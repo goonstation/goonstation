@@ -6,7 +6,7 @@
 //How much of a punch this has, tends to be seconds/damage before any resist
 	stun = 10
 //How much ammo this costs
-	cost = 30
+	cost = 40
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
@@ -51,7 +51,7 @@
 				if (stolenItem.cant_other_remove)
 					M.throw_at(linkedGun, 3, 0.5)
 					return
-				logTheThing(LOG_COMBAT, linkedGun, " successfully steals \a [stolenItem]")
+				logTheThing(LOG_COMBAT, linkedGun, " [key_name(src.firer)] successfully steals \a [stolenItem]")
 				M.u_equip(stolenItem)
 				linkedGun.heldItem = stolenItem
 				stolenItem.set_loc(linkedGun)
@@ -66,12 +66,12 @@
 				logTheThing(LOG_COMBAT, linkedGun, " attempts to plant [linkedGun.heldItem] on [constructTarget(M,"combat")]")
 				switch (targetZone)
 					if ("chest")
-						if (M.wear_id || !M.equip_if_possible(linkedGun.heldItem, M.slot_wear_id)) // If already wearing ID or attempt to equip failed
+						if (M.wear_id || !M.equip_if_possible(linkedGun.heldItem, SLOT_WEAR_ID)) // If already wearing ID or attempt to equip failed
 							linkedGun.heldItem.set_loc(get_turf(M))
 							linkedGun.heldItem.layer = initial(linkedGun.heldItem.layer)
 							boutput(M, "\A [linkedGun.heldItem] suddenly thwacks into your chest! [pick(strikeFlavor)]")
 					if ("head")
-						if (M.wear_mask || !M.equip_if_possible(linkedGun.heldItem, M.slot_wear_mask)) // Masks have more inherent grif potential than glasses/hat
+						if (M.wear_mask || !M.equip_if_possible(linkedGun.heldItem, SLOT_WEAR_MASK)) // Masks have more inherent grif potential than glasses/hat
 							linkedGun.heldItem.set_loc(get_turf(M))
 							linkedGun.heldItem.layer = initial(linkedGun.heldItem.layer)
 							boutput(M, "\A [linkedGun.heldItem] suddenly thwacks into your head! [pick(strikeFlavor)]")
@@ -79,30 +79,30 @@
 						if (!M.put_in_hand_or_drop(linkedGun.heldItem))
 							boutput(M, "\A [linkedGun.heldItem] brushes insistently at your hands! [pick(strikeFlavor)]")
 					if ("r_leg")
-						if (!M.r_store && M.can_equip(linkedGun.heldItem, M.slot_r_store))
-							M.equip_if_possible(linkedGun.heldItem, M.slot_r_store)
-						else if (!M.l_store && M.can_equip(linkedGun.heldItem, M.slot_l_store))
-							M.equip_if_possible(linkedGun.heldItem, M.slot_l_store)
+						if (!M.r_store && M.can_equip(linkedGun.heldItem, SLOT_R_STORE))
+							M.equip_if_possible(linkedGun.heldItem, SLOT_R_STORE)
+						else if (!M.l_store && M.can_equip(linkedGun.heldItem, SLOT_L_STORE))
+							M.equip_if_possible(linkedGun.heldItem, SLOT_L_STORE)
 						else // Couldn't go into a pocket, dump on ground
 							linkedGun.heldItem.set_loc(get_turf(M))
 							linkedGun.heldItem.layer = initial(linkedGun.heldItem.layer)
 							boutput(M, "\A [linkedGun.heldItem] tries to cram itself into your pockets! [pick(strikeFlavor)]")
 					if ("l_leg")
-						if (!M.l_store && M.can_equip(linkedGun.heldItem, M.slot_l_store))
-							M.equip_if_possible(linkedGun.heldItem, M.slot_l_store)
-						else if (!M.r_store && M.can_equip(linkedGun.heldItem, M.slot_r_store))
-							M.equip_if_possible(linkedGun.heldItem, M.slot_r_store)
+						if (!M.l_store && M.can_equip(linkedGun.heldItem, SLOT_L_STORE))
+							M.equip_if_possible(linkedGun.heldItem, SLOT_L_STORE)
+						else if (!M.r_store && M.can_equip(linkedGun.heldItem, SLOT_R_STORE))
+							M.equip_if_possible(linkedGun.heldItem, SLOT_R_STORE)
 						else // Couldn't go into a pocket, dump on ground
 							linkedGun.heldItem.set_loc(get_turf(M))
 							linkedGun.heldItem.layer = initial(linkedGun.heldItem.layer)
 							boutput(M, "\A [linkedGun.heldItem] tries to cram itself into your pockets! [pick(strikeFlavor)]")
 			else
 				var/turf/T = get_turf(hit)
-				if(isrestrictedz(T.z) || istype(T, /turf/unsimulated))
+				if((isrestrictedz(T.z) || istype(T, /turf/unsimulated)) && !in_shuttle_transit(T))
 					message_admins("[key_name(src.firer)] is a nerd and tried to fire a pickpocket gun on an unsimulated turf at [log_loc(T)].")
 					T.visible_message("The [linkedGun.name] jams!")
 					return
-				logTheThing(LOG_COMBAT, linkedGun, " plants [linkedGun.heldItem] at [log_loc(hit)]")
+				logTheThing(LOG_COMBAT, linkedGun, " [key_name(src.firer)] plants [linkedGun.heldItem] at [log_loc(hit)]")
 				linkedGun.heldItem.set_loc(get_turf(hit))
 			linkedGun.heldItem = null // One wayor another it's somewhere else now
 
@@ -132,7 +132,7 @@
 						M.u_equip(broke)
 						qdel(broke)
 					else // Eye gouge
-						boutput(M, "<span class='alert'>Something suddenly gouges you in the eyes! JESUS FUCK OW</span>")
+						boutput(M, SPAN_ALERT("Something suddenly gouges you in the eyes! JESUS FUCK OW"))
 						M.take_eye_damage(10)
 				if ("r_arm") // Stop hitting yourself, stop hitting yourself
 					if (M.r_hand && isitem(M.r_hand))

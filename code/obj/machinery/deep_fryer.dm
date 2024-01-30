@@ -32,59 +32,59 @@ TYPEINFO(/obj/machinery/deep_fryer)
 
 /obj/machinery/deep_fryer/attackby(obj/item/W, mob/user)
 	if (isghostdrone(user) || isAI(user))
-		boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+		boutput(user, SPAN_ALERT("The [src] refuses to interface with you, as you are not a properly trained chef!"))
 		return
 	if (W.cant_drop) //For borg held items
-		boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+		boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
 		return
 	if (src.fryitem)
-		boutput(user, "<span class='alert'>There is already something in the fryer!</span>")
+		boutput(user, SPAN_ALERT("There is already something in the fryer!"))
 		return
 	if (istype(W, /obj/item/reagent_containers/food/snacks/shell/deepfry))
-		boutput(user, "<span class='alert'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
+		boutput(user, SPAN_ALERT("Your cooking skills are not up to the legendary Doublefry technique."))
 		return
 	if (HAS_FLAG(status, BROKEN))
-		boutput(user, "<span class='alert'>It looks like the fryer is broken!</span>")
+		boutput(user, SPAN_ALERT("It looks like the fryer is broken!"))
 		return
 
-	else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
+	else if ((istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && W.is_open_container(FALSE))
 		if (!W.reagents.total_volume)
-			boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
+			boutput(user, SPAN_ALERT("There is nothing in [W] to pour!"))
 		else
 			logTheThing(LOG_CHEMISTRY, user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
-			src.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
+			src.visible_message(SPAN_NOTICE("[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src]."))
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			W.reagents.trans_to(src, W:amount_per_transfer_from_this)
-			if (!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
+			if (!W.reagents.total_volume) boutput(user, SPAN_ALERT("<b>[W] is now empty.</b>"))
 		return
 
 	else if (istype(W, /obj/item/grab))
 		var/obj/item/grab/G = W
 		if (!G.affecting) return
 		user.lastattacked = src
-		src.visible_message("<span class='alert'><b>[user] is trying to shove [G.affecting] into [src]!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[user] is trying to shove [G.affecting] into [src]!</b>"))
 		if(!do_mob(user, G.affecting) || !W)
 			return
 
 		if(ismonkey(G.affecting))
 			logTheThing(LOG_COMBAT, user, "shoves [constructTarget(G.affecting,"combat")] into the [src] at [log_loc(src)].") // For player monkeys (Convair880).
-			src.visible_message("<span class='alert'><b>[user] shoves [G.affecting] into [src]!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[user] shoves [G.affecting] into [src]!</b>"))
 			src.start_frying(G.affecting)
 			G.affecting.death(FALSE)
 			qdel(W)
 			return
 
 		logTheThing(LOG_COMBAT, user, "shoves [constructTarget(G.affecting,"combat")]'s face into the [src] at [log_loc(src)].")
-		src.visible_message("<span class='alert'><b>[user] shoves [G.affecting]'s face into [src]!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[user] shoves [G.affecting]'s face into [src]!</b>"))
 		src.reagents.reaction(G.affecting, TOUCH)
 		return
 
 	if (W.w_class > src.max_wclass || W.storage || istype(W, /obj/item/plate))
-		boutput(user, "<span class='alert'>There is no way that could fit!</span>")
+		boutput(user, SPAN_ALERT("There is no way that could fit!"))
 		return
 
 	logTheThing(LOG_STATION, user, "puts the [log_object(W)] into the [log_object(src)] at [log_loc(src)].")
-	src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
+	src.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."))
 	user.u_equip(W)
 	W.dropped(user)
 	W.add_fingerprint(user)
@@ -114,16 +114,16 @@ TYPEINFO(/obj/machinery/deep_fryer)
 
 /obj/machinery/deep_fryer/attack_hand(mob/user)
 	if (isghostdrone(user))
-		boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+		boutput(user, SPAN_ALERT("The [src] refuses to interface with you, as you are not a properly trained chef!"))
 		return
 	if (!src.fryitem)
-		boutput(user, "<span class='alert'>There is nothing in the fryer.</span>")
+		boutput(user, SPAN_ALERT("There is nothing in the fryer."))
 		return
 	if (src.cooktime < 5)
-		boutput(user, "<span class='alert'>Frying things takes time! Be patient!</span>")
+		boutput(user, SPAN_ALERT("Frying things takes time! Be patient!"))
 		return
 
-	user.visible_message("<span class='notice'>[user] removes [src.fryitem] from [src]!</span>", "<span class='notice'>You remove [src.fryitem] from [src].</span>")
+	user.visible_message(SPAN_NOTICE("[user] removes [src.fryitem] from [src]!"), SPAN_NOTICE("You remove [src.fryitem] from [src]."))
 	src.eject_food()
 
 /obj/machinery/deep_fryer/process()
@@ -150,8 +150,8 @@ TYPEINFO(/obj/machinery/deep_fryer)
 			var/mob/ice_feeder = fed_ice
 			fed_ice = TRUE
 			var/msg = "Oh, now I can die a warrior's death! Thank you!"
-			src.audible_message("<span class='game radio' style='color: #e8ae2a'>\
-					<span class='name'>[src.name] [bicon(src)]</span> <span class='message'> says, \"[msg]\"</span></span>",
+			src.audible_message("<span class='radio' style='color: #e8ae2a'>\
+					[SPAN_NAME("[src.name] [bicon(src)]")] [SPAN_MESSAGE(" says, \"[msg]\"")]</span>",
 					assoc_maptext = make_chat_maptext(src, msg, "color: #e8ae2a;"))
 			ADD_FLAG(src.status, BROKEN)
 			name = "Satiated [initial(src.name)]"
@@ -160,7 +160,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 
 		qdel(src.fryitem)
 		src.fryitem = null
-		src.visible_message("<span class='alert'>The ice reacts violently with the hot oil!</span>")
+		src.visible_message(SPAN_ALERT("The ice reacts violently with the hot oil!"))
 		fireflash(src, 3)
 		UnsubscribeProcess()
 		return
@@ -173,12 +173,12 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	if (src.cooktime < 60)
 		if (src.cooktime == 30)
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-			src.audible_message("<span class='notice'>[src] dings!</span>")
+			src.audible_message(SPAN_NOTICE("[src] dings!"))
 		else if (src.cooktime == 60) //Welp!
-			src.visible_message("<span class='alert'>[src] emits an acrid smell!</span>")
+			src.visible_message(SPAN_ALERT("[src] emits an acrid smell!"))
 	else if(src.cooktime >= 120)
 		if((src.cooktime % 5) == 0 && prob(10))
-			src.visible_message("<span class='alert'>[src] sprays burning oil all around it!</span>")
+			src.visible_message(SPAN_ALERT("[src] sprays burning oil all around it!"))
 			fireflash(src, 1)
 
 /obj/machinery/deep_fryer/custom_suicide = TRUE
@@ -187,7 +187,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		return 0
 	if (src.fryitem)
 		return 0
-	user.visible_message("<span class='alert'><b>[user] climbs into the deep fryer! How is that even possible?!</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] climbs into the deep fryer! How is that even possible?!</b>"))
 
 	src.start_frying(user)
 	user.TakeDamage("head", 0, 175)
@@ -220,7 +220,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 			for (var/mob/M in thing)
 				M.ghostize()
 		qdel(thing)
-		thing = new /obj/item/reagent_containers/food/snacks/yuckburn (src)
+		thing = new /obj/item/reagent_containers/food/snacks/yuck/burn (src)
 		if (!thing.reagents)
 			thing.create_reagents(50)
 
@@ -262,6 +262,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		fryholder.w_class = item.w_class
 	else
 		fryholder.bites_left = 5
+	fryholder.uneaten_bites_left = fryholder.bites_left
 	if (ismob(thing))
 		fryholder.w_class = W_CLASS_BULKY
 	if(thing.reagents)
@@ -301,7 +302,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 			return
 		else
 			src.reagents.clear_reagents()
-			src.visible_message("<span class='alert'>[usr] drains and refreshes the frying oil!</span>")
+			src.visible_message(SPAN_ALERT("[usr] drains and refreshes the frying oil!"))
 
 /// Shivers: You notice the fryer looks famished, needing to consume ice - VxnipVk6j5A
 /obj/machinery/deep_fryer/proc/check_hunger(mob/M, obj/item/W)
@@ -310,13 +311,13 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	var/shivers = 1
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if ((H.mind.assigned_role in list("Detective", "Vice Officer", "Part-time Vice Officer")) || (H.job in list("Detective", "Vice Officer", "Part-time Vice Officer")))
+		if ((H.mind.assigned_role in list("Detective", "Vice Officer")) || (H.job in list("Detective", "Vice Officer")))
 			shivers = 20
 	if (prob(0.5 * shivers))
 		fed_ice = M // asked this mob
 		src.name = "Absolutely Famished [src.name]"
 		var/msg = "I'm SO hungry! Please feed me a 20 pound bag of ice!"
-		boutput(M, "<span class='game radio' style='color: #e8ae2a'>\
-			<span class='name'>[src.name] [bicon(src)]</span> <span class='message'> says, \"[msg]\"</span></span>")
+		boutput(M, "<span class='radio' style='color: #e8ae2a'>\
+			[SPAN_NAME("[src.name] [bicon(src)]")] [SPAN_MESSAGE(" says, \"[msg]\"")]</span>")
 		var/image/chat_maptext/maptext = make_chat_maptext(src, msg, "color: #e8ae2a;")
 		maptext.show_to(M.client)

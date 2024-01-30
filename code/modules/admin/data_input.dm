@@ -46,7 +46,7 @@
 			while (!stub)
 				stub = input(custom_message  || "Enter part of type:", custom_title) as null|text
 				if (!stub)
-					boutput(src, "<span class='alert'>Cancelled.</span>")
+					boutput(src, SPAN_ALERT("Cancelled."))
 					return
 				input = get_one_match(stub, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (isnull(input))
@@ -61,7 +61,16 @@
 			input = input(custom_message  || "Enter text:", custom_title, default) as null|message
 
 		if (DATA_INPUT_ICON)
-			input = input(custom_message  || "Select icon:", custom_title) as null|icon
+			input = input(custom_message || "Input dmi path or hit OK with empty input if you want to upload") as null|text
+			if(isnull(input))
+				return
+			else if(input == "")
+				input = input(custom_message  || "Select icon:", custom_title) as null|icon
+			else
+				input = get_cached_file(input)
+				if(isnull(input))
+					boutput(src, SPAN_ALERT("DMI file [input] not found."))
+					return
 			if (alert("Would you like to associate an icon_state with the icon?", "icon_state", "Yes", "No") == "Yes")
 				var/state = input("Enter icon_state:", "icon_state") as null|text
 				if (state)
@@ -106,7 +115,7 @@
 			if (!input)
 				input = locate("\[[reftext]\]")
 			if (!input)
-				boutput(src, "<span class='alert'>Invalid ref.</span>")
+				boutput(src, SPAN_ALERT("Invalid ref."))
 				return
 
 		if (DATA_INPUT_TURF_BY_COORDS)
@@ -115,7 +124,7 @@
 			var/z = input("Z coordinate", "Set to turf at \[[x], [y], _\]", null) as null|num
 			input = locate(x, y, z)
 			if (!input)
-				boutput(src, "<span class='alert'>Invalid turf.</span>")
+				boutput(src, SPAN_ALERT("Invalid turf."))
 				return
 
 		if (DATA_INPUT_REFPICKER)
@@ -124,10 +133,17 @@
 		if (DATA_INPUT_NEW_INSTANCE)
 			var/stub = input(custom_message  || "Enter part of type:", custom_title) as null|text
 			if (!stub)
-				boutput(src, "<span class='alert'>Cancelled.</span>")
+				boutput(src, SPAN_ALERT("Cancelled."))
 				return
 			input = get_one_match(stub, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
-			input = new input
+			if(isnull(input))
+				boutput(src, SPAN_ALERT("Cancelled."))
+				return
+			var/list/arglist = src.get_proccall_arglist()
+			if(length(arglist))
+				input = new input(arglist(arglist))
+			else
+				input = new input
 
 		if (DATA_INPUT_NUM_ADJUST)
 			input = input("Enter amount to adjust by:", custom_title) as null|num
@@ -162,7 +178,7 @@
 			default = "[M.a],[M.b],[M.c],[M.d],[M.e],[M.f]"
 			input = input("Create a matrix:  (format: \"a,b,c,d,e,f\" without quotes). Must have a leading 0 for decimals:", custom_title, default) as null|message
 			if(input == null)
-				boutput(src, "<span class='alert'>Cancelled.</span>")
+				boutput(src, SPAN_ALERT("Cancelled."))
 				return
 
 			var/regex/R = new("(\\w*\\.*\\w+)(,|$)", "gi")
@@ -178,7 +194,7 @@
 				input = matrix(MV[1], MV[2], MV[3], MV[4], MV[5], MV[6])
 
 			else
-				boutput(src, "<span class='alert'>Matrix too short. Cancelled.</span>")
+				boutput(src, SPAN_ALERT("Matrix too short. Cancelled."))
 				return
 
 		// anything else, we just return a dummy value with the input type and let the caller handle it
@@ -186,7 +202,7 @@
 			input = selected_type
 
 	if (isnull(input) && selected_type != DATA_INPUT_NULL)
-		boutput(src, "<span class='alert'>Cancelled.</span>")
+		boutput(src, SPAN_ALERT("Cancelled."))
 		return
 
 	// Done with the switch. Now we return whatever we have
@@ -250,17 +266,13 @@
 		boutput(src, "Variable appears to be <b>TEXT</b>.")
 		default = DATA_INPUT_TEXT
 
-	else if (isatom(var_value))
-		boutput(src, "Variable appears to be <b>REFERENCE</b>.")
-		default = DATA_INPUT_NEW_INSTANCE //debatable
-
 	else if (isicon(var_value))
 		boutput(src, "Variable appears to be <b>ICON</b>.")
 		default = DATA_INPUT_ICON
 
-	else if (istype(var_value,/atom) || istype(var_value,/datum))
-		boutput(src, "Variable appears to be <b>TYPE</b>.")
-		default = DATA_INPUT_TYPE
+	else if (istype(var_value, /datum))
+		boutput(src, "Variable appears to be <b>REFERENCE</b>.")
+		default = DATA_INPUT_NEW_INSTANCE
 
 	else if (islist(var_value))
 		boutput(src, "Variable appears to be <b>LIST</b>.")

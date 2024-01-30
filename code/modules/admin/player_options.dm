@@ -9,6 +9,7 @@
 
 /datum/admins/proc/playeropt_link(mob/M, action)
 	return "?src=\ref[src];action=[action];targetckey=[M.ckey];targetmob=\ref[M];origin=adminplayeropts"
+
 /datum/admins/proc/playeropt(mob/M)
 	if (!ismob(M))
 		alert("Mob not found - can't auto-refresh the panel. (May have been banned / deleted)")
@@ -21,6 +22,7 @@
 
 	var/mentor = M.client?.player?.mentor
 	var/hos = (M.ckey in NT)
+	var/is_admin = M.client?.holder && ! M.client.player_mode
 
 	// The topBar style here is so that it can continue to happily chill at the top of even chui windows
 	var/header_thing_chui_toggle = (usr.client && !usr.client.use_chui) ? "<style type='text/css'>#topBar { top: 0; left: 0; right: 0; background-color: white; } </style>" : "<style type='text/css'>#topBar { top: 46px; left: 4px; right: 10px; background: inherit; }</style>"
@@ -90,6 +92,10 @@
 			color: #2237AD;
 		}
 
+		.admin {
+			color: #BE6E53;
+		}
+
 		#topBar {
 			position: fixed;
 			padding: 0.2em 0.5em;
@@ -145,12 +151,13 @@
 		<a href='?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.key ? M.key : M.name];origin=adminplayeropts'>Logs</a> &bull;
 		<a href='?src=\ref[src];action=refreshoptions;targetckey=[M.ckey];targetmob=\ref[M];'>&#8635;</a>
 	</div>
-	<b>[M.name]</b> (<tt>[html_key_string]</tt>)[mentor ? " <b class='mentor'>(Mentor)</b>" : ""][hos ? " <b class='hos'>(HoS)</b>" : ""]
+	<b>[M.name]</b> (<tt>[html_key_string]</tt>)[mentor ? " <b class='mentor'>(Mentor)</b>" : ""][hos ? " <b class='hos'>(HoS)</b>" : ""][is_admin ? " <b class='admin'>(Admin)</b>" : ""]
 </div>
 
 <div id="mobInfo">
 	Mob: <b>[M.name]</b> [M.mind && M.mind.assigned_role ? "{[M.mind.assigned_role]}": ""] (<tt>[html_key_string]</tt>)
 	[M.client ? "" : "<em>(no client)</em>"]
+	[M.ai ? "<a href='?src=\ref[src];target=\ref[M.ai];action=viewvars'>([M.ai.enabled ? "active" : "inactive"] AI)</a>" : ""]
 	[isdead(M) ? "<span class='antag'>(dead)</span>" : ""]
 	<div style="font-family: Monospace; font-size: 0.7em; float: right;">ping [M.client?.chatOutput?.last_ping || "N/A "]ms</div>
 	<br>Mob Type: <b>[M.type]</b>[number_of_antagonist_roles]
@@ -168,7 +175,8 @@
 						<a href='[playeropt_link(M, "subtlemsg")]'>Subtle PM</a> &bull;
 						<a href='[playeropt_link(M, "plainmsg")]'>Plain Message</a> &bull;
 						<a href='[playeropt_link(M, "adminalert")]'>Alert</a> &bull;
-						<a href='[playeropt_link(M, "showrules")]'>Show Rules</a>
+						<a href='[playeropt_link(M, "showrules;type=normal")]'>Show Rules</a> &bull;
+						<a href='[playeropt_link(M, "showrules;type=rp")]'>Show RP Rules</a>
 					</div>
 				</div>
 			</div>
@@ -187,7 +195,7 @@
 					<div class='r'>
 						<a href='[playeropt_link(M, "checkhealth")]'>Check</a> &bull;
 						<a href='[playeropt_link(M, "revive")]'>Heal</a> &bull;
-						[(M.stat == 2 || M.max_health == 0) ? "Dead" : "[round(100 * M.health / M.max_health)]%"] &bull;
+						[(isdead(M) || M.max_health == 0) ? "Dead" : "[round(100 * M.health / M.max_health)]%"] &bull;
 						<a href='[playeropt_link(M, "kill")]'>Kill</a>
 					</div>
 					"} : ""]
@@ -250,7 +258,8 @@
 						<a href='[playeropt_link(M, "tysongib")]'>Tyson</a> &bull;
 						<a href='[playeropt_link(M, "flockgib")]'>Flock</a> &bull;
 						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a> &bull;
-						<a href='[playeropt_link(M, "rapture")]'>Rapture</a>
+						<a href='[playeropt_link(M, "rapture")]'>Rapture</a> &bull;
+						<a href='[playeropt_link(M, "anvilgib")]'>Anvil</a>
 					</div>
 					<div class='l'>Misc</div>
 					<div class='r'>
@@ -278,7 +287,8 @@
 						<a href='[playeropt_link(M, "jumpto")]'>Jump to</A> &bull;
 						<a href='[playeropt_link(M, "observe")]'>Observe</A> &bull;
 						<a href='[playeropt_link(M, "getmob")]'>Get</a> &bull;
-						<a href='[playeropt_link(M, "sendmob")]'>Send to...</a>
+						<a href='[playeropt_link(M, "sendmob")]'>Send to...</a> &bull;
+						<a href='[playeropt_link(M, "viewport")]'>Viewport</a>
 						<br>Currently in [A]
 			"}
 		if (T) //runtime fix for mobs in null space
@@ -357,6 +367,7 @@
 				<div class='optionGroup' style='border-color: #B57EDC;'>
 					<h2 style='background-color: #B57EDC;'>Antagonist Options</h2>
 					<div>
+						[jobban_isbanned(M, "Syndicate") ? "<div class='antag'>⚠ This player is antag banned ⚠</div>" : ""]
 						<div class='l'>Options</div>
 						<div class='r'>
 							<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a> &bull;

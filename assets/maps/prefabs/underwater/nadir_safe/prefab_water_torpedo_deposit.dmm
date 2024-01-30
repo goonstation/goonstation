@@ -24,11 +24,6 @@
 "cZ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/torpedo_deposit)
-"dg" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor/plating/random,
-/area/prefab/torpedo_deposit)
 "dj" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles4"
@@ -536,7 +531,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/item/reagent_containers/syringe/jenkem,
 /turf/simulated/floor/black,
 /area/prefab/torpedo_deposit)
 "Pl" = (
@@ -835,7 +829,7 @@ jo
 pX
 wV
 cZ
-dg
+kU
 cZ
 Ns
 jN
@@ -1036,7 +1030,7 @@ RK
 RK
 "}
 (18,1,1) = {"
-dg
+kU
 gm
 lL
 sm

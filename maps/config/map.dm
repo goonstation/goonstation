@@ -62,6 +62,9 @@
 #elif defined(MAP_OVERRIDE_DESTINY)
 #include "destiny.dm"
 
+#elif defined(MAP_OVERRIDE_DENSITY2)
+#include "density2.dm"
+
 #elif defined(MAP_OVERRIDE_HORIZON)
 #include "horizon.dm"
 
@@ -77,6 +80,9 @@
 #elif defined(MAP_OVERRIDE_DENSITY)
 #include "density.dm"
 
+#elif defined(MAP_OVERRIDE_DENSITY2)
+#include "density2.dm"
+
 #elif defined(MAP_OVERRIDE_OZYMANDIAS)
 #include "ozymandias.dm"
 
@@ -89,6 +95,9 @@
 #elif defined(MAP_OVERRIDE_GEHENNA)
 #include "gehenna.dm"
 
+#elif defined(MAP_OVERRIDE_DEVTEST)
+#include "devtest.dm"
+
 #elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "gottagofast.dm"
 
@@ -97,6 +106,6 @@
 #include "standard.dm"
 #endif
 
-#if ENABLE_ARTEMIS && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
+#if defined(ENABLE_ARTEMIS) && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "..\artemis\planets.dmm"
 #endif

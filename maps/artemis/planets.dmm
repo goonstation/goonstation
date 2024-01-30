@@ -196,7 +196,7 @@
 	dir = 1
 	},
 /turf/background_canvas,
-/area)
+/area/background_canvas)
 "ey" = (
 /obj/stool/chair/office{
 	dir = 1;
@@ -361,7 +361,7 @@
 /area/ship/artemis)
 "iV" = (
 /obj/rack,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/black,
 /area/ship/artemis)
@@ -431,7 +431,7 @@
 /turf/cordon,
 /area/cordon)
 "kD" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/specialroom/medbay,
 /area/ship/artemis)
 "kF" = (
@@ -523,7 +523,7 @@
 	},
 /area/ship/artemis)
 "mp" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/specialroom/medbay,
 /area/ship/arjuna)
 "mt" = (
@@ -541,7 +541,7 @@
 /turf/background_canvas{
 	icon_state = "M-canvas"
 	},
-/area)
+/area/background_canvas)
 "mP" = (
 /obj/machinery/light/incandescent{
 	dir = 8
@@ -645,7 +645,7 @@
 "qc" = (
 /obj/landmark/artemis_planets,
 /turf/unsimulated/wall/void,
-/area)
+/area/background_canvas)
 "qd" = (
 /obj/landmark/destination_landmark{
 	destination_name = "asteroid3"
@@ -995,7 +995,7 @@
 /turf/background_canvas{
 	icon_state = "M-canvas"
 	},
-/area)
+/area/background_canvas)
 "BK" = (
 /obj/stool/chair/office{
 	dir = 4;
@@ -1357,7 +1357,7 @@
 /area/ship/artemis)
 "JT" = (
 /turf/unsimulated/wall/void,
-/area)
+/area/background_canvas)
 "Ke" = (
 /obj/submachine/chef_oven{
 	dir = 4;
@@ -1498,7 +1498,7 @@
 "Oo" = (
 /obj/stool/chair,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/background_canvas)
 "OD" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -1617,7 +1617,7 @@
 /area/space)
 "RG" = (
 /turf/background_canvas,
-/area)
+/area/background_canvas)
 "RQ" = (
 /obj/machinery/light/incandescent/harsh{
 	dir = 8
@@ -1794,7 +1794,7 @@
 /obj/item/storage/box/cutlery,
 /obj/item/storage/box/plates,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/background_canvas)
 "Wb" = (
 /obj/stool/chair/office{
 	dir = 1;
@@ -1873,7 +1873,7 @@
 	dir = 1
 	},
 /turf/background_canvas,
-/area)
+/area/background_canvas)
 "XJ" = (
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -1914,7 +1914,7 @@
 "YO" = (
 /obj/storage/closet/biohazard,
 /obj/item/clothing/head/rad_hood,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /turf/simulated/floor/engine,
 /area/ship/arjuna)
 "YR" = (

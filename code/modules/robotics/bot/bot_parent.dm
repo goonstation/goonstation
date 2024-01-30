@@ -1,5 +1,6 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 
+ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 /obj/machinery/bot
 	icon = 'icons/obj/bots/aibots.dmi'
 	layer = MOB_LAYER
@@ -80,6 +81,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, PROC_REF(hitbyproj))
 		if(!no_camera)
 			src.cam = new /obj/machinery/camera(src)
@@ -99,6 +101,7 @@
 		#endif
 
 	disposing()
+		STOP_TRACKING
 		botcard = null
 		qdel(chat_text)
 		chat_text = null
@@ -136,10 +139,7 @@
 		var/turf/T = get_turf(src)
 		if(isnull(T))
 			return FALSE
-		for (var/mob/M in GET_NEARBY(T, src.hash_check_range))
-			if(M.client)
-				return TRUE
-		return FALSE
+		return length(GET_NEARBY(/datum/spatial_hashmap/clients, T, src.hash_check_range))
 
 	// Generic default. Override for specific bots as needed.
 	bullet_act(var/obj/projectile/P)
@@ -163,6 +163,10 @@
 
 	proc/explode()
 		return
+
+	proc/admin_command_speak()
+		set name = "Speak"
+		src.speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
 
 	proc/speak(var/message, var/sing, var/just_float, var/just_chat)
 		if (!src.on || !message || src.muted)
@@ -189,7 +193,7 @@
 					if(I != chatbot_text)
 						I.bump_up(chatbot_text.measured_height)
 
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\"</span>", just_maptext = just_float, assoc_maptext = chatbot_text)
+		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\""), just_maptext = just_float, assoc_maptext = chatbot_text)
 		playsound(src, src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN(0)
@@ -207,9 +211,9 @@
 	var/healthpct = src.health / initial(src.health)
 	if (healthpct <= 0.8)
 		if (healthpct >= 0.4)
-			. += "<span class='alert'>[src]'s parts look loose.</span>"
+			. += SPAN_ALERT("[src]'s parts look loose.")
 		else
-			. += "<span class='alert'><B>[src]'s parts look very loose!</B></span>"
+			. += SPAN_ALERT("<B>[src]'s parts look very loose!</B>")
 
 /obj/machinery/bot/proc/hitbyproj(source, obj/projectile/P)
 	if((P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING)) && P.proj_data.ks_ratio > 0)
@@ -263,7 +267,7 @@
 				return T
 
 /obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=60)
-	var/target_turf = get_pathable_turf(the_target)
+	var/target_turf = adjacent ? get_turf(the_target) : get_pathable_turf(the_target)
 	if((BOUNDS_DIST(the_target, src) < 0))
 		return
 	if(src.bot_mover?.the_target == target_turf && frustration == 0)
@@ -285,6 +289,7 @@
 	var/adjacent = 0
 	var/scanrate = 10
 	var/max_dist = 600
+	var/max_seen = 1000
 
 	New(obj/machinery/bot/newmaster, _move_delay = 3, _target_turf, _current_movepath, _adjacent = 0, _scanrate = 10, _max_dist = 80)
 		..()
@@ -332,7 +337,8 @@
 			master.KillPathAndGiveUp(0)
 			return
 		var/compare_movepath = src.current_movepath
-		master.path = get_path_to(src.master, src.the_target, max_distance=src.max_dist, id=master.botcard, skip_first=FALSE, simulated_only=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
+		master.path = get_path_to(src.master, src.the_target, mintargetdist = adjacent ? 1 : 0, \
+			max_distance=src.max_dist, max_seen=src.max_seen, id=master.botcard, skip_first=FALSE, simulated_only=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
 		if(!length(master.path))
 			qdel(src)
 			return
@@ -341,9 +347,6 @@
 			if (!istype(master) || (master && (!length(master.path) || !src.the_target)))
 				qdel(src)
 				return
-
-			if(src.adjacent && (length(master?.path) > 1)) //Make sure to check it isn't null!!
-				master.path.len-- //Only go UP to the target, not the same tile.
 
 			master?.moving = 1
 

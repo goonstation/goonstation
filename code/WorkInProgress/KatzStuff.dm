@@ -2,10 +2,9 @@
 /obj/item/gun/kinetic/ag3_rifle
 	name = "AG3 battle rifle"
 	desc = "A modern semi-automatic battle rifle manufactured by Almagest Weapons Fabrication. Rarely seen in space operations due to their bulk."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "ag3_rifle"
 	item_state = "assault_rifle"
-	uses_multiple_icon_states = 1
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_AUTO_308)
@@ -28,7 +27,7 @@
 	damage = 50
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 
@@ -78,7 +77,7 @@ TYPEINFO(/datum/component/mimic_item)
 
 	tryCast()
 		if (is_incapacitated(holder.owner))
-			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
+			boutput(holder.owner, SPAN_ALERT("You cannot cast this ability while you are incapacitated."))
 			src.holder.locked = FALSE
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		. = ..()

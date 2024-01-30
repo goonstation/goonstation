@@ -22,23 +22,23 @@
 			return 1
 
 		if (M == target)
-			boutput(M, "<span class='alert'>Why would you want to maul yourself?</span>")
+			boutput(M, SPAN_ALERT("Why would you want to maul yourself?"))
 			return 1
 
 		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
+			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return 1
 
 		if (!ishuman(target)) // Critter mobs include robots and combat drones. There's not a lot of meat on them.
-			boutput(M, "<span class='alert'>[target] probably wouldn't taste very good.</span>")
+			boutput(M, SPAN_ALERT("[target] probably wouldn't taste very good."))
 			return 1
 
 		if (isnpc(target)) // Critter mobs include robots and combat drones. There's not a lot of meat on them.
-			boutput(M, "<span class='alert'>Something about [target]'s smell puts you off feasting on them.</span>")
+			boutput(M, SPAN_ALERT("Something about [target]'s smell puts you off feasting on [him_or_her(target)]."))
 			return 1
 
 		if (!target.lying)
-			boutput(M, "<span class='alert'>[target] needs to be lying on the ground first.</span>")
+			boutput(M, SPAN_ALERT("[target] needs to be lying on the ground first."))
 			return 1
 
 		logTheThing(LOG_COMBAT, M, "starts to maul [constructTarget(target,"combat")] at [log_loc(M)].")
@@ -48,7 +48,6 @@
 /datum/action/bar/private/icon/werewolf_feast
 	duration = 250
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "werewolf_feast"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	var/mob/living/target
@@ -72,21 +71,21 @@
 			return
 
 		// What do we do if the body is dead?
-		if (target.stat == 2)
+		if (isdead(target))
 			if (target.reagents)
 				if (target.reagents.has_reagent("formaldehyde", 15))
-					boutput(M, "<span class='alert'>Urgh, this cadaver tastes horrible. Better find some chemical free meat.</span>")
+					boutput(M, SPAN_ALERT("Urgh, this cadaver tastes horrible. Better find some chemical free meat."))
 					return
 
 			var/mob/living/carbon/human/H = target
 			//If they are at the decay or greater decomp stage, no eat
 			if (istype(H) && H.decomp_stage >= DECOMP_STAGE_DECAYED)
-				boutput(M, "<span class='alert'>Urgh, this cadaver tastes horrible. Better find some fresh meat.</span>")
+				boutput(M, SPAN_ALERT("Urgh, this cadaver tastes horrible. Better find some fresh meat."))
 				return
 
 		A.locked = 1
 		playsound(M.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-		M.visible_message("<span class='alert'><B>[M] lunges at [target]!</b></span>")
+		M.visible_message(SPAN_ALERT("<B>[M] lunges at [target]!</b>"))
 
 	onUpdate()
 		..()
@@ -129,17 +128,17 @@
 							M.max_health += 10
 							health_update_queue |= M
 							W.lower_cooldowns(0.1)
-							boutput(M, "<span class='notice'>You finish chewing on [HH], but what a feast it was!</span>")
+							boutput(M, SPAN_NOTICE("You finish chewing on [HH], but what a feast it was!"))
 						else
-							boutput(M, "<span class='alert'>You've mauled [HH] before and didn't like the aftertaste. Better find a different prey.</span>")
+							boutput(M, SPAN_ALERT("You've mauled [HH] before and didn't like the aftertaste. Better find a different prey."))
 					else
-						boutput(M, "<span class='alert'>What a meagre meal. You're still hungry...</span>")
+						boutput(M, SPAN_ALERT("What a meagre meal. You're still hungry..."))
 				else
-					boutput(M, "<span class='alert'>What a meagre meal. You're still hungry...</span>")
+					boutput(M, SPAN_ALERT("What a meagre meal. You're still hungry..."))
 			else
-				boutput(M, "<span class='alert'>You finish chewing on [HH].</span>")
+				boutput(M, SPAN_ALERT("You finish chewing on [HH]."))
 		else
-			boutput(M, "<span class='alert'>You finish chewing on [HH].</span>")
+			boutput(M, SPAN_ALERT("You finish chewing on [HH]."))
 
 		if (A && istype(A))
 			A.locked = 0
@@ -164,17 +163,17 @@
 							M.max_health += 10
 							health_update_queue |= M
 							W.lower_cooldowns(0.1)
-							boutput(M, "<span class='notice'>Your feast was interrupted, but it satisfied your hunger for the time being.</span>")
+							boutput(M, SPAN_NOTICE("Your feast was interrupted, but it satisfied your hunger for the time being."))
 						else
-							boutput(M, "<span class='alert'>You've mauled [HH] before and didn't like the aftertaste. Better find a different prey.</span>")
+							boutput(M, SPAN_ALERT("You've mauled [HH] before and didn't like the aftertaste. Better find a different prey."))
 					else
-						boutput(M, "<span class='alert'>Your feast was interrupted and you're still hungry...</span>")
+						boutput(M, SPAN_ALERT("Your feast was interrupted and you're still hungry..."))
 				else
-					boutput(M, "<span class='alert'>Your feast was interrupted and you're still hungry...</span>")
+					boutput(M, SPAN_ALERT("Your feast was interrupted and you're still hungry..."))
 			else
-				boutput(M, "<span class='alert'>Your feast was interrupted.</span>")
+				boutput(M, SPAN_ALERT("Your feast was interrupted."))
 		else
-			boutput(M, "<span class='alert'>Your feast was interrupted.</span>")
+			boutput(M, SPAN_ALERT("Your feast was interrupted."))
 
 		if (A && istype(A))
 			A.locked = 0

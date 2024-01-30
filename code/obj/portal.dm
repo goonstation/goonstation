@@ -32,12 +32,28 @@
 	SPAWN(0)
 		src.teleport(AM)
 
+/obj/portal/proc/set_target(atom/new_target)
+	if(src.target)
+		if(istype(src.target, /obj/item/device/radio/beacon))
+			var/obj/item/device/radio/beacon/B = src.target
+			B.remove_portal(src)
+	src.target = new_target
+	if(istype(src.target, /obj/item/device/radio/beacon))
+		var/obj/item/device/radio/beacon/B = target
+		B.add_portal(src)
+
 /obj/portal/attack_hand(mob/M)
 	SPAWN(0)
 		src.teleport(M)
 
 /obj/portal/disposing()
-	target = null
+	set_target(null)
+	..()
+
+/obj/portal/Click(location, control, params)
+	if (isobserver(usr))
+		usr.set_loc(src.target)
+		return
 	..()
 
 /obj/portal/proc/teleport(atom/movable/M as mob|obj)
@@ -63,7 +79,7 @@
 					var/part_splinched = splinch(M, 75)
 					if (part_splinched)
 						do_teleport(part_splinched, destination, 8)
-						M.visible_message("<span class='alert'><b>[M]</b> splinches themselves and their [part_splinched] falls off!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M]</b> splinches themselves and their [part_splinched] falls off!"))
 					M.throw_at(destination, 8, 2)
 
 					return

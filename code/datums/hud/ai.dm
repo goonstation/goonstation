@@ -131,11 +131,11 @@
 		switch (id)
 			if ("health")
 				//output health info
-				boutput(user, "<span class='hint'>Health: [master.health]/[master.max_health] - Brute: [master.bruteloss] - Burn: [master.fireloss]</span>")
+				boutput(user, SPAN_HINT("Health: [master.health]/[master.max_health] - Brute: [master.bruteloss] - Burn: [master.fireloss]"))
 
 			if ("cell")
 				// Output cell info
-				boutput(user, "<span class='hint'>Cell: [master.cell.charge]/[master.cell.maxcharge]</span>")
+				boutput(user, SPAN_HINT("Cell: [master.cell.charge]/[master.cell.maxcharge]"))
 
 			if ("status")
 				// Change status
@@ -169,14 +169,14 @@
 
 			if ("viewport")
 				if(master.deployed_to_eyecam)
-					master.eyecam.create_viewport()
+					master.eyecam.create_viewport(VIEWPORT_ID_AI)
 				else
-					boutput(master, "<span class='alert'>Deploy to an AI Eye first to create a viewport.</span>")
+					boutput(master, SPAN_ALERT("Deploy to an AI Eye first to create a viewport."))
 			if ("hologram")
 				if(master.deployed_to_eyecam)
 					master.create_hologram()
 				else
-					boutput(master, "<span class='alert'>Deploy to an AI Eye first to create a hologram.</span>")
+					boutput(master, SPAN_ALERT("Deploy to an AI Eye first to create a hologram."))
 			if ("map")
 				master.open_map()
 			if ("core")

@@ -776,7 +776,6 @@
 /area/prefab/drug_den)
 "SG" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/carpet/arcade/half,
@@ -823,10 +822,6 @@
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/donkpocket{
 	pixel_x = -3
-	},
-/obj/item/reagent_containers/syringe/jenkem{
-	pixel_x = -2;
-	pixel_y = 12
 	},
 /turf/simulated/floor/white/checker2{
 	dir = 1

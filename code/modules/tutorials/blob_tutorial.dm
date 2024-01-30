@@ -245,7 +245,7 @@
 				var/mob/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
 				walk_to(W, locate(tx, ty + 8, tz), 0, 8)
 				sleep(5 SECONDS)
-				W.set_dir(2)
+				W.set_dir(SOUTH)
 				sleep(2 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
 				sleep(4 SECONDS)
@@ -322,7 +322,7 @@
 				var/mob/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
 				walk_to(W, locate(tx, ty + 8, tz), 0, 8)
 				sleep(5 SECONDS)
-				W.set_dir(2)
+				W.set_dir(SOUTH)
 				sleep(2 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
 				sleep(4 SECONDS)
@@ -560,7 +560,7 @@ proc/AddBlobSteps(var/datum/tutorial_base/regional/blob/T)
 		L.lit = 1
 
 	proc/sprayAt(var/turf/T)
-		L.shoot(T, src.loc, src)
+		L.Shoot(T, src.loc, src, called_target = T)
 
 	disposing()
 		..()
@@ -569,7 +569,7 @@ proc/AddBlobSteps(var/datum/tutorial_base/regional/blob/T)
 /mob/living/intangible/blob_overmind/verb/help_my_tutorial_is_being_a_massive_shit()
 	set name = "EMERGENCY TUTORIAL STOP"
 	if (!tutorial)
-		boutput(src, "<span class='alert'>You're not in a tutorial, doofus. It's real. IT'S ALL REAL.</span>")
+		boutput(src, SPAN_ALERT("You're not in a tutorial, doofus. It's real. IT'S ALL REAL."))
 		return
 	src.tutorial.Finish()
 	src.tutorial = null

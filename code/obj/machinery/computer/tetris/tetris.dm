@@ -33,10 +33,10 @@
 	name = "Robustris Pro Cabinet"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tetris"
-	desc = "Instructions: Left/Right Arrows: Move, Up Arrow/W/R: Turn CW, Q: Turn CCW, Down Arrow/S: Soft Drop, Space: Hard Drop | HIGHSCORE: 0"
+	desc = "Instructions:<ul style='margin: 0;'><li>Left/Right Arrows: Move</li><li>Up Arrow/Space: Hard Drop</li><li>Down Arrow/S: Soft Drop</li><li>W/E/R: Rotate CW</li><li>Q/Z: Rotate CCW</li></ul>"
 	machine_registry_idx = MACHINES_MISC
 	circuit_type = /obj/item/circuitboard/tetris
-	var/datum/game/tetris
+	var/datum/game/tetris/tetris
 
 /obj/machinery/computer/tetris/New()
 	..()
@@ -60,6 +60,11 @@
 			SPAWN(rand(0, 15))
 				src.icon_state = "tetris0"
 				status |= NOPOWER
+
+/obj/machinery/computer/tetris/get_desc()
+	if (src.tetris && src.tetris.highscore)
+		return "<b>High Score: [src.tetris.highscore] by [src.tetris.highscoreholder]</b>"
+
 
 ABSTRACT_TYPE(/datum/game)
 /datum/game
@@ -89,24 +94,39 @@ ABSTRACT_TYPE(/datum/game)
 		if (owner.Topic(href, href_list))
 			return
 		if (href_list["highscore"])
-			if (text2num_safe(href_list["highscore"]))
-				if (text2num_safe(href_list["highscore"]) >= 30000)
+			var/score = text2num_safe(href_list["highscore"])
+			if (score)
+				var/msg
+				if (score >= 30000)
+					msg = "Game over. [usr] scored [score] points!"
 					usr.unlock_medal("Block Stacker", 1)
-				if (text2num_safe(href_list["highscore"]) > highscore)
-					highscore = text2num_safe(href_list["highscore"])
+
+				else if (score > 500)
+					// arbitrary threshold of effort
+					// (slightly more than "mash hard drop for 11 pieces")
+					msg = "Game over. [usr] scored [score] points."
+
+				if (score > highscore)
+					msg = "New high score by [usr] -- [score] points!!"
+					highscore = score
 					highscorekey = usr.key
 					highscoreholder = html_encode(input("Congratulations! You have achieved the highscore! Enter a name:", "Highscore!", usr.name) as text)
 					src.end_game()
+
+
+				if (src.owner && msg)
+					src.owner.obj_speak(msg)
+					if (score >= highscore || score >= 30000)
+						// >= here becuase it was updated earlier
+						particleMaster.SpawnSystem(new /datum/particleSystem/confetti(src.owner.loc))
+						SPAWN(1 SECOND)
+							playsound(src.owner, 'sound/voice/yayyy.ogg', 50, 1)
 		return
 
 	new_game(mob/user as mob)
 		var/dat = replacetext(code, "{{HIGHSCORE}}", num2text(highscore))
 		dat = replacetext(dat, "{{TOPICURL}}", "'?src=\ref[src];highscore='+this.ScoreCur;")
 
-		user.Browse(dat, "window=tetris;size=375x500")
+		user.Browse(dat, "window=tetris;size=375x546")
 		onclose(user, "tetris")
 		return
-
-	end_game()
-		if(istype(src.owner, /obj/machinery/computer/tetris))
-			src.owner.desc = "Instructions: Left/Right Arrows: Move, Up Arrow/W/R: Turn CW, Q: Turn CCW, Down Arrow/S: Soft Drop, Space: Hard Drop<br><br><b>Highscore: [highscore] by [highscoreholder]</b>"

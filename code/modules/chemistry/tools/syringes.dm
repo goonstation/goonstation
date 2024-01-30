@@ -12,7 +12,6 @@
 	item_state = "syringe_0"
 	var/icon_prefix = "syringe"
 	icon_state = "syringe_0"
-	uses_multiple_icon_states = 1
 	initial_volume = 15
 	amount_per_transfer_from_this = 5
 	/// The amount each visual stage of the icon increments by. Defaults to amount_per_transfer_from_this
@@ -83,6 +82,11 @@
 	afterattack(var/atom/target, mob/user, flag)
 		if(isghostcritter(user)) return
 		if (!target.reagents) return
+		if(istype(target, /obj/item/reagent_containers))
+			var/obj/item/reagent_containers/t = target
+			if(t.current_lid)
+				boutput(user, SPAN_ALERT("You cannot transfer liquids with the [target.name] while it has a lid on it!"))
+				return
 
 		switch(mode)
 			if (S_DRAW)
@@ -92,59 +96,59 @@
 						return
 
 					if (reagents.total_volume >= reagents.maximum_volume)
-						boutput(user, "<span class='alert'>The [src.name] is full.</span>")
+						boutput(user, SPAN_ALERT("The [src.name] is full."))
 						return
 
 					if (target != user)
 						logTheThing(LOG_COMBAT, user, "tries to draw 5 units of reagents from [constructTarget(target, "combat")] [log_reagents(target)] with a [src] [log_reagents(src)] at [log_loc(user)].")
-						user.visible_message("<span class='alert'><B>[user] is trying to draw blood from [target]!</B></span>")
+						user.visible_message(SPAN_ALERT("<B>[user] is trying to draw blood from [target]!</B>"))
 						actions.start(new/datum/action/bar/icon/syringe(target, src, src.icon, src.icon_state), user)
 					else
 						syringe_action(user, target)
 					return
 
 				if (!target.reagents.total_volume)
-					boutput(user, "<span class='alert'>[target] is empty.</span>")
+					boutput(user, SPAN_ALERT("[target] is empty."))
 					return
 
 				if (reagents.total_volume >= reagents.maximum_volume)
-					boutput(user, "<span class='alert'>The [src.name] is full.</span>")
+					boutput(user, SPAN_ALERT("The [src.name] is full."))
 					return
 
-				if (!target.is_open_container() && !istype(target,/obj/reagent_dispensers))
-					boutput(user, "<span class='alert'>You cannot directly remove reagents from this object.</span>")
+				if (!target.is_open_container() && (!istype(target,/obj/reagent_dispensers) && !istype(target,/obj/item/clothing/mask/cigarette/custom)))
+					boutput(user, SPAN_ALERT("You cannot directly remove reagents from this object."))
 					return
 
 				target.reagents.trans_to(src, src.amount_per_transfer_from_this)
 				logTheThing(LOG_CHEMISTRY, user, "draws 5 units of reagents from [constructTarget(target,"combat")] [log_reagents(target)] with a syringe [log_reagents(src)] at [log_loc(user)].")
 				user.update_inhands()
 
-				boutput(user, "<span class='notice'>You fill [src] with [src.amount_per_transfer_from_this] units of the solution.</span>")
+				boutput(user, SPAN_NOTICE("You fill [src] with [src.amount_per_transfer_from_this] units of the solution."))
 
 			if (S_INJECT)
 				// drsingh for Cannot read null.total_volume
 				if (!reagents || !reagents.total_volume)
-					boutput(user, "<span class='alert'>The [src.name] is empty.</span>")
+					boutput(user, SPAN_ALERT("The [src.name] is empty."))
 					return
 
 				if (istype(target, /obj/item/bloodslide))
 					var/obj/item/bloodslide/BL = target
 					if (BL.reagents.total_volume)
-						boutput(user, "<span class='alert'>There is already a pathogen sample on [target].</span>")
+						boutput(user, SPAN_ALERT("There is already a pathogen sample on [target]."))
 						return
 					var/transferred = src.reagents.trans_to(target, src.amount_per_transfer_from_this)
 					user.update_inhands()
-					boutput(user, "<span class='notice'>You fill the blood slide with [transferred] units of the solution.</span>")
+					boutput(user, SPAN_NOTICE("You fill the blood slide with [transferred] units of the solution."))
 					// contingency
 					BL.on_reagent_change()
 					return
 
 				if (target.reagents.total_volume >= target.reagents.maximum_volume)
-					boutput(user, "<span class='alert'>[target] is full.</span>")
+					boutput(user, SPAN_ALERT("[target] is full."))
 					return
 
-				if (target.is_open_container() != 1 && !ismob(target) && !istype(target,/obj/item/reagent_containers/food) && !istype(target,/obj/item/reagent_containers/patch))
-					boutput(user, "<span class='alert'>You cannot directly fill this object.</span>")
+				if (target.is_open_container(TRUE) != 1 && !ismob(target) && !istype(target,/obj/item/reagent_containers/food) && !istype(target,/obj/item/clothing/mask/cigarette/custom) && !istype(target,/obj/item/reagent_containers/patch))
+					boutput(user, SPAN_ALERT("You cannot directly fill this object."))
 					return
 
 				if (iscarbon(target) || ismobcritter(target))
@@ -154,7 +158,7 @@
 
 					if (target != user)
 						logTheThing(LOG_COMBAT, user, "tries to inject [constructTarget(target,"combat")] with a [src] [log_reagents(src)] at [log_loc(user)].")
-						user.visible_message("<span class='alert'><B>[user] is trying to inject [target] with [src]!</B></span>")
+						user.visible_message(SPAN_ALERT("<B>[user] is trying to inject [target] with [src]!</B>"))
 						actions.start(new/datum/action/bar/icon/syringe(target, src, src.icon, src.icon_state), user)
 					else
 						syringe_action(user, target)
@@ -162,10 +166,10 @@
 
 				if (istype(target,/obj/item/reagent_containers/patch))
 					var/obj/item/reagent_containers/patch/P = target
-					boutput(user, "<span class='notice'>You fill [P].</span>")
+					boutput(user, SPAN_NOTICE("You fill [P]."))
 					if (P.medical == 1)
 						//break the seal
-						boutput(user, "<span class='alert'>You break [P]'s tamper-proof seal!</span>")
+						boutput(user, SPAN_ALERT("You break [P]'s tamper-proof seal!"))
 						P.medical = 0
 
 
@@ -196,15 +200,15 @@
 						return
 
 				transfer_blood(target, src, src.amount_per_transfer_from_this)
-				user.visible_message("<span class='alert'>[user.name] draws blood from [target == user ? himself_or_herself(user) : target.name] with [src]!</span>",\
-				"<span class='notice'>You fill [src] with [src.amount_per_transfer_from_this] units of [target == user ? "your own" : target.name + "'s"] blood.</span>")
+				user.visible_message(SPAN_ALERT("[user.name] draws blood from [target == user ? himself_or_herself(user) : target.name] with [src]!"),\
+				SPAN_NOTICE("You fill [src] with [src.amount_per_transfer_from_this] units of [target == user ? "your own" : target.name + "'s"] blood."))
 				logTheThing(LOG_COMBAT, user, "draws 5 units of reagents from [constructTarget(target,"combat")] [log_reagents(target)] with a syringe [log_reagents(src)] at [log_loc(user)].")
 
 			if(S_INJECT)
 				src.reagents.reaction(target, INGEST, src.amount_per_transfer_from_this)
 				src.reagents.trans_to(target, src.amount_per_transfer_from_this)
-				user.visible_message("<span class='alert'>[user.name] injects [target == user ? himself_or_herself(user) : target.name] with [src]!</span>",\
-				"<span class='notice'>You inject [target == user ? "yourself" : target.name] with [src]!</span>")
+				user.visible_message(SPAN_ALERT("[user.name] injects [target == user ? himself_or_herself(user) : target.name] with [src]!"),\
+				SPAN_NOTICE("You inject [target == user ? "yourself" : target.name] with [src]!"))
 				logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with a [src.name] [log_reagents(src)] at [log_loc(user)].")
 
 		user.update_inhands()
@@ -266,11 +270,6 @@
 
 // drugs
 
-/obj/item/reagent_containers/syringe/jenkem
-	name = "syringe (jenkem)"
-	desc = "Contains jenkem, a low quality sewage drug used by no one in the right state of mind."
-	initial_reagents = "jenkem"
-
 /obj/item/reagent_containers/syringe/krokodil
 	name = "syringe (krokodil)"
 	desc = "Contains krokodil, a sketchy homemade opiate often used by disgruntled Cosmonauts.."
@@ -309,11 +308,11 @@
 		switch (mode)
 			if (S_DRAW)
 				if (!istype(target, /obj/item/reagent_containers))
-					boutput(user, "<span class='alert'>You can't fit [src]'s nozzle in that.</span>")
+					boutput(user, SPAN_ALERT("You can't fit [src]'s nozzle in that."))
 					return
 			if (S_INJECT)
 				if (!istype(target, /obj/item/reagent_containers/food) && !istype(target, /obj/item/reagent_containers/glass))
-					boutput(user, "<span class='alert'>You can't fit [src]'s nozzle in that.</span>")
+					boutput(user, SPAN_ALERT("You can't fit [src]'s nozzle in that."))
 					return
 		..()
 

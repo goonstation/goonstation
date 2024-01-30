@@ -62,7 +62,7 @@
 		if (gauntlet_controller.state != 0)
 			return
 		if (ticker.round_elapsed_ticks < 3000)
-			boutput(usr, "<span class='alert'>You may not initiate the Gauntlet before 5 minutes into the round.</span>")
+			boutput(usr, SPAN_ALERT("You may not initiate the Gauntlet before 5 minutes into the round."))
 			return
 		if (alert("Start the Gauntlet? No more players will be given admittance to the staging area!",, "Yes", "No") == "Yes")
 			if (gauntlet_controller.state != 0)
@@ -254,6 +254,12 @@
 							qdel(C)
 						else
 							live++
+					for (var/mob/living/critter/C in gauntlet)
+						if (isdead(C))
+							showswirl(get_turf(C))
+							qdel(C)
+						else
+							live++
 					if (!live)
 						finishWave()
 					for (var/mob/living/M in gauntlet)
@@ -295,6 +301,8 @@
 			for (var/obj/artifact/A in gauntlet)
 				qdel(A)
 			for (var/obj/critter/C in gauntlet)
+				qdel(C)
+			for (var/mob/living/critter/C in gauntlet)
 				qdel(C)
 			for (var/obj/machinery/bot/B in gauntlet)
 				qdel(B)
@@ -471,6 +479,8 @@
 				qdel(P)
 		for (var/obj/item/electronics/E in gauntlet)
 			qdel(E)
+		for(var/obj/item/material_piece/M in gauntlet)
+			qdel(M)
 
 		current_level++
 		current_waves.len = 0
@@ -561,10 +571,10 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		. = ..()
 		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
-	gauntlet
-		name = "The Gauntlet Arena"
-		has_camera = 1
-		cam_network = "Zeta"
+/obj/observable/gauntlet
+	name = "The Gauntlet Arena"
+	has_camera = 1
+	cam_network = "public"
 
 /datum/gauntletDrop
 	var/name = "Drop"
@@ -819,7 +829,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			else
 				for (var/mob/living/M in gauntlet_controller.gauntlet)
 					M.HealDamage("All", 5, 5)
-					//boutput(M, "<span class='notice'>A soothing wave of energy washes over you!</span>")
+					//boutput(M, SPAN_NOTICE("A soothing wave of energy washes over you!"))
 				counter = 10
 
 		tearDown()
@@ -866,7 +876,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 				M.bodytemperature = T0C + 120
 				if (prob(10))
 					if (!M.getStatusDuration("burning"))
-						boutput(M, "<span class='alert'>You spontaneously combust!</span>")
+						boutput(M, SPAN_ALERT("You spontaneously combust!"))
 					M.changeStatus("burning", 7 SECONDS)
 
 		tearDown()
@@ -893,7 +903,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			if (prob(20))
 				for (var/mob/living/M in gauntlet_controller.gauntlet)
 					M.TakeDamage("chest", 1, 0, 0, DAMAGE_CUT)
-					//boutput(M, "<span class='alert'>The void tears at you!</span>")
+					//boutput(M, SPAN_ALERT("The void tears at you!"))
 					// making the zone name a bit more obvious and making its spam chatbox less - ISN
 
 		tearDown()
@@ -1215,7 +1225,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Man Eater"
 		point_cost = 5
 		count = 2
-		types = list(/obj/critter/maneater)
+		types = list(/mob/living/critter/plant/maneater)
 
 	fallback
 		name = "Floating Eyes"

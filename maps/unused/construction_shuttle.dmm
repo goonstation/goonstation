@@ -76,25 +76,23 @@
 /area/shuttle/arrival/station)
 "am" = (
 /obj/rack,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "an" = (
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/machinery/power/rtg,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "ao" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
@@ -122,16 +120,12 @@
 "at" = (
 /obj/landmark/start/latejoin,
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "au" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -154,8 +148,6 @@
 "ay" = (
 /obj/machinery/door/unpowered/shuttle,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -177,11 +169,11 @@
 	},
 /area/shuttle/arrival/station)
 "aC" = (
-/obj/machinery/atmospherics/pipe/tank/air,
+/obj/machinery/atmospherics/unary/tank/air,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aD" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/securearea{
 	desc = "";
 	icon_state = "shock";
@@ -194,8 +186,6 @@
 /area/shuttle/arrival/station)
 "aE" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttle,
@@ -231,12 +221,10 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aK" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Purge Pump";
-	on = 1;
 	tag = "icon-intact_on (NORTH)";
 	target_pressure = 2000
 	},
@@ -273,7 +261,6 @@
 "aO" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
-	icon_state = "intact";
 	level = 2;
 	tag = "icon-intact (NORTHEAST)"
 	},
@@ -281,7 +268,6 @@
 /area/shuttle/arrival/station)
 "aP" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	icon_state = "manifold";
 	level = 2
 	},
 /turf/simulated/floor/shuttle,
@@ -289,7 +275,6 @@
 "aQ" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
-	icon_state = "intact";
 	level = 2;
 	tag = "icon-intact (NORTHWEST)"
 	},
@@ -376,8 +361,6 @@
 "bb" = (
 /obj/landmark/start/latejoin,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttle,
@@ -544,43 +527,34 @@
 "bz" = (
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /turf/simulated/floor/plating,
 /area/space)
 "bA" = (
 /obj/machinery/door/airlock/external,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bB" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bC" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bD" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,

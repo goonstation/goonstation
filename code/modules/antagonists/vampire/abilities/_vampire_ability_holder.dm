@@ -62,44 +62,11 @@
 
 ////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
 
-/atom/movable/screen/ability/topBar/vampire
-	clicked(params)
-		var/datum/targetable/vampire/spell = owner
-		var/datum/abilityHolder/holder = owner.holder
-
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-
-		if(params["shift"] && params["ctrl"])
-			if(owner.waiting_for_hotkey)
-				holder.cancel_action_binding()
-				return
-			else
-				owner.waiting_for_hotkey = 1
-				src.UpdateIcon()
-				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
-				return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr.targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (world.time < spell.last_cast)
-				return
-			owner.holder.owner.targeting_ability = owner
-			owner.holder.owner.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-		return
-
 /datum/abilityHolder/vampire
 	usesPoints = 1
 	regenRate = 0
 	tabName = "Vampire"
-	notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
+	notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
 	var/vamp_blood = 0
 	points = 0 // Replaces the old vamp_blood_remaining var.
 	var/vamp_blood_tracking = 1
@@ -140,6 +107,14 @@
 		.["Blood:"] = round(src.points)
 		.["Total:"] = round(src.vamp_blood)
 		return
+
+	onAttach(mob/to_whom)
+		..()
+		RegisterSignal(to_whom, COMSIG_MOB_FLIP, PROC_REF(launch_bat_orbiters))
+
+	onRemove(mob/from_who)
+		..()
+		UnregisterSignal(from_who, COMSIG_MOB_FLIP)
 
 	onLife(var/mult = 1)
 		..()
@@ -207,10 +182,10 @@
 			return
 
 		if (deduct > 1)
-			boutput(src.owner, "<span class='notice'>You used [deduct] units of blood, and have [src.points - deduct] remaining.</span>")
+			boutput(src.owner, SPAN_NOTICE("You used [deduct] units of blood, and have [src.points - deduct] remaining."))
 
 		else
-			boutput(src.owner, "<span class='notice'>You have accumulated [src.vamp_blood] units of blood and [src.points] left to use.</span>")
+			boutput(src.owner, SPAN_NOTICE("You have accumulated [src.vamp_blood] units of blood and [src.points] left to use."))
 
 		return
 
@@ -233,7 +208,7 @@
 
 			src.has_thermal = 1
 			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_THERMALVISION_MK2, src)
-			boutput(src.owner, "<span class='notice'><h3>Your vampiric vision has improved (thermal)!</h3></span>")
+			boutput(src.owner, SPAN_NOTICE("<h3>Your vampiric vision has improved (thermal)!</h3>"))
 
 			src.addAbility(/datum/targetable/vampire/mark_coffin)
 			src.addAbility(/datum/targetable/vampire/coffin_escape)
@@ -262,8 +237,8 @@
 
 			src.has_xray = 1
 			src.has_fullpower = 1
-			//boutput(src.owner, "<span class='notice'><h3>Your vampiric vision has improved (x-ray)!</h3></span>")
-			boutput(src.owner, "<span class='notice'><h3>You have attained full power and are now too powerful to be harmed or stopped by the chapel's aura.</h3></span>")
+			//boutput(src.owner, SPAN_NOTICE("<h3>Your vampiric vision has improved (x-ray)!</h3>"))
+			boutput(src.owner, SPAN_NOTICE("<h3>You have attained full power and are now too powerful to be harmed or stopped by the chapel's aura.</h3>"))
 
 		return
 
@@ -308,7 +283,7 @@
 			if (!M.mind && !M.client)
 				if (M.ghost && M.ghost.client && !M.ghost.mind.get_player().dnr)
 					var/mob/dead/ghost = M.ghost
-					ghost.show_text("<span class='red'>You feel yourself torn away from the afterlife and back into your body!</span>")
+					ghost.show_text(SPAN_ALERT("You feel yourself torn away from the afterlife and back into your body!"))
 					if(ghost.mind)
 						ghost.mind.transfer_to(M)
 					else if (ghost.client)
@@ -334,8 +309,8 @@
 
 			if (M.bioHolder && M.traitHolder.hasTrait("training_chaplain"))
 				if(ismob(owner))
-					boutput(owner, "<span class='alert'>Wait, this is a chaplain!!! <B>AGDFHSKFGBLDFGLHSFDGHDFGH</B></span>")
-					boutput(M, "<span class='notice'>Your divine protection saves you from enthrallment!</span>")
+					boutput(owner, SPAN_ALERT("Wait, this is a chaplain!!! <B>AGDFHSKFGBLDFGLHSFDGHDFGH</B>"))
+					boutput(M, SPAN_NOTICE("Your divine protection saves you from enthrallment!"))
 					owner.emote("scream")
 					owner.changeStatus("weakened", 5 SECONDS)
 					owner.TakeDamage("chest", 0, 30)
@@ -343,7 +318,7 @@
 
 			M.mind.add_subordinate_antagonist(ROLE_VAMPTHRALL, master = src)
 
-			boutput(owner, "<span class='notice'>[M] has been revived as your thrall.</span>")
+			boutput(owner, SPAN_NOTICE("[M] has been revived as your thrall."))
 			logTheThing(LOG_COMBAT, owner, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
 
 
@@ -373,40 +348,10 @@
 	var/not_when_in_an_object = TRUE
 	var/unlock_message = null
 
-	New()
-		var/atom/movable/screen/ability/topBar/vampire/B = new /atom/movable/screen/ability/topBar/vampire(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		B.name = src.name
-		B.desc = src.desc
-		src.object = B
-		return
-
 	onAttach(var/datum/abilityHolder/H)
 		..() // Start_on_cooldown check.
 		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
-		return
-
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/vampire()
-			object.icon = src.icon
-			object.owner = src
-		if (src.last_cast > world.time)
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
-			object.icon_state = src.icon_state + "_cd"
-		else
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt]"
-			object.icon_state = src.icon_state
+			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>"))
 		return
 
 	proc/incapacitation_check(var/stunned_only_is_okay = 0)
@@ -443,26 +388,26 @@
 		if(isobj(M)) //Exception for VampTEG and Sentient Objects...
 			return 1
 		if (src.not_when_in_an_object && !isturf(M.loc))
-			boutput(M, "<span class='alert'>You can't use this ability here.</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability here."))
 			return 0
 		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
+			boutput(M, SPAN_ALERT("You cannot use any powers in your current form."))
 			return 0
 
 		if (M.transforming)
-			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
+			boutput(M, SPAN_ALERT("You can't use any powers right now."))
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
 			return 0
 
 		if (istype(get_area(M), /area/station/chapel) && M.check_vampire_power(3) != 1 && !(M.job == "Chaplain"))
-			boutput(M, "<span class='alert'>Your powers do not work in this holy place!</span>")
+			boutput(M, SPAN_ALERT("Your powers do not work in this holy place!"))
 			return 0
 
 		return 1

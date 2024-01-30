@@ -100,29 +100,29 @@
 	if (isscrewingtool(W)) // To bolt to the floor
 		if (src.anchored == 0)
 			src.anchored = ANCHORED
-			playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
-			user.show_message("<span class='notice'>You bolt the display case to the floor.</span>")
+			playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
+			user.show_message(SPAN_NOTICE("You bolt the display case to the floor."))
 		else
 			src.anchored = UNANCHORED
-			playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
-			user.show_message("<span class='notice'>You unbolt the display case from the floor.</span>")
+			playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
+			user.show_message(SPAN_NOTICE("You unbolt the display case from the floor."))
 		return
 	else if (iswrenchingtool(W) && destroyed) // To disassemble when broken
-		boutput(user, "<span class='notice'>You begin to disassemble the broken display case.</span>")
+		boutput(user, SPAN_NOTICE("You begin to disassemble the broken display case."))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		var/turf/T = user.loc
 		sleep(2 SECONDS)
 		if ((user.loc == T && user.equipped() == W))
-			boutput("<span class='notice'>You disassemble the broken display case.</span>")
+			boutput(user, SPAN_NOTICE("You disassemble the broken display case."))
 			qdel(src)
 		return
 	else if (istype(W, /obj/item/sheet/glass) && destroyed) // To repair when broken
-		boutput(user, "<span class='notice'>You begin to repair the broken display case.</span>")
+		boutput(user, SPAN_NOTICE("You begin to repair the broken display case."))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		var/turf/T = user.loc
 		sleep(1.5 SECONDS)
 		if ((user.loc == T && user.equipped() == W))
-			user.show_message("<span class='notice'>You fix the broken display case.</span>")
+			user.show_message(SPAN_NOTICE("You fix the broken display case."))
 			var/obj/item/sheet/glass/G = W
 			G.change_stack_amount(-1)
 			src.set_density(1)
@@ -133,10 +133,10 @@
 		return
 	else if (displayed == null && !(destroyed)) // To put items inside when not broken
 		if (W.cant_drop)
-			boutput(user, "<span class='alert'>You can't put items that are attached to you in the display case!</span>")
+			boutput(user, SPAN_ALERT("You can't put items that are attached to you in the display case!"))
 			return
 		if (istype(W, /obj/item/grab))
-			boutput(user, "<span class='alert'>You can't put that in the display case!</span>")
+			boutput(user, SPAN_ALERT("You can't put that in the display case!"))
 			return
 		user.drop_item()
 		displayed = W
@@ -146,7 +146,7 @@
 		displayed.transform *= 0.8
 		desc = "A display case for antique possessions. There is \an [displayed.name] inside of it."
 		overlays += displayed
-		boutput(user, "<span class='notice'>You place the [W.name] in the display case.</span>")
+		boutput(user, SPAN_NOTICE("You place the [W.name] in the display case."))
 	else // When punched
 		user.lastattacked = src
 		attack_particle(user, src)
@@ -157,7 +157,7 @@
 
 /obj/displaycase/attack_hand(mob/user)
 	if (user.a_intent == INTENT_HARM)
-		user.visible_message("<span class='alert'>[user] kicks the display case.</span>")
+		user.visible_message(SPAN_ALERT("[user] kicks the display case."))
 		user.lastattacked = src
 		attack_particle(user, src)
 		src.health -= 2
@@ -169,7 +169,7 @@
 // high-quality materials, which will make the weapon more powerful (Convair880).
 /obj/item/captaingun
 	name = "antique laser gun"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "caplaser"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
@@ -203,19 +203,19 @@
 		if (src.repair_stage > 0)
 			switch (src.repair_stage)
 				if (1)
-					. += "<span class='notice'>The maintenance panel is open, revealing a largely empty circuit board.</span>"
+					. += SPAN_NOTICE("The maintenance panel is open, revealing a largely empty circuit board.")
 				if (2)
-					. += "<span class='notice'>The wiring has been replaced, but there's still an empty spot in the circuit board.</span>"
+					. += SPAN_NOTICE("The wiring has been replaced, but there's still an empty spot in the circuit board.")
 				if (3)
-					. += "<span class='notice'>A new coil has been inserted, but not secured yet.</span>"
+					. += SPAN_NOTICE("A new coil has been inserted, but not secured yet.")
 				if (4)
-					. += "<span class='notice'>The coil has been soldered into place, but there's nothing to focus the laser beam.</span>"
+					. += SPAN_NOTICE("The coil has been soldered into place, but there's nothing to focus the laser beam.")
 				if (5)
-					. += "<span class='notice'>A lens has been installed, but the control circuits aren't set up yet.</span>"
+					. += SPAN_NOTICE("A lens has been installed, but the control circuits aren't set up yet.")
 				if (6)
-					. += "<span class='notice'>The gun appears to be missing a power cell.</span>"
+					. += SPAN_NOTICE("The gun appears to be missing a power cell.")
 				if (7)
-					. += "<span class='notice'>Power cell installed. The maintenance panel is open.</span>"
+					. += SPAN_NOTICE("Power cell installed. The maintenance panel is open.")
 
 	attack()
 		..()
@@ -227,7 +227,7 @@
 		if (!src) return
 		if (src.stability <= 0)
 			if (user && ismob(user))
-				boutput(user, "<span class='alert'>The laser gun snaps in half!</span>")
+				boutput(user, SPAN_ALERT("The laser gun snaps in half!"))
 				user.u_equip(src)
 			qdel(src)
 		return
@@ -249,7 +249,7 @@
 				src.repair_stage = 1
 
 			else if (src.repair_stage == 7)
-				user.visible_message("<span class='notice'>[user] finishes repairing the [src.name].</span>", "<span class='notice'>You close the maintenance panel and power up the gun.</span>")
+				user.visible_message(SPAN_NOTICE("[user] finishes repairing the [src.name]."), SPAN_NOTICE("You close the maintenance panel and power up the gun."))
 
 				src.generate_properties(user) // Type of projectile(s) based on material quality.
 				var/obj/item/gun/energy/laser_gun/antique/L = new /obj/item/gun/energy/laser_gun/antique(get_turf(user))
@@ -275,77 +275,37 @@
 			if (src.repair_stage == 1)
 				var/obj/item/cable_coil/C = O
 				if (C.amount >= 10)
-					user.show_text("You begin to rewire the gun's circuit board...", "blue")
-					if (do_after(user, 3.5 SECONDS))
-						user.show_text("You rewire the circuit board.", "blue")
-						src.repair_stage = 2
-						if (C.material)
-							src.quality_counter += C.material.getQuality()
-					else
-						user.show_text("You were interrupted!", "red")
-						return
+					actions.start(new /datum/action/bar/icon/captaingun_assembly(src, C), user)
+					return
 				else
 					user.show_text("You need more wire than that.", "red")
 					return
 
 		else if (istype(O, /obj/item/coil/small))
 			if (src.repair_stage == 2)
-				user.show_text("You begin to install the coil...", "blue")
-				if (do_after(user, 3.5 SECONDS))
-					user.show_text("You install the coil.", "blue")
-					src.repair_stage = 3
-					if (O.material)
-						src.quality_counter += O.material.getQuality()
-					user.u_equip(O)
-					qdel(O)
-				else
-					user.show_text("You were interrupted!", "red")
-					return
+				actions.start(new /datum/action/bar/icon/captaingun_assembly(src, O), user)
+				return
 
 		else if (istype(O, /obj/item/electronics/soldering))
 			if (src.repair_stage == 3)
-				user.show_text("You begin to solder the coil into place...", "blue")
-				if (do_after(user, 3.5 SECONDS))
-					user.show_text("You solder the coil into place.", "blue")
-					src.repair_stage = 4
-				else
-					user.show_text("You were interrupted!", "red")
-					return
+				actions.start(new /datum/action/bar/icon/captaingun_assembly(src, O), user)
+				return
 
 		else if (istype(O, /obj/item/lens))
 			if (src.repair_stage == 4)
-				user.show_text("You begin to install the lens...", "blue")
-				if (do_after(user, 3.5 SECONDS))
-					user.show_text("You install the lens.", "blue")
-					src.repair_stage = 5
-					if (O.material)
-						src.quality_counter += O.material.getQuality()
-					user.u_equip(O)
-					qdel(O)
-				else
-					user.show_text("You were interrupted!", "red")
-					return
+				actions.start(new /datum/action/bar/icon/captaingun_assembly(src, O), user)
+				return
 
 		else if (ispulsingtool(O))
 			if (src.repair_stage == 5)
 				user.show_text("You initialize the control board.", "blue")
 				src.repair_stage = 6
+				return
 
 		else if (istype(O, /obj/item/ammo/power_cell))
 			if (src.repair_stage == 6)
-				var/obj/item/ammo/power_cell/P = O
-				user.show_text("You begin to install the power cell...", "blue")
-				if (do_after(user, 3.5 SECONDS))
-					user.show_text("You install the power cell.", "blue")
-					src.repair_stage = 7
-					user.u_equip(P)
-					P.set_loc(src)
-					src.our_cell = P
-					if (P.material)
-						src.quality_counter += P.material.getQuality()
-				else
-					user.show_text("You were interrupted!", "red")
-					return
+				actions.start(new /datum/action/bar/icon/captaingun_assembly(src, O), user)
+				return
 
 		else
 			..()
@@ -382,3 +342,88 @@
 
 		//DEBUG_MESSAGE("[src.name]'s quality_counter: [quality_counter]")
 		return
+
+/datum/action/bar/icon/captaingun_assembly
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+	duration = 3.5 SECONDS
+
+	var/obj/item/captaingun/gun
+	var/obj/item/stage_item
+
+	New(var/obj/item/captaingun/O, var/obj/item/I)
+		..()
+		if(O)
+			src.gun = O
+		if(I)
+			src.stage_item = I
+			src.icon = I.icon
+			src.icon_state = I.icon_state
+
+	onUpdate()
+		..()
+		if(QDELETED(src.gun) || QDELETED(src.stage_item) || BOUNDS_DIST(owner, gun) > 0 || BOUNDS_DIST(owner, src.stage_item) > 0)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if(istype(source) && stage_item != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+		switch(gun.repair_stage)
+			if(1)
+				boutput(owner, "<span class='notice'>You begin to rewire the gun's circuit board...</span>")
+			if(2)
+				boutput(owner, "<span class='notice'>You begin to install the coil...</span>")
+			if(3)
+				boutput(owner, "<span class='notice'>You begin to solder the coil into place...</span>")
+			if(4)
+				boutput(owner, "<span class='notice'>You begin to install the lens...</span>")
+			if(6)
+				boutput(owner, "<span class='notice'>You begin to install the power cell...</span>")
+
+	onEnd()
+		..()
+		var/mob/user = owner
+		switch(gun.repair_stage)
+			if(1)
+				var/obj/item/cable_coil/coil = src.stage_item
+				boutput(owner, "<span class='notice'>You rewire the circuit board.</span>")
+				gun.repair_stage = 2
+				if(coil.material)
+					gun.quality_counter += coil.material.getQuality()
+				coil.use(10)
+				return
+			if(2)
+				boutput(owner, "<span class='notice'>You install the coil.</span>")
+				gun.repair_stage = 3
+				if(stage_item.material)
+					gun.quality_counter += stage_item.material.getQuality()
+				user.u_equip(src.stage_item)
+				qdel(src.stage_item)
+				return
+			if(3)
+				boutput(owner, "<span class='notice'>You solder the coil into place.</span>")
+				gun.repair_stage = 4
+				return
+			if(4)
+				boutput(owner, "<span class='notice'>You install the lens.</span>")
+				gun.repair_stage = 5
+				if(stage_item.material)
+					gun.quality_counter += stage_item.material.getQuality()
+				user.u_equip(src.stage_item)
+				qdel(src.stage_item)
+				return
+			if(6)
+				var/obj/item/ammo/power_cell/cell = src.stage_item
+				boutput(owner, "<span class='notice'>You install the power cell.</span>")
+				gun.repair_stage = 7
+				user.u_equip(cell)
+				cell.set_loc(gun)
+				gun.our_cell = cell
+				if(cell.material)
+					gun.quality_counter += cell.material.getQuality()
+				return
+

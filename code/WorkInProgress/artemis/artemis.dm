@@ -1,4 +1,4 @@
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 
 #define ARTEMIS_ANIMATION_SPEED 2 // 2/10ths of a second. used to calculate various displacements
 #define ARTEMIS_MAX_R 951
@@ -105,7 +105,7 @@
 	var/bottom_x_offset = 57 // tile offset for duplicated bottom
 
 	var/obj/machinery/sim/vr_bed/flight_chair/controls
-	var/datum/movement_controller/artemis/controller
+	var/datum/movement_controller/artemis/movement_controller
 	var/datum/artemis_engine_controller/engines
 	var/controller_type = null
 
@@ -114,9 +114,9 @@
 		src.engines = new(src)
 		if(controller_type)
 			var/path = text2path("/datum/movement_controller/artemis/[controller_type]")
-			controller = new path(src)
+			movement_controller = new path(src)
 		else
-			controller = new(src)
+			movement_controller = new(src)
 		SubscribeToProcess()
 		src.background_ship_datum = new/datum/galactic_object/ship()
 		background_ship_datum.body_icon = src.icon
@@ -146,9 +146,11 @@
 		SPAWN(0)
 			do_process = 1
 			src.fast_process()
+		START_TRACKING
 
 	disposing()
 		UnsubscribeProcess()
+		STOP_TRACKING
 		..()
 
 	proc/SubscribeToProcess()
@@ -158,9 +160,6 @@
 	proc/UnsubscribeProcess()
 		if (src in processing_items)
 			processing_items.Remove(src)
-
-	get_movement_controller()
-		return controller
 
 	proc/engine_check()
 		. = engines.engine_check()
@@ -307,7 +306,7 @@
 			if(navigating && (G == src.navigation_target))
 				src.navigating = 0
 				if(my_pilot && (src.nav_arrow in my_pilot.client.images))
-					my_pilot.show_message("<span class='notice'>Navigation target reached.</span>")
+					my_pilot.show_message(SPAN_NOTICE("Navigation target reached."))
 					my_pilot.client.images -= src.nav_arrow
 
 			my_galactic_objects[map_body] = src.track_object(map_body) // feeds it the tracking arrow icon nom nom

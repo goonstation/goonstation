@@ -5,13 +5,12 @@
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "zolsoulgrey"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	density = 0
 	canmove = 0
 	blinded = 0
 	anchored = ANCHORED
 	alpha = 180
-	stat = 0
 	var/autofree = 0
 	var/firstfortune = 1
 	var/free = 0
@@ -27,6 +26,7 @@
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_GHOST
 		src.see_in_dark = SEE_DARK_FULL
+		src.flags |= UNCRUSHABLE
 
 	proc/addAllAbilities()
 		src.addAbility(/datum/targetable/zoldorfAbility/fortune)
@@ -136,7 +136,7 @@
 		if((target in range(0,src))&&(istype(target,/obj/item/reagent_containers/food/snacks/ectoplasm))&&(src.invisibility > INVIS_NONE))
 			if(src.emoting)
 				return
-			src.visible_message("<span class='notice'><b>[src.name] rolls around in the ectoplasm, making their soul visible!</b></span>")
+			src.visible_message(SPAN_NOTICE("<b>[src.name] rolls around in the ectoplasm, making their soul visible!</b>"))
 			if (prob(50))
 				animate_spin(src, "R", 1, 0)
 			else
@@ -169,7 +169,7 @@
 	Move(NewLoc, direct) //just a copy paste from ghost move // YEAH IT SURE FUCKING IS
 		if(!canmove) return
 
-		if (NewLoc && isrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
+		if (!can_ghost_be_here(src, NewLoc))
 			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (OS)
 				src.set_loc(OS)
@@ -262,7 +262,7 @@
 				src.emoting = 1
 				soulcache = src.icon
 				if(!src.invisibility)
-					src.visible_message("<span class='alert'><b>The ectoplasm falls off! Oh no!</b></span>")
+					src.visible_message(SPAN_ALERT("<b>The ectoplasm falls off! Oh no!</b>"))
 					APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 					src.ClearAllOverlays()
 					var/obj/item/reagent_containers/food/snacks/ectoplasm/e = new /obj/item/reagent_containers/food/snacks/ectoplasm
@@ -301,11 +301,11 @@
 			if(src.homebooth)
 				src.set_loc(homebooth)
 			else
-				src.visible_message("<span class='alert'><b>Poof!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>Poof!</b>"))
 				src.gib(1)
 				return
 		var/obj/machinery/playerzoldorf/pz = src.loc
-		src.visible_message("<span class='alert'><b>Poof!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>Poof!</b>"))
 		src.free()
 		src.set_loc(get_turf(src.loc))
 		pz.remove_simple_light("zoldorf")

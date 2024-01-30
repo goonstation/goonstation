@@ -35,11 +35,11 @@
 		else
 			src.headset = new /obj/item/device/radio/headset(H)
 			if (!H.r_store)
-				H.equip_if_possible(src.headset, H.slot_r_store)
+				H.equip_if_possible(src.headset, SLOT_R_STORE)
 			else if (!H.l_store)
-				H.equip_if_possible(src.headset, H.slot_l_store)
+				H.equip_if_possible(src.headset, SLOT_L_STORE)
 			else if (H.back?.storage && !H.back.storage.is_full())
-				H.equip_if_possible(src.headset, H.slot_in_backpack)
+				H.equip_if_possible(src.headset, SLOT_IN_BACKPACK)
 			else
 				H.put_in_hand_or_drop(src.headset)
 
@@ -50,9 +50,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(src.gang)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()
@@ -66,20 +65,33 @@
 
 	announce()
 		. = ..()
-		boutput(src.owner.current, "<span class='alert'>You are now a member of [src.gang.gang_name]!</span>")
-		boutput(src.owner.current, "<span class='alert'>Your headset has been tuned to your gang's frequency. Prefix a message with :z to communicate on this channel.</span>")
-		boutput(src.owner.current, "<span class='alert'>Your boss is denoted by the blue G and your fellow gang members are denoted by the red G! Work together and do some crime!</span>")
-		boutput(src.owner.current, "<span class='alert'>You are free to harm anyone who isn't in your gang, but be careful, they can do the same to you!</span>")
-		boutput(src.owner.current, "<span class='alert'>You should only use bombs if you have a good reason to, and also run any bombings past your gang!</span>")
-		boutput(src.owner.current, "<span class='alert'>Capture areas for your gang by using spraypaint on other gangs' tags (or on any turf if the area is unclaimed).</span>")
-		boutput(src.owner.current, "<span class='alert'>You can get spraypaint, an outfit, and a gang headset from your locker.</span>")
-		boutput(src.owner.current, "<span class='alert'>Your gang will earn points for cash, drugs, and guns stored in your locker.</span>")
-		boutput(src.owner.current, "<span class='alert'>Make sure to defend your locker, as other gangs can break it open to loot it!</span>")
+		var/gang_name = src.gang.gang_name
+		if(gang_name == initial(src.gang.gang_name))
+			gang_name = "a yet to be named gang"
+		boutput(src.owner.current, SPAN_ALERT("You are now a member of [gang_name]!"))
+		boutput(src.owner.current, SPAN_ALERT("Your headset has been tuned to your gang's frequency. Prefix a message with :z to communicate on this channel."))
+		boutput(src.owner.current, SPAN_ALERT("Your boss is denoted by the blue G and your fellow gang members are denoted by the red G! Work together and do some crime!"))
+		boutput(src.owner.current, SPAN_ALERT("You are free to harm anyone who isn't in your gang, but be careful, they can do the same to you!"))
+		boutput(src.owner.current, SPAN_ALERT("You should only use bombs if you have a good reason to, and also run any bombings past your gang!"))
+		boutput(src.owner.current, SPAN_ALERT("Capture areas for your gang by using spraypaint on other gangs' tags (or on any turf if the area is unclaimed)."))
+		boutput(src.owner.current, SPAN_ALERT("You can get spraypaint, an outfit, and a gang headset from your locker."))
+		boutput(src.owner.current, SPAN_ALERT("Your gang will earn points for cash, drugs, and guns stored in your locker."))
+		boutput(src.owner.current, SPAN_ALERT("Make sure to defend your locker, as other gangs can break it open to loot it!"))
 		if(src.gang.base)
-			boutput(src.owner.current, "<span class='alert'>Your gang's base is located in [src.gang.base], along with your locker.</span>")
+			boutput(src.owner.current, SPAN_ALERT("Your gang's base is located in [src.gang.base], along with your locker."))
 		else
-			boutput(src.owner.current, "<span class='alert'>Your gang doesn't have a base or locker yet.</span>")
+			boutput(src.owner.current, SPAN_ALERT("Your gang doesn't have a base or locker yet."))
 
-	// The gang leader antagonist datum will announce information pertaining to gang members.
-	handle_round_end()
-		return
+		boutput(src.owner.current, SPAN_ALERT("Your gang leader is <b>[src.gang.leader.current.real_name]</b> as <b>[src.gang.leader.current.job]</b>."))
+		var/list/member_strings = list()
+		for(var/datum/mind/member in src.gang.members)
+			if(!member.current)
+				continue
+			if(member == src.gang.leader || member == src.owner)
+				continue
+			var/job = member.current?.job
+			member_strings += "[member.current.real_name] as [job]"
+		if(length(member_strings))
+			boutput(src.owner.current, SPAN_ALERT("Other gang members of your gang are:<br>\t[jointext(member_strings, "<br>\t")]"))
+		else
+			boutput(src.owner.current, SPAN_ALERT("Seems like it's only you and the gang leader."))

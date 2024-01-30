@@ -111,6 +111,19 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			"sortAsc" = src.sortAsc,
 		)
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj in seeds)
+			seeds -= Obj
+		if(Obj in extractables)
+			extractables -= Obj
+		if(Obj == inserted)
+			inserted = null
+		if(Obj == splicing1)
+			splicing1 = null
+		if(Obj == splicing2)
+			splicing2 = null
+
 	ui_interact(mob/user, datum/tgui/ui)
 		if (src.mode == "overview" && src.inserted)
 			SEND_SIGNAL(src.inserted.reagents, COMSIG_REAGENTS_ANALYZED, user)
@@ -132,7 +145,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			if("ejectbeaker")
 				var/obj/item/I = src.inserted
 				if (!I)
-					boutput(usr, "<span class='alert'>No receptacle found to eject.</span>")
+					boutput(usr, SPAN_ALERT("No receptacle found to eject."))
 				else
 					if (I.cant_drop) // cyborg/item arms
 						src.inserted = null
@@ -150,12 +163,12 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 						boutput(ui.user, "This machine does not accept containers from robots!")
 						return
 					if(src.inserted)
-						boutput(ui.user, "<span class='alert'>A container is already loaded into the machine.</span>")
+						boutput(ui.user, SPAN_ALERT("A container is already loaded into the machine."))
 						return
 					src.inserted =  inserting
 					ui.user.drop_item()
 					inserting.set_loc(src)
-					boutput(ui.user, "<span class='notice'>You add [inserted] to the machine!</span>")
+					boutput(ui.user, SPAN_NOTICE("You add [inserted] to the machine!"))
 					update_static_data(ui.user, ui)
 
 			if("ejectseeds")
@@ -199,18 +212,18 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				if (istype(I,/obj/item/seed/))
 					var/obj/item/seed/S = I
 					if (!istype(S.planttype,/datum/plant/) || !istype(S.plantgenes,/datum/plantgenes/))
-						boutput(ui.user, "<span class='alert'>Genetic structure of seed corrupted. Cannot scan.</span>")
+						boutput(ui.user, SPAN_ALERT("Genetic structure of seed corrupted. Cannot scan."))
 					else
 						HYPgeneticanalysis(ui.user,S,S.planttype,S.plantgenes)
 
 				else if (istype(I,/obj/item/reagent_containers/food/snacks/plant/))
 					var/obj/item/reagent_containers/food/snacks/plant/P = I
 					if (!istype(P.planttype,/datum/plant/) || !istype(P.plantgenes,/datum/plantgenes/))
-						boutput(ui.user, "<span class='alert'>Genetic structure of item corrupted. Cannot scan.</span>")
+						boutput(ui.user, SPAN_ALERT("Genetic structure of item corrupted. Cannot scan."))
 					else
 						HYPgeneticanalysis(ui.user,P,P.planttype,P.plantgenes)
 				else
-					boutput(ui.user, "<span class='alert'>Item cannot be scanned.</span>")
+					boutput(ui.user, SPAN_ALERT("Item cannot be scanned."))
 
 			if("outputmode")
 				src.seedoutput = !src.seedoutput
@@ -240,9 +253,9 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 						give = 0
 
 					if (!give)
-						boutput(ui.user, "<span class='alert'>No viable seeds found in [I].</span>")
+						boutput(ui.user, SPAN_ALERT("No viable seeds found in [I]."))
 					else
-						boutput(ui.user, "<span class='notice'>Extracted [give] seeds from [I].</span>")
+						boutput(ui.user, SPAN_NOTICE("Extracted [give] seeds from [I]."))
 						while (give > 0)
 							var/obj/item/seed/S
 							if (stored.unique_seed) S = new stored.unique_seed(src)
@@ -281,10 +294,10 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					qdel(I)
 					update_static_data(ui.user, ui)
 				else
-					boutput(ui.user, "<span class='alert'>This item is not viable extraction produce.</span>")
+					boutput(ui.user, SPAN_ALERT("This item is not viable extraction produce."))
 
 			if("splice_select")
-				playsound(src, 'sound/machines/keypress.ogg', 50, 1)
+				playsound(src, 'sound/machines/keypress.ogg', 50, TRUE)
 				var/obj/item/I = locate(params["splice_select_ref"]) in src
 				if (!istype(I))
 					return
@@ -305,10 +318,10 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				if (!istype(S))
 					return
 				if (!src.inserted)
-					boutput(ui.user, "<span class='alert'>No reagent container available for infusions.</span>")
+					boutput(ui.user, SPAN_ALERT("No reagent container available for infusions."))
 				else
 					if (src.inserted.reagents.total_volume < 10)
-						boutput(ui.user, "<span class='alert'>You require at least ten units of a reagent to infuse a seed.</span>")
+						boutput(ui.user, SPAN_ALERT("You require at least ten units of a reagent to infuse a seed."))
 					else
 						var/list/usable_reagents = list()
 						var/list/usable_reagents_names = list()
@@ -321,7 +334,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 								usable_reagents_names += capitalize(current_reagent.name)
 
 						if (length(usable_reagents) < 1)
-							boutput(ui.user, "<span class='alert'>You require at least ten units of a reagent to infuse a seed.</span>")
+							boutput(ui.user, SPAN_ALERT("You require at least ten units of a reagent to infuse a seed."))
 						else
 							var/requested = "All"
 							if(length(usable_reagents) > 1)
@@ -334,22 +347,26 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 									if(lowertext(R.name) != lowertext(requested))
 										usable_reagents -= R
 							for(var/datum/reagent/R in usable_reagents)
+								if(R.volume < 10)
+									playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+									boutput(usr, SPAN_ALERT("ERROR: Not enough reagent."))
+									break
 								switch(S.HYPinfusionS(R.id,src))
 									if (1)
-										playsound(src, 'sound/machines/seed_destroyed.ogg', 50, 1)
-										boutput(usr, "<span class='alert'>ERROR: Seed has been destroyed.</span>")
+										playsound(src, 'sound/machines/seed_destroyed.ogg', 50, TRUE)
+										boutput(usr, SPAN_ALERT("ERROR: Seed has been destroyed."))
 										break
 									if (2)
-										playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
-										boutput(usr, "<span class='alert'>ERROR: Reagent lost.</span>")
+										playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+										boutput(usr, SPAN_ALERT("ERROR: Reagent lost."))
 										break
 									if (3)
-										playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
-										boutput(usr, "<span class='alert'>ERROR: Unknown error. Please try again.</span>")
+										playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+										boutput(usr, SPAN_ALERT("ERROR: Unknown error. Please try again."))
 										break
 									else
-										playsound(src, 'sound/effects/zzzt.ogg', 50, 1)
-										boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
+										playsound(src, 'sound/effects/zzzt.ogg', 50, TRUE)
+										boutput(usr, SPAN_NOTICE("Infusion of [R.name] successful."))
 								src.inserted.reagents.remove_reagent(R.id,10)
 					update_static_data(ui.user, ui)
 
@@ -479,8 +496,8 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 							checked_strain.on_passing(DNA)
 							checked_strain.changes_after_splicing(DNA)
 
-					boutput(usr, "<span class='notice'>Splice successful.</span>")
-					playsound(src, 'sound/machines/ping.ogg', 50, 1)
+					boutput(usr, SPAN_NOTICE("Splice successful."))
+					playsound(src, 'sound/machines/ping.ogg', 50, TRUE)
 					//0 xp for a 100% splice, 4 xp for a 10% splice
 					JOB_XP(usr, "Botanist", clamp(round((100 - splice_chance) / 20), 0, 4))
 					if (!src.seedoutput) src.seeds.Add(S)
@@ -488,8 +505,8 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 
 				else
 					// It fucked up - we don't need to do anything else other than tell the user
-					boutput(usr, "<span class='alert'>Splice failed.</span>")
-					playsound(src, 'sound/machines/seed_destroyed.ogg', 50, 1)
+					boutput(usr, SPAN_ALERT("Splice failed."))
+					playsound(src, 'sound/machines/seed_destroyed.ogg', 50, TRUE)
 
 				// Now get rid of the old seeds and go back to square one
 				src.seeds.Remove(seed1)
@@ -506,12 +523,12 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 	attackby(var/obj/item/W, var/mob/user)
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
 			if(src.inserted)
-				boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
+				boutput(user, SPAN_ALERT("A container is already loaded into the machine."))
 				return
 			src.inserted =  W
 			user.drop_item()
 			W.set_loc(src)
-			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
+			boutput(user, SPAN_NOTICE("You add [W] to the machine!"))
 			for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
 				if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 					update_static_data(ui.user, ui)
@@ -519,7 +536,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 
 
 		else if(istype(W, /obj/item/reagent_containers/food/snacks/plant/) || istype(W, /obj/item/seed/))
-			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
+			boutput(user, SPAN_NOTICE("You add [W] to the machine!"))
 			user.u_equip(W)
 			W.set_loc(src)
 			if (istype(W, /obj/item/seed/)) src.seeds += W
@@ -548,9 +565,9 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 						loadcount++
 						continue
 				if (loadcount)
-					boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
+					boutput(user, SPAN_NOTICE("[loadcount] items were loaded from the satchel!"))
 				else
-					boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
+					boutput(user, SPAN_ALERT("No items were loaded from the satchel!"))
 				S.UpdateIcon()
 				S.tooltip_rebuild = 1
 				for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
@@ -569,7 +586,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O,/obj/item/satchel/hydro))
 			return src.Attackby(O, user)
 		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/seed/))
-			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
+			user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing [O] into [src]!"))
 			var/itemtype = O.type
 			var/staystill = user.loc
 			for(var/obj/item/P in view(1,user))
@@ -577,15 +594,15 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				if (P.type != itemtype) continue
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 30, 1)
 				if (istype(O, /obj/item/seed/))
-					src.seeds.Add(P)
+					src.seeds |= P
 				else
-					src.extractables.Add(P)
+					src.extractables |= P
 				if (P.loc == user)
 					user.u_equip(P)
 					P.dropped(user)
 				P.set_loc(src)
 				sleep(0.3 SECONDS)
-			boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
+			boutput(user, SPAN_NOTICE("You finish stuffing [O] into [src]!"))
 			for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
 				if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 					update_static_data(ui.user, ui)
@@ -675,241 +692,6 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 		if(Obj == src.inserted)
 			src.inserted = null
 			src.updateUsrDialog()
-
-////// Reagent Extractor
-
-TYPEINFO(/obj/submachine/chem_extractor)
-	mats = 6
-
-/obj/submachine/chem_extractor
-	name = "reagent extractor"
-	desc = "A machine which can extract reagents from matter. Has a slot for a beaker and a chute to put things into."
-	density = 1
-	anchored = ANCHORED
-	event_handler_flags = NO_MOUSEDROP_QOL
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "reex-off"
-	flags = NOSPLASH | TGUI_INTERACTIVE
-	var/mode = "overview"
-	var/autoextract = FALSE
-	var/nextingredientkey = 0
-	var/obj/item/reagent_containers/glass/extract_to = null
-	var/obj/item/reagent_containers/glass/inserted = null
-	var/obj/item/reagent_containers/glass/storage_tank_1 = null
-	var/obj/item/reagent_containers/glass/storage_tank_2 = null
-	var/list/ingredients = list()
-	var/list/allowed = list(/obj/item/reagent_containers/food/fish/, /obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/clothing/head/flower/,/obj/item/seashell)
-
-	New()
-		..()
-		src.storage_tank_1 = new /obj/item/reagent_containers/glass/beaker/extractor_tank(src)
-		src.storage_tank_2 = new /obj/item/reagent_containers/glass/beaker/extractor_tank(src)
-		var/count = 1
-		for (var/obj/item/reagent_containers/glass/beaker/extractor_tank/ST in src.contents)
-			ST.name = "Storage Tank [count]"
-			count++
-		AddComponent(/datum/component/transfer_input/quickloading, allowed, "tryLoading")
-		AddComponent(/datum/component/transfer_output)
-
-	attack_ai(var/mob/user as mob)
-		return attack_hand(user)
-
-	ui_interact(mob/user, datum/tgui/ui)
-		remove_distant_beaker()
-		if (src.inserted)
-			SEND_SIGNAL(src.inserted.reagents, COMSIG_REAGENTS_ANALYZED, user)
-		ui = tgui_process.try_update_ui(user, src, ui)
-		if(!ui)
-			ui = new(user, src, "ReagentExtractor", src.name)
-			ui.open()
-
-	ui_data(mob/user)
-		. = list()
-		var/list/containers = src.getContainers()
-
-		var/list/containersData = list()
-		// Container data
-		for(var/container_id in containers)
-			var/obj/item/reagent_containers/thisContainer = containers[container_id]
-			if (!thisContainer)
-				continue
-			containersData[container_id] = ui_describe_reagents(thisContainer)
-			containersData[container_id]["selected"] = src.extract_to == thisContainer
-			containersData[container_id]["id"] = container_id
-
-		.["containersData"] = containersData
-
-		var/list/ingredientsData = list()
-		// Ingredient/Extractable data
-		for(var/ingredient_id in src.ingredients)
-			var/obj/item/thisIngredient = src.ingredients[ingredient_id]
-			if(thisIngredient)
-				var/list/thisIngredientData = list(
-					name = thisIngredient.name,
-					id = ingredient_id
-				)
-				ingredientsData += list(thisIngredientData)
-
-		.["ingredientsData"] = ingredientsData
-
-		.["autoextract"] = src.autoextract
-
-
-
-	ui_act(action, params)
-		. = ..()
-		if(.)
-			return
-		remove_distant_beaker()
-		var/list/containers = src.getContainers()
-		switch(action)
-			if("ejectcontainer")
-				var/obj/item/I = src.inserted
-				if (!I)
-					return
-				if(src.inserted.loc == src)
-					TRANSFER_OR_DROP(src, I) // causes Exited proc to be called
-					usr.put_in_hand_or_eject(I)
-				if (I == src.extract_to) src.extract_to = null
-				src.inserted = null
-				. = TRUE
-			if("insertcontainer")
-				if (src.inserted)
-					return
-				var/obj/item/inserting = usr.equipped()
-				if(istype(inserting, /obj/item/reagent_containers/glass/) || istype(inserting, /obj/item/reagent_containers/food/drinks/))
-					tryInsert(inserting, usr)
-					. = TRUE
-			if("ejectingredient")
-				var/id = params["ingredient_id"]
-				var/obj/item/ingredient = src.ingredients[id]
-				if (istype(ingredient))
-					src.ingredients.Remove(id)
-					TRANSFER_OR_DROP(src, ingredient)
-					. = TRUE
-			if("autoextract")
-				src.autoextract = !src.autoextract
-				. = TRUE
-			if("flush_reagent")
-				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
-				var/id = params["reagent_id"]
-				if (target?.reagents)
-					target.reagents.remove_reagent(id, 500)
-					. = TRUE
-			if("isolate")
-				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
-				var/id = params["reagent_id"]
-				if (target?.reagents)
-					target.reagents.isolate_reagent(id)
-					. = TRUE
-			if("flush")
-				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
-				if (target)
-					target.reagents.clear_reagents()
-					. = TRUE
-			if("extractto")
-				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
-				if (target)
-					src.extract_to = target
-					. = TRUE
-			if("extractingredient")
-				if (!src.extract_to || src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
-					return
-				var/id = params["ingredient_id"]
-				var/obj/item/ingredient = src.ingredients[id]
-				if (!istype(ingredient) || !ingredient.reagents)
-					return
-				src.doExtract(ingredient)
-				src.ingredients.Remove(id)
-				qdel(ingredient)
-				. = TRUE
-			if("chemtransfer")
-				var/obj/item/reagent_containers/glass/from = containers[params["container_id"]]
-				var/obj/item/reagent_containers/glass/target = src.extract_to
-				if (from?.reagents.total_volume && target && from != target)
-					from.reagents.trans_to(target, clamp(params["amount"], 1, 500))
-					. = TRUE
-		src.UpdateIcon()
-
-	attackby(var/obj/item/W, var/mob/user)
-		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
-			tryInsert(W, user)
-
-		..()
-
-	proc/remove_distant_beaker()
-		// borgs and people with item arms don't insert the beaker into the machine itself
-		// but whenever something would happen to the dispenser and the beaker is far it should disappear
-		if(src.inserted && BOUNDS_DIST(src.inserted, src) > 0)
-			if (src.inserted == src.extract_to) src.extract_to = null
-			src.inserted = null
-			src.UpdateIcon()
-
-	proc/tryInsert(var/obj/item/W, var/mob/user)
-		remove_distant_beaker()
-
-		if(BOUNDS_DIST(user, src) > 0) // prevent message from appearing in case a borg inserts from afar
-			return
-
-		if(src.inserted)
-			boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
-			return
-		src.inserted =  W
-
-		if(!W.cant_drop)
-			user.drop_item()
-			if(!QDELETED(W))
-				W.set_loc(src)
-		if(QDELETED(W))
-			W = null
-		else
-			if(!src.extract_to) src.extract_to = W
-			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
-		src.ui_interact(user)
-
-	Exited(Obj, newloc)
-		if(Obj == src.inserted)
-			src.inserted = null
-			tgui_process.update_uis(src)
-
-/obj/submachine/chem_extractor/proc/getContainers()
-	. = list(
-		inserted = src.inserted,
-		storage_tank_1 = src.storage_tank_1,
-		storage_tank_2 = src.storage_tank_2
-	)
-
-/obj/submachine/chem_extractor/update_icon()
-	if (src.ingredients.len)
-		src.icon_state = "reex-on"
-	else
-		src.icon_state = "reex-off"
-
-/obj/submachine/chem_extractor/proc/doExtract(atom/movable/AM)
-	// Welp -- we don't want anyone extracting these. They'll probably
-	// feed them to monkeys and then exsanguinate them trying to get at the chemicals.
-	if (istype(AM, /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor))
-		src.extract_to.reagents.add_reagent("sugar", 50)
-		return
-	AM.reagents.trans_to(src.extract_to, AM.reagents.total_volume)
-	qdel(AM)
-	src.UpdateIcon()
-
-/obj/submachine/chem_extractor/proc/tryLoading(atom/movable/incoming)
-	var/can_autoextract = src.autoextract && src.extract_to
-	if (can_autoextract && src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
-		playsound(src, 'sound/machines/chime.ogg', 10, 1)
-		src.visible_message("<span class='alert'>[src]'s tank over-fill alarm burps!</span>")
-		can_autoextract = FALSE
-
-	if (can_autoextract)
-		doExtract(incoming)
-	else
-		src.ingredients["[nextingredientkey++]"] = incoming
-		tgui_process.update_uis(src)
-		src.UpdateIcon()
-
 
 TYPEINFO(/obj/submachine/seed_vendor)
 	mats = 6
@@ -1053,7 +835,7 @@ TYPEINFO(/obj/submachine/seed_vendor)
 
 	Topic(href, href_list)
 		if(BOUNDS_DIST(usr, src) > 0 && !issilicon(usr) && !isAI(usr))
-			boutput(usr, "<span class='alert'>You need to be closer to the vendor to do that!</span>")
+			boutput(usr, SPAN_ALERT("You need to be closer to the vendor to do that!"))
 			return
 
 		if ((href_list["cutwire"]) && (src.panelopen || isAI(usr)))
@@ -1079,7 +861,7 @@ TYPEINFO(/obj/submachine/seed_vendor)
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.hacked)
 			if(user)
-				boutput(user, "<span class='notice'>You disable the [src]'s product locks!</span>")
+				boutput(user, SPAN_NOTICE("You disable the [src]'s product locks!"))
 			src.hacked = 1
 			src.name = "Feed Sabricator"
 			update_static_data(user)
@@ -1165,7 +947,7 @@ TYPEINFO(/obj/submachine/seed_manipulator/kudzu)
 		var/turf/T = get_turf(src)
 		for (var/obj/O in seeds)
 			O.set_loc(T)
-		src.visible_message("<span class='alert'>All the seeds spill out of [src]!</span>")
+		src.visible_message(SPAN_ALERT("All the seeds spill out of [src]!"))
 		..()
 	attack_ai(var/mob/user as mob)
 		return 0
@@ -1174,7 +956,7 @@ TYPEINFO(/obj/submachine/seed_manipulator/kudzu)
 		if (iskudzuman(user))
 			..()
 		else
-			boutput(user, "<span class='notice'>You stare at the bit that looks most like a screen, but you can't make heads or tails of what it's saying.!</span>")
+			boutput(user, SPAN_NOTICE("You stare at the bit that looks most like a screen, but you can't make heads or tails of what it's saying.!"))
 
 	//only kudzumen can understand it.
 	attackby(var/obj/item/W, var/mob/user)
@@ -1188,9 +970,9 @@ TYPEINFO(/obj/submachine/seed_manipulator/kudzu)
 				return
 
 			if (prob(40))
-				user.visible_message("<span class='alert'>[user] savagely attacks [src] with [W]!</span>")
+				user.visible_message(SPAN_ALERT("[user] savagely attacks [src] with [W]!"))
 			else
-				user.visible_message("<span class='alert'>[user] savagely attacks [src] with [W], destroying it!</span>")
+				user.visible_message(SPAN_ALERT("[user] savagely attacks [src] with [W], destroying it!"))
 				qdel(src)
 				return
 		..()

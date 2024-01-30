@@ -3,9 +3,10 @@
 	organ_name = "appendix"
 	organ_holder_name = "appendix"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 3
 	icon_state = "appendix"
 	failure_disease = /datum/ailment/disease/appendicitis
+	surgery_flags = SURGERY_SNIPPING
+	region = ABDOMINAL
 
 	on_life(var/mult = 1)
 		if (!..())
@@ -34,7 +35,7 @@ TYPEINFO(/obj/item/organ/appendix/cyber)
 	// item_state = "cyber-"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
-	made_from = "pharosium"
+	default_material = "pharosium"
 	edible = 0
 
 	//A bad version of the robutsec... For now.
@@ -71,4 +72,4 @@ TYPEINFO(/obj/item/organ/appendix/cyber)
 			#ifdef CREATE_PATHOGENS
 			add_pathogens(donor, 30) //oh no
 			#endif
-			boutput(donor, "<span class='alert'>Your appendix has burst! It has given you medical help... though you might want to see a doctor very soon.</span>")
+			boutput(donor, SPAN_ALERT("Your appendix has burst! It has given you medical help... though you might want to see a doctor very soon."))

@@ -26,9 +26,9 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 				var/turf/L = locate(T.x+x, T.y+y, T.z)
 
 				var/area/map_gen/planet/P = get_area(L)
-				if(L?.loc && !(istype(P) && P.allow_prefab))
+				if(L?.loc && !istype(P, /area/space) && !(istype(P) && P.allow_prefab))
 					return
-				if(T.density)
+				if(L.density)
 					return
 
 		var/area_type = get_area(T)
@@ -55,13 +55,28 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 	proc/convertSpace(turf/start, prefabSizeX, prefabSizeY, area/prev_area)
 		//var/list/areas_to_revert = list(/area/noGenerate, /area/allowGenerate)
 		var/child_path = "[prev_area.type]/no_prefab"
+		if(istype(prev_area, /area/space))
+			child_path = prev_area.type
+
 		var/list/turf/turfs = block(locate(start.x, start.y, start.z), locate(start.x+prefabSizeX-1, start.y+prefabSizeY-1, start.z))
 		for(var/turf/T in turfs)
 			//if( T.loc.type in areas_to_revert)
 			if(istype(T.loc, /area/noGenerate))
-				new child_path(T)
+				var/area/map_gen/planet/planet_area = prev_area
+				if(istype(planet_area) && planet_area.no_prefab_ref)
+					planet_area.no_prefab_ref.contents += T
+				else
+					new child_path(T)
 			else if(istype(T.loc, /area/allowGenerate))
-				new prev_area.type(T)
+				prev_area.contents += T
+				//new prev_area.type(T)
+			else if(prev_area.area_parallax_render_source_group)
+				var/area/our_area = T.loc
+				if(!our_area.area_parallax_render_source_group)
+					our_area.area_parallax_render_source_group = prev_area.area_parallax_render_source_group
+					our_area.occlude_foreground_parallax_layers = TRUE
+				if (our_area.occlude_foreground_parallax_layers)
+					T.update_parallax_occlusion_overlay()
 
 	bear_trap
 		maxNum = 1
@@ -197,28 +212,28 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 
 	illegal_still
 		maxNum = 1
-		probability = 10
+		probability = 15
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_illegal_still.dmm"
 		prefabSizeX = 23
 		prefabSizeY = 18
 
 	random_ship1
 		maxNum = 1
-		probability = 10
+		probability = 20
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_random_ship1.dmm"
 		prefabSizeX = 6
 		prefabSizeY = 6
 
 	random_crap1
 		maxNum = 1
-		probability = 10
+		probability = 20
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_random_crap1.dmm"
 		prefabSizeX = 6
 		prefabSizeY = 3
 
 	random_crap2
 		maxNum = 1
-		probability = 10
+		probability = 20
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_random_crap2.dmm"
 		prefabSizeX = 11
 		prefabSizeY = 7
@@ -274,14 +289,28 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 
 	supply_outpost_defended
 		maxNum = 1
-		probability = 10
+		probability = 15
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_supply_outpost_defended.dmm"
 		prefabSizeX = 16
 		prefabSizeY = 15
 
 	old_shack
 		maxNum = 1
-		probability = 10
+		probability = 15
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_old_shack.dmm"
 		prefabSizeX = 10
 		prefabSizeY = 11
+
+	shipwreck_survivor1
+		maxNum = 1
+		probability = 15
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_shipwreck_survivor1.dmm"
+		prefabSizeX = 19
+		prefabSizeY = 18
+
+	hidden_research_facility
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_hidden_research_facility.dmm"
+		prefabSizeX = 23
+		prefabSizeY = 32

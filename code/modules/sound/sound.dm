@@ -61,7 +61,7 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
 
 //default volumes
-var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
+var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 //volumous hair with l'orial paris
 /client/var/list/volumes
@@ -101,7 +101,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	var/original_volume = volumes[channel + 1]
 	if(original_volume == 0)
 		original_volume = 1 // let's be safe and try to avoid division by zero
-	volume = clamp(volume, 0, 1)
+	volume = clamp(volume, 0, 2)
 	volumes[channel + 1] = volume
 
 	cloud_put("audio_volume", json_encode(volumes))
@@ -111,28 +111,27 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 		for( var/sound/s in playing )
 			s.status |= SOUND_UPDATE
 			var/list/vol = sound_playing[ s.channel ]
-			s.volume = vol[1] * volume * volumes[ vol[2] ] * 100
+			s.volume = vol[1] * volume * volumes[ vol[2] ]
 			src << s
 		src.chatOutput.adjustVolumeRaw( volume * getRealVolume(VOLUME_CHANNEL_ADMIN) )
 	else
 		for( var/sound/s in playing )
 			if( sound_playing[s.channel][2] == channel )
 				s.status |= SOUND_UPDATE
-				s.volume = sound_playing[s.channel][1] * volume * volumes[1] * 100
+				s.volume = sound_playing[s.channel][1] * volume * volumes[1]
 				src << s
 
 	if( channel == VOLUME_CHANNEL_ADMIN )
 		src.chatOutput.adjustVolumeRaw( getMasterVolume() * volume )
 
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
-	// don't play if over the per-tick sound limit
-
 	var/turf/source_turf = get_turf(source)
 
 	// don't play if the sound is happening nowhere
 	if (isnull(source_turf))
 		return
 
+	// don't play if over the per-tick sound limit
 	var/play_id = "[(source_turf.x / SOUND_LIMITER_GRID_SIZE)] [round(source_turf.y / SOUND_LIMITER_GRID_SIZE)] [source_turf.z] [SOUNDIN_ID]"
 	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
@@ -172,8 +171,8 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 	// at this multiple of the max range the sound will be below TOO_QUIET level, derived from falloff equation lower in the code
 	var/rangemult = 0.18/(-(TOO_QUIET + 0.0542  * vol)/(TOO_QUIET - vol))**(10/17)
-	for (var/mob/M in GET_NEARBY(source_turf, rangemult * (MAX_SOUND_RANGE + extrarange)))
-		var/client/C = M.client
+	for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, source_turf, rangemult * (MAX_SOUND_RANGE + extrarange)))
+		var/mob/M = C.mob
 		if (!C)
 			continue
 
@@ -237,11 +236,16 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 			S.volume = ourvolume
 
-			if (spaced_env && !(flags & SOUND_IGNORE_SPACE))
+			var/orig_freq = S.frequency
+			S.frequency *= (HAS_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) : 1)
+
+			// play without spaced for stuff inside the source, for example pod sounds for people in the pod
+			// we might at some point want to make this check multiple levels deep, but for now this is fine
+			if (spaced_env && !(flags & SOUND_IGNORE_SPACE) && (isturf(source) || ismob(source) || !(M in source)))
 				S.environment = SPACED_ENV
 				S.echo = SPACED_ECHO
 			else
-				if(listener_location != source_location)
+				if(listener_location != source_location) // are they in a different area?
 					//boutput(M, "You barely hear a [source] at [source_location]!")
 					S.echo = ECHO_AFAR //Sound is occluded
 				else
@@ -253,6 +257,8 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 			S.y = 0
 
 			C << S
+
+			S.frequency = orig_freq
 
 
 /mob/proc/playsound_local(atom/source, soundin, vol, vary, extrarange, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
@@ -275,8 +281,6 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	var/play_id = "\ref[src] [SOUNDIN_ID]"
 	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
-
-	vol *= client.getVolume(channel) / 100
 
 	EARLY_RETURN_IF_QUIET(vol)
 
@@ -310,7 +314,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	client.sound_playing[ S.channel ][2] = channel
 
 	if (S)
-		if (spaced_env && !(flags & SOUND_IGNORE_SPACE))
+		if (spaced_env && !(flags & SOUND_IGNORE_SPACE) && (isturf(source) || ismob(source) || !(src in source)))
 			S.environment = SPACED_ENV
 			S.echo = SPACED_ECHO
 
@@ -318,16 +322,60 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 			var/dx = source_turf.x - src.x
 			S.pan = clamp(dx/8.0 * 100, -100, 100)
 
+		S.frequency *= (HAS_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) : 1)
+
+		S.volume = ourvolume * client.getVolume(channel) / 100
+
 		src << S
 
-		if (src.observers.len)
+		if (src.observers.len && !(flags & SOUND_SKIP_OBSERVERS))
 			for (var/mob/M in src.observers)
 				if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 					continue
+
 				M.client.sound_playing[ S.channel ][1] = ourvolume
 				M.client.sound_playing[ S.channel ][2] = channel
 
+				S.volume = ourvolume * M.client.getVolume(channel) / 100
+
 				M << S
+
+/// like playsound_local but without a source atom, this just plays at a given volume
+/mob/proc/playsound_local_not_inworld(soundin, vol, vary, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0, wait=FALSE)
+	if(!src.client)
+		return
+
+	if (CLIENT_IGNORES_SOUND(src.client))
+		return
+
+	var/play_id = "\ref[src] [SOUNDIN_ID]"
+	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
+		return
+
+	EARLY_RETURN_IF_QUIET(vol)
+
+	var/sound/S = generate_sound(null, soundin, vol, vary, 0, pitch)
+	if (!S) CRASH("Did not manage to generate sound \"[soundin]\". Likely that the filename is misnamed or does not exist.")
+	client.sound_playing[ S.channel ][1] = vol
+	client.sound_playing[ S.channel ][2] = channel
+	if(wait)
+		S.wait = TRUE
+
+	S.frequency *= (HAS_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) : 1)
+
+	S.volume = vol * client.getVolume(channel) / 100
+
+	src << S
+
+	if (src.observers.len && !(flags & SOUND_SKIP_OBSERVERS))
+		for (var/mob/M in src.observers)
+			if (!M.client || CLIENT_IGNORES_SOUND(M.client))
+				continue
+			M.client.sound_playing[ S.channel ][1] = vol
+			M.client.sound_playing[ S.channel ][2] = channel
+			S.volume = vol * M.client.getVolume(channel) / 100
+
+			M << S
 
 /**
 	Plays a sound to some clients without caring about its source location and stuff.
@@ -401,7 +449,12 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 		S.volume = ourvolume
 
+		var/orig_freq = S.frequency
+		S.frequency *= (HAS_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) : 1)
+
 		C << S
+
+		S.frequency = orig_freq
 
 /mob/living/silicon/ai/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	..()
@@ -433,14 +486,10 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 	return S
 
+var/global/number_of_sound_generated = 0
+
 /proc/generate_sound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1)
-	if (narrator_mode && (soundin in list("punch", "swing_hit", "shatter", "explosion")))
-		switch(soundin)
-			if ("shatter") soundin = 'sound/vox/break.ogg'
-			if ("explosion") soundin = list('sound/vox/explosion.ogg', 'sound/vox/explode.ogg')
-			if ("swing_hit") soundin = 'sound/vox/hit.ogg'
-			if ("punch") soundin = 'sound/vox/hit.ogg'
-	else
+	if (istext(soundin))
 		switch(soundin)
 			if ("shatter") soundin = pick(sounds_shatter)
 			if ("explosion") soundin = pick(sounds_explosion)
@@ -480,7 +529,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	S.falloff = 9999//(world.view + extrarange) / 3.5
 	//world.log << "Playing sound; wv = [world.view] + er = [extrarange] / 3.5 = falloff [S.falloff]"
 	S.wait = 0 //No queue
-	S.channel = rand(1,900) //Any channel
+	S.channel = (number_of_sound_generated++) % 900 + 1
 	S.volume = vol
 	S.priority = 5
 	S.environment = 0
@@ -494,7 +543,113 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	else
 		S.frequency = pitch
 
+	if(narrator_mode)
+		S = narrator_mode_sound(S)
+
 	return S
+
+
+proc/narrator_mode_sound(sound/S)
+	var/sound/output_sound = null
+	var/new_sound_file = narrator_mode_sound_file(S.file)
+	if(istext(new_sound_file))
+		if(!fexists(new_sound_file))
+			CRASH("Narrator mode sound file '[new_sound_file]' does not exist!")
+		output_sound = sound(file(new_sound_file))
+	else if(isfile(new_sound_file))
+		output_sound = sound(new_sound_file)
+	if(isnull(output_sound))
+		return S
+
+	// for reasons unknown to me just setting S.file and returning S does not work correctly
+	output_sound.falloff = S.falloff
+	output_sound.wait = S.wait
+	output_sound.channel = S.channel
+	output_sound.volume = S.volume
+	output_sound.priority = S.priority
+	output_sound.environment = S.environment
+	output_sound.frequency = S.frequency
+	output_sound.pan = S.pan
+	output_sound.echo = S.echo
+	output_sound.x = S.x
+	output_sound.y = S.y
+	output_sound.z = S.z
+	if(new_sound_file in list("sound/vox/door.ogg", "sound/vox/deny.ogg"))
+		output_sound.falloff = 4 // doors be too damn annoying and loud
+	return output_sound
+
+proc/narrator_mode_sound_file(sound_file)
+	var/static/list/narrator_mode_translation = list(
+		'sound/impact_sounds/Generic_Hit_1.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Hit_2.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Hit_3.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Punch_1.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Punch_2.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Punch_3.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Punch_4.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Punch_5.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Stab_1.ogg' = "sound/vox/hit.ogg",
+		'sound/voice/virtual_scream.ogg' = "sound/vox/scream.ogg",
+		'sound/voice/virtual_gassy.ogg' = "sound/vox/fart.ogg",
+		'sound/voice/virtual_snap.ogg' = "sound/vox/snap.ogg",
+		'sound/effects/fingersnap.ogg' = "sound/vox/snap.ogg",
+		'sound/impact_sounds/Generic_Snap_1.ogg' = "sound/vox/snap.ogg",
+		'sound/voice/burp.ogg' = "sound/vox/burpone.ogg",
+		'sound/machines/whistlealert.ogg' = "sound/vox/deeoo.ogg",
+		'sound/machines/whistlebeep.ogg' = "sound/vox/dadeda.ogg",
+		'sound/musical_instruments/Bikehorn_1.ogg' = "sound/vox/honk.ogg",
+		'sound/musical_instruments/Bikehorn_2.ogg' = "sound/vox/honk.ogg",
+		'sound/musical_instruments/Bikehorn_bonk1.ogg' = "sound/vox/honk.ogg",
+		'sound/musical_instruments/Bikehorn_bonk2.ogg' = "sound/vox/honk.ogg",
+		'sound/musical_instruments/Bikehorn_bonk3.ogg' = "sound/vox/honk.ogg",
+		'sound/items/rubberduck.ogg' = "sound/vox/duck.ogg",
+		'sound/machines/windowdoor.ogg' = "sound/vox/door.ogg",
+		'sound/machines/airlock_swoosh_temp.ogg' = "sound/vox/door.ogg",
+		'sound/machines/airlock.ogg' = "sound/vox/door.ogg",
+		'sound/machines/door_open.ogg' = "sound/vox/door.ogg",
+		'sound/machines/door_close.ogg' = "sound/vox/door.ogg",
+		'sound/impact_sounds/Glass_Shatter_1.ogg' = "sound/vox/break.ogg",
+		'sound/impact_sounds/Glass_Shatter_2.ogg' = "sound/vox/break.ogg",
+		'sound/impact_sounds/Glass_Shatter_3.ogg' = "sound/vox/break.ogg",
+		'sound/machines/tractor_running2.ogg' = "sound/vox/engine.ogg",
+		'sound/machines/tractor_running3.ogg' = "sound/vox/engine.ogg",
+		'sound/misc/clownstep1.ogg' = "sound/vox/clown.ogg",
+		'sound/misc/clownstep2.ogg' = "sound/vox/clown.ogg",
+		'sound/impact_sounds/Bush_Hit.ogg' = "sound/vox/shake.ogg",
+		'sound/misc/lightswitch.ogg' = "sound/vox/switch.ogg",
+		'sound/machines/alarm_a.ogg' = "sound/vox/alarm.ogg",
+		'sound/machines/firealarm.ogg' = "sound/vox/alarm.ogg",
+		'sound/effects/explosionfar.ogg' = "sound/vox/explosion.ogg",
+		'sound/effects/ExplosionFirey.ogg' = "sound/vox/explosion.ogg",
+		'sound/machines/airlock_deny.ogg' = "sound/vox/deny.ogg",
+		'sound/misc/body_thud.ogg' = "sound/vox/lie.ogg",
+		'sound/items/Crowbar.ogg' = "sound/vox/crow.ogg",
+		'sound/machines/airlock_pry.ogg' = "sound/vox/crow.ogg",
+		'sound/machines/airlock_deny_temp.ogg' = "sound/vox/deny.ogg",
+	)
+	if(sound_file in narrator_mode_translation)
+		return narrator_mode_translation[sound_file]
+
+	var/filetext = "[sound_file]"
+	if(startswith(filetext, "sound/misc/step") || startswith(filetext, "sound/misc/talk"))
+		return null
+	if(startswith(filetext, "sound/voice/screams"))
+		return "sound/vox/scream.ogg"
+	if(startswith(filetext, "sound/voice/farts"))
+		return "sound/vox/fart.ogg"
+
+	var/list/path_parts = splittext(filetext, "/")
+	var/filename = path_parts[length(path_parts)]
+	var/without_extension = splittext(filename, ".")[1]
+	var/list/underscore_parts = splittext(replacetext(without_extension, "-", "_"), "_")
+	for(var/part in underscore_parts)
+		var/normalized = ckey(part)
+		var/without_numbers = regex(@"[0-9]", "g").Replace(normalized, "")
+		var/datum/VOXsound/voxsound = global.voxsounds[without_numbers]
+		if(istype(voxsound))
+			return voxsound.ogg
+
+	return null
 
 
 /**

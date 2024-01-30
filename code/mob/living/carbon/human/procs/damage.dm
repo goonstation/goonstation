@@ -175,7 +175,7 @@
 	if (src.spellshield)
 		reduction += 2
 		shielded = 1
-		boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some blast!</b></span>")
+		boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some blast!</b>"))
 
 	var/list/shield_amt = list()
 	SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, power * 30, shield_amt)
@@ -196,7 +196,7 @@
 	if (prob(delib_chance) && !shielded)
 		if (src.traitHolder && src.traitHolder.hasTrait("explolimbs"))
 			if(prob(50))
-				boutput(src, "<span class='notice'><b>Your unusually strong bones keep your limbs attached through the blast!</b></span>")
+				boutput(src, SPAN_NOTICE("<b>Your unusually strong bones keep your limbs attached through the blast!</b>"))
 			else
 				src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg")))
 		else
@@ -204,7 +204,7 @@
 
 	switch (power)
 		if (-INFINITY to 0) //blocked
-			boutput(src, "<span class='alert'><b>You are shielded from the blast!</b></span>")
+			boutput(src, SPAN_ALERT("<b>You are shielded from the blast!</b>"))
 			return
 		if (6 to INFINITY) //gib?
 			if(src.health < 0 || power >= 7)
@@ -242,10 +242,10 @@
 
 		//src.paralysis += 1
 
-	src.show_message("<span class='alert'>The blob attacks you!</span>")
+	src.show_message(SPAN_ALERT("The blob attacks you!"))
 
 	if (src.spellshield)
-		boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")
+		boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some damage!</b>"))
 
 	var/list/zones = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
 
@@ -257,26 +257,26 @@
 				if (prob(45))
 					src.TakeDamage("head", damage, 0, 0, DAMAGE_BLUNT)
 				else
-					src.show_message("<span class='alert'>You have been protected from a hit to the head.</span>")
+					src.show_message(SPAN_ALERT("You have been protected from a hit to the head."))
 				return
 			if (damage > 4.9)
 				changeStatus("weakened", 2 SECONDS)
 				for (var/mob/O in viewers(src, null))
-					O.show_message("<span class='alert'><B>The blob has weakened [src]!</B></span>", 1, "<span class='alert'>You hear someone fall.</span>", 2)
+					O.show_message(SPAN_ALERT("<B>The blob has weakened [src]!</B>"), 1, SPAN_ALERT("You hear someone fall."), 2)
 			src.TakeDamage("head", damage, 0, 0, DAMAGE_BLUNT)
 		if ("chest")
 			if ((((src.wear_suit && src.wear_suit.body_parts_covered & TORSO) || (src.w_uniform && src.w_uniform.body_parts_covered & TORSO)) && prob(70)))
-				src.show_message("<span class='alert'>You have been protected from a hit to the chest.</span>")
+				src.show_message(SPAN_ALERT("You have been protected from a hit to the chest."))
 				return
 			if (damage > 4.9)
 				if (prob(50))
 					src.changeStatus("weakened", 5 SECONDS)
 					for (var/mob/O in viewers(src, null))
-						O.show_message("<span class='alert'><B>The blob has knocked down [src]!</B></span>", 1, "<span class='alert'>You hear someone fall.</span>", 2)
+						O.show_message(SPAN_ALERT("<B>The blob has knocked down [src]!</B>"), 1, SPAN_ALERT("You hear someone fall."), 2)
 				else
 					changeStatus("stunned", 5 SECONDS)
 					for (var/mob/O in viewers(src, null))
-						if (O.client)	O.show_message("<span class='alert'><B>The blob has stunned [src]!</B></span>", 1)
+						if (O.client)	O.show_message(SPAN_ALERT("<B>The blob has stunned [src]!</B>"), 1)
 				if (isalive(src))
 					src.lastgasp() // calling lastgasp() here because we just got knocked out
 			src.TakeDamage("chest", damage, 0, 0, DAMAGE_BLUNT)
@@ -284,24 +284,24 @@
 		if ("l_arm")
 			src.TakeDamage("l_arm", damage, 0, 0, DAMAGE_BLUNT)
 			if (prob(20) && equipped())
-				visible_message("<span class='alert'><b>The blob has knocked [equipped()] out of [src]'s hand!</b></span>")
+				visible_message(SPAN_ALERT("<b>The blob has knocked [equipped()] out of [src]'s hand!</b>"))
 				drop_item()
 		if ("r_arm")
 			src.TakeDamage("r_arm", damage, 0, 0, DAMAGE_BLUNT)
 			if (prob(20) && equipped())
-				visible_message("<span class='alert'><b>The blob has knocked [equipped()] out of [src]'s hand!</b></span>")
+				visible_message(SPAN_ALERT("<b>The blob has knocked [equipped()] out of [src]'s hand!</b>"))
 				drop_item()
 		if ("l_leg")
 			src.TakeDamage("l_leg", damage, 0, 0, DAMAGE_BLUNT)
 			if (prob(5))
-				visible_message("<span class='alert'><b>The blob has knocked [src] off-balance!</b></span>")
+				visible_message(SPAN_ALERT("<b>The blob has knocked [src] off-balance!</b>"))
 				drop_item()
 				if (prob(50))
 					src.changeStatus("weakened", 1 SECOND)
 		if ("r_leg")
 			src.TakeDamage("r_leg", damage, 0, 0, DAMAGE_BLUNT)
 			if (prob(5))
-				visible_message("<span class='alert'><b>The blob has knocked [src] off-balance!</b></span>")
+				visible_message(SPAN_ALERT("<b>The blob has knocked [src] off-balance!</b>"))
 				drop_item()
 				if (prob(50))
 					src.changeStatus("weakened", 1 SECOND)
@@ -375,13 +375,21 @@
 				if (brute > 30 && prob(brute - 30) && !disallow_limb_loss)
 					P.sever()
 				else if (burn > 30 && prob(burn) && !disallow_limb_loss)
-					src.visible_message("<span class='alert'>[src.name]'s [initial(P.name)] is burnt to ash!</span>")
+					src.visible_message(SPAN_ALERT("[src.name]'s [initial(P.name)] is burnt to ash!"))
 					P.remove(FALSE)
 					playsound(P, 'sound/impact_sounds/burn_sizzle.ogg', 30)
 					if(prob(20))
 						make_cleanable(/obj/decal/cleanable/ash, get_turf(src))
 					qdel(P)
 
+	// roll a quick death roll if you're already really beat up
+	// same as the standard death rolls, but an additional penalty percentage is added, based on damage taken:
+	// The penalty is 5% at 5 damage, requiring 2x additional damage to raise another 5% (5 = 5%, 15 = 10%, 35 = 15%, 75 = 20%)
+	if ((src.health - brute) <= -100 && brute >= 5 && !ON_COOLDOWN(src, "Death from Impact", 4 DECI SECONDS ) ) // stupid bullet hoses
+		var/penalty = (5 * log(2, (brute+5)/5))
+		var/deathchance = min(99, ((src.get_brain_damage() * -5) + (src.health + (src.get_oxygen_deprivation() / 2))) * -0.01 + penalty)
+		if (prob(deathchance))
+			src.death()
 	src.bruteloss += brute
 	src.burnloss += burn
 
@@ -410,9 +418,9 @@
 	burn = max(0, burn - armor_mod)
 	/*
 	if (brute + burn == 0)
-		show_message("<span class='notice'>You have been completely protected from damage on your [z_name]!</span>")
+		show_message(SPAN_NOTICE("You have been completely protected from damage on your [z_name]!"))
 	else if (armor_mod != 0)
-		show_message("<span class='notice'>You have been partly protected from damage on your [z_name]!</span>")
+		show_message(SPAN_NOTICE("You have been partly protected from damage on your [z_name]!"))
 	*///Begone, message spam. Nobody asked for this
 	TakeDamage(zone, max(brute, 0), max(burn, 0), 0, damage_type)
 
@@ -425,6 +433,12 @@
 	src.bruteloss = max(bruteloss - brute, 0)
 	src.burnloss = max(burnloss - burn, 0)
 
+	if (brute > 0)
+		if (brute >= 10 || src.get_brute_damage() <= 5)
+			src.heal_slash_wound("all")
+		else if (prob(10))
+			src.heal_slash_wound("single")
+
 	if (burn > 0)
 		if (burn >= 10 || src.get_burn_damage() <= 5)
 			src.heal_laser_wound("all")
@@ -434,6 +448,16 @@
 	src.UpdateDamageIcon()
 	health_update_queue |= src
 	return 1
+
+/mob/living/carbon/human/proc/heal_slash_wound(type)
+	if (type == "single")
+		for (var/i in 0 to 2)
+			if (src.GetOverlayImage("slash_wound-[i]"))
+				src.UpdateOverlays(null, "slash_wound-[i]")
+				break
+	else if (type == "all")
+		for (var/i in 0 to 2)
+			src.UpdateOverlays(null, "slash_wound-[i]")
 
 /mob/living/carbon/human/proc/heal_laser_wound(type)
 	if (type == "single")
@@ -613,7 +637,7 @@
 			src.organHolder.heal_organ(abs(amount), 0, 0, "brain")
 
 	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 120 && isalive(src))
-		src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
+		src.visible_message(SPAN_ALERT("<b>[src.name]</b> goes limp, their facial expression utterly blank."))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon/human, death))
 
 /mob/living/carbon/human/get_brain_damage()

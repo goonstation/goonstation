@@ -49,7 +49,7 @@ TYPEINFO(/obj/item/card/emag)
 /obj/item/card/emag/fake
 //delicious fake emag
 	attack_hand(mob/user)
-		boutput(user, "<span class='combat'>Turns out that card was actually a kind of [pick("deadly chameleon","spiny anteater","Discount Dan's latest product prototype","Syndicate Top Trumps Card","bag of neckbeard shavings")] in disguise! It stabs you!</span>")
+		boutput(user, SPAN_COMBAT("Turns out that card was actually a kind of [pick("deadly chameleon","spiny anteater","Discount Dan's latest product prototype","Syndicate Top Trumps Card","bag of neckbeard shavings")] in disguise! It stabs you!"))
 		user.changeStatus("paralysis", 10 SECONDS)
 		SPAWN(1 SECOND)
 			var/obj/storage/closet/C = new/obj/storage/closet(get_turf(user))
@@ -71,7 +71,6 @@ TYPEINFO(/obj/item/card/emag)
 /obj/item/card/id
 	name = "identification card"
 	icon_state = "id"
-	uses_multiple_icon_states = 1
 	item_state = "card-id"
 	desc = "A standardized NanoTrasen microchipped identification card that contains data that is scanned when attempting to access various doors and computers."
 	flags = FPRINT | TABLEPASS | ATTACK_SELF_DELAY
@@ -161,7 +160,11 @@ TYPEINFO(/obj/item/card/emag)
 	New()
 		..()
 		access = get_access("Captain")
-		src.AddComponent(/datum/component/log_item_pickup, "Captain")
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job="Captain", message_admins_too=FALSE)
+
+/obj/item/card/id/nt_specialist
+	icon_state = "polaris"
+	keep_icon = TRUE
 
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
@@ -175,7 +178,7 @@ TYPEINFO(/obj/item/card/emag)
 		else
 			var/flavor = pick("doesn't like you", "can tell you don't deserve it", "saw into your very soul and found you wanting", "hates you", "thinks you stink", "thinks you two should start seeing other people", "doesn't trust you", "finds your lack of faith disturbing", "is just not that into you", "gently weeps")
 			//stolen from Captain's Explosive Spare ID down below...
-			boutput(user, "<span class='alert'>The ID card [flavor] and <b>explodes!</b></span>")
+			boutput(user, SPAN_ALERT("The ID card [flavor] and <b>explodes!</b>"))
 			make_fake_explosion(src)
 			user.u_equip(src)
 			src.dropped(user)
@@ -236,7 +239,7 @@ TYPEINFO(/obj/item/card/emag)
 
 /obj/item/card/id/captains_spare/explosive
 	pickup(mob/user)
-		boutput(user, "<span class='alert'>The ID-Card explodes.</span>")
+		boutput(user, SPAN_ALERT("The ID-Card explodes."))
 		user.transforming = 1
 		var/obj/overlay/O = new/obj/overlay(get_turf(user))
 		O.anchored = ANCHORED
@@ -286,6 +289,7 @@ TYPEINFO(/obj/item/card/emag)
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate_shuttle)
+	HELP_MESSAGE_OVERRIDE(null)
 
 /obj/item/card/id/syndicate/attack_self(mob/user as mob)
 	if(!src.registered)
@@ -316,12 +320,20 @@ TYPEINFO(/obj/item/card/emag)
 		src.registered = reg
 		src.assignment = ass
 		src.name = "[src.registered]'s ID Card ([src.assignment])"
-		boutput(user, "<span class='notice'>You successfully forge the ID card.</span>")
+		boutput(user, SPAN_NOTICE("You successfully forge the ID card."))
 	else
 		..()
 
 /obj/item/card/id/syndicate/attackby(obj/item/W, mob/user)
 	var/obj/item/card/id/sourceCard = W
+	if (istype(sourceCard))
+		boutput(user, "You copy [sourceCard]'s accesses to [src].")
+		src.access |= sourceCard.access
+	else
+		return ..()
+
+/obj/item/card/id/syndicate/afterattack(atom/target, mob/user, reach, params)
+	var/obj/item/card/id/sourceCard = target
 	if (istype(sourceCard))
 		boutput(user, "You copy [sourceCard]'s accesses to [src].")
 		src.access |= sourceCard.access
@@ -337,6 +349,12 @@ TYPEINFO(/obj/item/card/emag)
 		namecheck[i] = capitalize(namecheck[i])
 	input = jointext(namecheck, " ")
 	return input
+
+/obj/item/card/id/syndicate/get_help_message(dist, mob/user)
+	if (src.name == "agent card") //It's probably unmodified, should be fine to show the help message
+		return {"Use the card in hand to set it's name, appearance, job title and pronouns. Use another ID on the agent card to add the access of the ID to the agent card."}
+	else
+		return null
 
 /obj/item/card/id/syndicate/commander
 	name = "commander card"
@@ -453,7 +471,7 @@ TYPEINFO(/obj/item/card/emag)
 	process()
 		if(!owner) return
 		if(!owner.contains(src))
-			boutput(owner, "<h3><span class='alert'>You have lost your license to kill!</span></h3>")
+			boutput(owner, SPAN_ALERT("<h3>You have lost your license to kill!</h3>"))
 			logTheThing(LOG_COMBAT, owner, "dropped their license to kill")
 			logTheThing(LOG_ADMIN, owner, "dropped their license to kill")
 			message_admins("[key_name(owner)] dropped their license to kill")
@@ -467,7 +485,7 @@ TYPEINFO(/obj/item/card/emag)
 			logTheThing(LOG_COMBAT, user, "picked up a license to kill")
 			logTheThing(LOG_ADMIN, user, "picked up a license to kill")
 			message_admins("[key_name(user)] picked up a license to kill")
-			boutput(user, "<h3><span class='alert'>You now have a license to kill!</span></h3>")
+			boutput(user, SPAN_ALERT("<h3>You now have a license to kill!</h3>"))
 			user.mind?.add_antagonist(ROLE_LICENSED)
 			if (is_very_visible)
 				user.vis_contents += indicator

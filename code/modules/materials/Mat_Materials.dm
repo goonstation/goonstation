@@ -216,7 +216,7 @@ ABSTRACT_TYPE(/datum/material)
 		var/datum/material/M = new src.type()
 		M.properties = mergeProperties(src.properties, rightBias = 0)
 		for(var/X in src.vars)
-			if(!issaved(X)) continue
+			if(!issaved(src.vars[X])) continue
 			if(X in triggerVars)
 				M.vars[X] = getFusedTriggers(src.vars[X], list(), M) //Pass in an empty list to basically copy the first one.
 			else
@@ -350,6 +350,13 @@ ABSTRACT_TYPE(/datum/material)
 		L[D] = 0
 		return
 
+	/// Checks if material proc type is present for a given trigger in the material
+	proc/hasTrigger(var/triggerListName as text, materialProcType)
+		var/list/L = src.vars[triggerListName]
+		for(var/datum/materialProc/P in L)
+			if(istype(P.type, materialProcType)) return 1
+		return 0
+
 	///Triggers is specified using one of the TRIGGER_ON_ defines
 	proc/removeTrigger(var/triggerListName as text, var/inType)
 		if(!src.mutable)
@@ -466,9 +473,9 @@ ABSTRACT_TYPE(/datum/material)
 	New(var/datum/material/mat1,var/datum/material/mat2,var/bias)
 		..()
 		if(isnull(mat1) || isnull(mat2))
-			CRASH("Tried to create alloy with null materials!")
+			return
 		var/left_bias = 1 - bias
-		src.quality = round(mat1.quality *left_bias+ mat2.quality * bias)
+		src.quality = round(mat1.quality * left_bias + mat2.quality * bias)
 
 		src.prefixes = (mat1.prefixes | mat2.prefixes)
 		src.suffixes = (mat1.suffixes | mat2.suffixes)
@@ -898,7 +905,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	New()
 		..()
 		material_flags |= MATERIAL_ENERGY
-		setProperty("density", 2)
+		setProperty("density", 7)
 		setProperty("hard", 3)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 8)
@@ -948,7 +955,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 /datum/material/crystal/gemstone
 	mat_id = "quartz"
 	name = "quartz"
-	desc = "Quartz is somewhat valuable but not paticularly useful."
+	desc = "Quartz is somewhat valuable but not particularly useful."
 	color = "#BBBBBB"
 	alpha = 220
 	quality = 50
@@ -1121,7 +1128,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	transparent
 		mat_id = "gnesisglass"
-		name = "transclucent gnesis"
+		name = "translucent gnesis"
 		desc = "A rare complex crystalline matrix with a lazily shifting internal structure. The layers are arranged to let light through."
 		color = "#ffffff"
 		alpha = 180
@@ -1202,14 +1209,14 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	New()
 		..()
-		setProperty("electrical", 6)
+		setProperty("electrical", 2)
 		setProperty("density", 1)
 		setProperty("hard", 2)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/slippery_entered())
 
-
+ABSTRACT_TYPE(/datum/material/crystal/wizard)
 /datum/material/crystal/wizard
 	quality = 50
 	alpha = 100
@@ -1270,7 +1277,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 /datum/material/organic/blob
 	mat_id = "blob"
 	name = "blob"
-	desc = "The material of the feared giant space amobea."
+	desc = "The material of the feared giant space amoeba."
 	color = "#44cc44"
 	alpha = 180
 	quality = 2
@@ -1321,6 +1328,12 @@ ABSTRACT_TYPE(/datum/material/organic)
 			addTrigger(TRIGGERS_ON_PICKUP, new /datum/materialProc/onpickup_butt)
 			addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/onpickup_butt)
 
+	greymatter
+		mat_id = "greymatter"
+		name = "grey matter"
+		desc = "It makes your brain think good."
+		color = "#b99696"
+
 /datum/material/organic/char
 	mat_id = "char"
 	name = "char"
@@ -1367,6 +1380,19 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("flammable", 2)
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_viscerite())
 
+/datum/material/organic/tensed_viscerite
+	mat_id = "tensed_viscerite"
+	name = "tensed viscerite"
+	desc = "Fleshy mass drawn out under tension. It's translucent and thready."
+	color = "#dd81ff"
+	alpha = 180
+
+	New()
+		..()
+		setProperty("density", 3)
+		setProperty("hard", 3)
+		setProperty("chemical", 8)
+		setProperty("flammable", 2)
 
 /datum/material/organic/bone
 	mat_id = "bone"
@@ -1663,6 +1689,23 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		. = replace_first_consonant_cluster(target.name, copytext(src.name , 1, 2))
 
 
+/datum/material/organic/pickle
+	mat_id = "pickle"
+	name = "pickle"
+	desc = "Pure pickle, presumably pickled previously."
+	color = "#b8db56"
+	texture = "pickle"
+	texture_blend = BLEND_MULTIPLY
+	edible_exact = 1
+	edible = 1
+
+	New()
+		..()
+		setProperty("density", 2)
+		setProperty("hard", 1)
+		setProperty("thermal", 2)
+		setProperty("flammable", 2)
+
 /datum/material/fabric/fibrilith
 	mat_id = "fibrilith"
 	name = "fibrilith"
@@ -1773,6 +1816,20 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("flammable", 1)
 
 
+/datum/material/fabric/exoweave
+	mat_id = "exoweave"
+	name = "ExoWeave"
+	desc = "A prototype composite fabric designed for EVA activity, comprised primarily of carbon fibers treated with a silica-based solution."
+	color = "#3d666b"
+
+	New()
+		..()
+		setProperty("density", 5)
+		setProperty("hard", 4)
+		setProperty("chemical", 7)
+		setProperty("thermal", 9)
+		setProperty("electrical", 8)
+
 
 /datum/material/fabric/beewool
 	mat_id = "beewool"
@@ -1810,7 +1867,6 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 3)
 		setProperty("thermal", 4)
 
-
 /datum/material/rubber/synthrubber
 	mat_id = "synthrubber"
 	name = "synthrubber"
@@ -1839,6 +1895,20 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("thermal", 3)
 		setProperty("flammable", 3)
 
+/datum/material/rubber/plastic
+	mat_id = "plastic"
+	name = "plastic"
+	desc = "A synthetic material made of polymers. Great for polluting oceans."
+	color = "#baccd3"
+
+	New()
+		..()
+		setProperty("density", 3)
+		setProperty("hard", 1)
+		setProperty("electrical", 2)
+		setProperty("thermal", 3)
+		setProperty("chemical", 5)
+
 /datum/material/metal/plutonium
 	mat_id = "plutonium"
 	name = "plutonium 239"
@@ -1855,3 +1925,22 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("n_radioactive", 5)
 		setProperty("radioactive", 3)
 		setProperty("electrical", 7)
+
+/// Material for bundles of glowsticks as fuel rods
+/datum/material/metal/glowstick
+	mat_id = "glowstick"
+	name = "glowsticks" //"it is made of glowsticks"
+	canMix = 0 //don't make alloys of this
+	desc = "It's just a bunch of glowsticks stuck together. How is this an ingot?"
+	color = "#00e618"
+	alpha = 200
+	quality = 60
+
+	New()
+		..()
+		setProperty("density", 3)
+		setProperty("hard", 3)
+		setProperty("radioactive", 1)
+		setProperty("electrical", 2)
+		setProperty("thermal", 3)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/glowstick_add())

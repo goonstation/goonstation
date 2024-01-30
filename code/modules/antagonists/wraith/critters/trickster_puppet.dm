@@ -106,6 +106,7 @@
 			master_ability_holder.points = AH.points
 			master_ability_holder.possession_points = AH.possession_points
 			src.mind.transfer_to(master)
+			src.master.Move(master.loc) //call Move manually so we do restricted Z checks
 			src.master = null
 		qdel(src)
 		return 0

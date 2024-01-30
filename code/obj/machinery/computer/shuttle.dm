@@ -134,11 +134,11 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 		if (Console.shuttlename != src.shuttlename) continue
 		if(!currentlocation || !end_location)
 			if (src.transit_delay)
-				Console.visible_message("<span class='alert'>[src.shuttlename] cant seem to move! Uh Oh.</span>")
+				Console.visible_message(SPAN_ALERT("[src.shuttlename] cant seem to move! Uh Oh."))
 		else
 			Console.active = TRUE
 			if (src.transit_delay)
-				Console.visible_message("<span class='alert'>[src.shuttlename] is moving to [end_location]!</span>")
+				Console.visible_message(SPAN_ALERT("[src.shuttlename] is moving to [end_location]!"))
 				playsound(Console.loc, 'sound/machines/transport_move.ogg', 75, 0)
 	return (currentlocation && end_location)
 
@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 
 	for(var/obj/machinery/computer/transit_shuttle/Console in machine_registry[MACHINES_SHUTTLECOMPS])
 		if (Console.shuttlename != src.shuttlename) continue
-		Console.visible_message("<span class='alert'>[src.shuttlename] has Moved!</span>")
+		Console.visible_message(SPAN_ALERT("[src.shuttlename] has Moved!"))
 		Console.currentlocation = end_location
 		Console.active = FALSE
 
@@ -239,7 +239,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 /obj/machinery/computer/transit_shuttle/research/embedded
 	icon_state = "shuttle-embed";
 	pixel_y = -25
-	ejectdir = 2
+	ejectdir = SOUTH
 	embed = 1
 
 // JOHN BILL'S JUICIN' BUS
@@ -272,41 +272,41 @@ var/bombini_saved
 		for(var/obj/npc/trader/bee/b in currentlocation)
 			bombini_saved = TRUE
 			for(var/mob/M in currentlocation)
-				boutput(M, "<span class='notice'>It would be great if things worked that way, but they don't. You'll need to find what <b>Bombini</b> is missing, now.</span>")
+				boutput(M, SPAN_NOTICE("It would be great if things worked that way, but they don't. You'll need to find what <b>Bombini</b> is missing, now."))
 
 	for(var/obj/machinery/computer/transit_shuttle/Console in machine_registry[MACHINES_SHUTTLECOMPS])
 		if (Console.shuttlename != src.shuttlename) continue
-		Console.visible_message("<span class='alert'>John is starting up the engines, this could take a minute!</span>")
+		Console.visible_message(SPAN_ALERT("John is starting up the engines, this could take a minute!"))
 		if(!Console.embed) continue
 		T = get_turf(Console)
 		SPAWN(1 DECI SECOND)
-			playsound(T, 'sound/effects/ship_charge.ogg', 60, 1)
+			playsound(T, 'sound/effects/ship_charge.ogg', 60, TRUE)
 			sleep(3 SECONDS)
-			playsound(T, 'sound/machines/weaponoverload.ogg', 60, 1)
-			Console.visible_message("<span class='alert'>The shuttle is making a hell of a racket!</span>")
+			playsound(T, 'sound/machines/weaponoverload.ogg', 60, TRUE)
+			Console.visible_message(SPAN_ALERT("The shuttle is making a hell of a racket!"))
 			sleep(5 SECONDS)
-			playsound(T, 'sound/impact_sounds/Machinery_Break_1.ogg', 60, 1)
+			playsound(T, 'sound/impact_sounds/Machinery_Break_1.ogg', 60, TRUE)
 			for(var/mob/living/M in range(Console.loc, 10))
 				shake_camera(M, 5, 8)
 				M.add_karma(0.1)
 
 			sleep(2 SECONDS)
-			playsound(T, 'sound/effects/creaking_metal2.ogg', 70, 1)
+			playsound(T, 'sound/effects/creaking_metal2.ogg', 70, TRUE)
 			sleep(3 SECONDS)
-			Console.visible_message("<span class='alert'>The shuttle engine alarms start blaring!</span>")
-			playsound(T, 'sound/machines/pod_alarm.ogg', 60, 1)
+			Console.visible_message(SPAN_ALERT("The shuttle engine alarms start blaring!"))
+			playsound(T, 'sound/machines/pod_alarm.ogg', 60, TRUE)
 			var/obj/decal/fakeobjects/shuttleengine/smokyEngine = locate() in get_area(Console)
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 			smoke.set_up(5, 0, smokyEngine)
 			smoke.start()
 			sleep(4 SECONDS)
-			playsound(T, 'sound/machines/boost.ogg', 60, 1)
+			playsound(T, 'sound/machines/boost.ogg', 60, TRUE)
 			for(var/mob/living/M in range(Console.loc, 10))
 				shake_camera(M, 10, 16)
 
 	T = get_turf(src)
 	SPAWN(25 SECONDS)
-		playsound(T, 'sound/effects/flameswoosh.ogg', 70, 1)
+		playsound(T, 'sound/effects/flameswoosh.ogg', 70, TRUE)
 		..()
 
 /obj/machinery/computer/shuttle/embedded/syndieshuttle
@@ -314,37 +314,23 @@ var/bombini_saved
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "syndiepc4"
 
-/obj/machinery/computer/icebase_elevator
-	name = "Elevator Control"
-	icon_state = "shuttle"
-	machine_registry_idx = MACHINES_ELEVATORCOMPS
-	var/active = 0
-	var/location = 1 // 0 for bottom, 1 for top
-
-/obj/machinery/computer/biodome_elevator
-	name = "Elevator Control"
-	icon_state = "shuttle"
-	machine_registry_idx = MACHINES_ELEVATORCOMPS
-	var/active = 0
-	var/location = 1 // 0 for bottom, 1 for top
-
 /obj/machinery/computer/shuttle/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(emergency_shuttle.location != SHUTTLE_LOC_STATION)
 		return
 	for (var/datum/flock/flock in flocks)
 		if (flock.relay_in_progress)
-			boutput(user, "<span class='alert'>[src] emits a pained burst of static, but nothing happens!</span>")
+			boutput(user, SPAN_ALERT("[src] emits a pained burst of static, but nothing happens!"))
 			return
 
 	if (user)
 		var/choice = tgui_alert(user, "Would you like to launch the shuttle?", "Shuttle control", list("Launch", "Cancel"))
 		if(BOUNDS_DIST(user, src) > 0 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
 		if (choice == "Launch")
-			boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
+			boutput(world, SPAN_NOTICE("<B>Alert: Shuttle launch time shortened to 10 seconds!</B>"))
 			emergency_shuttle.settimeleft( 10 )
 			logTheThing(LOG_ADMIN, user, "shortens Emergency Shuttle launch time to 10 seconds.")
 	else
-		boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
+		boutput(world, SPAN_NOTICE("<B>Alert: Shuttle launch time shortened to 10 seconds!</B>"))
 		emergency_shuttle.settimeleft( 10 )
 	return TRUE
 
@@ -379,7 +365,8 @@ var/bombini_saved
 		if(!choice || emergency_shuttle.location != SHUTTLE_LOC_STATION || BOUNDS_DIST(user, src) > 0) return
 		switch(choice)
 			if("Authorize")
-				for (var/datum/flock/flock in flocks)
+				for (var/flockname in flocks)
+					var/datum/flock/flock = flocks[flockname]
 					if (flock.relay_in_progress)
 						boutput(user, "Unable to contact central command, authorization rejected.")
 						return
@@ -388,162 +375,136 @@ var/bombini_saved
 					return
 				src.authorized |= W:registered
 				if (src.auth_need - length(src.authorized) > 0)
-					boutput(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
+					boutput(world, SPAN_NOTICE("<B>Alert: [src.auth_need - length(src.authorized)] authorizations needed until shuttle is launched early</B>"))
 				else
-					boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 60 seconds!</B></span>")
+					boutput(world, SPAN_NOTICE("<B>Alert: Shuttle launch time shortened to 60 seconds!</B>"))
 					emergency_shuttle.settimeleft(60)
 					qdel(src.authorized)
 					src.authorized = list(  )
 
 			if("Repeal")
 				src.authorized -= W:registered
-				boutput(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
+				boutput(world, SPAN_NOTICE("<B>Alert: [src.auth_need - length(src.authorized)] authorizations needed until shuttle is launched early</B>"))
 
 			if("Abort")
-				boutput(world, "<span class='notice'><B>All authorizations to shorting time for shuttle launch have been revoked!</B></span>")
+				boutput(world, SPAN_NOTICE("<B>All authorizations to shorting time for shuttle launch have been revoked!</B>"))
 				src.authorized.len = 0
 				src.authorized = list(  )
 	return
 
-/obj/machinery/computer/icebase_elevator/attack_hand(mob/user)
+ABSTRACT_TYPE(/obj/machinery/computer/elevator)
+/obj/machinery/computer/elevator
+	name = "Elevator Control"
+	icon_state = "shuttle"
+	var/active = 0
+	var/location = 1 // 0 for bottom, 1 for top
+
+	var/areaLower
+	var/areaUpper
+	var/startTurfToLeave = /turf/simulated/floor/plating
+	var/endTurfToLeave = /turf/simulated/floor/plating
+	var/logBioeleAccident = FALSE
+	var/adminOnly = FALSE
+
+/obj/machinery/computer/elevator/icebase
+	machine_registry_idx = MACHINES_ELEVATORICEBASE
+	areaLower = /area/shuttle/icebase_elevator/lower
+	areaUpper = /area/shuttle/icebase_elevator/upper
+	endTurfToLeave = /turf/simulated/floor/arctic_elevator_shaft
+
+/obj/machinery/computer/elevator/biodome
+	machine_registry_idx = MACHINES_ELEVATORBIODOME
+	areaLower = /area/shuttle/biodome_elevator/lower
+	areaUpper = /area/shuttle/biodome_elevator/upper
+	endTurfToLeave = /turf/unsimulated/floor/setpieces/ancient_pit/shaft
+	logBioeleAccident = TRUE
+
+/obj/machinery/computer/elevator/sea
+	machine_registry_idx = MACHINES_ELEVATORSEA
+	areaLower = /area/shuttle/sea_elevator/lower
+	areaUpper = /area/shuttle/sea_elevator/upper
+	endTurfToLeave = /turf/simulated/floor/specialroom/sea_elevator_shaft
+
+/obj/machinery/computer/elevator/centcomm
+	machine_registry_idx = MACHINES_ELEVATORCENTCOM
+	areaLower = /area/shuttle/centcom_elevator/lower
+	areaUpper = /area/shuttle/centcom_elevator/upper
+	endTurfToLeave = /turf/unsimulated/floor/glassblock/transparent_cyan
+	location = 0
+	adminOnly = TRUE
+
+/obj/machinery/computer/elevator/centcomm/hidden
+	name = "toilet paper holder";
+	desc = "a not at all suspicious toilet paper holder.";
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "toiletholder";
+
+/obj/machinery/computer/elevator/ui_interact(mob/user, datum/tgui/ui)
+	if (adminOnly && !isadmin(user))
+		return
+
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Elevator", name)
+		ui.open()
+
+/obj/machinery/computer/elevator/ui_data(mob/user)
+	. = list()
+	.["location"] = location ? "Upper level" : "Lower Level"
+	.["active"] = active
+
+/obj/machinery/computer/elevator/attack_hand(mob/user)
+	if (adminOnly && !isadmin(user))
+		return
 	if(..())
 		return
-	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
 
-	if(location)
-		dat += "Elevator Location: Upper level"
-	else
-		dat += "Elevator Location: Lower Level"
-	dat += "<BR>"
-	if(active)
-		dat += "Moving"
-	else
-		dat += "<a href='byond://?src=\ref[src];send=1'>Move Elevator</a><BR><BR>"
+	ui_interact(user)
 
-	user.Browse(dat, "window=ice_elevator")
-	onclose(user, "ice_elevator")
-	return
-
-/obj/machinery/computer/icebase_elevator/Topic(href, href_list)
+/obj/machinery/computer/elevator/ui_act(action, params)
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		src.add_dialog(usr)
-
-		if (href_list["send"])
-			if(!active)
-				for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-					active = 1
-					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
-					playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
-				SPAWN(5 SECONDS)
-					call_shuttle()
-
-		if (href_list["close"])
-			src.remove_dialog(usr)
-			usr.Browse(null, "window=ice_elevator")
-
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
-	return
+		switch(action)
+			if ("send")
+				if (adminOnly)
+					USR_ADMIN_ONLY
+				if(!active)
+					for(var/obj/machinery/computer/elevator/C in machine_registry[machine_registry_idx])
+						C.active = 1
+						C.visible_message(SPAN_ALERT("The elevator begins to move!"))
+						playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
+						tgui_process.update_uis(C)
+					SPAWN(5 SECONDS)
+						call_shuttle()
+					. = TRUE
 
 
-/obj/machinery/computer/icebase_elevator/proc/call_shuttle()
+/obj/machinery/computer/elevator/proc/call_shuttle()
 
 	if(location == 0) // at bottom
-		var/area/start_location = locate(/area/shuttle/icebase_elevator/lower)
-		var/area/end_location = locate(/area/shuttle/icebase_elevator/upper)
-		start_location.move_contents_to(end_location, /turf/simulated/floor/plating)
+		var/area/start_location = locate(areaLower)
+		var/area/end_location = locate(areaUpper)
+		start_location.move_contents_to(end_location, startTurfToLeave, ignore_fluid = TRUE)
 		location = 1
 	else // at top
-		var/area/start_location = locate(/area/shuttle/icebase_elevator/upper)
-		var/area/end_location = locate(/area/shuttle/icebase_elevator/lower)
+		var/area/start_location = locate(areaUpper)
+		var/area/end_location = locate(areaLower)
 		for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
 			if(!isintangible(L))
 				SPAWN(1 DECI SECOND)
 					logTheThing(LOG_COMBAT, L, "was gibbed by an elevator at [log_loc(L)].")
 					L.gib()
-		start_location.move_contents_to(end_location, /turf/simulated/floor/arctic_elevator_shaft)
+				if (logBioeleAccident)
+					bioele_accident()
+		start_location.move_contents_to(end_location, endTurfToLeave, ignore_fluid = TRUE)
 		location = 0
 
-	for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-		active = 0
-		C.visible_message("<span class='alert'>The elevator has moved.</span>")
+	for(var/obj/machinery/computer/elevator/C in machine_registry[machine_registry_idx])
+		C.active = 0
+		C.visible_message(SPAN_ALERT("The elevator has moved."))
 		C.location = src.location
-
-	return
-
-/obj/machinery/computer/biodome_elevator/attack_hand(mob/user)
-	if(..())
-		return
-	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
-
-	if(location)
-		dat += "Elevator Location: Upper level"
-	else
-		dat += "Elevator Location: Lower Level"
-	dat += "<BR>"
-	if(active)
-		dat += "Moving"
-	else
-		dat += "<a href='byond://?src=\ref[src];send=1'>Move Elevator</a><BR><BR>"
-
-	user.Browse(dat, "window=ice_elevator")
-	onclose(user, "biodome_elevator")
-	return
-
-/obj/machinery/computer/biodome_elevator/Topic(href, href_list)
-	if(..())
-		return
-	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		src.add_dialog(usr)
-
-		if (href_list["send"])
-			if(!active)
-				for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-					active = 1
-					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
-					playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
-				SPAWN(5 SECONDS)
-					call_shuttle()
-
-		if (href_list["close"])
-			src.remove_dialog(usr)
-			usr.Browse(null, "window=biodome_elevator")
-
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
-	return
-
-
-// Biodome elevator code
-
-
-/obj/machinery/computer/biodome_elevator/proc/call_shuttle()
-
-	if(location == 0) // at bottom
-		var/area/start_location = locate(/area/shuttle/biodome_elevator/lower)
-		var/area/end_location = locate(/area/shuttle/biodome_elevator/upper)
-		start_location.move_contents_to(end_location, /turf/simulated/floor/plating)
-		location = 1
-	else // at top
-		var/area/start_location = locate(/area/shuttle/biodome_elevator/upper)
-		var/area/end_location = locate(/area/shuttle/biodome_elevator/lower)
-		for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
-			if(!isintangible(L))
-				SPAWN(1 DECI SECOND)
-					logTheThing(LOG_COMBAT, L, "was gibbed by an elevator at [log_loc(L)].")
-					L.gib()
-			bioele_accident()
-		start_location.move_contents_to(end_location, /turf/unsimulated/floor/setpieces/ancient_pit/shaft)
-		location = 0
-
-	for(var/obj/machinery/computer/biodome_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-		active = 0
-		C.visible_message("<span class='alert'>The elevator has moved.</span>")
-		C.location = src.location
-
-	return
+		tgui_process.update_uis(C)
 
 /obj/sign_accidents
 	name = "Elevator Safety Sign"
@@ -584,91 +545,5 @@ proc/bioele_accident()
 	bioele_accidents++
 	bioele_shifts_since_accident = 0
 	bioele_save_stats()
-
-
-/obj/submachine/centcom_elevator
-	name = "elevator Control"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "shuttle"
-	var/active = FALSE
-	var/location = 0 // 0 for bottom, 1 for top
-
-	New()
-		. = ..()
-		START_TRACKING
-
-	disposing()
-		STOP_TRACKING
-		. = ..()
-
-	proc/call_shuttle()
-		if(location == 0) // at bottom
-			var/area/start_location = locate(/area/shuttle/centcom_elevator/lower)
-			var/area/end_location = locate(/area/shuttle/centcom_elevator/upper)
-			start_location.move_contents_to(end_location, /turf/simulated/floor/plating)
-			location = 1
-		else // at top
-			var/area/start_location = locate(/area/shuttle/centcom_elevator/upper)
-			var/area/end_location = locate(/area/shuttle/centcom_elevator/lower)
-			for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
-				if(!isintangible(L))
-					SPAWN(1 DECI SECOND)
-						logTheThing(LOG_COMBAT, L, "was gibbed by an elevator at [log_loc(L)].")
-						L.gib()
-				bioele_accident()
-			start_location.move_contents_to(end_location, /turf/unsimulated/floor/glassblock/transparent_cyan)
-			location = 0
-
-		for_by_tcl(O, /obj/submachine/centcom_elevator)
-			active = FALSE
-			O.visible_message("<span class='alert'>The elevator has moved.</span>")
-			O.location = src.location
-		return
-
-	attack_hand(mob/user)
-		if (!isadmin(user))
-			return
-		if(..())
-			return
-		var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
-
-		if(location)
-			dat += "Elevator Location: Upper level"
-		else
-			dat += "Elevator Location: Lower Level"
-		dat += "<BR>"
-		if(active)
-			dat += "Moving"
-		else
-			dat += "<a href='byond://?src=\ref[src];send=1'>Move Elevator</a><BR><BR>"
-
-		user.Browse(dat, "window=centcom_elevator")
-		onclose(user, "centcom_elevator")
-		return
-
-	Topic(href, href_list)
-		if(..())
-			return
-		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			src.add_dialog(usr)
-
-			if (href_list["send"])
-				USR_ADMIN_ONLY
-				if(!active)
-					for_by_tcl(O, /obj/submachine/centcom_elevator)
-						active = TRUE
-						O.visible_message("<span class='alert'>The elevator begins to move!</span>")
-						playsound(O.loc, 'sound/machines/elevator_move.ogg', 100, 0)
-					SPAWN(5 SECONDS)
-						call_shuttle()
-
-			if (href_list["close"])
-				src.remove_dialog(usr)
-				usr.Browse(null, "window=centcom_elevator")
-
-		src.add_fingerprint(usr)
-		src.updateUsrDialog()
-		return
-
 
 #undef MINING_OUTPOST_NAME

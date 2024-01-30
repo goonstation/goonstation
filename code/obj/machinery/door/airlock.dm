@@ -5,6 +5,9 @@
 #define OPEN_CLOSE_POWER_USAGE 50
 #define LINKED_FORCEFIELD_POWER_USAGE 100
 
+/// a global associative list of all airlocks linked together by cycling mechanisms. Indexed by ID
+var/global/list/cycling_airlocks = list()
+
 /*
 	New methods:
 	pulse - sends a pulse into a wire for hacking purposes
@@ -35,11 +38,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bo
 		boutput(user, "This door is unable to be electrified, you cannot shock it.")
 		return
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-		boutput(user, text("<span class='alert'>The electrification wire has been cut.<br><br></span>"))
+		boutput(user, SPAN_ALERT("The electrification wire has been cut.<br><br>"))
 	else if (src.secondsElectrified==-1)
-		boutput(user, text("<span class='alert'>The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br><br></span>"))
+		boutput(user, SPAN_ALERT("The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br><br>"))
 	else if (src.secondsElectrified!=0)
-		boutput(user, text("<span class='alert'>The door is already electrified. You can't re-electrify it while it's already electrified.<br><br></span>"))
+		boutput(user, SPAN_ALERT("The door is already electrified. You can't re-electrify it while it's already electrified.<br><br>"))
 	else
 		src.secondsElectrified = 30
 		logTheThing(LOG_COMBAT, user || usr, "electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
@@ -53,10 +56,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bo
 
 /obj/machinery/door/airlock/proc/toggle_bolt(mob/user)
 	if (src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-		boutput(user, "<span class='alert'>You can't drop the door bolts - The door bolt dropping wire has been cut.</span>")
+		boutput(user, SPAN_ALERT("You can't drop the door bolts - The door bolt dropping wire has been cut."))
 		return
 	if(!src.arePowerSystemsOn() || (src.status & NOPOWER))
-		boutput(user, "<span class='alert'>The door has no power - you can't raise/lower the door bolts.</span>")
+		boutput(user, SPAN_ALERT("The door has no power - you can't raise/lower the door bolts."))
 		return
 	if(src.locked)
 		src.set_unlocked()
@@ -66,17 +69,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bo
 
 /obj/machinery/door/airlock/proc/shock_perm(mob/user)
 	if(!src.arePowerSystemsOn() || (src.status & NOPOWER))
-		boutput(user, "<span class='alert'>The door has no power - you can't electrify it.</span>")
+		boutput(user, SPAN_ALERT("The door has no power - you can't electrify it."))
 		return
 	//electrify door indefinitely
 	if(!src.can_shock)
-		boutput(user, text("<span class='alert'>This door is unable to be electrified.<br><br></span>"))
+		boutput(user, SPAN_ALERT("This door is unable to be electrified.<br><br>"))
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-		boutput(user, text("<span class='alert'>The electrification wire has been cut.<br><br></span>"))
+		boutput(user, SPAN_ALERT("The electrification wire has been cut.<br><br>"))
 	else if (src.secondsElectrified==-1)
-		boutput(user, text("<span class='alert'>The door is already indefinitely electrified.<br><br></span>"))
+		boutput(user, SPAN_ALERT("The door is already indefinitely electrified.<br><br>"))
 	else if (src.secondsElectrified!=0)
-		boutput(user, text("<span class='alert'>The door is already electrified. You can't re-electrify it while it's already electrified.<br><br></span>"))
+		boutput(user, SPAN_ALERT("The door is already electrified. You can't re-electrify it while it's already electrified.<br><br>"))
 	else
 		logTheThing(LOG_COMBAT, user || usr, "electrified airlock ([src]) at [log_loc(src)] indefinitely.")
 		message_admins("[key_name(user || usr)] electrified airlock ([src]) at [log_loc(src)] indefinitely.")
@@ -88,7 +91,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bo
 		boutput(user, "The door has no power - you can't electrify it.")
 		return
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-		boutput(user, text("<span class='alert'>Can't un-electrify the airlock - The electrification wire is cut.<br><br></span>"))
+		boutput(user, SPAN_ALERT("Can't un-electrify the airlock - The electrification wire is cut.<br><br>"))
 	else if (src.secondsElectrified!=0)
 		src.secondsElectrified = 0
 		logTheThing(LOG_COMBAT, user || usr, "de-electrified airlock ([src]) at [log_loc(src)].")
@@ -97,7 +100,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bo
 
 /obj/machinery/door/airlock/proc/idscantoggle(mob/user)
 	if(!src.arePowerSystemsOn() || (src.status & NOPOWER))
-		boutput(user, "<span class='alert'>The door has no power - you toggle the ID scanner.</span>")
+		boutput(user, SPAN_ALERT("The door has no power - you toggle the ID scanner."))
 		return
 	//enable/disable ID scanner
 	if (src.isWireCut(AIRLOCK_WIRE_IDSCAN))
@@ -110,12 +113,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bo
 	if (src.operating == 1)
 		return
 	if((!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
-		boutput(user, "<span class='alert'>The door has no power - you can't open/close it.</span>")
+		boutput(user, SPAN_ALERT("The door has no power - you can't open/close it."))
 		return
 	if(src.welded)
-		boutput(user, text("<span class='alert'>The airlock has been welded shut!</span>"))
+		boutput(user, SPAN_ALERT("The airlock has been welded shut!"))
 	else if(locked)
-		boutput(user, text("<span class='alert'>The door bolts are down!</span>"))
+		boutput(user, SPAN_ALERT("The door bolts are down!"))
 	else if(!density)
 		close()
 	else
@@ -178,8 +181,10 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
 	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = 0
-	var/obj/machinery/door/airlock/closeOther = null
-	var/closeOtherId = null
+
+	var/cycle_id = ""	//! Which airlocks this door is connected too.
+	var/cycle_enter_id = ""	//! An ID for double doors sharing a direction in a cycling airlock system.
+
 	var/list/signalers[10]
 	var/lockdownbyai = 0
 	var/net_id = null
@@ -1093,6 +1098,8 @@ About the new airlock wires panel:
 			//Cutting this also flashes the red light on the door (if the door has power).
 			if ((src.arePowerSystemsOn()) && (!(src.status & NOPOWER)))
 				play_deny()
+				if(src.aiDisabledIdScanner == TRUE)
+					src.aiDisabledIdScanner = FALSE
 
 		if(AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
 			//Cutting either one disables the main door power, but unless backup power is also cut, the backup power re-powers the door in 10 seconds. While unpowered, the door may be crowbarred open, but bolts-raising will not work. Cutting these wires may electocute the user.
@@ -1330,58 +1337,58 @@ About the new airlock wires panel:
 		src.aiHacking=1
 		SPAWN(2 SECONDS)
 			//TODO: Make this take a minute
-			boutput(user, "<span class='notice'>Airlock AI control has been blocked. Beginning fault-detection.</span>")
+			boutput(user, SPAN_NOTICE("Airlock AI control has been blocked. Beginning fault-detection."))
 			src.hackMessage = "Fault Detection..."
 			hackingProgression = 1
 			tgui_process.update_uis(src)
 			sleep(5 SECONDS)
 			if (src.canAIControl())
-				boutput(user, "<span class='notice'>Alert cancelled. Airlock control has been restored without our assistance.</span>")
+				boutput(user, SPAN_NOTICE("Alert cancelled. Airlock control has been restored without our assistance."))
 				src.aiHacking=0
 				return
 			else if (!src.canAIHack())
-				boutput(user, "<span class='notice'>We've lost our connection! Unable to hack airlock.</span>")
+				boutput(user, SPAN_NOTICE("We've lost our connection! Unable to hack airlock."))
 				src.aiHacking=0
 				return
-			boutput(user, "<span class='notice'>Fault confirmed: airlock control wire disabled or cut.</span>")
+			boutput(user, SPAN_NOTICE("Fault confirmed: airlock control wire disabled or cut."))
 			src.hackMessage = "Fault Confirmed..."
 			hackingProgression = 2
 			tgui_process.update_uis(src)
 			sleep(2 SECONDS)
-			boutput(user, "<span class='notice'>Attempting to hack into airlock. This may take some time.</span>")
+			boutput(user, SPAN_NOTICE("Attempting to hack into airlock. This may take some time."))
 			src.hackMessage = "Hacking into airlock..."
 			hackingProgression = 3
 			tgui_process.update_uis(src)
 			sleep(20 SECONDS)
 			if (src.canAIControl())
-				boutput(user, "<span class='notice'>Alert cancelled. Airlock control has been restored without our assistance.</span>")
+				boutput(user, SPAN_NOTICE("Alert cancelled. Airlock control has been restored without our assistance."))
 				src.aiHacking=0
 				return
 			else if (!src.canAIHack())
-				boutput(user, "<span class='alert'>We've lost our connection! Unable to hack airlock.</span>")
+				boutput(user, SPAN_ALERT("We've lost our connection! Unable to hack airlock."))
 				src.aiHacking=0
 				return
-			boutput(user, "<span class='notice'>Upload access confirmed. Loading control program into airlock software.</span>")
+			boutput(user, SPAN_NOTICE("Upload access confirmed. Loading control program into airlock software."))
 			src.hackMessage = "Uploading..."
 			hackingProgression = 4
 			tgui_process.update_uis(src)
 			sleep(17 SECONDS)
 			if (src.canAIControl())
-				boutput(user, "<span class='notice'>Alert cancelled. Airlock control has been restored without our assistance.</span>")
+				boutput(user, SPAN_NOTICE("Alert cancelled. Airlock control has been restored without our assistance."))
 				src.aiHacking=0
 				return
 			else if (!src.canAIHack())
-				boutput(user, "<span class='alert'>We've lost our connection! Unable to hack airlock.</span>")
+				boutput(user, SPAN_ALERT("We've lost our connection! Unable to hack airlock."))
 				src.aiHacking=0
 				return
-			boutput(user, "<span class='notice'>Transfer complete. Forcing airlock to execute program.</span>")
+			boutput(user, SPAN_NOTICE("Transfer complete. Forcing airlock to execute program."))
 			src.hackMessage = "Transfer complete"
 			hackingProgression = 5
 			tgui_process.update_uis(src)
 			sleep(5 SECONDS)
 			//disable blocked control
 			src.aiControlDisabled = 2
-			boutput(user, "<span class='notice'>Receiving control information from airlock.</span>")
+			boutput(user, SPAN_NOTICE("Receiving control information from airlock."))
 			src.hackMessage = "Receiving Information"
 			hackingProgression = 6
 			tgui_process.update_uis(src)
@@ -1538,12 +1545,12 @@ About the new airlock wires panel:
 	src.add_fingerprint(user)
 	if (istype(C, /obj/item/device/t_scanner) || (istype(C, /obj/item/device/pda2) && istype(C:module, /obj/item/device/pda_module/tray)))
 		if(src.isElectrified())
-			boutput(user, "<span class='alert'>[bicon(C)] <b>WARNING</b>: Abnormal electrical response received from access panel.</span>")
+			boutput(user, SPAN_ALERT("[bicon(C)] <b>WARNING</b>: Abnormal electrical response received from access panel."))
 		else
 			if(src.status & NOPOWER)
-				boutput(user, "<span class='alert'>[bicon(C)] No electrical response received from access panel.</span>")
+				boutput(user, SPAN_ALERT("[bicon(C)] No electrical response received from access panel."))
 			else
-				boutput(user, "<span class='notice'>[bicon(C)] Regular electrical response received from access panel.</span>")
+				boutput(user, SPAN_NOTICE("[bicon(C)] Regular electrical response received from access panel."))
 		return
 
 	if (!issilicon(user) && (BOUNDS_DIST(src, user) == 0))
@@ -1557,7 +1564,7 @@ About the new airlock wires panel:
 
 	if ((isweldingtool(C) && !( src.operating ) && src.density))
 		if (src.hardened)
-			boutput(user, "<span class='alert'>Your tool is unable to weld this airlock! Huh.</span>")
+			boutput(user, SPAN_ALERT("Your tool is unable to weld this airlock! Huh."))
 			return
 		if(!C:try_weld(user, 1, burn_eyes = 1))
 			return
@@ -1569,15 +1576,15 @@ About the new airlock wires panel:
 
 		if (src.health < src.health_max)
 			src.heal_damage()
-			boutput(user, "<span class='notice'>Your repair the damage to [src].</span>")
+			boutput(user, SPAN_NOTICE("Your repair the damage to [src]."))
 
 		return
 	else if (isscrewingtool(C))
 		if (src.hardened)
-			boutput(user, "<span class='alert'>Your tool can't pierce this airlock! Huh.</span>")
+			boutput(user, SPAN_ALERT("Your tool can't pierce this airlock! Huh."))
 			return
 		if (!src.has_panel)
-			boutput(user, "<span class='alert'>[src] does not have a panel for you to unscrew!</span>")
+			boutput(user, SPAN_ALERT("[src] does not have a panel for you to unscrew!"))
 			return
 		src.panel_open = !(src.panel_open)
 		tgui_process.update_uis(src)
@@ -1640,21 +1647,27 @@ About the new airlock wires panel:
 			src.UpdateIcon()
 
 	else if (src.operating == -1) //broken
-		boutput(usr, "<span class='alert'>You try to pry [src]  [src.density ? "open" : "closed"], but it won't budge! It seems completely broken!</span>")
+		boutput(usr, SPAN_ALERT("You try to pry [src]  [src.density ? "open" : "closed"], but it won't budge! It seems completely broken!"))
 
 	else if (src.welded)
-		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The sides of \the [src] seem to be welded.</span>")
+		boutput(usr, SPAN_ALERT("You try to pry [src]  open, but it won't budge! The sides of \the [src] seem to be welded."))
 
 	else if (src.locked)
-		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The bolts of \the [src] must be disabled first.</span>")
+		boutput(usr, SPAN_ALERT("You try to pry [src]  open, but it won't budge! The bolts of \the [src] must be disabled first."))
 
 	else if (src.arePowerSystemsOn())
-		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The power of \the [src] must be disabled first.</span>")
+		boutput(usr, SPAN_ALERT("You try to pry [src]  open, but it won't budge! The power of \the [src] must be disabled first."))
 
 	if(!ON_COOLDOWN(src, "prying_sound", 1.5 SECONDS))
-		playsound(src, 'sound/machines/airlock_pry.ogg', 35, 1)
+		playsound(src, 'sound/machines/airlock_pry.ogg', 35, TRUE)
 
 	return
+
+/// adds the airlock in question to the global list.
+/obj/machinery/door/airlock/proc/attempt_cycle_link()
+	if (src.cycle_id)
+		if (!(src in cycling_airlocks[src.cycle_id]))
+			cycling_airlocks[src.cycle_id] += src
 
 /obj/machinery/door/airlock/open()
 	if (!src.density || src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
@@ -1664,13 +1677,14 @@ About the new airlock wires panel:
 		power_usage += LINKED_FORCEFIELD_POWER_USAGE
 	.= ..()
 
-	if (narrator_mode)
-		playsound(src.loc, 'sound/vox/door.ogg', 25, 1)
-	else
-		playsound(src.loc, src.sound_airlock, 25, 1)
+	playsound(src.loc, src.sound_airlock, 25, 1)
 
-	if (src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
-		src.closeOther.close(1)
+	if (src.cycle_id)
+		for (var/obj/machinery/door/airlock/D in cycling_airlocks[src.cycle_id])
+			// if they share entry id, don't close, e.g. double doors facing space.
+			if (src.cycle_enter_id && src.cycle_enter_id == D.cycle_enter_id)
+				continue
+			D.close()
 
 /obj/machinery/door/airlock/close()
 	//split into two sets of checks so failures to close due to lacking power will cause linked shields to deactivate
@@ -1685,13 +1699,10 @@ About the new airlock wires panel:
 	if (src.linked_forcefield)
 		power_usage -= LINKED_FORCEFIELD_POWER_USAGE
 	if(!..(!src.safety))
-		if (narrator_mode)
-			playsound(src.loc, 'sound/vox/door.ogg', 25, 1)
+		if (src.sound_close_airlock)
+			playsound(src.loc, src.sound_close_airlock, 25, 1)
 		else
-			if (src.sound_close_airlock)
-				playsound(src.loc, src.sound_close_airlock, 25, 1)
-			else
-				playsound(src.loc, src.sound_airlock, 25, 1)
+			playsound(src.loc, src.sound_airlock, 25, 1)
 
 	return
 
@@ -1700,14 +1711,6 @@ About the new airlock wires panel:
 	src.net_id = generate_net_id(src)
 	if (src.id_tag)
 		src.id_tag = ckeyEx(src.id_tag)
-
-	if (src.closeOtherId != null)
-		src.closeOtherId = ckeyEx(src.closeOtherId)
-		SPAWN(0.5 SECONDS)
-			for_by_tcl(A, /obj/machinery/door/airlock)
-				if (A.closeOtherId == src.closeOtherId && A != src)
-					src.closeOther = A
-					break
 
 /obj/machinery/door/airlock/isblocked()
 	if(src.density && ((src.status & NOPOWER) || src.welded || src.locked || (src.operating == -1) ))
@@ -1939,11 +1942,11 @@ TYPEINFO(/obj/machinery/door/airlock)
 
 	set_locked()
 		. = ..()
-		playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
+		playsound(src, 'sound/machines/airlock_bolt.ogg', 40, TRUE, -2)
 
 	set_unlocked()
 		. = ..()
-		playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
+		playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, TRUE, -2)
 
 
 	allowed(mob/living/carbon/human/user)
@@ -1987,9 +1990,9 @@ TYPEINFO(/obj/machinery/door/airlock)
 /obj/machinery/door/airlock/emag_act(mob/user, obj/item/card/emag/E)
 	. = ..()
 	if(src.welded && !src.locked)
-		audible_message("<span class='alert'>[src] lets out a loud whirring and grinding noise!</span>")
+		audible_message(SPAN_ALERT("[src] lets out a loud whirring and grinding noise!"))
 		animate_shake(src, 5, 2, 2, src.pixel_x, src.pixel_y)
-		playsound(src, 'sound/items/mining_drill.ogg', 25, 1, 0, 0.8)
+		playsound(src, 'sound/items/mining_drill.ogg', 25, TRUE, 0, 0.8)
 		src.take_damage(src.health * 0.8)
 
 /obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
@@ -2119,7 +2122,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 					src.UpdateIcon()
 					. = TRUE
 				else
-					boutput(usr, "<span class='alert'>Main power is already offline.</span>")
+					boutput(usr, SPAN_ALERT("Main power is already offline."))
 				. = TRUE
 			if("disruptBackup")
 				if(!src.secondsBackupPowerLost)
@@ -2127,7 +2130,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 					src.UpdateIcon()
 					. = TRUE
 				else
-					boutput(usr, "<span class='alert'>Backup power is already offline.</span>")
+					boutput(usr, SPAN_ALERT("Backup power is already offline."))
 				. = TRUE
 			if("shockRestore")
 				src.shock_restore(usr)

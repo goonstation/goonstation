@@ -33,6 +33,7 @@ TYPEINFO(/obj/item/saw)
 	w_class = W_CLASS_BULKY
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SAWING
+	leaves_slash_wound = TRUE
 	var/sawnoise = 'sound/machines/chainsaw_green.ogg'
 	arm_icon = "chainsaw-D"
 	var/base_arm = "chainsaw"
@@ -77,7 +78,7 @@ TYPEINFO(/obj/item/saw)
 		return
 
 	// Fixed a couple of bugs and cleaned code up a little bit (Convair880).
-	attack(mob/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (!istype(target))
 			return
 
@@ -100,16 +101,16 @@ TYPEINFO(/obj/item/saw)
 
 	attack_self(mob/user as mob)
 		if (user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> accidentally grabs the blade of [src].</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> accidentally grabs the blade of [src]."))
 			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 5, 5)
 			JOB_XP(user, "Clown", 1)
 		src.active = !( src.active )
 		if (src.active)
-			boutput(user, "<span class='notice'>[src] is now active.</span>")
+			boutput(user, SPAN_NOTICE("[src] is now active."))
 			src.force = active_force
 			src.hitsound = sawnoise
 		else
-			boutput(user, "<span class='notice'>[src] is now off.</span>")
+			boutput(user, SPAN_NOTICE("[src] is now off."))
 			src.force = off_force
 			src.hitsound = initial(src.hitsound)
 		tooltip_rebuild = 1
@@ -123,7 +124,7 @@ TYPEINFO(/obj/item/saw)
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] shoves the chainsaw into [his_or_her(user)] chest!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] shoves the chainsaw into [his_or_her(user)] chest!</b>"))
 		blood_slash(user, 25)
 		playsound(user.loc, 'sound/machines/chainsaw_red.ogg', 50, 1)
 		playsound(user.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
@@ -161,7 +162,7 @@ TYPEINFO(/obj/item/saw/syndie)
 	stamina_damage = 100
 	stamina_cost = 30
 	stamina_crit_chance = 40
-	c_flags = EQUIPPED_WHILE_HELD | NOT_EQUIPPED_WHEN_WORN
+	c_flags = EQUIPPED_WHILE_HELD
 
 	setupProperties()
 		. = ..()
@@ -172,11 +173,11 @@ TYPEINFO(/obj/item/saw/syndie)
 			return
 		..()
 		if (src.active)
-			playsound(src, 'sound/machines/chainsaw_red_start.ogg', 90, 0)
+			playsound(src, 'sound/machines/chainsaw_red_start.ogg', 90, FALSE)
 		else
-			playsound(src, 'sound/machines/chainsaw_red_stop.ogg', 90, 0)
+			playsound(src, 'sound/machines/chainsaw_red_stop.ogg', 90, FALSE)
 
-	attack(mob/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(!active)
 			return ..()
 		if (iscarbon(target))
@@ -192,14 +193,11 @@ TYPEINFO(/obj/item/saw/syndie)
 					qdel(C)
 				return
 
+		if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
+			return ..()
+
 		if (!ishuman(target))
 			target.changeStatus("weakened", 3 SECONDS)
-			return ..()
-
-		if (target.nodamage)
-			return ..()
-
-		if (target.spellshield)
 			return ..()
 
 		target.changeStatus("weakened", 3 SECONDS)
@@ -212,7 +210,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				H.organHolder.drop_organ("appendix")
 				playsound(target.loc, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 				target.visible_message(
-					"<span class='alert'><b>[target]'s appendix is ripped out [pick("violently", "brutally", "ferociously", "fiercely")]!</span>"
+					SPAN_ALERT("<b>[target]'s appendix is ripped out [pick("violently", "brutally", "ferociously", "fiercely")]!")
 					)
 				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 				return ..()
@@ -221,7 +219,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				H.organHolder.drop_organ("left_kidney")
 				playsound(target.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				target.visible_message(
-					"<span class='alert'><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
+					SPAN_ALERT("<b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!")
 					)
 				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 				return ..()
@@ -230,7 +228,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				H.organHolder.drop_organ("left_lung")
 				playsound(target.loc, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 				target.visible_message(
-					"<span class='alert'><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
+					SPAN_ALERT("<b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!")
 					)
 				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 				return ..()
@@ -239,7 +237,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				H.organHolder.drop_organ("right_kidney")
 				playsound(target.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				target.visible_message(
-					"<span class='alert'><b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!</span>"
+					SPAN_ALERT("<b>[target]'s kidney is torn out [pick("cruelly", "viciously", "atrociously", "fiercely")]!")
 					)
 				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 				return ..()
@@ -248,7 +246,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				H.organHolder.drop_organ("right_lung")
 				playsound(target.loc, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 				target.visible_message(
-					"<span class='alert'><b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!</span>"
+					SPAN_ALERT("<b>[target]'s lung is gashed out [pick("tempestuously", "impetuously", "sorta meanly", "unpleasantly")]!")
 					)
 				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 				return ..()
@@ -257,7 +255,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				H.organHolder.drop_organ("liver")
 				playsound(target.loc, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 				target.visible_message(
-					"<span class='alert'><b>[target]'s liver is gashed out [pick("unnecessarily", "stylishly", "viciously", "unethically")]!</span>"
+					SPAN_ALERT("<b>[target]'s liver is gashed out [pick("unnecessarily", "stylishly", "viciously", "unethically")]!")
 					)
 				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 
@@ -267,7 +265,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				H.organHolder.drop_organ("heart")
 				playsound(target.loc, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 				target.visible_message(
-					"<span class='alert'><b>[target]'s heart is ripped clean out! [pick("HOLY MOLY", "FUCK", "JESUS CHRIST", "THAT'S GONNA LEAVE A MARK", "OH GOD", "OUCH", "DANG", "WOW", "woah")]!!</span>"
+					SPAN_ALERT("<b>[target]'s heart is ripped clean out! [pick("HOLY MOLY", "FUCK", "JESUS CHRIST", "THAT'S GONNA LEAVE A MARK", "OH GOD", "OUCH", "DANG", "WOW", "woah")]!!")
 					)
 				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 				return ..()
@@ -277,7 +275,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				H.organHolder.drop_organ("spleen")
 				playsound(target.loc, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 				target.visible_message(
-					"<span class='alert'><b>[target]'s spleen is removed with [pick("conviction", "malice", "disregard for safety regulations", "contempt")]!</span>"
+					SPAN_ALERT("<b>[target]'s spleen is removed with [pick("conviction", "malice", "disregard for safety regulations", "contempt")]!")
 					)
 				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 				return ..()
@@ -286,7 +284,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				H.organHolder.drop_organ("pancreas")
 				playsound(target.loc, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 50, 1)
 				target.visible_message(
-					"<span class='alert'><b>[target]'s pancreas is evicted with [pick("anger", "ill intent", "disdain")]!</span>"
+					SPAN_ALERT("<b>[target]'s pancreas is evicted with [pick("anger", "ill intent", "disdain")]!")
 					)
 				make_cleanable(/obj/decal/cleanable/blood/gibs,target.loc)
 				return ..()
@@ -301,7 +299,7 @@ TYPEINFO(/obj/item/saw/syndie)
 		if(!H)
 			return
 		if (!H.find_in_hand(src))
-			boutput(H, "<span class='alert'>You need to be holding your saw!</span>")
+			boutput(H, SPAN_ALERT("You need to be holding your saw!"))
 			return
 		var/obj/item/parts/human_parts/arm/new_arm = null
 		if (target == "l_arm")
@@ -371,8 +369,10 @@ TYPEINFO(/obj/item/saw/elimbinator)
 	stamina_cost = 40
 	stamina_crit_chance = 50
 
-	attack(mob/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target))
+			if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
+				return ..()
 			var/mob/living/carbon/human/H = target
 			var/list/limbs = list("l_arm","r_arm","l_leg","r_leg")
 			var/the_limb = null
@@ -491,7 +491,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 			if(pot.current)
 				var/datum/plant/p = pot.current
 				if(p.growthmode == "weed")
-					user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!","<span class='alert'>The [p.name] is too strong for you traveller...</span>")
+					user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!",SPAN_ALERT("The [p.name] is too strong for you traveller..."))
 					return
 				src.genes = pot.plantgenes
 				src.grow_level = pot.grow_level

@@ -3,7 +3,8 @@
 	scantype = "Psychological Condition"
 	max_stages = 5
 	spread = "Non-Contagious"
-	cure = "Haloperidol"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Haloperidol"
 	reagentcure = list("haloperidol")
 	associated_reagent = "loose_screws"
 	affected_species = list("Human")
@@ -19,7 +20,7 @@
 	switch(D.stage)
 		if(2)
 			if (probmult(10))
-				boutput(affected_mob, pick("<span class='alert'><i><b><font face =Tempus Sans ITC>Kill them all!!!!!</b></i></FONT></span>", "<span class='alert'><i><b><font face = Tempus Sans ITC>They are out to get you!</b></FONT></i></span>", "<span class='alert'><i><b><font face = Tempus Sans ITC>They know what you did!!!!</b></FONT></i></span>", "<span class='alert'><i><b><font face = Tempus Sans ITC>They are watching you!!!</b></i></FONT></span>"))
+				boutput(affected_mob, pick(SPAN_ALERT("<i><b><font face =Tempus Sans ITC>Kill them all!!!!!</b></i></FONT>"), SPAN_ALERT("<i><b><font face = Tempus Sans ITC>They are out to get you!</b></FONT></i>"), SPAN_ALERT("<i><b><font face = Tempus Sans ITC>They know what you did!!!!</b></FONT></i>"), SPAN_ALERT("<i><b><font face = Tempus Sans ITC>They are watching you!!!</b></i></FONT>")))
 		if(3)
 			if (probmult(8))
 				for (var/mob/living/M in view(7,affected_mob))
@@ -27,7 +28,7 @@
 						boutput(affected_mob, "<b>[M.name]</b> says, \"[pick("I'm going to kill you!","I'm the the traitor.", "TRAITOR!")]\"")
 						break
 			if (probmult(9))
-				boutput(affected_mob, pick("<span class='alert'><i><b><font face =Tempus Sans ITC>Kill them all!!!!!</b></i></FONT></span>", "<span class='alert'><i><b><font face = Tempus Sans ITC>They are out to get you!</b></FONT></i></span>", "<span class='alert'><i><b><font face = Tempus Sans ITC>They know what you did!!!!</b></FONT></i></span>", "<span class='alert'><i><b><font face = Tempus Sans ITC>They are watching you!!!</b></i></FONT></span>"))
+				boutput(affected_mob, pick(SPAN_ALERT("<i><b><font face =Tempus Sans ITC>Kill them all!!!!!</b></i></FONT>"), SPAN_ALERT("<i><b><font face = Tempus Sans ITC>They are out to get you!</b></FONT></i>"), SPAN_ALERT("<i><b><font face = Tempus Sans ITC>They know what you did!!!!</b></FONT></i>"), SPAN_ALERT("<i><b><font face = Tempus Sans ITC>They are watching you!!!</b></i></FONT>")))
 
 		if(4)
 			if(probmult(5))
@@ -109,6 +110,6 @@
 
 /datum/ailment/disease/space_madness/on_remove(var/mob/living/affected_mob, var/datum/ailment_data/D)
 	if (affected_mob?.client)
-		affected_mob.client.dir = 1 // Reset their view of the map. Yes, this was missing for many years (Convair880).
+		affected_mob.client.dir = NORTH // Reset their view of the map. Yes, this was missing for many years (Convair880).
 	..()
 	return

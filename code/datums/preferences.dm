@@ -3,9 +3,10 @@ var/list/removed_jobs = list(
 	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
 	"Barman" = "Bartender",
 	"Mechanic" = "Engineer",
+	"Mailman" = "Mail Courier"
 )
 
-datum/preferences
+/datum/preferences
 	var/profile_name
 	var/profile_number
 	var/profile_modified
@@ -31,6 +32,7 @@ datum/preferences
 	var/be_syndicate_commander = 0
 	var/be_spy = 0
 	var/be_gangleader = 0
+	var/be_gangmember = 0
 	var/be_revhead = 0
 	var/be_changeling = 0
 	var/be_wizard = 0
@@ -53,6 +55,7 @@ datum/preferences
 	var/admin_music_volume = 50
 	var/radio_music_volume = 10
 	var/use_click_buffer = 0
+	var/help_text_in_examine = TRUE
 	var/listen_ooc = 1
 	var/listen_looc = 1
 	var/flying_chat_hidden = 0
@@ -88,11 +91,16 @@ datum/preferences
 
 	var/tooltip_option = TOOLTIP_ALWAYS
 
+	var/scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
+
 	var/regex/character_name_validation = null //This regex needs to match the name in order to consider it a valid name
 
 	var/preferred_map = ""
 
 	var/font_size = null
+
+	///An associative list of slots to part IDs, see part_customization.dm
+	var/list/custom_parts = null
 
 	//var/fartsound = "default"
 	//var/screamsound = "default"
@@ -102,6 +110,11 @@ datum/preferences
 		randomize_name()
 		randomizeLook()
 		..()
+		if (isnull(src.custom_parts)) //I feel like there should be a better place to init this
+			src.custom_parts = list(
+				"l_arm" = "arm_default_left",
+				"r_arm" = "arm_default_right",
+			)
 
 	ui_state(mob/user)
 		return tgui_always_state.can_use_topic(src, user)
@@ -111,13 +124,15 @@ datum/preferences
 
 	ui_interact(mob/user, datum/tgui/ui)
 		if(!tgui_process)
-			boutput(user, "<span class='alert'>Hold on a moment, stuff is still setting up.</span>")
+			boutput(user, SPAN_ALERT("Hold on a moment, stuff is still setting up."))
 			return
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
 			ui = new(user, src, "CharacterPreferences")
 			ui.set_autoupdate(FALSE)
 			ui.open()
+		SPAWN(0) //this awful hack is required to stop the preview rendering with the scale all wrong the first time the window is opened
+			src.update_preview_icon() //apparently you need to poke byond into re-sending the window data by changing something about the preview mob??
 
 	ui_close(mob/user)
 		. = ..()
@@ -141,7 +156,6 @@ datum/preferences
 				"img" = icon2base64(icon(trait.icon, trait.icon_state)),
 				"points" = trait.points,
 			)
-
 		. = list(
 			"traitsData" = traits
 		)
@@ -166,6 +180,8 @@ datum/preferences
 
 		var/list/cloud_saves = null
 
+		if (!client.cloud_available())
+			client.player.cloud_fetch()
 		if (client.cloud_available())
 			cloud_saves = list()
 			for (var/name in client.player.cloudsaves)
@@ -186,6 +202,16 @@ datum/preferences
 				"selected" = selected,
 				"available" = src.traitPreferences.isAvailableTrait(trait.id, selected)
 			))
+
+		var/list/custom_parts_data = list()
+		for (var/slot_id in src.custom_parts)
+			var/datum/part_customization/customization = get_part_customization(src.custom_parts[slot_id])
+			custom_parts_data[slot_id] = list(
+				"id" = customization.id,
+				"name" = customization.get_name(),
+				"points" = customization.trait_cost,
+				"img" = customization.get_base64_icon(),
+			)
 
 		. = list(
 			"isMentor" = client.is_mentor(),
@@ -243,18 +269,21 @@ datum/preferences
 			"targetingCursor" = src.target_cursor,
 			"targetingCursorPreview" = icon2base64(icon(cursors_selection[target_cursor])),
 			"tooltipOption" = src.tooltip_option,
+			"scrollWheelTargeting" = src.scrollwheel_limb_targeting,
 			"tguiFancy" = src.tgui_fancy,
 			"tguiLock" = src.tgui_lock,
 			"viewChangelog" = src.view_changelog,
 			"viewScore" = src.view_score,
 			"viewTickets" = src.view_tickets,
 			"useClickBuffer" = src.use_click_buffer,
+			"helpTextInExamine" = src.help_text_in_examine,
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
 			"traitsAvailable" = traits,
 			"traitsMax" = src.traitPreferences.max_traits,
-			"traitsPointsTotal" = src.traitPreferences.point_total,
+			"traitsPointsTotal" = src.traitPreferences.calcTotal(src.traitPreferences.traits_selected, src.custom_parts),
+			"partsData" = custom_parts_data,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -312,7 +341,7 @@ datum/preferences
 				if (!isnull(index) && isnum(index))
 					src.savefile_save(client.key, index)
 					src.profile_number = index
-					boutput(usr, "<span class='notice'><b>Character saved to Slot [index].</b></span>")
+					boutput(usr, SPAN_NOTICE("<b>Character saved to Slot [index].</b>"))
 					return TRUE
 
 			if ("load")
@@ -322,7 +351,7 @@ datum/preferences
 						tgui_alert(usr, "You do not have a savefile.", "No savefile")
 						return FALSE
 
-					boutput(usr, "<span class='notice'><b>Character loaded from Slot [index].</b></span>")
+					boutput(usr, SPAN_NOTICE("<b>Character loaded from Slot [index].</b>"))
 					update_preview_icon()
 					return TRUE
 
@@ -338,18 +367,18 @@ datum/preferences
 					else
 						var/ret = src.cloudsave_save(usr.client, new_name)
 						if(istext(ret))
-							boutput( usr, "<span class='alert'>Failed to save savefile: [ret]</span>" )
+							boutput( usr, SPAN_ALERT("Failed to save savefile: [ret]") )
 						else
-							boutput( usr, "<span class='notice'>Savefile saved!</span>" )
+							boutput( usr, SPAN_NOTICE("Savefile saved!") )
 
 			if ("cloud-save")
 				if (!client.cloud_available())
 					return
 				var/ret = src.cloudsave_save(client, params["name"])
 				if(istext(ret))
-					boutput(usr, "<span class='alert'>Failed to save savefile: [ret]</span>")
+					boutput(usr, SPAN_ALERT("Failed to save savefile: [ret]"))
 				else
-					boutput(usr, "<span class='notice'>Savefile saved!</span>")
+					boutput(usr, SPAN_NOTICE("Savefile saved!"))
 					return TRUE
 
 			if ("cloud-load")
@@ -357,9 +386,9 @@ datum/preferences
 					return
 				var/ret = src.cloudsave_load(client, params["name"])
 				if( istext(ret))
-					boutput(usr, "<span class='alert'>Failed to load savefile: [ret]</span>")
+					boutput(usr, SPAN_ALERT("Failed to load savefile: [ret]"))
 				else
-					boutput(usr, "<span class='notice'>Savefile loaded!</span>")
+					boutput(usr, SPAN_NOTICE("Savefile loaded!"))
 					update_preview_icon()
 					return TRUE
 
@@ -368,9 +397,9 @@ datum/preferences
 					return
 				var/ret = src.cloudsave_delete(client, params["name"])
 				if(istext(ret))
-					boutput(usr, "<span class='alert'>Failed to delete savefile: [ret]</span>")
+					boutput(usr, SPAN_ALERT("Failed to delete savefile: [ret]"))
 				else
-					boutput(usr, "<span class='notice'>Savefile deleted!</span>")
+					boutput(usr, SPAN_NOTICE("Savefile deleted!"))
 					return TRUE
 
 			if ("update-profileName")
@@ -539,7 +568,7 @@ datum/preferences
 						return TRUE
 
 			if ("update-flavorText")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", html_decode(src.flavor_text), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -551,7 +580,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-securityNote")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", html_decode(src.security_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -563,7 +592,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-medicalNote")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", html_decode(src.medical_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -575,7 +604,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-syndintNote")
-				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", src.synd_int_note, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", html_decode(src.synd_int_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > LONG_FLAVOR_CHAR_LIMIT)
@@ -601,7 +630,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-pdaColor")
-				var/new_color = input(usr, "Choose a color", "PDA", src.PDAcolor) as color | null
+				var/new_color = tgui_color_picker(usr, "Choose a color", "PDA", src.PDAcolor)
 				if (!isnull(new_color))
 					src.PDAcolor = new_color
 					src.profile_modified = TRUE
@@ -613,7 +642,7 @@ datum/preferences
 				if (usr.has_medal("Contributor"))
 					switch(tgui_alert(usr, "Goonstation contributors get to pick any colour for their skin tone!", "Thanks, pal!", list("Paint me like a posh fence!", "Use Standard tone.", "Cancel")))
 						if("Paint me like a posh fence!")
-							new_tone = input(usr, "Please select skin color.", "Character Generation", AH.s_tone)  as null|color
+							new_tone = tgui_color_picker(usr, "Please select skin color.", "Character Generation", AH.s_tone)
 						if("Use Standard tone.")
 							new_tone = get_standard_skintone(usr)
 						else
@@ -671,7 +700,7 @@ datum/preferences
 					src.profile_modified = TRUE
 					return TRUE
 			if ("update-eyeColor")
-				var/new_color = input(usr, "Please select an eye color.", "Character Generation", AH.e_color) as null|color
+				var/new_color = tgui_color_picker(usr, "Please select an eye color.", "Character Generation", AH.e_color)
 				if (new_color)
 					AH.e_color = new_color
 
@@ -695,7 +724,7 @@ datum/preferences
 						current_color = src.AH.customization_third_color
 					if ("underwear")
 						current_color = src.AH.u_color
-				var/new_color = input(usr, "Please select a color.", "Character Generation", current_color) as null|color
+				var/new_color = tgui_color_picker(usr, "Please select a color.", "Character Generation", current_color)
 				if (new_color)
 					switch(params["id"])
 						if ("custom1")
@@ -715,8 +744,7 @@ datum/preferences
 				var/new_style
 				switch(params["id"])
 					if ("custom1", "custom2", "custom3")
-						var/list/customization_types = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/hair/gimmick)
-						new_style = select_custom_style(customization_types, usr)
+						new_style = select_custom_style(usr, no_gimmick_hair=TRUE)
 					if ("underwear")
 						new_style = tgui_input_list(usr, "Select an underwear style", "Character Generation", underwear_styles)
 
@@ -756,7 +784,7 @@ datum/preferences
 
 				switch(params["id"])
 					if ("custom1", "custom2", "custom3")
-						style_list = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/hair/gimmick)
+						style_list = get_available_custom_style_types(usr.client, no_gimmick_hair=TRUE)
 					if ("underwear")
 						style_list = underwear_styles
 
@@ -878,6 +906,12 @@ datum/preferences
 					src.profile_modified = TRUE
 					return TRUE
 
+			if ("update-scrollWheelTargeting")
+				if (params["value"] == SCROLL_TARGET_ALWAYS || params["value"] == SCROLL_TARGET_HOVER || params["value"] == SCROLL_TARGET_NEVER)
+					src.scrollwheel_limb_targeting = params["value"]
+					src.profile_modified = TRUE
+				return TRUE
+
 			if ("update-tguiFancy")
 				src.tgui_fancy = !src.tgui_fancy
 				src.profile_modified = TRUE
@@ -908,6 +942,11 @@ datum/preferences
 				src.profile_modified = TRUE
 				return TRUE
 
+			if ("update-helpTextInExamine")
+				src.help_text_in_examine = !src.help_text_in_examine
+				src.profile_modified = TRUE
+				return TRUE
+
 			if ("update-useWasd")
 				src.use_wasd = !src.use_wasd
 				src.profile_modified = TRUE
@@ -924,16 +963,42 @@ datum/preferences
 				return TRUE
 
 			if ("select-trait")
-				src.profile_modified = src.traitPreferences.selectTrait(params["id"])
+				src.profile_modified = src.traitPreferences.selectTrait(params["id"], src.custom_parts)
 				return TRUE
 
 			if ("unselect-trait")
-				src.profile_modified = src.traitPreferences.unselectTrait(params["id"])
+				src.profile_modified = src.traitPreferences.unselectTrait(params["id"], src.custom_parts)
 				return TRUE
 
 			if ("reset-traits")
 				src.traitPreferences.resetTraits()
 				src.profile_modified = TRUE
+				return TRUE
+
+			if ("pick_part")
+				var/list/options = list()
+				for (var/part_id in part_customizations)
+					var/datum/part_customization/customization = part_customizations[part_id]
+					if (customization.slot == params["slot_id"])
+						var/option_string = "[customization.get_name()]"
+						if (customization.trait_cost)
+							option_string += " ([customization.trait_cost] trait point[customization.trait_cost > 1 ? "s" : ""])"
+						options[option_string] = customization.id
+				var/result = tgui_input_list(usr, "Select custom part", "Pick part", options)
+				if (!result)
+					return FALSE
+				var/list/new_custom_parts = src.custom_parts.Copy()
+				new_custom_parts[params["slot_id"]] = options[result] //this is kind of unsafe
+				if (!src.traitPreferences.isValid(src.traitPreferences.traits_selected, new_custom_parts))
+					boutput(usr, SPAN_ALERT("Cannot afford trait cost"))
+					return FALSE
+				var/datum/part_customization/customization = get_part_customization(options[result])
+				if (!customization.can_apply(src.preview.preview_thing, new_custom_parts))
+					boutput(usr, SPAN_ALERT("Unable to equip part"))
+					return FALSE
+				src.custom_parts = new_custom_parts
+				profile_modified = TRUE
+				update_preview_icon()
 				return TRUE
 
 			if ("reset")
@@ -971,11 +1036,13 @@ datum/preferences
 				admin_music_volume = 50
 				radio_music_volume = 50
 				use_click_buffer = 0
+				help_text_in_examine = TRUE
 				be_traitor = 0
 				be_syndicate = 0
 				be_syndicate_commander = 0
 				be_spy = 0
 				be_gangleader = 0
+				be_gangmember = 0
 				be_revhead = 0
 				be_changeling = 0
 				be_wizard = 0
@@ -987,6 +1054,7 @@ datum/preferences
 				be_flock = 0
 				be_misc = 0
 				tooltip_option = TOOLTIP_ALWAYS
+				scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
 				tgui_fancy = TRUE
 				tgui_lock = FALSE
 				PDAcolor = "#6F7961"
@@ -1080,7 +1148,12 @@ datum/preferences
 			qdel(ourWig)
 
 		if (traitPreferences.traits_selected.Find("bald") && mutantRace)
-			H.equip_if_possible(H.create_wig(), H.slot_head)
+			H.equip_if_possible(H.create_wig(), SLOT_HEAD)
+
+		for (var/slot_id in src.custom_parts)
+			var/datum/part_customization/customization = get_part_customization(src.custom_parts[slot_id])
+			customization.try_apply(H, src.custom_parts)
+		H.update_icons_if_needed()
 
 	proc/ShowChoices(mob/user)
 		src.ui_interact(user)
@@ -1159,10 +1232,10 @@ datum/preferences
 	proc/SetChoices(mob/user)
 		if (isnull(src.jobs_med_priority) || isnull(src.jobs_low_priority) || isnull(src.jobs_unwanted))
 			src.ResetAllPrefsToDefault(user)
-			boutput(user, "<span class='alert'><b>Your Job Preferences were null, and have been reset.</b></span>")
+			boutput(user, SPAN_ALERT("<b>Your Job Preferences were null, and have been reset.</b>"))
 		else if (isnull(src.job_favorite) && !src.jobs_med_priority.len && !src.jobs_low_priority.len && !length(src.jobs_unwanted))
 			src.ResetAllPrefsToDefault(user)
-			boutput(user, "<span class='alert'><b>Your Job Preferences were empty, and have been reset.</b></span>")
+			boutput(user, SPAN_ALERT("<b>Your Job Preferences were empty, and have been reset.</b>"))
 		else
 			// remove/replace jobs that were removed/renamed
 			for (var/job in removed_jobs)
@@ -1315,13 +1388,13 @@ datum/preferences
 			if (!J_Fav)
 				HTML += " Favorite Job not found!"
 			else if (jobban_isbanned(user,J_Fav.name) || (J_Fav.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J_Fav.requires_whitelist && !NT.Find(ckey(user.mind.key))))
-				boutput(user, "<span class='alert'><b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</b></span>")
+				boutput(user, SPAN_ALERT("<b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</b>"))
 				src.jobs_unwanted += J_Fav.name
 				src.job_favorite = null
 			else if (J_Fav.rounds_needed_to_play && (user.client && user.client.player))
 				var/round_num = user.client.player.get_rounds_participated()
 				if (!isnull(round_num) && round_num < J_Fav.rounds_needed_to_play) //they havent played enough rounds!
-					boutput(user, "<span class='alert'><b>You cannot play [J_Fav.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b></span>")
+					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b>"))
 					src.jobs_unwanted += J_Fav.name
 					src.job_favorite = null
 				else
@@ -1377,16 +1450,17 @@ datum/preferences
 					continue
 
 				if (cat == "unwanted" && JD.cant_allocate_unwanted)
-					boutput(user, "<span class='alert'><b>[JD.name] is not supposed to be in the Unwanted category. It has been moved to Low Priority.</b> You may need to refresh your job preferences page to correct the job count.</span>")
+					boutput(user, SPAN_ALERT("<b>[JD.name] is not supposed to be in the Unwanted category. It has been moved to Low Priority.</b> You may need to refresh your job preferences page to correct the job count."))
 					src.jobs_unwanted -= JD.name
 					src.jobs_low_priority += JD.name
 
+				var/hover_text = JD.short_description
 
 				HTML += {"
 				<div>
 					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level - 1]" class="arrow" style="left: 0;">&lt;</a>
 					[level < (4 - (JD.cant_allocate_unwanted ? 1 : 0)) ? {"<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level + 1]" class="arrow" style="right: 0;">&gt;</a>"} : ""]
-					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];">
+					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];" title="[hover_text]">
 					[JD.name]</a>
 				</div>
 				"}
@@ -1400,6 +1474,7 @@ datum/preferences
 			src.be_syndicate = FALSE
 			src.be_syndicate_commander = FALSE
 			src.be_gangleader = FALSE
+			src.be_gangmember = FALSE
 			src.be_revhead = FALSE
 			src.be_conspirator = FALSE
 #endif
@@ -1410,6 +1485,7 @@ datum/preferences
 			src.be_syndicate_commander = FALSE
 			src.be_spy = FALSE
 			src.be_gangleader = FALSE
+			src.be_gangmember = FALSE
 			src.be_revhead = FALSE
 			src.be_changeling = FALSE
 			src.be_wizard = FALSE
@@ -1429,6 +1505,7 @@ datum/preferences
 			<a href="byond://?src=\ref[src];preferences=1;b_syndicate_commander=1" class="[src.be_syndicate_commander ? "yup" : "nope"]">[crap_checkbox(src.be_syndicate_commander)] Nuclear Operative Commander</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_spy=1" class="[src.be_spy ? "yup" : "nope"]">[crap_checkbox(src.be_spy)] Spy/Thief</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_gangleader=1" class="[src.be_gangleader ? "yup" : "nope"]">[crap_checkbox(src.be_gangleader)] Gang Leader</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_gangmember=1" class="[src.be_gangmember ? "yup" : "nope"]">[crap_checkbox(src.be_gangmember)] Gang Member</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_revhead=1" class="[src.be_revhead ? "yup" : "nope"]">[crap_checkbox(src.be_revhead)] Revolution Leader</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_changeling=1" class="[src.be_changeling ? "yup" : "nope"]">[crap_checkbox(src.be_changeling)] Changeling</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_wizard=1" class="[src.be_wizard ? "yup" : "nope"]">[crap_checkbox(src.be_wizard)] Wizard</a>
@@ -1474,7 +1551,7 @@ datum/preferences
 #else
 		if (!find_job_in_controller_by_string(job,1))
 #endif
-			boutput(user, "<span class='alert'><b>The game could not find that job in the internal list of jobs.</b></span>")
+			boutput(user, SPAN_ALERT("<b>The game could not find that job in the internal list of jobs.</b>"))
 			switch(occ)
 				if (1) src.job_favorite = null
 				if (2) src.jobs_med_priority -= job
@@ -1482,7 +1559,7 @@ datum/preferences
 				if (4) src.jobs_unwanted -= job
 			return
 		if (job=="AI" && (!config.allow_ai))
-			boutput(user, "<span class='alert'><b>Selecting the AI is not currently allowed.</b></span>")
+			boutput(user, SPAN_ALERT("<b>Selecting the AI is not currently allowed.</b>"))
 			if (occ != 4)
 				switch(occ)
 					if (1) src.job_favorite = null
@@ -1492,7 +1569,7 @@ datum/preferences
 			return
 
 		if (jobban_isbanned(user, job))
-			boutput(user, "<span class='alert'><b>You are banned from this job and may not select it.</b></span>")
+			boutput(user, SPAN_ALERT("<b>You are banned from this job and may not select it.</b>"))
 			if (occ != 4)
 				switch(occ)
 					if (1) src.job_favorite = null
@@ -1510,7 +1587,7 @@ datum/preferences
 		if (temp_job.rounds_needed_to_play && (user.client && user.client.player))
 			var/round_num = user.client.player.get_rounds_participated()
 			if (!isnull(round_num) && round_num < temp_job.rounds_needed_to_play) //they havent played enough rounds!
-				boutput(user, "<span class='alert'><b>You cannot play [temp_job.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b></span>")
+				boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b>"))
 				if (occ != 4)
 					switch(occ)
 						if (1) src.job_favorite = null
@@ -1522,8 +1599,11 @@ datum/preferences
 		src.antispam = 1
 
 		var/picker = "Low Priority"
+		var/datum/job/J = find_job_in_controller_by_string(job)
 		if (level == 0)
 			var/list/valid_actions = list("Favorite","Medium Priority","Low Priority","Unwanted")
+			if(J.wiki_link)
+				valid_actions += "Show Wiki Page"
 
 			switch(occ)
 				if (1) valid_actions -= "Favorite"
@@ -1541,9 +1621,9 @@ datum/preferences
 				if (2) picker = "Medium Priority"
 				if (3) picker = "Low Priority"
 				if (4) picker = "Unwanted"
-		var/datum/job/J = find_job_in_controller_by_string(job)
+
 		if (J.cant_allocate_unwanted && picker == "Unwanted")
-			boutput(user, "<span class='alert'><b>[job] cannot be set to Unwanted.</b></span>")
+			boutput(user, SPAN_ALERT("<b>[job] cannot be set to Unwanted.</b>"))
 			src.antispam = 0
 			return
 
@@ -1570,6 +1650,8 @@ datum/preferences
 				if (occ == 1)
 					src.job_favorite = null
 				successful_move = 1
+			if ("Show Wiki Page")
+				user << link(J.wiki_link)
 
 		if (successful_move)
 			switch(occ)
@@ -1650,6 +1732,11 @@ datum/preferences
 
 		if (link_tags["b_gangleader"])
 			src.be_gangleader = !( src.be_gangleader)
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_gangmember"])
+			src.be_gangmember = !( src.be_gangmember )
 			src.SetChoices(user)
 			return
 
@@ -1755,7 +1842,6 @@ datum/preferences
 			var/mob/living/carbon/human/H = character
 			H.pin = pin
 			H.gender = src.gender
-			//H.desc = src.flavor_text
 
 		if (!skip_post_new_stuff)
 			apply_post_new_stuff(character)
@@ -1773,11 +1859,11 @@ datum/preferences
 				H.voice_type = H.mutantrace.voice_override
 
 	proc/apply_post_new_stuff(mob/living/character)
-		if(ishuman(character))
-			var/mob/living/carbon/human/H = character
-			if (H?.organHolder?.head?.donor_appearance) // aaaa
-				H.organHolder.head.donor_appearance.CopyOther(AH)
-		if (traitPreferences.isValid() && character.traitHolder)
+		for (var/slot_id in src.custom_parts)
+			var/part_id = src.custom_parts[slot_id]
+			var/datum/part_customization/customization = get_part_customization(part_id)
+			customization.try_apply(character, src.custom_parts)
+		if (traitPreferences.isValid(traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
 			for (var/T in traitPreferences.traits_selected)
 				character.traitHolder.addTrait(T)
 
@@ -1852,36 +1938,22 @@ datum/preferences
 /proc/randomize_hair_color(var/hcolor)
 	if (!hcolor)
 		return
-	var/adj = 0
-	if (copytext(hcolor, 1, 2) == "#")
-		adj = 1
-	//DEBUG_MESSAGE("HAIR initial: [hcolor]")
-	var/hR_adj = num2hex(hex2num(copytext(hcolor, 1 + adj, 3 + adj)) + rand(-25,25), 2)
-	//DEBUG_MESSAGE("HAIR R: [hR_adj]")
-	var/hG_adj = num2hex(hex2num(copytext(hcolor, 3 + adj, 5 + adj)) + rand(-5,5), 2)
-	//DEBUG_MESSAGE("HAIR G: [hG_adj]")
-	var/hB_adj = num2hex(hex2num(copytext(hcolor, 5 + adj, 7 + adj)) + rand(-10,10), 2)
-	//DEBUG_MESSAGE("HAIR B: [hB_adj]")
-	var/return_color = "#" + hR_adj + hG_adj + hB_adj
-	//DEBUG_MESSAGE("HAIR final: [return_color]")
-	return return_color
+	var/list/rgb_list = rgb2num(hcolor)
+	return rgb(
+		rgb_list[1] + rand(-25, 25),
+		rgb_list[2] + rand(-5, 5),
+		rgb_list[3] + rand(-10, 10)
+	)
 
 /proc/randomize_eye_color(var/ecolor)
 	if (!ecolor)
 		return
-	var/adj = 0
-	if (copytext(ecolor, 1, 2) == "#")
-		adj = 1
-	//DEBUG_MESSAGE("EYE initial: [ecolor]")
-	var/eR_adj = num2hex(hex2num(copytext(ecolor, 1 + adj, 3 + adj)) + rand(-10,10), 2)
-	//DEBUG_MESSAGE("EYE R: [eR_adj]")
-	var/eG_adj = num2hex(hex2num(copytext(ecolor, 3 + adj, 5 + adj)) + rand(-10,10), 2)
-	//DEBUG_MESSAGE("EYE G: [eG_adj]")
-	var/eB_adj = num2hex(hex2num(copytext(ecolor, 5 + adj, 7 + adj)) + rand(-10,10), 2)
-	//DEBUG_MESSAGE("EYE B: [eB_adj]")
-	var/return_color = "#" + eR_adj + eG_adj + eB_adj
-	//DEBUG_MESSAGE("EYE final: [return_color]")
-	return return_color
+	var/list/rgb_list = rgb2num(ecolor)
+	return rgb(
+		rgb_list[1] + rand(-10, 10),
+		rgb_list[2] + rand(-10, 10),
+		rgb_list[3] + rand(-10, 10)
+	)
 
 proc/isfem(datum/customization_style/style)
 	return !!(initial(style.gender) & FEMININE)
@@ -1978,11 +2050,12 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		else
 			H.real_name = pick_string_autokey("names/first_male.txt")
 		H.real_name += " [pick_string_autokey("names/last.txt")]"
+		H.on_realname_change()
 
 	AH.voicetype = RANDOM_HUMAN_VOICE
 
 	var/list/hair_colors = list("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D",\
-	"#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
+	"#D8C078", "#E3CC88", "#F2DA91", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
 	var/hair_color1
 	var/hair_color2
 	var/hair_color3
@@ -2018,23 +2091,24 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/type_first
 	if (AH.gender == MALE)
 		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/isfem))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE))
 			AH.customization_first = new type_first
 		else // otherwise just use one standard to the current gender
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/ismasc))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE))
 			AH.customization_first = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
-			var/type_second = pick(concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache))
+			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/beard) \
+								+ get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/moustache))
 			AH.customization_second = new type_second
-			has_second = 1 // so the detail check doesn't do anything - we already got a secondary thing!!
+			has_second = TRUE // so the detail check doesn't do anything - we already got a secondary thing!!
 
 	else // if FEMALE
 		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/ismasc))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE))
 			AH.customization_first = new type_first
 		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/isfem))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE))
 			AH.customization_first = new type_first
 
 	if (!has_second)
@@ -2093,7 +2167,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 
 	if (H?.organHolder?.head?.donor_appearance) // aaaa
 		H.organHolder.head.donor_appearance.CopyOther(AH)
-
+	AH.flavor_text = null //random characters don't have flavor text and disguised ones shouldn't show theirs
 	SPAWN(1 DECI SECOND)
 		H?.update_colorful_parts()
 

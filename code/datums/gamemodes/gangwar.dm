@@ -1,8 +1,12 @@
 #define CASH_DIVISOR 200
+#define DEFAULT_MAX_GANG_SIZE 4
 /datum/game_mode/gang
 	name = "Gang War (Beta)"
 	config_tag = "gang"
 	regular = FALSE
+
+	/// Makes it so gang members are chosen randomly at roundstart instead of being recruited.
+	var/random_gangs = TRUE
 
 	antag_token_support = TRUE
 	var/list/gangs = list()
@@ -62,6 +66,7 @@
 	if (!length(leaders_possible))
 		return 0
 
+
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
 		if (!length(token_players))
@@ -73,15 +78,30 @@
 
 	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = ROLE_GANG_LEADER, amount = num_teams, recordChosen = 1)
 	src.traitors |= chosen_leader
+
+	// check if we can actually run the mode before assigning special roles to minds
+	if(length(get_possible_enemies(ROLE_GANG_MEMBER, round(num_teams * DEFAULT_MAX_GANG_SIZE), force_fill = FALSE) - src.traitors) < round(num_teams * DEFAULT_MAX_GANG_SIZE * 0.66)) //must have at least 2/3 full gangs or there's no point
+		//boutput(world, SPAN_ALERT("<b>ERROR: The readied players are not collectively gangster enough for the selected mode, aborting gangwars.</b>"))
+		return 0
+
 	for (var/datum/mind/leader in src.traitors)
-		leader.special_role = ROLE_GANG_LEADER
 		leaders_possible.Remove(leader)
+		leader.special_role = ROLE_GANG_LEADER
 
 	return 1
 
 /datum/game_mode/gang/post_setup()
-	for (var/datum/mind/leaderMind in src.traitors)
-		leaderMind.add_antagonist(ROLE_GANG_LEADER)
+	for(var/datum/mind/antag_mind in src.traitors)
+		if(antag_mind.special_role == ROLE_GANG_LEADER)
+			antag_mind.add_antagonist(ROLE_GANG_LEADER, silent=TRUE)
+
+	if(src.random_gangs)
+		fill_gangs()
+
+	// we delay announcement to make sure everyone gets information about the other members
+	for(var/datum/mind/antag_mind in src.traitors)
+		antag_mind.get_antagonist(ROLE_GANG_LEADER)?.unsilence()
+		antag_mind.get_antagonist(ROLE_GANG_MEMBER)?.unsilence()
 
 
 	find_potential_hot_zones()
@@ -96,6 +116,28 @@
 		send_intercept()
 
 	return 1
+
+/datum/game_mode/gang/proc/fill_gangs(list/datum/mind/candidates = null, max_member_count = INFINITY)
+	var/num_teams = length(src.gangs)
+	var/num_people_needed = 0
+	for(var/datum/gang/gang in src.gangs)
+		num_people_needed += min(gang.current_max_gang_members, max_member_count) - length(gang.members)
+	if(isnull(candidates))
+		candidates = get_possible_enemies(ROLE_GANG_MEMBER, num_people_needed, allow_carbon=TRUE, filter_proc=PROC_REF(can_join_gangs), force_fill = FALSE)
+	var/num_people_available = min(num_people_needed, length(candidates))
+	var/people_added_per_gang = round(num_people_available / num_teams)
+	num_people_available = people_added_per_gang * num_teams
+	shuffle_list(candidates)
+	var/i = 1
+	for(var/datum/gang/gang in src.gangs)
+		for(var/j in 1 to people_added_per_gang)
+			var/datum/mind/candidate = candidates[i++]
+			candidate.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = gang.leader, silent=TRUE)
+			traitors |= candidate
+
+/datum/game_mode/gang/proc/can_join_gangs(mob/M)
+	var/datum/job/job = find_job_in_controller_by_string(M.mind.assigned_role)
+	. = !job || job.can_join_gangs
 
 /datum/game_mode/gang/proc/force_shuttle()
 	if (!emergency_shuttle.online)
@@ -257,7 +299,7 @@
 		else
 			G.broadcast_to_gang("[target_name] is the target of a kidnapping by [top_gang.gang_name]. Ensure that [target_name] is alive and well for the next 8 minutes for a reward!")
 
-	boutput(kidnapping_target, "<span class='alert'>You get the feeling that [top_gang.gang_name] wants you dead! Run and hide or ask security for help!</span>")
+	boutput(kidnapping_target, SPAN_ALERT("You get the feeling that [top_gang.gang_name] wants you dead! Run and hide or ask security for help!"))
 
 
 	SPAWN(kidnapping_timer - 1 MINUTE)
@@ -266,7 +308,7 @@
 		//if they didn't kidnap em, then give points to other gangs depending on whether they are alive or not.
 		if(!kidnap_success)
 			//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
-			if (kidnapping_target && kidnapping_target.stat != 2)
+			if (kidnapping_target && !isdead(kidnapping_target))
 				for (var/datum/gang/G in gangs)
 					if (G != top_gang)
 						G.score_event += kidnapping_score / length(gangs)	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
@@ -285,9 +327,10 @@ proc/broadcast_to_all_gangs(var/message)
 	for (var/datum/gang/gang in get_all_gangs())
 		gang.announcer_radio.set_secure_frequency("g", gang.gang_frequency)
 		gang.announcer_radio.talk_into(gang.announcer_source, messages, "g", gang.announcer_source.name, "english")
+
 /datum/gang
 	/// The maximum number of gang members per gang.
-	var/static/current_max_gang_members = 5
+	var/static/current_max_gang_members = DEFAULT_MAX_GANG_SIZE
 	/// Gang tag icon states that are being used by other gangs.
 	var/static/list/used_tags
 	/// Gang names that are being used by other gangs.
@@ -346,6 +389,9 @@ proc/broadcast_to_all_gangs(var/message)
 	/// Points gained by this gang from completing events.
 	var/score_event = 0
 
+	var/static/list/first_names = strings("gangwar.txt", "part1")
+	var/static/list/second_names = strings("gangwar.txt", "part2")
+
 	New()
 		. = ..()
 		if (!src.used_tags)
@@ -375,47 +421,57 @@ proc/broadcast_to_all_gangs(var/message)
 			var/datum/game_mode/gang/gamemode = ticker.mode
 			gamemode.gangs += src
 
+	proc/generate_random_name()
+		if (prob(70))
+			. = pick_string("gangwar.txt", "fullchosen")
+		else
+			. = "[pick(first_names)] [pick(second_names)]"
+
 	proc/select_gang_name()
-		if (!src.leader || !src.leader.current.client)
-			return
-
-		var/temporary_name = pick_string("gangwar.txt", "fullchosen")
-		var/first_name
-		var/second_name
-
-		var/list/first_names = strings("gangwar.txt", "part1")
-		var/list/second_names = strings("gangwar.txt", "part2")
+		var/temporary_name = generate_random_name()
 
 		while(src.gang_name == "Gang Name")
-			switch(tgui_alert(src.leader.current, "Name: [temporary_name].", "Approve Your Gang's Name", list("Accept", "Reselect", "Randomise")))
+			var/choice = "Accept"
+			if(src.leader?.current)
+				// if the leader is disconnected, this tgui_alert call will return null, breaking everything. Default to "Accept" and give them the random name
+				choice = tgui_alert(src.leader?.current, "Name: [temporary_name].", "Approve Your Gang's Name", list("Accept", "Reselect", "Randomise")) || "Accept"
+			switch(choice)
 				if ("Accept")
 					if (temporary_name in src.used_names)
-						boutput(src.leader.current, "<span class='alert'>Another gang has this name.</span>")
+						boutput(src.leader.current, SPAN_ALERT("Another gang has this name."))
+						// to prevent the incredibly slim chance that a disconncted gang leader rolls the same name as an existing gang
+						temporary_name = generate_random_name()
 						continue
 
 					src.gang_name = temporary_name
 					src.used_names += temporary_name
-					boutput(src.leader.current, "<h4><span class='alert'>Your gang name is [src.gang_name]!</span></h4>")
+
+					for(var/datum/mind/member in src.members + list(src.leader))
+						boutput(member.current, SPAN_ALERT("<h4>Your gang name is [src.gang_name]!</h4>"))
 
 				if ("Reselect")
-					first_name = tgui_input_list(src.leader.current, "Select the first word in your gang's name:", "Gang Name Selection", first_names)
-					second_name = tgui_input_list(src.leader.current, "Select the second word in your gang's name:", "Gang Name Selection", second_names)
+					var/first_name = tgui_input_list(src.leader.current, "Select the first word in your gang's name:", "Gang Name Selection", first_names)
+					var/second_name = tgui_input_list(src.leader.current, "Select the second word in your gang's name:", "Gang Name Selection", second_names)
 					temporary_name = "[first_name] [second_name]"
 
 				if ("Randomise")
-					if (prob(70))
-						temporary_name = pick_string("gangwar.txt", "fullchosen")
-					else
-						first_name = pick(first_names)
-						second_name = pick(second_names)
-						temporary_name = "[first_name] [second_name]"
+					temporary_name = generate_random_name()
+
+
+		// add the gang to their displayed name for antag and round end stuff. works hopefully??
+		var/datum/antagonist/leader_antag = src.leader.get_antagonist(ROLE_GANG_LEADER)
+		leader_antag.display_name = "[src.gang_name] [leader_antag.display_name]"
+
+		for (var/datum/mind/ganger in src.members)
+			var/datum/antagonist/antag = ganger.get_antagonist(ROLE_GANG_MEMBER)
+			antag.display_name = "[src.gang_name] [antag.display_name]"
 
 	proc/select_gang_uniform()
 		// Jumpsuit Selection.
 		var/temporary_jumpsuit = tgui_input_list(src.leader.current, "Select your gang's uniform slot item:", "Gang Uniform Selection", src.uniform_list)
 
 		while (!src.uniform_list[temporary_jumpsuit])
-			boutput(src.leader.current , "<span class='alert'>That uniform has been claimed by another gang.</span>")
+			boutput(src.leader.current , SPAN_ALERT("That uniform has been claimed by another gang."))
 			temporary_jumpsuit = tgui_input_list(src.leader.current, "Select your gang's uniform slot item:", "Gang Uniform Selection", src.uniform_list)
 
 		src.uniform = src.uniform_list[temporary_jumpsuit]
@@ -428,7 +484,7 @@ proc/broadcast_to_all_gangs(var/message)
 			var/temporary_headwear = tgui_input_list(src.leader.current, "Select your gang's mask or head slot item:", "Gang Uniform Selection", src.headwear_list)
 
 			while(!src.headwear_list[temporary_headwear])
-				boutput(src.leader.current , "<span class='alert'>That mask or hat has been claimed by another gang.</span>")
+				boutput(src.leader.current , SPAN_ALERT("That mask or hat has been claimed by another gang."))
 				temporary_headwear = tgui_input_list(src.leader.current, "Select your gang's mask or head slot item:", "Gang Uniform Selection", src.headwear_list)
 
 			src.headwear = src.headwear_list[temporary_headwear]
@@ -491,8 +547,7 @@ proc/broadcast_to_all_gangs(var/message)
 		"owl suit" = /obj/item/clothing/under/gimmick/owl,
 		"pinstripe suit" = /obj/item/clothing/under/suit/pinstripe,
 		"purple suit" = /obj/item/clothing/under/suit/purple,
-		"assless chaps" = /obj/item/clothing/under/gimmick/chaps,
-		"mailman's jumpsuit" = /obj/item/clothing/under/misc/mail,
+		"mail courier's jumpsuit" = /obj/item/clothing/under/misc/mail,
 		"comfy sweater" = /obj/item/clothing/under/gimmick/sweater,
 		"party princess uniform" = /obj/item/clothing/under/gimmick/princess,
 		"salesman's uniform" = /obj/item/clothing/under/gimmick/merchant,
@@ -517,7 +572,6 @@ proc/broadcast_to_all_gangs(var/message)
 		"red lawyer's suit" = /obj/item/clothing/under/misc/lawyer/red,
 		"lawyer suit" = /obj/item/clothing/under/misc/lawyer,
 		"blue tracksuit" = /obj/item/clothing/under/gimmick/chav,
-		"aged hipster clothes" = /obj/item/clothing/under/gimmick/dawson,
 		"diver jumpsuit" = /obj/item/clothing/under/gimmick/sealab,
 		"spiderman suit" = /obj/item/clothing/under/gimmick/spiderman,
 		"Vault 13 jumpsuit" = /obj/item/clothing/under/gimmick/vault13,
@@ -549,7 +603,7 @@ proc/broadcast_to_all_gangs(var/message)
 		"smooth criminal's hat" = /obj/item/clothing/head/mj_hat,
 		"genki" = /obj/item/clothing/head/genki,
 		"purple butt hat" = /obj/item/clothing/head/purplebutt,
-		"mailman's hat" = /obj/item/clothing/head/mailcap,
+		"mail courier's hat" = /obj/item/clothing/head/mailcap,
 		"turban" = /obj/item/clothing/head/turban,
 		"formal turban" = /obj/item/clothing/head/formal_turban,
 		"constable's helmet" = /obj/item/clothing/head/helmet/bobby,
@@ -564,10 +618,13 @@ proc/broadcast_to_all_gangs(var/message)
 		"psychedelic hat" = /obj/item/clothing/head/psyche,
 		"Snake's bandana" = /obj/item/clothing/head/snake,
 		"powdered wig" = /obj/item/clothing/head/powdered_wig,
-		"black ten-gallon hat" = /obj/item/clothing/head/westhat/black)
+		"black ten-gallon hat" = /obj/item/clothing/head/westhat/black,
+		"red mushroom cap" = /obj/item/clothing/head/mushroomcap/red,
+		"stag beetle helm" = /obj/item/clothing/head/stagbeetle,
+		"rhino beetle helm" = /obj/item/clothing/head/rhinobeetle)
 
 /obj/item/spray_paint
-	name = "Spraypaint Can"
+	name = "spraypaint can"
 	desc = "A can of spray paint."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
@@ -584,7 +641,7 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 
 		if(in_use)
-			boutput(user, "<span class='alert'>You are already tagging an area!</span>")
+			boutput(user, SPAN_ALERT("You are already tagging an area!"))
 			return
 
 		var/turf/turftarget = get_turf(target)
@@ -595,26 +652,26 @@ proc/broadcast_to_all_gangs(var/message)
 		var/datum/gang/gang = user.get_gang()
 
 		if(!gang)
-			boutput(user, "<span class='alert'>You aren't in a gang, why would you do that?</span>")
+			boutput(user, SPAN_ALERT("You aren't in a gang, why would you do that?"))
 			return
 
 		var/area/getarea = get_area(turftarget)
 		if(!getarea)
-			boutput(user, "<span class='alert'>You can't claim this place!</span>")
+			boutput(user, SPAN_ALERT("You can't claim this place!"))
 			return
 		if(getarea.name == "Space")
-			boutput(user, "<span class='alert'>You can't claim space!</span>")
+			boutput(user, SPAN_ALERT("You can't claim space!"))
 			return
 		if(getarea.name == "Ocean")
-			boutput(user, "<span class='alert'>You can't claim the entire ocean!</span>")
+			boutput(user, SPAN_ALERT("You can't claim the entire ocean!"))
 			return
 		if((getarea.teleport_blocked) || istype(getarea, /area/supply) || istype(getarea, /area/shuttle/))
-			boutput(user, "<span class='alert'>You can't claim this place!</span>")
+			boutput(user, SPAN_ALERT("You can't claim this place!"))
 			return
 		if(!ishuman(user))
-			boutput(user, "<span class='alert'>You don't have the dexterity to spray paint a gang tag!</span>")
+			boutput(user, SPAN_ALERT("You don't have the dexterity to spray paint a gang tag!"))
 		if(getarea.gang_owners && getarea.gang_owners != gang && !turftarget.tagged)
-			boutput(user, "<span class='alert'>[getarea.gang_owners.gang_name] own this area! You must paint over their tag to capture it!</span>")
+			boutput(user, SPAN_ALERT("[getarea.gang_owners.gang_name] own this area! You must paint over their tag to capture it!"))
 			if (user.GetComponent(/datum/component/tracker_hud))
 				return
 			var/datum/game_mode/gang/mode = ticker.mode
@@ -630,19 +687,18 @@ proc/broadcast_to_all_gangs(var/message)
 						return
 			return
 		if(getarea.being_captured)
-			boutput(user, "<span class='alert'>Somebody is already tagging that area!</span>")
+			boutput(user, SPAN_ALERT("Somebody is already tagging that area!"))
 			return
 		if(getarea.gang_owners == gang)
-			boutput(user, "<span class='alert'>This place is already owned by your gang!</span>")
+			boutput(user, SPAN_ALERT("This place is already owned by your gang!"))
 			return
 
-		user.visible_message("<span class='alert'>[user] begins to paint a gang tag on the [turftarget.name]!</span>")
+		user.visible_message(SPAN_ALERT("[user] begins to paint a gang tag on the [turftarget.name]!"))
 		actions.start(new/datum/action/bar/icon/spray_gang_tag(turftarget, src), user)
 
 /datum/action/bar/icon/spray_gang_tag
 	duration = 15 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "spray_tag"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
 	var/turf/target_turf
@@ -686,7 +742,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 		target_area.being_captured = 1
 		S.in_use = 1
-		playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)	//maybe just repeat the appropriate amount of times
+		playsound(target_turf, 'sound/machines/hiss.ogg', 50, TRUE)	//maybe just repeat the appropriate amount of times
 
 	onUpdate()
 		..()
@@ -695,10 +751,10 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 
 		if(prob(15))
-			playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)
+			playsound(target_turf, 'sound/machines/hiss.ogg', 50, TRUE)
 
 	onInterrupt(var/flag)
-		boutput(owner, "<span class='alert'>You were interrupted!</span>")
+		boutput(owner, SPAN_ALERT("You were interrupted!"))
 		if (target_area)
 			target_area.being_captured = 0
 		if (S)
@@ -718,11 +774,11 @@ proc/broadcast_to_all_gangs(var/message)
 		src.gang.controlled_areas += target_area
 
 		src.gang.make_tag(target_turf)
-		boutput(M, "<span class='notice'>You have claimed this area for your gang!</span>")
+		boutput(M, SPAN_NOTICE("You have claimed this area for your gang!"))
 
 /obj/ganglocker
 	desc = "Gang locker."
-	name = "Gang Closet"
+	name = "gang closet"
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "gang"
 	density = 1
@@ -785,13 +841,13 @@ proc/broadcast_to_all_gangs(var/message)
 
 	attack_hand(var/mob/living/carbon/human/user)
 		if(!isalive(user))
-			boutput(user, "<span class='alert'>Not when you're incapacitated.</span>")
+			boutput(user, SPAN_ALERT("Not when you're incapacitated."))
 			return
 
 		add_fingerprint(user)
 
 		if(health == 0)
-			boutput(user, "<span class='alert'>The locker is broken, it needs to be repaired first!</span>")
+			boutput(user, SPAN_ALERT("The locker is broken, it needs to be repaired first!"))
 			return
 
 		// if (!src.HTML)
@@ -851,20 +907,20 @@ proc/broadcast_to_all_gangs(var/message)
 			handle_gang_gear(usr)
 		if (href_list["buy_item"])
 			if (usr.get_gang() != src.gang)
-				boutput(usr, "<span class='alert'>You are not a member of this gang, you cannot purchase items from it.</span>")
+				boutput(usr, SPAN_ALERT("You are not a member of this gang, you cannot purchase items from it."))
 				return
 			var/datum/gang_item/GI = locate(href_list["buy_item"])
 			if (locate(GI) in buyable_items)
 				if (GI.price <= gang.spendable_points)
 					gang.spendable_points -= GI.price
 					new GI.item_path(src.loc)
-					boutput(usr, "<span class='notice'>You purchase [GI.name] for [GI.price]. Remaining balance = [gang.spendable_points] points.</span>")
+					boutput(usr, SPAN_NOTICE("You purchase [GI.name] for [GI.price]. Remaining balance = [gang.spendable_points] points."))
 					gang.items_purchased[GI.item_path]++
 					if (istype(GI, /datum/gang_item/misc/janktank))
 						src.increase_janktank_price()
 						updateDialog()
 				else
-					boutput(usr, "<span class='alert'>Insufficient funds.</span>")
+					boutput(usr, SPAN_ALERT("Insufficient funds."))
 
 	proc/increase_janktank_price()
 		src.janktank_price = round(src.janktank_price * 1.1)
@@ -881,10 +937,10 @@ proc/broadcast_to_all_gangs(var/message)
 				overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
 			if(1)
 				boutput(user, "<b class='alert'>The locker's screen briefly displays the message \"Access Denied\".</b>")
-				boutput(user, "<span class='alert'>You may only receive one set of gang gear every five minutes.</span>")
+				boutput(user, SPAN_ALERT("You may only receive one set of gang gear every five minutes."))
 				overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
 			if(2)
-				boutput(user, "<span class='success'>The locker's screen briefly displays the message \"Access Granted\". A set of gang equipment drops out of a slot.</span>")
+				boutput(user, SPAN_SUCCESS("The locker's screen briefly displays the message \"Access Granted\". A set of gang equipment drops out of a slot."))
 				overlay = image('icons/obj/large_storage.dmi', "gang_overlay_green")
 
 		src.UpdateOverlays(overlay, "screen")
@@ -921,23 +977,23 @@ proc/broadcast_to_all_gangs(var/message)
 		if(!has_gang_uniform)
 			var/obj/item/clothing/uniform = new src.gang.uniform(user.loc)
 			// Effectively a copy of the `autoequip_slot` macro in `code\datums\hud\human.dm`.
-			if (user.can_equip(uniform, user.slot_w_uniform))
+			if (user.can_equip(uniform, SLOT_W_UNIFORM))
 				var/obj/item/current_uniform = user.w_uniform
 				if (current_uniform)
 					current_uniform.unequipped(user)
 					user.hud.remove_item(current_uniform)
 					user.w_uniform = null
 					user.drop_from_slot(current_uniform, get_turf(current_uniform))
-				user.force_equip(uniform, user.slot_w_uniform)
+				user.force_equip(uniform, SLOT_W_UNIFORM)
 
 		if(!has_gang_headwear)
 			var/obj/item/clothing/headwear = new src.gang.headwear(user.loc)
 			if (istype(headwear, /obj/item/clothing/head))
 				user.drop_from_slot(user.head)
-				user.equip_if_possible(headwear, user.slot_head)
+				user.equip_if_possible(headwear, SLOT_HEAD)
 			else if (istype(headwear, /obj/item/clothing/mask))
 				user.drop_from_slot(user.wear_mask)
-				user.equip_if_possible(headwear, user.slot_wear_mask)
+				user.equip_if_possible(headwear, SLOT_WEAR_MASK)
 
 		if(!has_gang_headset)
 			var/obj/item/device/radio/headset/headset
@@ -946,11 +1002,11 @@ proc/broadcast_to_all_gangs(var/message)
 			else
 				headset = new /obj/item/device/radio/headset(user)
 				if (!user.r_store)
-					user.equip_if_possible(headset, user.slot_r_store)
+					user.equip_if_possible(headset, SLOT_R_STORE)
 				else if (!user.l_store)
-					user.equip_if_possible(headset, user.slot_l_store)
+					user.equip_if_possible(headset, SLOT_L_STORE)
 				else if (user.back?.storage && !user.back.storage.is_full())
-					user.equip_if_possible(headset, user.slot_in_backpack)
+					user.equip_if_possible(headset, SLOT_IN_BACKPACK)
 				else
 					user.put_in_hand_or_drop(headset)
 
@@ -962,7 +1018,11 @@ proc/broadcast_to_all_gangs(var/message)
 			user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
 
 		if(user.mind.special_role == ROLE_GANG_LEADER)
-			user.put_in_hand_or_drop(new /obj/item/storage/box/gang_flyers(user.loc, src.gang))
+			var/datum/game_mode/gang/gamemode = ticker.mode
+			if(gamemode.random_gangs)
+				boutput(user, SPAN_ALERT("Your gang is already formed, you get no recruitment flyers."))
+			else
+				user.put_in_hand_or_drop(new /obj/item/storage/box/gang_flyers(user.loc, src.gang))
 
 		src.gang.gear_cooldown += user
 		SPAWN(300 SECONDS)
@@ -988,14 +1048,14 @@ proc/broadcast_to_all_gangs(var/message)
 		if(!user)
 			return 0
 		if (user.get_gang() != src.gang)
-			boutput(user, "<span class='alert'>You are not a member of this gang, you cannot add items to it.</span>")
+			boutput(user, SPAN_ALERT("You are not a member of this gang, you cannot add items to it."))
 			return 0
 
 		//cash score
 		if (istype(item, /obj/item/currency/spacecash))
 			var/obj/item/currency/spacecash/S = item
 			if (S.amount > 500)
-				boutput(user, "<span class='alert'><b>[src.name] beeps, it don't accept bills larger than 500[CREDIT_SIGN]!<b></span>")
+				boutput(user, SPAN_ALERT("<b>[src.name] beeps, it don't accept bills larger than 500[CREDIT_SIGN]!</b>"))
 				return 0
 
 			gang.score_cash += round(S.amount/CASH_DIVISOR)
@@ -1004,7 +1064,8 @@ proc/broadcast_to_all_gangs(var/message)
 		//gun score
 		else if (istype(item, /obj/item/gun))
 			if(istype(item, /obj/item/gun/kinetic/foamdartgun))
-				boutput(user, "<span class='alert'><b>You cant stash toy guns in the locker<b></span>")
+				boutput(user, SPAN_ALERT("<b>You cant stash toy guns in the locker</b>"))
+
 				return 0
 			// var/obj/item/gun/gun = item
 			gang.score_gun += round(300)
@@ -1029,7 +1090,6 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/get_I_score_drug(var/obj/O)
 		var/score = 0
 		score += O.reagents.get_reagent_amount("bathsalts")
-		score += O.reagents.get_reagent_amount("jenkem")/2
 		score += O.reagents.get_reagent_amount("crank")*1.5
 		score += O.reagents.get_reagent_amount("LSD")/2
 		score += O.reagents.get_reagent_amount("lsd_bee")/3
@@ -1074,13 +1134,13 @@ proc/broadcast_to_all_gangs(var/message)
 			src.break_open()
 			src.gang.spendable_points = round(src.gang.spendable_points * 0.8)
 			src.gang.broadcast_to_gang("Your locker has been destroyed! Your amount of spendable points has been almost decimated!")
-			src.visible_message("<span class='alert'><b>[src.name] bursts open, spilling its contents!<b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src.name] bursts open, spilling its contents!</b>"))
 
 	proc/repair_damage(var/amount)
 		health = min(200,health+amount)
 		if(health > 0 && broken == 1)
 			repair_broken()
-			src.visible_message("<span class='notice'><b>The door to [src] swings shut and switches back on!<b></span>")
+			src.visible_message(SPAN_NOTICE("<b>The door to [src] swings shut and switches back on!</b>"))
 
 	ex_act(severity)
 		take_damage(250-50*severity)
@@ -1091,16 +1151,16 @@ proc/broadcast_to_all_gangs(var/message)
 			user.lastattacked = src
 
 			if(health == max_health)
-				boutput(user, "<span class='notice'>The locker isn't damaged!</span>")
+				boutput(user, SPAN_NOTICE("The locker isn't damaged!"))
 				return
 
 			if(W:try_weld(user, 4))
 				repair_damage(20)
-				user.visible_message("<span class='notice'>[user] repairs the [src] with [W]!</span>")
+				user.visible_message(SPAN_NOTICE("[user] repairs the [src] with [W]!"))
 				return
 
 		if (health <= 0)
-			boutput(user, "<span class='alert'>The locker is broken, it needs to be repaired first!</span>")
+			boutput(user, SPAN_ALERT("The locker is broken, it needs to be repaired first!"))
 			return
 
 		if (W.cant_drop)
@@ -1112,18 +1172,18 @@ proc/broadcast_to_all_gangs(var/message)
 		var/datum/gang/user_gang = user.get_gang()
 		if (istype(W, /obj/item/grab))
 			if (user_gang != src.gang)
-				boutput(user, "<span class='alert'>You can't kidnap someone for a different gang!</span>")
+				boutput(user, SPAN_ALERT("You can't kidnap someone for a different gang!"))
 				return
 			if (istype(ticker.mode, /datum/game_mode/gang))	//gotta be gang mode to kidnap
 				var/datum/game_mode/gang/mode = ticker.mode
 				var/obj/item/grab/G = W
 				if (G.affecting == mode.kidnapping_target)		//Can only shove the target in, nobody else. target must be not dead and must have a kill or pin grab on em.
-					if (G.affecting.stat == 2)
-						boutput(user, "<span class='alert'>[G.affecting] is dead, you can't kidnap a dead person!</span>")
+					if (isdead(G.affecting))
+						boutput(user, SPAN_ALERT("[G.affecting] is dead, you can't kidnap a dead person!"))
 					else if (G.state < GRAB_AGGRESSIVE)
-						boutput(user, "<span class='alert'>You'll need a stronger grip to successfully kinapp this person!")
+						boutput(user, SPAN_ALERT("You'll need a stronger grip to successfully kinapp this person!"))
 					else
-						user.visible_message("<span class='notice'>[user] shoves [G.affecting] into [src]!</span></span>")
+						user.visible_message(SPAN_NOTICE("[user] shoves [G.affecting] into [src]!"))
 						G.affecting.set_loc(src)
 						//assign poitns, gangs
 
@@ -1139,7 +1199,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 		if(istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/currency/spacecash) || (W.reagents != null && W.reagents.total_volume > 0))
 			if (insert_item(W,user))
-				user.visible_message("<span class='notice'>[user] puts [W] into [src]!</span>")
+				user.visible_message(SPAN_NOTICE("[user] puts [W] into [src]!"))
 			return
 
 		if(istype(W,/obj/item/satchel))
@@ -1153,26 +1213,26 @@ proc/broadcast_to_all_gangs(var/message)
 				hadcannabis = 1
 
 			if(hadcannabis)
-				boutput(user, "<span class='notice'>You empty the cannabis from [S] into the [src].</span>")
+				boutput(user, SPAN_NOTICE("You empty the cannabis from [S] into the [src]."))
 			else
-				boutput(user, "<span class='notice'>[S] doesn't contain any cannabis.</span>")
+				boutput(user, SPAN_NOTICE("[S] doesn't contain any cannabis."))
 			return
 
 		user.lastattacked = src
 
 		switch(W.hit_type)
 			if (DAMAGE_BURN)
-				user.visible_message("<span class='alert'>[user] ineffectually hits the [src] with [W]!</span>")
+				user.visible_message(SPAN_ALERT("[user] ineffectually hits the [src] with [W]!"))
 			else
 				take_damage(W.force)
-				user.visible_message("<span class='alert'><b>[user] hits the [src] with [W]!<b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] hits the [src] with [W]!</b>"))
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if(!istype(O, /obj/item/plant/herb/cannabis))
-			boutput(user, "<span class='alert'>[src] cannot hold that kind of item!</span>")
+			boutput(user, SPAN_ALERT("[src] cannot hold that kind of item!"))
 			return
 
-		user.visible_message("<span class='notice'>[user] begins quickly filling the [src]!</span>")
+		user.visible_message(SPAN_NOTICE("[user] begins quickly filling the [src]!"))
 		var/staystill = user.loc
 		for(var/obj/item/I in view(1,user))
 			if (!istype(I, O)) continue
@@ -1182,7 +1242,7 @@ proc/broadcast_to_all_gangs(var/message)
 			sleep(0.2 SECONDS)
 			if (user.loc != staystill) break
 
-		boutput(user, "<span class='notice'>You finish filling the [src]!</span>")
+		boutput(user, SPAN_NOTICE("You finish filling the [src]!"))
 
 	proc/break_open()
 		broken = 1
@@ -1212,10 +1272,10 @@ proc/broadcast_to_all_gangs(var/message)
 	w_class = W_CLASS_TINY
 	var/datum/gang/gang = null
 
-	attack(mob/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (istype(target,/mob/living) && user.a_intent != INTENT_HARM)
 			if(user != target)
-				user.visible_message("<span class='alert'><b>[user] shows [src] to [target]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] shows [src] to [target]!</b>"))
 			// induct_to_gang(target)		//this was sometimes kinda causing people to accidentally accept joining a gang.
 			return
 		else
@@ -1235,7 +1295,7 @@ proc/broadcast_to_all_gangs(var/message)
 			return ..()
 
 		var/turf/T = src.loc
-		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>", "<span class='alert'>You rip down [src] from [T]!</span>")
+		user.visible_message(SPAN_ALERT("<b>[user]</b> rips down [src] from [T]!"), SPAN_ALERT("You rip down [src] from [T]!"))
 		src.anchored = UNANCHORED
 		user.put_in_hand_or_drop(src)
 
@@ -1243,43 +1303,49 @@ proc/broadcast_to_all_gangs(var/message)
 		induct_to_gang(user)
 
 	proc/induct_to_gang(var/mob/living/carbon/human/target)
+		var/datum/game_mode/gang/gamemode = ticker.mode
+		if(gamemode.random_gangs)
+			boutput(target, SPAN_ALERT("You can't join a gang, they're already preformed!"))
+			return
+
 		if(gang == null)
-			boutput(target, "<span class='alert'>The flyer doesn't specify which gang it's advertising!</span>")
+			boutput(target, SPAN_ALERT("The flyer doesn't specify which gang it's advertising!"))
 			return
 
 		if(!ishuman(target))
-			boutput(target, "<span class='alert'>Only humans can join a gang!</span>")
+			boutput(target, SPAN_ALERT("Only humans can join a gang!"))
 			return
 
 		if(!isalive(target))
-			boutput(target, "<span class='alert'>Not when you're incapacitated.</span>")
+			boutput(target, SPAN_ALERT("Not when you're incapacitated."))
 			return
 
 		if (issmallanimal(target))
 			var/mob/living/critter/small_animal/C = target
 			if (C.ghost_spawned)
-				boutput(target, "<span class='alert'>Your spectral brain can't comprehend the concept of a gang!</span>")
+				boutput(target, SPAN_ALERT("Your spectral brain can't comprehend the concept of a gang!"))
 				return
 
 		var/datum/gang/target_gang = target.get_gang()
 		if(target_gang == gang)
-			boutput(target, "<span class='alert'>You're already in that gang!</span>")
+			boutput(target, SPAN_ALERT("You're already in that gang!"))
 			return
 
 		if(target_gang && (target == target_gang.leader))
-			boutput(target, "<span class='alert'>You can't join a gang, you run your own!</span>")
+			boutput(target, SPAN_ALERT("You can't join a gang, you run your own!"))
 			return
 
 		if(target_gang)
-			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
+			boutput(target, SPAN_ALERT("You're already in a gang, you can't switch sides!"))
 			return
 
-		if(target.mind.assigned_role in list("Security Officer", "Security Assistant", "Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Consultant", "Nanotrasen Special Operative"))
-			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
+		var/datum/job/job = find_job_in_controller_by_string(target.mind.assigned_role)
+		if(job && !job.can_join_gangs)
+			boutput(target, SPAN_ALERT("You are too responsible to join a gang!"))
 			return
 
 		if(length(src.gang.members) >= src.gang.current_max_gang_members)
-			boutput(target, "<span class='alert'>That gang is full!</span>")
+			boutput(target, SPAN_ALERT("That gang is full!"))
 			return
 
 		var/joingang = tgui_alert(target, "Do you wish to join [src.gang.gang_name]?", "[src]", list("Yes", "No"), timeout = 10 SECONDS)
@@ -1582,3 +1648,4 @@ proc/broadcast_to_all_gangs(var/message)
 // 		B1.reagents.add_reagent("infernite", 20)
 // 		beakers += B1
 #undef CASH_DIVISOR
+#undef DEFAULT_MAX_GANG_SIZE

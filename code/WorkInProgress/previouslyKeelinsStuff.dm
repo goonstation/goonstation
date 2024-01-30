@@ -285,20 +285,6 @@ var/reverse_mode = 0
 	//turfs += centerturf
 	return turfs
 
-/proc/ff_cansee(var/atom/A, var/atom/B)
-	var/AT = get_turf(A)
-	var/BT = get_turf(B)
-	if (AT == BT)
-		return 1
-	var/list/line = getline(A,B)
-	for (var/turf/T in line)
-		if (!T.gas_cross(T))
-			return 0
-		var/obj/blob/BL = locate() in T
-		if (istype(BL, /obj/blob/wall) || istype(BL, /obj/blob/firewall) || istype(BL, /obj/blob/reflective))
-			return 0
-	return 1
-
 /obj/item/relic
 	icon = 'icons/misc/hstation.dmi'
 	icon_state = "relic"
@@ -318,7 +304,7 @@ var/reverse_mode = 0
 	process()
 		if (prob(1) && prob(50) && ismob(src.loc))
 			var/mob/M = src.loc
-			boutput(M, "<span class='alert'>You feel uneasy ...</span>")
+			boutput(M, SPAN_ALERT("You feel uneasy ..."))
 
 		if (prob(25))
 			for(var/obj/machinery/light/L in range(6, get_turf(src)))
@@ -349,7 +335,7 @@ var/reverse_mode = 0
 		if (user != loc)
 			return
 		if (using)
-			boutput(user, "<span class='alert'>The relic is humming loudly.</span>")
+			boutput(user, SPAN_ALERT("The relic is humming loudly."))
 			return
 		else
 			if (!beingUsed) //I guess you could use this thing in-hand a lot and gain its powers repeatedly!
@@ -367,7 +353,7 @@ var/reverse_mode = 0
 						else
 							user.shock(src, rand(5000, 250000), "chest", 1, 1)
 						/*harmless_smoke_puff(get_turf(src))
-						playsound(user, 'sound/effects/ghost2.ogg', 60, 0)
+						playsound(user, 'sound/effects/ghost2.ogg', 60, FALSE)
 						user.flash(60)
 						var/mob/oldmob = user
 						var/mob/dead/observer/O = new/mob/dead/observer()
@@ -389,7 +375,7 @@ var/reverse_mode = 0
 								using = 0*/
 					if ("Bend the relic's power to your will")
 						using = 1
-						boutput(user, "<span class='alert'>You can feel the power of the relic coursing through you...</span>")
+						boutput(user, SPAN_ALERT("You can feel the power of the relic coursing through you..."))
 						user.bioHolder.AddEffect("telekinesis_drag")
 						SPAWN(2 MINUTES)
 							using = 0
@@ -402,7 +388,7 @@ var/reverse_mode = 0
 						user.take_toxin_damage(-INFINITY)
 						user:HealDamage("All", 1000, 1000)
 						if (prob(75))
-							boutput(user, "<span class='alert'>The relic crumbles into nothingness...</span>")
+							boutput(user, SPAN_ALERT("The relic crumbles into nothingness..."))
 							qdel(src)
 						SPAWN(1 MINUTE) using = 0
 					if ("Attempt to absorb the relic's power")
@@ -411,7 +397,7 @@ var/reverse_mode = 0
 							user.bioHolder.AddEffect("thermal_resist", 0, 0, 1) //if they're lucky enough to get this
 							user.bioHolder.AddEffect("xray", 2, 0, 1) //they're lucky enough to keep it
 							user.bioHolder.AddEffect("hulk", 0, 0, 1) //probably
-							boutput(user, "<span class='alert'>The relic crumbles into nothingness...</span>")
+							boutput(user, SPAN_ALERT("The relic crumbles into nothingness..."))
 							src.invisibility = INVIS_ALWAYS
 							var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
 							E.fingerprintslast = src.fingerprintslast
@@ -425,26 +411,26 @@ var/reverse_mode = 0
 						else
 							switch(pick(175;1,30;2,25;3,85;4))
 								if (1)
-									boutput(user, "<span class='alert'>The relic's power overwhelms you!</span>")
+									boutput(user, SPAN_ALERT("The relic's power overwhelms you!"))
 									user:changeStatus("weakened", 10 SECONDS)
 									user:TakeDamage("chest", 0, 33)
 								if (2)
-									boutput(user, "<span class='alert'>The relic explodes in a bright flash, blinding you!</span>")
+									boutput(user, SPAN_ALERT("The relic explodes in a bright flash, blinding you!"))
 									user.flash(60)
 									user.bioHolder.AddEffect("blind")
 									qdel(src)
 								if (3)
-									boutput(user, "<span class='alert'>The relic explodes violently!</span>")
+									boutput(user, SPAN_ALERT("The relic explodes violently!"))
 									var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
 									E.fingerprintslast = src.fingerprintslast
 									logTheThing(LOG_COMBAT, user, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 									user:gib()
 									qdel(src)
 								if (4)
-									boutput(user, "<span class='alert'>The relic's power completely overwhelms you!!</span>")
+									boutput(user, SPAN_ALERT("The relic's power completely overwhelms you!!"))
 									using = 1
 									harmless_smoke_puff( get_turf(src) )
-									playsound(user, 'sound/effects/ghost2.ogg', 60, 0)
+									playsound(user, 'sound/effects/ghost2.ogg', 60, FALSE)
 									logTheThing(LOG_COMBAT, user, "was killed by [src] ([src.type]) at [log_loc(user)].")
 									user.flash(60)
 									var/mob/oldmob = user
@@ -472,208 +458,7 @@ var/reverse_mode = 0
 		SPAWN(rand(10,300))
 			src.sparks()
 
-///Config datum for LSD fake sounds
-/datum/hallucinated_sound
-	///The sound file to play
-	var/path
-	///Max number of times to play it
-	var/max_count
-	///Min number of times to play it
-	var/min_count
-	///Delay between each play
-	var/delay
-	///Pitch to play it at
-	var/pitch
 
-	New(path, min_count = 1, max_count = 1, delay = 0, pitch = 1)
-		..()
-		src.path = path
-		src.min_count = min_count
-		src.max_count = max_count
-		src.delay = delay
-		src.pitch = pitch
-
-	///Play the sound to a mob from a location
-	proc/play(var/mob/mob, var/atom/location)
-		SPAWN(0)
-			for (var/i = 1 to rand(src.min_count, src.max_count))
-				mob.playsound_local(location, src.path, 100, 1, pitch = src.pitch)
-				sleep(src.delay)
-
-/obj/fake_attacker
-	icon = null
-	icon_state = null
-	var/fake_icon = 'icons/misc/critter.dmi'
-	var/fake_icon_state = ""
-	name = ""
-	desc = ""
-	density = 0
-	anchored = ANCHORED
-	opacity = 0
-	var/mob/living/carbon/human/my_target = null
-	var/weapon_name = null
-	///Does this hallucination constantly whack you
-	var/should_attack = TRUE
-	event_handler_flags = USE_FLUID_ENTER
-
-	proc/get_name()
-		return src.fake_icon_state
-
-	pig
-		fake_icon = 'icons/effects/hallucinations.dmi'
-		fake_icon_state = "pig"
-		get_name()
-			return pick("pig", "DAT FUKKEN PIG")
-	spider
-		fake_icon_state = "big_spide"
-		get_name()
-			return pick("giant black widow", "aw look a spider", "OH FUCK A SPIDER")
-	slime
-		fake_icon = 'icons/effects/hallucinations.dmi'
-		fake_icon_state = "slime"
-		get_name()
-			return pick("red slime", "some gooey thing", "ANGRY CRIMSON POO")
-	shambler
-		fake_icon = 'icons/effects/hallucinations.dmi'
-		fake_icon_state = "shambler"
-		get_name()
-			return pick("shambler", "strange creature", "OH GOD WHAT THE FUCK IS THAT THING?")
-	legworm
-		fake_icon_state = "legworm"
-	handspider
-		fake_icon_state = "handspider"
-
-	eyespider
-		fake_icon_state = "eyespider"
-	buttcrab
-		fake_icon_state = "buttcrab"
-		should_attack = FALSE
-	bat
-		fake_icon_state = "bat"
-		get_name()
-			return pick("bat", "batty", "the roundest possible bat", "the giant bat that makes all of the rules")
-	snake
-		fake_icon_state = "rattlesnake"
-		get_name()
-			return pick("snek", "WHY DID IT HAVE TO BE SNAKES?!", "rattlesnake", "OH SHIT A SNAKE")
-
-	scorpion
-		fake_icon_state = "spacescorpion"
-		get_name()
-			return "space scorpion"
-
-	aberration
-		fake_icon_state = "aberration"
-		should_attack = FALSE
-		get_name()
-			return "transposed particle field"
-
-	capybara
-		fake_icon_state = "capybara"
-		should_attack = FALSE
-
-	frog
-		fake_icon_state = "frog"
-		should_attack = FALSE
-
-	disposing()
-		my_target = null
-		. = ..()
-
-/obj/fake_attacker/attackby()
-	step_away(src,my_target,2)
-	for(var/mob/M in oviewers(world.view,my_target))
-		boutput(M, "<span class='alert'><B>[my_target] flails around wildly.</B></span>")
-	my_target.show_message("<span class='alert'><B>[src] has been attacked by [my_target] </B></span>", 1) //Lazy.
-	return
-
-/obj/fake_attacker/Crossed(atom/movable/M)
-	..()
-	if (M == my_target)
-		step_away(src,my_target,2)
-		if (prob(30))
-			for(var/mob/O in oviewers(world.view , my_target))
-				boutput(O, "<span class='alert'><B>[my_target] stumbles around.</B></span>")
-
-
-/obj/fake_attacker/New(location, target)
-	..()
-	SPAWN(30 SECONDS)	qdel(src)
-	src.name = src.get_name()
-	src.my_target = target
-	if (src.fake_icon && src.fake_icon_state)
-		var/image/image = image(icon = src.fake_icon, loc = src, icon_state = src.fake_icon_state)
-		image.override = TRUE
-		target << image
-	step_away(src,my_target,2)
-	process()
-
-/obj/fake_attacker/proc/process()
-	if (!my_target)
-		qdel(src)
-		return
-	if (BOUNDS_DIST(src, my_target) > 0)
-		step_towards(src,my_target)
-	else
-		if (src.should_attack && prob(70) && !ON_COOLDOWN(src, "fake_attack_cooldown", 1 SECOND))
-			if (weapon_name)
-				if (narrator_mode)
-					my_target.playsound_local(my_target.loc, 'sound/vox/weapon.ogg', 40, 0)
-				else
-					my_target.playsound_local(my_target.loc, "sound/impact_sounds/Generic_Hit_[rand(1, 3)].ogg", 40, 1)
-				my_target.show_message("<span class='alert'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", 1)
-				if (prob(20)) my_target.change_eye_blurry(3)
-				if (prob(33))
-					if (!locate(/obj/overlay) in my_target.loc)
-						fake_blood(my_target)
-			else
-				if (narrator_mode)
-					my_target.playsound_local(my_target.loc, 'sound/vox/hit.ogg', 40, 0)
-				else
-					my_target.playsound_local(my_target.loc, pick(sounds_punch), 40, 1)
-				my_target.show_message("<span class='alert'><B>[src.name] has punched [my_target]!</B></span>", 1)
-				if (prob(33))
-					if (!locate(/obj/overlay) in my_target.loc)
-						fake_blood(my_target)
-			attack_twitch(src)
-
-	if (src.should_attack && prob(10)) step_away(src,my_target,2)
-	SPAWN(0.3 SECONDS) .()
-
-/proc/fake_blood(var/mob/target)
-	var/obj/overlay/O = new/obj/overlay(target.loc)
-	O.name = "blood"
-	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
-	target << I
-	SPAWN(30 SECONDS)
-		qdel(O)
-	return
-
-/proc/fake_attack(var/mob/target)
-	var/list/possible_clones = new/list()
-	var/mob/living/carbon/human/clone = null
-	var/clone_weapon = null
-
-	for(var/mob/living/carbon/human/H in mobs)
-		if (H.stat || H.lying || H.dir == NORTH) continue
-		possible_clones += H
-
-	if (!possible_clones.len) return
-	clone = pick(possible_clones)
-
-	if (clone.l_hand)
-		clone_weapon = clone.l_hand.name
-	else if (clone.r_hand)
-		clone_weapon = clone.r_hand.name
-
-	var/obj/fake_attacker/F = new/obj/fake_attacker(target.loc, target)
-
-	F.name = clone.name
-	//F.my_target = target
-	F.weapon_name = clone_weapon
-
-	var/image/O = image(clone,F)
-	target << O
 
 //Same as the thing below just for density and without support for atoms.
 /proc/can_line(var/atom/source, var/atom/target, var/length=5)

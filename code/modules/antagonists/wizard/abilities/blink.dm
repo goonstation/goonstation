@@ -23,10 +23,10 @@
 		if(holder.owner.wizard_spellpower(src))
 			accuracy = 1
 		else
-			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your spell is weak without a staff to focus it!"))
 
 		if(holder.owner.getStatusDuration("burning"))
-			boutput(holder.owner, "<span class='notice'>The flames sputter out as you blink away.</span>")
+			boutput(holder.owner, SPAN_NOTICE("The flames sputter out as you blink away."))
 			holder.owner.delStatus("burning")
 
 		var/targetx = holder.owner.x
@@ -62,7 +62,7 @@
 		var/turf/picked = null
 		if (turfs.len) picked = pick(turfs)
 		if(!isturf(picked))
-			boutput(holder.owner, "<span class='alert'>It's too dangerous to blink there!</span>")
+			boutput(holder.owner, SPAN_ALERT("It's too dangerous to blink there!"))
 			return
 		animate_blink(holder.owner)
 		holder.owner.set_loc(picked)

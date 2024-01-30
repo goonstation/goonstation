@@ -139,11 +139,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/traymachine, proc/eject_tray, proc/collect_t
 
 	// stop the tray from extending into solid things
 	if (T.density && !istype(get_area(src), /area/solarium)) // Solarium gets an exception because this is a hilarious way to get Helios
-		playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+		playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 		return
 	for(var/obj/O in T) // we still want to extend into mobs, no iterating over them
 		if (O.density && O.anchored) // it's ok to pull in unanchored stuff I guess!
-			playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+			playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 			return
 
 	my_tray.set_dir(src.dir)
@@ -221,7 +221,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine/locking)
 
 /obj/machinery/traymachine/locking/attack_hand(mob/user)
 	if (locked)
-		boutput(user, "<span class='alert'>It's locked.</span>")
+		boutput(user, SPAN_ALERT("It's locked."))
 		src.add_fingerprint(user) //because we're not reaching the parent call
 		return
 	..()
@@ -283,7 +283,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		return
 	O.set_loc(src.loc)
 	if (user != O)
-		src.visible_message("<span class='alert'>[user] stuffs [O] into [src]!</span>")
+		src.visible_message(SPAN_ALERT("[user] stuffs [O] into [src]!"))
 	return
 
 
@@ -342,15 +342,22 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	if (src.locked)
 		return //don't let you cremate something twice or w/e
 	if (!src.contents || !length(src.contents))
-		src.visible_message("<span class='alert'>You hear a hollow crackle, but nothing else happens.</span>")
+		src.visible_message(SPAN_ALERT("You hear a hollow crackle, but nothing else happens."))
 		return
 
-	src.visible_message("<span class='alert'>You hear a roar as \the [src.name] activates.</span>")
+	src.visible_message(SPAN_ALERT("You hear a roar as \the [src.name] activates."))
 	src.locked = TRUE
 	var/ashes = 0
 	power_usage = powerdraw_use //gotta chug them watts
 	icon_state = "crema_active"
 	playsound(src.loc, 'sound/machines/crematorium.ogg', 90, 0)
+
+	for (var/obj/item/body_bag/bag in contents)
+		for (var/obj/O in bag)
+			O.set_loc(src)
+		for (var/mob/M in bag)
+			M.set_loc(src)
+		qdel(bag)
 
 	for (var/mob/living/L in contents)
 		if (L in non_tray_contents)
@@ -364,9 +371,10 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		for (var/mob/living/L in contents)
 			if (L in non_tray_contents)
 				continue
-			L.TakeDamage("chest", 0, 30)
-			if (!isdead(L) && prob(25))
-				L.emote("scream")
+			if (!L.is_heat_resistant())
+				L.TakeDamage("chest", 0, 30)
+				if (!isdead(L) && prob(25))
+					L.emote("scream")
 		sleep(1 SECOND)
 
 	if(isnull(src))
@@ -378,13 +386,15 @@ ABSTRACT_TYPE(/obj/machine_tray)
 			continue
 		if (isliving(I))
 			var/mob/living/L = I
-			for (var/obj/item/W in L)
-				if (prob(10))
-					W.set_loc(L.loc)
-
-			logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
-			L.remove()
-			ashes += 1
+			if (!L.is_heat_resistant())
+				logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
+				for (var/obj/item/W in L)
+					if (prob(10))
+						W.set_loc(L.loc)
+				ashes += 1
+			else
+				logTheThing(LOG_COMBAT, user, "fails to cremate [constructTarget(L,"combat")] in a crematorium at [log_loc(src)] due to their heat resistance.")
+				continue // don't qdel us thanks
 		else if (!ismob(I))
 			if (prob(max(0, 100 - (ashes * 10))))
 				ashes += 1
@@ -392,7 +402,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 
 	if(isnull(src))
 		return
-	src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
+	src.visible_message(SPAN_ALERT("\The [src.name] finishes and shuts down."))
 	src.locked = FALSE
 	power_usage = initial(power_usage)
 	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
@@ -443,7 +453,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 			if (!C.locked && C.my_tray.loc == C) //don't activate if the tray's not in ffs
 				C.cremate(user)
 	else
-		boutput(user, "<span class='alert'>Access denied.</span>")
+		boutput(user, SPAN_ALERT("Access denied."))
 
 
 //-----------------------------------------------------
@@ -497,10 +507,10 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		if (src.locked)
 			return //don't let you cremate something twice or w/e
 		if (!src.contents || !length(src.contents))
-			src.visible_message("<span class='alert'>You hear the lights turn on for a second, then turn off.</span>")
+			src.visible_message(SPAN_ALERT("You hear the lights turn on for a second, then turn off."))
 			return
 
-		src.visible_message("<span class='alert'>You hear a faint buzz as \the [src] activates.</span>")
+		src.visible_message(SPAN_ALERT("You hear a faint buzz as \the [src] activates."))
 		playsound(src.loc, 'sound/machines/shieldup.ogg', 30, 1)
 		src.locked = TRUE
 		power_usage = powerdraw_use
@@ -516,17 +526,17 @@ ABSTRACT_TYPE(/obj/machine_tray)
 						if (src.emagged)
 							H.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
 							if (i % (2 SECONDS)) //message limiter
-								boutput(H, "<span class='alert'>Your skin feels like it's on fire!</span>")
+								boutput(H, SPAN_ALERT("Your skin feels like it's on fire!"))
 						else if (!H.wear_suit)
 							H.TakeDamage("All", 0, 2, 0, DAMAGE_BURN)
 							if (i % (2 SECONDS)) //limiter
-								boutput(H, "<span class='alert'>Your skin feels hot!</span>")
+								boutput(H, SPAN_ALERT("Your skin feels hot!"))
 						if (!(H.glasses && istype(H.glasses, /obj/item/clothing/glasses/sunglasses))) //Always wear protection
 							H.take_eye_damage(1, 2)
 							H.change_eye_blurry(2)
 							H.changeStatus("stunned", 1 SECOND)
 							H.change_misstep_chance(5)
-							boutput(H, "<span class='alert'>Your eyes sting!</span>")
+							boutput(H, SPAN_ALERT("Your eyes sting!"))
 						if (H.bioHolder.mobAppearance.s_tone)
 							var/currenttone = H.bioHolder.mobAppearance.s_tone
 							var/newtone = BlendRGB(currenttone, src.tanningcolor, src.tanningmodifier) //Make them tan slowly
@@ -541,13 +551,13 @@ ABSTRACT_TYPE(/obj/machine_tray)
 							if (prob(15) && isalive(H))
 								H.emote("scream")
 							if (i % (2 SECONDS))
-								boutput(H, "<span class='alert'>[pick("Your skin is melting!", "This false sun burns just like a real one!", "The light! <b>IT BURNS</b>!")]</span>")
-								playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+								boutput(H, SPAN_ALERT("[pick("Your skin is melting!", "This false sun burns just like a real one!", "The light! <b>IT BURNS</b>!")]"))
+								playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE)
 							if (isdead(H))
 								make_cleanable(/obj/decal/cleanable/ash, src)
 								H.unequip_all()
 								H.remove()
-								src.visible_message("<span class='alert'>A puff of smoke erupts from the machine as it grinds to a halt! It smells like a graveyard caught fire!</span>")
+								src.visible_message(SPAN_ALERT("A puff of smoke erupts from the machine as it grinds to a halt! It smells like a graveyard caught fire!"))
 								var/turf/T = get_turf(src)
 								if (istype(T))
 									var/datum/effects/system/bad_smoke_spread/smoke_effect = new /datum/effects/system/bad_smoke_spread/(T)
@@ -565,7 +575,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 				end_tanning()
 
 	proc/end_tanning()
-		src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
+		src.visible_message(SPAN_ALERT("The [src.name] finishes and shuts down."))
 		src.locked = FALSE
 		power_usage = initial(power_usage)
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
@@ -627,7 +637,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 
 		if (istype(P, /obj/item/light/tube) && !length(src.contents))
 			var/obj/item/light/tube/G = P
-			boutput(user, "<span class='notice'>You put \the [G.name] into \the [src.name].</span>")
+			boutput(user, SPAN_NOTICE("You put \the [G.name] into \the [src.name]."))
 			user.drop_item()
 			G.set_loc(src)
 			src.tanningtube = G
@@ -638,7 +648,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 				light.set_color(tanningtube.color_r, tanningtube.color_g, tanningtube.color_b)
 				light.set_brightness(0.5)
 		else if (ispryingtool(P) && length(src.contents)) //pry out the tube with a crowbar
-			boutput(user, "<span class='notice'>You pry out \the [src.tanningtube.name] from \the [src.name].</span>")
+			boutput(user, SPAN_NOTICE("You pry out \the [src.tanningtube.name] from \the [src.name]."))
 			src.tanningtube.set_loc(src.loc)
 			src.tanningtube = null
 			generate_overlay_icon() //nulling overlay

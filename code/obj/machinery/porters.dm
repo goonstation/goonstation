@@ -286,6 +286,26 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(M)]"] += M // Don't remove the #[number] part here.
 		return
 
+/obj/item/remote/porter/port_a_laundry
+	name = "Port-A-Laundry Remote"
+	icon = 'icons/obj/porters.dmi'
+	icon_state = "remote"
+	item_state = "electronic"
+	desc = "A remote that summons a Port-A-Laundry."
+	machinery_name = "Port-a-Laundry"
+
+	get_machinery()
+		if (!src)
+			return
+
+		for (var/obj/submachine/laundry_machine/portable/LP in portable_machinery)
+			var/turf/T = get_turf(LP)
+			if (isrestrictedz(T?.z)) // Don't show stuff in "somewhere", okay.
+				continue
+			if (!(LP in src.machinerylist))
+				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(LP)]"] += LP // Don't remove the #[number] part here.
+		return
+
 /obj/item/remote/busted
 	name = "Port-A-Busted Remote"
 	icon = 'icons/obj/porters.dmi'
@@ -357,7 +377,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 
 		var/req = src.process()
 		if (req)
-			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")]. Somehow, you know that it will unlock in [req/10] seconds.</span>")
+			user.show_text(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]. Somehow, you know that it will unlock in [req/10] seconds."))
 
 
 	// Could be useful (Convair880).
@@ -381,7 +401,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 
 		if (tgui_alert(usr, "Set selected turf as home location?", "Set home location", list("Yes", "No")) == "Yes")
 			src.homeloc = over_object
-			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
+			usr.visible_message(SPAN_NOTICE("<b>[usr.name]</b> changes the [src.name]'s home turf."), SPAN_NOTICE("New home turf selected: [get_area(src.homeloc)]."))
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
@@ -415,35 +435,28 @@ TYPEINFO(/obj/machinery/port_a_brig)
 				if (src.occupant)
 					logTheThing(LOG_STATION, user, "[src.locked ? "locks" : "unlocks"] [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
 			else
-				boutput(user, "<span class='alert'>This [src] doesn't seem to accept your authority.</span>")
+				boutput(user, SPAN_ALERT("This [src] doesn't seem to accept your authority."))
 
 		else if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 			if (!G.affecting)
 				return
 			if (!ishuman(G.affecting))
-				boutput(user, "<span class='alert'>You can't find a way to fit [G.affecting] into [src]!</span>")
+				boutput(user, SPAN_ALERT("You can't find a way to fit [G.affecting] into [src]!"))
 				return
 			if (src.occupant)
-				boutput(user, "<span class='alert'>The Port-A-Brig is already occupied!</span>")
+				boutput(user, SPAN_ALERT("The Port-A-Brig is already occupied!"))
 				return
 			if (src.locked)
-				boutput(user, "<span class='alert'>The Port-A-Brig is locked!</span>")
+				boutput(user, SPAN_ALERT("The Port-A-Brig is locked!"))
 				return
 			src.add_fingerprint(user)
 			actions.start(new /datum/action/bar/portabrig_shove_in(src, user, G.affecting, G), user)
 
 		else if (ispryingtool(W))
-			var/turf/T = user.loc
-			boutput(user, "<span class='notice'>Prying door open.</span>")
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-			sleep(15 SECONDS)
-			if ((user.loc == T && user.equipped() == W))
-				src.locked = 0
-				boutput(user, "<span class='notice'>You pried the door open.</span>")
-			else if((isrobot(user) && (user.loc == T)))
-				src.locked = 0
-				boutput(user, "<span class='notice'>You pried the door open.</span>")
+			boutput(user, SPAN_NOTICE("Prying door open."))
+			SETUP_GENERIC_ACTIONBAR(user, src, 15 SECONDS, /obj/machinery/port_a_brig/proc/pry_open, list(user), W.icon, W.icon_state,
+				SPAN_ALERT("[user] pries open [src]."), INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_ATTACKED | INTERRUPT_STUNNED)
 
 	proc/build_icon()
 		if(src.occupant)
@@ -453,7 +466,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 
 	proc/go_out()
 		if (src.locked)
-			boutput(usr, "<span class='alert'>The Port-A-Brig is locked!</span>")
+			boutput(usr, SPAN_ALERT("The Port-A-Brig is locked!"))
 			return
 		if(src.occupant)
 			src.occupant.set_loc(src.loc)
@@ -489,7 +502,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 			interrupt(INTERRUPT_ALWAYS)
 		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
 			interrupt(INTERRUPT_ALWAYS)
-		src.brig.visible_message("<span class='alert'>[owner] begins shoving [victim] into [src.brig]!</span>")
+		src.brig.visible_message(SPAN_ALERT("[owner] begins shoving [victim] into [src.brig]!"))
 
 
 	onUpdate()
@@ -507,7 +520,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		src.brig.visible_message("<span class='alert'>[owner] shoves [victim] into [src.brig]!</span>")
+		src.brig.visible_message(SPAN_ALERT("[owner] shoves [victim] into [src.brig]!"))
 		src.brig.occupant = victim
 		victim.set_loc(src.brig)
 		for(var/obj/O in src.brig)
@@ -515,6 +528,9 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		src.brig.build_icon()
 		qdel(G)
 
+/obj/machinery/port_a_brig/proc/pry_open()
+	playsound(src.loc, 'sound/items/Crowbar.ogg', 100, TRUE)
+	src.locked = FALSE
 
 /obj/item/paper/Port_A_Brig
 	name = "paper - 'A-97 Port-A-Brig Manual"
@@ -598,7 +614,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 
 		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
 			src.homeloc = over_object
-			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
+			usr.visible_message(SPAN_NOTICE("<b>[usr.name]</b> changes the [src.name]'s home turf."), SPAN_NOTICE("New home turf selected: [get_area(src.homeloc)]."))
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
@@ -618,10 +634,10 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 			if (!G.affecting)
 				return
 			if (!ishuman(G.affecting))
-				boutput(user, "<span class='alert'>You can't find a way to fit [G.affecting] into [src]!</span>")
+				boutput(user, SPAN_ALERT("You can't find a way to fit [G.affecting] into [src]!"))
 				return
 			if (src.occupant)
-				boutput(user, "<span class='alert'>The Port-A-Medbay is already occupied!</span>")
+				boutput(user, SPAN_ALERT("The Port-A-Medbay is already occupied!"))
 				return
 			var/mob/living/carbon/human/H = G.affecting
 			H.set_loc(src)
@@ -659,10 +675,10 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 		set src in oview(1)
 		set category = "Local"
 		if (!ishuman(usr))
-			boutput(usr, "<span class='alert'>You can't seem to fit into \the [src].</span>")
+			boutput(usr, SPAN_ALERT("You can't seem to fit into \the [src]."))
 			return
 		if (src.occupant)
-			boutput(usr, "<span class='alert'>The Port-A-Medbay is already occupied!</span>")
+			boutput(usr, SPAN_ALERT("The Port-A-Medbay is already occupied!"))
 			return
 		if (!isalive(usr) || usr.getStatusDuration("stunned") != 0)
 			return
@@ -740,7 +756,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 
 		if (tgui_alert(usr, "Set selected turf as home location?", "Set home location", list("Yes", "No")) == "Yes")
 			src.homeloc = over_object
-			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
+			usr.visible_message(SPAN_NOTICE("<b>[usr.name]</b> changes the [src.name]'s home turf."), SPAN_NOTICE("New home turf selected: [get_area(src.homeloc)]."))
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
@@ -786,7 +802,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 					if(81 to INFINITY) //Travel sickness!
 						for(var/mob/living/carbon/M in src.contents)
 							SPAWN(rand(10,40))
-								var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+								var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
 								M.vomit(0, null, vomit_message)
 								M.change_misstep_chance(40)
 								M.changeStatus("drowsy", 10 SECONDS)
@@ -814,7 +830,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 					if(11 to 20) //Mechanical failure aaaaaa
 						var/list/temp = src.contents.Copy()
 						src.open()
-						src.visible_message("<span class='alert'><B>\the [src]'s door flies open and a gout of flame erupts from within!</span>")
+						src.visible_message(SPAN_ALERT("<B>\the [src]'s door flies open and a gout of flame erupts from within!"))
 						fireflash(src, 2)
 						for(var/mob/living/carbon/M in temp)
 							M.update_burning(100)
@@ -926,7 +942,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 
 		if (tgui_alert(usr, "Set selected turf as home location?", "Set home location", list("Yes", "No")) == "Yes")
 			src.homeloc = over_object
-			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
+			usr.visible_message(SPAN_NOTICE("<b>[usr.name]</b> changes the [src.name]'s home turf."), SPAN_NOTICE("New home turf selected: [get_area(src.homeloc)]."))
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief...well, if it wouldn't be the NanoMed.
 			//logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
@@ -942,3 +958,26 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 
 	power_change()
 		return
+
+//DIRTY DIRTY PLAYERS
+TYPEINFO(/obj/submachine/laundry_machine/portable)
+	mats = 0
+
+/obj/submachine/laundry_machine/portable
+	name = "Port-A-Laundry"
+	desc = "Don't ask."
+	anchored = UNANCHORED
+	pixel_y = 6
+	var/homeloc
+
+	New()
+		. = ..()
+		LAZYLISTADD(portable_machinery, src)
+		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		src.homeloc = get_turf(src)
+
+	disposing()
+		if (islist(portable_machinery))
+			portable_machinery.Remove(src)
+		..()

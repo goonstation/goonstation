@@ -34,8 +34,9 @@
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "cake1-base_custom"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	bites_left = 0
+	bites_left = 12
 	heal_amt = 2
+	fill_amt = 20 //2 per slice
 	use_bite_mask = FALSE
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	initial_volume = 100
@@ -216,6 +217,7 @@
 			schild.food_color = src.food_color
 			schild.sliced = TRUE
 			schild.bites_left = 1
+			schild.fill_amt = src.fill_amt / CAKE_SLICES
 
 			schild.set_loc(get_turf(src.loc))
 		qdel(s) //cleaning up the template slice
@@ -490,8 +492,9 @@
 			frost_cake(W,user)
 			return
 		else if(istype(W,/obj/item/reagent_containers/food/snacks/cake))
-			stack_cake(W,user)
-			return
+			if(src != W)
+				stack_cake(W,user)
+				return
 		else if(cake_candle.len && !(litfam) && (W.firesource))
 			src.ignite()
 			W.firesource_interact()
@@ -532,14 +535,14 @@
 			return
 
 
-	attack(mob/M, mob/user, def_zone) //nom nom nom
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(!src.sliced)
-			if(user == M)
+			if(user == target)
 				user.show_text("You can't just cram that in your mouth, you greedy beast!","red")
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 				return
 			else
-				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 				return
 		else
 			..()
@@ -565,7 +568,7 @@
 	desc = "Mmm! A delicious-looking cream sponge cake!"
 	heal_amt = 2
 	initial_volume = 50
-	initial_reagents = list("sugar"=30)
+	initial_reagents = list("sugar"=20, "cream"=10)
 
 	New()
 		..()

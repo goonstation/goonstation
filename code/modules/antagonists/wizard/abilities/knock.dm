@@ -22,7 +22,7 @@
 		if (holder.owner.wizard_spellpower(src))
 			SPrange = 5
 		else
-			boutput(holder.owner, "<span class='alert'>Your spell only works at point blank without a staff to focus it!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your spell only works at point blank without a staff to focus it!"))
 		for(var/obj/machinery/door/G in oview(SPrange, holder.owner))
 			SPAWN(1 DECI SECOND)
 				G.open()

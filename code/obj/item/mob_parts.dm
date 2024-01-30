@@ -174,7 +174,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		//object.name = "[src.holder.real_name]'s [initial(object.name)]"
 		object.add_fingerprint(src.holder)
 
-		if(show_message) holder.visible_message("<span class='alert'>[holder.name]'s [object.name] falls off!</span>")
+		if(show_message) holder.visible_message(SPAN_ALERT("[holder.name]'s [object.name] falls off!"))
 
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
@@ -230,7 +230,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		//object.name = "[src.holder.real_name]'s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm
 		object.add_fingerprint(src.holder)
 
-		holder.visible_message("<span class='alert'>[holder.name]'s [object.name] flies off in a [src.streak_descriptor] arc!</span>")
+		holder.visible_message(SPAN_ALERT("[holder.name]'s [object.name] flies off in a [src.streak_descriptor] arc!"))
 
 		switch(direction)
 			if(NORTH)
@@ -298,8 +298,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 			attacher.remove_item(src)
 
-			playsound(attachee, 'sound/effects/attach.ogg', 50, 1)
-			attacher.visible_message("<span class='alert'>[attacher] attaches [src] to [attacher == attachee ? his_or_her(attacher) : "[attachee]'s"] stump. It [src.easy_attach ? "fuses instantly" : can_secure ? "looks very secure" : "doesn't look very secure"]!</span>")
+			playsound(attachee, 'sound/effects/attach.ogg', 50, TRUE)
+			attacher.visible_message(SPAN_ALERT("[attacher] attaches [src] to [attacher == attachee ? his_or_her(attacher) : "[attachee]'s"] stump. It [src.easy_attach ? "fuses instantly" : can_secure ? "looks very secure" : "doesn't look very secure"]!"))
 
 		attachee.limbs.vars[src.slot] = src
 		src.holder = attachee
@@ -369,6 +369,10 @@ ABSTRACT_TYPE(/obj/item/parts)
 	proc/on_holder_examine()
 		return
 
+	///Called every life tick when attached to a mob
+	proc/on_life(datum/controller/process/mobs/parent)
+		return
+
 /obj/item/proc/streak_object(var/list/directions, var/streak_splatter) //stolen from gibs
 	var/destination
 	var/dist = rand(1,6)
@@ -388,7 +392,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 	SPAWN(0)
 		/// Number of tiles where it should try to make a splatter
-		var/num_splats = rand(round(dist * 0.2), dist) + 1
+		var/num_splats = randfloat(round(dist * 0.2), dist) + 1
 		for (var/turf/T in linepath)
 			if(step_to(src, T, 0, 300) || num_splats-- >= 1)
 				if (ispath(streak_splatter))

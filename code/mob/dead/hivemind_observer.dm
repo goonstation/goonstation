@@ -1,5 +1,6 @@
 /mob/dead/target_observer/hivemind_observer
 	is_respawnable = FALSE
+	locked = TRUE
 	var/datum/abilityHolder/changeling/hivemind_owner
 	var/can_exit_hivemind_time = 0
 	var/last_attack = 0
@@ -58,6 +59,7 @@
 	point_at(atom/target, var/pixel_x, var/pixel_y)
 		if(ON_COOLDOWN(src, "hivemind_member_point", 1 SECOND))
 			return
+		..()
 		make_hive_point(target, pixel_x, pixel_y, color="#e2a059")
 
 	/// Like make_point, but the point is an image that is only displayed to hivemind members
@@ -79,7 +81,7 @@
 		for (var/mob/member in hivemind_owner.get_current_hivemind())
 			if (!member.client)
 				continue
-			boutput(member, "<span class='game hivesay'><span class='prefix'>HIVEMIND: </span><b>[src]</b> points to [target].</span>")
+			boutput(member, SPAN_HIVESAY("[SPAN_PREFIX("HIVEMIND: ")]<b>[src]</b> points to [target]."))
 			member.client.images += point
 			viewers += member.client
 		var/matrix/M = matrix()
@@ -95,7 +97,7 @@
 	proc/try_launch_attack(atom/shoot_target)
 		.= 0
 		if (isabomination(hivemind_owner.owner) && world.time > (last_attack + src.combat_click_delay))
-			var/obj/projectile/proj = initialize_projectile_ST(target, new /datum/projectile/special/acidspit, shoot_target)
+			var/obj/projectile/proj = initialize_projectile_pixel_spread(target, new /datum/projectile/special/acidspit, shoot_target)
 			if (proj) //ZeWaka: Fix for null.launch()
 				proj.launch()
 				last_attack = world.time
@@ -136,8 +138,8 @@
 	usr = src
 
 	if(world.time >= can_exit_hivemind_time && hivemind_owner && hivemind_owner.master != src)
-		boutput(src, "<span class='alert'>You have parted with the hivemind.</span>")
+		boutput(src, SPAN_ALERT("You have parted with the hivemind."))
 		src.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 	else
-		boutput(src, "<span class='alert'>You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds.</span>")
+		boutput(src, SPAN_ALERT("You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds."))
 

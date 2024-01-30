@@ -27,23 +27,28 @@
 	var/list/cache
 	if(!M)
 		return FALSE
+	var/datum/player/player = null
 	if(ismob(M))
 		var/mob/M2 = M
-		//if(isnull(M2.client))
-			//return FALSE
-		var/datum/player/player = make_player(M2.ckey) // Get the player so we can use their bancache.
-		if(player.cached_jobbans == null) // Shit they aren't cached.
-			var/api_response = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M2.ckey), 1)
-			if(!length(api_response)) // API unavailable or something
-				return FALSE
-			if(!M2?.ckey)
-				return FALSE // new_player was disposed during api call
-			player.cached_jobbans = api_response[M2.ckey]
-		cache = player.cached_jobbans
+		player = make_player(M2.ckey) // Get the player so we can use their bancache.
 	else if(islist(M))
 		cache = M
-	else //If we aren't a string this is going to explode.
-		cache = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+	else if(istext(M))
+		player = make_player(M)
+	else
+		CRASH("jobban_isbanned() called with invalid argument type '[M]'.")
+
+	if(isnull(cache) && player)
+		if(isnull(player.cached_jobbans)) // Shit they aren't cached.
+			var/api_response = apiHandler.queryAPI("jobbans/get/player", list("ckey"=player.ckey), 1)
+			if(!length(api_response)) // API unavailable or something
+				return FALSE
+			player.cached_jobbans = api_response[player.ckey]
+		cache = player.cached_jobbans
+		if(isnull(cache))
+			CRASH("jobban cache is null for [player.ckey] after an API fetch")
+	else if(isnull(cache))
+		CRASH("jobban cache is null and there is no player datum, this should not happen: [M], [player]")
 
 	var/datum/job/J = find_job_in_controller_by_string(rank)
 	if (J?.no_jobban_from_this_job)
@@ -60,7 +65,7 @@
 			return TRUE
 
 	if(cache.Find("Security Department") || cache.Find("Security Officer"))
-		if(rank in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
+		if(rank in list("Security Officer","Security Assistant","Vice Officer","Detective"))
 			return TRUE
 
 	if(cache.Find("Heads of Staff"))

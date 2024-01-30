@@ -21,8 +21,10 @@ TYPEINFO(/atom)
 
 	/// Material id of this object as a material id (lowercase string), set on New()
 	var/default_material = null
-	/// Does this object use appearance from the material?
-	var/uses_material_appearance = FALSE
+	/// Does this object use appearance from the default material?
+	var/uses_default_material_appearance = FALSE
+	/// Does this object use the default material's name?
+	var/uses_default_material_name = FALSE
 
 	/// The message displayed when the atom is alt+doubleclicked, should contain a description of the atom's functionality.
 	/// You can also override get_help_message() to return a message dynamically (based on atom state or the user etc.)
@@ -62,6 +64,9 @@ TYPEINFO(/atom)
 	/// Storage for items
 	var/datum/storage/storage = null
 
+	/// Which mob is pulling this atom currently
+	var/mob/pulled_by = null
+
 /* -------------------- name stuff -------------------- */
 	/*
 	to change names: either add or remove something with the appropriate proc(s) and then call atom.UpdateName()
@@ -90,7 +95,7 @@ TYPEINFO(/atom)
 		// Lets stop having 5 implementations of this that all do it differently
 		if (!src.material && default_material)
 			var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
-			src.setMaterial(mat, src.uses_material_appearance, src.mat_changename)
+			src.setMaterial(mat)
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
@@ -195,6 +200,11 @@ TYPEINFO(/atom)
 				src.delStatus(effect)
 			src.statusEffects = null
 		ClearAllParticles()
+
+		if (!isnull(chat_text))
+			qdel(chat_text)
+			chat_text = null
+
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
 			ClearAllOverlays()
@@ -232,11 +242,20 @@ TYPEINFO(/atom)
 		return null
 	/**
 	  * Convenience proc to see if a container is open for chemistry handling
-	  *
+	  * Takes an argument of whether this openness is for the purpose of pouring something in or not (this should maybe just be a separate flag but we ran out of bits okay)
 	  * returns true if open, false if closed
 	  */
-	proc/is_open_container()
+	proc/is_open_container(input = FALSE)
 		return flags & OPENCONTAINER
+
+	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result
+	proc/set_open_container(value)
+		if (value)
+			ADD_FLAG(src.flags, OPENCONTAINER)
+		else
+			REMOVE_FLAG(src.flags, OPENCONTAINER)
+		src.reagents?.handle_reactions()
+
 
 	proc/transfer_all_reagents(var/atom/A as turf|obj|mob, var/mob/user as mob)
 		// trans from src to A
@@ -244,15 +263,15 @@ TYPEINFO(/atom)
 			return // what're we gunna do here?? ain't got no reagent holder
 
 		if (!src.reagents.total_volume) // Check to make sure the from container isn't empty.
-			boutput(user, "<span class='alert'>[src] is empty!</span>")
+			boutput(user, SPAN_ALERT("[src] is empty!"))
 			return
 		else if (A.reagents.total_volume == A.reagents.maximum_volume) // Destination Container is full, quit trying to do things what you can't do!
-			boutput(user, "<span class='alert'>[A] is full!</span>") // Notify the user, then exit the process.
+			boutput(user, SPAN_ALERT("[A] is full!")) // Notify the user, then exit the process.
 			return
 
 		logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
 		var/T = src.reagents.trans_to(A, src.reagents.total_volume) // Dump it all!
-		boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
+		boutput(user, SPAN_NOTICE("You transfer [T] units into [A]."))
 		return
 
 /atom/proc/signal_event(var/event) // Right now, we only signal our container
@@ -279,10 +298,10 @@ TYPEINFO(/atom)
 /atom/proc/deserialize_postprocess()
 	return
 
-/atom/proc/ex_act(var/severity=0,var/last_touched=0)
+/atom/proc/ex_act(var/severity=0,var/last_touched=0, var/power=0, var/datum/explosion/explosion=null)
 	return
 
-/atom/proc/reagent_act(var/reagent_id,var/volume)
+/atom/proc/reagent_act(var/reagent_id,var/volume,var/datum/reagentsholder_reagents)
 	if (!istext(reagent_id) || !isnum(volume) || volume < 1)
 		return 1
 	return 0
@@ -367,6 +386,7 @@ TYPEINFO(/atom)
 
 /// Changes the icon state and returns TRUE if the icon state changed.
 /atom/proc/set_icon_state(var/new_state)
+	SHOULD_CALL_PARENT(TRUE)
 	. = new_state != src.icon_state
 	src.icon_state = new_state
 	if(. && src.material_applied_appearance && src.material)
@@ -374,6 +394,17 @@ TYPEINFO(/atom)
 	signal_event("icon_updated")
 	// TODO: actual component signal here
 	// also TODO: use this proc instead of setting icon state directly probably
+
+/// Checks if the icon state in question exists. If it does it sets it and returns true. Otherwise returns false and doesn't change the icon state.
+/// You can supply the new_icon argument to also override src.icon. This will again only be overriden if the icon state + icon combination exists.
+/// Not intended for normal use. Current intended use is stuff like `src.try_set_icon_state(src.icon_state + "-autumn")` for seasonal modifiers etc.
+/atom/proc/try_set_icon_state(new_state, new_icon=null)
+	if(src.is_valid_icon_state(new_state, new_icon))
+		if(new_icon)
+			src.icon = new_icon
+		src.set_icon_state(new_state)
+		return TRUE
+	return FALSE
 
 /atom/proc/set_dir(var/new_dir)
 #ifdef COMSIG_ATOM_DIR_CHANGED
@@ -443,6 +474,10 @@ TYPEINFO(/atom)
 	master = null
 	..()
 
+TYPEINFO(/atom/movable)
+	/// Either a number or a list of the form list("MET-1"=5, "erebite"=3)
+	/// See the `match_material_pattern` proc for an explanation of what "CRY-2" is supposed to mean
+	var/list/mats = null
 
 /atom/movable
 	layer = OBJ_LAYER
@@ -472,10 +507,20 @@ TYPEINFO(/atom)
 	/// how much it slows you down while pulling it, changed this from w_class because that's gunna cause issues with items that shouldn't fit in backpacks but also shouldn't slow you down to pull (sorry grayshift)
 	var/p_class = 2.5
 
+	// Enables mobs and objs to be mechscannable
+	/// Can this only be scanned with a syndicate mech scanner?
+	var/is_syndicate = FALSE
+	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
+	var/mechanics_interaction = MECHANICS_INTERACTION_ALLOWED
+	/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
+	var/mechanics_type_override = null
 
 //some more of these event handler flag things are handled in set_loc far below . . .
 /atom/movable/New()
 	..()
+	var/typeinfo/obj/typeinfo = src.get_typeinfo()
+	if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
+		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if (isturf(src.loc))
@@ -593,6 +638,7 @@ TYPEINFO(/atom)
 	src.move_speed = TIME - src.l_move_time
 	src.l_move_time = TIME
 	if (A != src.loc && A?.z == src.z)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
 		src.last_move = get_dir(A, src.loc)
 		if (length(src.attached_objs))
 			for (var/atom/movable/M as anything in attached_objs)
@@ -600,7 +646,6 @@ TYPEINFO(/atom)
 		if (islist(src.tracked_blood))
 			src.track_blood()
 		actions.interrupt(src, INTERRUPT_MOVE)
-		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
 	//note : move is still called when we are steping into a wall. sometimes these are unnecesssary i think
 
 	if(last_turf == src.loc)
@@ -662,14 +707,14 @@ TYPEINFO(/atom)
 	if (isghostcritter(user))
 		var/mob/living/critter/C = user
 		if (!C.can_pull(src))
-			boutput(user,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
+			boutput(user,SPAN_ALERT("<b>[src] is too heavy for you pull in your half-spectral state!</b>"))
 			return 1
 
 	if (iscarbon(user) || issilicon(user))
 		add_fingerprint(user)
 
 	if (istype(src,/obj/item/old_grenade/light_gimmick))
-		boutput(user, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
+		boutput(user, SPAN_NOTICE("You feel your hand reach out and clasp the grenade."))
 		src.Attackhand(user)
 		return 1
 	if (!( src.anchored ))
@@ -687,12 +732,34 @@ TYPEINFO(/atom)
 		update_mdir_light_visibility(src.dir)
 
 /atom/proc/get_desc(dist, mob/user)
+	// If we click something on/under the floor, then analyze fluid/smoke as well
+	// a million things don't call the parent for this but the things I care about don't override it so kicking it down the road
+	if (CHECK_LIQUID_CLICK(src))
+		var/turf/T = get_turf(src)
+		var/obj/fluid/liquid = T.active_liquid
+		var/obj/fluid/airborne/gas = T.active_airborne_liquid
+
+		// Bit roundabout to use get_desc here instead of keeping it all in reagent code,
+		// but we can't actually identify which fluid obj is being examined from within'
+		// fluid group code, as my_atom is null. Thus we need to go through the obj for the
+		// distance check.
+
+		// also reagent examining code is hell and you need to explicitly put this proc call in every get_desc() proc
+		// to have it actually show up in examining
+		if (liquid)
+			. += liquid.get_desc(get_dist(T, user), user)
+		if (gas)
+			. += gas.get_desc(get_dist(T, user), user)
 
 /// Override this if you want the alt+doubleclick help message to be dynamic (for example based on the state of deconstruction).
 /// For consistency you should always also override help_message at least to a placeholder never-to-be-seen string, this is important
 /// for the context menu functionality. Use the [HELP_MESSAGE_OVERRIDE] macro to do that.
 /atom/proc/get_help_message(dist, mob/user)
 	. = src.help_message
+
+/// A proc to give this item a special name when viewed in an admin context (just the tilde-rightclick menu for now but probably other places later)
+/atom/proc/admin_visible_name()
+	return src.name
 
 /**
   * a proc to completely override the standard formatting for examine text
@@ -719,14 +786,16 @@ TYPEINFO(/atom)
 
 	// Added for forensics (Convair880).
 	if (isitem(src) && src.blood_DNA)
-		. = list("<span class='alert'>This is a bloody [src.name].</span>")
+		. = list(SPAN_ALERT("This is a bloody [src.name]."))
 		if (src.desc)
-			. += "<br>[src.desc] <span class='alert'>It seems to be covered in blood!</span>"
+			. += "<br>[src.desc] [SPAN_ALERT("It seems to be covered in blood!")]"
 	else if (src.desc)
 		. += "<br>[src.desc]"
 
 	var/extra = src.get_desc(dist, user)
-	if (extra)
+	if (islist(extra))
+		. += extra
+	else
 		. += " [extra]"
 
 	// handles PDA messaging shortcut for the AI
@@ -787,24 +856,23 @@ TYPEINFO(/atom)
 	return
 
 ///wrapper proc for /atom/proc/attackby so that signals are always sent. Call this, but do not override it.
-/atom/proc/Attackby(obj/item/W, mob/user, params, is_special = 0)
+/atom/proc/Attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
 	SHOULD_NOT_OVERRIDE(1)
 	if(SEND_SIGNAL(W, COMSIG_ITEM_ATTACKBY_PRE, src, user))
 		return
 	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user, params, is_special))
 		return
-	src.attackby(W, user, params, is_special)
+	src.attackby(W, user, params, is_special, silent)
 
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
-/atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0)
+/atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
 	PROTECTED_PROC(TRUE)
 	if (src.storage?.storage_item_attack_by(W, user))
 		return
 	src.material_trigger_when_attacked(W, user, 1)
-	if (user && W && !(W.flags & SUPPRESSATTACK))
-		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
-	return
+	if (user && W && !(W.flags & SUPPRESSATTACK) && !silent)
+		user.visible_message(SPAN_COMBAT("<B>[user] hits [src] with [W]!</B>"))
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")

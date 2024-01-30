@@ -86,7 +86,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	desc = "It keeps pulsing.  Ew.  Probably shouldn't put your hand in the..mouth?"
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "meatlumps"
-	dir = 4
+	dir = EAST
 
 /obj/stomachacid
 	name = "acid"
@@ -109,7 +109,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		if(!istype(A, /obj/item/skull))
 			reagents.reaction(A, TOUCH, 2)
 		if (prob(50) && isliving(A))
-			boutput(A, pick("<span class='alert'>This stings!</span>", "<span class='alert'>Oh jesus this burns!!</span>", "<span class='alert'>ow ow OW OW OW OW</span>", "<span class='alert'>oh cripes this isn't the fun kind of acid</span>", "<span class='alert'>ow OW OUCH FUCK OW</span>"))
+			boutput(A, pick(SPAN_ALERT("This stings!"), SPAN_ALERT("Oh jesus this burns!!"), SPAN_ALERT("ow ow OW OW OW OW"), SPAN_ALERT("oh cripes this isn't the fun kind of acid"), SPAN_ALERT("ow OW OUCH FUCK OW")))
 			if (ishuman(A) && prob(80))
 				A:emote("scream")
 		return
@@ -137,10 +137,10 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	attackby(obj/item/O, mob/user)
 		if (src.alive && O.force)
 			src.health -= O.force / 4
-			src.visible_message("<span class='alert'><b>[user] bops [src] with [O]!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[user] bops [src] with [O]!</b>"))
 			if (src.health <= 0)
 				src.alive = 0
-				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> dies!"))
 				src.icon_state = "light-dead"
 				light.disable()
 
@@ -187,7 +187,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 		attackby(obj/item/O, mob/user)
 			if (src.alive && ispryingtool(O))
-				user.visible_message("<span class='alert'><b>[user] jabs [src] with [O]!</b></span>", "<span class='alert'>You jab [src] with [O] and begin to pull!  Hold on!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user] jabs [src] with [O]!</b>"), SPAN_ALERT("You jab [src] with [O] and begin to pull!  Hold on!"))
 				if (do_after(user, 2 SECONDS))
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 					gibs(src.loc)
@@ -214,7 +214,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	CritterAttack(mob/M)
 		if(ismob(M))
 			src.attacking = 1
-			src.visible_message("<span class='alert'><B>[src]</B> chomps down on [M]!</span>")
+			src.visible_message(SPAN_ALERT("<B>[src]</B> chomps down on [M]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			random_brute_damage(M, rand(10,35), 1)
 			SPAWN(1 SECOND)
@@ -337,7 +337,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			return
 
 		src.attacking = 1
-		src.visible_message("<span class='alert'>[src] slaps [M] with a meaty tendril!</span>")
+		src.visible_message(SPAN_ALERT("[src] slaps [M] with a meaty tendril!"))
 		playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 		M.changeStatus("weakened", 10 SECONDS)
 		random_brute_damage(M, 10, 1)
@@ -428,7 +428,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		playsound(src.loc, pick(meathead_noises), 40, 1)
 
 		for(var/mob/O in hearers(src, null)) //Todo: gnarly font of some sort
-			O.show_message("<span class='game say'><span class='name'>[src]</span> [prob(33) ? "mutters" : (prob(50) ? "gurgles" : "whimpers")], \"[message]\"",2)
+			O.show_message(SPAN_SAY("[SPAN_NAME("[src]")] [prob(33) ? "mutters" : (prob(50) ? "gurgles" : "whimpers")], \"[message]\""), 2)
 		return
 
 #undef MEATHEAD_MAX_CUSTOM_UTTERANCES
@@ -774,7 +774,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 	Topic(href, href_list)
 		if (href_list["command"] == "eject")
-			boutput(usr, "<span class='alert'>You can't get it open, it's all overgrown!</span>")
+			boutput(usr, SPAN_ALERT("You can't get it open, it's all overgrown!"))
 			return
 		else
 			return ..()
@@ -830,7 +830,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			return
 
 		if (locked)
-			boutput(usr, "<span class='alert'>It's locked!</span>")
+			boutput(usr, SPAN_ALERT("It's locked!"))
 			return
 
 		src.deploy(usr)
@@ -989,16 +989,16 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				if (locked)
 					locked = 0
 					src.icon_state = "cheget_unlocked"
-					src.visible_message("<span class='alert'>[src]'s lock mechanism clicks unlocked.</span>")
+					src.visible_message(SPAN_ALERT("[src]'s lock mechanism clicks unlocked."))
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 					if (prob(50))
-						src.visible_message("<span class='alert'>[src] emits a happy bleep.</span>")
+						src.visible_message(SPAN_ALERT("[src] emits a happy bleep."))
 						playsound(src.loc, 'sound/machines/cheget_goodbloop.ogg', 30, 1)
 
 				else
 					locked = 1
 					src.icon_state = "cheget_closed"
-					src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
+					src.visible_message(SPAN_ALERT("[src]'s lock mechanism clunks locked."))
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 			else if (href_list["enter"] == "")
 				if (locked)
@@ -1006,7 +1006,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				locked = 1
 				src.icon_state = "cheget_closed"
 
-				src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
+				src.visible_message(SPAN_ALERT("[src]'s lock mechanism clunks locked."))
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 
 			else
@@ -1017,7 +1017,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 						if (cmptext( copytext(href_list["enter"], i,i+1), copytext(src.code, i, i+1)))
 							any_of_them_right++
 
-					src.visible_message("<span class='alert'>[src] emits a[(any_of_them_right > 1) ? "couple" : null] grumpy boop[(any_of_them_right > 1) ? "s" : null].</span>")
+					src.visible_message(SPAN_ALERT("[src] emits a[(any_of_them_right > 1) ? "couple" : null] grumpy boop[(any_of_them_right > 1) ? "s" : null]."))
 					playsound(src.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
 
 /obj/machinery/computer3/luggable/cheget
@@ -1098,8 +1098,8 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		src.host?.add_dialog(usr)
 
 		if(href_list["key"] && istype(usr.equipped(), /obj/item/device/key))
-			boutput(usr, "<span class='alert'>It doesn't fit.  Must be the wrong key.</span>")
-			host.visible_message("<span class='alert'>[src.loc] emits a grumpy boop.</span>")
+			boutput(usr, SPAN_ALERT("It doesn't fit.  Must be the wrong key."))
+			host.visible_message(SPAN_ALERT("[src.loc] emits a grumpy boop."))
 			playsound(src.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
 
 		return
@@ -1135,36 +1135,36 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				usr.drop_item()
 				C.set_loc(src)
 				src.inserted_key = C
-				boutput(usr, "<span class='notice'>You insert the key and turn it.</span>")
+				boutput(usr, SPAN_NOTICE("You insert the key and turn it."))
 				playsound(host.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
 				SPAWN(1 SECOND)
 					if(src.inserted_key)
-						host.visible_message("<span class='alert'>[host] emits a satisfied boop and a little green light comes on.</span>")
+						host.visible_message(SPAN_ALERT("[host] emits a satisfied boop and a little green light comes on."))
 						playsound(host.loc, 'sound/machines/cheget_goodbloop.ogg', 30, 1)
 						var/datum/signal/authSignal = get_free_signal()
 						authSignal.data = list("authcode"="\ref[src]")
 						send_command("key_auth", authSignal)
 
 			else if(istype(usr.equipped(), /obj/item/device/key))
-				boutput(usr, "<span class='alert'>It doesn't fit.  Must be the wrong key.</span>")
-				host.visible_message("<span class='alert'>[host] emits a grumpy boop.</span>")
+				boutput(usr, SPAN_ALERT("It doesn't fit.  Must be the wrong key."))
+				host.visible_message(SPAN_ALERT("[host] emits a grumpy boop."))
 				playsound(host.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
 
 		else if (href_list["eject_key"])
 			if(src.inserted_key)
-				boutput(usr, "<span class='notice'>You turn the key and pull it out of the lock. The green light turns off.</span>")
+				boutput(usr, SPAN_NOTICE("You turn the key and pull it out of the lock. The green light turns off."))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
 				src.inserted_key.set_loc(get_turf(src.loc))
 				src.inserted_key = null
 				SPAWN(1 SECOND)
 					if(!src.inserted_key)
-						host.visible_message("<span class='alert'>[host] emits a dour boop and a small red light flickers on.</span>")
+						host.visible_message(SPAN_ALERT("[host] emits a dour boop and a small red light flickers on."))
 						playsound(host.loc, 'sound/machines/cheget_sadbloop.ogg', 30, 1)
 						var/datum/signal/deauthSignal = get_free_signal()
 						deauthSignal.data = list("authcode"="\ref[src]")
 						send_command("key_deauth", deauthSignal)
 			else
-				boutput(usr, "<span class='alert'>You reach to remove the key from the computer... only to find it missing! Where did it go? ...mysterious.</span>")
+				boutput(usr, SPAN_ALERT("You reach to remove the key from the computer... only to find it missing! Where did it go? ...mysterious."))
 
 		host.updateUsrDialog()
 
@@ -1190,27 +1190,27 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/device/key))
 			if (opened)
-				boutput(user, "<span class='alert'>It's already been used, ok.</span>")
+				boutput(user, SPAN_ALERT("It's already been used, ok."))
 				return
 
 			if (findtext(O.name, "onyx"))
 				opened = 1
-				user.visible_message("<span class='alert'><b>[user] inserts [O] into [src]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] inserts [O] into [src]!</b>"))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
 				qdel(O)
 
-				src.visible_message("<span class='alert'>Something pops out of [src]!</span>")
+				src.visible_message(SPAN_ALERT("Something pops out of [src]!"))
 				new /obj/item/skull/crystal(get_turf(src))
 
 			else
-				boutput(user, "<span class='alert'>It doesn't fit.  Dang.</span>")
+				boutput(user, SPAN_ALERT("It doesn't fit.  Dang."))
 				return
 
 		else if (istype(O, /obj/item/iomoon_key))
-			boutput(user, "<span class='alert'>Okay, that isn't the right answer to this puzzle either.<br>Good thinking, though!</span>")
+			boutput(user, SPAN_ALERT("Okay, that isn't the right answer to this puzzle either.<br>Good thinking, though!"))
 
 		else if (istype(O, /obj/item/reagent_containers/food/snacks/pie/lime))
-			boutput(user, "<span class='alert'>You can just barely hear a hollow voice say \"ugh.\"[prob(20) ? " Phillip Farmer??" : null]</span>")
+			boutput(user, SPAN_ALERT("You can just barely hear a hollow voice say \"ugh.\"[prob(20) ? " Phillip Farmer??" : null]"))
 
 		else
 			return ..()
@@ -1255,7 +1255,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
 			return
 
-		user.visible_message("<span class='alert'>[user] presses against [src].</span>", "<span class='alert'>You press against [src].  Ew.</span>")
+		user.visible_message(SPAN_ALERT("[user] presses against [src]."), SPAN_ALERT("You press against [src].  Ew."))
 		return toggle()
 
 	proc
@@ -1378,15 +1378,15 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		flick("fangdoorc1",src)
 		for (var/mob/living/L in src.loc)
 			if (prob(10))
-				boutput(L, "<span class='notice'>You just barely slip by the clenching teeth unharmed!</span>")
+				boutput(L, SPAN_NOTICE("You just barely slip by the clenching teeth unharmed!"))
 			else if (prob(80))
-				L.visible_message("<span class='alert'><b>[src] slams shut on [L]!</b></span>")
+				L.visible_message(SPAN_ALERT("<b>[src] slams shut on [L]!</b>"))
 				if (ishuman(L))
 					L:sever_limb(pick("l_arm", "r_arm", "L_leg", "r_leg"))
 				else
 					random_brute_damage(L, 25, 1)
 			else
-				L.visible_message("<span class='alert'><b>[L] is gored by [src]!</b></span>", "<span class='alert'><b>OH SHIT</b></span>")
+				L.visible_message(SPAN_ALERT("<b>[L] is gored by [src]!</b>"), SPAN_ALERT("<b>OH SHIT</b>"))
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				logTheThing(LOG_COMBAT, L, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
 				L.gib()
@@ -1462,7 +1462,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 /obj/item/gun/gibgun
 	name = "grody gizmo"
 	desc = "Some kind of weirdo metal-laden meat tube.  Oh gosh, what would Freud say about this?"
-	//icon = 'icons/misc/meatland.dmi'
+	icon = 'icons/obj/items/guns/gimmick.dmi'
 	icon_state = "gibgun"
 	cant_self_remove = 1
 	cant_other_remove = 1
@@ -1471,7 +1471,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 	pickup(var/mob/user)
 		if (ishuman(user))
-			boutput(user, "<span class='alert'>[src] clamps down on your arm!  Mercy sakes!</span>")
+			boutput(user, SPAN_ALERT("[src] clamps down on your arm!  Mercy sakes!"))
 			src.w_class = W_CLASS_BUBSIAN
 		return ..()
 
@@ -1479,7 +1479,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		src.w_class = initial(src.w_class)
 		return ..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!istype(target, /turf) || !istype(start, /turf))
 			return
 		if (target == user.loc || target == loc)
@@ -1487,7 +1487,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 		if((last_shot + 15) <= world.time)
 			if (user.health <= 0)
-				boutput(user, "<span class='alert'>You try to fire, but just feel woozy, bolts of pain shooting up your arm.</span>")
+				boutput(user, SPAN_ALERT("You try to fire, but just feel woozy, bolts of pain shooting up your arm."))
 				return
 
 			last_shot = world.time
@@ -1501,9 +1501,9 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 			theGib.throw_at(target, 8, 2)
 			random_brute_damage(user, rand(5,15))
-			playsound(T, 'sound/impact_sounds/Flesh_Break_1.ogg', 40, 1)
+			playsound(T, 'sound/impact_sounds/Flesh_Break_1.ogg', 40, TRUE)
 
-			user.visible_message("<span class='alert'><b>[user]</b> blasts a lump of flesh at [target]!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> blasts a lump of flesh at [target]!"))
 			if (prob(15))
 				user.emote("scream")
 

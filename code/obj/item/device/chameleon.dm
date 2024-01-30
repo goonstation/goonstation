@@ -16,7 +16,7 @@
 		if (isnull(master))
 			return
 		for (var/mob/M in src)
-			boutput(M, "<span class='alert'>Your chameleon-projector deactivates.</span>")
+			boutput(M, SPAN_ALERT("Your chameleon-projector deactivates."))
 		if (isnull(master))
 			return
 		master.disrupt()
@@ -26,7 +26,7 @@
 		if (isnull(master))
 			return
 		for (var/mob/M in src)
-			boutput(M, "<span class='alert'>Your chameleon-projector deactivates.</span>")
+			boutput(M, SPAN_ALERT("Your chameleon-projector deactivates."))
 		if (isnull(master))
 			return
 		master.disrupt()
@@ -39,7 +39,7 @@
 			return
 
 		for (var/mob/M in src)
-			boutput(M, "<span class='alert'>Your chameleon-projector deactivates.</span>")
+			boutput(M, SPAN_ALERT("Your chameleon-projector deactivates."))
 			M.ex_act(severity) //Fuck you and your TTBs.
 
 		if(master)
@@ -52,7 +52,7 @@
 		if (isnull(master))
 			return
 		for (var/mob/M in src)
-			boutput(M, "<span class='alert'>Your chameleon-projector deactivates.</span>")
+			boutput(M, SPAN_ALERT("Your chameleon-projector deactivates."))
 		if (isnull(master))
 			return
 		master.disrupt()
@@ -83,6 +83,7 @@ TYPEINFO(/obj/item/device/chameleon)
 	var/obj/dummy/chameleon/cham = null //No sense creating / destroying this
 	var/active = 0
 	tooltip_flags = REBUILD_DIST
+	HELP_MESSAGE_OVERRIDE({"Use the chameleon projector on any object to copy it's appearance. Use it in hand to appear as that object indefinitely. The disguise will be removed if you interact with anything else or are hit."})
 
 	is_syndicate = 1
 
@@ -114,7 +115,7 @@ TYPEINFO(/obj/item/device/chameleon)
 		else
 			out = "The screen on it is blank."
 
-		boutput(usr, "<span class='notice'>[out]</span>")
+		boutput(usr, SPAN_NOTICE("[out]"))
 		return null
 */
 	afterattack(atom/target, mob/user , flag)
@@ -128,13 +129,13 @@ TYPEINFO(/obj/item/device/chameleon)
 		if (target.plane == PLANE_HUD || isgrab(target)) //just don't scan hud stuff or grabs
 			return
 		//Okay, enough scanning shit without actual icons yo.
-		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && isobj(target)) // please blame flourish
+		if ((target.icon && target.icon_state || length(target.overlays) || length(target.underlays)) && isobj(target))
 			if (!cham)
 				cham = new(src)
 				cham.master = src
 
-			playsound(src, 'sound/weapons/flash.ogg', 100, 1, 1)
-			boutput(user, "<span class='notice'>Scanned [target].</span>")
+			playsound(src, 'sound/weapons/flash.ogg', 100, TRUE, 1)
+			boutput(user, SPAN_NOTICE("Scanned [target]."))
 			cham.name = target.name
 			cham.real_name = target.name
 			cham.desc = target.desc
@@ -155,27 +156,27 @@ TYPEINFO(/obj/item/device/chameleon)
 
 		if (active) //active_dummy)
 			active = 0
-			playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
+			playsound(src, 'sound/effects/pop.ogg', 100, TRUE, 1)
 			for (var/atom/movable/A in cham)
 				A.set_loc(get_turf(cham))
 			cham.set_loc(src)
-			boutput(usr, "<span class='notice'>You deactivate the [src].</span>")
+			boutput(usr, SPAN_NOTICE("You deactivate the [src]."))
 			anim.set_loc(get_turf(src))
 			flick("emppulse",anim)
 			SPAWN(0.8 SECONDS)
 				anim.set_loc(src)
 		else
 			if (istype(src.loc, /obj/dummy/chameleon)) //No recursive chameleon projectors!!
-				boutput(usr, "<span class='alert'>As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector.</span>")
+				boutput(usr, SPAN_ALERT("As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector."))
 				return
 
-			playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
+			playsound(src, 'sound/effects/pop.ogg', 100, TRUE, 1)
 			cham.master = src
 			cham.set_loc(get_turf(src))
 			usr.set_loc(cham)
 			src.active = 1
 
-			boutput(usr, "<span class='notice'>You activate the [src].</span>")
+			boutput(usr, SPAN_NOTICE("You activate the [src]."))
 			anim.set_loc(get_turf(src))
 			flick("emppulse",anim)
 			SPAWN(0.8 SECONDS)
@@ -198,8 +199,15 @@ TYPEINFO(/obj/item/device/chameleon)
 	name = "chameleon bomb"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "cham_bomb"
-	burn_possible = 0
+	burn_possible = FALSE
+	HELP_MESSAGE_OVERRIDE(null)
 	var/strength = 12
+
+	get_help_message(dist, mob/user)
+		if (src.name == "chameleon bomb") // We havent been disguised yet, so we can show help messages
+			return "Hit the bomb on any object to disguise it as that object. Use the bomb in hand to arm/disarm it. The bomb will explode when anyone tries to pick up the armed bomb."
+		else
+			return null
 
 	dropped()
 		return
@@ -243,15 +251,14 @@ TYPEINFO(/obj/item/device/chameleon)
 			return
 		if (target.plane == PLANE_HUD  || isgrab(target)) //just don't scan hud stuff and grabs
 			return
-		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && (isitem(target) || istype(target, /obj/shrub) || istype(target, /obj/critter) || istype(target, /obj/machinery/bot))) // cogwerks - added more fun
-			playsound(src, 'sound/weapons/flash.ogg', 100, 1, 1)
-			boutput(user, "<span class='notice'>Scanned [target].</span>")
+		if ((target.icon && target.icon_state || length(target.overlays) || length(target.underlays)) && (isitem(target) || istype(target, /obj/shrub) || istype(target, /obj/critter) || istype(target, /obj/machinery/bot))) // cogwerks - added more fun
+			playsound(src, 'sound/weapons/flash.ogg', 100, TRUE, 1)
+			boutput(user, SPAN_NOTICE("Scanned [target]."))
 			src.name = target.name
 			src.real_name = target.name
-			src.desc = target.get_desc(0, user) || target.desc
-			src.real_desc = src.desc
-			src.icon = target.icon
-			src.icon_state = target.icon_state
+			src.desc = target.desc
+			src.real_desc = target.desc
+			src.icon = getFlatIcon(target)
 			src.set_dir(target.dir)
 			can_use = 1
 		else
@@ -266,15 +273,15 @@ TYPEINFO(/obj/item/device/chameleon)
 
 		if (active)
 			active = 0
-			playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
-			boutput(usr, "<span class='notice'>You disarm the [src].</span>")
+			playsound(src, 'sound/effects/pop.ogg', 100, TRUE, 1)
+			boutput(usr, SPAN_NOTICE("You disarm the [src]."))
 			message_admins("[key_name(usr)] disarms a chameleon bomb ([src]) at [log_loc(usr)].")
 			logTheThing(LOG_BOMBING, usr, "disarms a chameleon bomb ([src]) at [log_loc(usr)].")
 
 		else
-			playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
+			playsound(src, 'sound/effects/pop.ogg', 100, TRUE, 1)
 			src.active = 1
-			boutput(usr, "<span class='notice'>You arm the [src].</span>")
+			boutput(usr, SPAN_NOTICE("You arm the [src]."))
 			message_admins("[key_name(usr)] arms a chameleon bomb ([src]) at [log_loc(usr)].")
 			logTheThing(LOG_BOMBING, usr, "arms a chameleon bomb ([src]) at [log_loc(usr)].")
 

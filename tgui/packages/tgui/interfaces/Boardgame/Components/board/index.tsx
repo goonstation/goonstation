@@ -1,5 +1,5 @@
 import { HorizontalNotations, VerticalNotations } from '../';
-import { Flex, Box } from '../../../../components';
+import { Box, Flex } from '../../../../components';
 import { BoardgameData } from '../../utils';
 import { useBackend } from '../../../../backend';
 import { useActions } from '../../utils';

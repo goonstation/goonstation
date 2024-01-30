@@ -20,13 +20,18 @@
 		src.help_put_out_fire(M)
 	else if (src == M && src.getStatusDuration("burning"))
 		M.resist()
+	//If we use an empty hand on a cut up person, we might wanna rip out their organs by hand
+	else if (surgeryCheck(M, src) && M.organHolder?.chest?.op_stage >= 2 && ishuman(src))
+		if (M.organHolder.build_region_buttons())
+			src.showContextActions(M.organHolder.contexts, M, M.organHolder.contextLayout)
+			return
 	else if ((M.health <= 0 || M.find_ailment_by_type(/datum/ailment/malady/flatline)) && src.health >= -75.0)
 		if (src == M && src.is_bleeding())
 			src.staunch_bleeding(M) // if they've got SOMETHING to do let's not just harass them for trying to do CPR on themselves
 		else if (ishuman(M))
 			src.administer_CPR(M)
 		else
-			src.visible_message("<span class='notice'>[src] shakes [M], trying to wake them up!</span>")
+			src.visible_message(SPAN_NOTICE("[src] shakes [M], trying to wake [him_or_her(M)] up!"))
 			hit_twitch(M)
 	else if (M.is_bleeding())
 		src.staunch_bleeding(M)
@@ -35,7 +40,7 @@
 
 /mob/proc/help_put_out_fire(var/mob/living/M)
 	playsound(M.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0 , 0.7)
-	src.visible_message("<span class='notice'>[src] pats down [M] wildly, trying to put out the fire!</span>")
+	src.visible_message(SPAN_NOTICE("[src] pats down [M] wildly, trying to put out the fire!"))
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -43,19 +48,19 @@
 		if ((G && G.hasProperty("heatprot") && (G.getProperty("heatprot") >= 7)) || src.is_heat_resistant())
 			M.update_burning(-2.5)
 			if (src.is_heat_resistant())
-				boutput(H, "<span class='notice'>Being fire resistant protects you from the flames!</span>")
+				boutput(H, SPAN_NOTICE("Being fire resistant protects you from the flames!"))
 			else
-				boutput(H, "<span class='notice'>Your [G] protect you from the flames!</span>")
+				boutput(H, SPAN_NOTICE("Your [G] protect you from the flames!"))
 		else
 			M.update_burning(-1.2)
 			H.TakeDamage(prob(50) ? "l_arm" : "r_arm", 0, rand(1,2))
-			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30, 1)
-			boutput(src, "<span class='alert'>Your hands burn from patting the flames!</span>")
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30, TRUE)
+			boutput(src, SPAN_ALERT("Your hands burn from patting the flames!"))
 	else
 		M.update_burning(-1.2)
 		src.TakeDamage("All", 0, rand(1,2))
-		playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30, 1)
-		boutput(src, "<span class='alert'>Your hands burn from patting the flames!</span>")
+		playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30, TRUE)
+		boutput(src, SPAN_ALERT("Your hands burn from patting the flames!"))
 
 
 /mob/proc/shake_awake(var/mob/living/target)
@@ -83,20 +88,20 @@
 		if (P)
 			if (P.barbed == FALSE)
 				SETUP_GENERIC_ACTIONBAR(src, target, 1 SECOND, /mob/living/proc/pull_out_implant, list(target, P), P.icon, P.icon_state, \
-					src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of themselves!</B></span>"), \
+					src.visible_message(SPAN_COMBAT("<b>[src] pulls a [P.pull_out_name] out of [himself_or_herself(src)]!</B>")), \
 					INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else
-				src.visible_message("<span class='alert'><B>[src] tries to pull a [P.pull_out_name] out of themselves, but it's stuck in!</B></span>")
+				src.visible_message(SPAN_COMBAT("<b>[src] tries to pull a [P.pull_out_name] out of [himself_or_herself(src)], but it's stuck in!</B>"))
 			return
 
 		var/obj/stool/S = (locate(/obj/stool) in src.loc)
 		if (S)
 			S.buckle_in(src,src)
 		if(src.hasStatus("shivering"))
-			src.visible_message("<span class='alert'><B>[src] shakes themselves, trying to warm up!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] shakes [himself_or_herself(src)], trying to warm up!</B>"))
 			src.changeStatus("shivering", -1 SECONDS)
 		else if(istype(src.wear_mask,/obj/item/clothing/mask/moustache))
-			src.visible_message("<span class='alert'><B>[src] twirls [his_or_her(src)] moustache and laughs [pick("diabolically","madly","evilly","strangely","scarily","awkwardly","excitedly","hauntingly","ominously","nonchalantly","gloriously","hairily")]!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] twirls [his_or_her(src)] moustache and laughs [pick("diabolically","madly","evilly","strangely","scarily","awkwardly","excitedly","hauntingly","ominously","nonchalantly","gloriously","hairily")]!</B>"))
 		else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_hat))
 			var/obj/item/clothing/mask/clown_hat/mask = src.wear_mask
 			mask.honk_nose(src)
@@ -104,9 +109,9 @@
 			var/item = src.get_random_equipped_thing_name()
 			if (item)
 				var/v = pick("tidies","adjusts","brushes off", "flicks a piece of lint off", "tousles", "fixes", "readjusts","fusses with", "sweeps off")
-				src.visible_message("<span class='notice'>[src] [v] [his_or_her(src)] [item]!</span>")
+				src.visible_message(SPAN_NOTICE("[src] [v] [his_or_her(src)] [item]!"))
 			else
-				src.visible_message("<span class='notice'>[src] pats themselves on the back. Feel better, [src].</span>")
+				src.visible_message(SPAN_NOTICE("[src] pats [himself_or_herself(src)] on the back. Feel better, [src]."))
 
 	else
 		var/mob/living/M = target
@@ -116,16 +121,16 @@
 		if (P)
 			if (P.barbed == FALSE)
 				SETUP_GENERIC_ACTIONBAR(src, target, 1 SECOND, /mob/living/proc/pull_out_implant, list(src, P), P.icon, P.icon_state, \
-					src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of [target]!</B></span>"), \
+					src.visible_message(SPAN_COMBAT("<b>[src] pulls a [P.pull_out_name] out of [target]!</B>")), \
 					INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else
-				src.visible_message("<span class='alert'><B>[src] tries to pull a [P.pull_out_name] out of [target], but it's stuck in!</B></span>")
+				src.visible_message(SPAN_COMBAT("<b>[src] tries to pull a [P.pull_out_name] out of [target], but it's stuck in!</B>"))
 			return
 
 		if (target.lying)
-			src.visible_message("<span class='notice'>[src] shakes [target], trying to wake them up!</span>")
+			src.visible_message(SPAN_NOTICE("[src] shakes [target], trying to wake [him_or_her(target)] up!"))
 		else if(target.hasStatus("shivering"))
-			src.visible_message("<span class='alert'><B>[src] shakes [target], trying to warm up!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] shakes [target], trying to warm [him_or_her(target)] up!</B>"))
 			target.changeStatus("shivering", -2 SECONDS)
 		else
 			if (ishuman(target) && ishuman(src))
@@ -135,7 +140,7 @@
 				if (Z.zone_sel && Z.zone_sel.selecting == "head")
 					var/obj/item/clothing/head/sunhat/hat = X.head
 					if(istype(hat) && hat.uses)
-						src.visible_message("<span class='alert'>[src] tries to pat [target] on the head, but gets shocked by [target]'s hat!</span>")
+						src.visible_message(SPAN_ALERT("[src] tries to pat [target] on the head, but gets shocked by [target]'s hat!"))
 						elecflash(target)
 
 						hat.uses = max(0, hat.uses - 1)
@@ -153,14 +158,14 @@
 						src.do_disorient(140, weakened = 40, stunned = 20, disorient = 80)
 						src.stuttering = max(target.stuttering,5)
 					else
-						src.visible_message("<span class='notice'>[src] gently pats [target] on the head.</span>")
+						src.visible_message(SPAN_NOTICE("[src] gently pats [target] on the head."))
 					return
 
 			if (ismobcritter(target))
 				var/mob/living/critter/C = target
 				C.on_pet(src)
 			else
-				src.visible_message("<span class='notice'>[src] shakes [target], trying to grab their attention!</span>")
+				src.visible_message(SPAN_NOTICE("[src] shakes [target], trying to grab [his_or_her(target)] attention!"))
 	hit_twitch(target)
 
 /mob/living/proc/pull_out_implant(var/mob/living/user, var/obj/item/implant/dart)
@@ -169,7 +174,7 @@
 	user.put_in_hand_or_drop(dart)
 
 /mob/proc/administer_CPR(var/mob/living/carbon/human/target)
-	boutput(src, "<span class='alert'>You have no idea how to perform CPR.</span>")
+	boutput(src, SPAN_ALERT("You have no idea how to perform CPR."))
 	return
 
 /mob/living/administer_CPR(var/mob/living/target)
@@ -177,10 +182,10 @@
 		return 0
 
 	if (src == target) // :I
-		boutput(src, "<span class='alert'>You desperately try to think of a way to do CPR on yourself, but it's just not logically possible!</span>")
+		boutput(src, SPAN_ALERT("You desperately try to think of a way to do CPR on yourself, but it's just not logically possible!"))
 		return
-	if(actions.hasAction(src, "cpr"))
-		boutput(src, "<span class='alert'>You're already doing CPR!</span>")
+	if(actions.hasAction(src, /datum/action/bar/icon/CPR))
+		boutput(src, SPAN_ALERT("You're already doing CPR!"))
 		return
 
 	src.lastattacked = target
@@ -206,13 +211,15 @@
 
 	if (block_it_up)
 		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src, src)
-		src.put_in_hand(G, src.hand)
+		if(src.put_in_hand(G, src.hand))
+			playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
+			src.visible_message(SPAN_ALERT("[src] starts blocking!"))
+			SEND_SIGNAL(src, COMSIG_UNARMED_BLOCK_BEGIN, G)
+			src.setStatus("blocking", duration = INFINITE_STATUS)
+			block_begin(src)
+		else
+			qdel(G)
 
-		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-		src.visible_message("<span class='alert'>[src] starts blocking!</span>")
-		SEND_SIGNAL(src, COMSIG_UNARMED_BLOCK_BEGIN, G)
-		src.setStatus("blocking", duration = INFINITE_STATUS)
-		block_begin(src)
 		src.next_click = world.time + (COMBAT_CLICK_DELAY)
 
 /mob/living/proc/grab_block() //this is sorta an ugly but fuck it!!!!
@@ -232,7 +239,7 @@
 		I.chokehold.post_item_setup()
 
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-		src.visible_message("<span class='alert'>[src] starts blocking with [I]!</span>")
+		src.visible_message(SPAN_ALERT("[src] starts blocking with [I]!"))
 		SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_BEGIN, G)
 		src.setStatus("blocking", duration = INFINITE_STATUS)
 		block_begin(src)
@@ -252,12 +259,12 @@
 
 	if (check_target_immunity(target) == 1)
 		playsound(target.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-		target.visible_message("<span class='alert'><B>[src] tries to grab [target], but can't get a good grip!</B></span>")
+		target.visible_message(SPAN_COMBAT("<b>[src] tries to grab [target], but can't get a good grip!</B>"))
 		return
 
 	if (!target.canbegrabbed)
 		if (target.grabresistmessage)
-			target.visible_message("<span class='alert'><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
+			target.visible_message(SPAN_COMBAT("<b>[src] tries to grab [target], [target.grabresistmessage]</B>"))
 		return
 
 	if (istype(H))
@@ -266,17 +273,17 @@
 
 		if (prob(20) && isrobot(target))
 			var/mob/living/silicon/robot/T = target
-			src.visible_message("<span class='alert'><B>[T] blocks [src]'s attempt to grab [him_or_her(T)]!</span>")
+			src.visible_message(SPAN_COMBAT("<b>[T] blocks [src]'s attempt to grab [him_or_her(T)]!"))
 			playsound(target.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 			return
 		else
 			var/obj/item/grab/block/B = target.check_block()
 			if (target.do_dodge(src, null, show_msg = 0))
-				src.visible_message("<span class='alert'><B>[target] dodges [src]'s attempt to grab [him_or_her(target)]!</span>")
+				src.visible_message(SPAN_COMBAT("<b>[target] dodges [src]'s attempt to grab [him_or_her(target)]!"))
 				playsound(target.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 				return
 			else if(B && !target.lying)
-				src.visible_message("<span class='alert'><B>[target] blocks [src]'s attempt to grab [him_or_her(target)]!</span>")
+				src.visible_message(SPAN_COMBAT("<b>[target] blocks [src]'s attempt to grab [him_or_her(target)]!"))
 				playsound(target.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 				qdel(B)
 				target.remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
@@ -298,9 +305,9 @@
 	playsound(target.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 	if (!suppress_final_message) // Melee-focused roles (resp. their limb datums) grab the target aggressively (Convair880).
 		if (grab_item)
-			target.visible_message("<span class='alert'>[src] grabs hold of [target] with [grab_item]!</span>")
+			target.visible_message(SPAN_ALERT("[src] grabs hold of [target] with [grab_item]!"))
 		else
-			target.visible_message("<span class='alert'>[src] grabs hold of [target]!</span>")
+			target.visible_message(SPAN_ALERT("[src] grabs hold of [target]!"))
 
 
 ///////////////////////////////////////////////////// Disarm intent ////////////////////////////////////////////////
@@ -342,13 +349,13 @@
 	msgs.def_zone = def_zone
 	if(prob(target.get_deflection())) //chance to deflect disarm attempts entirely
 		msgs.played_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
-		msgs.base_attack_message = "<span class='alert'><B>[src] shoves at [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[src] shoves at [target][DISARM_WITH_ITEM_TEXT]!</B>")
 		fuckup_attack_particle(src)
 		return msgs
 
 	if (target.lying == 1) //roll lying bodies
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
-		msgs.base_attack_message = "<span class='alert'><B>[src] rolls [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[src] rolls [target] backwards[DISARM_WITH_ITEM_TEXT]!</B>")
 		msgs.disarm_RNG_result |= "shoved"
 		msgs.disarm_RNG_result |= "handle_item_arm"
 		return msgs
@@ -392,14 +399,14 @@
 
 	var/stampart = round( ((STAMINA_MAX - target_stamina) / 3) )
 	if (is_shove)
-		msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B>")
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 		if (prob((stampart + 70) * mult))
-			msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
+			msgs.base_attack_message = SPAN_COMBAT("<b>[src] shoves [target] backwards[DISARM_WITH_ITEM_TEXT]!</B>")
 			msgs.disarm_RNG_result |= "shoved"
 
 	if (prob((stampart + 5) * mult))
-		msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target] to the ground[DISARM_WITH_ITEM_TEXT]!</B></span>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[src] shoves [target] to the ground[DISARM_WITH_ITEM_TEXT]!</B>")
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 		msgs.disarm_RNG_result |= "shoved_down"
 		msgs.disarm_RNG_result |= "drop_item"
@@ -438,22 +445,22 @@
 		if(disarm_success)
 			msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 			if(length(limbs))
-				msgs.base_attack_message = "<span class='alert'><B>[src] shoves [ONE_OR_SOME(limbs, "item limbs")][DISARM_WITH_ITEM_TEXT] and forces [target] to hit [himself_or_herself(target)]!</B></span>"
+				msgs.base_attack_message = SPAN_COMBAT("<b>[src] shoves [ONE_OR_SOME(limbs, "item limbs")][DISARM_WITH_ITEM_TEXT] and forces [target] to hit [himself_or_herself(target)]!</B>")
 			else if(length(loose))
-				msgs.base_attack_message = "<span class='alert'><B>[src] knocks [ONE_OR_SOME(loose, "items")] out of [target]'s hand[multi?"s":""][DISARM_WITH_ITEM_TEXT]!</B></span>"
+				msgs.base_attack_message = SPAN_COMBAT("<b>[src] knocks [ONE_OR_SOME(loose, "items")] out of [target]'s hand[multi?"s":""][DISARM_WITH_ITEM_TEXT]!</B>")
 		else
 			msgs.played_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
 			if(length(limbs))
-				msgs.base_attack_message = "<span class='alert'><B>[src] shoves at [ONE_OR_SOME(limbs, "item limbs")][DISARM_WITH_ITEM_TEXT]!</B></span>"
+				msgs.base_attack_message = SPAN_COMBAT("<b>[src] shoves at [ONE_OR_SOME(limbs, "item limbs")][DISARM_WITH_ITEM_TEXT]!</B>")
 			else if(length(loose))
-				msgs.base_attack_message = "<span class='alert'><B>[src] tries to knock [ONE_OR_SOME(loose, "items")] out of [target]'s hand[multi?"s":""][DISARM_WITH_ITEM_TEXT]!</B></span>"
+				msgs.base_attack_message = SPAN_COMBAT("<b>[src] tries to knock [ONE_OR_SOME(loose, "items")] out of [target]'s hand[multi?"s":""][DISARM_WITH_ITEM_TEXT]!</B>")
 
 			else if(length(fixed_in_place))
-				msgs.base_attack_message = "<span class='alert'><B>[src] vainly tries to knock [ONE_OR_SOME(fixed_in_place, "items")] out of [target]'s hand[multi?"s":""][DISARM_WITH_ITEM_TEXT]!</B></span>"
-				msgs.show_self.Add("<span class='alert'>Something is binding [ONE_OR_SOME(fixed_in_place, "items")] to [target]. You won't be able to disarm [him_or_her(target)].</span>")
-				msgs.show_target.Add("<span class='alert'>Something is binding [ONE_OR_SOME(fixed_in_place, "items")] to you. It cannot be knocked out of your hands.</span>")
+				msgs.base_attack_message = SPAN_COMBAT("<b>[src] vainly tries to knock [ONE_OR_SOME(fixed_in_place, "items")] out of [target]'s hand[multi?"s":""][DISARM_WITH_ITEM_TEXT]!</B>")
+				msgs.show_self.Add(SPAN_ALERT("Something is binding [ONE_OR_SOME(fixed_in_place, "items")] to [target]. You won't be able to disarm [him_or_her(target)]."))
+				msgs.show_target.Add(SPAN_ALERT("Something is binding [ONE_OR_SOME(fixed_in_place, "items")] to you. It cannot be knocked out of your hands."))
 	else
-		msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B>")
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 #undef ONE_OR_SOME
 
@@ -479,8 +486,8 @@
 /mob/living/do_dodge(var/mob/attacker, var/obj/item/W, var/show_msg = 1)
 	if (stance == "dodge")
 		if (show_msg)
-			visible_message("<span class='alert'><B>[src] narrowly dodges [attacker]'s attack!</span>")
-		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
+			visible_message(SPAN_COMBAT("<b>[src] narrowly dodges [attacker]'s attack!"))
+		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, TRUE, 1)
 
 		add_stamina(STAMINA_FLIP_COST * 0.25) //Refunds some stamina if you successfully dodge.
 		stamina_stun()
@@ -488,8 +495,8 @@
 		return 1
 	else if (prob(src.get_passive_block()))
 		if (show_msg)
-			visible_message("<span class='alert'><B>[src] blocks [attacker]'s attack!</span>")
-		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
+			visible_message(SPAN_COMBAT("<b>[src] blocks [attacker]'s attack!"))
+		playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, TRUE, 1)
 		fuckup_attack_particle(attacker)
 		return 1
 	return ..()
@@ -540,9 +547,9 @@
 		else
 			src.show_text("The gloves have [src.gloves.uses]/[src.gloves.max_uses] charges left!", "red")
 
-		target.visible_message("<span class='alert'><B>[src] touches [target] with the stun gloves!</B></span>")
+		target.visible_message(SPAN_COMBAT("<b>[src] touches [target] with the stun gloves!</B>"))
 		if (check_target_immunity(target) == 1)
-			target.visible_message("<span class='alert'><B>...but it has no effect whatsoever!</B></span>")
+			target.visible_message(SPAN_COMBAT("<b>...but it has no effect whatsoever!</B>"))
 			return
 
 #ifdef USE_STAMINA_DISORIENT
@@ -556,7 +563,7 @@
 		target.stuttering = max(target.stuttering,5)
 
 	else
-		boutput(src, "<span class='alert'>The stun gloves don't have enough charge!</span>")
+		boutput(src, SPAN_ALERT("The stun gloves don't have enough charge!"))
 		return
 
 /mob/living/proc/melee_attack(var/mob/living/target)
@@ -577,9 +584,10 @@
 		return
 
 	var/datum/attackResults/msgs = calculate_melee_attack(target, 2, 9, extra_damage)
-	msgs.damage_type = damtype
-	attack_effects(target, zone_sel?.selecting)
-	msgs.flush(suppress_flags)
+	if(msgs)
+		msgs.damage_type = damtype
+		attack_effects(target, zone_sel?.selecting)
+		msgs.flush(suppress_flags)
 
 /mob/proc/calculate_melee_attack(var/mob/target, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1, can_punch = 1, can_kick = 1)
 	var/datum/attackResults/msgs = new(src)
@@ -602,17 +610,13 @@
 
 	//abort if either multiplier is 0
 	if (!target_damage_multiplier)
-		if (narrator_mode)
-			msgs.played_sound = 'sound/vox/hit.ogg'
-		else
-			msgs.played_sound = pick(sounds_punch)
-		msgs.visible_message_self("<span class='alert'><B>[src] [src.punchMessage] [target], but it does absolutely nothing!</B></span>")
-		CRASH("calculate_melee_attack for mob [src] attacking mob [target] had a target_damage_multiplier of 0.")
-
+		msgs.played_sound = pick(sounds_punch)
+		msgs.visible_message_self(SPAN_COMBAT("<b>[src] [src.punchMessage] [target], but it does absolutely nothing!</B>"))
+		return
 	if (!self_damage_multiplier)
 		msgs.played_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
-		msgs.visible_message_self("<span class='alert'><B>[src] hits [target] with a ridiculously feeble attack!</B></span>")
-		CRASH("calculate_melee_attack for mob [src] attacking mob [target] had a self_damage_multiplier of 0.")
+		msgs.visible_message_self(SPAN_COMBAT("<b>[src] hits [target] with a ridiculously feeble attack!</B>"))
+		return
 
 	msgs.played_sound = "punch"
 	var/do_punch = FALSE
@@ -655,7 +659,7 @@
 		//effects for armor reducing most/all of damage
 		if(pre_armor_damage > 0 && damage/pre_armor_damage <= 0.66)
 			block_spark(target,armor=1)
-			playsound(target, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1,pitch=1.5)
+			playsound(target, 'sound/impact_sounds/block_blunt.ogg', 50, TRUE, -1,pitch=1.5)
 			if(damage <= 0)
 				fuckup_attack_particle(src)
 
@@ -687,9 +691,9 @@
 	if(!do_kick)
 		//set attack message
 		if(pre_armor_damage > 0 && damage <= 0 )
-			msgs.base_attack_message = "<span class='alert'><B>[src] [do_punch ? src.punchMessage : "attacks"] [target], but [target]'s armor blocks it!</B></span>"
+			msgs.base_attack_message = SPAN_COMBAT("<b>[src] [do_punch ? src.punchMessage : "attacks"] [target], but [target]'s armor blocks it!</B>")
 		else
-			msgs.base_attack_message = "<span class='alert'><B>[src] [do_punch ? src.punchMessage : "attacks"] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
+			msgs.base_attack_message = SPAN_COMBAT("<b>[src] [do_punch ? src.punchMessage : "attacks"] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B>")
 
 	//check godmode/sanctuary/etc
 	var/attack_resistance = msgs.target.check_attack_resistance()
@@ -709,7 +713,7 @@
 
 	if (check_target_immunity(target) == 1)
 		playsound(user.loc, "punch", 50, 1, 1)
-		user.visible_message("<span class='alert'><B>[user]'s attack bounces off [target] uselessly!</B></span>")
+		user.visible_message(SPAN_COMBAT("<b>[user]'s attack bounces off [target] uselessly!</B>"))
 		return
 
 	user.lastattacked = target
@@ -720,34 +724,34 @@
 	if (isrobot(target))
 		var/mob/living/silicon/robot/BORG = target
 		if (!BORG.part_head)
-			user.visible_message("<span class='alert'><B>[user] smashes [BORG.name] to pieces!</B></span>")
+			user.visible_message(SPAN_COMBAT("<b>[user] smashes [BORG.name] to pieces!</B>"))
 			playsound(user.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
 			BORG.gib()
 		else
 			if (BORG.part_head.ropart_get_damage_percentage() >= 85)
-				user.visible_message("<span class='alert'><B>[user] grabs [BORG.name]'s head and wrenches it right off!</B></span>")
+				user.visible_message(SPAN_COMBAT("<b>[user] grabs [BORG.name]'s head and wrenches it right off!</B>"))
 				playsound(user.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
 				BORG.compborg_lose_limb(BORG.part_head)
 			else
-				user.visible_message("<span class='alert'><B>[user] pounds on [BORG.name]'s head furiously!</B></span>")
+				user.visible_message(SPAN_COMBAT("<b>[user] pounds on [BORG.name]'s head furiously!</B>"))
 				playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 				if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
 					BORG.compborg_lose_limb(BORG.part_head)
 				if (!BORG.anchored && prob(30))
-					user.visible_message("<span class='alert'><B>...and sends them flying!</B></span>")
+					user.visible_message(SPAN_COMBAT("<b>...and sends [him_or_her(BORG)] flying!</B>"))
 					send_flying = 2
 
 	else if (isAI(target))
-		user.visible_message("<span class='alert'><B>[user] [pick("wails", "pounds", "slams")] on [target]'s terminal furiously!</B></span>")
+		user.visible_message(SPAN_COMBAT("<b>[user] [pick("wails", "pounds", "slams")] on [target]'s terminal furiously!</B>"))
 		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 		damage = 10
 
 	else
-		user.visible_message("<span class='alert'><B>[user] smashes [target] furiously!</B></span>")
+		user.visible_message(SPAN_COMBAT("<b>[user] smashes [target] furiously!</B>"))
 		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 		damage = 10
 		if (!target.anchored && prob(30))
-			user.visible_message("<span class='alert'><B>...and sends them flying!</B></span>")
+			user.visible_message(SPAN_COMBAT("<b>...and sends [him_or_her(target)] flying!</B>"))
 			send_flying = 2
 
 	if (send_flying == 2)
@@ -865,7 +869,7 @@
 				playsound(owner.loc, played_sound, 50, 1, -1)
 
 		if (!(suppress & SUPPRESS_BASE_MESSAGE) && base_attack_message)
-			owner.visible_message(base_attack_message)
+			owner.visible_message(base_attack_message, group = msg_group)
 
 		if (!(suppress & SUPPRESS_SHOWN_MESSAGES))
 			for (var/message in show_self)
@@ -897,7 +901,7 @@
 				// message_admins("[owner] just committed friendly fire against [target]!")
 
 			for (var/message in logs)
-				logTheThing(LOG_COMBAT, owner, "[friendly_fire ? "<span class='alert'>Friendly Fire!</span>":""][message] at [log_loc(owner)].")
+				logTheThing(LOG_COMBAT, owner, "[friendly_fire ? SPAN_ALERT("Friendly Fire!"):""][message] at [log_loc(owner)].")
 #else
 			for (var/message in logs)
 				logTheThing(LOG_COMBAT, owner, "[message] at [log_loc(owner)].")
@@ -1050,7 +1054,7 @@
 /mob/proc/melee_attack_test(var/mob/attacker, var/obj/item/I, var/def_zone, var/disarm_check = 0)
 	if (check_target_immunity(src) == 1)
 		playsound(loc, "punch", 50, 1, 1)
-		src.visible_message("<span class='alert'><B>[attacker]'s attack bounces off [src] uselessly!</B></span>")
+		src.visible_message(SPAN_COMBAT("<b>[attacker]'s attack bounces off [src] uselessly!</B>"))
 		return 0
 
 	return 1
@@ -1134,10 +1138,10 @@
 	//drunkards get a 2/5 chance of bonus damage
 	if (src.reagents && (src.reagents.get_reagent_amount("ethanol") >= 100) && prob(40))
 		. += rand(3,5)
-		msgs.show_message_self("<span class='alert'>You drunkenly throw a brutal punch!</span>")
+		msgs.show_message_self(SPAN_ALERT("You drunkenly throw a brutal punch!"))
 	//wrestlers have a 2/3 chance of a big hit
 	if (src != msgs.target && iswrestler(src) && prob(66))
-		msgs.base_attack_message = "<span class='alert'><B>[src]</b> winds up and delivers a backfist to [msgs.target], sending them flying!</span>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[src]</b> winds up and delivers a backfist to [msgs.target], sending [him_or_her(msgs.target)] flying!")
 		. += 4
 		msgs.after_effects += /proc/wrestler_backfist
 
@@ -1155,7 +1159,7 @@
 	. = 0
 	//setup kick effects
 	msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
-	msgs.base_attack_message = "<span class='alert'><B>[src] [src.kickMessage] [msgs.target]!</B></span>"
+	msgs.base_attack_message = SPAN_COMBAT("<b>[src] [src.kickMessage] [msgs.target]!</B>")
 	msgs.logs = list("[src.kickMessage] [constructTarget(msgs.target,"combat")]")
 
 	//bonus damage from shoes or legs
@@ -1188,12 +1192,12 @@
 
 /mob/living/silicon/robot/check_attack_resistance(var/obj/item/I)
 	if (!I)
-		return "<span class='alert'>Sensors indicate no damage from external impact.</span>"
+		return SPAN_ALERT("Sensors indicate no damage from external impact.")
 	return null
 
 /mob/living/check_attack_resistance(var/obj/item/I)
 	if (reagents?.get_reagent_amount("ethanol") >= 100 && prob(40) && !I)
-		return "<span class='alert'>You drunkenly shrug off the blow!</span>"
+		return SPAN_ALERT("You drunkenly shrug off the blow!")
 	return null
 
 /mob/proc/get_melee_protection(zone, damage_type = 0)
@@ -1284,7 +1288,7 @@
 
 			var/turf/throw_to = get_edge_target_turf(H, H.dir)
 			if (isturf(throw_to))
-				H.visible_message("<span class='alert'><B>[H] savagely punches [T], sending them flying!</B></span>")
+				H.visible_message(SPAN_COMBAT("<b>[H] savagely punches [T], sending [him_or_her(T)] flying!</B>"))
 				T.throw_at(throw_to, 10, 2)
 
 /mob/proc/attack_finished(var/mob/target)
@@ -1313,12 +1317,12 @@
 		src.set_dir(get_dir(src, M))
 		playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
 		if (prob(60))
-			src.visible_message("<span class='alert'><B>[src] dodges the blow by [M]!</B></span>")
+			src.visible_message(SPAN_COMBAT("<b>[src] dodges the blow by [M]!</B>"))
 		else
 			if (prob(50))
 				step_away(M, src, 15)
 			else
-				src.visible_message("<span class='alert'><B>[src] parries [M]'s attack, knocking them to the ground!</B></span>")
+				src.visible_message(SPAN_COMBAT("<b>[src] parries [M]'s attack, knocking [him_or_her(M)] to the ground!</B>"))
 				M.changeStatus("weakened", 4 SECONDS)
 				M.force_laydown_standup()
 		playsound(src.loc, 'sound/impact_sounds/kendo_parry_1.ogg', 65, 1)

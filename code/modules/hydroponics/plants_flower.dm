@@ -28,6 +28,14 @@ ABSTRACT_TYPE(/datum/plant/flower)
 		if (reagent == "luminol")
 			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/rose/holorose)
 
+/datum/plant/flower/sunflower
+	name = "Sunflower"
+	seedcolor = "#695b59"
+	crop = /obj/item/plant/flower/sunflower
+	cropsize = 1
+	force_seed_on_harvest = -1
+	commuts = list(/datum/plant_gene_strain/growth_fast)
+
 /datum/plant/flower/rafflesia
 	name = "Rafflesia"
 	seedcolor = "#A4000F"
@@ -49,6 +57,18 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	HYPspecial_proc(var/obj/machinery/plantpot/POT) // Smokes miasma and whatever chemicals have been spliced into the plant
 		. = ..()
 		if (.) return
+
+		#ifdef RP_MODE
+		var/area/A = get_area(POT)
+		if (A)
+			if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
+				if (istype(A, /area/shuttle/escape/station))
+					return
+			else if (emergency_shuttle.location == SHUTTLE_LOC_TRANSIT)
+				if (istype(A, /area/shuttle/escape/transit))
+					return
+		#endif
+
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 		var/spray_prob = max(33,(33 + DNA?.get_effective_value("endurance") / 5))
@@ -56,8 +76,9 @@ ABSTRACT_TYPE(/datum/plant/flower)
 		reagents_temp.my_atom = POT
 
 		if (POT.growth > (P.harvtime - DNA?.get_effective_value("growtime")) && prob(spray_prob))
-			for (var/plantReagent in assoc_reagents)
-				reagents_temp.add_reagent(plantReagent, 3 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(assoc_reagents))))))
+			var/list/plant_complete_reagents = HYPget_assoc_reagents(P, DNA)
+			for (var/plantReagent in plant_complete_reagents)
+				reagents_temp.add_reagent(plantReagent, 3 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(plant_complete_reagents))))))
 			reagents_temp.smoke_start()
 			qdel(reagents_temp)
 

@@ -7,7 +7,7 @@
 
 import { classes } from 'common/react';
 import { COLORS } from '../../constants';
-import { computeBoxClassName, Box } from '../../components/Box';
+import { Box, computeBoxClassName } from '../../components/Box';
 
 /*
  * A box that applies a color to its contents depending on the damage type.
@@ -34,3 +34,5 @@ export const HealthStat = props => {
     </Box>
   );
 };
+
+export const damageNum = num => !num || num <= 0 ? '0' : num.toFixed(1);

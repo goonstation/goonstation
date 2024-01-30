@@ -139,7 +139,7 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/replicate/precondition()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F?.flock || F.flock.flockmind.tutorial)
+	if (!F?.flock || F.flock.flockmind?.tutorial)
 		return
 	return F.can_afford(src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT
 
@@ -167,7 +167,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/replicate/succeeded()
-	. = (!actions.hasAction(holder.owner, "flock_egg")) // for whatever reason, the required action has stopped
+	. = (!actions.hasAction(holder.owner, /datum/action/bar/flock_egg)) // for whatever reason, the required action has stopped
 
 /datum/aiTask/succeedable/replicate/on_tick()
 	if(!has_started)
@@ -198,7 +198,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/nest/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F?.flock || F.flock.flockmind.tutorial)
+	if (!F?.flock || F.flock.flockmind?.tutorial)
 		return
 	if(F.can_afford(FLOCK_CONVERT_COST + src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT)
 		. = TRUE
@@ -275,6 +275,7 @@ stare
 			continue // this tile's been claimed by someone else
 		. += T
 
+/datum/aiTask/sequence/goalbased/flock/build/score_by_distance_only = FALSE
 /datum/aiTask/sequence/goalbased/flock/build/score_target(atom/target)
 	. = ..()
 	var/mob/living/critter/flock/F = holder.owner
@@ -300,7 +301,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/build/succeeded()
-	. = isfeathertile(holder.target) || (has_started && !actions.hasAction(holder.owner, "flock_convert"))
+	. = isfeathertile(holder.target) || (has_started && !actions.hasAction(holder.owner, /datum/action/bar/flock_convert))
 
 /datum/aiTask/succeedable/build/on_tick()
 	if(!has_started && !failed() && !succeeded())
@@ -359,8 +360,8 @@ stare
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
 		if(!isfeathertile(T) && flockTurfAllowed(T) && (
 			istype(T, /turf/simulated/wall) || \
-			locate(/obj/machinery/door/airlock) in T || \
-			locate(/obj/storage) in T))
+			(locate(/obj/machinery/door/airlock) in T) || \
+			(locate(/obj/storage) in T)))
 			if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 				continue
 			. += T
@@ -374,6 +375,7 @@ stare
 					continue
 				. += T
 
+/datum/aiTask/sequence/goalbased/flock/build/drone/score_by_distance_only = FALSE
 /datum/aiTask/sequence/goalbased/flock/build/drone/score_target(atom/target)
 	. = ..()
 	var/mob/living/critter/flock/F = holder.owner
@@ -403,7 +405,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/repair/on_reset()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
-		F.active_hand = 2 // nanite spray
+		F.set_hand(2) // nanite spray
 		F.set_a_intent(INTENT_HELP)
 		F.hud?.update_hands() // for observers
 
@@ -439,7 +441,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/repair/succeeded()
-	. = (!actions.hasAction(holder.owner, "flock_repair")) // for whatever reason, the required action has stopped
+	. = (!actions.hasAction(holder.owner, /datum/action/bar/flock_repair)) // for whatever reason, the required action has stopped
 
 /datum/aiTask/succeedable/repair/on_tick()
 	if(!has_started)
@@ -481,7 +483,7 @@ stare
 	..()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
-		F.active_hand = 2 // nanite spray
+		F.set_hand(2)  // nanite spray
 		F.set_a_intent(INTENT_HELP)
 		F.hud?.update_hands() // for observers
 
@@ -510,7 +512,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/deposit/succeeded()
-	. = (!actions.hasAction(holder.owner, "flock_repair")) // for whatever reason, the required action has stopped
+	. = (!actions.hasAction(holder.owner, /datum/action/bar/flock_deposit)) // for whatever reason, the required action has stopped
 
 /datum/aiTask/succeedable/deposit/on_tick()
 	if(!has_started)
@@ -624,7 +626,7 @@ stare
 /datum/aiTask/succeedable/rummage/succeeded()
 	var/obj/item/storage/container_target = holder.target
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(container_target) // fix runtime Cannot read null.contents
+	if(container_target && container_target.storage) // fix runtime Cannot read null.contents
 		return !length(container_target.storage.get_contents()) || (F.absorber.item == container_target)
 
 	else
@@ -917,7 +919,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/capture/succeeded()
-	. = istype(holder?.target?.loc, /obj/flock_structure/cage) || (has_started && !actions.hasAction(holder.owner, "flock_entomb"))
+	. = istype(holder?.target?.loc, /obj/flock_structure/cage) || (has_started && !actions.hasAction(holder.owner, /datum/action/bar/flock_entomb))
 
 /datum/aiTask/succeedable/capture/on_tick()
 	if(!has_started && !failed() && !succeeded())
@@ -932,7 +934,7 @@ stare
 			if(!in_interact_range(owncritter, holder.target) || !istype(T.loc, /turf))
 				holder.interrupt() //this should basically never happen, but sanity check just in case
 				return
-			else if(!actions.hasAction(owncritter, "flock_entomb")) // let's not keep interrupting our own action
+			else if(!actions.hasAction(owncritter, /datum/action/bar/flock_entomb)) // let's not keep interrupting our own action
 				if(owncritter.floorrunning)
 					owncritter.end_floorrunning(TRUE)
 				owncritter.set_dir(get_dir(owncritter, holder.target))
@@ -967,7 +969,7 @@ stare
 	..()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
-		F.active_hand = 2 // nanite spray
+		F.set_hand(2)  // nanite spray
 		F.set_a_intent(INTENT_HARM)
 		F.hud?.update_hands() // for observers
 
@@ -997,7 +999,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/butcher/succeeded()
-	. = (!actions.hasAction(holder.owner, "butcherlivingcritter")) // for whatever reason, the required action has stopped
+	. = (!actions.hasAction(holder.owner, /datum/action/bar/icon/butcher_living_critter)) // for whatever reason, the required action has stopped
 
 /datum/aiTask/succeedable/butcher/on_tick()
 	if(!has_started)
@@ -1029,7 +1031,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/barricade/on_reset()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
-		F.active_hand = 2 // nanite spray
+		F.set_hand(2) // nanite spray
 		F.set_a_intent(INTENT_DISARM)
 		F.hud?.update_hands() // for observers
 
@@ -1047,7 +1049,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/barricade/succeeded()
-	return is_blocked_turf(target) || (has_started && !actions.hasAction(holder.owner, "flock_construct"))
+	return is_blocked_turf(target) || (has_started && !actions.hasAction(holder.owner, /datum/action/bar/flock_construct))
 
 /datum/aiTask/succeedable/barricade/on_tick()
 	if (!has_started && !failed() && !succeeded())
@@ -1058,7 +1060,7 @@ stare
 		if(dist > 1)
 			holder.interrupt() //this should basically never happen, but sanity check just in case
 			return
-		else if(!actions.hasAction(drone, "flock_convert")) // let's not keep interrupting our own action
+		else if(!actions.hasAction(drone, /datum/action/bar/flock_convert)) // let's not keep interrupting our own action
 			drone.set_dir(get_dir(drone, holder.target))
 			drone.hand_attack(holder.target)
 			has_started = TRUE
@@ -1090,7 +1092,7 @@ stare
 	..()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
-		F.active_hand = 2 // nanite spray
+		F.set_hand(2)  // nanite spray
 		F.set_a_intent(INTENT_HARM)
 		F.hud?.update_hands() // for observers
 
@@ -1114,7 +1116,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/deconstruct/succeeded()
-	. = (!actions.hasAction(holder.owner, "flock_decon")) // for whatever reason, the required action has stopped
+	. = (!actions.hasAction(holder.owner, /datum/action/bar/flock_decon)) // for whatever reason, the required action has stopped
 	if(.)
 		var/mob/living/critter/flock/drone/F = holder.owner
 		F?.flock?.toggleDeconstructionFlag(holder.target)
@@ -1401,7 +1403,7 @@ stare
 		startpos = get_turf(holder.owner)
 	if(targetpos && GET_DIST(holder.owner,targetpos) > 0) //if we have a target and we're not already there
 		if(!path || !length(path))
-			path = get_path_to(holder.owner, targetpos, 5, 1) //short search, we don't want this to be expensive
+			path = get_path_to(holder.owner, targetpos, max_distance=5, mintargetdist=1) //short search, we don't want this to be expensive
 		if(length(path))
 			holder.move_to_with_path(targetpos, path, 0)
 			return

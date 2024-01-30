@@ -61,34 +61,34 @@ TYPEINFO(/obj/item/device/transfer_valve)
 		if (isghostdrone(user))
 			return ..()
 		if (user.get_gang())
-			boutput(user, "<span class='alert'>You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway.</span>")
+			boutput(user, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
 		if(istype(item, /obj/item/tank) || istype(item, /obj/item/clothing/head/butt))
 			if(istype(item, /obj/item/tank))
 				var/obj/item/tank/myTank = item
 				if(!myTank.compatible_with_TTV)
-					boutput(user, "<span class='alert'>There's no way that will fit!</span>")
+					boutput(user, SPAN_ALERT("There's no way that will fit!"))
 					return
 
 			if(tank_one && tank_two)
-				boutput(user, "<span class='alert'>There are already two tanks attached, remove one first!</span>")
+				boutput(user, SPAN_ALERT("There are already two tanks attached, remove one first!"))
 				return
 
 			if(!tank_one)
 				tank_one = item
 				user.drop_item()
 				item.set_loc(src)
-				boutput(user, "<span class='notice'>You attach \the [item] to the transfer valve</span>")
+				boutput(user, SPAN_NOTICE("You attach \the [item] to the transfer valve"))
 			else if(!tank_two)
 				tank_two = item
 				user.drop_item()
 				item.set_loc(src)
-				boutput(user, "<span class='notice'>You attach the \the [item] to the transfer valve!</span>")
+				boutput(user, SPAN_NOTICE("You attach the \the [item] to the transfer valve!"))
 
 			if(tank_one && tank_two)
 				var/turf/T = get_turf(src)
 				var/butt = istype(tank_one, /obj/item/clothing/head/butt) || istype(tank_two, /obj/item/clothing/head/butt)
-				logTheThing(LOG_BOMBING, user, "made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
-				message_admins("[key_name(user)] made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
+				logTheThing(LOG_BOMBING, user, "made a TTV tank transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
+				message_admins("[key_name(user)] made a TTV tank transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
 
 			UpdateIcon()
 			attacher = user
@@ -98,13 +98,14 @@ TYPEINFO(/obj/item/device/transfer_valve)
 
 		else if(istype(item, /obj/item/device/radio/signaler) || istype(item, /obj/item/device/timer) || istype(item, /obj/item/device/infra) || istype(item, /obj/item/device/prox_sensor))
 			if(attached_device)
-				boutput(user, "<span class='alert'>There is already an device attached to the valve, remove it first!</span>")
+				boutput(user, SPAN_ALERT("There is already an device attached to the valve, remove it first!"))
 				return
 
 			attached_device = item
 			user.drop_item()
 			item.set_loc(src)
-			boutput(user, "<span class='notice'>You attach the [item] to the valve controls!</span>")
+			boutput(user, SPAN_NOTICE("You attach the [item] to the valve controls!"))
+			logTheThing(LOG_BOMBING, user, "attaches the [item] to a TTV tank transfer valve.")
 			item.master = src
 
 			/*
@@ -122,17 +123,17 @@ TYPEINFO(/obj/item/device/transfer_valve)
 
 		else if(istype(item, /obj/item/cable_coil)) //make loops for shoulder straps
 			if(c_flags & ONBACK)
-				boutput(user, "<span class='alert'>The valve already has shoulder straps!</span>")
+				boutput(user, SPAN_ALERT("The valve already has shoulder straps!"))
 				return
 
 			var/obj/item/cable_coil/coil = item
 			if (coil.amount < 2)
-				boutput(user, "<span class='alert'>You do not have enough cable to produce two straps! (2 units required)</span>")
+				boutput(user, SPAN_ALERT("You do not have enough cable to produce two straps! (2 units required)"))
 				return
 			coil.use(2)
 
 			c_flags |= ONBACK
-			boutput(user, "<span class='notice'>You attach two loops of [item] to the transfer valve!</span>")
+			boutput(user, SPAN_NOTICE("You attach two loops of [item] to the transfer valve!"))
 			UpdateIcon()
 
 		return
@@ -141,7 +142,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 		if (isghostdrone(user))
 			return
 		if (user.get_gang())
-			boutput(user, "<span class='alert'>You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway.</span>")
+			boutput(user, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
 		src.add_dialog(user)
 		var/dat = {"<B> Valve properties: </B>
 		<BR> <B> Attachment one:</B> [tank_one] [tank_one ? "<A href='?src=\ref[src];tankone=1'>Remove</A>" : ""]
@@ -159,7 +160,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 		if (isghostdrone(usr))
 			return
 		if (usr.get_gang())
-			boutput(usr, "<span class='alert'>You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway.</span>")
+			boutput(usr, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
 		if (usr.stat|| usr.restrained())
 			return
 		if (src.loc == usr)
@@ -167,19 +168,25 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				tank_one.set_loc(get_turf(src))
 				tank_one = null
 				UpdateIcon()
+				if(src.equipped_in_slot)
+					var/mob/wearer = src.loc
+					wearer.update_clothing()
 			if(href_list["tanktwo"])
 				tank_two.set_loc(get_turf(src))
 				tank_two = null
 				UpdateIcon()
+				if(src.equipped_in_slot)
+					var/mob/wearer = src.loc
+					wearer.update_clothing()
 			if(href_list["open"])
 				if (valve_open)
 					var/turf/bombturf = get_turf(src)
-					logTheThing(LOG_BOMBING, usr, "closed the valve on a tank transfer valve at [log_loc(bombturf)].")
-					message_admins("[key_name(usr)] closed the valve on a tank transfer valve at [log_loc(bombturf)].")
+					logTheThing(LOG_BOMBING, usr, "closed the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
+					message_admins("[key_name(usr)] closed the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
 				else
 					var/turf/bombturf = get_turf(src)
-					logTheThing(LOG_BOMBING, usr, "opened the valve on a tank transfer valve at [log_loc(bombturf)].")
-					message_admins("[key_name(usr)] opened the valve on a tank transfer valve at [log_loc(bombturf)].")
+					logTheThing(LOG_BOMBING, usr, "opened the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
+					message_admins("[key_name(usr)] opened the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
 				toggle_valve()
 			if(href_list["rem_device"])
 				attached_device.set_loc(get_turf(src))
@@ -190,13 +197,13 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				attached_device.attack_self(usr)
 			if(href_list["straps"])
 				if(usr?.back && usr.back == src)
-					boutput(usr, "<span class='alert'>You can't detach the loops of wire while you're wearing [src]!</span>")
+					boutput(usr, SPAN_ALERT("You can't detach the loops of wire while you're wearing [src]!"))
 				else
 					c_flags &= ~ONBACK
 					var/turf/location = get_turf(src)
 					var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(location)
 					C.amount = 2
-					boutput(usr, "<span class='notice'>You detach the loops of wire from [src]!</span>")
+					boutput(usr, SPAN_NOTICE("You detach the loops of wire from [src]!"))
 					UpdateIcon()
 
 			src.attack_self(usr)
@@ -296,12 +303,13 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			src.underlays += straps
 
 	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special varient.
-		src.tank_one_image = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]1")
-		src.tank_one_image_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]_under",)
-		src.tank_two_image = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]2")
-		src.tank_two_image_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]_under")
-		src.wear_image.overlays = list(tank_one_image, tank_two_image)
-		src.wear_image.underlays = list(tank_one_image_under, tank_two_image_under)
+		src.wear_image.overlays = list()
+		if(src.tank_one)
+			src.wear_image.overlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_one_icon]1")
+			src.wear_image.underlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_one_icon]_under")
+		if(src.tank_two)
+			src.wear_image.overlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_two_icon]2")
+			src.wear_image.underlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_two_icon]_under")
 
 		/*
 		Exadv1: I know this isn't how it's going to work, but this was just to check
@@ -312,6 +320,10 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			src.valve_open = !valve_open
 			SPAWN(1 SECOND)
 				signalled = FALSE
+			if(valve_open)
+				playsound(src, 'sound/effects/valve_creak.ogg', 50, TRUE)
+			else
+				playsound(src, 'sound/effects/valve_creak.ogg', 50, TRUE, pitch=-1)
 			if(valve_open && force_dud)
 				message_admins("A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [key_name(src.fingerprintslast)]")
 				logTheThing(LOG_BOMBING, null, "A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
@@ -337,7 +349,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				if(power < 0.3) //Really weak
 					return
 				else if (power < 0.5)
-					visible_message("<span class='combat'>\The [src] farts [pick_string("descriptors.txt", "mopey")]</span>")
+					visible_message(SPAN_COMBAT("\The [src] farts [pick_string("descriptors.txt", "mopey")]"))
 					playsound(src, 'sound/voice/farts/poo2.ogg', 30, 2, channel=VOLUME_CHANNEL_EMOTE)
 					return
 
@@ -352,14 +364,14 @@ TYPEINFO(/obj/item/device/transfer_valve)
 
 				for(var/mob/living/L in hearers(get_turf(src), fart_range))
 					shake_camera(L,10,32)
-					boutput(L, "<span class='alert'>You are sent flying!</span>")
+					boutput(L, SPAN_ALERT("You are sent flying!"))
 
 					L.changeStatus("weakened", stun_time SECONDS)
 					while (throw_repeat > 0)
 						throw_repeat--
 						step_away(L,get_turf(src),throw_speed)
 
-				T.air_contents.zero() //I could also make it vent the gas, I guess, but then it'd be off-limits to non-antagonists. Challenge mode: make a safe ttb?
+				ZERO_GASES(T.air_contents) //I could also make it vent the gas, I guess, but then it'd be off-limits to non-antagonists. Challenge mode: make a safe ttb?
 				qdel(B)
 				SPAWN(1 SECOND)
 					UpdateIcon()
@@ -369,8 +381,8 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				var/turf/bombturf = get_turf(src)
 				var/area/A = get_area(bombturf)
 				if(!A.dont_log_combat)
-					logTheThing(LOG_BOMBING, null, "Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
-					message_admins("Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
+					logTheThing(LOG_BOMBING, null, "TTV tank transfer valve bomb opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
+					message_admins("TTV tank transfer valve bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
 
 				var/datum/gas_mixture/temp
 
@@ -417,7 +429,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] drops [src], takes a short run up and kicks the valve as hard as [he_or_she(user)] can, knocking it [valve_open ? "closed" : "open"]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] drops [src], takes a short run up and kicks the valve as hard as [he_or_she(user)] can, knocking it [valve_open ? "closed" : "open"]!</b>"))
 		user.u_equip(src)
 		src.set_loc(user.loc)
 		toggle_valve()
@@ -425,8 +437,16 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			if (user)
 				user.suiciding = 0
 				if(isalive(user) && src && GET_DIST(user,src) <= 7)
-					user.visible_message("<span class='alert'>[user] stares at the [src.name], a confused expression on [his_or_her(user)] face.</span>") //It didn't blow up!
+					user.visible_message(SPAN_ALERT("[user] stares at the [src.name], a confused expression on [his_or_her(user)] face.")) //It didn't blow up!
 		return 1
+
+ADMIN_INTERACT_PROCS(/obj/item/device/transfer_valve, proc/admin_command_vacuum_tanks)
+///vacuum out all attached tanks - for admin purposes, to defuse someone's 'self-defense TTV'
+/obj/item/device/transfer_valve/proc/admin_command_vacuum_tanks()
+	set name = "Vacuum tanks"
+	for(var/obj/item/tank/T in src)
+		if(T.air_contents)
+			ZERO_GASES(T.air_contents)
 
 TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	mats = 8
@@ -457,9 +477,9 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 			tester.update_bomb_log("VR Bomb deleted.", 1)
 			tester.vrbomb = null;
 		if(ismob(src.loc))
-			boutput(src.loc, "<span class='alert'>[src] fades away!</span>")
+			boutput(src.loc, SPAN_ALERT("[src] fades away!"))
 		else
-			src.visible_message("<span class='alert'>[src] fades away!</span>")
+			src.visible_message(SPAN_ALERT("[src] fades away!"))
 		..()
 
 	toggle_valve()
@@ -503,55 +523,151 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 
 /obj/item/pressure_crystal
 	icon = 'icons/obj/items/assemblies.dmi'
-	icon_state = "pressure_3"
-	var/pressure = 0
-	var/total_pressure = 0
-	desc = "A pressure crystal. We're not really sure how it works, but it does. Place this near where the epicenter of a bomb would be, then detonate the bomb. Afterwards, place the crystal in a tester to determine the strength."
-	name = "Pressure Crystal"
-	ex_act(var/ex, var/inf, var/factor)
-		pressure = factor || (4-clamp(ex, 1, 3))*2
-		total_pressure += pressure
-		pressure += (rand()-0.5) * (pressure/1000)//its not extremely accurate.
-		icon_state = "pressure_[clamp(ex, 1, 3)]"
+	icon_state = "pressure_none"
+	w_class = W_CLASS_SMALL
+	var/pressure = 0 // used to calculate credit value, in shippingmarket.dm proc/appraise_value
+	var/last_explode_time = 0
+	var/static/explosion_id = 0
+	var/broken = FALSE
+	name = "pressure crystal"
+	desc = "A mysterious gadget that measures the power of bombs detonated over it. \
+		High measurements within the crystal can be very valuable on the shipping market."
+	HELP_MESSAGE_OVERRIDE("Place this where the epicenter of a bomb would be, then detonate the bomb. \
+		Afterwards, place the crystal in a pressure sensor to determine the explosion power.<br>\
+		Spent pressure crystals can be sold to researchers on the shipping market, for a credit sum depending on the measured power.")
+
+	attackby(obj/item/thing, mob/user)
+		if (istype(thing, /obj/item/device/pressure_sensor))
+			thing.Attackby(src, user)
+		else ..()
+
+	get_desc()
+		. = ..()
+		if (src.broken)
+			. += "<br>[SPAN_ALERT("This crystal has been broken by an explosion too powerful for it to handle, it is worthless.")]"
+		else if (src.pressure)
+			. += "<br>[SPAN_NOTICE("This crystal has already measured something. Another explosion will overwrite the previous results.")]"
+
+	ex_act(severity, fingerprints, power, datum/explosion/explosion)
+		if(src.broken)
+			return
+
+		var/exp_power = (power / 2) ** 2 || (4-clamp(severity, 1, 3))*2
+
+		logTheThing(LOG_BOMBING, src, "is hit by an explosion of power [exp_power] calculated from [power ? "power [power]" : "severity [severity]"]")
+
+		if (src.last_explode_time < world.time)
+			src.pressure = exp_power
+		else // sum the power of multiple explosions at roughly the same instant, but diminishingly
+			// preferring stronger explosions, too
+			src.pressure = max(src.pressure, exp_power) + sqrt(min(src.pressure, exp_power))
+		var/icon_num
+		if (exp_power < 10)
+			icon_num = 3
+		else if (exp_power < 50)
+			icon_num = 2
+		else
+			icon_num = 1
+		src.icon_state = "pressure_[icon_num]"
+		src.last_explode_time = world.time
+		src.explosion_id = exp_power * world.time
+
+		if (explosion.power >= 10000 || exp_power >= 10000) //sadly, the hemera nuke exists and so we must put a limit here
+			src.broken = TRUE
+			src.icon_state = "pressure_broken"
+
 /obj/item/device/pressure_sensor
-	name = "Pressure Sensor"
+	name = "pressure sensor"
 	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "pressure_tester"
 	desc = "Put in a pressure crystal to determine the strength of the explosion."
+	w_class = W_CLASS_SMALL
+
 	var/obj/item/pressure_crystal/crystal
+
+	examine()
+		. = ..()
+		if (src.crystal?.pressure)
+			. += "<br>[SPAN_NOTICE("The display reads: <b>[src.crystal.pressure] kiloblast.</b>")]"
+
 	attack_self(mob/user as mob)
-		if(!crystal)
-			boutput( user, "<b>There's no crystal in this here device!</b>")
+		if(!src.crystal)
+			boutput( user, SPAN_ALERT("There's no crystal in this here device!"))
+			return
+		if(src.crystal.pressure)
+			boutput( user, SPAN_NOTICE("The display reads: <b>[src.crystal.pressure] kiloblast.</b>") )
 		else
-			if(crystal.pressure)
-				boutput( user, "The reader reads <b>[crystal.pressure/25]</b> kilojoules." )
-			else
-				boutput( user, "The reader reads a firm 0. It guilts you into trying to read an unexploded pressure crystal, and seems to have succeeded. You feel ashamed for being so compelled by a device that has nothing more than a slot and a number display.")
-	ex_act()
+			boutput( user, "<span class='notice'>The display reads a firm 0. It guilts you into trying to read an unexploded pressure crystal, \
+							and seems to have succeeded. You feel ashamed for being so compelled by a device that \
+							has nothing more than a slot and a number display.</span>")
+
+	ex_act(var/ex, var/inf, var/factor)
+		if (src.crystal)
+			src.crystal.ex_act(ex, inf, factor)
+			src.crystal.set_loc(src.loc)
 		qdel(src)
+
 	attackby(obj/item/thing, mob/user)
-		if(istype(thing, /obj/item/pressure_crystal))
-			if(src.crystal)
-				boutput( user, "You contemplate how to place the crystal in an occupied sensor, but can't manage to figure out how." )
-			else
-				src.crystal = thing
-				thing.pixel_x = 0
-				thing.pixel_y = 0
-				boutput( user, "You insert the crystal." )
-				overlays += thing
-				user.drop_item()
-				crystal.set_loc(src)
-				wear_image.overlays += src.crystal
+		if (!istype(thing, /obj/item/pressure_crystal))
+			return ..()
+		if (src.insert_crystal(user, thing))
+			user.visible_message("[user] inserts [thing] into [src].",
+								SPAN_NOTICE("You insert the crystal into [src]."))
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (!src.crystal)
+			. = ..()
 			return
-		else if(thing.tool_flags & TOOL_PRYING && src.crystal)
-			overlays = list()
-			wear_image.overlays = list()
-			boutput( user, "You pry out the crystal." )
-			if(prob(src.crystal.total_pressure / 45))
-				boutput( user, "<b class='alert'>It shatters!</b>" )
-				qdel(src.crystal)
-				return
-			src.crystal.set_loc(user.loc)
-			src.crystal = null
+
+		if(BOUNDS_DIST(src_location, usr) > 0 || BOUNDS_DIST(src_location, over_location) > 0)
 			return
-		else return ..()
+		if (src.remove_crystal(usr, over_location))
+			usr.visible_message("[usr] removes the crystal from [src].",
+								SPAN_NOTICE("You pull the crystal out of [src]."))
+
+	MouseDrop_T(atom/movable/thing, mob/user)
+		. = ..()
+		if (!istype(thing, /obj/item/pressure_crystal))
+			return
+		if (src.insert_crystal(user, thing))
+			user.visible_message("[user] drops [thing] into [src].",
+								SPAN_NOTICE("You drop the crystal into [src]."))
+
+	attack_hand(mob/user)
+		if (src.loc != user || !user.find_in_hand(src))
+			..()
+		else if (src.crystal && src.remove_crystal(user))
+			boutput(user, SPAN_NOTICE("You extract the crystal from [src].") )
+		else ..() // something about having two of these feels wrong
+
+	update_icon()
+		if (src.crystal)
+			var/image/pc = image(src.crystal.icon, src.crystal.icon_state)
+			src.UpdateOverlays(pc, "sensor")
+		else
+			src.UpdateOverlays(null, "sensor")
+
+	proc/insert_crystal(mob/user, obj/item/pressure_crystal/pc)
+		if (!istype(pc, /obj/item/pressure_crystal))
+			return FALSE
+		if (src.crystal)
+			boutput(user, "<span class='alert'>You contemplate how to place the crystal in an occupied sensor, \
+							but can't manage to figure out how.</span>" )
+			return FALSE
+		user.drop_item(pc)
+		pc.set_loc(src)
+		src.crystal = pc
+		src.UpdateIcon()
+		return TRUE
+
+	proc/remove_crystal(mob/user, turf/spot)
+		if (!src.crystal)
+			boutput(user, SPAN_ALERT("There's no crystal in this here device!"))
+			return FALSE
+		if (spot)
+			src.crystal.set_loc(spot)
+		else
+			user.put_in_hand_or_drop(src.crystal)
+		src.crystal = null
+		src.UpdateIcon()
+		return TRUE

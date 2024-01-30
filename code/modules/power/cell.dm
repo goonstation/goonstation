@@ -1,6 +1,6 @@
 /obj/item/cell
 	name = "power cell"
-	desc = "A rechargable electrochemical power cell. It's too large to fit into most handheld devices, but can be used to power cyborgs and APCs."
+	desc = "A rechargeable electrochemical power cell. It's too large to fit into most handheld devices, but can be used to power cyborgs and APCs."
 	icon = 'icons/obj/power.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "cell"
@@ -52,7 +52,7 @@
 
 /obj/item/cell/shell_cell
 	name = "AI shell power cell"
-	desc = "A rechargable electrochemical power cell. It's made for AI shells."
+	desc = "A rechargeable electrochemical power cell. It's made for AI shells."
 	maxcharge = 4000
 
 /obj/item/cell/hypercell
@@ -102,7 +102,7 @@
 	charge = 15000
 
 /obj/item/cell/erebite/charged
-	charge = 20000
+	charge = 60000
 
 /obj/item/cell/cerenkite/charged
 	charge = 15000
@@ -201,7 +201,7 @@
 			if (istype(src,/obj/item/cell/erebite))
 				message_admins("[key_name(user)] injected [src] with plasma, causing an explosion at [log_loc(user)].")
 				logTheThing(LOG_COMBAT, user, "injected [src] with plasma, causing an explosion at [log_loc(user)].")
-				boutput(user, "<span class='alert'>The plasma reacts with the erebite and explodes violently!</span>")
+				boutput(user, SPAN_ALERT("The plasma reacts with the erebite and explodes violently!"))
 				src.explode()
 			else
 				logTheThing(LOG_COMBAT, user, "rigged [src] to explode at [log_loc(user)].")
@@ -243,11 +243,11 @@
 
 /obj/item/cell/proc/zap(mob/user as mob, var/ignores_gloves = 0)
 	if (user.shock(src, src.charge, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, ignores_gloves))
-		boutput(user, "<span class='alert'>[src] shocks you!</span>")
+		boutput(user, SPAN_ALERT("[src] shocks you!"))
 
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span class='alert'>[user:name] was shocked by the [src:name]!</span>", 3, "<span class='alert'>You hear an electrical crack</span>", 2)
+			M.show_message(SPAN_ALERT("[user:name] was shocked by the [src:name]!"), 3, SPAN_ALERT("You hear an electrical crack"), 2)
 		return 1
 
 /obj/item/cell/ex_act(severity)
@@ -256,7 +256,7 @@
 
 /obj/item/cell/temperature_expose(null, temp, volume)
 	if (istype(src,/obj/item/cell/erebite))
-		src.visible_message("<span class='alert'>[src] violently detonates!</span>")
+		src.visible_message(SPAN_ALERT("[src] violently detonates!"))
 		src.explode()
 	else ..()
 

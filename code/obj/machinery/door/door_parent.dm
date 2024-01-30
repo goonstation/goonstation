@@ -75,7 +75,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 	else if (istype(AM, /obj/machinery/bot))
 		var/obj/machinery/bot/B = AM
-		if (src.check_access(B.botcard))
+		if (src.check_access(B.botcard) && !B.pulled_by) //no more dragging bots onto doors for makeshift AA
 			if (src.density)
 				src.open()
 
@@ -107,13 +107,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			// If we just return 0, they will be able to bump-open the door and get past regardless
 			// because mob paralysis doesn't take effect until the next tick.
 			if (prob(20) && !ON_COOLDOWN(H, "brainstumble_cooldown", 1 SECOND))
-				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
-				src.visible_message("<span class='alert'><b>[H]</b> stumbles into [src] head-first. [pick("Ouch", "Damn", "Woops")]!</span>")
+				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, TRUE)
+				src.visible_message(SPAN_ALERT("<b>[H]</b> stumbles into [src] head-first. [pick("Ouch", "Damn", "Woops")]!"))
 				if (!istype(H.head, /obj/item/clothing/head/helmet))
 					H.TakeDamageAccountArmor("head", 9, 0, 0, DAMAGE_BLUNT)
 					H.changeStatus("weakened", 1 SECOND)
 				else
-					boutput(H, "<span class='notice'>Your helmet protected you from injury!</span>")
+					boutput(H, SPAN_NOTICE("Your helmet protected you from injury!"))
 				return 1
 	return 0
 
@@ -223,14 +223,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if (src.allowed(user)) // Don't override ID cards.
 			return src.Attackby(null, user)
 
-	src.visible_message("<span class='alert'>[user] is attempting to pry open [src].</span>")
+	src.visible_message(SPAN_ALERT("[user] is attempting to pry open [src]."))
 	user.show_text("You have to stand still...", "red")
 
 #ifdef HALLOWEEN
 	user.emote("scream")
 #endif
 	SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /obj/machinery/door/proc/try_force_open, list(user, TRUE), src.icon, src.icon_state, \
-	"<span class='alert'>[user] pries open [src]!</span>", \
+	SPAN_ALERT("[user] pries open [src]!"), \
 	INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 
 
@@ -238,12 +238,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/success = 0
 	if (src)
 		if (istype(src, /obj/machinery/door/poddoor))
-			boutput(user, "<span class='alert'>The door is too strong for you!</span>")
+			boutput(user, SPAN_ALERT("The door is too strong for you!"))
 
 		if (istype(src, /obj/machinery/door/unpowered/wood))
 			var/obj/machinery/door/unpowered/wood/WD = src
 			if (WD.locked)
-				boutput(user, "<span class='alert'>It's shut tight!</span>")
+				boutput(user, SPAN_ALERT("It's shut tight!"))
 			else
 				WD.open()
 				success = 1
@@ -251,7 +251,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if (istype(src, /obj/machinery/door/firedoor))
 			var/obj/machinery/door/firedoor/FD = src
 			if (FD.blocked)
-				boutput(user, "<span class='alert'>It's shut tight!</span>")
+				boutput(user, SPAN_ALERT("It's shut tight!"))
 			else
 				FD.open()
 				success = 1
@@ -259,7 +259,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if (istype(src, /obj/machinery/door/window))
 			var/obj/machinery/door/window/SD = src
 			if (SD.cant_emag != 0 || SD.isblocked() != 0)
-				boutput(user, "<span class='alert'>It's shut tight!</span>")
+				boutput(user, SPAN_ALERT("It's shut tight!"))
 			else
 				SD.open()
 				success = 1
@@ -267,7 +267,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if (istype(src, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/AL = src
 			if (AL.locked || AL.operating == -1 || AL.welded || AL.cant_emag != 0)
-				boutput(user, "<span class='alert'>It's shut tight!</span>")
+				boutput(user, SPAN_ALERT("It's shut tight!"))
 			else
 				if (!AL.arePowerSystemsOn() || (AL.status & NOPOWER))
 					AL.unpowered_open_close()
@@ -286,17 +286,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		last_used = world.time
 		src.operating = -1
 		flick(text("[]_spark", src.icon_base), src)
-		sleep(0.6 SECONDS)
-		open()
-		return 1
-	return 0
+		SPAWN(0.6 SECONDS)
+			open()
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/demag(var/mob/user)
 	if (src.operating != -1)
 		return 0
 	src.operating = 0
-	sleep(0.6 SECONDS)
-	close()
+	SPAWN(0.6 SECONDS)
+		close()
 	return 1
 
 /obj/machinery/door/attackby(obj/item/I, mob/user)
@@ -566,12 +566,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 					continue
 				var/mob_layer = L.layer	//Make it look like we're inside the door
 				L.layer = src.layer - 0.01
-				playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
-				L.emote("scream")
+				if(!ON_COOLDOWN(L, "doorcrush", 0.5 SECONDS))
+					playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, TRUE)
+					L.emote("scream")
 
-				L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
+					L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
 
-				L.changeStatus("weakened", 3 SECONDS)
+					L.changeStatus("weakened", 3 SECONDS)
 				L.stuttering += 10
 				did_crush = 1
 				SPAWN(src.operation_time * 1.5 + crush_delay)
@@ -586,8 +587,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 		if(did_crush)
 			interrupt_autoclose = 1
-			src.visible_message("<span class='alert'>\The [src] whirrs [pick_string("descriptors.txt", "borg_shake")]!</span>")
-			playsound(src, 'sound/machines/hydraulic.ogg', 30,1)
+			src.visible_message(SPAN_ALERT("\The [src] whirrs [pick_string("descriptors.txt", "borg_shake")]!"))
+			playsound(src, 'sound/machines/hydraulic.ogg', 30,TRUE)
 			sleep(crush_delay) //If we crushed someone, wait a bit until resuming operations to prevent chaincrushing
 			src.operating = 0
 			src.open()
@@ -707,11 +708,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/unpowered/martian/open()
 	if(src.locked) return
-	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 	. = ..()
 
 /obj/machinery/door/unpowered/martian/close()
-	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 	. = ..()
 
 // APRIL FOOLS
@@ -732,6 +733,7 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 	layer = EFFECTS_LAYER_UNDER_1
 	anchored = ANCHORED
 	autoclose = TRUE
+	material_amt = 0.3
 	var/blocked = null
 	var/simple_lock = 0
 	var/lock_dir = null // what direction you can lock/unlock the door from
@@ -749,6 +751,7 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "wood1"
 	icon_base = "wood"
+	material_amt = 0.6
 
 /obj/machinery/door/unpowered/wood/stall
 	name = "stall door"
@@ -775,22 +778,22 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 		user = null
 	if(istype(I, /obj/item/device/key) && src.density)
 		if (src.simple_lock)
-			boutput(user, "<span class='alert'>You can't find a keyhole on this [src.name], it just has a little latch.</span>")
+			boutput(user, SPAN_ALERT("You can't find a keyhole on this [src.name], it just has a little latch."))
 			return
 		else if (src.lock_dir)
 			var/checkdir = get_dir(src, user)
 			if (!(checkdir & src.lock_dir))
-				boutput(user, "<span class='alert'>[src]'s keyhole isn't on this side!</span>")
+				boutput(user, SPAN_ALERT("[src]'s keyhole isn't on this side!"))
 				return
 		src.toggle_locked()
-		src.visible_message("<span class='notice'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
+		src.visible_message(SPAN_NOTICE("<B>[user] [!src.locked ? "un" : null]locks [src].</B>"))
 		return
 	else if (isscrewingtool(I) && src.locked)
 		actions.start(new /datum/action/bar/icon/door_lockpick(src, I, src.simple_lock ? 40 : 80), user)
 		return
 	if (user.is_hulk())
-		src.visible_message("<span class='alert'><B>[user] smashes through the door!</B></span>")
-		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+		src.visible_message(SPAN_ALERT("<B>[user] smashes through the door!</B>"))
+		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
 		src.operating = -1
 		src.set_unlocked()
 		open()
@@ -802,17 +805,17 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 			close()
 	else if (src.density)
 		play_animation("deny")
-		playsound(src, 'sound/machines/door_locked.ogg', 50, 1, -2)
-		boutput(user, "<span class='alert'>The door is locked!</span>")
+		playsound(src, 'sound/machines/door_locked.ogg', 50, TRUE, -2)
+		boutput(user, SPAN_ALERT("The door is locked!"))
 	return
 
 /obj/machinery/door/unpowered/wood/open()
 	if(src.locked) return
-	playsound(src, 'sound/machines/door_open.ogg', 50, 1)
+	playsound(src, 'sound/machines/door_open.ogg', 50, TRUE)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/close()
-	playsound(src, 'sound/machines/door_close.ogg', 50, 1)
+	playsound(src, 'sound/machines/door_close.ogg', 50, TRUE)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/verb/simple_lock()
@@ -823,19 +826,18 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 	if (isdead(usr) || isintangible(usr))
 		return
 	if (!src.density || src.operating)
-		boutput(usr, "<span class='alert'>You COULD flip the lock on [src] while it's open, but it wouldn't actually accomplish anything!</span>")
+		boutput(usr, SPAN_ALERT("You COULD flip the lock on [src] while it's open, but it wouldn't actually accomplish anything!"))
 		return
 	if (src.lock_dir)
 		var/checkdir = get_dir(src, usr)
 		if (!(checkdir & src.lock_dir))
-			boutput(usr, "<span class='alert'>[src]'s lock isn't on this side!</span>")
+			boutput(usr, SPAN_ALERT("[src]'s lock isn't on this side!"))
 			return
 	src.toggle_locked()
-	src.visible_message("<span class='notice'><B>[usr] [!src.locked ? "un" : null]locks [src].</B></span>")
+	src.visible_message(SPAN_NOTICE("<B>[usr] [!src.locked ? "un" : null]locks [src].</B>"))
 	return
 
 /datum/action/bar/icon/door_lockpick
-	id = "door_lockpick"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 8 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -865,30 +867,21 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (prob(5) || (!the_door.simple_lock && prob(5)))
-			owner.visible_message("<span class='alert'>[owner] messes up while picking [src.the_door]'s lock!</span>")
-			playsound(the_door, 'sound/items/Screwdriver2.ogg', 50, 1)
+			owner.visible_message(SPAN_ALERT("[owner] messes up while picking [src.the_door]'s lock!"))
+			playsound(the_door, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		owner.visible_message("<span class='alert'>[owner] begins picking [src.the_door]'s lock!</span>")
+		owner.visible_message(SPAN_ALERT("[owner] begins picking [src.the_door]'s lock!"))
 		playsound(src.the_door, 'sound/items/Screwdriver2.ogg', 50, 1)
 
 	onEnd()
 		..()
 		src.the_door.set_unlocked()
-		owner.visible_message("<span class='alert'>[owner] jimmies [src.the_door]'s lock open!</span>")
+		owner.visible_message(SPAN_ALERT("[owner] jimmies [src.the_door]'s lock open!"))
 		playsound(src.the_door, 'sound/items/Screwdriver2.ogg', 50, 1)
-
-/obj/machinery/door/unpowered/bulkhead
-	name = "bulkhead door"
-	desc = "A heavy manually operated door. It looks rather beaten."
-	icon = 'icons/obj/doors/bulkhead.dmi'
-	operation_time = 20
-
-/obj/machinery/door/unpowered/bulkhead/Bumped()
-	return
 
 /obj/machinery/door/control/oneshot
 	var/broken = 0

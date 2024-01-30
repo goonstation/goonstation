@@ -4,7 +4,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	"Annoyed (Inverted)" = "ai_annoyed-lod", \
 	"Baffled" = "ai_baffled-dol",\
 	"Baffled (Inverted)" = "ai_baffled-lod",\
-	"Blank" = "ai_blank",\
+	"Blank" = "ai_blank-dol",\
+	"Blank (Inverted)" = "ai_blank-lod",\
 	"Cheeky" = "ai_cheeky-dol",\
 	"Cheeky (Inverted)" = "ai_cheeky-lod",\
 	"Colourbars" = "ai_colourbars",\
@@ -97,8 +98,6 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
 	var/printalerts = 1
-	var/announcearrival = 1
-	var/arrivalalert = "$NAME has signed up as $JOB."
 	/// a list of strings used as fake laws that may be stated via the State Fake Laws command, to deceive people as a rogue AI
 	var/list/fake_laws = list()
 	var/glitchy_speak = 0
@@ -109,7 +108,6 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/messageLog = ""
 	/// controls whether or not the ai will hear termos message notifications
 	var/termMute = FALSE
-	var/hologramdown = 0 //is the hologram downed?
 	var/canvox = 1
 	var/can_announce = 1
 	var/last_announcement = -INFINITY
@@ -120,7 +118,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/power_mode = 0
 	var/power_area = null
 	var/obj/machinery/power/apc/local_apc = null
-	var/obj/item/device/radio/radio1 = null // See /mob/living/say() in living.dm for AI-related radio code.
+	var/obj/item/device/radio/radio1 = null // See /mob/living/say() in living.dm for ai_related radio code.
 	var/obj/item/device/radio/radio2 = null
 	var/obj/item/device/radio/radio3 = null
 	var/obj/item/device/pda2/internal_pda = null
@@ -128,29 +126,60 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/moustache_mode = 0
 	var/status_message = null
 	var/mob/living/silicon/deployed_shell = null
+	var/locking = 0
 
 	var/faceEmotion = "ai_happy-dol"
 	var/faceColor = "#66B2F2"
 	var/list/custom_emotions = null
-
+	///Maximum number of viewports we can have open, unlimited vision was a bit silly
+	var/viewport_limit = 2
 	/// The icon_state for the outside non-screen bit of the core. icon_state is set to this in update_appearance() (which is called by New)
 	var/coreSkin = "default"
 /* To add a new skin:
 - Create the skin itself but also the overlay you want to have for when in battery mode
 - The name of the core icon state will be used to fetch the battery mode overlay, so your batmode overlay
-- should be the name of your core icon state with "batmode-" before it
-- Ditto for when the AI is online as normal (should you choose to have an overlay for this). Prefix with "apcmode-"
+- should be the name of your core icon state with "lights_bat-" before it
+- Ditto for when the AI is online as normal (should you choose to have an overlay for this). Prefix with "lights_apc-"
 - Add the icon state name to skinsList below, and while it's technically optional, you should also associate a short description with it
 - There is currently no support for significantly differently shaped cores, you'll have to do that yourself, sorry
+*/
+/* Addit. note from casing overhaul PR--
+There is... some support for cores with different tops now! Not much, but some
+if you're adding a new frame you should declare which open top overlay that new frame should use
+(search for "if (src.dismantle_stage > 1)" you'll find where those declares are)
+just add the name of your casing to one of those given checks
+or don't if it uses a custom topopen overlay
 */
 
 	/// List of valid skins and their descriptions. Used for validation of setSkin()
 	var/skinsList = list(
 		"default" = "The casing appears to be a standard NanoTrasen AI core.",
+		"science" = "The casing is made out of a white plastic and has a prominent purple stripe painted down the front.",
+		"medical" = "The casing is made out of a white plastic and has a prominent red stripe painted down the front.",
+		"ntold" = "A much older model of NanoTrasen AI core. The stark white has faded to eggshell with time.",
+		"bee" = "The casing has been painted and given little plastic antennae to make it resemble a bee!",
+		"shock" = "The casing is painted a luminescent blue and has what looks to be neon light tubes built into it!",
+		"gold" = "The casing seems to be made out of gold. No, wait. Looking closer, you think that's actually pyrite.",
+		"engineering" = "The casing is made out of a buffed metal and has a prominent orange stripe painted down the front.",
+		"soviet" = "The latest in Soviet artificial intelligence technology. And by latest, you mean this thing looks like it's been collecting dust for decades.",
+		"nt" = "A newer model of NanoTrasen AI core. It's been painted a greyish-blue, and proudly displays the NT logo below the screen.",
+		"industrial" = "The casing is made out of a sleek and polished alloy. It looks heavily reinforced- wait, no. No, that's just a really impressive paint job.",
+		"lgun" = "The casing is made out of pieces of colourful pink plastic clipped together. It looks like a toy.",
 		"dwaine" = "The casing has a label saying \"Thinktronic Data Systems, LLC\". Jeez, how old is this?",
+		"ailes" = "A bulky computational powerhouse- or, at least, it would have been twenty-odd years ago. The logo below the screen has been scratched off with something sharp.",
+		"salvage" = "A significantly worse-for-wear NanoTrasen AI core, haphazardly repaired back to working order with what looks to be scrap metal and spare parts.",
+		"gardengear" = "\"Product of GardenGear\" is etched into the side of the casing.",
+		"telegun" = "The casing is made out of pieces of colourful blue plastic clipped together. It looks like a toy.",
 		"kingsway" = "'Kingsway Systems 29A' is etched into the aged plastic casing beneath the screen.",
 		"syndicate" = "The casing is covered in Syndicate markings! On second glance, it seems like the panels are pieces of toy plastic clipped together. Wow.",
-		"clown" = "Crayon and questionable stains constitute the majority of the casing's exterior. What the fuck even is this thing?"
+		"clown" = "Crayon and questionable stains constitute the majority of the casing's exterior. What the fuck even is this thing?",
+		"mime" = "The casing has been painted to clearly resemble a mime.",
+		"tactical" = "The casing is made out of a dark grey plastic and is covered in clearly purposeless grooves and fans and whatelse. Very tacticool.",
+		"mauxite" = "The core has been hammered together out of jagged sheets of mauxite.",
+		"flock" = "The casing is made out of a humming teal material. It pulses and flares to a strange rhythm.",
+		"crt" = "The core appears to be a... CRT television. Huh.",
+		"rustic" = "The core appears to be... a box. Where are the beveled edges?! This core isn't a weird octagonal prism at all, it's just a cube!",
+		"cardboard" = "The core appears to be made out of cardboard. Huh. ...Well, it's probably still just as good at opening doors."
 	)
 
 	var/datum/ai_camera_tracker/tracker = null
@@ -194,7 +223,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 			src.hat = null
 		// src.hat.wear_image.pixel_y = 10
 		// src.UpdateOverlays(src.hat.wear_image, "hat")
-		var/image/hat_image = SafeGetOverlayImage(hat.icon_state, hat.icon, hat.icon_state, src.layer+0.2)
+		var/image/hat_image = SafeGetOverlayImage(hat.icon_state, hat.icon, hat.icon_state, src.layer+0.3)
 		hat_image.pixel_y = 12
 		if (istype(hat, /obj/item/clothing/head/bighat))
 			hat_image.pixel_y = 20
@@ -237,6 +266,16 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
+
+	if (deployed_to_eyecam)
+		eyecam.return_mainframe()
+		qdel(eyecam)
+		eyecam = null
+
+	if (deployed_shell)
+		src.return_to(deployed_shell)
+		src.deployed_shell = null
+
 	if (light)
 		light.dispose()
 	for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
@@ -279,7 +318,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	src.coreSkin = skinToApply
 	src.set_color(global.random_color())
 	src.faceEmotion = global.ai_emotions[pick(global.ai_emotions)]
-	src.UpdateOverlays(get_image("ai_blank"), "backscreen")
+	src.UpdateOverlays(SafeGetOverlayImage("backscreen", 'icons/mob/ai.dmi', "ai_blank"), "backscreen")
 	update_appearance()
 
 	src.eyecam = new /mob/living/intangible/aieye(src)
@@ -340,6 +379,9 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 				continue
 			if (!(R in available_ai_shells))
 				available_ai_shells += R
+		if(!isnull(src.client))
+			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
+			src.update_name_tag()
 
 //Returns either the AI mainframe or the eyecam mob, depending on whther or not we are deployed
 /mob/living/silicon/ai/proc/get_message_mob()
@@ -387,7 +429,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 		var/obj/item/device/borg_linker/linker = W
 		if(src.dismantle_stage<2)
-			boutput(user, "You need to open [src.name]'s cover before you can change their law rack link.")
+			boutput(user, "You need to open [src.name]'s cover before you can change [his_or_her(src)] law rack link.")
 			return
 
 		if(!src.law_rack_connection)
@@ -411,40 +453,41 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	if (isscrewingtool(W))
 		src.anchored = !src.anchored
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		user.visible_message("<span class='alert'><b>[user.name]</b> [src.anchored ? "screws down" : "unscrews"] [src.name]'s floor bolts.</span>")
+		user.visible_message(SPAN_ALERT("<b>[user.name]</b> [src.anchored ? "screws down" : "unscrews"] [src.name]'s floor bolts."))
 		src.update_terminal()
 
 	else if (ispryingtool(W))
 		if (src.dismantle_stage == 1)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			src.visible_message("<span class='alert'><b>[user.name]</b> opens [src.name]'s chassis cover.</span>")
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> opens [src.name]'s chassis cover."))
+			src.locking = 0
 			src.dismantle_stage = 2
 		else if (src.dismantle_stage == 2)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			src.visible_message("<span class='alert'><b>[user.name]</b> closes [src.name]'s chassis cover.</span>")
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> closes [src.name]'s chassis cover."))
 			src.dismantle_stage = 1
 		else ..()
 
 	else if (iswrenchingtool(W))
 		if (src.dismantle_stage == 2)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			src.visible_message("<span class='alert'><b>[user.name]</b> begins undoing [src.name]'s CPU bolts.</span>")
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins undoing [src.name]'s CPU bolts."))
 			var/turf/T = user.loc
 			SPAWN(6 SECONDS)
 				if (user.loc != T || !can_act(user))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return
-				src.visible_message("<span class='alert'><b>[user.name]</b> removes [src.name]'s CPU bolts.</span>")
+				src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU bolts."))
 				src.dismantle_stage = 3
 		else if (src.dismantle_stage == 3)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			src.visible_message("<span class='alert'><b>[user.name]</b> begins affixing [src.name]'s CPU bolts.</span>")
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins affixing [src.name]'s CPU bolts."))
 			var/turf/T = user.loc
 			SPAWN(6 SECONDS)
 				if (user.loc != T || !can_act(user))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return
-				src.visible_message("<span class='alert'><b>[user.name]</b> puts [src.name]'s CPU bolts into place.</span>")
+				src.visible_message(SPAN_ALERT("<b>[user.name]</b> puts [src.name]'s CPU bolts into place."))
 				src.dismantle_stage = 2
 		else ..()
 
@@ -453,8 +496,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 			if(W:try_weld(user, 1))
 				src.add_fingerprint(user)
 				src.HealDamage(null, 15, 0)
-				src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s chassis.</span>")
-		else boutput(user, "<span class='alert'>There's no structural damage on [src.name] to mend.</span>")
+				src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s chassis."))
+		else boutput(user, SPAN_ALERT("There's no structural damage on [src.name] to mend."))
 
 	else if(istype(W, /obj/item/cable_coil) && dismantle_stage >= 2)
 		var/obj/item/cable_coil/coil = W
@@ -463,31 +506,32 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 			playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 			coil.use(1)
 			src.HealDamage(null, 0, 15)
-			src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
-		else boutput(user, "<span class='alert'>There's no burn damage on [src.name]'s wiring to mend.</span>")
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
+		else boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
 
 	else if (istype(get_id_card(W), /obj/item/card/id))
 		if (src.dismantle_stage >= 2)
-			boutput(user, "<span class='alert'>You must close the cover to swipe an ID card.</span>")
+			boutput(user, SPAN_ALERT("You must close the cover to swipe an ID card."))
 		else
 			if(src.allowed(user))
 				if (src.dismantle_stage == 1)
 					src.dismantle_stage = 0
 				else
 					src.dismantle_stage = 1
-				user.visible_message("<span class='alert'><b>[user.name]</b> [src.dismantle_stage ? "unlocks" : "locks"] [src.name]'s cover lock.</span>")
-			else boutput(user, "<span class='alert'>Access denied.</span>")
+				src.locking = 0
+				user.visible_message(SPAN_ALERT("<b>[user.name]</b> [src.dismantle_stage ? "unlocks" : "locks"] [src.name]'s cover lock."))
+			else boutput(user, SPAN_ALERT("Access denied."))
 
 	else if (istype(W, /obj/item/organ/brain/) && src.dismantle_stage == 4)
 		if (src.brain)
-			boutput(user, "<span class='alert'>There's already a brain in there!</span>")
+			boutput(user, SPAN_ALERT("There's already a brain in there!"))
 		else
-			user.visible_message("<span class='alert'><b>[user.name]</b> inserts [W] into [src.name].</span>")
+			user.visible_message(SPAN_ALERT("<b>[user.name]</b> inserts [W] into [src.name]."))
 			user.drop_item()
 			W.set_loc(src)
 			var/obj/item/organ/brain/B = W
 			if (B.owner && (B.owner.get_player()?.dnr || jobban_isbanned(B.owner.current, "AI")))
-				src.visible_message("<span class='alert'>\The [B] is hit by a spark of electricity from \the [src]!</span>")
+				src.visible_message(SPAN_ALERT("\The [B] is hit by a spark of electricity from \the [src]!"))
 				B.combust()
 				return
 			if(B.owner)
@@ -538,26 +582,26 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	else if (istype(W, /obj/item/roboupgrade/ai/))
 		if (src.dismantle_stage >= 2 && src.dismantle_stage < 4)
 			var/obj/item/roboupgrade/ai/R = W
-			user.visible_message("<span class='alert'><b>[user.name]</b> inserts [R] into [src.name].</span>")
+			user.visible_message(SPAN_ALERT("<b>[user.name]</b> inserts [R] into [src.name]."))
 			user.drop_item()
 			R.set_loc(src)
 			R.slot_in(src)
 		else if (src.dismantle_stage == 4 || isdead(src))
-			boutput(user, "<span class='alert'>Using this on a deactivated AI would be pointless.</span>")
+			boutput(user, SPAN_ALERT("Using this on a deactivated AI would be pointless."))
 		else
-			boutput(user, "<span class='alert'>You need to open the AI's chassis cover to insert this. Unlock it with a card and then pry it open.</span>")
+			boutput(user, SPAN_ALERT("You need to open the AI's chassis cover to insert this. Unlock it with a card and then pry it open."))
 
 	else if (istype(W, /obj/item/clothing/mask/moustache/))
 		if (src.moustache_mode == 0)
 			src.moustache_mode = 1
-			user.visible_message("<span class='alert'><b>[user.name]</b> uploads a moustache to [src.name]!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user.name]</b> uploads a moustache to [src.name]!"))
 		else if (src.dismantle_stage == 4 || isdead(src))
-			boutput(user, "<span class='alert'>Using this on a deactivated AI would be silly.</span>")
+			boutput(user, SPAN_ALERT("Using this on a deactivated AI would be silly."))
 	else if( istype(W,/obj/item/clothing/head))
 		user.drop_item()
 		src.set_hat(W, user)
-		user.visible_message( "<span class='notice'>[user] places the [W] on the [src]!</span>" )
-		src.show_message( "<span class='notice'>[user] places the [W] on you!</span>" )
+		user.visible_message( SPAN_NOTICE("[user] places the [W] on the [src]!") )
+		src.show_message( SPAN_NOTICE("[user] places the [W] on you!") )
 		if(istype(W, /obj/item/clothing/head/butt))
 			var/obj/item/clothing/head/butt/butt = W
 			if(butt.donor == user)
@@ -566,13 +610,18 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 
 	else if(istype(W,/obj/item/ai_plating_kit))
 		if(src.coreSkin != "default") // to avoid having your hard-earned skin being lost because someone bought the clown one or something
-			user.show_message("<span class='alert'>[src] already has a plating kit installed!")
+			user.show_message(SPAN_ALERT("[src] already has a plating kit installed!"))
 		else
 			var/obj/item/ai_plating_kit/kit = W
 			src.setSkin(kit.skin)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
-			user.visible_message("<span class='notice'>[user] permanently installs the [W] on [src]!</span>")
+			user.visible_message(SPAN_NOTICE("[user] permanently installs the [W] on [src]!"))
 			qdel(W)
+			//if(istype(W,/obj/item/ai_plating_kit/flock) && src.brain)
+			//	src.brain = new /obj/item/organ/brain/flockdrone(src)
+			//	src.brain.owner = src.mind
+			//would be cool if the flock kit turned the ais brain into a flockbrain bc funny flockbrain messages
+			//but also idk how that would work with the ai eye/deploying and all of that so its honestly just not worth it
 
 	else ..()
 	src.update_appearance()
@@ -599,15 +648,12 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		C.apply_keybind("robot_tg")
 
 /mob/living/silicon/ai/proc/eject_brain(var/mob/user, var/fling = FALSE)
-	if (src.mind && src.mind.special_role)
-		src.remove_syndicate("brain_removed by [user]")
-
 	src.dismantle_stage = 4
 	if (user)
-		src.visible_message("<span class='alert'><b>[user.name]</b> removes [src.name]'s CPU unit!</span>")
+		src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU unit!"))
 		logTheThing(LOG_COMBAT, user, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
 	else
-		src.visible_message("<span class='alert'><b>[src.name]'s</b> CPU unit is launched out of its core!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src.name]'s</b> CPU unit is launched out of its core!"))
 
 	// Stick the player (if one exists) in a ghost mob
 	src.death()
@@ -617,6 +663,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 			newmob.corpse = null //Otherwise they could return to a brainless body.  And that is weird.
 			newmob.mind.brain = src.brain
 			src.brain.owner = newmob.mind
+			for (var/datum/antagonist/antag in newmob.mind.antagonists)
+				antag.on_death()
 	if (user)
 		user.put_in_hand_or_drop(src.brain)
 	else
@@ -642,12 +690,12 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		return
 
 	if (src.turn_it_back_on())
-		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name]! [src.name] beeps and starts to come online!</span>") //revived, transferred client to
+		user.visible_message(SPAN_ALERT("<b>[user.name]</b> pokes the restart button on [src.name]! [src.name] beeps and starts to come online!")) //revived, transferred client to
 		return TRUE
 	else if(!isobserver(src.brain.owner?.current))
-		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name]! [src.name] comes online, but remains in hiberation mode.</span>") //revived, didn't transfer client to
+		user.visible_message(SPAN_ALERT("<b>[user.name]</b> pokes the restart button on [src.name]! [src.name] comes online, but remains in hiberation mode.")) //revived, didn't transfer client to
 	else
-		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name], but [src.name] beeps and shuts down, too damaged to power on.</span>") //didn't revive
+		user.visible_message(SPAN_ALERT("<b>[user.name]</b> pokes the restart button on [src.name], but [src.name] beeps and shuts down, too damaged to power on.")) //didn't revive
 
 
 /mob/living/silicon/ai/proc/turn_it_back_on()
@@ -658,7 +706,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 																// just using this proc to check for VR/afterlife/ghostcritter/etc
 				return FALSE
 			var/mob/ghost = src.brain.owner.current
-			ghost.show_text("<span class='alert'><B>You feel your self being pulled back from the afterlife!</B></span>")
+			ghost.show_text(SPAN_ALERT("<B>You feel your self being pulled back from the afterlife!</B>"))
 			ghost.mind.transfer_to(src)
 			if (isdead(ghost))
 				qdel(ghost)
@@ -693,29 +741,29 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 					var/obj/item/roboupgrade/ai/A = src.installed_modules[1]
 					A.slot_out(src)
 					user.put_in_hand_or_drop(A)
-					src.visible_message("<span class='alert'><b>[user.name]</b> removes [A] from [src].</span>")
+					src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [A] from [src]."))
 	else
 		switch(user.a_intent)
 			if(INTENT_HELP)
 				if (isdead(src))
 					src.try_rebooting_it(user)
 				else
-					user.visible_message("<span class='alert'><b>[user.name]</b> pats [src.name] on the head.</span>")
+					user.visible_message(SPAN_ALERT("<b>[user.name]</b> pats [src.name] on the head."))
 			if(INTENT_DISARM)
-				user.visible_message("<span class='alert'><b>[user.name]</b> shoves [src.name] around a bit.</span>")
+				user.visible_message(SPAN_ALERT("<b>[user.name]</b> shoves [src.name] around a bit."))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			if(INTENT_GRAB)
-				user.visible_message("<span class='alert'><b>[user.name]</b> grabs and shakes [src.name].</span>")
+				user.visible_message(SPAN_ALERT("<b>[user.name]</b> grabs and shakes [src.name]."))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			if(INTENT_HARM)
-				user.visible_message("<span class='alert'><b>[user.name]</b> kicks [src.name].</span>")
+				user.visible_message(SPAN_ALERT("<b>[user.name]</b> kicks [src.name]."))
 				logTheThing(LOG_COMBAT, user, "kicks [constructTarget(src,"combat")]")
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 				if (prob(20))
 					src.bruteloss += 1
 				if (ishuman(user) && prob(10))
 					var/mob/living/carbon/human/M = user
-					boutput(user, "<span class='alert'>You stub your toe! Ouch!</span>")
+					boutput(user, SPAN_ALERT("You stub your toe! Ouch!"))
 					M.TakeDamage(M.hand ? "r_leg" : "l_leg", 3, 0, 0, DAMAGE_BLUNT)
 					user.changeStatus("weakened", 2 SECONDS)
 		user.lastattacked = src
@@ -826,7 +874,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 
 /mob/living/silicon/ai/meteorhit(obj/O as obj)
 	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span class='alert'>[] has been hit by []</span>", src, O), 1)
+		M.show_message(SPAN_ALERT("[src] has been hit by [O]"), 1)
 		//Foreach goto(19)
 	if (src.health > 0)
 		src.bruteloss += 30
@@ -941,8 +989,6 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 
 	if (src.mind)
 		src.mind.register_death()
-		if (src.syndicate)
-			src.remove_syndicate("death")
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
@@ -965,25 +1011,25 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	if (isghostdrone(user))
 		return list()
 
-	. = list("<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span> [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
+	. = list("[SPAN_NOTICE("This is [bicon(src)] <B>[src.name]</B>!")] [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
 	if (src.hat)
-		. += "<span class='notice'>[src.name] is wearing the [bicon(src.hat)] [src.hat.name].</span>"
+		. += SPAN_NOTICE("[src.name] is wearing the [bicon(src.hat)] [src.hat.name].")
 
 	if (isdead(src))
-		. += "<span class='alert'>[src.name] is nonfunctional...</span>"
+		. += SPAN_ALERT("[src.name] is nonfunctional...")
 	else if (isunconscious(src))
-		. += "<span class='alert'>[src.name] doesn't seem to be responding.</span>"
+		. += SPAN_ALERT("[src.name] doesn't seem to be responding.")
 
 	if (src.bruteloss)
 		if (src.bruteloss < 30)
-			. += "<span class='alert'>[src.name] looks slightly dented.</span>"
+			. += SPAN_ALERT("[src.name] looks slightly dented.")
 		else
-			. += "<span class='alert'><B>[src.name] looks severely dented!</B></span>"
+			. += SPAN_ALERT("<B>[src.name] looks severely dented!</B>")
 	if (src.fireloss)
 		if (src.fireloss < 30)
-			. += "<span class='alert'>[src.name] looks slightly burnt!</span>"
+			. += SPAN_ALERT("[src.name] looks slightly burnt!")
 		else
-			. += "<span class='alert'><B>[src.name] looks severely burnt!</B></span>"
+			. += SPAN_ALERT("<B>[src.name] looks severely burnt!</B>")
 
 	if(issilicon(user) || isAI(user))
 		var/lr = null
@@ -994,7 +1040,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 			var/mob/living/silicon/S = user
 			lr =  S.law_rack_connection
 		if(src.law_rack_connection != lr)
-			. += "<span class='alert'>[src.name] is not connected to your law rack!</span><br>"
+			. += "[SPAN_ALERT("[src.name] is not connected to your law rack!")]<br>"
 		else
 			. += "[src.name] follows the same laws you do.<br>"
 
@@ -1007,6 +1053,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		act = copytext(act, 1, t1)
 	var/m_type = 1
 	var/message = null
+	var/maptext_out = 0
+	var/custom = 0
 
 	switch (lowertext(act))
 
@@ -1016,12 +1064,12 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 
 		if ("list")
 			src.show_text("Basic emotes:")
-			src.show_text("twitch, twitch_s, scream, birdwell, fart, flip, custom, customv, customh")
+			src.show_text("twitch, twitch_s, scream, sigh, laugh, chuckle, giggle, chortle, guffaw, cackle, birdwell, fart, flip, custom, customv, customh")
 			src.show_text("Targetable emotes:")
 			src.show_text("salute, bow, wave, glare, stare, look, leer, nod, point")
 
 		if ("listbasic")
-			src.show_text("twitch, twitch_s, scream, birdwell, fart, flip, custom, customv, customh")
+			src.show_text("twitch, twitch_s, scream, sigh, laugh, chuckle, giggle, chortle, guffaw, cackle, birdwell, fart, flip, custom, customv, customh")
 
 		if ("listtarget")
 			src.show_text("salute, bow, wave, glare, stare, look, leer, nod, point")
@@ -1039,6 +1087,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 					param = null
 
 				act = lowertext(act)
+				maptext_out = "<I>[act]s</I>"
 				if (param)
 					switch(act)
 						if ("bow","wave","nod")
@@ -1051,10 +1100,12 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 					switch(act)
 						if ("hug")
 							message = "<B>[src]</b> [act]s itself."
+							maptext_out = "<I>[act]s itself</I>"
 						else
 							message = "<B>[src]</b> [act]s."
 			else
 				message = "<B>[src]</B> struggles to move."
+				maptext_out = "<I>struggles to move</I>"
 			m_type = 1
 
 		if ("point")
@@ -1078,23 +1129,28 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		if ("panic","freakout")
 			if (!src.restrained())
 				message = "<B>[src]</B> enters a state of hysterical panic!"
+				maptext_out = "<I>enters a state of hysterical panic!</I>"
 			else
 				message = "<B>[src]</B> starts writhing around in manic terror!"
+				maptext_out = "<I>starts writhing around in manic terror!</I>"
 			m_type = 1
 
 		if ("clap")
 			if (!src.restrained())
 				message = "<B>[src]</B> claps."
+				maptext_out = "<I>claps</I>"
 				m_type = 2
 
 		if ("flap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps its wings."
+				maptext_out = "<I>flaps its wings</I>"
 				m_type = 2
 
 		if ("aflap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps its wings ANGRILY!"
+				maptext_out = "<I>flaps its wings ANGRILY!</I>"
 				m_type = 2
 
 		if ("custom")
@@ -1108,6 +1164,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 				alert("Unable to use this emote, must be either hearable or visible.")
 				return
 			message = "<B>[src]</B> [input]"
+			maptext_out = "<I>[input]</I>"
+			custom = copytext(input, 1, 10)
 
 		if ("customv")
 			if (!param)
@@ -1115,6 +1173,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 				if(!param) return
 			param = html_encode(sanitize(param))
 			message = "<b>[src]</b> [param]"
+			maptext_out = "<I>[param]</I>"
+			custom = copytext(param, 1, 10)
 			m_type = 1
 
 		if ("customh")
@@ -1123,6 +1183,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 				if(!param) return
 			param = html_encode(sanitize(param))
 			message = "<b>[src]</b> [param]"
+			maptext_out = "<I>[param]</I>"
+			custom = copytext(param, 1, 10)
 			m_type = 2
 
 		if ("me")
@@ -1130,19 +1192,30 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 				return
 			param = html_encode(sanitize(param))
 			message = "<b>[src]</b> [param]"
+			maptext_out = "<I>[param]</I>"
+			custom = copytext(param, 1, 10)
 			m_type = 1
 
 		if ("smile","grin","smirk","frown","scowl","grimace","sulk","pout","blink","nod","shrug","think","ponder","contemplate")
 			// basic visible single-word emotes
 			message = "<B>[src]</B> [act]s."
+			maptext_out = "<I>[act]s</I>"
 			m_type = 1
+
+		if ("sigh","laugh","chuckle","giggle","chortle","guffaw","cackle")
+			// basic audible single-word emotes
+			message = "<B>[src]</B> [act]s."
+			maptext_out = "<I>[act]s</I>"
+			m_type = 2
 
 		if ("flipout")
 			message = "<B>[src]</B> flips the fuck out!"
+			maptext_out = "<I>flips the fuck out!</I>"
 			m_type = 1
 
 		if ("rage","fury","angry")
 			message = "<B>[src]</B> becomes utterly furious!"
+			maptext_out = "<I>becomes utterly furious!</I>"
 			m_type = 1
 
 		if ("twitch")
@@ -1173,14 +1246,11 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 			if (src.emote_check(voluntary, 50))
 				if (isdead(src))
 					src.emote_allowed = 0
-				if (narrator_mode)
-					playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				message = "<B>[src]</B> does a flip!"
 
 				//flick("ai-flip", src)
-				if(faceEmotion != "ai-red" && faceEmotion != "ai-tetris")
+				if(faceEmotion != "ai_red" && faceEmotion != "ai_tetris")
 					UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]-flip", src.layer+0.2), "actual_face")
 					SPAWN(0.5 SECONDS)
 						UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
@@ -1206,10 +1276,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 
 		if ("scream")
 			if (src.emote_check(voluntary, 50))
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src.loc, src.sound_scream, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, src.sound_scream, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				message = "<b>[src]</b> screams!"
 
 		if ("birdwell", "burp")
@@ -1232,7 +1299,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 				var/fart_on_other = 0
 				for (var/mob/living/M in src.loc)
 					if (M == src || !M.lying) continue
-					message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
+					message = SPAN_ALERT("<B>[src]</B> farts in [M]'s face!")
 					fart_on_other = 1
 					break
 				if (!fart_on_other)
@@ -1256,7 +1323,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 						if (17) message = "<B>[src]</B> farts the first few bars of Smoke on the Water. Ugh. Amateur.</B>"
 						if (18) message = "<B>[src]</B> farts. It smells like Robotics in here now!"
 						if (19) message = "<B>[src]</B> farts. It smells like the Roboticist's armpits!"
-						if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span class='alert'><B>FUCK!</B></span>"
+						if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. [SPAN_ALERT("<B>FUCK!</B>")]"
 						if (21) message = "<B>[src]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
 						if (22) message = "<B>[src]</B> has assimilated humanity's digestive distinctiveness to its own."
 						if (23) message = "<B>[src]</B> farts. He scream at own ass." //ty bubs for excellent new borgfart
@@ -1277,10 +1344,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 						if (38) message = "<B>[src]</B> exterminates the air supply."
 						if (39) message = "<B>[src]</B> farts so hard the borgs feel it."
 						if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	#ifdef DATALOGGER
 				game_stats.Increment("farts")
@@ -1291,14 +1355,40 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 			if (voluntary) src.show_text("Invalid Emote: [act]")
 			return
 
-	if ((message && isalive(src)))
-		logTheThing(LOG_SAY, src, "EMOTE: [message]")
-		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type)
-		else
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type)
+	if (!isalive(src))
+		return
+	if (maptext_out)
+		var/image/chat_maptext/chat_text = null
+		SPAWN(0) //blind stab at a life() hang - REMOVE LATER
+			if (speechpopups && src.chat_text)
+				chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
+				if(chat_text)
+					chat_text.measure(src.client)
+					for(var/image/chat_maptext/I in src.chat_text.lines)
+						if(I != chat_text)
+							I.bump_up(chat_text.measured_height)
+			if (message)
+				logTheThing(LOG_SAY, src, "EMOTE: [message]")
+				act = lowertext(act)
+				if (m_type & 1)
+					for (var/mob/O in viewers(src, null))
+						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (m_type & 2)
+					for (var/mob/O in hearers(src, null))
+						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+				else if (!isturf(src.loc))
+					var/atom/A = src.loc
+					for (var/mob/O in A.contents)
+						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+	else
+		if (message)
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
+			if (m_type & 1)
+				for (var/mob/O in viewers(src, null))
+					O.show_message(SPAN_EMOTE("[message]"), m_type)
+			else
+				for (var/mob/O in hearers(src, null))
+					O.show_message(SPAN_EMOTE("[message]"), m_type)
 	return
 
 
@@ -1394,13 +1484,18 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 
 		if(killswitch_time <= 10)
 			if(src.client)
-				boutput(message_mob, "<span class='alert'><b>Time left until Killswitch: [killswitch_time]</b></span>")
+				boutput(message_mob, SPAN_ALERT("<b>Time left until Killswitch: [killswitch_time]</b>"))
 		if(killswitch_time <= 0)
 			if(src.client)
-				boutput(message_mob, "<span class='alert'><B>Killswitch Process Complete!</B></span>")
+				boutput(message_mob, SPAN_ALERT("<B>Killswitch Process Complete!</B>"))
 			killswitch = 0
 			logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
 			// doink
+			src.brain.take_damage(20,20)
+			if(src.fire_res_on_core)
+				src.TakeDamage( null, src.health)
+			else
+				src.TakeDamage( null, src.health, src.health)
 			src.eject_brain()
 
 
@@ -1409,7 +1504,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		src.setStatus("paralysis", 5 SECONDS)
 		weaponlock_time --
 		if(weaponlock_time <= 0)
-			if(src.client) boutput(src, "<span class='alert'><B>Hibernation Mode Timed Out!</B></span>")
+			if(src.client) boutput(src, SPAN_ALERT("<B>Hibernation Mode Timed Out!</B>"))
 			weapon_lock = 0
 			weaponlock_time = 120
 
@@ -1576,6 +1671,10 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
 
+	if(get_z(src) != Z_LEVEL_STATION)
+		src.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
+
 	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]</tt></body>", "window=aimanifest")
 
 
@@ -1619,13 +1718,13 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	if (!newalert)
 		return
 	if (!findtext(newalert, "$NAME"))
-		boutput(src, "<span class='alert'>The alert needs at least one $NAME token.</span>")
+		boutput(src, SPAN_ALERT("The alert needs at least one $NAME token."))
 		return
 	if (!findtext(newalert, "$JOB"))
-		boutput(src, "<span class='alert'>The alert needs at least one $JOB token.</span>")
+		boutput(src, SPAN_ALERT("The alert needs at least one $JOB token."))
 		return
 	src.arrivalalert = sanitize(adminscrub(newalert, 200))
-	boutput(src, "<span class='notice'>Arrival alert set to '[newalert]'</span>")
+	boutput(src, SPAN_NOTICE("Arrival alert set to '[newalert]'"))
 
 /mob/living/silicon/ai/proc/ai_toggle_arrival_alerts()
 	set category = "AI Commands"
@@ -1643,7 +1742,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	set name = "State Standard Laws"
 
 	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
 		return
 
 	logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
@@ -1681,7 +1780,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/list/raw_law_list = splittext_char(raw_law_text, "\n")
 	// return if we input an excessive amount of laws
 	if (length(raw_law_list) > FAKE_LAW_LIMIT)
-		boutput(usr, "<span class='alert'>You cannot set more than [FAKE_LAW_LIMIT] laws.</span>")
+		boutput(usr, SPAN_ALERT("You cannot set more than [FAKE_LAW_LIMIT] laws."))
 		return
 	// clear old fake laws
 	src.fake_laws = list()
@@ -1693,7 +1792,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 			continue
 		fake_laws += nice_law
 
-	src.show_message("<span class='bold'>Your new fake laws are: </span>")
+	src.show_message(SPAN_BOLD("Your new fake laws are: "))
 	for(var/a_law in src.fake_laws)
 		src.show_message(a_law)
 	#undef FAKE_LAW_LIMIT
@@ -1703,7 +1802,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	set name = "State Fake Laws"
 
 	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
 		return
 
 	for(var/a_law in src.fake_laws)
@@ -1717,7 +1816,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	set name = "State All Laws"
 
 	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
 		return
 
 	if (tgui_alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.", "State Laws", list("State Laws", "Cancel")) != "State Laws")
@@ -1757,7 +1856,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		src.network = "Mining"
 	else
 		src.network = "SS13"
-	boutput(src, "<span class='notice'>Switched to [src.network] camera network.</span>")
+	boutput(src, SPAN_NOTICE("Switched to [src.network] camera network."))
 	if (camnets.len && camnets[network])
 		switchCamera(pick(camnets[network]))
 
@@ -1776,7 +1875,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 			bodies += H
 
 	for (var/mob/living/silicon/robot/R in available_ai_shells)
-		if (R.shell && !R.dependent && !isdead(R))
+		if (R.shell && !R.dependent && !isdead(R) && get_step(R, 0)?.z == get_step(src, 0)?.z)
 			bodies += R
 
 	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
@@ -1792,6 +1891,30 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		src.deployed_shell = target_shell
 		src.mind.transfer_to(target_shell)
 		return
+
+/mob/living/silicon/ai/verb/toggle_lock()
+	set category = "AI Commands"
+	set name = "Toggle Cover Lock"
+
+	if (src.dismantle_stage >= 2)
+		boutput(src, SPAN_ALERT("You can't lock your cover when it's open!"))
+	else
+		if (src.locking)
+			boutput(src, SPAN_ALERT("Your cover is currently locking, please be patient."))
+		else if (src.dismantle_stage == 1)
+			src.locking = 1
+			boutput(src, SPAN_ALERT("Locking cover..."))
+			SPAWN(12 SECONDS)
+				if (!src.locking)
+					boutput(src, SPAN_ALERT("The lock was interrupted before it could finish!"))
+				else
+					src.dismantle_stage = 0
+					src.locking = 0
+					boutput(src, SPAN_ALERT("You lock your cover lock."))
+
+		else
+			src.dismantle_stage = 1
+			boutput(src, SPAN_ALERT("You unlock your cover lock."))
 
 /mob/living/silicon/ai/proc/eye_view()
 	if (isdead(src))
@@ -1864,7 +1987,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	set name = "AI Color" //It's "colour", though :( "color" sounds like some kinda ass-themed He-Man villain
 
 	if(isdead(src))
-		boutput(src.get_message_mob(), "<span class='combat'>Do androids push up robotic daisies? Ponder that instead of trying to change your colour, because you are dead!</span>")
+		boutput(src.get_message_mob(), SPAN_COMBAT("Do androids push up robotic daisies? Ponder that instead of trying to change your colour, because you are dead!"))
 		return
 
 	var/fColor = input("Pick color:","Color", faceColor) as null|color
@@ -1893,6 +2016,10 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	if (!src || !message_mob.client || isdead(src))
 		return
 
+	if(get_z(src) != Z_LEVEL_STATION)
+		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
+
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 		for_by_tcl(P, /obj/machinery/power/apc)
 			if (P.z == Z_LEVEL_STATION && !(P.status & BROKEN) && !P.aidisabled && P.is_not_default())
@@ -1917,9 +2044,13 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	if (!src || !message_mob.client || isdead(src))
 		return
 
+	if(get_z(src) != Z_LEVEL_STATION)
+		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
+
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 		for_by_tcl(D, /obj/machinery/door/airlock)
-			if (D.z == 1 && D.canAIControl() && !D.isWireCut(AIRLOCK_WIRE_ELECTRIFY) && D.secondsElectrified != 0 )
+			if (D.z == Z_LEVEL_STATION && D.canAIControl() && !D.isWireCut(AIRLOCK_WIRE_ELECTRIFY) && D.secondsElectrified != 0 )
 				D.secondsElectrified = 0
 				count++
 
@@ -1937,6 +2068,10 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 
 	var/mob/message_mob = src.get_message_mob()
 	if (!src || !message_mob.client || isdead(src))
+		return
+
+	if(get_z(src) != Z_LEVEL_STATION)
+		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
@@ -1963,10 +2098,10 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 
 	if(printalerts)
 		printalerts = 0
-		boutput(message_mob, "No longer recieving alert messages.")
+		boutput(message_mob, "No longer receiving alert messages.")
 	else
 		printalerts = 1
-		boutput(message_mob, "Now recieving alert messages.")
+		boutput(message_mob, "Now receiving alert messages.")
 
 /mob/living/silicon/ai/verb/access_internal_pda()
 	set category = "AI Commands"
@@ -1980,7 +2115,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	if (istype(src.internal_pda,/obj/item/device/pda2/))
 		src.internal_pda.AttackSelf(message_mob)
 	else
-		boutput(usr, "<span class='alert'><b>Internal PDA not found!</span>")
+		boutput(usr, SPAN_ALERT("<b>Internal PDA not found!"))
 
 /mob/living/silicon/ai/verb/access_internal_radio()
 	set category = "AI Commands"
@@ -1998,7 +2133,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	if (istype(which,/obj/item/device/radio/))
 		which.AttackSelf(message_mob)
 	else
-		boutput(usr, "<span class='alert'><b>Radio not found!</b></span>")
+		boutput(usr, SPAN_ALERT("<b>Radio not found!</b>"))
 
 /mob/living/silicon/ai/verb/open_map()
 	set name = "Open station map"
@@ -2127,11 +2262,11 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 				return
 
 			var/message = signal.data["data"]
-			var/rendered = "<span class='game say'><span class='name'><a href='byond://?src=\ref[src];termmsg=[target]'><b>([target]):</b></a></span>"
-			rendered += "<span class='message'> [message]</span></span>"
+			var/rendered = SPAN_SAY("[SPAN_NAME("<a href='byond://?src=\ref[src];termmsg=[target]'><b>([target]):</b></a>")]")
+			rendered += SPAN_MESSAGE(" [message]")
 			// we need to let the game know that when a log href is clicked, we need to refresh the window
-			var/logAddress = "<span class='game say'><span class='name'><a href='byond://?src=\ref[src];termmsg=[target];refresh=[TRUE]'><b>([target])</b></a></span>"
-			src.messageLog += "\[[formattedShiftTime(TRUE)]\] Sent by: [logAddress]<br><span class='message'> [message]</span></span><hr>"
+			var/logAddress = SPAN_SAY("[SPAN_NAME("<a href='byond://?src=\ref[src];termmsg=[target];refresh=[TRUE]'><b>([target])</b></a>")]")
+			src.messageLog += "\[[formattedShiftTime(TRUE)]\] Sent by: [logAddress]<br>[SPAN_MESSAGE(" [message]")]</span><hr>"
 			if (!termMute)
 				src.soundToPlayer('sound/machines/tone_beep.ogg', 15, channel = VOLUME_CHANNEL_GAME, flags = SOUND_IGNORE_SPACE)
 			src.textToPlayer(rendered)
@@ -2169,41 +2304,53 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		if (src.cell && src.cell.charge < 100)
 			src.icon_state = coreSkin // I think just removing all icon_state updates should be fine but ai code is so
 		else // convoluted that I'm terrified of breaking some super specific thing by doing that
-			UpdateOverlays(get_image("ai_bsod"), "temp_face")
+			UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_bsod"), "temp_face")
 
 
 	else if (src.power_mode == -1 || src.health < 25 || src.getStatusDuration("paralysis"))
 		clearFaceOverlays(1)
-		UpdateOverlays(get_image("ai-stun-screen"), "temp_face")
+		UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_stun-screen"), "temp_face")
 
 	else
 		src.icon_state = coreSkin
 		UpdateOverlays(null, "temp_face") // we wanna get rid of the temporary BSOD/stun face overlays
 
-		var/image/I = SafeGetOverlayImage("faceplate", 'icons/mob/ai.dmi', "ai-white", src.layer)
+		var/image/I = SafeGetOverlayImage("faceplate", 'icons/mob/ai.dmi', "ai_white", src.layer)
 		I.color = faceColor
 		UpdateOverlays(I, "faceplate")
 
-		if (faceEmotion != "ai-tetris")
-			UpdateOverlays(SafeGetOverlayImage("face_glow", 'icons/mob/ai.dmi', "ai-face_glow", src.layer+0.1), "face_glow")
+		if (faceEmotion != "ai_tetris")
+			UpdateOverlays(SafeGetOverlayImage("face_glow", 'icons/mob/ai.dmi', "ai_face-glow", src.layer+0.1), "face_glow")
 		else
 			UpdateOverlays(null, "face_glow")
 
 		UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
 		if (src.power_mode == 1) // e.g get_image("batterymode-dwaine") which is the icon_state we want if coreSkin is "dwaine"
-			src.UpdateOverlays(get_image("batmode-[coreSkin]"), "power-status")
+			src.UpdateOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "lights_bat-[coreSkin]"), "power-status")
 		else
-			src.UpdateOverlays(get_image("apcmode-[coreSkin]"), "power-status")
+			src.UpdateOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "lights_apc-[coreSkin]"), "power-status")
 
 		if (src.moustache_mode == 1)
 			src.UpdateOverlays(SafeGetOverlayImage("moustache", 'icons/mob/ai.dmi', "moustache", src.layer+0.3), "moustache")
 		else
 			src.UpdateOverlays(null, "moustache")
 
-
+// ------ IF ADDING NEW CORE FRAMES PLEASE DEFINE WHICH OPEN OVERLAY TO USE HERE ------ //
 	if (src.dismantle_stage > 1)
-		src.UpdateOverlays(get_image("topopen"), "top")
+		if(coreSkin == "default" || coreSkin == "science" || coreSkin == "medical" || coreSkin == "syndicate" || coreSkin == "ntold" || coreSkin == "bee" || coreSkin == "shock")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_default"), "top")
+		else if(coreSkin == "gold" || coreSkin == "engineering" || coreSkin == "soviet")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_full"), "top")
+		else if(coreSkin == "dwaine" || coreSkin == "ailes" || coreSkin == "salvage" || coreSkin == "gardengear" || coreSkin == "telegun")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_split"), "top")
+		else if(coreSkin == "nt" || coreSkin == "industrial" || coreSkin == "lgun")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_uneven"), "top")
+		else if(coreSkin == "kingsway" || coreSkin == "clown" || coreSkin == "mime" || coreSkin == "tactical" || coreSkin == "mauxite")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_bulky"), "top")
+		else
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_[coreSkin]"), "top")
+
 	else
 		src.UpdateOverlays(null, "top")
 
@@ -2211,20 +2358,20 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		if (-INFINITY to 24)
 			src.UpdateOverlays(null, "burn")
 		if(25 to 49)
-			src.UpdateOverlays(get_image("burn25"), "burn")
+			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "dmg_burn-25"), "burn")
 		if(50 to 74)
-			src.UpdateOverlays(get_image("burn50"), "burn")
+			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "dmg_burn-50"), "burn")
 		if(75 to INFINITY)
-			src.UpdateOverlays(get_image("burn75"), "burn")
+			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "dmg_burn-75"), "burn")
 	switch(src.bruteloss)
 		if (-INFINITY to 24)
 			src.UpdateOverlays(null, "brute")
 		if(25 to 49)
-			src.UpdateOverlays(get_image("brute25"), "brute")
+			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "dmg_brute-25"), "brute")
 		if(50 to 74)
-			src.UpdateOverlays(get_image("brute50"), "brute")
+			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "dmg_brute-50"), "brute")
 		if(75 to INFINITY)
-			src.UpdateOverlays(get_image("brute75"), "brute")
+			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "dmg_brute-75"), "brute")
 
 /// Clears all overlays which constitute the displayed face/screen
 /mob/living/silicon/ai/proc/clearFaceOverlays(var/retain_cache=0)
@@ -2243,13 +2390,6 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		return
 	coreSkin = skin
 	update_appearance()
-
-/mob/living/silicon/ai/proc/get_image(var/icon_state)
-	if(!cached_image)
-		cached_image = image('icons/mob/ai.dmi', "moustache")
-	cached_image.icon_state = icon_state
-	return cached_image
-
 
 /mob/living/silicon/ai/proc/set_power_mode(var/mode)
 	switch(mode)
@@ -2335,6 +2475,7 @@ proc/get_mobs_trackable_by_AI()
 	. = list()
 	var/list/names = list()
 	var/list/namecounts = list()
+	var/static/regex/labelled_regex = regex(@"\s*\(.*\)$")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -2359,6 +2500,7 @@ proc/get_mobs_trackable_by_AI()
 			continue
 
 		var/name = M.name
+		name = labelled_regex.Replace(name, "")
 		if (name in names)
 			namecounts[name]++
 			name = text("[] ([])", name, namecounts[name])
@@ -2413,6 +2555,10 @@ proc/get_mobs_trackable_by_AI()
 	if(src.stat || !can_announce)
 		return
 
+	if(get_z(src) != Z_LEVEL_STATION)
+		src.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
+
 	if(last_announcement + announcement_cooldown > world.time)
 		src.show_text("This ability is still on cooldown for [round((announcement_cooldown + last_announcement - world.time) / 10)] seconds!", "red")
 		return
@@ -2433,7 +2579,7 @@ proc/get_mobs_trackable_by_AI()
 			return
 
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
-	command_announcement(message, "Station Announcement by [src.name] (AI)", sound_to_play)
+	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", sound_to_play)
 
 	last_announcement = world.time
 
@@ -2497,7 +2643,7 @@ proc/get_mobs_trackable_by_AI()
 	name = "\improper AI core frame"
 	desc = "A frame for an AI core."
 	icon = 'icons/mob/ai.dmi'
-	icon_state = "ai_frame0"
+	icon_state = "frame"
 	var/build_step = 0
 	var/obj/item/cell/cell = null
 	var/has_radios = 0
@@ -2519,14 +2665,14 @@ proc/get_mobs_trackable_by_AI()
 
 	New()
 		. = ..()
-		image_glass_overlay = image(icon, "ai_frame-glass", OBJ_LAYER+0.6)
-		image_wire_overlay = image(icon, "ai_frame-wires", OBJ_LAYER+0.5)
-		image_top_overlay = image(icon, "ai_frame-top", OBJ_LAYER+0.4)
+		image_glass_overlay = image(icon, "frame_glass", OBJ_LAYER+0.6)
+		image_wire_overlay = image(icon, "frame_wires", OBJ_LAYER+0.5)
+		image_top_overlay = image(icon, "frame_top", OBJ_LAYER+0.4)
 		// +0.3 is reserved for the core overlay; we can't define it here since we dunno what kind of core might be made!
-		image_radio_overlay = image(icon, "ai_frame-radio", OBJ_LAYER+0.2)
-		image_cell_overlay = image(icon, "ai_frame-cell", OBJ_LAYER+0.2)
-		image_interface_overlay = image(icon, "ai_frame-interface", OBJ_LAYER+0.2)
-		image_background_overlay = image(icon, "ai_frame-back", OBJ_LAYER+0.1)
+		image_cell_overlay = image(icon, "frame_cell", OBJ_LAYER+0.25)
+		image_radio_overlay = image(icon, "frame_radio", OBJ_LAYER+0.2)
+		image_interface_overlay = image(icon, "frame_interface", OBJ_LAYER+0.15)
+		image_background_overlay = image(icon, "frame_back", OBJ_LAYER+0.1)
 		// if someone map edited us in or something and set our build_step to 1 or 2, lets make sure we look the part!
 		if(!build_step || (build_step > 2))
 			build_step = 0 // if some bozo sets us to over 2 we need to default back to 0 so nothing breaks
@@ -2549,8 +2695,10 @@ proc/get_mobs_trackable_by_AI()
 				var/obj/item/sheet/M = W
 				if (M.change_stack_amount(-3))
 					src.build_step++
+					if (istype(W, /obj/item/sheet/mauxite))
+						skinToApply = "mauxite"
 					boutput(user, "You add plating to [src]!")
-					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 					src.UpdateOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")
 					src.UpdateOverlays(src.image_background_overlay, "background")
 					src.UpdateOverlays(src.image_top_overlay, "top")
@@ -2569,7 +2717,7 @@ proc/get_mobs_trackable_by_AI()
 					if (G.change_stack_amount(-1))
 						src.build_step++
 						boutput(user, "You add glass to [src]!")
-						playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+						playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 						src.has_glass = 1
 						src.UpdateOverlays(src.image_glass_overlay, "glass")
 						return
@@ -2594,7 +2742,7 @@ proc/get_mobs_trackable_by_AI()
 			if (coil.use(3))
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.UpdateOverlays(src.image_wire_overlay, "wires")
 				if (coil.amount < 1)
 					user.drop_item()
@@ -2615,7 +2763,7 @@ proc/get_mobs_trackable_by_AI()
 			if (!src.cell)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.cell = W
 				user.u_equip(W)
 				W.set_loc(src)
@@ -2633,7 +2781,7 @@ proc/get_mobs_trackable_by_AI()
 			if (src.has_radios < 3)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.has_radios++
 				qdel(W)
 				if (src.has_radios == 1) // we just added the first one, so this is the only time we need to worry about the overlays
@@ -2651,7 +2799,7 @@ proc/get_mobs_trackable_by_AI()
 			if (!src.has_interface)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.has_interface = 1
 				qdel(W)
 				src.UpdateOverlays(image_interface_overlay, "interface")
@@ -2707,7 +2855,7 @@ proc/get_mobs_trackable_by_AI()
 			return
 		src.build_step++
 		boutput(user, "You use the [W] to lay the exterior plating on the [src]!")
-		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 		qdel(plating)
 		skinToApply = plating.skin
 		UpdateOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")
@@ -2720,25 +2868,11 @@ proc/get_mobs_trackable_by_AI()
 		..()
 		qdel(src.brain)
 		src.brain = new /obj/item/organ/brain/latejoin(src)
+		src.set_color(000000)
+		src.faceEmotion = "ai_blank"
+		src.coreSkin = "cardboard"
+		src.update_appearance()
+		src.job = "AI"
+		if (src.mind)
+			src.mind.assigned_role = "AI"
 
-ABSTRACT_TYPE(/obj/item/ai_plating_kit)
-/obj/item/ai_plating_kit
-	name = "AI Frame Plating Kit (YOU SHOULD NOT SEE THIS, FILE A BUG REPORT IF YOU ARE READING THIS)"
-	desc = "A kit for putting the plating on an AI frame! WARNING: Choking hazard, not intended for children under 3 years."
-	icon = 'icons/mob/ai.dmi'
-	icon_state = "ai-green" // placeholder icon
-	/// The skin to apply to an AI core frame when we install this as plating. Needs to be a valid string from /ai/var/skinsList
-	var/skin = "default"
-
-/obj/item/ai_plating_kit/syndicate
-	name = "AI Frame Plating Kit"
-	desc = "A kit for putting the plating on an AI! WARNING: Choking hazard, not intended for children under 3 years. <i>(Syndicate AI system not included)</i>"
-	icon_state = "syndie_kit" // get it???
-	skin = "syndicate"
-	contraband = 1 // crime
-
-/obj/item/ai_plating_kit/clown
-	name = "AI Frame Plating Kit"
-	desc = "A kit for putting the plating on an AI! WARNING: Choking hazard, not intended for children under 3 years. It smells funny."
-	icon_state = "clown_kit"
-	skin = "clown"

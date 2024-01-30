@@ -8,10 +8,10 @@
 	set name = "View Global Variable"
 
 	if( !src.holder || src.holder.level < LEVEL_ADMIN)
-		boutput( src, "<span class='alert'>Get down from there!!</span>" )
+		boutput( src, SPAN_ALERT("Get down from there!!") )
 		return
 	if (!S)
-		boutput( src, "<span class='alert'>Can't enter null!!</span>" )
+		boutput( src, SPAN_ALERT("Can't enter null!!") )
 		return
 
 	src.audit(AUDIT_VIEW_VARIABLES, "is viewing global variable [S]")
@@ -32,7 +32,7 @@
 		var/V = global.vars[S]
 		if (V == logs || V == logs["audit"])
 			src.audit(AUDIT_ACCESS_DENIED, "tried to access the logs datum for modification.")
-			boutput(usr, "<span class='alert'>Yeah, no.</span>")
+			boutput(usr, SPAN_ALERT("Yeah, no."))
 			return
 		body += debug_variable(S, V, "GLOB", 0)
 		body += "</tbody></table>"
@@ -60,7 +60,7 @@
 
 		usr.Browse(html, "window=variables\ref[V];size=600x400")
 	catch
-		boutput(usr, "<span class='alert'>Could not find [S] in the Global Variables list!!</span>" )
+		boutput(usr, SPAN_ALERT("Could not find [S] in the Global Variables list!!") )
 		return
 
 /client/proc/debug_ref_variables(ref as text)
@@ -78,7 +78,7 @@
 		if(!D)
 			D = locate("\[[ref]\]")
 		if(!D)
-			boutput(src, "<span class='alert'>Bad ref or couldn't find that thing. Drats.</span>")
+			boutput(src, SPAN_ALERT("Bad ref or couldn't find that thing. Drats."))
 			return
 		debug_variables(D)
 
@@ -89,7 +89,7 @@
 
 	if( !src.holder || src.holder.level < LEVEL_PA )
 		src.audit(AUDIT_ACCESS_DENIED, "tried to use view variables while being below PA.")
-		boutput( src, "<span class='alert'>Get down from there!!</span>" )
+		boutput( src, SPAN_ALERT("Get down from there!!") )
 		return
 
 	if(src.holder.tempmin)
@@ -101,7 +101,7 @@
 
 	if(D == world && src.holder.level < LEVEL_CODER) // maybe host???
 		src.audit(AUDIT_ACCESS_DENIED, "tried to view variables of world as non-coder.")
-		boutput( src, "<span class='alert'>Get down from there!!</span>" )
+		boutput( src, SPAN_ALERT("Get down from there!!") )
 		return
 
 	//set src in world
@@ -111,7 +111,7 @@
 
 	#ifndef I_AM_HACKERMAN
 	if(istype(D, /datum/configuration) || istype(D, /datum/admins))
-		boutput(src, "<span class='alert'>YEAH... no....</span>")
+		boutput(src, SPAN_ALERT("YEAH... no...."))
 		src.audit(AUDIT_ACCESS_DENIED, "tried to View-Variables a forbidden type([D.type])")
 		return
 	#endif
@@ -209,9 +209,6 @@
 	html += "<a href='byond://?src=\ref[src];CallProc=\ref[D]'>Call Proc</a>"
 	html += " &middot; <a href='byond://?src=\ref[src];ListProcs=\ref[D]'>List Procs</a>"
 	html += " &middot; <a href='byond://?src=\ref[src];DMDump=\ref[D]'>DM Dump</a>"
-
-	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
-		html += " &middot; <a href='byond://?src=\ref[src];ViewReferences=\ref[D]'>View References</a>"
 
 	html += "<br>"
 	html += {"<a href='byond://?src=\ref[src];Refresh=\ref[D]'>Refresh</a>"}
@@ -387,7 +384,7 @@
 		src << browse_rsc(I.icon, "tmp\ref[value][rnd].png")
 		html += "[name]</th><td><img src=\"tmp\ref[value][rnd].png\">"
 		#else
-		html += "[name]</th><td>/image (<span class='value'>[value]</span>)"
+		html += "[name]</th><td>/image ([SPAN_VALUE("[value]")])"
 		#endif
 */
 	else if (isfile(value))
@@ -641,14 +638,6 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
 		return
-	if (href_list["ViewReferences"])
-		USR_ADMIN_ONLY
-		if(holder && src.holder.level >= LEVEL_CODER)
-			var/datum/D = locate(href_list["ViewReferences"])
-			usr.client.view_references(D, href_list["window_name"])
-		else
-			audit(AUDIT_ACCESS_DENIED, "tried to view references.")
-		return
 	if (href_list["AddPathogen"])
 		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
@@ -788,14 +777,14 @@
 	#endif
 
 	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
-		boutput(usr, "<span class='alert'>You do not have access to edit this variable!</span>")
+		boutput(usr, SPAN_ALERT("You do not have access to edit this variable!"))
 		return
 
 	//Let's prevent people from promoting themselves, yes?
 	#ifndef I_AM_HACKERMAN
 	var/list/locked_type = list(/datum/admins) //Short list - might be good if there are more objects that oughta be paws-off
 	if(D != "GLOB" && (D.type == /datum/configuration || (!(src.holder.rank in list("Host", "Coder")) && (D.type in locked_type) )))
-		boutput(usr, "<span class='alert'>You're not allowed to edit [D.type] for security reasons!</span>")
+		boutput(usr, SPAN_ALERT("You're not allowed to edit [D.type] for security reasons!"))
 		logTheThing(LOG_ADMIN, usr, "tried to varedit [D.type] but was denied!")
 		logTheThing(LOG_DIARY, usr, "tried to varedit [D.type] but was denied!", "admin")
 		message_admins("[key_name(usr)] tried to varedit [D.type] but was denied.") //If someone tries this let's make sure we all know it.
@@ -829,11 +818,14 @@
 			if (set_global)
 				for(var/datum/x as anything in find_all_by_type(D.type))
 					LAGCHECK(LAG_LOW)
+					var/original_val = x.vars[variable]
 					x.vars[variable] = initial(x.vars[variable])
+					if(istype(x))
+						x.onVarChanged(variable, original_val, x.vars[variable])
 			else
 				if (D == "GLOB")
 					// global.vars[variable] = initial(global.vars[variable]) // <- this trick does not work on global.vars
-					boutput(src, "<span class='alert'>You can't restore global variables.</span>")
+					boutput(src, SPAN_ALERT("You can't restore global variables."))
 				else
 					D.vars[variable] = initial(D.vars[variable])
 
@@ -854,12 +846,15 @@
 
 		if (DATA_INPUT_NUM_ADJUST)
 			if (!isnum(var_value))
-				boutput(src, "<span class='alert'>You can't adjust a non-num, silly.</span>")
+				boutput(src, SPAN_ALERT("You can't adjust a non-num, silly."))
 				return
 			if (set_global)
 				for(var/datum/x as anything in find_all_by_type(D.type))
 					LAGCHECK(LAG_LOW)
+					var/original_val = x.vars[variable]
 					x.vars[variable] += result.output
+					if(istype(x))
+						x.onVarChanged(variable, original_val, x.vars[variable])
 			else
 				if (D == "GLOB")
 					global.vars[variable] += result.output
@@ -869,7 +864,10 @@
 		else
 			if(set_global)
 				for(var/datum/x as anything in find_all_by_type(D.type))
+					var/original_val = x.vars[variable]
 					x.vars[variable] = result.output
+					if(istype(x))
+						x.onVarChanged(variable, original_val, x.vars[variable])
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -882,9 +880,8 @@
 	logTheThing(LOG_ADMIN, src, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
 	logTheThing(LOG_DIARY, src, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")
 	message_admins("[key_name(src)] modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), 1)
-	SPAWN(0)
-		if (istype(D, /datum))
-			D.onVarChanged(variable, var_value, D.vars[variable])
+	if(!set_global && istype(D, /datum))
+		D.onVarChanged(variable, var_value, D.vars[variable])
 	if(src.refresh_varedit_onchange)
 		src.debug_variables(D)
 

@@ -1,7 +1,8 @@
 /mob/living/critter/robotic/drone/cr
 	drone_designation = "CR"
 	desc = "A Syndicate scrap cutter drone, designed for automated salvage operations."
-	icon_state = "drone4"
+	icon = 'icons/mob/critter/robotic/drone/cutter.dmi'
+	icon_state = "drone_cutter"
 
 	setup_hands()
 		..()

@@ -31,7 +31,7 @@
 /turf/simulated/floor/wood/seven,
 /area/dmm_suite/clear_area)
 "w" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /obj/machinery/bot/cleanbot{
 	name = "Dirty Money"
 	},
@@ -80,7 +80,7 @@
 	},
 /area/dmm_suite/clear_area)
 "O" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/machinery/bot/skullbot{
@@ -106,13 +106,13 @@
 /obj/machinery/bot/floorbot{
 	name = "The Pit Boss"
 	},
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/green/fancy/edge,
 /area/dmm_suite/clear_area)
 "Z" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/machinery/bot/mining{

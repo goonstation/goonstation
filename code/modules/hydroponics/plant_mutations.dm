@@ -33,6 +33,9 @@
 
 	var/mutation_sfx = 'sound/effects/plant_mutation.ogg'
 
+	///Override the crop's brew result
+	var/brew_result = null
+
 	proc/HYPharvested_proc_M(var/obj/machinery/plantpot/POT, var/mob/user)
 		lasterr = 0
 		if (!POT || !user) return 301
@@ -212,7 +215,7 @@
 		var/thud_prob = clamp(DNA?.get_effective_value("endurance") / 2, 0, 100)
 
 		if (prob(thud_prob))
-			playsound(POT, 'sound/effects/exlow.ogg', 30, 1)
+			playsound(POT, 'sound/effects/exlow.ogg', 30, TRUE)
 			animate_wiggle_then_reset(POT)
 
 
@@ -220,7 +223,7 @@
 
 /datum/plantmutation/beans/jelly // hehehe
 	name = "Jelly Bean"
-	name_prefix = "Jelly"
+	name_prefix = "Jelly "
 	iconmod = "BeanJelly"
 	assoc_reagents = list("VHFCS")
 	crop = /obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor
@@ -229,7 +232,7 @@
 
 /datum/plantmutation/coffee/mocha
 	name = "Mocha Coffee"
-	name_prefix = "Mocha"
+	name_prefix = "Mocha "
 	iconmod = "CoffeeMocha"
 	crop = /obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha
 	PTrange = list(20,null)
@@ -237,7 +240,7 @@
 
 /datum/plantmutation/coffee/latte
 	name = "Latte Coffee"
-	name_prefix = "Latte"
+	name_prefix = "Latte "
 	iconmod = "CoffeeLatte"
 	crop = /obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte
 	ENrange = list(10,null)
@@ -259,7 +262,7 @@
 	crop = /obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili
 	PTrange = list(75,null)
 	chance = 10
-	assoc_reagents = list("ghostchilijuice")
+	brew_result = "ghostchilijuice"
 
 // Pumpkin Mutations
 
@@ -300,8 +303,8 @@
 	name = "ricein"
 	name_prefix = "Ricin "
 	iconmod = "Rice"
-	assoc_reagents = list("ricin")
 	PTrange = list(60,null)
+	brew_result = "ricin"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
 
 // Oat Mutations
@@ -332,8 +335,8 @@
 		var/fart_prob = clamp(100, 0, DNA?.get_effective_value("potency"))
 
 		if (POT.growth > (P.growtime - DNA?.get_effective_value("growtime")) && prob(fart_prob))
-			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")
-			playsound(POT, 'sound/voice/farts/poo2.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+			POT.visible_message(SPAN_ALERT("<b>[POT]</b> farts!"))
+			playsound(POT, 'sound/voice/farts/poo2.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 			// coder.Life()
 			// whoops undefined proc
 
@@ -488,6 +491,15 @@
 	assoc_reagents = list("methamphetamine")
 	chance = 10
 
+// Nettle Mutations
+
+/datum/plantmutation/stinging_nettle/smooth
+	name = "Dead Nettle"
+	name_prefix = "Smooth "
+	iconmod = "NettleSmooth"
+	crop = /obj/item/plant/herb/nettle/smooth
+	chance = 20
+
 // Venne Mutations
 
 /datum/plantmutation/venne/toxic
@@ -519,7 +531,7 @@
 	special_proc_override = TRUE
 
 	HYPon_mutation_general(var/datum/plant/parent_plant, var/datum/plantgenes/passed_genes)
-		HYPaddCommut(parent_plant, passed_genes, /datum/plant_gene_strain/inert)
+		HYPaddCommut(passed_genes, /datum/plant_gene_strain/inert)
 		return
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
@@ -538,7 +550,7 @@
 				else
 					continue
 			if (length(nerds) >= 1)
-				POT.visible_message("<span class='alert'><b>[POT.name]</b> slaps [pick(nerds)] with a fish!</span>")
+				POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> slaps [pick(nerds)] with a fish!"))
 				playsound(POT, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
 
 // Cannabis Mutations
@@ -619,6 +631,17 @@
 	iconmod = "LasherBerries"
 	harvest_override = 1
 	crop = /obj/item/reagent_containers/food/snacks/plant/lashberry
+	chance = 20
+
+// Creeper Mutations
+
+/datum/plantmutation/creeper/tumbling
+	name = "Tumbling Creeper"
+	name_prefix = "Tumbling "
+	iconmod = "CreeperTumbling"
+	harvest_override = 1
+	harvest_cap = 3
+	crop = /obj/item/plant/tumbling_creeper
 	chance = 20
 
 
@@ -719,6 +742,7 @@
 	name_prefix = "Paper "
 	iconmod = "TreePaper"
 	crop = /obj/item/paper
+	assoc_reagents = list("paper")
 
 /datum/plantmutation/tree/dog
 	name = "Dogwood Tree"
@@ -736,7 +760,7 @@
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(5))
-			POT.visible_message("<span class='combat'><b>[POT.name]</b> [pick("howls","bays","whines","barks","croons")]!</span>")
+			POT.visible_message(SPAN_COMBAT("<b>[POT.name]</b> [pick("howls","bays","whines","barks","croons")]!"))
 			playsound(POT, pick('sound/voice/animal/howl1.ogg','sound/voice/animal/howl2.ogg','sound/voice/animal/howl3.ogg','sound/voice/animal/howl4.ogg','sound/voice/animal/howl5.ogg','sound/voice/animal/howl6.ogg'), 30, 1,-1)
 
 	HYPattacked_proc_M(var/obj/machinery/plantpot/POT,var/mob/user)
@@ -747,7 +771,7 @@
 
 		if (POT.growth < (P.growtime + DNA?.get_effective_value("growtime"))) return 0
 		playsound(POT, pick('sound/voice/animal/howl1.ogg','sound/voice/animal/howl2.ogg','sound/voice/animal/howl3.ogg','sound/voice/animal/howl4.ogg','sound/voice/animal/howl5.ogg','sound/voice/animal/howl6.ogg'), 30, 1,-1)
-		boutput(user, "<span class='alert'>[POT.name] angrily bites you!</span>")
+		boutput(user, SPAN_ALERT("[POT.name] angrily bites you!"))
 		random_brute_damage(user, 3)
 		return prob(50) // fights back, but doesn't always succeed
 
@@ -757,6 +781,7 @@
 	name_prefix = "Rubber "
 	iconmod = "TreeRubber"
 	crop = /obj/item/material_piece/rubber/latex
+	assoc_reagents = list("rubber")
 
 /datum/plantmutation/tree/sassafras
 	name = "Sassafras Tree"

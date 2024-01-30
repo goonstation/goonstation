@@ -33,6 +33,9 @@
 	proc/attackby_pre(source, atom/target, mob/user)
 		if (target && user && (src.last_fished < TIME + src.fishing_delay))
 			var/datum/fishing_spot/fishing_spot = null
+			if (isturf(target))
+				var/turf/T = target
+				target = T.active_liquid || target
 			var/fishing_spot_type = target.type
 			while (fishing_spot_type != null)
 				fishing_spot = global.fishing_spots[fishing_spot_type]
@@ -41,7 +44,7 @@
 				fishing_spot_type = type2parent(fishing_spot_type)
 			if (fishing_spot)
 				if (fishing_spot.rod_tier_required > src.tier)
-					user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
+					user.visible_message(SPAN_ALERT("You need a higher tier rod to fish here!"))
 					return
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
 				return TRUE //cancel the attack because we're fishing now
@@ -68,7 +71,6 @@
 	/// how long the fishing action loop will take in seconds, set on onStart(), varies by 4 seconds in either direction.
 	duration = 1 MINUTE
 	/// id for fishing action
-	id = "fishing_for_fishies"
 
 	New(var/user, var/rod, var/fishing_spot, var/target)
 		..()
@@ -80,8 +82,8 @@
 	onStart()
 		..()
 		if (src.rod.tier < fishing_spot.rod_tier_required)
-			//user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
-			boutput(user, "<span class='notice'>You need a higher tier rod to fish here!.</span>")
+			//user.visible_message(SPAN_ALERT("You need a higher tier rod to fish here!"))
+			boutput(user, SPAN_NOTICE("You need a higher tier rod to fish here!."))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -89,11 +91,18 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		if (user.bioHolder.HasEffect("clumsy") && prob(10))
+			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles with [src.rod] in [his_or_her(user)] haste and hits [himself_or_herself(user)] in the forehead with it!"))
+			user.changeStatus("weakened", 2 SECONDS)
+			playsound(user, 'sound/impact_sounds/tube_bonk.ogg', 50, 1)
+			interrupt(INTERRUPT_ALWAYS)
+			JOB_XP(user, "Clown", 1)
+			return
 
 		src.duration = max(0.5 SECONDS, rod.fishing_speed + (pick(1, -1) * (rand(0,40) / 10) SECONDS)) //translates to rod duration +- (0,4) seconds, minimum of 0.5 seconds
 		playsound(src.user, 'sound/items/fishing_rod_cast.ogg', 50, 1)
 		//src.user.visible_message("[src.user] starts fishing.")
-		boutput(user, "<span class='notice'>You start fishing.</span>")
+		boutput(user, SPAN_NOTICE("You start fishing."))
 		src.rod.is_fishing = TRUE
 		src.rod.UpdateIcon()
 		src.user.update_inhands()
@@ -169,6 +178,36 @@
 			src.icon_state = "fishing_rod_3-inactive"
 			src.item_state = "fishing_rod-inactive"
 
+/obj/item/fishing_rod/cybernetic
+	name = "cybernetic fishing rod"
+	desc = "A Cybernetic Fishing Rod. Use on a fishing rod on the ground to upgrade."
+	icon_state = "fishing_rod-inactive"
+	item_state = "fishing_rod-inactive"
+	tier = 1
+
+	update_icon()
+		var/isactive = src.is_fishing ? "active" : "inactive"
+		src.icon_state = "fishing_rod[src.tier > 1 ? "_[src.tier]" : ""]-[isactive]"
+		src.item_state = "fishing_rod-[isactive]"
+
+	afterattack(atom/target, mob/user, reach, params)
+		if (istype(target, /obj/item/fishing_rod/upgraded) && src.tier < 2)
+			src.tier = 2
+			src.icon = target.icon
+			src.icon_state = target.icon_state
+			user.visible_message("<span class='notice'>You upgrade your [src.name] with [target]</span>")
+			qdel(target)
+			return
+		if (istype(target, /obj/item/fishing_rod/master) && src.tier < 3)
+			src.tier = 3
+			src.icon = target.icon
+			src.icon_state = target.icon_state
+			user.visible_message("<span class='notice'>You upgrade your [src.name] with [target]]</span>")
+			qdel(target)
+			return
+		else
+			. = ..()
+
 // portable fishing portal currently found in a prefab in space
 TYPEINFO(/obj/item/fish_portal)
 	mats = 11
@@ -222,7 +261,7 @@ TYPEINFO(/obj/item/fish_portal)
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "unanchors" : "anchors"] the [src].")
-			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			src.anchored = !(src.anchored)
 			return
 		else
@@ -232,7 +271,7 @@ TYPEINFO(/obj/item/fish_portal)
 
 /obj/submachine/fishing_upload_terminal
 	name = "Aquatic Research Upload Terminal"
-	desc = "Insert fish to recieve points to spend in the fishing vendor."
+	desc = "Insert fish to receive points to spend in the fishing vendor."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "uploadterminal_open"
 	anchored = ANCHORED
@@ -243,10 +282,10 @@ TYPEINFO(/obj/item/fish_portal)
 
 	attack_hand(var/mob/user)
 		if (!length(src.contents))
-			boutput(user, "<span class='alert'>There is nothing in the upload terminal!</span>")
+			boutput(user, SPAN_ALERT("There is nothing in the upload terminal!"))
 			return
 		if (src.working)
-			boutput(user, "<span class='alert'>The terminal is busy!</span>")
+			boutput(user, SPAN_ALERT("The terminal is busy!"))
 			return
 		src.icon_state = "uploadterminal_working"
 		src.working = TRUE
@@ -261,29 +300,29 @@ TYPEINFO(/obj/item/fish_portal)
 				found_blacklisted_fish = TRUE
 				P.set_loc(get_turf(src))
 			else
-				switch( P.value )
-					if (FISH_RARITY_COMMON)
+				switch( P.rarity )
+					if (ITEM_RARITY_COMMON)
 						new/obj/item/currency/fishing(src.loc)
 						JOB_XP(user, "Angler", 1)
 						qdel( P )
-					if (FISH_RARITY_UNCOMMON)
+					if (ITEM_RARITY_UNCOMMON)
 						new/obj/item/currency/fishing/uncommon(src.loc)
 						JOB_XP(user, "Angler", 2)
 						qdel( P )
-					if (FISH_RARITY_RARE)
+					if (ITEM_RARITY_RARE)
 						new/obj/item/currency/fishing/rare(src.loc)
 						JOB_XP(user, "Angler", 3)
 						qdel( P )
-					if (FISH_RARITY_EPIC)
+					if (ITEM_RARITY_EPIC)
 						new/obj/item/currency/fishing/epic(src.loc)
 						JOB_XP(user, "Angler", 4)
 						qdel( P )
-					if (FISH_RARITY_LEGENDARY)
+					if (ITEM_RARITY_LEGENDARY)
 						new/obj/item/currency/fishing/legendary(src.loc)
 						JOB_XP(user, "Angler", 5)
 						qdel( P )
 		if (found_blacklisted_fish)
-			src.visible_message("<span class='alert'>\The [src] ejects synthetical fish it was unable to do any research on!</span>")
+			src.visible_message(SPAN_ALERT("\The [src] ejects synthetical fish it was unable to do any research on!"))
 
 		// Wind down
 		for(var/obj/item/S in src)
@@ -297,19 +336,19 @@ TYPEINFO(/obj/item/fish_portal)
 
 	attackby(obj/item/W, mob/user)
 		if (src.working)
-			boutput(user, "<span class='alert'>The terminal is busy!</span>")
+			boutput(user, SPAN_ALERT("The terminal is busy!"))
 			return
 		if (istype(W, /obj/item/storage/fish_box))
 			var/obj/item/storage/fish_box/S = W
-			if (length(S.contents) < 1) boutput(user, "<span class='alert'>There's no fish in the portable aquarium!</span>")
+			if (length(S.contents) < 1) boutput(user, SPAN_ALERT("There's no fish in the portable aquarium!"))
 			else
-				user.visible_message("<span class='notice'>[user] loads [S]'s contents into [src]!</span>")
+				user.visible_message(SPAN_NOTICE("[user] loads [S]'s contents into [src]!"))
 				var/amtload = 0
 				for (var/obj/item/reagent_containers/food/fish/F in S.contents)
 					F.set_loc(src)
 					amtload++
 				S.UpdateIcon()
-				boutput(user, "<span class='notice'>[amtload] fish loaded from the portable aquarium!</span>")
+				boutput(user, SPAN_NOTICE("[amtload] fish loaded from the portable aquarium!"))
 				S.tooltip_rebuild = 1
 			return
 		else
@@ -319,9 +358,9 @@ TYPEINFO(/obj/item/fish_portal)
 					proceed = TRUE
 					break
 			if (!proceed)
-				boutput(user, "<span class='alert'>You can't put that in the upload terminal!</span>")
+				boutput(user, SPAN_ALERT("You can't put that in the upload terminal!"))
 				return
-			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."))
 			user.u_equip(W)
 			W.set_loc(src)
 			W.dropped(user)
@@ -332,18 +371,379 @@ TYPEINFO(/obj/item/fish_portal)
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "unanchors" : "anchors"] the [src].")
-			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			src.anchored = !(src.anchored)
 			return
 		else
 			return ..()
 
 /obj/item/storage/fish_box
-	name = 	"Portable aquarium"
+	name = 	"portable aquarium"
 	desc = "A temporary solution for transporting fish."
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	icon_state = "aquarium"
 	item_state = "aquarium"
 	slots = 6
-	can_hold = 	list(/obj/item/reagent_containers/food/fish)
+	can_hold = list(/obj/item/reagent_containers/food/fish)
+
+/obj/item/storage/fish_box/small
+	name = 	"small portable aquarium"
+	desc = "A smaller, temporary solution for transporting fish."
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	icon_state = "aquarium"
+	item_state = "aquarium"
+	slots = 3
+	can_hold = list(/obj/item/reagent_containers/food/fish)
+
+TYPEINFO(/obj/item/syndie_fishing_rod)
+	mats = list("MET-3"=15, "WOOD"=5, "POW-2"=5, "CON-2"=5)
+
+/obj/item/syndie_fishing_rod
+	name = "\improper Glaucus fishing rod"
+	desc = "A high grade tactical fishing rod, completely impractical for reeling in bass."
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	icon_state = "syndie_fishing_rod-inactive"
+	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
+	item_state = "syndie_fishing_rod-inactive"
+	hit_type = DAMAGE_STAB
+	flags = FPRINT | TABLEPASS | USEDELAY
+	w_class = W_CLASS_NORMAL
+	force = 10
+	throwforce = 5
+	throw_speed = 1
+	throw_range = 5
+	contraband = 4
+	is_syndicate = TRUE
+	tooltip_flags = REBUILD_DIST
+	var/obj/item/syndie_lure/lure = null
+	/// delay between tossing or reeling or etc
+	var/usage_cooldown = 0.8 SECONDS
+	/// time per step to reel/filet a mob
+	var/syndie_fishing_speed = 0.7 SECONDS
+	/// cooldown after throwing a hooked target around
+	var/yank_cooldown = 6 SECONDS
+	/// how far you throw when yanking them
+	var/yank_range = 4
+	/// how far the line can stretch
+	var/line_length = 8
+	/// true if the rod is currently ""fishing"", false if it isnt
+	var/is_fishing = FALSE
+	HELP_MESSAGE_OVERRIDE({"The Glaucus starts with 7 damage on a melee reel, but stores up 3 onetime bonus damage on each ranged reel. If this reaches <b>25 damage</b>, or 6 ranged reels before a melee reel, the target will be stunned when damaged."})
+
+	New()
+		..()
+		src.reset_lure()
+		RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(max_range_check))
+
+	get_desc(dist)
+		..()
+		if (dist < 1 && src.lure) // on our tile or our person and a lure exists
+			. += "There is \a [src.lure.name] presented as bait."
+
+	attackby(obj/item/I, mob/user)
+		src.reset_lure()
+		if (src.lure.loc == src)
+			boutput(user, "You scan \the [I.name] onto \the [src.name]'s holographic bait projector.")
+			src.lure.real_name = I.name
+			src.lure.real_desc = I.desc
+			src.lure.appearance = I
+			src.lure.set_dir(I.dir)
+			src.lure.overlay_refs = I.overlay_refs?.Copy()
+			src.lure.plane = initial(src.lure.plane)
+			src.lure.layer = initial(src.lure.layer)
+			src.lure.tooltip_rebuild = 1
+			tooltip_rebuild = 1
+		else
+			boutput(user, "You can't change the bait while the line is out!")
+		return
+
+	attack_self(mob/user)
+		. = ..()
+		src.reset_lure()
+		if (src.lure.loc == src)
+			boutput(user, "You clean \the [src.name]'s holographic bait projector.")
+			src.lure.clean_forensic()
+		else
+			if(!src.lure.owner)
+				if(BOUNDS_DIST(src.lure,src) == 0)
+					src.is_fishing = FALSE
+					src.UpdateIcon()
+					user.update_inhands()
+					src.lure.set_loc(src)
+				else
+					if (!istype(src.lure.loc, /turf))
+						src.lure.set_loc(get_turf(src.lure.loc))
+					else
+						step_towards(src.lure, src)
+			else
+				user.visible_message(SPAN_ALERT("<b>[user] yanks the lure out of [src.lure.owner]!</b>"))
+				src.lure.set_loc(get_turf(src.lure.loc))
+				src.lure.owner = null
+
+	pixelaction(atom/target, params, mob/user, reach)
+		..()
+		return null
+
+	afterattack(atom/target, mob/user)
+		..()
+		if (!isturf(user.loc))
+			return
+		src.reset_lure()
+		if (!ON_COOLDOWN(user, "syndie_fishing_delay", src.usage_cooldown))
+			if (src.lure.owner && isliving(src.lure.owner))
+				logTheThing(LOG_COMBAT, user, "at [log_loc(src)] reels in a Syndicate Fishing Rod hooked in [src.lure.owner]")
+				if (!actions.hasAction(user, /datum/action/bar/syndie_fishing))
+					actions.start(new /datum/action/bar/syndie_fishing(user, src.lure.owner, src, src.lure), user)
+				if (!ON_COOLDOWN(user, "syndie_fishing_yank", src.yank_cooldown))
+					src.lure.owner.throw_at(target, yank_range, yank_range / 4)
+					user.visible_message(SPAN_ALERT("<b>[user] thrashes [src.lure.owner] by yanking \the [src.name]!</b>"))
+			else if (src.lure.loc == src)
+				if (target == loc)
+					return
+				logTheThing(LOG_COMBAT, user, "casts a Syndicate Fishing Rod out at [log_loc(src)]")
+				playsound(user, 'sound/items/fishing_rod_cast.ogg', 50, 1)
+				src.is_fishing = TRUE
+				src.UpdateIcon()
+				user.update_inhands()
+				src.lure.pixel_x = rand(-12, 12)
+				src.lure.pixel_y = rand(-12, 12)
+				src.lure.set_loc(get_turf(src.loc))
+				src.lure.throw_at(target, src.line_length, 2)
+			else
+				src.pull_in_lure(user)
+
+	update_icon()
+		//state for fishing
+		if (src.is_fishing)
+			src.icon_state = "syndie_fishing_rod-active"
+			src.item_state = "syndie_fishing_rod-active"
+		//state for not fishing
+		else
+			src.icon_state = "syndie_fishing_rod-inactive"
+			src.item_state = "syndie_fishing_rod-inactive"
+
+	disposing()
+		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
+		UnregisterSignal(src.lure, XSIG_MOVABLE_TURF_CHANGED)
+		qdel(src.lure)
+		. = ..()
+
+	proc/reset_lure()
+		if (!src.lure)
+			src.lure = new (src)
+			src.lure.rod = src
+			tooltip_rebuild = 1
+			RegisterSignal(src.lure, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(max_range_check))
+		if (src.lure.owner && src.lure.loc != src.lure.owner)
+			src.lure.owner = null
+
+	proc/max_range_check()
+		if (GET_DIST(src, src.lure) > src.line_length)
+			src.pull_in_lure()
+
+	// reels in, returns whether damage was dealt
+	proc/reel_in(mob/target, mob/user, damage_on_reel = 7)
+		target.setStatusMin("staggered", 4 SECONDS)
+		if(BOUNDS_DIST(target, user) == 0)
+			if (issilicon(target))
+				user.visible_message(SPAN_ALERT("<b>[user] tears some scrap out of [target] with \the [src.name]!</b>"))
+				playsound(target.loc, 'sound/impact_sounds/circsaw.ogg', 40, 1)
+				random_burn_damage(target, damage_on_reel)
+			else
+				user.visible_message(SPAN_ALERT("<b>[user] reels some meat out of [target] with \the [src.name]!</b>"))
+				playsound(target.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+				take_bleeding_damage(target, user, damage_on_reel, DAMAGE_CUT)
+			random_brute_damage(target, damage_on_reel)
+			if (damage_on_reel >= 25)
+				target.changeStatus("weakened", sqrt(damage_on_reel) / 3 SECONDS)
+				target.force_laydown_standup()
+				if (target.bioHolder && target.bioHolder.Uid && target.bioHolder.bloodType)
+					gibs(target.loc, blood_DNA=target.bioHolder.Uid, blood_type=target.bioHolder.bloodType, headbits=FALSE, source=target)
+				else
+					gibs(target.loc, headbits=FALSE, source=target)
+			return TRUE
+		else
+			step_towards(target, user)
+			return FALSE
+
+	proc/pull_in_lure(mob/user)
+		if(QDELETED(src.lure))
+			src.lure = null
+			return
+		if (src.lure.owner)
+			src.lure.owner.visible_message("\The [src.lure] rips out of [src.lure.owner]!", "\The [src.lure] rips out of you!")
+			take_bleeding_damage(src.lure.owner, null, 5, DAMAGE_STAB)
+		src.lure.set_loc(get_turf(src.lure))
+		src.lure.owner = null
+		src.lure.throw_at(src, 15, 2)
+		SPAWN(0.2 SECONDS)
+			if (src.lure)
+				if (src.lure.owner)
+					src.lure.owner.throw_at(src, 2, 2)
+				else
+					src.lure.set_loc(src)
+					src.is_fishing = FALSE
+					src.UpdateIcon()
+					if(istype(user))
+						user.update_inhands()
+
+/obj/item/syndie_lure
+	name = "minnow"
+	desc = "One of the most common bait fish, looks like this one got away! Until it caught you."
+	icon = 'icons/obj/foodNdrink/food_fish.dmi'
+	icon_state = "minnow"
+	object_flags = NO_GHOSTCRITTER
+	throwforce = 5
+	density = 0
+	var/obj/item/syndie_fishing_rod/rod = null
+	var/mob/owner
+
+	UpdateName()
+		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
+
+	attackby(obj/item/W, mob/user)
+		if (src.try_embed(user))
+			return
+		..()
+
+	attack_hand(mob/user)
+		if (src.try_embed(user))
+			return
+		..()
+
+	pickup(mob/user)
+		if (src.try_embed(user))
+			return
+		..()
+
+	pull(mob/user)
+		if (src.try_embed(user))
+			return
+		..()
+
+	Crossed(atom/movable/AM as mob|obj)
+		if (ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(H.lying)
+				src.try_embed(H, FALSE)
+		..()
+
+	Uncrossed(atom/movable/AM as mob|obj)
+		if (ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(H.lying)
+				src.try_embed(H, FALSE)
+		..()
+
+	throw_impact(mob/hit_atom, datum/thrown_thing/thr)
+		if (istype(hit_atom))
+			src.try_embed(hit_atom, FALSE)
+			return
+		return ..()
+
+	proc/try_embed(mob/M, do_weaken = TRUE)
+		if (istype(M) && isliving(M))
+			var/area/AR = get_area(M)
+			if (AR?.sanctuary || M.nodamage || (src.rod in M.equipped_list(check_for_magtractor = 0)))
+				return TRUE
+			if (do_weaken)
+				M.changeStatus("weakened", 5 SECONDS)
+				M.TakeDamage(M.hand == LEFT_HAND ? "l_arm": "r_arm", 15, 0, 0, DAMAGE_STAB)
+			M.force_laydown_standup()
+
+			src.owner = M
+			src.set_loc(M)
+			M.visible_message(SPAN_ALERT("<b>[M] gets snagged by a fishing lure!</b>"))
+			logTheThing(LOG_COMBAT, M, "is caught by a barbed fishing lure at [log_loc(src)]")
+			M.emote("scream")
+			take_bleeding_damage(M, null, 10, DAMAGE_STAB)
+			M.UpdateDamageIcon()
+			return TRUE
+		else
+			return FALSE
+
+	Eat(mob/M, mob/user, by_matter_eater)
+		. = ..()
+		M.emote("scream")
+		M.TakeDamage("chest", 25, 0, 0, DAMAGE_CUT)
+		M.visible_message("\The [src] tears a bunch of gore out of [M.name]!")
+		if (M.bioHolder && M.bioHolder.Uid && M.bioHolder.bloodType)
+			gibs(M.loc, blood_DNA=M.bioHolder.Uid, blood_type=M.bioHolder.bloodType, headbits=FALSE, source=M)
+		else
+			gibs(M.loc, headbits=FALSE, source=M)
+		var/mob/living/carbon/human/H = M
+		if (istype(H))
+			if (H.organHolder)
+				for(var/organ in list("right_kidney", "left_kidney", "liver", "stomach", "intestines", "spleen", "pancreas"))
+					var/obj/item/organ/O = H.drop_organ(organ, M.loc)
+					if (istype(O))
+						O.throw_at(src.rod.loc, rand(3,6), rand(1,2))
+		qdel(src)
+
+	disposing()
+		src.rod.lure = null
+		. = ..()
+
+//action (with bar) for reeling in a mob with the Glaucus
+/datum/action/bar/syndie_fishing
+	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION
+	var/mob/user = null
+	var/mob/target = null
+	/// what fishing rod caught the mob
+	var/obj/item/syndie_fishing_rod/rod = null
+	/// what lure is snagged in the mob
+	var/obj/item/syndie_lure/lure = null
+	/// stores current damage per point blank reel and increases by 3 each cycle that target isnt point blank
+	/// resets when damage is dealt
+	var/damage_on_reel = 7
+	/// how long a step of reeling takes, set onStart
+	duration = 0
+	/// id for fishing action
+
+	New(var/user, var/target, var/rod, var/lure)
+		..()
+		src.user = user
+		src.target = target
+		src.rod = rod
+		src.lure = lure
+
+	onStart()
+		..()
+
+		src.duration = max(0.1 SECONDS, rod.syndie_fishing_speed)
+		playsound(src.user, 'sound/items/fishing_rod_cast.ogg', 50, 1)
+		APPLY_ATOM_PROPERTY(src.target, PROP_MOB_CANTSPRINT, src)
+		APPLY_MOVEMENT_MODIFIER(src.target, /datum/movement_modifier/syndie_fishing, src)
+		src.user.visible_message("[src.user] sets the hook!")
+		src.rod.is_fishing = TRUE
+		src.rod.UpdateIcon()
+		src.user.update_inhands()
+
+	onEnd()
+		..()
+		src.canRunCheck()
+
+		if (src.rod.reel_in(src.target, src.user, src.damage_on_reel))
+			src.damage_on_reel = initial(src.damage_on_reel)
+		else
+			src.damage_on_reel += 3
+		src.onRestart()
+
+	onDelete()
+		..()
+		src.rod.is_fishing = FALSE
+		src.rod.UpdateIcon()
+		src.user.update_inhands()
+		if (src.lure.owner)
+			src.lure.set_loc(get_turf(src.lure.loc))
+			src.lure.owner = null
+		REMOVE_ATOM_PROPERTY(src.target, PROP_MOB_CANTSPRINT, src)
+		REMOVE_MOVEMENT_MODIFIER(src.target, /datum/movement_modifier/syndie_fishing, src)
+
+	canRunCheck(in_start)
+		..()
+		if (!src.user || !src.target || !src.rod || !src.lure || (src.target == src.user) || !(src.lure.loc == src.target) || !(src.user.equipped() == src.rod) || !isturf(src.user.loc))
+			interrupt(INTERRUPT_ALWAYS)
+			return

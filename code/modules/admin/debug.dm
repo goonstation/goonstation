@@ -210,8 +210,8 @@ var/global/debug_messages = 0
 
 		var/list/results = find_all_by_type(thetype, procname, "instance", listargs)
 
-		boutput(usr, "<span class='notice'>'[procname]' called on [length(results)] instances of '[thetype]'</span>")
-		message_admins("<span class='alert'>Admin [key_name(src)] called '[procname]' on all instances of '[thetype]'</span>")
+		boutput(usr, SPAN_NOTICE("'[procname]' called on [length(results)] instances of '[thetype]'"))
+		message_admins(SPAN_ALERT("Admin [key_name(src)] called '[procname]' on all instances of '[thetype]'"))
 		logTheThing(LOG_ADMIN, src, "called [procname] on all instances of [thetype]")
 		logTheThing(LOG_DIARY, src, "called [procname] on all instances of [thetype]")
 	else
@@ -238,7 +238,7 @@ var/global/debug_messages = 0
 			target = null
 	src.doCallProc(target)
 
-/client/proc/doCallProc(target = null, procname = null) // also accepts actual proc
+/client/proc/doCallProc(datum/target = null, procname = null) // also accepts actual proc
 	var/returnval = null
 	if(isnull(procname))
 		procname = input("Procpath (ex. bust_lights)","path:", null) as null|text
@@ -259,14 +259,15 @@ var/global/debug_messages = 0
 		name_list = list(procname)
 
 	if(target)
-		boutput(usr, "<span class='notice'>Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments on '[target]'</span>")
+		boutput(usr, SPAN_NOTICE("Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments on '[target]'"))
 	else
-		boutput(usr, "<span class='notice'>Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments</span>")
+		boutput(usr, SPAN_NOTICE("Calling '[procname]' with [islist(listargs) ? listargs.len : "0"] arguments"))
 
 	var/success = FALSE
 	for(var/actual_proc in name_list)
 		try
 			if (target)
+				target.onProcCalled(actual_proc, listargs)
 				if(islist(listargs) && length(listargs))
 					returnval = call(target,actual_proc)(arglist(listargs))
 				else
@@ -280,11 +281,11 @@ var/global/debug_messages = 0
 			break
 		catch(var/exception/e)
 			if(e.name != "bad proc" && copytext(e.name, 1, 15) != "undefined proc") // fuck u byond
-				boutput(usr, "<span class='alert'>Exception occured! <a style='color: #88f;' href='byond://winset?command=View-Runtimes'>View Runtimes</a></span>")
+				boutput(usr, SPAN_ALERT("Exception occurred! <a style='color: #88f;' href='byond://winset?command=View-Runtimes'>View Runtimes</a>"))
 				throw e
 
 	if(!success)
-		boutput(usr, "<span class='alert'>Proc [procname] not found!</span>")
+		boutput(usr, SPAN_ALERT("Proc [procname] not found!"))
 		return
 
 	var/pretty_returnval = returnval
@@ -292,10 +293,132 @@ var/global/debug_messages = 0
 		pretty_returnval = "<a href='byond://?src=\ref[usr.client];Refresh=\ref[returnval]'>[returnval] \ref[returnval]</a>"
 	else
 		pretty_returnval = json_encode(returnval)
-	boutput(usr, "<span class='notice'>Proc returned: [pretty_returnval]</span>")
+	boutput(usr, SPAN_NOTICE("Proc returned: [pretty_returnval]"))
 	return
 
+/datum/proccall_editor
+	var/atom/movable/target
+	var/list/listargs
+	var/list/initialization_args
+	/// Boolean field describing if the tgui_color_picker was closed by the user.
+	var/closed = FALSE
+
+/datum/proccall_editor/New(atom/target, init_args)
+	..()
+	src.target = target
+	initialization_args = init_args
+	src.listargs = list()
+
+/datum/proccall_editor/disposing()
+	src.target = null
+	src.listargs = null
+	src.initialization_args = null
+	..()
+
+/datum/proccall_editor/ui_state(mob/user)
+	return tgui_admin_state
+
+/datum/proccall_editor/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ProcCall")
+		ui.open()
+		//ui.set_autoupdate(timeout > 0)
+
+/**
+ * Waits for a user's response to the tgui_color_picker's prompt before returning. Returns early if
+ * the window was closed by the user.
+ */
+/datum/proccall_editor/proc/wait()
+	while (!closed && !QDELETED(src))
+		sleep(1)
+
+/datum/proccall_editor/ui_close(mob/user)
+	. = ..()
+	closed = TRUE
+
+
+/datum/proccall_editor/ui_static_data(mob/user)
+	. = ui_data()
+	.["name"] = "Variables"
+	for(var/customization in initialization_args)
+		.["options"][customization[ARG_INFO_NAME]] += list(
+			"type" = customization[ARG_INFO_TYPE],
+			"description" = customization[ARG_INFO_DESC])
+		if(length(customization) >= ARG_INFO_DEFAULT)
+			.["options"][customization[ARG_INFO_NAME]]["value"] = customization[ARG_INFO_DEFAULT]
+		else
+			.["options"][customization[ARG_INFO_NAME]]["value"] = null
+
+/datum/proccall_editor/ui_data()
+	. = list()
+	.["options"] = list()
+	for(var/customization in initialization_args)
+		.["options"][customization[ARG_INFO_NAME]] += list(
+			"type" = customization[ARG_INFO_TYPE],
+			"description" = customization[ARG_INFO_DESC],
+			"value" = src.listargs[customization[ARG_INFO_NAME]]
+		)
+		if(customization[ARG_INFO_TYPE] == DATA_INPUT_REFPICKER)
+			var/atom/target = src.listargs[customization[ARG_INFO_NAME]]
+			if(isatom(target))
+				.["options"][customization[ARG_INFO_NAME]]["value"] = "([target.x],[target.y],[target.z]) [target]"
+			else
+				.["options"][customization[ARG_INFO_NAME]]["value"] = "null"
+
+
+/datum/proccall_editor/ui_act(action, list/params, datum/tgui/ui)
+	USR_ADMIN_ONLY
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("modify_value")
+			for(var/customization in initialization_args)
+				if(params["name"]==customization[ARG_INFO_NAME] \
+				&& params["type"]==customization[ARG_INFO_TYPE] )
+					listargs[params["name"]] = params["value"]
+					. = TRUE
+					break
+
+		if("modify_color_value")
+			for(var/customization in initialization_args)
+				if(params["name"]==customization[ARG_INFO_NAME] \
+				&& params["type"]==customization[ARG_INFO_TYPE] )
+					var/new_color = input(usr, "Pick new color", "Event Color") as color|null
+					if(new_color)
+						listargs[params["name"]] = new_color
+					. = TRUE
+					break;
+
+		if("modify_ref_value")
+			for(var/customization in initialization_args)
+				if(params["name"]==customization[ARG_INFO_NAME] \
+				&& params["type"]==customization[ARG_INFO_TYPE])
+					var/atom/target = pick_ref(usr)
+					listargs[params["name"]] = target
+					. = TRUE
+					break;
+
+		if("activate")
+			closed = TRUE
+			ui.close()
+
+		if("unsupported_type")
+			src.closed = TRUE
+			src.listargs = null
+			boutput(usr, "DataInput.js does not support type: [params["type"]] for name:[params["name"]]")
+			ui.close()
+
 /client/proc/get_proccall_arglist(list/arginfo = null, var/list/custom_options = null)
+	if(arginfo)
+		var/datum/proccall_editor/E = new /datum/proccall_editor(usr, arginfo)
+		if(E)
+			E.ui_interact(usr)
+			E.wait()
+			if(islist(E.listargs) && length(E.listargs))
+				return E.listargs
 	var/argnum = arginfo ? length(arginfo) : input("Number of arguments:","Number", 0) as null|num
 	var/list/listargs = list()
 	if (!argnum)
@@ -344,10 +467,10 @@ var/global/debug_messages = 0
 		if (job_start_locations["AI"])
 			new_loc = pick(job_start_locations["AI"])
 		if (new_loc)
-			boutput(M, "<span class='notice'><B>You have been teleported to your new starting location!</B></span>")
+			boutput(M, SPAN_NOTICE("<B>You have been teleported to your new starting location!</B>"))
 			M.set_loc(new_loc)
 			M.buckled = null
-		message_admins("<span class='alert'>Admin [key_name(src)] AIized [key_name(M)]!</span>")
+		message_admins(SPAN_ALERT("Admin [key_name(src)] AIized [key_name(M)]!"))
 		logTheThing(LOG_ADMIN, src, "AIized [constructTarget(M,"admin")]")
 		logTheThing(LOG_DIARY, src, "AIized [constructTarget(M,"diary")]", "admin")
 		return H.AIize()
@@ -389,15 +512,17 @@ var/global/debug_messages = 0
 	set name = "Del-All"
 	set desc = "Delete all instances of the selected type."
 
-	// to prevent REALLY stupid deletions
-	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
-	var/hsbitem = get_one_match(typename, /atom)
+	// to prevent REALLY stupid deletions on live
+	var/hsbitem = get_one_match(typename, /atom, use_concrete_types=FALSE)
 	var/background =  alert("Run the process in the background?",,"Yes" ,"No")
 
+#ifdef LIVE_SERVER
+	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
 	for(var/V in blocked)
 		if(V == hsbitem)
 			boutput(usr, "Can't delete that you jerk!")
 			return
+#endif
 	if(hsbitem)
 		src.delete_state = DELETE_RUNNING
 		src.verbs += /client/proc/cmd_debug_del_all_cancel
@@ -433,14 +558,16 @@ var/global/debug_messages = 0
 	set desc = "Delete approximately half of instances of the selected type. *snap"
 
 	// to prevent REALLY stupid deletions
-	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
-	var/hsbitem = get_one_match(typename, /atom)
+	var/hsbitem = get_one_match(typename, /atom, use_concrete_types=FALSE)
 	var/background =  alert("Run the process in the background?",,"Yes" ,"No")
 
+#ifdef LIVE_SERVER
+	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
 	for(var/V in blocked)
 		if(V == hsbitem)
 			boutput(usr, "Can't delete that you jerk!")
 			return
+#endif
 	if(hsbitem)
 		src.delete_state = DELETE_RUNNING
 		src.verbs += /client/proc/cmd_debug_del_all_cancel
@@ -741,11 +868,11 @@ body
 	if (isarea(theinstance))
 		var/turf/T = locate(/turf) in theinstance
 		if (!T)
-			boutput(usr, "<span class='notice'>[varedit_link] (no turfs in area).</span>")
+			boutput(usr, SPAN_NOTICE("[varedit_link] (no turfs in area)."))
 		else
-			boutput(usr, "<span class='notice'>[varedit_link] including [showMyCoords(T.x, T.y, T.z)].</span>")
+			boutput(usr, SPAN_NOTICE("[varedit_link] including [showMyCoords(T.x, T.y, T.z)]."))
 	else if (isturf(theinstance))
-		boutput(usr, "<span class='notice'>[varedit_link] at [showMyCoords(theinstance.x, theinstance.y, theinstance.z)].</span>")
+		boutput(usr, SPAN_NOTICE("[varedit_link] at [showMyCoords(theinstance.x, theinstance.y, theinstance.z)]."))
 	else
 		var/turf/T = get_turf(theinstance)
 		var/in_text = ""
@@ -753,7 +880,7 @@ body
 		while (Q && Q != T)
 			in_text += " in [Q]"
 			Q = Q.loc
-		boutput(usr, "<span class='notice'>[varedit_link][in_text] at [isnull(T) ? "null" : showMyCoords(T.x, T.y, T.z)]</span>")
+		boutput(usr, SPAN_NOTICE("[varedit_link][in_text] at [isnull(T) ? "null" : showMyCoords(T.x, T.y, T.z)]"))
 
 /client/proc/find_one_of(var/typename as text)
 	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
@@ -764,12 +891,12 @@ body
 	if (thetype)
 		var/atom/theinstance = find_first_by_type(thetype)
 		if (!theinstance)
-			boutput(usr, "<span class='alert'>Cannot locate an instance of [thetype].</span>")
+			boutput(usr, SPAN_ALERT("Cannot locate an instance of [thetype]."))
 			return
-		boutput(usr, "<span class='notice'><b>Found instance of [thetype]:</b></span>")
+		boutput(usr, SPAN_NOTICE("<b>Found instance of [thetype]:</b>"))
 		print_instance(theinstance)
 	else
-		boutput(usr, "<span class='alert'>No type matches for [typename].</span>")
+		boutput(usr, SPAN_ALERT("No type matches for [typename]."))
 		return
 
 /client/proc/find_all_of(var/typename as text)
@@ -779,9 +906,9 @@ body
 
 	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
-		boutput(usr, "<span class='notice'><b>All instances of [thetype]: </b></span>")
+		boutput(usr, SPAN_NOTICE("<b>All instances of [thetype]: </b>"))
 		var/list/all_instances = find_all_by_type(thetype, PROC_REF(print_instance), src)
-		boutput(usr, "<span class='notice'>Found [length(all_instances)] instances total.</span>")
+		boutput(usr, SPAN_NOTICE("Found [length(all_instances)] instances total."))
 	else
 		boutput(usr, "No type matches for [typename].")
 		return
@@ -795,7 +922,7 @@ body
 	if (!A)
 		return
 
-	boutput(usr, "<span class='notice'><b>Located [A] ([A.type]): </b></span>")
+	boutput(usr, SPAN_NOTICE("<b>Located [A] ([A.type]): </b>"))
 	print_instance(A)
 
 /client/proc/count_all_of(var/typename as text)
@@ -805,9 +932,9 @@ body
 
 	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
-		boutput(usr, "<span class='notice'>There are <b>[length(find_all_by_type(thetype))]</b> instances total of [thetype].</span>")
+		boutput(usr, SPAN_NOTICE("There are <b>[length(find_all_by_type(thetype))]</b> instances total of [thetype]."))
 	else
-		boutput(usr, "<span class='alert'><b>No type matches for [typename].</b></span>")
+		boutput(usr, SPAN_ALERT("<b>No type matches for [typename].</b>"))
 		return
 
 /client/proc/set_admin_level()
@@ -892,7 +1019,7 @@ proc/display_camera_paths()
 	ADMIN_ONLY
 
 	camera_network_reciprocity = !camera_network_reciprocity
-	boutput(usr, "<span class='notice'>Toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]</span>")
+	boutput(usr, SPAN_NOTICE("Toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]"))
 	logTheThing(LOG_ADMIN, usr, "toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]")
 	logTheThing(LOG_DIARY, usr, "toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]", "admin")
 	message_admins("[key_name(usr)] toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]")
@@ -920,7 +1047,7 @@ proc/display_camera_paths()
 
 	ADMIN_ONLY
 	if (!ishuman(src.mob))
-		return boutput(usr, "<span class='alert'>Error: client mob is invalid type or does not exist</span>")
+		return boutput(usr, SPAN_ALERT("Error: client mob is invalid type or does not exist"))
 	randomize_look(src.mob)
 	logTheThing(LOG_ADMIN, usr, "randomized their appearance")
 	logTheThing(LOG_DIARY, usr, "randomized their appearance", "admin")
@@ -933,7 +1060,7 @@ proc/display_camera_paths()
 	ADMIN_ONLY
 	if (src.mob && src.mob.mind)
 		src.mob.mind.handwriting = pick(handwriting_styles)
-		boutput(usr, "<span class='notice'>Handwriting style is now: [src.mob.mind.handwriting]</span>")
+		boutput(usr, SPAN_NOTICE("Handwriting style is now: [src.mob.mind.handwriting]"))
 		logTheThing(LOG_ADMIN, usr, "randomized their handwriting style: [src.mob.mind.handwriting]")
 		logTheThing(LOG_DIARY, usr, "randomized their handwriting style: [src.mob.mind.handwriting]", "admin")
 
@@ -1070,7 +1197,7 @@ proc/display_camera_paths()
 		return
 	var/new_style_name = input("Please enter a new name for your HUD", "Enter Name") as null|text
 	if (!new_style_name)
-		boutput(src, "<span class='alert'>Cannot create a HUD with no name![prob(5) ? " It's not a horse!" : null]</span>") // c:
+		boutput(src, SPAN_ALERT("Cannot create a HUD with no name![prob(5) ? " It's not a horse!" : null]")) // c:
 		return
 	if (alert("Create: \"[new_style_name]\" with icon [new_style]?", "Confirmation", "Yes", "No") == "Yes")
 		hud_style_selection[new_style_name] = new_style
@@ -1166,10 +1293,7 @@ var/datum/flock/testflock
 	if(src.holder)
 		var/seconds = input("How many seconds would you like to be deadminned?", "Temporary Deadmin", 60) as num
 		boutput(src, "<B><I>You have been deadminned for [seconds] seconds.</I></B>")
-		src.holder.dispose()
-		src.holder = null
-		src.clear_admin_verbs()
-		src.update_admins(null)
+		src.clear_admin()
 		SPAWN(seconds * 10)
 			src.init_admin()
 			boutput(src, "<B><I>Your adminnery has returned.</I></B>")
@@ -1204,9 +1328,7 @@ var/datum/flock/testflock
 		if(!src.mob)
 			return
 		var/fname = "spawn_dbg.json"
-		if (fexists(fname))
-			fdel(fname)
-		text2file(json_encode(list("spawn" = detailed_spawn_dbg)), fname)
+		rustg_file_write(json_encode(list("spawn" = detailed_spawn_dbg)), fname)
 		var/tmp_file = file(fname)
 		usr << ftp(tmp_file)
 		fdel(fname)
@@ -1227,12 +1349,12 @@ var/datum/flock/testflock
 	var/returnval = target._AddComponent(list(comptype) + listargs)
 
 
-	boutput(usr, "<span class='notice'>Returned: [!isnull(returnval) ? returnval : "null"]</span>")
+	boutput(usr, SPAN_NOTICE("Returned: [!isnull(returnval) ? returnval : "null"]"))
 
 /client/proc/debugRemoveComponent(var/datum/target = null)
 	var/list/dc = target.datum_components
 	if(!dc)
-		boutput(usr, "<span class='notice'>No components present on [target].</span>")
+		boutput(usr, SPAN_NOTICE("No components present on [target]."))
 		return
 
 	var/list/comps = dc[/datum/component]
@@ -1245,7 +1367,7 @@ var/datum/flock/testflock
 		return // user cancelled
 
 	selection.RemoveComponent()
-	boutput(usr, "<span class='notice'>Removed [selection] from [target].</span>")
+	boutput(usr, SPAN_NOTICE("Removed [selection] from [target]."))
 
 /client/proc/delete_profiling_logs()
 	set desc = "Delete all saved profiling data, I hope you know what you're doing."
@@ -1325,6 +1447,27 @@ var/datum/flock/testflock
 
 	lines += "</body></html>"
 	src.Browse(lines.Join(), "window=adminteract_buttons;size=300x800")
+
+// see code/modules/disposals/disposal_test.dm for documentation
+/client/proc/dbg_disposal_system()
+	set name ="Test Disposal System"
+	set desc = "Test disposal and mail chutes for broken routing."
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	ADMIN_ONLY
+
+	var/input_x = input(usr, "Enter X coordinate") as null | num
+	if(isnull(input_x))
+		return
+	var/input_y = input(usr, "Enter Y coordinate") as null | num
+	if(isnull(input_y))
+		return
+	var/sleep_time = input(usr, "Enter time to sleep (in seconds)", null, 120) as null | num
+	if(isnull(sleep_time))
+		return
+	var/include_mail = alert(usr, "Test mail system?", null, "Yes", "No")
+	if(isnull(include_mail)) // somehow
+		return
+	test_disposal_system(input_x, input_y, sleep_time SECONDS, include_mail == "Yes" ? TRUE : FALSE)
 
 
 #undef ARG_INFO_NAME

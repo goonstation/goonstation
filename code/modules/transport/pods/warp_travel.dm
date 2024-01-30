@@ -77,7 +77,7 @@
 				boutput(user,"This beacon's retraction hardware is locked into place and can't be altered.")
 				return
 			src.visible_message("<b>[user.name]</b> undeploys [src].")
-			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 40, TRUE)
 			src.startpack()
 		else if (ispulsingtool(W))
 			if (!packable)
@@ -85,14 +85,14 @@
 				return
 			var/str = html_encode(input(user,"Set designation","Re-Designate Buoy","") as null|text)
 			if (!str || !length(str))
-				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")
+				boutput(user, SPAN_ALERT("No valid input detected."))
 				return
 			if (length(str) > 30)
-				boutput(user, "<span style=\"color:red\">Text too long.</span>")
+				boutput(user, SPAN_ALERT("Text too long."))
 				return
 			src.beaconid = "[str]"
 			src.name = "Buoy [beaconid]"
-			boutput(user, "<span style=\"color:blue\">Designation updated to 'Buoy [str]'.</span>")
+			boutput(user, SPAN_NOTICE("Designation updated to 'Buoy [str]'."))
 		else
 			..()
 
@@ -133,6 +133,12 @@
 		sleep(30 SECONDS)
 		qdel(src)
 
+/obj/warp_portal/Click(location, control, params)
+	if (isobserver(usr))
+		usr.set_loc(get_turf(src.target))
+		return
+	..()
+
 /obj/warp_portal/proc/teleport(atom/movable/M as mob|obj)
 	if(istype(M, /obj/effects)) //sparks don't teleport
 		return
@@ -147,7 +153,7 @@
 	if (ismob(M))
 		var/mob/T = M
 		if (!issilicon(M)) // Borgs don't care about rads (for the meantime)
-			boutput(T, "<span class='alert'>You are exposed to some pretty swole strange particles, this can't be good...</span>")
+			boutput(T, SPAN_ALERT("You are exposed to some pretty swole strange particles, this can't be good..."))
 
 		if(prob(2))
 			M.set_loc(random_space_turf() || random_nonrestrictedz_turf())
@@ -176,7 +182,7 @@
 	src.icon_state = "beaconpack"
 	SPAWN(14) //wait until packing is complete
 		var/obj/beacon_deployer/packitup = new src.deployer(src.loc)
-		playsound(src, 'sound/machines/heater_off.ogg', 20, 1)
+		playsound(src, 'sound/machines/heater_off.ogg', 20, TRUE)
 		if(src.beaconid)
 			packitup.beaconid = src.beaconid
 			packitup.name = "warp buoy unit [beaconid]"
@@ -203,27 +209,28 @@
 		if (iswrenchingtool(W) && !src.deploying)
 			for (var/turf/T in range(src.tile_range,src))
 				if (!T.allows_vehicles)
-					boutput(user,"<span style=\"color:red\">The area surrounding the beacon isn't sufficiently navigable for vehicles.</span>")
+					boutput(user,SPAN_ALERT("The area surrounding the beacon isn't sufficiently navigable for vehicles."))
 					return
 			if (isrestrictedz(src.z))
-				boutput(user, "<span style=\"color:red\">The beacon can't connect to the warp network.</span>")
+				boutput(user, SPAN_ALERT("The beacon can't connect to the warp network."))
 				return
 			src.visible_message("<b>[user.name]</b> deploys [src].")
-			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 40, TRUE)
 			src.deploying = 1
 			src.deploybeacon()
 
 		else if (ispulsingtool(W) && !src.deploying)
 			var/str = html_encode(input(user,"Set designation","Re-Designate Buoy","") as null|text)
 			if (!str || !length(str))
-				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")
+				boutput(user, SPAN_ALERT("No valid input detected."))
 				return
 			if (length(str) > 30)
-				boutput(user, "<span style=\"color:red\">Text too long.</span>")
+				boutput(user, SPAN_ALERT("Text too long."))
 				return
 			src.beaconid = "[str]"
 			src.name = "warp buoy unit [beaconid]"
-			boutput(user, "<span style=\"color:blue\">Designation updated to 'Buoy [str]'.</span>")
+			boutput(user, SPAN_NOTICE("Designation updated to 'Buoy [str]'."))
+
 		else
 			..()
 
@@ -232,7 +239,7 @@
 	src.anchored = ANCHORED
 	SPAWN(16) //wait until unpacking is complete
 		var/obj/warp_beacon/depbeac = new /obj/warp_beacon/deployed(src.loc)
-		playsound(src, 'sound/machines/heater_off.ogg', 20, 1)
+		playsound(src, 'sound/machines/heater_off.ogg', 20, TRUE)
 		depbeac.name = "Buoy [src.beaconid]"
 		depbeac.beaconid = src.beaconid
 		depbeac.deployer = src.type
@@ -270,7 +277,7 @@
 			if(1)
 				if (istype(I, /obj/item/rods))
 					if (I.amount < 4)
-						boutput(user, "<span style=\"color:red\">You don't have enough rods to complete the stand (4 required).</span>")
+						boutput(user, SPAN_ALERT("You don't have enough rods to complete the stand (4 required)."))
 					else
 						actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
 			if(2)
@@ -281,7 +288,6 @@
 					actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
 
 /datum/action/bar/icon/warp_beacon_assembly
-	id = "warp_beacon_assembly"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 2 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -317,21 +323,21 @@
 	onStart()
 		..()
 		if (beacon.state == 1)
-			playsound(beacon, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
-			owner.visible_message("<span class='bold'>[owner]</span> begins installing rods onto \the [beacon].")
+			playsound(beacon, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
+			owner.visible_message("[SPAN_BOLD("[owner]")] begins installing rods onto \the [beacon].")
 		if (beacon.state == 2)
-			playsound(beacon, 'sound/items/Deconstruct.ogg', 40, 1)
-			owner.visible_message("<span class='bold'>[owner]</span> begins connecting \the [beacon]'s electrical systems.")
+			playsound(beacon, 'sound/items/Deconstruct.ogg', 40, TRUE)
+			owner.visible_message("[SPAN_BOLD("[owner]")] begins connecting \the [beacon]'s electrical systems.")
 		if (beacon.state == 3)
-			playsound(beacon, 'sound/effects/zzzt.ogg', 30, 1)
-			owner.visible_message("<span class='bold'>[owner]</span> begins soldering \the [beacon]'s wiring into place.")
+			playsound(beacon, 'sound/effects/zzzt.ogg', 30, TRUE)
+			owner.visible_message("[SPAN_BOLD("[owner]")] begins soldering \the [beacon]'s wiring into place.")
 	onEnd()
 		..()
 		if (beacon.state == 1)
 			beacon.state = 2
 			beacon.icon_state = "beacframe_2"
-			boutput(owner, "<span class='notice'>You successfully install the framework rods.</span>")
-			playsound(beacon, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			boutput(owner, SPAN_NOTICE("You successfully install the framework rods."))
+			playsound(beacon, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 
 			the_tool.change_stack_amount(-4) //the_tool should be rods
 
@@ -340,8 +346,8 @@
 		if (beacon.state == 2)
 			beacon.state = 3
 			beacon.icon_state = "beaconunit"
-			boutput(owner, "<span class='notice'>You finish wiring together the beacon's electronics.</span>")
-			playsound(beacon, 'sound/items/Deconstruct.ogg', 40, 1)
+			boutput(owner, SPAN_NOTICE("You finish wiring together the beacon's electronics."))
+			playsound(beacon, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 			the_tool.amount -= 1
 			if (the_tool.amount < 1)
@@ -354,8 +360,8 @@
 			beacon.desc = "A nearly-complete frame for a deployable warp buoy. Its connections haven't been soldered together."
 			return
 		if (beacon.state == 3)
-			boutput(owner, "<span class='notice'>You solder the wiring into place, completing the beacon. It's now ready to deploy with a wrench.</span>")
-			playsound(beacon, 'sound/effects/zzzt.ogg', 40, 1)
+			boutput(owner, SPAN_NOTICE("You solder the wiring into place, completing the beacon. It's now ready to deploy with a wrench."))
+			playsound(beacon, 'sound/effects/zzzt.ogg', 40, TRUE)
 			var/turf/T = get_turf(beacon)
 			new /obj/beacon_deployer(T)
 			qdel(beacon)

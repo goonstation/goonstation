@@ -32,30 +32,30 @@
 			return TRUE
 		src.holder.owner.tri_message(target,
 			"<span class='alert'>[src.holder.owner] places [his_or_her(src.holder.owner)] hand on [target]. A static charge fills the air.",
-			"<span class='alert'>You place your hand onto [target] and start draining [ismob(target) ? him_or_her(target) : "it"] of energy.</span>",
-			"<span class='alert'>[src.holder.owner] places [his_or_her(src.holder.owner)] hand onto you.</span>")
+			SPAN_ALERT("You place your hand onto [target] and start draining [ismob(target) ? him_or_her(target) : "it"] of energy."),
+			SPAN_ALERT("[src.holder.owner] places [his_or_her(src.holder.owner)] hand onto you."))
 		actions.start(new/datum/action/bar/private/icon/sap_power(src.holder.owner, target, holder), src.holder.owner)
 		logTheThing(LOG_COMBAT, src.holder.owner, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
 
 	castcheck()
 		. = ..()
 		if (src.holder.owner.restrained())
-			boutput(src.holder.owner, "<span class='alert'>You need an active working hand to sap power from things!</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You need an active working hand to sap power from things!"))
 			return FALSE
 
 	proc/is_valid_target(atom/target, mob/user)
 		if (ismob(target))
 			var/mob/M = target
 			if (isnpc(M))
-				boutput(user, "<span class='alert'>[M] lacks sufficient energy to consume.</span>")
+				boutput(user, SPAN_ALERT("[M] lacks sufficient energy to consume."))
 				return FALSE
 			else if (isdead(M))
-				boutput(user, "<span class='alert'>[M] is dead, and can provide no usable energy.</span>")
+				boutput(user, SPAN_ALERT("[M] is dead, and can provide no usable energy."))
 				return FALSE
 			else if (issilicon(M))
 				var/mob/living/silicon/S = M
 				if ((S.cell?.charge < POWER_CELL_DRAIN_RATE))
-					boutput(user, "<span class='alert'>[S]'s power cell is completely drained.</span>")
+					boutput(user, SPAN_ALERT("[S]'s power cell is completely drained."))
 					return FALSE
 		return ishuman(target) || issilicon(target) || istype(target, /obj/machinery)
 
@@ -63,7 +63,6 @@
 /datum/action/bar/private/icon/sap_power
 	duration = 1 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
-	id = "sap_power"
 	icon = 'icons/mob/arcfiend.dmi'
 	icon_state = "sap_icon"
 
@@ -110,11 +109,11 @@
 		if (ishuman(src.target))
 			var/mob/living/carbon/human/H = src.target
 			if (isdead(H))
-				boutput(src.holder.owner, "<span class='alert'>[src.target] has died, and can no longer provide usable energy.</span>")
+				boutput(src.holder.owner, SPAN_ALERT("[src.target] has died, and can no longer provide usable energy."))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			if (!src.scary_message)
-				H.visible_message("<span class='alert'>[H] spasms violently!</span>", "<span class='alert'>Sharp pains start wracking your chest!</span>")
+				H.visible_message(SPAN_ALERT("[H] spasms violently!"), SPAN_ALERT("Sharp pains start wracking your chest!"))
 				src.scary_message = TRUE
 			H.TakeDamage("All", 0, 5)
 			H.do_disorient(stamina_damage = 50, weakened = 1 SECONDS, disorient = 2 SECOND)
@@ -123,11 +122,11 @@
 		else if (issilicon(src.target))
 			var/mob/living/silicon/S = src.target
 			if (isdead(S) || (S.cell?.charge < POWER_CELL_DRAIN_RATE))
-				boutput(src.holder.owner, "<span class='alert'>[src.target]'s power cell is completely drained.</span>")
+				boutput(src.holder.owner, SPAN_ALERT("[src.target]'s power cell is completely drained."))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			if (!src.scary_message)
-				boutput(S, "<span class='alert'>Short circuit detected. Power cell integrity failing.</span>")
+				boutput(S, SPAN_ALERT("Short circuit detected. Power cell integrity failing."))
 				src.scary_message = TRUE
 			S.TakeDamage("chest", 3, 0, DAMAGE_BURN)
 			S.cell.use(POWER_CELL_DRAIN_RATE)
@@ -145,7 +144,7 @@
 					points_gained = SAP_LIMIT_APC
 					target_apc = apc // drain the target APC instead of the area's
 					if (!target_apc.cell || target_apc.cell.charge <= ((target_apc.cell.maxcharge / POWER_CELL_CHARGE_PERCENT_MINIMUM) + POWER_CELL_DRAIN_RATE)) //not enough power
-						boutput(src.holder.owner, "<span class='alert'>[target] doesn't have enough energy for you to absorb!</span>")
+						boutput(src.holder.owner, SPAN_ALERT("[target] doesn't have enough energy for you to absorb!"))
 						interrupt(INTERRUPT_ALWAYS)
 						return
 					if (prob(1))
@@ -155,21 +154,21 @@
 					target_apc = null
 					var/obj/machinery/power/smes/smes = src.target
 					if (smes.charge < SMES_DRAIN_RATE)
-						boutput(src.holder.owner, "<span class='alert'>[src.target] doesn't have enough energy for you to absorb!</span>")
+						boutput(src.holder.owner, SPAN_ALERT("[src.target] doesn't have enough energy for you to absorb!"))
 						interrupt(INTERRUPT_ALWAYS)
 						return
 					smes.charge -= SMES_DRAIN_RATE
 					points_gained = SAP_LIMIT_APC
 			else
 				if (!target_apc?.cell || target_apc.cell.charge <= ((target_apc.cell.maxcharge / POWER_CELL_CHARGE_PERCENT_MINIMUM) + POWER_CELL_DRAIN_RATE)) //not enough power
-					boutput(src.holder.owner, "<span class='alert'>[src.target] doesn't have enough energy for you to absorb!</span>")
+					boutput(src.holder.owner, SPAN_ALERT("[src.target] doesn't have enough energy for you to absorb!"))
 					interrupt(INTERRUPT_ALWAYS)
 					return
 				var/obj/machinery/M = src.target
 				points_gained = clamp(round((M.power_usage * 0.1)), 0, SAP_LIMIT_MACHINE)
 
 			if (!points_gained)
-				boutput(src.holder.owner, "<span class='alert'>[src.target] doesn't have enough energy for you to absorb!</span>")
+				boutput(src.holder.owner, SPAN_ALERT("[src.target] doesn't have enough energy for you to absorb!"))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			holder.addPoints(points_gained)

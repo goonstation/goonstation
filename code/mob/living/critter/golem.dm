@@ -1,7 +1,8 @@
 /mob/living/critter/golem
-	name = "Golem"
-	real_name = "Golem"
+	name = "golem"
+	real_name = "golem"
 	desc = "An elemental being, crafted by local artisans using traditional techniques."
+	icon = 'icons/mob/critter/humanoid/golem.dmi'
 	icon_state = "golem"
 	hand_count = 2
 	blood_id = "smokepowder"
@@ -26,20 +27,19 @@
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/golem, src) // Slow strong golems
 		src.add_stam_mod_max("golem", 100)
 		src.create_reagents(1000)
-		SPAWN(4 SECONDS)
-			if(reagents && !reagents.total_volume)
+		SPAWN(0) // Needed for wizard AAAAAAAAA
+			if (src.reagents && !src.reagents.total_volume)
 				if (length(all_functional_reagent_ids) > 0)
 					src.reagent_id = pick(all_functional_reagent_ids)
 				else
 					src.reagent_id = "water"
-
-				reagents.add_reagent(src.reagent_id, 10)
-
-				var/oldcolor = src.reagents.get_master_color()
-				var/icon/I = new /icon('icons/misc/critter.dmi',"golem")
-				I.Blend(oldcolor, ICON_ADD)
-				src.icon = I
-				src.name = "[capitalize(src.reagents.get_master_reagent_name())]-Golem"
+				src.reagents.add_reagent(src.reagent_id, 10)
+			src.color = src.reagents?.get_master_color()
+			src.name = "[capitalize(src.reagents?.get_master_reagent_name())] Golem"
+		var/image/eyes = SafeGetOverlayImage("golem_eyes", 'icons/mob/critter/humanoid/golem.dmi', "golem-eyes", MOB_OVERLAY_BASE)
+		eyes.plane = PLANE_SELFILLUM
+		eyes.appearance_flags |= RESET_COLOR
+		src.UpdateOverlays(eyes, "golem_eyes")
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
@@ -62,30 +62,23 @@
 		HH.limb_name = "right golem arm"
 
 	valid_target(mob/living/C)
-		if(ishuman(C))
+		if (ishuman(C))
 			var/mob/living/carbon/human/H = C
-			if (H.traitHolder.hasTrait("training_chaplain")) return FALSE
+			if (H.traitHolder.hasTrait("training_chaplain"))
+				return FALSE
 		return ..()
 
 	proc/CustomizeGolem(var/datum/reagents/CR) //customise it with the reagents in a container
-		for(var/current_id in CR.reagent_list)
+		for (var/current_id in CR.reagent_list)
 			var/datum/reagent/R = CR.reagent_list[current_id]
 			src.reagents.add_reagent(current_id, min(R.volume * 5, 50))
 
-		var/oldcolor = src.reagents.get_master_color()
-		var/icon/I = new /icon('icons/misc/critter.dmi',"golem")
-		I.Blend(oldcolor, ICON_ADD)
-		src.icon = I
 		src.faction = FACTION_WIZARD
-		src.name = "[capitalize(src.reagents.get_master_reagent_name())]-Golem"
-		src.desc = "An elemental entity composed of [src.reagents.get_master_reagent_name()], conjured by a wizard."
-		return
+		src.desc = "An elemental entity composed mainly of [src.reagents.get_master_reagent_name()], conjured by a wizard."
 
 	death(var/gibbed)
 		..()
-		src.visible_message("<span class='combat'><b>[src]</b> bursts into a puff of smoke!</span>")
 		logTheThing(LOG_COMBAT, src, "died, causing [src.reagents.get_master_reagent_name()] smoke at [log_loc(src)].")
 		src.reagents.smoke_start(12)
-		invisibility = INVIS_ALWAYS_ISH
-		SPAWN(5 SECONDS)
+		SPAWN(5 DECI SECONDS)
 			qdel(src)

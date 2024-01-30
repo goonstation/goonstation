@@ -45,7 +45,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 	disposing()
 		if(rider)
-			src.visible_message("<span class='alert'><b>The [src] is destroyed!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>The [src] is destroyed!</b>"))
 			eject_rider()
 		. = ..()
 		STOP_TRACKING
@@ -62,7 +62,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			user.lastattacked = src // sets click cooldown
 			if (attacks_fast_eject || is_incapacitated(rider))
 				eject_rider()
-			W.visible_message("<span class='alert'>[user] swings at [src.rider] with [W]!</span>")
+			W.visible_message(SPAN_ALERT("[user] swings at [src.rider] with [W]!"))
 
 	bullet_act(obj/projectile/P)
 		if(src.rider)
@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			src.eject_rider(crashed=FALSE, selfdismount=TRUE, ejectall=FALSE)
 
 	Click(location,control,params)
-		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier)
 			var/mob/dead/observer/O = usr
 			if(src.rider)
 				O.insert_observer(src.rider)
@@ -283,6 +283,7 @@ TYPEINFO(/obj/vehicle/segway)
 	var/datum/light/light
 	ability_buttons_to_initialize = list(/obj/ability_button/weeoo)
 	var/obj/item/joustingTool = null // When jousting will be reference to lance being used
+	var/weeoo_sound = 'sound/machines/siren_police.ogg'
 
 /obj/vehicle/segway/New()
 	..()
@@ -296,7 +297,7 @@ TYPEINFO(/obj/vehicle/segway)
 
 	weewoo_cycles_remaining = 10
 	SPAWN(0)
-		playsound(src.loc, 'sound/machines/siren_police.ogg', 50, 1)
+		playsound(src.loc, src.weeoo_sound, 50, 1)
 		light.enable()
 		src.icon_state = "[src.icon_base][SEGWAY_STATE_WEEWOO]"
 		while (weewoo_cycles_remaining--)
@@ -350,16 +351,16 @@ TYPEINFO(/obj/vehicle/segway)
 	..()
 	in_bump = TRUE
 	if(isturf(AM) && (src.emagged || src.rider.bioHolder.HasEffect("clumsy") || (src.rider.reagents && src.rider.reagents.has_reagent("ethanol"))))
-		src.rider.visible_message("<span class='alert'><b>[rider] crashes into the wall with \the [src]!</b></span>", "<span class='alert'><b>[src] crashes into the wall!</b></span>")
+		src.rider.visible_message(SPAN_ALERT("<b>[rider] crashes into the wall with \the [src]!</b>"), SPAN_ALERT("<b>[src] crashes into the wall!</b>"))
 		eject_rider(2)
 		JOB_XP(rider, "Clown", 1)
 		in_bump = FALSE
 		return
 	if(ismob(AM))
 		var/mob/M = AM
-		src.rider.tri_message(AM, "<span class='alert'><b>[src.rider] crashes into [AM] with \the [src]!</b></span>",
-								  "<span class='alert'><b>[src] crashes into the wall!</b></span>",
-								  "<span class='alert'><b>[src.rider] crashes into you with \the [src]!</b></span>")
+		src.rider.tri_message(AM, SPAN_ALERT("<b>[src.rider] crashes into [AM] with \the [src]!</b>"),
+								  SPAN_ALERT("<b>[src] crashes into the wall!</b>"),
+								  SPAN_ALERT("<b>[src.rider] crashes into you with \the [src]!</b>"))
 		// drsingh for undef variable silicon/robot/var/shoes
 		// i guess a borg got on a segway? maybe someone was riding one with nanites
 		if (ishuman(M))
@@ -369,7 +370,7 @@ TYPEINFO(/obj/vehicle/segway)
 				M.force_laydown_standup()
 				src.log_me(src.rider, M, "impact")
 			else
-				M.visible_message("<span class='alert'><b>[M] is kept upright by magical sandals!</b></span>", "<span class='alert'><b>Your magical sandals keep you upright!</b></span>")
+				M.visible_message(SPAN_ALERT("<b>[M] is kept upright by magical sandals!</b>"), SPAN_ALERT("<b>Your magical sandals keep you upright!</b>"))
 				src.log_me(src.rider, M, "impact", immune_to_impact=TRUE)
 		else
 			M.changeStatus("stunned", 5 SECONDS)
@@ -380,7 +381,7 @@ TYPEINFO(/obj/vehicle/segway)
 
 	if(isitem(AM))
 		if(AM:w_class >= W_CLASS_BULKY)
-			src.rider.visible_message("<span class='alert'><b>[src.rider] crashes into [AM] with \the [src]!</b></span>", "<span class='alert'><b>You crash into [AM] with \the [src]!</b></span>")
+			src.rider.visible_message(SPAN_ALERT("<b>[src.rider] crashes into [AM] with \the [src]!</b>"), SPAN_ALERT("<b>You crash into [AM] with \the [src]!</b>"))
 			eject_rider(1)
 			in_bump = FALSE
 			return
@@ -388,9 +389,9 @@ TYPEINFO(/obj/vehicle/segway)
 		var/obj/vehicle/segway/other_segway = AM
 		if(other_segway.rider)
 			other_segway.in_bump = TRUE
-			src.rider.tri_message(other_segway.rider, "<span class='alert'><b>[src.rider] and [other_segway.rider] crash into each other!</b></span>",
-													  "<span class='alert'><b>You crash into [other_segway.rider]'s [other_segway.name]!</b></span>",
-													  "<span class='alert'><b>[src.rider] crashes into your [other_segway.name]!</b></span>")
+			src.rider.tri_message(other_segway.rider, SPAN_ALERT("<b>[src.rider] and [other_segway.rider] crash into each other!</b>"),
+													  SPAN_ALERT("<b>You crash into [other_segway.rider]'s [other_segway.name]!</b>"),
+													  SPAN_ALERT("<b>[src.rider] crashes into your [other_segway.name]!</b>"))
 
 			eject_rider(2)
 			other_segway.eject_rider(crashed=TRUE)
@@ -409,21 +410,21 @@ TYPEINFO(/obj/vehicle/segway)
 	if(crashed)
 		if(crashed == 2)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-		boutput(rider, "<span class='alert'><b>You are flung over \the [src]'s handlebars!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>You are flung over \the [src]'s handlebars!</b>"))
 		rider.changeStatus("stunned", 8 SECONDS)
 		rider.changeStatus("weakened", 5 SECONDS)
 		rider.force_laydown_standup()
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
-			C.show_message("<span class='alert'><b>[rider] is flung over \the [src]'s handlebars!</b></span>", 1)
+			C.show_message(SPAN_ALERT("<b>[rider] is flung over \the [src]'s handlebars!</b>"), 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
 		rider = null
 		update()
 		return
 	if(selfdismount)
-		boutput(rider, "<span class='notice'>You dismount from \the [src].</span>")
+		boutput(rider, SPAN_NOTICE("You dismount from \the [src]."))
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
@@ -535,16 +536,16 @@ TYPEINFO(/obj/vehicle/segway)
 			. += S
 
 /obj/vehicle/segway/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
+	if (rider || !istype(target) || target.buckled || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(user, target) || isAI(user) || isintangible(user) || isintangible(target))
 		return
 
 	var/msg
 	if(target == user && can_act(user))	// if drop self, then climbed in
 		msg = "[user.name] climbs onto the [src]."
-		boutput(user, "<span class='notice'>You climb onto \the [src].</span>")
+		boutput(user, SPAN_NOTICE("You climb onto \the [src]."))
 	else if(target != user && !user.restrained())
 		msg = "[user.name] helps [target.name] onto \the [src]!"
-		boutput(user, "<span class='notice'>You help [target.name] onto \the [src]!</span>")
+		boutput(user, SPAN_NOTICE("You help [target.name] onto \the [src]!"))
 	else
 		return
 	target.set_loc(src)
@@ -579,7 +580,7 @@ TYPEINFO(/obj/vehicle/segway)
 		if("harm", "disarm")
 			if(prob(60))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-				src.visible_message("<span class='alert'><b>[M] has shoved [rider] off of the [src]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[M] has shoved [rider] off of the [src]!</b>"))
 				src.log_me(src.rider, M, "shoved_off")
 				if (!rider.hasStatus("weakened"))
 					rider.changeStatus("weakened", 2 SECONDS)
@@ -587,12 +588,12 @@ TYPEINFO(/obj/vehicle/segway)
 				eject_rider()
 			else
 				playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
-				src.visible_message("<span class='alert'><b>[M] has attempted to shove [rider] off of the [src]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[M] has attempted to shove [rider] off of the [src]!</b>"))
 	return
 
 /obj/vehicle/segway/disposing()
 	if(rider)
-		boutput(rider, "<span class='alert'><b>Your segway is destroyed!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>Your segway is destroyed!</b>"))
 		eject_rider()
 	..()
 	return
@@ -618,7 +619,7 @@ TYPEINFO(/obj/vehicle/segway)
 		src.emagged = TRUE
 		src.weeoo()
 		src.desc = src.desc + " It looks like the safety circuits have been shorted out."
-		src.visible_message("<span class='alert'><b>[src] beeps ominously.</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src] beeps ominously.</b>"))
 		return 1
 
 #undef SEGWAY_STATE_RIDDEN
@@ -673,7 +674,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 		if(istype(my_mob.loc, /obj/vehicle/floorbuffer))
 			FB = my_mob.loc
 			active = !active
-			boutput(my_mob, "<span class='notice'><b>You turn [active ? "on" : "off"] the floor buffer's sprayer.</span></b>")
+			boutput(my_mob, "[SPAN_NOTICE("<b>You turn [active ? "on" : "off"] the floor buffer's sprayer.")]</b>")
 			FB.sprayer_active = active
 			src.icon_state = active ? "on" : "off"
 			playsound(my_mob.loc, 'sound/machines/click.ogg', 50, 1)
@@ -728,7 +729,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 
 			else if(src.reagents.total_volume < 250 && !low_reagents_warning)
 				low_reagents_warning = 1
-				boutput(rider, "<span class='notice'><b>The \"Storage Tank Low\" indicator light starts blinking on [src]'s dashboard.</b></span>")
+				boutput(rider, SPAN_NOTICE("<b>The \"Storage Tank Low\" indicator light starts blinking on [src]'s dashboard.</b>"))
 				for (var/obj/ability_button/fbuffer_status/SB in src)
 					SB.icon_state = "bufferf-low"
 				playsound(src, 'sound/machines/twobeep.ogg', 50)
@@ -752,21 +753,25 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 			if (D_turf.active_liquid)
 				D_turf.active_liquid.try_connect_to_adjacent()
 
+			// clean floor drawings akin to the mop
+			var/turf/T = get_turf(src)
+			T.clean_forensic()
+
 			qdel(D)
 
 /obj/vehicle/floorbuffer/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/reagent_containers) && W.is_open_container() && W.reagents)
 		if(!W.reagents.total_volume)
-			boutput(user, "<span class='alert'>[W] is empty.</span>")
+			boutput(user, SPAN_ALERT("[W] is empty."))
 			return
 
 		if(src.reagents.total_volume >= src.reagents.maximum_volume)
-			boutput(user, "<span class='alert'>The [src.name]'s holding tank is full!</span>")
+			boutput(user, SPAN_ALERT("The [src.name]'s holding tank is full!"))
 			return
 
 		logTheThing(LOG_CHEMISTRY, user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for floor buffers (Convair880).
 		var/trans = W.reagents.trans_to(src, W.reagents.total_volume)
-		boutput(user, "<span class='notice'>You empty [trans] units of the solution into the [src.name]'s holding tank.</span>")
+		boutput(user, SPAN_NOTICE("You empty [trans] units of the solution into the [src.name]'s holding tank."))
 		return
 	..()
 
@@ -786,11 +791,11 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 	in_bump = 1
 	if(ismob(AM) && src.booster_upgrade)
 		var/mob/M = AM
-		boutput(rider, "<span class='alert'><b>You crash into [M]!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>You crash into [M]!</b>"))
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
-			C.show_message("<span class='alert'><b>[rider] crashes into [M] with \the [src]!</b></span>", 1)
+			C.show_message(SPAN_ALERT("<b>[rider] crashes into [M] with \the [src]!</b>"), 1)
 		M.changeStatus("stunned", 5 SECONDS)
 		M.changeStatus("weakened", 3 SECONDS)
 		in_bump = 0
@@ -805,12 +810,12 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 			SG.in_bump = 1
 			var/mob/M = SG.rider
 			var/mob/N = rider
-			boutput(N, "<span class='alert'><b>You crash into [M]'s [SG.name]!</b></span>")
-			boutput(M, "<span class='alert'><b>[N] crashes into your [SG.name]!</b></span>")
+			boutput(N, SPAN_ALERT("<b>You crash into [M]'s [SG.name]!</b>"))
+			boutput(M, SPAN_ALERT("<b>[N] crashes into your [SG.name]!</b>"))
 			for (var/mob/C in AIviewers(src))
 				if(C == N || C == M)
 					continue
-				C.show_message("<span class='alert'><b>[N] and [M] crash into each other!</b></span>", 1)
+				C.show_message(SPAN_ALERT("<b>[N] and [M] crash into each other!</b>"), 1)
 			SG.eject_rider(1)
 			in_bump = 0
 			SG.in_bump = 0
@@ -827,20 +832,20 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 	if(crashed)
 		if(crashed == 2)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-		boutput(rider, "<span class='alert'><b>You are flung over \the [src]'s handlebars!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>You are flung over \the [src]'s handlebars!</b>"))
 		rider.changeStatus("stunned", 8 SECONDS)
 		rider.changeStatus("weakened", 5 SECONDS)
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
-			C.show_message("<span class='alert'><b>[rider] is flung over \the [src]'s handlebars!</b></span>", 1)
+			C.show_message(SPAN_ALERT("<b>[rider] is flung over \the [src]'s handlebars!</b>"), 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
 		rider = null
 		update()
 		return
 	if(selfdismount)
-		boutput(rider, "<span class='notice'>You dismount from \the [src].</span>")
+		boutput(rider, SPAN_NOTICE("You dismount from \the [src]."))
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
@@ -850,18 +855,18 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 	return
 
 /obj/vehicle/floorbuffer/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
+	if (rider || !istype(target) || target.buckled || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(user, target) || isAI(user) || isintangible(user) || isintangible(target))
 		return
 
 	var/msg
 
 	if(target == user && can_act(user))	// if drop self, then climbed in
 		msg = "[user.name] climbs onto the [src]."
-		boutput(user, "<span class='notice'>You climb onto \the [src].</span>")
+		boutput(user, SPAN_NOTICE("You climb onto \the [src]."))
 		src.log_rider(user, 0)
 	else if(target != user && !user.restrained())
 		msg = "[user.name] helps [target.name] onto \the [src]!"
-		boutput(user, "<span class='notice'>You help [target.name] onto \the [src]!</span>")
+		boutput(user, SPAN_NOTICE("You help [target.name] onto \the [src]!"))
 		src.log_rider(target, 0)
 	else
 		return
@@ -898,19 +903,19 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 		if("harm", "disarm")
 			if(prob(70) || M.is_hulk())
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-				src.visible_message("<span class='alert'><b>[M] has yanked [rider] off of \the [src]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[M] has yanked [rider] off of \the [src]!</b>"))
 				if (!rider.hasStatus("weakened"))
 					rider.changeStatus("weakened", 2 SECONDS)
 					rider.force_laydown_standup()
 				eject_rider()
 			else
 				playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
-				src.visible_message("<span class='alert'><b>[M] has attempted to yank [rider] off of \the [src]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[M] has attempted to yank [rider] off of \the [src]!</b>"))
 	return
 
 /obj/vehicle/floorbuffer/disposing()
 	if(rider)
-		boutput(rider, "<span class='alert'><b>Your [src.name] is destroyed!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>Your [src.name] is destroyed!</b>"))
 		eject_rider()
 	..()
 	return
@@ -936,13 +941,13 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 			var/obj/vehicle/floorbuffer/FB = the_mob.loc
 			FB.sprayer_active = !FB.sprayer_active
 			if (FB.sprayer_active)
-				boutput(the_mob, "<span class='notice'><b>You turn on [FB]'s sprayer.</span></b>")
+				boutput(the_mob, "[SPAN_NOTICE("<b>You turn on [FB]'s sprayer.")]</b>")
 			else
-				boutput(the_mob, "<span class='notice'><b>You turn off [FB]'s sprayer - the buffer will now dry puddles.</span></b>")
+				boutput(the_mob, "[SPAN_NOTICE("<b>You turn off [FB]'s sprayer - the buffer will now dry puddles.")]</b>")
 			src.icon_state = "buffer[FB.sprayer_active]"
 			if (FB.rider)
 				FB.icon_state = "[FB.icon_base][FB.sprayer_active]"
-			playsound(the_mob, 'sound/machines/click.ogg', 50, 1)
+			playsound(the_mob, 'sound/machines/click.ogg', 50, TRUE)
 		return
 
 /obj/ability_button/fbuffer_status
@@ -957,7 +962,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 		if (istype(the_mob.loc, /obj/vehicle/floorbuffer))
 			var/obj/vehicle/floorbuffer/FB = the_mob.loc
 			if (FB.reagents)
-				boutput(the_mob, "<span class='notice'><b>[FB]'s tank is [get_fullness(FB.reagents.total_volume / FB.reagents.maximum_volume * 100)].</b></span>")
+				boutput(the_mob, SPAN_NOTICE("<b>[FB]'s tank is [get_fullness(FB.reagents.total_volume / FB.reagents.maximum_volume * 100)].</b>"))
 		return
 
 /////////////////////////////////////////////////////// Clown car ////////////////////////////////////////
@@ -977,6 +982,10 @@ TYPEINFO(/obj/vehicle/clowncar)
 	soundproofing = 5
 	var/second_icon = "clowncar2" //animated jiggling for the clowncar
 	var/peel_count = 5
+	HELP_MESSAGE_OVERRIDE({"While wearing two or more pieces of clown attire, <b>click drag</b> yourself to the car while next to it to enter it.
+							Driving into someone stuns them. If someone is lying down, <b>click drag</b> them to the car to force them inside.
+							Driving into a wall will force all the occupants out and stun the driver.
+							Click on the car while inside to get out. Click on the car while outside to free all the occupants."})
 
 /obj/vehicle/clowncar/do_special_on_relay(mob/user as mob, dir)
 	for (var/mob/living/L in src)
@@ -990,7 +999,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	moving = 1
 	if(!(world.timeofday - src.antispam <= 60))
 		src.antispam = world.timeofday
-		playsound(src, 'sound/machines/rev_engine.ogg', 50, 1)
+		playsound(src, 'sound/machines/rev_engine.ogg', 50, TRUE)
 		playsound(src.loc, 'sound/machines/rev_engine.ogg', 50, 1)
 		//play engine sound
 	return
@@ -999,16 +1008,16 @@ TYPEINFO(/obj/vehicle/clowncar)
 	victim.set_loc(src)
 	src.log_me(user, victim, "pax_enter", 1)
 	src.visible_message("[user.name] stuffs [victim.name] into the back of the [src]!")
-	boutput(user, "<span class='notice'>You stuff [victim.name] into the back of the [src]!</span>")
+	boutput(user, SPAN_NOTICE("You stuff [victim.name] into the back of the [src]!"))
 
 /obj/vehicle/clowncar/proc/eject_all(mob/user)
 	if(!length(src.contents))
 		return
 	if (user)
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-		src.visible_message("<span class='alert'><b>[user] opens up the [src], spilling the contents out!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[user] opens up the [src], spilling the contents out!</b>"))
 	else
-		src.visible_message("<span class='alert'><b>Everything in the [src] flies out!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>Everything in the [src] flies out!</b>"))
 
 	for(var/atom/A in src.contents)
 		if(ismob(A))
@@ -1016,9 +1025,9 @@ TYPEINFO(/obj/vehicle/clowncar)
 			if (N != src.rider)
 				src.log_me(src.rider, N, "pax_exit")
 				if (user)
-					N.show_message("<span class='alert'><b>You are let out of the [src] by [user]!</b></span>", 1)
+					N.show_message(SPAN_ALERT("<b>You are let out of the [src] by [user]!</b>"), 1)
 				else
-					N.show_message("<span class='alert'><b>You are flung out of the [src]!</b></span>", 1)
+					N.show_message(SPAN_ALERT("<b>You are flung out of the [src]!</b>"), 1)
 				N.set_loc(src.loc)
 			else
 				N.changeStatus("weakened", 2 SECONDS)
@@ -1048,7 +1057,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 	if(rider && prob(40))
 		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-		src.visible_message("<span class='alert'><b>[M] has pulled [rider] out of the [src]!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[M] has pulled [rider] out of the [src]!</b>"))
 		if (!rider.hasStatus("weakened"))
 			rider.changeStatus("weakened", 2 SECONDS)
 			rider.force_laydown_standup()
@@ -1057,10 +1066,10 @@ TYPEINFO(/obj/vehicle/clowncar)
 		if(src.contents.len)
 			src.eject_all()
 		else
-			boutput(M, "<span class='notice'>There's nothing inside of the [src].</span>")
+			boutput(M, SPAN_NOTICE("There's nothing inside of the [src]."))
 
 /obj/vehicle/clowncar/MouseDrop_T(atom/target, mob/user)
-	if (!target || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user) || isghostcritter(user))
+	if (!target || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(user, target) || isAI(user) || isintangible(user) || isghostcritter(user) || isintangible(target))
 		return
 
 	if (istype(target, /obj/item/bananapeel))
@@ -1078,7 +1087,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 		var/mob/living/carbon/human/human = user
 		clown_tally = human.clown_tally()
 	if(clown_tally < 2 && !IS_LIVING_OBJECT_USING_SELF(user))
-		boutput(user, "<span class='notice'>You don't feel funny enough to use the [src].</span>")
+		boutput(user, SPAN_NOTICE("You don't feel funny enough to use the [src]."))
 		return
 
 	if(mob_target == user && can_act(user))	// if drop self, then climbed in
@@ -1089,16 +1098,16 @@ TYPEINFO(/obj/vehicle/clowncar)
 		handle_button_addition()
 		src.log_me(src.rider, null, "rider_enter")
 		msg = "[user.name] climbs into the driver's seat of the [src]."
-		boutput(user, "<span class='notice'>You climb into the driver's seat of the [src].</span>")
+		boutput(user, SPAN_NOTICE("You climb into the driver's seat of the [src]."))
 	else if(mob_target != user && !user.restrained() && is_incapacitated(mob_target))
 		src.stuff_inside(user, mob_target)
 	else
 		return
-	for (var/mob/C in AIviewers(src))
-		if(C == user)
-			continue
-		C.show_message(msg, 3)
-	return
+	if(msg)
+		for (var/mob/C in AIviewers(src))
+			if(C == user)
+				continue
+			C.show_message(msg, 3)
 
 /obj/vehicle/clowncar/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
@@ -1113,11 +1122,11 @@ TYPEINFO(/obj/vehicle/clowncar)
 	..()
 	in_bump = 1
 	if(isturf(AM))
-		boutput(rider, "<span class='alert'><b>You crash into the wall!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>You crash into the wall!</b>"))
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
-			C.show_message("<span class='alert'><b>[rider] crashes into the wall with the [src]!</b></span>", 1)
+			C.show_message(SPAN_ALERT("<b>[rider] crashes into the wall with the [src]!</b>"), 1)
 		eject_rider(2)
 		in_bump = 0
 		return
@@ -1134,12 +1143,12 @@ TYPEINFO(/obj/vehicle/clowncar)
 			SG.in_bump = 1
 			var/mob/M = SG.rider
 			var/mob/N = rider
-			boutput(N, "<span class='alert'><b>You crash into [M]'s [SG]!</b></span>")
-			boutput(M, "<span class='alert'><b>[N] crashes into your [SG]!</b></span>")
+			boutput(N, SPAN_ALERT("<b>You crash into [M]'s [SG]!</b>"))
+			boutput(M, SPAN_ALERT("<b>[N] crashes into your [SG]!</b>"))
 			for (var/mob/C in AIviewers(src))
 				if(C == N || C == M)
 					continue
-				C.show_message("<span class='alert'><b>[N] crashes into [M]'s [SG]!</b></span>", 1)
+				C.show_message(SPAN_ALERT("<b>[N] crashes into [M]'s [SG]!</b>"), 1)
 			SG.eject_rider(1)
 			in_bump = 0
 			SG.in_bump = 0
@@ -1157,11 +1166,11 @@ TYPEINFO(/obj/vehicle/clowncar)
 
 /obj/vehicle/clowncar/proc/bumpstun(var/mob/M)
 	if(istype(M))
-		boutput(rider, "<span class='alert'><b>You crash into [M]!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>You crash into [M]!</b>"))
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
-			C.show_message("<span class='alert'><b>[rider] crashes into [M] with the [src]!</b></span>", 1)
+			C.show_message(SPAN_ALERT("<b>[rider] crashes into [M] with the [src]!</b>"), 1)
 		M.changeStatus("stunned", 8 SECONDS)
 		M.changeStatus("weakened", 5 SECONDS)
 		M.force_laydown_standup()
@@ -1180,7 +1189,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 
 /obj/vehicle/clowncar/disposing()
 	if(rider)
-		boutput(rider, "<span class='alert'><b>Your [src] is destroyed!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>Your [src] is destroyed!</b>"))
 		eject_rider(1)
 	..()
 	return
@@ -1197,13 +1206,13 @@ TYPEINFO(/obj/vehicle/clowncar)
 		if(crashed == 2)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 		playsound(src.loc, "shatter", 40, 1)
-		boutput(rider, "<span class='alert'><b>You are flung through the [src]'s windshield!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>You are flung through the [src]'s windshield!</b>"))
 		rider.changeStatus("stunned", 8 SECONDS)
 		rider.changeStatus("weakened", 5 SECONDS)
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
-			C.show_message("<span class='alert'><b>[rider] is flung through the [src]'s windshield!</b></span>", 1)
+			C.show_message(SPAN_ALERT("<b>[rider] is flung through the [src]'s windshield!</b>"), 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
 		rider = null
@@ -1212,7 +1221,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 			src.eject_all()
 		return
 	if(selfdismount)
-		boutput(rider, "<span class='notice'>You climb out of the [src].</span>")
+		boutput(rider, SPAN_NOTICE("You climb out of the [src]."))
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
@@ -1231,7 +1240,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 		if(istype(user:wear_mask, /obj/item/clothing/mask/clown_hat))
 			clown_tally += 1
 	if(clown_tally < 2)
-		boutput(user, "<span class='notice'>You don't feel funny enough to use the [src].</span>")
+		boutput(user, SPAN_NOTICE("You don't feel funny enough to use the [src]."))
 		return
 
 	if (istype(I, /obj/item/bananapeel))
@@ -1246,7 +1255,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 			for (var/mob/C in AIviewers(src))
 				if(C == user)
 					continue
-				C.show_message("<span class='alert'><b>[G.affecting.name] has been stuffed into the back of the [src] by [user]!</b></span>", 3)
+				C.show_message(SPAN_ALERT("<b>[G.affecting.name] has been stuffed into the back of the [src] by [user]!</b>"), 3)
 			qdel(G)
 			return
 	..()
@@ -1255,7 +1264,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 /obj/vehicle/clowncar/proc/add_peel(obj/item/bananapeel/peel, mob/user)
 	src.peel_count++
 	qdel(peel)
-	boutput(user, "<span class='notice'>You stuff the banana peel into the [src]'s peel hopper. It now contains [src.peel_count] peel[src.peel_count > 1 ? "s" : ""].")
+	boutput(user, SPAN_NOTICE("You stuff the banana peel into the [src]'s peel hopper. It now contains [src.peel_count] peel[src.peel_count > 1 ? "s" : ""]."))
 
 // Could be useful, I guess (Convair880).
 /obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", var/forced_in = 0)
@@ -1288,7 +1297,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	current.AddComponent(/datum/component/train, victim)
 	victim.set_loc(get_turf(current))
 	src.visible_message("[user.name] attaches [victim.name] to the back of the [src]!")
-	boutput(user, "<span class='notice'>You attach [victim.name] to the back of the [src]!</span>")
+	boutput(user, SPAN_NOTICE("You attach [victim.name] to the back of the [src]!"))
 
 /obj/vehicle/clowncar/train/eject_all(mob/user)
 	var/atom/movable/current = src
@@ -1333,13 +1342,13 @@ TYPEINFO(/obj/vehicle/clowncar)
 	pixel_y = 0
 
 /obj/vehicle/clowncar/cluwne/MouseDrop_T(mob/living/target, mob/user)
-	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
+	if (!istype(target) || target.buckled || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(user, target) || isAI(user) || isintangible(user) || isghostcritter(user) || isintangible(target))
 		return
 
 	var/msg
 
 	if(!user.mind || !iscluwne(user))
-		boutput(user, "<span class='alert'>You think it's a REALLY bad idea to use the [src].</span>")
+		boutput(user, SPAN_ALERT("You think it's a REALLY bad idea to use the [src]."))
 		return
 
 	if(target == user && can_act(user))	// if drop self, then climbed in
@@ -1349,7 +1358,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 		actions.interrupt(target, INTERRUPT_ACT)
 		src.log_me(src.rider, null, "rider_enter")
 		msg = "[user.name] climbs into the driver's seat of the [src]."
-		boutput(user, "<span class='notice'>You climb into the driver's seat of the [src].</span>")
+		boutput(user, SPAN_NOTICE("You climb into the driver's seat of the [src]."))
 	else
 		return
 
@@ -1402,21 +1411,21 @@ TYPEINFO(/obj/vehicle/clowncar)
 	..()
 	in_bump = 1
 	if(isturf(AM) && (rider.bioHolder.HasEffect("clumsy") || rider.reagents.has_reagent("ethanol")))
-		boutput(rider, "<span class='alert'><b>You run to the wall!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>You run to the wall!</b>"))
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
-			C.show_message("<span class='alert'><b>[rider] runs into the wall with the [src]!</b></span>", 1)
+			C.show_message(SPAN_ALERT("<b>[rider] runs into the wall with the [src]!</b>"), 1)
 		eject_rider(2)
 		in_bump = 0
 		return
 	if(ismob(AM))
 		var/mob/M = AM
-		boutput(rider, "<span class='alert'><b>You run into [M]!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>You run into [M]!</b>"))
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
-			C.show_message("<span class='alert'><b>[rider] runs into [M] with the [src]!</b></span>", 1)
+			C.show_message(SPAN_ALERT("<b>[rider] runs into [M] with the [src]!</b>"), 1)
 		M.changeStatus("stunned", 8 SECONDS)
 		M.changeStatus("weakened", 5 SECONDS)
 		eject_rider(2)
@@ -1424,11 +1433,11 @@ TYPEINFO(/obj/vehicle/clowncar)
 		return
 	if(isitem(AM))
 		if(AM:w_class >= W_CLASS_BULKY)
-			boutput(rider, "<span class='alert'><b>You run into [AM]!</b></span>")
+			boutput(rider, SPAN_ALERT("<b>You run into [AM]!</b>"))
 			for (var/mob/C in AIviewers(src))
 				if(C == rider)
 					continue
-				C.show_message("<span class='alert'><b>[rider] runs into [AM] with the [src]!</b></span>", 1)
+				C.show_message(SPAN_ALERT("<b>[rider] runs into [AM] with the [src]!</b>"), 1)
 			eject_rider(1)
 			in_bump = 0
 			return
@@ -1438,12 +1447,12 @@ TYPEINFO(/obj/vehicle/clowncar)
 			SG.in_bump = 1
 			var/mob/M = SG.rider
 			var/mob/N = rider
-			boutput(N, "<span class='alert'><b>You run into [M]'s [SG]!</b></span>")
-			boutput(M, "<span class='alert'><b>[N] runs into your [SG]!</b></span>")
+			boutput(N, SPAN_ALERT("<b>You run into [M]'s [SG]!</b>"))
+			boutput(M, SPAN_ALERT("<b>[N] runs into your [SG]!</b>"))
 			for (var/mob/C in AIviewers(src))
 				if(C == N || C == M)
 					continue
-				C.show_message("<span class='alert'><b>[N] and [M] crash into each other!</b></span>", 1)
+				C.show_message(SPAN_ALERT("<b>[N] and [M] crash into each other!</b>"), 1)
 			eject_rider(2)
 			SG.eject_rider(1)
 			in_bump = 0
@@ -1461,20 +1470,20 @@ TYPEINFO(/obj/vehicle/clowncar)
 	if(crashed)
 		if(crashed == 2)
 			playsound(src.loc, 'sound/voice/animal/cat.ogg', 70, 1)
-		boutput(rider, "<span class='alert'><b>You are flung over the [src]'s head!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>You are flung over the [src]'s head!</b>"))
 		rider.changeStatus("stunned", 8 SECONDS)
 		rider.changeStatus("weakened", 5 SECONDS)
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
-			C.show_message("<span class='alert'><b>[rider] is flung over the [src]'s head!</b></span>", 1)
+			C.show_message(SPAN_ALERT("<b>[rider] is flung over the [src]'s head!</b>"), 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
 		rider = null
 		ClearSpecificOverlays("rider")
 		return
 	if(selfdismount)
-		boutput(rider, "<span class='notice'>You dismount from the [src].</span>")
+		boutput(rider, SPAN_NOTICE("You dismount from the [src]."))
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
@@ -1492,17 +1501,17 @@ TYPEINFO(/obj/vehicle/clowncar)
 	return
 
 /obj/vehicle/cat/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || user.hasStatus(list("weakened", "paralysis", "stunned")) || !can_act(user) || isAI(user))
+	if (rider || !istype(target) || target.buckled || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(user, target) || isAI(user) || isintangible(user) || isintangible(target))
 		return
 
 	var/msg
 
 	if(target == user && can_act(user))	// if drop self, then climbed in
 		msg = "[user.name] climbs onto the [src]."
-		boutput(user, "<span class='notice'>You climb onto the [src].</span>")
+		boutput(user, SPAN_NOTICE("You climb onto the [src]."))
 	else if(target != user && !user.restrained())
 		msg = "[user.name] helps [target.name] onto the [src]!"
-		boutput(user, "<span class='notice'>You help [target.name] onto the [src]!</span>")
+		boutput(user, SPAN_NOTICE("You help [target.name] onto the [src]!"))
 	else
 		return
 
@@ -1536,20 +1545,20 @@ TYPEINFO(/obj/vehicle/clowncar)
 		if("harm", "disarm")
 			if(prob(60))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-				src.visible_message("<span class='alert'><b>[M] has shoved [rider] off of the [src]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[M] has shoved [rider] off of the [src]!</b>"))
 				if (!rider.hasStatus("weakened"))
 					rider.changeStatus("weakened", 2 SECONDS)
 					rider.force_laydown_standup()
 				eject_rider()
 			else
 				playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
-				src.visible_message("<span class='alert'><b>[M] has attempted to shove [rider] off of the [src]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[M] has attempted to shove [rider] off of the [src]!</b>"))
 	return
 
 
 /obj/vehicle/cat/disposing()
 	if(rider)
-		boutput(rider, "<span class='alert'><b>Your cat is destroyed!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>Your cat is destroyed!</b>"))
 		eject_rider()
 	..()
 	return
@@ -1636,7 +1645,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 		. = ..()
 		if(!the_mob) return
 		if(active)
-			boutput( the_mob, "<span class='alert'>The brake is on cooldown!</span>" )
+			boutput( the_mob, SPAN_ALERT("The brake is on cooldown!") )
 			return
 		var/mob/my_mob = the_mob
 		if(!istype(my_mob.loc, /obj/vehicle)) return
@@ -1662,9 +1671,9 @@ TYPEINFO(/obj/vehicle/adminbus)
 			return
 		var/obj/vehicle/clowncar/car = src.the_mob.loc
 		if (car.peel_count <= 0)
-			boutput(src.the_mob, "<span class='alert'>No peels left!</span>")
+			boutput(src.the_mob, SPAN_ALERT("No peels left!"))
 			return
-		playsound(car, 'sound/machines/click.ogg', 50, 1)
+		playsound(car, 'sound/machines/click.ogg', 50, TRUE)
 		new /obj/item/bananapeel(get_turf(car))
 		car.peel_count--
 
@@ -1681,9 +1690,9 @@ TYPEINFO(/obj/vehicle/adminbus)
 			var/obj/vehicle/adminbus/bus = usr.loc
 			bus.darkness = !bus.darkness
 			if (bus.darkness)
-				boutput( the_mob, "<span class='alert'>The air grows heavy and nearby lights begin to flicker and dim!</span>" )
+				boutput( the_mob, SPAN_ALERT("The air grows heavy and nearby lights begin to flicker and dim!") )
 			else
-				boutput( the_mob, "<span class='alert'>Things seem to return to normal.</span>" )
+				boutput( the_mob, SPAN_ALERT("Things seem to return to normal.") )
 
 /obj/vehicle/adminbus/Stopped()
 	..()
@@ -1693,7 +1702,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 	icon_state = moving_state
 	if(!(world.timeofday - src.antispam <= 60))
 		src.antispam = world.timeofday
-		playsound(src, 'sound/machines/rev_engine.ogg', 50, 1)
+		playsound(src, 'sound/machines/rev_engine.ogg', 50, TRUE)
 		playsound(src.loc, 'sound/machines/rev_engine.ogg', 50, 1)
 		//play engine sound
 		return
@@ -1716,7 +1725,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 	if(usr != rider)
 		var/mob/M = usr
 		if(M.client && M.client.holder && M.loc == src)
-			M.show_message(text("<span class='alert'><b>You exit the []!</b></span>", src), 1)
+			M.show_message(SPAN_ALERT("<b>You exit the [src]!</b>"), 1)
 			M.remove_adminbus_powers()
 			M.set_loc(src.loc)
 			return
@@ -1732,18 +1741,18 @@ TYPEINFO(/obj/vehicle/adminbus)
 		return
 	if(M.is_hulk())
 		if(prob(40))
-			boutput(M, "<span class='alert'><b>You smash the puny [src] apart!</b></span>")
+			boutput(M, SPAN_ALERT("<b>You smash the puny [src] apart!</b>"))
 			playsound(src, "shatter", 70, 1)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 
 			for(var/mob/N in AIviewers(M, null))
 				if(N == M)
 					continue
-				N.show_message("<span class='alert'><b>[M] smashes the [src] apart!</b></span>", 1)
+				N.show_message(SPAN_ALERT("<b>[M] smashes the [src] apart!</b>"), 1)
 			for(var/atom/A in src.contents)
 				if(ismob(A))
 					var/mob/N = A
-					N.show_message("<span class='alert'><b>[M] smashes the [src] apart!</b></span>", 1)
+					N.show_message(SPAN_ALERT("<b>[M] smashes the [src] apart!</b>"), 1)
 					N.set_loc(src.loc)
 				else if (isobj(A))
 					var/obj/O = A
@@ -1753,66 +1762,66 @@ TYPEINFO(/obj/vehicle/adminbus)
 			S.update()
 			qdel(src)
 		else
-			boutput(M, "<span class='alert'><b>You punch the puny [src]!</b></span>")
+			boutput(M, SPAN_ALERT("<b>You punch the puny [src]!</b>"))
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			for(var/mob/N in AIviewers(M, null))
 				if(N == M)
 					continue
-				N.show_message("<span class='alert'><b>[M] punches the [src]!</b></span>", 1)
+				N.show_message(SPAN_ALERT("<b>[M] punches the [src]!</b>"), 1)
 			for(var/atom/A in src.contents)
 				if(ismob(A))
 					var/mob/N = A
-					N.show_message("<span class='alert'><b>[M] punches the [src]!</b></span>", 1)
+					N.show_message(SPAN_ALERT("<b>[M] punches the [src]!</b>"), 1)
 	else
 		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 		if(rider && prob(40))
 			playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-			src.visible_message("<span class='alert'><b>[M] has pulled [rider] out of the [src]!</b></span>", 1)
+			src.visible_message(SPAN_ALERT("<b>[M] has pulled [rider] out of the [src]!</b>"))
 			rider.changeStatus("weakened", 2 SECONDS)
 			eject_rider(0,0,0)
 		else
 			if(src.contents.len)
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-				src.visible_message("<span class='alert'><b>[M] opens up the [src], spilling the contents out!</b></span>", 1)
+				src.visible_message(SPAN_ALERT("<b>[M] opens up the [src], spilling the contents out!</b>"))
 				for(var/atom/A in src.contents)
 					if(ismob(A))
 						var/mob/N = A
-						N.show_message("<span class='alert'><b>You are let out of the [src] by [M]!</b></span>", 1)
+						N.show_message(SPAN_ALERT("<b>You are let out of the [src] by [M]!</b>"), 1)
 						N.set_loc(src.loc)
 					else if (isobj(A))
 						var/obj/O = A
 						O.set_loc(src.loc)
 			else
-				boutput(M, "<span class='notice'>There's nothing inside of the [src].</span>")
+				boutput(M, SPAN_NOTICE("There's nothing inside of the [src]."))
 				return
 	return
 
-/obj/vehicle/adminbus/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
+/obj/vehicle/adminbus/MouseDrop_T(mob/living/target, mob/user)
+	if (!istype(target) || target.buckled || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(user, target) || isAI(user) || isintangible(user) || isintangible(target))
 		return
 
 	var/msg
 
 	if(!(user.client && user.client.holder))
-		boutput(user, "<span class='notice'>You don't feel cool enough to use the [src].</span>")
+		boutput(user, SPAN_NOTICE("You don't feel cool enough to use the [src]."))
 		return
 
 	if(target == user && can_act(usr))	// if drop self, then climbed in
 		target.set_loc(src)
 		if(rider)
 			msg = "[user.name] climbs into the front of the [src]."
-			boutput(user, "<span class='notice'>You climb into the front of the [src].</span>")
+			boutput(user, SPAN_NOTICE("You climb into the front of the [src]."))
 		else
 			rider = target
 			msg = "[user.name] climbs into the driver's seat of the [src]."
-			boutput(user, "<span class='notice'>You climb into the driver's seat of the [src].</span>")
+			boutput(user, SPAN_NOTICE("You climb into the driver's seat of the [src]."))
 			rider.add_adminbus_powers()
 			sleep(1 SECOND)
 			handle_button_addition()
 	else if(target != user && !user.restrained())
 		target.set_loc(src)
 		msg = "[user.name] stuffs [target.name] into the back of the [src]!"
-		boutput(user, "<span class='notice'>You stuff [target.name] into the back of the [src]!</span>")
+		boutput(user, SPAN_NOTICE("You stuff [target.name] into the back of the [src]!"))
 	else
 		return
 	for (var/mob/C in AIviewers(src))
@@ -1842,23 +1851,23 @@ TYPEINFO(/obj/vehicle/adminbus)
 			var/turf/simulated/wall/T = AM
 			T.dismantle_wall(1)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			boutput(rider, "<span class='alert'><b>You crash through the wall!</b></span>")
+			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
+			boutput(rider, SPAN_ALERT("<b>You crash through the wall!</b>"))
 			for(var/mob/C in viewers(src))
 				shake_camera(C, 10, 16)
 				if(C == rider)
 					continue
-				C.show_message("<span class='alert'><b>The [src] crashes through the wall!</b></span>", 1)
+				C.show_message(SPAN_ALERT("<b>The [src] crashes through the wall!</b>"), 1)
 			in_bump = 0
 			return
 	if(ismob(AM))
 		var/mob/M = AM
-		boutput(rider, "<span class='alert'><b>You crash into [M]!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>You crash into [M]!</b>"))
 		for (var/mob/C in viewers(src))
 			shake_camera(C, 8, 12)
 			if(C == rider)
 				continue
-			C.show_message("<span class='alert'><b>The [src] crashes into [M]!</b></span>", 1)
+			C.show_message(SPAN_ALERT("<b>The [src] crashes into [M]!</b>"), 1)
 		if(src.gib_onhit)
 			M.gib()
 		else
@@ -1867,21 +1876,21 @@ TYPEINFO(/obj/vehicle/adminbus)
 			var/turf/target = get_edge_target_turf(src, src.dir)
 			M.throw_at(target, 10, 2)
 		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 		in_bump = 0
 		return
 	if(isobj(AM))
 		var/obj/O = AM
 		if(O.density)
-			boutput(rider, "<span class='alert'><b>You crash into [O]!</b></span>")
+			boutput(rider, SPAN_ALERT("<b>You crash into [O]!</b>"))
 			for (var/mob/C in viewers(src))
 				shake_camera(C, 8, 12)
 				if(C == rider)
 					continue
-				C.show_message("<span class='alert'><b>The [src] crashes into [O]!</b></span>", 1)
+				C.show_message(SPAN_ALERT("<b>The [src] crashes into [O]!</b>"), 1)
 			var/turf/target = get_edge_target_turf(src, src.dir)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 			O.throw_at(target, 10, 2)
 			if(istype(O, /obj/window) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 				qdel(O)
@@ -1902,7 +1911,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 
 /obj/vehicle/adminbus/disposing()
 	if(rider)
-		boutput(rider, "<span class='alert'><b>Your [src] is destroyed!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>Your [src] is destroyed!</b>"))
 		eject_rider(1)
 	..()
 	return
@@ -1919,28 +1928,28 @@ TYPEINFO(/obj/vehicle/adminbus)
 		if(crashed == 2)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 		playsound(src.loc, "shatter", 40, 1)
-		boutput(rider, "<span class='alert'><b>You are flung through the [src]'s windshield!</b></span>")
+		boutput(rider, SPAN_ALERT("<b>You are flung through the [src]'s windshield!</b>"))
 		rider.changeStatus("stunned", 8 SECONDS)
 		rider.changeStatus("weakened", 5 SECONDS)
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
-			C.show_message("<span class='alert'><b>[rider] is flung through the [src]'s windshield!</b></span>", 1)
+			C.show_message(SPAN_ALERT("<b>[rider] is flung through the [src]'s windshield!</b>"), 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
 		if(prob(40) && length(src.contents))
-			src.visible_message("<span class='alert'><b>Everything in the [src] flies out!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>Everything in the [src] flies out!</b>"))
 			for(var/atom/A in src.contents)
 				if(ismob(A))
 					var/mob/N = A
-					N.show_message(text("<span class='alert'><b>You are flung out of the []!</b></span>", src), 1)
+					N.show_message(SPAN_ALERT("<b>You are flung out of the [src]!</b>"), 1)
 					N.set_loc(src.loc)
 				else if (isobj(A))
 					var/obj/O = A
 					O.set_loc(src.loc)
 
 	if(selfdismount)
-		boutput(rider, "<span class='notice'>You climb out of the [src].</span>")
+		boutput(rider, SPAN_NOTICE("You climb out of the [src]."))
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
@@ -1954,7 +1963,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 
 /obj/vehicle/adminbus/attackby(var/obj/item/I, var/mob/user)
 	if(!(user.client && user.client.holder))
-		boutput(user, "<span class='notice'>You don't feel cool enough to use the [src].</span>")
+		boutput(user, SPAN_NOTICE("You don't feel cool enough to use the [src]."))
 		return
 
 	var/obj/item/grab/G = I
@@ -1962,12 +1971,12 @@ TYPEINFO(/obj/vehicle/adminbus)
 		if(ismob(G.affecting))
 			var/mob/GM = G.affecting
 			GM.set_loc(src)
-			boutput(user, "<span class='notice'>You stuff [GM.name] into the back of the [src].</span>")
-			boutput(GM, "<span class='alert'><b>[user] stuffs you into the back of the [src]!</b></span>")
+			boutput(user, SPAN_NOTICE("You stuff [GM.name] into the back of the [src]."))
+			boutput(GM, SPAN_ALERT("<b>[user] stuffs you into the back of the [src]!</b>"))
 			for (var/mob/C in AIviewers(src))
 				if(C == user)
 					continue
-				C.show_message("<span class='alert'><b>[GM.name] has been stuffed into the back of the [src] by [user]!</b></span>", 3)
+				C.show_message(SPAN_ALERT("<b>[GM.name] has been stuffed into the back of the [src] by [user]!</b>"), 3)
 			qdel(G)
 			return
 	..()
@@ -1994,14 +2003,14 @@ TYPEINFO(/obj/vehicle/adminbus)
 		src.moving_state = initial(src.moving_state)
 		src.nonmoving_state = initial(src.nonmoving_state)
 		src.is_badmin_bus = FALSE
-		boutput(usr, "<span class='info'>Badmin mode disabled.</span>")
+		boutput(usr, SPAN_NOTICE("Badmin mode disabled."))
 	else
 		src.name = src.badmin_name
 		src.desc = src.badmin_desc
 		src.moving_state = src.badmin_moving_state
 		src.nonmoving_state = src.badmin_nonmoving_state
 		src.is_badmin_bus = TRUE
-		boutput(usr, "<span class='info'>Badmin mode enabled.</span>")
+		boutput(usr, SPAN_NOTICE("Badmin mode enabled."))
 
 /client/proc/toggle_gib_onhit()
 	set category = "Adminbus"
@@ -2009,18 +2018,18 @@ TYPEINFO(/obj/vehicle/adminbus)
 	set desc = "Toggle gibbing when colliding with mobs."
 
 	if(!can_act(usr))
-		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
+		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
 		return
 	if(istype(usr.loc, /obj/vehicle/adminbus))
 		var/obj/vehicle/adminbus/bus = usr.loc
 		if(bus.gib_onhit)
 			bus.gib_onhit = 0
-			boutput(usr, "<span class='alert'>No longer gibbing on collision.</span>")
+			boutput(usr, SPAN_ALERT("No longer gibbing on collision."))
 		else
 			bus.gib_onhit = 1
-			boutput(usr, "<span class='alert'>You will now gib mobs on collision. Let's paint the town red!</span>")
+			boutput(usr, SPAN_ALERT("You will now gib mobs on collision. Let's paint the town red!"))
 	else
-		boutput(usr, "<span class='alert'>Uh-oh, you aren't in the adminbus! Report this.</span>")
+		boutput(usr, SPAN_ALERT("Uh-oh, you aren't in the adminbus! Report this."))
 
 /client/proc/toggle_badminbus()
 	set category = "Adminbus"
@@ -2028,13 +2037,13 @@ TYPEINFO(/obj/vehicle/adminbus)
 	set desc = "Become the Badmin Bus"
 
 	if(!isalive(usr))
-		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
+		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
 		return
 	if(istype(usr.loc, /obj/vehicle/adminbus))
 		var/obj/vehicle/adminbus/bus = usr.loc
 		bus.toggle_badmin()
 	else
-		boutput(usr, "<span class='alert'>Uh-oh, you aren't in the adminbus! Report this.</span>")
+		boutput(usr, SPAN_ALERT("Uh-oh, you aren't in the adminbus! Report this."))
 
 /*
 /atom/movable/effect/darkness
@@ -2092,7 +2101,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 	do_special_on_relay(mob/user, dir) //this should probably actually be inside an overriden Move() proc, but I've preserved the original behavior here instead.
 		icon_state = moving_state
 		if(src.power_hotwheels)
-			tfireflash(get_turf(src), 0, 100)
+			fireflash(get_turf(src), 0, 100)
 		if(src.power_staticcharge)
 			elecflash(get_turf(src),radius=0, power=2, exclude_center = 0)
 		if(src.power_bomberbus && prob(power_bomberbus_chance))
@@ -2140,9 +2149,9 @@ TYPEINFO(/obj/vehicle/adminbus)
 			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
 			bus.power_hotwheels = !bus.power_hotwheels
 			if (bus.power_hotwheels)
-				boutput( the_mob, "<span class='alert'>Hot wheels engaged!</span>" )
+				boutput( the_mob, SPAN_ALERT("Hot wheels engaged!") )
 			else
-				boutput( the_mob, "<span class='alert'>Your tires begin to cooldown.</span>" )
+				boutput( the_mob, SPAN_ALERT("Your tires begin to cooldown.") )
 
 /obj/ability_button/staticcharge
 	name = "Static Charge"
@@ -2157,9 +2166,9 @@ TYPEINFO(/obj/vehicle/adminbus)
 			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
 			bus.power_staticcharge = !bus.power_staticcharge
 			if (bus.power_staticcharge)
-				boutput( the_mob, "<span class='alert'>The bus begins to tingle with static!</span>" )
+				boutput( the_mob, SPAN_ALERT("The bus begins to tingle with static!") )
 			else
-				boutput( the_mob, "<span class='alert'>The static charge disipates.</span>" )
+				boutput( the_mob, SPAN_ALERT("The static charge disipates.") )
 
 /obj/ability_button/bombchute
 	name = "Bomb Chute"
@@ -2174,9 +2183,9 @@ TYPEINFO(/obj/vehicle/adminbus)
 			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
 			bus.power_bomberbus = !bus.power_bomberbus
 			if (bus.power_bomberbus)
-				boutput( the_mob, "<span class='alert'>The bomb chute springs open!</span>" )
+				boutput( the_mob, SPAN_ALERT("The bomb chute springs open!") )
 			else
-				boutput( the_mob, "<span class='alert'>The bomb chute seals tightly shut.</span>" )
+				boutput( the_mob, SPAN_ALERT("The bomb chute seals tightly shut.") )
 
 //////////////////////////////////////////////////////////////// Forklift //////////////////////////
 
@@ -2369,11 +2378,11 @@ TYPEINFO(/obj/vehicle/forklift)
 		A.set_loc(src)
 		helditems.Add(A)
 		update_overlays()
-		boutput(user, "<span class='notice'><b>You pick up the [A.name].</b></span>")
+		boutput(user, SPAN_NOTICE("<b>You pick up the [A.name].</b>"))
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
-			C.show_message("<span class='notice'><b>[src] picks up the [A.name].</b></span>", 1)
+			C.show_message(SPAN_NOTICE("<b>[src] picks up the [A.name].</b>"), 1)
 		return
 
 	//Very funny
@@ -2385,7 +2394,7 @@ TYPEINFO(/obj/vehicle/forklift)
 		if (A == user)
 			boutput(user, "You get into [src].")
 		else
-			boutput(user, "<span class='notice'>You help [A] onto [src]!</span>")
+			boutput(user, SPAN_NOTICE("You help [A] onto [src]!"))
 		A.set_loc(src)
 		src.rider = A
 		src.update_overlays()
@@ -2399,7 +2408,7 @@ TYPEINFO(/obj/vehicle/forklift)
 		if("harm", "disarm")
 			if(prob(40) || isunconscious(rider))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-				src.visible_message("<span class='alert'><b>[M] has shoved [rider] off of [src]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[M] has shoved [rider] off of [src]!</b>"))
 				if (!rider.hasStatus("weakened"))
 					rider.changeStatus("weakened", 2 SECONDS)
 					rider.force_laydown_standup()
@@ -2408,7 +2417,7 @@ TYPEINFO(/obj/vehicle/forklift)
 				src.update_overlays()
 			else
 				playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
-				src.visible_message("<span class='alert'><b>[M] has attempted to shove [rider] off of [src]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[M] has attempted to shove [rider] off of [src]!</b>"))
 	return
 
 /obj/vehicle/forklift/verb/drop_crates()
@@ -2427,12 +2436,12 @@ TYPEINFO(/obj/vehicle/forklift)
 		if(length(helditems) == 1)
 			var/obj/O = helditems[1]
 			for (var/mob/C in AIviewers(src))
-				C.show_message("<span class='notice'><b>[src] leaves the [O.name] on [src.loc].</b></span>", 1)
-			boutput(usr, "<span class='notice'><b>You leave the [O.name] on [src.loc].</b></span>")
+				C.show_message(SPAN_NOTICE("<b>[src] leaves the [O.name] on [src.loc].</b>"), 1)
+			boutput(usr, SPAN_NOTICE("<b>You leave the [O.name] on [src.loc].</b>"))
 		if(length(helditems) > 1)
 			for (var/mob/C in AIviewers(src))
-				C.show_message("<span class='notice'><b>[src] leaves [helditems.len] crates on [src.loc].</b></span>", 1)
-			boutput(usr, "<span class='notice'><b>You leave [helditems.len] crates on [src.loc].</b></span>")
+				C.show_message(SPAN_NOTICE("<b>[src] leaves [helditems.len] crates on [src.loc].</b>"), 1)
+			boutput(usr, SPAN_NOTICE("<b>You leave [helditems.len] crates on [src.loc].</b>"))
 
 		for (var/obj/HI in helditems)
 			HI.set_loc(src.loc)
@@ -2441,7 +2450,7 @@ TYPEINFO(/obj/vehicle/forklift)
 	update_overlays()
 	return
 
-obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
+/obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 	//Use screwdriver to open/close the forklift's back panel
 	if (isscrewingtool(I))
 		if (!openpanel)
@@ -2459,8 +2468,8 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 	//Breaking the forklift
 	if (issnippingtool(I))
 		if (openpanel && !broken)
-			boutput(user, "<span class='notice'>You cut [src]'s wires!<span>")
-			new /obj/item/cable_coil/cut/small( src.loc )
+			boutput(user, SPAN_NOTICE("You cut [src]'s wires!"))
+			new /obj/item/cable_coil/cut( src.loc , 5)
 			break_forklift()
 		return
 
@@ -2468,11 +2477,13 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 	if (istype(I,/obj/item/cable_coil))
 		if (openpanel && broken)
 			var/obj/item/cable_coil/coil = I
-			coil.use(5)
-			boutput(user, "<span class='notice'>You replace [src]'s wires!</span>")
-			broken = 0
-			if (helditems_maximum < 4)
-				helditems_maximum = 4
+			if(coil.use(5))
+				boutput(user, SPAN_NOTICE("You replace [src]'s wires!"))
+				broken = 0
+				if (helditems_maximum < 4)
+					helditems_maximum = 4
+			else
+				boutput(user, SPAN_NOTICE("You need at least 5 pieces of cable for this!"))
 			return
 
 	return ..() // attacking rider on forklift

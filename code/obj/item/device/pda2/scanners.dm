@@ -64,10 +64,10 @@
 		name = "Reagent Scan"
 		size = 6
 
-		scan_atom(atom/A as mob|obj|turf|area)
+		scan_atom(atom/A)
 			if (..())
 				return
-			. = scan_reagents(A, visible = 1)
+			. = scan_reagents(A, visible = TRUE)
 
 	//Plant scanner
 	plant_scan
@@ -104,7 +104,7 @@
 			if (..() || !isobj(A) || !ismob(usr))
 				return
 			if (!istype(master.host_program, /datum/computer/file/pda_program/os/main_os) || !master.host_program:message_on)
-				return "<span class='alert'>Messaging must be enabled to communicate with engineering kit.</span>"
+				return SPAN_ALERT("Messaging must be enabled to communicate with engineering kit.")
 			var/obj/O = A
 			var/mob/user = usr
 			if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
@@ -114,7 +114,7 @@
 				return
 			animate_scanning(A, "#FFFF00")
 			if (!scan_result || scan_result == MECHANICS_ANALYSIS_INCOMPATIBLE)
-				return "<span class='alert'>Unable to scan.</span>"
+				return SPAN_ALERT("Unable to scan.")
 
 			var/datum/computer/file/electronics_scan/theScan = new
 			theScan.scannedName = initial(O.name)
@@ -166,6 +166,26 @@
 			var/mob/living/carbon/C = A
 
 			. = scan_secrecord(src.master, C, visible = 1)
+
+	material_scan
+		name = "Material Scanner"
+		size = 2
+
+		scan_atom(atom/A as mob|obj|turf|area)
+			if(..())
+				return
+
+			if(!A.material)
+				. = "No significant material found in \the [A]."
+				return
+
+			. = "<u>[capitalize(A.material.getName())]</u><br>[A.material.getDesc()]<br><br>"
+			if (length(A.material.getMaterialProperties()))
+				for(var/datum/material_property/mat in A.material.getMaterialProperties())
+					var/value = A.material.getProperty(mat.id)
+					. += "• [mat.getAdjective(A.material)] ([value])<br>"
+			else
+				. += "The material is completely unremarkable."
 
 /datum/computer/file/electronics_scan
 	name = "scanfile"

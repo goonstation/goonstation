@@ -1,0 +1,1248 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aD" = (
+/obj/table/auto,
+/obj/machinery/coffeemaker,
+/obj/drink_rack/mug{
+	pixel_y = 28
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"cX" = (
+/obj/table/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"fB" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/random,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"fR" = (
+/obj/machinery/pathogen_manipulator,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"gt" = (
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4;
+	name = "Research Facility"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "pathprefab_bioshutter";
+	name = "Biohazard Shutter"
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"gG" = (
+/obj/storage/secure/closet/fridge,
+/obj/random_item_spawner/snacks/lots,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"hu" = (
+/obj/iv_stand,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"hx" = (
+/obj/stool/chair,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"iW" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "pathprefab_bioshutter";
+	name = "Biohazard Shutter"
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"jw" = (
+/turf/simulated/floor/black,
+/area/noGenerate)
+"lu" = (
+/mob/living/critter/zombie/security,
+/turf/simulated/floor/black,
+/area/noGenerate)
+"lB" = (
+/obj/stool/chair,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"lC" = (
+/obj/storage/secure/closet/security,
+/obj/item/clothing/suit/hazard/bio_suit/armored,
+/obj/item/clothing/head/bio_hood,
+/turf/simulated/floor/redblack,
+/area/noGenerate)
+"mc" = (
+/obj/storage/crate/bin/trash,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"mu" = (
+/obj/iv_stand,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"mw" = (
+/obj/decal/poster/wallsign/chsl{
+	pixel_x = 32
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"nB" = (
+/obj/machinery/light/incandescent,
+/obj/stool/bed/moveable,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"nO" = (
+/obj/machinery/door/airlock/pyro/glass/toxins{
+	dir = 4;
+	name = "Research Facility"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "pathprefab_bioshutter";
+	name = "Biohazard Shutter"
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"oc" = (
+/mob/living/critter/zombie/scientist,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"om" = (
+/obj/machinery/crema_switch{
+	pixel_y = 24;
+	id = "pathprefab_crem"
+	},
+/obj/table/auto,
+/obj/item/storage/box/body_bag,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"ow" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "pathprefab_bioshutter";
+	name = "Biohazard Shutter"
+	},
+/turf/simulated/floor/plating,
+/area/noGenerate)
+"pE" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "pathprefab_bioshutter";
+	name = "Biohazard Shutter"
+	},
+/turf/simulated/floor/plating,
+/area/noGenerate)
+"pK" = (
+/obj/stool/bed/moveable,
+/mob/living/critter/zombie,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"pZ" = (
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"qf" = (
+/obj/decal/poster/wallsign/chsl{
+	pixel_x = 32
+	},
+/obj/storage/secure/closet/medical,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"rw" = (
+/mob/living/critter/zombie/scientist,
+/obj/machinery/drainage,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"sg" = (
+/turf/variableTurf/wall,
+/area/allowGenerate)
+"tD" = (
+/obj/storage/secure/closet/security,
+/obj/random_item_spawner/kineticgun/safer/one,
+/turf/simulated/floor/redblack,
+/area/noGenerate)
+"uL" = (
+/obj/table/auto,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"vI" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/black,
+/area/noGenerate)
+"wt" = (
+/obj/machinery/door/airlock/pyro/security/alt{
+	name = "Research Facility Security"
+	},
+/turf/simulated/floor/black,
+/area/noGenerate)
+"wS" = (
+/obj/machinery/synthomatic,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"xV" = (
+/obj/machinery/computer/pathology,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"yn" = (
+/obj/machinery/traymachine/locking/crematorium{
+	id = "pathprefab_crem"
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"yC" = (
+/obj/machinery/optable,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"zb" = (
+/obj/machinery/traymachine/morgue,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"zu" = (
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"Ai" = (
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"Aw" = (
+/mob/living/critter/zombie/security,
+/obj/machinery/drainage,
+/turf/simulated/floor/black,
+/area/noGenerate)
+"CQ" = (
+/obj/machinery/shower,
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -6
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"Db" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"EC" = (
+/obj/storage/crate/bin/trash,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"Go" = (
+/mob/living/critter/zombie/security,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"GP" = (
+/obj/decal/poster/wallsign/biohazard{
+	pixel_x = -32
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"GU" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "pathprefab_bioshutter";
+	name = "Biohazard Shutter"
+	},
+/turf/simulated/floor/plating,
+/area/noGenerate)
+"Hu" = (
+/obj/storage/closet/biohazard,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"IF" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/noGenerate)
+"IY" = (
+/obj/machinery/door_control{
+	id = "pathprefab_bioshutter";
+	name = "Biohazard Shutter Control";
+	pixel_x = -25
+	},
+/turf/simulated/floor/black,
+/area/noGenerate)
+"Jn" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"KU" = (
+/obj/item/mining_tools/pick,
+/obj/item/raw_material/rock,
+/obj/item/raw_material/rock,
+/obj/item/raw_material/rock{
+	pixel_y = -3;
+	pixel_x = -3
+	},
+/obj/item/raw_material/rock{
+	pixel_y = 6;
+	pixel_x = -4
+	},
+/obj/item/raw_material/rock{
+	pixel_y = 8;
+	pixel_x = 3
+	},
+/obj/item/raw_material/rock{
+	pixel_x = 4
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"KV" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"Lk" = (
+/obj/item/raw_material/rock,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"LS" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	name = "Body Disposal"
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"Mv" = (
+/obj/deployable_turret/outpost/active/south,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"Od" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"Op" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 6
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"Ow" = (
+/mob/living/critter/zombie,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"OU" = (
+/obj/machinery/centrifuge,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"OY" = (
+/obj/item/device/light/floodlight/starts_on/fixed,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"Pc" = (
+/obj/item_dispenser/latex_gloves{
+	pixel_x = 8
+	},
+/obj/item_dispenser/medical_mask{
+	pixel_x = -8
+	},
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"Pd" = (
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4;
+	name = "Research Facility"
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"PH" = (
+/turf/simulated/floor/white,
+/area/noGenerate)
+"RH" = (
+/mob/living/critter/zombie/scientist,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"TH" = (
+/obj/mapping_helper/mob_spawn/corpse/human,
+/obj/stool/bed/moveable,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"TJ" = (
+/obj/storage/closet/biohazard,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"TU" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/turf/simulated/floor/black,
+/area/noGenerate)
+"Ux" = (
+/obj/machinery/door/airlock/pyro/glass/sci{
+	name = "Research Facility"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "pathprefab_bioshutter";
+	name = "Biohazard Shutter"
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"Uz" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/mob/living/critter/zombie/scientist,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"Vy" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"VE" = (
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4;
+	name = "Research Facility"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "pathprefab_bioshutter";
+	name = "Biohazard Shutter"
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"XB" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"XQ" = (
+/obj/table/auto,
+/obj/random_item_spawner/tableware/two,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"Yc" = (
+/obj/decal/poster/wallsign/security{
+	pixel_y = 32
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"YS" = (
+/obj/decal/poster/wallsign/no_smoking{
+	pixel_x = 32
+	},
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"ZA" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "pathprefab_bioshutter";
+	name = "Biohazard Shutter"
+	},
+/obj/machinery/door/airlock/pyro/glass/toxins{
+	name = "Research Facility"
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+
+(1,1,1) = {"
+Vy
+sg
+sg
+sg
+sg
+Vy
+sg
+Vy
+Vy
+sg
+sg
+Vy
+Vy
+Vy
+Vy
+sg
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+"}
+(2,1,1) = {"
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+Vy
+sg
+sg
+sg
+sg
+sg
+Vy
+Vy
+Vy
+sg
+Vy
+Vy
+Vy
+Vy
+"}
+(3,1,1) = {"
+sg
+sg
+IF
+IF
+IF
+IF
+IF
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+Vy
+Vy
+Vy
+Vy
+Vy
+"}
+(4,1,1) = {"
+sg
+sg
+IF
+TU
+IY
+tD
+IF
+IF
+IF
+IF
+IF
+IF
+IF
+IF
+IF
+IF
+IF
+IF
+IF
+IF
+IF
+IF
+IF
+sg
+sg
+Vy
+Vy
+Vy
+sg
+sg
+Vy
+Vy
+"}
+(5,1,1) = {"
+sg
+sg
+IF
+vI
+jw
+lC
+IF
+pZ
+pZ
+IF
+xV
+XB
+PH
+RH
+PH
+ZA
+Ow
+nB
+IF
+mu
+Od
+mu
+IF
+sg
+sg
+Vy
+Vy
+sg
+sg
+sg
+sg
+Vy
+"}
+(6,1,1) = {"
+sg
+sg
+IF
+TU
+Aw
+jw
+wt
+pZ
+Jn
+IF
+fR
+PH
+RH
+PH
+wS
+pE
+PH
+pK
+IF
+TH
+PH
+pK
+IF
+sg
+sg
+Vy
+sg
+sg
+sg
+sg
+sg
+sg
+"}
+(7,1,1) = {"
+sg
+sg
+IF
+vI
+jw
+lC
+IF
+Yc
+pZ
+IF
+PH
+mw
+PH
+Op
+OU
+IF
+IF
+IF
+IF
+ow
+nO
+ow
+IF
+sg
+sg
+Vy
+sg
+sg
+sg
+sg
+sg
+sg
+"}
+(8,1,1) = {"
+sg
+sg
+IF
+TU
+lu
+lC
+IF
+pZ
+pZ
+IF
+IF
+IF
+Pd
+IF
+IF
+IF
+pZ
+IF
+Ai
+PH
+PH
+zb
+IF
+sg
+sg
+Vy
+Vy
+Vy
+Vy
+sg
+sg
+Vy
+"}
+(9,1,1) = {"
+sg
+sg
+IF
+IF
+IF
+IF
+IF
+IF
+pZ
+pZ
+IF
+Pc
+KV
+CQ
+IF
+pZ
+pZ
+IF
+yC
+PH
+PH
+Od
+IF
+sg
+sg
+sg
+sg
+Vy
+Vy
+Vy
+Vy
+Vy
+"}
+(10,1,1) = {"
+sg
+sg
+sg
+sg
+IF
+mc
+PH
+LS
+pZ
+pZ
+IF
+IF
+gt
+IF
+IF
+pZ
+Jn
+IF
+hu
+KV
+RH
+yC
+IF
+sg
+sg
+sg
+sg
+Vy
+sg
+sg
+Vy
+Vy
+"}
+(11,1,1) = {"
+sg
+sg
+sg
+sg
+IF
+om
+KV
+IF
+pZ
+pZ
+pZ
+GP
+pZ
+GP
+Jn
+pZ
+pZ
+Ux
+PH
+PH
+PH
+PH
+IF
+sg
+Lk
+Vy
+Vy
+Vy
+sg
+sg
+sg
+Vy
+"}
+(12,1,1) = {"
+sg
+sg
+sg
+sg
+IF
+yn
+PH
+IF
+Jn
+oc
+pZ
+pZ
+pZ
+pZ
+pZ
+Go
+pZ
+IF
+Op
+qf
+TJ
+zu
+IF
+sg
+pZ
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+"}
+(13,1,1) = {"
+Vy
+sg
+sg
+sg
+IF
+IF
+IF
+IF
+pZ
+pZ
+pZ
+pZ
+oc
+pZ
+pZ
+pZ
+pZ
+IF
+IF
+IF
+IF
+IF
+IF
+sg
+pZ
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+"}
+(14,1,1) = {"
+Vy
+sg
+sg
+sg
+sg
+sg
+IF
+Hu
+pZ
+pZ
+pZ
+Jn
+pZ
+YS
+pZ
+pZ
+pZ
+Jn
+pZ
+pZ
+pZ
+pZ
+sg
+sg
+pZ
+pZ
+sg
+sg
+sg
+sg
+sg
+sg
+"}
+(15,1,1) = {"
+Vy
+sg
+sg
+sg
+sg
+sg
+IF
+IF
+GU
+VE
+GU
+IF
+pZ
+IF
+GU
+VE
+GU
+IF
+IF
+IF
+iW
+IF
+sg
+sg
+sg
+Lk
+pZ
+pZ
+sg
+sg
+sg
+sg
+"}
+(16,1,1) = {"
+Vy
+Vy
+Vy
+sg
+sg
+sg
+IF
+fB
+PH
+KV
+fB
+IF
+Hu
+IF
+cX
+PH
+lB
+XQ
+XB
+IF
+pZ
+GP
+KU
+sg
+sg
+sg
+sg
+pZ
+sg
+sg
+sg
+sg
+"}
+(17,1,1) = {"
+Vy
+Vy
+Vy
+sg
+sg
+sg
+IF
+Od
+Db
+Uz
+Od
+IF
+IF
+IF
+aD
+PH
+rw
+PH
+Od
+IF
+pZ
+pZ
+pZ
+pZ
+sg
+sg
+sg
+Lk
+pZ
+sg
+sg
+sg
+"}
+(18,1,1) = {"
+Vy
+Vy
+sg
+Vy
+Vy
+sg
+IF
+fB
+uL
+uL
+fB
+IF
+sg
+IF
+gG
+hx
+XQ
+XB
+EC
+IF
+pZ
+OY
+pZ
+pZ
+Lk
+pZ
+sg
+sg
+pZ
+sg
+sg
+Vy
+"}
+(19,1,1) = {"
+Vy
+Vy
+Vy
+Vy
+sg
+sg
+IF
+IF
+IF
+IF
+IF
+IF
+sg
+IF
+IF
+IF
+IF
+IF
+IF
+IF
+pZ
+Mv
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+Lk
+sg
+sg
+Vy
+"}
+(20,1,1) = {"
+Vy
+Vy
+Vy
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+pZ
+OY
+pZ
+pZ
+pZ
+Lk
+sg
+sg
+sg
+sg
+sg
+sg
+"}
+(21,1,1) = {"
+Vy
+Vy
+Vy
+Vy
+Vy
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+Lk
+Lk
+Lk
+pZ
+sg
+sg
+sg
+sg
+sg
+sg
+Vy
+Vy
+"}
+(22,1,1) = {"
+Vy
+Vy
+Vy
+Vy
+Vy
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+Vy
+Vy
+sg
+Vy
+Vy
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+Vy
+Vy
+Vy
+"}
+(23,1,1) = {"
+Vy
+Vy
+Vy
+Vy
+sg
+Vy
+Vy
+sg
+sg
+sg
+Vy
+sg
+Vy
+Vy
+Vy
+sg
+Vy
+Vy
+sg
+sg
+sg
+sg
+sg
+sg
+sg
+Vy
+sg
+Vy
+Vy
+Vy
+sg
+Vy
+"}

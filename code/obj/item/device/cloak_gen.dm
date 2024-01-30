@@ -19,13 +19,16 @@ TYPEINFO(/obj/item/cloak_gen)
 	var/list/fields = new/list()
 	is_syndicate = TRUE
 	contraband = 2
+	HELP_MESSAGE_OVERRIDE({"Place the cloaking field generator on the floor, then use the associated remote to turn it on or off. While on, the cloaking field generator is immovable."})
 
 	New()
 		..()
 		var/obj/item/remote/cloak_gen/remote = new /obj/item/remote/cloak_gen(src.loc)
 		remote.my_gen = src
 
+		src.noise_image = image(icon='icons/misc/old_or_unused.dmi')
 		src.update_noise_image("noise2")
+		global.addGlobalRenderSource(src.noise_image, "*cloak_noise_[ref(src)]")
 
 	disposing()
 		if (src.active)
@@ -34,7 +37,7 @@ TYPEINFO(/obj/item/cloak_gen)
 		return
 
 	attack_self(mob/user)
-		boutput(user, "<span class='alert'>I need to place it on the ground to use it.</span>")
+		boutput(user, SPAN_ALERT("I need to place it on the ground to use it."))
 
 	// Shouldn't be required, but there have been surplus crate-related bugs in the past (Convair880).
 	attackby(obj/item/W, mob/user)
@@ -74,21 +77,21 @@ TYPEINFO(/obj/item/cloak_gen)
 					AM.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
 					O.vis_contents += AM
 
-		O.add_filter("cloak noise", 1, alpha_mask_filter(render_source="*noise_[ref(src)]"))
+		O.add_filter("cloak noise", 1, alpha_mask_filter(render_source="*cloak_noise_[ref(src)]"))
 
 	proc/turn_on(mob/user)
 		if (active) return
 
 		if (!isturf(loc))
 			if (user && ismob(user))
-				boutput(user, "<span class='alert'>The field generator must be on the floor to be activated.</span>")
+				boutput(user, SPAN_ALERT("The field generator must be on the floor to be activated."))
 			return
 
 		active = TRUE
 		anchored = ANCHORED
 
 		if (user && ismob(user))
-			boutput(user, "<span class='notice'>You activate the cloak field generator.</span>")
+			boutput(user, SPAN_NOTICE("You activate the cloak field generator."))
 
 		for(var/turf/T in range(range, src))
 			var/obj/overlay/O = new /obj/overlay(T)
@@ -104,18 +107,12 @@ TYPEINFO(/obj/item/cloak_gen)
 
 		src.active = FALSE
 		src.anchored = UNANCHORED
-		boutput(user, "<span class='notice'>You deactivate the cloak field generator.</span>")
+		boutput(user, SPAN_NOTICE("You deactivate the cloak field generator."))
 		for(var/obj/overlay/O in fields)
 			qdel(O)
 
 	proc/update_noise_image(var/set_icon_state)
-		src.overlays -= noise_image
-		qdel(src.noise_image)
-		src.noise_image = image(icon='icons/misc/old_or_unused.dmi', icon_state=set_icon_state)
-		noise_image.render_target = "*noise_[ref(src)]"
-		// hacky- we need the image on the map somewhere so it'll actually render as a render_source
-		// it won't actually render as an overlay since we prefix render_target with `*`
-		src.overlays += noise_image
+		src.noise_image.icon_state = set_icon_state
 
 /obj/item/remote/cloak_gen
 	name = "cloaking field generator remote"
@@ -128,6 +125,9 @@ TYPEINFO(/obj/item/cloak_gen)
 	var/obj/item/cloak_gen/my_gen = null
 	var/anti_spam = 0 // Creating and deleting overlays en masse can cause noticeable lag (Convair880).
 	contraband = 2
+	HELP_MESSAGE_OVERRIDE({"Use the remote in hand to turn the generator on or off.
+							Right click the remote to access a list of parameters that will affect the generator.
+							Hit the remote on a generator to link it to that generator."})
 
 	attack_self(mob/user)
 		. = ..()
@@ -143,7 +143,7 @@ TYPEINFO(/obj/item/cloak_gen)
 					src.anti_spam = world.time
 					my_gen.turn_on(user)
 			else
-				boutput(user, "<span class='alert'>No signal detected. Swipe remote on a cloaking generator to establish a connection.</span>")
+				boutput(user, SPAN_ALERT("No signal detected. Swipe remote on a cloaking generator to establish a connection."))
 
 	verb/set_pattern()
 		set src in view(1)
@@ -164,53 +164,53 @@ TYPEINFO(/obj/item/cloak_gen)
 			if("Rotating")
 				icon_to_use = "noise6"
 		my_gen.update_noise_image(icon_to_use)
-		boutput(usr, "<span class='notice'>You set the pattern to '[input]'.</span>")
+		boutput(usr, SPAN_NOTICE("You set the pattern to '[input]'."))
 
 	verb/set_range()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
 		var/input = input(usr,"Range 0-[my_gen.maxrange]:","Set range",my_gen.range) as num
 		if(input > my_gen.maxrange || input < 0 || !isnum_safe(input))
-			boutput(usr, "<span class='alert'>Invalid setting.</span>")
+			boutput(usr, SPAN_ALERT("Invalid setting."))
 			return
 		my_gen.range = input
 		if(my_gen.active)
 			my_gen.turn_off(usr)
 			my_gen.turn_on(usr)
-		boutput(usr, "<span class='notice'>You set the range to [my_gen.range].</span>")
+		boutput(usr, SPAN_NOTICE("You set the range to [my_gen.range]."))
 
 	verb/increase_range()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
 		if (my_gen.range + 1 > my_gen.maxrange)
-			boutput(usr, "<span class='alert'>Maximum range reached ([my_gen.maxrange]).</span>")
+			boutput(usr, SPAN_ALERT("Maximum range reached ([my_gen.maxrange])."))
 			return
 		my_gen.range++
 		if(my_gen.active)
 			my_gen.turn_off(usr)
 			my_gen.turn_on(usr)
-		boutput(usr, "<span class='notice'>You set the range to [my_gen.range].</span>")
+		boutput(usr, SPAN_NOTICE("You set the range to [my_gen.range]."))
 
 	verb/decrease_range()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
 		if (my_gen.range - 1 < 0)
-			boutput(usr, "<span class='alert'>Minimum range reached (0).</span>")
+			boutput(usr, SPAN_ALERT("Minimum range reached (0)."))
 			return
 		my_gen.range--
 		if(my_gen.active)
 			my_gen.turn_off(usr)
 			my_gen.turn_on(usr)
-		boutput(usr, "<span class='notice'>You set the range to [my_gen.range].</span>")
+		boutput(usr, SPAN_NOTICE("You set the range to [my_gen.range]."))
 
 	verb/turn_on()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen || my_gen.active) return
 		my_gen.turn_on(usr)
-		boutput(usr, "<span class='notice'>You turn the cloaking field generator on.</span>")
+		boutput(usr, SPAN_NOTICE("You turn the cloaking field generator on."))
 
 	verb/turn_off()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen || !my_gen.active) return
 		my_gen.turn_off(usr)
-		boutput(usr, "<span class='notice'>You turn the cloaking field generator off.</span>")
+		boutput(usr, SPAN_NOTICE("You turn the cloaking field generator off."))

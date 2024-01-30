@@ -40,22 +40,22 @@
 	get_damage()
 		return src.brute_dam + src.burn_dam	+ src.tox_dam
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
-		if(!ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(!ismob(target))
 			return
 
 		src.add_fingerprint(user)
 
-		if(user.zone_sel.selecting != slot || !ishuman(M))
+		if(user.zone_sel.selecting != slot || !ishuman(target))
 			return ..()
 		if (!src.easy_attach)
-			if (!surgeryCheck(M,user))
+			if (!surgeryCheck(target,user))
 				return ..()
 
-		var/mob/living/carbon/human/H = M
+		var/mob/living/carbon/human/H = target
 
 		if(H.limbs.vars[src.slot])
-			boutput(user, "<span class='alert'>[H.name] already has one of those!</span>")
+			boutput(user, SPAN_ALERT("[H.name] already has one of those!"))
 			return
 
 		attach(H,user)
@@ -140,23 +140,23 @@
 			if(prob(40))
 				holder.emote("scream")
 		holder.TakeDamage("chest",20,0)
-		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = 1)
+		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = TRUE)
 
 		switch(remove_stage)
 			if(0)
-				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [holder.name]'s [src.name] securely with [tool].</span>", "<span class='alert'>You attach [holder.name]'s [src.name] securely with [tool].</span>")
+				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [holder.name]'s [src.name] securely with [tool].</span>", SPAN_ALERT("You attach [holder.name]'s [src.name] securely with [tool]."))
 				logTheThing(LOG_COMBAT, tool.the_mob, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
 				logTheThing(LOG_DIARY, tool.the_mob, "staples [constructTarget(holder,"diary")]'s [src.name] back on.", "combat")
 			if(1)
-				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] slices through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You slice through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>")
+				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] slices through the skin and flesh of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You slice through the skin and flesh of [holder.name]'s [src.name] with [tool]."))
 			if(2)
-				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] saws through the bone of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You saw through the bone of [holder.name]'s [src.name] with [tool].</span>")
+				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] saws through the bone of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You saw through the bone of [holder.name]'s [src.name] with [tool]."))
 
 				SPAWN(rand(150,200))
 					if(remove_stage == 2)
 						src.remove(0)
 			if(3)
-				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] cuts through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>")
+				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] cuts through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool]."), SPAN_ALERT("You cut through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool]."))
 				logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(holder,"combat")]'s [src.name].")
 				logTheThing(LOG_DIARY, tool.the_mob, "removes [constructTarget(holder,"diary")]'s [src.name]", "combat")
 				src.remove(0)
@@ -198,11 +198,11 @@
 			var/mob/living/carbon/human/H = hit_atom
 			if (isskeletonlimb(src) && isskeleton(H) && !H.limbs.get_limb(src.slot))
 				src.attach(H)
-				H.visible_message("<span class='alert'>[H] has been hit by [src].</span> <span class='notice'>It fuses instantly with [H]'s empty socket!</span>")
-				playsound(H, 'sound/effects/attach.ogg', 50, 1)
+				H.visible_message("[SPAN_ALERT("[H] has been hit by [src].")] [SPAN_NOTICE("It fuses instantly with [H]'s empty socket!")]")
+				playsound(H, 'sound/effects/attach.ogg', 50, TRUE)
 			else
-				hit_atom.visible_message("<span class='alert'><b>[hit_atom]</b> gets clonked in the face with [src]!</span>")
-				playsound(hit_atom, 'sound/impact_sounds/Flesh_Break_1.ogg', 30, 1)
+				hit_atom.visible_message(SPAN_ALERT("<b>[hit_atom]</b> gets clonked in the face with [src]!"))
+				playsound(hit_atom, 'sound/impact_sounds/Flesh_Break_1.ogg', 30, TRUE)
 				hit_atom.changeStatus("stunned", 2 SECONDS)
 			return
 		..()
@@ -322,22 +322,22 @@
 		if(strangling)
 			if(holder.losebreath < 5) holder.losebreath = 5
 			if(prob(20-rebelliousness))
-				holder.visible_message("<span class='alert'>[holder.name] stops trying to strangle themself.</span>", "<span class='alert'>You manage to pull your [src.name] away from your throat!</span>")
+				holder.visible_message(SPAN_ALERT("[holder.name] stops trying to strangle themself."), SPAN_ALERT("You manage to pull your [src.name] away from your throat!"))
 				strangling = FALSE
 				holder.losebreath -= 5
 			return
 
 		if(prob(rebelliousness*2)) //Emote
-			boutput(holder, "<span class='alert'>Your [src.name] moves by itself!</span>")
+			boutput(holder, SPAN_ALERT("Your [src.name] moves by itself!"))
 			holder.emote(pick("snap", "shrug", "clap", "flap", "aflap", "raisehand", "crackknuckles","rude","gesticulate","wgesticulate","nosepick","flex","facepalm","airquote","flipoff","shakefist"))
 		else if(prob(rebelliousness)) //Slap self
-			boutput(holder, "<span class='alert'>Your [src.name] moves by itself!</span>")
+			boutput(holder, SPAN_ALERT("Your [src.name] moves by itself!"))
 			holder.emote("slap")
 		else if(prob(rebelliousness) && holder.get_eye_blurry() == 0) //Poke own eye
-			holder.visible_message("<span class='alert'>[holder.name] pokes themself in the eye with their [src.name].</span>", "<span class='alert'>Your [src.name] pokes you in the eye!</span>")
+			holder.visible_message(SPAN_ALERT("[holder.name] pokes themself in the eye with their [src.name]."), SPAN_ALERT("Your [src.name] pokes you in the eye!"))
 			holder.change_eye_blurry(10)
 		else if(prob(rebelliousness) && holder.losebreath == 0) //Strangle self
-			holder.visible_message("<span class='alert'>[holder.name] tries to strangle themself with their [src.name].</span>", "<span class='alert'>Your [src.name] tries to strangle you!</span>")
+			holder.visible_message(SPAN_ALERT("[holder.name] tries to strangle themself with their [src.name]."), SPAN_ALERT("Your [src.name] tries to strangle you!"))
 			holder.emote("gasp")
 			holder.losebreath = 5
 			strangling = TRUE
@@ -410,16 +410,16 @@
 			rebelliousness += 1
 
 		if(prob(rebelliousness*2)) //Emote
-			boutput(holder, "<span class='alert'><b>Your [src.name] moves by itself!</b></span>")
+			boutput(holder, SPAN_ALERT("<b>Your [src.name] moves by itself!</b>"))
 			holder.emote(pick("shakebutt", "flap", "aflap","stretch","dance","fart","twitch","twitch_v","flip"))
 		else if(prob(rebelliousness)) //Trip over
-			boutput(holder, "<span class='alert'><b>Your [src.name] moves by itself!</b></span>")
+			boutput(holder, SPAN_ALERT("<b>Your [src.name] moves by itself!</b>"))
 			holder.emote(pick("trip", "collapse"))
 		else if(prob(rebelliousness)) //Slow down
-			boutput(holder, "<span class='alert'><b>Your [src.name] is slowing you down!</b></span>")
+			boutput(holder, SPAN_ALERT("<b>Your [src.name] is slowing you down!</b>"))
 			holder.setStatusMin("slowed", 1 SECOND)
 		else if(prob(rebelliousness)) //Stumble around
-			boutput(holder, "<span class='alert'><b>Your [src.name] won't do what you tell it to!</b></span>")
+			boutput(holder, SPAN_ALERT("<b>Your [src.name] won't do what you tell it to!</b>"))
 			if (holder.misstep_chance < 20)
 				holder.change_misstep_chance(20)
 
@@ -992,7 +992,7 @@
 
 	sever(mob/user)
 		. = ..()
-		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		src.visible_message(SPAN_ALERT("[src] rapidly keratinizes!"))
 		var/obj/item/parts/human_parts/arm/left/claw/newlimb = new(src.loc)
 		newlimb.original_DNA = src.original_DNA
 		newlimb.original_holder = src.original_holder
@@ -1001,7 +1001,7 @@
 
 	remove(show_message)
 		. = ..()
-		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		src.visible_message(SPAN_ALERT("[src] rapidly keratinizes!"))
 		var/obj/item/parts/human_parts/arm/left/claw/newlimb = new(src.loc)
 		newlimb.original_DNA = src.original_DNA
 		newlimb.original_holder = src.original_holder
@@ -1031,7 +1031,7 @@
 
 	sever(mob/user)
 		. = ..()
-		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		src.visible_message(SPAN_ALERT("[src] rapidly keratinizes!"))
 		var/obj/item/parts/human_parts/arm/right/claw/newlimb = new(src.loc)
 		newlimb.original_DNA = src.original_DNA
 		newlimb.original_holder = src.original_holder
@@ -1040,7 +1040,7 @@
 
 	remove(show_message)
 		. = ..()
-		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		src.visible_message(SPAN_ALERT("[src] rapidly keratinizes!"))
 		var/obj/item/parts/human_parts/arm/right/claw/newlimb = new(src.loc)
 		newlimb.original_DNA = src.original_DNA
 		newlimb.original_holder = src.original_holder
@@ -1604,12 +1604,12 @@
 
 	sever(mob/user)
 		. = ..()
-		src.visible_message("<span class='notice'>[src] withers greatly as it falls off!</span>")
+		src.visible_message(SPAN_NOTICE("[src] withers greatly as it falls off!"))
 		src.limb_data = new/datum/limb/brullbar/severed_werewolf(src)
 
 	remove(show_message)
 		. = ..()
-		src.visible_message("<span class='notice'>[src] withers greatly as it falls off!</span>")
+		src.visible_message(SPAN_NOTICE("[src] withers greatly as it falls off!"))
 		src.limb_data = new/datum/limb/brullbar/severed_werewolf(src)
 
 //// THE ACTUAL WOLFLIMBS ////
@@ -1675,7 +1675,7 @@
 	icon = 'icons/mob/vampiric_thrall.dmi'
 	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	kind_of_limb = (LIMB_MUTANT | LIMB_ZOMBIE)
-	limb_type = /datum/limb/zombie
+	limb_type = /datum/limb/zombie/thrall
 
 /obj/item/parts/human_parts/leg/mutant/vampiric_thrall
 	icon = 'icons/mob/vampiric_thrall.dmi'

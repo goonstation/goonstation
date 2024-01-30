@@ -6,15 +6,15 @@ var/list/planetModifiers = list()
 var/list/planetModifiersUsed = list()//Assoc list, type:times used
 var/list/planet_seeds = list()
 
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 /proc/makePlanetLevel()
 	//var/list/turf/planetZ = list()
 	var/startTime = world.timeofday
 	if(!planetZLevel)
-		boutput(world, "<span class='alert'>Skipping Planet Generation!</span>")
+		boutput(world, SPAN_ALERT("Skipping Planet Generation!"))
 		return
 	else
-		boutput(world, "<span class='alert'>Generating Planet Level ...</span>")
+		boutput(world, SPAN_ALERT("Generating Planet Level ..."))
 
 	// SEED zee Planets!!!!
 	for(var/area/map_gen/planet/A in by_type[/area/map_gen])
@@ -70,16 +70,6 @@ var/list/planet_seeds = list()
 			parent_area.overlays += A.overlays
 			for(var/turf/T in A)
 				new parent_area.type(T)
-		else
-			for(var/datum/loadedProperties/prefab in A.prefabs)
-				var/list/turf/prefab_turfs = block(locate(prefab.sourceX, prefab.sourceY, prefab.sourceZ),locate(prefab.maxX, prefab.maxY, prefab.maxZ))
-				var/list/turf/regen_turfs = list()
-				for(var/turf/variableTurf/T in prefab_turfs)
-					regen_turfs += T
-					if(istype(T.loc, /area/space)) //space...
-						new A.type(T)
-				if(length(regen_turfs))
-					A.map_generator.generate_terrain(regen_turfs, reuse_seed=TRUE)
 
 	// // remove temporary areas
 	var/area/A
@@ -109,7 +99,7 @@ var/list/planet_seeds = list()
 		A = get_area(west_turf)
 		new A.type(AT)
 
-	boutput(world, "<span class='alert'>Generated Planet Level in [((world.timeofday - startTime)/10)] seconds!")
+	boutput(world, SPAN_ALERT("Generated Planet Level in [((world.timeofday - startTime)/10)] seconds!"))
 
 /obj/landmark/artemis_planets
 	name = "zlevel"
@@ -174,9 +164,14 @@ DEFINE_PLANET(indigo, "Indigo")
 	var/list/datum/loadedProperties/prefabs = list()
 	var/allow_prefab = TRUE
 	var/generated = FALSE
+	var/area/map_gen/planet/no_prefab/no_prefab_ref
+	var/area/map_gen/planet/no_foreground/occlude_ref
 
 	no_prefab
 		allow_prefab = FALSE
+
+	no_foreground
+		occlude_foreground_parallax_layers = TRUE
 
 /datum/planetData
 	var/name
@@ -220,7 +215,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 /proc/GeneratePlanetChunk(width=null, height=null, prefabs_to_place=1, datum/map_generator/generator=/datum/map_generator/desert_generator, color=null, name=null, use_lrt=TRUE, seed_ore=TRUE, mapgen_flags=null)
 	var/turf/T
-
+	if(istext(generator)) generator = text2path(generator)
 	if(ispath(generator)) generator = new generator()
 	if(!width)	width = rand(80,130)
 	if(!height)	height = rand(80,130)
@@ -239,45 +234,30 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 	//Generate and cleanup region
 	var/datum/allocated_region/region = global.region_allocator.allocate(width, height)
-	var/area/planet_area = new /area/map_gen/planet
+	var/area/map_gen/planet/planet_area = new/area/map_gen/planet
+	planet_area.no_prefab_ref = new/area/map_gen/planet/no_prefab
+	planet_area.occlude_ref = new/area/map_gen/planet/no_foreground
+
 	planet_area.name = name
+	planet_area.no_prefab_ref.name = name
+	planet_area.occlude_ref.name = name
 	region.clean_up(main_area=planet_area)
 
 	//Parallax it?
 	if(istype(generator, /datum/map_generator/snow_generator) && prob(15) )
-		var/angle = rand(110,250)
-		var/scroll_speed = rand(50, 100)
-		var/color_alpha = rand(30,60)/100
-		var/color_matrix = list(
-								1, 0, 0, color_alpha,
-								0, 1, 0, color_alpha,
-								0, 0, 1, color_alpha,
-								0, 0, 0, 1,
-								0, 0, 0, -1)
-		planet_area.area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/foreground/snow=list(color=color_matrix, scroll_speed=scroll_speed, scroll_angle=angle),
-		/atom/movable/screen/parallax_layer/foreground/snow/sparse=list(color=color_matrix, scroll_speed=scroll_speed+25, scroll_angle=angle),
-		)
-	else if(istype(generator, /datum/map_generator/desert_generator)&& prob(15) )
-		var/angle = rand(110,250)
-		var/scroll_speed = rand(75, 175)
-		var/color_alpha = rand(40,80)/100
-		var/color_matrix = list(
-								1, 0, 0, color_alpha,
-								0, 1, 0, color_alpha,
-								0, 0, 1, color_alpha,
-								0, 0, 0, 1,
-								0, 0, 0, -1)
-		planet_area.area_parallax_layers = list(
-			/atom/movable/screen/parallax_layer/foreground/dust=list(color=color_matrix, scroll_speed=scroll_speed, scroll_angle=angle),
-			/atom/movable/screen/parallax_layer/foreground/dust/sparse=list(color=color_matrix, scroll_speed=scroll_speed*1.5, scroll_angle=angle)
-		)
+		planet_area.area_parallax_render_source_group = new /datum/parallax_render_source_group/planet/snow()
+
+	else if(istype(generator, /datum/map_generator/desert_generator) && prob(15) )
+		planet_area.area_parallax_render_source_group = new /datum/parallax_render_source_group/planet/desert()
+
+	else if(istype(generator, /datum/map_generator/forest_generator) && prob(95))
+		planet_area.area_parallax_render_source_group = new /datum/parallax_render_source_group/planet/forest()
 
 	// Occlude overlays on edges
-	if(planet_area.area_parallax_layers)
+	if(planet_area.area_parallax_render_source_group)
+		planet_area.no_prefab_ref.area_parallax_render_source_group = planet_area.area_parallax_render_source_group
 		for(var/turf/cordon/CT in planet_area)
 			new/obj/foreground_parallax_occlusion(CT)
-
 
 	//Populate with Biome!
 	var/turfs = block(locate(region.bottom_left.x+1, region.bottom_left.y+1, region.bottom_left.z), locate(region.bottom_left.x+region.width-2, region.bottom_left.y+region.height-2, region.bottom_left.z) )
@@ -289,7 +269,8 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 		for(var/y in 1 to region.height)
 			if(x == 1 || y == 1 || x == region.width || y == region.height)
 				T = region.turf_at(x, y)
-				border_area.contents += T
+				if(T)
+					border_area.contents += T
 
 			if (current_state >= GAME_STATE_PLAYING)
 				LAGCHECK(LAG_LOW)
@@ -309,16 +290,21 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 	PLANET_LOCATIONS.add_planet(region, new /datum/planetData(name, ambient_light, generator))
 
+	var/failsafe = 800
 	//Make it interesting, slap some prefabs on that thing
-	for (var/n = 1, n <= prefabs_to_place, n++)
+	for (var/n = 1, n <= prefabs_to_place && failsafe-- > 0)
 		var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet)
 		if (P)
 			var/maxX = (region.bottom_left.x + region.width - P.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (region.bottom_left.y + region.height - P.prefabSizeY - AST_MAPBORDER)
 			var/stop = 0
 			var/count= 0
-			var/maxTries = (P.required ? 200:50)
-			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+			var/maxTries = (P.required ? 200:80)
+
+			if(region.bottom_left.x+AST_MAPBORDER >= maxX || region.bottom_left.y+AST_MAPBORDER >= maxY)
+				continue
+
+			while (!stop && count < maxTries && failsafe-- > 0) //Kinda brute forcing it. Dumb but whatever.
 				var/turf/target = locate(rand(region.bottom_left.x+AST_MAPBORDER, maxX), rand(region.bottom_left.y+AST_MAPBORDER,maxY), region.bottom_left.z)
 				if(!P.check_biome_requirements(target))
 					count++
@@ -336,6 +322,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 						LAGCHECK(LAG_LOW)
 
 					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+					n++
 					stop = 1
 				else
 					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type] failed due to blocked area. [target] @ [log_loc(target)]")
@@ -387,6 +374,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 	message_admins("Planet region generated at [log_loc(region.bottom_left)] with [generator].")
 
 	return turfs
+
 /datum/map_generator/asteroids
 	clear_turf_type = /turf/space
 

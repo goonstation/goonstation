@@ -262,7 +262,8 @@
 "hI" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	pixel_y = -1
+	pixel_y = -1;
+	color = "b4b4b4"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/discount_dans_asteroid)
@@ -605,7 +606,7 @@
 /turf/simulated/floor/airless/grime,
 /area/prefab/discount_dans_asteroid)
 "xw" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/prefab/discount_dans_asteroid)
 "xz" = (
@@ -683,7 +684,8 @@
 "Bg" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	pixel_y = -1
+	pixel_y = -1;
+	color = "b4b4b4"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/discount_dans_asteroid)
@@ -762,8 +764,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /turf/simulated/floor/plating/scorched,
@@ -878,7 +880,7 @@
 	},
 /area/prefab/discount_dans_asteroid)
 "JH" = (
-/obj/machinery/atmospherics/pipe/tank/air{
+/obj/machinery/atmospherics/unary/tank/air{
 	dir = 1
 	},
 /turf/simulated/floor/airless/snow,
@@ -973,7 +975,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
 	pixel_y = -1;
-	tag = "icon-intact (NORTHEAST)"
+	tag = "icon-intact (NORTHEAST)";
+	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -987,7 +990,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
 	pixel_y = -1;
-	tag = "icon-intact-f (NORTHWEST)"
+	tag = "icon-intact-f (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -1220,7 +1224,7 @@
 /turf/simulated/floor/airless/neutral,
 /area/prefab/discount_dans_asteroid)
 "Tk" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/nw,

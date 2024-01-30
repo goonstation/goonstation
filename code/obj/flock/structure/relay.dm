@@ -46,6 +46,7 @@ TYPEINFO(/obj/flock_structure/relay)
 	..()
 	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")
 	if(src.flock)
+		src.flock.last_relay = src
 		src.flock.stats.built_relay = TRUE
 	src.info_tag.set_tag_offset(64, -4) // to account for 5x5 sprite
 	src.info_tag.set_info_tag("Completion time: [round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))] seconds")
@@ -60,7 +61,7 @@ TYPEINFO(/obj/flock_structure/relay)
 			src.shuttle_departure_delayed = TRUE
 			command_alert("Emergency shuttle departure delayed due to anomalous radio signal interference.")
 
-	boutput(src.flock?.flockmind, "<span class='alert'><b>You pull together the collective force of your Flock to transmit the Signal. If the Relay is destroyed, you're dead!</b></span>")
+	boutput(src.flock?.flockmind, SPAN_ALERT("<b>You pull together the collective force of your Flock to transmit the Signal. If the Relay is destroyed, you're dead!</b>"))
 	flock_speak(null, "RELAY CONSTRUCTED! DEFEND THE RELAY!!", src.flock)
 	play_sound()
 	SPAWN(10 SECONDS)
@@ -92,15 +93,18 @@ TYPEINFO(/obj/flock_structure/relay)
 	if (!src.shuttle_departure_delayed)
 		emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 
+/obj/flock_structure/relay/proc/get_time_left()
+	return max(0, round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started)))
+
 /obj/flock_structure/relay/get_desc()
-	var/time_remaining = round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))
+	var/time_remaining = src.get_time_left()
 	if(time_remaining > 0)
 		return "<br><span class='flocksay bold'>\[[time_remaining] second[s_es(time_remaining)] remaining until broadcast.\]</span>"
 
 /obj/flock_structure/relay/building_specific_info()
-	var/time_remaining = round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))
+	var/time_remaining = src.get_time_left()
 	if(time_remaining > 0)
-		return "<b>Approximately <span class='italic'>[time_remaining]</span> second[time_remaining == 1 ? "" : "s"] left until broadcast.</b>"
+		return "<b>Approximately [SPAN_ITALIC("[time_remaining]")] second[time_remaining == 1 ? "" : "s"] left until broadcast.</b>"
 	else
 		return "<b><i>BROADCASTING IN PROGRESS</i></b>"
 
@@ -169,9 +173,9 @@ TYPEINFO(/obj/flock_structure/relay)
 				emergency_shuttle.incall()
 				emergency_shuttle.can_recall = FALSE
 				emergency_shuttle.settimeleft(60) // cut the time down to keep some sense of urgency
-				boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Hostile transmission intercepted. Sending rapid response emergency shuttle.</span>")
-				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft())] seconds.</B></span>")
+				boutput(world, SPAN_NOTICE("<B>Alert: The emergency shuttle has been called.</B>"))
+				boutput(world, SPAN_NOTICE("- - - <b>Reason:</b> Hostile transmission intercepted. Sending rapid response emergency shuttle."))
+				boutput(world, SPAN_NOTICE("<B>It will arrive in [round(emergency_shuttle.timeleft())] seconds.</B>"))
 		sleep(2 SECONDS)
 		for(var/x = -2 to 2)
 			for(var/y = -2 to 2)
@@ -202,6 +206,7 @@ TYPEINFO(/obj/flock_structure/relay)
 		radio.frequency = rand(R_FREQ_MINIMUM, 10000)
 		radio.secure_frequencies = list()
 		radio.set_secure_frequencies()
+		no_more_radios = TRUE
 	qdel(entrypoint)
 
 /obj/flock_structure/relay/takeDamage(var/damageType, var/amount)

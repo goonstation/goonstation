@@ -33,7 +33,7 @@
 
 			//wolfing removes all the implants in you
 			for(var/obj/item/implant/I in M)
-				boutput(M, "<span class='alert'>\an [I] falls out of your abdomen.</span>")
+				boutput(M, SPAN_ALERT("\an [I] falls out of your abdomen."))
 				I.on_remove(M)
 				M.implant.Remove(I)
 				I.set_loc(M.loc)
@@ -46,30 +46,30 @@
 				if (istype(M?.mutantrace, /datum/mutantrace/werewolf))
 					M.emote("howl")
 
-			M.visible_message("<span class='alert'><B>[M] [pick("metamorphizes", "transforms", "changes")] into a werewolf! Holy shit!</B></span>")
+			M.visible_message(SPAN_ALERT("<B>[M] [pick("metamorphizes", "transforms", "changes")] into a werewolf! Holy shit!</B>"))
 			if (M.find_ailment_by_type(/datum/ailment/disease/lycanthropy))
-				boutput(M, "<span class='alert'><h2>You've been turned into a werewolf!</h2> Your transformation was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one.</span>")
+				boutput(M, SPAN_ALERT("<h2>You've been turned into a werewolf!</h2> Your transformation was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one."))
 			else
-				boutput(M, "<span class='notice'><h3>You are now a werewolf. You can remain in this form indefinitely or change back at any time.</span></h3>")
+				boutput(M, "[SPAN_NOTICE("<h3>You are now a werewolf. You can remain in this form indefinitely or change back at any time.")]</h3>")
 
 			if (M.hasStatus("handcuffed"))
 				if (M.handcuffs.werewolf_cant_rip())
-					boutput(M, "<span class='alert'>You can't seem to break free from these silver handcuffs.</span>")
+					boutput(M, SPAN_ALERT("You can't seem to break free from these silver handcuffs."))
 				else
-					M.visible_message("<span class='alert'><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")
+					M.visible_message(SPAN_ALERT("<B>[M] rips apart the [M.handcuffs] with pure brute strength!</b>"))
 					M.handcuffs.destroy_handcuffs(M)
 
 			which_way = 0
 
 		// iswolf?
 		else
-			boutput(M, "<span class='notice'><h3>You transform back into your original form.</span></h3>")
+			boutput(M, "[SPAN_NOTICE("<h3>You transform back into your original form.")]</h3>")
 
 			M.set_mutantrace(M.coreMR) // return to monke/bove/herpe/etc
 
 			//Changing back removes all the implants in you, wolves should have a non-surgery way to remove bullets. considering silver is so harmful
 			for(var/obj/item/implant/I in M)
-				boutput(M, "<span class='alert'>\an [I] falls out of your abdomen.</span>")
+				boutput(M, SPAN_ALERT("\an [I] falls out of your abdomen."))
 				I.on_remove(M)
 				M.implant.Remove(I)
 				I.set_loc(M.loc)
@@ -96,7 +96,7 @@
 		return 0
 
 	if (check_target_immunity(target) == 1)
-		target.visible_message("<span class='alert'><B>[M]'s swipe bounces off of [target] uselessly!</B></span>")
+		target.visible_message(SPAN_ALERT("<B>[M]'s swipe bounces off of [target] uselessly!</B>"))
 		return 0
 	M.werewolf_tainted_saliva_transfer(target)
 
@@ -125,39 +125,39 @@
 					G.blood_DNA = HH.bioHolder.Uid
 					G.blood_type = HH.bioHolder.bloodType
 
-				M.visible_message("<span class='alert'><B>[M] messily [pick("rips", "tears")] out and [pick("eats", "devours", "wolfs down", "chows on")] some of [HH]'s [pick("guts", "intestines", "entrails")]!</B></span>")
+				M.visible_message(SPAN_ALERT("<B>[M] messily [pick("rips", "tears")] out and [pick("eats", "devours", "wolfs down", "chows on")] some of [HH]'s [pick("guts", "intestines", "entrails")]!</B>"))
 
 			else
 				HH.spread_blood_clothes(HH)
 
-				M.visible_message("<span class='alert'><B>[M] [pick("chomps on", "chews off a chunk of", "gnaws on")] [HH]'s [pick("right arm", "left arm", "head", "right leg", "left leg")]!</B></span>")
+				M.visible_message(SPAN_ALERT("<B>[M] [pick("chomps on", "chews off a chunk of", "gnaws on")] [HH]'s [pick("right arm", "left arm", "head", "right leg", "left leg")]!</B>"))
 
 			if (isnpcmonkey(HH))
-				boutput(M, "<span class='alert'>Monkey flesh just isn't the real deal...</span>")
+				boutput(M, SPAN_ALERT("Monkey flesh just isn't the real deal..."))
 				healing /= 2
 			else if (isdead(HH))
-				boutput(M, "<span class='alert'>Fresh meat would be much preferable to this cadaver...</span>")
+				boutput(M, SPAN_ALERT("Fresh meat would be much preferable to this cadaver..."))
 				healing /= 2
 			else if (HH.health < -150)
-				boutput(M, "<span class='alert'>[target] is pretty mangled. There's not a lot of flesh left...</span>")
+				boutput(M, SPAN_ALERT("[target] is pretty mangled. There's not a lot of flesh left..."))
 				healing /= 1.5
 			else
 				if (iscluwne(HH))
-					boutput(M, "<span class='alert'>That tasted awful!</span>")
+					boutput(M, SPAN_ALERT("That tasted awful!"))
 					healing /= 2
 					M.take_toxin_damage(5)
 				else if (iswerewolf(HH) || ishunter(HH) || isabomination(HH))
-					boutput(M, "<span class='notice'>That tasted fantastic!</span>")
+					boutput(M, SPAN_NOTICE("That tasted fantastic!"))
 					healing *= 2
 				else if (HH.nutrition > 100)
-					boutput(M, "<span class='notice'>That tasted amazing!</span>")
+					boutput(M, SPAN_NOTICE("That tasted amazing!"))
 					M.unlock_medal("Space Ham", 1)
 					healing *= 2
 				else if (HH.mind && HH.mind.assigned_role == "Clown")
-					boutput(M, "<span class='notice'>That tasted funny, huh.</span>")
+					boutput(M, SPAN_NOTICE("That tasted funny, huh."))
 					M.unlock_medal("That tasted funny", 1)
 				else
-					boutput(M, "<span class='notice'>That tasted good!</span>")
+					boutput(M, SPAN_NOTICE("That tasted good!"))
 					M.unlock_medal("Space Ham", 1) //new way to acquire
 
 			HH.add_fingerprint(M) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit.
@@ -202,20 +202,20 @@
 					if (HH.bioHolder && HH.bioHolder.Uid && HH.bioHolder.bloodType)
 						G.blood_DNA = HH.bioHolder.Uid
 						G.blood_type = HH.bioHolder.bloodType
-					M.visible_message("<span class='alert'><B>[M] sinks its teeth into [target]! !</B></span>")
+					M.visible_message(SPAN_ALERT("<B>[M] sinks its teeth into [target]! !</B>"))
 				HH.add_fingerprint(M) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit.
 				M.werewolf_audio_effects(HH, "feast")
 				HH.setStatus("weakened",rand(3 SECONDS, 6 SECONDS))
-				if (prob(70) && HH.stat != 2)
+				if (prob(70) && !isdead(HH))
 					HH.emote("scream")
 		if ("pounce")
 			if(isobserver(target) || isintangible(target))
 				return
 			wrestler_knockdown(M, target, 1)
-			M.visible_message("<span class='alert'><B>[M] barrels through the air, slashing [target]!</B></span>")
+			M.visible_message(SPAN_ALERT("<B>[M] barrels through the air, slashing [target]!</B>"))
 			damage += rand(2,8)
 			playsound(M.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-			if (prob(33) && target.stat != 2)
+			if (prob(33) && !isdead(target))
 				target.emote("scream")
 		if ("thrash")
 			if (prob(75))
@@ -227,7 +227,7 @@
 
 			if (prob(60)) playsound(M.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
 			if (prob(75)) target.setStatus("weakened", 3 SECONDS)
-			if (prob(33) && target.stat != 2)
+			if (prob(33) && !isdead(target))
 				target.emote("scream")
 
 		else
@@ -286,35 +286,11 @@
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/atom/movable/screen/ability/topBar/werewolf
-	clicked(params)
-		var/datum/targetable/werewolf/spell = owner
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
-			return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr.targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (world.time < spell.last_cast)
-				return
-			usr.targeting_ability = owner
-			usr.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-		return
-
 /datum/abilityHolder/werewolf
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Werewolf"
-	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
+	notEnoughPointsMessage = SPAN_ALERT("You aren't strong enough to use this ability.")
 	var/datum/objective/specialist/werewolf/feed/feed_objective = null
 	var/datum/reagents/tainted_saliva_reservoir = null
 	var/awaken_time //don't really need this here, but admins might want to know when the werewolf's awaken time is.
@@ -336,9 +312,9 @@
 				qdel(H.sims)
 				H.sims = new /datum/simsHolder/rp/wolf(H)
 
-	onRemove()
+	onRemove(mob/from_who)
 		. = ..()
-		var/mob/living/carbon/human/H = src.owner
+		var/mob/living/carbon/human/H = from_who
 		if (istype(H.sims, /datum/simsHolder/rp/wolf))
 			qdel(H.sims)
 			H.sims = new /datum/simsHolder/rp(H)
@@ -373,37 +349,6 @@
 	var/not_when_handcuffed = 0
 	var/werewolf_only = 0
 
-	New()
-		..()
-		var/atom/movable/screen/ability/topBar/werewolf/B = new /atom/movable/screen/ability/topBar/werewolf(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		B.name = src.name
-		B.desc = src.desc
-		src.object = B
-		return
-
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/werewolf()
-			object.icon = src.icon
-			object.owner = src
-		if (src.last_cast > world.time)
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
-			object.icon_state = src.icon_state + "_cd"
-		else
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt]"
-			object.icon_state = src.icon_state
-		return
-
 	proc/incapacitation_check(var/stunned_only_is_okay = 0)
 		if (!holder)
 			return 0
@@ -436,24 +381,28 @@
 			return 0
 
 		if (!ishuman(M)) // Only humans use mutantrace datums.
-			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
+			boutput(M, SPAN_ALERT("You cannot use any powers in your current form."))
 			return 0
 
 		if (M.transforming)
-			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
+			boutput(M, SPAN_ALERT("You can't use any powers right now."))
 			return 0
 
 		if (werewolf_only == 1 && !iswerewolf(M))
-			boutput(M, "<span class='alert'>You must be in your wolf form to use this ability.</span>")
+			boutput(M, SPAN_ALERT("You must be in your wolf form to use this ability."))
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
 			return 0
+
+		if (!isturf(src.holder.owner.loc))
+			boutput(src.holder.owner, SPAN_ALERT("You can't use this ability here."))
+			return FALSE
 
 		return 1
 

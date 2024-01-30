@@ -30,14 +30,24 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //------------ OPTIONS TO GO FAST ------------//
 
-//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
-//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
+//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the tiny map Devtest, no other zlevels. Boots way faster
+
+//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
+
+//#define SKIP_FEA_SETUP // Skip setting up atmospheric system
+//#define SKIP_Z5_SETUP // Skip generation of mining level
+//#define SKIP_PLANETS_SETUP // Skip planet generation (for Artemis)
+//#define SKIP_CAMERA_COVERAGE // Skip calculating security camera coverage
+//#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME // Skip changelogs
+//#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
 //#define NO_COOLDOWNS // disables all /datum/targetable cooldowns
 //#define BONUS_POINTS // gives a bunch of starting points to various abilities/uplinks/weapon vendors
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF // causes has_medal to always return true - good for testing medal rewards etc.
+//#define SHOW_ME_STATUSES // incredibly hacky visible status effects
+//#define ME_AND_MY_40_ALT_ACCOUNTS // Override game mode minimum player requirements for testing revs, nukies etc.
 
 //#define STOP_DISTRACTING_ME //All of the below
 
@@ -46,7 +56,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define BAD_MONKEY_NO_BANANA // Prevents landmark monkeys from spawning- monkeys can still be vended etc
 //#define CLONING_IS_A_SIN // Don't prebake clones
 //#define CLONING_IS_INSTANT //Clonepods fully heal the clone instantly
-//#define I_KNOW_WHAT_IM_DOING_PROBABLY // Suppresses gottagofast warning about only using one z-level.
 //#define LOW_SECURITY // Deletes turrets
 //#define NO_CRITTERS // Deletes mob critters
 //#define NO_RANDOM_ROOMS // Don't generate random rooms. Random room areas will be left blank and the landmark will be visible
@@ -55,6 +64,8 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define I_AM_HACKERMAN // Lets you varedit things you normally couldn't (admin holders, server config)
 //#define CHECK_MORE_RUNTIMES // Enables checking for some additional errors which might be too costly on live server
 //#define QUICK_MOB_DELETION // Enables deleting mobs with build mode right click on obj place mode
+//#define SHUT_UP_ABOUT_MY_PAY // disables PDA messages from the wagesystem
+//#define FUCK_OFF_WITH_THE_MAIL // Disables random crew mail system
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
@@ -98,10 +109,6 @@ o+`        `-` ``..-:yooos-..----------..`
 // (during that time the server will be frozen).
 //#define LOG_HARD_DELETE_REFERENCES
 //#define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
-// The same thing but powered by extools. Better, harder, faster, stronger.
-// You'll need an extools version that has the right stuff in it to make this work.
-//#define REFERENCE_TRACKING
-//#define AUTO_REFERENCE_TRACKING_ON_HARD_DEL
 
 // Toggle this to turn .dispose() into qdel( ). Useful for trying to find lingering references locally.
 //#define DISPOSE_IS_QDEL
@@ -110,36 +117,40 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define USE_PERSPECTIVE_EDITOR_WALLS
 
 //------------- MAP OVERRIDES -------------//
+
+//#define MAP_OVERRIDE_DEVTEST      // Developer Testing map, by cringe
+
 //-------Special Events:
-//#define MAP_OVERRIDE_CONSTRUCTION	// Construction mode
-//#define MAP_OVERRIDE_POD_WARS   	// 500x500 Pod Wars map
-//#define MAP_OVERRIDE_EVENT      	// Misc. event maps
-//#define MAP_OVERRIDE_PAMGOC				// Pamgoc, cogmaP
-//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
+//#define MAP_OVERRIDE_CONSTRUCTION // Construction mode
+//#define MAP_OVERRIDE_POD_WARS     // 500x500 Pod Wars map
+//#define MAP_OVERRIDE_EVENT        // Misc. event maps
+//#define MAP_OVERRIDE_PAMGOC       // ilaP yB ,1 pamgoC (pamgoc by pali)
+//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap, by Overtone
 
 //-------Rotation maps:
-//#define MAP_OVERRIDE_COGMAP				// Cogmap1, by Dr. Cogwerks
-//#define MAP_OVERRIDE_COGMAP2			// Cogmap2, by Dr. Cogwerks
-//#define MAP_OVERRIDE_DONUT2				// Updated Donut2, by committee. Currently managed by Sord.
-//#define MAP_OVERRIDE_DONUT3				// Donut3 by Ryumi
-//#define MAP_OVERRIDE_KONDARU			// Kondaru by Kubius
-//#define MAP_OVERRIDE_ATLAS				// Atlas by Gannets (and Kubius)
-//#define MAP_OVERRIDE_CLARION			// Used to be Destiny's Alt. By Dionsu and a69andahalf.
-//#define MAP_OVERRIDE_OSHAN				// Oshan by committee
-//#define MAP_OVERRIDE_NADIR				// Nadir Extraction Site by Kubius
+//#define MAP_OVERRIDE_COGMAP       // Cogmap1, by Dr. Cogwerks
+//#define MAP_OVERRIDE_COGMAP2      // Cogmap2, by Dr. Cogwerks
+//#define MAP_OVERRIDE_DONUT2       // Updated Donut Station 2, by committee.
+//#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi
+//#define MAP_OVERRIDE_KONDARU      // Kondaru Station, by Kubius
+//#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
+//#define MAP_OVERRIDE_CLARION      // NSS Clarion (Used to be Destiny's Alt), by Dionsu and a69andahalf.
+//#define MAP_OVERRIDE_OSHAN        // Oshan Laboratory, Abzu, by committee
+//#define MAP_OVERRIDE_NADIR        // Nadir Extraction Site by Kubius
 
 //-------Discontinued or gimmick maps:
-//#define MAP_OVERRIDE_MANTA				// manta map
-//#define MAP_OVERRIDE_DESTINY			// Destiny (RP)
-//#define MAP_OVERRIDE_HORIZON			// Horizon by Warcrimes
-//#define MAP_OVERRIDE_CRASH				// Stupid Crash Gimmick Map
-//#define MAP_OVERRIDE_MUSHROOM			// Updated Mushroom
-//#define MAP_OVERRIDE_TRUNKMAP			// Updated Ovary
-//#define MAP_OVERRIDE_DENSITY			// Density, the smallest map
-//#define MAP_OVERRIDE_OZYMANDIAS		// Ozymandias, the largest map (sort of)
-//#define MAP_OVERRIDE_FLEET				// Multiple stations stuck together
-//#define MAP_OVERRIDE_ICARUS
-//#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
+//#define MAP_OVERRIDE_MANTA        // NSS Manta by Azungar
+//#define MAP_OVERRIDE_DESTINY      // NSS Destiny (Originally for RP servers only)
+//#define MAP_OVERRIDE_HORIZON      // NSS Horizon, by Warcrimes
+//#define MAP_OVERRIDE_CRASH        // Stupid Crash Gimmick Map
+//#define MAP_OVERRIDE_MUSHROOM     // Updated Mushroom
+//#define MAP_OVERRIDE_TRUNKMAP     // Updated Devstation/Ovary/Trunkmap
+//#define MAP_OVERRIDE_DENSITY      // Density (smallest map)
+//#define MAP_OVERRIDE_DENSITY2     // Density2 (second smallest map), by Emily
+//#define MAP_OVERRIDE_OZYMANDIAS   // Ozymandias (large map), by Kubius
+//#define MAP_OVERRIDE_FLEET        // Bellerophon fleet (Multiple stations stuck together), by Kubius
+//#define MAP_OVERRIDE_ICARUS       // Icarus by Kubius
+//#define MAP_OVERRIDE_GEHENNA      // A WIP map by Warcrimes (DO NOT USE)
 
 
 //------------ Unit Test Framework ------------//
@@ -155,11 +166,15 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define RP_MODE 1
 //#define HALLOWEEN 1
-//#define AUTUMN 1
+//#define SEASON_WINTER 1
+//#define SEASON_SPRING 1
+//#define SEASON_SUMMER 1
+//#define SEASON_AUTUMN 1
 //#define XMAS 1
 //#define CANADADAY 1
 //#define FOOTBALL_MODE 1
-
+//#define ENABLE_ARTEMIS // Enables artemis for development
+//#define MIDSUMMER 1
 
 //Don't comment this ty
 #ifdef STOP_DISTRACTING_ME
@@ -168,7 +183,6 @@ o+`        `-` ``..-:yooos-..----------..`
 #define BAD_MONKEY_NO_BANANA
 #define CLONING_IS_A_SIN
 #define CLONING_IS_INSTANT
-#define I_KNOW_WHAT_IM_DOING_PROBABLY
 #define LOW_SECURITY
 #define NO_CRITTERS
 #define NO_RANDOM_ROOMS
@@ -177,6 +191,17 @@ o+`        `-` ``..-:yooos-..----------..`
 #define I_AM_HACKERMAN
 #define CHECK_MORE_RUNTIMES
 #define QUICK_MOB_DELETION
+#define SHUT_UP_ABOUT_MY_PAY
+#define FUCK_OFF_WITH_THE_MAIL
+#endif
+
+#ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
+#define SKIP_FEA_SETUP
+#define SKIP_Z5_SETUP
+#define SKIP_PLANETS_SETUP
+#define SKIP_CAMERA_COVERAGE
+#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
+#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 #endif
 
 //----- Testmerge & Revision Information -----//

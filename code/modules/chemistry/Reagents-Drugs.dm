@@ -49,9 +49,9 @@ datum
 					if (check < 8 && H.bioHolder.mobAppearance.customization_second.id != "tramp") // M.is_hobo = very yes
 						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/tramp
 						H.set_face_icon_dirty()
-						boutput(M, "<span class='alert'><b>You feel gruff!</b></span>")
+						boutput(M, SPAN_ALERT("<b>You feel gruff!</b>"))
 						SPAWN(0.3 SECONDS)
-							M.visible_message("<span class='alert'><b>[M.name]</b> has a wild look in their eyes!</span>")
+							M.visible_message(SPAN_ALERT("<b>[M.name]</b> has a wild look in their eyes!"))
 					if(check < 60)
 						if(H.getStatusDuration("paralysis")) H.delStatus("paralysis")
 						H.delStatus("stunned")
@@ -67,23 +67,23 @@ datum
 
 				if(check < 8)
 					M.reagents.add_reagent(pick("methamphetamine", "crank", "neurotoxin"), rand(1,5))
-					M.visible_message("<span class='alert'><b>[M.name]</b> scratches at something under their [issilicon(M) ? "chassis" : "skin"]!</span>")
+					M.visible_message(SPAN_ALERT("<b>[M.name]</b> scratches at something under their [issilicon(M) ? "chassis" : "skin"]!"))
 					random_brute_damage(M, 5 * mult)
 				else if (check < 16)
 					switch(rand(1,2))
 						if(1)
 							if(prob(20))
 								fake_attackEx(M, 'icons/misc/critter.dmi', "death", "death")
-								boutput(M, "<span class='alert'><b>OH GOD LOOK OUT!!!</b>!</span>")
+								boutput(M, SPAN_ALERT("<b>OH GOD LOOK OUT!!!</b>!"))
 								M.emote("scream")
 								M.playsound_local(M.loc, 'sound/musical_instruments/Bell_Huge_1.ogg', 50, 1)
 							else if(prob(50))
 								fake_attackEx(M, 'icons/misc/critter.dmi', "mimicface", "smiling thing")
-								boutput(M, "<span class='alert'><b>The smiling thing</b> laughs!</span>")
+								boutput(M, SPAN_ALERT("<b>The smiling thing</b> laughs!"))
 								M.playsound_local(M.loc, pick('sound/voice/cluwnelaugh1.ogg', 'sound/voice/cluwnelaugh2.ogg', 'sound/voice/cluwnelaugh3.ogg'), 35, 1)
 							else
 								M.playsound_local(M.loc, pick('sound/machines/ArtifactEld1.ogg', 'sound/machines/ArtifactEld2.ogg'), 50, 1)
-								boutput(M, "<span class='alert'><b>You hear something strange behind you...</b></span>")
+								boutput(M, SPAN_ALERT("<b>You hear something strange behind you...</b>"))
 								var/ants = rand(1,3)
 								for(var/i = 0, i < ants, i++)
 									fake_attackEx(M, 'icons/effects/genetics.dmi', "psyche", "stranger")
@@ -108,16 +108,16 @@ datum
 									halluc_name = pick("mom", "dad", "why are they burning WHY")
 							fake_attackEx(M, 'icons/mob/human.dmi', halluc_state, halluc_name)
 				else if(check < 24)
-					boutput(M, "<span class='alert'><b>They're coming for you!</b></span>")
+					boutput(M, SPAN_ALERT("<b>They're coming for you!</b>"))
 				else if(check < 28)
-					boutput(M, "<span class='alert'><b>THEY'RE GONNA GET YOU!</b></span>")
+					boutput(M, SPAN_ALERT("<b>THEY'RE GONNA GET YOU!</b>"))
 				..()
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if(method == INGEST)
-					boutput(M, "<span class='alert'><font face='[pick("Curlz MT", "Comic Sans MS")]' size='[rand(4,6)]'>You feel FUCKED UP!!!!!!</font></span>")
+					boutput(M, SPAN_ALERT("<font face='[pick("Curlz MT", "Comic Sans MS")]' size='[rand(4,6)]'>You feel FUCKED UP!!!!!!</font>"))
 					M.playsound_local(M.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 					M.emote("faint")
 					//var/mob/living/carbon/human/H = M
@@ -126,20 +126,20 @@ datum
 					M.take_toxin_damage(5)
 					M.take_brain_damage(10)
 				else
-					boutput(M, "<span class='notice'>You feel a bit more salty than usual.</span>")
+					boutput(M, SPAN_NOTICE("You feel a bit more salty than usual."))
 				return
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if (effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]</b> flails around like a lunatic!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> flails around like a lunatic!"))
 						M.change_misstep_chance(25 * mult)
 						M.make_jittery(10)
 						M.emote("scream")
 						M.reagents.add_reagent("salts1", 5 * mult)
 					else if (effect <= 4)
-						M.visible_message("<span class='alert'><b>[M.name]'s</b> eyes dilate!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> eyes dilate!"))
 						M.emote("twitch_s")
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(1 * mult)
@@ -151,14 +151,14 @@ datum
 						M.reagents.add_reagent("salts1", 5 * mult)
 				else if (severity == 2)
 					if (effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]'s</b> eyes dilate!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> eyes dilate!"))
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(1 * mult)
 						M.setStatusMin("stunned", 4 SECONDS * mult)
 						M.change_eye_blurry(7, 7)
 						M.reagents.add_reagent("salts1", 5 * mult)
 					else if (effect <= 4)
-						M.visible_message("<span class='alert'><b>[M.name]</b> convulses violently and falls to the floor!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> convulses violently and falls to the floor!"))
 						M.make_jittery(50)
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(1 * mult)
@@ -167,39 +167,10 @@ datum
 						M.reagents.add_reagent("salts1", 5 * mult)
 					else if (effect <= 7)
 						M.emote("scream")
-						M.visible_message("<span class='alert'><b>[M.name]</b> tears at their own skin!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> tears at their own skin!"))
 						random_brute_damage(M, 5 * mult)
 						M.reagents.add_reagent("salts1", 5 * mult)
 						M.emote("twitch")
-
-
-		drug/jenkem
-			name = "jenkem"
-			id = "jenkem"
-			description = "Jenkem is a prison drug made from fermenting feces in a solution of urine. Extremely disgusting."
-			reagent_state = LIQUID
-			fluid_r = 100
-			fluid_g = 70
-			fluid_b = 0
-			transparency = 255
-			addiction_prob = 5//30
-			addiction_min = 5
-			value = 2 // 1 1  :I
-			viscosity = 0.4
-			bladder_value = -0.03
-			hunger_value = -0.04
-			hygiene_value = -0.5
-			thirst_value = -0.04
-			energy_value = -0.04
-
-			on_mob_life(var/mob/M, var/mult = 1)
-				if(!M) M = holder.my_atom
-				M.make_dizzy(5 * mult)
-				if(prob(10))
-					M.emote(pick("twitch","drool","moan"))
-					M.take_toxin_damage(1 * mult)
-				..()
-				return
 
 		drug/crank
 			name = "crank" // sort of a shitty version of methamphetamine that can be made by assistants
@@ -225,14 +196,14 @@ datum
 				if(!M) M = holder.my_atom
 				if(probmult(15)) M.emote(pick("twitch", "twitch_s", "grumble", "laugh"))
 				if(prob(8))
-					boutput(M, "<span class='notice'><b>You feel great!</b></span>")
+					boutput(M, SPAN_NOTICE("<b>You feel great!</b>"))
 					M.reagents.add_reagent("methamphetamine", rand(1,2) * mult)
 					M.emote(pick("laugh", "giggle"))
 				if(prob(6))
-					boutput(M, "<span class='notice'><b>You feel warm.</b></span>")
+					boutput(M, SPAN_NOTICE("<b>You feel warm.</b>"))
 					M.bodytemperature += rand(1,10) * mult
 				if(prob(4))
-					boutput(M, "<span class='alert'><b>You feel kinda awful!</b></span>")
+					boutput(M, SPAN_ALERT("<b>You feel kinda awful!</b>"))
 					M.take_toxin_damage(1 * mult)
 					M.make_jittery(30 * mult)
 					M.emote(pick("groan", "moan"))
@@ -243,12 +214,12 @@ datum
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if (effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]</b> looks confused!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> looks confused!"))
 						M.change_misstep_chance(20 * mult)
 						M.make_jittery(20)
 						M.emote("scream")
 					else if (effect <= 4)
-						M.visible_message("<span class='alert'><b>[M.name]</b> is all sweaty!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> is all sweaty!"))
 						M.bodytemperature += rand(5,30) * mult
 						M.take_brain_damage(1 * mult)
 						M.take_toxin_damage(1 * mult)
@@ -258,12 +229,12 @@ datum
 						M.emote("grumble")
 				else if (severity == 2)
 					if (effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]</b> is sweating like a pig!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> is sweating like a pig!"))
 						M.bodytemperature += rand(20,100) * mult
 						M.take_toxin_damage(5 * mult)
 						M.setStatusMin("stunned", 4 SECONDS * mult)
 					else if (effect <= 4)
-						M.visible_message("<span class='alert'><b>[M.name]</b> starts tweaking the hell out!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> starts tweaking the hell out!"))
 						M.make_jittery(100)
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(8 * mult)
@@ -273,7 +244,7 @@ datum
 						M.reagents.add_reagent("salts1", 5 * mult)
 					else if (effect <= 7)
 						M.emote("scream")
-						M.visible_message("<span class='alert'><b>[M.name]</b> nervously scratches at their skin!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> nervously scratches at their skin!"))
 						M.make_jittery(10)
 						random_brute_damage(M, 5 * mult)
 						M.emote("twitch")
@@ -289,8 +260,6 @@ datum
 			transparency = 20
 			value = 6 // 4 2
 			thirst_value = -0.03
-			var/counter = 1
-			var/current_color_pattern = 1
 			var/static/list/halluc_sounds = list(
 				"punch",
 				'sound/vox/poo-vox.ogg',
@@ -333,72 +302,49 @@ datum
 				"A whisper in the vents",
 				"The universe itself",
 			)
+			var/static/list/monkey_images = list(
+				new /image('icons/mob/monkey.dmi', "monkey"),
+				new /image('icons/mob/monkey.dmi', "fire3"),
+				new /image('icons/mob/monkey.dmi', "skeleton"),
+				new /image('icons/mob/monkey.dmi', "seamonkey"),
+			)
+			var/static/list/critter_image_list = list(
+				new /image('icons/effects/hallucinations.dmi', "spider"),
+				new /image('icons/effects/hallucinations.dmi', "dragon"),
+				new /image('icons/effects/hallucinations.dmi', "pig"),
+				new /image('icons/effects/hallucinations.dmi', "slime"),
+				new /image('icons/misc/critter.dmi', "martianW"),
+			)
+			var/static/list/monkey_names = strings("names/monkey.txt")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				src.counter += 1 * mult //around half realtime
-				if(M.client && counter >= 6 && prob(20)) //trippy colours
-					if(src.current_color_pattern == 1)
-						animate_fade_drug_inbetween_1(M.client, 40)
-						src.current_color_pattern = 2
-					else
-						animate_fade_drug_inbetween_2(M.client, 40)
-						src.current_color_pattern = 1
-				if(probmult(12) && !ON_COOLDOWN(M, "hallucination_spawn", 30 SECONDS)) //spawn a fake critter
-					if (prob(20))
-						if(prob(60))
-							fake_attack(M)
-						else
-							var/monkeys = rand(1,3)
-							for(var/i = 0, i < monkeys, i++)
-								fake_attackEx(M, 'icons/mob/monkey.dmi', "monkey_hallucination", pick_string_autokey("names/monkey.txt"))
-					else
-						var/fake_type = pick(childrentypesof(/obj/fake_attacker))
-						new fake_type(M.loc, M)
+				//pretty colors
+				M.AddComponent(/datum/component/hallucination/trippy_colors, timeout=10)
+
+				//get attacked
+				if(prob(60)) //monkey mode
+					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=monkey_images, name_list=monkey_names, attacker_prob=20, max_attackers=3)
+				else
+					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=null, name_list=null, attacker_prob=20, max_attackers=3)
+
 				//THE VOICES GET LOUDER
-				if(probmult(min(16 + src.counter/2, 30))) //play some fake audio
-					var/atom/origin = M.loc
-					var/turf/mob_turf = get_turf(M)
-					if (mob_turf)
-						origin = locate(mob_turf.x + rand(-10,10), mob_turf.y + rand(-10,10), mob_turf.z)
-					//wacky loosely typed code ahead
-					var/datum/hallucinated_sound/chosen = pick(src.halluc_sounds)
-					if (istype(chosen)) //it's a datum
-						chosen.play(M, origin)
-					else //it's just a path directly
-						M.playsound_local(origin, chosen, 100, 1)
+				M.AddComponent(/datum/component/hallucination/random_sound, timeout=10, sound_list=src.halluc_sounds, sound_prob=5)
+
 				if(probmult(8)) //display a random chat message
 					M.playsound_local(M.loc, pick(src.speech_sounds, 100, 1))
 					boutput(M, "<b>[pick(src.voice_names)]</b> says, \"[phrase_log.random_phrase("say")]\"")
-				if(probmult(10)) //turn someone into a critter
-					var/list/candidates = list()
-					for(var/mob/living/carbon/human/human in viewers(M))
-						candidates += human
-					if (length(candidates))
-						var/mob/living/carbon/human/chosen = pick(candidates)
-						var/obj/fake_attacker/fake_type = pick(childrentypesof(/obj/fake_attacker))
-						var/image/override_img = image(initial(fake_type.fake_icon), chosen, initial(fake_type.fake_icon_state), chosen.layer)
-						override_img.override = TRUE
-						var/client/client = M.client //hold a reference to the client directly
-						client?.images.Add(override_img)
-						SPAWN (20 SECONDS)
-							client?.images.Remove(override_img)
-							qdel(override_img)
+
+				//turn someone into a critter
+				M.AddComponent(/datum/component/hallucination/random_image_override, timeout=10, image_list=critter_image_list, target_list=list(/mob/living/carbon/human), range=6, image_prob=10, image_time=20, override=TRUE)
 				..()
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if(method == INGEST)
-					boutput(M, "<span class='alert'><font face='[pick("Arial", "Georgia", "Impact", "Mucida Console", "Symbol", "Tahoma", "Times New Roman", "Verdana")]' size='[rand(3,6)]'>Holy shit, you start tripping balls!</font></span>")
+					boutput(M, SPAN_ALERT("<font face='[pick("Arial", "Georgia", "Impact", "Mucida Console", "Symbol", "Tahoma", "Times New Roman", "Verdana")]' size='[rand(3,6)]'>Holy shit, you start tripping balls!</font>"))
 				return
-
-			on_mob_life_complete(var/mob/living/M)
-				if(M.client)
-					if(src.current_color_pattern == 1)
-						animate_fade_from_drug_1(M.client, 40)
-					else
-						animate_fade_from_drug_2(M.client, 40)
 
 			on_remove()
 				. = ..()
@@ -419,32 +365,21 @@ datum
 			transparency = 100
 			value = 5
 			thirst_value = -0.03
+			var/static/list/bee_halluc = list(
+				new /image('icons/misc/bee.dmi',"zombee-wings") = list("zombee", "undead bee", "BZZZZZZZZ"),
+				new /image('icons/misc/bee.dmi',"syndiebee-wings") = list("syndiebee", "evil bee", "syndicate assassin bee", "IT HAS A GUN"),
+				new /image('icons/misc/bee.dmi',"bigbee-angry") = list("very angry bee", "extremely angry bee", "GIANT FRICKEN BEE"),
+				new /image('icons/misc/bee.dmi',"lichbee-wings") = list("evil bee", "demon bee", "YOU CAN'T BZZZZ FOREVER"),
+				new /image('icons/misc/bee.dmi',"voorbees-wings") = list("killer bee", "murder bee", "bad news bee", "RUN"),
+			)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 5)
-				if (probmult(10))
-					var/hstate = null
-					var/hname = null
-					switch(rand(1,5))
-						if(1)
-							hstate = "zombee-wings"
-							hname = pick("zombee", "undead bee", "BZZZZZZZZ")
-						if(2)
-							hstate = "syndiebee-wings"
-							hname = pick("syndiebee", "evil bee", "syndicate assassin bee", "IT HAS A GUN")
-						if(3)
-							hstate = "bigbee-angry"
-							hname = pick("very angry bee", "extremely angry bee", "GIANT FRICKEN BEE")
-						if(4)
-							hstate = "lichbee-wings"
-							hname = pick("evil bee", "demon bee", "YOU CAN'T BZZZZ FOREVER")
-						if(5)
-							hstate = "voorbees-wings"
-							hname = pick("killer bee", "murder bee", "bad news bee", "RUN")
-					fake_attackEx(M, 'icons/misc/bee.dmi', hstate, hname)
+				var/image/imagekey = pick(bee_halluc)
+				M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(imagekey), name_list=bee_halluc[imagekey], attacker_prob=10)
 				if (probmult(12))
-					M.visible_message(pick("<b>[M]</b> makes a buzzing sound.", "<b>[M]</b> buzzes."),pick("BZZZZZZZZZZZZZZZ", "<span class='alert'><b>THE BUZZING GETS LOUDER</b></span>", "<span class='alert'><b>THE BUZZING WON'T STOP</b></span>"))
+					M.visible_message(pick("<b>[M]</b> makes a buzzing sound.", "<b>[M]</b> buzzes."),pick("BZZZZZZZZZZZZZZZ", SPAN_ALERT("<b>THE BUZZING GETS LOUDER</b>"), SPAN_ALERT("<b>THE BUZZING WON'T STOP</b>")))
 				if (probmult(15))
 					switch(rand(1,2))
 						if(1)
@@ -492,10 +427,161 @@ datum
 				..()
 				return
 
+		drug/caffeine        //Unified chem for lots of caffeinated drinks, similar to how ethanol functions
+			name = "caffeine"
+			id = "caffeine"
+			description = "An addictive stimulant contained in coffee beans and many caffeinated beverages."
+			reagent_state = LIQUID
+			fluid_r = 230
+			fluid_g = 220
+			fluid_b = 230
+			addiction_prob = 1 //It lasts a while, it's not as low as it seems
+			addiction_min = 100
+			max_addiction_severity = "LOW"
+			stun_resist = 3
+			depletion_rate = 0.1
+			taste = "bitter"
+			overdose = 60
+			threshold = THRESHOLD_INIT
+			var/stamina_regen = 1
+			var/expected_stamina_regen = 1
+			var/expected_stun_resist = 3
+			var/heart_failure_counter = 0
+
+			proc/caffeine_stamina_change(stun_resist, stamina_regen)
+				var/mob/M = holder.my_atom // All of the caffeine regen properties in a single place
+				if (M.reagents.get_reagent_amount(src.id) <= threshold)
+					return // Shouldn't add any stun resist to a chem that isn't there
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_[src.id]", stun_resist)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_[src.id]", stun_resist)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", stamina_regen)
+				return
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", stamina_regen)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush")
+				..()
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				var/caffeine_amt = holder.get_reagent_amount(src.id)
+
+				if (heart_failure_counter > 150 && ishuman(M)) // This has to get pretty high for bad things to happen
+					var/mob/living/L = M
+					L.contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)
+					heart_failure_counter = 0
+
+				switch(caffeine_amt) //use ~midpoints for depeletion rate thresholds - need stronger coffees or blends to overcaffeinate
+					if(0 to 3)
+						depletion_rate = 0.05
+					if(3 to 10)
+						depletion_rate = 0.1
+					if(10 to 30)
+						depletion_rate = 0.2
+					if(30 to 50)
+						depletion_rate = 0.4
+					if(50 to INFINITY)
+						depletion_rate = 0.5
+
+				switch(caffeine_amt)
+					if(0 to 5)   //This is a trace amount of caffeine, doesn't do much
+						expected_stamina_regen = 1
+						expected_stun_resist   = 3
+
+					if(5 to 20)  //A regular coffee mug's worth
+						if (M.get_eye_blurry() && prob(75))
+							M.change_eye_blurry(-1 * mult)
+						expected_stamina_regen = 2
+						expected_stun_resist   = 7
+						M.dizziness = max(0, M.dizziness-3)
+						M.changeStatus("drowsy", -2 * mult SECONDS) //Helps combat that morning fatigue
+						if (prob(25))
+							M.make_jittery(10 * mult)
+
+					if(20 to 40) //A significant amount of caffeine
+						if (M.get_eye_blurry())
+							M.change_eye_blurry(-1 * mult)
+						expected_stamina_regen = 4
+						expected_stun_resist   = 12
+						M.changeStatus("drowsy", -4 * mult SECONDS)
+						M.dizziness = max(0, M.dizziness-5)
+						M.sleeping = 0 //Causes insomnia
+						if (prob(35))
+							M.make_jittery(10 * mult)
+						if (probmult(3) && !ON_COOLDOWN(M, "Caffeine Message", 30 SECONDS)) // Limits emote spam
+							boutput(M, pick(SPAN_NOTICE("You feel a slight twitch in your arm."),\
+									SPAN_NOTICE("Your shoulders are unusually tense."),\
+									SPAN_NOTICE("You feel kind of antsy, for some reason."),\
+									SPAN_ALERT("You feel ready for anything!"),\
+									SPAN_ALERT("You feel energized!"),\
+									SPAN_ALERT("You've got a bit of a headache...")))
+
+					if(40 to 60) //An unhealthy amount of caffeine
+						if (M.get_eye_blurry())
+							M.change_eye_blurry(-2 * mult)
+						expected_stamina_regen = 6
+						expected_stun_resist   = 20
+						M.changeStatus("drowsy", -10 * mult SECONDS)
+						M.dizziness = max(0, M.dizziness-7)
+						M.make_jittery(10 * mult)
+						M.change_misstep_chance(1 * mult)
+						M.sleeping = 0
+						if (probmult(3) && !ON_COOLDOWN(M, "Caffeine Message", 30 SECONDS)) // Limits emote spam
+							boutput(M, pick(SPAN_NOTICE("The muscles in your arms are twitching a lot. Huh."),\
+									SPAN_NOTICE("Your whole body feels really tense right now."),\
+									SPAN_NOTICE("You feel very restless - something isn't right."),\
+									SPAN_ALERT("You feel ready for anything! Nothing can stop you!"),\
+									SPAN_ALERT("You can feel power coursing through your veins!"),\
+									SPAN_ALERT("Your head is pounding...")))
+						else if (probmult(9))
+							M.emote(pick("twitch","twitch_v","blink_r", "shiver"))
+						heart_failure_counter += mult //This will be bad for you, given enough time
+
+					if(60 to INFINITY)  //Way too much coffee - very bad for you. This is actually non-trivial to reach now
+						if (M.get_eye_blurry())
+							M.change_eye_blurry(-3 * mult)
+						expected_stamina_regen = 8
+						expected_stun_resist   = 25
+						M.change_misstep_chance(4 * mult)
+						M.changeStatus("drowsy", -15 SECONDS)
+						M.dizziness = max(0,M.dizziness-10)
+						M.make_jittery(15 * mult)
+						M.sleeping = 0
+						if (probmult(3) && !ON_COOLDOWN(M, "Caffeine Message", 30 SECONDS))
+							boutput(M, pick(SPAN_ALERT("Oh god, your chest just spasmed! That felt bad!"),\
+									SPAN_ALERT("YOU ARE ENERGY INCARNATE."),\
+									SPAN_ALERT("YOU FEEL LIKE YOU COULD CONQUER THE WORLD!"),\
+									SPAN_ALERT("YOU CAN DO ANYTHING. YOU ARE READY FOR ANY CHALLENGE."),\
+									SPAN_ALERT("There's a burning sensation in your chest!"),\
+									SPAN_ALERT("Your head feels like it's throbbing!"),\
+									SPAN_ALERT("Speed. You are speed."),\
+									SPAN_NOTICE("Something is wrong.")))
+						else if (probmult(12))
+							M.emote(pick("shiver","twitch_v","blink_r","wheeze"))
+						else if(probmult(9) && !ON_COOLDOWN(M, "feeling_own heartbeat", 60 SECONDS)) //This can't be good for you
+							M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 20, 1)
+							M.take_toxin_damage(5)
+						heart_failure_counter += 5 * mult // This can be really bad for you
+
+				if (stun_resist != expected_stun_resist || stamina_regen != expected_stamina_regen)
+					stun_resist = expected_stun_resist
+					stamina_regen = expected_stamina_regen
+					caffeine_stamina_change(stun_resist, stamina_regen)
+
+				..()
+				return
+
 		drug/solipsizine
 			name = "solipsizine"
 			id = "solipsizine"
-			description = "A highly potent hallucinogenic substance that causes intense delirium and acute inability to percieve others."
+			description = "A highly potent hallucinogenic substance that causes intense delirium and acute inability to perceive others."
 			reagent_state = LIQUID
 			depletion_rate = 0.2
 			addiction_prob = 8
@@ -517,11 +603,11 @@ datum
 				src.tick_counter += 1
 
 				if(probmult(3))
-					boutput(M, pick("<span class='notice'>You feel eerily alone..</span>",\
-									"<span class='notice'>You feel like everything's gone silent.</span>",\
-									"<span class='notice'>Everything seems so quiet all of a sudden.</span>",\
-									"<span class='notice'>You can hear your heart beating.</span>",\
-									"<span class='notice'>Something is wrong.</span>"))
+					boutput(M, pick(SPAN_NOTICE("You feel eerily alone..."),\
+									SPAN_NOTICE("You feel like everything's gone silent."),\
+									SPAN_NOTICE("Everything seems so quiet all of a sudden."),\
+									SPAN_NOTICE("You can hear your heart beating."),\
+									SPAN_NOTICE("Something is wrong.")))
 				else if(probmult(3))
 					M.emote(pick("shiver","shudder","drool"))
 
@@ -561,7 +647,7 @@ datum
 					var/mob/M = holder.my_atom
 
 					if(!isnull(invisible_group) && (M.get_brain_damage() > 10))          //hits you and knocks you down for a little
-						M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>",\
+						M.visible_message(SPAN_ALERT("<B>[M]</B> starts convulsing violently!"),\
 											"You feel as if your body is tearing itself apart!")
 						M.setStatusMin("weakened", 10 SECONDS)
 						M.make_jittery(500)
@@ -694,13 +780,13 @@ datum
 				M.take_toxin_damage(1 * mult)
 				if (severity == 1)
 					if (effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]</b> looks nervous!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> looks nervous!"))
 						M.change_misstep_chance(15 * mult)
 						M.take_toxin_damage(2 * mult)
 						M.make_jittery(10)
 						M.emote("twitch")
 					else if (effect <= 4)
-						M.visible_message("<span class='alert'><b>[M.name]</b> is all sweaty!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> is all sweaty!"))
 						M.bodytemperature += rand(15,30) * mult
 						M.take_toxin_damage(3 * mult)
 					else if (effect <= 7)
@@ -710,12 +796,12 @@ datum
 				else if (severity == 2)
 					if (effect <= 2)
 						M.emote("gasp")
-						boutput(M, "<span class='alert'><b>You can't breathe!</b></span>")
+						boutput(M, SPAN_ALERT("<b>You can't breathe!</b>"))
 						M.take_oxygen_deprivation(15 * mult)
 						M.take_toxin_damage(3 * mult)
 						M.setStatusMin("stunned", 1 SECOND * mult)
 					else if (effect <= 4)
-						boutput(M, "<span class='alert'><b>You feel terrible!</b></span>")
+						boutput(M, SPAN_ALERT("<b>You feel terrible!</b>"))
 						M.emote("drool")
 						M.make_jittery(10)
 						M.take_toxin_damage(5 * mult)
@@ -723,8 +809,8 @@ datum
 						M.change_misstep_chance(33 * mult)
 					else if (effect <= 7)
 						M.emote("collapse")
-						boutput(M, "<span class='alert'><b>Your heart is pounding!</b></span>")
-						M << sound('sound/effects/heartbeat.ogg')
+						boutput(M, SPAN_ALERT("<b>Your heart is pounding!</b>"))
+						M.playsound_local_not_inworld('sound/effects/heartbeat.ogg', 100)
 						M.setStatusMin("paralysis", 5 SECONDS * mult)
 						M.make_jittery(30)
 						M.take_toxin_damage(6 * mult)
@@ -760,11 +846,11 @@ datum
 					M.make_jittery(10)
 				if(probmult(25))
 					M.emote(pick("drool","shudder","groan","moan","shiver"))
-					boutput(M, "<span class='success'><b>You feel... pretty good... and calm... weird.</b></span>")
+					boutput(M, SPAN_SUCCESS("<b>You feel... pretty good... and calm... weird.</b>"))
 				if(probmult(10))
 					M.make_jittery(20)
 					M.emote(pick("twitch","twitch_v","shiver","shudder","flinch","blink_r"))
-					boutput(M, "<span class='alert'><b>You can feel your heartbeat in your throat!</b></span>")
+					boutput(M, SPAN_ALERT("<b>You can feel your heartbeat in your throat!</b>"))
 					M.playsound_local(M.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 					M.take_toxin_damage(2)
 				if(probmult(5))
@@ -775,7 +861,7 @@ datum
 					M.sleeping = 0
 					M.make_jittery(30)
 					M.emote(pick("twitch","twitch_v","shiver","shudder","flinch","blink_r"))
-					boutput(M, "<span class='alert'><b>Your heart's beating really really fast!</b></span>")
+					boutput(M, SPAN_ALERT("<b>Your heart's beating really really fast!</b>"))
 					M.playsound_local(M.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 					M.take_toxin_damage(4)
 				..(M)
@@ -786,16 +872,16 @@ datum
 				/*var/effect = ..(severity, M)
 				if (severity == 1)
 					if (effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]</b> looks really nervous!</span>")
-						boutput(M, "<span class='alert'><b>You feel really nervous!</b></span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> looks really nervous!"))
+						boutput(M, SPAN_ALERT("<b>You feel really nervous!</b>"))
 						M.change_misstep_chance(30)
 						M.take_toxin_damage(3)
 						M.make_jittery(20)
 						M.emote("twitch")
 						M.emote("twitch")
 					else if (effect <= 4)
-						M.visible_message("<span class='alert'><b>[M.name]</b> is super sweaty!</span>")
-						boutput(M, "<span class='alert'><b>You feel hot! Is it hot in here?!</b></span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> is super sweaty!"))
+						boutput(M, SPAN_ALERT("<b>You feel hot! Is it hot in here?!</b>"))
 						M.bodytemperature += rand(30,60)
 						M.take_toxin_damage(4)
 					else if (effect <= 7)
@@ -807,12 +893,12 @@ datum
 					if (effect <= 2)
 						M.emote("gasp")
 						M.emote("gasp")
-						boutput(M, "<span class='alert'><b>You really can't breathe!</b></span>")
+						boutput(M, SPAN_ALERT("<b>You really can't breathe!</b>"))
 						M.take_oxygen_deprivation(15)
 						M.take_toxin_damage(4)
 						M.changeStatus("stunned", 10 * mult)
 					else if (effect <= 4)
-						boutput(M, "<span class='alert'><b>You feel really terrible!</b></span>")
+						boutput(M, SPAN_ALERT("<b>You feel really terrible!</b>"))
 						M.emote("drool")
 						M.emote("drool")
 						M.make_jittery(20)
@@ -821,7 +907,7 @@ datum
 						M.change_misstep_chance(66)
 					else if (effect <= 7)
 						M.emote("collapse")
-						boutput(M, "<span class='alert'><b>Your heart is pounding! You need help!</b></span>")
+						boutput(M, SPAN_ALERT("<b>Your heart is pounding! You need help!</b>"))
 						M << sound('sound/effects/heartbeat.ogg')
 						M.changeStatus("weakened", 50 * mult)
 						M.make_jittery(60)
@@ -853,23 +939,23 @@ datum
 						if(1)
 							boutput(M, "<B>The Emergency Shuttle has docked with the station! You have 3 minutes to board the Emergency Shuttle.</B>")
 						if(2)
-							boutput(M, "<span class='alert'><b>Restarting world!</b> </span><span class='notice'>Initiated by Administrator!</span>")
+							boutput(M, "[SPAN_ALERT("<b>Restarting world!</b>")] [SPAN_NOTICE("Initiated by Administrator!")]")
 							SPAWN(2 SECONDS) M.playsound_local(M.loc, pick('sound/misc/NewRound.ogg', 'sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg', 'sound/misc/TimeForANewRound.ogg'), 50, 1)
 						if(3)
 							switch (rand(1,4))
 								if(1)
-									boutput(M, "<span class='alert'><b>Unknown fires the revolver at [M]!</b></span>")
+									boutput(M, SPAN_ALERT("<b>Unknown fires the revolver at [M]!</b>"))
 									M.playsound_local(M.loc, 'sound/weapons/Gunshot.ogg', 50, 1)
 								if(2)
-									boutput(M, "<span class='alert'><b>[M] has been attacked with the fire extinguisher by Unknown</b></span>")
+									boutput(M, SPAN_ALERT("<b>[M] has been attacked with the fire extinguisher by Unknown</b>"))
 									M.playsound_local(M.loc, 'sound/impact_sounds/Metal_Hit_1.ogg', 50, 1)
 								if(3)
-									boutput(M, "<span class='alert'><b>Unknown has punched [M]</b></span>")
-									boutput(M, "<span class='alert'><b>Unknown has weakened [M]</b></span>")
+									boutput(M, SPAN_ALERT("<b>Unknown has punched [M]</b>"))
+									boutput(M, SPAN_ALERT("<b>Unknown has weakened [M]</b>"))
 									M.setStatusMin("weakened", 1 SECOND * mult)
 									M.playsound_local(M.loc, pick(sounds_punch), 50, 1)
 								if(4)
-									boutput(M, "<span class='alert'><b>[M] has been attacked with the taser gun by Unknown</b></span>")
+									boutput(M, SPAN_ALERT("<b>[M] has been attacked with the taser gun by Unknown</b>"))
 									boutput(M, "<i>You can almost hear someone talking...</i>")
 									M.setStatusMin("paralysis", 3 SECONDS * mult)
 				..()
@@ -896,18 +982,18 @@ datum
 				if(prob(25)) M.take_brain_damage(1 * mult)
 				if(probmult(15)) M.emote(pick("smile", "grin", "yawn", "laugh", "drool"))
 				if(prob(10))
-					boutput(M, "<span class='notice'><b>You feel pretty chill.</b></span>")
+					boutput(M, SPAN_NOTICE("<b>You feel pretty chill.</b>"))
 					M.bodytemperature -= 1 * mult
 					M.emote("smile")
 				if(prob(5))
-					boutput(M, "<span class='alert'><b>You feel too chill!</b></span>")
+					boutput(M, SPAN_ALERT("<b>You feel too chill!</b>"))
 					M.emote(pick("yawn", "drool"))
 					M.setStatusMin("stunned", 2 SECONDS * mult)
 					M.take_toxin_damage(1 * mult)
 					M.take_brain_damage(1 * mult)
 					M.bodytemperature -= 20 * mult
 				if(prob(2))
-					boutput(M, "<span class='alert'><b>Your skin feels all rough and dry.</b></span>")
+					boutput(M, SPAN_ALERT("<b>Your skin feels all rough and dry.</b>"))
 					random_brute_damage(M, 2 * mult)
 				..()
 				return
@@ -916,28 +1002,31 @@ datum
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if (effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]</b> looks dazed!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> looks dazed!"))
 						M.setStatusMin("stunned", 4 SECONDS * mult)
 						M.emote("drool")
 					else if (effect <= 4)
 						M.emote("shiver")
 						M.bodytemperature -= 40 * mult
 					else if (effect <= 7)
-						boutput(M, "<span class='alert'><b>Your skin is cracking and bleeding!</b></span>")
+						boutput(M, SPAN_ALERT("<b>Your skin is cracking and bleeding!</b>"))
 						random_brute_damage(M, 5 * mult)
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(1 * mult)
 						M.emote("cry")
 				else if (severity == 2)
 					if (effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]</b> sways and falls over!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> sways and falls over!"))
 						M.take_toxin_damage(3 * mult)
 						M.take_brain_damage(3 * mult)
 						M.setStatusMin("weakened", 9 SECONDS * mult)
 						M.emote("faint")
 					else if (effect <= 4)
-						if(ishuman(M))
-							M.visible_message("<span class='alert'><b>[M.name]'s</b> skin is rotting away!</span>")
+						if (ishuman(M))
+							if (isskeleton(M))
+								M.visible_message(SPAN_ALERT("<b>[M.name]'s bones are rotting away from the inside!"))
+							else
+								M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> skin is rotting away!"))
 							random_brute_damage(M, 25 * mult)
 							M.emote("scream")
 							M.bioHolder.AddEffect("eaten") //grody. changed line in human.dm to use decomp1 now
@@ -957,30 +1046,25 @@ datum
 			transparency = 20
 			viscosity = 0.14
 			thirst_value = -0.1
+			var/static/list/cat_halluc = list(
+				new /image('icons/misc/critter.dmi',"cat-ghost") = list("ghost cat"),
+				new /image('icons/misc/critter.dmi', "cat1-wild") = list("wild cat"),
+			)
+			var/static/list/cat_sounds = list('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg')
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 15)
 				if(probmult(11))
-					M.visible_message("<span class='notice'><b>[M.name]</b> hisses!</span>")
+					M.visible_message(SPAN_NOTICE("<b>[M.name]</b> hisses!"))
 					playsound(M.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
 				if(probmult(9))
-					M.visible_message("<span class='notice'><b>[M.name]</b> meows! What the fuck?</span>")
+					M.visible_message(SPAN_NOTICE("<b>[M.name]</b> meows! What the fuck?"))
 					playsound(M.loc, 'sound/voice/animal/cat.ogg', 50, 1)
-				if(probmult(7))
-					switch(rand(1,2))
-						if(1)
-							var/ghostcats = rand(1,3)
-							for(var/i = 0, i < ghostcats, i++)
-								fake_attackEx(M, 'icons/misc/critter.dmi', "cat-ghost", "ghost cat")
-								M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
-						if(2)
-							var/wildcats = rand(1,3)
-							for(var/i = 0, i < wildcats, i++)
-								fake_attackEx(M, 'icons/misc/critter.dmi', "cat1-wild", "wild cat")
-								M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
-				if(probmult(20))
-					M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
+
+				var/image/imagekey = pick(cat_halluc)
+				M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(imagekey), name_list=cat_halluc[imagekey], attacker_prob=7, max_attackers=3)
+				M.AddComponent(/datum/component/hallucination/random_sound, timeout=10, sound_list=src.cat_sounds, sound_prob=20)
 				..()
 				return
 
@@ -988,13 +1072,13 @@ datum
 				. = ..()
 				if(method == INGEST)
 					M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
-					boutput(M, "<span class='alert'><font face='[pick("Arial", "Georgia", "Impact", "Mucida Console", "Symbol", "Tahoma", "Times New Roman", "Verdana")]' size='[rand(3,6)]'>Holy shit, you start tripping balls!</font></span>")
+					boutput(M, SPAN_ALERT("<font face='[pick("Arial", "Georgia", "Impact", "Mucida Console", "Symbol", "Tahoma", "Times New Roman", "Verdana")]' size='[rand(3,6)]'>Holy shit, you start tripping balls!</font>"))
 				return
 
 		drug/triplemeth
 			name = "triple meth"
 			id = "triplemeth"
-			description = "Hot damn ... i don't even ..."
+			description = "Hot damn ... I don't even ..."
 			reagent_state = SOLID
 			fluid_r = 250
 			fluid_g = 250
@@ -1053,20 +1137,20 @@ datum
 					return //Since is created by a meth overdose, dont react while meth is in their system.
 				if (severity == 1)
 					if (effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]</b> can't seem to control their legs!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control their legs!"))
 						M.change_misstep_chance(12 * mult)
 						M.setStatusMin("weakened", 5 SECONDS * mult)
 					else if (effect <= 4)
-						M.visible_message("<span class='alert'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> hands flip out and flail everywhere!"))
 						M.empty_hands()
 					else if (effect <= 7)
 						M.emote("laugh")
 				else if (severity == 2)
 					if (effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> hands flip out and flail everywhere!"))
 						M.empty_hands()
 					else if (effect <= 4)
-						M.visible_message("<span class='alert'><b>[M.name]</b> falls to the floor and flails uncontrollably!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> falls to the floor and flails uncontrollably!"))
 						M.make_jittery(10)
 						M.setStatusMin("weakened", 10 SECONDS * mult)
 					else if (effect <= 7)
@@ -1143,11 +1227,11 @@ datum
 					return
 				if (severity == 1)
 					if (effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]</b> can't seem to control their legs!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> can't seem to control their legs!"))
 						M.change_misstep_chance(20 * mult)
 						M.setStatusMin("weakened", 5 SECONDS * mult)
 					else if (effect <= 4)
-						M.visible_message("<span class='alert'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> hands flip out and flail everywhere!"))
 						M.empty_hands()
 					else if (effect <= 7)
 						M.emote("laugh")
@@ -1158,10 +1242,10 @@ datum
 						M.add_karma(10)
 
 					if (effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> hands flip out and flail everywhere!"))
 						M.empty_hands()
 					else if (effect <= 4)
-						M.visible_message("<span class='alert'><b>[M.name]</b> falls to the floor and flails uncontrollably!</span>")
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> falls to the floor and flails uncontrollably!"))
 						M.make_jittery(10)
 						M.setStatusMin("weakened", 2 SECONDS * mult)
 					else if (effect <= 7)
@@ -1170,7 +1254,7 @@ datum
 			syndicate
 				name = "methamphetamine"
 				id = "synd_methamphetamine"
-				description = "Methamphetamine is a highly effective and dangerous stimulant drug. This batch seems unusally high-grade and pure."
+				description = "Methamphetamine is a highly effective and dangerous stimulant drug. This batch seems unusually high-grade and pure."
 				purge_brain = FALSE
 				fluid_r = 115 // This shit's pure and blue
 				fluid_g = 197
@@ -1215,27 +1299,26 @@ datum
 				var/check = rand(0,100)
 				if (istype(H))
 					if (M.reagents.has_reagent("milk"))
-						boutput(M, "<span class='notice'>The milk stops the burning. Ahhh.</span>")
+						boutput(M, SPAN_NOTICE("The milk stops the burning. Ahhh."))
 						M.reagents.del_reagent("milk")
 						M.reagents.del_reagent("hellshroom_extract")
 					if (check < 20)
 						src.breathefire(M)
 					if(check < 5)
 						var/bats = rand(2,3)
-						for(var/i = 0, i < bats, i++)
-						fake_attackEx(M, 'icons/misc/AzungarAdventure.dmi', "hellbat", "hellbat")
-						boutput(M, "<span class='alert'><b>A hellbat begins to chase you</b>!</span>")
+						M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(new /image('icons/misc/AzungarAdventure.dmi', "hellbat")), name_list=list("hellbat"), attacker_prob=100, max_attackers=bats)
+						boutput(M, SPAN_ALERT("<b>A hellbat begins to chase you</b>!"))
 						M.emote("scream")
 					if(check < 20)
-						boutput(M, "<span class='alert'><b>Oh god! Oh GODD!!</b></span>")
+						boutput(M, SPAN_ALERT("<b>Oh god! Oh GODD!!</b>"))
 					if(check < 20)
-						boutput(M, "<span class='alert'><b>You feel like you are melting from the inside!</b></span>")
+						boutput(M, SPAN_ALERT("<b>You feel like you are melting from the inside!</b>"))
 					if(check < 20)
-						boutput(M, "<span class='alert'>Your throat feels like it's on fire!</span>")
+						boutput(M, SPAN_ALERT("Your throat feels like it's on fire!"))
 						M.emote(pick("scream","cry","twitch_s","choke","gasp","grumble"))
 						M.changeStatus("paralysis", 2 SECONDS)
 					if(check < 20)
-						boutput(M, "<span class='notice'><b>You feel A LOT warmer.</b></span>")
+						boutput(M, SPAN_NOTICE("<b>You feel A LOT warmer.</b>"))
 						M.bodytemperature += rand(30,60)
 				..()
 				return
@@ -1248,7 +1331,7 @@ datum/reagent/drug/hellshroom_extract/proc/breathefire(var/mob/M)
 	T = get_step(T,M.dir)
 	var/list/affected_turfs = getline(M, T)
 
-	M.visible_message("<span class='alert'><b>[M] burps a stream of fire!</b></span>")
+	M.visible_message(SPAN_ALERT("<b>[M] burps a stream of fire!</b>"))
 	playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 30, 0)
 
 	var/turf/currentturf
@@ -1264,4 +1347,4 @@ datum/reagent/drug/hellshroom_extract/proc/breathefire(var/mob/M)
 			continue
 		if (GET_DIST(M,F) > range)
 			continue
-		tfireflash(F,1,temp)
+		fireflash(F,1,temp)

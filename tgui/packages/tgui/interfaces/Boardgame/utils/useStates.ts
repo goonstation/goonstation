@@ -1,5 +1,5 @@
 import { useLocalState } from '../../../backend';
-import { XYType, TileSizeType, PalleteExpandType } from '.';
+import { PalleteExpandType, TileSizeType, XYType } from '.';
 
 export const DEFAULT_STATES = {
   // TODO: add more default states here

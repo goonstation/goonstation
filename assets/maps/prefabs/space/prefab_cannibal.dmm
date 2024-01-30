@@ -53,7 +53,7 @@
 /turf/simulated/floor/wood/two,
 /area/noGenerate)
 "j" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4;
 	icon_state = "chair_wooden"
 	},
@@ -80,7 +80,7 @@
 /turf/simulated/floor/wood/two,
 /area/noGenerate)
 "m" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8;
 	icon_state = "chair_wooden"
 	},

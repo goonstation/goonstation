@@ -40,16 +40,34 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 
 /// called every time a fishing rod's action loop finishes. returns 0 if catching a fish failed, returns 1 if it succeeds
 /datum/fishing_spot/proc/try_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
-	var/atom/movable/fish = src.generate_fish(user, fishing_rod, target)
-	if (!fish)
-		return 0
-	// ever put this much effort into the dumbest thing ever haha
-	user.visible_message("[user] [pick("reels in", "catches", "pulls in", "fishes up")] a \
-	[pick("big", "wriggly", "fat", "slimy", "fishy", "large", "high-quality", "nasty", "chompy", "real", "wily")] \
-	[prob(80) ? "[fish.name]" : pick("one", "catch", "chomper", "wriggler", "sunovagun", "sucker")]!")
-	user.put_in_hand_or_drop(fish)
-	playsound(user, 'sound/items/fishing_rod_reel.ogg', 50, 1)
-	playsound(user, 'sound/effects/fish_catch.ogg', 75, 1)
+	if (user.bioHolder.HasEffect("clumsy") && prob(10))
+		var/mob/living/carbon/human/H = user
+		var/obj/picked_item
+		var/list/clothes_list = list()
+		if(H.shoes)
+			clothes_list.Add(H.shoes)
+		if(H.wear_mask)
+			clothes_list.Add(H.wear_mask)
+		if(clothes_list.len)
+			picked_item = pick(clothes_list)
+		else
+			return 0
+		user.visible_message("[user] [pick("reels in", "catches", "pulls in", "fishes up")] [picked_item]! Wait, how did that happen?")
+		user.u_equip(picked_item)
+		picked_item.set_loc(get_turf(user))
+		user.put_in_hand_or_drop(picked_item)
+		JOB_XP(user, "Clown", 1)
+	else
+		var/atom/movable/fish = src.generate_fish(user, fishing_rod, target)
+		if (!fish)
+			return 0
+		// ever put this much effort into the dumbest thing ever haha
+		user.visible_message("[user] [pick("reels in", "catches", "pulls in", "fishes up")] a \
+		[pick("big", "wriggly", "fat", "slimy", "fishy", "large", "high-quality", "nasty", "chompy", "real", "wily")] \
+		[prob(80) ? "[fish.name]" : pick("one", "catch", "chomper", "wriggler", "sunovagun", "sucker")]!")
+		user.put_in_hand_or_drop(fish)
+	playsound(user, 'sound/items/fishing_rod_reel.ogg', 50, TRUE)
+	playsound(user, 'sound/effects/fish_catch.ogg', 75, TRUE)
 	fishing_rod.last_fished = TIME //set the last fished time
 	return 1
 
@@ -96,7 +114,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fishing_atom_type = /obj/item/storage/toilet
 	rod_tier_required = 1
 	fish_available = list( /obj/item/reagent_containers/food/snacks/yuck = 20, \
-	/obj/item/reagent_containers/food/snacks/yuckburn = 20, \
+	/obj/item/reagent_containers/food/snacks/yuck/burn = 20, \
 	/obj/item/reagent_containers/food/snacks/shell = 20, \
 	/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
 	/obj/item/raw_material/scrap_metal = 5, \
@@ -148,7 +166,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/cod = 15,\
 	/obj/item/reagent_containers/food/fish/flounder = 5,\
 	/obj/item/reagent_containers/food/fish/carp = 15,\
-	/obj/item/reagent_containers/food/snacks/yuckburn = 20,\
+	/obj/item/reagent_containers/food/snacks/yuck/burn = 20,\
 	/obj/item/reagent_containers/food/snacks/fish_fingers = 10)
 
 	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
@@ -401,7 +419,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/disposal_chute // doesn't work yet
 	fishing_atom_type = /obj/machinery/disposal
 	rod_tier_required = 1
-	fish_available = list(/obj/item/clothing/under/trash_bag = 10,\
+	fish_available = list(/obj/item/trash_bag = 10,\
 	/mob/living/critter/small_animal/cockroach = 10,\
 	/obj/item/c_tube = 10,\
 	/obj/item/raw_material/shard/glass = 10,\
@@ -481,7 +499,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/igneous_fish = 10,\
 	/obj/item/material_piece/slag = 20,\
 	/obj/decal/cleanable/ash = 20,\
-	/obj/item/reagent_containers/food/snacks/yuckburn = 20,\
+	/obj/item/reagent_containers/food/snacks/yuck/burn = 20,\
 	/obj/item/raw_material/char =20)
 
 /datum/fishing_spot/cryo
@@ -699,7 +717,7 @@ datum/fishing_spot/golden_toilet
 	fishing_atom_type = /obj/item/storage/toilet/goldentoilet
 	rod_tier_required = 2
 	fish_available = list( /obj/item/reagent_containers/food/snacks/yuck = 20, \
-	/obj/item/reagent_containers/food/snacks/yuckburn = 20, \
+	/obj/item/reagent_containers/food/snacks/yuck/burn = 20, \
 	/obj/item/reagent_containers/food/snacks/shell = 20, \
 	/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
 	/obj/item/raw_material/scrap_metal = 5, \
@@ -714,7 +732,7 @@ datum/fishing_spot/golden_toilet
 /datum/fishing_spot/crusher
 	fishing_atom_type = /obj/machinery/crusher
 	rod_tier_required = 2
-	fish_available = list(/obj/item/clothing/under/trash_bag = 10,\
+	fish_available = list(/obj/item/trash_bag = 10,\
 	/mob/living/critter/small_animal/cockroach = 10,\
 	/obj/item/c_tube = 10,\
 	/obj/item/raw_material/shard/glass = 10,\
@@ -790,3 +808,22 @@ datum/fishing_spot/golden_toilet
 	/obj/item/disk/data/cartridge/clown = 15,\
 	/obj/item/disk/data/cartridge/ringtone_beepy = 5)
 
+//AI-core
+/datum/fishing_spot/ai_core
+	fishing_atom_type = /mob/living/silicon/ai
+	rod_tier_required = 3
+	fish_available = list(/obj/item/reagent_containers/food/fish/code_worm = 40,\
+	/obj/item/reagent_containers/food/fish/goldfish = 10, \
+	/obj/item/cable_coil/reinforced = 20,\
+	/obj/item/cell/shell_cell = 10, \
+	/obj/item/disk/data/cartridge/clown = 15,\
+	/obj/item/disk/data/cartridge/ringtone_beepy = 5)
+//cyborg docking station
+/datum/fishing_spot/recharge_station
+	fishing_atom_type = /obj/machinery/recharge_station
+	rod_tier_required = 2
+	fish_available = list(/obj/item/reagent_containers/food/fish/borgfish = 5,\
+	/obj/item/cable_coil/cut = 40,\
+	/obj/item/cable_coil/blue/cut = 40,\
+	/obj/item/cell = 10,\
+	/obj/item/raw_material/cotton = 20, )

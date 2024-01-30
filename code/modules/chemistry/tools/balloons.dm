@@ -74,13 +74,13 @@
 		if (prob(ohshit))
 			src.smash(user)
 			if (user)
-				user.visible_message("<span class='alert'>[src] bursts in [user]'s hands!</span>", \
-				"<span class='alert'>[src] bursts in your hands! <b>[curse]!</b></span>")
+				user.visible_message(SPAN_ALERT("[src] bursts in [user]'s hands!"), \
+				SPAN_ALERT("[src] bursts in your hands! <b>[curse]!</b>"))
 				user.update_inhands()
 			else
 				var/turf/T = get_turf(src)
 				if (T)
-					T.visible_message("<span class='alert'>[src] bursts!</span>")
+					T.visible_message(SPAN_ALERT("[src] bursts!"))
 			return
 
 	is_open_container()
@@ -93,14 +93,14 @@
 			return
 		if (!tied)
 			if(isliving(thrown_by))
-				thrown_by.visible_message("<span class='alert'>[src] spills all over [thrown_by]!</span>", \
-				"<span class='alert'>You forgot to tie off [src] and it spills all over you! <b>[curse]!</b></span>")
+				thrown_by.visible_message(SPAN_ALERT("[src] spills all over [thrown_by]!"), \
+				SPAN_ALERT("You forgot to tie off [src] and it spills all over you! <b>[curse]!</b>"))
 			src.reagents.reaction(get_turf(src))
 			src.reagents.clear_reagents()
 
 	attack_self(var/mob/user as mob)
 		if (!ishuman(user))
-			boutput(user, "<span class='notice'>You don't know what to do with the balloon.</span>")
+			boutput(user, SPAN_NOTICE("You don't know what to do with the balloon."))
 			return
 		var/mob/living/carbon/human/H = user
 
@@ -111,8 +111,6 @@
 			actions += "Inhale"
 		if (!src.tied)
 			actions += "Tie off"
-		if (H.urine >= 2 && !src.tied)
-			actions += "Pee in it"
 		if (!actions.len)
 			user.show_text("You can't think of anything to do with [src].", "red")
 			return
@@ -127,11 +125,11 @@
 			if ("Make balloon animal")
 				if (src.reagents.total_volume > 0)
 					user.visible_message("<b>[user]</b> fumbles with [src]!", \
-					"<span class='alert'>You fumble with [src]!</span>")
+					SPAN_ALERT("You fumble with [src]!"))
 					src.burst_chance(user, 100)
 				else
 					if (user.losebreath)
-						boutput(user, "<span class='alert'>You need to catch your breath first!</span>")
+						boutput(user, SPAN_ALERT("You need to catch your breath first!"))
 						return
 					var/list/animal_types = list("bee", "dog", "spider", "pie", "owl", "rockworm", "martian", "fermid", "fish")
 					if (!animal_types || length(animal_types) <= 0)
@@ -175,8 +173,8 @@
 					qdel(src)
 
 			if ("Inhale")
-				H.visible_message("<span class='alert'><B>[H] inhales the contents of [src]!</B></span>",\
-				"<span class='alert'><b>You inhale the contents of [src]!</b></span>")
+				H.visible_message(SPAN_ALERT("<B>[H] inhales the contents of [src]!</B>"),\
+				SPAN_ALERT("<b>You inhale the contents of [src]!</b>"))
 				logTheThing(LOG_CHEMISTRY, H, "inhales from [src] [log_reagents(src)] at [log_loc(H)].")
 				src.reagents.trans_to(H, 40)
 				var/datum/lifeprocess/breath/breathing = H.lifeprocesses?[/datum/lifeprocess/breath]
@@ -189,17 +187,9 @@
 					src.UpdateIcon()
 				return
 
-			if ("Pee in it")
-				H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>",\
-				"<span class='alert'><b>You pee in [src]!</b></span>")
-				playsound(H.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-				H.urine -= 2
-				src.reagents.add_reagent("urine", 8)
-				return
-
 			if ("Tie off")
-				H.visible_message("<span class='alert'><B>[H] ties off [src]!</B></span>",\
-				"<span class='alert'><b>You tie off the opening of [src]!</b></span>")
+				H.visible_message(SPAN_ALERT("<B>[H] ties off [src]!</B>"),\
+				SPAN_ALERT("<b>You tie off the opening of [src]!</b>"))
 				src.tied = TRUE
 
 	afterattack(obj/target, mob/user)
@@ -227,8 +217,8 @@
 		if (src.reagents)
 			src.reagents.reaction(T)
 		if (T)
-			T.visible_message("<span class='alert'>[src] bursts!</span>")
-		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+			T.visible_message(SPAN_ALERT("[src] bursts!"))
+		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
 		var/obj/decal/cleanable/balloon/decal = make_cleanable(/obj/decal/cleanable/balloon,T)
 		decal.icon_state = "balloon_[src.balloon_color]_pop"
 

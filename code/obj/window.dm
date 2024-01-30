@@ -8,7 +8,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	desc = "A window."
 	density = 1
 	stops_space_move = 1
-	dir = 5 //full tile
+	dir = NORTHEAST //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
@@ -33,17 +33,20 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	var/image/damage_image = null
 	default_material = "glass"
 	mat_changename = TRUE
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = ANCHORED
 	material_amt = 0.1
+	HELP_MESSAGE_OVERRIDE(null)
 
 	the_tuff_stuff
 		explosion_resistance = 3
 
-	New()
-		..()
+	New(loc, dir_override=null)
+		..(loc)
+		if(!isnull(dir_override))
+			src.dir = dir_override
 		src.ini_dir = src.dir
 		update_nearby_tiles(need_rebuild=1,selfnotify=1) // self notify to stop fluid jankness
 		if (default_reinforcement)
@@ -93,7 +96,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			src.layer = map_settings.window_layer_north
 		else if (src.dir == SOUTH && map_settings.window_layer_south)
 			src.layer = map_settings.window_layer_south
-		else if (src.dir in ordinal && map_settings.window_layer_full)
+		else if ((src.dir in ordinal) && map_settings.window_layer_full)
 			src.layer = map_settings.window_layer_full
 		else
 			src.layer = initial(src.layer)
@@ -373,7 +376,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
-		src.visible_message("<span class='alert'><B>[src] was hit by [AM].</B></span>")
+		src.visible_message(SPAN_ALERT("<B>[src] was hit by [AM].</B>"))
 		playsound(src.loc, src.hitsound , 100, 1)
 		if (ismob(AM))
 			damage_blunt(15)
@@ -394,17 +397,17 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		attack_particle(user,src)
 		if (user.a_intent == "harm")
 			if (user.is_hulk())
-				user.visible_message("<span class='alert'><b>[user]</b> punches the window.</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> punches the window."))
 				playsound(src.loc, src.hitsound, 100, 1)
 				src.damage_blunt(10)
 				return
 			else
-				src.visible_message("<span class='alert'><b>[user]</b> beats [src] uselessly!</span>")
+				src.visible_message(SPAN_ALERT("<b>[user]</b> beats [src] uselessly!"))
 				playsound(src.loc, src.hitsound, 100, 1)
 				return
 		else
 			if (ishuman(user))
-				src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
+				src.visible_message(SPAN_ALERT("<b>[user]</b> knocks on [src]."))
 				playsound(src.loc, src.hitsound, 100, 1)
 				SPAWN(-1) //uhhh maybe let's not sleep() an attack_hand. fucky effects up the chain?
 					sleep(0.3 SECONDS)
@@ -462,6 +465,11 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		else if (iswrenchingtool(W) && src.state == 0 && !src.anchored)
 			actions.start(new /datum/action/bar/icon/deconstruct_window(src, W), user)
+		else if (src.health < src.health_max && istype(W, /obj/item/sheet) && W.material.isSameMaterial(src.material))
+			var/time = 4 SECONDS
+			if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
+				time = 2 SECONDS
+			SETUP_GENERIC_ACTIONBAR(user, src, time, /obj/window/proc/fix_window, list(W), null, null, SPAN_NOTICE(" [user] repairs \the [src] with \the [W] "), null)
 		else
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
@@ -566,11 +574,16 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		return 1
 
+	proc/fix_window(var/obj/item/sheet/S)
+		health = health_max
+		UpdateIcon(src)
+		if (S)
+			S.change_stack_amount(-1)
+
 
 /datum/action/bar/icon/deconstruct_window
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "deconstruct_window"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "decon"
 	var/obj/window/the_window
@@ -600,7 +613,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		if(BOUNDS_DIST(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		boutput(owner, "<span class='notice'>Now disassembling [the_window]</span>")
+		boutput(owner, SPAN_NOTICE("Now disassembling \the [the_window]"))
 		playsound(the_window.loc, 'sound/items/Ratchet.ogg', 100, 1)
 
 	onEnd()
@@ -613,7 +626,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			if (!(the_tool in M.equipped_list()))
 				interrupt(INTERRUPT_ALWAYS)
 				return
-		boutput(owner, "<span class='notice'>You dissasembled [the_window]!</span>")
+		boutput(owner, SPAN_NOTICE("You disassemble \the [the_window]!"))
 		var/obj/item/sheet/A = new /obj/item/sheet(get_turf(the_window))
 		if(the_window.material)
 			A.setMaterial(the_window.material)
@@ -628,7 +641,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 	onInterrupt()
 		if (owner)
-			boutput(owner, "<span class='alert'>Deconstruction of [the_window] interrupted!</span>")
+			boutput(owner, SPAN_ALERT("Deconstruction of \the [the_window] interrupted!"))
 		..()
 
 /obj/window/pyro
@@ -755,7 +768,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 /obj/window/auto
 	icon = 'icons/obj/window_pyro.dmi'
 	icon_state = "mapwin"
-	dir = 5
+	dir = NORTHEAST
 	health_multiplier = 2
 	alpha = 160
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
@@ -888,8 +901,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	New()
 		..()
 		SPAWN(1 DECI SECOND)
-			ini_dir = 5//gurgle
-			set_dir(5)//grumble
+			ini_dir = NORTHEAST//gurgle
+			set_dir(NORTHEAST)//grumble
 
 	smash(var/actuallysmash)
 		if(actuallysmash)
@@ -897,7 +910,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 	attack_hand(mob/user)
 		if(!ON_COOLDOWN(user, "glass_tap", 5 SECONDS))
-			src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
+			src.visible_message(SPAN_ALERT("<b>[user]</b> knocks on [src]."))
 			playsound(src.loc, src.hitsound, 100, 1)
 			sleep(0.3 SECONDS)
 			playsound(src.loc, src.hitsound, 100, 1)
@@ -1017,7 +1030,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		opacity = 0
 		icon_state = "safetyrail"
 		layer = EFFECTS_LAYER_BASE
-		dir = 1
+		dir = NORTH
 		default_material = "steel"
 
 // flock windows
@@ -1035,10 +1048,10 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 /obj/window/auto/feather/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> [src.flock_id]
-		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+		[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
 /obj/window/auto/feather/proc/repair(resources_available)
 	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
@@ -1083,10 +1096,10 @@ TYPEINFO(/obj/window/feather)
 /obj/window/feather/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> [src.flock_id]
-		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+		[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
 /obj/window/feather/proc/repair(resources_available)
 	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)

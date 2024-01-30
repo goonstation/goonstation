@@ -10,8 +10,6 @@
 "aq" = (
 /obj/machinery/door/airlock/external,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/shuttle,
@@ -118,8 +116,6 @@
 "fB" = (
 /obj/machinery/door/airlock/external,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/forcefield/energyshield/perma{
@@ -159,7 +155,7 @@
 	},
 /area/space)
 "hC" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/securearea{
 	desc = "";
 	icon_state = "shock";
@@ -178,8 +174,6 @@
 /area/shuttle/arrival/station)
 "iQ" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/machinery/camera{
@@ -241,7 +235,6 @@
 /area/shuttle/arrival/station)
 "kQ" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/furnace,
@@ -316,14 +309,14 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
+/obj/landmark/shuttle_subwoofer,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
 	name = "steel shuttle bay plating"
 	},
-/area/shuttle_sound_spawn)
+/area/shuttle/arrival/station)
 "nn" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
@@ -349,7 +342,6 @@
 /area/shuttle/escape/station)
 "oo" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/random{
@@ -358,12 +350,10 @@
 	},
 /area/built_zone)
 "op" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Purge Pump";
-	on = 1;
 	tag = "icon-intact_on (NORTH)";
 	target_pressure = 2000
 	},
@@ -410,13 +400,9 @@
 /area/built_zone)
 "qB" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/shuttle,
@@ -447,8 +433,6 @@
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/random{
@@ -485,8 +469,6 @@
 "sU" = (
 /obj/machinery/door/unpowered/shuttle,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -513,7 +495,6 @@
 /area/built_zone)
 "ty" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
@@ -526,8 +507,6 @@
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/random{
@@ -549,7 +528,6 @@
 /area/shuttle/arrival/station)
 "vM" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	icon_state = "manifold";
 	level = 2
 	},
 /obj/machinery/light/small/floor/harsh/very,
@@ -584,7 +562,6 @@
 /area/shuttle/arrival/station)
 "yu" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
@@ -602,7 +579,7 @@
 /obj/item/fuel_pellet/cerenkite,
 /obj/item/fuel_pellet/cerenkite,
 /obj/item/clothing/head/rad_hood,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
@@ -909,7 +886,6 @@
 /area/shuttle/arrival/station)
 "HX" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/table/reinforced/auto,
@@ -954,12 +930,10 @@
 /area/shuttle/arrival/station)
 "JP" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/rtg,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -982,8 +956,6 @@
 "Kq" = (
 /obj/landmark/start/latejoin,
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -1063,8 +1035,6 @@
 /area/space)
 "NT" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttle,
@@ -1133,7 +1103,6 @@
 "Pa" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
-	icon_state = "intact";
 	level = 2;
 	tag = "icon-intact (NORTHEAST)"
 	},
@@ -1223,7 +1192,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "Sl" = (
-/obj/machinery/atmospherics/pipe/tank/air,
+/obj/machinery/atmospherics/unary/tank/air,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "SE" = (
@@ -1283,7 +1252,6 @@
 "UC" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
-	icon_state = "intact";
 	level = 2;
 	tag = "icon-intact (NORTHWEST)"
 	},
@@ -1292,15 +1260,12 @@
 "UK" = (
 /obj/landmark/start/latejoin,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "UN" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/random{
@@ -1340,7 +1305,6 @@
 /area/shuttle/arrival/station)
 "Xp" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/furnace,
@@ -1360,8 +1324,6 @@
 /area/space)
 "Yn" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/shuttle,

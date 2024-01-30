@@ -1,23 +1,3 @@
-var/list/ban_from_fluid = list(
-	"paper",\
-	"fungus",\
-	"martian_flesh",\
-	"blackpowder",\
-	"thermite",\
-	"luminol",\
-)
-//todo : make thermite work
-var/list/ban_stacking_into_fluid = list( //ban these from producing fluid from a 'cleanable'
-	"water",\
-	"sodium",\
-	"magnesium",\
-	"carbon",\
-	"ash",\
-	"blackpowder",\
-	"leaves",\
-	"poo",\
-)
-
 ///////////////////
 ////Fluid Object///
 ///////////////////
@@ -36,8 +16,9 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "15"
 	anchored = ANCHORED_ALWAYS
-	mouse_opacity = 1
+	mouse_opacity = FALSE
 	layer = FLUID_LAYER
+	flags = UNCRUSHABLE | OPENCONTAINER
 
 	event_handler_flags = IMMUNE_MANTA_PUSH
 
@@ -100,10 +81,6 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 				src.removed()
 				return
 
-		flags |= OPENCONTAINER | UNCRUSHABLE
-
-		//src.floated_atoms = list()
-
 		for (var/dir in cardinal)
 			blocked_perspective_objects["[dir]"] = 0
 
@@ -165,7 +142,6 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		if (isturf(src.loc))
 			src.turf_remove_cleanup(src.loc)
 
-		name = "fluid"
 		fluid_ma.icon_state = "15"
 		fluid_ma.alpha = 255
 		fluid_ma.color = "#ffffff"
@@ -196,25 +172,17 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			return
 		if (!src.group || !src.group.reagents)
 			return
-		. = "<br><span class='notice'>[src.group.reagents.get_description(user,(RC_VISIBLE | RC_SPECTRO))]</span>"
-		return
+		. += "<br><b class='notice'>[capitalize(src.name)] analysis:</b>"
+		. += "<br>[SPAN_NOTICE("[src.group.reagents.get_description(user,(RC_VISIBLE | RC_SPECTRO))]")]"
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W,/obj/item/mop))
-			return
-
-		//floor overrides some construction clicks
-		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || ispryingtool(W))
-			var/turf/T = get_turf(src)
-			T.Attackby(W,user)
-			W.AfterAttack(T,user)
-			return
-
-		.= ..()
+	admin_visible_name()
+		return "[src.name] \[[src.group.reagents.get_master_reagent_name()]\]"
 
 	attack_hand(mob/user)
-		var/turf/T = src.loc
-		T.Attackhand(user)
+		CRASH("[identify_object(user)] hit a fluid with their hand somehow. They shouldn't be able to do that.")
+
+	attackby(obj/item/W, mob/user)
+		CRASH("[identify_object(user)] hit a fluid with [identify_object(W)] somehow. They shouldn't be able to do that.")
 
 	proc/add_reagents(var/datum/reagents/R, var/volume) //should be called right after new() on inital group creation
 		if (!src.group) return
@@ -280,11 +248,10 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 
 
 	proc/add_tracked_blood(atom/movable/AM as mob|obj)
-		AM.tracked_blood = list("bDNA" = src.blood_DNA, "btype" = src.blood_type, "color" = src.color, "count" = rand(2,6))
+		AM.tracked_blood = list("bDNA" = src.blood_DNA, "btype" = src.blood_type, "color" = src.color, "count" = rand(2,6), "sample_reagent" = src.group?.master_reagent_id)
 		if (ismob(AM))
 			var/mob/M = AM
 			M.set_clothing_icon_dirty()
-
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		..()
@@ -382,7 +349,6 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 					if (!F || !src.group || src.group.disposed) continue //set_up may decide to remove F
 
 					F.amt = src.group.amt_per_tile
-					F.name = src.name
 					F.color = src.finalcolor
 					F.finalcolor = src.finalcolor
 					F.alpha = src.finalalpha
@@ -559,7 +525,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 
 		if (!src.group || !src.group.reagents) return
 
-		src.name = src.group.master_reagent_name ? src.group.master_reagent_name : src.group.reagents.get_master_reagent_name() //maybe obscure later?
+
 
 		var/color_changed = 0
 		var/datum/color/average = src.group.average_color ? src.group.average_color : src.group.reagents.get_average_color()
@@ -749,20 +715,20 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 						checks--
 						if (checks <= 0) break
 					if (prob(slippery) && src.slip())
-						src.visible_message("<span class='alert'><b>[src]</b> slips on [F]!</span>",\
-						"<span class='alert'>You slip on [F]!</span>")
+						src.visible_message(SPAN_ALERT("<b>[src]</b> slips on [F]!"),\
+						SPAN_ALERT("You slip on [F]!"))
 				if(-1) //space lube. this code bit is shit but i'm too lazy to make it Real right now. the proper implementation should also make exceptions for ice and stuff.
 					src.remove_pulling()
 					src.changeStatus("weakened", 3.5 SECONDS)
-					boutput(src, "<span class='notice'>You slipped on [F]!</span>")
-					playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
+					boutput(src, SPAN_NOTICE("You slipped on [F]!"))
+					playsound(T, 'sound/misc/slip.ogg', 50, TRUE, -3)
 					var/atom/target = get_edge_target_turf(src, src.dir)
 					src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 				if(-2) //superlibe
 					src.remove_pulling()
 					src.changeStatus("weakened", 6 SECONDS)
-					playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
-					boutput(src, "<span class='notice'>You slipped on [F]!</span>")
+					playsound(T, 'sound/misc/slip.ogg', 50, TRUE, -3)
+					boutput(src, SPAN_NOTICE("You slipped on [F]!"))
 					var/atom/target = get_edge_target_turf(src, src.dir)
 					src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
 					random_brute_damage(src, 10)
@@ -798,25 +764,24 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		entered_group = 0
 
 	//BLOODSTAINS
-	if (F.group.master_reagent_id =="blood" || F.group.master_reagent_id == "bloodc")
-		if (F.group.master_reagent_id == "blood")
-			//if (ishuman(M))
-			if (src.lying)
-				if (src.wear_suit)
-					src.wear_suit.add_blood(F)
-					src.set_clothing_icon_dirty()
-				else if (src.w_uniform)
-					src.w_uniform.add_blood(F)
-					src.set_clothing_icon_dirty()
+	if (F.group.master_reagent_id == "blood" || F.group.master_reagent_id == "bloodc" || F.group.master_reagent_id == "hemolymph") // Replace with a blood reagent check proc
+		if (src.lying)
+			if (src.wear_suit)
+				src.wear_suit.add_blood(F)
+				src.update_bloody_suit()
+			else if (src.w_uniform)
+				src.w_uniform.add_blood(F)
+				src.update_bloody_uniform()
+		else
+			if (src.shoes)
+				src.shoes.add_blood(F)
+				src.update_bloody_shoes()
 			else
-				if (src.shoes)
-					src.shoes.add_blood(F)
-					src.set_clothing_icon_dirty()
-			F.add_tracked_blood(src)
-			//else if (isliving(M))// || isobj(AM))
-			//	M.add_blood(F)
-			//	if (!M.anchored)
-			//		F.add_tracked_blood(M)
+				src.add_blood(F)
+
+		F.add_tracked_blood(src)
+		src.update_bloody_feet()
+
 	var/do_reagent_reaction = 1
 
 	if (F.my_depth_level == 1)

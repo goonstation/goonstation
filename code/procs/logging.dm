@@ -234,6 +234,16 @@ var/global/logLength = 0
 		nice_rack += "(UID: [rack_ref.unique_id]) at "
 		nice_rack += log_loc(rack_ref)
 		return nice_rack.Join()
+	else if(istype(ref,/datum/mind))
+		var/datum/mind/mindRef = ref
+		if(mindRef.current && ismob(mindRef.current))
+			return(constructName(mindRef.current, type))
+		else
+			name = "[mindRef.displayed_key] (character destroyed)"
+			if (mindRef.key)
+				key = mindRef.key
+			if (mindRef.ckey)
+				ckey = mindRef.ckey
 	else
 		return ref
 
@@ -277,7 +287,7 @@ var/global/logLength = 0
 		if (type == "diary")
 			data += name
 		else
-			data += "<span class='name'>[name]</span>"
+			data += SPAN_NAME("[name]")
 	if (mobType)
 		data += " ([mobType])"
 	if (ckey && key)
@@ -338,7 +348,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 			friendly_fire = 1
 
 	if (friendly_fire)
-		logTheThing(LOG_COMBAT, shooter_data, "<span class='alert'>Friendly Fire!</span>[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+		logTheThing(LOG_COMBAT, shooter_data, "[SPAN_ALERT("Friendly Fire!")][vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 			mode.stats_manager?.inc_friendly_fire(shooter_data)
@@ -385,13 +395,14 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 		log_health += "No clue! Report this to a coder!"
 	return "(<b>Damage:</b> <i>[log_health]</i>)"
 
-/proc/log_loc(var/atom/A)
+// "plain" used for player-visible versions. lazy
+/proc/log_loc(var/atom/A, var/plain = FALSE, var/ghostjump=FALSE)
 	if (!A)
 		return
 	var/turf/our_turf = get_turf(A)
 	if (!our_turf)
-		return
-	return "([showCoords(our_turf.x, our_turf.y, our_turf.z)] in [our_turf.loc])"
+		return "(null)"
+	return "([showCoords(our_turf.x, our_turf.y, our_turf.z, plain, ghostjump=ghostjump)] in [our_turf.loc])"
 
 // Does what is says on the tin. We're using the global proc, though (Convair880).
 /proc/log_atmos(var/atom/A as turf|obj|mob)

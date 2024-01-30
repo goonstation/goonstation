@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Section, Image, Stack } from '../components';
+import { Image, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const FlockStructures = (props, context) => {

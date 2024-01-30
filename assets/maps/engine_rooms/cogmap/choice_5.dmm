@@ -7,7 +7,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "ed" = (
-/obj/cable/brown,
+/obj/cable/orange,
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "fi" = (
@@ -20,7 +20,7 @@
 /obj/machinery/atmospherics/binary/valve{
 	name = "outlet purge valve"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
@@ -31,14 +31,8 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
-"hV" = (
-/obj/cable/black{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/inner)
 "ix" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
@@ -58,8 +52,6 @@
 /area/station/engine/inner)
 "lh" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
@@ -76,7 +68,7 @@
 	can_rupture = 0;
 	dir = 6
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
@@ -85,16 +77,14 @@
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
 "nx" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "ok" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
@@ -113,12 +103,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
-"qy" = (
-/obj/cable/black{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/inner)
 "qR" = (
 /turf/simulated/floor/grey/side,
 /area/station/engine/inner)
@@ -127,17 +111,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "tn" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/inner)
-"up" = (
-/obj/cable/brown{
-	icon_state = "1-2"
-	},
-/obj/cable/black{
-	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
@@ -150,7 +125,6 @@
 /area/station/engine/inner)
 "AI" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
@@ -158,12 +132,6 @@
 "AQ" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/inner)
-"CY" = (
-/obj/cable/black{
-	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
@@ -188,16 +156,14 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "OJ" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "PX" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/plating,
@@ -282,7 +248,7 @@ xq
 hS
 "}
 (6,1,1) = {"
-up
+ix
 ix
 tn
 GB
@@ -295,8 +261,8 @@ AI
 lh
 "}
 (7,1,1) = {"
-hV
-qy
+GB
+GB
 GB
 GB
 GB
@@ -309,7 +275,7 @@ hc
 "}
 (8,1,1) = {"
 GB
-CY
+GB
 GB
 tf
 GB

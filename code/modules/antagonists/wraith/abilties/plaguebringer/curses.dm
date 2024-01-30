@@ -17,14 +17,14 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 
 		if (ishuman(target))
 			if (istype(get_area(target), /area/station/chapel))	//Dont spam curses in the chapel.
-				boutput(holder.owner, "<span class='alert'>The holy ground this creature is standing on repels the curse immediatly.</span>")
-				boutput(target, "<span class='alert'>You feel as though some weight was added to your soul, but the feeling immediatly dissipates.</span>")
+				boutput(holder.owner, SPAN_ALERT("The holy ground this creature is standing on repels the curse immediately."))
+				boutput(target, SPAN_ALERT("You feel as though some weight was added to your soul, but the feeling immediately dissipates."))
 				return 0
 
 			//Lets let people know they have been cursed, might not be obvious at first glance
 			var/mob/living/carbon/H = target
 			if (H.traitHolder.hasTrait("training_chaplain"))
-				boutput(holder.owner, "<span class='notice'>A strange force prevents you from cursing this being, your energy is wasted.</span>")
+				boutput(holder.owner, SPAN_NOTICE("A strange force prevents you from cursing this being, your energy is wasted."))
 				return 0
 			var/curseCount = 0
 			if (H.bioHolder.HasEffect("blood_curse"))
@@ -37,12 +37,12 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				curseCount ++
 			switch(curseCount)
 				if (1)
-					boutput(H, "<span class='notice'>You feel strangely sick.</span>")
+					boutput(H, SPAN_NOTICE("You feel strangely sick."))
 				if (2)
-					boutput(H, "<span class='alert'>You hear whispers in your head, pushing you towards your doom.</span>")
+					boutput(H, SPAN_ALERT("You hear whispers in your head, pushing you towards your doom."))
 					H.playsound_local(H.loc, "sound/voice/wraith/wraithstaminadrain.ogg", 50)
 				if (3)
-					boutput(H, "<span class='alert'><b>A cacophony of otherworldly voices resonates within your mind. You sense a feeling of impending doom! You should seek salvation in the chapel or the purification of holy water.</b></span>")
+					boutput(H, SPAN_ALERT("<b>A cacophony of otherworldly voices resonates within your mind. You sense a feeling of impending doom! You should seek salvation in the chapel or the purification of holy water.</b>"))
 					H.playsound_local(H.loc, "sound/voice/wraith/wraithraise1.ogg", 80)
 
 /datum/targetable/wraithAbility/curse/blood
@@ -64,7 +64,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				return 1
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("blood_curse")
-			boutput(holder.owner, "<span class='notice'>We curse this being with a blood dripping curse.</span>")
+			boutput(holder.owner, SPAN_NOTICE("We curse this being with a blood dripping curse."))
 			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/rot)
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blindness)
@@ -96,7 +96,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				return 1
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("blind_curse")
-			boutput(holder.owner, "<span class='notice'>We curse this being with a blinding curse.</span>")
+			boutput(holder.owner, SPAN_NOTICE("We curse this being with a blinding curse."))
 			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blood)
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/enfeeble)
@@ -128,7 +128,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				return 1
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("weak_curse")
-			boutput(holder.owner, "<span class='notice'>We curse this being with an enfeebling curse.</span>")
+			boutput(holder.owner, SPAN_NOTICE("We curse this being with an enfeebling curse."))
 			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blood)
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blindness)
@@ -160,7 +160,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				return 1
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.bioHolder.AddEffect("rot_curse")
-			boutput(holder.owner, "<span class='notice'>We curse this being with a decaying curse.</span>")
+			boutput(holder.owner, SPAN_NOTICE("We curse this being with a decaying curse."))
 			var/datum/targetable/ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blood)
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/blindness)
@@ -194,7 +194,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			if (H?.bioHolder.HasEffect("rot_curse") && H?.bioHolder.HasEffect("weak_curse") && H?.bioHolder.HasEffect("blind_curse") && H?.bioHolder.HasEffect("blood_curse"))
 				W.playsound_local(W.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
 				H.bioHolder.AddEffect("death_curse")
-				boutput(W, "<span class='alert'><b>That soul will be OURS!</b></span>")
+				boutput(W, SPAN_ALERT("<b>That soul will be OURS!</b>"))
 				do_curse(H, W)
 				return FALSE
 			else
@@ -206,7 +206,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		var/active = TRUE
 		while (active)
 			if (!H?.bioHolder.GetEffect("death_curse"))
-				boutput(W, "<span class='alert'>Those foolish mortals stopped your deadly curse before it claimed it's victim! You'll damn them all!</span>")
+				boutput(W, SPAN_ALERT("Those foolish mortals stopped your deadly curse before it claimed it's victim! You'll damn them all!"))
 				active = FALSE
 				return
 			if (!isdead(H))
@@ -215,14 +215,14 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				cycles ++
 				if (prob(6))
 					H.changeStatus("stunned", 2 SECONDS)
-					boutput(H, "<span class='alert'><b>You feel netherworldly hands grasping at your soul!</b></span>")
+					boutput(H, SPAN_ALERT("<b>You feel netherworldly hands grasping at your soul!</b>"))
 				if (prob(4))
-					boutput(H, "<span class='alert'>IT'S COMING FOR YOU!</span>")
+					boutput(H, SPAN_ALERT("IT'S COMING FOR YOU!"))
 					H.remove_stamina( rand(30, 70) )
 				if ((cycles > 10) && prob(15))
 					random_brute_damage(H, 1)
 					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
-					H.visible_message("<span class='alert'>[H]'s flesh tears open before your very eyes!!</span>")
+					H.visible_message(SPAN_ALERT("[H]'s flesh tears open before your very eyes!!"))
 					new /obj/decal/cleanable/blood/drip(get_turf(H))
 			else
 				var/turf/T = get_turf(H)

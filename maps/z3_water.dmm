@@ -1514,7 +1514,7 @@
 	},
 /area/wrecknsspolaris)
 "eI" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/unsimulated/floor/yellow,
@@ -2874,8 +2874,6 @@
 /area/dank_trench)
 "iv" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "1-9"
 	},
 /obj/item/bluntwrap{
@@ -3045,7 +3043,7 @@
 "uV" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/floor/martian,
@@ -3103,7 +3101,7 @@
 "FT" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/floor/martian,
@@ -3148,7 +3146,7 @@
 "Pt" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/floor/martian,
@@ -3196,7 +3194,7 @@
 "TR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/floor/martian,

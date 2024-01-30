@@ -39,6 +39,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 	var/runOnLife = 0 //Should this obj run Life?
+	var/processed_on_killed = FALSE //! Whether onKilled already ran
 
 	New()
 		..()
@@ -62,7 +63,7 @@
 				if (H.decomp_stage == DECOMP_STAGE_SKELETONIZED || check_target_immunity(H))//too decomposed or too cool to be eaten
 					continue
 				H.was_harmed(src)
-				src.visible_message("<span class='alert'><b>The blob starts trying to absorb [H.name]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>The blob starts trying to absorb [H.name]!</b>"))
 				actions.start(new /datum/action/bar/blob_absorb(H, overmind), src)
 				playsound(src.loc, "sound/voice/blob/blobsucc[rand(1, 3)].ogg", 10, 1)
 
@@ -219,6 +220,10 @@
 			return
 		STOP_TRACKING
 		in_disposing = 1
+		if(!processed_on_killed)
+			src.onKilled()
+			if (overmind)
+				overmind.onBlobDeath(src, null)
 		var/datum/controller/process/blob/B = get_master_blob_controller()
 		B.blobs -= src
 		if (istype(overmind))
@@ -293,8 +298,10 @@
 			tolerance *= 3
 		if(temp_difference > tolerance)
 			temp_difference = abs(temp_difference - tolerance)
-
-			src.take_damage(temp_difference / heat_divisor * min(1, volume / (CELL_VOLUME/3)), 1, "burn")
+			var/damage = temp_difference / heat_divisor * min(1, volume / (CELL_VOLUME/3))
+			if(air)
+				damage *= clamp(MIXTURE_PRESSURE(air) / ONE_ATMOSPHERE, 0, 1)
+			src.take_damage(damage, 1, "burn")
 
 	attack_hand(var/mob/user)
 		user.lastattacked = src
@@ -314,22 +321,22 @@
 		act1 = pick_string("blob.txt", "act1_[adj1]")
 		adj1 = pick_string("blob.txt", "adj1_[adj1]")
 		playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
-		src.visible_message("<span class='combat'><b>[user.name]</b> [adj1] [act1] [src]! That's [adj2] [act2]!</span>")
+		src.visible_message(SPAN_COMBAT("<b>[user.name]</b> [adj1] [act1] [src]! That's [adj2] [act2]!"))
 		return
 
 	attackby(var/obj/item/W, var/mob/user)
 		user.lastattacked = src
 		if(ismobcritter(user) && user:ghost_spawned || isghostdrone(user))
-			src.visible_message("<span class='combat'><b>[user.name]</b> feebly attacks [src] with [W], but is too weak to harm it!</span>", group="blobweaklyattacked")
+			src.visible_message(SPAN_COMBAT("<b>[user.name]</b> feebly attacks [src] with [W], but is too weak to harm it!"), group="blobweaklyattacked")
 			return
 		if( istype(W,/obj/item/clothing/head) && overmind )
 			user.drop_item()
 			overmind.setHat(W)
-			user.visible_message( "<span class='notice'>[user] places the [W] on the blob!</span>" )
-			user.visible_message( "<span class='notice'>The blob disperses the hat!</span>" )
-			overmind.show_message( "<span class='notice'>[user] places the [W] on you!</span>" )
+			user.visible_message( SPAN_NOTICE("[user] places the [W] on the blob!") )
+			user.visible_message( SPAN_NOTICE("The blob disperses the hat!") )
+			overmind.show_message( SPAN_NOTICE("[user] places the [W] on you!") )
 			return
-		src.visible_message("<span class='combat'><b>[user.name]</b> attacks [src] with [W]!</span>", group="blobattacked")
+		src.visible_message(SPAN_COMBAT("<b>[user.name]</b> attacks [src] with [W]!"), group="blobattacked")
 		playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
 		if (W.hitsound)
 			playsound(src.loc, W.hitsound, 50, 1)
@@ -428,9 +435,10 @@
 		src.health = clamp(src.health, 0, src.health_max)
 
 		if (src.health <= 0)
-			src.onKilled()
-			if (overmind)
-				overmind.onBlobDeath(src, user)
+			if(!processed_on_killed)
+				src.onKilled()
+				if (overmind)
+					overmind.onBlobDeath(src, user)
 			playsound(src.loc, "sound/voice/blob/blobspread[rand(1, 2)].ogg", 100, 1)
 			qdel(src)
 		else
@@ -446,6 +454,8 @@
 			animate(src, color="#00FF00", time=10, loop=-1)
 
 	proc/onKilled()
+		SHOULD_CALL_PARENT(TRUE)
+		processed_on_killed = TRUE
 		if (poison)
 			poison = poison * poison_spread_coefficient
 			var/list/spread = list()
@@ -594,10 +604,9 @@
 		START_TRACKING
 
 	disposing()
-		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
-
-		. = ..()
 		STOP_TRACKING
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
+		. = ..()
 
 	bullet_act(var/obj/projectile/P)
 		if (P.proj_data.damage_type == D_ENERGY && src.overmind && prob(src.overmind.nucleus_reflectivity))
@@ -615,7 +624,7 @@
 	take_damage(amount, mult, damtype, mob/user)
 		var/now = world.timeofday
 		if (!src.nextAttackMsg || now >= src.nextAttackMsg) //every 5 seconds supposedly
-			boutput(overmind, "<span class='blobalert'>Your nucleus in [get_area(src)] is taking damage!</span>")
+			boutput(overmind, SPAN_BLOBALERT("Your nucleus in [get_area(src)] is taking damage!"))
 			src.nextAttackMsg = now + 50 //every 5 seconds
 
 		..()
@@ -632,16 +641,16 @@
 			overmind.bio_points = 0
 			overmind.debuff_timestamp = world.timeofday + overmind.debuff_duration
 
-			out(overmind, "<span class='blobalert'>Your nucleus in [get_area(src)] has been destroyed! You feel a lot weaker for a short time...</span>")
+			boutput(overmind, SPAN_BLOBALERT("Your nucleus in [get_area(src)] has been destroyed! You feel a lot weaker for a short time..."))
 
 			if (prob(1))
-				src.visible_message("<span class='blobalert'>With a great almighty wobble, the nucleus and nearby blob pieces wither and die! The time of jiggles is truly over.</span>")
+				src.visible_message(SPAN_BLOBALERT("With a great almighty wobble, the nucleus and nearby blob pieces wither and die! The time of jiggles is truly over."))
 			else
-				src.visible_message("<span class='blobalert'>The nucleus and nearby blob pieces wither and die!</span>")
+				src.visible_message(SPAN_BLOBALERT("The nucleus and nearby blob pieces wither and die!"))
 
 		//all dead :(
 		else
-			out(overmind, "<span class='blobalert'>Your nucleus in [get_area(src)] has been destroyed!</span>")
+			boutput(overmind, SPAN_BLOBALERT("Your nucleus in [get_area(src)] has been destroyed!"))
 			if (prob(50))
 				playsound(src.loc, 'sound/voice/blob/blobdeploy.ogg', 100, 1)
 			else
@@ -739,7 +748,7 @@
 		if (!Target)
 			return 1
 
-		var/obj/projectile/L = initialize_projectile_ST(src, current_projectile, Target)
+		var/obj/projectile/L = initialize_projectile_pixel_spread(src, current_projectile, Target)
 
 		if (!L)
 			return
@@ -756,7 +765,7 @@
 			overmind.usePoints(slime_cost)
 			L.color = overmind.color
 
-		visible_message("<span class='alert'><b>[src] fires slime at [Target]!</b></span>")
+		visible_message(SPAN_ALERT("<b>[src] fires slime at [Target]!</b>"))
 		L.launch()
 
 /datum/projectile/slime
@@ -912,7 +921,7 @@
 		. = ..()
 		dead = 1
 		if(absorbed_temp > 1000)
-			fireflash_s(get_turf(src), protect_range + 1, absorbed_temp + temptemp, (absorbed_temp + temptemp)/protect_range)
+			fireflash(get_turf(src), protect_range + 1, absorbed_temp + temptemp, (absorbed_temp + temptemp)/protect_range)
 
 
 /obj/blob/plasmaphyll
@@ -1086,24 +1095,24 @@
 
 	if (istype(src,/turf/space/))
 		if (feedback)
-			boutput(feedback, "<span class='alert'>You can't spread the blob into space.</span>")
+			boutput(feedback, SPAN_ALERT("You can't spread the blob into space."))
 		return 0
 
 	if (!admin_overmind) //admins can spread wherever (within reason)
 		if (istype(src,/turf/unsimulated/) && !istype(src,/turf/unsimulated/floor/shuttle))
 			if (feedback)
-				boutput(feedback, "<span class='alert'>You can't spread the blob onto that kind of tile.</span>")
+				boutput(feedback, SPAN_ALERT("You can't spread the blob onto that kind of tile."))
 			return 0
 
 	if (src.density)
 		if (feedback)
-			boutput(feedback, "<span class='alert'>You can't spread the blob into a wall.</span>")
+			boutput(feedback, SPAN_ALERT("You can't spread the blob into a wall."))
 		return 0
 
 	for (var/obj/O in src.contents)
 		if (O.density)
 			if (feedback)
-				boutput(feedback, "<span class='alert'>That tile is blocked by [O].</span>")
+				boutput(feedback, SPAN_ALERT("That tile is blocked by [O]."))
 			return 0
 
 	if (skip_adjacent)
@@ -1117,7 +1126,7 @@
 				return B
 
 	if (feedback)
-		boutput(feedback, "<span class='alert'>There is no blob adjacent to this tile to spread from.</span>")
+		boutput(feedback, SPAN_ALERT("There is no blob adjacent to this tile to spread from."))
 
 	return 0
 

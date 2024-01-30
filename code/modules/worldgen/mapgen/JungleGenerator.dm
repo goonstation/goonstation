@@ -123,3 +123,5 @@
 	nitrogen = MOLES_N2STANDARD
 	temperature = T20C
 	fullbright = 0
+
+#undef BIOME_RANDOM_SQUARE_DRIFT

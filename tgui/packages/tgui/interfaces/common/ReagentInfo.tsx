@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { Box, ColorBox, Flex, Icon, NoticeBox, Section, Tooltip, Stack, ProgressBar } from '../../components';
+import { Box, ColorBox, Flex, Icon, NoticeBox, ProgressBar, Section, Stack, Tooltip } from '../../components';
 import { freezeTemperature } from './temperatureUtils';
 import { BoxProps } from '../../components/Box';
 import { BooleanLike } from 'common/react';

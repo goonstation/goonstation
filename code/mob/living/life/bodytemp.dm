@@ -41,8 +41,8 @@
 			loc_temp = environment.temperature
 
 		var/thermal_protection
-		if (owner.stat < 2)
-			owner.bodytemperature = owner.adjustBodyTemp(owner.bodytemperature,owner.base_body_temp,1,owner.thermoregulation_mult)
+		if (!isdead(owner))
+			owner.bodytemperature = owner.adjustBodyTemp(owner.bodytemperature, owner.base_body_temp, 1 ,owner.thermoregulation_mult)
 		if (loc_temp < owner.base_body_temp) // a cold place -> add in cold protection
 			if (owner.is_cold_resistant())
 				return ..()
@@ -52,7 +52,7 @@
 				return ..()
 			thermal_protection = owner.get_heat_protection()
 		var/thermal_divisor = (100 - thermal_protection) * 0.01
-		owner.bodytemperature = owner.adjustBodyTemp(owner.bodytemperature,loc_temp,thermal_divisor,owner.innate_temp_resistance)
+		owner.bodytemperature = owner.adjustBodyTemp(owner.bodytemperature,loc_temp, thermal_divisor, owner.innate_temp_resistance)
 
 		if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			return ..()

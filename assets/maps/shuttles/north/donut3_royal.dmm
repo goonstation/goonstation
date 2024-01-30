@@ -35,7 +35,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	icon = 'icons/obj/atmospherics/valve.dmi';
-	icon_state = "valve0";
+	icon_state = "valve0-map";
 	name = "valve"
 	},
 /turf/unsimulated/floor{
@@ -117,7 +117,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -184,7 +185,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "ea" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -332,7 +333,7 @@
 	},
 /area/centcom)
 "he" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/fakeobjects{
@@ -364,7 +365,7 @@
 /turf/unsimulated/floor/arrival,
 /area/centcom)
 "hF" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 1
 	},
@@ -522,7 +523,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -618,7 +620,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "A pipe.";
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -741,7 +744,8 @@
 "oA" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "A pipe.";
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
@@ -802,7 +806,8 @@
 "pF" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
@@ -825,7 +830,7 @@
 	desc = "It's a pipe manifold.";
 	dir = 6;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
+	icon_state = "manifold-map";
 	name = "pipe"
 	},
 /turf/unsimulated/floor/shuttlebay,
@@ -897,7 +902,7 @@
 	desc = "It's a pipe manifold.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
+	icon_state = "manifold-map";
 	name = "pipe"
 	},
 /turf/unsimulated/floor{
@@ -1088,7 +1093,8 @@
 "Cf" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "A pipe.";
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -1119,7 +1125,7 @@
 	desc = "It's a pipe manifold.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
+	icon_state = "manifold-map";
 	name = "pipe"
 	},
 /turf/unsimulated/floor{
@@ -1154,7 +1160,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Ei" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -1401,7 +1407,8 @@
 "LS" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
@@ -1996,7 +2003,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';

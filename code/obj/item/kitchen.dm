@@ -70,7 +70,7 @@ TRAYS
 
 	proc/break_utensil(mob/living/carbon/user as mob, var/spawnatloc = 0)
 		var/location = get_turf(src)
-		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
+		user.visible_message(SPAN_ALERT("[src] breaks!"))
 		playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 30, 1)
 		user.u_equip(src)
 		var/replacethis
@@ -102,11 +102,11 @@ TRAYS
 	icon_state = "spoon"
 	tool_flags = TOOL_SPOONING
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)].</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)]."))
 			random_brute_damage(user, 5)
-		if (!spoon_surgery(M,user))
+		if (!spoon_surgery(target,user))
 			return ..()
 
 	custom_suicide = TRUE
@@ -114,7 +114,7 @@ TRAYS
 		if (!src.user_can_suicide(user))
 			return 0
 		var/hisher = his_or_her(user)
-		user.visible_message("<span style='color:red'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b>"))
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
@@ -131,19 +131,19 @@ TRAYS
 	dir = NORTH
 	throwforce = 7
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)].</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)]."))
 			random_brute_damage(user, 10)
 			JOB_XP(user, "Clown", 1)
-		if(!saw_surgery(M,user)) // it doesn't make sense, no. but hey, it's something.
+		if(!saw_surgery(target,user)) // it doesn't make sense, no. but hey, it's something.
 			return ..()
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if(!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] stabs [src] right into [his_or_her(user)] heart!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] stabs [src] right into [his_or_her(user)] heart!</b>"))
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("chest", 150, 0)
@@ -168,21 +168,22 @@ TRAYS
 
 	New()
 		..()
+		src.AddComponent(/datum/component/bloodflick)
 		src.setItemSpecial(/datum/item_special/double)
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts [himself_or_herself(user)].</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and cuts [himself_or_herself(user)]."))
 			random_brute_damage(user, 20)
 			JOB_XP(user, "Clown", 1)
-		if(!scalpel_surgery(M,user))
+		if(!scalpel_surgery(target,user))
 			return ..()
 
 	custom_suicide = TRUE
 	suicide(var/mob/user as mob)
 		if(!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] slashes [his_or_her(user)] own throat with [src]!</b>"))
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
 		return 1
@@ -199,18 +200,18 @@ TRAYS
 		..()
 		src.icon_state = pick("spoon_plastic_pink","spoon_plastic_yellow","spoon_plastic_green","spoon_plastic_blue")
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)].</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)]."))
 			random_brute_damage(user, 5)
 		if (prob(20))
 			src.break_utensil(user)
 			return
-		if (!spoon_surgery(M,user))
+		if (!spoon_surgery(target,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span style=\"color:red\"><b>[user] tries to jab [src] straight through [his_or_her(user)] eye and into [his_or_her(user)] brain!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] tries to jab [src] straight through [his_or_her(user)] eye and into [his_or_her(user)] brain!</b>"))
 		src.break_utensil(user)
 		spawn(100)
 			if (user)
@@ -229,18 +230,18 @@ TRAYS
 		..()
 		src.icon_state = pick("fork_plastic_pink","fork_plastic_yellow","fork_plastic_green","fork_plastic_blue")
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)].</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)]."))
 			random_brute_damage(user, 5)
 		if (prob(20))
 			src.break_utensil(user)
 			return
-		if (!saw_surgery(M,user))
+		if (!saw_surgery(target,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span style=\"color:red\"><b>[user] tries to stab [src] right into [his_or_her(user)] heart!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] tries to stab [src] right into [his_or_her(user)] heart!</b>"))
 		src.break_utensil(user)
 		spawn(100)
 			if (user)
@@ -259,19 +260,19 @@ TRAYS
 		..()
 		src.icon_state = pick("knife_plastic_pink","knife_plastic_yellow","knife_plastic_green","knife_plastic_blue")
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts [himself_or_herself(user)].</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and cuts [himself_or_herself(user)]."))
 			random_brute_damage(user, 5)
 			JOB_XP(user, "Clown", 1)
 		if(prob(20))
 			src.break_utensil(user)
 			return
-		if(!scalpel_surgery(M,user))
+		if(!scalpel_surgery(target,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span class='alert'><b>[user] tries to slash [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] tries to slash [his_or_her(user)] own throat with [src]!</b>"))
 		src.break_utensil(user)
 		SPAWN(10 SECONDS)
 			if(user)
@@ -342,7 +343,7 @@ TRAYS
 				src.icon_state = "chop_closed"
 				src.name = "chopsticks"
 			else
-				boutput(user,"<span style=\"color:red\"><b>The chopstics already have a wrapper!</b></span>")
+				boutput(user,SPAN_ALERT("<b>The chopstics already have a wrapper!</b>"))
 
 /obj/item/kitchen/utensil/fork/chopsticks
 	name = "chopsticks"
@@ -379,7 +380,7 @@ TRAYS
 				A:lastattackertime = world.time
 			random_brute_damage(C, 15, 1)
 			take_bleeding_damage(C, null, 10, DAMAGE_CUT)
-			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
 
 /obj/item/kitchen/utensil/knife/bread
 	name = "bread knife"
@@ -390,7 +391,7 @@ TRAYS
 	throwforce = 3
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span class='alert'><b>[user] drags [src] over [his_or_her(user)] own throat!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] drags [src] over [his_or_her(user)] own throat!</b>"))
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
 		return 1
@@ -403,16 +404,16 @@ TRAYS
 	desc = "A cutting tool with a rotary circular blade, designed to cut pizza. You can probably use it as a knife with enough patience."
 	tool_flags = TOOL_SAWING
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and pinches [his_or_her(user)] fingers against the blade guard.</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and pinches [his_or_her(user)] fingers against the blade guard."))
 			random_brute_damage(user, 5)
 			JOB_XP(user, "Clown", 1)
-		if(!saw_surgery(M,user))
+		if(!saw_surgery(target,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span class='alert'><b>[user] rolls [src] repeatedly over [his_or_her(user)] own throat and slices it wide open!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] rolls [src] repeatedly over [his_or_her(user)] own throat and slices it wide open!</b>"))
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
 		return 1
@@ -429,7 +430,6 @@ TRAYS
 	desc = "A box that can hold food! Well, not this one, I mean. You shouldn't be able to see this one."
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
 	icon_state = "donutbox"
-	uses_multiple_icon_states = 1
 	var/count = 6
 	var/max_count = 6
 	var/box_type = "donutbox"
@@ -497,6 +497,9 @@ TRAYS
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tongs))
 			return src.Attackhand(user)
+		// Stops trying to fit sticker in the box when we want it ON the box
+		if (istype(W, /obj/item/sticker))
+			return
 		if(src.count >= src.max_count)
 			boutput(user, "You can't fit anything else in [src]!")
 			return
@@ -516,14 +519,21 @@ TRAYS
 			if(!user.put_in_hand(src))
 				return ..()
 
+	proc/find_food()
+		// First in, last out food search
+		// Mostly needed since stickers add themselves to contents and need to stay there to be able to be removed...
+		for (var/i = length(src.contents) to 1 step -1)
+			var/obj/content = src.contents[i]
+			if (istype(content, /obj/item/reagent_containers/food/snacks))
+				return content
+
 	attack_hand(mob/user)
 		if((!istype(src.loc, /turf) && !user.is_in_hands(src)) || src.count == 0)
 			..()
 			return
 		src.add_fingerprint(user)
-		var/list/obj/item/reagent_containers/food/snacks/myFoodList = src.contents
-		if(length(myFoodList) >= 1)
-			var/obj/item/reagent_containers/food/snacks/myFood = myFoodList[myFoodList.len]
+		var/obj/item/reagent_containers/food/snacks/myFood = find_food(src.contents)
+		if(myFood)
 			if(src.count >= 1)
 				src.count--
 				tooltip_rebuild = 1
@@ -645,30 +655,30 @@ TRAYS
 	proc/add_contents(obj/item/food, mob/user, click_params)
 		. = FALSE
 		if(food.cant_drop)
-			boutput(user, "<span class='alert'>You can't do that, [food] is attached to you!</span>")
+			boutput(user, SPAN_ALERT("You can't do that, [food] is attached to you!"))
 			return
 
 
 		if (istype(food, /obj/item/plate))
 			if (food == src)
-				boutput(user, "<span class='alert'>You can't stack a [src] on itself!</span>")
+				boutput(user, SPAN_ALERT("You can't stack a [src] on itself!"))
 				return
 			if (src.plate_stacked)
-				boutput(user, "<span class='alert'>You can't stack anything on [src], it already has a plate stacked on it!</span>")
+				boutput(user, SPAN_ALERT("You can't stack anything on [src], it already has a plate stacked on it!"))
 				return
 			if (src.check_height(food) >= 7)
-				boutput(user, "<span class='alert'>You can't stack anything on [src], it's already stacked too high!</span>")
+				boutput(user, SPAN_ALERT("You can't stack anything on [src], it's already stacked too high!"))
 				return
 
 			var/obj/item/plate/not_really_food = food
 			. = src.stackable && not_really_food.stackable // . is TRUE if we can stack the other plate on this plate, FALSE otherwise
 
 		if (food.w_class > src.space_left && src.is_plate)
-			boutput(user, "<span class='alert'>There's no more space on \the [src]!</span>")
+			boutput(user, SPAN_ALERT("There's no more space on \the [src]!"))
 			return
 			                                    // anything that isn't a plate may as well hold anything that fits the "plate"
 		if (!food.edible && !. && src.is_plate) // plates aren't edible, so we check if we're adding a valid plate as well (. is TRUE if so)
-			boutput(user, "<span class='alert'>That's not food, it doesn't belong on \the [src]!</span>")
+			boutput(user, SPAN_ALERT("That's not food, it doesn't belong on \the [src]!"))
 			return
 		if (food.w_class > W_CLASS_NORMAL && !.) // same logic as above, but to check if we can stack it
 			boutput(user, "You try to think of a way to put \the [food] [src.is_plate ? "on" : "in"] \the [src] but it's not possible! It's too large!")
@@ -722,7 +732,7 @@ TRAYS
 	/// Called when you throw or smash the plate, throwing the contents everywhere
 	proc/shit_goes_everywhere(depth = 1)
 		if (length(src.contents))
-			src.visible_message("<span class='alert'>Everything [src.is_plate ? "on" : "in"] \the [src] goes flying!</span>")
+			src.visible_message(SPAN_ALERT("Everything [src.is_plate ? "on" : "in"] \the [src] goes flying!"))
 		for (var/atom/movable/food in src)
 			food.set_loc(get_turf(src))
 			if (istype(food, /obj/item/plate))
@@ -749,7 +759,7 @@ TRAYS
 
 	/// The plate shatters into shards and tosses its contents around.
 	proc/shatter(depth = 1)
-		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, TRUE)
 		var/turf/T = get_turf(src)
 		for (var/i in 1 to (2 - (depth > 1)))
 			var/obj/O = new /obj/item/raw_material/shard/glass
@@ -794,50 +804,50 @@ TRAYS
 			if(url_regex?.Find(str))
 				return
 			if (length(str) > 64)
-				boutput(user, "<span class='alert'>Name too long.</span>")
+				boutput(user, SPAN_ALERT("Name too long."))
 				return
 			src.name = "'[str]'"
-			boutput(user, "<span class='notice'>You name the dish '[str]'.</span>")
+			boutput(user, SPAN_NOTICE("You name the dish '[str]'."))
 			logTheThing(LOG_STATION, user, "names a dish \"[str]\".")
 		else
 			if (length(src.contents))
 				src.remove_contents(pick(src.contents))
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(user.a_intent == INTENT_HARM && src.is_plate)
-			if(M == user)
-				boutput(user, "<span class='alert'><B>You smash [src] over your own head!</b></span>")
+			if(target == user)
+				boutput(user, SPAN_ALERT("<B>You smash [src] over your own head!</b>"))
 			else
-				M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
-				logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
+				target.visible_message(SPAN_ALERT("<B>[user] smashes [src] over [target]'s head!</B>"))
+				logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(target,"combat")]'s head! ")
 
-			unique_attack_garbage_fuck(M, user)
+			unique_attack_garbage_fuck(target, user)
 
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
 				if(istype(H.head, /obj/item/clothing/head/helmet))
-					M.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+					target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
 				else
-					M.changeStatus("weakened", 1 SECONDS)
-					M.force_laydown_standup()
-			else if(ismobcritter(M))
-				var/mob/living/critter/L = M
+					target.changeStatus("weakened", 1 SECONDS)
+					target.force_laydown_standup()
+			else if(ismobcritter(target))
+				var/mob/living/critter/L = target
 				var/has_helmet = FALSE
 				for(var/datum/equipmentHolder/head/head in L.equipment)
 					if(istype(head.item, /obj/item/clothing/head/helmet))
 						has_helmet = TRUE
 						break
 				if(has_helmet)
-					M.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+					target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
 				else
-					M.changeStatus("weakened", 1 SECONDS)
-					M.force_laydown_standup()
+					target.changeStatus("weakened", 1 SECONDS)
+					target.force_laydown_standup()
 			else //borgs, ghosts, whatever
-				M.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+				target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
 		else
-			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
+			target.visible_message(SPAN_ALERT("[user] taps [target] over the head with [src]."))
 			playsound(src, src.hit_sound, 30, 1)
-			logTheThing(LOG_COMBAT, user, "taps [constructTarget(M,"combat")] over the head with [src].")
+			logTheThing(LOG_COMBAT, user, "taps [constructTarget(target,"combat")] over the head with [src].")
 
 	dropped(mob/user)
 		..()
@@ -846,7 +856,7 @@ TRAYS
 				var/mob/living/carbon/human/H = user
 				if (!H.limbs.r_leg && !H.limbs.l_leg)
 					return // fix for legless players shattering plates when stacking and pulling disposed plates from null space
-			user.visible_message("<span class='alert'>[user] drops \the [src]!</span>")
+			user.visible_message(SPAN_ALERT("[user] drops \the [src]!"))
 			src.shatter()
 
 	Crossed(atom/movable/AM)
@@ -891,29 +901,46 @@ TRAYS
 	add_contents(obj/item/food, mob/user, click_params) // Due to non-plates skipping some checks in the original add_contents() we'll have to do our own checks.
 
 		if (!src.open && !istype(food, /obj/item/plate/))
-			boutput(user, "<span class='alert'>You have to open \the [src] to put something in it, silly!</span>")
+			boutput(user, SPAN_ALERT("You have to open \the [src] to put something in it, silly!"))
 			return
 
 		if (src.open && istype(food, /obj/item/plate/))
-			boutput(user, "<span class='alert'>You can only put \the [food] on top of \the [src] when it's closed!")
+			boutput(user, SPAN_ALERT("You can only put \the [food] on top of \the [src] when it's closed!"))
 			return
 
 		if (food.w_class > src.space_left && !istype(food, src.type))
-			boutput(user, "<span class='alert'>There's no more space in \the [src]!</span>")
+			boutput(user, SPAN_ALERT("There's no more space in \the [src]!"))
+			return
+
+		if (src.open && istype(food, /obj/item/tongs)) // Stops borgs from seeing duplicate messages
 			return
 
 		. = ..()
 
+	proc/mousetrap_check(mob/user)
+		for(var/obj/item/mousetrap/MT in src.food_inside)
+			if (MT.armed)
+				user?.visible_message(SPAN_ALERT("<B>[user] opens the pizza box and sets off a mousetrap!</B>"),\
+					SPAN_ALERT("<B>You open the pizza box, but there was a live mousetrap in there!</B>"))
+				MT.triggered(user, user?.hand ? "l_hand" : "r_hand")
+				return TRUE
+		for(var/obj/item/mine/M in src.food_inside)
+			if (M.armed && M.used_up != TRUE)
+				user?.visible_message(SPAN_ALERT("<B>[user] opens the pizza box and sets off a [M.name]!</B>"),\
+					SPAN_ALERT("<B>You open the pizza box, but there was a live [M.name] in there!</B>"))
+				M.triggered(user)
+				return TRUE
+
 	proc/toggle_box(mob/user)
 		if (length(src.contents - src.food_inside) > 0)
-			boutput(user, "<span class='alert'>You have to remove the boxes on \the [src] before you can open it!")
+			boutput(user, SPAN_ALERT("You have to remove the boxes on \the [src] before you can open it!"))
 			return
 
 
 		if (src.open)
 			if(user.bioHolder.HasEffect("clumsy") && prob(10))
-				user.visible_message("<span class='alert'>[user] gets their finger caught in \the [src] when closing it. That thing is made out of cardboard! How is that possible?!</span>", \
-				"<span class='alert'>You close \the [src] with your finger in it! Yeow!</span>")
+				user.visible_message(SPAN_ALERT("[user] gets their finger caught in \the [src] when closing it. That thing is made out of cardboard! How is that possible?!"), \
+				SPAN_ALERT("You close \the [src] with your finger in it! Yeow!"))
 				user.setStatus("stunned", 1 SECOND)
 				user.TakeDamage((pick(TRUE, FALSE) ? "l_arm" : "r_arm"), 2, 0, 0, DAMAGE_BLUNT)
 				bleed(user, 1, 1)
@@ -929,6 +956,9 @@ TRAYS
 			src.UpdateIcon()
 
 		else
+			if (src.mousetrap_check(user))
+				return FALSE
+
 			if (isnull(user)) // We only need a null-check here because of the shit_goes_everywhere proc
 				icon_state = "pizzabox_open"
 				src.open = TRUE
@@ -937,8 +967,8 @@ TRAYS
 				return
 
 			if (user.bioHolder.HasEffect("clumsy") && prob(33))
-				user.visible_message("<span class='alert'>[user] hits their head on the back of \the [src].</span>", \
-				"<span class='alert'>You hit the back of \the [src] on your own head! Ouch!</span>")
+				user.visible_message(SPAN_ALERT("[user] hits their head on the back of \the [src]."), \
+				SPAN_ALERT("You hit the back of \the [src] on your own head! Ouch!"))
 				user.setStatus("stunned", 1 SECOND)
 				user.TakeDamage("head", 2, 0, 0, DAMAGE_BLUNT)
 				playsound(user.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 80, 0)
@@ -1042,13 +1072,13 @@ TRAYS
 
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
-		playsound(src, 'sound/weapons/trayhit.ogg', 25, 1)
+		playsound(src, 'sound/weapons/trayhit.ogg', 25, TRUE)
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")
 		user.drop_item(src)
 
 		if(tray_health == 0) //breakable trays because you flew too close to the sun, you tried to have unlimited damage AND stuns you fool, your hubris is too fat, too wide
 			src.visible_message("<b>\The [src] shatters!</b>")
-			playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 70, 1)
+			playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 70, TRUE)
 			new /obj/item/scrap(src.loc)
 			qdel(src)
 			return
@@ -1137,9 +1167,9 @@ TRAYS
 				user.u_equip(FOOD)
 				qdel(FOOD)
 			else if(!src.seaweed)
-				boutput(user,"<span class='alert'>You need a seaweed sheet on the roller first, silly.</span>")
+				boutput(user,SPAN_ALERT("You need a seaweed sheet on the roller first, silly."))
 			else
-				boutput(user,"<span class='alert'>You need sticky rice!</span>")
+				boutput(user,SPAN_ALERT("You need sticky rice!"))
 		else
 			..()
 
@@ -1214,13 +1244,6 @@ TRAYS
 /obj/surgery_tray/kitchen_island
 	name = "kitchen island"
 	desc = "a table! with WHEELS!"
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "kitchen_island"
-
-//kitchen island
-/obj/surgery_tray/kitchen_island
-	name = "kitchen island"
-	desc = "a table! with wheels!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "kitchen_island"
 

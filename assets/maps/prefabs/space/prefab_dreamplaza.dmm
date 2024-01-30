@@ -675,7 +675,7 @@
 	dir = 1;
 	pixel_y = 12
 	},
-/obj/stool/chair/wooden/regal,
+/obj/stool/chair/dining/regal,
 /turf/simulated/floor/marble/border_wb,
 /area/prefab/dreamplaza)
 "wA" = (

@@ -93,7 +93,7 @@ client/proc/open_dj_panel()
 			if (!usr.client)
 				return TRUE
 			usr.client.djmode = !usr.client.djmode
-			boutput(usr, "<span class='notice'>DJ mode now [(usr.client.djmode ? "On" : "Off")].</span>")
+			boutput(usr, SPAN_NOTICE("DJ mode now [(usr.client.djmode ? "On" : "Off")]."))
 
 			logTheThing(LOG_ADMIN, usr, "set their DJ mode to [(usr.client.djmode ? "On" : "Off")]")
 			logTheThing(LOG_DIARY, usr, "set their DJ mode to [(usr.client.djmode ? "On" : "Off")]", "admin")
@@ -139,9 +139,12 @@ client/proc/open_dj_panel()
 				preloaded_sounds.Remove(selected)
 
 		if("toggle-player-dj")
-			var/dude = input(usr, "Choose a client:", "Choose a client:", null) as null|anything in clients
-			if (!dude) return FALSE
-			toggledj(dude, usr)
+			if(isadmin(usr.client))
+				var/dude = input(usr, "Choose a client:", "Choose a client:", null) as null|anything in clients
+				if (!dude) return FALSE
+				toggledj(dude, usr)
+			else
+				boutput(usr, "You must be an admin to use this command.")
 
 		if("stop-sound")
 			move_admin_sound_channel(TRUE)
@@ -195,4 +198,4 @@ client/proc/open_dj_panel()
 	logTheThing(LOG_ADMIN, actor, "has [C.non_admin_dj ? "given" : "removed"] the ability for [constructTarget(C,"admin")] to DJ and use dectalk.")
 	logTheThing(LOG_DIARY, actor, "has [C.non_admin_dj ? "given" : "removed"] the ability for [constructTarget(C,"diary")] to DJ and use dectalk.", "admin")
 	message_admins("[key_name(actor)] has [C.non_admin_dj ? "given" : "removed"] the ability for [key_name(C)] to DJ and use dectalk.")
-	boutput(C, "<span class='alert'><b>You [C.non_admin_dj ? "can now" : "no longer can"] DJ with the 'DJ Panel' and use text2speech with 'Dectalk' commands under 'Special Verbs'.</b></span>")
+	boutput(C, SPAN_ALERT("<b>You [C.non_admin_dj ? "can now" : "no longer can"] DJ with the 'DJ Panel' and use text2speech with 'Dectalk' commands under 'Special Verbs'.</b>"))

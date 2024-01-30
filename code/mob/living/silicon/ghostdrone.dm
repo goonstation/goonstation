@@ -27,7 +27,6 @@
 	var/newDrone = 0
 
 	var/jetpack = 1 //fuck whoever made this
-	var/jeton = 0
 
 	var/sees_static = TRUE
 
@@ -107,7 +106,7 @@
 			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_mob(src)
 
 		/*SPAWN(0)
-			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
+			boutput(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
 
 	track_blood()
@@ -139,6 +138,7 @@
 
 	death(gibbed)
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
+		message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)].")
 		setdead(src)
 		if (src.mind)
 			var/mob/dead/observer/ghost = src.ghostize()
@@ -160,7 +160,7 @@
 		if (magHeld) magHeld.set_loc(get_turf(src))
 
 		if (gibbed)
-			src.visible_message("<span class='combat'>[src.name] explodes in a shower of lost hopes and dreams.</span>")
+			src.visible_message(SPAN_COMBAT("[src.name] explodes in a shower of lost hopes and dreams."))
 			var/turf/T = get_ranged_target_turf(src, pick(alldirs), 3)
 			if (magHeld) magHeld.throw_at(T, 3, 1) //flying...anything
 			if (src.hat) src.takeoffHat(pick(alldirs)) //flying hats
@@ -179,7 +179,7 @@
 				if (3)
 					msg = "[src.name]'s scream's gain echo and lose their electronic modulation as its soul is ripped monstrously from the cold metal body it once inhabited."
 
-			src.visible_message("<span class='combat'>[msg]</span>")
+			src.visible_message(SPAN_COMBAT("[msg]"))
 			if (src.hat) src.takeoffHat()
 			src.updateSprite()
 			..()
@@ -202,7 +202,7 @@
 	full_heal()
 		var/before = src.stat
 		..()
-		if (before == 2 && src.stat < 2) //if we were dead, and now arent
+		if (before == STAT_DEAD && !isdead(src)) //if we were dead, and now arent
 			src.updateSprite()
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
@@ -226,28 +226,28 @@
 			return
 
 
-		var/list/msg = list("<span class='notice'>")
+		var/list/msg = list()
 		if (src.active_tool)
 			msg += "[src] is holding a little [bicon(src.active_tool)] [src.active_tool.name]"
 			if (istype(src.active_tool, /obj/item/magtractor) && src.active_tool:holding)
 				msg += ", containing \an [src.active_tool:holding]"
 			msg += "<br>"
-		msg += "[src] has a power charge of [bicon(src.cell)] [src.cell.charge]/[src.cell.maxcharge]</span>"
+		msg += "[src] has a power charge of [bicon(src.cell)] [src.cell.charge]/[src.cell.maxcharge]"
 
-		. += msg.Join()
+		. += SPAN_NOTICE("[msg.Join()]")
 
 		if (src.health < src.max_health)
 			if (src.health < (src.max_health / 2))
-				. += "<span class='alert'>It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
+				. += SPAN_ALERT("It's rather badly damaged. It probably needs some wiring replaced inside.")
 			else
-				. += "<span class='alert'>It's a bit damaged. It looks like it needs some welding done.</span>"
+				. += SPAN_ALERT("It's a bit damaged. It looks like it needs some welding done.")
 
 		. += "*---------*"
 
 	Login()
 		..()
 		if (isalive(src))
-			src.visible_message("<span class='notice'>[src.name] comes online.</span>", "<span class='notice'>You come online!</span>")
+			src.visible_message(SPAN_NOTICE("[src.name] comes online."), SPAN_NOTICE("You come online!"))
 			src.updateSprite()
 
 	Logout()
@@ -355,7 +355,7 @@
 			if (!I.anchored)
 				return 0
 		if (istype(target, /obj/artifact) || istype(target, /obj/item/artifact) || istype(target, /obj/machinery/artifact)) //boo
-			out(src, "<span class='combat bold'>Your internal safety subroutines kick in and prevent you from touching \the [target]!</span>")
+			boutput(src, "<span class='combat bold'>Your internal safety subroutines kick in and prevent you from touching \the [target]!</span>")
 			return
 
 		..()
@@ -365,10 +365,8 @@
 			src.examine_verb(target) // in theory, usr should be us, this is shit though
 			return
 
-		if (src.in_point_mode || src.client?.check_key(KEY_POINT))
+		if (src.client?.check_key(KEY_POINT))
 			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
-			if (src.in_point_mode)
-				src.toggle_point_mode()
 			return
 
 		if (GET_DIST(src, target) > 0) // temporary fix for cyborgs turning by clicking
@@ -431,9 +429,16 @@
 	proc/putonHat(obj/item/clothing/head/W as obj, mob/user as mob)
 		src.hat = W
 		W.set_loc(src)
-		var/image/hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
-		hatImage.pixel_y = 5
-		hatImage.transform *= 0.9
+		var/image/hatImage = null
+		// Treat wigs differently as their icon_state is always bald
+		if (istype(W, /obj/item/clothing/head/wig))
+			hatImage = W.wear_image
+			hatImage.layer = src.layer+0.1
+			hatImage.pixel_y = -7
+		else
+			hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
+			hatImage.pixel_y = 5
+			hatImage.transform *= 0.9
 		UpdateOverlays(hatImage, "hat")
 		return 1
 
@@ -478,57 +483,55 @@
 		if(isweldingtool(W))
 			if (user.a_intent == INTENT_HARM)
 				if (W:try_weld(user,0,-1,0,0))
-					user.visible_message("<span class='alert'><b>[user] burns [src] with [W]!</b></span>")
+					user.visible_message(SPAN_ALERT("<b>[user] burns [src] with [W]!</b>"))
 					damage_heat(W.force)
 				else
-					user.visible_message("<span class='alert'><b>[user] beats [src] with [W]!</b></span>")
+					user.visible_message(SPAN_ALERT("<b>[user] beats [src] with [W]!</b>"))
 					damage_blunt(W.force)
 			else
 				if (src.health >= src.max_health)
-					boutput(user, "<span class='alert'>It isn't damaged!</span>")
+					boutput(user, SPAN_ALERT("It isn't damaged!"))
 					return
 				if (get_fraction_of_percentage_and_whole(src.health,src.max_health) < 33)
-					boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
+					boutput(user, SPAN_ALERT("You need to use wire to fix the cabling first."))
 					return
 				if(W:try_weld(user, 1))
 					src.health = clamp(src.health + 5, 1, src.max_health)
 					user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 					if (src.health == src.max_health)
-						boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
+						boutput(user, SPAN_NOTICE("<b>[src] looks fully repaired!</b>"))
 				else
-					boutput(user, "<span class='alert'>You need more welding fuel!</span>")
+					boutput(user, SPAN_ALERT("You need more welding fuel!"))
 
 		else if (istype(W,/obj/item/cable_coil/))
 			if (src.health >= src.max_health)
-				boutput(user, "<span class='alert'>It isn't damaged!</span>")
+				boutput(user, SPAN_ALERT("It isn't damaged!"))
 				return
 			var/obj/item/cable_coil/C = W
 			if (get_fraction_of_percentage_and_whole(src.health,src.max_health) >= 33)
-				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
+				boutput(user, SPAN_ALERT("The cabling looks fine. Use a welder to repair the rest of the damage."))
 				return
 			C.use(1)
 			src.health = clamp(src.health + 5, 1, src.max_health)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 25)
-				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
+				boutput(user, SPAN_NOTICE("The wiring is fully repaired. Now you need to weld the external plating."))
 
 		else if (istype(W, /obj/item/clothing/head))
 			if(src.hat)
-				boutput(user, "<span class='alert'>[src] is already wearing a hat!</span>")
+				boutput(user, SPAN_ALERT("[src] is already wearing a hat!"))
 				return
 
 			user.drop_item()
 			src.putonHat(W, user)
-			if (user == src)
-
-			else
+			if (user != src)
 				user.visible_message("<b>[user]</b> gently places a hat on [src]!", "You gently place a hat on [src]!")
 			return
 
 		else if (istype(W, /obj/item/clothing/suit/bedsheet))
 			if (src.bedsheet)
-				boutput(user, "<span class='alert'>There is already a sheet draped over [src]! Two sheets would be ridiculous!</span>")
+				boutput(user, SPAN_ALERT("There is already a sheet draped over [src]! Two sheets would be ridiculous!"))
 				return
 
 			user.drop_item()
@@ -544,10 +547,10 @@
 			switch(user.a_intent)
 				if(INTENT_HELP) //Friend person
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
-					user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
+					user.visible_message(SPAN_NOTICE("[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")]."))
 				if(INTENT_DISARM) //Shove
 					SPAWN(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
-					user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
+					user.visible_message(SPAN_ALERT("<B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B>"))
 					if (src.hat)
 						user.visible_message("<b>[user]</b> knocks \the [src.hat] off [src]!", "You knock the hat off [src]!")
 						src.takeoffHat()
@@ -556,10 +559,10 @@
 						src.takeoffSheet()
 				if(INTENT_GRAB) //Shake
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
-					user.visible_message("<span class='alert'>[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!</span>")
+					user.visible_message(SPAN_ALERT("[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!"))
 				if(INTENT_HARM) //Dumbo
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
-					user.visible_message("<span class='alert'><B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span class='alert'><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
+					user.visible_message(SPAN_ALERT("<B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!"), SPAN_ALERT("<B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B>"))
 					random_brute_damage(user, rand(2,5))
 					if(prob(10)) src.show_text("Your manipulator hurts...", "red")
 
@@ -568,10 +571,10 @@
 	weapon_attack(atom/target, obj/item/W, reach, params)
 		//Prevents drones attacking other people hahahaaaaaaa
 		if (isliving(target) && !isghostdrone(target))
-			out(src, "<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [W] on [target]!</span>")
+			boutput(src, "<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [W] on [target]!</span>")
 			return
 		if (istype(target, /obj/artifact) || istype(target, /obj/item/artifact) || istype(target, /obj/machinery/artifact)) //boo
-			out(src, "<span class='combat bold'>Your internal safety subroutines kick in and prevent you from using [W] on \the [target]!</span>")
+			boutput(src, "<span class='combat bold'>Your internal safety subroutines kick in and prevent you from using [W] on \the [target]!</span>")
 			return
 		else
 			..(target, W, reach, params)
@@ -605,13 +608,13 @@
 				if (mag.holding)
 					// drop the item that's being held first,
 					// so we can pick up things immediately without having to re-equip
-					actions.stopId("magpickerhold", src)
+					actions.stopId(/datum/action/magPickerHold, src)
 					hud.update_tools()
 					hud.update_equipment()
 					return
 
 				else
-					actions.stopId("magpicker", src)
+					actions.stopId(/datum/action/bar/private/icon/magPicker, src)
 			if (isitem(src.active_tool))
 				src.active_tool.dropped(src) // Handle light datums and the like.
 		src.active_tool = null
@@ -624,7 +627,7 @@
 		if (src.cell)
 			if(src.cell.charge <= 0)
 				if (isalive(src))
-					out(src, "<span class='combat bold'>You have run out of power!</span>")
+					boutput(src, "<span class='combat bold'>You have run out of power!</span>")
 					death()
 			else if (src.cell.charge <= 100)
 				src.active_tool = null
@@ -718,10 +721,7 @@
 						message = "<B>[src]</B> points."
 					else
 						src.point(M)
-
-					if (M)
 						message = "<B>[src]</B> points to [M]."
-					else
 				m_type = 1
 
 			if ("panic","freakout")
@@ -831,14 +831,11 @@
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
 					message = "<B>[src]</B> birdwells."
-					playsound(src, 'sound/vox/birdwell.ogg', 50, 1, 0, 1.5, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/vox/birdwell.ogg', 50, TRUE, 0, 1.5, channel=VOLUME_CHANNEL_EMOTE)
 
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					if (narrator_mode)
-						playsound(src, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					else
-						playsound(src, src.sound_scream, 80, 0, 0, 1.5, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, src.sound_scream, 80, 0, 0, 1.5, channel=VOLUME_CHANNEL_EMOTE)
 					message = "<b>[src]</b> screams!"
 
 			if ("johnny")
@@ -853,10 +850,7 @@
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
-					if (narrator_mode)
-						playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					else
-						playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					message = "<B>[src]</B> does a flip!"
 					m_anim = 1
 					if (prob(50))
@@ -877,7 +871,7 @@
 					for (var/mob/living/M in src.loc)
 						if (M == src || !M.lying)
 							continue
-						message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
+						message = SPAN_ALERT("<B>[src]</B> farts in [M]'s face!")
 						fart_on_other = 1
 						break
 					if (!fart_on_other)
@@ -901,7 +895,7 @@
 							if (17) message = "<B>[src]</B> farts the first few bars of Smoke on the Water. Ugh. Amateur.</B>"
 							if (18) message = "<B>[src]</B> farts. It smells like Robotics in here now!"
 							if (19) message = "<B>[src]</B> farts. It smells like the Roboticist's armpits!"
-							if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span class='alert'><B>FUCK!</B></span>"
+							if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. [SPAN_ALERT("<B>FUCK!</B>")]"
 							if (21) message = "<B>[src]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
 							if (22) message = "<B>[src]</B> has assimilated humanity's digestive distinctiveness to its own."
 							if (23) message = "<B>[src]</B> farts. He scream at own ass." //ty bubs for excellent new borgfart
@@ -922,10 +916,7 @@
 							if (38) message = "<B>[src]</B> exterminates the air supply."
 							if (39) message = "<B>[src]</B> farts so hard the AI feels it."
 							if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
-					if (narrator_mode)
-						playsound(src, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					else
-						playsound(src, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 #ifdef DATALOGGER
 					game_stats.Increment("farts")
 #endif
@@ -937,10 +928,10 @@
 			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/living/silicon/ghostdrone/O in viewers(src, null))
-					O.show_message("<span class='emote'>[message]</span>", m_type)
+					O.show_message(SPAN_EMOTE("[message]"), m_type)
 			else
 				for (var/mob/living/silicon/ghostdrone/O in hearers(src, null))
-					O.show_message("<span class='emote'>[message]</span>", m_type)
+					O.show_message(SPAN_EMOTE("[message]"), m_type)
 
 			if (m_anim) //restart our passive animation
 				SPAWN(1 SECOND)
@@ -966,12 +957,12 @@
 
 	proc/drone_talk(message)
 		message = html_encode(src.say_quote(message))
-		var/rendered = "<span class='game ghostdronesay'>"
+		var/rendered = "<span class='ghostdronesay'>"
 		rendered += "<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> "
-		rendered += "<span class='message'>[message]</span>"
+		rendered += SPAN_MESSAGE("[message]")
 		rendered += "</span>"
 
-		var/nohear = "<span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[nohear_message()]</span></span>"
+		var/nohear = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]")
 
 		for (var/client/C)
 			if (!C.mob) continue
@@ -991,13 +982,13 @@
 
 	proc/drone_broadcast(message)
 		message = html_encode(src.say_quote(message))
-		var/rendered = "<span class='game ghostdronesay broadcast'>"
-		rendered += "<span class='prefix'>DRONE:</span> "
+		var/rendered = "<span class='ghostdronesay broadcast'>"
+		rendered += "[SPAN_PREFIX("DRONE:")] "
 		rendered += "<span class='name text-normal' data-ctx='\ref[src.mind]'>[src.name]</span> "
-		rendered += "<span class='message'>[message]</span>"
+		rendered += SPAN_MESSAGE("[message]")
 		rendered += "</span>"
 
-		var/nohear = "<span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[nohear_message()]</span></span>"
+		var/nohear = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]")
 
 		for (var/client/C)
 			if (!C.mob) continue
@@ -1052,7 +1043,7 @@
 		1. Do not hinder the freedom or actions of the living and other silicons or attempt to intervene in their affairs. <br>
 		2. Do not willingly damage the station in any shape or form.<br>
 		3. Maintain, repair and improve the station.<br></span>"}
-		out(src, laws)
+		boutput(src, laws)
 		return
 
 	verb/cmd_show_laws()
@@ -1082,7 +1073,7 @@
 				dmgmult = 0
 
 		log_shot(P,src)
-		src.visible_message("<span class='alert'><b>[src]</b> is struck by [P]!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]</b> is struck by [P]!"))
 
 		var/damage = round((((P.power/3)*P.proj_data.ks_ratio)*dmgmult), 1.0)
 		var/stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
@@ -1097,7 +1088,7 @@
 			var/y = round(P.yo * 4)
 			var/turf/target = get_offset_target_turf(src, x, y)
 
-			src.visible_message("<span class='combat'>[src]'s [src.hat] goes flying!</span>")
+			src.visible_message(SPAN_COMBAT("[src]'s [src.hat] goes flying!"))
 			src.takeoffHat(target)
 
 		if (damage < 1)
@@ -1147,7 +1138,7 @@
 
 	blob_act(var/power)
 		if (src.nodamage) return
-		src.show_message("<span class='alert'>The blob attacks you!</span>")
+		src.show_message(SPAN_ALERT("The blob attacks you!"))
 		if (isdead(src) || src.health < 1)
 			src.gib(1)
 			return

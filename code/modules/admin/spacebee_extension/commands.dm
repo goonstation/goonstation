@@ -42,7 +42,7 @@
 
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "added a note for [ckey]: [note]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", null, "added a note for [ckey]: [note]", "admin")
-		message_admins("<span class='internal'>[user] (Discord) added a note for [ckey]: [note]</span>")
+		message_admins(SPAN_INTERNAL("[user] (Discord) added a note for [ckey]: [note]"))
 
 		var/ircmsg[] = new()
 		ircmsg["name"] = user
@@ -69,7 +69,7 @@
 		addPlayerNote(ckey, user + " (Discord)", "New login notice set:\n\n[notice]")
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "added a login notice for [ckey]: [notice]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", null, "added a login notice for [ckey]: [notice]", "admin")
-		message_admins("<span class='internal'>[user] (Discord) added a login notice for [ckey]: [notice]</span>")
+		message_admins(SPAN_INTERNAL("[user] (Discord) added a login notice for [ckey]: [notice]"))
 
 		ircbot.export("admin", list(
 		"name" = user,
@@ -288,12 +288,24 @@
 		for(var/client/C)
 			if (C.ckey == ckey)
 				var/mob/M = C.mob
-				if (M && ismob(M) && !isAI(M) && !isobserver(M))
+				var/area/A = get_area(M)
+				if (ismob(M) && istype(A, /area/prison/cell_block/wards))
+					var/ASLoc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, 1))
+					if (ASLoc)
+						M.set_loc(ASLoc)
+
+					M.show_text("<h2>[SPAN_ALERT("<b>You have been unprisoned and sent back to the station.</b>")]</h2>", "red")
+					logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
+					logTheThing(LOG_DIARY, "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
+					system.reply("Unprisoned [ckey].", user)
+					return
+
+				else if (M && ismob(M) && !isAI(M) && !isobserver(M))
 					var/prison = pick_landmark(LANDMARK_PRISONWARP)
 					if (prison)
 						M.changeStatus("paralysis", 8 SECONDS)
 						M.set_loc(prison)
-						M.show_text("<h2><font color=red><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></font></h2>", "red")
+						M.show_text("<h2>[SPAN_ALERT("<b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b>")]</h2>", "red")
 						logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
 						logTheThing(LOG_DIARY, "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
 						system.reply("Prisoned [ckey].", user)
@@ -482,7 +494,6 @@
 			target.mind.damned = 0
 			target.mind.transfer_to(newM)
 		target.mind = null
-		newM.Login()
 		newM.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 		qdel(target)
 
@@ -507,7 +518,7 @@
 			system.reply("Valid mob not found.", "user")
 			return FALSE
 		target.full_heal()
-		message_admins("<span class='alert'>Admin [user] (Discord) healed / revived [key_name(target)]!</span>")
+		message_admins(SPAN_ALERT("Admin [user] (Discord) healed / revived [key_name(target)]!"))
 		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "healed / revived [constructTarget(target,"admin")]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", target, "healed / revived [constructTarget(target,"diary")]", "admin")
 		return TRUE
@@ -602,7 +613,7 @@
 	perform_action(user, mob/target)
 		if(isnull(src.new_name))
 			return FALSE
-		message_admins("<span class='alert'>Admin [user] (Discord) renamed [key_name(target)] to [src.new_name]!</span>")
+		message_admins(SPAN_ALERT("Admin [user] (Discord) renamed [key_name(target)] to [src.new_name]!"))
 		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "renamed [constructTarget(target,"admin")] to [src.new_name]!")
 		logTheThing(LOG_DIARY, "[user] (Discord)", target, "renamed [constructTarget(target,"diary")] to [src.new_name]!", "admin")
 		target.real_name = src.new_name
@@ -691,7 +702,7 @@
 		if(isnull(src.new_name))
 			return
 		set_station_name(user, new_name, admin_override=TRUE)
-		message_admins("<span class='alert'>Admin [user] (Discord) renamed station to [src.new_name]!</span>")
+		message_admins(SPAN_ALERT("Admin [user] (Discord) renamed station to [src.new_name]!"))
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "renamed station to [src.new_name]!")
 		logTheThing(LOG_DIARY, "[user] (Discord)", null, "renamed station to [src.new_name]!", "admin")
 		var/success_msg = "Station renamed to [src.new_name]."
@@ -713,11 +724,13 @@
 				Provided: gr:[json_encode(giverevoke)] p:[json_encode(player)] m:[json_encode(medalname)]", user)
 			return
 
+		var/datum/player/player_datum = make_player(player)
+
 		var/result
 		if (giverevoke == "give")
-			result = world.SetMedal(medalname, player, config.medal_hub, config.medal_password)
+			result = player_datum.unlock_medal_sync(medalname)
 		else if (giverevoke == "revoke")
-			result = world.ClearMedal(medalname, player, config.medal_hub, config.medal_password)
+			result = player_datum.clear_medal(medalname)
 		else
 			system.reply("Failed to set medal; neither `give` nor `revoke` was specified as the first argument.")
 			return
@@ -726,7 +739,7 @@
 			return
 
 		var/to_log = "[giverevoke == "revoke" ? "revoked" : "gave"] the [medalname] medal for [player]."
-		message_admins("<span class='alert'>Admin [user] (Discord) [to_log]</span>")
+		message_admins(SPAN_ALERT("Admin [user] (Discord) [to_log]"))
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "[to_log]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", null, "admin")
 		system.reply("[user] [to_log]")
@@ -766,10 +779,10 @@
 		if (token_amt <= 0)
 			logTheThing(LOG_ADMIN, usr, "Removed all antag tokens from [constructTarget(target_client,"admin")]")
 			logTheThing(LOG_DIARY, usr, "Removed all antag tokens from [constructTarget(target_client,"diary")]", "admin")
-			success_msg = "<span class='internal'>[key_name(user)] removed all antag tokens from [key_name(target_client)]</span>"
+			success_msg = SPAN_INTERNAL("[key_name(user)] removed all antag tokens from [key_name(target_client)]")
 		else
 			logTheThing(LOG_ADMIN, usr, "Set [constructTarget(target_client,"admin")]'s Antag tokens to [token_amt].")
 			logTheThing(LOG_DIARY, usr, "Set [constructTarget(target_client,"diary")]'s Antag tokens to [token_amt].")
-			success_msg = "<span class='internal'>[key_name(user)] set [key_name(target_client)]'s Antag tokens to [token_amt].</span>"
+			success_msg = SPAN_INTERNAL("[key_name(user)] set [key_name(target_client)]'s Antag tokens to [token_amt].")
 		message_admins(success_msg)
 		system.reply("Antag tokens for [target_client] successfully [(token_amt <= 0) ? "cleared" : "set to " + token_amt]")

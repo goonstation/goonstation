@@ -27,7 +27,7 @@
 	pressure_resistance = 3*ONE_ATMOSPHERE
 	layer = STORAGE_LAYER //dumb
 	default_material = "steel"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	var/allow_unbuckle = 1
 	var/mob/living/buckled_guy = null
 	var/deconstructable = 1
@@ -60,8 +60,6 @@
 					else
 						qdel(src)
 					return
-			else
-		return
 
 	blob_act(var/power)
 		if (prob(power * 2.5))
@@ -83,7 +81,7 @@
 			src.toggle_secure(user)
 			return
 		else if (istype(W, /obj/item/cloth/towel))
-			user.visible_message("<span class='notice'>[user] wipes down [src] with [W].</span>")
+			user.visible_message(SPAN_NOTICE("[user] wipes down [src] with [W]."))
 		else
 			return ..()
 
@@ -94,7 +92,7 @@
 			boutput(user, "You can't buckle anyone in before the game starts.")
 			return FALSE
 		if (to_buckle.buckled)
-			boutput(user, "They're already buckled into something!", "red")
+			boutput(user, "[capitalize(hes_or_shes(to_buckle))] already buckled into something!", "red")
 			return FALSE
 		if (BOUNDS_DIST(src, user) > 0 || to_buckle.loc != src.loc || user.restrained() || is_incapacitated(user) || !isalive(user))
 			return FALSE
@@ -113,9 +111,9 @@
 			to_buckle.remove_pulling()
 
 		if (to_buckle == user)
-			user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
+			user.visible_message(SPAN_NOTICE("<b>[to_buckle]</b> buckles in!"), SPAN_NOTICE("You buckle yourself in."))
 		else
-			user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
+			user.visible_message(SPAN_NOTICE("<b>[to_buckle]</b> is buckled in by [user]."), SPAN_NOTICE("You buckle in [to_buckle]."))
 
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 		return TRUE
@@ -127,7 +125,7 @@
 	proc/toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -156,15 +154,27 @@
 		if (. && islist(scoot_sounds) && scoot_sounds.len && prob(75))
 			playsound( get_turf(src), pick( scoot_sounds ), 50, 1 )
 
+/obj/stool/pet_bed
+	name = "pet bed"
+	icon_state = "petbed"
+	desc = "A soft bed designed for small animals to snuggle up in."
+	parts_type = /obj/item/furniture_parts/stool/pet_bed
+
+/obj/stool/pet_bed/jones
+	name = "cat bed"
+	desc = "Though it was made to suit him, Jones still seems to sleep in every spot that is NOT this little bed."
+
 /obj/stool/bee_bed
 	// idk. Not a bed proper since humans can't lay in it. Weirdos.
 	// would also be cool to make these work with bees.
 	// it's hip to tuck bees!
 	name = "bee bed"
-	icon = 'icons/misc/critter.dmi'
 	icon_state = "beebed"
 	desc = "A soft little bed the general size and shape of a space bee."
 	parts_type = /obj/item/furniture_parts/stool/bee_bed
+
+/obj/stool/bee_bed/heisenbee
+	name = "heisenbed"
 
 /obj/stool/bee_bed/double // Prefab variant
 	name = "double bee bed"
@@ -189,6 +199,7 @@ TYPEINFO(/obj/stool/wooden)
 /obj/stool/wooden
 	name = "wooden stool"
 	icon_state = "wstool"
+	default_material = "wood"
 	desc = "Like a stool, but just made out of wood."
 	parts_type = /obj/item/furniture_parts/woodenstool
 
@@ -346,7 +357,7 @@ TYPEINFO(/obj/stool/wooden)
 			src.tuck_sheet(W, user)
 			return
 		if (iswrenchingtool(W) && !src.deconstructable)
-			boutput(user, "<span class='alert'>You briefly ponder how to go about disassembling a featureless slab using a wrench. You quickly give up.</span>")
+			boutput(user, SPAN_ALERT("You briefly ponder how to go about disassembling a featureless slab using a wrench. You quickly give up."))
 			return
 		else
 			return ..()
@@ -371,9 +382,9 @@ TYPEINFO(/obj/stool/wooden)
 		if (M.buckled && !user.restrained())
 			if (allow_unbuckle)
 				if (M != user)
-					user.visible_message("<span class='notice'><b>[M]</b> is unbuckled by [user].</span>", "<span class='notice'>You unbuckle [M].</span>")
+					user.visible_message(SPAN_NOTICE("<b>[M]</b> is unbuckled by [user]."), SPAN_NOTICE("You unbuckle [M]."))
 				else
-					user.visible_message("<span class='notice'><b>[M]</b> unbuckles.</span>", "<span class='notice'>You unbuckle.</span>")
+					user.visible_message(SPAN_NOTICE("<b>[M]</b> unbuckles."), SPAN_NOTICE("You unbuckle."))
 				unbuckle()
 			else
 				user.show_text("Seems like the buckle is firmly locked into place.", "red")
@@ -391,9 +402,9 @@ TYPEINFO(/obj/stool/wooden)
 
 
 		if (to_buckle == user)
-			user.visible_message("<span class='notice'><b>[to_buckle]</b> lies down on [src], fastening the buckles!</span>", "<span class='notice'>You lie down and buckle yourself in.</span>")
+			user.visible_message(SPAN_NOTICE("<b>[to_buckle]</b> lies down on [src], fastening the buckles!"), SPAN_NOTICE("You lie down and buckle yourself in."))
 		else
-			user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
+			user.visible_message(SPAN_NOTICE("<b>[to_buckle]</b> is buckled in by [user]."), SPAN_NOTICE("You buckle in [to_buckle]."))
 
 		to_buckle.lying = 1
 		if (src.anchored)
@@ -403,7 +414,7 @@ TYPEINFO(/obj/stool/wooden)
 		to_buckle.set_loc(src.loc)
 
 		to_buckle.set_clothing_icon_dirty()
-		playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
+		playsound(src, 'sound/misc/belt_click.ogg', 50, TRUE)
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 		return TRUE
 
@@ -414,7 +425,7 @@ TYPEINFO(/obj/stool/wooden)
 			buckled_guy.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
-			playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
+			playsound(src, 'sound/misc/belt_click.ogg', 50, TRUE)
 
 	proc/tuck_sheet(var/obj/item/clothing/suit/bedsheet/newsheet as obj, var/mob/user as mob)
 		if (!newsheet || newsheet.cape || (src.sheet == newsheet && newsheet.loc == src.loc)) // if we weren't provided a new bedsheet, the new bedsheet we got is tied into a cape, or the new bedsheet is actually the one we already have and is still in the same place as us...
@@ -442,13 +453,13 @@ TYPEINFO(/obj/stool/wooden)
 			else
 				somebody = locate(/mob/living/carbon) in get_turf(src)
 			if (somebody?.lying)
-				user.tri_message(somebody, "<span class='notice'><b>[user]</b> tucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] into bed.</span>",\
-					"<span class='notice'>You tuck [somebody == user ? "yourself" : "[somebody]"] into bed.</span>",\
-					"<span class='notice'>[somebody == user ? "You tuck yourself" : "<b>[user]</b> tucks you"] into bed.</span>")
+				user.tri_message(somebody, SPAN_NOTICE("<b>[user]</b> tucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] into bed."),\
+					SPAN_NOTICE("You tuck [somebody == user ? "yourself" : "[somebody]"] into bed."),\
+					SPAN_NOTICE("[somebody == user ? "You tuck yourself" : "<b>[user]</b> tucks you"] into bed."))
 				newsheet.layer = EFFECTS_LAYER_BASE-1
 			else
-				user.visible_message("<span class='notice'><b>[user]</b> tucks [newsheet] into [src].</span>",\
-				"<span class='notice'>You tuck [newsheet] into [src].</span>")
+				user.visible_message(SPAN_NOTICE("<b>[user]</b> tucks [newsheet] into [src]."),\
+				SPAN_NOTICE("You tuck [newsheet] into [src]."))
 
 	proc/untuck_sheet(var/mob/user as mob)
 		if (!src.sheet) // vOv
@@ -463,13 +474,13 @@ TYPEINFO(/obj/stool/wooden)
 			else
 				somebody = locate(/mob/living/carbon) in get_turf(src)
 			if (somebody?.lying)
-				user.tri_message(somebody, "<span class='notice'><b>[user]</b> untucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] from bed.</span>",\
-					"<span class='notice'>You untuck [somebody == user ? "yourself" : "[somebody]"] from bed.</span>",\
-					"<span class='notice'>[somebody == user ? "You untuck yourself" : "<b>[user]</b> untucks you"] from bed.</span>")
+				user.tri_message(somebody, SPAN_NOTICE("<b>[user]</b> untucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] from bed."),\
+					SPAN_NOTICE("You untuck [somebody == user ? "yourself" : "[somebody]"] from bed."),\
+					SPAN_NOTICE("[somebody == user ? "You untuck yourself" : "<b>[user]</b> untucks you"] from bed."))
 				oldsheet.layer = initial(oldsheet.layer)
 			else
-				user.visible_message("<span class='notice'><b>[user]</b> untucks [oldsheet] from [src].</span>",\
-				"<span class='notice'>You untuck [oldsheet] from [src].</span>")
+				user.visible_message(SPAN_NOTICE("<b>[user]</b> untucks [oldsheet] from [src]."),\
+				SPAN_NOTICE("You untuck [oldsheet] from [src]."))
 
 		if (oldsheet.bed == src) // just in case it's somehow not us
 			oldsheet.bed = null
@@ -518,11 +529,11 @@ TYPEINFO(/obj/stool/wooden)
 		var/mob/living/carbon/user = M
 
 		if (isdead(user))
-			boutput(user, "<span class='alert'>Some would say that death is already the big sleep.</span>")
+			boutput(user, SPAN_ALERT("Some would say that death is already the big sleep."))
 			return
 
 		if ((get_turf(user) != src.loc) || (!user.lying))
-			boutput(user, "<span class='alert'>You must be lying down on [src] to sleep on it.</span>")
+			boutput(user, SPAN_ALERT("You must be lying down on [src] to sleep on it."))
 			return
 
 		user.setStatus("resting", INFINITE_STATUS)
@@ -561,13 +572,13 @@ TYPEINFO(/obj/stool/chair)
 		anchored = UNANCHORED
 
 	get_help_message(dist, mob/user)
-		. = "You can <b>sit</b> on it by standing on the same tile then click draging yourself to the chair or using the Block hotkey with any intent except <b>Grab</b>. "
+		. = "You can <b>sit</b> on it by standing on the same tile then click dragging yourself to the chair or using the Block hotkey with any intent except <b>Grab</b>. "
 		if (src.climbable)
 			. += "It will be <b>climbed on</b> if you are using the <b>Grab intent</b>. "
 		if (src.foldable)
 			. += "It can be <b>folded</b> up to carry by clicking on it. "
 		if (src.securable)
-			. += "It can be <b>secured to the floor</b> with a screwing tool."
+			. += "It can be <b>secured to the floor</b> with a screwing tool. "
 
 	New()
 		if (src.dir == NORTH)
@@ -604,7 +615,7 @@ TYPEINFO(/obj/stool/chair)
 			return
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "unscrews [src] from" : "secures [src] to"] the floor.")
-		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -612,7 +623,7 @@ TYPEINFO(/obj/stool/chair)
 	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W) && has_butt)
 			user.put_in_hand_or_drop(has_butt)
-			boutput(user, "<span class='notice'>You pry [has_butt.name] from [name].</span>")
+			boutput(user, SPAN_NOTICE("You pry [has_butt.name] from [name]."))
 			has_butt = null
 			UpdateOverlays(null, "chairbutt")
 			return
@@ -620,19 +631,16 @@ TYPEINFO(/obj/stool/chair)
 			has_butt = W
 			user.u_equip(has_butt)
 			has_butt.set_loc(src)
-			boutput(user, "<span class='notice'>You place [has_butt.name] on [name].</span>")
+			boutput(user, SPAN_NOTICE("You place [has_butt.name] on [name]."))
 			butt_img.icon_state = "chair_[has_butt.icon_state]"
 			UpdateOverlays(butt_img, "chairbutt")
 			return
 		if (istype(W, /obj/item/assembly/shock_kit))
-			var/obj/stool/chair/e_chair/E = new /obj/stool/chair/e_chair(src.loc)
+			var/obj/stool/chair/e_chair/E = new /obj/stool/chair/e_chair(src.loc, W)
 			if (src.material)
 				E.setMaterial(src.material)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			E.set_dir(src.dir)
-			E.part1 = W
 			W.set_loc(E)
-			W.master = E
 			user.u_equip(W)
 			W.layer = initial(W.layer)
 			qdel(src)
@@ -652,7 +660,7 @@ TYPEINFO(/obj/stool/chair)
 				chair_chump = null
 			if (chair_chump)// == 1)
 				if (chair_chump == L)
-					user.visible_message("<span class='notice'><b>[chair_chump]</b> steps off [chair_chump.on_chair].</span>", "<span class='notice'>You step off [src].</span>")
+					user.visible_message(SPAN_NOTICE("<b>[chair_chump]</b> steps off [chair_chump.on_chair]."), SPAN_NOTICE("You step off [src]."))
 					src.add_fingerprint(user)
 					unbuckle()
 					return
@@ -662,9 +670,9 @@ TYPEINFO(/obj/stool/chair)
 					if(user.restrained())
 						return
 					if (M != user)
-						user.visible_message("<span class='notice'><b>[M]</b> is unbuckled by [user].</span>", "<span class='notice'>You unbuckle [M].</span>")
+						user.visible_message(SPAN_NOTICE("<b>[M]</b> is unbuckled by [user]."), SPAN_NOTICE("You unbuckle [M]."))
 					else
-						user.visible_message("<span class='notice'><b>[M]</b> unbuckles.</span>", "<span class='notice'>You unbuckle.</span>")
+						user.visible_message(SPAN_NOTICE("<b>[M]</b> unbuckles."), SPAN_NOTICE("You unbuckle."))
 					src.add_fingerprint(user)
 					unbuckle()
 					return
@@ -675,7 +683,7 @@ TYPEINFO(/obj/stool/chair)
 		if (src.foldable)
 			user.visible_message("<b>[user.name] folds [src].</b>")
 			if ((chair_chump) && (chair_chump != user))
-				chair_chump.visible_message("<span class='alert'><b>[chair_chump.name] falls off of [src]!</b></span>")
+				chair_chump.visible_message(SPAN_ALERT("<b>[chair_chump.name] falls off of [src]!</b>"))
 				chair_chump.on_chair = null
 				chair_chump.pixel_y = 0
 				chair_chump.changeStatus("weakened", 1 SECOND)
@@ -709,7 +717,7 @@ TYPEINFO(/obj/stool/chair)
 				if(climbable)
 					buckle_in(M, user, 1)
 				else
-					boutput(user, "<span class='alert'>[src] isn't climbable.</span>")
+					boutput(user, SPAN_ALERT("[src] isn't climbable."))
 			else
 				buckle_in(M,user)
 		else
@@ -735,7 +743,7 @@ TYPEINFO(/obj/stool/chair)
 		if(stand && ishuman(to_buckle))
 			if(ON_COOLDOWN(to_buckle, "chair_stand", 1 SECOND))
 				return
-			user.visible_message("<span class='notice'><b>[to_buckle]</b> climbs up on [src]!</span>", "<span class='notice'>You climb up on [src].</span>")
+			user.visible_message(SPAN_NOTICE("<b>[to_buckle]</b> climbs up on [src]!"), SPAN_NOTICE("You climb up on [src]."))
 
 			var/mob/living/carbon/human/H = to_buckle
 			to_buckle.set_loc(src.loc)
@@ -750,9 +758,9 @@ TYPEINFO(/obj/stool/chair)
 			H.start_chair_flip_targeting()
 		else
 			if (to_buckle == user)
-				user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
+				user.visible_message(SPAN_NOTICE("<b>[to_buckle]</b> buckles in!"), SPAN_NOTICE("You buckle yourself in."))
 			else
-				user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
+				user.visible_message(SPAN_NOTICE("<b>[to_buckle]</b> is buckled in by [user]."), SPAN_NOTICE("You buckle in [to_buckle]."))
 
 			if (src.anchored)
 				to_buckle.anchored = ANCHORED
@@ -764,7 +772,7 @@ TYPEINFO(/obj/stool/chair)
 		if (has_butt)
 			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
-			playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
+			playsound(src, 'sound/misc/belt_click.ogg', 50, TRUE)
 		return TRUE
 
 
@@ -794,7 +802,7 @@ TYPEINFO(/obj/stool/chair)
 
 		src.buckled_guy = null
 
-		playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
+		playsound(src, 'sound/misc/belt_click.ogg', 50, TRUE)
 
 	ex_act(severity)
 		for (var/mob/M in src.loc)
@@ -874,6 +882,12 @@ TYPEINFO(/obj/stool/chair)
 	green
 		icon_state = "chair-g"
 
+	purple
+		icon_state = "chair-p"
+
+	black
+		icon_state = "chair-blk"
+
 /* ========================================================== */
 /* -------------------- Syndicate Chairs -------------------- */
 /* ========================================================== */
@@ -885,7 +899,7 @@ TYPEINFO(/obj/stool/chair)
 
 	HasProximity(atom/movable/AM as mob|obj)
 		if (isliving(AM) && !isintangible(AM) && prob(40) && !AM.hasStatus("weakened"))
-			src.visible_message("<span class='alert'>[src] trips [AM]!</span>", "<span class='alert'>You hear someone fall.</span>")
+			src.visible_message(SPAN_ALERT("[src] trips [AM]!"), SPAN_ALERT("You hear someone fall."))
 			AM.changeStatus("weakened", 2 SECONDS)
 		return
 
@@ -896,7 +910,7 @@ TYPEINFO(/obj/stool/chair)
 /obj/stool/chair/material
 	name = "material chair"
 	desc = "A chair made from a material"
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE
 
 /obj/stool/chair/material/mauxite
@@ -1125,16 +1139,16 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 			var/mob/living/M = src.buckled_guy
 			src.unbuckle()
 			if (M && !src.buckled_guy)
-				M.visible_message("<span class='alert'>[M] is tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>",\
-				"<span class='alert'>You're tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>")
+				M.visible_message(SPAN_ALERT("[M] is tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!"),\
+				SPAN_ALERT("You're tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!"))
 				var/turf/target = get_edge_target_turf(src, src.dir)
 				M.throw_at(target, 3, 1)
 				M.changeStatus("stunned", 5 SECONDS)
 				M.changeStatus("weakened", 3 SECONDS)
 			else
-				src.visible_message("<span class='alert'>[src] tips [T ? "as it rolls over [T]" : "over"]!</span>")
+				src.visible_message(SPAN_ALERT("[src] tips [T ? "as it rolls over [T]" : "over"]!"))
 		else
-			src.visible_message("<span class='alert'>[src] tips [T ? "as it rolls over [T]" : "over"]!</span>")
+			src.visible_message(SPAN_ALERT("[src] tips [T ? "as it rolls over [T]" : "over"]!"))
 		src.lying = 1
 		animate_rest(src, !src.lying)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
@@ -1170,35 +1184,51 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 		unbuckle()
 
 /* ======================================================= */
-/* -------------------- Wooden Chairs -------------------- */
+/* -------------------- Dining Chairs -------------------- */
 /* ======================================================= */
 
-TYPEINFO(/obj/stool/chair/wooden)
+TYPEINFO(/obj/stool/chair/dining/wood)
 	mat_appearances_to_ignore = list("wood")
-/obj/stool/chair/wooden
-	name = "wooden chair"
-	icon_state = "chair_wooden" // this sprite is bad I will fix it at some point
+/obj/stool/chair/dining/
+	name = "dining chair"
+	icon_state = "chair_wooden"
+	desc = "You shouldn't be seeing this!"
 	comfort_value = 3
 	foldable = 0
 	anchored = UNANCHORED
 	//deconstructable = 0
-	parts_type = /obj/item/furniture_parts/wood_chair
 
-	constructed //no "wood wood chair"
-		name = "chair"
+
+
+	wood
+		name = "wooden chair"
+		desc = "A wooden dining chair. neat."
+		icon_state = "chair_wooden" // this sprite is bad I will fix it at some point
+		parts_type = /obj/item/furniture_parts/dining_chair/wood
+
+		constructed //no "wood wood chair"
+			name = "chair"
+
 	regal
 		name = "regal chair"
 		desc = "Much more comfortable than the average dining chair, and much more expensive."
 		icon_state = "regalchair"
 		comfort_value = 7
-		parts_type = /obj/item/furniture_parts/wood_chair/regal
+		parts_type = /obj/item/furniture_parts/dining_chair/regal
 
 	scrap
 		name = "scrap chair"
 		desc = "Hopefully you didn't pay actual money for this."
 		icon_state = "scrapchair"
 		comfort_value = 7
-		parts_type = /obj/item/furniture_parts/wood_chair/scrap
+		parts_type = /obj/item/furniture_parts/dining_chair/scrap
+
+	industrial
+		name = "industrial chair"
+		desc = "Repurposed scaffolding in the shape of a chair."
+		icon_state = "chair_industrial"
+		comfort_value = 7
+		parts_type = /obj/item/furniture_parts/dining_chair/industrial
 
 /* ============================================== */
 /* -------------------- Pews -------------------- */
@@ -1222,6 +1252,32 @@ TYPEINFO(/obj/stool/chair/wooden)
 		..()
 		if (arm_icon_state)
 			src.UpdateIcon()
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		. += "You can reshape it with a screwdriving tool. You can turn it with a crowbar."
+
+
+	attackby(obj/item/W, mob/user)
+		if(isscrewingtool(W))
+			switch(src.icon_state)
+				if("pewL")
+					src.icon_state = "pewC"
+				if("pewC")
+					src.icon_state = "pewR"
+				if("pewR")
+					src.icon_state = "pew"
+				if("pew")
+					src.icon_state = "pewL"
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
+			user.visible_message(SPAN_NOTICE("[user] reshapes the pew."), SPAN_NOTICE("You reshape the pew."))
+			src.update_icon()
+			return
+		if(ispryingtool(W))
+			src.dir = turn(src.dir,90)
+			src.update_icon()
+			return
+		. = ..()
 
 	update_icon()
 		if (src.dir == NORTH)
@@ -1328,20 +1384,20 @@ TYPEINFO(/obj/stool/chair/wooden)
 				if (istype(thing, /obj/critter/meatslinky)) //slink slink
 					user.emote("scream")
 					random_brute_damage(user, 10)
-					user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls [his_or_her(user)] hand out in pain! \An [thing] slithers out of \the [src]!</span>",\
-					"<span class='notice'>You rummage through the seams and behind the cushions of [src] and your hand gets bit by \an [thing]!</span>")
+					user.visible_message(SPAN_NOTICE("<b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls [his_or_her(user)] hand out in pain! \An [thing] slithers out of \the [src]!"),\
+					SPAN_NOTICE("You rummage through the seams and behind the cushions of [src] and your hand gets bit by \an [thing]!"))
 				else
-					user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls \an [thing] out of it!</span>",\
-					"<span class='notice'>You rummage through the seams and behind the cushions of [src] and you find \an [thing]!</span>")
+					user.visible_message(SPAN_NOTICE("<b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls \an [thing] out of it!"),\
+					SPAN_NOTICE("You rummage through the seams and behind the cushions of [src] and you find \an [thing]!"))
 				last_use = world.time
 				max_uses--
 
 		else if (max_uses <= 0)
-			user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls out absolutely nothing!</span>",\
-			"<span class='notice'>You rummage through the seams and behind the cushions of [src] and pull out absolutely nothing!</span>")
+			user.visible_message(SPAN_NOTICE("<b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls out absolutely nothing!"),\
+			SPAN_NOTICE("You rummage through the seams and behind the cushions of [src] and pull out absolutely nothing!"))
 		else
-			user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src]!</span>",\
-			"<span class='notice'>You rummage through the seams and behind the cushions of [src]!</span>")
+			user.visible_message(SPAN_NOTICE("<b>[user.name]</b> rummages through the seams and behind the cushions of [src]!"),\
+			SPAN_NOTICE("You rummage through the seams and behind the cushions of [src]!"))
 
 	blue
 		name = "comfy blue couch"
@@ -1406,179 +1462,8 @@ TYPEINFO(/obj/stool/chair/wooden)
 	toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 		src.anchored = !(src.anchored)
-		return
-
-/* ========================================================= */
-/* -------------------- Electric Chairs -------------------- */
-/* ========================================================= */
-
-/obj/stool/chair/e_chair
-	name = "electrified chair"
-	desc = "A chair that has been modified to conduct current with over 2000 volts, enough to kill a human nearly instantly."
-	icon_state = "e_chair0"
-	foldable = 0
-	var/on = 0
-	var/obj/item/assembly/shock_kit/part1 = null
-	var/last_time = 1
-	var/lethal = 0
-	var/image/image_belt = null
-	comfort_value = -3
-	securable = 0
-
-	New()
-		..()
-		SPAWN(2 SECONDS)
-			if (src)
-				if (!(src.part1 && istype(src.part1)))
-					src.part1 = new /obj/item/assembly/shock_kit(src)
-					src.part1.master = src
-				src.UpdateIcon()
-		return
-
-	attackby(obj/item/W, mob/user)
-		if (iswrenchingtool(W))
-			var/obj/stool/chair/C = new /obj/stool/chair(get_turf(src))
-			if (src.material)
-				C.setMaterial(src.material)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			C.set_dir(src.dir)
-			if (src.part1)
-				src.part1.set_loc(get_turf(src))
-				src.part1.master = null
-				src.part1 = null
-			qdel(src)
-			return
-
-	verb/controls()
-		set src in oview(1)
-		set category = "Local"
-
-		src.control_interface(usr)
-
-	// Seems to be the only way to get this stuff to auto-refresh properly, sigh (Convair880).
-	proc/control_interface(mob/user as mob)
-		if (!user.hasStatus("handcuffed") && isalive(user))
-			src.add_dialog(user)
-
-			var/dat = ""
-
-			var/area/A = get_area(src)
-			if (!isarea(A) || !A.powered(EQUIP))
-				dat += "\n<font color='red'>ERROR:</font> No power source detected!</b>"
-			else
-				dat += {"<A href='?src=\ref[src];on=1'>[on ? "Switch Off" : "Switch On"]</A><BR>
-				<A href='?src=\ref[src];lethal=1'>[lethal ? "<font color='red'>Lethal</font>" : "Nonlethal"]</A><BR><BR>
-				<A href='?src=\ref[src];shock=1'>Shock</A><BR>"}
-
-			user.Browse("<TITLE>Electric Chair</TITLE><b>Electric Chair</b><BR>[dat]", "window=e_chair;size=180x180")
-
-			onclose(user, "e_chair")
-		return
-
-	Topic(href, href_list)
-		if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat || usr.restrained()) return
-		if (!in_interact_range(src, usr)) return
-
-		if (href_list["on"])
-			toggle_active()
-		else if (href_list["lethal"])
-			toggle_lethal()
-		else if (href_list["shock"])
-			if (src.buckled_guy)
-				// The log entry for remote signallers can be found in item/assembly/shock_kit.dm (Convair880).
-				logTheThing(LOG_COMBAT, usr, "activated an electric chair (setting: [src.lethal ? "lethal" : "non-lethal"]), shocking [constructTarget(src.buckled_guy,"combat")] at [log_loc(src)].")
-			shock(lethal)
-
-		src.control_interface(usr)
-		src.add_fingerprint(usr)
-		return
-
-	proc/toggle_active()
-		src.on = !(src.on)
-		src.UpdateIcon()
-		return src.on
-
-	proc/toggle_lethal()
-		src.lethal = !(src.lethal)
-		src.UpdateIcon()
-		return
-
-	update_icon()
-		src.icon_state = "e_chair[src.on]"
-		if (!src.image_belt)
-			src.image_belt = image(src.icon, "e_chairo[src.on][src.lethal]", layer = FLY_LAYER + 1)
-			src.UpdateOverlays(src.image_belt, "belts")
-			return
-		src.image_belt.icon_state = "e_chairo[src.on][src.lethal]"
-		src.UpdateOverlays(src.image_belt, "belts")
-
-	// Options:      1) place the chair anywhere in a powered area (fixed shock values),
-	// (Convair880)  2) on top of a powered wire (scales with engine output).
-	proc/get_connection()
-		var/turf/T = get_turf(src)
-		if (!istype(T, /turf/simulated/floor))
-			return 0
-
-		for (var/obj/cable/C in T)
-			return C.netnum
-
-		return 0
-
-	proc/get_gridpower()
-		var/netnum = src.get_connection()
-
-		if (netnum)
-			var/datum/powernet/PN
-			if (powernets && length(powernets) >= netnum)
-				PN = powernets[netnum]
-				return PN.avail
-
-		return 0
-
-	proc/shock(lethal)
-		if (!src.on)
-			return
-		if ((src.last_time + 50) > world.time)
-			return
-		src.last_time = world.time
-
-		// special power handling
-		var/area/A = get_area(src)
-		if (!isarea(A))
-			return
-		if (!A.powered(EQUIP))
-			return
-		A.use_power(5000, EQUIP)
-		A.UpdateIcon()
-
-		for (var/mob/M in AIviewers(src, null))
-			M.show_message("<span class='alert'>The electric chair went off!</span>", 3)
-			if (lethal)
-				playsound(src.loc, 'sound/effects/electric_shock.ogg', 50, 0)
-			else
-				playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 0)
-
-		if (src.buckled_guy && isliving(src.buckled_guy))
-			var/mob/living/L = src.buckled_guy
-
-			if (src.lethal)
-				var/net = src.get_connection() // Are we wired-powered (Convair880)?
-				var/power = src.get_gridpower()
-				if (!net || (net && (power < 2000000)))
-					L.shock(src, 2000000, "chest", 0.3, 1) // Nope or not enough juice, use fixed values instead (around 80 BURN per shock).
-				else
-					//DEBUG_MESSAGE("Shocked [L] with [power]")
-					src.electrocute(L, 100, net, 1) // We are, great. Let that global proc calculate the damage.
-			else
-				L.shock(src, 2500, "chest", 1, 1)
-				L.changeStatus("stunned", 10 SECONDS)
-
-			if((L.mind?.get_antagonist(ROLE_REVOLUTIONARY)) && !(L.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)) && prob(66))
-				L.mind?.remove_antagonist(ROLE_REVOLUTIONARY)
-
-		A.UpdateIcon()
 		return
 
 /* ========================================================= */

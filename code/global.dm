@@ -91,7 +91,7 @@ var/global
 	/// All the accessible areas on the station in one convenient place
 	list/station_areas = list()
 	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
-	area_list_is_up_to_date = 0
+	area_list_is_up_to_date = FALSE
 
 	/// Contains objects in ID-based switched object groups, such as blinds and their switches
 	list/switched_objs = list()
@@ -385,7 +385,6 @@ var/global
 	list/datum/powernet/powernets = null
 
 	join_motd = null
-	rules = null
 	forceblob = 0
 
 	halloween_mode = 0
@@ -599,3 +598,7 @@ var/global
 	browse_item_initial_done = 1
 	for (var/client/C in clients)
 		sendItemIcons(C)
+
+#ifdef TWITCH_BOT_ALLOWED
+var/global/mob/twitch_mob = 0
+#endif

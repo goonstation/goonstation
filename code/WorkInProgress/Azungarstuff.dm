@@ -85,11 +85,11 @@
 				if (istype(H))
 					H.unkillable = 0
 				if(!M.stat) M.emote("scream")
-				src.visible_message("<span class='alert'><B>[M]</B> falls into the [src] and melts away!</span>")
+				src.visible_message(SPAN_ALERT("<B>[M]</B> falls into the [src] and melts away!"))
 				logTheThing(LOG_COMBAT, M, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
 				M.firegib() // thanks ISN!
 		else
-			src.visible_message("<span class='alert'><B>[O]</B> falls into the [src] and melts away!</span>")
+			src.visible_message(SPAN_ALERT("<B>[O]</B> falls into the [src] and melts away!"))
 			qdel(O)
 
 	ex_act(severity)
@@ -107,6 +107,8 @@
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "lava_edges"
 	temperature = 10+T0C
+	can_burn = FALSE
+	can_break = FALSE
 
 	Entered(var/mob/M)
 		. = ..()
@@ -124,7 +126,7 @@
 					M.canmove = 0
 					M.changeStatus("weakened", 6 SECONDS)
 					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
-					visible_message("<span class='alert'>[M] gets too close to the edge of the lava and spontaniously combusts from the heat!</span>")
+					visible_message(SPAN_ALERT("[M] gets too close to the edge of the lava and spontaniously combusts from the heat!"))
 					H.set_burning(500)
 					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 					M.emote("scream")
@@ -134,7 +136,7 @@
 					M.emote("scream")
 					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
-					visible_message("<span class='alert'>[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!</span>")
+					visible_message(SPAN_ALERT("[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!"))
 					M.changeStatus("stunned", 6 SECONDS)
 			sleep(5 SECONDS)
 			if(M.loc == src)
@@ -151,10 +153,10 @@
 						if (H.limbs.r_leg)
 							H.limbs.r_leg.delete()
 						boutput(M, "You can feel how both of your legs melt away!")
-						visible_message("<span class='alert'>[M] continues to remain too close to the lava, their legs literally melting away!</span>")
+						visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, their legs literally melting away!"))
 					else
 						boutput(M, "You can feel intense heat on the lower part of your torso.")
-						visible_message("<span class='alert'>[M] continues to remain too close to the lava, if they had any legs, they would have melted away!</span>")
+						visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, if they had any legs, they would have melted away!"))
 
 				if (isrobot(M))
 					var/mob/living/silicon/robot/R = M
@@ -177,11 +179,11 @@
 						R.update_bodypart("r_leg")
 					R.part_leg_l = null
 					R.update_bodypart("l_leg")
-					visible_message("<span class='alert'>[M] continues to remain too close to the lava, their legs literally melting away!</span>")
+					visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, their legs literally melting away!"))
 					boutput(M, "You can feel how both of your legs melt away!")
 				else
 					boutput(M, "You can feel intense heat on the lower part of your torso.")
-					visible_message("<span class='alert'>[M] continues to remain too close to the lava, if they had any legs, they would have melted away!</span>")
+					visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, if they had any legs, they would have melted away!"))
 
 	corners
 		icon_state = "lava_corners"
@@ -205,135 +207,135 @@
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "fpurple1"
 	innercross
-		dir = 1
+		dir = NORTH
 	outercross
-		dir = 4
+		dir = EAST
 
 /turf/unsimulated/floor/carpet/purple/standard/edge
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "purple2"
 
 	north
-		dir = 1
+		dir = NORTH
 	south
-		dir = 2
+		dir = SOUTH
 	east
-		dir = 4
+		dir = EAST
 	west
-		dir = 8
+		dir = WEST
 	ne
-		dir = 5
+		dir = NORTHEAST
 	se
-		dir = 6
+		dir = SOUTHEAST
 	nw
-		dir = 9
+		dir = NORTHWEST
 	sw
-		dir = 10
+		dir = SOUTHWEST
 
 /turf/unsimulated/floor/carpet/purple/standard/innercorner
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "purple3"
 
 	ne
-		dir = 5
+		dir = NORTHEAST
 	se
-		dir = 6
+		dir = SOUTHEAST
 	nw
-		dir = 9
+		dir = NORTHWEST
 	sw
-		dir = 10
+		dir = SOUTHWEST
 	north
-		dir = 1
+		dir = NORTH
 	south
-		dir = 2
+		dir = SOUTH
 	east
-		dir = 4
+		dir = EAST
 	west
-		dir = 8
+		dir = WEST
 	ne_triple
 		icon_state = "purple4"
-		dir = 5
+		dir = NORTHEAST
 	se_triple
 		icon_state = "purple4"
-		dir = 6
+		dir = SOUTHEAST
 	nw_triple
 		icon_state = "purple4"
-		dir = 9
+		dir = NORTHWEST
 	sw_triple
 		icon_state = "purple4"
-		dir = 10
+		dir = SOUTHWEST
 	ne_sw
 		icon_state = "purple1"
-		dir = 5
+		dir = NORTHEAST
 	nw_se
 		icon_state = "purple1"
-		dir = 9
+		dir = NORTHWEST
 	omni
 		icon_state = "purple1"
-		dir = 8
+		dir = WEST
 
 /turf/unsimulated/floor/carpet/purple/standard/narrow
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "purple6"
 
 	ne
-		dir = 5
+		dir = NORTHEAST
 	se
-		dir = 6
+		dir = SOUTHEAST
 	nw
-		dir = 9
+		dir = NORTHWEST
 	sw
-		dir = 10
+		dir = SOUTHWEST
 	T_north
-		dir = 1
+		dir = NORTH
 	T_south
-		dir = 2
+		dir = SOUTH
 	T_east
-		dir = 4
+		dir = EAST
 	T_west
-		dir = 8
+		dir = WEST
 	north
 		icon_state = "purple4"
-		dir = 1
+		dir = NORTH
 	south
 		icon_state = "purple4"
-		dir = 2
+		dir = SOUTH
 	east
 		icon_state = "purple4"
-		dir = 4
+		dir = EAST
 	west
 		icon_state = "purple4"
-		dir = 8
+		dir = WEST
 	solo
 		icon_state = "purple1"
-		dir = 4
+		dir = EAST
 	northsouth
 		icon_state = "purple1"
-		dir = 6
+		dir = SOUTHEAST
 	eastwest
 		icon_state = "purple1"
-		dir = 10
+		dir = SOUTHWEST
 
 /turf/unsimulated/floor/carpet/purple/standard/junction
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "purple5"
 
 	sw_e
-		dir = 1
+		dir = NORTH
 	ne_w
-		dir = 2
+		dir = SOUTH
 	nw_s
-		dir = 4
+		dir = EAST
 	se_n
-		dir = 8
+		dir = WEST
 	sw_n
-		dir = 5
+		dir = NORTHEAST
 	nw_e
-		dir = 6
+		dir = SOUTHEAST
 	ne_s
-		dir = 9
+		dir = NORTHWEST
 	se_w
-		dir = 10
+		dir = SOUTHWEST
 
 //fancy subvariant///////////////////////
 
@@ -342,123 +344,123 @@
 	icon_state = "fpurple2"
 
 	north
-		dir = 1
+		dir = NORTH
 	south
-		dir = 2
+		dir = SOUTH
 	east
-		dir = 4
+		dir = EAST
 	west
-		dir = 8
+		dir = WEST
 	ne
-		dir = 5
+		dir = NORTHEAST
 	se
-		dir = 6
+		dir = SOUTHEAST
 	nw
-		dir = 9
+		dir = NORTHWEST
 	sw
-		dir = 10
+		dir = SOUTHWEST
 
 /turf/unsimulated/floor/carpet/purple/fancy/innercorner
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "fpurple3"
 
 	ne
-		dir = 5
+		dir = NORTHEAST
 	se
-		dir = 6
+		dir = SOUTHEAST
 	nw
-		dir = 9
+		dir = NORTHWEST
 	sw
-		dir = 10
+		dir = SOUTHWEST
 	north
-		dir = 1
+		dir = NORTH
 	south
-		dir = 2
+		dir = SOUTH
 	east
-		dir = 4
+		dir = EAST
 	west
-		dir = 8
+		dir = WEST
 	ne_triple
 		icon_state = "fpurple4"
-		dir = 5
+		dir = NORTHEAST
 	se_triple
 		icon_state = "fpurple4"
-		dir = 6
+		dir = SOUTHEAST
 	nw_triple
 		icon_state = "fpurple4"
-		dir = 9
+		dir = NORTHWEST
 	sw_triple
 		icon_state = "fpurple4"
-		dir = 10
+		dir = SOUTHWEST
 	ne_sw
 		icon_state = "fpurple1"
-		dir = 5
+		dir = NORTHEAST
 	nw_se
 		icon_state = "fpurple1"
-		dir = 9
+		dir = NORTHWEST
 	omni
 		icon_state = "fpurple1"
-		dir = 8
+		dir = WEST
 
 /turf/unsimulated/floor/carpet/purple/fancy/narrow
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "fpurple6"
 
 	ne
-		dir = 5
+		dir = NORTHEAST
 	se
-		dir = 6
+		dir = SOUTHEAST
 	nw
-		dir = 9
+		dir = NORTHWEST
 	sw
-		dir = 10
+		dir = SOUTHWEST
 	T_north
-		dir = 1
+		dir = NORTH
 	T_south
-		dir = 2
+		dir = SOUTH
 	T_east
-		dir = 4
+		dir = EAST
 	T_west
-		dir = 8
+		dir = WEST
 	north
 		icon_state = "fpurple4"
-		dir = 1
+		dir = NORTH
 	south
 		icon_state = "fpurple4"
-		dir = 2
+		dir = SOUTH
 	east
 		icon_state = "fpurple4"
-		dir = 4
+		dir = EAST
 	west
 		icon_state = "fpurple4"
-		dir = 8
+		dir = WEST
 	northsouth
 		icon_state = "fpurple1"
-		dir = 6
+		dir = SOUTHEAST
 	eastwest
 		icon_state = "fpurple1"
-		dir = 10
+		dir = SOUTHWEST
 
 /turf/unsimulated/floor/carpet/purple/fancy/junction
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "fpurple5"
 
 	sw_e
-		dir = 1
+		dir = NORTH
 	ne_w
-		dir = 2
+		dir = SOUTH
 	nw_s
-		dir = 4
+		dir = EAST
 	se_n
-		dir = 8
+		dir = WEST
 	sw_n
-		dir = 5
+		dir = NORTHEAST
 	nw_e
-		dir = 6
+		dir = SOUTHEAST
 	ne_s
-		dir = 9
+		dir = NORTHWEST
 	se_w
-		dir = 10
+		dir = SOUTHWEST
 
 /turf/unsimulated/wall/setpieces/Azarak/cavewall
 	name = "rock wall"
@@ -498,7 +500,7 @@
 	attackby(obj/item/W, mob/user)
 		if ((istype(W, /obj/item/mining_tool) || istype(W, /obj/item/mining_tools)) && !isrestrictedz(src.z))
 			boutput(user, "You hit the [src] a few times with the [W]!")
-			src.visible_message("<span class='notice'><b>[src] crumbles into dust!</b></span>")
+			src.visible_message(SPAN_NOTICE("<b>[src] crumbles into dust!</b>"))
 			playsound(src.loc, 'sound/items/mining_pick.ogg', 70,1)
 			qdel(src)
 
@@ -521,7 +523,7 @@
 	attackby(obj/item/W, mob/user)
 		if ((istype(W, /obj/item/mining_tool) || istype(W, /obj/item/mining_tools)) && !isrestrictedz(src.z))
 			boutput(user, "You hit the [src] a few times with the [W]!")
-			src.visible_message("<span class='notice'><b>After a few hits [src] crumbles into smaller rocks.</b></span>")
+			src.visible_message(SPAN_NOTICE("<b>After a few hits [src] crumbles into smaller rocks.</b>"))
 			playsound(src.loc, 'sound/items/mining_pick.ogg', 80,1)
 			new /obj/decal/fakeobjects/smallrocks(src.loc)
 			qdel(src)
@@ -733,7 +735,7 @@
 			user.u_equip(W)
 			qdel(W)
 			src.amount++
-			boutput(user, "<span class='notice'>You put a pair of handcuffs in the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, SPAN_NOTICE("You put a pair of handcuffs in the [src]. [amount] left in the dispenser."))
 		return
 
 	attack_hand(mob/user)
@@ -741,11 +743,11 @@
 		if (src.amount >= 1)
 			src.amount--
 			user.put_in_hand_or_drop(new/obj/item/handcuffs, user.hand)
-			boutput(user, "<span class='alert'>You take a pair of handcuffs from the [src]. [amount] left in the dispenser.</span>")
+			boutput(user, SPAN_ALERT("You take a pair of handcuffs from the [src]. [amount] left in the dispenser."))
 			if (src.amount <= 0)
 				src.icon_state = "dispenser_handcuffs"
 		else
-			boutput(user, "<span class='alert'>There's no handcuffs left in the [src]!</span>")
+			boutput(user, SPAN_ALERT("There's no handcuffs left in the [src]!"))
 
 /obj/decal/fakeobjects/mantacontainer
 	name = "container"
@@ -760,7 +762,7 @@
 
 	attack_hand(mob/user)
 		if (can_reach(user,src))
-			boutput(user, "<span class='alert'>You attempt to open the container but its doors are sealed tight. It doesn't look like you'll be able to open it.</span>")
+			boutput(user, SPAN_ALERT("You attempt to open the container but its doors are sealed tight. It doesn't look like you'll be able to open it."))
 			playsound(src.loc, 'sound/machines/door_locked.ogg', 50, 1, -2)
 
 	yellow
@@ -839,7 +841,7 @@
 			background_color = "#33aa33"
 
 		last_result_text = "<span style='padding: 0 0.5em; color: white; background-color: [background_color];'>[src.last_result]</span> [result_color]"
-		src.visible_message("<span class='success'>[src] lands on [last_result_text]!</span>")
+		src.visible_message(SPAN_SUCCESS("[src] lands on [last_result_text]!"))
 		src.running = 0
 		UpdateIcon()
 		sleep(1 SECONDS)
@@ -907,7 +909,7 @@
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
 				var/mob/living/carbon/human/user = usr
-				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
+				user.visible_message(SPAN_ALERT("<B>[user] fumbles the catch and is clonked on the head!</B>"))
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				user.changeStatus("stunned", 5 SECONDS)
 				user.changeStatus("weakened", 3 SECONDS)
@@ -954,7 +956,7 @@
 		src.add_dialog(user)
 		busy = 1
 		showswirl(user.loc)
-		playsound(src, 'sound/effects/teleport.ogg', 60, 1)
+		playsound(src, 'sound/effects/teleport.ogg', 60, TRUE)
 		SPAWN(1 SECOND)
 		teleport(user)
 		busy = 0
@@ -1010,19 +1012,19 @@
 			if (src.attack)
 				src.target = C
 				src.oldtarget_name = C.name
-				src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [C.name]!</span>")
+				src.visible_message(SPAN_COMBAT("<b>[src]</b> [src.angertext] [C.name]!"))
 				src.task = "chasing"
 				break
 			else
 				continue
 
 	ChaseAttack(mob/M)
-		src.visible_message("<span class='combat'><B>[src]</B> launches itself at [M]!</span>")
+		src.visible_message(SPAN_COMBAT("<B>[src]</B> launches itself at [M]!"))
 		if (prob(30)) M.changeStatus("weakened", 2 SECONDS)
 
 	CritterAttack(mob/M)
 		src.attacking = 1
-		src.visible_message("<span class='combat'><B>[src]</B> bites and claws at [src.target]!</span>")
+		src.visible_message(SPAN_COMBAT("<B>[src]</B> bites and claws at [src.target]!"))
 		random_brute_damage(src.target, rand(3,5),1)
 		random_burn_damage(src.target, rand(2,3))
 		SPAWN(1 SECOND)
@@ -1056,7 +1058,6 @@ TYPEINFO(/obj/item/rpcargotele)
 			actions.start(new /datum/action/bar/icon/scenariocrate(src, I, 300), user)
 
 /datum/action/bar/icon/scenariocrate
-	id = "scenariocrate"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 300
 	icon = 'icons/obj/items/mining.dmi'
@@ -1087,13 +1088,13 @@ TYPEINFO(/obj/item/rpcargotele)
 
 	onStart()
 		..()
-		playsound(thecrate, 'sound/machines/click.ogg', 60, 1)
-		owner.visible_message("<span class='notice'>[owner] starts to calibrate the cargo teleporter in a suspicious manner.</span>")
+		playsound(thecrate, 'sound/machines/click.ogg', 60, TRUE)
+		owner.visible_message(SPAN_NOTICE("[owner] starts to calibrate the cargo teleporter in a suspicious manner."))
 	onEnd()
 		..()
-		owner.visible_message("<span class='alert'>[owner] has successfully teleported the NT vital supplies somewhere else!</span>")
+		owner.visible_message(SPAN_ALERT("[owner] has successfully teleported the NT vital supplies somewhere else!"))
 		showswirl(thecrate.loc)
 		qdel(thecrate)
 		message_admins("One of the NT supply crates has been succesfully teleported!")
-		boutput(owner, "<span class='notice'>You have successfully teleported one of the supply crates to the Syndicate.</span>")
-		playsound(thecrate, 'sound/machines/click.ogg', 60, 1)
+		boutput(owner, SPAN_NOTICE("You have successfully teleported one of the supply crates to the Syndicate."))
+		playsound(thecrate, 'sound/machines/click.ogg', 60, TRUE)

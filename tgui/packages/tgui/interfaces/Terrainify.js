@@ -75,9 +75,9 @@ export const TerrainToggles = props => {
   } = props;
 
   return (
-    terrain && typeData[terrain].toggles?.length ? (
+    terrain && typeData[terrain].toggles && Object.keys(typeData[terrain].toggles).length ? (
       <Section title="Toggles" >
-        {typeData[terrain].toggles.map((toggleOption, buttonIndex) => (
+        {Object.keys(typeData[terrain].toggles).map((toggleOption, buttonIndex) => (
           <Flex.Item mb={1} key={buttonIndex}>
             <Button.Checkbox
               checked={activeToggles[toggleOption]}

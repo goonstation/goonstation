@@ -71,7 +71,7 @@
 					O.ArtifactDeactivated()
 		else
 			if (target_is_valid(current_target,O) && istype(bullet,/datum/projectile/artifact))
-				shoot_projectile_ST(O, bullet, current_target)
+				shoot_projectile_ST_pixel_spread(O, bullet, current_target)
 			else
 				current_target = null
 
