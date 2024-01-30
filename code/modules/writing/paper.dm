@@ -647,7 +647,7 @@
 	var/next_generate = 0
 
 	attack_self(mob/user as mob)
-		if (src.amoamount_leftunt < 1 && isnull(locate(bin_type) in src))
+		if (src.amount_left < 1 && isnull(locate(bin_type) in src))
 			if (src.next_generate < TIME)
 				boutput(user, "The [src] generates another sheet of paper using the power of [pick("technology","science","computers","nanomachines",5;"magic",5;"extremely tiny clowns")].")
 				src.amount_left++
