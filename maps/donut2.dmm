@@ -6789,13 +6789,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aJc" = (
-/obj/rack,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/item/circuitboard/card,
-/obj/item/circuitboard/operating,
-/obj/item/circuitboard/powermonitor,
-/obj/item/circuitboard/genetics,
+/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aJd" = (
@@ -43730,15 +43724,10 @@
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "tlf" = (
-/obj/rack,
-/obj/item/circuitboard/teleporter,
-/obj/item/circuitboard/arcade,
-/obj/item/circuitboard/barcode,
-/obj/item/circuitboard/barcode_qm,
-/obj/item/circuitboard/powermonitor_smes,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/rack/organized/techstorage_eng,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "tlV" = (
