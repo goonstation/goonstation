@@ -1,4 +1,36 @@
 
+(t)tue jan 30 24
+(u)Valtsu0
+(p)17764
+(e)🗺📄|A-Mapping, A-UI
+(+)Announcement computers now use tgui
+(t)mon jan 29 24
+(u)Flappybat
+(p)17563
+(e)🎨⚖🔄⏰|C-Sprites, C-Balance, C-Rework, A-Status-Effects
+(*)Wizard polymorph now changes you into an animal for eight minutes. When the spell expires your original human form and status will be restored. Status icon by CalliopeSoups.
+(u)CalliopeSoups
+(p)17658
+(e)🗺💅|A-Mapping, C-QoL
+(+)Cogmap1 catering has been neatened up and widened a little.
+(u)Lyy, Beshemoth
+(p)17553
+(e)🆕🗺🎨🔎🍝|C-Feature, A-Mapping, C-Sprites, C-Code-Quality, A-Catering
+(*)Added melted sugar cooking recipes, including rock candy, hard candy, craftable lollipops, swirly lollipops, and dragon's beard candy!
+(u)LeahTheTech
+(*)Popsicle sticks can now be made by whittling a wooden plank with a knife.
+(t)sun jan 28 24
+(u)Tyrant
+(p)17800
+(e)💅📦🌱|C-QoL, A-Game-Objects, A-Hydroponics
+(+)Knitting supply boxes can now be found within ranching secure lockers and inside a wool production kit, in case you lose yours.
+(t)sat jan 27 24
+(u)NibChocolateeny
+(p)17772
+(e)⚖💅🌱|C-Balance, C-QoL, A-Hydroponics
+(+)The radiation immunity plant gene now reduces seed damage taken from certain radioactive infusions.
+(u)LeahTheTech
+(*)Heads of staff can no longer be gang members (again)
 (t)wed jan 24 24
 (u)Valtsu0
 (p)17338
