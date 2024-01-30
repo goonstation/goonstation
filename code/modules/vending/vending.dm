@@ -2776,7 +2776,6 @@ TYPEINFO(/obj/machinery/vending/monkey)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/wine/white, 4, hidden=1)
 
 	with_ammo
 		create_products(restocked)
