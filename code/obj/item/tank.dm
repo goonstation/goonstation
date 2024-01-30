@@ -158,8 +158,8 @@ Contains:
 			playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 			air_contents.react()
 			air_contents.react()
-			air_contents.react()
-			air_contents.react(react_compensation - 0.5)
+			air_contents.react(0.5)
+			air_contents.react(react_compensation)
 			pressure = MIXTURE_PRESSURE(air_contents)
 
 			//wooo magic numbers! 70 is the default volume of an air tank and quad rooting it seems to produce pretty reasonable scaling
