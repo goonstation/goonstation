@@ -621,6 +621,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Alcohol Crate"
 
+/datum/supply_packs/alcohol
+	name = "Mixed Mixers Crate"
+	desc = "A collection of free juice samples! At least, it was free to company reselling it to you."
+	category = "Civilian Department"
+	contains = list(/obj/item/storage/box/juice = 2)
+	cost = PAY_TRADESMAN*3
+	containertype = /obj/storage/crate
+	containername = "Juice Crate"
+
 /datum/supply_packs/cocktailparty
 	name = "Cocktail Party Supplies"
 	desc = "All the equipment you need to be the next up and coming amateur mixologist."
