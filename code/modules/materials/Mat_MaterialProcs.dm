@@ -748,12 +748,12 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/obj/item/I = owner
 		if (I.amount < 1)
 			return
-		var/radioactivity = O.material.getProperty("radioactive")
-		var/n_radioactivity = O.material.getProperty("n_radioactive")
+		var/radioactivity = I.material.getProperty("radioactive")
+		var/n_radioactivity = I.material.getProperty("n_radioactive")
 		if (!radioactivity && !n_radioactivity)
-			O.material.removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/radioactive_temp)
+			I.material.removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/radioactive_temp)
 			return
-		var/simTurf = locate(O.x, O.y, O.z)
+		var/simTurf = locate(I.x, I.y, I.z)
 		if (!issimulatedturf(simTurf) || !simTurf.air)
 			return
 		var/turf/simulated/T = simTurf
@@ -763,15 +763,15 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			simTurf.air.radgas += moles_to_convert
 			simTurf.air.toxins -= moles_to_convert
 			// Force mutability
-			if (!O.material.isMutable())
-				O.material = O.material.getMutable()
+			if (!I.material.isMutable())
+				I.material = I.material.getMutable()
 			// Adjust or remove radioactive
 			if (moles_to_convert/10 > radioactivity)
-				O.material.removeProperty("radioactive")
+				I.material.removeProperty("radioactive")
 			else
-				O.material.setProperty("radioactive", radioactivity - min(radioactivity, moles_to_convert/10))
+				I.material.setProperty("radioactive", radioactivity - min(radioactivity, moles_to_convert/10))
 			// Adjust or remove neutron radioactive
 			if (moles_to_convert/50 > n_radioactivity)
-				O.material.removeProperty("n_radioactive")
+				I.material.removeProperty("n_radioactive")
 			else
-				O.material.setProperty("n_radioactive", n_radioactivity - min(n_radioactivity, moles_to_convert/50))
+				I.material.setProperty("n_radioactive", n_radioactivity - min(n_radioactivity, moles_to_convert/50))
