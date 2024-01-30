@@ -757,11 +757,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if (!issimulatedturf(simTurf) || !simTurf.air)
 			return
 		var/turf/simulated/T = simTurf
-		if (simTurf.air.toxins > MINIMUM_REACT_QUANTITY)
+		if (T.air.toxins > MINIMUM_REACT_QUANTITY)
 			/// Mostly bullshit magic because I don't know how radiation works and plasma isn't real, but is how many moles to convert of existing plasma
-			var/moles_to_convert = min(((I.amount * (1 + radioactivity) * (1 + n_radioactivity) * sqrt(temp)) / 1000), simTurf.air.toxins)
-			simTurf.air.radgas += moles_to_convert
-			simTurf.air.toxins -= moles_to_convert
+			var/moles_to_convert = min(((I.amount * (1 + radioactivity) * (1 + n_radioactivity) * sqrt(temp)) / 1000), T.air.toxins)
+			T.air.radgas += moles_to_convert
+			T.air.toxins -= moles_to_convert
 			// Force mutability
 			if (!I.material.isMutable())
 				I.material = I.material.getMutable()
