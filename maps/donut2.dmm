@@ -37158,7 +37158,7 @@
 "pct" = (
 /obj/table/auto,
 /obj/item/paper_bin{
-	amount = 100;
+	amount_left = 100;
 	desc = "not at all a paper bin. no sir.";
 	name = "do-it-yourself joint construction kit"
 	},
