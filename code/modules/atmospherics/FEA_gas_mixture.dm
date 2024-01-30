@@ -68,7 +68,7 @@ What are the archived variables for?
 	graphic_archived = graphic
 
 /// Process all reactions, return bitfield if notable reaction occurs.
-/datum/gas_mixture/proc/react(atom/dump_location, mult=1)
+/datum/gas_mixture/proc/react(atom/dump_location, var/mult=1)
 	. = 0 //(used by pipe_network and hotspots)
 	var/reaction_rate
 	if(src.temperature > 900 && src.oxygen_agent_b > MINIMUM_REACT_QUANTITY && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)
@@ -103,7 +103,7 @@ What are the archived variables for?
 
 /// * Process fire combustion, pretty much just plasma combustion.
 /// * Returns: Rough amount of plasma and oxygen used. Inaccurate due to plasma usage lowering.
-/datum/gas_mixture/proc/fire(mult=1)
+/datum/gas_mixture/proc/fire(var/mult=1)
 
 	var/energy_released = 0
 	var/old_heat_capacity = HEAT_CAPACITY(src)
