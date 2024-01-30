@@ -281,7 +281,6 @@
 		else
 			progress += 1
 		progress = min(draw_target,progress)
-		progress = 0
 		moved = 0
 
 		var/completion_fraction = progress/draw_target
