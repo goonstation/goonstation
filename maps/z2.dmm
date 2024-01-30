@@ -28696,7 +28696,8 @@
 	dir = 4;
 	icon_state = "datasec";
 	name = "Commander's Announcement Computer";
-	req_access_txt = "76"
+	req_access_txt = "76";
+	theme = "syndicate"
 	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/sw,
 /area/syndicate_station/battlecruiser)
