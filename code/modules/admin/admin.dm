@@ -516,36 +516,11 @@ var/global/noir = 0
 		/////////////////////////////////////ban stuff
 		if ("addban") //Add ban
 			var/mob/M = (href_list["target"] ? locate(href_list["target"]) : null)
-			usr.client.addBanDialog(M)
+			usr.client.addBanTemp(M)
 
 		if ("sharkban") //Add ban
 			var/mob/M = (href_list["target"] ? locate(href_list["target"]) : null)
 			usr.client.sharkban(M)
-
-		if("unbane") //Edit ban
-			if (src.level >= LEVEL_SA)
-				var/id = html_decode(href_list["id"])
-				var/ckey = html_decode(href_list["target"])
-				var/compID = html_decode(href_list["compID"])
-				var/ip = html_decode(href_list["ip"])
-				var/reason = html_decode(href_list["reason"])
-				var/timestamp = html_decode(href_list["timestamp"])
-
-				usr.client.editBanDialog(id, ckey, compID, ip, reason, timestamp)
-			else
-				tgui_alert(usr,"You need to be at least a Secondary Administrator to edit bans.")
-
-		if("unbanf") //Delete ban
-			if (src.level >= LEVEL_SA)
-				var/id = html_decode(href_list["id"])
-				var/ckey = html_decode(href_list["target"])
-				var/compID = html_decode(href_list["compID"])
-				var/ip = html_decode(href_list["ip"])
-				var/akey = usr.client.ckey
-
-				usr.client.deleteBanDialog(id, ckey, compID, ip, akey)
-			else
-				tgui_alert(usr,"You need to be at least a Secondary Administrator to remove bans.")
 		/////////////////////////////////////end ban stuff
 
 		if("jobbanpanel")

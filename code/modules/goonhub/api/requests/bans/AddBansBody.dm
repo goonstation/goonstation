@@ -8,7 +8,8 @@
 		"comp_id", // string
 		"ip", // string
 		"reason", // string
-		"duration" // integer
+		"duration", // integer
+		"requires_appeal" // boolean
 	)
 
 /datum/apiBody/bans/add/VerifyIntegrity()
@@ -16,7 +17,6 @@
 	if (
 		isnull(src.values["game_admin_ckey"]) \
 		|| isnull(src.values["round_id"]) \
-		|| isnull(src.values["server_id"]) \
 		|| isnull(src.values["reason"]) \
 	)
 		return FALSE

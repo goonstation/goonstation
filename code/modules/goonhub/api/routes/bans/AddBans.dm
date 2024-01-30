@@ -14,6 +14,7 @@
 		comp_id,
 		ip,
 		reason,
-		duration
+		duration,
+		requires_appeal
 	)
 		. = ..(args)

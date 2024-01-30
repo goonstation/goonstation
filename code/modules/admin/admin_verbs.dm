@@ -154,7 +154,8 @@ var/list/admin_verbs = list(
 		/client/proc/main_loop_tick_detail,
 		/client/proc/display_bomb_monitor,
 		//Ban verbs
-		/client/proc/openBanPanel,
+		/client/proc/ban_panel,
+		/client/proc/addBanTemp,
 		/client/proc/banooc,
 		/client/proc/view_cid_list,
 		/client/proc/modify_parts,
@@ -478,6 +479,7 @@ var/list/admin_verbs = list(
 		/client/proc/upload_uncool_words,
 		/client/proc/TestMarketReq,
 		/verb/adminDumpBlueprint,
+		/client/proc/debug_event_recorder,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
@@ -761,6 +763,17 @@ var/list/special_pa_observing_verbs = list(
 	if (src.holder.level >= LEVEL_SA)
 		global.player_panel.ui_interact(src.mob)
 
+/client/proc/ban_panel()
+	set name = "Ban Panel"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	if (!src.holder || src.holder?.tempmin)
+		logTheThing(LOG_ADMIN, src, "tried to access the ban panel")
+		logTheThing(LOG_DIARY, src, "tried to access the ban panel", "admin")
+		message_admins("[key_name(src)] tried to access the ban panel but was denied.")
+	if (isnull(src.holder.ban_panel))
+		src.holder.ban_panel = new
+	src.holder.ban_panel.ui_interact(src.mob)
+
 /client/proc/jobbans(key as text)
 	set name = "Jobban Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
@@ -912,14 +925,15 @@ var/list/special_pa_observing_verbs = list(
 		M.client.warned = 1
 		message_admins(SPAN_INTERNAL("[src.ckey] warned [M.ckey]."))
 	else
-		var/addData[] = new()
-		addData["ckey"] = M.ckey
-		addData["compID"] = M.computer_id
-		addData["ip"] = M.client.address
-		addData["reason"] = "Autobanning due to previous warn. This is what we in the biz like to call a \"second warning\"."
-		addData["akey"] = src.ckey
-		addData["mins"] = 10
-		addBan(addData)
+		bansHandler.add(
+			src.ckey,
+			null,
+			M.ckey,
+			M.computer_id,
+			M.client.address,
+			"Autobanning due to previous warn. This is what we in the biz like to call a \"second warning\".",
+			10 MINUTES
+		)
 
 /client/proc/clear_area_overlays()
 	set name = "Clear Area Overlays"
