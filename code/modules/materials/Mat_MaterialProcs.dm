@@ -754,10 +754,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			I.material.removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/radioactive_temp)
 			return
 		var/simTurf = locate(I.x, I.y, I.z)
-		if (!issimulatedturf(simTurf) || !simTurf.air)
+		if (!issimulatedturf(simTurf))
 			return
 		var/turf/simulated/T = simTurf
-		if (T.air.toxins > MINIMUM_REACT_QUANTITY)
+		if (T.air && T.air.toxins > MINIMUM_REACT_QUANTITY)
 			/// Mostly bullshit magic because I don't know how radiation works and plasma isn't real, but is how many moles to convert of existing plasma
 			var/moles_to_convert = min(((I.amount * (1 + radioactivity) * (1 + n_radioactivity) * sqrt(temp)) / 1000), T.air.toxins)
 			T.air.radgas += moles_to_convert
