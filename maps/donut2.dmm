@@ -6045,7 +6045,7 @@
 /area/station/engine/elect)
 "aFe" = (
 /obj/table/glass/auto,
-/obj/item/reagent_containers/food/snacks/candy/taffy/watermelon,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/watermelon,
 /obj/item/reagent_containers/food/drinks/water,
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/blue/checker,
@@ -42975,6 +42975,7 @@
 	name = "kitchen counter"
 	},
 /obj/machinery/light/incandescent,
+/obj/item/storage/box/popsicle_sticks,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "sNC" = (
