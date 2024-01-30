@@ -399,25 +399,6 @@
 	amount_per_transfer_from_this = 5
 	initial_reagents = "formaldehyde"
 
-/* ========================================================= */
-/* -------------------- Bartender Juice -------------------- */
-/* ========================================================= */
-/obj/item/reagent_containers/glass/bottle/juice
-	name = "parent juice bottle"
-	desc = "Call 1-800-IMCODER! Should not be seeing this."
-	bottle_style = "2"
-	initial_volume = 15
-	amount_per_transfer_from_this = 5
-	var/juicelist = list("capsaicin", "honey", "juice_apple", "juice_blackberry", "juice_blueberry", "juice_blueraspberry", "juice_carrot", "juice_grapefruit", "juice_peach", "juice_pumpkin", "juice_strawberry", "juice_watermelon")
-	New()
-		if (prob(2))
-			src.initial_reagents = list(pick(juicelist) = 12)
-			src.initial_reagents["formaldehyde"] = 3
-		else
-			src.initial_reagents = list(pick(juicelist) = 15)
-		..()
-		src.name = "bottle of [src.reagents.get_master_reagent_name()]"
-		src.desc = "A free sample of [src.reagents.get_master_reagent_name()]! There's a warning sticker about preservatives on the side."
 /* ============================================== */
 /* -------------------- Misc -------------------- */
 /* ============================================== */

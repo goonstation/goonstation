@@ -2760,6 +2760,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/vodka, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/tequila, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/wine, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/wine/white, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/cider, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/mead, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/gin, 4)
@@ -2776,13 +2777,11 @@ TYPEINFO(/obj/machinery/vending/monkey)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/wine/white, 4, hidden=1)
 
 	with_ammo
 		create_products(restocked)
 			..()
 			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 2, cost=PAY_TRADESMAN, hidden=1)
-
 
 TYPEINFO(/obj/machinery/vending/chem)
 	mats = null
