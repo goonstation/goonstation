@@ -99,6 +99,9 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	onEnd()
 		..()
 
+		if(!ishuman(target))
+			boutput(M, SPAN_ALERT("<B>Your spell fizzles at the final moment, somehow your target is no longer human!</B>"))
+
 		if(!istype(get_area(M), /area/sim/gunsim))
 			M.say("YORAF UHRY", FALSE, spell.maptext_style, spell.maptext_colors)
 		if(ishuman(M))
@@ -115,23 +118,24 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 		smoke.attach(target)
 		smoke.start()
 
-		if (target.mind && (target.mind.assigned_role != "Animal") || (!target.mind || !target.client))
-			boutput(target, SPAN_ALERT("<B>You feel your flesh painfully ripped apart and reformed into something else!</B>"))
-			if (target.mind)
-				target.mind.assigned_role = "Animal"
-			target.emote("scream", 0)
+		boutput(target, SPAN_ALERT("<B>You feel your flesh painfully ripped apart and reformed into something else!</B>"))
+		target.emote("scream", 0)
 
-			target.unequip_all()
-			var/mob/living/critter/C = target.make_critter(pick(animal_spell_critter_paths))
-			C.real_name = "[target.real_name] the [C.real_name]"
-			C.name = C.real_name
-			C.is_npc = FALSE
-			logTheThing(LOG_COMBAT, M, "casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
-			C.butcherable = BUTCHER_ALLOWED // we would like the brain to be recoverable, please
-			if (istype(C, /mob/living/critter/small_animal/bee))
-				var/mob/living/critter/small_animal/bee/B = C
-				B.non_admin_bee_allowed = 1
-			if (istype(C))
-				C.change_misstep_chance(30)
-				C.stuttering = 40
-				C.show_antag_popup("polymorph")
+		target.unequip_all()
+		var/turf/T = get_turf(target)
+		var/mob/living/critter/C = target.make_critter(pick(animal_spell_critter_paths), T, ghost_spawned = FALSE, delete_original = FALSE)
+		target.set_loc(null) // We store the human in null so we can get them back with their exact current status
+		target.hibernating = TRUE
+		C.setStatus("wiz_polymorph", 8 MINUTES, target)
+		C.real_name = "[target.real_name] the [C.real_name]"
+		C.name = C.real_name
+		C.is_npc = FALSE
+		logTheThing(LOG_COMBAT, M, "casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
+		C.butcherable = BUTCHER_ALLOWED // we would like the brain to be recoverable, please
+		if (istype(C, /mob/living/critter/small_animal/bee))
+			var/mob/living/critter/small_animal/bee/B = C
+			B.non_admin_bee_allowed = 1
+		if (istype(C))
+			C.change_misstep_chance(30)
+			C.stuttering = 40
+			C.show_antag_popup("polymorph")

@@ -5,9 +5,9 @@
  * @license ISC
  */
 
-import {
+import { Action } from './type';
+import type {
   Act,
-  Action,
   ModuleActionPayload,
   MoveToolActionPayload,
   ResetModuleActionPayload,

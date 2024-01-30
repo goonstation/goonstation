@@ -210,8 +210,8 @@ A Flamethrower in various states of assembly
 	move_triggered = 1
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		src.create_reagents(4000)
 		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 

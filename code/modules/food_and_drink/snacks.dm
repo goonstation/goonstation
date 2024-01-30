@@ -108,7 +108,7 @@
 					return
 				else
 					boutput(user, SPAN_NOTICE("You sharpen the pizza, and start slicing it."))
-		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
+		if (istool(W, TOOL_CUTTING | TOOL_SAWING | TOOL_SNIPPING))
 			if (src.sliced)
 				boutput(user, SPAN_ALERT("This has already been sliced."))
 				return
@@ -3202,3 +3202,46 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 			qdel (W)
 			return
 		return ..()
+
+/obj/item/reagent_containers/food/snacks/brownie
+	name = "brownie"
+	desc = "A perfectly baked square of chocolatey goodness. Yum!"
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "brownie"
+	bites_left = 3
+	heal_amt = 2
+	food_color = "#38130C"
+	initial_volume = 10
+	initial_reagents = list("chocolate" = 5)
+	food_effects = list("food_warm","food_energized")
+	meal_time_flags = MEAL_TIME_SNACK
+
+/obj/item/reagent_containers/food/snacks/brownie_batch
+	name = "brownies"
+	desc = "A whole batch of freshly baked and chewy brownies."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "brownie_batch"
+	bites_left = 12
+	heal_amt = 2
+	food_color = "#38130C"
+	initial_volume = 40
+	initial_reagents = list("chocolate" = 20)
+	food_effects = list("food_warm","food_energized")
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/brownie
+	slice_amount = 4
+	slice_suffix = "square"
+	w_class = W_CLASS_BULKY
+	use_bite_mask = FALSE
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
+			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
+			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)

@@ -849,7 +849,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if (!donotupdate)
 			reagents_changed(1)
 
-		if((added_new || check_reactions) && !current_reagent.disposed)
+		if((added_new || check_reactions) && !QDELETED(current_reagent))
 			append_possible_reactions(current_reagent.id) //Experimental reaction possibilities
 			if (!donotreact)
 				src.handle_reactions()

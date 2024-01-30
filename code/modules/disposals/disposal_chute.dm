@@ -231,6 +231,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if (GET_COOLDOWN(MO, "PipeEject"))
 			return
 
+		if (isliving(MO))
+			var/mob/living/mobtarget = MO
+			if  (mobtarget.buckled || isAI(mobtarget))
+				return
+
+			if (istype(src, /obj/machinery/disposal/mail))
+				//Is this mob allowed to ride mailchutes?
+				if (!mobtarget.canRideMailchutes())
+					return
+
 		if(isitem(MO))
 			var/obj/item/I = MO
 			I.set_loc(src)

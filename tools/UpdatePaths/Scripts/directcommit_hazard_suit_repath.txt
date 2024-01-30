@@ -1,0 +1,2 @@
+/obj/item/clothing/suit/rad : /obj/item/clothing/suit/hazard/rad
+/obj/item/clothing/suit/fire : /obj/item/clothing/suit/hazard/fire

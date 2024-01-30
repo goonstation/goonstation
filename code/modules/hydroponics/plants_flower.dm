@@ -28,6 +28,14 @@ ABSTRACT_TYPE(/datum/plant/flower)
 		if (reagent == "luminol")
 			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/rose/holorose)
 
+/datum/plant/flower/sunflower
+	name = "Sunflower"
+	seedcolor = "#695b59"
+	crop = /obj/item/plant/flower/sunflower
+	cropsize = 1
+	force_seed_on_harvest = -1
+	commuts = list(/datum/plant_gene_strain/growth_fast)
+
 /datum/plant/flower/rafflesia
 	name = "Rafflesia"
 	seedcolor = "#A4000F"

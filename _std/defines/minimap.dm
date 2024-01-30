@@ -31,6 +31,7 @@
 #define MAPC_MEDICAL "#1ba7e9"
 #define MAPC_MEDLOBBY "#78c5e9"
 #define MAPC_ROBOTICS "#5b6eb1"
+#define MAPC_MORGUE "#2b6a92"
 #define MAPC_MEDRESEARCH "#3fb583"
 #define MAPC_PATHOLOGY "#167970"
 

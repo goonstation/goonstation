@@ -2318,7 +2318,7 @@ var/global/noir = 0
 							qdel(O)
 							LAGCHECK(LAG_LOW)
 					if("sec_classic1")
-						for(var/obj/item/clothing/suit/fire/O in world)
+						for(var/obj/item/clothing/suit/hazard/fire/O in world)
 							qdel(O)
 							LAGCHECK(LAG_LOW)
 						for(var/obj/grille/O in world)

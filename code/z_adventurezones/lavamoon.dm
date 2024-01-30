@@ -574,7 +574,7 @@ var/sound/iomoon_alarm_sound = null
 			. = ..()
 
 //Clothing & Associated Equipment
-/obj/item/clothing/suit/rad/iomoon
+/obj/item/clothing/suit/hazard/rad/iomoon
 	name = "FB-8 Environment Suit"
 	desc = "A rather old-looking suit designed to guard against extreme heat and radiation."
 	icon_state = "rad_io"
@@ -598,7 +598,7 @@ var/sound/iomoon_alarm_sound = null
 	icon_state = "syndicate"
 	icon_opened = "syndicate-open"
 	icon_closed = "syndicate"
-	spawn_contents = list(/obj/item/clothing/suit/rad/iomoon,\
+	spawn_contents = list(/obj/item/clothing/suit/hazard/rad/iomoon,\
 	/obj/item/clothing/head/rad_hood/iomoon)
 
 /obj/machinery/light/small/iomoon

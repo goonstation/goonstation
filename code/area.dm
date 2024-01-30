@@ -2939,13 +2939,13 @@ ABSTRACT_TYPE(/area/station/medical)
 	name = "Morgue"
 	icon_state = "morgue"
 	sound_environment = 3
-	station_map_colour = MAPC_MEDICAL
+	station_map_colour = MAPC_MORGUE
 
 /area/station/medical/crematorium
 	name = "Crematorium"
 	icon_state = "morgue"
 	sound_environment = 3
-	station_map_colour = MAPC_MEDICAL
+	station_map_colour = MAPC_MORGUE
 
 /area/station/medical/medbooth
 	name = "Medical Booth"

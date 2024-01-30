@@ -1466,6 +1466,21 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		..()
 		reagents.add_reagent("milk", 5)
 
+/obj/item/reagent_containers/food/snacks/plant/sunflower
+	name = "sunflower seeds"
+	crop_suffix = " seeds"
+	desc = "A handful of delicous sunflower seeds. The snack that keeps your fingers and mouth busy.  A wonderful portable snack if not a tad messy."
+	icon_state = "sunflower"
+	planttype = /datum/plant/flower/sunflower
+	bites_left = 3
+	heal_amt = 0.2
+	food_color = "#695b59"
+	food_effects = list("food_refreshed")
+
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		..()
+		src.AddComponent(/datum/component/seedy, passed_genes, origin_plant, generation)
+		return src
 
 /obj/item/reagent_containers/food/snacks/plant/coffeebean
 	name = "coffee beans"

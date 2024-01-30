@@ -5348,6 +5348,9 @@
 	},
 /obj/item/disk/data/cartridge/captain,
 /obj/item/peripheral/network/radio/locked,
+/obj/item/pinpointer/disk{
+	pixel_y = 9
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "IV" = (

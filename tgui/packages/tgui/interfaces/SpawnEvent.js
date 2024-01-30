@@ -52,6 +52,13 @@ export const SpawnEvent = (props, context) => {
               >
                 {(spawn_type === "job") ? thing_name : "Job"}
               </Button>
+              <Button
+                selected={spawn_type === "random_human"}
+                onClick={() => act("set_random_human")}
+                tooltip={"Just a basic random human."}
+              >
+                Random Human
+              </Button>
             </LabeledList.Item>
             <LabeledList.Item label="Accept delay">
               {!!ask_permission && (

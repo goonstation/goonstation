@@ -162,7 +162,7 @@
 						. += {"<a href='byond://?src=\ref[src];message_func=ringer'>Ringer: [src.message_silent == 1 ? "Off" : "On"]</a> |
 						<a href='byond://?src=\ref[src];message_func=on'>Send / Receive: [src.message_on == 1 ? "On" : "Off"]</a> |
 						<a href='byond://?src=\ref[src];input=tone'>Set Ring Message</a><br>
-						<a href='byond://?src=\ref[src];message_mode=1'>Messages</a> |
+						<a href='byond://?src=\ref[src];message_mode=1'>Message History</a> |
 						<a href='byond://?src=\ref[src];mode=[MODE_GROUPS]'>Groups</a> |
 						<a href='byond://?src=\ref[src];mode=[MODE_ADDRESSBOOK]'>Address Book</a><br>
 

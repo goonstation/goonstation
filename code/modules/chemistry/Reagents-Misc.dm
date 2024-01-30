@@ -1307,7 +1307,7 @@ datum
 					if (method == TOUCH)
 						if (isrobot(M))
 							var/mob/living/silicon/robot/R = M
-							R.add_oil(volume * 2)
+							R.changeStatus("freshly_oiled", (volume * 5)) // You need at least 30u to get max duration
 							boutput(R, SPAN_NOTICE("Your joints and servos begin to run more smoothly."))
 						else boutput(M, SPAN_ALERT("You feel greasy and gross."))
 

@@ -62,8 +62,8 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 	var/list/omencolors = list("none","custom","red","green")
 	var/list/notes = list()
 	var/omencolor
-	var/obj/o1 = new
-	var/obj/o2 = new
+	var/obj/effect/o1 = new
+	var/obj/effect/o2 = new
 	var/inuse = 0
 	var/colorinputbuffer
 	var/smokecolor
@@ -84,8 +84,6 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 
 	New()
 		. = ..()
-		o1.mouse_opacity = 0
-		o2.mouse_opacity = 0
 		START_TRACKING
 
 	proc/updatejar() //updates soul jar display based on partial souls and adds any spillover to the current zoldorf's soul pool

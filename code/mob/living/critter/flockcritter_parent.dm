@@ -29,7 +29,7 @@ TYPEINFO(/mob/living/critter/flock)
 	// if we're extinguishing ourselves don't extinguish ourselves repeatedly
 	var/extinguishing = FALSE
 	// FLOCK-SPECIFIC STUFF
-	var/datum/flock/flock
+	var/tmp/datum/flock/flock
 
 	var/mob/living/intangible/flock/controller = null
 

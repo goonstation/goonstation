@@ -579,7 +579,7 @@
 /obj/item/fuel_pellet/cerenkite,
 /obj/item/fuel_pellet/cerenkite,
 /obj/item/clothing/head/rad_hood,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)

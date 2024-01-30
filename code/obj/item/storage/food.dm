@@ -137,3 +137,9 @@
 	desc = "A box of generic unbranded popsicles."
 	icon_state = "popsiclebox"
 	spawn_contents = list(/obj/item/popsicle = 7)
+
+/obj/item/storage/box/popsicle_sticks
+	name = "popsicle sticks"
+	desc = "A box of popsicle sticks, used for making various kinds of sweets."
+	icon_state = "sticks"
+	spawn_contents = list(/obj/item/stick = 7)

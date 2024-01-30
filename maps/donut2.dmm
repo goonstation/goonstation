@@ -461,17 +461,6 @@
 	icon_state = "fred2"
 	},
 /area/listeningpost)
-"abV" = (
-/obj/item/reagent_containers/food/drinks/drinkingglass,
-/obj/item/pinpointer,
-/obj/table/wood/auto{
-	dir = 5
-	},
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fred2"
-	},
-/area/listeningpost)
 "abZ" = (
 /obj/lattice{
 	dir = 10;
@@ -6043,13 +6032,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
-"aFe" = (
-/obj/table/glass/auto,
-/obj/item/reagent_containers/food/snacks/candy/taffy/watermelon,
-/obj/item/reagent_containers/food/drinks/water,
-/obj/machinery/light_switch/east,
-/turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/pool)
 "aFf" = (
 /obj/machinery/light/incandescent,
 /obj/cable{
@@ -6958,14 +6940,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northeast)
-"aJR" = (
-/obj/rack,
-/obj/item/clothing/under/color/grey,
-/obj/item/clothing/shoes/black,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas/emergency,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "aJS" = (
 /turf/simulated/floor/plating,
 /area/space)
@@ -7148,6 +7122,13 @@
 "aKS" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/pharmacy)
+"aKT" = (
+/obj/table/glass/auto,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/watermelon,
+/obj/item/reagent_containers/food/drinks/water,
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/blue/checker,
+/area/station/crew_quarters/pool)
 "aKZ" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -13234,27 +13215,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
-"bsJ" = (
-/obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
-/obj/item/tank/air,
-/obj/item/chem_grenade/firefighting,
-/obj/item/chem_grenade/firefighting,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/tank/air,
-/obj/item/clothing/head/helmet/hardhat,
-/obj/item/chem_grenade/firefighting,
-/obj/item/chem_grenade/firefighting,
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 9
-	},
-/area/station/engine/storage)
 "bsT" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -14950,14 +14910,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
-"bDF" = (
-/obj/decal/cleanable/cobweb2,
-/obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas/emergency,
-/obj/random_item_spawner/mask/one,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bDG" = (
@@ -17686,13 +17638,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
-"cHd" = (
-/obj/table/auto,
-/obj/item/card/id/captains_spare,
-/obj/item/pinpointer,
-/obj/item/device/radio/intercom/bridge,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "cIh" = (
 /obj/machinery/hydro_growlamp,
 /obj/cable{
@@ -18027,6 +17972,14 @@
 	},
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
+"cRT" = (
+/obj/decal/cleanable/cobweb2,
+/obj/rack,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/mask/gas/emergency,
+/obj/random_item_spawner/mask/one,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "cSI" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -18506,6 +18459,14 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
+"djs" = (
+/obj/rack,
+/obj/item/clothing/under/color/grey,
+/obj/item/clothing/shoes/black,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/mask/gas/emergency,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "djz" = (
 /obj/cable/orange{
 	icon_state = "2-8"
@@ -21228,6 +21189,13 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/hor)
+"eTG" = (
+/obj/table/auto,
+/obj/item/card/id/captains_spare,
+/obj/item/pinpointer/disk,
+/obj/item/device/radio/intercom/bridge,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "eVj" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -23967,6 +23935,12 @@
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"gPU" = (
+/obj/machinery/light_switch/east,
+/obj/machinery/chem_dispenser/chef,
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "gQs" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
@@ -23978,6 +23952,14 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
+"gQH" = (
+/obj/storage/closet/fire,
+/obj/item/clothing/head/helmet/firefighter,
+/obj/item/clothing/suit/hazard/fire,
+/obj/decal/cleanable/dirt/dirt5,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/wood/six,
+/area/station/maintenance/west)
 "gQV" = (
 /obj/railing/orange/reinforced,
 /obj/submachine/chef_sink/chem_sink{
@@ -31986,27 +31968,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"lZX" = (
-/obj/table/auto,
-/obj/item/extinguisher{
-	pixel_x = 10;
-	pixel_y = 6
-	},
-/obj/item/clothing/suit/fire{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/wrench{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/screwdriver{
-	pixel_x = -2;
-	pixel_y = 8
-	},
-/obj/machinery/light/incandescent,
-/turf/simulated/floor,
-/area/station/science/testchamber)
 "maH" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass{
@@ -39185,12 +39146,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
-"qoX" = (
-/obj/machinery/light_switch/east,
-/obj/machinery/chem_dispenser/chef,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "qoZ" = (
 /obj/cable/orange{
 	icon_state = "1-8"
@@ -41738,6 +41693,15 @@
 	},
 /turf/space,
 /area/space)
+"saE" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/machinery/light/incandescent,
+/obj/item/storage/box/popsicle_sticks,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "saZ" = (
 /obj/storage/secure/closet/engineering/mining,
 /obj/disposalpipe/segment,
@@ -42381,14 +42345,6 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
-"svk" = (
-/obj/storage/closet/fire,
-/obj/item/clothing/head/helmet/firefighter,
-/obj/item/clothing/suit/fire,
-/obj/decal/cleanable/dirt/dirt5,
-/obj/decal/cleanable/cobweb,
-/turf/simulated/floor/wood/six,
-/area/station/maintenance/west)
 "svo" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
@@ -42911,6 +42867,17 @@
 	dir = 4
 	},
 /area/listeningpost)
+"sLS" = (
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/pinpointer/disk,
+/obj/table/wood/auto{
+	dir = 5
+	},
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fred2"
+	},
+/area/listeningpost)
 "sLU" = (
 /obj/machinery/camera{
 	c_tag = "Security West";
@@ -42965,14 +42932,6 @@
 	dir = 5
 	},
 /area/station/mining/staff_room)
-"sNk" = (
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter"
-	},
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "sNC" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -44319,16 +44278,6 @@
 /obj/machinery/disposal,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
-"tFn" = (
-/obj/decal/cleanable/dirt/dirt5,
-/obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/mask/gas,
-/obj/item/extinguisher,
-/obj/item/clothing/shoes/black,
-/obj/item/clothing/under/color/grey,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "tFy" = (
 /obj/storage/secure/closet/civilian/bartender,
 /obj/item/gun/russianrevolver,
@@ -45748,6 +45697,16 @@
 	dir = 1
 	},
 /area/station/medical/staff)
+"uGP" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/rack,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/mask/gas,
+/obj/item/extinguisher,
+/obj/item/clothing/shoes/black,
+/obj/item/clothing/under/color/grey,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "uHq" = (
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/plating,
@@ -48918,6 +48877,27 @@
 "wFj" = (
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/crew_quarters/courtroom)
+"wFv" = (
+/obj/table/auto,
+/obj/item/extinguisher{
+	pixel_x = 10;
+	pixel_y = 6
+	},
+/obj/item/clothing/suit/hazard/fire{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/wrench{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/screwdriver{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/station/science/testchamber)
 "wFA" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -50232,6 +50212,27 @@
 	icon_state = "fred1"
 	},
 /area/station/bridge)
+"xzc" = (
+/obj/rack,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/head/helmet/hardhat,
+/obj/item/tank/air,
+/obj/item/chem_grenade/firefighting,
+/obj/item/chem_grenade/firefighting,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/tank/air,
+/obj/item/clothing/head/helmet/hardhat,
+/obj/item/chem_grenade/firefighting,
+/obj/item/chem_grenade/firefighting,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/station/engine/storage)
 "xzf" = (
 /obj/grille/catwalk,
 /obj/cable{
@@ -61123,7 +61124,7 @@ aaa
 aaa
 aaa
 vkK
-svk
+gQH
 fls
 fsC
 fls
@@ -68045,7 +68046,7 @@ avq
 iPR
 xPV
 avq
-tFn
+uGP
 dIu
 cEb
 aGl
@@ -68702,7 +68703,7 @@ xOv
 cqt
 cXA
 sZp
-qoX
+gPU
 vwR
 gmL
 vKi
@@ -69309,7 +69310,7 @@ nGw
 eMi
 smk
 cgc
-sNk
+saE
 bGd
 eWz
 bAB
@@ -71865,7 +71866,7 @@ vrb
 abH
 mRn
 abQ
-abV
+sLS
 vrb
 aac
 aab
@@ -76267,7 +76268,7 @@ bAK
 bBr
 qhc
 bzg
-bDF
+cRT
 vse
 vse
 bis
@@ -79879,7 +79880,7 @@ aWF
 aWF
 vOv
 iMh
-bsJ
+xzc
 buI
 bvN
 mil
@@ -86464,7 +86465,7 @@ rQz
 axc
 nso
 aEl
-aFe
+aKT
 aFT
 aGE
 jZK
@@ -95239,7 +95240,7 @@ aJf
 aJf
 aJf
 aRK
-cHd
+eTG
 aTQ
 rbF
 ujN
@@ -96134,7 +96135,7 @@ aaa
 aaa
 abZ
 aJi
-aJR
+djs
 ilX
 aLC
 aMo
@@ -122041,7 +122042,7 @@ nUH
 ulJ
 qcz
 euw
-lZX
+wFv
 qvu
 aeA
 aeS

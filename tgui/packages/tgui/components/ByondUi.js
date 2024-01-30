@@ -28,13 +28,14 @@ const createByondUiElement = (elementId) => {
       // this is really spammy, maybe that's a warning sign but I need to be able to read the console
       // logger.log(`rendering '${id}'`);
       byondUiStack[index] = id;
+      params['is-visible'] = 'true';
       Byond.winset(id, params);
     },
     unmount: () => {
       logger.log(`unmounting '${id}'`);
       byondUiStack[index] = null;
       Byond.winset(id, {
-        parent: '',
+        'is-visible': 'false',
       });
     },
   };
@@ -48,7 +49,7 @@ window.addEventListener('beforeunload', () => {
       logger.log(`unmounting '${id}' (beforeunload)`);
       byondUiStack[index] = null;
       Byond.winset(id, {
-        parent: '',
+        'is-visible': 'false',
       });
     }
   }

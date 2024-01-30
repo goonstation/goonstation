@@ -733,7 +733,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/storage/closet/radiation = 10,
 			/obj/item/reagent_containers/pill/antirad = 10,
 			/obj/item/clothing/mask/gas = 5,
-			/obj/item/clothing/suit/rad = 5,
+			/obj/item/clothing/suit/hazard/rad = 5,
 			/obj/item/clothing/gloves/yellow = 5,
 			/obj/item/clothing/head/rad_hood = 5,
 			/obj/item/wrench/yellow = 10,
@@ -836,7 +836,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 	Bumped(atom/movable/A)
 		if(QDELETED(A) || A.throwing || istype(A, /obj/projectile))
 			return
-		if(prob(90)) // the 10% probability not to is there mostly just to prevent very rare infinite loops
+		if(!ON_COOLDOWN(A, "white_hole_bump", 0.2 SECONDS)) //okay this will REALLY prevent infinite loops (hopefully)
 			step_away(A, src)
 
 	attackby(obj/item/I, mob/user)

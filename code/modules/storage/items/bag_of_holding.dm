@@ -141,8 +141,10 @@ proc/destroy_bag_of_holding(obj/item/artifact/boh, obj/added, mob/user = null)
 						for (var/obj/item/I as anything in items)
 							H = pick(humans)
 							if (H.back.storage.check_can_hold(I) == STORAGE_CAN_HOLD)
+								logTheThing(LOG_STATION, boh, "[I] is transferred to [key_name(H)]'s back slot by a bag of holding fault")
 								I.stored.transfer_stored_item(I, H.back, TRUE)
 							else if (H.belt.storage.check_can_hold(I) == STORAGE_CAN_HOLD)
+								logTheThing(LOG_STATION, boh, "[I] is transferred to [key_name(H)]'s belt slot by a bag of holding fault")
 								I.stored.transfer_stored_item(I, H.belt, TRUE)
 							humans -= H
 							if (!length(humans))
@@ -180,7 +182,7 @@ proc/destroy_bag_of_holding(obj/item/artifact/boh, obj/added, mob/user = null)
 
 			effect = "user stranded in pocket dimension"
 
-	logTheThing(LOG_STATION, boh, "artifact bags of holding combined at [log_loc(T)] [user ? "by [user]" : null] with effect [effect].")
+	logTheThing(LOG_STATION, boh, "artifact bags of holding combined at [log_loc(T)] by [key_name(user)] with effect [effect].")
 
 	for (var/obj/item/I as anything in (added.storage?.get_contents() + boh.storage.get_contents() - added))
 		qdel(I)

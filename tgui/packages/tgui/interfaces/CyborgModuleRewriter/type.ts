@@ -6,27 +6,27 @@
  */
 
 export interface CyborgModuleRewriterData {
-  modules: ModulesData,
+  modules: ModulesData;
 }
 
 interface AvailableModule {
-  name: string,
-  ref: string,
+  name: string;
+  item_ref: string;
 }
 
 interface SelectedModule {
-  ref: string,
-  tools: Array<ToolData>,
+  item_ref: string;
+  tools: Array<ToolData>;
 }
 
 export interface ModulesData {
-  available: Array<AvailableModule>,
-  selected: SelectedModule,
+  available: Array<AvailableModule>;
+  selected: SelectedModule;
 }
 
 export interface ToolData {
-  name: string,
-  ref: string,
+  name: string;
+  item_ref: string;
 }
 
 export enum Action {
@@ -42,20 +42,20 @@ export enum Direction {
   Down = 'down',
 }
 
-export type Act = (action: string, payload?: object) => void
+export type Act = (action: string, payload?: object) => void;
 
-export interface ModuleActionPayload {
-  moduleRef: string,
+interface ItemActionPayload {
+  itemRef: string;
 }
 
-export interface ToolActionPayload extends ModuleActionPayload {
-  toolRef: string,
-}
+export interface ModuleActionPayload extends ItemActionPayload {}
+
+export interface ToolActionPayload extends ItemActionPayload {}
 
 export interface MoveToolActionPayload extends ToolActionPayload {
-  dir: Direction,
+  dir: Direction;
 }
 
-export interface ResetModuleActionPayload extends ModuleActionPayload {
-  moduleId: string,
+export interface ResetModuleActionPayload {
+  moduleId: string;
 }

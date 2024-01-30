@@ -369,6 +369,10 @@ ABSTRACT_TYPE(/obj/item/parts)
 	proc/on_holder_examine()
 		return
 
+	///Called every life tick when attached to a mob
+	proc/on_life(datum/controller/process/mobs/parent)
+		return
+
 /obj/item/proc/streak_object(var/list/directions, var/streak_splatter) //stolen from gibs
 	var/destination
 	var/dist = rand(1,6)

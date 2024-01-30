@@ -1324,8 +1324,8 @@ obj/decoration/gibberBroken
 	icon_state = "syndiepc1"
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -1469,7 +1469,7 @@ obj/decoration/gibberBroken
 /obj/decoration/bullethole
 	anchored = ANCHORED_ALWAYS
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "bhole"
+	icon_state = "bullethole"
 	mouse_opacity = 0
 
 	examine()

@@ -207,6 +207,8 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 	var/primary = TRUE
 	var/image/gemstone = null
 	var/obj/item/clothing/gloves/psylink_bracelet/twin
+	which_hands = null
+
 	setupProperties()
 		..()
 		setProperty("conductivity", 1)

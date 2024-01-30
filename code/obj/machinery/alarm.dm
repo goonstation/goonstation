@@ -3,7 +3,7 @@
 //
 
 /obj/machinery/alarm
-	name = "air Monitor"
+	name = "air monitor"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm_unpowered"
 	power_usage = 5

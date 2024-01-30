@@ -320,7 +320,7 @@
 	station_bounties[/obj/item/clothing/suit/hazard/bio_suit] = 1
 	station_bounties[/obj/item/clothing/suit/hazard/paramedic] = 1
 	station_bounties[/obj/item/clothing/suit/judgerobe] = 1
-	station_bounties[/obj/item/clothing/suit/fire] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/fire] = 1
 	station_bounties[/obj/item/clothing/suit/armor/vest] = 2
 
 	station_bounties[/obj/item/robodefibrillator] = 1

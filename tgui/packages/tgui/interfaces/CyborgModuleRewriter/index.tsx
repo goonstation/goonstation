@@ -10,39 +10,31 @@ import { Window } from '../../layouts';
 import { ModuleView } from './ModuleView';
 import { ejectModule, moveTool, removeTool, resetModule, selectModule } from './action';
 import * as styles from './style';
-import { CyborgModuleRewriterData, Direction } from './type';
+import { Direction } from './type';
+import type { CyborgModuleRewriterData } from './type';
 
-export const CyborgModuleRewriter = (_props, context) => {
+export const CyborgModuleRewriter = (_props: unknown, context) => {
   const { act, data } = useBackend<CyborgModuleRewriterData>(context);
   const { modules } = data;
 
-  const handleEjectModule = (moduleRef: string) => ejectModule(act, { moduleRef });
-  const handleMoveToolDown = (moduleRef: string, toolRef: string) => moveTool(act, {
-    dir: Direction.Down,
-    moduleRef,
-    toolRef,
-  });
-  const handleMoveToolUp = (moduleRef: string, toolRef: string) => moveTool(act, {
-    dir: Direction.Up,
-    moduleRef,
-    toolRef,
-  });
-  const handleRemoveTool = (moduleRef: string, toolRef: string) => removeTool(act, {
-    moduleRef,
-    toolRef,
-  });
-  const handleResetModule = (moduleRef: string, moduleId: string) => resetModule(act, {
-    moduleId,
-    moduleRef,
-  });
-  const handleSelectModule = (moduleRef: string) => selectModule(act, { moduleRef });
+  const handleEjectModule = (itemRef: string) => ejectModule(act, { itemRef });
+  const handleMoveToolDown = (itemRef: string) =>
+    moveTool(act, {
+      dir: Direction.Down,
+      itemRef,
+    });
+  const handleMoveToolUp = (itemRef: string) =>
+    moveTool(act, {
+      dir: Direction.Up,
+      itemRef,
+    });
+  const handleRemoveTool = (itemRef: string) => removeTool(act, { itemRef });
+  const handleResetModule = (moduleId: string) => resetModule(act, { moduleId });
+  const handleSelectModule = (itemRef: string) => selectModule(act, { itemRef });
 
   return (
-    <Window
-      width={670}
-      height={640}
-    >
-      <Window.Content className={styles.Block} scrollable>
+    <Window width={670} height={640}>
+      <Window.Content className={styles.Block}>
         <ModuleView
           modules={modules}
           onEjectModule={handleEjectModule}

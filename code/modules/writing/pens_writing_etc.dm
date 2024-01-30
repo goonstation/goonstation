@@ -927,7 +927,7 @@
 			return
 		tooltip_rebuild = 1
 		var/holder = src.loc
-		var/str = copytext(html_encode(tgui_input_text(user, "Label text?", "Set label", allowEmpty = TRUE)), 1, 32)
+		var/str = copytext(html_encode(tgui_input_text(user, "Label text?", "Set label", allowEmpty = TRUE, max_length = 30)), 1, 32)
 		if(str)
 			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
 		if (src.loc != holder)

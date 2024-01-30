@@ -35,7 +35,7 @@ TYPEINFO(/obj/flock_structure)
 	var/atom/movable/name_tag/flock_examine_tag/info_tag
 
 	var/fireVuln = 0.2
-	var/datum/flock/flock = null
+	var/tmp/datum/flock/flock = null
 	///base compute provided. negative amount means it uses compute
 	var/compute = 0
 	/// compute required to stay online
@@ -135,6 +135,13 @@ TYPEINFO(/obj/flock_structure)
 
 /obj/flock_structure/proc/process(var/mult)
 	// override
+
+/// overridable checks for if we should skip processing this cycle
+/obj/flock_structure/proc/skip_process()
+	return FALSE
+
+/obj/flock_structure/proc/isEnemy(atom/A)
+	return src.flock.isEnemy(A)
 
 /// multipler for flock loop, used to compensate for lag
 /obj/flock_structure/proc/get_multiplier()

@@ -76,7 +76,7 @@
 /area/shuttle/arrival/station)
 "am" = (
 /obj/rack,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)

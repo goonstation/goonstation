@@ -118,7 +118,7 @@ It's also faster (~6%), for internal bytecode reasons (which don't really matter
 
 ## Abstract types and typesof
 
-Some types exist just as a parent and should never be created in-game (e.g. `/obj/item`). Mark those using the `ABSTRACT_TYPE(type)` macro. You can check if a type is abstract using the `IS_ABSTRACT(type)` macro.
+Some types exist just as a parent and should never be created in-game (e.g. `/obj/item`). Mark those using the `ABSTRACT_TYPE(/type)` macro. You can check if a type is abstract using the `IS_ABSTRACT(/type)` macro.
 
 To get a list of all concrete (non-abstract) subtypes of a type you should use `concrete_typesof(type)`, the result is cached so no need to store it yourself. (As a consequence please `.Copy` the list if you want to make changes to it locally.) Proper usage of `ABSTRACT_TYPE` + `concrete_typesof` is preferred to using `typesof` and `childrentypesof` *usually* though exceptions apply.
 

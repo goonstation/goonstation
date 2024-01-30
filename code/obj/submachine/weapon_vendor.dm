@@ -167,8 +167,8 @@
 		return
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		// List of avaliable objects for purchase
 		materiel_stock += new/datum/materiel/sidearm/smartgun
 		materiel_stock += new/datum/materiel/sidearm/pistol

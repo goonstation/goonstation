@@ -69,7 +69,7 @@ Notes:
 	boutput(who, "<span style='font-size: 0.85em'>\[[time2text(world.realtime, "hh:mm:ss")]\] <strong>(TOOLTIP DEBUG | DM)</strong> [msg]</span>")
 #endif
 
-var/global/list/atomTooltips = new()
+var/global/list/atomTooltips = list()
 
 /datum/tooltipHolder
 	//Configurable vars
