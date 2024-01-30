@@ -1309,7 +1309,10 @@ datum
 							var/mob/living/silicon/robot/R = M
 							R.changeStatus("freshly_oiled", (volume * 5)) // You need at least 30u to get max duration
 							boutput(R, SPAN_NOTICE("Your joints and servos begin to run more smoothly."))
-						else boutput(M, SPAN_ALERT("You feel greasy and gross."))
+						else if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (!H.mutantrace.aquaphobic)
+								boutput(M, "<span class='alert'>You feel greasy and gross.</span>")
 
 				return
 
