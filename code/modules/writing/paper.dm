@@ -570,7 +570,7 @@
 	name = "paper bin"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_bin1"
-	amount = 10
+	var/amount_left = 10
 	item_state = "sheet-metal"
 	throwforce = 1
 	w_class = W_CLASS_NORMAL
@@ -590,7 +590,7 @@
 	desc = "A tray full of forms for classifying alien artifacts."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "artifact_form_tray"
-	amount = INFINITY
+	amount_left = INFINITY
 	bin_type = /obj/item/sticker/postit/artifact_paper
 
 	update()
@@ -598,7 +598,7 @@
 
 /obj/item/paper_bin/proc/update()
 	tooltip_rebuild = 1
-	src.icon_state = "paper_bin[(src.amount || locate(bin_type, src)) ? "1" : null]"
+	src.icon_state = "paper_bin[(src.amount_left || locate(bin_type, src)) ? "1" : null]"
 	return
 
 /obj/item/paper_bin/mouse_drop(mob/user as mob)
@@ -612,8 +612,8 @@
 	if (paper)
 		user.put_in_hand_or_drop(paper)
 	else
-		if (src.amount >= 1 && user) //Wire: Fix for Cannot read null.loc (&& user)
-			src.amount--
+		if (src.amount_left >= 1 && user) //Wire: Fix for Cannot read null.loc (&& user)
+			src.amount_left--
 			var/obj/item/P = new bin_type(src)
 			user.put_in_hand_or_drop(P)
 			if (rand(1,100) == 13 && istype(P, /obj/item/paper))
@@ -635,7 +635,7 @@
 		return ..()
 
 /obj/item/paper_bin/get_desc()
-	var/n = src.amount
+	var/n = src.amount_left
 	if (n == INFINITY)
 		return "There's an infinite amount of paper in \the [src], the wonders of future technology."
 	for(var/obj/item/paper/P in src)
@@ -647,10 +647,10 @@
 	var/next_generate = 0
 
 	attack_self(mob/user as mob)
-		if (src.amount < 1 && isnull(locate(bin_type) in src))
+		if (src.amount_left < 1 && isnull(locate(bin_type) in src))
 			if (src.next_generate < TIME)
 				boutput(user, "The [src] generates another sheet of paper using the power of [pick("technology","science","computers","nanomachines",5;"magic",5;"extremely tiny clowns")].")
-				src.amount++
+				src.amount_left++
 				src.update()
 				src.next_generate = TIME + 5 SECONDS
 				return
