@@ -1018,7 +1018,7 @@ proc/ui_describe_reagents(atom/A)
 				reagents.add_reagent("synthflesh", 40 * organ_efficiency)
 				become_unangry()
 
-		if(W.material == getMaterial("viscerite"))
+		if(W.material?.isSameMaterial(getMaterial("viscerite")))
 			var/obj/item/visc = W
 			if (reagents.total_volume >= reagents.maximum_volume)
 				boutput(user, SPAN_ALERT("The [src] is too full!"))
