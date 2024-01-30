@@ -57,7 +57,7 @@
 
 /obj/item/reagent_containers/food/drinks/bottle/wine/white
 	name = "white wine"
-	desc = "Wine made from those nasty green grapes."
+	desc = "Wine made from those nasty green grapes. Wait, why's the bottle colored red?"
 	initial_reagents = list("white_wine"=60)
 
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine
