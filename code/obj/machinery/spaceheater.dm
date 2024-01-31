@@ -11,20 +11,19 @@ TYPEINFO(/obj/machinery/space_heater)
 	var/emagged = FALSE
 	var/obj/item/cell/cell
 	var/on = FALSE
-	var/heating = FALSE
-	var/open = FALSE
-	var/set_temperature = 50		// in celcius, add T0C for kelvin
-	var/heating_power = 40000
-	var/cooling_power = -30000
+	var/heating = FALSE // If its cooling down (false) or heating up (true) the current atmosphere
+	var/set_temperature = 293 // Room temperature
+	var/heating_power = 100000
+	var/cooling_power = -100000
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = FPRINT | TGUI_INTERACTIVE
 
 
 	New()
 		..()
-		cell = new(src)
-		cell.charge = 1000
-		cell.maxcharge = 1000
+		src.cell = new(src)
+		src.cell.charge = 1000
+		src.cell.maxcharge = 1000
 		UpdateIcon()
 		return
 
@@ -37,175 +36,147 @@ TYPEINFO(/obj/machinery/space_heater)
 	ui_data(mob/user)
 		. = list()
 		.["on"] = src.on
-		.["open"] = src.open
+		.["max"] = src.emagged ? 1000 : 328
+		.["min"] = src.emagged ? 0 : 258
 		.["heating"] = src.heating
+		.["emagged"] = src.emagged
+		.["set_temperature"] = src.set_temperature
+		.["cell"] = src.cell
+		if (src.cell != null) // Cant get the cell variables if it doesnt exist
+			.["cell_name"] = src.cell.name
+			.["cell_charge"] = src.cell.percent()
 
 	ui_static_data(mob/user)
 		. = list()
 		.["name"] = src.name
 
 	update_icon()
-		if (on)
-			if(heating)
+		if (src.on)
+			if(src.heating)
 				icon_state = "sheaterH"
 			else
 				icon_state = "sheaterC"
 		else
 			icon_state = "sheater0"
-		if(open)
-			icon_state = "sheater-open"
 		return
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
-			if (open)
-				if (user)
-					user.show_text("You short out the temperature limiter circuit in the [src].", "blue")
-				src.emagged = TRUE
-				src.desc = "Made by Space Amish using traditional space techniques, this heater is guaranteed to set the station on fire."
-				return 1
-			else
-				if (user)
-					user.show_text("The internal circuitry must be exposed!", "red")
-				return 0
+			if (user)
+				user.show_text("You short out the temperature limiter circuit in the [src].", "blue")
+			src.emagged = TRUE
+			src.desc = "Made by Space Amish using traditional space techniques, this heater is guaranteed to set the station on fire."
+			return TRUE
 		else
 			if (user)
 				user.show_text("The temperature limiter is already burned out.", "red")
-				return 0
+				return FALSE
 
 	demag(mob/user)
 		if (!src.emagged)
-			return 0
+			return FALSE
 		if (user)
 			user.show_text("You repair the temperature regulator in the [src].", "blue")
 		src.desc = "Made by Space Amish using traditional space techniques, this heater is guaranteed not to set the station on fire."
 		src.emagged = FALSE
-		return 1
+		return TRUE
 
 	examine()
 		. = ..()
-		. += "The HVAC is [on ? "on" : "off"], [heating ? "heating" : "cooling"] and the hatch is [open ? "open" : "closed"]."
-		if(open)
-			. += "The power cell is [cell ? "installed" : "missing"]."
-		else
-			. += "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
+		. += "The HVAC is [src.on ? "on" : "off"], [src.heating ? "heating" : "cooling"]"
+		. += "The power cell is [src.cell ? "installed" : "missing"]."
+		if (src.cell != null)
+			. += "The charge meter reads [src.cell ? round(src.cell.percent(),1) : 0]%"
 
 	attackby(obj/item/I, mob/user)
-		if(istype(I, /obj/item/cell))
-			if(open)
-				if(cell)
-					boutput(user, "There is already a power cell inside.")
-					return
-				else
-					// insert cell
-					var/obj/item/cell/C = user.equipped()
-					if(istype(C))
-						user.drop_item()
-						cell = C
-						C.set_loc(src)
-						C.add_fingerprint(user)
-
-						user.visible_message(SPAN_NOTICE("[user] inserts a power cell into [src]."), SPAN_NOTICE("You insert the power cell into [src]."))
-			else
-				boutput(user, "The hatch must be open to insert a power cell.")
-				return
-		else if (isscrewingtool(I) && on)
-			boutput(user, "[src] must be turned off first.")
-		else if (isscrewingtool(I))
-			open = !open
-			user.visible_message(SPAN_NOTICE("[user] [open ? "opens" : "closes"] the hatch on the [src]."), SPAN_NOTICE("You [open ? "open" : "close"] the hatch on the [src]."))
-			UpdateIcon()
-			if(!open && user.using_dialog_of(src))
-				user.Browse(null, "window=spaceheater")
-				src.remove_dialog(user)
-		else if (iswrenchingtool(I))
+		if (iswrenchingtool(I))
 			if (user)
-				user.show_text("You [anchored ? "release" : "anchor"] the [src]", "blue")
+				user.show_text("You [src.anchored ? "release" : "anchor"] the [src]", "blue")
 			src.anchored = !src.anchored
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 40, 0, 0)
 		else
 			..()
 		return
 
-	attack_hand(mob/user)
-		src.add_fingerprint(user)
-		if (open)
-			ui_interact(user)
-		else if (on && src.emagged)
-			user.show_text("The button seems to be stuck!", "red")
-		else
-			on = !on
-			user.visible_message(SPAN_NOTICE("[user] switches [on ? "on" : "off"] the [src]."),SPAN_NOTICE("You switch [on ? "on" : "off"] the [src]."))
-			UpdateIcon()
-
-		if (on)
-			playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
-		else
-			playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
-		return
-
-	Topic(href, href_list)
-		if (usr.stat)
+	ui_act(action, list/params)
+		. = ..()
+		if (.)
 			return
-		if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
-			src.add_dialog(usr)
+		switch(action)
+			if ("switch_off")
+				if (src.cell == null)
+					return
+				else if (src.on && src.emagged)
+					usr.show_text("The button seems to be stuck!", "red")
+				else
+					src.on = FALSE
+				playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
+				UpdateIcon()
+				. = TRUE
 
-			switch(href_list["op"])
-				if("set_temp")
-					var/value = input(usr, "Target temperature (20C-[src.emagged ? 400 : 90]C):", "Enter Target Temperature", src.set_temperature)
-					if (!isnum(value)) return
-					var/max = src.emagged ? 400 : 90
-					var/min = src.emagged ? -120 : 90
+			if("switch_on")
+				if (src.cell == null)
+					return
+				else if (!src.on)
+					src.on = TRUE
+					playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
+				UpdateIcon()
+				. = TRUE
 
-					set_temperature = clamp(value, -min, max)
+			if("set_temp")
+				var/adjust_temperature = params["temperature_adjust"]
+				var/inputted_temperature = params["inputted_temperature"] // For dragging
+				var/max = src.emagged ? 1000 : 328
+				var/min = src.emagged ? 0 : 258
+				if (adjust_temperature)
+					src.set_temperature = clamp((src.set_temperature + adjust_temperature), min , max)
+				else if (text2num_safe(inputted_temperature) != null)
+					src.set_temperature = clamp(text2num_safe(inputted_temperature), min , max)
+				. = TRUE
 
-				if("temp")
-					var/value = text2num_safe(href_list["val"])
-					var/max = src.emagged ? 400 : 90
-					var/min = src.emagged ? -120 : 90
+			if("cellremove")
+				var/obj/item/I = src.cell
+				if (!I)
+					boutput(usr, SPAN_ALERT("No cell found to eject."))
+					return
+				else if (src.set_temperature > 400 && src.on)
+					usr.TakeDamage("All", 0, 15, 0, DAMAGE_BURN)
+					usr.show_text("The [src.cell.name] scalds your hand!", "red")
+					usr.emote("scream")
+					playsound(src.loc, 'sound/machines/engine_grump4.ogg', 50, 1)
+				else if (src.set_temperature < 100 && src.on)
+					usr.show_text("The [src.cell.name] seems frozen in place!", "red")
+					return
+				I.set_loc(src.loc)
+				src.on = FALSE
+				usr.put_in_hand_or_eject(I)
+				usr.visible_message(SPAN_NOTICE("[usr] removes the power cell from \the [src]."), SPAN_NOTICE("You remove the power cell from \the [src]."))
+				UpdateIcon()
+				. = TRUE
 
-					// limit to 20-90 degC
-					set_temperature = clamp(set_temperature + value, -min, max)
-
-				if("cellremove")
-					if(open && cell && !usr.equipped())
-						cell.UpdateIcon()
-						usr.put_in_hand_or_drop(cell)
-						cell = null
-
-						usr.visible_message(SPAN_NOTICE("[usr] removes the power cell from \the [src]."), SPAN_NOTICE("You remove the power cell from \the [src]."))
-
-
-				if("cellinstall")
-					if(open && !cell)
-						var/obj/item/cell/C = usr.equipped()
-						if(istype(C))
-							usr.drop_item()
-							cell = C
-							C.set_loc(src)
-							C.add_fingerprint(usr)
-
-							usr.visible_message(SPAN_NOTICE("[usr] inserts a power cell into \the [src]."), SPAN_NOTICE("You insert the power cell into \the [src]."))
-
-			updateDialog()
-		else
-			usr.Browse(null, "window=spaceheater")
-			src.remove_dialog(usr)
-		return
-
-
+			if("cellinstall")
+				var/obj/item/cell = usr.equipped()
+				if(istype(cell, /obj/item/cell))
+					if(src.cell)
+						boutput(usr, SPAN_ALERT("A cell is already loaded into the machine."))
+						return
+					src.cell =  cell
+					usr.drop_item()
+					cell.set_loc(src)
+					usr.visible_message(SPAN_NOTICE("[usr] inserts a power cell into \the [src]."), SPAN_NOTICE("You insert the power cell into \the [src]."))
+				. = TRUE
 
 	process()
-		if(on)
-			if(cell?.charge > 0)
+		if(src.on)
+			if(src.cell?.charge > 0)
 
 				var/turf/simulated/L = loc
 				if(istype(L))
 					var/datum/gas_mixture/env = L.return_air()
-					if(env.temperature < (set_temperature+T0C))
-						heating = 1
+					if(env.temperature < (set_temperature))
+						heating = TRUE
 					else
-						heating = 0
+						heating = FALSE
 
 					var/transfer_moles = src.emagged ? 0.5 * TOTAL_MOLES(env) : 0.25 * TOTAL_MOLES(env)
 
@@ -218,14 +189,14 @@ TYPEINFO(/obj/machinery/space_heater)
 						var/heat_capacity = HEAT_CAPACITY(removed)
 						//boutput(world, "heating ([heat_capacity])")
 						var/current_power = 0
-						if(heating)
-							current_power = src.emagged ? src.heating_power * 3: src.heating_power
+						if(src.heating)
+							current_power = src.emagged ? src.heating_power * 10: src.heating_power
 							removed.temperature = (removed.temperature*heat_capacity + current_power)/heat_capacity
 						else
-							current_power = src.emagged ? src.cooling_power * 3: src.cooling_power
+							current_power = src.emagged ? src.cooling_power * 10: src.cooling_power
 							removed.temperature = (removed.temperature*heat_capacity + current_power)/heat_capacity
 
-						cell.use(abs(current_power)/20000)
+						src.cell.use(abs(current_power)/20000)
 
 						//boutput(world, "now at [removed.temperature]")
 
@@ -235,7 +206,7 @@ TYPEINFO(/obj/machinery/space_heater)
 
 
 			else
-				on = 0
+				src.on = 0
 				UpdateIcon()
 
 
