@@ -1,4 +1,9 @@
+
 (t)wed jan 31 24
+(u)MeggalBozale
+(p)17821
+(e)🪲🗺📦🍝|C-Bug, A-Mapping, A-Game-Objects, A-Catering
+(+)An absurd amount of pickle jars no longer spawn on Cog1,
 (u)LeahTheTech
 (+)Breaching charges now break firedoors.
 (+)Water coolers can now be broken by shooting them with bullets.
