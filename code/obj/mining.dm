@@ -1795,12 +1795,11 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		..()
 
 /obj/item/mining_tool/powered/drill
-	//add sprites and change existing sprite names to accomodate being able to turn this thing off now
 	name = "laser drill"
-	desc = "An energized mining tool that's a bit more energy efficient than a pickaxe."
+	desc = "An energized mining tool that's more energy efficient than a pickaxe."
 	icon_state = "lasdrill"
-	item_state = "pdrill0"
-	powered_item_state = "pdrill1"
+	item_state = "ldrill0"
+	powered_item_state = "ldrill1"
 	powered_mining_sound = 'sound/items/Welder.ogg'
 	c_flags = ONBELT
 	force = 7
@@ -1812,7 +1811,6 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	default_cell = /obj/item/ammo/power_cell
 
 	New()
-		//TODO sprite pd-glow, and make the base lasdrill not glow
 		src.powered_overlay = image('icons/obj/items/mining.dmi', "ld-glow")
 		..()
 
