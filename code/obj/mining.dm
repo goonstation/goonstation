@@ -1623,13 +1623,13 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
-	get_dig_strength()
+	proc/get_dig_strength()
 		return src.dig_strength
 
-	get_mining_sound()
+	proc/get_mining_sound()
 		return src.mining_sound
 
-	is_weakener()
+	proc/is_weakener()
 		return src.weakener
 
 /obj/item/mining_tool/concussive_gloves_internal
@@ -1648,11 +1648,11 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	force = 7
 	var/default_cell = /obj/item/ammo/power_cell
 	var/is_on = FALSE
-	var/powered_force = force + 6
-	VAR_PROTECTED/powered_dig_strength = dig_strength + 1
+	var/powered_force = 13
+	VAR_PROTECTED/powered_dig_strength = 2
 	VAR_PROTECTED/powered_weakener = FALSE //does this become able to weaken asteroids when it's on?
 	VAR_PROTECTED/power_usage = 10 //power units expended per hit while on
-	VAR_PROTECTED/robot_power_usage = power_usage * 5 //power units expended when drawing from a robot's internal power cell, which tends to be 150x bigger
+	VAR_PROTECTED/robot_power_usage = 50 //power units expended when drawing from a robot's internal power cell, which tends to be 150x bigger
 	var/image/powered_overlay = null //the glowy bits for when its on
 	var/datum/item_special/unpowered_item_special = /datum/item_special/simple
 	var/datum/item_special/powered_item_special = /datum/item_special/simple
@@ -1665,7 +1665,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		src.setItemSpecial(unpowered_item_special)
 		src.power_up()
 
-	get_power_usage(mob/user = null)
+	proc/get_power_usage(mob/user = null)
 		if(user && isrobot(user))
 			return src.robot_power_usage
 		return src.power_usage
@@ -1701,7 +1701,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		if (src.is_on)
 			src.process_charges(src.get_power_usage())
 
-	process_charges(var/powerCost, var/mob/user as mob)
+	proc/process_charges(var/powerCost, var/mob/user = null)
 		//Returns FALSE if we failed to use power, otherwise returns TRUE
 		if (!isnum(powerCost) || powerCost < 0)
 			//We need a positive number
@@ -1728,7 +1728,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			boutput(user, SPAN_ALERT("[src] runs out of charge and shuts down!"))
 		return TRUE
 
-	mode_toggle(var/mob/user as mob)
+	proc/mode_toggle(var/mob/user as mob)
 		if (src.process_charges(0))
 			if(GET_COOLDOWN(src, "depowered"))
 				boutput(user, SPAN_ALERT("[src] was recently power cycled and is still cooling down!"))
@@ -1742,7 +1742,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		else
 			boutput(user, SPAN_ALERT("No charge left in [src]."))
 
-	power_up(var/mob/user = null)
+	proc/power_up(var/mob/user = null)
 		src.tooltip_rebuild = TRUE
 		src.is_on = TRUE
 		src.force = powered_force
@@ -1751,13 +1751,12 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			src.overlays.Add(powered_overlay)
 			signal_event("icon_updated")
 		if(user != null)
-			var/mob/user = src.loc
 			user.update_inhands()
 		playsound(user.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 		src.setItemSpecial(src.powered_item_special)
 		return
 
-	power_down(var/mob/user = null)
+	proc/power_down(var/mob/user = null)
 		ON_COOLDOWN(src, "depowered", 1 SECOND)
 		src.tooltip_rebuild = TRUE
 		src.is_on = FALSE
@@ -1767,7 +1766,6 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			src.overlays.Remove(powered_overlay)
 			signal_event("icon_updated")
 		if(user != null)
-			var/mob/user = src.loc
 			user.update_inhands()
 		playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 		src.setItemSpecial(src.unpowered_item_special)
@@ -1786,7 +1784,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	dig_strength = 2
 	powered_dig_strength = 3
 	power_usage = 10
-	robot_power_usage = power_usage * 5
+	robot_power_usage = 50
 	default_cell = /obj/item/ammo/power_cell
 	powered_overlay = null
 
@@ -1804,10 +1802,10 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	c_flags = ONBELT
 	force = 7
 	powered_force = 14
-	dig_strength = 0
+	dig_strength = 2
 	powered_dig_strength = 3
 	power_usage = 6
-	robot_power_usage = power_usage * 5
+	robot_power_usage = 30
 	default_cell = /obj/item/ammo/power_cell
 
 	New()
@@ -1828,7 +1826,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	powered_dig_strength = 3
 	powered_weakener = TRUE
 	power_usage = 15
-	robot_power_usage = power_usage * 5
+	robot_power_usage = 75
 	default_cell = /obj/item/ammo/power_cell
 	powered_item_special = /datum/item_special/slam
 
@@ -1849,7 +1847,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	dig_strength = 0
 	powered_dig_strength = 2
 	power_usage = 10
-	robot_power_usage = power_usage * 5
+	robot_power_usage = 50
 	default_cell = /obj/item/ammo/power_cell
 	powered_item_special = /datum/item_special/swipe
 
@@ -1866,7 +1864,7 @@ TYPEINFO(/obj/item/mining_tool/hedron_beam)
 	icon_state = "hedron-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
-	powered_item_state = item_state
+	powered_item_state = "gun"
 	powered_mining_sound = 'sound/items/Welder.ogg'
 	c_flags = ONBELT
 	tool_flags = TOOL_WELDING
@@ -1874,7 +1872,7 @@ TYPEINFO(/obj/item/mining_tool/hedron_beam)
 	dig_strength = 0
 	powered_dig_strength = 3
 	power_usage = 10
-	robot_power_usage = power_usage * 5
+	robot_power_usage = 50
 	default_cell = /obj/item/ammo/power_cell
 
 	examine(mob/user)

@@ -646,7 +646,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/item/laser_drill
 	name = "handheld laser drill"
-	typepath = /obj/item/mining_tool/drill
+	typepath = /obj/item/mining_tool/powered/drill
 
 /datum/rc_entry/stack/claretine
 	name = "claretine"

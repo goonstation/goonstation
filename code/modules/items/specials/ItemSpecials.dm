@@ -738,7 +738,7 @@
 
 	afterUse(var/mob/person)
 		..()
-		if (istype(master,/obj/item/mining_tool/powered))
+		if (istype(master, /obj/item/mining_tool/powered))
 			var/obj/item/mining_tool/powered/M = master
 			if (M.is_on)
 				M.process_charges(30)
