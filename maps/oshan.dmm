@@ -23322,7 +23322,7 @@
 /obj/storage/crate/bloody{
 	welded = 1
 	},
-/obj/item/mining_tool/powerhammer,
+/obj/item/mining_tool/powered/hammer,
 /obj/item/shipcomponent/mainweapon/mining,
 /turf/space/fluid,
 /area/space)
@@ -39310,7 +39310,7 @@
 /area/evilreaver/atmospherics)
 "mGS" = (
 /obj/decal/fakeobjects/skeleton,
-/obj/item/mining_tool/powerhammer,
+/obj/item/mining_tool/powered/hammer,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
@@ -44172,7 +44172,7 @@
 /turf/simulated/floor/damaged2,
 /area/derelict_diner)
 "unC" = (
-/obj/item/mining_tool/drill,
+/obj/item/mining_tool/powered/drill,
 /obj/item/clothing/suit/space/engineer,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)

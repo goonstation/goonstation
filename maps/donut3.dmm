@@ -25823,7 +25823,7 @@
 	dir = 1;
 	pixel_y = 32
 	},
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /obj/table/auto,
 /turf/simulated/floor/grey/side{
 	dir = 4

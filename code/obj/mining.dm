@@ -1836,7 +1836,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 
 /obj/item/mining_tool/powered/shovel
 	name = "power shovel"
-	desc = "The final word in digging."
+	desc = "An energized mining tool that can be used to dig holes in the sand."
 	icon_state = "powershovel"
 	item_state = "pshovel0"
 	powered_item_state = "pshovel1"
@@ -1905,7 +1905,7 @@ TYPEINFO(/obj/item/mining_tool/hedron_beam)
 		return FALSE
 
 /obj/item/clothing/gloves/concussive
-	name = "concussion gauntlets"
+	name = "concussive gauntlets"
 	desc = "These gloves enable miners to punch through solid rock with their hands instead of using tools."
 	icon_state = "cgaunts"
 	item_state = "bgloves"
