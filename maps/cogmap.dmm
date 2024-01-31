@@ -47201,9 +47201,6 @@
 	pixel_x = -7;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/glass/jar,
-/obj/item/reagent_containers/glass/jar,
-/obj/item/reagent_containers/glass/jar,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "jKQ" = (
