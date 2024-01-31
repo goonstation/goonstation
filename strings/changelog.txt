@@ -1,4 +1,7 @@
-
+(t)wed jan 31 24
+(u)LeahTheTech
+(+)Breaching charges now break firedoors.
+(+)Water coolers can now be broken by shooting them with bullets.
 (t)tue jan 30 24
 (u)MarkNstein
 (p)16899
