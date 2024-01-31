@@ -1,5 +1,9 @@
 
 (t)wed jan 31 24
+(u)NibChocolateeny
+(p)17817
+(e)🆕🌱|C-Feature, A-Hydroponics
+(*)Glowing Slurry has been added as a seed infusion. Greatly randomizes stats, has a high chance of mutating a plant, and a moderate chance of adding the Unstable gene.
 (u)MeggalBozale
 (p)17809
 (e)💅🔄💨🔬|C-QoL, C-Rework, A-Atmospherics, A-Science
