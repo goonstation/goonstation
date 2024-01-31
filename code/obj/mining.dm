@@ -1813,7 +1813,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 
 	New()
 		//TODO sprite pd-glow, and make the base lasdrill not glow
-		src.powered_overlay = image('icons/obj/items/mining.dmi', "pd-glow")
+		src.powered_overlay = image('icons/obj/items/mining.dmi', "ld-glow")
 		..()
 
 /obj/item/mining_tool/powered/hammer
