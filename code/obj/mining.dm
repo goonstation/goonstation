@@ -1258,15 +1258,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		var/datum/ore/event/E = src.event
 
-		if (tool.status)
-			playsound(user.loc, tool.hitsound_charged, 50, 1)
-		else
-			playsound(user.loc, tool.hitsound_uncharged, 50, 1)
-
-		if (tool.weakener)
+		playsound(user.loc, tool.get_mining_sound(), 50, 1)
+		if (tool.is_weakener())
 			src.weaken_asteroid()
 
-		var/strength = tool.dig_strength
+		var/strength = tool.get_dig_strength()
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
 			if (C.bioHolder && C.bioHolder.HasOneOfTheseEffects("strong","hulk"))
@@ -1619,18 +1615,28 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	w_class = W_CLASS_NORMAL
 	c_flags = ONBELT
 	force = 7
-	var/dig_strength = 1
-	var/sound/mining_sound = 'sound/impact_sounds/Stone_Cut_1.ogg'
+	VAR_PROTECTED/dig_strength = 1
+	VAR_PROTECTED/weakener = FALSE //does this thing weaken asteroids when you hit them?
+	VAR_PROTECTED/sound/mining_sound = 'sound/impact_sounds/Stone_Cut_1.ogg'
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
 	get_dig_strength()
-		return dig_strength
+		return src.dig_strength
 
 	get_mining_sound()
-		return mining_sound
+		return src.mining_sound
+
+	is_weakener()
+		return src.weakener
+
+/obj/item/mining_tool/concussive_gloves_internal
+	name = "concussive gloves internal mining tool"
+	desc = "you shouldn't see this"
+	dig_strength = 3
+	mining_sound = 'sound/impact_sounds/Stone_Cut_1.ogg'
 
 /obj/item/mining_tool/powered
 	name = "power pick"
@@ -1641,36 +1647,42 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	var/default_cell = /obj/item/ammo/power_cell
 	var/is_on = FALSE
 	var/powered_force = force + 6
-	var/powered_dig_strength = dig_strength + 1
-	var/power_usage = 10 //power units expended per hit while on
-	var/robot_power_multiplier = 5 //how much we increase power usage by when drawing from a robot's internal power cell, which tends to be 150x bigger
+	VAR_PROTECTED/powered_dig_strength = dig_strength + 1
+	VAR_PROTECTED/powered_weakener = FALSE //does this become able to weaken asteroids when it's on?
+	VAR_PROTECTED/power_usage = 10 //power units expended per hit while on
+	VAR_PROTECTED/robot_power_usage = power_usage * 5 //power units expended when drawing from a robot's internal power cell, which tends to be 150x bigger
 	var/image/powered_overlay = null //the glowy bits for when its on
 	var/powered_item_state = "ppick1"
-	var/sound/powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+	VAR_PROTECTED/sound/powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	var/datum/item_special/unpowered_item_special = /datum/item_special/simple
 	var/datum/item_special/powered_item_special = /datum/item_special/simple
 
 	New()
 		..()
-		if(default_cell)
+		if(src.default_cell)
 			AddComponent(/datum/component/cell_holder, new default_cell)
 			RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(power_down))
 		src.setItemSpecial(unpowered_item_special)
 		src.power_up()
 
 	get_power_usage(mob/user = null)
-		if(isrobot(user))
-			return robot_power_usage
-		return power_usage
+		if(user && isrobot(user))
+			return src.robot_power_usage
+		return src.power_usage
 
 	get_dig_strength()
-		if(is_on)
-			return powered_dig_strength
+		if(src.is_on)
+			return src.powered_dig_strength
+		return ..()
+
+	is_weakener()
+		if(src.is_on)
+			return src.powered_weakener
 		return ..()
 
 	get_mining_sound()
-		if(is_on)
-			return powered_mining_sound
+		if(src.is_on)
+			return src.powered_mining_sound
 		return ..()
 
 	// Seems like a basic bit of user feedback to me (Convair880).
@@ -1742,7 +1754,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			var/mob/user = src.loc
 			user.update_inhands()
 		playsound(user.loc, 'sound/items/miningtool_on.ogg', 30, 1)
-		src.setItemSpecial(powered_item_special)
+		src.setItemSpecial(src.powered_item_special)
 		return
 
 	power_down(var/mob/user = null)
@@ -1758,7 +1770,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			var/mob/user = src.loc
 			user.update_inhands()
 		playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
-		src.setItemSpecial(unpowered_item_special)
+		src.setItemSpecial(src.unpowered_item_special)
 		return
 
 /obj/item/mining_tool/powered/pickaxe
@@ -1773,7 +1785,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	dig_strength = 2
 	powered_dig_strength = 3
 	power_usage = 10
-	robot_power_multiplier = 5
+	robot_power_usage = power_usage * 5
 	default_cell = /obj/item/ammo/power_cell
 	powered_overlay = null
 	powered_item_state = "ppick1"
@@ -1797,7 +1809,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	dig_strength = 0
 	powered_dig_strength = 3
 	power_usage = 6
-	robot_power_multiplier = 5
+	robot_power_usage = power_usage * 5
 	default_cell = /obj/item/ammo/power_cell
 	powered_item_state = "pdrill1"
 	powered_mining_sound = 'sound/items/Welder.ogg'
@@ -1818,9 +1830,10 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	force = 9
 	powered_force = 20
 	dig_strength = 2
-	powered_dig_strength = 4
+	powered_dig_strength = 3
+	powered_weakener = TRUE
 	power_usage = 15
-	robot_power_multiplier = 5
+	robot_power_usage = power_usage * 5
 	default_cell = /obj/item/ammo/power_cell
 	powered_item_state = "phammer1"
 	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
@@ -1843,7 +1856,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	dig_strength = 0
 	powered_dig_strength = 2
 	power_usage = 10
-	robot_power_multiplier = 5
+	robot_power_usage = power_usage * 5
 	default_cell = /obj/item/ammo/power_cell
 	powered_item_state = "pshovel1"
 	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
@@ -1909,7 +1922,7 @@ TYPEINFO(/obj/item/mining_tool/hedron_beam)
 	icon_state = "cgaunts"
 	item_state = "bgloves"
 	material_prints = "industrial-grade mineral fibers"
-	var/obj/item/mining_tool/tool = null
+	var/obj/item/mining_tool/tool = new /obj/item/mining_tool/concussive_gloves_internal
 
 	setupProperties()
 		..()
@@ -1917,13 +1930,6 @@ TYPEINFO(/obj/item/mining_tool/hedron_beam)
 
 	New()
 		..()
-		var/obj/item/mining_tool/T = new /obj/item/mining_tool(src)
-		src.tool = T
-		T.name = src.name
-		T.desc = src.desc
-		T.dig_strength = 4
-		T.hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-		T.hitsound_uncharged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 		AddComponent(/datum/component/wearertargeting/unarmedblock/concussive, list(SLOT_GLOVES))
 
 /obj/item/breaching_charge/mining
