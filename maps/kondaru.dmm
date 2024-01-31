@@ -44228,18 +44228,11 @@
 /turf/simulated/floor/grey,
 /area/station/mining/magnet)
 "myd" = (
-/obj/rack,
-/obj/item/circuitboard/teleporter,
-/obj/item/circuitboard/card,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/item/circuitboard/barcode_qm,
-/obj/item/circuitboard/barcode,
-/obj/item/circuitboard/qmsupply,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/rack/organized/techstorage_eng,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "mzu" = (
@@ -46691,9 +46684,6 @@
 	},
 /area/station/solar/west)
 "osJ" = (
-/obj/rack,
-/obj/item/circuitboard/powermonitor,
-/obj/item/circuitboard/powermonitor_smes,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -46702,11 +46692,7 @@
 	tag = ""
 	},
 /obj/machinery/light_switch/east,
-/obj/item/circuitboard/genetics,
-/obj/item/circuitboard/bank_data,
-/obj/item/circuitboard/arcade,
-/obj/item/circuitboard/qmorder,
-/obj/item/circuitboard/telescope,
+/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "osY" = (

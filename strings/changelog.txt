@@ -1,5 +1,9 @@
 
 (t)tue jan 30 24
+(u)MarkNstein
+(p)16899
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Nadir: Added a PTL located at the South East hull connected to the turbine and southern catalytic engines.
 (u)Valtsu0
 (p)17764
 (e)🗺📄|A-Mapping, A-UI
