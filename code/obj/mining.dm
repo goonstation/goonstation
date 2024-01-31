@@ -1772,7 +1772,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		return
 
 /obj/item/mining_tool/powered/pickaxe
-	name = "power pick"
+	name = "energy pickaxe"
 	desc = "An energised mining tool."
 	icon_state = "powerpick"
 	item_state = "ppick0"
@@ -1793,11 +1793,11 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		..()
 
 /obj/item/mining_tool/powered/drill
-	name = "laser drill"
+	name = "energy drill"
 	desc = "An energized mining tool that's more energy efficient than a pickaxe."
-	icon_state = "lasdrill"
-	item_state = "ldrill0"
-	powered_item_state = "ldrill1"
+	icon_state = "powerdrill"
+	item_state = "pdrill0"
+	powered_item_state = "pdrill1"
 	powered_mining_sound = 'sound/items/Welder.ogg'
 	c_flags = ONBELT
 	force = 7
@@ -1813,7 +1813,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		..()
 
 /obj/item/mining_tool/powered/hammer
-	name = "power hammer"
+	name = "energy hammer"
 	desc = "An energised mining tool that's a bit more powerful than a pickaxe."
 	icon_state = "powerhammer"
 	item_state = "phammer0"
