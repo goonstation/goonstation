@@ -1643,6 +1643,8 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	desc = "An energised mining tool."
 	icon_state = "powerpick"
 	item_state = "ppick0"
+	var/powered_item_state = "ppick1"
+	VAR_PROTECTED/sound/powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	force = 7
 	var/default_cell = /obj/item/ammo/power_cell
 	var/is_on = FALSE
@@ -1652,8 +1654,6 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	VAR_PROTECTED/power_usage = 10 //power units expended per hit while on
 	VAR_PROTECTED/robot_power_usage = power_usage * 5 //power units expended when drawing from a robot's internal power cell, which tends to be 150x bigger
 	var/image/powered_overlay = null //the glowy bits for when its on
-	var/powered_item_state = "ppick1"
-	VAR_PROTECTED/sound/powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	var/datum/item_special/unpowered_item_special = /datum/item_special/simple
 	var/datum/item_special/powered_item_special = /datum/item_special/simple
 
@@ -1776,9 +1776,10 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 /obj/item/mining_tool/powered/pickaxe
 	name = "power pick"
 	desc = "An energised mining tool."
-	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerpick"
 	item_state = "ppick0"
+	powered_item_state = "ppick1"
+	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	c_flags = ONBELT
 	force = 7
 	powered_force = 14
@@ -1788,8 +1789,6 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	robot_power_usage = power_usage * 5
 	default_cell = /obj/item/ammo/power_cell
 	powered_overlay = null
-	powered_item_state = "ppick1"
-	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 
 	New()
 		src.powered_overlay = image('icons/obj/items/mining.dmi', "pp-glow")
@@ -1799,10 +1798,10 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	//add sprites and change existing sprite names to accomodate being able to turn this thing off now
 	name = "laser drill"
 	desc = "An energized mining tool that's a bit more energy efficient than a pickaxe."
-	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "lasdrill"
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pdrill0"
+	powered_item_state = "pdrill1"
+	powered_mining_sound = 'sound/items/Welder.ogg'
 	c_flags = ONBELT
 	force = 7
 	powered_force = 14
@@ -1811,8 +1810,6 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	power_usage = 6
 	robot_power_usage = power_usage * 5
 	default_cell = /obj/item/ammo/power_cell
-	powered_item_state = "pdrill1"
-	powered_mining_sound = 'sound/items/Welder.ogg'
 
 	New()
 		//TODO sprite pd-glow, and make the base lasdrill not glow
@@ -1822,10 +1819,10 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 /obj/item/mining_tool/powered/hammer
 	name = "power hammer"
 	desc = "An energised mining tool that's a bit more powerful than a pickaxe."
-	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerhammer"
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "phammer0"
+	powered_item_state = "phammer1"
+	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	c_flags = ONBELT
 	force = 9
 	powered_force = 20
@@ -1835,8 +1832,6 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	power_usage = 15
 	robot_power_usage = power_usage * 5
 	default_cell = /obj/item/ammo/power_cell
-	powered_item_state = "phammer1"
-	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	powered_item_special = /datum/item_special/slam
 
 	New()
@@ -1846,10 +1841,10 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 /obj/item/mining_tool/powered/shovel
 	name = "power shovel"
 	desc = "The final word in digging."
-	icon = 'icons/obj/sealab_power.dmi'
 	icon_state = "powershovel"
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pshovel0"
+	powered_item_state = "pshovel1"
+	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	c_flags = ONBELT
 	force = 6
 	powered_force = 12
@@ -1858,8 +1853,6 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	power_usage = 10
 	robot_power_usage = power_usage * 5
 	default_cell = /obj/item/ammo/power_cell
-	powered_item_state = "pshovel1"
-	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	powered_item_special = /datum/item_special/swipe
 
 	New()
@@ -1872,10 +1865,11 @@ TYPEINFO(/obj/item/mining_tool/hedron_beam)
 /obj/item/mining_tool/powered/hedron_beam
 	name = "\improper Hedron beam device"
 	desc = "A prototype multifunctional industrial tool capable of rapidly switching between welding and mining modes."
-	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "hedron-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
+	powered_item_state = item_state
+	powered_mining_sound = 'sound/items/Welder.ogg'
 	c_flags = ONBELT
 	tool_flags = TOOL_WELDING
 	force = 10
@@ -1884,8 +1878,6 @@ TYPEINFO(/obj/item/mining_tool/hedron_beam)
 	power_usage = 10
 	robot_power_usage = power_usage * 5
 	default_cell = /obj/item/ammo/power_cell
-	powered_item_state = "gun"
-	powered_mining_sound = 'sound/items/Welder.ogg'
 
 	examine(mob/user)
 		. = ..()
