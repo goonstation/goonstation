@@ -2047,8 +2047,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/powerhammer
 	name = "Power Hammer"
-	item_paths = list("DEN-1","CON-1")
-	item_amounts = list(1,8)
+	item_paths = list("MET-2","MET-3","CON-1")
+	item_amounts = list(15,7,10)
 	item_outputs = list(/obj/item/mining_tool/powered/hammer)
 	time = 70 SECONDS
 	create = 1
@@ -2056,8 +2056,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/drill
 	name = "Laser Drill"
-	item_paths = list("MET-2","MET-3","CON-2")
-	item_amounts = list(15,7,10)
+	item_paths = list("MET-2","CON-2")
+	item_amounts = list(15,10)
 	item_outputs = list(/obj/item/mining_tool/powered/drill)
 	time = 90 SECONDS
 	create = 1

@@ -1713,7 +1713,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 				robotUser.cell.use(powerCost)
 				return TRUE
 			//Not enough power
-			src.power_down()
+			src.power_down(user)
 			OVERRIDE_COOLDOWN(src, "depowered", 8 SECONDS)
 			boutput(user, SPAN_ALERT("Your charge is too low to power [src] and it shuts down!"))
 			return FALSE
@@ -1723,36 +1723,36 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			return FALSE
 		if (SEND_SIGNAL(src, COMSIG_CELL_USE, powerCost) & CELL_INSUFFICIENT_CHARGE)
 			//You just used power, continue down this branch if you ran out of power
-			src.power_down()
+			src.power_down(user)
 			OVERRIDE_COOLDOWN(src, "depowered", 8 SECONDS)
 			boutput(user, SPAN_ALERT("[src] runs out of charge and shuts down!"))
 		return TRUE
 
-	proc/mode_toggle(var/mob/user as mob)
+	proc/mode_toggle(var/mob/user = null)
 		if (src.process_charges(0))
 			if(GET_COOLDOWN(src, "depowered"))
 				boutput(user, SPAN_ALERT("[src] was recently power cycled and is still cooling down!"))
 				return
 			if (!src.is_on)
 				boutput(user, SPAN_NOTICE("You power up [src]."))
-				src.power_up()
+				src.power_up(user)
 			else
 				boutput(user, SPAN_NOTICE("You power down [src]."))
-				src.power_down()
+				src.power_down(user)
 		else
 			boutput(user, SPAN_ALERT("No charge left in [src]."))
 
 	proc/power_up(var/mob/user = null)
 		src.tooltip_rebuild = TRUE
 		src.is_on = TRUE
-		src.force = powered_force
+		src.force = src.powered_force
 		src.item_state = src.powered_item_state
 		if (src.powered_overlay)
 			src.overlays.Add(powered_overlay)
 			signal_event("icon_updated")
-		if(user != null)
+		if(user)
 			user.update_inhands()
-		playsound(user.loc, 'sound/items/miningtool_on.ogg', 30, 1)
+		playsound(user, 'sound/items/miningtool_on.ogg', 30, 1)
 		src.setItemSpecial(src.powered_item_special)
 		return
 
@@ -1765,9 +1765,9 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		if (src.powered_overlay)
 			src.overlays.Remove(powered_overlay)
 			signal_event("icon_updated")
-		if(user != null)
+		if(user)
 			user.update_inhands()
-		playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
+		playsound(user, 'sound/items/miningtool_off.ogg', 30, 1)
 		src.setItemSpecial(src.unpowered_item_special)
 		return
 
@@ -1809,7 +1809,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	default_cell = /obj/item/ammo/power_cell
 
 	New()
-		src.powered_overlay = image('icons/obj/items/mining.dmi', "ld-glow")
+		src.powered_overlay = image('icons/obj/items/mining.dmi', "pd-glow")
 		..()
 
 /obj/item/mining_tool/powered/hammer
@@ -1879,12 +1879,12 @@ TYPEINFO(/obj/item/mining_tool/hedron_beam)
 		. = ..()
 		. += "<br>Currently in [src.is_on ? "welding mode" : "mining mode"]."
 
-	power_up()
+	power_up(var/mob/user)
 		src.set_icon_state("hedron-M")
 		flick("hedron-WtoM", src)
 		..()
 
-	power_down()
+	power_down(var/mob/user)
 		src.set_icon_state("hedron-W")
 		flick("hedron-MtoW", src)
 		..()
