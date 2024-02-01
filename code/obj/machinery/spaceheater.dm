@@ -46,10 +46,6 @@ TYPEINFO(/obj/machinery/space_heater)
 			.["cell_name"] = src.cell.name
 			.["cell_charge"] = src.cell.percent()
 
-	ui_static_data(mob/user)
-		. = list()
-		.["name"] = src.name
-
 	update_icon()
 		if (src.on)
 			if(src.heating)

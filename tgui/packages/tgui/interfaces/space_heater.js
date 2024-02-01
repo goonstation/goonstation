@@ -101,14 +101,13 @@ export const space_heater = (props, context) => {
   const {
     emagged,
     on,
-    name,
     cell,
     cell_charge,
     set_temperature,
   } = data;
   return (
     <Window
-      title={Glitch_Text(emagged, name, 1)}
+      title={Glitch_Text(emagged, "Space HVAC", 1)}
       theme={Find_Theme(emagged, set_temperature, on)}
       width={350}
       height={250}>
