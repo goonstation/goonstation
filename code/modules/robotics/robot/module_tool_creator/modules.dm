@@ -119,7 +119,7 @@
 		/obj/item/rcd,
 		/obj/item/deconstructor/borg,
 		#ifdef MAP_OVERRIDE_OSHAN
-			/obj/item/mining_tool/power_shovel/borg,
+			/obj/item/mining_tool/powered/shovel,
 		#endif
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
 		/datum/robot/module_tool_creator/item_type/amount/steel_rod,
