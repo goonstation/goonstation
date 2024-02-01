@@ -52501,7 +52501,10 @@
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "cZH" = (
-/obj/machinery/firealarm/west,
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -4
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/pharmacy)
 "cZI" = (
@@ -53622,6 +53625,11 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/table/auto,
+/obj/item/storage/box/stma_kit,
+/obj/item/staple_gun,
+/obj/item/reagent_containers/iv_drip/saline,
+/obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -53779,9 +53787,6 @@
 	pixel_y = 5
 	},
 /obj/item/surgical_spoon,
-/obj/machinery/defib_mount{
-	pixel_x = -28
-	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -53920,12 +53925,15 @@
 	},
 /obj/item/paper/book/from_file/medical_surgery_guide,
 /obj/machinery/drainage,
+/obj/machinery/defib_mount{
+	pixel_x = -28
+	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
 "dfc" = (
-/obj/table/auto,
+/obj/table/wood/auto,
 /obj/item/paper_bin{
 	pixel_x = 7;
 	pixel_y = 10
@@ -56694,7 +56702,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/arcade,
+/turf/simulated/floor/blue,
 /area/station/medical/staff)
 "dqo" = (
 /obj/disposalpipe/segment/transport,
@@ -57490,7 +57498,7 @@
 /area/station/maintenance/inner/central)
 "ejF" = (
 /obj/machinery/disposal,
-/obj/disposalpipe/trunk/east,
+/obj/disposalpipe/trunk/west,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/morgue)
 "ejP" = (
@@ -58471,6 +58479,10 @@
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1;
+	pixel_y = -2
+	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/morgue)
 "fwi" = (
@@ -58760,7 +58772,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/catering)
 "fPk" = (
-/obj/table/auto,
+/obj/table/wood/auto,
 /obj/decoration/decorativeplant/plant3{
 	pixel_x = 4;
 	pixel_y = 10
@@ -60356,9 +60368,7 @@
 	pixel_y = 5
 	},
 /obj/item/surgical_spoon,
-/obj/machinery/defib_mount{
-	pixel_x = 28
-	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -61392,6 +61402,9 @@
 /obj/machinery/drainage,
 /obj/machinery/optable{
 	id = "OR1"
+	},
+/obj/machinery/defib_mount{
+	pixel_y = -28
 	},
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
@@ -66839,12 +66852,10 @@
 	},
 /area/mining/magnet)
 "opr" = (
-/obj/table/auto,
-/obj/item/storage/box/stma_kit,
-/obj/item/staple_gun,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/machinery/light_switch/east,
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 4
+	},
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -66931,7 +66942,9 @@
 /obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = 4
 	},
-/obj/item/paper/book/from_file/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide{
+	pixel_y = -4
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/medical/medbay/psychiatrist)
 "otU" = (
@@ -67487,7 +67500,7 @@
 	dir = 1
 	},
 /obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor,
+/turf/simulated/floor/green,
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
@@ -68967,7 +68980,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/blue,
+/turf/simulated/floor/blue,
 /area/station/medical/medbay/psychiatrist)
 "qJH" = (
 /obj/decal/poster/wallsign/stencil/right/s{
@@ -70795,6 +70808,10 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
+"sEq" = (
+/obj/machinery/firealarm/east,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/pharmacy)
 "sEs" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
@@ -72618,7 +72635,7 @@
 	},
 /area/station/medical/medbay)
 "uFy" = (
-/obj/table/auto,
+/obj/table/wood/auto,
 /obj/item/clipboard{
 	pixel_x = 3;
 	pixel_y = 1
@@ -107338,7 +107355,7 @@ dcf
 cZK
 gXa
 eMz
-cZK
+sEq
 daJ
 cGJ
 iOp
