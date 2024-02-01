@@ -20736,12 +20736,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "eJJ" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Armory APC";
-	noalerts = 1;
-	pixel_x = -24
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -20751,6 +20745,9 @@
 	dir = 8;
 	name = "autoname  - SS13";
 	pixel_x = 10
+	},
+/obj/machinery/power/apc/autoname_west{
+	noalerts = 1
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/central)
