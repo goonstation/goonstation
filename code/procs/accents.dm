@@ -2499,3 +2499,14 @@ proc/leetspeakify(string, chance=100)
 			letter = leetspeak_translation[lowertext(letter)]
 		letters += letter
 	return jointext(letters, "")
+
+/proc/bingus_parse(var/string)
+	var/bingus_list = list(
+		@{"\bbingus\b"} = "bingus my beloved",
+		@{"\bantag\b"} = "floppa",
+		@{"\bantagonist\b"} = "big floppa",
+		@{"\bI love [a-zA-Z]+"} = "I love bingus"
+	)
+	for (var/pattern in bingus_list)
+		string = replacetext(string, regex(pattern, "i"), bingus_list[pattern])
+	return string

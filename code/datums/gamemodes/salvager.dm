@@ -38,7 +38,7 @@
 
 	possible_salvagers = get_possible_enemies(ROLE_SALVAGER, target_antag_count)
 	if (!length(possible_salvagers))
-		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign any players as Salvagers, aborting salvager round pre-setup.</b>"))
+		//boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign any players as Salvagers, aborting salvager round pre-setup.</b>"))
 		return 0
 	if( ( master_mode != config_tag )   \
 	 && ( (length(possible_salvagers) < minimum_salvagers) || (target_antag_count < minimum_salvagers) ) )

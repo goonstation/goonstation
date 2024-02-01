@@ -2337,9 +2337,27 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		icon = 'icons/misc/worlds.dmi'
 		icon_state = "swampgrass_edge"
 
+TYPEINFO(/turf/simulated/floor/auto)
+	/// List of types this autowall connects to
+	var/list/connects_to = null
+	/// Because connections now work by parent type searches, this is for when you don't want certain subtypes to connect.
+	/// This must be a typecache ([/proc/typecachesof]) list
+	var/list/connects_to_exceptions = null
+	/// do we have wall connection overlays, ex nornwalls?
+	var/connect_overlay = 0
+	var/list/connects_with_overlay = null
+	var/list/connects_with_overlay_exceptions = null // same as above comment
+	var/connect_across_areas = TRUE
+	/// 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
+	var/connect_diagonal = 0
+
 /turf/simulated/floor/auto
 	name = "auto edging turf"
 
+	var/mod = null
+	var/light_mod = null
+	/// The image we're using to connect to stuff with
+	var/image/connect_image = null
 	///turf won't draw edges on turfs with higher or equal priority
 	var/edge_priority_level = 0
 	var/icon_state_edge = null
@@ -2347,8 +2365,45 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	New()
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
-		SPAWN(0.5 SECONDS) //give neighbors a chance to spawn in
-			edge_overlays()
+		if (current_state > GAME_STATE_WORLD_NEW)
+			SPAWN(0) //worldgen overrides ideally
+				UpdateIcon()
+				if(istype(src))
+					update_neighbors()
+		else
+			worldgenCandidates += src
+
+	generate_worldgen()
+		src.UpdateIcon()
+		if(istype(src))
+			update_neighbors()
+
+	update_icon()
+		. = ..()
+		src.edge_overlays()
+		if(src.mod)
+			var/typeinfo/turf/simulated/floor/auto/typinfo = get_typeinfo()
+			var/connectdir = get_connected_directions_bitflag(typinfo.connects_to, typinfo.connects_to_exceptions, typinfo.connect_across_areas, typinfo.connect_diagonal)
+			var/the_state = "[mod][connectdir]"
+			icon_state = the_state
+
+			// if (light_mod)
+			// 	src.RL_SetSprite("[light_mod][connectdir]")
+
+			if (typinfo.connect_overlay)
+				var/overlaydir = get_connected_directions_bitflag(typinfo.connects_with_overlay, typinfo.connects_with_overlay_exceptions, typinfo.connect_across_areas)
+				if (overlaydir)
+					if (!src.connect_image)
+						src.connect_image = image(src.icon, "connect[overlaydir]")
+					else
+						src.connect_image.icon_state = "connect[overlaydir]"
+					src.UpdateOverlays(src.connect_image, "connect")
+				else
+					src.UpdateOverlays(null, "connect")
+
+	proc/update_neighbors()
+		for (var/turf/simulated/floor/auto/T in orange(1,src))
+			T.UpdateIcon()
 
 	proc/edge_overlays()
 		for (var/turf/T in orange(src,1))
