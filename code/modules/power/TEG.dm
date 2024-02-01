@@ -1603,27 +1603,29 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 #define PUMP_POWERLEVEL_3 1000
 #define PUMP_POWERLEVEL_4 2500
 #define PUMP_POWERLEVEL_5 5000
+#define PUMP_ON 1
+#define PUMP_OFF 0
 
+/// Describes a pump from its packet data
 /datum/pump_infoset
-	var/power_status = 0
+	/// Whether or not the pump is on or off
+	var/power_status = PUMP_OFF
+	/// Pressure of the pump
 	var/target_output = 0
+	/// Radio ID the pump responds to
 	var/id = ""
 
 /obj/machinery/computer/atmosphere/pumpcontrol
-	req_access = list() //Change
-	req_access_txt = ""
-
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 
 	name = "Pump control computer"
+	/// Default frequency of the computer. Can be varedited so it only listens to relevant pumps, e.g. toxins computer controls toxins pumps
 	frequency = FREQ_PUMP_CONTROL
 
+	/* This is a list in which represents the top-to-bottom display of pump information in the computer.
+	It contains strings of the pump areas, and references to pumps themselves. */
 	var/list/pump_infos
-
-	var/last_change = 0
-	var/message_delay = 1 MINUTE
-
 
 	New()
 		. = ..()
@@ -1652,42 +1654,48 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 			return
 		//src.updateUsrDialog()
 
+	/// we probably have mapper varedited frequency so this handles all the pumps of the relevant frequency that scream back
 	receive_signal(datum/signal/signal)
-		if(!signal || signal.encryption)
+		// AGP is the device value broadcasted by pumps, this returns early if its not a pump or doesn't have all required data or is otherwise weird
+		// also if the pump is already saved in pump infos dont do it again
+		if (!signal \
+		   || (signal.source in pump_infos) \
+		   ||  signal.encryption \
+		   ||  signal.data["device"] != "AGP" \
+		   || !signal.data["tag"] \
+		   || !signal.data["power"] \
+		   || !signal.data["target_output"])
 			return
 
-		if(signal.data["device"] == "AGP")
-			if (!signal.data["tag"] || !signal.data["power"] || !signal.data["target_output"])
-				return
+		var/area/pump_area = get_area(signal.source)
+		if (!istype(pump_area))
+			return
 
-			var/datum/pump_infoset/I = new()
-			I.id = signal.data["tag"]
-			I.power_status = signal.data["power"]
-			I.target_output = signal.data["target_output"]
+		// Setup pump info datum to add to list later
+		var/datum/pump_infoset/I = new()
+		I.id = signal.data["tag"]
+		I.power_status = signal.data["power"]
+		I.target_output = signal.data["target_output"]
 
-			if (!(signal.source in pump_infos))
-				var/area/pump_area = get_area(signal.source)
-				if (istype(pump_area))
-					var/area_label_position = pump_infos.Find(pump_area.name)
-					if (area_label_position)
-						while (1)
-							area_label_position++
-							if (area_label_position > pump_infos.len)
-								break
-							var/datum/pump_infoset/infoset = pump_infos[ pump_infos[area_label_position] ]
-							if (!istype(infoset))
-								break
+		var/area_label_position = pump_infos.Find(pump_area.name)
+		if (area_label_position)
+			// We had a pump in this area before, insert it below its area
+			while (area_label_position < pump_infos.len)
+				area_label_position++
+				var/datum/pump_infoset/infoset = pump_infos[ pump_infos[area_label_position] ]
+				// Stop before next heading
+				if (!istype(infoset))
+					break
+				// Stop before pump after itself in alphabet to alphabetize output (wow)
+				if (sorttext(I.id, infoset.id) == 1)
+					break
+			pump_infos.Insert(area_label_position, signal.source)
+		else
+			// We never saw this pump's area before, so add it to the bottom
+			pump_infos += pump_area.name
+			pump_infos += signal.source
 
-							if (sorttext(I.id, infoset.id) == 1)
-								break
-
-						pump_infos.Insert(area_label_position, signal.source)
-
-					else
-						pump_infos += pump_area.name
-						pump_infos += signal.source
-
-			pump_infos[signal.source] = I
+		pump_infos[signal.source] = I
 
 		src.updateUsrDialog()
 
@@ -1789,6 +1797,8 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 #undef PUMP_POWERLEVEL_3
 #undef PUMP_POWERLEVEL_4
 #undef PUMP_POWERLEVEL_5
+#undef PUMP_ON
+#undef PUMP_OFF
 #undef LEFT_CIRCULATOR
 #undef RIGHT_CIRCULATOR
 #undef CIRCULATOR_MAX_PRESSURE
