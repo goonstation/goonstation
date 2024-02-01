@@ -2997,7 +2997,7 @@ var/global/force_radio_maptext = FALSE
 		boutput(src, "You must be at least an Administrator to use this command.")
 
 #define ARTIFACT_BULK_LIMIT 100
-#define ARTIFACT_HARD_LIMIT 20000
+#define ARTIFACT_HARD_LIMIT 2000
 #define ARTIFACT_MAX_SPAWN_ATTEMPTS 100
 
 /client/proc/spawn_tons_of_artifacts()
@@ -3014,10 +3014,11 @@ var/global/force_radio_maptext = FALSE
 				return
 			if("Yes")
 				var/amt_artifacts = min(input(usr,"How many artifacts do we want to spawn?\n(Default: 50)",,50) as num, ARTIFACT_HARD_LIMIT)
-				var/response = input(src, "High number of types: [length(spawn_matches)] - Type YES to continue", "Caution!") as null|text
-				if (response != "YES")
-					message_admins("[key_name(usr)] aborted spawning [amt_artifacts] due to failing to type 'YES'") // im telling on u!!!
-					return
+				if (amt_artifacts > ARTIFACT_BULK_LIMIT)
+					var/response = input(src, "High number of types: [length(amt_artifacts)] - Type YES to continue", "Caution!") as null|text
+					if (response != "YES")
+						message_admins("[key_name(usr)] aborted spawning [amt_artifacts] due to failing to type 'YES'") // im telling on u!!!
+						return
 				var/floors_only = (alert(src, "Only spawn artifacts on floors?",, "Yes", "No") == "Yes")
 				logTheThing(LOG_ADMIN, src, "started spawning [amt_artifacts] artifacts.")
 				message_admins("[key_name(usr)] started spawning [amt_artifacts] artifacts.")
