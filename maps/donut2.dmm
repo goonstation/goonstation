@@ -6045,7 +6045,7 @@
 /area/station/engine/elect)
 "aFe" = (
 /obj/table/glass/auto,
-/obj/item/reagent_containers/food/snacks/candy/taffy/watermelon,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/watermelon,
 /obj/item/reagent_containers/food/drinks/water,
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/blue/checker,
@@ -6789,13 +6789,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aJc" = (
-/obj/rack,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/item/circuitboard/card,
-/obj/item/circuitboard/operating,
-/obj/item/circuitboard/powermonitor,
-/obj/item/circuitboard/genetics,
+/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aJd" = (
@@ -37158,7 +37152,7 @@
 "pct" = (
 /obj/table/auto,
 /obj/item/paper_bin{
-	amount = 100;
+	amount_left = 100;
 	desc = "not at all a paper bin. no sir.";
 	name = "do-it-yourself joint construction kit"
 	},
@@ -42975,6 +42969,7 @@
 	name = "kitchen counter"
 	},
 /obj/machinery/light/incandescent,
+/obj/item/storage/box/popsicle_sticks,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "sNC" = (
@@ -43729,15 +43724,10 @@
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "tlf" = (
-/obj/rack,
-/obj/item/circuitboard/teleporter,
-/obj/item/circuitboard/arcade,
-/obj/item/circuitboard/barcode,
-/obj/item/circuitboard/barcode_qm,
-/obj/item/circuitboard/powermonitor_smes,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/rack/organized/techstorage_eng,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "tlV" = (
