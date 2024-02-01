@@ -2980,7 +2980,7 @@ var/global/force_radio_maptext = FALSE
 				// You definitely can activate an artnuke like this maybe be sure we're sure
 				var/response = input(src, "Extremely stupid button pressing shenanagains detected - Type YES to continue", "Caution!") as null|text
 				if (response != "YES")
-					message_admins("[key_name(usr)] aborted spawning [amt_artifacts] due to failing to type 'YES'") // im telling on u!!!
+					message_admins("[key_name(usr)] aborted toggling every dang artifact due to failing to type 'YES'") // im telling on u!!!
 					return
 				logTheThing(LOG_ADMIN, src, "started activating all available artifacts.")
 				message_admins("[key_name(usr)] started activating all available artifacts.")
