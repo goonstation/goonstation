@@ -2418,6 +2418,7 @@
 			C.setProperty("coldprot", C.getProperty("coldprot") - LAUNDERED_COLDPROT_AMOUNT)
 			if (C.stains)
 				C.stains -= LAUNDERED_STAIN_TEXT
+				C.UpdateName()
 
 #undef LAUNDERED_COLDPROT_AMOUNT
 #undef LAUNDERED_STAIN_TEXT
