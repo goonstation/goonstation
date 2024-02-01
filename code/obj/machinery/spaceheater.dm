@@ -150,7 +150,12 @@ TYPEINFO(/obj/machinery/space_heater)
 				I.set_loc(src.loc)
 				src.on = FALSE
 				usr.put_in_hand_or_eject(I)
-				usr.visible_message(SPAN_NOTICE("[usr] removes the power cell from \the [src]."), SPAN_NOTICE("You remove the power cell from \the [src]."))
+				if (src.emagged)
+					usr.visible_message(SPAN_ALERT("[usr] removes the power cell from \the [src] and completely frying it!"),
+					SPAN_ALERT("You remove the power cell from \the [src], causing it to fry itself!"))
+				else
+					usr.visible_message(SPAN_NOTICE("[usr] removes the power cell from \the [src]."),
+					SPAN_NOTICE("You remove the power cell from \the [src]."))
 				UpdateIcon()
 				. = TRUE
 

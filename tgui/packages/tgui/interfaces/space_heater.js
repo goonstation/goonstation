@@ -27,9 +27,9 @@ const Glitch_Text = (emagged, string, number) => {
 const Find_Theme = (emagged, temperature, on) => {
   if (!emagged) {
     return "generic";
-  } else if (emagged && temperature < 100 && on) { // Under 100 kelvin is supercooling
+  } else if (temperature < 100 && on) { // Under 100 kelvin is supercooling
     return "ntos";
-  } else if (emagged && temperature > 400 && on) { // Over 400 kelvin is overheating
+  } else if (temperature > 400 && on) { // Over 400 kelvin is overheating
     return "syndicate";
   } else {
     return "generic";
@@ -43,13 +43,23 @@ const HVAC_Death = (emagged, cell, cell_charge) => {
   return false;
 };
 
-const Set_Color = (temperature, generic_color="") => {
-  if (temperature < 100) {
-    return "#384e68";
-  } else if (temperature > 400) {
-    return "#910101";
+const Set_Color = (temperature, generic_color="", on=true) => {
+  if (temperature > 400 && on) {
+    return "red";
+  } else if (temperature < 100 && on) {
+    return "blue";
   } else {
     return generic_color;
+  }
+};
+
+const Set_Icon = (theme) => {
+  if (theme === "generic") {
+    return "eject";
+  } else if (theme === "syndicate") {
+    return "fire";
+  } else {
+    return "snowflake";
   }
 };
 
@@ -76,7 +86,7 @@ const Generate_Emag_Text = (theme, number) => {
     } else if (0.4 < num < 0.6) {
       out.push(theme === "syndicate" ? "HELP! ": "im shivering... ");
     } else if (0.6 < num < 0.8) {
-      out.push(theme === "syndicate" ? "MELTING! ": "its so cool... ");
+      out.push(theme === "syndicate" ? "MELTING! ": "its so cold... ");
     } else {
       out.push(theme === "syndicate" ? "OVERHEATING! ": "chilly... ");
     }
@@ -109,7 +119,7 @@ export const space_heater = (props, context) => {
             width={30.5}
             height={18}
           >
-            <Box backgroundColor={Set_Color(set_temperature)}>
+            <Box backgroundColor={Set_Color(set_temperature, "#001414")}>
               <Icon name={"skull-crossbones"} size={15} />
             </Box>
           </Modal>
@@ -141,8 +151,8 @@ const BatteryStatus = (props, context) => {
           <Flex justify={"space-between"}>
             <Flex.Item>
               <Button
-                icon={"eject"}
-                color={cell !== null ? "green" : "blue"}
+                icon={Set_Icon(Find_Theme(emagged, set_temperature, on))}
+                color={cell !== null ? Set_Color(set_temperature, "green", on) : "blue"}
                 disabled={on && !emagged}
                 onClick={() => cell !== null ? act('cellremove'): act('cellinstall')}
                 bold>
@@ -151,7 +161,7 @@ const BatteryStatus = (props, context) => {
             </Flex.Item>
             <Flex.Item>
               <Button
-                color={"blue"}
+                color={Set_Color(set_temperature, "blue", on)}
                 disabled={!on}
                 onClick={() => act('switch_off')}>
                 {Glitch_Text(emagged, "Off", 1)}
@@ -170,6 +180,7 @@ const BatteryStatus = (props, context) => {
           verticalAlign={"middle"}>
           <ProgressBar
             grow
+            color={Set_Color(set_temperature, "green", on)}
             ranges={{
               "green": [0.5, Infinity],
               "yellow": [0.1, 0.5],
@@ -218,9 +229,9 @@ const TemperatureRegulator = (props, context) => {
         <Stack.Item>
           <Button
             icon={"backward"}
-            tooltip={"Decrease by 5"}
+            tooltip={emagged ? "Decrease by 50": "Decrease by 5"}
             disabled={set_temperature === min}
-            onClick={() => act("set_temp", { temperature_adjust: -5 })} />
+            onClick={() => act("set_temp", { temperature_adjust: emagged ? -50: -5 })} />
         </Stack.Item>
         <Stack.Item>
           <Button
@@ -231,9 +242,9 @@ const TemperatureRegulator = (props, context) => {
         <Stack.Item>
           <Button
             icon={"forward"}
-            tooltip={"Increase by 5"}
+            tooltip={emagged ? "Increase by 50": "Increase by 5"}
             disabled={set_temperature === max}
-            onClick={() => act("set_temp", { temperature_adjust: 5 })} />
+            onClick={() => act("set_temp", { temperature_adjust: emagged ? 50: 5 })} />
         </Stack.Item>
         <Stack.Item>
           <Button
