@@ -743,35 +743,35 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	max_generations = -1
 
 	execute(var/atom/owner, var/temp)
-		if (!isitem(owner) || temp < 500 KELVIN)
-			return
+		// Just sanity checks with ordering to not init what we don't need
+		if (temp < 500 KELVIN || !isitem(owner)) return
+		if (!issimulatedturf(owner.loc)) return
+		var/turf/simulated/T = owner.loc
+		if (!T.gas_cross(T)) return
 		var/obj/item/I = owner
-		if (I.amount < 1)
-			return
-		var/radioactivity = I.material.getProperty("radioactive")
-		var/n_radioactivity = I.material.getProperty("n_radioactive")
-		if (!radioactivity && !n_radioactivity)
+		if (I.amount < 1) return
+		/// Init a property to 1 if it doesn't exist, its real value if it does, and if it does exist, delete it if the value is 0
+		var/radioactive = I.material.getProperty("radioactive")
+		var/n_radioactive = I.material.getProperty("n_radioactive")
+		if (!radioactive && !n_radioactive)
 			I.material.removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/radioactive_temp)
 			return
-		var/simTurf = locate(I.x, I.y, I.z)
-		if (!issimulatedturf(simTurf))
-			return
-		var/turf/simulated/T = simTurf
-		if (T.air && T.air.toxins > MINIMUM_REACT_QUANTITY)
-			/// Mostly bullshit magic because I don't know how radiation works and plasma isn't real, but is how many moles to convert of existing plasma
-			var/moles_to_convert = min(((I.amount * (1 + radioactivity) * (1 + n_radioactivity) * sqrt(temp)) / 1000), T.air.toxins)
-			T.air.radgas += moles_to_convert
-			T.air.toxins -= moles_to_convert
-			// Force mutability
-			if (!I.material.isMutable())
-				I.material = I.material.getMutable()
-			// Adjust or remove radioactive
-			if (moles_to_convert/10 > radioactivity)
-				I.material.removeProperty("radioactive")
-			else
-				I.material.setProperty("radioactive", radioactivity - min(radioactivity, moles_to_convert/10))
-			// Adjust or remove neutron radioactive
-			if (moles_to_convert/50 > n_radioactivity)
-				I.material.removeProperty("n_radioactive")
-			else
-				I.material.setProperty("n_radioactive", n_radioactivity - min(n_radioactivity, moles_to_convert/50))
+		var/datum/gas_mixture/air = T.return_air()
+		if (!air || air.toxins < MINIMUM_REACT_QUANTITY) return
+		if(T.parent?.group_processing)
+		T.parent.suspend_group_processing()
+		/// Mostly bullshit magic because I don't know how radiation works and plasma isn't real, but is how many moles to convert of existing plasma
+		var/moles_to_convert = min((I.amount * (1 + radioactive) * (1 + n_radioactive) * sqrt(temp) / 1000), air.toxins)
+		air.radgas += moles_to_convert
+		air.toxins -= moles_to_convert
+		// Force mutability
+		if (!I.material.isMutable())
+			I.material = I.material.getMutable()
+		if (radioactive)
+			I.material.setProperty("radioactive", radioactive - min(radioactive, moles_to_convert/I.amount))
+		else
+			I.material.removeProperty("radioactive")
+		if (n_radioactive)
+			I.material.setProperty("n_radioactive", n_radioactive - min(n_radioactive, moles_to_convert/(5*I.amount)))
+		else
+			I.material.removeProperty("n_radioactive")
