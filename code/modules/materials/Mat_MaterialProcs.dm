@@ -744,7 +744,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 	execute(var/atom/owner, var/temp)
 		if(ON_COOLDOWN(owner, "radioactive_material_decay_fallout", 5 SECONDS)) return
-		boutput(world, "OOH")
 		// Just sanity checks with ordering to not init what we don't need
 		if (temp < 500 KELVIN || !isitem(owner)) return
 		if (!issimulatedturf(owner.loc)) return
