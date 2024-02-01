@@ -1604,7 +1604,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	var/internal = FALSE
 
 /obj/item/ammo/power_cell/lasergat
-	name = "Mod. 93FS Repeating Laser Cell"
+	name = "Mod. 93R Repeating Laser Cell"
 	desc = "This single-use cell has a proprietary port for injecting liquid coolant into a laser firearm."
 	charge = 120
 	max_charge = 120

@@ -2167,11 +2167,11 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 
 /obj/item/gun/energy/lasergat
-	name = "\improper Hafgan Mod.93FS Repeating Laser"
+	name = "\improper Hafgan Mod.93R Repeating Laser"
 	rechargeable = 0
 	icon_state = "burst_laser_idle"
 	cell_type = /obj/item/ammo/power_cell/lasergat
-	desc = "Introduced to compete with the Clock line of military sidearms. The Mod. 93FS repeating laser masked early laser tech's heat problems with expendable liquid coolant cartridges, whose off-gassing caused unpredictable recoil that made it widely unpopular."
+	desc = "Introduced to compete with the Clock line of military sidearms. The Mod. 93R repeating laser masked early laser tech's heat problems with expendable liquid coolant cartridges, whose off-gassing caused unpredictable recoil that made it widely unpopular."
 	item_state = "egun-kill"
 	force = 5
 	add_residue = 1 // this is unique in that it spews energy-gun-gas or something
