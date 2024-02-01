@@ -823,6 +823,70 @@ proc/random_accent()
 	P.string = upper ? uppertext(new_string) : new_string
 	P.chars_used = used
 	return P
+
+/proc/german_parse(var/datum/text_roamer/R)
+	var/S = R.curr_char
+	var/new_string = S
+	var/used = 1
+	// Case insensitivity
+	var/upper = S == uppertext(S)
+	S = lowertext(S)
+	switch(S)
+
+		if("w")
+			new_string = "v"
+			used = 1
+		if("t")
+			if(lowertext(R.next_char) == "h")
+				new_string = "z"
+				used = 1
+		if("z")
+			new_string = "ts"
+			used = 1
+		if("r")
+			if(lowertext(R.prev_char) == " "  || lowertext(R.prev_char) == ""|| isVowel(lowertext(R.next_char)) || !isVowel(lowertext(R.next_char))) //tries to emulate the rolling of the R or the gutteral R
+				new_string = "rr"
+				used = 1
+		if("c")
+			if(lowertext(R.next_char) == "h" && lowertext(lowertext(R.next_char)) == "" || lowertext(lowertext(R.next_char)) == " ")
+				new_string = "sh" //this sound isn't really able to be written in english, but sh is a close approximate. The ch in ich.
+				used = 1
+
+		if("j")
+			new_string = "y"
+			used = 1
+		if("e")
+			if(lowertext(R.next_char) == "" || lowertext(R.next_char) == " " && prob(50))
+				new_string = "eh" //the dangling E that germans pronounce
+				used = 1
+			if(lowertext(R.prev_char) == "u")
+				new_string = "ee"
+				used = 1
+			if(lowertext(R.next_char) == "u")
+				new_string = "oi"
+				used = 1
+		if("d")
+			if(prob(50))
+				new_string = "t"
+				used = 1
+
+		if("v")
+			new_string = "f"
+			used = 1
+
+		if("s")
+			if(isVowel(lowertext(R.next_char)))
+				new_string = "z"
+				used = 1
+
+
+
+	var/datum/parse_result/P = new
+	P.string = upper ? uppertext(new_string) : new_string
+	P.chars_used = used
+	return P
+
+
 /* nnnoooooope!
 /proc/wonk_parse(var/string)
 	string = lowertext(string)
@@ -867,6 +931,53 @@ proc/random_accent()
 		T.curr_char_pos = T.curr_char_pos + P.chars_used
 		T.update()
 	return modded
+
+/proc/germify(var/string) // pretty much the same thing as scots and tyke, but instead with some common cognates between english and german. The list is significantly smaller
+	var/list/tokens = splittext(string, " ")
+	var/list/modded_tokens = list()
+
+	var/regex/punct_check = regex("\\W+\\Z", "i")
+	for(var/token in tokens)
+
+		var/modified_token = ""
+		var/original_word = ""
+		var/punct = ""
+		var/punct_index = findtext(token, punct_check)
+		if(punct_index)
+			punct = copytext(token, punct_index)
+			original_word = copytext(token, 1, punct_index)
+		else
+			original_word = token
+
+		var/matching_token = strings("language/german.txt", lowertext(original_word), 1)
+		if(matching_token)
+			var/pre_parse_modified_token = replacetext(original_word, lowertext(original_word), matching_token)
+			var/datum/text_roamer/T = new/datum/text_roamer(pre_parse_modified_token)
+			for(var/i = 0, i < length(pre_parse_modified_token), i=i)
+				var/datum/parse_result/P = german_parse(T)
+				modified_token += P.string
+				i += P.chars_used
+				T.curr_char_pos = T.curr_char_pos + P.chars_used
+				T.update()
+		else
+			var/datum/text_roamer/T = new/datum/text_roamer(original_word)
+			for(var/i = 0, i < length(original_word), i=i)
+				var/datum/parse_result/P = german_parse(T)
+				modified_token += P.string
+				i += P.chars_used
+				T.curr_char_pos = T.curr_char_pos + P.chars_used
+				T.update()
+
+		modified_token += punct
+		modded_tokens += modified_token
+
+	var/modded = jointext(modded_tokens, " ")
+
+	return modded
+
+
+
+
 
 /proc/tommify(var/string)
 	var/modded = ""
@@ -1520,6 +1631,9 @@ var/list/zalgo_mid = list(
 	var/modded = jointext(modded_tokens, " ")
 
 	return modded
+
+
+
 
 /proc/owo_parse(var/datum/text_roamer/R)
     var/new_string = ""

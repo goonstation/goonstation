@@ -325,6 +325,18 @@
 		return
 */
 
+
+
+/datum/trait/german
+	name = "German Accent"
+	desc = "You're from somewhere in the middle of Texas."
+	id = "german"
+	icon_state = "placeholder"
+	points = 0
+	category =  list("language")
+
+	onAdd(var/mob/owner)
+		owner.bioHolder?.AddEffect("accent_german")
 /datum/trait/finnish
 	name = "Finnish Accent"
 	desc = "...and you thought space didn't have Finns?"
