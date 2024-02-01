@@ -46444,9 +46444,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/decal/poster/wallsign/poster_nt{
-	pixel_y = 28
-	},
 /turf/simulated/floor/purple/corner,
 /area/station/medical/medbay/lobby)
 "cFk" = (
@@ -47300,6 +47297,7 @@
 	})
 "cIl" = (
 /obj/disposalpipe/segment/transport,
+/obj/machinery/genetics_booth,
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbay/lobby)
 "cIm" = (
@@ -47309,7 +47307,6 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/genetics_booth,
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbay/lobby)
 "cIn" = (
@@ -48193,10 +48190,6 @@
 /turf/simulated/floor/black,
 /area/station/medical/medbay/reception)
 "cLg" = (
-/obj/item/storage/wall/medical{
-	dir = 1;
-	pixel_y = 32
-	},
 /obj/table/auto,
 /obj/item/clipboard,
 /obj/item/storage/pill_bottle/mutadone,
@@ -51950,6 +51943,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 6
 	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon12,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "cXM" = (
@@ -56880,6 +56874,11 @@
 	icon_state = "corner_east"
 	},
 /area/station/engine/coldloop)
+"dyy" = (
+/obj/machinery/light/incandescent,
+/obj/shrub/random,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/lobby)
 "dyE" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -109440,7 +109439,7 @@ cCh
 cDC
 cFr
 cAL
-cId
+dyy
 uTS
 cKX
 cMz
