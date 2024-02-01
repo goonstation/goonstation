@@ -1648,10 +1648,6 @@
 /area/station/maintenance/northeast)
 "aiH" = (
 /obj/rack,
-/obj/item/tank/jetpack{
-	pixel_x = -4;
-	pixel_y = 1
-	},
 /obj/item/clothing/suit/space/engineer{
 	pixel_x = 5;
 	pixel_y = -1
@@ -1664,6 +1660,7 @@
 	pixel_x = 2;
 	pixel_y = 13
 	},
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -4519,10 +4516,6 @@
 /area/station/janitor/office)
 "awV" = (
 /obj/rack,
-/obj/item/tank/jetpack{
-	pixel_x = -4;
-	pixel_y = 1
-	},
 /obj/item/clothing/suit/space/engineer{
 	pixel_x = 5;
 	pixel_y = -1
@@ -4538,6 +4531,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -11304,10 +11298,6 @@
 /area/station/mining/magnet)
 "bfC" = (
 /obj/rack,
-/obj/item/tank/jetpack{
-	pixel_x = -4;
-	pixel_y = 1
-	},
 /obj/item/clothing/suit/space/engineer{
 	pixel_x = 5;
 	pixel_y = -1
@@ -11320,6 +11310,7 @@
 	pixel_x = 2;
 	pixel_y = 13
 	},
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
