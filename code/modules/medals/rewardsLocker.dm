@@ -704,8 +704,8 @@
 			var/mob/living/carbon/human/H = activator
 			var/succ = FALSE
 			if (H.wear_suit)
-				var/obj/item/clothing/suit/det_suit/M = H.wear_suit
-				if (istype(M))
+				var/obj/item/clothing/suit/M = H.wear_suit
+				if (istype(M, /obj/item/clothing/suit/det_suit))
 					var/prev = M.name
 					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 					M.inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
@@ -718,6 +718,18 @@
 					M.desc = "A coat for the modern detective. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/suit/wintercoat/detective))
+					var/prev = M.name
+					M.item_state = "wintercoat_inspector"
+					M.icon_state = findtext(M.icon_state, "_o") ? "wintercoat_inspector_o" : "wintercoat_inspector"
+					M.coat_style = "wintercoat_inspector"
+					M.name = "inspector's winter coat"
+					M.real_name = "inspector's winter coat"
+					M.desc = "A wintercoat for the modern detective. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
