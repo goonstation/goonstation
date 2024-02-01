@@ -11870,11 +11870,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
-"bid" = (
-/turf/simulated/floor/yellow/corner{
-	dir = 4
-	},
-/area/station/engine/engineering)
 "bif" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -76036,7 +76031,7 @@ sWY
 beD
 bbz
 bgQ
-bid
+axu
 axu
 axu
 bow
