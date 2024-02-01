@@ -30496,9 +30496,9 @@
 	dir = 6
 	},
 /obj/rack,
-/obj/item/mining_tool/power_shovel,
-/obj/item/mining_tool/power_shovel,
-/obj/item/mining_tool/power_shovel,
+/obj/item/mining_tool/powered/shovel,
+/obj/item/mining_tool/powered/shovel,
+/obj/item/mining_tool/powered/shovel,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "ceN" = (
