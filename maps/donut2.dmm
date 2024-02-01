@@ -38659,10 +38659,10 @@
 /area/station/crew_quarters/quarters)
 "qbJ" = (
 /obj/machinery/camera{
-	c_tag = "Science Hangar";
-	dir = 8;
-	name = "Outpost Camera";
-	network = "Zeta"
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	tag = ""
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
