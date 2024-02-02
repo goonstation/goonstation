@@ -1721,7 +1721,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 				continue
 			pump_html += "<B>[I.id] Status</B>:<BR>"
 			pump_html += "	Pump Status: <U><A href='?src=\ref[src];toggle=[I.id]'>[I.power_status == "on" ? "On":"Off"]</A></U><BR>"
-			pump_html += "	Pump Pressure Level: <A href='?src=\ref[src];target=[I.id]'>[I.target_pressure] kPa</A>"
+			pump_html += "	Pump Pressure Level: <A href='?src=\ref[src];setoutput=1&target=[I.id]'>[I.target_pressure] kPa</A>"
 			pump_html += "<BR><BR>"
 
 		var/output = "<B>[name]</B><BR><A href='?src=\ref[src];refresh=1'>Refresh</A><BR><HR><B>Pump Data: <BR><BR></B>[pump_html]<HR>"
