@@ -18,6 +18,8 @@ TYPEINFO(/obj/machinery/space_heater)
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = FPRINT | TGUI_INTERACTIVE
 
+	#define max (src.emagged ? 1000 : 328)
+	#define min (src.emagged ? 0 : 258)
 
 	New()
 		..()
@@ -36,8 +38,8 @@ TYPEINFO(/obj/machinery/space_heater)
 	ui_data(mob/user)
 		. = list()
 		.["on"] = src.on
-		.["max"] = src.emagged ? 1000 : 328
-		.["min"] = src.emagged ? 0 : 258
+		.["max"] = max
+		.["min"] = min
 		.["heating"] = src.heating
 		.["emagged"] = src.emagged
 		.["set_temperature"] = src.set_temperature
@@ -122,8 +124,6 @@ TYPEINFO(/obj/machinery/space_heater)
 			if("set_temp")
 				var/adjust_temperature = params["temperature_adjust"]
 				var/inputted_temperature = params["inputted_temperature"] // For dragging
-				var/max = src.emagged ? 1000 : 328
-				var/min = src.emagged ? 0 : 258
 				if (adjust_temperature)
 					src.set_temperature = clamp((src.set_temperature + adjust_temperature), min , max)
 				else if (text2num_safe(inputted_temperature) != null)
@@ -217,6 +217,9 @@ TYPEINFO(/obj/machinery/space_heater)
 		. = ..()
 		if(Obj == src.cell)
 			src.cell = null
+
+	#undef max
+	#undef min
 
 TYPEINFO(/obj/machinery/sauna_stove)
 	mats = 8
