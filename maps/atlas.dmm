@@ -2339,7 +2339,12 @@
 /area/station/hallway/primary/west)
 "ahF" = (
 /obj/table/auto,
-/obj/item/storage/box/cutlery,
+/obj/item/storage/box/cutlery{
+	pixel_x = 8
+	},
+/obj/item/storage/box/popsicle_sticks{
+	pixel_x = -7
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ahG" = (
@@ -9671,7 +9676,7 @@
 /area/station/medical/robotics)
 "aFH" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -12046,6 +12051,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/pinpointer/disk,
 /turf/simulated/floor/airless/circuit/red,
 /area/listeningpost)
 "aOi" = (
@@ -16483,7 +16489,7 @@
 "eJD" = (
 /obj/item/device/gps,
 /obj/item/device/gps,
-/obj/item/clothing/head/helmet/camera,
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/item/device/camera_viewer/telesci,
 /obj/table/reinforced/chemistry/auto,
 /obj/item/device/gps,

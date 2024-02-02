@@ -40,6 +40,8 @@ Contains:
 	var/integrity = 3
 	/// Whether or not this tank can be used in a tank transfer valve.
 	var/compatible_with_TTV = TRUE
+	/// Tank's previous pressure. Used for tanks that are going to explode
+	var/previous_pressure = null
 
 	New()
 		..()
@@ -138,6 +140,7 @@ Contains:
 	process()
 		//Allow for reactions
 		if (air_contents)
+			src.previous_pressure = MIXTURE_PRESSURE(air_contents)
 			air_contents.react()
 			src.inventory_counter.update_text("[round(MIXTURE_PRESSURE(air_contents))]\nkPa")
 		check_status()
@@ -148,14 +151,21 @@ Contains:
 			return FALSE
 		var/pressure = MIXTURE_PRESSURE(air_contents)
 		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
+			// How much pressure we needed to hit the fragment limit. Makes it so there is almost always only 3 additional reacts.
+			// (Hard limit above meant that you could get effectively either ~3.99 reacts or ~2.99, creating inconsistency in explosions)
+			var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / (pressure - src.previous_pressure))
 			//Give the gas a chance to build up more pressure through reacting
 			playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 			air_contents.react()
 			air_contents.react()
-			air_contents.react()
+			air_contents.react(mult=0.5)
+			air_contents.react(mult=react_compensation)
 			pressure = MIXTURE_PRESSURE(air_contents)
 
-			var/range = (pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
+			//wooo magic numbers! 70 is the default volume of an air tank and quad rooting it seems to produce pretty reasonable scaling
+			// scale for pocket oxy (3L): ~0.455 | extended pocket oxy (7L): ~0.562 | handheld (70L): 1
+			var/volume_scale = (air_contents.volume / 70) ** (1/4)
+			var/range = (pressure - TANK_FRAGMENT_PRESSURE) * volume_scale / TANK_FRAGMENT_SCALE
 			// (pressure - 5066.25 kpa) divided by 1013.25 kpa
 			range = min(range, 12)
 
@@ -166,13 +176,13 @@ Contains:
 					var/turf/T = get_turf(B.loc)
 					if(T)
 						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
-						explosion(src, T, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
+						explosion(src, T, range * 0.25, range * 0.5, range, range * 1.5)
 				qdel(src)
 				return
 			var/turf/epicenter = get_turf(loc)
 			logTheThing(LOG_BOMBING, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
 			src.visible_message(SPAN_ALERT("<b>[src] explosively ruptures!</b>"))
-			explosion(src, epicenter, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
+			explosion(src, epicenter, range * 0.25, range * 0.5, range, range * 1.5)
 			qdel(src)
 
 		else if(pressure > TANK_RUPTURE_PRESSURE)
@@ -415,8 +425,8 @@ TYPEINFO(/obj/item/tank/jetpack)
 	extra_desc = "It's painted in a sinister yet refined shade of red."
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)

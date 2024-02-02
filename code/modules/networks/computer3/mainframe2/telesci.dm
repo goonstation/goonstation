@@ -792,7 +792,6 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				var/summon = pick(
 					/mob/living/critter/zombie,
 					/mob/living/critter/bear,
-					/mob/living/carbon/human/npc/syndicate,
 					/mob/living/critter/martian/soldier,
 					/mob/living/critter/lion,
 					/obj/critter/yeti,

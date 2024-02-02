@@ -56,8 +56,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 				else
 					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 					user.visible_message(SPAN_NOTICE("[user] dunks [W:affecting]'s head in the sink!"))
-
-
+					GRAB.affecting.lastgasp() // --BLUH
 
 		else if (W.burning)
 			W.combust_ended()
@@ -793,6 +792,8 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/hotdog(src)
 			src.recipes += new /datum/cookingrecipe/oven/cheesewheel(src)
 			src.recipes += new /datum/cookingrecipe/oven/turkey(src)
+			src.recipes += new /datum/cookingrecipe/oven/melted_sugar(src)
+			src.recipes += new /datum/cookingrecipe/oven/brownie_batch(src)
 
 			// store the list for later
 			oven_recipes = src.recipes
@@ -1544,6 +1545,7 @@ TYPEINFO(/obj/submachine/mixer)
 		if (!src.recipes.len)
 			src.recipes += new /datum/cookingrecipe/mixer/mix_cake_custom(src)
 			src.recipes += new /datum/cookingrecipe/mixer/pancake_batter(src)
+			src.recipes += new /datum/cookingrecipe/mixer/brownie_batter(src)
 			src.recipes += new /datum/cookingrecipe/mixer/cake_batter(src)
 			src.recipes += new /datum/cookingrecipe/mixer/custard(src)
 			src.recipes += new /datum/cookingrecipe/mixer/mashedpotatoes(src)

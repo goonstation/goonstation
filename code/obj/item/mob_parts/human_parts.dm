@@ -1588,6 +1588,50 @@
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
 
+// bingus limbs hehehe
+
+/obj/item/parts/human_parts/arm/mutant/cat/bingus
+	icon = 'icons/mob/bingus.dmi'
+	partIcon = 'icons/mob/bingus.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/cat/bingus
+	icon = 'icons/mob/bingus.dmi'
+	partIcon = 'icons/mob/bingus.dmi'
+
+////// ACTUAL CAT LIMBS //////
+/obj/item/parts/human_parts/arm/mutant/cat/bingus/left
+	name = "left cat arm"
+	desc = "A cat's left arm. Meow."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/cat/bingus/right
+	name = "right cat arm"
+	desc = "A cat's right arm. =3"
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/cat/bingus/left
+	name = "left cat leg"
+	desc = "A cat's left leg. =0w0="
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/cat/bingus/right
+	name = "right cat leg"
+	desc = "A cat's right leg. Mrow."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
 
 //// WEREWOLF LIMBS ////
 ////// PARENT	//////////

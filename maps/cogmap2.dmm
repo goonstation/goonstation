@@ -3860,6 +3860,7 @@
 "amj" = (
 /obj/table/auto,
 /obj/item/device/radio/intercom/catering,
+/obj/item/storage/box/popsicle_sticks,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "amk" = (
@@ -19061,7 +19062,7 @@
 /area/station/engine/substation/west)
 "bdz" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -30396,7 +30397,7 @@
 /area/station/engine/core)
 "bKa" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/helmet/welding,
 /turf/simulated/floor/engine,
@@ -35570,7 +35571,7 @@
 /area/station/storage/emergency)
 "bXW" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -36030,7 +36031,7 @@
 /area/station/storage/emergency)
 "bZl" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -38355,7 +38356,7 @@
 /area/station/engine/substation/east)
 "chE" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -38366,7 +38367,7 @@
 /area/station/engine/substation/east)
 "chF" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -40858,14 +40859,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "coR" = (
-/obj/rack,
-/obj/item/circuitboard/teleporter,
-/obj/item/circuitboard/card,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/item/circuitboard/barcode_qm,
-/obj/item/circuitboard/barcode,
-/obj/item/circuitboard/qmorder,
+/obj/rack/organized/techstorage_eng,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "coS" = (
@@ -42919,7 +42913,7 @@
 	pixel_y = 11
 	},
 /obj/machinery/recharger,
-/obj/item/clothing/head/helmet/camera,
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/glasses/sunglasses,
 /turf/simulated/floor/specialroom/arcade,
@@ -45141,14 +45135,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "cBk" = (
-/obj/rack,
-/obj/item/circuitboard/arcade,
-/obj/item/circuitboard/powermonitor,
-/obj/item/circuitboard/powermonitor_smes,
-/obj/item/circuitboard/operating,
-/obj/item/circuitboard/genetics,
-/obj/item/circuitboard/qmsupply,
-/obj/item/circuitboard/telescope,
+/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "cBl" = (
@@ -46866,14 +46853,14 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/device/light/glowstick,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/extinguisher,
 /obj/item/extinguisher,
 /obj/item/chem_grenade/firefighting,
 /obj/item/chem_grenade/firefighting,
 /obj/machinery/light,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /turf/simulated/floor/caution/south,
 /area/station/science/lab)
 "cGq" = (
@@ -51777,10 +51764,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/networked/artifact_console{
-	desc = "It just sorta showed up in a giant box of test equipment.";
-	name = "giant mystery science doodad"
-	},
+/obj/machinery/networked/artifact_console,
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "cVk" = (
@@ -69316,11 +69300,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/engine/inner)
-"qNC" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/storage/cart,
-/turf/simulated/floor,
-/area/station/hydroponics/bay)
 "qNE" = (
 /obj/table/reinforced/auto,
 /obj/decal/stripe_delivery,
@@ -101232,7 +101211,7 @@ azn
 aCd
 aDl
 qlm
-qNC
+awf
 awf
 awf
 qlm

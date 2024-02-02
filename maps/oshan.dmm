@@ -11007,14 +11007,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aJX" = (
-/obj/rack,
-/obj/item/circuitboard/teleporter,
-/obj/item/circuitboard/card,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/item/circuitboard/barcode_qm,
-/obj/item/circuitboard/barcode,
-/obj/item/circuitboard/qmsupply,
+/obj/rack/organized/techstorage_eng,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aJY" = (
@@ -11073,14 +11066,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aKp" = (
-/obj/rack,
-/obj/item/circuitboard/arcade,
-/obj/item/circuitboard/powermonitor,
-/obj/item/circuitboard/powermonitor_smes,
-/obj/item/circuitboard/operating,
-/obj/item/circuitboard/genetics,
-/obj/item/circuitboard/qmorder,
-/obj/item/circuitboard/telescope,
+/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aKr" = (
@@ -12057,7 +12043,7 @@
 /area/station/maintenance/inner/central)
 "aOs" = (
 /obj/storage/closet/coffin,
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aOt" = (
@@ -12322,7 +12308,7 @@
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = -4
 	},
-/obj/item/pinpointer{
+/obj/item/pinpointer/disk{
 	pixel_x = 3;
 	pixel_y = 7
 	},
@@ -13955,7 +13941,7 @@
 /area/space)
 "aVp" = (
 /obj/storage/crate,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/grime,
@@ -14104,7 +14090,7 @@
 /area/iss)
 "aVR" = (
 /obj/storage/closet/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /turf/simulated/floor/grime,
 /area/iss)
 "aVS" = (
@@ -16639,7 +16625,7 @@
 /area/station/maintenance/inner/central)
 "biE" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -16712,6 +16698,7 @@
 /area/station/crew_quarters/catering)
 "biQ" = (
 /obj/machinery/light/incandescent/cool/very,
+/obj/item/storage/box/popsicle_sticks,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "biR" = (
@@ -17593,7 +17580,7 @@
 /area/evilreaver/security)
 "bmb" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -35495,7 +35482,7 @@
 /area/station/turret_protected/ai_upload)
 "gEE" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/extinguisher,
 /obj/item/screwdriver,
@@ -37886,12 +37873,8 @@
 /area/station/security/detectives_office)
 "kAg" = (
 /obj/item/device/gps,
-/obj/item/clothing/head/helmet/camera{
-	camera_tag = "Helmet Cam 2"
-	},
-/obj/item/clothing/head/helmet/camera{
-	camera_tag = "Helmet Cam 1"
-	},
+/obj/item/clothing/head/helmet/camera/telesci,
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/machinery/firealarm/north,
 /obj/table/round/auto,
 /turf/simulated/floor/purple,
@@ -42583,7 +42566,7 @@
 /area/research_outpost)
 "rxi" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,

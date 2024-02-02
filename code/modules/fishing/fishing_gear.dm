@@ -378,24 +378,24 @@ TYPEINFO(/obj/item/fish_portal)
 			return ..()
 
 /obj/item/storage/fish_box
-	name = 	"Portable aquarium"
+	name = 	"portable aquarium"
 	desc = "A temporary solution for transporting fish."
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	icon_state = "aquarium"
 	item_state = "aquarium"
 	slots = 6
-	can_hold = 	list(/obj/item/reagent_containers/food/fish)
+	can_hold = list(/obj/item/reagent_containers/food/fish)
 
 /obj/item/storage/fish_box/small
-	name = 	"Small Portable aquarium"
+	name = 	"small portable aquarium"
 	desc = "A smaller, temporary solution for transporting fish."
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	icon_state = "aquarium"
 	item_state = "aquarium"
 	slots = 3
-	can_hold = 	list(/obj/item/reagent_containers/food/fish)
+	can_hold = list(/obj/item/reagent_containers/food/fish)
 
 TYPEINFO(/obj/item/syndie_fishing_rod)
 	mats = list("MET-3"=15, "WOOD"=5, "POW-2"=5, "CON-2"=5)

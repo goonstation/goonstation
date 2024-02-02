@@ -2407,10 +2407,7 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "FP" = (
-/obj/machinery/networked/artifact_console{
-	desc = "It just sorta showed up in a giant box of test equipment.";
-	name = "giant mystery science doodad"
-	},
+/obj/machinery/networked/artifact_console,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
@@ -3819,6 +3816,7 @@
 /obj/railing/red{
 	dir = 8
 	},
+/obj/item/storage/box/popsicle_sticks,
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "Xk" = (
