@@ -2899,6 +2899,11 @@ ABSTRACT_TYPE(/area/station/medical)
 	name = "Medbay Operating Theater"
 	icon_state = "medbay_surgery"
 
+/area/station/medical/medbay/reception
+	name = "Medbay Reception"
+	icon_state = "medbooth"
+	sound_environment = 3
+
 /area/station/medical/medbay/surgery/storage
 	name = "Medical Storage"
 	icon_state = "blue"
