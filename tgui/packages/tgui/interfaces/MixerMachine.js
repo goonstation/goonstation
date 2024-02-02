@@ -18,10 +18,8 @@ export const MixerItem = (props, context) => {
     <Flex>
       <Image
         verticalAlign="middle"
-        my="0.2rem"
-        mr="0.5rem"
-        height="32px"
-        width="32px"
+        height="24px"
+        width="24px"
         src={`data:image/png;base64,${mixerItem.iconData}`} />
       <Button
         nowrap
@@ -50,9 +48,9 @@ export const MixerMachine = (props, context) => {
     <Window
       title="Kitchen Helper"
       width={500}
-      height={300}>
+      height={210}>
       <Window.Content >
-        <Stack m="0.25rem" fontSize="1.4rem" vertical fill>
+        <Stack m="0.25rem" vertical fill>
 
           <Stack.Item grow={1}>
             {
@@ -68,7 +66,7 @@ export const MixerMachine = (props, context) => {
 
           <Stack.Item m=".25rem">
             <Button
-              mx=".25rem"
+              mt="0.5rem"
               backgroundColor="green"
               icon="check"
               title={"Start Mixing"}
