@@ -232,3 +232,25 @@
 
 	cast(atom/target)
 		holder.owner.show_credits()
+
+/datum/targetable/citation_records
+	name = "Tickets and Fines"
+	desc = "Re-open the crew credits window."
+	icon = 'icons/mob/ghost_observer_abilities.dmi'
+	icon_state = "citation-records"
+	targeted = FALSE
+	cooldown = 1 SECOND
+
+	cast(atom/target)
+		holder.owner.show_citations()
+
+/datum/targetable/inspector_report
+	name = "Inspector Report"
+	desc = "Re-open the crew credits window."
+	icon = 'icons/mob/ghost_observer_abilities.dmi'
+	icon_state = "inspector-report"
+	targeted = FALSE
+	cooldown = 1 SECOND
+
+	cast(atom/target)
+		holder.owner.show_inspector_report()

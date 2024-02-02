@@ -209,6 +209,9 @@
 			. = TRUE
 
 /obj/item/paper/ui_static_data(mob/user)
+	return src.package_ui_static_data(user)
+
+/obj/item/paper/proc/package_ui_static_data(mob/user)
 	. = list(
 		"name" = src.name,
 		"sizeX" = src.sizex,

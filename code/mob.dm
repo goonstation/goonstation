@@ -1487,6 +1487,28 @@
 
 	global.ticker.get_credits().ui_interact(src)
 
+/mob/proc/show_citations()
+	set name = "Show Tickets and Fines"
+	set desc = "Open the citations window"
+	set category = "Commands"
+
+	if (global.current_state < GAME_STATE_FINISHED)
+		boutput(src, SPAN_NOTICE("The gane hasn't finished yet!"))
+		return
+
+	global.ticker.get_citations().ui_interact(src)
+
+/mob/proc/show_inspector_report()
+	set name = "Show Inspector Report"
+	set desc = "Open the inspector report window"
+	set category = "Commands"
+
+	if (global.current_state < GAME_STATE_FINISHED)
+		boutput(src, SPAN_NOTICE("The gane hasn't finished yet!"))
+		return
+
+	global.ticker.get_inspector_report().ui_interact(src)
+
 /mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
 		return !projCanHit(mover:proj_data)

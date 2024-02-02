@@ -6,14 +6,14 @@
  * @author Changes ThePotato97
  * @license MIT
  */
-import { resolveAsset } from '../assets';
+import { resolveAsset } from '../../assets';
 import { Component } from 'inferno';
 import marked from 'marked';
-import { useBackend } from '../backend';
-import { Box, Flex, Table, Tabs, TextArea } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from '../../backend';
+import { Box, Flex, Table, Tabs, TextArea } from '../../components';
+import { Window } from '../../layouts';
 import { clamp } from 'common/math';
-import { sanitizeText } from '../sanitize';
+import { sanitizeText } from '../../sanitize';
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
 const WINDOW_TITLEBAR_HEIGHT = 30;
 // Hacky, yes, works?...yes
@@ -228,6 +228,7 @@ export const PaperSheetView = (props, context) => {
     stamps = [],
     backgroundColor,
     readOnly,
+    fillWindow = true,
   } = props;
   const stampList = stamps || [];
   const textHtml = {
@@ -245,7 +246,7 @@ export const PaperSheetView = (props, context) => {
       <Box
         color="black"
         backgroundColor={backgroundColor}
-        fillPositionedParent
+        fillPositionedParent={fillWindow}
         width="100%"
         height="100%"
         dangerouslySetInnerHTML={textHtml}

@@ -20,6 +20,8 @@ var/global/current_state = GAME_STATE_INVALID
 	var/datum/ai_rack_manager/ai_law_rack_manager = new /datum/ai_rack_manager()
 
 	var/datum/crewCredits/creds = null
+	var/datum/citationRecords/citations = null
+	var/datum/inspectorReport/inspector_report = null
 
 	var/skull_key_assigned = 0
 
@@ -639,6 +641,8 @@ var/global/current_state = GAME_STATE_INVALID
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] score calculated")
 
 	src.creds = new /datum/crewCredits
+	src.citations = new /datum/citationRecords
+	src.inspector_report = new /datum/inspectorReport
 
 	var/final_score = score_tracker.final_score_all
 	if (final_score > 200)
@@ -859,10 +863,14 @@ var/global/current_state = GAME_STATE_INVALID
 				if (!E.abilityHolder)
 					E.add_ability_holder(/datum/abilityHolder/generic)
 				E.addAbility(/datum/targetable/crew_credits)
+				E.addAbility(/datum/targetable/citation_records)
+				if (src.inspector_report.has_contents)
+					E.addAbility(/datum/targetable/inspector_report)
+					src.inspector_report.ui_interact(E)
 				if (E.client.preferences.view_tickets)
-					E.showtickets()
+					src.citations.ui_interact(E)
 				if (E.client.preferences.view_score)
-					creds.ui_interact(E)
+					src.creds.ui_interact(E)
 				SPAWN(0) show_xp_summary(E.key, E)
 	logTheThing(LOG_DEBUG, null, "Did credits")
 
@@ -890,3 +898,15 @@ var/global/current_state = GAME_STATE_INVALID
 	if (!src.creds)
 		src.creds = new /datum/crewCredits
 	return src.creds
+
+/datum/controller/gameticker/proc/get_citations()
+	RETURN_TYPE(/datum/citationRecords)
+	if (!src.citations)
+		src.citations = new /datum/citationRecords
+	return src.citations
+
+/datum/controller/gameticker/proc/get_inspector_report()
+	RETURN_TYPE(/datum/inspectorReport)
+	if (!src.inspector_report)
+		src.inspector_report = new /datum/inspectorReport
+	return src.inspector_report
