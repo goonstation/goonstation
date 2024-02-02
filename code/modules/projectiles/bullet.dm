@@ -1915,3 +1915,13 @@ datum/projectile/bullet/autocannon
 			//let's pretend these walls/objects were destroyed in the explosion
 			hit.ex_act(2)
 		. = ..()
+
+/datum/projectile/bullet/webley
+	name = "bullet"
+	damage = 45
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_CUT
+	implanted = /obj/item/implant/projectile/bullet_455
+	impact_image_state = "bullethole-small"
+	casing = /obj/item/casing/medium
+	ricochets = TRUE

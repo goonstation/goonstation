@@ -1629,3 +1629,15 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 				if(99)
 					overlays += "burst_laspistol-100"
 			return
+/obj/item/ammo/bullets/webley
+	sname = ".455 Webley"
+	name = ".455 Webley Bullets"
+	desc = "A small speedloader, full of ammunition for a Webley Revolver."
+	icon_state = "455-6"
+	amount_left = 6
+	max_amount = 6
+	ammo_type = new/datum/projectile/bullet/webley
+	ammo_cat = AMMO_WEBLEY
+	icon_dynamic = 1
+	icon_short = "455"
+	icon_empty = "speedloader_empty"

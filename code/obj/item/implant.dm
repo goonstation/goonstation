@@ -876,7 +876,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	bullet_9mm
 		name = "9mm round"
 		desc = "An extremely common bullet fired by a myriad of different cartridges."
-
+	bullet_455
+		name = ".455 round"
+		desc = "A powerful, old-timey revolver bullet, likely of criminal origin."
 	ninemmplastic
 		name = "9mm Plastic round"
 		icon_state = "bulletplastic"

@@ -919,6 +919,83 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			spread_angle = 8
 			shoot_delay = 5
 
+/obj/item/gun/kinetic/webley
+	name = "Webley 'Holdout' Snubnose"
+	desc = "A cut down Webley break-action revolver. There's some extra weight in the grip for spinning action."
+	icon_state = "webleysnub"
+	force = MELEE_DMG_REVOLVER
+	ammo_cats = list(AMMO_WEBLEY)
+	w_class = W_CLASS_SMALL
+	fire_animation = TRUE
+	has_fire_anim_state = TRUE
+	fire_anim_state = "webleysnubfire"
+	max_ammo_capacity = 6
+	auto_eject = FALSE
+	can_dual_wield = FALSE
+	two_handed = FALSE
+	add_residue = TRUE
+	gildable = TRUE
+	HELP_MESSAGE_OVERRIDE({"When pulled from a pocket, this gun gains a brief firerate increase at the cost of accuracy."})
+
+	var/broke_open = FALSE
+	var/shells_to_eject = 0
+
+	New() //uses a special box of ammo that only starts with 2 shells to prevent issues with overloading
+		ammo = new/obj/item/ammo/bullets/webley
+		set_current_projectile(new/datum/projectile/bullet/webley)
+		..()
+
+	update_icon()
+		. = ..()
+		src.icon_state = "webleysnub" + (!src.broke_open ? "" : "open" )
+
+	canshoot(mob/user)
+		if (!src.broke_open)
+			return TRUE
+		..()
+
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if (src.broke_open)
+			boutput(user, SPAN_ALERT("You need to close [src] before you can fire!"))
+		if (!src.broke_open && src.ammo.amount_left > 0)
+			src.shells_to_eject++
+		..()
+
+	attack_self(mob/user)
+		src.toggle_action(user)
+		..()
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/ammo/bullets) && !src.broke_open)
+			boutput(user, SPAN_ALERT("You can't load rounds into the cylinder! You'll have to open [src] first!"))
+			return
+		..()
+
+	attack_hand(mob/user)
+		if (!src.broke_open && user.find_in_hand(src))
+			boutput(user, SPAN_ALERT("[src] is still closed, you need to open the action to take the rounds out!"))
+			return
+		..()
+
+	on_spin_emote(mob/living/carbon/human/user)
+		if(src.broke_open) // Only allow spinning to close the gun, doesn't make as much sense spinning it open.
+			src.toggle_action(user)
+			user.visible_message(SPAN_ALERT("<b>[user]</b> snaps shut [src] with a [pick("spin", "twirl")]!"))
+		..()
+
+	proc/toggle_action(mob/user)
+		if (!src.broke_open)
+			src.casings_to_eject = src.shells_to_eject
+
+			if (src.casings_to_eject > 0) //this code exists because without it the gun ejects double the amount of shells
+				src.ejectcasings()
+				src.shells_to_eject = 0
+		src.broke_open = !src.broke_open
+
+		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
+
+		UpdateIcon()
+
 
 
 /obj/item/gun/kinetic/american180
