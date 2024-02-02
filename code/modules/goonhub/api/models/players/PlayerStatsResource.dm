@@ -33,16 +33,7 @@
 /datum/apiModel/Tracked/PlayerStatsResource/VerifyIntegrity()
 	. = ..()
 	if (
-		isnull(src.ckey) \
-		|| isnull(src.key) \
-		|| isnull(src.byond_major) \
-		|| isnull(src.byond_minor) \
-		|| isnull(src.played) \
-		|| isnull(src.played_rp) \
-		|| isnull(src.connected) \
-		|| isnull(src.connected_rp) \
-		|| isnull(src.time_played) \
-		|| isnull(src.latest_connection) \
+		isnull(src.ckey)
 	)
 		return FALSE
 
