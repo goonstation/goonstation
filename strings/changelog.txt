@@ -1,5 +1,7 @@
 
 (t)fri feb 02 24
+(u)Sord
+(+)The Crematorium now takes longer operate and can be escaped up to a certain point.
 (u)Tyrant
 (p)17841
 (e)🪲🗺|C-Bug, A-Mapping
