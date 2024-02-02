@@ -41089,6 +41089,24 @@
 /obj/machinery/meter,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
+"eKd" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/decal/stripe_delivery,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "escape2";
+	name = "Escape";
+	enter_id = "main"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "eKk" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -43350,6 +43368,11 @@
 "grs" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "escape";
+	name = "Escape";
+	enter_id = "main"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "gse" = (
@@ -50279,6 +50302,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "escape";
+	name = "Escape";
+	enter_id = "main"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "mpC" = (
@@ -55775,6 +55803,20 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/north)
+"qAO" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "escape";
+	name = "Escape";
+	enter_id = "outer"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "qBh" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable/yellow{
@@ -56778,6 +56820,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
+"rsy" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "escape2";
+	name = "Escape";
+	enter_id = "main"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "rsK" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -57389,6 +57441,11 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "escape2";
+	name = "Escape";
+	enter_id = "outer"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -110950,7 +111007,7 @@ cdw
 cpY
 crb
 jje
-grs
+rsy
 kFN
 uzt
 uzt
@@ -111252,7 +111309,7 @@ cqe
 cqe
 hpX
 vIN
-grs
+rsy
 ctI
 yht
 yht
@@ -111555,10 +111612,10 @@ uLB
 uLB
 uLB
 uLB
-mpv
+eKd
 uLB
 uLB
-mpv
+eKd
 uLB
 adC
 adC
@@ -116693,7 +116750,7 @@ cIO
 yht
 yht
 lpQ
-rRo
+qAO
 adC
 adC
 adC
