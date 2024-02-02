@@ -1,5 +1,9 @@
 
 (t)fri feb 02 24
+(u)Tyrant
+(p)17828
+(e)🆕🗺💅|C-Feature, A-Mapping, C-QoL
+(+)Some airlocks are now linked in a way that opening one door tries to close the other doors. "Keep the Air Inside!" ~John Nanotrasen probably.
 (u)Chatauscours
 (p)17682
 (e)🗺💅|A-Mapping, C-QoL
