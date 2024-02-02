@@ -4,7 +4,7 @@
 /datum/apiRoute/players/saves/file/post
 	method = RUSTG_HTTP_METHOD_POST
 	path = "/players/saves/file"
-	body = /datum/apiBody/PlayerSavesData
+	body = /datum/apiBody/PlayerSavesAddSave
 	correct_response = /datum/apiModel/Tracked/PlayerRes/PlayerSaveResource
 
 	buildBody(
