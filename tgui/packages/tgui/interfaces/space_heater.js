@@ -5,15 +5,11 @@
  * @license ISC
  */
 
-// Notes: Change icons to the respective emag variants, give glitch affects to emag variants
-// Supercooling and Overheating emag affects.
-// Supercooling: Blue coloring to buttons and loading bar, picklocking affect for taking out the power cell.
-// Overheating: Red coloring to buttons and loading bar, power cell burns player when taken out.
-
 import { useBackend } from '../backend';
 import { Box, Button, Divider, Flex, Icon, LabeledList, Modal, ProgressBar, Section, Slider, Stack } from '../components';
 import { Window } from '../layouts';
 import { randInt } from './common/mathUtils';
+import { neutralTemperature } from './common/temperatureUtils';
 import { glitch } from './common/stringUtils';
 
 const Glitch_Text = (emagged, string, number) => {
@@ -224,7 +220,7 @@ const TemperatureRegulator = (props, context) => {
           <Button
             icon={"equals"}
             tooltip={"Room temperature"}
-            onClick={() => act("set_temp", { inputted_temperature: 293 })} />
+            onClick={() => act("set_temp", { inputted_temperature: neutralTemperature })} />
         </Stack.Item>
         <Stack.Item>
           <Button
@@ -246,14 +242,14 @@ const TemperatureRegulator = (props, context) => {
         value={set_temperature}
         format={value => value+" K"}
         bold
-        textColor={set_temperature >= 293 ? "red": "blue"}
+        textColor={set_temperature >= neutralTemperature ? "red": "blue"}
         minValue={min}
         maxValue={max}
         step={emagged ? 5: 1}
         stepPixelSize={emagged ? 1.5: 4.5}
         ranges={{
-          "blue": [-Infinity, 292],
-          "red": [293, Infinity],
+          "blue": [-Infinity, neutralTemperature-1], // Specifically want neutralTemperature (293.15) to be considered 'warm'
+          "red": [neutralTemperature, Infinity],
         }}
         onDrag={(e, value) => act("set_temp", { inputted_temperature: value })}
       />

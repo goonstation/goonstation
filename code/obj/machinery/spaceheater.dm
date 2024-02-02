@@ -12,14 +12,14 @@ TYPEINFO(/obj/machinery/space_heater)
 	var/obj/item/cell/cell
 	var/on = FALSE
 	var/heating = FALSE // If its cooling down (false) or heating up (true) the current atmosphere
-	var/set_temperature = 293 // Room temperature
+	var/set_temperature = T20C
 	var/heating_power = 100000
 	var/cooling_power = -100000
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = FPRINT | TGUI_INTERACTIVE
 
-	#define max (src.emagged ? 1000 : 328)
-	#define min (src.emagged ? 0 : 258)
+	#define max (src.emagged ? 1000 : T20C+35)
+	#define min (src.emagged ? 0 : T20C-35)
 
 	New()
 		..()
@@ -135,12 +135,12 @@ TYPEINFO(/obj/machinery/space_heater)
 				if (!I)
 					boutput(usr, SPAN_ALERT("No cell found to eject."))
 					return
-				else if (src.set_temperature > 400 && src.on)
+				else if (src.set_temperature > 400 && src.on) // Overheating
 					usr.TakeDamage("All", 0, 15, 0, DAMAGE_BURN)
 					usr.show_text("The [src.cell.name] scalds your hand!", "red")
 					usr.emote("scream")
 					playsound(src.loc, 'sound/machines/engine_grump4.ogg', 50, 1)
-				else if (src.set_temperature < 100 && src.on)
+				else if (src.set_temperature < 100 && src.on) // Supercooling
 					usr.show_text("The [src.cell.name] seems frozen in place!", "red")
 					return
 				I.set_loc(src.loc)
