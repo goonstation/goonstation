@@ -390,7 +390,7 @@ toxic - poisons
 /datum/projectile/bullet/nine_mm_surplus
 	name = "bullet"
 	shot_sound = 'sound/weapons/9x19NATO.ogg'
-	damage = 11
+	damage = 20
 	shot_number = 1
 	cost = 1
 	hit_ground_chance = 75
