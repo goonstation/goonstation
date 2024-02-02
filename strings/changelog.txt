@@ -1,6 +1,10 @@
 
 (t)fri feb 02 24
 (u)Tyrant
+(p)17841
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Clarion's central maintenance APC has been moved to actually be in central maintenance (and is no longer confusingly called armoury APC)
+(u)Tyrant
 (p)17828
 (e)🆕🗺💅|C-Feature, A-Mapping, C-QoL
 (+)Some airlocks are now linked in a way that opening one door tries to close the other doors. "Keep the Air Inside!" ~John Nanotrasen probably.
