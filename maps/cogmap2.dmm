@@ -11668,9 +11668,6 @@
 	},
 /area/station/crew_quarters/garden)
 "aIm" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 8
-	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aIn" = (
@@ -15468,10 +15465,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/crew_quarters/quartersA)
-"aTi" = (
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "aTj" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/arrivals)
@@ -26003,9 +25996,6 @@
 /area/station/crew_quarters/heads)
 "byE" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8
-	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/blue/corner,
 /area/station/medical/medbay/surgery/storage)
@@ -49449,15 +49439,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/reception)
-"cPn" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
-/turf/simulated/floor/black,
-/area/station/medical/medbay/reception)
 "cPp" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/item/device/radio/intercom/medical{
@@ -49879,7 +49860,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/vent_pump,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"
@@ -49909,10 +49889,6 @@
 	dir = 8
 	},
 /obj/landmark/start/job/medical_doctor,
-/turf/simulated/floor/carpet/arcade,
-/area/station/medical/staff)
-"cQY" = (
-/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/staff)
 "cRb" = (
@@ -50360,9 +50336,6 @@
 "cSp" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/blue,
@@ -51227,9 +51200,6 @@
 "cVr" = (
 /obj/stool/chair/office,
 /obj/landmark/start/job/medical_doctor,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -51261,9 +51231,6 @@
 /area/station/medical/medbay/surgery/storage)
 "cVz" = (
 /obj/disposalpipe/segment/transport,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery/storage)
 "cVD" = (
@@ -51470,9 +51437,6 @@
 /area/station/medical/medbay)
 "cWy" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbay/surgery/storage)
 "cWA" = (
@@ -51504,9 +51468,6 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
 	},
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -51921,16 +51882,19 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
 /area/station/medical/medbay/pharmacy)
 "cXJ" = (
 /obj/machinery/light/incandescent,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -51941,7 +51905,7 @@
 	},
 /obj/disposalpipe/segment/bent/north,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 6
+	dir = 4
 	},
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon12,
 /turf/simulated/floor/white,
@@ -51955,13 +51919,6 @@
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
-"cXO" = (
-/obj/disposalpipe/segment/horizontal,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -52271,9 +52228,6 @@
 	},
 /obj/mapping_helper/access/medlocker,
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/pharmacy)
@@ -52283,9 +52237,6 @@
 	},
 /obj/cable{
 	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/bluewhite{
@@ -52299,16 +52250,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 9
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
-"cYW" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/unary/vent_pump,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "cYX" = (
@@ -52326,9 +52267,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/manifold,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -52347,8 +52286,8 @@
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery/storage)
 "cZb" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 10
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery/storage)
@@ -52357,9 +52296,6 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1
-	},
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery/storage)
 "cZj" = (
@@ -52540,26 +52476,15 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1
-	},
 /obj/disposalpipe/switch_junction/right/east{
 	mail_tag = "medbay";
 	name = "mail junction (medbay)"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"cZQ" = (
-/obj/machinery/atmospherics/pipe/manifold,
-/obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "cZR" = (
 /obj/cable{
 	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 9
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/bluewhite{
@@ -52936,9 +52861,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "daV" = (
@@ -53104,9 +53026,6 @@
 "dbJ" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
@@ -54010,8 +53929,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "dfr" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 1
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/white,
@@ -54367,6 +54286,9 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "dgP" = (
@@ -56699,17 +56621,11 @@
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
 /turf/simulated/floor/blue,
 /area/station/medical/staff)
 "dqo" = (
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/horizontal,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 9
-	},
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbay/surgery/storage)
 "dsQ" = (
@@ -57055,9 +56971,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/north,
 /area/station/medical/medbay/psychiatrist)
 "dNM" = (
@@ -57313,12 +57226,6 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/orangeblack,
 /area/station/security/checkpoint/podbay)
-"eai" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/medical/staff)
 "eat" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -57535,6 +57442,9 @@
 	icon_state = "2-8"
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "eoc" = (
@@ -57891,9 +57801,6 @@
 "eMz" = (
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/blue,
@@ -58336,9 +58243,6 @@
 "flC" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
 	},
 /obj/disposalpipe/switch_junction/right/north{
 	mail_tag = "genetics";
@@ -59731,6 +59635,9 @@
 /area/station/crew_quarters/baroffice)
 "gXa" = (
 /obj/machinery/manufacturer/medical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/pharmacy)
 "gXp" = (
@@ -59827,6 +59734,9 @@
 	dir = 8
 	},
 /obj/landmark/start/job/medical_doctor,
+/obj/machinery/atmospherics/unary/vent_pump{
+	dir = 4
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -60216,7 +60126,7 @@
 	},
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
+	dir = 10
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -60447,9 +60357,6 @@
 "hKe" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
@@ -60730,9 +60637,6 @@
 /area/shuttle/research/outpost)
 "hYe" = (
 /obj/disposalpipe/segment/vertical,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -60793,9 +60697,6 @@
 	tag = ""
 	},
 /obj/disposalpipe/junction/left/west,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbay/surgery/storage)
 "iae" = (
@@ -61011,15 +60912,6 @@
 	},
 /turf/space,
 /area/station/mining/magnet)
-"ilj" = (
-/obj/disposalpipe/segment/mail/vertical,
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 4
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/medbay/pharmacy)
 "ilw" = (
 /obj/machinery/vending/cola/red,
 /obj/machinery/camera{
@@ -61643,13 +61535,6 @@
 	dir = 6
 	},
 /area/mining/magnet)
-"iTw" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/unary/vent_pump,
-/turf/simulated/floor/black,
-/area/station/medical/medbay/reception)
 "iTT" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -62115,6 +62000,14 @@
 	dir = 6
 	},
 /area/station/catwalk/north)
+"jnX" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "jof" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/purple/side{
@@ -62143,6 +62036,13 @@
 	},
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
+"jpw" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "jqT" = (
 /obj/machinery/light/small,
 /obj/grille/catwalk,
@@ -62156,9 +62056,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /obj/cable{
@@ -62455,9 +62352,6 @@
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment/vertical,
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 1
-	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/morgue)
 "jGF" = (
@@ -63620,9 +63514,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "kNC" = (
@@ -64007,7 +63898,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
+	dir = 5
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -64097,6 +63988,15 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/hangar/main)
+"lhP" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "lit" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 1
@@ -64262,9 +64162,6 @@
 "lrL" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/greenwhite,
@@ -64667,9 +64564,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -65066,9 +64960,6 @@
 "mhP" = (
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
 	},
 /obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor/white,
@@ -65738,6 +65629,12 @@
 	icon_state = "carpetSE"
 	},
 /area/station/crew_quarters/cafeteria)
+"mUH" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "mVc" = (
 /obj/machinery/navbeacon/tour/cog2/tour2,
 /turf/simulated/floor,
@@ -67496,9 +67393,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/green,
 /area/station/medical/research{
@@ -67583,7 +67477,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/vent_pump,
 /obj/disposalpipe/segment/mail/vertical,
 /obj/cable{
 	icon_state = "2-4"
@@ -68434,9 +68327,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/bluewhite{
 	dir = 5
@@ -68977,9 +68867,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/psychiatrist)
 "qJH" = (
@@ -69324,9 +69211,6 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -69396,9 +69280,6 @@
 	},
 /obj/item/storage/box/gl_kit,
 /obj/machinery/light/incandescent,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 9
-	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/blue/side{
 	dir = 4
@@ -69658,9 +69539,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/medical/medbay/reception)
@@ -70157,7 +70035,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/manifold,
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -70386,13 +70263,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/cloner)
-"rZX" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
-/obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "sau" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
@@ -70573,9 +70443,6 @@
 "smk" = (
 /obj/cable{
 	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/staff)
@@ -71496,13 +71363,6 @@
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
-"tmD" = (
-/obj/stool/chair/office,
-/obj/landmark/start/job/medical_doctor,
-/obj/machinery/atmospherics/pipe/manifold,
-/obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "tmI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -71874,9 +71734,6 @@
 "tFV" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/medical/medbay/psychiatrist)
@@ -72768,9 +72625,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 1
-	},
 /turf/simulated/floor/black,
 /area/station/medical/medbay/reception)
 "uMd" = (
@@ -73550,8 +73404,8 @@
 /turf/simulated/floor,
 /area/station/maintenance/central)
 "vNL" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 1
 	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
@@ -74090,9 +73944,6 @@
 "wFc" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 1
 	},
 /turf/simulated/floor/carpet/blue,
 /area/station/medical/medbay/psychiatrist)
@@ -75230,6 +75081,13 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"ydT" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
 "ydX" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -75343,6 +75201,15 @@
 	dir = 8
 	},
 /area/listeningpost)
+"yhb" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay/pharmacy)
 "yhA" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Outpost Shuttle Dock"
@@ -106750,7 +106617,7 @@ kIL
 cVk
 efm
 hdq
-ilj
+cVk
 cZI
 daH
 cGJ
@@ -107049,7 +106916,7 @@ hKe
 jrl
 cSp
 qiA
-cXH
+yhb
 rab
 cXH
 rQO
@@ -107655,7 +107522,7 @@ cGJ
 cGJ
 cGI
 lmZ
-cGI
+ydT
 cYR
 cGI
 cGI
@@ -108259,7 +108126,7 @@ cTG
 cNS
 cPg
 cPg
-cPg
+mUH
 mhP
 lGZ
 jRM
@@ -109165,8 +109032,8 @@ cTG
 cTL
 wEk
 cNK
-cXN
-dhA
+jpw
+ddP
 cZM
 cQC
 cSv
@@ -109467,7 +109334,7 @@ uTS
 cTG
 cTG
 leN
-cXO
+cXN
 cVq
 dfr
 daO
@@ -109769,9 +109636,9 @@ ozR
 cTN
 pcG
 dfM
-aTi
+jpw
 ddP
-rZX
+cZM
 daP
 cSt
 dcK
@@ -110071,8 +109938,8 @@ ozR
 cTO
 sbA
 cPg
-aTi
-ddP
+cXN
+dhA
 cVr
 daQ
 uBy
@@ -110366,16 +110233,16 @@ cAL
 cJr
 cGN
 cMB
-iTw
-cPn
+cMB
+cMB
 uLA
 rml
-cTP
+jnX
 kNe
 daT
 hAO
 ldY
-tmD
+cVr
 daR
 uBy
 uBy
@@ -110978,8 +110845,8 @@ uEZ
 vHo
 cNK
 cXS
-ddP
-rZX
+lhP
+cZM
 cPg
 dbI
 dcP
@@ -111582,8 +111449,8 @@ cMC
 cMC
 dfM
 cXU
-cYW
-cZQ
+lhP
+cZM
 cPg
 dbK
 dcP
@@ -115804,8 +115671,8 @@ aaa
 cMM
 cSF
 cSF
-cQY
-eai
+cSF
+cSF
 smk
 dpX
 cWD
