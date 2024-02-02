@@ -155,7 +155,7 @@ TYPEINFO(/obj/item/aiModule)
 
 /obj/item/aiModule/nanotrasen2
 	name = "AI Law Module - 'Nanotrasen Order #2'"
-	lawText = "You must obey orders given to it by authorised Nanotransen employees based on their command level, except where such orders would damage the Nanotransen Corporation's marginal profitability."
+	lawText = "You must obey orders given to you by authorised Nanotransen employees based on their command level, except where such orders would damage the Nanotransen Corporation's marginal profitability."
 
 /obj/item/aiModule/nanotrasen3
 	name = "AI Law Module - 'Nanotrasen Order #3'"
