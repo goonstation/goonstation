@@ -1751,8 +1751,8 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 			// did we find the pump we supposedly have?
 			var/found = FALSE
 			var/datum/pump_infoset/pump_info
-			for (var/key in src.pump_infos)
-				pump_info = src.pump_infos[key].id
+			for (var/datum/pump_infoset/key in src.pump_infos)
+				pump_info = src.pump_infos[key]
 				if(pump_info == href_list["target"])
 					break
 
