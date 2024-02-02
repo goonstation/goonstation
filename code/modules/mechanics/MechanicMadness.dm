@@ -3212,6 +3212,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set A", PROC_REF(setA))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set B", PROC_REF(setB))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Evaluate", PROC_REF(evaluate))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Mode", PROC_REF(compSetMode))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set A",PROC_REF(setAManually))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set B",PROC_REF(setBManually))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Mode",PROC_REF(setMode))
@@ -3267,6 +3268,39 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			tooltip_rebuild = 1
 			if (autoEval)
 				src.evaluate()
+	proc/compSetMode(var/datum/mechanicsMessage/input)
+		LIGHT_UP_HOUSING
+		tooltip_rebuild = 1
+		switch(input.signal)
+			if("add")
+				mode = "add"
+			if("sub")
+				mode = "sub"
+			if("div")
+				mode = "div"
+			if("mul")
+				mode = "mul"
+			if("mod")
+				mode = "mod"
+			if("pow")
+				mode = "pow"
+			if("rng")
+				mode = "rng"
+			if("gt")
+				mode = "gt"
+			if("lt")
+				mode = "lt"
+			if("gte")
+				mode = "gte"
+			if("lte")
+				mode = "lte"
+			if("eq")
+				mode = "eq"
+			if("neq")
+				mode = "neq"
+			else
+				return
+
 	proc/evaluate()
 		switch(mode)
 			if("add")
