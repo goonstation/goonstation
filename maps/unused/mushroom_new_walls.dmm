@@ -1321,7 +1321,8 @@
 "agF" = (
 /obj/item/device/analyzer/atmospheric,
 /obj/machinery/light/small{
-	dir = 1
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -1605,7 +1606,8 @@
 	dir = 4
 	},
 /obj/machinery/light/small{
-	dir = 1
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -4202,11 +4204,11 @@
 /area/station/janitor/office)
 "avz" = (
 /obj/item/device/radio/intercom,
+/obj/machinery/portable_reclaimer,
 /obj/machinery/light/small{
 	dir = 1;
-	status = 2
+	pixel_y = 21
 	},
-/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "avB" = (
@@ -5329,8 +5331,8 @@
 /area/station/maintenance/disposal)
 "aAP" = (
 /obj/machinery/light/small{
-	brightness = 2;
-	dir = 4
+	dir = 4;
+	tag = "icon-bulb1 (EAST)"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -13032,7 +13034,10 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/mining/magnet)
 "boj" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	width = 13;
+	height = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "boo" = (
@@ -24724,13 +24729,6 @@
 	icon_state = "fgreen2"
 	},
 /area/station/bridge)
-"mhy" = (
-/obj/machinery/light/small{
-	dir = 1;
-	status = 2
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "mhL" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	name = "Bridge"
@@ -25774,7 +25772,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/light/small{
 	dir = 8;
-	pixel_x = -10
+	tag = "icon-bulb1 (WEST)"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -85944,7 +85942,7 @@ apq
 aqr
 jyN
 afC
-mhy
+ahd
 atR
 auA
 auB
