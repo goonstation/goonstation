@@ -25,7 +25,24 @@
 	// Default gang crate
 	guns_and_gear
 		New()
-			lootMaster =  new /datum/loot_generator(4,3)
+			lootMaster =  new /datum/loot_generator(4,4)
+			// 3 guns, ammo, 3 bits of gear
+			lootMaster.add_random_loot(src, GANG_CRATE_GUN, 3)
+			lootMaster.add_random_loot(src, GANG_CRATE_AMMO_LIMITED, 3)
+			lootMaster.add_random_loot(src, GANG_CRATE_GEAR, 3)
+			// fill the rest with whatever
+			lootMaster.fill_remaining(src, GIMMICK)
+			..()
+		unlocked
+			New()
+				..()
+				anchored = UNANCHORED
+				locked = FALSE
+				src.light = image('icons/obj/large_storage.dmi',"gangcratefulllight")
+				UpdateIcon()
+	guns_and_gear_big
+		New()
+			lootMaster =  new /datum/loot_generator(4,4)
 			// Add spraypaints transparently, else they take up loot spots
 			//lootMaster.place_loot_instance(src, 1,1, new /obj/randomloot_spawner/short/spraypaint, TRUE)
 			//lootMaster.place_loot_instance(src, 4,1, new /obj/randomloot_spawner/short/spraypaint, TRUE)
@@ -635,6 +652,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 						spawn_item(C,I,ammoSelected, scale_x=0.6,scale_y=0.8)
 					else if (ispath(ammoSelected, /obj/item/ammo/bullets/assault_rifle))
 						spawn_item(C,I,ammoSelected, scale_x=0.8,scale_y=0.75)
+					else if (ispath(ammoSelected, /obj/item/ammo/bullets/nine_mm_surplus))
+						spawn_item(C,I,ammoSelected, scale_y=0.725)
 					else if (ispath(ammoSelected,/obj/item/ammo/bullets/flintlock/single))
 						var/obj/item/ammo/bullets/newAmmo = spawn_item(C,I,ammoSelected, rot=-45,scale_x=0.8,scale_y=0.8)
 						newAmmo.amount = 3
@@ -650,6 +669,10 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 
 			limited
 				tier = GANG_CRATE_AMMO_LIMITED
+				// AMMO_LIMITED limits the amount of ammo spawned to 'the amount of guns, plus a 50% chance for a bonus mag'
+				// So, if there's 1 gun, there's a 50% chance for 2 mags, 50% for one mag
+				// For 2 guns, there's a 50% chance for 3 mags, 50% for 2 mags.
+				// any AMMO_LIMITED that spawns therafter will
 				spawn_loot(var/C, datum/loot_spawner_info/I)
 					var/ammoSpawned = 0
 					if (I.tags["Ammo_Spawned"])
@@ -676,17 +699,17 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			weight=2
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/old_grenade/stinger/frag,off_y=2,scale_x=0.7,scale_y=0.7)
-				spawn_item(C,I,/obj/item/old_grenade/stinger/frag,off_y=0,scale_x=0.7,scale_y=0.7)
-				spawn_item(C,I,/obj/item/old_grenade/stinger/frag,off_y=-2,scale_x=0.7,scale_y=0.7)
+				spawn_item(C,I,/obj/item/old_grenade/stinger/frag,off_y=0,scale_x=0.6,scale_y=0.6)
+				spawn_item(C,I,/obj/item/old_grenade/stinger/frag,off_y=0,scale_x=0.6,scale_y=0.6)
+				spawn_item(C,I,/obj/item/old_grenade/stinger/frag,off_y=0,scale_x=0.6,scale_y=0.6)
 
 		// GANG_CRATE_GEAR
 		spraypaint
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/spray_paint,scale_x=0.7,scale_y=0.6,off_x=-2)
-				spawn_item(C,I,/obj/item/spray_paint,scale_x=0.7,scale_y=0.6)
-				spawn_item(C,I,/obj/item/spray_paint,scale_x=0.7,scale_y=0.6,off_x=2)
+				spawn_item(C,I,/obj/item/spray_paint,scale_x=0.6,scale_y=0.45,off_x=-2)
+				spawn_item(C,I,/obj/item/spray_paint,scale_x=0.6,scale_y=0.45)
+				spawn_item(C,I,/obj/item/spray_paint,scale_x=0.6,scale_y=0.45,off_x=2)
 		flash
 			weight = 1 // it sucks getting more than 1 of these
 			tier = GANG_CRATE_GEAR
@@ -696,8 +719,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 		flashbang
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_y=2,scale_y=0.8)
-				spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_y=-2,scale_y=0.8)
+				spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_y=2,scale_x=0.825,scale_y=0.65)
+				spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_y=-2,scale_x=0.825,scale_y=0.65)
 		donk
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -848,7 +871,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 		syndieomnitool
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/tool/omnitool/syndicate,scale_y=0.8,rot=90)
+				var/obj/item/tool/omnitool/syndietool = spawn_item(C,I,/obj/item/tool/omnitool/syndicate,scale_y=0.75,rot=90)
+				syndietool.change_mode(OMNI_MODE_PULSING, null, /obj/item/device/multitool)
 
 		cigar
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -980,7 +1004,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 		syndieomnitool
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/tool/omnitool/syndicate,0,0,scale_y=0.8)
+				var/obj/item/tool/omnitool/syndietool = spawn_item(C,I,/obj/item/tool/omnitool/syndicate,scale_y=0.75)
+				syndietool.change_mode(OMNI_MODE_PULSING, null, /obj/item/device/multitool)
 		autos
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
