@@ -2269,7 +2269,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/com_dish/auxdish)
 "amw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6452,12 +6452,6 @@
 	dir = 1
 	},
 /area/station/chapel/sanctuary)
-"aGQ" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "aGT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -86842,7 +86836,7 @@ aaa
 aaa
 aaa
 aaa
-aGQ
+amw
 afC
 xez
 xez
@@ -87144,7 +87138,7 @@ adG
 aaa
 aaa
 aaa
-aGQ
+amw
 aaB
 aaB
 aaB
