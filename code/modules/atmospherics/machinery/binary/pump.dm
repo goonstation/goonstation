@@ -11,6 +11,8 @@ Thus, the two variables affect pump operation are set in New():
 		Higher quantities of this cause more air to be perfected later
 			but overall network volume is also increased as this increases...
 */
+/// Min pump pressure.
+#define MIN_PRESSURE 0
 /// Max pump pressure.
 #define MAX_PRESSURE 149 * ONE_ATMOSPHERE
 
@@ -90,6 +92,8 @@ Thus, the two variables affect pump operation are set in New():
 	signal.data["netid"] = src.net_id
 	signal.data["device"] = "AGP"
 	signal.data["power"] = src.on ? "on" : "off"
+	signal.data["min_output"] = MIN_PRESSURE
+	signal.data["max_output"] = MAX_PRESSURE
 	signal.data["target_output"] = src.target_pressure
 	signal.data["address_tag"] = "pumpcontrol"
 
@@ -123,7 +127,7 @@ Thus, the two variables affect pump operation are set in New():
 		if("set_output_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
 
-			src.target_pressure = clamp(number, 0, MAX_PRESSURE)
+			src.target_pressure = clamp(number, MIN_PRESSURE, MAX_PRESSURE)
 			. = TRUE
 
 		if("help")
@@ -160,7 +164,7 @@ Thus, the two variables affect pump operation are set in New():
 /datum/pump_ui/basic_pump_ui
 	value_name = "Target Pressure"
 	value_units = "kPa"
-	min_value = 0
+	min_value = MIN_PRESSURE
 	max_value = MAX_PRESSURE
 	incr_sm = 50
 	incr_lg = 100
@@ -188,4 +192,5 @@ Thus, the two variables affect pump operation are set in New():
 /datum/pump_ui/basic_pump_ui/get_atom()
 	return our_pump
 
+#undef MIN_PRESSURE
 #undef MAX_PRESSURE
