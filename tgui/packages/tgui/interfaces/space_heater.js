@@ -25,15 +25,10 @@ const Glitch_Text = (emagged, string, number) => {
 };
 // Used for well, finding the theme, but also to tell if its in the 'special variants' when emagged.
 const Find_Theme = (emagged, temperature, on) => {
-  if (!emagged) {
-    return "generic";
-  } else if (temperature < 100 && on) { // Under 100 kelvin is supercooling
-    return "ntos";
-  } else if (temperature > 400 && on) { // Over 400 kelvin is overheating
-    return "syndicate";
-  } else {
-    return "generic";
-  }
+  if (!emagged) { return "generic"; }
+  else if (temperature < 100 && on) { return "ntos"; } // Under 100 kelvin is supercooling
+  else if (temperature > 400 && on) { return "syndicate"; } // Over 400 kelvin is overheating
+  else { return "generic"; }
 };
 
 const HVAC_Death = (emagged, cell, cell_charge) => {
