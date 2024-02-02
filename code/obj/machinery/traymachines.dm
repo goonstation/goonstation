@@ -349,7 +349,6 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		return
 
 	src.visible_message(SPAN_ALERT("You hear a roar as \the [src.name] activates."))
-	//src.locked = TRUE
 	var/ashes = 0
 	power_usage = powerdraw_use //gotta chug them watts
 	icon_state = "crema_active"
