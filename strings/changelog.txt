@@ -1,6 +1,10 @@
 
 (t)fri feb 02 24
 (u)Sord
+(p)17830
+(e)🗺|A-Mapping
+(*)Cogmap2's Medbay has been completely revamped
+(u)Sord
 (+)The Crematorium now takes longer operate and can be escaped up to a certain point.
 (u)Tyrant
 (p)17841
