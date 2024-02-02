@@ -1640,12 +1640,11 @@ TYPEINFO(/obj/submachine/mixer)
 				. = TRUE
 
 			if ("ejectAll")
+				. = TRUE
 				for (var/obj/item/target in src.contents)
 					src.ejectItemFromMixer(target)
 
 				usr.show_text(SPAN_NOTICE("You eject all contents from the [src]."))
-		if (.)
-			tgui_process.update_uis(src)
 
 	attack_ai(var/mob/user as mob)
 		return ui_interact(user)
