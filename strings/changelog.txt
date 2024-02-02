@@ -1,5 +1,9 @@
 
 (t)fri feb 02 24
+(u)LeahTheTech
+(p)17839
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)Members of the winning gang will now be displayed at round end.
 (u)Sord
 (p)17830
 (e)🗺|A-Mapping
