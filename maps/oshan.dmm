@@ -36689,6 +36689,11 @@
 "iEz" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "outpost";
+	name = "Research Outpost";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/black,
 /area/research_outpost)
 "iEE" = (
@@ -43356,6 +43361,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "outpost";
+	name = "Research Outpost";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
 "sJy" = (
@@ -45222,6 +45232,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "outpost";
+	name = "Research Outpost";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/hangar)
 "wbu" = (
