@@ -139,8 +139,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/list/typevulns
 
 	/// ignores suffocation from being underwater + moves at full speed underwater
-	var/aquatic = 0
-	var/needs_oxy = 1
+	var/aquatic = FALSE
+	/// Takes burn damage and hygiene loss on contact with water
+	var/aquaphobic = FALSE
+	var/needs_oxy = TRUE
 
 	var/voice_override = 0
 	var/step_override = null
@@ -1880,6 +1882,19 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		. = ..()
 
+/datum/mutantrace/cat/bingus // our beloved
+	name = "bingus"
+	icon = 'icons/mob/bingus.dmi'
+	mutant_organs = list("tail" = /obj/item/organ/tail/cat/bingus)
+	mutant_folder = 'icons/mob/bingus.dmi'
+	dna_mutagen_banned = FALSE
+	genetics_removable = FALSE
+	aquaphobic = TRUE
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/bingus/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/bingus/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/left
 
 /datum/mutantrace/amphibian
 	name = "amphibian"
@@ -2403,7 +2418,7 @@ TYPEINFO(/datum/mutantrace/pug)
 
 	proc/throw_response(target, item, thrower)
 		// Don't dive at things we throw; don't dive if we're stunned or dead; dive 15% of the time, 100% at limbs
-		if (src.mob == thrower || is_incapacitated(src.mob) || (prob(85) && !istype(item, /obj/item/parts)))
+		if (src.mob == thrower || is_incapacitated(src.mob) || (prob(85) && !(istype(item, /obj/item/parts) || istype(item, /obj/item/material_piece/bone))))
 			return
 		src.mob.throw_at(get_turf(item), 1, 1)
 		src.mob.visible_message(SPAN_ALERT("[src.mob] staggers."))
