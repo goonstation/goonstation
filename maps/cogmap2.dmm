@@ -53357,12 +53357,9 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "dcX" = (
-/obj/machinery/traymachine/locking/crematorium{
-	id = "medbaycrematorium"
-	},
-/obj/machinery/crema_switch{
-	id = "medbaycrematorium";
-	pixel_y = 28
+/obj/machinery/traymachine/locking/crematorium/medical,
+/obj/machinery/crema_switch/medical{
+	pixel_y = 24
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
