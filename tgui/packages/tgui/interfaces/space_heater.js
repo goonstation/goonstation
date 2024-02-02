@@ -155,16 +155,9 @@ const BatteryStatus = (props, context) => {
             </Flex.Item>
             <Flex.Item>
               <Button
-                color={Set_Color(set_temperature, "blue", on)}
-                disabled={!on}
-                onClick={() => act('switch_off')}>
-                {Glitch_Text(emagged, "Off", 1)}
-              </Button>
-              <Button
-                color={"green"}
-                disabled={on || cell === null}
-                onClick={() => act('switch_on')}>
-                {Glitch_Text(emagged, "On", 1)}
+                color={Set_Color(set_temperature, (on ? "average": "default"), on)}
+                onClick={() => on ? act('switch_off'): act('switch_on')}>
+                {Glitch_Text(emagged, (on ? "On": "Off"), 1)}
               </Button>
             </Flex.Item>
           </Flex>
