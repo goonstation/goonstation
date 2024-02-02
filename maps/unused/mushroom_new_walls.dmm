@@ -25032,9 +25032,10 @@
 	},
 /area/station/science/lab)
 "mzr" = (
-/obj/machinery/door/airlock,
-/obj/mapping_helper/access/syndie_shuttle,
 /obj/decal/stripe_caution,
+/obj/machinery/door/airlock{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/listeningpost)
 "mzy" = (
@@ -28550,7 +28551,6 @@
 /area/station/bridge)
 "pDL" = (
 /obj/machinery/door/airlock,
-/obj/mapping_helper/access/syndie_shuttle,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -30217,7 +30217,6 @@
 /area/station/security/main)
 "qSZ" = (
 /obj/machinery/door/airlock/glass,
-/obj/mapping_helper/access/syndie_shuttle,
 /obj/cable{
 	icon_state = "4-8"
 	},
