@@ -13757,14 +13757,7 @@
 /area/station/storage/tech)
 "bqF" = (
 /obj/machinery/light/small,
-/obj/rack,
-/obj/item/circuitboard/card,
-/obj/item/circuitboard/barcode_qm,
-/obj/item/circuitboard/arcade,
-/obj/item/circuitboard/powermonitor_smes,
-/obj/item/circuitboard/genetics,
-/obj/item/circuitboard/qmorder,
-/obj/item/circuitboard/telescope,
+/obj/rack/organized/techstorage_eng,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "bqG" = (
@@ -19573,7 +19566,12 @@
 /obj/item/kitchen/utensil/spoon,
 /obj/item/kitchen/utensil/fork,
 /obj/item/storage/box/plates,
-/obj/item/storage/box/cutlery,
+/obj/item/storage/box/cutlery{
+	pixel_x = 8
+	},
+/obj/item/storage/box/popsicle_sticks{
+	pixel_x = -7
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "dMz" = (
@@ -29593,16 +29591,9 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/disposal)
 "lyC" = (
-/obj/rack,
-/obj/item/circuitboard/teleporter,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/item/circuitboard/barcode,
-/obj/item/circuitboard/powermonitor,
-/obj/item/circuitboard/operating,
-/obj/item/circuitboard/qmsupply,
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
+/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "lzl" = (
