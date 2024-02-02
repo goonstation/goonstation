@@ -1605,15 +1605,19 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 #define PUMP_POWERLEVEL_5 5000
 #define PUMP_ON 1
 #define PUMP_OFF 0
+#define DEVICE_IS_PUMP(signal) (signal.data["device"] == "AGP")
+#define HAS_REQUIRED_DATA(signal) ((signal.data["tag"] != null) && (signal.data["power"] != null) && (signal.data["target_output"] != null) && (signal.data["min_output"] != null) && (signal.data["max_output"] != null))
 
 /// Describes a pump from its packet data
 /datum/pump_infoset
 	/// Whether or not the pump is on or off
 	var/power_status = PUMP_OFF
 	/// Pressure of the pump
-	var/target_output = 0
+	var/target_pressure = 0
 	/// Radio ID the pump responds to
 	var/id = ""
+	var/min_pressure = 0
+	var/max_pressure = 0
 
 /obj/machinery/computer/atmosphere/pumpcontrol
 	icon = 'icons/obj/computer.dmi'
@@ -1656,26 +1660,31 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 
 	/// we probably have mapper varedited frequency so this handles all the pumps of the relevant frequency that scream back
 	receive_signal(datum/signal/signal)
-		// AGP is the device value broadcasted by pumps, this returns early if its not a pump or doesn't have all required data or is otherwise weird
-		// also if the pump is already saved in pump infos dont do it again
-		if (!signal \
-		   || (signal.source in pump_infos) \
-		   ||  signal.encryption \
-		   ||  signal.data["device"] != "AGP" \
-		   || !signal.data["tag"] \
-		   || !signal.data["power"] \
-		   || !signal.data["target_output"])
-			return
+		if (!signal) return
+		if (signal.encryption) return
+		if (!DEVICE_IS_PUMP(signal)) return
+		if (!HAS_REQUIRED_DATA(signal)) return
 
-		var/area/pump_area = get_area(signal.source)
-		if (!istype(pump_area))
+
+		// We know about this pump so just update with information that prolly changed
+		if (signal.source in pump_infos)
+			var/datum/pump_infoset/I = pump_infos[signal.source]
+			I.power_status = signal.data["power"]
+			I.target_pressure = signal.data["target_output"]
+			src.updateUsrDialog()
 			return
 
 		// Setup pump info datum to add to list later
 		var/datum/pump_infoset/I = new()
 		I.id = signal.data["tag"]
 		I.power_status = signal.data["power"]
-		I.target_output = signal.data["target_output"]
+		I.target_pressure = signal.data["target_output"]
+		I.min_pressure = signal.data["min_output"]
+		I.max_pressure = signal.data["max_output"]
+
+		var/area/pump_area = get_area(signal.source)
+		if (!istype(pump_area))
+			return
 
 		var/area_label_position = pump_infos.Find(pump_area.name)
 		if (area_label_position)
@@ -1696,13 +1705,13 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 			pump_infos += signal.source
 
 		pump_infos[signal.source] = I
-
 		src.updateUsrDialog()
 
 	proc/return_text()
 		var/pump_html = ""
 		//var/count = 1
 		for(var/A in pump_infos)
+			// Area header
 			if (istext(A))
 				pump_html += "<center><b>[A]</b></center><br>"
 				continue
@@ -1711,30 +1720,9 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 			if (!istype(I))
 				continue
 			pump_html += "<B>[I.id] Status</B>:<BR>"
-			//pump_html += "<B>Pump [count] Status</B>: <BR>"
-			//pump_html += "	Pump Id: [I.id]<BR>"
 			pump_html += "	Pump Status: <U><A href='?src=\ref[src];toggle=[I.id]'>[I.power_status == "on" ? "On":"Off"]</A></U><BR>"
-			var/current_pump_level = 0
-			switch (I.target_output)
-				if (1 to PUMP_POWERLEVEL_1)
-					current_pump_level = 1
-				if (PUMP_POWERLEVEL_1 + 1 to PUMP_POWERLEVEL_2)
-					current_pump_level = 2
-				if (PUMP_POWERLEVEL_2 + 1 to PUMP_POWERLEVEL_3)
-					current_pump_level = 3
-				if (PUMP_POWERLEVEL_3 + 1 to PUMP_POWERLEVEL_4)
-					current_pump_level = 4
-				if (PUMP_POWERLEVEL_4 + 1 to INFINITY)
-					current_pump_level = 5
-			pump_html += "	Pump Pressure Level: "
-			for (var/i =1, i < 6, i++)
-				if (current_pump_level == i)
-					pump_html += "<b>[i]</b> "
-				else
-					pump_html += "<A href='?src=\ref[src];setoutput=[i]&target=[I.id]'>[i]</A> "
-
+			pump_html += "	Pump Pressure Level: <A href='?src=\ref[src];target=[I.id]'>[I.target_pressure] kPa</A>"
 			pump_html += "<BR><BR>"
-			//count++
 
 		var/output = "<B>[name]</B><BR><A href='?src=\ref[src];refresh=1'>Refresh</A><BR><HR><B>Pump Data: <BR><BR></B>[pump_html]<HR>"
 		return output
@@ -1760,43 +1748,50 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 			if(!href_list["target"])
 				return 0
 
-			var/new_target = 0
-			switch (href_list["setoutput"])
-				if ("1")
-					new_target = PUMP_POWERLEVEL_1
-				if ("2")
-					new_target = PUMP_POWERLEVEL_2
-				if ("3")
-					new_target = PUMP_POWERLEVEL_3
-				if ("4")
-					new_target = PUMP_POWERLEVEL_4
-				if ("5")
-					new_target = PUMP_POWERLEVEL_5
+			// did we find the pump we supposedly have?
+			var/found = FALSE
+			var/datum/pump_infoset/pump_info
+			for (var/key in src.pump_infos)
+				pump_info = src.pump_infos[key].id
+				if(pump_info == href_list["target"])
+					break
 
-			if (!new_target)
+			var/new_pressure
+			if (found)
+				new_pressure = input(usr, "Target Pressure ([pump_info.min_pressure] - [pump_info.max_pressure] kPa):", "Enter new value", pump_info.target_pressure) as num
+			else
+				new_pressure = input(usr, "Target Pressure:", "Enter new value", 0) as num
+
+
+			if (!new_pressure || !isnum_safe(new_pressure))
 				return
 
 			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = 1 //radio
+			signal.transmission_method = TRANSMISSION_RADIO
 			signal.source = src
 			signal.data["tag"] = href_list["target"]
 			signal.data["command"] = "set_output_pressure"
-			signal.data["parameter"] = new_target
+			signal.data["parameter"] = new_pressure
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-		if(href_list["refresh"])
+		// Refresh when we change pump states too
+		if(href_list["refresh"] || href_list["toggle"] || href_list["setoutput"])
 			src.add_fingerprint(usr)
 			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = 1 //radio
+			signal.transmission_method = TRANSMISSION_RADIO
 			signal.source = src
 			signal.data["command"] = "broadcast_status"
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+
+		src.updateUsrDialog()
 
 #undef PUMP_POWERLEVEL_1
 #undef PUMP_POWERLEVEL_2
 #undef PUMP_POWERLEVEL_3
 #undef PUMP_POWERLEVEL_4
 #undef PUMP_POWERLEVEL_5
+#undef DEVICE_IS_PUMP
+#undef HAS_REQUIRED_DATA
 #undef PUMP_ON
 #undef PUMP_OFF
 #undef LEFT_CIRCULATOR
