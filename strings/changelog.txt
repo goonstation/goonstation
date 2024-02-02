@@ -1,6 +1,10 @@
 
 (t)fri feb 02 24
 (u)LeahTheTech
+(p)17354
+(e)⚖|C-Balance
+(*)Captains can no longer spawn as antagonist roles.
+(u)LeahTheTech
 (p)17839
 (e)🆕🧛|C-Feature, A-Gamemodes
 (+)Members of the winning gang will now be displayed at round end.
