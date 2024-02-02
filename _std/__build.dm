@@ -128,7 +128,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap, by Overtone
 
 //-------Rotation maps:
-// #define MAP_OVERRIDE_COGMAP       // Cogmap1, by Dr. Cogwerks
+//#define MAP_OVERRIDE_COGMAP       // Cogmap1, by Dr. Cogwerks
 //#define MAP_OVERRIDE_COGMAP2      // Cogmap2, by Dr. Cogwerks
 //#define MAP_OVERRIDE_DONUT2       // Updated Donut Station 2, by committee.
 //#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi
