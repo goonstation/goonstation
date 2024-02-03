@@ -36,6 +36,7 @@ TYPEINFO(/obj/item/light_parts)
 
 // For metal sheets. Can't easily change an item's vars the way it's set up (Convair880).
 /obj/item/light_parts/bulb
+	name = "bulb fixture parts"
 	icon_state = "bulb-fixture"
 	fixture_type = /obj/machinery/light/small
 	installed_icon_state = "bulb1"
@@ -44,6 +45,7 @@ TYPEINFO(/obj/item/light_parts)
 	light_type = /obj/item/light/bulb
 
 /obj/item/light_parts/floor
+	name = "floor fixture parts"
 	icon_state = "floor-fixture"
 	fixture_type = /obj/machinery/light/small/floor/netural
 	installed_icon_state = "floor1"
@@ -379,7 +381,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 				..()
 				current_lamp.light_status = LIGHT_BROKEN
 
-
+/obj/machinery/light/small/uninstall_fixture()
+	var/obj/item/light_parts/bulb/parts = new /obj/item/light_parts/bulb(get_turf(src))
+	parts.copy_light(src)
+	qdel(src)
 
 //floor lights
 /obj/machinery/light/small/floor
@@ -438,6 +443,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		New()
 			..()
 			current_lamp.light_status = LIGHT_BROKEN
+
+/obj/machinery/light/small/floor/uninstall_fixture()
+	var/obj/item/light_parts/floor/parts = new /obj/item/light_parts/floor(get_turf(src))
+	parts.copy_light(src)
+	qdel(src)
 
 /obj/machinery/light/emergency
 	icon_state = "ebulb1"
@@ -967,14 +977,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 				boutput(user, "That's not safe with the power on!")
 				return
 			if (candismantle)
-				boutput(user, "You begin to unscrew the fixture from the wall...")
+				boutput(user, "You begin to loosen the fixture's screws...")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				if (!do_after(user, 2 SECONDS))
-					return
-				boutput(user, "You unscrew the fixture from the wall.")
-				var/obj/item/light_parts/parts = new /obj/item/light_parts(get_turf(src))
-				parts.copy_light(src)
-				qdel(src)
+				SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(uninstall_fixture),list(), src.icon, src.icon_state,\
+				 "[user] finishes uninstalling \the [src].", INTERRUPT_MOVE|INTERRUPT_ACT|INTERRUPT_ATTACKED|INTERRUPT_STUNNED|INTERRUPT_ACTION)
 				return
 			else
 				boutput(user, "You can't seem to dismantle it.")
@@ -1007,6 +1013,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		else
 			boutput(user, "You hit the light!")
 
+/obj/machinery/light/proc/uninstall_fixture()
+	var/obj/item/light_parts/parts = new /obj/item/light_parts(get_turf(src))
+	parts.copy_light(src)
+	qdel(src)
 
 // returns whether this light has power
 // true if area has power and lightswitch is on
