@@ -935,6 +935,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	two_handed = FALSE
 	add_residue = TRUE
 	gildable = TRUE
+	spread_angle = 2
 	HELP_MESSAGE_OVERRIDE({"When pulled from a pocket, this gun gains a brief firerate increase at the cost of accuracy."})
 
 	var/broke_open = FALSE
@@ -982,6 +983,22 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			src.toggle_action(user)
 			user.visible_message(SPAN_ALERT("<b>[user]</b> snaps shut [src] with a [pick("spin", "twirl")]!"))
 		..()
+	attack_hand(mob/user)
+		var/can_fan = FALSE
+		if (ishuman(loc))
+			var/mob/living/carbon/human/H = src.loc
+			if ( (H.l_store == src || H.r_store == src) && H.l_hand == null && H.r_hand == null)
+				can_fan = TRUE
+		..()
+		if (can_fan && !ON_COOLDOWN(src, "twirl_spam", 2 SECONDS))
+			shoot_delay = 1
+			spread_angle = 15
+			src.on_spin_emote(user)
+			animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+			user.show_message(SPAN_ALERT("[user] whips \the [src] out of [his_or_her(user)] pocket, seating their free hand over the hammer!"), 1)
+			SPAWN (2 SECONDS)
+				spread_angle = 2
+				shoot_delay = 4
 
 	proc/toggle_action(mob/user)
 		if (!src.broke_open)
