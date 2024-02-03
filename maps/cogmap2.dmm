@@ -53045,9 +53045,6 @@
 /obj/rack,
 /obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
-/obj/machinery/light_switch/east{
-	pixel_y = 12
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
