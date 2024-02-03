@@ -22,7 +22,7 @@ const Glitch_Text = (emagged, string, number) => {
 // Used for well, finding the theme, but also to tell if its in the 'special variants' when emagged.
 const Find_Theme = (emagged, temperature, on) => {
   if (!emagged) { return "generic"; }
-  else if (temperature < 100 && on) { return "ntos"; } // Under 100 kelvin is supercooling
+  else if (temperature < 180 && on) { return "ntos"; } // Under 100 kelvin is supercooling
   else if (temperature > 400 && on) { return "syndicate"; } // Over 400 kelvin is overheating
   else { return "generic"; }
 };
@@ -37,7 +37,7 @@ const HVAC_Death = (emagged, cell, cell_charge) => {
 const Set_Color = (temperature, generic_color="", on=true) => {
   if (temperature > 400 && on) {
     return "red";
-  } else if (temperature < 100 && on) {
+  } else if (temperature < 180 && on) {
     return "blue";
   } else {
     return generic_color;
@@ -246,7 +246,7 @@ const TemperatureRegulator = (props, context) => {
         minValue={min}
         maxValue={max}
         step={emagged ? 5: 1}
-        stepPixelSize={emagged ? 1.5: 4.5}
+        stepPixelSize={emagged ? 3: 1.8}
         ranges={{
           "blue": [-Infinity, neutralTemperature-1], // Specifically want neutralTemperature (293.15) to be considered 'warm'
           "red": [neutralTemperature, Infinity],

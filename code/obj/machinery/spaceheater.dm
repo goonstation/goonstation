@@ -12,14 +12,14 @@ TYPEINFO(/obj/machinery/space_heater)
 	var/obj/item/cell/cell
 	var/on = FALSE
 	var/heating = FALSE // If its cooling down (false) or heating up (true) the current atmosphere
-	var/set_temperature = T20C
-	var/heating_power = 100000
-	var/cooling_power = -100000
+	var/set_temperature = T0C+50
+	var/heating_power = 40000
+	var/cooling_power = -30000
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = FPRINT | TGUI_INTERACTIVE
 
-	#define max (src.emagged ? 1000 : T20C+35)
-	#define min (src.emagged ? 0 : T20C-35)
+	#define max (src.emagged ? T0C+400 : T0C+90)
+	#define min (src.emagged ? T0C-120 : T0C-90)
 
 	New()
 		..()
@@ -140,7 +140,7 @@ TYPEINFO(/obj/machinery/space_heater)
 					usr.show_text("The [src.cell.name] scalds your hand!", "red")
 					usr.emote("scream")
 					playsound(src.loc, 'sound/machines/engine_grump4.ogg', 50, 1)
-				else if (src.set_temperature < 100 && src.on) // Supercooling
+				else if (src.set_temperature < 180 && src.on) // Supercooling
 					usr.show_text("The [src.cell.name] seems frozen in place!", "red")
 					return
 				I.set_loc(src.loc)
@@ -191,10 +191,10 @@ TYPEINFO(/obj/machinery/space_heater)
 						//boutput(world, "heating ([heat_capacity])")
 						var/current_power = 0
 						if(src.heating)
-							current_power = src.emagged ? src.heating_power * 10: src.heating_power
+							current_power = src.emagged ? src.heating_power * 3: src.heating_power
 							removed.temperature = (removed.temperature*heat_capacity + current_power)/heat_capacity
 						else
-							current_power = src.emagged ? src.cooling_power * 10: src.cooling_power
+							current_power = src.emagged ? src.cooling_power * 3: src.cooling_power
 							removed.temperature = (removed.temperature*heat_capacity + current_power)/heat_capacity
 
 						src.cell.use(abs(current_power)/20000)
