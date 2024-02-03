@@ -6,9 +6,8 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Button, Divider, Flex, Icon, LabeledList, Modal, ProgressBar, Section, Slider, Stack } from '../components';
+import { Button, Divider, Flex, LabeledList, ProgressBar, Section, Slider, Stack } from '../components';
 import { Window } from '../layouts';
-import { randInt } from './common/mathUtils';
 import { neutralTemperature } from './common/temperatureUtils';
 import { glitch } from './common/stringUtils';
 
@@ -25,13 +24,6 @@ const Find_Theme = (emagged, temperature, on) => {
   else if (temperature < 180 && on) { return "ntos"; } // Under 100 kelvin is supercooling
   else if (temperature > 400 && on) { return "syndicate"; } // Over 400 kelvin is overheating
   else { return "generic"; }
-};
-
-const HVAC_Death = (emagged, cell, cell_charge) => {
-  if ((cell === null || cell_charge === 0) && emagged) {
-    return true;
-  }
-  return false;
 };
 
 const Set_Color = (temperature, generic_color="", on=true) => {
@@ -54,39 +46,6 @@ const Set_Icon = (theme) => {
   }
 };
 
-const Generate_Emag_Text = (theme, number) => {
-  let out = [];
-  if (theme === "generic") {
-    for (let i = 0; i < number; i++) {
-      if (Math.random() > 0.3) {
-        out.push("ERROR ");
-      } else {
-        out.push("Error ");
-      }
-    }
-    return out.map((kill, index) => (
-      <Box inline preserveWhitespace color="red" fontSize={randInt(10, 25) + "px"} key={index}>{kill}</Box>
-    ));
-  }
-  for (let i = 0; i < number; i++) {
-    let num = Math.random();
-    if (num < 0.2) {
-      out.push(theme === "syndicate" ? "HOT! HOT! HOT! ": "so cold... ");
-    } else if (0.2 < num < 0.4) {
-      out.push(theme === "syndicate" ? "IM BURNING! ": "im freezing... ");
-    } else if (0.4 < num < 0.6) {
-      out.push(theme === "syndicate" ? "HELP! ": "im shivering... ");
-    } else if (0.6 < num < 0.8) {
-      out.push(theme === "syndicate" ? "MELTING! ": "its so cold... ");
-    } else {
-      out.push(theme === "syndicate" ? "OVERHEATING! ": "chilly... ");
-    }
-  }
-  return out.map((kill, index) => (
-    <Box inline preserveWhitespace fontSize={randInt(10, 16) + "px"} key={index}>{kill}</Box>
-  ));
-};
-
 export const space_heater = (props, context) => {
   const { data } = useBackend(context);
   const {
@@ -103,17 +62,6 @@ export const space_heater = (props, context) => {
       width={350}
       height={250}>
       <Window.Content>
-        {HVAC_Death(emagged, cell, cell_charge) && (
-          <Modal
-            Align="center"
-            width={30.5}
-            height={18}
-          >
-            <Box backgroundColor={Set_Color(set_temperature, "#001414")}>
-              <Icon name={"skull-crossbones"} size={15} />
-            </Box>
-          </Modal>
-        )}
         <BatteryStatus />
         <TemperatureRegulator />
       </Window.Content>
@@ -189,17 +137,6 @@ const TemperatureRegulator = (props, context) => {
   } = data;
   return (
     <Section title={Glitch_Text(emagged, "Temperature regulator", 3)}>
-      {!!on && !!emagged && !HVAC_Death(emagged, cell, cell_charge) && (
-        <Modal
-          backgroundColor={Set_Color(set_temperature, "#001414")}
-          align="center"
-          height={5.8}
-          width={28.5} // This sucks
-          mr={1.4}
-        >
-          {Generate_Emag_Text(Find_Theme(emagged, set_temperature, on), 5)}
-        </Modal>
-      )}
       <Stack justify="center" align="center">
         <Stack.Item>
           <Button
