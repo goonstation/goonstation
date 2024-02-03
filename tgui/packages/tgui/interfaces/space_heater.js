@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Button, Divider, Flex, LabeledList, ProgressBar, Section, Slider, Stack } from '../components';
+import { Button, Divider, LabeledList, ProgressBar, Section, Slider, Stack } from '../components';
 import { Window } from '../layouts';
 import { neutralTemperature } from './common/temperatureUtils';
 import { glitch } from './common/stringUtils';
@@ -86,24 +86,13 @@ const BatteryStatus = (props, context) => {
           label={Glitch_Text(emagged, "Cell", 1)}
           verticalAlign={"middle"}
         >
-          <Flex justify={"space-between"}>
-            <Flex.Item>
-              <Button
-                icon={Set_Icon(Find_Theme(emagged, set_temperature, on))}
-                color={cell !== null ? Set_Color(set_temperature, "green", on) : "blue"}
-                onClick={() => cell !== null ? act('cellremove'): act('cellinstall')}
-                bold>
-                {cell !== null ? Glitch_Text(emagged, cell_name, 2): Glitch_Text(emagged, "Insert power cell", 3)}
-              </Button>
-            </Flex.Item>
-            <Flex.Item>
-              <Button
-                color={Set_Color(set_temperature, (on ? "average": "default"), on)}
-                onClick={() => on ? act('switch_off'): act('switch_on')}>
-                {Glitch_Text(emagged, (on ? "On": "Off"), 1)}
-              </Button>
-            </Flex.Item>
-          </Flex>
+          <Button
+            icon={Set_Icon(Find_Theme(emagged, set_temperature, on))}
+            color={cell !== null ? Set_Color(set_temperature, "green", on) : "blue"}
+            onClick={() => cell !== null ? act('cellremove'): act('cellinstall')}
+            bold>
+            {cell !== null ? Glitch_Text(emagged, cell_name, 2): Glitch_Text(emagged, "Insert power cell", 3)}
+          </Button>
         </LabeledList.Item>
         <LabeledList.Item
           label={Glitch_Text(emagged, "Cell Power", 1)}

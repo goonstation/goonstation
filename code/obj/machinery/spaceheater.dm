@@ -10,6 +10,7 @@ TYPEINFO(/obj/machinery/space_heater)
 	desc = "Made by Space Amish using traditional space techniques, this space heater is guaranteed not to set the station on fire."
 	var/emagged = FALSE
 	var/obj/item/cell/cell
+	var/open = FALSE
 	var/on = FALSE
 	var/heating = FALSE // If its cooling down (false) or heating up (true) the current atmosphere
 	var/set_temperature = T0C+50
@@ -56,15 +57,22 @@ TYPEINFO(/obj/machinery/space_heater)
 				icon_state = "sheaterC"
 		else
 			icon_state = "sheater0"
+		if (src.open)
+			icon_state = "sheater-open"
 		return
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
-			if (user)
-				user.show_text("You short out the temperature limiter circuit in the [src].", "blue")
-			src.emagged = TRUE
-			src.desc = "Made by Space Amish using traditional space techniques, this heater is guaranteed to set the station on fire."
-			return TRUE
+			if (src.open)
+				if (user)
+					user.show_text("You short out the temperature limiter circuit in the [src].", "blue")
+				src.emagged = TRUE
+				src.desc = "Made by Space Amish using traditional space techniques, this heater is guaranteed to set the station on fire."
+				return TRUE
+			else
+				if (user)
+					user.show_text("The internal circuitry must be exposed!", "red")
+				return FALSE
 		else
 			if (user)
 				user.show_text("The temperature limiter is already burned out.", "red")
@@ -83,11 +91,38 @@ TYPEINFO(/obj/machinery/space_heater)
 		. = ..()
 		. += "The HVAC is [src.on ? "on" : "off"], [src.heating ? "heating" : "cooling"]"
 		. += "The power cell is [src.cell ? "installed" : "missing"]."
+		if(src.open)
+			. += "The power cell is [cell ? "installed" : "missing"]."
 		if (src.cell != null)
 			. += "The charge meter reads [src.cell ? round(src.cell.percent(),1) : 0]%"
 
 	attackby(obj/item/I, mob/user)
-		if (iswrenchingtool(I))
+		if(istype(I, /obj/item/cell))
+			if(src.open)
+				if(src.cell)
+					boutput(user, "There is already a power cell inside.")
+					return
+				else
+					// insert cell
+					var/obj/item/cell/C = user.equipped()
+					if(istype(C))
+						user.drop_item()
+						src.cell = C
+						C.set_loc(src)
+						C.add_fingerprint(user)
+
+						user.visible_message(SPAN_NOTICE("[user] inserts a power cell into [src]."), SPAN_NOTICE("You insert the power cell into [src]."))
+			else
+				boutput(user, "The hatch must be open to insert a power cell.")
+				return
+		else if (isscrewingtool(I))
+			src.open = !src.open
+			user.visible_message(SPAN_NOTICE("[user] [open ? "opens" : "closes"] the hatch on the [src]."), SPAN_NOTICE("You [src.open ? "open" : "close"] the hatch on the [src]."))
+			UpdateIcon()
+			if(!src.open && user.using_dialog_of(src))
+				user.Browse(null, "window=spaceheater")
+				src.remove_dialog(user)
+		else if (iswrenchingtool(I))
 			if (user)
 				user.show_text("You [src.anchored ? "release" : "anchor"] the [src]", "blue")
 			src.anchored = !src.anchored
@@ -96,31 +131,28 @@ TYPEINFO(/obj/machinery/space_heater)
 			..()
 		return
 
+	attack_hand(mob/user)
+		src.add_fingerprint(user)
+		if(src.open)
+			ui_interact(user)
+		else
+			if (src.on && src.emagged)
+				user.show_text("The button seems to be stuck!", "red")
+			else
+				src.on = !src.on
+				user.visible_message(SPAN_NOTICE("[user] switches [src.on ? "on" : "off"] the [src]."),SPAN_NOTICE("You switch [src.on ? "on" : "off"] the [src]."))
+				UpdateIcon()
+			if (src.on)
+				playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
+			else
+				playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
+		return
+
 	ui_act(action, list/params)
 		. = ..()
 		if (.)
 			return
 		switch(action)
-			if ("switch_off")
-				if (src.cell == null)
-					return
-				else if (src.on && src.emagged)
-					usr.show_text("The button seems to be stuck!", "red")
-				else
-					src.on = FALSE
-				playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
-				UpdateIcon()
-				. = TRUE
-
-			if("switch_on")
-				if (src.cell == null)
-					return
-				else if (!src.on)
-					src.on = TRUE
-					playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
-				UpdateIcon()
-				. = TRUE
-
 			if("set_temp")
 				var/adjust_temperature = params["temperature_adjust"]
 				var/inputted_temperature = params["inputted_temperature"] // For dragging
@@ -138,12 +170,8 @@ TYPEINFO(/obj/machinery/space_heater)
 				I.set_loc(src.loc)
 				src.on = FALSE
 				usr.put_in_hand_or_eject(I)
-				if (src.emagged)
-					usr.visible_message(SPAN_ALERT("[usr] removes the power cell from \the [src] and completely frying it!"),
-					SPAN_ALERT("You remove the power cell from \the [src], causing it to fry itself!"))
-				else
-					usr.visible_message(SPAN_NOTICE("[usr] removes the power cell from \the [src]."),
-					SPAN_NOTICE("You remove the power cell from \the [src]."))
+				usr.visible_message(SPAN_NOTICE("[usr] removes the power cell from \the [src]."),
+				SPAN_NOTICE("You remove the power cell from \the [src]."))
 				UpdateIcon()
 				. = TRUE
 
