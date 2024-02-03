@@ -1993,6 +1993,130 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
+	cola/cola2
+		required_reagents = list("cola_syrup" = 1, "sodawater" = 5)
+
+	cola_syrup
+		name = "Cola syrup"
+		id = "cola_syrup"
+		result = "cola_syrup"
+		required_reagents = list("cola" = 4, "VHFCS" = 1)
+		inhibitors = list("sodawater")
+		result_amount = 1
+		min_temperature = T0C + 120
+		mix_phrase = "The cola simmers into a noxious black syrup."
+		on_reaction(datum/reagents/holder, created_volume)
+			. = ..()
+			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+			smoke.set_up(1, 0, get_turf(src))
+			smoke.start()
+
+	powercola
+		name = "powercola"
+		id = "powercola"
+		result = "powercola"
+		required_reagents = list("cola" = 1, "cola_syrup" = 1)
+		result_amount = 1
+		mix_phrase = "The cola grows more powerful than you could possibly imagine."
+
+	colamara_chaos
+		name = "Colamara Chaos"
+		id = "colamara"
+		result = "colamara"
+		required_reagents = list("powercola" = 1, "ice" = 0, "ldmatter" = 1, "bitters" = 1)
+		result_amount = 3
+		mix_phrase = "The bitters and cola roughen the surface of the ice as they war with one another."
+
+	mauna_cola_awakens
+		name = "Mauna Cola Awakens"
+		id = "maunacola"
+		result = "maunacola"
+		required_reagents = list("powercola" = 1, "phlogiston" = 1, "ash" = 1)
+		result_amount = 3
+		reaction_icon_state = list("reaction_fire-1", "reaction_fire-2") // Consider making non-instant
+		reaction_icon_color = "#ffffff"
+		mix_phrase = "The container rumbles and sputters as the cola absorbs the mixture's heat."
+
+	roaring_waters
+		name = "Roaring Waters"
+		id = "roaringwaters"
+		result = "roaringwaters"
+		required_reagents = list("powercola" = 1, "ice" = 0, "tonic" = 5, "sodawater" = 5)
+		result_amount = 3
+		mix_phrase = "A cool mist forms over the container as the waters crash over the ice."
+
+	strafers_soda
+		name = "Strafer's Soda" //tastes like gaming
+		id = "gamerdrink"
+		result = "gamerdrink"
+		required_reagents = list("powercola" = 1, "salt" = 1, "acid" = 1)
+		reaction_icon_state = list("reaction_explode-1", "reaction_explode-2")
+		reaction_icon_color = "#ffffff"
+		result_amount = 3
+		mix_phrase = "Looks like someone forgot to put a mix_phrase here. LOL."
+		//Todo: dynamic mix sounds with MLG quickscope sound, "oh baby a triple" if done thrice in succession, "that ain't falco," etc.
+		//Todo: Require dabbing license to mix
+
+	lostcoke
+		name = "The Lost Treasure of Kalimero"
+		id = "lostcoke"
+		result = "lostcoke"
+		required_reagents = list("powercola" = 1, "port" = 1)
+		result_amount = 2
+		mix_phrase = "The mixture teleports away!"
+
+		does_react(var/datum/reagents/holder)  // drink must be pure to mix-- no teleporting chem bombs
+			if(length(holder.reagents_list) > length(src.required_reagents))
+				return FALSE
+			else
+				return TRUE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume) // Teleports away on mixing with code stolen wholesale from haunted plushies
+			playsound(get_turf(holder.owner), "warp", 20, 1)
+			var/teleportation_target = get_a_random_station_unlocked_container() //This probably won't work
+			if(istype(teleportation_target, /obj/storage))
+				var/is_valid_storage_target = TRUE
+				var/obj/storage/container = teleportation_target
+				var/turf/container_turf = get_turf(container)
+				for(var/obj/storage/storage_object in container_turf)
+					if(storage_object == container)
+						continue
+					is_valid_storage_target = FALSE // found another storage object on the same turf as our container, teleport onto the turf instead
+					teleportation_target = get_turf(teleportation_target)
+				if(is_valid_storage_target)
+					if(container.open)
+						container.close()
+			else
+				teleportation_target = get_turf(teleportation_target)
+			if(teleportation_target)
+				holder.owner.set_loc(teleportation_target)
+			else
+				boutput(holder.owner, SPAN_ALERT("The container shudders for a moment, then is still."))
+
+	redspot
+		name = "Redspot"
+		id = ""
+		result = ""
+		required_reagents = list("powercola" = 1,)
+		result_amount =
+		mix_phrase = "Looks like someone forgot to put a mix_phrase here. LOL."
+
+	magnetar
+		name = "Magnetar"
+		id = ""
+		result = "magnetar"
+		required_reagents = list("powercola" = 1,)
+		result_amount =
+		mix_phrase = "Looks like someone forgot to put a mix_phrase here. LOL."
+
+	legendairy
+		name = "Legendairy"
+		id = "legendairy"
+		result = "legendairy"
+		required_reagents = list("powercola" = 1, "super_milk" = 1)
+		result_amount = 2
+		mix_phrase = "The Power Cola finally meets its match."
+
 	hot_toddy
 		name = "Hot Toddy"
 		id = "hottoddy"
