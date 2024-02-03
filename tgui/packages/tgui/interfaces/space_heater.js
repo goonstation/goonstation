@@ -97,7 +97,7 @@ const BatteryStatus = (props, context) => {
           verticalAlign={"middle"}>
           <ProgressBar
             grow
-            color={Set_Color(set_temperature, "green", on)}
+            color={cell !== null ? Set_Color(set_temperature, "green", on): "red"}
             ranges={{
               "green": [0.5, Infinity],
               "yellow": [0.1, 0.5],
