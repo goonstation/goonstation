@@ -38112,6 +38112,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -49006,6 +49007,7 @@
 /area/station/medical/medbay)
 "cNU" = (
 /obj/stool/bed/moveable,
+/obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
@@ -49452,6 +49454,9 @@
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = -10
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 10
@@ -53040,6 +53045,9 @@
 /obj/rack,
 /obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
+/obj/machinery/light_switch/east{
+	pixel_y = 12
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -61110,6 +61118,8 @@
 "iwc" = (
 /obj/stool/bed/moveable,
 /obj/machinery/light/incandescent,
+/obj/item/clothing/suit/bedsheet,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -68481,6 +68491,9 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/machinery/light_switch/east{
+	pixel_y = 12
+	},
 /turf/simulated/floor/black,
 /area/station/medical/medbay/reception)
 "qpr" = (
@@ -74410,6 +74423,7 @@
 	pixel_x = 4
 	},
 /obj/stool/bed/moveable,
+/obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/morgue)
 "xha" = (
