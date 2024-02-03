@@ -115,11 +115,11 @@
 	/obj/item/reagent_containers/glass/bottle/holywater)
 
 /obj/item/storage/box/misctools //used in CE locker
-	name = "miscellaneous tools"
-	desc = "A box full of tools, but distinctly seperate from a toolbox."
+	name = "spare tools box"
+	desc = "A box full of tools, but distinctly separate from a toolbox."
 	icon_state = "box"
 	spawn_contents = list(
-		/obj/item/electronics/scanner,
+		/obj/item/device/gps,
 		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/electronics/soldering,
 		/obj/item/cargotele,
