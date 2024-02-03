@@ -46676,7 +46676,7 @@
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
 /obj/machinery/power/apc/autoname_north{
-	areastring = "/area/station/engine/singcore"
+	areastring = "Singularity Core"
 	},
 /obj/cable{
 	icon_state = "0-8"
