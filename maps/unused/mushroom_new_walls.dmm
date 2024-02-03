@@ -28614,10 +28614,11 @@
 	},
 /area/station/solar/aisat)
 "pFB" = (
-/obj/machinery/activation_button{
-	pixel_y = 27;
+/obj/machinery/activation_button/driver_button{
+	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
 	id = "getitout";
-	name = "Emergency Ejection Button"
+	name = "Emergency Ejection Button";
+	pixel_y = 26
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -34626,10 +34627,9 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/pool)
 "uyS" = (
-/obj/machinery/activation_button{
-	pixel_y = 27;
-	id = "chapelgun";
-	name = "Chapel Ejection Button"
+/obj/machinery/activation_button/driver_button{
+	pixel_y = 30;
+	id = "chapelgun"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
