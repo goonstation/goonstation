@@ -1130,12 +1130,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	// teehee. get it? 'throw' it away?
 	proc/selfdestruct(obj/item/parent, atom/target, mob/user, reach, params)
-		if(!isliving(target) || src.ammo?.amount_left > 0)
+		if(!ishuman(target) || src.ammo?.amount_left > 0)
 			return
-		if (ishuman(src.loc))
-			var/mob/living/carbon/human/H = src.loc
-			H.changeStatus("weakened", 6 SECONDS)
-			H.force_laydown_standup()
+		var/mob/living/carbon/human/H = src.loc
+		H.changeStatus("weakened", 3 SECONDS)
+		H.force_laydown_standup()
 		src.visible_message("<span class='alert'>The [src] hits [target] <b>hard</b>, shattering into dozens of tiny pieces!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 		var/obj/decal/cleanable/gib = make_cleanable( /obj/decal/cleanable/machine_debris,src.loc)
