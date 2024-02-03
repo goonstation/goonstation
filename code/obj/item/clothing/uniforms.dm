@@ -14,7 +14,7 @@
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 800
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 10
 	var/team_num
 
@@ -157,7 +157,7 @@
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_pride.dmi'
 	icon_state = "gay"
 	item_state = "gay"
-	burn_possible = 0
+	burn_possible = FALSE
 
 	ace
 		name = "ace pride jumpsuit"
@@ -669,7 +669,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 	item_state = "hydro-senior"
 
 /obj/item/clothing/under/misc/mail
-	name = "mailman's jumpsuit"
+	name = "postmaster's jumpsuit"
 	desc = "The crisp threads of a postmaster."
 	icon_state = "mail"
 	item_state = "mail"
@@ -1246,7 +1246,7 @@ TYPEINFO(/obj/item/clothing/under/towel)
 	body_parts_covered = TORSO
 	burn_point = 450
 	burn_output = 800
-	burn_possible = 1
+	burn_possible = TRUE
 	rand_pos = 0
 	mat_changename = FALSE
 	default_material = "cotton"
@@ -1319,9 +1319,6 @@ TYPEINFO(/obj/item/clothing/under/towel)
 			dried ++
 		for (var/obj/decal/cleanable/water/W in T)
 			qdel(W)
-			dried ++
-		for (var/obj/decal/cleanable/urine/U in T) // ew
-			qdel(U)
 			dried ++
 		return dried
 

@@ -215,8 +215,12 @@ ABSTRACT_TYPE(/datum/game_mode)
 		else if(istype(C.mob, /mob/living/carbon))
 			if(!allow_carbon)
 				continue
-			if(!find_job_in_controller_by_string(C.mob.job)?.allow_traitors)
-				continue
+			var/datum/job/job = find_job_in_controller_by_string(C.mob.job)
+			if (job)
+				if(!job.allow_traitors)
+					continue
+				if (!job.can_join_gangs && (type == ROLE_GANG_LEADER || type == ROLE_GANG_MEMBER))
+					continue
 		else
 			continue
 		if(filter_proc && !call(filter_proc)(C.mob))
@@ -270,6 +274,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	if (!antag_datum.uses_pref_name)
 		var/datum/player/player = antag.get_player()
 		player.joined_names = list()
+		antag.current.bioHolder.mobAppearance.flavor_text = null
 
 /datum/game_mode/proc/check_win()
 

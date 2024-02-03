@@ -11,7 +11,7 @@
 #define SELECT_SECOND_CORNER 3
 #define DESELECT_SECOND_CORNER 4
 
-/obj/abcuMarker
+/obj/effects/abcuMarker
 	desc = "Denotes a valid tile."
 	icon = 'icons/obj/objects.dmi'
 	name = "Building marker (valid)"
@@ -20,7 +20,7 @@
 	density = 0
 	layer = TURF_LAYER
 
-/obj/abcuMarker/red
+/obj/effects/abcuMarker/red
 	desc = "Denotes an invalid tile."
 	icon = 'icons/obj/objects.dmi'
 	name = "Building marker (invalid)"
@@ -353,12 +353,12 @@
 		src.invalid_count = 0
 		for(var/datum/tileinfo/T in src.current_bp.roominfo)
 			var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
-			var/obj/abcuMarker/O = null
+			var/obj/effects/abcuMarker/O = null
 
 			if(istype(pos, /turf/space))
-				O = new/obj/abcuMarker(pos)
+				O = new/obj/effects/abcuMarker(pos)
 			else
-				O = new/obj/abcuMarker/red(pos)
+				O = new/obj/effects/abcuMarker/red(pos)
 				src.invalid_count++
 
 			src.markers.Add(O)
@@ -486,18 +486,23 @@
 #define WHITELIST_OBJECTS list( \
 	/obj/stool, \
 	/obj/grille, \
+	/obj/lattice, \
 	/obj/window, \
 	/obj/machinery/door, \
 	/obj/cable, \
 	/obj/table, \
 	/obj/rack, \
 	/obj/structure, \
+	/obj/kitchenspike, \
+	/obj/railing, \
 	/obj/disposalpipe, \
+	/obj/structure/woodwall, \
 	/obj/machinery/light, \
 	/obj/machinery/door_control, \
 	/obj/machinery/light_switch, \
 	/obj/machinery/camera, \
 	/obj/item/device/radio/intercom, \
+	/obj/item/storage/toilet, \
 	/obj/machinery/firealarm, \
 	/obj/machinery/power/apc, \
 	/obj/machinery/alarm, \
@@ -506,7 +511,22 @@
 	/obj/machinery/floorflusher, \
 	/obj/machinery/activation_button/driver_button, \
 	/obj/machinery/door_control, \
+	/obj/machinery/conveyor/, \
+	/obj/machinery/conveyor_switch, \
+	/obj/machinery/drainage, \
+	/obj/machinery/phone, \
+	/obj/machinery/glass_recycler, \
+	/obj/machinery/microwave, \
 	/obj/machinery/disposal, \
+	/obj/machinery/coffeemaker, \
+	/obj/machinery/vending/pizza, \
+	/obj/machinery/vending/cola, \
+	/obj/machinery/vending/coffee, \
+	/obj/machinery/vending/snack, \
+	/obj/machinery/bathtub, \
+	/obj/item/instrument/large/jukebox, \
+	/obj/submachine/claw_machine, \
+	/obj/submachine/chem_extractor, \
 	/obj/submachine/chef_oven, \
 	/obj/submachine/chef_sink, \
 	/obj/machinery/launcher_loader, \
@@ -523,15 +543,19 @@
 	/obj/securearea, \
 	/obj/submachine/mixer, \
 	/obj/submachine/foodprocessor, \
+	\
 )
 // blacklist overrules whitelist
 #define BLACKLIST_OBJECTS list( \
 	/obj/disposalpipe/loafer, \
 	/obj/submachine/slot_machine/item, \
 	/obj/machinery/portable_atmospherics/canister, \
+	/obj/window/crystal, \
+	/obj/window/auto/crystal, \
 )
 
 #define WHITELIST_TURFS list(/turf/simulated)
+#define BLACKLIST_TURFS list(/turf/simulated/floor/specialroom/sea_elevator_shaft, /turf/simulated/shuttle, /turf/simulated/floor/shuttle, /turf/simulated/wall/auto/shuttle)
 
 /datum/abcu_blueprint
 	var/cost_metal = 0
@@ -591,7 +615,7 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 	save.dir.Add("tiles")
 
 	for(var/atom/curr in turf_list)
-		if (!istypes(curr, WHITELIST_TURFS))
+		if (!istypes(curr, WHITELIST_TURFS) || istypes(curr, BLACKLIST_TURFS))
 			continue
 
 		var/posx = (curr.x - minx)
@@ -707,6 +731,8 @@ proc/is_valid_abcu_object(obj/O)
 
 #undef WHITELIST_OBJECTS
 #undef BLACKLIST_OBJECTS
+#undef WHITELIST_TURFS
+#undef BLACKLIST_TURFS
 
 proc/browse_abcu_blueprints(mob/user, var/window_title = "Blueprints", var/description = "Pick a blueprint.", var/browse_all_users = FALSE)
 	if (!user.client) return
@@ -982,8 +1008,6 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 		using = user
 		updateOverlays()
 		return
-
-#undef WHITELIST_TURFS
 
 /obj/item/blueprint_marker/verb/migrate_bigfile_blueprint()
 	// this is a tucked-away verb because it's niche and for old stuff, don't want it on the tool's main menu

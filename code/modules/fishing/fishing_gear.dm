@@ -71,7 +71,6 @@
 	/// how long the fishing action loop will take in seconds, set on onStart(), varies by 4 seconds in either direction.
 	duration = 1 MINUTE
 	/// id for fishing action
-	id = "fishing_for_fishies"
 
 	New(var/user, var/rod, var/fishing_spot, var/target)
 		..()
@@ -379,24 +378,24 @@ TYPEINFO(/obj/item/fish_portal)
 			return ..()
 
 /obj/item/storage/fish_box
-	name = 	"Portable aquarium"
+	name = 	"portable aquarium"
 	desc = "A temporary solution for transporting fish."
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	icon_state = "aquarium"
 	item_state = "aquarium"
 	slots = 6
-	can_hold = 	list(/obj/item/reagent_containers/food/fish)
+	can_hold = list(/obj/item/reagent_containers/food/fish)
 
 /obj/item/storage/fish_box/small
-	name = 	"Small Portable aquarium"
+	name = 	"small portable aquarium"
 	desc = "A smaller, temporary solution for transporting fish."
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	icon_state = "aquarium"
 	item_state = "aquarium"
 	slots = 3
-	can_hold = 	list(/obj/item/reagent_containers/food/fish)
+	can_hold = list(/obj/item/reagent_containers/food/fish)
 
 TYPEINFO(/obj/item/syndie_fishing_rod)
 	mats = list("MET-3"=15, "WOOD"=5, "POW-2"=5, "CON-2"=5)
@@ -495,7 +494,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 		if (!ON_COOLDOWN(user, "syndie_fishing_delay", src.usage_cooldown))
 			if (src.lure.owner && isliving(src.lure.owner))
 				logTheThing(LOG_COMBAT, user, "at [log_loc(src)] reels in a Syndicate Fishing Rod hooked in [src.lure.owner]")
-				if (!actions.hasAction(user,"fishing_for_fools"))
+				if (!actions.hasAction(user, /datum/action/bar/syndie_fishing))
 					actions.start(new /datum/action/bar/syndie_fishing(user, src.lure.owner, src, src.lure), user)
 				if (!ON_COOLDOWN(user, "syndie_fishing_yank", src.yank_cooldown))
 					src.lure.owner.throw_at(target, yank_range, yank_range / 4)
@@ -702,7 +701,6 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 	/// how long a step of reeling takes, set onStart
 	duration = 0
 	/// id for fishing action
-	id = "fishing_for_fools"
 
 	New(var/user, var/target, var/rod, var/lure)
 		..()

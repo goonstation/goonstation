@@ -742,6 +742,7 @@
 	name_prefix = "Paper "
 	iconmod = "TreePaper"
 	crop = /obj/item/paper
+	assoc_reagents = list("paper")
 
 /datum/plantmutation/tree/dog
 	name = "Dogwood Tree"
@@ -780,6 +781,7 @@
 	name_prefix = "Rubber "
 	iconmod = "TreeRubber"
 	crop = /obj/item/material_piece/rubber/latex
+	assoc_reagents = list("rubber")
 
 /datum/plantmutation/tree/sassafras
 	name = "Sassafras Tree"

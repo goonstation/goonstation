@@ -253,7 +253,7 @@
 					var/sound/sound = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg', 'sound/machines/siren_police.ogg')
 					playsound(get_turf(src), sound, 50, FALSE)
 					animate_bouncy(src)
-					SPAWN(1 SECOND)
+					SPAWN(2 SECONDS)
 						qdel(src)
 				if ("down_arrow", "up_arrow", "left_arrow", "right_arrow")
 					var/dirs = list("down_arrow" = SOUTH, "up_arrow" = NORTH, "left_arrow" = WEST, "right_arrow" = EAST)
@@ -263,6 +263,7 @@
 							for (var/atom/movable/AM in get_turf(src))
 								if (!AM.anchored)
 									step(AM, dir)
+							step(src, dir)
 							sleep(0.3 SECONDS)
 						qdel(src)
 				if ("happy_face")
@@ -279,7 +280,7 @@
 					qdel(src)
 
 
-/obj/effect/distort/hologram
+/obj/effect/rt/hologram
 	icon = 'icons/misc/holograms.dmi' // move to effects?
 	icon_state = "d_slow"
 	var/distort_size = 2
@@ -299,7 +300,7 @@
 	var/message
 	var/original_color
 	var/hsv
-	var/obj/effect/distort/hologram/E
+	var/obj/effect/rt/hologram/E
 	hologram_type = HOLOGRAM_TEXT
 
 	New(loc, owner, msg)
@@ -345,7 +346,7 @@
 	)
 	if (over_lighting)
 		src.plane = PLANE_ABOVE_LIGHTING
-	var/obj/effect/distort/hologram/E = new
+	var/obj/effect/rt/hologram/E = new
 	E.icon_state = "d_fast"
 	src.vis_contents += E
 	src.add_filter("hologram", 1, list(type="displace", size=E.distort_size, render_source = E.render_target))
@@ -353,6 +354,6 @@
 /atom/movable/proc/remove_hologram_effect()
 	src.color = null
 	src.remove_filter("hologram")
-	var/obj/effect/distort/hologram/E = locate() in src.vis_contents
+	var/obj/effect/rt/hologram/E = locate() in src.vis_contents
 	src.vis_contents -= E
 	qdel(E)

@@ -270,7 +270,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	var/obj/machinery/wraith/rat_den/linked_den = null
 
 	death()
-		if(linked_den.linked_critters > 0)
+		if(linked_den?.linked_critters > 0)
 			linked_den.linked_critters--
 		..()
 /* -------------------- Remy -------------------- */
@@ -594,7 +594,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	health_brute = 30
 	health_burn = 30
 	is_annoying = TRUE
-	is_pet = TRUE
+	is_pet = 2
 	is_syndicate = 1
 	var/swiped = 0
 
@@ -965,6 +965,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	real_name = "Blair"
 	icon_state = "pug"
 	dogtype = "pug"
+	is_pet = 2
 
 	attack_hand(mob/user)
 		if (prob(5) && isalive(src) && ispug(user))
@@ -975,6 +976,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	icon_state = "corgi"
 	icon_state_dead = "corgi-lying"
 	dogtype = "corgi"
+	is_pet = 2
 
 /* ============================================== */
 /* -------------------- Bird -------------------- */
@@ -1550,7 +1552,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return
 
 		if(prob(10))
-			src.audible_message("<b>[src]</b> honks!",2)
+			src.audible_message("<b>[src]</b> honks!")
 			playsound(src.loc, 'sound/voice/animal/goose.ogg', 50, 1)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -1889,7 +1891,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.ai_retaliates = FALSE
 				return
 			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
-				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken it's killer instincts!"))
+				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken [his_or_her(src)] killer instincts!"))
 				src.aggressive = TRUE
 				src.ai_retaliates = TRUE
 				return
@@ -1935,7 +1937,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 		if(length(.) && prob(25))
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-			src.visible_message(SPAN_ALERT("<B>[src]</B> snips it's pincers!"))
+			src.visible_message(SPAN_ALERT("<B>[src]</B> snips [his_or_her(src)] pincers!"))
 
 	death()
 		src.reagents.add_reagent("toxin", 20, null)
@@ -2013,7 +2015,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.ai_retaliates = FALSE
 				return
 			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
-				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken it's killer instincts!"))
+				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken [his_or_her(src)] killer instincts!"))
 				src.aggressive = TRUE
 				src.ai_retaliates = TRUE
 				return
@@ -2030,8 +2032,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					icon_state = "rattlesnake_rattle"
 					playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECONDS)
-						icon_state = "rattlesnake"
-					return SPAN_EMOTE("<b>[src]</b> rattles it's tail!")
+						if(isalive(src))
+							icon_state = "rattlesnake"
+					return SPAN_EMOTE("<b>[src]</b> rattles [his_or_her(src)] tail!")
 		return null
 
 	specific_emote_type(var/act)
@@ -2702,9 +2705,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		for (var/mob/living/critter/small_animal/walrus/walrus in view(7, src))
 			if (!(is_incapacitated(walrus) && walrus.ai?.enabled))
 				var/datum/aiTask/task = walrus.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(walrus.ai, walrus.ai.default_task))
-				task.target = M
 				walrus.ai.priority_tasks += task
 				walrus.ai.interrupt()
+				walrus.ai.target = M
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -2886,7 +2889,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "batdoctor-dead"
 	health_brute = 30
 	health_burn = 30
-	is_pet = TRUE
+	is_pet = 2
 
 /* ============================================== */
 /* -------------------- Wasp -------------------- */
@@ -3103,10 +3106,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 6
 	base_walk_delay = 8
 	var/slime_chance = 22
+	butcherable = TRUE
+	name_the_meat = FALSE
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
+
 
 	New()
 		..()
-		AddComponent(/datum/component/floor_slime, "badgrease", slime_chance, 10)
+		AddComponent(/datum/component/floor_slime, "slime", slime_chance, 10)
 
 	setup_hands()
 		..()
@@ -3427,7 +3434,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					SPAWN(3 SECONDS)
 						if (src && !isdead(src))
 							src.icon_state = start_icon
-					return SPAN_EMOTE("<b>[src]</b> clacks their claws!")
+					return SPAN_EMOTE("<b>[src]</b> clacks [his_or_her(src)] claws!")
 		return null
 
 	specific_emote_type(var/act)
@@ -3799,10 +3806,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				boutput(src, "[M] already has a mouse in [his_or_her(M)] pocket.")
 			return
 		if(voluntary && M != src.last_poked) // if we poked that person it means we implicitly agree
-			boutput(M, "You extend your hand to the mouse, waiting for it to accept.")
+			boutput(M, "You extend your hand to the mouse, waiting for [him_or_her(src)] to accept.")
 			if (ON_COOLDOWN(src, "mentor mouse pickup popup", 3 SECONDS))
 				return
-			if (tgui_alert(src, "[M] wants to pick you up and put you in their pocket. Is that okay with you?", "Hop in the pocket", list("Yes", "No")) != "Yes")
+			if (tgui_alert(src, "[M] wants to pick you up and put you in [his_or_her(M)] pocket. Is that okay with you?", "Hop in the pocket", list("Yes", "No")) != "Yes")
 				boutput(M, "\The [src] slips out as you try to pick it up.")
 				return
 		if(!src || !src.mind || !src.client)
@@ -3812,7 +3819,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		else
 			M.visible_message("\The [src] jumps into [M]'s pocket.", "\The [src] jumps into your pocket.")
 		boutput(M, "You can click on the status effect in the top right to kick the mouse out.")
-		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket and can talk to them and click on their screen to ping in the place where you're ctrl+clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
+		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket, can talk to [him_or_her(M)], and click on [his_or_her(M)] screen to ping in the place where you're ctrl+clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
 		logTheThing(LOG_ADMIN, src, "jumps into [constructTarget(M, "admin")]'s pocket as a mentor mouse at [log_loc(M)].")
 		var/mob/dead/target_observer/mentor_mouse_observer/obs = new(M, src.is_admin)
 		obs.set_observe_target(M)
@@ -3827,7 +3834,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_attack(atom/target, params, location, control, origParams)
 		if(istype(target, /mob/living) && target != src)
 			boutput(src, "<span class='game' class='mhelp'>You poke [target] in a way that clearly indicates you want to help [him_or_her(target)].</span>")
-			boutput(target, "<span class='game' class='mhelp'>\The [src] seems willing to help you. Click on it with an empty hand if you want to accept the offer.</span>")
+			boutput(target, "<span class='game' class='mhelp'>\The [src] seems willing to help you. Click on [him_or_her(src)] with an empty hand if you want to accept the offer.</span>")
 			src.last_poked = target
 			if(src.icon_state_exclaim)
 				flick(src.icon_state_exclaim, src)
@@ -3882,7 +3889,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (!holder)
 			return 1
 		logTheThing(LOG_ADMIN, src, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
-		M.visible_message(SPAN_ALERT("<B>[M] does a funny little jiggle with their body and then vanishes into thin air!</B>")) // MY ASCENSION BEGINS
+		M.visible_message(SPAN_ALERT("<B>[M] does a funny little jiggle with [his_or_her(M)] body and then vanishes into thin air!</B>")) // MY ASCENSION BEGINS
 		animate_bouncy(src)
 		animate(M, alpha=0, time=disappearance_time)
 		SPAWN(disappearance_time)

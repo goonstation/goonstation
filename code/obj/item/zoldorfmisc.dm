@@ -368,7 +368,7 @@
 	item_state = "scroll"
 	burn_point = 220
 	burn_output = 9
-	burn_possible = 1
+	burn_possible = TRUE
 	var/scrolltype
 	var/hat
 	var/obj/item/hatstorage

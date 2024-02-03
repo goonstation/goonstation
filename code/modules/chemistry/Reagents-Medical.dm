@@ -55,7 +55,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				for(var/datum/ailment_data/disease/virus in M.ailments)
-					if (virus.cure == "Antibiotics")
+					if (virus.cure_flags & CURE_ANTIBIOTICS)
 						virus.state = "Remissive"
 				if(M.hasStatus("poisoned"))
 					M.changeStatus("poisoned", -10 SECONDS * mult)
@@ -371,8 +371,6 @@ datum
 				if(probmult(6))
 					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
 					M.vomit(0, null, vomit_message)
-				if(probmult(4))
-					M.emote("piss")
 				..()
 				return
 

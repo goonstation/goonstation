@@ -71,6 +71,7 @@
 					H.traitHolder.copy_to(clone.traitHolder)
 				clone.real_name = user.real_name
 				clone.UpdateName()
+				spawn_rules_controller.apply_to(clone)
 
 			if(swapSouls && H.mind)
 				H.mind.transfer_to(clone)
@@ -106,9 +107,10 @@
 					if(H)
 						H.ai_aggressive = 1
 						H.ai_calm_down = 0
+					sleep(randfloat(3 SECOND, 20 SECONDS))
 					while (!isdead(H) && isnull(H.client))
-						sleep(randfloat(3 SECOND, 20 SECONDS))
 						H.say(phrase_log.random_phrase("say"))
+						sleep(randfloat(3 SECOND, 20 SECONDS))
 			else
 				// make clone evil
 				clone.attack_alert = 0

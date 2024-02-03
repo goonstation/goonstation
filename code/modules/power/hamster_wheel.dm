@@ -192,6 +192,9 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		if(src.occupant?.loc == src)
 			src.occupant.set_loc(get_turf(src))
 
+		for (var/atom/movable/AM in src.contents)
+			AM.set_loc(get_turf(src))
+
 		if(src.occupant)
 			occupant.vis_flags = occupant_vis_flags
 			src.vis_contents -= occupant

@@ -13,13 +13,13 @@
 	/// to make sure that they cant escape being shamecubed by just reconnecting
 	var/shamecubed = 0
 	/// how many rounds (total) theyve declared ready and joined, null with to differentiate between not set and no participation
-	var/rounds_participated = null
+	VAR_PRIVATE/rounds_participated = null
 	/// how many rounds (rp only) theyve declared ready and joined, null with to differentiate between not set and no participation
-	var/rounds_participated_rp = null
+	VAR_PRIVATE/rounds_participated_rp = null
 	/// how many rounds (total) theyve joined to at least the lobby in, null to differentiate between not set and not seen
-	var/rounds_seen = null
+	VAR_PRIVATE/rounds_seen = null
 	/// how many rounds (rp only) theyve joined to at least the lobby in, null to differentiate between not set and not seen
-	var/rounds_seen_rp = null
+	VAR_PRIVATE/rounds_seen_rp = null
 	/// timestamp of when they were last seen
 	var/last_seen = null
 	/// a list of cooldowns that has to persist between connections
@@ -138,20 +138,20 @@
 	/// returns the number of rounds that the player has played by joining in at roundstart
 	proc/get_rounds_participated()
 		if (isnull(src.rounds_participated)) //if the stats havent been cached yet
-			if (!src.cache_round_stats()) //if trying to set them fails
+			if (!src.cache_round_stats_blocking()) //if trying to set them fails
 				return null
 		return src.rounds_participated
 
 	proc/get_rounds_participated_rp()
 		if (isnull(src.rounds_participated_rp)) //if the stats havent been cached yet
-			if (!src.cache_round_stats()) //if trying to set them fails
+			if (!src.cache_round_stats_blocking()) //if trying to set them fails
 				return null
 		return src.rounds_participated_rp
 
 	/// returns the number of rounds that the player has at least joined the lobby in
 	proc/get_rounds_seen()
 		if (isnull(src.rounds_seen)) //if the stats havent been cached yet
-			if (!src.cache_round_stats()) //if trying to set them fails
+			if (!src.cache_round_stats_blocking()) //if trying to set them fails
 				return null
 		return src.rounds_seen
 
@@ -283,13 +283,13 @@
 				unlocks.Add(D)
 
 		if (announce)
-			boutput(world, "<span class='medal'>[displayed_key] earned the [medal_name] medal!</span>")
+			boutput(world, SPAN_MEDAL("[displayed_key] earned the [medal_name] medal!"))
 		else if (src.client)
-			boutput(src.client, "<span class='medal'>You earned the [medal_name] medal!</span>")
+			boutput(src.client, SPAN_MEDAL("You earned the [medal_name] medal!"))
 
 		if (length(unlocks))
 			for(var/datum/achievementReward/B in unlocks)
-				boutput(src.client, "<span class='medal'><FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT></span>")
+				boutput(src.client, SPAN_MEDAL("<FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT>"))
 
 	/// Removes a medal from this player. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/clear_medal(medal_name)

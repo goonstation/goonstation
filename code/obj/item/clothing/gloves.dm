@@ -355,8 +355,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	material_prints = "high-quality synthetic fibers"
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	setupProperties()
 		..()
@@ -780,7 +780,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "brassgauntlet"
 	item_state = "brassgauntlet"
 	punch_damage_modifier = 3
-	burn_possible = 0
+	burn_possible = FALSE
 	cant_self_remove = 1
 	cant_other_remove = 1
 	abilities = list()

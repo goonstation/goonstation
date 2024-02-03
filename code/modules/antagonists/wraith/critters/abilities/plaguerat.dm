@@ -19,7 +19,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 	var/list/decal_list = list(/obj/decal/cleanable/blood,
 	/obj/decal/cleanable/ketchup,
 	/obj/decal/cleanable/rust,
-	/obj/decal/cleanable/urine,
 	/obj/decal/cleanable/vomit,
 	/obj/decal/cleanable/greenpuke,
 	/obj/decal/cleanable/slime,
@@ -62,7 +61,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 /datum/action/bar/private/icon/plaguerat_eat
 	duration = 9 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ATTACKED
-	id = "plaguerat_eat"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 	var/list/obj/decal/cleanable/targets = list()

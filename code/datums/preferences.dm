@@ -3,9 +3,10 @@ var/list/removed_jobs = list(
 	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
 	"Barman" = "Bartender",
 	"Mechanic" = "Engineer",
+	"Mailman" = "Mail Courier"
 )
 
-datum/preferences
+/datum/preferences
 	var/profile_name
 	var/profile_number
 	var/profile_modified
@@ -98,6 +99,9 @@ datum/preferences
 
 	var/font_size = null
 
+	///An associative list of slots to part IDs, see part_customization.dm
+	var/list/custom_parts = null
+
 	//var/fartsound = "default"
 	//var/screamsound = "default"
 
@@ -106,6 +110,11 @@ datum/preferences
 		randomize_name()
 		randomizeLook()
 		..()
+		if (isnull(src.custom_parts)) //I feel like there should be a better place to init this
+			src.custom_parts = list(
+				"l_arm" = "arm_default_left",
+				"r_arm" = "arm_default_right",
+			)
 
 	ui_state(mob/user)
 		return tgui_always_state.can_use_topic(src, user)
@@ -122,6 +131,8 @@ datum/preferences
 			ui = new(user, src, "CharacterPreferences")
 			ui.set_autoupdate(FALSE)
 			ui.open()
+		SPAWN(0) //this awful hack is required to stop the preview rendering with the scale all wrong the first time the window is opened
+			src.update_preview_icon() //apparently you need to poke byond into re-sending the window data by changing something about the preview mob??
 
 	ui_close(mob/user)
 		. = ..()
@@ -145,7 +156,6 @@ datum/preferences
 				"img" = icon2base64(icon(trait.icon, trait.icon_state)),
 				"points" = trait.points,
 			)
-
 		. = list(
 			"traitsData" = traits
 		)
@@ -192,6 +202,16 @@ datum/preferences
 				"selected" = selected,
 				"available" = src.traitPreferences.isAvailableTrait(trait.id, selected)
 			))
+
+		var/list/custom_parts_data = list()
+		for (var/slot_id in src.custom_parts)
+			var/datum/part_customization/customization = get_part_customization(src.custom_parts[slot_id])
+			custom_parts_data[slot_id] = list(
+				"id" = customization.id,
+				"name" = customization.get_name(),
+				"points" = customization.trait_cost,
+				"img" = customization.get_base64_icon(),
+			)
 
 		. = list(
 			"isMentor" = client.is_mentor(),
@@ -262,7 +282,8 @@ datum/preferences
 			"preferredMap" = src.preferred_map,
 			"traitsAvailable" = traits,
 			"traitsMax" = src.traitPreferences.max_traits,
-			"traitsPointsTotal" = src.traitPreferences.point_total,
+			"traitsPointsTotal" = src.traitPreferences.calcTotal(src.traitPreferences.traits_selected, src.custom_parts),
+			"partsData" = custom_parts_data,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -547,7 +568,7 @@ datum/preferences
 						return TRUE
 
 			if ("update-flavorText")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", html_decode(src.flavor_text), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -559,7 +580,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-securityNote")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", html_decode(src.security_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -571,7 +592,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-medicalNote")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", html_decode(src.medical_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -583,7 +604,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-syndintNote")
-				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", src.synd_int_note, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", html_decode(src.synd_int_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > LONG_FLAVOR_CHAR_LIMIT)
@@ -723,8 +744,7 @@ datum/preferences
 				var/new_style
 				switch(params["id"])
 					if ("custom1", "custom2", "custom3")
-						var/list/customization_types = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/hair/gimmick)
-						new_style = select_custom_style(customization_types, usr)
+						new_style = select_custom_style(usr, no_gimmick_hair=TRUE)
 					if ("underwear")
 						new_style = tgui_input_list(usr, "Select an underwear style", "Character Generation", underwear_styles)
 
@@ -764,7 +784,7 @@ datum/preferences
 
 				switch(params["id"])
 					if ("custom1", "custom2", "custom3")
-						style_list = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/hair/gimmick)
+						style_list = get_available_custom_style_types(usr.client, no_gimmick_hair=TRUE)
 					if ("underwear")
 						style_list = underwear_styles
 
@@ -943,16 +963,42 @@ datum/preferences
 				return TRUE
 
 			if ("select-trait")
-				src.profile_modified = src.traitPreferences.selectTrait(params["id"])
+				src.profile_modified = src.traitPreferences.selectTrait(params["id"], src.custom_parts)
 				return TRUE
 
 			if ("unselect-trait")
-				src.profile_modified = src.traitPreferences.unselectTrait(params["id"])
+				src.profile_modified = src.traitPreferences.unselectTrait(params["id"], src.custom_parts)
 				return TRUE
 
 			if ("reset-traits")
 				src.traitPreferences.resetTraits()
 				src.profile_modified = TRUE
+				return TRUE
+
+			if ("pick_part")
+				var/list/options = list()
+				for (var/part_id in part_customizations)
+					var/datum/part_customization/customization = part_customizations[part_id]
+					if (customization.slot == params["slot_id"])
+						var/option_string = "[customization.get_name()]"
+						if (customization.trait_cost)
+							option_string += " ([customization.trait_cost] trait point[customization.trait_cost > 1 ? "s" : ""])"
+						options[option_string] = customization.id
+				var/result = tgui_input_list(usr, "Select custom part", "Pick part", options)
+				if (!result)
+					return FALSE
+				var/list/new_custom_parts = src.custom_parts.Copy()
+				new_custom_parts[params["slot_id"]] = options[result] //this is kind of unsafe
+				if (!src.traitPreferences.isValid(src.traitPreferences.traits_selected, new_custom_parts))
+					boutput(usr, SPAN_ALERT("Cannot afford trait cost"))
+					return FALSE
+				var/datum/part_customization/customization = get_part_customization(options[result])
+				if (!customization.can_apply(src.preview.preview_thing, new_custom_parts))
+					boutput(usr, SPAN_ALERT("Unable to equip part"))
+					return FALSE
+				src.custom_parts = new_custom_parts
+				profile_modified = TRUE
+				update_preview_icon()
 				return TRUE
 
 			if ("reset")
@@ -1103,6 +1149,11 @@ datum/preferences
 
 		if (traitPreferences.traits_selected.Find("bald") && mutantRace)
 			H.equip_if_possible(H.create_wig(), SLOT_HEAD)
+
+		for (var/slot_id in src.custom_parts)
+			var/datum/part_customization/customization = get_part_customization(src.custom_parts[slot_id])
+			customization.try_apply(H, src.custom_parts)
+		H.update_icons_if_needed()
 
 	proc/ShowChoices(mob/user)
 		src.ui_interact(user)
@@ -1808,7 +1859,11 @@ datum/preferences
 				H.voice_type = H.mutantrace.voice_override
 
 	proc/apply_post_new_stuff(mob/living/character)
-		if (traitPreferences.isValid() && character.traitHolder)
+		for (var/slot_id in src.custom_parts)
+			var/part_id = src.custom_parts[slot_id]
+			var/datum/part_customization/customization = get_part_customization(part_id)
+			customization.try_apply(character, src.custom_parts)
+		if (traitPreferences.isValid(traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
 			for (var/T in traitPreferences.traits_selected)
 				character.traitHolder.addTrait(T)
 
@@ -1995,6 +2050,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		else
 			H.real_name = pick_string_autokey("names/first_male.txt")
 		H.real_name += " [pick_string_autokey("names/last.txt")]"
+		H.on_realname_change()
 
 	AH.voicetype = RANDOM_HUMAN_VOICE
 
@@ -2035,23 +2091,24 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/type_first
 	if (AH.gender == MALE)
 		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/isfem))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE))
 			AH.customization_first = new type_first
 		else // otherwise just use one standard to the current gender
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/ismasc))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE))
 			AH.customization_first = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
-			var/type_second = pick(concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache))
+			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/beard) \
+								+ get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/moustache))
 			AH.customization_second = new type_second
-			has_second = 1 // so the detail check doesn't do anything - we already got a secondary thing!!
+			has_second = TRUE // so the detail check doesn't do anything - we already got a secondary thing!!
 
 	else // if FEMALE
 		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/ismasc))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE))
 			AH.customization_first = new type_first
 		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/isfem))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE))
 			AH.customization_first = new type_first
 
 	if (!has_second)
@@ -2110,7 +2167,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 
 	if (H?.organHolder?.head?.donor_appearance) // aaaa
 		H.organHolder.head.donor_appearance.CopyOther(AH)
-
+	AH.flavor_text = null //random characters don't have flavor text and disguised ones shouldn't show theirs
 	SPAWN(1 DECI SECOND)
 		H?.update_colorful_parts()
 
