@@ -195,6 +195,7 @@
 			var/obj/item/I = the_object
 			if(I)
 				if(I.Eat(owner, owner, TRUE)) //eating can return false to indicate it failed
+					I.storage?.hide_hud(owner)
 					logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
 					// Organs and body parts have special behaviors we need to account for
 					if (ishuman(owner))

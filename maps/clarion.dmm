@@ -13475,14 +13475,6 @@
 /obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"boR" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/storage/cart/trash,
-/turf/simulated/floor/plating,
-/area/station/maintenance/central)
 "boU" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -13753,6 +13745,11 @@
 /obj/item/disk/data/floppy/read_only/security_progs,
 /obj/item/disk/data/floppy/read_only/network_progs,
 /obj/item/disk/data/floppy/computer3boot,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
+"bqF" = (
+/obj/machinery/light/small,
+/obj/rack/organized/techstorage_eng,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "bqG" = (
@@ -19550,6 +19547,18 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/quartermaster/storage)
+"dMl" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13";
+	pixel_x = 10
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/maintenance/central)
 "dMu" = (
 /obj/disposalpipe/trunk/mail{
 	dir = 1
@@ -20730,25 +20739,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
-"eJJ" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Armory APC";
-	noalerts = 1;
-	pixel_x = -24
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname  - SS13";
-	pixel_x = 10
-	},
-/turf/simulated/floor/black,
-/area/station/maintenance/central)
 "eKZ" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/milk,
@@ -23386,6 +23376,18 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
+"gZE" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/storage/cart/trash,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "gZJ" = (
 /obj/stool/bench/yellow/auto,
 /turf/unsimulated/floor{
@@ -29577,6 +29579,12 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/disposal)
+"lyC" = (
+/obj/cable,
+/obj/machinery/power/apc/autoname_south,
+/obj/rack/organized/techstorage_med,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "lzl" = (
 /obj/machinery/atmospherics/unary/vent{
 	dir = 8
@@ -33592,6 +33600,21 @@
 	icon_state = "yellowblack"
 	},
 /area/station/hallway/primary/east)
+"oEC" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "oEQ" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -35377,18 +35400,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"qcM" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/central)
 "qda" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -45685,11 +45696,6 @@
 	dir = 4
 	},
 /area/station/hangar/sec)
-"ykq" = (
-/obj/machinery/light/small,
-/obj/rack/organized/techstorage_eng,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "ylf" = (
 /obj/decal/tile_edge/line/green{
 	dir = 8;
@@ -45703,12 +45709,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
-"ylJ" = (
-/obj/cable,
-/obj/machinery/power/apc/autoname_south,
-/obj/rack/organized/techstorage_med,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "yma" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -66444,7 +66444,7 @@ rRt
 oLd
 qEG
 qjB
-ykq
+bqF
 blN
 kYB
 aaa
@@ -66701,7 +66701,7 @@ aEa
 aEa
 lhz
 eao
-ylJ
+lyC
 blN
 kYB
 bDp
@@ -78264,8 +78264,8 @@ jOO
 cUY
 rTC
 bgz
-boR
-qcM
+gZE
+oEC
 brm
 gPg
 vcn
@@ -78773,7 +78773,7 @@ osW
 vYR
 oAz
 efw
-eJJ
+dMl
 lhN
 fMT
 fMT

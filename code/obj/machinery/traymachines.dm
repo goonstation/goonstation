@@ -324,6 +324,9 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	icon_unoccupied = "crema1"
 	icon_occupied = "crema2"
 
+	medical
+		id = "medicalcremator"
+
 	New()
 		. = ..()
 		START_TRACKING
@@ -346,7 +349,6 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		return
 
 	src.visible_message(SPAN_ALERT("You hear a roar as \the [src.name] activates."))
-	src.locked = TRUE
 	var/ashes = 0
 	power_usage = powerdraw_use //gotta chug them watts
 	icon_state = "crema_active"
@@ -362,23 +364,31 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	for (var/mob/living/L in contents)
 		if (L in non_tray_contents)
 			continue
-		L.changeStatus("stunned", 10 SECONDS)
+		L.changeStatus("burning", 15 SECONDS)
+		if (L in non_tray_contents)
+			continue
+		if (!L.is_heat_resistant())
+			L.TakeDamage("chest", 0, 30)
+			if (!isdead(L))
+				L.emote("scream")
 
-	sleep(1 SECOND)
+	sleep(3 SECONDS)
+
 	for (var/i in 1 to 10)
 		if(isnull(src))
 			return
 		for (var/mob/living/L in contents)
 			if (L in non_tray_contents)
 				continue
-			if (!L.is_heat_resistant())
-				L.TakeDamage("chest", 0, 30)
-				if (!isdead(L) && prob(25))
-					L.emote("scream")
-		sleep(1 SECOND)
+			L.changeStatus("burning", 30 SECONDS)
+
+	sleep(6 SECONDS)
 
 	if(isnull(src))
 		return
+	src.locked = TRUE // only lock when it's too late to escape
+	src.visible_message(SPAN_ALERT("\The [src.name] clunks locked!"))
+	sleep(1 SECOND)
 	for (var/I in contents)
 		if (I in non_tray_contents)
 			continue
@@ -430,6 +440,10 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	var/otherarea = null
 	var/id = 1
 	var/list/obj/machinery/traymachine/locking/crematorium/crematoriums = null
+
+	medical
+		id = "medicalcremator"
+		req_access = list(access_medical_lockers)
 
 	disposing()
 		for (var/obj/machinery/traymachine/locking/crematorium/O in src.crematoriums)
