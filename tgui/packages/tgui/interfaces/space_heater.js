@@ -51,8 +51,6 @@ export const space_heater = (props, context) => {
   const {
     emagged,
     on,
-    cell,
-    cell_charge,
     set_temperature,
   } = data;
   return (
@@ -117,11 +115,8 @@ const TemperatureRegulator = (props, context) => {
   const { data, act } = useBackend(context);
   const {
     emagged,
-    on,
     min,
     max,
-    cell,
-    cell_charge,
     set_temperature,
   } = data;
   return (
