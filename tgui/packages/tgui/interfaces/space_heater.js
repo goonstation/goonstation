@@ -143,7 +143,6 @@ const BatteryStatus = (props, context) => {
               <Button
                 icon={Set_Icon(Find_Theme(emagged, set_temperature, on))}
                 color={cell !== null ? Set_Color(set_temperature, "green", on) : "blue"}
-                disabled={on && !emagged}
                 onClick={() => cell !== null ? act('cellremove'): act('cellinstall')}
                 bold>
                 {cell !== null ? Glitch_Text(emagged, cell_name, 2): Glitch_Text(emagged, "Insert power cell", 3)}
