@@ -4912,7 +4912,9 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "bsa" = (
 /turf/simulated/wall/auto/asteroid,
 /area/station/garden/owlery)
@@ -7564,7 +7566,9 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/airless/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "cfW" = (
 /obj/machinery/door/airlock/pyro/command{
 	req_access = null
@@ -15092,7 +15096,9 @@
 /obj/mapping_helper/access/engineering,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/plating,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "ewS" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -15400,7 +15406,9 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8
 	},
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "eBV" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -16373,7 +16381,9 @@
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "eRI" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -17242,7 +17252,9 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/black,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "fgt" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
@@ -17675,7 +17687,9 @@
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "fnh" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/storage/closet/emergency,
@@ -22086,7 +22100,9 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
 	},
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "gEi" = (
 /turf/simulated/wall/auto/reinforced/jen/yellow,
 /area/station/maintenance/inner/east)
@@ -28286,7 +28302,9 @@
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/airless/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "iBs" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -29694,7 +29712,9 @@
 	dir = 6
 	},
 /turf/simulated/floor/airless/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "iYS" = (
 /obj/machinery/power/data_terminal,
 /obj/decal/stripe_delivery,
@@ -34822,7 +34842,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "kBV" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -36080,7 +36102,9 @@
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "kWE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -37261,7 +37285,9 @@
 	dir = 4;
 	icon_state = "catwalk_cross"
 	},
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "lqs" = (
 /obj/landmark/start/job/botanist,
 /obj/disposalpipe/segment{
@@ -42543,7 +42569,9 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "mSD" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blue/side,
@@ -51851,7 +51879,9 @@
 	dir = 10
 	},
 /turf/simulated/floor/airless/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "pJi" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen,
@@ -52033,7 +52063,9 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "pLV" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -53798,7 +53830,9 @@
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "qnd" = (
 /obj/machinery/power/data_terminal,
 /obj/decal/stripe_delivery,
@@ -55028,7 +55062,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "qGU" = (
 /obj/grille/catwalk/jen,
 /obj/cable{
@@ -59361,7 +59397,9 @@
 "rYX" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "rZd" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -61303,7 +61341,9 @@
 	dir = 5
 	},
 /turf/simulated/floor/airless/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "sEJ" = (
 /obj/cable,
 /obj/cable{
@@ -62909,7 +62949,9 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
 	},
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "tgq" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -62952,7 +62994,9 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/airless/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "tgQ" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -64204,7 +64248,9 @@
 /area/station/science/storage)
 "tBW" = (
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "tCr" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -65795,7 +65841,9 @@
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "tXj" = (
 /obj/item/reagent_containers/hypospray{
 	pixel_x = -6;
@@ -65919,7 +65967,9 @@
 	dir = 4;
 	icon_state = "catwalk_cross"
 	},
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "tYO" = (
 /obj/storage/closet/dresser/random,
 /obj/disposalpipe/segment/transport,
@@ -66939,7 +66989,9 @@
 	dir = 10
 	},
 /turf/simulated/floor/airless/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "utd" = (
 /obj/machinery/light/small/sticky/harsh,
 /obj/machinery/vending/monkey/research,
@@ -69955,7 +70007,9 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/black,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "vmv" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -73805,7 +73859,9 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/map/light/cyan,
 /turf/simulated/floor/airless/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "wsO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -74275,7 +74331,9 @@
 	dir = 9
 	},
 /turf/simulated/floor/airless/engine/glow/blue,
-/area/station/engine/singcore)
+/area/station/engine/singcore{
+	requires_power = 1
+	})
 "wzY" = (
 /obj/cable{
 	icon_state = "4-8"
