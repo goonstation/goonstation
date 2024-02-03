@@ -53869,7 +53869,6 @@
 /obj/stool/chair/comfy/blue{
 	dir = 8
 	},
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_east,
 /area/station/medical/medbay/psychiatrist)
 "dfl" = (
@@ -58658,6 +58657,7 @@
 /obj/item/reagent_containers/food/snacks/candy/peach_ring{
 	pixel_x = -2
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_east,
 /area/station/medical/medbay/psychiatrist)
 "fSZ" = (
@@ -63125,6 +63125,10 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
+"ktx" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/carpet/blue/fancy/narrow/T_south,
+/area/station/medical/medbay/psychiatrist)
 "ktE" = (
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -111550,7 +111554,7 @@ otO
 oAv
 owx
 pmW
-dga
+ktx
 yby
 ybT
 cuW
