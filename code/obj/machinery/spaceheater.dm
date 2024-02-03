@@ -135,14 +135,6 @@ TYPEINFO(/obj/machinery/space_heater)
 				if (!I)
 					boutput(usr, SPAN_ALERT("No cell found to eject."))
 					return
-				else if (src.set_temperature > 400 && src.on) // Overheating
-					usr.TakeDamage("All", 0, 15, 0, DAMAGE_BURN)
-					usr.show_text("The [src.cell.name] scalds your hand!", "red")
-					usr.emote("scream")
-					playsound(src.loc, 'sound/machines/engine_grump4.ogg', 50, 1)
-				else if (src.set_temperature < 180 && src.on) // Supercooling
-					usr.show_text("The [src.cell.name] seems frozen in place!", "red")
-					return
 				I.set_loc(src.loc)
 				src.on = FALSE
 				usr.put_in_hand_or_eject(I)
