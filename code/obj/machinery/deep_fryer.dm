@@ -212,7 +212,9 @@ TYPEINFO(/obj/machinery/deep_fryer)
 /obj/machinery/deep_fryer/proc/fryify(atom/movable/thing, burnt=FALSE)
 	var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = new(src)
 
-	if(burnt)
+	//photos cause exponential lag when deepfried, see #17848
+	//feel free to remove this if you can figure out why
+	if(burnt || istype(thing, /obj/item/photo))
 		if (ismob(thing))
 			var/mob/M = thing
 			M.ghostize()
