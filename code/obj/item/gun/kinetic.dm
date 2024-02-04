@@ -1659,6 +1659,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		AddComponent(/datum/component/holdertargeting/sniper_scope, 12, 1600, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
 		..()
 
+	setupProperties()
+		..()
+		setProperty("carried_movespeed", 0.9)
 
 //1.57
 /obj/item/gun/kinetic/riot40mm
