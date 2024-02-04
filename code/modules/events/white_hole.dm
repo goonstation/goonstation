@@ -456,6 +456,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/critter/killertomato = 0.5,
 			/mob/living/critter/small_animal/cat/synth = 1,
 			/mob/living/critter/plant/maneater = 0.3,
+			/obj/item/plant/tumbling_creeper = 3,
 		),
 		"maint" = list(
 			/obj/decal/cleanable/rust = 10,
