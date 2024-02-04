@@ -51385,9 +51385,6 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/decoration/toiletholder{
-	pixel_y = -6
-	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "cWk" = (
