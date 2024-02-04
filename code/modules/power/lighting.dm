@@ -7,6 +7,10 @@
 // defines moved to _setup.dm by ZeWaka
 #define INSTALL_WALL 1
 #define INSTALL_FLOOR 2
+
+#define LIGHT_FIXTURE_ATTACH_TIME 4 SECONDS
+#define LIGHT_FIXTURE_DETACH_TIME 2 SECONDS
+
 TYPEINFO(/obj/item/light_parts)
 	mats = 4
 
@@ -107,7 +111,7 @@ TYPEINFO(/obj/item/light_parts)
 	if(!instantly)
 		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 		boutput(user, "You begin to attach the [src] to [target]...")
-		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /obj/item/light_parts/proc/finish_attaching,\
+		SETUP_GENERIC_ACTIONBAR(user, src, LIGHT_FIXTURE_ATTACH_TIME, /obj/item/light_parts/proc/finish_attaching,\
 			list(target, user, dir), src.icon, src.icon_state, null, null)
 	else
 		finish_attaching(target, user, dir)
@@ -979,7 +983,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			if (candismantle)
 				boutput(user, "You begin to loosen the fixture's screws...")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(uninstall_fixture),list(), src.icon, src.icon_state,\
+				SETUP_GENERIC_ACTIONBAR(user, src, LIGHT_FIXTURE_DETACH_TIME, PROC_REF(uninstall_fixture),list(), src.icon, src.icon_state,\
 				 "[user] finishes uninstalling \the [src].", INTERRUPT_MOVE|INTERRUPT_ACT|INTERRUPT_ATTACKED|INTERRUPT_STUNNED|INTERRUPT_ACTION)
 				return
 			else
@@ -1651,6 +1655,8 @@ TYPEINFO(/obj/item/light)
 	else
 		return ..()
 
+#undef LIGHT_FIXTURE_ATTACH_TIME
+#undef LIGHT_FIXTURE_DETACH_TIME
 
 #undef INSTALL_WALL
 #undef INSTALL_FLOOR
