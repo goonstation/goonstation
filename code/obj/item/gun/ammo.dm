@@ -879,6 +879,36 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_COILGUN
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
+/obj/item/ammo/bullets/four_bore
+	sname = "Four-Bore Termination Round"
+	name = "four-bore termination rounds"
+	desc = "A box of inch wide lethal rounds. These are for monsters that shouldn't exist."
+	ammo_type = new/datum/projectile/bullet/four_bore
+	icon_state = "bg"
+	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_FOUR_BORE
+	icon_dynamic = 0
+	icon_empty = "bg-0"
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+/obj/item/ammo/bullets/four_bore/stun
+	sname = "Four-Bore Rubber Slug"
+	name = "four-bore rubber slugs"
+	desc = "A box of massive rubber slugs. These are sublethal, not nonlethal."
+	ammo_type = new/datum/projectile/bullet/four_bore_stunners
+	icon_state = "bg"
+	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_FOUR_BORE
+	icon_dynamic = 0
+	icon_empty = "bg-0"
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+/obj/item/ammo/bullets/four_bore/stun/two //spawns in the Albatross
+	amount_left = 2
+	max_amount = 2
+
 //1.57
 /obj/item/ammo/bullets/autocannon
 	sname = "40mm HE"
