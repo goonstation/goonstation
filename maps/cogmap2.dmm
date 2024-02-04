@@ -2084,6 +2084,10 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	name = "North Solar Maintenance";
+	cycle_id = "northsolar"
+	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
@@ -5240,6 +5244,10 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Emergency Solar Array 2";
+	cycle_id = "solar2"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/arrivals)
@@ -18283,6 +18291,10 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	name = "North Maintenance";
+	cycle_id = "n_maint"
+	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/north)
 "bbk" = (
@@ -18327,6 +18339,10 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "North East Maintenance";
+	cycle_id = "ne_maint2"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/northeast)
@@ -19818,6 +19834,10 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "West Substation";
+	cycle_id = "westsubstation"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/substation/west)
@@ -37622,6 +37642,10 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	name = "East Substation";
+	cycle_id = "eastsubstation"
+	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/substation/east)
 "cfe" = (
@@ -38205,6 +38229,10 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "North East Maintenance";
+	cycle_id = "ne_maint"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/northeast)
@@ -53589,6 +53617,10 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	name = "South Solar Maintenance";
+	cycle_id = "southsolar"
+	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/solar/south)
 "dec" = (
@@ -53721,6 +53753,10 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Auxillary Storage";
+	cycle_id = "auxstorage"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/storage/auxillary)
@@ -57723,6 +57759,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Mining";
+	cycle_id = "mining";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/mining/magnet)
 "eLu" = (
@@ -58294,6 +58335,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Central Maintenance";
+	cycle_id = "c_maint3";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/central)
 "fss" = (
@@ -58585,6 +58631,10 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Research Outpost";
+	cycle_id = "sci_outpost"
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -60076,6 +60126,10 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	name = "North East Maintenance";
+	cycle_id = "ne_maint2"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "hzY" = (
@@ -60729,6 +60783,22 @@
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
+"iaT" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Central Maintenance";
+	cycle_id = "c_maint"
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/maintenance/central)
 "ibt" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
@@ -61878,6 +61948,20 @@
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
+"jjb" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "South East Maintenance";
+	cycle_id = "se_maint"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "jjf" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -62346,6 +62430,10 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Central Maintenance";
+	cycle_id = "c_maint"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "jHr" = (
@@ -62380,6 +62468,11 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Mining";
+	cycle_id = "mining";
+	enter_id = "inner"
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -62511,6 +62604,10 @@
 	dir = 4;
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Central Maintenance";
+	cycle_id = "c_maint2"
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/central)
@@ -63242,6 +63339,10 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Auxillary Storage";
+	cycle_id = "auxstorage"
+	},
 /turf/simulated/floor/grime,
 /area/station/storage/auxillary)
 "kAx" = (
@@ -63407,6 +63508,10 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "North Maintenance";
+	cycle_id = "n_maint"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -64477,6 +64582,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	name = "Central Maintenance";
+	cycle_id = "c_maint3";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/central)
 "lKv" = (
@@ -64733,6 +64843,19 @@
 	name = "very reinforced wall"
 	},
 /area/station/mining/staff_room)
+"lWs" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "South East Maintenance";
+	cycle_id = "se_maint2"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/maintenance/southeast)
 "lXu" = (
 /obj/machinery/power/apc{
 	areastring = "Medbay Staff Area";
@@ -64781,6 +64904,10 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "North East Maintenance";
+	cycle_id = "ne_maint"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/northeast)
@@ -64898,6 +65025,10 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "North Solar Maintenance";
+	cycle_id = "northsolar"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/solar/north)
@@ -65070,6 +65201,20 @@
 	icon_state = "fgreen2"
 	},
 /area/station/hydroponics/bay)
+"mqH" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "South East Maintenance";
+	cycle_id = "se_maint2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "mrr" = (
 /obj/cable/orange{
 	icon_state = "1-8"
@@ -65697,6 +65842,11 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
 	dir = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Central Maintenance";
+	cycle_id = "c_maint4";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/central)
 "nau" = (
@@ -66122,6 +66272,10 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "East Substation";
+	cycle_id = "eastsubstation"
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/east)
@@ -69133,6 +69287,10 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Research Outpost";
+	cycle_id = "sci_outpost"
+	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "qXg" = (
@@ -69495,6 +69653,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"riZ" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Central Maintenance";
+	cycle_id = "c_maint2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "rjO" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -69948,6 +70123,19 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"rJo" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
+	dir = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Central Maintenance";
+	cycle_id = "c_maint3";
+	enter_id = "inner"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/maintenance/central)
 "rJs" = (
 /obj/stool/bench/green/auto,
 /turf/simulated/floor/purple/side{
@@ -70779,6 +70967,10 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Emergency Solar Array 2";
+	cycle_id = "solar2"
 	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
@@ -71886,6 +72078,19 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/medical/head)
+"tPJ" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "South East Maintenance";
+	cycle_id = "se_maint"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/maintenance/southeast)
 "tQb" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -72174,6 +72379,10 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	name = "West Substation";
+	cycle_id = "westsubstation"
+	},
 /turf/simulated/floor,
 /area/station/engine/substation/west)
 "ucX" = (
@@ -72257,6 +72466,11 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Mining";
+	cycle_id = "mining";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/mining/magnet)
@@ -72577,6 +72791,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable/orange{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Central Maintenance";
+	cycle_id = "c_maint4";
+	enter_id = "inner"
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/central)
@@ -73944,6 +74163,10 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	name = "South Solar Maintenance";
+	cycle_id = "southsolar"
+	},
 /turf/simulated/floor,
 /area/station/maintenance/solar/south)
 "wBK" = (
@@ -74047,6 +74270,11 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Mining";
+	cycle_id = "mining";
+	enter_id = "inner"
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -74908,6 +75136,21 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"xJS" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Central Maintenance";
+	cycle_id = "c_maint4";
+	enter_id = "outer"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/maintenance/central)
 "xJW" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
@@ -75092,6 +75335,11 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Central Maintenance";
+	cycle_id = "c_maint3";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/central)
@@ -106675,7 +106923,7 @@ byI
 cbC
 bgA
 bgA
-jNE
+iaT
 bgA
 aaB
 aaF
@@ -107247,7 +107495,7 @@ eNc
 aaI
 aaa
 sOs
-jGF
+riZ
 bgA
 bjx
 lkY
@@ -116044,9 +116292,9 @@ aaa
 hBR
 tlx
 uSY
-cdY
+lWs
 cew
-kBM
+mqH
 cew
 cji
 clj
@@ -121769,7 +122017,7 @@ dWf
 qZf
 dWf
 lfh
-fsq
+xJS
 bZE
 kIP
 sGP
@@ -122980,7 +123228,7 @@ bvK
 oEr
 nBc
 jOn
-fsq
+xJS
 uSY
 tlx
 hDu
@@ -123863,7 +124111,7 @@ bjV
 blC
 eFF
 boH
-mZL
+rJo
 bsg
 btT
 bvD
@@ -129936,9 +130184,9 @@ aaa
 hBR
 tlx
 uSY
-cdY
+tPJ
 cew
-kBM
+jjb
 chu
 cjJ
 clp
