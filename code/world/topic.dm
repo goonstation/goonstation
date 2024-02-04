@@ -342,7 +342,7 @@
 
 		if (findtext(addr, ":")) // remove port if present
 			addr = splittext(addr, ":")[1]
-		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub2_hostname)
+		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip)
 			return 0 //ip filtering
 
 		var/list/plist = params2list(T)
@@ -767,7 +767,6 @@
 				var/ircmsg[] = new()
 				ircmsg["major"] = world.byond_version
 				ircmsg["minor"] = world.byond_build
-				ircmsg["goonhub_api"] = config.goonhub_api_version ? config.goonhub_api_version : 0
 				return ircbot.response(ircmsg)
 
 			if ("youtube")
