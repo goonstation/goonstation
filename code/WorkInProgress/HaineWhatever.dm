@@ -1480,11 +1480,6 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	var/num2 = num2hex(hex2num(hexnum) - 554040)
 */
 
-/turf/simulated/tempstuff
-	name = "floor"
-	icon = 'icons/misc/HaineSpriteDump.dmi'
-	icon_state = "gooberything_small"
-
 /obj/item/blessed_ball_bearing
 	name = "blessed ball bearing" // fill claymores with them for all your nazi-vampire-protection needs
 	desc = "How can you tell it's blessed? Well, just look at it! It's so obvious!"
