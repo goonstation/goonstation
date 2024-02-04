@@ -1,4 +1,36 @@
 
+(t)sat feb 03 24
+(u)mloccy
+(p)17765
+(e)📄🍝|A-UI, A-Catering
+(+)Kitchen Mixer now uses a TGUI interface
+(t)fri feb 02 24
+(u)LeahTheTech
+(p)17354
+(e)⚖|C-Balance
+(*)Captains can no longer spawn as antagonist roles.
+(u)LeahTheTech
+(p)17839
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)Members of the winning gang will now be displayed at round end.
+(u)Sord
+(p)17830
+(e)🗺|A-Mapping
+(*)Cogmap2's Medbay has been completely revamped
+(u)Sord
+(+)The Crematorium now takes longer operate and can be escaped up to a certain point.
+(u)Tyrant
+(p)17841
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Clarion's central maintenance APC has been moved to actually be in central maintenance (and is no longer confusingly called armoury APC)
+(u)Tyrant
+(p)17828
+(e)🆕🗺💅|C-Feature, A-Mapping, C-QoL
+(+)Some airlocks are now linked in a way that opening one door tries to close the other doors. "Keep the Air Inside!" ~John Nanotrasen probably.
+(u)Chatauscours
+(p)17682
+(e)🗺💅|A-Mapping, C-QoL
+(+)The Donut 2 Auxilary storage has been repurposed for a construction area.
 (t)wed jan 31 24
 (u)NibChocolateeny
 (p)17817
