@@ -197,6 +197,20 @@ toxic - poisons
 	casing = /obj/item/casing/rifle
 	ricochets = TRUE
 
+/datum/projectile/bullet/draco
+	name = "bullet"
+	shot_sound = 'sound/weapons/akm.ogg'
+	damage = 28
+	cost = 1
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_CUT
+	shot_number = 1
+	fullauto_valid = 1
+	impact_image_state = "bullethole-small"
+	implanted = /obj/item/implant/projectile/bullet_308
+	casing = /obj/item/casing/rifle
+	ricochets = TRUE
+
 /datum/projectile/bullet/rifle_3006
 	name = "bullet"
 	damage = 85

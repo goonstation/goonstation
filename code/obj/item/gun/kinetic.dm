@@ -907,7 +907,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 		set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/burst)
 		projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_surplus/auto)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.5, 1.5, 1)
 		..()
 
 	attack_self(mob/user)
@@ -919,6 +919,140 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			spread_angle = 8
 			shoot_delay = 5
 
+
+/obj/item/gun/kinetic/greasegun
+	name = "\improper Grease Gun"
+	desc = "A stamped metal SMG, cheaply produced years ago, and found in the weirdest places today."
+	icon_state = "grease"
+	item_state = "grease"
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
+	spread_angle = 8
+	shoot_delay = 5
+	has_empty_state = TRUE
+	w_class = W_CLASS_SMALL
+	force = MELEE_DMG_PISTOL
+	ammo_cats = list(AMMO_PISTOL_9MM_ALL)
+	max_ammo_capacity = 30
+	auto_eject = TRUE
+	fire_animation = TRUE
+	default_magazine = /obj/item/ammo/bullets/nine_mm_surplus/mag_grease
+	var/greased = FALSE //guh
+	var/glued = FALSE // :'(
+	get_desc(dist, mob/user)
+		if (!greased && !glued)
+			. += "It's all seized up and could do with maintenance."
+		else if (glued)
+			. += "It's, er, all sticky and covered glue. WHY is it covered with glue???"
+		else
+			. += "It's greasy, alright..."
+
+	attack_self(mob/user as mob)
+		if(ishuman(user))
+			if(two_handed)
+				setTwoHanded(0) //Go 1-handed.
+				src.spread_angle = initial(src.spread_angle)
+				icon_state = "grease"
+			else
+				if(!setTwoHanded(1)) //Go 2-handed.
+					boutput(user, SPAN_ALERT("Can't switch to 2-handed while your other hand is full."))
+				else
+					icon_state = "greaseunfolded"
+					src.spread_angle = 4
+		..()
+
+	shoot() // fuck up firerate speed
+		var/delay
+		if (greased)
+			delay = 10
+		else if (glued)
+			delay = 30
+		else
+			delay = rand(8,25)// slightly faster than greased occasionally to maximise variance
+		var/datum/component/holdertargeting/fullauto/firemode = GetComponent(/datum/component/holdertargeting/fullauto)
+		firemode.delaystart = (delay/10) //not ideal to do it here, but this is a jank use case anyway
+		..()
+	reagent_act(reagent_id,volume)
+		if ((reagent_id in list("oil","lube", "superlube")) && volume >= 5)
+			greased = TRUE
+			glued = FALSE
+		if (reagent_id == "spaceglue" && volume >= 5)
+			greased = FALSE
+			glued = TRUE
+	New()
+		if (prob(33))
+			name = "\improper [pick ("Greafe","Grief","Greef","Griff","Greece")] Gun"
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
+		..()
+
+
+/obj/item/gun/kinetic/draco
+	name = "\improper Draco Pistol"
+	desc = "A full size 7.62x39mm 'Pistol'. With no stock. "
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
+	icon_state = "draco"
+	item_state = "draco"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	force = MELEE_DMG_RIFLE
+	contraband = 8
+	ammo_cats = list(AMMO_AUTO_762)
+	spread_angle = 3
+	shoot_delay = 3
+	max_ammo_capacity = 30
+	auto_eject = 1
+	can_dual_wield = 0
+	two_handed = 1
+	gildable = 1
+	default_magazine = /obj/item/ammo/bullets/akm/draco
+	fire_animation = TRUE
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = ONBACK
+	w_class = W_CLASS_BULKY
+	var/last_shot
+	var/recoil = 0
+	var/last_recoil_act
+	shoot()
+		if (recoil == 0)
+			processing_items |= src
+		lower_recoil()
+		if (recoil < 5) // give small bursts some benefit
+			recoil = min(30, recoil+1)
+		else
+			recoil = min(30, recoil+2)
+		spread_angle = 3 + recoil
+		last_shot = TIME
+		last_recoil_act = TIME
+		boutput(world, "recoil is  [recoil]")
+		..()
+	proc/animate_recoil()
+		boutput(world, "wuh")
+	proc/lower_recoil()
+		var/timediff = TIME - last_shot
+		if (timediff >= 5 DECI SECONDS)
+			var/recoildiff = TIME - last_recoil_act
+			last_recoil_act = TIME
+			boutput(world, "recoil is [recoil], timerecoildiffdiff is [recoildiff], so [recoil] *= 0.95^[recoildiff]")
+			recoil *= (0.95 ** (recoildiff))
+			recoil -= (recoildiff/3) // small linear part to aid with low values
+			recoil = max(recoil,0)
+			boutput(world, "recoil is now [recoil]")
+			boutput(world, "---")
+			animate_recoil()
+		if (recoil < 0.2 )
+			recoil = 0
+			animate_recoil()
+			processing_items.Remove(src)
+			return
+	process()
+		lower_recoil()
+		..()
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/draco)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
+		..()
 /obj/item/gun/kinetic/webley
 	name = "Webley 'Holdout' Snubnose"
 	desc = "A cut down Webley break-action revolver. There's some extra weight in the grip for spinning action."
@@ -936,7 +1070,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	add_residue = TRUE
 	gildable = TRUE
 	spread_angle = 2
-	HELP_MESSAGE_OVERRIDE({"When pulled from a pocket, this gun gains a brief firerate increase at the cost of accuracy."})
+	HELP_MESSAGE_OVERRIDE({"If your hands are empty, drawing this gun from a pocket grants a short, large firerate increase at the cost of accuracy."})
 
 	var/broke_open = FALSE
 	var/shells_to_eject = 0

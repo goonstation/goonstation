@@ -424,6 +424,10 @@
 	max_amount = 30
 	ammo_cat = AMMO_AUTO_762
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	draco
+		name = "Draco Magazine"
+		desc = "A curved 30 round magazine, for the Draco Pistol."
+		ammo_type = new/datum/projectile/bullet/draco
 
 /obj/item/ammo/bullets/rifle_3006
 	sname = ".308 AP"
@@ -583,7 +587,12 @@
 		name = "9mm MOR magazine"
 		amount_left = 30
 		max_amount = 30
-
+	mag_grease
+		icon_state = "grease"
+		icon_empty = "grease-empty"
+		name = "9mm Grease Gun magazine"
+		amount_left = 30
+		max_amount = 30
 /obj/item/ammo/bullets/nine_mm_soviet
 	sname = "9x18mm Makarov"
 	name = "9x18mm magazine"
