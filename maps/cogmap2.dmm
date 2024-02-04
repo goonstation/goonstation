@@ -38112,6 +38112,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -49006,6 +49007,7 @@
 /area/station/medical/medbay)
 "cNU" = (
 /obj/stool/bed/moveable,
+/obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
@@ -49452,6 +49454,9 @@
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = -10
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 10
@@ -53864,7 +53869,6 @@
 /obj/stool/chair/comfy/blue{
 	dir = 8
 	},
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_east,
 /area/station/medical/medbay/psychiatrist)
 "dfl" = (
@@ -58653,6 +58657,7 @@
 /obj/item/reagent_containers/food/snacks/candy/peach_ring{
 	pixel_x = -2
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_east,
 /area/station/medical/medbay/psychiatrist)
 "fSZ" = (
@@ -61110,6 +61115,8 @@
 "iwc" = (
 /obj/stool/bed/moveable,
 /obj/machinery/light/incandescent,
+/obj/item/clothing/suit/bedsheet,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -63118,6 +63125,10 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
+"ktx" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/carpet/blue/fancy/narrow/T_south,
+/area/station/medical/medbay/psychiatrist)
 "ktE" = (
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -68480,6 +68491,9 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/machinery/light_switch/east{
+	pixel_y = 12
 	},
 /turf/simulated/floor/black,
 /area/station/medical/medbay/reception)
@@ -74410,6 +74424,7 @@
 	pixel_x = 4
 	},
 /obj/stool/bed/moveable,
+/obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/morgue)
 "xha" = (
@@ -111539,7 +111554,7 @@ otO
 oAv
 owx
 pmW
-dga
+ktx
 yby
 ybT
 cuW
