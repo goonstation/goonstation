@@ -905,9 +905,9 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_empty = "bg-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
-/obj/item/ammo/bullets/four_bore/stun/two //spawns in the Albatross
-	amount_left = 2
-	max_amount = 2
+/obj/item/ammo/bullets/four_bore/stun/single //spawns in the Albatross
+	amount_left = 1
+	max_amount = 1
 
 //1.57
 /obj/item/ammo/bullets/autocannon

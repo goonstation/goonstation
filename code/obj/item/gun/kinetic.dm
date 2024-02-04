@@ -1635,9 +1635,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/four_bore_albatross
 	name = "\improper Albatross four-bore rifle"
 	desc = "A behemoth of a scoped rifle developed by Cormorant Precision Arms. Even the rubber slugs could kill."
-	icon = 'icons/obj/items/guns/energy64x32.dmi'
-	icon_state = "tasersniper"
-	item_state = "tasersniper"
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	icon_state = "four_bore"
+	item_state = "four_bore"
 	w_class = W_CLASS_BULKY
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
@@ -1649,13 +1649,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	contraband = 7
 	ammo_cats = list(AMMO_FOUR_BORE)
 	spread_angle = 2
-	max_ammo_capacity = 2
-	default_magazine = /obj/item/ammo/bullets/four_bore/stun/two
+	max_ammo_capacity = 1
+	default_magazine = /obj/item/ammo/bullets/four_bore/stun/single
 	fire_animation = FALSE
 
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/four_bore_stunners)
+		AddComponent(/datum/component/holdertargeting/sniper_scope, 12, 1600, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
 		..()
 
 
