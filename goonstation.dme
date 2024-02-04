@@ -16,7 +16,7 @@ var/datum/preMapLoad/preMapLoad = new
 // END_PREFERENCES
 
 // Compiler Settings
-#include "_std\__odlint.dm"
+#include "_std\__odlint.dme"
 
 // Compatibility Check
 #include "_std\compatibility.dme"
