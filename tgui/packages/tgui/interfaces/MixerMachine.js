@@ -48,7 +48,7 @@ export const MixerMachine = (props, context) => {
     <Window
       title="Kitchen Helper"
       width={500}
-      height={210}>
+      height={220}>
       <Window.Content >
         <Stack m="0.25rem" vertical fill>
 
