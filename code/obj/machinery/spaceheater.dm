@@ -67,7 +67,6 @@ TYPEINFO(/obj/machinery/space_heater)
 				if (user)
 					user.show_text("You short out the temperature limiter circuit in the [src].", "blue")
 				src.emagged = TRUE
-				src.desc = "Made by Space Amish using traditional space techniques, this heater is guaranteed to set the station on fire."
 				return TRUE
 			else
 				if (user)
@@ -83,13 +82,16 @@ TYPEINFO(/obj/machinery/space_heater)
 			return FALSE
 		if (user)
 			user.show_text("You repair the temperature regulator in the [src].", "blue")
-		src.desc = "Made by Space Amish using traditional space techniques, this heater is guaranteed not to set the station on fire."
 		src.emagged = FALSE
 		return TRUE
 
-	examine()
+	get_desc()
 		. = ..()
-		. += "The HVAC is [src.on ? "on" : "off"], [src.heating ? "heating" : "cooling"]"
+		if (src.emagged)
+			src.desc = "Made by Space Amish using traditional space techniques, this heater is guaranteed to set the station on fire."
+		else
+			src.desc = "Made by Space Amish using traditional space techniques, this heater is guaranteed not to set the station on fire."
+		. += "The HVAC is [src.on ? "on" : "off"], and [src.heating ? "heating" : "cooling"] the environment."
 		. += "The power cell is [src.cell ? "installed" : "missing"]."
 		if(src.open)
 			. += "The power cell is [cell ? "installed" : "missing"]."
