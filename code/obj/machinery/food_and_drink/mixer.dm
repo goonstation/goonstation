@@ -1,8 +1,8 @@
-// Max amount of items allowed in mixer bowl
+/// Max amount of items allowed in mixer bowl
 #define MIXER_MAX_CONTENTS 4
-// Power used during mixing
+/// Power used during mixing
 #define MIXER_MIXING_POWER_USAGE 1 KILO WATTS
-// Mixing time in seconds
+/// Mixing time in seconds
 #define MIX_TIME 2 SECONDS
 
 var/list/mixer_recipes = list()
@@ -23,7 +23,7 @@ TYPEINFO(/obj/machinery/mixer)
 	var/list/to_remove = list()
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
 	var/working = 0
-	var/timeMixStart = 0
+	var/timeMixEnd = 0
 
 	New()
 		..()
@@ -47,7 +47,6 @@ TYPEINFO(/obj/machinery/mixer)
 
 		src.UpdateIcon()
 		UnsubscribeProcess()
-		return
 
 	attackby(obj/item/W, mob/user)
 		var/amount = length(src.contents)
@@ -128,11 +127,11 @@ TYPEINFO(/obj/machinery/mixer)
 				. = TRUE
 
 			if ("ejectAll")
-				. = TRUE
 				for (var/obj/item/target in src.contents)
 					src.ejectItemFromMixer(target)
 
 				usr.show_text(SPAN_NOTICE("You eject all contents from the [src]."))
+				. = TRUE
 
 	attack_ai(var/mob/user as mob)
 		return ui_interact(user)
@@ -161,7 +160,7 @@ TYPEINFO(/obj/machinery/mixer)
 			boutput(usr, SPAN_ALERT("There's nothing in the mixer."))
 			return
 		src.working = 1
-		src.timeMixStart = TIME
+		src.timeMixEnd = TIME + MIX_TIME
 		src.power_usage = MIXER_MIXING_POWER_USAGE
 
 		tgui_process.update_uis(src)
@@ -170,6 +169,7 @@ TYPEINFO(/obj/machinery/mixer)
 		SubscribeToProcess()
 
 	process()
+		. = ..()
 		if (status & (NOPOWER|BROKEN))
 			UnsubscribeProcess()
 			return
@@ -179,49 +179,50 @@ TYPEINFO(/obj/machinery/mixer)
 			UnsubscribeProcess()
 			return
 
-		if (TIME - src.timeMixStart < MIX_TIME)
+		if (TIME < timeMixEnd)
 			return
-		else
-			var/output = null // /obj/item/reagent_containers/food/snacks/yuck
-			var/derivename = 0
-			for (var/datum/cookingrecipe/R in src.recipes)
-				to_remove.len = 0
-				if (R.item1)
-					if (!bowl_checkitem(R.item1, R.amt1)) continue
-				if (R.item2)
-					if (!bowl_checkitem(R.item2, R.amt2)) continue
-				if (R.item3)
-					if (!bowl_checkitem(R.item3, R.amt3)) continue
-				if (R.item4)
-					if (!bowl_checkitem(R.item4, R.amt4)) continue
-				output = R.specialOutput(src)
-				if (!output)
-					output = R.output
-				if (R.useshumanmeat)
-					derivename = 1
-				break
-			if (!isnull(output))
-				var/obj/item/reagent_containers/food/snacks/F
-				if (ispath(output))
-					F = new output(get_turf(src))
-				else
-					F = output
-					F.set_loc(get_turf(src))
 
-				if (derivename)
-					var/foodname = F.name
-					for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
-						F.name = "[M.subjectname] [foodname]"
-						F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
-						if(!isnull(F.unlock_medal_when_eaten))
-							continue
-						else if (M.subjectjob && M.subjectjob == "Clown")
-							F.unlock_medal_when_eaten = "That tasted funny"
-						else
-							F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
-				for (var/obj/item/I in to_remove)
-					qdel(I)
-				to_remove.len = 0
+		var/output = null // /obj/item/reagent_containers/food/snacks/yuck
+		var/derivename = 0
+		for (var/datum/cookingrecipe/R in src.recipes)
+			to_remove.len = 0
+			if (R.item1)
+				if (!bowl_checkitem(R.item1, R.amt1)) continue
+			if (R.item2)
+				if (!bowl_checkitem(R.item2, R.amt2)) continue
+			if (R.item3)
+				if (!bowl_checkitem(R.item3, R.amt3)) continue
+			if (R.item4)
+				if (!bowl_checkitem(R.item4, R.amt4)) continue
+			output = R.specialOutput(src)
+			if (!output)
+				output = R.output
+			if (R.useshumanmeat)
+				derivename = 1
+			break
+
+		if (!isnull(output))
+			var/obj/item/reagent_containers/food/snacks/F
+			if (ispath(output))
+				F = new output(get_turf(src))
+			else
+				F = output
+				F.set_loc(get_turf(src))
+
+			if (derivename)
+				var/foodname = F.name
+				for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
+					F.name = "[M.subjectname] [foodname]"
+					F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
+					if(!isnull(F.unlock_medal_when_eaten))
+						continue
+					else if (M.subjectjob && M.subjectjob == "Clown")
+						F.unlock_medal_when_eaten = "That tasted funny"
+					else
+						F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
+			for (var/obj/item/I in to_remove)
+				qdel(I)
+			to_remove.len = 0
 
 			for (var/obj/I in src.contents)
 				I.set_loc(src.loc)
@@ -231,9 +232,10 @@ TYPEINFO(/obj/machinery/mixer)
 
 			src.working = 0
 			src.UpdateIcon()
-			src.use_power(MIXER_MIXING_POWER_USAGE)
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 			tgui_process.update_uis(src)
+
+			src.power_usage = 0
 			UnsubscribeProcess()
 			return
 
