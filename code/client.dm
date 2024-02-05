@@ -1152,19 +1152,6 @@ var/global/curr_day = null
 		return 0
 	return (src.ckey in muted_keys) && muted_keys[src.ckey]
 
-/// Sets a cloud key value pair and sends it to goonhub
-/client/proc/cloud_put(key, value)
-	return src.player.cloud_put(key, value)
-
-/// Returns some cloud data on the client
-/client/proc/cloud_get(key)
-	return src.player.cloud_get(key)
-
-/// Returns 1 if you can set or retrieve cloud data on the client
-/client/proc/cloud_available()
-	return src.player.cloud_available()
-
-
 /client/proc/message_one_admin(source, message)
 	if(!src.holder)
 		return
