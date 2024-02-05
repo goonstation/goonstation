@@ -58289,6 +58289,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "sAI" = (
