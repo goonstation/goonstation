@@ -1,5 +1,7 @@
 
 (t)mon feb 05 24
+(u)tarmunora
+(+)Increase blood absorption rate during IV-drip transfusions and dialysis
 (u)GuvGuvington
 (p)17867
 (e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
