@@ -2162,13 +2162,33 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		icon_state = "torncape_green"
 		item_state = "torncape_green"
 
+	yellow
+		name = "Yellow Torn Cloak"
+		icon_state = "torncape_yellow"
+		item_state = "torncape_yellow"
+
+	white
+		name = "White Torn Cloak"
+		icon_state = "torncape_white"
+		item_state = "torncape_white"
+
+	pink
+		name = "Pink Torn Cloak"
+		icon_state = "torncape_pink"
+		item_state = "torncape_pink"
+
+	orange
+		name = "Orange Torn Cloak"
+		icon_state = "torncape_orange"
+		item_state = "torncape_orange"
+
 	random
 		var/style = null
 
 		New()
 			..()
 			if(!style)
-				src.style = pick("red","black","blue","brown","purple","green")
+				src.style = pick("red","black","blue","brown","purple","green","yellow","white","pink","orange")
 				src.icon_state = "torncape_[style]"
 				src.item_state = "torncape_[style]"
 				src.name = "[style] torn cloak"
@@ -2240,13 +2260,33 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		icon_state = "scarfcape_green"
 		item_state = "scarfcape_green"
 
+	yellow
+		name = "Yellow Adventurous Scarf"
+		icon_state = "scarfcape_yellow"
+		item_state = "scarfcape_yellow"
+
+	brown
+		name = "Brown Adventurous Scarf"
+		icon_state = "scarfcape_brown"
+		item_state = "scarfcape_brown"
+
+	pink
+		name = "Pink Adventurous Scarf"
+		icon_state = "scarfcape_pink"
+		item_state = "scarfcape_pink"
+
+	orange
+		name = "Orange Adventurous Scarf"
+		icon_state = "scarfcape_orange"
+		item_state = "scarfcape_orange"
+
 	random
 		var/style = null
 
 		New()
 			..()
 			if(!style)
-				src.style = pick("red","black","white","blue","purple","green")
+				src.style = pick("red","black","white","blue","purple","green","yellow","brown","pink","orange")
 				src.icon_state = "scarfcape_[style]"
 				src.item_state = "scarfcape_[style]"
 				src.name = "[style] adventure scarf"

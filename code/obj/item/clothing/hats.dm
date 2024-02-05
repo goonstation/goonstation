@@ -1903,6 +1903,36 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	icon_state = "westhat_brown"
 	item_state = "westhat_brown"
 
+/obj/item/clothing/head/westhat/green
+	name = "Green Ten-Gallon hat"
+	icon_state = "westhat_green"
+	item_state = "westhat_green"
+
+/obj/item/clothing/head/westhat/lightgreen
+	name = "Light green Ten-Gallon hat"
+	icon_state = "westhat_lightgreen"
+	item_state = "westhat_lightgreen"
+
+/obj/item/clothing/head/westhat/purple
+	name = "Purple Ten-Gallon hat"
+	icon_state = "westhat_purple"
+	item_state = "westhat_purple"
+
+/obj/item/clothing/head/westhat/yellow
+	name = "Yellow Ten-Gallon hat"
+	icon_state = "westhat_yellow"
+	item_state = "westhat_yellow"
+
+/obj/item/clothing/head/westhat/lightblue
+	name = "Light blue Ten-Gallon hat"
+	icon_state = "westhat_lightblue"
+	item_state = "westhat_lightblue"
+
+/obj/item/clothing/head/westhat/white
+	name = "White Ten-Gallon hat"
+	icon_state = "westhat_white"
+	item_state = "westhat_white"
+
 //Witchy Hats
 
 /obj/item/clothing/head/witchhat_purple

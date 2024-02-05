@@ -1259,6 +1259,30 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western/westhat)
 		name = "Red Ten-gallon Hat"
 		path = /obj/item/clothing/head/westhat/red
 
+	green
+		name = "Green Ten-gallon Hat"
+		path = /obj/item/clothing/head/westhat/green
+
+	lightgreen
+		name = "Light green Ten-gallon Hat"
+		path = /obj/item/clothing/head/westhat/lightgreen
+
+	purple
+		name = "Purple Ten-gallon Hat"
+		path = /obj/item/clothing/head/westhat/purple
+
+	yellow
+		name = "Yellow Ten-gallon Hat"
+		path = /obj/item/clothing/head/westhat/yellow
+
+	lightblue
+		name = "Light blue Ten-gallon Hat"
+		path = /obj/item/clothing/head/westhat/lightblue
+
+	white
+		name = "White Ten-gallon Hat"
+		path = /obj/item/clothing/head/westhat/white
+
 //Coats, Moved to Cargo Crate Supply pack: west_coats
 
 //Ponchos
