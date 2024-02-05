@@ -1598,26 +1598,31 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define PUMP_POWERLEVEL_1 100
-#define PUMP_POWERLEVEL_2 500
-#define PUMP_POWERLEVEL_3 1000
-#define PUMP_POWERLEVEL_4 2500
-#define PUMP_POWERLEVEL_5 5000
 #define PUMP_ON 1
 #define PUMP_OFF 0
+/// Signals which claim the device to be of identifier "AGP" are exclusively pumps or pump wannabes (fine)
 #define DEVICE_IS_PUMP(signal) (signal.data["device"] == "AGP")
-#define HAS_REQUIRED_DATA(signal) ((signal.data["tag"] != null) && (signal.data["power"] != null) && (signal.data["target_output"] != null) && (signal.data["min_output"] != null) && (signal.data["max_output"] != null))
+/// Do we have all the information we should Really Really Have?
+#define HAS_REQUIRED_DATA(signal) ((signal.data["netid"] != null) && (signal.data["tag"] != null) && (signal.data["power"] != null) && (signal.data["target_output"] != null) && (signal.data["min_output"] != null) && (signal.data["max_output"] != null))
 
 /// Describes a pump from its packet data
 /datum/pump_infoset
+	/// Unique identifier
+	var/net_id = 0
 	/// Whether or not the pump is on or off
 	var/power_status = PUMP_OFF
 	/// Pressure of the pump
 	var/target_pressure = 0
-	/// Radio ID the pump responds to
-	var/id = ""
+	/// Radio ID the pump responds to, usually varedited to be a readable name
+	var/id = "Pump"
+	/// minimum pressure this pump will accept
 	var/min_pressure = 0
+	/// maximum pressure this pump will accept
 	var/max_pressure = 0
+	/// HEXADECIMAL color to use in background of pump info box
+	var/color = MAPC_DEFAULT
+	/// name of area as it appears on the interface
+	var/area_name = "Unknown Area"
 
 /obj/machinery/computer/atmosphere/pumpcontrol
 	icon = 'icons/obj/computer.dmi'
@@ -1645,13 +1650,6 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 			FALSE \
 		)
 
-	attack_hand(mob/user)
-		if(status & (BROKEN | NOPOWER))
-			return
-		user << browse(return_text(),"window=computer;can_close=1")
-		src.add_dialog(user)
-		onclose(user, "computer")
-
 	process()
 		..()
 		if(status & (BROKEN | NOPOWER))
@@ -1665,7 +1663,6 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		if (!DEVICE_IS_PUMP(signal)) return
 		if (!HAS_REQUIRED_DATA(signal)) return
 
-
 		// We know about this pump so just update with information that prolly changed
 		if (signal.source in pump_infos)
 			var/datum/pump_infoset/I = pump_infos[signal.source]
@@ -1676,29 +1673,31 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 
 		// Setup pump info datum to add to list later
 		var/datum/pump_infoset/I = new()
+		// but first check area
+		var/area/pump_area = get_area(signal.source)
+		if (!istype(pump_area))
+			return
 		I.id = signal.data["tag"]
+		I.net_id = signal.data["netid"]
 		I.power_status = signal.data["power"]
 		I.target_pressure = signal.data["target_output"]
 		I.min_pressure = signal.data["min_output"]
 		I.max_pressure = signal.data["max_output"]
+		I.color = pump_area.station_map_colour
+		I.area_name = pump_infos.Find(pump_area.name)
 
-		var/area/pump_area = get_area(signal.source)
-		if (!istype(pump_area))
-			return
-
-		var/area_label_position = pump_infos.Find(pump_area.name)
-		if (area_label_position)
+		if (I.area_name)
 			// We had a pump in this area before, insert it below its area
-			while (area_label_position < pump_infos.len)
-				area_label_position++
-				var/datum/pump_infoset/infoset = pump_infos[ pump_infos[area_label_position] ]
+			while (I.area_name < pump_infos.len)
+				I.area_name++
+				var/datum/pump_infoset/infoset = pump_infos[ pump_infos[I.area_name] ]
 				// Stop before next heading
 				if (!istype(infoset))
 					break
 				// Stop before pump after itself in alphabet to alphabetize output (wow)
 				if (sorttext(I.id, infoset.id) == 1)
 					break
-			pump_infos.Insert(area_label_position, signal.source)
+			pump_infos.Insert(I.area_name, signal.source)
 		else
 			// We never saw this pump's area before, so add it to the bottom
 			pump_infos += pump_area.name
@@ -1727,6 +1726,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		var/output = "<B>[name]</B><BR><A href='?src=\ref[src];refresh=1'>Refresh</A><BR><HR><B>Pump Data: <BR><BR></B>[pump_html]<HR>"
 		return output
 
+	/*
 	Topic(href, href_list)
 		if(..())
 			return
@@ -1784,16 +1784,35 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 		src.updateUsrDialog()
+		*/
 
-#undef PUMP_POWERLEVEL_1
-#undef PUMP_POWERLEVEL_2
-#undef PUMP_POWERLEVEL_3
-#undef PUMP_POWERLEVEL_4
-#undef PUMP_POWERLEVEL_5
+/obj/machinery/computer/atmosphere/pumpcontrol/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "PumpControl")
+		ui.open()
+
+/obj/machinery/computer/atmosphere/pumpcontrol/ui_static_data(mob/user)
+	return list(
+		"frequency" = src.frequency,
+		"pump_list" = src.pump_infos
+	)
+
+/obj/machinery/computer/atmosphere/pumpcontrol/ui_data(mob/user)
+	. = ..()
+
+/obj/machinery/computer/atmosphere/pumpcontrol/ui_act(action, params)
+	. = ..()
+
+/obj/machinery/computer/atmosphere/pumpcontrol/attack_hand(mob/user)
+	. = ..()
+	src.ui_interact(user)
+
 #undef DEVICE_IS_PUMP
 #undef HAS_REQUIRED_DATA
 #undef PUMP_ON
 #undef PUMP_OFF
+
 #undef LEFT_CIRCULATOR
 #undef RIGHT_CIRCULATOR
 #undef CIRCULATOR_MAX_PRESSURE
