@@ -3054,6 +3054,7 @@
 /obj/cable{
 	icon_state = "1-5"
 	},
+/obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "apT" = (
@@ -8331,6 +8332,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aQC" = (
@@ -16140,6 +16142,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
+"ddR" = (
+/obj/landmark/pest,
+/turf/simulated/floor/grime,
+/area/station/storage/warehouse)
 "ddZ" = (
 /obj/storage/crate/furnacefuel,
 /obj/machinery/light/small{
@@ -16590,6 +16596,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "dyi" = (
@@ -17033,6 +17040,9 @@
 /obj/machinery/light_switch{
 	name = "W light switch";
 	pixel_x = -24
+	},
+/obj/machinery/computer/chem_request_receiver{
+	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
@@ -17499,6 +17509,14 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/garden/owlery)
+"etp" = (
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/landmark/pest,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "evf" = (
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -18901,6 +18919,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/storage/primary)
+"fPI" = (
+/obj/cable{
+	icon_state = "4-9"
+	},
+/obj/landmark/pest,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "fPW" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/med_data,
@@ -19110,6 +19135,10 @@
 	},
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
+"gfE" = (
+/obj/landmark/pest,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "ggb" = (
 /obj/lattice{
 	dir = 6;
@@ -19993,6 +20022,10 @@
 	dir = 10
 	},
 /area/station/medical/medbay)
+"hbg" = (
+/obj/landmark/pest,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "hbP" = (
 /obj/cable{
 	icon_state = "1-10"
@@ -23980,7 +24013,7 @@
 	},
 /area/station/security/main)
 "loB" = (
-/obj/stool/chair/comfy/wheelchair{
+/obj/machinery/computer/chem_requester/medical{
 	dir = 8
 	},
 /turf/simulated/floor/blue,
@@ -28532,7 +28565,9 @@
 /area/station/maintenance/northwest)
 "pCd" = (
 /obj/machinery/firealarm/east,
-/obj/table/glass/auto,
+/obj/machinery/computer/chem_requester/science{
+	dir = 8
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -29877,6 +29912,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "qGW" = (
@@ -34572,6 +34608,10 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
+"uuz" = (
+/obj/landmark/pest,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "uuN" = (
 /obj/machinery/vending/standard,
 /obj/cable{
@@ -35073,6 +35113,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
+/obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "uRe" = (
@@ -78714,7 +78755,7 @@ aqE
 aqE
 aqE
 aSE
-aTv
+fPI
 aqE
 axD
 aTv
@@ -82096,7 +82137,7 @@ aFk
 aFX
 rah
 tip
-tip
+gfE
 aKf
 sjH
 tip
@@ -82654,7 +82695,7 @@ rmY
 fvH
 bcZ
 pSS
-bbN
+ddR
 bbN
 bbN
 bbN
@@ -84776,7 +84817,7 @@ bbN
 bbN
 bmZ
 bbN
-bbN
+ddR
 brW
 vbK
 btC
@@ -88106,7 +88147,7 @@ aqj
 aqj
 aqj
 eII
-bdm
+hbg
 wuu
 hUT
 joQ
@@ -88429,7 +88470,7 @@ oyV
 pEL
 pEL
 jPK
-urS
+uuz
 bLr
 bLr
 bLr
@@ -89900,7 +89941,7 @@ upH
 bdm
 bdm
 bdm
-bdm
+hbg
 aYR
 bdm
 bdm
@@ -95034,7 +95075,7 @@ abm
 bbl
 bbZ
 bbl
-bcD
+etp
 aYL
 aYL
 bgs
