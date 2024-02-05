@@ -1706,6 +1706,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 
 		pump_infos[signal.source] = I
 		src.updateUsrDialog()
+		src.ui_static_data()
 
 	// Get a pump by net id
 	proc/getPump(var/net_id)

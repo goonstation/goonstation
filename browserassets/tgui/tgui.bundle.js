@@ -73397,7 +73397,8 @@ var PumpInformation = function PumpInformation(_, context) {
   var pump = _.pump;
 
   var setPressure = function setPressure(netid, newPressure) {
-    return act('setPressure', {
+    pump.target_pressure = newPressure;
+    act('setPressure', {
       net_id: netid,
       pressure: newPressure
     });
@@ -73433,6 +73434,7 @@ var PumpInformation = function PumpInformation(_, context) {
         children: (0, _inferno.createComponentVNode)(2, _components.Button, {
           "icon": "fas fa-power-off",
           "backgroundColor": pump.power_status === "on" ? "#11AA11" : "#AA1111",
+          "disabled": 0,
           "onClick": function () {
             function onClick() {
               return togglePump(pump.net_id);
@@ -73463,7 +73465,12 @@ var PumpInformation = function PumpInformation(_, context) {
 
 var PumpControl = function PumpControl(props, context) {
   var _useBackend2 = (0, _backend.useBackend)(context),
+      act = _useBackend2.act,
       data = _useBackend2.data;
+
+  var refresh = function refresh() {
+    return act('refresh');
+  };
 
   return (0, _inferno.createComponentVNode)(2, _layouts.Window, {
     "title": "Pump Control Computer",
@@ -73471,11 +73478,23 @@ var PumpControl = function PumpControl(props, context) {
     "height": 500,
     children: (0, _inferno.createComponentVNode)(2, _layouts.Window.Content, {
       "scrollable": true,
-      children: data.pump_list.map(function (p) {
+      children: [(0, _inferno.createComponentVNode)(2, _components.Button, {
+        "style": {
+          "margin-bottom": "10px"
+        },
+        "onClick": function () {
+          function onClick() {
+            return refresh();
+          }
+
+          return onClick;
+        }(),
+        children: "Refresh"
+      }), data.pump_list.map(function (p) {
         return (0, _inferno.createComponentVNode)(2, PumpInformation, {
           "pump": p
         }, p.net_id);
-      })
+      })]
     })
   });
 };

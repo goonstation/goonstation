@@ -34,7 +34,6 @@ const PumpInformation = (_:any, context:any) => {
     act('setPressure', { net_id: netid, pressure: newPressure });
   };
   const togglePump = (netid:string) => act('togglePump', { net_id: netid });
-  const refresh = () => act('refresh');
 
   return (
     <Box
@@ -51,11 +50,6 @@ const PumpInformation = (_:any, context:any) => {
       }}
     >
       <Stack>
-        <Stack.Item>
-          <Button
-            label="Refresh"
-          />
-        </Stack.Item>
         <Stack.Item grow={1}>
           {pump.id}
         </Stack.Item>
@@ -85,7 +79,8 @@ const PumpInformation = (_:any, context:any) => {
 };
 
 export const PumpControl = (props, context) => {
-  const { data } = useBackend<PumpList>(context);
+  const { act, data } = useBackend<PumpList>(context);
+  const refresh = () => act('refresh');
 
   return (
     <Window
@@ -93,6 +88,14 @@ export const PumpControl = (props, context) => {
       width={400}
       height={500}>
       <Window.Content scrollable>
+        <Button
+          style={{
+            "margin-bottom": "10px",
+          }}
+          onClick={() => refresh()}
+        >
+          Refresh
+        </Button>
         {data.pump_list.map((p) => (
           <PumpInformation pump={p} key={p.net_id} />
         ))}
