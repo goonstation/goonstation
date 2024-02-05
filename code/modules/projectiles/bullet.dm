@@ -1578,7 +1578,7 @@ datum/projectile/bullet/autocannon
 	on_hit(atom/hit)
 		var/obj/machinery/the_singularity/S = hit
 		if(istype(S))
-			new /obj/bhole(S.loc,rand(100,300))
+			new /obj/whitehole(S.loc, 0 SECONDS, 30 SECONDS)
 			qdel(S)
 		else
 			new /obj/effects/rendersparks(hit.loc)
