@@ -2085,6 +2085,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "ald" = (
@@ -3277,6 +3278,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
 "aqV" = (
@@ -7495,7 +7497,6 @@
 	c_tag = "Chapel Office";
 	dir = 4
 	},
-/obj/item/device/radio/beacon,
 /turf/simulated/floor{
 	icon_state = "carpetW"
 	},
@@ -7911,10 +7912,6 @@
 	},
 /area/station/chapel/sanctuary)
 "aOk" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=cargo";
-	location = "chapel"
-	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
 "aOl" = (
@@ -12086,6 +12083,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bje" = (
@@ -15409,6 +15407,7 @@
 "coE" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/stripe_delivery,
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "coR" = (
@@ -20248,6 +20247,7 @@
 	icon_state = "2-4";
 	pixel_y = 0
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
@@ -20634,6 +20634,10 @@
 /obj/machinery/door_timer/solitary/new_walls/south,
 /turf/simulated/floor/red/side,
 /area/station/security/processing)
+"hDV" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/quarters)
 "hEk" = (
 /obj/cable/blue{
 	icon_state = "1-4"
@@ -20893,6 +20897,13 @@
 	dir = 6
 	},
 /area/station/engine/engineering)
+"hWT" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "hXm" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -26668,6 +26679,16 @@
 	icon_state = "carpetNW"
 	},
 /area/station/security/detectives_office)
+"ohD" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/black,
+/area/station/hydroponics/bay)
 "oii" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -27888,6 +27909,7 @@
 	codes_txt = "patrol;next_patrol=security";
 	location = "courtroom"
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "pcH" = (
@@ -37246,6 +37268,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "xar" = (
@@ -77546,7 +77569,7 @@ toE
 arQ
 lHs
 aXA
-iSN
+ohD
 eab
 fIA
 toE
@@ -81779,7 +81802,7 @@ eRb
 jvN
 oRk
 rzV
-rzV
+hDV
 wdi
 sfL
 aFd
@@ -86250,7 +86273,7 @@ auB
 auB
 axc
 ayn
-ayn
+hWT
 azQ
 ayl
 ayi
