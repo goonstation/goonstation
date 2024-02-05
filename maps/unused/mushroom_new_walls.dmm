@@ -6678,6 +6678,22 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
+"aIp" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/purple/side,
+/area/station/science/lobby)
 "aIq" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -32166,7 +32182,8 @@
 /area/station/maintenance/southeast)
 "swi" = (
 /obj/strip_door{
-	name = "Beepsky's room"
+	name = "Beepsky's room";
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
@@ -94186,7 +94203,7 @@ jGs
 pDP
 qAl
 rzT
-sNI
+aIp
 tzO
 uSS
 uSS
