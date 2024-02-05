@@ -6,7 +6,7 @@
 import DOMPurify from 'dompurify';
 
 // Default values
-let defAllowedTags = [
+export let sanitizeDefAllowTags = [
   'b',
   'br',
   'center',
@@ -28,7 +28,7 @@ let defAllowedTags = [
   'u',
   'ul',
 ];
-let defForbidAttr = ['class', 'style'];
+export let sanitizeDefForbidAttrs = ['class', 'style'];
 
 /**
  * Feed it a string and it should spit out a sanitized version.
@@ -37,8 +37,8 @@ let defForbidAttr = ['class', 'style'];
  * @param {array} tags
  * @param {array} forbidAttr
  */
-export const sanitizeText = (input, tags = defAllowedTags,
-  forbidAttr = defForbidAttr) => {
+export const sanitizeText = (input, tags = sanitizeDefAllowTags,
+  forbidAttr = sanitizeDefForbidAttrs) => {
   // This is VERY important to think first if you NEED
   // the tag you put in here.  We are pushing all this
   // though dangerouslySetInnerHTML and even though
