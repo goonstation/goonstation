@@ -1619,8 +1619,6 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	var/min_pressure = 0
 	/// maximum pressure this pump will accept
 	var/max_pressure = 0
-	/// HEXADECIMAL color to use in background of pump info box
-	var/color = MAPC_DEFAULT
 	/// name of area as it appears on the interface
 	var/area_name = "Unknown Area"
 
@@ -1654,6 +1652,8 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		..()
 		if(status & (BROKEN | NOPOWER))
 			return
+		if(!src.pump_infos.len)
+			src.request_data()
 		//src.updateUsrDialog()
 
 	/// we probably have mapper varedited frequency so this handles all the pumps of the relevant frequency that scream back
@@ -1683,21 +1683,21 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		I.target_pressure = signal.data["target_output"]
 		I.min_pressure = signal.data["min_output"]
 		I.max_pressure = signal.data["max_output"]
-		I.color = pump_area.station_map_colour
-		I.area_name = pump_infos.Find(pump_area.name)
+		I.area_name = pump_area.name
 
-		if (I.area_name)
+		var/area_id = pump_infos.Find(I.area_name)
+		if (area_id)
 			// We had a pump in this area before, insert it below its area
-			while (I.area_name < pump_infos.len)
-				I.area_name++
-				var/datum/pump_infoset/infoset = pump_infos[ pump_infos[I.area_name] ]
+			while (area_id < pump_infos.len)
+				area_id++
+				var/datum/pump_infoset/infoset = pump_infos[ pump_infos[area_id] ]
 				// Stop before next heading
 				if (!istype(infoset))
 					break
 				// Stop before pump after itself in alphabet to alphabetize output (wow)
 				if (sorttext(I.id, infoset.id) == 1)
 					break
-			pump_infos.Insert(I.area_name, signal.source)
+			pump_infos.Insert(area_id, signal.source)
 		else
 			// We never saw this pump's area before, so add it to the bottom
 			pump_infos += pump_area.name
@@ -1786,6 +1786,13 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		src.updateUsrDialog()
 		*/
 
+/obj/machinery/computer/atmosphere/pumpcontrol/proc/request_data()
+	var/datum/signal/signal = get_free_signal()
+	signal.transmission_method = TRANSMISSION_RADIO
+	signal.source = src
+	signal.data["command"] = "broadcast_status"
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+
 /obj/machinery/computer/atmosphere/pumpcontrol/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
@@ -1795,8 +1802,28 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 /obj/machinery/computer/atmosphere/pumpcontrol/ui_static_data(mob/user)
 	return list(
 		"frequency" = src.frequency,
-		"pump_list" = src.pump_infos
+		"pump_list" = src.pumps_as_nested_lists()
 	)
+
+/obj/machinery/computer/atmosphere/pumpcontrol/proc/pumps_as_nested_lists()
+	// im fuckin tired ok ill fix this later
+	var/list/final_list = list()
+	for (var/key in src.pump_infos)
+		if (!istype(src.pump_infos[key],/datum/pump_infoset))
+			continue
+		var/datum/pump_infoset/P = src.pump_infos[key]
+		var/list/as_list = list()
+		as_list["id"] = P.id
+		as_list["net_id"] = P.net_id
+		as_list["power_status"] = P.power_status
+		as_list["target_pressure"] = P.target_pressure
+		as_list["min_pressure"] = P.min_pressure
+		as_list["max_pressure"] = P.max_pressure
+		as_list["color"] = P.color
+		as_list["area_name"] = P.area_name
+		final_list += list(as_list)
+	return final_list
+
 
 /obj/machinery/computer/atmosphere/pumpcontrol/ui_data(mob/user)
 	. = ..()

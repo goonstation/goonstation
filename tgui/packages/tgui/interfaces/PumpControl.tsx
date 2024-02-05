@@ -7,19 +7,18 @@
 
 import { hexToRgba, RgbaColor, rgbaToHex } from 'common/color';
 import { useBackend } from '../backend';
-import { Box } from '../components';
-//  import { DataInputOptions } from './common/DataInput';
+import { Box, Button, Slider, Stack } from '../components';
+// import { DataInputOptions } from './common/DataInput';
 import { Window } from '../layouts';
 
 type PumpData = {
   net_id: string
   id: string;
-  is_on: boolean;
-  pressure_now: number;
-  pressure_min: number;
-  pressure_max: number;
-  area: string;
-  area_color: string;
+  power_status: boolean;
+  target_pressure: number;
+  min_pressure: number;
+  max_pressure: number;
+  area_name: string;
 }
 
 type PumpList = {
@@ -29,30 +28,46 @@ type PumpList = {
 
 const PumpInformation = (_:any, context:any) => {
   const { data } = useBackend<PumpData>(context);
+  const { pump } = _;
   return (
     <Box
-      fontSize="25px"
-      fontFamily="Courier"
+      fontSize="15px"
+      fontFamily="Monospace"
       bold
-      textAlign="center"
-      padding="3px"
-      backgroundColor={data.area_color}
+      textAlign="left"
+      mb={1}
       style={{
         "border-width": "0.1em",
         "border-style": "solid",
-        "border-color": darkenHex(data.area_color, 10),
+        "padding": "5px",
+        "padding-top": "1px",
       }}
     >
-      {data.id}
-
+      <Stack>
+        <Stack.Item grow={1}>
+          {pump.id}
+        </Stack.Item>
+        <Stack.Item>{pump.area_name}</Stack.Item>
+      </Stack>
+      <Stack>
+        <Stack.Item>
+          <Button
+            icon="fas fa-power-off" //
+            backgroundColor={(pump.power_status === "on") ? "#11AA11" : "#AA1111"}
+            onClick={() => togglePump()}
+          />
+        </Stack.Item>
+        <Stack.Item grow>
+          <Slider
+            value={pump.target_pressure}
+            minValue={pump.min_pressure}
+            maxValue={pump.max_pressure}
+            stepPixelSize={0.05}
+          />
+        </Stack.Item>
+      </Stack>
     </Box>
   );
-};
-
-const darkenHex = (hex:string, amt:number) => {
-  let rgba:RgbaColor = hexToRgba(hex);
-  rgba.r -= amt; rgba.g -= amt; rgba.b -= amt;
-  return rgbaToHex(rgba);
 };
 
 export const PumpControl = (props, context) => {
