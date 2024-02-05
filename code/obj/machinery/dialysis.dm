@@ -156,7 +156,7 @@ TYPEINFO(/obj/machinery/dialysis)
 			return boutput(user, SPAN_ALERT("[src] already has a patient attached!"))
 		src.patient = new_patient
 		src.patient.setStatus("dialysis", INFINITE_STATUS, src)
-		APPLY_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 1)
+		APPLY_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 3)
 		src.power_usage = 500
 		src.patient_blood_id = src.patient.blood_id
 		src.UpdateIcon()
