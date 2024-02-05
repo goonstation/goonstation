@@ -1,5 +1,9 @@
 
 (t)mon feb 05 24
+(u)GuvGuvington
+(p)17865
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The Antique laser gun received some proper inhand sprites, both the model and functioning weapon.
 (u)Tyrant
 (p)17745
 (e)💅📦|C-QoL, A-Game-Objects
