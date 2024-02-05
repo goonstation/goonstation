@@ -5,7 +5,6 @@
  * @license ISC (https://choosealicense.com/licenses/isc/)
  */
 
-import { hexToRgba, RgbaColor, rgbaToHex } from 'common/color';
 import { useBackend } from '../backend';
 import { Box, Button, Slider, Stack } from '../components';
 // import { DataInputOptions } from './common/DataInput';
@@ -27,8 +26,12 @@ type PumpList = {
 };
 
 const PumpInformation = (_:any, context:any) => {
-  const { data } = useBackend<PumpData>(context);
+  const { act, data } = useBackend<PumpData>(context);
   const { pump } = _;
+
+  const setPressure = (netid: string, newPressure: number) => act('setPressure', { net_id: netid, pressure: newPressure });
+  const togglePump = (netid:string) => act('togglePump', { net_id: netid });
+
   return (
     <Box
       fontSize="15px"
@@ -52,9 +55,9 @@ const PumpInformation = (_:any, context:any) => {
       <Stack>
         <Stack.Item>
           <Button
-            icon="fas fa-power-off" //
+            icon="fas fa-power-off"
             backgroundColor={(pump.power_status === "on") ? "#11AA11" : "#AA1111"}
-            onClick={() => togglePump()}
+            onClick={() => togglePump(pump.net_id)}
           />
         </Stack.Item>
         <Stack.Item grow>
@@ -63,6 +66,7 @@ const PumpInformation = (_:any, context:any) => {
             minValue={pump.min_pressure}
             maxValue={pump.max_pressure}
             stepPixelSize={0.05}
+            onChange={(_e: any, value: number) => setPressure(pump.net_id, value)}
           />
         </Stack.Item>
       </Stack>
@@ -71,8 +75,7 @@ const PumpInformation = (_:any, context:any) => {
 };
 
 export const PumpControl = (props, context) => {
-  const { act, data } = useBackend<PumpList>(context);
-  let isLoading = true;
+  const { data } = useBackend<PumpList>(context);
 
   return (
     <Window

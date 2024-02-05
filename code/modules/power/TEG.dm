@@ -1653,10 +1653,10 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		if(status & (BROKEN | NOPOWER))
 			return
 		if(!src.pump_infos.len)
-			src.request_data()
+			src.request_data() // get data for first time
 		//src.updateUsrDialog()
 
-	/// we probably have mapper varedited frequency so this handles all the pumps of the relevant frequency that scream back
+	/// Add or update a new pump
 	receive_signal(datum/signal/signal)
 		if (!signal) return
 		if (signal.encryption) return
@@ -1685,19 +1685,20 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		I.max_pressure = signal.data["max_output"]
 		I.area_name = pump_area.name
 
-		var/area_id = pump_infos.Find(I.area_name)
-		if (area_id)
+		var/area_index = pump_infos.Find(I.area_name)
+		// Have we seen this before?
+		if (area_index)
 			// We had a pump in this area before, insert it below its area
-			while (area_id < pump_infos.len)
-				area_id++
-				var/datum/pump_infoset/infoset = pump_infos[ pump_infos[area_id] ]
+			while (area_index < pump_infos.len)
+				area_index++
+				var/datum/pump_infoset/infoset = pump_infos[ pump_infos[area_index] ]
 				// Stop before next heading
 				if (!istype(infoset))
 					break
 				// Stop before pump after itself in alphabet to alphabetize output (wow)
 				if (sorttext(I.id, infoset.id) == 1)
 					break
-			pump_infos.Insert(area_id, signal.source)
+			pump_infos.Insert(area_index, signal.source)
 		else
 			// We never saw this pump's area before, so add it to the bottom
 			pump_infos += pump_area.name
@@ -1706,85 +1707,38 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		pump_infos[signal.source] = I
 		src.updateUsrDialog()
 
-	proc/return_text()
-		var/pump_html = ""
-		//var/count = 1
-		for(var/A in pump_infos)
-			// Area header
-			if (istext(A))
-				pump_html += "<center><b>[A]</b></center><br>"
+	// Get a pump by net id
+	proc/getPump(var/net_id)
+		for (var/key in src.pump_infos)
+			if (!istype(src.pump_infos[key],/datum/pump_infoset))
 				continue
+			var/datum/pump_infoset/P = src.pump_infos[key]
+			if (net_id == P.net_id)
+				return P
+		return 0
 
-			var/datum/pump_infoset/I = pump_infos[A]
-			if (!istype(I))
-				continue
-			pump_html += "<B>[I.id] Status</B>:<BR>"
-			pump_html += "	Pump Status: <U><A href='?src=\ref[src];toggle=[I.id]'>[I.power_status == "on" ? "On":"Off"]</A></U><BR>"
-			pump_html += "	Pump Pressure Level: <A href='?src=\ref[src];setoutput=1&target=[I.id]'>[I.target_pressure] kPa</A>"
-			pump_html += "<BR><BR>"
+	// Get a pump by net id and toggle its power
+	proc/togglePump(var/net_id)
+		var/datum/pump_infoset/P = src.getPump(net_id)
+		if (!P) return
+		var/datum/signal/signal = get_free_signal()
+		signal.transmission_method = TRANSMISSION_RADIO
+		signal.source = src
+		signal.data["tag"] = P.id
+		signal.data["command"] = "power_toggle"
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-		var/output = "<B>[name]</B><BR><A href='?src=\ref[src];refresh=1'>Refresh</A><BR><HR><B>Pump Data: <BR><BR></B>[pump_html]<HR>"
-		return output
-
-	/*
-	Topic(href, href_list)
-		if(..())
-			return
-		if(!allowed(usr))
-			boutput(usr, SPAN_ALERT("Access Denied!"))
-			return
-
-		if(href_list["toggle"])
-			src.add_fingerprint(usr)
-			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = 1 //radio
-			signal.source = src
-			signal.data["tag"] = href_list["toggle"]
-			signal.data["command"] = "power_toggle"
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
-
-		if(href_list["setoutput"])
-			src.add_fingerprint(usr)
-			if(!href_list["target"])
-				return 0
-
-			// did we find the pump we supposedly have?
-			var/found = FALSE
-			var/datum/pump_infoset/pump_info
-			for (var/datum/pump_infoset/key in src.pump_infos)
-				pump_info = src.pump_infos[key]
-				if(pump_info == href_list["target"])
-					break
-
-			var/new_pressure
-			if (found)
-				new_pressure = input(usr, "Target Pressure ([pump_info.min_pressure] - [pump_info.max_pressure] kPa):", "Enter new value", pump_info.target_pressure) as num
-			else
-				new_pressure = input(usr, "Target Pressure:", "Enter new value", 0) as num
-
-
-			if (!new_pressure || !isnum_safe(new_pressure))
-				return
-
-			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = TRANSMISSION_RADIO
-			signal.source = src
-			signal.data["tag"] = href_list["target"]
-			signal.data["command"] = "set_output_pressure"
-			signal.data["parameter"] = new_pressure
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
-
-		// Refresh when we change pump states too
-		if(href_list["refresh"] || href_list["toggle"] || href_list["setoutput"])
-			src.add_fingerprint(usr)
-			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = TRANSMISSION_RADIO
-			signal.source = src
-			signal.data["command"] = "broadcast_status"
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
-
-		src.updateUsrDialog()
-		*/
+	proc/setPressure(var/net_id, var/new_pressure)
+		var/datum/pump_infoset/P = src.getPump(net_id)
+		if (!P || !isnum_safe(new_pressure)) return
+		new_pressure = clamp(new_pressure, P.min_pressure, P.max_pressure)
+		var/datum/signal/signal = get_free_signal()
+		signal.transmission_method = TRANSMISSION_RADIO
+		signal.source = src
+		signal.data["tag"] = P.id
+		signal.data["command"] = "set_output_pressure"
+		signal.data["parameter"] = new_pressure
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 /obj/machinery/computer/atmosphere/pumpcontrol/proc/request_data()
 	var/datum/signal/signal = get_free_signal()
@@ -1819,7 +1773,6 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		as_list["target_pressure"] = P.target_pressure
 		as_list["min_pressure"] = P.min_pressure
 		as_list["max_pressure"] = P.max_pressure
-		as_list["color"] = P.color
 		as_list["area_name"] = P.area_name
 		final_list += list(as_list)
 	return final_list
