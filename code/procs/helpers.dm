@@ -1059,12 +1059,6 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			client.pixel_y = 0
 			M.shakecamera = 0
 
-/proc/findname(msg)
-	for(var/mob/M in mobs)
-		if (M.real_name == text("[msg]"))
-			return 1
-	return 0
-
 /proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
 	//returns only NORTH, SOUTH, EAST, or WEST
 	var/dx = finish.x - start.x
