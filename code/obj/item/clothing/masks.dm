@@ -231,8 +231,8 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		item_function_flags = IMMUNE_TO_ACID
 
 		New()
-			..()
 			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
 
 		disposing()
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)

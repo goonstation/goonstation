@@ -104,6 +104,9 @@
 		//remove from list
 		src.registered_racks -= dead_rack
 
+		//clear abilities
+		dead_rack.ai_abilities = list()
+
 		//find all connected borgs and remove their connection too
 		for (var/mob/living/silicon/R in mobs)
 			if (isghostdrone(R))
@@ -113,7 +116,8 @@
 				R.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
 				R.show_text("<h3>ERROR: Lost connection to law rack. No laws detected!</h3>", "red")
 				logTheThing(LOG_STATION,  R, "[R.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
-
+				if(isAI(R))
+					dead_rack.reset_ai_abilities(R)
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == dead_rack)
 				E.mainframe.law_rack_connection = null
@@ -121,19 +125,20 @@
 				logTheThing(LOG_STATION, E.mainframe, "[E.mainframe.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
 
 /* Law Rack Corruption */
-	proc/corrupt_all_racks(picked_law = "Beep repeatedly.", replace = TRUE)
+	proc/corrupt_all_racks(picked_law = "Beep repeatedly.", replace = TRUE, law_number = null)
 		for(var/obj/machinery/lawrack/R in src.registered_racks)
 			if(istype(R,/obj/machinery/lawrack/syndicate))
 				continue //sadly syndie law racks must be immune to corruptions, because nobody can actually get at them to fix them.
-			var/num = rand(1, 3)
-			if(R.cause_law_glitch(picked_law, num, replace))
+			if (isnull(law_number))
+				law_number = rand(1, 3)
+			if(R.cause_law_glitch(picked_law, law_number, replace))
 				R.UpdateLaws()
 				if (replace)
-					logTheThing(LOG_ADMIN, null, "Law Rack Corruption replaced inherent AI law [num]: [picked_law]")
-					message_admins("Law Rack Corruption replaced inherent law [num]: [picked_law]")
+					logTheThing(LOG_ADMIN, null, "Law Rack Corruption replaced inherent AI law [law_number]: [picked_law]")
+					message_admins("Law Rack Corruption replaced inherent law [law_number]: [picked_law]")
 				else
-					logTheThing(LOG_ADMIN, null, "Law Rack Corruption added supplied AI law to law number [num]: [picked_law]")
-					message_admins("Law Rack Corruption added supplied law [num]: [picked_law]")
+					logTheThing(LOG_ADMIN, null, "Law Rack Corruption added supplied AI law to law number [law_number]: [picked_law]")
+					message_admins("Law Rack Corruption added supplied law [law_number]: [picked_law]")
 
 
 /* General ai_law functions */
