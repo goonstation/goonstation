@@ -184,7 +184,7 @@
 /mob/living/intangible/aieye/verb/ai_eye_create_viewport()
 	set category = "AI Commands"
 	set name = "Create Viewport"
-	set desc = "Expand your powers with Nanotransen's Viewportifier!"
+	set desc = "Expand your powers with Nanotrasen's Viewportifier!"
 
 	src.create_viewport(VIEWPORT_ID_AI)
 
