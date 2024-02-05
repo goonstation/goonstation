@@ -31,6 +31,7 @@ const PumpInformation = (_:any, context:any) => {
 
   const setPressure = (netid: string, newPressure: number) => act('setPressure', { net_id: netid, pressure: newPressure });
   const togglePump = (netid:string) => act('togglePump', { net_id: netid });
+  const refresh = () => act('refresh');
 
   return (
     <Box
@@ -47,6 +48,11 @@ const PumpInformation = (_:any, context:any) => {
       }}
     >
       <Stack>
+        <Stack.Item>
+          <Button
+            label="Refresh"
+          />
+        </Stack.Item>
         <Stack.Item grow={1}>
           {pump.id}
         </Stack.Item>
@@ -57,6 +63,7 @@ const PumpInformation = (_:any, context:any) => {
           <Button
             icon="fas fa-power-off"
             backgroundColor={(pump.power_status === "on") ? "#11AA11" : "#AA1111"}
+            disabled={0}
             onClick={() => togglePump(pump.net_id)}
           />
         </Stack.Item>
