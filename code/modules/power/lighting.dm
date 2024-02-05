@@ -166,7 +166,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	desc = "A lighting fixture."
 	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
-	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | USEDELAY
 	material_amt = 0.2
@@ -182,7 +181,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	var/fitting = "tube"
 	var/wallmounted = 1
-	var/nostick = 1 //If set to true, overrides the autopositioning.
+	var/nostick = 0 //If set to true, overrides the autopositioning.
 	var/candismantle = 1
 
 	power_usage = 0
@@ -202,6 +201,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		if (A)
 			UnsubscribeProcess()
 			A.add_light(src)
+		autoposition()
 
 	disposing()
 		if (src in stationLights)
@@ -235,21 +235,28 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 						if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
 							is_jen_wall = 1
 						src.set_dir(dir)
-						if (dir == EAST)
-							if (is_jen_wall)
-								src.pixel_x = 12
-							else
-								src.pixel_x = 10
-						else if (dir == WEST)
-							if (is_jen_wall)
-								src.pixel_x = -12
-							else
-								src.pixel_x = -10
-						else if (dir == NORTH)
-							if (is_jen_wall)
-								src.pixel_y = 24
-							else
-								src.pixel_y = 21
+						switch(dir)
+							if (EAST)
+								if (is_jen_wall)
+									src.pixel_x = 12
+								else
+									src.pixel_x = 32
+							if (WEST)
+								if (is_jen_wall)
+									src.pixel_x = -12
+								else
+									src.pixel_y = 32
+							if (NORTH)
+								if (is_jen_wall)
+									src.pixel_y = 24
+								else
+									src.pixel_y = 32
+							if (SOUTH)
+								if (is_jen_wall)
+									src.pixel_y = -24
+								else
+									src.pixel_y = -32
+
 						break
 				T = null
 
@@ -329,10 +336,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	//The only difference between these small lights and others are that these automatically stick to walls! Wow!!
 	sticky
 		nostick = 0
-
-		New()
-			..()
-			autoposition()
 
 		netural
 			name = "incandescent light bulb"

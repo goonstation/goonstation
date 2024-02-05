@@ -26,6 +26,7 @@
 	hub = "Exadv1.SpaceStation13"
 	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "Goonstation 13"
+	map_format = ISOMETRIC_MAP
 
 
 /world/proc/update_status()

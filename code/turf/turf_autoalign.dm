@@ -346,17 +346,17 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/supernorn)
 	. = ..()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
+		/turf/simulated/wall/false_wall,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old, /obj/strip_door
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/shuttle,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
+		/turf/simulated/wall/auto/shuttle,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen, /obj/strip_door
 	))
 /turf/simulated/wall/auto/supernorn
-	icon = 'icons/turf/walls/supernorn/smooth.dmi'
+	icon = 'icons/turf/walls/supernorn/smooth2.dmi'
 	mod = "norn-"
 	light_mod = "wall-"
 #ifdef PERSPECTIVE_EDITOR_WALL
@@ -382,18 +382,18 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn)
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
-		/obj/window, /obj/mapping_helper/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
+		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
+		/turf/simulated/wall/auto/reinforced/supernorn/yellow,
 		/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old, /obj/strip_door
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window,
-		/obj/mapping_helper/wingrille_spawn, /turf/simulated/wall/auto/reinforced/paper, /obj/strip_door
+		/turf/simulated/wall/auto/shuttle, 
+		/turf/simulated/wall/auto/reinforced/paper, /obj/strip_door
 	))
 /turf/simulated/wall/auto/reinforced/supernorn
-	icon = 'icons/turf/walls/supernorn/smooth.dmi'
+	icon = 'icons/turf/walls/supernorn/smooth2.dmi'
 #ifdef PERSPECTIVE_EDITOR_WALL
 	icon_state = "perspective-mapwall_r"
 #else
@@ -420,12 +420,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/yellow)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
+		/obj/machinery/door,
 		/obj/strip_door
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door,
 		/obj/strip_door
 	))
 /turf/simulated/wall/auto/reinforced/supernorn/yellow
