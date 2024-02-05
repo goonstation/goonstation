@@ -56,7 +56,7 @@
 	var/theme
 
 
-/datum/tgui_message/New(mob/user, message, title, message, sanitize, timeout, theme,)
+/datum/tgui_message/New(mob/user, message, title, sanitize, timeout, theme)
 	src.user = user
 	src.message = message
 	src.sanitize = sanitize
