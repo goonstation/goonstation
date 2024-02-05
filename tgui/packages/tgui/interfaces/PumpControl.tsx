@@ -29,7 +29,10 @@ const PumpInformation = (_:any, context:any) => {
   const { act, data } = useBackend<PumpData>(context);
   const { pump } = _;
 
-  const setPressure = (netid: string, newPressure: number) => act('setPressure', { net_id: netid, pressure: newPressure });
+  const setPressure = (netid: string, newPressure: number) => {
+    pump.target_pressure = newPressure;
+    act('setPressure', { net_id: netid, pressure: newPressure });
+  };
   const togglePump = (netid:string) => act('togglePump', { net_id: netid });
   const refresh = () => act('refresh');
 

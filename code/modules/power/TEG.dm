@@ -1786,7 +1786,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		if ("togglePump")
 			src.togglePump(params["net_id"])
 		if ("setPressure")
-			src.setPressure(params["net_id"], params["newPressure"])
+			src.setPressure(params["net_id"], params["pressure"])
 		if ("refresh")
 			src.request_data()
 
