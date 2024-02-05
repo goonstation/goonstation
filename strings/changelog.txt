@@ -1,5 +1,7 @@
 
 (t)mon feb 05 24
+(u)tarmunora
+(+)Increase blood absorption rate during IV-drip transfusions and dialysis
 (u)Tyrant
 (p)17745
 (e)💅📦|C-QoL, A-Game-Objects
