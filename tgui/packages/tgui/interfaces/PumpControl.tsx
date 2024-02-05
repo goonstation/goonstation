@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Button, Slider, Stack } from '../components';
+import { Button, Section, Slider, Stack } from '../components';
 // import { DataInputOptions } from './common/DataInput';
 import { Window } from '../layouts';
 
@@ -33,48 +33,44 @@ const PumpInformation = (_:any, context:any) => {
     pump.target_pressure = newPressure;
     act('setPressure', { net_id: netid, pressure: newPressure });
   };
-  const togglePump = (netid:string) => act('togglePump', { net_id: netid });
+  const togglePump = (netid:string) => {
+    pump.power_status = (pump.power_status === "on") ? "off" : "on";
+    act('togglePump', { net_id: netid });
+  };
+
+  let pump_title = pump.id + " - " + pump.area_name;
 
   return (
-    <Box
-      fontSize="15px"
-      fontFamily="Monospace"
-      bold
+    <Section
+      title={pump_title}
       textAlign="left"
       mb={1}
       style={{
-        "border-width": "0.1em",
-        "border-style": "solid",
         "padding": "5px",
         "padding-top": "1px",
       }}
     >
       <Stack>
-        <Stack.Item grow={1}>
-          {pump.id}
-        </Stack.Item>
-        <Stack.Item>{pump.area_name}</Stack.Item>
-      </Stack>
-      <Stack>
         <Stack.Item>
           <Button
-            icon="fas fa-power-off"
-            backgroundColor={(pump.power_status === "on") ? "#11AA11" : "#AA1111"}
-            disabled={0}
-            onClick={() => togglePump(pump.net_id)}
-          />
+            icon="power-off"
+            color={(pump.power_status === 'on') ? "green" : "red"}
+            onClick={() => togglePump(pump.net_id)}>
+            {(pump.power_status === 'on') ? 'On' : 'Off'}
+          </Button>
         </Stack.Item>
         <Stack.Item grow>
           <Slider
             value={pump.target_pressure}
             minValue={pump.min_pressure}
             maxValue={pump.max_pressure}
+            unit={"kPa"}
             stepPixelSize={0.05}
             onChange={(_e: any, value: number) => setPressure(pump.net_id, value)}
           />
         </Stack.Item>
       </Stack>
-    </Box>
+    </Section>
   );
 };
 
