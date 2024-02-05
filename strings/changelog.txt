@@ -1,3 +1,9 @@
+
+(t)mon feb 05 24
+(u)Tyrant
+(p)17745
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The Paint Cans crate is now called the Artistic Supplies crate, and comes with an artist's toolbox.
 (t)sun feb 04 24
 (u)LeahTheTech
 (+)Transparium now hides sechud and pro-doc icons.
