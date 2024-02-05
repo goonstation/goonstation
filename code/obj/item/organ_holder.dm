@@ -623,6 +623,7 @@
 			var/list/organ_name_parts = splittext(O.name, "'s")
 			if(length(organ_name_parts) == 2)
 				O.name = "[user_name]'s [organ_name_parts[2]]"
+				O.donor_name = user_name
 
 	//input organ = string value of organ_list assoc list
 	proc/get_organ(var/organ)
