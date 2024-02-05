@@ -1723,7 +1723,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	category = "Civilian Department"
 	contains = list(/obj/storage/secure/closet/fridge)
 	frames = list(/obj/submachine/chef_oven,
-					/obj/submachine/mixer,
+					/obj/machinery/mixer,
 					/obj/submachine/chef_sink,
 					/obj/machinery/deep_fryer,
 					/obj/submachine/foodprocessor,

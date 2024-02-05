@@ -541,7 +541,7 @@
 	/obj/machinery/portable_atmospherics, \
 	/obj/machinery/ai_status_display, \
 	/obj/securearea, \
-	/obj/submachine/mixer, \
+	/obj/machinery/mixer, \
 	/obj/submachine/foodprocessor, \
 	\
 )

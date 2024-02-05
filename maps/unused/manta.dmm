@@ -1333,7 +1333,7 @@
 /area/abandonedmedicalship/robot_trader)
 "aeB" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
@@ -18940,7 +18940,7 @@
 /area/station/crew_quarters/kitchen/therustykrab)
 "bcK" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
 "bcL" = (

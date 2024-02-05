@@ -5985,7 +5985,7 @@
 /area/station/crew_quarters/kitchen)
 "azI" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/machinery/disposal/small{
 	dir = 1;
 	name = "food delivery unit-'Brig'";
@@ -27817,7 +27817,7 @@
 /area/station/garden/aviary)
 "kdK" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "kea" = (

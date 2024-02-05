@@ -3156,7 +3156,7 @@
 /area/station/hallway/primary/south)
 "akj" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/white/side{
 	dir = 4
 	},

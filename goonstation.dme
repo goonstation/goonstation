@@ -2047,6 +2047,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\shield_generators\meteor_shield.dm"
 #include "code\obj\machinery\shield_generators\portable_shield_generator.dm"
 #include "code\obj\machinery\shield_generators\shield_generator.dm"
+#include "code\obj\machinery\food_and_drink\mixer.dm"
 #include "code\obj\map\light.dm"
 #include "code\obj\nuclearreactor\centrifuge.dm"
 #include "code\obj\nuclearreactor\destroyed_reactor.dm"
