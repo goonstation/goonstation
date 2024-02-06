@@ -11,13 +11,14 @@ import { Box, Section } from '../components';
 import { Window } from '../layouts';
 import { KEY_ESCAPE } from 'common/keycodes';
 import { sanitizeDefAllowTags, sanitizeText } from '../sanitize';
+import { BooleanLike } from 'common/react';
 
 type MessageInputData = {
   message: string;
   timeout: number;
   title: string;
   theme: string;
-  sanitize: boolean;
+  sanitize: BooleanLike;
 };
 
 export const MessageModal = (_, context) => {
