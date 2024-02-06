@@ -1674,7 +1674,9 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 			while ((iter <= L.len) && sorttext(infoset["area_name"], L[iter]) == -1)
 				iter += 1
 
-			L.Insert(iter, infoset)
+			// Insert key first
+			L.Insert(iter, infoset["netid"])
+			L[infoset["netid"]] = infoset
 		src.ui_static_data()
 
 	// Get a pump by net id
