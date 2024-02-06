@@ -252,7 +252,7 @@ ABSTRACT_TYPE(/datum/plant)
 	var/harvtime = 0 // same vars found in /datum/plant honestly. They go largely towards
 	var/harvests = 0 // the same purpose for the most part.
 	var/cropsize = 0
-	var/potency = 0  // Apart from this one - this one deals with reagents.
+	var/potency = 15  // Apart from this one - this one deals with reagents.
 	var/endurance = 0
 	var/list/commuts = null // General transferrable mutations
 	var/datum/plantmutation/mutation = null // is it mutated? if so which variation?
