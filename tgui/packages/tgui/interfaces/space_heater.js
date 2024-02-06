@@ -18,32 +18,22 @@ const Glitch_Text = (emagged, string, number) => {
     return string;
   }
 };
-// Used for well, finding the theme, but also to tell if its in the 'special variants' when emagged.
-const Find_Theme = (emagged, temperature, on) => {
-  if (!emagged) { return "generic"; }
-  else if (temperature < 180 && on) { return "ntos"; } // Under 100 kelvin is supercooling
-  else if (temperature > 400 && on) { return "syndicate"; } // Over 400 kelvin is overheating
-  else { return "generic"; }
-};
 
-const Set_Color = (temperature, generic_color="", on=true) => {
-  if (temperature > 400 && on) {
+const Set_Color = (temperature, generic_color="") => {
+  if (temperature > 400) {
     return "red";
-  } else if (temperature < 180 && on) {
+  } else if (temperature < 180) {
     return "blue";
   } else {
     return generic_color;
   }
 };
 
-const Set_Icon = (theme) => {
-  if (theme === "generic") {
-    return "eject";
-  } else if (theme === "syndicate") {
-    return "fire";
-  } else {
-    return "snowflake";
-  }
+const Set_Icon = (emagged, temperature, on) => {
+  if (!emagged) { return "eject"; }
+  else if (temperature < 180 && on) { return "snowflake"; } // Under 100 kelvin is supercooling
+  else if (temperature > 400 && on) { return "fire"; } // Over 400 kelvin is overheating
+  else { return "eject"; }
 };
 
 export const space_heater = (props, context) => {
@@ -56,7 +46,6 @@ export const space_heater = (props, context) => {
   return (
     <Window
       title={Glitch_Text(emagged, "Space HVAC", 1)}
-      theme={Find_Theme(emagged, set_temperature, on)}
       width={350}
       height={250}>
       <Window.Content>
@@ -85,10 +74,11 @@ const BatteryStatus = (props, context) => {
           verticalAlign={"middle"}
         >
           <Button
-            icon={Set_Icon(Find_Theme(emagged, set_temperature, on))}
-            color={cell !== null ? Set_Color(set_temperature, "green", on) : "blue"}
+            icon={Set_Icon(emagged, set_temperature, on)}
+            color={cell !== null ? Set_Color(set_temperature, "green") : "blue"}
             onClick={() => cell !== null ? act('cellremove'): act('cellinstall')}
-            bold>
+            bold
+          >
             {cell !== null ? Glitch_Text(emagged, cell_name, 2): Glitch_Text(emagged, "Insert power cell", 3)}
           </Button>
         </LabeledList.Item>
@@ -97,7 +87,7 @@ const BatteryStatus = (props, context) => {
           verticalAlign={"middle"}>
           <ProgressBar
             grow
-            color={cell !== null ? Set_Color(set_temperature, "green", on): "red"}
+            color={cell !== null ? Set_Color(set_temperature, "green"): "red"}
             ranges={{
               "green": [0.5, Infinity],
               "yellow": [0.1, 0.5],
@@ -115,6 +105,7 @@ const TemperatureRegulator = (props, context) => {
   const { data, act } = useBackend(context);
   const {
     emagged,
+    on,
     min,
     max,
     set_temperature,
@@ -125,6 +116,7 @@ const TemperatureRegulator = (props, context) => {
         <Stack.Item>
           <Button
             icon={"fast-backward"}
+            color={Set_Color(set_temperature)}
             tooltip={"Set minimum"}
             disabled={set_temperature === min}
             onClick={() => act("set_temp", { inputted_temperature: min })} />
@@ -132,6 +124,7 @@ const TemperatureRegulator = (props, context) => {
         <Stack.Item>
           <Button
             icon={"backward"}
+            color={Set_Color(set_temperature)}
             tooltip={emagged ? "Decrease by 50": "Decrease by 5"}
             disabled={set_temperature === min}
             onClick={() => act("set_temp", { temperature_adjust: emagged ? -50: -5 })} />
@@ -139,12 +132,14 @@ const TemperatureRegulator = (props, context) => {
         <Stack.Item>
           <Button
             icon={"equals"}
+            color={Set_Color(set_temperature)}
             tooltip={"Room temperature"}
             onClick={() => act("set_temp", { inputted_temperature: neutralTemperature })} />
         </Stack.Item>
         <Stack.Item>
           <Button
             icon={"forward"}
+            color={Set_Color(set_temperature)}
             tooltip={emagged ? "Increase by 50": "Increase by 5"}
             disabled={set_temperature === max}
             onClick={() => act("set_temp", { temperature_adjust: emagged ? 50: 5 })} />
@@ -152,6 +147,7 @@ const TemperatureRegulator = (props, context) => {
         <Stack.Item>
           <Button
             icon={"fast-forward"}
+            color={Set_Color(set_temperature)}
             tooltip={"Set maximum"}
             disabled={set_temperature === max}
             onClick={() => act("set_temp", { inputted_temperature: max })} />
@@ -161,8 +157,6 @@ const TemperatureRegulator = (props, context) => {
       <Slider
         value={set_temperature}
         format={value => value+" K"}
-        bold
-        textColor={set_temperature >= neutralTemperature ? "red": "blue"}
         minValue={min}
         maxValue={max}
         step={emagged ? 5: 1}
