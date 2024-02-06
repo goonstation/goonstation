@@ -29,6 +29,7 @@ TYPEINFO(/obj/machinery/dialysis)
 			CRASH("[src] tried to fetch the global chem whitelist but it has a length of 0!")
 		src.whitelist = chem_whitelist
 		src.UpdateIcon()
+		UnsubscribeProcess()
 
 	disposing()
 		if (src.patient)
