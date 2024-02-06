@@ -4,6 +4,7 @@
  * @author Romayne (https://github.com/MeggalBozale)
  * @license ISC (https://choosealicense.com/licenses/isc/)
  */
+// ^ dont need to ask me or anything i just assume this comes with making a new file
 
 import { useBackend } from '../backend';
 import { Button, Section, Slider, Stack } from '../components';
