@@ -1605,23 +1605,6 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 /// Do we have all the information we should Really Really Have?
 #define HAS_REQUIRED_DATA(signal) ((signal.data["netid"] != null) && (signal.data["tag"] != null) && (signal.data["power"] != null) && (signal.data["target_output"] != null) && (signal.data["min_output"] != null) && (signal.data["max_output"] != null))
 
-/// Describes a pump from its packet data
-/datum/pump_infoset
-	/// Radio ID the pump responds to, usually varedited to be a readable name
-	var/id
-	/// Unique Identifier
-	var/netid
-	/// Whether or not the pump is on or off
-	var/power
-	/// Pressure of the pump
-	var/target_output
-	/// minimum pressure this pump will accept
-	var/min_output
-	/// maximum pressure this pump will accept
-	var/max_output
-	/// name of area as it appears on the interface
-	var/area_name
-
 /obj/machinery/computer/atmosphere/pumpcontrol
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
@@ -1631,11 +1614,12 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	frequency = FREQ_PUMP_CONTROL
 
 	/// This is a list in which contains pump information datums keyed by their areas.
-	var/list/pump_infos
+	// e.g. pump_infoset["toxins"] has (pump_1, pump_2, pump_3)
+	var/list/pump_infoset
 
 	New()
 		. = ..()
-		pump_infos = new/list()
+		pump_infoset = new/list()
 		src.AddComponent( \
 			/datum/component/packet_connected/radio, \
 			null, \
@@ -1651,7 +1635,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		..()
 		if(status & (BROKEN | NOPOWER))
 			return
-		if(!src.pump_infos.len)
+		if(!src.pump_infoset.len)
 			src.request_data() // get data for first time
 
 	/// Add or update a new pump
@@ -1660,56 +1644,67 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		if (signal.encryption) return
 		if (!DEVICE_IS_PUMP(signal)) return
 		if (!HAS_REQUIRED_DATA(signal)) return
-		// Setup pump information
-		var/datum/pump_infoset/infoset = new()
+		/* Setup pump information from pump broadcast, which currently has these vars:
+		"tag" - Name of pump
+		"netid" - Network ID of pump
+		"device" - "AGP" unique pump identifier string
+		"power" - "on" or "off" depending on state
+		"min_output" - MIN_PRESSURE (0kpa)
+		"max_output" - MAX_PRESSURE (~15000kpa)
+		"target_output"- current pump output
+		"address_tag" = "pumpcontrol"
+		*/
+		var/list/infoset = new()
 		for (var/key as anything in signal.data)
-			if (key in infoset.vars)
-				infoset.vars[key] = signal.data[key]
+			infoset[key] = signal.data[key]
 		var/area/A = get_area(signal.source)
 		if (!A)
 			return
-		infoset.area_name = A.name
-		var/area_name_index = src.pump_infos.Find(infoset.area_name)
+		infoset["area_name"] = A.name
+
+		var/area_name_index = src.pump_infoset.Find(infoset["area_name"])
 		if (!area_name_index)
 			// We are first of an area, create our place in the list
-			src.pump_infos[infoset.area_name] = list(infoset)
+			src.pump_infoset[infoset["area_name"]] = list()
+			src.pump_infoset[infoset["area_name"]][infoset["netid"]] = infoset
 		else
 			// We are not first of an area, place us in the list alphabetically
 			var/iter = 1
-			while (sorttext(infoset.area_name, src.pump_infos[infoset.area_name][iter]) == -1)
+			var/list/L = src.pump_infoset[infoset["area_name"]]
+			while ((iter <= L.len) && sorttext(infoset["area_name"], L[iter]) == -1)
 				iter += 1
-			src.pump_infos[infoset.area_name].Insert(iter, infoset)
+
+			L.Insert(iter, infoset)
 		src.ui_static_data()
 
 	// Get a pump by net id
 	proc/getPump(var/net_id)
-		for (var/key in src.pump_infos)
-			if (!istype(src.pump_infos[key],/datum/pump_infoset))
-				continue
-			var/datum/pump_infoset/P = src.pump_infos[key]
-			if (net_id == P.net_id)
-				return P
+		for (var/area_name in src.pump_infoset)
+			var/list/L = src.pump_infoset[area_name]
+			for (var/pump in L)
+				if (pump["netid"] == net_id)
+					return pump
 		return 0
 
 	// Get a pump by net id and toggle its power
 	proc/togglePump(var/net_id)
-		var/datum/pump_infoset/P = src.getPump(net_id)
-		if (!P) return
+		var/list/pump = src.getPump(net_id)
+		if (!pump) return
 		var/datum/signal/signal = get_free_signal()
 		signal.transmission_method = TRANSMISSION_RADIO
 		signal.source = src
-		signal.data["tag"] = P.id
+		signal.data["tag"] = pump["netid"]
 		signal.data["command"] = "power_toggle"
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	proc/setPressure(var/net_id, var/new_pressure)
-		var/datum/pump_infoset/P = src.getPump(net_id)
-		if (!P || !isnum_safe(new_pressure)) return
-		new_pressure = clamp(new_pressure, P.min_output, P.max_output)
+		var/list/pump = src.getPump(net_id)
+		if (!pump || !isnum_safe(new_pressure)) return
+		new_pressure = clamp(new_pressure, pump["min_output"], pump["max_output"])
 		var/datum/signal/signal = get_free_signal()
 		signal.transmission_method = TRANSMISSION_RADIO
 		signal.source = src
-		signal.data["tag"] = P.id
+		signal.data["tag"] = pump["netid"]
 		signal.data["command"] = "set_output_pressure"
 		signal.data["parameter"] = new_pressure
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
@@ -1730,27 +1725,8 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 /obj/machinery/computer/atmosphere/pumpcontrol/ui_static_data(mob/user)
 	return list(
 		"frequency" = src.frequency,
-		"pump_list" = src.pumps_as_nested_lists()
+		"pump_list" = src.pump_infoset,
 	)
-
-/obj/machinery/computer/atmosphere/pumpcontrol/proc/pumps_as_nested_lists()
-	// im fuckin tired ok ill fix this later
-	var/list/final_list = list()
-	for (var/key in src.pump_infos)
-		if (!istype(src.pump_infos[key],/datum/pump_infoset))
-			continue
-		var/datum/pump_infoset/P = src.pump_infos[key]
-		var/list/as_list = list()
-		as_list["id"] = P.id
-		as_list["netid"] = P.netid
-		as_list["power"] = P.power
-		as_list["target_output"] = P.target_output
-		as_list["min_output"] = P.min_output
-		as_list["max_output"] = P.max_output
-		as_list["area_name"] = P.area_name
-		final_list += list(as_list)
-	return final_list
-
 
 /obj/machinery/computer/atmosphere/pumpcontrol/ui_data(mob/user)
 	. = ..()

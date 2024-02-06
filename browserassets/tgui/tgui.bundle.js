@@ -73390,7 +73390,7 @@ var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/in
  */
 // ^ dont need to ask me or anything i just assume this comes with making a new file
 // import { DataInputOptions } from './common/DataInput';
-var PumpInformation = function PumpInformation(_, context) {
+var PumpSettings = function PumpSettings(_, context) {
   var _useBackend = (0, _backend.useBackend)(context),
       act = _useBackend.act,
       data = _useBackend.data;
@@ -73412,46 +73412,53 @@ var PumpInformation = function PumpInformation(_, context) {
     });
   };
 
-  var pump_title = pump.id + " - " + pump.area_name;
+  return (0, _inferno.createComponentVNode)(2, _components.Stack, {
+    children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+      children: (0, _inferno.createComponentVNode)(2, _components.Button, {
+        "width": 4,
+        "icon": "power-off",
+        "color": pump.power_status === 'on' ? "green" : "red",
+        "onClick": function () {
+          function onClick() {
+            return togglePump(pump.net_id);
+          }
+
+          return onClick;
+        }(),
+        children: pump.power_status === 'on' ? 'On' : 'Off'
+      })
+    }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
+      "grow": true,
+      children: (0, _inferno.createComponentVNode)(2, _components.Slider, {
+        "value": pump.target_pressure,
+        "minValue": pump.min_pressure,
+        "maxValue": pump.max_pressure,
+        "unit": "kPa",
+        "stepPixelSize": 0.05,
+        "onChange": function () {
+          function onChange(_e, value) {
+            return setPressure(pump.net_id, value);
+          }
+
+          return onChange;
+        }()
+      })
+    })]
+  });
+};
+
+var PumpInformation = function PumpInformation(_, context) {
+  var pump = _.pump;
   return (0, _inferno.createComponentVNode)(2, _components.Section, {
-    "title": pump_title,
+    "title": pump.area_name,
     "textAlign": "left",
     "mb": 1,
     "style": {
       "padding": "5px",
       "padding-top": "1px"
     },
-    children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
-      children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
-        children: (0, _inferno.createComponentVNode)(2, _components.Button, {
-          "icon": "power-off",
-          "color": pump.power_status === 'on' ? "green" : "red",
-          "onClick": function () {
-            function onClick() {
-              return togglePump(pump.net_id);
-            }
-
-            return onClick;
-          }(),
-          children: pump.power_status === 'on' ? 'On' : 'Off'
-        })
-      }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
-        "grow": true,
-        children: (0, _inferno.createComponentVNode)(2, _components.Slider, {
-          "value": pump.target_pressure,
-          "minValue": pump.min_pressure,
-          "maxValue": pump.max_pressure,
-          "unit": "kPa",
-          "stepPixelSize": 0.05,
-          "onChange": function () {
-            function onChange(_e, value) {
-              return setPressure(pump.net_id, value);
-            }
-
-            return onChange;
-          }()
-        })
-      })]
+    children: (0, _inferno.createComponentVNode)(2, PumpSettings, {
+      "pump": pump
     })
   });
 };
