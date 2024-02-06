@@ -20337,6 +20337,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/machinery/power/apc/autoname_south,
+/obj/machinery/disposal/chemlink,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "hoZ" = (
@@ -27054,6 +27055,7 @@
 	pixel_y = -24
 	},
 /obj/machinery/light/incandescent,
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "ovM" = (
