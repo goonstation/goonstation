@@ -2,8 +2,11 @@
 // can have multiple per area
 // can also operate on non-loc area through "otherarea" var
 
+/// Amount of time before a light switch resets its spam cooldown counter
 #define SWITCH_SPAM_TIMEOUT 15 SECONDS
+/// Number of manual toggles before the light switch begins shocking people
 #define SWITCH_SPAM_START_THRESHOLD 10
+/// Number of manual toggles before light switches start really hurting people
 #define SWITCH_SPAM_MAJOR_THRESHOLD 50
 
 TYPEINFO(/obj/machinery/light_switch)
