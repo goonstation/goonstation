@@ -6,7 +6,7 @@
  */
 
 import { useBackend, useLocalState } from '../backend';
-import { Button, Section, Slider, Stack } from '../components';
+import { Box, Button, Section, Slider, Stack } from '../components';
 // import { DataInputOptions } from './common/DataInput';
 import { Window } from '../layouts';
 
@@ -22,13 +22,9 @@ type PumpData = {
   processing: boolean; // Whether we are waiting for packet response or not
 }
 
-type PumpList = {
-  area_name: string;
-}
-
 // List of areas which have pumps
 type AreaList = {
-  area_list: PumpList[];
+  area_list: { [key: string] : { [key: string] : PumpData } };
   frequency: number;
 };
 
@@ -36,8 +32,9 @@ type AreaList = {
 const PumpSettings = (_:any, context:any) => {
   const { act, data } = useBackend<PumpData>(context);
   const { pump } = _;
-  const [target_output, setOutput] = useLocalState(context, "target_output", pump.target_output);
-  const [power, setPower] = useLocalState(context, pump.netid, "on");
+  // Local states allow to keep the appearance of seamless response, but do not cope well with button spamming
+  const [target_output, setOutput] = useLocalState(context, pump.netid+"pressure", pump.target_output);
+  const [power, setPower] = useLocalState(context, pump.netid+"power", "on");
 
   const setPressure = (newPressure: number) => {
     setOutput(newPressure);
@@ -49,36 +46,47 @@ const PumpSettings = (_:any, context:any) => {
   };
 
   return (
-    <Stack>
-      <Stack.Item>
-        <Button
-          width={4}
-          icon="power-off"
-          color={(power === 'on') ? "green" : "red"}
-          onClick={() => togglePump()}>
-          {(power === 'on') ? 'On' : 'Off'}
-        </Button>
-      </Stack.Item>
-      <Stack.Item grow>
-        <Slider
-          value={target_output}
-          minValue={pump.min_output}
-          maxValue={pump.max_output}
-          unit={"kPa"}
-          stepPixelSize={0.05}
-          onChange={(_e: any, value: number) => setPressure(value)}
-        />
-      </Stack.Item>
-    </Stack>
+    <Box>
+      <Stack>
+        <Stack.Item
+          py={1}
+        >
+          {pump.tag}
+        </Stack.Item>
+      </Stack>
+      <Stack>
+        <Stack.Item>
+          <Button
+            width={4}
+            icon="power-off"
+            color={(power === 'on') ? "green" : "red"}
+            onClick={() => togglePump()}>
+            {(power === 'on') ? 'On' : 'Off'}
+          </Button>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Slider
+            value={target_output}
+            minValue={pump.min_output}
+            maxValue={pump.max_output}
+            unit={"kPa"}
+            stepPixelSize={0.05}
+            onChange={(_e: any, value: number) => setPressure(value)}
+          />
+        </Stack.Item>
+      </Stack>
+    </Box>
   );
 };
 
 // Responsible for creating a section for the pumps in an area.
 const PumpArea = (_:any, context:any) => {
-  const { data } = useBackend<PumpList>(context);
+  const { data } = useBackend<AreaList>(context);
   const { area } = _;
 
-  return (<br />);
+  // Need the keys as a list >:(
+  let pump_controls = [];
+  for (let pump_key in data.area_list[area]) pump_controls.push(<PumpSettings pump={data.area_list[area][pump_key]} />);
 
   return (
     <Section
@@ -90,9 +98,7 @@ const PumpArea = (_:any, context:any) => {
         "padding-top": "1px",
       }}
     >
-      {data[area].map((p) => (
-        <PumpSettings pump={data[area][p]} key={p} />
-      ))}
+      {pump_controls}
     </Section>
   );
 };
@@ -101,17 +107,11 @@ const PumpArea = (_:any, context:any) => {
 export const PumpControl = (props, context) => {
   const { act, data } = useBackend<AreaList>(context);
   const refresh = () => act('refresh');
-  // Check it out with --dev, but data consists of a list keyed by area names,
-  // who reference lists keyed by netids, containing pump info. Yeah
-  let last_key:PumpList;
-  let settings = [];
-  for (let key in data.area_list) {
-    last_key = data.area_list[key];
-    for (let pump_key in data.area_list[key]) {
-      settings.push(pump_key);
-    }
-    settings = settings.map((a) => (<PumpSettings pump={data.area_list[key][a]} key={a} />));
-  }
+
+  // Need this as list >:(
+  let areas = [];
+  for (let area in data.area_list) areas.push(area);
+
   return (
     <Window
       title="Pump Control Computer"
@@ -126,7 +126,7 @@ export const PumpControl = (props, context) => {
         >
           Refresh
         </Button>
-        {settings}
+        {areas.map((area) => (<PumpArea area={area} key={area} />))}
       </Window.Content>
     </Window>
   );
