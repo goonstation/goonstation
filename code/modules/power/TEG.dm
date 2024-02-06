@@ -1600,6 +1600,11 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 
 #define PUMP_ON 1
 #define PUMP_OFF 0
+
+#define PUMP_ALIVE 1
+#define PUMP_DEAD 0 // Pump left us on read
+#define PUMP_SCHRODINGER -1 // irony
+
 /// Signals which claim the device to be of identifier "AGP" are exclusively pumps or pump wannabes (fine)
 #define DEVICE_IS_PUMP(signal) (signal.data["device"] == "AGP")
 /// Do we have all the information we should Really Really Have?
@@ -1631,13 +1636,6 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		FALSE \
 	)
 
-/obj/machinery/computer/atmosphere/pumpcontrol/process()
-	..()
-	if(status & (BROKEN | NOPOWER))
-		return
-	if(!src.pump_infoset.len)
-		src.request_data() // get data for first time
-
 /// Add or update a new pump
 /obj/machinery/computer/atmosphere/pumpcontrol/receive_signal(datum/signal/signal)
 	if (!signal) return
@@ -1653,6 +1651,11 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	"max_output" - MAX_PRESSURE (~15000kpa)
 	"target_output"- current pump output
 	"address_tag" = "pumpcontrol"
+
+	Some added vars:
+	"processing" - Currently waiting to recieve data back from this pump
+	"area_name" - Name of the area the pump is in
+	"alive" - Whether or not the pump has broadcasted back. Used while checking for if pumps are unreachable or not
 	*/
 	var/list/pump_data_ref = src.getPump(signal.data["netid"])
 	if (pump_data_ref)
@@ -1660,6 +1663,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		for (var/key as anything in signal.data)
 			pump_data_ref[key] = signal.data[key]
 		pump_data_ref["processing"] = FALSE
+		pump_data_ref["alive"] = PUMP_ALIVE
 		return
 
 	var/list/infoset = new()
@@ -1670,6 +1674,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		return
 	infoset["area_name"] = A.name
 	infoset["processing"] = FALSE // are we processing a packet request rn?
+	infoset["alive"] = TRUE
 
 	var/area_name_index = src.pump_infoset.Find(infoset["area_name"])
 	if (!area_name_index)
@@ -1687,11 +1692,31 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		L.Insert(iter, infoset["netid"])
 		L[infoset["netid"]] = infoset
 
+/obj/machinery/computer/atmosphere/pumpcontrol/process()
+	..()
+	if(status & (BROKEN | NOPOWER))
+		return
+	if(!src.pump_infoset.len)
+		src.request_data() // get data for first time
+
+/// Check for pumps that 'sploded or are otherwise unreachable. Dont call this often thanks
+/obj/machinery/computer/atmosphere/pumpcontrol/proc/check_if_alive()
+	for (var/area_name as anything in src.pump_infoset)
+		for (var/pump as anything in src.pump_infoset[area_name])
+			src.pump_infoset[area_name][pump]["alive"] = PUMP_SCHRODINGER // https://i.imgur.com/mUfxPmb.png
+
+	src.request_data()
+	sleep(5 SECONDS)
+
+	for (var/area_name as anything in src.pump_infoset)
+		for (var/pump as anything in src.pump_infoset[area_name])
+			src.pump_infoset[area_name][pump]["alive"] = (PUMP_SCRODINGER) ? PUMP_DEAD : PUMP_ALIVE
+
 /// Get a pump by net id. Does not ask for pump data from pump
 /obj/machinery/computer/atmosphere/pumpcontrol/proc/getPump(var/netid)
-	for (var/area_name in src.pump_infoset)
+	for (var/area_name as anything in src.pump_infoset)
 		var/list/L = src.pump_infoset[area_name]
-		for (var/pump in L)
+		for (var/pump as anything in L)
 			if (pump == netid)
 				return L[pump]
 	return 0
@@ -1764,6 +1789,9 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 #undef HAS_REQUIRED_DATA
 #undef PUMP_ON
 #undef PUMP_OFF
+#undef PUMP_ALIVE
+#undef PUMP_DEAD
+#undef PUMP_SCHRODINGER
 
 #undef LEFT_CIRCULATOR
 #undef RIGHT_CIRCULATOR

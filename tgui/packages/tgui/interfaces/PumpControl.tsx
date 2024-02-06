@@ -14,12 +14,13 @@ import { Window } from '../layouts';
 type PumpData = {
   tag: string; // Pump name
   netid: string; // Pump id
-  power: boolean; // On or off
+  power: string; // On or off
   target_output: number; // Current output target of the pump
   min_output: number;
   max_output: number;
   area_name: string; // Name of the area this pump is in
   processing: boolean; // Whether we are waiting for packet response or not
+  alive: number; // A value of -1, 0, or 1 where -1 is checking if the pump is alive, 0 is dead, and 1 is alive
 }
 
 // List of areas which have pumps
@@ -29,9 +30,10 @@ type AreaList = {
 };
 
 // Responsible for providing information and settings for a pump.
-const PumpSettings = (_:any, context:any) => {
-  const { act, data } = useBackend<PumpData>(context);
-  const { pump } = _;
+const PumpSettings = (props:any, context:any) => {
+  const { act } = useBackend<PumpData>(context);
+  const { pump } = props;
+  if (pump.alive !== 1) return; // Don't show pumps that don't exist
   // Local states allow to keep the appearance of seamless response, but do not cope well with button spamming
   const [target_output, setOutput] = useLocalState(context, pump.netid+"pressure", pump.target_output);
   const [power, setPower] = useLocalState(context, pump.netid+"power", "on");
@@ -66,6 +68,7 @@ const PumpSettings = (_:any, context:any) => {
         </Stack.Item>
         <Stack.Item grow>
           <Slider
+            disabled={pump.alive !== 1}
             value={target_output}
             minValue={pump.min_output}
             maxValue={pump.max_output}
