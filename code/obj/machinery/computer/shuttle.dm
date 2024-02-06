@@ -365,7 +365,8 @@ var/bombini_saved
 		if(!choice || emergency_shuttle.location != SHUTTLE_LOC_STATION || BOUNDS_DIST(user, src) > 0) return
 		switch(choice)
 			if("Authorize")
-				for (var/datum/flock/flock in flocks)
+				for (var/flockname in flocks)
+					var/datum/flock/flock = flocks[flockname]
 					if (flock.relay_in_progress)
 						boutput(user, "Unable to contact central command, authorization rejected.")
 						return

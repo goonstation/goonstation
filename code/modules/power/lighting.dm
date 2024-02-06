@@ -7,7 +7,11 @@
 // defines moved to _setup.dm by ZeWaka
 #define INSTALL_WALL 1
 #define INSTALL_FLOOR 2
-
+/// Amount of time it takes to attach a light fixture to a tile by hand
+#define LIGHT_FIXTURE_ATTACH_TIME 4 SECONDS
+/// Amount of time it takes to remove a light fixture from a tile by hand
+#define LIGHT_FIXTURE_DETACH_TIME 2 SECONDS
+/// Probabilty a worn/burned out light will break
 #define WORN_LIGHT_BREAKPROB 6.25
 
 TYPEINFO(/obj/item/light_parts)
@@ -39,6 +43,7 @@ TYPEINFO(/obj/item/light_parts)
 
 // For metal sheets. Can't easily change an item's vars the way it's set up (Convair880).
 /obj/item/light_parts/bulb
+	name = "bulb fixture parts"
 	icon_state = "bulb-fixture"
 	fixture_type = /obj/machinery/light/small
 	installed_icon_state = "bulb1"
@@ -47,6 +52,7 @@ TYPEINFO(/obj/item/light_parts)
 	light_type = /obj/item/light/bulb
 
 /obj/item/light_parts/floor
+	name = "floor fixture parts"
 	icon_state = "floor-fixture"
 	fixture_type = /obj/machinery/light/small/floor/netural
 	installed_icon_state = "floor1"
@@ -108,7 +114,7 @@ TYPEINFO(/obj/item/light_parts)
 	if(!instantly)
 		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 		boutput(user, "You begin to attach the [src] to [target]...")
-		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /obj/item/light_parts/proc/finish_attaching,\
+		SETUP_GENERIC_ACTIONBAR(user, src, LIGHT_FIXTURE_ATTACH_TIME, /obj/item/light_parts/proc/finish_attaching,\
 			list(target, user, dir), src.icon, src.icon_state, null, null)
 	else
 		finish_attaching(target, user, dir)
@@ -382,7 +388,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 				..()
 				current_lamp.light_status = LIGHT_BROKEN
 
-
+/obj/machinery/light/small/uninstall_fixture()
+	var/obj/item/light_parts/bulb/parts = new /obj/item/light_parts/bulb(get_turf(src))
+	parts.copy_light(src)
+	qdel(src)
 
 //floor lights
 /obj/machinery/light/small/floor
@@ -441,6 +450,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		New()
 			..()
 			current_lamp.light_status = LIGHT_BROKEN
+
+/obj/machinery/light/small/floor/uninstall_fixture()
+	var/obj/item/light_parts/floor/parts = new /obj/item/light_parts/floor(get_turf(src))
+	parts.copy_light(src)
+	qdel(src)
 
 /obj/machinery/light/emergency
 	icon_state = "ebulb1"
@@ -997,14 +1011,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 				boutput(user, "That's not safe with the power on!")
 				return
 			if (candismantle)
-				boutput(user, "You begin to unscrew the fixture from the wall...")
+				boutput(user, "You begin to loosen the fixture's screws...")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				if (!do_after(user, 2 SECONDS))
-					return
-				boutput(user, "You unscrew the fixture from the wall.")
-				var/obj/item/light_parts/parts = new /obj/item/light_parts(get_turf(src))
-				parts.copy_light(src)
-				qdel(src)
+				SETUP_GENERIC_ACTIONBAR(user, src, LIGHT_FIXTURE_DETACH_TIME, PROC_REF(uninstall_fixture),list(), src.icon, src.icon_state,\
+				 "[user] finishes uninstalling \the [src].", INTERRUPT_MOVE|INTERRUPT_ACT|INTERRUPT_ATTACKED|INTERRUPT_STUNNED|INTERRUPT_ACTION)
 				return
 			else
 				boutput(user, "You can't seem to dismantle it.")
@@ -1037,6 +1047,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		else
 			boutput(user, "You hit the light!")
 
+/obj/machinery/light/proc/uninstall_fixture()
+	var/obj/item/light_parts/parts = new /obj/item/light_parts(get_turf(src))
+	parts.copy_light(src)
+	qdel(src)
 
 // returns whether this light has power
 // true if area has power and lightswitch is on
@@ -1673,6 +1687,9 @@ TYPEINFO(/obj/item/light)
 	else
 		return ..()
 
+#undef WORN_LIGHT_BREAKPROB
+#undef LIGHT_FIXTURE_ATTACH_TIME
+#undef LIGHT_FIXTURE_DETACH_TIME
 
 #undef INSTALL_WALL
 #undef INSTALL_FLOOR

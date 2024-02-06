@@ -192,12 +192,14 @@
 	proc/start_transfusion()
 		src.in_use = 1
 		processing_items |= src
+		APPLY_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 2)
 		if (src.stand)
 			src.stand.UpdateIcon()
 
 	proc/stop_transfusion()
 		processing_items -= src
 		src.in_use = 0
+		REMOVE_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
 		src.patient = null
 		if (src.stand)
 			src.stand.UpdateIcon()
