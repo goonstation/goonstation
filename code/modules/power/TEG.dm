@@ -1695,7 +1695,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		var/datum/signal/signal = get_free_signal()
 		signal.transmission_method = TRANSMISSION_RADIO
 		signal.source = src
-		signal.data["tag"] = pump["netid"]
+		signal.data["tag"] = pump["tag"]
 		signal.data["command"] = "power_toggle"
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
@@ -1706,7 +1706,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		var/datum/signal/signal = get_free_signal()
 		signal.transmission_method = TRANSMISSION_RADIO
 		signal.source = src
-		signal.data["tag"] = pump["netid"]
+		signal.data["tag"] = pump["tag"]
 		signal.data["command"] = "set_output_pressure"
 		signal.data["parameter"] = new_pressure
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
