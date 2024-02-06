@@ -11,32 +11,39 @@ import { Button, Section, Slider, Stack } from '../components';
 // import { DataInputOptions } from './common/DataInput';
 import { Window } from '../layouts';
 
+// List of information about a pump
 type PumpData = {
-  net_id: string
-  id: string;
-  power_status: boolean;
-  target_pressure: number;
-  min_pressure: number;
-  max_pressure: number;
-  area_name: string;
+  tag: string; // Pump name
+  netid: string; // Pump id
+  power: boolean; // On or off
+  target_output: number; // Current output target of the pump
+  min_output: number;
+  max_output: number;
+  area_name: string; // Name of the area this pump is in
 }
 
 type PumpList = {
-  pump_list: PumpData[];
+  area_name: string;
+}
+
+// List of areas which have pumps
+type AreaList = {
+  area_list: PumpList[];
   frequency: number;
 };
 
+// Responsible for providing information and settings for a pump.
 const PumpSettings = (_:any, context:any) => {
   const { act, data } = useBackend<PumpData>(context);
   const { pump } = _;
 
   const setPressure = (netid: string, newPressure: number) => {
-    pump.target_pressure = newPressure;
-    act('setPressure', { net_id: netid, pressure: newPressure });
+    pump.target_output = newPressure;
+    act('setPressure', { netid: netid, pressure: newPressure });
   };
   const togglePump = (netid:string) => {
-    pump.power_status = (pump.power_status === "on") ? "off" : "on";
-    act('togglePump', { net_id: netid });
+    pump.power = (pump.power === "on") ? "off" : "on";
+    act('togglePump', { netid: netid });
   };
 
   return (
@@ -45,31 +52,36 @@ const PumpSettings = (_:any, context:any) => {
         <Button
           width={4}
           icon="power-off"
-          color={(pump.power_status === 'on') ? "green" : "red"}
-          onClick={() => togglePump(pump.net_id)}>
-          {(pump.power_status === 'on') ? 'On' : 'Off'}
+          color={(pump.power === 'on') ? "green" : "red"}
+          onClick={() => togglePump(pump.netid)}>
+          {(pump.power === 'on') ? 'On' : 'Off'}
         </Button>
       </Stack.Item>
       <Stack.Item grow>
         <Slider
-          value={pump.target_pressure}
-          minValue={pump.min_pressure}
-          maxValue={pump.max_pressure}
+          value={pump.target_output}
+          minValue={pump.min_output}
+          maxValue={pump.max_output}
           unit={"kPa"}
           stepPixelSize={0.05}
-          onChange={(_e: any, value: number) => setPressure(pump.net_id, value)}
+          onChange={(_e: any, value: number) => setPressure(pump.netid, value)}
         />
+        {pump.netid}
       </Stack.Item>
     </Stack>
   );
 };
 
-const PumpInformation = (_:any, context:any) => {
-  const { pump } = _;
+// Responsible for creating a section for the pumps in an area.
+const PumpArea = (_:any, context:any) => {
+  const { data } = useBackend<PumpList>(context);
+  const { area } = _;
+
+  return (<br />);
 
   return (
     <Section
-      title={pump.area_name}
+      title={area}
       textAlign="left"
       mb={1}
       style={{
@@ -77,15 +89,28 @@ const PumpInformation = (_:any, context:any) => {
         "padding-top": "1px",
       }}
     >
-      <PumpSettings pump={pump} />
+      {data[area].map((p) => (
+        <PumpSettings pump={data[area][p]} key={p} />
+      ))}
     </Section>
   );
 };
 
+// Main element, responsible for building the window.
 export const PumpControl = (props, context) => {
-  const { act, data } = useBackend<PumpList>(context);
+  const { act, data } = useBackend<AreaList>(context);
   const refresh = () => act('refresh');
-
+  // Check it out with --dev, but data consists of a list keyed by area names,
+  // who reference lists keyed by netids, containing pump info. Yeah
+  let last_key:PumpList;
+  let settings = [];
+  for (let key in data.area_list) {
+    last_key = data.area_list[key];
+    for (let pump_key in data.area_list[key]) {
+      settings.push(pump_key);
+    }
+    settings = settings.map((a) => (<PumpSettings pump={data.area_list[key][a]} key={a} />));
+  }
   return (
     <Window
       title="Pump Control Computer"
@@ -100,9 +125,7 @@ export const PumpControl = (props, context) => {
         >
           Refresh
         </Button>
-        {data.pump_list.map((p) => (
-          <PumpInformation pump={p} key={p.net_id} />
-        ))}
+        {settings}
       </Window.Content>
     </Window>
   );

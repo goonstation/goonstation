@@ -1680,17 +1680,17 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		src.ui_static_data()
 
 	// Get a pump by net id
-	proc/getPump(var/net_id)
+	proc/getPump(var/netid)
 		for (var/area_name in src.pump_infoset)
 			var/list/L = src.pump_infoset[area_name]
 			for (var/pump in L)
-				if (pump["netid"] == net_id)
-					return pump
+				if (pump == netid)
+					return L[pump]
 		return 0
 
 	// Get a pump by net id and toggle its power
-	proc/togglePump(var/net_id)
-		var/list/pump = src.getPump(net_id)
+	proc/togglePump(var/netid)
+		var/list/pump = src.getPump(netid)
 		if (!pump) return
 		var/datum/signal/signal = get_free_signal()
 		signal.transmission_method = TRANSMISSION_RADIO
@@ -1699,8 +1699,8 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		signal.data["command"] = "power_toggle"
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-	proc/setPressure(var/net_id, var/new_pressure)
-		var/list/pump = src.getPump(net_id)
+	proc/setPressure(var/netid, var/new_pressure)
+		var/list/pump = src.getPump(netid)
 		if (!pump || !isnum_safe(new_pressure)) return
 		new_pressure = clamp(new_pressure, pump["min_output"], pump["max_output"])
 		var/datum/signal/signal = get_free_signal()
@@ -1727,7 +1727,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 /obj/machinery/computer/atmosphere/pumpcontrol/ui_static_data(mob/user)
 	return list(
 		"frequency" = src.frequency,
-		"pump_list" = src.pump_infoset,
+		"area_list" = src.pump_infoset,
 	)
 
 /obj/machinery/computer/atmosphere/pumpcontrol/ui_data(mob/user)
