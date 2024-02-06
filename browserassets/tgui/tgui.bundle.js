@@ -73388,6 +73388,7 @@ var _layouts = __webpack_require__(/*! ../layouts */ "./packages/tgui/layouts/in
  * @author Romayne (https://github.com/MeggalBozale)
  * @license ISC (https://choosealicense.com/licenses/isc/)
  */
+// ^ dont need to ask me or anything i just assume this comes with making a new file
 // import { DataInputOptions } from './common/DataInput';
 var PumpInformation = function PumpInformation(_, context) {
   var _useBackend = (0, _backend.useBackend)(context),
@@ -73405,43 +73406,34 @@ var PumpInformation = function PumpInformation(_, context) {
   };
 
   var togglePump = function togglePump(netid) {
-    return act('togglePump', {
+    pump.power_status = pump.power_status === "on" ? "off" : "on";
+    act('togglePump', {
       net_id: netid
     });
   };
 
-  return (0, _inferno.createComponentVNode)(2, _components.Box, {
-    "fontSize": "15px",
-    "fontFamily": "Monospace",
-    "bold": true,
+  var pump_title = pump.id + " - " + pump.area_name;
+  return (0, _inferno.createComponentVNode)(2, _components.Section, {
+    "title": pump_title,
     "textAlign": "left",
     "mb": 1,
     "style": {
-      "border-width": "0.1em",
-      "border-style": "solid",
       "padding": "5px",
       "padding-top": "1px"
     },
-    children: [(0, _inferno.createComponentVNode)(2, _components.Stack, {
-      children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
-        "grow": 1,
-        children: pump.id
-      }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
-        children: pump.area_name
-      })]
-    }), (0, _inferno.createComponentVNode)(2, _components.Stack, {
+    children: (0, _inferno.createComponentVNode)(2, _components.Stack, {
       children: [(0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
         children: (0, _inferno.createComponentVNode)(2, _components.Button, {
-          "icon": "fas fa-power-off",
-          "backgroundColor": pump.power_status === "on" ? "#11AA11" : "#AA1111",
-          "disabled": 0,
+          "icon": "power-off",
+          "color": pump.power_status === 'on' ? "green" : "red",
           "onClick": function () {
             function onClick() {
               return togglePump(pump.net_id);
             }
 
             return onClick;
-          }()
+          }(),
+          children: pump.power_status === 'on' ? 'On' : 'Off'
         })
       }), (0, _inferno.createComponentVNode)(2, _components.Stack.Item, {
         "grow": true,
@@ -73449,6 +73441,7 @@ var PumpInformation = function PumpInformation(_, context) {
           "value": pump.target_pressure,
           "minValue": pump.min_pressure,
           "maxValue": pump.max_pressure,
+          "unit": "kPa",
           "stepPixelSize": 0.05,
           "onChange": function () {
             function onChange(_e, value) {
@@ -73459,7 +73452,7 @@ var PumpInformation = function PumpInformation(_, context) {
           }()
         })
       })]
-    })]
+    })
   });
 };
 
