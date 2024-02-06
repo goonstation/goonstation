@@ -30,9 +30,8 @@ export const MessageModal = (_, context) => {
 
   let outputMessage = message;
   if (sanitize) {
-    let allowedHTMLTags = sanitizeDefAllowTags;
-    allowedHTMLTags.push('a'); // We commonly want to let users redirect to a URL.
-    let forbiddenHTMLTags = []; // sanitizeDefForbiddenTags - I don't see a reason to forbid styling for this
+    const allowedHTMLTags = [...sanitizeDefAllowTags, 'a']; // We commonly want to let users redirect to a URL.
+    const forbiddenHTMLTags = []; // sanitizeDefForbiddenTags - I don't see a reason to forbid styling for this
     outputMessage = sanitizeText(message, allowedHTMLTags, forbiddenHTMLTags);
   }
 
