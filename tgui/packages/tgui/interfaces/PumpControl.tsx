@@ -33,7 +33,6 @@ type AreaList = {
 const PumpSettings = (props:any, context:any) => {
   const { act } = useBackend<PumpData>(context);
   const { pump } = props;
-  if (pump.alive !== 1) return; // Don't show pumps that don't exist
   // Local states allow to keep the appearance of seamless response, but do not cope well with button spamming
   const [target_output, setOutput] = useLocalState(context, pump.netid+"pressure", pump.target_output);
   const [power, setPower] = useLocalState(context, pump.netid+"power", "on");
@@ -49,10 +48,8 @@ const PumpSettings = (props:any, context:any) => {
 
   return (
     <Box>
-      <Stack>
-        <Stack.Item
-          py={1}
-        >
+      <Stack py={1}>
+        <Stack.Item>
           {pump.tag}
         </Stack.Item>
       </Stack>
@@ -89,7 +86,16 @@ const PumpArea = (_:any, context:any) => {
 
   // Need the keys as a list >:(
   let pump_controls = [];
-  for (let pump_key in data.area_list[area]) pump_controls.push(<PumpSettings pump={data.area_list[area][pump_key]} />);
+  for (let pump_key in data.area_list[area]) {
+    if (data.area_list[area][pump_key].alive === 0) continue;
+    pump_controls.push(<PumpSettings pump={data.area_list[area][pump_key]} />);
+  }
+  // All pumps were dead
+  if (pump_controls.length === 0) {
+    pump_controls.push(
+      <p>No pumps found for {area}, please refresh and check connection.</p>
+    );
+  }
 
   return (
     <Section

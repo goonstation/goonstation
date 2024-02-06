@@ -1624,6 +1624,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 
 /obj/machinery/computer/atmosphere/pumpcontrol/New()
 	. = ..()
+
 	pump_infoset = new/list()
 	src.AddComponent( \
 		/datum/component/packet_connected/radio, \
@@ -1698,19 +1699,21 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		return
 	if(!src.pump_infoset.len)
 		src.request_data() // get data for first time
+	src.check_if_alive()
 
-/// Check for pumps that 'sploded or are otherwise unreachable. Dont call this often thanks
-/obj/machinery/computer/atmosphere/pumpcontrol/proc/check_if_alive()
+/// Check for pumps that 'sploded or are otherwise unreachable
+/obj/machinery/computer/atmosphere/pumpcontrol/proc/check_if_alive(override_cooldown = FALSE)
+	if (!override_cooldown && ON_COOLDOWN(src, "check_pumps_living", 1 MINUTE)) return
 	for (var/area_name as anything in src.pump_infoset)
 		for (var/pump as anything in src.pump_infoset[area_name])
 			src.pump_infoset[area_name][pump]["alive"] = PUMP_SCHRODINGER // https://i.imgur.com/mUfxPmb.png
 
 	src.request_data()
-	sleep(5 SECONDS)
-
-	for (var/area_name as anything in src.pump_infoset)
-		for (var/pump as anything in src.pump_infoset[area_name])
-			src.pump_infoset[area_name][pump]["alive"] = (PUMP_SCRODINGER) ? PUMP_DEAD : PUMP_ALIVE
+	SPAWN(5 SECONDS)
+		for (var/area_name as anything in src.pump_infoset)
+			for (var/pump as anything in src.pump_infoset[area_name])
+				if (src.pump_infoset[area_name][pump]["alive"] != PUMP_ALIVE)
+					src.pump_infoset[area_name][pump]["alive"] = PUMP_DEAD
 
 /// Get a pump by net id. Does not ask for pump data from pump
 /obj/machinery/computer/atmosphere/pumpcontrol/proc/getPump(var/netid)
@@ -1779,11 +1782,15 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 			src.setPressure(params["netid"], params["pressure"])
 		if ("refresh")
 			src.request_data()
+			src.check_if_alive(override_cooldown=TRUE)
+			return
+	src.check_if_alive()
 
 
 /obj/machinery/computer/atmosphere/pumpcontrol/attack_hand(mob/user)
 	. = ..()
 	src.ui_interact(user)
+	src.check_if_alive()
 
 #undef DEVICE_IS_PUMP
 #undef HAS_REQUIRED_DATA
