@@ -4,9 +4,8 @@
  * @author Romayne (https://github.com/MeggalBozale)
  * @license ISC (https://choosealicense.com/licenses/isc/)
  */
-// ^ dont need to ask me or anything i just assume this comes with making a new file
 
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Button, Section, Slider, Stack } from '../components';
 // import { DataInputOptions } from './common/DataInput';
 import { Window } from '../layouts';
@@ -20,6 +19,7 @@ type PumpData = {
   min_output: number;
   max_output: number;
   area_name: string; // Name of the area this pump is in
+  processing: boolean; // Whether we are waiting for packet response or not
 }
 
 type PumpList = {
@@ -36,14 +36,16 @@ type AreaList = {
 const PumpSettings = (_:any, context:any) => {
   const { act, data } = useBackend<PumpData>(context);
   const { pump } = _;
+  const [target_output, setOutput] = useLocalState(context, "target_output", pump.target_output);
+  const [power, setPower] = useLocalState(context, pump.netid, "on");
 
-  const setPressure = (netid: string, newPressure: number) => {
-    pump.target_output = newPressure;
-    act('setPressure', { netid: netid, pressure: newPressure });
+  const setPressure = (newPressure: number) => {
+    setOutput(newPressure);
+    act('setPressure', { netid: pump.netid, pressure: newPressure });
   };
-  const togglePump = (netid:string) => {
-    pump.power = (pump.power === "on") ? "off" : "on";
-    act('togglePump', { netid: netid });
+  const togglePump = () => {
+    setPower((power === "on") ? "off" : "on");
+    act('togglePump', { netid: pump.netid });
   };
 
   return (
@@ -52,21 +54,20 @@ const PumpSettings = (_:any, context:any) => {
         <Button
           width={4}
           icon="power-off"
-          color={(pump.power === 'on') ? "green" : "red"}
-          onClick={() => togglePump(pump.netid)}>
-          {(pump.power === 'on') ? 'On' : 'Off'}
+          color={(power === 'on') ? "green" : "red"}
+          onClick={() => togglePump()}>
+          {(power === 'on') ? 'On' : 'Off'}
         </Button>
       </Stack.Item>
       <Stack.Item grow>
         <Slider
-          value={pump.target_output}
+          value={target_output}
           minValue={pump.min_output}
           maxValue={pump.max_output}
           unit={"kPa"}
           stepPixelSize={0.05}
-          onChange={(_e: any, value: number) => setPressure(pump.netid, value)}
+          onChange={(_e: any, value: number) => setPressure(value)}
         />
-        {pump.netid}
       </Stack.Item>
     </Stack>
   );

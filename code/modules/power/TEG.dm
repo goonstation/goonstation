@@ -1617,99 +1617,115 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	// e.g. pump_infoset["toxins"] has (pump_1, pump_2, pump_3)
 	var/list/pump_infoset
 
-	New()
-		. = ..()
-		pump_infoset = new/list()
-		src.AddComponent( \
-			/datum/component/packet_connected/radio, \
-			null, \
-			frequency, \
-			null, \
-			"receive_signal", \
-			FALSE, \
-			"pumpcontrol", \
-			FALSE \
-		)
+/obj/machinery/computer/atmosphere/pumpcontrol/New()
+	. = ..()
+	pump_infoset = new/list()
+	src.AddComponent( \
+		/datum/component/packet_connected/radio, \
+		null, \
+		frequency, \
+		null, \
+		"receive_signal", \
+		FALSE, \
+		"pumpcontrol", \
+		FALSE \
+	)
 
-	process()
-		..()
-		if(status & (BROKEN | NOPOWER))
-			return
-		if(!src.pump_infoset.len)
-			src.request_data() // get data for first time
+/obj/machinery/computer/atmosphere/pumpcontrol/process()
+	..()
+	if(status & (BROKEN | NOPOWER))
+		return
+	if(!src.pump_infoset.len)
+		src.request_data() // get data for first time
 
-	/// Add or update a new pump
-	receive_signal(datum/signal/signal)
-		if (!signal) return
-		if (signal.encryption) return
-		if (!DEVICE_IS_PUMP(signal)) return
-		if (!HAS_REQUIRED_DATA(signal)) return
-		/* Setup pump information from pump broadcast, which currently has these vars:
-		"tag" - Name of pump
-		"netid" - Network ID of pump
-		"device" - "AGP" unique pump identifier string
-		"power" - "on" or "off" depending on state
-		"min_output" - MIN_PRESSURE (0kpa)
-		"max_output" - MAX_PRESSURE (~15000kpa)
-		"target_output"- current pump output
-		"address_tag" = "pumpcontrol"
-		*/
-		var/list/infoset = new()
+/// Add or update a new pump
+/obj/machinery/computer/atmosphere/pumpcontrol/receive_signal(datum/signal/signal)
+	if (!signal) return
+	if (signal.encryption) return
+	if (!DEVICE_IS_PUMP(signal)) return
+	if (!HAS_REQUIRED_DATA(signal)) return
+	/* Setup pump information from pump broadcast, which currently has these vars:
+	"tag" - Name of pump
+	"netid" - Network ID of pump
+	"device" - "AGP" unique pump identifier string
+	"power" - "on" or "off" depending on state
+	"min_output" - MIN_PRESSURE (0kpa)
+	"max_output" - MAX_PRESSURE (~15000kpa)
+	"target_output"- current pump output
+	"address_tag" = "pumpcontrol"
+	*/
+	var/list/pump_data_ref = src.getPump(signal.data["netid"])
+	if (pump_data_ref)
+		// We exist in the list already, update information instead
 		for (var/key as anything in signal.data)
-			infoset[key] = signal.data[key]
-		var/area/A = get_area(signal.source)
-		if (!A)
-			return
-		infoset["area_name"] = A.name
+			pump_data_ref[key] = signal.data[key]
+		pump_data_ref["processing"] = FALSE
+		return
 
-		var/area_name_index = src.pump_infoset.Find(infoset["area_name"])
-		if (!area_name_index)
-			// We are first of an area, create our place in the list
-			src.pump_infoset[infoset["area_name"]] = list()
-			src.pump_infoset[infoset["area_name"]][infoset["netid"]] = infoset
-		else
-			// We are not first of an area, place us in the list alphabetically
-			var/iter = 1
-			var/list/L = src.pump_infoset[infoset["area_name"]]
-			while ((iter <= L.len) && sorttext(infoset["area_name"], L[iter]) == -1)
-				iter += 1
+	var/list/infoset = new()
+	for (var/key as anything in signal.data)
+		infoset[key] = signal.data[key]
+	var/area/A = get_area(signal.source)
+	if (!A)
+		return
+	infoset["area_name"] = A.name
+	infoset["processing"] = FALSE // are we processing a packet request rn?
 
-			// Insert key first
-			L.Insert(iter, infoset["netid"])
-			L[infoset["netid"]] = infoset
-		src.ui_static_data()
+	var/area_name_index = src.pump_infoset.Find(infoset["area_name"])
+	if (!area_name_index)
+		// We are first of an area, create our place in the list
+		src.pump_infoset[infoset["area_name"]] = list()
+		src.pump_infoset[infoset["area_name"]][infoset["netid"]] = infoset
+	else
+		// We are not first of an area, place us in the list alphabetically
+		var/iter = 1
+		var/list/L = src.pump_infoset[infoset["area_name"]]
+		while ((iter <= L.len) && sorttext(infoset["area_name"], L[iter]) == -1)
+			iter += 1
 
-	// Get a pump by net id
-	proc/getPump(var/netid)
-		for (var/area_name in src.pump_infoset)
-			var/list/L = src.pump_infoset[area_name]
-			for (var/pump in L)
-				if (pump == netid)
-					return L[pump]
-		return 0
+		// Insert key first
+		L.Insert(iter, infoset["netid"])
+		L[infoset["netid"]] = infoset
 
-	// Get a pump by net id and toggle its power
-	proc/togglePump(var/netid)
-		var/list/pump = src.getPump(netid)
-		if (!pump) return
-		var/datum/signal/signal = get_free_signal()
-		signal.transmission_method = TRANSMISSION_RADIO
-		signal.source = src
-		signal.data["tag"] = pump["tag"]
-		signal.data["command"] = "power_toggle"
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+/// Get a pump by net id. Does not ask for pump data from pump
+/obj/machinery/computer/atmosphere/pumpcontrol/proc/getPump(var/netid)
+	for (var/area_name in src.pump_infoset)
+		var/list/L = src.pump_infoset[area_name]
+		for (var/pump in L)
+			if (pump == netid)
+				return L[pump]
+	return 0
 
-	proc/setPressure(var/netid, var/new_pressure)
-		var/list/pump = src.getPump(netid)
-		if (!pump || !isnum_safe(new_pressure)) return
-		new_pressure = clamp(new_pressure, pump["min_output"], pump["max_output"])
-		var/datum/signal/signal = get_free_signal()
-		signal.transmission_method = TRANSMISSION_RADIO
-		signal.source = src
-		signal.data["tag"] = pump["tag"]
-		signal.data["command"] = "set_output_pressure"
-		signal.data["parameter"] = new_pressure
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+/// Get a pump by net id and toggle its power
+/obj/machinery/computer/atmosphere/pumpcontrol/proc/togglePump(var/netid)
+	var/list/pump = src.getPump(netid)
+	if (!pump || pump["processing"]) return
+	var/datum/signal/signal = get_free_signal()
+	signal.transmission_method = TRANSMISSION_RADIO
+	signal.source = src
+	signal.data["tag"] = pump["tag"]
+	signal.data["command"] = "power_toggle"
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+	// Mimic action happening to pretend we're fast
+	pump["processing"] = TRUE
+	pump["power"] = (pump["power"] == "on") ? "off" : "on"
+	src.request_data()
+
+/obj/machinery/computer/atmosphere/pumpcontrol/proc/setPressure(var/netid, var/new_pressure)
+	var/list/pump = src.getPump(netid)
+	if (!pump || pump["processing"] || !isnum_safe(new_pressure)) return
+	new_pressure = clamp(new_pressure, pump["min_output"], pump["max_output"])
+	var/datum/signal/signal = get_free_signal()
+	signal.transmission_method = TRANSMISSION_RADIO
+	signal.source = src
+	signal.data["tag"] = pump["tag"]
+	signal.data["command"] = "set_output_pressure"
+	signal.data["parameter"] = new_pressure
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+	// Mimic action happening to pretend we're fast
+	pump["processing"] = TRUE
+	pump["target_output"] = new_pressure
+	src.request_data()
 
 /obj/machinery/computer/atmosphere/pumpcontrol/proc/request_data()
 	var/datum/signal/signal = get_free_signal()
@@ -1725,13 +1741,10 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		ui.open()
 
 /obj/machinery/computer/atmosphere/pumpcontrol/ui_static_data(mob/user)
-	return list(
-		"frequency" = src.frequency,
-		"area_list" = src.pump_infoset,
-	)
+	return list("frequency" = src.frequency)
 
 /obj/machinery/computer/atmosphere/pumpcontrol/ui_data(mob/user)
-	. = ..()
+	return list("area_list" = src.pump_infoset)
 
 /obj/machinery/computer/atmosphere/pumpcontrol/ui_act(action, params)
 	switch (action)
@@ -1741,6 +1754,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 			src.setPressure(params["netid"], params["pressure"])
 		if ("refresh")
 			src.request_data()
+
 
 /obj/machinery/computer/atmosphere/pumpcontrol/attack_hand(mob/user)
 	. = ..()
