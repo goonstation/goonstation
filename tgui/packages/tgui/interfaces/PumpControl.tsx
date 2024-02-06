@@ -26,7 +26,7 @@ type PumpList = {
   frequency: number;
 };
 
-const PumpInformation = (_:any, context:any) => {
+const PumpSettings = (_:any, context:any) => {
   const { act, data } = useBackend<PumpData>(context);
   const { pump } = _;
 
@@ -39,11 +39,37 @@ const PumpInformation = (_:any, context:any) => {
     act('togglePump', { net_id: netid });
   };
 
-  let pump_title = pump.id + " - " + pump.area_name;
+  return (
+    <Stack>
+      <Stack.Item>
+        <Button
+          width={4}
+          icon="power-off"
+          color={(pump.power_status === 'on') ? "green" : "red"}
+          onClick={() => togglePump(pump.net_id)}>
+          {(pump.power_status === 'on') ? 'On' : 'Off'}
+        </Button>
+      </Stack.Item>
+      <Stack.Item grow>
+        <Slider
+          value={pump.target_pressure}
+          minValue={pump.min_pressure}
+          maxValue={pump.max_pressure}
+          unit={"kPa"}
+          stepPixelSize={0.05}
+          onChange={(_e: any, value: number) => setPressure(pump.net_id, value)}
+        />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const PumpInformation = (_:any, context:any) => {
+  const { pump } = _;
 
   return (
     <Section
-      title={pump_title}
+      title={pump.area_name}
       textAlign="left"
       mb={1}
       style={{
@@ -51,26 +77,7 @@ const PumpInformation = (_:any, context:any) => {
         "padding-top": "1px",
       }}
     >
-      <Stack>
-        <Stack.Item>
-          <Button
-            icon="power-off"
-            color={(pump.power_status === 'on') ? "green" : "red"}
-            onClick={() => togglePump(pump.net_id)}>
-            {(pump.power_status === 'on') ? 'On' : 'Off'}
-          </Button>
-        </Stack.Item>
-        <Stack.Item grow>
-          <Slider
-            value={pump.target_pressure}
-            minValue={pump.min_pressure}
-            maxValue={pump.max_pressure}
-            unit={"kPa"}
-            stepPixelSize={0.05}
-            onChange={(_e: any, value: number) => setPressure(pump.net_id, value)}
-          />
-        </Stack.Item>
-      </Stack>
+      <PumpSettings pump={pump} />
     </Section>
   );
 };

@@ -1607,20 +1607,20 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 
 /// Describes a pump from its packet data
 /datum/pump_infoset
-	/// Unique identifier
-	var/net_id = 0
-	/// Whether or not the pump is on or off
-	var/power_status = PUMP_OFF
-	/// Pressure of the pump
-	var/target_pressure = 0
 	/// Radio ID the pump responds to, usually varedited to be a readable name
-	var/id = "Pump"
+	var/id
+	/// Unique Identifier
+	var/netid
+	/// Whether or not the pump is on or off
+	var/power
+	/// Pressure of the pump
+	var/target_output
 	/// minimum pressure this pump will accept
-	var/min_pressure = 0
+	var/min_output
 	/// maximum pressure this pump will accept
-	var/max_pressure = 0
+	var/max_output
 	/// name of area as it appears on the interface
-	var/area_name = "Unknown Area"
+	var/area_name
 
 /obj/machinery/computer/atmosphere/pumpcontrol
 	icon = 'icons/obj/computer.dmi'
@@ -1630,8 +1630,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	/// Default frequency of the computer. Can be varedited so it only listens to relevant pumps, e.g. toxins computer controls toxins pumps
 	frequency = FREQ_PUMP_CONTROL
 
-	/* This is a list in which represents the top-to-bottom display of pump information in the computer.
-	It contains strings of the pump areas, and references to pumps themselves. */
+	/// This is a list in which contains pump information datums keyed by their areas.
 	var/list/pump_infos
 
 	New()
@@ -1654,7 +1653,6 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 			return
 		if(!src.pump_infos.len)
 			src.request_data() // get data for first time
-		//src.updateUsrDialog()
 
 	/// Add or update a new pump
 	receive_signal(datum/signal/signal)
@@ -1662,50 +1660,25 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		if (signal.encryption) return
 		if (!DEVICE_IS_PUMP(signal)) return
 		if (!HAS_REQUIRED_DATA(signal)) return
-
-		// We know about this pump so just update with information that prolly changed
-		if (signal.source in pump_infos)
-			var/datum/pump_infoset/I = pump_infos[signal.source]
-			I.power_status = signal.data["power"]
-			I.target_pressure = signal.data["target_output"]
-			src.updateUsrDialog()
+		// Setup pump information
+		var/datum/pump_infoset/infoset = new()
+		for (var/key as anything in signal.data)
+			if (key in infoset.vars)
+				infoset.vars[key] = signal.data[key]
+		var/area/A = get_area(signal.source)
+		if (!A)
 			return
-
-		// Setup pump info datum to add to list later
-		var/datum/pump_infoset/I = new()
-		// but first check area
-		var/area/pump_area = get_area(signal.source)
-		if (!istype(pump_area))
-			return
-		I.id = signal.data["tag"]
-		I.net_id = signal.data["netid"]
-		I.power_status = signal.data["power"]
-		I.target_pressure = signal.data["target_output"]
-		I.min_pressure = signal.data["min_output"]
-		I.max_pressure = signal.data["max_output"]
-		I.area_name = pump_area.name
-
-		var/area_index = pump_infos.Find(I.area_name)
-		// Have we seen this before?
-		if (area_index)
-			// We had a pump in this area before, insert it below its area
-			while (area_index < pump_infos.len)
-				area_index++
-				var/datum/pump_infoset/infoset = pump_infos[ pump_infos[area_index] ]
-				// Stop before next heading
-				if (!istype(infoset))
-					break
-				// Stop before pump after itself in alphabet to alphabetize output (wow)
-				if (sorttext(I.id, infoset.id) == 1)
-					break
-			pump_infos.Insert(area_index, signal.source)
+		infoset.area_name = A.name
+		var/area_name_index = src.pump_infos.Find(infoset.area_name)
+		if (!area_name_index)
+			// We are first of an area, create our place in the list
+			src.pump_infos[infoset.area_name] = list(infoset)
 		else
-			// We never saw this pump's area before, so add it to the bottom
-			pump_infos += pump_area.name
-			pump_infos += signal.source
-
-		pump_infos[signal.source] = I
-		src.updateUsrDialog()
+			// We are not first of an area, place us in the list alphabetically
+			var/iter = 1
+			while (sorttext(infoset.area_name, src.pump_infos[infoset.area_name][iter]) == -1)
+				iter += 1
+			src.pump_infos[infoset.area_name].Insert(iter, infoset)
 		src.ui_static_data()
 
 	// Get a pump by net id
@@ -1732,7 +1705,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	proc/setPressure(var/net_id, var/new_pressure)
 		var/datum/pump_infoset/P = src.getPump(net_id)
 		if (!P || !isnum_safe(new_pressure)) return
-		new_pressure = clamp(new_pressure, P.min_pressure, P.max_pressure)
+		new_pressure = clamp(new_pressure, P.min_output, P.max_output)
 		var/datum/signal/signal = get_free_signal()
 		signal.transmission_method = TRANSMISSION_RADIO
 		signal.source = src
@@ -1769,11 +1742,11 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		var/datum/pump_infoset/P = src.pump_infos[key]
 		var/list/as_list = list()
 		as_list["id"] = P.id
-		as_list["net_id"] = P.net_id
-		as_list["power_status"] = P.power_status
-		as_list["target_pressure"] = P.target_pressure
-		as_list["min_pressure"] = P.min_pressure
-		as_list["max_pressure"] = P.max_pressure
+		as_list["netid"] = P.netid
+		as_list["power"] = P.power
+		as_list["target_output"] = P.target_output
+		as_list["min_output"] = P.min_output
+		as_list["max_output"] = P.max_output
 		as_list["area_name"] = P.area_name
 		final_list += list(as_list)
 	return final_list
@@ -1785,9 +1758,9 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 /obj/machinery/computer/atmosphere/pumpcontrol/ui_act(action, params)
 	switch (action)
 		if ("togglePump")
-			src.togglePump(params["net_id"])
+			src.togglePump(params["netid"])
 		if ("setPressure")
-			src.setPressure(params["net_id"], params["pressure"])
+			src.setPressure(params["netid"], params["pressure"])
 		if ("refresh")
 			src.request_data()
 
