@@ -2810,7 +2810,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/stool/chair/comfy/yellow{
+/obj/stool/chair/office/yellow{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green,
@@ -9138,9 +9138,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aVL" = (
-/obj/stool/chair{
-	dir = 1
-	},
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -9150,6 +9147,9 @@
 	},
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/stool/chair/office/green{
+	dir = 1
 	},
 /turf/simulated/floor/greenblack,
 /area/station/bridge)
@@ -14455,15 +14455,15 @@
 	frequency = 1445;
 	name = "Station Intercom (Medical)"
 	},
-/obj/stool/chair/office{
-	dir = 8
-	},
 /obj/cable,
 /obj/machinery/power/apc/autoname_east,
 /obj/item/clothing/suit/cardboard_box/head_surgeon,
 /obj/machinery/light_switch/east{
 	pixel_y = 12;
 	pixel_x = 19
+	},
+/obj/stool/chair/office/blue{
+	dir = 8
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/head)
@@ -23460,15 +23460,15 @@
 /turf/simulated/floor/carpet/green/fancy,
 /area/station/crew_quarters/heads)
 "kIY" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/stool/chair/office/green{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/crew_quarters/heads)
@@ -29701,6 +29701,10 @@
 	dir = 9
 	},
 /area/station/hallway/primary/south)
+"qwW" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor,
+/area/station/security/brig)
 "qwY" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/plating,
@@ -30788,13 +30792,14 @@
 /area/station/engine/elect)
 "rmF" = (
 /obj/disposalpipe/segment,
-/obj/stool/chair/comfy{
-	dir = 8;
-	tag = "icon-chair_comfy (WEST)"
-	},
 /obj/landmark/start/job/head_of_security,
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/stool/chair/office/red{
+	dir = 8;
+	icon_state = "office_chair_red";
+	tag = "icon-office_chair_red (WEST)"
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
@@ -88794,7 +88799,7 @@ qSG
 swD
 rnG
 xgD
-xgD
+qwW
 rhu
 oDO
 pRv
