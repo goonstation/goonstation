@@ -164,7 +164,7 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 
 /obj/item/pirate_hand_tele
 	name = "makeshift teleporter"
-	icon = '+secret/icons/obj/salvage.dmi'
+	icon = 'icons/obj/items/device.dmi'
 	desc = "A questionable portable teleportation device that is coupled to a specific location."
 	icon_state = "hand_tele"
 	item_state = "electronic"
