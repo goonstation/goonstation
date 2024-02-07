@@ -102,6 +102,13 @@
 	dir = 6
 	},
 /area/pirate_ship)
+"bJ" = (
+/turf/unsimulated/wall/generic{
+	icon = 'icons/obj/singularity.dmi';
+	icon_state = "TheSingMain";
+	name = "cloaking field"
+	},
+/area/space)
 "cx" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -1240,6 +1247,9 @@
 	dir = 4
 	},
 /area/pirate_ship)
+"As" = (
+/turf/cordon,
+/area/cordon)
 "Au" = (
 /obj/table/nanotrasen/auto,
 /obj/machinery/recharger/wall{
@@ -1617,6 +1627,16 @@
 	pixel_x = 5;
 	pixel_y = 8
 	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
+"Jv" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/fakeobjects/teleport_pad{
+	name = "prototype receiver pad"
+	},
+/obj/landmark/pirate_tele,
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "Jy" = (
@@ -2301,6 +2321,211 @@
 /area/pirate_ship)
 
 (1,1,1) = {"
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+"}
+(2,1,1) = {"
+As
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+As
+"}
+(3,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+bJ
+As
+"}
+(4,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+bJ
+As
+"}
+(5,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+bJ
+As
+"}
+(6,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 Wl
 Wl
@@ -2329,8 +2554,18 @@ Oi
 Wl
 Wl
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(2,1,1) = {"
+(7,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 Wl
 Wl
@@ -2359,8 +2594,18 @@ nu
 Ke
 MM
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(3,1,1) = {"
+(8,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 Wl
 Wl
@@ -2389,8 +2634,18 @@ nu
 Ke
 MM
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(4,1,1) = {"
+(9,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 Wl
 Wl
@@ -2419,8 +2674,18 @@ nu
 nu
 hg
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(5,1,1) = {"
+(10,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 Wl
 Wl
@@ -2449,8 +2714,18 @@ nu
 Ke
 MM
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(6,1,1) = {"
+(11,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Vj
 ai
 cS
@@ -2479,8 +2754,18 @@ nu
 Ke
 MM
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(7,1,1) = {"
+(12,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 cK
 nu
@@ -2509,8 +2794,18 @@ nu
 Oi
 Wl
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(8,1,1) = {"
+(13,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 nu
 Kn
@@ -2539,8 +2834,18 @@ at
 nu
 Wl
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(9,1,1) = {"
+(14,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 TC
 LU
@@ -2569,8 +2874,18 @@ Be
 TC
 nu
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(10,1,1) = {"
+(15,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 TC
 zp
@@ -2599,8 +2914,18 @@ rt
 TC
 qM
 vh
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(11,1,1) = {"
+(16,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 zs
 PY
@@ -2610,7 +2935,7 @@ nW
 Io
 Ph
 Io
-Io
+Jv
 Io
 Io
 Mw
@@ -2629,8 +2954,18 @@ mu
 pb
 yQ
 DS
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(12,1,1) = {"
+(17,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 TC
 zp
@@ -2659,8 +2994,18 @@ rt
 TC
 qM
 qg
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(13,1,1) = {"
+(18,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 TC
 Re
@@ -2689,8 +3034,18 @@ Be
 TC
 nu
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(14,1,1) = {"
+(19,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 nu
 Tb
@@ -2719,8 +3074,18 @@ nu
 nu
 Wl
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(15,1,1) = {"
+(20,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 bB
 nu
@@ -2749,8 +3114,18 @@ nu
 ku
 Wl
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(16,1,1) = {"
+(21,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Vj
 ai
 cS
@@ -2779,8 +3154,18 @@ nu
 Ke
 MM
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(17,1,1) = {"
+(22,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 Wl
 Wl
@@ -2809,8 +3194,18 @@ nu
 Ke
 MM
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(18,1,1) = {"
+(23,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 Wl
 Wl
@@ -2839,8 +3234,18 @@ nu
 nu
 hg
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(19,1,1) = {"
+(24,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 Wl
 Wl
@@ -2869,8 +3274,18 @@ nu
 Ke
 MM
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(20,1,1) = {"
+(25,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 Wl
 Wl
@@ -2899,8 +3314,18 @@ nu
 Ke
 MM
 Wl
+Wl
+Wl
+Wl
+bJ
+As
 "}
-(21,1,1) = {"
+(26,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
 Wl
 Wl
 Wl
@@ -2929,4 +3354,289 @@ ku
 Wl
 Wl
 Wl
+Wl
+Wl
+Wl
+bJ
+As
+"}
+(27,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+bJ
+As
+"}
+(28,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+bJ
+As
+"}
+(29,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+bJ
+As
+"}
+(30,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+bJ
+As
+"}
+(31,1,1) = {"
+As
+bJ
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+Wl
+bJ
+As
+"}
+(32,1,1) = {"
+As
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+bJ
+As
+"}
+(33,1,1) = {"
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
+As
 "}
