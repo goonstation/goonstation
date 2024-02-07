@@ -3,7 +3,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "l" = (
-/mob/living/critter/rockworm,
+/mob/living/critter/rockworm/runtime_checker_should_yell_at_this,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "z" = (
