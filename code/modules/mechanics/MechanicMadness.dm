@@ -3271,36 +3271,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	proc/compSetMode(var/datum/mechanicsMessage/input)
 		LIGHT_UP_HOUSING
 		tooltip_rebuild = 1
-		switch(input.signal)
-			if("add")
-				mode = "add"
-			if("sub")
-				mode = "sub"
-			if("div")
-				mode = "div"
-			if("mul")
-				mode = "mul"
-			if("mod")
-				mode = "mod"
-			if("pow")
-				mode = "pow"
-			if("rng")
-				mode = "rng"
-			if("gt")
-				mode = "gt"
-			if("lt")
-				mode = "lt"
-			if("gte")
-				mode = "gte"
-			if("lte")
-				mode = "lte"
-			if("eq")
-				mode = "eq"
-			if("neq")
-				mode = "neq"
-			else
-				return
-
+		if(input.signal in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte"))
+			mode = input.signal
 	proc/evaluate()
 		switch(mode)
 			if("add")
