@@ -1345,7 +1345,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				spell = category
 			))
 
-		.["Spell_Data"] = {}
+		.["Spell_Data"] = categories
 
 	attack_self(mob/user)
 		ui_interact(user)
