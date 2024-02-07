@@ -1666,6 +1666,8 @@ About the new airlock wires panel:
 /// adds the airlock in question to the global list.
 /obj/machinery/door/airlock/proc/attempt_cycle_link()
 	if (src.cycle_id)
+		if(!cycling_airlocks[src.cycle_id])	// add a list to the list of lists
+			cycling_airlocks[src.cycle_id] = list()
 		if (!(src in cycling_airlocks[src.cycle_id]))
 			cycling_airlocks[src.cycle_id] += src
 
