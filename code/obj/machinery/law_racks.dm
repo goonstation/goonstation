@@ -583,19 +583,7 @@
 				if(isAI(R))
 					var/mob/living/silicon/ai/holoAI = R
 					holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
-
-					var/ability_type
-					var/datum/abilityHolder/silicon/ai/aiAH = R.abilityHolder
-					var/list/current_abilities = list()
-					for(var/datum/ability in aiAH.abilities)
-						current_abilities |= ability.type
-					var/list/abilities_to_remove = current_abilities - ai_abilities
-					for(ability_type in abilities_to_remove)
-						if (ispath(ability_type, /datum/targetable/ai/module))
-							aiAH.removeAbility(ability_type)
-					var/list/abilities_to_add = ai_abilities - current_abilities
-					for(ability_type in abilities_to_add)
-						aiAH.addAbility(ability_type)
+					src.reset_ai_abilities(R)
 		src.calculate_power_usage()
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == src)
@@ -798,6 +786,20 @@
 		for (var/i in 1 to MAX_CIRCUITS)
 			if (src.law_circuits[i])
 				src.power_usage += 100
+
+	proc/reset_ai_abilities(mob/living/silicon/ai/target)
+		var/ability_type
+		var/datum/abilityHolder/silicon/ai/aiAH = target.abilityHolder
+		var/list/current_abilities = list()
+		for(var/datum/ability in aiAH.abilities)
+			current_abilities |= ability.type
+		var/list/abilities_to_remove = current_abilities - src.ai_abilities
+		for(ability_type in abilities_to_remove)
+			if (ispath(ability_type, /datum/targetable/ai/module))
+				aiAH.removeAbility(ability_type)
+		var/list/abilities_to_add = src.ai_abilities - current_abilities
+		for(ability_type in abilities_to_add)
+			aiAH.addAbility(ability_type)
 
 /particles/rack_smoke
 	icon = 'icons/effects/effects.dmi'

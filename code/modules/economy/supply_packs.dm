@@ -120,12 +120,12 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	syndicate = 1
 
 /datum/supply_packs/paint
-	name = "Paint Cans"
-	desc = "A selection of random paints."
-	contains = list(/obj/item/paint_can/random = 4)
+	name = "Artistic Supplies Crate"
+	desc = "A selection of random paints, and an artistic toolbox. Get arty!"
+	contains = list(/obj/item/paint_can/random = 4, /obj/item/storage/toolbox/artistic)
 	cost = PAY_TRADESMAN*3
-	containertype = /obj/storage/crate
-	containername = "Paint Crate"
+	containertype = /obj/storage/crate/packing
+	containername = "Artistic Crate"
 
 /datum/supply_packs/neon_lining
 	name = "Neon Lining Crate"

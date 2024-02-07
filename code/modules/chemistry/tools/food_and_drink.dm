@@ -1660,18 +1660,22 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 				src.amount_per_transfer_from_this = 15
 				src.gulp_size = 15
 				src.initial_volume = 15
+				src.reagents.maximum_volume = 15
 			if ("wine")
 				src.name = "wine glass"
 				src.icon_state = "glass-wine"
 				src.initial_volume = 30
+				src.reagents.maximum_volume = 30
 			if ("cocktail")
 				src.name = "cocktail glass"
 				src.icon_state = "glass-cocktail"
 				src.initial_volume = 20
+				src.reagents.maximum_volume = 20
 			if ("flute")
 				src.name = "champagne flute"
 				src.icon_state = "glass-flute"
 				src.initial_volume = 20
+				src.reagents.maximum_volume = 20
 
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled

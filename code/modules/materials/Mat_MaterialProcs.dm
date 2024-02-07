@@ -530,7 +530,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/slippery_attack
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked)
-		if (isitem(owner) && prob(20))
+		if (isitem(owner) && prob(20) && (owner in attacker.equipped_list()))
 			var/obj/item/handled_item = owner
 			boutput(attacker, SPAN_ALERT("[handled_item] slips right out of your hand!"))
 			handled_item.set_loc(attacker.loc)

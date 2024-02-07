@@ -80,7 +80,7 @@ datum/controller/process/lighting
 
 /datum/circular_queue
 
-	var/list/list = 0
+	var/list/list = null
 
 	var/read_index = 1
 	var/write_index = 1
@@ -90,9 +90,7 @@ datum/controller/process/lighting
 
 	New(ListSize = 500)
 		..()
-		list = list()
-		list.len = ListSize
-
+		src.list = new/list(ListSize)
 
 	proc/dequeue()
 		.= 0

@@ -1034,12 +1034,6 @@
 		LI += W
 	.= LI
 
-/mob/proc/findname(msg)
-	for(var/mob/M in mobs)
-		if (M.real_name == text("[]", msg))
-			.= M
-	.= 0
-
 /mob/proc/movement_delay(var/atom/move_target = 0)
 	.= 2 + movement_delay_modifier
 	if (src.pushing)

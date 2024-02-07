@@ -701,7 +701,7 @@ ported and crapped up by: haine
 			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			user.show_text("You transfer [trans] unit\s of the solution to [target].")
 
-		if (reagents.total_volume == reagents.maximum_volume) // See if the juicer is full.
+		if (src.reagents.total_volume >= src.reagents.maximum_volume) // See if the juicer is full.
 			user.show_text("[src] is full!", "red")
 			return
 

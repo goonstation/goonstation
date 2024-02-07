@@ -33,14 +33,25 @@ jobs:
           tools/bootstrap/python -c ''
           touch +secret/__secret.dme
 
+      - name: Check TGUI
+        run: |
+          tools/ci/build_tgui.sh
+
       - name: Misc Checks
         run: |
           tools/ci/check_filedirs.sh goonstation.dme
-          tools/ci/build_tgui.sh
           tools/ci/check_grep.sh
           tools/bootstrap/python tools/ci/validate_dme.py <goonstation.dme
+
+      - name: Check Maps
+        run: |
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
+
+      - name: Check Duplicate DMI Icon States
+        uses: spacestation13/dmi-duplicate-state-checker@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Linter
         id: linter

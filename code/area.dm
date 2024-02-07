@@ -1687,17 +1687,9 @@ ABSTRACT_TYPE(/area/sim)
 	name = "Vspace area 1"
 	icon_state = "simA1"
 
-/area/sim/a1entry
-	name = "Vspace area 1 Entry"
-	icon_state = "simA1E"
-
 /area/sim/area2
 	name = "Vspace area 2"
 	icon_state = "simA2"
-
-/area/sim/a2entry
-	name = "Vspace area 2 Entry"
-	icon_state = "simA2E"
 
 /area/sim/bball
 	name = "B-Ball Court"

@@ -35,7 +35,7 @@ ALLOW_INCLUDE = [
      # The one file in maps we always include
      r'maps/config/map.dm',
      # OD lint stuff that we want to live in `goonstation.dme`
-     r'_std\__odlint.dm'
+     r'_std\__odlint.dme'
 ]
 
 lines = []
