@@ -1995,14 +1995,15 @@
 
 	cola/cola2
 		required_reagents = list("cola_syrup" = 1, "sodawater" = 5)
+		result_amount = 6
 
 	cola_syrup
 		name = "Cola syrup"
 		id = "cola_syrup"
 		result = "cola_syrup"
-		required_reagents = list("cola" = 4, "VHFCS" = 1)
+		required_reagents = list("cola" = 4, "VHFCS" = 1, "plasma" = 1)
 		inhibitors = list("sodawater")
-		result_amount = 1
+		result_amount = 2
 		min_temperature = T0C + 120
 		mix_phrase = "The cola simmers into a noxious black syrup."
 		on_reaction(datum/reagents/holder, created_volume)
@@ -2042,20 +2043,20 @@
 		id = "roaringwaters"
 		result = "roaringwaters"
 		required_reagents = list("powercola" = 1, "ice" = 0, "tonic" = 5, "sodawater" = 5)
-		result_amount = 3
+		result_amount = 10
 		mix_phrase = "A cool mist forms over the container as the waters crash over the ice."
 
 	strafers_soda
-		name = "Strafer's Soda" //tastes like gaming
+		name = "Strafer's Soda"
 		id = "gamerdrink"
 		result = "gamerdrink"
-		required_reagents = list("powercola" = 1, "salt" = 1, "acid" = 1)
+		required_reagents = list("powercola" = 3, "salt" = 2, "toxin" = 1)
 		reaction_icon_state = list("reaction_explode-1", "reaction_explode-2")
 		reaction_icon_color = "#ffffff"
-		result_amount = 3
+		result_amount = 6
 		mix_phrase = "Looks like someone forgot to put a mix_phrase here. LOL."
-		//Todo: dynamic mix sounds with MLG quickscope sound, "oh baby a triple" if done thrice in succession, "that ain't falco," etc.
-		//Todo: Require dabbing license to mix
+		//mintodo: dynamic mix sounds with MLG quickscope sound, "oh baby a triple" if done thrice in succession, "that ain't falco," etc.
+		//mintodo: Require dabbing license to mix
 
 	lostcoke
 		name = "The Lost Treasure of Kalimero"
@@ -2066,14 +2067,14 @@
 		mix_phrase = "The mixture teleports away!"
 
 		does_react(var/datum/reagents/holder)  // drink must be pure to mix-- no teleporting chem bombs
-			if(length(holder.reagents_list) > length(src.required_reagents))
+			if(length(holder.reagent_list) > length(src.required_reagents))
 				return FALSE
 			else
 				return TRUE
 
-		on_reaction(var/datum/reagents/holder, var/created_volume) // Teleports away on mixing with code stolen wholesale from haunted plushies
-			playsound(get_turf(holder.owner), "warp", 20, 1)
-			var/teleportation_target = get_a_random_station_unlocked_container() //This probably won't work
+		on_reaction(var/datum/reagents/holder, var/created_volume) // Teleports away on mixing -- code stolen wholesale from haunted plushies
+			playsound(get_turf(holder), "warp", 20, 1)
+			var/teleportation_target = get_a_random_station_unlocked_container_with_no_others_on_the_turf() //mintodo This probably won't work
 			if(istype(teleportation_target, /obj/storage))
 				var/is_valid_storage_target = TRUE
 				var/obj/storage/container = teleportation_target
@@ -2089,25 +2090,28 @@
 			else
 				teleportation_target = get_turf(teleportation_target)
 			if(teleportation_target)
-				holder.owner.set_loc(teleportation_target)
+				holder.set_loc(teleportation_target) //This proc is undefined
 			else
-				boutput(holder.owner, SPAN_ALERT("The container shudders for a moment, then is still."))
+				boutput(holder, SPAN_ALERT("The container shudders for a moment, then is still.")) //mintodo make this show to all observers
 
-	redspot
-		name = "Redspot"
-		id = ""
-		result = ""
-		required_reagents = list("powercola" = 1,)
-		result_amount =
-		mix_phrase = "Looks like someone forgot to put a mix_phrase here. LOL."
+	/* redspot
+		name = "Redspot" //mintodo define reagent
+		id = "redspot"
+		result = "redspot"
+		required_reagents = list("powercola" = 1, "ice" = 0, "juice_tomato" = 1, "tonic" = 1)
+		result_amount = 3
+		mix_phrase = "A storm brews."
+		'sound/ambience/nature/Rain_ThunderDistant.ogg',
 
-	magnetar
-		name = "Magnetar"
-		id = ""
-		result = "magnetar"
-		required_reagents = list("powercola" = 1,)
-		result_amount =
-		mix_phrase = "Looks like someone forgot to put a mix_phrase here. LOL."
+		//mintodo mix effect: Thunder sound and rain effect (temporary)
+	*/
+	wipeout
+		name = "Wipeout"
+		id = "wipeout"
+		result = "wipeout"
+		required_reagents = list("powercola" = 1, "plasma" = 1, "espresso" = 1, "rum" = 1, "simplesyrup" = 1, "pfire" = 1)
+		result_amount = 6
+		mix_phrase = "Globs of the ingredients try and fail to mix with one another."
 
 	legendairy
 		name = "Legendairy"

@@ -119,6 +119,18 @@ datum
 			description = "This milk is far more milky than should be possible."
 			reagent_state = LIQUID
 
+		fooddrink/legendairy
+			name = "Legendairy"
+			id = "milk_powder"
+			description = "Enhanced milk mixed with enhanced cola. Shouldn't this be called Double Double?"
+			reagent_state = LIQUID
+			fluid_r = 177
+			fluid_g = 100
+			fluid_b = 65
+			transparency = 255
+			taste = list("coke", "coke") //intentional
+			viscosity = 0.4
+
 		fooddrink/milk/chocolate_milk
 			name = "chocolate milk"
 			id = "chocolate_milk"
@@ -1879,6 +1891,64 @@ datum
 			description = "A refreshing Spanish mixture of cola and wine."
 			reagent_state = LIQUID
 
+		fooddrink/alcoholic/lostcoke
+			name = "The Lost Treasure of Kalimero"
+			id = "lostcoke"
+			fluid_r = 255
+			fluid_g = 215
+			fluid_b = 0
+			alch_strength = 0.8
+			thirst_value = 50 //It's treasure!
+			hunger_value = 5  //Made from magic cola & magic wine
+			depletion_rate = 1 //good things never last forever
+			description = "At long last-- the legacy of Kalimoxto's namesake!"
+			taste = "like ambrosia from the gods"
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/colamara
+			name = "Colamara Chaos"
+			id = "colamara"
+			fluid_r = 174
+			fluid_g = 207
+			fluid_b = 235
+			alch_strength = 0.1
+			thirst_value = 20 // accounting for depletion rate, it's only a little better than triple C... But it's faster than mixing 12 fruit juices
+			depletion_rate = 3 //Faster Than Ever
+			description = "Chemical agitation gives the ice in this drink its unique striated pattern."
+			taste = "bittersweet"
+			reagent_state = LIQUID
+
+		fooddrink/maunacola
+			name = "Mauna Cola Awakens"
+			id = "maunacola"
+			fluid_r = 233
+			fluid_g = 60
+			fluid_b = 0
+			transparency = 60
+			thirst_value = 0.1
+			depletion_rate = 0.05
+			description = "The magical properties of the other ingredients seems to have awakened something in the ashes."
+			taste = list("earthy", "ashen")
+			reagent_state = LIQUID
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (M.bodytemperature < (T0C + 40000)) //fuck balancing, go spacewalking today
+					M.bodytemperature += 3 * mult
+				..()
+
+		fooddrink/roaringwaters
+			name = "Roaring Waters"
+			id = "roaringwaters"
+			fluid_r = 233
+			fluid_g = 247
+			fluid_b = 243
+			transparency = 80
+			thirst_value = 0.8 // Water if it hydrated you forever
+			depletion_rate = 0.05 // two sips to completely restore thirst
+			description = "What a sorry excuse for a mixed drink."
+			taste = list("fresh", "clean")
+			reagent_state = LIQUID
+
 		fooddrink/alcoholic/derby
 			name = "Derby"
 			id = "derby"
@@ -2350,6 +2420,85 @@ datum
 					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
 				..()
 				return
+
+		fooddrink/caffeinated/cola_syrup //done
+			name = "cola syrup"
+			id = "cola_syrup"
+			description = "An acrid, cloying goop derived from cola, containing trace amounts of plasma."
+			reagent_state = LIQUID
+			fluid_r = 66
+			fluid_g = 33
+			fluid_b = 33
+			transparency = 10
+			taste = list("cloying", "acrid")
+			thirst_value = -0.2
+			viscosity = 0.8
+			caffeine_content = 0.6
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				M.reagents.add_reagent("sugar", 2 * mult)
+				..()
+
+		fooddrink/caffeinated/powercola //done
+			name = "power cola"
+			id = "powercola"
+			description = "Madness. Madness. A union of cola with more cola."
+			fluid_r = 66
+			fluid_g = 33
+			fluid_b = 33
+			transparency = 70
+			taste = list("sugary", "acrid")
+			thirst_value = 1.8
+			viscosity = 0.5
+			caffeine_content = 0.4
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				M.reagents.add_reagent("sugar", 0.7 * mult)
+				..()
+
+		fooddrink/caffeinated/space_cola/gamerdrink
+			name = "Strafer's Soda"
+			id = "gamerdrink"
+			description = "No scrubs were left unrekt in the making of this beverage."
+			fluid_r = 150
+			fluid_g = 213
+			fluid_b = 18
+			transparency = 70
+			taste = "like gaming"
+			caffeine_content = 0.3 //mintodo add spread reduction for ranged weapons
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				M.reagents.add_reagent("sugar", 2 * mult)
+				M.reagents.add_reagent("salt", 2 * mult)
+				if (prob(1))
+					M.reagents.add_reagent("liquid_code", 1 * mult)
+				..()
+
+		fooddrink/caffeinated/wipeout
+			name = "Wipeout"
+			id = "wipeout"
+			description = "An emulsion of several strong drinks, this is probably closer to a poison than a cocktail."
+			fluid_r = 184
+			fluid_g = 245
+			fluid_b = 242
+			transparency = 70
+			taste = "a lot"
+			caffeine_content = 0 // handled by espresso decay
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom // decays into things that decay for maximum slow metabolism punishment. ~8x the resultant chems if you have the trait
+				if(prob(10))
+					M.reagents.add_reagent("rum", 1 * mult)
+				if(prob(15))
+					M.reagents.add_reagent("espresso", 1 * mult)
+				if(prob(21))
+					M.reagents.add_reagent("VHFCS", 1 * mult)
+				if(prob(5))
+					M.reagents.add_reagent("pfire", 0.4 * mult)
+				..()
 
 		fooddrink/sarsaparilla // traditionally non-caffeinated
 			name = "sarsaparilla"
