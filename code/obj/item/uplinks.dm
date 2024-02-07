@@ -1330,12 +1330,13 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		// Start with associative list, where each key is a spell category
 		var/list/categories = list()
 		for(var/datum/SWFuplinkspell/spell in src.spells)
-			categories[spell.eqtype] += list(list(
-				name = spell.name,
+		// spell.eqtype spell.name spell.desc spell.cost spell.vr_allowed
+			if (!categories[spell.eqtype]) categories[spell.eqtype] = list()
+			categories[spell.eqtype][spell.name] = list(
 				desc = spell.desc,
 				cost = spell.cost,
 				vr = spell.vr_allowed
-			))
+			)
 		// Convert to non-associative list holding each category
 		var/list/categoriesArray = list()
 		for(var/category_name in categories)
