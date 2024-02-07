@@ -12786,7 +12786,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "fNc" = (
