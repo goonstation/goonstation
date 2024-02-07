@@ -206,7 +206,11 @@ TYPEINFO(/obj/item/device/transfer_valve)
 		switch(action)
 			if ("add_item")
 				if (ismob(usr))
-					src.attach_tank(usr, params["tank"])
+					if (params["tank"])
+						src.attach_tank(usr, params["tank"])
+					else
+						var/mob/M = usr
+						src.Attackby(M.equipped(), M)
 			if ("remove_tank_one")
 				src.remove_tank(tank_one)
 			if ("remove_tank_two")

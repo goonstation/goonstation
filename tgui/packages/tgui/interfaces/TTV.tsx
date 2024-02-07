@@ -32,7 +32,7 @@ const TankInfo = (_props, context) => {
         <Stack>
           <Stack.Item py={1}>
             {tank ? <Button disabled={tank === null} icon="eject" onClick={() => act(tank_num === 1 ? "remove_tank_one" : "remove_tank_two")}>Eject</Button>
-              : <Button icon={"add"} onClick={() => act("add_item", { "tank": tank_num })}>Add</Button>}
+              : <Button icon="add" onClick={() => act("add_item", { "tank": tank_num })}>Add</Button>}
           </Stack.Item>
         </Stack>
       </Stack>
@@ -69,7 +69,9 @@ export const TTV = (_props, context) => {
                   </Button>
                 </Stack.Item>
                 <Stack.Item>
-                  {(data.device === '') ? "No Device Attached" : <><Button>{data.device}</Button><Button icon="eject" onClick={() => act("remove_device")}>Eject</Button></>}
+                  {(data.device === '') ? "No Device Attached" : ''}
+                  {(data.device === '') ? <Button icon="add" onClick={() => act("add_item")}>Add</Button>
+                    : <><Button>{toTitleCase(data.device)}</Button><Button icon="eject" onClick={() => act("remove_device")}>Eject</Button></>}
                 </Stack.Item>
               </Stack>
             </Stack.Item>
