@@ -1,5 +1,7 @@
 
 (t)wed feb 07 24
+(u)Sord
+(+)Opening/closing the panel on an airlock now has a short action bar
 (u)LeahTheTech
 (+)Random characters will no longer receive broken looking partial hairstyles.
 (u)Saccha
