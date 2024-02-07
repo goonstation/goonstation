@@ -177,6 +177,9 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		qdel(src)
 		return
 
+	process() //better than not doing this
+		src.remove_distant_beaker()
+
 	proc/eject_card()
 		if (src.user_id)
 			if((BOUNDS_DIST(usr, src) == 0))
