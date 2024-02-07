@@ -1778,15 +1778,15 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 /obj/machinery/computer/atmosphere/pumpcontrol/ui_act(action, params)
 	switch (action)
 		if ("togglePump")
+			playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)
 			src.togglePump(params["netid"])
 		if ("setPressure")
 			src.setPressure(params["netid"], params["pressure"])
 		if ("refresh")
-			src.request_data()
+			playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)
 			src.check_if_alive(override_cooldown=TRUE)
 			return
 	src.check_if_alive()
-
 
 /obj/machinery/computer/atmosphere/pumpcontrol/attack_hand(mob/user)
 	. = ..()
