@@ -245,7 +245,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 								if (is_jen_wall)
 									src.pixel_x = -12
 								else
-									src.pixel_y = 32
+									src.pixel_x = -32
 							if (NORTH)
 								if (is_jen_wall)
 									src.pixel_y = 24
