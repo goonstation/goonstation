@@ -1436,17 +1436,20 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		if(!istype(target, /obj/table) || src.cant_drop)
 			return ..()
 		var/obj/table/target_table = target
-		var/obj/table/source_table = locate() in get_step(user, user.dir)
-		if(isnull(source_table))
-			for(var/dir in cardinal)
-				source_table = locate() in get_step(user, dir)
-				if(!isnull(source_table))
-					user.set_dir(dir)
-					break
+		var/obj/table/source_table = null
+		var/obj/table/candidate_table = null
+		var/dist = INFINITY
+		for(var/dir in cardinal)
+			candidate_table = locate() in get_step(user, dir)
+			if(GET_MANHATTAN_DIST(candidate_table, target_table) < dist)
+				source_table = candidate_table
+				dist = GET_MANHATTAN_DIST(source_table, target_table)
+
 		if(isnull(source_table))
 			return
 		if(!can_reach(user, source_table))
 			return
+		user.set_dir(get_dir(user, source_table))
 		if("icon-x" in params)
 			src.pixel_x = text2num(params["icon-x"]) - 16
 		if("icon-y" in params)
@@ -1657,18 +1660,22 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 				src.amount_per_transfer_from_this = 15
 				src.gulp_size = 15
 				src.initial_volume = 15
+				src.reagents.maximum_volume = 15
 			if ("wine")
 				src.name = "wine glass"
 				src.icon_state = "glass-wine"
 				src.initial_volume = 30
+				src.reagents.maximum_volume = 30
 			if ("cocktail")
 				src.name = "cocktail glass"
 				src.icon_state = "glass-cocktail"
 				src.initial_volume = 20
+				src.reagents.maximum_volume = 20
 			if ("flute")
 				src.name = "champagne flute"
 				src.icon_state = "glass-flute"
 				src.initial_volume = 20
+				src.reagents.maximum_volume = 20
 
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled

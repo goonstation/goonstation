@@ -311,7 +311,8 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 
 	Move(NewLoc, direct)
 		. = ..()
-		animate(src, time=5 SECONDS, pixel_x=rand(-4,4), pixel_y=rand(-8,8))
+		if (!ON_COOLDOWN(src, "move_bumble", 5 SECONDS))
+			animate(src, time=5 SECONDS, pixel_x=rand(-4,4), pixel_y=rand(-8,8))
 
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W, /obj/item/reagent_containers/glass/jar) || istype(W, /obj/item/reagent_containers/glass/beaker/large))
