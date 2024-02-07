@@ -463,8 +463,8 @@
 		icon_state = "comtac"
 
 		New()
-			..()
 			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
 
 		setupProperties()
 			..()
@@ -491,8 +491,8 @@
 		desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
 
 		New()
-			..()
 			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
 
 		setupProperties()
 			..()

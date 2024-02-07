@@ -98,7 +98,7 @@
 	additive_slowdown = -0.25
 
 // robot modifiers
-/datum/movement_modifier/robot_base
+/datum/movement_modifier/robot_part/robot_base
 	health_deficiency_adjustment = -INFINITY
 	mob_pull_multiplier = 0.2 //make borgs pull mobs slightly slower than full speed (roundstart light borg will pull a corpse at ~1.3 delay, as opposed to ~1 when unencumbered)
 

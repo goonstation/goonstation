@@ -2032,7 +2032,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					icon_state = "rattlesnake_rattle"
 					playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECONDS)
-						icon_state = "rattlesnake"
+						if(isalive(src))
+							icon_state = "rattlesnake"
 					return SPAN_EMOTE("<b>[src]</b> rattles [his_or_her(src)] tail!")
 		return null
 

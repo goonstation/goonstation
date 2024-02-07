@@ -45,7 +45,7 @@
 	shot_sound = 'sound/weapons/optio.ogg'
 	implanted = null
 	armor_ignored = 0.66
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	shot_volume = 66
 	window_pass = 1
 
@@ -137,7 +137,7 @@
 	casing = /obj/item/casing/cannon
 	damage = 125
 	implanted = /obj/item/implant/projectile/rakshasa
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	goes_through_walls = 1
 	pierces = -1
 
@@ -238,7 +238,7 @@
 	shot_volume = 66
 	dissipation_delay = 10
 	dissipation_rate = 5
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 
 	small
 		shot_sound = 'sound/weapons/9x19NATO.ogg'
@@ -351,7 +351,7 @@
 	precalculated = 0
 	shot_volume = 100
 	shot_sound = 'sound/weapons/gyrojet.ogg'
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 
 	on_launch(obj/projectile/O)
 		O.internal_speed = projectile_speed
@@ -413,7 +413,7 @@
 	dissipation_delay = 5
 	dissipation_rate = 5
 	implanted = /obj/item/implant/projectile/bullet_50
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/deagle
 	shot_sound = 'sound/weapons/deagle.ogg'
 
@@ -455,7 +455,7 @@
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	implanted = null
 
 	on_hit(atom/hit)

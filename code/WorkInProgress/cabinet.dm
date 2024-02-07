@@ -262,12 +262,12 @@
 /obj/cabinet/taffy // for psychiatrists to prescribe
 
 	New()
-		slots["1"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/cherry(src)
-		slots["2"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/watermelon(src)
-		slots["3"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry(src)
-		slots["4"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/cherry(src)
-		slots["5"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/watermelon(src)
-		slots["6"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry(src)
+		slots["1"] = new /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry(src)
+		slots["2"] = new /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/watermelon(src)
+		slots["3"] = new /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/blueraspberry(src)
+		slots["4"] = new /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry(src)
+		slots["5"] = new /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/watermelon(src)
+		slots["6"] = new /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/blueraspberry(src)
 		rebuildOverlays()
 		return ..()
 

@@ -22,8 +22,8 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	var/obj/effects/music/effect
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		pixel_y = 0
 		effect = new
 		src.vis_contents += effect
@@ -97,8 +97,8 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	var/overheated = FALSE
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		effect = new
 		speakers |= new /obj/item/device/radio/nukie_studio_monitor(src.loc)
 		speakers |= new /obj/item/device/radio/nukie_studio_monitor(src.loc)
