@@ -69,9 +69,9 @@ export const TTV = (_props, context) => {
                   </Button>
                 </Stack.Item>
                 <Stack.Item>
-                  {(data.device === '') ? "No Device Attached" : ''}
+                  {(data.device === '') ? "No Device " : ''}
                   {(data.device === '') ? <Button icon="add" onClick={() => act("add_item")}>Add</Button>
-                    : <><Button>{toTitleCase(data.device)}</Button><Button icon="eject" onClick={() => act("remove_device")}>Eject</Button></>}
+                    : <><Button onClick={() => act("interact_device")}>{toTitleCase(data.device)}</Button><Button icon="eject" onClick={() => act("remove_device")}>Eject</Button></>}
                 </Stack.Item>
               </Stack>
             </Stack.Item>
