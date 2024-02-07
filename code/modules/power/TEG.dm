@@ -1706,7 +1706,8 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	if (!override_cooldown && ON_COOLDOWN(src, "check_pumps_living", 1 MINUTE)) return
 	for (var/area_name as anything in src.pump_infoset)
 		for (var/pump as anything in src.pump_infoset[area_name])
-			src.pump_infoset[area_name][pump]["alive"] = PUMP_SCHRODINGER // https://i.imgur.com/mUfxPmb.png
+			if (src.pump_infoset[area_name][pump]["alive"] == PUMP_ALIVE) // Don't modify dead ones if they were just jammed theyll respond
+				src.pump_infoset[area_name][pump]["alive"] = PUMP_SCHRODINGER // https://i.imgur.com/mUfxPmb.png
 
 	src.request_data()
 	SPAWN(5 SECONDS)

@@ -36,6 +36,8 @@ const PumpSettings = (props:any, context:any) => {
   // Local states allow to keep the appearance of seamless response, but do not cope well with button spamming
   const [target_output, setOutput] = useLocalState(context, pump.netid+"pressure", pump.target_output);
   const [power, setPower] = useLocalState(context, pump.netid+"power", "on");
+  
+  let status = "Connected";
 
   const setPressure = (newPressure: number) => {
     setOutput(newPressure);
@@ -52,6 +54,11 @@ const PumpSettings = (props:any, context:any) => {
         <Stack.Item>
           {pump.tag}
         </Stack.Item>
+        {
+          <Stack.Item textAlign={"right"} grow={1}>
+            {pump.alive === -1 ? "Establishing Connection..." : status}
+          </Stack.Item>
+        }
       </Stack>
       <Stack>
         <Stack.Item>
