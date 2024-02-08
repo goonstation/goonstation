@@ -5,29 +5,10 @@
  * @license ISC (https://choosealicense.com/licenses/isc/)
  */
 
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Section, Slider, Stack } from '../components';
+import { useBackend, useLocalState } from '../../backend';
+import { Box, Button, Section, Slider, Stack } from '../../components';
 // import { DataInputOptions } from './common/DataInput';
-import { Window } from '../layouts';
-
-// List of information about a pump
-type PumpData = {
-  tag: string; // Pump name
-  netid: string; // Pump id
-  power: string; // On or off
-  target_output: number; // Current output target of the pump
-  min_output: number;
-  max_output: number;
-  area_name: string; // Name of the area this pump is in
-  processing: boolean; // Whether we are waiting for packet response or not
-  alive: number; // A value of -1, 0, or 1 where -1 is checking if the pump is alive, 0 is dead, and 1 is alive
-}
-
-// List of areas which have pumps
-type AreaList = {
-  area_list: { [key: string] : { [key: string] : PumpData } };
-  frequency: number;
-};
+import { Window } from '../../layouts';
 
 // Responsible for providing information and settings for a pump.
 const PumpSettings = (props:any, context:any) => {
@@ -85,9 +66,9 @@ const PumpSettings = (props:any, context:any) => {
 };
 
 // Responsible for creating a section for the pumps in an area.
-const PumpArea = (_:any, context:any) => {
+const PumpArea = (props:any, context:any) => {
   const { data } = useBackend<AreaList>(context);
-  const { area } = _;
+  const { area } = props;
 
   // Need the keys as a list >:(
   let pump_controls = [];
@@ -118,7 +99,7 @@ const PumpArea = (_:any, context:any) => {
 };
 
 // Main element, responsible for building the window.
-export const PumpControl = (props, context) => {
+export const PumpControl = (context) => {
   const { act, data } = useBackend<AreaList>(context);
   const refresh = () => act('refresh');
 
