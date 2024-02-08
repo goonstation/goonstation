@@ -26936,6 +26936,10 @@
 	},
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/west)
+"oqS" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "orc" = (
 /obj/cable/yellow{
 	icon_state = "1-4"
@@ -84099,7 +84103,7 @@ iNk
 iNk
 iNk
 aaa
-aaa
+oqS
 iNk
 iNk
 iNk
