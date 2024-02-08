@@ -7,7 +7,6 @@
 
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Section, Slider, Stack } from '../components';
-// import { DataInputOptions } from './common/DataInput';
 import { Window } from '../layouts';
 
 // List of information about a pump
