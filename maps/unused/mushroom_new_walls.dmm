@@ -30520,7 +30520,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/plating,
 /area/station/medical/head)
 "qZj" = (
 /obj/disposalpipe/segment,
