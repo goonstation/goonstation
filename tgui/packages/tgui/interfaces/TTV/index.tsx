@@ -76,7 +76,7 @@ export const TTV = (_props, context) => {
                 <Stack.Item>
                   {(data.device === '') ? "No Device " : ''}
                   {(data.device === '') ? <Button icon="add" onClick={() => act("add_item")}>Add</Button>
-                    : <><Button onClick={() => act("interact_device")}>Device</Button><Button icon="eject" onClick={() => act("remove_device")}>Eject</Button></>}
+                    : <><Button onClick={() => act("interact_device")}>{data.device}</Button><Button icon="eject" onClick={() => act("remove_device")}>Eject</Button></>}
                 </Stack.Item>
               </Stack>
             </Section>
