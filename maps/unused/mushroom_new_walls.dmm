@@ -17138,11 +17138,11 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/ranch)
 "ebZ" = (
-/obj/stool/chair{
-	dir = 1
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/stool/chair/purple{
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
@@ -18028,13 +18028,13 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "eVf" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/decal/stripe_caution,
+/obj/stool/chair/purple{
+	dir = 8
+	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "eVp" = (
@@ -19032,8 +19032,8 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "fWY" = (
-/obj/stool/chair,
 /obj/landmark/start/job/scientist,
+/obj/stool/chair/purple,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "fXd" = (
@@ -27517,7 +27517,6 @@
 /obj/machinery/light_switch/south{
 	pixel_x = 8
 	},
-/obj/machinery/vending/hydroponics,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "oQf" = (
@@ -35421,6 +35420,7 @@
 	dir = 8
 	},
 /obj/machinery/light_switch/south,
+/obj/machinery/vending/hydroponics,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "vkK" = (
@@ -37894,7 +37894,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/east)
 "xBp" = (
-/obj/stool/chair,
+/obj/stool/chair/purple,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "red2"
