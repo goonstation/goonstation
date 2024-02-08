@@ -155,9 +155,9 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			if (!src.tank_two)
 				src.tank_two = myTank
 		// Handle attackby tank attachment (wherever fits)
-		else if (!src.tank_one)
+		else if (!tank_preference && !src.tank_one)
 			src.tank_one = myTank
-		else if (!src.tank_two)
+		else if (!tank_preference && !src.tank_two)
 			src.tank_two = myTank
 		else
 			// it did not fit, clearly. dummy.
@@ -184,9 +184,15 @@ TYPEINFO(/obj/item/device/transfer_valve)
 		src.ui_interact(user)
 
 	ui_data(mob/user)
+		var/tank_one_data = (src.tank_one) ? list("name"=src.tank_one.name, "num"=1, "pressure"=MIXTURE_PRESSURE(src.tank_one.air_contents), \
+											      "maxPressure"=TANK_FRAGMENT_PRESSURE) \
+										   : list("name"=null, "num"=1, "pressure"=null, "maxPressure"=null)
+		var/tank_two_data = (src.tank_two) ? list("name"=src.tank_two.name, "num"=2, "pressure"=MIXTURE_PRESSURE(src.tank_two.air_contents), \
+											      "maxPressure"=TANK_FRAGMENT_PRESSURE) \
+										   : list("name"=null, "num"=2, "pressure"=null, "maxPressure"=null)
 		return list(
-			"tank_one" = "[src.tank_one]",
-			"tank_two" = "[src.tank_two]",
+			"tank_one" = tank_one_data,
+			"tank_two" = tank_two_data,
 			"device" = "[src.attached_device]",
 			"opened" = src.valve_open,
 		)

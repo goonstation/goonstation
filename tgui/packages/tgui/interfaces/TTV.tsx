@@ -6,36 +6,56 @@
  */
 
 import { useBackend } from '../backend';
-import { Button, Section, Stack } from '../components';
+import { Button, LabeledList, RoundGauge, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { toTitleCase } from '../../common/string';
-
+import { formatPressure } from '../format';
 interface AirVendorParams {
   opened: boolean;
-  tank_one: string;
-  tank_two: string;
+  tank_one: TankData;
+  tank_two: TankData;
   device: string;
+}
+
+interface TankData {
+  name: string;
+  num: number;
+  pressure: number;
+  maxPressure: number;
 }
 
 const TankInfo = (_props, context) => {
   const { act, data } = useBackend<AirVendorParams>(context);
-  const { tank, tank_num } = _props;
+  const { tank } = _props;
+  let button_eject = <Button width={5} textAlign={"center"} disabled={tank.name===null} icon="eject" onClick={() => act(tank.num === 1 ? "remove_tank_one" : "remove_tank_two")}>Eject</Button>;
+  let button_add = <Button width={5} textAlign={"center"} icon="add" onClick={() => act("add_item", { "tank": tank.num })}>Add</Button>;
+  let maxPressure = (tank.maxPressure !== null) ? tank.maxPressure : 999;
   return (
-    <Section>
-      <Stack vertical align="center" textAlign="center">
-        <Stack.Item>
-          {tank_num === 1 ? "Tank One:" : "Tank Two:"}
-        </Stack.Item>
-        <Stack.Item>
-          {tank ? toTitleCase(tank) : "None"}
-        </Stack.Item>
-        <Stack>
-          <Stack.Item py={1}>
-            {tank ? <Button disabled={tank === null} icon="eject" onClick={() => act(tank_num === 1 ? "remove_tank_one" : "remove_tank_two")}>Eject</Button>
-              : <Button icon="add" onClick={() => act("add_item", { "tank": tank_num })}>Add</Button>}
-          </Stack.Item>
-        </Stack>
-      </Stack>
+    <Section
+      title={tank.num === 1 ? "Tank One" : "Tank Two"}
+      buttons={tank.name !== null ? button_eject : button_add}
+    >
+      <LabeledList>
+        <LabeledList.Item label={"Holding"}>
+          {tank.name !== null ? toTitleCase(tank.name) : "None"}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Pressure">
+          <RoundGauge
+            size={1.75}
+            value={tank.pressure !== null ? tank.pressure : 0}
+            minValue={0}
+            maxValue={maxPressure}
+            alertAfter={maxPressure * 0.70}
+            ranges={{
+              "good": [0, maxPressure * 0.70],
+              "average": [maxPressure * 0.70, maxPressure * 0.85],
+              "bad": [maxPressure * 0.85, maxPressure],
+            }}
+            format={formatPressure}
+          />
+        </LabeledList.Item>
+      </LabeledList>
     </Section>
   );
 };
@@ -47,15 +67,15 @@ export const TTV = (_props, context) => {
     tank_one,
     tank_two,
   } = data;
-  let windowWidth = 600;
+  let windowWidth = 650;
   return (
-    <Window width={windowWidth} height={150}>
+    <Window width={windowWidth} height={200}>
       <Window.Content>
         <Section>
           <Stack>
 
             <Stack.Item width={windowWidth/3}>
-              <TankInfo tank={tank_one} tank_num={1} />
+              <TankInfo tank={tank_one} />
             </Stack.Item>
 
             <Stack.Item width={windowWidth/3}>
@@ -77,7 +97,7 @@ export const TTV = (_props, context) => {
             </Stack.Item>
 
             <Stack.Item width={windowWidth/3}>
-              <TankInfo tank={tank_two} tank_num={2} />
+              <TankInfo tank={tank_two} />
             </Stack.Item>
 
           </Stack>
