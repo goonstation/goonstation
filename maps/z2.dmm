@@ -26505,7 +26505,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/phone,
+/obj/machinery/phone/unlisted,
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
 /area/syndicate_station/battlecruiser)
 "bXv" = (
