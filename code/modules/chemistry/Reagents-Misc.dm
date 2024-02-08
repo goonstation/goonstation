@@ -2605,12 +2605,14 @@ datum
 				if(M)
 					boutput(M, SPAN_ALERT("You feel yourself fading away."))
 					M.alpha = 0
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, src.id)
 					if(effect_length > 75)
 						M.take_brain_damage(10) // there!
 					SPAWN(effect_length * 10)
 						if(M.alpha != 255)
 							boutput(M, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
 							M.alpha = 255
+							REMOVE_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, src.id)
 
 			do_overdose(var/severity, var/mob/living/M, var/mult = 1)
 				var/effect = ..(severity, M)
