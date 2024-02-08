@@ -1634,7 +1634,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/four_bore_albatross
 	name = "\improper Albatross four-bore rifle"
-	desc = "A behemoth of a scoped rifle developed by Cormorant Precision Arms. Even the rubber slugs could kill."
+	desc = "A behemoth of a scoped rifle developed by Cormorant Precision Arms. Intended for suppression or elimination of monstrous targets."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "four_bore"
 	item_state = "four_bore"

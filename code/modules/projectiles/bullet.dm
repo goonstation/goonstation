@@ -989,7 +989,7 @@ toxic - poisons
 /datum/projectile/bullet/four_bore
 	name = "\"termination\" round"
 	sname = "terminate"
-	icon_state = "40mm_lethal"
+	icon_state = "20mm"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	damage = 85
 	dissipation_rate = 8
@@ -1004,11 +1004,12 @@ toxic - poisons
 	casing = /obj/item/casing/cannon
 	ricochets = FALSE
 	hit_ground_chance = 50
+	shot_sound_extrarange = 1
 
 	on_launch(obj/projectile/proj)
 		proj.AddComponent(/datum/component/sniper_wallpierce, 1) //pierces 1 walls/lockers/doors/etc. Does not function on restricted Z, rwalls and blast doors use 2 pierces
 		for(var/mob/M in range(proj.loc, 2))
-			shake_camera(M, 3, 6)
+			shake_camera(M, 3, 8)
 
 	on_hit(atom/hit, dirflag, obj/projectile/P)
 		var/turf/T = get_turf(hit)
@@ -1025,7 +1026,7 @@ toxic - poisons
 
 			else if(istype(hit, /obj/window))
 				var/obj/window/W = hit
-				W.damage_blunt(power * 2) //and windows too, but maybe a bit less so reinforced plasmaglass doesnt break in one shot
+				W.damage_blunt(power * 1.75) //and windows too, but maybe a bit less
 
 		if (hit && ismob(hit))
 			var/mob/M = hit
@@ -1049,7 +1050,7 @@ toxic - poisons
 /datum/projectile/bullet/four_bore_stunners //behavior is distinct enough to not be a child of four_bore lethals
 	name = "\"roundhouse\" round"
 	sname = "roundhouse"
-	icon_state = "40mm_lethal"
+	icon_state = "20mm"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	damage = 15
 	stun = 45
@@ -1071,7 +1072,7 @@ toxic - poisons
 	on_hit(atom/hit, dirflag, obj/projectile/P)
 		if(hit && isobj(hit) && istype(hit, /obj/window))
 			var/obj/window/W = hit
-			W.damage_blunt(power / 2) //even if it aint metal, its gonna crack a window
+			W.damage_blunt(power / 2.5) //even if it aint metal, its gonna crack a window
 
 		if (hit && ismob(hit))
 			var/mob/M = hit
