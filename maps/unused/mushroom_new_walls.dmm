@@ -1527,7 +1527,9 @@
 /obj/cable{
 	icon_state = "8-10"
 	},
-/obj/machinery/light/small/sticky/frostedred,
+/obj/machinery/light/small/broken{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "ahU" = (
@@ -5675,7 +5677,9 @@
 /obj/cable{
 	icon_state = "6-10"
 	},
-/obj/machinery/light/small/sticky/frostedred,
+/obj/machinery/light/small/broken{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aCr" = (
@@ -10754,7 +10758,9 @@
 	name = "predator"
 	},
 /obj/disposalpipe/segment/morgue,
-/obj/machinery/light/small/frostedred,
+/obj/machinery/light/small/broken{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bdi" = (
@@ -21987,18 +21993,11 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "jew" = (
-/obj/storage/closet{
-	name = "rancher's supply closet"
-	},
-/obj/item/paper/ranch_guide,
-/obj/item/storage/box/clothing/rancher,
-/obj/item/fishing_rod,
-/obj/item/chicken_carrier,
-/obj/item/clothing/mask/chicken,
 /obj/disposalpipe/trunk/north,
 /obj/machinery/disposal/small{
 	dir = 8
 	},
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/grasstodirt{
 	dir = 6
 	},
@@ -25817,9 +25816,7 @@
 /area/station/mining/staff_room)
 "nlj" = (
 /obj/disposalpipe/segment,
-/obj/machinery/light/small/broken{
-	dir = 8
-	},
+/obj/machinery/light/small/sticky/frostedred,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "nlt" = (
@@ -27027,7 +27024,9 @@
 /turf/simulated/floor,
 /area/station/security/processing)
 "otF" = (
-/obj/machinery/light/small/frostedred,
+/obj/machinery/light/small/broken{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "otH" = (
@@ -28489,7 +28488,7 @@
 /area/station/bridge)
 "pxZ" = (
 /obj/landmark/antagonist/blob,
-/obj/machinery/light/small/sticky/frostedred,
+/obj/machinery/light/small/broken,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "pyh" = (
@@ -30668,7 +30667,7 @@
 /obj/railing/orange{
 	dir = 4
 	},
-/obj/storage/secure/closet/civilian/ranch,
+/obj/submachine/seed_vendor,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "rhu" = (
@@ -35299,13 +35298,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"uYG" = (
-/obj/disposalpipe/segment/mail,
-/obj/machinery/light/small/broken{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
 "uZy" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
@@ -35461,6 +35453,7 @@
 	dir = 8
 	},
 /obj/machinery/light_switch/south,
+/obj/machinery/vending/hydroponics,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "vkK" = (
@@ -77827,7 +77820,7 @@ ahQ
 aiU
 alH
 anW
-uYG
+aoU
 aoU
 aqC
 aoU
