@@ -99,7 +99,7 @@ const PumpArea = (props:any, context:any) => {
 };
 
 // Main element, responsible for building the window.
-export const PumpControl = (context) => {
+export const PumpControl = (props, context) => {
   const { act, data } = useBackend<AreaList>(context);
   const refresh = () => act('refresh');
 
@@ -117,9 +117,10 @@ export const PumpControl = (context) => {
           style={{
             "margin-bottom": "10px",
           }}
+          icon="wifi"
           onClick={() => refresh()}
         >
-          Refresh
+          Requery Pumps
         </Button>
         {areas.map((area) => (<PumpArea area={area} key={area} />))}
       </Window.Content>
