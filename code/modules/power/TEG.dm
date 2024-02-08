@@ -1652,8 +1652,6 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	"max_output" - MAX_PRESSURE (~15000kpa)
 	"target_output"- current pump output
 	"address_tag" = "pumpcontrol"
-
-	Some added vars:
 	"processing" - Currently waiting to recieve data back from this pump
 	"area_name" - Name of the area the pump is in
 	"alive" - Whether or not the pump has broadcasted back. Used while checking for if pumps are unreachable or not
