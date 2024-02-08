@@ -7025,9 +7025,6 @@
 /turf/simulated/floor/dojo/sand/circle,
 /area/station/crew_quarters/captain)
 "bYs" = (
-/obj/stool/chair/office{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -7036,6 +7033,9 @@
 	},
 /obj/cable,
 /obj/landmark/start/job/scientist,
+/obj/stool/chair/office/purple{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
 "bYw" = (
@@ -7697,9 +7697,6 @@
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "chx" = (
-/obj/stool/chair/office{
-	dir = 8
-	},
 /obj/decal/tile_edge/line/purple{
 	dir = 6;
 	icon_state = "tile1"
@@ -7716,6 +7713,9 @@
 	},
 /obj/cable,
 /obj/landmark/start/job/scientist,
+/obj/stool/chair/office/purple{
+	dir = 8
+	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "chz" = (
@@ -9365,15 +9365,15 @@
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "cEz" = (
-/obj/stool/chair/office{
-	dir = 4
-	},
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/stool/chair/office/purple{
+	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -11210,7 +11210,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/maintenance/inner/sw)
 "dli" = (
-/obj/stool/chair/couch/green{
+/obj/stool/chair/couch/purple{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
@@ -30091,10 +30091,10 @@
 /turf/simulated/floor/black,
 /area/station/security/visitation)
 "jfd" = (
-/obj/stool/chair/office/blue{
+/obj/machinery/light/incandescent/netural,
+/obj/stool/chair/office/purple{
 	dir = 1
 	},
-/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/carpet/purple/fancy/narrow,
 /area/station/crew_quarters/hor)
 "jft" = (
@@ -46797,9 +46797,6 @@
 	},
 /area/station/crew_quarters/hor)
 "olH" = (
-/obj/stool/chair/office{
-	dir = 1
-	},
 /obj/decal/tile_edge/line/purple{
 	dir = 1;
 	icon_state = "line1"
@@ -46809,6 +46806,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/stool/chair/office/purple{
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
@@ -59527,10 +59527,10 @@
 	},
 /area/listeningpost)
 "sda" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 1
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/carpet/purple/standard,
 /area/station/science/lobby)
 "sdo" = (
@@ -60023,7 +60023,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/stool/chair/couch/green{
+/obj/stool/chair/couch/purple{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
@@ -67933,7 +67933,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "uHV" = (
-/obj/stool/chair/couch/green,
+/obj/stool/chair/couch/purple,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "uHW" = (
@@ -79616,10 +79616,10 @@
 /turf/simulated/floor/white,
 /area/spacehabitat/pool)
 "yaE" = (
-/obj/stool/chair/office{
+/obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/stool/chair/office/purple{
 	dir = 8
 	},
 /turf/simulated/floor/grey,

@@ -7085,9 +7085,6 @@
 	name = "Southwest Breach Hull"
 	})
 "dhp" = (
-/obj/stool/chair/office{
-	dir = 4
-	},
 /obj/machinery/door_control{
 	id = "scienceteleporter2";
 	name = "Pad Access Door";
@@ -7099,6 +7096,9 @@
 	name = "Pad Shutters";
 	pixel_x = 6;
 	pixel_y = 26
+	},
+/obj/stool/chair/office/purple{
+	dir = 4
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -13061,12 +13061,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/shuttle/sea_elevator_room)
 "fNd" = (
-/obj/stool/chair{
-	dir = 4
-	},
 /obj/landmark/start/job/scientist,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/stool/chair/purple{
+	dir = 4
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
@@ -13296,14 +13296,14 @@
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
 "fRH" = (
-/obj/stool/chair/office{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/stool/chair/office/purple{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
@@ -18474,11 +18474,11 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "hRU" = (
-/obj/stool/chair/office{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/stool/chair/office/purple{
+	dir = 4
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
@@ -28139,10 +28139,10 @@
 	name = "Cargo Primary Endpoint"
 	})
 "lLZ" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 4
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/black,
 /area/station/science/hall)
 "lMn" = (
@@ -40601,10 +40601,10 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "rpK" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 8
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -43193,13 +43193,13 @@
 	name = "Southwest Breach Hull"
 	})
 "sBs" = (
-/obj/stool/chair/office{
-	dir = 1
-	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/stool/chair/office/purple{
+	dir = 1
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 8
