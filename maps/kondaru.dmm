@@ -21921,7 +21921,7 @@
 	},
 /area/station/science/lobby)
 "bKw" = (
-/obj/stool/bench/auto,
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/purple/side,
 /area/station/hallway/secondary/south)
 "bKx" = (
@@ -28910,10 +28910,10 @@
 /turf/simulated/floor/carpet/purple/standard/edge/south,
 /area/research_outpost/indigo_rye)
 "clD" = (
-/obj/stool/chair,
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/stool/chair/purple,
 /turf/simulated/floor/carpet/purple/standard/edge/south,
 /area/research_outpost/indigo_rye)
 "clE" = (

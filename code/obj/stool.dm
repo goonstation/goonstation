@@ -296,7 +296,7 @@ TYPEINFO(/obj/stool/wooden)
 /* ---------- Purple ---------- */
 
 /obj/stool/bench/purple
-	icon = 'icons/obj/furniture/purple_wood.dmi'
+	icon = 'icons/obj/furniture/bench_purple.dmi'
 	parts_type = /obj/item/furniture_parts/bench/purple
 
 /obj/stool/bench/purple/auto
