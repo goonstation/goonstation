@@ -15785,9 +15785,6 @@
 	icon_state = "0-2"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/decal/tile_edge/floorguide/science{
-	dir = 1
-	},
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
@@ -16352,9 +16349,6 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
-/obj/decal/tile_edge/floorguide/arrow_s{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
@@ -16473,7 +16467,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "dtv" = (
-/turf/simulated/floor/blue/side{
+/turf/simulated/floor/purple/side{
 	dir = 8
 	},
 /area/station/hallway/primary/south)
@@ -18787,7 +18781,7 @@
 	dir = 4;
 	id = "cloning_exit"
 	},
-/turf/simulated/floor/bluewhite{
+/turf/simulated/floor/purplewhite{
 	dir = 1
 	},
 /area/station/hallway/primary/south)
@@ -22131,7 +22125,7 @@
 /area/station/turret_protected/AIsat)
 "jnk" = (
 /obj/machinery/firealarm/south,
-/turf/simulated/floor/blue/side{
+/turf/simulated/floor/purple/side{
 	dir = 10
 	},
 /area/station/hallway/primary/south)
@@ -22207,28 +22201,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"jrr" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/blue/side{
-	dir = 4
-	},
-/area/station/hallway/primary/south)
-"jrR" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/medbay/lobby)
 "jrT" = (
 /obj/decal/tile_edge/floorguide/security{
 	dir = 1
@@ -23493,7 +23465,7 @@
 /turf/simulated/floor/circuit/red,
 /area/station/turret_protected/ai)
 "kJO" = (
-/turf/simulated/floor/blue/corner,
+/turf/simulated/floor/purple/corner,
 /area/station/hallway/primary/south)
 "kJR" = (
 /obj/machinery/door/poddoor/pyro{
@@ -23528,9 +23500,7 @@
 	c_tag = "Medical Wing Entrance";
 	dir = 1
 	},
-/turf/simulated/floor/blue/side{
-	dir = 0
-	},
+/turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
 "kMO" = (
 /obj/machinery/light_switch{
@@ -23562,9 +23532,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "kNc" = (
-/turf/simulated/floor/blue/side{
-	dir = 0
-	},
+/turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
 "kNl" = (
 /obj/cable{
@@ -23681,9 +23649,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/blue/side{
-	dir = 0
-	},
+/turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
 "kTX" = (
 /obj/machinery/light/incandescent,
@@ -23696,7 +23662,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/blue/side{
+/turf/simulated/floor/purple/side{
 	dir = 6
 	},
 /area/station/hallway/primary/south)
@@ -23705,7 +23671,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/bluewhite{
+/turf/simulated/floor/purplewhite{
 	dir = 1
 	},
 /area/station/hallway/primary/south)
@@ -23718,6 +23684,12 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"kXv" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/purplewhite/corner,
+/area/station/medical/medbay/lobby)
 "kXD" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -23844,7 +23816,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm/south,
-/turf/simulated/floor/bluewhite/corner{
+/turf/simulated/floor/purplewhite/corner{
 	dir = 1
 	},
 /area/station/medical/medbay/lobby)
@@ -23864,9 +23836,9 @@
 	icon_state = "pipe-c"
 	},
 /obj/decal/tile_edge/floorguide/science{
-	dir = 4
+	dir = 1
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/purplewhite,
 /area/station/medical/medbay/lobby)
 "lfI" = (
 /obj/mapping_helper/firedoor_spawn,
@@ -23920,7 +23892,9 @@
 /area/station/hallway/arrivals)
 "lhE" = (
 /obj/machinery/vending/medical_public,
-/turf/simulated/floor/white,
+/turf/simulated/floor/purplewhite/corner{
+	dir = 4
+	},
 /area/station/medical/medbay/lobby)
 "lhH" = (
 /obj/machinery/disposal,
@@ -25150,9 +25124,7 @@
 "mBx" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
-/turf/simulated/floor/blue/side{
-	dir = 0
-	},
+/turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
 "mBC" = (
 /obj/cable{
@@ -25177,9 +25149,7 @@
 /area/station/bridge)
 "mDs" = (
 /obj/machinery/light/emergency,
-/turf/simulated/floor/blue/side{
-	dir = 0
-	},
+/turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
 "mEf" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -25200,7 +25170,7 @@
 /area/station/bridge)
 "mEh" = (
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/blue/side{
+/turf/simulated/floor/purple/side{
 	dir = 6
 	},
 /area/station/hallway/primary/south)
@@ -26604,9 +26574,7 @@
 /area/station/crew_quarters/captain)
 "ocg" = (
 /obj/machinery/firealarm/south,
-/turf/simulated/floor/blue/side{
-	dir = 0
-	},
+/turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
 "ocp" = (
 /obj/cable{
@@ -29753,15 +29721,6 @@
 	},
 /turf/space,
 /area/space)
-"qzV" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/blue,
-/area/station/hallway/primary/south)
 "qAl" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -30052,9 +30011,9 @@
 "qLp" = (
 /obj/disposalpipe/segment,
 /obj/decal/tile_edge/floorguide/arrow_s{
-	dir = 6
+	dir = 8
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/purplewhite,
 /area/station/medical/medbay/lobby)
 "qMC" = (
 /obj/machinery/camera{
@@ -89661,7 +89620,7 @@ eIY
 aaB
 gLy
 hXL
-jrr
+joQ
 kWd
 wuu
 nUd
@@ -89963,7 +89922,7 @@ aaB
 aaa
 wuu
 hZc
-qzV
+joQ
 kXq
 wuu
 mGW
@@ -90567,7 +90526,7 @@ eJn
 fGZ
 gLY
 gOR
-jrR
+jvc
 leo
 bpU
 aaa
@@ -91172,7 +91131,7 @@ bqO
 bqO
 ibI
 jvc
-btg
+kXv
 mwA
 okt
 pAK
