@@ -160,3 +160,4 @@ Most weapons will cause blood spatter on the victim and the assailant. A blood-c
 Click yourself with help intent if you're cold; you'll shake yourself to warm up and partially undo the slowdowns from it. Clothing and some chemicals can also help keep you warm.
 Different items do different types of damage in different amounts, both to your health and your stamina. A weapon that does low physical damage may do high stamina damage, which can keep a person locked in "stam crit", preventing them from fighting back.
 The cloning console displays a red flashing icon when someone can be cloned.
+Shuttle votes aren't in the rules, if you have access and the station's in bad shape you can call the shuttle!

@@ -3837,7 +3837,7 @@
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -39981,7 +39981,7 @@
 	desc = "A black countertop table for storing kitchen-y objects.";
 	name = "kitchen counter"
 	},
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
