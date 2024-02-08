@@ -19,7 +19,6 @@ TYPEINFO(/obj/machinery/mixer)
 	anchored = ANCHORED
 	flags = TGUI_INTERACTIVE
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
-	status = 0
 
 	var/list/recipes = null
 	var/list/to_remove = list()
@@ -241,6 +240,7 @@ TYPEINFO(/obj/machinery/mixer)
 		src.power_usage = 0
 		UnsubscribeProcess()
 		return
+
 	power_change()
 		. = ..()
 		src.UpdateIcon()
