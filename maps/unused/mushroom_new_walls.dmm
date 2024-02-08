@@ -32889,6 +32889,12 @@
 	dir = 8
 	},
 /area/station/science/lab)
+"sZB" = (
+/obj/storage/secure/closet/engineering/cargo,
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/station/quartermaster/office)
 "tae" = (
 /obj/disposalpipe/segment/bent,
 /turf/simulated/floor/green/side,
@@ -77192,8 +77198,8 @@ ycc
 ycc
 aCC
 xfF
-aDJ
-aDJ
+sZB
+sZB
 aHr
 aJw
 aJw
