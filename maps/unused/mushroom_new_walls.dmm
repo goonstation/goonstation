@@ -31662,19 +31662,16 @@
 /turf/simulated/floor/red/side,
 /area/station/security/processing)
 "rVS" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/cable,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/command{
 	name = "Medical Director's Office";
 	dir = 4
 	},
 /obj/mapping_helper/access/medical_director,
 /obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/head)
 "rWa" = (
