@@ -14446,6 +14446,9 @@
 	},
 /obj/cable,
 /obj/machinery/firealarm/south,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/head)
 "bzn" = (
@@ -22565,6 +22568,10 @@
 	},
 /obj/machinery/light/incandescent,
 /obj/item/clothing/suit/cardboard_box/head_surgeon,
+/obj/cable{
+	icon_state = "2-4";
+	pixel_y = 0
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/head)
 "jIX" = (
@@ -22748,6 +22755,18 @@
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/bar)
+"jSn" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/head)
 "jSM" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -24528,6 +24547,9 @@
 /obj/window_blinds/cog2{
 	layer = 2.9;
 	pixel_y = 13
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
@@ -26349,6 +26371,9 @@
 	},
 /obj/mapping_helper/access/medical_director,
 /obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "nQw" = (
@@ -95365,7 +95390,7 @@ xkq
 iPk
 btj
 jIk
-lVq
+jSn
 cFZ
 dUr
 eUi
