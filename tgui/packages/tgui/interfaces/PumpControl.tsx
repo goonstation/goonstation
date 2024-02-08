@@ -137,8 +137,9 @@ export const PumpControl = (props, context) => {
             "margin-bottom": "10px",
           }}
           onClick={() => refresh()}
+          icon="wifi"
         >
-          Refresh
+          Rescan
         </Button>
         {areas.map((area) => (<PumpArea area={area} key={area} />))}
       </Window.Content>
