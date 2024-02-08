@@ -1309,7 +1309,10 @@ datum
 							var/mob/living/silicon/robot/R = M
 							R.changeStatus("freshly_oiled", (volume * 5)) // You need at least 30u to get max duration
 							boutput(R, SPAN_NOTICE("Your joints and servos begin to run more smoothly."))
-						else boutput(M, SPAN_ALERT("You feel greasy and gross."))
+						else if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (!H.mutantrace.aquaphobic)
+								boutput(M, "<span class='alert'>You feel greasy and gross.</span>")
 
 				return
 
@@ -2602,12 +2605,14 @@ datum
 				if(M)
 					boutput(M, SPAN_ALERT("You feel yourself fading away."))
 					M.alpha = 0
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, src.id)
 					if(effect_length > 75)
 						M.take_brain_damage(10) // there!
 					SPAWN(effect_length * 10)
 						if(M.alpha != 255)
 							boutput(M, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
 							M.alpha = 255
+							REMOVE_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, src.id)
 
 			do_overdose(var/severity, var/mob/living/M, var/mult = 1)
 				var/effect = ..(severity, M)

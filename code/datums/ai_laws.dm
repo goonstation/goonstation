@@ -104,6 +104,9 @@
 		//remove from list
 		src.registered_racks -= dead_rack
 
+		//clear abilities
+		dead_rack.ai_abilities = list()
+
 		//find all connected borgs and remove their connection too
 		for (var/mob/living/silicon/R in mobs)
 			if (isghostdrone(R))
@@ -113,7 +116,8 @@
 				R.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
 				R.show_text("<h3>ERROR: Lost connection to law rack. No laws detected!</h3>", "red")
 				logTheThing(LOG_STATION,  R, "[R.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
-
+				if(isAI(R))
+					dead_rack.reset_ai_abilities(R)
 		for (var/mob/living/intangible/aieye/E in mobs)
 			if(E.mainframe?.law_rack_connection == dead_rack)
 				E.mainframe.law_rack_connection = null

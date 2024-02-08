@@ -16,7 +16,7 @@ var/datum/preMapLoad/preMapLoad = new
 // END_PREFERENCES
 
 // Compiler Settings
-#include "_std\__odlint.dm"
+#include "_std\__odlint.dme"
 
 // Compatibility Check
 #include "_std\compatibility.dme"
@@ -371,6 +371,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\gamemodes\mixed.dm"
 #include "code\datums\gamemodes\mixed_rp.dm"
 #include "code\datums\gamemodes\nuclear.dm"
+#include "code\datums\gamemodes\pirate.dm"
 #include "code\datums\gamemodes\pod_wars.dm"
 #include "code\datums\gamemodes\revolution.dm"
 #include "code\datums\gamemodes\salvager.dm"
@@ -398,6 +399,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\hud\flockdrone.dm"
 #include "code\datums\hud\flockmind.dm"
 #include "code\datums\hud\funimage.dm"
+#include "code\datums\hud\gang_victory.dm"
 #include "code\datums\hud\ghost_observer.dm"
 #include "code\datums\hud\ghostdrone.dm"
 #include "code\datums\hud\human.dm"
