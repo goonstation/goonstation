@@ -179,7 +179,7 @@ TYPEINFO(/obj/machinery/mixer)
 			UnsubscribeProcess()
 			return
 
-		if (TIME < timeMixEnd)
+		if (TIME < src.timeMixEnd)
 			return
 
 		var/output = null // /obj/item/reagent_containers/food/snacks/yuck
