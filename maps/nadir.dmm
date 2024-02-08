@@ -9679,7 +9679,7 @@
 	})
 "ers" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer{
+/obj/machinery/mixer{
 	pixel_y = 4
 	},
 /turf/simulated/floor/black,

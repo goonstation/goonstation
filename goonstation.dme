@@ -2042,6 +2042,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\door\poddoor.dm"
 #include "code\obj\machinery\door\supernorn.dm"
 #include "code\obj\machinery\door\window.dm"
+#include "code\obj\machinery\food_and_drink\mixer.dm"
 #include "code\obj\machinery\phone\phone.dm"
 #include "code\obj\machinery\pipe\pipe_dispenser.dm"
 #include "code\obj\machinery\shield_generators\energy_shield.dm"
