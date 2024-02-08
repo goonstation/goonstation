@@ -1327,26 +1327,16 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	ui_static_data(mob/user)
 		. = list()
 
-		// Start with associative list, where each key is a spell category
-		var/list/categories = list()
+		var/list/spellbook_contents = list()
 		for(var/datum/SWFuplinkspell/spell in src.spells)
-		// spell.eqtype spell.name spell.desc spell.cost spell.vr_allowed
-			if (!categories[spell.eqtype]) categories[spell.eqtype] = list()
-			categories[spell.eqtype][spell.name] = list(
+			if (!spellbook_contents[spell.eqtype]) spellbook_contents[spell.eqtype] = list() // Create category if it doesnt exist
+			spellbook_contents[spell.eqtype][spell.name] = list(
 				desc = spell.desc,
 				cost = spell.cost,
 				vr = spell.vr_allowed
 			)
-		// Convert to non-associative list holding each category
-		var/list/categoriesArray = list()
-		for(var/category_name in categories)
-			var/category = categories[category_name]
-			categoriesArray += list(list(
-				name = category_name,
-				spell = category
-			))
 
-		.["Spell_Data"] = categories
+		.["spellbook_contents"] = spellbook_contents
 
 	attack_self(mob/user)
 		ui_interact(user)
