@@ -2942,17 +2942,17 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/researchshuttle)
 "aqZ" = (
-/obj/stool/bench/yellow,
 /obj/machinery/camera{
 	c_tag = "Escape Hallway";
 	dir = 10
 	},
+/obj/stool/bench/red,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "ara" = (
 /obj/machinery/light/emergency,
-/obj/stool/bench/green,
 /obj/machinery/light/incandescent,
+/obj/stool/bench/green,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "arc" = (
@@ -23921,7 +23921,7 @@
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
 "gOE" = (
-/obj/stool/bench/red,
+/obj/stool/bench/purple,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "gOO" = (
@@ -28475,8 +28475,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "jLT" = (
-/obj/stool/bench/green,
 /obj/machinery/light/incandescent,
+/obj/stool/bench/yellow,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "jMr" = (
@@ -32195,8 +32195,8 @@
 /area/station/hallway/primary/north)
 "mgJ" = (
 /obj/machinery/light/emergency,
-/obj/stool/bench/blue,
 /obj/machinery/firealarm/south,
+/obj/stool/bench/purple,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "mgZ" = (
@@ -73901,7 +73901,7 @@ dRI
 kYR
 hMd
 tbx
-uiX
+cJF
 cyq
 arN
 ayH
@@ -74807,7 +74807,7 @@ dRI
 wIP
 hMd
 fqV
-cJF
+uiX
 cyq
 arN
 yjM
