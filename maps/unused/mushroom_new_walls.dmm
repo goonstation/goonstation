@@ -13412,6 +13412,7 @@
 /area/station/medical/medbay/lobby)
 "bpV" = (
 /obj/disposalpipe/segment/mail,
+/obj/machinery/sleeper/compact,
 /turf/simulated/floor/blackwhite{
 	dir = 9
 	},
@@ -13432,6 +13433,7 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
+/obj/machinery/sleeper/compact,
 /turf/simulated/floor/blackwhite{
 	dir = 5
 	},
@@ -15786,6 +15788,8 @@
 /obj/decal/tile_edge/floorguide/science{
 	dir = 1
 	},
+/obj/machinery/door/airlock/pyro/glass/sci,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/science/lobby)
 "cHb" = (
@@ -16026,10 +16030,6 @@
 /turf/simulated/floor/red,
 /area/listeningpost)
 "cXz" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Med-Sci"
-	},
 /obj/mapping_helper/access/medlab,
 /obj/cable,
 /obj/cable{
@@ -16045,6 +16045,10 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4;
+	id = "cloning_exit"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "cXF" = (
@@ -16351,6 +16355,8 @@
 /obj/decal/tile_edge/floorguide/arrow_s{
 	dir = 8
 	},
+/obj/machinery/door/airlock/pyro/glass/sci,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/science/lobby)
 "dmO" = (
@@ -17019,10 +17025,6 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "dXA" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Research Sector"
-	},
 /obj/mapping_helper/access/telesci,
 /obj/cable{
 	icon_state = "4-8"
@@ -17031,6 +17033,9 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4
+	},
 /turf/simulated/floor/white/side,
 /area/station/science/teleporter)
 "dYm" = (
@@ -17811,10 +17816,6 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "eLv" = (
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 8;
-	name = "Mixing Room"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -17823,6 +17824,9 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/tox,
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4
+	},
 /turf/simulated/floor/purple,
 /area/station/science/lab)
 "eLQ" = (
@@ -18779,8 +18783,9 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4;
+	id = "cloning_exit"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -21206,13 +21211,11 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "inH" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Freezer"
-	},
 /obj/mapping_helper/access/kitchen,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/botany,
 /turf/simulated/floor/white/side{
 	dir = 1
 	},
@@ -21333,14 +21336,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/chemistry)
 "itH" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Med-Sci"
-	},
 /obj/mapping_helper/access/medlab,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/med,
 /turf/simulated/floor/blackwhite/side,
 /area/station/medical/morgue)
 "itJ" = (
@@ -22828,10 +22829,6 @@
 	dir = 4;
 	pixel_x = -20
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Medical Bay"
-	},
 /obj/mapping_helper/access/medical,
 /obj/cable,
 /obj/cable{
@@ -22844,6 +22841,10 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4;
+	id = "cloning_exit"
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "jXE" = (
@@ -24060,8 +24061,9 @@
 /area/station/hydroponics/bay)
 "lqu" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4;
+	id = "cloning_exit"
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/hallway/primary/south)
@@ -26385,10 +26387,7 @@
 	name = "Teleporter Blast Shield";
 	panel_open = 1
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Teleporter Pad";
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/glass/sci,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "nQP" = (
@@ -27130,22 +27129,16 @@
 	},
 /area/station/bridge)
 "oxW" = (
-/obj/machinery/door/airlock/pyro/medical{
-	name = "Chemistry Department Access"
-	},
 /obj/mapping_helper/access/chemistry,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/sci_alt,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "oyp" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Med-Sci"
-	},
 /obj/mapping_helper/access/medlab,
 /obj/cable{
 	icon_state = "5-8"
@@ -27154,6 +27147,10 @@
 	icon_state = "6-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4;
+	id = "cloning_exit"
+	},
 /turf/simulated/floor/blackwhite/side{
 	dir = 4
 	},
@@ -31693,11 +31690,11 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "rWu" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 8
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/research,
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/science/artifact)
 "rXg" = (
@@ -31884,10 +31881,6 @@
 /turf/space,
 /area/shuttle/merchant_shuttle/left_station/cogmap)
 "sil" = (
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 8;
-	name = "Artifact Lab"
-	},
 /obj/mapping_helper/access/artlab,
 /obj/cable{
 	icon_state = "4-8"
@@ -31896,6 +31889,9 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4
+	},
 /turf/simulated/floor/white/side{
 	dir = 4
 	},
@@ -32095,12 +32091,10 @@
 /turf/simulated/floor/yellow/corner,
 /area/station/engine/elect)
 "spS" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Robotics"
-	},
 /obj/mapping_helper/access/robotics,
 /obj/disposalpipe/segment,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/med,
 /turf/simulated/floor/white/side,
 /area/station/medical/robotics)
 "sqD" = (
@@ -33449,6 +33443,8 @@
 	name = "teleporter lockdown"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/door/airlock/pyro/glass/sci,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "twy" = (
@@ -36064,10 +36060,6 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "vOX" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Research Sector"
-	},
 /obj/mapping_helper/access/research_foyer,
 /obj/cable{
 	icon_state = "4-8"
@@ -36076,6 +36068,9 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/sci{
+	dir = 4
+	},
 /turf/simulated/floor/white/side{
 	dir = 8
 	},
