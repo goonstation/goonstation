@@ -5,28 +5,15 @@
  * @license ISC
  */
 
-import { useBackend } from '../backend';
-import { Button, LabeledList, RoundGauge, Section, Stack } from '../components';
-import { Window } from '../layouts';
-import { toTitleCase } from '../../common/string';
-import { formatPressure } from '../format';
-interface AirVendorParams {
-  opened: boolean;
-  tank_one: TankData;
-  tank_two: TankData;
-  device: string;
-}
-
-interface TankData {
-  name: string;
-  num: number;
-  pressure: number;
-  maxPressure: number;
-}
+import { useBackend } from '../../backend';
+import { Button, LabeledList, RoundGauge, Section, Stack } from '../../components';
+import { Window } from '../../layouts';
+import { toTitleCase } from 'common/string';
+import { formatPressure } from '../../format';
 
 const TankInfo = (_props, context) => {
-  const { act, data } = useBackend<AirVendorParams>(context);
-  const { tank, height } = _props;
+  const { act } = useBackend<TransferValveParams>(context);
+  const { tank } = _props;
   let button_eject = <Button width={5} textAlign={"center"} disabled={tank.name===null} icon="eject" onClick={() => act(tank.num === 1 ? "remove_tank_one" : "remove_tank_two")}>Eject</Button>;
   let button_add = <Button width={5} textAlign={"center"} icon="add" onClick={() => act("add_item", { "tank": tank.num })}>Add</Button>;
   let maxPressure = (tank.maxPressure !== null) ? tank.maxPressure : 999;
@@ -34,7 +21,6 @@ const TankInfo = (_props, context) => {
     <Section
       title={tank.num === 1 ? "Tank One" : "Tank Two"}
       buttons={tank.name !== null ? button_eject : button_add}
-      height={height}
     >
       <LabeledList>
         <LabeledList.Item label={"Holding"}>
@@ -62,24 +48,22 @@ const TankInfo = (_props, context) => {
 };
 
 export const TTV = (_props, context) => {
-  const { act, data } = useBackend<AirVendorParams>(context);
+  const { act, data } = useBackend<TransferValveParams>(context);
   const {
     opened,
     tank_one,
     tank_two,
   } = data;
-  let windowWidth = 650;
-  let windowHeight = 160;
   return (
-    <Window width={windowWidth} height={windowHeight}>
+    <Window width={650} height={160}>
       <Window.Content>
         <Stack>
-          <Stack.Item width={windowWidth/3}>
-            <TankInfo height={windowHeight/16.666} tank={tank_one} />
+          <Stack.Item>
+            <TankInfo tank={tank_one} />
           </Stack.Item>
 
-          <Stack.Item width={windowWidth/3}>
-            <Section title="Valve" height={windowHeight/16.666} px={1}>
+          <Stack.Item>
+            <Section title="Valve" px={1}>
               <Stack vertical textAlign="center">
                 <Stack.Item color={opened ? "red" : "green"}>
                   Valve is {opened ? "open" : "closed"}
@@ -97,8 +81,8 @@ export const TTV = (_props, context) => {
               </Stack>
             </Section>
           </Stack.Item>
-          <Stack.Item width={windowWidth/3}>
-            <TankInfo height={windowHeight/16.666} tank={tank_two} />
+          <Stack.Item>
+            <TankInfo tank={tank_two} />
           </Stack.Item>
         </Stack>
       </Window.Content>

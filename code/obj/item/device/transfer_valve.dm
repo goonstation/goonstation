@@ -136,6 +136,17 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			boutput(user, SPAN_NOTICE("You attach two loops of [item] to the transfer valve!"))
 			UpdateIcon()
 
+		else if (iscuttingtool(item))
+			if(usr?.back && usr.back == src)
+				boutput(usr, SPAN_ALERT("You can't detach the loops of wire while you're wearing [src]!"))
+			else
+				c_flags &= ~ONBACK
+				var/turf/location = get_turf(src)
+				var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(location)
+				C.amount = 2
+				boutput(usr, SPAN_NOTICE("You detach the loops of wire from [src]!"))
+				UpdateIcon()
+
 		return
 
 	/// Attach the tank the mob is currently holding
@@ -211,12 +222,10 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			boutput(usr, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
 		switch(action)
 			if ("add_item")
-				if (ismob(usr))
-					if (params["tank"])
-						src.attach_tank(usr, params["tank"])
-					else
-						var/mob/M = usr
-						src.Attackby(M.equipped(), M)
+				if (params["tank"])
+					src.attach_tank(usr, params["tank"])
+				else
+					src.Attackby(usr.equipped(), usr)
 			if ("remove_tank_one")
 				src.remove_tank(tank_one)
 			if ("remove_tank_two")
@@ -234,16 +243,6 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				UpdateIcon()
 			if ("interact_device")
 				attached_device.attack_self(usr)
-			if ("remove_straps")
-				if(usr?.back && usr.back == src)
-					boutput(usr, SPAN_ALERT("You can't detach the loops of wire while you're wearing [src]!"))
-				else
-					c_flags &= ~ONBACK
-					var/turf/location = get_turf(src)
-					var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(location)
-					C.amount = 2
-					boutput(usr, SPAN_NOTICE("You detach the loops of wire from [src]!"))
-					UpdateIcon()
 		src.attack_self(usr)
 		src.add_fingerprint(usr)
 
