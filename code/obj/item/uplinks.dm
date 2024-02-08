@@ -1296,7 +1296,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/traitor_frequency = 0
 	var/obj/item/device/radio/origradio = null
 	var/list/spells = list()
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS | TGUI_INTERACTIVE
 	c_flags = ONBELT
 	throwforce = 5
 	health = 5
@@ -1315,10 +1315,43 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			vr = 1
 			uses *= 2
 
-		//Kubius spellbook upgrade: autonomous compendium of SWF uplink datums
-		for(var/D in (childrentypesof(/datum/SWFuplinkspell)))
+		for(var/D in typesof(/datum/SWFuplinkspell))
 			src.spells += new D(src)
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "Wizard_Spellbook")
+			ui.open()
+
+	ui_static_data(mob/user)
+		. = list()
+
+		// Start with associative list, where each key is a spell category
+		var/list/categories = list()
+		for(var/datum/SWFuplinkspell/spell in src.spells)
+		// spell.eqtype spell.name spell.desc spell.cost spell.vr_allowed
+			if (!categories[spell.eqtype]) categories[spell.eqtype] = list()
+			categories[spell.eqtype][spell.name] = list(
+				desc = spell.desc,
+				cost = spell.cost,
+				vr = spell.vr_allowed
+			)
+		// Convert to non-associative list holding each category
+		var/list/categoriesArray = list()
+		for(var/category_name in categories)
+			var/category = categories[category_name]
+			categoriesArray += list(list(
+				name = category_name,
+				spell = category
+			))
+
+		.["Spell_Data"] = categories
+
+	attack_self(mob/user)
+		ui_interact(user)
+
+///////////////////////////////////////// Wizard's spells ///////////////////////////////////////////////////
 /datum/SWFuplinkspell
 	var/name = "Spell"
 	var/eqtype = "Spell"
@@ -1355,6 +1388,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				S.wizard_key = user.mind.key
 		book.uses -= src.cost
 
+//------------ ENCHANTMENT SPELLS ------------//
 /datum/SWFuplinkspell/soulguard
 	name = "Soulguard"
 	eqtype = "Enchantment"
@@ -1369,6 +1403,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		..()
 		user.spell_soulguard = SOULGUARD_SPELL
 
+//------------ EQUIPMENT SPELLS ------------//
 /datum/SWFuplinkspell/staffofcthulhu
 	name = "Staff of Cthulhu"
 	eqtype = "Equipment"
@@ -1385,6 +1420,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	assoc_item = /obj/item/staff/thunder
 	cost = 2
 
+//------------ OFFENSIVE SPELLS ------------//
 /datum/SWFuplinkspell/bull
 	name = "Bull's Charge"
 	eqtype = "Offensive"
@@ -1464,6 +1500,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "Fires a bolt of electricity in a cardinal direction. Causes decent damage, and can go through thin walls and solid objects. You need special HAZARDOUS robes to cast this!"
 	assoc_verb = */
 
+//------------ DEFENSIVE SPELLS ------------//
 /datum/SWFuplinkspell/forcewall
 	name = "Forcewall"
 	eqtype = "Defensive"
@@ -1505,6 +1542,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	assoc_spell = /datum/targetable/spell/doppelganger
 	cost = 2
 
+//------------ UTILITY SPELLS ------------//
 /datum/SWFuplinkspell/knock
 	name = "Knock"
 	eqtype = "Utility"
@@ -1536,6 +1574,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "This spell infuses an adjacent human corpse with necromantic energy, creating a durable skeleton minion that seeks to pummel your enemies into oblivion."
 	assoc_spell = /datum/targetable/spell/animatedead
 
+//------------ MISC SPELLS ------------//
 /datum/SWFuplinkspell/pandemonium
 	name = "Pandemonium"
 	eqtype = "Miscellaneous"
@@ -1554,7 +1593,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	qdel(src.master)
 	qdel(src)
 	return
-
+/*
 /obj/item/SWF_uplink/attack_self(mob/user as mob)
 	if(!user.mind || (user.mind && user.mind.key != src.wizard_key))
 		boutput(user, SPAN_ALERT("<b>The spellbook is magically attuned to someone else!</b>"))
@@ -1720,3 +1759,4 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	//if (istype(H.wear_suit, /obj/item/clothing/suit/wizrobe))
 	//	H.wear_suit.check_abilities()
 	return
+*/
