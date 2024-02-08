@@ -33,6 +33,7 @@ export const Wizard_Spellbook = (props, context) => {
     spellbook_contents,
     owner_name,
     spell_slots,
+    spell_test,
   } = data;
 
   let spell_categories = [];
@@ -42,10 +43,11 @@ export const Wizard_Spellbook = (props, context) => {
 
   return (
     <Window
+      fontSize={2}
       title={"Wizard Spellbook"}
       theme={"ntos"}
-      maxWidth={300}
-      maxHeight={770}
+      width={500}
+      height={400}
     >
       <Window.Content scrollable>
         <Section title={owner_name+"'s Spellbook "}>
@@ -81,7 +83,7 @@ const SpellCategory = (props, context) => {
 };
 
 const Spell = (props, context) => {
-  const { data } = useBackend(context);
+  const { data, act } = useBackend(context);
   const { spellbook_contents } = data;
   const { spell, category } = props;
 
@@ -95,7 +97,11 @@ const Spell = (props, context) => {
     <Stack.Item>
       <Section
         title={spell+" - cost: "+spell_contents[1]}
-        buttons={<Button>{"Purchase"}</Button>}
+        buttons={
+          <Button onClick={() => act("buyspell", { spell: spell })}>
+            {"Purchase"}
+          </Button>
+        }
       >
         <LabeledList>
           <LabeledList.Item label={"Description"}>

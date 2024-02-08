@@ -1324,9 +1324,12 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			ui = new(user, src, "Wizard_Spellbook")
 			ui.open()
 
-	ui_static_data(mob/user)
+	ui_data(mob/user)
 		. = list()
 		.["spell_slots"] = src.uses
+
+	ui_static_data(mob/user)
+		. = list()
 		.["owner_name"] = user.real_name
 
 		var/list/spellbook_contents = list()
@@ -1348,6 +1351,29 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		ui_interact(user)
 
 	ui_act(action, list/params)
+		. = ..()
+		if (.)
+			return
+		switch (action)
+			if ("buyspell")
+				var/datum/SWFuplinkspell/chosen_spell = params["spell"]
+				for (var/datum/SWFuplinkspell/spell in src.spells)
+					if (spell.name == chosen_spell)
+						chosen_spell = spell
+						break
+				/*
+				for (var/D in typesof(/datum/SWFuplinkspell))
+					if (D.name == chosen_spell)
+						chosen_spell = D.name
+						break
+				*/
+				switch(chosen_spell.SWFspell_CheckRequirements(usr,src))
+					if(1) boutput(usr, SPAN_ALERT("You have no more magic points to spend."))
+					if(2) boutput(usr, SPAN_ALERT("You already have this spell."))
+					if(3) boutput(usr, SPAN_ALERT("This spell isn't availble in VR."))
+					if(999) boutput(usr, SPAN_ALERT("Unknown Error."))
+					else
+						chosen_spell.SWFspell_Purchased(usr,src)
 
 ///////////////////////////////////////// Wizard's spells ///////////////////////////////////////////////////
 /datum/SWFuplinkspell
