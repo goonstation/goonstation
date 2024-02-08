@@ -5330,7 +5330,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aAP" = (
-/obj/machinery/light/small/frostedred,
+/obj/machinery/light/small/frostedred{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aAS" = (
@@ -32520,9 +32522,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/cleanable/generic,
-/obj/machinery/light/small/broken{
-	dir = 1
-	},
+/obj/machinery/light/small/frostedred,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "sNI" = (
@@ -36578,7 +36578,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/light/small/frostedred,
+/obj/machinery/light/small/broken{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "woP" = (
