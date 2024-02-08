@@ -28545,7 +28545,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "pAK" = (
-/obj/stool/bench/blue/auto,
+/obj/stool/bench/auto,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -30882,10 +30882,10 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen/freezer)
 "rsO" = (
-/obj/stool/bench/blue/auto,
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
+/obj/stool/bench/auto,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -32320,11 +32320,11 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "sFc" = (
-/obj/stool/bench/blue/auto,
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/stool/bench/auto,
 /turf/simulated/floor/purplewhite,
 /area/station/science/lobby)
 "sFB" = (
@@ -33407,15 +33407,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "tvX" = (
+/obj/disposalpipe/segment/mail,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/sci,
 /obj/machinery/door/poddoor/pyro{
 	id = "publicscienceteleporter";
 	name = "teleporter lockdown"
 	},
-/obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/glass/sci,
-/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/purple,
-/area/station/science/lobby)
+/area/station/science/teleporter)
 "twy" = (
 /obj/table/auto,
 /obj/item/clothing/head/plunger,
