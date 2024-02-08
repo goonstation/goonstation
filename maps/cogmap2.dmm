@@ -3549,7 +3549,7 @@
 	id = "crematorium";
 	pixel_y = 28
 	},
-/obj/stool/chair,
+/obj/stool/chair/black,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "alx" = (
