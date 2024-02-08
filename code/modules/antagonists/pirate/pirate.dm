@@ -188,13 +188,13 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 		indicator_light.color = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5)
 
 	get_help_message(dist, mob/user)
-		. = "Use it in hand to return to the Peregrine. Use it on someone else to send them to the Peregrine instead."
+		. = "Use it in hand to return to the Peregrine. Use it on someone or something else to send your target to the Peregrine instead."
 
 	attack_self(mob/user)
 		. = ..()
 		if(!ispirate(user)) src.malfunction(user)
 		if(length(landmarks[LANDMARK_PIRATES_TELE]))
-			if (!ON_COOLDOWN(src, "recharging", 30 SECONDS))
+			if (!ON_COOLDOWN(src, "recharging", 15 SECONDS))
 				actions.start(new /datum/action/bar/pirate_tele(user, src), user)
 			else
 				user.show_message(SPAN_ALERT("It's still recharging!"))
@@ -203,11 +203,14 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 
 	// teleport a friend
 	afterattack(atom/target, mob/user, reach, params)
-		. = ..()
-		if(!ispirate(user)) src.malfunction(user)
+		if (!ispirate(user)) src.malfunction(user)
+		if (!ismovable(target)) return
+		var/atom/movable/AM = target
+		if(AM.anchored) return
+
 		if(length(landmarks[LANDMARK_PIRATES_TELE]))
-			if (ismob(target) && !ON_COOLDOWN(src, "recharging", 10 SECONDS))
-				actions.start(new /datum/action/bar/pirate_tele(user, src), user)
+			if (!ON_COOLDOWN(src, "recharging", 15 SECONDS))
+				actions.start(new /datum/action/bar/pirate_tele(AM, src), user)
 			else
 				user.show_message(SPAN_ALERT("It's still recharging!"))
 		else
@@ -229,7 +232,7 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 /datum/action/bar/pirate_tele
 	duration = 6 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	var/mob/target
+	var/atom/movable/target
 	var/obj/item/pirate_hand_tele/device
 
 	New(Target, Device)
@@ -256,7 +259,6 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 		..()
 		var/turf/destination = pick(landmarks[LANDMARK_PIRATES_TELE])
 		animate_teleport(target)
-		target.emote("scream")
 		SPAWN(6 DECI SECONDS)
 			showswirl(target)
 			target.set_loc(destination)
