@@ -14,11 +14,13 @@ TYPEINFO(/obj/machinery/mixer)
 	name = "KitchenHelper"
 	desc = "A food mixer."
 	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "blender"
+	icon_state = "blender_empty"
 	density = 1
 	anchored = ANCHORED
 	flags = TGUI_INTERACTIVE
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
+	status = 0
+
 	var/list/recipes = null
 	var/list/to_remove = list()
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
@@ -66,6 +68,7 @@ TYPEINFO(/obj/machinery/mixer)
 		W.set_loc(src)
 		W.dropped(user)
 		tgui_process.update_uis(src)
+		src.UpdateIcon()
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -238,14 +241,27 @@ TYPEINFO(/obj/machinery/mixer)
 		src.power_usage = 0
 		UnsubscribeProcess()
 		return
+	power_change()
+		. = ..()
+		src.UpdateIcon()
 
 	update_icon()
 		if (!src || !istype(src))
 			return
 
-		if (src.working != 0)
-			src.icon_state = "blender_on"
+		if (length(src.contents) > 0)
+			src.icon_state = "blender_filled"
 		else
-			src.icon_state = "blender"
+			src.icon_state = "blender_empty"
+
+		src.overlays.len = 0
+		var/powered = src.status & NOPOWER
+
+		if (powered)
+			src.overlays += image(src.icon, "blender_off")
+		else if (!powered && !src.working)
+			src.overlays += image(src.icon, "blender_powered")
+		else
+			src.overlays += image(src.icon, "blender_working")
 
 		return
