@@ -3816,6 +3816,7 @@
 /obj/railing/red{
 	dir = 8
 	},
+/obj/item/storage/box/popsicle_sticks,
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "Xk" = (
