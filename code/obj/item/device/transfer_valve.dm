@@ -136,7 +136,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			boutput(user, SPAN_NOTICE("You attach two loops of [item] to the transfer valve!"))
 			UpdateIcon()
 
-		else if (iscuttingtool(item))
+		else if (issnippingtool(item))
 			if(usr?.back && usr.back == src)
 				boutput(usr, SPAN_ALERT("You can't detach the loops of wire while you're wearing [src]!"))
 			else
