@@ -220,24 +220,24 @@ TYPEINFO(/obj/machinery/mixer)
 						F.unlock_medal_when_eaten = "That tasted funny"
 					else
 						F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
-			for (var/obj/item/I in to_remove)
-				qdel(I)
-			to_remove.len = 0
+		for (var/obj/item/I in to_remove)
+			qdel(I)
+		to_remove.len = 0
 
-			for (var/obj/I in src.contents)
-				I.set_loc(src.loc)
-				src.visible_message(SPAN_ALERT("[I] is tossed out of [src]!"))
-				var/edge = get_edge_target_turf(src, pick(alldirs))
-				I.throw_at(edge, 25, 4)
+		for (var/obj/I in src.contents)
+			I.set_loc(src.loc)
+			src.visible_message(SPAN_ALERT("[I] is tossed out of [src]!"))
+			var/edge = get_edge_target_turf(src, pick(alldirs))
+			I.throw_at(edge, 25, 4)
 
-			src.working = 0
-			src.UpdateIcon()
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-			tgui_process.update_uis(src)
+		src.working = 0
+		src.UpdateIcon()
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		tgui_process.update_uis(src)
 
-			src.power_usage = 0
-			UnsubscribeProcess()
-			return
+		src.power_usage = 0
+		UnsubscribeProcess()
+		return
 
 	update_icon()
 		if (!src || !istype(src))
