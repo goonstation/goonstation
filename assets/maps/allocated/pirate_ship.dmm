@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ai" = (
 /obj/lattice{
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/pirate_ship)
+/area/pirate_ship_space)
 "ak" = (
 /obj/item/storage/wall/office,
 /turf/simulated/floor/orange/side,
@@ -109,6 +109,12 @@
 	name = "cloaking field"
 	},
 /area/space)
+"bV" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
 "cx" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -118,6 +124,10 @@
 	name = "The Waking Nightmare"
 	},
 /turf/simulated/floor/shuttlebay,
+/area/pirate_ship)
+"cI" = (
+/obj/table/reinforced/bar/auto,
+/turf/simulated/floor/orange,
 /area/pirate_ship)
 "cK" = (
 /obj/indestructible/shuttle_corner{
@@ -286,11 +296,15 @@
 	},
 /turf/simulated/floor/black,
 /area/pirate_ship)
-"gH" = (
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/grey/side{
-	dir = 4
+"gc" = (
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 12
 	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
+"gH" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/black,
 /area/pirate_ship)
 "gJ" = (
 /turf/simulated/floor/blackwhite{
@@ -653,19 +667,8 @@
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "oO" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/computer3/terminal{
-	dir = 8
-	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 4
-	},
+/obj/stool/bar,
+/turf/simulated/floor,
 /area/pirate_ship)
 "pb" = (
 /obj/machinery/power/terminal,
@@ -780,6 +783,14 @@
 /turf/simulated/floor/grey/checker{
 	dir = 8
 	},
+/area/pirate_ship)
+"te" = (
+/obj/item/storage/toilet,
+/obj/decoration/toiletholder{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/black,
 /area/pirate_ship)
 "tB" = (
 /obj/item/bandage,
@@ -1050,6 +1061,10 @@
 	dir = 1
 	},
 /area/pirate_ship)
+"vt" = (
+/obj/stool/bed,
+/turf/simulated/floor/black,
+/area/pirate_ship)
 "vv" = (
 /obj/decal/poster/wallsign/stencil/left/y{
 	pixel_x = -12;
@@ -1069,7 +1084,9 @@
 /turf/simulated/floor/shuttlebay,
 /area/pirate_ship)
 "vz" = (
-/obj/machinery/light/incandescent/warm,
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
 /turf/simulated/floor/orange/side{
 	dir = 8
 	},
@@ -1132,6 +1149,12 @@
 	pixel_y = -5
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"xh" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
+/turf/simulated/floor/black,
 /area/pirate_ship)
 "xs" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -1353,6 +1376,10 @@
 	},
 /turf/simulated/floor/black,
 /area/pirate_ship)
+"CO" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor,
+/area/pirate_ship)
 "Df" = (
 /obj/storage/closet/emergency,
 /turf/unsimulated/floor/plating/random,
@@ -1462,6 +1489,14 @@
 	pixel_y = -7
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"FF" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
+/turf/simulated/floor/orange/side{
+	dir = 4
+	},
 /area/pirate_ship)
 "FT" = (
 /obj/forcefield/energyshield/perma/doorlink{
@@ -1829,11 +1864,10 @@
 	},
 /area/pirate_ship)
 "OK" = (
-/obj/lattice{
-	icon_state = "lattice-dir-b"
-	},
-/turf/space,
-/area/space)
+/obj/table/reinforced/bar/auto,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/orange,
+/area/pirate_ship)
 "ON" = (
 /obj/table/syndicate/auto,
 /obj/item/storage/firstaid/toxin{
@@ -1851,6 +1885,21 @@
 	pixel_x = 6
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/pirate_ship)
+"OR" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer3/terminal{
+	dir = 8
+	},
+/turf/simulated/floor/orange/side{
+	dir = 4
+	},
 /area/pirate_ship)
 "OU" = (
 /obj/table/syndicate/auto,
@@ -2121,6 +2170,14 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/pirate_ship)
+"Ve" = (
+/obj/item/storage/toilet,
+/obj/decoration/toiletholder{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/black,
+/area/pirate_ship)
 "Vf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2134,11 +2191,8 @@
 /turf/simulated/floor,
 /area/pirate_ship)
 "Vj" = (
-/obj/lattice{
-	icon_state = "lattice-dir-b"
-	},
 /turf/space,
-/area/pirate_ship)
+/area/pirate_ship_space)
 "Vm" = (
 /obj/decal/stage_edge/alt{
 	color = "#555555"
@@ -2207,8 +2261,11 @@
 /turf/simulated/floor/shuttlebay,
 /area/pirate_ship)
 "Wl" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
 /turf/space,
-/area/space)
+/area/pirate_ship_space)
 "Wp" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/orange/side,
@@ -2403,143 +2460,105 @@ As
 (3,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 bJ
 As
 "}
 (4,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 bJ
 As
 "}
 (5,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-bJ
-As
-"}
-(6,1,1) = {"
-As
-bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 cK
 nu
 nu
@@ -2551,28 +2570,28 @@ Qd
 Qd
 Qd
 Oi
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
 bJ
 As
 "}
-(7,1,1) = {"
+(6,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 cK
 TC
 TC
@@ -2593,26 +2612,26 @@ GY
 nu
 Ke
 MM
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 bJ
 As
 "}
-(8,1,1) = {"
+(7,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+nu
+nu
+nu
+nu
 nu
 tB
 yw
@@ -2633,26 +2652,26 @@ Yb
 nu
 Ke
 MM
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 bJ
 As
 "}
-(9,1,1) = {"
+(8,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+Vj
 cK
 nu
 nu
+nu
+te
+bV
+vt
 Fp
 uq
 zp
@@ -2673,26 +2692,26 @@ GY
 nu
 nu
 hg
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 bJ
 As
 "}
-(10,1,1) = {"
+(9,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-OK
+Vj
+Vj
+Vj
+Vj
+ai
 TC
 oE
 mL
+nu
+gc
+JM
+JM
 nu
 ak
 yM
@@ -2713,26 +2732,26 @@ GY
 nu
 Ke
 MM
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 bJ
 As
 "}
-(11,1,1) = {"
+(10,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
 Vj
 ai
+Wl
 cS
 fy
 Zt
 vX
 qq
+nu
+gH
+Jy
+gH
 nu
 uI
 zp
@@ -2753,26 +2772,26 @@ Yb
 nu
 Ke
 MM
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 bJ
 As
 "}
-(12,1,1) = {"
+(11,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 cK
 nu
 nu
 Pf
 fh
+AJ
 vz
+AJ
+AJ
+AJ
 nu
 vl
 zp
@@ -2792,27 +2811,27 @@ Xy
 GY
 nu
 Oi
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
 bJ
 As
 "}
-(13,1,1) = {"
+(12,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 nu
 Kn
 VJ
 Vm
 cP
 cP
+cP
+cP
+cP
+CO
 nu
 nu
 JF
@@ -2832,25 +2851,25 @@ nu
 hS
 at
 nu
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
 bJ
 As
 "}
-(14,1,1) = {"
+(13,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 TC
 LU
 tS
 wp
+cP
+oO
+oO
+oO
 cP
 cP
 nu
@@ -2873,24 +2892,24 @@ JM
 Be
 TC
 nu
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 bJ
 As
 "}
-(15,1,1) = {"
+(14,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 TC
 zp
 nv
 WB
+zp
+OK
+cI
+OK
 zp
 zp
 Vr
@@ -2914,24 +2933,24 @@ rt
 TC
 qM
 vh
-Wl
-Wl
-Wl
+Vj
 bJ
 As
 "}
-(16,1,1) = {"
+(15,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 zs
 PY
 mh
 Mw
 nW
+Io
+Io
+Io
+Io
 Io
 Ph
 Io
@@ -2954,24 +2973,24 @@ mu
 pb
 yQ
 DS
-Wl
-Wl
-Wl
+Vj
 bJ
 As
 "}
-(17,1,1) = {"
+(16,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 TC
 zp
 nv
 WB
 nv
+OK
+cI
+OK
+zp
 zp
 SY
 dd
@@ -2994,24 +3013,24 @@ rt
 TC
 qM
 qg
-Wl
-Wl
-Wl
+Vj
 bJ
 As
 "}
-(18,1,1) = {"
+(17,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 TC
 Re
 dC
 bG
 oe
+oO
+oO
+oO
+cP
 cP
 nu
 JA
@@ -3033,26 +3052,26 @@ JM
 Be
 TC
 nu
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 bJ
 As
 "}
-(19,1,1) = {"
+(18,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 nu
 Tb
 Yy
 be
 Vf
 cP
+cP
+cP
+cP
+CO
 nu
 nu
 DP
@@ -3072,27 +3091,27 @@ Sw
 ip
 nu
 nu
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
 bJ
 As
 "}
-(20,1,1) = {"
+(19,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 bB
 nu
 nu
 hn
-oO
-gH
+OR
+ph
+FF
+ph
+ph
+ph
 nu
 vo
 cP
@@ -3112,27 +3131,27 @@ JM
 UX
 nu
 ku
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
 bJ
 As
 "}
-(21,1,1) = {"
+(20,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
 Vj
 ai
+Wl
 cS
 xG
 nu
 GP
 sl
+nu
+gH
+Jy
+gH
 Nj
 vp
 zo
@@ -3153,26 +3172,26 @@ dN
 nu
 Ke
 MM
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 bJ
 As
 "}
-(22,1,1) = {"
+(21,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-OK
+Vj
+Vj
+Vj
+Vj
+ai
 TC
 Df
 zM
+nu
+gc
+JM
+JM
 nu
 vp
 VL
@@ -3193,26 +3212,26 @@ nV
 nu
 Ke
 MM
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 bJ
 As
 "}
-(23,1,1) = {"
+(22,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+Vj
 bB
 nu
 sl
+nu
+Ve
+xh
+vt
 nu
 Rp
 Hs
@@ -3233,26 +3252,26 @@ nV
 nu
 nu
 hg
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 bJ
 As
 "}
-(24,1,1) = {"
+(23,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+nu
+nu
+nu
+nu
 nu
 Kf
 zF
@@ -3273,26 +3292,26 @@ cx
 nu
 Ke
 MM
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 bJ
 As
 "}
-(25,1,1) = {"
+(24,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 bB
 nu
 nK
@@ -3313,33 +3332,33 @@ KZ
 nu
 Ke
 MM
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
 bJ
 As
 "}
-(26,1,1) = {"
+(25,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 bB
 dk
 tH
@@ -3351,212 +3370,250 @@ FT
 tH
 FT
 ku
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+bJ
+As
+"}
+(26,1,1) = {"
+As
+bJ
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 bJ
 As
 "}
 (27,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 bJ
 As
 "}
 (28,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 bJ
 As
 "}
 (29,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 bJ
 As
 "}
 (30,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 bJ
 As
 "}
 (31,1,1) = {"
 As
 bJ
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
-Wl
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
+Vj
 bJ
 As
 "}

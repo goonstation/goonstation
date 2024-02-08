@@ -127,7 +127,7 @@ var/global/list/nuke_op_camo_matrix = null
 			target_locations = list("the main security room" = list(/area/station/security/main),
 			"the central research sector hub" = list(/area/station/science/lobby),
 			"the cargo bay (QM)" = list(/area/station/quartermaster/office),
-			"the engineering control room" = list(/area/station/engine/engineering, /area/station/engine/power),
+			"the engineering control room" = list(/area/station/engine/engineering),
 			"the central warehouse" = list(/area/station/storage/warehouse),
 			"the courtroom" = list(/area/station/crew_quarters/courtroom, /area/station/crew_quarters/juryroom),
 			"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
