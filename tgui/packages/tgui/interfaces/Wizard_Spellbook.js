@@ -6,8 +6,26 @@
  */
 
 import { useBackend } from '../backend';
-import { Collapsible, Divider, Section, Stack } from '../components';
+import { Button, Collapsible, Divider, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
+
+// If I wanna color the categories, but probably gonna be scrapped
+const category_coloring = (spell_category) => {
+  switch (spell_category) {
+    case "Enchantment":
+      return "purple";
+    case "Equipment":
+      return "yellow";
+    case "Offensive":
+      return "red";
+    case "Defensive":
+      return "blue";
+    case "Utility":
+      return "green";
+    case "Miscellaneous":
+      return "grey";
+  }
+};
 
 export const Wizard_Spellbook = (props, context) => {
   const { data } = useBackend(context);
@@ -30,11 +48,11 @@ export const Wizard_Spellbook = (props, context) => {
       maxHeight={770}
     >
       <Window.Content scrollable>
-        <Section title={owner_name+"'s Spellbook"}>
-          {"Spell slots remaining:"+spell_slots}
+        <Section title={owner_name+"'s Spellbook "}>
+          {"Spell slots remaining: "+spell_slots}
           <Divider />
-          {spell_categories.map((cat_section) => (
-            <SpellCategory category={cat_section} key={cat_section} />
+          {spell_categories.map((category) => (
+            <SpellCategory category={category} key={category} />
           ))}
         </Section>
       </Window.Content>
@@ -52,22 +70,40 @@ const SpellCategory = (props, context) => {
     spells.push(spell_name);
   }
   return (
-    <Collapsible title={category}>
-      {spells.map((spell) => (
-        <Spell spell={spell} key={spell} />
-      ))}
+    <Collapsible title={category} textColor={category_coloring(category)} bold>
+      <Stack vertical textColor={category_coloring(category)}>
+        {spells.map((spell) => (
+          <Spell spell={spell} category={category} key={spell} />
+        ))}
+      </Stack>
     </Collapsible>
   );
 };
 
 const Spell = (props, context) => {
-  const { spell } = props;
+  const { data } = useBackend(context);
+  const { spellbook_contents } = data;
+  const { spell, category } = props;
+
+  let spell_contents = [];
+
+  for (let spell_data in spellbook_contents[category][spell]) {
+    spell_contents.push(spellbook_contents[category][spell][spell_data]);
+  }
 
   return (
-    <Stack vertical>
-      <Stack.Item>
-        {spell}
-      </Stack.Item>
-    </Stack>
+    <Stack.Item>
+      <Section
+        title={spell+" - cost: "+spell_contents[1]}
+        buttons={<Button>{"Purchase"}</Button>}
+      >
+        <LabeledList>
+          <LabeledList.Item label={"Description"}>
+            {spell_contents[0]}
+          </LabeledList.Item>
+        </LabeledList>
+      </Section>
+    </Stack.Item>
   );
 };
+

@@ -1347,6 +1347,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		ui_interact(user)
 
+	ui_act(action, list/params)
+
 ///////////////////////////////////////// Wizard's spells ///////////////////////////////////////////////////
 /datum/SWFuplinkspell
 	var/name = "Spell"
@@ -1579,7 +1581,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	assoc_spell = /datum/targetable/spell/pandemonium
 
 
-
+/*
 /obj/item/SWF_uplink/proc/explode()
 	var/turf/location = get_turf(src.loc)
 	location.hotspot_expose(700, 125)
@@ -1589,7 +1591,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	qdel(src.master)
 	qdel(src)
 	return
-/*
+
 /obj/item/SWF_uplink/attack_self(mob/user as mob)
 	if(!user.mind || (user.mind && user.mind.key != src.wizard_key))
 		boutput(user, SPAN_ALERT("<b>The spellbook is magically attuned to someone else!</b>"))
