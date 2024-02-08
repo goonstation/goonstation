@@ -1940,12 +1940,12 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "akY" = (
-/obj/stool/chair,
+/obj/stool/chair/purple,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "akZ" = (
-/obj/stool/chair,
 /obj/landmark/start/job/scientist,
+/obj/stool/chair/purple,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "alb" = (
@@ -2120,16 +2120,16 @@
 	location = "bar";
 	name = "buddytime beacon"
 	},
-/obj/stool/chair{
+/obj/stool/chair/purple{
 	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "alK" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 1
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "alL" = (
@@ -22000,8 +22000,8 @@
 /turf/simulated/floor/wood/six,
 /area/station/maintenance/west)
 "fsH" = (
-/obj/stool/chair,
 /obj/disposalpipe/segment/vertical,
+/obj/stool/chair/purple,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "ftz" = (
@@ -31638,7 +31638,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "lMB" = (
-/obj/stool/chair{
+/obj/stool/chair/purple{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
@@ -32643,11 +32643,11 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "msE" = (
-/obj/stool/chair{
-	dir = 1
-	},
 /obj/landmark/start/job/medical_doctor,
 /obj/machinery/light/incandescent/cool/very,
+/obj/stool/chair/black{
+	dir = 1
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "msI" = (
@@ -33562,7 +33562,7 @@
 	},
 /area/station/ai_monitored/armory)
 "mVH" = (
-/obj/stool/chair,
+/obj/stool/chair/purple,
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/science/lobby)
 "mWp" = (

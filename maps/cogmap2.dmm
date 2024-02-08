@@ -46791,7 +46791,7 @@
 /turf/simulated/floor/purple/side,
 /area/station/medical/medbay/lobby)
 "cGz" = (
-/obj/stool/chair{
+/obj/stool/chair/purple{
 	dir = 4
 	},
 /turf/simulated/floor/purple/side,
@@ -46809,7 +46809,7 @@
 /turf/simulated/floor/purple/side,
 /area/station/medical/medbay/lobby)
 "cGB" = (
-/obj/stool/chair{
+/obj/stool/chair/purple{
 	dir = 8
 	},
 /turf/simulated/floor/purple/side,
