@@ -27546,6 +27546,7 @@
 /obj/machinery/light_switch/south{
 	pixel_x = 8
 	},
+/obj/machinery/vending/hydroponics,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "oQf" = (
@@ -35453,7 +35454,6 @@
 	dir = 8
 	},
 /obj/machinery/light_switch/south,
-/obj/machinery/vending/hydroponics,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "vkK" = (
