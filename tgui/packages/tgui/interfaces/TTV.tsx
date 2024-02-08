@@ -26,7 +26,7 @@ interface TankData {
 
 const TankInfo = (_props, context) => {
   const { act, data } = useBackend<AirVendorParams>(context);
-  const { tank } = _props;
+  const { tank, height } = _props;
   let button_eject = <Button width={5} textAlign={"center"} disabled={tank.name===null} icon="eject" onClick={() => act(tank.num === 1 ? "remove_tank_one" : "remove_tank_two")}>Eject</Button>;
   let button_add = <Button width={5} textAlign={"center"} icon="add" onClick={() => act("add_item", { "tank": tank.num })}>Add</Button>;
   let maxPressure = (tank.maxPressure !== null) ? tank.maxPressure : 999;
@@ -34,6 +34,7 @@ const TankInfo = (_props, context) => {
     <Section
       title={tank.num === 1 ? "Tank One" : "Tank Two"}
       buttons={tank.name !== null ? button_eject : button_add}
+      height={height}
     >
       <LabeledList>
         <LabeledList.Item label={"Holding"}>
@@ -68,17 +69,17 @@ export const TTV = (_props, context) => {
     tank_two,
   } = data;
   let windowWidth = 650;
+  let windowHeight = 160;
   return (
-    <Window width={windowWidth} height={200}>
+    <Window width={windowWidth} height={windowHeight}>
       <Window.Content>
-        <Section>
-          <Stack>
+        <Stack>
+          <Stack.Item width={windowWidth/3}>
+            <TankInfo height={windowHeight/16.666} tank={tank_one} />
+          </Stack.Item>
 
-            <Stack.Item width={windowWidth/3}>
-              <TankInfo tank={tank_one} />
-            </Stack.Item>
-
-            <Stack.Item width={windowWidth/3}>
+          <Stack.Item width={windowWidth/3}>
+            <Section title="Valve" height={windowHeight/16.666} px={1}>
               <Stack vertical textAlign="center">
                 <Stack.Item color={opened ? "red" : "green"}>
                   Valve is {opened ? "open" : "closed"}
@@ -91,17 +92,15 @@ export const TTV = (_props, context) => {
                 <Stack.Item>
                   {(data.device === '') ? "No Device " : ''}
                   {(data.device === '') ? <Button icon="add" onClick={() => act("add_item")}>Add</Button>
-                    : <><Button onClick={() => act("interact_device")}>{toTitleCase(data.device)}</Button><Button icon="eject" onClick={() => act("remove_device")}>Eject</Button></>}
+                    : <><Button onClick={() => act("interact_device")}>Device</Button><Button icon="eject" onClick={() => act("remove_device")}>Eject</Button></>}
                 </Stack.Item>
               </Stack>
-            </Stack.Item>
-
-            <Stack.Item width={windowWidth/3}>
-              <TankInfo tank={tank_two} />
-            </Stack.Item>
-
-          </Stack>
-        </Section>
+            </Section>
+          </Stack.Item>
+          <Stack.Item width={windowWidth/3}>
+            <TankInfo height={windowHeight/16.666} tank={tank_two} />
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
