@@ -13483,26 +13483,16 @@
 	dir = 8
 	},
 /area/station/medical/research)
-"bqg" = (
-/turf/simulated/floor/bluewhite{
-	dir = 9
-	},
-/area/station/medical/research)
 "bqi" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/white,
-/area/station/medical/research)
-"bqj" = (
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
+/turf/simulated/floor/airless/blue/checker,
 /area/station/medical/research)
 "bqk" = (
-/turf/simulated/floor/bluewhite{
-	dir = 5
+/turf/simulated/floor/airless/greenwhite/corner{
+	dir = 8
 	},
 /area/station/medical/research)
 "bql" = (
@@ -13771,9 +13761,7 @@
 	dir = 4
 	},
 /obj/landmark/start/job/geneticist,
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
+/turf/simulated/floor/airless/blue/checker,
 /area/station/medical/research)
 "bru" = (
 /obj/machinery/computer/genetics{
@@ -14021,17 +14009,6 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
-"bsq" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/research)
 "bsr" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -14041,9 +14018,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "bst" = (
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
+/turf/simulated/floor/airless/blue/checker,
 /area/station/medical/research)
 "bsu" = (
 /obj/submachine/cargopad/qm,
@@ -14226,9 +14201,7 @@
 "btr" = (
 /obj/landmark/start/job/geneticist,
 /obj/stool/chair,
-/turf/simulated/floor/bluewhite{
-	dir = 6
-	},
+/turf/simulated/floor/airless/blue/checker,
 /area/station/medical/research)
 "bts" = (
 /obj/monkeyplant,
@@ -21003,9 +20976,6 @@
 	dir = 8
 	},
 /area/station/science/lab)
-"icL" = (
-/turf/simulated/floor/white,
-/area/station/medical/research)
 "icY" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/bluewhite{
@@ -26746,7 +26716,9 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/blue/checker,
+/turf/simulated/floor/airless/greenwhite/corner{
+	dir = 4
+	},
 /area/station/medical/research)
 "oix" = (
 /obj/mapping_helper/firedoor_spawn,
@@ -27741,9 +27713,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/airless/greenwhite/corner{
-	dir = 4
-	},
+/turf/simulated/floor/greenwhite,
 /area/station/medical/research)
 "oWq" = (
 /obj/window/reinforced{
@@ -94784,7 +94754,7 @@ biI
 bjO
 bnT
 bpa
-icL
+bst
 brn
 lSg
 btj
@@ -95388,7 +95358,7 @@ aOf
 aOf
 izI
 bpd
-icL
+bst
 xkq
 iPk
 btj
@@ -95690,7 +95660,7 @@ biJ
 biJ
 izI
 bpe
-icL
+bst
 oWl
 rGB
 btp
@@ -95992,8 +95962,8 @@ aQu
 aQu
 vuF
 bpf
-bqg
-bsq
+bst
+oWl
 vWl
 btq
 vWl
@@ -96294,7 +96264,7 @@ biM
 aQv
 itH
 bpg
-bqj
+bst
 oiv
 brp
 dWg
