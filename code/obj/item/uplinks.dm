@@ -1326,19 +1326,25 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	ui_static_data(mob/user)
 		. = list()
+		.["spell_slots"] = src.uses
+		.["owner_name"] = user.real_name
 
 		var/list/spellbook_contents = list()
 		for(var/datum/SWFuplinkspell/spell in src.spells)
-			if (!spellbook_contents[spell.eqtype]) spellbook_contents[spell.eqtype] = list() // Create category if it doesnt exist
-			spellbook_contents[spell.eqtype][spell.name] = list(
-				desc = spell.desc,
-				cost = spell.cost,
-				vr = spell.vr_allowed
-			)
+			if (spell.eqtype != "Spell") // Disallow spell framework
+				if (!spellbook_contents[spell.eqtype]) spellbook_contents[spell.eqtype] = list() // Create category if it doesnt exist
+				spellbook_contents[spell.eqtype][spell.name] = list(
+					desc = spell.desc,
+					cost = spell.cost,
+					vr = spell.vr_allowed
+				)
 
 		.["spellbook_contents"] = spellbook_contents
 
 	attack_self(mob/user)
+		if(!user.mind || (user.mind && user.mind.key != src.wizard_key))
+			boutput(user, SPAN_ALERT("<b>The spellbook is magically attuned to someone else!</b>"))
+			return
 		ui_interact(user)
 
 ///////////////////////////////////////// Wizard's spells ///////////////////////////////////////////////////

@@ -6,12 +6,16 @@
  */
 
 import { useBackend } from '../backend';
-import { Section, Stack } from '../components';
+import { Collapsible, Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const Wizard_Spellbook = (props, context) => {
   const { data } = useBackend(context);
-  const { spellbook_contents } = data;
+  const {
+    spellbook_contents,
+    owner_name,
+    spell_slots,
+  } = data;
 
   let spell_categories = [];
   for (let spell_category in spellbook_contents) {
@@ -19,11 +23,20 @@ export const Wizard_Spellbook = (props, context) => {
   }
 
   return (
-    <Window>
-      <Window.Content>
-        {spell_categories.map((cat_section) => ( // Categories, not literal cats
-          <SpellCategory category={cat_section} key={cat_section} />
-        ))}
+    <Window
+      title={"Wizard Spellbook"}
+      theme={"ntos"}
+      maxWidth={300}
+      maxHeight={770}
+    >
+      <Window.Content scrollable>
+        <Section title={owner_name+"'s Spellbook"}>
+          {"Spell slots remaining:"+spell_slots}
+          <Divider />
+          {spell_categories.map((cat_section) => (
+            <SpellCategory category={cat_section} key={cat_section} />
+          ))}
+        </Section>
       </Window.Content>
     </Window>
   );
@@ -39,11 +52,11 @@ const SpellCategory = (props, context) => {
     spells.push(spell_name);
   }
   return (
-    <Section title={category}>
+    <Collapsible title={category}>
       {spells.map((spell) => (
         <Spell spell={spell} key={spell} />
       ))}
-    </Section>
+    </Collapsible>
   );
 };
 
