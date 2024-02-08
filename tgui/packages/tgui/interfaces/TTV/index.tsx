@@ -55,7 +55,7 @@ export const TTV = (_props, context) => {
     tank_two,
   } = data;
   return (
-    <Window width={650} height={160}>
+    <Window width={650} height={170}>
       <Window.Content>
         <Stack>
           <Stack.Item>
