@@ -23863,6 +23863,9 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/decal/tile_edge/floorguide/science{
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "lfI" = (
@@ -30046,6 +30049,13 @@
 "qLi" = (
 /turf/simulated/floor/purple,
 /area/station/science/hall)
+"qLp" = (
+/obj/disposalpipe/segment,
+/obj/decal/tile_edge/floorguide/arrow_s{
+	dir = 6
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/lobby)
 "qMC" = (
 /obj/machinery/camera{
 	c_tag = "Robotics East";
@@ -91766,7 +91776,7 @@ maJ
 gTj
 gTj
 jAJ
-bqM
+qLp
 dmA
 omO
 csM
