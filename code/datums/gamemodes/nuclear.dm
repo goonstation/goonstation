@@ -427,23 +427,28 @@ var/global/list/nuke_op_camo_matrix = null
 		for (var/area_type in target_locations[target_location_names[i]])
 			areas += get_areas(area_type)
 
-		var/max_x = 1
-		var/min_x = world.maxx
-		var/max_y = 1
-		var/min_y = world.maxy
+		var/total_x = 0
+		var/total_y = 0
+		var/total_turfs = 0
 
 		for (var/area/area in areas)
 			if (area.z != Z_LEVEL_STATION)
 				continue
 			for (var/turf/T in area)
-				max_x = max(max_x, T.x)
-				min_x = min(min_x, T.x)
-				max_y = max(max_y, T.y)
-				min_y = min(min_y, T.y)
+				total_x += T.x
+				total_y += T.y
+				total_turfs += 1
 			if (!marker_name)
 				marker_name = capitalize(area.name)
-		var/target_x = (max_x + min_x) / 2
-		var/target_y = (max_y + min_y) / 2
+		var/target_x = round(total_x / total_turfs)
+		var/target_y = round(total_y / total_turfs)
+
+		// If its not in the right area we can at least try randomly
+		var/marker_area = get_area(locate(target_x, target_y, Z_LEVEL_STATION))
+		if (!(marker_area in areas))
+			var/turf/T = pick(get_area_turfs(pick(areas)))
+			target_x = T.x
+			target_y = T.y
 
 		var/turf/plant_location = locate(target_x, target_y, Z_LEVEL_STATION)
 		plant_location.AddComponent(/datum/component/minimap_marker, MAP_SYNDICATE, "nuclear_bomb_pin", 'icons/obj/minimap/minimap_markers.dmi', "[marker_name] Plant Site")
