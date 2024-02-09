@@ -3,6 +3,7 @@ TYPEINFO(/datum/mapPrefab/planet)
 
 ABSTRACT_TYPE(/datum/mapPrefab/planet)
 /datum/mapPrefab/planet
+	tags = PREFAB_PLANET
 	var/list/datum/biome/required_biomes // ensure area has these biomes somewhere...
 
 	applyTo(var/turf/target)
