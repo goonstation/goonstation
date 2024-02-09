@@ -2135,10 +2135,16 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				if(BOUNDS_DIST(user,F) == 0 && BOUNDS_DIST(user,src) == 0)
 					C.move_callback(user, F, 0, src)
 
+/turf/simulated/floor/ReplaceWith(what, keep_old_material, handle_air, handle_dir, force)
+	var/list/old_hidden_contents = src.hidden_contents //we have to do this because src will be the new turf after the replace due to byond
+	var/turf/simulated/floor/newfloor = ..()
+	if (istype(newfloor))
+		newfloor.hidden_contents = old_hidden_contents
+
 /turf/simulated/floor/restore_tile()
 	..()
 	for (var/obj/item/item in src.contents)
-		if (item.w_class <= W_CLASS_TINY && !item.anchored) //I wonder if this will cause problems
+		if (item.w_class <= W_CLASS_TINY && !item.anchored && !item.GetComponent(/datum/component/glued)) //I wonder if this will cause problems
 			src.hide_inside(item)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
