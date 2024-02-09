@@ -155,7 +155,7 @@ var/list/admin_verbs = list(
 		/client/proc/display_bomb_monitor,
 		//Ban verbs
 		/client/proc/ban_panel,
-		/client/proc/openBanPanel,
+		/client/proc/addBanTemp,
 		/client/proc/banooc,
 		/client/proc/view_cid_list,
 		/client/proc/modify_parts,
@@ -479,6 +479,7 @@ var/list/admin_verbs = list(
 		/client/proc/upload_uncool_words,
 		/client/proc/TestMarketReq,
 		/verb/adminDumpBlueprint,
+		/client/proc/debug_event_recorder,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,

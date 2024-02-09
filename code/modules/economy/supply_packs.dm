@@ -120,12 +120,12 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	syndicate = 1
 
 /datum/supply_packs/paint
-	name = "Paint Cans"
-	desc = "A selection of random paints."
-	contains = list(/obj/item/paint_can/random = 4)
+	name = "Artistic Supplies Crate"
+	desc = "A selection of random paints, and an artistic toolbox. Get arty!"
+	contains = list(/obj/item/paint_can/random = 4, /obj/item/storage/toolbox/artistic)
 	cost = PAY_TRADESMAN*3
-	containertype = /obj/storage/crate
-	containername = "Paint Crate"
+	containertype = /obj/storage/crate/packing
+	containername = "Artistic Crate"
 
 /datum/supply_packs/neon_lining
 	name = "Neon Lining Crate"
@@ -485,7 +485,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Wool Production Kit"
 	desc = "For use with existing Ranch."
 	category = "Civilian Department"
-	contains = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep)
+	contains = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep, /obj/item/storage/box/knitting)
 	cost = PAY_TRADESMAN*10
 	containertype = /obj/storage/crate
 	containername = "Wool Production Kit"

@@ -342,7 +342,7 @@
 
 		if (findtext(addr, ":")) // remove port if present
 			addr = splittext(addr, ":")[1]
-		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub2_hostname)
+		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip)
 			return 0 //ip filtering
 
 		var/list/plist = params2list(T)
@@ -633,44 +633,6 @@
 				else
 					return 0
 
-			if ("hubCallback")
-				//Wire note: Temp debug logging as this should always get data and proc
-				if (!plist["data"])
-					logTheThing(LOG_DEBUG, null, "<b>API Error (Temp):</b> Didnt get data.")
-					return 0
-				if (!plist["proc"])
-					logTheThing(LOG_DEBUG, null, "<b>API Error (Temp):</b> Didnt get proc.")
-					return 0
-
-				if (addr != config.goonhub_api_ip) return 0 //ip filtering
-				var/auth = plist["auth"]
-				if (auth != md5(config.goonhub_api_token)) return 0 //really bad md5 token security
-				var/theDatum = plist["datum"] ? plist["datum"] : null
-				var/theProc = "/proc/[plist["proc"]]"
-
-				var/list/ldata
-				try
-					ldata = json_decode(plist["data"])
-				catch
-					logTheThing(LOG_DEBUG, null, "<b>API Error:</b> Invalid JSON detected: [plist["data"]]")
-					return 0
-
-				ldata["data_hub_callback"] = 1
-
-				//calls the second stage of whatever proc specified
-				var/rVal
-				if (theDatum)
-					rVal = call(theDatum, theProc)(ldata)
-				else
-					rVal = call(theProc)(ldata)
-
-				if (rVal)
-					logTheThing(LOG_DEBUG, null, "<b>Callback Error</b> - Hub callback failed in [theDatum ? "<b>[theDatum]</b> " : ""]<b>[theProc]</b> with message: <b>[rVal]</b>")
-					logTheThing(LOG_DIARY, null, "<b>Callback Error</b> - Hub callback failed in [theDatum ? "[theDatum] " : ""][theProc] with message: [rVal]", "debug")
-					return 0
-				else
-					return 1
-
 			if ("roundEnd")
 				if (!plist["server"] || !plist["address"]) return 0
 
@@ -767,7 +729,6 @@
 				var/ircmsg[] = new()
 				ircmsg["major"] = world.byond_version
 				ircmsg["minor"] = world.byond_build
-				ircmsg["goonhub_api"] = config.goonhub_api_version ? config.goonhub_api_version : 0
 				return ircbot.response(ircmsg)
 
 			if ("youtube")

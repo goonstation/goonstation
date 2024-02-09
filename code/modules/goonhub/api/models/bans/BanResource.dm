@@ -5,6 +5,7 @@
 	var/game_admin_id									= null // integer
 	var/server_id										= null // string
 	var/reason											= null // string
+	var/duration_human									= null // string
 	var/expires_at										= null // date-time | null
 	var/deleted_at										= null // date-time | null
 	var/game_admin										= null // { id: integer, ckey: string, name: string } - not required
@@ -19,6 +20,7 @@
 	src.game_admin_id = response["game_admin_id"]
 	src.server_id = response["server_id"]
 	src.reason = response["reason"]
+	src.duration_human = response["duration_human"]
 	src.expires_at = response["expires_at"]
 	src.deleted_at = response["deleted_at"]
 	src.game_admin = response["game_admin"]
@@ -53,6 +55,7 @@
 	.["game_admin_id"] = src.game_admin_id
 	.["server_id"] = src.server_id
 	.["reason"] = src.reason
+	.["duration_human"] = src.duration_human
 	.["expires_at"] = src.expires_at
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at

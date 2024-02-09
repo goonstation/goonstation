@@ -16,7 +16,7 @@ var/datum/preMapLoad/preMapLoad = new
 // END_PREFERENCES
 
 // Compiler Settings
-#include "_std\__odlint.dm"
+#include "_std\__odlint.dme"
 
 // Compatibility Check
 #include "_std\compatibility.dme"
@@ -401,6 +401,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\hud\flockdrone.dm"
 #include "code\datums\hud\flockmind.dm"
 #include "code\datums\hud\funimage.dm"
+#include "code\datums\hud\gang_victory.dm"
 #include "code\datums\hud\ghost_observer.dm"
 #include "code\datums\hud\ghostdrone.dm"
 #include "code\datums\hud\human.dm"
@@ -1244,7 +1245,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\goonhub\api\requests\players\PlayerParticipationsBody.dm"
 #include "code\modules\goonhub\api\requests\players\PlayerParticipationsBulkBody.dm"
 #include "code\modules\goonhub\api\requests\players\PlayerPlaytimeBody.dm"
-#include "code\modules\goonhub\api\requests\players\PlayerSavesBody.dm"
+#include "code\modules\goonhub\api\requests\players\PlayerSavesAddDataBody.dm"
+#include "code\modules\goonhub\api\requests\players\PlayerSavesAddSaveBody.dm"
 #include "code\modules\goonhub\api\requests\players\PlayerSavesBulkBody.dm"
 #include "code\modules\goonhub\api\requests\players\PlayerSavesDeleteDataBody.dm"
 #include "code\modules\goonhub\api\requests\players\PlayerSavesDeleteSaveBody.dm"
@@ -2318,7 +2320,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\actuallyKeelinsStuff.dm"
 #include "code\WorkInProgress\aloe_stuff_public.dm"
 #include "code\WorkInProgress\AphsStuff.dm"
-#include "code\WorkInProgress\apiFallbackRoutes.dm"
 #include "code\WorkInProgress\AzrunStuff.dm"
 #include "code\WorkInProgress\Azungarstuff.dm"
 #include "code\WorkInProgress\batman.dm"

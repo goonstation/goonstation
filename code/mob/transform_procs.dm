@@ -167,7 +167,7 @@
 		return make_critter(CT, get_turf(src))
 	return 0
 
-/mob/proc/make_critter(var/critter_type, var/turf/T, ghost_spawned=FALSE)
+/mob/proc/make_critter(var/critter_type, var/turf/T, ghost_spawned=FALSE, delete_original=TRUE)
 	var/mob/living/critter/newmob = new critter_type()
 	if(ghost_spawned)
 		newmob.ghost_spawned = ghost_spawned
@@ -198,8 +198,9 @@
 		var/mob/living/critter/small_animal/small = newmob
 		small.setup_overlays() // this requires the small animal to have a client to set things up properly
 
-	SPAWN(1 DECI SECOND)
-		qdel(src)
+	if (delete_original)
+		SPAWN(1 DECI SECOND)
+			qdel(src)
 	return newmob
 
 

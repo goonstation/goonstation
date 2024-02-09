@@ -1,12 +1,12 @@
 
-/datum/apiBody/PlayerSavesData
+/datum/apiBody/PlayerSavesAddSave
 	fields = list(
 		"player_id", // integer
 		"name", // string
 		"data" //string
 	)
 
-/datum/apiBody/PlayerSavesData/VerifyIntegrity()
+/datum/apiBody/PlayerSavesAddSave/VerifyIntegrity()
 	. = ..()
 	if (
 		isnull(src.values["player_id"]) \

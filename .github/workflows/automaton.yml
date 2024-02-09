@@ -11,7 +11,6 @@ on:
       - "master"
 
 jobs:
-
   runtime:
     name: Runtime Checker
     runs-on: ubuntu-22.04
@@ -19,10 +18,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        map: ["COGMAP", "COGMAP2", "CLARION", "DONUT3", "DONUT2", "OSHAN", "KONDARU", "NADIR", "ATLAS", "SPACE_PREFAB", "UNDERWATER_PREFAB", "RANDOM_ROOMS", "FULL"]
+        map:
+          [
+            "COGMAP",
+            "COGMAP2",
+            "CLARION",
+            "DONUT3",
+            "DONUT2",
+            "OSHAN",
+            "KONDARU",
+            "NADIR",
+            "ATLAS",
+            "SPACE_PREFAB",
+            "UNDERWATER_PREFAB",
+            "RANDOM_ROOMS",
+            "FULL",
+          ]
         compiletype: ["default"]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Dependencies
         run: |
@@ -32,7 +46,7 @@ jobs:
           sudo apt install -o APT::Immediate-Configure=false libssl-dev:i386 libgcc-s1:i386
 
       - name: Cache BYOND
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
@@ -95,14 +109,28 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        map: ["COGMAP", "COGMAP2", "CLARION", "DONUT3", "DONUT2", "OSHAN", "KONDARU", "NADIR", "ATLAS", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
+        map:
+          [
+            "COGMAP",
+            "COGMAP2",
+            "CLARION",
+            "DONUT3",
+            "DONUT2",
+            "OSHAN",
+            "KONDARU",
+            "NADIR",
+            "ATLAS",
+            "SPACE_PREFAB",
+            "UNDERWATER_PREFAB",
+            "FULL",
+          ]
         compiletype: ["default"]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-          token: '${{ secrets.ROBUDDYBOT_PAT }}'
+          token: "${{ secrets.ROBUDDYBOT_PAT }}"
 
       - name: Install Dependencies
         run: |
@@ -112,7 +140,7 @@ jobs:
           sudo apt install -o APT::Immediate-Configure=false libssl-dev:i386 libgcc-s1:i386
 
       - name: Cache BYOND
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
@@ -167,7 +195,7 @@ jobs:
     runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Dependencies
         run: |
@@ -177,7 +205,7 @@ jobs:
           sudo apt install -o APT::Immediate-Configure=false libssl-dev:i386 libgcc-s1:i386
 
       - name: Cache BYOND
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}

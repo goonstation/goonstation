@@ -2,8 +2,8 @@ TYPEINFO(/datum)
 	var/admin_spawnable = TRUE
 
 #ifdef IMAGE_DEL_DEBUG
-var/global/list/deletedImageData = new
-var/global/list/deletedImageIconStates = new
+var/global/list/deletedImageData = list()
+var/global/list/deletedImageIconStates = list()
 
 /image/Del()
 	deletedImageData.len++;
@@ -14,7 +14,7 @@ var/global/list/deletedImageIconStates = new
 #endif
 
 #ifdef DELETE_QUEUE_DEBUG
-var/global/list/deletedObjects = new
+var/global/list/deletedObjects = list()
 
 /datum/Del()
 	if(!("[src.type]" in deletedObjects))
