@@ -257,3 +257,16 @@
 		..()
 		src.critter_type = null
 		src.num_critters = 0
+
+/datum/random_event/major/player_spawn/antag/antagonist_pest/rp
+	name = "Antagonist Critter Spawn (RP)"
+#ifndef RP_MODE
+	disabled = TRUE
+#endif
+	pest_invasion_critter_datums = list(list(
+		new /datum/eventSpawnedCritter(
+			name = "plague rats",
+			critter_types = list(/mob/living/critter/wraith/plaguerat/young)
+			)
+		) = 100, //no loot for rats
+	)
