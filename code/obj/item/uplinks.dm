@@ -1334,11 +1334,16 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		var/list/spellbook_contents = list()
 		for(var/datum/SWFuplinkspell/spell in src.spells)
+			var/cooldown_contents = null
 			if (spell.eqtype != "Spell") // Disallow spell framework
 				if (!spellbook_contents[spell.eqtype]) spellbook_contents[spell.eqtype] = list() // Create category if it doesnt exist
+				if (spell.assoc_spell && ispath(spell.assoc_spell, /datum/targetable/spell))
+					var/datum/targetable/spell/spell_datum = spell.assoc_spell
+					cooldown_contents = initial(spell_datum.cooldown)
 				spellbook_contents[spell.eqtype][spell.name] = list(
 					desc = spell.desc,
 					cost = spell.cost,
+					cooldown = cooldown_contents,
 					vr = spell.vr_allowed
 				)
 

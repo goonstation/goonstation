@@ -73,7 +73,7 @@ const SpellCategory = (props, context) => {
   }
   return (
     <Collapsible title={category} textColor={category_coloring(category)} bold>
-      <Stack vertical textColor={category_coloring(category)}>
+      <Stack vertical>
         {spells.map((spell) => (
           <Spell spell={spell} category={category} key={spell} />
         ))}
@@ -96,14 +96,24 @@ const Spell = (props, context) => {
   return (
     <Stack.Item>
       <Section
-        title={spell+" - cost: "+spell_contents[1]}
+        title={spell}
+        backgroundColor={"#384e68"}
+        m={1}
         buttons={
-          <Button onClick={() => act("buyspell", { spell: spell })}>
+          <Button backgroundColor={"green"} onClick={() => act("buyspell", { spell: spell })}>
             {"Purchase"}
           </Button>
         }
       >
         <LabeledList>
+          <LabeledList.Item label={"Cost"}>
+            {spell_contents[1]}
+          </LabeledList.Item>
+          {spell_contents[2] !== null && (
+            <LabeledList.Item label={"Cooldown"}>
+              {spell_contents[2]/10+" seconds"}
+            </LabeledList.Item>
+          )}
           <LabeledList.Item label={"Description"}>
             {spell_contents[0]}
           </LabeledList.Item>
