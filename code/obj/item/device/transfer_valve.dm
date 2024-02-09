@@ -194,11 +194,12 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			boutput(user, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
 		src.ui_interact(user)
 
+#define TANK_PRESSURE(item_tank) (hasvar(item_tank, "air_contents")) ? MIXTURE_PRESSURE(item_tank.air_contents) : 0
 	ui_data(mob/user)
-		var/tank_one_data = (src.tank_one) ? list("name"=src.tank_one.name, "num"=1, "pressure"=MIXTURE_PRESSURE(src.tank_one.air_contents), \
+		var/tank_one_data = (src.tank_one) ? list("name"=src.tank_one.name, "num"=1, "pressure"=TANK_PRESSURE(src.tank_one), \
 											      "maxPressure"=TANK_FRAGMENT_PRESSURE) \
 										   : list("name"=null, "num"=1, "pressure"=null, "maxPressure"=null)
-		var/tank_two_data = (src.tank_two) ? list("name"=src.tank_two.name, "num"=2, "pressure"=MIXTURE_PRESSURE(src.tank_two.air_contents), \
+		var/tank_two_data = (src.tank_two) ? list("name"=src.tank_two.name, "num"=2, "pressure"=TANK_PRESSURE(src.tank_two), \
 											      "maxPressure"=TANK_FRAGMENT_PRESSURE) \
 										   : list("name"=null, "num"=2, "pressure"=null, "maxPressure"=null)
 		return list(
@@ -207,6 +208,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			"device" = "[src.attached_device]",
 			"opened" = src.valve_open,
 		)
+#undef TANK_PRESSURE
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
