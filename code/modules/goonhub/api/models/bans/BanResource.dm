@@ -5,9 +5,9 @@
 	var/game_admin_id									= null // integer
 	var/server_id										= null // string
 	var/reason											= null // string
-	var/duration_human								= null // string
-	var/expires_at										= null // date-time
-	var/deleted_at										= null // string
+	var/duration_human									= null // string
+	var/expires_at										= null // date-time | null
+	var/deleted_at										= null // date-time | null
 	var/game_admin										= null // { id: integer, ckey: string, name: string } - not required
 	var/datum/apiModel/Tracked/GameRound/game_round		= null // /datum/apiModel/GameRound - not required
 	var/original_ban_detail								= null // { id: integer, ban_id: integer, ckey: string, comp_id: string, ip: string }

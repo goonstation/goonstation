@@ -17,12 +17,13 @@
 				. = "[exp] Minute[exp > 1 ? "s" : ""]"
 
 	/// List all bans
-	proc/getAll(list/filters = list(), sort_by = "id", descending = TRUE, per_page = 30)
+	proc/getAll(list/filters = list(), sort_by = "id", descending = TRUE, page = "1", per_page = 30)
 		var/datum/apiRoute/bans/get/getBans = new
 		getBans.queryParams = list(
 			"filters" = filters,
 			"sort_by" = sort_by,
 			"descending" = descending,
+			"page" = page,
 			"per_page" = per_page
 		)
 		var/datum/apiModel/Paginated/BanResourceList/bans
@@ -333,7 +334,7 @@
 /client/proc/addBanTemp()
 	set name = "Add Ban"
 	set desc = "Add a ban"
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 
 	var/list/data = src.addBanTempDialog()
 	if (!data) return
