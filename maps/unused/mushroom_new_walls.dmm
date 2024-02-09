@@ -18091,11 +18091,11 @@
 	name = "Med-Sci Maintenance";
 	req_access = null
 	},
-/obj/mapping_helper/access/medlab,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "eWb" = (
