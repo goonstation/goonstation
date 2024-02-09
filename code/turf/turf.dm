@@ -856,8 +856,8 @@ var/global/in_replace_with = 0
 
 				#undef _OLD_GAS_VAR_RESTORE
 			#undef _OLD_GAS_VAR_NOT_NULL
-
-			N.update_visuals(N.air)
+			if(N.air)
+				N.update_visuals(N.air)
 			// tell atmos to update this tile's air settings
 			if (air_master)
 				air_master.tiles_to_update |= N
