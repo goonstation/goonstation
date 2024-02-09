@@ -160,9 +160,6 @@ TYPEINFO(/obj/gold_bee)
 /obj/landmark/pirate_tele
 	name = LANDMARK_PIRATES_TELE
 
-/obj/landmark/salvager_beacon
-	name = LANDMARK_PIRATES_BEACON
-
 /obj/machinery/r_door_control/podbay/pirate
 	id = "peregrine_podbay"
 	access_type = POD_ACCESS_PIRATE

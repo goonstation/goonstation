@@ -37,7 +37,6 @@
 #define LANDMARK_PIRATE "Pirate-Spawn"
 #define LANDMARK_PIRATE_FIRST_MATE "Pirate-First-Mate-Spawn"
 #define LANDMARK_PIRATE_CAPTAIN "Pirate-Captain-Spawn"
-#define LANDMARK_PIRATES_BEACON "Priate-Beacon"
 #define LANDMARK_PIRATES_TELE "Priate-Tele"
 
 // Salvagers
