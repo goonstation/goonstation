@@ -38,6 +38,10 @@
 				src.grenade = new /obj/item/chem_grenade/cleaner(src)
 				return
 
+	New()
+		..()
+		RegisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED, PROC_REF(triggered))
+
 	examine()
 		. = ..()
 		if (src.armed)

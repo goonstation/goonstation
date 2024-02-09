@@ -25,6 +25,9 @@
 	var/tmp/roundstart_dir
 	/// if this turf is immune to explosion (explosion immune turfs immediately return on ex_act())
 	var/explosion_immune = FALSE
+	///Things that are hidden "in" this turf that are revealed when it is pried up.
+	///We have to do this since turf.contents is a list of things ON the turf, their actual loc is null.
+	var/list/hidden_contents = null
 
 	New()
 		..()
@@ -1897,6 +1900,15 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	to_plating()
 	playsound(src, 'sound/items/Crowbar.ogg', 80, TRUE)
 
+/turf/simulated/floor/levelupdate()
+	..()
+	if (!src.intact && src.hidden_contents)
+		for(var/atom/movable/AM as anything in src.hidden_contents)
+			AM.set_loc(src)
+			SEND_SIGNAL(AM, COMSIG_MOVABLE_FLOOR_REVEALED, src)
+		src.hidden_contents = null
+
+
 /turf/simulated/floor/attackby(obj/item/C, mob/user, params)
 
 	if (!C || !user)
@@ -2108,6 +2120,10 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	ReplaceWithFloor()
 	src.to_plating()
 
+/turf/simulated/floor/proc/hide_inside(atom/movable/AM)
+	LAZYLISTADD(src.hidden_contents, AM)
+	AM.set_loc(null) //sneaky
+
 /turf/simulated/floor/MouseDrop_T(atom/A, mob/user as mob)
 	..(A,user)
 	if(istype(A,/turf/simulated/floor))
@@ -2118,6 +2134,12 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				var/obj/item/cable_coil/C = I
 				if(BOUNDS_DIST(user,F) == 0 && BOUNDS_DIST(user,src) == 0)
 					C.move_callback(user, F, 0, src)
+
+/turf/simulated/floor/restore_tile()
+	..()
+	for (var/obj/item/item in src.contents)
+		if (item.w_class <= W_CLASS_TINY) //I wonder if this will cause problems
+			src.hide_inside(item)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
 DEFINE_FLOORS_SIMMED_UNSIMMED(racing,
