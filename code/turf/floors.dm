@@ -2138,7 +2138,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 /turf/simulated/floor/restore_tile()
 	..()
 	for (var/obj/item/item in src.contents)
-		if (item.w_class <= W_CLASS_TINY) //I wonder if this will cause problems
+		if (item.w_class <= W_CLASS_TINY && !item.anchored) //I wonder if this will cause problems
 			src.hide_inside(item)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
