@@ -8811,6 +8811,14 @@
 /area/station/turret_protected/ai_upload)
 "aTs" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
 "aTt" = (
@@ -16781,6 +16789,19 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
+"dKp" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 1
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/turret_protected/ai_upload)
 "dKO" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -17444,6 +17465,20 @@
 	},
 /turf/simulated/floor/plating/damaged1,
 /area/station/maintenance/west)
+"epw" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/turret_protected/ai_upload)
 "eqv" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
@@ -18044,6 +18079,12 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
+"eVI" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai_upload)
 "eVZ" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -18253,6 +18294,13 @@
 	tag = "icon-grass1"
 	},
 /area/station/hydroponics/bay)
+"ffM" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/turret_protected/ai_upload)
 "ffR" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -21678,6 +21726,9 @@
 	pixel_y = 10
 	},
 /obj/item/aiModule/oneHuman,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai_upload)
 "iNW" = (
@@ -23078,6 +23129,11 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/grass/random,
 /area/station/garden/owlery)
+"knI" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/cable,
+/turf/simulated/floor/plating/airless,
+/area/station/turret_protected/ai_upload)
 "knR" = (
 /obj/item/storage/toilet/random{
 	dir = 8;
@@ -24754,6 +24810,12 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/captain)
+"mhS" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/turret_protected/ai_upload)
 "mhX" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -31397,10 +31459,6 @@
 	desc = "A black countertop table for storing kitchen-y objects.";
 	name = "kitchen counter"
 	},
-/obj/machinery/mixer{
-	pixel_x = 8;
-	pixel_y = 4
-	},
 /obj/item/kitchen/utensil/fork{
 	dir = 2;
 	pixel_x = -8;
@@ -37304,6 +37362,16 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/cafeteria)
+"xbT" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/turret_protected/ai_upload)
 "xcn" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -92925,7 +92993,7 @@ aUY
 iKt
 aUY
 meq
-aTr
+eVI
 aTr
 aaa
 aaa
@@ -93227,7 +93295,7 @@ aUY
 iKt
 aUY
 aUY
-aTr
+mhS
 aTs
 aaa
 aaa
@@ -93522,7 +93590,7 @@ aaa
 aaa
 aaa
 aaa
-aTs
+xbT
 aTr
 ovQ
 aUY
@@ -93530,7 +93598,7 @@ jRG
 aUY
 cEt
 aTr
-aTs
+ffM
 aaa
 aaa
 mBC
@@ -93824,7 +93892,7 @@ aaa
 aaa
 aaa
 aaa
-aTs
+xbT
 aTr
 aTr
 aTr
@@ -93832,7 +93900,7 @@ aTr
 aTr
 aTr
 aTr
-aTs
+ffM
 aaB
 aaa
 aYR
@@ -94126,15 +94194,15 @@ aaa
 aaa
 aaa
 aaa
-aTs
-aTs
-aTs
-aTs
-aTs
-aTs
-aTs
-aTs
-aTs
+epw
+knI
+knI
+knI
+knI
+knI
+knI
+knI
+dKp
 aaB
 aaa
 aYR
