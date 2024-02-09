@@ -6,7 +6,7 @@
 * It does NOT catch reference bugs
 */
 
-var/global/list/runtimeDetails = new()
+var/global/list/runtimeDetails = list()
 var/global/runtime_count = 0
 var/global/blame_for_runtimes = FALSE
 

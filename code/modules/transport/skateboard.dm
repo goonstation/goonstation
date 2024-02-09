@@ -198,8 +198,7 @@
 				input_lockout -= 1
 
 	else if(isobj(AM))
-		var/trick = trickName()
-		src.messageNearby(SPAN_ALERT("<B>You do a [trick] on the [AM]!</B>"), SPAN_ALERT("<B>[rider] does a [trick] on the [AM]!</B>"))
+		//chat message removed due to extreme amounts of spam
 		if(give_points)
 			adjustSickness(4)
 		trickAnimate()

@@ -1441,7 +1441,7 @@
 /area/station/crew_quarters/kitchen)
 "dI" = (
 /obj/table/wood/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "dJ" = (
