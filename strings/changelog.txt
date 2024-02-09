@@ -1,5 +1,9 @@
 
 (t)fri feb 09 24
+(u)IPingu
+(p)17826
+(e)📄|A-UI
+(+)Converts HVAC interface to TGUI
 (u)MeggalBozale
 (p)17897
 (e)💅📄|C-QoL, A-UI
