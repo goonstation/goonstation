@@ -1,4 +1,54 @@
 
+(t)fri feb 09 24
+(u)MeggalBozale
+(p)17897
+(e)💅📄|C-QoL, A-UI
+(*)Tank Transfer Valves now use TGUI menus.
+(t)thu feb 08 24
+(u)Tyrant
+(p)17894
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Oshan now needs at least 14 players online to be voted for
+(t)wed feb 07 24
+(u)SirNooben
+(p)17845
+(e)|
+(+)Makes it possible for the arithmetic comp's mode to be changed using an input coming from another comp.
+(u)Sord
+(+)Opening/closing the panel on an airlock now has a short action bar
+(u)LeahTheTech
+(+)Random characters will no longer receive broken looking partial hairstyles.
+(u)Saccha
+(p)17895
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The floor and wall designer has a range of three tiles.
+(t)tue feb 06 24
+(u)glowbold
+(p)17440
+(e)🆕⚖💡|C-Feature, C-Balance, A-Station-Systems
+(*)NanoTrasen has secured further discounts on station electrical equipment - details in minor notes.
+(+)Lights may burn out when turned on. Burned out lights may burst if left unfixed.
+(+)Over-use of light switches may cause a shock to users and/or their property. Re-secure the electrical contacts on light switches with a screwdriver.
+(t)mon feb 05 24
+(u)tarmunora
+(+)Increase blood absorption rate during IV-drip transfusions and dialysis
+(u)GuvGuvington
+(p)17867
+(e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
+(+)New sprites and description for white wine bottles, aswell as a change to white wine reagent colours and a reagent description.
+(u)GuvGuvington
+(p)17865
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The Antique laser gun received some proper inhand sprites, both the model and functioning weapon.
+(u)Tyrant
+(p)17745
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The Paint Cans crate is now called the Artistic Supplies crate, and comes with an artist's toolbox.
+(t)sun feb 04 24
+(u)LeahTheTech
+(+)Transparium now hides sechud and pro-doc icons.
+(+)Tumbling creepers can now be occasionally obtained from requisitions and botany white holes.
+(+)The floor and wall designer no longer has infinite range.
 (t)sat feb 03 24
 (u)mloccy
 (p)17765

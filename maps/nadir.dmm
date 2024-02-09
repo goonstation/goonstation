@@ -355,6 +355,18 @@
 	dir = 6
 	},
 /area/station/hallway/secondary/exit)
+"ahJ" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "se_breach";
+	name = "South East Breach Hull"
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/se{
+	name = "Southeast Breach Hull"
+	})
 "ahN" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	icon_state = "bdoormid1";
@@ -1748,6 +1760,22 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
+	})
+"aQh" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "disposals";
+	name = "Disposals";
+	enter_id = "inner"
+	},
+/turf/simulated/floor/black,
+/area/station/maintenance/outer/ne{
+	name = "Northeast Breach Hull"
 	})
 "aQs" = (
 /obj/machinery/door_control{
@@ -3296,6 +3324,18 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/narrow/T_east,
 /area/station/crew_quarters/arcade/dungeon)
+"bva" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "escape";
+	name = "Escape";
+	enter_id = "inner"
+	},
+/turf/simulated/floor/engine/caution/northsouth,
+/area/station/hallway/secondary/exit)
 "bvo" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -9074,6 +9114,16 @@
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
+"ecJ" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "escape";
+	name = "Escape";
+	enter_id = "outer"
+	},
+/turf/simulated/floor/engine/caution/northsouth,
+/area/station/hallway/secondary/exit)
 "ecQ" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/wood/two,
@@ -9629,7 +9679,7 @@
 	})
 "ers" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer{
+/obj/machinery/mixer{
 	pixel_y = 4
 	},
 /turf/simulated/floor/black,
@@ -10170,6 +10220,18 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/purple/fancy/innercorner/omni,
 /area/station/science/research_director)
+"eFo" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sw_breach";
+	name = "South West Breach Hull"
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/sw{
+	name = "Southwest Breach Hull"
+	})
 "eFA" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -20460,6 +20522,10 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/maint,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "ne_breach";
+	name = "North East Breach Hull"
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
@@ -24364,6 +24430,10 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/maint,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sw_breach";
+	name = "South West Breach Hull"
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
@@ -27104,6 +27174,10 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/access/research,
 /obj/mapping_helper/access/maint,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sw_breach2";
+	name = "South West Breach Hull"
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
@@ -31912,6 +31986,18 @@
 /obj/fitness/speedbag/clown,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
+"nun" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "nw_breach";
+	name = "North West Breach Hull"
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/nw{
+	name = "Northwest Breach Hull"
+	})
 "nuo" = (
 /obj/storage/closet/emergency,
 /obj/machinery/light/small{
@@ -35714,6 +35800,10 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/maint,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "se_breach";
+	name = "South East Breach Hull"
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
@@ -37248,6 +37338,15 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/chemistry)
+"pNF" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "escape";
+	name = "Escape";
+	enter_id = "inner"
+	},
+/turf/simulated/floor/engine/caution/northsouth,
+/area/station/hallway/secondary/exit)
 "pNP" = (
 /obj/machinery/door/airlock/pyro/medical/morgue{
 	dir = 4
@@ -46354,6 +46453,18 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"tQV" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "ne_breach";
+	name = "North East Breach Hull"
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/ne{
+	name = "Northeast Breach Hull"
+	})
 "tQW" = (
 /obj/grille/catwalk,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -51717,6 +51828,10 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/maint,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "nw_breach";
+	name = "North West Breach Hull"
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
@@ -52367,6 +52482,16 @@
 /obj/decal/poster/wallsign/engineering,
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/hall)
+"wDb" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sw_breach2";
+	name = "South West Breach Hull"
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/sw{
+	name = "Southwest Breach Hull"
+	})
 "wDw" = (
 /obj/machinery/drainage,
 /obj/machinery/light/small,
@@ -54840,6 +54965,11 @@
 	},
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/access/maint,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "disposals";
+	name = "Disposals";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/black,
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
@@ -85707,7 +85837,7 @@ xQv
 xQv
 iXj
 xQv
-kAj
+nun
 xQv
 kAj
 yls
@@ -85779,7 +85909,7 @@ vaV
 vaV
 eqq
 jjE
-eqq
+eFo
 jjE
 iXj
 jjE
@@ -92132,7 +92262,7 @@ rvx
 dwC
 cHt
 uqC
-fbn
+wDb
 uax
 ltE
 gsX
@@ -114090,7 +114220,7 @@ rJg
 vNl
 rne
 rne
-eVf
+aQh
 kti
 kti
 kti
@@ -114695,7 +114825,7 @@ rJg
 rJg
 rne
 cXH
-eVf
+aQh
 tVq
 pYH
 pYH
@@ -117719,7 +117849,7 @@ rne
 rne
 iXj
 rne
-wjl
+tQV
 rne
 wjl
 tVq
@@ -117791,7 +117921,7 @@ pzI
 pzI
 fxH
 dAB
-fxH
+ahJ
 dAB
 iXj
 iXQ
@@ -120453,9 +120583,9 @@ rJg
 rJg
 rJg
 rJg
-fUM
+ecJ
 gYJ
-uWc
+bva
 ahz
 pnk
 gza
@@ -121057,9 +121187,9 @@ rJg
 rJg
 rJg
 rJg
-fUM
+ecJ
 fbB
-aSj
+pNF
 kDr
 pnk
 ruH

@@ -4553,7 +4553,7 @@
 	brightness = 2;
 	dir = 4
 	},
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "ata" = (
@@ -26505,7 +26505,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/phone,
+/obj/machinery/phone/unlisted,
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
 /area/syndicate_station/battlecruiser)
 "bXv" = (
@@ -34798,7 +34798,7 @@
 /obj/table/reinforced/auto{
 	layer = 2
 	},
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "czR" = (
@@ -44868,7 +44868,7 @@
 /area/afterlife/bar/sanctuary)
 "daO" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
@@ -52382,7 +52382,7 @@
 /area/centcom/lounge)
 "dHk" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
 "dHl" = (
