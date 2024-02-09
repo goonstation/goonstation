@@ -107,6 +107,8 @@
 			if (src.antag_role == "generic_antagonist")
 				mind.add_generic_antagonist("generic_antagonist", new_mob.real_name, do_equip = src.equip_antag, do_objectives = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
 			else if (src.antag_role)
+				if (mind.get_antagonist(src.antag_role))
+					mind.remove_antagonist(src.antag_role, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
 				mind.add_antagonist(src.antag_role, do_relocate = FALSE, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN, do_equip = src.equip_antag, respect_mutual_exclusives = FALSE)
 			else
 				mind.wipe_antagonists()
