@@ -1124,7 +1124,7 @@
 	pixel_x = -24;
 	pixel_y = 12
 	},
-/obj/machinery/vending/air_vendor/plasma,
+/obj/machinery/vending/air_vendor/plasma/pod_wars,
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "xG" = (
@@ -1370,6 +1370,11 @@
 	dir = 8
 	},
 /area/pirate_ship)
+"DL" = (
+/obj/lattice/auto,
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/pirate_ship_space)
 "DP" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -3499,9 +3504,9 @@ Vj
 Vj
 Vj
 Vj
-Vj
 Bg
-Vj
+Or
+Bg
 Vj
 Vj
 Vj
@@ -3540,7 +3545,7 @@ Vj
 Vj
 Vj
 Vj
-Or
+DL
 Vj
 Vj
 Vj
