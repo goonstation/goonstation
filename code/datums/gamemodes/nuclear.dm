@@ -445,9 +445,8 @@ var/global/list/nuke_op_camo_matrix = null
 
 		// If its not in the right area we can at least try randomly
 		var/marker_area = get_area(locate(target_x, target_y, Z_LEVEL_STATION))
-		var/area/A = target_locations[target_location_names[i]][1]
-		if (!istype(marker_area, A))
-			var/turf/T = pick(get_area_turfs(A))
+		if (!(marker_area in areas))
+			var/turf/T = pick(get_area_turfs(pick(areas)))
 			target_x = T.x
 			target_y = T.y
 
