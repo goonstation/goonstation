@@ -224,7 +224,7 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 		indicator_light.color = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5)
 
 	get_help_message(dist, mob/user)
-		. = "Use it in hand to return to the Peregrine. Use it on someone or something else to send your target to the Peregrine instead."
+		. = "Use it in hand to return to the Peregrine. Use it on someone else to send your target to the Peregrine instead."
 
 	attack_self(mob/user)
 		. = ..()
