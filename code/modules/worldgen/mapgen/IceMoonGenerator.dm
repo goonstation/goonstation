@@ -6,7 +6,7 @@
 	flora_types = list(/obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
 	flora_density = 1
 
-	fauna_types = list(/mob/living/critter/small_animal/seal = 15, /mob/living/critter/brullbar = 5, /obj/critter/yeti = 1)
+	fauna_types = list(/mob/living/critter/small_animal/seal = 15, /mob/living/critter/brullbar = 5)
 	fauna_density = 0.5
 
 /datum/biome/icemoon/snow/trees
