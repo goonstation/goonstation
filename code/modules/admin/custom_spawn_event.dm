@@ -233,8 +233,8 @@
 				src.spawn_event.allow_dnr = params["allow_dnr"]
 			if ("spawn") //no accidental double clicks
 				if (!ON_COOLDOWN(ui.user, "custom_spawn_event", 1 SECOND))
-					message_admins("[key_name(ui.user)] initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()]")
-					logTheThing(LOG_ADMIN, ui.user, "initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()]")
+					message_admins("[key_name(ui.user)] initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()] [src.spawn_event.antag_role]")
+					logTheThing(LOG_ADMIN, ui.user, "initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()] [src.spawn_event.antag_role]")
 					src.spawn_event.do_spawn()
 			if ("refresh_player_count")
 				src.refresh_player_count = TRUE
