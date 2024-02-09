@@ -121,6 +121,9 @@
 
 		src.respawn_lock = 1
 
+		if(src.antagonist_type == "Wraith")
+			latejoin_wraith = 1
+
 		// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 		var/list/text_messages = list()
 		text_messages.Add("Would you like to respawn as a [src.antagonist_type] antagonist? Your name will be added to the list of eligible candidates and may be selected at random by the game.") // Do disclose which type it is. You know, ghosts can already metagame in a myriad of ways.

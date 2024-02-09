@@ -9,10 +9,9 @@
 	var/static/list/paths = list("Rot" = 1, "Summoner" = 2, "Trickster" = 3)
 	var/list/paths_buttons = list()
 
-
 	New()
-		if (istype(ticker.mode, /datum/game_mode/disaster)) //For Disaster wraith
-			desc = "Choose a form to evolve into using the power of the void"
+		if (istype(ticker.mode, /datum/game_mode/disaster) || latejoin_wraith == 1) //For Disaster wraith
+			desc = "Choose a form to evolve into using the power of the void!"
 
 		..()
 
@@ -29,15 +28,15 @@
 			return 1
 
 	proc/evolve(var/effect as text)
+		var/mob/living/intangible/wraith/W
 		var/datum/abilityHolder/wraith/AH = holder
-		if (AH.corpsecount < AH.absorbs_to_evolve && !istype(ticker.mode, /datum/game_mode/disaster))
+		if (AH.corpsecount < AH.absorbs_to_evolve && !istype(ticker.mode, /datum/game_mode/disaster) && !latejoin_wraith)
 			boutput(holder.owner, SPAN_NOTICE("You didn't absorb enough souls. You need to absorb at least [AH.absorbs_to_evolve - AH.corpsecount] more!"))
 			return 1
 		if (holder.points < pointCost)
 			boutput(holder.owner, SPAN_NOTICE("You do not have enough points to cast this. You need at least [pointCost] points."))
 			return 1
 		else
-			var/mob/living/intangible/wraith/W
 			switch (effect)
 				if (1)
 					W = new/mob/living/intangible/wraith/wraith_decay(holder.owner)

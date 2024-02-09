@@ -299,7 +299,7 @@ var/global
 	announce_banlogin = 1
 	announce_jobbans = 0
 	radio_audio_enabled = 1
-
+	latejoin_wraith = 0
 
 	outpost_destroyed = 0
 	signal_loss = 0

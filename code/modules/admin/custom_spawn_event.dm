@@ -190,6 +190,8 @@
 					boutput(ui.user, "That's not a mob, dingus.")
 			if ("select_mob_type")
 				src.spawn_event.thing_to_spawn = tgui_input_list(ui.user, "Select mob type", "Select type", concrete_typesof(/mob/living)) || src.spawn_event.thing_to_spawn
+				if (src.spawn_event.thing_to_spawn == /mob/living/intangible/wraith)
+					latejoin_wraith = 1
 			if ("select_job")
 				var/list/job_names = list()
 				for (var/datum/job/job in (job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs))
