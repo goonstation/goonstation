@@ -31471,6 +31471,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "rMh" = (
