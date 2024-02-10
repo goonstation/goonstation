@@ -173,7 +173,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	//get all bendy
 
-	var/image/lense = image(icon='icons/effects/overlays/lensing.dmi', icon_state="lensing_med_hole", pixel_x = -208, pixel_y = -208)
+	var/image/lense = image(icon='icons/effects/overlays/lensing.dmi', icon_state="lensing_med_hole", pixel_x = 0, pixel_y = -416)
 	lense.plane = PLANE_DISTORTION
 	lense.blend_mode = BLEND_OVERLAY
 	lense.appearance_flags = RESET_ALPHA | RESET_COLOR
