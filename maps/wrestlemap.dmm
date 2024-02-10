@@ -21865,7 +21865,7 @@
 	pixel_x = 6;
 	pixel_y = 10
 	},
-/obj/machinery/mixer,
+/obj/submachine/mixer,
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
 "jAR" = (

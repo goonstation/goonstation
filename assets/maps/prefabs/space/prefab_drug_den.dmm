@@ -109,7 +109,7 @@
 	desc = "A black countertop table for storing kitchen-y objects.";
 	name = "kitchen counter"
 	},
-/obj/machinery/mixer,
+/obj/submachine/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/drug_den)
 "gy" = (

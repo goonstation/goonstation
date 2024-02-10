@@ -7453,7 +7453,7 @@
 	tag = ""
 	},
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/submachine/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/sim/area1)
 "rl" = (

@@ -38,8 +38,7 @@
 
 /obj/racing_powerup_spawner
 	name = "PowerUpSpawner"
-	icon = 'icons/map-editing/mapping_helpers.dmi'
-	icon_state = "spawner"
+	icon = 'icons/Testing/atmos_testing.dmi'
 	anchored = ANCHORED
 	density = 0
 	opacity = 0

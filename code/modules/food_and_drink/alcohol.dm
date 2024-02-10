@@ -57,14 +57,7 @@
 
 /obj/item/reagent_containers/food/drinks/bottle/wine/white
 	name = "white wine"
-	desc = "Wine made from those nasty green grapes. Its a Riesling, according to the label. Whatever that means."
-	icon_state = "bottle-whitewine"
-	heal_amt = 1
-	g_amt = 40
-	bottle_style = "whitewine"
-	fluid_style = "whitewine"
-	label = "whitewine"
-	initial_volume = 100
+	desc = "Wine made from those nasty green grapes. Wait, why's the bottle colored red?"
 	initial_reagents = list("white_wine"=60)
 
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine

@@ -68,15 +68,17 @@ What are the archived variables for?
 	graphic_archived = graphic
 
 /// Process all reactions, return bitfield if notable reaction occurs.
-/datum/gas_mixture/proc/react(atom/dump_location, mult=1)
+/datum/gas_mixture/proc/react(atom/dump_location)
 	. = 0 //(used by pipe_network and hotspots)
 	var/reaction_rate
-	if(src.temperature > 900 && src.oxygen_agent_b > MINIMUM_REACT_QUANTITY && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)
+
+	if(src.temperature > 900 && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY && src.oxygen_agent_b > MINIMUM_REACT_QUANTITY )
 		reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.oxygen_agent_b*0.05)
-		reaction_rate = QUANTIZE(reaction_rate) * mult
+		reaction_rate = QUANTIZE(reaction_rate)
 
 		src.carbon_dioxide -= reaction_rate
 		src.oxygen += reaction_rate
+
 		src.oxygen_agent_b -= reaction_rate*0.05
 
 		src.temperature += (reaction_rate*20000)/HEAT_CAPACITY(src)
@@ -87,10 +89,11 @@ What are the archived variables for?
 
 	if(src.temperature > 900 && src.farts > MINIMUM_REACT_QUANTITY && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)
 		reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.farts*0.05)
-		reaction_rate = QUANTIZE(reaction_rate) * mult
+		reaction_rate = QUANTIZE(reaction_rate)
 
 		src.carbon_dioxide -= reaction_rate
 		src.toxins += reaction_rate
+
 		src.farts -= reaction_rate*0.05
 
 		src.temperature += (reaction_rate*10000)/HEAT_CAPACITY(src)
@@ -98,13 +101,12 @@ What are the archived variables for?
 
 	src.fuel_burnt = 0
 	if(src.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		if(src.fire(mult))
+		if(src.fire())
 			. |= COMBUSTION_ACTIVE
 
 /// * Process fire combustion, pretty much just plasma combustion.
 /// * Returns: Rough amount of plasma and oxygen used. Inaccurate due to plasma usage lowering.
-/datum/gas_mixture/proc/fire(mult=1)
-
+/datum/gas_mixture/proc/fire()
 	var/energy_released = 0
 	var/old_heat_capacity = HEAT_CAPACITY(src)
 
@@ -125,9 +127,6 @@ What are the archived variables for?
 			else
 				plasma_burn_rate = (temperature_scale * (src.oxygen / PLASMA_OXYGEN_FULLBURN)) / 4
 			if(plasma_burn_rate > MINIMUM_REACT_QUANTITY)
-				plasma_burn_rate *= mult
-				oxygen_burn_rate *= mult
-
 				src.toxins -= QUANTIZE(plasma_burn_rate / 3) // Plasma usage lowered
 				src.oxygen -= QUANTIZE(plasma_burn_rate * oxygen_burn_rate)
 				src.carbon_dioxide += QUANTIZE(plasma_burn_rate / 3)

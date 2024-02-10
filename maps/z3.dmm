@@ -18485,7 +18485,7 @@
 /area/timewarp/ship)
 "kKo" = (
 /obj/table/reinforced/auto,
-/obj/machinery/mixer,
+/obj/submachine/mixer,
 /obj/decal/cleanable/cobweb2,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,

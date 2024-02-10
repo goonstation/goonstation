@@ -1740,10 +1740,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
-	name = "North Maintenance";
-	cycle_id = "northmaint"
-	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "axg" = (
@@ -3837,7 +3833,7 @@
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
-/obj/machinery/mixer,
+/obj/submachine/mixer,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -8242,10 +8238,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/airlock/cycler{
-	name = "Toxin Storage";
-	cycle_id = "toxins"
-	},
 /turf/simulated/floor/black,
 /area/station/science/storage)
 "coS" = (
@@ -8253,6 +8245,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/mapping_helper/access,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/tile_edge/line/white{
 	dir = 8;
@@ -9729,6 +9722,7 @@
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "cMR" = (
@@ -10174,10 +10168,6 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
-	},
-/obj/mapping_helper/airlock/cycler{
-	name = "North Maintenance";
-	cycle_id = "northmaint"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -14311,10 +14301,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/airlock/cycler{
-	name = "East Solar Maintenance";
-	cycle_id = "eastsolar"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "ejc" = (
@@ -14902,11 +14888,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/access/maint,
-/obj/mapping_helper/airlock/cycler{
-	name = "Med Bay";
-	cycle_id = "medbay";
-	enter_id = "inner"
-	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "esP" = (
@@ -24942,10 +24923,6 @@
 /area/station/ai_monitored/armory)
 "hvZ" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
-	name = "North Inner Maintenance";
-	cycle_id = "n_innermaint"
-	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/inner/north)
 "hwl" = (
@@ -25941,11 +25918,6 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
-	},
-/obj/mapping_helper/airlock/cycler{
-	name = "Med Bay";
-	cycle_id = "medbay";
-	enter_id = "outer"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -29484,11 +29456,6 @@
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/mining,
-/obj/mapping_helper/airlock/cycler{
-	name = "Mining";
-	cycle_id = "mining";
-	enter_id = "inner"
-	},
 /turf/simulated/floor/black/grime,
 /area/station/mining/staff_room)
 "iWm" = (
@@ -30441,10 +30408,6 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/mapping_helper/airlock/cycler{
-	name = "Bomb Testing Chamber";
-	cycle_id = "bombtest"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber/bombchamber)
@@ -33520,10 +33483,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/airlock/cycler{
-	name = "Bomb Testing Chamber";
-	cycle_id = "bombtest"
-	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber/bombchamber)
 "khw" = (
@@ -34973,6 +34932,7 @@
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access,
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hangar/main)
@@ -35740,10 +35700,6 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/mapping_helper/airlock/cycler{
-	name = "Toxin Storage";
-	cycle_id = "toxins"
 	},
 /turf/simulated/floor/black,
 /area/station/science/storage)
@@ -39986,7 +39942,7 @@
 	desc = "A black countertop table for storing kitchen-y objects.";
 	name = "kitchen counter"
 	},
-/obj/machinery/mixer,
+/obj/submachine/mixer,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -41295,11 +41251,6 @@
 	dir = 8;
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
-	},
-/obj/mapping_helper/airlock/cycler{
-	name = "Mining";
-	cycle_id = "mining";
-	enter_id = "outer"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/mining/staff_room)
@@ -47884,10 +47835,6 @@
 /obj/mapping_helper/access/research,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
-/obj/mapping_helper/airlock/cycler{
-	name = "Science Lobby";
-	cycle_id = "scilobby"
-	},
 /turf/simulated/floor/plating/jen,
 /area/station/science/lobby)
 "oAy" = (
@@ -47927,10 +47874,6 @@
 "oBp" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
-	name = "North Inner Maintenance";
-	cycle_id = "n_innermaint"
-	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "oBq" = (
@@ -48848,10 +48791,6 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/research,
 /obj/decal/stripe_delivery,
-/obj/mapping_helper/airlock/cycler{
-	name = "Science Lobby";
-	cycle_id = "scilobby"
-	},
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "oQI" = (
@@ -50816,10 +50755,6 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
-	},
-/obj/mapping_helper/airlock/cycler{
-	name = "West Solar Maintenance";
-	cycle_id = "westsolar"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/west)
@@ -54341,10 +54276,6 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
-	name = "Northeast Maintenance";
-	cycle_id = "northeastmaint"
-	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "qwZ" = (
@@ -55443,10 +55374,6 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
-	},
-/obj/mapping_helper/airlock/cycler{
-	name = "Southwest Inner Maintenance";
-	cycle_id = "sw_innermaint"
 	},
 /turf/simulated/floor/grime{
 	dir = 8
@@ -61611,10 +61538,6 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/maint,
 /obj/decal/stripe_delivery,
-/obj/mapping_helper/airlock/cycler{
-	name = "Southwest Inner Maintenance";
-	cycle_id = "sw_innermaint"
-	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "sMH" = (
@@ -62509,6 +62432,7 @@
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "tbs" = (
@@ -69825,10 +69749,6 @@
 	},
 /obj/mapping_helper/access/maint,
 /obj/decal/stripe_delivery,
-/obj/mapping_helper/airlock/cycler{
-	name = "Northeast Maintenance";
-	cycle_id = "northeastmaint"
-	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "vmB" = (
@@ -72174,10 +72094,6 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/engineering,
-/obj/mapping_helper/airlock/cycler{
-	name = "West Solar Maintenance";
-	cycle_id = "westsolar"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "vVY" = (
@@ -75079,10 +74995,6 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
-	name = "East Solar Maintenance";
-	cycle_id = "eastsolar"
-	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/east)
 "wNd" = (
@@ -76923,10 +76835,6 @@
 	powerlevel = 1
 	},
 /obj/decal/stripe_delivery,
-/obj/mapping_helper/airlock/cycler{
-	name = "Pool and Owlrey";
-	cycle_id = "pool"
-	},
 /turf/simulated/floor,
 /area/spacehabitat/pool)
 "xms" = (
@@ -77467,10 +77375,6 @@
 	name = "Pool Access"
 	},
 /obj/decal/stripe_delivery,
-/obj/mapping_helper/airlock/cycler{
-	name = "Pool and Owlrey";
-	cycle_id = "pool"
-	},
 /turf/simulated/floor/grey,
 /area/spacehabitat/pool)
 "xuj" = (
@@ -79135,18 +79039,6 @@
 	tag = ""
 	},
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/plating/jen,
-/area/station/hallway/secondary/exit)
-"xTv" = (
-/obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/decal/tile_edge/line/white{
-	dir = 8;
-	icon_state = "line1"
-	},
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/exit)
 "xTw" = (
@@ -143639,7 +143531,7 @@ etV
 etV
 sdZ
 sdZ
-xTv
+fdX
 sdZ
 sdZ
 etV
@@ -143649,7 +143541,7 @@ sdZ
 etV
 sdZ
 sdZ
-xTv
+fdX
 sdZ
 sdZ
 etV

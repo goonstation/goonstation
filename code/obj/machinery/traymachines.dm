@@ -319,14 +319,10 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	var/id = 1 //crema switch uses this when finding crematoria
 	var/obj/machinery/crema_switch/igniter = null
 	tray_type = /obj/machine_tray/crematorium
-	var/active = FALSE
 
 	icon_trayopen = "crema0"
 	icon_unoccupied = "crema1"
 	icon_occupied = "crema2"
-
-	medical
-		id = "medicalcremator"
 
 	New()
 		. = ..()
@@ -345,14 +341,12 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		return
 	if (src.locked)
 		return //don't let you cremate something twice or w/e
-	if (src.active)
-		return
 	if (!src.contents || !length(src.contents))
 		src.visible_message(SPAN_ALERT("You hear a hollow crackle, but nothing else happens."))
 		return
 
-	src.active = TRUE
 	src.visible_message(SPAN_ALERT("You hear a roar as \the [src.name] activates."))
+	src.locked = TRUE
 	var/ashes = 0
 	power_usage = powerdraw_use //gotta chug them watts
 	icon_state = "crema_active"
@@ -368,31 +362,23 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	for (var/mob/living/L in contents)
 		if (L in non_tray_contents)
 			continue
-		L.changeStatus("burning", 15 SECONDS)
-		if (L in non_tray_contents)
-			continue
-		if (!L.is_heat_resistant())
-			L.TakeDamage("chest", 0, 30)
-			if (!isdead(L))
-				L.emote("scream")
+		L.changeStatus("stunned", 10 SECONDS)
 
-	sleep(3 SECONDS)
-
+	sleep(1 SECOND)
 	for (var/i in 1 to 10)
 		if(isnull(src))
 			return
 		for (var/mob/living/L in contents)
 			if (L in non_tray_contents)
 				continue
-			L.changeStatus("burning", 30 SECONDS)
-
-	sleep(6 SECONDS)
+			if (!L.is_heat_resistant())
+				L.TakeDamage("chest", 0, 30)
+				if (!isdead(L) && prob(25))
+					L.emote("scream")
+		sleep(1 SECOND)
 
 	if(isnull(src))
 		return
-	src.locked = TRUE // only lock when it's too late to escape
-	src.visible_message(SPAN_ALERT("\The [src.name] clunks locked!"))
-	sleep(1 SECOND)
 	for (var/I in contents)
 		if (I in non_tray_contents)
 			continue
@@ -418,7 +404,6 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		return
 	src.visible_message(SPAN_ALERT("\The [src.name] finishes and shuts down."))
 	src.locked = FALSE
-	src.active = FALSE
 	power_usage = initial(power_usage)
 	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 
@@ -445,10 +430,6 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	var/otherarea = null
 	var/id = 1
 	var/list/obj/machinery/traymachine/locking/crematorium/crematoriums = null
-
-	medical
-		id = "medicalcremator"
-		req_access = list(access_medical_lockers)
 
 	disposing()
 		for (var/obj/machinery/traymachine/locking/crematorium/O in src.crematoriums)

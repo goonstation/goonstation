@@ -25,8 +25,7 @@ proc/qdel(var/datum/D)
 				qdel(C)
 
 		#ifdef OPENDREAM
-		SPAWN(1)
-			del(D)
+		del(D)
 		return
 		#endif
 

@@ -334,7 +334,7 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/escape_pod_succ
 	name = LANDMARK_ESCAPE_POD_SUCCESS
-	icon_state = "escape_pod_succ"
+	icon_state = "xp"
 
 	New()
 		src.data = src.dir

@@ -1232,7 +1232,7 @@
 			(isintangible(M) && (M in hearers)) || \
 			( \
 				(!isturf(say_location.loc) && (say_location.loc == M.loc || (say_location in M))) && \
-				!(M in heard_a) && !(M in heard_b) &&\
+				!(M in heard_a) && \
 				!istype(M, /mob/dead/target_observer) && \
 				M != src \
 			) \
@@ -2285,7 +2285,7 @@
 
 /// Returns the rate of blood to absorb from the reagent holder per Life()
 /mob/living/proc/get_blood_absorption_rate()
-	return 1 + GET_ATOM_PROPERTY(src, PROP_MOB_BLOOD_ABSORPTION_RATE) // that's the standard absorption rate
+	return 1 // that's the standard absorption rate
 
 /mob/living/was_built_from_frame(mob/user, newly_built)
 	. = ..()

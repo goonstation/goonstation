@@ -479,10 +479,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "northsolar2";
-	name = "North Solars"
-	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/west)
 "abY" = (
@@ -901,10 +897,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "northsolar";
-	name = "North Solars"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "adb" = (
@@ -922,10 +914,6 @@
 	},
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
-	},
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "northsolar";
-	name = "North Solars"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
@@ -1855,10 +1843,6 @@
 /area/station/medical/morgue)
 "afX" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "northmerch";
-	name = "North Merchant Dock"
-	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hallway/primary/south)
 "afZ" = (
@@ -3156,7 +3140,7 @@
 /area/station/hallway/primary/south)
 "akj" = (
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/submachine/mixer,
 /turf/simulated/floor/white/side{
 	dir = 4
 	},
@@ -8217,11 +8201,6 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/access/engineering_power,
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "southsolar";
-	name = "South Solars";
-	enter_id = "inner"
-	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
 "aBu" = (
@@ -8706,10 +8685,6 @@
 "aCX" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/mining,
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "mining";
-	name = "Mining"
-	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/mining/staff_room)
 "aCY" = (
@@ -9148,11 +9123,6 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/engineering_power,
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "southsolar";
-	name = "South Solars";
-	enter_id = "outer"
-	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
 "aEc" = (
@@ -10348,10 +10318,6 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/mining,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "mining";
-	name = "Mining"
-	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/mining/staff_room)
 "aHJ" = (
@@ -10378,10 +10344,6 @@
 /area/station/janitor/office)
 "aHN" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "southmerch";
-	name = "South Merchant Dock"
-	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/main)
 "aHO" = (
@@ -10516,11 +10478,6 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "southsolar";
-	name = "South Solars";
-	enter_id = "inner"
-	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "aIx" = (
@@ -10541,11 +10498,6 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "southsolar";
-	name = "South Solars";
-	enter_id = "outer"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -10901,11 +10853,6 @@
 "aKb" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "miningshuttle";
-	name = "Mining Shuttle";
-	enter_id = "inner"
-	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "aKc" = (
@@ -11123,11 +11070,6 @@
 /area/station/hangar/arrivals)
 "aKJ" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "miningshuttle";
-	name = "Mining Shuttle";
-	enter_id = "outer"
-	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "aKK" = (
@@ -18127,10 +18069,6 @@
 /obj/mapping_helper/access/engineering_power,
 /obj/cable/yellow{
 	icon_state = "4-8"
-	},
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "northsolar2";
-	name = "North Solars"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/west)

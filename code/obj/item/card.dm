@@ -166,15 +166,6 @@ TYPEINFO(/obj/item/card/emag)
 	icon_state = "polaris"
 	keep_icon = TRUE
 
-/obj/item/card/id/pirate
-	access = list(access_maint_tunnels, access_pirate)
-	assignment = "Space Pirate"
-
-	first_mate
-		assignment = "Space Pirate First Mate"
-	captain
-		assignment = "Space Pirate Captain"
-
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
 	desc = "An ID card to help open doors, lock pods, and identify your body."

@@ -144,8 +144,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify
 	var/name
 	var/desc
-	var/additional_options = list()
-	var/additional_toggles = list()
+	var/additional_options
+	var/additional_toggles
 	var/static/datum/terrainify/terrainify_lock
 	var/allow_underwater = FALSE
 	var/syndi_camo_color = null
@@ -209,7 +209,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	proc/handle_mining(params, list/turfs)
 		var/mining = params["Mining"]
-		mining = (mining == "None") ? null : mining
+		mining = (mining == "No") ? null : mining
 		if(mining)
 			var/list/turf/valid_spots = list()
 			for(var/turf/simulated/wall/auto/asteroid/AST in turfs)
@@ -243,7 +243,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	proc/place_prefabs(prefabs_to_place, flags)
 		var/failsafe = 800
 		for (var/n = 1, n <= prefabs_to_place && failsafe-- > 0)
-			var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
+			var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet)
 			if (P)
 				var/maxX = (world.maxx - AST_MAPBORDER)
 				var/maxY = (world.maxy - AST_MAPBORDER)
@@ -323,10 +323,6 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/void
 	name = "Void Station"
 	desc = "Turn space into the unknowable void? Space if filled with the void, inhibited by those departed, and chunks of scaffolding."
-
-	New()
-		syndi_camo_color = list(nuke_op_color_matrix[1], "#a223d2", nuke_op_color_matrix[3])
-		..()
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())

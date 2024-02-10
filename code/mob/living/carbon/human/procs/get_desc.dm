@@ -247,10 +247,12 @@
 		else
 			. += "<br>[SPAN_ALERT("<B>[src.name]'s entire chest is missing!</B>")]"
 
-		if (!src.organHolder.butt)
-			. += "<br>[SPAN_ALERT("<B>[src.name]'s butt seems to be missing!</B>")]"
-		else if (src.organHolder.back_op_stage > BACK_SURGERY_CLOSED)
-			. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on [t_his] butt!</B>")]"
+
+		if (src.organHolder.back_op_stage > BACK_SURGERY_CLOSED)
+			if (!src.organHolder.butt)
+				. += "<br>[SPAN_ALERT("<B>[src.name]'s butt seems to be missing!</B>")]"
+			else
+				. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on [t_his] butt!</B>")]"
 
 	if (src.limbs)
 		if (!src.limbs.l_arm)

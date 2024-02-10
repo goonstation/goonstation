@@ -1586,7 +1586,9 @@ About the new airlock wires panel:
 		if (!src.has_panel)
 			boutput(user, SPAN_ALERT("[src] does not have a panel for you to unscrew!"))
 			return
-		SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/machinery/door/airlock/proc/interact_panel, user, C.icon, C.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+		src.panel_open = !(src.panel_open)
+		tgui_process.update_uis(src)
+		src.UpdateIcon()
 	else if (issnippingtool(C) && src.panel_open)
 		return src.Attackhand(user)
 	else if (ispulsingtool(C))
@@ -1598,19 +1600,6 @@ About the new airlock wires panel:
 	else
 		..()
 	return
-
-/obj/machinery/door/airlock/proc/interact_panel(mob/user)
-	if (!src.panel_open)
-		user.visible_message(SPAN_ALERT("[user] opens the maintenance panel on \the [src.name]."))
-		logTheThing(LOG_STATION, user, "opens the maintenance panel on \the [src.name] airlock/door at [log_loc(src)]")
-	else
-		user.visible_message(SPAN_ALERT("[user] closes the maintenance panel on \the [src.name]."))
-		logTheThing(LOG_STATION, user, "closes the maintenance panel on \the [src.name] airlock/door at [log_loc(src)]")
-	src.panel_open = !(src.panel_open)
-	tgui_process.update_uis(src)
-	src.UpdateIcon()
-	playsound(src.loc, 'sound/items/screwdriver2.ogg', 25, TRUE)
-
 
 /obj/machinery/door/airlock/proc/weld_action(mob/user)
 	if(!src.density)
@@ -1677,8 +1666,6 @@ About the new airlock wires panel:
 /// adds the airlock in question to the global list.
 /obj/machinery/door/airlock/proc/attempt_cycle_link()
 	if (src.cycle_id)
-		if(!cycling_airlocks[src.cycle_id])	// add a list to the list of lists
-			cycling_airlocks[src.cycle_id] = list()
 		if (!(src in cycling_airlocks[src.cycle_id]))
 			cycling_airlocks[src.cycle_id] += src
 

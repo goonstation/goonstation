@@ -44286,7 +44286,7 @@
 /area/russian/radiation)
 "idR" = (
 /obj/table/reinforced/auto,
-/obj/machinery/mixer,
+/obj/submachine/mixer,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -55070,7 +55070,7 @@
 /area/russian/radiation)
 "ngI" = (
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/submachine/mixer,
 /obj/disposalpipe/segment/morgue,
 /turf/space,
 /area/russian/radiation)
@@ -59794,7 +59794,7 @@
 	name = "dried vomit"
 	},
 /obj/table/wood/auto,
-/obj/machinery/mixer,
+/obj/submachine/mixer,
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor3"
 	},

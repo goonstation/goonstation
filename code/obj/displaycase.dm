@@ -172,7 +172,7 @@
 	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "caplaser"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
-	item_state = "capgun"
+	item_state = "gun"
 	force = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBELT

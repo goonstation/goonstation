@@ -350,7 +350,7 @@
 /area/ship/artemis)
 "wN" = (
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/submachine/mixer,
 /turf/simulated/floor/blue/checker,
 /area/ship/artemis)
 "wY" = (

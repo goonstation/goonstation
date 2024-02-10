@@ -2118,7 +2118,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/swampzone/interiors/outbuildings)
 "cBV" = (
-/obj/machinery/mixer,
+/obj/submachine/mixer,
 /obj/table/auto,
 /turf/unsimulated/floor/green/side{
 	dir = 1

@@ -827,7 +827,8 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			if (user)
 				newThing.add_fingerprint(user)
 				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.getID() ? "[newThing.material.getID()]" : "*UNKNOWN*"]) at [log_loc(T)].")
-		change_stack_amount(-1)
+				user.u_equip(src)
+		qdel(src)
 		return newThing
 
 /obj/item_dispenser/barricade

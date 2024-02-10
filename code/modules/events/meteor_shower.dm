@@ -369,15 +369,11 @@ var/global/meteor_shower_active = 0
 			process()
 
 	proc/check_hits()
-		for(var/turf/T in range(1,src))
-			if(!T.density)
-				continue
-			//let's not just go straight through unsimmed turfs and total the inside of the listening post
-			if (!issimulatedturf(T) || !istype(T, /turf/unsimulated))
-				continue
+		for(var/turf/simulated/S in range(1,src))
+			if(!S.density) continue
 			hit_object = 1
 			if (prob(meteorhit_chance))
-				T.meteorhit(src)
+				S.meteorhit(src)
 
 		for(var/mob/M in range(1,src))
 			if(M == src) continue //Just to make sure

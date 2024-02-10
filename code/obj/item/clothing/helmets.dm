@@ -565,10 +565,10 @@
 		light_dir.update(0)
 
 	attack_self(mob/user)
-		src.flashlight_toggle(user, activated_inhand = TRUE)
+		src.flashlight_toggle(user)
 		return
 
-	proc/flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
+	proc/flashlight_toggle(var/mob/user, var/force_on = 0)
 		on = !on
 		src.icon_state = "hardhat[on]"
 		src.item_state = "hardhat[on]"
@@ -577,10 +577,6 @@
 			light_dir.update(1)
 		else
 			light_dir.update(0)
-		if (activated_inhand)
-			var/obj/ability_button/flashlight_hardhat/flashlight_button = locate(/obj/ability_button/flashlight_hardhat) in src.ability_buttons
-			if(istype(flashlight_button))
-				flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
 		return
 
 	attackby(var/obj/item/T, mob/user as mob)
@@ -608,9 +604,8 @@
 				light_dir.update(0)
 			user.update_clothing()
 			if (activated_inhand)
-				var/obj/ability_button/flashlight_hardhat/flashlight_button = locate(/obj/ability_button/flashlight_hardhat) in src.ability_buttons
-				if (istype(flashlight_button))
-					flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
+				var/obj/ability_button/flashlight_engiehelm/flashlight_button = locate(/obj/ability_button/flashlight_engiehelm) in src.ability_buttons
+				flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
 			return
 
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
@@ -627,7 +622,7 @@
 		setProperty("heatprot", 10)
 		setProperty("meleeprot_head", 5)
 
-	flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
+	flashlight_toggle(var/mob/user, var/force_on = 0)
 		on = !on
 		user.update_clothing()
 		if (on)

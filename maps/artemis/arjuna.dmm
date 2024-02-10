@@ -227,7 +227,7 @@
 /area/ship/arjuna)
 "qD" = (
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/submachine/mixer,
 /turf/simulated/floor/blue/checker,
 /area/ship/arjuna)
 "rc" = (

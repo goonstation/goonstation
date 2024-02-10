@@ -3979,7 +3979,7 @@
 /area/station/devzone)
 "Yr" = (
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/submachine/mixer,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "Yt" = (

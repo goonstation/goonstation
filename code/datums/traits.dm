@@ -551,7 +551,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 		..()
 
 	onAdd(mob/living/owner)
-		if(owner.traitHolder?.hasTrait("atheist"))
+		if(owner.traitHolder?.hasTrait("athiest"))
 			src.faith_mult = 0.2
 
 /datum/trait/job/medical

@@ -130,7 +130,7 @@ var/global/current_state = GAME_STATE_INVALID
 			if("action")
 				src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
 			if("intrigue")
-				src.mode = config.pick_mode(pick(prob(300);"traitor", prob(200);"mixed_rp", prob(75);"changeling",prob(75);"vampire", prob(50);"spy_theft", prob(50);"arcfiend", prob(50);"salvager", prob(50);"extended"))
+				src.mode = config.pick_mode(pick(prob(300);"traitor", prob(200);"mixed_rp", prob(75);"changeling",prob(75);"vampire", prob(50);"spy_theft", prob(50);"arcfiend", prob(50);"salvager", prob(50);"extended", prob(50);"gang"))
 			if("pod_wars") src.mode = config.pick_mode("pod_wars")
 			else src.mode = config.pick_mode(master_mode)
 
