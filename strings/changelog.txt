@@ -1,5 +1,9 @@
 
 (t)fri feb 09 24
+(u)LeahTheTech
+(p)17915
+(e)🆕⚖|C-Feature, C-Balance
+(*)Tiny items can now be hidden under floor tiles, mousetraps hidden like this will trigger when the tile is pried up again.
 (u)IPingu
 (p)17826
 (e)📄|A-UI
