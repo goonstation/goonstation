@@ -1337,8 +1337,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (book.vr && !src.vr_allowed)
 			return 3
 		if (src.assoc_spell)
-			var/datum/antagonist/wizard/antag_role = user.mind.get_antagonist(ROLE_WIZARD)
-			if (antag_role.ability_holder.getAbility(assoc_spell))
+			if (book.antag_datum.ability_holder.getAbility(assoc_spell))
 				return 2
 		if (book.uses < src.cost)
 			return 1 // ran out of points
