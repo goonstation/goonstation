@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Button, Collapsible, Divider, LabeledList, Section, Stack } from '../components';
+import { Box, Button, Collapsible, Dimmer, Divider, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 // If I wanna color the categories, but probably gonna be scrapped
@@ -84,10 +84,10 @@ const SpellCategory = (props, context) => {
 
 const Spell = (props, context) => {
   const { data, act } = useBackend(context);
-  const { spellbook_contents } = data;
+  const { spellbook_contents, vr } = data;
   const { spell, category } = props;
 
-  let spell_contents = [];
+  let spell_contents = []; // desc, cost, cooldown, vr_allowed
 
   for (let spell_data in spellbook_contents[category][spell]) {
     spell_contents.push(spellbook_contents[category][spell][spell_data]);
@@ -95,29 +95,36 @@ const Spell = (props, context) => {
 
   return (
     <Stack.Item>
-      <Section
-        title={spell}
-        backgroundColor={"#384e68"}
-        m={1}
-        buttons={
-          <Button backgroundColor={"green"} onClick={() => act("buyspell", { spell: spell })}>
-            {"Purchase"}
-          </Button>
-        }
-      >
-        <LabeledList>
-          <LabeledList.Item label={"Cost"}>
-            {spell_contents[1]}
-          </LabeledList.Item>
-          {spell_contents[2] !== null && (
-            <LabeledList.Item label={"Cooldown"}>
-              {spell_contents[2]/10+" seconds"}
+      <Section>
+        {(vr === 1) && (spell_contents[3] === 0) && (
+          <Dimmer>
+            <Box fontSize={1.5} backgroundColor={"#384e68"} p={2}>
+              spell unavailable in VR
+            </Box>
+          </Dimmer>
+        )}
+        <Section
+          title={spell}
+          buttons={
+            <Button backgroundColor={"green"} onClick={() => act("buyspell", { spell: spell })}>
+              {"Purchase"}
+            </Button>
+          }
+        >
+          <LabeledList>
+            <LabeledList.Item label={"Cost"}>
+              {spell_contents[1]}
             </LabeledList.Item>
-          )}
-          <LabeledList.Item label={"Description"}>
-            {spell_contents[0]}
-          </LabeledList.Item>
-        </LabeledList>
+            {spell_contents[2] !== null && (
+              <LabeledList.Item label={"Cooldown"}>
+                {spell_contents[2]/10+" seconds"}
+              </LabeledList.Item>
+            )}
+            <LabeledList.Item label={"Description"}>
+              {spell_contents[0]}
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
       </Section>
     </Stack.Item>
   );

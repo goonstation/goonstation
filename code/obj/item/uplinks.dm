@@ -1331,6 +1331,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	ui_static_data(mob/user)
 		. = list()
 		.["owner_name"] = user.real_name
+		.["vr"] = src.vr
 
 		var/list/spellbook_contents = list()
 		for(var/datum/SWFuplinkspell/spell in src.spells)
@@ -1344,7 +1345,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					desc = spell.desc,
 					cost = spell.cost,
 					cooldown = cooldown_contents,
-					vr = spell.vr_allowed
+					vr_allowed = spell.vr_allowed
 				)
 
 		.["spellbook_contents"] = spellbook_contents
@@ -1366,12 +1367,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					if (spell.name == chosen_spell)
 						chosen_spell = spell
 						break
-				/*
-				for (var/D in typesof(/datum/SWFuplinkspell))
-					if (D.name == chosen_spell)
-						chosen_spell = D.name
-						break
-				*/
 				switch(chosen_spell.SWFspell_CheckRequirements(usr,src))
 					if(1) boutput(usr, SPAN_ALERT("You have no more magic points to spend."))
 					if(2) boutput(usr, SPAN_ALERT("You already have this spell."))
