@@ -80,6 +80,7 @@
 
 	disposing()
 		clear_armer()
+		UnregisterSignal(src, COMSIG_MOVABLE_FLOOR_REVEALED)
 		. = ..()
 
 	attack_hand(mob/user)
