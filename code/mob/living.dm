@@ -1232,7 +1232,7 @@
 			(isintangible(M) && (M in hearers)) || \
 			( \
 				(!isturf(say_location.loc) && (say_location.loc == M.loc || (say_location in M))) && \
-				!(M in heard_a) && \
+				!(M in heard_a) && !(M in heard_b) &&\
 				!istype(M, /mob/dead/target_observer) && \
 				M != src \
 			) \

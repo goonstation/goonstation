@@ -6191,7 +6191,7 @@
 /area/station/crew_quarters/catering)
 "ats" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/item/device/radio/intercom/catering,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -10090,7 +10090,7 @@
 /area/station/crew_quarters/cafeteria)
 "aDx" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
