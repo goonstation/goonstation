@@ -289,7 +289,7 @@ TYPEINFO(/obj/item/fish_portal)
 				src.visible_message("<b class='alert'>Fishes jump out of [src]! [pick("Holy shit!", "Holy fuck!", "What the hell!", "What the fuck!")]</b>")
 				// lets create a neat water spread effect
 				var/datum/effects/system/steam_spread/splash = new /datum/effects/system/steam_spread
-				splash.set_up(4, 0, get_turf(src), "#382ec9")
+				splash.set_up(6, 0, get_turf(src), color="#382ec9", plane=PLANE_NOSHADOW_ABOVE)
 				splash.attach(src)
 				splash.start()
 		//Now we damage the pond. No infinite dynamite fishing
