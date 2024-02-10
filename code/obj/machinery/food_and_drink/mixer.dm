@@ -245,6 +245,10 @@ TYPEINFO(/obj/machinery/mixer)
 		. = ..()
 		src.UpdateIcon()
 
+	disposing()
+		. = ..()
+		src.ClearSpecificOverlays(0)
+
 	update_icon()
 		if (!src || !istype(src))
 			return
@@ -254,14 +258,14 @@ TYPEINFO(/obj/machinery/mixer)
 		else
 			src.icon_state = "blender_empty"
 
-		src.overlays.len = 0
+		src.ClearSpecificOverlays(1)
 		var/powered = src.status & NOPOWER
 
 		if (powered)
-			src.overlays += image(src.icon, "blender_off")
+			src.UpdateOverlays(image(src.icon, "blender_off"), "blender_off")
 		else if (!powered && !src.working)
-			src.overlays += image(src.icon, "blender_powered")
+			src.UpdateOverlays(image(src.icon, "blender_powered"), "blender_powered")
 		else
-			src.overlays += image(src.icon, "blender_working")
+			src.UpdateOverlays(image(src.icon, "blender_working"), "blender_working")
 
 		return
