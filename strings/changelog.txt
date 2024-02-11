@@ -1,4 +1,18 @@
 
+(t)fri feb 09 24
+(u)LeahTheTech
+(+)The chemical request console now shows the request in the PDA notification.
+(p)17915
+(e)🆕⚖|C-Feature, C-Balance
+(*)Tiny items can now be hidden under floor tiles, mousetraps hidden like this will trigger when the tile is pried up again.
+(u)IPingu
+(p)17826
+(e)📄|A-UI
+(+)Converts HVAC interface to TGUI
+(u)MeggalBozale
+(p)17897
+(e)💅📄|C-QoL, A-UI
+(*)Tank Transfer Valves now use TGUI menus.
 (t)thu feb 08 24
 (u)Tyrant
 (p)17894
