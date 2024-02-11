@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author EleSeu (https://github.com/EleSeu)
+ * @license ISC
+ */
+
 import { useBackend } from '../backend';
 import { Button, Flex, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
