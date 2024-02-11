@@ -119,7 +119,7 @@
 	// now, we set the arm injection up
 	if (length(origin_plant.assoc_reagents) > 0)
 		var/datum/limb/mouth/maneater/manipulated_limb = src.scaleable_limb
-		manipulated_limb.amount_to_inject = clamp(round(baseline_injection + injection_amount_per_yield * passed_genes?.get_effective_value("cropsize")), 1, maxcap_injection )
+		manipulated_limb.amount_to_inject = clamp(round(baseline_injection + injection_amount_per_yield * HYPchem_scaling(passed_genes?.get_effective_value("cropsize")) * passed_genes?.get_effective_value("cropsize")), 1, maxcap_injection )
 		manipulated_limb.chems_to_inject |= HYPget_assoc_reagents(origin_plant, passed_genes)
 	..()
 	return src
