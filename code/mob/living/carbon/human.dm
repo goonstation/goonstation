@@ -173,6 +173,8 @@
 
 
 	//really dont like this but kinda prefer being able to click stuff under turfs
+	var/hideturfs = TRUE
+
 	var/turf/SWTurf = null
 	var/turf/STurf = null
 	var/turf/SETurf = null
@@ -3368,7 +3370,7 @@
 				S.layer = initial(S.layer)
 				if (prob(20)) boutput(src, "You run right the fuck out of your shoes. [SPAN_ALERT("Shit!")]")
 
-	if(src.client)
+	if(src.client && src.hideturfs)
 		//turf hider ew ew ew
 		src.SWTurf?.alpha = src.SWAlpha
 		src.STurf?.alpha = src.SAlpha
