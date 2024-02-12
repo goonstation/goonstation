@@ -118,6 +118,8 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 	ZERO_GASES(src.air_transient)
 
 	for(var/datum/gas_mixture/gas as anything in src.gases)
+		if (isnull(gas))
+			continue
 		src.air_transient.volume += gas.volume
 		total_thermal_energy += THERMAL_ENERGY(gas)
 		total_heat_capacity += HEAT_CAPACITY(gas)
@@ -141,6 +143,8 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 
 	//Update individual gas_mixtures by volume ratio
 	for(var/datum/gas_mixture/gas as anything in src.gases)
+		if (isnull(gas))
+			continue
 		#define _RECONCILE_AIR_TRANSFER(GAS, ...) gas.GAS = src.air_transient.GAS * gas.volume / src.air_transient.volume ;
 		APPLY_TO_GASES(_RECONCILE_AIR_TRANSFER)
 		#undef _RECONCILE_AIR_TRANSFER
