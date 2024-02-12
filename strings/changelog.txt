@@ -1,5 +1,7 @@
 
 (t)sun feb 11 24
+(u)LeahTheTech
+(+)The actionbar for opening and closing airlock wiring panels is now private (cannot be seen by other players).
 (u)Sord
 (+)You can now order a communications dish manudrive (and commaster disk) from cargo.
 (t)fri feb 09 24
