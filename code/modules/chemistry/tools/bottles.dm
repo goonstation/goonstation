@@ -6,42 +6,25 @@
 /obj/item/reagent_containers/glass/bottle
 	name = "bottle"
 	desc = "A small bottle."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle1"
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "bottle_1"
 	item_state = "atoxinbottle"
 	initial_volume = 30
-	var/image/fluid_image
-	var/bottle_style = null
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 	object_flags = NO_GHOSTCRITTER
+	fluid_overlay_states = 6
+	var/bottle_style = null
 
 	New()
 		if (!src.bottle_style)
 			src.bottle_style = "[rand(1,4)]"
-		src.UpdateIcon()
-		..()
 
-	on_reagent_change()
-		..()
-		src.UpdateIcon()
+		. = ..()
 
-	update_icon()
-		..()
-		if (!(findtext(src.icon_state, "bottle", 1, length("bottle") + 1)))
-			return
-		src.underlays = null
-		if (reagents?.total_volume)
-			var/datum/color/average = reagents.get_average_color()
-			var/fluid_state = round(clamp((((src.reagents.total_volume / src.reagents.maximum_volume) * 4) + 1), 1, 4))
-			src.fluid_image = image('icons/obj/chemical.dmi', "fluid-bottle[bottle_style]-[fluid_state]", -1)
-			src.icon_state = "bottle[bottle_style]-[fluid_state]"
-			src.fluid_image.color = average.to_rgba()
-			src.underlays += src.fluid_image
-		else
-			src.icon_state = "bottle[bottle_style]"
-		signal_event("icon_updated")
+		src.container_style = "bottle_[src.bottle_style]"
+		src.UpdateIcon()
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */

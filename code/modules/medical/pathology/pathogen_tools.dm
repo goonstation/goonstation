@@ -250,17 +250,13 @@
 /obj/item/reagent_containers/glass/vial
 	name = "vial"
 	desc = "A vial. Can hold up to 5 units."
-	icon = 'icons/obj/pathology.dmi'
-	icon_state = "vial0"
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "phial"
 	item_state = "vial"
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
-
-	on_reagent_change()
-		..()
-		if (reagents.total_volume < 0.05)
-			icon_state = "vial0"
-		else
-			icon_state = "vial1"
+	accepts_lid = TRUE
+	fluid_overlay_states = 5
+	container_style = "phial"
 
 	New()
 		var/datum/reagents/R = new /datum/reagents(5)
@@ -280,9 +276,6 @@
 /obj/item/reagent_containers/glass/vial/prepared
 	name = "Totally Safe(tm) pathogen sample"
 	desc = "A vial. Can hold up to 5 units."
-	icon = 'icons/obj/pathology.dmi'
-	icon_state = "vial0"
-	item_state = "vial"
 	var/datum/microbody/FM = null
 
 	New()
@@ -303,6 +296,8 @@
 			RE.add_reagent("water", 5)
 			#endif
 
+			src.UpdateIcon()
+
 /obj/item/reagent_containers/glass/vial/prepared/virus
 	FM = /datum/microbody/virus
 
@@ -319,8 +314,6 @@
 	name = "Beaker of Parasitic Medium"
 	desc = "A mix of blood and flesh; fertile ground for some microbes."
 
-	icon_state = "beaker"
-
 	New()
 		..()
 		src.reagents.add_reagent("parasiticmedium", 50)
@@ -328,8 +321,6 @@
 /obj/item/reagent_containers/glass/beaker/egg
 	name = "Beaker of Eggs"
 	desc = "Eggs; fertile ground for some microbes."
-
-	icon_state = "beaker"
 
 	New()
 		..()
@@ -339,8 +330,6 @@
 	name = "Beaker of Stable Mutagen"
 	desc = "Stable Mutagen; fertile ground for some microbes."
 
-	icon_state = "beaker"
-
 	New()
 		..()
 		src.reagents.add_reagent("dna_mutagen", 50)
@@ -348,8 +337,6 @@
 /obj/item/reagent_containers/glass/beaker/bacterial
 	name = "Beaker of Bacterial Growth Medium"
 	desc = "Bacterial Growth Medium; fertile ground for some microbes."
-
-	icon_state = "beaker"
 
 	New()
 		..()
@@ -359,8 +346,6 @@
 	name = "Beaker of Fungal Growth Medium"
 	desc = "Fungal Growth Medium; fertile ground for some microbes."
 
-	icon_state = "beaker"
-
 	New()
 		..()
 		src.reagents.add_reagent("fungalmedium", 50)
@@ -368,8 +353,6 @@
 /obj/item/reagent_containers/glass/beaker/antiviral
 	name = "Beaker of Antiviral Agent"
 	desc = "A beaker of a weak anti-viral agent."
-
-	icon_state = "beaker"
 
 	New()
 		..()
@@ -379,8 +362,6 @@
 	name = "Beaker of Biocides"
 	desc = "A beaker of biocides. The label says 'do not feed to worms or mushrooms'. Curious."
 
-	icon_state = "beaker"
-
 	New()
 		..()
 		src.reagents.add_reagent("biocide", 50)
@@ -389,8 +370,6 @@
 	name = "Beaker of Spaceacillin"
 	desc = "It's penicillin in space."
 
-	icon_state = "beaker"
-
 	New()
 		..()
 		src.reagents.add_reagent("spaceacillin", 50)
@@ -398,8 +377,6 @@
 /obj/item/reagent_containers/glass/beaker/inhibitor
 	name = "Beaker of Inhibition Agent"
 	desc = "It's green, that's for sure."
-
-	icon_state = "beaker"
 
 	New()
 		..()
