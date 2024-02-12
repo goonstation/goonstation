@@ -248,9 +248,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 				name = current_reagent.name,
 				colorR = current_reagent.fluid_r,
 				colorG = current_reagent.fluid_g,
-				colorB = current_reagent.fluid_b,
-				state = current_reagent.reagent_state,
-				id = reagent
+				colorB = current_reagent.fluid_b
 			)))
 		. = list(
 			"flavors" = flavorsTemp
@@ -285,35 +283,39 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 				src.cone = null
 				src.UpdateIcon()
 				. = TRUE
+
 			if("eject_beaker")
 				var/obj/item/target = src.beaker
 				if (!target)
 					boutput(usr, SPAN_ALERT("There is no beaker loaded!"))
 					return
+
 				usr.put_in_hand_or_eject(target)
 				boutput(usr, SPAN_NOTICE("You have removed the beaker from [src]."))
 				src.beaker = null
 				src.UpdateIcon()
 				. = TRUE
+
 			if("make_ice_cream")
 				if(!cone)
 					boutput(usr, SPAN_ALERT("There is no cone loaded!"))
 					return
+
 				var/flavor = params["flavor"]
 				var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
 				if(flavor == "beaker")
 					if(!beaker.reagents.total_volume)
 						boutput(usr, SPAN_ALERT("The beaker is empty!"))
 						return
+
 					beaker.reagents.trans_to(newcream,40)
 				else if(flavor in src.flavors)
 					newcream.reagents.add_reagent(flavor,40)
+
 				usr.put_in_hand_or_eject(newcream)
 				src.cone = null
 				src.UpdateIcon()
 				. = TRUE
-		if (.)
-			tgui_process.update_uis(src)
 
 
 	attack_ai(var/mob/user as mob)

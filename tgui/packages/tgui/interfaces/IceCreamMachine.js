@@ -45,14 +45,16 @@ export const BeakerFlavor = (props, context) => {
 
   return (
     <Section title="Custom Flavor" fill>
-      <Flex direction="column" mt="10px">
+      <Flex direction="column">
         <ReagentGraph container={beaker} />
         <Flex wrap >
           <Flex.Item>
             <Button key="beaker"
               mt=".5rem"
-              icon="check" color="green" title="Make Custom Ice Cream"
-              disabled={!beaker}
+              mr=".5rem"
+              icon="check" color="green"
+              disabled={!beaker || !beaker.totalVolume}
+              tooltip={beaker && !beaker.totalVolume ? "Beaker Is Empty" : ""}
               onClick={() => act("make_ice_cream", { flavor: "beaker" })}>
               Make Custom Ice Cream
             </Button>
@@ -60,9 +62,7 @@ export const BeakerFlavor = (props, context) => {
           <Flex.Item>
             <Button
               mt=".5rem"
-              ml=".5rem"
-              icon="eject" title="Eject Beaker"
-              mr="10px"
+              icon="eject"
               disabled={!beaker}
               onClick={() => act("eject_beaker")} >
               {!beaker ? "Eject Beaker" : "Eject " + beaker.name }
@@ -83,8 +83,7 @@ export const ConeButton = (props, context) => {
       <Flex.Item nowrap>
         <Button
           mt="0.5rem"
-          icon="eject" title="Eject Cone"
-          mr="10px"
+          icon="eject"
           disabled={!cone}
           onClick={() => act("eject_cone")} >
           Eject Cone
@@ -99,13 +98,13 @@ export const IceCreamMachine = (props, context) => {
     <Window
       title="Ice Cream-O-Mat 9900"
       width={430}
-      height={300}>
+      height={275}>
       <Window.Content>
         <Stack m="0.25rem" vertical fill>
           <Stack.Item>
             <StandardFlavors />
           </Stack.Item>
-          <Stack.Item grow={1}>
+          <Stack.Item>
             <BeakerFlavor />
           </Stack.Item>
           <Stack.Item m=".25rem">
