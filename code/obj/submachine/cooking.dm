@@ -240,17 +240,18 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 
 	ui_static_data(mob/user)
 		var/list/flavorsTemp = list()
-		if(flavors)
-			for(var/reagent in flavors)
-				var/datum/reagent/fooddrink/current_reagent = reagents_cache[reagent]
-				flavorsTemp.Add(list(list(
-					name = current_reagent.name,
-					colorR = current_reagent.fluid_r,
-					colorG = current_reagent.fluid_g,
-					colorB = current_reagent.fluid_b,
-					state = current_reagent.reagent_state,
-					id = reagent
-				)))
+		if(!flavors)
+			return
+		for(var/reagent in flavors)
+			var/datum/reagent/fooddrink/current_reagent = reagents_cache[reagent]
+			flavorsTemp.Add(list(list(
+				name = current_reagent.name,
+				colorR = current_reagent.fluid_r,
+				colorG = current_reagent.fluid_g,
+				colorB = current_reagent.fluid_b,
+				state = current_reagent.reagent_state,
+				id = reagent
+			)))
 		. = list(
 			"flavors" = flavorsTemp
 		)
@@ -275,51 +276,39 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 		src.add_fingerprint(usr)
 		switch(action)
 			if("eject_cone")
-				if(!cone)
-					usr.show_text("There is no cone loaded!")
-					return
 				var/obj/item/target = src.cone
-				if (target)
-					if((BOUNDS_DIST(usr, src) == 0))
-						usr.put_in_hand_or_eject(target)
-					else
-						target.set_loc(src.loc)
-				usr.show_text("You have removed the cone from [src].")
+				if (!target)
+					boutput(usr, SPAN_ALERT("There is no cone loaded!"))
+					return
+				usr.put_in_hand_or_eject(target)
+				boutput(usr, SPAN_NOTICE("You have removed the cone from [src]."))
 				src.cone = null
 				src.UpdateIcon()
 				. = TRUE
 			if("eject_beaker")
-				if(!beaker)
-					usr.show_text("There is no beaker loaded!")
-					return
 				var/obj/item/target = src.beaker
-				if (target)
-					if((BOUNDS_DIST(usr, src) == 0))
-						usr.put_in_hand_or_eject(target)
-					else
-						target.set_loc(src.loc)
-				usr.show_text("You have removed the beaker from [src].")
+				if (!target)
+					boutput(usr, SPAN_ALERT("There is no beaker loaded!"))
+					return
+				usr.put_in_hand_or_eject(target)
+				boutput(usr, SPAN_NOTICE("You have removed the beaker from [src]."))
 				src.beaker = null
 				src.UpdateIcon()
 				. = TRUE
-
 			if("make_ice_cream")
 				if(!cone)
-					usr.show_text("There is no cone loaded!")
+					boutput(usr, SPAN_ALERT("There is no cone loaded!"))
 					return
 				var/flavor = params["flavor"]
 				var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
 				if(flavor == "beaker")
 					if(!beaker.reagents.total_volume)
-						usr.show_text("The beaker is empty!")
+						boutput(usr, SPAN_ALERT("The beaker is empty!"))
 						return
 					beaker.reagents.trans_to(newcream,40)
 				else if(flavor in src.flavors)
 					newcream.reagents.add_reagent(flavor,40)
-				if((BOUNDS_DIST(usr, src) == 0))
-					usr.put_in_hand_or_eject(newcream)
-				else
-					newcream.set_loc(src.loc)
+				usr.put_in_hand_or_eject(newcream)
 				src.cone = null
 				src.UpdateIcon()
 				. = TRUE
