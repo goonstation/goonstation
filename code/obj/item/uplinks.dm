@@ -1289,12 +1289,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "spellbook"
 	item_state = "spellbook"
+	var/datum/antagonist/wizard/antag_datum = null
 	var/wizard_key = ""
-	var/temp = null
 	var/uses = 6
-	var/selfdestruct = 0
-	var/traitor_frequency = 0
-	var/obj/item/device/radio/origradio = null
 	var/list/spells = list()
 	flags = FPRINT | TABLEPASS | TGUI_INTERACTIVE
 	c_flags = ONBELT
@@ -1309,8 +1306,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	uses = 9999
 #endif
 
-	New(var/in_vr = 0)
+	New(datum/antagonist/wizard/antag, in_vr = FALSE)
 		..()
+		src.antag_datum = antag
 		if (in_vr)
 			vr = 1
 			uses *= 2
@@ -1392,8 +1390,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (book.vr && !src.vr_allowed)
 			return 3
 		if (src.assoc_spell)
-			var/datum/antagonist/wizard/antag_role = user.mind.get_antagonist(ROLE_WIZARD)
-			if (antag_role.ability_holder.getAbility(assoc_spell))
+			if (book.antag_datum.ability_holder.getAbility(assoc_spell))
 				return 2
 		if (book.uses < src.cost)
 			return 1 // ran out of points
@@ -1403,8 +1400,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		logTheThing(LOG_DEBUG, null, "[constructTarget(user)] purchased the spell [src.name] using the [book] uplink.")
 		if (src.assoc_spell)
-			var/datum/antagonist/wizard/antag_role = user.mind.get_antagonist(ROLE_WIZARD)
-			antag_role.ability_holder.addAbility(src.assoc_spell)
+			book.antag_datum.ability_holder.addAbility(src.assoc_spell)
 		if (src.assoc_item)
 			var/obj/item/I = new src.assoc_item(user.loc)
 			if (istype(I, /obj/item/staff) && user.mind && !isvirtual(user))

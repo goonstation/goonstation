@@ -33,7 +33,6 @@ export const Wizard_Spellbook = (props, context) => {
     spellbook_contents,
     owner_name,
     spell_slots,
-    spell_test,
   } = data;
 
   let spell_categories = [];
@@ -84,7 +83,7 @@ const SpellCategory = (props, context) => {
 
 const Spell = (props, context) => {
   const { data, act } = useBackend(context);
-  const { spellbook_contents, vr } = data;
+  const { spellbook_contents, spell_slots, vr } = data;
   const { spell, category } = props;
 
   let spell_contents = []; // desc, cost, cooldown, vr_allowed
@@ -106,7 +105,11 @@ const Spell = (props, context) => {
         <Section
           title={spell}
           buttons={
-            <Button backgroundColor={"green"} onClick={() => act("buyspell", { spell: spell })}>
+            <Button
+              backgroundColor={"green"}
+              disabled={spell_slots < spell_contents[1]}
+              onClick={() => act("buyspell", { spell: spell })}
+            >
               {"Purchase"}
             </Button>
           }
