@@ -9,8 +9,8 @@
 		..()
 		selection = new /obj/adventurepuzzle/marker
 		power = input("Fireball explosion power? (default should do if you want this to be doable)", "Fireball explosion", 5) as num
-		boutput(usr, "<span class='notice'>Right click to set trap target. Right click active target to clear target. Left click to place trap. Ctrl+click anywhere to finish.</span>")
-		boutput(usr, "<span class='notice'>Special note: If no target is set, the fireball will launch at the nearest mob.</span>")
+		boutput(usr, SPAN_NOTICE("Right click to set trap target. Right click active target to clear target. Left click to place trap. Ctrl+click anywhere to finish."))
+		boutput(usr, SPAN_NOTICE("Special note: If no target is set, the fireball will launch at the nearest mob."))
 
 	disposing()
 		if (target)
@@ -176,7 +176,7 @@
 		if (exploding)
 			return
 		for (var/mob/M in viewers(src))
-			boutput(M, "<span class='alert'>The [name] explodes!</span>")
+			boutput(M, SPAN_ALERT("The [name] explodes!"))
 		exploding = 1
 		var/turf/T = get_turf(src)
 		explosion_new(src, T, power)

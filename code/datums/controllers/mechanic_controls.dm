@@ -62,7 +62,7 @@ var/datum/mechanic_controller/mechanic_controls
 			var/datum/manufacture/mechanics/cached_print = new /datum/manufacture/mechanics(manuf_controls)
 			if (istype(src.blueprint,/datum/manufacture/mechanics/))
 				return
-			cached_print = get_schematic_from_path_in_custom(src.item_type)
+			cached_print = get_schematic_from_path_in_custom(src.item_type, silent = TRUE)
 			if (cached_print)
 				src.blueprint = cached_print
 				return

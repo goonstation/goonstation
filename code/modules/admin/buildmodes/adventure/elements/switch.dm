@@ -15,8 +15,8 @@
 		button_name = input("Button name", "Button name", "button") as text
 		var/bdstr = input("Is the button dense (impassable)?", "Passability", "yes") in list("yes", "no")
 		button_density = (bdstr == "yes") ? 1 : 0
-		boutput(usr, "<span class='notice'>Left click to place buttons, right click triggerables to (de)select them for automatic assignment to the buttons. Ctrl+click anywhere to finish.</span>")
-		boutput(usr, "<span class='notice'>NOTE: Select stuff first, then make buttons for extra comfort!</span>")
+		boutput(usr, SPAN_NOTICE("Left click to place buttons, right click triggerables to (de)select them for automatic assignment to the buttons. Ctrl+click anywhere to finish."))
+		boutput(usr, SPAN_NOTICE("NOTE: Select stuff first, then make buttons for extra comfort!"))
 
 	proc/clear_selections()
 		for (var/obj/O in selected_triggerable)
@@ -64,7 +64,7 @@
 						selected_triggerable_untrigger += object
 						selected_triggerable_untrigger[object] = unact
 					else
-						boutput(user, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(user, SPAN_ALERT("ERROR: Missing actions definition for triggerable [object]."))
 
 /obj/adventurepuzzle/triggerer/twostate/switch
 	icon = 'icons/obj/randompuzzles.dmi'
@@ -81,7 +81,7 @@
 		if (!istype(user))
 			return
 		if (!(user in range(1)))
-			boutput(user, "<span class='alert'>You must go closer!</span>")
+			boutput(user, SPAN_ALERT("You must go closer!"))
 			return
 		if (!pressed)
 			pressed = 1

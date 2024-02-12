@@ -50,7 +50,7 @@
 				else
 					AM.meteorhit()
 				playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
-				src.visible_message("<span class='alert'><B>[src]</B> smashes into \the [AM]!</span>")
+				src.visible_message(SPAN_ALERT("<B>[src]</B> smashes into \the [AM]!"))
 		..()
 
 	proc/setup_loot_table()

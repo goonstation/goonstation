@@ -54,7 +54,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/martian)
 		else
 			src.material_trigger_when_attacked(W, user, 1)
 			attack_particle(user, src)
-			src.visible_message("<span class='alert'>[user ? user : "Someone"] hits [src] with [W].</span>", "<span class='alert'>You hit [src] with [W].</span>")
+			src.visible_message(SPAN_ALERT("[user ? user : "Someone"] hits [src] with [W]."), SPAN_ALERT("You hit [src] with [W]."))
 			src.take_damage(W.force / 2)
 
 	dismantle_wall(devastated=0, keep_material = 1)

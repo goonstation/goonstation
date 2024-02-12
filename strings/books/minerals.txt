@@ -104,7 +104,7 @@ and luxury goods traders for their compact shapes, light weight and highly varie
 <h2>Fibrilith</h2>
 <p>Classification: Crystal</p>
 <p>Fibrilith is a highly strange mineral known for both its unusual threaded molecular structure and its extreme softness for
-a mineral substance. While it is not paticularly useful in any kind of construction project, it has been successfully woven
+a mineral substance. While it is not particularly useful in any kind of construction project, it has been successfully woven
 into a fabric highly similar to linen. As such, it is prized by textile industries and used in clothing.
 </p>
 
@@ -122,10 +122,10 @@ and thus it is not suited to certain structural projects.
 <h2>Claretine</h2>
 <p>Classification: Crystal, High Energy Conductor</p>
 <p>A mineral salt of a brilliant bright red coloration, Claretine is a high-end electrical conductor, able to conduct immense
-amounts of electricity without suffering any damage at all. At paticularly high energy states, Pharosium and other lower
+amounts of electricity without suffering any damage at all. At particularly high energy states, Pharosium and other lower
 grade conductors have been known to lose efficiency due to heat and eventually break down and melt - Claretine appears to
 have an incredible resistance to heat in general, and thus is spun into wire spools and used for electrical wiring in
-paticularly high-energy systems. It is not common however, and should be used resourcefully.
+particularly high-energy systems. It is not common however, and should be used resourcefully.
 </p>
 
 <h2>Telecrystal</h2>
@@ -185,7 +185,7 @@ for biomatter intensive processes like cloning.
 <h2>Koshmarite</h2>
 <p>Classification: Crystal</p>
 <p>Koshmarite is a fairly common fiber that occurs in deposits of unknown origins. It is dusted in a fine layer of regolith, as Cerenkite
-is, though the pourous surface leads to less scatter of the regolith when handled. It should still be treated as a radiation hazard to
+is, though the porous surface leads to less scatter of the regolith when handled. It should still be treated as a radiation hazard to
 personnel working with it. It also has incredibly high albedo, leading to strong reflectance of light. Some believe that Koshmarite appears
 to pulsate, though it is not known if these visual effects were conjurations brought on to the observers by acute radiation sickness.
 </p>
@@ -215,7 +215,7 @@ erebite has unique energy-altering properties that make it invaluable as an inte
 
 <h2>Starstone</h2>
 <p>Classification: Extraordinarily Dense Crystalline Matter</p>
-<p>Starstone is a highly rare mineral not found in the vast majority of mining areas. While not paticularly useful as a
+<p>Starstone is a highly rare mineral not found in the vast majority of mining areas. While not particularly useful as a
 construction grade material (being only as strong as mid-grade Molitz at best), the unusual star-shaped crystal lattices
 making up this jewel make the few instances of it found by astrogeologists highly prized collectors items. Sapient members
 of the Rock Snake race in paticular tend to buy these for high prices, as even a small five gram crystal is able to provide

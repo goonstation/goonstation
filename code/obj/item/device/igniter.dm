@@ -113,14 +113,14 @@ TYPEINFO(/obj/item/device/igniter)
 
 		R.setDetState(0)
 		src.add_fingerprint(user)
-		user.show_message("<span class='notice'>You hook up the igniter to the multitool's panel.</span>")
+		user.show_message(SPAN_NOTICE("You hook up the igniter to the multitool's panel."))
 
 	if (isscrewingtool(W))
 		src.status = !(src.status)
 		if (src.status)
-			user.show_message("<span class='notice'>The igniter is ready!</span>")
+			user.show_message(SPAN_NOTICE("The igniter is ready!"))
 		else
-			user.show_message("<span class='notice'>The igniter can now be attached!</span>")
+			user.show_message(SPAN_NOTICE("The igniter can now be attached!"))
 		src.add_fingerprint(user)
 
 	return
@@ -139,7 +139,7 @@ TYPEINFO(/obj/item/device/igniter)
 /obj/item/device/igniter/afterattack(atom/target, mob/user as mob)
 	if (!ismob(target) && target.reagents && can_ignite())
 		flick("igniter_light", src)
-		boutput(user, "<span class='notice'>You heat \the [target.name]</span>")
+		boutput(user, SPAN_NOTICE("You heat \the [target.name]"))
 		target.reagents.temperature_reagents(4000,400)
 		last_ignite = world.time
 

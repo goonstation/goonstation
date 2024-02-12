@@ -81,7 +81,7 @@
 /area/space)
 "x" = (
 /obj/table/reinforced/roulette,
-/obj/item/spacecash/random/really_small{
+/obj/item/currency/spacecash/really_small{
 	pixel_y = 10
 	},
 /obj/item/dice/coin/poker_chip/v10{
@@ -150,7 +150,7 @@
 /area/space)
 "Z" = (
 /obj/roulette_table_w,
-/obj/item/spacecash/random/really_small,
+/obj/item/currency/spacecash/really_small,
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled{
 	pixel_y = 10;
 	pixel_x = -10

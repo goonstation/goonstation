@@ -136,7 +136,7 @@
 				survivors[player.real_name] = "alive"
 
 	if (survivors.len)
-		boutput(world, "<span class='notice'><B>The following survived the [disaster_name] event!</B></span>")
+		boutput(world, SPAN_NOTICE("<B>The following survived the [disaster_name] event!</B>"))
 		for(var/survivor in survivors)
 			var/condition = survivors[survivor]
 			switch(condition)
@@ -146,7 +146,7 @@
 					boutput(world, "<span>&emsp; <FONT size = 1>[survivor] stayed alive. Whereabouts unknown.</FONT></span>")
 
 	else
-		boutput(world, "<span class='notice'><B>No one survived the [disaster_name] event!</B></span>")
+		boutput(world, SPAN_NOTICE("<B>No one survived the [disaster_name] event!</B>"))
 
 #ifdef RP_MODE // if rp do not set to secret
 		world.save_mode("extended")

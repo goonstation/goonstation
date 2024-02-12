@@ -85,7 +85,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 		return TRUE
 	if(BOUNDS_DIST(source, user) == 0 || (IN_RANGE(source, user, 1))) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
-	else if (source in bible_contents && locate(/obj/item/bible) in range(1, user)) // whoever added the global bibles, fuck you
+	else if ((source in bible_contents) && locate(/obj/item/bible) in range(1, user)) // whoever added the global bibles, fuck you
 		return TRUE
 	else
 		if (iscarbon(user))
@@ -95,7 +95,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 				var/Y = source:y
 				var/Z = source:z
 				if (isrestrictedz(Z) || isrestrictedz(user:z))
-					boutput(user, "<span class='alert'>Your telekinetic powers don't seem to work here.</span>")
+					boutput(user, SPAN_ALERT("Your telekinetic powers don't seem to work here."))
 					return 0
 				SPAWN(0)
 					//I really shouldnt put this here but i dont have a better idea

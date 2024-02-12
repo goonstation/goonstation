@@ -19,7 +19,7 @@
 			return
 
 		if(ship.control_lock && keys)
-			user.show_message("<span class='alert'>The controls are locked!</span>")
+			user.show_message(SPAN_ALERT("The controls are locked!"))
 			return
 
 		if (ship.engine_check()) // ENGINE CHECK HERE LATER

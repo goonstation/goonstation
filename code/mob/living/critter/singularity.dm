@@ -7,7 +7,7 @@
   if(!istype(T) || !istype(S))
     return
   if(!S.affects_mobs && ismob(T))
-    S.show_message("<span class='alert'>You can't seem to exert enough attractive force to budge it.</span>")
+    S.show_message(SPAN_ALERT("You can't seem to exert enough attractive force to budge it."))
     return
   if(GET_DIST(T, user) <= grav_range)
     if(!T.anchored)
@@ -15,9 +15,9 @@
         S.visible_message("<span style='color:red; font-weight:bold'>[S] [pick("sucks", "draws", "pulls", "yanks", "tugs", "flings")] [T] towards itself!</span>")
         T.throw_at(S, grav_range, 2)
     else
-      S.show_message("<span class='alert'>You can't seem to exert enough attractive force to budge it.</span>")
+      S.show_message(SPAN_ALERT("You can't seem to exert enough attractive force to budge it."))
   else
-    S.show_message("<span class='alert'>It's too far away, your gravitational drop-off is too severe.[prob(10) ? " Curse you, general relativity!" : ""]</span>")
+    S.show_message(SPAN_ALERT("It's too far away, your gravitational drop-off is too severe.[prob(10) ? " Curse you, general relativity!" : ""]"))
 
 /mob/living/critter/singularity
   name = "singularity"
@@ -80,7 +80,7 @@
   if (istype(I, /obj/item/clothing/mask/cigarette))
     var/obj/item/clothing/mask/cigarette/C = I
     if (!C.on)
-      C.light(user, "<span class='alert'><b>[user]</b> lights [C] on [src]. Mildly impressive!</span>")
+      C.light(user, SPAN_ALERT("<b>[user]</b> lights [C] on [src]. Mildly impressive!"))
     else
       return ..()
   else

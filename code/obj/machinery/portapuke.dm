@@ -37,7 +37,7 @@
 	Entered(atom/movable/Obj, atom/OldLoc)
 		if(isliving(Obj) && src.n_occupants >= src.max_occupants)
 			Obj.set_loc(OldLoc)
-			Obj.visible_message("<span class='alert'>[Obj] doesn't manage to fit into \the [src].</span>")
+			Obj.visible_message(SPAN_ALERT("[Obj] doesn't manage to fit into \the [src]."))
 			return FALSE
 		. = ..()
 		if(isliving(Obj))
@@ -67,7 +67,7 @@
 			, 100, 1)
 
 		if (prob(15))
-			visible_message("<span class='alert'>[src] sprays vomit all around itself!</span>")
+			visible_message(SPAN_ALERT("[src] sprays vomit all around itself!"))
 			playsound(src, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 			for (var/turf/T in range(src, rand(1, 3)))
 				if(T.density)
@@ -85,19 +85,19 @@
 			return
 
 		if (isdead(occupant))
-			src.visible_message("<span class='alert'>[src] spits out a dead corpse.</span>")
+			src.visible_message(SPAN_ALERT("[src] spits out a dead corpse."))
 			occupant.set_loc(src.loc)
 			return
 
 		if(occupant.health <= -180 && prob(25))
-			src.visible_message("<span class='alert'>[src] spits out a near lifeless corpse.</span>")
+			src.visible_message(SPAN_ALERT("[src] spits out a near lifeless corpse."))
 			occupant.set_loc(src.loc)
 			return
 
 		occupant.TakeDamage("All", 10, 0, 0, DAMAGE_BLUNT)
 
 		if (prob(5))
-			visible_message("<span class='alert'>[occupant] pukes [his_or_her(occupant)] guts out!</span>")
+			visible_message(SPAN_ALERT("[occupant] pukes [his_or_her(occupant)] guts out!"))
 			playsound(src, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 			for (var/turf/T in range(src, rand(1, 3)))
 				if(T.density)
@@ -106,18 +106,18 @@
 
 			if (prob(5) && occupant.organHolder?.heart)
 				occupant.organHolder.drop_organ("heart")
-				occupant.visible_message("<span class='alert'><b>Wait, is that [his_or_her(occupant)] heart!?</b></span>")
+				occupant.visible_message(SPAN_ALERT("<b>Wait, is that [his_or_her(occupant)] heart!?</b>"))
 
 		if (prob(30))
-			boutput(occupant, "<span class='alert'>You [pick("have a gut-wrenching sensation", "feel horribly sick", "feel like you're going to throw up", "feel like you're going to puke")]</span>")
+			boutput(occupant, SPAN_ALERT("You [pick("have a gut-wrenching sensation", "feel horribly sick", "feel like you're going to throw up", "feel like you're going to puke")]"))
 
 		if (prob(25))
 			for (var/mob/O in viewers(src, null))
 				if (O == occupant || isdead(O))
 					continue
-				O.show_message("<span class='alert'><b>[occupant]</b> is puking over and over! It's all slimy and stringy. Oh god.</span>", 1)
+				O.show_message(SPAN_ALERT("<b>[occupant]</b> is puking over and over! It's all slimy and stringy. Oh god."), 1)
 				if (prob(66))
-					var/vomit_message = "<span class='alert'>[O] pukes all over [himself_or_herself(O)].</span>"
+					var/vomit_message = SPAN_ALERT("[O] pukes all over [himself_or_herself(O)].")
 					O.vomit(0, null, vomit_message)
 
 		if (prob(40))
@@ -126,12 +126,12 @@
 
 
 	relaymove(mob/user as mob)
-		boutput(user, "<span class='alert'>You're trapped inside!</span>")
+		boutput(user, SPAN_ALERT("You're trapped inside!"))
 
 
 	attackby(var/obj/item/I, var/mob/user)
 		if (!isliving(user))
-			boutput(user, "<span class='alert'>You're dead! Quit that!</span>")
+			boutput(user, SPAN_ALERT("You're dead! Quit that!"))
 			return
 
 		if(istype(I, /obj/item/grab))
@@ -144,14 +144,14 @@
 			var/mob/living/L = user
 
 			if (isdead(target))
-				boutput(user, "<span class='alert'>[target] is dead and cannot be forced to puke.</span>")
+				boutput(user, SPAN_ALERT("[target] is dead and cannot be forced to puke."))
 				return
 
 			if (L.pulling == target)
 				L.remove_pulling()
 
 			src.add_fingerprint(user)
-			src.visible_message("<span class='alert'><b>[user] shoves [target] into [src]!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[user] shoves [target] into [src]!</b>"))
 			logTheThing(LOG_COMBAT, user, "shoves [constructTarget(target,"combat")] into a portapuke at [log_loc(user)].")
 			target.set_loc(src)
 			src.UpdateIcon()

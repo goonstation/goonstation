@@ -13,12 +13,12 @@
 			if((islist(valid_calibers) && (initial(W.caliber) in valid_calibers) || (!islist(valid_calibers) && valid_calibers == initial(W.caliber)) || valid_calibers == "All"))
 				new W.default_magazine(get_turf(src))
 				var/obj/O = W.default_magazine
-				boutput(user, "<span class='alert'>You get a [O.name] out of [src].</span>")
+				boutput(user, SPAN_ALERT("You get a [O.name] out of [src]."))
 				qdel(src)
 			if(valid_calibers == "All")
 				new W.default_magazine(get_turf(src))
 				var/obj/O = W.default_magazine
-				boutput(user, "<span class='alert'>You get a [O.name] out of [src].</span>")
+				boutput(user, SPAN_ALERT("You get a [O.name] out of [src]."))
 				qdel(src)
 		else
 			..()
@@ -71,7 +71,7 @@
 
 	attackby(obj/item/gun/kinetic/W, mob/user)
 		if(!deployed)
-			boutput(user, "<span class='alert'>The [src] isn't unfolded!</span>")
+			boutput(user, SPAN_ALERT("The [src] isn't unfolded!"))
 			return
 
 		if(!istype(W))
@@ -106,10 +106,10 @@
 
 		if(charge >= ammo_cost)
 			var/obj/item/created = new ammo(get_turf(src))
-			boutput(user, "<span class='alert'>You get an [initial(created.name)] out of [src].</span>")
+			boutput(user, SPAN_ALERT("You get an [initial(created.name)] out of [src]."))
 			charge -= ammo_cost
 		else
-			boutput(user, "<span class='alert'>The [src] doesn't have enough charge left to fabricate the ammo for [W]!</span>")
+			boutput(user, SPAN_ALERT("The [src] doesn't have enough charge left to fabricate the ammo for [W]!"))
 			return
 
 		desc = "A bag that can fabricate magazines for standard syndicate weapons. Technology! It has [charge] charge left."
@@ -138,14 +138,14 @@
 		if(istype(I, /obj/item/gun/kinetic))
 			var/obj/item/gun/kinetic/K = I
 			if(!K.ammo.refillable)
-				boutput(user, "<span class='alert'>The ammobag grumps unhappily. What?</span>")
+				boutput(user, SPAN_ALERT("The ammobag grumps unhappily. What?"))
 				return
 			if(K.ammo.amount_left>=K.max_ammo_capacity)
 				user.show_text("[K] is full!", "red")
 				return
 			K.ammo.amount_left = K.max_ammo_capacity
 			K.UpdateIcon()
-			user.visible_message("<span class='alert'>[user] refills [K] from [src].</span>", "<span class='alert'>You fully refill [K] with ammo from [src].</span>")
+			user.visible_message(SPAN_ALERT("[user] refills [K] from [src]."), SPAN_ALERT("You fully refill [K] with ammo from [src]."))
 			var/obj/item/ammo/bullets/magazine = K.default_magazine
 			var/reload_sound = initial(magazine.sound_load)
 			if(isnull(reload_sound))

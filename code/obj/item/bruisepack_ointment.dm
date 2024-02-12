@@ -19,7 +19,7 @@
 
 	examine()
 		. = ..()
-		. += "[bicon(src)] <span class='notice'>There [src.amount == 1 ? "is" : "are"] [src.amount] [src.name]\s left on the stack!</span>"
+		. += "[bicon(src)] [SPAN_NOTICE("There [src.amount == 1 ? "is" : "are"] [src.amount] [src.name]\s left on the stack!")]"
 
 	attack_hand(mob/user)
 		if (user.r_hand == src || user.l_hand == src)
@@ -68,7 +68,7 @@
 			if (target != user)
 				self = TRUE
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/medical/proc/do_use, list(target, user),\
-			src.icon, src.icon_state, "<span class='alert'>[user] applies [src] to [self ? "[target]" : "[himself_or_herself(target)]"].</span>", null)
+			src.icon, src.icon_state, SPAN_ALERT("[user] applies [src] to [self ? "[target]" : "[himself_or_herself(target)]"]."), null)
 
 	proc/do_use(mob/M, mob/user)
 		if (M != user && ishuman(M) && ishuman(user))

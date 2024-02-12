@@ -28,7 +28,7 @@
 			else if (reagents.has_reagent("bloodc"))
 				blood = reagents.get_reagent("bloodc")
 			if (blood == null)
-				boutput(usr, "<span class='alert'>Blood slides are not working. This is an error message, please page 1-800-555-MARQUESAS.</span>")
+				boutput(usr, SPAN_ALERT("Blood slides are not working. This is an error message, please page 1-800-555-MARQUESAS."))
 				return
 		else
 			desc = "This blood slide is contaminated and useless."
@@ -59,23 +59,23 @@
 	examine()
 		if (src.dirty || src.dirty_reason)
 			. = ..()
-			. += "<span class='alert'>The petri dish appears to be incapable of growing any pathogen, and must be cleaned.</span><br/>"
+			. += "[SPAN_ALERT("The petri dish appears to be incapable of growing any pathogen, and must be cleaned.")]<br/>"
 			return
 
 		. = list("This is [src]<br/>")
 		if (src.reagents.reagent_list["pathogen"])
 			var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
-			. += "<span class='notice'>It contains [P.volume] unit\s of harvestable pathogen.</span><br/>"
+			. += "[SPAN_NOTICE("It contains [P.volume] unit\s of harvestable pathogen.")]<br/>"
 		if (src.medium)
-			. += "<span class='notice'>The petri dish is coated with [src.medium.name].</span><br/>"
+			. += "[SPAN_NOTICE("The petri dish is coated with [src.medium.name].")]<br/>"
 		. += "Nutrients in the dish:<br/>"
 		var/count = 0
 		for (var/N in nutrition)
 			if (nutrition[N])
-				. += "<span class='notice'>[nutrition[N]] unit\s of [N]</span><br/>"
+				. += "[SPAN_NOTICE("[nutrition[N]] unit\s of [N]")]<br/>"
 				count++
 		if (!count)
-			. += "<span class='notice'>None.</span><br/>"
+			. += "[SPAN_NOTICE("None.")]<br/>"
 
 	afterattack(obj/target, mob/user , flag)
 		if (istype(target, /obj/machinery/microscope))
@@ -427,12 +427,12 @@
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (used)
-			boutput(user, "<span class='alert'>The [src.name] is empty.</span>")
+			boutput(user, SPAN_ALERT("The [src.name] is empty."))
 			return
 		if (ishuman(target))
 			if (target != user)
 				for (var/mob/V in viewers(target))
-					boutput(V, "<span class='alert'><b>[user] is trying to inject [target] with the [src.name]!</b></span>")
+					boutput(V, SPAN_ALERT("<b>[user] is trying to inject [target] with the [src.name]!</b>"))
 				var/ML = target.loc
 				var/UL = user.loc
 				SPAWN(3 SECONDS)
@@ -441,14 +441,14 @@
 					if (user.equipped() == src && target.loc == ML && user.loc == UL)
 						used = 1
 						for (var/mob/V in viewers(target))
-							boutput(V, "<span class='alert'><b>[user] is injects [target] with the [src.name]!</b></span>")
+							boutput(V, SPAN_ALERT("<b>[user] is injects [target] with the [src.name]!</b>"))
 						src.name = "empty [src.name]"
 						icon_state = "serum0"
 						inject(target, user)
 			else
 				used = 1
 				for (var/mob/V in viewers(target))
-					boutput(V, "<span class='alert'><b>[user] injects [target] with the [src.name]!</b></span>")
+					boutput(V, SPAN_ALERT("<b>[user] injects [target] with the [src.name]!</b>"))
 				icon_state = "serum0"
 				src.name = "empty [src.name]"
 				inject(user, user)

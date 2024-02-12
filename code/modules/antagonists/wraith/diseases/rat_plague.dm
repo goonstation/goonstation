@@ -2,7 +2,8 @@
 	name = "Rat Plague"
 	max_stages = 4
 	spread = "Non-Contagious"
-	cure = "Mercury"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Mercury"
 	reagentcure = list("mercury")
 	associated_reagent = "rat_spit"
 	stage_prob = 6
@@ -17,7 +18,7 @@
 			if(probmult(5)) affected_mob.emote(pick("cough", "sneeze"))
 			if (probmult(8))
 				var/procmessage = pick("You start to shiver.","You feel deathly ill.","Your heart is beating hard in your chest...")
-				boutput(affected_mob, "<span class='alert'>[procmessage]</span>")
+				boutput(affected_mob, SPAN_ALERT("[procmessage]"))
 		if(2)
 			if(probmult(10))
 				for(var/datum/ailment/A in affected_mob.ailments)
@@ -26,7 +27,7 @@
 				affected_mob.emote(pick("sneeze", "cough", "pale"))
 			if (probmult(8))
 				var/procmessage = pick("Your heart is beating irregularly...","Your whole body aches.","You feel the blood rush in your temples.")
-				boutput(affected_mob, "<span class='alert'>[procmessage]</span>")
+				boutput(affected_mob, SPAN_ALERT("[procmessage]"))
 		if(3)
 			if(probmult(15))
 				for(var/datum/ailment/A in affected_mob.ailments)
@@ -35,7 +36,7 @@
 				affected_mob.emote(pick("sneeze", "cough", "pale"))
 			if (probmult(8))
 				var/procmessage = pick("Your entire body hurts...","You just want to ball up in a corner and let the pain pass.","The suffering is unbearable.")
-				boutput(affected_mob, "<span class='alert'>[procmessage]</span>")
+				boutput(affected_mob, SPAN_ALERT("[procmessage]"))
 		if(4)
 			if(probmult(10))
 				for(var/datum/ailment/A in affected_mob.ailments)
@@ -44,7 +45,7 @@
 				affected_mob.emote(pick("cough", "sneeze", "pale"))
 			if (probmult(5))
 				var/procmessage = pick("It feels like you could drop dead any second...","You are getting worse by the minute.")
-				boutput(affected_mob, "<span class='alert'>[procmessage]</span>")
+				boutput(affected_mob, SPAN_ALERT("[procmessage]"))
 			if(probmult(4))
 				var/list/disease_list = list(/datum/ailment/disease/tissue_necrosis,
 				/datum/ailment/disease/space_madness,

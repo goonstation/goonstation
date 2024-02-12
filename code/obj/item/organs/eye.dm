@@ -81,27 +81,27 @@
 			target_organ_location = pick("right", "left")
 
 		if (target_organ_location == "right" && !H.organHolder.right_eye)
-			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right eye socket!</span>",\
-				"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] right eye socket!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your right eye socket!</span>")
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right eye socket!"),\
+				SPAN_ALERT("You [fluff] [src] into [user == H ? "your" : "[H]'s"] right eye socket!"),\
+				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your right eye socket!"))
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "right_eye", 2)
 			H.update_body()
 		else if (target_organ_location == "left" && !H.organHolder.left_eye)
-			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left eye socket!</span>",\
-				"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] left eye socket!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your left eye socket!</span>")
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left eye socket!"),\
+				SPAN_ALERT("You [fluff] [src] into [user == H ? "your" : "[H]'s"] left eye socket!"),\
+				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your left eye socket!"))
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "left_eye", 2)
 			H.update_body()
 		else
-			user.tri_message(H, "<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right eye socket!<br>But there's something already there!</span>",\
-				"<span class='alert'>You try to [fluff] the [src] into [user == H ? "your" : "[H]'s"] right eye socket!<br>But there's something already there!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [H == user ? "try" : "tries"] to [fluff] the [src] into your right eye socket!<br>But there's something already there!</span>")
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right eye socket!<br>But there's something already there!"),\
+				SPAN_ALERT("You try to [fluff] the [src] into [user == H ? "your" : "[H]'s"] right eye socket!<br>But there's something already there!"),\
+				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [H == user ? "try" : "tries"] to [fluff] the [src] into your right eye socket!<br>But there's something already there!"))
 			return 0
 
 		return 1
@@ -335,9 +335,9 @@ TYPEINFO(/obj/item/organ/eye/cyber/prodoc)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(M)
 		return
 
-	on_removal(var/mob/M)
+	on_removal()
 		processing_items.Remove(src)
-		REMOVE_ATOM_PROPERTY(M,PROP_MOB_EXAMINE_HEALTH,src)
+		REMOVE_ATOM_PROPERTY(donor,PROP_MOB_EXAMINE_HEALTH,src)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(donor)
 		..()
 		return
@@ -374,7 +374,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/camera)
 	icon_state = "eye-camera"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Eye Cam"
-	var/camera_network = "Zeta"
+	var/camera_network = "public"
 	default_material = "pharosium"
 	iris_color = "#0d0558"
 

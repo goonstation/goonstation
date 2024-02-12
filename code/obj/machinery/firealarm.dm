@@ -20,7 +20,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 	var/net_id
 	var/ringlimiter = 0
 	var/dont_spam = 0
-	var/static/manual_off_reactivate_idle = 8 //how many machine loop ticks to idle after being manually switched off
+	var/static/manual_off_reactivate_idle = 4 //! how many machine loop ticks to idle after being manually switched off
 	var/idle_count = 0
 	/// specifies if the alarm is currently going off
 	var/alarm_active = FALSE
@@ -88,7 +88,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(src.detecting)
 		if(temperature > T0C+200)
-			src.alarm()			// added check of detector status here
+			src.alarm(triggered_automatically=TRUE)			// added check of detector status here
 	return
 
 /obj/machinery/firealarm/attack_ai(mob/user as mob)
@@ -107,12 +107,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 	if (issnippingtool(W))
 		src.detecting = !( src.detecting )
 		if (src.detecting)
-			user.visible_message("<span class='alert'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
+			user.visible_message(SPAN_ALERT("[user] has reconnected [src]'s detecting unit!"), "You have reconnected [src]'s detecting unit.")
 			src.icon_state = "firep"
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			logTheThing(LOG_STATION, null, "[key_name(user)] fixed a fire alarm at ([log_loc(src.loc)])")
 		else
-			user.visible_message("<span class='alert'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
+			user.visible_message(SPAN_ALERT("[user] has disconnected [src]'s detecting unit!"), "You have disconnected [src]'s detecting unit.")
 			src.icon_state = "firep-cut"
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			logTheThing(LOG_STATION, null, "[key_name(user)] deactivated a fire alarm at ([log_loc(src.loc)])")
@@ -126,6 +126,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 /obj/machinery/firealarm/process()
 	if(status & (NOPOWER|BROKEN))
 		return
+	if(idle_count > 0)
+		idle_count--
 	..()
 
 /obj/machinery/firealarm/power_change()
@@ -169,7 +171,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 	post_alert(0)
 	return
 
-/obj/machinery/firealarm/proc/alarm()
+/obj/machinery/firealarm/proc/alarm(triggered_automatically=FALSE)
+	if(triggered_automatically && idle_count > 0)
+		return
+
 	if(!working)
 		return
 

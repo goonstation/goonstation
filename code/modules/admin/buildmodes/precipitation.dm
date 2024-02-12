@@ -20,7 +20,7 @@ Ctrl + Alt + Shift Left Click          - Edit Precipitation Controller<br>
 			if("snow")
 				effect_type = /obj/effects/precipitation/snow/grey/tile
 
-		boutput(usr, "<span class='notice'>Now placing [target].</span>")
+		boutput(usr, SPAN_NOTICE("Now placing [target]."))
 
 		update_icon_state("precip_[effect_type==/obj/effects/precipitation/rain/sideways/tile ? "rain" : "snow"]")
 
@@ -54,7 +54,7 @@ Ctrl + Alt + Shift Left Click          - Edit Precipitation Controller<br>
 				add_reagents(P.PC)
 				P.PC.update()
 			else
-				boutput(usr, "<span class='notice'>This doesn't have any precipitation.</span>")
+				boutput(usr, SPAN_NOTICE("This doesn't have any precipitation."))
 		else
 			new effect_type(T)
 			blink(T)

@@ -51,7 +51,7 @@ ABSTRACT_TYPE(/datum/parallax_render_source_group)
 
 	// Assign parallax layers corresponding to the parallax layer render sources to the client.
 	for (var/client/client as anything in src.members)
-		client.parallax_controller?.add_parallax_layer(new_parallax_render_sources)
+		client?.parallax_controller?.add_parallax_layer(new_parallax_render_sources)
 
 	// Begin a fade-in animation.
 	if (animation_time)

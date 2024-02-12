@@ -106,6 +106,7 @@
 		name = "shuriken pouch"
 		desc = "A pouch for carrying shurikens. Guaranteed to not shred."
 		slots = 4
+		can_hold = list(/obj/item/implant/projectile/shuriken)
 		spawn_contents = list(/obj/item/implant/projectile/shuriken = 4)
 
 /obj/item/storage/grenade_pouch

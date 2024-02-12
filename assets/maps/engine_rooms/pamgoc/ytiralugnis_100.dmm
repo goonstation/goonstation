@@ -1,0 +1,827 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 4
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/inner)
+"ab" = (
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/inner)
+"ac" = (
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/north,
+/area/station/engine/inner)
+"ad" = (
+/obj/cable/orange{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
+	},
+/area/station/engine/inner)
+"ae" = (
+/obj/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable/orange{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/inner)
+"af" = (
+/obj/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/north,
+/area/station/engine/inner)
+"ag" = (
+/obj/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/inner)
+"ah" = (
+/obj/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"ai" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aj" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"ak" = (
+/obj/item/gun/kinetic/antisingularity{
+	pixel_x = 16
+	},
+/obj/item/ammo/bullets/antisingularity,
+/obj/item/ammo/bullets/antisingularity,
+/obj/item/ammo/bullets/antisingularity,
+/obj/storage/secure/crate/eng{
+	name = "Singularity buster crate"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"al" = (
+/obj/machinery/atmospherics/binary/passive_gate/opened{
+	dir = 4;
+	target_pressure = 1e+031
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"am" = (
+/obj/machinery/atmospherics/binary/passive_gate/opened{
+	dir = 8;
+	target_pressure = 1e+031
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"an" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 8;
+	name = "cold loop inlet valve"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"ao" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 8;
+	name = "hot loop inlet valve"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"ap" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "outlet purge valve"
+	},
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aq" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "outlet purge valve"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"ar" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/east,
+/area/station/engine/inner)
+"as" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/east,
+/area/station/engine/inner)
+"at" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/east,
+/area/station/engine/inner)
+"au" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/station/engine/inner)
+"av" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable/orange{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/inner)
+"aw" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/inner)
+"ax" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 10
+	},
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/power/collector_array,
+/obj/cable/brown{
+	d1 = 0;
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable/orange{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"ay" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 10
+	},
+/obj/cable/orange{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/inner)
+"az" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 5
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/power/collector_array,
+/obj/cable/orange{
+	d1 = 0;
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aA" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
+	},
+/area/station/engine/inner)
+"aB" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable/orange{
+	d1 = 0;
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/collector_control,
+/obj/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aC" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/power/collector_array,
+/obj/cable/orange{
+	d1 = 0;
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aD" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 6
+	},
+/obj/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/east,
+/area/station/engine/inner)
+"aE" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 6
+	},
+/obj/machinery/power/collector_array,
+/obj/machinery/power/data_terminal,
+/obj/cable/orange{
+	d1 = 0;
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aF" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/power/collector_array,
+/obj/cable/orange{
+	d1 = 0;
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aG" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/power/collector_control,
+/obj/cable/orange{
+	d1 = 0;
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aH" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 9
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/power/collector_array,
+/obj/cable/orange{
+	d1 = 0;
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aI" = (
+/obj/machinery/dispenser,
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aJ" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 8;
+	name = "Singularity Room";
+	req_access = null
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/firedoor_spawn,
+/obj/decal/stripe_delivery,
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aK" = (
+/obj/machinery/emitter,
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"aL" = (
+/obj/machinery/emitter{
+	dir = 4
+	},
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"aM" = (
+/obj/machinery/emitter{
+	dir = 8
+	},
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"aN" = (
+/obj/machinery/field_generator,
+/obj/machinery/power/data_terminal,
+/obj/cable/orange{
+	d1 = 0;
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"aO" = (
+/obj/machinery/field_generator,
+/obj/machinery/power/data_terminal,
+/obj/cable/orange{
+	d1 = 0;
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"aP" = (
+/obj/machinery/light,
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"aQ" = (
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aR" = (
+/obj/machinery/light/emergency{
+	dir = 8
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aS" = (
+/obj/machinery/light/small/floor,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aT" = (
+/obj/machinery/light/small/floor,
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aU" = (
+/obj/machinery/light/small/floor,
+/obj/storage/closet/radiation,
+/obj/cable{
+	d1 = 0;
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aV" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"aW" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/orange{
+	d1 = 0;
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"aX" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/orange{
+	d1 = 0;
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"aY" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/orange{
+	d1 = 0;
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/collector_control,
+/obj/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"aZ" = (
+/obj/machinery/the_singularitygen,
+/obj/machinery/power/data_terminal,
+/obj/cable/orange{
+	d1 = 0;
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"ba" = (
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/firedoor_spawn,
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 8;
+	name = "Singularity Room";
+	req_access = null
+	},
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"bb" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 2
+	},
+/area/station/engine/inner)
+"bc" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/north,
+/area/station/engine/inner)
+"bd" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/caution/east,
+/area/station/engine/inner)
+"be" = (
+/obj/storage/closet/radiation,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"bf" = (
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+
+(1,1,1) = {"
+aU
+be
+an
+aQ
+ai
+aQ
+ai
+am
+ai
+ai
+aS
+"}
+(2,1,1) = {"
+ad
+ab
+ay
+aw
+ba
+aw
+av
+aa
+aA
+az
+aj
+"}
+(3,1,1) = {"
+af
+aK
+aX
+bf
+bf
+bf
+aX
+aM
+ag
+aB
+aj
+"}
+(4,1,1) = {"
+af
+bf
+aO
+bf
+bf
+bf
+aO
+bf
+ag
+aC
+aj
+"}
+(5,1,1) = {"
+af
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+ae
+ax
+ap
+"}
+(6,1,1) = {"
+ac
+aV
+bf
+bf
+aZ
+ak
+bf
+aP
+ag
+aY
+aI
+"}
+(7,1,1) = {"
+bc
+bf
+bf
+bf
+ah
+bf
+bf
+bf
+ag
+aE
+aq
+"}
+(8,1,1) = {"
+bc
+bf
+aN
+bf
+ah
+bf
+aN
+bf
+ag
+aF
+aj
+"}
+(9,1,1) = {"
+bc
+aK
+aW
+bf
+ah
+bf
+aW
+aL
+ag
+aG
+aj
+"}
+(10,1,1) = {"
+bb
+bd
+aD
+at
+aJ
+at
+as
+ar
+au
+aH
+aj
+"}
+(11,1,1) = {"
+aU
+be
+ao
+aR
+ai
+aR
+ai
+al
+ai
+ai
+aT
+"}

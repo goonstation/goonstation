@@ -83,25 +83,25 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	if (prob(33)) // if they REALLY fuck up
 		var/fluff = pick("", "confident ", "quick ", "agile ", "flamboyant ", "nimble ")
-		surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> makes a [fluff]cut into [patient]'s [target_area] with [src]!</span>",\
-			"<span class='alert'>You make a [fluff]cut into [patient]'s [target_area] with [src]!</span>",\
-			"<span class='alert'><b>[surgeon]</b> makes a [fluff]cut into your [target_area] with [src]!</span>")
+		surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> makes a [fluff]cut into [patient]'s [target_area] with [src]!"),\
+			SPAN_ALERT("You make a [fluff]cut into [patient]'s [target_area] with [src]!"),\
+			SPAN_ALERT("<b>[surgeon]</b> makes a [fluff]cut into your [target_area] with [src]!"))
 
 		patient.TakeDamage(surgeon.zone_sel.selecting, damage, 0)
 		take_bleeding_damage(patient, surgeon, damage, surgery_bleed = TRUE)
 		create_blood_sploosh(patient)
 		display_slipup_image(surgeon, patient.loc)
 
-		patient.visible_message("<span class='alert'><b>Blood gushes from the incision!</b> That can't have been the correct thing to do!</span>")
+		patient.visible_message(SPAN_ALERT("<b>Blood gushes from the incision!</b> That can't have been the correct thing to do!"))
 		return
 
 	else
 		var/fluff = pick("", "gently ", "carefully ", "lightly ", "trepidly ")
 		var/fluff2 = pick("prod", "poke", "jab", "dig")
 		var/fluff3 = pick("", " [he_or_she(surgeon)] looks [pick("confused", "unsure", "uncertain")][pick("", " about what [he_or_she(surgeon)]'s doing")].")
-		surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> [fluff][fluff2]s at [patient]'s [target_area] with [src].[fluff3]</span>",\
-			"<span class='alert'>You [fluff][fluff2] at [patient]'s [target_area] with [src].</span>",\
-			"<span class='alert'><b>[surgeon]</b> [fluff][fluff2]s at your [target_area] with [src].[fluff3]</span>")
+		surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> [fluff][fluff2]s at [patient]'s [target_area] with [src].[fluff3]"),\
+			SPAN_ALERT("You [fluff][fluff2] at [patient]'s [target_area] with [src]."),\
+			SPAN_ALERT("<b>[surgeon]</b> [fluff][fluff2]s at your [target_area] with [src].[fluff3]"))
 		return
 
 /proc/calc_screw_up_prob(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob, var/screw_up_prob = 25)
@@ -177,7 +177,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		// Check if patient has item in chest already
 		if (patient.chest_item == null)
 			if(chest_item.w_class > W_CLASS_NORMAL && !(chest_item.type in chestitem_whitelist))
-				boutput("<span class='alert'>[chest_item] is too big to fit into [patient]'s chest cavity.</span>")
+				boutput(surgeon, SPAN_ALERT("[chest_item] is too big to fit into [patient]'s chest cavity."))
 				return TRUE
 
 
@@ -191,18 +191,18 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 			if(surgeon.find_type_in_hand(/obj/item/suture/))
 				patient.chest_item_sewn = TRUE
-				surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> shoves [chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest and sutures it up.</span>",\
-					"<span class='notice'>You shove [chest_item] into [surgeon == patient ? "your" : "[patient]'s"] chest and suture it up.</span>",\
-					"<span class='notice'>[patient == surgeon ? "You shove [chest_item] into your chest and suture it up" : "<b>[surgeon]</b> shoves [chest_item] into your chest and sutures it up"].</span>")
+				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> shoves [chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest and sutures it up."),\
+					SPAN_NOTICE("You shove [chest_item] into [surgeon == patient ? "your" : "[patient]'s"] chest and suture it up."),\
+					SPAN_NOTICE("[patient == surgeon ? "You shove [chest_item] into your chest and suture it up" : "<b>[surgeon]</b> shoves [chest_item] into your chest and sutures it up"]."))
 				patient.TakeDamage("chest", rand(5, 15), 0)
 			else
-				surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> shoves [chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest.</span>",\
-					"<span class='notice'>You shove [chest_item] into [surgeon == patient ? "your" : "[patient]'s"] chest.</span>",\
-					"<span class='notice'>[patient == surgeon ? "You shove" : "<b>[surgeon]</b> shoves"] [chest_item] into your chest.</span>")
+				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> shoves [chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest."),\
+					SPAN_NOTICE("You shove [chest_item] into [surgeon == patient ? "your" : "[patient]'s"] chest."),\
+					SPAN_NOTICE("[patient == surgeon ? "You shove" : "<b>[surgeon]</b> shoves"] [chest_item] into your chest."))
 
 		else if (patient.chest_item != null)
 			// State that there's already something in the patient's chest.
-			surgeon.show_text("<span class='alert'>[patient.chest_item] is already inside [patient]'s chest cavity.</span>")
+			surgeon.show_text(SPAN_ALERT("[patient.chest_item] is already inside [patient]'s chest cavity."))
 		return TRUE
 	else
 		return FALSE
@@ -225,17 +225,17 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	if (!removing) // ?????
 		return FALSE
 
-	user.tri_message(H, "<span class='notice'><b>[user]</b> begins removing [H == user ? "[his_or_her(H)]" : "[H]'s"] bandage.</span>",\
-		"<span class='notice'>You begin removing [H == user ? "your" : "[H]'s"] bandage.</span>",\
-		"<span class='notice'>[H == user ? "You begin" : "<b>[user]</b> begins"] removing your bandage.</span>")
+	user.tri_message(H, SPAN_NOTICE("<b>[user]</b> begins removing [H == user ? "[his_or_her(H)]" : "[H]'s"] bandage."),\
+		SPAN_NOTICE("You begin removing [H == user ? "your" : "[H]'s"] bandage."),\
+		SPAN_NOTICE("[H == user ? "You begin" : "<b>[user]</b> begins"] removing your bandage."))
 
 	if (!do_mob(user, H, 50))
 		user.show_text("You were interrupted!", "red")
 		return TRUE
 
-	user.tri_message(H, "<span class='notice'><b>[user]</b> removes [H == user ? "[his_or_her(H)]" : "[H]'s"] bandage.</span>",\
-		"<span class='notice'>You remove [H == user ? "your" : "[H]'s"] bandage.</span>",\
-		"<span class='notice'>[H == user ? "You remove" : "<b>[user]</b> removes"] your bandage.</span>")
+	user.tri_message(H, SPAN_NOTICE("<b>[user]</b> removes [H == user ? "[his_or_her(H)]" : "[H]'s"] bandage."),\
+		SPAN_NOTICE("You remove [H == user ? "your" : "[H]'s"] bandage."),\
+		SPAN_NOTICE("[H == user ? "You remove" : "<b>[user]</b> removes"] your bandage."))
 
 	H.bandaged -= removing
 	H.update_body()
@@ -305,8 +305,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		return FALSE
 
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
-		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!</span>", \
-		"<span class='alert'>You fumble and stab yourself in the eye with [src]!</span>")
+		surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!"), \
+		SPAN_ALERT("You fumble and stab yourself in the eye with [src]!"))
 		surgeon.bioHolder.AddEffect("blind")
 		surgeon.changeStatus("weakened", 4 SECONDS)
 		JOB_XP(surgeon, "Clown", 1)
@@ -335,7 +335,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SCALPEL - INTENTIONAL SLIPUP ---------- */
 
 	if (surgeon.a_intent == INTENT_DISARM)
-		boutput(surgeon, "<span class='notice'>You mess up [patient]'s surgery on purpose.</span>")
+		boutput(surgeon, SPAN_NOTICE("You mess up [patient]'s surgery on purpose."))
 		do_slipup(surgeon, patient, "chest", damage_high, fluff)
 		return TRUE
 
@@ -347,7 +347,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return TRUE
 
 		if (!patient.organHolder.head)
-			boutput(surgeon, "<span class='alert'>[patient] doesn't have a head!</span>")
+			boutput(surgeon, SPAN_ALERT("[patient] doesn't have a head!"))
 			return FALSE
 
 		if (surgeon.a_intent == INTENT_HARM)
@@ -358,9 +358,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					do_slipup(surgeon, patient, "head", damage_low, fluff)
 					return TRUE
 
-				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts the skin of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck open with [src]!</span>",\
-					"<span class='alert'>You cut the skin of [surgeon == patient ? "your" : "[patient]'s"] neck open with [src]!</span>", \
-					"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] the skin of your neck open with [src]!</span>")
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts the skin of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck open with [src]!"),\
+					SPAN_ALERT("You cut the skin of [surgeon == patient ? "your" : "[patient]'s"] neck open with [src]!"), \
+					SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] the skin of your neck open with [src]!"))
 
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -374,9 +374,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					do_slipup(surgeon, patient, "head", damage_high, fluff2)
 					return TRUE
 
-				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> slices the tissue around [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] spine with [src]!</span>",\
-					"<span class='alert'>You slice the tissue around [surgeon == patient ? "your" : "[patient]'s"] spine with [src]!</span>",\
-					"<span class='alert'>[patient == surgeon ? "You slice" : "<b>[surgeon]</b> slices"] the tissue around your spine with [src]!</span>")
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> slices the tissue around [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] spine with [src]!"),\
+					SPAN_ALERT("You slice the tissue around [surgeon == patient ? "your" : "[patient]'s"] spine with [src]!"),\
+					SPAN_ALERT("[patient == surgeon ? "You slice" : "<b>[surgeon]</b> slices"] the tissue around your spine with [src]!"))
 
 				patient.TakeDamage("head", damage_high, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -390,9 +390,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				do_slipup(surgeon, patient, "head", damage_low, fluff)
 				return TRUE
 
-			surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts away the flesh holding [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right eye in with [src]!</span>",\
-				"<span class='alert'>You cut away the flesh holding [surgeon == patient ? "your" : "[patient]'s"] right eye in with [src]!</span>", \
-				"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] away the flesh holding your right eye in with [src]!</span>")
+			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts away the flesh holding [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right eye in with [src]!"),\
+				SPAN_ALERT("You cut away the flesh holding [surgeon == patient ? "your" : "[patient]'s"] right eye in with [src]!"), \
+				SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] away the flesh holding your right eye in with [src]!"))
 
 			patient.TakeDamage("head", damage_low, 0)
 			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -406,9 +406,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				do_slipup(surgeon, patient, "head", damage_low, fluff)
 				return TRUE
 
-			surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts away the flesh holding [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] left eye in with [src]!</span>",\
-				"<span class='alert'>You cut away the flesh holding [surgeon == patient ? "your" : "[patient]'s"] left eye in with [src]!</span>", \
-				"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] away the flesh holding your left eye in with [src]!</span>")
+			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts away the flesh holding [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] left eye in with [src]!"),\
+				SPAN_ALERT("You cut away the flesh holding [surgeon == patient ? "your" : "[patient]'s"] left eye in with [src]!"), \
+				SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] away the flesh holding your left eye in with [src]!"))
 
 			patient.TakeDamage("head", damage_low, 0)
 			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -430,9 +430,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					do_slipup(surgeon, patient, "head", damage_low, fluff)
 					return TRUE
 
-				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head open with [src]!</span>",\
-					"<span class='alert'>You cut [surgeon == patient ? "your" : "[patient]'s"] head open with [src]!</span>", \
-					"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your head open with [src]!</span>")
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head open with [src]!"),\
+					SPAN_ALERT("You cut [surgeon == patient ? "your" : "[patient]'s"] head open with [src]!"), \
+					SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your head open with [src]!"))
 
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -447,14 +447,14 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return TRUE
 
 				if (patient.organHolder.brain)
-					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> removes the connections to [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain with [src]!</span>",\
-						"<span class='alert'>You remove [surgeon == patient ? "your" : "[patient]'s"] connections to [surgeon == patient ? "your" : "[his_or_her(patient)]"] brain with [src]!</span>",\
-						"<span class='alert'>[patient == surgeon ? "You remove" : "<b>[surgeon]</b> removes"] the connections to your brain with [src]!</span>")
+					surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> removes the connections to [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain with [src]!"),\
+						SPAN_ALERT("You remove [surgeon == patient ? "your" : "[patient]'s"] connections to [surgeon == patient ? "your" : "[his_or_her(patient)]"] brain with [src]!"),\
+						SPAN_ALERT("[patient == surgeon ? "You remove" : "<b>[surgeon]</b> removes"] the connections to your brain with [src]!"))
 				else
 					// If the brain is gone, but the suture site was closed and we're re-opening
-					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> opens the area around [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain cavity with [src]!</span>",\
-						"<span class='alert'>You open the area around [surgeon == patient ? "your" : "[patient]'s"] brain cavity with [src]!</span>",\
-						"<span class='alert'>[patient == surgeon ? "You open" : "<b>[surgeon]</b> opens"] the area around your brain cavity with [src]!</span>")
+					surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> opens the area around [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain cavity with [src]!"),\
+						SPAN_ALERT("You open the area around [surgeon == patient ? "your" : "[patient]'s"] brain cavity with [src]!"),\
+						SPAN_ALERT("[patient == surgeon ? "You open" : "<b>[surgeon]</b> opens"] the area around your brain cavity with [src]!"))
 
 				patient.TakeDamage("head", damage_high, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -468,14 +468,14 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return TRUE
 
 				if (patient.organHolder.skull)
-					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] skull away from the skin with [src]!</span>",\
-						"<span class='alert'>You cut [surgeon == patient ? "your" : "[patient]'s"] skull away from the skin with [src]!</span>",\
-						"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your skull away from the skin with [src]!</span>")
+					surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] skull away from the skin with [src]!"),\
+						SPAN_ALERT("You cut [surgeon == patient ? "your" : "[patient]'s"] skull away from the skin with [src]!"),\
+						SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your skull away from the skin with [src]!"))
 				else
 					// If the skull is gone, but the suture site was closed and we're re-opening
-					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> opens [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] skull cavity with [src]!</span>",\
-						"<span class='alert'>You open [surgeon == patient ? "your" : "[patient]'s"] skull cavity with [src]!</span>",\
-						"<span class='alert'>[patient == surgeon ? "You open" : "<b>[surgeon]</b> opens"] your skull cavity with [src]!</span>")
+					surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> opens [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] skull cavity with [src]!"),\
+						SPAN_ALERT("You open [surgeon == patient ? "your" : "[patient]'s"] skull cavity with [src]!"),\
+						SPAN_ALERT("[patient == surgeon ? "You open" : "<b>[surgeon]</b> opens"] your skull cavity with [src]!"))
 
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -499,9 +499,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					do_slipup(surgeon, patient, "chest", damage_low, fluff)
 					return TRUE
 
-				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] lower back open with [src]!</span>",\
-					"<span class='alert'>You cut [surgeon == patient ? "your" : "[patient]'s"] lower back open with [src]!</span>",\
-					"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your lower back open with [src]!</span>")
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] lower back open with [src]!"),\
+					SPAN_ALERT("You cut [surgeon == patient ? "your" : "[patient]'s"] lower back open with [src]!"),\
+					SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your lower back open with [src]!"))
 
 				patient.TakeDamage("chest", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -515,9 +515,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					do_slipup(surgeon, patient, "chest", damage_high, fluff2)
 					return TRUE
 
-				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> severs [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] intestines with [src]!</span>",\
-					"<span class='alert'>You sever [surgeon == patient ? "your" : "[patient]'s"] intestines with [src]!</span>",\
-					"<span class='alert'>[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] your intestines with [src]!</span>")
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> severs [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] intestines with [src]!"),\
+					SPAN_ALERT("You sever [surgeon == patient ? "your" : "[patient]'s"] intestines with [src]!"),\
+					SPAN_ALERT("[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] your intestines with [src]!"))
 
 				patient.TakeDamage("chest", damage_high, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -538,14 +538,14 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_HELP)
 		if (length(patient.implant) > 0)
 			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-			surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src]!</span>",\
-				"<span class='alert'>You cut into [surgeon == patient ? "your" : "[patient]'s"] chest with [src]!</span>",\
-				"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] into your chest with [src]!</span>")
+			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src]!"),\
+				SPAN_ALERT("You cut into [surgeon == patient ? "your" : "[patient]'s"] chest with [src]!"),\
+				SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] into your chest with [src]!"))
 
 			for (var/obj/item/implant/projectile/I in patient.implant)
-				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts out \an [I] from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
-					"<span class='alert'>You cut out \an [I] from [surgeon == patient ? "yourself" : "[patient]"] with [src]!</span>",\
-					"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out \an [I] from you with [src]!</span>")
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts out \an [I] from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!"),\
+					SPAN_ALERT("You cut out \an [I] from [surgeon == patient ? "yourself" : "[patient]"] with [src]!"),\
+					SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] out \an [I] from you with [src]!"))
 
 				I.on_remove(patient)
 				patient.implant.Remove(I)
@@ -563,14 +563,14 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						do_slipup(surgeon, patient, "chest", damage_low, fluff)
 						return TRUE
 
-					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> makes a cut on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src]!</span>",\
-						"<span class='alert'>You make a cut on [surgeon == patient ? "your" : "[patient]'s"] chest with [src]!</span>",\
-						"<span class='alert'>[patient == surgeon ? "You make a cut" : "<b>[surgeon]</b> makes a cut"] on chest with [src]!</span>")
+					surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> makes a cut on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src]!"),\
+						SPAN_ALERT("You make a cut on [surgeon == patient ? "your" : "[patient]'s"] chest with [src]!"),\
+						SPAN_ALERT("[patient == surgeon ? "You make a cut" : "<b>[surgeon]</b> makes a cut"] on chest with [src]!"))
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 					patient.organHolder.chest.op_stage ++
 					patient.chest_cavity_clamped = FALSE	//Start bleeding all over the place until we are clamped or sutured
-					patient.visible_message("<span class='alert'>[patient] begins bleeding profusely from [his_or_her(patient)] open chest wound. Clamping the bleeders may alleviate this issue.</span>")
+					patient.visible_message(SPAN_ALERT("[patient] begins bleeding profusely from [his_or_her(patient)] open chest wound. Clamping the bleeders may alleviate this issue."))
 					return TRUE
 				if (1)
 					src.surgeryConfusion(patient, surgeon, damage_high)
@@ -583,7 +583,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return TRUE
 
 				if (3 to INFINITY)
-					boutput(surgeon, "<span class='alert'>[patient]'s op_stage is above intended parameters. Dial 1-800 CODER.</span>")
+					boutput(surgeon, SPAN_ALERT("[patient]'s op_stage is above intended parameters. Dial 1-800 CODER."))
 					return TRUE
 		else
 			return FALSE
@@ -613,8 +613,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		return FALSE
 
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
-		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> mishandles [src] and cuts [him_or_her(surgeon)]self!</span>",\
-		"<span class='alert'>You mishandle [src] and cut yourself!</span>")
+		surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> mishandles [src] and cuts [him_or_her(surgeon)]self!"),\
+		SPAN_ALERT("You mishandle [src] and cut yourself!"))
 		surgeon.changeStatus("weakened", 1 SECOND)
 		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(10, 20)
@@ -644,7 +644,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	if (surgeon.a_intent == INTENT_DISARM)
 		do_slipup(surgeon, patient, "chest", damage_high, fluff2)
-		boutput(surgeon, "<span class='notice'>You mess up [patient]'s surgery on purpose.</span>")
+		boutput(surgeon, SPAN_NOTICE("You mess up [patient]'s surgery on purpose."))
 		return TRUE
 
 /* ---------- SAW - HEAD ---------- */
@@ -655,7 +655,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return TRUE
 
 		if (!patient.organHolder.head)
-			boutput(surgeon, "<span class='alert'>[patient] doesn't have a head!</span>")
+			boutput(surgeon, SPAN_ALERT("[patient] doesn't have a head!"))
 			return FALSE
 
 		if (surgeon.a_intent == INTENT_HARM)
@@ -666,9 +666,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					do_slipup(surgeon, patient, "chest", damage_low, fluff)
 					return TRUE
 
-				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> severs most of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck with [src]!</span>",\
-					"<span class='alert'>You sever most of [surgeon == patient ? "your" : "[patient]'s"] neck with [src]!</span>",\
-					"<span class='alert'>[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] most of your neck with [src]!</span>")
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> severs most of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck with [src]!"),\
+					SPAN_ALERT("You sever most of [surgeon == patient ? "your" : "[patient]'s"] neck with [src]!"),\
+					SPAN_ALERT("[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] most of your neck with [src]!"))
 
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -682,9 +682,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					do_slipup(surgeon, patient, "chest", damage_low, fluff)
 					return TRUE
 
-				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> saws through the last of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head's connections to [surgeon == patient ? "[his_or_her(patient)]" : "[patient]'s"] body with [src]!</span>",\
-					"<span class='alert'>You saw through the last of [surgeon == patient ? "your" : "[patient]'s"] head's connections to [surgeon == patient ? "your" : "[his_or_her(patient)]"] body with [src]!</span>",\
-					"<span class='alert'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] through the last of your head's connection to your body with [src]!</span>")
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> saws through the last of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head's connections to [surgeon == patient ? "[his_or_her(patient)]" : "[patient]'s"] body with [src]!"),\
+					SPAN_ALERT("You saw through the last of [surgeon == patient ? "your" : "[patient]'s"] head's connections to [surgeon == patient ? "your" : "[his_or_her(patient)]"] body with [src]!"),\
+					SPAN_ALERT("[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] through the last of your head's connection to your body with [src]!"))
 
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -711,9 +711,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					// If the skull is gone, but the suture site was closed and we're re-opening
 					missing_fluff = pick("region", "area")
 
-				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> saws open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] skull [missing_fluff] with [src]!</span>",\
-					"<span class='alert'>You saw open [surgeon == patient ? "your" : "[patient]'s"] skull [missing_fluff] with [src]!</span>",\
-					"<span class='alert'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] open your skull [missing_fluff] with [src]!</span>")
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> saws open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] skull [missing_fluff] with [src]!"),\
+					SPAN_ALERT("You saw open [surgeon == patient ? "your" : "[patient]'s"] skull [missing_fluff] with [src]!"),\
+					SPAN_ALERT("[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] open your skull [missing_fluff] with [src]!"))
 
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -728,16 +728,16 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return TRUE
 
 				if (patient.organHolder.brain)
-					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> severs [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain's connection to the spine with [src]!</span>",\
-						"<span class='alert'>You sever [surgeon == patient ? "your" : "[patient]'s"] brain's connection to the spine with [src]!</span>",\
-						"<span class='alert'>[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] your brain's connection to the spine with [src]!</span>")
+					surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> severs [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain's connection to the spine with [src]!"),\
+						SPAN_ALERT("You sever [surgeon == patient ? "your" : "[patient]'s"] brain's connection to the spine with [src]!"),\
+						SPAN_ALERT("[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] your brain's connection to the spine with [src]!"))
 
 					patient.organHolder.drop_organ("brain")
 				else
 					// If the brain is gone, but the suture site was closed and we're re-opening
-					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain cavity with [src]!</span>",\
-						"<span class='alert'>You cut open [surgeon == patient ? "your" : "[patient]'s"] brain cavity with [src]!</span>",\
-						"<span class='alert'>[patient == surgeon ? "You cut open" : "<b>[surgeon]</b> cuts open "] your brain cavity with [src]!</span>")
+					surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] brain cavity with [src]!"),\
+						SPAN_ALERT("You cut open [surgeon == patient ? "your" : "[patient]'s"] brain cavity with [src]!"),\
+						SPAN_ALERT("[patient == surgeon ? "You cut open" : "<b>[surgeon]</b> cuts open "] your brain cavity with [src]!"))
 
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -754,18 +754,18 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return TRUE
 
 				if (patient.organHolder.skull)
-					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> saws [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] skull out with [src]!</span>",\
-						"<span class='alert'>You saw [surgeon == patient ? "your" : "[patient]'s"] skull out with [src]!</span>",\
-						"<span class='alert'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] your skull out with [src]!</span>")
+					surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> saws [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] skull out with [src]!"),\
+						SPAN_ALERT("You saw [surgeon == patient ? "your" : "[patient]'s"] skull out with [src]!"),\
+						SPAN_ALERT("[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] your skull out with [src]!"))
 
-					patient.visible_message("<span class='alert'><b>[patient]</b>'s head collapses into a useless pile of skin with no skull to keep it in its proper shape!</span>",\
-					"<span class='alert'>Your head collapses into a useless pile of skin with no skull to keep it in its proper shape!</span>")
+					patient.visible_message(SPAN_ALERT("<b>[patient]</b>'s head collapses into a useless pile of skin with no skull to keep it in its proper shape!"),\
+					SPAN_ALERT("Your head collapses into a useless pile of skin with no skull to keep it in its proper shape!"))
 					patient.organHolder.drop_organ("skull")
 				else
 					// If the skull is gone, but the suture site was closed and we're re-opening
-					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> saws the top of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head open with [src]!</span>",\
-						"<span class='alert'>You saw the top of [surgeon == patient ? "your" : "[patient]'s"] head open with [src]!</span>",\
-						"<span class='alert'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] the top of your head open with [src]!</span>")
+					surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> saws the top of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head open with [src]!"),\
+						SPAN_ALERT("You saw the top of [surgeon == patient ? "your" : "[patient]'s"] head open with [src]!"),\
+						SPAN_ALERT("[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] the top of your head open with [src]!"))
 
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -788,9 +788,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					do_slipup(surgeon, patient, "chest", damage_low, fluff)
 					return TRUE
 
-				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> saws open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] back with [src]!</span>",\
-					"<span class='alert'>You saw open [surgeon == patient ? "your" : "[patient]'s"] back with [src]!</span>",\
-					"<span class='alert'>[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] open your back with [src]!</span>")
+				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> saws open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] back with [src]!"),\
+					SPAN_ALERT("You saw open [surgeon == patient ? "your" : "[patient]'s"] back with [src]!"),\
+					SPAN_ALERT("[patient == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] open your back with [src]!"))
 
 				patient.TakeDamage("chest", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -823,7 +823,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					surgeon.showContextActions(patient.organHolder.contexts, patient, patient.organHolder.contextLayout)
 					return TRUE
 				if (3 to INFINITY)
-					boutput(surgeon, "<span class='alert'>[patient]'s op_stage is above intended parameters. Dial 1-800 CODER.</span>")
+					boutput(surgeon, SPAN_ALERT("[patient]'s op_stage is above intended parameters. Dial 1-800 CODER."))
 					return TRUE
 		else
 			return FALSE
@@ -850,8 +850,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		return FALSE
 
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(33))
-		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> pricks [his_or_her(surgeon)] finger with [src]!</span>",\
-		"<span class='alert'>You prick your finger with [src]</span>")
+		surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> pricks [his_or_her(surgeon)] finger with [src]!"),\
+		SPAN_ALERT("You prick your finger with [src]"))
 
 		//surgeon.bioHolder.AddEffect("blind") // oh my god I'm the biggest idiot ever I forgot to get rid of this part
 		// I'm not deleting it I'm just commenting it out so my shame will be eternal and perhaps future generations of coders can learn from my mistake
@@ -873,9 +873,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	if (surgeon.zone_sel.selecting == "head")
 		if (patient.organHolder && patient.organHolder.head && patient.organHolder.head.op_stage > 0.0)
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck closed with [src].</span>",\
-				"<span class='notice'>You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] neck closed with [src].</span>",\
-				"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your neck closed with [src].</span>")
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck closed with [src]."),\
+				SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] neck closed with [src]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your neck closed with [src]."))
 
 			patient.organHolder.head.op_stage = 0
 			patient.TakeDamage("head", 2 * surgCheck * surgCheck, 0)
@@ -884,9 +884,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return TRUE
 
 		else if (patient.organHolder && patient.organHolder.head && patient.organHolder.head.scalp_op_stage > 0.0)
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head closed with [src].</span>",\
-				"<span class='notice'>You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] head closed with [src].</span>",\
-				"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your head closed with [src].</span>")
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head closed with [src]."),\
+				SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] head closed with [src]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your head closed with [src]."))
 
 			patient.organHolder.head.scalp_op_stage = 0
 			patient.TakeDamage("head", 2 * surgCheck * surgCheck, 0)
@@ -895,9 +895,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return TRUE
 
 		else if (patient.organHolder && patient.organHolder.right_eye && patient.organHolder.right_eye.op_stage > 0.0)
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews the incision in [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right eye socket closed with [src].</span>",\
-				"<span class='notice'>You sew the incision in [surgeon == patient ? "your" : "[patient]'s"] right eye socket closed with [src].</span>",\
-				"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision in your right eye socket closed with [src].</span>")
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision in [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right eye socket closed with [src]."),\
+				SPAN_NOTICE("You sew the incision in [surgeon == patient ? "your" : "[patient]'s"] right eye socket closed with [src]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision in your right eye socket closed with [src]."))
 
 			patient.organHolder.right_eye.op_stage = 0
 			patient.TakeDamage("head", 2 * surgCheck * surgCheck, 0)
@@ -905,9 +905,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				repair_bleeding_damage(patient, 50, rand(1,3))
 
 		else if (patient.organHolder && patient.organHolder.left_eye && patient.organHolder.left_eye.op_stage > 0.0)
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews the incision in [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] left eye socket closed with [src].</span>",\
-				"<span class='notice'>You sew the incision in [surgeon == patient ? "your" : "[patient]'s"] left eye socket closed with [src].</span>",\
-				"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision in your left eye socket closed with [src].</span>")
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision in [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] left eye socket closed with [src]."),\
+				SPAN_NOTICE("You sew the incision in [surgeon == patient ? "your" : "[patient]'s"] left eye socket closed with [src]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision in your left eye socket closed with [src]."))
 
 			patient.organHolder.left_eye.op_stage = 0
 			patient.TakeDamage("head", 2 * surgCheck * surgCheck, 0)
@@ -915,9 +915,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				repair_bleeding_damage(patient, 50, rand(1,3))
 
 		else if (patient.bleeding)
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src].</span>",\
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src]."),\
 				"You sew [surgeon == patient ? "your" : "[patient]'s"] wounds closed with [src].",\
-				"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] your wounds closed with [src].</span>")
+				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] your wounds closed with [src]."))
 
 			random_brute_damage(patient, 2 * surgCheck * surgCheck)
 			repair_bleeding_damage(patient, 100, 10)
@@ -931,9 +931,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else if (surgeon.zone_sel.selecting == "chest")
 
 		if (patient.organHolder?.chest?.op_stage > 1 && patient.chest_item != null && patient.chest_item_sewn == 0 && surgeon.a_intent == "grab")
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews the [patient.chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest cavity with [src].</span>",\
-				"<span class='notice'>You sew the [patient.chest_item] securely into [surgeon == patient ? "your" : "[patient]'s"] chest cavity with [src].</span>",\
-				"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the [patient.chest_item] into your chest cavity with [src].</span>")
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the [patient.chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest cavity with [src]."),\
+				SPAN_NOTICE("You sew the [patient.chest_item] securely into [surgeon == patient ? "your" : "[patient]'s"] chest cavity with [src]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the [patient.chest_item] into your chest cavity with [src]."))
 
 			patient.chest_item_sewn = 1
 			patient.TakeDamage("chest", 2 * surgCheck * surgCheck, 0)
@@ -942,9 +942,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return TRUE
 
 		else if (patient.organHolder.chest && patient.organHolder.chest.op_stage > 0.0)
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest closed with [src].</span>",\
-				"<span class='notice'>You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] chest closed with [src].</span>",\
-				"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your chest closed with [src].</span>")
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest closed with [src]."),\
+				SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] chest closed with [src]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your chest closed with [src]."))
 
 			patient.organHolder.chest.op_stage = 0
 			patient.organHolder.close_surgery_regions()
@@ -954,9 +954,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return TRUE
 
 		else if (patient.organHolder.back_op_stage > BACK_SURGERY_CLOSED && surgeon.a_intent == "grab")
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt closed with [src].</span>",\
-				"<span class='notice'>You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src].</span>",\
-				"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your butt closed with [src].</span>")
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt closed with [src]."),\
+				SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your butt closed with [src]."))
 
 			patient.organHolder.back_op_stage = BACK_SURGERY_CLOSED
 			patient.TakeDamage("chest", 2 * surgCheck * surgCheck, 0)
@@ -965,9 +965,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return TRUE
 
 		else if (patient.bleeding)
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> sews [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src].</span>",\
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src]."),\
 				"You sew [surgeon == patient ? "your" : "[patient]'s"] wounds closed with [src].",\
-				"<span class='notice'>[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] your wounds closed with [src].</span>")
+				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] your wounds closed with [src]."))
 
 			random_brute_damage(patient, 2 * surgCheck * surgCheck)
 			repair_bleeding_damage(patient, 100, 10)
@@ -997,7 +997,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		return FALSE
 
 	if (patient.is_heat_resistant())
-		patient.visible_message("<span class='alert'><b>Nothing happens!</b></span>")
+		patient.visible_message(SPAN_ALERT("<b>Nothing happens!</b>"))
 		return FALSE
 
 	if (!surgeon)
@@ -1007,8 +1007,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		damage = rand(5, 15)
 
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(33))
-		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> burns [him_or_her(surgeon)]self with [src]!</span>",\
-		"<span class='alert'>You burn yourself with [src]</span>")
+		surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> burns [him_or_her(surgeon)]self with [src]!"),\
+		SPAN_ALERT("You burn yourself with [src]"))
 
 		JOB_XP(surgeon, "Clown", 1)
 		surgeon.changeStatus("weakened", 4 SECONDS)
@@ -1035,9 +1035,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		random_burn_damage(patient, damage)
 
 		if (quick_surgery)
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> cauterizes the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck closed with [src].</span>",\
-				"<span class='notice'>You cauterize the incision on [surgeon == patient ? "your" : "[patient]'s"] neck closed with [src].</span>",\
-				"<span class='notice'>[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] the incision on your neck closed with [src].</span>")
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> cauterizes the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck closed with [src]."),\
+				SPAN_NOTICE("You cauterize the incision on [surgeon == patient ? "your" : "[patient]'s"] neck closed with [src]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] the incision on your neck closed with [src]."))
 
 			patient.organHolder.head.op_stage = 0
 			if (patient.bleeding)
@@ -1045,14 +1045,14 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return TRUE
 
 		else
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> begins cauterizing the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck closed with [src].</span>",\
-				"<span class='notice'>You begin cauterizing the incision on [surgeon == patient ? "your" : "[patient]'s"] neck closed with [src].</span>",\
-				"<span class='notice'>[patient == surgeon ? "You begin" : "<b>[surgeon]</b> begins"] cauterizing incision on your neck closed with [src].</span>")
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> begins cauterizing the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck closed with [src]."),\
+				SPAN_NOTICE("You begin cauterizing the incision on [surgeon == patient ? "your" : "[patient]'s"] neck closed with [src]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You begin" : "<b>[surgeon]</b> begins"] cauterizing incision on your neck closed with [src]."))
 
 			if (do_mob(patient, surgeon, max(100 - (damage * 2)), 0))
-				surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> cauterizes the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck closed with [src].</span>",\
-					"<span class='notice'>You cauterize the incision on [surgeon == patient ? "your" : "[patient]'s"] neck closed with [src].</span>",\
-					"<span class='notice'>[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] the incision on your neck closed with [src].</span>")
+				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> cauterizes the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck closed with [src]."),\
+					SPAN_NOTICE("You cauterize the incision on [surgeon == patient ? "your" : "[patient]'s"] neck closed with [src]."),\
+					SPAN_NOTICE("[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] the incision on your neck closed with [src]."))
 
 				patient.organHolder.head.op_stage = 0
 				if (patient.bleeding)
@@ -1076,9 +1076,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		random_burn_damage(patient, damage)
 
 		if (quick_surgery)
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> cauterizes the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt closed with [src].</span>",\
-				"<span class='notice'>You cauterize the incision on [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src].</span>",\
-				"<span class='notice'>[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] the incision on your butt closed with [src].</span>")
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> cauterizes the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt closed with [src]."),\
+				SPAN_NOTICE("You cauterize the incision on [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] the incision on your butt closed with [src]."))
 
 			patient.organHolder.back_op_stage = BACK_SURGERY_CLOSED
 			if (patient.bleeding)
@@ -1086,14 +1086,14 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return TRUE
 
 		else
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> begins cauterizing the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt closed with [src].</span>",\
-				"<span class='notice'>You begin cauterizing the incision on [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src].</span>",\
-				"<span class='notice'>[patient == surgeon ? "You begin" : "<b>[surgeon]</b> begins"] cauterizing incision on your butt closed with [src].</span>")
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> begins cauterizing the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt closed with [src]."),\
+				SPAN_NOTICE("You begin cauterizing the incision on [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You begin" : "<b>[surgeon]</b> begins"] cauterizing incision on your butt closed with [src]."))
 
 			if (do_mob(patient, surgeon, max(100 - (damage * 2)), 0))
-				surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> cauterizes the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt closed with [src].</span>",\
-					"<span class='notice'>You cauterize the incision on [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src].</span>",\
-					"<span class='notice'>[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] the incision on your butt closed with [src].</span>")
+				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> cauterizes the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt closed with [src]."),\
+					SPAN_NOTICE("You cauterize the incision on [surgeon == patient ? "your" : "[patient]'s"] butt closed with [src]."),\
+					SPAN_NOTICE("[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] the incision on your butt closed with [src]."))
 
 				patient.organHolder.back_op_stage = BACK_SURGERY_CLOSED
 				if (patient.bleeding)
@@ -1117,17 +1117,17 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		random_burn_damage(patient, damage)
 
 		if (quick_surgery)
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> cauterizes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src].</span>",\
-				"<span class='notice'>You cauterize [surgeon == patient ? "your" : "[patient]'s"] wounds closed with [src].</span>",\
-				"<span class='notice'>[patient == surgeon ? "You cauterizes" : "<b>[surgeon]</b> cauterizes"] your wounds closed with [src].</span>")
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> cauterizes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src]."),\
+				SPAN_NOTICE("You cauterize [surgeon == patient ? "your" : "[patient]'s"] wounds closed with [src]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You cauterizes" : "<b>[surgeon]</b> cauterizes"] your wounds closed with [src]."))
 
 			repair_bleeding_damage(patient, 100, 10)
 			return TRUE
 
 		else
-			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> begins cauterizing [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src].</span>",\
-				"<span class='notice'>You begin cauterizing [surgeon == patient ? "your" : "[patient]'s"] wounds closed with [src].</span>",\
-				"<span class='notice'>[patient == surgeon ? "You begin" : "<b>[surgeon]</b> begins"] cauterizing your wounds closed with [src].</span>")
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> begins cauterizing [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src]."),\
+				SPAN_NOTICE("You begin cauterizing [surgeon == patient ? "your" : "[patient]'s"] wounds closed with [src]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You begin" : "<b>[surgeon]</b> begins"] cauterizing your wounds closed with [src]."))
 
 			var/dur = max(patient.bleeding * 2 - damage * 0.2, 0) SECONDS
 			if (dur == 0)
@@ -1141,9 +1141,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		return FALSE
 
 /obj/item/proc/cauterize_wound(mob/surgeon, mob/living/carbon/human/patient)
-	surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> cauterizes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src].</span>",
-		"<span class='notice'>You cauterize [surgeon == patient ? "your" : "[patient]'s"] wounds closed with [src].</span>",
-		"<span class='notice'>[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] your wounds closed with [src].</span>")
+	surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> cauterizes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src]."),
+		SPAN_NOTICE("You cauterize [surgeon == patient ? "your" : "[patient]'s"] wounds closed with [src]."),
+		SPAN_NOTICE("[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] your wounds closed with [src]."))
 
 	repair_bleeding_damage(patient, 100, 10)
 
@@ -1159,8 +1159,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		return FALSE
 /* gunna think on this part
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
-		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!</span>", \
-		"<span class='alert'>You fumble and stab yourself in the eye with [src]!</span>")
+		surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!"), \
+		SPAN_ALERT("You fumble and stab yourself in the eye with [src]!"))
 		surgeon.bioHolder.AddEffect("blind")
 		surgeon.weakened += 4
 		var/damage = rand(5, 15)
@@ -1193,7 +1193,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return TRUE
 
 		if (!patient.organHolder.head)
-			boutput(surgeon, "<span class='alert'>[patient] doesn't have a head!</span>")
+			boutput(surgeon, SPAN_ALERT("[patient] doesn't have a head!"))
 			return FALSE
 
 		var/obj/item/organ/eye/target_eye = null
@@ -1218,9 +1218,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				do_slipup(surgeon, patient, "head", damage_low, fluff)
 				return TRUE
 
-			surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> inserts [src] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] eye socket!</span>",\
-				"<span class='alert'>You insert [src] into [surgeon == patient ? "your" : "[patient]'s"] [target_side] eye socket!</span>", \
-				"<span class='alert'>[patient == surgeon ? "You insert" : "<b>[surgeon]</b> inserts"] [src] into your [target_side] eye socket!</span>")
+			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> inserts [src] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] eye socket!"),\
+				SPAN_ALERT("You insert [src] into [surgeon == patient ? "your" : "[patient]'s"] [target_side] eye socket!"), \
+				SPAN_ALERT("[patient == surgeon ? "You insert" : "<b>[surgeon]</b> inserts"] [src] into your [target_side] eye socket!"))
 
 			patient.TakeDamage("head", damage_low, 0)
 			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -1234,9 +1234,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				do_slipup(surgeon, patient, "head", damage_high, fluff2)
 				return TRUE
 
-			surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> removes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] eye with [src]!</span>",\
-				"<span class='alert'>You remove [surgeon == patient ? "your" : "[patient]'s"] [target_side] eye with [src]!</span>",\
-				"<span class='alert'>[patient == surgeon ? "You remove" : "<b>[surgeon]</b> removes"] your [target_side] eye with [src]!</span>")
+			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> removes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] eye with [src]!"),\
+				SPAN_ALERT("You remove [surgeon == patient ? "your" : "[patient]'s"] [target_side] eye with [src]!"),\
+				SPAN_ALERT("[patient == surgeon ? "You remove" : "<b>[surgeon]</b> removes"] your [target_side] eye with [src]!"))
 
 			patient.TakeDamage("head", damage_low, 0)
 			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
@@ -1266,8 +1266,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		return FALSE
 
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
-		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!</span>", \
-		"<span class='alert'>You fumble and stab yourself in the eye with [src]!</span>")
+		surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!"), \
+		SPAN_ALERT("You fumble and stab yourself in the eye with [src]!"))
 		surgeon.bioHolder.AddEffect("blind")
 		patient.changeStatus("weakened", 0.4 SECONDS)
 
@@ -1296,7 +1296,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	if (surgeon.a_intent == INTENT_DISARM)
 		do_slipup(surgeon, patient, "chest", damage_high, fluff2)
-		boutput(surgeon, "<span class='notice'>You mess up [patient]'s surgery on purpose.</span>")
+		boutput(surgeon, SPAN_NOTICE("You mess up [patient]'s surgery on purpose."))
 		return TRUE
 
 /* ---------- SNIP - chest ---------- */
@@ -1313,9 +1313,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						do_slipup(surgeon, patient, "chest", damage_low, fluff)
 						return TRUE
 
-					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> makes a cut on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src]!</span>",\
-						"<span class='alert'>You make a cut on [surgeon == patient ? "your" : "[patient]'s"] chest with [src]!</span>",\
-						"<span class='alert'>[patient == surgeon ? "You make a cut" : "<b>[surgeon]</b> makes a cut"] on chest with [src]!</span>")
+					surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> makes a cut on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src]!"),\
+						SPAN_ALERT("You make a cut on [surgeon == patient ? "your" : "[patient]'s"] chest with [src]!"),\
+						SPAN_ALERT("[patient == surgeon ? "You make a cut" : "<b>[surgeon]</b> makes a cut"] on chest with [src]!"))
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 					patient.organHolder.chest.op_stage ++
@@ -1327,7 +1327,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					surgeon.showContextActions(patient.organHolder.contexts, patient, patient.organHolder.contextLayout)
 					return TRUE
 				if (3 to INFINITY)
-					boutput(surgeon, "<span class='alert'>[patient]'s op_stage is above intended parameters. Dial 1-800 CODER.</span>")
+					boutput(surgeon, SPAN_ALERT("[patient]'s op_stage is above intended parameters. Dial 1-800 CODER."))
 					return TRUE
 		else
 			return FALSE
@@ -1343,8 +1343,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		return FALSE
 
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
-		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> fumbles and clubs [him_or_her(surgeon)]self upside the head with [src]!</span>", \
-		"<span class='alert'>You fumble and club yourself in the head with [src]!</span>")
+		surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and clubs [him_or_her(surgeon)]self upside the head with [src]!"), \
+		SPAN_ALERT("You fumble and club yourself in the head with [src]!"))
 		patient.changeStatus("weakened", 0.4 SECONDS)
 
 		JOB_XP(surgeon, "Clown", 1)
@@ -1368,9 +1368,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	if (surgeon.zone_sel.selecting == "chest")
 		playsound(patient, 'sound/items/Crowbar.ogg', 50, TRUE)	// Dont really need much surgery to remove a bone from a skeleton
-		surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> jams one end of the [src] just below [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!</span>",\
-			"<span class='alert'>You jam one end of the [src] just below [surgeon == patient ? "your" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!</span>",\
-			"<span class='alert'>[patient == surgeon ? "You jam" : "<b>[surgeon]</b> jams"] one end of the [src] just below your sacrum and [patient == surgeon ? "pry" : "pries"] your tail off!</span>")
+		surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> jams one end of the [src] just below [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!"),\
+			SPAN_ALERT("You jam one end of the [src] just below [surgeon == patient ? "your" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!"),\
+			SPAN_ALERT("[patient == surgeon ? "You jam" : "<b>[surgeon]</b> jams"] one end of the [src] just below your sacrum and [patient == surgeon ? "pry" : "pries"] your tail off!"))
 		if (patient.organHolder.tail)
 			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s skeleton tail with [src].")
 		patient.organHolder.drop_organ("tail")
@@ -1381,7 +1381,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if (H.op_stage != 1)
 			return FALSE
 		H.op_stage = 2
-		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> pries [H] loose with [src].</span>")
+		surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> pries [H] loose with [src]."))
 		playsound(patient, 'sound/items/Crowbar.ogg', 50, TRUE)
 		return TRUE
 
@@ -1390,7 +1390,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if (!isskeletonlimb(limb) || limb.remove_stage != 1)
 			return FALSE
 		limb.remove_stage = 2
-		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> pries [limb] loose with [src].</span>")
+		surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> pries [limb] loose with [src]."))
 		playsound(patient, 'sound/items/Crowbar.ogg', 50, TRUE)
 		return TRUE
 
@@ -1410,12 +1410,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		var/obj/item/organ/head/H = patient.organHolder.head
 		if (H.op_stage == 0)
 			H.op_stage = 1
-			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> loosens [H] with [src].</span>")
+			surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> loosens [H] with [src]."))
 			playsound(patient, 'sound/items/Screwdriver.ogg', 50, TRUE)
 			return TRUE
 		else if (H.op_stage == 2)
 			patient.organHolder.drop_organ("head", get_turf(patient))
-			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [H] off with [src].</span>")
+			surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> twists [H] off with [src]."))
 			playsound(patient, 'sound/items/Ratchet.ogg', 50, TRUE)
 			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s head with [src].")
 			return TRUE
@@ -1426,19 +1426,19 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return FALSE
 		if (limb.remove_stage == 0)
 			limb.remove_stage = 1
-			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> loosens [limb] with [src].</span>")
+			surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> loosens [limb] with [src]."))
 			playsound(patient, 'sound/items/Screwdriver.ogg', 50, TRUE)
 			return TRUE
 		else if (limb.remove_stage == 2)
 			limb.remove(FALSE)
-			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [limb] off with [src].</span>")
+			surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> twists [limb] off with [src]."))
 			playsound(patient, 'sound/items/Ratchet.ogg', 50, TRUE)
 			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [limb] with [src].")
 			return TRUE
 
 ///You messed up. Cause damage and spawn some indicators.
 /proc/do_slipup(var/mob/surgeon, var/mob/patient, var/damage_target, var/damage_value, var/fluff_text)
-	surgeon.visible_message("<span class='alert'><b>[surgeon][fluff_text]!</b></span>")
+	surgeon.visible_message(SPAN_ALERT("<b>[surgeon][fluff_text]!</b>"))
 	patient.TakeDamage(damage_target, damage_value, 0)
 	take_bleeding_damage(patient, surgeon, damage_value, surgery_bleed = TRUE)
 	create_blood_sploosh(patient)
@@ -1462,7 +1462,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /datum/action/bar/icon/remove_organ
 	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ACTION
-	id = "remove_organ"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 	resumable = FALSE
@@ -1502,10 +1501,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (src.rip_out_organ)
-			src.surgeon.visible_message("<span class='alert'>[src.surgeon] begins ripping out [src.target]'s [src.organ_name] with [his_or_her(src.surgeon)] bare hands!</span>")
+			src.surgeon.visible_message(SPAN_ALERT("[src.surgeon] begins ripping out [src.target]'s [src.organ_name] with [his_or_her(src.surgeon)] bare hands!"))
 			ON_COOLDOWN(src.surgeon, "rip_out_damage", 4 SECOND)
 		else
-			src.surgeon.visible_message("<span class='notice'>[src.surgeon] begins cutting out [src.target]'s [src.organ_name].</span>")
+			src.surgeon.visible_message(SPAN_NOTICE("[src.surgeon] begins cutting out [src.target]'s [src.organ_name]."))
 
 	onUpdate()
 		..()
@@ -1534,7 +1533,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			var/obj/item/organ/the_organ = src.target.organHolder.drop_organ(src.organ_path)
 			the_organ.take_damage(rand(20, 35), 0, 0)
 			src.surgeon.put_in_hand_or_drop(the_organ)
-			src.surgeon.visible_message("<span class='notice'>[src.surgeon] rips out [src.target]'s [src.organ_name].</span>")
+			src.surgeon.visible_message(SPAN_NOTICE("[src.surgeon] rips out [src.target]'s [src.organ_name]."))
 			playsound(src.target, 'sound/impact_sounds/Slimy_Hit_3.ogg', 50, 1, -1)
 			if (isalive(src.target) && prob(30))
 				src.target.emote("scream")
@@ -1547,9 +1546,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				var/damage = calc_surgery_damage(src.surgeon, screw_up_prob, rand(5,10))
 				do_slipup(src.surgeon, src.target, "chest", damage, pick(" messes up", " slips up", " makes a mess", " stabs directly into [src.target]'s organs"))
 				return
-			src.surgeon.tri_message(src.target, "<span class='notice'><b>[src.surgeon]</b> takes out [src.surgeon == src.target ? "[his_or_her(src.target)]" : "[src.target]'s"] [src.organ_name].</span>",\
-				"<span class='notice'>You take out [src.surgeon == src.target ? "your" : "[src.target]'s"] [src.organ_name].</span>",\
-				"<span class='alert'>[src.target == src.surgeon ? "You take" : "<b>[src.surgeon]</b> takes"] out your [src.organ_name]!</span>")
+			src.surgeon.tri_message(src.target, SPAN_NOTICE("<b>[src.surgeon]</b> takes out [src.surgeon == src.target ? "[his_or_her(src.target)]" : "[src.target]'s"] [src.organ_name]."),\
+				SPAN_NOTICE("You take out [src.surgeon == src.target ? "your" : "[src.target]'s"] [src.organ_name]."),\
+				SPAN_ALERT("[src.target == src.surgeon ? "You take" : "<b>[src.surgeon]</b> takes"] out your [src.organ_name]!"))
 			logTheThing(LOG_COMBAT, src.surgeon, "removed [constructTarget(src.target,"combat")]'s [src.organ_path].")
 			src.target.organHolder.drop_organ(src.organ_path)
 			playsound(src.target, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
@@ -1558,7 +1557,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /datum/action/bar/icon/clamp_bleeders
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ACTION
-	id = "clamp_bleeders"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
 	resumable = FALSE
@@ -1582,7 +1580,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		else
-			src.surgeon.visible_message("<span class='notice'>[src.surgeon] begins clamping the bleeders on [src.target]'s chest wound.</span>")
+			src.surgeon.visible_message(SPAN_NOTICE("[src.surgeon] begins clamping the bleeders on [src.target]'s chest wound."))
 
 	onUpdate()
 		..()
@@ -1600,9 +1598,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if(BOUNDS_DIST(src.surgeon, src.target) > 0 || src.target == null || src.surgeon == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		src.surgeon.tri_message(src.target, "<span class='notice'><b>[src.surgeon]</b> clamps the bleeders on [src.surgeon == src.target ? "[his_or_her(src.target)]" : "[src.target]'s"] chest wound.</span>",\
-			"<span class='notice'>You clamp the bleeders on [src.surgeon == src.target ? "your" : "[src.target]'s"] chest wound.</span>",\
-			"<span class='alert'>[src.target == src.surgeon ? "You clamp" : "<b>[src.surgeon]</b> clamps"] the bleeders on your chest wound!</span>")
+		src.surgeon.tri_message(src.target, SPAN_NOTICE("<b>[src.surgeon]</b> clamps the bleeders on [src.surgeon == src.target ? "[his_or_her(src.target)]" : "[src.target]'s"] chest wound."),\
+			SPAN_NOTICE("You clamp the bleeders on [src.surgeon == src.target ? "your" : "[src.target]'s"] chest wound."),\
+			SPAN_ALERT("[src.target == src.surgeon ? "You clamp" : "<b>[src.surgeon]</b> clamps"] the bleeders on your chest wound!"))
 		if (src.target.organHolder.chest.op_stage > 0)
 			src.target.chest_cavity_clamped = TRUE
 		if (src.target.bleeding)

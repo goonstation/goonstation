@@ -652,3 +652,31 @@ toxic - poisons
 			hit.delStatus("cornicened2")
 		else
 			hit.setStatus("cornicened")
+
+/datum/projectile/laser/ntso_cannon
+	name = "heavy assault laser"
+	icon_state = "u_laser"
+	damage = 80
+	cost = 65
+	dissipation_delay = 10
+	brightness = 0
+	sname = "heavy laser"
+	shot_sound = 'sound/weapons/Laser.ogg'
+	color_red = 0
+	color_green = 0
+	color_blue = 1
+
+	on_hit(atom/hit, dir, obj/projectile/P)
+		fireflash(get_turf(hit), 0)
+		hit.ex_act(2)
+		P.die() //explicitly kill projectile - not a mining laser
+
+/datum/projectile/laser/makeshift
+	cost = 1250
+	shot_sound = 'sound/weapons/laserlight.ogg'
+	icon_state = "laser_tiny"
+	damage = 20
+	/// lower bounds of heat added to the makeshift laser rifle this was fired from
+	var/heat_low = 10
+	/// higher bounds of heat added to the makeshift laser rifle this was fired from
+	var/heat_high = 12

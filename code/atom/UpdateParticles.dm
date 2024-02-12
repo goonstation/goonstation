@@ -53,3 +53,11 @@
 		return
 	var/obj/O = particle_refs[key]
 	return O?.particles
+
+/atom/proc/GetParticleHolder(key)
+	RETURN_TYPE(/obj/effects/particle_holder)
+	if(!key)
+		CRASH("GetParticleHolder called without a key.")
+	if (!particle_refs)
+		return
+	return particle_refs[key]

@@ -13,7 +13,7 @@
 		HealDamage(regeneration_rate)
 
 	on_deplete()
-		holder.visible_message("<span class='alert'>[holder] collapses!</span>")
+		holder.visible_message(SPAN_ALERT("[holder] collapses!"))
 		holder.changeStatus("paralysis", 6 SECONDS)
 
 	// @todo finish this

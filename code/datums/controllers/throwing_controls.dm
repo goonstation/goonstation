@@ -1,3 +1,5 @@
+#define THROW_SPEED_COEFFICIENT 1/1.5
+
 /datum/thrown_thing
 	var/atom/movable/thing
 	var/atom/target
@@ -29,7 +31,7 @@
 		src.thing = thing
 		src.target = target
 		src.error = error
-		src.speed = speed
+		src.speed = speed * THROW_SPEED_COEFFICIENT
 		src.dx = dx
 		src.dy = dy
 		src.dist_x = dist_x
@@ -65,7 +67,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 	src.running = TRUE
 	SPAWN(0)
 		while(src.tick())
-			sleep(0.1 SECONDS)
+			sleep(0.001 SECONDS)
 		src.running = FALSE
 
 /datum/controller/throwing/proc/tick()
@@ -160,3 +162,5 @@ var/global/datum/controller/throwing/throwing_controller = new
 		var/atom/movable/thing = thr.thing
 		if(thing == AM)
 			. += thr
+
+#undef THROW_SPEED_COEFFICIENT

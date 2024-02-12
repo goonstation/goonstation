@@ -27,7 +27,7 @@
 	var/ink_level = 100
 	/// the default modes, can be expanded to have "Ink Colors" and "Custom Cover"
 	var/list/press_modes = list("Choose book cover", "Set book info", "Set book contents",
-	"Set newspaper info", "Amount to make", "Print", "View Information")
+	"Set newspaper info", "Set newspaper contents", "Amount to make", "Print", "View Information")
 
 	/// how many books to make?
 	var/book_amount = 0
@@ -73,7 +73,7 @@
 	var/list/colorable_symbols = list("None", "Skull", "Drop", "Shortcross", "Smile", "One", "FadeCircle", "Square", "NT", "Ghost", "Bone",\
 	"Heart", "Pentagram", "Key", "Lock")
 	/// alchemical symbols (because theres a lot of them)
-	var/list/alchemical_symbols = list("None", "Mercury", "Salt", "Sulfur", "Urine", "Water", "Fire", "Air", "Earth", "Calcination", "Congelation",\
+	var/list/alchemical_symbols = list("None", "Mercury", "Salt", "Sulfur", "Water", "Fire", "Air", "Earth", "Calcination", "Congelation",\
 	"Fixation", "Dissolution", "Digestion", "Distillation", "Sublimation", "Seperation", "Ceration", "Fermentation", "Multiplication",\
 	"Projection")
 	var/list/alphanumeric_symbols = list("None", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",\
@@ -199,17 +199,17 @@
 /obj/machinery/printing_press/attackby(var/obj/item/W, mob/user)
 	if (istype(W, /obj/item/paper_bin))
 		var/obj/item/paper_bin/P = W
-		if (P.amount > 0 && src.paper_amt <= src.paper_max) //if the paper bin has paper, and adding the paper bin doesnt add too much paper
+		if (P.amount_left > 0 && src.paper_amt <= src.paper_max) //if the paper bin has paper, and adding the paper bin doesnt add too much paper
 			boutput(user, "You load \the [P] into \the [src].")
 			var/amount_to_take = src.paper_max - src.paper_amt
-			var/amount_taken = min(amount_to_take, P.amount)
+			var/amount_taken = min(amount_to_take, P.amount_left)
 			src.paper_amt += amount_taken
 			UpdateIcon()
-			P.amount = P.amount - amount_taken
+			P.amount_left = P.amount_left - amount_taken
 			P.update()
 			return
 		else
-			if (P.amount <= 0)
+			if (P.amount_left <= 0)
 				if (length(P.contents) > 0)
 					boutput(user, "\The [P] has no unsoiled sheets left in it.") // someone put junk paper in the bin
 				else
@@ -270,7 +270,7 @@
 					src.visible_message("\The [src] already has that upgrade installed.")
 					return
 				src.press_modes += "Set newspaper info"
-				src.press_modes += "Toggle newspaper mode"
+				src.press_modes += "Set newspaper contents"
 				src.newspaper_upgrade = TRUE
 				src.visible_message("\The [src] accepts the upgrade.")
 
@@ -346,7 +346,7 @@
 			if (!src.newspaper_upgrade)
 				boutput(user, "Your free trial of newspaper printing has expired. Please enter Newspaper Printing Upgrade.")
 				return
-			var/name_sel = input("What do you want the headline to be?", "Information Control", src.book_name)
+			var/name_sel = input("What do you want the headline to be?", "Information Control", src.newspaper_headline)
 			if (length(name_sel) > src.headline_len_lim)
 				boutput(user, "Aborting, headline too long.")
 				return
@@ -361,10 +361,12 @@
 			boutput(user, "Information set.")
 			return
 		if ("set newspaper contents")
-			var/info_sel = input(user, "What do you want the article to say?", "Information Control", src.newspaper_info_raw)
+			var/info_sel = input(user, "What do you want the article to say?", "Information Control", src.newspaper_info_raw) as null|message
 			if (!info_sel)
 				return
-			src.declare_contents(info_sel, src.newspaper_info_raw, src.newspaper_info)
+			info_sel = src.trim_input(info_sel)
+			src.newspaper_info_raw = info_sel
+			src.newspaper_info = src.convert_input(info_sel)
 			phrase_log.log_phrase("newspaperarticle", src.newspaper_info, TRUE, user, FALSE)
 			boutput(user, "Newspaper contents set.")
 			return
@@ -388,7 +390,9 @@
 			var/info_sel = input("What do you want your book to say?", "Content Control", src.book_info_raw) as null|message
 			if (!info_sel)
 				return
-			src.declare_contents(info_sel, src.book_info_raw, src.book_info)
+			info_sel = src.trim_input(info_sel)
+			src.book_info_raw = info_sel
+			src.book_info = src.convert_input(info_sel)
 			phrase_log.log_phrase("bookcontent", src.book_info, TRUE, user, FALSE)
 			boutput(user, "Book contents set.")
 			return
@@ -548,10 +552,9 @@
 		else //just in case, yell at me if this is bad
 			return
 
-/// sets book_info and book_info_raw, for newspapers as well.
-/obj/machinery/printing_press/proc/declare_contents(var/info_sel, var/raw_info, var/non_raw_info)
-	info_sel = copytext(html_encode(info_sel), 1, 4*MAX_MESSAGE_LEN) //for now this is ~700 words, 4096 characters, please increase if people say that its too restrictive/low
-	raw_info = info_sel
+/// HTML encodes input and converts bbcode to HTML
+/obj/machinery/printing_press/proc/convert_input(var/info_sel)
+	info_sel = html_encode(info_sel)
 	info_sel = replacetext(info_sel, "\n", "<BR>")
 	info_sel = replacetext(info_sel, "\[b\]", "<B>")
 	info_sel = replacetext(info_sel, "\[/b\]", "</B>")
@@ -575,7 +578,11 @@
 	info_sel = replacetext(info_sel, "\[/li\]", "</LI>")
 	info_sel = replacetext(info_sel, "\[bq\]", "<BLOCKQUOTE>")
 	info_sel = replacetext(info_sel, "\[/bq\]", "</BLOCKQUOTE>")
-	non_raw_info = info_sel
+	return info_sel
+
+/// trim text down to max length for contents
+/obj/machinery/printing_press/proc/trim_input(var/info_sel)
+	return copytext(info_sel, 1, 4*MAX_MESSAGE_LEN) //for now this is ~700 words, 4096 characters, please increase if people say that its too restrictive/low
 
 /////////////////////
 //Book making stuff//

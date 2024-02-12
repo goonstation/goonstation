@@ -19,7 +19,8 @@
 			if (H.organHolder?.appendix?.robotic) continue // that isn't robotic
 			potential_victims += H
 		if (length(potential_victims))
+			shuffle_list(potential_victims)
 			var/num = rand(2, 4)
-			for (var/i = 0, i < min(num, length(potential_victims)), i++)
-				var/mob/living/carbon/human/patient = pick(potential_victims)
-				patient?.contract_disease(/datum/ailment/disease/appendicitis,null,null,1)
+			for (var/i in 1 to num)
+				var/mob/living/carbon/human/patient = potential_victims[i]
+				patient?.contract_disease(/datum/ailment/disease/appendicitis, null, null, 1)

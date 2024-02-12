@@ -118,7 +118,6 @@
 	build_reagent_cache()
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
-	build_camera_network()
 	build_manufacturer_icons()
 	clothingbooth_setup()
 	initialize_biomes()
@@ -177,6 +176,7 @@
 
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
+	build_camera_network()
 	camera_coverage_controller.setup()
 
 	UPDATE_TITLE_STATUS("Preloading client data...")

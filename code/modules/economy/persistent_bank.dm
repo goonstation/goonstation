@@ -46,7 +46,7 @@
 
 		if(user.client.persistent_bank_item && user.client.persistent_bank_item != "none" && !found_held)
 			user.client.set_last_purchase(null)
-			boutput(user, "<span class='notice'><b>The thing you previously purchased has been removed from your inventory due to it no longer existing.</b></span>")
+			boutput(user, SPAN_NOTICE("<b>The thing you previously purchased has been removed from your inventory due to it no longer existing.</b>"))
 
 		var/truebalance = user.client.persistent_bank
 		if(istype(src.bought_this_round))
@@ -65,11 +65,11 @@
 		if(istype(ui.user,/mob/new_player))
 			var/mob/new_player/playermob = ui.user
 			if(playermob.spawning)
-				boutput(ui.user, "<span class='notice'><b>The round has started, you'll have to wait until the next round!</b></span>" )
+				boutput(ui.user, SPAN_NOTICE("<b>The round has started, you'll have to wait until the next round!</b>") )
 				ui.close()
 				return
 		else
-			boutput(ui.user, "<span class='notice'><b>The round has started, you'll have to wait until the next round!</b></span>" )
+			boutput(ui.user, SPAN_NOTICE("<b>The round has started, you'll have to wait until the next round!</b>") )
 			ui.close()
 			return
 
@@ -83,7 +83,7 @@
 			if (try_purchase(ui.user.client, purchased))
 				ui.close()
 		else
-			boutput( ui.user, "<span class='notice'><b>Oh no! Something is broken. Please tell a coder. (problem retrieving purchaseable id : [id])</b></span>" )
+			boutput( ui.user, SPAN_NOTICE("<b>Oh no! Something is broken. Please tell a coder. (problem retrieving purchaseable id : [id])</b>") )
 
 	proc/try_purchase(var/client/c, var/datum/bank_purchaseable/p)
 		if(istype(c.mob,/mob/new_player))
@@ -102,7 +102,7 @@
 
 		if (c.bank_can_afford(p.cost))
 			usr.playsound_local(usr, 'sound/misc/cashregister.ogg', 50, 0)
-			boutput( usr, "<span class='notice'><b>You purchased [p.name] for the round!</b></span>" )
+			boutput( usr, SPAN_NOTICE("<b>You purchased [p.name] for the round!</b>") )
 			if (istype(c.mob,/mob/new_player))
 				var/mob/new_player/playermob = c.mob
 				if (playermob.mind)
@@ -110,16 +110,16 @@
 					playermob.mind.purchased_bank_item = p
 					c.persistent_bank_item = 0
 				else
-					boutput( usr, "<span class='notice'><b>Can't find mind of new player mob [playermob]... please report this to a coder</b></span>" )
+					boutput( usr, SPAN_NOTICE("<b>Can't find mind of new player mob [playermob]... please report this to a coder</b>") )
 					return FALSE
 			else
-				boutput( usr, "<span class='notice'><b>Can't find new player mob from client [c]... please report this to a coder</b></span>" )
+				boutput( usr, SPAN_NOTICE("<b>Can't find new player mob from client [c]... please report this to a coder</b>") )
 				return FALSE
 
 			return TRUE
 		else
 			usr.playsound_local(usr, 'sound/items/penclick.ogg', 80, 0)
-			boutput( usr, "<span class='notice'><b>You can't afford [p.name]!</b></span>" )
+			boutput( usr, SPAN_NOTICE("<b>You can't afford [p.name]!</b>") )
 			return FALSE
 
 
@@ -173,14 +173,14 @@
 
 	if(purchase in persistent_bank_purchaseables)
 		if (purchase.Create(src))
-			boutput( src, "<span class='notice'><b>[purchase.name] equipped successfully.</b></span>" )
+			boutput( src, SPAN_NOTICE("<b>[purchase.name] equipped successfully.</b>") )
 		else
-			boutput( src, "<span class='notice'><b>[purchase.name] is not available for the job you rolled. It will not be billed.</b></span>" )
+			boutput( src, SPAN_NOTICE("<b>[purchase.name] is not available for the job you rolled. It will be refunded.</b>") )
 			src.client.add_to_bank(purchase.cost)
 			src.client.set_last_purchase(null)
 			return
 	else
-		boutput( src, "<span class='notice'><b>The thing you previously purchased has been removed from your inventory due to it no longer existing.</b></span>")
+		boutput( src, SPAN_NOTICE("<b>The thing you previously purchased has been removed from your inventory due to it no longer existing.</b>"))
 		src.client.set_last_purchase(null)
 		return
 

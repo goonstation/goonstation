@@ -102,7 +102,7 @@
 				src.UpdateIcon()
 				if (A.delete_on_reload)
 					qdel(A) // No duplicating empty magazines, please (Convair880).
-				user.visible_message("<span class='alert'>[user] refills [src].</span>", "<span class='alert'>There wasn't enough ammo left in [A.name] to fully refill [src]. It only has [src.amount_left] rounds remaining.</span>")
+				user.visible_message(SPAN_ALERT("[user] refills [src]."), SPAN_ALERT("There wasn't enough ammo left in [A.name] to fully refill [src]. It only has [src.amount_left] rounds remaining."))
 				return // Couldn't fully reload the gun.
 			if ((A.amount_left >= 0) && (src.amount_left == src.max_amount))
 				A.UpdateIcon()
@@ -110,7 +110,7 @@
 				if (A.amount_left == 0)
 					if (A.delete_on_reload)
 						qdel(A) // No duplicating empty magazines, please (Convair880).
-				user.visible_message("<span class='alert'>[user] refills [src].</span>", "<span class='alert'>You fully refill [src] with ammo from [A.name]. There are [A.amount_left] rounds left in [A.name].</span>")
+				user.visible_message(SPAN_ALERT("[user] refills [src]."), SPAN_ALERT("You fully refill [src] with ammo from [A.name]. There are [A.amount_left] rounds left in [A.name]."))
 				return // Full reload or ammo left over.
 		else return ..()
 
@@ -963,7 +963,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
-	icon_empty = "40mm_nonlethal-0"
+	icon_empty = "40mm_paint-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 /obj/item/ammo/bullets/pbr
@@ -982,7 +982,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/bullets/stunbaton
 	sname = "40mm Stun Baton Rounds"
-	name = "40mm plastic baton rounds"
+	name = "40mm stun-baton rounds"
 	desc = "A box of disposable stun batons shoved into 40mm grenade shells. What the hell?"
 	ammo_type = new/datum/projectile/bullet/stunbaton
 	amount_left = 2
@@ -1049,7 +1049,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 				src.amount_left++
 				boutput(user, "You load [W] into the [src].")
 			else
-				boutput(user, "<span class='alert'>For <i>some reason</i>, you are unable to place [W] into an already filled chamber.</span>")
+				boutput(user, SPAN_ALERT("For <i>some reason</i>, you are unable to place [W] into an already filled chamber."))
 				return
 		else
 			return ..()
@@ -1514,6 +1514,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/power_cell/self_charging/lawbringer/bad
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 175PU."
+	charge = 175
 	max_charge = 175
 	recharge_rate = 3
 
@@ -1526,46 +1527,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 /obj/item/ammo/power_cell/self_charging/flockdrone
 	name = "Flockdrone incapacitor cell"
 	desc = "You should not be seeing this!"
+	charge = 40
 	max_charge = 40
 	recharge_rate = 5
 	component_type = /datum/component/power_cell/flockdrone
-
-/datum/action/bar/icon/powercellswap
-	duration = 1 SECOND
-	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "powercellswap"
-	icon = 'icons/obj/items/ammo.dmi'
-	icon_state = "power_cell"
-	var/mob/living/user
-	var/obj/item/ammo/power_cell/cell
-	var/obj/item/gun/energy/gun
-
-	New(User, Cell, Gun)
-		user = User
-		cell = Cell
-		gun = Gun
-		..()
-
-	onUpdate()
-		..()
-		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-	onStart()
-		..()
-		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		return
-
-	onEnd()
-		..()
-		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
-			..()
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		cell.swap(gun,user)
 
 /obj/item/ammo/power_cell/redirect
 	component_type = /datum/component/power_cell/redirect

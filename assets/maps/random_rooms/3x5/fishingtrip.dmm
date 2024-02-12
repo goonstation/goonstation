@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/machinery/drainage,
-/obj/item/reagent_container/food/fish/random,
+/obj/item/reagent_containers/food/fish/random,
 /obj/decal/stage_edge,
 /turf/simulated/floor/twotone/blue,
 /area/space)

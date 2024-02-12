@@ -27,8 +27,8 @@
 
 	if (!oH.skull && oH.head && !isskeleton(src) && !src.nodamage) // skeletons can also survive without their skull because reasons
 		src.death()
-		src.visible_message("<span class='alert'><b>[src]</b>'s head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>",\
-		"<span class='alert'>Your head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]</b>'s head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!"),\
+		SPAN_ALERT("Your head collapses into a useless pile of skin mush with no skull to keep it in its proper shape!"))
 
 	//Wire note: Fix for Cannot read null.loc
 	else if (oH.skull?.loc != src)

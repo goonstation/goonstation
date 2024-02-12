@@ -28,12 +28,12 @@
 				for (var/mob/living/M in psource)
 					logTheThing(LOG_COMBAT, M, "takes [damage] damage due to ldmatter implosion while inside [psource].")
 					M.TakeDamage("All", damage, 0)
-					boutput(M, "<span class='alert'>[psource] [created_volume >= 10 ? "crushes you as it implodes!" : "compresses around you tightly for a moment!"]</span>")
+					boutput(M, SPAN_ALERT("[psource] [created_volume >= 10 ? "crushes you as it implodes!" : "compresses around you tightly for a moment!"]"))
 
 				if (created_volume >= 10)
 					for (var/atom/movable/O in psource)
 						O.set_loc(source)
-					psource:visible_message("<span class='alert'>[psource] implodes!</span>")
+					psource:visible_message(SPAN_ALERT("[psource] implodes!"))
 					qdel(psource)
 					return
 			SPAWN(0)
@@ -183,9 +183,7 @@
 
 
 /proc/omega_hairgrownium_grow_hair(var/mob/living/carbon/human/H, var/all_hairs)
-	var/list/possible_hairstyles = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/biological)
-	if (!all_hairs)
-		possible_hairstyles -= concrete_typesof(/datum/customization_style/hair/gimmick)
+	var/list/possible_hairstyles = get_available_custom_style_types(H.client, no_gimmick_hair=!all_hairs) // if all_hairs is TRUE, character setup mode is FALSE, vice versa
 	var/hair_type = pick(possible_hairstyles)
 	H.bioHolder.mobAppearance.customization_first = new hair_type
 	H.bioHolder.mobAppearance.customization_first_color = random_saturated_hex_color()
@@ -196,7 +194,7 @@
 	H.bioHolder.mobAppearance.customization_third = new hair_type
 	H.bioHolder.mobAppearance.customization_third_color = random_saturated_hex_color()
 	H.update_colorful_parts()
-	boutput(H, "<span class='notice'>Your entire head feels extremely itchy!</span>")
+	boutput(H, SPAN_NOTICE("Your entire head feels extremely itchy!"))
 
 /proc/omega_hairgrownium_drop_hair(var/mob/living/carbon/human/H)
 	H.visible_message("<strong style='font-size: 170%;'>[H.name] hair fall out!!</strong>", "<strong style='font-size: 170%;'>you hair fall out!!</strong>")
@@ -239,7 +237,7 @@
 		if (isintangible(M) )
 			continue
 		if (!M.ears_protected_from_sound() && !ON_COOLDOWN(M, "sonicpowder_anti_spam", 1 SECOND))
-			boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
+			boutput(M, SPAN_ALERT("<b>[hootmode ? "HOOT" : "BANG"]</b>"))
 		else
 			continue
 

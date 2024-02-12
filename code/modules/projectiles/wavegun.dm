@@ -50,6 +50,10 @@
 	color_green = 1
 	color_blue = 0
 
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if(ismob(hit) && proj.power == 40) //hax
+			elecflash(get_turf(hit),radius=0, power=1, exclude_center = 0)
+
 	get_power(obj/projectile/P, atom/A)
 		return 10 + 30 * (P.travelled >= 128)
 

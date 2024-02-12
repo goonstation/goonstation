@@ -474,24 +474,25 @@ file_save - Save file to local disk."}
 				src.print_text("Service mode [src.service_mode ? "" : "de"]activated.")
 
 			if("term_login")
-				var/obj/item/peripheral/scanner = find_peripheral("ID_SCANNER")
-				if(!scanner)
-					src.print_text("Error: No ID scanner detected.")
-					return
 				if(!src.pnet_card)
 					src.print_text("Alert: No network card detected.")
 					return
 				if(!src.serv_id)
 					src.print_text("Alert: Connection required.")
 					return
-				src.ping_wait = 2
 
 				var/datum/computer/file/record/udat = new // what name, assignment, and access do we have??
+				var/obj/item/peripheral/scanner = find_peripheral("ID_SCANNER")
 				if (issilicon(usr) || isAI(usr)) // silicons dont have IDs and we want them to override any inserted ID
 					udat.fields["registered"] = isAI(usr) ? "AIUSR" : "CYBORG" // should probably make all logins use the actual name of the silicon at some point
 					udat.fields["assignment"] = "AI"
 					udat.fields["access"] = "34"
 				else
+					if(!scanner)
+						src.print_text("Error: No ID scanner detected.")
+						return
+				src.ping_wait = 2
+				if(!udat.fields["registered"]) // if a name hasn't been assigned yet (i.e. not a silicon, need to scan id)
 					var/datum/signal/scansignal = src.peripheral_command("scan_card",null,"\ref[scanner]")
 					if (istype(scansignal))
 						udat.fields["registered"] = scansignal.data["registered"]

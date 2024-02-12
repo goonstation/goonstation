@@ -181,7 +181,7 @@
 				else if (checked_plantpot.dead)
 					checked_plantpot.HYPdestroyplant()
 				//Seedless prevents the plant from replanting. And inhibited potential as well.... no infinite maneaters, folks
-				else if (!growing && !HYPCheckCommut(current_plantgenes, /datum/plant_gene_strain/seedless) && !!HYPCheckCommut(current_plantgenes, /datum/plant_gene_strain/reagent_blacklist))
+				else if (!growing && !HYPCheckCommut(current_plantgenes, /datum/plant_gene_strain/seedless) && !HYPCheckCommut(current_plantgenes, /datum/plant_gene_strain/reagent_blacklist))
 					//we create a new seed now
 					var/obj/item/seed/temporary_seed = HYPgenerateseedcopy(current_plantgenes, current_planttype, carrying_plantpot.generation)
 					// now we are able to plant the seed

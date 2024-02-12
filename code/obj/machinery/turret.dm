@@ -379,7 +379,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 				if (user.using_dialog_of(src))
 					src.Attackhand(user)
 		else
-			boutput(user, "<span class='alert'>Access denied.</span>")
+			boutput(user, SPAN_ALERT("Access denied."))
 
 /obj/machinery/turretid/attack_ai(mob/user as mob)
 	return attack_hand(user)

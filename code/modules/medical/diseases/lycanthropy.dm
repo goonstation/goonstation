@@ -3,7 +3,8 @@
 	print_name = "Unidentified virus"
 	max_stages = 5
 	spread = "Saliva"
-	cure = "Incurable"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Silver nitrate"
 	reagentcure = list("silver_nitrate")
 	recureprob = 10
 	affected_species = list("Human")
@@ -28,25 +29,25 @@
 				else if (probmult(5))
 					H.emote("gasp")
 				if (probmult(10))
-					boutput(H, "<span class='alert'>You're starting to feel weak.</span>")
+					boutput(H, SPAN_ALERT("You're starting to feel weak."))
 
 			if (4)
 				if (probmult(10))
 					H.emote("cough")
 				if (probmult(5) && !H.getStatusDuration("weakened") && !H.getStatusDuration("paralysis"))
-					boutput(H, "<span class='alert'>You suddenly feel very weak.</span>")
+					boutput(H, SPAN_ALERT("You suddenly feel very weak."))
 					H.emote("collapse")
 
 			if (5)
-				boutput(H, "<span class='alert'>Your body feels as if it's on fire!</span>")
+				boutput(H, SPAN_ALERT("Your body feels as if it's on fire!"))
 				if (probmult(50) && src.triggered_transformation == 0)
 					if (!istype(H.mutantrace, /datum/mutantrace/werewolf))
-						H.visible_message("<span class='alert'><B>[H] starts having a seizure!</B></span>")
+						H.visible_message(SPAN_ALERT("<B>[H] starts having a seizure!</B>"))
 						H.changeStatus("weakened", 15 SECONDS)
 						H.stuttering = max(10, H.stuttering)
 						H.make_jittery(1000)
 					else
-						boutput(H, "<span class='alert'>You feel a wave of lethargy wash over you!</span>")
+						boutput(H, SPAN_ALERT("You feel a wave of lethargy wash over you!"))
 						H.changeStatus("drowsy", 30 SECONDS)
 					src.triggered_transformation = 1
 

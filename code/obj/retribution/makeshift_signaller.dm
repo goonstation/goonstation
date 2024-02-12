@@ -23,13 +23,13 @@ TYPEINFO(/obj/item/makeshift_signaller_frame)
 
 	attackby(obj/item/W, mob/user)
 		if (build_stage >= 4)														//If build_stage is 4 or higher, which shouldn't be possible, alert the player to in turt alert coders.
-			user.show_message("<span class='notice'>Uh oh, it seems you broke it!</span>", 1)
+			user.show_message(SPAN_NOTICE("Uh oh, it seems you broke it!"), 1)
 			desc = "This doodad is broken. Call a coder."
 			tooltip_rebuild = 1
 			return
 		else if (ispulsingtool(W) && build_stage <= 0)								//Step 1 of construction: Multitool.
 			build_stage = 1
-			user.show_message("<span class='notice'>You rearrange and attune the wiring inside!</span>", 1)
+			user.show_message(SPAN_NOTICE("You rearrange and attune the wiring inside!"), 1)
 			desc = "A remote signaller frame with wiring sticking out."
 			tooltip_rebuild = 1
 			return
@@ -40,14 +40,14 @@ TYPEINFO(/obj/item/makeshift_signaller_frame)
 			else
 				W.inventory_counter.update_number(W.amount)
 			build_stage = 2
-			user.show_message("<span class='notice'>You make a crude but functional circuit board port and slot it into the frame!</span>", 1)
+			user.show_message(SPAN_NOTICE("You make a crude but functional circuit board port and slot it into the frame!"), 1)
 			desc = "A remote signaller frame with a handmade circuit board port slotted loosely into it, connected with wires."
 			tooltip_rebuild = 1
 			return
 		else if (istype(W,/obj/item/circuitboard/secure_data) && build_stage == 2)	//Step 3 of construction: Circuit Board.
 			qdel(W)
 			build_stage = 3
-			user.show_message("<span class='notice'>You put the circuit board in the port!</span>", 1)
+			user.show_message(SPAN_NOTICE("You put the circuit board in the port!"), 1)
 			desc = "A remote signaller frame with a circuit board inside, being held together with a custom port and some wiring."
 			tooltip_rebuild = 1
 		else if (iswrenchingtool(W) && build_stage == 3)							//Step 4 of construction: Wrench.
@@ -55,7 +55,7 @@ TYPEINFO(/obj/item/makeshift_signaller_frame)
 			var/obj/item/makeshift_syndicate_signaller/A = new /obj/item/makeshift_syndicate_signaller
 			user.put_in_hand_or_drop(A)
 			A.add_fingerprint(user)
-			user.show_message("<span class='notice'>You connect and secure all the loose parts!</span>", 1)
+			user.show_message(SPAN_NOTICE("You connect and secure all the loose parts!"), 1)
 			desc = "An illegal-looking signaller, clearly makeshift. If you're seeing this, alert a coder please."
 			tooltip_rebuild = 1
 			qdel(src)
@@ -100,7 +100,7 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 							sword_summoned_before = TRUE
 
 							icon_state = "explosion"
-							user.show_message("<span class='notice'>You sent a signal to unknown coordinates derived from the uploaded metadata! This can't be good...</span>", 1)
+							user.show_message(SPAN_NOTICE("You sent a signal to unknown coordinates derived from the uploaded metadata! This can't be good..."), 1)
 							desc = "Oh shit, it's overloading!"
 							tooltip_rebuild = 1
 							is_exploding = TRUE
@@ -111,17 +111,17 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 								qdel(src)
 							return
 						else
-							user.show_message("<span class='notice'>You failed to send a signal. To avoid interference, it's best to try again closer to open space.</span>", 1)
+							user.show_message(SPAN_NOTICE("You failed to send a signal. To avoid interference, it's best to try again closer to open space."), 1)
 					else
-						user.show_message("<span class='notice'>You failed to send a signal. The device seems oddly dormant...</span>", 1)
+						user.show_message(SPAN_NOTICE("You failed to send a signal. The device seems oddly dormant..."), 1)
 						desc = "This device is dormant. It has no purpose now."
 						tooltip_rebuild = 1
 				else
-					user.show_message("<span class='notice'>You failed to send a signal. To avoid interference, it's best to try again in an unrestricted area.</span>", 1)
+					user.show_message(SPAN_NOTICE("You failed to send a signal. To avoid interference, it's best to try again in an unrestricted area."), 1)
 			else
-				user.show_message("<span class='notice'>You failed to send a signal. The device is currently waiting for a link to establish. It's best to try again later.</span>", 1)
+				user.show_message(SPAN_NOTICE("You failed to send a signal. The device is currently waiting for a link to establish. It's best to try again later."), 1)
 		else if (metadata >= 0 && metadata < 8 && !is_exploding)			//If there are still unfilled metadata nodes left, display the filled nodes' amount.
-			user.show_message("<span class='notice'>Metadata nodes currently filled: [metadata]</span>", 1)
+			user.show_message(SPAN_NOTICE("Metadata nodes currently filled: [metadata]"), 1)
 			return
 		return
 
@@ -132,13 +132,13 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 				playsound(src.loc, 'sound/effects/sparks4.ogg', 100, 0)
 				user.put_in_hand_or_drop(new /obj/item/factionrep/ntboardfried)
 				metadata += 1
-				user.show_message("<span class='notice'>You uploaded some metadata from the syndicate circuit board, frying it in the process.</span>", 1)
+				user.show_message(SPAN_NOTICE("You uploaded some metadata from the syndicate circuit board, frying it in the process."), 1)
 				set_icon_state("metadata_[metadata]")
 				if (metadata >= 8)
 					desc = "This device has a menacing aura around it. All 8 nodes of metadata are filled. The signal is ready to be sent."
 					tooltip_rebuild = 1
 			else if (metadata >= 8)										//If all metadata nodes are filled, alert the player instead.
-				user.show_message("<span class='notice'>All 8 metadata nodes have been filled already!</span>", 1)
+				user.show_message(SPAN_NOTICE("All 8 metadata nodes have been filled already!"), 1)
 			return
 		return
 
@@ -146,7 +146,7 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 		. = ..()
 		if (!was_emagged)
 			if (metadata >= 8)											//If all metadata nodes are filled, alert the player instead.
-				user.show_message("<span class='notice'>All 8 metadata nodes have been filled already!</span>", 1)
+				user.show_message(SPAN_NOTICE("All 8 metadata nodes have been filled already!"), 1)
 				return
 			else
 				metadata += rand(2, 7)
@@ -159,7 +159,7 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 				tooltip_rebuild = 1
 			set_icon_state("metadata_[metadata]")
 		else
-			user.show_message("<span class='notice'>This device has been emagged already!</span>", 1)
+			user.show_message(SPAN_NOTICE("This device has been emagged already!"), 1)
 
 /obj/item/makeshift_syndicate_signaller/proc/metadata_increase(source, dying_drone)
 	if (metadata >= 8)

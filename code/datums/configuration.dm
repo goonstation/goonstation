@@ -423,13 +423,13 @@
 
 	return new /datum/game_mode/extended // Let's fall back to extended! Better than erroring and having to manually restart.
 
-/datum/configuration/proc/pick_random_mode()
+/datum/configuration/proc/pick_random_mode(list/exclusions = list())
 	var/total = 0
 	var/list/accum = list()
 	var/list/avail_modes = list()
 
 	for(var/M in src.modes)
-		if (src.probabilities[M] && getSpecialModeCase(M))
+		if (!exclusions.Find(M) && src.probabilities[M] && getSpecialModeCase(M))
 			total += src.probabilities[M]
 			avail_modes += M
 			accum[M] = total
@@ -447,7 +447,6 @@
 		return null // This essentially will never happen (you'd have to not be able to choose any mode in secret), so it's okay to leave it null, I think
 
 	//boutput(world, "Returning mode [mode_name]")
-	message_admins("[mode_name] was chosen as the random game mode!")
 
 	return src.pick_mode(mode_name)
 

@@ -58,7 +58,7 @@
 
 		if(length(.) && prob(30))
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
-			src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
+			src.visible_message(SPAN_ALERT("<B>[src]</B> hisses!"))
 
 	//Special behaviour for Sticks To Snakes spell
 
@@ -93,7 +93,7 @@
 			my_stick.mouse_opacity = 1
 			my_stick.set_loc(src.loc)
 			if(revert_message)
-				src.visible_message("<span class='combat'><b>[src]</b> reverts into [my_stick]!</span>")
+				src.visible_message(SPAN_COMBAT("<b>[src]</b> reverts into [my_stick]!"))
 			if(istype(my_stick, /mob/living/critter/small_animal/snake))
 				var/mob/living/critter/small_animal/snake/snake = my_stick
 				snake.start_expiration(2 MINUTES)
@@ -181,7 +181,7 @@
 
 	proc/contents_check()
 		if(!src.allow_empty && !length(src.contents))
-			src.visible_message("<span class='notice'><B>[src]</B> realizes that its material essence is missing and vanishes in a puff of logic!</span>")
+			src.visible_message(SPAN_NOTICE("<B>[src]</B> realizes that its material essence is missing and vanishes in a puff of logic!"))
 			qdel(src)
 
 	death(var/gibbed)

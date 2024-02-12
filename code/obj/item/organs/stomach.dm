@@ -32,7 +32,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
-			user.visible_message("<span class='alert'>[user] starts cutting [src] open!")
+			user.visible_message(SPAN_ALERT("[user] starts cutting [src] open!"))
 			SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, PROC_REF(cut_open), list(), W.icon, W.icon_state, "[user] cuts [src] open, spilling its contents everywhere!", INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 			return
 		. = ..()
@@ -121,12 +121,12 @@
 	relaymove(mob/user, direction, delay, running)
 		if(!prob(60) || !src.donor || !(user in src.stomach_contents))
 			return
-		src.donor.audible_message("<span class='alert'>You hear something rumbling inside [src.donor]'s stomach...</span>")
+		src.donor.audible_message(SPAN_ALERT("You hear something rumbling inside [src.donor]'s stomach..."))
 		var/obj/item/I = user.equipped()
 		if(I?.force)
 			var/d = rand(round(I.force / 4), I.force)
 			src.donor.TakeDamage("chest", d, 0)
-			src.donor.visible_message("<span class='alert'><B>[user] attacks [src.donor]'s stomach wall with \the [I.name]!</span>")
+			src.donor.visible_message(SPAN_ALERT("<B>[user] attacks [src.donor]'s stomach wall with \the [I.name]!"))
 			playsound(user.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 50, 1)
 
 			if(prob(src.donor.get_brute_damage() - 50))
@@ -155,6 +155,7 @@
 					M.death(TRUE)
 					M.ghostize()
 					qdel(M)
+					src.stomach_contents -= M
 					src.donor.emote("burp")
 					playsound(get_turf(src.donor), 'sound/voice/burp.ogg', 50, 1)
 					continue

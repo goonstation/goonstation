@@ -69,7 +69,7 @@
 			src.try_vault(M)
 		else
 			make_cleanable(/obj/decal/cleanable/sec_tape, src.loc)
-			src.visible_message("<span class='alert'>[M] rips up [src].</span>")
+			src.visible_message(SPAN_ALERT("[M] rips up [src]."))
 			qdel(src)
 
 	Bumped(var/mob/AM as mob)
@@ -77,11 +77,12 @@
 		if(!istype(AM)) return
 		if(AM.client?.check_key(KEY_RUN)) //In a rush? Run through it
 			playsound(src, 'sound/effects/snaptape.ogg', 10)
-			make_cleanable(/obj/decal/cleanable/sec_tape, src.loc)
+			var/obj/decal/cleanable/sec_tape/tape = make_cleanable(/obj/decal/cleanable/sec_tape, src.loc)
+			tape.add_fingerprint(AM) //mess with the tape, leave prints
 			qdel(src)
 		else	//Just walking? Vault it
 			src.try_vault(AM)
 
 	proc/try_vault(mob/user, use_owner_dir = FALSE)
-		if(!actions.hasAction(user, "railing_jump"))
+		if(!actions.hasAction(user, /datum/action/bar/icon/railing_jump))
 			actions.start(new /datum/action/bar/icon/railing_jump(user, src, use_owner_dir), user)

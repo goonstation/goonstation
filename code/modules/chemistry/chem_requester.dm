@@ -109,7 +109,7 @@ var/list/datum/chem_request/chem_requests = list()
 				chem_requests["[src.request.id]"] = src.request
 				logTheThing(LOG_STATION, src, "[constructTarget(ui.user)] placed a chemical request for [src.request.volume] units of [src.request.reagent_id] using [src.request.requester_name]'s ID at [log_loc(src)], notes: \"[src.request.note]\"")
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "group"=list(MGD_SCIENCE), "sender"="00000000", "message"="Notification: new chemical request received.")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "group"=list(MGD_SCIENCE), "sender"="00000000", "message"="Notification: new chemical request received. [src.request.volume]u of [src.request.reagent_name] requested by [src.request.requester_name].")
 				radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 				src.request = new
 				. = TRUE
@@ -117,7 +117,7 @@ var/list/datum/chem_request/chem_requests = list()
 	attackby(var/obj/item/I, mob/user)
 		var/obj/item/card/id/id_card = get_id_card(I)
 		if (istype(id_card))
-			boutput(user, "<span class='notice'>You swipe the ID card.</span>")
+			boutput(user, SPAN_NOTICE("You swipe the ID card."))
 			src.card = id_card
 			tgui_process.try_update_ui(user, src)
 		else src.Attackhand(user)

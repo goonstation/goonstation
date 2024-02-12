@@ -72,4 +72,4 @@ TYPEINFO(/obj/item/organ/appendix/cyber)
 			#ifdef CREATE_PATHOGENS
 			add_pathogens(donor, 30) //oh no
 			#endif
-			boutput(donor, "<span class='alert'>Your appendix has burst! It has given you medical help... though you might want to see a doctor very soon.</span>")
+			boutput(donor, SPAN_ALERT("Your appendix has burst! It has given you medical help... though you might want to see a doctor very soon."))

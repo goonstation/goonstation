@@ -34,7 +34,7 @@ Highest peak on Mundus climbed for first time. Climber says 'hardest part was ac
 Pug detective sniffs out crimes.@,
 Flock of crows tears janitorial crew to shreds, Owlrey Association advocates claim victory for Owl public image.@,
 Singularity Engineers terrified by discovery of White Holes. Spokesperson says "We have literally no idea what happens if they collide."@,
-Cogmap-1 line of space stations to recieve variable engine types.@,
+Cogmap-1 line of space stations to receive variable engine types.@,
 Oshan's NT representative rumoured to have gotten tired of standing all day, sits down for first time in recorded history.@,
 Temporal Laboratory discovered to have erased themselves from existence retroactively.@,
 Mimes launch all out assault on invisible boxes.@,
@@ -63,7 +63,7 @@ Destiny Shuttles flies its last flight.@,
 Manta submarine 2 reportedly in development. "What? Why would we do that?" says ship designer.@,
 Silicon found to have installed security cameras in toilets. Report any toilet cameras to Engineering department immediately.@,
 Showers found to be laced with soap. Survey shows people don't mind.@,
-The dangers of being cloned more than 10 times: a Genticist's perspective.@,
+The dangers of being cloned more than 10 times: a Geneticist's perspective.@,
 Top 5 ways to self defend without being brigged. Number 2 will surprise you.@,
 AI forced to speak in cutesy voice for 2 weeks commits suicide.@,
 "Electromagnetic cards are still illegal you know," says John Nanotrasen.@,
@@ -76,7 +76,7 @@ Head of Personnel annoys those around them by repeatedly showing off new pocketw
 Mechanics rejoice as conveyor belts to be removed from the mechscan blacklist.@,
 Mineral Mining Magnet breaks for unknown reasons for 100th time, prompting party.@,
 AI cores to be made water (and drink) proof.@,
-Floor plan to Nanotrasen Central Command found in a maintainence shaft, sparking panic.@,
+Floor plan to Nanotrasen Central Command found in a maintainance shaft, sparking panic.@,
 Pathology department declared "really pointless for every station to have" and removed from current station/ship models.@,
 White Hole spits out perfect clones of existing crew members, sparking new research.@,
 NT employees asked to please check their emails "at all or ever".@,
@@ -105,7 +105,7 @@ name
 John Nanotrasen@,Shitty Bill@,Beepsky@,Discount Dan@,The King In Yellow
 
 title
-Acting Director@,Captain@,Head of Personnel@,Research Director@,staff assistant@,Medical Director@,Head of Staff@,Director of Operations@,CEO@,CFO@,COO@,Big Boss@,Reigning champion@,representative@,attourney@,journalist@,tourist@,researcher
+Acting Director@,Captain@,Head of Personnel@,Research Director@,staff assistant@,Medical Director@,Head of Staff@,Director of Operations@,CEO@,CFO@,COO@,Big Boss@,Reigning champion@,representative@,attorney@,journalist@,tourist@,researcher
 
 location
 Frontier@,Watchful Eye Sensor@,Afghanistan@,Albania@,Algeria@,Andorra@,Angola@,Anguilla@,Argentina@,Armenia@,Arstotzka@,Australia@,Austria@,Azerbaijan@,Bahamas@,Bahrain@,Bangladesh@,Barbados@,Belarus@,Belgium@,Belize@,Benin@,Bermuda@,Bhutan@,Bolivia@,Botswana@,Brazil@,Brexit@,Bulgaria@,Burundi@,Cambodia@,Cameroon@,Canada@,Catmandu@,Chad@,Chile@,China@,Cobrastan@,Colombia@,Comoros@,Congo@,Croatia@,Cuba@,Cyprus@,Denmark@,Djibouti@,Dominica@,Ecuador@,Egypt@,England@,Eritrea@,Estonia@,Ethiopia@,Fiji@,Finland@,France@,Gabon@,Gambia@,Georgia@,Germany@,Ghana@,Greece@,Grenada@,Guadeloupe@,Guatemala@,Guinea@,Guyana@,Haiti@,Honduras@,Hungary@,Iceland@,India@,Indonesia@,Iran@,Iraq@,Ireland@,Israel@,Italy@,Jamaica@,Japan@,Jordan@,Kazakhstan@,Kenya@,Kolechia@,Korea@,Kosovo@,Kuwait@,Kyrgyz@,Laos@,Latvia@,Lebanon@,Lesotho@,Liberia@,Libya@,Liechtenstein@,Lithuania@,Luxembourg@,Macedonia@,Madagascar@,Malawi@,Malaysia@,Maldives@,Mali@,Malta@,Martinique@,Mauritania@,Mauritius@,Mayotte@,Mexico@,Moldova@,Monaco@,Mongolia@,Montenegro@,Montserrat@,Morocco@,Mozambique@,Namibia@,Naughty@,Nepal@,Netherlands@,Nicaragua@,Nigeria@,Norway@,Oman@,Pakistan@,Panama@,Paraguay@,Peru@,Philippines@,Poland@,Portugal@,Qatar@,Reunion@,Romania@,Rwanda@,Samoa@,Scotland@,Senegal@,Serbia@,Seychelles@,Singapore@,Slovenia@,Somalia@,Spain@,Sudan@,Suriname@,Swaziland@,Sweden@,Switzerland@,Syria@,Tajikistan@,Tanzania@,Thailand@,Togo@,Tunisia@,Turkey@,Turkmenistan@,UAE@,Uganda@,Ukraine@,Uruguay@,USA@,Uzbekistan@,Venezuela@,Vietnam@,Wales@,Yemen@,Zambia@,Zanzibar@,Zimbabwe@,X-0@,Typhon@,Plasma Star@,Fortitudo@,Antistes@,Quadriga@,Fatuus@,Domus Dei@,Mundus@,Iustitia@,Iudicium@,Rota Fortuna@,Amantes@,Magus@,Regis@,Regina@,Mors@,Flaminica@,Senex@,Estella@,Shidd@,Šid@,Abzu@,Lahamu@,Lahmu@,Anu@,Fugg@,Fugere

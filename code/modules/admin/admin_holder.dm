@@ -44,6 +44,7 @@
 	var/datum/centcomviewer/centcomviewer = null
 	var/datum/bioeffectmanager/bioeffectmanager = null
 	var/datum/abilitymanager/abilitymanager = null
+	var/datum/antagonist_panel/antagonist_panel = null
 
 	var/list/hidden_categories = null
 
@@ -64,6 +65,7 @@
 			"Rotate",\
 			"Scale",\
 			"Emag",\
+			"Pixel Offset",\
 			)
 
 		if (!admin_interact_verbs || length(admin_interact_verbs) <= 0)
@@ -177,7 +179,7 @@
 		if (json_data)
 			AP = json_decode(json_data)
 		else
-			boutput(src.owner, "<span class='notice'>ERROR: Admin prefence data is null. You either have no saved prefs or cloud is unreachable.</span>")
+			boutput(src.owner, SPAN_NOTICE("ERROR: Admin prefence data is null. You either have no saved prefs or cloud is unreachable."))
 			return
 
 		var/saved_servertoggles_toggle = AP["servertoggles_toggle"]
@@ -313,7 +315,7 @@
 				src.owner?.show_verb_category(ADMIN_CAT_PREFIX + cat)
 
 		if (src.owner)
-			boutput(src.owner, "<span class='notice'>Admin preferences loaded.</span>")
+			boutput(src.owner, SPAN_NOTICE("Admin preferences loaded."))
 
 	proc/save_admin_prefs()
 		if (!src.owner)
@@ -361,7 +363,7 @@
 		if (!owner.player.cloud_put("admin_preferences", json_encode(AP)))
 			tgui_alert(src.owner, "ERROR: Unable to reach cloud.")
 		else
-			boutput(src.owner, "<span class='notice'>Admin preferences saved.</span>")
+			boutput(src.owner, SPAN_NOTICE("Admin preferences saved."))
 
 	proc/admin_message_to_me(source, message)
 		src.owner?.message_one_admin(source, message)

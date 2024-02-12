@@ -11,7 +11,7 @@
 
 		var/mob/living/carbon/human/slasher/W = src.holder.owner
 		if(!W.hasStatus("incorporeal"))
-			boutput(src.holder.owner, "<span class='alert'><span class='alert'>You must be incorporeal to use this ability.</span></span>")
+			boutput(src.holder.owner, SPAN_ALERT("[SPAN_ALERT("You must be incorporeal to use this ability.")]"))
 			return TRUE
 		else
 			return W.corporealize()

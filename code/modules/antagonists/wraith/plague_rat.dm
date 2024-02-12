@@ -18,5 +18,5 @@
 
 	announce()
 		. = ..()
-		boutput(src.owner.current, "<span class='alert'><b>You have been respawned as a plague rat!</b></span>")
-		boutput(src.owner.current, "<span class='alert'>[src.master.current] is your master! Use your abilities to spread disease and consume rot! Work with your master to turn the station into a rat den!</span>")
+		boutput(src.owner.current, SPAN_ALERT("<b>You have been respawned as a plague rat!</b>"))
+		boutput(src.owner.current, SPAN_ALERT("[src.master.current] is your master! Use your abilities to spread disease and consume rot! Work with your master to turn the station into a rat den!"))

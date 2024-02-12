@@ -90,7 +90,7 @@
 				sleep(30 SECONDS)
 			if(event_active)
 				command_alert("Onsite Engineers inform us a sympathetic connection exists between the furnaces and the engine. Considering burning something it might enjoy: food, people, weed. We're grasping at straws here. ", "Engine Suggestion")
-				sleep(rand(1 MINUTE, 2.5 MINUTES))
+				sleep(randfloat(1 MINUTE, 2.5 MINUTES))
 
 			if(event_active)
 				pda_msg("Unknown substance detected in Themo-Electric Generator Circulators. Please drain and replace lubricants.")
@@ -178,7 +178,7 @@
 						circulators_to_relube -= C
 						target_grump += 25
 
-				sleep(rand(5.8 SECONDS, 25 SECONDS))
+				sleep(randfloat(5.8 SECONDS, 25 SECONDS))
 
 	proc/pda_msg(event_string)
 		var/datum/signal/signal = get_free_signal()
@@ -350,6 +350,7 @@ datum/teg_transformation/vampire
 
 	// Implement attackby to handle objects and attacks to Generator and Circulators
 	proc/attackby(obj/T, obj/item/I, mob/user)
+		user.lastattacked = src
 		var/force = I.force
 		if(istype(I,/obj/item/bible) && user.traitHolder.hasTrait("training_chaplain"))
 			force = 60
@@ -388,7 +389,7 @@ datum/teg_transformation/vampire
 		if (!message || !length(src.abilityHolder.thralls) )
 			return
 
-		var/rendered = "<span class='game thrallsay'><span class='prefix'>Thrall speak:</span> <span class='name vamp'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
+		var/rendered = SPAN_THRALLSAY("[SPAN_PREFIX("Thrall speak:")] <span class='name vamp'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 		for (var/mob/M in src.abilityHolder.thralls)
 			boutput(M, rendered)
 

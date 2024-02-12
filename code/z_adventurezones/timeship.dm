@@ -100,7 +100,7 @@ Turfs and decal for the space rift
 		src.exploding = 1
 		var/death_message = pick("It is now safe to shut off your buddy.","I regret nothing, but I am sorry I am about to leave my friends.","Malfunction!","I had a good run.","Es lebe die Freiheit!","Life was worth living.","It's time to split!")
 		speak(death_message)
-		src.visible_message("<span class='combat'><b>[src] blows apart!</b></span>")
+		src.visible_message(SPAN_COMBAT("<b>[src] blows apart!</b>"))
 		var/turf/T = get_turf(src)
 		if(src.mover)
 			src.mover.master = null
@@ -180,7 +180,7 @@ Turfs and decal for the space rift
 					dialogChecklist |= WD_SLEEPER_SCREAM
 
 					src.master.speak("Oh no oh no oh no no no no")
-					src.master.visible_message( "<span class='alert'>[src.master] points repeatedly at [maybe_that_somebody]![prob(50) ? "  With both arms, no less!" : null]</span>")
+					src.master.visible_message( SPAN_ALERT("[src.master] points repeatedly at [maybe_that_somebody]![prob(50) ? "  With both arms, no less!" : null]"))
 					src.master.set_emotion("screaming")
 					SPAWN(4 SECONDS)
 						if (src.master)
@@ -290,7 +290,7 @@ Turfs and decal for the space rift
 			if(src.ckey && !had_thought && !death_countdown)
 				//7848(2)9(1) = 7848b9a = hex for 126127002 = 126 127 002 = coordinates to cheget key
 				//A fucker is me
-				src.show_text("<B><I>A foreign thought flashes into your mind... <font color=red>Rem..e...mbe...r 78... 4... 8(2)... 9... (1) alw..a...ys...</font></I></B>")
+				src.show_text("<B><I>A foreign thought flashes into your mind... [SPAN_ALERT("Rem..e...mbe...r 78... 4... 8(2)... 9... (1) alw..a...ys...")]</I></B>")
 				had_thought = 1
 
 			if (death_countdown-- < 0)

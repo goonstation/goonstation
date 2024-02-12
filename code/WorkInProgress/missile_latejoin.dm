@@ -80,7 +80,7 @@
 		var/again = ""
 		if(src.num_loops > 1)
 			again = " again"
-		boutput(src.passenger, "<span class='alert'>Whew, it seems like the missile missed[again]. Recalibrating!</span>")
+		boutput(src.passenger, SPAN_ALERT("Whew, it seems like the missile missed[again]. Recalibrating!"))
 
 	proc/move_self()
 		var/glide = 0

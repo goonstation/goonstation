@@ -2,6 +2,7 @@
 	id = ROLE_GANG_LEADER
 	display_name = "gang leader"
 	antagonist_icon = "gang_head"
+	antagonist_panel_tab_type = /datum/antagonist_panel_tab/gang
 
 	/// The gang that this gang leader belongs to.
 	var/datum/gang/gang
@@ -65,9 +66,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(src.gang)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()
@@ -82,15 +82,15 @@
 	announce()
 		. = ..()
 		var/datum/game_mode/gang/gamemode = ticker.mode
-		boutput(src.owner.current, "<span class='alert'>Your headset has been tuned to your gang's frequency. Prefix a message with :z to communicate on this channel.</span>")
+		boutput(src.owner.current, SPAN_ALERT("Your headset has been tuned to your gang's frequency. Prefix a message with :z to communicate on this channel."))
 		if(!gamemode.random_gangs)
-			boutput(src.owner.current, "<span class='alert'>You must recruit people to your gang and compete for wealth and territory!</span>")
-		boutput(src.owner.current, "<span class='alert'>You can harm whoever you want, but be careful - the crew can harm gang members too!</span>")
-		boutput(src.owner.current, "<span class='alert'>To set your gang's home turf and spawn your locker, use the Set Gang Base ability in the top left. Make sure to pick somewhere safe, as your locker can be broken into and looted. You can only do this once!</span>")
-		boutput(src.owner.current, "<span class='alert'>Build up a stash of cash, guns and drugs. Use the items on your locker to store them.</span>")
+			boutput(src.owner.current, SPAN_ALERT("You must recruit people to your gang and compete for wealth and territory!"))
+		boutput(src.owner.current, SPAN_ALERT("You can harm whoever you want, but be careful - the crew can harm gang members too!"))
+		boutput(src.owner.current, SPAN_ALERT("To set your gang's home turf and spawn your locker, use the Set Gang Base ability in the top left. Make sure to pick somewhere safe, as your locker can be broken into and looted. You can only do this once!"))
+		boutput(src.owner.current, SPAN_ALERT("Build up a stash of cash, guns and drugs. Use the items on your locker to store them."))
 		if(!gamemode.random_gangs)
-			boutput(src.owner.current, "<span class='alert'>Use recruitment flyers obtained from the locker to invite new members, up to a limit of [src.gang.current_max_gang_members].</span>")
-		boutput(src.owner.current, "<span class='alert'><b>Turf, cash, guns and drugs all count towards victory, and your survival gives your gang bonus points!</b></span>")
+			boutput(src.owner.current, SPAN_ALERT("Use recruitment flyers obtained from the locker to invite new members, up to a limit of [src.gang.current_max_gang_members]."))
+		boutput(src.owner.current, SPAN_ALERT("<b>Turf, cash, guns and drugs all count towards victory, and your survival gives your gang bonus points!</b>"))
 		if(gamemode.random_gangs)
 			var/list/member_strings = list()
 			for(var/datum/mind/member in src.gang.members)
@@ -99,9 +99,9 @@
 				var/job = member.current?.job
 				member_strings += "[member.current.real_name] as [job]"
 			if(length(member_strings))
-				boutput(src.owner.current, "<span class='alert'>Your gang members are:<br>\t[jointext(member_strings, "<br>\t")]</span>")
+				boutput(src.owner.current, SPAN_ALERT("Your gang members are:<br>\t[jointext(member_strings, "<br>\t")]"))
 			else
-				boutput(src.owner.current, "<span class='alert'>You have no gang members, ouch!</span>")
+				boutput(src.owner.current, SPAN_ALERT("You have no gang members, ouch!"))
 
 	get_statistics()
 		var/list/purchased_items = list()

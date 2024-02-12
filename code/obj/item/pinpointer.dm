@@ -43,10 +43,10 @@ TYPEINFO(/obj/item/pinpointer)
 				user.show_text("No target criteria specified, cannot activate \the [src].", "red")
 				return
 			src.turn_on()
-			boutput(user, "<span class='notice'>You activate \the [src]</span>")
+			boutput(user, SPAN_NOTICE("You activate \the [src]"))
 		else
 			src.turn_off()
-			boutput(user, "<span class='notice'>You deactivate \the [src]</span>")
+			boutput(user, SPAN_NOTICE("You deactivate \the [src]"))
 
 	pickup(mob/user)
 		. = ..()
@@ -97,7 +97,7 @@ TYPEINFO(/obj/item/pinpointer)
 			if(!ST || !T || ST.z != T.z || !isnull(max_range) && GET_DIST(src,target) > max_range)
 				src.turn_off()
 				if(ismob(src.loc))
-					boutput(src.loc, "<span class='alert'>Pinpointer target out of range.</span>")
+					boutput(src.loc, SPAN_ALERT("Pinpointer target out of range."))
 				return
 			src.set_dir(get_dir(src,target))
 			var/dist = GET_DIST(src,target)
@@ -194,8 +194,8 @@ TYPEINFO(/obj/item/pinpointer)
 	target_criteria = /obj/item/disk/data/floppy/read_only/authentication
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -230,7 +230,7 @@ TYPEINFO(/obj/item/pinpointer)
 			var/turf/T = A.find_middle()
 			var/turf/ST = get_turf(user)
 			if (ST.z != T.z)
-				boutput(user, "<span class='notice'>You must be in the trench to use this pinpointer.</span>")
+				boutput(user, SPAN_NOTICE("You must be in the trench to use this pinpointer."))
 				return
 			target_ref = "\ref[A.find_middle()]"
 		. = ..()
@@ -254,7 +254,7 @@ TYPEINFO(/obj/item/pinpointer)
 	attack_self(mob/user)
 		if(!active)
 			if (!src.owner || !src.owner.mind)
-				boutput(user, "<span class='alert'>\The [src] emits a sorrowful ping!</span>")
+				boutput(user, SPAN_ALERT("\The [src] emits a sorrowful ping!"))
 				return
 			var/list/targets = list()
 			for_by_tcl(I, /obj/item/card/id)
@@ -268,9 +268,9 @@ TYPEINFO(/obj/item/pinpointer)
 			target = null
 			target = input(user, "Which ID do you wish to track?", "Target Locator", null) in targets
 			if(!target)
-				boutput(user, "<span class='notice'>You activate the target locator. No available targets!</span>")
+				boutput(user, SPAN_NOTICE("You activate the target locator. No available targets!"))
 			else
-				boutput(user, "<span class='notice'>You activate the target locator. Tracking [target]</span>")
+				boutput(user, SPAN_NOTICE("You activate the target locator. Tracking [target]"))
 				src.turn_on()
 		else
 			..()
@@ -279,14 +279,14 @@ TYPEINFO(/obj/item/pinpointer)
 	attack_hand(mob/user)
 		..(user)
 		if (!user.mind || user.mind.special_role != ROLE_SPY_THIEF)
-			boutput(user, "<span class='alert'>The target locator emits a sorrowful ping!</span>")
+			boutput(user, SPAN_ALERT("The target locator emits a sorrowful ping!"))
 			src.turn_off()
 			target = null
 
 	attack_self(mob/user)
 		if(!active)
 			if (!src.owner || !src.owner.mind || src.owner.mind.special_role != ROLE_SPY_THIEF)
-				boutput(user, "<span class='alert'>The target locator emits a sorrowful ping!</span>")
+				boutput(user, SPAN_ALERT("The target locator emits a sorrowful ping!"))
 				return
 
 			var/list/targets = list()
@@ -301,9 +301,9 @@ TYPEINFO(/obj/item/pinpointer)
 			target = null
 			target = input(user, "Which ID do you wish to track?", "Target Locator", null) in targets
 			if(!target)
-				boutput(user, "<span class='notice'>You activate the target locator. No available targets!</span>")
+				boutput(user, SPAN_NOTICE("You activate the target locator. No available targets!"))
 			else
-				boutput(user, "<span class='notice'>You activate the target locator. Tracking [target]</span>")
+				boutput(user, SPAN_NOTICE("You activate the target locator. Tracking [target]"))
 				src.turn_on()
 		else
 			..()
@@ -323,7 +323,7 @@ TYPEINFO(/obj/item/pinpointer)
 		if(istype(A, /obj/decal/cleanable/blood))
 			var/obj/decal/cleanable/blood/B = A
 			if(B.dry > 0) //Fresh blood is -1
-				boutput(user, "<span class='alert'>Targeted blood is too dry to be useful!</span>")
+				boutput(user, SPAN_ALERT("Targeted blood is too dry to be useful!"))
 				return
 			if(B.dry == -1)
 				timer += 4 MINUTES
@@ -352,14 +352,14 @@ TYPEINFO(/obj/item/pinpointer)
 				blood_timer = timer
 				break
 		src.turn_on()
-		user.visible_message("<span class='notice'><b>[user]</b> scans [A] with [src]!</span>",\
-			"<span class='notice'>You scan [A] with [src]!</span>")
+		user.visible_message(SPAN_NOTICE("<b>[user]</b> scans [A] with [src]!"),\
+			SPAN_NOTICE("You scan [A] with [src]!"))
 
 	work_check()
 		if(TIME > blood_timer)
 			src.turn_off()
 			if(ismob(src.loc))
-				boutput(src.loc, "<span class='alert'>[src] shuts down because the blood in it became too dry!</span>")
+				boutput(src.loc, SPAN_ALERT("[src] shuts down because the blood in it became too dry!"))
 
 TYPEINFO(/obj/item/pinpointer/secweapons)
 	mats = null
@@ -399,10 +399,32 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 				user.show_text("No target specified. Cannot activate pinpointer.", "red")
 				return
 			src.turn_on()
-			boutput(user, "<span class='notice'>You activate the pinpointer</span>")
+			boutput(user, SPAN_NOTICE("You activate the pinpointer"))
 		else
 			src.turn_off()
-			boutput(user, "<span class='notice'>You deactivate the pinpointer</span>")
+			boutput(user, SPAN_NOTICE("You deactivate the pinpointer"))
+
+/obj/item/pinpointer/mail_recepient
+	name = "mail recipient pinpointer"
+
+	attackby(obj/item/W, mob/user, params)
+		. = ..()
+		if (istype(W, /obj/item/random_mail))
+			var/obj/item/random_mail/package = W
+			src.target = find_by_dna(package.target_dna)
+			user.show_message(SPAN_NOTICE("Target updated."))
+
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if (istype(target, /obj/item/random_mail))
+			var/obj/item/random_mail/package = target
+			src.target = find_by_dna(package.target_dna)
+			user.show_message(SPAN_NOTICE("Target updated."))
+
+	proc/find_by_dna(var/dna)
+		for_by_tcl(H, /mob/living/carbon/human)
+			if (H.bioHolder?.Uid == dna)
+				return H
 
 //lets you click on something to pick it as a target, good for gimmicks
 /obj/item/pinpointer/picker
@@ -480,7 +502,7 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 			if(AR.area_apc)
 				return AR.area_apc
 			else
-				boutput(user, "<span class='alert'>There is no APC in this area!</span>")
+				boutput(user, SPAN_ALERT("There is no APC in this area!"))
 				return null
 		return ..()
 

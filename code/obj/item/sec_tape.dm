@@ -24,10 +24,10 @@
 		BLOCK_SETUP(BLOCK_ROPE)
 
 	before_stack(atom/movable/O, mob/user)
-		user.visible_message("<span class='notice'>[user] begins awkwardly sticking the tape back onto the roll.</span>")
+		user.visible_message(SPAN_NOTICE("[user] begins awkwardly sticking the tape back onto the roll."))
 
 	after_stack(atom/movable/O, mob/user, var/added)
-		boutput(user, "<span class='notice'>You finish sticking the tape back together.</span>")
+		boutput(user, SPAN_NOTICE("You finish sticking the tape back together."))
 
 	change_stack_amount(diff)
 		. = ..()
@@ -42,7 +42,7 @@
 		var/turf/T = get_turf(user)
 		if (isturf(user.loc) && istype(T, /turf/simulated/floor) && amount >= 4)
 			//Setup the perfect crime
-			user.visible_message("<span class='alert'><b>[user] carefully sets up some security tape around themselves then swallows the tape and chokes on it, satisfied that they created the perfect crime scene.</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] carefully sets up some security tape around themselves then swallows the tape and chokes on it, satisfied that they created the perfect crime scene.</b>"))
 			var/obj/sec_tape/T1 = new /obj/sec_tape(T, src)
 			T1.set_dir(EAST)
 			var/obj/sec_tape/T2 = new /obj/sec_tape(T, src)
@@ -56,7 +56,7 @@
 			qdel(src)
 		else
 			//Else we'll choke ourselves out
-			user.visible_message("<span class='alert'><b>[user] wraps some tape around [his_or_her(user)] neck and tightens it.</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] wraps some tape around [his_or_her(user)] neck and tightens it.</b>"))
 			user.take_oxygen_deprivation(160)
 			SPAWN(50 SECONDS)
 				if (user && !isdead(user))
@@ -80,7 +80,7 @@
 		var/obj/item/sec_tape/split_tape = split_stack(1)
 		user.put_in_hand_or_drop(split_tape)
 		tooltip_rebuild = 1
-		boutput(user, "<span class='notice'>You cut a piece off the [base_name].</span>")
+		boutput(user, SPAN_NOTICE("You cut a piece off the [base_name]."))
 		src.UpdateIcon()
 		return
 
@@ -88,18 +88,18 @@
 		var/obj/item/sec_tape/C = W
 
 		if (C.amount == src.max_stack)
-			boutput(user, "<span class='notice'>The coil is too long, you cannot add any more tape to it.</span>")
+			boutput(user, SPAN_NOTICE("The coil is too long, you cannot add any more tape to it."))
 			return
 
 		if ((C.amount + src.amount <= src.max_stack))
 			stack_item(W)
-			boutput(user, "<span class='notice'>You join the tape ends together.</span>")
+			boutput(user, SPAN_NOTICE("You join the tape ends together."))
 			C.tooltip_rebuild = 1
 			C.UpdateIcon()
 			return
 
 		else
-			boutput(user, "<span class='notice'>You transfer [src.max_stack - src.amount] length\s of tape from one roll to the other.</span>")
+			boutput(user, SPAN_NOTICE("You transfer [src.max_stack - src.amount] length\s of tape from one roll to the other."))
 			src.amount -= (src.max_stack-C.amount)
 			src.UpdateIcon()
 			tooltip_rebuild = 1
@@ -119,13 +119,13 @@
 		return
 
 	if (BOUNDS_DIST(F, user) > 0)
-		boutput(user, "<span class='notice'>You can't setup a cordon at a place that far away.</span>")
+		boutput(user, SPAN_NOTICE("You can't setup a cordon at a place that far away."))
 		return
 
 	var/dirn = user.dir
 	for (var/obj/sec_tape/T in F)
 		if (T.dir == dirn)
-			boutput(user, "<span class='notice'>There is already a cordon setup there!</span>")
+			boutput(user, SPAN_NOTICE("There is already a cordon setup there!"))
 			return
 
 	var/obj/sec_tape/ST = new /obj/sec_tape(F, src)
@@ -137,7 +137,7 @@
 		ST.set_dir(WEST)
 	else
 		ST.set_dir(NORTH)
-	boutput(user, "<span class='notice'>You [pick("hastily", "quickly", "haphazardly")] setup a security cordon.</span>", group="sectape_setup")
+	boutput(user, SPAN_NOTICE("You [pick("hastily", "quickly", "haphazardly")] setup a security cordon."), group="sectape_setup")
 	ST.add_fingerprint(user)
 	change_stack_amount(-1)
 

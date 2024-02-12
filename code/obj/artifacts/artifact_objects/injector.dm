@@ -29,7 +29,7 @@
 				// medicine, some poisons, some gross stuff
 				potential_reagents = list("charcoal","salbutamol","anti_rad","synaptizine","omnizine","synthflesh",
 				"cyanide","ketamine","toxin","neurotoxin","solipsizine","neurodepressant","mutagen","fake_initropidril",
-				"toxic_slurry","space_fungus","blood","urine","meat_slurry")
+				"toxic_slurry","space_fungus","blood","meat_slurry")
 			if ("eldritch")
 				// all the worst stuff. all of it
 				potential_reagents = list("chlorine","fluorine","lithium","mercury","plasma","radium","uranium","strange_reagent",

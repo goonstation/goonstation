@@ -22,16 +22,16 @@
 /proc/placeAllPrefabs()
 #if defined(CI_RUNTIME_CHECKING)
 	var/startTime = world.timeofday
-	boutput(world, "<span class='alert'>Generating prefabs...</span>")
+	boutput(world, SPAN_ALERT("Generating prefabs..."))
 	var/list/prefab_types = filtered_concrete_typesof(/datum/mapPrefab/mining, /proc/filter_underwater_prefab)
-	boutput(world, "<span class='alert'>Found [length(prefab_types)] prefabs...</span>")
+	boutput(world, SPAN_ALERT("Found [length(prefab_types)] prefabs..."))
 	for (var/prefab_type in prefab_types)
 		var/datum/mapPrefab/mining/M = new prefab_type()
 		var/turf/T = locate(1+AST_MAPBORDER, 1+AST_MAPBORDER, Z_LEVEL_STATION)
 		var/loaded = file2text(M.prefabPath)
 		var/dmm_suite/D = new/dmm_suite()
 		D.read_map(loaded,T.x,T.y,T.z,M.prefabPath, DMM_OVERWRITE_MOBS | DMM_OVERWRITE_OBJS)
-		boutput(world, "<span class='alert'>Prefab placement [M.type][M.required?" (REQUIRED)":""] succeeded. [T] @ [log_loc(T)]")
+		boutput(world, SPAN_ALERT("Prefab placement [M.type][M.required?" (REQUIRED)":""] succeeded. [T] @ [log_loc(T)]"))
 		sleep(1 SECOND)
 		// cleanup
 		var/turf/other_corner = locate(T.x + M.prefabSizeX, T.y + M.prefabSizeY, T.z)
@@ -42,7 +42,7 @@
 				catch // suppress errors
 					;
 			T2.ReplaceWithSpaceForce()
-	boutput(world, "<span class='alert'>Generated prefabs Level in [((world.timeofday - startTime)/10)] seconds!")
+	boutput(world, SPAN_ALERT("Generated prefabs Level in [((world.timeofday - startTime)/10)] seconds!"))
 #else
 	CRASH("This proc only works if CI_RUNTIME_CHECKING is defined")
 #endif

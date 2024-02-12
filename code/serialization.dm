@@ -39,7 +39,7 @@
 
 			F["ICONS.[iname]"] >> IDS.icon
 			if (!IDS.icon && usr)
-				boutput(usr, "<span class='alert'>Fatal error: Saved copy of icon [iname] cannot be loaded. Local loading failed. Falling back to default icon.</span>")
+				boutput(usr, SPAN_ALERT("Fatal error: Saved copy of icon [iname] cannot be loaded. Local loading failed. Falling back to default icon."))
 			else if (IDS.icon)
 				F["[path].icon_state"] >> IDS.icon_state
 	else

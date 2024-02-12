@@ -101,17 +101,20 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> squeaks!</span>"
+					return SPAN_EMOTE("<b>[src]</b> squeaks!")
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/farts/poo2.ogg', 40, TRUE, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> toots disgustingly!</span>"
+					return SPAN_EMOTE("<b>[src]</b> toots disgustingly!")
 
 	specific_emote_type(var/act)
 		switch (act)
 			if ("scream","hiss")
 				return 2
 		return ..()
+
+	animate_lying(lying)
+		animate_180_rest(src, !lying)
 
 	death(var/gibbed)
 		if (src.master && istype(src.master, /mob/living/intangible/wraith))
@@ -143,8 +146,8 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 		if (!ispath(src.adultpath))
 			return 0
 		src.unequip_all()
-		src.visible_message("<span class='alert'><b>[src] bloats and grows up in size. The smell is utterly revolting!</b></span>",\
-		"<span class='notice'><b>You grow up!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src] bloats and grows up in size. The smell is utterly revolting!</b>"),\
+		SPAN_NOTICE("<b>You grow up!</b>"))
 		SPAWN(0)
 			var/mob/living/critter/wraith/plaguerat/new_rat = new adultpath(get_turf(src), master)
 			var/mob/living/critter/wraith/plaguerat/old_rat = src

@@ -89,7 +89,7 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 							if (floatingText)
 								chat_text = make_chat_maptext(master, N.getNodeText(C), floating_text_style)
 							for(var/mob/O in all_hearers(5, master.loc))
-								O.show_message("<span class='name'>[master.name]</span> [objectDialogueVerb], <span class='message'>\"[N.getNodeText(C)]\"</span>",2, assoc_maptext = chat_text)
+								O.show_message("[SPAN_NAME("[master.name]")] [objectDialogueVerb], [SPAN_MESSAGE("\"[N.getNodeText(C)]\"")]", 2, assoc_maptext = chat_text)
 		return
 
 	proc/setFlag(var/client/C, var/flag="", var/value="") //Sets flag to value for this client in this dialogue master.

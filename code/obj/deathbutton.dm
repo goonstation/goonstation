@@ -58,7 +58,7 @@
 		if (H.get_organ("butt"))
 			H.drop_organ("butt")
 
-			H.visible_message("[H]'s butt falls off.", "<span class='alert'>You butt fall off!</span>")
+			H.visible_message("[H]'s butt falls off.", SPAN_ALERT("You butt fall off!"))
 			H.emote("scream")
 
 			numkills++

@@ -41,19 +41,21 @@
 		// create hotspots
 		T.add_hotspot(temp - GET_DIST(center_turf, T) * falloff, 400)
 		T.hotspot_expose(temp - GET_DIST(center_turf, T) * falloff, 400)
-		created_hotspots += T.active_hotspot
-		affected_turfs += T
 
-		T.burn_tile()
+		if (T.active_hotspot)
+			created_hotspots += T.active_hotspot
+			affected_turfs += T
 
-		// burn turf contents
-		for (var/atom/A as anything in T)
-			if (istype(A, /mob/living))
-				var/mob/living/L = A
-				L.update_burning(clamp((T.active_hotspot.temperature - 100) / 550, 0, 55))
-				L.bodytemperature = max(L.bodytemperature, T.active_hotspot.temperature / 3)
-			else if (istype(A, /obj/spacevine) || istype(A, /obj/kudzu_marker))
-				qdel(A)
+			T.burn_tile()
+
+			// burn turf contents
+			for (var/atom/A as anything in T)
+				if (istype(A, /mob/living))
+					var/mob/living/L = A
+					L.update_burning(clamp((T.active_hotspot.temperature - 100) / 550, 0, 55))
+					L.bodytemperature = max(L.bodytemperature, T.active_hotspot.temperature / 3)
+				else if (istype(A, /obj/spacevine) || istype(A, /obj/kudzu_marker))
+					qdel(A)
 
 		LAGCHECK(LAG_REALTIME)
 
@@ -86,7 +88,7 @@
 
 		// determine melting temp of turf
 		melting_point = 1643.15 // default for steel
-		if (T?.material.getProperty("flammable") > 4)
+		if (T?.material?.getProperty("flammable") > 4)
 			melting_point = 505.93 / 2 // 451F (temp paper burns at, / 2 to undo the * 2 below)
 			bypass_melt_RNG = TRUE
 

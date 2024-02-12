@@ -51,6 +51,7 @@ proc/get_radio_connection_by_id(atom/movable/AM, id)
 //Signal frequencies
 
 #define FREQ_PDA 1149
+#define FREQ_PUMP_CONTROL 1225 //frequency for the control of pumps
 #define FREQ_AIRLOCK 1411
 #define FREQ_FREE 1419 /// frequency for "free packet communication", default for nerd stuff
 #define FREQ_NAVBEACON 1445

@@ -28,7 +28,7 @@ change the direction of created objects.<br>
 		objpath = get_one_match(input("Type path", "Type path", "[objpath]"), /atom)
 		first_corner = null
 		if(ispath(objpath, /turf))
-			boutput(usr, "<span class='alert'>No gifting turfs!</span>")
+			boutput(usr, SPAN_ALERT("No gifting turfs!"))
 			return
 		update_button_text(objpath)
 
@@ -48,7 +48,7 @@ change the direction of created objects.<br>
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!objpath || ispath(objpath, /turf))
-			boutput(usr, "<span class='alert'>Incorrect object path!</span>")
+			boutput(usr, SPAN_ALERT("Incorrect object path!"))
 			return
 		var/turf/T = get_turf(object)
 		if(!isnull(T) && objpath)
@@ -93,17 +93,17 @@ change the direction of created objects.<br>
 			return
 		if(ctrl)
 			first_corner = null
-			boutput(usr, "<span class='alert'>Cleared corners!</span>")
+			boutput(usr, SPAN_ALERT("Cleared corners!"))
 			return
 		if (!objpath || ispath(objpath, /turf))
-			boutput(usr, "<span class='alert'>Incorrect object path!</span>")
+			boutput(usr, SPAN_ALERT("Incorrect object path!"))
 			return
 		else if (!first_corner)  //mark first corner
 			mark_corner(object)
 		else  //first corner exists, time to wide area spawn
 			var/turf/second_corner = get_turf(object)
 			if (!second_corner || first_corner.z != second_corner.z)
-				boutput(usr, "<span class='alert'>Corners must be on the same Z-level!</span>")
+				boutput(usr, SPAN_ALERT("Corners must be on the same Z-level!"))
 				return
 			update_button_text("Spawning...")
 			var/cnt = 0

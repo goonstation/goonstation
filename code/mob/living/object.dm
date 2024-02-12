@@ -27,7 +27,7 @@
 	faction = FACTION_WRAITH
 
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
-		..(loc, null, null)
+		..(loc)
 
 		if (isitem(possessed))
 			src.possessed_item = possessed
@@ -85,7 +85,7 @@
 			src.owner.set_loc(src)
 			src.owner.mind.transfer_to(src)
 
-		src.visible_message("<span class='alert'><b>[src.possessed_thing] comes to life!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src.possessed_thing] comes to life!</b>"))
 		animate_levitate(src, -1, 20, 1)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "living_object", 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object", 100)
@@ -131,7 +131,7 @@
 	Exited(var/atom/movable/AM, var/atom/newloc)
 		if (AM == src.possessed_thing && newloc != src)
 			src.death(FALSE) //uh oh
-			boutput(src, "<span class='alert'>You feel yourself being ripped away from this object!</h1>") //no destroying spacetime
+			boutput(src, SPAN_ALERT("You feel yourself being ripped away from this object!")) //no destroying spacetime
 
 	equipped()
 		if (src.possessed_item)
@@ -141,9 +141,9 @@
 
 	get_desc()
 		. = ..()
-		. += "<span class='alert'>It seems to be alive.</span><br>"
+		. += "[SPAN_ALERT("It seems to be alive.")]<br>"
 		if (src.health < src.max_health * 0.5)
-			. += "<span class='notice'>The ethereal grip on this object appears to be weakening.</span>"
+			. += SPAN_NOTICE("The ethereal grip on this object appears to be weakening.")
 
 	meteorhit(var/obj/O as obj)
 		src.death(TRUE)
@@ -161,9 +161,9 @@
 		change_misstep_chance(-INFINITY)
 		src.delStatus("drowsy")
 		dizziness = 0
-		is_dizzy = 0
-		is_jittery = 0
+		is_dizzy = FALSE
 		jitteriness = 0
+		is_jittery = FALSE
 
 
 	bullet_act(var/obj/projectile/P)
@@ -183,7 +183,7 @@
 				src.TakeDamage(null, 0, damage)
 
 		if(!P.proj_data.silentshot)
-			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
+			src.visible_message(SPAN_ALERT("[src] is hit by the [P]!"))
 
 	blob_act(var/power)
 		logTheThing(LOG_COMBAT, src, "is hit by a blob")
@@ -195,11 +195,11 @@
 
 		src.TakeDamage(null, damage, 0)
 
-		src.show_message("<span class='alert'>The blob attacks you!</span>")
+		src.show_message(SPAN_ALERT("The blob attacks you!"))
 
 	attack_hand(mob/user)
 		if (user.a_intent == "help")
-			user.visible_message("<span class='alert'>[user] pets [src]!</span>")
+			user.visible_message(SPAN_ALERT("[user] pets [src]!"))
 		else
 			..()
 
@@ -258,7 +258,7 @@
 
 		if (src.owner)
 			src.owner.set_loc(get_turf(src))
-			src.visible_message("<span class='alert'><b>[src] is no longer possessed.</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src] is no longer possessed.</b>"))
 
 			if (src.mind)
 				mind.transfer_to(src.owner)
@@ -301,9 +301,9 @@
 
 	item_attack_message(var/mob/T, var/obj/item/S, var/d_zone)
 		if (d_zone)
-			return "<span class='alert'><B>[src] attacks [T] in the [d_zone]!</B></span>"
+			return SPAN_ALERT("<B>[src] attacks [T] in the [d_zone]!</B>")
 		else
-			return "<span class='alert'><B>[src] attacks [T]!</B></span>"
+			return SPAN_ALERT("<B>[src] attacks [T]!</B>")
 
 	return_air()
 		return loc?.return_air()
@@ -323,7 +323,7 @@
 	///Ensure the item is still inside us. If it isn't, die and return false. Otherwise, return true.
 	proc/item_position_check()
 		if (!src.possessed_thing || src.possessed_thing.loc != src) //item somewhere else? we no longer exist
-			boutput(src, "<span class='alert'>You feel yourself being ripped away from this object!</h1>")
+			boutput(src, SPAN_ALERT("You feel yourself being ripped away from this object!"))
 			src.death(FALSE)
 			return FALSE
 		return TRUE
@@ -336,7 +336,8 @@
 		return src.hud
 
 /mob/living/object/ai_controlled
-	is_npc = 1
+	is_npc = TRUE
+
 	New()
 		..()
 		src.ai = new /datum/aiHolder/living_object(src)
@@ -418,6 +419,7 @@
 /datum/aiTask/timed/targeted/living_object/proc/pre_attack()
 	var/mob/living/object/spooker = holder.owner
 	var/obj/item/item = spooker.equipped()
+
 	if (!istype(item, /obj/item/attackdummy)) // marginally more performant- don't bother if we're a possessed non item
 		if (istype(item, /obj/item/baton))
 			var/obj/item/baton/bat = item
@@ -444,14 +446,17 @@
 			if (!saber.active)
 				spooker.self_interact() // turn that sword on
 			spooker.set_a_intent(INTENT_HARM)
+
 		else if (istype(item, /obj/item/gun))
 			var/obj/item/gun/pew = item
 			if (pew.canshoot(holder.owner))
 				spooker.set_a_intent(INTENT_HARM) // we can shoot, so... shoot
 			else
 				spooker.set_a_intent(INTENT_HELP) // otherwise go on help for gun whipping
+
 		else if (istype(item, /obj/item/old_grenade) || istype(item, /obj/item/chem_grenade || istype(item, /obj/item/pipebomb))) //cool paths tHANKS
 			spooker.self_interact() // arm grenades
+
 		else if (istype(item, /obj/item/swords)) 		// this will also apply for non-limb-slicey katanas but it shouldn't really matter
 			if (ishuman(holder.target))
 				var/mob/living/carbon/human/H = holder.target
@@ -468,6 +473,17 @@
 			var/obj/item/weldingtool/welder = item
 			if (!welder.welding)
 				spooker.self_interact()
+
+		else if (istype(item, /obj/item/device/transfer_valve))
+			var/obj/item/device/transfer_valve/TTV = item
+			if (!TTV.valve_open)
+				TTV.toggle_valve() // boom
+
+		else if (istype(item, /obj/item/saw))
+			var/obj/item/saw/chainsaw = item
+			if (!chainsaw.active)
+				spooker.self_interact() // activate chainsaw for sawing
+
 		else
 			spooker.set_a_intent(INTENT_HARM)
 			spooker.zone_sel.select_zone("head") // head for plates n stuff

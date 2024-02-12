@@ -22,7 +22,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 				if (team_num == get_pod_wars_team_num(user))
 					return ..(target, start, user)
 				else
-					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
+					boutput(user, "[SPAN_ALERT("You don't have to right DNA to fire this weapon!")]<br>")
 					playsound(get_turf(user), 'sound/machines/buzz-sigh.ogg', 20, 1)
 
 					return
@@ -35,7 +35,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 				if (team_num == get_pod_wars_team_num(user))
 					return ..(target, user)
 				else
-					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
+					boutput(user, "[SPAN_ALERT("You don't have to right DNA to fire this weapon!")]<br>")
 					playsound(get_turf(user), 'sound/machines/buzz-sigh.ogg', 20, 1)
 
 					return
@@ -72,7 +72,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	proc/stop_charging()
 		var/turf/T = get_turf(src)
 		var/fluff = pick("boop", "beep", "warble", "buzz", "bozzle", "wali", "hum", "whistle")
-		T.visible_message("<span class='notice'>[src] lets out a sad [fluff]</span>", "<span class='notice'>You hear a sad [fluff]</span>")
+		T.visible_message(SPAN_NOTICE("[src] lets out a sad [fluff]"), SPAN_NOTICE("You hear a sad [fluff]"))
 		src.can_swap_cell = 0
 		src.rechargeable = 0
 

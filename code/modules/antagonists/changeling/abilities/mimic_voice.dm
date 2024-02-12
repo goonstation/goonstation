@@ -27,7 +27,7 @@
 		"Miner" = "Min",
 		"Civilian" = "civ",
 		"Radio Show Host" = "rh",
-		"Mailman" = "mail",
+		"Mail Courier" = "mail",
 		"Clown" = "clown")
 
 	cast(atom/target)

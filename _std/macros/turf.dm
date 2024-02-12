@@ -21,6 +21,8 @@
 /// Returns true if x is a reinforced wall
 #define isrwall(x) (istype(x,/turf/simulated/wall/r_wall)||istype(x,/turf/simulated/wall/auto/reinforced)||istype(x,/turf/unsimulated/wall/auto/reinforced)||istype(x,/turf/simulated/wall/false_wall/reinforced))
 
+#define wall_window_check(x) (isturf(x) && (istypes(x, list(/turf/simulated/wall/auto, /turf/unsimulated/wall/auto) || (locate(/obj/mapping_helper/wingrille_spawn) in x) || (locate(/obj/window) in x))))
+
 /**
 	* Creates typepaths for an unsimulated turf, a simulated turf, an airless simulated turf, and an airless unsimulated turf at compile time.
 	*

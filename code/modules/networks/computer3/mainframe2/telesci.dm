@@ -87,7 +87,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 	examine()
 		. = ..()
 		if (!src.host_id)
-			. += "<span class='alert'>The [src.name]'s \"disconnected from host\" light is flashing.</span>"
+			. += SPAN_ALERT("The [src.name]'s \"disconnected from host\" light is flashing.")
 
 	attack_hand(mob/user)
 		if(..())
@@ -496,7 +496,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		showswirl(target)
 		use_power(1500)
 		if(prob(2) && prob(2))
-			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
+			src.visible_message(SPAN_ALERT("The console emits a loud pop and an acrid smell fills the air!"))
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
@@ -529,7 +529,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		showswirl_out(receiveturf)
 		use_power(1500)
 		if(prob(2) && prob(2))
-			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
+			src.visible_message(SPAN_ALERT("The console emits a loud pop and an acrid smell fills the air!"))
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
@@ -563,14 +563,14 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		showswirl(target)
 		use_power(400000)
 		if(prob(2))
-			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
+			src.visible_message(SPAN_ALERT("The console emits a loud pop and an acrid smell fills the air!"))
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
 			SPAWN(1 SECOND)
 				processbadeffect(pick("flash","buzz","scatter","ignite","chill"))
-		if(prob(5) && !locate(/obj/dfissure_to) in get_step(src, EAST))
-			new/obj/dfissure_to(get_step(src, EAST))
+		if(prob(5) && !locate(/obj/dfissure_to) in get_step(src, NORTHEAST))
+			new/obj/dfissure_to(get_step(src, NORTHEAST))
 		else
 			start_portal = makeportal(src.loc, target)
 			if (start_portal)
@@ -613,7 +613,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			if("")
 				return
 			if("flash")
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>A bright flash emnates from the [src]!</span>", 1)
+				for(var/mob/O in AIviewers(src, null)) O.show_message(SPAN_ALERT("A bright flash emnates from the [src]!"), 1)
 				playsound(src.loc, 'sound/weapons/flashbang.ogg', 35, 1)
 				for (var/mob/N in viewers(src, null))
 					if (GET_DIST(N, src) <= 6)
@@ -622,7 +622,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 						shake_camera(N, 6, 32)
 				return
 			if("buzz")
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>You hear a loud buzz coming from the [src]!</span>", 1)
+				for(var/mob/O in AIviewers(src, null)) O.show_message(SPAN_ALERT("You hear a loud buzz coming from the [src]!"), 1)
 				playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
 				return
 			if("scatter") //stolen from hand tele, heh
@@ -643,17 +643,17 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			if("ignite")
 				for(var/mob/living/carbon/M in src.loc)
 					M.update_burning(30)
-					boutput(M, "<span class='alert'>You catch fire!</span>")
+					boutput(M, SPAN_ALERT("You catch fire!"))
 				return
 			if("chill")
 				for(var/mob/living/carbon/M in src.loc)
 					M.bodytemperature -= 100
-					boutput(M, "<span class='alert'>You feel colder!</span>")
+					boutput(M, SPAN_ALERT("You feel colder!"))
 				return
 			if("tempblind")
 				for(var/mob/living/carbon/M in src.loc)
 					M.take_eye_damage(10, 1)
-					boutput(M, "<span class='alert'>You can't see anything!</span>")
+					boutput(M, SPAN_ALERT("You can't see anything!"))
 				return
 			if("minormutate")
 				for(var/mob/living/carbon/M in src.loc)
@@ -675,11 +675,11 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				for (var/i in 1 to rand(3,5))
 					var/datum/projectile/neutron/projectile = new(15)
 					shoot_projectile_DIR(src, projectile, pick(alldirs))
-				src.visible_message("<span class='alert'>A bright green pulse emanates from the [src]!</span>")
+				src.visible_message(SPAN_ALERT("A bright green pulse emanates from the [src]!"))
 				return
 			if("fire")
 				fireflash(src.loc, 6) // cogwerks - lowered from 8, too laggy
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>A huge wave of fire explodes out from the [src]!</span>", 1)
+				for(var/mob/O in AIviewers(src, null)) O.show_message(SPAN_ALERT("A huge wave of fire explodes out from the [src]!"), 1)
 				return
 			if("widescatter")
 				var/list/turfs = new
@@ -699,7 +699,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			if("brute")
 				for(var/mob/living/M in src.loc)
 					M.TakeDamage("chest", rand(20,30), 0)
-					boutput(M, "<span class='alert'>You feel like you're being pulled apart!</span>")
+					boutput(M, SPAN_ALERT("You feel like you're being pulled apart!"))
 				return
 			if("gib")
 				for(var/mob/living/M in src.loc)
@@ -717,7 +717,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			if("mutatearea")
 				for(var/mob/living/carbon/M in orange(5,src.loc))
 					M:bioHolder:RandomEffect("bad")
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>A bright green pulse emnates from the [src]!</span>", 1)
+				for(var/mob/O in AIviewers(src, null)) O.show_message(SPAN_ALERT("A bright green pulse emnates from the [src]!"), 1)
 				return
 			if("explosion")
 				explosion(src, src.loc, 0, 0, 5, 10)
@@ -756,7 +756,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			if("tinyfire")
 				fireflash(src.loc, 3)
 				for(var/mob/O in AIviewers(src, null))
-					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
+					O.show_message(SPAN_ALERT("The area surrounding the [src] bursts into flame!"), 1)
 				return
 			if("mediumsummon")
 				var/summon = pick(/mob/living/critter/plant/maneater, /obj/critter/killertomato, /mob/living/critter/small_animal/wasp, /mob/living/critter/golem, /mob/living/critter/skeleton, /mob/living/critter/mimic)
@@ -792,7 +792,6 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				var/summon = pick(
 					/mob/living/critter/zombie,
 					/mob/living/critter/bear,
-					/mob/living/carbon/human/npc/syndicate,
 					/mob/living/critter/martian/soldier,
 					/mob/living/critter/lion,
 					/obj/critter/yeti,
@@ -883,7 +882,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				if (!istype(user_data))
 					user_data = new
 
-					user_data.fields["userid"] = "telepad"
+					user_data.fields["userid"] = src.net_id
 					user_data.fields["access"] = "11"
 
 				src.timeout = initial(src.timeout)
@@ -1020,7 +1019,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			if ("send")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				if (!host_id)
-					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					boutput(usr, SPAN_ALERT("Error: No host connection!"))
 					return
 
 				if (coord_update_flag)
@@ -1032,7 +1031,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			if ("receive")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				if (!host_id)
-					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					boutput(usr, SPAN_ALERT("Error: No host connection!"))
 					return
 
 				if (coord_update_flag)
@@ -1044,7 +1043,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			if ("portal")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				if (!host_id)
-					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					boutput(usr, SPAN_ALERT("Error: No host connection!"))
 					return
 
 				if (coord_update_flag)
@@ -1056,7 +1055,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			if ("scan")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				if (!host_id)
-					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					boutput(usr, SPAN_ALERT("Error: No host connection!"))
 					return
 
 				if (coord_update_flag)
@@ -1085,7 +1084,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			if ("addbookmark")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				if(length(bookmarks) >= max_bookmarks)
-					boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
+					boutput(usr, SPAN_ALERT("Maximum number of Bookmarks reached."))
 					return
 				var/datum/teleporter_bookmark/bm = new
 				var/title = params["value"]

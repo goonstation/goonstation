@@ -3,7 +3,7 @@
 	name = "manifold valve"
 	desc = "A pipe valve"
 	icon = 'icons/obj/atmospherics/manifold_valve.dmi'
-	icon_state = "manifold_valve0"
+	icon_state = "manifold_valve0-map"
 	/// Diverts gas flow into the middle node.
 	var/divert = FALSE
 	/// What frequency we are listening on.
@@ -27,6 +27,10 @@
 		playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, 1)
 	else
 		src.icon_state = "manifold_valve[src.divert]"
+
+	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, -180), "medium", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node2, src.flipped ? turn(src.dir, 90) : turn(src.dir, -90), "medium", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node3, src.dir, "medium", issimplepipe(src.node3) ?  src.node3.color : null, FALSE)
 
 /obj/machinery/atmospherics/trinary/manifold_valve/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == src.node1)
@@ -141,3 +145,7 @@
 				src.undivert()
 			else
 				src.divert()
+
+/obj/machinery/atmospherics/trinary/manifold_valve/diverted
+	icon_state = "manifold_valve1-map"
+	divert = TRUE

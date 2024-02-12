@@ -143,15 +143,6 @@
 	src.harm_special.onAdd()
 	return src.harm_special
 
-
-//This needs to happen in process_move(), not Move() so we can change the delay modifier before it is put to use
-/mob/living/process_move(keys)
-	if (apply_movement_delay_until != -1)
-		if (apply_movement_delay_until >= world.time)
-			//Don't pick a delay modifier that will exceed the bounds of our delay apply window
-			movement_delay_modifier = min(movement_delay_modifier, (apply_movement_delay_until - world.time))
-	return ..(keys)
-
 /datum/item_special/dummy //These don't do anything and are simply used for the tooltip. Used when the special is implemented in another way. Hacky and ugly.
 	getDesc()
 		return desc	+ "<br>"
@@ -266,10 +257,8 @@
 		if(moveDelayDuration && moveDelay)
 			SPAWN(0)
 				person.movement_delay_modifier += moveDelay
-				person.apply_movement_delay_until = world.time + moveDelayDuration //handle move() started mid-delay
 				sleep(moveDelayDuration)
-				person.movement_delay_modifier = 0
-				person.apply_movement_delay_until = -1
+				person?.movement_delay_modifier -= moveDelay
 		last_use = world.time
 
 	//Should be called after everything is done and all attacks are finished. Make sure you call this when appropriate in your mouse procs etc.
@@ -796,6 +785,10 @@
 							A.Attackhand(user, params)
 						attacked += A
 						A.throw_at(get_edge_target_turf(A,direction), 5, 3)
+						if (ishuman(A))
+							var/mob/living/carbon/human/H = A
+							if (isdead(H))
+								H.gib()
 
 			afterUse(user)
 			playsound(master, 'sound/effects/exlow.ogg', 50, FALSE)
@@ -1355,12 +1348,12 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			logTheThing(LOG_COMBAT, user, "uses the elecflash (multitool pulse) special attack at [log_loc(user)].")
 			for(var/atom/movable/A in turf.contents)
 				if (istype(A, /obj/blob))
-					boutput(user, "<span class='alert'><b>You try to pulse a spark, but [A] is too wet for it to take!</b></span>")
+					boutput(user, SPAN_ALERT("<b>You try to pulse a spark, but [A] is too wet for it to take!</b>"))
 					return
 				if (istype(A, /obj/spacevine))
 					var/obj/spacevine/K = A
 					if (K.current_stage >= 2)	//if it's med density
-						boutput(user, "<span class='alert'><b>You try to pulse a spark, but [A] is too dense for it to take!</b></span>")
+						boutput(user, SPAN_ALERT("<b>You try to pulse a spark, but [A] is too dense for it to take!</b>"))
 						return
 				if (ismob(A))
 					logTheThing(LOG_COMBAT, user, "'s elecflash (multitool pulse) special attack hits [constructTarget(A,"combat")] at [log_loc(A)].")
@@ -1805,12 +1798,12 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				if (istype(turf,/turf/simulated/floor))
 					var/turf/simulated/floor/F = turf
 					if (istype(F, /turf/simulated/floor/feather))
-						boutput(user, "<span class='alert'><b>The tile stays stuck to the floor!</b></span>")
+						boutput(user, SPAN_ALERT("<b>The tile stays stuck to the floor!</b>"))
 						return
 					var/obj/item/tile = F.pry_tile(master, user, params)
 					if (tile)
 						hit = 1
-						user.visible_message("<span class='alert'><b>[user] flings a tile from [turf] into the air!</b></span>")
+						user.visible_message(SPAN_ALERT("<b>[user] flings a tile from [turf] into the air!</b>"))
 						logTheThing(LOG_COMBAT, user, "fling throws a floor tile ([F]) [get_dir(user, target)] from [turf].")
 
 						user.lastattacked = user //apply combat click delay
@@ -2002,7 +1995,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				var/obj/projectile/Q = shoot_reflected_bounce(P, src)
 				P.die()
 
-				src.visible_message("<span class='alert'>[src] reflected [Q.name]!</span>")
+				src.visible_message(SPAN_ALERT("[src] reflected [Q.name]!"))
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
 
 				//was_clashed()
@@ -2135,7 +2128,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 /////////REFERENCES
 
 /datum/action/bar/private/icon/rush
-	id = "rush"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "conc"

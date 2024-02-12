@@ -4,7 +4,8 @@
 	scantype = "Medical Emergency"
 	max_stages = 3
 	spread = "The patient's respiratory is starting to fail"
-	cure = "Oxygen-healing drugs or surgery"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Oxygen-healing drugs or surgery"
 	recureprob = 10
 	affected_species = list("Human")
 	stage_prob = 1
@@ -47,21 +48,21 @@
 	switch (D.stage)
 		if (1)
 			if (probmult(0.1))
-				boutput(H, "<span class='notice'>You feel better.</span>")
+				boutput(H, SPAN_NOTICE("You feel better."))
 				H.cure_disease(D)
 				return
 			if (probmult(8)) H.emote(pick("pale", "shudder"))
 			if (probmult(5))
-				boutput(H, "<span class='alert'>Your ribs hurt!</span>")
+				boutput(H, SPAN_ALERT("Your ribs hurt!"))
 		if (2)
 			if (probmult(0.1))
-				boutput(H, "<span class='notice'>You feel better.</span>")
+				boutput(H, SPAN_NOTICE("You feel better."))
 				H.resistances += src.type
 				H.ailments -= src
 				return
 			if (probmult(8)) H.emote(pick("pale", "groan"))
 			if (probmult(10))
-				boutput(H, "<span class='alert'>It hurts to breathe!</span>")
+				boutput(H, SPAN_ALERT("It hurts to breathe!"))
 				H.losebreath++
 
 			if (probmult(5)) H.emote(pick("faint", "collapse", "groan"))
@@ -70,7 +71,7 @@
 
 			if (probmult(20))
 				H.emote(pick("twitch", "gasp"))
-				boutput(H, "<span class='alert'>You can hardly breathe due to the pain!</span>")
+				boutput(H, SPAN_ALERT("You can hardly breathe due to the pain!"))
 
 				H.organHolder.damage_organs(0, 0, 3, 60, list("left_lung", "right_lung"))
 				H.losebreath+=3

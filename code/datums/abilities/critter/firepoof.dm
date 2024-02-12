@@ -24,6 +24,6 @@
 		else
 			M.special_sprint |= SPRINT_FIRE
 
-		boutput(M, "<span class='notice'>Fire Form toggled [(M.special_sprint & SPRINT_FIRE ) ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)</span>")
+		boutput(M, SPAN_NOTICE("Fire Form toggled [(M.special_sprint & SPRINT_FIRE ) ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)"))
 
 		return 0

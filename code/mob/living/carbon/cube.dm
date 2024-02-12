@@ -19,14 +19,14 @@
 	use_stamina = 0
 
 	examine(mob/user)
-		. = list("<span class='notice'>*---------*</span>")
-		. += "<span class='notice'>This is a [bicon(src)] <B>[src.name]</B>!</span>"
+		. = list(SPAN_NOTICE("*---------*"))
+		. += SPAN_NOTICE("This is a [bicon(src)] <B>[src.name]</B>!")
 		if(prob(50) && ishuman(user) && user.bioHolder.HasEffect("clumsy"))
-			. += "<span class='alert'>You can't help but laugh at it.</span>"
+			. += SPAN_ALERT("You can't help but laugh at it.")
 			user.emote("laugh")
 		else
-			. += "<span class='alert'>It looks [pick("kinda", "really", "sorta", "a bit", "slightly")] [desc].</span>"
-		. += "<span class='notice'>*---------*</span>" // the fact this was missing bugged me - cirr
+			. += SPAN_ALERT("It looks [pick("kinda", "really", "sorta", "a bit", "slightly")] [desc].")
+		. += SPAN_NOTICE("*---------*") // the fact this was missing bugged me - cirr
 
 	say_understands(var/other)
 		if (ishuman(other) || isrobot(other) || isAI(other))
@@ -34,7 +34,7 @@
 		return ..()
 
 	attack_hand(mob/user)
-		boutput(user, "<span class='notice'>You push the [src.name] but nothing happens!</span>")
+		boutput(user, SPAN_NOTICE("You push the [src.name] but nothing happens!"))
 		playsound(src.loc, 'sound/impact_sounds/Flesh_Crush_1.ogg', 40, 1)
 		src.add_fingerprint(user)
 		return
@@ -89,7 +89,7 @@
 						var/fart_on_other = 0
 						for (var/mob/living/M in src.loc)
 							if (M == src || !M.lying) continue
-							message = "<span class='alert'><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
+							message = SPAN_ALERT("<B>[src]</B> jumps and farts all over [M]! That's disgusting!")
 							fart_on_other = 1
 							if(prob(20))
 								M.vomit()
@@ -120,17 +120,17 @@
 					if(src.emote_check(voluntary, 50))
 						if (istype(src.loc,/obj/))
 							var/obj/container = src.loc
-							boutput(src, "<span class='alert'>You leap and slam yourself against the inside of [container]! Ouch!</span>")
+							boutput(src, SPAN_ALERT("You leap and slam yourself against the inside of [container]! Ouch!"))
 							src.changeStatus("paralysis", 4 SECONDS)
 							src.changeStatus("weakened", 3 SECONDS)
-							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
+							container.visible_message(SPAN_ALERT("<b>[container]</b> emits a loud thump and rattles a bit."))
 							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 							animate_shake(container)
 							if (prob(33))
 								if (istype(container, /obj/storage))
 									var/obj/storage/C = container
 									if (C.can_flip_bust == 1)
-										boutput(src, "<span class='alert'>[C] [pick("cracks","bends","shakes","groans")].</span>")
+										boutput(src, SPAN_ALERT("[C] [pick("cracks","bends","shakes","groans")]."))
 										C.bust_out()
 						else
 							message = "<B>[src]</b> squishes down, pops up, and does a flip! Gross!"
@@ -187,7 +187,7 @@
 				meat.name = "cube steak"
 				meat.desc = "Grody."
 			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
-			src.visible_message("<span class='alert'><b>The meat cube pops!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>The meat cube pops!</b>"))
 			..()
 
 
@@ -206,7 +206,7 @@
 			// people were somehow being shit even as a meatcube, so i'm removing the small mercy they had with being unpoppable - cirr
 
 			// attackby(obj/item/W, mob/user)
-			// 	user.visible_message("<span class='combat'><B>[user] pokes [src] with \the [W]!</B></span>") //No weldergibs. Krampus is truly a fiend.
+			// 	user.visible_message(SPAN_COMBAT("<B>[user] pokes [src] with \the [W]!</B>")) //No weldergibs. Krampus is truly a fiend.
 
 			telekinetic //this one has the wraith click-drag to throw item ability
 				name = "Krampus 3.1 III Turbo Edition: Alpha Strike"
@@ -236,7 +236,7 @@
 				if (prob(50))
 					M.reagents.add_reagent("nanites", 5)
 			playsound(src.loc, 'sound/machines/engine_grump2.ogg', 75, 1)
-			src.visible_message("<span class='alert'><b>The metal cube violently falls apart!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>The metal cube violently falls apart!</b>"))
 			..()
 
 		attackby(obj/item/W, mob/user)
@@ -257,7 +257,7 @@
 						var/fart_on_other = 0
 						for (var/mob/living/M in src.loc)
 							if (M == src || !M.lying) continue
-							message = "<span class='alert'><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
+							message = SPAN_ALERT("<B>[src]</B> jumps and farts all over [M]! That's disgusting!")
 							fart_on_other = 1
 							if(prob(20))
 								M.vomit()

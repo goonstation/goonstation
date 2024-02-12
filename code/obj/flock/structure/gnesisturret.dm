@@ -5,7 +5,7 @@
 /obj/flock_structure/gnesisturret
 	name = "spiky fluid vat"
 	desc = "A vat of bubbling teal fluid, covered in hollow spikes."
-	flock_desc = "A turret that fires gnesis-filled spikes at enemies, beginning their conversion to Flockbits. Consumes 20 compute passively and 50 while synthesizing gnesis."
+	flock_desc = "A turret that fires gnesis-filled spikes at enemies, beginning their conversion to Flockbits. Consumes 50 compute passively."
 	icon_state = "teleblocker-off"
 	flock_id = "Gnesis turret"
 	resourcecost = 150
@@ -28,10 +28,8 @@
 	passthrough = TRUE
 	accepts_sapper_power = TRUE
 
-	var/making_projectiles = FALSE
-	var/fluid_gen_cost = 30 //generating gnesis consumes compute
-	var/base_compute = 20
 	compute = 0
+	online_compute_cost = 50
 
 	New(var/atom/location, var/datum/flock/F=null)
 		..(location, F)
@@ -52,61 +50,40 @@
 		if(!powered)
 			status = "offline"
 		else if (src.reagents.total_volume < fluid_level_max)
-			if (src.making_projectiles)
-				status =  "replicating"
-			else
-				status =  "insufficient compute for replication"
+			status =  "replicating"
 		else
 			status = "idle"
 
-		return {"<span class='bold'>Status:</span> [status].
-	<br><span class='bold'>Gnesis Tank Level:</span> [src.reagents.total_volume]/[fluid_level_max]."}
+		return {"[SPAN_BOLD("Status:")] [status].
+	<br>[SPAN_BOLD("Gnesis Tank Level:")] [src.reagents.total_volume]/[fluid_level_max]."}
 
 	process(mult)
 		if(!src.flock)//if it dont exist it off
 			if (powered)
-				src.making_projectiles = FALSE
 				src.update_flock_compute("remove")
 			src.compute = 0
 			powered = FALSE
 			src.icon_state = "teleblocker-off"
 			return
 
-		if(src.flock.can_afford_compute(base_compute))
-			src.compute = !src.making_projectiles ? -base_compute : -(base_compute + fluid_gen_cost)
+		if(src.flock.can_afford_compute(src.online_compute_cost))
+			src.compute = -src.online_compute_cost
 			if (!powered)
 				src.update_flock_compute("apply")
 				powered = TRUE
 			src.icon_state = "teleblocker-on"
 		else if (src.flock.used_compute > src.flock.total_compute() || !src.powered)//if there isnt enough juice
-			if (src.making_projectiles)
-				src.making_projectiles = FALSE
-				src.update_flock_compute("remove", FALSE)
-				src.compute = -base_compute
-				src.update_flock_compute("apply")
-			if (src.flock.used_compute > src.flock.total_compute() || !src.powered)
-				if (powered)
-					src.update_flock_compute("remove")
-				src.compute = 0
-				powered = FALSE
-				src.icon_state = "teleblocker-off"
-				return
+			if (powered)
+				src.update_flock_compute("remove")
+			src.compute = 0
+			powered = FALSE
+			src.icon_state = "teleblocker-off"
+			return
 
 		//if we need to generate more juice, do so and up the compute cost appropriately
 		if(src.reagents.total_volume < src.reagents.maximum_volume)
-			if(src.flock.can_afford_compute(fluid_gen_cost) && !src.making_projectiles)
-				src.making_projectiles = TRUE
-				src.update_flock_compute("remove", FALSE)
-				src.compute = -(base_compute + fluid_gen_cost)
-				src.update_flock_compute("apply")
-			if (src.making_projectiles)
-				src.reagents.add_reagent(fluid_gen_type, fluid_gen_amt * mult)
-				src.info_tag.set_info_tag("Gnesis: [src.reagents.total_volume]/[src.fluid_level_max]")
-		else if (src.making_projectiles)
-			src.making_projectiles = FALSE
-			src.update_flock_compute("remove", FALSE)
-			src.compute = -base_compute
-			src.update_flock_compute("apply")
+			src.reagents.add_reagent(fluid_gen_type, fluid_gen_amt * mult)
+			src.info_tag.set_info_tag("Gnesis: [src.reagents.total_volume]/[src.fluid_level_max]")
 
 		if(src.reagents.total_volume >= src.current_projectile.cost*src.current_projectile.shot_number)
 			//shamelessly stolen from deployable_turret.dm
@@ -169,7 +146,7 @@
 			return FALSE
 		if (isdead(C))
 			return FALSE
-		if (!src.flock.isEnemy(C))
+		if (!src.isEnemy(C))
 			return FALSE
 		if (istype(C.loc,/obj/flock_structure/cage)) //already caged, stop shooting
 			return FALSE
@@ -194,6 +171,10 @@
 
 		return TRUE
 
+
+/obj/flock_structure/gnesisturret/angry
+	isEnemy(mob/M)
+		return istype(M) && isalive(M) && !isintangible(M)
 
 /datum/projectile/syringe/syringe_barbed/gnesis
 	name = "nanite spike"

@@ -30,7 +30,7 @@
 
 		var/mob/living/HH = G.affecting
 		if(check_target_immunity( HH ))
-			M.visible_message("<span class='alert'>You seem to attack [HH]!</span>")
+			M.visible_message(SPAN_ALERT("You seem to attack [HH]!"))
 			return 1
 		HH.set_loc(M.loc)
 		HH.set_dir(get_dir(HH, M))
@@ -38,7 +38,7 @@
 		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		HH.changeStatus("stunned", 4 SECONDS)
-		M.visible_message("<span class='alert'><B>[M] starts spinning around with [HH]!</B></span>")
+		M.visible_message(SPAN_ALERT("<B>[M] starts spinning around with [HH]!</B>"))
 		M.emote("scream")
 		var/i = 0
 		var/spin_start = TIME
@@ -59,7 +59,7 @@
 			if (M && HH)
 				// These are necessary because of the sleep call.
 				if (!G || !istype(G) || G.state == GRAB_PASSIVE)
-					boutput(M, "<span class='alert'>You can't throw the target without a firm grab!</span>")
+					boutput(M, SPAN_ALERT("You can't throw the target without a firm grab!"))
 					return 0
 
 				if (src.castcheck() != 1)
@@ -67,7 +67,7 @@
 					return 0
 
 				if (!isturf(M.loc) || !isturf(HH.loc))
-					boutput(M, "<span class='alert'>You can't throw [HH] from here!</span>")
+					boutput(M, SPAN_ALERT("You can't throw [HH] from here!"))
 					qdel(G)
 					return 0
 
@@ -94,7 +94,7 @@
 		if (M && HH)
 			// These are necessary because of the sleep call.
 			if (!G || !istype(G) || G.state == GRAB_PASSIVE)
-				boutput(M, "<span class='alert'>You can't throw the target without a firm grab!</span>")
+				boutput(M, SPAN_ALERT("You can't throw the target without a firm grab!"))
 				return 0
 
 			if (src.castcheck() != 1)
@@ -102,14 +102,14 @@
 				return 0
 
 			if (!isturf(M.loc) || !isturf(HH.loc))
-				boutput(M, "<span class='alert'>You can't throw [HH] from here!</span>")
+				boutput(M, SPAN_ALERT("You can't throw [HH] from here!"))
 				qdel(G)
 				return 0
 
 			HH.set_loc(M.loc) // Maybe this will help with the wallthrowing bug.
 			qdel(G)
 
-			M.visible_message("<span class='alert'><B>[M] [pick_string("wrestling_belt.txt", "throw")] [HH]!</B></span>")
+			M.visible_message(SPAN_ALERT("<B>[M] [pick_string("wrestling_belt.txt", "throw")] [HH]!</B>"))
 			playsound(M.loc, "swing_hit", 50, 1)
 
 			var/turf/T = get_edge_target_turf(M, M.dir)

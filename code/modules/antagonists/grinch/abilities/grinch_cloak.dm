@@ -24,33 +24,33 @@
 
 		if (ismobcritter(M)) // Placeholder because only humans use bioeffects at the moment.
 			if (M.invisibility != INVIS_NONE)
-				boutput(M, "<span class='alert'>You are already invisible.</span>")
+				boutput(M, SPAN_ALERT("You are already invisible."))
 				return 1
 
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, src, INVIS_CLOAK)
 			M.UpdateOverlays(image('icons/mob/mob.dmi', "icon_state" = "shield"), "shield")
-			boutput(M, "<span class='notice'><b>Your cloak will remain active for the next [src.cloak_duration / 600] minutes.</b></span>")
+			boutput(M, SPAN_NOTICE("<b>Your cloak will remain active for the next [src.cloak_duration / 600] minutes.</b>"))
 
 			SPAWN(src.cloak_duration)
 				if (M && ismobcritter(M))
 					REMOVE_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, src)
 					M.UpdateOverlays(null, "shield")
-					boutput(M, "<span class='alert'><b>You are no longer invisible.</b></span>")
+					boutput(M, SPAN_ALERT("<b>You are no longer invisible.</b>"))
 
 		else if (ishuman(M))
 			var/mob/living/carbon/human/MM = M
 			if (!MM.bioHolder)
-				boutput(MM, "<span class='alert'>You can't use this ability in your current form.</span>")
+				boutput(MM, SPAN_ALERT("You can't use this ability in your current form."))
 				return 1
 
 			if (MM.bioHolder.HasEffect("chameleon"))
-				boutput(M, "<span class='alert'>You are already invisible.</span>")
+				boutput(M, SPAN_ALERT("You are already invisible."))
 				return 1
 			else
 				var/datum/bioEffect/power/chameleon/CC = MM.bioHolder.AddEffect("chameleon", 0, src.cloak_duration / 10)
 				if (CC && istype(CC))
 					CC.active = 1 // Important!
 					MM.set_body_icon_dirty()
-					boutput(M, "<span class='notice'><b>Your chameleon cloak is available for the next [src.cloak_duration / 600] minutes.</b></span>")
+					boutput(M, SPAN_NOTICE("<b>Your chameleon cloak is available for the next [src.cloak_duration / 600] minutes.</b>"))
 
 		return 0

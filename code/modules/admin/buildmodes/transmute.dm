@@ -10,7 +10,7 @@ Right Mouse Button on buildmode    = Set material ID<br>
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if (!material_cache.len)
-			boutput(usr, "<span class='alert'>Error detected in material cache, attempting rebuild. Please try again.</span>")
+			boutput(usr, SPAN_ALERT("Error detected in material cache, attempting rebuild. Please try again."))
 			buildMaterialCache()
 			return
 		var/mat = tgui_input_list(usr, "Select material: ", "Material", material_cache)

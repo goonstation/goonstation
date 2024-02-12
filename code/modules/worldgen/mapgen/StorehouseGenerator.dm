@@ -276,7 +276,7 @@
 				var/rarity = rand(1, 100)
 				switch(rarity)
 					if(1 to 10)
-						new /obj/storage/crate/loot/puzzle(T)
+						new /obj/storage/crate/loot(T)
 					if(11 to 90)
 						new /obj/storage/crate(T)
 					if(91 to 100)
@@ -340,7 +340,7 @@
 					var/rarity = rand(1, 100)
 					switch(rarity)
 						if(1 to 8)
-							new /obj/storage/crate/loot/puzzle(T)
+							new /obj/storage/crate/loot(T)
 						else
 							make_cleanable(/obj/decal/cleanable/blood/gibs, T)
 

@@ -118,7 +118,7 @@
 
 		if (can_operate_on(user))
 			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
-			"<span class='notice'>You apply [src] to yourself.</span>")
+			SPAN_NOTICE("You apply [src] to yourself."))
 			logTheThing(LOG_CHEMISTRY, user, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
 			user.Attackby(src, user)
 		return
@@ -128,7 +128,7 @@
 		if (src.medical && !borg && !src.in_use && (can_operate_on(M)))
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
-				M.visible_message("<span class='alert'>[src] lands on [M] sticky side down!</span>")
+				M.visible_message(SPAN_ALERT("[src] lands on [M] sticky side down!"))
 				logTheThing(LOG_COMBAT, M, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(M)].")
 				apply_to(M,usr)
 				attach_sticker(M)
@@ -148,11 +148,11 @@
 			if (target == user)
 				//target.show_text("You put [src] on your arm.", "blue")
 				target.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
-				"<span class='notice'>You apply [src] to yourself.</span>")
+				SPAN_NOTICE("You apply [src] to yourself."))
 			else
 				if (medical == 0)
-					user.visible_message("<span class='alert'><b>[user]</b> is trying to stick [src] to [target]'s arm!</span>",\
-					"<span class='alert'>You try to stick [src] to [target]'s arm!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user]</b> is trying to stick [src] to [target]'s arm!"),\
+					SPAN_ALERT("You try to stick [src] to [target]'s arm!"))
 					logTheThing(LOG_COMBAT, user, "tries to apply a patch [log_reagents(src)] to [constructTarget(target,"combat")] at [log_loc(user)].")
 
 					if (!do_mob(user, target))
@@ -162,19 +162,19 @@
 						return
 					// No src.reagents check here because empty patches can be used to counteract bleeding.
 
-					user.visible_message("<span class='alert'><b>[user]</b> sticks [src] to [target]'s arm.</span>",\
-					"<span class='alert'>You stick [src] to [target]'s arm.</span>")
+					user.visible_message(SPAN_ALERT("<b>[user]</b> sticks [src] to [target]'s arm."),\
+					SPAN_ALERT("You stick [src] to [target]'s arm."))
 
 				else if (borg == 1)
-					user.visible_message("<span class='notice'><b>[user]</b> stamps [src] on [target].</span>",\
-					"<span class='notice'>You stamp [src] on [target].</span>")
+					user.visible_message(SPAN_NOTICE("<b>[user]</b> stamps [src] on [target]."),\
+					SPAN_NOTICE("You stamp [src] on [target]."))
 					if (user.mind && user.mind.objectives && target.health < 90) //might as well let people complete this even if they're borged
 						for (var/datum/objective/crew/medicaldoctor/heal/H in user.mind.objectives)
 							H.patchesused ++
 						JOB_XP(user, "Medical Doctor", 1)
 				else
-					user.visible_message("<span class='notice'><b>[user]</b> applies [src] to [target].</span>",\
-					"<span class='notice'>You apply [src] to [target].</span>")
+					user.visible_message(SPAN_NOTICE("<b>[user]</b> applies [src] to [target]."),\
+					SPAN_NOTICE("You apply [src] to [target]."))
 					if (user.mind && user.mind.objectives && target.health < 90)
 						for (var/datum/objective/crew/medicaldoctor/heal/H in user.mind.objectives)
 							H.patchesused ++
@@ -408,9 +408,9 @@
 			P.set_loc(user.loc)
 			patches -= P
 			update_overlay()
-			boutput(user, "<span class='notice'>You remove [P] from the stack.</span>")
+			boutput(user, SPAN_NOTICE("You remove [P] from the stack."))
 		else
-			boutput(user, "<span class='alert'>There are no patches on the stack.</span>")
+			boutput(user, SPAN_ALERT("There are no patches on the stack."))
 
 	attack() //Or you're gonna literally attack someone with it. *thwonk* style
 		return
@@ -427,7 +427,7 @@
 				target.set_loc(src)
 				patches += target
 				update_overlay()
-				boutput(user, "<span class='notice'>You add [target] to the stack.</span>")
+				boutput(user, SPAN_NOTICE("You add [target] to the stack."))
 		else if (isliving(target))
 			if (patches.len)
 				var/obj/item/reagent_containers/patch/P = patches[patches.len]
@@ -515,7 +515,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 
 	emp_act()
 		. = ..()
-		src.visible_message("<span class='alert'>[src] malfunctions and identifies all substaces as harmful, removing them!</span>")
+		src.visible_message(SPAN_ALERT("[src] malfunctions and identifies all substaces as harmful, removing them!"))
 		playsound(src, "sparks", 75, 1, -1)
 		src.reagents?.clear_reagents()
 
@@ -536,13 +536,13 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
 
-		if (can_operate_on(target) && !actions.hasAction(user,"automender_apply"))
+		if (can_operate_on(target) && !actions.hasAction(user, /datum/action/bar/icon/automender_apply))
 			if (target == user)
 				target.visible_message("[user] begins mending [himself_or_herself(user)] with [src].",\
-					"<span class='notice'>You begin mending yourself with [src].</span>")
+					SPAN_NOTICE("You begin mending yourself with [src]."))
 			else
-				user.visible_message("<span class='alert'><b>[user]</b> begins mending [target] with [src].</span>",\
-					"<span class='alert'>You begin mending [target] with [src].</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> begins mending [target] with [src]."),\
+					SPAN_ALERT("You begin mending [target] with [src]."))
 				if (target.health < 90)
 					JOB_XP(user, "Medical Doctor", 2)
 
@@ -555,7 +555,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 	afterattack(obj/target, mob/user, flag)
 		if(is_reagent_dispenser(target) && target.reagents)
 			if (!target.reagents.total_volume)
-				boutput(user, "<span class='alert'>[target] is already empty.</span>")
+				boutput(user, SPAN_ALERT("[target] is already empty."))
 				return
 			playsound(src.loc, 'sound/items/mender_refill_juice.ogg', 50, 1)
 			target.reagents.trans_to(src, src.reagents.maximum_volume)
@@ -616,7 +616,6 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 /datum/action/bar/icon/automender_apply
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "automender_apply"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mender-active"
 	var/mob/living/user
@@ -723,11 +722,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 			src.UpdateIcon()
 			playsound(src, 'sound/items/mender_refill_juice.ogg', 50, TRUE)
 			if (src.reagents.total_volume == 0)
-				boutput(user, "<span class='notice'>You refill [mender] to [mender.reagents.total_volume]u and empty [src]!</span>")
+				boutput(user, SPAN_NOTICE("You refill [mender] to [mender.reagents.total_volume]u and empty [src]!"))
 			else
-				boutput(user, "<span class='notice'>You refill [mender] to [mender.reagents.total_volume]u!</span>")
+				boutput(user, SPAN_NOTICE("You refill [mender] to [mender.reagents.total_volume]u!"))
 		else
-			boutput(user, "<span class='alert'>You attempt to refill [mender], but [src] is empty!</span>")
+			boutput(user, SPAN_ALERT("You attempt to refill [mender], but [src] is empty!"))
 
 /obj/item/reagent_containers/mender_refill_cartridge/brute
 	name = "brute auto-mender refill cartridge"

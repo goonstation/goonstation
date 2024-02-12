@@ -19,14 +19,26 @@
 	New()
 		..()
 		src.react_heat[2] = "SUPERFICIAL DAMAGE DETECTED"
-		src.field_radius = rand(2,9) // field radius
+		src.field_radius = rand(4,9) // field radius
+		var/did_any = 0
 		if (prob(80))
 			src.helpers.Add("growth")
+			did_any++
 		if (prob(60))
 			src.helpers.Add("health")
+			did_any++
 		if (prob(40))
 			src.helpers.Add("weedkiller")
+			did_any++
 		if (prob(20))
+			src.helpers.Add("mutation")
+			did_any++
+		if (did_any == 0)
+			// if you rolled a complete dud, instead make it real good
+			// i think this works out to about 7% (3.84% x 2 for hitting all OR none)
+			src.helpers.Add("growth")
+			src.helpers.Add("health")
+			src.helpers.Add("weedkiller")
 			src.helpers.Add("mutation")
 
 	effect_process(var/obj/O)

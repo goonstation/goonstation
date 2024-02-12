@@ -1,6 +1,9 @@
 var/datum/telescope_manager/tele_man
 var/list/special_places = list() //list of location names, which are coincidentally also landmark ids
 
+TYPEINFO(/obj/machinery/lrteleporter)
+	mats = list("telecrystal"=10, "MET-1"=10, "CON-1"=10)
+	
 /obj/machinery/lrteleporter
 	name = "Experimental long-range teleporter"
 	desc = "Well this looks somewhat unsafe."
@@ -227,12 +230,12 @@ var/list/special_places = list() //list of location names, which are coincidenta
 	projectile_type = /datum/projectile/laser/drill/cutter
 	current_projectile = new/datum/projectile/laser/drill/cutter
 	droploot = null
-	smashes_shit = 1
+	smashes_shit = FALSE
 
 	ChaseAttack(atom/M)
 		if(target && !attacking)
 			attacking = 1
-			src.visible_message("<span class='alert'><b>[src]</b> floats towards [M]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> floats towards [M]!"))
 			walk_to(src, src.target,1,4)
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -244,7 +247,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 		if(target && !attacking)
 			attacking = 1
 			//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
-			src.visible_message("<span class='alert'><b>[src]</b> shreds [M]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> shreds [M]!"))
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -259,7 +262,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 
 	CritterDeath()
 		if(prob(33) && alive && !dying)
-			src.visible_message("<span class='alert'><b>[src]</b> begins to reassemble!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> begins to reassemble!"))
 			var/turf/T = src.loc
 			SPAWN(5 SECONDS)
 				new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(T)

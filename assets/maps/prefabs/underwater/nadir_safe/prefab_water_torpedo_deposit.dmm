@@ -531,7 +531,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/item/reagent_containers/syringe/jenkem,
 /turf/simulated/floor/black,
 /area/prefab/torpedo_deposit)
 "Pl" = (

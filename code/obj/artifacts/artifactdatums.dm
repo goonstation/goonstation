@@ -212,6 +212,16 @@ ABSTRACT_TYPE(/datum/artifact/)
 	proc/get_rarity_modifier()
 		return src.rarity_weight ? 0.995**src.rarity_weight : 0.2
 
+	/// show artifact fx
+	proc/show_fx(obj/artifact)
+		artifact.vis_contents += src.fx_image
+		artifact.vis_contents += src.fx_fallback
+
+	/// hide artifact fx
+	proc/hide_fx(obj/artifact)
+		artifact.vis_contents -= src.fx_image
+		artifact.vis_contents -= src.fx_fallback
+
 // SPECIFIC DATUMS
 
 ABSTRACT_TYPE(/datum/artifact/art)

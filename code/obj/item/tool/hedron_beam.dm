@@ -35,24 +35,24 @@ TYPEINFO(/obj/item/mining_tool/hedron_beam)
 	attack_self(var/mob/user as mob)
 		if (src.process_charges(0))
 			if(GET_COOLDOWN(src, "depowered"))
-				boutput(user, "<span class='alert'>[src] mode-cycled recently and can't switch modes yet.</span>")
+				boutput(user, SPAN_ALERT("[src] mode-cycled recently and can't switch modes yet."))
 				return
-			boutput(user, "<span class='notice'>You switch [src] into [status ? "welding mode" : "mining mode"].</span>")
+			boutput(user, SPAN_NOTICE("You switch [src] into [status ? "welding mode" : "mining mode"]."))
 			playsound(user.loc, 'sound/items/putback_defib.ogg', 30, 1)
 			src.mode_toggle()
 		else
-			boutput(user, "<span class='alert'>No charge left in [src]. Cannot enter mining mode.</span>")
+			boutput(user, SPAN_ALERT("No charge left in [src]. Cannot enter mining mode."))
 
 	proc/try_weld(mob/user, var/fuel_amt = 2, var/use_amt = -1, var/noisy=TRUE, var/burn_eyes=FALSE)
 		if (!src.status)
 			if(use_amt == -1)
 				use_amt = fuel_amt
 			if (!src.process_charges(use_amt*5)) //no "fuel", no weld
-				boutput(user, "<span class='notice'>Cannot weld - cell insufficiently charged.</span>")
+				boutput(user, SPAN_NOTICE("Cannot weld - cell insufficiently charged."))
 				return FALSE
 			if(noisy)
 				playsound(user.loc, list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')[noisy], 35, 1)
 			return TRUE //welding, has "fuel"
 		//in mining mode? no welding 4 u
-		boutput(user, "<span class='notice'>[src] is in mining mode and can't currently weld.</span>")
+		boutput(user, SPAN_NOTICE("[src] is in mining mode and can't currently weld."))
 		return FALSE

@@ -169,7 +169,8 @@ proc/maximal_subtype(var/list/L)
 /// contains lists of objects indexed by their type based on [START_TRACKING] / [STOP_TRACKING]
 var/list/list/by_type = list()
 
-/// Performs a typecheckless for loop with var/iterator over by_type[_type]
+/// Loops over all instances of a type that's tracked via the [START_TRACKING] and [STOP_TRACKING] macros.
+/// Example: for_by_tcl(gnome, /obj/item/gnomechompski) qdel(gnome)
 #define for_by_tcl(_iterator, _type) for(var ##_type/##_iterator as anything in by_type[##_type])
 
 // sometimes we want to have a list of objects of multiple types, without having to traverse multiple lists
@@ -480,3 +481,25 @@ proc/istypes(datum/dat, list/types)
 	if (!return_instance)
 		return chosen_type
 	return new chosen_type(return_instance_newargs)
+
+/// thing.type but it also returns "num" for numbers etc.
+/proc/string_type_of_anything(thing)
+	. = "unknown"
+	if(isnum(thing))
+		return "num"
+	else if(istext(thing))
+		return "text"
+	else if(islist(thing))
+		return "list"
+	else if(ispath(thing))
+		return "path"
+	else if(isnull(thing))
+		return "null"
+	else if(isproc(thing))
+		return "proc"
+	else if(isresource(thing))
+		return "resource"
+	else if(thing == world)
+		return "world"
+	else
+		return "[thing:type]"

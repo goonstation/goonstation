@@ -18,7 +18,7 @@ var/global/datum/participationRecorder/participationRecorder
 
 
 	proc/debugLog(msg)
-		out(world, msg)
+		boutput(world, msg)
 
 
 	//Record a participation for a player (or add it to a queue if holding)

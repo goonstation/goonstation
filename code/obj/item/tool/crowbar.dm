@@ -35,7 +35,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] beats [him_or_her(user)]self in the head with a crowbar, like some kind of suicidal theoretical physicist.</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] beats [him_or_her(user)]self in the head with a crowbar, like some kind of suicidal theoretical physicist.</b>"))
 		take_bleeding_damage(user, null, 25, src.hit_type)
 		user.TakeDamage("head", 160, 0)
 		return 1

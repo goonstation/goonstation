@@ -86,7 +86,7 @@
 /turf/simulated/floor/carpet/clowncarpet,
 /area/dmm_suite/clear_area)
 "Y" = (
-/obj/critter/spacerattlesnake,
+/mob/living/critter/small_animal/rattlesnake,
 /turf/simulated/floor/carpet/clowncarpet,
 /area/dmm_suite/clear_area)
 

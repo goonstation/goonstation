@@ -28,7 +28,7 @@
 			num_players++
 
 	var/i = rand(10, 15)
-	var/num_blobs = clamp(round((num_players + i) / 25), blobs_minimum, blobs_possible)
+	var/num_blobs = clamp(round((num_players + i) / 20), blobs_minimum, blobs_possible)
 
 	var/list/possible_blobs = get_possible_enemies(ROLE_BLOB, num_blobs)
 

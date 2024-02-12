@@ -422,24 +422,24 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 		if (href_list["create"])
 			if (src.emergency && emergency_shuttle)
 				if (emergency_shuttle.location != SHUTTLE_LOC_STATION)
-					boutput(usr, "<span class='alert'>The airbridge cannot be deployed while the shuttle is not in position.</span>")
+					boutput(usr, SPAN_ALERT("The airbridge cannot be deployed while the shuttle is not in position."))
 					return
 			if (!(src.allowed(usr)))
-				boutput(usr, "<span class='alert'>Access denied.</span>")
+				boutput(usr, SPAN_ALERT("Access denied."))
 				return
 			if (src.establish_bridge())
 				logTheThing(LOG_STATION, usr, "extended the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		else if (href_list["remove"])
 			if (!(src.allowed(usr)))
-				boutput(usr, "<span class='alert'>Access denied.</span>")
+				boutput(usr, SPAN_ALERT("Access denied."))
 				return
 			if (src.remove_bridge())
 				logTheThing(LOG_STATION, usr, "retracted the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		else if (href_list["air"])
 			if (!(src.allowed(usr)))
-				boutput(usr, "<span class='alert'>Access denied.</span>")
+				boutput(usr, SPAN_ALERT("Access denied."))
 				return
 			if (src.pressurize())
 				logTheThing(LOG_STATION, usr, "pressurized the airbridge at [usr.loc.loc] ([log_loc(usr)])")
@@ -493,6 +493,6 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 
 	attack_hand(mob/user)
 		for(var/obj/airbridge_controller/C in range(3, src))
-			boutput(user, "<span class='notice'>[C.toggle_bridge()]</span>")
+			boutput(user, SPAN_NOTICE("[C.toggle_bridge()]"))
 			break
 		return

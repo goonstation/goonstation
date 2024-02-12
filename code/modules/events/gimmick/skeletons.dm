@@ -50,7 +50,7 @@
 					if(temp.open)
 						closets -= temp
 						continue
-					temp.visible_message("<span class='alert'><b>[temp]</b> emits a loud thump and rattles a bit.</span>")
+					temp.visible_message(SPAN_ALERT("<b>[temp]</b> emits a loud thump and rattles a bit."))
 					playsound(temp, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 					var/wiggle = 6
 					while(wiggle > 0)

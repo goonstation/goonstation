@@ -7,7 +7,7 @@
 				for (var/atom/A as anything in owner.contents)
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
-							owner.visible_message("<span class='alert'><b>[A]</b> is burnt to a crisp and destroyed!</span>")
+							owner.visible_message(SPAN_ALERT("<b>[A]</b> is burnt to a crisp and destroyed!"))
 							qdel(A)
 
 			if (isturf(owner.loc))

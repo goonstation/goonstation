@@ -1,7 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1
+	dir = 1;
+	color = "b4b4b4"
 	},
 /obj/machinery/crusher,
 /obj/map/light/dimreddish,
@@ -13,17 +14,19 @@
 "ac" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	tag = "icon-intact (NORTHEAST)"
+	tag = "icon-intact (NORTHEAST)";
+	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
 "ad" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	icon_state = "intact"
+	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -36,11 +39,12 @@
 /area/noGenerate)
 "af" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	icon_state = "intact"
+	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/prefab/tunnelsnake)
@@ -49,34 +53,40 @@
 /area/prefab/tunnelsnake)
 "ah" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/prefab/tunnelsnake)
 "ai" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	tag = "icon-intact-f (EAST)"
+	tag = "icon-intact-f (EAST)";
+	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/prefab/tunnelsnake)
 "aj" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	tag = "icon-intact-f (EAST)"
+	tag = "icon-intact-f (EAST)";
+	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
 "ak" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	tag = "icon-intact (NORTHWEST)"
+	tag = "icon-intact (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -113,7 +123,8 @@
 "av" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	tag = "icon-intact (NORTHWEST)"
+	tag = "icon-intact (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/prefab/tunnelsnake)

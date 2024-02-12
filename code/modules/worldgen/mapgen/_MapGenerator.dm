@@ -28,8 +28,8 @@ proc/initialize_biomes()
 	if(length(seed_list))
 		seeds = seed_list
 
-ABSTRACT_TYPE(area/map_gen)
-area/map_gen
+ABSTRACT_TYPE(/area/map_gen)
+/area/map_gen
 	name = "map gen"
 	icon = 'icons/turf/map_gen.dmi'
 	icon_state = "genarea"

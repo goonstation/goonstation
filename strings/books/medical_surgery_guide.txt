@@ -135,7 +135,7 @@
 		<h3>Organ Damage Treatment</h3>
 		<div id ="treatment">
 		<p>Presently there are only a few known ways to treat organ damage, provided they are not damaged too extensively. This "chapter" will discuss the most common ways.</p>
-		<p>It is probably helpful to seperate organs into 3 different groups in order to more quickly and easily treat them.<br>
+		<p>It is probably helpful to separate organs into 3 different groups in order to more quickly and easily treat them.<br>
 		The reason for each grouping should be completely obvious to anyone who cares to think about it so I will not explain the logic behind each grouping.</p>
 
 		<p><b>Group I: Lungs and Spleen</b></p>
@@ -157,7 +157,7 @@
 		<br>
 		<p>It's been theorized that gene therapies are also capable to healing internal organs over time. Though I have not collected any solid data on this to date.</p>
 		</div>
-		<h4>Additonal documentation is available at:</h4>
+		<h4>Additional documentation is available at:</h4>
 		<ul>><li><a href="https://wiki.ss13.co/Doctoring" target="Goonstation Wiki: Doctoring">https://wiki.ss13.co/Doctoring</a></li></ul>
 <h5>by Trent Durinste<br>2053 C.E.</h5>
 </div>

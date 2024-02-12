@@ -2,7 +2,8 @@
 	name = "Necrotic Degeneration"
 	max_stages = 5
 	spread = "Non-Contagious"
-	cure = "Healing Reagents"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Healing reagents"
 	reagentcure = list("omnizine","cryoxadone","mannitol","penteticacid","styptic_powder")
 	recureprob = 8
 	associated_reagent = "necrovirus"
@@ -23,12 +24,12 @@
 				affected_mob.emote(pick("shiver", "pale"))
 		if(2)
 			if (probmult(8))
-				boutput(affected_mob, "<span class='alert'>You notice a foul smell.</span>")
+				boutput(affected_mob, SPAN_ALERT("You notice a foul smell."))
 			if (probmult(10))
-				boutput(affected_mob, "<span class='alert'>You lose track of your thoughts.</span>")
+				boutput(affected_mob, SPAN_ALERT("You lose track of your thoughts."))
 				affected_mob.take_brain_damage(10)
 			if (probmult(4))
-				boutput(affected_mob, "<span class='alert'>You pass out momentarily.</span>")
+				boutput(affected_mob, SPAN_ALERT("You pass out momentarily."))
 				affected_mob.changeStatus("paralysis", 4 SECONDS)
 			if (probmult(5))
 				affected_mob.emote(pick("shiver","pale","drool"))
@@ -61,9 +62,9 @@
 				affected_mob.take_brain_damage(10)
 			if (probmult(10))
 				affected_mob.emote(pick("moan"))
-			cure = "Incurable"
+			cure_flags = CURE_INCURABLE
 		if(5)
-			boutput(affected_mob, "<span class='alert'>Your heart seems to have stopped...</span>")
+			boutput(affected_mob, SPAN_ALERT("Your heart seems to have stopped..."))
 			if (zombie_mutantrace)
 				affected_mob.set_mutantrace(zombie_mutantrace)
 			if (ishuman(affected_mob))

@@ -46,16 +46,16 @@ Subtypes:
 	proc/add_item(var/obj/item/W, var/mob/user, params)
 		. = FALSE
 		if (W == src)
-			boutput(user, "<span class='notice'>You can't attach [W] to another [src]. Duh.</span>")
+			boutput(user, SPAN_NOTICE("You can't attach [W] to another [src]. Duh."))
 			return
 		if (!istype(W, allowed_item))
-			boutput(user, "<span class='notice'>You can't attach [W] to \the [src].</span>")
+			boutput(user, SPAN_NOTICE("You can't attach [W] to \the [src]."))
 			return
 		if (item_added)
-			boutput(user,"<span class='notice'>There is already something attached!</span>")
+			boutput(user,SPAN_NOTICE("There is already something attached!"))
 			return
 		if(W.cant_drop)
-			boutput(user, "<span class='alert'>You can't attach [W] to \the [src]! It's attached to you!</span>")
+			boutput(user, SPAN_ALERT("You can't attach [W] to \the [src]! It's attached to you!"))
 			return
 		. = TRUE
 		src.place_on(W, user, params)
@@ -66,7 +66,7 @@ Subtypes:
 		src.vis_contents += W
 		src.UpdateIcon()
 		item_added = TRUE
-		boutput(user, "<span class='notice'>You attach [W] to \the [src].</span>")
+		boutput(user, SPAN_NOTICE("You attach [W] to \the [src]."))
 		if (auto_anchor)
 			W.anchored = TRUE
 
@@ -80,7 +80,7 @@ Subtypes:
 		src.vis_contents -= W
 		src.UpdateIcon()
 		item_added = FALSE
-		boutput(user,"<span class='notice'>You unattach [W] from \the [src].</span>")
+		boutput(user,SPAN_NOTICE("You unattach [W] from \the [src]."))
 
 
 	//attacked by item

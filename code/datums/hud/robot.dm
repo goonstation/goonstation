@@ -1,10 +1,18 @@
 /atom/movable/screen/hud/robotstorage
 	MouseEntered(location, control, params)
+		// there is no reason for master to ever be something other than /datum/hud/silicon here
+		// and yet
+		if(istype(src.master, /datum/hud/silicon/robot))
+			var/datum/hud/silicon/robot/hud = src.master
+			if(usr != hud.silicon) return
 		if (src.name)
 			src.maptext_x = 34
 			src.maptext_width = 128
 			src.maptext = "<span class='vm l pixel sh'>[src.name]</span>"
 	MouseExited(location, control, params)
+		if(istype(src.master, /datum/hud/silicon/robot))
+			var/datum/hud/silicon/robot/hud = src.master
+			if(usr != hud.silicon) return
 		src.maptext = null
 
 /datum/hud/silicon/robot
@@ -165,36 +173,24 @@
 				return
 			var/content_id = items_screen + i - 1
 			if (content_id > master.module.tools.len || content_id < 1)
-				boutput(usr, "<span class='alert'>An error occurred. Please notify a coder immediately. (Content ID: [content_id].)</span>")
+				boutput(usr, SPAN_ALERT("An error occurred. Please notify a coder immediately. (Content ID: [content_id].)"))
 			var/obj/item/O = master.module.tools[content_id]
 			if(!O || O.loc != master.module)
 				return
 			if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/parts/robot_parts/arm/))
-				master.module_states[1] = O
-				O.set_loc(master)
-				O.pickup(master) // Handle light datums and the like.
+				master.equip_slot(1, O)
 			else if(!master.module_states[2])
-				master.module_states[2] = O
-				O.set_loc(master)
-				O.pickup(master)
+				master.equip_slot(2, O)
 			else if(!master.module_states[3] && istype(master.part_arm_r,/obj/item/parts/robot_parts/arm/))
-				master.module_states[3] = O
-				O.set_loc(master)
-				O.pickup(master)
+				master.equip_slot(3, O)
 			else
 				master.uneq_active()
 				if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/parts/robot_parts/arm/))
-					master.module_states[1] = O
-					O.set_loc(master)
-					O.pickup(master)
+					master.equip_slot(1, O)
 				else if(!master.module_states[2])
-					master.module_states[2] = O
-					O.set_loc(master)
-					O.pickup(master)
+					master.equip_slot(2, O)
 				else if(!master.module_states[3] && istype(master.part_arm_r,/obj/item/parts/robot_parts/arm/))
-					master.module_states[3] = O
-					O.set_loc(master)
-					O.pickup(master)
+					master.equip_slot(3, O)
 			update_equipment()
 			update_tools()
 
@@ -340,7 +336,7 @@
 					master.remove_pulling()
 					src.update_pulling()
 				else if(!isturf(master.loc))
-					boutput(master, "<span class='notice'>You can't pull things while inside \a [master.loc].</span>")
+					boutput(master, SPAN_NOTICE("You can't pull things while inside \a [master.loc]."))
 				else
 					var/list/atom/movable/pullable = list()
 					for(var/atom/movable/AM in range(1, get_turf(master)))
@@ -351,7 +347,7 @@
 					if(length(pullable) == 1)
 						to_pull = pullable[1]
 					else if(length(pullable) < 1)
-						boutput(master, "<span class='notice'>There is nothing to pull.</span>")
+						boutput(master, SPAN_NOTICE("There is nothing to pull."))
 					else
 						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
 					if(!isnull(to_pull) && BOUNDS_DIST(master, to_pull) == 0)

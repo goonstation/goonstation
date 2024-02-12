@@ -22,7 +22,7 @@
 		stored_id.set_loc(get_turf(src))
 		W.set_loc(get_turf(src))
 
-		boutput(user, "<span class='notice'>You swap the held ID with the ID in the lanyard.</notice>")
+		boutput(user, SPAN_NOTICE(">You swap the held ID with the ID in the lanyard."))
 		src.storage.add_contents(W, user, FALSE)
 		user.put_in_hand_or_drop(stored_id)
 

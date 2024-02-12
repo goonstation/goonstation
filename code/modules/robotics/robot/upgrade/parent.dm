@@ -25,7 +25,7 @@ ABSTRACT_TYPE(/obj/item/roboupgrade)
 	if (!user)
 		return 1
 	if(user.hasStatus("upgrade_disabled"))
-		boutput(user, "<span class='alert'>Your modules are currently disabled!</span>")
+		boutput(user, SPAN_ALERT("Your modules are currently disabled!"))
 		return 1
 	if (!src.activated && !src.active)
 		src.activated = 1

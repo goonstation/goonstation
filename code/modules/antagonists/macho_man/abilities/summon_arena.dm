@@ -16,12 +16,12 @@
 				var/turf/Aloc = get_turf(holder.owner)
 				for (var/obj/decal/O in range(ring_radius + 1, Aloc))
 					if (istype(O, /obj/decal/boxingrope))
-						boutput(holder.owner, "<span class='alert'>A ring is already nearby!</span>")
+						boutput(holder.owner, SPAN_ALERT("A ring is already nearby!"))
 						return
 				//var/arena_time = 45 SECONDS
 				holder.owner.verbs -= /mob/living/carbon/human/machoman/verb/macho_summon_arena
 				playsound(holder.owner.loc, 'sound/voice/chanting.ogg', 75, 0, 0, holder.owner.get_age_pitch())
-				holder.owner.visible_message("<span class='alert'><B>[holder.owner] begins summoning a wrestling ring!</B></span>", "<span class='alert'><B>You begin summoning a wrestling ring!</B></span>")
+				holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] begins summoning a wrestling ring!</B>"), SPAN_ALERT("<B>You begin summoning a wrestling ring!</B>"))
 				for (var/mob/living/M in oviewers(ring_radius + 4, get_turf(holder.owner)))
 					M.apply_sonic_stun(6, 3, stamina_damage = 0)
 
@@ -57,7 +57,7 @@
 							SPAWN(random_deviation)
 								spawn_animation1(FF)
 								sleep(10) // animation, also to simulate them coming in and slamming into the ground
-								FF.visible_message("<span class='alert'><B>[FF] slams and anchors itself into the ground!</B></span>")
+								FF.visible_message(SPAN_ALERT("<B>[FF] slams and anchors itself into the ground!</B>"))
 								playsound(T, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 								for (var/mob/living/M in oviewers(ring_radius * 2, T))
 									shake_camera(M, 8, 24)

@@ -176,7 +176,7 @@ TYPEINFO(/obj/machinery/power/solar)
 	else
 		src.icon_state = "solar_panel"
 		src.set_dir(NORTH)
-		animate(src, time=rand(0.1 SECONDS, 9 SECONDS))
+		animate(src, time=randfloat(0.1 SECONDS, 9 SECONDS))
 		animate(transform=matrix(adir, MATRIX_ROTATE), time=rand(1 SECOND, 4 SECONDS))
 
 /obj/machinery/power/solar/proc/update_solar_exposure()

@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/unary/cold_sink/freezer
 	name = "freezer"
 	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "freezer_0"
+	icon_state = "freezer_0-map"
 	density = TRUE
 	anchored = ANCHORED
 	current_heat_capacity = 1000
@@ -10,13 +10,8 @@
 	var/max_temp_possible = T20C
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/update_icon()
-	if(src.node)
-		if(src.on)
-			icon_state = "freezer_1"
-		else
-			icon_state = "freezer_0"
-	else
-		icon_state = "freezer"
+	icon_state = src.on ? "freezer_1" : "freezer_0"
+	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, FALSE)
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/process()
 	..()
@@ -60,6 +55,7 @@
 	name = "freezer (kitchen)"
 	current_temperature = 150 KELVIN
 	on = TRUE
+	icon_state = "freezer_1-map"
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/emergency
 	name = "emergency cooler"

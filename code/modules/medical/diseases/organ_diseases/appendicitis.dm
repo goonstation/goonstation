@@ -3,7 +3,8 @@
 	scantype = "Medical Emergency"
 	max_stages = 3
 	spread = "The patient's appendicitis is dangerously enlarged"
-	cure = "Removal of organ"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Removal of organ"
 	recureprob = 10
 	affected_species = list("Human")
 	stage_prob = 1
@@ -35,7 +36,7 @@
 				return
 			if (probmult(8)) H.emote(pick("pale", "shudder"))
 			if (probmult(5))
-				boutput(H, "<span class='alert'>Your abdomen hurts!</span>")
+				boutput(H, SPAN_ALERT("Your abdomen hurts!"))
 			if (probmult(10))
 				H.show_text(pick_string("organ_disease_messages.txt", "appendicitis0"), "red")
 		if (2)
@@ -45,10 +46,10 @@
 				H.ailments -= src
 				return
 			if (probmult(10))
-				var/vomit_message = "<span class='alert'>[H] suddenly and violently vomits!</span>"
+				var/vomit_message = SPAN_ALERT("[H] suddenly and violently vomits!")
 				H.vomit(0, null, vomit_message)
 			else if (probmult(2) && !H.reagents?.has_reagent("promethazine"))
-				H.visible_message("<span class='alert'>[H] vomits blood!</span>")
+				H.visible_message(SPAN_ALERT("[H] vomits blood!"))
 				playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(H, rand(5,8))
 				bleed(H, rand(5,8), 5)
@@ -57,9 +58,9 @@
 				H.bodytemperature += 4
 				H.show_text(pick_string("organ_disease_messages.txt", "appendicitis1"), "red")
 			if (probmult(5))
-				boutput(H, "<span class='alert'>Your back aches terribly!</span>")
+				boutput(H, SPAN_ALERT("Your back aches terribly!"))
 			if (probmult(3))
-				boutput(H, "<span class='alert'>You feel excruciating pain in your upper-right adbomen!</span>")
+				boutput(H, SPAN_ALERT("You feel excruciating pain in your upper-right abdomen!"))
 				// H.organHolder.takepancreas
 
 			if (probmult(5)) H.emote(pick("faint", "collapse", "groan"))
@@ -80,7 +81,7 @@
 					#ifdef CREATE_PATHOGENS
 					add_pathogens(H, 30)
 					#endif
-					boutput(H, "<span class='alert'>Your appendix has burst! Seek medical help!</span>")
+					boutput(H, SPAN_ALERT("Your appendix has burst! Seek medical help!"))
 
 			H.take_toxin_damage(1 * mult)
 

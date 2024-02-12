@@ -83,7 +83,7 @@
 			particleMaster.SpawnSystem(new system_path(owner))
 
 	OnRemove()
-		if (!particleMaster.CheckSystemExists(system_path, owner))
+		if (particleMaster.CheckSystemExists(system_path, owner))
 			particleMaster.RemoveSystem(system_path, owner)
 
 /datum/bioEffect/achromia
@@ -237,14 +237,14 @@
 				if (C == owner)
 					continue
 				if (ispug(C))
-					boutput(C, "<span class='alert'>Wow, [owner] sure [pick("stinks", "smells", "reeks")]!")
+					boutput(C, SPAN_ALERT("Wow, [owner] sure [pick("stinks", "smells", "reeks")]!"))
 				else if (src.personalized_stink)
-					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
+					boutput(C, SPAN_ALERT("[src.personalized_stink]"))
 				else
-					boutput(C, "<span class='alert'>[stinkString()]</span>")
+					boutput(C, SPAN_ALERT("[stinkString()]"))
 
 
-/obj/effect/distort/dwarf
+/obj/effect/rt/dwarf
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "distort-dwarf"
 
@@ -256,7 +256,7 @@
 	msgLose = "You feel tall!"
 	icon_state  = "dwarf"
 	var/filter = null
-	var/obj/effect/distort/dwarf/distort = new
+	var/tmp/obj/effect/rt/dwarf/distort = new
 	var/size = 127
 
 	OnAdd()

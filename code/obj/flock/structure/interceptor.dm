@@ -12,7 +12,7 @@
 	show_in_tutorial = TRUE
 	accepts_sapper_power = TRUE
 	compute = 0
-	var/online_compute_cost = 30
+	online_compute_cost = 30
 
 	/// if the interceptor has enough compute to work
 	var/powered = FALSE

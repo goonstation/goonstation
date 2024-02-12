@@ -145,9 +145,9 @@
 	if (M.buckled)	return
 
 	if (M == user)
-		user.visible_message("<span class='notice'>[user] buckles in!</span>")
+		user.visible_message(SPAN_NOTICE("[user] buckles in!"))
 	else
-		M.visible_message("<span class='notice'>[M] is buckled in by [user]!</span>")
+		M.visible_message(SPAN_NOTICE("[M] is buckled in by [user]!"))
 
 	M.anchored = ANCHORED
 	M.buckled = src
@@ -163,9 +163,9 @@
 	if (src.con_user)
 		var/mob/living/M = src.con_user
 		if (M != user)
-			M.visible_message("<span class='notice'>[M] is unbuckled by [user].</span>")
+			M.visible_message(SPAN_NOTICE("[M] is unbuckled by [user]."))
 		else
-			M.visible_message("<span class='notice'>[M] is unbuckles.</span>")
+			M.visible_message(SPAN_NOTICE("[M] is unbuckles."))
 
 		M.anchored = UNANCHORED
 		M.buckled = null
@@ -217,7 +217,7 @@
 		if (!ismob(G.affecting))
 			return
 		if (src.occupant)
-			boutput(user, "<span class='notice'><B>The VR pod is already occupied!</B></span>")
+			boutput(user, SPAN_NOTICE("<B>The VR pod is already occupied!</B>"))
 			return
 		if(..())
 			return
@@ -245,11 +245,11 @@
 	if (src.occupant && !isobserver(M))
 		if(M == src.occupant)
 			return src.go_out()
-		boutput(M, "<span class='notice'><B>The VR pod is already occupied!</B></span>")
+		boutput(M, SPAN_NOTICE("<B>The VR pod is already occupied!</B>"))
 		return
 
 	if (!iscarbon(M) && !isobserver(M))
-		boutput(M, "<span class='notice'><B>You cannot possibly fit into that!</B></span>")
+		boutput(M, SPAN_NOTICE("<B>You cannot possibly fit into that!</B>"))
 		return
 
 	if (!isobserver(M) || isAIeye(M))
@@ -463,7 +463,7 @@
 			var/mob/living/carbon/human/virtual/V = usr
 
 			if(src.network == "prison")
-				boutput(V, "<span class='alert'>Leaving this network from the inside has been disabled!</span>")
+				boutput(V, SPAN_ALERT("Leaving this network from the inside has been disabled!"))
 				return
 			Station_VNet.Leave_Vspace(V)
 

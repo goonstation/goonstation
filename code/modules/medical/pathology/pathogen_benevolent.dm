@@ -61,7 +61,7 @@ datum/pathogeneffects/benevolent/fleshrestructuring
 				if(H.bleeding)
 					repair_bleeding_damage(M, 80, 2)
 			if (prob(50))
-				M.show_message("<span class='notice'>You feel your wounds closing by themselves.</span>")
+				M.show_message(SPAN_NOTICE("You feel your wounds closing by themselves."))
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
@@ -156,7 +156,7 @@ datum/pathogeneffects/benevolent/cleansing
 		if (M.get_toxin_damage())
 			M.take_toxin_damage(-origin.stage / 2)
 			if (prob(12))
-				M.show_message("<span class='notice'>You feel cleansed.</span>")
+				M.show_message(SPAN_NOTICE("You feel cleansed."))
 
 	react_to(var/R, var/zoom)
 		return "The pathogen appears to have entirely metabolized... all chemical agents in the dish."
@@ -250,13 +250,13 @@ datum/pathogeneffects/benevolent/resurrection
 			M.change_misstep_chance(40)					// even after getting up they still have some grogginess for a while
 			M.stuttering = 15
 			if (M.ghost && M.ghost.mind && !(M.mind && M.mind.get_player()?.dnr)) // if they have dnr set don't bother shoving them back in their body
-				M.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
+				M.ghost.show_text(SPAN_ALERT("<B>You feel yourself being dragged out of the afterlife!</B>"))
 				M.ghost.mind.transfer_to(M)
 				qdel(M.ghost)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.contract_disease(/datum/ailment/disease/tissue_necrosis, null, null, 1) // this disease will make the person more and more rotten even while alive
-				H.visible_message("<span class='alert'>[H] suddenly starts moving again!</span>","<span class='alert'>You feel the pathogen weakening as you rise from the dead.</span>")
+				H.visible_message(SPAN_ALERT("[H] suddenly starts moving again!"),SPAN_ALERT("You feel the pathogen weakening as you rise from the dead."))
 
 	react_to(var/R, var/zoom)
 		if (R == "synthflesh")
@@ -371,7 +371,7 @@ datum/pathogeneffects/benevolent/sunglass
 	proc/glasses(var/mob/living/carbon/human/M as mob)
 		var/obj/item/clothing/glasses/G = M.glasses
 		var/obj/item/clothing/glasses/N = new/obj/item/clothing/glasses/sunglasses()
-		M.show_message({"<span class='notice'>[pick("You feel cooler!", "You find yourself wearing sunglasses.", "A pair of sunglasses grow onto your face.")][G?" But you were already wearing glasses!":""]</span>"})
+		M.show_message(SPAN_NOTICE("[pick("You feel cooler!", "You find yourself wearing sunglasses.", "A pair of sunglasses grow onto your face.")][G?" But you were already wearing glasses!":""]"))
 		if (G)
 			N.set_loc(M.loc)
 			var/turf/T = get_edge_target_turf(M, pick(alldirs))

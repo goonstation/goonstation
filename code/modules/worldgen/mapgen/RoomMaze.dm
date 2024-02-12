@@ -62,14 +62,14 @@
 			LAGCHECK(LAG_MED)
 
 	proc/connect_nodes_by_spatial_distance(datum/bsp_tree/tree)
-		var/datum/spatial_hashmap/datums/spatial_map = new(cs=room_size*2)
+		var/datum/spatial_hashmap/datums/spatial_map = new(cs=room_size*2, zlevels=1)
 		spatial_map.update_cooldown = INFINITY
 		var/center_x
 		var/center_y
 		for(var/datum/bsp_node/node in tree.leaves)
 			center_x = node.x + node.width * 0.5
 			center_y = node.y + node.height * 0.5
-			spatial_map.add_target(center_x, center_y, node)
+			spatial_map.add_target(center_x, center_y, 1, node)
 			build_room(node)
 		var/list/datum/bsp_node/connected = list()
 		connected += pick(tree.leaves)
@@ -88,7 +88,7 @@
 				for(traverser in tree.leaves)
 					center_x = traverser.x + traverser.width * 0.5
 					center_y = traverser.y + traverser.height * 0.5
-					nearby = spatial_map.get_nearby_datum(center_x, center_y, room_size)
+					nearby = spatial_map.get_nearby_by_coords(center_x, center_y, 1, room_size)
 					nearby -= tree.leaves
 					if(length(nearby))
 						break // We found something!
@@ -98,7 +98,7 @@
 				traverser = connected[length(connected)-backtrack_ptr]
 				center_x = traverser.x + traverser.width * 0.5
 				center_y = traverser.y + traverser.height * 0.5
-				nearby = spatial_map.get_nearby_datum(center_x, center_y, room_size + backtrack_ptr)
+				nearby = spatial_map.get_nearby_by_coords(center_x, center_y, 1, room_size + backtrack_ptr)
 				nearby -= connected
 			if(length(nearby))
 				backtrack_ptr = 0

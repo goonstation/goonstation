@@ -90,30 +90,30 @@ TYPEINFO(/obj/item/motherboard)
 				actions.start(action_bar, user)
 			if (istype(P, /obj/item/motherboard) && !mainboard)
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You place the mainboard inside the frame.</span>")
+				boutput(user, SPAN_NOTICE("You place the mainboard inside the frame."))
 				src.icon_state = "1"
 				src.mainboard = P
 				user.drop_item()
 				P.set_loc(src)
 			if (isscrewingtool(P) && mainboard)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You screw the mainboard into place.</span>")
+				boutput(user, SPAN_NOTICE("You screw the mainboard into place."))
 				src.state = 2
 				src.icon_state = "2"
 			if (ispryingtool(P) && mainboard)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You remove the mainboard.</span>")
+				boutput(user, SPAN_NOTICE("You remove the mainboard."))
 				src.state = 1
 				src.icon_state = "0"
 				mainboard.set_loc(src.loc)
 				src.mainboard = null
 			if (istype(P, /obj/item/circuitboard))
-				boutput(user, "<span class='alert'>This is the wrong type of frame, it won't fit!</span>")
+				boutput(user, SPAN_ALERT("This is the wrong type of frame, it won't fit!"))
 
 		if(2)
 			if (isscrewingtool(P) && mainboard && (!peripherals.len))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You unfasten the mainboard.</span>")
+				boutput(user, SPAN_NOTICE("You unfasten the mainboard."))
 				src.state = 1
 				src.icon_state = "1"
 
@@ -122,13 +122,13 @@ TYPEINFO(/obj/item/motherboard)
 					user.drop_item()
 					src.peripherals.Add(P)
 					P.set_loc(src)
-					boutput(user, "<span class='notice'>You add [P] to the frame.</span>")
+					boutput(user, SPAN_NOTICE("You add [P] to the frame."))
 				else
-					boutput(user, "<span class='alert'>There is no more room for peripheral cards.</span>")
+					boutput(user, SPAN_ALERT("There is no more room for peripheral cards."))
 
 			if (ispryingtool(P) && length(src.peripherals))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You remove the peripheral boards.</span>")
+				boutput(user, SPAN_NOTICE("You remove the peripheral boards."))
 				for(var/obj/item/peripheral/W in src.peripherals)
 					W.set_loc(src.loc)
 					src.peripherals.Remove(W)
@@ -141,7 +141,7 @@ TYPEINFO(/obj/item/motherboard)
 		if(3)
 			if (issnippingtool(P))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You remove the cables.</span>")
+				boutput(user, SPAN_NOTICE("You remove the cables."))
 				src.state = 2
 				src.icon_state = "2"
 				var/obj/item/cable_coil/A = new /obj/item/cable_coil( src.loc )
@@ -155,11 +155,11 @@ TYPEINFO(/obj/item/motherboard)
 				user.drop_item()
 				src.hd = P
 				P.set_loc(src)
-				boutput(user, "<span class='notice'>You connect the drive to the cabling.</span>")
+				boutput(user, SPAN_NOTICE("You connect the drive to the cabling."))
 
 			if (ispryingtool(P) && src.hd)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You remove the hard drive.</span>")
+				boutput(user, SPAN_NOTICE("You remove the hard drive."))
 				src.hd.set_loc(src.loc)
 				src.hd = null
 
@@ -170,13 +170,13 @@ TYPEINFO(/obj/item/motherboard)
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						actions.start(action_bar, user)
 					else
-						boutput(user, "<span class='alert'>There's not enough sheets on the stack.</span>")
+						boutput(user, SPAN_ALERT("There's not enough sheets on the stack."))
 				else
-					boutput(user, "<span class='alert'>You need sheets of some kind of crystal or glass for this.</span>")
+					boutput(user, SPAN_ALERT("You need sheets of some kind of crystal or glass for this."))
 		if(4)
 			if (ispryingtool(P))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You remove the glass panel.</span>")
+				boutput(user, SPAN_NOTICE("You remove the glass panel."))
 				src.state = 3
 				src.icon_state = "3"
 				var/obj/item/sheet/glass/A = new /obj/item/sheet/glass(src.loc)
@@ -184,7 +184,7 @@ TYPEINFO(/obj/item/motherboard)
 
 			if (isscrewingtool(P))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You connect the monitor.</span>")
+				boutput(user, SPAN_NOTICE("You connect the monitor."))
 				if(!ispath(computer_type, /obj/machinery/computer3))
 					src.computer_type = /obj/machinery/computer3
 				var/obj/machinery/computer3/C= new src.computer_type( src.loc )
@@ -210,11 +210,11 @@ TYPEINFO(/obj/item/motherboard)
 	switch(state)
 		if(0)
 			if(user.equipped(P) && iswrenchingtool(P))
-				boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
+				boutput(user, SPAN_NOTICE("You wrench the frame into place."))
 				src.anchored = ANCHORED
 				src.state = 1
 			if(user.equipped(P) && isweldingtool(P))
-				boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
+				boutput(user, SPAN_NOTICE("You deconstruct the frame."))
 				var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
 				A.amount = metal_given
 				if (src.material)
@@ -225,18 +225,18 @@ TYPEINFO(/obj/item/motherboard)
 				qdel(src)
 		if(1)
 			if(user.equipped(P) && iswrenchingtool(P))
-				boutput(user, "<span class='notice'>You unfasten the frame.</span>")
+				boutput(user, SPAN_NOTICE("You unfasten the frame."))
 				src.anchored = UNANCHORED
 				src.state = 0
 		if(2)
 			if(user.equipped(P) && istype(P, /obj/item/cable_coil))
-				boutput(user, "<span class='notice'>You add cables to the frame.</span>")
+				boutput(user, SPAN_NOTICE("You add cables to the frame."))
 				P.change_stack_amount(-5)
 				src.state = 3
 				src.icon_state = "3"
 		if(3)
 			if(user.equipped(P) && istype(P, /obj/item/sheet))
-				boutput(user, "<span class='notice'>You put in the glass panel.</span>")
+				boutput(user, SPAN_NOTICE("You put in the glass panel."))
 				P.change_stack_amount(-glass_needed)
 				src.state = 4
 				src.icon_state = "4"

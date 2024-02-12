@@ -31,9 +31,9 @@
 			return TRUE
 
 	proc/self_cast(mob/living/carbon/human/H)
-		boutput(H, "<span class='alert'>You send a massive electrical surge through yourself!</span>")
+		boutput(H, SPAN_ALERT("You send a massive electrical surge through yourself!"))
 		if (H.find_ailment_by_type(/datum/ailment/malady/flatline))
-			boutput(H, "<span class='notice'>You inhale deeply as your heart starts beating again!</notice>")
+			boutput(H, SPAN_NOTICE("You inhale deeply as your heart starts beating again!"))
 		playsound(H, 'sound/effects/elec_bigzap.ogg', 30, TRUE)
 		H.cure_disease_by_path(/datum/ailment/malady/flatline)
 		H.TakeDamage("chest", 0, 30, 0, DAMAGE_BURN)
@@ -44,7 +44,6 @@
 /datum/action/bar/private/icon/jolt
 	duration = 12 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
-	id = "jolt"
 	icon = 'icons/mob/arcfiend.dmi'
 	icon_state = "jolt_icon"
 
@@ -95,14 +94,14 @@
 		..()
 
 	onEnd()
-		boutput(src.user, "<span class='alert'>You send a massive electrical surge through [src.target]'s body!</span>")
+		boutput(src.user, SPAN_ALERT("You send a massive electrical surge through [src.target]'s body!"))
 		playsound(src.target, 'sound/impact_sounds/Energy_Hit_3.ogg', 100)
 		playsound(src.target, 'sound/effects/elec_bzzz.ogg', 25, TRUE)
 		src.target.emote("twitch_v")
 		src.particles.spawning = FALSE
 		src.target.add_fingerprint(src.user)
 		if (!src.target.bioHolder?.HasEffect("resist_electric"))
-			boutput(src.target, "<span class='alert'><b>Your heart spasms painfully and stops beating!</b></span>")
+			boutput(src.target, SPAN_ALERT("<b>Your heart spasms painfully and stops beating!</b>"))
 			src.target.contract_disease(/datum/ailment/malady/flatline, null, null, TRUE)
 			var/datum/abilityHolder/arcfiend/AH = src.holder
 			AH.hearts_stopped++
@@ -112,6 +111,6 @@
 
 	proc/cure_arrest()
 		if (src.target.find_ailment_by_type(/datum/ailment/malady/flatline))
-			boutput(src.target, "<span class='notice'>Your heart starts beating again!</notice>")
+			boutput(src.target, SPAN_NOTICE("Your heart starts beating again!"))
 		src.target.cure_disease_by_path(/datum/ailment/malady/flatline)
 		src.target.cure_disease_by_path(/datum/ailment/malady/heartfailure)

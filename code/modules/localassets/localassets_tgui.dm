@@ -53,5 +53,5 @@
 			"fa-regular-400.ttf"	= "[resource("css/fonts/fa-regular-400.ttf")]",
 			"fa-solid-900.eot"		= "[resource("css/fonts/fa-solid-900.eot")]",
 			"fa-solid-900.ttf"		= "[resource("css/fonts/fa-solid-900.ttf")]",
-			"fa-all.min.css"		= "[resource("css/tgui/fa-all.min.css")]",
+			"fa-all.min.css"		= "[resource("vendor/css/tgui/fa-all.min.css")]",
 		)

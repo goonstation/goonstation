@@ -24,6 +24,7 @@
 TYPEINFO(/obj/machinery/recharger)
 	mats = 16
 
+/// Typical powercell recharger
 /obj/machinery/recharger
 	anchored = ANCHORED
 	icon = 'icons/obj/stationobjs.dmi'
@@ -52,50 +53,55 @@ TYPEINFO(/obj/machinery/recharger)
 	var/charge_amount = 0
 	var/charge_status = 0
 
-	//wall rechargers!!
-	wall
-		icon_state = "wall_recharger0"
-		name = "wall mounted recharger"
-		desc = "A recharger, refitted to be mounted onto a wall. Handy!"
-		sprite_empty = "wall_recharger0"
-		sprite_charging = "wall_recharger1"
-		sprite_complete = "wall_recharger2"
-		sprite_error = "wall_recharger3"
+/// wall rechargers!!
+/obj/machinery/recharger/wall
+	icon_state = "wall_recharger0"
+	name = "wall mounted recharger"
+	desc = "A recharger, refitted to be mounted onto a wall. Handy!"
+	sprite_empty = "wall_recharger0"
+	sprite_charging = "wall_recharger1"
+	sprite_complete = "wall_recharger2"
+	sprite_error = "wall_recharger3"
 
-		//this version just autopositions itself onto walls depending what direction it's facing
-		sticky
-			New()
-				..()
-				var/turf/T = null
-				for (var/dir in cardinal)
-					T = get_step(src,dir)
-					if (istype(T,/turf/simulated/wall))
-						src.set_dir(dir)
-						switch(src.dir)
-							if(NORTH)
-								src.pixel_y = 28
-								break
-							if(SOUTH)
-								src.pixel_y = -22
-								break
-							if(EAST)
-								src.pixel_x = 23
-								break
-							if(WEST)
-								src.pixel_x = -23
-								break
+//this version just autopositions itself onto walls depending what direction it's facing
+/obj/machinery/recharger/wall/sticky
+	New()
+		..()
+		var/turf/T = null
+		for (var/dir in cardinal)
+			T = get_step(src,dir)
+			if (istype(T,/turf/simulated/wall))
+				src.set_dir(dir)
+				switch(src.dir)
+					if(NORTH)
+						src.pixel_y = 28
 						break
-				T = null
+					if(SOUTH)
+						src.pixel_y = -22
+						break
+					if(EAST)
+						src.pixel_x = 23
+						break
+					if(WEST)
+						src.pixel_x = -23
+						break
+				break
+		T = null
+
+/obj/machinery/recharger/disposing()
+	src.remove_charging(null)
+	. = ..()
 
 /obj/machinery/recharger/attackby(obj/item/G, mob/user)
-	if (isrobot(user)) return
+	if (isrobot(user))
+		return
 	if (src.charging)
 		return
 
 	var/ret = SEND_SIGNAL(G, COMSIG_CELL_CAN_CHARGE)
 
 	if(ret & CELL_UNCHARGEABLE)
-		boutput(user, "<span class='alert'>[G] is not compatible with \the [src]!</span>")
+		boutput(user, SPAN_ALERT("[G] is not compatible with \the [src]!"))
 	else if(ret & CELL_CHARGEABLE)
 		user.drop_item(G)
 		G.set_loc(src)
@@ -104,13 +110,13 @@ TYPEINFO(/obj/machinery/recharger)
 			charge_status = STATUS_ACTIVE
 			UpdateIcon()
 	else
-		boutput(user, "<span class='alert'>That [G.name] won't fit in \the [src]!</span>")
+		boutput(user, SPAN_ALERT("That [G.name] won't fit in \the [src]!"))
 
 /obj/machinery/recharger/attack_hand(mob/user)
 	src.add_fingerprint(user)
-	remove_charging()
+	remove_charging(user)
 
-/obj/machinery/recharger/proc/remove_charging()
+/obj/machinery/recharger/proc/remove_charging(mob/user)
 	//Remove the currently charging item
 	if (src.charging)
 		try
@@ -119,7 +125,10 @@ TYPEINFO(/obj/machinery/recharger)
 		catch
 			//Pass
 
-		src.charging.set_loc(src.loc)
+		if (user)
+			user.put_in_hand_or_eject(src.charging)
+		else
+			src.charging.set_loc(src.loc)
 		src.charging = null
 
 		charge_status = STATUS_INACTIVE
@@ -147,13 +156,13 @@ TYPEINFO(/obj/machinery/recharger)
 	if(charge_status == STATUS_ACTIVE || charge_status == STATUS_COMPLETE)
 		var/list/charge = list();
 		if(SEND_SIGNAL(src.charging, COMSIG_CELL_CHECK_CHARGE, charge) & CELL_RETURNED_LIST)
-			. += "<br> <span class='notice'> \The [charging.name]! Progress: [charge["charge"]]/[charge["max_charge"]]PU </span>"
+			. += "<br> [SPAN_NOTICE(" \The [charging.name]! Progress: [charge["charge"]]/[charge["max_charge"]]PU ")]"
 	else
 		. += "<br>Nothing! </span>"
 	return
 
 
-/obj/machinery/recharger/process(var/mult)
+/obj/machinery/recharger/process(mult)
 	if(status & NOPOWER)
 		src.icon_state = sprite_empty
 		UpdateIcon()
@@ -169,7 +178,7 @@ TYPEINFO(/obj/machinery/recharger)
 		else if(ret & CELL_UNCHARGEABLE)
 			// Charge failed - the item does not want to be recharged
 			charge_status = STATUS_ERRORED
-			src.visible_message("<span class='alert'>[src.charging] is not compatible with \the [src].</span>")
+			src.visible_message(SPAN_ALERT("[src.charging] is not compatible with \the [src]."))
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
 			UpdateIcon()
 

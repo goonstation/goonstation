@@ -226,25 +226,25 @@
 		if(temperature >= REACTOR_TOO_HOT_TEMP)
 			if(!src.GetParticles("overheat_smoke"))
 				src.UpdateParticles(new/particles/nuke_overheat_smoke(get_turf(src)),"overheat_smoke")
-				src.visible_message("<span class='alert'><b>The [src] begins to smoke!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>The [src] begins to smoke!</b>"))
 				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and may meltdown")
 				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has reached a dangerous temperature. Intervene immediately to prevent meltdown.")
 			if(temperature >= REACTOR_ON_FIRE_TEMP && !src.GetParticles("overheat_fire"))
 				src.UpdateParticles(new/particles/nuke_overheat_fire(get_turf(src)),"overheat_fire")
-				src.visible_message("<span class='alert'><b>The [src] begins to burn!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>The [src] begins to burn!</b>"))
 				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and is likely to meltdown")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has reached CRITICAL temperature. MELTDOWN IMMINENT.", crisis = TRUE)
 			else if(temperature < REACTOR_ON_FIRE_TEMP && src.GetParticles("overheat_fire"))
-				src.visible_message("<span class='alert'><b>The [src] stops burning.</b></span>")
+				src.visible_message(SPAN_ALERT("<b>The [src] stops burning.</b>"))
 				logTheThing(LOG_STATION, src, "[src] is cooling from 2500K")
 				src.ClearSpecificParticles("overheat_fire")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has cooled below critical temperature. Meltdown averted. Have a nice day.", crisis = TRUE)
 		else
 			if(src.GetParticles("overheat_smoke"))
-				src.visible_message("<span class='alert'><b>The [src] stops smoking.</b></span>")
+				src.visible_message(SPAN_ALERT("<b>The [src] stops smoking.</b>"))
 				logTheThing(LOG_STATION, src, "[src] is cooling from [temperature]K")
 				src.ClearSpecificParticles("overheat_smoke")
 				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
@@ -406,7 +406,7 @@
 		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)
 
-		for(var/i = 1 to rand(5,20))
+		for(var/i = 1 to rand(10,30))
 			shoot_projectile_XY(src, new /datum/projectile/bullet/wall_buster_shrapnel(), rand(-10,10), rand(-10,10))
 
 		logTheThing(LOG_STATION, src, "[src] CATASTROPHICALLY OVERLOADS (this is bad) meltdown badness: [meltdown_badness]")
@@ -529,7 +529,7 @@
 						boutput(ui.user, "The component is melted! It's stuck.")
 						return
 
-					ui.user.visible_message("<span class='alert'>[ui.user] starts removing a [component_grid[x][y]]!</span>", "<span class='alert'>You start removing the [component_grid[x][y]]!</span>")
+					ui.user.visible_message(SPAN_ALERT("[ui.user] starts removing a [component_grid[x][y]]!"), SPAN_ALERT("You start removing the [component_grid[x][y]]!"))
 					var/datum/action/bar/icon/callback/A = new(ui.user, src, 1 SECONDS, PROC_REF(remove_comp_callback), list(x,y,ui.user), component_grid[x][y].icon, component_grid[x][y].icon_state,\
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 					A.maximum_range=3
@@ -540,10 +540,10 @@
 						return
 
 					if(!istype(equipped,/obj/item/reactor_component) && !istype(equipped,/obj/item/device/light/glowstick))
-						ui.user.visible_message("<span class='alert'>[ui.user] tries to shove \a [equipped] into the reactor. Silly [ui.user]!</span>", "<span class='alert'>You try to put \a [equipped] into the reactor. You feel very foolish.</span>")
+						ui.user.visible_message(SPAN_ALERT("[ui.user] tries to shove \a [equipped] into the reactor. Silly [ui.user]!"), SPAN_ALERT("You try to put \a [equipped] into the reactor. You feel very foolish."))
 						return
 
-					ui.user.visible_message("<span class='alert'>[ui.user] starts inserting \a [equipped]!</span>", "<span class='alert'>You start inserting the [equipped]!</span>")
+					ui.user.visible_message(SPAN_ALERT("[ui.user] starts inserting \a [equipped]!"), SPAN_ALERT("You start inserting the [equipped]!"))
 					var/datum/action/bar/icon/callback/A = new(ui.user, src, 1 SECONDS, PROC_REF(insert_comp_callback), list(x,y,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 					A.maximum_range=3
@@ -568,7 +568,7 @@
 			equipped.set_loc(src)
 		playsound(src, 'sound/machines/law_insert.ogg', 80)
 		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> component into nuclear reactor([src]): [equipped] at slot [x],[y]")
-		user.visible_message("<span class='alert'>[user] slides \a [equipped] into the reactor</span>", "<span class='alert'>You slide the [equipped] into the reactor.</span>")
+		user.visible_message(SPAN_ALERT("[user] slides \a [equipped] into the reactor"), SPAN_ALERT("You slide the [equipped] into the reactor."))
 		tgui_process.update_uis(src)
 		_comp_grid_overlay_update = TRUE
 		UpdateGasVolume()
@@ -577,7 +577,7 @@
 	proc/remove_comp_callback(var/x,var/y,var/mob/user)
 		playsound(src, 'sound/machines/law_remove.ogg', 80)
 		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> component from nuclear reactor([src]): [src.component_grid[x][y]] at slot [x],[y]")
-		user.visible_message("<span class='alert'>[user] slides \a [src.component_grid[x][y]] out of the reactor</span>", "<span class='alert'>You slide the [src.component_grid[x][y]] out of the reactor.</span>")
+		user.visible_message(SPAN_ALERT("[user] slides \a [src.component_grid[x][y]] out of the reactor"), SPAN_ALERT("You slide the [src.component_grid[x][y]] out of the reactor."))
 		user.put_in_hand_or_drop(src.component_grid[x][y])
 		src.component_grid[x][y] = null
 		tgui_process.update_uis(src)
@@ -646,7 +646,7 @@
 				if(src.component_grid[x][y] == null)
 					free_slots += list(list(x,y))
 		if(length(free_slots))
-			user.visible_message("<span class='alert'><b>[user] climbs into \the [src] and starts forcing [his_or_her(user)] body down into a channel!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] climbs into \the [src] and starts forcing [his_or_her(user)] body down into a channel!</b>"))
 			var/list/chosen_slot = pick(free_slots)
 			user.set_loc(src)
 			SPAWN(1 SECOND)
@@ -667,13 +667,13 @@
 				else
 					meat_rod.throw_at(get_ranged_target_turf(get_turf(src),pick(alldirs),rand(1,20)),rand(1,20),rand(1,20))
 				user.set_loc(get_turf(src))
-				user.visible_message("<span class='alert'><b>The bits of [user] that didn't fit spray everywhere!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>The bits of [user] that didn't fit spray everywhere!</b>"))
 				user.gib()
 				_comp_grid_overlay_update = TRUE
 				UpdateIcon()
 			return TRUE
 		else
-			user.visible_message("<span class='alert'>[user] tries to climb into \the [src], but it's full. What a moron!</span>")
+			user.visible_message(SPAN_ALERT("[user] tries to climb into \the [src], but it's full. What a moron!"))
 			return FALSE
 
 	/// Transmuting nuclear engine into jeans sometimes causes a client crash
@@ -682,7 +682,8 @@
 			return
 		. = ..()
 
-
+	return_air()
+		return air_contents
 
 /datum/neutron //this is literally just a tuple
 	var/dir = NORTH
@@ -833,8 +834,18 @@
 			//finally, moderation
 			hit.AddComponent(/datum/component/radioactive, min(O.power, density*multiplier), TRUE, FALSE, 1) //make it all glowy
 			O.power -= density*multiplier
+			var/datum/gas_mixture/gasmix = hit.return_air()
 			if(O.power < 1)
 				O.power = 0
+			else if (istype(gasmix) && !ON_COOLDOWN(hit, "world_gas_neutron_interaction", 3 SECONDS))
+				var/neutron_count = gasmix.neutron_interact()
+				if(neutron_count > 1) //if it returns more than one, new neutrons were created
+					for(var/i in 1 to neutron_count)
+						shoot_projectile_XY(hit, new /datum/projectile/neutron(rand(5,80)), rand(-10,10), rand(-10,10))
+				else if(neutron_count < 1) //less than one, neutron was consumed
+					O.power = 0
+				// 1 = no reaction
+
 			return TRUE //don't hit this, lose power and pass through it
 		return TRUE
 
@@ -842,6 +853,16 @@
 		if(P.power <= 0)
 			P.die()
 			return
+		var/turf/simulated/T = get_turf(P)
+		if (issimulatedturf(T) && istype(T.air) && !ON_COOLDOWN(T, "world_gas_neutron_interaction", 3 SECONDS))
+			var/neutron_count = T.air.neutron_interact()
+			if(neutron_count > 1)
+				for(var/i in 1 to neutron_count)
+					shoot_projectile_XY(T, new /datum/projectile/neutron(rand(5,80)), rand(-10,10), rand(-10,10))
+			else if(neutron_count < 1)
+				P.power = 0
+				P.die()
+				return
 
 	get_power(obj/projectile/P, atom/A)
 		return P.power

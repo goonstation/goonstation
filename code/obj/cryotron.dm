@@ -128,6 +128,9 @@
 				return
 			if (thePerson.loc == firstLoc)
 				step(thePerson, SOUTH)
+			for (var/obj/O in src.loc) // dropped stuff & whatever spawned under them
+				if (O.anchored == UNANCHORED && O != src)
+					O.set_loc(locate(src.x, src.y-1, src.z)) // dump it in front of the cyrotron
 			src.icon_state = "cryotron_up"
 			flick("cryotron_go_up", src)
 
@@ -328,7 +331,7 @@
 
 	attack_ai(mob/user as mob)
 		if(isAIeye(user))
-			boutput(user, "<span class='alert'>An incorporeal manifestation of an artificial intelligence's presence can't enter \the [src]!</span>")
+			boutput(user, SPAN_ALERT("An incorporeal manifestation of an artificial intelligence's presence can't enter \the [src]!"))
 			return FALSE
 		if (!enter_prompt(user))
 			return ..()
@@ -344,14 +347,14 @@
 
 	proc/insert_prompt(mob/target, mob/user)
 		if (target.client || !target.ckey)
-			boutput(user, "<span class='alert'>You can't force someone into cryosleep if they're still logged in or are an NPC!</span>")
+			boutput(user, SPAN_ALERT("You can't force someone into cryosleep if they're still logged in or are an NPC!"))
 			return FALSE
 		else if (tgui_alert(user, "Would you like to put [target] into cryogenic storage? [he_or_she(target)] will be able to leave it immediately if they log back in.", "Confirmation", list("Yes", "No")) == "Yes")
 			if (!src.mob_can_enter_storage(target, user))
 				return FALSE
 			else
 				src.add_person_to_storage(target, FALSE)
-				src.visible_message("<span class='alert'><b>[user] forces [target] into [src]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[user] forces [target] into [src]!</b>"))
 				return TRUE
 		return FALSE
 

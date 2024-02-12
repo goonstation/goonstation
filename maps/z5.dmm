@@ -209,7 +209,9 @@
 /area/mining/manufacturing)
 "cN" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/item/raw_material/shard/glass,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
@@ -270,7 +272,9 @@
 /area/noGenerate)
 "eS" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
@@ -343,7 +347,8 @@
 /area/noGenerate)
 "gM" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /mob/living/critter/martian/warrior,
 /turf/simulated/floor/martian,
@@ -437,7 +442,9 @@
 /area/evilreaver/security)
 "jn" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /mob/living/critter/martian/mutant,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
@@ -1111,7 +1118,8 @@
 /area/mining/power)
 "qs" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -1448,7 +1456,8 @@
 "su" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/atmospherics)
@@ -1646,7 +1655,9 @@
 /area/spyshack)
 "tJ" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
 "tM" = (
@@ -1955,7 +1966,8 @@
 /area/mining/miningoutpost)
 "vX" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -2008,7 +2020,8 @@
 /area/mining/mainasteroid)
 "wf" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
@@ -2104,7 +2117,8 @@
 /area/mining/manufacturing)
 "wJ" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/lattice,
 /turf/simulated/floor/martian,
@@ -2134,7 +2148,8 @@
 	icon_state = "diagonal"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
@@ -2143,7 +2158,8 @@
 /area/mining/manufacturing)
 "wZ" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/atmospherics)
@@ -2157,7 +2173,8 @@
 /area/mining/dock)
 "xc" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
@@ -2202,7 +2219,8 @@
 "xy" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/plating/damaged1,
 /area/evilreaver/atmospherics)
@@ -2433,7 +2451,9 @@
 /area/tech_outpost)
 "yA" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid3"
 	},
@@ -2585,7 +2605,9 @@
 /obj/crevice{
 	pixel_y = 30
 	},
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
 "zE" = (
@@ -3310,7 +3332,8 @@
 /area/evilreaver/bridge)
 "EG" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
@@ -3480,7 +3503,9 @@
 /area/station/solar/small_backup3)
 "FF" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
 "FG" = (
@@ -3577,7 +3602,9 @@
 /area/evilreaver/bridge)
 "Ga" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
 "Gb" = (
@@ -5730,7 +5757,9 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "UC" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /mob/living/critter/martian/mutant,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
@@ -6039,7 +6068,9 @@
 /area/noGenerate)
 "WW" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gib6"
 	},
@@ -6072,14 +6103,16 @@
 	icon_state = "diagonal"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
 "Xd" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/item/furniture_parts/rack,
 /obj/item/wirecutters,
@@ -6128,7 +6161,8 @@
 /area/mining/miningoutpost)
 "Xr" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/storage/tools)
@@ -6145,7 +6179,8 @@
 /area/noGenerate)
 "Xx" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/computerframe{
 	anchored = 1;

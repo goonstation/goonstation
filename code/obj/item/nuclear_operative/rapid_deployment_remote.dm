@@ -29,7 +29,7 @@
 
 	attack_self(mob/user)
 		if(src.used)
-			boutput(user, "<span class='alert'>The [src] has been used up!</span>")
+			boutput(user, SPAN_ALERT("The [src] has been used up!"))
 			return
 		if(!src.landing_area)
 			choose_area(user)
@@ -41,7 +41,7 @@
 					return
 				if("Deploy")
 					if(!istype(get_area(user), /area/listeningpost) && !istype(get_area(user), /area/syndicate_station))
-						boutput(user, "<span class='alert'>You can only deploy from the Cairngorm or Listening Post!</span>")
+						boutput(user, SPAN_ALERT("You can only deploy from the Cairngorm or Listening Post!"))
 						return
 					var/list/chosen_mobs = list()
 					var/is_the_nuke_there = FALSE
@@ -164,7 +164,7 @@
 				launch_with_missile(C, picked_turf, null, "arrival_missile_synd")
 			possible_turfs -= picked_turf
 			if(!length(possible_turfs))
-				src.visible_message("<span class='alert'>The [src] makes a grumpy beep, it seems not everyone could be sent!</span>")
+				src.visible_message(SPAN_ALERT("The [src] makes a grumpy beep, it seems not everyone could be sent!"))
 				break
 		command_alert("A [length(sent_mobs) > 1 ? "group of [length(sent_mobs)] personnel missiles have" : "single personnel missile has"] been spotted launching from a Syndicate Assault pod towards the [src.landing_area], be prepared for heavy contact.","Central Command Alert", 'sound/misc/announcement_1.ogg')
 		qdel(src)
@@ -173,10 +173,12 @@
 	maptext_x = 0
 	maptext_y = 20
 	maptext_width = 64
-	var/total_pod_time = 0
+	var/total_pod_time = null
 	processing_tier = PROCESSING_QUARTER
 
 	proc/get_pod_timer()
+		if(isnull(total_pod_time))
+			return "--:--"
 		var/timeleft = round((total_pod_time - TIME) / 10, 1)
 		timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 		return timeleft

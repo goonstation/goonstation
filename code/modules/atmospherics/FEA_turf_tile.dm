@@ -272,12 +272,10 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 /// Returns air mixture of turf or air group, if we have one. If we don't, return [/turf/return_air].
 /turf/simulated/return_air()
-	if(src.air)
-		if(src.parent?.group_processing)
-			return src.parent.air
-		else
-			return src.air
-
+	if(src.parent?.group_processing)
+		return src.parent.air
+	else if(!isnull(src.air))
+		return src.air
 	else
 		return ..()
 

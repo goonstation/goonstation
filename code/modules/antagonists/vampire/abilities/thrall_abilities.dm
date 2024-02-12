@@ -30,7 +30,7 @@
 			return
 
 		if (!H.master)
-			boutput(M, "<span class='alert'>Your link to your master has been severed!</span>")
+			boutput(M, SPAN_ALERT("Your link to your master has been severed!"))
 			return 1
 
 		.= H.msg_to_master(message)

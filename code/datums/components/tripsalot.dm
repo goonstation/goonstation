@@ -16,9 +16,9 @@
 				ON_COOLDOWN(H, "clown_trip", 6 SECONDS)
 				if(istype(H.head, /obj/item/clothing/head))
 					if(istype(H.head, /obj/item/clothing/head/helmet))
-						boutput(H, "<span class='alert'>You stumble and fall to the ground. Thankfully, that helmet protected you.</span>")
+						boutput(H, SPAN_ALERT("You stumble and fall to the ground. Thankfully, that helmet protected you."))
 					else
-						boutput(H, "<span class='alert'>You stumble and fall to the ground. Thankfully, that hat protected you.</span>")
+						boutput(H, SPAN_ALERT("You stumble and fall to the ground. Thankfully, that hat protected you."))
 				else
-					boutput(H, "<span class='alert'>You stumble and hit your head.</span>")
+					boutput(H, SPAN_ALERT("You stumble and hit your head."))
 					H.stuttering = max(H.stuttering, 4)

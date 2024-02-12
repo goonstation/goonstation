@@ -301,7 +301,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		if (can_act_check && !can_act(owner, needs_hands))
 			return FALSE
 		if (targeted && GET_DIST(src.holder?.owner, target) > src.max_range)
-			boutput(src.holder?.owner, "<span class='alert'>[target] is too far away.</span>")
+			boutput(src.holder?.owner, SPAN_ALERT("[target] is too far away."))
 			return FALSE
 		return ..()
 

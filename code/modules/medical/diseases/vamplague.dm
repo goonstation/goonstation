@@ -2,8 +2,7 @@
 	name = "Grave Fever"
 	max_stages = 4
 	spread = "Non-Contagious"
-	cure = "Antibiotics"
-	recureprob = 20
+	cure_flags = CURE_ANTIBIOTICS
 	associated_reagent = "grave dust"
 	affected_species = list("Human")
 
@@ -21,12 +20,12 @@
 
 	if (probmult(15))
 		if (prob(33))
-			boutput(affected_mob, "<span class='alert'>You feel sickly and weak.</span>")
+			boutput(affected_mob, SPAN_ALERT("You feel sickly and weak."))
 			affected_mob.changeStatus("slowed", 3 SECONDS, (D.stage-1) * 3)
 		affected_mob.take_toxin_damage(toxdamage)
 
 	if (probmult(10))
-		boutput(affected_mob, "<span class='alert'>Your joints ache horribly!</span>")
+		boutput(affected_mob, SPAN_ALERT("Your joints ache horribly!"))
 		affected_mob.changeStatus("weakened", stuntime SECONDS)
 		affected_mob.changeStatus("stunned", stuntime SECONDS)
 		affected_mob.take_toxin_damage(toxdamage * 2)
@@ -37,7 +36,7 @@
 	max_stages = 3
 	stage_prob = 9
 	spread = "Non-Contagious"
-	cure = "None"
+	cure_flags = CURE_UNKNOWN
 	associated_reagent = "vampire_serum"
 	affected_species = list("Human")
 
@@ -53,13 +52,13 @@
 			if (probmult(5))
 				affected_mob.emote(pick("shiver", "pale"))
 			if (probmult(8))
-				boutput(affected_mob, "<span class='alert'>You taste blood.  Gross.</span>")
+				boutput(affected_mob, SPAN_ALERT("You taste blood.  Gross."))
 			if (probmult(5))
 				affected_mob.emote(pick("shiver","pale","drool"))
 
 		else
 			if (probmult(40))
-				boutput(affected_mob, "<span class='alert'>Your heart stops...</span>")
+				boutput(affected_mob, SPAN_ALERT("Your heart stops..."))
 				affected_mob.playsound_local(affected_mob.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 				affected_mob.emote("collapse")
 

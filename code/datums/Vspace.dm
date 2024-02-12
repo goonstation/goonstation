@@ -66,26 +66,26 @@ datum/v_space
 		if(!user)
 			return
 		if(!active)
-			boutput(user, "<span class='alert'>Unable to connect to the Net!</span>")
+			boutput(user, SPAN_ALERT("Unable to connect to the Net!"))
 			return
 		if(!network_device)
-			boutput(user, "<span class='alert'>You lack a device able to connect to the net!</span>")
+			boutput(user, SPAN_ALERT("You lack a device able to connect to the net!"))
 			return
 		if(!user:client)
 			return
 		if(!user.mind)
-			boutput(user, "<span class='alert'>You don't have a mind!</span>")
+			boutput(user, SPAN_ALERT("You don't have a mind!"))
 			return
 
 //		var/range_check = In_Network(user, network_device, network)
 //		if(!range_check)
-//			boutput(user, "<span class='alert'>Out of network range!</span>")
+//			boutput(user, SPAN_ALERT("Out of network range!"))
 //			return
 
 		var/turf/B = pick_landmark(network)
 
 		if(!B) //no entry landmark
-			boutput(user, "<span class='alert'>Invalid network!</span>")
+			boutput(user, SPAN_ALERT("Invalid network!"))
 			return
 
 
@@ -98,14 +98,14 @@ datum/v_space
 			V.body = user
 			user.mind.transfer_to(V)
 			character = V
-			character.visible_message("<span class='notice'><b>[user.name] logs in!</b></span>")
+			character.visible_message(SPAN_NOTICE("<b>[user.name] logs in!</b>"))
 		else
 			character = create_Vcharacter(user, network_device, network, B)
 			character.set_loc(B)
-			character.visible_message("<span class='notice'><b>[character.name] logs in!</b></span>")
+			character.visible_message(SPAN_NOTICE("<b>[character.name] logs in!</b>"))
 		users.Add(character)
 		// Made much more prominent due to frequent a- and mhelps (Convair880).
-		character.show_text("<h2><font color=red><B>Death in virtual reality will result in a log-out. You can also press one of the logout buttons to leave.</B></font></h2>", "red")
+		character.show_text("<h2>[SPAN_ALERT("<B>Death in virtual reality will result in a log-out. You can also press one of the logout buttons to leave.</B>")]</h2>", "red")
 		return
 
 
@@ -125,7 +125,7 @@ datum/v_space
 					antag_role.on_death()
 
 		for(var/mob/O in oviewers())
-			boutput(O, "<span class='alert'><b>[user] logs out!</b></span>")
+			boutput(O, SPAN_ALERT("<b>[user] logs out!</b>"))
 		if (istype(user.loc,/obj/racing_clowncar/kart))
 			var/obj/racing_clowncar/kart/car = user.loc
 			car.reset()

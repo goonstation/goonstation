@@ -39,12 +39,12 @@
 		else if (istype(target, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/airlock = target
 			if (airlock.hardened)
-				boutput(src.holder.owner, "<span class='alert'>[target] is hardened against your electrical attacks, your [name] skill has no effect!</span>")
+				boutput(src.holder.owner, SPAN_ALERT("[target] is hardened against your electrical attacks, your [name] skill has no effect!"))
 				return TRUE
 			airlock.loseMainPower()
 			target.add_fingerprint(src.holder.owner)
 			playsound(src.holder.owner, 'sound/effects/electric_shock.ogg', 50, TRUE)
-			boutput(src.holder.owner, "<span class='alert'>You run a powerful current into [target], temporarily cutting its power!</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You run a powerful current into [target], temporarily cutting its power!"))
 		else
 			return TRUE
 		var/datum/effects/system/spark_spread/S = new /datum/effects/system/spark_spread

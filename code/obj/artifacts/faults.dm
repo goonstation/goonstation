@@ -28,7 +28,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		if (..())
 			return
 		var/turf/T = get_turf(user)
-		T.visible_message("<span class='alert'>The [cosmeticSource.name] suddenly emits a burst of flame!</span>")
+		T.visible_message(SPAN_ALERT("The [cosmeticSource.name] suddenly emits a burst of flame!"))
 		fireflash(T, 0)
 		playsound(T, 'sound/effects/bamf.ogg', 100, TRUE)
 
@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
-		boutput(user, "<span class='alert'>You feel strange.</span>")
+		boutput(user, SPAN_ALERT("You feel strange."))
 		user.take_radiation_dose(src.rads_amount)
 
 /datum/artifact_fault/shutdown
@@ -54,7 +54,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		T.visible_message("<span class='alert'>The [O.name] suddenly deactivates!</span>")
+		T.visible_message(SPAN_ALERT("The [O.name] suddenly deactivates!"))
 		playsound(T, 'sound/effects/shielddown2.ogg', 100, TRUE)
 		O.ArtifactDeactivated()
 
@@ -67,7 +67,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		T.visible_message("<span class='alert'>The [cosmeticSource.name] warps [user.name] away!</span>")
+		T.visible_message(SPAN_ALERT("The [cosmeticSource.name] warps [user.name] away!"))
 		playsound(T, 'sound/effects/mag_warp.ogg', 100, TRUE)
 		var/turf/destination = pick(random_floor_turfs)
 		logTheThing(LOG_COMBAT, user, "was teleported by artifact fault from [log_loc(user)] to [log_loc(destination)]")
@@ -87,11 +87,11 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		if(I.w_class > W_CLASS_GIGANTIC)
 			return
 
-		boutput(user, "<span class='alert'>The [I.name] grows in size!</span>")
+		boutput(user, SPAN_ALERT("The [I.name] grows in size!"))
 		I.transform = matrix(I.transform, 1.1, 1.1, MATRIX_SCALE)
 		I.w_class++
 		if (I.loc == user && I.w_class > W_CLASS_BULKY)
-			boutput(user, "<span class='alert'>You can't maintain a grip due to its excessive girth!</span>")
+			boutput(user, SPAN_ALERT("You can't maintain a grip due to its excessive girth!"))
 			user.u_equip(I)
 			I.set_loc(user.loc)
 
@@ -107,11 +107,11 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			return
 		var/obj/item/I = O
 
-		boutput(user, "<span class='alert'>The [I.name] shrinks in size!</span>")
+		boutput(user, SPAN_ALERT("The [I.name] shrinks in size!"))
 		I.transform = matrix(I.transform, 0.9, 0.9, MATRIX_SCALE)
 		I.w_class--
 		if (I.w_class < W_CLASS_TINY)
-			boutput(user, "<span class='alert'>The artifact shrinks away into nothingness!</span>")
+			boutput(user, SPAN_ALERT("The artifact shrinks away into nothingness!"))
 			user.u_equip(I)
 			I.set_loc(user.loc)
 			I.invisibility = INVIS_ALWAYS_ISH
@@ -131,7 +131,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 				user.u_equip(I)
 				I.dropped(user)
 		var/turf/T = get_turf(O)
-		T.visible_message("<span class='alert'><b>The [cosmeticSource.name] utterly annihilates [user.name]!</b></span>")
+		T.visible_message(SPAN_ALERT("<b>The [cosmeticSource.name] utterly annihilates [user.name]!</b>"))
 		playsound(T, 'sound/effects/elec_bigzap.ogg', 40, TRUE) // seriously 100 volume on this file? Are you trying to deafen players?
 		logTheThing(LOG_COMBAT, user, "was elecgibbed by an artifact fault from [O] at [log_loc(user)].")
 		user.elecgib()
@@ -146,7 +146,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		T.visible_message("<span class='alert'>The [cosmeticSource.name] suddenly explodes!</span>")
+		T.visible_message(SPAN_ALERT("The [cosmeticSource.name] suddenly explodes!"))
 		if (isitem(O))
 			var/obj/item/I = O
 			user.u_equip(I)
@@ -163,7 +163,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		T.visible_message("<span class='alert'><b>[user.name]</b> is shocked by a surge of energy from [cosmeticSource.name]!</span>")
+		T.visible_message(SPAN_ALERT("<b>[user.name]</b> is shocked by a surge of energy from [cosmeticSource.name]!"))
 		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 		s.set_up(4, 1, user)
 		s.start()
@@ -205,9 +205,9 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 			if ("big")
 				boutput(user, "<big>[generate_message(O, user, cosmeticSource)]</big>")
 			if ("red")
-				boutput(user, "<span class='alert'>[generate_message(O, user, cosmeticSource)]</span>")
+				boutput(user, SPAN_ALERT("[generate_message(O, user, cosmeticSource)]"))
 			if ("blue")
-				boutput(user, "<span class='notice'>[generate_message(O, user, cosmeticSource)]</span>")
+				boutput(user, SPAN_NOTICE("[generate_message(O, user, cosmeticSource)]"))
 			if ("monospace")
 				boutput(user, "<span style='font-family: monospace;'>[generate_message(O, user, cosmeticSource)]</span>")
 			else
@@ -276,6 +276,6 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
-		boutput(user, "<span class='alert'>The [cosmeticSource.name] stings you!</span>")
+		boutput(user, SPAN_ALERT("The [cosmeticSource.name] stings you!"))
 		if (user.reagents)
 			user.reagents.add_reagent(poison_type,poison_amount)

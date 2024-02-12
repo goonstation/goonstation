@@ -116,7 +116,7 @@
 				return
 
 			working = 1
-			T.visible_message("<span class='alert'><b>[O]</b> suddenly lashes out at [H.name] with a flurry of sharp implements!</span>")
+			T.visible_message(SPAN_ALERT("<b>[O]</b> suddenly lashes out at [H.name] with a flurry of sharp implements!"))
 			H.changeStatus("paralysis", 4 SECONDS)
 			playsound(H.loc, pick(work_sounds), 50, 1, -1)
 			random_brute_damage(user, 10)
@@ -146,10 +146,10 @@
 					replace_action = pick("inserts something else where it was", "places something else inside", "shoves something else in their body")
 					ArtifactLogs(user, null, O, "touched by [H.real_name]", "given organ [part] as [part_loc]", 0)
 
-				T.visible_message("<span class='alert'><b>[O]</b> [remove_action] [H.name]'s [organ_names[part_loc]], pulls it inside and [replace_action]! [pick("", "Holy fuck!", "It looks incredibly painful!")]</span>")
+				T.visible_message(SPAN_ALERT("<b>[O]</b> [remove_action] [H.name]'s [organ_names[part_loc]], pulls it inside and [replace_action]! [pick("", "Holy fuck!", "It looks incredibly painful!")]"))
 
 			playsound(H.loc, pick(work_sounds), 50, 1, -1)
-			boutput(H, "<span class='alert'><b>[pick("IT HURTS!", "OH GOD!", "JESUS FUCK!")]</b></span>")
+			boutput(H, SPAN_ALERT("<b>[pick("IT HURTS!", "OH GOD!", "JESUS FUCK!")]</b>"))
 			H.emote("scream")
 			random_brute_damage(user, 30)
 			bleed(H, 5, 5)

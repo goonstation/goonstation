@@ -5,7 +5,7 @@
 	scantype = "Nano-Infection"
 	max_stages = 6
 	spread = "Non-Contagious"
-	cure = "Electric Shock"
+	cure_flags = CURE_ELEC_SHOCK
 	associated_reagent = "corruptnanites"
 	affected_species = list("Human","Monkey")
 
@@ -23,12 +23,12 @@
 				boutput(affected_mob, "Your joints start to feel stiff.")
 				random_brute_damage(affected_mob, 1)
 			if (probmult(9))
-				boutput(affected_mob, "<span class='alert'>What is happening to me..? </span>")
+				boutput(affected_mob, SPAN_ALERT("What is happening to me..? "))
 			if (probmult(9))
-				boutput(affected_mob, "<span class='alert'>You feel really terrible..</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel really terrible.."))
 		if(3)
 			if (probmult(8))
-				boutput(affected_mob,pick("<span class='alert'>Your joints start to feel very stiff.</span>", "<span class='alert'>Your joints feel extremely stiff.</span>"))
+				boutput(affected_mob,pick(SPAN_ALERT("Your joints start to feel very stiff."), SPAN_ALERT("Your joints feel extremely stiff.")))
 				random_brute_damage(affected_mob, 5)
 			if (probmult(8))
 				affected_mob.say(pick("Something.. is in my veins..", "I can feel them crawling in my veins..", "Oh god.. What is inside me..?"))
@@ -36,13 +36,13 @@
 				boutput(affected_mob, "Your skin starts to feel loose.")
 				random_brute_damage(affected_mob, 5)
 			if (probmult(4))
-				boutput(affected_mob, "<span class='alert'>You feel a stabbing pain in your head.</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel a stabbing pain in your head."))
 				affected_mob.changeStatus("paralysis", 4 SECONDS)
 			if (probmult(4))
-				boutput(affected_mob, "<span class='alert'>You can feel something move...inside.</span>")
+				boutput(affected_mob, SPAN_ALERT("You can feel something move...inside."))
 		if(4)
 			if (probmult(8))
-				boutput(affected_mob,pick("<span class='alert'>Your joints start to feel very stiff.</span>", "<span class='alert'>Your joints feel extremely stiff.</span>"))
+				boutput(affected_mob,pick(SPAN_ALERT("Your joints start to feel very stiff."), SPAN_ALERT("Your joints feel extremely stiff.")))
 				random_brute_damage(affected_mob, 5)
 			if (probmult(8))
 				affected_mob.say(pick("Something.. is in my veins..", "I can feel them crawling in my veins..", "Oh god.. What is inside me..?"))
@@ -50,20 +50,20 @@
 				boutput(affected_mob, "Your skin starts to feel loose.")
 				random_brute_damage(affected_mob, 5)
 			if (probmult(4))
-				boutput(affected_mob, "<span class='alert'>You feel a stabbing pain in your head.</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel a stabbing pain in your head."))
 				affected_mob.changeStatus("paralysis", 4 SECONDS)
 			if (probmult(4))
-				boutput(affected_mob, "<span class='alert'>You can feel something move...inside.</span>")
+				boutput(affected_mob, SPAN_ALERT("You can feel something move...inside."))
 		if(5)
 			if (probmult(10))
-				boutput(affected_mob, "<span class='alert'>Your skin feels very loose.</span>")
+				boutput(affected_mob, SPAN_ALERT("Your skin feels very loose."))
 				random_brute_damage(affected_mob, 8)
 			if (probmult(20))
 				affected_mob.say(pick("Ohh god the p..ain...", "Just.. kill mee...", "kkkiiiill mmme..", "I wwwaaannntt tttoo dddiiieeee..."))
 			if (probmult(8))
-				boutput(affected_mob, "<span class='alert'>You can feel... something...inside you.</span>")
+				boutput(affected_mob, SPAN_ALERT("You can feel... something...inside you."))
 		if(6)
-			boutput(affected_mob, "<span class='alert'>Your skin feels as if it's about to burst off...</span>")
+			boutput(affected_mob, SPAN_ALERT("Your skin feels as if it's about to burst off..."))
 			affected_mob.take_toxin_damage(10 * mult)
 			if(probmult(35)) //So everyone can feel like robot Seth Brundle
 

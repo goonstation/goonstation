@@ -65,9 +65,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(src.master_ability_holder)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()
@@ -79,11 +78,11 @@
 	announce()
 		. = ..()
 		if (src.master)
-			boutput(src.owner.current, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [src.master.current.real_name]!</b></span>")
+			boutput(src.owner.current, SPAN_ALERT("<b>You awaken filled with purpose - you must serve your master vampire, [src.master.current.real_name]!</b>"))
 		else if (istype(src.master_ability_holder.owner, /mob))
-			boutput(src.owner.current, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [src.master_ability_holder.owner.real_name]!</b></span>")
+			boutput(src.owner.current, SPAN_ALERT("<b>You awaken filled with purpose - you must serve your master vampire, [src.master_ability_holder.owner.real_name]!</b>"))
 		else if (istype(src.master_ability_holder.owner, /obj/machinery/power/generatorTemp))
-			boutput(src.owner.current, "<span class='alert'><b>You awaken filled with purpose - you must serve the Bone Generator!</b></span>")
+			boutput(src.owner.current, SPAN_ALERT("<b>You awaken filled with purpose - you must serve the Bone Generator!</b>"))
 
 	announce_removal(source)
 		. = ..()
@@ -91,10 +90,10 @@
 		switch (source)
 			if (ANTAGONIST_REMOVAL_SOURCE_DEATH)
 				src.owner.current.show_antag_popup("mindhackdeath")
-				boutput(src.owner.current, "<span class='alert'><b>As you have died, you are no longer subservient to [src.master.current.real_name]! Do not obey your former master's orders even if you've been brought back to life somehow.</b></span>")
+				boutput(src.owner.current, SPAN_ALERT("<b>As you have died, you are no longer subservient to [src.master.current.real_name]! Do not obey your former master's orders even if you've been brought back to life somehow.</b>"))
 				logTheThing(LOG_COMBAT, src.owner.current, "(enthralled by [src.master.current ? "[constructTarget(src.master.current, "combat")]" : "*NOKEYFOUND*"]) has died, removing vampire thrall status.")
 
 			else
 				src.owner.current.show_antag_popup("mindhackexpired")
-				boutput(src.owner.current, "<span class='alert'><b>Your mind is your own again! You no longer feel the need to obey your former master's orders.</b></span>")
+				boutput(src.owner.current, SPAN_ALERT("<b>Your mind is your own again! You no longer feel the need to obey your former master's orders.</b>"))
 				logTheThing(LOG_COMBAT, src.owner.current, "(enthralled by [src.master.current ? "[constructTarget(src.master.current, "combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing vampire thrall status.")

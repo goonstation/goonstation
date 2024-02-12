@@ -68,9 +68,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(ROLE_SALVAGER)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()
@@ -84,7 +83,7 @@
 
 	relocate()
 		if (!landmarks[LANDMARK_SALVAGER])
-			message_admins("<span class='alert'><b>ERROR: couldn't find Salvager spawn landmark, aborting relocation.</b></span>")
+			message_admins(SPAN_ALERT("<b>ERROR: couldn't find Salvager spawn landmark, aborting relocation.</b>"))
 			return 0
 
 		if(length(by_type[/obj/salvager_cryotron]))

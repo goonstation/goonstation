@@ -44,13 +44,13 @@
 		else
 			var/turf/T = get_turf(src.holder.owner)
 			if (!T.z || isrestrictedz(T.z))
-				boutput(src.holder.owner, "<span class='alert'>You are forbidden from using that here!</span>")
+				boutput(src.holder.owner, SPAN_ALERT("You are forbidden from using that here!"))
 				return TRUE
 			if (T != src.holder.owner.loc) // See: no escaping port-a-brig
-				boutput(src.holder.owner, "<span class='alert'>You cannot use this ability while inside [src.holder.owner.loc]!</span>")
+				boutput(src.holder.owner, SPAN_ALERT("You cannot use this ability while inside [src.holder.owner.loc]!"))
 				return TRUE
 			if (!(locate(/obj/cable) in T))
-				boutput(src.holder.owner, "<span class='alert'>You must use this ability on top of a cable!</span>")
+				boutput(src.holder.owner, SPAN_ALERT("You must use this ability on top of a cable!"))
 				return TRUE
 			playsound(src.holder.owner, 'sound/machines/ArtifactBee2.ogg', 30, TRUE, -2)
 			actions.start(new/datum/action/bar/private/voltron(src), src.holder.owner)
@@ -93,9 +93,9 @@
 
 	proc/deactivate(force = FALSE)
 		if (force)
-			boutput(src.holder.owner, "<span class='alert'>You are ejected from the cable!</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You are ejected from the cable!"))
 		else
-			boutput(src.holder.owner, "<span class='notice'>You exit the cable.</span>")
+			boutput(src.holder.owner, SPAN_NOTICE("You exit the cable."))
 		src.active = FALSE
 		src.pointCost = initial(src.pointCost)
 		var/atom/movable/screen/ability/topBar/B = src.object

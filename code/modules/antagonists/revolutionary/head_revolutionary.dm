@@ -2,6 +2,7 @@
 	id = ROLE_HEAD_REVOLUTIONARY
 	display_name = "head revolutionary"
 	antagonist_icon = "rev_head"
+	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/revolution
 
 	var/static/list/datum/mind/heads_of_staff
 	/// A list of items that this head revolutionary has purchased using their uplink.
@@ -35,7 +36,7 @@
 
 	give_equipment()
 		if (!ishuman(src.owner.current))
-			boutput(src.owner.current, "<span class='alert'>Due to your lack of opposable thumbs, the Syndicate was unable to provide you with an uplink. That's biology for you.</span>")
+			boutput(src.owner.current, SPAN_ALERT("Due to your lack of opposable thumbs, the Syndicate was unable to provide you with an uplink. That's biology for you."))
 			return FALSE
 
 		var/mob/living/carbon/human/H = src.owner.current
@@ -97,9 +98,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(ROLE_REVOLUTIONARY)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 		get_image_group(CLIENT_IMAGE_GROUP_HEADS_OF_STAFF).add_mind(src.owner)
@@ -108,11 +108,9 @@
 		. = ..()
 		var/datum/client_image_group/image_group = get_image_group(ROLE_REVOLUTIONARY)
 		image_group.remove_mind_mob_overlay(src.owner)
-		if (image_group.minds_with_associated_mob_image[src.owner])
-			image_group.remove_mind(src.owner)
+		image_group.remove_mind(src.owner)
 		var/datum/client_image_group/heads_group = get_image_group(CLIENT_IMAGE_GROUP_HEADS_OF_STAFF)
-		if (heads_group.minds_with_associated_mob_image[src.owner])
-			heads_group.remove_mind(src.owner)
+		heads_group.remove_mind(src.owner)
 
 	assign_objectives()
 		for(var/datum/mind/head_mind in src.heads_of_staff)

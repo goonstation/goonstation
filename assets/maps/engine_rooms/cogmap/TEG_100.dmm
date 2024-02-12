@@ -254,10 +254,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "pa" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -319,8 +317,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "sZ" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -581,10 +578,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "Kh" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,

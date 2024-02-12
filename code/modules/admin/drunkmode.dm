@@ -218,4 +218,4 @@ var/list/dangerousVerbs = list(\
 			)
 			command_alert("[C.key] [pick(announce)].", "Weedmin detected")
 
-		boutput(C, "<span class='alert'><b><big>You are now in drunk-mode!</big></b><br>You will have reduced powers so you can't fuck shit up so much.<br>Use \"Disable Drunk Mode\" to disable this.</span>")
+		boutput(C, SPAN_ALERT("<b><big>You are now in drunk-mode!</big></b><br>You will have reduced powers so you can't fuck shit up so much.<br>Use \"Disable Drunk Mode\" to disable this."))

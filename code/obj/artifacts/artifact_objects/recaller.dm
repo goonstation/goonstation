@@ -28,7 +28,7 @@
 		O.ArtifactFaultUsed(user)
 		SPAWN(src.recall_delay)
 			if (user && src.activated && !user.hibernating && !user.disposed) //Wire note: Fix for Cannot execute null.visible message()
-				user.visible_message("<span class='alert'><b>[user]</b> is suddenly pulled through space!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> is suddenly pulled through space!"))
 				playsound(user.loc, 'sound/effects/mag_warp.ogg', 50, 1, -1)
 				var/turf/T = get_turf(O)
 				if (T)

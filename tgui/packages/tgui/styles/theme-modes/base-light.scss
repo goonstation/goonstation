@@ -45,7 +45,9 @@ $primary-color: color.scale($bg-color, $lightness: -20%) !default;
 @include meta.load-css('../components/Divider.scss', $with: (
   'color': rgba(0, 0, 0, 0.1),
 ));
-@include meta.load-css('../components/Stack.scss');
+@include meta.load-css('../components/Stack.scss', $with: (
+  'zebra-background-color': base.$color-bg-section,
+));
 @include meta.load-css('../components/ProgressBar.scss', $with: (
   'color-default-fill': base.$color-bg,
   'background-color': rgba(255, 255, 255, 0.5),

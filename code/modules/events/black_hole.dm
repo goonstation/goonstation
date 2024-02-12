@@ -45,7 +45,7 @@
 				playsound(IX,'sound/machines/alarm_a.ogg',50,FALSE,5,1.5)
 				SPAWN(3 SECONDS)
 					if(IX) playsound(IX,'sound/machines/alarm_a.ogg',50,FALSE,5,1.5)
-				IX.visible_message("<span class='alert'><b>[IX] emits a gravitational anomaly warning!</b></span>")
+				IX.visible_message(SPAN_ALERT("<b>[IX] emits a gravitational anomaly warning!</b>"))
 				feedings_required = rand(12,24)
 				lifespan = lifespan * 1.2
 				break
@@ -55,13 +55,13 @@
 
 		var/turf/T = get_turf(src)
 		for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, T, 15))
-			boutput(C, "<span class='alert'>The air grows heavy and thick. Something feels terribly wrong.</span>")
+			boutput(C, SPAN_ALERT("The air grows heavy and thick. Something feels terribly wrong."))
 			shake_camera(C.mob, 5, 16)
 		playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,0.5)
 
 		sleep(lifespan / 2)
 		if (!stable)
-			src.visible_message("<span class='alert'><b>[src] begins to collapse in on itself!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src] begins to collapse in on itself!</b>"))
 			playsound(src,'sound/machines/engine_alert3.ogg',100,FALSE,5,0.5)
 			animate(src, transform = matrix(4, MATRIX_SCALE), time = 300, loop = 0, easing = LINEAR_EASING)
 		if (random_events.announce_events)
@@ -69,11 +69,11 @@
 
 		sleep(lifespan)
 		if (!stable)
-			src.visible_message("<span class='alert'><b>[src] collapses into a black hole!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src] collapses into a black hole!</b>"))
 			playsound(src, 'sound/machines/singulo_start.ogg', 90, FALSE, 5)
 			new /obj/bhole(get_turf(src),300,12)
 		else
-			src.visible_message("<span class='alert'><b>[src]</b> dissipates quietly into nothing.</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> dissipates quietly into nothing."))
 
 		SPAWN(0)
 			qdel(src)
@@ -102,7 +102,7 @@
 		src.feedings += feed_amount
 		if (src.feedings >= src.feedings_required)
 			src.stable = 1
-			src.visible_message("<span class='notice'><b>[src] stabilizes and begins to harmlessly dissipate!</b></span>")
+			src.visible_message(SPAN_NOTICE("<b>[src] stabilizes and begins to harmlessly dissipate!</b>"))
 			src.name = "stabilized dark anomaly"
 			src.desc = "This anomaly seems much calmer than it used to be. That's probably a good thing."
 			// letting it dispose of itself in its new proc in case we can do research on it later or something

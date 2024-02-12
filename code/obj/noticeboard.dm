@@ -24,10 +24,10 @@
 			O.set_loc(src)
 			src.notices++
 			src.UpdateIcon()
-			boutput(user, "<span class='notice'>You pin \the [O] to the noticeboard.</span>")
+			boutput(user, SPAN_NOTICE("You pin \the [O] to the noticeboard."))
 			src.updateUsrDialog()
 		else
-			boutput(user, "<span class='alert'>You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached.</span>")
+			boutput(user, SPAN_ALERT("You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached."))
 
 
 /obj/noticeboard/update_icon()

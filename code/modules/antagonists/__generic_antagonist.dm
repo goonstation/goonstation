@@ -1,5 +1,6 @@
 /datum/antagonist/generic
 	succinct_end_of_round_antagonist_entry = TRUE
+	var/grouped_name
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, id, display_name)
 		if (!src.id)
@@ -18,6 +19,7 @@
 /datum/antagonist/generic/antagonist_critter
 	id = ROLE_ANTAGONIST_CRITTER
 	display_name = "antagonist critter"
+	grouped_name = "Antagonist Critters"
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, id, display_name)
 		src.display_name = "[initial(src.display_name)] [display_name]"
@@ -27,6 +29,7 @@
 /datum/antagonist/generic/syndicate_agent
 	id = ROLE_SYNDICATE_AGENT
 	antagonist_icon = "syndicate"
+	grouped_name = "Syndicate Agents"
 	faction = FACTION_SYNDICATE
 
 	New(datum/mind/new_owner)
@@ -40,9 +43,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(ROLE_NUKEOP)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()

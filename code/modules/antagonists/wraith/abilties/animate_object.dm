@@ -23,11 +23,11 @@
 
 		if (istype(O))
 			if(istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility)
-				boutput(usr, "<span class='alert'>That is not a valid target for animation!</span>")
+				boutput(usr, SPAN_ALERT("That is not a valid target for animation!"))
 				return 1
 			new/mob/living/object/ai_controlled(O.loc, O)
 			usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithlivingobject.ogg', 50, 0)
 			return 0
 		else
-			boutput(usr, "<span class='alert'>There is no object here to animate!</span>")
+			boutput(usr, SPAN_ALERT("There is no object here to animate!"))
 			return 1

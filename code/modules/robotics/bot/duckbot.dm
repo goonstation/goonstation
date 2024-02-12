@@ -164,8 +164,8 @@
 /obj/machinery/bot/duckbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		if(user)
-			boutput(user, "<span class='alert'>You short out the horn on [src].</span>")
-		src.audible_message("<span class='alert'><B>[src] quacks loudly!</B></span>", 1)
+			boutput(user, SPAN_ALERT("You short out the horn on [src]."))
+		src.audible_message(SPAN_ALERT("<B>[src] quacks loudly!</B>"))
 		playsound(src.loc, 'sound/misc/amusingduck.ogg', 50, 1)
 		src.eggs += rand(3,9)
 		src.emagged = 1
@@ -272,7 +272,7 @@
 	if (istype(W, /obj/item/card/emag))
 		emag_act(user, W)
 	else
-		src.visible_message("<span class='alert'>[user] hits [src] with [W]!</span>")
+		src.visible_message(SPAN_ALERT("[user] hits [src] with [W]!"))
 		src.health -= W.force * 0.5
 		if (src.health <= 0)
 			src.explode()
@@ -284,7 +284,7 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"))
 	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	new /obj/item/instrument/bikehorn(src.loc)

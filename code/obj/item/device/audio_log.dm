@@ -81,7 +81,6 @@ TYPEINFO(/obj/item/device/audio_log)
 	desc = "A fairly spartan recording device."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "audiolog_newSmall"
-	uses_multiple_icon_states = TRUE
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
 	var/obj/item/audio_tape/tape = null
@@ -301,7 +300,7 @@ TYPEINFO(/obj/item/device/audio_log)
 				for (var/image/chat_maptext/I in src.chat_text.lines)
 					if (I != audio_log_text)
 						I.bump_up(audio_log_text.measured_height)
-		src.audible_message("<span class='game radio' style='color: [speaker_colour]'><span class='name'>[speaker]</span><b> [bicon(src)]\[Log\]</b> <span class='message'>\"[message]\"</span></span>", 2, assoc_maptext = audio_log_text)
+		src.audible_message("<span class='radio' style='color: [speaker_colour]'>[SPAN_NAME("[speaker]")]<b> [bicon(src)]\[Log\]</b> [SPAN_MESSAGE("\"[message]\"")]</span>", assoc_maptext = audio_log_text)
 		return
 
 	proc/explode()
@@ -365,6 +364,9 @@ TYPEINFO(/obj/item/device/audio_log)
 
 			src.tape.speakers = src.audiolog_speakers
 			src.audiolog_speakers = null
+
+			SPAWN(10 SECONDS) // Let people get their bearings first
+				src.play()
 
 			return
 

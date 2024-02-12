@@ -7,6 +7,8 @@
 
 /// Pathfind option key; The maximum number of steps we can take in a given path to search (default: 30, 0 = infinite)
 #define POP_MAX_DIST "max_distance"
+/// Pathfind option key; The maximum number of actual tiles seen. Sometimes a better limiter maybe?
+#define POP_MAX_SEEN "max_seen"
 /// Pathfind option key; Minimum distance to the target before path returns, could be used to get near a target, but not right to it - for an AI mob with a gun, for example.
 #define POP_MIN_DIST "min_distance"
 /// Pathfind option key; An ID card representing what access we have and what doors we can open. Its location relative to the pathing atom is irrelevant
@@ -44,7 +46,7 @@
  * Returns: List of turfs from the caller to the end or a list of lists of the former if multiple ends are specified.
  * If no paths were found, returns an empty list, which is important for bots like medibots who expect an empty list rather than nothing.
  */
-/proc/get_path_to(caller, ends, max_distance = 30, mintargetdist, id=null, simulated_only=TRUE, turf/exclude=null, skip_first=FALSE, cardinal_only=TRUE, required_goals=null, do_doorcheck=FALSE)
+/proc/get_path_to(caller, ends, max_distance = 30, max_seen = null, mintargetdist, id=null, simulated_only=TRUE, turf/exclude=null, skip_first=FALSE, cardinal_only=TRUE, required_goals=null, do_doorcheck=FALSE)
 	if(isnull(ends))
 		return
 	var/single_end = !islist(ends)
@@ -55,6 +57,7 @@
 
 	var/list/options = list(
 		POP_MAX_DIST=max_distance,
+		POP_MAX_SEEN=max_seen,
 		POP_MIN_DIST=mintargetdist,
 		POP_ID=id,
 		POP_SIMULATED_ONLY=simulated_only,
@@ -174,6 +177,8 @@
 	var/list/sources
 	/// The list we compile at the end if successful to pass back
 	var/list/list/turf/paths
+	/// The total number of tiles seen so far
+	var/total_seen = 0
 
 	// general pathfinding vars/args
 
@@ -181,6 +186,8 @@
 	var/mintargetdist = 0
 	/// I don't know what this does vs , but they limit how far we can search before giving up on a path
 	var/max_distance = 30
+	/// Max number of tiles seen, null skips the check
+	var/max_seen = null
 	/// Space is big and empty, if this is TRUE then we ignore pathing through unsimulated tiles
 	var/simulated_only
 	/// A specific turf we're avoiding, like if a mulebot is being blocked by someone t-posing in a doorway we're trying to get through
@@ -208,6 +215,7 @@
 	sources = new()
 	src.options = options
 	src.max_distance = options[POP_MAX_DIST]
+	src.max_seen = options[POP_MAX_SEEN]
 	src.mintargetdist = options[POP_MIN_DIST]
 	src.simulated_only = options[POP_SIMULATED_ONLY]
 	src.avoid = options[POP_EXCLUDE]
@@ -230,6 +238,10 @@
 	for(var/turf/end as anything in ends)
 		if(end.z != search_z || max_distance && (max_distance < GET_DIST(start, end)))
 			ends -= end
+		else if(end == start)
+			for(var/goal in ends[end])
+				src.paths[goal] = list(start)
+			ends -= end
 		else
 			possible_goal_count += length(ends[end])
 	n_target_goals = min(n_target_goals, possible_goal_count)
@@ -243,6 +255,9 @@
 
 	//then run the main loop
 	while(!open.is_empty() && !FINISHED_SEARCH)
+		if (src.max_seen && (src.total_seen > src.max_seen))
+			// boutput(world, "ending search early due to total_seen limit")
+			return
 		if(!caller)
 			return
 		current_processed_node = open.pop() //get the lower f_value turf in the open list
@@ -264,7 +279,6 @@
 		if(path)
 			for(var/i = 1 to round(0.5 * length(path)))
 				path.Swap(i, length(path) - i + 1)
-
 	sources = null
 	qdel(open)
 
@@ -314,6 +328,7 @@
 			return
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
+		src.total_seen++
 		steps_taken++
 		if(!CAN_STEP(lag_turf, current_turf))
 			return
@@ -387,6 +402,7 @@
 			return
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
+		src.total_seen++
 		steps_taken++
 		if(!CAN_STEP(lag_turf, current_turf))
 			return

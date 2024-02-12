@@ -97,10 +97,10 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				hit_twitch(src)
 				playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,TRUE)
 				src.take_damage(damage)
-				user.visible_message("<span class='alert'><b>[user] bashes [src] with [B]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] bashes [src] with [B]!</b>"))
 			else
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,TRUE)
-				user.visible_message("<span class='alert'><b>[user] uselessly taps [src] with [B]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] uselessly taps [src] with [B]!</b>"))
 			return
 
 		if (B.incompatible_with_chem_dispensers == 1)
@@ -111,7 +111,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			return
 
 		if (B.current_lid)
-			boutput(user, "<span class='alert'>You cannot put the [B.name] in the [src.name] while it has a lid on it.</span>")
+			boutput(user, SPAN_ALERT("You cannot put the [B.name] in the [src.name] while it has a lid on it."))
 			return
 		/*
 		if (isrobot(user))
@@ -177,6 +177,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		qdel(src)
 		return
 
+
 	proc/eject_card()
 		if (src.user_id)
 			if((BOUNDS_DIST(usr, src) == 0))
@@ -216,23 +217,23 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the dispenser's output target.</span>")
+			boutput(usr, SPAN_ALERT("Only living mobs are able to set the dispenser's output target."))
 			return
 
 		if(BOUNDS_DIST(over_object, src) > 0)
-			boutput(usr, "<span class='alert'>The dispenser is too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("The dispenser is too far away from the target!"))
 			return
 
 		if(BOUNDS_DIST(over_object, usr) > 0)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("You are too far away from the target!"))
 			return
 
 		else if (istype(over_object,/turf/simulated/floor/))
 			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set the dispenser to output to [over_object]!</span>")
+			boutput(usr, SPAN_NOTICE("You set the dispenser to output to [over_object]!"))
 
 		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
+			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
 		return
 
 	proc/take_damage(var/damage_amount = 5)
@@ -242,16 +243,16 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
 				REMOVE_ATOM_PROPERTY(beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 				beaker = null
-			src.visible_message("<span class='alert'><b>[name] falls apart into useless debris!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[name] falls apart into useless debris!</b>"))
 			robogibs(src.loc)
 			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			qdel(src)
 			return
 
-	proc/remove_distant_beaker()
+	proc/remove_distant_beaker(force = FALSE)
 		// borgs and people with item arms don't insert the beaker into the machine itself
 		// but whenever something would happen to the dispenser and the beaker is far it should disappear
-		if(beaker && BOUNDS_DIST(beaker, src) > 0)
+		if(beaker && (BOUNDS_DIST(beaker, src) > 0 || force))
 			REMOVE_ATOM_PROPERTY(beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 			beaker = null
 			src.UpdateIcon()
@@ -338,7 +339,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 					var/obj/item/reagent_containers/newbeaker = usr.equipped()
 					if (istype(newbeaker, glass_path))
 						if (newbeaker.current_lid)
-							boutput(ui.user, "<span class='alert'>You cannot put the [newbeaker.name] in the [src.name] while it has a lid on it.</span>")
+							boutput(ui.user, SPAN_ALERT("You cannot put the [newbeaker.name] in the [src.name] while it has a lid on it."))
 							return
 						if(!newbeaker.cant_drop) // borgs and item arms
 							usr.drop_item()
@@ -436,6 +437,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			if ("clear_recording")
 				src.recording_queue = list()
 				. = TRUE
+
+	ui_close(mob/user)
+		. = ..()
+		if(src.beaker?.loc != src)
+			src.remove_distant_beaker(force = TRUE)
 
 /obj/machinery/chem_dispenser/chemical
 	New()

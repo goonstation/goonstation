@@ -27,6 +27,7 @@ const nextTick
    title: string;
    start_with_search: number;
    capitalize: number;
+   theme: string;
  };
 
 
@@ -63,7 +64,7 @@ const getCanvasFont = (el = document.body) => {
 
 export const ListInputModal = (_, context) => {
   const { act, data } = useBackend<ListInputData>(context);
-  const { items = [], message, init_value, timeout, title, start_with_search, capitalize } = data;
+  const { items = [], message, init_value, timeout, title, start_with_search, capitalize, theme } = data;
   const [selected, setSelected] = useLocalState<number>(
     context,
     'selected',
@@ -237,7 +238,7 @@ export const ListInputModal = (_, context) => {
   }
 
   return (
-    <Window title={title} width={actualWindowWidth} height={windowHeight}>
+    <Window title={title} width={actualWindowWidth} height={windowHeight} theme={theme || 'nanotrasen'}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onkeydown={handleKey}>

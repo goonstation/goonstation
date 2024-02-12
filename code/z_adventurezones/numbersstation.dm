@@ -264,7 +264,7 @@ Nanotrasen, Inc.<br>
 			for (var/obj/item/device/radio/Hs in H)
 				if (Hs.frequency == frequency)
 					listeners += H
-					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs.name].</span>")
+					boutput(H, SPAN_NOTICE("A peculiar noise intrudes upon the radio frequency of your [Hs.name]."))
 				break
 		for (var/mob/living/silicon/robot/R in mobs)
 			LAGCHECK(LAG_LOW)
@@ -272,7 +272,7 @@ Nanotrasen, Inc.<br>
 				var/obj/item/device/radio/Hs = R.radio
 				if (Hs.frequency == frequency)
 					listeners += R
-					boutput(R, "<span class='notice'>A peculiar noise intrudes upon your radio frequency.</span>")
+					boutput(R, SPAN_NOTICE("A peculiar noise intrudes upon your radio frequency."))
 
 	proc/play_all_numbers()
 		var/batch = 0

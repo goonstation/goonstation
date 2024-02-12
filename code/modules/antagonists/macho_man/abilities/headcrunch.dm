@@ -9,7 +9,7 @@
 				if (ishuman(G.affecting))
 					var/mob/living/carbon/human/H = G.affecting
 					playsound(holder.owner.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
-					holder.owner.visible_message("<span class='alert'><B>[holder.owner] crushes [H]'s skull like a grape!</B></span>")
+					holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] crushes [H]'s skull like a grape!</B>"))
 					H.take_brain_damage(60)
 					H.TakeDamage("head", 50, 0, 0, DAMAGE_CRUSH)
 					H.changeStatus("stunned", 8 SECONDS)
@@ -18,10 +18,10 @@
 					qdel(G)
 				else
 					playsound(holder.owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
-					holder.owner.visible_message("<span class='alert'><B>[holder.owner] crushes [G.affecting]'s body into bits!</B></span>")
+					holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] crushes [G.affecting]'s body into bits!</B>"))
 					G.affecting.gib()
 					qdel(G)
 				SPAWN(2 SECONDS)
 					playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
-					holder.owner.visible_message("<span class='alert'><b>[holder.owner]</b> lets out an angry warcry!</span>")
+					holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner]</b> lets out an angry warcry!"))
 				break

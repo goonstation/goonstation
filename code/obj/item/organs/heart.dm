@@ -38,14 +38,14 @@
 		if (!src.reagents)
 			return
 		if (!src.reagents.total_volume)
-			boutput(user, "<span class='alert'>There's nothing in \the [src] to wring out!</span>")
+			boutput(user, SPAN_ALERT("There's nothing in \the [src] to wring out!"))
 			return
 
 		if (!ON_COOLDOWN(src, "heart_wring", 2 SECONDS))
 			playsound(user, squeeze_sound, 30, TRUE)
 			logTheThing(LOG_CHEMISTRY, user, "wrings out [src] containing [log_reagents(src)] at [log_loc(user)].")
 			src.reagents.trans_to(get_turf(src), HEART_WRING_AMOUNT)
-			boutput(user, "<span class='notice'>You wring out \the [src].</span>")
+			boutput(user, SPAN_NOTICE("You wring out \the [src]."))
 
 #undef HEART_WRING_AMOUNT
 
@@ -68,7 +68,7 @@
 
 		if (src.donor)
 			for (var/datum/ailment_data/disease in src.donor.ailments)
-				if (disease.cure == "Heart Transplant")
+				if (disease.cure_flags & CURE_HEART_TRANSPLANT)
 					src.donor.cure_disease(disease)
 			src.donor.blood_id = (ischangeling(src.donor) && src.blood_id == "blood") ? "bloodc" : src.blood_id
 		if (ishuman(M) && islist(src.diseases))
@@ -138,7 +138,7 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 	emp_act()
 		..()
 		if (src.emagged)
-			boutput(donor, "<span class='alert'><B>Your cyberheart malfunctions and shuts down!</B></span>")
+			boutput(donor, SPAN_ALERT("<B>Your cyberheart malfunctions and shuts down!</B>"))
 			donor.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 
 /obj/item/organ/heart/flock
@@ -184,7 +184,7 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 /obj/item/organ/heart/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Resource repository
-		<br><span class='bold'>Resources:</span> [src.resources]
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] Resource repository<br>\
+		[SPAN_BOLD("System Integrity:")] [src.resources]<br>\
+		[SPAN_BOLD("###=-")]")]"}

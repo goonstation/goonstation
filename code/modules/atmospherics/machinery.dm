@@ -11,6 +11,7 @@ ABSTRACT_TYPE(/obj/machinery/atmospherics)
 	anchored = ANCHORED
 	/// Directions to look for other atmospheric devices.
 	var/initialize_directions = 0
+	var/static/list/icon/pipe_underlay_cache = list()
 
 /obj/machinery/atmospherics/process()
 	src.build_network()

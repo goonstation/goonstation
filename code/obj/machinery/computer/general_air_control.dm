@@ -147,7 +147,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				return
 
 			if(!allowed(usr))
-				boutput(usr, "<span class='alert'>Access Denied!</span>")
+				boutput(usr, SPAN_ALERT("Access Denied!"))
 				return
 
 			if(href_list["in_refresh_status"])
@@ -560,7 +560,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 		if (..())
 			return 0
 		if (!src.allowed(usr))
-			boutput(usr, "<span class='alert'>Access denied!</span>")
+			boutput(usr, SPAN_ALERT("Access denied!"))
 			return 0
 
 		var/datum/signal/signal = get_free_signal()
@@ -600,7 +600,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				if (is_incapacitated(usr) || usr.restrained())
 					return 0
 				if (!src.allowed(usr))
-					boutput(usr, "<span class='alert'>Access denied!</span>")
+					boutput(usr, SPAN_ALERT("Access denied!"))
 					return 0
 				if (!isnum_safe(change))
 					return 0

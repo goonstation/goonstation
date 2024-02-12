@@ -155,6 +155,8 @@ module.exports = (env = {}, argv) => {
   if (argv.mode !== 'production') {
     config.devtool = 'cheap-module-source-map';
   }
+  // Uncomment the below if you need to locally generate source maps to debug production
+  // config.devtool = 'source-map';
 
   // Development server specific options
   if (argv.devServer) {

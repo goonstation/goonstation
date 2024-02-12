@@ -53,12 +53,12 @@
 
 			if (7)
 				for(var/mob/O in hearers(src, null))
-					O.show_message("<span class='combat'><b>[src]'s speaker crackles oddly!</b></span>", 2)
+					O.show_message(SPAN_COMBAT("<b>[src]'s speaker crackles oddly!</b>"), 2)
 				return
 
 			if (8)
 				message = uppertext(message)
 
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
+			O.show_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\""), 2)
 		return

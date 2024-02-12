@@ -52,7 +52,7 @@
 			ON_COOLDOWN(src, "resource_production", 10 SECONDS)
 
 	building_specific_info()
-		return "<span class='bold'>Resources left to produce:</span> [src.resources_to_produce]."
+		return "[SPAN_BOLD("Resources left to produce:")] [src.resources_to_produce]."
 
 	process(mult)
 		if (!src.resources_to_produce)

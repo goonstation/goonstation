@@ -241,11 +241,11 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 			// play without spaced for stuff inside the source, for example pod sounds for people in the pod
 			// we might at some point want to make this check multiple levels deep, but for now this is fine
-			if (spaced_env && !(flags & SOUND_IGNORE_SPACE) && !(M in source))
+			if (spaced_env && !(flags & SOUND_IGNORE_SPACE) && (isturf(source) || ismob(source) || !(M in source)))
 				S.environment = SPACED_ENV
 				S.echo = SPACED_ECHO
 			else
-				if(listener_location != source_location)
+				if(listener_location != source_location) // are they in a different area?
 					//boutput(M, "You barely hear a [source] at [source_location]!")
 					S.echo = ECHO_AFAR //Sound is occluded
 				else
@@ -314,7 +314,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 	client.sound_playing[ S.channel ][2] = channel
 
 	if (S)
-		if (spaced_env && !(flags & SOUND_IGNORE_SPACE) && !(src in source))
+		if (spaced_env && !(flags & SOUND_IGNORE_SPACE) && (isturf(source) || ismob(source) || !(src in source)))
 			S.environment = SPACED_ENV
 			S.echo = SPACED_ECHO
 
@@ -328,7 +328,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 		src << S
 
-		if (src.observers.len)
+		if (src.observers.len && !(flags & SOUND_SKIP_OBSERVERS))
 			for (var/mob/M in src.observers)
 				if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 					continue
@@ -367,7 +367,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 	src << S
 
-	if (src.observers.len)
+	if (src.observers.len && !(flags & SOUND_SKIP_OBSERVERS))
 		for (var/mob/M in src.observers)
 			if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 				continue
@@ -486,6 +486,8 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 	return S
 
+var/global/number_of_sound_generated = 0
+
 /proc/generate_sound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1)
 	if (istext(soundin))
 		switch(soundin)
@@ -527,7 +529,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 	S.falloff = 9999//(world.view + extrarange) / 3.5
 	//world.log << "Playing sound; wv = [world.view] + er = [extrarange] / 3.5 = falloff [S.falloff]"
 	S.wait = 0 //No queue
-	S.channel = rand(1,900) //Any channel
+	S.channel = (number_of_sound_generated++) % 900 + 1
 	S.volume = vol
 	S.priority = 5
 	S.environment = 0

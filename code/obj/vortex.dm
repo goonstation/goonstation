@@ -38,7 +38,7 @@
 							interdicted = TRUE
 							break
 					if(!interdicted)
-						src.visible_message("<span class='alert'><b>[src] explodes in a burst of intense light!</b></span>")
+						src.visible_message(SPAN_ALERT("<b>[src] explodes in a burst of intense light!</b>"))
 						playsound(src.loc, 'sound/weapons/flashbang.ogg', 40, 1)
 						for (var/mob/living/C in view(3,src))
 							C.apply_flash(30, 1, 0, 0, 0, rand(0, 2))
@@ -52,7 +52,7 @@
 					return
 
 				/*if(5)
-					src.visible_message("<span class='alert'><b>[src] gives off an electromagnetic burst!</b></span>","<span class='alert'>You hear a sharp buzzing.</span>")
+					src.visible_message(SPAN_ALERT("<b>[src] gives off an electromagnetic burst!</b>"),SPAN_ALERT("You hear a sharp buzzing."))
 					var/obj/item/old_grenade/emp/G = new /obj/item/old_grenade/emp(src.loc)
 					G.invisibility = INVIS_ALWAYS
 					G.prime()
@@ -123,9 +123,9 @@
 				C.faction |= FACTION_DERELICT
 				if (derelict_mode) // In disaster rounds we don't want wraith spawns fighting the local wildlife
 					C.faction |= FACTION_WRAITH
-			src.visible_message("<span class='alert'><b>[horror] emerges from the [src]!</b></span>","<span class='alert'>You hear a sharp buzzing noise.</span>")
+			src.visible_message(SPAN_ALERT("<b>[horror] emerges from the [src]!</b>"),SPAN_ALERT("You hear a sharp buzzing noise."))
 		else
-			SPAWN(rand(0.2 SECONDS, 2 SECONDS)) //desynchronize the visual/audible indication of interdiction in case of large batches of simultaneous vortexes
+			SPAWN(randfloat(0.2 SECONDS, 2 SECONDS)) //desynchronize the visual/audible indication of interdiction in case of large batches of simultaneous vortexes
 				src.icon = 'icons/effects/effects.dmi'
 				src.icon_state = "portswirl_error"
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)

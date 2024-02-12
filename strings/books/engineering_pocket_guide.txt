@@ -66,6 +66,6 @@
 		<br>
 		<hr>
 		<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at the following sources:
-		<ul><li><a href="https://wiki.ss13.co/Powering_the_Station" target="Goonstation Wiki: Powering the Station">https://wiki.ss13.co/Powering_the_Station</a></li>
+		<ul><li><a href="https://wiki.ss13.co/Power_Grid" target="Goonstation Wiki: Power Grid">https://wiki.ss13.co/Power_Grid</a></li>
 		<li><a href="https://wiki.ss13.co/Engineer" target="Goonstation Wiki: Engineer">https://wiki.ss13.co/Engineer</a></li></ul>
 		Thank you for your service to Nanotrasen.</i></p>

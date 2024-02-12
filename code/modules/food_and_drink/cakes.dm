@@ -542,7 +542,7 @@
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 				return
 			else
-				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 				return
 		else
 			..()
@@ -568,7 +568,7 @@
 	desc = "Mmm! A delicious-looking cream sponge cake!"
 	heal_amt = 2
 	initial_volume = 50
-	initial_reagents = list("sugar"=30)
+	initial_reagents = list("sugar"=20, "cream"=10)
 
 	New()
 		..()

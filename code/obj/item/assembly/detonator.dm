@@ -2,7 +2,6 @@
 	desc = "A failsafe timer, wired in an incomprehensible way to a detonator assembly"
 	name = "Detonator Assembly"
 	icon_state = "multitool-igniter"
-	uses_multiple_icon_states = 1
 	var/obj/item/device/multitool/part_mt = null
 	var/obj/item/device/igniter/part_ig = null
 	var/obj/item/tank/plasma/part_t = null
@@ -92,7 +91,7 @@
 				W.layer = initial(src.layer)
 				src.part_t = W
 				src.add_fingerprint(user)
-				user.show_message("<span class='notice'>You insert the [W.name] into the slot.</span>")
+				user.show_message(SPAN_NOTICE("You insert the [W.name] into the slot."))
 			else if (issnippingtool(W))
 				src.part_ig.set_loc(user.loc)
 				src.part_mt.set_loc(user.loc)
@@ -102,22 +101,22 @@
 				src.part_mt = null
 				user.u_equip(src)
 				qdel(src)
-				user.show_message("<span class='notice'>You sever the connection between the multitool and the igniter. The assembly falls apart.</span>")
+				user.show_message(SPAN_NOTICE("You sever the connection between the multitool and the igniter. The assembly falls apart."))
 			else
-				user.show_message("<span class='alert'>The [W.name] doesn't seem to fit into the slot!</span>")
+				user.show_message(SPAN_ALERT("The [W.name] doesn't seem to fit into the slot!"))
 
 		if (1)
 			if (istype(W, /obj/item/cable_coil))
-				user.show_message("<span class='alert'>The plasma tank must be firmly secured to the assembly first.</span>")
+				user.show_message(SPAN_ALERT("The plasma tank must be firmly secured to the assembly first."))
 			else if (ispryingtool(W))
 				src.setDetState(0)
 				src.part_t.set_loc(user.loc)
 				src.part_t.master = null
 				src.part_t = null
-				user.show_message("<span class='notice'>You pry the plasma tank out of the assembly.</span>")
+				user.show_message(SPAN_NOTICE("You pry the plasma tank out of the assembly."))
 			else if (isscrewingtool(W))
 				src.setDetState(2)
-				user.show_message("<span class='notice'>You secure the plasma tank to the assembly.</span>")
+				user.show_message(SPAN_NOTICE("You secure the plasma tank to the assembly."))
 
 		if (2)
 			if (istype(W, /obj/item/cable_coil))
@@ -126,14 +125,14 @@
 					C.use(6)
 					src.setDetState(3)
 					src.add_fingerprint(user)
-					user.show_message("<span class='notice'>You add the wiring to the assembly.</span>")
+					user.show_message(SPAN_NOTICE("You add the wiring to the assembly."))
 				else
-					user.show_message("<span class='alert'>This cable coil isn't long enough!</span>")
+					user.show_message(SPAN_ALERT("This cable coil isn't long enough!"))
 			else if (ispryingtool(W))
-				user.show_message("<span class='alert'>The plasma tank is firmly secured to the assembly and won't budge.</span>")
+				user.show_message(SPAN_ALERT("The plasma tank is firmly secured to the assembly and won't budge."))
 			else if (isscrewingtool(W))
 				src.setDetState(1)
-				user.show_message("<span class='notice'>You unsecure the plasma tank from the assembly.</span>")
+				user.show_message(SPAN_NOTICE("You unsecure the plasma tank from the assembly."))
 
 		if (3)
 			if (istype(W, /obj/item/device/timer))
@@ -145,12 +144,12 @@
 				src.part_fs = W
 				src.part_fs.time = 90 SECONDS //Minimum det time
 				src.add_fingerprint(user)
-				user.show_message("<span class='notice'>You wire the timer failsafe to the assembly, disabling its external controls.</span>")
+				user.show_message(SPAN_NOTICE("You wire the timer failsafe to the assembly, disabling its external controls."))
 			else if (issnippingtool(W))
 				src.setDetState(2)
 				var/obj/item/cable_coil/C = new /obj/item/cable_coil(user, 6)
 				C.set_loc(user.loc)
-				user.show_message("<span class='notice'>You cut the wiring on the assembly.</span>")
+				user.show_message(SPAN_NOTICE("You cut the wiring on the assembly."))
 		if (4)
 			if (issnippingtool(W))
 				src.setDetState(3)
@@ -161,18 +160,18 @@
 					src.trigger.set_loc(user.loc)
 					src.trigger.master = null
 					src.trigger = null
-					user.show_message("<span class='alert'>The triggering device falls off the assembly.</span>")
+					user.show_message(SPAN_ALERT("The triggering device falls off the assembly."))
 				for (var/obj/item/a in src.attachments)
 					a.set_loc(user.loc)
 					a.master = null
 					a.layer = initial(a.layer)
 					src.clear_attachment(a)
-					user.show_message("<span class='alert'>The [a] falls off the assembly.</span>")
+					user.show_message(SPAN_ALERT("The [a] falls off the assembly."))
 				src.attachments.Cut()
-				user.show_message("<span class='notice'>You disconnect the timer from the assembly, and reenable its external controls.</span>")
+				user.show_message(SPAN_NOTICE("You disconnect the timer from the assembly, and reenable its external controls."))
 			if (isscrewingtool(W))
 				if (!src.trigger && !length(src.attachments))
-					user.show_message("<span class='alert'>You cannot remove any attachments, as there are none attached.</span>")
+					user.show_message(SPAN_ALERT("You cannot remove any attachments, as there are none attached."))
 					return
 				var/list/options = list(src.trigger)
 				options += src.attachments
@@ -182,7 +181,7 @@
 					src.trigger.set_loc(user.loc)
 					src.trigger.master = null
 					src.trigger = null
-					user.show_message("<span class='notice'>You remove the triggering device from the assembly.</span>")
+					user.show_message(SPAN_NOTICE("You remove the triggering device from the assembly."))
 				else if (target == "cancel")
 					return
 				else
@@ -193,24 +192,24 @@
 					src.clear_attachment(target)
 					src.attachments.Remove(target)
 					setDescription()
-					user.show_message("<span class='notice'>You remove the [target] from the assembly.</span>")
+					user.show_message(SPAN_NOTICE("You remove the [target] from the assembly."))
 				setDescription()
 			else if (istype(W, /obj/item/device/radio/signaler))
 				if (src.trigger)
-					user.show_message("<span class='alert'>There is a trigger already screwed onto the assembly.</span>")
+					user.show_message(SPAN_ALERT("There is a trigger already screwed onto the assembly."))
 				else
 					W.set_loc(src)
 					W.master = src
 					user.u_equip(W)
 					src.trigger = W
-					user.show_message("<span class='notice'>You attach the [W.name] to the trigger slot.</span>")
+					user.show_message(SPAN_NOTICE("You attach the [W.name] to the trigger slot."))
 					setDescription()
 			else if (istype(W, /obj/item/paper))
 				W.set_loc(src)
 				W.master = src
 				user.u_equip(W)
 				src.attachments += W
-				user.show_message("<span class='notice'>You stick the note onto the detonator assembly.</span>")
+				user.show_message(SPAN_NOTICE("You stick the note onto the detonator assembly."))
 			else if (W.is_detonator_attachment())
 				if (length(src.attachments) < 3)
 					W.set_loc(src)
@@ -226,10 +225,10 @@
 					src.WireNames.Insert(pos, N)
 					src.WireFunctions.Insert(pos, W)
 
-					user.show_message("<span class='notice'>You attach the [W.name] to an attachment slot.</span>")
+					user.show_message(SPAN_NOTICE("You attach the [W.name] to an attachment slot."))
 					setDescription()
 				else
-					user.show_message("<span class='alert'>There are no more free attachment slots on the device!</span>")
+					user.show_message(SPAN_ALERT("There are no more free attachment slots on the device!"))
 					setDescription()
 
 /obj/item/assembly/detonator/proc/clear_attachment(var/obj/item/T)
@@ -255,17 +254,17 @@
 	src.attachedTo.remove_simple_light("canister")
 
 	if (src.defused)
-		src.attachedTo.visible_message("<b><span class='alert'>The cut detonation wire emits a spark. The detonator signal never reached the detonator unit.</span></b>")
+		src.attachedTo.visible_message(SPAN_ALERT("<b>The cut detonation wire emits a spark. The detonator signal never reached the detonator unit.</b>"))
 		return
 	if (MIXTURE_PRESSURE(src.part_t.air_contents) < 400 || src.part_t.air_contents.toxins < (4*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C))
-		src.attachedTo.visible_message("<b><span class='alert'>A sparking noise is heard as the igniter goes off. The plasma tank fails to explode, merely burning the circuits of the detonator.</span></b>")
+		src.attachedTo.visible_message(SPAN_ALERT("<b>A sparking noise is heard as the igniter goes off. The plasma tank fails to explode, merely burning the circuits of the detonator.</b>"))
 		src.attachedTo.det = null
 		src.attachedTo.overlay_state = null
 		qdel(src)
 		return
-	src.attachedTo.visible_message("<b><span class='alert'>A sparking noise is heard as the igniter goes off. The plasma tank blows, creating a microexplosion and rupturing the canister.</span></b>")
+	src.attachedTo.visible_message(SPAN_ALERT("<b>A sparking noise is heard as the igniter goes off. The plasma tank blows, creating a microexplosion and rupturing the canister.</b>"))
 	if (MIXTURE_PRESSURE(attachedTo.air_contents) < 7000)
-		src.attachedTo.visible_message("<b><span class='alert'>The ruptured canister, due to a serious lack of pressure, fails to explode into shreds and leaks its contents into the air.</span></b>")
+		src.attachedTo.visible_message(SPAN_ALERT("<b>The ruptured canister, due to a serious lack of pressure, fails to explode into shreds and leaks its contents into the air.</b>"))
 		src.attachedTo.health = 0
 		src.attachedTo.healthcheck()
 		src.attachedTo.det = null
@@ -273,7 +272,7 @@
 		qdel(src)
 		return
 	if (attachedTo.air_contents.temperature < 100000)
-		src.attachedTo.visible_message("<b><span class='alert'>The ruptured canister shatters from the pressure, but its temperature isn't high enough to create an explosion. Its contents leak into the air.</span></b>")
+		src.attachedTo.visible_message(SPAN_ALERT("<b>The ruptured canister shatters from the pressure, but its temperature isn't high enough to create an explosion. Its contents leak into the air.</b>"))
 		src.attachedTo.health = 0
 		src.attachedTo.healthcheck()
 		src.attachedTo.det = null
@@ -284,7 +283,7 @@
 	var/turf/epicenter = get_turf(loc)
 	logTheThing(LOG_BOMBING, null, "A canister bomb detonates at [epicenter.loc.name] ([log_loc(epicenter)])")
 	message_admins("A canister bomb detonates at [epicenter.loc.name] ([log_loc(epicenter)])")
-	src.attachedTo.visible_message("<b><span class='alert'>The ruptured canister shatters from the pressure, and the hot gas ignites.</span></b>")
+	src.attachedTo.visible_message(SPAN_ALERT("<b>The ruptured canister shatters from the pressure, and the hot gas ignites.</b>"))
 
 	var/power = min(850 * (MIXTURE_PRESSURE(attachedTo.air_contents) + attachedTo.air_contents.temperature - 107000) / 233196469.0 + 200, 7000) //the second arg is the max explosion power
 	//if (power == 150000) //they reached the cap SOMEHOW? well dang they deserve a medal
@@ -295,9 +294,9 @@
 	src.desc = "A failsafe timer, wired in an incomprehensible way to a detonator assembly"
 
 	if (src.trigger)
-		src.desc += "<br><span class='notice'>There is \an [src.trigger.name] as a detonation trigger.</span>"
+		src.desc += "<br>[SPAN_NOTICE("There is \an [src.trigger.name] as a detonation trigger.")]"
 	for (var/obj/item/a in src.attachments)
-		src.desc += "<br><span class='notice'>There is \an [a] wired onto the assembly as an attachment.</span>"
+		src.desc += "<br>[SPAN_NOTICE("There is \an [a] wired onto the assembly as an attachment.")]"
 
 /obj/item/assembly/detonator/proc/failsafe_engage()
 	if (src.part_fs.timing)

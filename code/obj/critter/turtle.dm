@@ -117,7 +117,7 @@
 			if(!rigged && S.reagents.has_reagent("plasma", 1))
 				for (var/mob/living/M in mobs)
 					if (M.mind && M.mind.assigned_role == "Head of Security")
-						boutput(M, "<span class='alert'>You feel a foreboding feeling about the imminent fate of a certain turtle in [get_area(src)], better act quick.</span>")
+						boutput(M, SPAN_ALERT("You feel a foreboding feeling about the imminent fate of a certain turtle in [get_area(src)], better act quick."))
 
 				message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [log_loc(user)].")
 				logTheThing(LOG_COMBAT, user, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
@@ -147,7 +147,7 @@
 			var/message = "Check please!"
 			var/chat_text = make_chat_maptext(src, message)
 			for (var/mob/O in all_hearers(7, get_turf(src)))
-				O.show_message("<span class='game say bold'><span class='name'>[src]</span></span> says, <span class='message'>\"[message]\"</span>", 2, assoc_maptext = chat_text)
+				O.show_message("<span class='say bold'>[SPAN_NAME("[src]")]</span> says, [SPAN_MESSAGE("\"[message]\"")]", 2, assoc_maptext = chat_text)
 			playsound(src.loc, 'sound/misc/rimshot.ogg', 50, 1)
 
 	//sets the turtle to sleep inside their shell. Will exit their shell if hit again
@@ -168,7 +168,7 @@
 
 		density = TRUE
 
-		src.visible_message("<span class='alert'><b>[src]</b> retreats into [his_or_her()] shell!")
+		src.visible_message(SPAN_ALERT("<b>[src]</b> retreats into [his_or_her()] shell!"))
 		return 1
 
 	//sets shellcount to 0 and changes task to "thinking". changes icon state and protections.
@@ -185,7 +185,7 @@
 
 		density = FALSE
 
-		src.visible_message("<span class='notice'><b>[src]</b> comes out of [his_or_her()] shell!")
+		src.visible_message(SPAN_NOTICE("<b>[src]</b> comes out of [his_or_her()] shell!"))
 		return 1
 
 	//Just completely override this to change values of severity. Kinda ugly, but it's what I want!
@@ -264,7 +264,7 @@
 		target = M
 		attack = 1
 		task = "chasing"
-		src.visible_message("<span class='alert'><b>[src]</b> notices a Clown and starts charging at [src.target]!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]</b> notices a Clown and starts charging at [src.target]!"))
 
 		search_frequency = 30
 		seek_target()
@@ -341,7 +341,7 @@
 				beret.name = "HoS Beret"
 				beret.icon_state = "hosberet"
 				beret.item_state = "hosberet"
-				boutput(user, "<span class='notice'>[src] folds the hat into a beret before putting it on! </span>")
+				boutput(user, SPAN_NOTICE("[src] folds the hat into a beret before putting it on! "))
 			//beret gives bonus protection
 			brutevuln = 0.5
 			firevuln = 0.8
@@ -381,7 +381,7 @@
 					H.put_in_hand_or_drop(beret)
 				else
 					if (alive)
-						boutput(M, "<span class='alert'>You try to grab the beret, but [src] pulls into his shell before you can!</span>")
+						boutput(M, SPAN_ALERT("You try to grab the beret, but [src] pulls into his shell before you can!"))
 						playsound(src.loc, "rustle", 10, 1)
 						src.enter_shell()
 					return 0

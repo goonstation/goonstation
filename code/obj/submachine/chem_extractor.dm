@@ -154,16 +154,21 @@ TYPEINFO(/obj/submachine/chem_extractor)
 					. = TRUE
 		src.UpdateIcon()
 
+	ui_close(mob/user)
+		. = ..()
+		if(inserted?.loc != src)
+			remove_distant_beaker(force = TRUE)
+
 	attackby(var/obj/item/W, var/mob/user)
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
 			tryInsert(W, user)
 
 		..()
 
-	proc/remove_distant_beaker()
+	proc/remove_distant_beaker(force = FALSE)
 		// borgs and people with item arms don't insert the beaker into the machine itself
 		// but whenever something would happen to the dispenser and the beaker is far it should disappear
-		if(src.inserted && BOUNDS_DIST(src.inserted, src) > 0)
+		if(src.inserted && (BOUNDS_DIST(src.inserted, src) > 0 || force))
 			if (src.inserted == src.extract_to) src.extract_to = null
 			src.inserted = null
 			src.UpdateIcon()
@@ -175,7 +180,7 @@ TYPEINFO(/obj/submachine/chem_extractor)
 			return
 
 		if(src.inserted)
-			boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
+			boutput(user, SPAN_ALERT("A container is already loaded into the machine."))
 			return
 		src.inserted =  W
 
@@ -187,7 +192,7 @@ TYPEINFO(/obj/submachine/chem_extractor)
 			W = null
 		else
 			if(!src.extract_to) src.extract_to = W
-			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
+			boutput(user, SPAN_NOTICE("You add [W] to the machine!"))
 		src.ui_interact(user)
 
 	Exited(Obj, newloc)
@@ -222,7 +227,7 @@ TYPEINFO(/obj/submachine/chem_extractor)
 	var/can_autoextract = src.autoextract && src.extract_to
 	if (can_autoextract && src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
 		playsound(src, 'sound/machines/chime.ogg', 10, TRUE)
-		src.visible_message("<span class='alert'>[src]'s tank over-fill alarm burps!</span>")
+		src.visible_message(SPAN_ALERT("[src]'s tank over-fill alarm burps!"))
 		can_autoextract = FALSE
 
 	if (can_autoextract)

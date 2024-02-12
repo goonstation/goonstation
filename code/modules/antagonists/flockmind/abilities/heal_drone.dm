@@ -30,5 +30,5 @@
 			break
 
 	playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
-	boutput(holder.get_controlling_mob(), "<span class='notice'>You focus the flock's efforts on repairing nearby units.</span>")
+	boutput(holder.get_controlling_mob(), SPAN_NOTICE("You focus the flock's efforts on repairing nearby units."))
 	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts repair burst at [log_loc(src.holder.owner)].")

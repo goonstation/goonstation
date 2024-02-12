@@ -25,7 +25,7 @@
 
 	proc/d_print()
 		for(var/obj/machinery/machine in src.machines)
-			boutput(world,"<span class='admin'>[machine.name] : [machine.type]</span>")
+			boutput(world,SPAN_ADMIN("[machine.name] : [machine.type]"))
 
 	doWork()
 		var/c = 0
@@ -141,6 +141,3 @@ proc/register_machine_time(var/datum/machine, var/time)
 			machines[machine]+=amount
 
 #endif MACHINE_PROCESSING_DEBUG
-
-
-

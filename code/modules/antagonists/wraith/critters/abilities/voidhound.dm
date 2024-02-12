@@ -14,12 +14,12 @@
 		if(istype(holder.owner, /mob/living/critter/wraith/voidhound))
 			var/mob/living/critter/wraith/voidhound/V = holder.owner
 			animate(V, alpha=30, time=3 SECONDS)
-			boutput(V, "<span class='notice'>We slip into the shadows...</span>")
+			boutput(V, SPAN_NOTICE("We slip into the shadows..."))
 			V.cloaked = TRUE
 			SPAWN(20 SECONDS)
 				if(V?.cloaked)
 					animate(V, alpha=255, time=3 SECONDS)
-					boutput(V, "<span class='alert'>We reappear...</span>")
+					boutput(V, SPAN_ALERT("We reappear..."))
 					V.cloaked = FALSE
 
 	onAttach(datum/abilityHolder/holder)
@@ -45,7 +45,7 @@
 		var/mob/living/M = holder.owner
 
 		if (istype(M.loc,/mob/))
-			boutput(usr, "<span class='alert'>You can't jump right now!</span>")
+			boutput(usr, SPAN_ALERT("You can't jump right now!"))
 			return 1
 
 		var/jump_tiles = max_range
@@ -56,7 +56,7 @@
 			var/mob/living/critter/wraith/voidhound/V = holder.owner
 			if(V.cloaked)
 				animate(V, alpha=255, time=1 SECONDS)
-				boutput(V, "<span class='notice'>We leap out of the shadows</span>")
+				boutput(V, SPAN_NOTICE("We leap out of the shadows"))
 
 		if (istype(M.loc,/turf))
 			playsound(M.loc, 'sound/voice/animal/werewolf_attack2.ogg', 50, 1, 0, 1.4)
@@ -64,7 +64,7 @@
 
 			var/prevLayer = M.layer
 			M.layer = EFFECTS_LAYER_BASE
-			usr.visible_message("<span class='alert'><b>[M]</b> pounces into the air!</span>")
+			usr.visible_message(SPAN_ALERT("<b>[M]</b> pounces into the air!"))
 
 			for(var/i in 1 to jump_tiles)
 
@@ -86,16 +86,16 @@
 
 		if (istype(M.loc,/obj/))
 			var/obj/container = M.loc
-			boutput(M, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
+			boutput(M, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
 			M.setStatus("paralysis", 3 SECONDS)
 			M.setStatus("weakened", 5 SECONDS)
-			container.visible_message("<span class='alert'><b>[M.loc]</b> emits a loud thump and rattles a bit.</span>")
+			container.visible_message(SPAN_ALERT("<b>[M.loc]</b> emits a loud thump and rattles a bit."))
 			animate_storage_thump(container)
 			if (prob(25))
 				if (istype(container, /obj/storage))
 					var/obj/storage/C = container
 					if (C.can_flip_bust == 1)
-						boutput(src, "<span class='alert'>[C] [pick("busts","bends","cracks")] open.</span>")
+						boutput(src, SPAN_ALERT("[C] [pick("busts","bends","cracks")] open."))
 						C.bust_out()
 
 	onAttach(datum/abilityHolder/holder)

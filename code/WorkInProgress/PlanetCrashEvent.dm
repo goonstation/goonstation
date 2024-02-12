@@ -95,33 +95,33 @@ Notes:
 	proc/process()
 		var/datum/gas_mixture/env = src.spot.remove_air(TOTAL_MOLES(src.spot.air))
 		if (env)
-			out(world, "Current temp: [env.temperature]")
+			boutput(world, "Current temp: [env.temperature]")
 			env.temperature += src.heatAmount
 			env.react()
 			src.spot.assume_air(env)
-			out(world, "New temp: [env.temperature]")
+			boutput(world, "New temp: [env.temperature]")
 
 		/*
 		if (istype(src.spot))
-			out(world, "Operating on [src.spot]")
+			boutput(world, "Operating on [src.spot]")
 			var/datum/gas_mixture/env = src.spot.return_air()
 			if (env.temperature < src.tempTarget)
 				var/transfer_moles = TOTAL_MOLES(env)
 				var/datum/gas_mixture/removed = env.remove(transfer_moles)
-				out(world, "got [transfer_moles] moles at [removed.temperature]")
+				boutput(world, "got [transfer_moles] moles at [removed.temperature]")
 
 				if (removed)
 					/*
 					var/heat_capacity = HEAT_CAPACITY(removed)
-					out(world, "heating ([heat_capacity])")
+					boutput(world, "heating ([heat_capacity])")
 					if (heat_capacity)
 						removed.temperature = (removed.temperature*heat_capacity + src.heatAmount)/heat_capacity
 					*/
 
 					removed.temperature += src.heatAmount
-					out(world, "now at [removed.temperature]")
+					boutput(world, "now at [removed.temperature]")
 				env.merge(removed)
-				out(world, "turf now at [env.temperature]")
+				boutput(world, "turf now at [env.temperature]")
 		*/
 
 
@@ -134,12 +134,12 @@ var/datum/planetCrashHotspot/hotspotTest
 	set name = "Test Planet Crash"
 	//new /datum/planetCrashHotspot(get_turf(src.mob))
 	hotspotTest = new(get_turf(src.mob))
-	out(world, "Done supposedly")
+	boutput(world, "Done supposedly")
 
 // TODO: Debug verb, remove
 /client/verb/testPlanetCrash2(var/amount as num)
 	set name = "Test Planet Crash 2"
 	hotspotTest.heatAmount = amount
-	out(world, "Done supposedly")
+	boutput(world, "Done supposedly")
 
 #endif

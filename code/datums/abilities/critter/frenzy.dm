@@ -37,14 +37,14 @@
 		if (target == holder.owner)
 			return TRUE
 		if (!ismob(target))
-			boutput(holder.owner, "<span class='alert'>Nothing to frenzy at there.</span>")
+			boutput(holder.owner, SPAN_ALERT("Nothing to frenzy at there."))
 			return TRUE
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to frenzy.</span>")
+			boutput(holder.owner, SPAN_ALERT("That is too far away to frenzy."))
 			return TRUE
 		var/mob/MT = target
 		if (!is_incapacitated(MT))
-			boutput(holder.owner, "<span class='alert'>That is moving around far too much to pounce.</span>")
+			boutput(holder.owner, SPAN_ALERT("That is moving around far too much to pounce."))
 			return TRUE
 		playsound(holder.owner, start_sound, 80, 1)
 		disabled = TRUE
@@ -59,7 +59,7 @@
 				if (is_incapacitated(holder?.owner))
 					break
 				playsound(holder.owner, pick(attack_sounds), 70, 1)
-				holder.owner.visible_message("<span class='alert'><b>[holder.owner] [pick(attack_verbs)] [MT]!</b></span>")
+				holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] [pick(attack_verbs)] [MT]!</b>"))
 				holder.owner.set_dir((cardinal))
 				holder.owner.pixel_x = rand(-5, 5)
 				holder.owner.pixel_y = rand(-5, 5)

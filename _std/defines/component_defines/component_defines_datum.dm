@@ -8,6 +8,10 @@
 	#define COMSIG_COMPONENT_REMOVING "component_removing"
 	/// just before a datum's disposing()
 	#define COMSIG_PARENT_PRE_DISPOSING "parent_pre_disposing"
+	/// when a variable is changed by admin varedit
+	#define COMSIG_VARIABLE_CHANGED "variable_changed"
+	/// when a proc is called by admin proc-call
+	#define COMSIG_PROC_CALLED "proc_called"
 
 // ---- mind signals ----
 

@@ -134,11 +134,11 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 		if (Console.shuttlename != src.shuttlename) continue
 		if(!currentlocation || !end_location)
 			if (src.transit_delay)
-				Console.visible_message("<span class='alert'>[src.shuttlename] cant seem to move! Uh Oh.</span>")
+				Console.visible_message(SPAN_ALERT("[src.shuttlename] cant seem to move! Uh Oh."))
 		else
 			Console.active = TRUE
 			if (src.transit_delay)
-				Console.visible_message("<span class='alert'>[src.shuttlename] is moving to [end_location]!</span>")
+				Console.visible_message(SPAN_ALERT("[src.shuttlename] is moving to [end_location]!"))
 				playsound(Console.loc, 'sound/machines/transport_move.ogg', 75, 0)
 	return (currentlocation && end_location)
 
@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 
 	for(var/obj/machinery/computer/transit_shuttle/Console in machine_registry[MACHINES_SHUTTLECOMPS])
 		if (Console.shuttlename != src.shuttlename) continue
-		Console.visible_message("<span class='alert'>[src.shuttlename] has Moved!</span>")
+		Console.visible_message(SPAN_ALERT("[src.shuttlename] has Moved!"))
 		Console.currentlocation = end_location
 		Console.active = FALSE
 
@@ -272,18 +272,18 @@ var/bombini_saved
 		for(var/obj/npc/trader/bee/b in currentlocation)
 			bombini_saved = TRUE
 			for(var/mob/M in currentlocation)
-				boutput(M, "<span class='notice'>It would be great if things worked that way, but they don't. You'll need to find what <b>Bombini</b> is missing, now.</span>")
+				boutput(M, SPAN_NOTICE("It would be great if things worked that way, but they don't. You'll need to find what <b>Bombini</b> is missing, now."))
 
 	for(var/obj/machinery/computer/transit_shuttle/Console in machine_registry[MACHINES_SHUTTLECOMPS])
 		if (Console.shuttlename != src.shuttlename) continue
-		Console.visible_message("<span class='alert'>John is starting up the engines, this could take a minute!</span>")
+		Console.visible_message(SPAN_ALERT("John is starting up the engines, this could take a minute!"))
 		if(!Console.embed) continue
 		T = get_turf(Console)
 		SPAWN(1 DECI SECOND)
 			playsound(T, 'sound/effects/ship_charge.ogg', 60, TRUE)
 			sleep(3 SECONDS)
 			playsound(T, 'sound/machines/weaponoverload.ogg', 60, TRUE)
-			Console.visible_message("<span class='alert'>The shuttle is making a hell of a racket!</span>")
+			Console.visible_message(SPAN_ALERT("The shuttle is making a hell of a racket!"))
 			sleep(5 SECONDS)
 			playsound(T, 'sound/impact_sounds/Machinery_Break_1.ogg', 60, TRUE)
 			for(var/mob/living/M in range(Console.loc, 10))
@@ -293,7 +293,7 @@ var/bombini_saved
 			sleep(2 SECONDS)
 			playsound(T, 'sound/effects/creaking_metal2.ogg', 70, TRUE)
 			sleep(3 SECONDS)
-			Console.visible_message("<span class='alert'>The shuttle engine alarms start blaring!</span>")
+			Console.visible_message(SPAN_ALERT("The shuttle engine alarms start blaring!"))
 			playsound(T, 'sound/machines/pod_alarm.ogg', 60, TRUE)
 			var/obj/decal/fakeobjects/shuttleengine/smokyEngine = locate() in get_area(Console)
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -319,18 +319,18 @@ var/bombini_saved
 		return
 	for (var/datum/flock/flock in flocks)
 		if (flock.relay_in_progress)
-			boutput(user, "<span class='alert'>[src] emits a pained burst of static, but nothing happens!</span>")
+			boutput(user, SPAN_ALERT("[src] emits a pained burst of static, but nothing happens!"))
 			return
 
 	if (user)
 		var/choice = tgui_alert(user, "Would you like to launch the shuttle?", "Shuttle control", list("Launch", "Cancel"))
 		if(BOUNDS_DIST(user, src) > 0 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
 		if (choice == "Launch")
-			boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
+			boutput(world, SPAN_NOTICE("<B>Alert: Shuttle launch time shortened to 10 seconds!</B>"))
 			emergency_shuttle.settimeleft( 10 )
 			logTheThing(LOG_ADMIN, user, "shortens Emergency Shuttle launch time to 10 seconds.")
 	else
-		boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
+		boutput(world, SPAN_NOTICE("<B>Alert: Shuttle launch time shortened to 10 seconds!</B>"))
 		emergency_shuttle.settimeleft( 10 )
 	return TRUE
 
@@ -365,7 +365,8 @@ var/bombini_saved
 		if(!choice || emergency_shuttle.location != SHUTTLE_LOC_STATION || BOUNDS_DIST(user, src) > 0) return
 		switch(choice)
 			if("Authorize")
-				for (var/datum/flock/flock in flocks)
+				for (var/flockname in flocks)
+					var/datum/flock/flock = flocks[flockname]
 					if (flock.relay_in_progress)
 						boutput(user, "Unable to contact central command, authorization rejected.")
 						return
@@ -374,19 +375,19 @@ var/bombini_saved
 					return
 				src.authorized |= W:registered
 				if (src.auth_need - length(src.authorized) > 0)
-					boutput(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
+					boutput(world, SPAN_NOTICE("<B>Alert: [src.auth_need - length(src.authorized)] authorizations needed until shuttle is launched early</B>"))
 				else
-					boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 60 seconds!</B></span>")
+					boutput(world, SPAN_NOTICE("<B>Alert: Shuttle launch time shortened to 60 seconds!</B>"))
 					emergency_shuttle.settimeleft(60)
 					qdel(src.authorized)
 					src.authorized = list(  )
 
 			if("Repeal")
 				src.authorized -= W:registered
-				boutput(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
+				boutput(world, SPAN_NOTICE("<B>Alert: [src.auth_need - length(src.authorized)] authorizations needed until shuttle is launched early</B>"))
 
 			if("Abort")
-				boutput(world, "<span class='notice'><B>All authorizations to shorting time for shuttle launch have been revoked!</B></span>")
+				boutput(world, SPAN_NOTICE("<B>All authorizations to shorting time for shuttle launch have been revoked!</B>"))
 				src.authorized.len = 0
 				src.authorized = list(  )
 	return
@@ -471,7 +472,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 				if(!active)
 					for(var/obj/machinery/computer/elevator/C in machine_registry[machine_registry_idx])
 						C.active = 1
-						C.visible_message("<span class='alert'>The elevator begins to move!</span>")
+						C.visible_message(SPAN_ALERT("The elevator begins to move!"))
 						playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
 						tgui_process.update_uis(C)
 					SPAWN(5 SECONDS)
@@ -501,7 +502,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 
 	for(var/obj/machinery/computer/elevator/C in machine_registry[machine_registry_idx])
 		C.active = 0
-		C.visible_message("<span class='alert'>The elevator has moved.</span>")
+		C.visible_message(SPAN_ALERT("The elevator has moved."))
 		C.location = src.location
 		tgui_process.update_uis(C)
 

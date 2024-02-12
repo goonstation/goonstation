@@ -14,23 +14,23 @@
 	var/empty = 0
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(empty)
-			boutput(user, "<span class='alert'>This stimpack is empty!</span>")
+			boutput(user, SPAN_ALERT("This stimpack is empty!"))
 			return
 		if(user != target)
-			boutput(user, "<span class='alert'>You can only use this item on yourself.</span>")
+			boutput(user, SPAN_ALERT("You can only use this item on yourself."))
 			return
 		src.empty = 1
 		src.icon_state = "stims0"
-		boutput(user, "<span class='notice'>Ah! That's the stuff!</span>")
+		boutput(user, SPAN_NOTICE("Ah! That's the stuff!"))
 		user.changeStatus("stimulants", 3 MINUTES)
 		return
 
 /obj/item/stimpack/large_dose
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(user != target)
-			boutput(user, "<span class='alert'>You can only use this item on yourself.</span>")
+			boutput(user, SPAN_ALERT("You can only use this item on yourself."))
 			return
-		boutput(user, "<span class='notice'>Ah! That's the stuff!</span>")
+		boutput(user, SPAN_NOTICE("Ah! That's the stuff!"))
 		user.changeStatus("stimulants", 15 MINUTES)
 		qdel(src)
 		return

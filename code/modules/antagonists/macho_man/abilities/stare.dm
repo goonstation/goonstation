@@ -18,7 +18,7 @@
 					holder.owner.transforming = 1
 					holder.owner.set_dir(get_dir(holder.owner, H))
 					H.set_dir(get_dir(H, holder.owner))
-					holder.owner.visible_message("<span class='alert'><B>[holder.owner] picks up [H] by the throat!</B></span>")
+					holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] picks up [H] by the throat!</B>"))
 					playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
 					var/dir_offset = get_dir(holder.owner, H)
 					switch(dir_offset)
@@ -41,11 +41,11 @@
 					holder.owner.bioHolder.AddEffect("fire_resist")
 					holder.owner.transforming = 1
 					playsound(holder.owner.loc, 'sound/effects/mindkill.ogg', 50)
-					holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins intensely staring [H] in the eyes!</b></span>")
-					boutput(H, "<span class='alert'>You feel a horrible pain in your head!</span>")
+					holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] begins intensely staring [H] in the eyes!</b>"))
+					boutput(H, SPAN_ALERT("You feel a horrible pain in your head!"))
 					sleep(0.5 SECONDS)
 					H.make_jittery(1000)
-					H.visible_message("<span class='alert'><b>[H] starts violently convulsing!</b></span>")
+					H.visible_message(SPAN_ALERT("<b>[H] starts violently convulsing!</b>"))
 					sleep(4 SECONDS)
 					playsound(holder.owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 					qdel(G)
@@ -59,7 +59,7 @@
 						H:client:mob = newmob
 						H.mind.transfer_to(newmob)
 						newmob.corpse = null
-					H.visible_message("<span class='alert'><b>[H] instantly vaporizes into a cloud of blood!</b></span>")
+					H.visible_message(SPAN_ALERT("<b>[H] instantly vaporizes into a cloud of blood!</b>"))
 					for (var/mob/N in viewers(holder.owner, null))
 						if (N.client)
 							shake_camera(N, 6, 16)

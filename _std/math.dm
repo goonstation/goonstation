@@ -51,7 +51,7 @@ proc/text2num_safe(x)
 	return null
 
 /// rand() but for floats, returns a random floating point number between L and H
-#define randfloat(L, H) (L + rand() * (H - L))
+#define randfloat(L, H) ((L) + rand() * ((H) - (L)))
 
 //bit math helpers
 

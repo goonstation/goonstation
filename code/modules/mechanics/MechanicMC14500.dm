@@ -63,7 +63,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 			return
 		. = uppertext(copytext(ckey(.), 1, 1+MAX_ROM_SIZE))
 		if (length(.)%2 || !is_hex(.))
-			boutput(user, "<span class='alert'>Invalid ROM values.  Great job, knucklehead!!</span>")
+			boutput(user, SPAN_ALERT("Invalid ROM values.  Great job, knucklehead!!"))
 		ROM = .
 
 	proc/toggleActivate(obj/item/W as obj, mob/user as mob)

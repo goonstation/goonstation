@@ -26,11 +26,11 @@
 
 	give_equipment()
 		if (!ishuman(src.owner.current))
-			boutput(src.owner.current, "<span class='alert'>Due to your lack of opposable thumbs, the Syndicate was unable to provide you with an uplink. That's biology for you.</span>")
+			boutput(src.owner.current, SPAN_ALERT("Due to your lack of opposable thumbs, the Syndicate was unable to provide you with an uplink. That's biology for you."))
 			return FALSE
 
 		var/mob/living/carbon/human/H = src.owner.current
-		var/obj/item/uplink_source = null
+		var/obj/item/device/pda2/uplink_source = null
 		var/loc_string = ""
 
 		// Attempt to locate the owner's PDA.
@@ -73,6 +73,7 @@
 		// If the owner has no PDA, create one.
 		if (!uplink_source)
 			uplink_source = new /obj/item/device/pda2(H)
+			uplink_source.owner = H.real_name // So they don't need to get an ID first
 			loc_string = "in your backpack"
 			if (H.equip_if_possible(uplink_source, SLOT_IN_BACKPACK) == 0)
 				uplink_source.set_loc(get_turf(H))

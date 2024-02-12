@@ -21,29 +21,29 @@
 			return 1
 
 		if (M == target)
-			boutput(M, "<span class='alert'>Why would you want to stun yourself?</span>")
+			boutput(M, SPAN_ALERT("Why would you want to stun yourself?"))
 			return 1
 
 		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
+			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return 1
 
 		if (isdead(target))
-			boutput(M, "<span class='alert'>It would be a waste of time to stun the dead.</span>")
+			boutput(M, SPAN_ALERT("It would be a waste of time to stun the dead."))
 			return 1
 
 		if (!isliving(target) || (isliving(target) && issilicon(target)))
-			boutput(M, "<span class='alert'>This spell would have no effect on [target].</span>")
+			boutput(M, SPAN_ALERT("This spell would have no effect on [target]."))
 			return 1
 
 		if (!M.sight_check(1))
-			boutput(M, "<span class='alert'>How do you expect this to work? You can't use your eyes right now.</span>")
-			M.visible_message("<span class='alert'>What was that? There's something odd about [M]'s eyes.</span>")
+			boutput(M, SPAN_ALERT("How do you expect this to work? You can't use your eyes right now."))
+			M.visible_message(SPAN_ALERT("What was that? There's something odd about [M]'s eyes."))
 			if (istype(H)) H.blood_tracking_output(src.pointCost)
 			return 1
 
-		M.visible_message("<span class='alert'><B>[M] stares into [target]'s eyes!</B></span>")
-		boutput(M, "<span class='alert'>You have to stand still...</span>")
+		M.visible_message(SPAN_ALERT("<B>[M] stares into [target]'s eyes!</B>"))
+		boutput(M, SPAN_ALERT("You have to stand still..."))
 
 		actions.start(new/datum/action/bar/icon/vamp_hypno(M,target,src), M)
 
@@ -60,7 +60,6 @@
 /datum/action/bar/icon/vamp_hypno
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "vamp_hypno"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "hypno"
 	bar_icon_state = "bar-vampire"
@@ -82,26 +81,26 @@
 		..()
 		if(hypno == null || GET_DIST(M, target) > hypno.max_range || M == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
-			boutput(M, "<span class='alert'>Your attempt to hypnotize the target was interrupted!</span>")
+			boutput(M, SPAN_ALERT("Your attempt to hypnotize the target was interrupted!"))
 			return
 
 	onStart()
 		..()
 		if(hypno == null || GET_DIST(M, target) > hypno.max_range || M == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
-			boutput(M, "<span class='alert'>Your attempt to hypnotize the target was interrupted!</span>")
+			boutput(M, SPAN_ALERT("Your attempt to hypnotize the target was interrupted!"))
 			return
 
 	onEnd()
 		..()
 		if (target.bioHolder && target.traitHolder.hasTrait("training_chaplain"))
-			boutput(target, "<span class='notice'>Your faith protects you from [M]'s dark designs!</span>")
+			boutput(target, SPAN_NOTICE("Your faith protects you from [M]'s dark designs!"))
 			JOB_XP(target, "Chaplain", 2)
-			target.visible_message("<span class='alert'><b>[target] just stares right back at [M]!</b></span>")
+			target.visible_message(SPAN_ALERT("<b>[target] just stares right back at [M]!</b>"))
 
 		else if (target.sight_check(1)) // Can't stare through a blindfold very well, no?
-			boutput(target, "<span class='alert'>Your consciousness is overwhelmed by [M]'s dark glare!</span>")
-			boutput(M, "<span class='notice'>Your piercing gaze knocks out [target].</span>")
+			boutput(target, SPAN_ALERT("Your consciousness is overwhelmed by [M]'s dark glare!"))
+			boutput(M, SPAN_NOTICE("Your piercing gaze knocks out [target]."))
 			target.changeStatus("stunned", 30 SECONDS)
 			target.changeStatus("weakened", 30 SECONDS)
 			target.changeStatus("paralysis", 30 SECONDS)

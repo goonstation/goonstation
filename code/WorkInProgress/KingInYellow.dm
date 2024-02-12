@@ -62,7 +62,7 @@
 
 	proc/farty_doom(var/mob/living/victim)
 		if(istype(victim) && victim.loc == src.loc)
-			victim.visible_message("<span class='alert'>[victim] farts on [src].<br><b>A mysterious force sucks [victim] into the book!!</b></span>")
+			victim.visible_message(SPAN_ALERT("[victim] farts on [src].<br><b>A mysterious force sucks [victim] into the book!!</b>"))
 			victim.emote("scream")
 			victim.implode()
 			return 1

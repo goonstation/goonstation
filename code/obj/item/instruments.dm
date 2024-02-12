@@ -346,7 +346,7 @@
 	if(ismob(target))
 		playsound(src, pick(sounds_punch), 50, 1, -1)
 		playsound(src, pick('sound/musical_instruments/saxbonk.ogg', 'sound/musical_instruments/saxbonk2.ogg', 'sound/musical_instruments/saxbonk3.ogg'), 50, 1, -1)
-		user.visible_message("<span class='alert'><b>[user] bonks [target] with [src]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] bonks [target] with [src]!</b>"))
 	else
 		. = ..()
 
@@ -512,7 +512,7 @@
 		else
 			var/obj/machinery/bot/duckbot/D = new /obj/machinery/bot/duckbot
 			D.eggs = rand(2,5) // LAY EGG IS TRUE!!!
-			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
+			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
 			D.set_loc(get_turf(user))
 			qdel(W)
 			qdel(src)
@@ -566,7 +566,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			return
 		else
 			var/obj/machinery/bot/chefbot/D = new /obj/machinery/bot/chefbot
-			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
+			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
 			D.set_loc(get_turf(user))
 			qdel(W)
 			qdel(src)
@@ -764,7 +764,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 
 	attack_self(mob/user as mob)
 		if(GET_COOLDOWN(user, "instrument_play"))
-			boutput(user, "<span class='alert'>\The [src] needs time to recharge its spooky strength!</span>")
+			boutput(user, SPAN_ALERT("\The [src] needs time to recharge its spooky strength!"))
 			return
 		else
 			playsound(src, 'sound/musical_instruments/Bikehorn_2.ogg', 70, FALSE, 0, 0.5)
@@ -782,12 +782,12 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 		if (!istype(S))
 			return
 		if (S.mob_flags & IS_BONEY)
-			S.visible_message("<span class='notice'><b>[S.name]</b> claks in appreciation!</span>")
+			S.visible_message(SPAN_NOTICE("<b>[S.name]</b> claks in appreciation!"))
 			playsound(S.loc, 'sound/items/Scissor.ogg', 50, 0)
 			return
 		else
 			logTheThing(LOG_COMBAT, S, "was skeletonized by a dootdoot trumpet played by [constructTarget(M,"combat")] at [log_loc(src)].")
-			S.visible_message("<span class='alert'><b>[S.name]'s skeleton rips itself free upon hearing the song of its people!</b></span>")
+			S.visible_message(SPAN_ALERT("<b>[S.name]'s skeleton rips itself free upon hearing the song of its people!</b>"))
 			playsound(S, S.gender == "female" ? 'sound/voice/screams/female_scream.ogg' : 'sound/voice/screams/male_scream.ogg', 50, 0, 0, S.get_age_pitch())
 			playsound(S, 'sound/effects/bubbles.ogg', 50, FALSE)
 			playsound(S, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, FALSE)
