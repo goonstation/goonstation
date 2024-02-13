@@ -53331,7 +53331,7 @@
 	},
 /obj/item/kitchen/utensil/spoon{
 	dir = 8;
-	pixel_y = 12;
+	pixel_y = 13;
 	pixel_x = 2
 	},
 /obj/item/plate{
