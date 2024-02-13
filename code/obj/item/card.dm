@@ -416,7 +416,7 @@ TYPEINFO(/obj/item/card/emag)
 			else
 				assignment = "loading arena matches..."
 				tag = "gauntlet-id-[user.client.key]"
-				queryGauntletMatches(1, user.client.key)
+				queryGauntletMatches(user.client.key)
 		name = "[registered]'s ID Card ([assignment])"
 
 	proc/SetMatchCount(var/matches)
