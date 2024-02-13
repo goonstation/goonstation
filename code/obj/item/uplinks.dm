@@ -1293,6 +1293,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/wizard_key = ""
 	var/uses = 6
 	var/list/spells = list()
+	var/list/purchased_spells = list() // Cant get it from ability_holder because soulguard wont be listed there.
 	flags = FPRINT | TABLEPASS | TGUI_INTERACTIVE
 	c_flags = ONBELT
 	throwforce = 5
@@ -1325,6 +1326,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	ui_data(mob/user)
 		. = list()
 		.["spell_slots"] = src.uses
+		.["purchased_spells"] = src.purchased_spells
 
 	ui_static_data(mob/user)
 		. = list()
@@ -1372,6 +1374,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					if(999) boutput(usr, SPAN_ALERT("Unknown Error."))
 					else
 						chosen_spell.SWFspell_Purchased(usr,src)
+						src.purchased_spells += chosen_spell
 
 ///////////////////////////////////////// Wizard's spells ///////////////////////////////////////////////////
 /datum/SWFuplinkspell
@@ -1601,182 +1604,3 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "This spell causes random effects to happen. Best used only by skilled wizards."
 	vr_allowed = 0
 	assoc_spell = /datum/targetable/spell/pandemonium
-
-
-/*
-/obj/item/SWF_uplink/proc/explode()
-	var/turf/location = get_turf(src.loc)
-	location.hotspot_expose(700, 125)
-
-	explosion(src, location, 0, 0, 2, 4)
-
-	qdel(src.master)
-	qdel(src)
-	return
-
-/obj/item/SWF_uplink/attack_self(mob/user as mob)
-	if(!user.mind || (user.mind && user.mind.key != src.wizard_key))
-		boutput(user, SPAN_ALERT("<b>The spellbook is magically attuned to someone else!</b>"))
-		return
-	src.add_dialog(user)
-	var/html = {"
-[(user.client && !user.client.use_chui) ? "<!doctype html>\n<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"pragma\" content=\"no-cache\"><style type='text/css'>body { font-family: Tahoma, sans-serif; font-size: 10pt; }</style><title>Wizard Spellbook</title></head><body>" : ""]
-
-<style type="text/css">
-	.spell {
-		position: relative;
-	}
-
-	.spell:hover {
-		background: #ddd;
-	}
-	.spell div {
-		display: none;
-		position: absolute;
-		right: 0;
-		top: -1em;
-		background: #ddd;
-		color: black;
-		padding: 0.1em 0.3em;
-		width: 50%;
-		font-size: 80%;
-		z-index: 9999;
-	}
-	.spell:hover div {
-		display: block;
-	}
-	.cantbuy {
-		opacity: 0.7;
-	}
-
-	.buyme, .owned {
-		font-weight: bold;
-	}
-
-	.owned {
-		background: rgba(0, 255, 0, 0.3);
-	}
-	.spell em {
-		color: #888;
-		margin-left: 1em;
-		font-size: 90%;
-		}
-	.spelllink { font-weight: bold; }
-</style>
-	<h3>[user.real_name]'s Spellbook</h3>
-	Spell slots remaining: [src.uses]
-	"}
-	var/list/spell_group = list()
-	var/rowclass = ""
-	var/rowtext = ""
-	var/link = ""
-	var/unusable = 0
-	for (var/datum/SWFuplinkspell/SP in src.spells)
-		var/cooldown = null
-
-		if (SP.assoc_spell && ispath(SP.assoc_spell, /datum/targetable/spell))
-			var/datum/targetable/spell/SPdatum = SP.assoc_spell
-			cooldown = initial(SPdatum.cooldown)
-
-		unusable = SP.SWFspell_CheckRequirements(user, src)
-		switch (unusable)
-			if (1)
-				rowclass = "cantbuy"
-				rowtext = ""
-			if (2)
-				rowclass = "owned"
-				rowtext = "Acquired!"
-			if (3)
-				rowclass = "vr"
-				rowtext = "Unavailable in VR"
-			if (999)
-				rowclass = "cantbuy"
-				rowtext = "Error???"
-			else
-				rowclass = "buyme"
-				rowtext = ""
-
-		if (!spell_group[SP.eqtype])
-			spell_group[SP.eqtype] = list("<center><b>[SP.eqtype]</b></center>")
-
-		if (!unusable)
-			link = "<a href='byond://?src=\ref[src];buyspell=\ref[SP]'><span class='spelllink [rowclass]'>[SP.name] - cost: [SP.cost]</span></a>"
-		else
-			link = "<span class='spelllink [rowclass]'>[SP.name] - cost: [SP.cost]</span>"
-
-		spell_group[SP.eqtype] += "<div class='spell'>[link]<em>[rowtext]</em><div>[SP.desc][cooldown ? "<br><b>Cooldown: [cooldown / 10] sec.</b>" : ""]</div></div>"
-
-
-	for (var/L in spell_group)
-		html += jointext(spell_group[L], "")
-
-	user.Browse(jointext(html, ""), "window=radio")
-	onclose(user, "radio")
-	return
-
-/obj/item/SWF_uplink/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained())
-		return
-	var/mob/living/carbon/human/H = usr
-	if (!( ishuman(H)))
-		return 1
-	if ((usr.contents.Find(src) || (in_interact_range(src,usr) && istype(src.loc, /turf))))
-		src.add_dialog(usr)
-
-		if (href_list["buyspell"])
-			var/datum/SWFuplinkspell/SP = locate(href_list["buyspell"])
-			switch(SP.SWFspell_CheckRequirements(usr,src))
-				if(1) boutput(usr, SPAN_ALERT("You have no more magic points to spend."))
-				if(2) boutput(usr, SPAN_ALERT("You already have this spell."))
-				if(3) boutput(usr, SPAN_ALERT("This spell isn't availble in VR."))
-				if(999) boutput(usr, SPAN_ALERT("Unknown Error."))
-				else
-					SP.SWFspell_Purchased(usr,src)
-
-		else if (href_list["aboutspell"])
-			var/datum/SWFuplinkspell/SP = locate(href_list["aboutspell"])
-			src.temp = "[SP.desc]"
-			if (SP.cooldown)
-				src.temp += "<BR>It takes [SP.cooldown] seconds to recharge after use."
-
-		else if (href_list["lock"] && src.origradio)
-			// presto chango, a regular radio again! (reset the freq too...)
-			src.remove_dialog(usr)
-			usr.Browse(null, "window=radio")
-			var/obj/item/device/radio/T = src.origradio
-			var/obj/item/SWF_uplink/R = src
-			R.set_loc(T)
-			T.set_loc(usr)
-			// R.layer = initial(R.layer)
-			R.layer = 0
-			usr.u_equip(R)
-			usr.put_in_hand_or_drop(T)
-			R.set_loc(T)
-			T.set_frequency(initial(T.frequency))
-			T.attack_self(usr)
-			return
-
-		else if (href_list["selfdestruct"])
-			src.temp = "<A href='byond://?src=\ref[src];selfdestruct2=1'>Self-Destruct</A>"
-
-		else if (href_list["selfdestruct2"])
-			src.selfdestruct = 1
-			SPAWN(10 SECONDS)
-				explode()
-				return
-		else
-			if (href_list["temp"])
-				src.temp = null
-
-		if (ismob(src.loc))
-			attack_self(src.loc)
-		else
-			for(var/mob/M in viewers(1, src))
-				if (M.client)
-					src.attack_self(M)
-
-	//if (istype(H.wear_suit, /obj/item/clothing/suit/wizrobe))
-	//	H.wear_suit.check_abilities()
-	return
-*/

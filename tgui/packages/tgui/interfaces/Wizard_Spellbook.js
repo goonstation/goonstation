@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Button, Collapsible, Dimmer, Divider, LabeledList, Section, Stack } from '../components';
+import { Box, Button, Collapsible, Dimmer, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 // If I wanna color the categories, but probably gonna be scrapped
@@ -46,12 +46,15 @@ export const Wizard_Spellbook = (props, context) => {
       title={"Wizard Spellbook"}
       theme={"ntos"}
       width={500}
-      height={400}
+      height={600}
     >
-      <Window.Content scrollable>
+      <Window.Content>
         <Section title={owner_name+"'s Spellbook "}>
           {"Spell slots remaining: "+spell_slots}
-          <Divider />
+        </Section>
+      </Window.Content>
+      <Window.Content mt={11} scrollable>
+        <Section>
           {spell_categories.map((category) => (
             <SpellCategory category={category} key={category} />
           ))}
@@ -81,12 +84,32 @@ const SpellCategory = (props, context) => {
   );
 };
 
+const If_Purchased_Text = (purchased, cost, spell_slots) => {
+  if (purchased) {
+    return "Spell purchased";
+  } else if (cost > spell_slots) {
+    return "Not enough spell slots";
+  } else {
+    return "Purchase";
+  }
+};
+
+const If_Purchased = (purchased_spells, spell) => {
+  for (let index in purchased_spells) {
+    if (purchased_spells[index] === spell) {
+      return true;
+    }
+  }
+  return false;
+};
+
 const Spell = (props, context) => {
   const { data, act } = useBackend(context);
-  const { spellbook_contents, spell_slots, vr } = data;
+  const { spellbook_contents, purchased_spells, spell_slots, vr } = data;
   const { spell, category } = props;
 
   let spell_contents = []; // desc, cost, cooldown, vr_allowed
+  const purchased = If_Purchased(purchased_spells, spell);
 
   for (let spell_data in spellbook_contents[category][spell]) {
     spell_contents.push(spellbook_contents[category][spell][spell_data]);
@@ -107,10 +130,10 @@ const Spell = (props, context) => {
           buttons={
             <Button
               backgroundColor={"green"}
-              disabled={spell_slots < spell_contents[1]}
+              disabled={spell_slots < spell_contents[1] || purchased}
               onClick={() => act("buyspell", { spell: spell })}
             >
-              {"Purchase"}
+              {If_Purchased_Text(purchased, spell_contents[1], spell_slots)}
             </Button>
           }
         >
