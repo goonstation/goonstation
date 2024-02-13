@@ -1,4 +1,9 @@
 
+(t)mon feb 12 24
+(u)TDHooligan
+(p)17761
+(e)⚖💅🌱|C-Balance, C-QoL, A-Hydroponics
+(+)The RNG gods see botanys' plight. The top 3 genomes have, on average, dropped in value.
 (t)sun feb 11 24
 (u)LeahTheTech
 (+)The actionbar for opening and closing airlock wiring panels is now private (cannot be seen by other players).
