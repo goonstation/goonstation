@@ -203,6 +203,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
 	capacity = 500
+	_health = 250
+	_max_health = 250
 
 	var/has_tank = 1
 
@@ -296,6 +298,12 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			if (src.cup_amount <= 0)
 				user.show_text("That was the last cup!", "red")
 				src.UpdateIcon()
+
+	bullet_act(obj/projectile/P)
+		src.changeHealth(-P.power * P.proj_data.ks_ratio)
+
+	onDestroy()
+		src.smash()
 
 	drugged
 		New()
