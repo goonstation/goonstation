@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { useBackend } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { Box, Button, Collapsible, Dimmer, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
@@ -94,22 +94,13 @@ const If_Purchased_Text = (purchased, cost, spell_slots) => {
   }
 };
 
-const If_Purchased = (purchased_spells, spell) => {
-  for (let index in purchased_spells) {
-    if (purchased_spells[index] === spell) {
-      return true;
-    }
-  }
-  return false;
-};
-
 const Spell = (props, context) => {
   const { data, act } = useBackend(context);
   const { spellbook_contents, purchased_spells, spell_slots, vr } = data;
   const { spell, category } = props;
 
   let spell_contents = []; // desc, cost, cooldown, vr_allowed
-  const purchased = If_Purchased(purchased_spells, spell);
+  const [purchased, setPurchased] = useSharedState(context, spell, false);
 
   for (let spell_data in spellbook_contents[category][spell]) {
     spell_contents.push(spellbook_contents[category][spell][spell_data]);
@@ -131,7 +122,7 @@ const Spell = (props, context) => {
             <Button
               backgroundColor={"green"}
               disabled={spell_slots < spell_contents[1] || purchased}
-              onClick={() => act("buyspell", { spell: spell })}
+              onClick={() => { setPurchased(true); act("buyspell", { spell: spell }); }}
             >
               {If_Purchased_Text(purchased, spell_contents[1], spell_slots)}
             </Button>

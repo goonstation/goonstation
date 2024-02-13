@@ -1293,7 +1293,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/wizard_key = ""
 	var/uses = 6
 	var/list/spells = list()
-	var/list/purchased_spells = list() // Cant get it from ability_holder because soulguard wont be listed there.
 	flags = FPRINT | TABLEPASS | TGUI_INTERACTIVE
 	c_flags = ONBELT
 	throwforce = 5
@@ -1326,7 +1325,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	ui_data(mob/user)
 		. = list()
 		.["spell_slots"] = src.uses
-		.["purchased_spells"] = src.purchased_spells
 
 	ui_static_data(mob/user)
 		. = list()
@@ -1367,14 +1365,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					if (spell.name == chosen_spell)
 						chosen_spell = spell
 						break
-				switch(chosen_spell.SWFspell_CheckRequirements(usr,src))
-					if(1) boutput(usr, SPAN_ALERT("You have no more magic points to spend."))
-					if(2) boutput(usr, SPAN_ALERT("You already have this spell."))
-					if(3) boutput(usr, SPAN_ALERT("This spell isn't availble in VR."))
-					if(999) boutput(usr, SPAN_ALERT("Unknown Error."))
-					else
-						chosen_spell.SWFspell_Purchased(usr,src)
-						src.purchased_spells += chosen_spell
+				if (chosen_spell.SWFspell_CheckRequirements(usr,src))
+					chosen_spell.SWFspell_Purchased(usr,src)
 
 ///////////////////////////////////////// Wizard's spells ///////////////////////////////////////////////////
 /datum/SWFuplinkspell
@@ -1389,14 +1381,15 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	proc/SWFspell_CheckRequirements(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		if (!user || !book)
-			return 999 // unknown error
+			return FALSE // unknown error
 		if (book.vr && !src.vr_allowed)
-			return 3
+			return FALSE // Unavailable in VR
 		if (src.assoc_spell)
 			if (book.antag_datum.ability_holder.getAbility(assoc_spell))
-				return 2
+				return FALSE // Already have this spell
 		if (book.uses < src.cost)
-			return 1 // ran out of points
+			return FALSE // ran out of points
+		return TRUE
 
 	proc/SWFspell_Purchased(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		if (!user || !book)
