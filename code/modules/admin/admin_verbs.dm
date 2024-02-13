@@ -384,6 +384,8 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_caviewer,
 		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
+		/client/proc/toggle_all_artifacts,
+		/client/proc/spawn_tons_of_artifacts,
 		/client/proc/toggle_radio_maptext,
 
 		/datum/admins/proc/toggleaprilfools,

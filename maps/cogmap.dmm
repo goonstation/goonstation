@@ -5924,12 +5924,12 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/disposalpipe/segment/produce,
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -7295,8 +7295,8 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
-/obj/disposalpipe/segment/mail,
 /obj/decal/stripe_delivery,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/hydroponics/lobby)
 "aAQ" = (
@@ -7688,6 +7688,10 @@
 /obj/item/paper_bin,
 /obj/item/clipboard,
 /obj/item/pen,
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
 "aCk" = (
@@ -7698,6 +7702,9 @@
 	req_access_txt = "35"
 	},
 /obj/item/hand_labeler,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
 "aCm" = (
@@ -8282,6 +8289,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -8296,7 +8304,6 @@
 	},
 /area/station/hallway/primary/east)
 "aDL" = (
-/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -38219,7 +38226,6 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
@@ -38579,15 +38585,6 @@
 	dir = 4
 	},
 /area/station/engine/hotloop)
-"cZb" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/specialroom/chapel{
-	dir = 1
-	},
-/area/station/chapel/sanctuary)
 "cZg" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -38966,15 +38963,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
-"dpR" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred2"
-	},
-/area/station/chapel/sanctuary)
 "dpZ" = (
 /obj/machinery/turretid{
 	pixel_x = -24;
@@ -39699,9 +39687,6 @@
 "dOI" = (
 /obj/stool,
 /obj/machinery/atmospherics/pipe/simple,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
 "dON" = (
@@ -40960,12 +40945,12 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/landmark/start/job/botanist,
 /obj/machinery/alarm{
 	pixel_y = 23
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -42503,16 +42488,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
-"fMj" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
 "fML" = (
 /obj/lattice,
 /turf/space,
@@ -43386,7 +43361,6 @@
 	name = "W light switch";
 	pixel_x = -24
 	},
-/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "gsj" = (
@@ -45761,6 +45735,11 @@
 	icon_state = "L3"
 	},
 /area/station/crew_quarters/market)
+"isN" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/plating,
+/area/station/chapel/sanctuary)
 "isQ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -48577,17 +48556,6 @@
 /obj/landmark/start/job/scientist,
 /turf/simulated/floor/purple/side,
 /area/station/science/lobby)
-"kIp" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 1
-	},
-/area/station/chapel/sanctuary)
 "kIr" = (
 /obj/table/wood/auto,
 /obj/machinery/light,
@@ -48661,6 +48629,12 @@
 	dir = 6
 	},
 /area/mining/magnet)
+"kLp" = (
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
 "kLE" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -49989,6 +49963,13 @@
 	dir = 1
 	},
 /area/station/turret_protected/ai_upload_foyer)
+"maI" = (
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fred2"
+	},
+/area/station/chapel/sanctuary)
 "maK" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -50716,7 +50697,7 @@
 /area/station/maintenance/solar/west)
 "mBW" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "mCe" = (
@@ -51339,12 +51320,6 @@
 	dir = 5
 	},
 /area/station/solar/west)
-"ncw" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/carpet,
-/area/station/chapel/sanctuary)
 "ndi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -53918,13 +53893,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
-"paM" = (
-/obj/stool,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/carpet,
-/area/station/chapel/sanctuary)
 "pbj" = (
 /obj/machinery/firealarm/east,
 /obj/machinery/fluid_canister,
@@ -54572,14 +54540,6 @@
 	dir = 4
 	},
 /area/station/storage/primary)
-"pCZ" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 1
-	},
-/area/station/chapel/sanctuary)
 "pDb" = (
 /obj/machinery/firealarm/south,
 /obj/item/slag_shovel{
@@ -55382,14 +55342,6 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/airbridge)
-"qpn" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 8
-	},
-/area/station/chapel/sanctuary)
 "qqm" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -57289,12 +57241,6 @@
 "rMr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/pool)
-"rMu" = (
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fred1"
-	},
-/area/station/chapel/sanctuary)
 "rMG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -58343,6 +58289,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "sAI" = (
@@ -60722,8 +60669,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "ulq" = (
-/obj/disposalpipe/segment/mail,
 /obj/mapping_helper/wingrille_spawn/auto,
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/plating,
 /area/station/hydroponics/lobby)
 "ulC" = (
@@ -62281,6 +62231,16 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
+"vxJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "vxT" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -62296,10 +62256,7 @@
 	},
 /area/station/crew_quarters/market)
 "vyW" = (
-/obj/disposalpipe/segment/mail{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fred1"
@@ -62496,15 +62453,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/bridge)
-"vJq" = (
-/obj/disposalpipe/segment/mail{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 4
-	},
-/area/station/chapel/sanctuary)
 "vKj" = (
 /obj/cable/yellow,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -64126,6 +64074,18 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"wSZ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/switch_junction{
+	dir = 4;
+	icon_state = "pipe-sj2";
+	mail_tag = "hydroponics";
+	name = "hydroponics mail router"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "wTs" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -64144,7 +64104,6 @@
 /obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 4
 	},
-/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
@@ -64176,10 +64135,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction{
-	dir = 4;
-	mail_tag = "dispatch";
-	name = "dispatch mail router"
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/east)
@@ -64718,6 +64675,7 @@
 	dir = 4
 	},
 /obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred1"
@@ -65311,12 +65269,6 @@
 /obj/storage/secure/closet/command/medical_director,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
-"xVH" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/sanctuary)
 "xVK" = (
 /obj/machinery/launcher_loader/west{
 	door_delay = 5
@@ -119073,9 +119025,9 @@ bVV
 wVp
 cLi
 gse
-cZb
+aMl
 wTx
-vJq
+aHr
 mEg
 bjg
 bib
@@ -119377,7 +119329,7 @@ aXQ
 aRG
 aMm
 aNp
-qpn
+aHs
 mEg
 bia
 bnp
@@ -119679,7 +119631,7 @@ aXQ
 aLa
 aHs
 aNq
-xVH
+aMm
 mEg
 mEg
 aGo
@@ -119981,7 +119933,7 @@ fUp
 qDq
 uZB
 aNr
-pCZ
+aOF
 aPB
 aQG
 aRF
@@ -120283,7 +120235,7 @@ aGo
 aLc
 oQT
 aNq
-xVH
+aMm
 aOF
 aMm
 aRG
@@ -120585,7 +120537,7 @@ aGo
 aUr
 kiL
 aNs
-kIp
+aMl
 aPC
 aMl
 aRH
@@ -120887,7 +120839,7 @@ sKs
 wRX
 xwT
 aNt
-xVH
+aMm
 aOF
 aMm
 aOF
@@ -121189,7 +121141,7 @@ aHr
 aIO
 aJT
 aNu
-dpR
+aJT
 aPD
 aOF
 eZQ
@@ -121491,7 +121443,7 @@ aHs
 aLe
 aMo
 aNv
-ncw
+aMo
 aPE
 aMm
 aRJ
@@ -121793,7 +121745,7 @@ aHr
 aLe
 aMo
 aNw
-ncw
+aMo
 aPE
 aOF
 aRK
@@ -122095,7 +122047,7 @@ aHs
 aLe
 aMo
 aNv
-ncw
+aMo
 aPE
 aMm
 aOF
@@ -122699,7 +122651,7 @@ aJT
 aLf
 aMo
 qTU
-ncw
+aMo
 aLf
 aJT
 aPD
@@ -122993,7 +122945,7 @@ azd
 aAN
 aCj
 aDJ
-bVG
+wSZ
 aXQ
 aHr
 aIP
@@ -123001,7 +122953,7 @@ aJU
 aJU
 aJU
 aNy
-paM
+aJU
 aJU
 aJU
 aRM
@@ -123295,13 +123247,13 @@ aze
 aAO
 aCk
 aDK
-bVG
-aXQ
-aHs
-aLe
-aLf
-aLf
-rMu
+vxJ
+isN
+kLp
+maI
+aJV
+aJV
+vyW
 xtf
 vyW
 aJV
@@ -123597,7 +123549,7 @@ omw
 aAP
 ulq
 aDL
-fMj
+gro
 aGo
 aHu
 aIP

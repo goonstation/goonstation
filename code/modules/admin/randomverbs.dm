@@ -2950,3 +2950,90 @@ var/global/force_radio_maptext = FALSE
 				return
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
+/client/proc/toggle_all_artifacts()
+	// Housekeeping
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Toggle All Artifacts"
+	if (holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("What would you like to do?",,"Activate All","Deactivate All","Cancel"))
+			if("Cancel")
+				return
+			if("Activate All")
+				// You definitely can activate an artnuke like this maybe be sure we're sure
+				var/response = input(src, "Extremely stupid button pressing shenanagains detected - Type YES to continue", "Caution!") as null|text
+				if (response != "YES")
+					message_admins("[key_name(usr)] aborted toggling every dang artifact due to failing to type 'YES'") // im telling on u!!!
+					return
+				logTheThing(LOG_ADMIN, src, "started activating all available artifacts.")
+				message_admins("[key_name(usr)] started activating all available artifacts.")
+				for(var/artifact as anything in by_cat[TR_CAT_ARTIFACTS])
+					var/obj/holder = artifact
+					holder.ArtifactActivated()
+			if("Deactivate All")
+				// No confirmation for this since you cant really activate an artnuke like this
+				logTheThing(LOG_ADMIN, src, "started deactivating all available artifacts.")
+				message_admins("[key_name(usr)] started deactivating all available artifacts.")
+				for(var/artifact as anything in by_cat[TR_CAT_ARTIFACTS])
+					var/obj/holder = artifact
+					holder.ArtifactDeactivated()
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+
+#define ARTIFACT_BULK_LIMIT 100
+#define ARTIFACT_HARD_LIMIT 2000
+#define ARTIFACT_MAX_SPAWN_ATTEMPTS 100
+
+/client/proc/spawn_tons_of_artifacts()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Bulk Spawn Artifacts"
+
+	var/artifacts_spawned = 0
+	var/spawn_fails = 0
+	var/artifact_spawn_attempts
+
+	if (holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("THIS COULD SERIOUSLY FUCK THINGS UP. That being said, do it anyway?","WOAH THERE BUCKAROO","Yes","No"))
+			if("No")
+				return
+			if("Yes")
+				var/amt_artifacts = min(input(usr,"How many artifacts do we want to spawn?\n(Default: 50)",,50) as num, ARTIFACT_HARD_LIMIT)
+				if (amt_artifacts > ARTIFACT_BULK_LIMIT)
+					var/response = input(src, "High number of types: [length(amt_artifacts)] - Type YES to continue", "Caution!") as null|text
+					if (response != "YES")
+						message_admins("[key_name(usr)] aborted spawning [amt_artifacts] due to failing to type 'YES'") // im telling on u!!!
+						return
+				var/floors_only = (alert(src, "Only spawn artifacts on floors?",, "Yes", "No") == "Yes")
+				logTheThing(LOG_ADMIN, src, "started spawning [amt_artifacts] artifacts.")
+				message_admins("[key_name(usr)] started spawning [amt_artifacts] artifacts.")
+
+				while (artifacts_spawned < amt_artifacts)
+					var/turf/T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
+
+					if (floors_only)
+						while (artifact_spawn_attempts < ARTIFACT_MAX_SPAWN_ATTEMPTS)
+							if (istype(T, /turf/simulated/floor) && checkTurfPassable(T))
+								break
+							artifact_spawn_attempts += 1
+							T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
+						if (artifact_spawn_attempts >= ARTIFACT_MAX_SPAWN_ATTEMPTS)
+							spawn_fails += 1
+						else
+							Artifact_Spawn(T)
+						artifact_spawn_attempts = 0
+					else
+						Artifact_Spawn(T)
+					artifacts_spawned += 1
+					if (artifacts_spawned % ARTIFACT_BULK_LIMIT == 0)
+						sleep(1 SECOND)
+
+				logTheThing(LOG_ADMIN, src, "finished spawning [amt_artifacts] artifacts.")
+				message_admins("[key_name(usr)] finished spawning [amt_artifacts] artifacts.")
+				if (spawn_fails > 0)
+					logTheThing(LOG_ADMIN, src, "[spawn_fails] artifact\s failed to spawn")
+					message_admins("[spawn_fails] artifact\s failed to spawn")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+
+#undef ARTIFACT_BULK_LIMIT
+#undef ARTIFACT_HARD_LIMIT
+#undef ARTIFACT_MAX_SPAWN_ATTEMPTS
