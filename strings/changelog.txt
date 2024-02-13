@@ -1,4 +1,9 @@
 
+(t)tue feb 13 24
+(u)Wire
+(p)17816
+(e)🆕🚨|C-Feature, A-Admin
+(*)New backend system for external API communications. This impacts systems such as bans and cloud saves, as well as many other non-gameplay related things. This is a fairly significant change so please report any weird bugs you think may be related to the GitHub issue tracker.
 (t)mon feb 12 24
 (u)TDHooligan
 (p)17761
