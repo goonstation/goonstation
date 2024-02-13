@@ -849,6 +849,11 @@
 				L.changeStatus("burning", -20 SECONDS)
 		return !reacted
 
+	on_mob_life(var/mob/M, var/mult = 1)
+		if(!M) M = holder.my_atom
+		flush(holder, 10 * mult, "vampire")
+		..()
+
 /datum/reagent/water/tonic
 	name = "tonic water"
 	id = "tonic"

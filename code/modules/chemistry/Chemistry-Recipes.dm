@@ -2002,9 +2002,9 @@
 		id = "cola_syrup"
 		result = "cola_syrup"
 		required_reagents = list("cola" = 4, "VHFCS" = 1, "plasma" = 1)
-		inhibitors = list("sodawater")
+		inhibitors = "sodawater"
 		result_amount = 2
-		min_temperature = T0C + 120
+		min_temperature = 360
 		mix_phrase = "The cola simmers into a noxious black syrup."
 		on_reaction(datum/reagents/holder, created_volume)
 			. = ..()
@@ -2013,12 +2013,13 @@
 			smoke.start()
 
 	powercola
-		name = "powercola"
+		name = "Power Cola"
 		id = "powercola"
 		result = "powercola"
 		required_reagents = list("cola" = 1, "cola_syrup" = 1)
 		result_amount = 1
 		mix_phrase = "The cola grows more powerful than you could possibly imagine."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
 
 	colamara_chaos
 		name = "Colamara Chaos"
@@ -2027,6 +2028,7 @@
 		required_reagents = list("powercola" = 1, "ice" = 0, "ldmatter" = 1, "bitters" = 1)
 		result_amount = 3
 		mix_phrase = "The bitters and cola roughen the surface of the ice as they war with one another."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
 
 	mauna_cola_awakens
 		name = "Mauna Cola Awakens"
@@ -2036,7 +2038,13 @@
 		result_amount = 3
 		reaction_icon_state = list("reaction_fire-1", "reaction_fire-2") // Consider making non-instant
 		reaction_icon_color = "#ffffff"
+		mix_sound = 'sound/misc/ground_rumble.ogg'
 		mix_phrase = "The container rumbles and sputters as the cola absorbs the mixture's heat."
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			for (var/mob/living/M in range(6, 6))
+				shake_camera(M, 4, 4)
+				M.show_text(SPAN_ALERT("<b>The ground rumbles softly.</b>"))
 
 	roaring_waters
 		name = "Roaring Waters"
@@ -2044,6 +2052,7 @@
 		result = "roaringwaters"
 		required_reagents = list("powercola" = 1, "ice" = 0, "tonic" = 5, "sodawater" = 5)
 		result_amount = 10
+		mix_sound = 'sound/misc/drinkfizz.ogg'
 		mix_phrase = "A cool mist forms over the container as the waters crash over the ice."
 
 	strafers_soda
@@ -2055,8 +2064,19 @@
 		reaction_icon_color = "#ffffff"
 		result_amount = 6
 		mix_phrase = "Looks like someone forgot to put a mix_phrase here. LOL."
+
+
+
+		for (var/mob/living/carbon/human/H in range(2, holder.my_atom)) //MINTODO THIS SHIT
+			var/obj/item/I = get_id_card(H.wear_id)
+			if(istype(I, /obj/item/card/id/dabbing_license))
+				greg
+			else
+				for(var/mob/M in all_viewers(null, get_turf(holder.my_atom)))
+					boutput(M, SPAN_ALERT("The bevvy shrinks away into nothing as the ingredients mix. You determine that it needs more swag."))
 		//mintodo: dynamic mix sounds with MLG quickscope sound, "oh baby a triple" if done thrice in succession, "that ain't falco," etc.
 		//mintodo: Require dabbing license to mix
+		//"You don't have nearly enough swag to do this bevvy justice. You pour it out before someone notices."
 
 	lostcoke
 		name = "The Lost Treasure of Kalimero"
@@ -2064,54 +2084,75 @@
 		result = "lostcoke"
 		required_reagents = list("powercola" = 1, "port" = 1)
 		result_amount = 2
-		mix_phrase = "The mixture teleports away!"
+		mix_phrase = "The mixture teleports away! Go find it!"
+		mix_sound = FALSE
 
 		does_react(var/datum/reagents/holder)  // drink must be pure to mix-- no teleporting chem bombs
 			if(length(holder.reagent_list) > length(src.required_reagents))
 				return FALSE
+			if(!holder.my_atom) //no teleportable container, no reaction
+				return FALSE
 			else
 				return TRUE
 
-		on_reaction(var/datum/reagents/holder, var/created_volume) // Teleports away on mixing -- code stolen wholesale from haunted plushies
-			playsound(get_turf(holder), "warp", 20, 1)
-			var/teleportation_target = get_a_random_station_unlocked_container_with_no_others_on_the_turf() //mintodo This probably won't work
-			if(istype(teleportation_target, /obj/storage))
-				var/is_valid_storage_target = TRUE
-				var/obj/storage/container = teleportation_target
-				var/turf/container_turf = get_turf(container)
-				for(var/obj/storage/storage_object in container_turf)
-					if(storage_object == container)
-						continue
-					is_valid_storage_target = FALSE // found another storage object on the same turf as our container, teleport onto the turf instead
-					teleportation_target = get_turf(teleportation_target)
-				if(is_valid_storage_target)
-					if(container.open)
-						container.close()
-			else
-				teleportation_target = get_turf(teleportation_target)
-			if(teleportation_target)
-				holder.set_loc(teleportation_target) //This proc is undefined
-			else
-				boutput(holder, SPAN_ALERT("The container shudders for a moment, then is still.")) //mintodo make this show to all observers
+		on_reaction(var/datum/reagents/holder, var/created_volume) // Teleports away on mixing
+			playsound(get_turf(holder.my_atom), "warp", 20, 1)
+			if(istype(holder.my_atom, /obj))
+				var/obj/cup = holder.my_atom
+				cup.set_loc(get_a_random_station_unlocked_container_with_no_others_on_the_turf())
 
-	/* redspot
-		name = "Redspot" //mintodo define reagent
+
+	redspot
+		name = "Redspot"
 		id = "redspot"
 		result = "redspot"
-		required_reagents = list("powercola" = 1, "ice" = 0, "juice_tomato" = 1, "tonic" = 1)
+		required_reagents = list("powercola" = 1, "juice_cherry" = 1, "milk" = 1)
 		result_amount = 3
-		mix_phrase = "A storm brews."
-		'sound/ambience/nature/Rain_ThunderDistant.ogg',
+		mix_phrase = "An ancient storm brews within." //worded so that people can use it for dramatic flair
+		mix_sound = 'sound/ambience/nature/Rain_ThunderDistant.ogg'
 
-		//mintodo mix effect: Thunder sound and rain effect (temporary)
-	*/
+		on_reaction(datum/reagents/holder, created_volume)
+			var/turf/T = get_turf(holder.my_atom)
+			if (istype(T))
+				var/obj/effects/precipitation/rain/dense/tile/rain = new /obj/effects/precipitation/rain/dense/tile/
+				rain.set_loc(T)
+				SPAWN(6 SECONDS)
+					qdel(rain)
+
 	wipeout
 		name = "Wipeout"
 		id = "wipeout"
 		result = "wipeout"
 		required_reagents = list("powercola" = 1, "plasma" = 1, "espresso" = 1, "rum" = 1, "simplesyrup" = 1, "pfire" = 1)
 		result_amount = 6
-		mix_phrase = "Globs of the ingredients try and fail to mix with one another."
+		mix_phrase = "Globs of the ingredients barely mix with one another."
+
+	rotorua
+		name = "Rotorua Ravager"
+		id = "rotorua"
+		result = "rotorua"
+		required_reagents = list("powercola" = 1, "steam" = 1, "lipolicide" = 1, "ethanol" = 1)
+		result_amount = 4
+		mix_phrase = "The cola bubbles and steams."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+
+	spinningpipe
+		name = "Spinning Pipe"
+		id = "spinningpipe"
+		result = "spinningpipe"
+		required_reagents = list("powercola" = 1, "bojack" = 1, "atropine" = 1, "methamphetamine" = 1)
+		result_amount = 2
+		mix_phrase = "The container spins violently as the ingredients mix."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+
+	vampire
+		name = "Vampire"
+		id = "vampire"
+		result = "vampire"
+		required_reagents = list("powercola" = 1, "salt" = 1, "vodka" = 1, "blood" = 1)
+		result_amount = 4
+		mix_phrase = "A stillness falls over the drink as it congeals."
+		mix_sound = 'sound/effects/heartbeat.ogg'
 
 	legendairy
 		name = "Legendairy"
@@ -2119,7 +2160,8 @@
 		result = "legendairy"
 		required_reagents = list("powercola" = 1, "super_milk" = 1)
 		result_amount = 2
-		mix_phrase = "The Power Cola finally meets its match."
+		mix_phrase = "There's a small blast wave as the Power Cola and Super Milk meet."
+		mix_sound = 'sound/items/mining_blaster.ogg'
 
 	hot_toddy
 		name = "Hot Toddy"
