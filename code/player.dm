@@ -118,8 +118,8 @@
 		catch
 			return FALSE
 
-		src.rounds_participated = text2num(playerStats.played)
 		src.rounds_participated_rp = text2num(playerStats.played_rp)
+		src.rounds_participated = text2num(playerStats.played) + src.rounds_participated_rp //the API counts these separately, but we want a combined number
 		src.rounds_seen = text2num(playerStats.connected)
 		src.rounds_seen_rp = text2num(playerStats.connected_rp)
 		src.last_seen = playerStats.latest_connection.created_at
