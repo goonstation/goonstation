@@ -96,7 +96,7 @@ export const ConeButton = (props, context) => {
 export const IceCreamMachine = (props, context) => {
   return (
     <Window
-      title="Ice Cream-O-Mat 9900"
+      title="Ice Cream-O-Mat 6300"
       width={430}
       height={275}>
       <Window.Content>
