@@ -82,8 +82,18 @@
 					var/input = tgui_input_number(ui.user, "How many days?", "Add Poll", 1, 10000, 0)
 					expires_at = toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), days = input))
 				if ("Custom ISO8601 Timestamp")
-					//todo
-					return
+					var/input = tgui_input_text(ui.user, "Please provide a valid ISO8601 formatted timestamp?", "Add Poll", toIso8601(subtractTime(world.realtime, hours = world.timezone)))
+					if (validateIso8601(input))
+						expires_at = input
+					else
+						tgui_alert(ui.user, "Invalid timestamp provided, poll defaulting to no expiration", "Error")
+
+			//todo more advanced input to pick and choose multiple servers, e.g. RP only polls
+			var/servers = tgui_alert(ui.user, "Cross-server poll?", "Add Poll", list("Yes", "No"))
+			if (servers == "Yes")
+				servers = null
+			else
+				servers = list(config.server_id)
 
 			var/list/poll
 			try
@@ -94,7 +104,7 @@
 					multiple_choice,
 					expires_at,
 					options,
-					null
+					servers
 				)
 				var/datum/apiModel/Tracked/PollResource/pollResource = apiHandler.queryAPI(addPoll)
 				poll = pollResource.ToList()
