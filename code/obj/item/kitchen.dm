@@ -54,8 +54,8 @@ TRAYS
 
 	New()
 		..()
-//		if(prob(60)) // This was causing issues with placing stuff for setting tables.
-//			src.pixel_y = rand(0, 4)
+		if(src.pixel_y == 0 && prob(60)) // Don't adjust map-set pixel adjustments
+			src.pixel_y = rand(0, 4)
 		BLOCK_SETUP(BLOCK_KNIFE)
 		return
 
