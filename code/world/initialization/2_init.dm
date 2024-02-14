@@ -8,6 +8,9 @@
 	game_start_countdown = new()
 	UPDATE_TITLE_STATUS("Initializing world")
 
+	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
+	roundManagement.recordStart()
+
 	Z_LOG_DEBUG("World/Init", "Loading MOTD...")
 	src.load_motd()//GUH
 	Z_LOG_DEBUG("World/Init", "Loading admins...")
@@ -102,8 +105,6 @@
 	logTheThing(LOG_STATION, null, "Map: [getMapNameFromID(map_setting)]")
 #endif
 
-	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
-	round_start_data() //Tell the hub site a round is starting
 	if (time2text(world.realtime,"DDD") == "Fri")
 		NT |= mentors
 
