@@ -15073,7 +15073,7 @@
 /area/station/mining/refinery)
 "biN" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing{
 	pixel_x = -14
 	},

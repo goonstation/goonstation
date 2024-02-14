@@ -25,6 +25,9 @@
 	var/tmp/roundstart_dir
 	/// if this turf is immune to explosion (explosion immune turfs immediately return on ex_act())
 	var/explosion_immune = FALSE
+	///Things that are hidden "in" this turf that are revealed when it is pried up.
+	///Kept in a hidden object on the turf so that `get_turf` works as normal. Yes this is crime, fight me I have a possum.
+	var/obj/effects/hidden_contents_holder/hidden_contents = null
 
 	New()
 		..()
@@ -1897,6 +1900,16 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	to_plating()
 	playsound(src, 'sound/items/Crowbar.ogg', 80, TRUE)
 
+/turf/simulated/floor/levelupdate()
+	..()
+	if (!src.intact && src.hidden_contents)
+		for(var/atom/movable/AM as anything in src.hidden_contents)
+			AM.set_loc(src)
+			SEND_SIGNAL(AM, COMSIG_MOVABLE_FLOOR_REVEALED, src)
+		qdel(src.hidden_contents) //it's an obj, see the definition for crime justification
+		src.hidden_contents = null
+
+
 /turf/simulated/floor/attackby(obj/item/C, mob/user, params)
 
 	if (!C || !user)
@@ -2108,6 +2121,11 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	ReplaceWithFloor()
 	src.to_plating()
 
+/turf/simulated/floor/proc/hide_inside(atom/movable/AM)
+	if (!src.hidden_contents)
+		src.hidden_contents = new(src)
+	AM.set_loc(src.hidden_contents)
+
 /turf/simulated/floor/MouseDrop_T(atom/A, mob/user as mob)
 	..(A,user)
 	if(istype(A,/turf/simulated/floor))
@@ -2118,6 +2136,36 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				var/obj/item/cable_coil/C = I
 				if(BOUNDS_DIST(user,F) == 0 && BOUNDS_DIST(user,src) == 0)
 					C.move_callback(user, F, 0, src)
+
+/turf/simulated/floor/ReplaceWith(what, keep_old_material, handle_air, handle_dir, force)
+	var/obj/effects/hidden_contents_holder/old_hidden_contents = src.hidden_contents //we have to do this because src will be the new turf after the replace due to byond
+	var/turf/simulated/floor/newfloor = ..()
+	if (istype(newfloor))
+		newfloor.hidden_contents = old_hidden_contents
+	else
+		qdel(old_hidden_contents)
+	return newfloor
+
+/turf/simulated/floor/restore_tile()
+	..()
+	for (var/obj/item/item in src.contents)
+		if (item.w_class <= W_CLASS_TINY && !item.anchored) //I wonder if this will cause problems
+			src.hide_inside(item)
+
+///CRIME
+/obj/effects/hidden_contents_holder
+	name = ""
+	desc = ""
+	icon = null
+	anchored = ANCHORED_ALWAYS
+	invisibility = INVIS_ALWAYS
+	alpha = 0
+
+	set_loc(newloc)
+		if (!isnull(newloc))
+			return
+		. = ..()
+
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
 DEFINE_FLOORS_SIMMED_UNSIMMED(racing,
