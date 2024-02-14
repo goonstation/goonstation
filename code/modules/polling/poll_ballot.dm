@@ -62,6 +62,13 @@
 			else
 				multiple_choice = FALSE
 
+			//todo more advanced input to pick and choose multiple servers, e.g. RP only polls
+			var/servers = tgui_alert(ui.user, "Cross-server poll?", "Add Poll", list("Yes", "No"))
+			if (servers == "Yes")
+				servers = null
+			else
+				servers = list(config.server_id)
+
 			var/expiration_choice = tgui_input_list(ui.user, "Set an expiration date", "Add Poll",
 				list(
 					"None",
@@ -88,13 +95,6 @@
 					else
 						tgui_alert(ui.user, "Invalid timestamp provided, poll defaulting to no expiration", "Error")
 
-			//todo more advanced input to pick and choose multiple servers, e.g. RP only polls
-			var/servers = tgui_alert(ui.user, "Cross-server poll?", "Add Poll", list("Yes", "No"))
-			if (servers == "Yes")
-				servers = null
-			else
-				servers = list(config.server_id)
-
 			var/list/poll
 			try
 				var/datum/apiRoute/polls/add/addPoll = new
@@ -115,6 +115,14 @@
 
 			// Add this poll to our cached data
 			poll_manager.poll_data.Insert(1, list(poll))
+
+			var/alert_the_players = tgui_alert(ui.user, "Alert the players?", "Add Poll", list("Yes", "No"))
+			if (alert_the_players == "Yes")
+				// alert the players of the new poll!
+				for (var/client/C in clients)
+					boutput(C, SPAN_NOTICE("A new poll is now available. <a href='byond://winset?command=Player-Polls'>Click here to vote!</a>"))
+				playsound_global(world, 'sound/misc/prayerchime.ogg', 100, channel = VOLUME_CHANNEL_MENTORPM)
+
 			. = TRUE
 
 		if ("deletePoll")
