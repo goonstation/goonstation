@@ -283,7 +283,7 @@
 	var/mob/M
 	if (target && ismob(target)) M = target
 
-	var/ckey = tgui_input_text(src.mob, "Ckey of the player", "Ckey", M ? M.ckey : "")
+	var/ckey = ckey(tgui_input_text(src.mob, "Ckey of the player", "Ckey", M ? M.ckey : ""))
 	if (!ckey) return
 
 	var/datum/player/player = find_player(ckey)
