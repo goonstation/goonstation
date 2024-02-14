@@ -625,7 +625,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Mixed Mixers Crate"
 	desc = "A collection of free juice samples! At least, it was free to company reselling it to you."
 	category = "Civilian Department"
-	contains = list(/obj/item/storage/box/juice = 2)
+	contains = list(/obj/item/storage/box/juice = 3)
 	cost = PAY_TRADESMAN*3
 	containertype = /obj/storage/crate
 	containername = "Juice Crate"

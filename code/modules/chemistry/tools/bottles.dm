@@ -408,7 +408,11 @@
 	icon_state = "reagent_bottle"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
-	var/juicelist = list("juice_apple", "juice_banana", "juice_blackberry", "juice_blueberry", "juice_blueraspberry", "juice_carrot", "juice_grapefruit", "mint", "juice_peach", "juice_pumpkin", "juice_strawberry", "juice_watermelon")
+	var/juicelist = list("juice_apple", "juice_banana", "juice_blueberry", \
+						"juice_carrot", "juice_grapefruit", "mint", \
+						"juice_peach", "juice_pumpkin", "juice_strawberry", "juice_watermelon", \
+						"juice_lime", "juice_lemon", "juice_orange", "juice_cran", "juice_cherry", \
+						"juice_pineapple", "juice_tomato", "coconut_milk")
 	New()
 		if (prob(2))
 			src.initial_reagents = list(pick(juicelist) = 40)
