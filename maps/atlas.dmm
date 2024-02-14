@@ -1785,7 +1785,7 @@
 	pixel_x = 5;
 	pixel_y = 28
 	},
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "afK" = (

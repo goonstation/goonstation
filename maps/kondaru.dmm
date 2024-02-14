@@ -2898,7 +2898,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "akh" = (
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "akj" = (
