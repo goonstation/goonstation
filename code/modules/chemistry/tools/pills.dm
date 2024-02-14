@@ -61,7 +61,7 @@
 		if (I.is_open_container(TRUE) && I.reagents)
 			if (istype(I, /obj/item/clothing/mask/cigarette)) //Apparently you can smush a lit cigarette into a pill and destroy both
 				return
-			afterattack(I, user)	//Probably weird but afterattack contains the dissolving code
+			src.AfterAttack(I, user)	//Probably weird but afterattack contains the dissolving code
 		return
 
 	proc/create_random_icon()

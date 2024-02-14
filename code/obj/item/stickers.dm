@@ -113,7 +113,7 @@
 
 	mouse_drop(atom/over_object)
 		if (over_object.storage && can_act(usr) && (src in usr.equipped_list()) && BOUNDS_DIST(usr, over_object) <= 0)
-			src.afterattack(over_object, usr)
+			src.AfterAttack(over_object, usr)
 		else
 			..()
 
