@@ -2059,13 +2059,12 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				var/alch_mod = (holder.get_reagent_amount("ethanol")) / 15
-				M.make_dizzy(alch_mod / 5 * mult)
 				M.change_misstep_chance(alch_mod * mult)
 				src.total_misstep += alch_mod * mult
 				..()
 				return
 
-		fooddrink/maunacola //Spacewalking chem that requires drunkeness
+		/*fooddrink/maunacola //Spacewalking chem that requires drunkeness
 			name = "Mauna Cola Awakens"
 			id = "maunacola"
 			fluid_r = 233
@@ -2091,7 +2090,7 @@ datum
 					var/consumed = clamp(burnrate, 0, EtOH_amt) //partial burn, partial heat
 					greg //Greg will burn away the ethanol... in your liver. Fuck you Greg
 					H.sims.affectMotive("Thirst", )
-				..()
+				..()*/
 
 		fooddrink/roaringwaters
 			name = "Roaring Waters"
@@ -2622,14 +2621,15 @@ datum
 			fluid_r = 150
 			fluid_g = 213
 			fluid_b = 18
-			transparency = 70
+			transparency = 200
 			taste = "like gaming"
-			caffeine_content = 0.3 //mintodo add spread reduction for ranged weapons
+			caffeine_content = 0.3
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.reagents.add_reagent("sugar", 2 * mult)
 				M.reagents.add_reagent("salt", 2 * mult)
+				M.add_karma(-1)
 				if (prob(1))
 					M.reagents.add_reagent("liquid_code", 1 * mult)
 				..()

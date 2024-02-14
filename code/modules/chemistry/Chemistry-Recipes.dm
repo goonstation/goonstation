@@ -2067,13 +2067,13 @@
 
 
 
-		for (var/mob/living/carbon/human/H in range(2, holder.my_atom)) //MINTODO THIS SHIT
+		/*for (var/mob/living/carbon/human/H in range(2, holder.my_atom)) //MINTODO THIS SHIT
 			var/obj/item/I = get_id_card(H.wear_id)
 			if(istype(I, /obj/item/card/id/dabbing_license))
 				greg
 			else
 				for(var/mob/M in all_viewers(null, get_turf(holder.my_atom)))
-					boutput(M, SPAN_ALERT("The bevvy shrinks away into nothing as the ingredients mix. You determine that it needs more swag."))
+					boutput(M, SPAN_ALERT("The bevvy shrinks away into nothing as the ingredients mix. You determine that it needs more swag."))*/
 		//mintodo: dynamic mix sounds with MLG quickscope sound, "oh baby a triple" if done thrice in succession, "that ain't falco," etc.
 		//mintodo: Require dabbing license to mix
 		//"You don't have nearly enough swag to do this bevvy justice. You pour it out before someone notices."
