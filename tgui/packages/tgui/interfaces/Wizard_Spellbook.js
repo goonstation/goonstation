@@ -5,8 +5,8 @@
  * @license ISC
  */
 
-import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Collapsible, Dimmer, LabeledList, Section, Stack } from '../components';
+import { useBackend, useLocalState, useSharedState } from '../backend';
+import { Box, Button, Collapsible, Dimmer, Flex, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 // If I wanna color the categories, but probably gonna be scrapped
@@ -29,6 +29,7 @@ const category_coloring = (spell_category) => {
 
 export const Wizard_Spellbook = (props, context) => {
   const { data } = useBackend(context);
+  const [searchQuery, setSearchQuery] = useLocalState(context, 'searchQuery', '');
   const {
     spellbook_contents,
     owner_name,
@@ -50,13 +51,26 @@ export const Wizard_Spellbook = (props, context) => {
     >
       <Window.Content>
         <Section title={owner_name+"'s Spellbook "}>
-          {"Spell slots remaining: "+spell_slots}
+          <Flex justify={"space-between"}>
+            <Flex.Item>
+              {"Spell slots remaining: "+spell_slots}
+            </Flex.Item>
+            <Flex.Item>
+              <Input
+                value={searchQuery}
+                placeholder={"search by spell name"}
+                width={15}
+                autoSelect
+                onInput={(_, value) => setSearchQuery(value)}
+              />
+            </Flex.Item>
+          </Flex>
         </Section>
       </Window.Content>
-      <Window.Content mt={11} scrollable>
+      <Window.Content mt={12} scrollable>
         <Section>
           {spell_categories.map((category) => (
-            <SpellCategory category={category} key={category} />
+            <SpellCategory category={category} searchQuery={searchQuery} key={category} />
           ))}
         </Section>
       </Window.Content>
@@ -67,7 +81,7 @@ export const Wizard_Spellbook = (props, context) => {
 const SpellCategory = (props, context) => {
   const { data } = useBackend(context);
   const { spellbook_contents } = data;
-  const { category } = props;
+  const { category, searchQuery } = props;
 
   let spells = [];
   for (let spell_name in spellbook_contents[category]) {
@@ -76,7 +90,7 @@ const SpellCategory = (props, context) => {
   return (
     <Collapsible title={category} textColor={category_coloring(category)} bold>
       <Stack vertical>
-        {spells.map((spell) => (
+        {spells.filter((spell) => spell.toLowerCase().includes(searchQuery.toLowerCase())).map((spell) => (
           <Spell spell={spell} category={category} key={spell} />
         ))}
       </Stack>
