@@ -9,7 +9,7 @@ import { useBackend, useLocalState, useSharedState } from '../backend';
 import { Box, Button, Collapsible, Dimmer, Flex, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-// If I wanna color the categories, but probably gonna be scrapped
+// This will do in-place of there being no wizard theme
 const category_coloring = (spell_category) => {
   switch (spell_category) {
     case "Enchantment":
@@ -32,8 +32,8 @@ export const Wizard_Spellbook = (props, context) => {
   const [searchQuery, setSearchQuery] = useLocalState(context, 'searchQuery', '');
   const {
     spellbook_contents,
-    owner_name,
     spell_slots,
+    owner_name,
   } = data;
 
   let spell_categories = [];
@@ -43,11 +43,11 @@ export const Wizard_Spellbook = (props, context) => {
 
   return (
     <Window
-      fontSize={2}
       title={"Wizard Spellbook"}
       theme={"ntos"}
-      width={500}
+      fontSize={2}
       height={600}
+      width={500}
     >
       <Window.Content>
         <Section title={owner_name+"'s Spellbook "}>
@@ -87,8 +87,13 @@ const SpellCategory = (props, context) => {
   for (let spell_name in spellbook_contents[category]) {
     spells.push(spell_name);
   }
+
   return (
-    <Collapsible title={category} textColor={category_coloring(category)} bold>
+    <Collapsible
+      title={category}
+      textColor={category_coloring(category)}
+      bold
+    >
       <Stack vertical>
         {spells.filter((spell) => spell.toLowerCase().includes(searchQuery.toLowerCase())).map((spell) => (
           <Spell spell={spell} category={category} key={spell} />
@@ -110,12 +115,15 @@ const If_Purchased_Text = (purchased, cost, spell_slots) => {
 
 const Spell = (props, context) => {
   const { data, act } = useBackend(context);
-  const { spellbook_contents, purchased_spells, spell_slots, vr } = data;
+  const {
+    spellbook_contents,
+    spell_slots,
+    vr,
+  } = data;
   const { spell, category } = props;
 
-  let spell_contents = []; // desc, cost, cooldown, vr_allowed
   const [purchased, setPurchased] = useSharedState(context, spell, false);
-
+  let spell_contents = []; // Non-associated list of: desc, cost, cooldown, vr_allowed
   for (let spell_data in spellbook_contents[category][spell]) {
     spell_contents.push(spellbook_contents[category][spell][spell_data]);
   }
