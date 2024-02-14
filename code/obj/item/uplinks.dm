@@ -438,7 +438,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				var/obj/item = new I.item(get_turf(src))
 				I.run_on_spawn(item, usr, FALSE, src)
 				if (src.is_VR_uplink == 0)
-					statlog_traitor_item(usr, I.name, I.cost)
+					var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
+					antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
 			if (I.item2)
 				new I.item2(get_turf(src))
 			if (I.item3)
@@ -712,7 +713,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				var/obj/item = new I.item(get_turf(src.hostpda))
 				I.run_on_spawn(item, usr)
 				if (src.is_VR_uplink == 0)
-					statlog_traitor_item(usr, I.name, I.cost)
+					var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
+					antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
 			if (I.item2)
 				new I.item2(get_turf(src.hostpda))
 			if (I.item3)
@@ -1289,6 +1291,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "spellbook"
 	item_state = "spellbook"
+	var/datum/antagonist/wizard/antag_datum = null
 	var/wizard_key = ""
 	var/temp = null
 	var/uses = 6
@@ -1309,8 +1312,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	uses = 9999
 #endif
 
-	New(var/in_vr = 0)
+	New(datum/antagonist/wizard/antag, in_vr = FALSE)
 		..()
+		src.antag_datum = antag
 		if (in_vr)
 			vr = 1
 			uses *= 2
@@ -1335,8 +1339,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (book.vr && !src.vr_allowed)
 			return 3
 		if (src.assoc_spell)
-			var/datum/antagonist/wizard/antag_role = user.mind.get_antagonist(ROLE_WIZARD)
-			if (antag_role.ability_holder.getAbility(assoc_spell))
+			if (book.antag_datum.ability_holder.getAbility(assoc_spell))
 				return 2
 		if (book.uses < src.cost)
 			return 1 // ran out of points
@@ -1346,8 +1349,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		logTheThing(LOG_DEBUG, null, "[constructTarget(user)] purchased the spell [src.name] using the [book] uplink.")
 		if (src.assoc_spell)
-			var/datum/antagonist/wizard/antag_role = user.mind.get_antagonist(ROLE_WIZARD)
-			antag_role.ability_holder.addAbility(src.assoc_spell)
+			book.antag_datum.ability_holder.addAbility(src.assoc_spell)
 		if (src.assoc_item)
 			var/obj/item/I = new src.assoc_item(user.loc)
 			if (istype(I, /obj/item/staff) && user.mind && !isvirtual(user))

@@ -111,6 +111,8 @@
 	icon_state = "fatportal"
 	density = 0
 	var/obj/target = null
+	/// allows a portal to warp to restricted Zs and areas
+	var/bypass_tele_block = FALSE
 	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -175,7 +177,7 @@
 	if (istype(M, /atom/movable))
 		animate_portal_tele(src)
 		playsound(src.loc, "warp", 50, 1, 0.2, 1.2)
-		do_teleport(M, src.target, 1) ///You will appear adjacent to the beacon
+		do_teleport(M, src.target, 1, !bypass_tele_block) ///You will appear adjacent to the beacon
 
 /obj/warp_beacon/proc/startpack()
 	src.packable = 0

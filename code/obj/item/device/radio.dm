@@ -878,7 +878,7 @@ TYPEINFO(/obj/item/radiojammer)
 
 
 /obj/item/device/radio/signaler
-	name = "\improper Remote Signaling Device"
+	name = "remote signaler" //US spelling :vomit: but we should be consistent
 	icon_state = "signaller"
 	item_state = "signaler"
 	var/code = 30

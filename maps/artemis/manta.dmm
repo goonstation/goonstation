@@ -512,7 +512,7 @@
 /area/ship/manta)
 "MW" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/blue/checker,
 /area/ship/manta)
 "Oi" = (

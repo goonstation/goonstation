@@ -160,11 +160,25 @@ datum
 						if(M.reagents)
 							M.reagents.add_reagent(self.id,volume*touch_modifier,self.data)
 							did_not_react = 0
-					if (ishuman(M) && hygiene_value && method == TOUCH)
+					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
+						if (H.mutantrace.aquaphobic && istype(src, /datum/reagent/water))
+							animate_shake(H)
+							if (prob(50))
+								H.emote("scream")
+							else
+								boutput(H, "<span class='alert'><b>The water! It[pick(" burns"," hurts","'s so terrible","'s ruining your skin"," is your true mortal enemy!")]!</b></span>", group = "aquaphobia")
+							if (!ON_COOLDOWN(H, "bingus_damage", 3 SECONDS))
+								random_burn_damage(H, clamp(0.3 * volume, 4, 20))
 						if (H.sims)
 							if ((hygiene_value > 0 && !(H.wear_suit || H.w_uniform)) || hygiene_value < 0)
-								H.sims.affectMotive("Hygiene", volume * hygiene_value)
+								var/hygiene_restore = hygiene_value
+								if (H.mutantrace.aquaphobic)
+									if (istype(src, /datum/reagent/oil))
+										hygiene_restore = 3
+									else if (istype(src, /datum/reagent/water))
+										hygiene_restore = -3
+								H.sims.affectMotive("Hygiene", volume * hygiene_restore)
 
 				if(INGEST)
 					var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)

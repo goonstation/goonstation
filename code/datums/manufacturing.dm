@@ -120,6 +120,16 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	frame_path = /obj/disposalpipe/loafer
 
+/******************** Communications Dish *******************/
+
+/datum/manufacture/mechanics/comms_dish
+	name = "Communications Dish"
+	item_paths = list("MET-1", "MET-2", "INS-1" , "CON-1")
+	item_amounts = list(20,10,20,20)
+	time = 60 SECONDS
+	create = 1
+	frame_path = /obj/machinery/communications_dish
+
 /******************** AI Law Rack *******************/
 
 /datum/manufacture/mechanics/lawrack
