@@ -516,7 +516,7 @@
 	proc/set_internal_radio(mob/user as mob)
 		if (!ishuman(user) || !src.radio)
 			return
-		src.radio.attack_self(user)
+		src.radio.AttackSelf(user)
 
 	proc/set_internal_camera(mob/user)
 		if (!ishuman(user) || !src.camera)

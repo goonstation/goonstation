@@ -369,7 +369,7 @@ TYPEINFO(/obj/item/device/flash)
 
 /obj/item/device/flash/emp_act()
 	if(iscarbon(src.loc))
-		src.attack_self()
+		src.AttackSelf()
 	return
 
 // The Turboflash - A flash combined with a charged energy cell to make a bigger, meaner flash (That dies after one use).

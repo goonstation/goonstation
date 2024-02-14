@@ -398,7 +398,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					usr.put_in_hand_or_drop(T)
 					RU.set_loc(T)
 					T.set_frequency(initial(T.frequency))
-					T.attack_self(usr)
+					T.AttackSelf(usr)
 					return
 
 			else if (src.locked == 0 && src.is_VR_uplink == 0)
@@ -474,7 +474,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		else if (href_list["temp"])
 			src.temp = null
 
-		src.attack_self(usr)
+		src.AttackSelf(usr)
 		return
 #undef CHECK1
 #undef CHECK2
@@ -1697,7 +1697,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			usr.put_in_hand_or_drop(T)
 			R.set_loc(T)
 			T.set_frequency(initial(T.frequency))
-			T.attack_self(usr)
+			T.AttackSelf(usr)
 			return
 
 		else if (href_list["selfdestruct"])
@@ -1713,11 +1713,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.temp = null
 
 		if (ismob(src.loc))
-			attack_self(src.loc)
+			src.AttackSelf(src.loc)
 		else
 			for(var/mob/M in viewers(1, src))
 				if (M.client)
-					src.attack_self(M)
+					src.AttackSelf(M)
 
 	//if (istype(H.wear_suit, /obj/item/clothing/suit/wizrobe))
 	//	H.wear_suit.check_abilities()

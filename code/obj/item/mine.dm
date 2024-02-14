@@ -78,7 +78,7 @@ TYPEINFO(/obj/item/mine)
 			logTheThing(LOG_BOMBING, user, "has disarmed the [src.name] at [log_loc(user)].")
 
 		if (src.our_timer && istype(src.our_timer))
-			src.our_timer.attack_self(user)
+			src.our_timer.AttackSelf(user)
 
 
 	receive_signal()
