@@ -215,6 +215,7 @@ TYPEINFO(/obj/item/gun/energy)
 /obj/item/gun/energy/laser_gun/antique
 	name = "antique laser gun"
 	icon_state = "caplaser"
+	item_state = "capgun"
 	desc = "It's a kit model of the Mod.00 'Lunaport Legend' laser gun from Super! Protector Friend. With realistic sound fx and exciting LED display! This one has been hazardously upgraded."
 	muzzle_flash = "muzzle_flash_laser"
 	cell_type = null

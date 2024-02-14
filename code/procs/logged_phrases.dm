@@ -218,11 +218,16 @@ var/global/datum/phrase_log/phrase_log = new
 	/// Gets a random phrase from the Goonhub API database, categories are "ai_laws", "tickets", "fines"
 	proc/random_api_phrase(category)
 		if(!length(src.cached_api_phrases[category]))
-			var/list/data = apiHandler.queryAPI("random-entries", list("type"=category, "count"=src.api_cache_size), 1, 1, 1)
-			if(!data)
+			var/datum/apiModel/RandomEntries/randomEntries
+			try
+				var/datum/apiRoute/randomEntries/getRandomEntries = new
+				getRandomEntries.queryParams = list("type" = category, "count" = src.api_cache_size)
+				randomEntries = apiHandler.queryAPI(getRandomEntries)
+			catch
 				return .
+
 			var/list/new_phrases = list()
-			for(var/list/entry in data["entries"])
+			for (var/datum/apiModel/entry in randomEntries.entries)
 				switch(category)
 					if("ai_laws")
 						if(entry["uploader_key"] != "Random Event")
