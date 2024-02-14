@@ -97,7 +97,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			throw EXCEPTION(error.message)
 
 		if (text2num(mapSwitchRes.status) != 200)
-			throw EXCEPTION("Build server failed to switch map")
+			throw EXCEPTION("Build server failed to switch map. Expected HTTP status code 200, received code [isnull(mapSwitchRes.status) ? "null" : mapSwitchRes.status] instead")
 
 		//make a note if this is a player voted map
 		src.nextMapIsVotedFor = trigger == "Player Vote" ? 1 : 0

@@ -2,10 +2,17 @@ import { useBackend } from '../backend';
 import { Button, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-const PollControls = ({ isAdmin, act, pollId, isExpired, multipleChoice, expiryDate }) => {
+const PollControls = ({ isAdmin, act, pollId, isExpired, multipleChoice, expiryDate, servers }) => {
   return (
     <Stack>
       <Stack.Item>
+        {servers ? null : (
+          <Button
+            tooltip="Global Poll"
+            tooltipPosition="top"
+            icon="globe"
+          />
+        )}
         {multipleChoice ? (
           <Button
             tooltip="Multiple Choice"
@@ -104,6 +111,7 @@ export const PollBallot = (props, context) => {
                     isExpired={poll.expires_at && (new Date() > new Date(poll.expires_at))}
                     multipleChoice={poll.multiple_choice}
                     expiryDate={poll.expires_at}
+                    servers={poll.servers}
                   />
                 }>
                 <Stack vertical>
