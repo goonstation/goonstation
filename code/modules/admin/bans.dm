@@ -80,7 +80,7 @@
 		ircmsg["key2"] = "[ckey] (IP: [ip], CompID: [comp_id])"
 		ircmsg["msg"] = reason
 		ircmsg["time"] = durationHuman
-		ircmsg["timestamp"] = duration / 60 // duration is in seconds, bot expects minutes
+		ircmsg["timestamp"] = ((world.realtime / 10) / 60) + (duration / 60) // duration is in seconds, bot expects minutes
 		ircbot.export_async("ban", ircmsg)
 
 		if (targetClient)
