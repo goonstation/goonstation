@@ -1586,7 +1586,7 @@ About the new airlock wires panel:
 		if (!src.has_panel)
 			boutput(user, SPAN_ALERT("[src] does not have a panel for you to unscrew!"))
 			return
-		SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/machinery/door/airlock/proc/interact_panel, user, C.icon, C.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 1 SECOND, /obj/machinery/door/airlock/proc/interact_panel, user, C.icon, C.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 	else if (issnippingtool(C) && src.panel_open)
 		return src.Attackhand(user)
 	else if (ispulsingtool(C))

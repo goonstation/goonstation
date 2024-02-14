@@ -2144,6 +2144,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		newfloor.hidden_contents = old_hidden_contents
 	else
 		qdel(old_hidden_contents)
+	return newfloor
 
 /turf/simulated/floor/restore_tile()
 	..()

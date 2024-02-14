@@ -24,6 +24,8 @@ var/list/extra_resources = list('interface/fonts/pressstart2p.ttf', 'interface/f
 
 var/global
 
+	roundId = 0
+
 	serverKey = 0
 
 	lagcheck_enabled = 0
