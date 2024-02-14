@@ -1,5 +1,9 @@
 
 (t)tue feb 13 24
+(u)Keiiro
+(p)17924
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Nanotrasen and Syndicate card colors are now available for selection with an Agent Card.
 (u)Wire
 (p)17816
 (e)🆕🚨|C-Feature, A-Admin
