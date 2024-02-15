@@ -3923,6 +3923,11 @@
 /obj/mapping_helper/access/engineering_engine,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "reactormain";
+	name = "Reactor Main";
+	enter_id = "inner2"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -4151,6 +4156,11 @@
 /obj/mapping_helper/access/ai_upload,
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aicore";
+	name = "AI Core";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
@@ -5376,6 +5386,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "secinterro2";
+	name = "Security Interrogation 2";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -6190,6 +6205,11 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
 "cNE" = (
@@ -6480,6 +6500,32 @@
 	},
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
+"cTx" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "bdoormid0";
+	id = "nadir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4;
+	name = "Secondary Core Access"
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "reactorside";
+	name = "Reactor Side";
+	enter_id = "inner"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "cTz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18559,6 +18605,11 @@
 	},
 /obj/mapping_helper/access/ai_upload,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/turret_protected/ai_upload)
 "hTu" = (
@@ -19161,6 +19212,11 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "reactormain";
+	name = "Reactor Main";
+	enter_id = "inner1"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -22358,6 +22414,11 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "reactormain";
+	name = "Reactor Main";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -25098,6 +25159,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "reactorside";
+	name = "Reactor Side";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -40678,6 +40744,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "secinterro1";
+	name = "Security Interrogation 1";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -44184,6 +44255,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "secinterro1";
+	name = "Security Interrogation 1";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
 "sUo" = (
@@ -45973,6 +46049,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "brig"
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig)
@@ -47984,6 +48065,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "secinterro2";
+	name = "Security Interrogation 2";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
 "uwl" = (
@@ -48289,6 +48375,11 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "uEt" = (
@@ -50649,6 +50740,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "reactormain";
+	name = "Reactor Main";
+	enter_id = "centrifuge"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -52359,6 +52455,11 @@
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "wzv" = (
@@ -53353,6 +53454,24 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/darkblue/checker,
+/area/station/turret_protected/ai)
+"wXQ" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/ai_upload,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aicore";
+	name = "AI Core";
+	enter_id = "inner"
+	},
+/turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
 "wYn" = (
 /obj/machinery/clothingbooth,
@@ -108525,7 +108644,7 @@ uiV
 sce
 ibV
 fLQ
-kAM
+cTx
 fLQ
 ibV
 fLQ
@@ -108786,7 +108905,7 @@ mIG
 mIG
 mIG
 mIG
-bOo
+wXQ
 mIG
 mIG
 mIG

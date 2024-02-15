@@ -1,4 +1,7 @@
 
+(t)thu feb 15 24
+(u)Sord
+(+)Most in rotation maps now have airlock cyclers on some interior airlocks (Security, engineering, research, etc) where applicable.
 (t)wed feb 14 24
 (u)Ikea
 (p)17577
