@@ -1940,12 +1940,12 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "akY" = (
-/obj/stool/chair,
+/obj/stool/chair/purple,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "akZ" = (
-/obj/stool/chair,
 /obj/landmark/start/job/scientist,
+/obj/stool/chair/purple,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "alb" = (
@@ -2120,16 +2120,16 @@
 	location = "bar";
 	name = "buddytime beacon"
 	},
-/obj/stool/chair{
+/obj/stool/chair/purple{
 	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "alK" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 1
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "alL" = (
@@ -2942,17 +2942,17 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/researchshuttle)
 "aqZ" = (
-/obj/stool/bench/yellow,
 /obj/machinery/camera{
 	c_tag = "Escape Hallway";
 	dir = 10
 	},
+/obj/stool/bench/red,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "ara" = (
 /obj/machinery/light/emergency,
-/obj/stool/bench/green,
 /obj/machinery/light/incandescent,
+/obj/stool/bench/green,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "arc" = (
@@ -22016,8 +22016,8 @@
 /turf/simulated/floor/wood/six,
 /area/station/maintenance/west)
 "fsH" = (
-/obj/stool/chair,
 /obj/disposalpipe/segment/vertical,
+/obj/stool/chair/purple,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "ftz" = (
@@ -23942,7 +23942,7 @@
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
 "gOE" = (
-/obj/stool/bench/red,
+/obj/stool/bench/purple,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "gOO" = (
@@ -28506,8 +28506,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "jLT" = (
-/obj/stool/bench/green,
 /obj/machinery/light/incandescent,
+/obj/stool/bench/yellow,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "jMr" = (
@@ -31679,7 +31679,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "lMB" = (
-/obj/stool/chair{
+/obj/stool/chair/purple{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
@@ -32236,8 +32236,8 @@
 /area/station/hallway/primary/north)
 "mgJ" = (
 /obj/machinery/light/emergency,
-/obj/stool/bench/blue,
 /obj/machinery/firealarm/south,
+/obj/stool/bench/purple,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "mgZ" = (
@@ -32684,11 +32684,11 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "msE" = (
-/obj/stool/chair{
-	dir = 1
-	},
 /obj/landmark/start/job/medical_doctor,
 /obj/machinery/light/incandescent/cool/very,
+/obj/stool/chair/black{
+	dir = 1
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "msI" = (
@@ -33603,7 +33603,7 @@
 	},
 /area/station/ai_monitored/armory)
 "mVH" = (
-/obj/stool/chair,
+/obj/stool/chair/purple,
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/science/lobby)
 "mWp" = (
@@ -73996,7 +73996,7 @@ dRI
 kYR
 hMd
 tbx
-uiX
+cJF
 cyq
 arN
 ayH
@@ -74902,7 +74902,7 @@ dRI
 wIP
 hMd
 fqV
-cJF
+uiX
 cyq
 arN
 yjM
