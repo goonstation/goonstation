@@ -45252,11 +45252,6 @@
 	},
 /area/station/medical/morgue)
 "trK" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/decal/cleanable/dirt,
@@ -45264,6 +45259,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/plating,
 /area/station/hydroponics{
 	do_not_irradiate = 1;
