@@ -77,6 +77,10 @@ var/global/list/cycling_airlocks = list()
 			if(0 to 24)
 				. += "It is barely intact!"
 
+// ==============================================================
+// ========================== procs =============================
+// ==============================================================
+
 /obj/machinery/door/airlock/New()
 	..()
 	if(!isrestrictedz(src.z) && src.name == initial(src.name)) //The second half prevents varedited names being overwritten
@@ -100,17 +104,18 @@ var/global/list/cycling_airlocks = list()
 		return 0
 	.= ..()
 
+// ================= airlock wire panel procs ==================
+
 /*
-About the new airlock wires panel:
-*	An airlock wire dialog can be accessed by the normal way or by using wirecutters or a multitool on the door while the wire-panel is open. This would show the following wires, which you can either wirecut/mend or send a multitool pulse through. There are 9 wires.
-*		one wire from the ID scanner. Sending a pulse through this flashes the red light on the door (if the door has power). If you cut this wire, the door will stop recognizing valid IDs. (If the door has 0000 access, it still opens and closes, though)
-*		two wires for power. Sending a pulse through either one causes a breaker to trip, disabling the door for 10 seconds if backup power is connected, or 1 minute if not (or until backup power comes back on, whichever is shorter). Cutting either one disables the main door power, but unless backup power is also cut, the backup power re-powers the door in 10 seconds. While unpowered, the door may be red open, but bolts-raising will not work. Cutting these wires may electrocute the user.
-*		one wire for door bolts. Sending a pulse through this drops door bolts (whether the door is powered or not) or raises them (if it is). Cutting this wire also drops the door bolts, and mending it does not raise them. If the wire is cut, trying to raise the door bolts will not work.
-*		two wires for backup power. Sending a pulse through either one causes a breaker to trip, but this does not disable it unless main power is down too (in which case it is disabled for 1 minute or however long it takes main power to come back, whichever is shorter). Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
-*		one wire for opening the door. Sending a pulse through this while the door has power makes it open the door if no access is required.
-*		one wire for AI control. Sending a pulse through this blocks AI control for a second or so (which is enough to see the AI control light on the panel dialog go off and back on again). Cutting this prevents the AI from controlling the door unless it has hacked the door through the power connection (which takes about a minute). If both main and backup power are cut, as well as this wire, then the AI cannot operate or hack the door at all.
-*		one wire for electrifying the door. Sending a pulse through this electrifies the door for 30 seconds. Cutting this wire electrifies the door, so that the next person to touch the door without insulated gloves gets electrocuted. (Currently it is also STAYING electrified until someone mends the wire)
-*/
+	About the new airlock wires panel:
+	*	An airlock wire dialog can be accessed by the normal way or by using wirecutters or a multitool on the door while the wire-panel is open. This would show the following wires, which you can either wirecut/mend or send a multitool pulse through. There are 9 wires.
+	*		one wire from the ID scanner. Sending a pulse through this flashes the red light on the door (if the door has power). If you cut this wire, the door will stop recognizing valid IDs. (If the door has 0000 access, it still opens and closes, though)
+	*		two wires for power. Sending a pulse through either one causes a breaker to trip, disabling the door for 10 seconds if backup power is connected, or 1 minute if not (or until backup power comes back on, whichever is shorter). Cutting either one disables the main door power, but unless backup power is also cut, the backup power re-powers the door in 10 seconds. While unpowered, the door may be red open, but bolts-raising will not work. Cutting these wires may electrocute the user.
+	*		one wire for door bolts. Sending a pulse through this drops door bolts (whether the door is powered or not) or raises them (if it is). Cutting this wire also drops the door bolts, and mending it does not raise them. If the wire is cut, trying to raise the door bolts will not work.
+	*		two wires for backup power. Sending a pulse through either one causes a breaker to trip, but this does not disable it unless main power is down too (in which case it is disabled for 1 minute or however long it takes main power to come back, whichever is shorter). Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
+	*		one wire for opening the door. Sending a pulse through this while the door has power makes it open the door if no access is required.
+	*		one wire for AI control. Sending a pulse through this blocks AI control for a second or so (which is enough to see the AI control light on the panel dialog go off and back on again). Cutting this prevents the AI from controlling the door unless it has hacked the door through the power connection (which takes about a minute). If both main and backup power are cut, as well as this wire, then the AI cannot operate or hack the door at all.
+	*		one wire for electrifying the door. Sending a pulse through this electrifies the door for 30 seconds. Cutting this wire electrifies the door, so that the next person to touch the door without insulated gloves gets electrocuted. (Currently it is also STAYING electrified until someone mends the wire).	*/
 /obj/machinery/door/airlock/proc/play_deny()
 	if(src.density && !src.operating) // only play the animation while fully closed
 		play_animation("deny")
@@ -426,9 +431,12 @@ About the new airlock wires panel:
 
 	return 0
 
-// shock user with probability prb (if all connections & power are working)
-// returns 1 if shocked, 0 otherwise
-// The preceding comment was borrowed from the grille's shock script
+// ================= general procs ==================
+
+/*
+	shock user with probability prb (if all connections & power are working)
+	returns 1 if shocked, 0 otherwise
+	The preceding comment was borrowed from the grille's shock script.	*/
 /obj/machinery/door/airlock/proc/shock(mob/user, prb)
 
 	if(!prob(prb))
@@ -899,6 +907,8 @@ About the new airlock wires panel:
 		..()
 	return
 
+// ========== mechcomp duplicate code ============
+
 TYPEINFO(/obj/machinery/door/airlock)
 	mats = 18
 
@@ -1352,6 +1362,8 @@ TYPEINFO(/obj/machinery/door/airlock)
 						src.attach_signaler(which_wire+1, usr)
 						. = TRUE
 
+// ================= admin procs ==================
+
 /*
 	New methods:
 	pulse - sends a pulse into a wire for hacking purposes
@@ -1368,11 +1380,8 @@ TYPEINFO(/obj/machinery/door/airlock)
 	loseMainPower - handles the effects of main power going offline. Usually (if one isn't already running) spawn a thread to count down how long it will be offline - counting down won't happen if main power was completely cut along with backup power, though, the thread will just sleep.
 	loseBackupPower - handles the effects of backup power going offline.
 	regainBackupPower - handles the effects of main power coming back on.
-	shock - has a chance of electrocuting its target.
-*/
-
+	shock - has a chance of electrocuting its target.	*/
 ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bolt, proc/shock_temp, proc/shock_perm, proc/shock_restore)
-
 /obj/machinery/door/airlock/proc/shock_temp(mob/user)
 	//electrify door for 30 seconds
 	if(!src.arePowerSystemsOn() || (src.status & NOPOWER))
@@ -1468,6 +1477,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bo
 	else
 		open()
 
+// ================= global procs ==================
 
 //This generates the randomized airlock wire assignments for the game.
 /proc/RandomAirlockWires()
@@ -1491,15 +1501,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bo
 	return wires
 
 /* Example:
-Airlock wires color -> flag are { 64, 128, 256, 2, 16, 4, 8, 32, 1 }.
-Airlock wires color -> index are { 7, 8, 9, 2, 5, 3, 4, 6, 1 }.
-Airlock index -> flag are { 1, 2, 4, 8, 16, 32, 64, 128, 256 }.
-Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
-*/
+	Airlock wires color -> flag are { 64, 128, 256, 2, 16, 4, 8, 32, 1 }.
+	Airlock wires color -> index are { 7, 8, 9, 2, 5, 3, 4, 6, 1 }.
+	Airlock index -> flag are { 1, 2, 4, 8, 16, 32, 64, 128, 256 }.
+	Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.	*/
 
-// ============================================
-// ============ different subtypes ============
-// ============================================
+// ==============================================================
+// ===================== different subtypes =====================
+// ==============================================================
+
 /obj/machinery/door/airlock/command
 	name = "command airlock"
 	icon = 'icons/obj/doors/Doorcom.dmi'
@@ -1540,6 +1550,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	operation_time = 10
 
 // ------------ syndicate airlocks ------------
+
 TYPEINFO(/obj/machinery/door/airlock/syndicate)
 	mats = 0
 
@@ -1561,6 +1572,7 @@ TYPEINFO(/obj/machinery/door/airlock/syndicate)
 	return
 
 // ------------ centcomm airlocks ------------
+
 TYPEINFO(/obj/machinery/door/airlock/centcom)
 	mats = 0
 
@@ -1580,6 +1592,7 @@ TYPEINFO(/obj/machinery/door/airlock/centcom)
 	return
 
 // // ------------ glass airlocks ------------
+
 /obj/machinery/door/airlock/glass
 	name = "glass airlock"
 	icon = 'icons/obj/doors/Doorglass.dmi'
@@ -1602,6 +1615,7 @@ TYPEINFO(/obj/machinery/door/airlock/centcom)
 		req_access = list(access_medical)
 
 // ------------ gannets airlocks ------------
+
 /obj/machinery/door/airlock/gannets
 	name = "airlock"
 	icon = 'icons/obj/doors/destiny.dmi'
@@ -1795,6 +1809,7 @@ TYPEINFO(/obj/machinery/door/airlock/centcom)
 		req_access = list(access_maint_tunnels)
 
 // ------------ pyro airlocks ------------
+
 /obj/machinery/door/airlock/pyro
 	name = "airlock"
 	icon = 'icons/obj/doors/SL_doors.dmi'
@@ -1819,6 +1834,7 @@ TYPEINFO(/obj/machinery/door/airlock/centcom)
 	operation_time = 10
 
 // -------- command
+
 /obj/machinery/door/airlock/pyro/command
 	name = "command airlock"
 	icon_state = "com_closed"
@@ -1852,6 +1868,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	req_access = list(access_syndicate_commander)
 
 // -------- security
+
 /obj/machinery/door/airlock/pyro/weapons
 	icon_state = "manta_closed"
 	icon_base = "manta"
@@ -1884,6 +1901,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	req_access = null
 
 // -------- engineering
+
 /obj/machinery/door/airlock/pyro/engineering
 	name = "engineering airlock"
 	icon_state = "eng_closed"
@@ -1906,6 +1924,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	req_access = null
 
 // -------- medsci
+
 /obj/machinery/door/airlock/pyro/medical
 	name = "medical airlock"
 	icon_state = "research_closed"
@@ -1950,6 +1969,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	req_access = null
 
 // -------- maintenance
+
 /obj/machinery/door/airlock/pyro/maintenance
 	name = "maintenance airlock"
 	icon_state = "maint_closed"
@@ -1963,6 +1983,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	welded_icon_state = "2_welded"
 
 // -------- external
+
 /obj/machinery/door/airlock/pyro/external
 	name = "external airlock"
 	icon_state = "airlock_closed"
@@ -2008,6 +2029,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
 	visible = 0
 
 // -------- glass
+
 /obj/machinery/door/airlock/pyro/glass
 	name = "glass airlock"
 	icon_state = "glass_closed"
@@ -2093,6 +2115,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	req_access = null
 
 // -------- windoors
+
 /obj/machinery/door/airlock/pyro/glass/windoor
 	name = "thin glass airlock"
 	icon_state = "windoor_closed"
@@ -2205,6 +2228,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	sound_airlock = 'sound/machines/windowdoor.ogg'
 	has_crush = FALSE
 
+// undefining stuff
 #undef NET_ACCESS_OPTIONS
 #undef LINKED_FORCEFIELD_POWER_USAGE
 #undef OPEN_CLOSE_POWER_USAGE
