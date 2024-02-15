@@ -147,7 +147,7 @@
 		src.ui_interact(user)
 
 	attack_ai(var/mob/user)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_self(var/mob/user)
-		return src.attack_hand(user)
+		return src.Attackhand(user)

@@ -46,7 +46,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 		return
 
 /obj/submachine/claw_machine/attack_ai(mob/user)
-	src.attack_hand(user)
+	src.Attackhand(user)
 
 /obj/submachine/claw_machine/get_desc(dist)
 	. = ..()

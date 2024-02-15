@@ -155,7 +155,7 @@
 	attack_ai(mob/user)
 		if(!can_reach(user, src) || isAI(user) || isAIeye(user))
 			return
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	Bumped(var/mob/AM as mob)
 		. = ..()

@@ -3,7 +3,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 
 TYPEINFO(/obj/machinery/lrteleporter)
 	mats = list("telecrystal"=10, "MET-1"=10, "CON-1"=10)
-	
+
 /obj/machinery/lrteleporter
 	name = "Experimental long-range teleporter"
 	desc = "Well this looks somewhat unsafe."
@@ -28,7 +28,7 @@ TYPEINFO(/obj/machinery/lrteleporter)
 		STOP_TRACKING
 
 	attack_ai(mob/user as mob)
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user)
 		ui_interact(user)

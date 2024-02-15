@@ -80,7 +80,7 @@
 
 	attack_ai(mob/user as mob)
 		if(BOUNDS_DIST(src, user) == 0)
-			return attack_hand(user)
+			return src.Attackhand(user)
 		else
 			boutput(user, "This jukebox is too old to be controlled remotely.")
 		return

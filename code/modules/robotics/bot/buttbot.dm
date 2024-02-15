@@ -232,7 +232,7 @@
 	if(href_list["butt_fart_toggle"])
 		src.buttfart = !src.buttfart
 
-	attack_hand(usr)
+	src.Attackhand(usr)
 
 /obj/machinery/bot/buttbot/attack_hand(mob/user)
 	var/dat
