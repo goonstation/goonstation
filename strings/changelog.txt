@@ -1,4 +1,42 @@
 
+(t)wed feb 14 24
+(u)Cheekybrdy
+(p)17902
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Benches in science now appear in a purple variant.
+(t)tue feb 13 24
+(u)Keiiro
+(p)17924
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Nanotrasen and Syndicate card colors are now available for selection with an Agent Card.
+(u)Wire
+(p)17816
+(e)🆕🚨|C-Feature, A-Admin
+(*)New backend system for external API communications. This impacts systems such as bans and cloud saves, as well as many other non-gameplay related things. This is a fairly significant change so please report any weird bugs you think may be related to the GitHub issue tracker.
+(t)mon feb 12 24
+(u)TDHooligan
+(p)17761
+(e)⚖💅🌱|C-Balance, C-QoL, A-Hydroponics
+(+)The RNG gods see botanys' plight. The top 3 genomes have, on average, dropped in value.
+(t)sun feb 11 24
+(u)LeahTheTech
+(+)The actionbar for opening and closing airlock wiring panels is now private (cannot be seen by other players).
+(u)Sord
+(+)You can now order a communications dish manudrive (and commaster disk) from cargo.
+(t)fri feb 09 24
+(u)LeahTheTech
+(+)The chemical request console now shows the request in the PDA notification.
+(p)17915
+(e)🆕⚖|C-Feature, C-Balance
+(*)Tiny items can now be hidden under floor tiles, mousetraps hidden like this will trigger when the tile is pried up again.
+(u)IPingu
+(p)17826
+(e)📄|A-UI
+(+)Converts HVAC interface to TGUI
+(u)MeggalBozale
+(p)17897
+(e)💅📄|C-QoL, A-UI
+(*)Tank Transfer Valves now use TGUI menus.
 (t)thu feb 08 24
 (u)Tyrant
 (p)17894
