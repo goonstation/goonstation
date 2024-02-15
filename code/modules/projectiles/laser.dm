@@ -461,9 +461,6 @@ toxic - poisons
 			mult = 0.5
 		return ..(P, A) * mult
 
-	weak
-		damage = 12.5
-		cost = 10
 
 /datum/projectile/laser/blaster/pod_pilot/blue_NT
 	name = "blue blaster bolt"
