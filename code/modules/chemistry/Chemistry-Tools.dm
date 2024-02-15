@@ -214,7 +214,6 @@ proc/ui_describe_reagents(atom/A)
 
 	New()
 		. = ..()
-
 		src.container_style ||= src.icon_state
 
 	on_reagent_change()
@@ -237,7 +236,6 @@ proc/ui_describe_reagents(atom/A)
 			average.a = max(average.a, RC_MINIMUM_REAGENT_ALPHA)
 			fluid_image.color = average.to_rgba()
 			src.UpdateOverlays(fluid_image, "fluid_image")
-
 		else
 			src.UpdateOverlays(null, "fluid_image")
 
