@@ -231,6 +231,7 @@
 	try
 		var/datum/apiRoute/players/saves/databulk/post/addBulkData = new
 		addBulkData.buildBody(json_encode(data))
+		logTheThing(LOG_DEBUG, null, "TEMP CLOUD BULK: [json_encode(data)]")
 		apiHandler.queryAPI(addBulkData)
 		return TRUE
 	catch (var/exception/e)

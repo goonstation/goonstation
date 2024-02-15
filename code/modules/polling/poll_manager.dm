@@ -11,7 +11,7 @@ var/global/datum/poll_manager/poll_manager = new
 			var/datum/apiRoute/polls/get/getPolls = new
 			getPolls.queryParams = list(
 				"filters" = list(
-					"active" = "true",
+					//"active" = "true",
 					"server" = config.server_id
 				)
 			)
