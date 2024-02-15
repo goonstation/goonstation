@@ -12,7 +12,7 @@ var/global/datum/poll_manager/poll_manager = new
 			getPolls.queryParams = list(
 				"filters" = list(
 					//"active" = "true",
-					"server" = config.server_id
+					"servers" = list(config.server_id)
 				)
 			)
 			polls = apiHandler.queryAPI(getPolls)
