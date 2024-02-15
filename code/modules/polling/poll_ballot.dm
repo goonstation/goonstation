@@ -9,6 +9,7 @@
 	var/rate_limit_counter = 0
 	/// soft cap to start forcing 1 second cooldown
 	var/const/rate_limit_soft_cap = 10
+	var/filterInactive = TRUE
 
 /datum/poll_ballot/ui_state(mob/user)
 	return tgui_always_state.can_use_topic(src, user)
@@ -26,7 +27,8 @@
 	. = list(
 			"isAdmin" = isadmin(user),
 			"polls" = poll_manager.poll_data,
-			"playerId" = user.client.player.id
+			"playerId" = user.client.player.id,
+			"filterInactive" = src.filterInactive
 		)
 
 /datum/poll_ballot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -274,3 +276,6 @@
 			poll_manager.sync_single_poll(params["pollId"])
 			. = TRUE
 
+		if("toggle-filterInactive")
+			filterInactive = !filterInactive
+			. = TRUE
