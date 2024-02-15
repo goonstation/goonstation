@@ -28610,7 +28610,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "pAK" = (
-/obj/stool/bench/auto,
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -30950,7 +30950,7 @@
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
-/obj/stool/bench/auto,
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -32386,7 +32386,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/stool/bench/auto,
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/purplewhite,
 /area/station/science/lobby)
 "sFB" = (
