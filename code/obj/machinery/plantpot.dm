@@ -1057,38 +1057,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(((growing.isgrass || (growing.force_seed_on_harvest > 0 )) && prob(80)) && !istype(getitem,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless) && (growing.force_seed_on_harvest >= 0 ))
 				// Same shit again. This isn't so much the crop as it is giving you seeds
 				// incase you couldn't get them otherwise, though.
-				var/obj/item/seed/S
-				if(growing.unique_seed)
-					S = new growing.unique_seed
-					S.set_loc(src)
-				else
-					S = new /obj/item/seed
-					S.set_loc(src)
-					S.removecolor()
-				var/datum/plantgenes/HDNA = src.plantgenes
-				var/datum/plantgenes/SDNA = S.plantgenes
-				if(!growing.unique_seed && !growing.hybrid)
-					S.generic_seed_setup(growing, TRUE)
-
-				var/seedname = "[growing.name]"
-				if(istype(MUT,/datum/plantmutation/))
-					if(!MUT.name_prefix && !MUT.name_suffix && MUT.name)
-						seedname = "[MUT.name]"
-					else if(MUT.name_prefix || MUT.name_suffix)
-						seedname = "[MUT.name_prefix][growing.name][MUT.name_suffix]"
-
-				S.name = "[seedname] seed"
-				S.plant_seed_color(growing.seedcolor)
-				HYPpassplantgenes(HDNA,SDNA)
-				S.generation = src.generation
-				if(growing.hybrid)
-					var/plantType = growing.type
-					var/datum/plant/hybrid = new plantType(S)
-					for(var/V in growing.vars)
-						if(issaved(growing.vars[V]) && V != "holder")
-							hybrid.vars[V] = growing.vars[V]
-					S.planttype = hybrid
-
+				HYPgenerateseedcopy(src.plantgenes, growing, src.generation, src)
 				seedcount++
 
 		// Give XP based on base quality of crop harvest. Will make better later, like so more plants harvasted and stuff, this is just for testing.
