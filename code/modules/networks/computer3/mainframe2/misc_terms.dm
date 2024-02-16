@@ -789,7 +789,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 		if (href_list["tank"])
 
-			//Ai/cyborgs cannot physically remove a tape from a room away.
+			//Ai/cyborgs cannot physically remove a tank from a room away.
 			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, SPAN_ALERT("You cannot press the ejection button."))
 				return
