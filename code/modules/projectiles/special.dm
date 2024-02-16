@@ -886,6 +886,35 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
 
+/datum/projectile/special/spreader/pwshotgunspread
+	name = "blaster bolt"
+	sname = "shotgun spread"
+	cost = 40
+	pellets_to_fire = 5
+	spread_projectile_type = /datum/projectile/laser/blaster/pod_pilot/blue_NT/shotgun
+	split_type = 0
+	shot_sound = 'sound/weapons/laser_b.ogg'
+	var/spread_angle = 10
+	var/current_angle = 0
+	var/angle_adjust_per_pellet = 0
+	var/initial_angle_offset_mult = 0.5
+
+	on_launch(var/obj/projectile/P)
+		angle_adjust_per_pellet = ((spread_angle * 2) / pellets_to_fire)
+		current_angle = (0 - spread_angle) + (angle_adjust_per_pellet * initial_angle_offset_mult)
+		..()
+
+	new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
+		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
+		FC.rotateDirection(current_angle)
+		FC.launch()
+		current_angle += angle_adjust_per_pellet
+
+	NT
+		spread_projectile_type = /datum/projectile/laser/blaster/pod_pilot/blue_NT/shotgun
+
+	SY
+		spread_projectile_type = /datum/projectile/laser/blaster/pod_pilot/red_SY/shotgun
 
 /datum/projectile/special/spreader/quadwasp
 	name = "4 space wasp eggs"

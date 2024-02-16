@@ -198,9 +198,6 @@ var/global/lastStationNameChange = 0 //timestamp
 
 		the_station_name = name
 
-		var/datum/eventRecord/StationName/stationNameEvent = new()
-		stationNameEvent.send(name)
-
 		if (user)
 			logTheThing(LOG_ADMIN, user, "changed the station name to: [name]")
 			logTheThing(LOG_DIARY, user, "changed the station name to: [name]", "admin")
@@ -226,6 +223,9 @@ var/global/lastStationNameChange = 0 //timestamp
 				#endif
 			else
 				the_station_name = name
+
+	var/datum/eventRecord/StationName/stationNameEvent = new()
+	stationNameEvent.send(name)
 
 	station_name = name
 

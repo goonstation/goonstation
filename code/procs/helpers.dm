@@ -2048,8 +2048,8 @@ var/global/lastDectalkUse = 0
 		var/datum/apiModel/DectalkPlayResource/playDectalkResource
 		try
 			var/datum/apiRoute/dectalk/play/playDectalk = new
-			playDectalk.buildBody(msg)
-			playDectalkResource = apiHandler.queryAPI(playDectalk, roundId)
+			playDectalk.buildBody(msg, roundId)
+			playDectalkResource = apiHandler.queryAPI(playDectalk)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
 			logTheThing(LOG_DEBUG, null, "<b>dectalk:</b> Failed to play dectalk for msg: '[msg]' because: [error.message]")

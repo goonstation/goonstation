@@ -106,7 +106,9 @@
 			src.putSimulatedCloud("data", key, value)
 
 		else
-			if (!src.player.id) return
+			if (!src.player?.id)
+				logTheThing(LOG_DEBUG, src.player?.ckey, "No player ID found in cloud data put [key], [value]")
+				return
 			try
 				var/datum/apiRoute/players/saves/data/post/addPlayerData = new
 				addPlayerData.buildBody(src.player.id, key, value)
@@ -231,6 +233,7 @@
 	try
 		var/datum/apiRoute/players/saves/databulk/post/addBulkData = new
 		addBulkData.buildBody(json_encode(data))
+		logTheThing(LOG_DEBUG, null, "TEMP CLOUD BULK: [json_encode(data)]")
 		apiHandler.queryAPI(addBulkData)
 		return TRUE
 	catch (var/exception/e)

@@ -10,7 +10,6 @@
 	. = ..()
 	if (
 		isnull(src.values["player_id"]) \
-		|| isnull(src.values["key"]) \
-		|| isnull(src.values["value"])
+		|| isnull(src.values["key"])
 	)
 		return FALSE

@@ -705,6 +705,7 @@ TRASH BAG
 		BLOCK_SETUP(BLOCK_SOFT)
 
 	dropped()
+		. = ..()
 		JOB_XP(usr, "Janitor", 2)
 		return
 
@@ -822,6 +823,7 @@ TRASH BAG
 
 
 	dropped()
+		. = ..()
 		JOB_XP(usr, "Janitor", 2)
 		return
 

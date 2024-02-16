@@ -1,6 +1,7 @@
 
 /// PlayerNoteResource
-/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource
+/datum/apiModel/Tracked/PlayerNoteResource
+	var/player_id = null // integer
 	var/datum/apiModel/Tracked/PlayerResource/player = null // Model
 	var/ckey			= null // string
 	var/game_admin_id	= null // integer
@@ -10,14 +11,15 @@
 	var/note			= null // string
 	var/legacy_data		= null // [string]
 
-/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/SetupFromResponse(response)
+/datum/apiModel/Tracked/PlayerNoteResource/SetupFromResponse(response)
 	. = ..()
-	if ("player" in response)
+	src.player = response["player_id"]
+	if (("player" in response) && islist(response["player"]))
 		src.player = new
 		src.player.SetupFromResponse(response["player"])
 	src.ckey = response["ckey"]
 	src.game_admin_id = response["game_admin_id"]
-	if ("game_admin" in response)
+	if (("game_admin" in response) && islist(response["game_admin"]))
 		src.game_admin = new
 		src.game_admin.SetupFromResponse(response["game_admin"])
 	src.server_id = response["server_id"]
@@ -25,14 +27,14 @@
 	src.note = response["note"]
 	src.legacy_data = response["legacy_data"]
 
-/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/VerifyIntegrity()
+/datum/apiModel/Tracked/PlayerNoteResource/VerifyIntegrity()
 	. = ..()
 	if (
 		isnull(src.note) \
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/ToList()
+/datum/apiModel/Tracked/PlayerNoteResource/ToList()
 	. = ..()
 	.["id"] = src.id
 	.["player_id"] = src.player_id

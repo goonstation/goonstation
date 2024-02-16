@@ -80,7 +80,7 @@
 		ircmsg["key2"] = "[ckey] (IP: [ip], CompID: [comp_id])"
 		ircmsg["msg"] = reason
 		ircmsg["time"] = durationHuman
-		ircmsg["timestamp"] = duration / 60 // duration is in seconds, bot expects minutes
+		ircmsg["timestamp"] = ((world.realtime / 10) / 60) + (duration / 60) // duration is in seconds, bot expects minutes
 		ircbot.export_async("ban", ircmsg)
 
 		if (targetClient)
@@ -96,6 +96,8 @@
 					boutput(targetClient, "<span class='alert'>You have received a permanent ban, you can't appeal this ban until 30 days have passed.</span>")
 
 			del(targetClient)
+		else
+			logTheThing(LOG_DEBUG, "Bans: unable to find client to kick for banned ckey [ckey]")
 
 	/// Check if a ban exists
 	proc/check(ckey, comp_id, ip)
@@ -283,7 +285,7 @@
 	var/mob/M
 	if (target && ismob(target)) M = target
 
-	var/ckey = tgui_input_text(src.mob, "Ckey of the player", "Ckey", M ? M.ckey : "")
+	var/ckey = ckey(tgui_input_text(src.mob, "Ckey of the player", "Ckey", M ? M.ckey : ""))
 	if (!ckey) return
 
 	var/datum/player/player = find_player(ckey)

@@ -6,6 +6,6 @@
 	. = ..()
 	src.data = list()
 	for (var/item in response["data"])
-		var/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/playerNote = new()
+		var/datum/apiModel/Tracked/PlayerNoteResource/playerNote = new()
 		playerNote.SetupFromResponse(item)
 		src.data.Add(playerNote)
