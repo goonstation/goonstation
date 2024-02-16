@@ -2104,8 +2104,8 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
-				M.HealDamage("All", mult * 2, mult * 2)
-				M.take_toxin_damage(1 * mult)
+				M.HealDamage("All", mult * 2.5, mult * 2)
+				M.take_toxin_damage(1.5 * mult)
 				flush(holder, 3 * mult)
 				if(prob(20))
 					M.setStatusMin("weakened", 3 SECONDS)
@@ -2119,9 +2119,9 @@ datum
 				if(!volume_passed)
 					return
 				if(method == TOUCH)
-					boutput(M, SPAN_ALERT("You hope that never happens to you again."))
+					boutput(M, SPAN_ALERT("The pink viscera partially hangs off of your clothes."))
 				if(method == INGEST)
-					boutput(M, "<span class='alert bold'>[pick("The taste is like stomach acid in the worst way possible", "It feels like spaghetti made by someone nearly blacked out who also doesn't know what spaghetti is", "Somewhere in this cacophony of terrible flavors you manage to pick out one that's suprisingly okay, this very quickly fades", "This feels way stickier then you hoped for")]!!</span>")
+					boutput(M, "<span class='alert bold'>[pick("The viscera burns your mouth as it goes down", "The texture of the viscera feels like spaghetti made by someone nearly blacked out who also doesn't know what spaghetti is", "You feel the viscera slide down your throat")]!!</span>")
 					M.setStatusMin("weakened", 3 SECONDS)
 
 		flockdrone_fluid

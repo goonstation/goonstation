@@ -948,7 +948,6 @@ proc/ui_describe_reagents(atom/A)
 				var/datum/reagents/smokeContents = new/datum/reagents/
 				smokeContents.add_reagent("acid", volume / chemical_efficiency)
 				smoke_reaction(smokeContents, 2, get_turf(src), do_sfx = TRUE)
-
 		src.reagents.remove_reagent(reagent_id, volume)
 
 	proc/become_angry() //become dangerous to pick up
@@ -1037,7 +1036,7 @@ proc/ui_describe_reagents(atom/A)
 				if(visc.amount == 1)
 					reagents.add_reagent("viscerite_viscera", 20 * visc.amount * visc.material_amt) // Gets converted into synthflesh (and some other stuff). Small/medium pustules produce 7 synthflesh and 7 martian flesh per visc, large produce 14 synthflesh and 3.5 martian flesh per visc
 					qdel(visc)
-				else // Oh boy oh boy are you ready for messy code to deal with stacks
+				else // Oh boy oh boy are you ready for somewhat messy code to deal with stacks
 					var/leftover_space = (reagents.maximum_volume - reagents.total_volume)
 					var/max_amt_removal = round(leftover_space / (20 * visc.material_amt))
 					var/amt_to_remove = 0
@@ -1048,13 +1047,7 @@ proc/ui_describe_reagents(atom/A)
 					else
 						amt_to_remove = visc.amount
 					reagents.add_reagent("viscerite_viscera", 20 * amt_to_remove * visc.material_amt)
-					visc.amount -= amt_to_remove
-					if (visc.amount <= 0)
-						qdel(visc)
-					else
-						if(visc.inventory_counter)
-							visc.inventory_counter.update_number(visc.amount)
-							visc.UpdateStackAppearance()
+					visc.change_stack_amount(-amt_to_remove)
 				user.visible_message("<span class = 'alert'>[user.name] stuffs the [visc.name] into the [src.name].</span>")
 				playsound(src.loc, 'sound/items/eatfoodshort.ogg', 50, 1)
 				animate_shake(src, 2 , 0, 3, 0, 0)
