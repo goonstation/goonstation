@@ -781,6 +781,16 @@ TYPEINFO(/obj/machinery/networked/storage)
 		onclose(user,"bombtester")
 		return
 
+#define TANK_ONE "1"
+#define TANK_TWO "2"
+/// Checks if we have a tank in the specified slot
+#define HAS_TANK(tanknum) ((tanknum == TANK_ONE) && src.tank1) || ((tanknum == TANK_TWO) && src.tank2)
+/// Remove the tank being interacted with from the device
+#define REMOVE_TANK(tanknum) if ((tanknum) == TANK_ONE && src.tank1) {src.tank1.set_loc(src.loc); src.tank1 = null;}\
+						     else if (src.tank2) {src.tank2.set_loc(src.loc); src.tank2 = null;};
+/// Add the tank to the slot being interact with in the device
+#define ADD_TANK(tanknum, tank) tank.set_loc(src); if ((tanknum) == TANK_ONE) {src.tank1 = tank;}\
+								else {src.tank2 = tank;};
 	Topic(href, href_list)
 		if(..())
 			return
@@ -793,18 +803,9 @@ TYPEINFO(/obj/machinery/networked/storage)
 				boutput(usr, SPAN_ALERT("You cannot interact with \the [src] from that far away!"))
 				return
 
-			// Get a reference to the tank in question
-			var/obj/item/target
-			switch(href_list["tank"])
-				if("1")
-					target = src.tank1
-				if ("2")
-					target = src.tank2
-
 			// Eject tank
-			if (target)
-				target.set_loc(src.loc)
-				target = null
+			if (HAS_TANK(href_list["tank"]))
+				REMOVE_TANK(href_list["tank"])
 				if (vrbomb)
 					qdel(vrbomb)
 			// Insert tank. If you're doing this there is clearly no vrbomb inside.. right?
@@ -819,8 +820,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 					// We are inserting a tank from a magtractor and it must have a valid tank
 					else
 						mag.dropItem(0)
-						I.set_loc(src)
-						target = I
+						ADD_TANK(href_list["tank"], I)
 						boutput(usr, "You insert \the [I].")
 				// We are not inserting from a magtractor and it might not have a valid tank
 				else if (!(istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)))
@@ -828,8 +828,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 				// We are inserting from a magtractor and it has a valid tank
 				else
 					usr.drop_item()
-					I.set_loc(src)
-					src.tank1 = I
+					ADD_TANK(href_list["tank"], I)
 					boutput(usr, "You insert \the [I].")
 			src.UpdateIcon()
 			src.updateUsrDialog()
