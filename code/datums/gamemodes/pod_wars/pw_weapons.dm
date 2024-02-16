@@ -96,11 +96,11 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	name = "blaster smg"
 	desc = "A dangerous-looking blaster smg. It's self-charging by a radioactive power cell."
 	icon_state = "pw_smg"
-	item_state = "pw_smg_nt"
+	item_state = "pw_smg"
 	w_class = W_CLASS_NORMAL
 	force = 12
 	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_basic
-	initial_proj = /datum/projectile/laser/blaster/pod_pilot/weak
+	initial_proj = /datum/projectile/laser/blaster/pod_pilot/blue_NT/smg
 	spread_angle = 10
 
 	New()
@@ -127,7 +127,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	name = "blaster smg"
 	desc = "A dangerous-looking blaster shotgun. It's self-charging by a radioactive power cell."
 	icon_state = "pw_shotgun"
-	item_state = "pw_shotgun_nt"
+	item_state = "pw_shotgun"
 	w_class = W_CLASS_NORMAL
 	force = 12
 	initial_proj = /datum/projectile/special/spreader/pwshotgunspread
