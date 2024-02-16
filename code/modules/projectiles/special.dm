@@ -893,7 +893,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	pellets_to_fire = 5
 	spread_projectile_type = /datum/projectile/laser/blaster/pod_pilot/blue_NT/shotgun
 	split_type = 0
-	shot_sound = 'sound/weapons/laser_a.ogg'
+	shot_sound = 'sound/weapons/laser_b.ogg'
 	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0

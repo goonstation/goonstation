@@ -495,6 +495,8 @@ toxic - poisons
 	cost = 10
 	damage = 12.5
 	fullauto_valid = 1
+	icon_state = "bolt_burst"
+	shot_sound = 'sound/weapons/laser_c.ogg'
 
 /datum/projectile/laser/blaster/pod_pilot/red_SY/smg
 	name = "red blaster bolt"
@@ -505,6 +507,8 @@ toxic - poisons
 	cost = 10
 	damage = 12.5
 	fullauto_valid = 1
+	icon_state = "bolt_burst"
+	shot_sound = 'sound/weapons/laser_c.ogg'
 
 /datum/projectile/laser/blaster/pod_pilot/blue_NT/shotgun
 	name = "blue blaster bolt"
