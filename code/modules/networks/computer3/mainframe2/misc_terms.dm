@@ -741,19 +741,6 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 		return
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/tank))
-			return attack_hand(user)
-		else if (isscrewingtool(W))
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			boutput(user, "You [src.locked ? "secure" : "unscrew"] the maintenance panel.")
-			src.panel_open = !src.panel_open
-			src.updateUsrDialog()
-			return
-		else
-			..()
-		return
-
 	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
 			return
