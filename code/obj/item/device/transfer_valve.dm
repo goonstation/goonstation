@@ -550,22 +550,20 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 
 		update_counter++
 
-		var/log_message = "[time2text(world.timeofday, "mm:ss")]:"
+		tester.update_bomb_log("[time2text(world.timeofday, "mm:ss")]:")
 		var/tank1_pressure = (tank_one?.air_contents != null) ?  MIXTURE_PRESSURE(tank_one.air_contents) : 0
 		var/tank2_pressure = (tank_two?.air_contents != null) ?  MIXTURE_PRESSURE(tank_two.air_contents) : 0
 
-		log_message += "Tank 1 Pressure:[tank1_pressure] kPa"
-		log_message += "Tank 2 Pressure:[tank2_pressure] kPa"
-		if(!tank1_pressure)
-			log_message += "Tank one has no pressure or has been destroyed!"
-		if (!tank2_pressure)
-			log_message += "Tank two has no pressure or has been destroyed!"
-		// We went boom, or we loaded two empty tanks. Don't simulate that!
-		if (!tank1_pressure && !tank2_pressure)
-			log_message += "Both tanks have no pressure or are destroyed!"
-			processing_items.Remove(src)
+		tester.update_bomb_log("Tank 1 Pressure:[tank1_pressure] kPa")
+		tester.update_bomb_log("Tank 2 Pressure:[tank2_pressure] kPa")
 
-		tester.update_bomb_log(log_message)
+		// This doesn't really happen as both tanks are usually bound to have the same reaction process due to same volume/contents/temp/etc
+		// so disposing() gets called first
+		if(!tank1_pressure)
+			tester.update_bomb_log("Tank one has no pressure or has been destroyed!")
+		if (!tank2_pressure)
+			tester.update_bomb_log("Tank two has no pressure or has been destroyed!")
+
 		return
 #undef UPDATES_BEFORE_TIMEOUT
 

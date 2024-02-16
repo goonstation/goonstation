@@ -733,6 +733,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 			if(src.timeout <= 5 && !src.timeout_alert)
 				src.timeout_alert = 1
 				src.post_status(src.host_id, "command","term_ping","data","reply")
+				
 		return
 
 	attack_hand(mob/user)
