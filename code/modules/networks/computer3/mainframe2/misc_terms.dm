@@ -815,7 +815,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 					I = mag.holding
 					// We are inserting a tank from a magtractor and it might not have a valid tank
 					if (!(istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)))
-						boutput(usr, "You can't put \the [I] into that!")
+						boutput(usr, "That won't work inside of the [src]!")
 					// We are inserting a tank from a magtractor and it must have a valid tank
 					else
 						mag.dropItem(0)
@@ -824,7 +824,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 						boutput(usr, "You insert \the [I].")
 				// We are not inserting from a magtractor and it might not have a valid tank
 				else if (!(istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)))
-					boutput(usr, "You can't put \the [I] into that!")
+					boutput(usr, "That won't work inside of the [src]!")
 				// We are inserting from a magtractor and it has a valid tank
 				else
 					usr.drop_item()
