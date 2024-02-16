@@ -1800,13 +1800,6 @@
 				. += ROBOT_MISSING_ARM_MOVEMENT_ADJUST
 
 
-		if (total_weight > 0)
-			if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/left/treads) && istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/right/treads))
-				. += total_weight / 3
-			else
-				. += total_weight
-
-
 	hotkey(name)
 		switch (name)
 			if ("help")

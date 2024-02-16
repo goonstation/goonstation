@@ -1,5 +1,12 @@
 
+(t)thu feb 15 24
+(u)Sord
+(+)Most in rotation maps now have airlock cyclers on some interior airlocks (Security, engineering, research, etc) where applicable.
 (t)wed feb 14 24
+(u)Ikea
+(p)17577
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Borg speed values have been changed all across the board. Treadless light borgs are the same speed. Light and heavy borgs with treads are now slower compared to before. Every other borg body type is faster, see pr for specific values.
 (u)Cheekybrdy
 (p)17902
 (e)🗺🎨|A-Mapping, C-Sprites
