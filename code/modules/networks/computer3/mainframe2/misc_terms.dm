@@ -882,15 +882,11 @@ TYPEINFO(/obj/machinery/networked/storage)
 			src.visible_message("[src] emits a somber ping.")
 			return
 
+		// Create and setup our vr explosive
 		src.vrbomb = new
 		src.vrbomb.set_loc(B)
 		src.vrbomb.anchored = ANCHORED
 		src.vrbomb.tester = src
-
-		var/obj/item/device/timer/T = new
-		src.vrbomb.attached_device = T
-		T.master = src.vrbomb
-		T.time = 6
 
 		var/obj/item/tank/vrtank1 = new tank1.type
 		var/obj/item/tank/vrtank2 = new tank2.type
@@ -900,16 +896,11 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 		src.vrbomb.tank_one = vrtank1
 		src.vrbomb.tank_two = vrtank2
-		vrtank1.master = src.vrbomb
 		vrtank1.set_loc(src.vrbomb)
-		vrtank2.master = src.vrbomb
 		vrtank2.set_loc(src.vrbomb)
 
 		src.vrbomb.UpdateIcon()
-
-		T.timing = 1
-		T.c_state(1)
-		processing_items |= T
+		src.vrbomb.toggle_valve()
 
 		var/area/to_reset = get_area(src.vrbomb) //Reset the magic vr turf.
 		if(to_reset && to_reset.name != "Space")
@@ -920,8 +911,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 				VT.set_opacity(1)
 				VT.set_density(1)
 
-		if(results)
-			//qdel(results)
+		if(results) // Clear old results, setup new log
 			results.dispose()
 		src.new_bomb_log()
 		return
