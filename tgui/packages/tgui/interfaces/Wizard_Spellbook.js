@@ -58,7 +58,7 @@ export const Wizard_Spellbook = (props, context) => {
             <Flex.Item>
               <Input
                 value={searchQuery}
-                placeholder={"search by spell name"}
+                placeholder={"Search by spell name"}
                 width={15}
                 autoSelect
                 onInput={(_, value) => setSearchQuery(value)}
@@ -134,7 +134,7 @@ const Spell = (props, context) => {
         {(vr === 1) && (spell_contents[3] === 0) && (
           <Dimmer>
             <Box fontSize={1.5} backgroundColor={"#384e68"} p={2}>
-              spell unavailable in VR
+              Spell unavailable in VR
             </Box>
           </Dimmer>
         )}
