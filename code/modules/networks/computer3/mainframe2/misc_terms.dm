@@ -700,80 +700,80 @@ TYPEINFO(/obj/machinery/networked/storage)
 	/// Where the bomb gets dropped
 	var/vr_landmark = LANDMARK_VR_BOMB
 
-/obj/machinery/networked/storage/bomb_tester/power_change()
-	if(powered())
-		status &= ~NOPOWER
-		UpdateIcon()
-	else
-		SPAWN(rand(0, 15))
-			status |= NOPOWER
+	power_change()
+		if(powered())
+			status &= ~NOPOWER
 			UpdateIcon()
-			if(vrbomb)
-				qdel(vrbomb)
-	return
-
-/obj/machinery/networked/storage/bomb_tester/process()
-	if(status & BROKEN)
-		return
-	..()
-	if(status & NOPOWER)
+		else
+			SPAWN(rand(0, 15))
+				status |= NOPOWER
+				UpdateIcon()
+				if(vrbomb)
+					qdel(vrbomb)
 		return
 
-	if(!host_id || !link)
+	process()
+		if(status & BROKEN)
+			return
+		..()
+		if(status & NOPOWER)
+			return
+
+		if(!host_id || !link)
+			return
+
+		if(src.timeout == 0)
+			src.post_status(host_id, "command","term_disconnect","data","timeout")
+			src.host_id = null
+			src.updateUsrDialog()
+			src.timeout = initial(src.timeout)
+			src.timeout_alert = 0
+		else
+			src.timeout--
+			if(src.timeout <= 5 && !src.timeout_alert)
+				src.timeout_alert = 1
+				src.post_status(src.host_id, "command","term_ping","data","reply")
 		return
 
-	if(src.timeout == 0)
-		src.post_status(host_id, "command","term_disconnect","data","timeout")
-		src.host_id = null
-		src.updateUsrDialog()
-		src.timeout = initial(src.timeout)
-		src.timeout_alert = 0
-	else
-		src.timeout--
-		if(src.timeout <= 5 && !src.timeout_alert)
-			src.timeout_alert = 1
-			src.post_status(src.host_id, "command","term_ping","data","reply")
-	return
+	attack_hand(mob/user)
+		if(status & (NOPOWER|BROKEN))
+			return
 
-/obj/machinery/networked/storage/bomb_tester/attack_hand(mob/user)
-	if(status & (NOPOWER|BROKEN))
+		if(user.lying || user.stat)
+			return 1
+
+		if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !issilicon(user))
+			return 1
+
+		src.add_dialog(user)
+
+		var/dat = "<html><head><title>SimUnit - \[[bank_id]]</title></head><body>"
+
+		dat += "<b>Tank One:</b> <a href='?src=\ref[src];tank=1'>[src.tank1 ? "Eject" : "None"]</a><br>"
+		dat += "<b>Tank Two:</b> <a href='?src=\ref[src];tank=2'>[src.tank2 ? "Eject" : "None"]</a><hr>"
+
+		dat += "<b>Simulation:</b> [vrbomb ? "IN PROGRESS" : "<a href='?src=\ref[src];simulate=1'>BEGIN</a>"]<br>"
+
+		var/readout_color = "#000000"
+		var/readout = "ERROR"
+		if(src.host_id)
+			readout_color = "#33FF00"
+			readout = "OK CONNECTION"
+		else
+			readout_color = "#F80000"
+			readout = "NO CONNECTION"
+
+		dat += "Host Connection: "
+		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
+
+		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+
+		if (src.panel_open)
+			dat += net_switch_html()
+
+		user.Browse(dat,"window=bombtester;size=245x302")
+		onclose(user,"bombtester")
 		return
-
-	if(user.lying || user.stat)
-		return 1
-
-	if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !issilicon(user))
-		return 1
-
-	src.add_dialog(user)
-
-	var/dat = "<html><head><title>SimUnit - \[[bank_id]]</title></head><body>"
-
-	dat += "<b>Tank One:</b> <a href='?src=\ref[src];tank=1'>[src.tank1 ? "Eject" : "None"]</a><br>"
-	dat += "<b>Tank Two:</b> <a href='?src=\ref[src];tank=2'>[src.tank2 ? "Eject" : "None"]</a><hr>"
-
-	dat += "<b>Simulation:</b> [vrbomb ? "IN PROGRESS" : "<a href='?src=\ref[src];simulate=1'>BEGIN</a>"]<br>"
-
-	var/readout_color = "#000000"
-	var/readout = "ERROR"
-	if(src.host_id)
-		readout_color = "#33FF00"
-		readout = "OK CONNECTION"
-	else
-		readout_color = "#F80000"
-		readout = "NO CONNECTION"
-
-	dat += "Host Connection: "
-	dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
-
-	dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
-
-	if (src.panel_open)
-		dat += net_switch_html()
-
-	user.Browse(dat,"window=bombtester;size=245x302")
-	onclose(user,"bombtester")
-	return
 
 #define TANK_ONE "1"
 #define TANK_TWO "2"
@@ -786,83 +786,83 @@ TYPEINFO(/obj/machinery/networked/storage)
 #define ADD_TANK(tanknum, tank) tank.set_loc(src); if ((tanknum) == TANK_ONE) {src.tank1 = tank;}\
 								else {src.tank2 = tank;};
 
-/obj/machinery/networked/storage/bomb_tester/Topic(href, href_list)
-	if(..())
-		return
-
-	src.add_dialog(usr)
-
-	if (href_list["tank"])
-		//Ai/cyborgs cannot physically remove a tank from a room away.
-		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
-			boutput(usr, SPAN_ALERT("You cannot interact with \the [src] from that far away!"))
+	Topic(href, href_list)
+		if(..())
 			return
 
-		// Eject tank
-		if (HAS_TANK(href_list["tank"]))
-			REMOVE_TANK(href_list["tank"])
-			if (vrbomb)
-				qdel(vrbomb)
-		// Insert tank. If you're doing this there is clearly no vrbomb inside.. right?
-		else
-			var/obj/item/I = usr.equipped()
-			if (istype(I, /obj/item/magtractor)) // grr
-				var/obj/item/magtractor/mag = I
-				I = mag.holding
-				// We are inserting a tank from a magtractor and it might not have a valid tank
-				if (!(istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)))
+		src.add_dialog(usr)
+
+		if (href_list["tank"])
+			//Ai/cyborgs cannot physically remove a tank from a room away.
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
+				boutput(usr, SPAN_ALERT("You cannot interact with \the [src] from that far away!"))
+				return
+
+			// Eject tank
+			if (HAS_TANK(href_list["tank"]))
+				REMOVE_TANK(href_list["tank"])
+				if (vrbomb)
+					qdel(vrbomb)
+			// Insert tank. If you're doing this there is clearly no vrbomb inside.. right?
+			else
+				var/obj/item/I = usr.equipped()
+				if (istype(I, /obj/item/magtractor)) // grr
+					var/obj/item/magtractor/mag = I
+					I = mag.holding
+					// We are inserting a tank from a magtractor and it might not have a valid tank
+					if (!(istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)))
+						boutput(usr, "That won't work inside of the [src]!")
+					// We are inserting a tank from a magtractor and it must have a valid tank
+					else
+						mag.dropItem(0)
+						ADD_TANK(href_list["tank"], I)
+						boutput(usr, "You insert \the [I].")
+				// We are not inserting from a magtractor and it might not have a valid tank
+				else if (!(istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)))
 					boutput(usr, "That won't work inside of the [src]!")
-				// We are inserting a tank from a magtractor and it must have a valid tank
+				// We are inserting from a magtractor and it has a valid tank
 				else
-					mag.dropItem(0)
+					usr.drop_item()
 					ADD_TANK(href_list["tank"], I)
 					boutput(usr, "You insert \the [I].")
-			// We are not inserting from a magtractor and it might not have a valid tank
-			else if (!(istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)))
-				boutput(usr, "That won't work inside of the [src]!")
-			// We are inserting from a magtractor and it has a valid tank
-			else
-				usr.drop_item()
-				ADD_TANK(href_list["tank"], I)
-				boutput(usr, "You insert \the [I].")
-		src.UpdateIcon()
-		src.updateUsrDialog()
+			src.UpdateIcon()
+			src.updateUsrDialog()
 
-	else if(href_list["simulate"])
-		if(vrbomb)
-			boutput(usr, SPAN_ALERT("Simulation already in progress!"))
+		else if(href_list["simulate"])
+			if(vrbomb)
+				boutput(usr, SPAN_ALERT("Simulation already in progress!"))
+				return
+
+			if(!(src.tank1 && src.tank2))
+				boutput(usr, SPAN_ALERT("Both tanks are required!"))
+				return
+
+			if (ON_COOLDOWN(global, "bomb_simulator", 30 SECONDS))
+				boutput(usr, SPAN_ALERT("Simulator not ready, please try again later."))
+				return
+
+			src.generate_vrbomb()
+			src.updateUsrDialog()
+
+		else if (href_list["reset"])
+			if (ON_COOLDOWN(src, "reset", NETWORK_MACHINE_RESET_DELAY))
+				return
+
+			if(!host_id)
+				return
+
+			var/rem_host = src.host_id ? src.host_id : src.old_host_id
+			src.host_id = null
+			src.old_host_id = null
+			src.post_status(rem_host, "command","term_disconnect")
+			SPAWN(0.5 SECONDS)
+				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
+
+			src.updateUsrDialog()
 			return
 
-		if(!(src.tank1 && src.tank2))
-			boutput(usr, SPAN_ALERT("Both tanks are required!"))
-			return
-
-		if (ON_COOLDOWN(global, "bomb_simulator", 30 SECONDS))
-			boutput(usr, SPAN_ALERT("Simulator not ready, please try again later."))
-			return
-
-		src.generate_vrbomb()
-		src.updateUsrDialog()
-
-	else if (href_list["reset"])
-		if (ON_COOLDOWN(src, "reset", NETWORK_MACHINE_RESET_DELAY))
-			return
-
-		if(!host_id)
-			return
-
-		var/rem_host = src.host_id ? src.host_id : src.old_host_id
-		src.host_id = null
-		src.old_host_id = null
-		src.post_status(rem_host, "command","term_disconnect")
-		SPAWN(0.5 SECONDS)
-			src.post_status(rem_host, "command","term_connect","device",src.device_tag)
-
-		src.updateUsrDialog()
+		src.add_fingerprint(usr)
 		return
-
-	src.add_fingerprint(usr)
-	return
 #undef HAS_TANK
 #undef ADD_TANK
 #undef REMOVE_TANK
@@ -870,7 +870,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 #undef TANK_TWO
 
 	proc/generate_vrbomb()
-		if(!tank1 || !tank2)
+		if(!(src.tank1 && src.tank2))
 			return
 
 		if(vrbomb)
