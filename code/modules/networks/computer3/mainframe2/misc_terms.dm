@@ -867,122 +867,122 @@ TYPEINFO(/obj/machinery/networked/storage)
 		return
 
 	proc/generate_vrbomb()
-			if(!tank1 || !tank2)
-				return
-
-			if(vrbomb)
-				qdel(vrbomb)
-
-			var/turf/B = pick_landmark(vr_landmark)
-			if(!B)
-				playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
-				src.visible_message("[src] emits a somber ping.")
-				return
-
-			vrbomb = new
-			vrbomb.set_loc(B)
-			vrbomb.anchored = ANCHORED
-			vrbomb.tester = src
-
-			var/obj/item/device/timer/T = new
-			vrbomb.attached_device = T
-			T.master = vrbomb
-			T.time = 6
-
-			var/obj/item/tank/vrtank1 = new tank1.type
-			var/obj/item/tank/vrtank2 = new tank2.type
-
-			vrtank1.air_contents.copy_from(tank1.air_contents)
-			vrtank2.air_contents.copy_from(tank2.air_contents)
-
-			vrbomb.tank_one = vrtank1
-			vrbomb.tank_two = vrtank2
-			vrtank1.master = vrbomb
-			vrtank1.set_loc(vrbomb)
-			vrtank2.master = vrbomb
-			vrtank2.set_loc(vrbomb)
-
-			vrbomb.UpdateIcon()
-
-			T.timing = 1
-			T.c_state(1)
-			processing_items |= T
-
-			var/area/to_reset = get_area(vrbomb) //Reset the magic vr turf.
-			if(to_reset && to_reset.name != "Space")
-				for(var/turf/unsimulated/bombvr/VT in to_reset)
-					VT.icon_state = initial(VT.icon_state)
-				for(var/turf/unsimulated/wall/bombvr/VT in to_reset)
-					VT.icon_state = initial(VT.icon_state)
-					VT.set_opacity(1)
-					VT.set_density(1)
-
-			if(results)
-				//qdel(results)
-				results.dispose()
-			src.new_bomb_log()
+		if(!tank1 || !tank2)
 			return
+
+		if(vrbomb)
+			qdel(vrbomb)
+
+		var/turf/B = pick_landmark(vr_landmark)
+		if(!B)
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
+			src.visible_message("[src] emits a somber ping.")
+			return
+
+		vrbomb = new
+		vrbomb.set_loc(B)
+		vrbomb.anchored = ANCHORED
+		vrbomb.tester = src
+
+		var/obj/item/device/timer/T = new
+		vrbomb.attached_device = T
+		T.master = vrbomb
+		T.time = 6
+
+		var/obj/item/tank/vrtank1 = new tank1.type
+		var/obj/item/tank/vrtank2 = new tank2.type
+
+		vrtank1.air_contents.copy_from(tank1.air_contents)
+		vrtank2.air_contents.copy_from(tank2.air_contents)
+
+		vrbomb.tank_one = vrtank1
+		vrbomb.tank_two = vrtank2
+		vrtank1.master = vrbomb
+		vrtank1.set_loc(vrbomb)
+		vrtank2.master = vrbomb
+		vrtank2.set_loc(vrbomb)
+
+		vrbomb.UpdateIcon()
+
+		T.timing = 1
+		T.c_state(1)
+		processing_items |= T
+
+		var/area/to_reset = get_area(vrbomb) //Reset the magic vr turf.
+		if(to_reset && to_reset.name != "Space")
+			for(var/turf/unsimulated/bombvr/VT in to_reset)
+				VT.icon_state = initial(VT.icon_state)
+			for(var/turf/unsimulated/wall/bombvr/VT in to_reset)
+				VT.icon_state = initial(VT.icon_state)
+				VT.set_opacity(1)
+				VT.set_density(1)
+
+		if(results)
+			//qdel(results)
+			results.dispose()
+		src.new_bomb_log()
+		return
 
 	proc/new_bomb_log()
-			if(!tape)
-				return
-
-			if(results)
-				//qdel(results)
-				results.dispose()
-
-			results = new
-			results.name = "Bomblog"
-
-			results.fields += "Test [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [CURRENT_SPACE_YEAR]"
-
-			results.fields += "Atmospheric Tank #1:"
-			if(tank1)
-				var/datum/gas_mixture/environment = tank1.return_air()
-				var/pressure = MIXTURE_PRESSURE(environment)
-				var/total_moles = TOTAL_MOLES(environment)
-
-				results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
-				if(total_moles)
-					LIST_CONCENTRATION_REPORT(environment, results.fields)
-					results.fields += "|n"
-
-				else
-					results.fields += "Tank Empty"
-			else
-				results.fields += "None. (Sensor Error?)"
-
-			results.fields += "Atmospheric Tank #2:"
-			if(tank2)
-				var/datum/gas_mixture/environment = tank2.return_air()
-				var/pressure = MIXTURE_PRESSURE(environment)
-				var/total_moles = TOTAL_MOLES(environment)
-
-				results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
-				if(total_moles)
-					LIST_CONCENTRATION_REPORT(environment, results.fields)
-					results.fields += "|n"
-
-				else
-					results.fields += "Tank Empty"
-			else
-				results.fields += "None. (Sensor Error?)"
-
-			results.fields += "VR Bomb Monitor log:|nWaiting for monitor..."
-
-			src.tape.root.add_file( src.results )
-			src.sync(src.host_id)
+		if(!tape)
 			return
+
+		if(results)
+			//qdel(results)
+			results.dispose()
+
+		results = new
+		results.name = "Bomblog"
+
+		results.fields += "Test [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [CURRENT_SPACE_YEAR]"
+
+		results.fields += "Atmospheric Tank #1:"
+		if(tank1)
+			var/datum/gas_mixture/environment = tank1.return_air()
+			var/pressure = MIXTURE_PRESSURE(environment)
+			var/total_moles = TOTAL_MOLES(environment)
+
+			results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
+			if(total_moles)
+				LIST_CONCENTRATION_REPORT(environment, results.fields)
+				results.fields += "|n"
+
+			else
+				results.fields += "Tank Empty"
+		else
+			results.fields += "None. (Sensor Error?)"
+
+		results.fields += "Atmospheric Tank #2:"
+		if(tank2)
+			var/datum/gas_mixture/environment = tank2.return_air()
+			var/pressure = MIXTURE_PRESSURE(environment)
+			var/total_moles = TOTAL_MOLES(environment)
+
+			results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
+			if(total_moles)
+				LIST_CONCENTRATION_REPORT(environment, results.fields)
+				results.fields += "|n"
+
+			else
+				results.fields += "Tank Empty"
+		else
+			results.fields += "None. (Sensor Error?)"
+
+		results.fields += "VR Bomb Monitor log:|nWaiting for monitor..."
+
+		src.tape.root.add_file( src.results )
+		src.sync(src.host_id)
+		return
 
 		//Called by our vrbomb as it heats up (Or doesn't.)
 	proc/update_bomb_log(var/newdata, var/sync_log = 0)
-			if(!results || !newdata || !tape)
-				return
-
-			results.fields += newdata
-			if (sync_log)
-				src.sync(src.host_id)
+		if(!results || !newdata || !tape)
 			return
+
+		results.fields += newdata
+		if (sync_log)
+			src.sync(src.host_id)
+		return
 
 	update_icon()
 		if(tank1) //Update tank overlays.
