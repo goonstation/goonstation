@@ -700,82 +700,80 @@ TYPEINFO(/obj/machinery/networked/storage)
 	/// Where the bomb gets dropped
 	var/vr_landmark = LANDMARK_VR_BOMB
 
-	power_change()
-		if(powered())
-			status &= ~NOPOWER
+/obj/machinery/networked/storage/bomb_tester/power_change()
+	if(powered())
+		status &= ~NOPOWER
+		UpdateIcon()
+	else
+		SPAWN(rand(0, 15))
+			status |= NOPOWER
 			UpdateIcon()
-		else
-			SPAWN(rand(0, 15))
-				status |= NOPOWER
-				UpdateIcon()
-				if(vrbomb)
-					qdel(vrbomb)
+			if(vrbomb)
+				qdel(vrbomb)
+	return
 
+/obj/machinery/networked/storage/bomb_tester/process()
+	if(status & BROKEN)
+		return
+	..()
+	if(status & NOPOWER)
 		return
 
-	process()
-		if(status & BROKEN)
-			return
-		..()
-		if(status & NOPOWER)
-			return
-
-		if(!host_id || !link)
-			return
-
-		if(src.timeout == 0)
-			src.post_status(host_id, "command","term_disconnect","data","timeout")
-			src.host_id = null
-			src.updateUsrDialog()
-			src.timeout = initial(src.timeout)
-			src.timeout_alert = 0
-		else
-			src.timeout--
-			if(src.timeout <= 5 && !src.timeout_alert)
-				src.timeout_alert = 1
-				src.post_status(src.host_id, "command","term_ping","data","reply")
-
+	if(!host_id || !link)
 		return
 
-	attack_hand(mob/user)
-		if(status & (NOPOWER|BROKEN))
-			return
+	if(src.timeout == 0)
+		src.post_status(host_id, "command","term_disconnect","data","timeout")
+		src.host_id = null
+		src.updateUsrDialog()
+		src.timeout = initial(src.timeout)
+		src.timeout_alert = 0
+	else
+		src.timeout--
+		if(src.timeout <= 5 && !src.timeout_alert)
+			src.timeout_alert = 1
+			src.post_status(src.host_id, "command","term_ping","data","reply")
+	return
 
-		if(user.lying || user.stat)
-			return 1
-
-		if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !issilicon(user))
-			return 1
-
-		src.add_dialog(user)
-
-		var/dat = "<html><head><title>SimUnit - \[[bank_id]]</title></head><body>"
-
-		dat += "<b>Tank One:</b> <a href='?src=\ref[src];tank=1'>[src.tank1 ? "Eject" : "None"]</a><br>"
-		dat += "<b>Tank Two:</b> <a href='?src=\ref[src];tank=2'>[src.tank2 ? "Eject" : "None"]</a><hr>"
-
-		dat += "<b>Simulation:</b> [vrbomb ? "IN PROGRESS" : "<a href='?src=\ref[src];simulate=1'>BEGIN</a>"]<br>"
-
-		var/readout_color = "#000000"
-		var/readout = "ERROR"
-		if(src.host_id)
-			readout_color = "#33FF00"
-			readout = "OK CONNECTION"
-		else
-			readout_color = "#F80000"
-			readout = "NO CONNECTION"
-
-		dat += "Host Connection: "
-		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
-
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
-
-		if (src.panel_open)
-			dat += net_switch_html()
-
-		user.Browse(dat,"window=bombtester;size=245x302")
-		onclose(user,"bombtester")
+/obj/machinery/networked/storage/bomb_tester/attack_hand(mob/user)
+	if(status & (NOPOWER|BROKEN))
 		return
+
+	if(user.lying || user.stat)
+		return 1
+
+	if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !issilicon(user))
+		return 1
+
+	src.add_dialog(user)
+
+	var/dat = "<html><head><title>SimUnit - \[[bank_id]]</title></head><body>"
+
+	dat += "<b>Tank One:</b> <a href='?src=\ref[src];tank=1'>[src.tank1 ? "Eject" : "None"]</a><br>"
+	dat += "<b>Tank Two:</b> <a href='?src=\ref[src];tank=2'>[src.tank2 ? "Eject" : "None"]</a><hr>"
+
+	dat += "<b>Simulation:</b> [vrbomb ? "IN PROGRESS" : "<a href='?src=\ref[src];simulate=1'>BEGIN</a>"]<br>"
+
+	var/readout_color = "#000000"
+	var/readout = "ERROR"
+	if(src.host_id)
+		readout_color = "#33FF00"
+		readout = "OK CONNECTION"
+	else
+		readout_color = "#F80000"
+		readout = "NO CONNECTION"
+
+	dat += "Host Connection: "
+	dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
+
+	dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+
+	if (src.panel_open)
+		dat += net_switch_html()
+
+	user.Browse(dat,"window=bombtester;size=245x302")
+	onclose(user,"bombtester")
+	return
 
 #define TANK_ONE "1"
 #define TANK_TWO "2"
@@ -787,226 +785,230 @@ TYPEINFO(/obj/machinery/networked/storage)
 /// Add the tank to the slot being interact with in the device
 #define ADD_TANK(tanknum, tank) tank.set_loc(src); if ((tanknum) == TANK_ONE) {src.tank1 = tank;}\
 								else {src.tank2 = tank;};
-	Topic(href, href_list)
-		if(..())
+
+/obj/machinery/networked/storage/bomb_tester/Topic(href, href_list)
+	if(..())
+		return
+
+	src.add_dialog(usr)
+
+	if (href_list["tank"])
+		//Ai/cyborgs cannot physically remove a tank from a room away.
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
+			boutput(usr, SPAN_ALERT("You cannot interact with \the [src] from that far away!"))
 			return
 
-		src.add_dialog(usr)
-
-		if (href_list["tank"])
-			//Ai/cyborgs cannot physically remove a tank from a room away.
-			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
-				boutput(usr, SPAN_ALERT("You cannot interact with \the [src] from that far away!"))
-				return
-
-			// Eject tank
-			if (HAS_TANK(href_list["tank"]))
-				REMOVE_TANK(href_list["tank"])
-				if (vrbomb)
-					qdel(vrbomb)
-			// Insert tank. If you're doing this there is clearly no vrbomb inside.. right?
-			else
-				var/obj/item/I = usr.equipped()
-				if (istype(I, /obj/item/magtractor)) // grr
-					var/obj/item/magtractor/mag = I
-					I = mag.holding
-					// We are inserting a tank from a magtractor and it might not have a valid tank
-					if (!(istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)))
-						boutput(usr, "That won't work inside of the [src]!")
-					// We are inserting a tank from a magtractor and it must have a valid tank
-					else
-						mag.dropItem(0)
-						ADD_TANK(href_list["tank"], I)
-						boutput(usr, "You insert \the [I].")
-				// We are not inserting from a magtractor and it might not have a valid tank
-				else if (!(istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)))
+		// Eject tank
+		if (HAS_TANK(href_list["tank"]))
+			REMOVE_TANK(href_list["tank"])
+			if (vrbomb)
+				qdel(vrbomb)
+		// Insert tank. If you're doing this there is clearly no vrbomb inside.. right?
+		else
+			var/obj/item/I = usr.equipped()
+			if (istype(I, /obj/item/magtractor)) // grr
+				var/obj/item/magtractor/mag = I
+				I = mag.holding
+				// We are inserting a tank from a magtractor and it might not have a valid tank
+				if (!(istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)))
 					boutput(usr, "That won't work inside of the [src]!")
-				// We are inserting from a magtractor and it has a valid tank
+				// We are inserting a tank from a magtractor and it must have a valid tank
 				else
-					usr.drop_item()
+					mag.dropItem(0)
 					ADD_TANK(href_list["tank"], I)
 					boutput(usr, "You insert \the [I].")
-			src.UpdateIcon()
-			src.updateUsrDialog()
+			// We are not inserting from a magtractor and it might not have a valid tank
+			else if (!(istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)))
+				boutput(usr, "That won't work inside of the [src]!")
+			// We are inserting from a magtractor and it has a valid tank
+			else
+				usr.drop_item()
+				ADD_TANK(href_list["tank"], I)
+				boutput(usr, "You insert \the [I].")
+		src.UpdateIcon()
+		src.updateUsrDialog()
 
-		else if(href_list["simulate"])
-			if(vrbomb)
-				boutput(usr, SPAN_ALERT("Simulation already in progress!"))
-				return
-
-			if(!(src.tank1 && src.tank2))
-				boutput(usr, SPAN_ALERT("Both tanks are required!"))
-				return
-
-			if (ON_COOLDOWN(global, "bomb_simulator", 30 SECONDS))
-				boutput(usr, SPAN_ALERT("Simulator not ready, please try again later."))
-				return
-
-			src.generate_vrbomb()
-			src.updateUsrDialog()
-
-		else if (href_list["reset"])
-			if (ON_COOLDOWN(src, "reset", NETWORK_MACHINE_RESET_DELAY))
-				return
-
-			if(!host_id)
-				return
-
-			src.last_reset = world.time
-			var/rem_host = src.host_id ? src.host_id : src.old_host_id
-			src.host_id = null
-			src.old_host_id = null
-			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN(0.5 SECONDS)
-				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
-
-			src.updateUsrDialog()
+	else if(href_list["simulate"])
+		if(vrbomb)
+			boutput(usr, SPAN_ALERT("Simulation already in progress!"))
 			return
 
-		src.add_fingerprint(usr)
+		if(!(src.tank1 && src.tank2))
+			boutput(usr, SPAN_ALERT("Both tanks are required!"))
+			return
+
+		if (ON_COOLDOWN(global, "bomb_simulator", 30 SECONDS))
+			boutput(usr, SPAN_ALERT("Simulator not ready, please try again later."))
+			return
+
+		src.generate_vrbomb()
+		src.updateUsrDialog()
+
+	else if (href_list["reset"])
+		if (ON_COOLDOWN(src, "reset", NETWORK_MACHINE_RESET_DELAY))
+			return
+
+		if(!host_id)
+			return
+
+		var/rem_host = src.host_id ? src.host_id : src.old_host_id
+		src.host_id = null
+		src.old_host_id = null
+		src.post_status(rem_host, "command","term_disconnect")
+		SPAWN(0.5 SECONDS)
+			src.post_status(rem_host, "command","term_connect","device",src.device_tag)
+
+		src.updateUsrDialog()
 		return
 
-	proc
-		generate_vrbomb()
-			if(!tank1 || !tank2)
-				return
+	src.add_fingerprint(usr)
+	return
+#undef HAS_TANK
+#undef ADD_TANK
+#undef REMOVE_TANK
+#undef TANK_ONE
+#undef TANK_TWO
 
-			if(vrbomb)
-				qdel(vrbomb)
-
-			var/turf/B = pick_landmark(vr_landmark)
-			if(!B)
-				playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
-				src.visible_message("[src] emits a somber ping.")
-				return
-
-			vrbomb = new
-			vrbomb.set_loc(B)
-			vrbomb.anchored = ANCHORED
-			vrbomb.tester = src
-
-			var/obj/item/device/timer/T = new
-			vrbomb.attached_device = T
-			T.master = vrbomb
-			T.time = 6
-
-			var/obj/item/tank/vrtank1 = new tank1.type
-			var/obj/item/tank/vrtank2 = new tank2.type
-
-			vrtank1.air_contents.copy_from(tank1.air_contents)
-			vrtank2.air_contents.copy_from(tank2.air_contents)
-
-			vrbomb.tank_one = vrtank1
-			vrbomb.tank_two = vrtank2
-			vrtank1.master = vrbomb
-			vrtank1.set_loc(vrbomb)
-			vrtank2.master = vrbomb
-			vrtank2.set_loc(vrbomb)
-
-			vrbomb.UpdateIcon()
-
-			T.timing = 1
-			T.c_state(1)
-			processing_items |= T
-
-			var/area/to_reset = get_area(vrbomb) //Reset the magic vr turf.
-			if(to_reset && to_reset.name != "Space")
-				for(var/turf/unsimulated/bombvr/VT in to_reset)
-					VT.icon_state = initial(VT.icon_state)
-				for(var/turf/unsimulated/wall/bombvr/VT in to_reset)
-					VT.icon_state = initial(VT.icon_state)
-					VT.set_opacity(1)
-					VT.set_density(1)
-
-			if(results)
-				//qdel(results)
-				results.dispose()
-			src.new_bomb_log()
-			return
-
-		new_bomb_log()
-			if(!tape)
-				return
-
-			if(results)
-				//qdel(results)
-				results.dispose()
-
-			results = new
-			results.name = "Bomblog"
-
-			results.fields += "Test [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [CURRENT_SPACE_YEAR]"
-
-			results.fields += "Atmospheric Tank #1:"
-			if(tank1)
-				var/datum/gas_mixture/environment = tank1.return_air()
-				var/pressure = MIXTURE_PRESSURE(environment)
-				var/total_moles = TOTAL_MOLES(environment)
-
-				results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
-				if(total_moles)
-					LIST_CONCENTRATION_REPORT(environment, results.fields)
-					results.fields += "|n"
-
-				else
-					results.fields += "Tank Empty"
-			else
-				results.fields += "None. (Sensor Error?)"
-
-			results.fields += "Atmospheric Tank #2:"
-			if(tank2)
-				var/datum/gas_mixture/environment = tank2.return_air()
-				var/pressure = MIXTURE_PRESSURE(environment)
-				var/total_moles = TOTAL_MOLES(environment)
-
-				results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
-				if(total_moles)
-					LIST_CONCENTRATION_REPORT(environment, results.fields)
-					results.fields += "|n"
-
-				else
-					results.fields += "Tank Empty"
-			else
-				results.fields += "None. (Sensor Error?)"
-
-			results.fields += "VR Bomb Monitor log:|nWaiting for monitor..."
-
-			src.tape.root.add_file( src.results )
-			src.sync(src.host_id)
-			return
-
-		//Called by our vrbomb as it heats up (Or doesn't.)
-		update_bomb_log(var/newdata, var/sync_log = 0)
-			if(!results || !newdata || !tape)
-				return
-
-			results.fields += newdata
-			if (sync_log)
-				src.sync(src.host_id)
-			return
-
-	update_icon()
-		if(tank1) //Update tank overlays.
-			UpdateOverlays(image(src.icon,"bscanner-tank1"), "tank1")
-		else
-			UpdateOverlays(null, "tank1")
-		if(tank2)
-			UpdateOverlays(image(src.icon,"bscanner-tank2"), "tank2")
-		else
-			UpdateOverlays(null, "tank2")
-
-		if(status & BROKEN)
-			icon_state = "bomb_scannerb"
-			return
-		if(status & NOPOWER)
-			icon_state = "bomb_scanner-p"
-			return
-
-		if(src.tank1 && src.tank2)
-			icon_state = "bomb_scanner1"
-		else
-			icon_state = "bomb_scanner0"
+/obj/machinery/networked/storage/bomb_tester/proc/generate_vrbomb()
+	if(!tank1 || !tank2)
 		return
+
+	if(vrbomb)
+		qdel(vrbomb)
+
+	var/turf/B = pick_landmark(vr_landmark)
+	if(!B)
+		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
+		src.visible_message("[src] emits a somber ping.")
+		return
+
+	vrbomb = new
+	vrbomb.set_loc(B)
+	vrbomb.anchored = ANCHORED
+	vrbomb.tester = src
+
+	var/obj/item/device/timer/T = new
+	vrbomb.attached_device = T
+	T.master = vrbomb
+	T.time = 6
+
+	var/obj/item/tank/vrtank1 = new tank1.type
+	var/obj/item/tank/vrtank2 = new tank2.type
+
+	vrtank1.air_contents.copy_from(tank1.air_contents)
+	vrtank2.air_contents.copy_from(tank2.air_contents)
+
+	vrbomb.tank_one = vrtank1
+	vrbomb.tank_two = vrtank2
+	vrtank1.master = vrbomb
+	vrtank1.set_loc(vrbomb)
+	vrtank2.master = vrbomb
+	vrtank2.set_loc(vrbomb)
+
+	vrbomb.UpdateIcon()
+
+	T.timing = 1
+	T.c_state(1)
+	processing_items |= T
+
+	var/area/to_reset = get_area(vrbomb) //Reset the magic vr turf.
+	if(to_reset && to_reset.name != "Space")
+		for(var/turf/unsimulated/bombvr/VT in to_reset)
+			VT.icon_state = initial(VT.icon_state)
+		for(var/turf/unsimulated/wall/bombvr/VT in to_reset)
+			VT.icon_state = initial(VT.icon_state)
+			VT.set_opacity(1)
+			VT.set_density(1)
+
+	if(results)
+		//qdel(results)
+		results.dispose()
+	src.new_bomb_log()
+	return
+
+/obj/machinery/networked/storage/bomb_tester/proc/new_bomb_log()
+	if(!tape)
+		return
+
+	if(results)
+		//qdel(results)
+		results.dispose()
+
+	results = new
+	results.name = "Bomblog"
+
+	results.fields += "Test [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [CURRENT_SPACE_YEAR]"
+
+	results.fields += "Atmospheric Tank #1:"
+	if(tank1)
+		var/datum/gas_mixture/environment = tank1.return_air()
+		var/pressure = MIXTURE_PRESSURE(environment)
+		var/total_moles = TOTAL_MOLES(environment)
+
+		results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
+		if(total_moles)
+			LIST_CONCENTRATION_REPORT(environment, results.fields)
+			results.fields += "|n"
+
+		else
+			results.fields += "Tank Empty"
+	else
+		results.fields += "None. (Sensor Error?)"
+
+	results.fields += "Atmospheric Tank #2:"
+	if(tank2)
+		var/datum/gas_mixture/environment = tank2.return_air()
+		var/pressure = MIXTURE_PRESSURE(environment)
+		var/total_moles = TOTAL_MOLES(environment)
+
+		results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
+		if(total_moles)
+			LIST_CONCENTRATION_REPORT(environment, results.fields)
+			results.fields += "|n"
+
+		else
+			results.fields += "Tank Empty"
+	else
+		results.fields += "None. (Sensor Error?)"
+
+	results.fields += "VR Bomb Monitor log:|nWaiting for monitor..."
+
+	src.tape.root.add_file( src.results )
+	src.sync(src.host_id)
+	return
+
+/// Called by our vrbomb as it heats up (Or doesn't.)
+/obj/machinery/networked/storage/bomb_tester/proc/update_bomb_log(var/newdata, var/sync_log = 0)
+	if(!results || !newdata || !tape)
+		return
+
+	results.fields += newdata
+	if (sync_log)
+		src.sync(src.host_id)
+	return
+
+/obj/machinery/networked/storage/bomb_tester/update_icon()
+	if(tank1) //Update tank overlays.
+		UpdateOverlays(image(src.icon,"bscanner-tank1"), "tank1")
+	else
+		UpdateOverlays(null, "tank1")
+	if(tank2)
+		UpdateOverlays(image(src.icon,"bscanner-tank2"), "tank2")
+	else
+		UpdateOverlays(null, "tank2")
+
+	if(status & BROKEN)
+		icon_state = "bomb_scannerb"
+		return
+	if(status & NOPOWER)
+		icon_state = "bomb_scanner-p"
+		return
+
+	if(src.tank1 && src.tank2)
+		icon_state = "bomb_scanner1"
+	else
+		icon_state = "bomb_scanner0"
+	return
 
 //Generic disk to hold VR bomb log
 /obj/item/disk/data/bomb_tester
