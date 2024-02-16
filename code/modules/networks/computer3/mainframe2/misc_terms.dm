@@ -708,8 +708,8 @@ TYPEINFO(/obj/machinery/networked/storage)
 			SPAWN(rand(0, 15))
 				status |= NOPOWER
 				UpdateIcon()
-				if(vrbomb)
-					qdel(vrbomb)
+				if(src.vrbomb)
+					qdel(src.vrbomb)
 		return
 
 	process()
@@ -752,7 +752,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 		dat += "<b>Tank One:</b> <a href='?src=\ref[src];tank=1'>[src.tank1 ? "Eject" : "None"]</a><br>"
 		dat += "<b>Tank Two:</b> <a href='?src=\ref[src];tank=2'>[src.tank2 ? "Eject" : "None"]</a><hr>"
 
-		dat += "<b>Simulation:</b> [vrbomb ? "IN PROGRESS" : "<a href='?src=\ref[src];simulate=1'>BEGIN</a>"]<br>"
+		dat += "<b>Simulation:</b> [src.vrbomb ? "IN PROGRESS" : "<a href='?src=\ref[src];simulate=1'>BEGIN</a>"]<br>"
 
 		var/readout_color = "#000000"
 		var/readout = "ERROR"
@@ -801,8 +801,8 @@ TYPEINFO(/obj/machinery/networked/storage)
 			// Eject tank
 			if (HAS_TANK(href_list["tank"]))
 				REMOVE_TANK(href_list["tank"])
-				if (vrbomb)
-					qdel(vrbomb)
+				if (src.vrbomb)
+					qdel(src.vrbomb)
 			// Insert tank. If you're doing this there is clearly no vrbomb inside.. right?
 			else
 				var/obj/item/I = usr.equipped()
@@ -829,7 +829,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 			src.updateUsrDialog()
 
 		else if(href_list["simulate"])
-			if(vrbomb)
+			if(src.vrbomb)
 				boutput(usr, SPAN_ALERT("Simulation already in progress!"))
 				return
 
@@ -873,8 +873,8 @@ TYPEINFO(/obj/machinery/networked/storage)
 		if(!(src.tank1 && src.tank2))
 			return
 
-		if(vrbomb)
-			qdel(vrbomb)
+		if(src.vrbomb)
+			qdel(src.vrbomb)
 
 		var/turf/B = pick_landmark(vr_landmark)
 		if(!B)
@@ -882,14 +882,14 @@ TYPEINFO(/obj/machinery/networked/storage)
 			src.visible_message("[src] emits a somber ping.")
 			return
 
-		vrbomb = new
-		vrbomb.set_loc(B)
-		vrbomb.anchored = ANCHORED
-		vrbomb.tester = src
+		src.vrbomb = new
+		src.vrbomb.set_loc(B)
+		src.vrbomb.anchored = ANCHORED
+		src.vrbomb.tester = src
 
 		var/obj/item/device/timer/T = new
-		vrbomb.attached_device = T
-		T.master = vrbomb
+		src.vrbomb.attached_device = T
+		T.master = src.vrbomb
 		T.time = 6
 
 		var/obj/item/tank/vrtank1 = new tank1.type
@@ -898,20 +898,20 @@ TYPEINFO(/obj/machinery/networked/storage)
 		vrtank1.air_contents.copy_from(tank1.air_contents)
 		vrtank2.air_contents.copy_from(tank2.air_contents)
 
-		vrbomb.tank_one = vrtank1
-		vrbomb.tank_two = vrtank2
-		vrtank1.master = vrbomb
-		vrtank1.set_loc(vrbomb)
-		vrtank2.master = vrbomb
-		vrtank2.set_loc(vrbomb)
+		src.vrbomb.tank_one = vrtank1
+		src.vrbomb.tank_two = vrtank2
+		vrtank1.master = src.vrbomb
+		vrtank1.set_loc(src.vrbomb)
+		vrtank2.master = src.vrbomb
+		vrtank2.set_loc(src.vrbomb)
 
-		vrbomb.UpdateIcon()
+		src.vrbomb.UpdateIcon()
 
 		T.timing = 1
 		T.c_state(1)
 		processing_items |= T
 
-		var/area/to_reset = get_area(vrbomb) //Reset the magic vr turf.
+		var/area/to_reset = get_area(src.vrbomb) //Reset the magic vr turf.
 		if(to_reset && to_reset.name != "Space")
 			for(var/turf/unsimulated/bombvr/VT in to_reset)
 				VT.icon_state = initial(VT.icon_state)
