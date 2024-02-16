@@ -153,6 +153,12 @@
 			count++
 		. += "<br>[SPAN_ALERT("[src] has [count > 1 ? "arrows" : "an arrow"] stuck in [him_or_her(src)]!")]"
 
+	if (locate(/obj/item/implant/projectile/body_visible/seed) in src.implant)
+		var/count = 0
+		for (var/obj/item/implant/projectile/body_visible/seed/P in src.implant)
+			count++
+		. += "<br>[SPAN_ALERT("[src] has [count > 1 ? "seeds" : "a seed"] stuck in [him_or_her(src)]!")]"
+
 	if (src.is_jittery)
 		switch(src.jitteriness)
 			if (300 to INFINITY)
