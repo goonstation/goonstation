@@ -733,7 +733,30 @@ TYPEINFO(/obj/machinery/networked/storage)
 			if(src.timeout <= 5 && !src.timeout_alert)
 				src.timeout_alert = 1
 				src.post_status(src.host_id, "command","term_ping","data","reply")
-				
+
+		return
+
+	update_icon()
+		if(tank1) //Update tank overlays.
+			UpdateOverlays(image(src.icon,"bscanner-tank1"), "tank1")
+		else
+			UpdateOverlays(null, "tank1")
+		if(tank2)
+			UpdateOverlays(image(src.icon,"bscanner-tank2"), "tank2")
+		else
+			UpdateOverlays(null, "tank2")
+
+		if(status & BROKEN)
+			icon_state = "bomb_scannerb"
+			return
+		if(status & NOPOWER)
+			icon_state = "bomb_scanner-p"
+			return
+
+		if(src.tank1 && src.tank2)
+			icon_state = "bomb_scanner1"
+		else
+			icon_state = "bomb_scanner0"
 		return
 
 	attack_hand(mob/user)
@@ -965,7 +988,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 		src.sync(src.host_id)
 		return
 
-		//Called by our vrbomb as it heats up (Or doesn't.)
+	///Called by our vrbomb as it heats up (Or doesn't.)
 	proc/update_bomb_log(var/newdata, var/sync_log = 0)
 		if(!src.results || !newdata || !tape)
 			return
@@ -975,30 +998,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 			src.sync(src.host_id)
 		return
 
-/obj/machinery/networked/storage/bomb_tester/update_icon()
-	if(tank1) //Update tank overlays.
-		UpdateOverlays(image(src.icon,"bscanner-tank1"), "tank1")
-	else
-		UpdateOverlays(null, "tank1")
-	if(tank2)
-		UpdateOverlays(image(src.icon,"bscanner-tank2"), "tank2")
-	else
-		UpdateOverlays(null, "tank2")
-
-	if(status & BROKEN)
-		icon_state = "bomb_scannerb"
-		return
-	if(status & NOPOWER)
-		icon_state = "bomb_scanner-p"
-		return
-
-	if(src.tank1 && src.tank2)
-		icon_state = "bomb_scanner1"
-	else
-		icon_state = "bomb_scanner0"
-	return
-
-//Generic disk to hold VR bomb log
+///Generic disk to hold VR bomb log
 /obj/item/disk/data/bomb_tester
 	desc = "You shouldn't be seeing this!"
 	title = "TEMPBUFFER"
