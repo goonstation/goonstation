@@ -1,4 +1,9 @@
 
+(t)fri feb 16 24
+(u)Mr. Moriarty
+(p)17949
+(e)🎨📦⚗|C-Sprites, A-Game-Objects, A-Chemistry
+(+)Resprited phials, beakers, round flasks, conical flasks, large beakers, large flasks, the four types of bottles, bongs, and all of their respective fluid overlays.
 (t)thu feb 15 24
 (u)Sord
 (+)Most in rotation maps now have airlock cyclers on some interior airlocks (Security, engineering, research, etc) where applicable.
