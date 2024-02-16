@@ -788,60 +788,50 @@ TYPEINFO(/obj/machinery/networked/storage)
 		src.add_dialog(usr)
 
 		if (href_list["tank"])
-
 			//Ai/cyborgs cannot physically remove a tank from a room away.
 			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
-				boutput(usr, SPAN_ALERT("You cannot press the ejection button."))
+				boutput(usr, SPAN_ALERT("You cannot interact with \the [src] from that far away!"))
 				return
 
+			// Get a reference to the tank in question
+			var/obj/item/target
 			switch(href_list["tank"])
 				if("1")
-					if(src.tank1)
-						src.tank1.set_loc(src.loc)
-						src.tank1 = null
-						boutput(usr, "You remove the tank.")
-						if(vrbomb)
-							qdel(vrbomb)
-					else
-						var/obj/item/I = usr.equipped()
-						if (istype(I, /obj/item/tank))
-							usr.drop_item()
-							I.set_loc(src)
-							src.tank1 = I
-							boutput(usr, "You insert [I].")
-						else if (istype(I, /obj/item/magtractor))
-							var/obj/item/magtractor/mag = I
-							if (istype(mag.holding, /obj/item/tank))
-								I = mag.holding
-								mag.dropItem(0)
-								I.set_loc(src)
-								src.tank1 = I
-								boutput(usr, "You insert [I].")
-					src.UpdateIcon()
-				if("2")
-					if(src.tank2)
-						src.tank2.set_loc(src.loc)
-						src.tank2 = null
-						boutput(usr, "You remove the tank.")
-						if(vrbomb)
-							qdel(vrbomb)
-					else
-						var/obj/item/I = usr.equipped()
-						if (istype(I, /obj/item/tank))
-							usr.drop_item()
-							I.set_loc(src)
-							src.tank2 = I
-							boutput(usr, "You insert [I].")
-						else if (istype(I, /obj/item/magtractor))
-							var/obj/item/magtractor/mag = I
-							if (istype(mag.holding, /obj/item/tank))
-								I = mag.holding
-								mag.dropItem(0)
-								I.set_loc(src)
-								src.tank2 = I
-								boutput(usr, "You insert [I].")
-					src.UpdateIcon()
+					target = src.tank1
+				if ("2")
+					target = src.tank2
 
+			// Eject tank
+			if (target)
+				target.set_loc(src.loc)
+				target = null
+				if (vrbomb)
+					qdel(vrbomb)
+			// Insert tank. If you're doing this there is clearly no vrbomb inside.. right?
+			else
+				var/obj/item/I = usr.equipped()
+				if (istype(I, /obj/item/magtractor)) // grr
+					var/obj/item/magtractor/mag = I
+					I = mag.holding
+					// We are inserting a tank from a magtractor and it might not have a valid tank
+					if (!(istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)))
+						boutput(usr, "You can't put \the [I] into that!")
+					// We are inserting a tank from a magtractor and it must have a valid tank
+					else
+						mag.dropItem(0)
+						I.set_loc(src)
+						target = I
+						boutput(usr, "You insert \the [I].")
+				// We are not inserting from a magtractor and it might not have a valid tank
+				else if (!(istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)))
+					boutput(usr, "You can't put \the [I] into that!")
+				// We are inserting from a magtractor and it has a valid tank
+				else
+					usr.drop_item()
+					I.set_loc(src)
+					src.tank1 = I
+					boutput(usr, "You insert \the [I].")
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else if(href_list["simulate"])
