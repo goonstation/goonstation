@@ -695,10 +695,6 @@ TYPEINFO(/obj/machinery/networked/storage)
 	var/datum/computer/file/record/results = null
 	/// Our VR TTV to attach tank1 and tank2 to
 	var/obj/item/device/transfer_valve/vr/vrbomb = null
-	/// Last world.time we tested a bomb.
-	var/last_sim = 0
-	/// Time until next simulation.
-	var/sim_delay = 300
 	power_usage = 200
 
 	/// Where the bomb gets dropped
@@ -834,23 +830,23 @@ TYPEINFO(/obj/machinery/networked/storage)
 			src.updateUsrDialog()
 
 		else if(href_list["simulate"])
-			if(!tank1 || !tank2)
+			if(vrbomb)
+				boutput(usr, SPAN_ALERT("Simulation already in progress!"))
+				return
+
+			if(!(src.tank1 && src.tank2))
 				boutput(usr, SPAN_ALERT("Both tanks are required!"))
 				return
 
-			if(last_sim && (last_sim + sim_delay > world.time))
+			if (ON_COOLDOWN(global, "bomb_simulator", 30 SECONDS))
 				boutput(usr, SPAN_ALERT("Simulator not ready, please try again later."))
-				return
-
-			if(vrbomb)
-				boutput(usr, SPAN_ALERT("Simulation already in progress!"))
 				return
 
 			src.generate_vrbomb()
 			src.updateUsrDialog()
 
 		else if (href_list["reset"])
-			if(last_reset && (last_reset + NETWORK_MACHINE_RESET_DELAY >= world.time))
+			if (ON_COOLDOWN(src, "reset", NETWORK_MACHINE_RESET_DELAY))
 				return
 
 			if(!host_id)
