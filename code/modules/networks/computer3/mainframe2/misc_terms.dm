@@ -681,21 +681,27 @@ TYPEINFO(/obj/machinery/networked/storage)
 	icon_state = "bomb_scanner0"
 	base_icon_state = "bomb_scanner"
 
-	setup_access_click = 0
-	read_only = 1
-	setup_drive_size = 4
-	setup_drive_type = /obj/item/disk/data/bomb_tester
-	setup_accept_tapes = 0
+	setup_access_click = FALSE // We dont play a click sound on accessing/loading a tape ig
+	read_only = TRUE
+	setup_drive_size = 4 // Storage allocation for the drive
+	setup_drive_type = /obj/item/disk/data/bomb_tester // Cool drive
+	setup_accept_tapes = FALSE // Dont accept swappies
 
+	/// One of two tanks this holds as a basis for the simulation
 	var/obj/item/tank/tank1 = null
+	/// Two of two tanks this holds as a basis for the simulation
 	var/obj/item/tank/tank2 = null
+	/// File record where the simulation results are kept
 	var/datum/computer/file/record/results = null
-	var/setup_result_name = "Bomblog"
+	/// Our VR TTV to attach tank1 and tank2 to
 	var/obj/item/device/transfer_valve/vr/vrbomb = null
-	var/last_sim = 0 //Last world.time we tested a bomb.
-	var/sim_delay = 300 //Time until next simulation.
+	/// Last world.time we tested a bomb.
+	var/last_sim = 0
+	/// Time until next simulation.
+	var/sim_delay = 300
 	power_usage = 200
 
+	/// Where the bomb gets dropped
 	var/vr_landmark = LANDMARK_VR_BOMB
 
 	power_change()
@@ -956,7 +962,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 				results.dispose()
 
 			results = new
-			results.name = setup_result_name
+			results.name = "Bomblog"
 
 			results.fields += "Test [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [CURRENT_SPACE_YEAR]"
 
