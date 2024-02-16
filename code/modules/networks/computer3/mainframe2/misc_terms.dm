@@ -866,8 +866,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 		src.add_fingerprint(usr)
 		return
 
-	proc
-		generate_vrbomb()
+	proc/generate_vrbomb()
 			if(!tank1 || !tank2)
 				return
 
@@ -924,7 +923,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 			src.new_bomb_log()
 			return
 
-		new_bomb_log()
+	proc/new_bomb_log()
 			if(!tape)
 				return
 
@@ -976,7 +975,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 			return
 
 		//Called by our vrbomb as it heats up (Or doesn't.)
-		update_bomb_log(var/newdata, var/sync_log = 0)
+	proc/update_bomb_log(var/newdata, var/sync_log = 0)
 			if(!results || !newdata || !tape)
 				return
 
