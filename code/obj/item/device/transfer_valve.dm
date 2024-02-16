@@ -510,10 +510,12 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 
 		return
 
+/// How many atmos ticks we are willing to count before giving up
+#define UPDATES_BEFORE_TIMEOUT 20
 /obj/item/device/transfer_valve/vr
 	name = "VR explosive"
 	var/obj/machinery/networked/storage/bomb_tester/tester = null
-	var/updates_before_halt = 10 //So we don't keep updating on a dud bomb forever.
+	/// How many atmos ticks we have listened to thus far
 	var/update_counter = 0
 
 	attack_hand(mob/user)
@@ -541,33 +543,31 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 		if(!tester || !src.valve_open)
 			return
 
-		if(update_counter >= updates_before_halt)
+		if(update_counter >= UPDATES_BEFORE_TIMEOUT)
 			tester.update_bomb_log("VR bomb monitor timeout.", 1)
 			processing_items.Remove(src)
 			return
 
 		update_counter++
 
-		var/tankslost = 2
 		var/log_message = "[time2text(world.timeofday, "mm:ss")]:"
-		var/tpressure = 0
-		if(tank_one?.air_contents)
-			tankslost--
-			var/t1pressure = MIXTURE_PRESSURE(tank_one.air_contents)
-			tpressure += round(t1pressure,0.1)
+		var/tank1_pressure = (tank_one?.air_contents != null) ?  MIXTURE_PRESSURE(tank_one.air_contents) : 0
+		var/tank2_pressure = (tank_two?.air_contents != null) ?  MIXTURE_PRESSURE(tank_two.air_contents) : 0
 
-		if(tank_two?.air_contents)
-			tankslost--
-			var/t2pressure = MIXTURE_PRESSURE(tank_two.air_contents)
-			tpressure += round(t2pressure,0.1)
-
-		log_message += " Pressure:[tpressure] kPa"
-		if(tankslost)
-			log_message += " [tankslost == 2 ? "Both" : "One"] Tank(s) Lost!"
+		log_message += "Tank 1 Pressure:[tank1_pressure] kPa"
+		log_message += "Tank 2 Pressure:[tank2_pressure] kPa"
+		if(!tank1_pressure)
+			log_message += "Tank one has no pressure or has been destroyed!"
+		if (!tank2_pressure)
+			log_message += "Tank two has no pressure or has been destroyed!"
+		// We went boom, or we loaded two empty tanks. Don't simulate that!
+		if (!tank1_pressure && !tank2_pressure)
+			log_message += "Both tanks have no pressure or are destroyed!"
+			processing_items.Remove(src)
 
 		tester.update_bomb_log(log_message)
 		return
-
+#undef UPDATES_BEFORE_TIMEOUT
 
 /obj/item/pressure_crystal
 	icon = 'icons/obj/items/assemblies.dmi'

@@ -911,8 +911,6 @@ TYPEINFO(/obj/machinery/networked/storage)
 				VT.set_opacity(1)
 				VT.set_density(1)
 
-		if(results) // Clear old results, setup new log
-			results.dispose()
 		src.new_bomb_log()
 		return
 
@@ -920,48 +918,47 @@ TYPEINFO(/obj/machinery/networked/storage)
 		if(!tape)
 			return
 
-		if(results)
-			//qdel(results)
-			results.dispose()
+		if(src.results)
+			src.results.dispose()
 
-		results = new
-		results.name = "Bomblog"
+		src.results = new
+		src.results.name = "Bomblog"
 
-		results.fields += "Test [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [CURRENT_SPACE_YEAR]"
+		src.results.fields += "Test [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [CURRENT_SPACE_YEAR]"
 
-		results.fields += "Atmospheric Tank #1:"
+		src.results.fields += "Atmospheric Tank #1:"
 		if(tank1)
 			var/datum/gas_mixture/environment = tank1.return_air()
 			var/pressure = MIXTURE_PRESSURE(environment)
 			var/total_moles = TOTAL_MOLES(environment)
 
-			results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
+			src.results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
 			if(total_moles)
-				LIST_CONCENTRATION_REPORT(environment, results.fields)
-				results.fields += "|n"
+				LIST_CONCENTRATION_REPORT(environment, src.results.fields)
+				src.results.fields += "|n"
 
 			else
-				results.fields += "Tank Empty"
+				src.results.fields += "Tank Empty"
 		else
-			results.fields += "None. (Sensor Error?)"
+			src.results.fields += "None. (Sensor Error?)"
 
-		results.fields += "Atmospheric Tank #2:"
+		src.results.fields += "Atmospheric Tank #2:"
 		if(tank2)
 			var/datum/gas_mixture/environment = tank2.return_air()
 			var/pressure = MIXTURE_PRESSURE(environment)
 			var/total_moles = TOTAL_MOLES(environment)
 
-			results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
+			src.results.fields += "Tank Pressure: [round(pressure,0.1)] kPa"
 			if(total_moles)
-				LIST_CONCENTRATION_REPORT(environment, results.fields)
-				results.fields += "|n"
+				LIST_CONCENTRATION_REPORT(environment, src.results.fields)
+				src.results.fields += "|n"
 
 			else
-				results.fields += "Tank Empty"
+				src.results.fields += "Tank Empty"
 		else
-			results.fields += "None. (Sensor Error?)"
+			src.results.fields += "None. (Sensor Error?)"
 
-		results.fields += "VR Bomb Monitor log:|nWaiting for monitor..."
+		src.results.fields += "VR Bomb Monitor log:|nWaiting for monitor..."
 
 		src.tape.root.add_file( src.results )
 		src.sync(src.host_id)
@@ -969,10 +966,10 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 		//Called by our vrbomb as it heats up (Or doesn't.)
 	proc/update_bomb_log(var/newdata, var/sync_log = 0)
-		if(!results || !newdata || !tape)
+		if(!src.results || !newdata || !tape)
 			return
 
-		results.fields += newdata
+		src.results.fields += newdata
 		if (sync_log)
 			src.sync(src.host_id)
 		return
