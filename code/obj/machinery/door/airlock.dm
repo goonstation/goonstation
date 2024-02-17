@@ -1678,7 +1678,7 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/proc/attempt_cycle_unlink()
 	cycling_airlocks[src.junction_id] -= src
 	if (!cycling_airlocks[src.junction_id])	// if the junction list is now empty, remove it from the global list
-		cycling_airlocks -= src.junction_id
+		cycling_airlocks -= cycling_airlocks[src.junction_id]
 
 /// adds the airlock in question to the global list.
 /obj/machinery/door/airlock/proc/attempt_cycle_link()
