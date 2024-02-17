@@ -1674,6 +1674,12 @@ About the new airlock wires panel:
 
 	return
 
+/// removes the airlock in question from the global list.
+/obj/machinery/door/airlock/proc/attempt_cycle_unlink()
+	cycling_airlocks[src.junction_id] -= src
+	if (!cycling_airlocks[src.junction_id])	// if the junction list is now empty, remove it from the global list
+		cycling_airlocks -= src.junction_id
+
 /// adds the airlock in question to the global list.
 /obj/machinery/door/airlock/proc/attempt_cycle_link()
 	if (src.junction_id)
@@ -1800,6 +1806,12 @@ TYPEINFO(/obj/machinery/door/airlock)
 					if ("secure_open")
 						reply.data["description"] = "Opens the airlock and drops the bolts, securing it open. Requires access code"
 						reply.data["args"] = "access_code"
+					if ("change_junction_id")
+						reply.data["description"] = "Changes the ID of what junction the airlock is in. All linked airlocks should share the same ID. Requires access code and message."
+						reply.data["args"] = "access_code,message"
+					if ("change_entrance_id")
+						reply.data["description"] = "Changes the ID of what entrance to the junction the airlock is in. Sets of double doors or doors opening into the same space should share the same ID. Requires access code and message."
+						reply.data["args"] = "access_code,message"
 					else
 						reply.data["description"] = "ERROR: UNKNOWN TOPIC"
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, radiorange)
@@ -1883,7 +1895,9 @@ TYPEINFO(/obj/machinery/door/airlock)
 			if ("change_junction_id")
 				SPAWN(0)
 					if (signal.data["message"])
+						src.attempt_cycle_unlink()
 						src.junction_id = signal.data["message"]
+						src.attempt_cycle_link()
 					src.send_status(,senderid)
 
 			if ("change_entrance_id")
