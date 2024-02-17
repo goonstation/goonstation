@@ -1704,6 +1704,13 @@ About the new airlock wires panel:
 			if (src.entrance_id && src.entrance_id == D.entrance_id)
 				continue
 			D.close()
+		// we make the illusion of a close packet, not an actual one.
+		var/datum/signal/doorsignal = get_free_signal()
+		doorsignal.source = src
+		doorsignal.data["command"]	= "close_linked"
+		doorsignal.data["access_code"]	= "linked_airlock_override"	// it's not actually sending the access code, because it could just keep sniffed.
+		doorsignal.data["sender"]	= src.net_id
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, doorsignal, src.radiorange)
 
 /obj/machinery/door/airlock/close()
 	//split into two sets of checks so failures to close due to lacking power will cause linked shields to deactivate
@@ -1812,6 +1819,9 @@ TYPEINFO(/obj/machinery/door/airlock)
 					if ("change_entrance_id")
 						reply.data["description"] = "Changes the ID of what entrance to the junction the airlock is in. Sets of double doors or doors opening into the same space should share the same ID. Requires access code and message."
 						reply.data["args"] = "access_code,message"
+					if ("close_linked")
+						reply.data["description"] = "Closes all airlocks with matching junction_id and non matching entrance_id. Cannot be spoofed."
+						reply.data["args"] = "not applicable"
 					else
 						reply.data["description"] = "ERROR: UNKNOWN TOPIC"
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, radiorange)
