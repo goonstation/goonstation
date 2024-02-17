@@ -107,7 +107,9 @@
 					if (isvampire(src))
 						playsound(src, 'sound/effects/screech_tone.ogg', 90, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 						screamed = TRUE
-
+					if (isarcfiend(src))
+						playsound(src, 'sound/effects/elec_bzzz.ogg', 80, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+						screamed = TRUE
 					#ifdef HALLOWEEN
 					spooktober_GH.change_points(src.ckey, 100)
 					#endif
