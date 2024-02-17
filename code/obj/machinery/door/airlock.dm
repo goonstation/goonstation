@@ -1931,9 +1931,9 @@ TYPEINFO(/obj/machinery/door/airlock)
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, radiorange)
 
-	open(surpress_send)
+	open(suppress_send)
 		. = ..()
-		if(!surpress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
+		if(!suppress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
 			var/user_name = "???"
 			if (issilicon(usr))
 				user_name = "AI"
@@ -1949,9 +1949,9 @@ TYPEINFO(/obj/machinery/door/airlock)
 			send_status(user_name)
 			src.last_update_time = ticker.round_elapsed_ticks
 
-	close(surpress_send, is_auto = 0)
+	close(suppress_send, is_auto = 0)
 		. = ..()
-		if(!surpress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
+		if(!suppress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
 			var/user_name = "???"
 			if (issilicon(usr))
 				user_name = "AI"
