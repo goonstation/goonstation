@@ -182,8 +182,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = 0
 
-	var/cycle_id = ""	//! Which airlocks this door is connected too.
-	var/cycle_enter_id = ""	//! An ID for double doors sharing a direction in a cycling airlock system.
+	var/junction_id = ""	//! Which airlocks this door is connected too.
+	var/entrance_id = ""	//! An ID for double doors sharing a direction in a cycling airlock system.
 
 	var/list/signalers[10]
 	var/lockdownbyai = 0
@@ -205,7 +205,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 	autoclose = TRUE
 	power_usage = 50
-	operation_time = 6
+	operation_time = 6 DECI SECONDS
 	brainloss_stumble = TRUE
 
 	get_desc()
@@ -1676,11 +1676,11 @@ About the new airlock wires panel:
 
 /// adds the airlock in question to the global list.
 /obj/machinery/door/airlock/proc/attempt_cycle_link()
-	if (src.cycle_id)
-		if(!cycling_airlocks[src.cycle_id])	// add a list to the list of lists
-			cycling_airlocks[src.cycle_id] = list()
-		if (!(src in cycling_airlocks[src.cycle_id]))
-			cycling_airlocks[src.cycle_id] += src
+	if (src.junction_id)
+		if(!cycling_airlocks[src.junction_id])	// add a list to the list of lists
+			cycling_airlocks[src.junction_id] = list()
+		if (!(src in cycling_airlocks[src.junction_id]))
+			cycling_airlocks[src.junction_id] += src
 
 /obj/machinery/door/airlock/open()
 	if (!src.density || src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
@@ -1692,10 +1692,10 @@ About the new airlock wires panel:
 
 	playsound(src.loc, src.sound_airlock, 25, 1)
 
-	if (src.cycle_id)
-		for (var/obj/machinery/door/airlock/D in cycling_airlocks[src.cycle_id])
+	if (src.junction_id)
+		for (var/obj/machinery/door/airlock/D in cycling_airlocks[src.junction_id])
 			// if they share entry id, don't close, e.g. double doors facing space.
-			if (src.cycle_enter_id && src.cycle_enter_id == D.cycle_enter_id)
+			if (src.entrance_id && src.entrance_id == D.entrance_id)
 				continue
 			D.close()
 
@@ -1880,12 +1880,24 @@ TYPEINFO(/obj/machinery/door/airlock)
 					sleep(src.operation_time)
 					src.send_status(,senderid)
 
+			if ("change_junction_id")
+				SPAWN(0)
+					if (signal.data["message"])
+						src.junction_id = signal.data["message"]
+					src.send_status(,senderid)
+
+			if ("change_entrance_id")
+				SPAWN(0)
+					if (signal.data["message"])
+						src.entrance_id = signal.data["message"]
+					src.send_status(,senderid)
+
 	proc/send_status(userid,target)
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
 		if (id_tag)
-			signal.data["tag"] = id_tag
-		signal.data["sender"] = net_id
+			signal.data["tag"] = src.id_tag
+		signal.data["sender"] = src.net_id
 		signal.data["timestamp"] = "[air_master.current_cycle]"
 		signal.data["address_tag"] = "airlock_listener" // prevents other doors from receiving this packet unnecessarily
 
@@ -1893,8 +1905,10 @@ TYPEINFO(/obj/machinery/door/airlock)
 			signal.data["user_id"] = "[userid]"
 		if (target)
 			signal.data["address_1"] = target
-		signal.data["door_status"] = density?("closed"):("open")
-		signal.data["lock_status"] = locked?("locked"):("unlocked")
+		signal.data["door_status"] = src.density ? ("closed") : ("open")
+		signal.data["lock_status"] = src.locked ? ("locked") : ("unlocked")
+		signal.data["junction_id"] = src.junction_id ? (src.junction_id) : ("null")
+		signal.data["entrance_id"] = src.entrance_id ? (src.entrance_id) : ("null")
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, radiorange)
 
