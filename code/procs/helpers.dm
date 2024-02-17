@@ -2257,11 +2257,11 @@ proc/gradientText(var/color1, var/color2, message)
 		if(prob(20))
 			dir = dir/abs(dir) * -1
 		if(n < 0)
-		n = 0
-		dir = 1
+			n = 0
+			dir = 1
 		if(n > 1)
-		n = 1
-		dir = -1
+			n = 1
+			dir = -1
 		var/col = rgb(r1 + dr*n, g1 + dg*n, b1 + db*n)
 		var/chars = copytext(message, i, i+3)
 		result += "<span style='color:[col]'>[chars]</span>"
