@@ -1763,7 +1763,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 
 	mouse_drop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
 
-		if(!isliving(usr))
+		if(!isliving(usr) || isintangible(usr))
 			return
 
 		if(istype(O, /obj/item/mechanics) && O.level == OVERFLOOR)
