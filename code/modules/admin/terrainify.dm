@@ -284,7 +284,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Desert Station"
 	desc = "Turn space into into a nice desert full of sand and stones."
 	additional_options = list("Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj"=TRUE)
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
 
 	New()
 		syndi_camo_color = list(nuke_op_color_matrix[1], "#efc998", nuke_op_color_matrix[3])
@@ -438,7 +438,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/swampify
 	name = "Swamp Station"
 	desc = "Turns space into a swamp"
-	additional_options = list("Rain"=list("Yes","No", "Particles"), "Mining"=list("None","Normal","Rich"))
+	additional_options = list("Rain"=list("No", "Yes", "Particles"), "Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
 
 	New()
@@ -501,7 +501,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Mars Station"
 	desc = "Turns space into Mars.  A sprawl of stand, stone, and an unyielding wind."
 	additional_options = list("Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj"=FALSE, "Duststorm"=TRUE)
+	additional_toggles = list("Ambient Light Obj"=FALSE, "Duststorm"=TRUE, "Prefabs"=FALSE)
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
