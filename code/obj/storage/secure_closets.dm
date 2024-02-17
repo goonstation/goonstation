@@ -356,8 +356,6 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	)
 
 /obj/storage/secure/closet/command/chief_engineer/puzzle
-	//obj/storage/secure/closet/command/chief_engineer/puzzle would never be real
-	//obj/storage/secure/closet/command/chief_engineer/puzzle:
 	locked = FALSE
 	spawn_contents = list(
 		/obj/item/storage/belt/utility/prepared/ceshielded, //instead of the law rack disk
