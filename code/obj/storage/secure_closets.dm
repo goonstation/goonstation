@@ -328,7 +328,6 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	name = "\improper Chief Engineer's locker"
 	req_access = list(access_engineering_chief)
 	spawn_contents = list(
-		/obj/item/storage/belt/utility/prepared/ceshielded,
 		/obj/item/disk/data/floppy/manudrive/law_rack,
 		/obj/item/storage/box/clothing/chief_engineer,
 		/obj/item/device/radio/headset/command/ce,
@@ -354,7 +353,27 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/clothing/suit/space/light/engineer,
 		/obj/item/clothing/head/helmet/space/light/engineer,
 	#endif
+	)
 
+/obj/storage/secure/closet/command/chief_engineer/puzzle
+	locked = FALSE
+	spawn_contents = list(
+		/obj/item/storage/belt/utility/prepared/ceshielded, //instead of the law rack disk
+		/obj/item/storage/box/clothing/chief_engineer,
+		/obj/item/device/radio/headset/command/ce,
+		/obj/item/stamp/ce,
+		/obj/item/device/flash,
+		/obj/item/clothing/shoes/magnetic,
+		/obj/item/clothing/gloves/yellow,
+		/obj/item/clothing/suit/hazard/fire/heavy,
+		/obj/item/clothing/head/helmet/firefighter,
+		/obj/item/clothing/suit/hazard/rad,
+		/obj/item/clothing/head/rad_hood,
+		/obj/item/storage/toolbox/mechanical/yellow_tools,
+		/obj/item/storage/box/misctools,
+		/obj/item/extinguisher,
+		/obj/item/clothing/suit/space/light/engineer,
+		/obj/item/clothing/head/helmet/space/light/engineer,
 	)
 
 /* ==================== */
