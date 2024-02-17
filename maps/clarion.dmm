@@ -17620,7 +17620,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "westsubstation";
+	junction_id = "westsubstation";
 	name = "West Substation"
 	},
 /turf/simulated/floor/plating,
@@ -17791,7 +17791,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engine Room";
 	enter_id = "outer"
 	},
@@ -19609,7 +19609,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "westmaint";
+	junction_id = "westmaint";
 	name = "West Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -20015,7 +20015,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "podbay";
+	junction_id = "podbay";
 	name = "Public Podbay"
 	},
 /turf/simulated/floor/plating,
@@ -20844,7 +20844,7 @@
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "eastsubstation";
+	junction_id = "eastsubstation";
 	name = "East Substation"
 	},
 /turf/simulated/floor/plating,
@@ -21081,7 +21081,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "arrivals2";
+	junction_id = "arrivals2";
 	name = "Arrivals";
 	enter_id = "main"
 	},
@@ -21999,7 +21999,7 @@
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "cargo";
+	junction_id = "cargo";
 	name = "Cargo";
 	enter_id = "inner"
 	},
@@ -22238,7 +22238,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "cargo";
+	junction_id = "cargo";
 	name = "Cargo";
 	enter_id = "outer"
 	},
@@ -23465,7 +23465,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "arrivals";
+	junction_id = "arrivals";
 	name = "Arrivals";
 	enter_id = "main"
 	},
@@ -23851,7 +23851,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "escape";
+	junction_id = "escape";
 	name = "Escape";
 	enter_id = "outer"
 	},
@@ -28021,7 +28021,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "arrivals";
+	junction_id = "arrivals";
 	name = "Arrivals";
 	enter_id = "main"
 	},
@@ -29072,7 +29072,7 @@
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "cargo";
+	junction_id = "cargo";
 	name = "Cargo";
 	enter_id = "inner"
 	},
@@ -29503,7 +29503,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "arrivals2";
+	junction_id = "arrivals2";
 	name = "Arrivals";
 	enter_id = "outer"
 	},
@@ -31844,7 +31844,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "escape";
+	junction_id = "escape";
 	name = "Escape";
 	enter_id = "main"
 	},
@@ -32737,7 +32737,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "secpod";
+	junction_id = "secpod";
 	name = "Security Podbay"
 	},
 /turf/simulated/floor/plating,
@@ -33510,7 +33510,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "eastsubstation";
+	junction_id = "eastsubstation";
 	name = "East Substation"
 	},
 /turf/simulated/floor/plating,
@@ -34454,7 +34454,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engine Room";
 	enter_id = "inner"
 	},
@@ -35913,7 +35913,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "ptl";
+	junction_id = "ptl";
 	name = "Power Transmission Laser Room"
 	},
 /turf/simulated/floor/orangeblack,
@@ -36539,7 +36539,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "escape";
+	junction_id = "escape";
 	name = "Escape";
 	enter_id = "main"
 	},
@@ -36604,7 +36604,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "escape2";
+	junction_id = "escape2";
 	name = "Escape";
 	enter_id = "main"
 	},
@@ -36712,7 +36712,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "escape2";
+	junction_id = "escape2";
 	name = "Escape";
 	enter_id = "main"
 	},
@@ -37351,7 +37351,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "westmaint";
+	junction_id = "westmaint";
 	name = "West Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -37630,7 +37630,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "escape2";
+	junction_id = "escape2";
 	name = "Escape";
 	enter_id = "outer"
 	},
@@ -38341,7 +38341,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "eastmaint";
+	junction_id = "eastmaint";
 	name = "East Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -38638,7 +38638,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engine Room";
 	enter_id = "outer"
 	},
@@ -38664,7 +38664,7 @@
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "cargo";
+	junction_id = "cargo";
 	name = "Cargo";
 	enter_id = "inner"
 	},
@@ -40021,7 +40021,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "cargo";
+	junction_id = "cargo";
 	name = "Cargo";
 	enter_id = "outer"
 	},
@@ -40817,7 +40817,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/research,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "eastsubstation";
+	junction_id = "eastsubstation";
 	name = "East Substation"
 	},
 /turf/simulated/floor/plating,
@@ -41165,7 +41165,7 @@
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "westsubstation";
+	junction_id = "westsubstation";
 	name = "West Substation"
 	},
 /turf/simulated/floor/plating,
@@ -42798,7 +42798,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "arrivals2";
+	junction_id = "arrivals2";
 	name = "Arrivals";
 	enter_id = "main"
 	},
@@ -43472,7 +43472,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "arrivals";
+	junction_id = "arrivals";
 	name = "Arrivals";
 	enter_id = "outer"
 	},
@@ -44271,7 +44271,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "ptl";
+	junction_id = "ptl";
 	name = "Power Transmission Laser Room"
 	},
 /turf/simulated/floor/orangeblack,
@@ -45383,7 +45383,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engine Room";
 	enter_id = "inner"
 	},

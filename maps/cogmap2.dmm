@@ -45354,7 +45354,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Mining";
-	cycle_id = "mining";
+	junction_id = "mining";
 	enter_id = "inner"
 	},
 /turf/simulated/floor,
@@ -57419,7 +57419,7 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "north"
 	},
@@ -57649,7 +57649,7 @@
 /obj/mapping_helper/access/security,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "security";
+	junction_id = "security";
 	name = "Security";
 	enter_id = "inner"
 	},
@@ -58132,7 +58132,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Emergency Solar Array 2";
-	cycle_id = "solar2"
+	junction_id = "solar2"
 	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
@@ -58488,7 +58488,7 @@
 /obj/mapping_helper/access/heads,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "inner"
 	},
@@ -58789,7 +58789,7 @@
 /obj/mapping_helper/access/hydro,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "hydro";
+	junction_id = "hydro";
 	name = "Hydroponics";
 	enter_id = "inner"
 	},
@@ -59087,7 +59087,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/hydro,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "hydro";
+	junction_id = "hydro";
 	name = "Hydroponics";
 	enter_id = "outer"
 	},
@@ -59237,7 +59237,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Mining";
-	cycle_id = "mining";
+	junction_id = "mining";
 	enter_id = "inner"
 	},
 /turf/simulated/floor,
@@ -59452,7 +59452,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "North Maintenance";
-	cycle_id = "n_maint"
+	junction_id = "n_maint"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -60018,7 +60018,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Emergency Solar Array 2";
-	cycle_id = "solar2"
+	junction_id = "solar2"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/arrivals)
@@ -60353,7 +60353,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aiairbridge";
+	junction_id = "aiairbridge";
 	name = "AI Airbridge";
 	enter_id = "outer"
 	},
@@ -60705,7 +60705,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Central Maintenance";
-	cycle_id = "c_maint"
+	junction_id = "c_maint"
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/central)
@@ -60900,7 +60900,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "West Substation";
-	cycle_id = "westsubstation"
+	junction_id = "westsubstation"
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/west)
@@ -60955,7 +60955,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	name = "Central Maintenance";
-	cycle_id = "c_maint3";
+	junction_id = "c_maint3";
 	enter_id = "inner"
 	},
 /turf/simulated/floor/caution/westeast,
@@ -61210,7 +61210,7 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "south"
 	},
@@ -61593,7 +61593,7 @@
 /obj/mapping_helper/access/heads,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "outer"
 	},
@@ -61793,7 +61793,7 @@
 /obj/mapping_helper/access/security,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "security";
+	junction_id = "security";
 	name = "Security";
 	enter_id = "inner"
 	},
@@ -61916,7 +61916,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "South East Maintenance";
-	cycle_id = "se_maint"
+	junction_id = "se_maint"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -62121,7 +62121,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Mining";
-	cycle_id = "mining";
+	junction_id = "mining";
 	enter_id = "outer"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -62413,7 +62413,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "West Substation";
-	cycle_id = "westsubstation"
+	junction_id = "westsubstation"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/substation/west)
@@ -62985,7 +62985,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Mining";
-	cycle_id = "mining";
+	junction_id = "mining";
 	enter_id = "outer"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -63076,7 +63076,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "South Solar Maintenance";
-	cycle_id = "southsolar"
+	junction_id = "southsolar"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/solar/south)
@@ -63161,7 +63161,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Central Maintenance";
-	cycle_id = "c_maint3";
+	junction_id = "c_maint3";
 	enter_id = "outer"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -64708,7 +64708,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "North East Maintenance";
-	cycle_id = "ne_maint"
+	junction_id = "ne_maint"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/northeast)
@@ -64743,7 +64743,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "North East Maintenance";
-	cycle_id = "ne_maint2"
+	junction_id = "ne_maint2"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -64821,7 +64821,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "South East Maintenance";
-	cycle_id = "se_maint2"
+	junction_id = "se_maint2"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/southeast)
@@ -64945,7 +64945,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Auxillary Storage";
-	cycle_id = "auxstorage"
+	junction_id = "auxstorage"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/storage/auxillary)
@@ -65020,7 +65020,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Auxillary Storage";
-	cycle_id = "auxstorage"
+	junction_id = "auxstorage"
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/auxillary)
@@ -65184,7 +65184,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "South East Maintenance";
-	cycle_id = "se_maint2"
+	junction_id = "se_maint2"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -65319,7 +65319,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "South Solar Maintenance";
-	cycle_id = "southsolar"
+	junction_id = "southsolar"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/solar/south)
@@ -66354,7 +66354,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "North Maintenance";
-	cycle_id = "n_maint"
+	junction_id = "n_maint"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/north)
@@ -66447,7 +66447,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Central Maintenance";
-	cycle_id = "c_maint2"
+	junction_id = "c_maint2"
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/central)
@@ -66554,7 +66554,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Central Maintenance";
-	cycle_id = "c_maint4";
+	junction_id = "c_maint4";
 	enter_id = "inner"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -67857,7 +67857,7 @@
 /obj/mapping_helper/access/security,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "securityrelease";
+	junction_id = "securityrelease";
 	name = "Security Release Room";
 	enter_id = "inner"
 	},
@@ -68737,7 +68737,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "North Solar Maintenance";
-	cycle_id = "northsolar"
+	junction_id = "northsolar"
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
@@ -68766,7 +68766,7 @@
 /obj/mapping_helper/access/security,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "securityrelease";
+	junction_id = "securityrelease";
 	name = "Security Release Room";
 	enter_id = "outer"
 	},
@@ -68866,7 +68866,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Research Outpost";
-	cycle_id = "sci_outpost"
+	junction_id = "sci_outpost"
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -69364,7 +69364,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Research Outpost";
-	cycle_id = "sci_outpost"
+	junction_id = "sci_outpost"
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -69718,7 +69718,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Central Maintenance";
-	cycle_id = "c_maint2"
+	junction_id = "c_maint2"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
@@ -69843,7 +69843,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/research_foyer,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "research";
+	junction_id = "research";
 	name = "Research";
 	enter_id = "inner"
 	},
@@ -70188,7 +70188,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Central Maintenance";
-	cycle_id = "c_maint3";
+	junction_id = "c_maint3";
 	enter_id = "inner"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -70320,7 +70320,7 @@
 /obj/mapping_helper/access/security,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "security";
+	junction_id = "security";
 	name = "Security";
 	enter_id = "outer"
 	},
@@ -70337,7 +70337,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "North Solar Maintenance";
-	cycle_id = "northsolar"
+	junction_id = "northsolar"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/solar/north)
@@ -70815,7 +70815,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "North East Maintenance";
-	cycle_id = "ne_maint"
+	junction_id = "ne_maint"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/northeast)
@@ -71577,7 +71577,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "East Substation";
-	cycle_id = "eastsubstation"
+	junction_id = "eastsubstation"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/substation/east)
@@ -72190,7 +72190,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "South East Maintenance";
-	cycle_id = "se_maint"
+	junction_id = "se_maint"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/southeast)
@@ -72270,7 +72270,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/research_foyer,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "research";
+	junction_id = "research";
 	name = "Research";
 	enter_id = "outer"
 	},
@@ -72514,7 +72514,7 @@
 /obj/mapping_helper/access/heads,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "inner"
 	},
@@ -72533,7 +72533,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Central Maintenance";
-	cycle_id = "c_maint"
+	junction_id = "c_maint"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
@@ -72661,7 +72661,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aiairbridge";
+	junction_id = "aiairbridge";
 	name = "AI Airbridge";
 	enter_id = "inner"
 	},
@@ -73994,7 +73994,7 @@
 /obj/mapping_helper/access/hydro,
 /obj/decal/stripe_caution,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "hydro";
+	junction_id = "hydro";
 	name = "Hydroponics";
 	enter_id = "side"
 	},
@@ -74100,7 +74100,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "North East Maintenance";
-	cycle_id = "ne_maint2"
+	junction_id = "ne_maint2"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/northeast)
@@ -75219,7 +75219,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Central Maintenance";
-	cycle_id = "c_maint4";
+	junction_id = "c_maint4";
 	enter_id = "outer"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -75276,7 +75276,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Central Maintenance";
-	cycle_id = "c_maint4";
+	junction_id = "c_maint4";
 	enter_id = "inner"
 	},
 /turf/simulated/floor/caution/westeast,
@@ -75381,7 +75381,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "Central Maintenance";
-	cycle_id = "c_maint3";
+	junction_id = "c_maint3";
 	enter_id = "outer"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -75518,7 +75518,7 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	name = "East Substation";
-	cycle_id = "eastsubstation"
+	junction_id = "eastsubstation"
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/east)

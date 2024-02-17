@@ -480,7 +480,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "northsolar2";
+	junction_id = "northsolar2";
 	name = "North Solars"
 	},
 /turf/simulated/floor/plating/random,
@@ -902,7 +902,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "northsolar";
+	junction_id = "northsolar";
 	name = "North Solars"
 	},
 /turf/simulated/floor/plating,
@@ -924,7 +924,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "northsolar";
+	junction_id = "northsolar";
 	name = "North Solars"
 	},
 /turf/simulated/floor/plating/random,
@@ -1856,7 +1856,7 @@
 "afX" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "northmerch";
+	junction_id = "northmerch";
 	name = "North Merchant Dock"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -5613,7 +5613,7 @@
 	},
 /obj/mapping_helper/access/teleporter,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "teleporter"
 	},
@@ -5683,7 +5683,7 @@
 	},
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aiupload";
+	junction_id = "aiupload";
 	name = "AI Upload";
 	enter_id = "core"
 	},
@@ -5945,7 +5945,7 @@
 	level = -1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "inner"
 	},
@@ -6757,7 +6757,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engineering";
+	junction_id = "engineering";
 	name = "Engineering";
 	enter_id = "south"
 	},
@@ -7233,7 +7233,7 @@
 	icon_state = "delivery2"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aiupload";
+	junction_id = "aiupload";
 	name = "AI Upload";
 	enter_id = "outer"
 	},
@@ -7381,7 +7381,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "meetingroom"
 	},
@@ -8248,7 +8248,7 @@
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "southsolar";
+	junction_id = "southsolar";
 	name = "South Solars";
 	enter_id = "inner"
 	},
@@ -8737,7 +8737,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/mining,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "mining";
+	junction_id = "mining";
 	name = "Mining"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -9179,7 +9179,7 @@
 	},
 /obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "southsolar";
+	junction_id = "southsolar";
 	name = "South Solars";
 	enter_id = "outer"
 	},
@@ -10379,7 +10379,7 @@
 /obj/mapping_helper/access/mining,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "mining";
+	junction_id = "mining";
 	name = "Mining"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -10409,7 +10409,7 @@
 "aHN" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "southmerch";
+	junction_id = "southmerch";
 	name = "South Merchant Dock"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -10547,7 +10547,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "southsolar";
+	junction_id = "southsolar";
 	name = "South Solars";
 	enter_id = "inner"
 	},
@@ -10573,7 +10573,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "southsolar";
+	junction_id = "southsolar";
 	name = "South Solars";
 	enter_id = "outer"
 	},
@@ -10932,7 +10932,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "miningshuttle";
+	junction_id = "miningshuttle";
 	name = "Mining Shuttle";
 	enter_id = "inner"
 	},
@@ -11154,7 +11154,7 @@
 "aKJ" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "miningshuttle";
+	junction_id = "miningshuttle";
 	name = "Mining Shuttle";
 	enter_id = "outer"
 	},
@@ -13943,7 +13943,7 @@
 	name = "Engine Room"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engineering";
 	enter_id = "sw"
 	},
@@ -15892,7 +15892,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engineering";
 	enter_id = "se"
 	},
@@ -15989,7 +15989,7 @@
 /obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sec";
+	junction_id = "sec";
 	name = "Security";
 	enter_id = "outer"
 	},
@@ -16716,7 +16716,7 @@
 	level = -1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "outer"
 	},
@@ -16745,7 +16745,7 @@
 	name = "Engine Room"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engineering";
 	enter_id = "nw"
 	},
@@ -17067,7 +17067,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engineering";
+	junction_id = "engineering";
 	name = "Engineering";
 	enter_id = "north"
 	},
@@ -17096,7 +17096,7 @@
 	pixel_x = -20
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "outer"
 	},
@@ -17215,7 +17215,7 @@
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sec";
+	junction_id = "sec";
 	name = "Security";
 	enter_id = "inner"
 	},
@@ -17970,7 +17970,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engineering";
 	enter_id = "ne"
 	},
@@ -18204,7 +18204,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "northsolar2";
+	junction_id = "northsolar2";
 	name = "North Solars"
 	},
 /turf/simulated/floor/plating/random,
@@ -18496,7 +18496,7 @@
 	icon_state = "delivery2"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aiupload";
+	junction_id = "aiupload";
 	name = "AI Upload";
 	enter_id = "inner"
 	},
@@ -19513,7 +19513,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engineering";
+	junction_id = "engineering";
 	name = "Engineering";
 	enter_id = "outer"
 	},

@@ -280,7 +280,7 @@
 	},
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engineering";
 	enter_id = "outer"
 	},
@@ -332,7 +332,7 @@
 	},
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engineering";
 	enter_id = "outer"
 	},
@@ -2335,7 +2335,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "northmaint";
+	junction_id = "northmaint";
 	name = "North Maintenance"
 	},
 /turf/simulated/floor/plating/random,
@@ -2414,7 +2414,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "northmaint2";
+	junction_id = "northmaint2";
 	name = "North Maintenance"
 	},
 /turf/simulated/floor/plating/random,
@@ -11773,7 +11773,7 @@
 	},
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innermaint2";
+	junction_id = "innermaint2";
 	name = "Central Inner Maintenance"
 	},
 /turf/simulated/floor/engine/glow/blue{
@@ -12062,7 +12062,7 @@
 	},
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innermaint2";
+	junction_id = "innermaint2";
 	name = "Central Inner Maintenance"
 	},
 /turf/simulated/floor/plating/random,
@@ -14978,7 +14978,7 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engineering";
 	enter_id = "inner"
 	},
@@ -20320,7 +20320,7 @@
 "bvq" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engineering";
 	enter_id = "inner"
 	},
@@ -29881,7 +29881,7 @@
 "ccH" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "diner";
+	junction_id = "diner";
 	name = "Space Diner";
 	enter_id = "inner"
 	},
@@ -30959,7 +30959,7 @@
 "cgj" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sealift";
+	junction_id = "sealift";
 	name = "Sea Elevator Room";
 	enter_id = "elevator"
 	},
@@ -31177,7 +31177,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sealift";
+	junction_id = "sealift";
 	name = "Sea Elevator Room";
 	enter_id = "seaside"
 	},
@@ -31224,7 +31224,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "diner";
+	junction_id = "diner";
 	name = "Space Diner";
 	enter_id = "outer"
 	},
@@ -31654,7 +31654,7 @@
 	},
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innermaint";
+	junction_id = "innermaint";
 	name = "Central Inner Maintenance";
 	enter_id = "outer"
 	},
@@ -32452,7 +32452,7 @@
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engineering";
 	enter_id = "outer"
 	},
@@ -32870,7 +32870,7 @@
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "inner"
 	},
@@ -33299,7 +33299,7 @@
 	},
 /obj/cable,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sealift";
+	junction_id = "sealift";
 	name = "Sea Elevator Room";
 	enter_id = "elevator"
 	},
@@ -33691,7 +33691,7 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engineering";
 	enter_id = "inner"
 	},
@@ -36700,7 +36700,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "outpost";
+	junction_id = "outpost";
 	name = "Research Outpost";
 	enter_id = "outer"
 	},
@@ -37254,7 +37254,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engineering";
 	enter_id = "outer"
 	},
@@ -37684,7 +37684,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sec";
+	junction_id = "sec";
 	name = "Security";
 	enter_id = "sec"
 	},
@@ -38467,7 +38467,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sec";
+	junction_id = "sec";
 	name = "Security";
 	enter_id = "brig"
 	},
@@ -40017,7 +40017,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sealift";
+	junction_id = "sealift";
 	name = "Sea Elevator Room";
 	enter_id = "stationside"
 	},
@@ -40355,7 +40355,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engine";
+	junction_id = "engine";
 	name = "Engineering";
 	enter_id = "inner"
 	},
@@ -40745,7 +40745,7 @@
 	pixel_y = 10
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "outer"
 	},
@@ -42029,7 +42029,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "inner"
 	},
@@ -42301,7 +42301,7 @@
 	},
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innermaint";
+	junction_id = "innermaint";
 	name = "Central Inner Maintenance";
 	enter_id = "inner"
 	},
@@ -42762,7 +42762,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sealift";
+	junction_id = "sealift";
 	name = "Sea Elevator Room";
 	enter_id = "stationside"
 	},
@@ -43231,7 +43231,7 @@
 	pixel_y = 10
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "outer"
 	},
@@ -43407,7 +43407,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "outpost";
+	junction_id = "outpost";
 	name = "Research Outpost";
 	enter_id = "inner"
 	},
@@ -44808,7 +44808,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sec";
+	junction_id = "sec";
 	name = "Security";
 	enter_id = "outer"
 	},
@@ -45283,7 +45283,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "outpost";
+	junction_id = "outpost";
 	name = "Research Outpost";
 	enter_id = "inner"
 	},

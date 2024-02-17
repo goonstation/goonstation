@@ -5910,7 +5910,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "westmaint";
+	junction_id = "westmaint";
 	name = "West Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -7845,7 +7845,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innermaint";
+	junction_id = "innermaint";
 	name = "Central Inner Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -8743,7 +8743,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innermaint4";
+	junction_id = "innermaint4";
 	name = "Central Inner Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -10949,7 +10949,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "eastmaint";
+	junction_id = "eastmaint";
 	name = "East Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -11697,7 +11697,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_atmos,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "atmos";
+	junction_id = "atmos";
 	name = "Atmos";
 	enter_id = "outer"
 	},
@@ -12888,7 +12888,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "inner"
 	},
@@ -16510,7 +16510,7 @@
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aicore";
+	junction_id = "aicore";
 	name = "AI Core";
 	enter_id = "outer"
 	},
@@ -17289,7 +17289,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "ranchship";
+	junction_id = "ranchship";
 	name = "Ranch Ship"
 	},
 /turf/simulated/floor/green,
@@ -17745,7 +17745,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "westmaint2";
+	junction_id = "westmaint2";
 	name = "West Maintenance"
 	},
 /turf/simulated/floor,
@@ -18530,7 +18530,7 @@
 /obj/decal/stripe_delivery,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innereng";
+	junction_id = "innereng";
 	name = "Inner Engineering";
 	enter_id = "outer"
 	},
@@ -20975,7 +20975,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "eastmaint";
+	junction_id = "eastmaint";
 	name = "East Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -23061,7 +23061,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/tox,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "toxins";
+	junction_id = "toxins";
 	name = "Toxins"
 	},
 /turf/simulated/floor/black,
@@ -23574,7 +23574,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sec";
+	junction_id = "sec";
 	name = "Security";
 	enter_id = "outer"
 	},
@@ -24152,7 +24152,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innermaint3";
+	junction_id = "innermaint3";
 	name = "Central Inner Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -24214,7 +24214,7 @@
 /obj/decal/stripe_delivery,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innereng";
+	junction_id = "innereng";
 	name = "Inner Engineering";
 	enter_id = "outer"
 	},
@@ -26410,7 +26410,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innereng2";
+	junction_id = "innereng2";
 	name = "Inner Engineering"
 	},
 /turf/simulated/floor,
@@ -26494,7 +26494,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "mining";
+	junction_id = "mining";
 	name = "Mining";
 	enter_id = "outer"
 	},
@@ -26665,7 +26665,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "southsolars";
+	junction_id = "southsolars";
 	name = "South Solar Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -26786,7 +26786,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "mining";
+	junction_id = "mining";
 	name = "Mining";
 	enter_id = "inner"
 	},
@@ -27080,7 +27080,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "westsolars";
+	junction_id = "westsolars";
 	name = "West Solar Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -27563,7 +27563,7 @@
 /obj/mapping_helper/access/teleporter,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "teleporter";
+	junction_id = "teleporter";
 	name = "Teleporter";
 	enter_id = "outer"
 	},
@@ -27931,7 +27931,7 @@
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "outer"
 	},
@@ -28257,7 +28257,7 @@
 "jEr" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "toxins";
+	junction_id = "toxins";
 	name = "Toxins"
 	},
 /turf/simulated/floor/black,
@@ -29262,7 +29262,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "westmaint2";
+	junction_id = "westmaint2";
 	name = "West Maintenance"
 	},
 /turf/simulated/floor,
@@ -29358,7 +29358,7 @@
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aiupload";
+	junction_id = "aiupload";
 	name = "AI Upload";
 	enter_id = "inner"
 	},
@@ -30173,7 +30173,7 @@
 	icon_state = "2-8"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sec";
+	junction_id = "sec";
 	name = "Security";
 	enter_id = "brig"
 	},
@@ -30450,7 +30450,7 @@
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "westsolars";
+	junction_id = "westsolars";
 	name = "West Solar Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -32654,7 +32654,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aisat";
+	junction_id = "aisat";
 	name = "AI Satellite";
 	enter_id = "outer"
 	},
@@ -33072,7 +33072,7 @@
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aisat";
+	junction_id = "aisat";
 	name = "AI Satellite";
 	enter_id = "inner"
 	},
@@ -35315,7 +35315,7 @@
 	},
 /obj/mapping_helper/access/mining,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "mining";
+	junction_id = "mining";
 	name = "Mining";
 	enter_id = "inner"
 	},
@@ -35438,7 +35438,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "eastsolars";
+	junction_id = "eastsolars";
 	name = "East Solar Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -36608,7 +36608,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innereng";
+	junction_id = "innereng";
 	name = "Inner Engineering";
 	enter_id = "inner"
 	},
@@ -36983,7 +36983,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "podbay";
+	junction_id = "podbay";
 	name = "Pod Bay"
 	},
 /turf/simulated/floor/plating,
@@ -37274,7 +37274,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "mining";
+	junction_id = "mining";
 	name = "Mining";
 	enter_id = "outer"
 	},
@@ -38205,7 +38205,7 @@
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aisat";
+	junction_id = "aisat";
 	name = "AI Satellite";
 	enter_id = "inner"
 	},
@@ -38480,7 +38480,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innereng3";
+	junction_id = "innereng3";
 	name = "Inner Engineering"
 	},
 /turf/simulated/floor,
@@ -39797,7 +39797,7 @@
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "southsolars";
+	junction_id = "southsolars";
 	name = "South Solar Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -40019,7 +40019,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "outer"
 	},
@@ -40635,7 +40635,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innermaint2";
+	junction_id = "innermaint2";
 	name = "Central Inner Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -40910,7 +40910,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "westmaint";
+	junction_id = "westmaint";
 	name = "West Maintenance"
 	},
 /turf/simulated/floor/plating/airless,
@@ -41535,7 +41535,7 @@
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "eastsolars";
+	junction_id = "eastsolars";
 	name = "East Solar Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -41874,7 +41874,7 @@
 	},
 /obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aisat";
+	junction_id = "aisat";
 	name = "AI Satellite";
 	enter_id = "inner"
 	},
@@ -44218,7 +44218,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "westmaint2";
+	junction_id = "westmaint2";
 	name = "West Maintenance"
 	},
 /turf/simulated/floor,
@@ -44256,7 +44256,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "outpost";
+	junction_id = "outpost";
 	name = "Research Outpost Lobby"
 	},
 /turf/simulated/floor,
@@ -44308,7 +44308,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_atmos,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "atmos";
+	junction_id = "atmos";
 	name = "Atmos";
 	enter_id = "outer"
 	},
@@ -44980,7 +44980,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sec";
+	junction_id = "sec";
 	name = "Security";
 	enter_id = "sec"
 	},
@@ -46019,7 +46019,7 @@
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "bridge";
+	junction_id = "bridge";
 	name = "Bridge";
 	enter_id = "inner"
 	},
@@ -46051,7 +46051,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "outpostsolars";
+	junction_id = "outpostsolars";
 	name = "Research Outpost Solars"
 	},
 /turf/simulated/floor/plating,
@@ -46265,7 +46265,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innereng";
+	junction_id = "innereng";
 	name = "Inner Engineering";
 	enter_id = "inner"
 	},
@@ -46375,7 +46375,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "ranchship";
+	junction_id = "ranchship";
 	name = "Ranch Ship"
 	},
 /turf/simulated/floor/plating,
@@ -47381,7 +47381,7 @@
 	},
 /obj/mapping_helper/access/mining,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "mining";
+	junction_id = "mining";
 	name = "Mining";
 	enter_id = "inner"
 	},
@@ -48147,7 +48147,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_atmos,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "atmos";
+	junction_id = "atmos";
 	name = "Atmos";
 	enter_id = "inner"
 	},
@@ -48475,7 +48475,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "innermaint3";
+	junction_id = "innermaint3";
 	name = "Central Inner Maintenance"
 	},
 /turf/simulated/floor/plating,
@@ -48488,7 +48488,7 @@
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aicore";
+	junction_id = "aicore";
 	name = "AI Core";
 	enter_id = "inner"
 	},
@@ -48770,7 +48770,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "teleporter";
+	junction_id = "teleporter";
 	name = "Teleporter";
 	enter_id = "inner"
 	},
@@ -49831,7 +49831,7 @@
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aiupload";
+	junction_id = "aiupload";
 	name = "AI Upload";
 	enter_id = "outer"
 	},
@@ -50167,7 +50167,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_atmos,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "atmos";
+	junction_id = "atmos";
 	name = "Atmos";
 	enter_id = "inner"
 	},
