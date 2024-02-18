@@ -1527,11 +1527,11 @@
 		src.SEAlpha = src.SETurf?.alpha
 		src.EAlpha = src.ETurf?.alpha
 		src.NEAlpha = src.NETurf?.alpha
-		src.SWTurf?.alpha = 128
-		src.STurf?.alpha = 128
-		src.SETurf?.alpha = 128
-		src.ETurf?.alpha = 128
-		src.NETurf?.alpha = 128
+		src.SWTurf?.alpha = 96
+		src.STurf?.alpha = 96
+		src.SETurf?.alpha = 96
+		src.ETurf?.alpha = 96
+		src.NETurf?.alpha = 96
 		src.SWTurf?.mouse_opacity = 0
 		src.STurf?.mouse_opacity = 0
 		src.SETurf?.mouse_opacity = 0
