@@ -6,13 +6,19 @@ const PollControls = ({ isAdmin, act, pollId, isExpired, multipleChoice, expiryD
   return (
     <Stack>
       <Stack.Item>
-        {servers ? null : (
+        {servers === "global" ? (
           <Button
             tooltip="Global Poll"
             tooltipPosition="top"
             icon="globe"
           />
-        )}
+        ) : servers === "rp_only" ? (
+          <Button
+            tooltip="RP Only Poll"
+            tooltipPosition="top"
+            icon="masks-theater"
+          />
+        ) : null}
         {multipleChoice ? (
           <Button
             tooltip="Multiple Choice"
