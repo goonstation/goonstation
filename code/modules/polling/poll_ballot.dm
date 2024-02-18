@@ -67,7 +67,7 @@
 			//todo more advanced input to pick and choose multiple servers, e.g. RP only polls
 			var/servers = tgui_alert(ui.user, "Cross-server poll?", "Add Poll", list("Yes", "No"))
 			if (servers == "Yes")
-				servers = null
+				servers = list("global")
 			else
 				servers = list(config.server_id)
 
