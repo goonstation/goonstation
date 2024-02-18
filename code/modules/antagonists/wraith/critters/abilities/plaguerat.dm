@@ -80,7 +80,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 		current_target = targets[1]
 		M.visible_message(SPAN_COMBAT("<b>[M] begins eating [current_target]!</b>"),\
 			SPAN_COMBAT("<b>You start eating [current_target]!</b>"))
-		logTheThing(LOG_DEBUG, src, "Targets = [length(targets)]")
 
 	onUpdate()
 		..()
@@ -102,9 +101,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 		P.visible_message(SPAN_COMBAT("<b>[P] eats [current_target]!</b>"),\
 					SPAN_COMBAT("<b>You finish eating [current_target]!</b>"))
 		targets -= targets[1]
-		logTheThing(LOG_DEBUG, src, "Targets = [length(targets)]")
 		qdel(current_target)
-		logTheThing(LOG_DEBUG, src, "Targets = [length(targets)]")
 		P.eaten_amount ++
 		if (P.eaten_amount >= P.amount_to_grow)
 			P.grow_up()

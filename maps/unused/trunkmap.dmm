@@ -22504,7 +22504,7 @@
 	icon_state = "0-8"
 	},
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bxd" = (

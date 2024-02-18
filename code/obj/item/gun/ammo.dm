@@ -963,7 +963,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
-	icon_empty = "40mm_nonlethal-0"
+	icon_empty = "40mm_paint-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 /obj/item/ammo/bullets/pbr

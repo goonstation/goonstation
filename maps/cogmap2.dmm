@@ -3549,7 +3549,7 @@
 	id = "crematorium";
 	pixel_y = 28
 	},
-/obj/stool/chair,
+/obj/stool/chair/black,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "alx" = (
@@ -6191,7 +6191,7 @@
 /area/station/crew_quarters/catering)
 "ats" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/item/device/radio/intercom/catering,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -10090,7 +10090,7 @@
 /area/station/crew_quarters/cafeteria)
 "aDx" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -40640,8 +40640,8 @@
 /turf/simulated/floor/circuit/green,
 /area/station/science/teleporter)
 "cot" = (
-/obj/stool/bench/auto,
 /obj/disposalpipe/segment/mail/vertical,
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/caution/west,
 /area/station/science/teleporter)
 "cou" = (
@@ -41288,11 +41288,11 @@
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "cqh" = (
-/obj/stool/bench/auto,
 /obj/item/device/radio/intercom/science{
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/caution/corner/sw,
 /area/station/science/teleporter)
 "cqi" = (
@@ -46791,7 +46791,7 @@
 /turf/simulated/floor/purple/side,
 /area/station/medical/medbay/lobby)
 "cGz" = (
-/obj/stool/chair{
+/obj/stool/chair/purple{
 	dir = 4
 	},
 /turf/simulated/floor/purple/side,
@@ -46809,7 +46809,7 @@
 /turf/simulated/floor/purple/side,
 /area/station/medical/medbay/lobby)
 "cGB" = (
-/obj/stool/chair{
+/obj/stool/chair/purple{
 	dir = 8
 	},
 /turf/simulated/floor/purple/side,
@@ -57404,6 +57404,27 @@
 	},
 /turf/simulated/floor/arrival,
 /area/station/hallway/secondary/exit)
+"ewx" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment/mail/vertical,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/pyro/command{
+	name = "Bridge Access"
+	},
+/obj/mapping_helper/access/heads,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "north"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint/customs)
 "ewI" = (
 /obj/machinery/printing_press,
 /turf/simulated/floor/carpet/grime,
@@ -57627,6 +57648,11 @@
 	},
 /obj/mapping_helper/access/security,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "security";
+	name = "Security";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
 "eLN" = (
@@ -58253,7 +58279,6 @@
 /turf/simulated/floor,
 /area/research_outpost/chamber)
 "fwx" = (
-/obj/stool/bench/green/auto,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -58261,6 +58286,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -58461,6 +58487,11 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/customs)
 "fLz" = (
@@ -58757,6 +58788,11 @@
 /obj/landmark/gps_waypoint,
 /obj/mapping_helper/access/hydro,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "hydro";
+	name = "Hydroponics";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "ggg" = (
@@ -59050,6 +59086,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/hydro,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "hydro";
+	name = "Hydroponics";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
 "gvO" = (
@@ -60311,6 +60352,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiairbridge";
+	name = "AI Airbridge";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -61163,6 +61209,11 @@
 	name = "Bridge Access"
 	},
 /obj/mapping_helper/access/heads,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "south"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/customs)
 "iBl" = (
@@ -61541,6 +61592,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/heads,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/customs)
 "iXJ" = (
@@ -61736,6 +61792,11 @@
 	},
 /obj/mapping_helper/access/security,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "security";
+	name = "Security";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
 "jfB" = (
@@ -65561,6 +65622,14 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/maintenance/northeast)
+"mMO" = (
+/obj/storage/closet/emergency,
+/obj/item/crowbar/red,
+/obj/item/crowbar/red,
+/turf/unsimulated/floor/shuttle/green{
+	dir = 4
+	},
+/area/shuttle/arrival/station)
 "mNd" = (
 /obj/machinery/firealarm/west,
 /obj/submachine/ATM{
@@ -67787,6 +67856,11 @@
 	},
 /obj/mapping_helper/access/security,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "securityrelease";
+	name = "Security Release Room";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "psM" = (
@@ -68691,6 +68765,11 @@
 	},
 /obj/mapping_helper/access/security,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "securityrelease";
+	name = "Security Release Room";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "qwc" = (
@@ -69763,6 +69842,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/research_foyer,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "research";
+	name = "Research";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "rpd" = (
@@ -70110,7 +70194,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/central)
 "rJs" = (
-/obj/stool/bench/green/auto,
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -70235,6 +70319,11 @@
 	},
 /obj/mapping_helper/access/security,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "security";
+	name = "Security";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
 "rRw" = (
@@ -72180,6 +72269,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/research_foyer,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "research";
+	name = "Research";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "tSS" = (
@@ -72419,6 +72513,11 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/customs)
 "uih" = (
@@ -72560,6 +72659,11 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiairbridge";
+	name = "AI Airbridge";
+	enter_id = "inner"
 	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
@@ -73755,7 +73859,7 @@
 /turf/space,
 /area/space)
 "vWT" = (
-/obj/stool/bench/green/auto,
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
 "vXc" = (
@@ -73889,6 +73993,11 @@
 	},
 /obj/mapping_helper/access/hydro,
 /obj/decal/stripe_caution,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "hydro";
+	name = "Hydroponics";
+	enter_id = "side"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/catering)
 "wge" = (
@@ -139780,7 +139889,7 @@ arJ
 aaa
 aaa
 aKm
-lnj
+mMO
 lnj
 aFx
 aIP
@@ -140082,7 +140191,7 @@ aAD
 aaS
 arR
 aEA
-lnj
+mMO
 lnj
 aFx
 aFx
@@ -140119,7 +140228,7 @@ bip
 bjr
 bjI
 bjr
-iBh
+ewx
 bBF
 bDB
 bFz
