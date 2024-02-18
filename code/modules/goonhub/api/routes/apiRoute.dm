@@ -31,7 +31,7 @@
 							if (length(src.queryParams[key][subKey]))
 								for (var/idx in 1 to length(src.queryParams[key][subKey]))
 									// encode in array syntax e.x. ?&filters[servers][1]=main3&filters[servers][2]=main4
-									.["[key]\[[subKey]\]\[[idx]\]"] = src.queryParams[key][subKey][idx]
+									.["[key]\[[subKey]\]\[[idx-1]\]"] = src.queryParams[key][subKey][idx]
 							else
 								.["[key]\[[subKey]\]\[\]"] = null
 						else
