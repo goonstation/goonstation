@@ -11,7 +11,8 @@ var/global/datum/poll_manager/poll_manager = new
 			var/datum/apiRoute/polls/get/getPolls = new
 			getPolls.queryParams = list(
 				"filters" = list(
-					"servers[]" = config.server_id
+					//"active" = "true",
+					"servers" = list(config.server_id)
 				)
 			)
 			polls = apiHandler.queryAPI(getPolls)
