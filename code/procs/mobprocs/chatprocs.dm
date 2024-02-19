@@ -666,7 +666,7 @@
 			ooc_class = "newbeeooc"
 			ooc_icon = "Newbee"
 
-		if( src.client.cloud_available() && src.client.cloud_get("donor") )
+		if (src.client.player.cloudSaves.getData("donor") )
 			msg = replacetext(msg, ":shelterfrog:", "<img src='http://stuff.goonhub.com/shelterfrog.png' width=32>")
 
 		if (src.client.has_contestwinner_medal)

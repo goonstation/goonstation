@@ -293,6 +293,16 @@ TYPEINFO(/obj/stool/wooden)
 	auto = 1
 	auto_path = /obj/stool/bench/yellow/auto
 
+/* ---------- Purple ---------- */
+
+/obj/stool/bench/purple
+	icon = 'icons/obj/furniture/bench_purple.dmi'
+	parts_type = /obj/item/furniture_parts/bench/purple
+
+/obj/stool/bench/purple/auto
+	auto = 1
+	auto_path = /obj/stool/bench/purple/auto
+
 /* ---------- Wooden ---------- */
 
 /obj/stool/bench/wooden

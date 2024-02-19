@@ -25,12 +25,6 @@
 	return test == uppertext(test)
 
 /**
-  * Shows the calling client admins.txt
-  */
-/proc/showadminlist()
-	usr.client.Export("##action=browse_file","config/admins.txt")
-
-/**
   * Returns the line matrix from a start atom to an end atom, used in creating line objects
   */
 /proc/getLineMatrix(var/atom/start, var/atom/end)
@@ -184,10 +178,8 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 			if(!(T in crossed)) crossed.Add(T)
 	return crossed
 
-/**
-	* Returns the angle between two given atoms
-	*/
-proc/get_angle(atom/a, atom/b)
+/// Returns the angle between two given atoms
+/proc/get_angle(atom/a, atom/b)
 	var/turf/a_turf = get_turf(a)
 	var/turf/b_turf = get_turf(b)
 	if (isnull(a_turf) || isnull(b_turf))
@@ -997,24 +989,15 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 // <3 Fire
 // I'm preserving the above comment block, let it be known this proc used to use the variables "n", "pr", "te", "t", "p." I have fixed them. You're welcome.
 // <3 FlamingLily
-/proc/stars(input_text, probability)
-	if(probability == null)
-		probability = 25
-	if(probability <= 0)
-		return null
-	else
-		if (probability >= 100)
-			return input_text
-	var/output_text = ""
-	var/input_length = length(input_text)
-	var/cycle = 1
-	while(cycle <= input_length)
-		if ((copytext(input_text, cycle, cycle + 1) == " " || prob(probability)))
-			output_text = text("[][]", output_text, copytext(input_text, cycle, cycle + 1))
-		else
-			output_text = text("[]*", output_text)
-		cycle++
-	return output_text
+/proc/stars(phrase, probability = 25)
+	if(length(phrase) == 0)
+		return
+	var/list/chars = splittext_char(html_decode(phrase), "")
+	for(var/i in 1 to length(chars))
+		if(chars[i] == " " || !prob(probability))
+			continue
+		chars[i] = "*"
+	return sanitize(jointext(chars, ""))
 
 /proc/stutter(n)
 	var/te = html_decode(n)
@@ -1058,12 +1041,6 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			client.pixel_x = 0
 			client.pixel_y = 0
 			M.shakecamera = 0
-
-/proc/findname(msg)
-	for(var/mob/M in mobs)
-		if (M.real_name == text("[msg]"))
-			return 1
-	return 0
 
 /proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
 	//returns only NORTH, SOUTH, EAST, or WEST
@@ -1354,34 +1331,34 @@ proc/outermost_movable(atom/movable/target)
 	. = text2path(stringtarget)
 
 /proc/GetRedPart(hex)
-    hex = uppertext(hex)
-    var/hi = text2ascii(hex, 2)
-    var/lo = text2ascii(hex, 3)
-    return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
+	hex = uppertext(hex)
+	var/hi = text2ascii(hex, 2)
+	var/lo = text2ascii(hex, 3)
+	return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
 
 /proc/GetGreenPart(hex)
-    hex = uppertext(hex)
-    var/hi = text2ascii(hex, 4)
-    var/lo = text2ascii(hex, 5)
-    return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
+	hex = uppertext(hex)
+	var/hi = text2ascii(hex, 4)
+	var/lo = text2ascii(hex, 5)
+	return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
 
 /proc/GetBluePart(hex)
-    hex = uppertext(hex)
-    var/hi = text2ascii(hex, 6)
-    var/lo = text2ascii(hex, 7)
-    return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
+	hex = uppertext(hex)
+	var/hi = text2ascii(hex, 6)
+	var/lo = text2ascii(hex, 7)
+	return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
 
 /proc/GetColors(hex)
-    hex = uppertext(hex)
-    var/hi1 = text2ascii(hex, 2)
-    var/lo1 = text2ascii(hex, 3)
-    var/hi2 = text2ascii(hex, 4)
-    var/lo2 = text2ascii(hex, 5)
-    var/hi3 = text2ascii(hex, 6)
-    var/lo3 = text2ascii(hex, 7)
-    return list(((hi1>= 65 ? hi1-55 : hi1-48)<<4) | (lo1 >= 65 ? lo1-55 : lo1-48),
-        ((hi2 >= 65 ? hi2-55 : hi2-48)<<4) | (lo2 >= 65 ? lo2-55 : lo2-48),
-        ((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))
+	hex = uppertext(hex)
+	var/hi1 = text2ascii(hex, 2)
+	var/lo1 = text2ascii(hex, 3)
+	var/hi2 = text2ascii(hex, 4)
+	var/lo2 = text2ascii(hex, 5)
+	var/hi3 = text2ascii(hex, 6)
+	var/lo3 = text2ascii(hex, 7)
+	return list(((hi1>= 65 ? hi1-55 : hi1-48)<<4) | (lo1 >= 65 ? lo1-55 : lo1-48),
+		((hi2 >= 65 ? hi2-55 : hi2-48)<<4) | (lo2 >= 65 ? lo2-55 : lo2-48),
+		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))
 
 //Shoves a jump to link or whatever in the thing :effort:
 /proc/showCoords(x, y, z, plaintext, holder, ghostjump)
@@ -2046,23 +2023,22 @@ proc/countJob(rank)
 var/global/nextDectalkDelay = 1 //seconds
 var/global/lastDectalkUse = 0
 /proc/dectalk(msg)
-	if (!msg || !config.spacebee_api_key) return 0
+	if (!msg) return 0
 	if (TIME > (lastDectalkUse + (nextDectalkDelay * 10)))
 		lastDectalkUse = TIME
 		msg = copytext(msg, 1, 2000)
 
-		// Fetch via HTTP from goonhub
-		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/tts?dectalk=[url_encode(msg)]&api_key=[config.spacebee_api_key]", "", "")
-		request.begin_async()
-		UNTIL(request.is_complete())
-		var/datum/http_response/response = request.into_response()
-
-		if (response.errored || !response.body)
-			logTheThing(LOG_DEBUG, null, "<b>dectalk:</b> Failed to contact goonhub. msg : [msg]")
+		var/datum/apiModel/DectalkPlayResource/playDectalkResource
+		try
+			var/datum/apiRoute/dectalk/play/playDectalk = new
+			playDectalk.buildBody(msg, roundId)
+			playDectalkResource = apiHandler.queryAPI(playDectalk)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "<b>dectalk:</b> Failed to play dectalk for msg: '[msg]' because: [error.message]")
 			return
 
-		return list("audio" = response.body, "message" = msg)
+		return list("audio" = playDectalkResource.audio, "message" = msg)
 	else
 		return list("cooldown" = 1)
 
@@ -2263,39 +2239,37 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 
 	return FALSE
 
-/**
-  * Returns span with a color gradient between two given colors of given message
-  */
+/// Returns span with a color gradient between two given colors of given message
 proc/gradientText(var/color1, var/color2, message)
-  var/color1hex = hex2num(copytext(color1, 2))
-  var/color2hex = hex2num(copytext(color2, 2))
-  var/r1 = (color1hex >> 16) & 0xFF
-  var/g1 = (color1hex >> 8) & 0xFF
-  var/b1 = color1hex & 0xFF
-  var/dr = ((color2hex >> 16) & 0xFF)- r1
-  var/dg = ((color2hex >> 8) & 0xFF) - g1
-  var/db = (color2hex & 0xFF) - b1
-  var/list/result = new/list()
-  var/n = rand(0,10)/10.0 // what a shitty name for a variable
-  var/dir = prob(50) ? -1 : 1
-  for(var/i=1, i<=length(message), i += 3)
-    n += dir * 0.2
-    if(prob(20))
-      dir = dir/abs(dir) * -1
-    if(n < 0)
-      n = 0
-      dir = 1
-    if(n > 1)
-      n = 1
-      dir = -1
-    var/col = rgb(r1 + dr*n, g1 + dg*n, b1 + db*n)
-    var/chars = copytext(message, i, i+3)
-    result += "<span style='color:[col]'>[chars]</span>"
-  . = result.Join()
+	var/color1hex = hex2num(copytext(color1, 2))
+	var/color2hex = hex2num(copytext(color2, 2))
+	var/r1 = (color1hex >> 16) & 0xFF
+	var/g1 = (color1hex >> 8) & 0xFF
+	var/b1 = color1hex & 0xFF
+	var/dr = ((color2hex >> 16) & 0xFF)- r1
+	var/dg = ((color2hex >> 8) & 0xFF) - g1
+	var/db = (color2hex & 0xFF) - b1
+	var/list/result = new/list()
+	var/n = rand(0,10)/10.0 // what a shitty name for a variable
+	var/dir = prob(50) ? -1 : 1
+	for(var/i=1, i<=length(message), i += 3)
+		n += dir * 0.2
+		if(prob(20))
+			dir = dir/abs(dir) * -1
+		if(n < 0)
+			n = 0
+			dir = 1
+		if(n > 1)
+			n = 1
+			dir = -1
+		var/col = rgb(r1 + dr*n, g1 + dg*n, b1 + db*n)
+		var/chars = copytext(message, i, i+3)
+		result += "<span style='color:[col]'>[chars]</span>"
+	. = result.Join()
 
 /**
-  * Returns given text replaced by nonsense chars, excepting HTML tags, on a 40% or given % basis
-  */
+ * Returns given text replaced by nonsense chars, excepting HTML tags, on a 40% or given % basis
+ */
 proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
 	var/split_html_text = splittext(message,  regex("<\[^>\]*>"), 1, length(message), TRUE) //I'd love to just use include_delimiters=TRUE, but byond
 	var/list/corruptedChars = list("@","#","!",",",".","-","=","/","\\","'","\"","`","*","(",")","[","]","_","&")
@@ -2314,23 +2288,18 @@ proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
 	return jointext(.,"")
 
 
-/**
-  * Returns given text replaced entirely by nonsense chars
-  */
+/// Returns given text replaced entirely by nonsense chars
 proc/illiterateGarbleText(var/message)
 	. = radioGarbleText(message, 100)
 
-/**
-  * Returns the time in seconds since a given timestamp
-  */
+
+/// Returns the time in seconds since a given timestamp
 proc/getTimeInSecondsSinceTime(var/timestamp)
 	var/time_of_day = world.timeofday + ((world.timeofday < timestamp) ? 864000 : 0) // Offset the time of day in case of midnight rollover
 	var/time_elapsed = (time_of_day - timestamp)/10
 	return time_elapsed
 
-/**
-  * Handles the two states icon_size can be in: basic number, or string in WxH format
-  */
+/// Handles the two states icon_size can be in: basic number, or string in WxH format
 proc/getIconSize()
 	if (istext(world.icon_size))
 		var/list/iconSizes = splittext(world.icon_size, "x")
@@ -2338,18 +2307,14 @@ proc/getIconSize()
 
 	return world.icon_size
 
-/**
-  * Finds a client by ckey, throws exception if not found
-  */
+/// Finds a client by ckey, throws exception if not found
 proc/getClientFromCkey(ckey)
 	var/datum/player/player = find_player(ckey)
 	if(!player?.client)
 		throw EXCEPTION("Client not found")
 	return player.client
 
-/**
-	* Returns true if the given atom is within src's contents (deeply/recursively)
-	*/
+/// Returns true if the given atom is within src's contents (deeply/recursively)
 /atom/proc/contains(var/atom/A)
 	. = FALSE
 	if(!A)
@@ -2424,9 +2389,7 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 
 	return (seer.dir == dir)
 
-/**
-	* Returns the passed decisecond-format time in the form of a text string
-	*/
+/// Returns the passed decisecond-format time in the form of a text string
 proc/time_to_text(var/time)
 	. = list()
 
@@ -2632,3 +2595,9 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 		// Otherwise, output to ghosts
 		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
 			boutput(M, rendered)
+
+/// Find a client based on ckey
+/proc/find_client(ckey)
+	for (var/client/C in clients)
+		if (C == ckey)
+			return C

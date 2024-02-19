@@ -268,6 +268,9 @@
 /obj/item_dispenser/idcarddispenser{
 	pixel_x = 7
 	},
+/obj/storage/secure/closet/command/chief_engineer/puzzle{
+	pixel_x = -8
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -367,6 +370,14 @@
 /turf/simulated/floor/red/redblackchecker,
 /area/prefab/sequestered_cloner)
 "xI" = (
+/obj/machinery/power/apc/puzzle_apc{
+	autoname_on_spawn = 0;
+	desc = "A note is attached: To leave, power this APC and press the neighboring button. The APC can be a little slow.";
+	name = "Engine Test APC";
+	pixel_x = -24;
+	pixel_y = -2;
+	start_charge = 0
+	},
 /obj/cable,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/yellow,

@@ -144,8 +144,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify
 	var/name
 	var/desc
-	var/additional_options
-	var/additional_toggles
+	var/additional_options = list()
+	var/additional_toggles = list()
 	var/static/datum/terrainify/terrainify_lock
 	var/allow_underwater = FALSE
 	var/syndi_camo_color = null
@@ -209,7 +209,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	proc/handle_mining(params, list/turfs)
 		var/mining = params["Mining"]
-		mining = (mining == "No") ? null : mining
+		mining = (mining == "None") ? null : mining
 		if(mining)
 			var/list/turf/valid_spots = list()
 			for(var/turf/simulated/wall/auto/asteroid/AST in turfs)
@@ -243,7 +243,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	proc/place_prefabs(prefabs_to_place, flags)
 		var/failsafe = 800
 		for (var/n = 1, n <= prefabs_to_place && failsafe-- > 0)
-			var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet)
+			var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
 			if (P)
 				var/maxX = (world.maxx - AST_MAPBORDER)
 				var/maxY = (world.maxy - AST_MAPBORDER)
@@ -323,6 +323,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/void
 	name = "Void Station"
 	desc = "Turn space into the unknowable void? Space if filled with the void, inhibited by those departed, and chunks of scaffolding."
+
+	New()
+		syndi_camo_color = list(nuke_op_color_matrix[1], "#a223d2", nuke_op_color_matrix[3])
+		..()
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
@@ -497,14 +501,25 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Mars Station"
 	desc = "Turns space into Mars.  A sprawl of stand, stone, and an unyielding wind."
 	additional_options = list("Mining"=list("None","Normal","Rich"))
+	additional_toggles = list("Ambient Light Obj"=FALSE, "Duststorm"=TRUE)
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
 			var/ambient_value
-			station_repair.station_generator = new/datum/map_generator/mars_generator
+
+			if(params["Duststorm"])
+				station_repair.station_generator = new/datum/map_generator/mars_generator/duststorm
+				station_repair.weather_img = image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE)
+			else
+				station_repair.station_generator = new/datum/map_generator/mars_generator
 			station_repair.overlay_delay = 3.5 SECONDS // Delay to let rocks cull
-			station_repair.weather_img = image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE)
-			station_repair.ambient_light = new /image/ambient
+
+			if(params["Ambient Light Obj"])
+				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
+				var/const/ambient_light = "#222222"
+				station_repair.ambient_obj.color = ambient_light
+			else
+				station_repair.ambient_light = new /image/ambient
 
 			station_repair.default_air.carbon_dioxide = 500
 			station_repair.default_air.nitrogen = 0
@@ -516,11 +531,16 @@ ABSTRACT_TYPE(/datum/terrainify)
 				space += S
 			convert_turfs(space)
 			sleep(3 SECONDS) // Let turfs initialize and re-orient before applying overlays
+
 			for (var/turf/S in space)
 				S.UpdateOverlays(station_repair.weather_img, "weather")
-				ambient_value = lerp(20,80,S.x/300)
-				station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
-				S.UpdateOverlays(station_repair.ambient_light, "ambient")
+
+				if(params["Ambient Light Obj"])
+					S.vis_contents |= station_repair.ambient_obj
+				else
+					ambient_value = lerp(20,80,S.x/300)
+					station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 
 			for(var/turf/S in get_area_turfs(/area/mining/magnet))
 				if(S.z != Z_LEVEL_STATION) continue

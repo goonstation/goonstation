@@ -2760,6 +2760,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/vodka, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/tequila, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/wine, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/wine/white, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/cider, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/mead, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/gin, 4)
@@ -3134,6 +3135,13 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	ex_act(severity)
 		. = ..()
 
+/obj/machinery/vending/air_vendor/plasma/pod_wars
+	air_cost = 0
+	can_fall = FALSE
+	can_hack = FALSE
+
+	ex_act(severity)
+		. = ..()
 /obj/machinery/vending/jobclothing/security
 	name = "Security Apparel"
 	desc = "A vending machine that vends Security clothing."

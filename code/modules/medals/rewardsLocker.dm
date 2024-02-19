@@ -375,9 +375,12 @@
 			var/prev = skin_target.name
 			skin_target.name = "round-bottom flask"
 			skin_target.desc = "A large round-bottom flask, for all your chemistry needs. (Base Item: [prev])"
-			skin_target.icon_style = "flask"
-			skin_target.item_state = "flask"
-			skin_target.fluid_image = image(skin_target.icon, "fluid-flask")
+			skin_target.icon_state = "large_flask"
+			skin_target.item_state = "large_flask"
+			skin_target.original_icon_state = "large_flask"
+			skin_target.fluid_overlay_states = 11
+			skin_target.container_style = "large_flask"
+			skin_target.fluid_overlay_scaling = RC_FLUID_OVERLAY_SCALING_SPHERICAL
 			skin_target.UpdateIcon()
 			activator.set_clothing_icon_dirty()
 			return 1
