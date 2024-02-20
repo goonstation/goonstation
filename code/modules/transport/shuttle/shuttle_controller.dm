@@ -176,6 +176,20 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						if (!filler_turf)
 							filler_turf = centcom_turf
 						start_location.move_contents_to(end_location, filler_turf, turf_to_skip=/turf/unsimulated/floor/shuttlebay)
+						for (var/atom/A as anything in end_location)
+							A.pixel_z = 512
+							switch(shuttle_dir)
+								if (EAST)
+									A.pixel_x = -512
+								if (WEST)
+									A.pixel_x = 512
+								if (NORTH)
+									A.pixel_y = -512
+								if (SOUTH)
+									A.pixel_y = 512
+						for (var/atom/A as anything in end_location)
+							animate(A, 4 SECONDS, FALSE, CUBIC_EASING, pixel_z = 0, pixel_x = 0, pixel_y = 0)
+
 						for (var/turf/P in end_location)
 							if (istype(P, filler_turf))
 								P.ReplaceWith(src.map_turf, keep_old_material = 0, force = 1)
@@ -238,7 +252,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 								D.locked = 1
 								D.UpdateIcon()
 
-						for (var/atom/A in start_location)
+						for (var/atom/A as anything in start_location)
 							if(istype(A, /obj/stool))
 								var/obj/stool/O = A
 								if(!O.anchored)
@@ -281,7 +295,26 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 							particle_spawn.start_particles()
 
 						DEBUG_MESSAGE("Now moving shuttle!")
+						var/dirvertical = 0
+						var/dirhorizontal = 0
+						var/shuttle_dir = map_settings ? map_settings.escape_dir : SOUTH
+						switch(shuttle_dir)
+							if (EAST)
+								dirhorizontal = 512
+							if (WEST)
+								dirhorizontal = -512
+							if (NORTH)
+								dirvertical = 512
+							if (SOUTH)
+								dirvertical = -512
+						for (var/atom/A as anything in start_location)
+							animate(A, 5 SECONDS, FALSE, CUBIC_EASING, pixel_z = 512, pixel_x = dirhorizontal, pixel_y = dirvertical)
+						sleep(5 SECONDS)
 						start_location.move_contents_to(end_location, map_turf, turf_to_skip = list(/turf/simulated/floor/plating, src.map_turf))
+						for (var/atom/A as anything in end_location)
+							A.pixel_z = 0
+							A.pixel_x = 0
+							A.pixel_y = 0
 
 						if(station_repair.station_generator)
 							var/list/turf/turfs_to_fix = get_area_turfs(start_location)
@@ -318,6 +351,10 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						if (!filler_turf)
 							filler_turf = centcom_turf
 						start_location.move_contents_to(end_location, src.transit_turf, turf_to_skip=/turf/space)
+						for (var/atom/A as anything in end_location)
+							A.pixel_z = 512
+						for (var/atom/A as anything in end_location)
+							animate(A, 4 SECONDS, FALSE, CUBIC_EASING, pixel_z = 0)
 						for (var/turf/G in end_location)
 							if (istype(G, src.transit_turf))
 								G.ReplaceWith(filler_turf, keep_old_material = 0, force = 1)
