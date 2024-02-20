@@ -57125,7 +57125,7 @@
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/assault_pod)
 "eqU" = (
-/turf/unsimulated/wall/auto/lead,
+/turf/unsimulated/wall/auto/lead/white,
 /area/watchful_eye_sensor)
 "erd" = (
 /obj/machinery/door/airlock/gannets/medical/alt{
@@ -57289,7 +57289,7 @@
 /obj/decal/laserbeam{
 	dir = 4
 	},
-/turf/space,
+/turf/space/dense,
 /area/watchful_eye_sensor)
 "ezH" = (
 /obj/table/glass/auto,
@@ -59489,7 +59489,7 @@
 /area/crunch)
 "gNQ" = (
 /obj/decal/laserbeam,
-/turf/space,
+/turf/space/dense,
 /area/watchful_eye_sensor)
 "gOW" = (
 /obj/table/regal/auto,
@@ -59909,15 +59909,6 @@
 "hlE" = (
 /turf/space,
 /area/syndicate_station_space)
-"hlI" = (
-/obj/decal/fakeobjects/tallsmes{
-	icon_state = "tallsmes1"
-	},
-/obj/cable/yellow{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor,
-/area/watchful_eye_sensor)
 "hmn" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -73163,12 +73154,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/diner_centcom)
-"tRO" = (
-/obj/decal/fakeobjects/tallsmes{
-	icon_state = "tallsmes1"
-	},
-/turf/unsimulated/wall/auto/lead,
-/area/watchful_eye_sensor)
 "tSc" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/void,
@@ -75907,7 +75892,7 @@
 /area/watchful_eye_sensor)
 "wrX" = (
 /obj/decoration/clock/frozen,
-/turf/unsimulated/wall/auto/lead,
+/turf/unsimulated/wall/auto/lead/white,
 /area/watchful_eye_sensor)
 "wsk" = (
 /obj/storage/closet/dresser,
@@ -134631,13 +134616,13 @@ rjh
 rCI
 vjC
 ttG
-tRO
+eqU
 lON
 oJp
 mIp
 wht
 bod
-hlI
+oJp
 ije
 eqU
 ttG
@@ -140671,13 +140656,13 @@ hls
 rCI
 uAq
 ttG
-tRO
+eqU
 lON
 oJp
 lIw
 kAC
 tJB
-hlI
+oJp
 ije
 eqU
 ttG
