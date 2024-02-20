@@ -6,26 +6,8 @@
  */
 
 import { useBackend, useLocalState, useSharedState } from '../backend';
-import { Box, Button, Collapsible, Dimmer, Flex, Input, LabeledList, Section, Stack } from '../components';
+import { Box, Button, Collapsible, Dimmer, Divider, Flex, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
-
-// This will do in-place of there being no wizard theme
-const category_coloring = (spell_category) => {
-  switch (spell_category) {
-    case "Enchantment":
-      return "purple";
-    case "Equipment":
-      return "yellow";
-    case "Offensive":
-      return "red";
-    case "Defensive":
-      return "blue";
-    case "Utility":
-      return "green";
-    case "Miscellaneous":
-      return "grey";
-  }
-};
 
 export const Wizard_Spellbook = (props, context) => {
   const { data } = useBackend(context);
@@ -44,7 +26,6 @@ export const Wizard_Spellbook = (props, context) => {
   return (
     <Window
       title={"Wizard Spellbook"}
-      theme={"ntos"}
       fontSize={2}
       height={600}
       width={500}
@@ -91,10 +72,9 @@ const SpellCategory = (props, context) => {
   return (
     <Collapsible
       title={category}
-      textColor={category_coloring(category)}
-      bold
     >
       <Stack vertical>
+        <Divider />
         {spells.filter((spell) => spell.toLowerCase().includes(searchQuery.toLowerCase())).map((spell) => (
           <Spell spell={spell} category={category} key={spell} />
         ))}
@@ -108,8 +88,10 @@ const If_Purchased_Text = (purchased, cost, spell_slots) => {
     return "Spell purchased";
   } else if (cost > spell_slots) {
     return "Not enough spell slots";
+  } else if (cost === 1) {
+    return "Purchase for "+cost+" spell slot";
   } else {
-    return "Purchase";
+    return "Purchase for "+cost+" spell slots";
   }
 };
 
@@ -122,7 +104,7 @@ const Spell = (props, context) => {
   } = data;
   const { spell, category } = props;
 
-  const [purchased, setPurchased] = useSharedState(context, spell, false);
+  const [purchased, setPurchased] = useSharedState(context, spell+"p", false);
   let spell_contents = []; // Non-associated list of: desc, cost, cooldown, vr_allowed
   for (let spell_data in spellbook_contents[category][spell]) {
     spell_contents.push(spellbook_contents[category][spell][spell_data]);
@@ -141,19 +123,18 @@ const Spell = (props, context) => {
         <Section
           title={spell}
           buttons={
-            <Button
-              backgroundColor={"green"}
-              disabled={spell_slots < spell_contents[1] || purchased}
-              onClick={() => { setPurchased(true); act("buyspell", { spell: spell }); }}
-            >
-              {If_Purchased_Text(purchased, spell_contents[1], spell_slots)}
-            </Button>
+            <Flex>
+              <Button
+                backgroundColor={"green"}
+                disabled={spell_slots < spell_contents[1] || purchased}
+                onClick={() => { setPurchased(true); act("buyspell", { spell: spell }); }}
+              >
+                {If_Purchased_Text(purchased, spell_contents[1], spell_slots)}
+              </Button>
+            </Flex>
           }
         >
           <LabeledList>
-            <LabeledList.Item label={"Cost"}>
-              {spell_contents[1]}
-            </LabeledList.Item>
             {spell_contents[2] !== null && (
               <LabeledList.Item label={"Cooldown"}>
                 {spell_contents[2]/10+" seconds"}
@@ -164,6 +145,7 @@ const Spell = (props, context) => {
             </LabeledList.Item>
           </LabeledList>
         </Section>
+        <Divider />
       </Section>
     </Stack.Item>
   );
