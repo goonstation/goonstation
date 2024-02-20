@@ -65,11 +65,15 @@
 				multiple_choice = FALSE
 
 			//todo more advanced input to pick and choose multiple servers, e.g. RP only polls
-			var/servers = tgui_alert(ui.user, "Cross-server poll?", "Add Poll", list("Yes", "No"))
-			if (servers == "Yes")
-				servers = null
-			else
+			var/servers = tgui_alert(ui.user, "Poll type?", "Add Poll", list("Local", "Global", "RP Only"))
+			if (servers == "Local")
 				servers = list(config.server_id)
+			else if (servers == "Global")
+				servers = list(poll_manager.global_server_id)
+			else if (servers == "RP Only")
+				servers = list(poll_manager.rp_only_server_id)
+			else
+				return
 
 			var/expiration_choice = tgui_input_list(ui.user, "Set an expiration date", "Add Poll",
 				list(

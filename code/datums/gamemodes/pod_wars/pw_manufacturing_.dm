@@ -11,6 +11,8 @@
 		/obj/item/material_piece/molitz
 	)
 	available = list(
+		/datum/manufacture/pod/preassembeled_parts,
+		/datum/manufacture/putt/preassembeled_parts,
 		/datum/manufacture/pod_wars/lock,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
@@ -57,6 +59,8 @@
 	name = "\improper NanoTrasen ship component fabricator"
 	team_num = TEAM_NANOTRASEN
 	available = list(
+		/datum/manufacture/pod/preassembeled_parts,
+		/datum/manufacture/putt/preassembeled_parts,
 		/datum/manufacture/pod_wars/lock,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
@@ -84,6 +88,8 @@
 	name = "\improper Syndicate ship component fabricator"
 	team_num = TEAM_SYNDICATE
 	available = list(
+		/datum/manufacture/pod/preassembeled_parts,
+		/datum/manufacture/putt/preassembeled_parts,
 		/datum/manufacture/pod_wars/lock,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,

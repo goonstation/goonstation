@@ -5612,6 +5612,11 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/teleporter,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "teleporter"
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "atz" = (
@@ -5677,6 +5682,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "core"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "atG" = (
@@ -5933,6 +5943,11 @@
 /obj/disposalpipe/segment{
 	dir = 4;
 	level = -1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "inner"
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
@@ -6741,6 +6756,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering";
+	enter_id = "south"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
 "awE" = (
@@ -7212,6 +7232,11 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "axU" = (
@@ -7355,6 +7380,11 @@
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "meetingroom"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/united_command)
 "ayt" = (
@@ -13912,6 +13942,11 @@
 	dir = 4;
 	name = "Engine Room"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "sw"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aUa" = (
@@ -15856,6 +15891,11 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "se"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bie" = (
@@ -15948,6 +15988,11 @@
 	},
 /obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/security,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/security/secwing)
 "bAx" = (
@@ -16670,6 +16715,11 @@
 	dir = 4;
 	level = -1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
 "fiL" = (
@@ -16693,6 +16743,11 @@
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4;
 	name = "Engine Room"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "nw"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -17011,6 +17066,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering";
+	enter_id = "north"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
 "hpN" = (
@@ -17034,6 +17094,11 @@
 /obj/machinery/secscanner{
 	dir = 4;
 	pixel_x = -20
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
@@ -17149,6 +17214,11 @@
 	},
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -17899,6 +17969,11 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "ne"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "mlP" = (
@@ -18403,6 +18478,30 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"oOs" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4;
+	name = "AI Upload Chamber"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "inner"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai)
 "oPh" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -19412,6 +19511,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/ejection{
 	dir = 8
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering";
+	enter_id = "outer"
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
@@ -61759,7 +61863,7 @@ aGw
 aqD
 aqD
 aqD
-axT
+oOs
 aqD
 aqD
 aqD

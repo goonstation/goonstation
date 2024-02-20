@@ -5,7 +5,7 @@
 	method = RUSTG_HTTP_METHOD_POST
 	path = "/players/notes"
 	body = /datum/apiBody/players/notes/post
-	correct_response = /datum/apiModel/Tracked/PlayerRes/PlayerNoteResource
+	correct_response = /datum/apiModel/Tracked/PlayerNoteResource
 
 	buildBody(
 		game_admin_ckey,
