@@ -491,6 +491,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/lrt/voiddiner
 	name = "Void Diner"
 
+/obj/landmark/lrt/watchfuleye
+	name = "Watchful-Eye Sensor"
+
 /obj/landmark/character_preview_spawn
 	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
 

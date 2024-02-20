@@ -99,6 +99,13 @@ Z_LEVEL_PARALLAX_RENDER_SOURCE_GROUP(5)
 		/atom/movable/screen/parallax_render_source/space_2,
 	)
 
+/datum/parallax_render_source_group/area/watchful_eye_sensor
+	parallax_render_source_types = list(	// these are placeholders until i upload better images
+		/atom/movable/screen/parallax_render_source/void,
+		/atom/movable/screen/parallax_render_source/void/clouds_1,
+		/atom/movable/screen/parallax_render_source/void/clouds_2,
+	)
+
 // Planet Parallax Layers
 /datum/parallax_render_source_group/planet/snow
 	parallax_render_source_types = list(
