@@ -253,6 +253,9 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 	else if(istype(generator, /datum/map_generator/forest_generator) && prob(95))
 		planet_area.area_parallax_render_source_group = new /datum/parallax_render_source_group/planet/forest()
 
+	else if(istype(generator, /datum/map_generator/lavamoon_generator) && prob(95))
+		planet_area.area_parallax_render_source_group = new /datum/parallax_render_source_group/planet/lava_moon()
+
 	// Occlude overlays on edges
 	if(planet_area.area_parallax_render_source_group)
 		planet_area.no_prefab_ref.area_parallax_render_source_group = planet_area.area_parallax_render_source_group
