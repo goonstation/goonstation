@@ -1,0 +1,90 @@
+/obj/item/clothing/head/fruithat
+	name = "fruit basket hat"
+	desc = "Where do these things even come from? It reeks of welch, and it's not the grapes."
+	icon_state = "fruithat"
+	var/bites = 8
+	var/list/youarebad = list("You're a liar.", "You're a cheat.","You're a fraud.") // h e h
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (target == user)
+			if (!src.bites)
+				boutput(user, SPAN_ALERT("No more bites of \the [src] left, oh no!"))
+				user.u_equip(src)
+				qdel(src)
+			else
+				target.visible_message(SPAN_NOTICE("[target] takes a bite of [src]!"),\
+				SPAN_NOTICE("You take a bite of [src]!"))
+				src.bites--
+				target.nutrition += 20
+				playsound(target.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+				if (!src.bites)
+					user.u_equip(src)
+					qdel(src)
+				sleep(rand(10,50))
+				boutput(target, voidSpeak(pick(youarebad)))
+				random_brute_damage(user, 5)
+		else if(check_target_immunity(target))
+			user.visible_message(SPAN_ALERT("You try to feed [target] [src], but fail!"))
+		else
+			user.tri_message(target, SPAN_ALERT("<b>[user]</b> tries to feed [target] [src]!"),\
+				SPAN_ALERT("You try to feed [target] [src]!"),\
+				SPAN_ALERT("<b>[user]</b> tries to feed you [src]!"))
+			if (!do_after(user, 1 SECONDS))
+				boutput(user, SPAN_ALERT("You were interrupted!"))
+				return ..()
+			else
+				user.tri_message(target, SPAN_ALERT("<b>[user]</b> feeds [target] [src]!"),\
+					SPAN_ALERT("You feed [target] [src]!"),\
+					SPAN_ALERT("<b>[user]</b> feeds you [src]!"))
+				src.bites--
+				target.nutrition += 20
+				playsound(target.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
+				if (!src.amount)
+					user.u_equip(src)
+					qdel(src)
+				sleep(rand(10,50))
+				boutput(target, voidSpeak(pick(youarebad)))
+				random_brute_damage(user, 5)
+
+//////////////////////////////////////////////FRUITHAT ASSEMBLIES
+
+/obj/item/dynassembly/fruit
+	name = "wire" //This gets funky otherwise.
+	icon = 'icons/obj/foodNdrink/food_produce.dmi'
+	validparts = list(/obj/item/reagent_containers/food/snacks/plant/)
+	multipart = 1
+
+	checkifdone()
+		if (length(src.contents) >= 8)
+			src.product = 1
+			src.desc += "<BR>[SPAN_NOTICE("It looks like this assembly can be secured with a screwdriver.")]"
+
+	createproduct(mob/user)
+		if (product == 1)
+			var/obj/item/clothing/head/fruithat/N = new /obj/item/clothing/head/fruithat(get_turf(src))
+			boutput(user, "You have successfully created \a [N]!")
+		return
+
+/obj/item/reagent_containers/food/snacks/plant/attackby(obj/item/W, mob/user) //first phase of fruithat construction
+	if (istype(W, /obj/item/cable_coil))
+		var/obj/item/cable_coil/C = W
+		if (src.validforhat == 1) //is it a fruit and not a filthy vegetable?
+			if (C.amount <= 7)
+				boutput(user, "You don't have enough cable to add to \the [src.name]")
+			else
+				boutput(user, SPAN_NOTICE("You begin adding \the [C.name] to \the [src.name]."))
+				if (!do_after(user, 3 SECONDS))
+					boutput(user, SPAN_ALERT("You were interrupted!"))
+					return ..()
+				else
+					C.amount -= 8
+					C.UpdateIcon()
+					user.drop_item()
+					var/obj/item/dynassembly/fruit/A = new /obj/item/dynassembly/fruit(get_turf(src))
+					A.newpart(A,src,1) //returns assembly we created, fruit we made it from, and 1st run
+					var/image/I = new /image('icons/obj/foodNdrink/food_produce.dmi', "hatwires")
+					I.layer += 1
+					A.overlays += I
+		else
+			boutput(user, "The [src.name] cannot be wired with the [C.name]")
+	return ..()
