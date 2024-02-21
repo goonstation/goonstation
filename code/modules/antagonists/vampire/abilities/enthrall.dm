@@ -131,9 +131,9 @@
 
 		if (target in H.thralls)
 			//and add blood!
-			var/datum/mutantrace/vampiric_thrall/V = target.mutantrace
-			if (V)
-				V.blood_points += 200
+			var/datum/abilityHolder/vampiric_thrall/thrallHolder = target.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+			if (thrallHolder)
+				thrallHolder.points += 200
 
 			H.blood_tracking_output(cost)
 

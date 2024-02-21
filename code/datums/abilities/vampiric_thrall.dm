@@ -45,35 +45,79 @@
 	regenRate = 0
 	tabName = "Thrall"
 	notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
+#ifdef BONUS_POINTS
+	points = 300
+#else
 	points = 0
+#endif
 	remove_on_clone = TRUE
 
 	var/mob/vamp_isbiting = null
 	var/datum/abilityHolder/vampire/master
 
-	var/last_blood_points = 0
+#ifdef RP_MODE
+	var/blood_decay = 0.125
+#else
+	var/blood_decay = 0.25
+#endif
+	var/blood_to_health_scalar = 0.75 //200 blood = 150 health
+	var/min_max_health = 40 //! Minimum health we can get to via blood loss. also lol
 
-	onLife(var/mult = 1) //failsafe for UI not doing its update correctly elsewhere
+	onLife(var/mult = 1)
 		.= 0
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
-				var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
+		var/mob/living/owner_mob = src.owner
+		if (!istype(owner_mob))
+			return
+		//normal bleeding
+		if (owner_mob.bleeding)
+			src.points -= src.blood_decay * owner_mob.bleeding
 
-				if (last_blood_points != V.blood_points)
-					last_blood_points = V.blood_points
-					src.updateText(0, src.x_occupied, src.y_occupied)
+		//passive decay
+		src.points -= blood_decay * mult
+		src.points = max(0,src.points)
 
+		if (ON_COOLDOWN(owner_mob, "thrall_blood_waste", 5 SECONDS))
+			return
+
+		var/dist
+		if (!master?.owner || get_z(master.owner) != get_z(owner_mob))
+			dist = 60
+		else
+			dist = GET_DIST(master.owner, owner_mob)
+		dist = min(dist, 100)
+		if (dist > 30)
+			var/blood_loss = 15 + dist/2
+			var/overflow_loss = blood_loss - src.points //the amount not covered by our points
+			src.points = max(0, src.points - blood_loss)
+			boutput(owner_mob, SPAN_ALERT(SPAN_BOLD("You feel your gut wrench as you stray too far from your master.")))
+			var/visual_severity = 1
+			if (overflow_loss > 0)
+				bleed(owner_mob, overflow_loss, 5, get_turf(owner_mob)) //take it from our actual bloodstream instead
+			else
+				visual_severity = 0.3
+				var/obj/decal/cleanable/blood/blood_decal = make_cleanable(/obj/decal/cleanable/blood, get_turf(owner_mob))
+				if (owner_mob.bioHolder)
+					blood_decal.blood_DNA = owner_mob.bioHolder.Uid
+					blood_decal.blood_type = owner_mob.bioHolder.bloodType
+			if (owner_mob.client)
+				var/original_color = owner_mob.client.color
+				var/flash_color = rgb(255, (1-visual_severity) * 255, (1-visual_severity) * 255)
+				animate(owner_mob.client, color=flash_color, time=0.4 SECONDS)
+				animate(color=original_color, time=1.5 SECONDS)
+
+		src.update_max_health()
+		src.updateText(0, src.x_occupied, src.y_occupied) //might not be needed?
+
+	proc/update_max_health()
+		src.owner.max_health = src.points * blood_to_health_scalar
+		src.owner.max_health = max(src.min_max_health, src.owner.max_health)
+		global.health_update_queue |= src.owner
 
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
 		.= list()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
-				var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
-				.["Blood:"] = round(V.blood_points)
-				.["Max HP:"] = round(H.max_health)
+		.["Blood:"] = round(src.points)
+		.["Max HP:"] = round(src.owner.max_health)
 
 	proc/msg_to_master(var/msg)
 		if (master)
@@ -81,17 +125,12 @@
 
 	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
 		if(!total_blood)
-			var/mob/living/carbon/human/M = owner
-			if(istype(M) && istype(M.mutantrace, /datum/mutantrace/vampiric_thrall))
-				var/datum/mutantrace/vampiric_thrall/V = M.mutantrace
-				if (V.blood_points < 0)
-					V.blood_points = 0
-					if (haine_blood_debug) logTheThing(LOG_DEBUG, M, "<b>HAINE BLOOD DEBUG:</b> [M]'s blood_points dropped below 0 and was reset to 0")
-
-				if (set_null)
-					V.blood_points = 0
-				else
-					V.blood_points = max(V.blood_points + change, 0)
+			if (src.points < 0)
+				src.points = 0
+			if (set_null)
+				src.points = 0
+			else
+				src.points = max(src.points + change, 0)
 
 
 /datum/targetable/vampiric_thrall
