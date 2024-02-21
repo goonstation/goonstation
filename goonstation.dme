@@ -1746,6 +1746,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\worldgen\mapgen\ForestGenerator.dm"
 #include "code\modules\worldgen\mapgen\IceMoonGenerator.dm"
 #include "code\modules\worldgen\mapgen\JungleGenerator.dm"
+#include "code\modules\worldgen\mapgen\LavaMoonGenerator.dm"
 #include "code\modules\worldgen\mapgen\MarsGenerator.dm"
 #include "code\modules\worldgen\mapgen\RoomMaze.dm"
 #include "code\modules\worldgen\mapgen\SnowGenerator.dm"
