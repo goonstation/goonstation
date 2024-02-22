@@ -981,6 +981,9 @@ datum/pump_ui/circulator_ui
 						return
 			if(TEG_SEMI_STATE_MISSING)
 				if(istype(W,/obj/item/teg_semiconductor) || (istype(W,/obj/item/sheet) && (W.amount >= 10)))
+					if (W.cant_drop && istype(W,/obj/item/teg_semiconductor))
+						boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
+						return
 					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 5 SECONDS), user)
 					return
 			if(TEG_SEMI_STATE_BOOTLEG_SEMI)
