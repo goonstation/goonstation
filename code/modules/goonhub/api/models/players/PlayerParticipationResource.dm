@@ -12,12 +12,9 @@
 	src.legacy_data = response["legacy_data"]
 
 /datum/apiModel/Tracked/PlayerRes/PlayerParticipationResource/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(src.player_id) \
-		|| isnull(src.round_id) \
-		|| isnull(src.created_at) \
-		|| isnull(src.updated_at) \
+		isnull(src.round_id)
 	)
 		return FALSE
 

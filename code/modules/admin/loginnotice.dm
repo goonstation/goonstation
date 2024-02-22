@@ -105,7 +105,7 @@
 /client/proc/acknowledge_login_notice()
 	var/message = src.player.cloudSaves.getData("login_notice")
 	if (message)
-		if (!player.cloudSaves.putData("login_notice", null))
+		if (!player.cloudSaves.deleteData("login_notice"))
 			tgui_alert(src.mob, "ERROR: Failed to clear login notice for some reason...")
 			return
 

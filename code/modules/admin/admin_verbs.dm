@@ -1580,7 +1580,7 @@ var/list/fun_images = list()
 				trigger = (C.holder ? "[src.key] (as [src.fakekey])" : src.fakekey)
 			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 			if (vol)
-				C.chatOutput.playDectalk(audio["audio"], trigger, vol)
+				C.chatOutput.playDectalk(audio["audio"], trigger, vol * 0.75)
 		return 1
 	else if (audio && audio["cooldown"])
 		alert(src, "There is a [nextDectalkDelay] second global cooldown between uses of this verb. Please wait [((world.timeofday + nextDectalkDelay * 10) - world.timeofday)/10] seconds.")

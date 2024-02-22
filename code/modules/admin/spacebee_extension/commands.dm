@@ -97,15 +97,12 @@
 				var/datum/apiRoute/players/stats/get/getPlayerStats = new
 				getPlayerStats.queryParams = list("ckey" = data["ckey"])
 				playerStats = apiHandler.queryAPI(getPlayerStats)
+				data["ip"] = playerStats.latest_connection.ip
+				data["compID"] = playerStats.latest_connection.comp_id
 			catch
-				var/ircmsg[] = new()
-				ircmsg["name"] = user
-				ircmsg["msg"] = "Failed to query API, try again later."
-				ircbot.export("admin", ircmsg)
-				return
+				data["ip"] = null
+				data["compID"] = null
 
-			data["ip"] = playerStats.latest_connection.ip
-			data["compID"] = playerStats.latest_connection.comp_id
 		data["text_ban_length"] = length
 		data["reason"] = reason
 		if (length == "hour")

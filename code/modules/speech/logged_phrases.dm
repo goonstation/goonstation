@@ -230,7 +230,7 @@ var/global/datum/phrase_log/phrase_log = new
 			for (var/datum/apiModel/entry in randomEntries.entries)
 				switch(category)
 					if("ai_laws")
-						if(entry["uploader_key"] != "Random Event")
+						if(entry["uploader_name"] != "Random Event")
 							new_phrases += entry["law_text"]
 					if("tickets", "fines")
 						new_phrases += entry["reason"]

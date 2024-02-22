@@ -1,4 +1,35 @@
 
+(t)thu feb 22 24
+(u)Tyrant
+(p)17977
+(e)🔎📦⚙💡|C-Code-Quality, A-Game-Objects, A-Internal, A-Station-Systems
+(+)Massive backend reshuffling of the airlock code has taken place. report any bugs with door bolting/opening/closing.
+(t)mon feb 19 24
+(u)LeahTheTech
+(+)Shrapnel created by reactor meltdowns is now a bit more destructive.
+(t)fri feb 16 24
+(u)LeahTheTech
+(+)Arcfiends can now *monsterscream too.
+(u)Cherman0
+(p)17853
+(e)🗺💅📦🎩|A-Mapping, C-QoL, A-Game-Objects, A-Clothing
+(+)The CE now spawns wearing their Aurora Belt MkII
+(u)Mr. Moriarty
+(p)17949
+(e)🎨📦⚗|C-Sprites, A-Game-Objects, A-Chemistry
+(+)Resprited phials, beakers, round flasks, conical flasks, large beakers, large flasks, the four types of bottles, bongs, and all of their respective fluid overlays.
+(t)thu feb 15 24
+(u)Sord
+(+)Most in rotation maps now have airlock cyclers on some interior airlocks (Security, engineering, research, etc) where applicable.
+(t)wed feb 14 24
+(u)Ikea
+(p)17577
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Borg speed values have been changed all across the board. Treadless light borgs are the same speed. Light and heavy borgs with treads are now slower compared to before. Every other borg body type is faster, see pr for specific values.
+(u)Cheekybrdy
+(p)17902
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Benches in science now appear in a purple variant.
 (t)tue feb 13 24
 (u)Keiiro
 (p)17924

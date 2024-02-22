@@ -9,6 +9,7 @@
 	var/rate_limit_counter = 0
 	/// soft cap to start forcing 1 second cooldown
 	var/const/rate_limit_soft_cap = 10
+	var/filterInactive = TRUE
 
 /datum/poll_ballot/ui_state(mob/user)
 	return tgui_always_state.can_use_topic(src, user)
@@ -26,7 +27,8 @@
 	. = list(
 			"isAdmin" = isadmin(user),
 			"polls" = poll_manager.poll_data,
-			"playerId" = user.client.player.id
+			"playerId" = user.client.player.id,
+			"filterInactive" = src.filterInactive
 		)
 
 /datum/poll_ballot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -63,11 +65,15 @@
 				multiple_choice = FALSE
 
 			//todo more advanced input to pick and choose multiple servers, e.g. RP only polls
-			var/servers = tgui_alert(ui.user, "Cross-server poll?", "Add Poll", list("Yes", "No"))
-			if (servers == "Yes")
-				servers = null
-			else
+			var/servers = tgui_alert(ui.user, "Poll type?", "Add Poll", list("Local", "Global", "RP Only"))
+			if (servers == "Local")
 				servers = list(config.server_id)
+			else if (servers == "Global")
+				servers = list(poll_manager.global_server_id)
+			else if (servers == "RP Only")
+				servers = list(poll_manager.rp_only_server_id)
+			else
+				return
 
 			var/expiration_choice = tgui_input_list(ui.user, "Set an expiration date", "Add Poll",
 				list(
@@ -274,3 +280,6 @@
 			poll_manager.sync_single_poll(params["pollId"])
 			. = TRUE
 
+		if("toggle-filterInactive")
+			filterInactive = !filterInactive
+			. = TRUE

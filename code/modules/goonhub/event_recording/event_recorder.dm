@@ -53,7 +53,7 @@ var/global/datum/eventRecorder/eventRecorder
 
 	/// Add an event to the event queue
 	proc/add(datum/eventRecord/event)
-		if (!src.enabled) return
+		if (!src.enabled || !roundId) return
 
 		var/list/data = event.body.ToList()
 		data["type"] = event.eventType

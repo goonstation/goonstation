@@ -382,28 +382,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (doseed)
 					var/datum/plant/stored = P.planttype
 					if (istype(stored) && !stored.isgrass)
-						var/obj/item/seed/S
-						if (stored.unique_seed)
-							S = new stored.unique_seed
-							S.set_loc(consumer.loc)
-						else
-							S = new /obj/item/seed
-							S.set_loc(consumer.loc)
-							S.removecolor()
-
-						var/datum/plantgenes/DNA = P.plantgenes
-						var/datum/plantgenes/PDNA = S.plantgenes
-						if (!stored.hybrid && !stored.unique_seed)
-							S.generic_seed_setup(stored, TRUE)
-						HYPpassplantgenes(DNA,PDNA)
-						if (stored.hybrid)
-							var/plantType = stored.type
-							var/datum/plant/hybrid = new plantType(S)
-							for (var/V in stored.vars)
-								if (issaved(stored.vars[V]) && V != "holder")
-									hybrid.vars[V] = stored.vars[V]
-							S.planttype = hybrid
-							S.plant_seed_color(stored.seedcolor)
+						HYPgenerateseedcopy(SRCDNA, stored, P.generation, consumer.loc)
 						consumer.visible_message(SPAN_NOTICE("<b>[consumer]</b> spits out a seed."),\
 						SPAN_NOTICE("You spit out a seed."))
 			if(src.dropped_item)

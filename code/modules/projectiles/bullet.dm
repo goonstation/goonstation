@@ -1832,9 +1832,9 @@ datum/projectile/bullet/autocannon
 			if(isturf(hit)) //did you know that turf.loc is /area? because I didn't
 				hitloc = hit
 			for(var/obj/window/maybe_thindow in hitloc)
-				maybe_thindow.ex_act(3)
+				maybe_thindow.ex_act(2)
 			for(var/obj/structure/girder/girderstack in hitloc)
-				girderstack.ex_act(3)
+				girderstack.ex_act(2)
 			//let's pretend these walls/objects were destroyed in the explosion
-			hit.ex_act(2)
+			hit.ex_act(pick(1,2))
 		. = ..()
