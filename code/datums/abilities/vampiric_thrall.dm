@@ -114,7 +114,7 @@
 		var/overflow_loss = blood_loss - src.points //the amount not covered by our points
 		src.points = max(0, src.points - blood_loss)
 		var/mob/living/living_owner = src.owner //the calling proc can be responsible for checking this, it needs some responsibility in its life
-		if (src.points <= 0 && src.owner.blood_volume < 200)
+		if (src.points <= 0 && living_owner.blood_volume < 200)
 			boutput(src.owner, SPAN_ALERT(SPAN_BOLD(pick("You feel your master's power fading...", "NEED. BLOOOD.", "You can feel death trying to take you back."))))
 		else
 			boutput(src.owner, SPAN_ALERT(SPAN_BOLD("You feel [pick("your gut wrench", "your skin bleed", "your heart twist")] as you stray too far from your master.")))
