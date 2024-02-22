@@ -284,7 +284,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Desert Station"
 	desc = "Turn space into into a nice desert full of sand and stones."
 	additional_options = list("Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj"=TRUE)
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
 
 	New()
 		syndi_camo_color = list(nuke_op_color_matrix[1], "#efc998", nuke_op_color_matrix[3])
@@ -434,11 +434,54 @@ ABSTRACT_TYPE(/datum/terrainify)
 			logTheThing(LOG_DIARY, ui.user, "turned space into an another outpost on Theta.", "admin")
 			message_admins("[key_name(ui.user)] turned space into an another outpost on Theta.")
 
+/datum/terrainify/lava_moon
+	name = "Lava Moon Station"
+	desc = "Turns space into... CO2 + Lava."
+	additional_options = list("Mining"=list("None","Normal","Rich"), "Lava"=list("Normal","Extra","Less"))
+
+	convert_station_level(params, datum/tgui/ui)
+		if(..())
+			station_repair.default_air.carbon_dioxide = 20
+			station_repair.default_air.nitrogen = 0
+			station_repair.default_air.oxygen = 0
+			station_repair.default_air.temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST-1
+
+			station_repair.station_generator = new/datum/map_generator/lavamoon_generator
+			var/datum/map_generator/lavamoon_generator/LG = station_repair.station_generator
+			switch(params["Lava"])
+				if("Extra")
+					LG.lava_percent = 45
+				if("Less")
+					LG.lava_percent = 25
+
+			var/list/turf/traveling_crate_turfs = station_repair.get_mass_driver_turfs()
+			var/list/turf/shipping_path = shippingmarket.get_path_to_market()
+			traveling_crate_turfs |= shipping_path
+			for(var/turf/space/T in traveling_crate_turfs)
+				T.ReplaceWith(/turf/unsimulated/floor/auto/iomoon)
+
+			station_repair.land_vehicle_fixup(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
+
+			var/list/space = list()
+			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+				space += S
+			convert_turfs(space)
+
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
+			var/list/parallax_layers = list(/atom/movable/screen/parallax_render_source/foreground/embers)
+			ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, parallax_layers, 0 SECONDS)
+
+			handle_mining(params, space)
+
+			logTheThing(LOG_ADMIN, ui.user, "turned space into an another outpost on Io.")
+			logTheThing(LOG_DIARY, ui.user, "turned space into an another outpost on Io.", "admin")
+			message_admins("[key_name(ui.user)] turned space into an another outpost on Io.")
+
 
 /datum/terrainify/swampify
 	name = "Swamp Station"
 	desc = "Turns space into a swamp"
-	additional_options = list("Rain"=list("Yes","No", "Particles"), "Mining"=list("None","Normal","Rich"))
+	additional_options = list("Rain"=list("No", "Yes", "Particles"), "Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
 
 	New()
@@ -501,7 +544,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Mars Station"
 	desc = "Turns space into Mars.  A sprawl of stand, stone, and an unyielding wind."
 	additional_options = list("Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj"=FALSE, "Duststorm"=TRUE)
+	additional_toggles = list("Ambient Light Obj"=FALSE, "Duststorm"=TRUE, "Prefabs"=FALSE)
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
