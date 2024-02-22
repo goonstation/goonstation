@@ -696,7 +696,9 @@ TYPEINFO(/obj/machinery/networked/storage)
 	/// Our VR TTV to attach tank1 and tank2 to
 	var/obj/item/device/transfer_valve/vr/vrbomb = null
 	power_usage = 200
-
+	HELP_MESSAGE_OVERRIDE("Simulates the mixture of two tanks of gas.</br>\
+						   You can use the <b>VR Goggles</b> typically found nearby to watch the simulation unfold.</br>\
+						   A <b>screwdriver</b> can open the maintenence panel to manage the host connection.")
 	/// Where the bomb gets dropped
 	var/vr_landmark = LANDMARK_VR_BOMB
 
@@ -749,7 +751,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 	ui_act(action, params)
 		switch(action)
 			if ("interact_tank_slot")
-				// Prevent silicons from interacting from unreasonable range
+				// No silicons dont get to eject tanks from tiles away
 				if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 					boutput(usr, SPAN_ALERT("You cannot interact with \the [src] from that far away!"))
 					return
@@ -780,15 +782,11 @@ TYPEINFO(/obj/machinery/networked/storage)
 						boutput(usr, "You insert \the [I].")
 
 			if("simulate")
-				if(src.vrbomb)
-					boutput(usr, SPAN_ALERT("Simulation already in progress!"))
-					return
-				if(!(src.tank1 && src.tank2))
-					boutput(usr, SPAN_ALERT("Both tanks are required!"))
-					return
-				if (ON_COOLDOWN(global, "bomb_simulator", 30 SECONDS))
-					boutput(usr, SPAN_ALERT("Simulator not ready, please try again later."))
-					return
+				// Button is disabled on these conditions, but can't hurt to check em' twice
+				var/simulator_dialogue = src.can_simulate()
+				if (!simulator_dialogue[1])
+					boutput(usr, SPAN_ALERT(simulator_dialogue[2]))
+				ON_COOLDOWN(global, "bomb_simulator", 30 SECONDS)
 				src.generate_vrbomb()
 				src.updateUsrDialog()
 
@@ -803,6 +801,9 @@ TYPEINFO(/obj/machinery/networked/storage)
 					src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 				return
 
+			if ("config_switch")
+				src.net_number = src.net_number ^ (1 << params["switch_flicked"])
+
 		src.add_fingerprint(usr)
 		return
 
@@ -812,19 +813,39 @@ TYPEINFO(/obj/machinery/networked/storage)
 #undef TANK_ONE
 #undef TANK_TWO
 
+	/// Determine if the simulator is ready, returns a list of a bool for whether it's ready, and a dialogue for the user
+	proc/can_simulate()
+		if(!(src.tank1 && src.tank2))
+			return list(FALSE, "Both tanks are required!")
+		else if (GET_COOLDOWN(global, "bomb_simulator"))
+			return list(FALSE, "Simulator not ready, please try again later.")
+		else if (src.vrbomb)
+			return list(TRUE, "Simulation in progress!")
+		else
+			return list(TRUE, "Simulator ready.")
+
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
 			ui = new(user, src, "Bombsim", src.name)
 			ui.open()
 
+/// Gets relevant properties of the tank as a list for ui_data
+#define TANK_AS_LIST(tank) (tank != null) ? list("name"=tank.name,\
+								"pressure"=(hasvar(tank, "air_contents") ? MIXTURE_PRESSURE(tank.air_contents) : null),\
+								"maxPressure"=TANK_FRAGMENT_PRESSURE) : list("name"=null, "pressure"=null,"maxPressure"=null)
 	ui_data()
+		var/simulator_dialogue = src.can_simulate()
 		return list(
-			"tank_one" = src.tank1,
-			"tank_two" = src.tank2,
+			"tank_one" = TANK_AS_LIST(src.tank1),
+			"tank_two" = TANK_AS_LIST(src.tank2),
 			"host_id" = src.host_id,
 			"vr_bomb" = src.vrbomb,
 			"panel_open" = src.panel_open,
+			"is_ready" = simulator_dialogue[1],
+			"cooldown" = "[GET_COOLDOWN(global, "bomb_simulator")] second\s",
+			"readiness_dialogue" = simulator_dialogue[2],
+			"net_number" = src.net_number,
 		)
 
 	update_icon()
@@ -860,7 +881,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 		if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !issilicon(user))
 			return 1
 
-		src.ui_interact()
+		src.ui_interact(user)
 
 	proc/generate_vrbomb()
 		if(!(src.tank1 && src.tank2))

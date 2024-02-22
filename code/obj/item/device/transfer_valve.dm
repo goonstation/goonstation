@@ -519,7 +519,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	var/update_counter = 0
 
 	attack_hand(mob/user)
-		return
+		src.ui_interact()
 
 	disposing()
 		processing_items.Remove(src)
