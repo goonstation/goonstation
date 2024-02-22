@@ -60,8 +60,13 @@
 #else
 	var/blood_decay = 0.25
 #endif
-	var/blood_to_health_scalar = 0.75 //200 blood = 150 health
+	var/blood_to_health_scalar = 0.75 //! 200 blood = 150 health
 	var/min_max_health = 40 //! Minimum health we can get to via blood loss. also lol
+
+	///Counter that ticks up as you spend time away from your vampire before you start to loose blood
+	var/grace_count = 0
+	///How many (mult adjusted) life ticks before
+	var/grace_limit = 3
 
 	onLife(var/mult = 1)
 		.= 0
@@ -76,35 +81,25 @@
 		src.points -= blood_decay * mult
 		src.points = max(0,src.points)
 
-		if (ON_COOLDOWN(owner_mob, "thrall_blood_waste", 5 SECONDS))
+		if (ON_COOLDOWN(src.owner, "thrall_blood_waste", 5 SECONDS))
 			return
 
 		var/dist
-		if (!master?.owner || get_z(master.owner) != get_z(owner_mob))
+		if (!master?.owner || get_z(master.owner) != get_z(src.owner))
 			dist = 60
 		else
-			dist = GET_DIST(master.owner, owner_mob)
+			dist = GET_DIST(master.owner, src.owner)
 		dist = min(dist, 100)
 		if (dist > 30)
-			var/blood_loss = 15 + dist/2
-			var/overflow_loss = blood_loss - src.points //the amount not covered by our points
-			src.points = max(0, src.points - blood_loss)
-			boutput(owner_mob, SPAN_ALERT(SPAN_BOLD("You feel your gut wrench as you stray too far from your master.")))
-			var/visual_severity = 1
-			if (overflow_loss > 0)
-				bleed(owner_mob, overflow_loss, 5, get_turf(owner_mob)) //take it from our actual bloodstream instead
+			if (src.grace_count > src.grace_limit)
+				var/blood_loss = 15 + dist/2
+				src.blood_waste(blood_loss)
 			else
-				visual_severity = 0.3
-				var/obj/decal/cleanable/blood/blood_decal = make_cleanable(/obj/decal/cleanable/blood, get_turf(owner_mob))
-				if (owner_mob.bioHolder)
-					blood_decal.blood_DNA = owner_mob.bioHolder.Uid
-					blood_decal.blood_type = owner_mob.bioHolder.bloodType
-			if (owner_mob.client)
-				var/original_color = owner_mob.client.color
-				var/flash_color = rgb(255, (1-visual_severity) * 255, (1-visual_severity) * 255)
-				animate(owner_mob.client, color=flash_color, time=0.4 SECONDS)
-				animate(color=original_color, time=1.5 SECONDS)
-				playsound(owner_mob, 'sound/effects/heartbeat.ogg', 60, FALSE)
+				src.grace_count += mult
+				boutput(src.owner, SPAN_ALERT("You feel an insistent tug, you need to stick closer to your master."))
+				src.waste_effect(0.1)
+		else
+			src.grace_count = 0 //we're within range, reset
 
 		src.update_max_health()
 		src.updateText(0, src.x_occupied, src.y_occupied) //might not be needed?
@@ -113,6 +108,31 @@
 		src.owner.max_health = src.points * blood_to_health_scalar
 		src.owner.max_health = max(src.min_max_health, src.owner.max_health)
 		global.health_update_queue |= src.owner
+
+	///Lose an amount of blood, first from points then from bloodstream
+	proc/blood_waste(blood_loss)
+		var/overflow_loss = blood_loss - src.points //the amount not covered by our points
+		src.points = max(0, src.points - blood_loss)
+		boutput(src.owner, SPAN_ALERT(SPAN_BOLD("You feel [pick("your gut wrench", "your skin bleed", "your heart twist")] as you stray too far from your master.")))
+		if (overflow_loss > 0)
+			bleed(src.owner, overflow_loss, 5, get_turf(src.owner)) //take it from our actual bloodstream instead
+			src.waste_effect(1)
+		else
+			var/obj/decal/cleanable/blood/blood_decal = make_cleanable(/obj/decal/cleanable/blood, get_turf(src.owner))
+			if (src.owner.bioHolder)
+				blood_decal.blood_DNA = src.owner.bioHolder.Uid
+				blood_decal.blood_type = src.owner.bioHolder.bloodType
+			src.waste_effect(0.4)
+
+	proc/waste_effect(severity)
+		if (!src.owner.client)
+			return
+		var/original_color = src.owner.client.color
+		var/flash_color = rgb(255, (1-severity) * 255, (1-severity) * 255)
+		animate(src.owner.client, color=flash_color, time=0.4 SECONDS)
+		animate(color=original_color, time=1.5 SECONDS)
+		if (severity > 0.2)
+			playsound(src.owner, 'sound/effects/heartbeat.ogg', 60, FALSE)
 
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
