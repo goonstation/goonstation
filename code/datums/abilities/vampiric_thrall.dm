@@ -88,7 +88,7 @@
 		if (!master?.owner || get_z(master.owner) != get_z(src.owner))
 			dist = 60
 		else
-			dist = GET_DIST(master.owner, src.owner)
+			dist = GET_DIST(get_turf(master.owner), get_turf(src.owner))
 		dist = min(dist, 100)
 		if (dist > 30)
 			if (src.grace_count > src.grace_limit)
