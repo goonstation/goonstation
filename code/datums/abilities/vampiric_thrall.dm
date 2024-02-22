@@ -66,7 +66,7 @@
 	///Counter that ticks up as you spend time away from your vampire before you start to loose blood
 	var/grace_count = 0
 	///How many (mult adjusted) life ticks before
-	var/grace_limit = 3
+	var/grace_limit = 2
 
 	onLife(var/mult = 1)
 		.= 0
