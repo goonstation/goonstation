@@ -104,6 +104,7 @@
 				var/flash_color = rgb(255, (1-visual_severity) * 255, (1-visual_severity) * 255)
 				animate(owner_mob.client, color=flash_color, time=0.4 SECONDS)
 				animate(color=original_color, time=1.5 SECONDS)
+				playsound(owner_mob, 'sound/effects/heartbeat.ogg', 60, FALSE)
 
 		src.update_max_health()
 		src.updateText(0, src.x_occupied, src.y_occupied) //might not be needed?
