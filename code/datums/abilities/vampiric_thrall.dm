@@ -90,7 +90,7 @@
 		else
 			dist = GET_DIST(get_turf(master.owner), get_turf(src.owner))
 		dist = min(dist, 100)
-		if (dist > 30)
+		if (dist > 15)
 			if (src.grace_count > src.grace_limit)
 				var/blood_loss = 15 + dist/2
 				src.blood_waste(blood_loss)
