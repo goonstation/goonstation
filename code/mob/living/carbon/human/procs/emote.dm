@@ -547,7 +547,7 @@
 				wheeze, sniff, snore, whimper, yawn, choke, gasp, weep, sob, wail, whine, gurgle, gargle, blush, flinch, blink_r, eyebrow, shakehead, shakebutt, \
 				pale, flipout, rage, shame, raisehand, crackknuckles, stretch, rude, cry, retch, raspberry, tantrum, gesticulate, wgesticulate, smug, \
 				nosepick, flex, facepalm, panic, snap, airquote, twitch, twitch_v, faint, deathgasp, signal, wink, collapse, trip, dance, scream, \
-				burp, fart, monologue, contemplate, custom")
+				burp, fart, monologue, contemplate, nudge, custom")
 
 			if ("listtarget")
 				src.show_text("salute, bow, hug, wave, glare, stare, look, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive, fingerguns")
@@ -616,6 +616,8 @@
 				src.show_text("You open your eyes.")
 
 	//april fools end
+
+
 
 			if ("birdwell")
 				if ((src.client && src.client.holder) && src.emote_check(voluntary, 50))
@@ -699,6 +701,19 @@
 							src.add_karma(-10)
 							logTheThing(LOG_COMBAT, src, "was gibbed by emoting fedora tipping at [log_loc(src)].")
 							src.gib()
+
+
+			if("nudge")
+				if (!src.restrained())
+					if (istype(src.glasses, /obj/item/clothing/glasses/regular))
+						var/obj/item/glasses = src.glasses
+						if(glasses.icon_state != "circleglasses")
+							playsound(src, "sound/weapons/flash.ogg", 60, TRUE)
+							glasses.AttackSelf(src)
+							src.say (pick("Heh-","hm-","hah-"))
+							src.visible_message("[src] nudges [his_or_her(src)] glasses, and furrows [his_or_her(src)] brow. Their glasses start to reflect light.")
+							update_glasses()
+
 
 			if ("hatstomp", "stomphat")
 				if (!src.restrained())
