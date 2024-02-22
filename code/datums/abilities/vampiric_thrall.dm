@@ -82,6 +82,7 @@
 		src.points = max(0,src.points)
 
 		if (ON_COOLDOWN(src.owner, "thrall_blood_waste", 5 SECONDS))
+			src.update_max_health()
 			return
 
 		var/dist
@@ -102,12 +103,12 @@
 			src.grace_count = 0 //we're within range, reset
 
 		src.update_max_health()
-		src.updateText(0, src.x_occupied, src.y_occupied) //might not be needed?
 
 	proc/update_max_health()
 		src.owner.max_health = src.points * blood_to_health_scalar
 		src.owner.max_health = max(src.min_max_health, src.owner.max_health)
 		global.health_update_queue |= src.owner
+		src.updateText(0, src.x_occupied, src.y_occupied) //might not be needed?
 
 	///Lose an amount of blood, first from points then from bloodstream
 	proc/blood_waste(blood_loss)
