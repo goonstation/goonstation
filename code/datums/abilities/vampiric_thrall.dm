@@ -97,7 +97,7 @@
 			else
 				src.grace_count += mult
 				boutput(src.owner, SPAN_ALERT("You feel an insistent tug, you need to stick closer to your master."))
-				src.waste_effect(0.1)
+				src.waste_effect(0.2)
 		else
 			src.grace_count = 0 //we're within range, reset
 
