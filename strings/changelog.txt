@@ -1,3 +1,9 @@
+
+(t)thu feb 22 24
+(u)Tyrant
+(p)17977
+(e)🔎📦⚙💡|C-Code-Quality, A-Game-Objects, A-Internal, A-Station-Systems
+(+)Massive backend reshuffling of the airlock code has taken place. report any bugs with door bolting/opening/closing.
 (t)mon feb 19 24
 (u)LeahTheTech
 (+)Shrapnel created by reactor meltdowns is now a bit more destructive.
