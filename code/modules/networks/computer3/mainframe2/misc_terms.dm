@@ -778,7 +778,11 @@ TYPEINFO(/obj/machinery/networked/storage)
 				slot = TANK_ONE
 
 		if (HAS_TANK(slot)) // Eject
-			user.put_in_hand_or_eject((tanknum == TANK_ONE) ? src.tank1 : src.tank2)
+			user.put_in_hand_or_eject((slot == TANK_ONE) ? src.tank1 : src.tank2)
+			if (slot == TANK_ONE)
+				src.tank1 = null
+			else
+				src.tank2 = null
 			if (src.vrbomb)
 				qdel(src.vrbomb)
 
