@@ -928,8 +928,10 @@ TYPEINFO(/obj/machinery/networked/storage)
 		var/obj/item/tank/vrtank1 = new tank1.type
 		var/obj/item/tank/vrtank2 = new tank2.type
 
-		vrtank1.air_contents.copy_from(tank1.air_contents)
-		vrtank2.air_contents.copy_from(tank2.air_contents)
+		if (hasvar(src.tank1, "air_contents"))
+			vrtank1.air_contents.copy_from(src.tank1.air_contents)
+		if (hasvar(src.tank2, "air_contents"))
+			vrtank2.air_contents.copy_from(src.tank2.air_contents)
 
 		src.vrbomb.tank_one = vrtank1
 		src.vrbomb.tank_two = vrtank2
