@@ -233,7 +233,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			if ("remove_tank_two")
 				src.remove_tank(tank_two)
 			if ("toggle_valve")
-				var/openorclose = (src.valve_open) ? "opened" : "closed"
+				var/openorclose = (src.valve_open) ? "closed" : "opened"
 				var/turf/bombturf = get_turf(src)
 				logTheThing(LOG_BOMBING, usr, "[openorclose] the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
 				message_admins("[key_name(usr)] [openorclose] the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
