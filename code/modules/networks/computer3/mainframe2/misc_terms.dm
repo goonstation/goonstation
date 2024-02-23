@@ -761,11 +761,9 @@ TYPEINFO(/obj/machinery/networked/storage)
 #define ADD_TANK(tanknum, tank) tank.set_loc(src); if ((tanknum) == TANK_ONE) {src.tank1 = tank;}\
 								else {src.tank2 = tank;};
 	proc/interact_tank_slot(mob/user, obj/item/I, slot=null)
-		// No silicons dont get to eject tanks from tiles away
 		if(issilicon(user) && BOUNDS_DIST(src, user) > 0)
 			boutput(user, SPAN_ALERT("You cannot interact with \the [src] from that far away!"))
 			return
-
 		// No slot specified, try to interact with an empty slot
 		if (!slot)
 			if (HAS_TANK(TANK_ONE))
@@ -776,8 +774,8 @@ TYPEINFO(/obj/machinery/networked/storage)
 					slot = TANK_TWO
 			else
 				slot = TANK_ONE
-
-		if (HAS_TANK(slot)) // Eject
+		// Eject tank
+		if (HAS_TANK(slot))
 			user.put_in_hand_or_eject((slot == TANK_ONE) ? src.tank1 : src.tank2)
 			boutput(user, "You eject \the [I].")
 			if (slot == TANK_ONE)
@@ -786,24 +784,21 @@ TYPEINFO(/obj/machinery/networked/storage)
 				src.tank2 = null
 			if (src.vrbomb)
 				qdel(src.vrbomb)
-
-		else // Insert
-			if (istype(I, /obj/item/magtractor)) // grr
+		// Insert tank
+		else
+			// Magtractors need special handling
+			if (istype(I, /obj/item/magtractor))
 				var/obj/item/magtractor/mag = I
 				I = mag.holding
-				// We are inserting a tank from a magtractor and it might not have a valid tank
 				if (!src.is_valid_tank(I))
 					boutput(user, "That won't work inside of the [src]!")
-				// We are inserting a tank from a magtractor and it must have a valid tank
 				else
 					mag.dropItem(0)
 					ADD_TANK(slot, I)
 					playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 					boutput(user, "You insert \the [I].")
-			// We are not inserting from a magtractor and it might not have a valid tank
 			else if (!src.is_valid_tank(I))
 				boutput(user, "That won't work inside of the [src]!")
-			// We are inserting from a magtractor and it has a valid tank
 			else
 				user.drop_item()
 				ADD_TANK(slot, I)
