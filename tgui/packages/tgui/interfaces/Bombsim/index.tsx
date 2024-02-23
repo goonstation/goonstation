@@ -50,10 +50,10 @@ const is_set = (bits, bit) => { return bits & (1 << bit); };
 const MaintenencePanel = (props, context) => {
   const { act, data } = useBackend<SimulatorData>(context);
   let resetButton = <Button icon="wifi" onClick={() => act("reset")}>Reset Connection</Button>;
-  const [bits, setBits] = useLocalState(context, "bits", "on");
+  const [bits, setBits] = useLocalState(context, "bits", data.net_number);
   let configSwitches = [];
   for (let i = 0; i < 4; i++) {
-    configSwitches.push(<Stack.Item><ConfigSwitch setter={setBits} bit_pos={i} /></Stack.Item>);
+    configSwitches.push(<Stack.Item><ConfigSwitch local_bits={bits} setter={setBits} bit_pos={i} /></Stack.Item>);
   }
   return (
     <Section title="Maintenence Panel" buttons={resetButton}>
@@ -72,11 +72,11 @@ const MaintenencePanel = (props, context) => {
 
 const ConfigSwitch = (props, context) => {
   const { act, data } = useBackend<SimulatorData>(context);
-  const { setter, bit_pos } = props;
-  let bit_is_set = is_set(data.net_number, bit_pos);
+  const { local_bits, setter, bit_pos } = props;
+  let bit_is_set = is_set(local_bits, bit_pos);
   const handle_click = () => {
     act("config_switch", { "switch_flicked": bit_pos });
-    setter(data.net_number ^ (1 << bit_pos));
+    setter(local_bits ^ (1 << bit_pos));
   };
   return (
     <Button width={2} height={2} color={(bit_is_set) ? "green" : "red"} onClick={handle_click} />
