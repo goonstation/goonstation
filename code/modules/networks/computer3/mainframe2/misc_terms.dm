@@ -681,11 +681,11 @@ TYPEINFO(/obj/machinery/networked/storage)
 	icon_state = "bomb_scanner0"
 	base_icon_state = "bomb_scanner"
 
-	setup_access_click = FALSE // We dont play a click sound on accessing/loading a tape ig
+	setup_access_click = FALSE
 	read_only = TRUE
-	setup_drive_size = 4 // Storage allocation for the drive
-	setup_drive_type = /obj/item/disk/data/bomb_tester // Cool drive
-	setup_accept_tapes = FALSE // Dont accept swappies
+	setup_drive_size = 4
+	setup_drive_type = /obj/item/disk/data/bomb_tester
+	setup_accept_tapes = FALSE
 
 	/// One of two tanks this holds as a basis for the simulation
 	var/obj/item/tank/tank1 = null
