@@ -738,6 +738,21 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 		return
 
+	/// Handheld tanks and butts are both fair game here
+	proc/is_valid_tank(obj/item/I)
+		return (istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt))
+
+	/// Determine if the simulator is ready, returns a list of a bool for whether it's ready, and a dialogue for the user
+	proc/can_simulate()
+		if(!(src.tank1 && src.tank2))
+			return list(FALSE, "Both tanks are required!")
+		else if (GET_COOLDOWN(global, "bomb_simulator"))
+			return list(FALSE, "Simulator not ready, please try again later.")
+		else if (src.vrbomb)
+			return list(TRUE, "Simulation in progress!")
+		else
+			return list(TRUE, "Simulator ready.")
+
 #define TANK_ONE "1"
 #define TANK_TWO "2"
 /// Checks if we have a tank in the specified slot
@@ -748,38 +763,48 @@ TYPEINFO(/obj/machinery/networked/storage)
 /// Add the tank to the slot being interact with in the device
 #define ADD_TANK(tanknum, tank) tank.set_loc(src); if ((tanknum) == TANK_ONE) {src.tank1 = tank;}\
 								else {src.tank2 = tank;};
+	proc/try_add_tank(obj/item/I, mob/user, slot)
+		// No silicons dont get to eject tanks from tiles away
+		if(issilicon(user) && BOUNDS_DIST(src, user) > 0)
+			boutput(user, SPAN_ALERT("You cannot interact with \the [src] from that far away!"))
+			return
+
+		if (HAS_TANK(params["slot_num"])) // Eject
+			REMOVE_TANK(params["slot_num"])
+			if (src.vrbomb)
+				qdel(src.vrbomb)
+
+		else // Insert
+			if (istype(I, /obj/item/magtractor)) // grr
+				var/obj/item/magtractor/mag = I
+				I = mag.holding
+				// We are inserting a tank from a magtractor and it might not have a valid tank
+				if (!src.is_valid_tank(I))
+					boutput(user, "That won't work inside of the [src]!")
+				// We are inserting a tank from a magtractor and it must have a valid tank
+				else
+					mag.dropItem(0)
+					ADD_TANK(params["slot_num"], I)
+					boutput(user, "You insert \the [I].")
+			// We are not inserting from a magtractor and it might not have a valid tank
+			else if (!src.is_valid_tank(I))
+				boutput(user, "That won't work inside of the [src]!")
+			// We are inserting from a magtractor and it has a valid tank
+			else
+				user.drop_item()
+				ADD_TANK(params["slot_num"], I)
+				boutput(user, "You insert \the [I].")
+
+#undef HAS_TANK
+#undef ADD_TANK
+#undef REMOVE_TANK
+#undef TANK_ONE
+#undef TANK_TWO
+
 	ui_act(action, params)
 		switch(action)
 			if ("interact_tank_slot")
-				// No silicons dont get to eject tanks from tiles away
-				if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
-					boutput(usr, SPAN_ALERT("You cannot interact with \the [src] from that far away!"))
-					return
-				if (HAS_TANK(params["slot_num"])) // Eject
-					REMOVE_TANK(params["slot_num"])
-					if (src.vrbomb)
-						qdel(src.vrbomb)
-				else // Insert
-					var/obj/item/I = usr.equipped()
-					if (istype(I, /obj/item/magtractor)) // grr
-						var/obj/item/magtractor/mag = I
-						I = mag.holding
-						// We are inserting a tank from a magtractor and it might not have a valid tank
-						if (!(istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)))
-							boutput(usr, "That won't work inside of the [src]!")
-						// We are inserting a tank from a magtractor and it must have a valid tank
-						else
-							mag.dropItem(0)
-							ADD_TANK(params["slot_num"], I)
-							boutput(usr, "You insert \the [I].")
-					// We are not inserting from a magtractor and it might not have a valid tank
-					else if (!(istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)))
-						boutput(usr, "That won't work inside of the [src]!")
-					// We are inserting from a magtractor and it has a valid tank
-					else
-						usr.drop_item()
-						ADD_TANK(params["slot_num"], I)
-						boutput(usr, "You insert \the [I].")
+				src.try_add_tank(usr, usr.equipped(), params["slot_num"]))
 
 			if("simulate")
 				// Button is disabled on these conditions, but can't hurt to check em' twice
@@ -807,23 +832,6 @@ TYPEINFO(/obj/machinery/networked/storage)
 		src.add_fingerprint(usr)
 		return
 
-#undef HAS_TANK
-#undef ADD_TANK
-#undef REMOVE_TANK
-#undef TANK_ONE
-#undef TANK_TWO
-
-	/// Determine if the simulator is ready, returns a list of a bool for whether it's ready, and a dialogue for the user
-	proc/can_simulate()
-		if(!(src.tank1 && src.tank2))
-			return list(FALSE, "Both tanks are required!")
-		else if (GET_COOLDOWN(global, "bomb_simulator"))
-			return list(FALSE, "Simulator not ready, please try again later.")
-		else if (src.vrbomb)
-			return list(TRUE, "Simulation in progress!")
-		else
-			return list(TRUE, "Simulator ready.")
-
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
@@ -843,7 +851,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 			"vr_bomb" = src.vrbomb,
 			"panel_open" = src.panel_open,
 			"is_ready" = simulator_dialogue[1],
-			"cooldown" = "[GET_COOLDOWN(global, "bomb_simulator")] second\s",
+			"cooldown" = "[GET_COOLDOWN(global, "bomb_simulator")/10] second\s",
 			"readiness_dialogue" = simulator_dialogue[2],
 			"net_number" = src.net_number,
 		)
@@ -870,6 +878,11 @@ TYPEINFO(/obj/machinery/networked/storage)
 		else
 			icon_state = "bomb_scanner0"
 		return
+
+	attackby(obj/item/I, mob/user)
+		..()
+		if (istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt))
+
 
 	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
