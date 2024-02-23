@@ -968,7 +968,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 		src.results.fields += "Test [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [CURRENT_SPACE_YEAR]"
 
 		src.results.fields += "Atmospheric Tank #1:"
-		if(tank1)
+		if(tank1 && tank1.air_contents)
 			var/datum/gas_mixture/environment = tank1.return_air()
 			var/pressure = MIXTURE_PRESSURE(environment)
 			var/total_moles = TOTAL_MOLES(environment)
@@ -984,7 +984,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 			src.results.fields += "None. (Sensor Error?)"
 
 		src.results.fields += "Atmospheric Tank #2:"
-		if(tank2)
+		if(tank2 && tank1.air_contents)
 			var/datum/gas_mixture/environment = tank2.return_air()
 			var/pressure = MIXTURE_PRESSURE(environment)
 			var/total_moles = TOTAL_MOLES(environment)
