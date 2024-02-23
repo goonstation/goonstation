@@ -939,7 +939,8 @@ TYPEINFO(/obj/machinery/networked/storage)
 		vrtank2.set_loc(src.vrbomb)
 
 		src.vrbomb.UpdateIcon()
-		src.vrbomb.toggle_valve()
+		SPAWN(3 SECONDS)
+			src.vrbomb.toggle_valve()
 
 		var/area/to_reset = get_area(src.vrbomb) //Reset the magic vr turf.
 		if(to_reset && to_reset.name != "Space")
