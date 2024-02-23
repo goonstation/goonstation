@@ -850,9 +850,10 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 /// Gets relevant properties of the tank as a list for ui_data
 #define TANK_AS_LIST(tank) (tank != null) ? list("name"=capitalize(tank.name),\
-								"pressure"=(hasvar(tank, "air_contents") ? MIXTURE_PRESSURE(tank.air_contents) : null),\
+								"pressure"=((hasvar(tank, "air_contents") && tank.air_contents != null) ? MIXTURE_PRESSURE(tank.air_contents) : null),\
 								"maxPressure"=TANK_FRAGMENT_PRESSURE) : list("name"=null, "pressure"=null,"maxPressure"=null)
 	ui_data()
+
 		var/simulator_dialogue = src.can_simulate()
 		return list(
 			"tank_one" = TANK_AS_LIST(src.tank1),
