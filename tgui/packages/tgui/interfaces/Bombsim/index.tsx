@@ -9,7 +9,7 @@ import { useBackend, useLocalState } from '../../backend';
 import { Button, LabeledList, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { formatPressure } from '../../format';
-import { toTitleCase } from 'common/string';
+import { truncate } from '../../format';
 
 const TankDisplay = (props, context) => {
   const { act, data } = useBackend<TransferValveParams>(context);
@@ -31,7 +31,7 @@ const TankDisplay = (props, context) => {
           label="Tank"
           textAlign="left"
         >
-          {hasTank ? toTitleCase(tank.name) : "None"}
+          {hasTank ? truncate(tank.name, 100) : "None"}
         </LabeledList.Item>
         <LabeledList.Item
           label="Pressure"
