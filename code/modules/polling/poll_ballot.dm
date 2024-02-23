@@ -10,6 +10,8 @@
 	/// soft cap to start forcing 1 second cooldown
 	var/const/rate_limit_soft_cap = 10
 	var/filterInactive = TRUE
+	/// toggle for whether or not to show the votes on polls
+	var/showVotes = FALSE
 
 /datum/poll_ballot/ui_state(mob/user)
 	return tgui_always_state.can_use_topic(src, user)
@@ -28,7 +30,8 @@
 			"isAdmin" = isadmin(user),
 			"polls" = poll_manager.poll_data,
 			"playerId" = user.client.player.id,
-			"filterInactive" = src.filterInactive
+			"filterInactive" = src.filterInactive,
+			"showVotes" = src.showVotes
 		)
 
 /datum/poll_ballot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -282,4 +285,8 @@
 
 		if("toggle-filterInactive")
 			filterInactive = !filterInactive
+			. = TRUE
+
+		if ("toggle-showVotes")
+			showVotes = !showVotes
 			. = TRUE
