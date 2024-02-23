@@ -760,6 +760,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 /// Add the tank to the slot being interact with in the device
 #define ADD_TANK(tanknum, tank) tank.set_loc(src); if ((tanknum) == TANK_ONE) {src.tank1 = tank;}\
 								else {src.tank2 = tank;};
+	/// Interact with one of the tank slots on the machine. "1" for the first slot, "2" for the second. "null" to use an empty slot, if there is one.
 	proc/interact_tank_slot(mob/user, obj/item/I, slot=null)
 		if(issilicon(user) && BOUNDS_DIST(src, user) > 0)
 			boutput(user, SPAN_ALERT("You cannot interact with \the [src] from that far away!"))
@@ -860,7 +861,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 			"vr_bomb" = src.vrbomb,
 			"panel_open" = src.panel_open,
 			"is_ready" = simulator_dialogue[1],
-			"cooldown" = "[GET_COOLDOWN(global, "bomb_simulator")/10] second\s",
+			"cooldown" = "[GET_COOLDOWN(global, "bomb_simulator")/10] Second\s",
 			"readiness_dialogue" = simulator_dialogue[2],
 			"net_number" = src.net_number,
 		)
@@ -890,7 +891,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 	attackby(obj/item/I, mob/user)
 		..()
-		if (src.is_valid_tank(I))
+		if (src.is_valid_tank(I)) // Insert tanks by hand
 			src.interact_tank_slot(user, I)
 
 	attack_hand(mob/user)
