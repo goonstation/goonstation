@@ -8,8 +8,7 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Button, LabeledList, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
-import { formatPressure } from '../../format';
-import { truncate } from '../../format';
+import { formatPressure, truncate } from '../../format';
 
 const TankDisplay = (props, context) => {
   const { act, data } = useBackend<TransferValveParams>(context);
