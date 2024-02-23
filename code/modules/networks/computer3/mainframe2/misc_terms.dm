@@ -757,20 +757,28 @@ TYPEINFO(/obj/machinery/networked/storage)
 #define TANK_TWO "2"
 /// Checks if we have a tank in the specified slot
 #define HAS_TANK(tanknum) ((tanknum == TANK_ONE) && src.tank1) || ((tanknum == TANK_TWO) && src.tank2)
-/// Remove the tank being interacted with from the device
-#define REMOVE_TANK(tanknum) if ((tanknum) == TANK_ONE && src.tank1) {src.tank1.set_loc(src.loc); src.tank1 = null;}\
-						     else if (src.tank2) {src.tank2.set_loc(src.loc); src.tank2 = null;};
 /// Add the tank to the slot being interact with in the device
 #define ADD_TANK(tanknum, tank) tank.set_loc(src); if ((tanknum) == TANK_ONE) {src.tank1 = tank;}\
 								else {src.tank2 = tank;};
-	proc/try_add_tank(obj/item/I, mob/user, slot)
+	proc/interact_tank_slot(mob/user, obj/item/I, slot=null)
 		// No silicons dont get to eject tanks from tiles away
 		if(issilicon(user) && BOUNDS_DIST(src, user) > 0)
 			boutput(user, SPAN_ALERT("You cannot interact with \the [src] from that far away!"))
 			return
 
-		if (HAS_TANK(params["slot_num"])) // Eject
-			REMOVE_TANK(params["slot_num"])
+		// No slot specified, try to interact with an empty slot
+		if (!slot)
+			if (HAS_TANK(TANK_ONE))
+				if (HAS_TANK(TANK_TWO))
+					boutput(user, SPAN_ALERT("There is no room to insert that into \the [src]!"))
+					return
+				else
+					slot = TANK_TWO
+			else
+				slot = TANK_ONE
+
+		if (HAS_TANK(slot)) // Eject
+			user.put_in_hand_or_eject(I)
 			if (src.vrbomb)
 				qdel(src.vrbomb)
 
@@ -784,7 +792,8 @@ TYPEINFO(/obj/machinery/networked/storage)
 				// We are inserting a tank from a magtractor and it must have a valid tank
 				else
 					mag.dropItem(0)
-					ADD_TANK(params["slot_num"], I)
+					ADD_TANK(slot, I)
+					playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 					boutput(user, "You insert \the [I].")
 			// We are not inserting from a magtractor and it might not have a valid tank
 			else if (!src.is_valid_tank(I))
@@ -792,7 +801,8 @@ TYPEINFO(/obj/machinery/networked/storage)
 			// We are inserting from a magtractor and it has a valid tank
 			else
 				user.drop_item()
-				ADD_TANK(params["slot_num"], I)
+				ADD_TANK(slot, I)
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				boutput(user, "You insert \the [I].")
 
 #undef HAS_TANK
@@ -804,7 +814,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 	ui_act(action, params)
 		switch(action)
 			if ("interact_tank_slot")
-				src.try_add_tank(usr, usr.equipped(), params["slot_num"]))
+				src.interact_tank_slot(usr, usr.equipped(), params["slot_num"])
 
 			if("simulate")
 				// Button is disabled on these conditions, but can't hurt to check em' twice
@@ -881,8 +891,8 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 	attackby(obj/item/I, mob/user)
 		..()
-		if (istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt))
-
+		if (src.is_valid_tank(I))
+			src.interact_tank_slot(user, I)
 
 	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
