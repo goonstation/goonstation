@@ -540,7 +540,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 		return
 
 	process()
-		if(!tester || !src.valve_open)
+		if(!tester || !tester.vrbomb || !src.valve_open)
 			return
 
 		if(update_counter >= UPDATES_BEFORE_TIMEOUT)
