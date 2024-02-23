@@ -812,7 +812,6 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 #undef HAS_TANK
 #undef ADD_TANK
-#undef REMOVE_TANK
 #undef TANK_ONE
 #undef TANK_TWO
 
