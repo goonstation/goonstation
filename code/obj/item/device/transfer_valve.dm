@@ -551,8 +551,8 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 		update_counter++
 
 		tester.update_bomb_log("[time2text(world.timeofday, "mm:ss")]:")
-		var/tank1_pressure = (tank_one?.air_contents != null) ?  MIXTURE_PRESSURE(tank_one.air_contents) : 0
-		var/tank2_pressure = (tank_two?.air_contents != null) ?  MIXTURE_PRESSURE(tank_two.air_contents) : 0
+		var/tank1_pressure = (hasvar(src.tank_one, "air_contents")) ?  MIXTURE_PRESSURE(src.tank_one.air_contents) : 0
+		var/tank2_pressure = (hasvar(src.tank_two, "air_contents")) ?  MIXTURE_PRESSURE(src.tank_two.air_contents) : 0
 
 		tester.update_bomb_log("Tank 1 Pressure:[tank1_pressure] kPa")
 		tester.update_bomb_log("Tank 2 Pressure:[tank2_pressure] kPa")
