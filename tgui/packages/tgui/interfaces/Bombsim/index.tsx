@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { useBackend } from '../../backend';
+import { useBackend, useLocalState } from '../../backend';
 import { Button, LabeledList, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { formatPressure } from '../../format';
@@ -22,6 +22,9 @@ const TankDisplay = (props, context) => {
       title={(tankNum === "1") ? "Tank One" : "Tank Two"}
       textAlign="left"
       buttons={tankButton}
+      style={{
+        "height": "100%",
+      }}
     >
       <LabeledList>
         <LabeledList.Item
@@ -46,10 +49,11 @@ const is_set = (bits, bit) => { return bits & (1 << bit); };
 
 const MaintenencePanel = (props, context) => {
   const { act, data } = useBackend<SimulatorData>(context);
-  let resetButton = <Button icon="wifi" onClick={() => act("reconnect")}>Reset Connection</Button>;
+  let resetButton = <Button icon="wifi" onClick={() => act("reset")}>Reset Connection</Button>;
+  const [bits, setBits] = useLocalState(context, "bits", "on");
   let configSwitches = [];
   for (let i = 0; i < 4; i++) {
-    configSwitches.push(<Stack.Item><ConfigSwitch bit_pos={i} /></Stack.Item>);
+    configSwitches.push(<Stack.Item><ConfigSwitch setter={setBits} bit_pos={i} /></Stack.Item>);
   }
   return (
     <Section title="Maintenence Panel" buttons={resetButton}>
@@ -68,10 +72,14 @@ const MaintenencePanel = (props, context) => {
 
 const ConfigSwitch = (props, context) => {
   const { act, data } = useBackend<SimulatorData>(context);
-  const { bit_pos } = props;
+  const { setter, bit_pos } = props;
   let bit_is_set = is_set(data.net_number, bit_pos);
+  const handle_click = () => {
+    act("config_switch", { "switch_flicked": bit_pos });
+    setter(data.net_number ^ (1 << bit_pos));
+  };
   return (
-    <Button width={2} height={2} color={(bit_is_set) ? "green" : "red"} onClick={() => act("config_switch", { "switch_flicked": bit_pos })} />
+    <Button width={2} height={2} color={(bit_is_set) ? "green" : "red"} onClick={handle_click} />
   );
 };
 
@@ -79,13 +87,13 @@ export const Bombsim = (_props, context) => {
   const { act, data } = useBackend<SimulatorData>(context);
   let simulationButton = <Button icon="add" disabled={!data.is_ready} onClick={() => act("simulate")}>Begin Simulation</Button>;
   return (
-    <Window width={400} height={(data.panel_open) ? 335 : 235}>
+    <Window width={400} height={(data.panel_open) ? 400 : 300}>
       <Window.Content>
-        <Stack fill>
-          <Stack.Item >
+        <Stack>
+          <Stack.Item>
             <TankDisplay tankNum="1" />
           </Stack.Item>
-          <Stack.Item >
+          <Stack.Item>
             <TankDisplay tankNum="2" />
           </Stack.Item>
         </Stack>
