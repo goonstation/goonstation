@@ -779,6 +779,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 		if (HAS_TANK(slot)) // Eject
 			user.put_in_hand_or_eject((slot == TANK_ONE) ? src.tank1 : src.tank2)
+			boutput(user, "You eject \the [I].")
 			if (slot == TANK_ONE)
 				src.tank1 = null
 			else
