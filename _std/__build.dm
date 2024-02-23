@@ -1,6 +1,4 @@
 /*
-
-i put this here 2/6/2024 for no reason
   ANY CHANGES HERE WILL BE OVERWRITTEN BY THE SERVER BUILD PROCESS.
   THAT BEING SAID, THIS IS THE IDEAL PLACE TO FORCE A CERTAIN MAP/FLAGS FOR LOCAL DEVELOPMENT.
   ALSO HERE'S A BEE
@@ -41,7 +39,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define SKIP_PLANETS_SETUP // Skip planet generation (for Artemis)
 //#define SKIP_CAMERA_COVERAGE // Skip calculating security camera coverage
 //#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME // Skip changelogs
-// #define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
+//#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
@@ -130,15 +128,15 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap, by Overtone
 
 //-------Rotation maps:
-#define MAP_OVERRIDE_COGMAP       // Cogmap1, by Dr. Cogwerks
+//#define MAP_OVERRIDE_COGMAP       // Cogmap1, by Dr. Cogwerks
 //#define MAP_OVERRIDE_COGMAP2      // Cogmap2, by Dr. Cogwerks
-// #define MAP_OVERRIDE_DONUT2       // Updated Donut Station 2, by committee.
+//#define MAP_OVERRIDE_DONUT2       // Updated Donut Station 2, by committee.
 //#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi
 //#define MAP_OVERRIDE_KONDARU      // Kondaru Station, by Kubius
 //#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CLARION      // NSS Clarion (Used to be Destiny's Alt), by Dionsu and a69andahalf.
 //#define MAP_OVERRIDE_OSHAN        // Oshan Laboratory, Abzu, by committee
-// #define MAP_OVERRIDE_NADIR        // Nadir Extraction Site by Kubius
+//#define MAP_OVERRIDE_NADIR        // Nadir Extraction Site by Kubius
 
 //-------Discontinued or gimmick maps:
 //#define MAP_OVERRIDE_MANTA        // NSS Manta by Azungar
