@@ -347,10 +347,7 @@
 	icon_state = "knife";
 	dir = 2
 	},
-/obj/item/reagent_containers/syringe{
-	step_x = 3;
-	step_y = 4
-	},
+/obj/item/reagent_containers/syringe,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
