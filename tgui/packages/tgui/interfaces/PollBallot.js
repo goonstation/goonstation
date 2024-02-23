@@ -6,13 +6,19 @@ const PollControls = ({ isAdmin, act, pollId, isExpired, multipleChoice, expiryD
   return (
     <Stack>
       <Stack.Item>
-        {servers ? null : (
+        {servers.includes("global") ? (
           <Button
             tooltip="Global Poll"
             tooltipPosition="top"
             icon="globe"
           />
-        )}
+        ) : servers.includes("rp_only") ? (
+          <Button
+            tooltip="RP Only Poll"
+            tooltipPosition="top"
+            icon="masks-theater"
+          />
+        ) : null}
         {multipleChoice ? (
           <Button
             tooltip="Multiple Choice"
@@ -98,11 +104,22 @@ export const PollBallot = (props, context) => {
   return (
     <Window title="Poll Ballot" width="750" height="800">
       <Window.Content>
-        <Button.Checkbox
-          checked={filterInactive}
-          onClick={() => act('toggle-filterInactive')}>Filter Closed Polls
-        </Button.Checkbox>
         <Stack vertical>
+          <Stack.Item>
+            <Stack>
+              <Stack.Item>
+                <Button.Checkbox
+                  checked={filterInactive}
+                  onClick={() => act('toggle-filterInactive')}>Filter Closed Polls
+                </Button.Checkbox>
+              </Stack.Item>
+              {isAdmin ? (
+                <Stack.Item>
+                  <Button onClick={() => act('addPoll')}>Add Poll</Button>
+                </Stack.Item>
+              ) : null}
+            </Stack>
+          </Stack.Item>
           {
             polls && polls.filter(poll => {
               // Check if the poll is expired by comparing the current date to expires_at.
@@ -139,11 +156,6 @@ export const PollBallot = (props, context) => {
               </Stack.Item>
             ))
           }
-          {isAdmin ? (
-            <Stack.Item>
-              <Button onClick={() => act('addPoll')}>Add Poll</Button>
-            </Stack.Item>
-          ) : null}
         </Stack>
       </Window.Content>
     </Window>
