@@ -154,16 +154,21 @@ TYPEINFO(/obj/submachine/chem_extractor)
 					. = TRUE
 		src.UpdateIcon()
 
+	ui_close(mob/user)
+		. = ..()
+		if(inserted?.loc != src)
+			remove_distant_beaker(force = TRUE)
+
 	attackby(var/obj/item/W, var/mob/user)
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
 			tryInsert(W, user)
 
 		..()
 
-	proc/remove_distant_beaker()
+	proc/remove_distant_beaker(force = FALSE)
 		// borgs and people with item arms don't insert the beaker into the machine itself
 		// but whenever something would happen to the dispenser and the beaker is far it should disappear
-		if(src.inserted && BOUNDS_DIST(src.inserted, src) > 0)
+		if(src.inserted && (BOUNDS_DIST(src.inserted, src) > 0 || force))
 			if (src.inserted == src.extract_to) src.extract_to = null
 			src.inserted = null
 			src.UpdateIcon()

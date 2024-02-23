@@ -1,4 +1,87 @@
-
+(t)mon feb 19 24
+(u)LeahTheTech
+(+)Shrapnel created by reactor meltdowns is now a bit more destructive.
+(t)fri feb 16 24
+(u)LeahTheTech
+(+)Arcfiends can now *monsterscream too.
+(u)Cherman0
+(p)17853
+(e)🗺💅📦🎩|A-Mapping, C-QoL, A-Game-Objects, A-Clothing
+(+)The CE now spawns wearing their Aurora Belt MkII
+(u)Mr. Moriarty
+(p)17949
+(e)🎨📦⚗|C-Sprites, A-Game-Objects, A-Chemistry
+(+)Resprited phials, beakers, round flasks, conical flasks, large beakers, large flasks, the four types of bottles, bongs, and all of their respective fluid overlays.
+(t)thu feb 15 24
+(u)Sord
+(+)Most in rotation maps now have airlock cyclers on some interior airlocks (Security, engineering, research, etc) where applicable.
+(t)wed feb 14 24
+(u)Ikea
+(p)17577
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Borg speed values have been changed all across the board. Treadless light borgs are the same speed. Light and heavy borgs with treads are now slower compared to before. Every other borg body type is faster, see pr for specific values.
+(u)Cheekybrdy
+(p)17902
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Benches in science now appear in a purple variant.
+(t)tue feb 13 24
+(u)Keiiro
+(p)17924
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Nanotrasen and Syndicate card colors are now available for selection with an Agent Card.
+(u)Wire
+(p)17816
+(e)🆕🚨|C-Feature, A-Admin
+(*)New backend system for external API communications. This impacts systems such as bans and cloud saves, as well as many other non-gameplay related things. This is a fairly significant change so please report any weird bugs you think may be related to the GitHub issue tracker.
+(t)mon feb 12 24
+(u)TDHooligan
+(p)17761
+(e)⚖💅🌱|C-Balance, C-QoL, A-Hydroponics
+(+)The RNG gods see botanys' plight. The top 3 genomes have, on average, dropped in value.
+(t)sun feb 11 24
+(u)LeahTheTech
+(+)The actionbar for opening and closing airlock wiring panels is now private (cannot be seen by other players).
+(u)Sord
+(+)You can now order a communications dish manudrive (and commaster disk) from cargo.
+(t)fri feb 09 24
+(u)LeahTheTech
+(+)The chemical request console now shows the request in the PDA notification.
+(p)17915
+(e)🆕⚖|C-Feature, C-Balance
+(*)Tiny items can now be hidden under floor tiles, mousetraps hidden like this will trigger when the tile is pried up again.
+(u)IPingu
+(p)17826
+(e)📄|A-UI
+(+)Converts HVAC interface to TGUI
+(u)MeggalBozale
+(p)17897
+(e)💅📄|C-QoL, A-UI
+(*)Tank Transfer Valves now use TGUI menus.
+(t)thu feb 08 24
+(u)Tyrant
+(p)17894
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Oshan now needs at least 14 players online to be voted for
+(t)wed feb 07 24
+(u)SirNooben
+(p)17845
+(e)|
+(+)Makes it possible for the arithmetic comp's mode to be changed using an input coming from another comp.
+(u)Sord
+(+)Opening/closing the panel on an airlock now has a short action bar
+(u)LeahTheTech
+(+)Random characters will no longer receive broken looking partial hairstyles.
+(u)Saccha
+(p)17895
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The floor and wall designer has a range of three tiles.
+(t)tue feb 06 24
+(u)glowbold
+(p)17440
+(e)🆕⚖💡|C-Feature, C-Balance, A-Station-Systems
+(*)NanoTrasen has secured further discounts on station electrical equipment - details in minor notes.
+(+)Lights may burn out when turned on. Burned out lights may burst if left unfixed.
+(+)Over-use of light switches may cause a shock to users and/or their property. Re-secure the electrical contacts on light switches with a screwdriver.
 (t)mon feb 05 24
 (u)tarmunora
 (+)Increase blood absorption rate during IV-drip transfusions and dialysis

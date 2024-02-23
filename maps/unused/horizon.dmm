@@ -4634,7 +4634,7 @@
 	name = "dried vomit"
 	},
 /obj/table/wood/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor3"
 	},
@@ -28707,7 +28707,7 @@
 /area/station/crew_quarters/kitchen)
 "bEu" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -35271,7 +35271,7 @@
 /area/station/crew_quarters/kitchen)
 "bXN" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/machinery/light,
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/white/checker{

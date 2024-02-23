@@ -1024,13 +1024,17 @@
 				shake_camera(V,10,64)
 				if (V == owner)
 					continue
-				boutput(V, SPAN_ALERT("You are sent flying!"))
 
 				V.changeStatus("weakened", stun_time SECONDS)
-				// why the hell was this set to 12 christ
-				while (throw_repeat > 0)
-					throw_repeat--
-					step_away(V,get_turf(owner),throw_speed)
+				if(!V.anchored)
+					boutput(V, SPAN_ALERT("You are sent flying!"))
+					// why the hell was this set to 12 christ
+					while (throw_repeat > 0)
+						throw_repeat--
+						step_away(V,get_turf(owner),throw_speed)
+				else
+					boutput(V, SPAN_ALERT("You are knocked down!"))
+
 			var/toxic = owner.bioHolder.HasEffect("toxic_farts")
 			if(toxic)
 				var/turf/fart_turf = get_turf(owner)

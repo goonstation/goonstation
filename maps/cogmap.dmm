@@ -25014,9 +25014,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bLk" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -25026,6 +25023,9 @@
 	name = "autoname - SS13"
 	},
 /obj/blind_switch/area/north,
+/obj/stool/chair/purple{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bLl" = (
@@ -27136,11 +27136,11 @@
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bSp" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/stool/chair/purple{
+	dir = 8
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
@@ -39474,6 +39474,11 @@
 	},
 /obj/disposalpipe/segment,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engairlock";
+	name = "Engineering Airlock";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/plating,
 /area/station/hangar/engine)
 "dFg" = (
@@ -40797,6 +40802,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "security";
+	name = "Security";
+	enter_id = "side"
+	},
 /turf/simulated/floor,
 /area/station/security/secwing)
 "eCa" = (
@@ -41252,6 +41262,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engairlock";
+	name = "Engineering Airlock";
+	enter_id = "hangar"
+	},
 /turf/simulated/floor/plating,
 /area/station/hangar/engine)
 "eRW" = (
@@ -41619,6 +41634,11 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/bridge)
 "fhq" = (
@@ -42545,6 +42565,11 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/security,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "security";
+	name = "Security";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/security/secwing)
 "fOw" = (
@@ -42780,6 +42805,11 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/bridge)
 "fWA" = (
@@ -43458,6 +43488,11 @@
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engairlock";
+	name = "Engineering Airlock";
+	enter_id = "inner"
 	},
 /turf/simulated/floor,
 /area/station/hangar/engine)
@@ -45593,6 +45628,11 @@
 	name = "Bridge"
 	},
 /obj/mapping_helper/access/heads,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/bridge)
 "ijw" = (
@@ -47114,10 +47154,10 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "jHW" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 4
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/purple/side,
 /area/station/science/lobby)
 "jIu" = (
@@ -47622,15 +47662,15 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "jXp" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/item/storage/briefcase/toxins{
 	pixel_x = 6;
 	pixel_y = -11
+	},
+/obj/stool/chair/purple{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -48550,10 +48590,10 @@
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "kHj" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 8
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/purple/side,
 /area/station/science/lobby)
 "kIr" = (
@@ -50388,6 +50428,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiairbridge";
+	name = "AI Airbridge";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
 "mts" = (
@@ -50697,7 +50742,7 @@
 /area/station/maintenance/solar/west)
 "mBW" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "mCe" = (
@@ -52197,6 +52242,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/public,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "nLw" = (
@@ -52694,6 +52744,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/public,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "ogJ" = (
@@ -56508,6 +56563,11 @@
 	dir = 4;
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiairbridge";
+	name = "AI Airbridge";
+	enter_id = "outer"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -60764,6 +60824,11 @@
 /obj/mapping_helper/access/engineering_control,
 /obj/machinery/power/data_terminal,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "uoI" = (
@@ -61420,6 +61485,11 @@
 	name = "Bridge"
 	},
 /obj/mapping_helper/access/heads,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/bridge)
 "uNi" = (
@@ -62670,6 +62740,11 @@
 	req_access_txt = null
 	},
 /obj/mapping_helper/access/research_foyer,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "research";
+	name = "Research";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "vTv" = (
@@ -63104,6 +63179,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "security";
+	name = "Security";
+	enter_id = "side"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/secwing)
 "wng" = (
@@ -63270,6 +63350,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aipower";
+	name = "AI Power";
+	enter_id = "inner"
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload_foyer)
@@ -64594,6 +64679,11 @@
 	},
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "security";
+	name = "Security";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/red,
 /area/station/security/secwing)
 "xrW" = (
@@ -64850,6 +64940,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/research_foyer,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "research";
+	name = "Research";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "xzu" = (
@@ -64884,6 +64979,11 @@
 	dir = 4;
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aipower";
+	name = "AI Power";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload_foyer)
@@ -65621,6 +65721,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_control,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "yhS" = (

@@ -3923,6 +3923,11 @@
 /obj/mapping_helper/access/engineering_engine,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "reactormain";
+	name = "Reactor Main";
+	enter_id = "inner2"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -4151,6 +4156,11 @@
 /obj/mapping_helper/access/ai_upload,
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aicore";
+	name = "AI Core";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
@@ -5376,6 +5386,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "secinterro2";
+	name = "Security Interrogation 2";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -6190,6 +6205,11 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
 "cNE" = (
@@ -6480,6 +6500,32 @@
 	},
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
+"cTx" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "bdoormid0";
+	id = "nadir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4;
+	name = "Secondary Core Access"
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "reactorside";
+	name = "Reactor Side";
+	enter_id = "inner"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "cTz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7085,9 +7131,6 @@
 	name = "Southwest Breach Hull"
 	})
 "dhp" = (
-/obj/stool/chair/office{
-	dir = 4
-	},
 /obj/machinery/door_control{
 	id = "scienceteleporter2";
 	name = "Pad Access Door";
@@ -7099,6 +7142,9 @@
 	name = "Pad Shutters";
 	pixel_x = 6;
 	pixel_y = 26
+	},
+/obj/stool/chair/office/purple{
+	dir = 4
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -9679,7 +9725,7 @@
 	})
 "ers" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer{
+/obj/machinery/mixer{
 	pixel_y = 4
 	},
 /turf/simulated/floor/black,
@@ -13061,12 +13107,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/shuttle/sea_elevator_room)
 "fNd" = (
-/obj/stool/chair{
-	dir = 4
-	},
 /obj/landmark/start/job/scientist,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/stool/chair/purple{
+	dir = 4
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
@@ -13296,14 +13342,14 @@
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
 "fRH" = (
-/obj/stool/chair/office{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/stool/chair/office/purple{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
@@ -18112,11 +18158,11 @@
 	},
 /area/station/engine/elect)
 "hJQ" = (
-/obj/stool/bench/blue/auto,
 /obj/machinery/shower{
 	dir = 1;
 	pixel_y = 20
 	},
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/sanitary/white,
 /area/station/science/lobby{
 	name = "Science Lounge"
@@ -18474,11 +18520,11 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "hRU" = (
-/obj/stool/chair/office{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/stool/chair/office/purple{
+	dir = 4
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
@@ -18559,6 +18605,11 @@
 	},
 /obj/mapping_helper/access/ai_upload,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/turret_protected/ai_upload)
 "hTu" = (
@@ -19161,6 +19212,11 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "reactormain";
+	name = "Reactor Main";
+	enter_id = "inner1"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -22358,6 +22414,11 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "reactormain";
+	name = "Reactor Main";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -25098,6 +25159,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "reactorside";
+	name = "Reactor Side";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -28139,10 +28205,10 @@
 	name = "Cargo Primary Endpoint"
 	})
 "lLZ" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 4
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/black,
 /area/station/science/hall)
 "lMn" = (
@@ -39830,7 +39896,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "qVs" = (
-/obj/stool/bench/blue/auto,
 /obj/machinery/shower{
 	dir = 4;
 	pixel_x = 8;
@@ -39842,6 +39907,7 @@
 	pixel_x = 24;
 	pixel_y = -3
 	},
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -40601,10 +40667,10 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "rpK" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 8
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -40678,6 +40744,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "secinterro1";
+	name = "Security Interrogation 1";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -43193,13 +43264,13 @@
 	name = "Southwest Breach Hull"
 	})
 "sBs" = (
-/obj/stool/chair/office{
-	dir = 1
-	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/stool/chair/office/purple{
+	dir = 1
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 8
@@ -44184,6 +44255,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "secinterro1";
+	name = "Security Interrogation 1";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
 "sUo" = (
@@ -45252,11 +45328,6 @@
 	},
 /area/station/medical/morgue)
 "trK" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/decal/cleanable/dirt,
@@ -45264,6 +45335,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/plating,
 /area/station/hydroponics{
 	do_not_irradiate = 1;
@@ -45973,6 +46045,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "brig"
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig)
@@ -47984,6 +48061,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "secinterro2";
+	name = "Security Interrogation 2";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
 "uwl" = (
@@ -48289,6 +48371,11 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "uEt" = (
@@ -50649,6 +50736,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "reactormain";
+	name = "Reactor Main";
+	enter_id = "centrifuge"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -52359,6 +52451,11 @@
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "wzv" = (
@@ -53353,6 +53450,24 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/darkblue/checker,
+/area/station/turret_protected/ai)
+"wXQ" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/ai_upload,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aicore";
+	name = "AI Core";
+	enter_id = "inner"
+	},
+/turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
 "wYn" = (
 /obj/machinery/clothingbooth,
@@ -108525,7 +108640,7 @@ uiV
 sce
 ibV
 fLQ
-kAM
+cTx
 fLQ
 ibV
 fLQ
@@ -108786,7 +108901,7 @@ mIG
 mIG
 mIG
 mIG
-bOo
+wXQ
 mIG
 mIG
 mIG
@@ -118228,7 +118343,7 @@ dAB
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 iUo
 bzS
@@ -118530,7 +118645,7 @@ dAB
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -118832,7 +118947,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -119134,7 +119249,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -119436,7 +119551,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -119738,7 +119853,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -120040,7 +120155,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -120342,7 +120457,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -120644,7 +120759,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -120946,7 +121061,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -121248,7 +121363,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -121550,7 +121665,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -121852,7 +121967,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -122154,7 +122269,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -122456,7 +122571,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -122758,7 +122873,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -123060,7 +123175,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -123362,7 +123477,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -123664,7 +123779,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -123966,7 +124081,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -124268,7 +124383,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -124570,7 +124685,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -124872,7 +124987,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -125174,7 +125289,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -125476,7 +125591,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -125778,7 +125893,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -126080,7 +126195,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -126382,7 +126497,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -126684,7 +126799,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -126986,7 +127101,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -127288,7 +127403,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -127590,7 +127705,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -127892,7 +128007,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -128194,7 +128309,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -128496,7 +128611,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -128798,7 +128913,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -129100,7 +129215,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -129402,7 +129517,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -129704,7 +129819,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -130006,7 +130121,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -130308,7 +130423,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -130610,7 +130725,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -130912,7 +131027,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -131214,7 +131329,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -131516,7 +131631,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -131818,7 +131933,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -132120,7 +132235,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -132422,7 +132537,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
@@ -132724,7 +132839,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+rJg
 bzS
 bzS
 bzS
