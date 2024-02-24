@@ -337,7 +337,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/supernorn)
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old
 	))
 /turf/simulated/wall/auto/supernorn
-	icon = 'icons/turf/walls/supernorn/smooth2.dmi'
+	icon = 'icons/turf/walls/supernorn/smooth.dmi'
 	mod = "norn-"
 	light_mod = "wall-"
 #ifdef PERSPECTIVE_EDITOR_WALL
@@ -368,7 +368,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn)
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old
 	))
 /turf/simulated/wall/auto/reinforced/supernorn
-	icon = 'icons/turf/walls/supernorn/smooth2.dmi'
+	icon = 'icons/turf/walls/supernorn/smooth.dmi'
 #ifdef PERSPECTIVE_EDITOR_WALL
 	icon_state = "perspective-mapwall_r"
 #else
