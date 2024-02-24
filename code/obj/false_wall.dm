@@ -37,7 +37,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 			src.UpdateIcon()
 		SPAWN(1 SECOND)
 			// so that if it's getting created by the map it works, and if it isn't this will just return
-			src.setFloorUnderlay('icons/turf/floors2.dmi', "plating", 0, 100, 0, "plating")
+			src.setFloorUnderlay('icons/turf/floors.dmi', "plating", 0, 100, 0, "plating")
 			if (src.can_be_auto)
 				for (var/turf/simulated/wall/auto/W in orange(1,src))
 					W.UpdateIcon()

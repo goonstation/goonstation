@@ -6,7 +6,7 @@
 
 /turf/simulated/floor
 	name = "floor"
-	icon = 'icons/turf/floors2.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	thermal_conductivity = 0.04
 	heat_capacity = 225000
