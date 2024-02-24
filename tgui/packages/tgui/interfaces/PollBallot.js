@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, ProgressBar, Section, Stack } from '../components';
+import { Button, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const getServerButtonType = (servers) => {
@@ -85,10 +85,8 @@ const Poll = ({ options, total_answers, act, pollId, isAdmin, isExpired, playerI
                     </Button.Checkbox>
                   </Stack.Item>
                   {showVotes ? (
-                    <Stack.Item>
-                      <Box align="right">
-                        {`(${option.answers_count} votes)`}
-                      </Box>
+                    <Stack.Item align="right">
+                      {`(${option.answers_count} votes)`}
                     </Stack.Item>
                   ) : null}
                 </Stack>
