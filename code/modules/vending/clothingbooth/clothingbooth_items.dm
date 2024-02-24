@@ -34,7 +34,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/barrettes)
 
 	blue
 		name = "Blue"
-		swatch_background_colour = "#2477c6"
+		swatch_background_colour = "#10a789"
 		item_path = /obj/item/clothing/head/barrette/blue
 
 	gold
@@ -88,34 +88,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head)
 	slot = SLOT_HEAD
 	cost = PAY_TRADESMAN/2
 
-ABSTRACT_TYPE(/datum/clothingbooth_item/head/barrettes)
-/datum/clothingbooth_item/head/barrettes
-	name = "Barrettes"
-	cost = PAY_TRADESMAN/5
-
-	black
-		name = "Black"
-		item_path = /obj/item/clothing/head/barrette/black
-
-	blue
-		name = "Blue"
-		item_path = /obj/item/clothing/head/barrette/blue
-
-	gold
-		name = "Gold"
-		item_path = /obj/item/clothing/head/barrette/gold
-	green
-		name = "Green"
-		item_path = /obj/item/clothing/head/barrette/green
-
-	pink
-		name = "Pink"
-		item_path = /obj/item/clothing/head/barrette/pink
-
-	silver
-		name = "Silver"
-		item_path = /obj/item/clothing/head/barrette/silver
-
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/basecap)
 /datum/clothingbooth_item/head/basecap
 	name = "Baseball Cap"
@@ -123,34 +95,42 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/basecap)
 
 	black
 		name = "Black"
+		swatch_background_colour = "#424554"
 		item_path = /obj/item/clothing/head/basecap/black
 
 	white
 		name = "White"
+		swatch_background_colour = "#ebf0f2"
 		item_path = /obj/item/clothing/head/basecap/white
 
 	pink
 		name = "Pink"
+		swatch_background_colour = "#c9294e"
 		item_path = /obj/item/clothing/head/basecap/pink
 
 	red
 		name = "Red"
+		swatch_background_colour = "#d73715"
 		item_path = /obj/item/clothing/head/basecap/red
 
 	yellow
 		name = "Yellow"
+		swatch_background_colour = "#ebc921"
 		item_path = /obj/item/clothing/head/basecap/yellow
 
 	green
 		name = "Green"
+		swatch_background_colour = "#3fb54f"
 		item_path = /obj/item/clothing/head/basecap/green
 
 	blue
 		name = "Blue"
+		swatch_background_colour = "#24bdc6"
 		item_path = /obj/item/clothing/head/basecap/blue
 
 	purple
 		name = "Purple"
+		swatch_background_colour = "#8718b0"
 		item_path = /obj/item/clothing/head/basecap/purple
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/beret)
@@ -160,34 +140,42 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/beret)
 
 	white
 		name = "White"
+		swatch_background_colour = "#d8d8d8"
 		item_path = /obj/item/clothing/head/frenchberet/white
 
 	purple
 		name = "Purple"
+		swatch_background_colour = "#9326cf"
 		item_path = /obj/item/clothing/head/frenchberet/purple
 
 	blue
 		name = "Blue"
+		swatch_background_colour = "#3698cb"
 		item_path = /obj/item/clothing/head/frenchberet/blue
 
 	pink
 		name = "Pink"
+		swatch_background_colour = "#e13da1"
 		item_path = /obj/item/clothing/head/frenchberet/pink
 
 	mint
 		name = "Mint"
+		swatch_background_colour = "#1ab692"
 		item_path = /obj/item/clothing/head/frenchberet/mint
 
 	yellow
 		name = "Yellow"
+		swatch_background_colour = "#d49d0f"
 		item_path = /obj/item/clothing/head/frenchberet/yellow
 
 	strawberry
 		name = "Strawberry"
+		swatch_background_colour = "#c20038"
 		item_path = /obj/item/clothing/head/frenchberet/strawberry
 
 	blueberry
 		name = "Blueberry"
+		swatch_background_colour = "#3510b0"
 		item_path = /obj/item/clothing/head/frenchberet/blueberry
 
 /datum/clothingbooth_item/head/bowler
@@ -201,10 +189,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/butterfly_hairclip)
 
 	blue
 		name = "Blue"
+		swatch_background_colour = "#0090cb"
 		item_path = /obj/item/clothing/head/barrette/butterflyblu
 
 	orange
 		name = "Orange"
+		swatch_background_colour = "#eb7f46"
 		item_path = /obj/item/clothing/head/barrette/butterflyorg
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/cat_ears)
@@ -214,38 +204,47 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/cat_ears)
 
 	white
 		name = "White"
+		swatch_background_colour = "#e5e5e5"
 		item_path = /obj/item/clothing/head/headband/nyan/white
 
 	black
 		name = "Black"
+		swatch_background_colour = "#191919"
 		item_path = /obj/item/clothing/head/headband/nyan/black
 
 	blue
 		name = "Blue"
+		swatch_background_colour = "#007f7f"
 		item_path = /obj/item/clothing/head/headband/nyan/blue
 
 	green
 		name = "Green"
+		swatch_background_colour = "#007f00"
 		item_path = /obj/item/clothing/head/headband/nyan/green
 
 	grey
 		name = "Grey"
+		swatch_background_colour = "#4c4c4c"
 		item_path = /obj/item/clothing/head/headband/nyan/gray
 
 	orange
 		name = "Orange"
+		swatch_background_colour = "#7f3f00"
 		item_path = /obj/item/clothing/head/headband/nyan/orange
 
 	purple
 		name = "Purple"
+		swatch_background_colour = "#55007f"
 		item_path = /obj/item/clothing/head/headband/nyan/purple
 
 	red
 		name = "Red"
+		swatch_background_colour = "#7f0000"
 		item_path = /obj/item/clothing/head/headband/nyan/red
 
 	yellow
 		name = "Yellow"
+		swatch_background_colour = "#7f6a00"
 		item_path = /obj/item/clothing/head/headband/nyan/yellow
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/costume_goggles)
@@ -253,24 +252,29 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/costume_goggles)
 	name = "Costume Goggles"
 	cost = PAY_TRADESMAN/3
 
-	purple
+	yellow
 		name = "Yellow"
+		swatch_background_colour = "#ffcb1f"
 		item_path = /obj/item/clothing/head/goggles/yellow
 
 	red
 		name = "Red"
+		swatch_background_colour = "#ff3535"
 		item_path = /obj/item/clothing/head/goggles/red
 
 	green
 		name = "Green"
+		swatch_background_colour = "#6dff5d"
 		item_path = /obj/item/clothing/head/goggles/green
 
 	blue
 		name = "Blue"
+		swatch_background_colour = "#5ecfcf"
 		item_path = /obj/item/clothing/head/goggles/blue
 
 	purple
 		name = "Purple"
+		swatch_background_colour = "#dc70ff"
 		item_path = /obj/item/clothing/head/goggles/purple
 
 /datum/clothingbooth_item/head/cowboy
@@ -291,14 +295,17 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/fedora)
 
 	black
 		name = "Black"
+		swatch_background_colour = "#090a22"
 		item_path = /obj/item/clothing/head/fedora
 
 	brown
 		name = "Brown"
+		swatch_background_colour = "#4a281b"
 		item_path = /obj/item/clothing/head/det_hat
 
 	white
 		name = "White"
+		swatch_background_colour = "#c9b796"
 		item_path = /obj/item/clothing/head/mj_hat
 
 /datum/clothingbooth_item/head/frog
@@ -320,58 +327,74 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/hairbow)
 
 	blue
 		name = "blue"
+		swatch_background_colour = "#3c6dc3"
 		item_path = /obj/item/clothing/head/hairbow/blue
 
 	matteblack
 		name = "Matte Black"
+		swatch_background_colour = "#343442"
 		item_path = /obj/item/clothing/head/hairbow/matteblack
 
 	shinyblack
 		name = "Shiny Black"
+		swatch_background_colour = "#1c0223"
 		item_path = /obj/item/clothing/head/hairbow/shinyblack
 
 	gold
 		name = "Gold"
+		swatch_background_colour = "#cf842e"
 		item_path = /obj/item/clothing/head/hairbow/gold
 
 	green
 		name = "Green"
+		swatch_background_colour = "#3fb54f"
 		item_path = /obj/item/clothing/head/hairbow/green
 
 	magenta
 		name = "Magenta"
+		swatch_background_colour = "#dc0380"
 		item_path = /obj/item/clothing/head/hairbow/magenta
 
 	mint
 		name = "Mint"
+		swatch_background_colour = "#329297"
 		item_path = /obj/item/clothing/head/hairbow/mint
 
 	navy
 		name = "Navy"
+		swatch_background_colour = "#24639a"
 		item_path = /obj/item/clothing/head/hairbow/navy
 
 	pink
 		name = "Pink"
+		swatch_background_colour = "#e98b8b"
 		item_path = /obj/item/clothing/head/hairbow/pink
 
 	purple
 		name = "Purple"
+		swatch_background_colour = "#8d1bc2"
 		item_path = /obj/item/clothing/head/hairbow/purple
 
 	red
 		name = "Red"
+		swatch_background_colour = "#a40322"
 		item_path = /obj/item/clothing/head/hairbow/red
 
 	white
 		name = "White"
+		swatch_background_colour = "#cbd4da"
 		item_path = /obj/item/clothing/head/hairbow/white
 
 	rainbow
 		name = "Rainbow"
+		swatch_background_colour = "#8d1422"
+		swatch_foreground_colour = "#5a1d8a"
 		item_path = /obj/item/clothing/head/hairbow/rainbow
 
 	yellowpolkadot
 		name = "Yellow Polka-dot"
+		swatch_background_colour = "#d3cb21"
+		swatch_foreground_colour = "#0d0c19"
 		item_path = /obj/item/clothing/head/hairbow/yellowpolkadot
 
 /datum/clothingbooth_item/head/maid
@@ -395,10 +418,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/pirate)
 
 	black
 		name = "Black"
+		swatch_background_colour = "#1d223c"
 		item_path = /obj/item/clothing/head/pirate_blk
 
 	brown
 		name = "Brown"
+		swatch_background_colour = "#4a281b"
 		item_path = /obj/item/clothing/head/pirate_brn
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/pomhat)
@@ -407,10 +432,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/pomhat)
 
 	red
 		name = "Red"
+		swatch_background_colour = "#d73715"
 		item_path = /obj/item/clothing/head/pomhat_red
 
 	blue
 		name = "Blue"
+		swatch_background_colour = "#3c6dc3"
 		item_path = /obj/item/clothing/head/pomhat_blue
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/sunhat)
@@ -420,14 +447,17 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/sunhat)
 
 	red
 		name = "Red"
+		swatch_background_colour = "#a7231b"
 		item_path = /obj/item/clothing/head/sunhat/sunhatr
 
 	green
 		name = "Green"
+		swatch_background_colour = "#128f3d"
 		item_path = /obj/item/clothing/head/sunhat/sunhatg
 
 	blue
 		name = "Blue"
+		swatch_background_colour = "#13788f"
 		item_path = /obj/item/clothing/head/sunhat
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/tophat)
@@ -436,10 +466,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/tophat)
 
 	black
 		name = "Black"
+		swatch_background_colour = "#333333"
 		item_path = /obj/item/clothing/head/that
 
 	white
 		name = "White"
+		swatch_background_colour = "#d3d2d4"
 		item_path = /obj/item/clothing/head/that/white
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/westhat)
@@ -449,26 +481,32 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/westhat)
 
 	beige
 		name = "Beige"
+		swatch_background_colour = "#975d24"
 		item_path = /obj/item/clothing/head/westhat
 
 	black
 		name = "Black"
+		swatch_background_colour = "#1a1b1c"
 		item_path = /obj/item/clothing/head/westhat/black
 
 	blue
 		name = "Blue"
+		swatch_background_colour = "#1d223c"
 		item_path = /obj/item/clothing/head/westhat/blue
 
 	brown
 		name = "Brown"
+		swatch_background_colour = "#5b2a0e"
 		item_path = /obj/item/clothing/head/westhat/brown
 
 	tan
 		name = "Tan"
+		swatch_background_colour = "#ba8450"
 		item_path = /obj/item/clothing/head/westhat/tan
 
 	red
 		name = "Red"
+		swatch_background_colour = "#6b0b0d"
 		item_path = /obj/item/clothing/head/westhat/red
 
 /datum/clothingbooth_item/head/ushanka
@@ -488,18 +526,22 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/boots)
 
 	black
 		name = "Black"
+		swatch_background_colour = "#2e2245"
 		item_path = /obj/item/clothing/shoes/bootsblk
 
 	white
 		name = "White"
+		swatch_background_colour = "#e1e1e1"
 		item_path = /obj/item/clothing/shoes/bootswht
 
 	brown
 		name = "Brown"
+		swatch_background_colour = "#5f2d0c"
 		item_path = /obj/item/clothing/shoes/bootsbrn
 
 	blue
 		name = "Blue"
+		swatch_background_colour = "#28acb6"
 		item_path = /obj/item/clothing/shoes/bootsblu
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/cowboy_boots)
@@ -509,18 +551,22 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/cowboy_boots)
 
 	real
 		name = "Real"
+		swatch_background_colour = "#8a4f23"
 		item_path = /obj/item/clothing/shoes/westboot
 
 	dirty
 		name = "Dirty"
+		swatch_background_colour = "#7d6d59"
 		item_path = /obj/item/clothing/shoes/westboot/dirty
 
 	black
 		name = "Black"
+		swatch_background_colour = "#232424"
 		item_path = /obj/item/clothing/shoes/westboot/black
 
 	brown
 		name = "Brown"
+		swatch_background_colour = "#5b2a0e"
 		item_path = /obj/item/clothing/shoes/westboot/brown
 
 /datum/clothingbooth_item/shoes/dress_shoes
@@ -533,22 +579,27 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/flats)
 
 	black
 		name = "Black"
+		swatch_background_colour = "#3a2b56"
 		item_path = /obj/item/clothing/shoes/flatsblk
 
 	white
 		name = "White"
+		swatch_background_colour = "#fafafa"
 		item_path = /obj/item/clothing/shoes/flatswht
 
 	brown
 		name = "Brown"
+		swatch_background_colour = "#5f2d0c"
 		item_path = /obj/item/clothing/shoes/flatsbrn
 
 	blue
 		name = "Blue"
+		swatch_background_colour = "#28acb6"
 		item_path = /obj/item/clothing/shoes/flatsblu
 
 	pink
 		name = "Pink"
+		swatch_background_colour = "#be22a6"
 		item_path = /obj/item/clothing/shoes/flatspnk
 
 /datum/clothingbooth_item/shoes/floppy_boots
@@ -561,14 +612,17 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/heels)
 
 	white
 		name = "White"
+		swatch_background_colour = "#f0f0f0"
 		item_path = /obj/item/clothing/shoes/heels
 
 	black
 		name = "Black"
+		swatch_background_colour = "#3c3c3c"
 		item_path = /obj/item/clothing/shoes/heels/black
 
 	red
 		name = "Red"
+		swatch_background_colour = "#c8183a"
 		item_path = /obj/item/clothing/shoes/heels/red
 
 /datum/clothingbooth_item/shoes/macando_boots
@@ -581,18 +635,22 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/mary_janes)
 
 	black
 		name = "Black"
+		swatch_background_colour = "#1e1e32"
 		item_path = /obj/item/clothing/shoes/mjblack
 
 	brown
 		name = "Brown"
+		swatch_background_colour = "#4a281b"
 		item_path = /obj/item/clothing/shoes/mjbrown
 
 	navy
 		name = "Navy"
+		swatch_background_colour = "#0a4882"
 		item_path = /obj/item/clothing/shoes/mjnavy
 
 	white
 		name = "White"
+		swatch_background_colour = "#ebf0f2"
 		item_path = /obj/item/clothing/shoes/mjwhite
 
 /* ------------------------ Suits ------------------------ */
@@ -616,18 +674,22 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/dress)
 
 	black
 		name = "Black"
+		swatch_background_colour = "#1f1e23"
 		item_path = /obj/item/clothing/suit/dressb
 
 	blue
 		name = "Blue"
+		swatch_background_colour = "#11728a"
 		item_path = /obj/item/clothing/suit/dressb/dressbl
 
 	green
 		name = "Green"
+		swatch_background_colour = "#108a37"
 		item_path = /obj/item/clothing/suit/dressb/dressg
 
 	red
 		name = "Red"
+		swatch_background_colour = "#921a14"
 		item_path = /obj/item/clothing/suit/dressb/dressr
 
 /datum/clothingbooth_item/wear_suit/guards_coat
