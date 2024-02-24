@@ -2,25 +2,20 @@ import { useBackend } from '../backend';
 import { Box, Button, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
+const getServerButtonType = (servers) => {
+  if (servers.includes("global")) {
+    return { tooltip: "Global Poll", icon: "globe" };
+  } else if (servers.includes("rp_only")) {
+    return { tooltip: "RP Only Poll", icon: "masks-theater" };
+  }
+  return { tooltip: "Local Poll", icon: "location-dot" };
+};
+
 const PollControls = ({ isAdmin, act, pollId, isExpired, multipleChoice, expiryDate, servers }) => {
+  const serverButtonProps = getServerButtonType(servers);
   return (
     <Stack>
       <Stack.Item>
-        {servers.includes("global") ? (
-          <Button
-            tooltip="Global Poll"
-            tooltipPosition="top"
-            icon="globe"
-            onClick={() => act('editServers', { pollId })}
-          />
-        ) : servers.includes("rp_only") ? (
-          <Button
-            tooltip="RP Only Poll"
-            tooltipPosition="top"
-            icon="masks-theater"
-            onClick={() => act('editServers', { pollId })}
-          />
-        ) : null}
         {multipleChoice ? (
           <Button
             tooltip="Multiple Choice"
@@ -28,6 +23,12 @@ const PollControls = ({ isAdmin, act, pollId, isExpired, multipleChoice, expiryD
             icon="list-check"
           />
         ) : null}
+        <Button
+          tooltip={serverButtonProps.tooltip}
+          tooltipPosition="top"
+          icon={serverButtonProps.icon}
+          onClick={() => act('editServers', { pollId })}
+        />
         <Button
           tooltip={expiryDate ? expiryDate : "No Expiration Date"}
           tooltipPosition="top"
