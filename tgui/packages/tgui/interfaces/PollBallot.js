@@ -11,12 +11,14 @@ const PollControls = ({ isAdmin, act, pollId, isExpired, multipleChoice, expiryD
             tooltip="Global Poll"
             tooltipPosition="top"
             icon="globe"
+            onClick={() => act('editServers', { pollId })}
           />
         ) : servers.includes("rp_only") ? (
           <Button
             tooltip="RP Only Poll"
             tooltipPosition="top"
             icon="masks-theater"
+            onClick={() => act('editServers', { pollId })}
           />
         ) : null}
         {multipleChoice ? (
@@ -31,6 +33,7 @@ const PollControls = ({ isAdmin, act, pollId, isExpired, multipleChoice, expiryD
           tooltipPosition="top"
           color={isExpired ? 'bad' : 'good'}
           icon={isExpired ? 'lock' : 'lock-open'}
+          onClick={() => act('editExpiration', { pollId })}
         />
         {isAdmin ? (
           <>

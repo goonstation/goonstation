@@ -1,3 +1,5 @@
+#define POLL_ACTION_CANCEL "cancel"
+
 /client/var/datum/poll_ballot/poll_ballot = new
 /client/verb/players_polls()
 	set name = "Player Polls"
@@ -67,42 +69,10 @@
 			else
 				multiple_choice = FALSE
 
-			//todo more advanced input to pick and choose multiple servers, e.g. RP only polls
-			var/servers = tgui_alert(ui.user, "Poll type?", "Add Poll", list("Local", "Global", "RP Only"))
-			if (servers == "Local")
-				servers = list(config.server_id)
-			else if (servers == "Global")
-				servers = list(poll_manager.global_server_id)
-			else if (servers == "RP Only")
-				servers = list(poll_manager.rp_only_server_id)
-			else
-				return
-
-			var/expiration_choice = tgui_input_list(ui.user, "Set an expiration date", "Add Poll",
-				list(
-					"None",
-					"Custom Minutes",
-					"Custom Hours",
-					"Custom Days",
-					"Custom ISO8601 Timestamp",
-					))
-			var/expires_at
-			switch (expiration_choice)
-				if ("Custom Minutes")
-					var/input = tgui_input_number(ui.user, "How many minutes?", "Add Poll", 1, 10000, 0)
-					expires_at = toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), minutes = input))
-				if ("Custom Hours")
-					var/input = tgui_input_number(ui.user, "How many hours?", "Add Poll", 1, 10000, 0)
-					expires_at = toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), hours = input))
-				if ("Custom Days")
-					var/input = tgui_input_number(ui.user, "How many days?", "Add Poll", 1, 10000, 0)
-					expires_at = toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), days = input))
-				if ("Custom ISO8601 Timestamp")
-					var/input = tgui_input_text(ui.user, "Please provide a valid ISO8601 formatted timestamp?", "Add Poll", toIso8601(subtractTime(world.realtime, hours = world.timezone)))
-					if (validateIso8601(input))
-						expires_at = input
-					else
-						tgui_alert(ui.user, "Invalid timestamp provided, poll defaulting to no expiration", "Error")
+			var/servers = pick_servers(ui.user)
+			if (servers == POLL_ACTION_CANCEL) return // user canceled
+			var/expires_at = pick_expiration_date(ui.user)
+			if (expires_at == POLL_ACTION_CANCEL) return // user canceled
 
 			var/list/poll
 			try
@@ -170,6 +140,66 @@
 			question = tgui_input_text(ui.user, "Enter the poll question", "Edit Poll", question, MAX_MESSAGE_LEN)
 			question = copytext(html_encode(question), 1, MAX_MESSAGE_LEN)
 			if (!question) return
+
+			try
+				var/datum/apiRoute/polls/edit/editPoll = new
+				editPoll.routeParams = list("[params["pollId"]]")
+				editPoll.buildBody(question, expires_at, servers)
+				apiHandler.queryAPI(editPoll)
+			catch (var/exception/e)
+				var/datum/apiModel/Error/error = e.name
+				logTheThing(LOG_DEBUG, null, "Failed to edit a poll: [error.message]")
+				return FALSE
+
+			poll_manager.sync_single_poll(params["pollId"])
+			. = TRUE
+
+		if ("editExpiration")
+			if (!ui.user.client.holder) return FALSE
+			USR_ADMIN_ONLY
+
+			var/question
+			var/expires_at
+			var/servers
+			for (var/list/poll in poll_manager.poll_data)
+				if (poll["id"] == text2num(params["pollId"]))
+					question = poll["question"]
+					expires_at = poll["expires_at"]
+					servers = poll["servers"]
+					break
+
+			expires_at = src.pick_expiration_date(ui.user)
+			if (expires_at == POLL_ACTION_CANCEL) return // user canceled
+
+			try
+				var/datum/apiRoute/polls/edit/editPoll = new
+				editPoll.routeParams = list("[params["pollId"]]")
+				editPoll.buildBody(question, expires_at, servers)
+				apiHandler.queryAPI(editPoll)
+			catch (var/exception/e)
+				var/datum/apiModel/Error/error = e.name
+				logTheThing(LOG_DEBUG, null, "Failed to edit a poll: [error.message]")
+				return FALSE
+
+			poll_manager.sync_single_poll(params["pollId"])
+			. = TRUE
+
+		if ("editServers")
+			if (!ui.user.client.holder) return FALSE
+			USR_ADMIN_ONLY
+
+			var/question
+			var/expires_at
+			var/servers
+			for (var/list/poll in poll_manager.poll_data)
+				if (poll["id"] == text2num(params["pollId"]))
+					question = poll["question"]
+					expires_at = poll["expires_at"]
+					servers = poll["servers"]
+					break
+
+			servers = src.pick_servers(ui.user)
+			if (servers == POLL_ACTION_CANCEL) return // user canceled
 
 			try
 				var/datum/apiRoute/polls/edit/editPoll = new
@@ -290,3 +320,49 @@
 		if ("toggle-showVotes")
 			showVotes = !showVotes
 			. = TRUE
+
+
+/// prompts users to select a date in the future, returns an iso8601 string or null
+/datum/poll_ballot/proc/pick_expiration_date(user)
+	. = POLL_ACTION_CANCEL
+	var/expiration_choice = tgui_input_list(user, "Set an expiration date", "Add Poll",
+		list(
+			"None",
+			"Custom Minutes",
+			"Custom Hours",
+			"Custom Days",
+			"Custom ISO8601 Timestamp",
+			))
+	switch (expiration_choice)
+		if ("None")
+			. = null
+		if ("Custom Minutes")
+			var/input = tgui_input_number(user, "How many minutes?", "Add Poll", 1, 10000, 0)
+			. = toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), minutes = input))
+		if ("Custom Hours")
+			var/input = tgui_input_number(user, "How many hours?", "Add Poll", 1, 10000, 0)
+			. = toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), hours = input))
+		if ("Custom Days")
+			var/input = tgui_input_number(user, "How many days?", "Add Poll", 1, 10000, 0)
+			. = toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), days = input))
+		if ("Custom ISO8601 Timestamp")
+			var/input = tgui_input_text(user, "Please provide a valid ISO8601 formatted timestamp?", "Add Poll", toIso8601(subtractTime(world.realtime, hours = world.timezone)))
+			if (validateIso8601(input))
+				. = input
+			else
+				tgui_alert(user, "Invalid timestamp provided, poll defaulting to no expiration", "Error")
+
+/// prompts users to select which servers to target for polling
+/datum/poll_ballot/proc/pick_servers(user)
+	var/servers = tgui_alert(user, "Poll type?", "Targeted Servers", list("Local", "Global", "RP Only"))
+	switch(servers)
+		if ("Local")
+			. = list(config.server_id)
+		if ("Global")
+			. = list(poll_manager.global_server_id)
+		if ("RP Only")
+			. = list(poll_manager.rp_only_server_id)
+		else
+			. = POLL_ACTION_CANCEL
+
+#undef POLL_ACTION_CANCEL
