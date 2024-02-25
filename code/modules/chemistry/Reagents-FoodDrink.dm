@@ -144,8 +144,17 @@ datum
 					return
 				var/coke = pick("conk", "croke", "ckoe", "clock", "coge", "choke", "coque", "legend")
 				var/milk = pick("malk", "mylik", "millic", "vilk", "mick", "mill", "mrilck", "dairy")
+				var/thinkpositive = pick("What a great drink.", "Wonder if there's more around?",\
+				"Yum!","You daydream about having more.","Maybe your coworkers want some!","You should get more.")
+				var/thinknegative = pick("The thought sickens you.", "You feel betrayed.",\
+				"You hasten to distract yourself.","You crave vengeance.","Regret washes over you.")
+
 				switch(regret)
 					if(FALSE)
+						if (probmult (6))
+							boutput(M, SPAN_ALERT(pick("Your thoughts turn briefly to [coke] [milk]. [thinkpositive]",\
+							"Your stomach rolls. Must be time for some [coke] [milk]!",\
+							"A delicious taste lingers in your throat!")))
 						if (probmult(12))
 							var/obj/item/reagent_containers/food/drinks/helddrink = M.equipped()
 							if(helddrink)
@@ -161,6 +170,11 @@ datum
 								"Gotta get me a sippy of that dranky drank!",\
 								"This really [coke]s my [milk]!"))
 					if(TRUE)
+						if (probmult (6))
+							boutput(M, SPAN_ALERT(pick("Your thoughts turn briefly to [coke] [milk]. [thinknegative]",\
+							"Your stomach rolls. Must be because of that [coke] [milk].",\
+							"The vile taste of [coke] [milk] lingers in your throat.",\
+							"You feel nauseous. You resolve to never drink [coke] [milk] again.")))
 						if (probmult(6))
 							M.say(pick("I don't want any more of that [coke] [milk].",\
 								"I'm not thirsty anymore.",\
@@ -1980,7 +1994,7 @@ datum
 			fluid_g = 85
 			fluid_b = 40
 			transparency = 240
-			thirst_value = 2
+			thirst_value = 3
 			depletion_rate = 0.2 //kind of an intermediate between Roaring Waters and Colamara Chaos
 			description = "An ancient storm brews within."
 			taste = list("sweet", "milky")
@@ -2002,7 +2016,7 @@ datum
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				var/stam_percent_left = M.stamina / M.stamina_max
-				alch_strength = clamp((8 * (1 - stam_percent_left)), 0.4, 8)
+				alch_strength = clamp((8 * (1 - stam_percent_left)), 0.4, 6)
 				..()
 
 		fooddrink/alcoholic/vampire
@@ -2015,7 +2029,7 @@ datum
 			alch_strength = 0.25
 			thirst_value = 0.5
 			depletion_rate = 0.4
-			description = "This cocktail takes a creative approach to increasing blood alcohol content by draining blood as it intoxicates you."
+			description = "This cocktail takes a unique approach to increasing blood alcohol content by draining blood as it intoxicates you."
 			taste = "metallic"
 			reagent_state = LIQUID
 
@@ -2064,7 +2078,7 @@ datum
 				..()
 				return
 
-		/*fooddrink/maunacola //Spacewalking chem that requires drunkeness
+		fooddrink/maunacola //Spacewalking chem that requires drunkeness
 			name = "Mauna Cola Awakens"
 			id = "maunacola"
 			fluid_r = 233
@@ -2078,19 +2092,47 @@ datum
 			reagent_state = LIQUID
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				var/EtOH_amt = holder.get_reagent_amount("ethanol") //mintodo FINISH HIM!
-				switch(EtOH_amt)
-					if(-INFINITY to 1)
-						//Greg will use your liver for fuel. Fuck you, Greg.
-					if(1 to INFINITY)
+				var/mob/living/L = M
+				if (istype(L))
+					var/heatmsg = pick("Ah! So hot!", "You're too hot! It burns!", "Feels like you're burning inside!","HOT!")
+					var/EtOH_amt = holder.get_reagent_amount("ethanol")
+					if (EtOH_amt)
+						L.bodytemperature += clamp((EtOH_amt - 10)/3, 0, 30)
+						if (L.bodytemperature > (T0C+130) && EtOH_amt > 40)
+							if (prob(60))
+								L.update_burning(2 * mult)
+							if (ishuman(L))
+								var/mob/living/carbon/human/H = L
+								if (H.sims)
+									H.sims.affectMotive("thirst", -1 * mult)
+								if (H.organHolder && H.organHolder.liver)
+									H.organHolder.damage_organ(0, 1 * mult, 0, "liver")
+					else
+						L.bodytemperature += 3
 
-				M.bodytemperature += 3 //slow exotherm
-				if (M.bodytemperature > (T0C+130) && EtOH_amt > 40) //You should know better than to bring your internal body temperature to >300C
-					var/burnrate = clamp((EtOH_amt - 10)/3, 3, 30) //partial burn, partial heat
-					var/consumed = clamp(burnrate, 0, EtOH_amt) //partial burn, partial heat
-					greg //Greg will burn away the ethanol... in your liver. Fuck you Greg
-					H.sims.affectMotive("Thirst", )
-				..()*/
+					//If you're hot when you drink this, You Will Burn
+					if (L.bodytemperature > L.base_body_temp + L.temp_tolerance && !L.is_heat_resistant())
+						if (probmult(20)) boutput(L, SPAN_ALERT("[heatmsg]"))
+						var/heatdiff = min((L.bodytemperature - L.base_body_temp), 3) //mintodo adjust numbers here
+						L.TakeDamage("chest", 0, heatdiff * mult, 0, DAMAGE_BURN)
+
+					//Funny WOW reference, delete if lame
+					if(!L.stat && can_act(L) && probmult(40))
+						var/found = 0
+						for(var/mob/living/critter/small_animal/cockroach/R in oview(2, L))
+							if (!found)
+								found = 1
+								if(can_reach(L, R))
+									L.say("DIE, INSECT!")
+									L.point_at(R)
+									sleep(1 SECONDS)
+									var/turf/C = get_turf(R)
+									R.visible_message(SPAN_ALERT("[R] is consumed in flames!"))
+									//fireflash(C,0)
+									playsound(R.loc, 'sound/effects/mag_fireballlaunch.ogg', 30, 0)
+									make_cleanable(/obj/decal/cleanable/ash, C)
+									//qdel(R)
+					..()
 
 		fooddrink/roaringwaters
 			name = "Roaring Waters"
@@ -2647,13 +2689,13 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom // decays into things that decay for maximum slow metabolism punishment. ~8x the resultant chems if you have the trait
-				if(prob(10))
-					M.reagents.add_reagent("rum", 1 * mult)
 				if(prob(15))
+					M.reagents.add_reagent("rum", 1 * mult)
+				if(prob(20))
 					M.reagents.add_reagent("espresso", 1 * mult)
-				if(prob(21))
+				if(prob(25))
 					M.reagents.add_reagent("VHFCS", 1 * mult) //consider increasing
-				if(prob(5))
+				if(prob(8))
 					M.reagents.add_reagent("pfire", 0.4 * mult)
 				..()
 
