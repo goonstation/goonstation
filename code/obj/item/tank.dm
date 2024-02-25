@@ -316,18 +316,6 @@ Contains:
 	name = "gas tank"
 	icon_state = "empty"
 
-/obj/item/tank/filled_custom
-	name = "custom gas tank"
-	icon_state = "empty"
-	var/custom_gas_type = "oxygen" // replace with exact varname of choice
-	var/custom_temperature = 175 KELVIN
-
-	New()
-		..()
-		src.air_contents.temperature = src.custom_temperature
-		src.air_contents.vars[src.custom_gas_type] = (10 * ONE_ATMOSPHERE) * src.air_contents.volume / (R_IDEAL_GAS_EQUATION * src.air_contents.temperature)
-
-
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/anesthetic
