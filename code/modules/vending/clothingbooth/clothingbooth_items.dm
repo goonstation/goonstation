@@ -1294,24 +1294,20 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/yoga)
 
 /* ------------------------ Masks ------------------------ */
 /datum/clothingbooth_item/mask/tengumask
-	season = SEASON_HALLOWEEN
 	cost = PAY_TRADESMAN/2
 	item_path = /obj/item/clothing/mask/tengu
 
 /* ------------------------- Head ------------------------ */
 /datum/clothingbooth_item/head/giraffehat
-	season = SEASON_HALLOWEEN
 	item_path = /obj/item/clothing/head/giraffehat
 
 /datum/clothingbooth_item/head/axehat
-	season = SEASON_HALLOWEEN
 	cost = PAY_TRADESMAN/3
 	item_path = /obj/item/clothing/head/axehat
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/beetlehat)
 /datum/clothingbooth_item/head/beetlehat
 	name = "Beetle Helm"
-	season = SEASON_HALLOWEEN
 
 	rhinobeetle
 		name = "Rhino Beetle"
@@ -1324,7 +1320,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/beetlehat)
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/elephanthat)
 /datum/clothingbooth_item/head/elephanthat
 	name = "Elephant Hat"
-	season = SEASON_HALLOWEEN
 	cost = PAY_TRADESMAN/3
 
 	pink
@@ -1346,7 +1341,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/elephanthat)
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/mushroomcap)
 /datum/clothingbooth_item/head/mushroomcap
 	name = "Mushroom Cap"
-	season = SEASON_HALLOWEEN
 
 	red
 		name = "Red"
@@ -1366,7 +1360,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/mushroomcap)
 		item_path = /obj/item/clothing/head/mushroomcap/inky
 
 /datum/clothingbooth_item/head/minotaurmask
-	season = SEASON_HALLOWEEN
 	cost = PAY_TRADESMAN
 	item_path = /obj/item/clothing/head/minotaurmask
 

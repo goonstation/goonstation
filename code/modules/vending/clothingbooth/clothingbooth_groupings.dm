@@ -179,7 +179,7 @@
 /datum/clothingbooth_grouping/lace_veil
 	item_paths = list(/datum/clothingbooth_item/head/lace_veil)
 	grouping_tags = list(
-		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/leaf_hairclip
@@ -193,6 +193,7 @@
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
+
 /datum/clothingbooth_grouping/pirate
 	name = "Pirate"
 	item_paths = list(
@@ -223,7 +224,7 @@
 	)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/casual,
-		/datum/clothingbooth_grouping_tag/season/spring,
+		/datum/clothingbooth_grouping_tag/season/summer,
 	)
 
 /datum/clothingbooth_grouping/tophat
@@ -235,6 +236,7 @@
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
+
 /datum/clothingbooth_grouping/westhat
 	name = "Ten-Gallon Hat"
 	item_paths = list(
@@ -255,6 +257,7 @@
 		/datum/clothingbooth_grouping_tag/formality/casual,
 		/datum/clothingbooth_grouping_tag/season/winter,
 	)
+
 /* ----------------------- Glasses ----------------------- */
 /datum/clothingbooth_grouping/ftscanplate
 	item_paths = list(/datum/clothingbooth_item/glasses/ftscanplate)
@@ -278,7 +281,7 @@
 /datum/clothingbooth_grouping/ring_gold
 	item_paths = list(/datum/clothingbooth_item/gloves/ring_gold)
 	grouping_tags = list(
-		/datum/clothingbooth_grouping_tag/formality/casual,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 /* ------------------------- Head ------------------------ */
 
@@ -358,6 +361,7 @@
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
+
 /* ------------------------ Suits ------------------------ */
 /datum/clothingbooth_grouping/baseball_jacket
 	item_paths = list(/datum/clothingbooth_item/wear_suit/baseball_jacket)
@@ -368,8 +372,9 @@
 /datum/clothingbooth_grouping/dinosaur_pajamas
 	item_paths = list(/datum/clothingbooth_item/wear_suit/dinosaur_pajamas)
 	grouping_tags = list(
-		/datum/clothingbooth_grouping_tag/formality/casual,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
+
 /datum/clothingbooth_grouping/dress
 	name = "Dress"
 	item_paths = list(
@@ -381,8 +386,8 @@
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
-/* ---------------------- Jumpsuits ---------------------- */
 
+/* ---------------------- Jumpsuits ---------------------- */
 /datum/clothingbooth_grouping/card_suit_shirt
 	name = "Card Suit Shirt"
 	item_paths = list(
