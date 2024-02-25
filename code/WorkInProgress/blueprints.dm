@@ -992,6 +992,7 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 		return
 
 	dropped(mob/user as mob)
+		. = ..()
 		removeOverlays()
 		selecting = 0
 		qdel(corner1img)

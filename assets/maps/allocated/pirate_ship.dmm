@@ -38,7 +38,7 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/vehicle/miniputt/indyputt{
 	dir = 1;
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Dreadful"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -53,7 +53,7 @@
 	dir = 1
 	},
 /obj/machinery/vehicle/miniputt/indyputt{
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Deathly"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -66,6 +66,7 @@
 /obj/decal/stage_edge/alt{
 	color = "#555555"
 	},
+/obj/storage/crate/chest,
 /turf/simulated/floor,
 /area/pirate_ship)
 "bu" = (
@@ -120,7 +121,7 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/vehicle/pod_smooth/black{
 	dir = 1;
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Waking Nightmare"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -167,10 +168,7 @@
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "dk" = (
-/obj/machinery/r_door_control/podbay{
-	access_type = -1;
-	id = "peregrine_podbay"
-	},
+/obj/machinery/r_door_control/podbay/pirate,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/pirate_ship)
 "dt" = (
@@ -210,7 +208,7 @@
 	},
 /obj/machinery/vehicle/pod_smooth/industrial{
 	dir = 1;
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Vehement"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -336,7 +334,7 @@
 	dir = 1
 	},
 /obj/machinery/vehicle/miniputt/wizard{
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Brimstone"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -532,38 +530,10 @@
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "mu" = (
-/obj/rack,
-/obj/item/clothing/mask/breath{
-	pixel_x = 10
-	},
-/obj/item/clothing/suit/space/emerg{
-	pixel_x = 14
-	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 11;
-	pixel_y = 10
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/emerg{
-	pixel_x = 4
-	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 1;
-	pixel_y = 10
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = -10
-	},
-/obj/item/clothing/suit/space/emerg{
-	pixel_x = -6
-	},
-/obj/item/clothing/head/emerg{
-	pixel_x = -9;
-	pixel_y = 10
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/vending/air_vendor/pod_wars,
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "mx" = (
@@ -585,6 +555,7 @@
 	pixel_y = -2;
 	pixel_x = -8
 	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "nu" = (
@@ -599,7 +570,7 @@
 "nC" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/vehicle/pod_smooth{
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Retribution"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -693,7 +664,7 @@
 "pO" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/vehicle/pod_smooth/gold{
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Cannonade"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -812,10 +783,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
-	dir = 4;
-	id = "peregrine_podbay";
-	name = "Cargo Bay Door"
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/pirate_podbay{
+	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
 /area/pirate_ship)
@@ -856,7 +825,7 @@
 	dir = 1
 	},
 /obj/machinery/vehicle/miniputt/black{
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Black Flag"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -1083,14 +1052,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/pirate_ship)
-"vz" = (
-/obj/machinery/light/incandescent/warm{
-	dir = 8
-	},
-/turf/simulated/floor/orange/side{
-	dir = 8
-	},
-/area/pirate_ship)
 "vN" = (
 /obj/decoration/bullethole{
 	pixel_x = 10;
@@ -1157,13 +1118,13 @@
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "xs" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/door_control{
 	id = "peregrine_podbay";
 	name = "Podbay Door Control";
 	pixel_x = -24;
 	pixel_y = 12
 	},
+/obj/machinery/vending/air_vendor/plasma/pod_wars,
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "xG" = (
@@ -1262,6 +1223,11 @@
 	},
 /turf/simulated/floor/black,
 /area/pirate_ship)
+"zP" = (
+/obj/lattice/auto,
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/pirate_ship_space)
 "zX" = (
 /obj/stool/chair/office/yellow{
 	dir = 4
@@ -1346,6 +1312,10 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/pirate_ship)
+"Bg" = (
+/obj/lattice/auto,
+/turf/space,
+/area/pirate_ship_space)
 "Bp" = (
 /obj/item/storage/toolbox/mechanical{
 	pixel_x = 3;
@@ -1400,6 +1370,11 @@
 	dir = 8
 	},
 /area/pirate_ship)
+"DL" = (
+/obj/lattice/auto,
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/pirate_ship_space)
 "DP" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -1490,14 +1465,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/pirate_ship)
-"FF" = (
-/obj/machinery/light/incandescent/warm{
-	dir = 4
-	},
-/turf/simulated/floor/orange/side{
-	dir = 4
-	},
-/area/pirate_ship)
 "FT" = (
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -1506,10 +1473,8 @@
 	powerlevel = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
-	dir = 4;
-	id = "peregrine_podbay";
-	name = "Cargo Bay Door"
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/pirate_podbay{
+	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
 /area/pirate_ship)
@@ -1609,7 +1574,7 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/vehicle/miniputt{
 	dir = 1;
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Inglorious"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -1788,6 +1753,14 @@
 /obj/decoration/bustedmantapc,
 /turf/simulated/floor/orange,
 /area/pirate_ship)
+"Mg" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/pirate_ship)
 "Mw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1848,6 +1821,11 @@
 	},
 /turf/space,
 /area/pirate_ship)
+"Or" = (
+/obj/lattice/auto,
+/obj/warp_beacon/pirate,
+/turf/space,
+/area/pirate_ship_space)
 "Ox" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -1979,10 +1957,8 @@
 /area/pirate_ship)
 "Qd" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
-	dir = 4;
-	id = "peregrine_armoury";
-	name = "Cargo Bay Door"
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/pirate_armory{
+	dir = 8
 	},
 /turf/unsimulated/floor/plating/random,
 /area/pirate_ship)
@@ -2121,7 +2097,7 @@
 	dir = 1
 	},
 /obj/machinery/vehicle/miniputt{
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Spectre"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -2197,6 +2173,7 @@
 /obj/decal/stage_edge/alt{
 	color = "#555555"
 	},
+/obj/storage/crate/chest,
 /turf/simulated/floor,
 /area/pirate_ship)
 "Vo" = (
@@ -2255,7 +2232,7 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 1;
-	init_comms_type = /obj/item/shipcomponent/communications/syndicate;
+	init_comms_type = /obj/item/shipcomponent/communications/pirate;
 	name = "The Betrayal"
 	},
 /turf/simulated/floor/shuttlebay,
@@ -2297,6 +2274,14 @@
 	},
 /turf/simulated/floor/black,
 /area/pirate_ship)
+"XJ" = (
+/obj/machinery/light/runway_light,
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/pirate_ship_space)
 "Yb" = (
 /obj/machinery/light/incandescent/warm,
 /obj/submachine/weapon_vendor/pirate,
@@ -2749,9 +2734,9 @@ Zt
 vX
 qq
 nu
-gH
-Jy
-gH
+JM
+JM
+JM
 nu
 uI
 zp
@@ -2788,10 +2773,10 @@ nu
 Pf
 fh
 AJ
-vz
-AJ
-AJ
-AJ
+nu
+gH
+Jy
+gH
 nu
 vl
 zp
@@ -3108,10 +3093,10 @@ nu
 hn
 OR
 ph
-FF
-ph
-ph
-ph
+nu
+gH
+Jy
+gH
 nu
 vo
 cP
@@ -3149,9 +3134,9 @@ nu
 GP
 sl
 nu
-gH
-Jy
-gH
+JM
+JM
+JM
 Nj
 vp
 zo
@@ -3187,7 +3172,7 @@ Vj
 ai
 TC
 Df
-zM
+Mg
 nu
 gc
 JM
@@ -3400,7 +3385,7 @@ Vj
 Vj
 Vj
 Vj
-Vj
+XJ
 Vj
 Vj
 Vj
@@ -3440,7 +3425,7 @@ Vj
 Vj
 Vj
 Vj
-Vj
+Bg
 Vj
 Vj
 Vj
@@ -3480,7 +3465,7 @@ Vj
 Vj
 Vj
 Vj
-Vj
+zP
 Vj
 Vj
 Vj
@@ -3519,9 +3504,9 @@ Vj
 Vj
 Vj
 Vj
-Vj
-Vj
-Vj
+Bg
+Or
+Bg
 Vj
 Vj
 Vj
@@ -3560,7 +3545,7 @@ Vj
 Vj
 Vj
 Vj
-Vj
+DL
 Vj
 Vj
 Vj

@@ -33,20 +33,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		// not this is fruit but some veg do this too.
 		var/datum/plantgenes/new_genes = src.plantgenes
 
+		// Copy the genes from the plant we're harvesting to the new piece of produce.
 		HYPpassplantgenes(passed_genes,new_genes)
 		src.generation = harvested_plantpot.generation
-		// Copy the genes from the plant we're harvesting to the new piece of produce.
-
-		if(origin_plant.hybrid)
-			// We need to do special shit with the genes if the plant is a spliced
-			// hybrid since they run off instanced datums rather than referencing
-			// a specific already-existing one.
-			var/plantType = origin_plant.type
-			var/datum/plant/hybrid = new plantType(src)
-			for(var/V in origin_plant.vars)
-				if(issaved(origin_plant.vars[V]) && V != "holder")
-					hybrid.vars[V] = origin_plant.vars[V]
-			src.planttype = hybrid
+		src.planttype = HYPgenerateplanttypecopy(src, origin_plant)
 
 		// Now we calculate the effect of quality on the item
 		switch(quality_status)

@@ -15,9 +15,6 @@
 
 	pre_setup()
 		. = ..()
-		get_singleton(/datum/mapPrefab/allocated/pirate_ship).load()
-
-		. = ..()
 		var/list/possible_pirates = list()
 
 		var/num_players = 0
@@ -41,6 +38,9 @@
 		&& ((length(possible_pirates) < minimum_pirates) || (target_antag_count < minimum_pirates)))
 			return 0
 
+		//load in the ship dmm
+		get_singleton(/datum/mapPrefab/allocated/pirate_ship).load()
+
 		// choose the antags
 		var/list/chosen_antags = antagWeighter.choose(pool = possible_pirates, role = ROLE_PIRATE, amount = target_antag_count, recordChosen = 1)
 
@@ -63,7 +63,7 @@
 		return TRUE
 
 	post_setup()
-		..()
+		. = ..()
 		for (var/datum/mind/pirate in pirate_minds)
 			equip_antag(pirate)
 

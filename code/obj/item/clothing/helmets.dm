@@ -1070,6 +1070,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
 	item_state = "salvager-heavy"
 	blocked_from_petasusaphilic = TRUE
 	has_visor = TRUE
+	item_function_flags = IMMUNE_TO_ACID
 	visor_color_lst = list(
 		"color_r" = 1.0,
 		"color_g" = 0.9,

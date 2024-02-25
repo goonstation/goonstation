@@ -178,14 +178,9 @@ var/list/removed_jobs = list(
 				"name" = src.savefile_get_profile_name(client, i),
 			)
 
-		var/list/cloud_saves = null
-
-		if (!client.cloud_available())
-			client.player.cloud_fetch()
-		if (client.cloud_available())
-			cloud_saves = list()
-			for (var/name in client.player.cloudsaves)
-				cloud_saves += name
+		var/list/cloud_saves = list()
+		for (var/name in client.player.cloudSaves.saves)
+			cloud_saves += name
 
 		sanitize_null_values()
 
@@ -356,9 +351,7 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("cloud-new")
-				if (!client.cloud_available())
-					return
-				if(length(client.player.cloudsaves) >= SAVEFILE_CLOUD_PROFILES_MAX)
+				if(length(client.player.cloudSaves.saves) >= SAVEFILE_CLOUD_PROFILES_MAX)
 					tgui_alert(usr, "You have hit your cloud save limit. Please write over an existing save.", "Max saves")
 				else
 					var/new_name = tgui_input_text(usr, "What would you like to name the save?", "Save Name")
@@ -372,8 +365,6 @@ var/list/removed_jobs = list(
 							boutput( usr, SPAN_NOTICE("Savefile saved!") )
 
 			if ("cloud-save")
-				if (!client.cloud_available())
-					return
 				var/ret = src.cloudsave_save(client, params["name"])
 				if(istext(ret))
 					boutput(usr, SPAN_ALERT("Failed to save savefile: [ret]"))
@@ -382,8 +373,6 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("cloud-load")
-				if (!client.cloud_available())
-					return
 				var/ret = src.cloudsave_load(client, params["name"])
 				if( istext(ret))
 					boutput(usr, SPAN_ALERT("Failed to load savefile: [ret]"))
@@ -393,8 +382,6 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("cloud-delete")
-				if (!client.cloud_available())
-					return
 				var/ret = src.cloudsave_delete(client, params["name"])
 				if(istext(ret))
 					boutput(usr, SPAN_ALERT("Failed to delete savefile: [ret]"))

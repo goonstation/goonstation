@@ -816,7 +816,7 @@ toxic - poisons
 		if(isliving(hit))
 			var/mob/living/L = hit
 			L.bodytemperature = max(50, L.bodytemperature - proj.power * 5)
-			if(L.getStatusDuration("shivering" < power))
+			if(L.getStatusDuration("shivering") < power)
 				L.setStatus("shivering", power/2 SECONDS)
 			var/obj/icecube/I = new/obj/icecube(get_turf(L), L)
 			I.health = proj.power / 2
@@ -1578,7 +1578,7 @@ datum/projectile/bullet/autocannon
 	on_hit(atom/hit)
 		var/obj/machinery/the_singularity/S = hit
 		if(istype(S))
-			new /obj/bhole(S.loc,rand(100,300))
+			new /obj/whitehole(S.loc, 0 SECONDS, 30 SECONDS)
 			qdel(S)
 		else
 			new /obj/effects/rendersparks(hit.loc)
@@ -1832,9 +1832,9 @@ datum/projectile/bullet/autocannon
 			if(isturf(hit)) //did you know that turf.loc is /area? because I didn't
 				hitloc = hit
 			for(var/obj/window/maybe_thindow in hitloc)
-				maybe_thindow.ex_act(3)
+				maybe_thindow.ex_act(2)
 			for(var/obj/structure/girder/girderstack in hitloc)
-				girderstack.ex_act(3)
+				girderstack.ex_act(2)
 			//let's pretend these walls/objects were destroyed in the explosion
-			hit.ex_act(2)
+			hit.ex_act(pick(1,2))
 		. = ..()
