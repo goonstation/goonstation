@@ -65,7 +65,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 			ratio = round(ratio, 0.25) * 100
 			if (ratio == 0)
 				return
-			indicator_display.icon_state = "pw_pistol_power-[ratio]"
+			indicator_display.icon_state = "[icon_state]_power-[ratio]" //using icon_state to set the charge icon? probably fine.
 			indicator_display.color = display_color
 			UpdateOverlays(indicator_display, "ind_dis")
 
@@ -90,6 +90,64 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 		display_color =	"#ff4043"
 		item_state = "pw_pistol_sy"
 		initial_proj = /datum/projectile/laser/blaster/pod_pilot/red_SY
+		team_num = 2
+
+/obj/item/gun/energy/blaster_pod_wars/smg
+	name = "blaster smg"
+	desc = "A dangerous-looking blaster smg. It's self-charging by a radioactive power cell."
+	icon_state = "pw_smg"
+	item_state = "pw_smg"
+	w_class = W_CLASS_NORMAL
+	force = 12
+	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_basic
+	initial_proj = /datum/projectile/laser/blaster/pod_pilot/blue_NT/smg
+	spread_angle = 10
+
+	New()
+		AddComponent(/datum/component/holdertargeting/fullauto, 2, 1.5, 1)
+		..()
+	nanotrasen
+		muzzle_flash = "muzzle_flash_plaser"
+		display_color =	"#3d9cff"
+		item_state = "pw_smg_nt"
+		initial_proj = /datum/projectile/laser/blaster/pod_pilot/blue_NT/smg
+		team_num = 1
+
+
+	syndicate
+		muzzle_flash = "muzzle_flash_laser"
+		display_color =	"#ff4043"
+		item_state = "pw_smg_sy"
+		initial_proj = /datum/projectile/laser/blaster/pod_pilot/red_SY/smg
+		team_num = 2
+
+
+
+/obj/item/gun/energy/blaster_pod_wars/shotgun
+	name = "blaster smg"
+	desc = "A dangerous-looking blaster shotgun. It's self-charging by a radioactive power cell."
+	icon_state = "pw_shotgun"
+	item_state = "pw_shotgun"
+	w_class = W_CLASS_NORMAL
+	force = 12
+	initial_proj = /datum/projectile/special/spreader/pwshotgunspread
+	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_basic
+	two_handed = 1
+	can_dual_wield = 0
+	shoot_delay = 8 DECI SECONDS
+
+	nanotrasen
+		muzzle_flash = "muzzle_flash_plaser"
+		display_color =	"#3d9cff"
+		item_state = "pw_shotgun_nt"
+		initial_proj = /datum/projectile/special/spreader/pwshotgunspread/NT
+		team_num = 1
+
+	syndicate
+		muzzle_flash = "muzzle_flash_laser"
+		display_color =	"#ff4043"
+		item_state = "pw_shotgun_sy"
+		initial_proj = /datum/projectile/special/spreader/pwshotgunspread/SY
 		team_num = 2
 
 /obj/item/ammo/power_cell/higher_power

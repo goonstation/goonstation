@@ -50,3 +50,42 @@ proc/addTime(timeInByondFormat, years=0, months=0, days=0, hours=0, minutes=0, s
 /// Subtract time from a given BYOND time format
 proc/subtractTime(timeInByondFormat, years=0, months=0, days=0, hours=0, minutes=0, seconds=0)
 	return addTime(timeInByondFormat, -years, -months, -days, -hours, -minutes, -seconds)
+
+/// Validate ISO 8601 format
+proc/validateIso8601(iso8601)
+	var/regex/iso8601Pattern = new(@/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/)
+
+	if(!iso8601Pattern.Find(iso8601))
+		return FALSE // Does not match the pattern
+
+	// Extract components
+	var/list/datetimeParts = splittext(iso8601, "T")
+	var/date = datetimeParts[1]
+	var/time = splittext(datetimeParts[2], "Z")[1]
+
+	var/list/dateParts = splittext(date, "-")
+	var/year = text2num(dateParts[1])
+	var/month = text2num(dateParts[2])
+	var/day = text2num(dateParts[3])
+
+	// Validate year, month, and day
+	if(year < 1 || month < 1 || month > 12 || day < 1 || day > 31)
+		return FALSE
+
+	var/list/timeParts = splittext(time, ":")
+	var/hour = text2num(timeParts[1])
+	var/minute = text2num(timeParts[2])
+	var/second = text2num(timeParts[3])
+
+	// Validate hour, minute, and second
+	if(hour < 0 || hour > 23 || minute < 0 || minute > 59 || second < 0 || second > 59)
+		return FALSE
+
+	// Additional validation for day of month
+	var/list/monthDays = list(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+	if(isLeapYear(year))
+		monthDays[2] = 29
+	if(day > monthDays[month])
+		return FALSE
+
+	return TRUE

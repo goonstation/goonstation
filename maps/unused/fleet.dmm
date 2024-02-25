@@ -18220,7 +18220,7 @@
 	})
 "Ol" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/machinery/phone/wall{
 	pixel_y = 32
 	},

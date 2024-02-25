@@ -21326,7 +21326,7 @@
 /area/shuttle/arrival/station)
 "fGK" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -26757,7 +26757,7 @@
 /area/station/hallway/secondary/north)
 "han" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "haw" = (
@@ -84666,7 +84666,7 @@
 "vJl" = (
 /obj/machinery/manufacturer/general/grody{
 	free_resource_amt = 2;
-	
+
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -91014,7 +91014,7 @@
 /area/station/engine/engineering/ce)
 "xkx" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/item/device/radio/intercom/catering,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/quarters{
