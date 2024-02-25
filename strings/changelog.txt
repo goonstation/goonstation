@@ -1,5 +1,9 @@
 
 (t)sun feb 25 24
+(u)GuvGuvington
+(p)17932
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Updated the rubber hammer sprite.
 (u)Lord_Earthfire
 (p)17928
 (e)🆕📦|C-Feature, A-Game-Objects
