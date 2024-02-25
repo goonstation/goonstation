@@ -15,8 +15,16 @@ const is_set = (bits, bit) => { return bits & (1 << bit); };
 
 const MaintenencePanel = (props, context) => {
   const { act, data } = useBackend<SimulatorData>(context);
-  let resetButton = <Button icon="wifi" onClick={() => act("reset")}>Reset Connection</Button>;
+  let resetButton = <Button icon="wifi" onClick={() => reset()}>Reset Connection</Button>;
+  const reset = () => {
+    act("reset");
+    setConnection("NO CONNECTION");
+  };
   const [bits, setBits] = useLocalState(context, "bits", data.net_number);
+  const [connection, setConnection] = useLocalState(context, "connection", data.host_id);
+  if (data.host_id !== null && connection === "NO CONNECTION") {
+    setConnection("OK CONNECTION");
+  }
   let configSwitches = [];
   for (let i = 0; i < 4; i++) {
     configSwitches.push(<Stack.Item><ConfigSwitch local_bits={bits} setter={setBits} bit_pos={i} /></Stack.Item>);
@@ -24,7 +32,7 @@ const MaintenencePanel = (props, context) => {
   return (
     <Section title="Maintenence Panel" buttons={resetButton}>
       <LabeledList.Item label="Host Connection">
-        {(data.host_id !== null) ? "OK CONNECTION" : "NO CONNECTION"}
+        {connection}
       </LabeledList.Item>
       <LabeledList.Item label="Configuration Switches" verticalAlign="middle">
         <Stack>
