@@ -2078,7 +2078,7 @@ datum
 				..()
 				return
 
-		fooddrink/maunacola //Spacewalking chem that requires drunkeness
+		fooddrink/maunacola
 			name = "Mauna Cola Awakens"
 			id = "maunacola"
 			fluid_r = 233
@@ -2099,8 +2099,11 @@ datum
 					if (EtOH_amt)
 						L.bodytemperature += clamp((EtOH_amt - 10)/3, 0, 30)
 						if (L.bodytemperature > (T0C+130) && EtOH_amt > 40)
+							var/burnrate = EtOH_amt/10
+							flush(holder, burnrate * mult, list("ethanol"))
+							L.bodytemperature += burnrate * 3
 							if (prob(60))
-								L.update_burning(2 * mult)
+								L.update_burning(burnrate * mult)
 							if (ishuman(L))
 								var/mob/living/carbon/human/H = L
 								if (H.sims)
@@ -2112,12 +2115,11 @@ datum
 
 					//If you're hot when you drink this, You Will Burn
 					if (L.bodytemperature > L.base_body_temp + L.temp_tolerance && !L.is_heat_resistant())
-						if (probmult(20)) boutput(L, SPAN_ALERT("[heatmsg]"))
-						var/heatdiff = min((L.bodytemperature - L.base_body_temp), 3) //mintodo adjust numbers here
-						L.TakeDamage("chest", 0, heatdiff * mult, 0, DAMAGE_BURN)
+						if (probmult(20)) boutput(L, SPAN_ALERT("[heatmsg]")) //mintodo play with heating numbers and burning numbers
+						L.TakeDamage("chest", 0, 1 * mult, 0, DAMAGE_BURN)
 
 					//Funny WOW reference, delete if lame
-					if(!L.stat && can_act(L) && probmult(40))
+					if(!L.stat && can_act(L) && probmult(6))
 						var/found = 0
 						for(var/mob/living/critter/small_animal/cockroach/R in oview(2, L))
 							if (!found)
@@ -2128,10 +2130,10 @@ datum
 									sleep(1 SECONDS)
 									var/turf/C = get_turf(R)
 									R.visible_message(SPAN_ALERT("[R] is consumed in flames!"))
-									//fireflash(C,0)
+									fireflash(C,0)
 									playsound(R.loc, 'sound/effects/mag_fireballlaunch.ogg', 30, 0)
 									make_cleanable(/obj/decal/cleanable/ash, C)
-									//qdel(R)
+									qdel(R)
 					..()
 
 		fooddrink/roaringwaters

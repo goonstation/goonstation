@@ -600,9 +600,8 @@
 
 	if(!IN_RANGE(src, target, 12)) // don't point through cameras
 		return
-	boutput(src, SPAN_ALERT("target is [target], client is [client], src is [src], baba is you")) //MINTODO THIS IS DEBUG CODE REMOVE THIS SHIT BEFORE MERGING
-	if(src.client && !(target in view(src.client.view))) //don't point at things we can't see
-		boutput(src, SPAN_ALERT("target is [target], client is [client], src is [src], baba is you"))
+
+	if(src.client && !(src in viewers(src.client.view, target))) //don't point at things we can't see
 		return
 
 	var/obj/item/gun/G = src.equipped()
