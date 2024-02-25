@@ -753,14 +753,14 @@ TYPEINFO(/obj/machinery/networked/storage)
 		else
 			return list(TRUE, "Simulator ready.")
 
-#define TANK_ONE "1"
-#define TANK_TWO "2"
+#define TANK_ONE 1
+#define TANK_TWO 2
 /// Checks if we have a tank in the specified slot
 #define HAS_TANK(tanknum) ((tanknum == TANK_ONE) && src.tank1) || ((tanknum == TANK_TWO) && src.tank2)
 /// Add the tank to the slot being interact with in the device
 #define ADD_TANK(tanknum, tank) tank.set_loc(src); if ((tanknum) == TANK_ONE) {src.tank1 = tank;}\
 								else {src.tank2 = tank;};
-	/// Interact with one of the tank slots on the machine. "1" for the first slot, "2" for the second. "null" to use an empty slot, if there is one.
+	/// Interact with one of the tank slots on the machine. 1 for the first slot, 2 for the second. "null" to use an empty slot, if there is one.
 	proc/interact_tank_slot(mob/user, obj/item/I, slot=null)
 		if(issilicon(user) && BOUNDS_DIST(src, user) > 0)
 			boutput(user, SPAN_ALERT("You cannot interact with \the [src] from that far away!"))
@@ -813,8 +813,8 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 	ui_act(action, params)
 		switch(action)
-			if ("interact_tank_slot")
-				src.interact_tank_slot(usr, usr.equipped(), params["slot_num"])
+			if ("add_item")
+				src.interact_tank_slot(usr, usr.equipped(), params["tank"])
 
 			if("simulate")
 				// Button is disabled on these conditions, but can't hurt to check em' twice
@@ -853,7 +853,6 @@ TYPEINFO(/obj/machinery/networked/storage)
 								"pressure"=((hasvar(tank, "air_contents") && tank.air_contents != null) ? MIXTURE_PRESSURE(tank.air_contents) : null),\
 								"maxPressure"=TANK_FRAGMENT_PRESSURE) : list("name"=null, "pressure"=null,"maxPressure"=null)
 	ui_data()
-
 		var/simulator_dialogue = src.can_simulate()
 		return list(
 			"tank_one" = TANK_AS_LIST(src.tank1),

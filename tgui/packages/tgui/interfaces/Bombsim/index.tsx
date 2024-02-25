@@ -9,13 +9,14 @@ import { useBackend, useLocalState } from '../../backend';
 import { Button, LabeledList, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { formatPressure, truncate } from '../../format';
+import { TankInfo } from "../TTV"
 
 const TankDisplay = (props, context) => {
   const { act, data } = useBackend<TransferValveParams>(context);
   const { tankNum } = props;
   let tank:TankData = (tankNum === "1") ? (data.tank_one) : (data.tank_two);
   let hasTank = (tank.name !== null);
-  let tankButton = <Button icon={(hasTank) ? "eject" : "add"} onClick={() => act("interact_tank_slot", { "slot_num": tankNum })}>{hasTank ? "Eject" : "Insert"}</Button>;
+  let tankButton = <Button icon={(hasTank) ? "eject" : "add"} onClick={() => act("add_item", { "tank": tankNum })}>{hasTank ? "Eject" : "Insert"}</Button>;
   return (
     <Section
       title={(tankNum === "1") ? "Tank One" : "Tank Two"}
@@ -90,10 +91,10 @@ export const Bombsim = (_props, context) => {
       <Window.Content>
         <Stack>
           <Stack.Item>
-            <TankDisplay tankNum="1" />
+            <TankInfo tankNum={1} />
           </Stack.Item>
           <Stack.Item>
-            <TankDisplay tankNum="2" />
+            <TankInfo tankNum={2} />
           </Stack.Item>
         </Stack>
         <Section
