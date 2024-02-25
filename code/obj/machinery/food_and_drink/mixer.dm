@@ -20,6 +20,9 @@ TYPEINFO(/obj/machinery/mixer)
 	flags = TGUI_INTERACTIVE
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
+	var/image/blender_off
+	var/image/blender_powered
+	var/image/blender_working
 	var/list/recipes = null
 	var/list/to_remove = list()
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
@@ -46,6 +49,9 @@ TYPEINFO(/obj/machinery/mixer)
 			src.recipes += new /datum/cookingrecipe/mixer/wonton_wrapper(src)
 			src.recipes += new /datum/cookingrecipe/mixer/butters(src)
 
+		src.blender_off = image(src.icon, "blender_off")
+		src.blender_powered = image(src.icon, "blender_powered")
+		src.blender_working = image(src.icon, "blender_working")
 		src.UpdateIcon()
 		UnsubscribeProcess()
 
@@ -258,14 +264,12 @@ TYPEINFO(/obj/machinery/mixer)
 		else
 			src.icon_state = "blender_empty"
 
-		src.ClearSpecificOverlays(1)
-		var/powered = src.status & NOPOWER
-
-		if (powered)
-			src.UpdateOverlays(image(src.icon, "blender_off"), "blender_off")
-		else if (!powered && !src.working)
-			src.UpdateOverlays(image(src.icon, "blender_powered"), "blender_powered")
+		var/notPowered = src.status & NOPOWER
+		if (notPowered)
+			src.UpdateOverlays(src.blender_off, "blender_light")
+		else if (!notPowered && !src.working)
+			src.UpdateOverlays(src.blender_powered, "blender_light")
 		else
-			src.UpdateOverlays(image(src.icon, "blender_working"), "blender_working")
+			src.UpdateOverlays(src.blender_working, "blender_light")
 
 		return
