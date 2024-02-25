@@ -838,7 +838,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 			if ("config_switch")
 				src.net_number = src.net_number ^ (1 << params["switch_flicked"])
 
-		src.try_update_ui()
+		tgui_process.update_uis(src)
 		src.add_fingerprint(usr)
 		return
 
