@@ -21,6 +21,9 @@ export const TankInfo = (_props, context) => {
     <Section
       title={tankNum === 1 ? "Tank One" : "Tank Two"}
       buttons={tank.name !== null ? button_eject : button_add}
+      style={{
+        "height": "100%",
+      }}
     >
       <LabeledList>
         <LabeledList.Item label={"Holding"}>
