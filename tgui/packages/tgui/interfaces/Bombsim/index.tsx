@@ -8,41 +8,7 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Button, LabeledList, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
-import { formatPressure, truncate } from '../../format';
-import { TankInfo } from "../TTV"
-
-const TankDisplay = (props, context) => {
-  const { act, data } = useBackend<TransferValveParams>(context);
-  const { tankNum } = props;
-  let tank:TankData = (tankNum === "1") ? (data.tank_one) : (data.tank_two);
-  let hasTank = (tank.name !== null);
-  let tankButton = <Button icon={(hasTank) ? "eject" : "add"} onClick={() => act("add_item", { "tank": tankNum })}>{hasTank ? "Eject" : "Insert"}</Button>;
-  return (
-    <Section
-      title={(tankNum === "1") ? "Tank One" : "Tank Two"}
-      textAlign="left"
-      buttons={tankButton}
-      style={{
-        "height": "100%",
-      }}
-    >
-      <LabeledList>
-        <LabeledList.Item
-          label="Tank"
-          textAlign="left"
-        >
-          {hasTank ? truncate(tank.name, 100) : "None"}
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Pressure"
-          textAlign="left"
-        >
-          {(tank.pressure !== null) ? formatPressure(tank.pressure) : "None"}
-        </LabeledList.Item>
-      </LabeledList>
-    </Section>
-  );
-};
+import { TankInfo } from "../TTV";
 
 // Returns whether the nth bit starting with 0 for the rightmost is set
 const is_set = (bits, bit) => { return bits & (1 << bit); };
@@ -91,10 +57,10 @@ export const Bombsim = (_props, context) => {
       <Window.Content>
         <Stack>
           <Stack.Item>
-            <TankInfo tankNum={1} />
+            <TankInfo tank={data.tank_one} tankNum={1} />
           </Stack.Item>
           <Stack.Item>
-            <TankInfo tankNum={2} />
+            <TankInfo tank={data.tank_two} tankNum={2} />
           </Stack.Item>
         </Stack>
         <Section

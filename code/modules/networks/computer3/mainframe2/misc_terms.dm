@@ -761,7 +761,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 #define ADD_TANK(tanknum, tank) tank.set_loc(src); if ((tanknum) == TANK_ONE) {src.tank1 = tank;}\
 								else {src.tank2 = tank;};
 	/// Interact with one of the tank slots on the machine. 1 for the first slot, 2 for the second. "null" to use an empty slot, if there is one.
-	proc/interact_tank_slot(mob/user, obj/item/I, slot=null)
+	proc/add_tank(mob/user, obj/item/I, slot=null)
 		if(issilicon(user) && BOUNDS_DIST(src, user) > 0)
 			boutput(user, SPAN_ALERT("You cannot interact with \the [src] from that far away!"))
 			return
@@ -775,46 +775,45 @@ TYPEINFO(/obj/machinery/networked/storage)
 					slot = TANK_TWO
 			else
 				slot = TANK_ONE
-		// Eject tank
-		if (HAS_TANK(slot))
-			user.put_in_hand_or_eject((slot == TANK_ONE) ? src.tank1 : src.tank2)
-			boutput(user, "You eject \the [I].")
-			if (slot == TANK_ONE)
-				src.tank1 = null
-			else
-				src.tank2 = null
-			if (src.vrbomb)
-				qdel(src.vrbomb)
-		// Insert tank
-		else
-			// Magtractors need special handling
-			if (istype(I, /obj/item/magtractor))
-				var/obj/item/magtractor/mag = I
-				I = mag.holding
-				if (!src.is_valid_tank(I))
-					boutput(user, "That won't work inside of the [src]!")
-				else
-					mag.dropItem(0)
-					ADD_TANK(slot, I)
-					playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-					boutput(user, "You insert \the [I].")
-			else if (!src.is_valid_tank(I))
+		// Magtractors need special handling
+		if (istype(I, /obj/item/magtractor))
+			var/obj/item/magtractor/mag = I
+			I = mag.holding
+			if (!src.is_valid_tank(I))
 				boutput(user, "That won't work inside of the [src]!")
 			else
-				user.drop_item()
+				mag.dropItem(0)
 				ADD_TANK(slot, I)
 				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				boutput(user, "You insert \the [I].")
-
-#undef HAS_TANK
-#undef ADD_TANK
-#undef TANK_ONE
-#undef TANK_TWO
+		else if (!src.is_valid_tank(I))
+			boutput(user, "That won't work inside of the [src]!")
+		else
+			user.drop_item()
+			ADD_TANK(slot, I)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+			boutput(user, "You insert \the [I].")
 
 	ui_act(action, params)
 		switch(action)
 			if ("add_item")
-				src.interact_tank_slot(usr, usr.equipped(), params["tank"])
+				src.add_tank(usr, usr.equipped(), params["tank"])
+
+			if ("remove_tank_one")
+				if (HAS_TANK(TANK_ONE))
+					usr.put_in_hand_or_eject(src.tank1)
+					boutput(usr, "You eject \the [src.tank1].")
+					src.tank1 = null
+					if (src.vrbomb)
+						qdel(src.vrbomb)
+
+			if ("remove_tank_two")
+				if (HAS_TANK(TANK_TWO))
+					usr.put_in_hand_or_eject(src.tank2)
+					boutput(usr, "You eject \the [src.tank2].")
+					src.tank2 = null
+					if (src.vrbomb)
+						qdel(src.vrbomb)
 
 			if("simulate")
 				// Button is disabled on these conditions, but can't hurt to check em' twice
@@ -839,8 +838,14 @@ TYPEINFO(/obj/machinery/networked/storage)
 			if ("config_switch")
 				src.net_number = src.net_number ^ (1 << params["switch_flicked"])
 
+		src.try_update_ui()
 		src.add_fingerprint(usr)
 		return
+
+#undef HAS_TANK
+#undef ADD_TANK
+#undef TANK_ONE
+#undef TANK_TWO
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -892,7 +897,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 	attackby(obj/item/I, mob/user)
 		..()
 		if (src.is_valid_tank(I)) // Insert tanks by hand
-			src.interact_tank_slot(user, I)
+			src.add_tank(user, I)
 
 	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
