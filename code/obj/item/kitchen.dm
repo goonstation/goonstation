@@ -54,7 +54,7 @@ TRAYS
 
 	New()
 		..()
-		if(prob(60))
+		if(src.pixel_y == 0 && prob(60)) // Don't adjust map-set pixel adjustments
 			src.pixel_y = rand(0, 4)
 		BLOCK_SETUP(BLOCK_KNIFE)
 		return
