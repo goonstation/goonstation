@@ -12,7 +12,7 @@ import { toTitleCase } from 'common/string';
 import { formatPressure } from '../../format';
 
 const TankInfo = (_props, context) => {
-  const { act } = useBackend<TransferValveParams>(context);
+  const { act } = useBackend(context);
   const { tank } = _props;
   let button_eject = <Button width={5} textAlign={"center"} disabled={tank.name===null} icon="eject" onClick={() => act(tank.num === 1 ? "remove_tank_one" : "remove_tank_two")}>Eject</Button>;
   let button_add = <Button width={5} textAlign={"center"} icon="add" onClick={() => act("add_item", { "tank": tank.num })}>Add</Button>;
