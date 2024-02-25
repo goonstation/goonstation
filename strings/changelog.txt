@@ -1,5 +1,9 @@
 
 (t)sun feb 25 24
+(u)Lord_Earthfire
+(p)17928
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Fishes within aquatic research pools have begun to fear explosions and actively jump out of their pool when exposed to them.
 (u)MeggalBozale
 (p)17922
 (e)💅📄🔬|C-QoL, A-UI, A-Science
