@@ -1,5 +1,11 @@
 
 (t)sun feb 25 24
+(u)LeahTheTech
+(p)18022
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Vampiric thralls no longer have zombie arms.
+(*)Vampiric thralls now rapidly lose blood and die if they stray too far from their vampire master.
+(+)Vampiric thrall passive blood drain halved.
 (u)GuvGuvington
 (p)17932
 (e)🎨📦|C-Sprites, A-Game-Objects
