@@ -838,15 +838,16 @@ var/global/current_state = GAME_STATE_INVALID
 					logTheThing(LOG_DEBUG, null, "[player.ckey] lost held item")
 					player.client.persistent_bank_item = "none"
 
-				bulk_commit["[bulk_commit.len + 1]"] = list(
-					"player_id" = player.client.player.id,
-					"key" = "persistent_bank",
-					"value" = player.client.persistent_bank + earnings
-				)
-				bulk_commit["[bulk_commit.len + 1]"] = list(
-					"player_id" = player.client.player.id,
-					"key" = "persistent_bank_item",
-					"value" = player.client.persistent_bank_item
+				if (player.client.player.id)
+					bulk_commit["[bulk_commit.len + 1]"] = list(
+						"player_id" = player.client.player.id,
+						"key" = "persistent_bank",
+						"value" = player.client.persistent_bank + earnings
+					)
+					bulk_commit["[bulk_commit.len + 1]"] = list(
+						"player_id" = player.client.player.id,
+						"key" = "persistent_bank_item",
+						"value" = player.client.persistent_bank_item
 				)
 
 				SPAWN(0)

@@ -59,7 +59,7 @@
 		dat += "No notes. <i>Yet.</i>"
 
 	else
-		for (var/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/playerNote in playerNotes.data)
+		for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 			var/list/row_classes = list()
 			var/noteReason = playerNote.note
 

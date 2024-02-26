@@ -100,7 +100,9 @@
 /turf/simulated/floor/sanitary/white,
 /area/mining/miningoutpost)
 "at" = (
-/obj/machinery/door/unpowered/wood/stall,
+/obj/machinery/door/unpowered/wood/stall{
+	dir = 4
+	},
 /turf/simulated/floor/sanitary/white,
 /area/mining/miningoutpost)
 "au" = (
@@ -139,8 +141,7 @@
 "aB" = (
 /obj/stool/chair/yellow,
 /obj/cable{
-	icon_state = "4-8";
-	
+	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent/warm/very,
 /turf/simulated/floor/specialroom/medbay,
@@ -590,15 +591,13 @@
 	icon_state = "1-8"
 	},
 /obj/cable{
-	icon_state = "2-4";
-	
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/mining/miningoutpost)
 "bY" = (
 /obj/cable{
-	icon_state = "1-2";
-	
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/mining/miningoutpost)
@@ -608,8 +607,7 @@
 	dir = 1
 	},
 /obj/cable{
-	icon_state = "0-2";
-	
+	icon_state = "0-2"
 	},
 /obj/cable{
 	icon_state = "0-8"
@@ -644,8 +642,7 @@
 "cd" = (
 /obj/machinery/door/airlock/pyro,
 /obj/cable{
-	icon_state = "1-2";
-	
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/mining/miningoutpost)

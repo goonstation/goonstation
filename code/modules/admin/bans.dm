@@ -96,6 +96,8 @@
 					boutput(targetClient, "<span class='alert'>You have received a permanent ban, you can't appeal this ban until 30 days have passed.</span>")
 
 			del(targetClient)
+		else
+			logTheThing(LOG_DEBUG, "Bans: unable to find client to kick for banned ckey [ckey]")
 
 	/// Check if a ban exists
 	proc/check(ckey, comp_id, ip)

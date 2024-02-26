@@ -2,6 +2,10 @@ var/global/datum/poll_manager/poll_manager = new
 /// master poll controller for the server. Caches the results, syncs with api
 /datum/poll_manager
 	var/list/poll_data = list()
+	/// server id for global polls
+	var/const/global_server_id = "global"
+	/// server id for rp only polls
+	var/const/rp_only_server_id = "rp_only"
 
 	/// fetch and cache the latest poll data from the API
 	proc/sync_polldata()
@@ -11,8 +15,11 @@ var/global/datum/poll_manager/poll_manager = new
 			var/datum/apiRoute/polls/get/getPolls = new
 			getPolls.queryParams = list(
 				"filters" = list(
-					//"active" = "true",
-					"server" = config.server_id
+#ifdef RP_MODE
+					"servers" = list(config.server_id, global_server_id, rp_only_server_id)
+#else
+					"servers" = list(config.server_id, global_server_id)
+#endif
 				)
 			)
 			polls = apiHandler.queryAPI(getPolls)

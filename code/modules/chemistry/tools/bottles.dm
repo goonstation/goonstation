@@ -6,42 +6,25 @@
 /obj/item/reagent_containers/glass/bottle
 	name = "bottle"
 	desc = "A small bottle."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle1"
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "bottle_1"
 	item_state = "atoxinbottle"
 	initial_volume = 30
-	var/image/fluid_image
-	var/bottle_style = null
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 	object_flags = NO_GHOSTCRITTER
+	fluid_overlay_states = 6
+	var/bottle_style = null
 
 	New()
 		if (!src.bottle_style)
 			src.bottle_style = "[rand(1,4)]"
-		src.UpdateIcon()
-		..()
 
-	on_reagent_change()
-		..()
-		src.UpdateIcon()
+		. = ..()
 
-	update_icon()
-		..()
-		if (!(findtext(src.icon_state, "bottle", 1, length("bottle") + 1)))
-			return
-		src.underlays = null
-		if (reagents?.total_volume)
-			var/datum/color/average = reagents.get_average_color()
-			var/fluid_state = round(clamp((((src.reagents.total_volume / src.reagents.maximum_volume) * 4) + 1), 1, 4))
-			src.fluid_image = image('icons/obj/chemical.dmi', "fluid-bottle[bottle_style]-[fluid_state]", -1)
-			src.icon_state = "bottle[bottle_style]-[fluid_state]"
-			src.fluid_image.color = average.to_rgba()
-			src.underlays += src.fluid_image
-		else
-			src.icon_state = "bottle[bottle_style]"
-		signal_event("icon_updated")
+		src.container_style = "bottle_[src.bottle_style]"
+		src.UpdateIcon()
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -165,8 +148,10 @@
 /obj/item/reagent_containers/glass/bottle/syringe_canister
 	name = "poison canister"
 	desc = "A large fluid-filled canister designed to fill a syringe gun."
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "syringe_canister"
 	initial_volume = 90
+	fluid_overlay_states = 0
 
 	curare
 		initial_reagents = "curare"
@@ -285,10 +270,12 @@
 /obj/item/reagent_containers/glass/bottle/ethanol
 	name = "rubbing alcohol"
 	desc = "Isopropriate, or rubbing alcohol. Please don't drink it."
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "plasticbottle"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
 	initial_reagents = "ethanol"
+	fluid_overlay_states = 0
 
 /obj/item/reagent_containers/glass/bottle/mercury
 	name = "mercury bottle"
@@ -305,9 +292,11 @@
 /obj/item/reagent_containers/glass/bottle/chemical
 	name = "chemical bottle"
 	desc = "A reagent storage bottle."
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "reagent_bottle"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
+	fluid_overlay_states = 0
 
 /obj/item/reagent_containers/glass/bottle/chemical/plastic
 	name = "plastic chemical bottle"
@@ -321,25 +310,31 @@
 /obj/item/reagent_containers/glass/bottle/oil
 	name = "oil bottle"
 	desc = "A reagent storage bottle."
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "reagent_bottle"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
+	fluid_overlay_states = 0
 	initial_reagents = "oil"
 
 /obj/item/reagent_containers/glass/bottle/phenol
 	name = "phenol bottle"
 	desc = "A reagent storage bottle."
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "reagent_bottle"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
+	fluid_overlay_states = 0
 	initial_reagents = "phenol"
 
 /obj/item/reagent_containers/glass/bottle/acetone
 	name = "acetone bottle"
 	desc = "A reagent storage bottle."
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "reagent_bottle"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
+	fluid_overlay_states = 0
 	initial_reagents = "acetone"
 
 	large
@@ -355,9 +350,11 @@
 /obj/item/reagent_containers/glass/bottle/ammonia
 	name = "ammonia bottle"
 	desc = "A reagent storage bottle."
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "reagent_bottle"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
+	fluid_overlay_states = 0
 	initial_reagents = "ammonia"
 
 	large
@@ -373,17 +370,21 @@
 /obj/item/reagent_containers/glass/bottle/diethylamine
 	name = "diethylamine bottle"
 	desc = "A reagent storage bottle."
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "reagent_bottle"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
+	fluid_overlay_states = 0
 	initial_reagents = "diethylamine"
 
 /obj/item/reagent_containers/glass/bottle/acid
 	name = "acid bottle"
 	desc = "A reagent storage bottle."
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "reagent_bottle"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
+	fluid_overlay_states = 0
 	initial_reagents = "acid"
 
 	large
@@ -394,9 +395,11 @@
 /obj/item/reagent_containers/glass/bottle/formaldehyde
 	name = "embalming fluid bottle"
 	desc = "A reagent storage bottle."
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "reagent_bottle"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
+	fluid_overlay_states = 0
 	initial_reagents = "formaldehyde"
 
 /* ============================================== */
@@ -424,6 +427,7 @@
 /obj/item/reagent_containers/glass/bottle/cleaner
 	name = "cleaner bottle"
 	desc = "A bottle filled with cleaning fluid."
+	icon = 'icons/obj/chemical.dmi'
 	icon_state = "largebottle-labeled"
 	initial_volume = 100
 	initial_reagents = "cleaner"

@@ -32451,6 +32451,11 @@
 	},
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "cAR" = (
@@ -32864,6 +32869,11 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "dcJ" = (
@@ -37243,6 +37253,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "juK" = (
@@ -37667,6 +37682,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "sec"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -38446,6 +38466,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "brig"
+	},
 /turf/simulated/floor/red,
 /area/station/security/processing)
 "ltZ" = (
@@ -40329,6 +40354,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "nLp" = (
@@ -40713,6 +40743,11 @@
 	},
 /obj/machinery/secscanner{
 	pixel_y = 10
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -41993,6 +42028,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "quk" = (
@@ -43189,6 +43229,11 @@
 	},
 /obj/machinery/secscanner{
 	pixel_y = 10
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -44761,6 +44806,11 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
