@@ -832,10 +832,7 @@ proc/random_accent()
 	var/upper = S == uppertext(S)
 	S = lowertext(S)
 	switch(S)
-		if("a")
-			if(lowertext(R.next_char) == "u")
-				new_string = "ow"
-				used = 2
+
 		if("w")
 			new_string = "v"
 			used = 1
