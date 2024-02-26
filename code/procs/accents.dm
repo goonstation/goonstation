@@ -833,18 +833,18 @@ proc/random_accent()
 	S = lowertext(S)
 	switch(S)
 
-		if("w")
+		if("w") //germans pronounce W like V
 			new_string = "v"
 			used = 1
-		if("t")
+		if("t") //unlinke the stereotypical zat- it's more like dat, because both the t and the h are pronounced in german
 			if(lowertext(R.next_char) == "h")
 				new_string = "d"
 				used = 2
-		if("z")
+		if("z")//z acts like an english ts
 			new_string = "ts"
 			used = 1
 
-		if("q")
+		if("q")//qu is pronounced like kv, like in quatsch - kvahtch
 			if(lowertext(R.next_char) == "u")
 				new_string = "kv"
 				used = 2
@@ -883,9 +883,6 @@ proc/random_accent()
 			if(isVowel(lowertext(R.next_char)))
 				new_string = "z"
 				used = 1
-
-
-
 
 	var/datum/parse_result/P = new
 	P.string = upper ? uppertext(new_string) : new_string
@@ -943,7 +940,7 @@ proc/random_accent()
 
 		var/matching_token = strings("language/german.txt", lowertext(original_word), 1)
 		if(matching_token)
-			var/pre_parse_modified_token = replacetext(original_word, lowertext(original_word), matching_token)
+			var/pre_parse_modified_token = replacetext(original_word, lowertext(original_word), matching_token)//grab the cognates, replace them, and then feed them into the parser for consistency
 			var/datum/text_roamer/T = new/datum/text_roamer(pre_parse_modified_token)
 			for(var/i = 0, i < length(pre_parse_modified_token), i=i)
 				var/datum/parse_result/P = german_parse(T)
