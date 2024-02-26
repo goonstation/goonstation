@@ -129,7 +129,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	item_state = "glasses"
 	desc = "Corrective lenses, perfect for the near-sighted."
 	correct_bad_vision = 1
-	AttackSelf(mob/user)
+	attack_self(mob/user)
 		. = ..()
 		user.show_text("You change the glasses' style.")
 		if(src.icon_state == "glasses")
