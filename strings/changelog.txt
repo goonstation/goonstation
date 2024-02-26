@@ -1,4 +1,35 @@
 
+(t)sun feb 25 24
+(u)LeahTheTech
+(p)18022
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Vampiric thralls no longer have zombie arms.
+(*)Vampiric thralls now rapidly lose blood and die if they stray too far from their vampire master.
+(+)Vampiric thrall passive blood drain halved.
+(u)GuvGuvington
+(p)17932
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Updated the rubber hammer sprite.
+(u)Lord_Earthfire
+(p)17928
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Fishes within aquatic research pools have begun to fear explosions and actively jump out of their pool when exposed to them.
+(u)MeggalBozale
+(p)17922
+(e)💅📄🔬|C-QoL, A-UI, A-Science
+(*)Pump Control Computers now use TGUI, and can set the specific pressure of pumps they control. Give it a try!
+(t)sat feb 24 24
+(u)LeahTheTech
+(+)Space HVACs have had some internal mathy parts hit with a wrench and should have a bit more oomph now.
+(u)Cherman0
+(p)17872
+(e)🆕⚖🌠|C-Feature, C-Balance, A-Events
+(+)Using the singularity buster to destroy a singularity now causes a white hole to spawn.
+(t)fri feb 23 24
+(u)IPingu
+(p)17963
+(e)🔄📄🧛|C-Rework, A-UI, A-Gamemodes
+(+)Converts wizard spellbook interface to TGUI
 (t)thu feb 22 24
 (u)Tyrant
 (p)17977

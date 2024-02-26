@@ -59,6 +59,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 
 			user.drop_item(src)
 			src.set_loc(B)
+			src.storage.hide_all_huds()
 			boutput(user, "You add the tiles into the empty toolbox. They stick oddly out the top.")
 			return
 
