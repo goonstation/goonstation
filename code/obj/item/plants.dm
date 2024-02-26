@@ -618,15 +618,14 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 		var/obj/item/reagent_containers/food/snacks/plant/seeds = locate() in src
 		if(seeds)
 			boutput(user, SPAN_NOTICE("You notice some [seeds] fall out of [src]!"))
+			seeds.set_loc(get_turf(target))
 			// that's the result if you want to keep 50% of the initial chems in the sunflower at the end.
 			// This accomodates partially for chems injected in the sunflower if some seeds are already missing
 			var/chem_amount = src.reagents.total_volume / (current_seed_count + initial_seed_count)
 			seeds.reagents.maximum_volume = max(chem_amount, seeds.reagents.maximum_volume)
-			seeds.reagents.inert = 1 //let's not explode people by hitting them with a potassium/water sunflower
 			src.reagents.trans_to(seeds, chem_amount)
-			seeds.reagents.inert = 0
 			src.current_seed_count -= 1
-			seeds.set_loc(get_turf(target))
+
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		. = ..()
