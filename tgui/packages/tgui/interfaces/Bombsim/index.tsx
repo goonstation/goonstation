@@ -21,8 +21,8 @@ const MaintenencePanel = (props, context) => {
     setConnection("NO CONNECTION");
   };
   const [bits, setBits] = useLocalState(context, "bits", data.net_number);
-  const [connection, setConnection] = useLocalState(context, "connection", data.host_id);
-  if (data.host_id !== null && connection === "NO CONNECTION") {
+  const [connection, setConnection] = useLocalState(context, "connection", "OK CONNECTION");
+  if (connection === "NO CONNECTION" && data.host_id !== null) {
     setConnection("OK CONNECTION");
   }
   let configSwitches = [];
@@ -59,7 +59,7 @@ const ConfigSwitch = (props, context) => {
 
 export const Bombsim = (_props, context) => {
   const { act, data } = useBackend<SimulatorData>(context);
-  let simulationButton = <Button icon="boom" disabled={!data.is_ready} onClick={() => act("simulate")}>Begin Simulation</Button>;
+  let simulationButton = <Button icon="burst" disabled={!data.is_ready} onClick={() => act("simulate")}>Begin Simulation</Button>;
   return (
     <Window width={400} height={(data.panel_open) ? 400 : 300}>
       <Window.Content>
