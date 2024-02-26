@@ -148,7 +148,7 @@ proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/pare
 	//This can be used, when you want to quickly generate seeds out of objects or other plants e.g. creeper or fruits.
 	var/obj/item/seed/child
 	if (parent_planttype.unique_seed)
-		child = new parent_planttype.unique_seed
+		child = new parent_planttype.unique_seed(location_to_create)
 	else
 		child = new /obj/item/seed(location_to_create)
 	var/datum/plant/child_planttype = HYPgenerateplanttypecopy(child, parent_planttype)
