@@ -712,10 +712,11 @@
 							glasses.AttackSelf(src)
 							src.say (pick("Heh-","hm-","hah-"))
 							src.visible_message("[src] nudges [his_or_her(src)] glasses, and furrows [his_or_her(src)] brow. [his_or_her(src)] glasses start to reflect light.")
+							elecflash(src)
 							update_glasses()
 						else
 							glasses.AttackSelf(src)
-							src	.visible_message("[src] nudges [his_or_her(src)] glasses back down [his_or_her(src)] nose.")
+							src.visible_message("[src] nudges [his_or_her(src)] glasses back down [his_or_her(src)] nose.")
 							update_glasses()
 
 			if ("hatstomp", "stomphat")
