@@ -11,16 +11,19 @@ import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
 import { formatPressure } from '../../format';
 
-const TankInfo = (_props, context) => {
-  const { act } = useBackend<TransferValveParams>(context);
-  const { tank } = _props;
-  let button_eject = <Button width={5} textAlign={"center"} disabled={tank.name===null} icon="eject" onClick={() => act(tank.num === 1 ? "remove_tank_one" : "remove_tank_two")}>Eject</Button>;
-  let button_add = <Button width={5} textAlign={"center"} icon="add" onClick={() => act("add_item", { "tank": tank.num })}>Add</Button>;
+export const TankInfo = (_props, context) => {
+  const { act } = useBackend(context);
+  const { tank, tankNum } = _props;
+  let button_eject = <Button width={5} textAlign={"center"} disabled={tank.name===null} icon="eject" onClick={() => act(tankNum === 1 ? "remove_tank_one" : "remove_tank_two")}>Eject</Button>;
+  let button_add = <Button width={5} textAlign={"center"} icon="add" onClick={() => act("add_item", { "tank": tankNum })}>Add</Button>;
   let maxPressure = (tank.maxPressure !== null) ? tank.maxPressure : 999;
   return (
     <Section
-      title={tank.num === 1 ? "Tank One" : "Tank Two"}
+      title={tankNum === 1 ? "Tank One" : "Tank Two"}
       buttons={tank.name !== null ? button_eject : button_add}
+      style={{
+        "height": "100%",
+      }}
     >
       <LabeledList>
         <LabeledList.Item label={"Holding"}>
@@ -59,7 +62,7 @@ export const TTV = (_props, context) => {
       <Window.Content>
         <Stack>
           <Stack.Item>
-            <TankInfo tank={tank_one} />
+            <TankInfo tank={tank_one} tankNum={1} />
           </Stack.Item>
 
           <Stack.Item>
@@ -82,7 +85,7 @@ export const TTV = (_props, context) => {
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <TankInfo tank={tank_two} />
+            <TankInfo tank={tank_two} tankNum={2} />
           </Stack.Item>
         </Stack>
       </Window.Content>
