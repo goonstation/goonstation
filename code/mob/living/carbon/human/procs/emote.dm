@@ -708,12 +708,15 @@
 					if (istype(src.glasses, /obj/item/clothing/glasses/regular))
 						var/obj/item/glasses = src.glasses
 						if(glasses.icon_state != "circleglasses")
-							playsound(src, "sound/weapons/flash.ogg", 60, TRUE)
+
 							glasses.AttackSelf(src)
 							src.say (pick("Heh-","hm-","hah-"))
-							src.visible_message("[src] nudges [his_or_her(src)] glasses, and furrows [his_or_her(src)] brow. Their glasses start to reflect light.")
+							src.visible_message("[src] nudges [his_or_her(src)] glasses, and furrows [his_or_her(src)] brow. [his_or_her(src)] glasses start to reflect light.")
 							update_glasses()
-
+						else
+							glasses.AttackSelf(src)
+							src	.visible_message("[src] nudges [his_or_her(src)] glasses back down [his_or_her(src)] nose.")
+							update_glasses()
 
 			if ("hatstomp", "stomphat")
 				if (!src.restrained())
