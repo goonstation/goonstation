@@ -59,7 +59,7 @@ const ConfigSwitch = (props, context) => {
 
 export const Bombsim = (_props, context) => {
   const { act, data } = useBackend<SimulatorData>(context);
-  let simulationButton = <Button icon="add" disabled={!data.is_ready} onClick={() => act("simulate")}>Begin Simulation</Button>;
+  let simulationButton = <Button icon="boom" disabled={!data.is_ready} onClick={() => act("simulate")}>Begin Simulation</Button>;
   return (
     <Window width={400} height={(data.panel_open) ? 400 : 300}>
       <Window.Content>
