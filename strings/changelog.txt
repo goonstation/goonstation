@@ -3,6 +3,7 @@
 (u)tanker4390
 (*)Resprited THE MONSTER and MacGuffin burgers.
 (u)LeahTheTech
+(+)The appendicitis random event now only affects crew that have medical records. No more NT records indicating salvager organ health.
 (p)18022
 (e)⚖🧛|C-Balance, A-Gamemodes
 (*)Vampiric thralls no longer have zombie arms.
