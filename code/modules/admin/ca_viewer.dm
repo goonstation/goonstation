@@ -11,6 +11,7 @@
 ABSTRACT_TYPE(/datum/ca_type)
 /datum/ca_type
 	var/name = "Unknown"
+	var/description = "Description Goes Here?"
 	var/function = "foo()"
 	var/options = list()
 	var/defaults = list()
@@ -24,6 +25,7 @@ ABSTRACT_TYPE(/datum/ca_type)
 	cnoise
 		name = "Noise"
 		function = "rustg_cnoise_generate"
+		description = "Cellular Automata Noise Grid"
 		options = list("percentage", "iterations", "birth limit", "dead limit", "size_x", "size_y")
 		defaults = list("percentage"=50, "iterations"=5, "birth limit"=6, "dead limit"=3, "size_x"=100, "size_y"=100)
 
@@ -34,6 +36,7 @@ ABSTRACT_TYPE(/datum/ca_type)
 
 	perlin_grid
 		name = "Perlin Noise Grid"
+		description = "Perlin Noise Grid"
 		function = "rustg_dbp_generate"
 		options = list("seed", "accuracy", "stamp_size", "world_size", "lower_range", "upper_range")
 		defaults = list("seed"=42069, "accuracy"=4, "stamp_size"=16, "world_size"=100, "lower_range"=0.1, "upper_range"=0.8)
@@ -44,6 +47,7 @@ ABSTRACT_TYPE(/datum/ca_type)
 				return rustg_dbp_generate("[params["seed"]]", "[params["accuracy"]]", "[params["stamp_size"]]", "[params["world_size"]]", "[params["lower_range"]]", "[params["upper_range"]]")
 	worley
 		name = "Worley Noise"
+		description = "Worley Noise"
 		function = "rustg_worley_generate"
 		options = list("region_size", "threshold", "node_per_region_chance", "maxx", "node_min", "node_max")
 		defaults = list("region_size"=32, "threshold"=10, "node_per_region_chance"=50, "maxx"=100, "node_min"=1, "node_max"=8)
@@ -95,6 +99,7 @@ ABSTRACT_TYPE(/datum/ca_type)
 		.["typeData"][T.name] += list(
 			"name" = T.name,
 			"function" = T.function,
+			"description" = T.description,
 			"options"=T.options)
 
 /datum/ca_viewer/ui_data()
