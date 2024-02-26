@@ -843,12 +843,18 @@ proc/random_accent()
 		if("z")
 			new_string = "ts"
 			used = 1
+
+		if("q")
+			if(lowertext(R.next_char) == "u")
+				new_string = "kv"
+				used = 2
+
 		if("r")
-			if(lowertext(R.prev_char) == " "  || lowertext(R.prev_char) == ""|| isVowel(lowertext(R.next_char)) || !isVowel(lowertext(R.next_char))) //tries to emulate the rolling of the R or the gutteral R
+			if(lowertext(R.prev_char) == " "  || lowertext(R.prev_char) == ""|| isVowel(lowertext(R.next_char)) || !isVowel(lowertext(R.next_char) && lowertext(R.next_char) != "r" && R.prev_char != ":")) //tries to emulate the rolling of the R or the gutteral R
 				new_string = "rr"
 				used = 1
 		if("c")
-			if(lowertext(R.next_char) == "h" && lowertext(lowertext(R.next_char)) == "" || lowertext(lowertext(R.next_char)) == " ")
+			if(lowertext(R.next_char) == "h" && !lowertext(lowertext(R.next_char)) == "" || !lowertext(lowertext(R.next_char)) == " ")
 				new_string = "sh" //this sound isn't really able to be written in english, but sh is a close approximate. The ch in ich.
 				used = 1
 
@@ -857,8 +863,7 @@ proc/random_accent()
 			used = 1
 		if("e")
 			if(lowertext(R.next_char) == "" || lowertext(R.next_char) == " " && prob(50))
-				new_string = "eh" //the dangling E that germans pronounce
-				used = 1
+				new_string = "eh"
 			if(lowertext(R.prev_char) == "u")
 				new_string = "ee"
 				used = 1
@@ -881,25 +886,12 @@ proc/random_accent()
 
 
 
+
 	var/datum/parse_result/P = new
 	P.string = upper ? uppertext(new_string) : new_string
 	P.chars_used = used
 	return P
 
-
-/* nnnoooooope!
-/proc/wonk_parse(var/string)
-	string = lowertext(string)
-	if(prob(1))
-		return pick("yiff yiff mrr", "fuckable owwwwwwls")
-
-	var/list/broken_string = splittext(string, " ")
-	for(var/i = 1; i <= broken_string.len;i++)
-		if(prob(20))
-			broken_string[i] = pick("actually most of this is really gross and isn't appropriate for any player to be saying, so here it is gone!")
-
-	return kText.list2text(broken_string)
-*/
 /proc/russify(var/string)
 	var/modded = ""
 	var/datum/text_roamer/T = new/datum/text_roamer(string)

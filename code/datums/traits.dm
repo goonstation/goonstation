@@ -328,10 +328,10 @@
 
 
 /datum/trait/german
-	name = "German Accent"
-	desc = "You're from somewhere in the middle of Texas."
+	name = "German"
+	desc = "You're from somewhere in the middle of Texas. Prost y'all."
 	id = "german"
-	icon_state = "placeholder"
+	icon_state = "german"
 	points = 0
 	category =  list("language")
 
