@@ -177,3 +177,4 @@ worm@=wurm
 yes@=ja
 yessir@=javol
 yummy@=lecker
+bastard@=schweinehund
