@@ -406,7 +406,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			gain += A.material.getProperty("n_radioactive") * 6 * A.material_amt
 			if(isitem(A))
 				var/obj/item/I = A
-				gain *= I.amount
+				gain *= min(I.amount, INFINITY)
 
 		if (A.reagents)
 			gain += min(A.reagents.total_volume/4, 50)
