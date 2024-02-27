@@ -1,4 +1,9 @@
 
+(t)tue feb 27 24
+(u)Lord_Earthfire
+(p)17937
+(e)🪲📦🌱|C-Bug, A-Game-Objects, A-Hydroponics
+(+)Sunflowers now transfers up to 50% of their chems unto their sunflower seeds
 (t)sun feb 25 24
 (u)tanker4390
 (*)Resprited THE MONSTER and MacGuffin burgers.
