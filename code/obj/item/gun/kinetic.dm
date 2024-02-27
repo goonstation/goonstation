@@ -912,9 +912,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_restock_cost = 2
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/veritate)
 		projectiles = list(current_projectile,new/datum/projectile/bullet/veritate/burst)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 	attack_self(mob/user as mob)
@@ -1062,6 +1067,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	var/pulled = FALSE
+	add_residue = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -1160,6 +1166,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 6
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
+	add_residue = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -1183,6 +1190,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 12
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
+	add_residue = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -2144,6 +2152,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/)
 		..()
 
+
 // assault
 /obj/item/gun/kinetic/assault_rifle
 	name = "\improper Sirius assault rifle"
@@ -2208,7 +2217,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 
-
 // heavy
 /obj/item/gun/kinetic/light_machine_gun
 	name = "\improper Antares light machine gun"
@@ -2235,10 +2243,15 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_restock_cost = 3
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/lmg)
 		projectiles = list(current_projectile, new/datum/projectile/bullet/lmg/auto)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.5 DECI SECONDS, 1.5 DECI SECONDS, 1)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 	setupProperties()
@@ -2277,8 +2290,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/cannon)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 	setupProperties()
@@ -2313,8 +2331,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_restock_cost = 5
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/howitzer)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 	setupProperties()

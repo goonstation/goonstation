@@ -30,7 +30,8 @@
 	..()
 	return
 
-/obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj)
+/obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj, mob/user)
+	logTheThing(LOG_STATION, src, "is deconstructed by [key_name(user)] at [log_loc(src)]")
 	frame.circuit.id = src.id
 
 /obj/machinery/computer/robotics/process()

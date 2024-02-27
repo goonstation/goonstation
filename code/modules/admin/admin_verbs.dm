@@ -154,7 +154,8 @@ var/list/admin_verbs = list(
 		/client/proc/main_loop_tick_detail,
 		/client/proc/display_bomb_monitor,
 		//Ban verbs
-		/client/proc/openBanPanel,
+		/client/proc/ban_panel,
+		/client/proc/addBanTemp,
 		/client/proc/banooc,
 		/client/proc/view_cid_list,
 		/client/proc/modify_parts,
@@ -172,7 +173,8 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_flourish,
 
 		/client/proc/cmd_view_runtimes,
-		/client/proc/cmd_antag_history,
+		/client/proc/cmd_aggressive_debugging,
+		// /client/proc/cmd_antag_history,
 		/client/proc/cmd_admin_show_player_stats,
 		/client/proc/cmd_admin_show_player_ips,
 		/client/proc/cmd_admin_show_player_compids,
@@ -382,6 +384,8 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_caviewer,
 		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
+		/client/proc/toggle_all_artifacts,
+		/client/proc/spawn_tons_of_artifacts,
 		/client/proc/toggle_radio_maptext,
 
 		/datum/admins/proc/toggleaprilfools,
@@ -477,6 +481,7 @@ var/list/admin_verbs = list(
 		/client/proc/upload_uncool_words,
 		/client/proc/TestMarketReq,
 		/verb/adminDumpBlueprint,
+		/client/proc/debug_event_recorder,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
@@ -760,6 +765,17 @@ var/list/special_pa_observing_verbs = list(
 	if (src.holder.level >= LEVEL_SA)
 		global.player_panel.ui_interact(src.mob)
 
+/client/proc/ban_panel()
+	set name = "Ban Panel"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	if (!src.holder || src.holder?.tempmin)
+		logTheThing(LOG_ADMIN, src, "tried to access the ban panel")
+		logTheThing(LOG_DIARY, src, "tried to access the ban panel", "admin")
+		message_admins("[key_name(src)] tried to access the ban panel but was denied.")
+	if (isnull(src.holder.ban_panel))
+		src.holder.ban_panel = new
+	src.holder.ban_panel.ui_interact(src.mob)
+
 /client/proc/jobbans(key as text)
 	set name = "Jobban Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
@@ -911,14 +927,15 @@ var/list/special_pa_observing_verbs = list(
 		M.client.warned = 1
 		message_admins(SPAN_INTERNAL("[src.ckey] warned [M.ckey]."))
 	else
-		var/addData[] = new()
-		addData["ckey"] = M.ckey
-		addData["compID"] = M.computer_id
-		addData["ip"] = M.client.address
-		addData["reason"] = "Autobanning due to previous warn. This is what we in the biz like to call a \"second warning\"."
-		addData["akey"] = src.ckey
-		addData["mins"] = 10
-		addBan(addData)
+		bansHandler.add(
+			src.ckey,
+			null,
+			M.ckey,
+			M.computer_id,
+			M.client.address,
+			"Autobanning due to previous warn. This is what we in the biz like to call a \"second warning\".",
+			10 MINUTES
+		)
 
 /client/proc/clear_area_overlays()
 	set name = "Clear Area Overlays"
@@ -1563,7 +1580,7 @@ var/list/fun_images = list()
 				trigger = (C.holder ? "[src.key] (as [src.fakekey])" : src.fakekey)
 			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 			if (vol)
-				C.chatOutput.playDectalk(audio["audio"], trigger, vol)
+				C.chatOutput.playDectalk(audio["audio"], trigger, vol * 0.75)
 		return 1
 	else if (audio && audio["cooldown"])
 		alert(src, "There is a [nextDectalkDelay] second global cooldown between uses of this verb. Please wait [((world.timeofday + nextDectalkDelay * 10) - world.timeofday)/10] seconds.")
@@ -1808,7 +1825,7 @@ var/list/fun_images = list()
 		return alert("The map is already on [map] you dunce!")
 
 	try
-		mapSwitcher.setNextMap(src.key, mapName = map)
+		mapSwitcher.setNextMap(src.ckey, mapName = map)
 	catch (var/exception/e)
 		logTheThing(LOG_DEBUG, null, "<b>Map Switcher:</b> [e.name]")
 		return alert("Oh no! Something went wrong with the map switcher. Details have been logged to the debug category.")
@@ -1906,70 +1923,70 @@ var/list/fun_images = list()
 	logTheThing(LOG_DIARY, usr ? usr : src, null, "cancelled the player map vote prematurely", "admin")
 	message_admins("[key_name(usr ? usr : src)] cancelled the player map vote prematurely. Rude.")
 
-/client/proc/cmd_antag_history(var/ckey as text)
-	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
-	set name = "View Antag History"
-	set desc = "View the antag history for a given player"
-	set popup_menu = 0
-	ADMIN_ONLY
+// /client/proc/cmd_antag_history(var/ckey as text)
+// 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+// 	set name = "View Antag History"
+// 	set desc = "View the antag history for a given player"
+// 	set popup_menu = 0
+// 	ADMIN_ONLY
 
-	if (!ckey)
-		return
+// 	if (!ckey)
+// 		return
 
-	var/list/history
-	try
-		history = antagWeighter.completeHistory(ckey)
-	catch(var/exception/e)
-		return alert(e.name)
+// 	var/list/history
+// 	try
+// 		history = antagWeighter.completeHistory(ckey)
+// 	catch(var/exception/e)
+// 		return alert(e.name)
 
-	var/html = "<table>"
-	html += "<thead><tr>"
-	html += "<th>Mode</th>"
-	html += "<th>Played</th>"
-	html += "<th>Antag</th>"
-	html += "<th>Chosen</th>"
-	html += "<th>Target</th>"
-	html += "</tr></thead>"
+// 	var/html = "<table>"
+// 	html += "<thead><tr>"
+// 	html += "<th>Mode</th>"
+// 	html += "<th>Played</th>"
+// 	html += "<th>Antag</th>"
+// 	html += "<th>Chosen</th>"
+// 	html += "<th>Target</th>"
+// 	html += "</tr></thead>"
 
-	for (var/role in config.play_antag_rates)
-		var/list/data
+// 	for (var/role in config.play_antag_rates)
+// 		var/list/data
 
-		if (role in history)
-			data = history[role]
-		else
-			//some round types are so rare, we might have no data for this player playing them, so we make shit up
-			data = list(
-				"seen" = 0,
-				"selected" = 0,
-				"percent" = 0
-			)
+// 		if (role in history)
+// 			data = history[role]
+// 		else
+// 			//some round types are so rare, we might have no data for this player playing them, so we make shit up
+// 			data = list(
+// 				"seen" = 0,
+// 				"selected" = 0,
+// 				"percent" = 0
+// 			)
 
-		var/seen = round(text2num(data["seen"]))
-		var/selected = round(text2num(data["selected"]))
-		var/chosen = round(text2num(data["percent"]))
-		var/target = config.play_antag_rates[role]
+// 		var/seen = round(text2num(data["seen"]))
+// 		var/selected = round(text2num(data["selected"]))
+// 		var/chosen = round(text2num(data["percent"]))
+// 		var/target = config.play_antag_rates[role]
 
-		var/chosenClass = "fine"
-		//if the player has been chosen more than 50% over the target, show red
-		if (chosen > target * 1.5)
-			chosenClass = "danger"
-		//or, if it's just over the target, show orange
-		else if (chosen > target)
-			chosenClass = "warning"
+// 		var/chosenClass = "fine"
+// 		//if the player has been chosen more than 50% over the target, show red
+// 		if (chosen > target * 1.5)
+// 			chosenClass = "danger"
+// 		//or, if it's just over the target, show orange
+// 		else if (chosen > target)
+// 			chosenClass = "warning"
 
-		html += "<tr>"
-		html += "<td>[capitalize(role)]</td>"
-		html += "<td>[seen]</td>"
-		html += "<td>[selected]</td>"
-		html += "<td class='[chosenClass]'>[chosen]%</td>"
-		html += "<td>[target]%</td>"
-		html += "</tr>"
+// 		html += "<tr>"
+// 		html += "<td>[capitalize(role)]</td>"
+// 		html += "<td>[seen]</td>"
+// 		html += "<td>[selected]</td>"
+// 		html += "<td class='[chosenClass]'>[chosen]%</td>"
+// 		html += "<td>[target]%</td>"
+// 		html += "</tr>"
 
-	html += "</table>"
+// 	html += "</table>"
 
-	var/antagHistoryHtml = grabResource("html/antagHistory.html")
-	antagHistoryHtml = replacetext(antagHistoryHtml, "<!-- HTML GOES HERE -->", html)
-	src.Browse(antagHistoryHtml, "window=antaghistory[ckey];title=[capitalize(ckey)]+Antag+History;")
+// 	var/antagHistoryHtml = grabResource("html/antagHistory.html")
+// 	antagHistoryHtml = replacetext(antagHistoryHtml, "<!-- HTML GOES HERE -->", html)
+// 	src.Browse(antagHistoryHtml, "window=antaghistory[ckey];title=[capitalize(ckey)]+Antag+History;")
 
 
 /client/proc/cmd_dispatch_observe_to_ghosts(var/atom/movable/target)
@@ -2336,15 +2353,19 @@ var/list/fun_images = list()
 	DENY_TEMPMIN
 	vpnckey = ckey(vpnckey)
 	try
-		apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = vpnckey, "akey" = src.ckey))
-	catch(var/exception/e)
-		message_admins("Error while adding ckey [vpnckey] to the VPN whitelist: [e.name]")
-		return 0
+		var/datum/apiRoute/vpnwhitelist/add/addWhitelist = new
+		addWhitelist.buildBody(src.ckey, vpnckey)
+		apiHandler.queryAPI(addWhitelist)
+	catch (var/exception/e)
+		var/datum/apiModel/Error/error = e.name
+		message_admins("Error while adding ckey [vpnckey] to the VPN whitelist: [error.message]")
+		return FALSE
+
 	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 	message_admins("Ckey [vpnckey] added to the VPN whitelist by [src.key].")
 	logTheThing(LOG_ADMIN, src, "Ckey [vpnckey] added to the VPN whitelist.")
 	addPlayerNote(vpnckey, src.ckey, "Ckey [vpnckey] added to the VPN whitelist.")
-	return 1
+	return TRUE
 
 /client/proc/vpn_whitelist_remove(vpnckey as text)
 	set name = "VPN whitelist remove"
@@ -2353,13 +2374,17 @@ var/list/fun_images = list()
 	DENY_TEMPMIN
 	vpnckey = ckey(vpnckey)
 	try
-		apiHandler.queryAPI("vpncheck-whitelist/remove", list("ckey" = vpnckey, "akey" = src.ckey))
-	catch(var/exception/e)
-		message_admins("Error while removing ckey [vpnckey] from the VPN whitelist: [e.name]")
-		return 0
+		var/datum/apiRoute/vpnwhitelist/delete/deleteWhitelist = new
+		deleteWhitelist.queryParams = list("ckey" = vpnckey)
+		apiHandler.queryAPI(deleteWhitelist)
+	catch (var/exception/e)
+		var/datum/apiModel/Error/error = e.name
+		message_admins("Error while removing ckey [vpnckey] from the VPN whitelist: [error.message]")
+		return FALSE
+
 	message_admins("Ckey [vpnckey] removed from the VPN whitelist by [src.key].")
 	logTheThing(LOG_ADMIN, src, "Ckey [vpnckey] removed from the VPN whitelist.")
-	return 1
+	return TRUE
 
 /client/proc/cmd_lightsout()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)

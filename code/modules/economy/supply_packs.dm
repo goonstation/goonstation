@@ -120,12 +120,12 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	syndicate = 1
 
 /datum/supply_packs/paint
-	name = "Paint Cans"
-	desc = "A selection of random paints."
-	contains = list(/obj/item/paint_can/random = 4)
+	name = "Artistic Supplies Crate"
+	desc = "A selection of random paints, and an artistic toolbox. Get arty!"
+	contains = list(/obj/item/paint_can/random = 4, /obj/item/storage/toolbox/artistic)
 	cost = PAY_TRADESMAN*3
-	containertype = /obj/storage/crate
-	containername = "Paint Crate"
+	containertype = /obj/storage/crate/packing
+	containername = "Artistic Crate"
 
 /datum/supply_packs/neon_lining
 	name = "Neon Lining Crate"
@@ -310,7 +310,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Engineering Department"
 	contains = list(/obj/item/extinguisher = 3,
 	/obj/item/chem_grenade/firefighting = 3,
-	/obj/item/clothing/suit/fire = 2,
+	/obj/item/clothing/suit/hazard/fire = 2,
 	/obj/item/clothing/head/helmet/firefighter = 2)
 	cost = PAY_TRADESMAN*2
 	containertype = /obj/storage/crate
@@ -485,7 +485,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Wool Production Kit"
 	desc = "For use with existing Ranch."
 	category = "Civilian Department"
-	contains = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep)
+	contains = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep, /obj/item/storage/box/knitting)
 	cost = PAY_TRADESMAN*10
 	containertype = /obj/storage/crate
 	containername = "Wool Production Kit"
@@ -1052,7 +1052,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Radiation Emergency Supplies"
 	desc = "Equipment for dealing with a radiation emergency. No, the crate itself is not irradiated."
 	category = "Basic Materials"
-	contains = list(/obj/item/clothing/suit/rad = 4,
+	contains = list(/obj/item/clothing/suit/hazard/rad = 4,
 					/obj/item/clothing/head/rad_hood = 4,
 					/obj/item/storage/pill_bottle/antirad = 2,
 					/obj/item/reagent_containers/emergency_injector/anti_rad = 4,
@@ -1477,6 +1477,17 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Pressure Crystal Crate"
 
+/datum/supply_packs/comms_dish
+	name = "Communications Dish"
+	desc = "A single-use Manudrive for creating a new Communications Dish and a floppy disk containing the COMMaster program. Note: Console not included"
+	category = "Engineering Department"
+	contains = list(/obj/item/disk/data/floppy/manudrive/comms_dish/singleuse, /obj/item/disk/data/floppy/read_only/communications)
+	cost = PAY_IMPORTANT
+	containertype = /obj/storage/secure/crate
+	containertype = /obj/storage/secure/crate
+	containername = "Communications Dish Crate (Cardlocked \[Engineering])"
+	access = access_engineering
+
 /* ================================================= */
 /* -------------------- Complex -------------------- */
 /* ================================================= */
@@ -1723,7 +1734,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	category = "Civilian Department"
 	contains = list(/obj/storage/secure/closet/fridge)
 	frames = list(/obj/submachine/chef_oven,
-					/obj/submachine/mixer,
+					/obj/machinery/mixer,
 					/obj/submachine/chef_sink,
 					/obj/machinery/deep_fryer,
 					/obj/submachine/foodprocessor,

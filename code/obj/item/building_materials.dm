@@ -227,6 +227,10 @@ MATERIAL
 			else
 				boutput(user, SPAN_ALERT("You may only reinforce metal or crystal sheets."))
 				return
+		else if (iscuttingtool(W) && (src.material?.isSameMaterial(getMaterial("wood")) || src.material.isSameMaterial(getMaterial("bamboo"))))
+			boutput(user, SPAN_NOTICE("You whittle [src] down to make a useful stick."))
+			new /obj/item/stick(get_turf(src))
+			src.change_stack_amount(-1)
 		else
 			..()
 		return
