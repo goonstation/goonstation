@@ -869,7 +869,7 @@ proc/random_accent()
 				used = 1
 			if(lowertext(R.next_char) == "u")
 				new_string = "oi"
-				used = 1
+				used = 2
 		if("d")
 			if(prob(50))
 				new_string = "t"
