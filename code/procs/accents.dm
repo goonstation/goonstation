@@ -925,7 +925,7 @@ proc/random_accent()
 
 	var/list/phrases = list("excuse me=entschuldigung","yes sir=javol","yes ma'am=javol","you stink=du stinkst","good morning=guten morgen"
 	,"good day=guten tag", "good evening=guten abend", "good night=guten nacht","thank you=danke","thank you very much=danke schoen","I'm sorry=es tut mir leid","that's too bad=schade","no problem=kein problem"
-	,"good luck=viel glueck","bless you=gezundheit")//this is horrible. I'll come up with a better system later, but I have work to do right now. This is for multi-word phrases the document can't pick up. I'm going to convert this list to a text document when I have time.
+	,"good luck=viel glueck","bless you=gezundheit","good afternoon=guten tag")//this is horrible. I'll come up with a better system later, but I have work to do right now. This is for multi-word phrases the document can't pick up. I'm going to convert this list to a text document when I have time.
 	for(var/i=1,i < length(phrases),i = i)
 		var/list/splitPhrase = splittext(phrases[i],"=")
 		if(findtext(string, splitPhrase[1]))
