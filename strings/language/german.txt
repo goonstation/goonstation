@@ -148,7 +148,6 @@ salad@=salat
 salt@=salz
 sauce@=sosse
 sausage@=bratwurst
-security@=polizei
 shame@=scham
 shameful@=schamvoll
 she@=sie
