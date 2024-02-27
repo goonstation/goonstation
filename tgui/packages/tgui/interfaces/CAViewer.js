@@ -42,14 +42,9 @@ export const CAViewer = (props, context) => {
               })} />
           )}
         >
+          {typeData[CAType].description}
           <Flex direction="row">
-            <Flex.Item ml={2} />
-            <Flex.Item ml={1}>
-              <Section title="Description" >
-                {"Description Goes here?"}
-              </Section>
-            </Flex.Item>
-            <Flex.Item ml={4} />
+            <Flex.Item />
             {(
               CAType && typeData[CAType].options && Object.keys(typeData[CAType].options).length ? (
                 Object.keys(typeData[CAType].options).map((optionName, sectionIndex) => (
@@ -71,6 +66,12 @@ export const CAViewer = (props, context) => {
                 : ""
             )}
           </Flex>
+          <Section title="Command" >
+            {`${typeData[CAType].function}(`}
+            {Object.keys(typeData[CAType].options).map((optionName, sectionIndex) =>
+              `"${settings[typeData[CAType].options[optionName]]}"${sectionIndex < Object.keys(typeData[CAType].options).length-1 ? ", " : ""}`)}
+            {`)`}
+          </Section>
           <Box m={1}>
             <Button
               fluid
