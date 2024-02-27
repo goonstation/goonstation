@@ -922,6 +922,15 @@ proc/random_accent()
 	return modded
 
 /proc/germify(var/string) // pretty much the same thing as scots and tyke, but instead with some common cognates between english and german. The list is significantly smaller
+
+	var/list/phrases = list("excuse me=entschuldigung","yes sir=javol","yes ma'am=javol","you stink=du stinkst","good morning=guten morgen"
+	,"good day=guten tag", "good evening=guten abend", "good night=guten nacht","thank you=danke","thank you very much=danke schoen","I'm sorry=es tut mir leid","that's too bad=schade","no problem=kein problem"
+	,"good luck=viel glueck","bless you=gezundheit")//this is horrible. I'll come up with a better system later, but I have work to do right now. This is for multi-word phrases the document can't pick up. I'm going to convert this list to a text document when I have time.
+	for(var/i=1,i < length(phrases),i = i)
+		var/list/splitPhrase = splittext(phrases[i],"=")
+		if(findtext(string, splitPhrase[1]))
+			string = replacetext(string, splitPhrase[1],splitPhrase[2])
+		i += 1
 	var/list/tokens = splittext(string, " ")
 	var/list/modded_tokens = list()
 
@@ -1585,7 +1594,7 @@ var/list/zalgo_mid = list(
 
 // this list got too big to maintain as a list literal, so now it lives in strings/language/scots.txt
 
-/proc/scotify(var/string) // plays scottish music on demand, harr harr i crack me up (shoot me)
+/proc/scotify(var/string) // plays scottish music on demand, harr harr i crack me up (shoot me)scot
 	var/list/tokens = splittext(string, " ")
 	var/list/modded_tokens = list()
 
