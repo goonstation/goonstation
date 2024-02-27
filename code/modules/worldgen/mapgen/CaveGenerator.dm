@@ -82,18 +82,18 @@
 	if(!big_caves)
 		switch(rand(1,3))
 			if(1)
-				src.big_caves = rustg_dbp_generate("[cave_seed]", "10", "20", "[world.maxx]", "0.01", "0.3")
+				src.big_caves = rustg_dbp_generate("[cave_seed]", "30", "30", "[world.maxx]", "0.0001", "0.1")
 			if(2)
-				src.big_caves = rustg_dbp_generate("[cave_seed]", "15", "25", "[world.maxx]", "0.01", "0.3")
+				src.big_caves = rustg_dbp_generate("[cave_seed]", "5", "40", "[world.maxx]", "0.01", "0.2")
 			else
-				src.big_caves = rustg_worley_generate("50", "10", "60", "[world.maxx]", "2", "8")
+				src.big_caves = rustg_worley_generate("20", "10", "5", "[world.maxx]", "4", "6")
 
 	if(!smol_caves)
 		switch(rand(1,3))
 			if(1)
-				src.smol_caves = rustg_dbp_generate("[cave_seed]", "3", "6", "[world.maxx]", "0.01", "0.8")
+				src.smol_caves = rustg_dbp_generate("[cave_seed]", "3", "7", "[world.maxx]", "0.0001", "0.8")
 			if(2)
-				src.smol_caves = rustg_dbp_generate("[cave_seed]", "20", "5", "[world.maxx]", "0.01", "0.8")
+				src.smol_caves = rustg_dbp_generate("[cave_seed]", "20", "5", "[world.maxx]", "0.0001", "0.8")
 			else
 				src.smol_caves = rustg_cnoise_generate("60", "10", "5", "4", "[world.maxx]", "[world.maxy]")
 
