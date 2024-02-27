@@ -550,6 +550,22 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Subject is trained in cultural and psychological matters."
 	id = "training_chaplain"
 
+	var/faith = FAITH_STARTING
+	///multiplier for faith gain only - faith losses ignore this
+	var/faith_mult = 1
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+	onAdd(mob/living/owner)
+		if(owner.traitHolder?.hasTrait("atheist"))
+			src.faith_mult = 0.2
+
 /datum/trait/job/medical
 	name = "Medical Training"
 	desc = "Subject is a proficient surgeon."
@@ -947,6 +963,19 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "In this moment, you are euphoric. You cannot receive faith healing, and prayer makes you feel silly."
 	id = "atheist"
 	points = 0
+
+	onAdd(mob/living/owner)
+		if (istype(owner))
+			owner.remove_lifeprocess(/datum/lifeprocess/faith)
+		var/datum/trait/job/chaplain/chap_trait = owner.traitHolder?.getTrait("training_chaplain")
+		chap_trait?.faith_mult = 0.2
+
+	onRemove(mob/living/owner)
+		if (istype(owner))
+			owner.add_lifeprocess(/datum/lifeprocess/faith)
+		var/datum/trait/job/chaplain/chap_trait = owner.traitHolder?.getTrait("training_chaplain")
+		chap_trait?.faith_mult = 1
+
 
 /datum/trait/lizard
 	name = "Reptilian"

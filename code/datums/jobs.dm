@@ -152,9 +152,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_EXECUTIVE
 	high_priority_job = 1
 	receives_miranda = 1
-#ifdef RP_MODE
 	allow_traitors = 0
-#endif
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	allow_spy_theft = 0
@@ -324,7 +322,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wiki_link = "https://wiki.ss13.co/Chief_Engineer"
 
 	slot_back = list(/obj/item/storage/backpack/engineering)
-	slot_belt = list(/obj/item/device/pda2/chiefengineer)
+	slot_belt = list(/obj/item/storage/belt/utility/prepared/ceshielded)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_head = list(/obj/item/clothing/head/helmet/hardhat/chief_engineer)
@@ -332,6 +330,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_jump = list(/obj/item/clothing/under/rank/chief_engineer)
 	slot_ears = list(/obj/item/device/radio/headset/command/ce)
 	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/engineering)
+	slot_poc2 = list(/obj/item/device/pda2/chiefengineer)
 	items_in_backpack = list(/obj/item/device/flash, /obj/item/rcd_ammo/medium)
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -2324,41 +2323,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		var/type = pick(/mob/living/critter/small_animal/bird/turkey/gobbler, /mob/living/critter/small_animal/bird/turkey/hen)
 		M.critterize(type)
 */
-
-/datum/job/special/syndicate_operative
-	name = "Syndicate Operative"
-	wages = 0
-	limit = 0
-	linkcolor = "#880000"
-	slot_ears = list() // So they don't get a default headset and stuff first.
-	slot_card = null
-	slot_glov = list()
-	slot_foot = list()
-	slot_back = list()
-	slot_belt = list()
-	spawn_id = 0
-	radio_announcement = FALSE
-	special_spawn_location = LANDMARK_SYNDICATE
-	var/leader = FALSE
-	add_to_manifest = FALSE
-	wiki_link = "https://wiki.ss13.co/Nuclear_Operative"
-
-	faction = FACTION_SYNDICATE
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M?.mind)
-			return
-
-		if (src.leader)
-			M.mind.add_antagonist(ROLE_NUKEOP_COMMANDER, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
-		else
-			M.mind.add_antagonist(ROLE_NUKEOP, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
-
-/datum/job/special/syndicate_operative/leader
-	name = "Syndicate Operative Commander"
-	special_spawn_location = LANDMARK_SYNDICATE_BOSS
-	leader = TRUE
 
 /datum/job/special/syndicate_weak
 	linkcolor = "#880000"

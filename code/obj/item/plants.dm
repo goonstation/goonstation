@@ -531,7 +531,7 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 			return TRUE
 
 	proc/prick(mob/M)
-		boutput(M, SPAN_ALERT("You prick yourself on [src]'s thorns trying to pick it up!"))
+		boutput(M, SPAN_ALERT("YOWCH! You prick yourself on [src]'s thorns trying to pick it up! Maybe you should've used gloves..."))
 		random_brute_damage(M, 3)
 		take_bleeding_damage(M, null, 3, DAMAGE_STAB)
 

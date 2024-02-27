@@ -38,7 +38,7 @@
 	help_message = "Adds a note to a given ckey."
 	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/the_rest="note")
 	execute(user, ckey, note)
-		addPlayerNote(ckey, user + " (Discord)", note)
+		addPlayerNote(ckey, user, note)
 
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "added a note for [ckey]: [note]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", null, "added a note for [ckey]: [note]", "admin")
@@ -57,16 +57,16 @@
 
 	execute(user, ckey, notice)
 		var/datum/player/player = make_player(ckey)
-		player.cloud_fetch()
-		if (player.cloud_get("login_notice"))
+		player.cloudSaves.fetch()
+		if (player.cloudSaves.getData("login_notice"))
 			system.reply("Error, [ckey] already has a login notice set.", user)
 			return
 		var/message = "Message from Admin [user] at [roundLog_date]:\n\n[notice]"
-		if (!player.cloud_put("login_notice", message))
+		if (!player.cloudSaves.putData("login_notice", message))
 			system.reply("Error, issue saving login notice, try again later.", user)
 			return
 		// else it succeeded
-		addPlayerNote(ckey, user + " (Discord)", "New login notice set:\n\n[notice]")
+		addPlayerNote(ckey, user, "New login notice set:\n\n[notice]")
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "added a login notice for [ckey]: [notice]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", null, "added a login notice for [ckey]: [notice]", "admin")
 		message_admins(SPAN_INTERNAL("[user] (Discord) added a login notice for [ckey]: [notice]"))
@@ -92,17 +92,17 @@
 			data["compID"] = M.computer_id
 			data["ip"] = M.lastKnownIP
 		else
-			var/list/response
+			var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 			try
-				response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
-			catch ()
-				var/ircmsg[] = new()
-				ircmsg["name"] = user
-				ircmsg["msg"] = "Failed to query API, try again later."
-				ircbot.export("admin", ircmsg)
-				return
-			data["ip"] = response["last_ip"]
-			data["compID"] = response["last_compID"]
+				var/datum/apiRoute/players/stats/get/getPlayerStats = new
+				getPlayerStats.queryParams = list("ckey" = data["ckey"])
+				playerStats = apiHandler.queryAPI(getPlayerStats)
+				data["ip"] = playerStats.latest_connection.ip
+				data["compID"] = playerStats.latest_connection.comp_id
+			catch
+				data["ip"] = null
+				data["compID"] = null
+
 		data["text_ban_length"] = length
 		data["reason"] = reason
 		if (length == "hour")
@@ -130,12 +130,15 @@
 			return
 		data["mins"] = length
 		data["akey"] = ckey(user) + " (Discord)"
-		addBan(data) // logging, messaging, and noting are all taken care of by this proc
-
-		var/ircmsg[] = new()
-		ircmsg["name"] = user
-		ircmsg["msg"] = "Banned [ckey] from all servers for [length] minutes, reason: [reason]"
-		ircbot.export("admin", ircmsg)
+		bansHandler.add(
+			ckey(user),
+			null,
+			data["ckey"],
+			data["compID"],
+			data["ip"],
+			data["reason"],
+			data["mins"] * 60 * 10
+		)
 
 /datum/spacebee_extension_command/serverban
 	name = "serverban"
@@ -154,17 +157,20 @@
 			data["compID"] = M.computer_id
 			data["ip"] = M.lastKnownIP
 		else
-			var/list/response
+			var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 			try
-				response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
-			catch ()
+				var/datum/apiRoute/players/stats/get/getPlayerStats = new
+				getPlayerStats.queryParams = list("ckey" = data["ckey"])
+				playerStats = apiHandler.queryAPI(getPlayerStats)
+			catch
 				var/ircmsg[] = new()
 				ircmsg["name"] = user
 				ircmsg["msg"] = "Failed to query API, try again later."
 				ircbot.export("admin", ircmsg)
 				return
-			data["ip"] = response["last_ip"]
-			data["compID"] = response["last_compID"]
+
+			data["ip"] = playerStats.latest_connection.ip
+			data["compID"] = playerStats.latest_connection.comp_id
 		if(server == "main1" || server == "1" || server == "goon1")
 			server = "main1"
 		else if(server == "main2" || server == "2" || server == "goon2")
@@ -204,12 +210,15 @@
 			return
 		data["mins"] = length
 		data["akey"] = ckey(user) + " (Discord)"
-		addBan(data) // logging, messaging, and noting are all taken care of by this proc
-
-		var/ircmsg[] = new()
-		ircmsg["name"] = user
-		ircmsg["msg"] = "Banned [ckey] from [server] for [length] minutes, reason: [reason]"
-		ircbot.export("admin", ircmsg)
+		bansHandler.add(
+			ckey(user),
+			data["server"],
+			data["ckey"],
+			data["compID"],
+			data["ip"],
+			data["reason"],
+			data["mins"] * 60 * 10
+		)
 
 /datum/spacebee_extension_command/boot
 	name = "boot"
@@ -630,14 +639,18 @@
 
 	execute(user, ckey)
 		try
-			apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = ckey, "akey" = user + " (Discord)"))
-		catch(var/exception/e)
-			system.reply("Error while adding ckey [ckey] to the VPN whitelist: [e.name]")
+			var/datum/apiRoute/vpnwhitelist/add/addWhitelist = new
+			addWhitelist.buildBody(user, ckey)
+			apiHandler.queryAPI(addWhitelist)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			system.reply("Error while adding ckey [ckey] to the VPN whitelist: [error.message]")
 			return FALSE
+
 		global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 		message_admins("Ckey [ckey] added to the VPN whitelist by [user] (Discord).")
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "Ckey [ckey] added to the VPN whitelist.")
-		addPlayerNote(ckey, user + " (Discord)", "Ckey [ckey] added to the VPN whitelist.")
+		addPlayerNote(ckey, user, "Ckey [ckey] added to the VPN whitelist.")
 		system.reply("[ckey] added to the VPN whitelist.")
 		return TRUE
 
@@ -648,23 +661,18 @@
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
 
 	execute(user, ckey)
-		var/list/response
 		try
-			response = apiHandler.queryAPI("vpncheck-whitelist/search", list("ckey" = ckey), forceResponse = 1)
-		catch(var/exception/e)
-			system.reply("Error, while checking vpn whitelist status of ckey [ckey] encountered the following error: [e.name]")
-			return
-		if (!islist(response))
-			system.reply("Failed to query vpn whitelist, did not receive response from API.")
-		if (response["error"])
-			system.reply("Failed to query vpn whitelist, error: [response["error"]]")
-		else if ((response["success"]))
-			if (response["whitelisted"])
-				system.reply("ckey [ckey] is VPN whitelisted. Whitelisted by [response["akey"] ? response["akey"] : "unknown admin"]")
+			var/datum/apiRoute/vpnwhitelist/search/searchWhitelist = new
+			searchWhitelist.queryParams = list("ckey" = ckey)
+			var/datum/apiModel/VpnWhitelistSearch/searchResults = apiHandler.queryAPI(searchWhitelist)
+			if (searchResults.whitelisted)
+				system.reply("ckey [ckey] is VPN whitelisted.")
 			else
 				system.reply("ckey [ckey] is not VPN whitelisted.")
-		else
-			system.reply("Failed to query vpn whitelist, received invalid response from API.")
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			system.reply("Failed to query vpn whitelist, error: [error.message]")
+			return FALSE
 
 /datum/spacebee_extension_command/hard_reboot
 	name = "hardreboot"

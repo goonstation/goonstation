@@ -668,7 +668,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	return 1
 
 /obj/item/proc/split_stack(var/toRemove)
-	if(toRemove >= amount || toRemove < 1) return null
+	if(toRemove >= src.amount || toRemove < 1) return null
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
@@ -1643,6 +1643,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	logTheThing(LOG_BOMBING, M, "[msg]")
 
 /obj/item/proc/dropped(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
 	SPAWN(0) //need to spawn to know if we've been dropped or thrown instead
 		if ((firesource == FIRESOURCE_OPEN_FLAME) && throwing)
 			RegisterSignal(src, COMSIG_MOVABLE_THROW_END, PROC_REF(log_firesource))

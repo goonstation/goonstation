@@ -7268,7 +7268,7 @@
 /obj/rack,
 /obj/item/clothing/under/color,
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
@@ -10277,7 +10277,7 @@
 "avn" = (
 /obj/rack,
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/glasses/sunglasses,
 /obj/machinery/light/small,
@@ -26853,7 +26853,7 @@
 /area/station/crew_quarters/kitchen)
 "bbQ" = (
 /obj/table,
-/obj/submachine/mixer{
+/obj/machinery/mixer{
 	pixel_y = 6
 	},
 /turf/simulated/floor/specialroom/cafeteria{
@@ -26863,7 +26863,7 @@
 "bbR" = (
 /obj/machinery/light,
 /obj/table,
-/obj/submachine/mixer{
+/obj/machinery/mixer{
 	pixel_y = 6
 	},
 /obj/machinery/camera{

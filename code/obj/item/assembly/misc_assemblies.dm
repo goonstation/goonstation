@@ -296,6 +296,7 @@ Contains:
 	return
 
 /obj/item/assembly/prox_ignite/dropped()
+	. = ..()
 	SPAWN( 0 )
 		if (src.part1)
 			src.part1.sense()
@@ -991,6 +992,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	return
 
 /obj/item/assembly/rad_prox/dropped()
+	. = ..()
 	SPAWN( 0 )
 		src.part2.sense()
 		return

@@ -12599,7 +12599,7 @@
 /obj/rack{
 	dir = 1
 	},
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/tank/emergency_oxygen,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/glasses/sunglasses,
@@ -22504,7 +22504,7 @@
 	icon_state = "0-8"
 	},
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bxd" = (
@@ -30315,7 +30315,7 @@
 /obj/rack{
 	dir = 1
 	},
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/tank/emergency_oxygen,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/glasses/toggleable/meson,

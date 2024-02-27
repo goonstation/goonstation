@@ -541,7 +541,7 @@
 	/obj/machinery/portable_atmospherics, \
 	/obj/machinery/ai_status_display, \
 	/obj/securearea, \
-	/obj/submachine/mixer, \
+	/obj/machinery/mixer, \
 	/obj/submachine/foodprocessor, \
 	\
 )
@@ -555,7 +555,7 @@
 )
 
 #define WHITELIST_TURFS list(/turf/simulated)
-#define BLACKLIST_TURFS list(/turf/simulated/floor/specialroom/sea_elevator_shaft)
+#define BLACKLIST_TURFS list(/turf/simulated/floor/specialroom/sea_elevator_shaft, /turf/simulated/shuttle, /turf/simulated/floor/shuttle, /turf/simulated/wall/auto/shuttle)
 
 /datum/abcu_blueprint
 	var/cost_metal = 0
@@ -992,6 +992,7 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 		return
 
 	dropped(mob/user as mob)
+		. = ..()
 		removeOverlays()
 		selecting = 0
 		qdel(corner1img)

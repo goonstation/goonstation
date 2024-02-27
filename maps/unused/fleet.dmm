@@ -179,7 +179,7 @@
 /area/space)
 "aB" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/airless,
@@ -17837,8 +17837,8 @@
 	})
 "ND" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/fire/heavy,
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /obj/item/clothing/head/helmet/welding,
 /obj/item/clothing/head/helmet/welding,
 /obj/machinery/power/apc/autoname_north,
@@ -18220,7 +18220,7 @@
 	})
 "Ol" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/machinery/phone/wall{
 	pixel_y = 32
 	},
@@ -23073,8 +23073,8 @@
 	})
 "YZ" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
 /obj/cable{

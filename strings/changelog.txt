@@ -1,4 +1,296 @@
 
+(t)sun feb 25 24
+(u)tanker4390
+(*)Resprited THE MONSTER and MacGuffin burgers.
+(u)LeahTheTech
+(+)The appendicitis random event now only affects crew that have medical records. No more NT records indicating salvager organ health.
+(p)18022
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Vampiric thralls no longer have zombie arms.
+(*)Vampiric thralls now rapidly lose blood and die if they stray too far from their vampire master.
+(+)Vampiric thrall passive blood drain halved.
+(u)GuvGuvington
+(p)17932
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Updated the rubber hammer sprite.
+(u)Lord_Earthfire
+(p)17928
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Fishes within aquatic research pools have begun to fear explosions and actively jump out of their pool when exposed to them.
+(u)MeggalBozale
+(p)17922
+(e)💅📄🔬|C-QoL, A-UI, A-Science
+(*)Pump Control Computers now use TGUI, and can set the specific pressure of pumps they control. Give it a try!
+(t)sat feb 24 24
+(u)LeahTheTech
+(+)Space HVACs have had some internal mathy parts hit with a wrench and should have a bit more oomph now.
+(u)Cherman0
+(p)17872
+(e)🆕⚖🌠|C-Feature, C-Balance, A-Events
+(+)Using the singularity buster to destroy a singularity now causes a white hole to spawn.
+(t)fri feb 23 24
+(u)IPingu
+(p)17963
+(e)🔄📄🧛|C-Rework, A-UI, A-Gamemodes
+(+)Converts wizard spellbook interface to TGUI
+(t)thu feb 22 24
+(u)Tyrant
+(p)17977
+(e)🔎📦⚙💡|C-Code-Quality, A-Game-Objects, A-Internal, A-Station-Systems
+(+)Massive backend reshuffling of the airlock code has taken place. report any bugs with door bolting/opening/closing.
+(t)mon feb 19 24
+(u)LeahTheTech
+(+)Shrapnel created by reactor meltdowns is now a bit more destructive.
+(t)fri feb 16 24
+(u)LeahTheTech
+(+)Arcfiends can now *monsterscream too.
+(u)Cherman0
+(p)17853
+(e)🗺💅📦🎩|A-Mapping, C-QoL, A-Game-Objects, A-Clothing
+(+)The CE now spawns wearing their Aurora Belt MkII
+(u)Mr. Moriarty
+(p)17949
+(e)🎨📦⚗|C-Sprites, A-Game-Objects, A-Chemistry
+(+)Resprited phials, beakers, round flasks, conical flasks, large beakers, large flasks, the four types of bottles, bongs, and all of their respective fluid overlays.
+(t)thu feb 15 24
+(u)Sord
+(+)Most in rotation maps now have airlock cyclers on some interior airlocks (Security, engineering, research, etc) where applicable.
+(t)wed feb 14 24
+(u)Ikea
+(p)17577
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Borg speed values have been changed all across the board. Treadless light borgs are the same speed. Light and heavy borgs with treads are now slower compared to before. Every other borg body type is faster, see pr for specific values.
+(u)Cheekybrdy
+(p)17902
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Benches in science now appear in a purple variant.
+(t)tue feb 13 24
+(u)Keiiro
+(p)17924
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Nanotrasen and Syndicate card colors are now available for selection with an Agent Card.
+(u)Wire
+(p)17816
+(e)🆕🚨|C-Feature, A-Admin
+(*)New backend system for external API communications. This impacts systems such as bans and cloud saves, as well as many other non-gameplay related things. This is a fairly significant change so please report any weird bugs you think may be related to the GitHub issue tracker.
+(t)mon feb 12 24
+(u)TDHooligan
+(p)17761
+(e)⚖💅🌱|C-Balance, C-QoL, A-Hydroponics
+(+)The RNG gods see botanys' plight. The top 3 genomes have, on average, dropped in value.
+(t)sun feb 11 24
+(u)LeahTheTech
+(+)The actionbar for opening and closing airlock wiring panels is now private (cannot be seen by other players).
+(u)Sord
+(+)You can now order a communications dish manudrive (and commaster disk) from cargo.
+(t)fri feb 09 24
+(u)LeahTheTech
+(+)The chemical request console now shows the request in the PDA notification.
+(p)17915
+(e)🆕⚖|C-Feature, C-Balance
+(*)Tiny items can now be hidden under floor tiles, mousetraps hidden like this will trigger when the tile is pried up again.
+(u)IPingu
+(p)17826
+(e)📄|A-UI
+(+)Converts HVAC interface to TGUI
+(u)MeggalBozale
+(p)17897
+(e)💅📄|C-QoL, A-UI
+(*)Tank Transfer Valves now use TGUI menus.
+(t)thu feb 08 24
+(u)Tyrant
+(p)17894
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Oshan now needs at least 14 players online to be voted for
+(t)wed feb 07 24
+(u)SirNooben
+(p)17845
+(e)|
+(+)Makes it possible for the arithmetic comp's mode to be changed using an input coming from another comp.
+(u)Sord
+(+)Opening/closing the panel on an airlock now has a short action bar
+(u)LeahTheTech
+(+)Random characters will no longer receive broken looking partial hairstyles.
+(u)Saccha
+(p)17895
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The floor and wall designer has a range of three tiles.
+(t)tue feb 06 24
+(u)glowbold
+(p)17440
+(e)🆕⚖💡|C-Feature, C-Balance, A-Station-Systems
+(*)NanoTrasen has secured further discounts on station electrical equipment - details in minor notes.
+(+)Lights may burn out when turned on. Burned out lights may burst if left unfixed.
+(+)Over-use of light switches may cause a shock to users and/or their property. Re-secure the electrical contacts on light switches with a screwdriver.
+(t)mon feb 05 24
+(u)tarmunora
+(+)Increase blood absorption rate during IV-drip transfusions and dialysis
+(u)GuvGuvington
+(p)17867
+(e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
+(+)New sprites and description for white wine bottles, aswell as a change to white wine reagent colours and a reagent description.
+(u)GuvGuvington
+(p)17865
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The Antique laser gun received some proper inhand sprites, both the model and functioning weapon.
+(u)Tyrant
+(p)17745
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The Paint Cans crate is now called the Artistic Supplies crate, and comes with an artist's toolbox.
+(t)sun feb 04 24
+(u)LeahTheTech
+(+)Transparium now hides sechud and pro-doc icons.
+(+)Tumbling creepers can now be occasionally obtained from requisitions and botany white holes.
+(+)The floor and wall designer no longer has infinite range.
+(t)sat feb 03 24
+(u)mloccy
+(p)17765
+(e)📄🍝|A-UI, A-Catering
+(+)Kitchen Mixer now uses a TGUI interface
+(t)fri feb 02 24
+(u)LeahTheTech
+(p)17354
+(e)⚖|C-Balance
+(*)Captains can no longer spawn as antagonist roles.
+(u)LeahTheTech
+(p)17839
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)Members of the winning gang will now be displayed at round end.
+(u)Sord
+(p)17830
+(e)🗺|A-Mapping
+(*)Cogmap2's Medbay has been completely revamped
+(u)Sord
+(+)The Crematorium now takes longer operate and can be escaped up to a certain point.
+(u)Tyrant
+(p)17841
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Clarion's central maintenance APC has been moved to actually be in central maintenance (and is no longer confusingly called armoury APC)
+(u)Tyrant
+(p)17828
+(e)🆕🗺💅|C-Feature, A-Mapping, C-QoL
+(+)Some airlocks are now linked in a way that opening one door tries to close the other doors. "Keep the Air Inside!" ~John Nanotrasen probably.
+(u)Chatauscours
+(p)17682
+(e)🗺💅|A-Mapping, C-QoL
+(+)The Donut 2 Auxilary storage has been repurposed for a construction area.
+(t)wed jan 31 24
+(u)NibChocolateeny
+(p)17817
+(e)🆕🌱|C-Feature, A-Hydroponics
+(*)Glowing Slurry has been added as a seed infusion. Greatly randomizes stats, has a high chance of mutating a plant, and a moderate chance of adding the Unstable gene.
+(u)MeggalBozale
+(p)17809
+(e)💅🔄💨🔬|C-QoL, C-Rework, A-Atmospherics, A-Science
+(*)Tanks will now explode in a more predictable manner. For an in-depth explanation, see the PR.
+(u)NibChocolateeny
+(p)17812
+(e)💅💊|C-QoL, A-Medical
+(+)You no longer have to do surgery to determine - by visual observation - if someone lacks a butt.
+(u)MeggalBozale
+(p)17821
+(e)🪲🗺📦🍝|C-Bug, A-Mapping, A-Game-Objects, A-Catering
+(+)An absurd amount of pickle jars no longer spawn on Cog1,
+(u)LeahTheTech
+(+)Breaching charges now break firedoors.
+(+)Water coolers can now be broken by shooting them with bullets.
+(t)tue jan 30 24
+(u)MarkNstein
+(p)16899
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Nadir: Added a PTL located at the South East hull connected to the turbine and southern catalytic engines.
+(u)Valtsu0
+(p)17764
+(e)🗺📄|A-Mapping, A-UI
+(+)Announcement computers now use tgui
+(t)mon jan 29 24
+(u)Flappybat
+(p)17563
+(e)🎨⚖🔄⏰|C-Sprites, C-Balance, C-Rework, A-Status-Effects
+(*)Wizard polymorph now changes you into an animal for eight minutes. When the spell expires your original human form and status will be restored. Status icon by CalliopeSoups.
+(u)CalliopeSoups
+(p)17658
+(e)🗺💅|A-Mapping, C-QoL
+(+)Cogmap1 catering has been neatened up and widened a little.
+(u)Lyy, Beshemoth
+(p)17553
+(e)🆕🗺🎨🔎🍝|C-Feature, A-Mapping, C-Sprites, C-Code-Quality, A-Catering
+(*)Added melted sugar cooking recipes, including rock candy, hard candy, craftable lollipops, swirly lollipops, and dragon's beard candy!
+(u)LeahTheTech
+(*)Popsicle sticks can now be made by whittling a wooden plank with a knife.
+(t)sun jan 28 24
+(u)Tyrant
+(p)17800
+(e)💅📦🌱|C-QoL, A-Game-Objects, A-Hydroponics
+(+)Knitting supply boxes can now be found within ranching secure lockers and inside a wool production kit, in case you lose yours.
+(t)sat jan 27 24
+(u)NibChocolateeny
+(p)17772
+(e)⚖💅🌱|C-Balance, C-QoL, A-Hydroponics
+(+)The radiation immunity plant gene now reduces seed damage taken from certain radioactive infusions.
+(u)LeahTheTech
+(*)Heads of staff can no longer be gang members (again)
+(t)wed jan 24 24
+(u)Valtsu0
+(p)17338
+(e)🆕🧱|C-Feature, A-Materials
+(+)Robot parts can now be reclaimed.
+(t)mon jan 22 24
+(u)LeahTheTech
+(p)17746
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(*)Cyborg screen heads can now be smashed by explosions and blunt instruments, repaired with glass sheets.
+(u)cringe
+(p)17475
+(e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
+(*)Vents, pumps, and injectors can now be controlled through packets! Send them a command with the help value with a packet sniffer to see what they can do. Have fun!
+(u)Chasu
+(p)17747
+(e)🆕💅🍝|C-Feature, C-QoL, A-Catering
+(+)Pizzas can now be cut with snipping tools. Knifeless rejoice!
+(t)sun jan 21 24
+(u)aloe
+(*)Being thrown as a human no longer stuns you for 1 second. Subject to reversion if it messes anything up too bad.
+(+)Throwing someone at a table while adjacent to the table tableslams them (like if you'd clicked the table, basically).
+(u)tarmunora
+(+)EMPs now wipe floppydisks
+(t)sat jan 20 24
+(u)Löpz
+(p)17697
+(e)🎨|C-Sprites
+(+)Gave the ThinkTape and master ThinkTape new looks
+(t)fri jan 19 24
+(u)Ikea
+(p)17618
+(e)🎨⚖🔄🤖|C-Sprites, C-Balance, C-Rework, A-Silicons
+(*)The previous behavior for oil in regards to borgs has been split into two status effects, freshly oiled and oiled. These apply speed increase and power consumption decrease in varying amounts, alongside stun resistance.
+(t)thu jan 18 24
+(u)NibChocolateeny
+(p)17694
+(e)⚖💅⚗🌱|C-Balance, C-QoL, A-Chemistry, A-Hydroponics
+(+)LSD is now synthesized at 70 °C (343.15 K). Botanists rejoice!
+(t)wed jan 17 24
+(u)LeahTheTech
+(p)17691
+(e)🆕⚖🤖|C-Feature, C-Balance, A-Silicons
+(+)Robotic arms can now be emagged.
+(u)Lyy
+(p)17686
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Pizza boxes can now be rigged with mousetraps or landmines.
+(u)Valtsu0
+(p)17597
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(*)Chaplains will now gather faith from people in the chapel. Atheist chaplains may have a harder time with this... Faith will increase the healing done by the bible
+(u)LeahTheTech
+(p)17692
+(e)⚖💨|C-Balance, A-Atmospherics
+(*)Tank explosions now scale with the volume of the tank, smaller tank = less boom :(
+(t)tue jan 16 24
+(u)Cheekybrdy
+(p)17674
+(e)🗺|A-Mapping
+(+)Moved the QM locker to a new room inside cargo from refinery on Cogmap1.
 (t)mon jan 15 24
 (u)Mordent
 (p)17606

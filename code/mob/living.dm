@@ -196,7 +196,9 @@
 	src.remove_ailments()
 	src.lastgasp(allow_dead = TRUE)
 	if (src.ai) src.ai.disable()
-	if (src.key) statlog_death(src, gibbed)
+	if (src.key)
+		var/datum/eventRecord/Death/deathEvent = new
+		deathEvent.buildAndSend(src, gibbed)
 	if (src.client && ticker.round_elapsed_ticks >= 12000 && VALID_MOB(src))
 		var/num_players = 0
 		for(var/client/C)
@@ -961,7 +963,7 @@
 
 	//Blobchat handling
 	if (src.mob_flags & SPEECH_BLOB)
-		message = html_encode(src.say_quote(message))
+		message = src.say_quote(message)
 		var/rendered = "<span class='game blobsay'>"
 		rendered += "[SPAN_PREFIX("BLOB:")] "
 		rendered += "<span class='name text-normal' data-ctx='\ref[src.mind]'>[src.get_heard_name()]</span> "
@@ -1232,7 +1234,7 @@
 			(isintangible(M) && (M in hearers)) || \
 			( \
 				(!isturf(say_location.loc) && (say_location.loc == M.loc || (say_location in M))) && \
-				!(M in heard_a) && \
+				!(M in heard_a) && !(M in heard_b) &&\
 				!istype(M, /mob/dead/target_observer) && \
 				M != src \
 			) \
@@ -2285,7 +2287,7 @@
 
 /// Returns the rate of blood to absorb from the reagent holder per Life()
 /mob/living/proc/get_blood_absorption_rate()
-	return 1 // that's the standard absorption rate
+	return 1 + GET_ATOM_PROPERTY(src, PROP_MOB_BLOOD_ABSORPTION_RATE) // that's the standard absorption rate
 
 /mob/living/was_built_from_frame(mob/user, newly_built)
 	. = ..()

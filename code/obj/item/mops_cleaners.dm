@@ -511,10 +511,19 @@ TRASH BAG
 	return ..()
 
 /obj/item/sponge/attack_self(mob/user as mob)
+	if(spam_flag)
+		return
 	. = ..()
 	var/turf/location = get_turf(user)
+	spam_flag = 1
 	if (location)
 		src.reagents.reaction(location, TOUCH, src.reagents.total_volume)
+	//somepotato note: wtf is the thing below this
+	//mbc note : yeah that's dumb! I moved spam_flag up top to prevent reagent duplication
+	SPAWN(1 DECI SECOND) // to make sure the reagents actually react before they're cleared
+	src.reagents.clear_reagents()
+	SPAWN(1 SECOND)
+	spam_flag = 0
 
 /obj/item/sponge/attackby(obj/item/W, mob/user)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
@@ -696,6 +705,7 @@ TRASH BAG
 		BLOCK_SETUP(BLOCK_SOFT)
 
 	dropped()
+		. = ..()
 		JOB_XP(usr, "Janitor", 2)
 		return
 
@@ -813,6 +823,7 @@ TRASH BAG
 
 
 	dropped()
+		. = ..()
 		JOB_XP(usr, "Janitor", 2)
 		return
 

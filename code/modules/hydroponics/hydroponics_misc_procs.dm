@@ -124,6 +124,8 @@ proc/HYPgenerate_produce_name(var/atom/manipulated_atom, var/obj/machinery/plant
 
 
 proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
+	if(!PARENT || !CHILD)
+		return
 	// This is a proc used to copy genes from PARENT to CHILD. It's used in a whole bunch
 	// of places, usually when seeds or fruit are created and need to get their genes from
 	// the thing that spawned them.
@@ -144,12 +146,18 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype, var/parent_generation, var/location_to_create)
 	//This proc generates a seed at location_to_create with a copy of the planttype and genes of a given parent plant.
 	//This can be used, when you want to quickly generate seeds out of objects or other plants e.g. creeper or fruits.
-	var/obj/item/seed/child = new /obj/item/seed(location_to_create)
+	var/obj/item/seed/child
+	if (parent_planttype.unique_seed)
+		child = new parent_planttype.unique_seed(location_to_create)
+	else
+		child = new /obj/item/seed(location_to_create)
 	var/datum/plant/child_planttype = HYPgenerateplanttypecopy(child, parent_planttype)
 	var/datum/plantgenes/child_genes = child.plantgenes
-	var/datum/plantmutation/child_mutation = parent_genes.mutation
+	var/datum/plantmutation/child_mutation
+	if(parent_genes)
+		child_mutation = parent_genes.mutation
 	// If the plant is a standard plant, our work here is mostly done
-	if (!child_planttype.hybrid)
+	if (!child_planttype.hybrid && !parent_planttype.unique_seed)
 		child.generic_seed_setup(child_planttype)
 	else
 		child.planttype = child_planttype
@@ -161,8 +169,9 @@ proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/pare
 			seedname = "[child_mutation.name]"
 		else if(child_mutation.name_prefix || child_mutation.name_suffix)
 			seedname = "[child_mutation.name_prefix][child_planttype.name][child_mutation.name_suffix]"
-	HYPpassplantgenes(parent_genes, child_genes)
 	child.name = "[seedname] seed"
+	//What's missing is transfering genes and the generation
+	HYPpassplantgenes(parent_genes, child_genes)
 	child.generation = parent_generation
 	//Now the seed it created and we can release it upon the world
 	return child
