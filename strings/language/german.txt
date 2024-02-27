@@ -198,3 +198,6 @@ yes@=ja
 yessir@=javol
 yogurt@=joghurt
 yummy@=lecker
+right@=recht
+true@=rightig
+false@=falsch
