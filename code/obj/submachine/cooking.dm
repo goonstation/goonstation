@@ -224,107 +224,112 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
-	flags = NOSPLASH
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	var/list/flavors = list("chocolate","vanilla","coffee")
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/obj/item/reagent_containers/food/snacks/ice_cream_cone/cone = null
 	var/doing_a_thing = 0
 
-	attack_hand(var/mob/user)
-		src.add_dialog(user)
-		var/dat = "<b>Ice Cream-O-Mat 9900</b><br>"
-		if(src.cone)
-			dat += "<a href='?src=\ref[src];eject=cone'>Eject Cone</a><br>"
-			dat += "<b>Select a Flavor:</b><br><ul>"
-			for(var/flavor in flavors)
-				dat += "<li><a href='?src=\ref[src];flavor=[flavor]'>[capitalize(flavor)]</a></li>"
-			if(src.beaker)
-				dat += "<li><a href='?src=\ref[src];flavor=beaker'>From Beaker</a></li>"
-			dat += "</ul><br>"
+	ui_interact(mob/user, datum/tgui/ui)
+		if (src.beaker)
+			SEND_SIGNAL(src.beaker.reagents, COMSIG_REAGENTS_ANALYZED, user)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "IceCreamMachine")
+			ui.open()
 
-		else
-			dat += "<b>No Cone Inserted!</b><br>"
+	ui_static_data(mob/user)
+		var/list/flavorsTemp = list()
+		if(!flavors)
+			return
+		for(var/reagent in flavors)
+			var/datum/reagent/fooddrink/current_reagent = reagents_cache[reagent]
+			flavorsTemp.Add(list(list(
+				name = current_reagent.name,
+				colorR = current_reagent.fluid_r,
+				colorG = current_reagent.fluid_g,
+				colorB = current_reagent.fluid_b
+			)))
+		. = list(
+			"flavors" = flavorsTemp
+		)
 
-		if(src.beaker)
-			dat += "<a href='?src=\ref[src];eject=beaker'>Eject Beaker</a><br>"
+	ui_data(mob/user)
+		. = list(
+			"beaker" = ui_describe_reagents(src.beaker),
+			"cone" = src.cone
+		)
 
-		user.Browse(dat, "window=icecream;size=400x500")
-		onclose(user, "icecream")
-		return
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
 
-	attack_ai(var/mob/user as mob)
-		return attack_hand(user)
-
-	Topic(href, href_list)
 		if (istype(src.loc, /turf) && (( BOUNDS_DIST(src, usr) == 0) || issilicon(usr) || isAI(usr)))
 			if (!isliving(usr) || iswraith(usr) || isintangible(usr))
 				return
 			if (is_incapacitated(usr) || usr.restrained())
 				return
 
-			src.add_fingerprint(usr)
-			src.add_dialog(usr)
-
-			if(href_list["eject"])
-				switch(href_list["eject"])
-					if("beaker")
-						if(src.beaker)
-							src.beaker.set_loc(src.loc)
-							usr.put_in_hand_or_eject(src.beaker) // try to eject it into the users hand, if we can
-							src.beaker = null
-							src.UpdateIcon()
-
-					if("cone")
-						if(src.cone)
-							src.cone.set_loc(src.loc)
-							usr.put_in_hand_or_eject(src.cone) // try to eject it into the users hand, if we can
-							src.cone = null
-							src.UpdateIcon()
-
-			else if(href_list["flavor"])
-				if(doing_a_thing)
-					src.updateUsrDialog()
+		src.add_fingerprint(usr)
+		switch(action)
+			if("eject_cone")
+				var/obj/item/target = src.cone
+				if (!target)
+					boutput(usr, SPAN_ALERT("There is no cone loaded!"))
 					return
+				usr.put_in_hand_or_eject(target)
+				boutput(usr, SPAN_NOTICE("You have removed the cone from [src]."))
+				src.cone = null
+				src.UpdateIcon()
+				. = TRUE
+
+			if("eject_beaker")
+				var/obj/item/target = src.beaker
+				if (!target)
+					boutput(usr, SPAN_ALERT("There is no beaker loaded!"))
+					return
+
+				usr.put_in_hand_or_eject(target)
+				boutput(usr, SPAN_NOTICE("You have removed the beaker from [src]."))
+				src.beaker = null
+				src.UpdateIcon()
+				. = TRUE
+
+			if("insert_beaker")
+				var/obj/item/reagent_containers/newbeaker = usr.equipped()
+				if (istype(newbeaker, /obj/item/reagent_containers/glass/) || istype(newbeaker, /obj/item/reagent_containers/food/drinks/))
+					if(!newbeaker.cant_drop)
+						usr.drop_item()
+						newbeaker.set_loc(src)
+					src.beaker = newbeaker
+					src.UpdateIcon()
+					. = TRUE
+
+			if("make_ice_cream")
 				if(!cone)
 					boutput(usr, SPAN_ALERT("There is no cone loaded!"))
-					src.updateUsrDialog()
 					return
 
-				var/the_flavor = href_list["flavor"]
-				if(the_flavor == "beaker")
-					if(!beaker)
-						boutput(usr, SPAN_ALERT("There is no beaker loaded!"))
-						src.updateUsrDialog()
-						return
-
+				var/flavor = params["flavor"]
+				var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
+				if(flavor == "beaker")
 					if(!beaker.reagents.total_volume)
 						boutput(usr, SPAN_ALERT("The beaker is empty!"))
-						src.updateUsrDialog()
 						return
 
-					doing_a_thing = 1
-					qdel(src.cone)
-					src.cone = null
-					var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
 					beaker.reagents.trans_to(newcream,40)
-					newcream.set_loc(src.loc)
+				else if(flavor in src.flavors)
+					newcream.reagents.add_reagent(flavor,40)
 
-				else
-					if(the_flavor in src.flavors)
-						doing_a_thing = 1
-						qdel(src.cone)
-						src.cone = null
-						var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
-						newcream.reagents.add_reagent(the_flavor,40)
-						newcream.set_loc(src.loc)
-					else
-						boutput(usr, SPAN_ALERT("Unknown flavor!"))
-
-				doing_a_thing = 0
+				usr.put_in_hand_or_eject(newcream)
+				src.cone = null
 				src.UpdateIcon()
+				. = TRUE
 
-			src.updateUsrDialog()
-		return
+
+	attack_ai(var/mob/user as mob)
+		return ui_interact(user)
 
 	attackby(obj/item/W, mob/user)
 		if (W.cant_drop) // For borg held items
@@ -342,7 +347,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 				boutput(user, SPAN_NOTICE("You load the cone into [src]."))
 
 			src.UpdateIcon()
-			src.updateUsrDialog()
+			tgui_process.update_uis(src)
 
 		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
 			if(src.beaker)
@@ -355,7 +360,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 				boutput(user, SPAN_ALERT("You load [W] into [src]."))
 
 			src.UpdateIcon()
-			src.updateUsrDialog()
+			tgui_process.update_uis(src)
 		else ..()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
