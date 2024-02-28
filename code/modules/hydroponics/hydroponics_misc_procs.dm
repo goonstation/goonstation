@@ -1,5 +1,26 @@
 // Hydroponics procs not specific to the plantpot start here.
 
+proc/HYPchem_scaling(var/scaling_statistics)
+	//! This proc causes all chem production of botany to have a diminishing return with potency (or other stats for e.g. maneaters)
+	//For the graph in question with explanation, refer to this link: https://www.desmos.com/calculator/gy7tn43s6b
+	var/scaling_asymptote = 200 //! For potency reaching infinite, this times linear_factor will be the result
+	var/scaling_factor = 150 //! Refer to the graph in the explation on how this is calculated
+	var/result = 1
+	if (scaling_statistics > 0)
+		result *= scaling_asymptote / (scaling_statistics + scaling_factor)
+	return result
+
+proc/HYPfull_potency_calculation(var/datum/plantgenes/DNA, var/linear_factor = 1)
+	//! this proc is a shortcut to calculate the amount of chems to produce from a linear factor and the plantgenes
+	var/result = linear_factor
+	if(DNA)
+		var/potency_to_scale = DNA.get_effective_value("potency")
+		result *= potency_to_scale * HYPchem_scaling(potency_to_scale)
+	else
+		result = 0
+	return max(round(result), 0) //we return the rounded value or 0 when we have negative potency
+
+
 proc/HYPget_assoc_reagents(var/datum/plant/passed_plant, var/datum/plantgenes/passed_plantgenes)
 	//This proc returns a list with all reagents (or none) the plant currently is able to produce.
 	var/reagent_list = list()
@@ -49,7 +70,7 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 	if(special_condition == "jumbo")
 		basecapacity *= 2
 
-	var/to_add = basecapacity + DNA?.get_effective_value("potency")
+	var/to_add = basecapacity + HYPfull_potency_calculation(DNA)
 	I.reagents.maximum_volume = max(to_add, I.reagents.maximum_volume)
 	if(I.reagents.maximum_volume < 1)
 		I.reagents.maximum_volume = 1

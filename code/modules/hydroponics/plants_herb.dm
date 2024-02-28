@@ -282,7 +282,7 @@ ABSTRACT_TYPE(/datum/plant/herb)
 					chem_protection = ((100 - M.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
 
 				var/list/plant_complete_reagents = HYPget_assoc_reagents(P, DNA)
-				var/potency_scale = length(plant_complete_reagents) ? round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * (length(plant_complete_reagents) ** 0.5))))) : 0
+				var/potency_scale = length(plant_complete_reagents) ? round(max(1, HYPfull_potency_calculation(DNA, 0.1 / (length(plant_complete_reagents)** 0.5)))) : 0
 
 				logTheThing(LOG_CHEMISTRY, M, "is stung by a nettle plant (likely planted by [constructName(POT.contributors[1])]) at [log_loc(POT)][potency_scale ? ", injecting with [5 * chem_protection * potency_scale]u each of [json_encode(HYPget_assoc_reagents(P, DNA))]" : ""]")
 
@@ -316,7 +316,7 @@ ABSTRACT_TYPE(/datum/plant/herb)
 			boutput(user, SPAN_NOTICE("You feel something brush against you."))
 		var/list/plant_complete_reagents = HYPget_assoc_reagents(src, DNA)
 		for (var/plantReagent in plant_complete_reagents)
-			H.reagents?.add_reagent(plantReagent, 5 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * (length(plant_complete_reagents) ** 0.5))))))
+			H.reagents?.add_reagent(plantReagent, 5 * round(max(1, HYPfull_potency_calculation(DNA, 0.1 / (length(plant_complete_reagents) ** 0.5)))))
 
 /datum/plant/herb/tobacco
 	name = "Tobacco"
