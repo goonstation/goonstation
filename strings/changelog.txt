@@ -1,4 +1,9 @@
+
 (t)wed feb 28 24
+(u)Mr. Moriarty & TealSeer
+(p)18044
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Power and data terminals now have modern, visually distinct sprites.
 (u)LeahTheTech
 (+)Newspapers now correctly hide your face when unfurled.
 (t)tue feb 27 24
