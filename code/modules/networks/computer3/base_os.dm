@@ -593,6 +593,8 @@
 		return
 
 	initialize()
+		if (..())
+			return TRUE
 		src.print_text("Loading [src.setup_version_name]<br>Scanning for peripheral cards...")
 
 		src.peripherals = new //Figure out what cards are there now so we can address them later all easy-like
