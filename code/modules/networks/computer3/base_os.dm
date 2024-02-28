@@ -12,7 +12,6 @@
 	var/echo_input = 1
 	var/log_errors = 1
 	var/list/peripherals = list()
-	var/authenticated = null //Is anyone logged in?
 
 	var/setup_version_name = "ThinkDOS 0.7.2"
 	var/setup_needs_authentication = 1 //Do we need to present an ID to use this?
