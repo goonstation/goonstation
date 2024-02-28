@@ -16,26 +16,24 @@ export const StandardFlavors = (props, context) => {
 
   return (
     <Section title="Standard Flavors" >
-      <Flex wrap>
-        {standardFlavors.map((flavor, flavorIndex) => (
-          <Button
-            key={flavorIndex}
-            className="chem-dispenser__dispense-buttons"
-            align="left"
-            width="130px"
-            m=".1rem"
-            onClick={() => act("make_ice_cream", { flavor: flavor.name })}
-          >
-            <Icon
-              color={"rgba(" + flavor.colorR + "," + flavor.colorG + ", " + flavor.colorB + ", 1)"}
-              name="circle"
-              pt={1}
-              style={{ "text-shadow": "0 0 3px #000" }}
-            />
-            {flavor.name}
-          </Button>
-        ))}
-      </Flex>
+      {standardFlavors.map((flavor, flavorIndex) => (
+        <Button
+          key={flavorIndex}
+          className="chem-dispenser__dispense-buttons"
+          align="left"
+          width="130px"
+          m=".1rem"
+          onClick={() => act("make_ice_cream", { flavor: flavor.name })}
+        >
+          <Icon
+            color={"rgba(" + flavor.colorR + "," + flavor.colorG + ", " + flavor.colorB + ", 1)"}
+            name="circle"
+            pt={1}
+            style={{ "text-shadow": "0 0 3px #000" }}
+          />
+          {flavor.name}
+        </Button>
+      ))}
     </Section>
   );
 };
@@ -46,31 +44,29 @@ export const BeakerFlavor = (props, context) => {
 
   return (
     <Section title="Custom Flavor" fill>
-      <Flex direction="column">
-        <ReagentGraph container={beaker} />
-        <Flex wrap >
-          <Flex.Item>
-            <Button key="beaker"
-              mt=".5rem"
-              mr=".5rem"
-              className="chem-dispenser__dispense-buttons"
-              icon="check" color="green"
-              disabled={!beaker || !beaker.totalVolume}
-              tooltip={beaker && !beaker.totalVolume ? "Beaker Is Empty" : ""}
-              onClick={() => act("make_ice_cream", { flavor: "beaker" })}>
-              Make Custom Ice Cream
-            </Button>
-          </Flex.Item>
-          <Flex.Item>
-            <Button
-              mt=".5rem"
-              className="chem-dispenser__dispense-buttons"
-              icon="eject"
-              onClick={() => !beaker ? act("insert_beaker") : act("eject_beaker")} >
-              {!beaker ? "Insert Beaker" : "Eject " + beaker.name + " (" + beaker.totalVolume + "/" + beaker.maxVolume + ")"}
-            </Button>
-          </Flex.Item>
-        </Flex>
+      <ReagentGraph container={beaker} />
+      <Flex wrap >
+        <Flex.Item>
+          <Button key="beaker"
+            mt=".5rem"
+            mr=".5rem"
+            className="chem-dispenser__dispense-buttons"
+            icon="check" color="green"
+            disabled={!beaker || !beaker.totalVolume}
+            tooltip={beaker && !beaker.totalVolume ? "Beaker Is Empty" : ""}
+            onClick={() => act("make_ice_cream", { flavor: "beaker" })}>
+            Make Custom Ice Cream
+          </Button>
+        </Flex.Item>
+        <Flex.Item>
+          <Button
+            mt=".5rem"
+            className="chem-dispenser__dispense-buttons"
+            icon="eject"
+            onClick={() => !beaker ? act("insert_beaker") : act("eject_beaker")} >
+            {!beaker ? "Insert Beaker" : "Eject " + beaker.name + " (" + beaker.totalVolume + "/" + beaker.maxVolume + ")"}
+          </Button>
+        </Flex.Item>
       </Flex>
     </Section>
   );
@@ -83,7 +79,7 @@ export const IceCreamMachine = (props, context) => {
   return (
     <Window
       title="Ice Cream-O-Mat 6300"
-      width={430}
+      width={440}
       height={275}>
       <Window.Content>
         <Stack m="0.25rem" vertical fill>
