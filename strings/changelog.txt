@@ -1,5 +1,9 @@
 
 (t)wed feb 28 24
+(u)Elettra
+(p)17947
+(e)📄🍝|A-UI, A-Catering
+(+)New UI for the Ice Cream machine using TGUI.
 (u)Mr. Moriarty & TealSeer
 (p)18044
 (e)🎨📦|C-Sprites, A-Game-Objects
