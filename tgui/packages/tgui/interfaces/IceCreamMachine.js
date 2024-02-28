@@ -20,6 +20,7 @@ export const StandardFlavors = (props, context) => {
         {standardFlavors.map((flavor, flavorIndex) => (
           <Button
             key={flavorIndex}
+            className="chem-dispenser__dispense-buttons"
             align="left"
             width="130px"
             m=".1rem"
@@ -52,6 +53,7 @@ export const BeakerFlavor = (props, context) => {
             <Button key="beaker"
               mt=".5rem"
               mr=".5rem"
+              className="chem-dispenser__dispense-buttons"
               icon="check" color="green"
               disabled={!beaker || !beaker.totalVolume}
               tooltip={beaker && !beaker.totalVolume ? "Beaker Is Empty" : ""}
@@ -62,10 +64,10 @@ export const BeakerFlavor = (props, context) => {
           <Flex.Item>
             <Button
               mt=".5rem"
+              className="chem-dispenser__dispense-buttons"
               icon="eject"
-              disabled={!beaker}
-              onClick={() => act("eject_beaker")} >
-              {!beaker ? "Eject Beaker" : "Eject " + beaker.name }
+              onClick={() => !beaker ? act("insert_beaker") : act("eject_beaker")} >
+              {!beaker ? "Insert Beaker" : "Eject " + beaker.name + " (" + beaker.totalVolume + "/" + beaker.maxVolume + ")"}
             </Button>
           </Flex.Item>
         </Flex>
@@ -74,26 +76,10 @@ export const BeakerFlavor = (props, context) => {
   );
 };
 
-export const ConeButton = (props, context) => {
-  const { act, data } = useBackend(context);
-  const cone=data.cone;
-
-  return (
-    <Flex>
-      <Flex.Item nowrap>
-        <Button
-          mt="0.5rem"
-          icon="eject"
-          disabled={!cone}
-          onClick={() => act("eject_cone")} >
-          Eject Cone
-        </Button>
-      </Flex.Item>
-    </Flex>
-  );
-};
-
 export const IceCreamMachine = (props, context) => {
+  const { data } = useBackend(context);
+  const cone = data.cone;
+
   return (
     <Window
       title="Ice Cream-O-Mat 6300"
@@ -108,7 +94,14 @@ export const IceCreamMachine = (props, context) => {
             <BeakerFlavor />
           </Stack.Item>
           <Stack.Item m=".25rem">
-            <ConeButton />
+            <Button
+              mt="0.5rem"
+              icon="eject"
+              className="chem-dispenser__buttons"
+              disabled={!cone}
+              onClick={() => act("eject_cone")} >
+              Eject Cone
+            </Button>
           </Stack.Item>
         </Stack>
       </Window.Content>

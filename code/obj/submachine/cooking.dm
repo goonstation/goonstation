@@ -296,6 +296,16 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 				src.UpdateIcon()
 				. = TRUE
 
+			if("insert_beaker")
+				var/obj/item/reagent_containers/newbeaker = usr.equipped()
+				if (istype(newbeaker, /obj/item/reagent_containers/glass/) || istype(newbeaker, /obj/item/reagent_containers/food/drinks/))
+					if(!newbeaker.cant_drop)
+						usr.drop_item()
+						newbeaker.set_loc(src)
+					src.beaker = newbeaker
+					src.UpdateIcon()
+					. = TRUE
+
 			if("make_ice_cream")
 				if(!cone)
 					boutput(usr, SPAN_ALERT("There is no cone loaded!"))
