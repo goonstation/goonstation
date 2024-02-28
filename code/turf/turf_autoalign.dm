@@ -484,7 +484,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/paper)
 		/turf/simulated/wall/auto/reinforced/paper, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto
 	))
-	connects_with_overlay = typecacheof(list(/obj/table/reinforced/bar/auto))
 /turf/simulated/wall/auto/reinforced/paper
 	icon = 'icons/turf/walls/paper.dmi'
 	default_material = "bamboo"
@@ -699,7 +698,6 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn)
 		/turf/unsimulated/wall/auto/supernorn,
 		/turf/unsimulated/wall/auto/reinforced/supernorn
 	))
-	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window, /obj/strip_door))
 /turf/unsimulated/wall/auto/supernorn
 	icon = 'icons/turf/walls/supernorn/smooth.dmi'
 #ifdef PERSPECTIVE_EDITOR_WALL
@@ -724,7 +722,6 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/reinforced/supernorn)
 		/turf/unsimulated/wall/auto/adventure/fake_window,
 		/turf/unsimulated/wall/auto/adventure/meat
 	))
-	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window, /obj/strip_door))
 /turf/unsimulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls/supernorn/smooth.dmi'
 #ifdef PERSPECTIVE_EDITOR_WALL
@@ -799,7 +796,6 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/lead)
 		/turf/simulated/wall/false_wall/,
 		/turf/simulated/wall/false_wall/centcom
 	))
-	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window, /obj/strip_door))
 /turf/unsimulated/wall/auto/lead
 	name = "lead wall"
 	light_mod = "wall-"
