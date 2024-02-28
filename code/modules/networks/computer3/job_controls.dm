@@ -43,6 +43,10 @@ var/datum/job/priority_job = null
 					else
 						src.print_text("No currently specified priority role.")
 					return
+				if (cmptext(job_name, "None"))
+					global.priority_job = null
+					src.print_text("Cleared priority job listing.")
+					return
 				var/datum/job/job = find_job_in_controller_by_string(job_name, soft = TRUE, case_sensitive = FALSE)
 				if (!job)
 					src.print_text("Error: unable to identify role with name \[[job_name]\]")
