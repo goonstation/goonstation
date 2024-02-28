@@ -6,7 +6,7 @@
  */
 
 import { useBackend, useLocalState, useSharedState } from '../backend';
-import { Box, Button, Collapsible, Dimmer, Divider, Flex, Input, LabeledList, Section, Stack } from '../components';
+import { Box, Button, Collapsible, Dimmer, Divider, Flex, Image, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const Wizard_Spellbook = (props, context) => {
@@ -105,14 +105,14 @@ const Spell = (props, context) => {
   const { spell, category } = props;
 
   const [purchased, setPurchased] = useSharedState(context, spell+"p", false);
-  let spell_contents = []; // Non-associated list of: desc, cost, cooldown, vr_allowed
+  let spell_contents = []; // Non-associated list of: desc, cost, cooldown, vr_allowed, spell_img
   for (let spell_data in spellbook_contents[category][spell]) {
     spell_contents.push(spellbook_contents[category][spell][spell_data]);
   }
 
   return (
     <Stack.Item>
-      <Section>
+      <Section mt={0.5} mb={-1.5}>
         {(vr === 1) && (spell_contents[3] === 0) && (
           <Dimmer>
             <Box fontSize={1.5} backgroundColor={"#384e68"} p={2}>
@@ -121,16 +121,37 @@ const Spell = (props, context) => {
           </Dimmer>
         )}
         <Section
-          title={spell}
-          buttons={
-            <Flex>
-              <Button
-                backgroundColor={"green"}
-                disabled={spell_slots < spell_contents[1] || purchased}
-                onClick={() => { setPurchased(true); act("buyspell", { spell: spell }); }}
-              >
-                {If_Purchased_Text(purchased, spell_contents[1], spell_slots)}
-              </Button>
+          title={
+            <Flex justify={"space-between"} align={"end"}>
+              <Flex.Item>
+                <Flex>
+                  <Flex.Item>
+                    {!!spell_contents[4] && (
+                      <Image
+                        pixelated
+                        mt={-2}
+                        height="38px"
+                        width="38px"
+                        src={`data:image/png;base64,${spell_contents[4]}`}
+                      />
+                    )}
+                  </Flex.Item>
+                  <Flex.Item align={"end"}>
+                    <Box fontSize={1.25} ml={1}>
+                      {spell}
+                    </Box>
+                  </Flex.Item>
+                </Flex>
+              </Flex.Item>
+              <Flex.Item>
+                <Button
+                  backgroundColor={"green"}
+                  disabled={spell_slots < spell_contents[1] || purchased}
+                  onClick={() => { setPurchased(true); act("buyspell", { spell: spell }); }}
+                >
+                  {If_Purchased_Text(purchased, spell_contents[1], spell_slots)}
+                </Button>
+              </Flex.Item>
             </Flex>
           }
         >
