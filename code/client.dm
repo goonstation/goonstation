@@ -720,6 +720,7 @@
 #ifdef BONUS_POINTS
 	persistent_bank = 99999999
 #else
+	if (!src.player.cloudSaves.loaded) return
 	var/cPersistentBank = src.player.cloudSaves.getData("persistent_bank")
 	persistent_bank = cPersistentBank ? text2num(cPersistentBank) : FALSE
 #endif
