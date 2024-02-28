@@ -954,6 +954,15 @@
 	src.generate_article()
 	src.update_desc()
 
+/obj/item/paper/newspaper/pickup(mob/user)
+	. = ..()
+	user.UpdateName() //hide their face
+
+/obj/item/paper/newspaper/dropped(mob/user)
+	. = ..()
+	SPAWN(0) //sigh
+		user.UpdateName()
+
 /obj/item/paper/newspaper/ui_interact(mob/user, datum/tgui/ui)
 	if (!src.two_handed)
 		return // only read the contents if the newspaper is unfurled

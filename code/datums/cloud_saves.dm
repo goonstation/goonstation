@@ -96,6 +96,7 @@
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to have their cloud data loaded: [error.message]")
+				logTheThing(LOG_DIARY, src.player.ckey, "failed to have their cloud data loaded: [error.message]", "admin")
 
 		return TRUE
 
@@ -108,6 +109,7 @@
 		else
 			if (!src.player?.id)
 				logTheThing(LOG_DEBUG, src.player?.ckey, "No player ID found in cloud data put [key], [value]")
+				logTheThing(LOG_DIARY, src.player?.ckey, "No player ID found in cloud data put [key], [value]", "admin")
 				return
 			try
 				var/datum/apiRoute/players/saves/data/post/addPlayerData = new
@@ -116,6 +118,7 @@
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to put data into their cloud. Key: [key]. Value: [value]. Error: [error.message]")
+				logTheThing(LOG_DIARY, src.player.ckey, "failed to put data into their cloud. Key: [key]. Value: [value]. Error: [error.message]", "admin")
 				return FALSE
 
 		src.data[key] = value
@@ -136,6 +139,7 @@
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to put save into their cloud. Error: [error.message]")
+				logTheThing(LOG_DIARY, src.player.ckey, "failed to put save into their cloud. Error: [error.message]", "admin")
 				return FALSE
 
 		src.saves[name] = data
@@ -156,6 +160,7 @@
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to delete data from their cloud. Error: [error.message]")
+				logTheThing(LOG_DIARY, src.player.ckey, "failed to delete data from their cloud. Error: [error.message]", "admin")
 				return FALSE
 
 		src.data.Remove(key)
@@ -176,6 +181,7 @@
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to delete save from their cloud. Error: [error.message]")
+				logTheThing(LOG_DIARY, src.player.ckey, "failed to delete save from their cloud. Error: [error.message]", "admin")
 				return FALSE
 
 		src.saves.Remove(name)
@@ -233,12 +239,13 @@
 	try
 		var/datum/apiRoute/players/saves/databulk/post/addBulkData = new
 		addBulkData.buildBody(json_encode(data))
-		logTheThing(LOG_DEBUG, null, "TEMP CLOUD BULK: [json_encode(data)]")
+		logTheThing(LOG_DIARY, null, "TEMP CLOUD BULK: [json_encode(data)]", "admin")
 		apiHandler.queryAPI(addBulkData)
 		return TRUE
 	catch (var/exception/e)
 		var/datum/apiModel/Error/error = e.name
 		logTheThing(LOG_DEBUG, null, "failed to put bulk data into the cloud. Error: [error.message]")
+		logTheThing(LOG_DIARY, null, "failed to put bulk data into the cloud. Error: [error.message]", "admin")
 		return FALSE
 #endif
 

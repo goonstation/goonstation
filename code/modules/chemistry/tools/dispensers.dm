@@ -690,7 +690,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		if(istype(W, /obj/item/reagent_containers/food/snacks/plant))
 			var/obj/item/reagent_containers/food/snacks/plant/P = W
 			var/datum/plantgenes/DNA = P.plantgenes
-			brew_amount = max(DNA?.get_effective_value("potency"), 5) //always produce SOMETHING
+			brew_amount = max(HYPfull_potency_calculation(DNA), 5) //always produce SOMETHING
 
 		if (!brew_result)
 			return FALSE

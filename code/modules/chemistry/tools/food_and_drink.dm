@@ -1733,6 +1733,14 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 					 "mojito", "cremedementhe", "grasshopper", "freeze", "limeade", "juice_peach",
 					 "juice_banana")
 
+/obj/item/reagent_containers/food/drinks/drinkingglass/icewater
+	New()
+		..()
+		SPAWN(0)
+			if (src.reagents)
+				src.reagents.add_reagent("ice", 15, null, T0C)
+				src.reagents.add_reagent("water", 35, null, T0C)
+
 /obj/item/reagent_containers/food/drinks/duo
 	name = "red duo cup"
 	desc = "Can't imagine a party without a few dozen these on the lawn afterward."

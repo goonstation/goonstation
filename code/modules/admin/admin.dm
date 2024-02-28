@@ -2512,7 +2512,7 @@ var/global/noir = 0
 							if (tgui_alert(usr,"Do you want to give everyone a gun?", "Confirmation", list("Yes", "No")) != "Yes")
 								return
 							for (var/mob/living/L in mobs)
-								new /obj/random_item_spawner/kineticgun(get_turf(L))
+								new /obj/random_item_spawner/kineticgun/fullrandom(get_turf(L))
 							message_admins("[key_name(usr)] gave everyone a random firearm.")
 							logTheThing(LOG_ADMIN, usr, "gave everyone a random firearm.")
 							logTheThing(LOG_DIARY, usr, "gave everyone a random firearm.", "admin")
