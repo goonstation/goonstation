@@ -724,7 +724,6 @@
 	persistent_bank = cPersistentBank ? text2num(cPersistentBank) : FALSE
 #endif
 	persistent_bank_valid = TRUE //moved down to below api call so if it runtimes it won't be considered valid
-	persistent_bank_valid = persistent_bank > 0 //bad hack to stop people's spacebux being deleted while Wire figures out what's going on. REMOVE THIS LATER
 	persistent_bank_item = src.player.cloudSaves.getData("persistent_bank_item")
 
 //MBC TODO : PERSISTENTBANK_VERSION_MIN, MAX FOR BANKING SO WE CAN WIPE AWAY EVERYONE'S HARD WORK WITH A SINGLE LINE OF CODE CHANGE
