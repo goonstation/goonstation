@@ -1,4 +1,6 @@
-
+(t)wed feb 28 24
+(u)LeahTheTech
+(+)Newspapers now correctly hide your face when unfurled.
 (t)tue feb 27 24
 (u)Lord_Earthfire
 (p)17938
