@@ -33,6 +33,11 @@ var/global/datum/participationRecorder/participationRecorder
 		if (!P)
 			throw EXCEPTION("No player given")
 
+		if (!P.id)
+			logTheThing(LOG_DEBUG, null, "No player ID for player during player participation recording. Player: [P.mind.ckey]")
+			logTheThing(LOG_DIARY, null, "No player ID for player during player participation recording. Player: [P.mind.ckey]", "admin")
+			return
+
 		if (!ticker || !ticker.mode || !ticker.mode.name)
 			throw EXCEPTION("Invalid ticker found")
 
@@ -50,7 +55,8 @@ var/global/datum/participationRecorder/participationRecorder
 				addParticipation.buildBody(P.id, roundId, src.getJob(P))
 				apiHandler.queryAPI(addParticipation)
 			catch
-				// pass
+				logTheThing(LOG_DEBUG, null, "failed to record player participation. Player: [P.mind.ckey]")
+				logTheThing(LOG_DIARY, null, "failed to record player participation. Player: [P.mind.ckey]", "admin")
 
 
 	//Set holding on, which enables queuing of participation data for the duration
@@ -74,4 +80,5 @@ var/global/datum/participationRecorder/participationRecorder
 			addBulkParticipations.buildBody(src.queue, roundId)
 			apiHandler.queryAPI(addBulkParticipations)
 		catch
-			// pass
+			logTheThing(LOG_DEBUG, null, "failed to bulk record player participations. Queue: [json_encode(src.queue)]")
+			logTheThing(LOG_DIARY, null, "failed to bulk record player participations. Queue: [json_encode(src.queue)]", "admin")
