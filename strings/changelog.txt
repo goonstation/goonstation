@@ -1,6 +1,11 @@
 
 (t)tue feb 27 24
 (u)Lord_Earthfire
+(p)17938
+(e)⚖🌱|C-Balance, A-Hydroponics
+(*)Chemicals produced by plants show diminishing returns with increasing potency. See the minor logs for more information.
+(+)Diminishing returns for botany scaling start at 50 potency, with 80% effectivity at 100 potency.
+(u)Lord_Earthfire
 (p)17937
 (e)🪲📦🌱|C-Bug, A-Game-Objects, A-Hydroponics
 (+)Sunflowers now transfers up to 50% of their chems unto their sunflower seeds
