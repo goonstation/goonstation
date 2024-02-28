@@ -160,12 +160,12 @@ ABSTRACT_TYPE(/datum/plant/herb)
 
 	HYPharvested_proc(obj/machinery/plantpot/POT, mob/user)
 		// check if we need to add a suffix
-		if (!src.weed_suffix && POT.plantgenes.potency > INITIAL_REQUIRED_POTENCY)
+		if (!src.weed_suffix && POT.plantgenes?.get_effective_value("potency") > INITIAL_REQUIRED_POTENCY)
 			src.weed_suffix = pick_string("chemistry_tools.txt", "WEED_suffixes")
 
 		if (src.weed_suffix)
 			// if we have a suffix, check if we need to generate more prefixes
-			var/target_prefix_num = min(MAX_PREFIXES, round(POT.plantgenes.potency / POTENCY_PER_PREFIX))
+			var/target_prefix_num = min(MAX_PREFIXES, round(POT.plantgenes?.get_effective_value("potency") / POTENCY_PER_PREFIX))
 			if (length(src.weed_prefixes) < target_prefix_num)
 				var/prefixes_to_add = target_prefix_num - length(src.weed_prefixes)
 				for (var/i in 1 to prefixes_to_add)
