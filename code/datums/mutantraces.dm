@@ -2127,9 +2127,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	icon = 'icons/mob/cow.dmi'
 	icon_state = "backpack_mask"
 
+TYPEINFO(/datum/mutantrace/cow) // !!!!!!If you are reading this, PLEASE figure out a way to make special_styles effect the tail, head-detail2 and cow_over_suit as well, I beg you!!!!!!
+	special_styles = list("spotted" = 'icons/mob/cow/spotted.dmi',
+	"peach" = 'icons/mob/cow/peach.dmi', "brown" = 'icons/mob/cow/brown.dmi') //!Common bug inherited from pugs where the mutantrace style selecteds a "default" style by... well, default. This "default" style is buggy and I would prefer it if it simply selected the first style in the list instead, in this case "spotted".
 /datum/mutantrace/cow
 	name = "cow"
-	icon = 'icons/mob/cow.dmi'
+	icon = 'icons/mob/cow/spotted.dmi'
 	icon_state = "body_m"
 	human_compatible = TRUE
 	uses_human_clothes = FALSE
@@ -2140,15 +2143,19 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	mutant_organs = list("tail" = /obj/item/organ/tail/cow,
 	"left_eye" = /obj/item/organ/eye/cow,
 	"right_eye" = /obj/item/organ/eye/cow)
-	mutant_folder = 'icons/mob/cow.dmi'
+	mutant_folder = 'icons/mob/cow/spotted.dmi'
 	special_head = HEAD_COW
-	special_hair_1_icon = 'icons/mob/cow.dmi'
+	special_hair_1_icon = 'icons/mob/cow/spotted.dmi' //!Head-detail1 and head-detail2 do not immedially poke through wigs when equiped, but only after the player appereance updates by removing a headset or shoes for example. Old, unrelated bug but maybe you can fix it?
 	special_hair_1_state = "head-detail1"
 	special_hair_1_color = CUST_1
-	special_hair_2_icon = 'icons/mob/cow.dmi'
+	special_hair_2_icon = 'icons/mob/cow/spotted.dmi'
 	special_hair_2_state = "cow_over_suit"
 	special_hair_2_color = null
-	special_hair_2_layer = MOB_OVERMASK_LAYER
+	special_hair_2_layer = MOB_HAIR_LAYER1
+	special_hair_3_icon = 'icons/mob/cow/spotted.dmi' //This makes the cowrace's new and ADORABLE ears poke through wigs, just like their horns do! Its a miracle that this works so well and easily.
+	special_hair_3_state = "head-detail2"
+	special_hair_3_color = null
+	special_hair_3_layer = MOB_HAIR_LAYER1
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right
