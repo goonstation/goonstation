@@ -1,4 +1,9 @@
 
+(t)thu feb 29 24
+(u)LeahTheTech
+(p)18064
+(e)🆕🐣|C-Feature, A-Respawning
+(*)Added a new program to communications consoles: RoleControl. Requires ID computer access and allows you to set a priority role to be highlighted on the latejoin menu.
 (t)wed feb 28 24
 (u)mloccy
 (p)17907
