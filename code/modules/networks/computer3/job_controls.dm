@@ -39,7 +39,7 @@ var/datum/job/priority_job = null
 				var/job_name = command_list.Join(" ") //all later arguments are assumed to just be parts of the job name
 				if (!length(job_name))
 					if (global.priority_job)
-						src.print_text("Current priority role: [src.job_info(global.priority_job)]")
+						src.print_text("Current priority role: [src.job_info(global.priority_job)]<br>Type \"prio none\" to clear.")
 					else
 						src.print_text("No currently specified priority role.")
 					return
