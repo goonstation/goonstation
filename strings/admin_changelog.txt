@@ -1,3 +1,12 @@
+(t)sun feb 25 24
+(u)Azrun
+(*)Caves added to Find Planets and Terrainify
+(t)tue feb 20 24
+(u)Azrun
+(*)IO/Lava Moon added to Find Planets and Terrainify
+(t)wed jan 24 24
+(u)LeahTheTech
+(*)The law rack corruption random event can now be configured with custom laws.
 (t)mon jan 08 24
 (u)LeahTheTech
 (*)Added a pixel offsets editor to the admin interact menu to make pixel shifting easier.

@@ -25,6 +25,9 @@
 	var/tmp/roundstart_dir
 	/// if this turf is immune to explosion (explosion immune turfs immediately return on ex_act())
 	var/explosion_immune = FALSE
+	///Things that are hidden "in" this turf that are revealed when it is pried up.
+	///Kept in a hidden object on the turf so that `get_turf` works as normal. Yes this is crime, fight me I have a possum.
+	var/obj/effects/hidden_contents_holder/hidden_contents = null
 
 	New()
 		..()
@@ -1897,6 +1900,16 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	to_plating()
 	playsound(src, 'sound/items/Crowbar.ogg', 80, TRUE)
 
+/turf/simulated/floor/levelupdate()
+	..()
+	if (!src.intact && src.hidden_contents)
+		for(var/atom/movable/AM as anything in src.hidden_contents)
+			AM.set_loc(src)
+			SEND_SIGNAL(AM, COMSIG_MOVABLE_FLOOR_REVEALED, src)
+		qdel(src.hidden_contents) //it's an obj, see the definition for crime justification
+		src.hidden_contents = null
+
+
 /turf/simulated/floor/attackby(obj/item/C, mob/user, params)
 
 	if (!C || !user)
@@ -2108,6 +2121,11 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	ReplaceWithFloor()
 	src.to_plating()
 
+/turf/simulated/floor/proc/hide_inside(atom/movable/AM)
+	if (!src.hidden_contents)
+		src.hidden_contents = new(src)
+	AM.set_loc(src.hidden_contents)
+
 /turf/simulated/floor/MouseDrop_T(atom/A, mob/user as mob)
 	..(A,user)
 	if(istype(A,/turf/simulated/floor))
@@ -2118,6 +2136,36 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				var/obj/item/cable_coil/C = I
 				if(BOUNDS_DIST(user,F) == 0 && BOUNDS_DIST(user,src) == 0)
 					C.move_callback(user, F, 0, src)
+
+/turf/simulated/floor/ReplaceWith(what, keep_old_material, handle_air, handle_dir, force)
+	var/obj/effects/hidden_contents_holder/old_hidden_contents = src.hidden_contents //we have to do this because src will be the new turf after the replace due to byond
+	var/turf/simulated/floor/newfloor = ..()
+	if (istype(newfloor))
+		newfloor.hidden_contents = old_hidden_contents
+	else
+		qdel(old_hidden_contents)
+	return newfloor
+
+/turf/simulated/floor/restore_tile()
+	..()
+	for (var/obj/item/item in src.contents)
+		if (item.w_class <= W_CLASS_TINY && !item.anchored) //I wonder if this will cause problems
+			src.hide_inside(item)
+
+///CRIME
+/obj/effects/hidden_contents_holder
+	name = ""
+	desc = ""
+	icon = null
+	anchored = ANCHORED_ALWAYS
+	invisibility = INVIS_ALWAYS
+	alpha = 0
+
+	set_loc(newloc)
+		if (!isnull(newloc))
+			return
+		. = ..()
+
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
 DEFINE_FLOORS_SIMMED_UNSIMMED(racing,
@@ -2337,9 +2385,27 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		icon = 'icons/misc/worlds.dmi'
 		icon_state = "swampgrass_edge"
 
+TYPEINFO(/turf/simulated/floor/auto)
+	/// List of types this autowall connects to
+	var/list/connects_to = null
+	/// Because connections now work by parent type searches, this is for when you don't want certain subtypes to connect.
+	/// This must be a typecache ([/proc/typecachesof]) list
+	var/list/connects_to_exceptions = null
+	/// do we have wall connection overlays, ex nornwalls?
+	var/connect_overlay = 0
+	var/list/connects_with_overlay = null
+	var/list/connects_with_overlay_exceptions = null // same as above comment
+	var/connect_across_areas = TRUE
+	/// 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
+	var/connect_diagonal = 0
+
 /turf/simulated/floor/auto
 	name = "auto edging turf"
 
+	var/mod = null
+	var/light_mod = null
+	/// The image we're using to connect to stuff with
+	var/image/connect_image = null
 	///turf won't draw edges on turfs with higher or equal priority
 	var/edge_priority_level = 0
 	var/icon_state_edge = null
@@ -2347,21 +2413,59 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	New()
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
-		SPAWN(0.5 SECONDS) //give neighbors a chance to spawn in
-			edge_overlays()
+		if (current_state > GAME_STATE_WORLD_NEW)
+			SPAWN(0) //worldgen overrides ideally
+				UpdateIcon()
+				if(istype(src))
+					update_neighbors()
+		else
+			worldgenCandidates += src
+
+	generate_worldgen()
+		src.UpdateIcon()
+		if(istype(src))
+			update_neighbors()
+
+	update_icon()
+		. = ..()
+		src.edge_overlays()
+		if(src.mod)
+			var/typeinfo/turf/simulated/floor/auto/typinfo = get_typeinfo()
+			var/connectdir = get_connected_directions_bitflag(typinfo.connects_to, typinfo.connects_to_exceptions, typinfo.connect_across_areas, typinfo.connect_diagonal)
+			var/the_state = "[mod][connectdir]"
+			icon_state = the_state
+
+			// if (light_mod)
+			// 	src.RL_SetSprite("[light_mod][connectdir]")
+
+			if (typinfo.connect_overlay)
+				var/overlaydir = get_connected_directions_bitflag(typinfo.connects_with_overlay, typinfo.connects_with_overlay_exceptions, typinfo.connect_across_areas)
+				if (overlaydir)
+					if (!src.connect_image)
+						src.connect_image = image(src.icon, "connect[overlaydir]")
+					else
+						src.connect_image.icon_state = "connect[overlaydir]"
+					src.UpdateOverlays(src.connect_image, "connect")
+				else
+					src.UpdateOverlays(null, "connect")
+
+	proc/update_neighbors()
+		for (var/turf/simulated/floor/auto/T in orange(1,src))
+			T.UpdateIcon()
 
 	proc/edge_overlays()
-		for (var/turf/T in orange(src,1))
-			if (istype(T, /turf/simulated/floor/auto))
-				var/turf/simulated/floor/auto/TA = T
-				if (TA.edge_priority_level >= src.edge_priority_level)
-					continue
-			var/direction = get_dir(T,src)
-			var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
-			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
-			edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
-			edge_overlay.plane = PLANE_FLOOR
-			T.UpdateOverlays(edge_overlay, "edge_[direction]")
+		if(src.icon_state_edge)
+			for (var/turf/T in orange(src,1))
+				if (istype(T, /turf/simulated/floor/auto))
+					var/turf/simulated/floor/auto/TA = T
+					if (TA.edge_priority_level >= src.edge_priority_level)
+						continue
+				var/direction = get_dir(T,src)
+				var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
+				edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+				edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
+				edge_overlay.plane = PLANE_FLOOR
+				T.UpdateOverlays(edge_overlay, "edge_[direction]")
 
 /turf/simulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"

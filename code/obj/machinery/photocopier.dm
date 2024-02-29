@@ -145,8 +145,8 @@ TYPEINFO(/obj/machinery/photocopier)
 					return
 				boutput(user, "You load the paper bin into \the [src].")
 				var/obj/item/paper_bin/P = w
-				src.paper_amount += w.amount
-				P.amount = 0
+				src.paper_amount += P.amount_left
+				P.amount_left = 0
 				P.update()
 				return
 

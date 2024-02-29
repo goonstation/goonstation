@@ -15,21 +15,18 @@ import { ModulesData } from '../type';
 const ModuleListWidth = 20;
 
 interface ModuleViewProps {
-  modules: ModulesData,
-  onEjectModule: (moduleRef: string) => void,
-  onMoveToolDown: (moduleRef: string, toolRef: string) => void,
-  onMoveToolUp: (moduleRef: string, toolRef: string) => void,
-  onRemoveTool: (moduleRef: string, toolRef: string) => void,
-  onResetModule: (moduleRef: string, moduleId: string) => void,
-  onSelectModule: (moduleRef: string) => void,
+  modules: ModulesData;
+  onEjectModule: (itemRef: string) => void;
+  onMoveToolDown: (itemRef: string) => void;
+  onMoveToolUp: (itemRef: string) => void;
+  onRemoveTool: (itemRef: string) => void;
+  onResetModule: (moduleId: string) => void;
+  onSelectModule: (itemRef: string) => void;
 }
 
 export const ModuleView = (props: ModuleViewProps) => {
   const {
-    modules: {
-      available = [],
-      selected,
-    } = {},
+    modules: { available = [], selected } = {},
     onEjectModule,
     onMoveToolDown,
     onMoveToolUp,
@@ -37,15 +34,7 @@ export const ModuleView = (props: ModuleViewProps) => {
     onResetModule,
     onSelectModule,
   } = props;
-  const {
-    ref: selectedModuleRef,
-    tools = [],
-  } = selected || {};
-
-  const handleMoveToolDown = (toolRef: string) => onMoveToolDown(selectedModuleRef, toolRef);
-  const handleMoveToolUp = (toolRef: string) => onMoveToolUp(selectedModuleRef, toolRef);
-  const handleRemoveTool = (toolRef: string) => onRemoveTool(selectedModuleRef, toolRef);
-  const handleResetModule = (moduleId: string) => onResetModule(selectedModuleRef, moduleId);
+  const { item_ref: selectedModuleRef, tools = [] } = selected || {};
 
   if (available.length === 0) {
     return (
@@ -59,53 +48,43 @@ export const ModuleView = (props: ModuleViewProps) => {
       <Stack.Item width={ModuleListWidth}>
         <Section title="Modules" scrollable fill>
           <Tabs vertical>
-            {
-              available.map(module => {
-                const {
-                  ref: moduleRef,
-                  name,
-                } = module;
-                const ejectButton = (
-                  <Button
-                    icon="eject"
-                    color="transparent"
-                    onClick={() => onEjectModule(moduleRef)}
-                    title={`Eject ${name}`}
-                  />
-                );
-                return (
-                  <Tabs.Tab
-                    key={moduleRef}
-                    onClick={() => onSelectModule(moduleRef)}
-                    rightSlot={ejectButton}
-                    selected={moduleRef === selectedModuleRef}
-                  >
-                    {name}
-                  </Tabs.Tab>
-                );
-              })
-            }
+            {available.map((module) => {
+              const { item_ref: itemRef, name } = module;
+              const ejectButton = (
+                <Button
+                  icon="eject"
+                  color="transparent"
+                  onClick={() => onEjectModule(itemRef)}
+                  title={`Eject ${name}`}
+                />
+              );
+              return (
+                <Tabs.Tab
+                  key={itemRef}
+                  onClick={() => onSelectModule(itemRef)}
+                  rightSlot={ejectButton}
+                  selected={itemRef === selectedModuleRef}>
+                  {name}
+                </Tabs.Tab>
+              );
+            })}
           </Tabs>
         </Section>
       </Stack.Item>
       <Stack.Item grow>
-        {
-          selectedModuleRef
-            ? (
-              <ModuleDetail
-                onMoveToolDown={handleMoveToolDown}
-                onMoveToolUp={handleMoveToolUp}
-                onRemoveTool={handleRemoveTool}
-                onResetModule={handleResetModule}
-                tools={tools}
-              />
-            )
-            : (
-              <Section fill>
-                <EmptyPlaceholder>No module selected</EmptyPlaceholder>
-              </Section>
-            )
-        }
+        {selectedModuleRef ? (
+          <ModuleDetail
+            onMoveToolDown={onMoveToolDown}
+            onMoveToolUp={onMoveToolUp}
+            onRemoveTool={onRemoveTool}
+            onResetModule={onResetModule}
+            tools={tools}
+          />
+        ) : (
+          <Section fill>
+            <EmptyPlaceholder>No module selected</EmptyPlaceholder>
+          </Section>
+        )}
       </Stack.Item>
     </Stack>
   );

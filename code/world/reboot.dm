@@ -36,6 +36,7 @@
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
+	eventRecorder.process() // Ensure any remaining events are processed
 #if defined(CI_RUNTIME_CHECKING) || defined(UNIT_TESTS)
 	logTheThing(LOG_DIARY, null, "Shutting down after testing for runtimes.", "admin")
 	if (isnull(runtimeDetails))

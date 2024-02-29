@@ -342,7 +342,7 @@
 
 		if (findtext(addr, ":")) // remove port if present
 			addr = splittext(addr, ":")[1]
-		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub2_hostname)
+		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip)
 			return 0 //ip filtering
 
 		var/list/plist = params2list(T)
@@ -633,44 +633,6 @@
 				else
 					return 0
 
-			if ("hubCallback")
-				//Wire note: Temp debug logging as this should always get data and proc
-				if (!plist["data"])
-					logTheThing(LOG_DEBUG, null, "<b>API Error (Temp):</b> Didnt get data.")
-					return 0
-				if (!plist["proc"])
-					logTheThing(LOG_DEBUG, null, "<b>API Error (Temp):</b> Didnt get proc.")
-					return 0
-
-				if (addr != config.goonhub_api_ip) return 0 //ip filtering
-				var/auth = plist["auth"]
-				if (auth != md5(config.goonhub_api_token)) return 0 //really bad md5 token security
-				var/theDatum = plist["datum"] ? plist["datum"] : null
-				var/theProc = "/proc/[plist["proc"]]"
-
-				var/list/ldata
-				try
-					ldata = json_decode(plist["data"])
-				catch
-					logTheThing(LOG_DEBUG, null, "<b>API Error:</b> Invalid JSON detected: [plist["data"]]")
-					return 0
-
-				ldata["data_hub_callback"] = 1
-
-				//calls the second stage of whatever proc specified
-				var/rVal
-				if (theDatum)
-					rVal = call(theDatum, theProc)(ldata)
-				else
-					rVal = call(theProc)(ldata)
-
-				if (rVal)
-					logTheThing(LOG_DEBUG, null, "<b>Callback Error</b> - Hub callback failed in [theDatum ? "<b>[theDatum]</b> " : ""]<b>[theProc]</b> with message: <b>[rVal]</b>")
-					logTheThing(LOG_DIARY, null, "<b>Callback Error</b> - Hub callback failed in [theDatum ? "[theDatum] " : ""][theProc] with message: [rVal]", "debug")
-					return 0
-				else
-					return 1
-
 			if ("roundEnd")
 				if (!plist["server"] || !plist["address"]) return 0
 
@@ -698,6 +660,13 @@
 				for (var/obj/machinery/networked/printer/P as anything in machine_registry[MACHINES_PRINTERS])
 					P.print_buffer += "[msgTitle]&title;[msgText]"
 					P.print()
+
+				return 1
+
+			if ("numbersStation")
+				if (!plist["numbers"]) return 0
+
+				lincolnshire_numbers(plist["numbers"])
 
 				return 1
 
@@ -760,15 +729,16 @@
 				var/ircmsg[] = new()
 				ircmsg["major"] = world.byond_version
 				ircmsg["minor"] = world.byond_build
-				ircmsg["goonhub_api"] = config.goonhub_api_version ? config.goonhub_api_version : 0
 				return ircbot.response(ircmsg)
 
 			if ("youtube")
 				if (!plist["data"]) return 0
 
 				play_music_remote(json_decode(plist["data"]))
+
 				// trigger cooldown so radio station doesn't interrupt our cool music
-				EXTEND_COOLDOWN(global, "music", 2 MINUTES) // TODO use plist duration data if available
+				var/duration = text2num(plist["duration"])
+				EXTEND_COOLDOWN(global, "music", duration SECONDS)
 				return 1
 
 			if ("delay")
@@ -864,67 +834,48 @@
 				if (!plist["ckey"])
 					return 0
 
-				var/list/data = list(
-					"auth" = config.player_notes_auth,
-					"action" = "get",
-					"ckey" = plist["ckey"],
-					"format" = "json"
-				)
-
-				// Fetch notes via HTTP
-				var/datum/http_request/request = new()
-				request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
-				request.begin_async()
-				UNTIL(request.is_complete())
-				var/datum/http_response/response = request.into_response()
-
-				if (response.errored || !response.body)
-					return 0
-
-				return response.body
+				try
+					var/datum/apiRoute/players/notes/get/getPlayerNotes = new
+					getPlayerNotes.queryParams = list(
+						"filters" = list(
+							"ckey" = plist["ckey"]
+						)
+					)
+					return apiHandler.queryAPI(getPlayerNotes)
+				catch
+					return FALSE
 
 			if ("getPlayerStats")
 				if (!plist["ckey"])
 					return 0
 
-				// playtime stats
-				var/list/data = list(
-					"auth" = config.player_notes_auth,
-					"action" = "user_stats",
-					"ckey" = plist["ckey"],
-					"format" = "json"
-				)
-				var/datum/http_request/playtime_request = new()
-				playtime_request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
-				playtime_request.begin_async()
-
-				// round stats
-				// cleverly making this request inbetween the start and the wait of the playtime request
-				var/list/response = null
+				var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 				try
-					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = plist["ckey"]), forceResponse = 1)
+					var/datum/apiRoute/players/stats/get/getPlayerStats = new
+					getPlayerStats.queryParams = list("ckey" = plist["ckey"])
+					playerStats = apiHandler.queryAPI(getPlayerStats)
 				catch
-					return 0
-				if (!response)
-					return 0
+					return FALSE
 
-				// finish playtime stats
-				UNTIL(playtime_request.is_complete())
-				var/datum/http_response/playtime_response = playtime_request.into_response()
-				if (!playtime_response.errored && playtime_response.body)
-					response["playtime"] = playtime_response.body
+				var/list/response = list(
+					"seen" = playerStats.connected,
+					"seen_rp" = playerStats.connected_rp,
+					"participated" = playerStats.played,
+					"participated_rp" = playerStats.played_rp,
+					"playtime" = playerStats.time_played
+				)
 
 				var/datum/player/player = make_player(plist["ckey"])
 				if(isnull(player.last_seen))
 					player.cache_round_stats_blocking()
 				if(player)
 					response["last_seen"] = player.last_seen
-				if(player.cloud_fetch())
-					for(var/kkey in player.clouddata)
-						if(kkey in list("admin_preferences", "buildmode"))
-							continue
-						response[kkey] = player.clouddata[kkey]
-					response["cloudsaves"] = player.cloudsaves
+				player.cloudSaves.fetch()
+				for(var/kkey in player.cloudSaves.data)
+					if(kkey in list("admin_preferences", "buildmode"))
+						continue
+					response[kkey] = player.cloudSaves.data[kkey]
+				response["cloudsaves"] = player.cloudSaves.saves
 
 				return json_encode(response)
 

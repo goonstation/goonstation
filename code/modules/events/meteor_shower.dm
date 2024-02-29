@@ -122,20 +122,20 @@ var/global/meteor_shower_active = 0
 				playsound_global(world, 'sound/machines/disaster_alert.ogg', 60)
 
 	#ifndef UNDERWATER_MAP
-			var/scroll_angle
 			switch(src.wave_direction)
 				if (NORTH)
-					scroll_angle = 180
+					ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/north, 0 SECONDS)
 				if (EAST)
-					scroll_angle = 270
+					ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/east, 0 SECONDS)
 				if (SOUTH)
-					scroll_angle = 0
+					ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/south, 0 SECONDS)
 				if (WEST)
-					scroll_angle = 90
-
-			if (scroll_angle)
-				ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower, 0 SECONDS)
-				GET_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower)?.scroll_angle = scroll_angle
+					ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/west, 0 SECONDS)
+				if (-1)	// from ALL DIRECTIONS (may cause lag? probably not though, it's only 4 layers)
+					ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/north, 0 SECONDS)
+					ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/east, 0 SECONDS)
+					ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/south, 0 SECONDS)
+					ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/west, 0 SECONDS)
 	#endif
 
 			var/start_x
@@ -198,7 +198,10 @@ var/global/meteor_shower_active = 0
 				S.UpdateIcon()
 
 	#ifndef UNDERWATER_MAP
-			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower, 0 SECONDS)
+			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/north, 0 SECONDS)
+			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/east, 0 SECONDS)
+			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/south, 0 SECONDS)
+			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/west, 0 SECONDS)
 	#endif
 
 	admin_call(var/source)
@@ -366,11 +369,15 @@ var/global/meteor_shower_active = 0
 			process()
 
 	proc/check_hits()
-		for(var/turf/simulated/S in range(1,src))
-			if(!S.density) continue
+		for(var/turf/T in range(1,src))
+			if(!T.density)
+				continue
+			//let's not just go straight through unsimmed turfs and total the inside of the listening post
+			if (!issimulatedturf(T) || !istype(T, /turf/unsimulated))
+				continue
 			hit_object = 1
 			if (prob(meteorhit_chance))
-				S.meteorhit(src)
+				T.meteorhit(src)
 
 		for(var/mob/M in range(1,src))
 			if(M == src) continue //Just to make sure

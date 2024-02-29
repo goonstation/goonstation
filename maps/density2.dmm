@@ -5348,6 +5348,9 @@
 	},
 /obj/item/disk/data/cartridge/captain,
 /obj/item/peripheral/network/radio/locked,
+/obj/item/pinpointer/disk{
+	pixel_y = 9
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "IV" = (
@@ -6587,7 +6590,7 @@
 /turf/simulated/floor/marble,
 /area/station/ranch)
 "Rj" = (
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/table/auto,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)

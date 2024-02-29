@@ -6486,8 +6486,8 @@
 	anchored = 1;
 	pixel_y = 16
 	},
-/obj/item/clothing/suit/rad/iomoon,
-/obj/item/clothing/suit/rad/iomoon,
+/obj/item/clothing/suit/hazard/rad/iomoon,
+/obj/item/clothing/suit/hazard/rad/iomoon,
 /turf/unsimulated/floor/yellow/checker,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -8195,8 +8195,8 @@
 	anchored = 1;
 	pixel_y = 16
 	},
-/obj/item/clothing/suit/rad/iomoon,
-/obj/item/clothing/suit/rad/iomoon,
+/obj/item/clothing/suit/hazard/rad/iomoon,
+/obj/item/clothing/suit/hazard/rad/iomoon,
 /turf/unsimulated/floor/yellow/checker,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"

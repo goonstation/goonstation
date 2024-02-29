@@ -8,7 +8,6 @@
 	radio_type = /obj/item/device/radio/headset/medical
 	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGO_SILICON, MGD_PARTY)
 	alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
-	include_common_tools = FALSE
 
 /datum/robot_cosmetic/medical
 	head_mod = "Medical Mirror"

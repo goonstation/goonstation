@@ -295,6 +295,19 @@ proc/hsv_transform_color_matrix(h=0.0, s=1.0, v=1.0)
 		0, 0, 0, 0
 	)
 
+
+var/global/list/list/icon_state_average_color_cache = list(list())
+
+/atom/proc/get_average_color()
+	if(!icon_state_average_color_cache[src.icon] || !icon_state_average_color_cache[src.icon][src.icon_state])
+		if(!icon_state_average_color_cache[src.icon])
+			icon_state_average_color_cache[src.icon] = list()
+		var/icon/I = icon(src.icon, src.icon_state)
+		icon_state_average_color_cache[src.icon][src.icon_state] = global.get_average_color(I)
+
+	return icon_state_average_color_cache[src.icon][src.icon_state]
+
+
 /**
  * Takes an icon and optionally two non-zero Pixel Intervals and returns the average color of the icon.
  *

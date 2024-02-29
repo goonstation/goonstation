@@ -2804,7 +2804,7 @@
 /area/station/maintenance/solar/west)
 "alX" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -4487,7 +4487,7 @@
 	icon_state = "2-8"
 	},
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -10384,7 +10384,7 @@
 /area/space)
 "aXr" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -12380,7 +12380,7 @@
 /area/station/crew_quarters/pool)
 "bng" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -14199,8 +14199,8 @@
 /obj/item/extinguisher,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/clothing/head/helmet/welding,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/tank/air,
@@ -15525,7 +15525,7 @@
 /area/station/crew_quarters/catering)
 "bTv" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -15953,7 +15953,7 @@
 	pixel_y = 32
 	},
 /obj/storage/closet/fire,
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /obj/item/tank/air,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/welding,
@@ -17460,7 +17460,7 @@
 /area/station/crew_quarters/fitness)
 "cKx" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -21456,7 +21456,7 @@
 /area/station/ranch)
 "exV" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -28003,7 +28003,7 @@
 /area/station/science/lab)
 "hvs" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -36804,7 +36804,7 @@
 /area/station/crew_quarters/pool)
 "mdr" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -49276,7 +49276,7 @@
 /area/station/science/artifact)
 "sGr" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -56487,7 +56487,7 @@
 	icon_state = "0-2"
 	},
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/extinguisher,
@@ -59739,8 +59739,8 @@
 /area/station/quartermaster/cargobay)
 "xKr" = (
 /obj/storage/secure/closet/engineering/electrical,
-/obj/item/clothing/suit/rad,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /obj/item/clothing/head/rad_hood,
 /obj/item/clothing/glasses/toggleable/meson,

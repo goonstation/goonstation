@@ -215,8 +215,12 @@ ABSTRACT_TYPE(/datum/game_mode)
 		else if(istype(C.mob, /mob/living/carbon))
 			if(!allow_carbon)
 				continue
-			if(!find_job_in_controller_by_string(C.mob.job)?.allow_traitors)
-				continue
+			var/datum/job/job = find_job_in_controller_by_string(C.mob.job)
+			if (job)
+				if(!job.allow_traitors)
+					continue
+				if (!job.can_join_gangs && (type == ROLE_GANG_LEADER || type == ROLE_GANG_MEMBER))
+					continue
 		else
 			continue
 		if(filter_proc && !call(filter_proc)(C.mob))

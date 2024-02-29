@@ -484,12 +484,12 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	missile_arrival
 		name = "Missile Arrival"
 		cost = 20000
+		path = /obj/item/tank/emergency_oxygen  // oh boy they'll need this if they are unlucky
 		icon = 'icons/obj/large/32x64.dmi'
 		icon_state = "arrival_missile"
 		icon_dir = SOUTH
 
 		Create(var/mob/living/M)
-			M.back?.storage?.add_contents(new /obj/item/tank/emergency_oxygen(M.back)) // oh boy they'll need this if they are unlucky
 			var/mob/living/carbon/human/H = M
 			if(istype(H))
 				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
@@ -498,7 +498,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					launch_with_missile(M.loc)
 				else
 					launch_with_missile(M)
-			return 1
+			return ..()
 
 	critter_respawn
 		name = "Alt Ghost Critter"

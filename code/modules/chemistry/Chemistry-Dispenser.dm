@@ -177,6 +177,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		qdel(src)
 		return
 
+
 	proc/eject_card()
 		if (src.user_id)
 			if((BOUNDS_DIST(usr, src) == 0))
@@ -248,10 +249,10 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			qdel(src)
 			return
 
-	proc/remove_distant_beaker()
+	proc/remove_distant_beaker(force = FALSE)
 		// borgs and people with item arms don't insert the beaker into the machine itself
 		// but whenever something would happen to the dispenser and the beaker is far it should disappear
-		if(beaker && BOUNDS_DIST(beaker, src) > 0)
+		if(beaker && (BOUNDS_DIST(beaker, src) > 0 || force))
 			REMOVE_ATOM_PROPERTY(beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 			beaker = null
 			src.UpdateIcon()
@@ -436,6 +437,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			if ("clear_recording")
 				src.recording_queue = list()
 				. = TRUE
+
+	ui_close(mob/user)
+		. = ..()
+		if(src.beaker?.loc != src)
+			src.remove_distant_beaker(force = TRUE)
 
 /obj/machinery/chem_dispenser/chemical
 	New()
