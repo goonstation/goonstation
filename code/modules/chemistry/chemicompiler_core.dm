@@ -51,7 +51,7 @@
 	var/heading = "don't touch!!!"
 	var/minStored = 1
 	var/maxStored = 6
-	var/list/utilReservoir = list(11, 12, 13,)
+	var/list/utilReservoir = list(11, 12, 13)
 
 /datum/chemicompiler_core/New(datum/holder)
 	..()
