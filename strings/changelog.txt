@@ -1,5 +1,9 @@
 
 (t)wed feb 28 24
+(u)mloccy
+(p)17907
+(e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
+(*)Added an LED on the kitchen mixer to indicate if it's powered on / off or mixing.
 (u)Elettra
 (p)17947
 (e)📄🍝|A-UI, A-Catering
