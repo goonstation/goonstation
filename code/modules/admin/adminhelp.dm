@@ -116,7 +116,8 @@
 	var/in_chapel = 0
 	if(istype(get_area(client.mob), /area/station/chapel))
 		in_chapel = 1
-
+	if (client.mob.mind && client.mob.traitHolder?.hasTrait("atheist"))
+		src.add_karma(-1)
 	var/is_atheist = client.mob.traitHolder?.hasTrait("atheist")
 
 	if (is_atheist)
