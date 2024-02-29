@@ -131,6 +131,22 @@
 				if(M.real_name != default && M.real_name != orig_real)
 					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
 
+	/// Is this job highlighted for priority latejoining
+	proc/is_highlighted()
+		return global.priority_job == src
+
+	///Check if a string matches this job's name or alias with varying case sensitivity
+	proc/match_to_string(string, case_sensitive)
+		if (case_sensitive)
+			return src.name == string || (string in src.alias_names)
+		else
+			if(cmptext(src.name, string))
+				return TRUE
+			for (var/alias in src.alias_names)
+				if (cmptext(src.name, string))
+					return TRUE
+
+
 // Command Jobs
 
 ABSTRACT_TYPE(/datum/job/command)
@@ -1423,7 +1439,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_lhan = list(/obj/item/storage/secure/sbriefcase)
 	items_in_backpack = list(/obj/item/baton/cane)
-	alt_names = list("Senator", "President", "CEO", "Board Member", "Mayor", "Vice-President", "Governor")
+	alt_names = list("Senator", "President", "Board Member", "Mayor", "Vice-President", "Governor")
 	wiki_link = "https://wiki.ss13.co/VIP"
 
 	New()

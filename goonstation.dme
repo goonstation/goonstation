@@ -1519,6 +1519,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\networks\computer3\disks.dm"
 #include "code\modules\networks\computer3\emailclient.dm"
 #include "code\modules\networks\computer3\engine.dm"
+#include "code\modules\networks\computer3\job_controls.dm"
 #include "code\modules\networks\computer3\med_rec.dm"
 #include "code\modules\networks\computer3\peripherals.dm"
 #include "code\modules\networks\computer3\sec_rec.dm"
