@@ -15795,7 +15795,7 @@
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/white,
+/turf/simulated/floor/purple,
 /area/station/science/lobby)
 "cHb" = (
 /obj/table/auto,
@@ -16359,7 +16359,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/white,
+/turf/simulated/floor/purple,
 /area/station/science/lobby)
 "dmO" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
