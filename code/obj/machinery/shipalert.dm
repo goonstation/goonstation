@@ -26,6 +26,7 @@ TYPEINFO(/obj/machinery/shipalert)
 
 	New()
 		..()
+		src.name = "[capitalize(station_or_ship())] Alert Button"
 		UnsubscribeProcess()
 
 /obj/machinery/shipalert/attack_hand(mob/user)
