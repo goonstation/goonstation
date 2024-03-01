@@ -112,7 +112,7 @@
 			reagents_temp.my_atom = POT
 			var/list/plant_complete_reagents = HYPget_assoc_reagents(src, DNA)
 			for (var/plantReagent in plant_complete_reagents)
-				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(plant_complete_reagents))))))
+				reagents_temp.add_reagent(plantReagent, 2 * max(1, HYPfull_potency_calculation(DNA, 0.1 / length(plant_complete_reagents))))
 
 			SPAWN(0) // spawning to kick fluid processing out of machine loop
 				reagents_temp.smoke_start()

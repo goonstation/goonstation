@@ -320,6 +320,52 @@ ABSTRACT_TYPE(/datum/terrainify)
 			message_admins("[key_name(ui.user)] turned space into a desert.")
 
 
+/datum/terrainify/caveify
+	name = "Underground Station"
+	desc = "Turns space into a cave system"
+	additional_options = list("Mining"=list("None","Normal","Rich"))
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
+
+	New()
+		..()
+
+	convert_station_level(params, datum/tgui/ui)
+		if(..())
+			var/const/ambient_light = "#222222"
+			var/rain = params["Rain"]
+			rain = (rain == "No") ? null : rain
+
+			station_repair.station_generator = new/datum/map_generator/cave_generator
+
+			if(params["Ambient Light Obj"])
+				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
+				station_repair.ambient_obj.color = ambient_light
+			else
+				station_repair.ambient_light = new /image/ambient
+				station_repair.ambient_light.color = ambient_light
+
+
+			var/list/space = list()
+			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+				space += S
+			convert_turfs(space)
+			for (var/turf/S in space)
+				if(params["Ambient Light Obj"])
+					S.vis_contents |= station_repair.ambient_obj
+				else
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+
+			if(params["Prefabs"])
+				place_prefabs(10)
+
+			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
+			handle_mining(params, space)
+
+			logTheThing(LOG_ADMIN, ui.user, "turned space into a caves.")
+			logTheThing(LOG_DIARY, ui.user, "turned space into a caves.", "admin")
+			message_admins("[key_name(ui.user)] turned space into a caves.")
+
+
 /datum/terrainify/void
 	name = "Void Station"
 	desc = "Turn space into the unknowable void? Space if filled with the void, inhibited by those departed, and chunks of scaffolding."
