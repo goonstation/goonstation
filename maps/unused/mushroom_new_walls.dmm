@@ -14459,6 +14459,10 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = -8;
+	pixel_y = 10
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/head)
 "bzn" = (
@@ -22784,6 +22788,9 @@
 /obj/cable,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
