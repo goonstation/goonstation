@@ -1039,7 +1039,8 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	var/tmp/inPasswordRequestMode = 0
 
 	initialize()
-		..()
+		if (..())
+			return TRUE
 		src.master.temp = ""
 		src.master.temp_add = ""
 		src.print_text("&#x041F;&#x043E;&#x0436;a&#x043B;y&#x0439;c&#x0442;a, &#x0432;c&#x0442;a&#x0432;&#x044C;&#x0442;e &#x043A;&#x043B;&#x044E;&#x0447;&#x0438; a&#x0432;&#x0442;o&#x0440;&#x0438;&#x044D;a&#x0446;&#x0438;&#x0438;.")
