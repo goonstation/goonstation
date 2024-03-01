@@ -857,14 +857,13 @@
 		tooltip_rebuild = TRUE // tooltip description won't update otherwise
 		var/i = 0
 		for (var/list/stamp in stamps)
-			if(icon_state)
-				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp[5]]");
-				var/matrix/stamp_matrix = matrix()
-				stamp_matrix.Scale(1, 1)
-				stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
-				stamp_overlay.transform = stamp_matrix
-				src.UpdateOverlays(stamp_overlay, "stamps_[i]")
-				i++
+			var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp[5]]");
+			var/matrix/stamp_matrix = matrix()
+			stamp_matrix.Scale(1, 1)
+			stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
+			stamp_overlay.transform = stamp_matrix
+			src.UpdateOverlays(stamp_overlay, "stamps_[i]")
+			i++
 		if(src.old_icon_state)
 			src.icon_state = src.old_icon_state
 		else
