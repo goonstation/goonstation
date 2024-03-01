@@ -117,6 +117,7 @@
 			F.info = src.info
 			F.old_desc = src.desc
 			F.old_icon_state = src.icon_state
+			F.stamps = src.stamps
 			user.put_in_hand_or_drop(F)
 
 		qdel(src)
@@ -128,7 +129,7 @@
 
 /obj/item/paper/proc/stamp(x, y, r, stamp_png, icon_state)
 	if(length(stamps) < PAPER_MAX_STAMPS)
-		var/list/stamp_info = list(list(stamp_png, x, y, r))
+		var/list/stamp_info = list(list(stamp_png, x, y, r, icon_state))
 		LAZYLISTADD(stamps, stamp_info)
 	if(icon_state)
 		var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[icon_state]");
@@ -852,7 +853,18 @@
 	if (src.sealed)
 		user.show_text("You unfold the [src] back into a sheet of paper! It looks pretty crinkled.", "blue")
 		src.name = "crinkled paper"
-		src.desc = src.old_desc
+		src.desc = "This sheet has seen better days"
+		tooltip_rebuild = TRUE // tooltip description won't update otherwise
+		var/i = 0
+		for (var/list/stamp in stamps)
+			if(icon_state)
+				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp[5]]");
+				var/matrix/stamp_matrix = matrix()
+				stamp_matrix.Scale(1, 1)
+				stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
+				stamp_overlay.transform = stamp_matrix
+				src.UpdateOverlays(stamp_overlay, "stamps_[i]")
+				i++
 		if(src.old_icon_state)
 			src.icon_state = src.old_icon_state
 		else
