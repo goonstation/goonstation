@@ -862,7 +862,7 @@
 			stamp_matrix.Scale(1, 1)
 			stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
 			stamp_overlay.transform = stamp_matrix
-			src.UpdateOverlays(stamp_overlay, "stamps_[i]")
+			src.UpdateOverlays(stamp_overlay, "stamps_[i % PAPER_MAX_STAMPS_OVERLAYS]")
 			i++
 		if(src.old_icon_state)
 			src.icon_state = src.old_icon_state
