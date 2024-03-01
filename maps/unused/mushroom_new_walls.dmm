@@ -20714,10 +20714,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
-"hHr" = (
-/obj/item/device/radio/beacon,
-/turf/simulated/floor,
-/area/station/hydroponics/bay)
 "hIV" = (
 /obj/cable{
 	icon_state = "5-10"
@@ -72788,7 +72784,7 @@ vNm
 gez
 atQ
 iBE
-hHr
+atQ
 lMm
 vNm
 atz
