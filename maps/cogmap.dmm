@@ -47482,7 +47482,6 @@
 /area/station/turret_protected/Zeta)
 "jRc" = (
 /obj/shrub,
-/obj/shrub,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
