@@ -189,7 +189,8 @@ TYPEINFO(/obj/machinery/recharge_station)
 		return
 	if (!isliving(user) || isAI(user))
 		return
-
+	if (isintangible(user))
+		return
 	if (isitem(AM) && can_act(user))
 		src.Attackby(AM, user)
 		return

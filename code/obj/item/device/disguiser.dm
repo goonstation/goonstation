@@ -134,6 +134,7 @@ TYPEINFO(/obj/item/device/disguiser)
 		// Restore original appearance.
 		else
 			user.real_name = src.real_name
+			user.on_realname_change()
 			AH.CopyOther(oldAH)
 			if (user.limbs)
 				user.limbs.reset_stone()

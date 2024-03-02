@@ -114,7 +114,7 @@
 		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
 		src.internal_pda.name = "[src]'s Internal PDA Unit"
 		src.internal_pda.owner = "[src]"
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_base, "robot_health_slow_immunity")
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity")
 		if (frame)
 			src.freemodule = frame.freemodule
 			src.frame_material = frame.material
@@ -259,6 +259,10 @@
 
 		if (prob(50))
 			src.sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
+
+		for (var/datum/movement_modifier/MM in src.movement_modifiers) // Spawning borgs applies human only movemods, this cleans that up
+			if (!istype(MM, /datum/movement_modifier/robot_part))
+				REMOVE_MOVEMENT_MODIFIER(src, MM, src.type)
 
 	set_pulling(atom/movable/A)
 		. = ..()
@@ -1796,13 +1800,6 @@
 				. += ROBOT_MISSING_ARM_MOVEMENT_ADJUST
 
 
-		if (total_weight > 0)
-			if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/left/treads) && istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/right/treads))
-				. += total_weight / 3
-			else
-				. += total_weight
-
-
 	hotkey(name)
 		switch (name)
 			if ("help")
@@ -2236,6 +2233,19 @@
 		for (var/number in laws)
 			src.say("[number]. [laws[number]]")
 			sleep(1 SECOND)
+
+	verb/robot_set_fake_laws()
+		set category = "Robot Commands"
+		set name = "Set Fake Laws"
+		if (src.shell)
+			src.mainframe.set_fake_laws()
+		else
+			src.set_fake_laws()
+
+	verb/ai_state_fake_laws()
+		set category = "Robot Commands"
+		set name = "State Fake Laws"
+		src.state_fake_laws() //already handles being a shell
 
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"
