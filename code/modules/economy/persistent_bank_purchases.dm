@@ -24,6 +24,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/dabbing_license,\
 	new /datum/bank_purchaseable/human_item/chem_hint,\
 	new /datum/bank_purchaseable/human_item/pixel_pass,\
+	new /datum/bank_purchaseable/human_item/fanny_pack,\
 
 	new /datum/bank_purchaseable/altjumpsuit,\
 	new /datum/bank_purchaseable/altclown,\
@@ -645,6 +646,13 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					H.back.desc = "A thick, wearable container made of synthetic fibers. This brown variation is both rustic and adventurous!"
 					return 1
 				return 0
+
+	fanny_pack
+		name = "Fanny Pack"
+		cost = 2500
+		path = /obj/item/storage/fanny
+		icon = 'icons/obj/items/belts.dmi'
+		icon_state = "fanny"
 
 	lunchbox
 		name = "Lunchbox"
