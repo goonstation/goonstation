@@ -7010,7 +7010,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sec";
+	junction_id = "sec";
 	name = "Security";
 	enter_id = "brig"
 	},
@@ -8001,7 +8001,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "secinterro1";
+	junction_id = "secinterro1";
 	name = "Security Interrogation 1";
 	enter_id = "inner"
 	},
@@ -11183,7 +11183,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sec";
+	junction_id = "sec";
 	name = "Security";
 	enter_id = "outer"
 	},
@@ -12880,7 +12880,7 @@
 	},
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aiupload";
+	junction_id = "aiupload";
 	name = "AI Upload";
 	enter_id = "inner"
 	},
@@ -19540,7 +19540,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "reactormain";
+	junction_id = "reactormain";
 	name = "Reactor Main";
 	enter_id = "outer"
 	},
@@ -19571,7 +19571,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "secinterro2";
+	junction_id = "secinterro2";
 	name = "Security Interrogation 2";
 	enter_id = "outer"
 	},
@@ -24956,7 +24956,7 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "reactormain";
+	junction_id = "reactormain";
 	name = "Reactor Main";
 	enter_id = "inner2"
 	},
@@ -25544,7 +25544,7 @@
 /obj/mapping_helper/access/ai_upload,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aiupload";
+	junction_id = "aiupload";
 	name = "AI Upload";
 	enter_id = "outer"
 	},
@@ -28969,7 +28969,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "aicore";
+	junction_id = "aicore";
 	name = "AI Core";
 	enter_id = "outer"
 	},
@@ -31918,7 +31918,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "reactorside";
+	junction_id = "reactorside";
 	name = "Reactor Side";
 	enter_id = "outer"
 	},
@@ -32982,7 +32982,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "secinterro1";
+	junction_id = "secinterro1";
 	name = "Security Interrogation 1";
 	enter_id = "outer"
 	},
@@ -36511,7 +36511,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "reactormain";
+	junction_id = "reactormain";
 	name = "Reactor Main";
 	enter_id = "inner1"
 	},
@@ -50799,7 +50799,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "secinterro2";
+	junction_id = "secinterro2";
 	name = "Security Interrogation 2";
 	enter_id = "inner"
 	},
@@ -51237,7 +51237,7 @@
 	},
 /obj/disposalpipe/segment/horizontal,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "sec";
+	junction_id = "sec";
 	name = "Security";
 	enter_id = "inner"
 	},
