@@ -2,7 +2,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	mats = 3
 
 /obj/item/device/radio/intercom
-	name = "Station Intercom (Radio)"
+
 #ifndef IN_MAP_EDITOR
 	icon_state = "intercom"
 #else
@@ -358,3 +358,11 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 	update_pixel_offset_dir()
 		return // no
+
+/obj/item/device/radio/intercom/AI/handheld
+	name = "Portable Intercom"
+	desc = "A portable intercom that's useful to do all the things intercoms normally do, which is mostly listening in on people."
+	broadcasting = FALSE
+	listening = FALSE
+	anchored = UNANCHORED
+	icon_state = "intercom_pot"
