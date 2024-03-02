@@ -387,6 +387,52 @@
 		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
+/datum/clothingbooth_grouping/hoodie
+	name = "Hoodie"
+	item_paths = list(
+		/datum/clothingbooth_item/wear_suit/hoodie/orange,
+		/datum/clothingbooth_item/wear_suit/hoodie/pink,
+		/datum/clothingbooth_item/wear_suit/hoodie/red,
+		/datum/clothingbooth_item/wear_suit/hoodie/yellow,
+		/datum/clothingbooth_item/wear_suit/hoodie/green,
+		/datum/clothingbooth_item/wear_suit/hoodie/blue,
+		/datum/clothingbooth_item/wear_suit/hoodie/dark_blue,
+		/datum/clothingbooth_item/wear_suit/hoodie/magenta,
+		/datum/clothingbooth_item/wear_suit/hoodie/white,
+		/datum/clothingbooth_item/wear_suit/hoodie/dull_grey,
+		/datum/clothingbooth_item/wear_suit/hoodie/grey,
+		/datum/clothingbooth_item/wear_suit/hoodie/black
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/casual
+	)
+
+/datum/clothingbooth_grouping/jacket
+	name = "Jacket"
+	item_paths = list(
+		/datum/clothingbooth_item/wear_suit/jacket/cerulean,
+		/datum/clothingbooth_item/wear_suit/jacket/grey,
+		/datum/clothingbooth_item/wear_suit/jacket/indigo,
+		/datum/clothingbooth_item/wear_suit/jacket/magenta,
+		/datum/clothingbooth_item/wear_suit/jacket/maroon,
+		/datum/clothingbooth_item/wear_suit/jacket/mint,
+		/datum/clothingbooth_item/wear_suit/jacket/navy,
+		/datum/clothingbooth_item/wear_suit/jacket/tan
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/casual
+	)
+
+/datum/clothingbooth_grouping/poncho
+	name = "Poncho"
+	item_paths = list(
+		/datum/clothingbooth_item/wear_suit/poncho/flower,
+		/datum/clothingbooth_item/wear_suit/poncho/leaf
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/costume
+	)
+
 /* ---------------------- Jumpsuits ---------------------- */
 /datum/clothingbooth_grouping/card_suit_shirt
 	name = "Card Suit Shirt"
@@ -420,6 +466,139 @@
 		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
+/datum/clothingbooth_grouping/collar_dress
+	name = "Collar Dress"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/collar_dress/black,
+		/datum/clothingbooth_item/w_uniform/collar_dress/blue,
+		/datum/clothingbooth_item/w_uniform/collar_dress/green,
+		/datum/clothingbooth_item/w_uniform/collar_dress/red
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/casual
+	)
+
+/datum/clothingbooth_grouping/diner_waitress_dress
+	name = "Diner Waitress's Dress"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/diner_waitress_dress/mint,
+		/datum/clothingbooth_item/w_uniform/diner_waitress_dress/pink
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/costume
+	)
+
+/datum/clothingbooth_grouping/dress_shirt_wcoat
+	name = "Dress Shirt and Waistcoat"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/dress_shirt_wcoat/black,
+		/datum/clothingbooth_item/w_uniform/dress_shirt_wcoat/blue,
+		/datum/clothingbooth_item/w_uniform/dress_shirt_wcoat/red
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/formal,
+	)
+
+/datum/clothingbooth_grouping/flame_shirt
+	name = "Flame Shirt"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/flame_shirt/purple,
+		/datum/clothingbooth_item/w_uniform/flame_shirt/rainbow
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/casual
+	)
+
+/datum/clothingbooth_grouping/little_dress
+	name = "Little Dress"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/little_dress/black,
+		/datum/clothingbooth_item/w_uniform/little_dress/red
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/casual
+	)
+
+/datum/clothingbooth_grouping/masquerade
+	name = "Masquerade Dress"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/masquerade/cherryblossom,
+		/datum/clothingbooth_item/w_uniform/masquerade/peacock
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/group_set/masquerade,
+	)
+
+/datum/clothingbooth_grouping/scifi
+	name = "Sci-Fi Jumpsuit"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/scifi/black_and_purple,
+		/datum/clothingbooth_item/w_uniform/scifi/black_and_red,
+		/datum/clothingbooth_item/w_uniform/scifi/pink_and_blue,
+		/datum/clothingbooth_item/w_uniform/scifi/bee
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/costume
+	)
+
+/datum/clothingbooth_grouping/shirt_and_jeans
+	name = "Shirt and Jeans"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/shirt_and_jeans/white,
+		/datum/clothingbooth_item/w_uniform/shirt_and_jeans/black_skull,
+		/datum/clothingbooth_item/w_uniform/shirt_and_jeans/red_skull,
+		/datum/clothingbooth_item/w_uniform/shirt_and_jeans/skull_acid_wash,
+		/datum/clothingbooth_item/w_uniform/shirt_and_jeans/blue,
+		/datum/clothingbooth_item/w_uniform/shirt_and_jeans/grey,
+		/datum/clothingbooth_item/w_uniform/shirt_and_jeans/khaki,
+		/datum/clothingbooth_item/w_uniform/shirt_and_jeans/purple,
+		/datum/clothingbooth_item/w_uniform/shirt_and_jeans/yellow
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/casual
+	)
+
+/datum/clothingbooth_grouping/skirt_dress
+	name = "Skirt Dress"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/skirt_dress/red,
+		/datum/clothingbooth_item/w_uniform/skirt_dress/blue,
+		/datum/clothingbooth_item/w_uniform/skirt_dress/gold,
+		/datum/clothingbooth_item/w_uniform/skirt_dress/purple
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/formal
+	)
+
+/datum/clothingbooth_grouping/tshirt_dress
+	name = "Tshirt Dress"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/tshirt_dress/black,
+		/datum/clothingbooth_item/w_uniform/tshirt_dress/blue,
+		/datum/clothingbooth_item/w_uniform/tshirt_dress/green,
+		/datum/clothingbooth_item/w_uniform/tshirt_dress/pink,
+		/datum/clothingbooth_item/w_uniform/tshirt_dress/white,
+		/datum/clothingbooth_item/w_uniform/tshirt_dress/bolt,
+		/datum/clothingbooth_item/w_uniform/tshirt_dress/purple_bolt,
+		/datum/clothingbooth_item/w_uniform/tshirt_dress/leopard,
+		/datum/clothingbooth_item/w_uniform/tshirt_dress/pink_leopard
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/casual
+	)
+
+/datum/clothingbooth_grouping/yoga
+	name = "Yoga Outfit"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/yoga/white,
+		/datum/clothingbooth_item/w_uniform/yoga/red,
+		/datum/clothingbooth_item/w_uniform/yoga/very_red
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/casual
+	)
+
 /* ------------------------------------------------------- */
 /* ------------------------ AUTUMN ----------------------- */
 /* ------------------------------------------------------- */
@@ -435,3 +614,36 @@
 /* ------------------------ Masks ------------------------ */
 
 /* ------------------------- Head ------------------------ */
+/datum/clothingbooth_grouping/beetlehat
+	name = "Beetle Helm"
+	item_paths = list(
+		/datum/clothingbooth_item/head/beetlehat/rhinobeetle,
+		/datum/clothingbooth_item/head/beetlehat/stagbeetle
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/costume
+	)
+
+/datum/clothingbooth_grouping/elephanthat
+	name = "Elephant Hat"
+	item_paths = list(
+		/datum/clothingbooth_item/head/elephanthat/pink,
+		/datum/clothingbooth_item/head/elephanthat/gold,
+		/datum/clothingbooth_item/head/elephanthat/green,
+		/datum/clothingbooth_item/head/elephanthat/blue
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/costume
+	)
+
+/datum/clothingbooth_grouping/mushroomcap
+	name = "Mushroom Cap"
+	item_paths = list(
+		/datum/clothingbooth_item/head/mushroomcap/red,
+		/datum/clothingbooth_item/head/mushroomcap/shiitake,
+		/datum/clothingbooth_item/head/mushroomcap/indigo,
+		/datum/clothingbooth_item/head/mushroomcap/inky
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/costume
+	)
