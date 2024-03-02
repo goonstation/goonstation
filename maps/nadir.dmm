@@ -52110,7 +52110,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "reactormain";
+	junction_id = "reactormain";
 	name = "Reactor Main";
 	enter_id = "centrifuge"
 	},
