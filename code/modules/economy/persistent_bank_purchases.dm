@@ -330,6 +330,13 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			path = /obj/item/pixel_pass
 			icon_state = "pixel_pass"
 
+		fanny_pack
+			name = "Fanny Pack"
+			cost = 2500
+			path = /obj/item/storage/fanny
+			icon = 'icons/obj/items/belts.dmi'
+			icon_state = "fanny"
+
 	altjumpsuit
 		name = "Alternate Jumpsuit"
 		cost = 1500
@@ -646,13 +653,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					H.back.desc = "A thick, wearable container made of synthetic fibers. This brown variation is both rustic and adventurous!"
 					return 1
 				return 0
-
-	fanny_pack
-		name = "Fanny Pack"
-		cost = 2500
-		path = /obj/item/storage/fanny
-		icon = 'icons/obj/items/belts.dmi'
-		icon_state = "fanny"
 
 	lunchbox
 		name = "Lunchbox"
