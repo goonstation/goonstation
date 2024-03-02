@@ -505,7 +505,8 @@
 	},
 /obj/window_blinds/cog2{
 	layer = 2.9;
-	pixel_y = 13
+	pixel_y = 13;
+	id = "HOS"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
@@ -2922,7 +2923,8 @@
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/right{
-	dir = 8
+	dir = 8;
+	id = "CE"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
@@ -3024,7 +3026,9 @@
 	icon_state = "0-4"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/window_blinds/cog2/left,
+/obj/window_blinds/cog2/left{
+	id = "CE"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
 "apJ" = (
@@ -3033,7 +3037,9 @@
 	},
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/window_blinds/cog2/right,
+/obj/window_blinds/cog2/right{
+	id = "CE"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
 "apM" = (
@@ -13528,7 +13534,9 @@
 	icon_state = "0-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/window_blinds/cog2/middle,
+/obj/window_blinds/cog2/middle{
+	id = "CE"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
 "bqq" = (
@@ -13536,7 +13544,9 @@
 	icon_state = "0-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/window_blinds/cog2/right,
+/obj/window_blinds/cog2/right{
+	id = "CE"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
 "bqt" = (
@@ -14018,7 +14028,9 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/window_blinds/cog2/left,
+/obj/window_blinds/cog2/left{
+	id = "MD"
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "bsr" = (
@@ -14026,7 +14038,9 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/window_blinds/cog2/middle,
+/obj/window_blinds/cog2/middle{
+	id = "MD"
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "bst" = (
@@ -14088,7 +14102,8 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/left{
-	dir = 8
+	dir = 8;
+	id = "CE"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
@@ -14183,7 +14198,7 @@
 	dir = 4
 	},
 /obj/critter/bat/doctor,
-/turf/simulated/floor/blue/checker,
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/medical/head)
 "btp" = (
 /obj/disposalpipe/segment/mail{
@@ -14249,7 +14264,8 @@
 	dir = 1
 	},
 /obj/blind_switch/area/south{
-	pixel_x = 7
+	pixel_x = 7;
+	id = "CE"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/engine/engineering/ce)
@@ -14415,10 +14431,10 @@
 "buO" = (
 /obj/machinery/light/incandescent,
 /obj/storage/secure/closet/medical/chemical,
-/turf/simulated/floor/blue/checker,
+/turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/medical/head)
 "bwb" = (
-/turf/simulated/floor/blue/checker,
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/medical/head)
 "bwx" = (
 /obj/lattice{
@@ -14449,7 +14465,8 @@
 	},
 /obj/blind_switch/east{
 	pixel_y = -9;
-	pixel_x = 19
+	pixel_x = 19;
+	id = "MD"
 	},
 /obj/machinery/computer/card/department/medical{
 	dir = 8
@@ -16085,7 +16102,8 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
 /obj/window_blinds/cog2{
-	dir = 4
+	dir = 4;
+	id = "MD"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
@@ -18099,7 +18117,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/morgue,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "eWb" = (
@@ -20379,7 +20397,12 @@
 /obj/stool/chair,
 /obj/machinery/light_switch{
 	name = "W light switch";
-	pixel_x = -24
+	pixel_x = -24;
+	pixel_y = 8
+	},
+/obj/blind_switch/area/west{
+	pixel_y = -8;
+	id = "RD"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 8
@@ -21106,6 +21129,12 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/proto)
+"igU" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/nw,
+/area/station/medical/head)
 "ihh" = (
 /turf/simulated/floor,
 /area/station/security/processing)
@@ -21774,7 +21803,9 @@
 	icon_state = "0-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/middle,
+/obj/window_blinds/cog2/middle{
+	id = "MD"
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "iPl" = (
@@ -21818,6 +21849,9 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/right{
+	id = "RD"
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
@@ -22596,7 +22630,7 @@
 	icon_state = "2-4";
 	pixel_y = 0
 	},
-/turf/simulated/floor/blue/checker,
+/turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/medical/head)
 "jIX" = (
 /obj/machinery/power/data_terminal,
@@ -22781,16 +22815,17 @@
 /area/station/crew_quarters/bar)
 "jSn" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2{
-	layer = 2.9;
-	pixel_y = 13
-	},
 /obj/cable,
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/window_blinds/cog2{
+	layer = 2.9;
+	pixel_y = 13;
+	id = "MD"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
@@ -24573,21 +24608,29 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/window_blinds/cog2/middle,
+/obj/window_blinds/cog2/middle{
+	id = "MD"
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "lUY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2{
+	layer = 2.9;
+	pixel_y = 13;
+	id = "RD"
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "lVq" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2{
-	layer = 2.9;
-	pixel_y = 13
-	},
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2{
+	layer = 2.9;
+	pixel_y = 13;
+	id = "MD"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
@@ -26292,7 +26335,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
 "nKd" = (
-/obj/blind_switch/area/west,
+/obj/blind_switch/area/west{
+	id = "HOS"
+	},
 /obj/machinery/computer/card/department/security{
 	dir = 4
 	},
@@ -27191,6 +27236,7 @@
 	dir = 4;
 	id = "cloning_exit"
 	},
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/blackwhite/side{
 	dir = 4
 	},
@@ -29593,6 +29639,12 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/armory_outside)
+"qqW" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/area/station/medical/head)
 "qrJ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -31321,7 +31373,9 @@
 	icon_state = "0-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/right,
+/obj/window_blinds/cog2/right{
+	id = "MD"
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "rGC" = (
@@ -37513,6 +37567,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/window_blinds/cog2/left{
+	id = "RD"
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "xiV" = (
@@ -38234,7 +38291,8 @@
 	icon_state = "0-8"
 	},
 /obj/window_blinds/cog2/right{
-	dir = 4
+	dir = 4;
+	id = "HOS"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
@@ -38537,7 +38595,8 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
 /obj/window_blinds/cog2/left{
-	dir = 4
+	dir = 4;
+	id = "HOS"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
@@ -94827,7 +94886,7 @@ bpa
 bst
 brn
 lSg
-btj
+igU
 buO
 lVq
 cBV
@@ -95431,7 +95490,7 @@ bpd
 bst
 xkq
 iPk
-btj
+qqW
 jIk
 jSn
 cFZ
