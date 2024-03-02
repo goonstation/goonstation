@@ -23,6 +23,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_grouping_tag/season)
 	name = "Spacemas"
 	colour = "#49db3c"
 
+/datum/clothingbooth_grouping_tag/season/halloween
+	name = "Halloween"
+	colour = "#f8861c"
+
 /* ----------------------- Formality --------------------- */
 ABSTRACT_TYPE(/datum/clothingbooth_grouping_tag/formality)
 /datum/clothingbooth_grouping_tag/formality

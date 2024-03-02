@@ -90,7 +90,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/basecap)
 /datum/clothingbooth_item/head/basecap
-	name = "Baseball Cap"
 	cost = PAY_TRADESMAN/5
 
 	black
@@ -135,7 +134,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/basecap)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/beret)
 /datum/clothingbooth_item/head/beret
-	name = "Beret"
 	cost = PAY_TRADESMAN/3
 
 	white
@@ -184,7 +182,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/beret)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/butterfly_hairclip)
 /datum/clothingbooth_item/head/butterfly_hairclip
-	name = "Butterfly Hairclip"
 	cost = PAY_TRADESMAN/5
 
 	blue
@@ -199,7 +196,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/butterfly_hairclip)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/cat_ears)
 /datum/clothingbooth_item/head/cat_ears
-	name = "Cat Ears"
 	cost = PAY_TRADESMAN/2
 
 	white
@@ -249,7 +245,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/cat_ears)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/costume_goggles)
 /datum/clothingbooth_item/head/costume_goggles
-	name = "Costume Goggles"
 	cost = PAY_TRADESMAN/3
 
 	yellow
@@ -290,7 +285,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/costume_goggles)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/fedora)
 /datum/clothingbooth_item/head/fedora
-	name = "Fedora"
 	cost = PAY_TRADESMAN/5
 
 	black
@@ -322,7 +316,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/fedora)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/hairbow)
 /datum/clothingbooth_item/head/hairbow
-	name = "Hairbow"
 	cost = PAY_TRADESMAN/3
 
 	blue
@@ -414,7 +407,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/hairbow)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/pirate)
 /datum/clothingbooth_item/head/pirate
-	name = "Pirate"
 
 	black
 		name = "Black"
@@ -428,7 +420,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/pirate)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/pomhat)
 /datum/clothingbooth_item/head/pomhat
-	name = "Pomhat"
 
 	red
 		name = "Red"
@@ -442,7 +433,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/pomhat)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/sunhat)
 /datum/clothingbooth_item/head/sunhat
-	name = "Sunhat"
 	cost = PAY_TRADESMAN/5
 
 	red
@@ -462,7 +452,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/sunhat)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/tophat)
 /datum/clothingbooth_item/head/tophat
-	name = "Top Hat"
 
 	black
 		name = "Black"
@@ -476,7 +465,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/tophat)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/westhat)
 /datum/clothingbooth_item/head/westhat
-	name = "Ten-Gallon Hat"
 	cost = PAY_UNTRAINED/2
 
 	beige
@@ -521,7 +509,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/boots)
 /datum/clothingbooth_item/shoes/boots
-	name = "Boots"
 	cost = PAY_DOCTORATE/5
 
 	black
@@ -546,7 +533,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/boots)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/cowboy_boots)
 /datum/clothingbooth_item/shoes/cowboy_boots
-	name = "Cowboy Boots"
 	cost = PAY_UNTRAINED/2
 
 	real
@@ -575,7 +561,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/cowboy_boots)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/flats)
 /datum/clothingbooth_item/shoes/flats
-	name = "Flats"
 
 	black
 		name = "Black"
@@ -607,7 +592,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/flats)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/heels)
 /datum/clothingbooth_item/shoes/heels
-	name = "Heels"
 	cost = PAY_DOCTORATE/5
 
 	white
@@ -631,7 +615,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/heels)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/shoes/mary_janes)
 /datum/clothingbooth_item/shoes/mary_janes
-	name = "Mary Janes"
 
 	black
 		name = "Black"
@@ -669,7 +652,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/dress)
 /datum/clothingbooth_item/wear_suit/dress
-	name = "Dress"
 	cost = PAY_DOCTORATE/3
 
 	black
@@ -698,7 +680,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/dress)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie)
 /datum/clothingbooth_item/wear_suit/hoodie
-	name = "Hoodie"
 	cost = PAY_UNTRAINED/3
 
 	orange
@@ -763,7 +744,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/hoodie)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/jacket)
 /datum/clothingbooth_item/wear_suit/jacket
-	name = "Jacket"
 	cost = PAY_TRADESMAN/3
 
 	cerulean
@@ -823,7 +803,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/jacket)
 // todo: distinguish these two somehow
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/poncho)
 /datum/clothingbooth_item/wear_suit/poncho
-	name = "Poncho"
 	cost = PAY_UNTRAINED/1
 
 	flower
@@ -878,7 +857,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/card_suit_shirt)
 /datum/clothingbooth_item/w_uniform/card_suit_shirt
-	name = "Card Suit Shirt"
 
 	hearts
 		name = "Hearts"
@@ -911,7 +889,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/card_suit_shirt)
 // todo, double check that blacj
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/collar_dress)
 /datum/clothingbooth_item/w_uniform/collar_dress
-	name = "Collar Dress"
 
 	black
 		name = "black"
@@ -939,7 +916,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/collar_dress)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/diner_waitress_dress)
 /datum/clothingbooth_item/w_uniform/diner_waitress_dress
-	name = "Diner Waitress's Dress"
 
 	mint
 		name = "Mint"
@@ -956,7 +932,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/diner_waitress_dress)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/dress_shirt_wcoat)
 /datum/clothingbooth_item/w_uniform/dress_shirt_wcoat
-	name = "Dress Shirt and Waistcoat"
 	cost = PAY_DOCTORATE/3
 
 	black
@@ -983,13 +958,14 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/dress_shirt_wcoat)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/flame_shirt)
 /datum/clothingbooth_item/w_uniform/flame_shirt
-	name = "Flame Shirt"
 
 	purple
+		name = "Purple"
 		swatch_background_colour = "#ee59e3"
 		item_path = /obj/item/clothing/under/misc/flame_purple
 
 	rainbow
+		name = "Rainbow"
 		swatch_background_colour = "#ebf0f2"
 		item_path = /obj/item/clothing/under/misc/flame_rainbow
 		cost = PAY_TRADESMAN/3
@@ -1006,7 +982,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/flame_shirt)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/little_dress)
 /datum/clothingbooth_item/w_uniform/little_dress
-	name = "Little Dress"
 	cost = PAY_IMPORTANT/3
 
 	black
@@ -1028,7 +1003,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/little_dress)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/masquerade)
 /datum/clothingbooth_item/w_uniform/masquerade
-	name = "Masquerade Dress"
 	cost = PAY_DOCTORATE/3
 
 	cherryblossom
@@ -1050,7 +1024,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/masquerade)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/scifi)
 /datum/clothingbooth_item/w_uniform/scifi
-	name = "Sci-Fi Jumpsuit"
 	cost = PAY_DOCTORATE/3
 
 	black_and_purple
@@ -1075,7 +1048,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/scifi)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/shirt_and_jeans)
 /datum/clothingbooth_item/w_uniform/shirt_and_jeans
-	name = "Shirt and Jeans"
 
 	white
 		name = "White"
@@ -1128,7 +1100,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/shirt_and_jeans)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/shirt_and_pants)
 /datum/clothingbooth_item/w_uniform/shirt_and_pants
-	name = "Shirt and Pants"
 	cost = PAY_TRADESMAN/3
 
 	black_pants_no_tie
@@ -1213,7 +1184,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/shirt_and_pants)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/skirt_dress)
 /datum/clothingbooth_item/w_uniform/skirt_dress
-	name = "Skirt Dress"
 	cost = PAY_TRADESMAN/3
 
 	red
@@ -1240,12 +1210,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/skirt_dress)
 	item_path = /obj/item/clothing/under/misc/tech_shirt
 
 /datum/clothingbooth_item/w_uniform/tracksuit
-	name = "Tracksuit"
 	item_path = /obj/item/clothing/under/gimmick/adidad
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/tshirt_dress)
 /datum/clothingbooth_item/w_uniform/tshirt_dress
-	name = "Tshirt Dress"
 
 	black
 		name = "Black"
@@ -1322,7 +1290,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/tshirt_dress)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/yoga)
 /datum/clothingbooth_item/w_uniform/yoga
-	name = "Yoga Outfit"
 	cost = PAY_TRADESMAN/3
 
 	white
@@ -1391,7 +1358,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/yoga)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/beetlehat)
 /datum/clothingbooth_item/head/beetlehat
-	name = "Beetle Helm"
 
 	rhinobeetle
 		name = "Rhino Beetle"
@@ -1405,7 +1371,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/beetlehat)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/elephanthat)
 /datum/clothingbooth_item/head/elephanthat
-	name = "Elephant Hat"
 	cost = PAY_TRADESMAN/3
 
 	pink
@@ -1430,7 +1395,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/elephanthat)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/mushroomcap)
 /datum/clothingbooth_item/head/mushroomcap
-	name = "Mushroom Cap"
 
 	red
 		name = "Red"
