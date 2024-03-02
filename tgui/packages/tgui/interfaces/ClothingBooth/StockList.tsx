@@ -11,6 +11,10 @@ import { ClothingBoothSlotKey, ClothingBoothSortType } from './type';
 const clothingBoothItemComparators: Record<ClothingBoothSortType, ComparatorFn<ClothingBoothGroupingData>> = {
   [ClothingBoothSortType.Name]: buildFieldComparator((itemGrouping) => itemGrouping.name, stringComparator),
   [ClothingBoothSortType.Price]: buildFieldComparator((itemGrouping) => itemGrouping.cost_min, numberComparator),
+  [ClothingBoothSortType.Variants]: buildFieldComparator(
+    (itemGrouping) => Object.values(itemGrouping.clothingbooth_items).length,
+    numberComparator
+  ),
 };
 
 const getSortComparator
@@ -68,7 +72,7 @@ export const StockList = (_props: unknown, context) => {
                     className="clothingbooth__dropdown"
                     displayText={`Sort: ${sortType}`}
                     onSelected={(value) => setSortType(value)}
-                    options={[ClothingBoothSortType.Name, ClothingBoothSortType.Price]}
+                    options={[ClothingBoothSortType.Name, ClothingBoothSortType.Price, ClothingBoothSortType.Variants]}
                     selected={sortType}
                     width="100%"
                   />

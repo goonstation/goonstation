@@ -23,7 +23,19 @@ export const PurchaseInfo = (_, context) => {
     <Stack vertical textAlign="center">
       {selectedItemName ? (
         <>
-          <Stack.Item bold>{selectedGroupingName}</Stack.Item>
+          <Stack.Item bold>
+            <Stack align="center" justify="center">
+              <Stack.Item>
+                <Button icon="chevron-left" tooltip="Previous Grouping" />
+              </Stack.Item>
+              <Stack.Item>
+                {selectedGroupingName}
+              </Stack.Item>
+              <Stack.Item>
+                <Button icon="chevron-right" tooltip="Next Grouping" />
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
           {Object.values(selectedGroupingTags).length && (
             <Stack.Item>
               <Stack justify="center">

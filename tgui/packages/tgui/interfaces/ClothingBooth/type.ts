@@ -49,6 +49,7 @@ export enum ClothingBoothSlotKey {
 export enum ClothingBoothSortType {
   Name = "Name",
   Price = "Price",
+  Variants = "Variants",
 }
 
 export enum ClothingBoothSortComparatorType {
