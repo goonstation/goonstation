@@ -52,6 +52,7 @@ var/datum/job_controller/job_controls
 		for (var/datum/job/J in staple_jobs)
 			if (J.limit > 0)
 				J.limit *= 4
+				J.upper_limit = J.limit
 		#endif
 
 
@@ -198,6 +199,7 @@ var/datum/job_controller/job_controls
 			if (isnull(newcap))
 				return
 			JOB.limit = newcap
+			JOB.admin_set_limit = TRUE
 			message_admins("Admin [key_name(usr)] altered [JOB.name] job cap to [newcap]")
 			logTheThing(LOG_ADMIN, usr, "altered [JOB.name] job cap to [newcap]")
 			logTheThing(LOG_DIARY, usr, "altered [JOB.name] job cap to [newcap]", "admin")
