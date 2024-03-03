@@ -25014,9 +25014,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bLk" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -25026,6 +25023,9 @@
 	name = "autoname - SS13"
 	},
 /obj/blind_switch/area/north,
+/obj/stool/chair/purple{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bLl" = (
@@ -27136,11 +27136,11 @@
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bSp" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/stool/chair/purple{
+	dir = 8
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
@@ -47154,10 +47154,10 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "jHW" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 4
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/purple/side,
 /area/station/science/lobby)
 "jIu" = (
@@ -47482,7 +47482,6 @@
 /area/station/turret_protected/Zeta)
 "jRc" = (
 /obj/shrub,
-/obj/shrub,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
@@ -47662,15 +47661,15 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "jXp" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/item/storage/briefcase/toxins{
 	pixel_x = 6;
 	pixel_y = -11
+	},
+/obj/stool/chair/purple{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -48590,10 +48589,10 @@
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "kHj" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 8
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/purple/side,
 /area/station/science/lobby)
 "kIr" = (
