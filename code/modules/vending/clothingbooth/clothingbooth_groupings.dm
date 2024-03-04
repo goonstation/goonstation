@@ -195,7 +195,7 @@
 	)
 
 /datum/clothingbooth_grouping/pirate
-	name = "Pirate"
+	name = "Pirate Hat"
 	item_paths = list(
 		/datum/clothingbooth_item/head/pirate/black,
 		/datum/clothingbooth_item/head/pirate/brown,
