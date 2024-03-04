@@ -704,7 +704,7 @@ toxic - poisons
 	damage_type = D_PIERCING
 	armor_ignored = 0.66
 	implanted = null
-	damage = 13
+	damage = 8
 
 /datum/projectile/bullet/improvglass
 	name = "glass"
@@ -733,7 +733,7 @@ toxic - poisons
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	implanted = null
-	damage = 8
+	damage = 9
 	ricochets = TRUE
 	impact_image_state = null // in my mind these are just literal bones fragments being thrown at people, wouldn't stick into walls
 
@@ -1140,7 +1140,7 @@ datum/projectile/bullet/autocannon
 		damage = 10
 
 		on_hit(atom/hit)
-
+			explosion_new(null,get_turf(hit), 8, 0.75)
 /datum/projectile/bullet/smoke
 	name = "smoke grenade"
 	sname = "smokeshot"
