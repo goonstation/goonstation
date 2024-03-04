@@ -57310,10 +57310,8 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/morgue)
 "ezp" = (
-/obj/decal/laserbeam{
-	dir = 4
-	},
-/turf/space/dense,
+/obj/lattice/directional_icons,
+/turf/space,
 /area/watchful_eye_sensor)
 "ezH" = (
 /obj/table/glass/auto,
@@ -59533,8 +59531,10 @@
 /turf/unsimulated/floor/airless/plating/damaged2,
 /area/crunch)
 "gNQ" = (
-/obj/decal/laserbeam,
-/turf/space/dense,
+/obj/lattice/directional_icons{
+	dir = 4
+	},
+/turf/space,
 /area/watchful_eye_sensor)
 "gOW" = (
 /obj/table/regal/auto,
@@ -60754,6 +60754,15 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon)
+"ifi" = (
+/obj/decal/residual_energy,
+/mob/living/critter/small_animal/floateye/watchful,
+/obj/window/reinforced{
+	dir = 2
+	},
+/obj/lattice,
+/turf/space,
+/area/watchful_eye_sensor)
 "ihk" = (
 /obj/table/reinforced/auto,
 /obj/item/currency/spacecash/million,
@@ -64589,11 +64598,6 @@
 /turf/unsimulated/floor/wood,
 /area/centcom/lounge)
 "lCf" = (
-/obj/grille/catwalk,
-/obj/machinery/field_generator{
-	anchored = 1;
-	name = "Containment Field Generator"
-	},
 /obj/cable{
 	icon_state = "0-9"
 	},
@@ -66656,10 +66660,24 @@
 /obj/decal/fakeobjects/dreambeach/big/palm1,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"nyL" = (
+/obj/lattice,
+/obj/grille/steel,
+/turf/space,
+/area/watchful_eye_sensor)
 "nyQ" = (
 /obj/spacevine,
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/research)
+"nyV" = (
+/obj/decal/residual_energy,
+/mob/living/critter/small_animal/floateye/watchful,
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/lattice,
+/turf/space,
+/area/watchful_eye_sensor)
 "nyZ" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
@@ -68982,11 +69000,6 @@
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
 "pFn" = (
-/obj/grille/catwalk,
-/obj/machinery/field_generator{
-	anchored = 1;
-	name = "Containment Field Generator"
-	},
 /obj/cable{
 	icon_state = "0-10"
 	},
@@ -70418,6 +70431,10 @@
 "qUM" = (
 /obj/decal/residual_energy,
 /mob/living/critter/small_animal/floateye/watchful,
+/obj/window/reinforced{
+	dir = 4
+	},
+/obj/lattice,
 /turf/space,
 /area/watchful_eye_sensor)
 "qWF" = (
@@ -71534,10 +71551,6 @@
 /area/moon/museum/west)
 "rMX" = (
 /obj/grille/catwalk,
-/obj/machinery/field_generator{
-	anchored = 1;
-	name = "Containment Field Generator"
-	},
 /obj/cable{
 	icon_state = "0-6"
 	},
@@ -72044,6 +72057,15 @@
 /mob/living/critter/robotic/repairbot/security,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
+"skC" = (
+/obj/decal/residual_energy,
+/mob/living/critter/small_animal/floateye/watchful,
+/obj/window/reinforced{
+	dir = 8
+	},
+/obj/lattice,
+/turf/space,
+/area/watchful_eye_sensor)
 "skF" = (
 /obj/storage/closet/dresser,
 /obj/machinery/light/small/floor/warm/very,
@@ -75770,6 +75792,13 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"wcD" = (
+/obj/decal/residual_energy,
+/mob/living/critter/small_animal/floateye/watchful,
+/obj/lattice,
+/obj/lattice,
+/turf/space,
+/area/watchful_eye_sensor)
 "wcT" = (
 /turf/unsimulated/wall/auto/lead/white{
 	explosion_resistance = 999999;
@@ -136999,9 +137028,9 @@ eqU
 iWF
 pFn
 gNQ
-gNQ
-gNQ
-gNQ
+ivk
+ivk
+ivk
 gNQ
 lCf
 rYf
@@ -137300,11 +137329,11 @@ ttG
 fdI
 qnM
 ezp
-ivk
-qUM
-qUM
-qUM
-ivk
+nyL
+skC
+skC
+skC
+nyL
 ezp
 rxS
 lgy
@@ -137601,13 +137630,13 @@ rcT
 ttG
 fdI
 jxb
-ezp
-qUM
-qUM
-qUM
-qUM
-qUM
-ezp
+ivk
+nyV
+wcD
+wcD
+wcD
+ifi
+ivk
 dbP
 vSA
 ttG
@@ -137903,13 +137932,13 @@ qIe
 ttG
 fdI
 jxb
-ezp
-qUM
-qUM
-qUM
-qUM
-qUM
-ezp
+ivk
+nyV
+wcD
+wcD
+wcD
+ifi
+ivk
 dbP
 vSA
 ttG
@@ -138205,13 +138234,13 @@ tiG
 ttG
 fdI
 jxb
-ezp
-qUM
-qUM
-qUM
-qUM
-qUM
-ezp
+ivk
+nyV
+wcD
+wcD
+wcD
+ifi
+ivk
 dbP
 vSA
 ttG
@@ -138508,11 +138537,11 @@ ttG
 fdI
 rUY
 ezp
-ivk
+nyL
 qUM
 qUM
 qUM
-ivk
+nyL
 ezp
 fSi
 vSA
@@ -138811,9 +138840,9 @@ eqU
 rXk
 rMX
 gNQ
-gNQ
-gNQ
-gNQ
+ivk
+ivk
+ivk
 gNQ
 pFn
 tls

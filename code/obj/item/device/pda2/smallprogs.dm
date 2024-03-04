@@ -1411,7 +1411,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			return
 
 		var/mob/living/critter/small_animal/floateye/watchful/random_eye = pick(watchful_eyes)
-		random_eye.make_jittery(rand(5 SECONDS, 20 SECONDS))
+		random_eye.make_jittery(rand(800, 1500))
 
 		var/dat = src.return_text_header()
 
