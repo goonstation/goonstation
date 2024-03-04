@@ -37307,6 +37307,13 @@
 /obj/disposalpipe/segment,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/lab)
+"cGO" = (
+/obj/cable/green{
+	icon_state = "5-10"
+	},
+/obj/decal/cleanable/paper,
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "cGP" = (
 /obj/storage/crate,
 /obj/machinery/light/small,
@@ -56785,6 +56792,11 @@
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
+"eae" = (
+/obj/machinery/light/small/sticky/warm/very,
+/obj/decal/cleanable/oil,
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "eal" = (
 /obj/table/wood/round/auto,
 /obj/map/light/white,
@@ -57416,6 +57428,13 @@
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
+"eIl" = (
+/obj/item/casing{
+	pixel_y = -5;
+	pixel_x = -18
+	},
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "eIF" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/machinery/door/airlock/pyro/glass,
@@ -61172,11 +61191,16 @@
 	dir = 8
 	},
 /area/centcom/offices/cogwerks)
+"izt" = (
+/obj/item/casing,
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "izT" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base)
 "iAo" = (
 /obj/decal/cleanable/dirt/dirt5,
+/obj/item/casing,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "iAN" = (
@@ -62558,6 +62582,15 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/hospital/samostrel)
+"jJG" = (
+/obj/cable/green{
+	icon_state = "5-10"
+	},
+/obj/decal/cleanable/generic{
+	name = "rubbish"
+	},
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "jKn" = (
 /obj/decal/fakeobjects{
 	desc = "It's probably broken.";
@@ -63991,6 +64024,13 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"ldt" = (
+/obj/cable/green{
+	icon_state = "6-9"
+	},
+/obj/item/casing/grenade,
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "ldA" = (
 /turf/unsimulated/wall/generic{
 	desc = "It's sealed shut.";
@@ -64514,7 +64554,7 @@
 /obj/cable/green{
 	icon_state = "4-9"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
 "lAJ" = (
 /obj/table/reinforced/auto,
@@ -64686,7 +64726,7 @@
 /obj/machinery/light/small/sticky/warm/very{
 	dir = 4
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
 "lJg" = (
 /obj/decal/fakeobjects/pipe{
@@ -65001,6 +65041,11 @@
 	},
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/owleryhall)
+"lYB" = (
+/obj/machinery/light/small/sticky/warm/very,
+/obj/decal/cleanable/ash,
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "lZf" = (
 /turf/unsimulated/floor/carpet{
 	dir = 10;
@@ -65332,6 +65377,7 @@
 /obj/cable/green{
 	icon_state = "6-9"
 	},
+/obj/item/casing/shotgun/pipe,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "mrd" = (
@@ -65688,6 +65734,7 @@
 /obj/machinery/light/small/sticky/warm/very{
 	dir = 8
 	},
+/obj/decal/cleanable/vomit,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "mIO" = (
@@ -66210,7 +66257,7 @@
 /obj/cable{
 	icon_state = "2-10"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
 "nhM" = (
 /obj/indestructible/shuttle_corner{
@@ -66243,6 +66290,7 @@
 /obj/cable/green{
 	icon_state = "1-4"
 	},
+/obj/decal/cleanable/machine_debris,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "njW" = (
@@ -68068,6 +68116,10 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
+"oSC" = (
+/obj/item/casing/shotgun,
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "oSO" = (
 /turf/unsimulated/wall/auto/lead/white{
 	explosion_resistance = 999999;
@@ -68077,6 +68129,7 @@
 "oTd" = (
 /obj/machinery/light/small/sticky/warm/very,
 /obj/table/nanotrasen/auto,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "oTH" = (
@@ -69225,6 +69278,18 @@
 	},
 /turf/unsimulated/dirt,
 /area/crypt/graveyard/swamp)
+"pSI" = (
+/obj/machinery/light/small/sticky/warm/very{
+	dir = 1
+	},
+/obj/decal/cleanable/robot_debris{
+	icon_state = "gib7";
+	pixel_x = 10;
+	pixel_y = -9;
+	random_icon_states = list("gib7")
+	},
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "pSW" = (
 /obj/map/light/graveyard,
 /obj/tree{
@@ -69547,6 +69612,11 @@
 /obj/item/basketball/catball,
 /turf/unsimulated/floor,
 /area/centcom/offices/pali)
+"qjQ" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/machine_debris,
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "qkC" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
@@ -70260,6 +70330,13 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/angel)
+"qQM" = (
+/obj/item/casing{
+	pixel_y = -5;
+	pixel_x = 6
+	},
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "qRe" = (
 /obj/grille/steel,
 /obj/decal/fakeobjects{
@@ -70553,6 +70630,9 @@
 "rcQ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"rcT" = (
+/turf/unsimulated/floor/plating,
+/area/watchful_eye_sensor)
 "rdE" = (
 /obj/overlay{
 	density = 1;
@@ -71100,6 +71180,10 @@
 	name = "indoor garden"
 	},
 /area/afterlife/heaven/hydroponics/inside)
+"ryH" = (
+/obj/decal/cleanable/fungus,
+/turf/unsimulated/wall/auto/lead/white,
+/area/watchful_eye_sensor)
 "ryU" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -71932,6 +72016,7 @@
 	icon_state = "5-10"
 	},
 /obj/table/nanotrasen/auto,
+/obj/item/device/radio,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "sjQ" = (
@@ -72725,6 +72810,17 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"tiG" = (
+/obj/item/casing{
+	pixel_y = -5;
+	pixel_x = 6
+	},
+/obj/item/casing{
+	pixel_y = 13;
+	pixel_x = -18
+	},
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "tje" = (
 /obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater-R"
@@ -74411,6 +74507,7 @@
 /area/moon/museum/west)
 "uXp" = (
 /obj/table/nanotrasen/auto,
+/obj/decal/cleanable/desk_clutter,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "uYH" = (
@@ -74817,7 +74914,7 @@
 	icon_state = "1-4"
 	},
 /obj/decal/cleanable/blood/splatter/extra,
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
 "vol" = (
 /turf/unsimulated/iomoon/floor,
@@ -74878,6 +74975,7 @@
 /obj/cable/green{
 	icon_state = "5-8"
 	},
+/obj/item/casing,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "vqT" = (
@@ -75795,6 +75893,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"wju" = (
+/obj/decal/cleanable/machine_debris,
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "wjW" = (
 /obj/indestructible/shuttle_corner{
 	icon = 'icons/turf/walls/silicate.dmi';
@@ -76192,6 +76294,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
+"wzb" = (
+/obj/decal/cleanable/ripped_poster,
+/turf/unsimulated/wall/auto/lead/white,
+/area/watchful_eye_sensor)
 "wzE" = (
 /obj/decal/cleanable/blood{
 	icon_state = "left_bloodygloves_c"
@@ -76864,6 +76970,9 @@
 "xbK" = (
 /obj/machinery/light/small/sticky/warm/very,
 /obj/decal/cleanable/dirt/dirt2,
+/obj/decal/cleanable/robot_debris{
+	icon_state = "gib7"
+	},
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "xbL" = (
@@ -77032,6 +77141,7 @@
 	pixel_y = -14;
 	pixel_x = -8
 	},
+/obj/item/radio_tape,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "xle" = (
@@ -77229,6 +77339,10 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"xsB" = (
+/obj/item/casing/shotgun/pipe,
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "xsG" = (
 /obj/lattice{
 	dir = 6;
@@ -77347,6 +77461,10 @@
 /obj/table/auto,
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"xyN" = (
+/obj/decal/cleanable/generic,
+/turf/unsimulated/floor,
+/area/watchful_eye_sensor)
 "xyS" = (
 /obj/item/reagent_containers/food/snacks/breadloaf{
 	pixel_y = 12;
@@ -129019,6 +129137,8 @@ cbw
 (169,1,1) = {"
 aaa
 oVZ
+oVZ
+oVZ
 ivk
 ivk
 ivk
@@ -129038,10 +129158,8 @@ ivk
 ivk
 ivk
 ivk
-ivk
-ivk
-ivk
-ivk
+oVZ
+oVZ
 oVZ
 aaa
 aaa
@@ -129321,7 +129439,7 @@ cbw
 (170,1,1) = {"
 aaa
 oVZ
-ivk
+oVZ
 ivk
 ivk
 ivk
@@ -129343,7 +129461,7 @@ ivk
 ivk
 ivk
 ivk
-ivk
+oVZ
 oVZ
 aaa
 aaa
@@ -135069,7 +135187,7 @@ ttG
 jfM
 vJO
 kBa
-vJO
+rcT
 vJO
 vJO
 ezP
@@ -135368,7 +135486,7 @@ nCJ
 ttG
 eqU
 gIu
-vJO
+eIl
 nGx
 eqU
 ttG
@@ -135969,8 +136087,8 @@ ivk
 qis
 eqU
 eqU
-gIu
-vJO
+pSI
+xyN
 jAm
 oTd
 eqU
@@ -136285,7 +136403,7 @@ eqU
 ttG
 xqu
 nah
-wNW
+qjQ
 jhS
 ttG
 qis
@@ -136573,7 +136691,7 @@ ivk
 qis
 ttG
 tBi
-nGx
+cGO
 nTl
 ttG
 ttG
@@ -136889,7 +137007,7 @@ lCf
 rYf
 eqU
 wrX
-vJO
+oSC
 lAc
 ttG
 qis
@@ -137479,7 +137597,7 @@ qis
 pkB
 pRC
 njT
-vJO
+rcT
 ttG
 fdI
 jxb
@@ -138083,7 +138201,7 @@ qis
 tgF
 pRC
 voe
-vJO
+tiG
 ttG
 fdI
 jxb
@@ -138399,7 +138517,7 @@ ezp
 fSi
 vSA
 ttG
-vJO
+izt
 mfB
 ttG
 qis
@@ -138990,7 +139108,7 @@ qis
 ttG
 tBi
 mrp
-nGC
+eae
 ttG
 ttG
 rXk
@@ -139003,8 +139121,8 @@ tls
 ttG
 ttG
 vDa
-nGx
-vJO
+jJG
+wju
 ttG
 qis
 ivk
@@ -139292,7 +139410,7 @@ qis
 ttG
 vJx
 iAo
-mrp
+ldt
 wNW
 ttG
 eqU
@@ -139594,7 +139712,7 @@ qis
 eqU
 eqU
 mNV
-vJO
+qQM
 fsF
 xbK
 eqU
@@ -139603,7 +139721,7 @@ ttG
 nJQ
 ttG
 eqU
-eqU
+ryH
 xkT
 nnc
 sYS
@@ -140200,16 +140318,16 @@ dXH
 ttG
 eqU
 tPV
-vJO
+xsB
 mrp
 eqU
 ttG
 ttG
 ttG
-eqU
+wzb
 nGx
 vJO
-nGC
+lYB
 eqU
 ttG
 dXH
@@ -146233,7 +146351,7 @@ bZd
 (226,1,1) = {"
 aaa
 oVZ
-ivk
+oVZ
 ivk
 ivk
 ivk
@@ -146255,7 +146373,7 @@ ivk
 ivk
 ivk
 ivk
-ivk
+oVZ
 oVZ
 aaa
 dFc
@@ -146535,6 +146653,8 @@ bZd
 (227,1,1) = {"
 aaa
 oVZ
+oVZ
+oVZ
 ivk
 ivk
 ivk
@@ -146554,10 +146674,8 @@ ivk
 ivk
 ivk
 ivk
-ivk
-ivk
-ivk
-ivk
+oVZ
+oVZ
 oVZ
 aaa
 dFc
