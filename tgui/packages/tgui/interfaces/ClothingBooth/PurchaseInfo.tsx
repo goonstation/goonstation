@@ -1,6 +1,6 @@
 import { useBackend } from '../../backend';
 import { Button, Flex, Stack } from '../../components';
-import type { ClothingBoothData, ClothingBoothGroupingTagsData, ClothingBoothItemData } from './type';
+import type { ClothingBoothData, ClothingBoothGroupingTagsData, ClothingBoothItemData, ClothingBoothSlotKey } from './type';
 import { GroupingTagContainer as GroupingTagContainer } from './GroupingTag';
 import { ItemSwatch as ItemSwatch } from './ItemSwatch';
 
@@ -8,10 +8,12 @@ export const PurchaseInfo = (_, context) => {
   const { act, data } = useBackend<ClothingBoothData>(context);
   const { catalogue, money, selectedGroupingName, selectedItemName } = data;
 
+  const selectedGrouping = catalogue[selectedGroupingName];
+  let selectedGroupingSlot: ClothingBoothSlotKey | undefined;
   let selectedGroupingTags: Record<string, ClothingBoothGroupingTagsData> | undefined;
   let selectedItem: ClothingBoothItemData | undefined;
-  const selectedGrouping = catalogue[selectedGroupingName];
   if (selectedGrouping) {
+    selectedGroupingSlot = selectedGrouping.slot;
     selectedGroupingTags = selectedGrouping.grouping_tags;
     selectedItem = selectedGrouping.clothingbooth_items[selectedItemName];
   }
@@ -41,7 +43,7 @@ export const PurchaseInfo = (_, context) => {
               <Stack justify="center">
                 <Stack.Item bold>Tags: </Stack.Item>
                 <Stack.Item style={{ opacity: '0.5' }}>
-                  <GroupingTagContainer {...selectedGroupingTags} />
+                  <GroupingTagContainer slot={selectedGroupingSlot} tags={selectedGroupingTags} />
                 </Stack.Item>
               </Stack>
             </Stack.Item>

@@ -18,6 +18,7 @@ export const BoothGrouping = (props: BoothGroupingProps) => {
     name,
     onSelectGrouping,
     selectedGroupingName,
+    slot,
   } = props;
   const cn = classes([
     'clothingbooth__boothitem',
@@ -42,7 +43,7 @@ export const BoothGrouping = (props: BoothGroupingProps) => {
             <Stack fluid style={{ opacity: '0.5' }}>
               {Object.values(grouping_tags).length && (
                 <Stack.Item grow>
-                  <GroupingTagContainer {...grouping_tags} />
+                  <GroupingTagContainer slot={slot} tags={grouping_tags} />
                 </Stack.Item>
               )}
               {itemsCount > 1 && <Stack.Item>{itemsCount} variants</Stack.Item>}

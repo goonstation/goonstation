@@ -32,7 +32,7 @@ export interface ClothingBoothItemData {
 export interface ClothingBoothGroupingTagsData {
   name: string;
   colour?: string;
-  display_order: number;
+  display_order?: number | 1;
 }
 
 // Keep in sync with `\_std\defines\clothing.dm` `SLOT_` defines.
