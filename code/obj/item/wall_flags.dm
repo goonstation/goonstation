@@ -97,7 +97,7 @@
 		name = "\improper Vincian MLM pride flag"
 		icon_state = "mlmvinc"
 		associated_flag = /obj/decal/poster/flag/mlmvinc
-		altside_flag = /obj/decal/poster/flag/mlmachi
+		altside_flag = /obj/item/flag/mlmachi
 
 	mlmachi
 		name = "\improper Achilean MLM pride flag"
