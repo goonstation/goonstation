@@ -1141,6 +1141,7 @@ datum/projectile/bullet/autocannon
 
 		on_hit(atom/hit)
 			explosion_new(null,get_turf(hit), 8, 0.75)
+
 /datum/projectile/bullet/smoke
 	name = "smoke grenade"
 	sname = "smokeshot"
