@@ -1158,3 +1158,43 @@ Only trained personnel should operate station systems. Follow all procedures car
 	handle with the same hand that holds your beloved
 	napalm-phlogiston-thermite """hell mix."""
 	"}
+
+/obj/item/paper/watchful_eye
+	name = "MEMO: Deployment Notice"
+	icon_state = "paper_caution_bloody"
+	info ={"
+	TO: WATCHFUL-EYE SENSOR ARRAY MAINTENANCE <br>
+	FROM: OUTPOST OMICRON, NANOTRASEN-THINKTRONIC JOINT PROJECT <br>
+	SUBJECT: SCHEDULED MAINTAINENCE <br>
+	MESSAGE: <br>
+	Reports show that one of the satellites in the array is acting up.
+	The eye clusters there are allegedly behaving oddly, reporting
+	false events, and there are rumours that someone has recalibrated
+	them to track individuals instead of Typhon. Please investigate the
+	source of the anomalous readings and let us know whether to decommission
+	that satellite. The previous team didn't return, so proceed with caution.
+	<br>
+
+	We can still operate the array with only 15 out of the 30 satellites,
+	due to safety (redundancy) policy. Still, we'd rather keep as many
+	satellites in operation as we can. If the problem can be repaired, do so.
+
+	<br> <br>
+	Signed, <br>
+	The office of Commodore Roland Yee
+	"}
+
+/obj/item/paper/watchful_eye/rev
+	name = "Plan of attack."
+	icon_state = "paper_singed"
+	info ={"
+	Steps: <br>
+	1. assum ctrl of sat 13. involves killin prolly. implnt maint crew tooo so we
+	can use then snce we don't know jack about how it wrks lol <br>
+	2. hack the sensurs to track non revs?? or sth. figyure it out when we get their <br>
+	3. a wait furthr isntr instrect instuctions <br> <br>
+
+	edit: turns out the eyes r actual eyes. wtf!!! no one tld us that!! HOW 2 HACK AN IBALL?? <br>
+	edit 2: it kind of work s now yey<br>
+	please nevr make me com hear a gain
+	"}

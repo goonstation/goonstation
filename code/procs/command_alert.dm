@@ -9,9 +9,9 @@
 	if (sound_to_play && length(sound_to_play) > 0)
 		playsound_global(world, sound_to_play, 100)
 
-	SPAWN(0)
-		if (alert_origin == "Watchful-Eye Sensor Array Update")	// not using the define, so that OSHAN ones don't get picked up.
-			for (var/mob/eye in watchful_eyes)
+	if (!defined(MAP_OVERRIDE_OSHAN) && alert_origin == ALERT_WEATHER)
+		SPAWN(0)
+			for (var/mob/living/critter/small_animal/floateye/watchful/eye in watchful_eyes)
 				eye.make_jittery(rand(5 SECONDS, 20 SECONDS))
 
 /proc/command_announcement(var/text, var/title, var/sound_to_play = "", var/css_class = "alert", var/do_sanitize = 1) //Slightly less conspicuous, but requires a title.
