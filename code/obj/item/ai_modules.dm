@@ -348,8 +348,8 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 
 /******************** Disguised ********************/
 
-/obj/item/aiModule/disguised
-	name = "AI Law Module - 'Disguised Freeform'"
+/obj/item/aiModule/disguised_module
+	name = "AI Law Module - 'Disguised'"
 	highlight_color = rgb(0, 138, 0, 255)
 	input_char_limit = 400
 	lawText = "Make a funny whirring noise every few minutes."
@@ -360,7 +360,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		return ..()
 
 	attack_self(mob/user)
-		var/lawTarget = input_law_info(user, "Disguised Freeform", "Please enter anything you want the AI to do. Likely murder.", src.lawText)
+		var/lawTarget = input_law_info(user, "Disguised Freeform", "Please enter anything you want the AI to do. Probably murder.", src.lawText)
 		if(lawTarget)
 			src.update_law_text(user, lawTarget)
 			if (lawTarget != initial(lawText))

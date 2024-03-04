@@ -1036,6 +1036,16 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	not_in_crates = TRUE
 	job = list("Captain", "VIP", "Regional Director", "Inspector")
 
+/datum/syndicate_buylist/traitor/ai_disguised_module
+	name = "AI Disguised Law Module"
+	item = /obj/item/aiModule/disguised_module
+	cost = 2
+	vr_allowed = FALSE
+	not_in_crates = TRUE
+	desc = "An AI law that at a glance looks completely normal."
+	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
+	can_buy = UPLINK_TRAITOR
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
