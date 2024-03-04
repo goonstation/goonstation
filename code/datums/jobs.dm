@@ -77,7 +77,7 @@
 		if (isnull(src.upper_limit))
 			src.upper_limit = src.limit
 
-#define SLOT_SCALING_UPPER_THRESHOLD 60 //the point at which we have maximum slots open
+#define SLOT_SCALING_UPPER_THRESHOLD 50 //the point at which we have maximum slots open
 #define SLOT_SCALING_LOWER_THRESHOLD 20 //the point at which we have minimum slots open
 
 	proc/recalculate_limit(player_count)
@@ -86,10 +86,13 @@
 		if (player_count >= SLOT_SCALING_UPPER_THRESHOLD) //above this just open everything up
 			src.limit = src.upper_limit
 			return src.limit
+		var/old_limit = src.limit
 		//basic linear scale between upper and lower limits
 		var/scalar = (player_count - SLOT_SCALING_LOWER_THRESHOLD) / (SLOT_SCALING_UPPER_THRESHOLD - SLOT_SCALING_LOWER_THRESHOLD)
 		src.limit = round(src.lower_limit + scalar * (src.upper_limit - src.lower_limit))
 		src.limit = clamp(src.limit, src.lower_limit, src.upper_limit) //paranoia clamp, probably not needed
+		if (src.limit != old_limit)
+			logTheThing(LOG_DEBUG, src, "Altering variable job limit for [src.name] from [old_limit] to [src.limit] at [player_count] player count.")
 		return src.limit
 
 #undef SLOT_SCALING_UPPER_THRESHOLD
