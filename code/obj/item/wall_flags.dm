@@ -72,12 +72,37 @@
 		icon_state = "progressive"
 		associated_flag = /obj/decal/poster/flag/progressive
 
+		attack_self(mob/user as mob)
+			user.show_text("You flip the [src] around.")
+			if(src.loc == user)
+				user.u_equip(src)
+			qdel(src)
+			user.put_in_hand_or_drop(new /obj/item/flag/rainbow)
+
 	rainbow
 		name = "rainbow flag"
 		icon_state = "rainbow"
 		associated_flag = /obj/decal/poster/flag/rainbow
 
+		attack_self(mob/user as mob)
+			user.show_text("You flip the [src] around.")
+			if(src.loc == user)
+				user.u_equip(src)
+			qdel(src)
+			user.put_in_hand_or_drop(new /obj/item/flag/progressive)
+
 	trans
 		name = "transgender pride flag"
 		icon_state = "trans"
 		associated_flag = /obj/decal/poster/flag/trans
+
+	mlmvinc
+		name = "\improper Vincian MLM pride flag"
+		icon_state = "mlmvinc"
+		associated_flag = /obj/decal/poster/flag/mlmvinc
+
+	mlmachi
+		name = "\improper Achilean MLM pride flag"
+		icon_state = "mlmachi"
+		associated_flag = /obj/decal/poster/flag/mlmachi
+
