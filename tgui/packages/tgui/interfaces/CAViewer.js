@@ -4,7 +4,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Button, Dropdown, Flex, NumberInput, Section } from '../components';
+import { Box, Button, Dropdown, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const CAViewer = (props, context) => {
@@ -17,10 +17,17 @@ export const CAViewer = (props, context) => {
     settings,
   } = data;
 
+  const width_replace = '(.{' + viewWidth + '})';
+  const width_re = new RegExp(width_replace, "g");
+  let CAText = CAData;
+  CAText = CAText.replace(/0/g, '▫');
+  CAText = CAText.replace(/1/g, '■');
+  CAText = CAText.replace(width_re, "$1\n");
+
   return (
     <Window
       title="Cellular Automata Viewer"
-      width={900}
+      width={1600}
       height={800}>
       <Window.Content scrollable>
         <Section
@@ -43,29 +50,29 @@ export const CAViewer = (props, context) => {
           )}
         >
           {typeData[CAType].description}
-          <Flex direction="row">
-            <Flex.Item />
+          <Stack>
             {(
               CAType && typeData[CAType].options && Object.keys(typeData[CAType].options).length ? (
                 Object.keys(typeData[CAType].options).map((optionName, sectionIndex) => (
-                  <Section title={typeData[CAType].options[optionName]} key={sectionIndex}>
-                    <NumberInput
-                      value={settings[typeData[CAType].options[optionName]]}
-                      minValue={0}
-                      maxValue={500}
-                      stepPixelSize={5}
-                      width="39px"
-                      onDrag={(e, value) => act('settings', {
-                        name: typeData[CAType].options[optionName],
-                        data: value })}
-                    />
-                    {}
-                  </Section>
+                  <Stack.Item key={sectionIndex}>
+                    <Section title={typeData[CAType].options[optionName]} >
+                      <NumberInput
+                        value={settings[typeData[CAType].options[optionName]]}
+                        minValue={0}
+                        maxValue={500}
+                        stepPixelSize={5}
+                        width="39px"
+                        onDrag={(e, value) => act('settings', {
+                          name: typeData[CAType].options[optionName],
+                          data: value })}
+                      />
+                    </Section>
+                  </Stack.Item>
                 ))
               )
                 : ""
             )}
-          </Flex>
+          </Stack>
           <Section title="Command" >
             {`${typeData[CAType].function}(`}
             {Object.keys(typeData[CAType].options).map((optionName, sectionIndex) =>
@@ -83,8 +90,10 @@ export const CAViewer = (props, context) => {
           <Section>
             <Box
               preserveWhitespace
-              fontFamily="Consolas">
-              {CAData.replace(/0/g, '-').replace(/(.{100})/g, "$1\n")}
+              style={{ "font-size": "9px", "line-height": "5px" }}
+              fontFamily="Consolas"
+            >
+              {CAText}
             </Box>
           </Section>
         </Section>
