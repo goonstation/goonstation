@@ -1882,8 +1882,6 @@ proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8
 /proc/animate_psy_juggle(atom/thing, duration = 2 SECONDS)
 	var/eighth_duration = duration / 8  // Divide the duration for each segment of the octagon
 	var/distance = 24  // Max distance from the center in pixels
-	thing.pixel_x = 0
-	thing.pixel_y = 0
 	animate(thing, pixel_x = distance, pixel_y = distance * 0.5, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
 	animate(pixel_x = distance * 0.5, pixel_y = distance, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
 	animate(pixel_x = -distance * 0.5, pixel_y = distance, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
