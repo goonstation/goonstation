@@ -13,7 +13,7 @@
 	if (alert_origin == ALERT_WEATHER)
 		SPAWN(0)
 			for (var/mob/living/critter/small_animal/floateye/watchful/eye in watchful_eyes)
-				eye.make_jittery(rand(800, 1500))
+				eye.make_jittery(rand(10 SECONDS, 90 SECONDS))
 #endif
 
 /proc/command_announcement(var/text, var/title, var/sound_to_play = "", var/css_class = "alert", var/do_sanitize = 1) //Slightly less conspicuous, but requires a title.

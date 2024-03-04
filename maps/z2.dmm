@@ -57311,6 +57311,7 @@
 /area/crypt/sigma/morgue)
 "ezp" = (
 /obj/lattice/directional_icons,
+/obj/machinery/light/small/floor/harsh/very,
 /turf/space,
 /area/watchful_eye_sensor)
 "ezH" = (
@@ -57734,6 +57735,12 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"eYv" = (
+/obj/decal/residual_energy,
+/mob/living/critter/small_animal/floateye/watchful,
+/obj/lattice,
+/turf/space,
+/area/watchful_eye_sensor)
 "eYK" = (
 /obj/decal/poster/wallsign/fire,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -58185,6 +58192,15 @@
 /obj/tree/sakura_tree,
 /turf/unsimulated/floor/grass/leafy,
 /area/dojo/sakura)
+"fzT" = (
+/obj/decal/residual_energy,
+/mob/living/critter/small_animal/floateye/watchful,
+/obj/window/reinforced{
+	dir = 8
+	},
+/obj/lattice/directional_icons,
+/turf/space,
+/area/watchful_eye_sensor)
 "fzZ" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 1;
@@ -58458,18 +58474,13 @@
 /turf/unsimulated/floor/engine,
 /area/drone/assembly)
 "fLK" = (
-/obj/lattice/directional_icons{
-	dir = 6
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/lattice,
 /turf/space,
 /area/watchful_eye_sensor)
 "fMq" = (
@@ -59534,6 +59545,7 @@
 /obj/lattice/directional_icons{
 	dir = 4
 	},
+/obj/machinery/light/small/floor/harsh/very,
 /turf/space,
 /area/watchful_eye_sensor)
 "gOW" = (
@@ -60735,6 +60747,11 @@
 /mob/living/critter/spider/ice/baby,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
+"idW" = (
+/obj/decal/residual_energy,
+/mob/living/critter/small_animal/floateye/watchful,
+/turf/space,
+/area/watchful_eye_sensor)
 "ies" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It won't budge.";
@@ -60760,7 +60777,9 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/lattice,
+/obj/lattice/directional_icons{
+	dir = 10
+	},
 /turf/space,
 /area/watchful_eye_sensor)
 "ihk" = (
@@ -61483,6 +61502,13 @@
 	},
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
+"iNX" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/lattice,
+/turf/space,
+/area/watchful_eye_sensor)
 "iOn" = (
 /obj/tree,
 /obj/spacevine{
@@ -61714,6 +61740,17 @@
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
 	dir = 4;
 	pixel_x = -10
+	},
+/turf/space,
+/area/watchful_eye_sensor)
+"iWM" = (
+/obj/decal/residual_energy,
+/mob/living/critter/small_animal/floateye/watchful,
+/obj/window/reinforced{
+	dir = 2
+	},
+/obj/lattice/directional_icons{
+	dir = 4
 	},
 /turf/space,
 /area/watchful_eye_sensor)
@@ -63045,6 +63082,13 @@
 /obj/item/storage/secure/ssafe/icemoon,
 /turf/unsimulated/wall/auto/lead/blue,
 /area/lower_arctic/pod1)
+"khh" = (
+/obj/lattice/directional_icons_alt{
+	dir = 1
+	},
+/obj/machinery/light/small/floor/harsh/very,
+/turf/space,
+/area/watchful_eye_sensor)
 "kht" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
@@ -64599,10 +64643,7 @@
 /area/centcom/lounge)
 "lCf" = (
 /obj/cable{
-	icon_state = "0-9"
-	},
-/obj/cable{
-	icon_state = "0-6"
+	icon_state = "6-9"
 	},
 /turf/space,
 /area/watchful_eye_sensor)
@@ -66675,7 +66716,9 @@
 /obj/window/reinforced{
 	dir = 1
 	},
-/obj/lattice,
+/obj/lattice/directional_icons{
+	dir = 4
+	},
 /turf/space,
 /area/watchful_eye_sensor)
 "nyZ" = (
@@ -68123,6 +68166,11 @@
 	name = "\proper the murderbox"
 	},
 /area/sim/gunsim/arena)
+"oSu" = (
+/obj/lattice/directional_icons_alt,
+/obj/machinery/light/small/floor/harsh/very,
+/turf/space,
+/area/watchful_eye_sensor)
 "oSz" = (
 /obj/decal/exhibit/lowend{
 	exhibit_id = "ex_centcom_lowend_6";
@@ -68798,18 +68846,13 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base)
 "pup" = (
-/obj/lattice/directional_icons{
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/lattice,
 /turf/space,
 /area/watchful_eye_sensor)
 "pux" = (
@@ -69001,10 +69044,7 @@
 /area/centcom/gallery)
 "pFn" = (
 /obj/cable{
-	icon_state = "0-10"
-	},
-/obj/cable{
-	icon_state = "0-5"
+	icon_state = "5-10"
 	},
 /turf/space,
 /area/watchful_eye_sensor)
@@ -70434,7 +70474,9 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/lattice,
+/obj/lattice/directional_icons{
+	dir = 1
+	},
 /turf/space,
 /area/watchful_eye_sensor)
 "qWF" = (
@@ -71550,12 +71592,10 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "rMX" = (
-/obj/grille/catwalk,
-/obj/cable{
-	icon_state = "0-6"
-	},
-/obj/cable{
-	icon_state = "0-9"
+/obj/decal/residual_energy,
+/mob/living/critter/small_animal/floateye/watchful,
+/obj/lattice/directional_icons{
+	dir = 4
 	},
 /turf/space,
 /area/watchful_eye_sensor)
@@ -72063,7 +72103,9 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/lattice,
+/obj/lattice/directional_icons{
+	dir = 6
+	},
 /turf/space,
 /area/watchful_eye_sensor)
 "skF" = (
@@ -72606,6 +72648,15 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"sPn" = (
+/obj/decal/residual_energy,
+/mob/living/critter/small_animal/floateye/watchful,
+/obj/window/reinforced{
+	dir = 4
+	},
+/obj/lattice/directional_icons,
+/turf/space,
+/area/watchful_eye_sensor)
 "sPM" = (
 /mob/living/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow,
@@ -73359,6 +73410,13 @@
 /obj/machinery/light/small/sticky/warm/very,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
+"tRh" = (
+/obj/grille/catwalk,
+/obj/decal/fakeobjects/bustedpod{
+	dir = 4
+	},
+/turf/space,
+/area/watchful_eye_sensor)
 "tRx" = (
 /turf/unsimulated/floor/marble/border_wb{
 	dir = 10
@@ -73609,6 +73667,13 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
+"ucz" = (
+/obj/lattice/directional_icons{
+	dir = 9
+	},
+/obj/machinery/light/small/floor/harsh/very,
+/turf/space,
+/area/watchful_eye_sensor)
 "udv" = (
 /turf/unsimulated/floor/carpet/green/fancy/edge/ne,
 /area/centcom/offices{
@@ -75795,8 +75860,7 @@
 "wcD" = (
 /obj/decal/residual_energy,
 /mob/living/critter/small_animal/floateye/watchful,
-/obj/lattice,
-/obj/lattice,
+/obj/lattice/directional_icons,
 /turf/space,
 /area/watchful_eye_sensor)
 "wcT" = (
@@ -77055,6 +77119,17 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"xeU" = (
+/obj/decal/residual_energy,
+/mob/living/critter/small_animal/floateye/watchful,
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/lattice/directional_icons{
+	dir = 8
+	},
+/turf/space,
+/area/watchful_eye_sensor)
 "xfe" = (
 /obj/stool/chair/office/blue,
 /obj/decal/cleanable/blood{
@@ -77342,6 +77417,13 @@
 	icon_state = "fullblack"
 	},
 /area/sim/racing_track)
+"xqA" = (
+/obj/lattice/directional_icons{
+	dir = 5
+	},
+/obj/machinery/light/small/floor/harsh/very,
+/turf/space,
+/area/watchful_eye_sensor)
 "xqB" = (
 /obj/item/reagent_containers/food/snacks/mushroom/psilocybin,
 /turf/unsimulated/floor/grey/side{
@@ -77602,6 +77684,14 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"xBW" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/decal/fakeobjects/bustedpod,
+/turf/space,
+/area/watchful_eye_sensor)
 "xCw" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -134006,7 +134096,7 @@ qis
 jKn
 qis
 hci
-qis
+tRh
 uFl
 eqU
 eqU
@@ -137029,7 +137119,7 @@ iWF
 pFn
 gNQ
 ivk
-ivk
+xqA
 ivk
 gNQ
 lCf
@@ -137330,9 +137420,9 @@ fdI
 qnM
 ezp
 nyL
+fzT
 skC
-skC
-skC
+fzT
 nyL
 ezp
 rxS
@@ -137632,10 +137722,10 @@ fdI
 jxb
 ivk
 nyV
-wcD
-wcD
-wcD
-ifi
+idW
+rMX
+idW
+iWM
 ivk
 dbP
 vSA
@@ -137931,15 +138021,15 @@ ktZ
 qIe
 ttG
 fdI
-jxb
-ivk
-nyV
+iNX
+khh
+xeU
 wcD
-wcD
+eYv
 wcD
 ifi
-ivk
-dbP
+oSu
+iNX
 vSA
 ttG
 kud
@@ -138236,10 +138326,10 @@ fdI
 jxb
 ivk
 nyV
-wcD
-wcD
-wcD
-ifi
+idW
+rMX
+idW
+iWM
 ivk
 dbP
 vSA
@@ -138538,9 +138628,9 @@ fdI
 rUY
 ezp
 nyL
+sPn
 qUM
-qUM
-qUM
+sPn
 nyL
 ezp
 fSi
@@ -138838,10 +138928,10 @@ nGC
 eqU
 eqU
 rXk
-rMX
+lCf
 gNQ
 ivk
-ivk
+ucz
 ivk
 gNQ
 pFn
@@ -141562,7 +141652,7 @@ mTF
 jZm
 raG
 gHs
-rCI
+xBW
 jGH
 rCI
 vEx
