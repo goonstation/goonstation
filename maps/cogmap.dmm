@@ -54722,7 +54722,6 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/machinery/light,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -125494,7 +125493,7 @@ awI
 atX
 hpR
 azp
-fSd
+awI
 atW
 axI
 iYS
@@ -125796,7 +125795,7 @@ awI
 atX
 eFQ
 awI
-awI
+fSd
 atW
 dSo
 axQ
@@ -126400,7 +126399,7 @@ awI
 rNW
 dZb
 sem
-fSd
+awI
 atW
 awC
 axQ
