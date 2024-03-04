@@ -4133,16 +4133,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/ranch)
-"apZ" = (
-/obj/machinery/plantpot,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
 "aqm" = (
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -5161,6 +5151,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
@@ -6308,6 +6299,10 @@
 	pixel_x = 2;
 	pixel_y = 4
 	},
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -6716,15 +6711,6 @@
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
-"azr" = (
-/obj/machinery/plantpot,
-/obj/machinery/light{
-	dir = 4
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -54021,16 +54007,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
-"pga" = (
-/obj/landmark/kudzu,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
 "pgo" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -54717,6 +54693,10 @@
 /obj/item/bee_egg_carton{
 	pixel_x = 2;
 	pixel_y = 3
+	},
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -64508,6 +64488,7 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
+/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -65593,9 +65574,6 @@
 /area/station/hangar/medical)
 "ydh" = (
 /obj/machinery/hydro_mister,
-/obj/machinery/light{
-	tag = ""
-	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -127601,7 +127579,7 @@ adC
 adC
 mPp
 mPp
-pga
+eCD
 aBb
 atZ
 avj
@@ -128506,7 +128484,7 @@ adC
 adC
 adC
 mPp
-apZ
+srq
 arn
 arn
 auc
@@ -129715,7 +129693,7 @@ adC
 adC
 mPp
 mPp
-apZ
+srq
 arn
 arn
 aEX
@@ -129726,7 +129704,7 @@ jvO
 aEX
 arn
 arn
-aHw
+srq
 mPp
 mPp
 adC
@@ -130018,7 +129996,7 @@ adC
 aag
 mPp
 azm
-azr
+srq
 arn
 arn
 nBp
