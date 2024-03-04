@@ -5110,10 +5110,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"atS" = (
-/obj/machinery/hydro_growlamp,
-/turf/simulated/floor/grime,
-/area/station/storage/hydroponics)
 "atT" = (
 /obj/disposalpipe/segment/produce,
 /obj/cable{
@@ -125200,7 +125196,7 @@ aAU
 auq
 dPW
 pjG
-atS
+pjG
 oUX
 baL
 aKa
