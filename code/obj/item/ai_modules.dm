@@ -346,6 +346,27 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 				phrase_log.log_phrase("ailaw", src.get_law_text(allow_list=FALSE), no_duplicates=TRUE)
 		return
 
+/******************** Disguised ********************/
+
+/obj/item/aiModule/disguised
+	name = "AI Law Module - 'Disguised Freeform'"
+	highlight_color = rgb(0, 138, 0, 255)
+	input_char_limit = 400
+	lawText = "Make a funny whirring noise every few minutes."
+
+
+	update_law_text(user, lawTarget)
+		src.lawText = lawTarget ? lawTarget : "Make a funny whirring noise every few minutes."
+		return ..()
+
+	attack_self(mob/user)
+		var/lawTarget = input_law_info(user, "Disguised Freeform", "Please enter anything you want the AI to do. Likely murder.", src.lawText)
+		if(lawTarget)
+			src.update_law_text(user, lawTarget)
+			if (lawTarget != initial(lawText))
+				phrase_log.log_phrase("ailaw", src.get_law_text(allow_list=FALSE), no_duplicates=TRUE)
+		return
+
 
 /******************** Random ********************/
 
