@@ -704,7 +704,7 @@ toxic - poisons
 	damage_type = D_PIERCING
 	armor_ignored = 0.66
 	implanted = null
-	damage = 8
+	damage = 13
 
 /datum/projectile/bullet/improvglass
 	name = "glass"
