@@ -891,22 +891,22 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/collar_dress)
 /datum/clothingbooth_item/w_uniform/collar_dress
 
 	black
-		name = "black"
+		name = "Black"
 		swatch_background_colour = "#3f4c5b"
 		item_path = /obj/item/clothing/under/collardressbl
 
 	blue
-		name = "blue"
+		name = "Blue"
 		swatch_background_colour = "#63a5ee"
 		item_path = /obj/item/clothing/under/collardressb
 
 	green
-		name = "green"
+		name = "Green"
 		swatch_background_colour = "#3eb54e"
 		item_path = /obj/item/clothing/under/collardressg
 
 	red
-		name = "red"
+		name = "Red"
 		swatch_background_colour = "#d73715"
 		item_path = /obj/item/clothing/under/collardressr
 
@@ -1402,17 +1402,17 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/mushroomcap)
 		item_path = /obj/item/clothing/head/mushroomcap/red
 
 	shiitake
-		name = "Shiitake Mushroom Cap"
+		name = "Shiitake"
 		swatch_background_colour = "#724f29"
 		item_path = /obj/item/clothing/head/mushroomcap/shiitake
 
 	indigo
-		name = "Indigo Mushroom Cap"
+		name = "Indigo"
 		swatch_background_colour = "#24bdc6"
 		item_path = /obj/item/clothing/head/mushroomcap/indigo
 
 	inky
-		name = "Inky Mushroom Cap"
+		name = "Inky"
 		swatch_background_colour = "#545461"
 		cost = PAY_TRADESMAN
 		item_path = /obj/item/clothing/head/mushroomcap/inky
