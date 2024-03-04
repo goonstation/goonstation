@@ -32,7 +32,7 @@
 	else
 		//Hides the window and does nothing else.
 		winset(src, "[id].cancel", "command=\".winset \\\"[id].is-visible=false;[id].say-input.text=\\\"\\\"\"")
-		winset(src, "[id]_macro_return", "parent=persist_[id]_macro;name=Return;command=\".winset \\\"[id].is-visible=false\"")
+		winset(src, "[id]_macro_return", "parent=persist_[id]_macro;name=Return;command=\".winset \\\"[id].is-visible=false\\\"\"")
 		winset(src, "[id]_macro_escape", "parent=persist_[id]_macro;name=Escape;command=\".winset \\\"[id].is-visible=false;[id].say-input.text=\\\"\\\"\"")
 
 	//Window scaling!
