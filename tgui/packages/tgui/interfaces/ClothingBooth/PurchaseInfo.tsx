@@ -28,13 +28,7 @@ export const PurchaseInfo = (_, context) => {
           <Stack.Item bold>
             <Stack align="center" justify="center">
               <Stack.Item>
-                <Button icon="chevron-left" tooltip="Previous Grouping" />
-              </Stack.Item>
-              <Stack.Item>
                 {selectedGroupingName}
-              </Stack.Item>
-              <Stack.Item>
-                <Button icon="chevron-right" tooltip="Next Grouping" />
               </Stack.Item>
             </Stack>
           </Stack.Item>
