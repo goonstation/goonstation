@@ -1,4 +1,9 @@
 
+(t)mon mar 04 24
+(u)LeahTheTech
+(p)18091
+(e)⚖🐣|C-Balance, A-Respawning
+(*)NTSCs now take up a security officer slot.
 (t)sun mar 03 24
 (u)LeahTheTech
 (+)The botanical mister can now be emptied with click-drag.
