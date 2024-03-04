@@ -1,5 +1,10 @@
 
 (t)mon mar 04 24
+(u)ithebinman
+(p)18087
+(e)|
+(*)Removed mugwort from the bathsalts chemistry recipe
+(+)Added ghost chili juice to the bathsalts chemistry recipe
 (u)LeahTheTech
 (p)18091
 (e)⚖🐣|C-Balance, A-Respawning
