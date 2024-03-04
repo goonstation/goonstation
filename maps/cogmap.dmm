@@ -5151,7 +5151,6 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
@@ -5166,6 +5165,7 @@
 	pixel_x = -4;
 	pixel_y = 6
 	},
+/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -5481,6 +5481,7 @@
 /area/station/crew_quarters/pool)
 "avh" = (
 /obj/submachine/seed_vendor,
+/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -6689,6 +6690,7 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
+/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -9193,15 +9195,6 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
-"aHw" = (
-/obj/machinery/plantpot,
-/obj/machinery/light{
-	tag = ""
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
 "aHx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -41762,6 +41755,7 @@
 /area/station/engine/hotloop)
 "fnq" = (
 /obj/reagent_dispensers/watertank/big,
+/obj/machinery/light,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -44831,7 +44825,7 @@
 /obj/item/storage/box/syringes{
 	pixel_w = 2;
 	pixel_x = -5;
-	pixel_y = 10
+	pixel_y = 7
 	},
 /obj/item/device/reagentscanner{
 	pixel_x = -8;
@@ -46267,8 +46261,8 @@
 /area/station/security/main)
 "iTs" = (
 /obj/reagent_dispensers/watertank/big,
-/obj/machinery/alarm{
-	pixel_y = 23
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -47612,7 +47606,6 @@
 /area/station/quartermaster/refinery)
 "jVY" = (
 /obj/landmark/start/job/botanist,
-/obj/disposalpipe/segment,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -50370,6 +50363,7 @@
 "mtb" = (
 /obj/table/auto,
 /obj/item/storage/box/beakerbox,
+/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -53426,12 +53420,10 @@
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
 "oLV" = (
-/obj/machinery/light_switch{
-	name = "N light switch";
-	on = 0;
-	pixel_y = 24
-	},
 /obj/machinery/plantpot,
+/obj/machinery/alarm{
+	pixel_y = 23
+	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "oMv" = (
@@ -56574,9 +56566,6 @@
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/produce{
 	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
 	},
 /turf/simulated/floor/green/side{
 	dir = 4
@@ -64478,6 +64467,8 @@
 	pixel_x = -1;
 	pixel_y = 8
 	},
+/obj/machinery/light/small/floor/warm,
+/obj/item/screwdriver/green,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -64488,7 +64479,6 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
-/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -128497,7 +128487,7 @@ avj
 xiw
 arn
 arn
-aHw
+srq
 mPp
 adC
 adC
