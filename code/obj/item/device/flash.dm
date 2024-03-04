@@ -467,6 +467,9 @@ TYPEINFO(/obj/item/device/flash/revolution)
 		if (current_cooldown)
 			boutput(user, SPAN_ALERT("[src] still needs to recharge before it can convert another. Time left: [current_cooldown/10]s"))
 			return
+		var/mob/living/carbon/human/H = M
+		if (istype(H) && H.eyes_protected_from_light())
+			return
 		if (src.convert_duration)
 			actions.start(new /datum/action/bar/private/icon/callback(user, M, src.convert_duration, PROC_REF(finish_conversion), list(M, user), src.icon, src.icon_state, SPAN_ALERT("[M]'s eyes glaze over for a second..."), INTERRUPT_ATTACKED | INTERRUPT_STUNNED, src), user)
 		else //skip actionbar
