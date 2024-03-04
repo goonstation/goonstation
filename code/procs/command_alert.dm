@@ -9,10 +9,12 @@
 	if (sound_to_play && length(sound_to_play) > 0)
 		playsound_global(world, sound_to_play, 100)
 
-	if (!defined(MAP_OVERRIDE_OSHAN) && alert_origin == ALERT_WEATHER)
+#ifndef MAP_OVERRIDE_OSHAN
+	if (alert_origin == ALERT_WEATHER)
 		SPAWN(0)
 			for (var/mob/living/critter/small_animal/floateye/watchful/eye in watchful_eyes)
 				eye.make_jittery(rand(5 SECONDS, 20 SECONDS))
+#endif
 
 /proc/command_announcement(var/text, var/title, var/sound_to_play = "", var/css_class = "alert", var/do_sanitize = 1) //Slightly less conspicuous, but requires a title.
 	if(!title || !text) return
