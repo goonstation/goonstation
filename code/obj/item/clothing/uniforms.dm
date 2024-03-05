@@ -17,7 +17,7 @@
 	burn_possible = TRUE
 	health = 10
 	var/team_num
-	var/obj/item/cutting_product
+	var/cutting_product
 
 	duration_remove = 7.5 SECONDS
 
