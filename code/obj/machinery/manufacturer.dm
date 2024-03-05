@@ -272,9 +272,61 @@ TYPEINFO(/obj/machinery/manufacturer)
 					status |= NOPOWER
 					src.build_icon()
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "Manufacturer")
+			ui.open()
+
+	ui_data(mob/user)
+		return list(
+			"name" = src.name,
+			"panel_open" = src.panel_open,
+			"hacked" = src.hacked,
+			"malfunction" = src.malfunction,
+			"wire_bitflags" = src.wires,
+			"scanned_card" = src.scan,
+			"speed" = src.speed,
+			"repeat" = src.repeat,
+			"resources" = src.resource_amounts,
+			"mats_by_id" = src.stored_materials_by_id,
+			"categories" = src.categories,
+			"downloaded_blueprints" = src.download,
+			"drive_recipe_blueprints" = src.drive_recipes,
+		)
+
+	ui_static_data(mob/user)
+		var/list/available_blueprints[length(src.available)]
+		for (var/i in 1 to length(src.available))
+			available_blueprints[i] = as_list(src.available[i], user)
+		var/list/hidden_blueprints[length(src.hidden)]
+		for (var/i in 1 to length(src.hidden))
+			hidden_blueprints[i] = as_list(src.hidden[i], user)
+		return list (
+			"available_blueprints" = available_blueprints,
+			"hidden_blueprints" = hidden_blueprints,
+		)
+
+	proc/as_list(datum/manufacture/M, mob/user)
+		return list(
+			"name" = M.name,
+			"item_paths" = M.item_paths,
+			"item_amounts" = M.item_amounts,
+			"item_outputs" = M.item_outputs,
+			"randomise_output" = M.randomise_output,
+			"create" = M.create,
+			"time" = M.time,
+			"category" = M.category,
+			"sanity_check_exemption" = M.sanity_check_exemption,
+			"apply_material" = M.apply_material,
+			"img" = getItemIcon(M.item_outputs[1], C = user.client)
+		)
+
 	attack_hand(mob/user)
 		if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
 			claim_free_resources()
+		src.ui_interact(user)
+
 		if(src.electrified)
 			if (!(status & NOPOWER || status & BROKEN))
 				if (src.shock(user, 33))
