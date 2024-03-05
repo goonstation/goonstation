@@ -8,23 +8,23 @@
 	item_state = "blankhb"
 	desc = "An interpretive holy scripture touting… just about whatever you want, really."
 	var/item_state_base = "blankhb"
-	var/open = FALSE
+	var/is_open = FALSE
 
 	attack_self(mob/user)
 		if (user.find_in_hand(src))
-			if (!src.open)
+			if (!src.is_open)
 				src.open(user)
 			else
 				src.close(user)
 			user.update_inhands()
 
 	proc/open (mob/user as mob)
-		src.open = TRUE
+		src.is_open = TRUE
 		icon_state = "[icon_state]open"
 		item_state = "[item_state]open"
 
 	proc/close (mob/user as mob)
-		src.open = FALSE
+		src.is_open = FALSE
 		icon_state = "[src.item_state_base]"
 		item_state = "[src.item_state_base]"
 
