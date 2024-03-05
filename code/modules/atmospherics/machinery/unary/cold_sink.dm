@@ -1,40 +1,37 @@
 /obj/machinery/atmospherics/unary/cold_sink
-	icon = 'icons/obj/atmospherics/cold_sink.dmi'
-	icon_state = "intact_off"
-	density = 1
-
 	name = "Cold Sink"
 	desc = "Cools gas when connected to pipe network"
-//
-	var/on = 0
+	icon = 'icons/obj/atmospherics/cold_sink.dmi'
+	icon_state = "intact_off"
+	density = TRUE
 
+	var/on = FALSE
+	/// What temperature are we changing the gas to.
 	var/current_temperature = T20C
+	/// How well do we change a mixture's temperature, essentially.
 	var/current_heat_capacity = 50000 //totally random
 
-	update_icon()
+/obj/machinery/atmospherics/unary/cold_sink/update_icon()
+	if(node)
+		icon_state = "intact_[src.on?("on"):("off")]"
+	else
+		icon_state = "exposed"
+		src.on = FALSE
 
-		if(node)
-			icon_state = "intact_[on?("on"):("off")]"
-		else
-			icon_state = "exposed"
+/obj/machinery/atmospherics/unary/cold_sink/process()
+	..()
+	if(!src.on)
+		return FALSE
 
-			on = 0
+	var/air_heat_capacity = HEAT_CAPACITY(src.air_contents)
+	var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
+	var/old_temperature = src.air_contents.temperature
 
-		return
+	if(combined_heat_capacity > 0)
+		var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature
+		air_contents.temperature = combined_energy/combined_heat_capacity
+		src.use_power(round(abs(old_temperature-air_contents.temperature)), ENVIRON) // watt per degree kelvin changed
 
-	process()
-		..()
-		if(!on)
-			return 0
-		var/air_heat_capacity = HEAT_CAPACITY(air_contents)
-		var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
-		var/old_temperature = air_contents.temperature
-
-		if(combined_heat_capacity > 0)
-			var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature
-			air_contents.temperature = combined_energy/combined_heat_capacity
-			use_power(round(abs(old_temperature-air_contents.temperature)), ENVIRON) // watt per degree kelvin changed
-
-		if(abs(old_temperature-air_contents.temperature) > 1 && network)
-			network.update = 1
-		return 1
+	if(abs(old_temperature-air_contents.temperature) > 1 KELVIN && src.network)
+		src.network.update = TRUE
+	return TRUE

@@ -8,7 +8,6 @@
 "c" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (SOUTHEAST)";
-	icon_state = "intact";
 	dir = 6;
 	layer = 3;
 	level = 2
@@ -36,7 +35,6 @@
 "g" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2;
 	tag = "icon-intact (SOUTHWEST)"
@@ -77,7 +75,6 @@
 "j" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact";
-	icon_state = "intact";
 	dir = 2;
 	layer = 3;
 	level = 2
@@ -108,7 +105,6 @@
 /area/space)
 "n" = (
 /obj/machinery/atmospherics/pipe/simple{
-	icon_state = "intact";
 	level = 2
 	},
 /obj/cable{
@@ -129,7 +125,6 @@
 "q" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8;
 	level = 2
 	},
@@ -138,7 +133,6 @@
 "r" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4;
 	level = 2
 	},
@@ -151,7 +145,6 @@
 "s" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 2;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2;
 	tag = "icon-intact"
@@ -165,7 +158,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold{
 	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4;
 	level = 2
 	},
@@ -182,7 +174,6 @@
 "w" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2;
 	tag = "icon-intact (NORTHEAST)"
@@ -192,7 +183,6 @@
 "x" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2
 	},
@@ -205,7 +195,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2
 	},
@@ -223,7 +212,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2
 	},
@@ -232,7 +220,6 @@
 "A" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2
 	},
@@ -241,7 +228,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
-	icon_state = "intact";
 	layer = 2.1;
 	level = 2;
 	pixel_y = 6;
@@ -252,13 +238,11 @@
 "B" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2;
 	pixel_y = 6
@@ -278,7 +262,6 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2;
 	pixel_x = 6;
@@ -289,14 +272,12 @@
 "E" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2;
 	tag = "icon-intact (SOUTHWEST)"
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2;
 	pixel_x = 6;
@@ -305,7 +286,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2;
 	pixel_x = -6;
@@ -322,7 +302,6 @@
 "F" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 2;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2;
 	pixel_x = -6;
@@ -331,7 +310,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 2;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2;
 	pixel_x = 6;
@@ -340,7 +318,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 2;
-	icon_state = "intact";
 	layer = 2.11;
 	level = 2;
 	tag = "icon-intact"

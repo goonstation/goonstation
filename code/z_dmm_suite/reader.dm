@@ -180,6 +180,8 @@ dmm_suite
 				for(var/atomModel in splittext(models, comma_delim))
 					var bracketPos = findtext(atomModel, "{")
 					var atomPath = text2path(copytext(atomModel, 1, bracketPos))
+					if(!atomPath)
+						stack_trace("Attempted to load invalid type [copytext(atomModel, 1, bracketPos)]!")
 					var/list/attributes
 					if(bracketPos)
 						attributes = new()

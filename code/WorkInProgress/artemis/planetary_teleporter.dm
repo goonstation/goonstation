@@ -50,8 +50,8 @@
 			if(target)
 				busy = 1
 				flick("lrport1", src)
-				playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
-				playsound(target, 'sound/machines/lrteleport.ogg', 60, 1)
+				playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
+				playsound(target, 'sound/machines/lrteleport.ogg', 60, TRUE)
 
 				if(istype(target, /turf/simulated/wall))
 					var/turf/simulated/wall/W = target
@@ -73,8 +73,8 @@
 			if(target)
 				busy = 1
 				flick("lrport1", src)
-				playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
-				playsound(target, 'sound/machines/lrteleport.ogg', 60, 1)
+				playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
+				playsound(target, 'sound/machines/lrteleport.ogg', 60, TRUE)
 				for(var/atom/movable/M in target)
 					if(M.anchored) continue
 					animate_teleport(M)
@@ -150,8 +150,8 @@
 		if(target)
 			busy = 1
 			flick("lrport1", my_teleporter)
-			playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
-			playsound(target, 'sound/machines/lrteleport.ogg', 60, 1)
+			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
+			playsound(target, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			for(var/atom/movable/M in target)
 				if(M.anchored) continue
 				animate_teleport(M)

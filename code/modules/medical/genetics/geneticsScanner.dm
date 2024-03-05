@@ -51,7 +51,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 	mob_flip_inside(mob/user)
 		..(user)
 		if (prob(33))
-			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
+			user.show_text(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]."))
 			src.togglelock(1)
 
 
@@ -89,19 +89,19 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0
 		if (src.occupant)
-			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
+			boutput(M, SPAN_NOTICE("<B>The scanner is already occupied!</B>"))
 			return 0
 		if(ismobcritter(target))
-			boutput(M, "<span class='alert'><B>The scanner doesn't support this body type.</B></span>")
+			boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
 			return 0
 		if(!iscarbon(target) )
-			boutput(M, "<span class='alert'><B>The scanner supports only carbon based lifeforms.</B></span>")
+			boutput(M, SPAN_ALERT("<B>The scanner supports only carbon based lifeforms.</B>"))
 			return 0
 		if (src.occupant)
-			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
+			boutput(M, SPAN_NOTICE("<B>The scanner is already occupied!</B>"))
 			return 0
 		if (src.locked)
-			boutput(M, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
+			boutput(M, SPAN_ALERT("<B>You need to unlock the scanner first.</B>"))
 			return 0
 
 		.= 1
@@ -146,7 +146,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		if (!isalive(user) || iswraith(user))
 			return
 		if (src.locked)
-			boutput(user, "<span class='alert'><b>The scanner door is locked!</b></span>")
+			boutput(user, SPAN_ALERT("<b>The scanner door is locked!</b>"))
 			return
 
 		src.go_out()
@@ -157,15 +157,15 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 			return
 
 		if (src.occupant)
-			boutput(user, "<span class='alert'><B>The scanner is already occupied!</B></span>")
+			boutput(user, SPAN_ALERT("<B>The scanner is already occupied!</B>"))
 			return
 
 		if (src.locked)
-			boutput(usr, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
+			boutput(usr, SPAN_ALERT("<B>You need to unlock the scanner first.</B>"))
 			return
 
 		if(!iscarbon(G.affecting))
-			boutput(user, "<span class='notice'><B>The scanner supports only carbon based lifeforms.</B></span>")
+			boutput(user, SPAN_NOTICE("<B>The scanner supports only carbon based lifeforms.</B>"))
 			return
 
 		var/mob/living/L = user
@@ -189,7 +189,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		if (!isalive(usr))
 			return
 		if (usr == src.occupant)
-			boutput(usr, "<span class='alert'><b>You can't reach the scanner lock from the inside.</b></span>")
+			boutput(usr, SPAN_ALERT("<b>You can't reach the scanner lock from the inside.</b>"))
 			return
 		src.togglelock()
 		return
@@ -200,12 +200,12 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 			src.locked = 0
 			usr.visible_message("<b>[usr]</b> unlocks the scanner.")
 			if (src.occupant)
-				boutput(src.occupant, "<span class='alert'>You hear the scanner's lock slide out of place.</span>")
+				boutput(src.occupant, SPAN_ALERT("You hear the scanner's lock slide out of place."))
 		else
 			src.locked = 1
 			usr.visible_message("<b>[usr]</b> locks the scanner.")
 			if (src.occupant)
-				boutput(src.occupant, "<span class='alert'>You hear the scanner's lock click into place.</span>")
+				boutput(src.occupant, SPAN_ALERT("You hear the scanner's lock click into place."))
 
 		// Added (Convair880).
 		if (src.occupant)
@@ -320,11 +320,11 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 				if (params["color3"])
 					src.customization_third_color = sanitize_color(params["color3"], fixColors)
 				if (params["style1"])
-					src.customization_first = find_style_by_name(params["style1"])
+					src.customization_first = find_style_by_name(params["style1"], usr.client)
 				if (params["style2"])
-					src.customization_second = find_style_by_name(params["style2"])
+					src.customization_second = find_style_by_name(params["style2"], usr.client)
 				if (params["style3"])
-					src.customization_third = find_style_by_name(params["style3"])
+					src.customization_third = find_style_by_name(params["style3"], usr.client)
 				if (params["apply"] || params["cancel"])
 					if (params["apply"])
 						src.copy_to_target()
@@ -336,8 +336,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		src.preview?.add_client(user?.client)
 
 		if (!genetek_hair_styles.len)
-			var/list/datum/customization_style/customization_types = concrete_typesof(/datum/customization_style)
-			for (var/datum/customization_style/styletype as anything in customization_types)
+			for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(user.client))
 				var/datum/customization_style/CS = new styletype
 				genetek_hair_styles += CS.name
 

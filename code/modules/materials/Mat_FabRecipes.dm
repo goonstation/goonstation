@@ -615,7 +615,7 @@
 			newObj.set_loc(getOutputLocation(owner))
 
 /datum/matfab_recipe/thermocouple
-	name = "Themocouple"
+	name = "Thermocouple"
 	desc = "For use in a Thermo Electric Generator."
 	category = "Tools"
 
@@ -653,7 +653,7 @@
 
 /datum/matfab_recipe/cell_large
 	name = "Large energy cell"
-	desc = "A large enery cell, often used in APCs or cyborgs."
+	desc = "A large energy cell, often used in APCs or cyborgs."
 	category = "Tools"
 
 	New()

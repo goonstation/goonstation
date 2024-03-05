@@ -34,9 +34,11 @@ var/datum/job_controller/job_controls
 			for (var/A in concrete_typesof(/datum/job/special)) src.special_jobs += new A(src)
 		job_creator = new /datum/job/created(src)
 		//Add special daily variety job
-		var/variety_job_path = text2path("/datum/job/daily/[lowertext(time2text(world.realtime,"Day"))]")
-		if (variety_job_path)
-			src.staple_jobs += new variety_job_path(src)
+		for (var/datum/job/daily/variety_job_path as anything in concrete_typesof(/datum/job/daily))
+			if (initial(variety_job_path.day) == time2text(world.realtime,"Day"))
+				src.staple_jobs += new variety_job_path(src)
+			else
+				src.hidden_jobs += new variety_job_path(src)
 
 		for (var/datum/job/J in src.staple_jobs)
 			// Cull any of those nasty null jobs from the category heads
@@ -58,27 +60,27 @@ var/datum/job_controller/job_controls
 		dat += "<b><u>Job Controls</u></b><HR>"
 		dat += "<b>Command & Security Jobs</b><BR>"
 		for(var/datum/job/command/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		for(var/datum/job/security/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		dat += "<BR>"
 		dat += "<b>Research Jobs</b><BR>"
 		for(var/datum/job/research/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		dat += "<BR>"
 		dat += "<b>Engineering Jobs</b><BR>"
 		for(var/datum/job/engineering/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		dat += "<BR>"
 		dat += "<b>Civilian Jobs</b><BR>"
 		for(var/datum/job/civilian/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		dat += "<BR>"
 		dat += "<b>Special Jobs</b><BR>"
 		for(var/datum/job/special/JOB in src.special_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		for(var/datum/job/created/JOB in src.special_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a>"
 			dat += " <a href='byond://?src=\ref[src];RemoveJob=\ref[JOB]'>(Remove)</A><BR>"
 		dat += "<BR>"
 		if (src.allow_special_jobs)
@@ -205,7 +207,7 @@ var/datum/job_controller/job_controls
 			var/list/alljobs = src.staple_jobs | src.special_jobs
 			var/datum/job/JOB = locate(href_list["RemoveJob"]) in alljobs
 			if (!istype(JOB,/datum/job/created/))
-				boutput(usr, "<span class='alert'><b>Removing integral jobs is not allowed. Bad for business, y'know.</b></span>")
+				boutput(usr, SPAN_ALERT("<b>Removing integral jobs is not allowed. Bad for business, y'know.</b>"))
 				return
 			message_admins("Admin [key_name(usr)] removed special job [JOB.name]")
 			logTheThing(LOG_ADMIN, usr, "removed special job [JOB.name]")
@@ -221,6 +223,11 @@ var/datum/job_controller/job_controls
 			src.job_config()
 
 		if(href_list["JobCreator"])
+			savefile_fix(usr.client)
+			src.job_creator()
+
+		if(href_list["Edit"])
+			src.job_creator = locate(href_list["Edit"])
 			savefile_fix(usr.client)
 			src.job_creator()
 
@@ -904,8 +911,11 @@ var/datum/job_controller/job_controls
 				match_check = find_job_in_controller_by_string(src.job_creator.name)
 			catch
 				;
+			if (match_check == src.job_creator)
+				boutput(usr, SPAN_ALERT("<b>This job already exists. All is well.</b>"))
+				return
 			if (match_check)
-				boutput(usr, "<span class='alert'><b>A job with this name already exists. It cannot be created.</b></span>")
+				boutput(usr, SPAN_ALERT("<b>A job with this name already exists. It cannot be created.</b>"))
 				return
 			else
 				var/datum/job/created/JOB = new /datum/job/created(src)
@@ -956,7 +966,7 @@ var/datum/job_controller/job_controls
 		if(href_list["Save"])
 			if (!src.check_user_changed())
 				src.savefile_save(usr.client, (isnum(text2num(href_list["Save"])) ? text2num(href_list["Save"]) : 1))
-				boutput(usr, "<span class='notice'><b>Job saved to Slot [text2num(href_list["Save"])].</b></span>")
+				boutput(usr, SPAN_NOTICE("<b>Job saved to Slot [text2num(href_list["Save"])].</b>"))
 			src.job_creator()
 
 		if(href_list["Load"])
@@ -964,7 +974,7 @@ var/datum/job_controller/job_controls
 				if (!src.savefile_load(usr.client, (isnum(text2num(href_list["Load"])) ? text2num(href_list["Load"]) : 1)))
 					alert(usr, "You do not have a job saved in this slot.")
 				else
-					boutput(usr, "<span class='notice'><b>Job loaded from Slot [text2num(href_list["Load"])].</b></span>")
+					boutput(usr, SPAN_NOTICE("<b>Job loaded from Slot [text2num(href_list["Load"])].</b>"))
 			src.job_creator()
 
 		if(href_list["SaveLoad"])
@@ -980,13 +990,14 @@ var/datum/job_controller/job_controls
 				alert(usr, "Could not find a savefile with that ckey!.")
 			src.job_creator()
 
-/proc/find_job_in_controller_by_string(var/string, var/staple_only = 0)
+///Soft supresses crash on failing to find a job
+/proc/find_job_in_controller_by_string(var/string, var/staple_only = 0, var/soft = FALSE, var/case_sensitive = TRUE)
 	RETURN_TYPE(/datum/job)
 	if (!string || !istext(string))
 		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
 		return null
 	var/list/excluded_strings = list("Special Respawn","Custom Names","Everything Except Assistant",
-	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker", "MODE", "Ghostdrone")
+	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker", "MODE", "Ghostdrone", "Animal")
 	#ifndef MAP_OVERRIDE_MANTA
 	excluded_strings += "Communications Officer"
 	#endif
@@ -997,21 +1008,22 @@ var/datum/job_controller/job_controls
 		return null
 	var/list/results = list()
 	for (var/datum/job/J in job_controls.staple_jobs)
-		if (J.name == string || (string in J.alias_names))
+		if (J.match_to_string(string, case_sensitive))
 			results += J
 	if (!staple_only)
 		for (var/datum/job/J in job_controls.special_jobs)
-			if (J.name == string || (string in J.alias_names))
+			if (J.match_to_string(string, case_sensitive))
 				results += J
 		for (var/datum/job/J in job_controls.hidden_jobs)
-			if (J.name == string || (string in J.alias_names))
+			if (J.match_to_string(string, case_sensitive))
 				results += J
 	if(length(results) == 1)
 		return results[1]
 	else if(length(results) > 1)
 		stack_trace("Multiple jobs share the name '[string]'!")
 		return results[1]
-	CRASH("No job found with name '[string]'!")
+	if (!soft)
+		CRASH("No job found with name '[string]'!")
 
 /proc/find_job_in_controller_by_path(var/path)
 	if (!path || !ispath(path) || !istype(path,/datum/job/))

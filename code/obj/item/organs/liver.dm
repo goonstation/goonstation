@@ -4,10 +4,11 @@
 	desc = "Ew, this thing is just the wurst."
 	organ_holder_name = "liver"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 3
 	icon = 'icons/obj/items/organs/liver.dmi'
 	icon_state = "liver"
 	failure_disease = /datum/ailment/disease/liver_failure
+	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING
+	region = SUBCOSTAL
 
 	on_life(var/mult = 1)
 		if (!..())
@@ -17,7 +18,10 @@
 		return 1
 
 	on_broken(var/mult = 1)
-		donor.take_toxin_damage(2*mult, 1)
+		var/damage = 2 * mult
+		if (src.donor.hasStatus("dialysis"))
+			damage /= 3
+		donor.take_toxin_damage(damage, TRUE)
 
 	disposing()
 		if (holder)
@@ -43,7 +47,7 @@ TYPEINFO(/obj/item/organ/liver/cyber)
 	desc = "A fancy robotic liver to replace one that someone's lost!"
 	icon_state = "cyber-liver"
 	// item_state = "heart_robo1"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
@@ -68,9 +72,9 @@ TYPEINFO(/obj/item/organ/liver/cyber)
 			else
 				donor.reagents.remove_reagent("ethanol", 5 * mult)
 				if(prob(20))
-					boutput(donor, "<span class='alert'>You feel painfully sober.</span>")
+					boutput(donor, SPAN_ALERT("You feel painfully sober."))
 				else if(prob(25)) //20% total
-					boutput(donor, "<span class='alert'>You feel a burning in your liver!</span>")
+					boutput(donor, SPAN_ALERT("You feel a burning in your liver!"))
 					src.take_damage(2 * mult, 2 * mult, 0)
 		return 1
 

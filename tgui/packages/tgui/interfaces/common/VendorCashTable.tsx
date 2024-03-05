@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { Table, Button } from '../../components';
+import { Button, Table } from '../../components';
 
 interface VendorCashTableProps {
   cardname: string,

@@ -11,8 +11,8 @@
 	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
 			logTheThing(LOG_STATION, user, "cut the don't-cut-this wire and got ghosted/disconnected as a result.")
-			//boutput(user, "<span class='alert'>You snip the ca</span>")
-			user.visible_message("[user] nearly snips the cable with \the [W], but suddenly freezes in place just before it cuts!", "<span class='alert'>You snip the ca</span>")
+			//boutput(user, SPAN_ALERT("You snip the ca"))
+			user.visible_message("[user] nearly snips the cable with \the [W], but suddenly freezes in place just before it cuts!", SPAN_ALERT("You snip the ca"))
 			var/client/C = user.client
 			user.ghostize()
 			del(C)
@@ -44,7 +44,8 @@
 	density = 0
 	opacity = 0
 	icon = null
-	plane = PLANE_HUD - 1
+	plane = PLANE_HUD
+	layer = -420
 	maptext = ""
 
 
@@ -65,7 +66,7 @@
 			applies++
 		wait++
 		src.gen = generation
-		src.maptext = "<span class='c vm ps2p ol'><span style='color: #ffff00'>[updates]</span>\n<span style='color: #00ffff'>[applies]</span>\n<span class='pixel'>[src.gen]</span></span>"
+		src.maptext = "<span class='c vm ps2p ol'><span style='color: #ffff00'>[updates]</span>\n<span style='color: #00ffff'>[applies]</span>\n[SPAN_PIXEL("[src.gen]")]</span>"
 		src.color = null;
 		animate(src, color = "#ffffff", time = 15, flags = ANIMATION_END_NOW)
 		animate(color = "#999999", time = 2)
@@ -316,7 +317,7 @@
 		if (score == -1)
 			return ..()
 
-		boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
+		boutput(user, SPAN_NOTICE("[src] mulches up [W]."))
 		user.u_equip(W)
 		W.dropped(user)
 		mulch_item(W, score)
@@ -396,19 +397,19 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!isliving(user))
-			boutput(user, "<span class='alert'>Excuse me you are dead, get your gross dead hands off that!</span>")
+			boutput(user, SPAN_ALERT("Excuse me you are dead, get your gross dead hands off that!"))
 			return
 		if (BOUNDS_DIST(user, src) > 0)
-			boutput(user, "<span class='alert'>You need to move closer to [src] to do that.</span>")
+			boutput(user, SPAN_ALERT("You need to move closer to [src] to do that."))
 			return
 		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
-			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
+			boutput(user, SPAN_ALERT("[O] is too far away to load into [src]!"))
 			return
 
 		var/score = 0
 		if (get_item_value(O) != -1)
 			var/MT = start_scoring()
-			user.visible_message("<span class='notice'>[user] begins quickly stuffing things into [src]!</span>")
+			user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing things into [src]!"))
 			var/staystill = user.loc
 
 			for(var/obj/item/P in view(1,user))
@@ -421,7 +422,7 @@
 				update_score(MT, score)
 				sleep(0.1 SECONDS)
 
-			boutput(user, "<span class='notice'>You finish stuffing things into [src]!</span>")
+			boutput(user, SPAN_NOTICE("You finish stuffing things into [src]!"))
 			finish_scoring(MT)
 		else ..()
 
@@ -456,7 +457,7 @@
 					qdel(I)
 
 			for (var/atom/S in gunsim)
-				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy) || istype(S, /mob/living/critter))
+				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery) || istype(S, /obj/decal) || istype(S, /obj/fluid) || istype(S, /mob/living/carbon/human/tdummy) || istype(S, /mob/living/critter))
 					qdel(S)
 
 
@@ -538,7 +539,6 @@
 	icon_state = "clowkey"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "nothing"
-	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	force = 0
@@ -712,7 +712,7 @@
 		if (src.last_count != runtime_count)
 			src.last_count = runtime_count
 			animate_storage_rustle(src)
-			playsound(src, 'sound/mksounds/gotitem.ogg', 33, 0)
+			playsound(src, 'sound/mksounds/gotitem.ogg', 33, FALSE)
 			src.maptext = "<span class='ps2p sh vb c'><span style='font-size: 12px;'>[runtime_count]</span>\nruntimes</span>"
 			src.maptext_x = -100
 			src.maptext_width = 232
@@ -732,7 +732,7 @@
 		if (src.last_count != harddel_count)
 			src.last_count = harddel_count
 			animate_storage_rustle(src)
-			playsound(src, 'sound/mksounds/gotitem.ogg', 33, 0)
+			playsound(src, 'sound/mksounds/gotitem.ogg', 33, FALSE)
 			src.maptext = "<span class='ps2p sh vb c'><span style='font-size: 12px;'>[harddel_count]</span>\nharddels</span>"
 			src.maptext_x = -100
 			src.maptext_width = 232
@@ -745,7 +745,8 @@
 	icon = null
 	anchored = ANCHORED_ALWAYS
 	density = 0
-	plane = PLANE_HUD - 1
+	plane = PLANE_HUD
+	layer = -420
 
 	var/datum/monitored = null
 	var/monitored_var = null
@@ -1053,6 +1054,8 @@
 				desc = "A digital readout of how long the shift has been so far."
 				maptext_prefix = "<span class='c xfont ol'>"
 				maptext_suffix = "</span>"
+				plane = PLANE_DEFAULT
+				layer = 420
 
 				New()
 					..()
@@ -1247,6 +1250,23 @@
 			monitored_var = "clones"
 			maptext_prefix = "<span class='c pixel sh'>Clones:\n<span class='vga'>"
 
+		hydro_produce
+			name = "produce counter"
+			desc = "The number of produce produced by Botany."
+			monitored_var = "hydro_produce"
+			maptext_prefix = "<span class='c pixel sh'>Produce Harvested:\n<span class='vga'>"
+
+		hydro_harvests
+			name = "harvest counter"
+			desc = "The number of times Botany has harvested stuff."
+			monitored_var = "hydro_harvests"
+			maptext_prefix = "<span class='c pixel sh'>Harvests:\n<span class='vga'>"
+
+		opened_mail
+			name = "opened mail counter"
+			desc = "The number of times someone has opened their mail."
+			monitored_var = "mail_opened"
+			maptext_prefix = "<span class='c pixel sh'>Mail opened:\n<span class='vga'>"
 
 		last_death
 			name = "last death monitor"
@@ -1435,7 +1455,8 @@
 		src.maptext_x = -100
 		src.maptext_height = 64
 		src.maptext_width = 232
-		src.plane = 100
+		src.plane = PLANE_HUD
+		src.layer = 420
 		src.anchored = ANCHORED_ALWAYS
 		src.mouse_opacity = 1
 
@@ -1455,7 +1476,8 @@
 		src.maptext_x = -100
 		src.maptext_height = 64
 		src.maptext_width = 232
-		src.plane = 100
+		src.plane = PLANE_HUD
+		src.layer = 420
 		src.anchored = ANCHORED_ALWAYS
 		src.mouse_opacity = 1
 		src.maptext = {"<div class='c pixel sh' style="background: #00000080;"><strong>-- Welcome to Goonstation! --</strong>
@@ -1477,7 +1499,8 @@ Read the rules, don't grief, and have fun!</div>"}
 		src.maptext_width = 320
 		src.maptext_x = -(320 / 2) + 16
 		src.maptext_height = 48
-		src.plane = 100
+		src.plane = PLANE_HUD
+		src.layer = 420
 		src.set_text("")
 
 	disposing()
@@ -1695,7 +1718,8 @@ Other Goonstation servers:[serverList]</span>"})
 	density = 0
 	opacity = 0
 	icon = null
-	plane = PLANE_HUD - 1
+	plane = PLANE_HUD
+	layer = -420
 	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
 	maptext = ""
 	var/gib_time = 60
@@ -1790,3 +1814,163 @@ Other Goonstation servers:[serverList]</span>"})
 				victim.gib()
 
 			qdel(src)
+
+
+
+/obj/admin_spacebux_store
+	name = "admin spacebux store setup object"
+	desc = "An admin can click on this to set stuff up."
+	density = 1
+	anchored = 1
+	icon = 'icons/mob/inhand/hand_general.dmi'
+	icon_state = "DONGS"
+	var/tmp/set_up = FALSE
+	var/tmp/copy_mode = FALSE
+	var/tmp/thing_name = null
+	var/tmp/type_to_spawn = null
+	var/tmp/atom/thing_to_copy = null
+	var/tmp/price = 0
+	var/tmp/limit_per_player = 0
+	var/tmp/limit_total = 0
+	var/tmp/number_purchased = 0
+	var/tmp/obj/maptext_junk/price_text = null
+	var/tmp/obj/maptext_junk/quantity_text = null
+	var/tmp/list/purchaser_ckeys = list()
+
+	get_desc()
+		if (set_up)
+			. += "<br>Total purchases: [src.number_purchased] purchased by [purchaser_ckeys.len] player\s (total: [src.number_purchased * src.price] Spacebux)"
+
+	attack_hand(mob/user)
+		if (!set_up)
+			if (!isadmin(user))
+				boutput(user, SPAN_ALERT("You're no admin! Get your dirty hands off this!"))
+				return
+
+			var/copyOrType = alert(user, "Sell copies of a target, or new instances of a type?", "Whatcha sellin'?", "Copies", "Type")
+			if (copyOrType == "Copies")
+				// copy
+				alert(user, "Click on the thing you want to sell copies of.")
+				var/atom/thing = pick_ref(user)
+				if(!(isobj(thing) || ismob(thing)))
+					boutput(user, SPAN_ALERT("It has to be an obj or mob, sorry!"))
+					return
+
+				copy_mode = TRUE
+				src.thing_to_copy = thing
+				src.appearance = thing.appearance
+				src.thing_name = thing.name
+
+			else
+
+				alert(user, "Click on something for the store to copy the appearance of (the actual item you're selling comes after this; you might have to varedit the store later)")
+				var/atom/thing = pick_ref(user)
+				if(!(isobj(thing) || ismob(thing)))
+					boutput(user, SPAN_ALERT("It has to be an obj or mob, sorry!"))
+					return
+
+				// copy the appearance
+				src.appearance = thing.appearance
+				src.thing_name = thing.name
+
+				var/objpath = get_one_match(input(user, "Type in (part of) a path to spawn:", "Type path", "[thing.type]"), /atom)
+				copy_mode = FALSE
+				src.type_to_spawn = objpath
+
+			src.price = max(0, input(user, "How much does one cost?", "Spacebux Price", 500) as num)
+			src.limit_total = max(0, input(user, "How many can be sold? (0=infinite)", "Quantity", 0) as num)
+			src.limit_per_player = max(0, input(user, "How many can one player buy? (0=infinite)", "Quantity", 0) as num)
+
+			src.name = "[price > 0 ? "spacebux shop" : "dispenser"] - [src.thing_name]"
+			src.desc = "A little shop where you can buy \a [src.thing_name]. Each one costs [price] spacebux."
+
+			src.price_text = new()
+			src.price_text.set_loc(src)
+			src.price_text.maptext_width = 132
+			src.price_text.maptext_x = -50
+			src.price_text.maptext_y = 34
+			src.price_text.maptext = "<span class='c vb sh xfont'>[price > 0 ? price : "FREE"]</span>"
+			src.vis_contents += src.price_text
+			src.price_text.appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | KEEP_APART | PIXEL_SCALE
+
+			if (src.limit_total)
+				src.quantity_text = new()
+				src.quantity_text.set_loc(src)
+				src.vis_contents += src.quantity_text
+				src.quantity_text.appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | KEEP_APART | PIXEL_SCALE
+				src.update_quantity()
+
+			src.set_up = TRUE
+
+			animate(src, pixel_y = 0 + 8,  time = 2 SECONDS, loop = -1, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+			animate(pixel_y = 0, time = 2 SECONDS, loop = -1, easing = SINE_EASING)
+
+		else
+			// it has been set up so we can do stuff here
+
+			// Check if this can actually be bought
+			// This also outputs the message to (user) as to why they can't
+			if (!src.can_this_person_buy_it(user))
+				return FALSE
+
+			// Are we actually buying this?
+			if (src.price)
+				// Do we really wanna buy it?
+				if (tgui_alert(user, "Purchase \a [src.thing_name] for [src.price] Spacebux?", "Buy it?", list("Yes", "No"), 10 SECONDS) != "Yes")
+					// If no, abort
+					return
+
+				// Check if this can actually be bought, again
+				// This is here because of a race condition when none are left:
+				// Player 1   click -> prompt -------------------------> buy (x-1)
+				// Player 2               click -> prompt ---> buy (x0)
+				if (!src.can_this_person_buy_it(user))
+					return FALSE
+
+				user.client.add_to_bank(-src.price)
+
+			logTheThing(LOG_DIARY, user, "purchased [src.thing_name] for [src.price] spacebux.")
+
+			if (!src.purchaser_ckeys[user.client.ckey])
+				src.purchaser_ckeys[user.client.ckey] = 0
+
+			src.number_purchased++
+			src.purchaser_ckeys[user.client.ckey]++
+			src.update_quantity()
+			playsound(src, 'sound/misc/cashregister.ogg', 33, FALSE)
+
+			var/atom/new_instance = null
+			var/turf/T = get_turf(user)
+			if (src.copy_mode && src.thing_to_copy)
+				new_instance = semi_deep_copy(src.thing_to_copy, T)
+			else
+				new_instance = new src.type_to_spawn(T)
+
+			// Try to put it in their hand if it's an item
+			if (istype(new_instance, /obj/item))
+				user.put_in_hand_or_drop(new_instance)
+
+		return
+
+
+	// TRUE: yes you can buy it  FALSE: no
+	proc/can_this_person_buy_it(mob/user)
+		// Do we have any left to sell?
+		if (limit_total && number_purchased >= limit_total)
+			boutput(user, SPAN_ALERT("There's no more left to buy..."))
+			return FALSE
+
+		// Are we limiting how many people can buy?
+		if (limit_per_player && (src.purchaser_ckeys[user.client.ckey] && src.purchaser_ckeys[user.client.ckey] >= limit_per_player))
+			boutput(user, SPAN_ALERT("You've reached the limit that you can buy."))
+			return FALSE
+
+		if (src.price && !user.client.bank_can_afford(src.price))
+			boutput(user, SPAN_ALERT("Not enough Spacebux to purchase."))
+			return FALSE
+		return TRUE
+
+	proc/update_quantity()
+		if (!src.quantity_text) return
+		src.quantity_text.maptext = "<span class='r sh pixel' style='font-size: 5px;[(limit_total - number_purchased) == 0 ? " color: red;" : ""]'>x[limit_total - number_purchased]</span>"
+		return

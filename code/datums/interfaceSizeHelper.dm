@@ -26,11 +26,14 @@
 				"browserassets/js/interfaceSizeHelper.js"
 			))
 
-		var/html = grabResource(src.htmlFile)
-		html = replacetext(html, "holderRefHere", "\ref[src]")
-		html = replacetext(html, "interfaceHere", src.interface)
-		html = replacetext(html, "dataPropHere", src.dataProp)
+		var/html = src.get_html()
 		src.owner.Browse(html, "window=[src.window];titlebar=0;can_close=0;can_resize=0;border=0")
+
+	proc/get_html()
+		. = grabResource(src.htmlFile)
+		. = replacetext(., "holderRefHere", "\ref[src]")
+		. = replacetext(., "interfaceHere", src.interface)
+		. = replacetext(., "dataPropHere", src.dataProp)
 
 	//tells the interface to recompute properties
 	proc/update()

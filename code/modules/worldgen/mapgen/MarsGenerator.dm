@@ -1,17 +1,24 @@
 //the random offset applied to square coordinates, causes intermingling at biome borders
  #define MARS_BIOME_RANDOM_SQUARE_DRIFT 2
 
+
+/datum/biome/mars
+	turf_type = /turf/unsimulated/floor/setpieces/martian
+
+	flora_types = list(/obj/machinery/light/beacon=10)
+	flora_density = 2
+	minimum_flora_distance = 14
+
 /datum/biome/mars/duststorm
 	turf_type = /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
-	flora_types = list(/obj/machinery/light/beacon=10)
-	flora_density = 0.8
-
 /datum/biome/mars/martian_area
-	turf_type = /turf/unsimulated/floor/setpieces/martian/station_duststorm
-
 	fauna_types = list(/mob/living/critter/martian=50, /mob/living/critter/martian/soldier=10, /mob/living/critter/martian/mutant=1, /mob/living/critter/martian/initiate=5, /mob/living/critter/martian/warrior=10)
 	fauna_density = 1
+	minimum_fauna_distance = 3
+
+/datum/biome/mars/martian_area/duststorm
+	turf_type = /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
 /datum/biome/mars/martian_rock
 	turf_type = /turf/unsimulated/wall/setpieces/martian/auto
@@ -24,6 +31,39 @@
 	var/list/possible_biomes = list(
 	BIOME_LOW_HEAT = list(
 		BIOME_LOW_HUMIDITY = /datum/biome/mars/martian_area,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mars/martian_rock,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mars,
+		BIOME_HIGH_HUMIDITY = /datum/biome/mars
+		),
+	BIOME_LOWMEDIUM_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/mars,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mars/martian_rock,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mars/martian_rock,
+		BIOME_HIGH_HUMIDITY = /datum/biome/mars
+		),
+	BIOME_HIGHMEDIUM_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/mars,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mars,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mars/martian_rock,
+		BIOME_HIGH_HUMIDITY = /datum/biome/mars
+		),
+	BIOME_HIGH_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/mars,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mars,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mars,
+		BIOME_HIGH_HUMIDITY = /datum/biome/mars/martian_area
+		)
+	)
+	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
+	var/perlin_zoom = 65
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mars
+	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/mars
+
+/datum/map_generator/mars_generator/duststorm
+	///2D list of all biomes based on heat and humidity combos.
+	possible_biomes = list(
+	BIOME_LOW_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/mars/martian_area/duststorm,
 		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mars/martian_rock,
 		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mars/duststorm,
 		BIOME_HIGH_HUMIDITY = /datum/biome/mars/duststorm
@@ -44,13 +84,9 @@
 		BIOME_LOW_HUMIDITY = /datum/biome/mars/duststorm,
 		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mars/duststorm,
 		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mars/duststorm,
-		BIOME_HIGH_HUMIDITY = /datum/biome/mars/martian_area
+		BIOME_HIGH_HUMIDITY = /datum/biome/mars/martian_area/duststorm
 		)
 	)
-	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
-	var/perlin_zoom = 65
-	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mars
-	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/mars
 
  ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/mars_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -121,7 +157,7 @@
 					random_brute_damage(jerk, 20, checkarmor=TRUE) // Allow armor to resist
 					jerk.do_disorient(stamina_damage = 100, weakened = 3 SECONDS, disorient = 5 SECOND)
 					if(prob(50))
-						playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 50, 1)
+						playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 50, TRUE)
 						boutput(jerk, pick("Dust gets caught in your eyes!","The wind blows you off course!","Debris pierces through your skin!"))
 
 

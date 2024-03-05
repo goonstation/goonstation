@@ -224,7 +224,7 @@ TYPEINFO(/obj/item/mine)
 		if (!src || !istype(src))
 			return
 
-		fireflash_sm(get_turf(src), 3, 3000, 500)
+		fireflash_melting(get_turf(src), 3, 3000, 500)
 		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
 
 /obj/item/mine/stun
@@ -292,7 +292,7 @@ TYPEINFO(/obj/item/mine/gibs)
 		if (!src || !istype(src))
 			return
 
-		src.visible_message("<span class='alert'>[src] bursts[pick(" like an overripe melon!", " like an impacted bowel!", " like a balloon filled with blood!", "!", "!")]</span>")
+		src.visible_message(SPAN_ALERT("[src] bursts[pick(" like an overripe melon!", " like an impacted bowel!", " like a balloon filled with blood!", "!", "!")]"))
 		gibs(src.loc)
 		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 

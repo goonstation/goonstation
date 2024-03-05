@@ -47,7 +47,7 @@ proc/is_music_playing()
 
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [uploaded_sound.channel]")
 			if (src.djmode || src.non_admin_dj)
-				boutput(C, "<span class=\"medal\"><b>[admin_key] played:</b></span> <span class='notice'>[S]</span>")
+				boutput(C, "[SPAN_MEDAL("<b>[admin_key] played:</b>")][SPAN_NOTICE(" [S]")]")
 		dj_panel.move_admin_sound_channel()
 
 /client/proc/play_music_real(S as sound, var/freq as num)
@@ -75,7 +75,7 @@ proc/is_music_playing()
 			var/client_vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 
 			if (src.djmode || src.non_admin_dj)
-				boutput(C, "<span class=\"medal\"><b>[admin_key] played (your volume: [client_vol ? "[client_vol]" : "muted"]):</b></span> <span class='notice'>[S]</span>")
+				boutput(C, "[SPAN_MEDAL("<b>[admin_key] played (your volume: [client_vol ? "[client_vol]" : "muted"]):</b>")][SPAN_NOTICE(" [S]")]")
 
 			if (!client_vol)
 				continue
@@ -139,7 +139,7 @@ proc/is_music_playing()
 
 	var/client/adminC
 	for (var/client/C in clients)
-		if (C.key == data["key"])
+		if (C.ckey == data["admin_ckey"])
 			adminC = C
 
 	SPAWN(0)
@@ -155,7 +155,7 @@ proc/is_music_playing()
 				var/show_other_key = 0
 				if (adminC.stealth || adminC.alt_key)
 					show_other_key = 1
-				boutput(C, "<span class=\"medal\"><b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [ ismuted ? "muted" : vol ]):</b></span> <span class='notice'>[data["title"]] ([data["duration"]])</span>")
+				boutput(C, "[SPAN_MEDAL("<b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [ ismuted ? "muted" : vol ]):</b>")][SPAN_NOTICE("[data["title"]] ([data["duration_human"]])")]")
 
 			if (ismuted) //bullshit BYOND 0 is not null fuck you
 				continue
@@ -170,22 +170,22 @@ proc/is_music_playing()
 	if (adminC)
 		logTheThing(LOG_ADMIN, adminC, "loaded remote music: [data["file"]] ([data["filesize"]])")
 		logTheThing(LOG_DIARY, adminC, "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
-		message_admins("[key_name(adminC)] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
+		message_admins("[key_name(adminC)] loaded remote music: [data["title"]] ([data["duration_human"]] / [data["filesize"]])")
 	else
-		logTheThing(LOG_ADMIN, data["key"], "loaded remote music: [data["file"]] ([data["filesize"]])")
-		logTheThing(LOG_DIARY, data["key"], "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
-		message_admins("[data["key"]] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
+		logTheThing(LOG_ADMIN, data["admin_ckey"], "loaded remote music: [data["file"]] ([data["filesize"]])")
+		logTheThing(LOG_DIARY, data["admin_ckey"], "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
+		message_admins("[data["admin_ckey"]] loaded remote music: [data["title"]] ([data["duration_human"]] / [data["filesize"]])")
 	return 1
 
 /client/verb/change_volume(channel_name as anything in audio_channel_name_to_id)
 	var/channel_id = audio_channel_name_to_id[channel_name]
 	if(isnull(channel_id))
 		alert(usr, "Invalid channel.")
-	var/vol = input("Goes from 0-100. Default is [getDefaultVolume(channel_id) * 100]\n[src.getVolumeChannelDescription(channel_id)]", \
+	var/vol = input("Goes from 0-200. Default is [getDefaultVolume(channel_id) * 100]\n[src.getVolumeChannelDescription(channel_id)]", \
 	 "[capitalize(channel_name)] Volume", src.getRealVolume(channel_id) * 100) as num
-	vol = clamp(vol, 0, 100)
+	vol = clamp(vol, 0, 200)
 	src.setVolume(channel_id, vol/100 )
-	boutput(usr, "<span class='notice'>You have changed [channel_name] Volume to [vol].</span>")
+	boutput(usr, SPAN_NOTICE("You have changed [channel_name] Volume to [vol]."))
 
 // for giving non-admins the ability to play music
 /client/proc/non_admin_dj(S as sound)
@@ -193,7 +193,7 @@ proc/is_music_playing()
 	set name = "Play Music"
 
 	if (src.play_music_real(S))
-		boutput(src, "<span class='notice'>Loading music [S]...</span>")
+		boutput(src, SPAN_NOTICE("Loading music [S]..."))
 
 /client/verb/stop_the_music()
 	set category = "Commands"
@@ -250,33 +250,21 @@ proc/is_music_playing()
 		src.verbs += /client/verb/stop_all_sounds
 
 /client/proc/play_youtube_audio()
-	if (!config.youtube_audio_key)
-		alert("You don't have access to the youtube audio converter")
-		return 0
-
 	var/video = input("Input the Youtube video information\nEither the full URL e.g. https://www.youtube.com/watch?v=145RCdUwAxM\nOr just the video ID e.g. 145RCdUwAxM", "Play Youtube Audio") as null|text
 	if (!video)
 		return
 
-	// Fetch via HTTP from goonhub
-	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_GET, "http://yt.goonhub.com/index.php?server=[config.server_id]&key=[src.key]&video=[video]&auth=[config.youtube_audio_key]", "", "")
-	request.begin_async()
-	UNTIL(request.is_complete())
-	var/datum/http_response/response = request.into_response()
-
-	if (response.errored || !response.body)
-		boutput(src, "<span class='bold' class='notice'>Something went wrong with the youtube thing! Yell at Wire.</span>")
-		logTheThing(LOG_DEBUG, null, "<b>Youtube Error</b>: No response from server with video: <b>[video]</b>")
-		logTheThing(LOG_DIARY, null, "Youtube Error: No response from server with video: [video]", "debug")
-		return
-
-	var/data = json_decode(response.body)
-	if (data["error"])
-		boutput(src, "<span class='bold' class='notice'>Error returned from youtube server thing: [data["error"]].</span>")
+	try
+		var/datum/apiRoute/remoteMusic/playRemoteMusic = new
+		playRemoteMusic.buildBody(video, roundId, src.ckey)
+		apiHandler.queryAPI(playRemoteMusic)
+	catch (var/exception/e)
+		var/datum/apiModel/Error/error = e.name
+		boutput(src, "<span class='bold' class='notice'>Error returned from youtube server thing: [error.message].</span>")
 		return
 
 	// prevent radio station from interrupting us
-	EXTEND_COOLDOWN(global, "music", 2 MINUTES) // TODO: use data from the request as duration instead
+	// Wire note: This essentially means "extend the duration by the time we think it will take the API to download the song and get back to us"
+	EXTEND_COOLDOWN(global, "music", 30 SECONDS)
 
 	boutput(src, "<span class='bold' class='notice'>Youtube audio loading started. This may take some time to play and a second message will be displayed when it finishes.</span>")

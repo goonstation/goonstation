@@ -9,11 +9,13 @@
 	var/time = 30
 	var/timing = FALSE
 	var/last_tick = 0
-	var/const/max_time = 300
+	var/const/max_time = 300 //this is in seconds, don't use time defines here
 
 	New()
 		..()
 		START_TRACKING
+		src.maptext_y += 24
+		src.maptext_x -= 1
 
 	disposing()
 		..()
@@ -169,29 +171,42 @@
 	. = list("A remote control switch for a door.")
 
 	if(src.timing)
-		var/second = src.time % 60
-		var/minute = (src.time - second) / 60
-		. += "<span class='alert'>Time Remaining: <b>[(minute ? text("[minute]:") : null)][second]</b></span>"
+		. += SPAN_ALERT("Time Remaining: <b>[src.get_time_left()]</b>")
 	else
-		. += "<span class='alert'>There is no time set.</span>"
+		. += SPAN_ALERT("There is no time set.")
 
 /obj/machinery/door_timer/process()
 	..()
 	if (src.timing)
 		if (!last_tick) last_tick = TIME
-		var/passed_time = round(max(round(TIME - last_tick), 10) / 10)
-		if (src.time > 0)
-			src.time -= passed_time
-		else
+		// i have no idea why this was here. just subtract the time between ticks?????
+		var/passed_time = (TIME - last_tick) / 10 // round(max(round(TIME - last_tick), 10) / 10)
+		src.time -= passed_time
+		if (src.time <= 0)
 			alarm()
 			src.time = 0
 			src.timing = FALSE
 			last_tick = 0
 		src.UpdateIcon()
+		update_maptext()
 		last_tick = TIME
 	else
 		last_tick = 0
 	return
+
+/obj/machinery/door_timer/proc/update_maptext()
+	if (src.status & (NOPOWER|BROKEN) || !src.timing || src.time <= 0)
+		// if broke, or not timing, or time is expired
+		src.maptext = ""
+	else
+		src.maptext = "<span class='sh pixel c' style='font-size: 5px; color: #ff0;'>[src.get_time_left()]</span>"
+
+/obj/machinery/door_timer/proc/get_time_left()
+	if (src.time <= 0)
+		return "0:00"
+	else
+		return "[round(src.time / 60 % 60)]:[add_zero(round(src.time) % 60, 2)]"
+
 
 /obj/machinery/door_timer/power_change()
 	src.UpdateIcon()
@@ -203,6 +218,8 @@
 		return
 	if (src.status & (NOPOWER|BROKEN))
 		return
+
+	src.obj_speak("Time expired. Unlocking...")
 
 	for_by_tcl(M, /obj/machinery/door/window/brigdoor)
 		if (!IN_RANGE(M, src, 30))
@@ -225,7 +242,7 @@
 			if (B.locked)
 				B.locked = 0
 				B.UpdateIcon()
-				B.visible_message("<span class='notice'>[B.name] unlocks automatically.</span>")
+				B.visible_message(SPAN_NOTICE("[B.name] unlocks automatically."))
 
 	tgui_process.update_uis(src)
 	src.UpdateIcon()
@@ -291,6 +308,10 @@
 
 		if ("toggle-timing")
 			if (src.timing == FALSE)
+				// the timer is starting
+				// set the last time to now
+				src.last_tick = TIME
+				src.obj_speak("Timer set to [src.get_time_left()].")
 				for_by_tcl(M, /obj/machinery/door/window/brigdoor)
 					if (!IN_RANGE(M, src, 10))
 						continue
@@ -298,6 +319,8 @@
 						M.close() //close the cell door up when the timer starts.
 						break
 			else
+				// the timer is being turned off
+				src.obj_speak("Timer cancelled.")
 				for_by_tcl(M, /obj/machinery/door/window/brigdoor)
 					if (!IN_RANGE(M, src, 10))
 						continue
@@ -307,9 +330,9 @@
 
 			src.timing = !src.timing
 			logTheThing(LOG_STATION, usr, "[src.timing ? "starts" : "stops"] a door timer: [src] [log_loc(src)].")
-
 			src.add_fingerprint(usr)
 			src.UpdateIcon()
+			src.update_maptext()
 			return TRUE
 
 		if ("activate-flasher")

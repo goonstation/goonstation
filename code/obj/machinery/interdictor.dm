@@ -108,7 +108,7 @@
 
 	attack_hand(mob/user)
 		if(!emagged && !src.allowed(user))
-			boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
+			boutput(user, SPAN_ALERT("Engineering clearance is required to operate the interdictor's locks."))
 			return
 		if(!ON_COOLDOWN(src, "maglocks", src.maglock_cooldown))
 			if(anchored)
@@ -134,9 +134,9 @@
 					if(intcap.charge >= (intcap.maxcharge * 0.7) && !src.canInterdict)
 						src.start_interdicting()
 				else
-					boutput(user, "<span class='alert'>An interdictor is already active within range.</span>")
+					boutput(user, SPAN_ALERT("An interdictor is already active within range."))
 		else
-			boutput(user, "<span class='alert'>The interdictor's magnetic locks were just toggled and can't yet be toggled again.</span>")
+			boutput(user, SPAN_ALERT("The interdictor's magnetic locks were just toggled and can't yet be toggled again."))
 
 	attackby(obj/item/W, mob/user)
 		if(ispulsingtool(W))
@@ -147,7 +147,7 @@
 				return
 		else if(istype(W, /obj/item/card/id))
 			if(!emagged && !src.check_access(W))
-				boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
+				boutput(user, SPAN_ALERT("Engineering clearance is required to operate the interdictor's locks."))
 				return
 			else if(!ON_COOLDOWN(src, "maglocks", src.maglock_cooldown))
 				if(anchored)
@@ -173,13 +173,13 @@
 						if(intcap.charge >= (intcap.maxcharge * 0.7) && !src.canInterdict)
 							src.start_interdicting()
 					else
-						boutput(user, "<span class='alert'>Cannot activate interdictor - another field is already active within operating bounds.</span>")
+						boutput(user, SPAN_ALERT("Cannot activate interdictor - another field is already active within operating bounds."))
 		else
 			..()
 
 	examine()
 		. = ..()
-		. += "\n <span class='notice'>The interdictor's internal capacitor is currently at [src.intcap.charge] of [src.intcap.maxcharge] units.</span>"
+		. += "\n [SPAN_NOTICE("The interdictor's internal capacitor is currently at [src.intcap.charge] of [src.intcap.maxcharge] units.")]"
 
 	Exited(Obj, newloc)
 		. = ..()
@@ -257,7 +257,7 @@
 	return 1
 
 
-/obj/machinery/interdictor/process()
+/obj/machinery/interdictor/process(mult)
 	var/doupdateicon = 1 //avoids repeating icon updates, might be goofy
 	if (status & BROKEN)
 		return
@@ -282,7 +282,23 @@
 			doupdateicon = 0
 			src.start_interdicting()
 		if(src.canInterdict)
+			var/extra_usage = 0
 			use_power(src.power_usage)
+			for (var/mob/living/mob in range(src.interdict_range, src)) //mob in range is optimized by byond, this is fine
+				mob.changeStatus("spatial_protection", 6 SECONDS * mult)
+				var/area/area = get_area(mob)
+				if (istype(area) && area.irradiated)
+					src.resisted = TRUE
+				if (!iscarbon(mob))
+					continue
+				if (src.interdict_class == ITDR_DEVERA) // Devera-class interdictor: prevents hygiene loss for mobs in range, which can accumulate to linger briefly
+					mob.changeStatus("devera_field", 6 SECONDS * mult)
+					extra_usage += 1
+				else if (src.interdict_class == ITDR_ZEPHYR) // Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
+					mob.changeStatus("zephyr_field", 6 SECONDS * mult)
+					extra_usage += 4
+			src.expend_interdict(extra_usage)
+
 	else
 		if(src.canInterdict)
 			doupdateicon = 0
@@ -497,11 +513,11 @@ TYPEINFO(/obj/item/interdictor_board)
 					continue
 				if (A.density)
 					canbuild = 0
-					boutput(user, "<span class='alert'>You can't build this here! [A] is in the way.</span>")
+					boutput(user, SPAN_ALERT("You can't build this here! [A] is in the way."))
 					break
 
 		if (canbuild)
-			boutput(user, "<span class='notice'>You empty the box of parts onto the floor.</span>")
+			boutput(user, SPAN_NOTICE("You empty the box of parts onto the floor."))
 			var/obj/frame = new /obj/interdictor_frame( get_turf(user) )
 			frame.fingerprints = src.fingerprints
 			frame.fingerprints_full = src.fingerprints_full
@@ -524,8 +540,8 @@ TYPEINFO(/obj/item/interdictor_board)
 		if(state == 4) //permit removal of cell before you install wires
 			src.state = 3
 			src.icon_state = "interframe-3"
-			boutput(user, "<span class='notice'>You remove \the [intcap] from the interdictor's cell compartment.</span>")
-			playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+			boutput(user, SPAN_NOTICE("You remove \the [intcap] from the interdictor's cell compartment."))
+			playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 			user.put_in_hand_or_drop(src.intcap)
 			src.intcap = null
@@ -554,8 +570,8 @@ TYPEINFO(/obj/item/interdictor_board)
 				if (istype(I, /obj/item/cell))
 					src.state = 4
 					src.icon_state = "interframe-4"
-					boutput(user, "<span class='notice'>You install \the [I] into the interdictor's cell compartment.</span>")
-					playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+					boutput(user, SPAN_NOTICE("You install \the [I] into the interdictor's cell compartment."))
+					playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 					user.u_equip(I)
 					I.set_loc(src)
@@ -568,7 +584,7 @@ TYPEINFO(/obj/item/interdictor_board)
 			if(4)
 				if (istype(I, /obj/item/cable_coil))
 					if (I.amount < 4)
-						boutput(user, "<span style=\"color:red\">You don't have enough cable to connect the components (4 required).</span>")
+						boutput(user, SPAN_ALERT("You don't have enough cable to connect the components (4 required)."))
 					else
 						actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 1 SECOND), user)
 				else
@@ -582,7 +598,7 @@ TYPEINFO(/obj/item/interdictor_board)
 				if (istype(I, /obj/item/sheet))
 					var/obj/item/sheet/sheets = I
 					if (sheets.amount < 4 || !(sheets.material.getMaterialFlags() & MATERIAL_METAL))
-						boutput(user, "<span style=\"color:red\">You don't have enough metal to install the outer covers (4 required).</span>")
+						boutput(user, SPAN_ALERT("You don't have enough metal to install the outer covers (4 required)."))
 					else
 						actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
 				else
@@ -599,7 +615,6 @@ TYPEINFO(/obj/item/interdictor_board)
 //transition 3 > 4 (battery installation) is done without an action bar as it's just putting a battery in a little slot
 //there is no visual difference between stage 5 and 6, both use stage 5 icon state
 /datum/action/bar/icon/interdictor_assembly
-	id = "interdictor_assembly"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 2 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -635,31 +650,31 @@ TYPEINFO(/obj/item/interdictor_board)
 	onStart()
 		..()
 		if (itdr.state == 0)
-			playsound(itdr, 'sound/items/Ratchet.ogg', 40, 1)
+			playsound(itdr, 'sound/items/Ratchet.ogg', 40, TRUE)
 		if (itdr.state == 1)
-			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 		if (itdr.state == 2)
-			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 		if (itdr.state == 4)
-			playsound(itdr, 'sound/items/Deconstruct.ogg', 40, 1)
+			playsound(itdr, 'sound/items/Deconstruct.ogg', 40, TRUE)
 		if (itdr.state == 5)
-			playsound(itdr, 'sound/items/Screwdriver.ogg', 30, 1)
+			playsound(itdr, 'sound/items/Screwdriver.ogg', 30, TRUE)
 		if (itdr.state == 6)
-			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 	onEnd()
 		..()
 		if (itdr.state == 0) //unassembled > no components
 			itdr.state = 1
 			itdr.icon_state = "interframe-1"
-			boutput(owner, "<span class='notice'>You assemble and secure the frame components.</span>")
-			playsound(itdr, 'sound/items/Ratchet.ogg', 40, 1)
+			boutput(owner, SPAN_NOTICE("You assemble and secure the frame components."))
+			playsound(itdr, 'sound/items/Ratchet.ogg', 40, TRUE)
 			itdr.desc = "A frame for a spatial interdictor. It's missing its mainboard."
 			return
 		if (itdr.state == 1) //no components > mainboard
 			itdr.state = 2
 			itdr.icon_state = "interframe-2"
-			boutput(owner, "<span class='notice'>You install the interdictor mainboard.</span>")
-			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			boutput(owner, SPAN_NOTICE("You install the interdictor mainboard."))
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 
 			var/mob/source = owner
 			source.u_equip(the_tool)
@@ -671,8 +686,8 @@ TYPEINFO(/obj/item/interdictor_board)
 		if (itdr.state == 2) //mainboard > mainboard and rod
 			itdr.state = 3
 			itdr.icon_state = "interframe-3"
-			boutput(owner, "<span class='notice'>You install the phase-control rod.</span>")
-			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			boutput(owner, SPAN_NOTICE("You install the phase-control rod."))
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 
 			var/mob/source = owner
 			source.u_equip(the_tool)
@@ -684,8 +699,8 @@ TYPEINFO(/obj/item/interdictor_board)
 		if (itdr.state == 4) //all components > all components and wired
 			itdr.state = 5
 			itdr.icon_state = "interframe-5"
-			boutput(owner, "<span class='notice'>You finish wiring together the interdictor's systems.</span>")
-			playsound(itdr, 'sound/items/Deconstruct.ogg', 40, 1)
+			boutput(owner, SPAN_NOTICE("You finish wiring together the interdictor's systems."))
+			playsound(itdr, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 			the_tool.amount -= 4
 			if (the_tool.amount < 1)
@@ -700,13 +715,13 @@ TYPEINFO(/obj/item/interdictor_board)
 		if (itdr.state == 5) //all components and wired > all components and secured
 			itdr.state = 6
 			itdr.icon_state = "interframe-5"
-			boutput(owner, "<span class='notice'>You finish securing the wire terminals. The internal systems are now fully installed.</span>")
-			playsound(itdr, 'sound/items/Screwdriver.ogg', 30, 1)
+			boutput(owner, SPAN_NOTICE("You finish securing the wire terminals. The internal systems are now fully installed."))
+			playsound(itdr, 'sound/items/Screwdriver.ogg', 30, TRUE)
 			itdr.desc = "A nearly-complete frame for a spatial interdictor. It's missing a casing."
 			return
 		if (itdr.state == 6)
-			boutput(owner, "<span class='notice'>You install a metal casing onto the interdictor, completing its construction.</span>")
-			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			boutput(owner, SPAN_NOTICE("You install a metal casing onto the interdictor, completing its construction."))
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 
 			//setting up for custom interdictor casing
 			var/obj/item/sheet/S = the_tool

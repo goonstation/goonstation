@@ -27,7 +27,7 @@
 	    <br>Now, if you still feel like you can do better, maybe it might be in your best interest to do some real Mixology and try your hand at discovering some of the drinks Nanotrasen doesn't want you to know about.
 	    <br>
 	    <br>Dragon's Breath: Spicy, alcoholic liquid firewater, fairly safe after new mixing regulations came into play but still has a very slight chance to instantly turn you to dust when drinking it.
-	    <br>Freeze: Liquid hypothermia, somehow extremely cold even if you heat it to 1000 Kelvin; like Dragon's Breath it has a very slight chance toruin your shift by turning you into an ice statue.
+	    <br>Freeze: Liquid hypothermia, somehow extremely cold even if you heat it to 1000 Kelvin; like Dragon's Breath it has a very slight chance to ruin your shift by turning you into an ice statue.
 	    <br>Grog: A pirate's disgusting dream, somehow perfectly safe to drink even with a PH level of 1 and a piratry level of over 9000.
 	    <br>Mutini: An odd drink of clashing chemicals. Gives you both horrific mutations and brain damage while curing it at the same time. A very good party starter.
 	    <br><hr>

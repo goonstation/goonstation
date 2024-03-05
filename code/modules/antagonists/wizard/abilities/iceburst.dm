@@ -23,7 +23,7 @@
 			if(isdead(M)) continue
 			count2++
 		if(!count2)
-			boutput(holder.owner, "Noone is in range!")
+			boutput(holder.owner, "No one is in range!")
 			return 1
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
@@ -31,20 +31,20 @@
 		..()
 
 		if(!holder.owner.wizard_spellpower(src))
-			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your spell is weak without a staff to focus it!"))
 
 		for (var/mob/living/M as mob in oview())
 			if(isdead(M)) continue
 			if (ishuman(M))
 				if (M.traitHolder.hasTrait("training_chaplain"))
-					boutput(holder.owner, "<span class='alert'>[M] has divine protection! The spell refuses to target [him_or_her(M)]!</span>")
+					boutput(holder.owner, SPAN_ALERT("[M] has divine protection! The spell refuses to target [him_or_her(M)]!"))
 					JOB_XP(M, "Chaplain", 2)
 					continue
 			if (iswizard(M))
-				boutput(holder.owner, "<span class='alert'>[M] has arcane protection! The spell refuses to target [him_or_her(M)]!</span>")
+				boutput(holder.owner, SPAN_ALERT("[M] has arcane protection! The spell refuses to target [him_or_her(M)]!"))
 				continue
 			else if(check_target_immunity( M ))
-				boutput(holder.owner, "<span class='alert'>[M] seems to be warded from the effects!</span>" )
+				boutput(holder.owner, SPAN_ALERT("[M] seems to be warded from the effects!") )
 				continue
 
 			playsound(holder.owner.loc, 'sound/effects/mag_iceburstlaunch.ogg', 25, 1, -1)
@@ -71,15 +71,15 @@
 								qdel (B)
 					step_to(A,M,0)
 					if (GET_DIST(A,M) == 0)
-						boutput(M, text("<span class='notice'>You are chilled by a burst of magical ice!</span>"))
-						M.visible_message("<span class='alert'>[M] is struck by magical ice!</span>")
+						boutput(M, SPAN_NOTICE("You are chilled by a burst of magical ice!"))
+						M.visible_message(SPAN_ALERT("[M] is struck by magical ice!"))
 						playsound(holder.owner.loc, 'sound/effects/mag_iceburstimpact.ogg', 25, 1, -1)
 						M.bodytemperature = 0
 						M.lastattacker = holder.owner
 						M.lastattackertime = world.time
 						qdel(A)
 						if(prob(40))
-							M.visible_message("<span class='alert'>[M] is frozen solid!</span>")
+							M.visible_message(SPAN_ALERT("[M] is frozen solid!"))
 							new /obj/icecube(M.loc, M)
 						return
 					sleep(0.5 SECONDS)
@@ -116,7 +116,7 @@
 
 			if (add_underlay)
 				src.underlays += iced
-			boutput(iced, "<span class='alert'>You are trapped within [src]!</span>") // since this is used in at least two places to trap people in things other than ice cubes
+			boutput(iced, SPAN_ALERT("You are trapped within [src]!")) // since this is used in at least two places to trap people in things other than ice cubes
 
 		if (iced) //apparently a blank ice cube spawns in adventure
 			iced.last_cubed = world.time
@@ -133,7 +133,7 @@
 		for(var/atom/movable/AM in src)
 			if(ismob(AM))
 				var/mob/M = AM
-				M.visible_message("<span class='alert'><b>[M]</b> breaks out of [src]!</span>","<span class='alert'>You break out of [src]!</span>")
+				M.visible_message(SPAN_ALERT("<b>[M]</b> breaks out of [src]!"),SPAN_ALERT("You break out of [src]!"))
 				M.last_cubed = world.time
 				UnregisterSignal(M, COMSIG_LIVING_LIFE_TICK)
 			AM.set_loc(src.loc)
@@ -176,7 +176,7 @@
 			takeDamage(1 * mult)
 
 	attack_hand(mob/user)
-		user.visible_message("<span class='combat'><b>[user]</b> kicks [src]!</span>", "<span class='notice'>You kick [src].</span>")
+		user.visible_message(SPAN_COMBAT("<b>[user]</b> kicks [src]!"), SPAN_NOTICE("You kick [src]."))
 		takeDamage(2)
 
 	bullet_act(var/obj/projectile/P)
@@ -198,7 +198,7 @@
 
 	mob_flip_inside(var/mob/user)
 		..(user)
-		user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
+		user.show_text(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]."))
 		src.takeDamage(6)
 
 	ex_act(severity)

@@ -221,7 +221,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			footballer.full_heal()
 
 		if (!ishuman(footballer))
-			boutput(M, "<span class='alert'>Something went wrong. dunno what. sorry. football machine broke.</span>")
+			boutput(M, SPAN_ALERT("Something went wrong. dunno what. sorry. football machine broke."))
 			return
 
 		if (is_new)

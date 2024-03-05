@@ -20,6 +20,7 @@
 // shuttle landmarks
 #define LANDMARK_SHUTTLE_CENTCOM "shuttle-centcom"
 #define LANDMARK_SHUTTLE_TRANSIT "shuttle-transit"
+#define LANDMARK_SHUTTLE_SOUND "shuttle-subwoofer"
 
 // nukies
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"
@@ -36,6 +37,7 @@
 #define LANDMARK_PIRATE "Pirate-Spawn"
 #define LANDMARK_PIRATE_FIRST_MATE "Pirate-First-Mate-Spawn"
 #define LANDMARK_PIRATE_CAPTAIN "Pirate-Captain-Spawn"
+#define LANDMARK_PIRATES_TELE "Priate-Tele"
 
 // Salvagers
 #define LANDMARK_SALVAGER "Salvager-Spawn"

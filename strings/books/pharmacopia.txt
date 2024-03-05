@@ -198,7 +198,7 @@
 		<h3>Mutadone</h3>
 		<div class ="mutadone">
 		<ul>
-			<li>Mutadone is an experimental bromide that can cure genetic abnomalities.
+			<li>Mutadone is an experimental bromide that can cure genetic abnormalities.
 		</div>
 		<br>
 		<hr>

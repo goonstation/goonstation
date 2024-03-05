@@ -382,7 +382,7 @@ Still reading? Good. I'm a member of the Syndicate, and I'm here to teach you ho
 >su -
 </div>
 <p>
-Will elevate your priveleges to administrator level. This will let you use the <i>ls</i> command in the root directory to view hidden system files and folders.<br>
+Will elevate your privleges to administrator level. This will let you use the <i>ls</i> command in the root directory to view hidden system files and folders.<br>
 It's possible to steal things like login credentials and session keys, enabling you to gain access as another user even if you're not authorized - and frame them for theft. <br>
 Unfortunately, the <i>su</i> command requires an administrator-level ID card. But this should not prove a challenge to a fellow agent.<br>
 <br>

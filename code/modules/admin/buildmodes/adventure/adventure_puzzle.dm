@@ -16,16 +16,16 @@
 
 	click_raw(var/atom/object, location, control, list/params)
 		if (!wizard)
-			boutput(usr, "<span class='alert'>No active wizard! Right click the adventure button to begin.</span>")
+			boutput(usr, SPAN_ALERT("No active wizard! Right click the adventure button to begin."))
 			return
 		if (params.Find("ctrl") && params.Find("shift") && params.Find("right"))
 			if (!params.Find("alt"))
 				if (istype(object, /obj/adventurepuzzle))
-					boutput(usr, "<span class='notice'>Decreased layer by 0.1.</span>")
+					boutput(usr, SPAN_NOTICE("Decreased layer by 0.1."))
 					var/obj/O = object
 					O.layer -= 0.1
 			else
-				boutput(usr, "<span class='notice'>Reset the layers of every adventure object on that turf.</span>")
+				boutput(usr, SPAN_NOTICE("Reset the layers of every adventure object on that turf."))
 				for (var/obj/adventurepuzzle/O in get_turf(src))
 					O.layer = initial(O.layer)
 			return
@@ -35,7 +35,7 @@
 		if (wizard.finished)
 			qdel(wizard)
 			wizard = null
-			boutput(usr, "<span class='notice'>The wizard is finished.</span>")
+			boutput(usr, SPAN_NOTICE("The wizard is finished."))
 
 	selected()
 		boutput(usr, {"<span class='notice'>Right click the button to select the type of adventure wizard.<br>

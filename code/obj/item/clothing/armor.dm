@@ -26,7 +26,6 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	name = "armor vest"
 	desc = "An armored vest that protects against some damage. Contains carbon fibres."
 	icon_state = "armorvest"
-	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
@@ -71,7 +70,6 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	name = "light armor vest"
 	desc = "A cheap armored vest that gives a little bit of protection."
 	icon_state = "armorvest-old"
-	uses_multiple_icon_states = 0
 	item_state = "armorvest-old"
 
 	setupProperties()
@@ -90,7 +88,6 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	name = "suicide bomb vest"
 	desc = "A makeshift mechanical vest set to trigger a payload when the user dies."
 	icon_state = "bombvest0"
-	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
 	body_parts_covered = TORSO
@@ -116,9 +113,9 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	examine()
 		. = ..()
 		if (src.payload)
-			. += "<span class='alert'>Looks like the payload is a [src.payload].</span>"
+			. += SPAN_ALERT("Looks like the payload is a [src.payload].")
 		else
-			. += "<span class='alert'>There doesn't appear to be a payload attached.</span>"
+			. += SPAN_ALERT("There doesn't appear to be a payload attached.")
 
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
@@ -126,7 +123,13 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		if (istype(W, /obj/item/chem_grenade/))
 			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 				var/obj/item/chem_grenade/CG = W
-				if (CG.stage == 2 && !CG.armed)
+				var/grenade_ready = TRUE
+				if(istype(CG, /obj/item/chem_grenade/custom))
+					//we want to only fit custom grenades if they are ready to be applied
+					var/obj/item/chem_grenade/custom/custom_grenade = CG
+					if (custom_grenade.stage != 2)
+						grenade_ready = FALSE
+				if (grenade_ready && !CG.armed)
 					user.u_equip(CG)
 					CG.set_loc(src)
 					src.grenade = CG
@@ -234,13 +237,13 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 			return
 		if (!isdead(wearer) || (wearer.suiciding && prob(60))) // Don't abuse suiciding.
-			wearer.visible_message("<span class='alert'><b>[wearer]'s suicide bomb vest clicks softly, but nothing happens.</b></span>")
+			wearer.visible_message(SPAN_ALERT("<b>[wearer]'s suicide bomb vest clicks softly, but nothing happens.</b>"))
 			return
 
 		if (!src.payload)
 			src.payload = "*unknown or null*"
 
-		wearer.visible_message("<span class='alert'><b>[wearer]'s suicide bomb vest clicks loudly!</b></span>")
+		wearer.visible_message(SPAN_ALERT("<b>[wearer]'s suicide bomb vest clicks loudly!</b>"))
 		message_admins("[key_name(wearer)]'s suicide bomb vest triggers (Payload: [src.payload]) at [log_loc(wearer)].")
 		logTheThing(LOG_BOMBING, wearer, "'s suicide bomb vest triggers (<b>Payload:</b> [src.payload])[src.payload == "beaker" ? " [log_reagents(src.beaker)]" : ""] at [log_loc(wearer)].")
 
@@ -291,11 +294,24 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	desc = "A suit of protective formal armor made for the station's captain."
 	icon_state = "caparmor"
 	item_state = "caparmor"
+	hides_from_examine = C_UNIFORM
 
 	setupProperties()
 		..()
 		setProperty("meleeprot", 7)
 		setProperty("rangedprot", 1.5)
+
+	centcomm
+		name = "commander's armor"
+		desc = "A suit of protective formal armor. It is made specifically for NanoTrasen commanders."
+		icon_state = "centcom"
+		item_state = "centcom"
+
+	centcommred
+		name = "commander's armor"
+		desc = "A suit of protective formal armor. It is made specifically for NanoTrasen commanders."
+		icon_state = "centcom-red"
+		item_state = "centcom-red"
 
 /obj/item/clothing/suit/armor/capcoat //old alt armour for the captain
 	name = "captain's coat"
@@ -311,6 +327,18 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.9)
 
+	centcomm //coat version of the centcom armour
+		name = "commander's coat"
+		desc = "A luxurious formal coat. It is specifically made for Nanotrasen commanders. It seems to be made out of some thermally resistant material."
+		icon_state = "centcoat"
+		item_state = "centcoat"
+
+	centcommred //for the red reward
+		name = "commander's coat"
+		desc = "A luxurious formal coat. It is specifically made for Nanotrasen commanders. It seems to be made out of some thermally resistant material."
+		icon_state = "centcoat-red"
+		item_state = "centcoat-red"
+
 /obj/item/clothing/suit/armor/hopcoat
 	name = "Head of Personnel's naval coat"
 	desc = "A rather well armored coat tailored in a traditional naval fashion."
@@ -323,37 +351,6 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		setProperty("coldprot", 35)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
-
-/obj/item/clothing/suit/armor/centcomm
-	name = "administrator's armor"
-	desc = "A suit of protective formal armor. It is made specifically for NanoTrasen commanders."
-	icon_state = "centcom"
-	item_state = "centcom"
-	setupProperties()
-		..()
-		setProperty("meleeprot", 7)
-		setProperty("rangedprot", 1.5)
-
-	red
-		icon_state = "centcom-red"
-		item_state = "centcom-red"
-
-/obj/item/clothing/suit/armor/centcommcoat //coat version of the centcom armour
-	name = "administator's coat"
-	desc = "A luxorious formal coat. It is specifically made for Nanotrasen commanders. It seems to be made out of some thermally resistant material."
-	icon_state = "centcoat"
-	item_state = "centcoat"
-	hides_from_examine = 0
-	setupProperties()
-		..()
-		setProperty("coldprot", 35)
-		setProperty("heatprot", 35)
-		setProperty("meleeprot", 4)
-		setProperty("rangedprot", 0.9)
-
-	red //for the red reward
-		icon_state = "centcoat-red"
-		item_state = "centcoat-red"
 
 /obj/item/clothing/suit/armor/pirate_captain_coat
 	name = "pirate captain's coat"
@@ -441,9 +438,12 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 /obj/item/clothing/suit/armor/NT
 	name = "armored nanotrasen jacket"
 	desc = "An armored jacket worn by NanoTrasen security commanders."
-	icon_state = "ntarmor_o"
-	item_state = "ntarmor"
-	coat_style = "ntarmor"
+	icon_state = "ntjacket_o"
+	item_state = "ntjacket"
+	coat_style = "ntjacket"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi' //someone moved the sprite!!
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 	body_parts_covered = TORSO
 	hides_from_examine = 0
 
@@ -488,7 +488,6 @@ TYPEINFO(/obj/item/clothing/suit/armor/NT_alt)
 	icon_state = "hos-cape"
 	item_state = "hos-cape"
 	hides_from_examine = 0
-	wear_layer = MOB_GLASSES_LAYER2
 	c_flags = ONBACK
 
 	setupProperties()

@@ -276,9 +276,9 @@ TYPEINFO(/obj/item/device/infra_sensor)
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span class='notice'>The infrared laser is now secured!</span>", 1)
+		user.show_message(SPAN_NOTICE("The infrared laser is now secured!"), 1)
 	else
-		user.show_message("<span class='notice'>The infrared laser is now unsecured!</span>", 1)
+		user.show_message(SPAN_NOTICE("The infrared laser is now unsecured!"), 1)
 	src.part1.b_stat = !(src.status)
 	src.add_fingerprint(user)
 	return

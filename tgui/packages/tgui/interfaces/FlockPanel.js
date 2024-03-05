@@ -6,7 +6,7 @@
  */
 
 import { useBackend, useLocalState } from "../backend";
-import { Tooltip, Button, Stack, Tabs, Icon, Box, Section, Dropdown } from "../components";
+import { Box, Button, Dropdown, Icon, Section, Stack, Tabs, Tooltip } from "../components";
 import { Window } from '../layouts';
 
 const FlockPartitions = (props, context) => {

@@ -50,7 +50,7 @@
 	var/darkmode = TRUE
 
 	var/tg_controls = 0
-	var/tg_layout = 0
+	var/tg_layout = null
 
 	var/use_chui = 1
 	var/use_chui_custom_frames = 1
@@ -237,10 +237,10 @@
 	..()
 
 	if (join_motd)
-		boutput(src, "<div class=\"motd\">[join_motd]</div>")
+		boutput(src, "<div class='motd'>[join_motd]</div>")
 
 	if (IsGuestKey(src.key))
-		if(!(!src.address || src.address == world.host)) // If you're a host or a developer locally, ignore this check.
+		if(!(!src.address || src.address == world.host || src.address == "127.0.0.1")) // If you're a host or a developer locally, ignore this check.
 			var/gueststring = {"
 							<!doctype html>
 							<html>
@@ -299,12 +299,12 @@
 			return
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
-	var/isbanned = checkBan(src.ckey, src.computer_id, src.address, record = 1)
+	var/list/checkBan = bansHandler.check(src.ckey, src.computer_id, src.address)
 
-	if (isbanned)
+	if (checkBan)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
 		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned", "access")
-		if (announce_banlogin) message_admins("<span class='internal'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
+		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])"))
 		var/banstring = {"
 							<!doctype html>
 							<html>
@@ -319,7 +319,7 @@
 								</head>
 								<body>
 									<h1>You have been banned.</h1>
-									<span class='banreason'>Reason: [isbanned].</span><br>
+									<span class='banreason'>Reason: [checkBan["message"]]</span><br>
 									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.<br>
 									<b>If you believe this ban was not meant for you then please appeal regardless of what the ban message or length says!</b>
 								</body>
@@ -332,6 +332,15 @@
 		return
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
+
+	if (!src.chatOutput.loaded)
+		//Load custom chat
+		SPAWN(-1)
+			src.chatOutput.start()
+
+	// Record a login, sets player.id, which is used by almost every future API call for a player
+	// So we need to do this early, and outside of a spawn
+	src.player.record_login()
 
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())
@@ -355,12 +364,7 @@
 	clients += src
 
 	SPAWN(0) // to not lock up spawning process
-		if (IsGuestKey(src.key))
-			src.has_contestwinner_medal = 0
-		else if (!config || !config.medal_hub || !config.medal_password)
-			src.has_contestwinner_medal = 0
-		else
-			src.has_contestwinner_medal = world.GetMedal("Too Cool", src.key, config.medal_hub, config.medal_password)
+		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
 
 	src.initSizeHelpers()
 
@@ -373,7 +377,6 @@
 	for(var/key in globalImages)
 		var/image/I = globalImages[key]
 		src << I
-
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - ok mostly done")
 
@@ -402,8 +405,8 @@
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 				//preferences.randomizeLook()
 				preferences.ShowChoices(src.mob)
-				src.mob.Browse(grabResource("html/tgControls.html"),"window=tgcontrolsinfo;size=600x400;title=TG Controls Help")
-				boutput(src, "<span class='alert'>Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!</span>")
+				tgui_alert(src, content_window = "tgControls", do_wait = FALSE)
+				boutput(src, SPAN_ALERT("Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!"))
 				//hey maybe put some 'new player mini-instructional' prompt here
 				//ok :)
 				is_newbie = 1
@@ -427,7 +430,7 @@
 			if (noir)
 				animate_fade_grayscale(src, 1)
 			preferences.savefile_load(src)
-			load_antag_tokens()
+			src.antag_tokens = src.player?.get_antag_tokens()
 			load_persistent_bank()
 
 #ifdef LIVE_SERVER
@@ -458,38 +461,26 @@
 			tgui_alert(src, "Hardware rendering is disabled. This may cause errors displaying lighting, manifesting as BIG WHITE SQUARES.\nPlease enable hardware rendering from the byond preferences menu.", "Potential Rendering Issue")
 
 		ircbot.event("login", src.key)
-#if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
-		src.verbs += /client/proc/cmd_rp_rules
-		if (istype(src.mob, /mob/new_player))
-			src.cmd_rp_rules()
-#endif
 		//Cloud data
-#ifdef LIVE_SERVER
-		if (cdn)
-			if(!cloud_available())
-				src.player.cloud_fetch()
-#else
-		// dev server, uses local save file to simulate clouddata
-		if (src.player.cloud_fetch()) // might needlessly reload, but whatever.
-#endif
-			if(cloud_available())
-				src.load_antag_tokens()
-				src.load_persistent_bank()
-				var/decoded = cloud_get("audio_volume")
-				if(decoded)
-					var/list/old_volumes = volumes.Copy()
-					volumes = json_decode(decoded)
-					for(var/i = length(volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
-						if(i - 1 == VOLUME_CHANNEL_EMOTE) // emote channel defaults to game volume
-							volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
-						else
-							volumes += old_volumes[i]
+		if (!src.player.cloudSaves.loaded)
+			src.player.cloudSaves.fetch()
+		src.antag_tokens = src.player?.get_antag_tokens()
+		src.load_persistent_bank()
+		var/decoded = src.player.cloudSaves.getData("audio_volume")
+		if(decoded)
+			var/list/old_volumes = volumes.Copy()
+			volumes = json_decode(decoded)
+			for(var/i = length(volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
+				if(i - 1 == VOLUME_CHANNEL_EMOTE) // emote channel defaults to game volume
+					volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
+				else
+					volumes += old_volumes[i]
 
-				// Show login notice, if one exists
-				src.show_login_notice()
+			// Show login notice, if one exists
+			src.show_login_notice()
 
-				// Set screen saturation
-				src.set_saturation(text2num(cloud_get("saturation")))
+			// Set screen saturation
+			src.set_saturation(text2num(src.player.cloudSaves.getData("saturation")))
 
 		src.mob.reset_keymap()
 
@@ -499,6 +490,12 @@
 		if(istype(src.mob, /mob/new_player))
 			var/mob/new_player/M = src.mob
 			M.new_player_panel() // update if tokens available
+
+#if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
+		src.verbs += /client/proc/cmd_rp_rules
+		if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10)
+			src.cmd_rp_rules()
+#endif
 
 	if(do_compid_analysis)
 		do_computerid_test(src) //Will ban yonder fucker in case they are prix
@@ -527,11 +524,6 @@
 		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
 		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
 		src.set_color(normalize_color_to_matrix("#AAAAAA"))
-
-	if (!src.chatOutput.loaded)
-		//Load custom chat
-		SPAWN(-1)
-			src.chatOutput.start()
 
 	logTheThing(LOG_DIARY, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
 
@@ -652,7 +644,7 @@
 				logTheThing(LOG_ADMIN, src.mob, "The following have the same [what]: [jointext(offenders_log, ", ")]")
 				logTheThing(LOG_DIARY, src.mob, "The following have the same [what]: [jointext(offenders_log, ", ")]", "access")
 			if(global.IP_alerts)
-				var/message = "<span class='alert'><B>Notice: </B></span><span class='internal'>The following have the same [what]: [jointext(offenders_message, ", ")]</span>"
+				var/message = "[SPAN_ALERT("<B>Notice:</B>")] [SPAN_INTERNAL("The following have the same [what]: [jointext(offenders_message, ", ")]")]"
 				if(isnull(message_who))
 					message_admins(message)
 				else
@@ -689,7 +681,6 @@
 		src.holder.dispose()
 		src.holder = null
 		src.clear_admin_verbs()
-		src.update_admins(null)
 		onlineAdmins -= src
 
 /client/proc/checkScreenAspect(list/params)
@@ -709,35 +700,10 @@
 
 /client/Command(command)
 	command = html_encode(command)
-	out(src, "<span class='alert'>Command \"[command]\" not recognised</span>")
-
-/client/proc/load_antag_tokens()
-	var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
-	if (!AT)
-		if( cloud_available() )
-			antag_tokens = cloud_get( "antag_tokens" ) ? text2num(cloud_get( "antag_tokens" )) : 0
-		return
-
-	var/ATtoken
-	AT[ckey] >> ATtoken
-	if (!ATtoken)
-		antag_tokens = cloud_get( "antag_tokens" ) ? text2num(cloud_get( "antag_tokens" )) : 0
-		return
-	else
-		antag_tokens = ATtoken
-	if( cloud_available() )
-		antag_tokens += text2num( cloud_get( "antag_tokens" ) || "0" )
-		var/failed = cloud_put( "antag_tokens", antag_tokens )
-		if( failed )
-			logTheThing(LOG_DEBUG, src, "Failed to store antag tokens in the ~cloud~: [failed]")
-		else
-			AT[ckey] << null
+	boutput(src, SPAN_ALERT("Command \"[command]\" not recognised"))
 
 /client/proc/set_antag_tokens(amt as num)
-	antag_tokens = amt
-	if( cloud_available() )
-		cloud_put( "antag_tokens", amt )
-		. = TRUE
+	src.player.set_antag_tokens(amt)
 	/*
 	var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
 	if (!AT) return
@@ -750,25 +716,16 @@
 
 
 /client/proc/load_persistent_bank()
-	persistent_bank_valid = cloud_available()
 
-	persistent_bank = cloud_get("persistent_bank") ? text2num(cloud_get("persistent_bank")) : FALSE
-
-	if(!persistent_bank && cloud_available())
-		logTheThing(LOG_DEBUG, src, "first cloud_get failed but cloud is available!")
-		persistent_bank += text2num( cloud_get("persistent_bank") || "0" )
-		var/failed = cloud_put( "persistent_bank", persistent_bank )
-		if(failed)
-			logTheThing(LOG_DEBUG, src, "Failed to store persistent cash in the ~cloud~: [failed]")
-
-	persistent_bank_item = cloud_get("persistent_bank_item")
-
-	if(!persistent_bank_item && cloud_available())
-		persistent_bank_item = cloud_get("persistent_bank_item")
-		var/failed = cloud_put( "persistent_bank_item", persistent_bank_item )
-		if(failed)
-			logTheThing(LOG_DEBUG, src, "Failed to store persistent bank item in the ~cloud~: [failed]")
-
+#ifdef BONUS_POINTS
+	persistent_bank = 99999999
+#else
+	if (!src.player.cloudSaves.loaded) return
+	var/cPersistentBank = src.player.cloudSaves.getData("persistent_bank")
+	persistent_bank = cPersistentBank ? text2num(cPersistentBank) : FALSE
+#endif
+	persistent_bank_valid = TRUE //moved down to below api call so if it runtimes it won't be considered valid
+	persistent_bank_item = src.player.cloudSaves.getData("persistent_bank_item")
 
 //MBC TODO : PERSISTENTBANK_VERSION_MIN, MAX FOR BANKING SO WE CAN WIPE AWAY EVERYONE'S HARD WORK WITH A SINGLE LINE OF CODE CHANGE
 // defines are already set, just do the checks here ok
@@ -777,17 +734,14 @@
 /client/proc/set_last_purchase(datum/bank_purchaseable/purchase)
 	if (!purchase || purchase == 0 || !purchase.carries_over)
 		persistent_bank_item = "none"
-		if( cloud_available() )
-			cloud_put( "persistent_bank_item", "none" )
+		src.player.cloudSaves.putData( "persistent_bank_item", "none" )
 	else
 		persistent_bank_item = purchase.name
-		if( cloud_available() )
-			cloud_put( "persistent_bank_item", persistent_bank_item )
+		src.player.cloudSaves.putData( "persistent_bank_item", persistent_bank_item )
 
 /client/proc/set_persistent_bank(amt as num)
 	persistent_bank = amt
-	if( cloud_available() )
-		cloud_put( "persistent_bank", amt )
+	src.player.cloudSaves.putData( "persistent_bank", amt )
 	/*
 	var/savefile/PB = LoadSavefile("data/PersistentBank.sav")
 	if (!PB) return
@@ -800,15 +754,14 @@
 		load_persistent_bank()
 		if(!persistent_bank_valid)
 			return
-	var/list/earnings = list((ckey) = list("persistent_bank" = list("command" = "add", "value" = amt)))
-	cloud_put_bulk(json_encode(earnings))
 	persistent_bank += amt
+	src.player.cloudSaves.putData("persistent_bank", persistent_bank)
 
 /client/proc/sub_from_bank(datum/bank_purchaseable/purchase)
 	add_to_bank(-purchase.cost)
 
 /client/proc/bank_can_afford(amt as num)
-	player.cloud_fetch_data_only()
+	player.cloudSaves.fetch()
 	load_persistent_bank()
 	var/new_bank_value = persistent_bank - amt
 	if (new_bank_value >= 0)
@@ -860,18 +813,19 @@ var/global/curr_day = null
 		var/cid = computer_id
 		SPAWN(0)
 			if (geoip_check(addr))
-				var/addData[] = new()
-				addData["ckey"] = ck
-				addData["compID"] = cid
-				addData["ip"] = addr
-				addData["reason"] = "Ban evader: computer ID collision." // haha get fucked
-				addData["akey"] = "Marquesas"
-				addData["mins"] = 0
 				var/slt = rand(600, 3000)
 				logTheThing(LOG_ADMIN, null, "Evasion geoip autoban triggered on [key], will execute in [slt / 10] seconds.")
 				message_admins("Autobanning evader [key] in [slt / 10] seconds.")
 				sleep(slt)
-				addBan(addData)
+				bansHandler.add(
+					"bot",
+					null,
+					ck,
+					cid,
+					addr,
+					"Ban evader: computer ID collision.",
+					FALSE
+				)
 
 /proc/geoip_check(var/addr)
 	set background = 1
@@ -913,10 +867,11 @@ var/global/curr_day = null
 	save.cd = "general"
 	joined_date = save["joined"]
 	jd_warning(joined_date)
+	. = save
 
 /client/verb/ping()
 	set name = "Ping"
-	boutput(usr, "<span class='hint'>Pong</span>")
+	boutput(usr, SPAN_HINT("Pong"))
 
 #ifdef RP_MODE
 /client/proc/cmd_rp_rules()
@@ -957,13 +912,13 @@ var/global/curr_day = null
 		src.mob.update_cursor()
 		A = promise.wait_for_value()
 	if(!A)
-		boutput(src, "<span class='alert'>No target selected.</span>")
+		boutput(src, SPAN_ALERT("No target selected."))
 		return
 	if(GET_DIST(src.mob, A) > 1 && !(src.holder || istype(src.mob, /mob/dead)))
-		boutput(src, "<span class='alert'>Target is too far away (it needs to be next to you).</span>")
+		boutput(src, SPAN_ALERT("Target is too far away (it needs to be next to you)."))
 		return
 	if(!src.holder && ON_COOLDOWN(src.player, "download_sprite", 5 SECONDS))
-		boutput(src, "<span class='alert'>Verb on cooldown for [time_to_text(ON_COOLDOWN(src.player, "download_sprite", 0))].</span>")
+		boutput(src, SPAN_ALERT("Verb on cooldown for [time_to_text(ON_COOLDOWN(src.player, "download_sprite", 0))]."))
 		return
 	var/icon/icon = getFlatIcon(A)
 	src << ftp(icon, "[ckey(A.name)]_[time2text(world.realtime,"YYYY-MM-DD")].png")
@@ -1018,7 +973,7 @@ var/global/curr_day = null
 				t = strip_html(t,500)
 			if (!( t ))
 				return
-			boutput(src.mob, "<span class='ahelp' class=\"bigPM\">Admin PM to-<b>[target] (Discord)</b>: [t]</span>")
+			boutput(src.mob, "<span class='ahelp bigPM'>Admin PM to-<b>[target] (Discord)</b>: [t]</span>")
 			logTheThing(LOG_AHELP, src, "<b>PM'd [target]</b>: [t]")
 			logTheThing(LOG_DIARY, src, "PM'd [target]: [t]", "ahelp")
 
@@ -1028,7 +983,12 @@ var/global/curr_day = null
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
+			ircmsg["previous_msgid"] = href_list["msgid"]
+			var/unique_message_id = md5("priv_msg_irc" + json_encode(ircmsg))
+			ircmsg["msgid"] = unique_message_id
 			ircbot.export_async("pm", ircmsg)
+
+			var/src_keyname = key_name(src.mob, 0, 0, additional_url_data="&msgid=[unique_message_id]")
 
 			//we don't use message_admins here because the sender/receiver might get it too
 			for (var/client/C)
@@ -1038,10 +998,10 @@ var/global/curr_day = null
 					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
-						boutput(K, "<span class='ahelp'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</span>")
+						boutput(K, SPAN_AHELP("<b>PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]"))
 
 		if ("priv_msg")
-			do_admin_pm(href_list["target"], usr) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
+			do_admin_pm(href_list["target"], usr, previous_msgid=href_list["msgid"]) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
 
 		if ("mentor_msg_irc")
 			if (!usr || !usr.client)
@@ -1052,7 +1012,7 @@ var/global/curr_day = null
 				t = strip_html(t, MAX_MESSAGE_LEN * 4, strip_newlines=FALSE)
 			if (!( t ))
 				return
-			boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+			boutput(src.mob, SPAN_MHELP("<b>MENTOR PM: TO [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]"))
 			logTheThing(LOG_MHELP, src, "<b>Mentor PM'd [target]</b>: [t]")
 			logTheThing(LOG_DIARY, src, "Mentor PM'd [target]: [t]", "admin")
 
@@ -1062,17 +1022,22 @@ var/global/curr_day = null
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
+			ircmsg["previous_msgid"] = href_list["msgid"]
+			var/unique_message_id = md5("mentor_msg_irc" + json_encode(ircmsg))
+			ircmsg["msgid"] = unique_message_id
 			ircbot.export_async("mentorpm", ircmsg)
 
+			var/src_keyname = key_name(src.mob, 0, 0, 1, additional_url_data="&msgid=[unique_message_id]")
+
 			//we don't use message_admins here because the sender/receiver might get it too
-			var/mentormsg = "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>"
+			var/mentormsg = SPAN_MHELP("<b>MENTOR PM: [src_keyname] <i class='icon-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]")
 			for (var/client/C)
 				if (C.can_see_mentor_pms() && C.key != usr.key)
 					if (C.holder)
 						if (C.player_mode && !C.player_mode_mhelp)
 							continue
 						else //Message admins
-							boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+							boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]"))
 					else //Message mentors
 						boutput(C, mentormsg)
 
@@ -1093,38 +1058,44 @@ var/global/curr_day = null
 				if (!src || !src.mob) //ZeWaka: Fix for null.client
 					return
 
-				if (src.holder)
-					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-					M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
-					boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
-				else
-					if (M.client && M.client.holder)
-						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
-						M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
-					else
-						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-						M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
-					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-
-				logTheThing(LOG_MHELP, src.mob, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
-				logTheThing(LOG_DIARY, src.mob, "Mentor PM'd [constructTarget(M,"diary")]: [t]", "admin")
-
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.mob && src ? src.key : ""
 				ircmsg["name"] = stripTextMacros(src.mob.real_name)
 				ircmsg["key2"] = (M != null && M.client != null && M.client.key != null) ? M.client.key : ""
 				ircmsg["name2"] = (M != null && M.real_name != null) ? stripTextMacros(M.real_name) : ""
 				ircmsg["msg"] = html_decode(t)
+				ircmsg["previous_msgid"] = href_list["msgid"]
+				var/unique_message_id = md5("mentor_msg" + json_encode(ircmsg))
+				ircmsg["msgid"] = unique_message_id
 				ircbot.export_async("mentorpm", ircmsg)
 
-				var/mentormsg = "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>"
+				var/src_keyname = key_name(src.mob, 0, 0, 1, additional_url_data="&msgid=[unique_message_id]")
+				var/target_keyname = key_name(M, 0, 0, 1, additional_url_data="&msgid=[unique_message_id]")
+
+				if (src.holder)
+					boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname]</b>: [SPAN_MESSAGE("[t]")]"))
+					M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
+					boutput(src.mob, SPAN_MHELP("<b>MENTOR PM: TO [target_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
+				else
+					if (M.client && M.client.holder)
+						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
+						M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
+					else
+						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname]</b>: [SPAN_MESSAGE("[t]")]"))
+						M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
+					boutput(usr, SPAN_MHELP("<b>MENTOR PM: TO [target_keyname]</b>: [SPAN_MESSAGE("[t]")]"))
+
+				logTheThing(LOG_MHELP, src.mob, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
+				logTheThing(LOG_DIARY, src.mob, "Mentor PM'd [constructTarget(M,"diary")]: [t]", "admin")
+
+				var/mentormsg = SPAN_MHELP("<b>MENTOR PM: [src_keyname] <i class='icon-arrow-right'></i> [target_keyname]</b>: [SPAN_MESSAGE("[t]")]")
 				for (var/client/C)
 					if (C.can_see_mentor_pms() && C.key != usr.key && (M && C.key != M.key))
 						if (C.holder)
 							if (C.player_mode && !C.player_mode_mhelp)
 								continue
 							else
-								boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+								boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target_keyname]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
 						else
 							boutput(C, mentormsg)
 
@@ -1146,7 +1117,7 @@ var/global/curr_day = null
 			ehjax.topic("main", href_list, src)
 
 		if("resourcePreloadComplete")
-			boutput(src, "<span class='notice'><b>Preload completed.</b></span>")
+			boutput(src, SPAN_NOTICE("<b>Preload completed.</b>"))
 			src.Browse(null, "window=resourcePreload")
 			return
 
@@ -1156,6 +1127,12 @@ var/global/curr_day = null
 
 	. = ..()
 	return
+
+/client/verb/open_link(link as text)
+	set name = ".openlink"
+	set hidden = TRUE
+	if(link)
+		src << link(link)
 
 /client/proc/mute(len = -1)
 	if (!src.ckey)
@@ -1175,77 +1152,11 @@ var/global/curr_day = null
 		return 0
 	return (src.ckey in muted_keys) && muted_keys[src.ckey]
 
-/// Sets a cloud key value pair and sends it to goonhub
-/client/proc/cloud_put(key, value)
-	return src.player.cloud_put(key, value)
-
-/// Returns some cloud data on the client
-/client/proc/cloud_get(key)
-	return src.player.cloud_get(key)
-
-/// Returns 1 if you can set or retrieve cloud data on the client
-/client/proc/cloud_available()
-	return src.player.cloud_available()
-
 /client/proc/message_one_admin(source, message)
 	if(!src.holder)
 		return
 	boutput(src, replacetext(replacetext(message, "%admin_ref%", "\ref[src.holder]"), "%client_ref%", "\ref[src]"))
 
-/proc/add_test_screen_thing()
-	var/client/C = input("For who", "For who", null) in clients
-	var/wavelength_shift = input("Shift wavelength bounds by <x> nm, should be in the range of -370 to 370", "Wavelength shift", 0) as num
-	if (wavelength_shift < -370 || wavelength_shift > 370)
-		boutput(usr, "<span class='admin'>Invalid value.</span>")
-		return
-	var/s_r = 0
-	var/s_g = 0
-	var/s_b = 0
-
-	// total range: 380 - 750 (range: 370nm)
-	// red: 570 - 750 (range: 180nm)
-	if (wavelength_shift < 0)
-		s_r = min(-wavelength_shift / 180 * 255, 255)
-	else if (wavelength_shift > 190)
-		s_r = min((wavelength_shift - 190) / 180 * 255, 255)
-	// green: 490 - 620 (range: 130nm)
-	if (wavelength_shift < -130)
-		s_g = min(-(wavelength_shift + 130) / 130 * 255, 255)
-	else if (wavelength_shift > 110)
-		s_g = min((wavelength_shift - 110) / 130 * 255, 255)
-	// blue: 380 - 500 (range: 120nm)
-	if (wavelength_shift < -250)
-		s_b = min(-(wavelength_shift + 250) / 120 * 255, 255)
-	else if (wavelength_shift > 0)
-		s_b = min(wavelength_shift / 120 * 255, 255)
-
-	var/subtr_color = rgb(s_r, s_g, s_b)
-
-	var/si_r = clamp(input("Red spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
-	var/si_g = clamp(input("Green spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
-	var/si_b = clamp(input("Blue spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
-
-	var/multip_color = rgb(si_r * 255, si_g * 255, si_b * 255)
-
-	var/atom/movable/screen/S = new
-	S.icon = 'icons/mob/whiteview.dmi'
-	S.blend_mode = BLEND_SUBTRACT
-	S.color = subtr_color
-	S.layer = HUD_LAYER - 0.2
-	S.screen_loc = "SOUTH,WEST"
-	S.mouse_opacity = 0
-
-	C.screen += S
-
-	var/atom/movable/screen/M = new
-	M.icon = 'icons/mob/whiteview.dmi'
-	M.blend_mode = BLEND_MULTIPLY
-	M.color = multip_color
-	M.layer = HUD_LAYER - 0.1
-	M.screen_loc = "SOUTH,WEST"
-	M.mouse_opacity = 0
-
-	C.screen += M
 
 /client/verb/apply_depth_shadow()
 	set hidden = 1
@@ -1257,18 +1168,14 @@ var/global/curr_day = null
 	set hidden = 1
 	set name = "toggle-parallax"
 
-#ifndef UNDERWATER_MAP
 	if ((winget(src, "menu.toggle_parallax", "is-checked") == "true") && parallax_enabled)
-		src.screen -= src.parallax_controller?.parallax_layers
+		qdel(src.parallax_controller)
 		src.parallax_controller = new(null, src)
 		src.mob?.register_parallax_signals()
 
 	else if (src.parallax_controller)
-		src.screen -= src.parallax_controller.parallax_layers
 		qdel(src.parallax_controller)
-		src.parallax_controller = null
 		src.mob?.unregister_parallax_signals()
-#endif
 
 /client/verb/apply_view_tint()
 	set hidden = 1
@@ -1285,8 +1192,8 @@ var/global/curr_day = null
 	var/s = input("Enter a saturation % from 50-150. Default is 100.", "Saturation %", 100) as num
 	s = clamp(s, 50, 150) / 100
 	src.set_saturation(s)
-	src.cloud_put("saturation", s)
-	boutput(usr, "<span class='notice'>You have changed your game saturation to [s * 100]%.</span>")
+	src.player.cloudSaves.putData("saturation", s)
+	boutput(usr, SPAN_NOTICE("You have changed your game saturation to [s * 100]%."))
 
 /client/proc/set_view_size(var/x, var/y)
 	//These maximum values make for a near-fullscreen game view at 32x32 tile size, 1920x1080 monitor resolution.

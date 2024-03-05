@@ -41,9 +41,9 @@ For fruit DynAssemblies see: fruithat.dm
 			if ((!multipart && (P.type in src.contents) || (multipart && multitypes && !(P.type in src.multitypes) ) && length(contents) >= 15)) //who really needs more than 15 parts
 				boutput(user, "You can't add any more of this type of part!")
 			else
-				boutput(user, "<span class='notice'>You begin adding \the [P.name] to \the [src.name].</span>")
+				boutput(user, SPAN_NOTICE("You begin adding \the [P.name] to \the [src.name]."))
 				if (!do_after(user, 5 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return ..()
 				else
 					user.drop_item()
@@ -71,7 +71,7 @@ For fruit DynAssemblies see: fruithat.dm
 			var/image/I = image(M.icon, M.icon_state)
 			I.pixel_x = rand(-6,6)
 			I.pixel_y = rand(-6,6)
-			I.layer += rand(0.25,0.75)
+			I.layer += randfloat(0.25,0.75)
 			if (usematerial)
 				if (M.material)
 					src.oldmat = M.material
@@ -83,7 +83,7 @@ For fruit DynAssemblies see: fruithat.dm
 		var/image/I = image(P.icon, P.icon_state)
 		I.pixel_x = rand(-6,6)
 		I.pixel_y = rand(-6,6)
-		I.layer += rand(0.25,0.75)
+		I.layer += randfloat(0.25,0.75)
 		if (usematerial)
 			I.color = P.color
 			I.alpha = P.alpha
@@ -121,7 +121,6 @@ For fruit DynAssemblies see: fruithat.dm
 /datum/action/bar/icon/dynassemblySecure //This is used when you are securing a dynassembly.
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "dynassSecure"
 	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/item/dynassembly/assembly
@@ -136,15 +135,15 @@ For fruit DynAssemblies see: fruithat.dm
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span class='notice'>[] begins securing \the [assembly].</span>", owner), 1)
+			O.show_message(SPAN_NOTICE("[owner] begins securing \the [assembly]."), 1)
 
 	onInterrupt(var/flag)
 		..()
-		boutput(owner, "<span class='alert'>You were interrupted!</span>")
+		boutput(owner, SPAN_ALERT("You were interrupted!"))
 
 	onEnd()
 		..()
-		user.visible_message("<span class='notice'><b>[user.name]</b> drops the materials in their hands to secure the assembly.</span>")
+		user.visible_message(SPAN_NOTICE("<b>[user.name]</b> drops the materials in their hands to secure the assembly."))
 		if(assembly.loc == user)
 			user.drop_item(assembly)
 		assembly.createproduct(user)
@@ -153,7 +152,6 @@ For fruit DynAssemblies see: fruithat.dm
 /datum/action/bar/icon/dynassemblyUnsecure //This is used when you are unsecuring a dynassembly.
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "dynassUnsecure"
 	icon = 'icons/obj/items/tools/wrench.dmi'
 	icon_state = "wrench"
 	var/obj/item/dynassembly/assembly
@@ -168,16 +166,16 @@ For fruit DynAssemblies see: fruithat.dm
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span class='notice'>[] begins unsecuring \the [assembly].</span>", owner), 1)
+			O.show_message(SPAN_NOTICE("[owner] begins unsecuring \the [assembly]."), 1)
 
 	onInterrupt(var/flag)
 		..()
-		boutput(owner, "<span class='alert'>You were interrupted!</span>")
+		boutput(owner, SPAN_ALERT("You were interrupted!"))
 
 	onEnd()
 		..()
 		for (var/obj/O in assembly.contents)
 			O.set_loc(get_turf(assembly))
 		user.u_equip(assembly)
-		boutput(user, "<span class='alert'>You have unsecured \the [assembly]!</span>")
+		boutput(user, SPAN_ALERT("You have unsecured \the [assembly]!"))
 		qdel(assembly)

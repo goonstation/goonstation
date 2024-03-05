@@ -37,7 +37,7 @@
 			return
 		var/turf/T = get_turf(O)
 		playsound(O.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
-		T.visible_message("<span class='alert'><b>[O]</b> erupts into a huge column of flames! Holy shit!</span>")
-		fireflash_sm(T, fire_range, temperature, (temperature / fire_range))
+		T.visible_message(SPAN_ALERT("<b>[O]</b> erupts into a huge column of flames! Holy shit!"))
+		fireflash_melting(T, fire_range, temperature, temperature / fire_range)
 		SPAWN(3 SECONDS)
 			O.ArtifactDeactivated()

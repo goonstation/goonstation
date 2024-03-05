@@ -1,115 +1,171 @@
+/// We are taking in all gases indiscriminately.
+#define SIPHONING 0
+/// We are selectively choosing gases to suck.
+#define SCRUBBING 1
+
 /obj/machinery/atmospherics/unary/vent_scrubber
 	icon = 'icons/obj/atmospherics/vent_scrubber.dmi'
-	icon_state = "on"
-
+	icon_state = "on-map"
 	name = "Air Scrubber"
 	desc = "Has a valve and pump attached to it"
 
-	level = 1
-
+	level = UNDERFLOOR
+	/// ID we respond to for multicast.
 	var/id = null
+	/// ID that refers specifically to us.
+	var/net_id = null
+	/// Frequency we communicate on, usually with air alarms.
 	var/frequency = FREQ_AIR_ALARM_CONTROL
-
+	/// Are we doing anything at all?
 	var/on = TRUE
-	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
+	/// Are we sucking in all gas or only some?
+	var/scrubbing = SCRUBBING
+	// Sets up vars to scrub gases
 	#define _DEF_SCRUBBER_VAR(GAS, ...) var/scrub_##GAS = 1;
 	APPLY_TO_GASES(_DEF_SCRUBBER_VAR)
 	#undef _DEF_SCRUBBER_VAR
-
+	/// Volume of gas to take from turf.
 	var/volume_rate = 120
 
-	New()
-		..()
-		if(frequency)
-			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+/obj/machinery/atmospherics/unary/vent_scrubber/New()
+	..()
+	if(src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		src.net_id = generate_net_id(src)
 
-	initialize()
-		..()
-		UpdateIcon()
+/obj/machinery/atmospherics/unary/vent_scrubber/initialize()
+	..()
+	UpdateIcon()
 
-	update_icon()
-		var/turf/T = get_turf(src)
-		src.hide(T.intact)
+/obj/machinery/atmospherics/unary/vent_scrubber/update_icon()
+	var/turf/T = get_turf(src)
+	src.hide(T.intact)
 
-	process()
-		..()
-		if(!on)
-			return 0
+/obj/machinery/atmospherics/unary/vent_scrubber/process()
+	..()
+	if(!on)
+		return FALSE
 
-		var/datum/gas_mixture/environment = loc.return_air()
+	var/datum/gas_mixture/environment = loc.return_air()
 
-		if(scrubbing)
-			var/moles = TOTAL_MOLES(environment)
-			if(moles)
-				var/transfer_moles = min(1, volume_rate/environment.volume) * moles
+	if(scrubbing)
+		var/moles = TOTAL_MOLES(environment)
+		if(moles)
+			var/transfer_moles = min(1, volume_rate/environment.volume) * moles
 
-				//Take a gas sample
-				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
-
-				//Filter it
-				var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
-				filtered_out.temperature = removed.temperature
-
-				#define _FILTER_OUT_GAS(GAS, ...) \
-					if(scrub_##GAS) { \
-						filtered_out.GAS = removed.GAS; \
-						removed.GAS = 0; \
-					}
-				APPLY_TO_GASES(_FILTER_OUT_GAS)
-				#undef _FILTER_OUT_GAS
-
-				//Remix the resulting gases
-				air_contents.merge(filtered_out)
-
-				loc.assume_air(removed)
-
-				if(network)
-					network.update = 1
-
-		else //Just siphoning all air
-			var/transfer_moles = TOTAL_MOLES(environment)*(volume_rate/environment.volume)
-
+			//Take a gas sample
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
-			air_contents.merge(removed)
+			//Filter it
+			var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
+			filtered_out.temperature = removed.temperature
 
-			if(network)
-				network.update = 1
+			#define _FILTER_OUT_GAS(GAS, ...) \
+				if(scrub_##GAS) { \
+					filtered_out.GAS = removed.GAS; \
+					removed.GAS = 0; \
+				}
+			APPLY_TO_GASES(_FILTER_OUT_GAS)
+			#undef _FILTER_OUT_GAS
 
-		return 1
+			//Remix the resulting gases
+			air_contents.merge(filtered_out)
 
-	hide(var/intact) //to make the little pipe section invisible, the icon changes.
-		if(on&&node)
-			if(scrubbing)
-				icon_state = "[intact && istype(loc, /turf/simulated) && level == UNDERFLOOR ? "h" : "" ]on"
-			else
-				icon_state = "[intact && istype(loc, /turf/simulated) && level == UNDERFLOOR ? "h" : "" ]in"
+			loc.assume_air(removed)
+
+			network?.update = TRUE
+
+	else //Just siphoning all air
+		var/transfer_moles = TOTAL_MOLES(environment)*(volume_rate/environment.volume)
+
+		var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
+
+		air_contents.merge(removed)
+
+		network?.update = TRUE
+
+	return TRUE
+
+/obj/machinery/atmospherics/unary/vent_scrubber/hide(var/intact) //to make the little pipe section invisible, the icon changes.
+	var/hide_pipe = CHECKHIDEPIPE(src)
+	if(on&&node)
+		if(scrubbing)
+			icon_state = "[hide_pipe ? "h" : "" ]on"
 		else
-			icon_state = "[intact && istype(loc, /turf/simulated) && level == UNDERFLOOR ? "h" : "" ]off"
-			on = FALSE
+			icon_state = "[hide_pipe ? "h" : "" ]in"
+	else
+		icon_state = "[hide_pipe ? "h" : "" ]off"
+		on = FALSE
 
-	receive_signal(datum/signal/signal)
-		if(signal.data["tag"] && (signal.data["tag"] != id))
-			return 0
+	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
 
-		switch(signal.data["command"])
-			if("power_on")
-				on = TRUE
+/obj/machinery/atmospherics/unary/vent_scrubber/receive_signal(datum/signal/signal)
+	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["netid"] && (signal.data["netid"] == src.net_id))))
+		if(signal.data["command"] != "broadcast_status")
+			return FALSE
 
-			if("power_off")
-				on = FALSE
+	switch(signal.data["command"])
+		if("power_on")
+			src.on = TRUE
+			. = TRUE
 
-			if("power_toggle")
-				on = !on
+		if("power_off")
+			src.on = FALSE
+			. = TRUE
 
-			if("set_siphon")
-				scrubbing = 0
+		if("power_toggle")
+			src.on = !on
+			. = TRUE
 
-			if("set_scrubbing")
-				scrubbing = 1
+		if("set_siphon")
+			src.scrubbing = SIPHONING
+			. = TRUE
 
-		UpdateIcon()
+		if("set_scrubbing")
+			src.scrubbing = SCRUBBING
+			. = TRUE
+
+		if("help")
+			var/datum/signal/help = get_free_signal()
+			help.transmission_method = TRANSMISSION_RADIO
+			help.source = src
+
+			help.data["info"] = "Command help. \
+									power_on - Turns on scrubber. \
+									power_off - Turns off scrubber. \
+									power_toggle - Toggles scrubber. \
+									set_siphon - Begins siphoning all gas. \
+									set_scrubbing - Begins scrubbing select gases. \
+									set_volume_rate (parameter: Number) - Sets rate in liters to parameter. Max at [src.air_contents.volume] L."
+
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
+
+
+	if(.)
+		src.UpdateIcon()
+		var/turf/intact = get_turf(src)
+		intact = intact.intact
+		var/hide_pipe = CHECKHIDEPIPE(src)
+		flick("[hide_pipe ? "h" : "" ]alert", src)
+		playsound(src, 'sound/machines/chime.ogg', 25)
+
+/obj/machinery/atmospherics/unary/vent_scrubber/inactive
+	icon_state = "off-map"
+	on = FALSE
+
+/obj/machinery/atmospherics/unary/vent_scrubber/overfloor
+	level = OVERFLOOR
+
+/obj/machinery/atmospherics/unary/vent_scrubber/overfloor/inactive
+	icon_state = "off-map"
+	on = FALSE
 
 /obj/machinery/atmospherics/unary/vent_scrubber/breathable
-	scrub_oxygen = 0
-	scrub_nitrogen = 0
+	scrub_oxygen = FALSE
+	scrub_nitrogen = FALSE
+
+/obj/machinery/atmospherics/unary/vent_scrubber/breathable/overfloor
+	level = OVERFLOOR
+
+#undef SIPHONING
+#undef SCRUBBING

@@ -25,6 +25,6 @@ Left Mouse Button on turf/mob/obj      = FIRE! Literally.<br>
 		if (!object)
 			return
 		if (melting)
-			fireflash_sm(object, radius, temperature, falloff)
+			fireflash_melting(object, radius, temperature, falloff)
 		else
-			fireflash_s(object, radius, temperature, falloff)
+			fireflash(object, radius, temperature, falloff)

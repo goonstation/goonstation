@@ -69,6 +69,7 @@
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
 	default_material = "blob"
+	uses_default_material_appearance = TRUE
 	mat_changename = FALSE
 	available = list(
 		/datum/manufacture/mechanics/blob/base,

@@ -82,6 +82,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	beejail
 		ckey = ""
 		name = "Bee Jail"
+	bilo
+		ckey = "bilo216"
+		name = "Office of Bilo"
 	bubs
 		ckey = "insanoblan"
 		name = "Office of bubs"
@@ -355,10 +358,13 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		icon_state = "grass_snow"
 	grass
 		name = "grass"
+		icon_state = "grass"
 		New()
 			..()
+		#ifdef SEASON_AUTUMN
+			try_set_icon_state(src.icon_state + "_autumn", src.icon)
+		#endif
 			set_dir(pick(cardinal))
-		icon_state = "grass"
 		dense
 			name = "dense grass"
 			desc = "whoa, this is some dense grass. wow."
@@ -516,21 +522,21 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 
 	equipped(var/mob/user)
 		..()
-		boutput(user, "<span class='alert'>You can feel a proud and angry presence probing your mind...</span>")
+		boutput(user, SPAN_ALERT("You can feel a proud and angry presence probing your mind..."))
 		src.cant_self_remove = TRUE
 		src.cant_other_remove = TRUE
 		SPAWN(1 SECOND)
 			if (user.bioHolder && user.bioHolder.HasEffect("accent_scots"))
-				boutput(user, "<span class='notice'>YE AR' ALREADY BLESSED!!!</span>")
+				boutput(user, SPAN_NOTICE("YE AR' ALREADY BLESSED!!!"))
 			else if (prob(50) && user.bioHolder && !src.rejected_mobs.Find(user))
-				boutput(user, "<span class='notice'>OCH, CAN YE 'EAR TH' HIELAN WINDS WHISPERIN' MY NAME??</span>")
+				boutput(user, SPAN_NOTICE("OCH, CAN YE 'EAR TH' HIELAN WINDS WHISPERIN' MY NAME??"))
 				sleep(1 SECOND)
-				boutput(user, "<span class='notice'>I AM ADA O'HARA! MA SPIRIT IS INDOMITABLE! I'LL MAKE YE INDOMITABLE TAE...</span>")
+				boutput(user, SPAN_NOTICE("I AM ADA O'HARA! MA SPIRIT IS INDOMITABLE! I'LL MAKE YE INDOMITABLE TAE..."))
 				sleep(1 SECOND)
 				user.bioHolder.AddEffect("accent_scots")
-				boutput(user, "<span class='notice'>HEED FORTH, AYE? FECHT LANG AN' HAURD!!</span>")
+				boutput(user, SPAN_NOTICE("HEED FORTH, AYE? FECHT LANG AN' HAURD!!"))
 			else
-				boutput(user, "<span class='alert'>YE AR' NO' WORTHY OF ADA O'HARA'S BLESSIN'! FECK AFF!!!!</span>")
+				boutput(user, SPAN_ALERT("YE AR' NO' WORTHY OF ADA O'HARA'S BLESSIN'! FECK AFF!!!!"))
 				src.rejected_mobs.Add(user)
 			src.cant_self_remove = TRUE
 			src.cant_other_remove = FALSE
@@ -608,8 +614,8 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 		L.set_density(TRUE)
 		L.set_a_intent(INTENT_HARM)
 		L.dir_locked = TRUE
-	playsound(clone, 'sound/machines/ding.ogg', 50, 1)
-	clone.visible_message("<span class='notice'>[L.name || "A clone"] pops out of the cloner.</span>")
+	playsound(clone, 'sound/machines/ding.ogg', 50, TRUE)
+	clone.visible_message(SPAN_NOTICE("[L.name || "A clone"] pops out of the cloner."))
 	var/static/list/obj/machinery/conveyor/conveyors = null
 	var/static/conveyor_running_count = 0
 	if(isnull(conveyors))

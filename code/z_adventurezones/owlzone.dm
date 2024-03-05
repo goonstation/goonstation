@@ -39,14 +39,14 @@ obj/item/coin/bombini
 			interesting = pick("This device is loaded with noxious chemicals","This showerhead is armed","This showerhead is waiting to go off")
 
 	attack_hand(mob/user)
-		boutput(user, "<span class='notice'><B>The [src] beeps [src.stage] times softly</B></span>")
+		boutput(user, SPAN_NOTICE("<B>The [src] beeps [src.stage] times softly</B>"))
 		if (id == next_choice)
 			if (a)
 				a.cycle()
 			else
 				cycle()
 		else
-			boutput(user, "<span class='alert'><B>The [src] sprays horrible gunk at you!</B></span>")
+			boutput(user, SPAN_ALERT("<B>The [src] sprays horrible gunk at you!</B>"))
 			if (a)
 				a.stage = 0
 				spray()

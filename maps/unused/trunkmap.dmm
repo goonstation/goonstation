@@ -1008,7 +1008,7 @@
 /area/russian)
 "acP" = (
 /obj/decal/cleanable/cobweb,
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -1480,7 +1480,7 @@
 /turf/simulated/floor/white,
 /area/russian)
 "aei" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -2406,13 +2406,6 @@
 /area/station/quartermaster/office)
 "ahF" = (
 /turf/simulated/floor/caution/east,
-/area/station/quartermaster/office)
-"ahH" = (
-/obj/plasticflaps,
-/obj/machinery/conveyor/WE{
-	id = "QM"
-	},
-/turf/simulated/floor/grime,
 /area/station/quartermaster/office)
 "ahI" = (
 /obj/machinery/conveyor/WE{
@@ -4744,16 +4737,6 @@
 /obj/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
-"apK" = (
-/obj/rack{
-	dir = 1
-	},
-/obj/item/clothing/suit/fire,
-/obj/item/tank/emergency_oxygen,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "apS" = (
@@ -8194,12 +8177,10 @@
 /turf/space,
 /area/space)
 "aBJ" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 8;
 	frequency = 1441;
-	icon_state = "on";
-	id = "misc_out";
-	on = 1
+	id = "misc_out"
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/atmos/highcap_storage)
@@ -8501,9 +8482,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aCS" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8;
-	
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
 	},
 /obj/machinery/light{
 	dir = 4
@@ -8981,9 +8961,8 @@
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
 "aEP" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8;
-	
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -9146,16 +9125,6 @@
 	dir = 4
 	},
 /obj/item/circuitboard/powermonitor_smes,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
-"aFz" = (
-/obj/item/device/radio/intercom{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aFA" = (
@@ -9728,7 +9697,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aIi" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -10666,7 +10635,7 @@
 	},
 /area/station/hallway/primary/south)
 "aLI" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
 "aLJ" = (
@@ -12237,12 +12206,10 @@
 	},
 /area/station/hallway/primary/north)
 "aRp" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 1;
 	frequency = 1441;
-	icon_state = "on";
-	id = "n2_in";
-	on = 1
+	id = "n2_in"
 	},
 /turf/simulated/floor/engine{
 	name = "n2 floor";
@@ -12632,7 +12599,7 @@
 /obj/rack{
 	dir = 1
 	},
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/tank/emergency_oxygen,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/glasses/sunglasses,
@@ -18703,12 +18670,10 @@
 	},
 /area/station/hallway/secondary/entry)
 "bno" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 1;
 	frequency = 1441;
-	icon_state = "on";
-	id = "o2_in";
-	on = 1
+	id = "o2_in"
 	},
 /turf/simulated/floor/engine{
 	name = "o2 floor";
@@ -19755,10 +19720,7 @@
 /turf/simulated/floor/white,
 /area/station/science/construction)
 "bqh" = (
-/obj/machinery/networked/artifact_console{
-	desc = "It just sorta showed up in a giant box of test equipment.";
-	name = "giant mystery science doodad"
-	},
+/obj/machinery/networked/artifact_console,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
@@ -22255,18 +22217,6 @@
 /obj/window/reinforced/east,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
-"bww" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	id = "qm_dock_out"
-	},
-/obj/machinery/door/poddoor{
-	id = "QM-dock-out";
-	name = "Supply Dock Selling Door"
-	},
-/obj/plasticflaps,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
 "bwx" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -22403,14 +22353,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -22561,7 +22504,7 @@
 	icon_state = "0-8"
 	},
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bxd" = (
@@ -22725,7 +22668,7 @@
 "bxz" = (
 /obj/table/auto,
 /obj/item/device/multitool,
-/obj/item/chem_grenade,
+/obj/item/chem_grenade/custom,
 /obj/item/device/timer,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
@@ -23200,8 +23143,9 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "bzF" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "bzL" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -23709,7 +23653,7 @@
 	},
 /area/station/science/lobby)
 "bCl" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -23722,7 +23666,7 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "bCp" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/cable{
@@ -23782,10 +23726,8 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "bCw" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 4;
-	icon_state = "intact_on";
-	on = 1
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 4
 	},
 /turf/simulated/wall,
 /area/station/science/lab)
@@ -23817,10 +23759,8 @@
 	id = "mixingsparker";
 	pixel_y = 24
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -24159,7 +24099,7 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "bDr" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/cable{
@@ -24440,7 +24380,7 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "bEi" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/cable{
@@ -24459,7 +24399,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -24486,10 +24426,8 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "bEo" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 8;
-	icon_state = "intact_on";
-	on = 1
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 8
 	},
 /turf/simulated/wall,
 /area/station/science/lab)
@@ -24560,17 +24498,6 @@
 	},
 /turf/space,
 /area/space)
-"bEy" = (
-/obj/machinery/conveyor/WE{
-	id = "QMLoad"
-	},
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor";
-	name = "Supply Dock Loading Door"
-	},
-/obj/plasticflaps,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
 "bEz" = (
 /obj/machinery/conveyor/WE{
 	id = "QMLoad"
@@ -25663,10 +25590,8 @@
 /area/station/janitor/office)
 "dxP" = (
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/binary/pump{
-	dir = 4;
-	icon_state = "intact_on";
-	on = 1
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -25781,12 +25706,10 @@
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "dQa" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 8;
 	frequency = 1441;
-	icon_state = "on";
-	id = "tox_in";
-	on = 1
+	id = "tox_in"
 	},
 /turf/simulated/floor/engine{
 	name = "plasma floor";
@@ -25837,7 +25760,7 @@
 	layer = 8;
 	level = 1
 	},
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 4;
 	tag = "icon-intact (EAST)"
 	},
@@ -26545,7 +26468,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "gxE" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -26628,7 +26551,7 @@
 /obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 8
 	},
 /turf/simulated/floor/engine,
@@ -26860,6 +26783,16 @@
 /obj/stool,
 /turf/simulated/floor,
 /area/station/science/chemistry)
+"hCF" = (
+/obj/item/device/radio/intercom{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "hDv" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -27217,7 +27150,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "iHB" = (
-/obj/machinery/atmospherics/pipe/tank/air{
+/obj/machinery/atmospherics/unary/tank/air{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -28577,9 +28510,7 @@
 /area/station/security/prison)
 "mlk" = (
 /obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/south)
 "mlO" = (
@@ -28709,7 +28640,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "mGu" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 1
 	},
 /obj/lattice,
@@ -28791,10 +28722,8 @@
 	dir = 4;
 	tag = "icon-intact (EAST)"
 	},
-/obj/machinery/atmospherics/binary/pump{
-	dir = 0;
-	icon_state = "intact_on";
-	on = 1
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 0
 	},
 /obj/machinery/camera{
 	c_tag = "Cargo Storage";
@@ -29021,6 +28950,18 @@
 "nUR" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"nVB" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	id = "qm_dock_out"
+	},
+/obj/machinery/door/poddoor{
+	id = "QM-dock-out";
+	name = "Supply Dock Selling Door"
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage)
 "nWH" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -29282,13 +29223,13 @@
 /area/station/security/prison)
 "oVY" = (
 /obj/table/auto,
-/obj/item/chem_grenade,
-/obj/item/chem_grenade,
-/obj/item/chem_grenade,
-/obj/item/chem_grenade,
-/obj/item/chem_grenade,
-/obj/item/chem_grenade,
-/obj/item/chem_grenade,
+/obj/item/chem_grenade/custom,
+/obj/item/chem_grenade/custom,
+/obj/item/chem_grenade/custom,
+/obj/item/chem_grenade/custom,
+/obj/item/chem_grenade/custom,
+/obj/item/chem_grenade/custom,
+/obj/item/chem_grenade/custom,
 /obj/machinery/light,
 /turf/simulated/floor/purple/side{
 	dir = 6
@@ -29372,12 +29313,10 @@
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "pqi" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 8;
 	frequency = 1441;
-	icon_state = "on";
-	id = "co2_in";
-	on = 1
+	id = "co2_in"
 	},
 /turf/simulated/floor/engine{
 	carbon_dioxide = 50000;
@@ -29846,6 +29785,13 @@
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/russian)
+"qNi" = (
+/obj/strip_door,
+/obj/machinery/conveyor/WE{
+	id = "QM"
+	},
+/turf/simulated/floor/grime,
+/area/station/quartermaster/office)
 "qNl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -30365,6 +30311,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"sdi" = (
+/obj/rack{
+	dir = 1
+	},
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/tank/emergency_oxygen,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "sdH" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -30834,7 +30790,7 @@
 /obj/storage/secure/closet/security{
 	name = "NanoTrasen Equipment Locker"
 	},
-/obj/item/clothing/suit/bio_suit/armored/nt,
+/obj/item/clothing/suit/hazard/bio_suit/armored/nt,
 /obj/item/clothing/head/bio_hood/nt,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
@@ -32001,6 +31957,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
+"wPP" = (
+/obj/machinery/conveyor/WE{
+	id = "QMLoad"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "Supply Dock Loading Door"
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage)
 "wQi" = (
 /obj/machinery/access_button{
 	dir = 1;
@@ -32087,7 +32054,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "xgS" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/item/wrench,
@@ -58521,7 +58488,7 @@ ayc
 aze
 aAR
 aDB
-aFz
+hCF
 aHI
 aHY
 aMi
@@ -61269,12 +61236,12 @@ aaa
 aaa
 aab
 amK
-bww
+nVB
 amK
 aab
 aab
 amK
-bEy
+wPP
 bFA
 aaa
 aaa
@@ -61878,7 +61845,7 @@ bxX
 apA
 apA
 bDA
-bEy
+wPP
 bFB
 apA
 aqK
@@ -66712,7 +66679,7 @@ bCK
 jul
 aoa
 aoJ
-apK
+sdi
 bAL
 bAL
 uDx
@@ -66997,8 +66964,8 @@ aQO
 aPt
 ahm
 ahu
-ahH
-ahH
+qNi
+qNi
 boz
 ahX
 bqB
@@ -67014,7 +66981,7 @@ amX
 amS
 anX
 aoJ
-apK
+sdi
 bAL
 bAL
 asT
@@ -67316,7 +67283,7 @@ amX
 amS
 aoa
 aoJ
-apK
+sdi
 bAL
 sOw
 asT

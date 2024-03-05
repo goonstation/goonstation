@@ -24,6 +24,8 @@ var/list/extra_resources = list('interface/fonts/pressstart2p.ttf', 'interface/f
 
 var/global
 
+	roundId = 0
+
 	serverKey = 0
 
 	lagcheck_enabled = 0
@@ -91,7 +93,7 @@ var/global
 	/// All the accessible areas on the station in one convenient place
 	list/station_areas = list()
 	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
-	area_list_is_up_to_date = 0
+	area_list_is_up_to_date = FALSE
 
 	/// Contains objects in ID-based switched object groups, such as blinds and their switches
 	list/switched_objs = list()

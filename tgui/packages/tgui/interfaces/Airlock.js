@@ -8,7 +8,7 @@
 import { Fragment } from "inferno";
 import { useBackend, useLocalState } from "../backend";
 import { truncate } from '../format';
-import { Button, LabeledList, Section, Modal, Flex, Tabs, Box, NoticeBox, Divider, ProgressBar } from "../components";
+import { Box, Button, Divider, Flex, LabeledList, Modal, NoticeBox, ProgressBar, Section, Tabs } from "../components";
 import { Window } from "../layouts";
 
 export const uiCurrentUserPermissions = data => {

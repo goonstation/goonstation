@@ -188,7 +188,7 @@
 					if (P3.occupant)
 						logTheThing(LOG_STATION, usr, "[P3.locked ? "locks" : "unlocks"] [P3.name] with [constructTarget(P3.occupant,"station")] inside at [log_loc(P3)].")
 
-					PDA.display_alert("<span style=\"color:blue\">The [src.machinery_name] is now [P3.locked ? "locked" : "unlocked"].</span>")
+					PDA.display_alert(SPAN_NOTICE("The [src.machinery_name] is now [P3.locked ? "locked" : "unlocked"]."))
 
 				else return
 
@@ -198,7 +198,7 @@
 				if (isAIeye(usr))
 					our_loc = get_turf(usr)
 					if (!(our_loc.camera_coverage_emitters && length(our_loc.camera_coverage_emitters)))
-						boutput(usr, "<span class='alert'>This area is not within your range of influence.</span>")
+						boutput(usr, SPAN_ALERT("This area is not within your range of influence."))
 						return
 
 				// Z-level check bypass for Port-a-Sci.
@@ -208,15 +208,15 @@
 
 				switch (src.teleport_sanity_check(P4, usr, null, zlevel_check_bypass))
 					if (0)
-						PDA.display_alert("<span style=\"color:red\">Teleportation failed due to unknown interference!</span>")
+						PDA.display_alert(SPAN_ALERT("Teleportation failed due to unknown interference!"))
 					if (2)
-						PDA.display_alert("<span style=\"color:red\">The [src.machinery_name] is recharging!</span>")
+						PDA.display_alert(SPAN_ALERT("The [src.machinery_name] is recharging!"))
 					if (3)
-						PDA.display_alert("<span style=\"color:red\">Cannot teleport unlocked [src.machinery_name] with someone inside!</span>")
+						PDA.display_alert(SPAN_ALERT("Cannot teleport unlocked [src.machinery_name] with someone inside!"))
 					if (4)
-						PDA.display_alert("<span style=\"color:red\">Teleportation failed due to obstacle!</span>")
+						PDA.display_alert(SPAN_ALERT("Teleportation failed due to obstacle!"))
 					if (5)
-						PDA.display_alert("<span style=\"color:red\">Teleportation failed due to obstacle at home turf!</span>")
+						PDA.display_alert(SPAN_ALERT("Teleportation failed due to obstacle at home turf!"))
 
 					else
 						src.anti_spam = world.time
@@ -246,7 +246,7 @@
 					dest_loc = get_turf(P5:homeloc) // I have sinned, though the BAD OPERATOR might be unproblematic here.
 
 				if (!dest_loc || !isturf(dest_loc))
-					PDA.display_alert("<span style=\"color:red\">No home turf assigned to [src.machinery_name], can't teleport!</span>")
+					PDA.display_alert(SPAN_ALERT("No home turf assigned to [src.machinery_name], can't teleport!"))
 					return
 
 				// Z-level check bypass for Port-a-Sci.
@@ -256,15 +256,15 @@
 
 				switch (src.teleport_sanity_check(P5, usr, dest_loc, zlevel_check_bypass))
 					if (0)
-						PDA.display_alert("<span style=\"color:red\">Teleportation failed due to unknown interference!</span>")
+						PDA.display_alert(SPAN_ALERT("Teleportation failed due to unknown interference!"))
 					if (2)
-						PDA.display_alert("<span style=\"color:red\">The [src.machinery_name] is recharging!</span>")
+						PDA.display_alert(SPAN_ALERT("The [src.machinery_name] is recharging!"))
 					if (3)
-						PDA.display_alert("<span style=\"color:red\">Cannot teleport unlocked [src.machinery_name] with someone inside!</span>")
+						PDA.display_alert(SPAN_ALERT("Cannot teleport unlocked [src.machinery_name] with someone inside!"))
 					if (4)
-						PDA.display_alert("<span style=\"color:red\">Teleportation failed due to obstacle!</span>")
+						PDA.display_alert(SPAN_ALERT("Teleportation failed due to obstacle!"))
 					if (5)
-						PDA.display_alert("<span style=\"color:red\">Teleportation failed due to obstacle at home turf!</span>")
+						PDA.display_alert(SPAN_ALERT("Teleportation failed due to obstacle at home turf!"))
 
 					else
 						src.anti_spam = world.time
@@ -309,7 +309,7 @@
 		return
 
 /datum/computer/file/pda_program/portable_machinery_control/portamedbay
-	name = "P-Medbay Remote" // Damn forced line breaks.
+	name = "Port-a-Medbay Remote" // Damn forced line breaks.
 	our_machinery = /obj/machinery/sleeper/port_a_medbay
 	machinery_name = "Port-a-Medbay"
 	size = 4
@@ -327,7 +327,7 @@
 		return
 
 /datum/computer/file/pda_program/portable_machinery_control/portananomed
-	name = "NanoMed Remote" // Damn forced line breaks.
+	name = "Port-a-NanoMed Remote" // Damn forced line breaks.
 	our_machinery = /obj/machinery/vending/port_a_nanomed/
 	machinery_name = "Port-a-NanoMed"
 	size = 4

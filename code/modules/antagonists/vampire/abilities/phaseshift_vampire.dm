@@ -24,7 +24,7 @@
 		if (!M)
 			return 1
 
-		if (level == UNDERFLOOR)
+		if (level == 1)
 			M.special_sprint &= ~SPRINT_BAT_CLOAKED
 
 			if (M.special_sprint & SPRINT_BAT)
@@ -43,7 +43,7 @@
 				M.special_sprint |= SPRINT_BAT_CLOAKED
 				icon_state = "batform-on"
 
-		boutput(M, "<span class='notice'>Bat Form toggled [(M.special_sprint & SPRINT_BAT || M.special_sprint & SPRINT_BAT_CLOAKED ) ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)</span>")
+		boutput(M, SPAN_NOTICE("Bat Form toggled [(M.special_sprint & SPRINT_BAT || M.special_sprint & SPRINT_BAT_CLOAKED ) ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)"))
 
 		return 0
 

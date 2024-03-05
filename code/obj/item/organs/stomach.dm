@@ -4,45 +4,96 @@
 	desc = "A little meat sack containing acid for the digestion of food. Like most things that come out of living creatures, you can probably eat it."
 	organ_holder_name = "stomach"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 4
 	icon_state = "stomach"
 	fail_damage = 100
+	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING
+	region = ABDOMINAL
+	///How much food can we fit, based on `fill_amt` var on food items
+	var/capacity = 7
+	///How much food and other stuff we have (also based on `fill_amt`)
+	var/food_amount = 0
+	///Stomach contents are actually stored in the mob so that things like matsci effects work
+	VAR_PRIVATE/atom/movable/stomach_contents = list()
+	///Amount of reagents we digest from each bite per life tick, also how fast the bites dissolve
+	var/digestion_per_tick = 3
 
-	//Do something with this when you figure out what the guy who made digestion and handle stomach was doing with stomach_contents and stomach_process - kyle
-	// on_transplant()
-	// 	..()
-	// 	if (iscarbon(src.donor))
-	// 		src.donor.stomach_contents = src.contents
-	// 		src.contents = null //Probably don't need to do this, will undo if I ever remove the var off of mob and into stomach completely -kyle
-	// on_removal()
-	// 	..()
-	// 	//Add stomach contents on mob to this object for transplants
-	// 	if (iscarbon(src.donor))
-	// 		src.contents = src.donor.stomach_contents
-	// 		src.donor.stomach_contents = src.donor.stomach_contents.Cut()
-
-//
 	on_transplant()
 		..()
-		if (iscarbon(src.donor))
-			src.donor.stomach_process = src.contents
-			src.contents = list() //Probably don't need to do this, will undo if I ever remove the var off of mob and into stomach completely -kyle
-		// if (src.donor)
-			// for (var/datum/ailment_data/disease in src.donor.ailments)
-			// 	if (disease.cure == "Stomach Transplant")
-			// 		src.donor.cure_disease(disease)
-			// return
+		for (var/atom/movable/AM in src.stomach_contents)
+			AM.set_loc(src.donor)
+		if (src.is_full())
+			src.donor.setStatus("full")
+
 	on_removal()
-		//Add stomach contents on mob to this object for transplants
-		if (iscarbon(src.donor))
-			src.contents = src.donor.stomach_process
-			src.donor.stomach_process = list()
+		for (var/atom/movable/AM in src.stomach_contents)
+			AM.set_loc(src) // take them with us
+		src.donor.delStatus("full")
 		..()
+
+	attackby(obj/item/W, mob/user)
+		if (iscuttingtool(W))
+			user.visible_message(SPAN_ALERT("[user] starts cutting [src] open!"))
+			SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, PROC_REF(cut_open), list(), W.icon, W.icon_state, "[user] cuts [src] open, spilling its contents everywhere!", INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+			return
+		. = ..()
+
+	proc/cut_open()
+		for (var/atom/movable/AM in src.stomach_contents)
+			AM.set_loc(get_turf(src))
+		src.stomach_contents = null
+		src.splat(get_turf(src))
+		qdel(src)
+
+	///How much does this thing fill a stomach
+	proc/food_value(atom/movable/AM)
+		if (istype(AM, /obj/item/reagent_containers/food))
+			var/obj/item/reagent_containers/food/food = AM
+			return food.fill_amt
+		else
+			return 1 //other stuff can clog your stomach
+
+	proc/consume(atom/movable/AM)
+		if (AM in src.stomach_contents)
+			return
+		AM.set_loc(src.donor)
+		src.stomach_contents |= AM
+		src.food_amount += src.food_value(AM)
+		if (src.is_full())
+			src.donor.setStatus("full")
+
+	proc/eject(atom/movable/AM)
+		if (!(AM in src.stomach_contents))
+			return
+		AM.set_loc(src.donor.loc)
+		src.stomach_contents -= AM
+		src.food_amount -= src.food_value(AM)
+		if (!src.is_full())
+			src.donor.delStatus("full")
+
+	proc/vomit()
+		if (!length(src.stomach_contents))
+			return null
+		var/atom/movable/AM = pick(src.stomach_contents)
+		src.eject(AM)
+		return AM
+
+	proc/is_full()
+		return src.food_amount > src.capacity
+
+	//get_fullness was taken
+	proc/calculate_fullness()
+		. = 0
+		for (var/atom/movable/thing in src.stomach_contents)
+			if (istype(thing, /obj/item/reagent_containers/food))
+				var/obj/item/reagent_containers/food/food = thing
+				. += food.fill_amt
+			else
+				. += 1 //other stuff can clog your stomach
 
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		donor.handle_digestion(mult)
+		src.handle_digestion(mult)
 
 		// if (src.get_damage() >= fail_damage && prob(src.get_damage() * 0.2))
 		// 	donor.contract_disease(failure_disease,null,null,1)
@@ -67,6 +118,52 @@
 				output += "[S] = [L[S]]\n"
 			boutput(user, "<br><span style='color:purple'><b>[src]</b> contains:\n [output]</span>")
 
+	relaymove(mob/user, direction, delay, running)
+		if(!prob(60) || !src.donor || !(user in src.stomach_contents))
+			return
+		src.donor.audible_message(SPAN_ALERT("You hear something rumbling inside [src.donor]'s stomach..."))
+		var/obj/item/I = user.equipped()
+		if(I?.force)
+			var/d = rand(round(I.force / 4), I.force)
+			src.donor.TakeDamage("chest", d, 0)
+			src.donor.visible_message(SPAN_ALERT("<B>[user] attacks [src.donor]'s stomach wall with \the [I.name]!"))
+			playsound(user.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 50, 1)
+
+			if(prob(src.donor.get_brute_damage() - 50))
+				logTheThing(LOG_COMBAT, user, "gibs [constructTarget(src.donor,"combat")] breaking out of their stomach at [log_loc(src.donor)].")
+				src.donor.gib()
+
+	proc/handle_digestion(mult = 1)
+		if (!length(src.stomach_contents))
+			return
+		src.digest_food(mult)
+		src.digest_mobs(mult)
+
+	proc/digest_food(mult = 1)
+		var/count_to_process = min(length(src.stomach_contents), 10)
+		var/count_left = count_to_process
+		for(var/obj/item/reagent_containers/food/food in src.stomach_contents)
+			food.process_stomach(src.donor, (src.digestion_per_tick / count_to_process) * mult) //Takes an even amt of reagents from all stomach contents
+			if(count_left-- <= 0)
+				break
+
+	///LOOK I'M ONLY REORGANISING THIS CODE OKAY, I AM NOT RESPONSIBLE FOR THIS DO NOT @ ME
+	proc/digest_mobs(mult = 1)
+		for (var/mob/M in src.stomach_contents)
+			if (iscarbon(M) && !isdead(src.donor))
+				if (isdead(M))
+					M.death(TRUE)
+					M.ghostize()
+					qdel(M)
+					src.stomach_contents -= M
+					src.donor.emote("burp")
+					playsound(get_turf(src.donor), 'sound/voice/burp.ogg', 50, 1)
+					continue
+				if (air_master.current_cycle%3==1) //????
+					if (!M.nodamage)
+						M.TakeDamage("chest", 5, 0)
+					src.donor.nutrition += 10
+
 /obj/item/organ/stomach/synth
 	name = "synthstomach"
 	organ_name = "synthstomach"
@@ -85,10 +182,11 @@ TYPEINFO(/obj/item/organ/stomach/cyber)
 	desc = "A fancy robotic stomach to replace one that someone's lost!"
 	icon_state = "cyber-stomach"
 	// item_state = "heart_robo1"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
+	capacity = 12
 
 	on_transplant(mob/M)
 		. = ..()

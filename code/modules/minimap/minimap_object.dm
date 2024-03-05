@@ -232,6 +232,7 @@
 			src.mouse_opacity = 2
 
 	MouseWheel(dx, dy, loc, ctrl, params)
+		. = TRUE
 		var/list/param_list = params2list(params)
 		var/datum/minimap/z_level/minimap = src.displayed_minimap
 		var/datum/minimap/z_level/controlled_minimap = src.controlled_minimap.map

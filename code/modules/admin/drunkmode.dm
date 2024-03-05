@@ -10,8 +10,7 @@ var/list/dangerousVerbs = list(\
 
 //No banning for you
 /client/proc/warn,\
-/client/proc/openBanPanel,\
-/client/proc/cmd_admin_addban,\
+/client/proc/ban_panel,\
 /client/proc/banooc,\
 /client/proc/sharkban,\
 
@@ -63,7 +62,6 @@ var/list/dangerousVerbs = list(\
 
 //Toggles (these are ones that could be very confusing to accidentally toggle for a drunk person)
 /client/proc/toggle_toggles,\
-/client/proc/toggle_popup_verbs,\
 /client/proc/toggle_server_toggles_tab,\
 /datum/admins/proc/toggleenter,\
 /datum/admins/proc/toggle_blood_system,\
@@ -219,4 +217,4 @@ var/list/dangerousVerbs = list(\
 			)
 			command_alert("[C.key] [pick(announce)].", "Weedmin detected")
 
-		boutput(C, "<span class='alert'><b><big>You are now in drunk-mode!</big></b><br>You will have reduced powers so you can't fuck shit up so much.<br>Use \"Disable Drunk Mode\" to disable this.</span>")
+		boutput(C, SPAN_ALERT("<b><big>You are now in drunk-mode!</big></b><br>You will have reduced powers so you can't fuck shit up so much.<br>Use \"Disable Drunk Mode\" to disable this."))

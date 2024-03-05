@@ -175,7 +175,7 @@ plush_toy_words@=maybe
 	guitar
 	banjo
 	violin
-	vuvuzuela
+	vuvuzela
 	cake
 	glass
 	fork

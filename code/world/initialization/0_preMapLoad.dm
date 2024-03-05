@@ -70,8 +70,8 @@
 			screenOverlayLibrary.Add(over)
 			screenOverlayLibrary[over] = E
 
-		url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
-		full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\w]+\.)+[\l]+(\/\S+)*\/?)","ig")
+		url_regex = new("(https?|\\bbyond|\\bwww)(\\.|:\\/\\/)", "ig")
+		full_url_regex = new(@"(https?:\/\/)?((\\bwww\.)?([-\w]+\.)+[\l]+(\/\S+)*\/?)","ig")
 
 		Z_LOG_DEBUG("Preload", "initLimiter() (whatever the fuck that does)")
 		initLimiter()

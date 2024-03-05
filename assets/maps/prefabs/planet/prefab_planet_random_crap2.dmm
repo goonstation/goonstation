@@ -57,7 +57,8 @@
 /area/noGenerate)
 "L" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -70,7 +71,8 @@
 "N" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)

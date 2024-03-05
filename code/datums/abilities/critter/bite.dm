@@ -25,12 +25,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to bite there.</span>")
+				boutput(holder.owner, SPAN_ALERT("Nothing to bite there."))
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to bite.</span>")
+			boutput(holder.owner, SPAN_ALERT("That is too far away to bite."))
 			return 1
 		playsound(target, src.sound_bite, sound_volume, 1, -1)
 		var/mob/MT = target
@@ -39,7 +39,7 @@
 		if(bleed)
 			take_bleeding_damage(MT, null, bleed, DAMAGE_CUT, bleed-5, get_turf(MT))
 
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner] [verb_other] [MT]!</b></span>", "<span class='combat'>You [verb_self] [MT]!</span>")
+		holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner] [verb_other] [MT]!</b>"), SPAN_COMBAT("You [verb_self] [MT]!"))
 		return 0
 
 /datum/targetable/critter/bite/big

@@ -21,15 +21,16 @@
 
 	attack_self(mob/user)
 		if (src.on)
-			src.visible_message("<span class='notice'>[user] blows on [src], its eyes emit a threatening glow!</span>")
+			src.visible_message(SPAN_NOTICE("[user] blows on [src], its eyes emit a threatening glow!"))
 			for(var/mob/living/intangible/wraith/W in orange(4, user))
 				//Small grace period to run away after being manifested if you managed to survive so you dont get chain-manifested
 				if ((W.last_spirit_candle_time + (W.forced_haunt_duration + 6 SECONDS)) < TIME)
 					W.last_spirit_candle_time = TIME
 					W.setStatus("corporeal", W.forced_haunt_duration, TRUE)
-					boutput(W, "<span class='alert'>A malignant spirit pulls you into the physical world! You begin to gather your forces to try and escape to the spirit realm...</span>")
+					logTheThing(LOG_COMBAT, W, "is forced to manifest at [log_loc(W)] due to a spirit candle used by [user]")
+					boutput(W, SPAN_ALERT("A malignant spirit pulls you into the physical world! You begin to gather your forces to try and escape to the spirit realm..."))
 				else
-					boutput(user, "<span class='notice'>[src] vibrates slightly in your hand. A hostile entity lurks nearby but resisted our attempts to reveal it!</span>")
+					boutput(user, SPAN_NOTICE("[src] vibrates slightly in your hand. A hostile entity lurks nearby but resisted our attempts to reveal it!"))
 			var/turf/T = get_turf(src)
 			playsound(src.loc, 'sound/voice/chanting.ogg', 50, 0)
 			new /obj/overlay/darkness_field(T, 10 SECOND, radius = 5.5, max_alpha = 250)
@@ -39,24 +40,30 @@
 	attackby(obj/item/W, mob/user)
 		if (!src.on && !burnt)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
+				src.light(user)
+				user.visible_message(SPAN_ALERT("<b>[user]</b> casually lights [src] with [W], what a badass."))
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				src.light(user)
+				user.visible_message(SPAN_ALERT("Did [user] just light \his [src] with [W]? Holy Shit."))
 
 			else if (istype(W, /obj/item/device/igniter))
-				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; sparks erupt from [src].</span>")
+				src.light(user)
+				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles around with [W]; sparks erupt from [src]."))
 
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
-				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				src.light(user)
+				user.visible_message(SPAN_ALERT("With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool."))
 
 			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
-				src.light(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
+				src.light(user)
+				user.visible_message(SPAN_ALERT("<b>[user] lights [src] with [W]."))
 
 			else if (W.burning)
-				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				src.light(user)
+				user.visible_message(SPAN_ALERT("<b>[user]</b> lights [src] with [W]. Goddamn."))
 		else if (burnt)
-			boutput(user, "<span class='notice'>The spirit inside has departed, you cannot use the candle again</span>")
+			boutput(user, SPAN_NOTICE("The spirit inside has departed, you cannot use the candle again"))
 		else
 			return ..()
 
@@ -68,11 +75,11 @@
 		if ((light_ticks < 40) && (burn_state < 1))
 			burn_state = 1
 			src.icon_state = "smelted-lit"
-			src.visible_message("<span class='notice'>[src]'s light begins to flicker!</span>")
+			src.visible_message(SPAN_NOTICE("[src]'s light begins to flicker!"))
 		else if ((light_ticks < 20) && (burn_state < 2))
 			burn_state = 2
 			src.icon_state = "melted-lit"
-			src.visible_message("<span class='notice'>[src]'s light is almost out!</span>")
+			src.visible_message(SPAN_NOTICE("[src]'s light is almost out!"))
 		if (light_ticks <= 0)
 			src.put_out()
 			return
@@ -87,7 +94,7 @@
 			src.light()
 		..()
 
-	proc/light(var/mob/user, var/message)
+	proc/light(var/mob/user)
 		if (!src) return
 		if (burnt) return
 		if (!src.on)

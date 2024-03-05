@@ -1,8 +1,8 @@
 // Wraith
 
 /mob/living/intangible/wraith
-	name = "Wraith"
-	real_name = "Wraith"
+	name = "wraith"
+	real_name = "wraith"
 	desc = "Jesus Christ, how spooky."
 	icon = 'icons/mob/mob.dmi'
 #if defined(XMAS) || (BUILD_TIME_MONTH == 2 && BUILD_TIME_DAY == 14)
@@ -91,9 +91,6 @@
 		#endif
 		theName = theName  + suffix
 		return theName
-
-	proc/get_movement_controller(mob/user)
-		return movement_controller
 
 	New(var/mob/M)
 		. = ..()
@@ -251,14 +248,14 @@
 		drop_following_poltergeists()
 
 		if (deaths < 2)
-			boutput(src, "<span class='alert'><b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b></span>")
+			boutput(src, SPAN_ALERT("<b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b>"))
 			logTheThing(LOG_COMBAT, src, "lost a life as a wraith at [log_loc(src.loc)].")
 			src.justdied = 1
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 			SPAWN(15 SECONDS) //15 seconds
 				src.justdied = 0
 		else
-			boutput(src, "<span class='alert'><b>Your connection with the mortal realm is severed. You have been permanently banished.</b></span>")
+			boutput(src, SPAN_ALERT("<b>Your connection with the mortal realm is severed. You have been permanently banished.</b>"))
 			message_admins("Wraith [key_name(src)] died with no more respawns at [log_loc(src.loc)].")
 			logTheThing(LOG_COMBAT, src, "died as a wraith with no more respawns at [log_loc(src.loc)].")
 			if (src.mind)
@@ -296,8 +293,8 @@
 					else
 						P.exit_master(T1)
 					P.setStatus("corporeal", INFINITE_STATUS, TRUE)
-					boutput(P, "<span class='alert'><b>Oh no! Your master has died and you've been ejected outside into the material plane!</b></span>")
-				boutput(P, "<span class='alert'><b>Your master has died!</b></span>")
+					boutput(P, SPAN_ALERT("<b>Oh no! Your master has died and you've been ejected outside into the material plane!</b>"))
+				boutput(P, SPAN_ALERT("<b>Your master has died!</b>"))
 
 	proc/onAbsorb(var/mob/M)
 		if (src.mind)
@@ -337,7 +334,7 @@
 				src.TakeDamage(null, 0, damage)
 
 		if(!P.proj_data.silentshot)
-			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
+			src.visible_message(SPAN_ALERT("[src] is hit by the [P]!"))
 
 	ex_act(severity)
 		if (!src.density) return
@@ -390,7 +387,7 @@
 				src.setStatus("corporeal", src.forced_haunt_duration, TRUE)
 				var/datum/targetable/ability = src.abilityHolder.getAbility(/datum/targetable/wraithAbility/haunt)
 				ability.doCooldown()
-				boutput(src, "<span class='alert'>You have passed over salt! You now interact with the mortal realm...</span>")
+				boutput(src, SPAN_ALERT("You have passed over salt! You now interact with the mortal realm..."))
 				break
 
 		return ..()
@@ -424,20 +421,20 @@
 			var/string = ""
 			var/mob/M = A
 			if (M.traitHolder.hasTrait("training_chaplain"))
-				string += "<span class='alert'>This creature is <b><i>vile</i></b>!</span>\n"
+				string += "[SPAN_ALERT("This creature is <b><i>vile</i></b>!")]\n"
 
 			if (M.reagents)
 				var/f_amt = M.reagents.get_reagent_amount("formaldehyde")
 				if (f_amt >= src.formaldehyde_tolerance)
-					string += "<span class='blue'>This creature is <i>saturated</i> with a most unpleasant substance!</span>\n"
+					string += "[SPAN_NOTICE("This creature is <i>saturated</i> with a most unpleasant substance!")]\n"
 				else if (f_amt > 0)
-					string += "<span class='blue'>This creature has a somewhat unpleasant <i>taste</i>.</span>\n"
+					string += "[SPAN_NOTICE("This creature has a somewhat unpleasant <i>taste</i>.")]\n"
 
 				var/hw_amt = M.reagents.get_reagent_amount("water_holy")
 				if (hw_amt >= src.holy_water_tolerance)
-					string += "<span class='blue'>This creature exudes a truly vile <i>aroma</i>!</span>\n"
+					string += "[SPAN_NOTICE("This creature exudes a truly vile <i>aroma</i>!")]\n"
 				else if (hw_amt > 0)
-					string += "<span class='blue'>This creature has a somewhat vile <i>fragrance</i>!</span>\n"
+					string += "[SPAN_NOTICE("This creature has a somewhat vile <i>fragrance</i>!")]\n"
 
 			if (length(string))
 				boutput(src, string)
@@ -495,7 +492,7 @@
 
 		if (acts)
 			for (var/mob/M in hearers(src, null))
-				M.show_message("<span class='alert'>[src] [acts]!</span>")
+				M.show_message(SPAN_ALERT("[src] [acts]!"))
 
 	attack_hand(var/mob/user)
 		user.lastattacked = src
@@ -550,25 +547,25 @@
 		var/list/safe_area_names = list()
 		for (var/area/area as anything in booster_locations)
 			safe_area_names += area.name
-		boutput(src, "<span class='alert'><b>You will gather energy more rapidly if you are close to [get_battle_area_names(safe_area_names)]!</b></span>")
+		boutput(src, SPAN_ALERT("<b>You will gather energy more rapidly if you are close to [get_battle_area_names(safe_area_names)]!</b>"))
 
 	proc/makeRevenant(var/mob/M as mob)
 		if (!ishuman(M))
-			boutput(usr, "<span class='alert'>You can only extend your consciousness into humans corpses.</span>")
+			boutput(usr, SPAN_ALERT("You can only extend your consciousness into humans corpses."))
 			return 1
 		var/mob/living/carbon/human/H = M
 		if (!isdead(H))
-			boutput(usr, "<span class='alert'>A living consciousness possesses this body. You cannot force your way in.</span>")
+			boutput(usr, SPAN_ALERT("A living consciousness possesses this body. You cannot force your way in."))
 			return 1
 		if (H.decomp_stage == DECOMP_STAGE_SKELETONIZED)
-			boutput(usr, "<span class='alert'>This corpse is no good for this!</span>")
+			boutput(usr, SPAN_ALERT("This corpse is no good for this!"))
 			return 1
 		if (ischangeling(H))
-			boutput(usr, "<span class='alert'>What is this? An exquisite genetic structure. It forcibly resists your will, even in death.</span>")
+			boutput(usr, SPAN_ALERT("What is this? An exquisite genetic structure. It forcibly resists your will, even in death."))
 			return 1
 		if (!H.bioHolder)
 			message_admins("[key_name(src)] tried to possess [M] as a revenant but failed due to a missing bioholder.")
-			boutput(usr, "<span class='alert'>Failed.</span>")
+			boutput(usr, SPAN_ALERT("Failed."))
 			return 1
 		var/datum/bioEffect/hidden/revenant/R = H.bioHolder.AddEffect("revenant")
 		if (H.bioHolder.HasEffect("revenant")) // make sure we didn't get deleted on the way - should probably make a better check than this. whatever.

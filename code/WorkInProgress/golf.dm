@@ -44,10 +44,10 @@
 
 	attack_self(mob/user as mob)
 		if (src.putting)
-			boutput(user, "<span class='notice'>You tighten your grip on the [src].  Ready for a big swing!</span>")
+			boutput(user, SPAN_NOTICE("You tighten your grip on the [src].  Ready for a big swing!"))
 			src.putting = FALSE
 		else
-			boutput(user, "<span class='notice'>You loosen your grip on the [src]. Perfect for a nice gentle putt.</span>")
+			boutput(user, SPAN_NOTICE("You loosen your grip on the [src]. Perfect for a nice gentle putt."))
 			src.putting = TRUE
 		return
 
@@ -67,8 +67,8 @@
 			return
 
 		if (the_mob.bioHolder.HasEffect("clumsy") && prob(50))
-			the_mob.visible_message("<span class='alert'>[the_mob] swings the [C] wildly and falls on [his_or_her(the_mob)] face.</span>",\
-			"<span class='alert'>You swing so hard you lose your balance and fall!</span>")
+			the_mob.visible_message(SPAN_ALERT("[the_mob] swings the [C] wildly and falls on [his_or_her(the_mob)] face."),\
+			SPAN_ALERT("You swing so hard you lose your balance and fall!"))
 			the_mob.changeStatus("weakened", 2 SECONDS)
 			JOB_XP(the_mob, "Clown", 4)
 			return

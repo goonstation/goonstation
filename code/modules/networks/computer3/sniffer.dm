@@ -46,7 +46,7 @@
 
 					else
 
-						boutput(user, "<span class='alert'>The [src] couldn't be attached here!</span>")
+						boutput(user, SPAN_ALERT("The [src] couldn't be attached here!"))
 						return
 
 				else

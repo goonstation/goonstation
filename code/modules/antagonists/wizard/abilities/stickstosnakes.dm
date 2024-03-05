@@ -27,7 +27,7 @@
 		else if(istype(target, /mob/living/critter/small_animal/snake))
 			var/mob/living/critter/small_animal/snake/snek = target
 			if(snek.double)
-				boutput(holder.owner, "<span class='alert'>Your wizarding skills are not up to the legendary Triplesnake technique.</span>")
+				boutput(holder.owner, SPAN_ALERT("Your wizarding skills are not up to the legendary Triplesnake technique."))
 				return 1
 			stick = target
 		else if(istype(target, /mob))
@@ -54,10 +54,10 @@
 			I.stored?.transfer_stored_item(I, get_turf(I))
 
 		if(!stick)
-			boutput(holder.owner, "<span class='alert'>You must target an item or a person holding one.</span>")
+			boutput(holder.owner, SPAN_ALERT("You must target an item or a person holding one."))
 			return 1 // No cooldown when it fails.
 		if(!istype(stick.loc, /turf))
-			boutput(holder.owner, "<span class='alert'>It wasn't possible to remove the item from its container, oh no.</span>")
+			boutput(holder.owner, SPAN_ALERT("It wasn't possible to remove the item from its container, oh no."))
 			return 1 // No cooldown when it fails.
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
@@ -71,6 +71,6 @@
 
 		snake.start_expiration(2 MINUTES)
 
-		holder.owner.visible_message("<span class='alert'>[holder.owner] turns [stick] into [snake]!</span>")
+		holder.owner.visible_message(SPAN_ALERT("[holder.owner] turns [stick] into [snake]!"))
 		logTheThing(LOG_COMBAT, holder.owner, "casts Sticks to Snakes on [constructTarget(stick,"combat")] turning it into [snake] at [log_loc(snake)].")
 		playsound(holder.owner.loc, 'sound/effects/mag_golem.ogg', 25, 1, -1)

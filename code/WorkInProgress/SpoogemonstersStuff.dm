@@ -182,7 +182,7 @@
 
 
 	proc/grenade(var/name as text)
-		var/obj/item/chem_grenade/adminGrenade = new /obj/item/chem_grenade(src.loc)
+		var/obj/item/chem_grenade/custom/adminGrenade = new /obj/item/chem_grenade/custom(src.loc)
 
 		if(name == "" || isnull(name))
 			adminGrenade.name = "grief grenade"
@@ -255,7 +255,7 @@
 
 	attack_hand(mob/user)
 		if(!isadmin(user) && current_state < GAME_STATE_FINISHED)
-			boutput(user, "<span class='alert'>This dispenser is too powerful for you!</span>")
+			boutput(user, SPAN_ALERT("This dispenser is too powerful for you!"))
 			return
 		panel()
 
@@ -486,27 +486,27 @@
 		html.addToBody(scr)
 
 		var/datum/tag/cssinclude/bootstrap = new
-		bootstrap.setHref(resource("css/bootstrap.min.css"))
+		bootstrap.setHref(resource("vendor/css/bootstrap.min.css"))
 		html.addToHead(bootstrap)
 
 		var/datum/tag/cssinclude/bootstrapResponsive = new
-		bootstrapResponsive.setHref(resource("css/bootstrap-responsive.min.css"))
+		bootstrapResponsive.setHref(resource("vendor/css/bootstrap-responsive.min.css"))
 		html.addToHead(bootstrapResponsive)
 
 		var/datum/tag/scriptinclude/jquery = new
-		jquery.setSrc(resource("js/jquery.min.js"))
+		jquery.setSrc(resource("vendor/js/jquery.min.js"))
 		html.addToHead(jquery)
 
 		var/datum/tag/scriptinclude/jqueryMigrate = new
-		jqueryMigrate.setSrc(resource("js/jquery.migrate.js"))
+		jqueryMigrate.setSrc(resource("vendor/js/jquery.migrate.js"))
 		html.addToHead(jqueryMigrate)
 
 		var/datum/tag/scriptinclude/bootstrapJs = new
-		bootstrapJs.setSrc(resource("js/bootstrap.min.js"))
+		bootstrapJs.setSrc(resource("vendor/js/bootstrap.min.js"))
 		html.addToBody(bootstrapJs)
 
 		var/datum/tag/scriptinclude/jsviews = new
-		jsviews.setSrc(resource("js/jsviews.min.js"))
+		jsviews.setSrc(resource("vendor/js/jsviews.min.js"))
 		html.addToBody(jsviews)
 
 		var/datum/tag/script/beakerTemplate = new

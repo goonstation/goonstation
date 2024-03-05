@@ -43,8 +43,12 @@ var/list/ai_move_scheduled = list()
 			M.skipped_mobs_list |= SKIPPED_AI_MOBS_LIST
 			LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, M)
 
-		if(owner?.abilityHolder)
-			if(src.owner.use_ai_toggle && !owner.abilityHolder.getAbility(/datum/targetable/ai_toggle))
+		if(src.owner.use_ai_toggle)
+			if(owner?.abilityHolder)
+				if(!owner.abilityHolder.getAbility(/datum/targetable/ai_toggle))
+					owner.abilityHolder.addAbility(/datum/targetable/ai_toggle)
+			else
+				owner.add_ability_holder(/datum/abilityHolder/composite)
 				owner.abilityHolder.addAbility(/datum/targetable/ai_toggle)
 
 	disposing()
@@ -97,24 +101,31 @@ var/list/ai_move_scheduled = list()
 				T.reset()
 
 	proc/get_instance(taskType, list/nparams)
+		RETURN_TYPE(taskType)
 		if (taskType in task_cache)
 			return task_cache[taskType]
 		task_cache[taskType] = new taskType(arglist(nparams))
 		return task_cache[taskType]
 
 // bumping these up to parent because these are undoubtedly gonna be useful for more than just flockdrones - cirr
-	proc/wait()
+	proc/wait(var/time=10)
 		// switch into the wait task NOW, and add our current task as the task to return to
 		var/datum/aiTask/timed/wait/waitTask = src.get_instance(/datum/aiTask/timed/wait, list(src))
 		waitTask.transition_task = current_task
+		waitTask.elapsed_ticks = 0
+		waitTask.minimum_task_ticks = time
+		waitTask.maximum_task_ticks = time
 		switch_to(waitTask)
 
-	proc/interrupt()
+	proc/interrupt_to_task(datum/aiTask/task)
 		if(src.enabled)
 			current_task?.reset()
-			switch_to(default_task)
+			switch_to(task)
 			stop_move()
 			tick()
+
+	proc/interrupt()
+		interrupt_to_task(src.default_task)
 
 	proc/die()
 		src.disable()
@@ -180,7 +191,7 @@ var/list/ai_move_scheduled = list()
 				src.owner.process_move()
 		else if (length(src.move_path))
 			var/turf/next
-			if(src.move_path[1] == src.owner.loc) //check you've completed a step before removing it from the path
+			if(src.move_path[1] == get_turf(src.owner)) //check you've completed a step before removing it from the path
 				src.move_path.Cut(1, 2)
 
 			if(length(src.move_path))
@@ -214,6 +225,9 @@ var/list/ai_move_scheduled = list()
 	var/atom/target = null
 	/// The maximum tile distance that we look for targets
 	var/max_dist = 5
+	/// If this is set score_target() is ignored and instead the target is chosen by distance only.
+	/// This is better for performance if there are multiple targets. Override to FALSE if you override score_target()!
+	var/score_by_distance_only = TRUE
 	/// if this is set, temporarily give this mob the HEAVYWEIGHT_AI mob flag for the duration of this task
 	var/ai_turbo = FALSE
 	/// If this task allows pathing through space
@@ -261,22 +275,32 @@ var/list/ai_move_scheduled = list()
 		var/best_score = -INFINITY
 		var/list/best_path = null
 		if(length(targets))
-			for(var/atom/A as anything in targets)
-				var/score = src.score_target(A)
-				if(score > best_score)
-					var/simulated_only = !move_through_space
-#ifdef UNDERWATER_MAP
-					//fucking unsimulated ocean tiles fuck
-					simulated_only = FALSE
-#endif
-					var/tmp_best_path = get_path_to(holder.owner, A, max_dist*2, distance_from_target, null, simulated_only)
-					if(length(tmp_best_path))
-						best_score = score
-						best_path = tmp_best_path
-						. = A
+			var/simulated_only = !move_through_space
+			#ifdef UNDERWATER_MAP
+			//fucking unsimulated ocean tiles fuck
+			simulated_only = FALSE
+			#endif
+			var/required_goals = null // find all targets
+			if(score_by_distance_only)
+				required_goals = 1 // we only need to find the first one
+			var/list/atom/paths_found = get_path_to(holder.owner, targets, max_distance=max_dist*2, mintargetdist=distance_from_target, simulated_only=simulated_only, required_goals=required_goals)
+			if(score_by_distance_only)
+				if(length(paths_found))
+					. = paths_found[1]
+					best_path = paths_found[.]
+			else
+				for(var/atom/A as anything in paths_found)
+					var/score = src.score_target(A)
+					if(score > best_score)
+						var/list/tmp_best_path = paths_found[A]
+						if(length(tmp_best_path))
+							best_score = score
+							best_path = tmp_best_path
+							. = A
 		holder.target = .
 		holder.target_path = best_path
 
+	/// If overriding also override [score_by_distance_only] to FALSE!
 	proc/score_target(atom/target)
 		. = 0
 		if(target)

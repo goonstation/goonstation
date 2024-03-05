@@ -379,7 +379,7 @@
 	name = "Plant Siege"
 	warning_text = "We are under attack by a group of sentient vegetables!"
 	attacker_types = list(/obj/critter/killertomato)
-	bosses = list(/obj/critter/maneater)
+	bosses = list(/mob/living/critter/plant/maneater)
 	original_size = 30
 	original_bosses = 1
 	is_abstract = 0

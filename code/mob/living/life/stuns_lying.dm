@@ -55,7 +55,7 @@
 						owner.HealDamage("All", 0.2, 0.2, 0.2)
 
 				else if ((oldStat == STAT_UNCONSCIOUS) && (!statusList["paralysis"] && !statusList["stunned"] && !statusList["weakened"] && !changeling_fakedeath))
-					owner << sound('sound/misc/molly_revived.ogg', volume=50)
+					owner.playsound_local_not_inworld('sound/misc/molly_revived.ogg', 50)
 					setalive(owner)
 
 			else	//Not stunned.
@@ -72,14 +72,16 @@
 
 		if (owner.lying != lying_old)
 			owner.update_lying()
-			owner.set_density(!owner.lying)
+			var/can_be_dense = initial(owner.density)
+			if(ismobcritter(owner) && isdead(owner))
+				can_be_dense = FALSE
+			owner.set_density(!owner.lying && can_be_dense)
 
 			if (owner.lying && !owner.buckled && !HAS_ATOM_PROPERTY(owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND))
 				var/turf/T = get_turf(owner)
 				var/sound_to_play = 'sound/misc/body_thud.ogg'
 				if (T?.active_liquid && T.active_liquid.my_depth_level <= 3)
 					T.active_liquid.Crossed(owner)
-					boutput(src, "<span class='notice'>You splash into [T.active_liquid].</span>")
 					sound_to_play = 'sound/misc/splash_2.ogg'
 				else if(T?.active_liquid)
 					sound_to_play = null

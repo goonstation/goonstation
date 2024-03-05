@@ -79,7 +79,6 @@ var/list/action_names = list(
 	"mentorhelp" = "Mentor Help",
 	"adminhelp" = "Admin Help",
 
-	"togglepoint" = "Toggle Pointing",
 	"refocus"   = "Refocus Window",
 	"mainfocus" = "Focus Main Window",
 
@@ -118,7 +117,6 @@ var/list/action_verbs = list(
 	"mentorhelp" = "mentorhelp",
 	"autoscreenshot" = ".xscreenshot auto",
 	"screenshot" = ".xscreenshot",
-	"togglepoint" = "togglepoint",
 	"refocus"   = ".winset \\\"mainwindow.input.focus=true;mainwindow.input.text=\\\"\\\"\\\"",
 	"mainfocus" = ".winset \"mainwindow.input.focus=false;mapwindow.map.focus=true;mainwindow.input.text=\"\"\"",
 	//"lazyfocus" = ".winset \\\"mainwindow.input.focus=true\\\"",

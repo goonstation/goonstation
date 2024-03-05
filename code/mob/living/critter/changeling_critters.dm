@@ -59,10 +59,10 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/head))
 			if(src.hat)
-				boutput(user, "<span class='alert'>[src] is already wearing a hat!</span>")
+				boutput(user, SPAN_ALERT("[src] is already wearing a hat!"))
 				return
 			if(!(W.icon_state in BUDDY_HATS))
-				boutput(user, "<span class='alert'>It doesn't fit!</span>")
+				boutput(user, SPAN_ALERT("It doesn't fit!"))
 				return
 
 			src.hat = W
@@ -100,14 +100,14 @@
 			hat = 0
 			UpdateIcon()
 		if (!gibbed)
-			playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, 0.2, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, TRUE, 0.2, 1)
 		death_effect()
 		..()
 
 	butcher(mob/user)
 		src.original_bodypart?.set_loc(src.loc)
 		src.original_bodypart = null
-		return ..(user, FALSE)
+		return ..(user, FALSE, TRUE)
 
 	disposing()
 		..()
@@ -167,6 +167,17 @@
 		UnregisterSignal(src, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
 		..()
 
+	critter_ability_attack(var/mob/target)
+		for (var/ability_path in list(/datum/targetable/critter/dna_gnaw, /datum/targetable/critter/boilgib))
+			var/datum/targetable/critter/A = src.abilityHolder?.getAbility(ability_path)
+			if(istype(A))
+				if(istype(A, /datum/targetable/critter/boilgib))
+					if(prob(src.get_health_percentage() * 100))
+						continue
+				if (!A.disabled && A.cooldowncheck())
+					A.handleCast(target)
+					return TRUE
+
 	proc/stop_sprint()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT, src.type)
 
@@ -184,8 +195,8 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0, 2.1, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b><span class='alert'>[src] screams!</span></b>"
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, TRUE, 0, 2.1, channel=VOLUME_CHANNEL_EMOTE)
+					return SPAN_ALERT("<b>[src] screams!</b>")
 			if("flip")
 				if(src.emote_check(voluntary, 50))
 					var/list/mob/living/possible_targets = list()
@@ -289,19 +300,22 @@
 					C.limbs.r_arm:set_skin_tone()
 					C.set_body_icon_dirty()
 				if (isdead(src))
-					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B></span>"))
+					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B>"))
 				else
-					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their arm stump!</B></span>"))
+					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their arm stump!</B>"))
 
 		var/dna_gain = absorbed_dna
 		if (isdead(src))	//if the handspider is dead, the changeling can only gain half of what they collected
 			dna_gain = dna_gain / 2
 		dna_gain += 4
-		boutput(hivemind_owner.owner, "<span class='notice'>A handspider has returned to your body! You gain <B>[dna_gain]</B> DNA points from the spider!</span>")
+		boutput(hivemind_owner.owner, SPAN_NOTICE("A handspider has returned to your body! You gain <B>[dna_gain]</B> DNA points from the spider!"))
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
 
+/mob/living/critter/changeling/handspider/ai_controlled
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
 
 ///////////////////////////
 // EYESPIDER
@@ -360,6 +374,17 @@
 		// EYE CAN SEE FOREVERRRR
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_XRAYVISION, src)
 
+	critter_ability_attack(var/mob/target)
+		for (var/ability_path in list(/datum/targetable/critter/shedtears, /datum/targetable/critter/boilgib))
+			var/datum/targetable/critter/A = src.abilityHolder?.getAbility(ability_path)
+			if(istype(A))
+				if(istype(A, /datum/targetable/critter/boilgib))
+					if(prob(src.get_health_percentage() * 100))
+						continue
+				if (!A.disabled && A.cooldowncheck())
+					A.handleCast(target)
+					return TRUE
+
 	// a slight breeze will kill these guys, such is life as a squishy li'l eye
 	setup_healths()
 		add_hh_flesh(3, 1)
@@ -385,7 +410,7 @@
 			else
 				dna_gain = 2 // bad_ideas.txt
 
-		boutput(hivemind_owner.owner, "<span class='notice'>An eyespider has returned to your body![dna_gain > 0 ? " You gain <B>[dna_gain]</B> DNA points from the spider!" : ""]</span>")
+		boutput(hivemind_owner.owner, SPAN_NOTICE("An eyespider has returned to your body![dna_gain > 0 ? " You gain <B>[dna_gain]</B> DNA points from the spider!" : ""]"))
 		hivemind_owner.points += dna_gain
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
@@ -404,6 +429,10 @@
 			SPAWN(3 SECONDS)
 				src.client?.images -= arrow
 				qdel(arrow)
+
+/mob/living/critter/changeling/eyespider/ai_controlled
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
 
 ///////////////////////////
 // LEGWORM
@@ -424,8 +453,8 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b><span class='alert'>[src] screams!</span></b>"
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, TRUE, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
+					return SPAN_ALERT("<b>[src] screams!</b>")
 		return null
 
 	specific_emote_type(var/act)
@@ -492,6 +521,16 @@
 		add_hh_flesh_burn(5, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)
 
+	critter_ability_attack(var/mob/target)
+		for (var/ability_path in list(/datum/targetable/critter/powerkick, /datum/targetable/critter/writhe, /datum/targetable/critter/boilgib))
+			var/datum/targetable/critter/A = src.abilityHolder?.getAbility(ability_path)
+			if(istype(A))
+				if(istype(A, /datum/targetable/critter/boilgib))
+					if(prob(src.get_health_percentage() * 100))
+						continue
+				if (!A.disabled && A.cooldowncheck())
+					A.handleCast(target)
+					return TRUE
 
 	return_to_master()
 		if (ishuman(hivemind_owner.owner))
@@ -510,15 +549,19 @@
 					C.limbs.r_leg:set_skin_tone()
 					C.set_body_icon_dirty()
 				if (isdead(src))
-					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B></span>"))
+					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B>"))
 				else
-					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their leg stump!</B></span>"))
+					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their leg stump!</B>"))
 
 		var/dna_gain = 6 //spend dna
-		boutput(hivemind_owner.owner, "<span class='notice'>A legworm has returned to your body! You gain <B>[dna_gain]</B> DNA points from the leg!</span>")
+		boutput(hivemind_owner.owner, SPAN_NOTICE("A legworm has returned to your body! You gain <B>[dna_gain]</B> DNA points from the leg!"))
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
+
+/mob/living/critter/changeling/legworm/ai_controlled
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
 
 
 ///////////////////////////
@@ -546,7 +589,7 @@
 					playsound(src,"sound/voice/farts/fart[rand(1,6)].ogg", 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					var/turf/fart_turf = get_turf(src)
 					fart_turf.fluid_react_single("[prob(20)?"very_":""]toxic_fart",1,airborne = 1)
-					return "<b><span class='alert'>[src] farts!</span></b>"
+					return SPAN_ALERT("<b>[src] farts!</b>")
 		return null
 
 	specific_emote_type(var/act)
@@ -566,7 +609,13 @@
 		add_hh_flesh(16, 1)
 		add_hh_flesh_burn(5, 1.25)
 
-
+	critter_ability_attack(var/mob/target)
+		for (var/ability_path in list(/datum/targetable/changeling/sting/fartonium, /datum/targetable/changeling/sting/simethicone))
+			var/datum/targetable/critter/A = src.abilityHolder?.getAbility(ability_path)
+			if(istype(A))
+				if (!A.disabled && A.cooldowncheck())
+					A.handleCast(target)
+					return TRUE
 
 	return_to_master()
 		if (ishuman(hivemind_owner.owner))
@@ -576,15 +625,19 @@
 				C.organHolder.receive_organ(E,"butt",0)
 				C.update_body()
 				if (isdead(src))
-					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[hivemind_owner.owner] grabs on to [src] and.. JESUS FUCKING CHRIST LOOK AWAY OH GOD!</B></span>"))
+					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[hivemind_owner.owner] grabs on to [src] and.. JESUS FUCKING CHRIST LOOK AWAY OH GOD!</B>"))
 				else
-					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and... oh. Oh my. You really wish you hadnt seen that.</B></span>"))
+					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[src] climbs on to [hivemind_owner.owner] and... oh. Oh my. You really wish you hadnt seen that.</B>"))
 
 		var/dna_gain = 1 //spend dna
-		boutput(hivemind_owner.owner, "<span class='notice'>A buttcrab has returned to your body! You gain <B>[dna_gain]</B> DNA points from the butt!</span>")
+		boutput(hivemind_owner.owner, SPAN_NOTICE("A buttcrab has returned to your body! You gain <B>[dna_gain]</B> DNA points from the butt!"))
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
+
+/mob/living/critter/changeling/buttcrab/ai_controlled
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
 
 
 
@@ -606,8 +659,8 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b><span class='alert'>[src] screams!</span></b>"
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, TRUE, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
+					return SPAN_ALERT("<b>[src] screams!</b>")
 		return null
 
 	specific_emote_type(var/act)
@@ -683,10 +736,10 @@
 /mob/living/critter/changeling/headspider/death_effect()
 	if (changeling) // don't do this if we're an empty headspider (already took control of a body)
 		for (var/mob/living/critter/changeling/spider in changeling.hivemind)
-			boutput(spider, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
+			boutput(spider, SPAN_ALERT("Your telepathic link to your master has been destroyed!"))
 			spider.hivemind_owner = 0
 		for (var/mob/dead/target_observer/hivemind_observer/obs in changeling.hivemind)
-			boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
+			boutput(obs, SPAN_ALERT("Your telepathic link to your master has been destroyed!"))
 			obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		changeling.hivemind.Cut()
 

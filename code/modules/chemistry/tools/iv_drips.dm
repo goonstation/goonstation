@@ -10,7 +10,6 @@
 	desc = "A bag with a fine needle attached at the end, for injecting patients with fluids."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "IV"
-	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "IV"
 	w_class = W_CLASS_TINY
@@ -85,19 +84,19 @@
 		user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
 		src.UpdateIcon()
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
-		if (!ishuman(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!ishuman(target))
 			return ..()
-		var/mob/living/carbon/human/H = M
+		var/mob/living/carbon/human/H = target
 
 		if (in_use && src.patient)
 			if (src.patient != H)
 				user.show_text("[src] is already being used by someone else!", "red")
 				return
 			else if (src.patient == H)
-				H.tri_message(user, "<span class='notice'><b>[user]</b> removes [src]'s needle from [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
-					"<span class='notice'>You remove [src]'s needle from [H == user ? "your" : "[H]'s"] arm.</span>",\
-					"<span class='notice'>[H == user ? "You remove" : "<b>[user]</b> removes"] [src]'s needle from your arm.</span>")
+				H.tri_message(user, SPAN_NOTICE("<b>[user]</b> removes [src]'s needle from [H == user ? "[his_or_her(H)]" : "[H]'s"] arm."),\
+					SPAN_NOTICE("You remove [src]'s needle from [H == user ? "your" : "[H]'s"] arm."),\
+					SPAN_NOTICE("[H == user ? "You remove" : "<b>[user]</b> removes"] [src]'s needle from your arm."))
 				src.stop_transfusion()
 				return
 		else
@@ -119,9 +118,9 @@
 					user.show_text("[H] doesn't have anything left to give!", "red")
 					return
 
-			H.tri_message(user, "<span class='notice'><b>[user]</b> begins inserting [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
-				"<span class='notice'>[H == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into your arm.</span>",\
-				"<span class='notice'>You begin inserting [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>")
+			H.tri_message(user, SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm."),\
+				SPAN_NOTICE("[H == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into your arm."),\
+				SPAN_NOTICE("You begin inserting [src]'s needle into [H == user ? "your" : "[H]'s"] arm."))
 			logTheThing(LOG_COMBAT, user, "tries to hook up an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/reagent_containers/iv_drip/proc/insert_needle, list(H, user), src.icon, "IV", null, null)
 			return
@@ -143,19 +142,19 @@
 
 		if ((!src.stand && !in_interact_range(src, src.patient)) || (src.stand && !in_interact_range(src.stand, src.patient)))
 			var/fluff = pick("pulled", "yanked", "ripped")
-			src.patient.visible_message("<span class='alert'><b>[src]'s needle gets [fluff] out of [src.patient]'s arm!</b></span>",\
-			"<span class='alert'><b>[src]'s needle gets [fluff] out of your arm!</b></span>")
+			src.patient.visible_message(SPAN_ALERT("<b>[src]'s needle gets [fluff] out of [src.patient]'s arm!</b>"),\
+			SPAN_ALERT("<b>[src]'s needle gets [fluff] out of your arm!</b>"))
 			src.stop_transfusion()
 			return
 
 		if (src.mode == IV_INJECT)
 			if (src.patient.reagents.is_full())
-				src.patient.visible_message("<span class='notice'><b>[src.patient]</b>'s transfusion finishes.</span>",\
-				"<span class='notice'>Your transfusion finishes.</span>")
+				src.patient.visible_message(SPAN_NOTICE("<b>[src.patient]</b>'s transfusion finishes."),\
+				SPAN_NOTICE("Your transfusion finishes."))
 				src.stop_transfusion()
 				return
 			if (!src.reagents.total_volume)
-				src.patient.visible_message("<span class='alert'>[src] runs out of fluid!</span>")
+				src.patient.visible_message(SPAN_ALERT("[src] runs out of fluid!"))
 				src.stop_transfusion()
 				return
 
@@ -166,15 +165,15 @@
 
 		else if (src.mode == IV_DRAW)
 			if (src.reagents.is_full())
-				src.patient.visible_message("<span class='notice'>[src] fills up and stops drawing blood from [src.patient].</span>",\
-				"<span class='notice'>[src] fills up and stops drawing blood from you.</span>")
+				src.patient.visible_message(SPAN_NOTICE("[src] fills up and stops drawing blood from [src.patient]."),\
+				SPAN_NOTICE("[src] fills up and stops drawing blood from you."))
 				src.stop_transfusion()
 				return
 			// Vampires can't use this trick to inflate their blood count, because they can't get more than ~30% of it back.
 			// Also ignore that second container of blood entirely if it's a vampire (Convair880).
 			if ((isvampire(src.patient) && (src.patient.get_vampire_blood() <= 0)) || (!isvampire(src.patient) && !src.patient.reagents.total_volume && !src.patient.blood_volume))
-				src.patient.visible_message("<span class='alert'>[src] can't seem to draw anything more out of [src.patient]!</span>",\
-				"<span class='alert'>Your veins feel utterly empty!</span>")
+				src.patient.visible_message(SPAN_ALERT("[src] can't seem to draw anything more out of [src.patient]!"),\
+				SPAN_ALERT("Your veins feel utterly empty!"))
 				src.stop_transfusion()
 				return
 
@@ -184,21 +183,23 @@
 
 	proc/insert_needle(var/mob/living/carbon/human/H as mob, mob/living/carbon/user as mob)
 		src.patient = H
-		H.tri_message(user, "<span class='notice'><b>[user]</b> inserts [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
-			"<span class='notice'>[H == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s needle into your arm.</span>",\
-			"<span class='notice'>You insert [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>")
+		H.tri_message(user, SPAN_NOTICE("<b>[user]</b> inserts [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm."),\
+			SPAN_NOTICE("[H == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s needle into your arm."),\
+			SPAN_NOTICE("You insert [src]'s needle into [H == user ? "your" : "[H]'s"] arm."))
 		logTheThing(LOG_COMBAT, user, "connects an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
 		src.start_transfusion()
 
 	proc/start_transfusion()
 		src.in_use = 1
 		processing_items |= src
+		APPLY_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 2)
 		if (src.stand)
 			src.stand.UpdateIcon()
 
 	proc/stop_transfusion()
 		processing_items -= src
 		src.in_use = 0
+		REMOVE_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
 		src.patient = null
 		if (src.stand)
 			src.stand.UpdateIcon()
@@ -280,8 +281,8 @@ TYPEINFO(/obj/iv_stand)
 			if (isrobot(user)) // are they a borg? it's probably a mediborg's IV then, don't take that!
 				return
 			var/obj/item/reagent_containers/iv_drip/newIV = W
-			user.visible_message("<span class='notice'>[user] hangs [newIV] on [src].</span>",\
-			"<span class='notice'>You hang [newIV] on [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] hangs [newIV] on [src]."),\
+			SPAN_NOTICE("You hang [newIV] on [src]."))
 			user.u_equip(newIV)
 			newIV.set_loc(src)
 			src.IV = newIV
@@ -298,8 +299,8 @@ TYPEINFO(/obj/iv_stand)
 	attack_hand(mob/user)
 		if (src.IV && !isrobot(user))
 			var/obj/item/reagent_containers/iv_drip/oldIV = src.IV
-			user.visible_message("<span class='notice'>[user] takes [oldIV] down from [src].</span>",\
-			"<span class='notice'>You take [oldIV] down from [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] takes [oldIV] down from [src]."),\
+			SPAN_NOTICE("You take [oldIV] down from [src]."))
 			user.put_in_hand_or_drop(oldIV)
 			oldIV.stand = null
 			src.IV = null

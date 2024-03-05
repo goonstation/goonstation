@@ -115,7 +115,7 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		locked = !locked
 		if(user)
-			boutput(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>")
+			boutput(user, SPAN_NOTICE("You [locked ? "lock" : "unlock"] the mulebot's controls!"))
 
 		flick("mulebot-emagged", src)
 		playsound(src.loc, 'sound/effects/sparks1.ogg', 100, 0)
@@ -130,23 +130,23 @@
 			updateDialog()
 		else if (isscrewingtool(I))
 			if (locked)
-				boutput(user, "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>")
+				boutput(user, SPAN_NOTICE("The maintenance hatch cannot be opened or closed while the controls are locked."))
 				return
 
 			open = !open
 			if(open)
-				src.visible_message("[user] opens the maintenance hatch of [src]", "<span class='notice'>You open [src]'s maintenance hatch.</span>")
+				src.visible_message("[user] opens the maintenance hatch of [src]", SPAN_NOTICE("You open [src]'s maintenance hatch."))
 				on = 0
 				icon_state="mulebot-hatch"
 			else
-				src.visible_message("[user] closes the maintenance hatch of [src]", "<span class='notice'>You close [src]'s maintenance hatch.</span>")
+				src.visible_message("[user] closes the maintenance hatch of [src]", SPAN_NOTICE("You close [src]'s maintenance hatch."))
 				icon_state = "mulebot0"
 
 			updateDialog()
 		else if(load && ismob(load))  // chance to knock off rider
 			if(prob(1+I.force * 2))
 				unload(0)
-				user.visible_message("<span class='alert'>[user] knocks [load] off [src] with \the [I]!</span>", "<span class='alert'>You knock [load] off [src] with \the [I]!</span>")
+				user.visible_message(SPAN_ALERT("[user] knocks [load] off [src] with \the [I]!"), SPAN_ALERT("You knock [load] off [src] with \the [I]!"))
 			else
 				boutput(user, "You hit [src] with \the [I] but to no effect.")
 		else
@@ -284,7 +284,7 @@
 					if(src.allowed(usr))
 						locked = !locked
 					else
-						boutput(usr, "<span class='alert'>Access denied.</span>")
+						boutput(usr, SPAN_ALERT("Access denied."))
 						return
 
 				if("power")
@@ -305,7 +305,7 @@
 						usr.put_in_hand_or_drop(cell)
 						cell = null
 
-						usr.visible_message("<span class='notice'>[usr] removes the power cell from [src].</span>", "<span class='notice'>You remove the power cell from [src].</span>")
+						usr.visible_message(SPAN_NOTICE("[usr] removes the power cell from [src]."), SPAN_NOTICE("You remove the power cell from [src]."))
 
 				if("cellinsert")
 					if(open && !cell)
@@ -316,7 +316,7 @@
 							C.set_loc(src)
 							C.add_fingerprint(usr)
 
-							usr.visible_message("<span class='notice'>[usr] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
+							usr.visible_message(SPAN_NOTICE("[usr] inserts a power cell into [src]."), SPAN_NOTICE("You insert the power cell into [src]."))
 
 				if("stop")
 					if(mode >=2)
@@ -374,7 +374,7 @@
 							src.emagger = usr
 						wires &= ~wirebit
 					else
-						boutput(usr, "<span class='notice'>You need wirecutters!</span>")
+						boutput(usr, SPAN_NOTICE("You need wirecutters!"))
 				if("wiremend")
 					if (usr.find_tool_in_hand(TOOL_SNIPPING))
 						var/wirebit = text2num_safe(href_list["wire"])
@@ -383,23 +383,23 @@
 							src.emagger = null
 						wires |= wirebit
 					else
-						boutput(usr, "<span class='notice'>You need wirecutters!</span>")
+						boutput(usr, SPAN_NOTICE("You need wirecutters!"))
 
 				if("wirepulse")
 					if (usr.find_tool_in_hand(TOOL_PULSING))
 						switch(href_list["wire"])
 							if("1","2")
-								boutput(usr, "<span class='notice'>[bicon(src)] The charge light flickers.</span>")
+								boutput(usr, SPAN_NOTICE("[bicon(src)] The charge light flickers."))
 							if("4")
-								boutput(usr, "<span class='notice'>[bicon(src)] The external warning lights flash briefly.</span>")
+								boutput(usr, SPAN_NOTICE("[bicon(src)] The external warning lights flash briefly."))
 							if("8")
-								boutput(usr, "<span class='notice'>[bicon(src)] The load platform clunks.</span>")
+								boutput(usr, SPAN_NOTICE("[bicon(src)] The load platform clunks."))
 							if("16", "32")
-								boutput(usr, "<span class='notice'>[bicon(src)] The drive motor whines briefly.</span>")
+								boutput(usr, SPAN_NOTICE("[bicon(src)] The drive motor whines briefly."))
 							else
-								boutput(usr, "<span class='notice'>[bicon(src)] You hear a radio crackle.</span>")
+								boutput(usr, SPAN_NOTICE("[bicon(src)] You hear a radio crackle."))
 					else
-						boutput(usr, "<span class='notice'>You need a multitool or similar!</span>")
+						boutput(usr, SPAN_NOTICE("You need a multitool or similar!"))
 
 			updateDialog()
 		else
@@ -552,9 +552,9 @@
 							else
 								newdir = newdir | dir
 								if(newdir == 3)
-									newdir = 1
+									newdir = NORTH
 								else if(newdir == 12)
-									newdir = 4
+									newdir = EAST
 								B.set_dir(newdir)
 							bloodiness--
 
@@ -708,9 +708,9 @@
 			var/mob/M = obs
 			if(ismob(M))
 				if(isrobot(M))
-					src.visible_message("<span class='alert'>[src] bumps into [M]!</span>")
+					src.visible_message(SPAN_ALERT("[src] bumps into [M]!"))
 				else
-					src.visible_message("<span class='alert'>[src] knocks over [M]!</span>")
+					src.visible_message(SPAN_ALERT("[src] knocks over [M]!"))
 					M.remove_pulling()
 					M.changeStatus("stunned", 8 SECONDS)
 					M.changeStatus("weakened", 5 SECONDS)
@@ -724,7 +724,7 @@
 	// called from mob/living/carbon/human/Crossed(atom/movable/)
 	// when mulebot is in the same loc
 	proc/RunOver(var/mob/living/carbon/human/H)
-		src.visible_message("<span class='alert'>[src] drives over [H]!</span>")
+		src.visible_message(SPAN_ALERT("[src] drives over [H]!"))
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 		logTheThing(LOG_VEHICLE, H, "is run over by a MULE ([src.name]) at [log_loc(src)].[src.emagger && ismob(src.emagger) ? " Safety disabled by [constructTarget(src.emagger,"vehicle")]." : ""]")

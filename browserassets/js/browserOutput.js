@@ -914,7 +914,7 @@ $(function() {
         } else {
             xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
         }
-        xmlHttp.open('GET', 'https://cdn.goonhub.com/css/browserOutput.css', false);
+        xmlHttp.open('GET', 'https://cdn-main1.goonhub.com/css/browserOutput.css', false);
         xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xmlHttp.send();
         saved += '<style>'+xmlHttp.responseText+'</style>';
@@ -1008,7 +1008,7 @@ $(function() {
             '</div>');
     }
 
-    runByond('?action=ehjax&type=datum&datum=chatOutput&proc=doneLoading&param[ua]='+escaper(navigator.userAgent));
+    runByond('?action=ehjax&type=datum&datum=chatOutput&proc=doneLoading');
     if ($('#loading').is(':visible')) {
         $('#loading').remove();
     }

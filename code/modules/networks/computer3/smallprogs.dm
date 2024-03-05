@@ -55,6 +55,8 @@
 	var/const/logfile_path = "signal_log"
 
 	initialize()
+		if (..())
+			return TRUE
 		src.print_text("Signal Catcher 1.2<br>Commands: \"active \[ON/OFF/AUTO],\" \"Save \[filename]\" as signal, \"View\" current signal.<br>\"Quit\" to exit but remain in memory, \"FQuit\" to quit normally.")
 
 	disposing()
@@ -216,6 +218,8 @@
 	var/obj/item/peripheral/network/ping_card = null //The card we are actually going to use to send pings.
 
 	initialize()
+		if (..())
+			return TRUE
 		src.ping_card = null
 		src.print_text("Ping! V4.92<br>Commands: \"Ping\" to ping network. \"View\" to view prevous ping data.<br>\"Quit\" to exit but remain in memory, \"FQuit\" to quit normally.")
 
@@ -327,9 +331,9 @@
 
 	var/tmp/datum/computer/file/temp_file
 
-	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
-
 	initialize()
+		if (..())
+			return TRUE
 		attempt_id = null
 		src.pnet_card = null
 		var/introdat = "FROG Terminal Client V1.3<br>Copyright 2053 Thinktronic Systems, LTD."
@@ -474,24 +478,25 @@ file_save - Save file to local disk."}
 				src.print_text("Service mode [src.service_mode ? "" : "de"]activated.")
 
 			if("term_login")
-				var/obj/item/peripheral/scanner = find_peripheral("ID_SCANNER")
-				if(!scanner)
-					src.print_text("Error: No ID scanner detected.")
-					return
 				if(!src.pnet_card)
 					src.print_text("Alert: No network card detected.")
 					return
 				if(!src.serv_id)
 					src.print_text("Alert: Connection required.")
 					return
-				src.ping_wait = 2
 
 				var/datum/computer/file/record/udat = new // what name, assignment, and access do we have??
+				var/obj/item/peripheral/scanner = find_peripheral("ID_SCANNER")
 				if (issilicon(usr) || isAI(usr)) // silicons dont have IDs and we want them to override any inserted ID
 					udat.fields["registered"] = isAI(usr) ? "AIUSR" : "CYBORG" // should probably make all logins use the actual name of the silicon at some point
 					udat.fields["assignment"] = "AI"
 					udat.fields["access"] = "34"
 				else
+					if(!scanner)
+						src.print_text("Error: No ID scanner detected.")
+						return
+				src.ping_wait = 2
+				if(!udat.fields["registered"]) // if a name hasn't been assigned yet (i.e. not a silicon, need to scan id)
 					var/datum/signal/scansignal = src.peripheral_command("scan_card",null,"\ref[scanner]")
 					if (istype(scansignal))
 						udat.fields["registered"] = scansignal.data["registered"]
@@ -533,16 +538,15 @@ file_save - Save file to local disk."}
 
 				src.attempt_id = argument1
 
-				var/datum/computer/file/user_data/user_data = get_user_data()
 				var/datum/computer/file/record/udat = null
-				if (istype(user_data))
+				if (istype(src.account))
 					udat = new
-					udat.fields["registered"] = user_data.registered
+					udat.fields["registered"] = src.account.registered
 					if (src.service_mode)
-						udat.fields["userid"] = format_username(user_data.registered)
+						udat.fields["userid"] = format_username(src.account.registered)
 
-					udat.fields["assignment"] = user_data.assignment
-					udat.fields["access"] = list2params(user_data.access)
+					udat.fields["assignment"] = src.account.assignment
+					udat.fields["access"] = list2params(src.account.access)
 					if (!udat.fields["registered"] || !udat.fields["assignment"] || !udat.fields["access"])
 						//qdel(udat)
 						udat.dispose()
@@ -846,17 +850,6 @@ file_save - Save file to local disk."}
 		src.peripheral_command("transmit", termsignal, "\ref[pnet_card]")
 		return
 
-	proc/get_user_data()
-		var/datum/computer/folder/accdir = src.holder.root
-		if(src.master.host_program) //Check where the OS is, preferably.
-			accdir = src.master.host_program.holder.root
-
-		var/datum/computer/file/user_data/target = parse_file_directory(setup_acc_filepath, accdir)
-		if(target && istype(target))
-			return target
-
-		return null
-
 #define WORKING_PACKET_MAX 32
 
 /datum/computer/file/terminal_program/sigpal
@@ -873,6 +866,8 @@ file_save - Save file to local disk."}
 		..()
 
 	initialize()
+		if (..())
+			return TRUE
 		working_signal = list()
 		src.pnet_card = null
 		attached_file = null
@@ -1272,6 +1267,8 @@ file_save - Save file to local disk."}
 		return
 
 	initialize()
+		if (..())
+			return TRUE
 		//Set working lists back to normal...
 		src.text_buffer = new
 		src.working_signal = get_free_signal()
@@ -1363,6 +1360,8 @@ file_save - Save file to local disk."}
 
 
 	initialize()
+		if (..())
+			return TRUE
 
 		var/dat = "Crew Manifest<br>Entries cannot be modified from this terminal.<br>"
 

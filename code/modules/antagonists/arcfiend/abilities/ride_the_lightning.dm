@@ -33,7 +33,7 @@
 		for (var/i in 1 to length(src.cable_images))
 			var/image/cimg = image(cicon)
 			cimg.layer = 100
-			cimg.plane = 100
+			cimg.plane = PLANE_ABOVE_BLACKNESS
 			src.cable_images[i] = cimg
 
 	cast(atom/target)
@@ -44,13 +44,13 @@
 		else
 			var/turf/T = get_turf(src.holder.owner)
 			if (!T.z || isrestrictedz(T.z))
-				boutput(src.holder.owner, "<span class='alert'>You are forbidden from using that here!</span>")
+				boutput(src.holder.owner, SPAN_ALERT("You are forbidden from using that here!"))
 				return TRUE
 			if (T != src.holder.owner.loc) // See: no escaping port-a-brig
-				boutput(src.holder.owner, "<span class='alert'>You cannot use this ability while inside [src.holder.owner.loc]!</span>")
+				boutput(src.holder.owner, SPAN_ALERT("You cannot use this ability while inside [src.holder.owner.loc]!"))
 				return TRUE
 			if (!(locate(/obj/cable) in T))
-				boutput(src.holder.owner, "<span class='alert'>You must use this ability on top of a cable!</span>")
+				boutput(src.holder.owner, SPAN_ALERT("You must use this ability on top of a cable!"))
 				return TRUE
 			playsound(src.holder.owner, 'sound/machines/ArtifactBee2.ogg', 30, TRUE, -2)
 			actions.start(new/datum/action/bar/private/voltron(src), src.holder.owner)
@@ -81,7 +81,7 @@
 				img.invisibility = 0
 				img.alpha = 255
 				img.layer = 100
-				img.plane = 100
+				img.plane = PLANE_ABOVE_BLACKNESS
 				img.loc = locate(C.x, C.y, C.z)
 
 		src.holder.owner.client.images += src.cable_images
@@ -93,9 +93,9 @@
 
 	proc/deactivate(force = FALSE)
 		if (force)
-			boutput(src.holder.owner, "<span class='alert'>You are ejected from the cable!</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You are ejected from the cable!"))
 		else
-			boutput(src.holder.owner, "<span class='notice'>You exit the cable.</span>")
+			boutput(src.holder.owner, SPAN_NOTICE("You exit the cable."))
 		src.active = FALSE
 		src.pointCost = initial(src.pointCost)
 		var/atom/movable/screen/ability/topBar/B = src.object

@@ -2,7 +2,7 @@
 /*----------Heart----------*/
 /*=========================*/
 
-#define HEART_REAGENT_CAP 100
+#define HEART_REAGENT_CAP 330
 #define HEART_WRING_AMOUNT src.reagents.maximum_volume * 0.25
 /obj/item/organ/heart
 	name = "heart"
@@ -10,10 +10,11 @@
 	desc = "Offal, just offal."
 	organ_holder_name = "heart"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 9
 	icon = 'icons/obj/items/organs/heart.dmi'
 	icon_state = "heart"
 	item_state = "heart"
+	surgery_flags = SURGERY_SNIPPING | SURGERY_SAWING | SURGERY_CUTTING
+	region = RIBS
 	// var/broken = 0		//Might still want this. As like a "dead organ var", maybe not needed at all tho?
 	var/list/diseases = null
 	var/body_image = null // don't have time to completely refactor this, but, what name does the heart icon have in human.dmi?
@@ -37,14 +38,14 @@
 		if (!src.reagents)
 			return
 		if (!src.reagents.total_volume)
-			boutput(user, "<span class='alert'>There's nothing in \the [src] to wring out!</span>")
+			boutput(user, SPAN_ALERT("There's nothing in \the [src] to wring out!"))
 			return
 
 		if (!ON_COOLDOWN(src, "heart_wring", 2 SECONDS))
-			playsound(user, squeeze_sound, 30, 1)
+			playsound(user, squeeze_sound, 30, TRUE)
 			logTheThing(LOG_CHEMISTRY, user, "wrings out [src] containing [log_reagents(src)] at [log_loc(user)].")
 			src.reagents.trans_to(get_turf(src), HEART_WRING_AMOUNT)
-			boutput(user, "<span class='notice'>You wring out \the [src].</span>")
+			boutput(user, SPAN_NOTICE("You wring out \the [src]."))
 
 #undef HEART_WRING_AMOUNT
 
@@ -67,7 +68,7 @@
 
 		if (src.donor)
 			for (var/datum/ailment_data/disease in src.donor.ailments)
-				if (disease.cure == "Heart Transplant")
+				if (disease.cure_flags & CURE_HEART_TRANSPLANT)
 					src.donor.cure_disease(disease)
 			src.donor.blood_id = (ischangeling(src.donor) && src.blood_id == "blood") ? "bloodc" : src.blood_id
 		if (ishuman(M) && islist(src.diseases))
@@ -106,21 +107,6 @@
 		..()
 		return
 
-	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
-		/* Overrides parent function to handle special case for attaching heads. */
-		var/mob/living/carbon/human/H = M
-		if (!src.can_attach_organ(H, user))
-			return 0
-
-		var/success = ..(H, user)
-
-		if (success)
-			if (!isdead(H))
-				JOB_XP(user, "Medical Doctor", src.health > 0 ? transplant_XP*2 : transplant_XP)
-			return 1
-		else
-			return 0
-
 /obj/item/organ/heart/synth
 	name = "synthheart"
 	desc = "I guess you could call this a... hearti-choke"
@@ -145,14 +131,14 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 	edible = 0
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
-	made_from = "pharosium"
+	default_material = "pharosium"
 	transplant_XP = 7
 	squeeze_sound = 'sound/voice/screams/Robot_Scream_2.ogg'
 
 	emp_act()
 		..()
 		if (src.emagged)
-			boutput(donor, "<span class='alert'><B>Your cyberheart malfunctions and shuts down!</B></span>")
+			boutput(donor, SPAN_ALERT("<B>Your cyberheart malfunctions and shuts down!</B>"))
 			donor.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 
 /obj/item/organ/heart/flock
@@ -162,7 +148,7 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 	item_state = "flockdrone_heart"
 	body_image = "heart_flock"
 	created_decal = /obj/decal/cleanable/flockdrone_debris/fluid
-	made_from = "gnesis"
+	default_material = "gnesis"
 	var/resources = 0 // reagents for humans go in heart, resources for flockdrone go in heart, now, not the brain
 	var/flockjuice_limit = 20 // pump flockjuice into the human host forever, but only a small bit
 	var/min_blood_amount = 450
@@ -198,7 +184,7 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 /obj/item/organ/heart/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Resource repository
-		<br><span class='bold'>Resources:</span> [src.resources]
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] Resource repository<br>\
+		[SPAN_BOLD("System Integrity:")] [src.resources]<br>\
+		[SPAN_BOLD("###=-")]")]"}

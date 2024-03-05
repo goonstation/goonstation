@@ -24,7 +24,7 @@
 			return 1
 
 		if (holder.owner == target)
-			boutput(holder.owner, "<span class='alert'>You can't warp yourself!</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't warp yourself!"))
 			return 1
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
@@ -32,14 +32,14 @@
 		..()
 
 		if (target.traitHolder.hasTrait("training_chaplain"))
-			boutput(holder.owner, "<span class='alert'>[target] has divine protection from magic.</span>")
+			boutput(holder.owner, SPAN_ALERT("[target] has divine protection from magic."))
 			playsound(target.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
-			target.visible_message("<span class='alert'>The spell fails to work on [target]!</span>")
+			target.visible_message(SPAN_ALERT("The spell fails to work on [target]!"))
 			JOB_XP(target, "Chaplain", 2)
 			return
 
 		if (iswizard(target))
-			target.visible_message("<span class='alert'>The spell fails to work on [target]!</span>")
+			target.visible_message(SPAN_ALERT("The spell fails to work on [target]!"))
 			playsound(target.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 			return 1
 
@@ -47,11 +47,11 @@
 		if (holder.owner.wizard_spellpower(src))
 			telerange = 25
 		else
-			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your spell is weak without a staff to focus it!"))
 
 
 		if (isrestrictedz(holder.owner.z))
-			boutput(holder.owner, "<span class='notice'>You feel guilty for trying to use that spell here.</span>")
+			boutput(holder.owner, SPAN_NOTICE("You feel guilty for trying to use that spell here."))
 			return 1
 
 
@@ -60,9 +60,9 @@
 		for(var/turf/T in orange(target, telerange))
 			if(istype(T, /turf/space) || T.density) continue
 			randomturfs.Add(T)
-		boutput(target, "<span class='notice'>You are caught in a magical warp field!</span>")
+		boutput(target, SPAN_NOTICE("You are caught in a magical warp field!"))
 		animate_blink(target)
-		target.visible_message("<span class='alert'>[target] is warped away!</span>")
+		target.visible_message(SPAN_ALERT("[target] is warped away!"))
 		playsound(target.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 		var/turf/destination = pick(randomturfs)
 		logTheThing(LOG_COMBAT, holder.owner, "warped [constructTarget(target,"combat")] from [log_loc(target)] to [log_loc(destination)].")

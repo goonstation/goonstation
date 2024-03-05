@@ -5,6 +5,14 @@
 
 // light_status values shared between lighting fixtures and items
 // defines moved to _setup.dm by ZeWaka
+#define INSTALL_WALL 1
+#define INSTALL_FLOOR 2
+/// Amount of time it takes to attach a light fixture to a tile by hand
+#define LIGHT_FIXTURE_ATTACH_TIME 4 SECONDS
+/// Amount of time it takes to remove a light fixture from a tile by hand
+#define LIGHT_FIXTURE_DETACH_TIME 2 SECONDS
+/// Probabilty a worn/burned out light will break
+#define WORN_LIGHT_BREAKPROB 5
 
 TYPEINFO(/obj/item/light_parts)
 	mats = 4
@@ -21,9 +29,21 @@ TYPEINFO(/obj/item/light_parts)
 	var/fixture_type = /obj/machinery/light
 	var/light_type = /obj/item/light/tube
 	var/fitting = "tube"
+	var/install_type = INSTALL_WALL
+
+	New()
+		..()
+		UpdateIcon()
+
+	update_icon()
+		..()
+		var/image/light_image = SafeGetOverlayImage("light", src.icon, "[fitting]-light")
+		src.UpdateOverlays(light_image, "light")
+
 
 // For metal sheets. Can't easily change an item's vars the way it's set up (Convair880).
 /obj/item/light_parts/bulb
+	name = "bulb fixture parts"
 	icon_state = "bulb-fixture"
 	fixture_type = /obj/machinery/light/small
 	installed_icon_state = "bulb1"
@@ -32,12 +52,14 @@ TYPEINFO(/obj/item/light_parts)
 	light_type = /obj/item/light/bulb
 
 /obj/item/light_parts/floor
+	name = "floor fixture parts"
 	icon_state = "floor-fixture"
 	fixture_type = /obj/machinery/light/small/floor/netural
 	installed_icon_state = "floor1"
 	installed_base_state = "floor"
 	fitting = "floor"
 	light_type = /obj/item/light/bulb
+	install_type = INSTALL_FLOOR
 
 /obj/item/light_parts/proc/copy_light(obj/machinery/light/target)
 	installed_icon_state = target.icon_state
@@ -51,7 +73,73 @@ TYPEINFO(/obj/item/light_parts)
 		icon_state = "floor-fixture"
 	else
 		icon_state = "bulb-fixture"
+	UpdateIcon()
 
+/obj/item/light_parts/New()
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(attach_fixture))
+
+/obj/item/light_parts/proc/can_attach(atom/target, mob/user)
+	var/dir = NORTH
+	var/turf/checkturf = get_turf(target)
+	if (src.install_type == INSTALL_FLOOR)
+		if (!istype(target, /turf/simulated/floor))
+			return FALSE
+	else if (src.install_type == INSTALL_WALL)
+		if (!istype(target, /obj/window) && !istype(target, /turf/simulated/wall))
+			return FALSE
+		dir = get_dir(checkturf, user)
+		checkturf = get_step(checkturf, dir)
+		if (!is_cardinal(dir))
+			boutput(user, "You can't seem to reach that part of \the [target]. Try standing right up against it.")
+			return FALSE
+	dir = turn(dir, 180)
+	for (var/obj/machinery/light/L in checkturf)
+		if (L.dir == dir && L.install_type == src.install_type)
+			boutput(user, "There's already a lamp there!")
+			return FALSE
+	return TRUE
+
+/obj/item/light_parts/proc/attach_fixture(atom/self, atom/target, mob/user, instantly)
+	if (!user)
+		return FALSE
+
+	if (!src.can_attach(target, user))
+		return FALSE
+
+	var/dir = NORTH
+	if (src.install_type == INSTALL_WALL)
+		dir = get_dir(get_turf(target), user)
+
+	if(!instantly)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		boutput(user, "You begin to attach the [src] to [target]...")
+		SETUP_GENERIC_ACTIONBAR(user, src, LIGHT_FIXTURE_ATTACH_TIME, /obj/item/light_parts/proc/finish_attaching,\
+			list(target, user, dir), src.icon, src.icon_state, null, null)
+	else
+		finish_attaching(target, user, dir)
+	return TRUE
+
+/obj/item/light_parts/proc/finish_attaching(atom/target, mob/user, var/light_dir)
+	var/turf/turf_target = get_turf(target)
+	// wall lights are actually on the turf next to the wall
+	if (src.install_type == INSTALL_WALL)
+		turf_target = get_step(turf_target, light_dir)
+	var/obj/machinery/light/newlight = new src.fixture_type(turf_target)
+	boutput(user, "You attach \the [src] to \the [target].")
+	newlight.set_dir(turn(light_dir, 180))
+	newlight.icon_state = src.installed_icon_state
+	newlight.base_state = src.installed_base_state
+	newlight.fitting = src.fitting
+	newlight.status = LIGHT_EMPTY
+	newlight.add_fingerprint(user)
+	// this does the exact pixel positioning and stuff for the walls to line up with sprites
+	if (src.install_type == INSTALL_WALL)
+		newlight.nostick = 0
+		newlight.autoposition(turn(light_dir, 180), TRUE)
+	src.add_fingerprint(user)
+	user.u_equip(src)
+	qdel(src)
 
 //MBC : moving lights to consume power inside as an area-wide process() instead of each individual light processing its own shit
 /obj/machinery/light_area_manager
@@ -110,6 +198,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	power_channel = LIGHT
 	var/removable_bulb = 1
 	var/datum/light/point/light
+	var/install_type = INSTALL_WALL
 
 	New()
 		..()
@@ -138,10 +227,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			light.dispose()
 		..()
 
-	proc/autoposition(setdir = null)
+	proc/autoposition(setdir = null, instant = FALSE)
 		//auto position these lights so i don't have to mess with dirs in the map editor that's annoying!!!
 		if (nostick == 0) // unless nostick is set to true in which case... dont
-			SPAWN(1 DECI SECOND) //wait for the wingrille spawners to complete when map is loading (ugly i am sorry)
+			SPAWN (instant ? -1 : 1 DECI SECOND) // potentially wait for the wingrille spawners to complete when map is loading (ugly i am sorry)
 				var/turf/T = null
 				var/list/directions = null
 				if (setdir)
@@ -189,6 +278,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	base_state = "flamp"
 	icon_state = "flamp1"
 	wallmounted = 0
+	install_type = INSTALL_FLOOR
 
 //regular light bulbs
 /obj/machinery/light/small
@@ -298,7 +388,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 				..()
 				current_lamp.light_status = LIGHT_BROKEN
 
-
+/obj/machinery/light/small/uninstall_fixture()
+	var/obj/item/light_parts/bulb/parts = new /obj/item/light_parts/bulb(get_turf(src))
+	parts.copy_light(src)
+	qdel(src)
 
 //floor lights
 /obj/machinery/light/small/floor
@@ -307,6 +400,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	desc = "A small lighting fixture, embedded in the floor."
 	plane = PLANE_FLOOR
 	allowed_type = /obj/item/light/bulb
+	install_type = INSTALL_FLOOR
 
 	New()
 		..()
@@ -357,6 +451,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			..()
 			current_lamp.light_status = LIGHT_BROKEN
 
+/obj/machinery/light/small/floor/uninstall_fixture()
+	var/obj/item/light_parts/floor/parts = new /obj/item/light_parts/floor(get_turf(src))
+	parts.copy_light(src)
+	qdel(src)
+
 /obj/machinery/light/emergency
 	icon_state = "ebulb1"
 	base_state = "ebulb"
@@ -394,6 +493,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	allowed_type = /obj/item/light/bulb/emergency
 	on = 1
 	removable_bulb = 0
+	install_type = INSTALL_WALL
 
 /obj/machinery/light/runway_light
 	name = "runway light"
@@ -408,7 +508,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	on = 1
 	wallmounted = 0
 	removable_bulb = 0
-
+	install_type = INSTALL_FLOOR
 	delay2
 		icon_state = "runway20"
 		base_state = "runway2"
@@ -421,6 +521,21 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	delay5
 		icon_state = "runway50"
 		base_state = "runway5"
+
+/obj/machinery/light/runway_light/update_icon_state()
+	if (!inserted_lamp)
+		icon_state = "floor-empty"
+		on = 0
+	else
+		switch(current_lamp.light_status) // set icon_states
+			if(LIGHT_OK)
+				icon_state = "[base_state][on]"
+			if(LIGHT_BURNED)
+				icon_state = "floor-burned"
+				on = 0
+			if(LIGHT_BROKEN)
+				icon_state = "floor-broken"
+				on = 0
 
 /obj/machinery/light/traffic_light
 	name = "warning light"
@@ -437,6 +552,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	removable_bulb = 0
 	var/static/warning_color = "#da9b49"
 	var/connected_dock = null
+	install_type = INSTALL_FLOOR
 
 	New()
 		..()
@@ -502,6 +618,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		var/state = src.on && A.power_light
 		seton(state)
 
+/obj/machinery/light/traffic_light/update_icon_state()
+	if (!inserted_lamp)
+		icon_state = "floor-empty"
+		on = 0
+	else
+		switch(current_lamp.light_status) // set icon_states
+			if(LIGHT_OK)
+				icon_state = "[base_state][on]"
+			if(LIGHT_BURNED)
+				icon_state = "floor-burned"
+				on = 0
+			if(LIGHT_BROKEN)
+				icon_state = "floor-broken"
+				on = 0
+
+
 /obj/machinery/light/beacon
 	name = "tripod light"
 	desc = "A large portable light tripod."
@@ -515,6 +647,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	light_type = /obj/item/light/big_bulb
 	allowed_type = /obj/item/light/big_bulb
 	power_usage = 0
+	install_type = INSTALL_FLOOR
 
 	attackby(obj/item/W, mob/user)
 
@@ -527,10 +660,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			src.anchored = !src.anchored
 
 			if (!src.anchored)
-				boutput(user, "<span class='alert'>[src] can now be moved.</span>")
+				boutput(user, SPAN_ALERT("[src] can now be moved."))
 				src.on = 0
 			else
-				boutput(user, "<span class='alert'>[src] is now secured.</span>")
+				boutput(user, SPAN_ALERT("[src] is now secured."))
 				src.on = 1
 
 			update()
@@ -547,7 +680,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	brightness = 1
 	New()
 		..()
-		current_lamp.breakprob = 6.25
+		current_lamp.breakprob = WORN_LIGHT_BREAKPROB
 
 // the desk lamp
 /obj/machinery/light/lamp
@@ -562,6 +695,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	layer = ABOVE_OBJ_LAYER
 	plane = PLANE_DEFAULT
 	var/switchon = FALSE		// independent switching for lamps - not controlled by area lightswitch
+	install_type = INSTALL_FLOOR
 
 // if attack with hand, only "grab" attacks are an attempt to remove bulb
 // otherwise, switch the lamp on/off
@@ -688,6 +822,33 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update()
+	src.update_icon_state()
+
+	if (on)
+		light.enable()
+	else
+		light.disable()
+
+	SPAWN(0)
+		// now check to see if the bulb is burned out
+		switch(current_lamp.light_status)
+			if(LIGHT_OK)
+				if(!on)
+					return
+				if(current_lamp.rigged)
+					if (current_lamp.rigger)
+						message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
+						logTheThing(LOG_COMBAT, current_lamp.rigger, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
+					explode()
+				if(prob(current_lamp.breakprob))
+					src.do_break()
+				if(prob(current_lamp.burnprob))
+					src.do_burn_out()
+			if (LIGHT_BURNED)
+				if(prob(current_lamp.breakprob))
+					src.do_break()
+
+/obj/machinery/light/proc/update_icon_state()
 	if (!inserted_lamp)
 		icon_state = "[base_state]-empty"
 		on = 0
@@ -702,36 +863,37 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 				icon_state = "[base_state]-broken"
 				on = 0
 
-	// if the state changed, inc the switching counter
-	//if(src.light.enabled != on)
+/obj/machinery/light/proc/do_break()
+	current_lamp.light_status = LIGHT_BROKEN
+	current_lamp.update()
+	icon_state = "[base_state]-broken"
+	on = 0
+	light.disable()
+	elecflash(src, radius = 1, power = 2, exclude_center = 0)
+	logTheThing(LOG_STATION, null, "Light '[name]' broke itself (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
 
-	if (on)
-		light.enable()
-	else
-		light.disable()
-
-	SPAWN(0)
-		// now check to see if the bulb is burned out
-		if(current_lamp.light_status == LIGHT_OK)
-			if(on && current_lamp.rigged)
-				if (current_lamp.rigger)
-					message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
-					logTheThing(LOG_COMBAT, current_lamp.rigger, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
-				explode()
-			if(on && prob(current_lamp.breakprob))
-				current_lamp.light_status = LIGHT_BURNED
-				icon_state = "[base_state]-burned"
-				on = 0
-				light.disable()
-				elecflash(src,radius = 1, power = 2, exclude_center = 0)
-				logTheThing(LOG_STATION, null, "Light '[name]' burnt out (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
-
+/obj/machinery/light/proc/do_burn_out()
+	var/original_brightness = src.light.brightness
+	playsound(src, 'sound/effects/snaptape.ogg', 30, TRUE)
+	src.light.set_brightness(original_brightness * 3)
+	logTheThing(LOG_STATION, null, "Light '[name]' burned out (burnprob: [current_lamp.burnprob]) at ([log_loc(src)])")
+	SPAWN(0.2 SECONDS)
+		src.light.set_brightness(original_brightness)
+		src.icon_state = "[base_state]-burned"
+		src.current_lamp.breakprob = WORN_LIGHT_BREAKPROB
+		src.current_lamp.light_status = LIGHT_BURNED
+		src.current_lamp.update()
+		playsound(src, 'sound/effects/sparks4.ogg', 40, TRUE)
+		src.on = FALSE
+		src.light.disable()
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
 /obj/machinery/light/proc/seton(var/s)
+	var/old_on = on
 	on = (s && current_lamp.light_status == LIGHT_OK)
-	update()
+	if(s != old_on) //don't update if trying to set to the same state
+		update()
 
 // examine verb
 /obj/machinery/light/examine(mob/user)
@@ -851,14 +1013,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 				boutput(user, "That's not safe with the power on!")
 				return
 			if (candismantle)
-				boutput(user, "You begin to unscrew the fixture from the wall...")
+				boutput(user, "You begin to loosen the fixture's screws...")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				if (!do_after(user, 2 SECONDS))
-					return
-				boutput(user, "You unscrew the fixture from the wall.")
-				var/obj/item/light_parts/parts = new /obj/item/light_parts(get_turf(src))
-				parts.copy_light(src)
-				qdel(src)
+				SETUP_GENERIC_ACTIONBAR(user, src, LIGHT_FIXTURE_DETACH_TIME, PROC_REF(uninstall_fixture),list(), src.icon, src.icon_state,\
+				 "[user] finishes uninstalling \the [src].", INTERRUPT_MOVE|INTERRUPT_ACT|INTERRUPT_ATTACKED|INTERRUPT_STUNNED|INTERRUPT_ACTION)
 				return
 			else
 				boutput(user, "You can't seem to dismantle it.")
@@ -891,6 +1049,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		else
 			boutput(user, "You hit the light!")
 
+/obj/machinery/light/proc/uninstall_fixture()
+	var/obj/item/light_parts/parts = new /obj/item/light_parts(get_turf(src))
+	parts.copy_light(src)
+	qdel(src)
 
 // returns whether this light has power
 // true if area has power and lightswitch is on
@@ -1076,6 +1238,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		var/state = !A.power_light || shipAlertState == SHIP_ALERT_BAD
 		seton(state)
 
+/obj/machinery/light/emergency/insert()
+	..()
+	power_change()
 
 // the light item
 // can be tube or bulb subtypes
@@ -1091,10 +1256,11 @@ TYPEINFO(/obj/item/light)
 	force = 2
 	throwforce = 5
 	w_class = W_CLASS_SMALL
+	m_amt = 60
 	var/light_status = LIGHT_OK		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
-	var/breakprob = 0	// number of times switched
-	m_amt = 60
+	var/breakprob = 0 //! Chance for the bulb to burst
+	var/burnprob = 1 //! Chance for the bulb to burn out
 	var/rigged = 0		// true if rigged to explode
 	var/mob/rigger = null // mob responsible
 	var/color_r = 1
@@ -1359,6 +1525,7 @@ TYPEINFO(/obj/item/light)
 		desc = "A frosted red bulb."
 		icon_state = "bulb-emergency"
 		base_state = "bulb-emergency"
+		burnprob = 0
 		color_r = 1
 		color_g = 0.2
 		color_b = 0.2
@@ -1521,3 +1688,10 @@ TYPEINFO(/obj/item/light)
 		return C
 	else
 		return ..()
+
+#undef WORN_LIGHT_BREAKPROB
+#undef LIGHT_FIXTURE_ATTACH_TIME
+#undef LIGHT_FIXTURE_DETACH_TIME
+
+#undef INSTALL_WALL
+#undef INSTALL_FLOOR

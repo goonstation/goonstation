@@ -87,7 +87,7 @@
 			logTheThing(LOG_STATION, user.real_name, "added an approval for podbay access. [length(src.authorized)] total approval[s_es(length(src.authorized))].")
 			auths_required -= 1
 			for (var/mob/M in hearers(src, null))
-				M.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[user.real_name]'s request accepted. [auths_required] authorization[s_es(auths_required)] needed until Podbay is opened.\"</span></span>", 2)
+				M.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[user.real_name]'s request accepted. [auths_required] authorization[s_es(auths_required)] needed until Podbay is opened.\"")), 2)
 		else
 			src.authorize()
 

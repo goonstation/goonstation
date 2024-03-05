@@ -38,7 +38,7 @@
 				H.set_density(0)
 				H.set_loc(holder.owner.loc)
 			else
-				holder.owner.visible_message("<span class='alert'>[holder.owner] closes his eyes for a moment.</span>")
+				holder.owner.visible_message(SPAN_ALERT("[holder.owner] closes his eyes for a moment."))
 				playsound(holder.owner.loc, 'sound/voice/macho/macho_breathing18.ogg', 50, 0, 0, holder.owner.get_age_pitch())
 				sleep(4 SECONDS)
 			holder.owner.set_density(0)
@@ -57,9 +57,9 @@
 				H.overlays = null
 				H.icon = composite
 				*/
-				holder.owner.visible_message("<span class='alert'><B>[holder.owner] grabs [H] and flies through the ceiling!</B></span>")
+				holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] grabs [H] and flies through the ceiling!</B>"))
 			else
-				holder.owner.visible_message("<span class='alert'>[holder.owner] flies through the ceiling!</span>")
+				holder.owner.visible_message(SPAN_ALERT("[holder.owner] flies through the ceiling!"))
 			playsound(holder.owner.loc, 'sound/effects/bionic_sound.ogg', 50)
 			playsound(holder.owner.loc, 'sound/voice/macho/macho_become_enraged01.ogg', 50, 0, 0, holder.owner.get_age_pitch())
 			for (var/i = 0, i < 20, i++)
@@ -84,10 +84,10 @@
 				sleep(0.1 SECONDS)
 			holder.owner.set_loc(pick(turfs))
 			if (H)
-				holder.owner.visible_message("<span class='alert'>[holder.owner] suddenly descends from the ceiling with [H]!</span>")
+				holder.owner.visible_message(SPAN_ALERT("[holder.owner] suddenly descends from the ceiling with [H]!"))
 				H.set_loc(holder.owner.loc)
 			else
-				holder.owner.visible_message("<span class='alert'>[holder.owner] suddenly descends from the ceiling!</span>")
+				holder.owner.visible_message(SPAN_ALERT("[holder.owner] suddenly descends from the ceiling!"))
 			playsound(holder.owner.loc, 'sound/effects/bionic_sound.ogg', 50)
 			for (var/i = 0, i < 20, i++)
 				holder.owner.pixel_y -= 15
@@ -121,7 +121,7 @@
 			if (istype(holder.owner.loc, /turf/simulated/floor))
 				holder.owner.loc:break_tile()
 			if (H)
-				holder.owner.visible_message("<span class='alert'><B>[holder.owner] ultra atomic piledrives [H]!!</B></span>")
+				holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] ultra atomic piledrives [H]!!</B>"))
 				var/obj/overlay/O = new/obj/overlay(get_turf(holder.owner))
 				O.anchored = ANCHORED
 				O.name = "Explosion"

@@ -32,7 +32,7 @@
 		else if (ambient_light)
 			var/image/I = new /image/ambient
 			I.color = ambient_light
-			overlays += I
+			src.UpdateOverlays(I, "ambient")
 
 	proc/update_fullbright()
 		if (force_fullbright)
