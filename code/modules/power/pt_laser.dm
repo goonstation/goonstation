@@ -150,8 +150,6 @@
 	if(online) // if it's switched on
 		if(!firing) //not firing
 
-			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "[0]") //output 0 on mechcomp if beam is not firing
-
 			if(charge >= adj_output && (adj_output >= PTLMINOUTPUT)) //have power to fire
 				start_firing() //creates all the laser objects then activates the right ones
 				dont_update = 1 //so the firing animation runs
@@ -172,7 +170,7 @@
 				melt_blocking_objects()
 			power_sold(adj_output)
 
-			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "[output]") //give theoretical output if beam is firing
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "[output * firing]") //sends 0 if not firing else give theoretical output
 
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
