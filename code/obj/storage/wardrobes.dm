@@ -29,38 +29,38 @@ TYPEINFO(/obj/storage/closet/dresser)
 	desc = "A label on it reads: In order to improve workplace efficiency, employees are encouraged to spend no more than 5 minutes in the closet at a time."
 	icon_state = "gay"
 	icon_closed = "gay"
-	spawn_contents = list(/obj/item/clothing/under/pride = 2,
-	/obj/item/clothing/under/pride/ace = 2,
-	/obj/item/clothing/under/pride/aro = 2,
-	/obj/item/clothing/under/pride/bi = 2,
-	/obj/item/clothing/under/pride/inter = 2,
-	/obj/item/clothing/under/pride/pan = 2,
-	/obj/item/clothing/under/pride/poly = 2,
-	/obj/item/clothing/under/pride/nb = 2,
-	/obj/item/clothing/under/pride/lesb = 2,
-	/obj/item/clothing/under/pride/gaymasc = 2,
-	/obj/item/clothing/under/pride/trans = 2)
+	spawn_contents = list(/obj/item/clothing/under/pride = list(2, 3, 6),
+	/obj/item/clothing/under/pride/ace = list(2, -3, 6),
+	/obj/item/clothing/under/pride/aro = list(2, 3, 3),
+	/obj/item/clothing/under/pride/bi = list(2, -3, 3),
+	/obj/item/clothing/under/pride/inter = list(2, 3, 0),
+	/obj/item/clothing/under/pride/pan = list(2, -3, 0),
+	/obj/item/clothing/under/pride/poly = list(2, 3, -3),
+	/obj/item/clothing/under/pride/nb = list(2, -3, -3),
+	/obj/item/clothing/under/pride/lesb = list(2, 3, -6),
+	/obj/item/clothing/under/pride/gaymasc = list(2, -3, -6),
+	/obj/item/clothing/under/pride/trans = list(2, 0, -9))
 
 /obj/storage/closet/wardrobe/black
 	name = "black wardrobe"
 	icon_state = "black"
 	icon_closed = "black"
-	spawn_contents = list(/obj/item/clothing/under/color = 4,
-	/obj/item/clothing/shoes/black = 4,
-	/obj/item/clothing/head/black = 2)
+	spawn_contents = list(/obj/item/clothing/under/color = list(4, 0, -3),
+	/obj/item/clothing/shoes/black = list(4, 0, -12),
+	/obj/item/clothing/head/black = list(2, 0, 8))
 
 /obj/storage/closet/wardrobe/grey
 	name = "grey wardrobe"
 	icon_state = "grey"
 	icon_closed = "grey"
-	spawn_contents = list(/obj/item/clothing/under/color/grey = 4,
-	/obj/item/clothing/shoes/black = 5)
+	spawn_contents = list(/obj/item/clothing/under/color/grey = list(4, 0, -3),
+	/obj/item/clothing/shoes/black = list(5, 0, -12))
 
 /obj/storage/closet/wardrobe/white
 	name = "white wardrobe"
 	icon_state = "white"
 	icon_closed = "white"
-	spawn_contents = list(/obj/item/clothing/under/color/white = 4,
+	spawn_contents = list(/obj/item/clothing/under/color/white = list(4, 0, -3),
 	/obj/item/clothing/shoes/brown = 4,
 	/obj/item/clothing/head/white  = 2)
 

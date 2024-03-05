@@ -90,11 +90,23 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 		for (var/thing in src.spawn_contents)
 			var/amt = 1
+			var/x_offset = 0
+			var/y_offset = 0
 			if (!ispath(thing))
 				continue
 			if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
 				amt = abs(spawn_contents[thing])
-			do new thing(src)	//Two lines! I TOLD YOU I COULD DO IT!!!
+			if (islist(spawn_contents[thing])) //Should hopefully support pixel offsets in spawn_contents
+				var/list/thinginfo = spawn_contents[thing]
+				amt = abs(thinginfo[1])
+				x_offset = thinginfo[2]
+				y_offset = thinginfo[3]
+			do
+				var/thing_i_made = new thing(src)
+				var/obj/I = thing_i_made
+				if (I)
+					I.pixel_x = x_offset
+					I.pixel_y = y_offset
 			while (--amt > 0)
 
 	proc/get_welding_positions()
