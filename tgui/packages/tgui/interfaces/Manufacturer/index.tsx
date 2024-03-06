@@ -1,7 +1,7 @@
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { Box, Button, Collapsible, Image, Section, Stack } from '../../components';
+import { Button, Collapsible, Image, Section, Stack } from '../../components';
 import { truncate } from '../../format';
 
 const CategoryButton = (props) => {
@@ -17,7 +17,8 @@ const CategoryButton = (props) => {
 };
 
 
-const BlueprintButton = (props) => {
+const BlueprintButton = (props, context) => {
+  const { act } = useBackend(context);
   const { blueprintData } = props;
 
   return (
@@ -30,6 +31,7 @@ const BlueprintButton = (props) => {
       pb={0}
       pt={0}
       mt={0}
+      onClick={() => act("product", { "blueprint_ref": blueprintData.ref })}
     >
       <Stack>
         <Stack.Item

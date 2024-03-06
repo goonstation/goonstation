@@ -14,6 +14,7 @@ type ManufacturerData = {
   downloaded_blueprints:{ [key:string] : Manufacturable[]};
   drive_recipe_blueprints:{ [key:string] : Manufacturable[]};
   hidden_blueprints:{ [key:string] : Manufacturable[]};
+  delete_allowed:boolean;
 }
 
 // See /datum/manufacture
@@ -29,4 +30,5 @@ type Manufacturable = {
   category:string;
   sanity_check_exemption:boolean;
   apply_material:boolean;
+  ref:string;
 }

@@ -291,6 +291,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"mats_by_id" = src.stored_materials_by_id,
 			"downloaded_blueprints" = src.download,
 			"drive_recipe_blueprints" = src.drive_recipes,
+			"delete_allowed" = src.allowed(user)
 		)
 
 	ui_static_data(mob/user)
@@ -321,7 +322,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"time" = M.time,
 			"sanity_check_exemption" = M.sanity_check_exemption,
 			"apply_material" = M.apply_material,
-			"img" = getItemIcon(M.item_outputs[1], C = user.client)
+			"img" = getItemIcon(M.item_outputs[1], C = user.client),
+			"ref" = "\ref[M]",
 		)
 
 	attack_hand(mob/user)
@@ -653,6 +655,32 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if(src.hacked && src.hidden && (M in src.hidden))
 			return TRUE
 
+	ui_act(action, params)
+		switch(action)
+			if ("product")
+				var/datum/manufacture/I = locate(params["blueprint_ref"])
+				if (!istype(I,/datum/manufacture/))
+					return
+				if(world.time < last_queue_op + 5) //Anti-spam to prevent people lagging the server with autoclickers
+					return
+				else
+					last_queue_op = world.time
+
+				// Verify that there is no href fuckery abound
+				if(!validate_disp(I))
+					// Since a manufacturer may get unhacked or a downloaded item could get deleted between someone
+					// opening the window and clicking the button we can't assume intent here, so no cluwne
+					return
+
+				if (!check_enough_materials(I))
+					boutput(usr, SPAN_ALERT("Insufficient usable materials to manufacture that item."))
+				else if (length(src.queue) >= MAX_QUEUE_LENGTH)
+					boutput(usr, SPAN_ALERT("Manufacturer queue length limit reached."))
+				else
+					src.queue += I
+					if (src.mode == "ready")
+						src.begin_work(1)
+						src.updateUsrDialog()
 
 	Topic(href, href_list)
 
