@@ -1,5 +1,9 @@
 
 (t)wed mar 06 24
+(u)mintyphresh, Geonightman
+(p)18104
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Pride jumpsuits can be cut up into flags.
 (u)Vincent983 + Ikea
 (p)18083
 (e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
