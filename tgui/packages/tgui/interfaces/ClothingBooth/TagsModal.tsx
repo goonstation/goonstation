@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Dimmer, Section, Stack } from '../../components';
+import { Button, Dimmer, Section, Stack } from '../../components';
 import { ClothingBoothData, ClothingBoothGroupingTagsData, TagDisplayOrderType } from './type';
 import { buildFieldComparator, stringComparator } from './utils/Comparator';
 
@@ -78,10 +78,8 @@ const TagCheckbox = (props: ClothingBoothGroupingTagsData, context) => {
     });
 
   return (
-    <Button.Checkbox fluid color="" onClick={() => setTagFilter(name)}>
-      <Box inline checked={!!tagFilters[name]} color={colour && colour}>
-        {name}
-      </Box>
+    <Button.Checkbox fluid checked={!!tagFilters[name]} color="" onClick={() => setTagFilter(name)}>
+      {name}
     </Button.Checkbox>
   );
 };

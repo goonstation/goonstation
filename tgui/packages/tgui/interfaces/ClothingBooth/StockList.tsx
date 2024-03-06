@@ -41,12 +41,15 @@ export const StockList = (_props: unknown, context) => {
   const slotFilteredItemGroupings = Object.values(slotFilters).some((filter) => filter)
     ? affordableItemGroupings.filter((itemGrouping) => slotFilters[itemGrouping.slot])
     : affordableItemGroupings;
+  const tagFilteredItemGroupings = Object.values(tagFilters).some((filter) => filter)
+    ? slotFilteredItemGroupings.filter((itemGrouping) => ())
+    : slotFilteredItemGroupings;
   const searchTextLower = searchText.toLocaleLowerCase();
   const searchFilteredItemGroupings = searchText
-    ? slotFilteredItemGroupings.filter((itemGrouping) =>
+    ? tagFilteredItemGroupings.filter((itemGrouping) =>
       itemGrouping.name.toLocaleLowerCase().includes(searchTextLower)
     )
-    : slotFilteredItemGroupings;
+    : tagFilteredItemGroupings;
   const sortComparator = getClothingBoothGroupingSortComparator(sortType, sortAscending);
   const sortedStockInformationList = searchFilteredItemGroupings.sort(sortComparator);
 
