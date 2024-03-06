@@ -735,7 +735,6 @@ toxic - poisons
 	implanted = null
 	damage = 9
 	hit_mob_sound = 'sound/effects/skeleton_break.ogg'
-	ricochets = TRUE
 	impact_image_state = null // in my mind these are just literal bones fragments being thrown at people, wouldn't stick into walls
 
 	on_hit(atom/hit)
