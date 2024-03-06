@@ -63,20 +63,17 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "8.0"
+      # - name: Setup dotnet
+      #   uses: actions/setup-dotnet@v4
+      #   with:
+      #     dotnet-version: "8.0"
       - run: touch +secret/__secret.dme
-
       - uses: robinraju/release-downloader@v1.9
         with:
           repository: "OpenDreamProject/OpenDream"
           tag: "latest"
           fileName: "DMCompiler_linux-x64.tar.gz"
           extract: true
-      - run: |
-          ls -la
       - run: ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented goonstation.dme --version=514.1584
 
   compile:
