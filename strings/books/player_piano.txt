@@ -42,7 +42,7 @@
 
 <p>Each note has three characters, with vertical bars separating them.</p>
 
-<p>Rests are a single letter, R/r</p>
+<p>Rests are a single letter, R/r, that may be followed by a number to indicate multiple rests which go from R1 to R9999.</p>
 
 <ul style="padding: 10px;">
 <li>First character is the note name and accidental</li>
