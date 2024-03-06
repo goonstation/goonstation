@@ -83,7 +83,7 @@ jobs:
         with:
           working-directory: OpenDream
       - run: dotnet build -c Release OpenDream/OpenDream.sln
-      - run: dotnet OpenDream/bin/DMCompiler/DMCompiler.dll --suppress-unimplemented goonstation.dme
+      - run: dotnet OpenDream/bin/DMCompiler/DMCompiler.dll --suppress-unimplemented goonstation.dme --version=514.1584
 
   compile:
     name: Compile
