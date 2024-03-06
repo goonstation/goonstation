@@ -98,7 +98,7 @@ export const Manufacturer = (_, context) => {
     dropdowns.push(<CategoryDropdown category={i} blueprints={usable_blueprints[i]} />);
   }
   return (
-    <Window width={1200} height={600}>
+    <Window width={1200} height={600} title={data.fabricator_name}>
       <Section width={79.75} pl={0.5}>
         {dropdowns}
       </Section>

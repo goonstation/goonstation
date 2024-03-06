@@ -296,6 +296,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	ui_static_data(mob/user)
 		return list (
+			"fabricator_name" = src.name,
 			"all_categories" = src.categories,
 			"available_blueprints" = blueprints_as_list(src.available, user),
 			"hidden_blueprints" = blueprints_as_list(src.hidden, user),

@@ -1,20 +1,27 @@
 
 type ManufacturerData = {
-  panel_open:boolean;
-  hacked:boolean;
-  malfunction:boolean;
-  wire_bitflags:number;
-  scanned_card:string;
-  speed:number;
-  repeat:boolean;
-  resources:{ [key: string] : number };
-  mats_by_id:any;
   all_categories:[string];
+  
+  fabricator_name:string;
+  scanned_card:string;
+
   available_blueprints:{ [key:string] : Manufacturable[]};
   downloaded_blueprints:{ [key:string] : Manufacturable[]};
   drive_recipe_blueprints:{ [key:string] : Manufacturable[]};
   hidden_blueprints:{ [key:string] : Manufacturable[]};
+
+  resources:{ [key: string] : number };
+
   delete_allowed:boolean;
+  hacked:boolean;
+  malfunction:boolean;
+  panel_open:boolean;
+  repeat:boolean;
+
+  mats_by_id:any;
+
+  speed:number;
+  wire_bitflags:number;
 }
 
 // See /datum/manufacture
