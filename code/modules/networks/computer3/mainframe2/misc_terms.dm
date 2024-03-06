@@ -1767,18 +1767,19 @@ TYPEINFO(/obj/machinery/networked/printer)
 			return
 
 		else if (istype(W, /obj/item/paper_bin)) //Load up the printer!
+			var/obj/item/paper_bin/bin = W
 			if (sheets_remaining >= MAX_SHEETS)
 				boutput(user, SPAN_ALERT("The tray is full!"))
 				return
 
 			var/to_remove = MAX_SHEETS - sheets_remaining
-			if(W:amount > to_remove)
-				W:amount -= to_remove
+			if(bin.amount_left > to_remove)
+				bin.amount_left -= to_remove
 				boutput(user, "You load [to_remove] sheets into the tray.")
 				src.sheets_remaining += to_remove
 			else
-				boutput(user, "You load [W:amount] sheets into the tray.")
-				src.sheets_remaining += W:amount
+				boutput(user, "You load [bin.amount_left] sheets into the tray.")
+				src.sheets_remaining += bin.amount_left
 				user.drop_item()
 				qdel(W)
 

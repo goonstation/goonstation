@@ -152,9 +152,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_EXECUTIVE
 	high_priority_job = 1
 	receives_miranda = 1
-#ifdef RP_MODE
 	allow_traitors = 0
-#endif
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	allow_spy_theft = 0
@@ -324,7 +322,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wiki_link = "https://wiki.ss13.co/Chief_Engineer"
 
 	slot_back = list(/obj/item/storage/backpack/engineering)
-	slot_belt = list(/obj/item/device/pda2/chiefengineer)
+	slot_belt = list(/obj/item/storage/belt/utility/prepared/ceshielded)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_head = list(/obj/item/clothing/head/helmet/hardhat/chief_engineer)
@@ -332,6 +330,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_jump = list(/obj/item/clothing/under/rank/chief_engineer)
 	slot_ears = list(/obj/item/device/radio/headset/command/ce)
 	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/engineering)
+	slot_poc2 = list(/obj/item/device/pda2/chiefengineer)
 	items_in_backpack = list(/obj/item/device/flash, /obj/item/rcd_ammo/medium)
 
 	special_setup(var/mob/living/carbon/human/M)

@@ -40260,66 +40260,14 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bVf" = (
-/obj/rack,
-/obj/item/circuitboard/qmsupply{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/circuitboard/telescope{
-	pixel_x = 5;
-	pixel_y = 1
-	},
-/obj/item/circuitboard/powermonitor{
-	pixel_x = 5;
-	pixel_y = -3
-	},
-/obj/item/circuitboard/genetics{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/circuitboard/powermonitor_smes{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/arcade{
-	pixel_x = -5;
-	pixel_y = -5
-	},
-/obj/item/circuitboard/operating{
-	pixel_x = -5;
-	pixel_y = -1
+/obj/rack/organized/techstorage_med{
+	order_override = "zigzag"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "bVg" = (
-/obj/rack,
-/obj/item/circuitboard/qmorder{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/circuitboard/robot_module_rewriter{
-	pixel_x = 5;
-	pixel_y = -3
-	},
-/obj/item/circuitboard/barcode_qm{
-	pixel_x = 5;
-	pixel_y = 1
-	},
-/obj/item/circuitboard/barcode{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/circuitboard/card{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/cloning{
-	pixel_x = -5;
-	pixel_y = -1
-	},
-/obj/item/circuitboard/teleporter{
-	pixel_x = -5;
-	pixel_y = -5
+/obj/rack/organized/techstorage_eng{
+	order_override = "zigzag"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -43441,9 +43389,6 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "cbG" = (
-/obj/stool/chair{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -43451,15 +43396,15 @@
 	pixel_x = -6;
 	pixel_y = -11
 	},
+/obj/stool/chair/purple{
+	dir = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred5"
 	},
 /area/station/crew_quarters/hor)
 "cbH" = (
-/obj/stool/chair{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -43469,14 +43414,17 @@
 	name = "autoname - SS13"
 	},
 /obj/blind_switch/area/north,
+/obj/stool/chair/purple{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "cbI" = (
-/obj/stool/chair{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/stool/chair/purple{
+	dir = 4
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
@@ -43534,10 +43482,10 @@
 /turf/simulated/floor/purple/side,
 /area/station/janitor/office)
 "cbO" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 4
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/purple/side,
 /area/station/science/lobby)
 "cbP" = (
@@ -43754,11 +43702,11 @@
 	},
 /area/station/crew_quarters/captain)
 "cco" = (
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/stool/chair/purple{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -43807,10 +43755,10 @@
 	},
 /area/station/chapel/sanctuary)
 "ccs" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 8
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/purple/side,
 /area/station/science/lobby)
 "cct" = (
@@ -49066,7 +49014,7 @@
 /area/station/mining/staff_room)
 "ckQ" = (
 /obj/table/auto,
-/obj/submachine/mixer{
+/obj/machinery/mixer{
 	pixel_x = -6
 	},
 /turf/simulated/floor/specialroom/cafeteria,

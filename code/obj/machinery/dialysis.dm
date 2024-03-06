@@ -29,6 +29,7 @@ TYPEINFO(/obj/machinery/dialysis)
 			CRASH("[src] tried to fetch the global chem whitelist but it has a length of 0!")
 		src.whitelist = chem_whitelist
 		src.UpdateIcon()
+		UnsubscribeProcess()
 
 	disposing()
 		if (src.patient)
@@ -156,6 +157,7 @@ TYPEINFO(/obj/machinery/dialysis)
 			return boutput(user, SPAN_ALERT("[src] already has a patient attached!"))
 		src.patient = new_patient
 		src.patient.setStatus("dialysis", INFINITE_STATUS, src)
+		APPLY_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 3)
 		src.power_usage = 500
 		src.patient_blood_id = src.patient.blood_id
 		src.UpdateIcon()
@@ -166,6 +168,7 @@ TYPEINFO(/obj/machinery/dialysis)
 		var/list/datum/statusEffect/statuses = src.patient?.getStatusList("dialysis", src) //get our particular status effect
 		if (length(statuses))
 			src.patient.delStatus(statuses[1])
+		REMOVE_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
 		src.patient = null
 		src.patient_blood_id = null
 		src.output_blood_colour = null

@@ -99,7 +99,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	proc/set_reagent_temp(var/new_temp = T0C, var/react = 0)
 		src.last_temp = total_temperature
-		src.total_temperature = new_temp
+		src.total_temperature = max(new_temp, 0)
 		if (react)
 			temperature_react()
 			handle_reactions()
