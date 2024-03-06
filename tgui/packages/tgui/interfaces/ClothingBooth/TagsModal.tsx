@@ -1,21 +1,10 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, Dimmer, Section, Stack } from '../../components';
-import type { ClothingBoothData, ClothingBoothGroupingTagsData } from './type';
-import { ClothingBoothGroupingTagDisplayOrderType } from './type';
+import { ClothingBoothData, ClothingBoothGroupingTagDisplayOrderType, ClothingBoothGroupingTagsData } from './type';
+import { buildFieldComparator, stringComparator } from './utils/Comparator';
 
 export const TagsModal = (_, context) => {
-  const { data } = useBackend<ClothingBoothData>(context);
   const [tagModal, setTagModal] = useLocalState(context, 'tagModal', false);
-
-  const tagList = Object.values(data.tags);
-
-  const seasonTags = tagList.filter((tag) => tag.display_order === ClothingBoothGroupingTagDisplayOrderType.Season);
-  const formalityTags = tagList.filter(
-    (tag) => tag.display_order === ClothingBoothGroupingTagDisplayOrderType.Formality
-  );
-  const collectionTags = tagList.filter(
-    (tag) => tag.display_order === ClothingBoothGroupingTagDisplayOrderType.Collection
-  );
 
   return (
     <Dimmer>
@@ -29,40 +18,13 @@ export const TagsModal = (_, context) => {
         title="Tags">
         <Stack fluid>
           <Stack.Item>
-            <Stack fill vertical>
-              <Stack.Item bold textAlign="center">
-                Season
-              </Stack.Item>
-              {seasonTags.map((tag) => (
-                <Stack.Item key={tag.name}>
-                  <TagCheckbox {...tag} />
-                </Stack.Item>
-              ))}
-            </Stack>
+            <TagStackContainer tagType="Season" typeToDisplay={ClothingBoothGroupingTagDisplayOrderType.Season} />
           </Stack.Item>
           <Stack.Item>
-            <Stack fill vertical>
-              <Stack.Item bold textAlign="center">
-                Formality
-              </Stack.Item>
-              {formalityTags.map((tag) => (
-                <Stack.Item key={tag.name}>
-                  <TagCheckbox {...tag} />
-                </Stack.Item>
-              ))}
-            </Stack>
+            <TagStackContainer tagType="Formality" typeToDisplay={ClothingBoothGroupingTagDisplayOrderType.Formality} />
           </Stack.Item>
           <Stack.Item>
-            <Stack fill vertical>
-              <Stack.Item bold textAlign="center">
-                Collection
-              </Stack.Item>
-              {collectionTags.map((tag) => (
-                <Stack.Item key={tag.name}>
-                  <TagCheckbox {...tag} />
-                </Stack.Item>
-              ))}
-            </Stack>
+            <TagStackContainer tagType="Collection" typeToDisplay={ClothingBoothGroupingTagDisplayOrderType.Collection} />
           </Stack.Item>
         </Stack>
       </Section>
@@ -70,8 +32,34 @@ export const TagsModal = (_, context) => {
   );
 };
 
+interface TagStackContainerProps {
+  tagType: string;
+  typeToDisplay: number;
+}
+
+const TagStackContainer = (props: TagStackContainerProps, context) => {
+  const { data } = useBackend<ClothingBoothData>(context);
+  const { tagType, typeToDisplay } = props;
+  const tags = Object.values(data.tags).filter(tag => tag.display_order === typeToDisplay);
+  const sortedTags = tags.sort(
+    buildFieldComparator((tags) => tags.name, stringComparator)
+  );
+
+  return (
+    <Stack fill vertical>
+      <Stack.Item bold textAlign="center">
+        {tagType}
+      </Stack.Item>
+      {sortedTags.map((tag) => (
+        <Stack.Item key={tag.name}>
+          <TagCheckbox {...tag} />
+        </Stack.Item>
+      ))}
+    </Stack>
+  );
+};
+
 const TagCheckbox = (props: ClothingBoothGroupingTagsData, context) => {
-  const { act } = useBackend<ClothingBoothData>(context);
   const { colour, name } = props;
   return (
     <Button.Checkbox color="" fluid>
