@@ -9,16 +9,16 @@ type ManufacturerData = {
   repeat:boolean;
   resources:{ [key: string] : number };
   mats_by_id:any;
-  categories:[string];
-  available_blueprints:[Manufacturable];
-  downloaded_blueprints:[string];
-  drive_recipe_blueprints:[string];
-  hidden_blueprints:[string];
+  all_categories:[string];
+  available_blueprints:{ [key:string] : Manufacturable[]};
+  downloaded_blueprints:{ [key:string] : Manufacturable[]};
+  drive_recipe_blueprints:{ [key:string] : Manufacturable[]};
+  hidden_blueprints:{ [key:string] : Manufacturable[]};
 }
 
 // See /datum/manufacture
+// Name is the key for this type
 type Manufacturable = {
-  name:string;
   item_paths:[string];
   item_names:[string];
   item_amounts:[number];

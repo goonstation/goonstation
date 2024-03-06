@@ -280,7 +280,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	ui_data(mob/user)
 		return list(
-			"name" = src.name,
 			"panel_open" = src.panel_open,
 			"hacked" = src.hacked,
 			"malfunction" = src.malfunction,
@@ -290,24 +289,28 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"repeat" = src.repeat,
 			"resources" = src.resource_amounts,
 			"mats_by_id" = src.stored_materials_by_id,
-			"categories" = src.categories,
 			"downloaded_blueprints" = src.download,
 			"drive_recipe_blueprints" = src.drive_recipes,
 		)
 
 	ui_static_data(mob/user)
-		var/list/available_blueprints[length(src.available)]
-		for (var/i in 1 to length(src.available))
-			available_blueprints[i] = as_list(src.available[i], user)
-		var/list/hidden_blueprints[length(src.hidden)]
-		for (var/i in 1 to length(src.hidden))
-			hidden_blueprints[i] = as_list(src.hidden[i], user)
 		return list (
-			"available_blueprints" = available_blueprints,
-			"hidden_blueprints" = hidden_blueprints,
+			"all_categories" = src.categories,
+			"available_blueprints" = blueprints_as_list(src.available, user),
+			"hidden_blueprints" = blueprints_as_list(src.hidden, user),
 		)
 
-	proc/as_list(datum/manufacture/M, mob/user)
+	/// Converts list of manufacture datums to list keyed by category containing listified manufacture datums of said category.
+	proc/blueprints_as_list(var/list/L, mob/user)
+		var/list/as_list = list()
+		for (var/datum/manufacture/M as anything in L)
+			if (length(as_list[M.category]) == 0)
+				as_list[M.category] = list()
+			as_list[M.category][M.name] = manufacture_as_list(M, user)
+		return as_list
+
+	/// Converts a manufacture datum to a list with string keys to relevant vars for the UI
+	proc/manufacture_as_list(datum/manufacture/M, mob/user)
 		return list(
 			"name" = M.name,
 			"item_paths" = M.item_paths,
@@ -316,7 +319,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"randomise_output" = M.randomise_output,
 			"create" = M.create,
 			"time" = M.time,
-			"category" = M.category,
 			"sanity_check_exemption" = M.sanity_check_exemption,
 			"apply_material" = M.apply_material,
 			"img" = getItemIcon(M.item_outputs[1], C = user.client)

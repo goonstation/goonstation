@@ -18,6 +18,7 @@ export const Button = props => {
   const {
     className,
     fluid,
+    forceWrap,
     icon,
     iconRotation,
     iconSpin,
@@ -61,6 +62,7 @@ export const Button = props => {
       className={classes([
         'Button',
         fluid && 'Button--fluid',
+        forceWrap && 'Button--forceWrap',
         disabled && 'Button--disabled',
         selected && 'Button--selected',
         hasContent && 'Button--hasContent',
