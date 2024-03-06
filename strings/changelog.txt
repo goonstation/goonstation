@@ -4,6 +4,8 @@
 (p)18083
 (e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
 (*)Borgs can now get their hands on a magnetic traction upgrade which has the same effect as magboots
+(u)LeahTheTech
+(*)Blob victories now cause the blob to automatically spread uncontrollably. I'm at least 70% sure this won't crash the server.
 (u)Knipje
 (p)18120
 (e)🆕💅💡|C-Feature, C-QoL, A-Station-Systems
