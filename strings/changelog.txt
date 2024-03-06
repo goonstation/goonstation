@@ -1,4 +1,30 @@
 
+(t)wed mar 06 24
+(u)Knipje
+(p)18120
+(e)🆕💅💡|C-Feature, C-QoL, A-Station-Systems
+(+)Current PTL output can now be read through MechComp.
+(t)mon mar 04 24
+(u)ithebinman
+(p)18087
+(e)|
+(*)Removed mugwort from the bathsalts chemistry recipe
+(+)Added ghost chili juice to the bathsalts chemistry recipe
+(u)LeahTheTech
+(p)18091
+(e)⚖🐣|C-Balance, A-Respawning
+(*)NTSCs now take up a security officer slot.
+(t)sun mar 03 24
+(u)LeahTheTech
+(+)The botanical mister can now be emptied with click-drag.
+(u)Sovexe
+(p)18092
+(e)🚗|A-Vehicles
+(+)The brake is now engaged by default in pods and subs
+(t)fri mar 01 24
+(u)LeahTheTech
+(+)The general alert button safety glass can now be repaired with glass sheets.
+(+)Cyborgs can now use the fake law commands too.
 (t)thu feb 29 24
 (u)LeahTheTech
 (p)18064
