@@ -81,7 +81,7 @@
 			message += "**Notes for [ckey]**"
 			message += ""
 			for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
-				message += "**\[[playerNote.server_id]\] [playerNote.game_admin.name]** on **[fromIso8601(ISOplayerNote.created_at, TRUE)]**"
+				message += "**\[[playerNote.server_id]\] [playerNote.game_admin.name]** on **[fromIso8601(playerNote.created_at, TRUE)]**"
 				message += "[playerNote.note]"
 			message = jointext(message, "\n")
 			system.reply(message)
