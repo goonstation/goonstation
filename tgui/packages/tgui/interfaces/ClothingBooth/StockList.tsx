@@ -17,7 +17,7 @@ const clothingBoothItemComparators: Record<ClothingBoothSortType, ComparatorFn<C
   ),
 };
 
-const getSortComparator
+const getClothingBoothGroupingSortComparator
   = (usedSortType: ClothingBoothSortType, usedSortDirection: boolean) =>
     (a: ClothingBoothGroupingData, b: ClothingBoothGroupingData) =>
       clothingBoothItemComparators[usedSortType](a, b) * (usedSortDirection ? 1 : -1);
@@ -29,7 +29,7 @@ export const StockList = (_props: unknown, context) => {
   const [slotFilters] = useLocalState<Partial<Record<ClothingBoothSlotKey, boolean>>>(context, 'slotFilters', {}); // TODO: shared local state
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
   const [sortType, setSortType] = useLocalState(context, 'sortType', ClothingBoothSortType.Name);
-  const [sortAscending, toggleSortAscending] = useLocalState(context, 'sortAscending', true);
+  const [sortAscending, setSortAscending] = useLocalState(context, 'sortAscending', true);
 
   const handleSelectGrouping = (name: string) => act('select-grouping', { name });
   const catalogueItems = Object.values(catalogue);
@@ -46,7 +46,7 @@ export const StockList = (_props: unknown, context) => {
       itemGrouping.name.toLocaleLowerCase().includes(searchTextLower)
     )
     : slotFilteredItemGroupings;
-  const sortComparator = getSortComparator(sortType, sortAscending);
+  const sortComparator = getClothingBoothGroupingSortComparator(sortType, sortAscending);
   const sortedStockInformationList = searchFilteredItemGroupings.sort(sortComparator);
 
   return (
@@ -80,7 +80,7 @@ export const StockList = (_props: unknown, context) => {
                 <Stack.Item>
                   <Button
                     icon={sortAscending ? 'arrow-down-short-wide' : 'arrow-down-wide-short'}
-                    onClick={() => toggleSortAscending(!sortAscending)}
+                    onClick={() => setSortAscending(!sortAscending)}
                     tooltip={`Sort Direction: ${sortAscending ? 'Ascending' : 'Descending'}`}
                   />
                 </Stack.Item>

@@ -9,6 +9,7 @@ export interface ClothingBoothData {
   previewShowClothing: BooleanLike;
   selectedGroupingName: string | null;
   selectedItemName: string | null;
+  tags: Record<string, ClothingBoothGroupingTagsData>;
 }
 
 export interface ClothingBoothGroupingData {
@@ -55,4 +56,10 @@ export enum ClothingBoothSortType {
 export enum ClothingBoothSortComparatorType {
   String,
   Number,
+}
+
+export enum ClothingBoothGroupingTagDisplayOrderType {
+  Season = 1,
+  Formality = 2,
+  Collection = 3,
 }

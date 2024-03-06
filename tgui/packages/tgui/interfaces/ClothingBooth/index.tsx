@@ -12,16 +12,19 @@ import { Window } from '../../layouts';
 import { CharacterPreview } from './CharacterPreview';
 import { StockList } from './StockList';
 import { PurchaseInfo } from './PurchaseInfo';
+import { TagsModal } from './TagsModal';
 import { ClothingBoothData } from './type';
 
 export const ClothingBooth = (_, context) => {
   const { data } = useBackend<ClothingBoothData>(context);
   const { name, money } = data;
-  const [hideUnaffordable, toggleHideUnaffordable] = useLocalState(context, 'hideUnaffordable', false);
+  const [hideUnaffordable, setHideUnaffordable] = useLocalState(context, 'hideUnaffordable', false);
+  const [tagModal, setTagModal] = useLocalState(context, 'tagModal', false);
 
   return (
     <Window title={name} width={500} height={600}>
       <Window.Content>
+        {tagModal && <TagsModal />}
         <Stack fill vertical>
           <Stack.Item>
             <Section fill>
@@ -30,7 +33,7 @@ export const ClothingBooth = (_, context) => {
                 <Stack.Item>
                   <Button.Checkbox
                     checked={!!hideUnaffordable}
-                    onClick={() => toggleHideUnaffordable(!hideUnaffordable)}>
+                    onClick={() => setHideUnaffordable(!hideUnaffordable)}>
                     Hide Unaffordable
                   </Button.Checkbox>
                 </Stack.Item>

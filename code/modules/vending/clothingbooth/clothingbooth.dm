@@ -125,6 +125,7 @@
 	ui_static_data(mob/user)
 		. = ..()
 		.["catalogue"] = global.serialized_clothingbooth_catalogue
+		.["tags"] = global.serialized_clothingbooth_tags
 		.["name"] = src.name
 
 	ui_data(mob/user)
