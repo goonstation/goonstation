@@ -2,6 +2,7 @@
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { Box, Button, Collapsible, Image, Section, Stack } from '../../components';
+import { truncate } from '../../format';
 
 const CategoryButton = (props) => {
   const { name } = props;
@@ -21,18 +22,20 @@ const BlueprintButton = (props) => {
 
   return (
     <Button
-      width={20}
-      height={6.5}
+      ellipsis
+      width={15.2}
+      height={5.3}
       mr={1}
       pl={0}
+      pb={0}
+      pt={0}
+      mt={0}
     >
-      <Stack
-        style={{
-          "white-space": "normal",
-        }}
-      >
+      <Stack>
         <Stack.Item
           ml={0}
+          pt={0}
+          mt={0}
           style={{
             "background": "rgba(0,0,0,0.1)",
           }}
@@ -40,15 +43,30 @@ const BlueprintButton = (props) => {
           <Image pixelated src={blueprintData.img} width={5} />
         </Stack.Item>
         <Stack.Item>
-          <Section
-            title={blueprintData.name}
+          <Stack vertical pt={1}>
+            <Stack.Item><Button align="center" width={2} height={1.8} icon="gear" /></Stack.Item>
+            <Stack.Item><Button align="center" width={2} height={1.8} icon="question" /></Stack.Item>
+          </Stack>
+        </Stack.Item>
+        <Stack.Item>
+          <Stack
+            vertical
+            fill
+            style={{
+              "align-items": "center",
+            }}
           >
-            <Stack fill>
-              <Stack.Item>
-                <Button icon="gear" />
-              </Stack.Item>
-            </Stack>
-          </Section>
+            <Stack.Item
+              width={6}
+              textAlign="center"
+              verticalAlign="center"
+              style={{
+                "white-space": "normal",
+              }}
+            >
+              {truncate(blueprintData.name, 30)}
+            </Stack.Item>
+          </Stack>
         </Stack.Item>
       </Stack>
     </Button>
@@ -78,8 +96,8 @@ export const Manufacturer = (_, context) => {
     dropdowns.push(<CategoryDropdown category={i} blueprints={usable_blueprints[i]} />);
   }
   return (
-    <Window width={1111} height={600}>
-      <Section width={62.5}>
+    <Window width={1200} height={600}>
+      <Section width={79.75} pl={0.5}>
         {dropdowns}
       </Section>
       <Image pixelated src={data.available_blueprints["Resource"]["Machine Translator Implant"]["img"]} width={5} />
