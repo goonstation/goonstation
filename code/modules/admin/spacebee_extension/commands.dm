@@ -56,8 +56,6 @@
 	argument_types = list(/datum/command_argument/string/ckey="ckey")
 
 	execute(user, ckey)
-
-
 		var/datum/apiModel/Paginated/PlayerNoteResourceList/playerNotes
 		try
 			var/datum/apiRoute/players/notes/get/getPlayerNotes = new
