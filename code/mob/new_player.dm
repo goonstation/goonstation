@@ -390,7 +390,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 			var/player_count = 0
 			for (var/client/client in clients)
-				if (istype(client.mob.loc, /obj/cryotron) || istype(client.mob, /mob/new_player)) //don't count cryoed or lobby players
+				if (!istype(client.mob.loc, /obj/cryotron) && !istype(client.mob, /mob/new_player)) //don't count cryoed or lobby players
 					player_count++
 			for(var/datum/job/staple_job in job_controls.staple_jobs) //we'll just assume only staple jobs have variable limits for now
 				if (staple_job.variable_limit)
