@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, Dimmer, Section, Stack } from '../../components';
-import { ClothingBoothData, ClothingBoothGroupingTagDisplayOrderType, ClothingBoothGroupingTagsData } from './type';
+import { ClothingBoothData, ClothingBoothGroupingTagsData, TagDisplayOrderType } from './type';
 import { buildFieldComparator, stringComparator } from './utils/Comparator';
 
 export const TagsModal = (_, context) => {
@@ -18,13 +18,13 @@ export const TagsModal = (_, context) => {
         title="Tags">
         <Stack fluid>
           <Stack.Item>
-            <TagStackContainer tagType="Season" typeToDisplay={ClothingBoothGroupingTagDisplayOrderType.Season} />
+            <TagStackContainer tagType="Season" typeToDisplay={TagDisplayOrderType.Season} />
           </Stack.Item>
           <Stack.Item>
-            <TagStackContainer tagType="Formality" typeToDisplay={ClothingBoothGroupingTagDisplayOrderType.Formality} />
+            <TagStackContainer tagType="Formality" typeToDisplay={TagDisplayOrderType.Formality} />
           </Stack.Item>
           <Stack.Item>
-            <TagStackContainer tagType="Collection" typeToDisplay={ClothingBoothGroupingTagDisplayOrderType.Collection} />
+            <TagStackContainer tagType="Collection" typeToDisplay={TagDisplayOrderType.Collection} />
           </Stack.Item>
         </Stack>
       </Section>

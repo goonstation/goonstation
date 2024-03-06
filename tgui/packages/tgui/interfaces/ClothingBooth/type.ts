@@ -58,7 +58,7 @@ export enum ClothingBoothSortComparatorType {
   Number,
 }
 
-export enum ClothingBoothGroupingTagDisplayOrderType {
+export enum TagDisplayOrderType {
   Season = 1,
   Formality = 2,
   Collection = 3,
