@@ -5,15 +5,25 @@ import { buildFieldComparator, stringComparator } from './utils/Comparator';
 
 export const TagsModal = (_, context) => {
   const [tagModal, setTagModal] = useLocalState(context, 'tagModal', false);
+  const [tagFilters, setTagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, 'tagFilters', {});
 
   return (
     <Dimmer>
       <Section
         scrollable
         buttons={
-          <Button icon="xmark" onClick={() => setTagModal(!tagModal)}>
-            Close
-          </Button>
+          <Stack>
+            <Stack.Item>
+              <Button icon="trash" onClick={() => setTagFilters({})}>
+                Clear Tags
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button icon="xmark" onClick={() => setTagModal(!tagModal)}>
+                Close
+              </Button>
+            </Stack.Item>
+          </Stack>
         }
         title="Tags">
         <Stack fluid>
@@ -40,10 +50,8 @@ interface TagStackContainerProps {
 const TagStackContainer = (props: TagStackContainerProps, context) => {
   const { data } = useBackend<ClothingBoothData>(context);
   const { tagType, typeToDisplay } = props;
-  const tags = Object.values(data.tags).filter(tag => tag.display_order === typeToDisplay);
-  const sortedTags = tags.sort(
-    buildFieldComparator((tags) => tags.name, stringComparator)
-  );
+  const groupingTags = Object.values(data.tags).filter((groupingTag) => groupingTag.display_order === typeToDisplay);
+  const sortedTags = groupingTags.sort(buildFieldComparator((groupingTag) => groupingTag.name, stringComparator));
 
   return (
     <Stack fill vertical>
@@ -61,9 +69,17 @@ const TagStackContainer = (props: TagStackContainerProps, context) => {
 
 const TagCheckbox = (props: ClothingBoothGroupingTagsData, context) => {
   const { colour, name } = props;
+
+  const [tagFilters, setTagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, 'tagFilters', {});
+  const setTagFilter = (filter: string) =>
+    setTagFilters({
+      ...tagFilters,
+      [filter]: !tagFilters[filter],
+    });
+
   return (
-    <Button.Checkbox color="" fluid>
-      <Box inline color={colour && colour}>
+    <Button.Checkbox fluid color="" onClick={() => setTagFilter(name)}>
+      <Box inline checked={!!tagFilters[name]} color={colour && colour}>
         {name}
       </Box>
     </Button.Checkbox>

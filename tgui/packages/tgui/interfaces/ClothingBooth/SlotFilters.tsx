@@ -15,13 +15,13 @@ export const SlotFilters = (_, context) => {
     <Section fill>
       <Stack fill vertical>
         <Stack.Item>
-          <Button fluid align="center" onClick={() => setSlotFilters({})}>
-            Clear Filters
+          <Button fluid align="center" onClick={() => setTagModal(!tagModal)}>
+            Tags
           </Button>
         </Stack.Item>
         <Stack.Item>
-          <Button fluid align="center" onClick={() => setTagModal(!tagModal)}>
-            Tags
+          <Button fluid align="center" onClick={() => setSlotFilters({})}>
+            Clear Slots
           </Button>
         </Stack.Item>
         <Stack.Item>

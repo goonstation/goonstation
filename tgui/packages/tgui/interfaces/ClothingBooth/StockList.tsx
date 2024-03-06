@@ -27,6 +27,7 @@ export const StockList = (_props: unknown, context) => {
   const { catalogue, money, selectedGroupingName } = data;
   const [hideUnaffordable] = useLocalState(context, 'hideUnaffordable', false);
   const [slotFilters] = useLocalState<Partial<Record<ClothingBoothSlotKey, boolean>>>(context, 'slotFilters', {}); // TODO: shared local state
+  const [tagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, 'tagFilters', {});
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
   const [sortType, setSortType] = useLocalState(context, 'sortType', ClothingBoothSortType.Name);
   const [sortAscending, setSortAscending] = useLocalState(context, 'sortAscending', true);
