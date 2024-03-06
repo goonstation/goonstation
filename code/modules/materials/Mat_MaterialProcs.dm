@@ -769,10 +769,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if (!I.material.isMutable())
 			I.material = I.material.getMutable()
 		if (radioactive)
-			I.material.setProperty("radioactive", radioactive - min(radioactive, moles_to_convert/I.amount))
+			I.material.setProperty("radioactive", radioactive - min(radioactive, moles_to_convert/(10*I.amount)))
 		else
 			I.material.removeProperty("radioactive")
 		if (n_radioactive)
-			I.material.setProperty("n_radioactive", n_radioactive - min(n_radioactive, moles_to_convert/(5*I.amount)))
+			I.material.setProperty("n_radioactive", n_radioactive - min(n_radioactive, moles_to_convert/(50*I.amount)))
 		else
 			I.material.removeProperty("n_radioactive")
