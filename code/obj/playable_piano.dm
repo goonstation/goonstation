@@ -230,10 +230,11 @@ TYPEINFO(/obj/player_piano)
 					return TRUE
 		return FALSE
 
-	proc/clean_input(split_input) //breaks our big input string into chunks
+	proc/clean_input() //breaks our big input string into chunks
 		is_busy = 1
 		piano_notes = list()
 //		src.visible_message(SPAN_NOTICE("\The [src] starts humming and rattling as it processes!"))
+		var/list/split_input = splittext("[note_input]", "|")
 		for (var/string in split_input)
 			if (string)
 				piano_notes += string
@@ -298,7 +299,14 @@ TYPEINFO(/obj/player_piano)
 				note_accidentals += "r"
 				note_volumes += 0
 				continue
-			if (length(note) != 3)
+			if (lowertext(note[1]) == "r" && length(note) <= 5 && isnum_safe(text2num(copytext(note,2))))
+				for (var/rest_amount = 0, rest_amount < text2num_safe(copytext(note,2)), rest_amount++)
+					note_names += "r"
+					note_octaves += "r"
+					note_accidentals += "r"
+					note_volumes += 0
+				continue
+			if (length(note) != 3 || (lowertext(note[1]) == "r" && (length(note) < 1 || length(note) > 5)))
 				break
 			note_names += lowertext(note[1])
 			note_octaves += note[2]
@@ -318,24 +326,39 @@ TYPEINFO(/obj/player_piano)
 					note_volumes += 60
 		is_busy = 0
 
-	proc/get_note_format(var/list/notes)
+	proc/get_note_format()
 		var/current_format = FORMAT_INVALID
-		var/first_note_length = length(notes[1])
+		var/first_note_length = length(piano_notes[1])
 
 		if (first_note_length >= 7)
 			current_format = FORMAT_CLASSIC
-		else if (first_note_length == 3 || first_note_length == 1)
+		else if (first_note_length >= 1 && first_note_length <= 5)
 			current_format = FORMAT_COMPACT
 		else
 			return FORMAT_INVALID
 
-		for (var/note_index = 2, note_index <= length(notes), note_index++)
-			if (current_format == FORMAT_CLASSIC && length(notes[note_index]) < 7)
+		for (var/note_index = 2, note_index <= length(piano_notes), note_index++)
+			var/note_length = length(piano_notes[note_index])
+			if (current_format == FORMAT_CLASSIC && note_length < 7)
 				return FORMAT_INVALID
-			else if (current_format == FORMAT_COMPACT && (length(notes[note_index]) != 3 && length(notes[note_index]) != 1))
+			else if (current_format == FORMAT_COMPACT && (note_length != 3 && (lowertext(piano_notes[note_index][1]) == "r" && (note_length < 1 || note_length > 5))))
 				return FORMAT_INVALID
 
 		return current_format
+
+	proc/count_notes(var/note_format)
+		switch(note_format)
+			if (FORMAT_CLASSIC)
+				return length(piano_notes)
+			if (FORMAT_COMPACT)
+				var/note_amount = 0
+				for (var/note_index = 1, note_index <= length(piano_notes), note_index++)
+					if (lowertext(piano_notes[note_index][1]) == "r" && length(piano_notes[note_index]) > 1 && isnum_safe(text2num_safe(copytext(piano_notes[note_index],2))))
+						note_amount += text2num_safe(copytext(piano_notes[note_index],2))
+					else
+						note_amount += 1
+				return note_amount
+		return MAX_NOTE_INPUT + 1
 
 	proc/ready_piano(var/is_linked) //final checks to make sure stuff is right, gets notes into a compiled form for easy playsounding
 		if (is_busy || is_stored)
@@ -392,12 +415,12 @@ TYPEINFO(/obj/player_piano)
 	proc/set_notes(var/given_notes)
 		if (is_busy || is_stored)
 			return FALSE
-		var/list/split_input = splittext("[given_notes]", "|")
-		if (length(split_input) > MAX_NOTE_INPUT)
-			return FALSE
 		src.note_input = given_notes
-		clean_input(split_input)
-		switch (get_note_format(piano_notes))
+		clean_input()
+		var/note_format = get_note_format()
+		if (count_notes(note_format) > MAX_NOTE_INPUT)
+			return FALSE
+		switch (note_format)
 			if (FORMAT_CLASSIC)
 				build_notes(piano_notes)
 			if (FORMAT_COMPACT)
