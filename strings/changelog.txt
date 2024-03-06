@@ -1,5 +1,9 @@
 
 (t)wed mar 06 24
+(u)Vincent983 + Ikea
+(p)18083
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(*)Borgs can now get their hands on a magnetic traction upgrade which has the same effect as magboots
 (u)Knipje
 (p)18120
 (e)🆕💅💡|C-Feature, C-QoL, A-Station-Systems
