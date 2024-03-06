@@ -89,7 +89,7 @@
 		var/old_limit = src.limit
 		//basic linear scale between upper and lower limits
 		var/scalar = (player_count - SLOT_SCALING_LOWER_THRESHOLD) / (SLOT_SCALING_UPPER_THRESHOLD - SLOT_SCALING_LOWER_THRESHOLD)
-		src.limit = round(src.lower_limit + scalar * (src.upper_limit - src.lower_limit))
+		src.limit = round(src.lower_limit + scalar * (src.upper_limit - src.lower_limit), 1)
 		src.limit = clamp(src.limit, src.lower_limit, src.upper_limit) //paranoia clamp, probably not needed
 		if (src.limit != old_limit)
 			logTheThing(LOG_DEBUG, src, "Altering variable job limit for [src.name] from [old_limit] to [src.limit] at [player_count] player count.")
