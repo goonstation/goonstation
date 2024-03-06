@@ -4080,6 +4080,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "apK" = (
@@ -5165,7 +5169,6 @@
 	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -35037,6 +35040,13 @@
 	dir = 4
 	},
 /area/station/mining/staff_room)
+"csh" = (
+/obj/machinery/plantpot,
+/obj/machinery/light,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "csk" = (
 /turf/space,
 /area/shuttle/mining/station)
@@ -38179,6 +38189,12 @@
 	dir = 1
 	},
 /area/station/chapel/sanctuary)
+"cLn" = (
+/turf/simulated/floor/stairs{
+	dir = 1;
+	icon_state = "stairs_middle"
+	},
+/area/station/hydroponics/bay)
 "cMe" = (
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/grey/whitegrime/other,
@@ -38894,15 +38910,13 @@
 /obj/stove,
 /obj/item/soup_pot,
 /obj/item/ladle,
-/obj/noticeboard/persistent{
-	name = "Kitchen persistent notice board";
-	persistent_id = "kitchen"
-	},
 /obj/item/matchbook{
 	pixel_x = 10;
 	pixel_y = 9
 	},
-/obj/machinery/light/small/floor/warm,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "dpE" = (
@@ -47588,6 +47602,15 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/cafeteria)
+"jVD" = (
+/obj/machinery/plantpot,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "jVU" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -49317,8 +49340,9 @@
 "lwM" = (
 /obj/submachine/chef_oven,
 /obj/landmark/bill_spawn,
-/obj/machinery/alarm{
-	pixel_y = 23
+/obj/noticeboard/persistent{
+	name = "Kitchen persistent notice board";
+	persistent_id = "kitchen"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -51741,6 +51765,12 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"ntc" = (
+/obj/submachine/seed_vendor,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "ntp" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/decal/stripe_caution,
@@ -54118,6 +54148,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"piY" = (
+/turf/simulated/floor/stairs{
+	icon_state = "stairs_middle"
+	},
+/area/station/hydroponics/bay)
 "pje" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -55288,6 +55323,7 @@
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
 "qkq" = (
+/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "qkY" = (
@@ -128171,22 +128207,22 @@ adC
 adC
 adC
 adC
-mPp
-srq
+atV
+jVD
 arn
 arn
 jVY
-aDF
+cLn
 awG
 awG
 awG
 awG
-uqe
+piY
 lVE
 arn
 arn
-srq
-mPp
+csh
+atV
 adC
 adC
 adC
@@ -128477,14 +128513,14 @@ mPp
 srq
 arn
 arn
-auc
-avj
-fhM
+awJ
+aDF
 awG
 awG
-rFl
-avj
-xiw
+awG
+awG
+uqe
+jvO
 arn
 arn
 srq
@@ -128776,20 +128812,20 @@ adC
 adC
 adC
 mPp
-srq
+aCm
 arn
 arn
-fnq
-nhn
-nhn
-oLV
-pbM
-nhn
-nhn
-iTs
+auc
+avj
+fhM
+awG
+awG
+rFl
+avj
+xiw
 arn
 arn
-srq
+aCm
 mPp
 adC
 adC
@@ -129081,14 +129117,14 @@ mPp
 srq
 arn
 arn
-aCm
-aDH
+fnq
 nhn
-hXZ
-hXZ
 nhn
-aDH
-aCm
+oLV
+pbM
+nhn
+nhn
+iTs
 arn
 arn
 srq
@@ -129379,22 +129415,22 @@ adC
 adC
 adC
 adC
-mPp
-avh
+atV
+jVD
 arn
 arn
 arn
-dJQ
-gJj
-tHo
-tHo
-rUg
+aDH
+nhn
+hXZ
+hXZ
+nhn
+aDH
 arn
 arn
-eBl
 arn
-avh
-mPp
+csh
+atV
 adC
 adC
 adC
@@ -129682,20 +129718,20 @@ adC
 adC
 adC
 mPp
-mPp
-srq
+ntc
 arn
 arn
-aEX
-awJ
-awG
-awG
-jvO
-aEX
+arn
+dJQ
+gJj
+tHo
+tHo
+rUg
 arn
 arn
-srq
-mPp
+eBl
+arn
+avh
 mPp
 adC
 adC
@@ -129983,22 +130019,22 @@ adC
 adC
 adC
 adC
-aag
 mPp
-azm
+mPp
 srq
 arn
 arn
-nBp
+aEX
+awJ
 awG
-iEc
+awG
 jvO
+aEX
 arn
 arn
 srq
-mtb
 mPp
-aaG
+mPp
 adC
 adC
 adC
@@ -130287,18 +130323,18 @@ adC
 adC
 aag
 mPp
-mPp
-mPp
-oQP
-oxK
-aGq
-hHR
-suD
-ssI
-oxK
-meq
-mPp
-mPp
+azm
+srq
+arn
+arn
+nBp
+awG
+iEc
+jvO
+arn
+arn
+srq
+mtb
 mPp
 aaG
 adC
@@ -130587,22 +130623,22 @@ adC
 adC
 adC
 adC
-aam
-aaq
-aap
-mPp
-mPp
-atV
+aag
 mPp
 mPp
 mPp
+oQP
+oxK
+aGq
+hHR
+suD
+ssI
+oxK
+meq
 mPp
-atV
 mPp
 mPp
-aap
-aaq
-acW
+aaG
 adC
 adC
 adC
@@ -130889,22 +130925,22 @@ adC
 adC
 adC
 adC
-adC
-adC
 aam
 aaq
-aaq
 aap
-aaq
-aaq
-aaq
-aaq
+mPp
+mPp
+atV
+mPp
+mPp
+mPp
+mPp
+atV
+mPp
+mPp
 aap
-aaq
 aaq
 acW
-adC
-adC
 adC
 adC
 adC
@@ -131193,18 +131229,18 @@ adC
 adC
 adC
 adC
-adC
-adC
-adC
-aah
-adC
-adC
-adC
-adC
-aah
-adC
-adC
-adC
+aam
+aaq
+aaq
+aap
+aaq
+aaq
+aaq
+aaq
+aap
+aaq
+aaq
+acW
 adC
 adC
 adC
