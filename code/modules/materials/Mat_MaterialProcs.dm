@@ -762,7 +762,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(T.parent?.group_processing)
 			T.parent.suspend_group_processing()
 		/// Mostly bullshit magic because I don't know how radiation works and plasma isn't real, but is how many moles to convert of existing plasma
-		var/moles_to_convert = min((I.amount * (1 + radioactive) * (1 + n_radioactive) * sqrt(temp) / 1000), air.toxins)
+		var/moles_to_convert = min(((I.amount * I.material_amt) * (1 + radioactive) * (1 + n_radioactive) * sqrt(temp) / 1000), air.toxins)
 		air.radgas += moles_to_convert
 		air.toxins -= moles_to_convert
 		// Force mutability
