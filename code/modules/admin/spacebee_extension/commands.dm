@@ -84,6 +84,7 @@
 				message += "**[playerNote.server_id] [playerNote.game_admin.name] on [playerNote.created_at]**"
 				message += "[playerNote.note]"
 			message = jointext(message, "\n")
+			system.reply(message)
 
 /datum/spacebee_extension_command/addnotice
 	name = "addnotice"
