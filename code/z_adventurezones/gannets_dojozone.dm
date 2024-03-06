@@ -535,7 +535,7 @@ Contents:
 		else
 			playsound(src, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40)
 			for(var/obj/machinery/dojo_tatara/T in orange(2))
-				src.visible_message("\The [src] breathe life into \the [T] causing it errupt in flames.", blind_message="A loud roar of air causes a fire to errupt.")
+				src.visible_message("\The [src] breathe life into \the [T] causing it erupt in flames.", blind_message="A loud roar of air causes a fire to erupt.")
 				T.temperature = clamp(T.temperature + 150, initial(T.temperature)-150, T0C+2500)
 
 /obj/decal/fakeobjects/swordrack

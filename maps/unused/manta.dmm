@@ -1333,7 +1333,7 @@
 /area/abandonedmedicalship/robot_trader)
 "aeB" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
@@ -7595,7 +7595,7 @@
 /area/station/engine/storage)
 "awJ" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/tank/air,
 /obj/item/chem_grenade/firefighting,
@@ -7606,7 +7606,7 @@
 /area/station/engine/storage)
 "awK" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/tank/air,
 /obj/item/chem_grenade/firefighting,
@@ -7719,7 +7719,7 @@
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/tank/air,
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /turf/simulated/floor,
 /area/station/engine/storage)
 "awW" = (
@@ -11020,7 +11020,7 @@
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aFY" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -16249,7 +16249,7 @@
 /area/station/security/beepsky)
 "aVe" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -18940,7 +18940,7 @@
 /area/station/crew_quarters/kitchen/therustykrab)
 "bcK" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
 "bcL" = (
@@ -29607,7 +29607,7 @@
 /area/station/maintenance/upperport)
 "bFK" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -29677,7 +29677,7 @@
 /area/station/maintenance/lowerport)
 "bFU" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -31699,7 +31699,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/clothing/head/rad_hood,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -37904,7 +37904,7 @@
 /area/station/chapel/office)
 "nRd" = (
 /obj/storage/closet/fire,
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /obj/item/tank/air,
 /obj/item/tank/air,
 /obj/item/clothing/mask/gas/emergency,
@@ -37913,7 +37913,7 @@
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/extinguisher,
 /obj/item/extinguisher,
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
 	pixel_x = -10

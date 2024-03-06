@@ -1307,9 +1307,12 @@ datum
 					if (method == TOUCH)
 						if (isrobot(M))
 							var/mob/living/silicon/robot/R = M
-							R.add_oil(volume * 2)
+							R.changeStatus("freshly_oiled", (volume * 5)) // You need at least 30u to get max duration
 							boutput(R, SPAN_NOTICE("Your joints and servos begin to run more smoothly."))
-						else boutput(M, SPAN_ALERT("You feel greasy and gross."))
+						else if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (!H.mutantrace.aquaphobic)
+								boutput(M, "<span class='alert'>You feel greasy and gross.</span>")
 
 				return
 
@@ -2602,12 +2605,14 @@ datum
 				if(M)
 					boutput(M, SPAN_ALERT("You feel yourself fading away."))
 					M.alpha = 0
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, src.id)
 					if(effect_length > 75)
 						M.take_brain_damage(10) // there!
 					SPAWN(effect_length * 10)
 						if(M.alpha != 255)
 							boutput(M, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
 							M.alpha = 255
+							REMOVE_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, src.id)
 
 			do_overdose(var/severity, var/mob/living/M, var/mult = 1)
 				var/effect = ..(severity, M)
@@ -3210,11 +3215,10 @@ datum
 				if (!ishuman(M)) return
 				if (method == INGEST)
 					if (M.mind)
-						var/mob/living/carbon/human/H = M
-						if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
-							var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
+						var/datum/abilityHolder/vampiric_thrall/thrallHolder = M.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+						if (thrallHolder)
 							var/bloodget = volume_passed / 4
-							V.blood_points += bloodget
+							thrallHolder.points += bloodget
 							holder.del_reagent(src.id)
 
 						if (isvampire(M))
@@ -3356,58 +3360,24 @@ datum
 						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable( /obj/decal/cleanable/greenpuke,T)
 
-		urine
-			name = "urine"
-			id = "urine"
-			description = "Ewww."
+		triplepissed
+			name = "triplepissed"
+			id = "triplepissed"
+			description = "It's furious!"
 			reagent_state = LIQUID
-			fluid_r = 233
-			fluid_g = 216
-			fluid_b = 0
-			transparency = 245
-			hygiene_value = -3
-			hunger_value = -0.098
-
-			/*on_mob_life(var/mob/M, var/mult = 1) why
-				for (var/datum/ailment_data/disease/virus in M.ailments)
-					if (prob(10))
-						M.resistances += virus.type
-						M.ailments -= virus
-						boutput(M, SPAN_NOTICE("You feel better"))
-				..()
-				return*/
-			reaction_turf(var/turf/T, var/volume)
-				var/list/covered = holder.covered_turf()
-				if (length(covered) > 9)
-					volume = (volume/covered.len)
-				if (volume > 10)
-					return 1
-				if (volume >= 5)
-					if (!locate(/obj/decal/cleanable/urine) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
-						make_cleanable( /obj/decal/cleanable/urine,T)
-
-		triplepiss
-			name = "triplepiss"
-			id = "triplepiss"
-			description = "Ewwwwwwwww."
-			reagent_state = LIQUID
-			fluid_r = 133
-			fluid_g = 116
-			fluid_b = 0
+			fluid_r = 255
+			fluid_g = 50
+			fluid_b = 50
 			transparency = 255
-			hygiene_value = -5
 
-			reaction_turf(var/turf/T, var/volume)
-				var/list/covered = holder.covered_turf()
-				if (length(covered) > 9)
-					volume = (volume/covered.len)
-				if (volume > 10)
-					return 1
-				if (volume >= 5)
-					if (!locate(/obj/decal/cleanable/urine) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
-						make_cleanable( /obj/decal/cleanable/urine,T)
+			on_mob_life(var/mob/M, var/mult = 1)
+				. = ..()
+				if (probmult(10))
+					M.set_a_intent(INTENT_HARM)
+					if (ishuman(M))
+						M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
+						if (prob(50))
+							M.emote("scream")
 
 		poo
 			name = "compost"
@@ -3944,7 +3914,7 @@ datum
 				if (M?.reagents)
 					if (prob(25))
 						boutput(M, SPAN_ALERT("Oh god! The <i>smell</i>!!!"))
-					M.reagents.add_reagent("jenkem",0.1 * volume_passed)
+					M.reagents.add_reagent("poo",0.1 * volume_passed)
 
 			very_toxic
 				id = "very_toxic_fart"

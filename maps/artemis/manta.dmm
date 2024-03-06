@@ -472,7 +472,7 @@
 /area/ship/manta)
 "JO" = (
 /obj/rack,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/black,
 /area/ship/manta)
@@ -512,7 +512,7 @@
 /area/ship/manta)
 "MW" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/blue/checker,
 /area/ship/manta)
 "Oi" = (

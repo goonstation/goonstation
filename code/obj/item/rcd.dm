@@ -964,35 +964,36 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 
 	modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS)
 
+	/// Load the RCD from a stack of items at an (optional) fill ratio
+	proc/reload_from_stack(obj/item/stack, mob/user, fill_ratio = 1)
+		var/amount_needed = ceil((src.max_matter - src.matter) / fill_ratio)
+		var/partial_eat = FALSE
+		if(amount_needed == 0)
+			boutput(user, "\The [src] is full.")
+			return
+		if(stack.amount > amount_needed)
+			stack.change_stack_amount(-amount_needed)
+			src.matter = src.max_matter
+			partial_eat = TRUE
+		else
+			src.matter += round(stack.amount * fill_ratio)
+			qdel(stack)
+		boutput(user, "\The [src] [partial_eat ? "partially " : null]absorbs \the [stack.name] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+		src.UpdateIcon()
+
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
 			..()
 		else if (istype(W, /obj/item/sheet)) //allow selective direct recycle (prices have been adjusted)
 			var/sheet_mat_id = W.material.getID()
 			if(sheet_mat_id == "viscerite" || sheet_mat_id == "tensed_viscerite")
-				var/partial_eat = FALSE
-				if (src.matter + W.amount > src.max_matter)
-					W.amount -= (src.max_matter - src.matter)
-					src.matter = src.max_matter
-					partial_eat = TRUE
-					W.tooltip_rebuild = 1
-				else
-					src.matter += W.amount
-					qdel(W)
-				boutput(user, "\The [src] [partial_eat ? "partially " : null]absorbs [W] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
-				src.UpdateIcon()
+				src.reload_from_stack(W, user)
 		else if (isExploitableObject(W))
 			boutput(user, "Recycling [W] just doesn't work.")
 		else if (istype(W, /obj/item/raw_material/martian))
-			matter += 10
-			boutput(user, "\The [src] absorbs [W] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
-			qdel(W)
-			src.UpdateIcon()
+			src.reload_from_stack(W, user, 10)
 		else if (istype(W, /obj/item/material_piece/viscerite))
-			matter += 10
-			boutput(user, "\The [src] absorbs [W] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
-			qdel(W)
-			src.UpdateIcon()
+			src.reload_from_stack(W, user, 10)
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/yuck))
 			matter += 0.5
 			boutput(user, "\The [src] absorbs [W] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")

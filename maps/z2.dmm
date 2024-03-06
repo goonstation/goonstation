@@ -4553,7 +4553,7 @@
 	brightness = 2;
 	dir = 4
 	},
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "ata" = (
@@ -14944,15 +14944,6 @@
 /obj/item/scissors,
 /turf/unsimulated/floor/wood,
 /area/marsoutpost)
-"bhp" = (
-/obj/stool/bed,
-/obj/decal/cleanable/urine,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
-	},
-/turf/unsimulated/floor/wood,
-/area/marsoutpost)
 "bhq" = (
 /turf/unsimulated/floor/blue/side{
 	dir = 8
@@ -24636,7 +24627,7 @@
 "bQg" = (
 /obj/table/auto,
 /obj/item/paper_bin{
-	amount = 100;
+	amount_left = 100;
 	desc = "not at all a paper bin. no sir.";
 	name = "do-it-yourself joint construction kit"
 	},
@@ -26514,7 +26505,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/phone,
+/obj/machinery/phone/unlisted,
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
 /area/syndicate_station/battlecruiser)
 "bXv" = (
@@ -28670,7 +28661,7 @@
 /area/crunch)
 "cgf" = (
 /obj/rack,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/unsimulated/floor/caution/north{
 	dir = 8
@@ -28705,7 +28696,8 @@
 	dir = 4;
 	icon_state = "datasec";
 	name = "Commander's Announcement Computer";
-	req_access_txt = "76"
+	req_access_txt = "76";
+	theme = "syndicate"
 	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/sw,
 /area/syndicate_station/battlecruiser)
@@ -33191,7 +33183,6 @@
 	name = "crusty vent"
 	},
 /obj/decal/cleanable/dirt,
-/obj/item/reagent_containers/syringe/jenkem,
 /obj/machinery/light/small/iomoon{
 	dir = 4;
 	name = "maintenance light";
@@ -34807,7 +34798,7 @@
 /obj/table/reinforced/auto{
 	layer = 2
 	},
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "czR" = (
@@ -36606,7 +36597,7 @@
 /area/owlery/Owlmait)
 "cEX" = (
 /obj/item/gun/flamethrower/assembled/loaded,
-/obj/item/clothing/suit/fire/armored,
+/obj/item/clothing/suit/hazard/fire/armored,
 /obj/item/clothing/head/helmet/welding,
 /obj/storage/secure/crate/weapon/confiscated_items{
 	req_access_txt = "71"
@@ -39227,7 +39218,6 @@
 	dir = 8
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness,
-/obj/decal/cleanable/urine,
 /turf/unsimulated/floor/yellowblack{
 	dir = 8
 	},
@@ -43264,15 +43254,15 @@
 	name = "antique plate";
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/snacks/candy/butterscotch{
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch{
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/snacks/candy/butterscotch{
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch{
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/snacks/candy/butterscotch{
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch{
 	pixel_y = 9
 	},
 /turf/unsimulated/floor/wood/two,
@@ -44878,7 +44868,7 @@
 /area/afterlife/bar/sanctuary)
 "daO" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
@@ -49391,7 +49381,7 @@
 	},
 /area/crypt/sigma/crew)
 "dvH" = (
-/obj/reagent_dispensers/watertank/fountain/piss,
+/obj/reagent_dispensers/watertank/fountain/drugged,
 /turf/unsimulated/floor/grey/side{
 	dir = 4
 	},
@@ -49464,18 +49454,18 @@
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dvZ" = (
-/obj/item/reagent_containers/food/snacks/candy/taffy/cherry{
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry{
 	pixel_x = 3
 	},
-/obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry{
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/blueraspberry{
 	pixel_x = -12;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/snacks/candy/taffy/cherry{
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry{
 	pixel_x = 7;
 	pixel_y = -10
 	},
-/obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry{
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/blueraspberry{
 	pixel_x = -7
 	},
 /obj/storage/crate/wooden,
@@ -52047,7 +52037,7 @@
 /turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGg" = (
-/obj/reagent_dispensers/watertank/fountain/piss,
+/obj/reagent_dispensers/watertank/fountain/drugged,
 /turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGh" = (
@@ -52392,7 +52382,7 @@
 /area/centcom/lounge)
 "dHk" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
 "dHl" = (
@@ -55728,7 +55718,7 @@
 	},
 /area/centcom/lounge)
 "dRI" = (
-/obj/reagent_dispensers/watertank/fountain/piss,
+/obj/reagent_dispensers/watertank/fountain/drugged,
 /turf/unsimulated/floor/carpet{
 	icon_state = "blue1";
 	tag = "icon-blue1"
@@ -60007,7 +59997,7 @@
 	},
 /area/meat_derelict/guts)
 "hIz" = (
-/obj/reagent_dispensers/watertank/fountain/piss,
+/obj/reagent_dispensers/watertank/fountain/drugged,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -134029,7 +134019,7 @@ bgo
 aTs
 bgL
 aTs
-bhp
+bic
 aTs
 bic
 aTs

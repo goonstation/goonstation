@@ -12,4 +12,4 @@
 /// Amount an arm on the same side as a missing leg will offset the missing leg penalty
 #define ROBOT_MISSING_LEG_ARM_OFFSET -1
 /// Amount a missing arm will speed you up (as long as you have legs)
-#define ROBOT_MISSING_ARM_MOVEMENT_ADJUST -0.4
+#define ROBOT_MISSING_ARM_MOVEMENT_ADJUST -0.1

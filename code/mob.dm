@@ -90,7 +90,6 @@
 	var/is_zombie = 0
 	var/jitteriness = 0
 	var/charges = 0
-	var/urine = 0
 	var/nutrition = 100
 	var/losebreath = 0
 	var/intent = null
@@ -160,7 +159,6 @@
 	var/singing = 0 // true when last thing living mob said was sung, i.e. prefixed with "%""
 
 	var/movement_delay_modifier = 0 //Always applied.
-	var/apply_movement_delay_until = -1 //world.time at which our movement delay modifier expires
 	var/restrain_time = 0 //we are restrained ; time at which we will be freed.  (using timeofday)
 
 //Disease stuff
@@ -564,7 +562,7 @@
 			if(!ON_COOLDOWN(src, "flubber_bounce", 0.1 SECONDS) || src.hasStatus("sugar_rush"))
 				src.now_pushing = 0
 				var/atom/source = A
-				src.visible_message(SPAN_ALERT("<B>[src]</B>'s bounces off [A]!"))
+				src.visible_message(SPAN_ALERT("<B>[src]</B> bounces off [A]!"))
 				playsound(source, 'sound/misc/boing/6.ogg', 100, TRUE)
 				var/throw_dir = turn(get_dir(A, src),rand(-1,1)*45)
 				src.throw_at(get_edge_cheap(source, throw_dir),  20, 3)
@@ -612,7 +610,7 @@
 					return
 
 				var/atom/source = get_turf(tmob)
-				src.visible_message(SPAN_ALERT("<B>[src]</B> and <B>[tmob]</B>'s bounce off each other!"))
+				src.visible_message(SPAN_ALERT("<B>[src]</B> and <B>[tmob]</B> bounce off each other!"))
 				playsound(source, 'sound/misc/boing/6.ogg', 100, TRUE)
 				var/target_dir = get_dir(src, tmob)
 				var/src_dir = get_dir(tmob, src)
@@ -1035,12 +1033,6 @@
 
 		LI += W
 	.= LI
-
-/mob/proc/findname(msg)
-	for(var/mob/M in mobs)
-		if (M.real_name == text("[]", msg))
-			.= M
-	.= 0
 
 /mob/proc/movement_delay(var/atom/move_target = 0)
 	.= 2 + movement_delay_modifier
@@ -2351,8 +2343,8 @@
 	if (!ishuman(src)) // for the moment, only humans get dizzy
 		return
 
-	jitteriness = min(500, jitteriness + amount)	// store what will be new value
-													// clamped to max 500
+	jitteriness = min(400, jitteriness + amount)	// store what will be new value
+													// clamped to max 400
 	if (jitteriness > 100 && !is_jittery)
 		SPAWN(0)
 			jittery_process()

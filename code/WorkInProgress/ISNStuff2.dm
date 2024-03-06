@@ -257,7 +257,7 @@
 
 			for_by_tcl(G, /mob/living/critter/small_animal/dog/george)
 				G.visible_message(SPAN_ALERT("<b>[G]</b> pees on the floor. Bad dog!"))
-				make_cleanable( /obj/decal/cleanable/urine ,get_turf(G))
+				make_cleanable( /obj/decal/cleanable/water ,get_turf(G))
 		return
 
 	attackby(obj/item/W, mob/user)

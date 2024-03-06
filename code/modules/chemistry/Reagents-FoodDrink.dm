@@ -407,9 +407,15 @@ datum
 		fooddrink/alcoholic/wine/white
 			name = "white wine"
 			id = "white_wine"
-			fluid_r = 252
-			fluid_g = 168
-			fluid_b = 177
+			fluid_r = 255
+			fluid_g = 229
+			fluid_b = 189
+			alch_strength = 0.13
+			depletion_rate = 0.7
+			description = "An alcoholic beverage derived from white grapes."
+			reagent_state = LIQUID
+			taste = "dry"
+			viscosity = 0.3
 
 		fooddrink/alcoholic/champagne
 			name = "champagne"
@@ -3975,9 +3981,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
-
-				if(probmult(10))
-					new /obj/decal/cleanable/urine(M.loc)
 
 				if(probmult(15) && !M.reagents?.has_reagent("promethazine"))
 					M.visible_message(SPAN_ALERT("[M] pukes violently!"))

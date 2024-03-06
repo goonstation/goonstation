@@ -10438,7 +10438,7 @@
 /area/space)
 "aVj" = (
 /obj/storage/crate,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/grime,
@@ -18485,7 +18485,7 @@
 /area/timewarp/ship)
 "kKo" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/decal/cleanable/cobweb2,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
@@ -19303,10 +19303,6 @@
 	},
 /turf/unsimulated/floor/white/grime,
 /area/timewarp/ship)
-"mWO" = (
-/obj/decal/cleanable/urine,
-/turf/simulated/floor/pool/no_animate,
-/area/diner/motel/pool)
 "mXB" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -82843,7 +82839,7 @@ byl
 moj
 vRZ
 qhW
-mWO
+qhW
 qhW
 smm
 orA

@@ -92,6 +92,7 @@
 	win_path = /obj/window/auto
 	full_win = TRUE
 	no_dirs = TRUE
+	layer = LATTICE_LAYER	// to stop it rendering over things in map editors
 #ifdef PERSPECTIVE_EDITOR_WALL
 	icon_state = "wingrille_new"
 	color = "#A3DCFF"

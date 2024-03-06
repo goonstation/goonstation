@@ -33,20 +33,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		// not this is fruit but some veg do this too.
 		var/datum/plantgenes/new_genes = src.plantgenes
 
+		// Copy the genes from the plant we're harvesting to the new piece of produce.
 		HYPpassplantgenes(passed_genes,new_genes)
 		src.generation = harvested_plantpot.generation
-		// Copy the genes from the plant we're harvesting to the new piece of produce.
-
-		if(origin_plant.hybrid)
-			// We need to do special shit with the genes if the plant is a spliced
-			// hybrid since they run off instanced datums rather than referencing
-			// a specific already-existing one.
-			var/plantType = origin_plant.type
-			var/datum/plant/hybrid = new plantType(src)
-			for(var/V in origin_plant.vars)
-				if(issaved(origin_plant.vars[V]) && V != "holder")
-					hybrid.vars[V] = origin_plant.vars[V]
-			src.planttype = hybrid
+		src.planttype = HYPgenerateplanttypecopy(src, origin_plant)
 
 		// Now we calculate the effect of quality on the item
 		switch(quality_status)
@@ -73,7 +63,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		made_reagents = TRUE
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (src.edible == 0)
+		if (!src.edible)
 			if (user == target)
 				boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
@@ -124,7 +114,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			src.already_burst = TRUE
 			var/turf/T = get_turf(src)
 			playsound(T, wielded_sword.hitsound, 65, 1)
-			target.visible_message("[target] cuts the flying [src] with their [wielded_sword] midair!].", "You cut the flying [src] with your [wielded_sword] midair!].")
+			target.visible_message("[target] cuts the flying [src] with their [wielded_sword] midair!].",\
+			"You cut the flying [src] with your [wielded_sword] midair!].")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
 			for (var/i in 1 to src.slice_amount)
@@ -136,8 +127,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		else
 			..()
 
-	/// This proc checks if the produce that is thrown gets sliced midair, important for produce with special on-throw effects e.g. tomatoes, bowling melons
-	/// The conditions are 1. the produce is sliceable 2. the target is a mob 3. the target is blocking and 4. the target wields a sword that can cut produce midair
+	/// This proc checks if the produce that is thrown gets sliced midair, important for produce with special on-throw effects
+	/// (e.g. tomatoes, bowling melons)
+	/// The conditions are: 1. the produce is sliceable 2. the target is a mob
+	/// 3. the target is blocking and 4. the target wields a sword that can cut produce midair
 	proc/midair_slice_check(atom/hit_atom, datum/thrown_thing/thr)
 		if (hit_atom && ismob(hit_atom) && src.sliceable && !src.already_burst)
 			var/mob/target = hit_atom
@@ -244,7 +237,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/corn/clear
 	name = "clear corn cob"
-	desc = "Pure grain ethanol in a vague corn shape."
+	desc = "Pure grain ethanol in a vaguely corn-like shape."
 	icon_state = "clearcorn"
 	planttype = /datum/plant/veg/corn
 	bites_left = 3
@@ -265,7 +258,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/soy
 	name = "soybean pod"
 	crop_suffix = " pod"
-	desc = "These soybeans are as close as two beans in a pod. Probably because they are literally beans in a pod."
+	desc = "These soybeans are as close as two beans in a pod. Probably because they are <i>literally</i> beans in a pod."
 	planttype = /datum/plant/veg/soy
 	icon_state = "soy"
 	bites_left = 3
@@ -278,7 +271,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/bean
 	name = "bean pod"
 	crop_suffix = " pod"
-	desc = "This bean pod contains an inordinately large bites_left of beans due to genetic engineering. How convenient."
+	desc = "Aw, beans."
 	planttype = /datum/plant/veg/beans
 	icon_state = "beanpod"
 	bites_left = 1
@@ -464,7 +457,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	planttype = /datum/plant/fruit/melon
 	throwforce = 8
 	w_class = W_CLASS_NORMAL
-	edible = 0
+	edible = FALSE
 	food_color = "#7FFF00"
 	validforhat = 1
 	fill_amt = 3
@@ -488,11 +481,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/melon/george
 	name = "rainbow melon"
 	crop_prefix = "rainbow "
-	desc = "Sometime in the year 2472 these melons were required to have their name legally changed to protect the not-so-innocent. Also for tax evasion reasons."
+	desc = "Back in 2033, these melons were required to have their name legally changed to protect the not-so-innocent. \
+	Also for tax evasion reasons."
+	// Dr. George was likely dead by 2033, if the lawsuit was from his estate regarding the use of his name by gardengear.
+	// This is just a headcanon for what happened - I don't know the goon lore, ok?
 	icon_state = "george-melon"
 	throwforce = 0
 	w_class = W_CLASS_NORMAL
-	edible = 0
+	edible = FALSE
 	initial_volume = 60
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/plant/melonslice/george
@@ -518,7 +514,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/melonslice/george
 	name = "rainbow melon slice"
-	desc = "A slice of a particularly special melon. Previously went by a different name but then it got married or something THIS IS HOW MELON NAMES WORK OKAY"
+	desc = "A slice of a particularly special melon. \
+	Previously went by a different name but then it got married or something THIS IS HOW MELON NAMES WORK OKAY"
 	icon_state = "george-melon-slice"
 	throwforce = 5
 	w_class = W_CLASS_TINY
@@ -644,7 +641,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	make_reagents()
 		..()
 		var/datum/plantgenes/DNA = src.plantgenes
-		reagents.add_reagent("capsaicin", DNA?.get_effective_value("potency"))
+		reagents.add_reagent("capsaicin", HYPfull_potency_calculation(DNA))
 
 /obj/item/reagent_containers/food/snacks/plant/chili/chilly
 	name = "chilly pepper"
@@ -661,7 +658,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	make_reagents()
 		..()
 		var/datum/plantgenes/DNA = src.plantgenes
-		reagents.add_reagent("cryostylane", DNA?.get_effective_value("potency"))
+		reagents.add_reagent("cryostylane", HYPfull_potency_calculation(DNA))
 
 	heal(var/mob/M)
 		..()
@@ -673,7 +670,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili
 	name = "ghostlier chili"
 	crop_prefix = "ghost "
-	desc = "Naga Jolokia, or Ghost Chili, is a chili pepper previously recognized by Guinness World Records as the hottest pepper in the world. This one, found in space, is even hotter."
+	desc = "Naga Jolokia, or Ghost Chili, is a chili pepper previously recognized by Guinness World Records as the hottest pepper in the world. \
+	This one, found in space, is even hotter."
 	icon_state = "ghost_chili"
 	//planttype = /datum/plant/fruit/chili
 	w_class = W_CLASS_TINY
@@ -891,7 +889,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	make_reagents()
 		..()
 		var/datum/plantgenes/DNA = src.plantgenes
-		reagents.add_reagent("capulettium", DNA?.get_effective_value("potency"))
+		reagents.add_reagent("capulettium", HYPfull_potency_calculation(DNA))
 
 //Apple on a stick
 /obj/item/reagent_containers/food/snacks/plant/apple/stick
@@ -979,7 +977,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "Spooky!"
 	planttype = /datum/plant/fruit/pumpkin
 	icon_state = "pumpkin"
-	edible = 0
+	edible = FALSE
 	food_color = "#CC6600"
 	validforhat = 1
 	brew_result = list("juice_pumpkin"=20)
@@ -1027,7 +1025,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "Autumny!"
 	icon_state = "pumpkinlatte"
 	planttype = /datum/plant/fruit/pumpkin
-	edible = 0
+	edible = FALSE
 	food_color = "#CC6600"
 	validforhat = 1
 	brew_result = list("pumpkinspicelatte"=20)
@@ -1039,7 +1037,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			P.name = "carved [src.name]"
 			qdel(src)
 		else if (isspooningtool(W))
-			user.visible_message("[user] carefully opens up [src] to make a drinkable beverage.", "You carefully spoon the top off of [src], mindful of the whipped cream.")
+			user.visible_message("[user] carefully opens up [src] to make a drinkable beverage.", \
+			"You carefully spoon the top off of [src], mindful of the whipped cream.")
 			var/obj/item/reagent_containers/food/drinks/pumpkinlatte/latte = new(get_turf(user))
 			src.reagents.trans_to(latte, src.reagents.total_volume)
 			qdel(src)
@@ -1129,7 +1128,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/slurryfruit
 	name = "slurrypod"
 	crop_suffix = "pod"
-	desc = "An extremely poisonous, bitter fruit.  The slurrypod fruit is regarded as a delicacy in some outer colony worlds."
+	desc = "An extremely poisonous, bitter fruit. The slurrypod fruit is regarded as a delicacy in some outer colony worlds."
 	icon_state = "slurry"
 	planttype = /datum/plant/weed/slurrypod
 	bites_left = 1
@@ -1141,7 +1140,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega
 	name = "omega slurrypod"
 	crop_prefix = "omega "
-	desc = "An extremely poisonous, bitter fruit.  A strange light pulses from within."
+	desc = "An extremely poisonous, bitter fruit. A strange light pulses from within."
 	icon_state = "slurrymut"
 	bites_left = 1
 	heal_amt = -1
@@ -1221,7 +1220,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/onion
 	name = "onion"
-	desc = "A yellow onion bulb. This little bundle of fun tends to irritate eyes when cut as a result of a fascinating chemical reaction."
+	desc = "A red onion bulb. This little bundle of fun tends to irritate eyes when cut as a result of a fascinating chemical reaction."
 	icon_state = "onion"
 	planttype = /datum/plant/veg/onion
 	food_color = "#FF9933"
@@ -1268,7 +1267,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/avocado
 	name = "avocado"
-	desc = "The immense berry of a Mexican tree, the avocado is rich in monounsaturated fat, fiber, and potassium.  It is also poisonous to birds and horses."
+	desc = "The immense berry of a Mexican tree, the avocado is rich in monounsaturated fat, fiber, and potassium. \
+	It is also poisonous to birds and horses."
 	icon_state = "avocado"
 	planttype = /datum/plant/fruit/avocado
 	food_color = "#007B1C"
@@ -1294,7 +1294,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	planttype = /datum/plant/fruit/coconut
 	throwforce = 9
 	w_class = W_CLASS_NORMAL
-	edible = 0
+	edible = FALSE
 	food_color = "#4D2600"
 	validforhat = 1
 	event_handler_flags = USE_FLUID_ENTER
@@ -1306,11 +1306,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
-			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
+			user.visible_message("[user] cracks [src] open.", "You crack open [src].")
 			src.split()
 		..()
 
-	//Because coconuts create a drink item, we need to put that in seperatly
+	//Because coconuts create a drink item, we need to put that in seperately
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (hit_atom && ismob(hit_atom) && !src.already_burst)
 			var/mob/target = hit_atom
@@ -1321,7 +1321,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 					src.already_burst = TRUE
 					var/turf/T = get_turf(src)
 					playsound(T, wielded_sword.hitsound, 65, 1)
-					target.visible_message("[target] cuts the flying [src] with their [wielded_sword] midair!].", "You cut the flying [src] with your [wielded_sword] midair!].")
+					target.visible_message("[target] cuts the flying [src] with their [wielded_sword] midair!].", \
+					"You cut the flying [src] with your [wielded_sword] midair!].")
 					src.split(TRUE)
 				else
 					..()
@@ -1392,7 +1393,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/pineapple
 	name = "pineapple"
-	desc = "It's spiky, kind of like some sort of medieval weapon that grows on a plant. Who decided to cut one of these open and tried to eat it?"
+	desc = "It looks like some sort of spiky medieval weapon. Who decided to cut one of these open and eat it?"
 	icon_state = "pineapple"
 	planttype = /datum/plant/fruit/pineapple
 	sliceable = TRUE
@@ -1448,18 +1449,33 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte
 	name = "latte coffee berries"
 	crop_prefix = "latte "
-	desc = "The texture of these berries' skin is vaguely... creamy??"
+	desc = "The texture of these berries' skin is vaguely... creamy?"
 	icon_state = "latteberries"
 
 	make_reagents()
 		..()
 		reagents.add_reagent("milk", 5)
 
+/obj/item/reagent_containers/food/snacks/plant/sunflower
+	name = "sunflower seeds"
+	crop_suffix = " seeds"
+	desc = "A handful of delicous sunflower seeds. The snack that keeps your fingers and mouth busy.  A wonderful portable snack if not a tad messy."
+	icon_state = "sunflower"
+	planttype = /datum/plant/flower/sunflower
+	bites_left = 3
+	heal_amt = 0.2
+	food_color = "#695b59"
+	food_effects = list("food_refreshed")
+
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		..()
+		src.AddComponent(/datum/component/seedy, passed_genes, origin_plant, generation)
+		return src
 
 /obj/item/reagent_containers/food/snacks/plant/coffeebean
 	name = "coffee beans"
 	crop_suffix = " beans"
-	desc = "Even though the coffee beans are seeds, they are referred to as 'beans' because of their resemblance to true beans.."
+	desc = "Even though the coffee beans are seeds, they are referred to as 'beans' because of their resemblance to true beans."
 	icon_state = "coffeebeans"
 	planttype = /datum/plant/crop/coffee
 	bites_left = 1
@@ -1477,7 +1493,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "An aromatic root from the turmeric plant, a relative of ginger."
 	icon_state = "turmericroot"
 	planttype = /datum/plant/veg/turmeric
-	edible = 0
+	edible = FALSE
 	validforhat = 1
 	food_color = "#e0a80c"
 
@@ -1487,7 +1503,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "A spice known for its sweet and aromatic flavor, often used in cooking and baking."
 	icon_state = "cinnamonstick"
 	planttype = /datum/plant/veg/cinnamon
-	edible = 1
+	edible = TRUE //who eats cinnamon sticks whole? Are you a beaver???
 	validforhat = 1
 	food_color = "#C58C66"
 
@@ -1539,7 +1555,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop
 	name = "orange goop"
-	desc = "Some sort of pulsating orange goop...."
+	desc = "Some sort of pulsating orange goop..."
 	icon_state = "yuckorange"
 	food_color = "#ff9900"
 	initial_volume = 30

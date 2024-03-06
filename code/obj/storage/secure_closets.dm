@@ -328,7 +328,6 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	name = "\improper Chief Engineer's locker"
 	req_access = list(access_engineering_chief)
 	spawn_contents = list(
-		/obj/item/storage/belt/utility/prepared/ceshielded,
 		/obj/item/disk/data/floppy/manudrive/law_rack,
 		/obj/item/storage/box/clothing/chief_engineer,
 		/obj/item/device/radio/headset/command/ce,
@@ -336,9 +335,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/device/flash,
 		/obj/item/clothing/shoes/magnetic,
 		/obj/item/clothing/gloves/yellow,
-		/obj/item/clothing/suit/fire/heavy, //now theres at least one on every map
+		/obj/item/clothing/suit/hazard/fire/heavy, //now theres at least one on every map
 		/obj/item/clothing/head/helmet/firefighter,
-		/obj/item/clothing/suit/rad, //mostly relevant for singulo and nuke maps
+		/obj/item/clothing/suit/hazard/rad, //mostly relevant for singulo and nuke maps
 		/obj/item/clothing/head/rad_hood,
 		/obj/item/storage/toolbox/mechanical/yellow_tools,
 		/obj/item/storage/box/misctools,
@@ -354,7 +353,27 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/clothing/suit/space/light/engineer,
 		/obj/item/clothing/head/helmet/space/light/engineer,
 	#endif
+	)
 
+/obj/storage/secure/closet/command/chief_engineer/puzzle
+	locked = FALSE
+	spawn_contents = list(
+		/obj/item/storage/belt/utility/prepared/ceshielded, //instead of the law rack disk
+		/obj/item/storage/box/clothing/chief_engineer,
+		/obj/item/device/radio/headset/command/ce,
+		/obj/item/stamp/ce,
+		/obj/item/device/flash,
+		/obj/item/clothing/shoes/magnetic,
+		/obj/item/clothing/gloves/yellow,
+		/obj/item/clothing/suit/hazard/fire/heavy,
+		/obj/item/clothing/head/helmet/firefighter,
+		/obj/item/clothing/suit/hazard/rad,
+		/obj/item/clothing/head/rad_hood,
+		/obj/item/storage/toolbox/mechanical/yellow_tools,
+		/obj/item/storage/box/misctools,
+		/obj/item/extinguisher,
+		/obj/item/clothing/suit/space/light/engineer,
+		/obj/item/clothing/head/helmet/space/light/engineer,
 	)
 
 /* ==================== */
@@ -766,7 +785,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet/engineering/atmos
 	name = "\improper Atmospheric Technician's locker"
 	req_access = list(access_engineering_atmos)
-	spawn_contents = list(/obj/item/clothing/suit/fire,
+	spawn_contents = list(/obj/item/clothing/suit/hazard/fire,
 	/obj/item/clothing/head/helmet/firefighter,
 	/obj/item/device/analyzer/atmospheric/upgraded,
 	/obj/item/clothing/glasses/toggleable/atmos,
@@ -864,7 +883,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/satchel/hydro,\
 	/obj/item/reagent_containers/glass/wateringcan,\
 	/obj/item/sponge,\
-	/obj/item/kitchen/food_box/egg_box/rancher)
+	/obj/item/kitchen/food_box/egg_box/rancher,
+	/obj/item/storage/box/knitting)
 
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"

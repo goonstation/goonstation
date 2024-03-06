@@ -37,6 +37,12 @@ TYPEINFO(/datum/component/arable)
 
 	if(P)
 		return
+
+
+	var/datum/component/seedy/seed_container = I.GetComponent(/datum/component/seedy)
+	if(seed_container)
+		I = seed_container.generate_seed()
+
 	if(istype(I, /obj/item/seed) || istype(I, /obj/item/seedplanter/) )
 		if(isturf(A))
 			var/turf/T = A
@@ -79,6 +85,10 @@ TYPEINFO(/datum/component/arable)
 		else
 			boutput(user, SPAN_ALERT("You plant the seed, but nothing happens."))
 			qdel(SEED)
+
+		if(seed_container)
+			user.u_equip(seed_container.parent)
+			qdel(seed_container.parent)
 
 		return TRUE
 

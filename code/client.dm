@@ -299,9 +299,9 @@
 			return
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
-	var/isbanned = checkBan(src.ckey, src.computer_id, src.address, record = 1)
+	var/list/checkBan = bansHandler.check(src.ckey, src.computer_id, src.address)
 
-	if (isbanned)
+	if (checkBan)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
 		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned", "access")
 		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])"))
@@ -319,7 +319,7 @@
 								</head>
 								<body>
 									<h1>You have been banned.</h1>
-									<span class='banreason'>"Reason: [isbanned].")]</span><br>
+									<span class='banreason'>Reason: [checkBan["message"]]</span><br>
 									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.<br>
 									<b>If you believe this ban was not meant for you then please appeal regardless of what the ban message or length says!</b>
 								</body>
@@ -337,6 +337,10 @@
 		//Load custom chat
 		SPAWN(-1)
 			src.chatOutput.start()
+
+	// Record a login, sets player.id, which is used by almost every future API call for a player
+	// So we need to do this early, and outside of a spawn
+	src.player.record_login()
 
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())
@@ -373,7 +377,6 @@
 	for(var/key in globalImages)
 		var/image/I = globalImages[key]
 		src << I
-
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - ok mostly done")
 
@@ -459,32 +462,25 @@
 
 		ircbot.event("login", src.key)
 		//Cloud data
-#ifdef LIVE_SERVER
-		if (cdn)
-			if(!cloud_available())
-				src.player.cloud_fetch()
-#else
-		// dev server, uses local save file to simulate clouddata
-		if (src.player.cloud_fetch()) // might needlessly reload, but whatever.
-#endif
-			if(cloud_available())
-				src.antag_tokens = src.player?.get_antag_tokens()
-				src.load_persistent_bank()
-				var/decoded = cloud_get("audio_volume")
-				if(decoded)
-					var/list/old_volumes = volumes.Copy()
-					volumes = json_decode(decoded)
-					for(var/i = length(volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
-						if(i - 1 == VOLUME_CHANNEL_EMOTE) // emote channel defaults to game volume
-							volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
-						else
-							volumes += old_volumes[i]
+		if (!src.player.cloudSaves.loaded)
+			src.player.cloudSaves.fetch()
+		src.antag_tokens = src.player?.get_antag_tokens()
+		src.load_persistent_bank()
+		var/decoded = src.player.cloudSaves.getData("audio_volume")
+		if(decoded)
+			var/list/old_volumes = volumes.Copy()
+			volumes = json_decode(decoded)
+			for(var/i = length(volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
+				if(i - 1 == VOLUME_CHANNEL_EMOTE) // emote channel defaults to game volume
+					volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
+				else
+					volumes += old_volumes[i]
 
-				// Show login notice, if one exists
-				src.show_login_notice()
+			// Show login notice, if one exists
+			src.show_login_notice()
 
-				// Set screen saturation
-				src.set_saturation(text2num(cloud_get("saturation")))
+			// Set screen saturation
+			src.set_saturation(text2num(src.player.cloudSaves.getData("saturation")))
 
 		src.mob.reset_keymap()
 
@@ -720,25 +716,16 @@
 
 
 /client/proc/load_persistent_bank()
-	persistent_bank_valid = cloud_available()
 
-	persistent_bank = cloud_get("persistent_bank") ? text2num(cloud_get("persistent_bank")) : FALSE
-
-	if(!persistent_bank && cloud_available())
-		logTheThing(LOG_DEBUG, src, "first cloud_get failed but cloud is available!")
-		persistent_bank += text2num( cloud_get("persistent_bank") || "0" )
-		var/failed = cloud_put( "persistent_bank", persistent_bank )
-		if(failed)
-			logTheThing(LOG_DEBUG, src, "Failed to store persistent cash in the ~cloud~: [failed]")
-
-	persistent_bank_item = cloud_get("persistent_bank_item")
-
-	if(!persistent_bank_item && cloud_available())
-		persistent_bank_item = cloud_get("persistent_bank_item")
-		var/failed = cloud_put( "persistent_bank_item", persistent_bank_item )
-		if(failed)
-			logTheThing(LOG_DEBUG, src, "Failed to store persistent bank item in the ~cloud~: [failed]")
-
+#ifdef BONUS_POINTS
+	persistent_bank = 99999999
+#else
+	if (!src.player.cloudSaves.loaded) return
+	var/cPersistentBank = src.player.cloudSaves.getData("persistent_bank")
+	persistent_bank = cPersistentBank ? text2num(cPersistentBank) : FALSE
+#endif
+	persistent_bank_valid = TRUE //moved down to below api call so if it runtimes it won't be considered valid
+	persistent_bank_item = src.player.cloudSaves.getData("persistent_bank_item")
 
 //MBC TODO : PERSISTENTBANK_VERSION_MIN, MAX FOR BANKING SO WE CAN WIPE AWAY EVERYONE'S HARD WORK WITH A SINGLE LINE OF CODE CHANGE
 // defines are already set, just do the checks here ok
@@ -747,17 +734,14 @@
 /client/proc/set_last_purchase(datum/bank_purchaseable/purchase)
 	if (!purchase || purchase == 0 || !purchase.carries_over)
 		persistent_bank_item = "none"
-		if( cloud_available() )
-			cloud_put( "persistent_bank_item", "none" )
+		src.player.cloudSaves.putData( "persistent_bank_item", "none" )
 	else
 		persistent_bank_item = purchase.name
-		if( cloud_available() )
-			cloud_put( "persistent_bank_item", persistent_bank_item )
+		src.player.cloudSaves.putData( "persistent_bank_item", persistent_bank_item )
 
 /client/proc/set_persistent_bank(amt as num)
 	persistent_bank = amt
-	if( cloud_available() )
-		cloud_put( "persistent_bank", amt )
+	src.player.cloudSaves.putData( "persistent_bank", amt )
 	/*
 	var/savefile/PB = LoadSavefile("data/PersistentBank.sav")
 	if (!PB) return
@@ -770,15 +754,14 @@
 		load_persistent_bank()
 		if(!persistent_bank_valid)
 			return
-	var/list/earnings = list((ckey) = list("persistent_bank" = list("command" = "add", "value" = amt)))
-	cloud_put_bulk(json_encode(earnings))
 	persistent_bank += amt
+	src.player.cloudSaves.putData("persistent_bank", persistent_bank)
 
 /client/proc/sub_from_bank(datum/bank_purchaseable/purchase)
 	add_to_bank(-purchase.cost)
 
 /client/proc/bank_can_afford(amt as num)
-	player.cloud_fetch_data_only()
+	player.cloudSaves.fetch()
 	load_persistent_bank()
 	var/new_bank_value = persistent_bank - amt
 	if (new_bank_value >= 0)
@@ -830,18 +813,19 @@ var/global/curr_day = null
 		var/cid = computer_id
 		SPAWN(0)
 			if (geoip_check(addr))
-				var/addData[] = new()
-				addData["ckey"] = ck
-				addData["compID"] = cid
-				addData["ip"] = addr
-				addData["reason"] = "Ban evader: computer ID collision." // haha get fucked
-				addData["akey"] = "Marquesas"
-				addData["mins"] = 0
 				var/slt = rand(600, 3000)
 				logTheThing(LOG_ADMIN, null, "Evasion geoip autoban triggered on [key], will execute in [slt / 10] seconds.")
 				message_admins("Autobanning evader [key] in [slt / 10] seconds.")
 				sleep(slt)
-				addBan(addData)
+				bansHandler.add(
+					"bot",
+					null,
+					ck,
+					cid,
+					addr,
+					"Ban evader: computer ID collision.",
+					FALSE
+				)
 
 /proc/geoip_check(var/addr)
 	set background = 1
@@ -1168,77 +1152,11 @@ var/global/curr_day = null
 		return 0
 	return (src.ckey in muted_keys) && muted_keys[src.ckey]
 
-/// Sets a cloud key value pair and sends it to goonhub
-/client/proc/cloud_put(key, value)
-	return src.player.cloud_put(key, value)
-
-/// Returns some cloud data on the client
-/client/proc/cloud_get(key)
-	return src.player.cloud_get(key)
-
-/// Returns 1 if you can set or retrieve cloud data on the client
-/client/proc/cloud_available()
-	return src.player.cloud_available()
-
 /client/proc/message_one_admin(source, message)
 	if(!src.holder)
 		return
 	boutput(src, replacetext(replacetext(message, "%admin_ref%", "\ref[src.holder]"), "%client_ref%", "\ref[src]"))
 
-/proc/add_test_screen_thing()
-	var/client/C = input("For who", "For who", null) in clients
-	var/wavelength_shift = input("Shift wavelength bounds by <x> nm, should be in the range of -370 to 370", "Wavelength shift", 0) as num
-	if (wavelength_shift < -370 || wavelength_shift > 370)
-		boutput(usr, SPAN_ADMIN("Invalid value."))
-		return
-	var/s_r = 0
-	var/s_g = 0
-	var/s_b = 0
-
-	// total range: 380 - 750 (range: 370nm)
-	// red: 570 - 750 (range: 180nm)
-	if (wavelength_shift < 0)
-		s_r = min(-wavelength_shift / 180 * 255, 255)
-	else if (wavelength_shift > 190)
-		s_r = min((wavelength_shift - 190) / 180 * 255, 255)
-	// green: 490 - 620 (range: 130nm)
-	if (wavelength_shift < -130)
-		s_g = min(-(wavelength_shift + 130) / 130 * 255, 255)
-	else if (wavelength_shift > 110)
-		s_g = min((wavelength_shift - 110) / 130 * 255, 255)
-	// blue: 380 - 500 (range: 120nm)
-	if (wavelength_shift < -250)
-		s_b = min(-(wavelength_shift + 250) / 120 * 255, 255)
-	else if (wavelength_shift > 0)
-		s_b = min(wavelength_shift / 120 * 255, 255)
-
-	var/subtr_color = rgb(s_r, s_g, s_b)
-
-	var/si_r = clamp(input("Red spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
-	var/si_g = clamp(input("Green spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
-	var/si_b = clamp(input("Blue spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
-
-	var/multip_color = rgb(si_r * 255, si_g * 255, si_b * 255)
-
-	var/atom/movable/screen/S = new
-	S.icon = 'icons/mob/whiteview.dmi'
-	S.blend_mode = BLEND_SUBTRACT
-	S.color = subtr_color
-	S.layer = HUD_LAYER - 0.2
-	S.screen_loc = "SOUTH,WEST"
-	S.mouse_opacity = 0
-
-	C.screen += S
-
-	var/atom/movable/screen/M = new
-	M.icon = 'icons/mob/whiteview.dmi'
-	M.blend_mode = BLEND_MULTIPLY
-	M.color = multip_color
-	M.layer = HUD_LAYER - 0.1
-	M.screen_loc = "SOUTH,WEST"
-	M.mouse_opacity = 0
-
-	C.screen += M
 
 /client/verb/apply_depth_shadow()
 	set hidden = 1
@@ -1274,7 +1192,7 @@ var/global/curr_day = null
 	var/s = input("Enter a saturation % from 50-150. Default is 100.", "Saturation %", 100) as num
 	s = clamp(s, 50, 150) / 100
 	src.set_saturation(s)
-	src.cloud_put("saturation", s)
+	src.player.cloudSaves.putData("saturation", s)
 	boutput(usr, SPAN_NOTICE("You have changed your game saturation to [s * 100]%."))
 
 /client/proc/set_view_size(var/x, var/y)

@@ -387,7 +387,7 @@
 	},
 /obj/fluid_spawner{
 	amount = 5000;
-	reagent_id = "urine"
+	reagent_id = "water"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9

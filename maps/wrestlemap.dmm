@@ -2284,7 +2284,7 @@
 /area/shuttle/arrival/station)
 "aYH" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/hardhat,
 /obj/item/tank/air,
@@ -2621,7 +2621,7 @@
 /area/station/science/teleporter)
 "biY" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/hardhat,
 /obj/item/tank/air,
@@ -3305,7 +3305,7 @@
 /obj/item/clothing/head/helmet/welding,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/head/rad_hood,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -6780,7 +6780,7 @@
 /obj/item/parts/robot_parts/leg/left,
 /obj/item/parts/robot_parts/leg/right,
 /obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/head/standard,
 /obj/item/parts/robot_parts/arm/left,
 /obj/item/parts/robot_parts/arm/right,
 /obj/item/reagent_containers/food/snacks/candy/chocolate,
@@ -7231,7 +7231,7 @@
 /area/station/hallway/primary/west)
 "dmw" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/hardhat,
 /obj/item/tank/air,
@@ -8019,7 +8019,7 @@
 /area/station/medical/robotics)
 "dBX" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/hardhat,
 /obj/item/tank/air,
@@ -13330,7 +13330,7 @@
 /area/station/hallway/secondary/entry)
 "fQB" = (
 /obj/table/wood/auto,
-/obj/item/pinpointer{
+/obj/item/pinpointer/disk{
 	pixel_y = 4
 	},
 /obj/item/paper/telecrystal_update,
@@ -14400,7 +14400,7 @@
 /area/station/janitor/supply)
 "gnw" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/hardhat,
 /obj/item/tank/air,
@@ -14468,7 +14468,7 @@
 /area/station/maintenance/solar/north)
 "goF" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/hardhat,
 /obj/item/tank/air,
@@ -15173,7 +15173,7 @@
 /obj/item/clothing/head/helmet/welding,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/head/rad_hood,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	name = "autoname - SS13";
@@ -16245,7 +16245,7 @@
 	})
 "hhh" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/hardhat,
 /obj/item/tank/air,
@@ -21865,7 +21865,7 @@
 	pixel_x = 6;
 	pixel_y = 10
 	},
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
 "jAR" = (
@@ -23897,7 +23897,7 @@
 /area/research_outpost/protest)
 "kwW" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/hardhat,
 /obj/item/tank/air,
@@ -26280,7 +26280,7 @@
 /obj/item/clothing/head/helmet/welding,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/head/rad_hood,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -54580,7 +54580,7 @@
 /area/station/engine/monitoring)
 "xUM" = (
 /obj/table/auto,
-/obj/item/blueprint,
+/obj/item/paper/blueprint,
 /obj/item/pen/pencil,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)

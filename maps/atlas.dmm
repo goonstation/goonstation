@@ -479,6 +479,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "northsolar2";
+	name = "North Solars"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/west)
 "abY" = (
@@ -897,6 +901,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "northsolar";
+	name = "North Solars"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "adb" = (
@@ -914,6 +922,10 @@
 	},
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "northsolar";
+	name = "North Solars"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
@@ -1843,6 +1855,10 @@
 /area/station/medical/morgue)
 "afX" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "northmerch";
+	name = "North Merchant Dock"
+	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hallway/primary/south)
 "afZ" = (
@@ -2339,7 +2355,12 @@
 /area/station/hallway/primary/west)
 "ahF" = (
 /obj/table/auto,
-/obj/item/storage/box/cutlery,
+/obj/item/storage/box/cutlery{
+	pixel_x = 8
+	},
+/obj/item/storage/box/popsicle_sticks{
+	pixel_x = -7
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ahG" = (
@@ -3135,7 +3156,7 @@
 /area/station/hallway/primary/south)
 "akj" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/white/side{
 	dir = 4
 	},
@@ -5591,6 +5612,11 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/teleporter,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "teleporter"
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "atz" = (
@@ -5656,6 +5682,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "core"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "atG" = (
@@ -5912,6 +5943,11 @@
 /obj/disposalpipe/segment{
 	dir = 4;
 	level = -1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "inner"
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
@@ -6720,6 +6756,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering";
+	enter_id = "south"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
 "awE" = (
@@ -7191,6 +7232,11 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "axU" = (
@@ -7334,6 +7380,11 @@
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "meetingroom"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/united_command)
 "ayt" = (
@@ -8196,6 +8247,11 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/access/engineering_power,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "southsolar";
+	name = "South Solars";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
 "aBu" = (
@@ -8680,6 +8736,10 @@
 "aCX" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/mining,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "mining";
+	name = "Mining"
+	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/mining/staff_room)
 "aCY" = (
@@ -9118,6 +9178,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/engineering_power,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "southsolar";
+	name = "South Solars";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
 "aEc" = (
@@ -9671,7 +9736,7 @@
 /area/station/medical/robotics)
 "aFH" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -10313,6 +10378,10 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/mining,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "mining";
+	name = "Mining"
+	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/mining/staff_room)
 "aHJ" = (
@@ -10339,6 +10408,10 @@
 /area/station/janitor/office)
 "aHN" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "southmerch";
+	name = "South Merchant Dock"
+	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/main)
 "aHO" = (
@@ -10473,6 +10546,11 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "southsolar";
+	name = "South Solars";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "aIx" = (
@@ -10493,6 +10571,11 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "southsolar";
+	name = "South Solars";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -10848,6 +10931,11 @@
 "aKb" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "miningshuttle";
+	name = "Mining Shuttle";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "aKc" = (
@@ -11065,6 +11153,11 @@
 /area/station/hangar/arrivals)
 "aKJ" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "miningshuttle";
+	name = "Mining Shuttle";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "aKK" = (
@@ -12046,6 +12139,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/pinpointer/disk,
 /turf/simulated/floor/airless/circuit/red,
 /area/listeningpost)
 "aOi" = (
@@ -13847,6 +13941,11 @@
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4;
 	name = "Engine Room"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "sw"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -15792,6 +15891,11 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "se"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bie" = (
@@ -15884,6 +15988,11 @@
 	},
 /obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/security,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/security/secwing)
 "bAx" = (
@@ -16483,7 +16592,7 @@
 "eJD" = (
 /obj/item/device/gps,
 /obj/item/device/gps,
-/obj/item/clothing/head/helmet/camera,
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/item/device/camera_viewer/telesci,
 /obj/table/reinforced/chemistry/auto,
 /obj/item/device/gps,
@@ -16606,6 +16715,11 @@
 	dir = 4;
 	level = -1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
 "fiL" = (
@@ -16629,6 +16743,11 @@
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4;
 	name = "Engine Room"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "nw"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -16947,6 +17066,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering";
+	enter_id = "north"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
 "hpN" = (
@@ -16970,6 +17094,11 @@
 /obj/machinery/secscanner{
 	dir = 4;
 	pixel_x = -20
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
@@ -17085,6 +17214,11 @@
 	},
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -17835,6 +17969,11 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "ne"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "mlP" = (
@@ -18063,6 +18202,10 @@
 /obj/mapping_helper/access/engineering_power,
 /obj/cable/yellow{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "northsolar2";
+	name = "North Solars"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/west)
@@ -18335,6 +18478,30 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"oOs" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4;
+	name = "AI Upload Chamber"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "inner"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai)
 "oPh" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -19344,6 +19511,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/ejection{
 	dir = 8
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering";
+	enter_id = "outer"
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
@@ -61691,7 +61863,7 @@ aGw
 aqD
 aqD
 aqD
-axT
+oOs
 aqD
 aqD
 aqD
