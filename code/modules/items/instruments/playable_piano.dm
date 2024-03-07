@@ -7,7 +7,8 @@
 
 #define MIN_TIMING 0.1
 #define MAX_TIMING 0.5
-#define MAX_NOTE_INPUT 1920
+//#define MAX_NOTE_INPUT 1920
+#define MAX_NOTE_INPUT 6000
 #define FORMAT_INVALID 0
 #define FORMAT_CLASSIC 1
 #define FORMAT_COMPACT 2
@@ -337,7 +338,7 @@ TYPEINFO(/obj/player_piano)
 					note_volumes += 60
 		is_busy = 0
 
-	proc/build_notes_very_compact_format(var/list/piano_notes)
+	proc/build_notes_very_compact_format()
 		is_busy = 1
 		note_volumes = list()
 		note_octaves = list()
@@ -345,20 +346,21 @@ TYPEINFO(/obj/player_piano)
 		note_accidentals = list()
 		var/note_translation_list = list("c", "c-", "d", "d-", "e", "f", "f-", "g", "g-", "a", "a-", "b")
 
-		for (var/note_index = 1, note_index <= length(piano_notes), note_index++)
-			var/note = text2ascii(piano_notes[note_index])
+		for (var/note_index = 1, note_index <= length(note_input))
+			var/note = text2ascii(note_input[note_index])
 
 			if (note == REST)
 				note_names += "r"
 				note_octaves += "r"
 				note_accidentals += "r"
 				note_volumes += 0
+				note_index++
 				continue
 
 			if (note >= REST_1 && note <= REST_3)
 				var/offset = 122
 				var/consume_amount = note - offset
-				var/rest_length = text2num_safe(piano_notes.Copy(note_index,note_index+consume_amount))
+				var/rest_length = text2num_safe(copytext(note_input, note_index+1, note_index + consume_amount))
 				note_index += consume_amount
 				for (var/rest_amount = 0, rest_amount < rest_length, rest_amount++)
 					note_names += "r"
@@ -379,6 +381,8 @@ TYPEINFO(/obj/player_piano)
 			note_accidentals += (length(note_translation_list[note_translated_index+1]) == 2) ? "-" : ""
 
 			note_volumes += 40
+
+			note_index++
 		is_busy = 0
 
 	proc/get_note_format()
@@ -426,20 +430,22 @@ TYPEINFO(/obj/player_piano)
 
 				return note_amount_compact
 			if (FORMAT_VERY_COMPACT)
-				var/note_amount_v_compact = 0
+				var/note_amount_vcf = 0
 
-				for (var/note_index = 1, note_index <= length(note_input), note_index++)
-					var/note_ascii_num = text2ascii(note_input[note_index])
+				for (var/note_index_vcf = 1, note_index_vcf <= length(note_input))
+					var/note_ascii_num = text2ascii(note_input[note_index_vcf])
 
 					if (note_ascii_num >= REST_1 && note_ascii_num <= REST_3)
 						var/offset = 122
 						var/consume_amount = note_ascii_num - offset
-						note_amount_v_compact += text2num_safe(piano_notes.Copy(note_index,note_index+consume_amount))
-						note_index += consume_amount
+						var/num = copytext(note_input, note_index_vcf+1, note_index_vcf + consume_amount)
+						note_amount_vcf += text2num_safe(num)
+						note_index_vcf += consume_amount
 					else
-						note_amount_v_compact += 1
+						note_amount_vcf += 1
+						note_index_vcf++
 
-				return note_amount_v_compact
+				return note_amount_vcf
 		return MAX_NOTE_INPUT + 1
 
 	proc/ready_piano(var/is_linked) //final checks to make sure stuff is right, gets notes into a compiled form for easy playsounding
