@@ -4201,26 +4201,31 @@ datum
 			taste = "like a good quality all wear garment"
 			reagent_state = LIQUID
 
+			var/datum/material/jeanMaterial = null
+
+			New()
+				. = ..()
+				jeanMaterial = getMaterial("jean")
+
 			reaction_turf(var/turf/T, var/volume)
 				. = ..()
 				if (volume < MIN_JEANS_FOR_CONVERSION)
-					if (prob(5))
-						return
+					return
+
 				if (!T)
 					return
 
-				T.setMaterial(getMaterial("jean"))
+				T.setMaterial(jeanMaterial)
 
 			reaction_obj(var/obj/O, var/volume)
 				. = ..()
 				if (volume < MIN_JEANS_FOR_CONVERSION)
-					if (prob(5))
-						return
+					return
 
 				if (!O)
 					return
 
-				O.setMaterial(getMaterial("jean"))
+				O.setMaterial(jeanMaterial)
 
 			var/list/jean_affected_slots = list(
 				SLOT_BACK,
@@ -4242,7 +4247,7 @@ datum
 				if (volume < MIN_JEANS_FOR_CONVERSION)
 					return
 
-				var/mob/living/carbon/human/human = M;
+				var/mob/living/carbon/human/human = M
 				var/update_required = FALSE
 				for (var/slot in jean_affected_slots)
 					var/obj/item/I = human.get_slot(slot)
@@ -4250,14 +4255,14 @@ datum
 					if (!I)
 						continue
 
-					if (I.material?.getName() == "jean")
+					if (I.material?.isSameMaterial(jeanMaterial))
 						continue
 
-					volume -= MIN_JEANS_FOR_CONVERSION
-					if (volume < 0)
+					volume = max(0, volume - MIN_JEANS_FOR_CONVERSION)
+					if (volume == 0)
 						break
 
-					I.setMaterial(getMaterial("jean"))
+					I.setMaterial(jeanMaterial)
 					update_required = TRUE
 
 				if (update_required)
