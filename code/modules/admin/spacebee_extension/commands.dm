@@ -80,7 +80,7 @@
 			message += "RECV"
 			for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 				var/id = playerNote.server_id
-				if(length(playerNote.legacy_data))
+				if(!id && length(playerNote.legacy_data))
 					var/lData = json_decode(playerNote.legacy_data)
 					if(lData["oldserver"])
 						id = lData["oldserver"]
