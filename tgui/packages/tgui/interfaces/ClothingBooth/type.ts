@@ -18,7 +18,7 @@ export interface ClothingBoothGroupingData {
   cost_min: number;
   cost_max: number;
   clothingbooth_items: Record<string, ClothingBoothItemData>;
-  grouping_tags: Record<string, ClothingBoothGroupingTagsData>;
+  grouping_tags: string[];
   slot: ClothingBoothSlotKey;
 }
 

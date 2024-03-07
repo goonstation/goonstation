@@ -68,17 +68,17 @@ const TagStackContainer = (props: TagStackContainerProps, context) => {
 };
 
 const TagCheckbox = (props: ClothingBoothGroupingTagsData, context) => {
-  const { colour, name } = props;
+  const { name } = props;
 
   const [tagFilters, setTagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, 'tagFilters', {});
-  const setTagFilter = (filter: string) =>
+  const mergeTagFilter = (filter: string) =>
     setTagFilters({
       ...tagFilters,
       [filter]: !tagFilters[filter],
     });
 
   return (
-    <Button.Checkbox fluid checked={!!tagFilters[name]} color="" onClick={() => setTagFilter(name)}>
+    <Button.Checkbox fluid checked={!!tagFilters[name]} color="" onClick={() => mergeTagFilter(name)}>
       {name}
     </Button.Checkbox>
   );

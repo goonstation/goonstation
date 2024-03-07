@@ -1,10 +1,11 @@
 import { Box, Stack } from '../../components';
 import { buildFieldComparator, numberComparator } from './utils/Comparator';
-import { ClothingBoothGroupingTagsData, ClothingBoothSlotKey } from './type';
+import { ClothingBoothData, ClothingBoothGroupingTagsData, ClothingBoothSlotKey } from './type';
+import { useBackend } from '../../backend';
 
 interface GroupingTagContainerProps {
   slot: ClothingBoothSlotKey,
-  tags: Record<string, ClothingBoothGroupingTagsData>,
+  grouping_tags: string[],
 }
 
 interface ClothingBoothSlotDetail {
@@ -12,11 +13,13 @@ interface ClothingBoothSlotDetail {
   name: string;
 }
 
-export const GroupingTagContainer = (props: GroupingTagContainerProps) => {
-  const { slot, tags } = props;
-  const groupingTags = Object.values(tags);
-  const sortedGroupingTags = groupingTags.sort(
-    buildFieldComparator((groupingTag) => groupingTag.display_order, numberComparator)
+export const GroupingTagContainer = (props: GroupingTagContainerProps, context) => {
+  const { data } = useBackend<ClothingBoothData>(context);
+  const { tags } = data;
+  const { slot, grouping_tags } = props;
+  const groupingTagsObject = Object.values(grouping_tags);
+  const sortedGroupingTags = groupingTagsObject.sort(
+    buildFieldComparator((groupingTag) => tags[groupingTag].display_order, numberComparator)
   );
   const clothingBoothSlotLookup = Object.entries(ClothingBoothSlotKey).reduce((acc, [name, id]) => {
     acc[id] = { id, name };
@@ -26,8 +29,8 @@ export const GroupingTagContainer = (props: GroupingTagContainerProps) => {
   return (
     <Stack fluid>
       {sortedGroupingTags.map((groupingTag) => (
-        <Stack.Item key={groupingTag.name}>
-          <GroupingTag {...groupingTag} />
+        <Stack.Item key={tags[groupingTag].name}>
+          <GroupingTag {...tags[groupingTag]} />
         </Stack.Item>
       ))}
       <Stack.Item>

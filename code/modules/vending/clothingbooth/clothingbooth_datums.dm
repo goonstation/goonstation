@@ -37,18 +37,17 @@ var/list/serialized_clothingbooth_tags = list()
 		var/list/serialized_grouping_tags = list()
 		for (var/grouping_tag_name as anything in grouping.clothingbooth_grouping_tags)
 			var/datum/clothingbooth_grouping_tag/grouping_tag = grouping.clothingbooth_grouping_tags[grouping_tag_name]
-			var/list/grouping_tag_serialized_data = list(
-				"name" = grouping_tag.name,
-				"colour" = grouping_tag.colour,
-				"display_order" = grouping_tag.display_order,
-			)
-			serialized_grouping_tags[grouping_tag.name] = grouping_tag_serialized_data
+			serialized_grouping_tags += grouping_tag.name
 			var/tag_match_found = FALSE
 			for (var/serialized_clothingbooth_tag in serialized_clothingbooth_tags_buffer)
 				if (serialized_clothingbooth_tag == grouping_tag.name)
 					tag_match_found = TRUE
 			if (!tag_match_found)
-				serialized_clothingbooth_tags_buffer[grouping_tag.name] = grouping_tag_serialized_data
+				serialized_clothingbooth_tags_buffer[grouping_tag.name] = list(
+					"name" = grouping_tag.name,
+					"colour" = grouping_tag.colour,
+					"display_order" = grouping_tag.display_order,
+				)
 		var/list/serialized_grouping = list(
 			"name" = grouping.name,
 			"slot" = grouping.slot,
