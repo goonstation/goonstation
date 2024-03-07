@@ -284,14 +284,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"hacked" = src.hacked,
 			"malfunction" = src.malfunction,
 			"wire_bitflags" = src.wires,
-			"scanned_card" = src.scan,
+			"card_owner" = (!isnull(src.scan) ? src.scan.registered : null),
+			"card_balance" = (!isnull(src.scan) ? src.scan.money : null),
 			"speed" = src.speed,
 			"repeat" = src.repeat,
 			"resources" = src.resource_amounts,
-			"mats_by_id" = src.stored_materials_by_id,
 			"downloaded_blueprints" = src.download,
 			"drive_recipe_blueprints" = src.drive_recipes,
-			"delete_allowed" = src.allowed(user)
+			"delete_allowed" = src.allowed(user),
 		)
 
 	ui_static_data(mob/user)
@@ -314,14 +314,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Converts a manufacture datum to a list with string keys to relevant vars for the UI
 	proc/manufacture_as_list(datum/manufacture/M, mob/user)
 		return list(
-			"name" = M.name,
-			"item_paths" = M.item_paths,
+			"item_names" = M.item_names,
 			"item_amounts" = M.item_amounts,
-			"item_outputs" = M.item_outputs,
-			"randomise_output" = M.randomise_output,
 			"create" = M.create,
 			"time" = M.time,
-			"sanity_check_exemption" = M.sanity_check_exemption,
 			"apply_material" = M.apply_material,
 			"img" = getItemIcon(M.item_outputs[1], C = user.client),
 			"ref" = "\ref[M]",

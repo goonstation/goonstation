@@ -1,9 +1,9 @@
 
 type ManufacturerData = {
   all_categories:[string];
-  
+
+  card_owner:string;
   fabricator_name:string;
-  scanned_card:string;
 
   available_blueprints:{ [key:string] : Manufacturable[]};
   downloaded_blueprints:{ [key:string] : Manufacturable[]};
@@ -20,22 +20,17 @@ type ManufacturerData = {
 
   mats_by_id:any;
 
+  card_balance:number;
   speed:number;
   wire_bitflags:number;
 }
 
-// See /datum/manufacture
-// Name is the key for this type
+// Keyed by name
 type Manufacturable = {
-  item_paths:[string];
   item_names:[string];
   item_amounts:[number];
-  item_outputs:any;
-  randomize_output:boolean;
   create:number;
   time:number;
   category:string;
-  sanity_check_exemption:boolean;
-  apply_material:boolean;
   ref:string;
 }
