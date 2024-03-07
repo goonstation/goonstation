@@ -1857,6 +1857,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			src.UpdateOverlays(null, "panel")
 
+		/*
 		if (src.reagents.total_volume > 0)
 			dat += {"
 		<tr><th colspan='2'>Loaded Reagents</th></tr>
@@ -1980,6 +1981,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			queue_num++
 
 		return dat.Join()
+	*/
 
 	proc/eject_manudrive(mob/living/user)
 		src.drive_recipes = null
