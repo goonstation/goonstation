@@ -8,9 +8,19 @@
 #define MIN_TIMING 0.1
 #define MAX_TIMING 0.5
 #define MAX_NOTE_INPUT 1920
+#define FORMAT_INVALID 0
 #define FORMAT_CLASSIC 1
 #define FORMAT_COMPACT 2
-#define FORMAT_INVALID 3
+#define FORMAT_VERY_COMPACT 3
+#define FORMAT_CLASSIC_MAX_NOTE_LENGTH 7
+#define FORMAT_COMPACT_MAX_NOTE_LENGTH 5
+// Defines for the Very Compact Format in ASCII numbers
+#define REST 123   // {
+#define REST_1 124 // |
+#define REST_2 125 // }
+#define REST_3 126 // ~
+#define VCF_BOUND_LOWER 33  // !
+#define VCF_BOUND_UPPER 126 // ~
 
 TYPEINFO(/obj/player_piano)
 	mats = 20
@@ -22,7 +32,8 @@ TYPEINFO(/obj/player_piano)
 	icon_state = "player_piano"
 	density = 1
 	anchored = ANCHORED
-	var/timing = 0.5 //values from 0.25 to 0.5 please
+	//var/timing = 0.5 //values from 0.25 to 0.5 please
+	var/timing = 0.11 //values from 0.25 to 0.5 please
 	var/items_claimed = 0 //set to 1 when items are claimed
 	var/is_looping = 0 //is the piano looping? 0 is no, 1 is yes, 2 is never more looping
 	var/panel_exposed = 0 //0 by default
@@ -299,14 +310,14 @@ TYPEINFO(/obj/player_piano)
 				note_accidentals += "r"
 				note_volumes += 0
 				continue
-			if (lowertext(note[1]) == "r" && length(note) <= 5 && isnum_safe(text2num(copytext(note,2))))
+			if (lowertext(note[1]) == "r" && length(note) <= FORMAT_COMPACT_MAX_NOTE_LENGTH && isnum_safe(text2num(copytext(note,2))))
 				for (var/rest_amount = 0, rest_amount < text2num_safe(copytext(note,2)), rest_amount++)
 					note_names += "r"
 					note_octaves += "r"
 					note_accidentals += "r"
 					note_volumes += 0
 				continue
-			if (length(note) != 3 || (lowertext(note[1]) == "r" && (length(note) < 1 || length(note) > 5)))
+			if (length(note) != 3 || (lowertext(note[1]) == "r" && (length(note) < 1 || length(note) > FORMAT_COMPACT_MAX_NOTE_LENGTH)))
 				break
 			note_names += lowertext(note[1])
 			note_octaves += note[2]
@@ -326,23 +337,76 @@ TYPEINFO(/obj/player_piano)
 					note_volumes += 60
 		is_busy = 0
 
+	proc/build_notes_very_compact_format(var/list/piano_notes)
+		is_busy = 1
+		note_volumes = list()
+		note_octaves = list()
+		note_names = list()
+		note_accidentals = list()
+		var/note_translation_list = list("c", "c-", "d", "d-", "e", "f", "f-", "g", "g-", "a", "a-", "b")
+
+		for (var/note_index = 1, note_index <= length(piano_notes), note_index++)
+			var/note = text2ascii(piano_notes[note_index])
+
+			if (note == REST)
+				note_names += "r"
+				note_octaves += "r"
+				note_accidentals += "r"
+				note_volumes += 0
+				continue
+
+			if (note >= REST_1 && note <= REST_3)
+				var/offset = 122
+				var/consume_amount = note - offset
+				var/rest_length = text2num_safe(piano_notes.Copy(note_index,note_index+consume_amount))
+				note_index += consume_amount
+				for (var/rest_amount = 0, rest_amount < rest_length, rest_amount++)
+					note_names += "r"
+					note_octaves += "r"
+					note_accidentals += "r"
+					note_volumes += 0
+				continue
+
+			if (note < VCF_BOUND_LOWER || note > VCF_BOUND_UPPER)
+				break
+
+			var/note_translated_index = (note % 12)
+			note_names += note_translation_list[note_translated_index+1][1]
+
+			var/octave = ((note - note_translated_index) / 12) - 2
+			note_octaves += octave
+
+			note_accidentals += (length(note_translation_list[note_translated_index+1]) == 2) ? "-" : ""
+
+			note_volumes += 40
+		is_busy = 0
+
 	proc/get_note_format()
 		var/current_format = FORMAT_INVALID
-		var/first_note_length = length(piano_notes[1])
+		if (length(piano_notes) != 0)
+			var/first_note_length = length(piano_notes[1])
 
-		if (first_note_length >= 7)
-			current_format = FORMAT_CLASSIC
-		else if (first_note_length >= 1 && first_note_length <= 5)
-			current_format = FORMAT_COMPACT
+			if (first_note_length >= FORMAT_CLASSIC_MAX_NOTE_LENGTH)
+				current_format = FORMAT_CLASSIC
+			else if (first_note_length >= 1 && first_note_length <= FORMAT_COMPACT_MAX_NOTE_LENGTH)
+				current_format = FORMAT_COMPACT
+			else
+				return FORMAT_INVALID
+
+			for (var/note_index = 2, note_index <= length(piano_notes), note_index++)
+				var/note_length = length(piano_notes[note_index])
+				if (current_format == FORMAT_CLASSIC && note_length < FORMAT_CLASSIC_MAX_NOTE_LENGTH)
+					return FORMAT_INVALID
+				else if (current_format == FORMAT_COMPACT && (note_length != 3 && (lowertext(piano_notes[note_index][1]) == "r" \
+						 && (note_length < 1 || note_length > FORMAT_COMPACT_MAX_NOTE_LENGTH))))
+					return FORMAT_INVALID
 		else
-			return FORMAT_INVALID
+			current_format = FORMAT_VERY_COMPACT
 
-		for (var/note_index = 2, note_index <= length(piano_notes), note_index++)
-			var/note_length = length(piano_notes[note_index])
-			if (current_format == FORMAT_CLASSIC && note_length < 7)
-				return FORMAT_INVALID
-			else if (current_format == FORMAT_COMPACT && (note_length != 3 && (lowertext(piano_notes[note_index][1]) == "r" && (note_length < 1 || note_length > 5))))
-				return FORMAT_INVALID
+			for (var/note_index = 1, note_index <= length(note_input), note_index++)
+				var/note_ascii_num = text2ascii(note_input[note_index])
+				if (note_ascii_num < VCF_BOUND_LOWER || note_ascii_num > VCF_BOUND_UPPER)
+					return FORMAT_INVALID
 
 		return current_format
 
@@ -351,13 +415,31 @@ TYPEINFO(/obj/player_piano)
 			if (FORMAT_CLASSIC)
 				return length(piano_notes)
 			if (FORMAT_COMPACT)
-				var/note_amount = 0
+				var/note_amount_compact = 0
+
 				for (var/note_index = 1, note_index <= length(piano_notes), note_index++)
-					if (lowertext(piano_notes[note_index][1]) == "r" && length(piano_notes[note_index]) > 1 && isnum_safe(text2num_safe(copytext(piano_notes[note_index],2))))
-						note_amount += text2num_safe(copytext(piano_notes[note_index],2))
+					if (lowertext(piano_notes[note_index][1]) == "r" && length(piano_notes[note_index]) > 1 \
+						&& isnum_safe(text2num_safe(copytext(piano_notes[note_index],2))))
+						note_amount_compact += text2num_safe(copytext(piano_notes[note_index],2))
 					else
-						note_amount += 1
-				return note_amount
+						note_amount_compact += 1
+
+				return note_amount_compact
+			if (FORMAT_VERY_COMPACT)
+				var/note_amount_v_compact = 0
+
+				for (var/note_index = 1, note_index <= length(note_input), note_index++)
+					var/note_ascii_num = text2ascii(note_input[note_index])
+
+					if (note_ascii_num >= REST_1 && note_ascii_num <= REST_3)
+						var/offset = 122
+						var/consume_amount = note_ascii_num - offset
+						note_amount_v_compact += text2num_safe(piano_notes.Copy(note_index,note_index+consume_amount))
+						note_index += consume_amount
+					else
+						note_amount_v_compact += 1
+
+				return note_amount_v_compact
 		return MAX_NOTE_INPUT + 1
 
 	proc/ready_piano(var/is_linked) //final checks to make sure stuff is right, gets notes into a compiled form for easy playsounding
@@ -415,18 +497,27 @@ TYPEINFO(/obj/player_piano)
 	proc/set_notes(var/given_notes)
 		if (is_busy || is_stored)
 			return FALSE
+
 		src.note_input = given_notes
-		clean_input()
+
+		// VERY_COMPACT only takes in unprocessed input
+		if (!regex(@"[{}~]").Find(note_input))
+			clean_input()
+
 		var/note_format = get_note_format()
 		if (count_notes(note_format) > MAX_NOTE_INPUT)
 			return FALSE
+
 		switch (note_format)
 			if (FORMAT_CLASSIC)
 				build_notes(piano_notes)
 			if (FORMAT_COMPACT)
 				build_notes_compact_format(piano_notes)
+			if (FORMAT_VERY_COMPACT)
+				build_notes_very_compact_format(note_input)
 			if (FORMAT_INVALID)
 				return FALSE
+
 		return TRUE
 
 	proc/set_timing(var/time_sel)
@@ -506,6 +597,15 @@ TYPEINFO(/obj/player_piano)
 #undef MIN_TIMING
 #undef MAX_TIMING
 #undef MAX_NOTE_INPUT
+#undef FORMAT_INVALID
 #undef FORMAT_CLASSIC
 #undef FORMAT_COMPACT
-#undef FORMAT_INVALID
+#undef FORMAT_VERY_COMPACT
+#undef FORMAT_CLASSIC_MAX_NOTE_LENGTH
+#undef FORMAT_COMPACT_MAX_NOTE_LENGTH
+#undef REST
+#undef REST_1
+#undef REST_2
+#undef REST_3
+#undef VCF_BOUND_LOWER
+#undef VCF_BOUND_UPPER
