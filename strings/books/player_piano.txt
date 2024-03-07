@@ -59,6 +59,28 @@
 	</ul>
 </ul>
 
+<h3>Very Compact Format</h3>
+
+<code style="background: #ddd; padding: 3px 5px; border-radius: 4px;">}32V{T{V{X{V{T{Q{T|3O|3O{Q{A{T|3X{V{X{[{C{]{[{X{</code>
+
+<ul style="padding: 10px;">
+<li>Notes are a single character</li>
+	<ul style="padding: 10px;">
+    <li>There are 88 keys on a piano</li>
+    <li>Characters go from 33 (!) to 120 (x), with each character representing a key</li>
+	</ul>
+<li>Rests have four variants</li>
+	<ul style="padding: 10px;">
+    <li>Numbered variants indicate multiple rests</li>
+    <li>`{` is one rest</li>
+    <li>`|#` is a rest with one digit</li>
+    <li>`}##` is a rest with two digits</li>
+    <li>`~###` is a rest with three digits</li>
+	</ul>
+<li>Does not support dynamics</li>
+<li>There are no delimiters</li>
+</ul>
+
 <h2>Limitations</h2>
 
 <ul style="padding: 10px;">
