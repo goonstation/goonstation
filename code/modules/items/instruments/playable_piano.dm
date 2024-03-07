@@ -7,8 +7,7 @@
 
 #define MIN_TIMING 0.1
 #define MAX_TIMING 0.5
-//#define MAX_NOTE_INPUT 1920
-#define MAX_NOTE_INPUT 6000
+#define MAX_NOTE_INPUT 1920
 #define FORMAT_INVALID 0
 #define FORMAT_CLASSIC 1
 #define FORMAT_COMPACT 2
@@ -33,8 +32,7 @@ TYPEINFO(/obj/player_piano)
 	icon_state = "player_piano"
 	density = 1
 	anchored = ANCHORED
-	//var/timing = 0.5 //values from 0.25 to 0.5 please
-	var/timing = 0.11 //values from 0.25 to 0.5 please
+	var/timing = 0.5 //values from 0.25 to 0.5 please
 	var/items_claimed = 0 //set to 1 when items are claimed
 	var/is_looping = 0 //is the piano looping? 0 is no, 1 is yes, 2 is never more looping
 	var/panel_exposed = 0 //0 by default
