@@ -77,12 +77,11 @@
 		else
 			var/message = list()
 			message += "**Notes for [ckey]**"
-			message += "RECV"
 			for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 				var/id = playerNote.server_id
 				if(!id && length(playerNote.legacy_data))
 					var/lData = json_decode(playerNote.legacy_data)
-					if(lData["oldserver"])
+					if(islist(lData) && lData["oldserver"])
 						id = lData["oldserver"]
 				message += "**\[[id]\] [playerNote.game_admin.name]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
 				message += "[playerNote.note]"
