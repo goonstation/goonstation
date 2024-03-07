@@ -73,10 +73,10 @@
 				noteReason = R.Replace(noteReason, "<b>BANNED</b> from <b>$1</b> by <b>$2</b> &mdash; $4<br><blockquote>$3</blockquote>")
 
 			var/id = playerNote.server_id
-				if(!id && length(playerNote.legacy_data))
-					var/lData = json_decode(playerNote.legacy_data)
-					if(islist(lData) && lData["oldserver"])
-						id = lData["oldserver"]
+			if(!id && length(playerNote.legacy_data))
+				var/lData = json_decode(playerNote.legacy_data)
+				if(islist(lData) && lData["oldserver"])
+					id = lData["oldserver"]
 
 			var/classes = row_classes.Join(" ")
 			dat += {"
