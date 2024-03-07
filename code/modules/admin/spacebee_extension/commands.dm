@@ -80,7 +80,7 @@
 			message += ""
 			for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 				var/id = playerNote.server_id
-				if(!id && length(playerNote.legacyData))
+				if(!id && length(playerNote.legacy_data))
 					for(var/lData in playerNote.legacy_data)
 						if(splittext(lData, ": ")[1] == "\"oldserver\"")
 							id = replacetext(splittext(lData, ": ")[2], "\"", "")
