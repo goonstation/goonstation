@@ -53,9 +53,11 @@
 	name = "notes"
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
 	help_message = "retrieves player notes."
-	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/number/integer="page")
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/the_rest = "page")
 
 	execute(user, ckey, page = 1)
+		if(!isnum(page))
+			page = text2num(page)
 		var/datum/apiModel/Paginated/PlayerNoteResourceList/playerNotes
 		try
 			var/datum/apiRoute/players/notes/get/getPlayerNotes = new
@@ -77,6 +79,8 @@
 
 		else
 			var/message = list()
+			for(var/i in 1 to length(playerNotes.meta))
+				boutput(world, "[i] - [playerNotes.meta[i]]: [playerNotes.meta[playerNotes.meta[i]]]")
 			message += "**Notes for [ckey][playerNotes.meta["lastpage"] > 1 ? "**, page [page] out of [playerNotes.meta["lastpage"]]" : "**"]"
 			for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 				var/id = playerNote.server_id
