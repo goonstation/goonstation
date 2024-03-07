@@ -51,18 +51,19 @@
 
 /datum/spacebee_extension_command/notes
 	name = "notes"
-	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
 	help_message = "retrieves player notes."
-	argument_types = list(/datum/command_argument/string/ckey="ckey")
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/number/integer="page")
 
-	execute(user, ckey)
+	execute(user, ckey, page = 1)
 		var/datum/apiModel/Paginated/PlayerNoteResourceList/playerNotes
 		try
 			var/datum/apiRoute/players/notes/get/getPlayerNotes = new
 			getPlayerNotes.queryParams = list(
 				"filters" = list(
 					"ckey" = ckey
-				)
+				),
+				"page" = page
 			)
 			playerNotes = apiHandler.queryAPI(getPlayerNotes)
 		catch (var/exception/e)
@@ -76,7 +77,7 @@
 
 		else
 			var/message = list()
-			message += "**Notes for [ckey]**"
+			message += "**Notes for [ckey][playerNotes.meta["lastpage"] > 1 ? "**, page [page] out of [playerNotes.meta["lastpage"]]" : "**"]"
 			for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 				var/id = playerNote.server_id
 				if(!id && length(playerNote.legacy_data))
