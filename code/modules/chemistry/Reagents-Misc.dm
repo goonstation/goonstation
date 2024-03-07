@@ -4260,8 +4260,8 @@ datum
 					I.setMaterial(getMaterial("jean"))
 					update_required = TRUE
 
-					if (update_required)
-						human.update_clothing()
+				if (update_required)
+					human.update_clothing()
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				. = ..()
