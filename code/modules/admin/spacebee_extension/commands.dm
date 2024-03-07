@@ -56,10 +56,9 @@
 	argument_types = list(/datum/command_argument/string/optional = "page_number", /datum/command_argument/string/ckey="ckey")
 
 	execute(user, ckey, maybe_page)
+		var/page = 1
 		if(maybe_page)
 			page = text2num(page)
-		else
-			page = 1
 
 		var/datum/apiModel/Paginated/PlayerNoteResourceList/playerNotes
 		try
@@ -82,8 +81,6 @@
 
 		else
 			var/message = list()
-			for(var/i in 1 to length(playerNotes.meta))
-				boutput(world, "[i] - [playerNotes.meta[i]]: [playerNotes.meta[playerNotes.meta[i]]]")
 			message += "**Notes for [ckey][playerNotes.meta["last_page"] > 1 ? "**, page [page] out of [playerNotes.meta["last_page"]]" : "**"]"
 			for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 				var/id = playerNote.server_id
