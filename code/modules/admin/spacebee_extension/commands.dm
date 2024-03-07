@@ -80,9 +80,10 @@
 			message += "RECV"
 			for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 				var/id = playerNote.server_id
-				var/lData = json_decode(playerNote.legacy_data)
-				if(lData["oldserver"])
-					id = lData["oldserver"]
+				if(length(playerNote.legacy_data))
+					var/lData = json_decode(playerNote.legacy_data)
+					if(lData["oldserver"])
+						id = lData["oldserver"]
 				message += "**\[[id]\] [playerNote.game_admin.name]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
 				message += "[playerNote.note]"
 			message = jointext(message, "\n")
