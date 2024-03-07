@@ -64,6 +64,12 @@
 			var/noteReason = playerNote.note
 
 
+			if(islist(playerNote.legacy_data))
+				for(var/D in playerNote.legacy_data)
+					boutput(usr, "[D]")
+			else
+				boutput(usr, "[playerNote.legacy_data]")
+
 			if (playerNote.game_admin.ckey == "bot")
 				row_classes += "auto"
 
