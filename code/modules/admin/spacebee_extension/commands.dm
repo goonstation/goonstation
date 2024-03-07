@@ -82,8 +82,9 @@
 				var/id = playerNote.server_id
 				if(!id && length(playerNote.legacy_data))
 					for(var/lData in playerNote.legacy_data)
-						if(splittext(lData, ": ")[1] == "\"oldserver\"")
-							id = replacetext(splittext(lData, ": ")[2], "\"", "")
+						lData = replacetext(lData, regex(@%[{}"]%, "g"), "")
+						if(splittext(lData, ": ")[1] == "oldserver")
+							id = splittext(lData, ": ")[2]
 				message += "**\[[id]\] [playerNote.game_admin.name]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
 				message += "[playerNote.note]"
 			message = jointext(message, "\n")
