@@ -4189,6 +4189,92 @@ datum
 				if (!issilicon(user) && !isAI(user) && !isintangible(user) && !isobserver(user)) //there's probably other things we should exclude here
 					src.holder.trans_to(user, max(1, src.volume))
 
+#define MIN_JEANS_FOR_CONVERSION 5
+		/// Jeans reagent turns turfs and objects into jeans
+		/// and on touch on humans will convert their clothes into jeans material
+		jeans
+			name = "liquid jeans"
+			id = "jeans"
+			fluid_r = 39
+			fluid_g = 78
+			fluid_b = 133
+			taste = "like a good quality all wear garment"
+			reagent_state = LIQUID
+
+			reaction_turf(var/turf/T, var/volume)
+				. = ..()
+				if (volume < MIN_JEANS_FOR_CONVERSION)
+					if (prob(5))
+						return
+				if (!T)
+					return
+
+				T.setMaterial(getMaterial("jean"))
+
+			reaction_obj(var/obj/O, var/volume)
+				. = ..()
+				if (volume < MIN_JEANS_FOR_CONVERSION)
+					if (prob(5))
+						return
+
+				if (!O)
+					return
+
+				O.setMaterial(getMaterial("jean"))
+
+			var/list/jean_affected_slots = list(
+				SLOT_BACK,
+				SLOT_WEAR_MASK,
+				SLOT_BELT,
+				SLOT_WEAR_ID,
+				SLOT_EARS,
+				SLOT_GLASSES,
+				SLOT_GLOVES,
+				SLOT_HEAD,
+				SLOT_SHOES,
+				SLOT_WEAR_SUIT,
+				SLOT_W_UNIFORM)
+
+			proc/handle_mob_touch(mob/living/M, volume)
+				if (!ishuman(M))
+					return
+
+				if (volume < MIN_JEANS_FOR_CONVERSION)
+					return
+
+				var/mob/living/carbon/human/human = M;
+				var/update_required = FALSE
+				for (var/slot in jean_affected_slots)
+					var/obj/item/I = human.get_slot(slot)
+
+					if (!I)
+						continue
+
+					if (I.material?.getName() == "jean")
+						continue
+
+					volume -= MIN_JEANS_FOR_CONVERSION
+					if (volume < 0)
+						break
+
+					I.setMaterial(getMaterial("jean"))
+					update_required = TRUE
+
+					if (update_required)
+						human.update_clothing()
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (!M || volume <= 0)
+					return
+
+				if (method != TOUCH)
+					return
+
+				handle_mob_touch(M, volume)
+
+#undef MIN_JEANS_FOR_CONVERSION
+
 /obj/badman/ //I really don't know a good spot to put this guy so im putting him here, fuck you.
 	name = "Senator Death Badman"
 	desc = "Finally, a politician I can trust."
