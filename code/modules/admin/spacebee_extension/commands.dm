@@ -49,6 +49,45 @@
 		ircmsg["msg"] = "Added a note for [ckey]: [note]"
 		ircbot.export("admin", ircmsg)
 
+/datum/spacebee_extension_command/notes
+	name = "notes"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "retrieves player notes."
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+
+	execute(user, ckey)
+		var/datum/apiModel/Paginated/PlayerNoteResourceList/playerNotes
+		try
+			var/datum/apiRoute/players/notes/get/getPlayerNotes = new
+			getPlayerNotes.queryParams = list(
+				"filters" = list(
+					"ckey" = ckey
+				)
+			)
+			playerNotes = apiHandler.queryAPI(getPlayerNotes)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "viewPlayerNotes: Failed to fetch notes of player: [ckey] because: [error.message]")
+			system.reply("error fetching notes for [ckey]")
+			return
+
+		if (!length(playerNotes.data))
+			system.reply("No notes found for [ckey].")
+
+		else
+			var/message = list()
+			message += "**Notes for [ckey]**"
+			for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
+				var/id = playerNote.server_id
+				if(!id && length(playerNote.legacy_data))
+					var/lData = json_decode(playerNote.legacy_data)
+					if(islist(lData) && lData["oldserver"])
+						id = lData["oldserver"]
+				message += "**\[[id]\] [playerNote.game_admin.name]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
+				message += "[playerNote.note]"
+			message = jointext(message, "\n")
+			system.reply(message)
+
 /datum/spacebee_extension_command/addnotice
 	name = "addnotice"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER

@@ -574,7 +574,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	name = "weedkiller"
 	desc = "A small bottle filled with Atrazine, an effective weedkiller."
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
-	bottle_style = "1"
+	icon_state = "bottle_1"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -586,7 +586,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	name = "Mutagenic Plant Formula"
 	desc = "An unstable radioactive mixture that stimulates genetic diversity."
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
-	bottle_style = "3"
+	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -598,7 +598,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	name = "Ammonia Plant Formula"
 	desc = "A nutrient-rich plant formula that encourages quick plant growth."
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
-	bottle_style = "3"
+	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -610,7 +610,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	name = "Potash Plant Formula"
 	desc = "A nutrient-rich plant formula that encourages large crop yields."
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
-	bottle_style = "3"
+	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -622,7 +622,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	name = "Saltpetre Plant Formula"
 	desc = "A nutrient-rich plant formula that encourages more potent crops."
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
-	bottle_style = "3"
+	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -634,7 +634,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	name = "Mutadone Plant Formula"
 	desc = "A nutrient-rich formula that attempts to rectify genetic problems."
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
-	bottle_style = "3"
+	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 

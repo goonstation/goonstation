@@ -2640,3 +2640,11 @@
 			qdel(original)
 
 		src.original = null
+
+/datum/statusEffect/conspiracy_convert
+	id = "conspiracy_convert"
+	name = "Recent Conversion"
+	desc = "You have recently converted another to your side, you will be able to convert again soon."
+	icon_state = "possess"
+	maxDuration = 30 MINUTES
+	effect_quality = STATUS_QUALITY_NEGATIVE
