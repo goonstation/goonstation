@@ -774,6 +774,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	amount_left = 5
 	max_amount = 5
 
+/obj/item/ammo/bullets/pipeshot/bone // scrap handmade bone shells
+	sname = "bone load"
+	desc = "This appears to be some bone fragments haphazardly shoved into a few cut open pipe frames - grotesque!"
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/bone
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"

@@ -1,5 +1,13 @@
 
 (t)wed mar 06 24
+(u)Cindertroy
+(p)18112
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Added a bone pipeshot, crafted with 2 "bits of bone"
+(u)mintyphresh, Geonightman
+(p)18104
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Pride jumpsuits can be cut up into flags.
 (u)Vincent983 + Ikea
 (p)18083
 (e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
