@@ -213,6 +213,9 @@
 							respawn_controller.subscribeNewRespawnee(user.ckey)
 							user.mind?.get_player()?.dnr = TRUE
 							user.ghostize()
+							var/datum/job/job = find_job_in_controller_by_string(user.job, soft=TRUE)
+							if (job)
+								job.assigned = max(0, job.assigned - 1)
 							qdel(user)
 							return 1
 
