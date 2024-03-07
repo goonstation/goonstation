@@ -26,7 +26,7 @@
 		logTheThing(LOG_DEBUG, null, "viewPlayerNotes: Failed to fetch notes of player: [player] because: [error.message]")
 		alert("Failed to fetch notes for [player].")
 		return
-	allnotes = !allnotes
+
 	var/datum/player/pdatum = make_player(player)
 	pdatum.cloudSaves.fetch()
 	var/noticelink = ""
