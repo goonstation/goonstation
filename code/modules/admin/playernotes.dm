@@ -1,4 +1,5 @@
 /// Viewing a player's notes
+var/allnotes = FALSE
 /datum/admins/proc/viewPlayerNotes(player)
 	if (!player)
 		return
@@ -14,18 +15,26 @@
 	var/datum/apiModel/Paginated/PlayerNoteResourceList/playerNotes
 	try
 		var/datum/apiRoute/players/notes/get/getPlayerNotes = new
-		getPlayerNotes.queryParams = list(
-			"filters" = list(
-				"ckey" = player
+		if(allnotes)
+			getPlayerNotes.queryParams = list(
+				"filters" = list(
+					"ckey" = player
+				),
+				"per_page" = 50
 			)
-		)
+		else
+			getPlayerNotes.queryParams = list(
+				"filters" = list(
+					"ckey" = player
+				)
+			)
 		playerNotes = apiHandler.queryAPI(getPlayerNotes)
 	catch (var/exception/e)
 		var/datum/apiModel/Error/error = e.name
 		logTheThing(LOG_DEBUG, null, "viewPlayerNotes: Failed to fetch notes of player: [player] because: [error.message]")
 		alert("Failed to fetch notes for [player].")
 		return
-
+	allnotes = !allnotes
 	var/datum/player/pdatum = make_player(player)
 	pdatum.cloudSaves.fetch()
 	var/noticelink = ""
@@ -59,10 +68,12 @@
 		dat += "No notes. <i>Yet.</i>"
 
 	else
+		var/i = 1
+		boutput(world, length(playerNotes.data))
 		for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 			var/list/row_classes = list()
 			var/noteReason = playerNote.note
-
+			boutput(world, "[i]")
 			if (playerNote.game_admin.ckey == "bot")
 				row_classes += "auto"
 
