@@ -5,7 +5,7 @@
 #define WIRE_SHOCK 4
 #define MAX_SPEED 3
 #define MAX_SPEED_HACKED 5
-
+#define HAS_NO_POWER (src.status & BROKEN || src.status & NOPOWER)
 TYPEINFO(/obj/machinery/manufacturer)
 	mats = 20
 
@@ -60,7 +60,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/free_resource_amt = 0 //! The amount of each free resource that the manufacturer comes preloaded with
 	var/list/obj/item/material_piece/free_resources = list() //! See free_resource_amt; this is the list of resources being populated from
 	var/obj/item/reagent_containers/glass/beaker = null
-	var/obj/item/disk/data/floppy/manudrive = null
+	var/obj/item/disk/data/floppy/manudrive/manudrive = null
 	var/list/resource_amounts = list()
 	var/list/materials_in_use = list()
 	var/list/stored_materials_by_id = list()
@@ -292,6 +292,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"downloaded_blueprints" = src.download,
 			"drive_recipe_blueprints" = src.drive_recipes,
 			"delete_allowed" = src.allowed(user),
+			"indicators" = list("electrified" = src.electrified,
+							    "malfunctioning" = src.malfunction,
+								"hacked" = src.hacked,
+								"hasPower" = !HAS_NO_POWER,
+							   ),
+			"reagents" = src.beaker.reagents.reagent_list,
 		)
 
 	ui_static_data(mob/user)
@@ -300,7 +306,42 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"all_categories" = src.categories,
 			"available_blueprints" = blueprints_as_list(src.available, user),
 			"hidden_blueprints" = blueprints_as_list(src.hidden, user),
+			"wires" = list("Amber" = "#FFBF00",
+							"Teal" = "#21868C",
+							"Indigo" = "#4B0082",
+							"Lime" = "#99FF1D",
+						  ),
+			"rockboxes" = rockboxes_as_list(),
+			"manudrive" = list ("name" = "[src.manudrive]",
+							   	"limit" = src.manudrive.fablimit,
+							   ),
 		)
+
+	#define ORE_TAX(price) round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01)
+	/// Gets rockbox data as list for ui_static_data
+	proc/rockboxes_as_list()
+		var/rockboxes = list()
+		for_by_tcl(cloud_container, /obj/machinery/ore_cloud_storage_container)
+			if(cloud_container.broken)
+				continue
+			var/ore_data = list()
+			for(var/ore_name as anything in cloud_container.ores)
+				var/datum/ore_cloud_data/oredata = cloud_container.ores[ore_name]
+				if(!oredata.for_sale || !oredata.amount)
+					continue
+				ore_data += list(list(
+					"name" = "[oredata]",
+					"amount" = oredata.amount,
+					"cost" = oredata.price + ORE_TAX(oredata.price),
+				))
+			rockboxes += list(list(
+				"name" = cloud_container.name,
+				"area_name" = get_area(cloud_container),
+				"reference" = "\ref[cloud_container]",
+				"ores" = ore_data,
+			))
+		return rockboxes
+	#undef ORE_TAX
 
 	/// Converts list of manufacture datums to list keyed by category containing listified manufacture datums of said category.
 	proc/blueprints_as_list(var/list/L, mob/user)
@@ -326,209 +367,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 	attack_hand(mob/user)
 		if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
 			claim_free_resources()
-		src.ui_interact(user)
-
 		if(src.electrified)
 			if (!(status & NOPOWER || status & BROKEN))
 				if (src.shock(user, 33))
 					return
-
-		src.add_dialog(user)
-
-		var/HTML = {"
-		<title>[src.name]</title>
-		<style type='text/css'>
-
-			/* will probaby break chui, dont care */
-			body { background: #222; color: white; font-family: Tahoma, sans-serif; }
-			a { color: #88f; }
-
-			.l { text-align: left; } .r { text-align: right; } .c { text-align: center; }
-			.buttonlink { background: #66c; min-width: 1.1em; height: 1.2em; padding: 0.2em 0.2em; margin-bottom: 2px; border-radius: 4px; font-size: 90%; color: white; text-decoration: none; display: inline-block; vertical-align: middle; }
-			thead { background: #555555; }
-
-			table {
-				border-collapse: collapse;
-				width: 100%;
-				}
-			td, th { padding: 0.2em; 0.5em; }
-			.outline td, .outline th {
-				border: 1px solid #666;
-			}
-
-			img, a img {
-				border: 0;
-				}
-
-			#info {
-				position: absolute;
-				right: 0.5em;
-				top: 50px;
-				width: 25%;
-				padding: 0.5em;
-				}
-
-			#products {
-				position: absolute;
-				left: 0;
-				top:50px;
-				width: 73%;
-				padding: 0.25em;
-			}
-			.tabs {
-				position:fixed;
-				background-color: inherit;
-				z-index:1;
-				top: 0;
-				left: 0;
-			}
-			.tabs a {
-				background-color: inherit;
-				float: left;
-				border: none;
-				outline: none;
-				padding: 14px 16px;
-                margin-left: 10px;
-                margin-top: 6px;
-                margin-bottom: 6px;
-				border-radius: 5px;
-			}
-			.tabs a:hover {
-				background-color: #ddd;
-			}
-			.tabs a.active {
-				background-color: #ccc;
-			}
-
-			.queue, .product {
-				position: relative;
-				display: inline-block;
-				width: 12em;
-				padding: 0.25em 0.5em;
-				border-radius: 5px;
-				margin: 0.5em;
-				background: #555;
-				box-shadow: 3px 3px 0 2px #000;
-				}
-
-			.queue {
-				vertical-align: middle;
-				clear: both;
-				}
-			.queue .icon {
-				float: left;
-				margin: 0.2em;
-				}
-			.product {
-				vertical-align: top;
-				text-align: center;
-				}
-			.product .time {
-				position: absolute;
-				bottom: 0.3em;
-				right: 0.3em;
-				}
-			.product .mats {
-				position: absolute;
-				bottom: 0.3em;
-				left: 0.3em;
-				}
-			.product .icon {
-				display: block;
-				height: 64px;
-				width: 64px;
-				margin: 0.2em auto 0.5em auto;
-				-ms-interpolation-mode: nearest-neighbor; /* pixels go cronch */
-				}
-			.product.disabled {
-				background: #333;
-				color: #aaa;
-			}
-			.required {
-				display: none;
-				}
-
-			.product:hover {
-				cursor: pointer;
-				background: #666;
-			}
-			.product:hover .required {
-				display: block;
-				position: absolute;
-				left: 0;
-				right: 0;
-				}
-			.product .delete {
-				color: #c44;
-				background: #222;
-				padding: 0.25em 0.5em;
-				border-radius: 10px;
-				}
-			.required div {
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				background: #333;
-				border: 1px solid #888888;
-				padding: 0.25em 0.5em;
-				margin: 0.25em 0.5em;
-				font-size: 80%;
-				text-align: left;
-				border-radius: 5px;
-				}
-			.mat-missing {
-				color: #f66;
-			}
-		</style>
-		<script type="text/javascript">
-			function product(ref) {
-				window.location = "?src=\ref[src];disp=" + ref;
-			}
-
-			function delete_product(ref) {
-				window.location = "?src=\ref[src];delete=1;disp=" + ref;
-			}
-		</script>
-		"}
-
+		src.ui_interact(user)
+		return
 
 		var/list/dat = list()
-		var/delete_allowed = src.allowed(user)
-
-		if (src.panel_open || isAI(user))
-			var/list/manuwires = list(
-			"Amber" = 1,
-			"Teal" = 2,
-			"Indigo" = 3,
-			"Lime" = 4,
-			)
-			var/list/pdat = list("<B>[src] Maintenance Panel</B><hr>")
-			for(var/wiredesc in manuwires)
-				var/is_uncut = src.wires & APCWireColorToFlag[manuwires[wiredesc]]
-				pdat += "[wiredesc] wire: "
-				if(!is_uncut)
-					pdat += "<a href='?src=\ref[src];cutwire=[manuwires[wiredesc]]'>Mend</a>"
-				else
-					pdat += "<a href='?src=\ref[src];cutwire=[manuwires[wiredesc]]'>Cut</a> "
-					pdat += "<a href='?src=\ref[src];pulsewire=[manuwires[wiredesc]]'>Pulse</a> "
-				pdat += "<br>"
-
-			pdat += "<br>"
-			if (status & BROKEN || status & NOPOWER)
-				pdat += "The yellow light is off.<BR>"
-				pdat += "The blue light is off.<BR>"
-				pdat += "The white light is off.<BR>"
-				pdat += "The red light is off.<BR>"
-			else
-				pdat += "The yellow light is [(src.electrified == 0) ? "off" : "on"].<BR>"
-				pdat += "The blue light is [src.malfunction ? "flashing" : "on"].<BR>"
-				pdat += "The white light is [src.hacked ? "on" : "off"].<BR>"
-				pdat += "The red light is on.<BR>"
-
-			user.Browse(pdat.Join(), "window=manupanel")
-			onclose(user, "manupanel")
-
 		if (status & BROKEN || status & NOPOWER)
 			dat = "The screen is blank."
 			user.Browse(dat, "window=manufact;size=750x500")
@@ -607,35 +453,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		//Search
 		dat += " <A href='?src=\ref[src];search=1'>(Search: \"[istext(src.search) ? html_encode(src.search) : "----"]\")</A><BR>"
 		// This is not re-formatted yet just b/c i don't wanna mess with it
-		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
-		if(scan)
-			var/datum/db_record/account = null
-			account = FindBankAccountByName(src.scan.registered)
-			if (account)
-				dat+="<B>Current Funds</B>: [account["current_money"]] Credits<br>"
-		dat+= src.temp
-		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
-		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
-			if(S.broken)
-				continue
-			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
-			var/list/ores = S.ores
-			for(var/ore in ores)
-				var/datum/ore_cloud_data/OCD = ores[ore]
-				if(!OCD.for_sale || !OCD.amount)
-					continue
-				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(OCD.price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
-				dat += "[ore]: [OCD.amount] ([OCD.price+taxes+(!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0)][CREDIT_SIGN]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)<br>"
-
-		dat += "</small><HR>"
-
-		dat += build_control_panel(user)
-
-
-		user.Browse(HTML + dat.Join(), "window=manufact;size=1111x600")
-		onclose(user, "manufact")
-
-		interact_particle(user,src)
 
 	// Validate that an item is inside this machine for HREF check purposes
 	proc/validate_disp(datum/manufacture/M)
@@ -1183,7 +1000,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					user.u_equip(W)
 					W.dropped(user)
 
-		else if (istype(W,/obj/item/disk/data/floppy))
+		else if (istype(W,/obj/item/disk/data/floppy/manudrive))
 			if (src.manudrive)
 				boutput(user, SPAN_ALERT("You swap out the disk in the manufacturer with a different one."))
 				src.eject_manudrive(user)
@@ -1573,7 +1390,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/accept_loading(mob/user,allow_silicon)
 		if (!user)
 			return FALSE
-		if (src.status & BROKEN || src.status & NOPOWER)
+		if HAS_NO_POWER
 			return FALSE
 		if (src.dismantle_stage > 0)
 			return FALSE
@@ -1606,7 +1423,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if(WIRE_MALF)
 				src.malfunction = TRUE
 			if(WIRE_POWER)
-				if(!(src.status & BROKEN || src.status & NOPOWER))
+				if(!HAS_NO_POWER)
 					src.shock(user, 100)
 					src.status |= NOPOWER
 
@@ -1634,7 +1451,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (WIRE_MALF)
 				src.malfunction = !src.malfunction
 			if (WIRE_POWER)
-				if(!(src.status & BROKEN || src.status & NOPOWER))
+				if(!HAS_NO_POWER)
 					src.shock(user, 100)
 
 	proc/shock(mob/user, prb)
@@ -1865,7 +1682,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/datum/computer/file/manudrive/manudrive_file = null
 		if(src.manudrive)
 			if(src.queue[1] in src.drive_recipes)
-				var/obj/item/disk/data/floppy/ManuD = src.manudrive
+				var/obj/item/disk/data/floppy/manudrive/ManuD = src.manudrive
 				for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
 					if(MD.fablimit != -1 && MD.fablimit - MD.num_working <= 0)
 						src.mode = "halt"
@@ -2039,49 +1856,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.UpdateOverlays(src.panel_sprite, "panel")
 		else
 			src.UpdateOverlays(null, "panel")
-
-	proc/build_material_list()
-		var/list/dat = list()
-		dat += {"
-<table class="outline" style="width: 100%;">
-	<thead>
-		<tr><th colspan='2'>Loaded Materials</th></tr>
-	</thead>
-	<tbody>
-		"}
-		for(var/mat_id in src.resource_amounts)
-			var/datum/material/mat = src.get_our_material(mat_id)
-			dat += {"
-		<tr>
-			<td><a href='?src=\ref[src];eject=[url_encode(mat_id)]' class='buttonlink'>&#9167;</a>  [mat]</td>
-			<td class='r'>[src.resource_amounts[mat_id]/10]</td>
-		</tr>
-			"}
-		if (length(dat) == 1)
-			dat += {"
-		<tr>
-			<td colspan='2' class='c'>No materials loaded.</td>
-		</tr>
-			"}
-
-		if (src.manudrive)
-			dat += {"
-		<tr><th colspan='2'>Manufacturer drive</th></tr>
-			"}
-
-			dat += {"
-		<tr><td colspan='2'><a href='?src=\ref[src];ejectmanudrive=\ref[src]' class='buttonlink'>&#9167;</a> [src.manudrive.name]</td></tr>
-			"}
-
-			var/obj/item/disk/data/floppy/ManuD = src.manudrive
-			for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
-				if(MD.fablimit >= 0)
-					dat += {"
-				<tr>
-					<td>ManuDrive Usages</td>
-					<td class='r'>[MD.fablimit]</td>
-				</tr>
-					"}
 
 		if (src.reagents.total_volume > 0)
 			dat += {"

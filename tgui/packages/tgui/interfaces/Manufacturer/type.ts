@@ -11,6 +11,7 @@ type ManufacturerData = {
   hidden_blueprints:{ [key:string] : Manufacturable[]};
 
   resources:{ [key: string] : number };
+  wires:{ [key:string] : string};
 
   delete_allowed:boolean;
   hacked:boolean;
@@ -23,6 +24,8 @@ type ManufacturerData = {
   card_balance:number;
   speed:number;
   wire_bitflags:number;
+
+  indicators:WireIndicators;
 }
 
 // Keyed by name
@@ -33,4 +36,24 @@ type Manufacturable = {
   time:number;
   category:string;
   ref:string;
+}
+
+type Rockbox = {
+  name: string;
+  area_name: string;
+  reference: string;
+  ores: Ore[];
+}
+
+type Ore = {
+  name: string;
+  amount: number;
+  cost: number;
+}
+
+type WireIndicators = {
+  electrified: number;
+  malfunctioning: boolean;
+  hacked: boolean;
+  hasPower: boolean;
 }

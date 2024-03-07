@@ -1,7 +1,7 @@
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { Box, Button, Collapsible, Image, Input, Section, Stack, Table, Tooltip } from '../../components';
+import { Box, Button, Collapsible, Divider, Flex, Image, Input, LabeledList, Section, Slider, Stack, Table, Tooltip } from '../../components';
 import { formatTime, truncate } from '../../format';
 import { TableCell, TableRow } from '../../components/Table';
 
@@ -184,8 +184,72 @@ const CardInfo = (props, context) => {
   );
 };
 
+const is_set = (bits, bit) => { return bits & (1 << bit); };
+
+export const CollapsibleWireMenu = (props, context) => {
+  const { act, data } = useBackend<ManufacturerData>(context);
+  let wireContent = [];
+  let i = 0;
+  for (let wire in data.wires)
+  {
+    let cut = is_set(data.wire_bitflags, i);
+    i++;
+    wireContent.push(
+      <Flex textColor={data.wires[wire]}>
+        <Flex.Item grow bold>
+          {wire}
+        </Flex.Item>
+        <Flex.Item mr="5%">
+          <Button
+            ml="10%"
+            my="1%"
+            content="Pulse"
+            onClick={() => act('pulsewire', { wire: wire })}
+          />
+        </Flex.Item>
+        <Flex.Item>
+          <Button
+            m="1%"
+            content={cut ? "Cut" : "Mend"}
+            onClick={() => act(cut ? 'cutwire' : "mendwire", {
+              wire: wire })}
+          />
+        </Flex.Item>
+      </Flex>
+    );
+  }
+  return (
+    <Collapsible
+      mb="1%"
+      title="Wire Panel"
+      open={data.panel_open}
+    >
+      {wireContent}
+      <Divider />
+      <LabeledList>
+        <LabeledList.Item
+          label="Electrification Risk">
+          {data.indicators.electrified ? "High" : "None"}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="System Stability">
+          {data.indicators.malfunctioning ? "100%" : "0%"}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Warranty">
+          {data.indicators.hacked ? "Void" : "Valid"}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Power">
+          {data.indicators.hasPower ? "Sufficient" : "Insufficient"}
+        </LabeledList.Item>
+      </LabeledList>
+    </Collapsible>
+  );
+};
+
 export const Manufacturer = (_, context) => {
-  const { data } = useBackend<ManufacturerData>(context);
+  const { act, data } = useBackend<ManufacturerData>(context);
   let usable_blueprints = data.available_blueprints;
   let dropdowns = [];
   for (let i of data.all_categories) {
@@ -195,15 +259,16 @@ export const Manufacturer = (_, context) => {
   return (
     <Window width={1200} height={600} title={data.fabricator_name}>
       <Window.Content>
-        <Stack>
-          <Stack.Item
+        <Flex>
+          <Flex.Item
             style={{ "width": "80%" }}
+            mr={1}
           >
             <Section>
               {dropdowns}
             </Section>
-          </Stack.Item>
-          <Stack.Item
+          </Flex.Item>
+          <Flex.Item
             style={{ "width": "20%" }}
           >
             <Section
@@ -216,11 +281,34 @@ export const Manufacturer = (_, context) => {
               <Section title="Materials Loaded" style={{ "width": "100%" }} textAlign="center" pt={1} backgroundColor={backgroundPop}>
                 <LoadedMaterials resources={data.resources} />
               </Section>
+              <Slider
+                my={2}
+                minValue={1}
+                value={data.speed}
+                maxValue={3}
+                step={1}
+                stepPixelSize={100}
+              >
+                Speed: {data.speed}
+              </Slider>
+              <CollapsibleWireMenu />
               <CardInfo />
-              
+              <Flex
+                backgroundColor={backgroundPop}
+                my={1}
+                py={1}
+                style={{ "align-items": "center" }}
+              >
+                <Flex.Item grow>
+                  Repeat: Off
+                </Flex.Item>
+                <Flex.Item>
+                  <Button icon="repeat">Toggle Repeat</Button>
+                </Flex.Item>
+              </Flex>
             </Section>
-          </Stack.Item>
-        </Stack>
+          </Flex.Item>
+        </Flex>
 
       </Window.Content>
     </Window>
