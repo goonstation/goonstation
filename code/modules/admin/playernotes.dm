@@ -1,5 +1,4 @@
 /// Viewing a player's notes
-var/allnotes = FALSE
 /datum/admins/proc/viewPlayerNotes(player)
 	if (!player)
 		return
@@ -15,19 +14,12 @@ var/allnotes = FALSE
 	var/datum/apiModel/Paginated/PlayerNoteResourceList/playerNotes
 	try
 		var/datum/apiRoute/players/notes/get/getPlayerNotes = new
-		if(allnotes)
-			getPlayerNotes.queryParams = list(
-				"filters" = list(
-					"ckey" = player
-				),
-				"per_page" = 50
-			)
-		else
-			getPlayerNotes.queryParams = list(
-				"filters" = list(
-					"ckey" = player
-				)
-			)
+		getPlayerNotes.queryParams = list(
+			"filters" = list(
+				"ckey" = player
+			),
+			"per_page" = 100
+		)
 		playerNotes = apiHandler.queryAPI(getPlayerNotes)
 	catch (var/exception/e)
 		var/datum/apiModel/Error/error = e.name
@@ -68,12 +60,9 @@ var/allnotes = FALSE
 		dat += "No notes. <i>Yet.</i>"
 
 	else
-		var/i = 1
-		boutput(world, length(playerNotes.data))
 		for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 			var/list/row_classes = list()
 			var/noteReason = playerNote.note
-			boutput(world, "[i]")
 			if (playerNote.game_admin.ckey == "bot")
 				row_classes += "auto"
 
