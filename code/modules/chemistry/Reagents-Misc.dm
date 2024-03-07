@@ -4201,11 +4201,10 @@ datum
 			taste = "like a good quality all wear garment"
 			reagent_state = LIQUID
 
-			var/datum/material/jeanMaterial = null
+
 
 			New()
 				. = ..()
-				jeanMaterial = getMaterial("jean")
 
 			reaction_turf(var/turf/T, var/volume)
 				. = ..()
@@ -4215,7 +4214,7 @@ datum
 				if (!T)
 					return
 
-				T.setMaterial(jeanMaterial)
+				T.setMaterial(getMaterial("jean"))
 
 			reaction_obj(var/obj/O, var/volume)
 				. = ..()
@@ -4225,7 +4224,7 @@ datum
 				if (!O)
 					return
 
-				O.setMaterial(jeanMaterial)
+				O.setMaterial(getMaterial("jean"))
 
 			var/list/jean_affected_slots = list(
 				SLOT_BACK,
@@ -4255,14 +4254,14 @@ datum
 					if (!I)
 						continue
 
-					if (I.material?.isSameMaterial(jeanMaterial))
+					if (I.material?.isSameMaterial(getMaterial("jean")))
 						continue
 
 					volume = max(0, volume - MIN_JEANS_FOR_CONVERSION)
 					if (volume == 0)
 						break
 
-					I.setMaterial(jeanMaterial)
+					I.setMaterial(getMaterial("jean"))
 					update_required = TRUE
 
 				if (update_required)
