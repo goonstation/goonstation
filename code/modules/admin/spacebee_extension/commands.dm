@@ -77,14 +77,15 @@
 		else
 			var/message = list()
 			message += "**Notes for [ckey]**"
-			message += ""
+			message += "RECV"
 			for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 				var/id = playerNote.server_id
-				if(!id && length(playerNote.legacy_data))
+				if(length(playerNote.legacy_data))
 					for(var/lData in playerNote.legacy_data)
 						lData = replacetext(lData, regex(@%[{}"]%, "g"), "")
 						if(splittext(lData, ": ")[1] == "oldserver")
 							id = splittext(lData, ": ")[2]
+						else id = lData
 				message += "**\[[id]\] [playerNote.game_admin.name]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
 				message += "[playerNote.note]"
 			message = jointext(message, "\n")
