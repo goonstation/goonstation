@@ -137,14 +137,15 @@ const Spell = (props, context) => {
                     )}
                   </Flex.Item>
                   <Flex.Item align={"end"}>
-                    <Box fontSize={1.25} ml={1}>
+                    <Box fontSize={1.25} ml={1} mt={1}>
                       {spell}
                     </Box>
                   </Flex.Item>
                 </Flex>
               </Flex.Item>
               <Flex.Item>
-                <Button
+                <Button // Putting this into buttons={}, breaks it, somehow.
+                  mt={1}
                   backgroundColor={"green"}
                   disabled={spell_slots < spell_contents[1] || purchased}
                   onClick={() => { setPurchased(true); act("buyspell", { spell: spell }); }}
