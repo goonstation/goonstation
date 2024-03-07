@@ -5482,13 +5482,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/pool)
-"avh" = (
-/obj/submachine/seed_vendor,
-/obj/machinery/light/small/floor/warm,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
 "avj" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -6693,7 +6686,6 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -50387,7 +50379,6 @@
 "mtb" = (
 /obj/table/auto,
 /obj/item/storage/box/beakerbox,
-/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -64503,7 +64494,6 @@
 	pixel_x = -1;
 	pixel_y = 8
 	},
-/obj/machinery/light/small/floor/warm,
 /obj/item/screwdriver/green,
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -129731,7 +129721,7 @@ arn
 arn
 eBl
 arn
-avh
+ntc
 mPp
 adC
 adC
