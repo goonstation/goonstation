@@ -839,16 +839,17 @@ var/global/current_state = GAME_STATE_INVALID
 					player.client.persistent_bank_item = "none"
 
 				if (player.client.player.id)
-					bulk_commit["[bulk_commit.len + 1]"] = list(
-						"player_id" = player.client.player.id,
-						"key" = "persistent_bank",
-						"value" = player.client.persistent_bank + earnings
-					)
+					if (player.client.persistent_bank_valid)
+						bulk_commit["[bulk_commit.len + 1]"] = list(
+							"player_id" = player.client.player.id,
+							"key" = "persistent_bank",
+							"value" = player.client.persistent_bank + earnings
+						)
 					bulk_commit["[bulk_commit.len + 1]"] = list(
 						"player_id" = player.client.player.id,
 						"key" = "persistent_bank_item",
 						"value" = player.client.persistent_bank_item
-				)
+					)
 
 				SPAWN(0)
 					bank_earnings.pilot_bonus = pilot_bonus

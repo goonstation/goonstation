@@ -1069,6 +1069,13 @@ ABSTRACT_TYPE(/datum/pipeshotrecipe)
 	accepteditem = /obj/item/raw_material/shard
 	craftname = "shard"
 
+/datum/pipeshotrecipe/bone
+	thingsneeded = 2
+	result = /obj/item/ammo/bullets/pipeshot/bone
+	accepteditem = /obj/item/material_piece/bone
+	craftname = "bone chunk"
+
+
 /obj/item/assembly/pipehulls
 	name = "filled pipe hulls"
 	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
