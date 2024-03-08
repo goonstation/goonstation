@@ -8,7 +8,7 @@
 import { useBackend, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
-import { Box, Button, Collapsible, Divider, Flex, Image, Input, LabeledList, Section, Slider, Stack, Table, Tooltip } from '../../components';
+import { Box, Button, Collapsible, Divider, Flex, Image, Input, LabeledList, Section, Slider, Table } from '../../components';
 import { formatTime, truncate } from '../../format';
 import { TableCell, TableRow } from '../../components/Table';
 import { formatMoney } from '../../format';
@@ -32,15 +32,60 @@ const BlueprintTooltip = (props) => {
   );
 };
 
-const BlueprintButton = (props, context) => {
-  const { act } = useBackend(context);
-  const { name, blueprintData } = props;
+type CenteredTextProps = {
+  width:number,
+  height:number,
+  text:string;
+}
 
+export const CenteredText = (props:CenteredTextProps) => {
+  const {
+    width,
+    height,
+    text,
+  } = props;
+  return (
+    <Box
+      preserveWhitespace
+      inline
+      width={width} height={height} lineHeight={height}
+      style={{ "text-align": "center" }}
+    >
+      <span
+        style={{
+          "display": "inline-block",
+          "vertical-align": "middle",
+          "line-height": "normal",
+        }}>
+        {text}
+      </span>
+    </Box>
+  );
+};
+
+type ButtonWithBadgeProps = {
+  width?: number,
+  height?: number,
+  noImageShadow?: boolean,
+  image_path: string;
+  text?: string;
+  onClick?: Function;
+}
+
+export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
+  const {
+    width,
+    height,
+    noImageShadow,
+    image_path,
+    text,
+    onClick,
+  } = props;
   return (
     <Button
-      onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
+      onClick={onClick}
       ellipsis
-      width={12.5} height={5}
+      width={width} height={height}
       pl={0} pb={0}
       m={1}
     >
@@ -48,25 +93,20 @@ const BlueprintButton = (props, context) => {
         verticalAlign="top"
         height={5}
         pixelated
-        src={blueprintData.img}
-        backgroundColor={backgroundPop}
+        src={image_path}
+        backgroundColor={noImageShadow ? null : "rgba(0,0,0,0.2)"}
       />
-      <Box
-        preserveWhitespace
-        inline
-        width={7} height={5} lineHeight={5}
-        style={{ "text-align": "center" }}
-      >
-        <span
-          style={{
-            "display": "inline-block",
-            "vertical-align": "middle",
-            "line-height": "normal",
-          }}>
-          {truncate(name, 40)}
-        </span>
-      </Box>
+      <CenteredText mx={50} width={7} height={5} text={text} />
     </Button>
+  );
+};
+
+const BlueprintButton = (props, context) => {
+  const { act } = useBackend(context);
+  const { name, blueprintData } = props;
+
+  return (
+    <ButtonWithBadge image_path={blueprintData.img} text={truncate(name, 40)} onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })} />
   );
 };
 
