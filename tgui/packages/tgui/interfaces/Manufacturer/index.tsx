@@ -204,7 +204,7 @@ const CardInfo = (_, context) => {
   );
 };
 
-const is_set = (bits, bit) => { return bits & (1 << bit); };
+const is_set = (bits, bit) => bits & (1 << bit);
 
 export const CollapsibleWireMenu = (_, context) => {
   const { act, data } = useBackend<ManufacturerData>(context);
