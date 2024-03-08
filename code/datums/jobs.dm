@@ -68,6 +68,9 @@
 	var/wiki_link = null //! Link to the wiki page for this job
 
 	var/counts_as = null //! Name of a job that we count towards the cap of
+	///if true, cryoing won't free up slots, only ghosting will
+	///basically there should never be two of these
+	var/unique = FALSE
 
 	New()
 		..()
@@ -157,6 +160,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_card = /obj/item/card/id/command
 	map_can_autooverride = 0
 	can_join_gangs = FALSE
+	unique = TRUE
 
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
@@ -2613,6 +2617,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	linkcolor = "#3348ff"
 	name = "Nanotrasen Security Consultant"
 	limit = 1 // backup during HELL WEEK. players will probably like it
+	unique = TRUE
 	wages = PAY_TRADESMAN
 	requires_whitelist = 1
 	requires_supervisor_job = "Head of Security"
