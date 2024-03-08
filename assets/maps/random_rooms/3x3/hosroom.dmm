@@ -15,7 +15,7 @@
 /obj/item/clothing/shoes/swat,
 /obj/item/clothing/head/danberet,
 /obj/item/clothing/suit/gimmick/guncoat/dirty{
-	name = "Old And Diry Coats"
+	name = "Dirty Old Coat"
 	},
 /obj/item/reagent_containers/food/drinks/bottle/vintage,
 /turf/simulated/floor/plating/damaged1,

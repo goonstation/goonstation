@@ -438,3 +438,47 @@ TYPEINFO(/obj/item/device/flash/revolution)
 		playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, TRUE, 0, 0.6)
 		user.show_text("Hold still to override . . . ", "red")
 		actions.start(new/datum/action/bar/icon/rev_flash(src,M), user)
+
+/obj/item/device/flash/conspiracy
+	///How long between successful conversions
+	var/convert_cooldown = 1 MINUTE
+	///How long the (private) actionbar is to convert
+	var/convert_duration = 2 SECONDS
+
+	New()
+		. = ..()
+		src.desc += " There's something weird about this one..."
+
+	process_burnout(mob/user as mob)
+		return
+
+	emp_act()
+		return
+
+	attackby(obj/item/W, mob/user)
+		return
+
+	convert(mob/living/M, mob/user)
+		if (!isconspirator(user)) //it's just a regular flash to them
+			return
+		if (isconspirator(M) || issilicon(M) || !M.mind)
+			return
+		var/current_cooldown = GET_COOLDOWN(global, "conspiracy_convert")
+		if (current_cooldown)
+			boutput(user, SPAN_ALERT("[src] still needs to recharge before it can convert another. Time left: [current_cooldown/10]s"))
+			return
+		var/mob/living/carbon/human/H = M
+		if (istype(H) && H.eyes_protected_from_light())
+			return
+		if (src.convert_duration)
+			actions.start(new /datum/action/bar/private/icon/callback(user, M, src.convert_duration, PROC_REF(finish_conversion), list(M, user), src.icon, src.icon_state, SPAN_ALERT("[M]'s eyes glaze over for a second..."), INTERRUPT_ATTACKED | INTERRUPT_STUNNED, src), user)
+		else //skip actionbar
+			src.finish_conversion(M, user)
+
+	proc/finish_conversion(mob/living/M, mob/user)
+		M.mind?.add_antagonist(ROLE_CONSPIRATOR, source = ANTAGONIST_SOURCE_CONVERTED)
+		M.setStatus("weakened", 5 SECONDS)
+		ON_COOLDOWN(global, "conspiracy_convert", src.convert_cooldown)
+		for (var/datum/mind/antag in ticker.mode.traitors)
+			if (antag.get_antagonist(ROLE_CONSPIRATOR))
+				antag.current.setStatus("conspiracy_convert", src.convert_cooldown)

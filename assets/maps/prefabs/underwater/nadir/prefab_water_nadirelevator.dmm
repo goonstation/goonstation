@@ -490,7 +490,7 @@
 /area/shuttle/sea_elevator)
 "sR" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/machinery/light/incandescent/warm{
 	dir = 4;
 	nostick = 1;

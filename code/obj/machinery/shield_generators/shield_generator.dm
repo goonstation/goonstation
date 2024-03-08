@@ -253,34 +253,21 @@ TYPEINFO(/area/station/shield_zone)
 	name = "ShieldControl"
 	size = 10
 	req_access = list(access_engineering_engine)
-	var/tmp/authenticated = null //Are we currently logged in?
-	var/datum/computer/file/user_data/account = null
 	var/obj/item/peripheral/network/powernet_card/pnet_card = null
 	var/tmp/gen_net_id = null //The net id of our linked generator
 	var/tmp/reply_wait = -1 //How long do we wait for replies? -1 is not waiting.
 
-	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
-
 	initialize()
-		src.authenticated = null
+		if (..())
+			return TRUE
 		src.master.temp = null
-		if (!src.find_access_file()) //Find the account information, as it's essentially a ~digital ID card~
-			src.print_text("<b>Error:</b> Cannot locate user file.  Quitting...")
-			src.master.unload_program(src) //Oh no, couldn't find the file.
-			return
 
 		src.pnet_card = locate() in src.master.peripherals
 		if (!pnet_card || !istype(src.pnet_card))
 			src.pnet_card = null
 			src.print_text("<b>Warning:</b> No network adapter detected.")
 
-		if (!src.check_access(src.account.access))
-			src.print_text("User [src.account.registered] does not have needed access credentials.<br>Quitting...")
-			src.master.unload_program(src)
-			return
-
 		src.reply_wait = -1
-		src.authenticated = src.account.registered
 
 		var/intro_text = {"<b>ShieldControl</b>
 		<br>Emergency Defense Shield System
@@ -422,18 +409,6 @@ TYPEINFO(/area/station/shield_zone)
 							logTheThing(LOG_STATION, null, "[key_name(usr)] deactivated shields")
 				return
 		return
-
-	proc/find_access_file() //Look for the whimsical account_data file
-		var/datum/computer/folder/accdir = src.holder.root
-		if (src.master.host_program) //Check where the OS is, preferably.
-			accdir = src.master.host_program.holder.root
-
-		var/datum/computer/file/user_data/target = parse_file_directory(setup_acc_filepath, accdir)
-		if (target && istype(target))
-			src.account = target
-			return 1
-
-		return 0
 
 	proc/detect_generator() //Send out a ping signal to find a comm dish.
 		if (!src.pnet_card)

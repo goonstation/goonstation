@@ -30,7 +30,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 ///This proc handles the creation of a turf of a specific biome type
 /datum/biome/proc/generate_turf(var/turf/gen_turf, flags=0)
-	gen_turf.ReplaceWith(turf_type, keep_old_material=FALSE, handle_dir=FALSE)
+	gen_turf.ReplaceWith(src.turf_type, keep_old_material=FALSE, handle_dir=FALSE)
 
 	if((flags & MAPGEN_IGNORE_FAUNA) == 0)
 		if(length(fauna_types) && prob(fauna_density))
@@ -184,3 +184,13 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/mountain/desert
 	turf_type = /turf/simulated/wall/auto/asteroid/mountain/desert
+
+/datum/biome/mountain/cave
+	turf_type = /turf/simulated/wall/auto/asteroid/mountain/cave
+
+/datum/biome/adventure/cave
+	turf_type = /turf/unsimulated/floor/cave
+
+/datum/biome/adventure/cave/wall
+	turf_type = /turf/unsimulated/wall/auto/adventure/cave
+

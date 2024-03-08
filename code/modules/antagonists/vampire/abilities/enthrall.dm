@@ -131,9 +131,11 @@
 
 		if (target in H.thralls)
 			//and add blood!
-			var/datum/mutantrace/vampiric_thrall/V = target.mutantrace
-			if (V)
-				V.blood_points += 200
+			var/datum/abilityHolder/vampiric_thrall/thrallHolder = target.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+			if (thrallHolder)
+				thrallHolder.points += 200
+			//we also restore their real actual blood pressure a bit, to allow vampires to save their thralls who are drained
+			target.blood_volume = min(target.blood_volume + 200, initial(target.blood_volume))
 
 			H.blood_tracking_output(cost)
 

@@ -335,7 +335,7 @@
 	src.score_tab_data[SCORE_TAB_SECTION_ENGINEERING] = list(
 		list(
 			"name" = "Power Generated",
-			"value" = "[engineering_notation(score_tracker.power_generated)]W",
+			"value" = "[engineering_notation(score_tracker.power_generated / 3600)]Wh",
 		),
 		list(
 			"name" = "Station Structural Integrity",

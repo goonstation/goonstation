@@ -1008,7 +1008,7 @@ $(function() {
             '</div>');
     }
 
-    runByond('?action=ehjax&type=datum&datum=chatOutput&proc=doneLoading&param[ua]='+escaper(navigator.userAgent));
+    runByond('?action=ehjax&type=datum&datum=chatOutput&proc=doneLoading');
     if ($('#loading').is(':visible')) {
         $('#loading').remove();
     }

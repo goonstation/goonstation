@@ -96,7 +96,7 @@ export const Radio = (_props, context) => {
                 )}
                 {!!data.sendButton && (
                   <LabeledList.Item>
-                    <Button align="center" onClick={() => { act("send"); }}>Send signal</Button>
+                    <Button align="center" onClick={() => { act("send"); }} icon="wifi">Send signal</Button>
                   </LabeledList.Item>
                 )}
               </LabeledList>

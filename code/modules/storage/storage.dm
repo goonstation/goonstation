@@ -435,6 +435,10 @@
 		user.s_active = null
 		user.detach_hud(src.hud)
 
+/datum/storage/proc/hide_all_huds()
+	for (var/mob/M as anything in src.hud?.mobs)
+		src.hide_hud(M)
+
 /// if user sees the storage hud
 /datum/storage/proc/hud_shown(mob/user)
 	return user in src.hud.mobs

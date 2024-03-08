@@ -44,20 +44,20 @@
 	var/datum/centcomviewer/centcomviewer = null
 	var/datum/bioeffectmanager/bioeffectmanager = null
 	var/datum/abilitymanager/abilitymanager = null
+	var/datum/ban_panel/ban_panel = null
 	var/datum/antagonist_panel/antagonist_panel = null
 
 	var/list/hidden_categories = null
 
 	var/mob/respawn_as_self_mob = null
 
-	New()
+	New(client/C)
 		..()
+		src.owner = C
 		src.hidden_categories = list()
 		SPAWN(1 DECI SECOND)
-			if (src.owner)
-				var/client/C = src.owner
-				C.chatOutput.getContextFlag()
-				src.load_admin_prefs()
+			src.owner.chatOutput.getContextFlag()
+			src.load_admin_prefs()
 
 		if (!admin_interact_atom_verbs || length(admin_interact_atom_verbs) <= 0)
 			admin_interact_atom_verbs = list(\
@@ -170,16 +170,15 @@
 		user.Browse(HTML.Join(),"window=aprefs;size=385x540")
 
 	proc/load_admin_prefs()
-		if (!src.owner)
-			return
 		var/list/AP
-		if (!owner.player.clouddata)
-			owner.player.cloud_fetch()
-		var/json_data = src.owner.player.cloud_get("admin_preferences")
+		if (!owner.player.cloudSaves.loaded)
+			owner.player.cloudSaves.fetch()
+
+		var/json_data = owner.player.cloudSaves.getData("admin_preferences")
 		if (json_data)
 			AP = json_decode(json_data)
 		else
-			boutput(src.owner, SPAN_NOTICE("ERROR: Admin prefence data is null. You either have no saved prefs or cloud is unreachable."))
+			boutput(src.owner, SPAN_NOTICE("ERROR: Admin preference data is null. You either have no saved prefs or cloud is unreachable."))
 			return
 
 		var/saved_servertoggles_toggle = AP["servertoggles_toggle"]
@@ -320,10 +319,10 @@
 	proc/save_admin_prefs()
 		if (!src.owner)
 			return
-		var/list/data = owner.player.cloud_get("admin_preferences")
+		var/data = owner.player.cloudSaves.getData("admin_preferences")
 		var/list/auto_aliases = list()
 		if (data) // decoding null will runtime
-			data = json_decode(owner.player.cloud_get("admin_preferences"))
+			data = json_decode(data)
 			auto_aliases = data["auto_aliases"]
 
 		if (auto_alias_global_save)
@@ -360,7 +359,7 @@
 		for(var/cat in toggleable_admin_verb_categories)
 			AP["hidden_[cat]"] = (cat in src.hidden_categories)
 
-		if (!owner.player.cloud_put("admin_preferences", json_encode(AP)))
+		if (!owner.player.cloudSaves.putData("admin_preferences", json_encode(AP)))
 			tgui_alert(src.owner, "ERROR: Unable to reach cloud.")
 		else
 			boutput(src.owner, SPAN_NOTICE("Admin preferences saved."))

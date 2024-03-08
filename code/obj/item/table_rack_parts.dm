@@ -438,6 +438,10 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 	icon = 'icons/obj/furniture/bench_yellow.dmi'
 	furniture_type = /obj/stool/bench/yellow/auto
 
+/obj/item/furniture_parts/bench/purple
+	icon = 'icons/obj/furniture/bench_purple.dmi'
+	furniture_type = /obj/stool/bench/purple/auto
+
 /obj/item/furniture_parts/bench/wooden
 	name = "wooden bench parts"
 	desc = "A collection of parts that can be used to make a wooden bench."

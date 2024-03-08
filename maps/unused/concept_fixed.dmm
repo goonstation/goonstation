@@ -26853,7 +26853,7 @@
 /area/station/crew_quarters/kitchen)
 "bbQ" = (
 /obj/table,
-/obj/submachine/mixer{
+/obj/machinery/mixer{
 	pixel_y = 6
 	},
 /turf/simulated/floor/specialroom/cafeteria{
@@ -26863,7 +26863,7 @@
 "bbR" = (
 /obj/machinery/light,
 /obj/table,
-/obj/submachine/mixer{
+/obj/machinery/mixer{
 	pixel_y = 6
 	},
 /obj/machinery/camera{

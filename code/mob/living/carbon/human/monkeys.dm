@@ -477,18 +477,15 @@
 				if(!length(choices))
 					return
 				thingy = pick(choices)
-				slot = thingy.equipped_in_slot
 			else if (theft_target.l_store && theft_target.r_store)
 				thingy = pick(theft_target.l_store, theft_target.r_store)
-				if (thingy == theft_target.r_store)
-					slot = 16
 			else if (theft_target.l_store)
 				thingy = theft_target.l_store
 			else if (theft_target.r_store)
 				thingy = theft_target.r_store
-				slot = 16
 			else // ???
 				return
+		slot = theft_target.get_slot_from_item(thingy)
 		walk_towards(src, null)
 		if(ismonkey(theft_target))
 			src.say("I help!")
@@ -565,9 +562,12 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 
-	var/mob/living/carbon/human/npc/source  //The npc doing the action
-	var/mob/living/carbon/human/target  	//The target of the action
-	var/slot						    	//The slot number
+	/// NPC who is pickpocketing
+	var/mob/living/carbon/human/npc/source
+	/// The pick-pocketing victim
+	var/mob/living/carbon/human/target
+	/// The SLOT_* define (i.e. SLOT_BACK)
+	var/slot
 
 	New(var/Source, var/Target, var/Slot)
 		source = Source

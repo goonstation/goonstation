@@ -852,14 +852,15 @@
 
 		if (istype(master.loc,/obj/vehicle/)) //so we always see vehicle buttons
 			var/obj/vehicle/V = master.loc
-			for(var/obj/ability_button/B2 in V.ability_buttons)
-				B2.screen_loc = "NORTH-[pos_y],[pos_x]"
-				master.client.screen += B2
-				B2.the_mob = master
-				pos_x++
-				if(pos_x > 15)
-					pos_x = 1
-					pos_y++
+			if (V.rider == src.master) //unless we're a passenger
+				for(var/obj/ability_button/B2 in V.ability_buttons)
+					B2.screen_loc = "NORTH-[pos_y],[pos_x]"
+					master.client.screen += B2
+					B2.the_mob = master
+					pos_x++
+					if(pos_x > 15)
+						pos_x = 1
+						pos_y++
 
 
 	proc/update_sprinting()

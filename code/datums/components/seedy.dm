@@ -31,26 +31,7 @@
 	. = ..()
 
 /datum/component/seedy/proc/generate_seed()
-	var/obj/item/seed/SEED
-	if (planttype.unique_seed)
-		SEED = new planttype.unique_seed
-	else
-		SEED = new /obj/item/seed
-		SEED.removecolor()
-
-	if (!src.planttype.hybrid && !src.planttype.unique_seed)
-		SEED.generic_seed_setup(src.planttype, TRUE)
-	HYPpassplantgenes(src.DNA,SEED.plantgenes)
-	SEED.generation = src.generation
-	if (src.planttype.hybrid)
-		var/plantType = src.planttype.type
-		var/datum/plant/hybrid = new plantType(SEED)
-		for (var/V in src.planttype.vars)
-			if (issaved(src.planttype.vars[V]) && V != "holder")
-				hybrid.vars[V] = src.planttype.vars[V]
-		SEED.planttype = hybrid
-		SEED.plant_seed_color(src.planttype.seedcolor)
-
+	var/obj/item/seed/SEED = HYPgenerateseedcopy(src.DNA, src.planttype, src.generation)
 	return SEED
 
 /datum/component/seedy/proc/on_pre_attack(var/atom/affected_parent, var/atom/target, var/mob/user, var/damage)

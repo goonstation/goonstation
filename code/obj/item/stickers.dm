@@ -672,6 +672,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 		src.pixel_x = initial(src.pixel_x)
 		src.pixel_y = initial(src.pixel_y)
 		src.attached = null
+		src.active = FALSE
 		light_c.update(0)
 
 	green

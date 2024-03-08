@@ -112,7 +112,7 @@
 			reagents_temp.my_atom = POT
 			var/list/plant_complete_reagents = HYPget_assoc_reagents(src, DNA)
 			for (var/plantReagent in plant_complete_reagents)
-				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(plant_complete_reagents))))))
+				reagents_temp.add_reagent(plantReagent, 2 * max(1, HYPfull_potency_calculation(DNA, 0.1 / length(plant_complete_reagents))))
 
 			SPAWN(0) // spawning to kick fluid processing out of machine loop
 				reagents_temp.smoke_start()
@@ -199,7 +199,40 @@
 	name = "strange seed"
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "seedproj"
-	implanted = /obj/item/implant/projectile/spitter_pod
+	implanted = /obj/item/implant/projectile/body_visible/seed/spitter_pod
+
+/obj/item/implant/projectile/body_visible/seed/spitter_pod
+	name = "strange seed pod"
+	pull_out_name = "strange seed pod"
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
+	desc = "A small hollow pod."
+	icon_state = "seedproj"
+	var/dig_ticker = 25
+
+	New()
+		..()
+		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "dart_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+
+	do_process()
+		src.dig_ticker = max(src.dig_ticker-1, 0)
+		if(!src.dig_ticker)
+			online = FALSE
+			if(prob(80))
+				var/mob/living/carbon/human/H = src.owner
+				var/obj/item/implant/projectile/spitter_pod/implant = new
+				implant.implanted(H)
+				boutput(src.owner,SPAN_ALERT("You feel something work its way into your body from \the [src]."))
+
+	on_death()
+		if(!online)
+			return
+		if(prob(80))
+			var/mob/living/carbon/human/H = src.owner
+			var/obj/item/implant/projectile/spitter_pod/implant = new
+			implant.implanted(H)
+			SPAWN(rand(5 SECONDS, 30 SECONDS))
+				if(!QDELETED(H) && !QDELETED(implant))
+					implant.on_death()
 
 /obj/item/implant/projectile/spitter_pod
 	name = "strange seed pod"
@@ -234,6 +267,9 @@
 
 	do_process()
 		heart_ticker = max(heart_ticker-1, 0)
+		if(!isalive(src.owner))
+			online = FALSE
+			return
 		if(heart_ticker & prob(60) && !ON_COOLDOWN(src,"[src] spam", 5 SECONDS) )
 			if(prob(30))
 				boutput(src.owner,SPAN_ALERT("You feel as though something moving towards your heart... That can't be good."))
@@ -243,14 +279,14 @@
 			if(!ON_COOLDOWN(src,"[src] spam", 8 SECONDS))
 				var/mob/living/carbon/human/H = src.owner
 				if(istype(H))
-					H.organHolder.damage_organs(rand(2,5)/2, 0, 1, list("heart"))
+					H.organHolder.damage_organs(rand(1,5)/2, 0, 1, list("heart"))
 				else
-					src.owner.TakeDamage("All", 2, 0)
+					src.owner.TakeDamage("All", 1, 0)
 
 				if(prob(5))
 					boutput(src.owner,SPAN_ALERT("AAHRRRGGGG something is trying to dig your heart out from the inside?!?!"))
 					src.owner.emote("scream")
-					src.owner.changeStatus("stunned", 2 SECONDS)
+					src.owner.changeStatus("stunned", rand(1 SECOND, 2 SECONDS))
 				else if(prob(40))
 					boutput(src.owner,SPAN_ALERT("You feel a sharp pain in your chest."))
 

@@ -534,6 +534,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	icon_state = "lavafish"
 	inhand_color = "#eb2d2d"
 	rarity = ITEM_RARITY_EPIC
+	firesource = FIRESOURCE_OPEN_FLAME
 
 	New()
 		global.processing_items += src
@@ -546,6 +547,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	process()
 		if (ismob(src.loc) && prob(60))
 			src.loc.changeStatus("burning", pick(3, 5) SECONDS)
+
+	attack(mob/target, mob/user, def_zone, is_special, params)
+		. = ..()
+		if (prob(50))
+			playsound(target, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE)
+			target.changeStatus("burning", 2 SECONDS)
 
 /obj/item/reagent_containers/food/fish/igneous_fish
 	name = "igneous fish"

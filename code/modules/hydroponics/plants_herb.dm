@@ -160,12 +160,12 @@ ABSTRACT_TYPE(/datum/plant/herb)
 
 	HYPharvested_proc(obj/machinery/plantpot/POT, mob/user)
 		// check if we need to add a suffix
-		if (!src.weed_suffix && POT.plantgenes.potency > INITIAL_REQUIRED_POTENCY)
+		if (!src.weed_suffix && POT.plantgenes?.get_effective_value("potency") > INITIAL_REQUIRED_POTENCY)
 			src.weed_suffix = pick_string("chemistry_tools.txt", "WEED_suffixes")
 
 		if (src.weed_suffix)
 			// if we have a suffix, check if we need to generate more prefixes
-			var/target_prefix_num = min(MAX_PREFIXES, round(POT.plantgenes.potency / POTENCY_PER_PREFIX))
+			var/target_prefix_num = min(MAX_PREFIXES, round(POT.plantgenes?.get_effective_value("potency") / POTENCY_PER_PREFIX))
 			if (length(src.weed_prefixes) < target_prefix_num)
 				var/prefixes_to_add = target_prefix_num - length(src.weed_prefixes)
 				for (var/i in 1 to prefixes_to_add)
@@ -282,7 +282,7 @@ ABSTRACT_TYPE(/datum/plant/herb)
 					chem_protection = ((100 - M.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
 
 				var/list/plant_complete_reagents = HYPget_assoc_reagents(P, DNA)
-				var/potency_scale = length(plant_complete_reagents) ? round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * (length(plant_complete_reagents) ** 0.5))))) : 0
+				var/potency_scale = length(plant_complete_reagents) ? round(max(1, HYPfull_potency_calculation(DNA, 0.1 / (length(plant_complete_reagents)** 0.5)))) : 0
 
 				logTheThing(LOG_CHEMISTRY, M, "is stung by a nettle plant (likely planted by [constructName(POT.contributors[1])]) at [log_loc(POT)][potency_scale ? ", injecting with [5 * chem_protection * potency_scale]u each of [json_encode(HYPget_assoc_reagents(P, DNA))]" : ""]")
 
@@ -316,7 +316,7 @@ ABSTRACT_TYPE(/datum/plant/herb)
 			boutput(user, SPAN_NOTICE("You feel something brush against you."))
 		var/list/plant_complete_reagents = HYPget_assoc_reagents(src, DNA)
 		for (var/plantReagent in plant_complete_reagents)
-			H.reagents?.add_reagent(plantReagent, 5 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * (length(plant_complete_reagents) ** 0.5))))))
+			H.reagents?.add_reagent(plantReagent, 5 * round(max(1, HYPfull_potency_calculation(DNA, 0.1 / (length(plant_complete_reagents) ** 0.5)))))
 
 /datum/plant/herb/tobacco
 	name = "Tobacco"

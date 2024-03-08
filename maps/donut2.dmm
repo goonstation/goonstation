@@ -1952,12 +1952,12 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "akY" = (
-/obj/stool/chair,
+/obj/stool/chair/purple,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "akZ" = (
-/obj/stool/chair,
 /obj/landmark/start/job/scientist,
+/obj/stool/chair/purple,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "alb" = (
@@ -2132,16 +2132,16 @@
 	location = "bar";
 	name = "buddytime beacon"
 	},
-/obj/stool/chair{
+/obj/stool/chair/purple{
 	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "alK" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 1
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "alL" = (
@@ -2954,17 +2954,17 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/researchshuttle)
 "aqZ" = (
-/obj/stool/bench/yellow,
 /obj/machinery/camera{
 	c_tag = "Escape Hallway";
 	dir = 10
 	},
+/obj/stool/bench/red,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "ara" = (
 /obj/machinery/light/emergency,
-/obj/stool/bench/green,
 /obj/machinery/light/incandescent,
+/obj/stool/bench/green,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "arc" = (
@@ -11648,6 +11648,17 @@
 	dir = 8
 	},
 /area/station/medical/research)
+"bka" = (
+/obj/machinery/door/airlock/pyro/engineering/alt,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_atmos,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "atmos";
+	name = "Atmos";
+	enter_id = "outer"
+	},
+/turf/simulated/floor/grime,
+/area/station/atmos/highcap_storage)
 "bkf" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/market)
@@ -12831,6 +12842,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "inner"
 	},
 /turf/simulated/floor/black/side{
 	dir = 8
@@ -15621,11 +15637,6 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bGU" = (
@@ -16454,6 +16465,11 @@
 /obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aicore";
+	name = "AI Core";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "bQH" = (
@@ -21991,8 +22007,8 @@
 /turf/simulated/floor/wood/six,
 /area/station/maintenance/west)
 "fsH" = (
-/obj/stool/chair,
 /obj/disposalpipe/segment/vertical,
+/obj/stool/chair/purple,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "ftz" = (
@@ -23535,6 +23551,11 @@
 	icon_state = "2-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "gBm" = (
@@ -23899,7 +23920,7 @@
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
 "gOE" = (
-/obj/stool/bench/red,
+/obj/stool/bench/purple,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "gOO" = (
@@ -27443,6 +27464,11 @@
 	},
 /obj/mapping_helper/access/teleporter,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "teleporter";
+	name = "Teleporter";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "jkz" = (
@@ -27806,6 +27832,11 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/bridge)
 "jwV" = (
@@ -28381,8 +28412,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "jLT" = (
-/obj/stool/bench/green,
 /obj/machinery/light/incandescent,
+/obj/stool/bench/yellow,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "jLU" = (
@@ -29284,6 +29315,11 @@
 /obj/machinery/door/airlock/pyro/glass/command,
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "ktd" = (
@@ -30132,6 +30168,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "brig"
 	},
 /turf/simulated/floor/red/side{
 	dir = 8
@@ -31641,7 +31682,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "lMB" = (
-/obj/stool/chair{
+/obj/stool/chair/purple{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
@@ -32228,8 +32269,8 @@
 /area/station/hallway/primary/north)
 "mgJ" = (
 /obj/machinery/light/emergency,
-/obj/stool/bench/blue,
 /obj/machinery/firealarm/south,
+/obj/stool/bench/purple,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "mgZ" = (
@@ -32658,11 +32699,11 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "msE" = (
-/obj/stool/chair{
-	dir = 1
-	},
 /obj/landmark/start/job/medical_doctor,
 /obj/machinery/light/incandescent/cool/very,
+/obj/stool/chair/black{
+	dir = 1
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "msI" = (
@@ -33583,7 +33624,7 @@
 	},
 /area/station/ai_monitored/armory)
 "mVH" = (
-/obj/stool/chair,
+/obj/stool/chair/purple,
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/science/lobby)
 "mWp" = (
@@ -35995,7 +36036,7 @@
 	desc = "A black countertop table for storing kitchen-y objects.";
 	name = "kitchen counter"
 	},
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "ouw" = (
@@ -39980,6 +40021,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "outer"
 	},
 /turf/simulated/floor,
 /area/station/bridge)
@@ -44229,6 +44275,20 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/pharmacy)
+"tAl" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/engineering/alt,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_atmos,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "atmos";
+	name = "Atmos";
+	enter_id = "outer"
+	},
+/turf/simulated/floor/grime,
+/area/station/atmos/highcap_storage)
 "tAo" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/corner/extra_big2{
@@ -44893,6 +44953,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/brig{
 	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "sec"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -45928,6 +45993,11 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/black/side{
 	dir = 8
 	},
@@ -48018,6 +48088,11 @@
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_atmos,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "atmos";
+	name = "Atmos";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "waD" = (
@@ -48354,6 +48429,11 @@
 /obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aicore";
+	name = "AI Core";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai)
 "wlU" = (
@@ -48630,6 +48710,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "teleporter";
+	name = "Teleporter";
+	enter_id = "inner"
 	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
@@ -49724,6 +49809,11 @@
 /obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "xgM" = (
@@ -50072,6 +50162,11 @@
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_atmos,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "atmos";
+	name = "Atmos";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "xse" = (
@@ -73897,7 +73992,7 @@ dRI
 kYR
 hMd
 tbx
-uiX
+cJF
 cyq
 arN
 ayH
@@ -74803,7 +74898,7 @@ dRI
 wIP
 hMd
 fqV
-cJF
+uiX
 cyq
 arN
 yjM
@@ -80629,7 +80724,7 @@ bzi
 sTg
 bhm
 wpm
-wal
+bka
 bDf
 bDf
 wal
@@ -80931,7 +81026,7 @@ bzi
 kBH
 buN
 knh
-xra
+tAl
 bDI
 gPo
 xra

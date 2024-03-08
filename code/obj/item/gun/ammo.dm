@@ -774,6 +774,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	amount_left = 5
 	max_amount = 5
 
+/obj/item/ammo/bullets/pipeshot/bone // scrap handmade bone shells
+	sname = "bone load"
+	desc = "This appears to be some bone fragments haphazardly shoved into a few cut open pipe frames - grotesque!"
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/bone
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
@@ -963,7 +967,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
-	icon_empty = "40mm_nonlethal-0"
+	icon_empty = "40mm_paint-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 /obj/item/ammo/bullets/pbr

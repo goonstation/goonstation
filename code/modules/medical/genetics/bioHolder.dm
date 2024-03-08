@@ -920,6 +920,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/RandomEffect(var/type = "either", var/useProbability = 1, var/datum/dna_chromosome/toApply)
 		//Adds a random effect to this holder. Argument controls which type. bad , good, either.
+		if(check_target_immunity(owner, TRUE))
+			return
 		var/list/filtered = new/list()
 
 		for(var/T in bioEffectList)

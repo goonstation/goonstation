@@ -81,6 +81,7 @@ TYPEINFO(/obj/item/device/chameleon)
 	var/can_use = 0
 	var/obj/overlay/anim = null //The toggle animation overlay will also be retained
 	var/obj/dummy/chameleon/cham = null //No sense creating / destroying this
+	var/disrupt_on_drop = TRUE //TODO: refactor this
 	var/active = 0
 	tooltip_flags = REBUILD_DIST
 	HELP_MESSAGE_OVERRIDE({"Use the chameleon projector on any object to copy it's appearance. Use it in hand to appear as that object indefinitely. The disguise will be removed if you interact with anything else or are hit."})
@@ -95,7 +96,9 @@ TYPEINFO(/obj/item/device/chameleon)
 		src.cham.master = src
 
 	dropped()
-		disrupt()
+		. = ..()
+		if(disrupt_on_drop)
+			disrupt()
 
 	attack_self()
 		toggle()
@@ -200,6 +203,7 @@ TYPEINFO(/obj/item/device/chameleon)
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "cham_bomb"
 	burn_possible = FALSE
+	disrupt_on_drop = FALSE
 	HELP_MESSAGE_OVERRIDE(null)
 	var/strength = 12
 
@@ -208,9 +212,6 @@ TYPEINFO(/obj/item/device/chameleon)
 			return "Hit the bomb on any object to disguise it as that object. Use the bomb in hand to arm/disarm it. The bomb will explode when anyone tries to pick up the armed bomb."
 		else
 			return null
-
-	dropped()
-		return
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"

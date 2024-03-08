@@ -745,6 +745,7 @@ var/list/rollList = list()
 			pourout(target,user)
 
 	dropped(mob/user as mob)
+		. = ..()
 		if((dicelist.len) && (user.a_intent != "help"))
 			src.ClearAllOverlays()
 			src.icon_state = "dicecupf"

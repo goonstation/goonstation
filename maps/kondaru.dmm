@@ -12603,12 +12603,8 @@
 /area/station/crewquarters/cryotron)
 "aYd" = (
 /obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
 /obj/item/device/t_scanner,
 /obj/item/device/t_scanner,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
 /obj/item/device/radio/intercom/engineering{
 	dir = 4
 	},
@@ -14924,7 +14920,7 @@
 /area/station/mining/refinery)
 "biN" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing{
 	pixel_x = -14
 	},
@@ -21820,7 +21816,7 @@
 	},
 /area/station/science/lobby)
 "bKw" = (
-/obj/stool/bench/auto,
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/purple/side,
 /area/station/hallway/secondary/south)
 "bKx" = (
@@ -28803,10 +28799,10 @@
 /turf/simulated/floor/carpet/purple/standard/edge/south,
 /area/research_outpost/indigo_rye)
 "clD" = (
-/obj/stool/chair,
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/stool/chair/purple,
 /turf/simulated/floor/carpet/purple/standard/edge/south,
 /area/research_outpost/indigo_rye)
 "clE" = (
@@ -30587,6 +30583,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineairbridge2";
+	name = "Engineering Airbridge 2";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/redblack,
 /area/station/engine/hotloop)
 "cFJ" = (
@@ -30744,6 +30745,11 @@
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/atmospherics/pipe/simple,
 /obj/mapping_helper/access/security,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "cKV" = (
@@ -30897,6 +30903,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "hopdesk";
+	name = "HOP Desk";
+	enter_id = "hop"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/hos)
 "cPy" = (
@@ -32375,6 +32386,11 @@
 	name = "AI Upload"
 	},
 /obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "dPf" = (
@@ -32763,6 +32779,11 @@
 /obj/mapping_helper/access/ai_upload,
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "inner"
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
@@ -40081,6 +40102,11 @@
 	name = "Courtroom"
 	},
 /obj/mapping_helper/access/brig,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "hopdesk";
+	name = "HOP Desk";
+	enter_id = "sec"
+	},
 /turf/simulated/floor,
 /area/station/security/secwing)
 "jrg" = (
@@ -42213,6 +42239,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineairbridge1";
+	name = "Engineering Airbridge 1";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/engine/gas)
 "kUu" = (
@@ -42655,6 +42686,11 @@
 	dir = 4;
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineairbridge1";
+	name = "Engineering Airbridge 1";
+	enter_id = "inner"
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/engine/hotloop)
@@ -43842,6 +43878,11 @@
 	dir = 1
 	},
 /obj/mapping_helper/access/brig,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "hopdesk";
+	name = "HOP Desk";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "mep" = (
@@ -49072,6 +49113,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "research";
+	name = "Research";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "qfh" = (
@@ -50462,6 +50508,11 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineairbridge2";
+	name = "Engineering Airbridge 2";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -56943,6 +56994,11 @@
 	req_access = null
 	},
 /obj/mapping_helper/access/research_foyer,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "research";
+	name = "Research";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "vZg" = (
@@ -59111,6 +59167,11 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)

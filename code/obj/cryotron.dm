@@ -213,6 +213,9 @@
 							respawn_controller.subscribeNewRespawnee(user.ckey)
 							user.mind?.get_player()?.dnr = TRUE
 							user.ghostize()
+							var/datum/job/job = find_job_in_controller_by_string(user.job, soft=TRUE)
+							if (job)
+								job.assigned = max(0, job.assigned - 1)
 							qdel(user)
 							return 1
 
@@ -321,29 +324,10 @@
 					if (!isnull(crew_record))
 						crew_record["p_stat"] = "Active"
 
-	attack_hand(var/mob/user)
-		if(isgrab(user.l_hand))
-			src.Attackby(user.l_hand, user)
-		else if(isgrab(user.r_hand))
-			src.Attackby(user.r_hand, user)
-		else if (!enter_prompt(user))
-			return ..()
-
-	attack_ai(mob/user as mob)
-		if(isAIeye(user))
-			boutput(user, SPAN_ALERT("An incorporeal manifestation of an artificial intelligence's presence can't enter \the [src]!"))
-			return FALSE
-		if (!enter_prompt(user))
-			return ..()
-
-	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W, /obj/item/grab))
-			var/obj/item/grab/G = W
-			if (ismob(G.affecting) && insert_prompt(G.affecting, user))
-				user.u_equip(G)
-				qdel(G)
-		else if (!enter_prompt(user))
-			return ..()
+	/// Override to stop slamming mobs into the cryotron, without this the user will
+	/// drop the player mob they're trying to insert
+	attackby(obj/item/I, mob/user)
+		return
 
 	proc/insert_prompt(mob/target, mob/user)
 		if (target.client || !target.ckey)
@@ -364,9 +348,65 @@
 		if (!exit_prompt(user))
 			return ..()
 
+	/// Handling dragging players in to cryo, mainly for silicon players.
 	MouseDrop_T(atom/target, mob/user as mob)
-		if (ishuman(target) && isrobot(user) && BOUNDS_DIST(src, user) == 0 && BOUNDS_DIST(src, target) == 0 && BOUNDS_DIST(user, target) == 0)
-			insert_prompt(target, user)
+		if (!ishuman(target) && !isrobot(user))
 			return
+
+		if (BOUNDS_DIST(src, user) != 0)
+			return
+
+		if (BOUNDS_DIST(src, target) != 0)
+			return
+
+		if (BOUNDS_DIST(user, target) != 0)
+			return
+
+		insert_prompt(target, user)
 		return ..()
 
+	/// Override for handling all interactions with the cryo chamber
+	Click()
+		if (!usr)
+			return
+
+		if (isAIeye(usr) || isintangible(usr))
+			return
+
+		if (!can_act(usr) || !in_interact_range(src, usr))
+			return
+
+		if (isdead(usr) || isobserver(usr))
+			return
+
+		if (issilicon(usr))
+			enter_prompt(usr)
+			return
+
+		var/obj/item/in_hand_item = usr.equipped()
+
+		if (in_hand_item != null)
+			if (istype(in_hand_item, /obj/item/grab))
+				var/obj/item/grab/G = in_hand_item
+
+				if (ismob(G.affecting) && insert_prompt(G.affecting, usr))
+					usr.u_equip(G)
+					qdel(G)
+			else
+				enter_prompt(usr)
+				return
+
+		else if (usr.equipped_limb() != null && in_hand_item == null)
+			if (isgrab(usr.l_hand))
+				src.Attackby(usr.l_hand, usr)
+
+			else if (isgrab(usr.r_hand))
+				src.Attackby(usr.r_hand, usr)
+
+			else
+				enter_prompt(usr)
+				return
+		else
+			enter_prompt(usr)
+
+		return ..()

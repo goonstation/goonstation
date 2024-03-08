@@ -194,9 +194,6 @@
 /obj/item/reagent_containers/glass/beaker/strange_reagent
 	name = "beaker-'Property of H. Jam'"
 	desc = "A beaker labled 'Property of H. Jam'.  Can hold up to 50 units."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "beaker0"
-	item_state = "beaker"
 	initial_volume = 50
 
 	New()

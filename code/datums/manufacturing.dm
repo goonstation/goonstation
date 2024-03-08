@@ -120,6 +120,16 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	frame_path = /obj/disposalpipe/loafer
 
+/******************** Communications Dish *******************/
+
+/datum/manufacture/mechanics/comms_dish
+	name = "Communications Dish"
+	item_paths = list("MET-1", "MET-2", "INS-1" , "CON-1")
+	item_amounts = list(20,10,20,20)
+	time = 60 SECONDS
+	create = 1
+	frame_path = /obj/machinery/communications_dish
+
 /******************** AI Law Rack *******************/
 
 /datum/manufacture/mechanics/lawrack
@@ -990,6 +1000,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/pocketoxyex
+	name = "Extended Capacity Pocket Oxygen Tank"
+	item_paths = list("DEN-2","INS-1", "RUB")
+	item_amounts = list(10, 20, 5)
+	item_outputs = list(/obj/item/tank/emergency_oxygen/extended/empty)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 /******************** Medical **************************/
 
 /datum/manufacture/scalpel
@@ -1737,6 +1756,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("CON-1","CRY-1")
 	item_amounts = list(3,5)
 	item_outputs = list(/obj/item/roboupgrade/speed)
+	time = 60 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/robup_mag
+	name = "Magnetic Traction Upgrade"
+	item_paths = list("CON-1","CRY-1")
+	item_amounts = list(5,3)
+	item_outputs = list(/obj/item/roboupgrade/magboot)
 	time = 60 SECONDS
 	create = 1
 	category = "Component"

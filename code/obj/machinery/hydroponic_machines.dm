@@ -113,6 +113,21 @@ TYPEINFO(/obj/machinery/hydro_mister)
 	complete_description += " It seems to contain [reag_list]."
 	return complete_description
 
+/obj/machinery/hydro_mister/mouse_drop(over_object, src_location, over_location)
+	..()
+	if(!isturf(over_object) || !isliving(usr) || isintangible(usr) || isghostcritter(usr))
+		return
+	if(BOUNDS_DIST(src, usr) > 0 || BOUNDS_DIST(over_object, usr) > 0)
+		boutput(usr, SPAN_ALERT("You need to be closer to empty the mister out!"))
+		return
+	if (tgui_alert(usr, "Empty mister tank?", "Botanical mister", list("Yes", "No")) == "Yes")
+		if(BOUNDS_DIST(src, usr) > 0 || BOUNDS_DIST(over_object, usr) > 0)
+			boutput(usr, SPAN_ALERT("You need to be closer to empty the mister out!"))
+			return
+		boutput(usr, SPAN_NOTICE("You empty [src] onto [over_object]"))
+		src.reagents.reaction(over_object, TOUCH, src.reagents.total_volume)
+		src.reagents.clear_reagents()
+
 /obj/machinery/hydro_mister/process()
 	..()
 	if(src.active)

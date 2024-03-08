@@ -336,8 +336,12 @@ Obsidian Crown
 
 		hear_voidSpeak("Hello, friend.")
 		hear_voidSpeak("Your world is so dangerous! Let me help you.")
-		if (user)
-			user.speech_void = 1
+
+		user.bioHolder?.AddEffect("accent_void")
+
+	unequipped(mob/user) //idk if this can even happen but :iiam:
+		user.bioHolder?.RemoveEffect("accent_void")
+		. = ..()
 
 	process()
 		var/mob/living/host = src.loc

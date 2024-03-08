@@ -265,12 +265,11 @@
 /turf/simulated/floor,
 /area/prefab/sequestered_cloner)
 "rW" = (
-/obj/storage/secure/closet/command/chief_engineer{
-	locked = 0;
-	pixel_x = -8
-	},
 /obj/item_dispenser/idcarddispenser{
 	pixel_x = 7
+	},
+/obj/storage/secure/closet/command/chief_engineer/puzzle{
+	pixel_x = -8
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1

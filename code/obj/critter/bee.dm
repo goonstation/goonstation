@@ -73,7 +73,8 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		START_TRACKING
 		src.create_reagents(honey_production_amount)
 
-		statlog_bees(src)
+		var/datum/eventRecord/BeeSpawn/beeSpawnEvent = new()
+		beeSpawnEvent.send(src.name)
 
 		//SPAWN(1 SECOND)
 		src.pixel_x = rand(-max_offset,max_offset)

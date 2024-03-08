@@ -49,14 +49,13 @@
 		del(usr.client)
 		return
 
-	var/list/response
+	var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 	try
-		response = apiHandler.queryAPI("playerInfo/get", list("ckey" = ckey), forceResponse = 1)
-	catch ()
+		var/datum/apiRoute/players/stats/get/getPlayerStats = new
+		getPlayerStats.queryParams = list("ckey" = ckey)
+		playerStats = apiHandler.queryAPI(getPlayerStats)
+	catch
 		return alert("Failed to query API, try again later.")
-
-	if (text2num(response["seen"]) < 1)
-		return alert("No data found.")
 
 	//Find the connected client, if present (ignore not found)
 	var/client/C
@@ -68,22 +67,20 @@
 
 	html += "<table>"
 	html += "<tr><td><b>Current status</b></td><td>[C ? "<span style='color: green;'>Online" : "<span style='color: red;'>Offline"]</span></td></tr>"
-	html += "<tr><td><b>Rounds connected to</b></td><td>[response["seen"]]</td></tr>"
-	html += "<tr><td><b>Rounds participated in</b></td><td>[response["participated"]]</td></tr>"
-	html += "<tr><td><b>Rounds connected to, RP</b></td><td>[response["seen_rp"]]</td></tr>"
-	html += "<tr><td><b>Rounds participated in, RP</b></td><td>[response["participated_rp"]]</td></tr>"
-	html += "<tr><td><b>Last seen</b></td><td>[response["last_seen"]]</td></tr>"
-	html += "<tr><td><b>Last seen BYOND version</b></td><td>[response["byondMajor"]].[response["byondMinor"]]</td></tr>"
-	html += "<tr><td><b>Platform</b></td><td>[response["platform"]]</td></tr>"
-	html += "<tr><td><b>Browser</b></td><td>[response["browser"]] [response["browserVersion"]][response["browserMode"] ? " ([response["browserMode"]])" : ""]</td></tr>"
+	html += "<tr><td><b>Rounds connected to</b></td><td>[playerStats.connected]</td></tr>"
+	html += "<tr><td><b>Rounds participated in</b></td><td>[playerStats.played]</td></tr>"
+	html += "<tr><td><b>Rounds connected to, RP</b></td><td>[playerStats.connected_rp]</td></tr>"
+	html += "<tr><td><b>Rounds participated in, RP</b></td><td>[playerStats.played_rp]</td></tr>"
+	html += "<tr><td><b>Last seen</b></td><td>[playerStats.latest_connection.created_at]</td></tr>"
+	html += "<tr><td><b>Last seen BYOND version</b></td><td>[playerStats.byond_major].[playerStats.byond_minor]</td></tr>"
 
 	html += "<tr><td style='vertical-align: top;'><b>IP</b></td><td>"
-	html += "Last seen: [response["last_ip"]]<br>"
+	html += "Last seen: [playerStats.latest_connection.ip]<br>"
 	html += "<a href='?src=\ref[src];action=show_player_ips;ckey=[ckey];'>See All</a>"
 	html += "</td></tr>"
 
 	html += "<tr><td style='vertical-align: top;'><b>Computer ID</b></td><td>"
-	html += "Last seen: [response["last_compID"]]<br>"
+	html += "Last seen: [playerStats.latest_connection.comp_id]<br>"
 	html += "<a href='?src=\ref[src];action=show_player_compids;ckey=[ckey];'>See All</a>"
 	html += "</td></tr>"
 
@@ -104,17 +101,16 @@
 		del(usr.client)
 		return
 
-	var/list/response
+	var/datum/apiModel/PlayerIpsResource/playerIps
 	try
-		response = apiHandler.queryAPI("playerInfo/getIPs", list("ckey" = ckey), forceResponse = 1)
-	catch ()
+		var/datum/apiRoute/players/ips/get/getPlayerIps = new
+		getPlayerIps.queryParams = list("ckey" = ckey)
+		playerIps = apiHandler.queryAPI(getPlayerIps)
+	catch
 		return alert("Failed to query API, try again later.")
 
-	if (length(response) < 1)
-		return alert("No data found.")
-
 	var/html = "<p><b>[capitalize(ckey)]</b> IP History</p>"
-	html += "<p><b>Last seen IP:</b> [response[1]["last_seen"]]</p>"
+	html += "<p><b>Last seen IP:</b> [playerIps.latest_connection.ip]</p>"
 
 	html += "<table>"
 	html += "<thead><tr>"
@@ -122,8 +118,8 @@
 	html += "<th style='text-align: left;'>Times connected</th>"
 	html += "</tr></thead>"
 
-	for (var/list/details in response)
-		html += "<tr><td>[details["ip"]]</td><td>[details["times"]]</td></tr>"
+	for (var/list/details in playerIps.ips)
+		html += "<tr><td>[details["ip"]]</td><td>[details["connected"]]</td></tr>"
 
 	html += "</table>"
 
@@ -142,17 +138,16 @@
 		del(usr.client)
 		return
 
-	var/list/response
+	var/datum/apiModel/PlayerCompIdsResource/playerCompIds
 	try
-		response = apiHandler.queryAPI("playerInfo/getCompIDs", list("ckey" = ckey), forceResponse = 1)
-	catch ()
+		var/datum/apiRoute/players/compids/get/getPlayerCompIds = new
+		getPlayerCompIds.queryParams = list("ckey" = ckey)
+		playerCompIds = apiHandler.queryAPI(getPlayerCompIds)
+	catch
 		return alert("Failed to query API, try again later.")
 
-	if (length(response) < 1)
-		return alert("No data found.")
-
 	var/html = "<p><b>[capitalize(ckey)]</b> Computer ID History</p>"
-	html += "<p><b>Last seen Computer ID:</b> [response[1]["last_seen"]]</p>"
+	html += "<p><b>Last seen Computer ID:</b> [playerCompIds.latest_connection.comp_id]</p>"
 
 	html += "<table>"
 	html += "<thead style='text-align: left;'><tr>"
@@ -160,8 +155,8 @@
 	html += "<th style='text-align: left;'>Times connected</th>"
 	html += "</tr></thead>"
 
-	for (var/list/details in response)
-		html += "<tr><td>[details["compID"]]</td><td>[details["times"]]</td></tr>"
+	for (var/list/details in playerCompIds.comp_ids)
+		html += "<tr><td>[details["comp_id"]]</td><td>[details["connected"]]</td></tr>"
 
 	html += "</table>"
 

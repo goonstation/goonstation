@@ -56,7 +56,7 @@
 		if (!src.vr)
 			H.equip_if_possible(new /obj/item/teleportation_scroll(H), SLOT_L_HAND)
 
-		var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(src.vr)
+		var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(src, src.vr)
 		SB.wizard_key = src.owner.key
 		H.equip_if_possible(SB, SLOT_BELT)
 
@@ -73,7 +73,7 @@
 
 		if (!src.vr && !src.pseudo)
 			SPAWN(0)
-				var/newname = tgui_input_text(H, "You are a Wizard. Would you like to change your name to something else?", "Name change", randomname, max_length = 25)
+				var/newname = tgui_input_text(H, "You are a Wizard. Would you like to change your name to something else?", "Name change", randomname, max_length = 28)
 				if(newname && newname != randomname)
 					phrase_log.log_phrase("name-wizard", randomname, no_duplicates = TRUE)
 

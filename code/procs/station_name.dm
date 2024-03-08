@@ -224,6 +224,9 @@ var/global/lastStationNameChange = 0 //timestamp
 			else
 				the_station_name = name
 
+	var/datum/eventRecord/StationName/stationNameEvent = new()
+	stationNameEvent.send(name)
+
 	station_name = name
 
 	var/extra = null

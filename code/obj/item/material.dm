@@ -858,12 +858,14 @@
 			if (.)
 				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
 				playsound(src, sound_load, 40, TRUE)
+				logTheThing(LOG_STATION, user, "loads [W] into \the [src] at [log_loc(src)].")
 		else if (W?.cant_drop)
 			boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
 			return ..()
 		else if (load_reclaim(W, user))
 			boutput(user, "You load [W] into [src].")
 			playsound(src, sound_load, 40, TRUE)
+			logTheThing(LOG_STATION, user, "loads [W] into \the [src] at [log_loc(src)].")
 		else
 			. = ..()
 

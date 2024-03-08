@@ -88,8 +88,8 @@ TYPEINFO(/obj/machinery/dialysis)
 
 		if (!in_interact_range(src, src.patient))
 			var/fluff = pick("pulled", "yanked", "ripped")
-			src.patient.visible_message(SPAN_ALERT("<b>[src]'s cannulae gets [fluff] out of [src.patient]'s arm!</b>"),\
-			SPAN_ALERT("<b>[src]'s cannulae gets [fluff] out of your arm!</b>"))
+			src.patient.visible_message(SPAN_ALERT("<b>[src]'s cannulae get [fluff] out of [src.patient]'s arm!</b>"),\
+			SPAN_ALERT("<b>[src]'s cannulae get [fluff] out of your arm!</b>"))
 			src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"No blood pressure detected.\""))
 			src.stop_dialysis()
 			return

@@ -17,7 +17,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	cropsize = 3
 	force_seed_on_harvest = 1
 	vending = 2
-	genome = 30
+	genome = 31
 	assoc_reagents = list("space_fungus")
 	mutations = list(/datum/plantmutation/fungus/amanita,/datum/plantmutation/fungus/psilocybin,/datum/plantmutation/fungus/cloak)
 
@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	endurance = 80
 	special_proc = 1
 	vending = 2
-	genome = 40
+	genome = 34
 	assoc_reagents = list("radium")
 	mutations = list(/datum/plantmutation/radweed/redweed,/datum/plantmutation/radweed/safeweed)
 
@@ -148,7 +148,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	endurance = 30
 	special_proc = 1
 	vending = 2
-	genome = 45
+	genome = 40
 	var/exploding = 0
 	assoc_reagents = list("toxic_slurry")
 	mutations = list(/datum/plantmutation/slurrypod/omega)

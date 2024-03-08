@@ -9,6 +9,8 @@
 		..()
 
 	initialize()
+		if (..())
+			return TRUE
 		src.print_text("Cruiser Control Assistant<br>Type \"help\" for commands.")
 
 	input_text(text)

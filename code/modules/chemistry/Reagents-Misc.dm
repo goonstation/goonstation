@@ -3215,11 +3215,10 @@ datum
 				if (!ishuman(M)) return
 				if (method == INGEST)
 					if (M.mind)
-						var/mob/living/carbon/human/H = M
-						if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
-							var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
+						var/datum/abilityHolder/vampiric_thrall/thrallHolder = M.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+						if (thrallHolder)
 							var/bloodget = volume_passed / 4
-							V.blood_points += bloodget
+							thrallHolder.points += bloodget
 							holder.del_reagent(src.id)
 
 						if (isvampire(M))

@@ -26,6 +26,11 @@ TYPEINFO(/obj/machinery/crusher)
 	if(AM.flags & UNCRUSHABLE || AM.anchored == 2)
 		return
 
+	if(ismob(AM)) //don't crush me in godmode thx
+		var/mob/M = AM
+		if(M.nodamage)
+			return
+
 	var/turf/T = get_turf(src)
 	if (T.density) // no clipping through walls ty
 		return
@@ -43,6 +48,11 @@ TYPEINFO(/obj/machinery/crusher)
 	return_if_overlay_or_effect(AM)
 	if(AM.flags & UNCRUSHABLE || AM.anchored == 2)
 		return
+
+	if(ismob(AM)) //don't crush me in godmode thx
+		var/mob/M = AM
+		if(M.nodamage)
+			return
 
 	var/turf/T = get_turf(src)
 	if (T.density) // no clipping through walls ty

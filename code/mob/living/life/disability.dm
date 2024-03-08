@@ -14,11 +14,11 @@
 
 		// The value at which this stuff is capped at can be found in mob.dm
 		if (owner.hasStatus("resting"))
+			owner.dizziness = max(0, owner.dizziness - 10*mult)
+			owner.jitteriness = max(0, owner.jitteriness - 10*mult)
+		else
 			owner.dizziness = max(0, owner.dizziness - 5*mult)
 			owner.jitteriness = max(0, owner.jitteriness - 5*mult)
-		else
-			owner.dizziness = max(0, owner.dizziness - 2*mult)
-			owner.jitteriness = max(0, owner.jitteriness - 2*mult)
 
 		if (owner.mind && isvampire(owner) || isvampiricthrall(owner))
 			if (istype(get_area(owner), /area/station/chapel) && owner.check_vampire_power(3) != 1 && !(owner.job == "Chaplain"))

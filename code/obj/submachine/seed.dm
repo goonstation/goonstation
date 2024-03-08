@@ -257,38 +257,11 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					else
 						boutput(ui.user, SPAN_NOTICE("Extracted [give] seeds from [I]."))
 						while (give > 0)
-							var/obj/item/seed/S
-							if (stored.unique_seed) S = new stored.unique_seed(src)
-							else S = new /obj/item/seed(src,0)
-							var/datum/plantgenes/SDNA = S.plantgenes
-							if (!stored.unique_seed && !stored.hybrid)
-								S.generic_seed_setup(stored, TRUE)
-							HYPpassplantgenes(DNA,SDNA)
-
-							S.name = stored.name
-							S.plant_seed_color(stored.seedcolor)
-							if (stored.hybrid)
-								var/hybrid_type = stored.type
-								var/datum/plant/hybrid = new hybrid_type(S)
-								for(var/V in stored.vars)
-									if (issaved(stored.vars[V]) && V != "holder")
-										hybrid.vars[V] = stored.vars[V]
-								S.planttype = hybrid
-								S.name = hybrid.name
-
-							var/seedname = S.name
-							if (DNA.mutation && istype(DNA.mutation,/datum/plantmutation/))
-								var/datum/plantmutation/MUT = DNA.mutation
-								if (!MUT.name_prefix && !MUT.name_prefix && MUT.name)
-									seedname = "[MUT.name]"
-								else if (MUT.name_prefix || MUT.name_suffix)
-									seedname = "[MUT.name_prefix][seedname][MUT.name_suffix]"
-
-							S.name = "[seedname] seed"
-
-							S.generation = P.generation
-							if (!src.seedoutput) src.seeds.Add(S)
-							else S.set_loc(src.loc)
+							var/obj/item/seed/S = HYPgenerateseedcopy(DNA, stored, P.generation, src)
+							if (!src.seedoutput)
+								src.seeds.Add(S)
+							else
+								S.set_loc(src.loc)
 							give -= 1
 					src.extractables.Remove(I)
 					qdel(I)

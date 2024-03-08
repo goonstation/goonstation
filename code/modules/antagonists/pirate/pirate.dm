@@ -62,6 +62,7 @@
 		H.equip_sensory_items()
 
 		H.traitHolder.addTrait("training_drinker")
+		H.addBioEffect("accent_pirate")
 
 	add_to_image_groups()
 		. = ..()
@@ -159,6 +160,39 @@ TYPEINFO(/obj/gold_bee)
 /obj/landmark/pirate_tele
 	name = LANDMARK_PIRATES_TELE
 
+/obj/machinery/r_door_control/podbay/pirate
+	id = "peregrine_podbay"
+	access_type = POD_ACCESS_PIRATE
+
+	new_walls
+		north
+			pixel_y = 24
+		east
+			pixel_x = 22
+		south
+			pixel_y = -19
+		west
+			pixel_x = -22
+
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/pirate_podbay
+	name = "Blast Shield"
+	id = "peregrine_podbay"
+
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/pirate_armory
+	name = "Podbay Door"
+	id = "peregrine_armory"
+
+/obj/warp_beacon/pirate
+	name = "Peregrine hangar beacon"
+	icon_state = "beacon_synd"
+	encrypted = POD_ACCESS_PIRATE
+
+/obj/item/shipcomponent/communications/pirate
+	name = "Pirate Communication Array"
+	desc = "A patchwork of mismatched components, boasts an unexpected proficiency in homing in on elusive warp beacons."
+	color = "#91681c"
+	access_type = list(POD_ACCESS_PIRATE)
+
 TYPEINFO(/obj/item/salvager_hand_tele)
 	mats = list("MET-1" = 5, "POW-1"=5, "CON-2" = 5, "telecrystal" = 30)
 
@@ -185,43 +219,60 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 		indicator_light.blend_mode = BLEND_ADD
 		indicator_light.plane = PLANE_LIGHTING
 		indicator_light.color = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5)
-/* 		UpdateIcon()
 
-	update_icon()
-		if(charges)
-			src.UpdateOverlays(indicator, "indicator")
-		else
-			src.UpdateOverlays(null, "indicator") */
+	get_help_message(dist, mob/user)
+		. = "Use it in hand to return to the Peregrine. Use it on someone else to send your target to the Peregrine instead."
 
 	attack_self(mob/user)
 		. = ..()
-		if(ispirate(user))
-			if(length(landmarks[LANDMARK_PIRATES_TELE]))
-				if (!ON_COOLDOWN(src, "recharging", 30 SECONDS))
-					actions.start(new /datum/action/bar/private/pirate_tele(user, src), user)
-				else
-					user.show_message(SPAN_ALERT("It's still recharging!"))
+		if(!ispirate(user)) src.malfunction(user)
+		if (!isturf(user.loc))
+			boutput(user, SPAN_ALERT("It wouldn't be safe to use \the [src] from inside of \the [user.loc]!"))
+			return
+		if(length(landmarks[LANDMARK_PIRATES_TELE]))
+			if (!ON_COOLDOWN(src, "recharging", 15 SECONDS))
+				actions.start(new /datum/action/bar/pirate_tele(user, src), user)
 			else
-				user.show_message(SPAN_ALERT("Something is wrong..."))
+				user.show_message(SPAN_ALERT("It's still recharging!"))
 		else
-			var/results = rand(1,10)
-			switch( results )
-				if(1 to 5)
-					boutput(user, SPAN_ALERT("You can't make any sense of this device.  Maybe it isn't for you."))
-				if(6 to 8)
-					boutput(user, SPAN_ALERT("\the [src] screen flashes momentarily before discharing a shock."))
-					user.shock(src, 2500, "chest", 1, 1)
-					user.changeStatus("stunned", 3 SECONDS)
-				if(9 to 10)
-					boutput(user, SPAN_ALERT("[src] gets really hot... and explodes?!?"))
-					elecflash(src)
-					user.u_equip(src)
-					qdel(src)
+			user.show_message(SPAN_ALERT("Something is wrong..."))
 
-/datum/action/bar/private/pirate_tele
+	// teleport a friend
+	attack(mob/target, mob/user, def_zone, is_special, params)
+		if (!ispirate(user))
+			src.malfunction(user)
+			return
+		if (target.anchored)
+			boutput(user, SPAN_ALERT("Teleportation failed due to interference."))
+			return
+
+		if(length(landmarks[LANDMARK_PIRATES_TELE]))
+			if (!ON_COOLDOWN(src, "recharging", 15 SECONDS))
+				actions.start(new /datum/action/bar/pirate_tele(target, src), user)
+			else
+				user.show_message(SPAN_ALERT("It's still recharging!"))
+			return
+		else
+			user.show_message(SPAN_ALERT("Something is wrong..."))
+
+	proc/malfunction(mob/user)
+		switch(rand(1,10))
+			if(1 to 5)
+				boutput(user, SPAN_ALERT("You can't make any sense of this device.  Maybe it isn't for you."))
+			if(6 to 8)
+				boutput(user, SPAN_ALERT("\the [src] screen flashes momentarily before discharing a shock."))
+				user.shock(src, 2500, "chest", 1, 1)
+				user.changeStatus("stunned", 3 SECONDS)
+			if(9 to 10)
+				boutput(user, SPAN_ALERT("[src] gets really hot... and explodes?!?"))
+				elecflash(src)
+				user.u_equip(src)
+				qdel(src)
+
+/datum/action/bar/pirate_tele
 	duration = 6 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	var/mob/target
+	var/atom/movable/target
 	var/obj/item/pirate_hand_tele/device
 
 	New(Target, Device)
@@ -231,7 +282,7 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 1 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(prob(25))
@@ -239,7 +290,7 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 1 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		playsound(owner.loc, 'sound/machines/click.ogg', 60, 1)
@@ -248,7 +299,6 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 		..()
 		var/turf/destination = pick(landmarks[LANDMARK_PIRATES_TELE])
 		animate_teleport(target)
-		target.emote("scream")
 		SPAWN(6 DECI SECONDS)
 			showswirl(target)
 			target.set_loc(destination)

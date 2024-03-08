@@ -40,18 +40,17 @@
 	req_access = list(access_medical)
 	var/tmp/menu = MENU_MAIN
 	var/tmp/field_input = 0
-	var/tmp/authenticated = null //Are we currently logged in?
 	var/datum/record_database/record_database = null
-	var/datum/computer/file/user_data/account = null
 	var/datum/db_record/active_general = null //General record
 	var/datum/db_record/active_medical = null //Medical record
 	var/log_string = null //Log usage of record system, can be dumped to a text file.
 	var/list/datum/db_record/possible_active = null
 
-	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
 	var/setup_logdump_name = "medlog" //What name do we give our logdump textfile?
 
 	initialize()
+		if (..())
+			return TRUE
 /*
 		var/title_art = {"<pre>
   __  __        _     _____          _
@@ -59,27 +58,14 @@
  | |\\/| / -_) _` |___| | | | '_/ _` | / /
  |_|  |_\\___\\__,_|     |_| |_| \\__,_|_\\_\\</pre>"}
 */
-		src.authenticated = null
 		src.record_database = data_core.general
 		src.master.temp = null
 		src.menu = MENU_MAIN
 		src.field_input = 0
-		//src.print_text(" [title_art]")
-		if(!src.find_access_file()) //Find the account information, as it's essentially a ~digital ID card~
-			src.print_text("<b>Error:</b> Cannot locate user file.  Quitting...")
-			src.master.unload_program(src) //Oh no, couldn't find the file.
-			return
 
-		if(!src.check_access(src.account.access))
-			src.print_text("User [src.account.registered] does not have needed access credentials.<br>Quitting...")
-			src.master.unload_program(src)
-			return
-
-		src.authenticated = src.account.registered
 		src.log_string += "<br><b>LOGIN:</b> [src.authenticated]"
 
 		src.print_text(mainmenu_text())
-		return
 
 
 	input_text(text)
@@ -789,18 +775,6 @@
 
 			src.print_text(dat)
 			return 1
-
-		find_access_file() //Look for the whimsical account_data file
-			var/datum/computer/folder/accdir = src.holder.root
-			if(src.master.host_program) //Check where the OS is, preferably.
-				accdir = src.master.host_program.holder.root
-
-			var/datum/computer/file/user_data/target = parse_file_directory(setup_acc_filepath, accdir)
-			if(target && istype(target))
-				src.account = target
-				return 1
-
-			return 0
 
 #undef MENU_MAIN
 #undef MENU_INDEX

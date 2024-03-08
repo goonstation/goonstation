@@ -293,6 +293,16 @@ TYPEINFO(/obj/stool/wooden)
 	auto = 1
 	auto_path = /obj/stool/bench/yellow/auto
 
+/* ---------- Purple ---------- */
+
+/obj/stool/bench/purple
+	icon = 'icons/obj/furniture/bench_purple.dmi'
+	parts_type = /obj/item/furniture_parts/bench/purple
+
+/obj/stool/bench/purple/auto
+	auto = 1
+	auto_path = /obj/stool/bench/purple/auto
+
 /* ---------- Wooden ---------- */
 
 /obj/stool/bench/wooden
@@ -655,9 +665,10 @@ TYPEINFO(/obj/stool/chair)
 		for (var/mob/living/M in src.loc)
 
 			if (ishuman(M))
-				chair_chump = M
-			if (!chair_chump || !chair_chump.on_chair)
-				chair_chump = null
+				var/mob/living/carbon/human/H = M
+				if (H.on_chair)
+					chair_chump = H
+
 			if (chair_chump)// == 1)
 				if (chair_chump == L)
 					user.visible_message(SPAN_NOTICE("<b>[chair_chump]</b> steps off [chair_chump.on_chair]."), SPAN_NOTICE("You step off [src]."))

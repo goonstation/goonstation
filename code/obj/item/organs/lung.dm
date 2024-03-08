@@ -253,8 +253,10 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	organ_name = "synthlung_L"
 	icon_state = "plant"
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a left lung, since it has three lobes. Hopefully whoever used to have this one doesn't need it anymore."
+	organ_holder_name = "left_lung"
+	body_side = L_ORGAN
 	synthetic = 1
-	failure_disease = /datum/ailment/disease/respiratory_failure
+	failure_disease = /datum/ailment/disease/respiratory_failure/left
 	New()
 		..()
 		src.icon_state = pick("plant_lung_L", "plant_lung_L_bloom")
@@ -264,8 +266,10 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	organ_name = "synthlung_R"
 	icon_state = "plant"
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a right lung, since it has two lobes and a cardiac notch, where the heart would be. Hopefully whoever used to have this one doesn't need it anymore."
+	organ_holder_name = "right_lung"
+	body_side = R_ORGAN
 	synthetic = 1
-	failure_disease = /datum/ailment/disease/respiratory_failure
+	failure_disease = /datum/ailment/disease/respiratory_failure/right
 	New()
 		..()
 		src.icon_state = pick("plant_lung_R", "plant_lung_R_bloom")

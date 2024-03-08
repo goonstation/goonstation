@@ -98,8 +98,6 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
 	var/printalerts = 1
-	/// a list of strings used as fake laws that may be stated via the State Fake Laws command, to deceive people as a rogue AI
-	var/list/fake_laws = list()
 	var/glitchy_speak = 0
 	//Comm over powernet stuff
 	var/net_id = null
@@ -1757,59 +1755,12 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/proc/ai_set_fake_laws()
 	set category = "AI Commands"
 	set name = "Set Fake Laws"
-
-	#define FAKE_LAW_LIMIT 12
-	var/law_base_choice = tgui_input_list(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", list("Real Laws", "Fake Laws"))
-	if (!law_base_choice)
-		return
-	var/law_base = ""
-	if(law_base_choice == "Real Laws")
-		if(src.law_rack_connection)
-			law_base = src.law_rack_connection.format_for_logs("\n")
-		else
-			law_base = ""
-	else if(law_base_choice == "Fake Laws")
-		for(var/fake_law in src.fake_laws)
-			// this is just the default input for the user, so it should be fine
-			law_base += "[html_decode(fake_law)]\n"
-
-	var/raw_law_text = tgui_input_text(usr, "Please enter the fake laws you would like to be able to state via the State Fake Laws command! Each line is one law.", "Fake Laws", law_base, multiline = TRUE)
-	if(!raw_law_text)
-		return
-	// split into lines
-	var/list/raw_law_list = splittext_char(raw_law_text, "\n")
-	// return if we input an excessive amount of laws
-	if (length(raw_law_list) > FAKE_LAW_LIMIT)
-		boutput(usr, SPAN_ALERT("You cannot set more than [FAKE_LAW_LIMIT] laws."))
-		return
-	// clear old fake laws
-	src.fake_laws = list()
-	// cleanse the lines and add them as our laws
-	for(var/raw_law in raw_law_list)
-		var/nice_law = trim(strip_html(raw_law))
-		// empty lines would probably be an accident and result in awkward pauses that might give the AI away
-		if (!length(nice_law))
-			continue
-		fake_laws += nice_law
-
-	src.show_message(SPAN_BOLD("Your new fake laws are: "))
-	for(var/a_law in src.fake_laws)
-		src.show_message(a_law)
-	#undef FAKE_LAW_LIMIT
+	src.set_fake_laws()
 
 /mob/living/silicon/ai/proc/ai_state_fake_laws()
 	set category = "AI Commands"
 	set name = "State Fake Laws"
-
-	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
-		return
-
-	for(var/a_law in src.fake_laws)
-		sleep(AI_LAW_STATE_DELAY)
-		// decode the symbols, because they will be encoded again when the law is spoken, and otherwise we'd double-dip
-		src.say(html_decode(a_law))
-		logTheThing(LOG_SAY, usr, "states a fake law: \"[a_law]\"")
+	src.state_fake_laws()
 
 /mob/living/silicon/ai/proc/ai_state_laws_all()
 	set category = "AI Commands"

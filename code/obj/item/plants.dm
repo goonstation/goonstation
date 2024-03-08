@@ -531,7 +531,7 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 			return TRUE
 
 	proc/prick(mob/M)
-		boutput(M, SPAN_ALERT("You prick yourself on [src]'s thorns trying to pick it up!"))
+		boutput(M, SPAN_ALERT("YOWCH! You prick yourself on [src]'s thorns trying to pick it up! Maybe you should've used gloves..."))
 		random_brute_damage(M, 3)
 		take_bleeding_damage(M, null, 3, DAMAGE_STAB)
 
@@ -599,6 +599,8 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 	name = "sunflower"
 	desc = "A rather large sunflower.  Legends speak of the tasty seeds."
 	icon_state = "sunflower"
+	var/initial_seed_count = 0 //! how many seeds the flower started with
+	var/current_seed_count = 0 //! how many seeds the flower has left
 
 	attack_self(mob/user)
 		. = ..()
@@ -617,6 +619,13 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 		if(seeds)
 			boutput(user, SPAN_NOTICE("You notice some [seeds] fall out of [src]!"))
 			seeds.set_loc(get_turf(target))
+			// that's the result if you want to keep 50% of the initial chems in the sunflower at the end.
+			// This accomodates partially for chems injected in the sunflower if some seeds are already missing
+			var/chem_amount = src.reagents.total_volume / (current_seed_count + initial_seed_count)
+			seeds.reagents.maximum_volume = max(chem_amount, seeds.reagents.maximum_volume)
+			src.reagents.trans_to(seeds, chem_amount)
+			src.current_seed_count -= 1
+
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		. = ..()
@@ -634,6 +643,9 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 		for(var/seed_num in 1 to seed_count)
 			var/obj/item/reagent_containers/food/snacks/plant/sunflower/P = new(src)
 			P.HYPsetup_DNA(passed_genes, harvested_plantpot, origin_plant, quality_status)
+			P.reagents.clear_reagents() //no chem duping by getting seeds out of sunflowers. We will transfer the chems from the flower onto the seeds in disperse_seeds.
+			src.initial_seed_count += 1
+			src.current_seed_count += 1
 
 /obj/item/plant/herb/hcordata
 	name = "houttuynia cordata"

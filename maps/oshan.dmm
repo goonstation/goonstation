@@ -10665,11 +10665,11 @@
 /area/station/science/lobby)
 "aJg" = (
 /obj/machinery/light/incandescent/warm,
-/obj/stool/chair{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/stool/chair/purple{
+	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
@@ -17138,7 +17138,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/auto,
-/obj/submachine/mixer{
+/obj/machinery/mixer{
 	pixel_y = 10
 	},
 /turf/simulated/floor/white,
@@ -29010,10 +29010,10 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/stool/chair,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/stool/chair/purple,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -29674,7 +29674,7 @@
 /area/diner/kitchen)
 "ccn" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "cco" = (
@@ -32302,6 +32302,11 @@
 	},
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "cAR" = (
@@ -32715,6 +32720,11 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "dcJ" = (
@@ -37129,6 +37139,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "juK" = (
@@ -37572,6 +37587,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "sec"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -38362,6 +38382,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "brig"
+	},
 /turf/simulated/floor/red,
 /area/station/security/processing)
 "ltZ" = (
@@ -40274,6 +40299,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "nLp" = (
@@ -40406,11 +40436,11 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/stool/chair{
-	dir = 1
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/stool/chair/purple{
+	dir = 1
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 8
@@ -40658,6 +40688,11 @@
 	},
 /obj/machinery/secscanner{
 	pixel_y = 10
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -41983,6 +42018,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "quk" = (
@@ -43175,6 +43215,11 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "sxC" = (
@@ -44231,10 +44276,10 @@
 /turf/simulated/floor/plating/damaged3,
 /area/martian_trader)
 "uij" = (
-/obj/stool/chair{
+/obj/landmark/start/job/scientist,
+/obj/stool/chair/purple{
 	dir = 4
 	},
-/obj/landmark/start/job/scientist,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "ujL" = (
@@ -44780,6 +44825,11 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)

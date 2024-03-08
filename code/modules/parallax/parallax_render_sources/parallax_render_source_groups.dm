@@ -134,6 +134,11 @@ Z_LEVEL_PARALLAX_RENDER_SOURCE_GROUP(5)
 		/atom/movable/screen/parallax_render_source/foreground/dust/sparse,
 	)
 
+/datum/parallax_render_source_group/planet/lava_moon
+	parallax_render_source_types = list(
+		/atom/movable/screen/parallax_render_source/foreground/embers,
+	)
+
 /datum/parallax_render_source_group/planet/desert/setup_render_sources()
 	var/angle = rand(110, 250)
 	var/scroll_speed = rand(75, 175)

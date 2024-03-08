@@ -146,6 +146,14 @@
 	msgLose = "Your fur falls out."
 	icon_state  = "cat"
 
+/datum/bioEffect/mutantrace/cat/bingus
+	name = "Bingus Genetics"
+	id = "bingus"
+	mutantrace_option = "Bingus"
+	mutantrace_path = /datum/mutantrace/cat/bingus
+	msgGain = "You feel like wearing jeans."
+	msgLose = "Your love of jeans fades."
+	icon_state = null
 
 /datum/bioEffect/mutantrace/cow
 	name = "Bovine Genetics"

@@ -136,80 +136,128 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			boutput(user, SPAN_NOTICE("You attach two loops of [item] to the transfer valve!"))
 			UpdateIcon()
 
+		else if (issnippingtool(item))
+			if(usr?.back && usr.back == src)
+				boutput(usr, SPAN_ALERT("You can't detach the loops of wire while you're wearing [src]!"))
+			else
+				c_flags &= ~ONBACK
+				var/turf/location = get_turf(src)
+				var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(location)
+				C.amount = 2
+				boutput(usr, SPAN_NOTICE("You detach the loops of wire from [src]!"))
+				UpdateIcon()
+
 		return
+
+	/// Attach the tank the mob is currently holding
+	proc/attach_tank(mob/user, tank_preference=null)
+		if (!user) return
+		var/obj/item/I = user.equipped()
+		if (!istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)) return
+		var/obj/item/tank/myTank = I
+		if (!myTank.compatible_with_TTV) return
+		// Handle UI tank attachment
+		if (tank_preference == 1)
+			// This check should always pass
+			if (!src.tank_one)
+				src.tank_one = myTank
+		else if (tank_preference == 2)
+			// As should this one
+			if (!src.tank_two)
+				src.tank_two = myTank
+		// Handle attackby tank attachment (wherever fits)
+		else if (!tank_preference && !src.tank_one)
+			src.tank_one = myTank
+		else if (!tank_preference && !src.tank_two)
+			src.tank_two = myTank
+		else
+			// it did not fit, clearly. dummy.
+			boutput(user, SPAN_NOTICE("\the [myTank] cannot fit on the [src]!"))
+			return
+		user.drop_item()
+		myTank.set_loc(src)
+		boutput(user, SPAN_NOTICE("You attach \the [myTank] to the transfer valve"))
+		if(src.tank_one && src.tank_two)
+			var/turf/T = get_turf(src)
+			var/butt = istype(tank_one, /obj/item/clothing/head/butt) || istype(tank_two, /obj/item/clothing/head/butt)
+			logTheThing(LOG_BOMBING, user, "made a TTV tank transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
+			message_admins("[key_name(user)] made a TTV tank transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
+		UpdateIcon()
+		attacher = user
+		if(user.back == src)
+			user.update_clothing()
 
 	attack_self(mob/user as mob)
 		if (isghostdrone(user))
 			return
 		if (user.get_gang())
 			boutput(user, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
-		src.add_dialog(user)
-		var/dat = {"<B> Valve properties: </B>
-		<BR> <B> Attachment one:</B> [tank_one] [tank_one ? "<A href='?src=\ref[src];tankone=1'>Remove</A>" : ""]
-		<BR> <B> Attachment two:</B> [tank_two] [tank_two ? "<A href='?src=\ref[src];tanktwo=1'>Remove</A>" : ""]
-		<BR> <B> Valve attachment:</B> [attached_device ? "<A href='?src=\ref[src];device=1'>[attached_device]</A>" : "None"] [attached_device ? "<A href='?src=\ref[src];rem_device=1'>Remove</A>" : ""]
-		<BR> <B> Valve status: </B> [ valve_open ? "<A href='?src=\ref[src];open=1'>Closed</A> <B>Open</B>" : "<B>Closed</B> <A href='?src=\ref[src];open=1'>Open</A>"]
-		<BR> [c_flags & ONBACK ? "<B> Straps: </B> <A href='?src=\ref[src];straps=1'>Remove</A>" : ""]"}
+		src.ui_interact(user)
 
-		user.Browse(dat, "window=trans_valve;size=600x300")
-		onclose(user, "trans_valve")
-		return
+#define TANK_PRESSURE(item_tank) (hasvar(item_tank, "air_contents")) ? MIXTURE_PRESSURE(item_tank.air_contents) : 0
+	ui_data(mob/user)
+		var/tank_one_data = (src.tank_one) ? list("name"=src.tank_one.name, "num"=1, "pressure"=TANK_PRESSURE(src.tank_one), \
+											      "maxPressure"=TANK_FRAGMENT_PRESSURE) \
+										   : list("name"=null, "num"=1, "pressure"=null, "maxPressure"=null)
+		var/tank_two_data = (src.tank_two) ? list("name"=src.tank_two.name, "num"=2, "pressure"=TANK_PRESSURE(src.tank_two), \
+											      "maxPressure"=TANK_FRAGMENT_PRESSURE) \
+										   : list("name"=null, "num"=2, "pressure"=null, "maxPressure"=null)
+		return list(
+			"tank_one" = tank_one_data,
+			"tank_two" = tank_two_data,
+			"device" = "[src.attached_device]",
+			"opened" = src.valve_open,
+		)
+#undef TANK_PRESSURE
 
-	Topic(href, href_list)
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "TTV", src.name)
+			ui.open()
+
+	ui_act(action, params)
 		..()
-		if (isghostdrone(usr))
+		if (isghostdrone(usr) || usr.stat || usr.restrained())
 			return
 		if (usr.get_gang())
 			boutput(usr, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
-		if (usr.stat|| usr.restrained())
-			return
-		if (src.loc == usr)
-			if(href_list["tankone"])
-				tank_one.set_loc(get_turf(src))
-				tank_one = null
-				UpdateIcon()
-				if(src.equipped_in_slot)
-					var/mob/wearer = src.loc
-					wearer.update_clothing()
-			if(href_list["tanktwo"])
-				tank_two.set_loc(get_turf(src))
-				tank_two = null
-				UpdateIcon()
-				if(src.equipped_in_slot)
-					var/mob/wearer = src.loc
-					wearer.update_clothing()
-			if(href_list["open"])
-				if (valve_open)
-					var/turf/bombturf = get_turf(src)
-					logTheThing(LOG_BOMBING, usr, "closed the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
-					message_admins("[key_name(usr)] closed the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
+		switch(action)
+			if ("add_item")
+				if (params["tank"])
+					src.attach_tank(usr, params["tank"])
 				else
-					var/turf/bombturf = get_turf(src)
-					logTheThing(LOG_BOMBING, usr, "opened the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
-					message_admins("[key_name(usr)] opened the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
+					src.Attackby(usr.equipped(), usr)
+			if ("remove_tank_one")
+				src.remove_tank(tank_one)
+			if ("remove_tank_two")
+				src.remove_tank(tank_two)
+			if ("toggle_valve")
+				var/openorclose = (src.valve_open) ? "closed" : "opened"
+				var/turf/bombturf = get_turf(src)
+				logTheThing(LOG_BOMBING, usr, "[openorclose] the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
+				message_admins("[key_name(usr)] [openorclose] the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
 				toggle_valve()
-			if(href_list["rem_device"])
-				attached_device.set_loc(get_turf(src))
-				attached_device.master = null
-				attached_device = null
+			if ("remove_device")
+				src.attached_device.set_loc(get_turf(src))
+				src.attached_device.master = null
+				src.attached_device = null
 				UpdateIcon()
-			if(href_list["device"])
+			if ("interact_device")
 				attached_device.attack_self(usr)
-			if(href_list["straps"])
-				if(usr?.back && usr.back == src)
-					boutput(usr, SPAN_ALERT("You can't detach the loops of wire while you're wearing [src]!"))
-				else
-					c_flags &= ~ONBACK
-					var/turf/location = get_turf(src)
-					var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(location)
-					C.amount = 2
-					boutput(usr, SPAN_NOTICE("You detach the loops of wire from [src]!"))
-					UpdateIcon()
+		src.attack_self(usr)
+		src.add_fingerprint(usr)
 
-			src.attack_self(usr)
-
-			src.add_fingerprint(usr)
-			return
+	proc/remove_tank(var/T)
+		if (!istype(T, /obj/item/tank)) return
+		var/obj/item/tank/removed = T
+		boutput(usr, SPAN_NOTICE("You remove the [removed] from [src]."))
+		removed.set_loc(get_turf(src))
+		removed = null
+		UpdateIcon()
+		if(src.equipped_in_slot)
+			var/mob/wearer = src.loc
+			wearer.update_clothing()
 
 	receive_signal(signal)
 		if(toggle)
@@ -462,14 +510,16 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 
 		return
 
+/// How many atmos ticks we are willing to count before giving up
+#define UPDATES_BEFORE_TIMEOUT 20
 /obj/item/device/transfer_valve/vr
 	name = "VR explosive"
 	var/obj/machinery/networked/storage/bomb_tester/tester = null
-	var/updates_before_halt = 10 //So we don't keep updating on a dud bomb forever.
+	/// How many atmos ticks we have listened to thus far
 	var/update_counter = 0
 
 	attack_hand(mob/user)
-		return
+		src.ui_interact()
 
 	disposing()
 		processing_items.Remove(src)
@@ -490,36 +540,32 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 		return
 
 	process()
-		if(!tester || !src.valve_open)
+		if(!tester || !tester.vrbomb || !src.valve_open)
 			return
 
-		if(update_counter >= updates_before_halt)
+		if(update_counter >= UPDATES_BEFORE_TIMEOUT)
 			tester.update_bomb_log("VR bomb monitor timeout.", 1)
 			processing_items.Remove(src)
 			return
 
 		update_counter++
 
-		var/tankslost = 2
-		var/log_message = "[time2text(world.timeofday, "mm:ss")]:"
-		var/tpressure = 0
-		if(tank_one?.air_contents)
-			tankslost--
-			var/t1pressure = MIXTURE_PRESSURE(tank_one.air_contents)
-			tpressure += round(t1pressure,0.1)
+		tester.update_bomb_log("[time2text(world.timeofday, "mm:ss")]:")
+		var/tank1_pressure = (hasvar(src.tank_one, "air_contents")) ?  MIXTURE_PRESSURE(src.tank_one.air_contents) : 0
+		var/tank2_pressure = (hasvar(src.tank_two, "air_contents")) ?  MIXTURE_PRESSURE(src.tank_two.air_contents) : 0
 
-		if(tank_two?.air_contents)
-			tankslost--
-			var/t2pressure = MIXTURE_PRESSURE(tank_two.air_contents)
-			tpressure += round(t2pressure,0.1)
+		tester.update_bomb_log("Tank 1 Pressure:[tank1_pressure] kPa")
+		tester.update_bomb_log("Tank 2 Pressure:[tank2_pressure] kPa")
 
-		log_message += " Pressure:[tpressure] kPa"
-		if(tankslost)
-			log_message += " [tankslost == 2 ? "Both" : "One"] Tank(s) Lost!"
+		// This doesn't really happen as both tanks are usually bound to have the same reaction process due to same volume/contents/temp/etc
+		// so disposing() gets called first
+		if(!tank1_pressure)
+			tester.update_bomb_log("Tank one has no pressure or has been destroyed!")
+		if (!tank2_pressure)
+			tester.update_bomb_log("Tank two has no pressure or has been destroyed!")
 
-		tester.update_bomb_log(log_message)
 		return
-
+#undef UPDATES_BEFORE_TIMEOUT
 
 /obj/item/pressure_crystal
 	icon = 'icons/obj/items/assemblies.dmi'

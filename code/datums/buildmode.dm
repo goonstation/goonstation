@@ -240,7 +240,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	qdel(src.buildmode)
 	src.buildmode = new(src)
 	src.player.buildmode = src.buildmode
-	src.cloud_put("buildmode", null)
+	src.player.cloudSaves.putData("buildmode", null)
 	src.togglebuildmode()
 
 /client/proc/togglebuildmode()

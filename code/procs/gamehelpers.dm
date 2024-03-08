@@ -289,11 +289,11 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 	if (!H || !istext(message))
 		return
 
-	if (H.bioHolder && !H.speech_void)
+	if (H.bioHolder)
 		var/datum/bioEffect/speech/S = null
 		for(var/X in H.bioHolder.effects)
 			S = H.bioHolder.GetEffect(X)
-			if (istype(S,/datum/bioEffect/speech/))
+			if (istype(S,/datum/bioEffect/speech/) && !(H.speech_void && !istype(S,/datum/bioEffect/speech/void)))
 				message = S.OnSpeak(message)
 				messageEffects += S
 

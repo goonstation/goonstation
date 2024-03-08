@@ -4611,7 +4611,7 @@
 /area/pod_wars/team2/power)
 "rR" = (
 /obj/table/reinforced/bar/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "rS" = (
@@ -6118,7 +6118,7 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "xy" = (
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/table/auto,
 /turf/simulated/floor/green/side{
 	dir = 10
@@ -9870,7 +9870,7 @@
 /area/pod_wars/spacejunk/miningoutpost)
 "MT" = (
 /obj/table/reinforced/bar/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "MU" = (
@@ -10398,7 +10398,7 @@
 "Pk" = (
 /obj/machinery/light/incandescent/netural,
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/restaurant)
 "Pm" = (

@@ -714,6 +714,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 								turf_reaction_success = 1
 								.+= current_id
 						if(isobj(A))
+
+							if (istype(A, /obj/overlay))
+								continue
 							// use current_reagent.reaction_obj for stuff that affects all objects
 							// and reagent_act for stuff that affects specific objects
 							if (!current_reagent.reaction_obj(A, current_reagent.volume*volume_fraction))

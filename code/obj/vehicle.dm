@@ -350,7 +350,7 @@ TYPEINFO(/obj/vehicle/segway)
 	update()
 	..()
 	in_bump = TRUE
-	if(isturf(AM) && (src.emagged || src.rider.bioHolder.HasEffect("clumsy") || (src.rider.reagents && src.rider.reagents.has_reagent("ethanol"))))
+	if((isturf(AM) || istype(AM, /obj/window)) && (src.emagged || src.rider.bioHolder.HasEffect("clumsy") || (src.rider.reagents && src.rider.reagents.has_reagent("ethanol"))))
 		src.rider.visible_message(SPAN_ALERT("<b>[rider] crashes into the wall with \the [src]!</b>"), SPAN_ALERT("<b>[src] crashes into the wall!</b>"))
 		eject_rider(2)
 		JOB_XP(rider, "Clown", 1)
@@ -617,6 +617,7 @@ TYPEINFO(/obj/vehicle/segway)
 /obj/vehicle/segway/emag_act(mob/user, obj/item/card/emag/E)
 	if (!src.emagged)
 		src.emagged = TRUE
+		src.delay = 1.4
 		src.weeoo()
 		src.desc = src.desc + " It looks like the safety circuits have been shorted out."
 		src.visible_message(SPAN_ALERT("<b>[src] beeps ominously.</b>"))

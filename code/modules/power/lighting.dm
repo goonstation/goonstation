@@ -12,7 +12,7 @@
 /// Amount of time it takes to remove a light fixture from a tile by hand
 #define LIGHT_FIXTURE_DETACH_TIME 2 SECONDS
 /// Probabilty a worn/burned out light will break
-#define WORN_LIGHT_BREAKPROB 6.25
+#define WORN_LIGHT_BREAKPROB 5
 
 TYPEINFO(/obj/item/light_parts)
 	mats = 4
@@ -890,8 +890,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
 /obj/machinery/light/proc/seton(var/s)
+	var/old_on = on
 	on = (s && current_lamp.light_status == LIGHT_OK)
-	update()
+	if(s != old_on) //don't update if trying to set to the same state
+		update()
 
 // examine verb
 /obj/machinery/light/examine(mob/user)

@@ -12380,7 +12380,7 @@
 /area/station/crew_quarters/pool)
 "bng" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/cable{
 	icon_state = "1-2"
 	},

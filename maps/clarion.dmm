@@ -6020,7 +6020,7 @@
 /area/station/crew_quarters/kitchen)
 "azI" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/machinery/disposal/small{
 	dir = 1;
 	name = "food delivery unit-'Brig'";
@@ -9662,7 +9662,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "aQP" = (
-/obj/stool/bench/auto,
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/purple,
 /area/station/hallway/secondary/central)
 "aQQ" = (
@@ -9670,7 +9670,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/stool/bench/auto,
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/purple,
 /area/station/hallway/secondary/central)
 "aQR" = (
@@ -26195,11 +26195,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/bench/auto,
 /obj/item/device/radio/intercom/science{
 	pixel_x = 10;
 	pixel_y = 24
 	},
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/purple,
 /area/station/hallway/secondary/central)
 "iOK" = (
@@ -27859,7 +27859,7 @@
 /area/station/garden/aviary)
 "kdK" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "kea" = (
@@ -28924,7 +28924,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/stool/bench/auto,
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/purple,
 /area/station/hallway/secondary/central)
 "kVJ" = (
