@@ -54580,7 +54580,7 @@
 /area/station/engine/monitoring)
 "xUM" = (
 /obj/table/auto,
-/obj/item/blueprint,
+/obj/item/paper/blueprint,
 /obj/item/pen/pencil,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
