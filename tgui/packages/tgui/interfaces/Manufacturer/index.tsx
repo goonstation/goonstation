@@ -310,7 +310,7 @@ export const Manufacturer = (_, context) => {
               fill
               align="center"
             >
-              <Input placeholder={"Search..."} icon={"search"} style={{ "width": "100%" }} />
+              <Input placeholder="Search..." icon="search" width="100%" />
               <Section title="Materials Loaded" style={{ "width": "100%" }} textAlign="center" pt={0.25} backgroundColor={backgroundPop}>
                 <LoadedMaterials resources={data.resources} resourceNames={data.resource_names} />
               </Section>
