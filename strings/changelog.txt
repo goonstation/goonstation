@@ -1,4 +1,9 @@
 
+(t)thu mar 07 24
+(u)MeggalBozale
+(p)17813
+(e)🆕💨🔬|C-Feature, A-Atmospherics, A-Science
+(*)Radioactive material at sufficient temperature will now decay some plasma into fallout gas.
 (t)wed mar 06 24
 (u)Cindertroy
 (p)18112
