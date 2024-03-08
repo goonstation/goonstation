@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author Romayne (https://github.com/MeggalBozale)
+ * @license ISC
+ */
 
 type ManufacturerData = {
   all_categories:[string];
@@ -26,6 +32,7 @@ type ManufacturerData = {
   wire_bitflags:number;
 
   indicators:WireIndicators;
+  rockboxes:Rockbox[]
 }
 
 // Keyed by name

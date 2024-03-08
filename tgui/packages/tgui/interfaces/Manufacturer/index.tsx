@@ -1,5 +1,11 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author Romayne (https://github.com/MeggalBozale)
+ * @license ISC
+ */
 
-import { useBackend } from '../../backend';
+import { useBackend, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { Box, Button, Collapsible, Divider, Flex, Image, Input, LabeledList, Section, Slider, Stack, Table, Tooltip } from '../../components';
 import { formatTime, truncate } from '../../format';
@@ -126,10 +132,10 @@ const MaterialRow = (props, context) => {
   return (
     <TableRow collapsing>
       <TableCell collapsing>
-        <Button icon="eject" />
+        <Button icon="eject" onClick={() => act("material_eject", { "material": resource })} />
       </TableCell>
       <TableCell>
-        <Button icon="add" />
+        <Button icon="add" onClick={() => act("material_swap", { "resource": resource })} />
       </TableCell>
       <TableCell header>
         {resource}
@@ -171,15 +177,19 @@ const CategoryDropdown = (props) => {
 const CardInfo = (props, context) => {
   const { data, act } = useBackend<ManufacturerData>(context);
   return (data.card_owner === null || data.card_balance === null) ? (
-    <Box backgroundColor={backgroundPop}>
-      No Card Inserted <br />
-      <Button icon="add">Insert Card</Button>
-    </Box>
+    <Flex backgroundColor={backgroundPop} py={1}>
+      <Flex.Item grow>
+        No Card Inserted
+      </Flex.Item>
+      <Flex.Item>
+        <Button icon="add" onClick={() => act("card", { "scan": true })}>Insert Card</Button>
+      </Flex.Item>
+    </Flex>
   ) : (
     <Box backgroundColor={backgroundPop} py={1}>
       Card Owner: {data.card_owner}<br />
       Current Balance: {data.card_balance}⪽
-      <Button icon="subtract">Remove Card</Button>
+      <Button icon="subtract" onClick={() => act("card", { "remove": true })}>Remove Card</Button>
     </Box>
   );
 };
@@ -190,66 +200,99 @@ export const CollapsibleWireMenu = (props, context) => {
   const { act, data } = useBackend<ManufacturerData>(context);
   let wireContent = [];
   let i = 0;
-  for (let wire in data.wires)
-  {
-    let cut = is_set(data.wire_bitflags, i);
-    i++;
-    wireContent.push(
-      <Flex textColor={data.wires[wire]}>
-        <Flex.Item grow bold>
-          {wire}
+  wireContent.push(
+    <>
+      <Flex style={{ "align-items": "center" }}>
+        <Flex.Item style={{ "width": "45%" }}>
+          Panel {data.panel_open ? "open" : "closed"}.
         </Flex.Item>
-        <Flex.Item mr="5%">
+        <Flex.Item grow>
           <Button
-            ml="10%"
-            my="1%"
-            content="Pulse"
-            onClick={() => act('pulsewire', { wire: wire })}
-          />
-        </Flex.Item>
-        <Flex.Item>
-          <Button
-            m="1%"
-            content={cut ? "Cut" : "Mend"}
-            onClick={() => act(cut ? 'cutwire' : "mendwire", {
-              wire: wire })}
-          />
+            icon={data.panel_open ? "warning" : "circle"}
+            color={data.panel_open ? "orange" : "green"}
+            onClick={() => act("toggle_panel")}
+          >
+            Screws {data.panel_open ? "Loose" : "Secure"}
+          </Button>
         </Flex.Item>
       </Flex>
-    );
+      <Divider />
+    </>
+  );
+  if (data.panel_open)
+  {
+    for (let wire in data.wires)
+    {
+      let cut = is_set(data.wire_bitflags, i);
+      i++;
+      wireContent.push(
+        <Flex textColor={data.wires[wire]} px={2}>
+          <Flex.Item grow bold>
+            {wire}
+          </Flex.Item>
+          <Flex.Item mr="5%">
+            <Button
+              ml="10%"
+              my="1%"
+              content="Pulse"
+              onClick={() => act('wire', { action: "pulse", wire: i })}
+            />
+          </Flex.Item>
+          <Flex.Item>
+            <Button
+              m="1%"
+              content={cut ? "Cut" : "Mend"}
+              onClick={() => act("wire", { action: (cut ? "mend" : "cut"), wire: i })}
+            />
+          </Flex.Item>
+        </Flex>
+      );
+    }
   }
   return (
     <Collapsible
       mb="1%"
-      title="Wire Panel"
+      title="Maintenence Panel"
       open={data.panel_open}
     >
-      {wireContent}
-      <Divider />
-      <LabeledList>
-        <LabeledList.Item
-          label="Electrification Risk">
-          {data.indicators.electrified ? "High" : "None"}
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="System Stability">
-          {data.indicators.malfunctioning ? "100%" : "0%"}
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Warranty">
-          {data.indicators.hacked ? "Void" : "Valid"}
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Power">
-          {data.indicators.hasPower ? "Sufficient" : "Insufficient"}
-        </LabeledList.Item>
-      </LabeledList>
+      <Box backgroundColor={backgroundPop} p={1}>
+        {wireContent}
+        <Divider />
+        <LabeledList>
+          <LabeledList.Item
+            label="Electrification Risk">
+            {data.indicators.electrified ? "High" : "None"}
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="System Stability">
+            {data.indicators.malfunctioning ? "100%" : "0%"}
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Warranty">
+            {data.indicators.hacked ? "Void" : "Valid"}
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Power">
+            {data.indicators.hasPower ? "Sufficient" : "Insufficient"}
+          </LabeledList.Item>
+        </LabeledList>
+      </Box>
     </Collapsible>
   );
 };
 
 export const Manufacturer = (_, context) => {
   const { act, data } = useBackend<ManufacturerData>(context);
+  const [repeat, toggleRepeatVar] = useSharedState(context, "repeat", data.repeat);
+  const [speed, setSpeedVar] = useSharedState(context, "speed", data.speed);
+  let toggleRepeat = () => {
+    act("repeat");
+    toggleRepeatVar(!repeat);
+  };
+  let updateSpeed = (newValue:number) => {
+    act("speed", { "value": newValue });
+    setSpeedVar(newValue);
+  };
   let usable_blueprints = data.available_blueprints;
   let dropdowns = [];
   for (let i of data.all_categories) {
@@ -272,8 +315,6 @@ export const Manufacturer = (_, context) => {
             style={{ "width": "20%" }}
           >
             <Section
-              position="fixed"
-              style={{ "width": "19.75%" }}
               fill
               align="center"
             >
@@ -284,14 +325,14 @@ export const Manufacturer = (_, context) => {
               <Slider
                 my={2}
                 minValue={1}
-                value={data.speed}
+                value={speed}
                 maxValue={3}
                 step={1}
                 stepPixelSize={100}
+                onChange={(_e:any, value:number) => updateSpeed(value)}
               >
-                Speed: {data.speed}
+                Speed: {speed}
               </Slider>
-              <CollapsibleWireMenu />
               <CardInfo />
               <Flex
                 backgroundColor={backgroundPop}
@@ -300,12 +341,34 @@ export const Manufacturer = (_, context) => {
                 style={{ "align-items": "center" }}
               >
                 <Flex.Item grow>
-                  Repeat: Off
+                  Repeat: {repeat ? "On" : "Off"}
                 </Flex.Item>
                 <Flex.Item>
-                  <Button icon="repeat">Toggle Repeat</Button>
+                  <Button icon="repeat" onClick={() => toggleRepeat()}>Toggle Repeat</Button>
                 </Flex.Item>
               </Flex>
+
+              <CollapsibleWireMenu />
+
+              {data.rockboxes.map((rockbox:Rockbox) => (
+                <Section
+                  key={rockbox.name}
+                  backgroundColor={backgroundPop}
+                  title={rockbox.name+ " at "+rockbox.area_name}
+                  fontSize={0.875}
+                >
+                  {rockbox.ores.map((ore:Ore) => (
+                    <Button
+                      fontSize={1}
+                      key={ore.name}
+                      onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.reference })}
+                      style={{ "width": "90%" }}
+                    >
+                      {ore.name}: {ore.amount} for {ore.cost}⪽ each
+                    </Button>
+                  ))}
+                </Section>
+              ))}
             </Section>
           </Flex.Item>
         </Flex>
@@ -314,5 +377,3 @@ export const Manufacturer = (_, context) => {
     </Window>
   );
 };
-
-//
