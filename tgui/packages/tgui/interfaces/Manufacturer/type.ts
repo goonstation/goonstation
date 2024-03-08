@@ -5,6 +5,8 @@
  * @license ISC
  */
 
+import { BooleanLike } from "common/react";
+
 type ManufacturerData = {
   all_categories:string[];
   resource_names:string[];
@@ -12,21 +14,19 @@ type ManufacturerData = {
   card_owner:string;
   fabricator_name:string;
 
-  available_blueprints:{ [key:string] : Manufacturable[]};
-  downloaded_blueprints:{ [key:string] : Manufacturable[]};
-  drive_recipe_blueprints:{ [key:string] : Manufacturable[]};
-  hidden_blueprints:{ [key:string] : Manufacturable[]};
+  available_blueprints:Record<string, Manufacturable[]>;
+  downloaded_blueprints:Record<string, Manufacturable[]>;
+  drive_recipe_blueprints:Record<string, Manufacturable[]>;
+  hidden_blueprints:Record<string, Manufacturable[]>;
 
   resources:{ [key: string] : number };
-  wires:{ [key:string] : string};
+  wires:Record<string, string>;
 
-  delete_allowed:boolean;
-  hacked:boolean;
-  malfunction:boolean;
-  panel_open:boolean;
-  repeat:boolean;
-
-  mats_by_id:any;
+  delete_allowed:BooleanLike;
+  hacked:BooleanLike;
+  malfunction:BooleanLike;
+  panel_open:BooleanLike;
+  repeat:BooleanLike;
 
   card_balance:number;
   speed:number;
@@ -38,18 +38,18 @@ type ManufacturerData = {
 
 // Keyed by name
 type Manufacturable = {
-  item_names:[string];
-  item_amounts:[number];
+  item_names:string[];
+  item_amounts:string[];
   create:number;
   time:number;
   category:string;
-  ref:string;
+  byondRef:string;
 }
 
 type Rockbox = {
   name: string;
   area_name: string;
-  reference: string;
+  byondRef: string;
   ores: Ore[];
 }
 
@@ -61,7 +61,7 @@ type Ore = {
 
 type WireIndicators = {
   electrified: number;
-  malfunctioning: boolean;
-  hacked: boolean;
-  hasPower: boolean;
+  malfunctioning: BooleanLike;
+  hacked: BooleanLike;
+  hasPower: BooleanLike;
 }

@@ -13,8 +13,8 @@ import { formatTime, truncate } from '../../format';
 import { TableCell, TableRow } from '../../components/Table';
 import { formatMoney } from '../../format';
 
-let backgroundPop = "rgba(0,0,0,0.2)"; // The intent is to use this akin to a #DEFINE but if this is foolish yell @ me
-let credit_symbol = "⪽";
+const backgroundPop = "rgba(0,0,0,0.2)"; // The intent is to use this akin to a #DEFINE but if this is foolish yell @ me
+const credit_symbol = "⪽";
 /* This code block explains the general flow of the code regarding menu structure
    This menu is rather big so hopefully it helps navigate the heavy nesting of elements
 
@@ -80,7 +80,7 @@ const BlueprintButton = (props, context) => {
           width={12.2}
           height={5.3}
           p={0}
-          onClick={() => act("product", { "blueprint_ref": blueprintData.ref })}
+          onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
         >
           <Stack>
             <Stack.Item
@@ -132,7 +132,7 @@ const MaterialRow = (props, context) => {
   let { resource, resourceAmt } = props;
 
   return (
-    <TableRow collapsing>
+    <TableRow collapsing fontSize={0.95}>
       <TableCell collapsing>
         <Button icon="eject" onClick={() => act("material_eject", { "material": resource })} />
       </TableCell>
@@ -210,25 +210,6 @@ export const CollapsibleWireMenu = (_, context) => {
   const { act, data } = useBackend<ManufacturerData>(context);
   let wireContent = [];
   let i = 0;
-  wireContent.push(
-    <>
-      <Flex style={{ "align-items": "center" }}>
-        <Flex.Item style={{ "width": "45%" }}>
-          Panel {data.panel_open ? "open" : "closed"}.
-        </Flex.Item>
-        <Flex.Item grow>
-          <Button
-            icon={data.panel_open ? "warning" : "circle"}
-            color={data.panel_open ? "orange" : "green"}
-            onClick={() => act("toggle_panel")}
-          >
-            Screws {data.panel_open ? "Loose" : "Secure"}
-          </Button>
-        </Flex.Item>
-      </Flex>
-      <Divider />
-    </>
-  );
   if (data.panel_open)
   {
     for (let wire in data.wires)
@@ -263,10 +244,10 @@ export const CollapsibleWireMenu = (_, context) => {
     <Collapsible
       mb="1%"
       title="Maintenence Panel"
-      open={data.panel_open}
+      open
       width="95%"
     >
-      <Box backgroundColor={backgroundPop} p={1}>
+      <Box backgroundColor={backgroundPop} px={1} pb={0.5}>
         {wireContent}
         <Divider />
         <LabeledList>
@@ -363,7 +344,7 @@ export const Manufacturer = (_, context) => {
                 </Slider>
               </Box>
 
-              <CollapsibleWireMenu />
+              {data.panel_open ? <CollapsibleWireMenu /> : ""}
 
               {data.rockboxes.map((rockbox:Rockbox) => (
                 <Section
@@ -376,8 +357,7 @@ export const Manufacturer = (_, context) => {
                     <Button
                       fontSize={1}
                       key={ore.name}
-                      onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.reference })}
-                      style={{ "width": "90%" }}
+                      onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
                     >
                       {ore.name}: {ore.amount} for {ore.cost}{credit_symbol} each
                     </Button>
