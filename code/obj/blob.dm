@@ -40,6 +40,7 @@
 	mat_changedesc = 0
 	var/runOnLife = 0 //Should this obj run Life?
 	var/processed_on_killed = FALSE //! Whether onKilled already ran
+	var/surrounded = 0 //! bitfield of dirs we have other blob tiles around us on
 
 	New()
 		..()
@@ -497,6 +498,7 @@
 				if (B)
 					dirs |= dir
 			icon_state = num2text(dirs)
+			src.surrounded = dirs
 
 		//else if(istext( special_icon ))
 		//	if(!BLOB_OVERLAYS[ special_icon ])

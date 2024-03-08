@@ -15,7 +15,7 @@ const PumpSettings = (props:any, context:any) => {
   const { pump } = props;
   // Local states allow to keep the appearance of seamless response, but do not cope well with button spamming
   const [target_output, setOutput] = useLocalState(context, pump.netid+"pressure", pump.target_output);
-  const [power, setPower] = useLocalState(context, pump.netid+"power", "on");
+  const [power, setPower] = useLocalState(context, pump.netid+"power", pump.power);
 
   const setPressure = (newPressure: number) => {
     setOutput(newPressure);

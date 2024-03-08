@@ -1391,7 +1391,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 
 			if (7)
 				src.name = "neutron loaf"
-				src.desc = "Oh good, the flavor atoms in this prison loaf have collapsed down to a a solid lump of neutrons."
+				src.desc = "Oh good, the flavor atoms in this prison loaf have collapsed down to a solid lump of neutrons."
 				src.icon_state = "ploaf4"
 				src.force = 32
 				src.throwforce = 32
