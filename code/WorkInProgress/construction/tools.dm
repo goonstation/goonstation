@@ -610,7 +610,7 @@ TYPEINFO(/obj/item/room_planner)
 			T = get_turf(T)
 		if (!T || !mode)
 			return 0
-		if (GET_DIST(T, user) > 1)
+		if (GET_DIST(T, user) > 3)
 			return 0
 
 		if (mode == "restore original") //For those who want to undo the carnage

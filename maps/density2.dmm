@@ -6590,7 +6590,7 @@
 /turf/simulated/floor/marble,
 /area/station/ranch)
 "Rj" = (
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/table/auto,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)

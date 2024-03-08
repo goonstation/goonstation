@@ -354,6 +354,8 @@ file_save - Save file to local disk."}
 		return
 
 	initialize()
+		if (..())
+			return TRUE
 		//src.service_mode = 0
 		src.print_text("Loading TermOS, Revision C<br>Copyright 2046-2053 Thinktronic Systems, LTD.")
 

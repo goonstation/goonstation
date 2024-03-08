@@ -2,7 +2,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 	mats = 2
 
 /obj/item/device/prox_sensor
-	name = "Proximity Sensor"
+	name = "proximity sensor"
 	icon_state = "motion0"
 	var/armed = FALSE
 	var/timing = FALSE

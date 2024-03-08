@@ -190,6 +190,10 @@
 			reagents.remove_reagent("fuel", amount)
 		src.inventory_counter.update_number(get_fuel())
 
+	on_reagent_change(add)
+		. = ..()
+		src.inventory_counter.update_number(get_fuel())
+
 #define EYE_DAMAGE_IMMUNE 2
 #define EYE_DAMAGE_MINOR 1
 #define EYE_DAMAGE_NORMAL 0
