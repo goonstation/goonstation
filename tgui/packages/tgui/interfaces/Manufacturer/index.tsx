@@ -37,43 +37,36 @@ const BlueprintButton = (props, context) => {
   const { name, blueprintData } = props;
 
   return (
-    <Stack inline>
-      <Stack.Item>
-        <Button
-          ellipsis
-          onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
-        >
-          <Stack>
-            <Stack.Item>
-              <Image pixelated src={blueprintData.img} />
-            </Stack.Item>
-            <Stack.Item>
-              <Stack
-                vertical
-                fill
-              >
-                <Stack.Item>
-                  {truncate(name, 30)}
-                </Stack.Item>
-              </Stack>
-            </Stack.Item>
-          </Stack>
-        </Button>
-      </Stack.Item>
-
-      <Stack.Item>
-        <Stack vertical>
-          <Stack.Item>
-            <Button icon="gear" />
-          </Stack.Item>
-          <Stack.Item>
-            <Tooltip content={<BlueprintTooltip blueprint={blueprintData} />}>
-              <Button align="center" icon="question" />
-            </Tooltip>
-          </Stack.Item>
-        </Stack>
-      </Stack.Item>
-    </Stack>
+    <Button
+      onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
+      ellipsis
+      width={12.5} height={5}
+      pl={0} pb={0}
+      m={1}
+    >
+      <Image
+        verticalAlign="top"
+        height={5}
+        pixelated
+        src={blueprintData.img}
+        backgroundColor={backgroundPop}
+      />
+      <Box
+        preserveWhitespace
+        inline
+        width={7} height={5} lineHeight={5}
+        style={{ "text-align": "center" }}
+      >
+        <span
+          style={{
+            "display": "inline-block",
+            "vertical-align": "middle",
+            "line-height": "normal",
+          }}>
+          {truncate(name, 40)}
+        </span>
+      </Box>
+    </Button>
   );
 };
 
