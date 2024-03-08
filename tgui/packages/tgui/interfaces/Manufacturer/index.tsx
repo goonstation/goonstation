@@ -7,12 +7,14 @@
 
 import { useBackend, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
+import { toTitleCase } from 'common/string';
 import { Box, Button, Collapsible, Divider, Flex, Image, Input, LabeledList, Section, Slider, Stack, Table, Tooltip } from '../../components';
 import { formatTime, truncate } from '../../format';
 import { TableCell, TableRow } from '../../components/Table';
+import { formatMoney } from '../../format';
 
 let backgroundPop = "rgba(0,0,0,0.2)"; // The intent is to use this akin to a #DEFINE but if this is foolish yell @ me
-
+let credit_symbol = "⪽";
 /* This code block explains the general flow of the code regarding menu structure
    This menu is rather big so hopefully it helps navigate the heavy nesting of elements
 
@@ -138,7 +140,7 @@ const MaterialRow = (props, context) => {
         <Button icon="add" onClick={() => act("material_swap", { "resource": resource })} />
       </TableCell>
       <TableCell header>
-        {resource}
+        {toTitleCase(resource)}
       </TableCell>
       <TableCell>
         {resourceAmt/10}
@@ -147,11 +149,13 @@ const MaterialRow = (props, context) => {
   );
 };
 
-const LoadedMaterials = (props, context) => {
-  let { resources } = props;
+const LoadedMaterials = (props) => {
+  let { resources, resourceNames } = props;
   let resourceRows = [];
+  let i = 0;
   for (let resource in resources) {
-    resourceRows.push(<MaterialRow resource={resource} resourceAmt={resources[resource]} />);
+    resourceRows.push(<MaterialRow resource={resourceNames[i]} resourceAmt={resources[resource]} />);
+    i++;
   }
   return (
     <Table>
@@ -174,10 +178,10 @@ const CategoryDropdown = (props) => {
   );
 };
 
-const CardInfo = (props, context) => {
+const CardInfo = (_, context) => {
   const { data, act } = useBackend<ManufacturerData>(context);
   return (data.card_owner === null || data.card_balance === null) ? (
-    <Flex backgroundColor={backgroundPop} py={1}>
+    <Flex backgroundColor={backgroundPop} py={0.5}>
       <Flex.Item grow>
         No Card Inserted
       </Flex.Item>
@@ -186,17 +190,23 @@ const CardInfo = (props, context) => {
       </Flex.Item>
     </Flex>
   ) : (
-    <Box backgroundColor={backgroundPop} py={1}>
-      Card Owner: {data.card_owner}<br />
-      Current Balance: {data.card_balance}⪽
-      <Button icon="subtract" onClick={() => act("card", { "remove": true })}>Remove Card</Button>
+    <Box backgroundColor={backgroundPop} py={0.5}>
+      Card: {data.card_owner}
+      <Flex style={{ "align-items": "center" }}>
+        <Flex.Item width="50%" >
+          Balance: {formatMoney(1000)}{credit_symbol}
+        </Flex.Item>
+        <Flex.Item>
+          <Button icon="subtract" onClick={() => act("card", { "remove": true })}>Remove Card</Button>
+        </Flex.Item>
+      </Flex>
     </Box>
   );
 };
 
 const is_set = (bits, bit) => { return bits & (1 << bit); };
 
-export const CollapsibleWireMenu = (props, context) => {
+export const CollapsibleWireMenu = (_, context) => {
   const { act, data } = useBackend<ManufacturerData>(context);
   let wireContent = [];
   let i = 0;
@@ -254,6 +264,7 @@ export const CollapsibleWireMenu = (props, context) => {
       mb="1%"
       title="Maintenence Panel"
       open={data.panel_open}
+      width="95%"
     >
       <Box backgroundColor={backgroundPop} p={1}>
         {wireContent}
@@ -319,34 +330,38 @@ export const Manufacturer = (_, context) => {
               align="center"
             >
               <Input placeholder={"Search..."} icon={"search"} style={{ "width": "100%" }} />
-              <Section title="Materials Loaded" style={{ "width": "100%" }} textAlign="center" pt={1} backgroundColor={backgroundPop}>
-                <LoadedMaterials resources={data.resources} />
+              <Section title="Materials Loaded" style={{ "width": "100%" }} textAlign="center" pt={0.25} backgroundColor={backgroundPop}>
+                <LoadedMaterials resources={data.resources} resourceNames={data.resource_names} />
               </Section>
-              <Slider
-                my={2}
-                minValue={1}
-                value={speed}
-                maxValue={3}
-                step={1}
-                stepPixelSize={100}
-                onChange={(_e:any, value:number) => updateSpeed(value)}
-              >
-                Speed: {speed}
-              </Slider>
               <CardInfo />
-              <Flex
-                backgroundColor={backgroundPop}
-                my={1}
-                py={1}
-                style={{ "align-items": "center" }}
-              >
-                <Flex.Item grow>
-                  Repeat: {repeat ? "On" : "Off"}
-                </Flex.Item>
-                <Flex.Item>
-                  <Button icon="repeat" onClick={() => toggleRepeat()}>Toggle Repeat</Button>
-                </Flex.Item>
-              </Flex>
+              <Box backgroundColor={backgroundPop} my={0}>
+                <Flex
+                  mt={0.5}
+                  py={0.5}
+                  width="95%"
+                  style={{ "align-items": "center" }}
+                >
+                  <Flex.Item grow>
+                    Repeat: {repeat ? "On" : "Off"}
+                  </Flex.Item>
+                  <Flex.Item>
+                    <Button icon="repeat" onClick={() => toggleRepeat()}>Toggle Repeat</Button>
+                  </Flex.Item>
+                </Flex>
+                <Slider
+                  width="95%"
+                  backgroundColor={backgroundPop}
+                  mb={1}
+                  minValue={1}
+                  value={speed}
+                  maxValue={3}
+                  step={1}
+                  stepPixelSize={100}
+                  onChange={(_e:any, value:number) => updateSpeed(value)}
+                >
+                  Speed: {speed}
+                </Slider>
+              </Box>
 
               <CollapsibleWireMenu />
 
@@ -364,7 +379,7 @@ export const Manufacturer = (_, context) => {
                       onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.reference })}
                       style={{ "width": "90%" }}
                     >
-                      {ore.name}: {ore.amount} for {ore.cost}⪽ each
+                      {ore.name}: {ore.amount} for {ore.cost}{credit_symbol} each
                     </Button>
                   ))}
                 </Section>

@@ -6,7 +6,8 @@
  */
 
 type ManufacturerData = {
-  all_categories:[string];
+  all_categories:string[];
+  resource_names:string[];
 
   card_owner:string;
   fabricator_name:string;

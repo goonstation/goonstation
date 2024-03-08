@@ -279,33 +279,37 @@ TYPEINFO(/obj/machinery/manufacturer)
 			ui.open()
 
 	ui_data(mob/user)
+		// human-readable rather than matid
+		var/resource_names = list()
+		for (var/mat_id in resource_amounts)
+			resource_names += "[src.get_our_material(mat_id)]"
 		return list(
 			"panel_open" = src.panel_open,
 			"hacked" = src.hacked,
 			"malfunction" = src.malfunction,
 			"wire_bitflags" = src.wires,
-			"card_owner" = (!isnull(src.scan) ? src.scan.registered : null),
-			"card_balance" = (!isnull(src.scan) ? src.scan.money : null),
 			"speed" = src.speed,
 			"repeat" = src.repeat,
 			"resources" = src.resource_amounts,
-			"downloaded_blueprints" = src.download,
-			"drive_recipe_blueprints" = src.drive_recipes,
-			"delete_allowed" = src.allowed(user),
+			"resource_names" = resource_names,
 			"indicators" = list("electrified" = src.electrified,
 							    "malfunctioning" = src.malfunction,
 								"hacked" = src.hacked,
 								"hasPower" = !IS_NOT_OPERATIONAL,
 							   ),
-			"reagents" = (src.beaker && src.beaker.reagents) ? src.beaker.reagents.reagent_list : null,
 		)
 
 	ui_static_data(mob/user)
 		return list (
 			"fabricator_name" = src.name,
 			"all_categories" = src.categories,
+			"card_balance" = (!isnull(src.scan) ? FindBankAccountByName(src.scan.registered)["current_money"] : null),
+			"card_owner" = (!isnull(src.scan) ? src.scan.registered : null),
+			"delete_allowed" = src.allowed(user),
 			"available_blueprints" = blueprints_as_list(src.available, user),
 			"hidden_blueprints" = blueprints_as_list(src.hidden, user),
+			"downloaded_blueprints" = blueprints_as_list(src.download, user),
+			"drive_recipe_blueprints" = blueprints_as_list(src.drive_recipes, user),
 			"wires" = list("Amber" = "#FFBF00",
 							"Teal" = "#21868C",
 							"Indigo" = "#6f0fb4",
@@ -315,6 +319,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"manudrive" = list ("name" = "[src.manudrive]",
 							   	"limit" = src.manudrive?.fablimit,
 							   ),
+			"reagents" = (src.beaker && src.beaker.reagents) ? src.beaker.reagents.reagent_list : null,
 		)
 
 	#define ORE_TAX(price) round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01)
@@ -685,8 +690,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (src.scan.registered in FrozenAccounts)
 			boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
 			return
-		var/datum/db_record/account = null
-		account = FindBankAccountByName(src.scan.registered)
+		var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
 		if (account)
 			var/quantity = 1
 			quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
