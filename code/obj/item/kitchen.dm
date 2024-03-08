@@ -607,6 +607,8 @@ TRAYS
 	var/stackable = TRUE
 	/// Do we have a plate stacked on us?
 	var/plate_stacked = FALSE
+	/// Can this smash someone on the head?
+	var/can_headsmash = TRUE
 
 	New()
 		..()
@@ -814,7 +816,7 @@ TRAYS
 				src.remove_contents(pick(src.contents))
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(user.a_intent == INTENT_HARM && src.is_plate)
+		if(user.a_intent == INTENT_HARM && src.can_headsmash)
 			if(target == user)
 				boutput(user, SPAN_ALERT("<B>You smash [src] over your own head!</b>"))
 			else
@@ -896,7 +898,9 @@ TRAYS
 	is_plate = FALSE
 	max_space = 6
 	space_left = 6
+	can_headsmash = FALSE
 	var/open = FALSE
+
 
 	add_contents(obj/item/food, mob/user, click_params) // Due to non-plates skipping some checks in the original add_contents() we'll have to do our own checks.
 
@@ -1100,9 +1104,30 @@ TRAYS
 	pickup_sfx = 0 // to avoid using plate SFX
 	w_class = W_CLASS_NORMAL
 	hit_sound = "step_lattice"
+	can_headsmash = FALSE // no unbreakable plate smash for you!
 
+	New()
+		. = ..()
+		processing_items |= src
 
+	disposing()
+		. = ..()
+		processing_items.Remove(src)
 
+	process()
+		if (!length(src.contents)) return
+		var/turf/T = get_turf(src.loc)
+		if (!T) return
+
+		for (var/obj/item/reagent_containers/food in src.contents)
+			var/datum/reagents/R = food.reagents
+			R.temperature_reagents(T.temperature, exposed_volume = (150 + R.total_volume * 2), change_cap = 100)
+
+	add_contents(obj/item/food, mob/user, click_params)
+		if (!food.edible)
+			boutput(user, SPAN_ALERT("That's not food, it doesn't belong on \the [src]!"))
+			return
+		..()
 
 	shatter()//mesh trays don't shatter
 		shit_goes_everywhere()
