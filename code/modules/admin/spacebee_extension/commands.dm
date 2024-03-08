@@ -51,7 +51,7 @@
 
 /datum/spacebee_extension_command/state_based/notes
 	name = "notes"
-	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
 	help_message = "retrieves player notes."
 	argument_types = list(/datum/command_argument/string/ckey="ckey")
 	var/page = 1
