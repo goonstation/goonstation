@@ -1087,6 +1087,28 @@ TRAYS
 	shatter() // don't
 		return
 
+/obj/item/plate/cooling_rack //because grilled and fried foods always scalding you is annoying
+	name = "cooling rack"
+	desc = "A wire-mesh rack that lets food items cool down for safe(er?) consumption."
+	icon = 'icons/obj/foodNdrink/food_related.dmi'
+	icon_state = "tray"
+	flags = FPRINT | TABLEPASS
+	force = 5
+	throwforce = 5
+	throw_speed = 3
+	throw_range = 5
+	pickup_sfx = 0 // to avoid using plate SFX
+	w_class = W_CLASS_NORMAL
+	hit_sound = "step_lattice"
+
+
+
+
+	shatter()//mesh trays don't shatter
+		shit_goes_everywhere()
+
+		return
+
 //sushiiiiiii
 /obj/item/kitchen/sushi_roller
 	name = "rolling mat"
