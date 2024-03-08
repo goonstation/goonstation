@@ -69,6 +69,8 @@
 	var/short_description = null //! Description provided when a player hovers over the job name in latejoin menu
 	var/wiki_link = null //! Link to the wiki page for this job
 
+	var/counts_as = null //! Name of a job that we count towards the cap of
+
 	New()
 		..()
 		initial_name = name
@@ -2620,6 +2622,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	wages = PAY_TRADESMAN
 	requires_whitelist = 1
 	requires_supervisor_job = "Head of Security"
+	counts_as = "Security Officer"
 	allow_traitors = 0
 	allow_spy_theft = 0
 	can_join_gangs = FALSE
