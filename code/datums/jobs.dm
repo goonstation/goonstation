@@ -5,6 +5,8 @@
 	var/linkcolor = "#0FF"
 	var/wages = 0
 	var/limit = -1
+	/// job category flag for use with loops rather than a needing a bunch of type checks
+	var/job_category = JOB_SPECIAL
 	var/add_to_manifest = 1
 	var/no_late_join = 0
 	var/no_jobban_from_this_job = 0
@@ -476,6 +478,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	linkcolor = "#FF0000"
 	slot_card = /obj/item/card/id/security
 	receives_miranda = 1
+	job_category = JOB_SECURITY
 
 /datum/job/security/security_officer
 	name = "Security Officer"
@@ -602,6 +605,7 @@ ABSTRACT_TYPE(/datum/job/research)
 /datum/job/research
 	linkcolor = "#9900FF"
 	slot_card = /obj/item/card/id/research
+	job_category = JOB_RESEARCH
 
 /datum/job/research/geneticist
 	name = "Geneticist"
@@ -749,6 +753,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 /datum/job/engineering
 	linkcolor = "#FF9900"
 	slot_card = /obj/item/card/id/engineering
+	job_category = JOB_ENGINEERING
 
 /datum/job/engineering/quartermaster
 	name = "Quartermaster"
@@ -867,6 +872,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian
 	linkcolor = "#0099FF"
 	slot_card = /obj/item/card/id/civilian
+	job_category = JOB_CIVILIAN
 
 /datum/job/civilian/chef
 	name = "Chef"
