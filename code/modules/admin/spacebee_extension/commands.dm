@@ -58,7 +58,8 @@
 	var/key_to_check = null
 
 	execute(user, ckey)
-		. == ..()
+		. = ..()
+		key_to_check = ckey
 		var/last_page = send_notes()
 		if(last_page > 1)
 			system.reply("viewing notes page [page] out of [last_page], enter ;;next to send next page")
