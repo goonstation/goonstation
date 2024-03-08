@@ -12,47 +12,10 @@ import { Box, Button, Collapsible, Divider, Flex, Image, Input, LabeledList, Sec
 import { formatTime, truncate } from '../../format';
 import { TableCell, TableRow } from '../../components/Table';
 import { formatMoney } from '../../format';
-import { ManufacturerData } from './type.ts'
+import { Manufacturable, ManufacturerData, Ore, Rockbox, WireIndicators } from './type';
 
-const backgroundPop = "rgba(0,0,0,0.2)"; // The intent is to use this akin to a #DEFINE but if this is foolish yell @ me
+const backgroundPop = "rgba(0,0,0,0.2)";
 const credit_symbol = "⪽";
-/* This code block explains the general flow of the code regarding menu structure
-   This menu is rather big so hopefully it helps navigate the heavy nesting of elements
-
-Window contains:
-- Left section containing collapsibles of buttons
-- Right section containing settings
-
-  Left section contains:
-    - Collapsibles with buttons
-
-    Collapsibles contain:
-      - Buttons which have image/name/tooltip based off own data.
-
-    Buttons contain:
-      - Leftmost: image of item
-      - Middle: vertical stack, settings button on top and ? tooltip on bottom.
-        - settings tooltip NYI
-        - tooltip button contains information on material and time costs
-      - Right: name, up to 3 lines / 30 characters
-
-  Right section contains:
-    - Search bar
-    - Materials list containing material info/control
-
-    Material list elements contain:
-      - Eject button
-      - Priority swap buttons (swap priority of two materials for fabricator use)
-      - Speed control buttons
-      - Repeat toggle button
-      - Ore buying which contains ores by rockbox
-
-      Each rockbox element contains:
-        - List of ores available for purchase
-
-        Each ore available for purchase contains:
-          - Button with ore icon, name, amount, and cost
-*/
 
 const BlueprintTooltip = (props) => {
   let { blueprint } = props;
@@ -74,35 +37,22 @@ const BlueprintButton = (props, context) => {
   const { name, blueprintData } = props;
 
   return (
-    <Stack width={15} inline backgroundColor={backgroundPop} mx={0.575} mb={0} p={0.5}>
+    <Stack inline>
       <Stack.Item>
         <Button
           ellipsis
-          width={12.2}
-          height={5.3}
-          p={0}
           onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
         >
           <Stack>
-            <Stack.Item
-              ml={0}
-              pt={0}
-              mt={0}
-              backgroundColor={backgroundPop}
-            >
-              <Image pixelated src={blueprintData.img} width={5} />
+            <Stack.Item>
+              <Image pixelated src={blueprintData.img} />
             </Stack.Item>
             <Stack.Item>
               <Stack
                 vertical
                 fill
-                style={{ "align-items": "center" }}
               >
-                <Stack.Item
-                  width={6}
-                  textAlign="center"
-                  style={{ "white-space": "normal" }}
-                >
+                <Stack.Item>
                   {truncate(name, 30)}
                 </Stack.Item>
               </Stack>
@@ -111,19 +61,18 @@ const BlueprintButton = (props, context) => {
         </Button>
       </Stack.Item>
 
-      <Stack.Item ml={0.5}>
-        <Stack vertical p={0} m={0}>
-          <Stack.Item pb={0.5}>
-            <Button align="center" width={2} height={2.5} icon="gear" pt={0.9} />
+      <Stack.Item>
+        <Stack vertical>
+          <Stack.Item>
+            <Button icon="gear" />
           </Stack.Item>
-          <Stack.Item p={0} m={0}>
+          <Stack.Item>
             <Tooltip content={<BlueprintTooltip blueprint={blueprintData} />}>
-              <Button align="center" width={2} height={2.5} icon="question" pt={0.9} />
+              <Button align="center" icon="question" />
             </Tooltip>
           </Stack.Item>
         </Stack>
       </Stack.Item>
-
     </Stack>
   );
 };
@@ -133,7 +82,7 @@ const MaterialRow = (props, context) => {
   let { resource, resourceAmt } = props;
 
   return (
-    <TableRow collapsing fontSize={0.95}>
+    <TableRow>
       <TableCell collapsing>
         <Button icon="eject" onClick={() => act("material_eject", { "material": resource })} />
       </TableCell>
@@ -182,8 +131,8 @@ const CategoryDropdown = (props) => {
 const CardInfo = (_, context) => {
   const { data, act } = useBackend<ManufacturerData>(context);
   return (data.card_owner === null || data.card_balance === null) ? (
-    <Flex backgroundColor={backgroundPop} py={0.5}>
-      <Flex.Item grow>
+    <Flex>
+      <Flex.Item>
         No Card Inserted
       </Flex.Item>
       <Flex.Item>
@@ -191,10 +140,10 @@ const CardInfo = (_, context) => {
       </Flex.Item>
     </Flex>
   ) : (
-    <Box backgroundColor={backgroundPop} py={0.5}>
+    <Box>
       Card: {data.card_owner}
-      <Flex style={{ "align-items": "center" }}>
-        <Flex.Item width="50%" >
+      <Flex>
+        <Flex.Item>
           Balance: {formatMoney(1000)}{credit_symbol}
         </Flex.Item>
         <Flex.Item>
@@ -219,7 +168,7 @@ export const CollapsibleWireMenu = (_, context) => {
       i++;
       wireContent.push(
         <Flex textColor={data.wires[wire]}>
-          <Flex.Item grow bold>
+          <Flex.Item>
             {wire}
           </Flex.Item>
           <Flex.Item>
@@ -243,7 +192,7 @@ export const CollapsibleWireMenu = (_, context) => {
       title="Maintenence Panel"
       open
     >
-      <Box backgroundColor={backgroundPop}>
+      <Box>
         {wireContent}
         <Divider />
         <LabeledList>
@@ -303,7 +252,7 @@ export const Manufacturer = (_, context) => {
                 <LoadedMaterials resources={data.resources} resourceNames={data.resource_names} />
               </Section>
               <CardInfo />
-              <Box backgroundColor={backgroundPop}>
+              <Box>
                 <Flex>
                   <Flex.Item>
                     Repeat: {repeat ? "On" : "Off"}
@@ -313,7 +262,6 @@ export const Manufacturer = (_, context) => {
                   </Flex.Item>
                 </Flex>
                 <Slider
-                  backgroundColor={backgroundPop}
                   minValue={1}
                   value={speed}
                   maxValue={3}
@@ -330,7 +278,6 @@ export const Manufacturer = (_, context) => {
               {data.rockboxes.map((rockbox:Rockbox) => (
                 <Section
                   key={rockbox.name}
-                  backgroundColor={backgroundPop}
                   title={rockbox.name+ " at "+rockbox.area_name}
                 >
                   {rockbox.ores.map((ore:Ore) => (

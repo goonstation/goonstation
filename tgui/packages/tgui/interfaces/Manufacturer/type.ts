@@ -7,7 +7,7 @@
 
 import { BooleanLike } from "common/react";
 
-type ManufacturerData = {
+export type ManufacturerData = {
   all_categories:string[];
   resource_names:string[];
 
@@ -37,7 +37,7 @@ type ManufacturerData = {
 }
 
 // Keyed by name
-type Manufacturable = {
+export type Manufacturable = {
   item_names:string[];
   item_amounts:string[];
   create:number;
@@ -46,20 +46,20 @@ type Manufacturable = {
   byondRef:string;
 }
 
-type Rockbox = {
+export type Rockbox = {
   name: string;
   area_name: string;
   byondRef: string;
   ores: Ore[];
 }
 
-type Ore = {
+export type Ore = {
   name: string;
   amount: number;
   cost: number;
 }
 
-type WireIndicators = {
+export type WireIndicators = {
   electrified: number;
   malfunctioning: BooleanLike;
   hacked: BooleanLike;
