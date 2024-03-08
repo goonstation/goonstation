@@ -1,11 +1,11 @@
 import { Box, Stack } from '../../components';
-import { buildFieldComparator, numberComparator } from './utils/Comparator';
+import { buildFieldComparator, numberComparator } from './utils/comparator';
 import { ClothingBoothData, ClothingBoothGroupingTagsData, ClothingBoothSlotKey } from './type';
 import { useBackend } from '../../backend';
 
 interface GroupingTagContainerProps {
-  slot: ClothingBoothSlotKey,
-  grouping_tags: string[],
+  slot: ClothingBoothSlotKey;
+  grouping_tags: string[];
 }
 
 interface ClothingBoothSlotDetail {

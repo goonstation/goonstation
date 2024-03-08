@@ -1,11 +1,16 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Button, Dimmer, Section, Stack } from '../../components';
 import { ClothingBoothData, ClothingBoothGroupingTagsData, TagDisplayOrderType } from './type';
-import { buildFieldComparator, stringComparator } from './utils/Comparator';
+import { buildFieldComparator, stringComparator } from './utils/comparator';
+import { LocalStateKey } from './utils/enum';
 
 export const TagsModal = (_, context) => {
-  const [tagModal, setTagModal] = useLocalState(context, 'tagModal', false);
-  const [tagFilters, setTagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, 'tagFilters', {});
+  const [tagModal, setTagModal] = useLocalState(context, LocalStateKey.TagModal, false);
+  const [tagFilters, setTagFilters] = useLocalState<Partial<Record<string, boolean>>>(
+    context,
+    LocalStateKey.TagFilters,
+    {}
+  );
 
   return (
     <Dimmer>

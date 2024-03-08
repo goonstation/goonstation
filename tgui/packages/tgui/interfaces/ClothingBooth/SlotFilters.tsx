@@ -1,22 +1,31 @@
 import { useLocalState } from '../../backend';
 import { Button, Section, Stack } from '../../components';
 import { ClothingBoothSlotKey } from './type';
+import { LocalStateKey } from './utils/enum';
 
 export const SlotFilters = (_, context) => {
-  const [slotFilters, setSlotFilters] = useLocalState<Partial<Record<ClothingBoothSlotKey, boolean>>>(context, 'slotFilters', {});
+  const [slotFilters, setSlotFilters] = useLocalState<Partial<Record<ClothingBoothSlotKey, boolean>>>(
+    context,
+    'slotFilters',
+    {}
+  );
   const mergeSlotFilter = (filter: ClothingBoothSlotKey) =>
     setSlotFilters({
       ...slotFilters,
       [filter]: !slotFilters[filter],
     });
-  const [tagModal, setTagModal] = useLocalState(context, 'tagModal', false);
-  const [tagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, 'tagFilters', {});
+  const [tagModal, setTagModal] = useLocalState(context, LocalStateKey.TagModal, false);
+  const [tagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, LocalStateKey.TagFilters, {});
 
   return (
     <Section fill>
       <Stack fill vertical>
         <Stack.Item>
-          <Button fluid align="center" color={Object.values(tagFilters).some((tagFilter) => tagFilter === true) && "good"} onClick={() => setTagModal(!tagModal)}>
+          <Button
+            fluid
+            align="center"
+            color={Object.values(tagFilters).some((tagFilter) => tagFilter === true) && 'good'}
+            onClick={() => setTagModal(!tagModal)}>
             Tags
           </Button>
         </Stack.Item>

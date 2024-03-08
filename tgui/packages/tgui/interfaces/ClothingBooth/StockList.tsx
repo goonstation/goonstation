@@ -3,10 +3,11 @@ import { useBackend, useLocalState } from '../../backend';
 import { Button, Divider, Dropdown, Input, Section, Stack } from '../../components';
 import { BoothGrouping } from './BoothGrouping';
 import { SlotFilters } from './SlotFilters';
-import { buildFieldComparator, numberComparator, stringComparator } from './utils/Comparator';
-import type { ComparatorFn } from './utils/Comparator';
+import { buildFieldComparator, numberComparator, stringComparator } from './utils/comparator';
+import type { ComparatorFn } from './utils/comparator';
 import type { ClothingBoothData, ClothingBoothGroupingData } from './type';
 import { ClothingBoothSlotKey, ClothingBoothSortType } from './type';
+import { LocalStateKey } from './utils/enum';
 
 const clothingBoothItemComparators: Record<ClothingBoothSortType, ComparatorFn<ClothingBoothGroupingData>> = {
   [ClothingBoothSortType.Name]: buildFieldComparator((itemGrouping) => itemGrouping.name, stringComparator),
@@ -25,15 +26,20 @@ const getClothingBoothGroupingSortComparator
 export const StockList = (_props: unknown, context) => {
   const { act, data } = useBackend<ClothingBoothData>(context);
   const { catalogue, money, selectedGroupingName } = data;
-  const [hideUnaffordable] = useLocalState(context, 'hideUnaffordable', false);
-  const [slotFilters] = useLocalState<Partial<Record<ClothingBoothSlotKey, boolean>>>(context, 'slotFilters', {}); // TODO: shared local state
-  const [tagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, 'tagFilters', {});
-  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
-  const [sortType, setSortType] = useLocalState(context, 'sortType', ClothingBoothSortType.Name);
-  const [sortAscending, setSortAscending] = useLocalState(context, 'sortAscending', true);
+  const catalogueItems = Object.values(catalogue);
+
+  const [hideUnaffordable] = useLocalState(context, LocalStateKey.HideUnaffordable, false);
+  const [slotFilters] = useLocalState<Partial<Record<ClothingBoothSlotKey, boolean>>>(
+    context,
+    LocalStateKey.SlotFilters,
+    {}
+  );
+  const [tagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, LocalStateKey.TagFilters, {});
+  const [searchText, setSearchText] = useLocalState(context, LocalStateKey.SearchText, '');
+  const [sortType, setSortType] = useLocalState(context, LocalStateKey.SortType, ClothingBoothSortType.Name);
+  const [sortAscending, setSortAscending] = useLocalState(context, LocalStateKey.SortAscending, true);
 
   const handleSelectGrouping = (name: string) => act('select-grouping', { name });
-  const catalogueItems = Object.values(catalogue);
 
   const affordableItemGroupings = hideUnaffordable
     ? catalogueItems.filter((catalogueGrouping) => money >= catalogueGrouping.cost_min)

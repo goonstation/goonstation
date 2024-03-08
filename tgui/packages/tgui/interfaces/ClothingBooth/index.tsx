@@ -13,13 +13,14 @@ import { CharacterPreview } from './CharacterPreview';
 import { StockList } from './StockList';
 import { PurchaseInfo } from './PurchaseInfo';
 import { TagsModal } from './TagsModal';
-import { ClothingBoothData } from './type';
+import type { ClothingBoothData } from './type';
+import { LocalStateKey } from './utils/enum';
 
 export const ClothingBooth = (_, context) => {
   const { data } = useBackend<ClothingBoothData>(context);
   const { name, money } = data;
-  const [hideUnaffordable, setHideUnaffordable] = useLocalState(context, 'hideUnaffordable', false);
-  const [tagModal, setTagModal] = useLocalState(context, 'tagModal', false);
+  const [hideUnaffordable, setHideUnaffordable] = useLocalState(context, LocalStateKey.HideUnaffordable, false);
+  const [tagModal, setTagModal] = useLocalState(context, LocalStateKey.TagModal, false);
 
   return (
     <Window title={name} width={500} height={600}>
@@ -31,9 +32,7 @@ export const ClothingBooth = (_, context) => {
               <Stack fluid align="baseline" justify="space-between">
                 <Stack.Item bold>Cash: {money}⪽</Stack.Item>
                 <Stack.Item>
-                  <Button.Checkbox
-                    checked={!!hideUnaffordable}
-                    onClick={() => setHideUnaffordable(!hideUnaffordable)}>
+                  <Button.Checkbox checked={hideUnaffordable} onClick={() => setHideUnaffordable(!hideUnaffordable)}>
                     Hide Unaffordable
                   </Button.Checkbox>
                 </Stack.Item>
