@@ -133,9 +133,6 @@
 /obj/machinery/camera/ranch{
 	dir = 4
 	},
-/obj/machinery/camera/ranch{
-	dir = 4
-	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "aas" = (
