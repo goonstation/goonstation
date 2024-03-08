@@ -19,7 +19,7 @@ type ManufacturerData = {
   drive_recipe_blueprints:Record<string, Manufacturable[]>;
   hidden_blueprints:Record<string, Manufacturable[]>;
 
-  resources:{ [key: string] : number };
+  resources:Record<string, number>;
   wires:Record<string, string>;
 
   delete_allowed:BooleanLike;
@@ -33,7 +33,7 @@ type ManufacturerData = {
   wire_bitflags:number;
 
   indicators:WireIndicators;
-  rockboxes:Rockbox[]
+  rockboxes:Rockbox[];
 }
 
 // Keyed by name

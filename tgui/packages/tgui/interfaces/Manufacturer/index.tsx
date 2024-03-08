@@ -12,6 +12,7 @@ import { Box, Button, Collapsible, Divider, Flex, Image, Input, LabeledList, Sec
 import { formatTime, truncate } from '../../format';
 import { TableCell, TableRow } from '../../components/Table';
 import { formatMoney } from '../../format';
+import { ManufacturerData } from './type.ts'
 
 const backgroundPop = "rgba(0,0,0,0.2)"; // The intent is to use this akin to a #DEFINE but if this is foolish yell @ me
 const credit_symbol = "⪽";
@@ -217,21 +218,18 @@ export const CollapsibleWireMenu = (_, context) => {
       let cut = is_set(data.wire_bitflags, i);
       i++;
       wireContent.push(
-        <Flex textColor={data.wires[wire]} px={2}>
+        <Flex textColor={data.wires[wire]}>
           <Flex.Item grow bold>
             {wire}
           </Flex.Item>
-          <Flex.Item mr="5%">
+          <Flex.Item>
             <Button
-              ml="10%"
-              my="1%"
               content="Pulse"
               onClick={() => act('wire', { action: "pulse", wire: i })}
             />
           </Flex.Item>
           <Flex.Item>
             <Button
-              m="1%"
               content={cut ? "Cut" : "Mend"}
               onClick={() => act("wire", { action: (cut ? "mend" : "cut"), wire: i })}
             />
@@ -242,12 +240,10 @@ export const CollapsibleWireMenu = (_, context) => {
   }
   return (
     <Collapsible
-      mb="1%"
       title="Maintenence Panel"
       open
-      width="95%"
     >
-      <Box backgroundColor={backgroundPop} px={1} pb={0.5}>
+      <Box backgroundColor={backgroundPop}>
         {wireContent}
         <Divider />
         <LabeledList>
@@ -295,34 +291,21 @@ export const Manufacturer = (_, context) => {
     <Window width={1200} height={600} title={data.fabricator_name}>
       <Window.Content>
         <Flex>
-          <Flex.Item
-            style={{ "width": "80%" }}
-            mr={1}
-          >
+          <Flex.Item width="80%">
             <Section>
               {dropdowns}
             </Section>
           </Flex.Item>
-          <Flex.Item
-            style={{ "width": "20%" }}
-          >
-            <Section
-              fill
-              align="center"
-            >
+          <Flex.Item grow>
+            <Section>
               <Input placeholder="Search..." icon="search" width="100%" />
-              <Section title="Materials Loaded" style={{ "width": "100%" }} textAlign="center" pt={0.25} backgroundColor={backgroundPop}>
+              <Section title="Materials Loaded" textAlign="center">
                 <LoadedMaterials resources={data.resources} resourceNames={data.resource_names} />
               </Section>
               <CardInfo />
-              <Box backgroundColor={backgroundPop} my={0}>
-                <Flex
-                  mt={0.5}
-                  py={0.5}
-                  width="95%"
-                  style={{ "align-items": "center" }}
-                >
-                  <Flex.Item grow>
+              <Box backgroundColor={backgroundPop}>
+                <Flex>
+                  <Flex.Item>
                     Repeat: {repeat ? "On" : "Off"}
                   </Flex.Item>
                   <Flex.Item>
@@ -330,9 +313,7 @@ export const Manufacturer = (_, context) => {
                   </Flex.Item>
                 </Flex>
                 <Slider
-                  width="95%"
                   backgroundColor={backgroundPop}
-                  mb={1}
                   minValue={1}
                   value={speed}
                   maxValue={3}
@@ -351,11 +332,9 @@ export const Manufacturer = (_, context) => {
                   key={rockbox.name}
                   backgroundColor={backgroundPop}
                   title={rockbox.name+ " at "+rockbox.area_name}
-                  fontSize={0.875}
                 >
                   {rockbox.ores.map((ore:Ore) => (
                     <Button
-                      fontSize={1}
                       key={ore.name}
                       onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
                     >
