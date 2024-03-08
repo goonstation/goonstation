@@ -130,6 +130,12 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/camera/ranch{
+	dir = 4
+	},
+/obj/machinery/camera/ranch{
+	dir = 4
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "aas" = (
@@ -934,6 +940,7 @@
 	anchored = 0;
 	dir = 1
 	},
+/obj/landmark/start/job/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aco" = (
@@ -42441,6 +42448,15 @@
 	dir = 9
 	},
 /area/station/security/main)
+"vfz" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "vgp" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor,
@@ -83749,7 +83765,7 @@ ato
 ato
 lgy
 avs
-ato
+vfz
 asN
 axH
 ayu
