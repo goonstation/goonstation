@@ -114,6 +114,8 @@
 			try
 				var/datum/apiRoute/players/saves/data/post/addPlayerData = new
 				addPlayerData.buildBody(src.player.id, src.player.ckey, key, value)
+				logTheThing(LOG_DEBUG, src.player.ckey, "Saving data to cloud. Player ID: [src.player.id]. Ckey: [src.player.ckey]. Key: [key]. Value: [value]")
+				logTheThing(LOG_DIARY, src.player.ckey, "Saving data to cloud. Player ID: [src.player.id]. Ckey: [src.player.ckey]. Key: [key]. Value: [value]", "admin")
 				apiHandler.queryAPI(addPlayerData)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
