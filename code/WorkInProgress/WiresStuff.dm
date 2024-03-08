@@ -5,8 +5,11 @@
 	set hidden = 1
 	ADMIN_ONLY
 
-	//mapWorldNew(src)
-	//boop2
+	for (var/mob/M as anything in mobs)
+		if (M.mind)
+			var/playerId = M.mind.get_player().id
+			if (!playerId)
+				boutput(src, "[M.mind.ckey] has no player ID")
 
 
 /proc/mapWorldNew(client/C)

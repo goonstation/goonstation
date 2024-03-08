@@ -6,5 +6,7 @@
 		name = "Poll Sync"
 		schedule_interval = POLL_SYNC_PROCESS_SCHEDULE_INTERVAL
 
+		// initial pregame sync
+		poll_manager.sync_polldata()
 	doWork()
 		poll_manager.sync_polldata()

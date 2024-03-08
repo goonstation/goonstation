@@ -122,6 +122,9 @@
 		. *= 0.75
 	return list(0, .)
 
+/datum/movement_modifier/robot_mag_upgrade
+	additive_slowdown = 0.5
+
 // robot heads
 /datum/movement_modifier/robot_part/light_head
 	additive_slowdown = -0.1
@@ -235,18 +238,16 @@
 
 /datum/movement_modifier/vampiric_thrall/modifiers(mob/user, move_target, running)
 	. = list(4,0)
-	if (ishuman(user))
-		var/mob/living/carbon/human/H = user
-		var/datum/mutantrace/vampiric_thrall/vampiric_thrall = H.mutantrace
-		if (!istype(vampiric_thrall))
-			return
-		switch (vampiric_thrall.blood_points)
-			if (151 to INFINITY)
-				.[1] = 0.7
-			if (101 to 151)
-				.[1] = 1.6
-			if (51 to 101)
-				.[1] = 2.8
+	var/datum/abilityHolder/vampiric_thrall/thrallHolder = user.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+	if (!thrallHolder)
+		return
+	switch (thrallHolder.points)
+		if (151 to INFINITY)
+			.[1] = 0.7
+		if (101 to 151)
+			.[1] = 1.6
+		if (51 to 101)
+			.[1] = 2.8
 
 /datum/movement_modifier/wheelchair
 	ask_proc = 1

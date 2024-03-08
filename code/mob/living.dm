@@ -199,6 +199,7 @@
 	if (src.key)
 		var/datum/eventRecord/Death/deathEvent = new
 		deathEvent.buildAndSend(src, gibbed)
+	#ifndef NO_SHUTTLE_CALLS
 	if (src.client && ticker.round_elapsed_ticks >= 12000 && VALID_MOB(src))
 		var/num_players = 0
 		for(var/client/C)
@@ -213,6 +214,7 @@
 					boutput(world, SPAN_NOTICE("<B>Alert: The emergency shuttle has been called.</B>"))
 					boutput(world, SPAN_NOTICE("- - - <b>Reason:</b> Crew shortages and fatalities."))
 					boutput(world, SPAN_NOTICE("<B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"))
+	#endif
 	#undef VALID_MOB
 
 	// Active if XMAS or manually toggled.
@@ -963,7 +965,7 @@
 
 	//Blobchat handling
 	if (src.mob_flags & SPEECH_BLOB)
-		message = html_encode(src.say_quote(message))
+		message = src.say_quote(message)
 		var/rendered = "<span class='game blobsay'>"
 		rendered += "[SPAN_PREFIX("BLOB:")] "
 		rendered += "<span class='name text-normal' data-ctx='\ref[src.mind]'>[src.get_heard_name()]</span> "

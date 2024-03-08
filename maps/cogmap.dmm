@@ -44622,7 +44622,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "hxx" = (
@@ -47481,7 +47483,6 @@
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/Zeta)
 "jRc" = (
-/obj/shrub,
 /obj/shrub,
 /turf/simulated/floor/green/side{
 	dir = 4
@@ -61254,7 +61255,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "uDr" = (
