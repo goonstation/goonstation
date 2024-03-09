@@ -26,14 +26,10 @@ var/global/list/hydro_controller_queue = list(
 		pot_health_display = image('icons/obj/hydroponics/machines_hydroponics.dmi', "led-health")
 		pot_harvest_display = image('icons/obj/hydroponics/machines_hydroponics.dmi', "led-harv")
 
-		for (var/B in typesof(/datum/plantmutation))
-			if (B == /datum/plantmutation)
-				continue
+		for (var/B in concrete_typesof(/datum/plantmutation))
 			src.mutations += new B(src)
 
-		for (var/C in typesof(/datum/plant_gene_strain))
-			if (C == /datum/plant_gene_strain)
-				continue
+		for (var/C in concrete_typesof(/datum/plant_gene_strain))
 			src.strains += new C(src)
 
 		// You need to do plants after the others or they won't set up properly due to mutations and strains
