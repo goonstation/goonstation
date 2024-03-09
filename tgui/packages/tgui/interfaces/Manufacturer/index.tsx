@@ -75,7 +75,7 @@ const CategoryDropdown = (props, context) => {
   const { category, blueprints } = props;
   let buttons = [];
   for (let i in blueprints) {
-    buttons.push(<ButtonWithBadge width="16.4499%" height={5.75} image_path={blueprints[i].img} text={truncate(blueprints[i].name, 40)} onClick={() => act("product", { "blueprint_ref": blueprints[i].byondRef })} />);
+    buttons.push(<ButtonWithBadge width={12.75} height={5.5} image_path={blueprints[i].img} text={truncate(blueprints[i].name, 40)} onClick={() => act("product", { "blueprint_ref": blueprints[i].byondRef })} />);
   }
 
   return (
@@ -88,7 +88,7 @@ const CategoryDropdown = (props, context) => {
 const CardInfo = (_, context) => {
   const { data, act } = useBackend<ManufacturerData>(context);
   return (data.card_owner === null || data.card_balance === null) ? (
-    <Flex>
+    <Flex backgroundColor={backgroundPop} p={1}>
       <Flex.Item>
         No Card Inserted
       </Flex.Item>
@@ -97,7 +97,7 @@ const CardInfo = (_, context) => {
       </Flex.Item>
     </Flex>
   ) : (
-    <Box>
+    <Box backgroundColor={backgroundPop} p={1}>
       Card: {data.card_owner}
       <Flex>
         <Flex.Item>
@@ -124,8 +124,8 @@ export const CollapsibleWireMenu = (_, context) => {
       let cut = is_set(data.wire_bitflags, i);
       i++;
       wireContent.push(
-        <Flex textColor={data.wires[wire]}>
-          <Flex.Item>
+        <Flex>
+          <Flex.Item textColor={data.wires[wire]}>
             {wire}
           </Flex.Item>
           <Flex.Item>
@@ -196,13 +196,13 @@ export const Manufacturer = (_, context) => {
   return (
     <Window width={1200} height={600} title={data.fabricator_name}>
       <Window.Content>
-        <Flex>
-          <Flex.Item width="75%">
+        <Stack>
+          <Stack.Item width="80%">
             <Section>
               {dropdowns}
             </Section>
-          </Flex.Item>
-          <Flex.Item grow>
+          </Stack.Item>
+          <Stack.Item grow>
             <Stack vertical>
               <Stack.Item>
                 <Input placeholder="Search..." icon="search" width="100%" />
@@ -260,8 +260,8 @@ export const Manufacturer = (_, context) => {
                 ))}
               </Stack.Item>
             </Stack>
-          </Flex.Item>
-        </Flex>
+          </Stack.Item>
+        </Stack>
 
       </Window.Content>
     </Window>
