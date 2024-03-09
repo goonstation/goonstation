@@ -1,6 +1,7 @@
 #define PLANE_DISTORTION -130 //used as a render source for distortion filter for world, does not render directly
 #define PLANE_SPACE -120
-#define PLANE_PARALLAX -119
+#define PLANE_BETWEENSPACE -119
+#define PLANE_PARALLAX -118
 #define PLANE_UNDERFLOOR -115
 #define PLANE_FLOOR -110
 #define PLANE_WALL -105
