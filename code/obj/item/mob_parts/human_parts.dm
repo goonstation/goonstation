@@ -1254,15 +1254,15 @@
 ///// PARENT  /////
 
 /obj/item/parts/human_parts/arm/mutant/cow
-	icon = 'icons/mob/cow.dmi'
-	partIcon = 'icons/mob/cow.dmi'
+	icon = 'icons/mob/cow/spotted.dmi'
+	partIcon = 'icons/mob/cow/spotted.dmi'
 
 /obj/item/parts/human_parts/leg/mutant/cow
-	icon = 'icons/mob/cow.dmi'
-	partIcon = 'icons/mob/cow.dmi'
+	icon = 'icons/mob/cow/spotted.dmi'
+	partIcon = 'icons/mob/cow/spotted.dmi'
 	limb_hit_bonus = 4
 	skintoned = TRUE
-	handfoot_overlay_1_icon = 'icons/mob/cow.dmi'
+	handfoot_overlay_1_icon = 'icons/mob/cow/spotted.dmi'
 	handfoot_overlay_1_state = null
 	handfoot_overlay_1_color = CUST_2
 

@@ -207,9 +207,9 @@
 
 /obj/item/organ/tail/cow
 	name = "cow tail"
-	desc = "A short, brush-like tail."
+	desc = "A thin, brush like tail."
 	icon_state = "tail-cow"
-	organ_image_icon = 'icons/mob/cow.dmi'
+	organ_image_icon = 'icons/mob/cow/spotted.dmi'
 	tail_num = TAIL_COW
 	organ_image_under_suit_1 = "cow_under_suit"
 	organ_image_under_suit_2 = null
