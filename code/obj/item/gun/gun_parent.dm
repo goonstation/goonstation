@@ -51,16 +51,14 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/recoil_stacks = 0 //! current number of shots fired before recoil_reset elapsed.
 
 	// RECOIL SETUP
-	var/recoil_enabled = FALSE
+	var/recoil_enabled = TRUE
 
 	// RECOIL STRENGTH
 	// Basic recoil strength, this is how hard the weapon kicks by default
-	var/recoil_strength = 6 //! How strong this gun's base recoil impulse is.
-	var/recoil_max = 30		//! What's the max cumulative recoil this gun can hit?
-	// RECOIL ACCURACY
-	// How much cumulative recoil affects accuracy. default = 5 recoil to 1 degree spread
-	var/recoil_inaccuracy = TRUE //! Should this gun increase in spread as recoil increases
-	var/recoil_inaccuracy_multiplier = 0.2 //! Here in case it's needed, but 0.2 (aka. 5 recoil:1 degree spread) is likely the best way to go.
+	// recoil_strength is added to recoil every shot, and kicks the camera similarly.
+	var/recoil_strength = 9 //! How strong this gun's base recoil impulse is.
+	var/recoil_max = 50		//! What's the max cumulative recoil this gun can hit?
+	var/recoil_inaccuracy_max = 0 //! at recoil_max, the weapon has this much additional spread
 
 	// Recoil-induced icon tilting. Good for smaller guns. 64x32 icons might look a bit silly with high values.
 	// If your gun uses recoil, it's *strongly* recommended to keep this enabled.
@@ -331,8 +329,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		spread += 5 * how_drunk
 	spread = max(spread, spread_angle)
 
-	if (recoil_inaccuracy)
-		spread += recoil * recoil_inaccuracy_multiplier
+	spread += (recoil/recoil_max) * recoil_inaccuracy_max
 
 	for (var/i = 0; i < current_projectile.shot_number; i++)
 		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, target, 0, 0, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
@@ -419,8 +416,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		spread += 5 * how_drunk
 	spread = max(spread, spread_angle)
 
-	if (recoil_inaccuracy)
-		spread += recoil * recoil_inaccuracy_multiplier
+	spread += (recoil/recoil_max) * recoil_inaccuracy_max
 
 	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), called_target = called_target)
 	if (P)
@@ -525,8 +521,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		total_strength += clamp(round(recoil_stacks) - recoil_stacking_safe_stacks,0,recoil_stacking_max_stacks) * recoil_stacking_amount
 	var/variance = clamp(total_strength * camera_recoil_sway_multiplier, camera_recoil_sway_min, camera_recoil_sway_max)
 
-	//recoil_camera(user, dir, src.recoil * camera_recoil_multiplier, variance)
-	recoil_momentum_camera(user, dir, total_strength * camera_recoil_multiplier, variance)
+	recoil_camera(user, dir, total_strength * camera_recoil_multiplier, variance)
 
 
 /obj/item/gun/proc/do_icon_recoil()

@@ -8,6 +8,8 @@ TYPEINFO(/obj/item/gun/energy)
 	m_amt = 2000
 	g_amt = 1000
 	add_residue = 0 // Does this gun add gunshot residue when fired? Energy guns shouldn't.
+	recoil_inaccuracy_max = 0 //lasers probably dont shudder as you shoot them
+
 	var/rechargeable = 1 // Can we put this gun in a recharger? False should be a very rare exception.
 	var/robocharge = 800
 	var/cell_type = /obj/item/ammo/power_cell // Type of cell to spawn by default.

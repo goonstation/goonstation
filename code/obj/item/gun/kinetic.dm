@@ -4,6 +4,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/items/guns/kinetic.dmi'
 	item_state = "gun"
 	m_amt = 2000
+	camera_recoil_sway_min = 5 // kinetics can be more shuddery than lasers
+	recoil_inaccuracy_max = 10 // 10 degrees of seperation at max recoil
 	var/obj/item/ammo/bullets/ammo = null
 	/// How much ammo can this gun hold? Don't make this null (Convair880).
 	var/max_ammo_capacity = 1
@@ -789,6 +791,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO
+	recoil_stacking_enabled = TRUE
 
 	New()
 		if (prob(70))
@@ -1340,6 +1343,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/a12
 	ammobag_magazines = list(/obj/item/ammo/bullets/a12, /obj/item/ammo/bullets/aex)
 	ammobag_restock_cost = 2
+	recoil_strength = 20
+	recoil_max = 60
 
 	New()
 		if(prob(10))
@@ -1395,6 +1400,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/abg
 	var/racked_slide = FALSE
+	recoil_strength = 30
+	recoil_max = 60
 
 
 
@@ -1476,6 +1483,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	gildable = TRUE
 	default_magazine = /obj/item/ammo/bullets/pipeshot/scrap/five
+	recoil_strength = 20
+	recoil_max = 60
 
 	New()
 		ammo = new default_magazine
@@ -1493,6 +1502,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 1
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/flare/single
+	recoil_strength = 20
+	recoil_max = 20
 
 	New()
 		ammo = new default_magazine
@@ -1519,7 +1530,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	default_magazine = /obj/item/ammo/bullets/a12
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
-
+	recoil_strength = 30
+	recoil_max = 30
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/a12)
@@ -2146,6 +2158,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/buckshot_burst
 	fire_animation = TRUE
 	has_empty_state = TRUE
+	recoil_strength = 20
+	recoil_max = 60
 
 	New()
 		ammo = new default_magazine
@@ -2241,6 +2255,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/lmg
 	ammobag_magazines = list(/obj/item/ammo/bullets/lmg)
 	ammobag_restock_cost = 3
+	recoil_stacking_enabled = TRUE
+	recoil_stacking_safe_stacks = 8
+	recoil_stacking_max_stacks = 16
+	recoil_stacking_amount = 1
+	recoil_max = 100
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -2494,6 +2513,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = TRUE
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
 
+	recoil_strength = 20
+	recoil_max = 60
 	var/broke_open = FALSE
 	var/shells_to_eject = 0
 

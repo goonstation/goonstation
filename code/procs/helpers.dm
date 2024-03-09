@@ -1046,77 +1046,10 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			M.shakecamera = 0
 		animate(pixel_x = total_off_x*-1, pixel_y = total_off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 
-/proc/recoil_momentum_camera(mob/M, dir, strength=1, spread=3)
-	SPAWN(0)
-		if(!M || !M.client)
-			return
-		var/client/client = M.client
-		if (strength > M.recoilcamera_recoil_magnitude)
-			var/rand_angle =  rand(-spread, spread)
-			M.recoilcamera_angle = dir + rand_angle
-			M.recoilcamera_recoil_delta += strength
-		else
-			var/offset_angle = M.recoilcamera_angle - (dir)
-			var/rand_angle =  offset_angle + rand(-spread, spread)
-
-			//ok, so this odd math, but in essence:
-			//var/angle_relative_mult = max(0.4,cos(M.recoilcamera_angle - dir)) // this lowers recoil strength by 40%
-			var/angle_relative_mult = max(0,cos(M.recoilcamera_angle - dir))
-			var/max_reduction = rand(6,9)/10
-			//var/recoil_strength_reduction = min(max_reduction*M.recoilcamera_recoil_magnitude/(strength*6) * angle_relative_mult, max_reduction)
-			var/recoil_strength_reduction = min(M.recoilcamera_recoil_magnitude/(strength*6) * angle_relative_mult, max_reduction)
-
-			//back to normal
-			var/recoil_strength_adjusted = strength-recoil_strength_reduction
-			var/recoil_impulse = recoil_strength_adjusted * cos(offset_angle)
-			var/sway_strength = max(10,strength) * sin(rand_angle)
-			M.recoilcamera_sway_delta -= sway_strength
-			M.recoilcamera_recoil_delta += recoil_impulse
-		M.recoilcamera_last = TIME
-		if (!M.recoilcamera)
-			M.recoilcamera = TRUE
-			SPAWN(0)
-				do_momentum_recoil(M)
-
-var/elapsedTicks = 0
-/proc/do_momentum_recoil(mob/M)
-	if(!M || !M.client)
+/proc/recoil_camera(mob/M, dir, strength=1, spread=3)
+	if(!M || !M.client || !M.client.recoil_controller)
 		return
-	var/client/client = M.client
-	while(abs(M.recoilcamera_recoil_magnitude) > 0 || abs(M.recoilcamera_recoil_delta) > 0)
-		var/timer = TIME - M.recoilcamera_last
-		M.recoilcamera_recoil_magnitude = max(0, M.recoilcamera_recoil_magnitude + M.recoilcamera_recoil_delta)
-		M.recoilcamera_angle += M.recoilcamera_sway_delta
-		var/targetx = cos(M.recoilcamera_angle) * M.recoilcamera_recoil_magnitude
-		var/targety = sin(M.recoilcamera_angle) * M.recoilcamera_recoil_magnitude
-		var/deltax = targetx - M.recoilcamera_x
-		var/deltay = targety - M.recoilcamera_y
-
-		M.recoilcamera_sway_delta *= M.recoilcamera_sway_damp
-		M.recoilcamera_recoil_delta *= M.recoilcamera_damp
-		M.recoilcamera_recoil_delta -= M.recoilcamera_recoil_magnitude * M.recoilcamera_damp_distance
-		M.recoilcamera_recoil_delta -= 0.3
-		if (deltax >= 0)
-			deltax = round(deltax)
-		else
-			deltax = -round(-deltax)
-
-		if (deltay >= 0)
-			deltay = round(deltay)
-		else
-			deltay = -round(-deltay)
-
-		M.recoilcamera_x += deltax
-		M.recoilcamera_y += deltay
-
-		if (M.recoilcamera_recoil_magnitude == 0)
-			M.recoilcamera_recoil_delta = 0
-			M.recoilcamera_sway_delta = 0
-			M.recoilcamera_angle = 0
-		if(M.client)
-			animate(client, pixel_x = deltax, pixel_y = deltay, time = 1, flags = ANIMATION_RELATIVE)
-		sleep(1 DECI SECOND)
-	M.recoilcamera = FALSE
+	M.client.recoil_controller.recoil_camera(dir,strength,spread)
 
 
 /proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
