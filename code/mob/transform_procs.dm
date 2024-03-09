@@ -78,6 +78,8 @@
 
 /mob/new_player/AIize(var/mobile=0)
 	src.spawning = 1
+	src.name = "AI"
+	src.real_name = "AI"
 	return ..()
 
 /mob/living/carbon/AIize(var/mobile=0)
@@ -167,12 +169,13 @@
 		return make_critter(CT, get_turf(src))
 	return 0
 
-/mob/proc/make_critter(var/critter_type, var/turf/T, ghost_spawned=FALSE)
+/mob/proc/make_critter(var/critter_type, var/turf/T, ghost_spawned=FALSE, delete_original=TRUE)
 	var/mob/living/critter/newmob = new critter_type()
 	if(ghost_spawned)
 		newmob.ghost_spawned = ghost_spawned
 		if(!istype(newmob, /mob/living/critter/small_animal/mouse/weak/mentor))
 			newmob.name_prefix("ethereal")
+			newmob.name_suffix("[rand(10,99)][rand(10,99)]")
 			newmob.UpdateName()
 	if (!T || !isturf(T))
 		T = get_turf(src)
@@ -198,8 +201,9 @@
 		var/mob/living/critter/small_animal/small = newmob
 		small.setup_overlays() // this requires the small animal to have a client to set things up properly
 
-	SPAWN(1 DECI SECOND)
-		qdel(src)
+	if (delete_original)
+		SPAWN(1 DECI SECOND)
+			qdel(src)
 	return newmob
 
 

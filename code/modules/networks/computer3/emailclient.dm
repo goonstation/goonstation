@@ -49,10 +49,11 @@
 	var/max_lines = 16
 	var/signature = null
 
-	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
 	var/defaultDomain = "NT13"
 
 	initialize()
+		if (..())
+			return TRUE
 		src.netCard = null
 		src.menu = 0
 		var/introdat = "ViewPoint Email Client V1.5<br>Copyright 2051 Thinktronic Systems, LTD.<br>"
@@ -64,15 +65,13 @@
 
 			src.server_netid = null
 			src.master.unload_program(src)
-			return
+			return TRUE
 
 		else
 			introdat += mainmenu_text()
 
 		src.master.temp = null
 		src.print_text(introdat)
-
-		return
 
 	input_text(text)
 		if(..())
@@ -671,17 +670,16 @@ SUBJECT: [ckeyEx(headerList["subj"]) ? copytext(uppertext(headerList["subj"]), 1
 			signal.data["address_1"] = attempted_netid
 			signal.data["command"] = "term_connect"
 			signal.data["device"] = "SRV_TERMINAL"
-			var/datum/computer/file/user_data/user_data = get_user_data()
 			var/datum/computer/file/record/udat = null
-			if (istype(user_data))
+			if (istype(src.account))
 				udat = new
 
-				var/userid = format_username(user_data.registered)
+				var/userid = format_username(src.account.registered)
 
 				udat.fields["userid"] = userid
 				src.user_address = "[userid]@[defaultDomain]"
-				//udat.fields["assignment"] = user_data.assignment
-				udat.fields["access"] = list2params(user_data.access)
+				//udat.fields["assignment"] = src.account.assignment
+				udat.fields["access"] = list2params(src.account.access)
 				if (!udat.fields["access"] || !udat.fields["userid"])
 					//qdel(udat)
 					udat.dispose()
@@ -739,17 +737,6 @@ SUBJECT: [ckeyEx(headerList["subj"]) ? copytext(uppertext(headerList["subj"]), 1
 				return (potential_server_netid == null)
 
 			return 0
-
-		get_user_data()
-			var/datum/computer/folder/accdir = src.holder.root
-			if(src.master.host_program) //Check where the OS is, preferably.
-				accdir = src.master.host_program.holder.root
-
-			var/datum/computer/file/user_data/target = parse_file_directory(setup_acc_filepath, accdir)
-			if(target && istype(target))
-				return target
-
-			return null
 
 		mainmenu_text(display_server=1)
 			. = null

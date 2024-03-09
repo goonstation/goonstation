@@ -1067,6 +1067,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	var/pulled = FALSE
+	add_residue = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -1165,6 +1166,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 6
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
+	add_residue = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -1188,6 +1190,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 12
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
+	add_residue = FALSE
 
 	New()
 		ammo = new default_magazine

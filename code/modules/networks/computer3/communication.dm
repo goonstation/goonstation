@@ -10,8 +10,6 @@
 	req_access = list(access_heads)
 	var/tmp/menu = MENU_MAIN
 	var/tmp/transmit_type
-	var/tmp/authenticated = null //Are we currently logged in?
-	var/datum/computer/file/user_data/account = null
 	var/obj/item/peripheral/network/radio/radiocard = null
 	var/obj/item/peripheral/network/powernet_card/pnet_card = null
 	var/tmp/comm_net_id = null //The net id of our linked ~comm dish~
@@ -19,16 +17,10 @@
 
 	var/transmit_title = null
 
-	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
-
 	initialize()
-
-		src.authenticated = null
+		if (..())
+			return TRUE
 		src.master.temp = null
-		if(!src.find_access_file()) //Find the account information, as it's essentially a ~digital ID card~
-			src.print_text("<b>Error:</b> Cannot locate user file.  Quitting...")
-			src.master.unload_program(src) //Oh no, couldn't find the file.
-			return
 
 		src.radiocard = locate() in src.master.peripherals
 		if(!radiocard || !istype(src.radiocard))
@@ -40,13 +32,7 @@
 			src.pnet_card = null
 			src.print_text("<b>Warning:</b> No network adapter detected.")
 
-		if(!src.check_access(src.account.access))
-			src.print_text("User [src.account.registered] does not have needed access credentials.<br>Quitting...")
-			src.master.unload_program(src)
-			return
-
 		src.reply_wait = -1
-		src.authenticated = src.account.registered
 
 		src.print_shuttle_status()
 		src.print_intro_text()
@@ -69,8 +55,6 @@
 
 	input_text(text)
 		if(..())
-			return
-		if(isghostdrone(usr))
 			return
 
 		var/list/command_list = parse_string(text)
@@ -348,18 +332,6 @@
 		return
 
 	proc
-		find_access_file() //Look for the whimsical account_data file
-			var/datum/computer/folder/accdir = src.holder.root
-			if(src.master.host_program) //Check where the OS is, preferably.
-				accdir = src.master.host_program.holder.root
-
-			var/datum/computer/file/user_data/target = parse_file_directory(setup_acc_filepath, accdir)
-			if(target && istype(target))
-				src.account = target
-				return 1
-
-			return 0
-
 		detect_comm_dish() //Send out a ping signal to find a comm dish.
 			if(!src.pnet_card)
 				return //The card is kinda crucial for this.
