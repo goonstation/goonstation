@@ -1091,7 +1091,7 @@ TRAYS
 	shatter() // don't
 		return
 
-/obj/item/plate/cooling_rack //because grilled and fried foods always scalding you is annoying
+/obj/item/plate/cooling_rack // because grilled and fried foods always scalding you is annoying. This also lets you cook things in plasma fires.
 	name = "cooling rack"
 	desc = "A wire-mesh rack that lets food items cool down for safe(er?) consumption."
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
@@ -1104,7 +1104,7 @@ TRAYS
 	pickup_sfx = 0 // to avoid using plate SFX
 	w_class = W_CLASS_NORMAL
 	hit_sound = "step_lattice"
-	can_headsmash = FALSE // no unbreakable plate smash for you!
+	can_headsmash = FALSE // no unbreakable smashing tool for you!
 
 	New()
 		. = ..()
