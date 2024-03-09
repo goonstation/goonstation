@@ -10,8 +10,8 @@ import { Image } from "../Image";
 import { CenteredText } from "./CenteredText";
 
 type ButtonWithBadgeProps = {
-  width?: number,
-  height?: number,
+  width: number | string,
+  height: number | string,
   noImageShadow?: boolean,
   image_path: string;
   text?: string;
@@ -34,17 +34,16 @@ export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
       onClick={onClick}
       ellipsis
       width={width} height={height}
-      pl={0} pb={0}
-      m={1}
+      p={0} mb={0}
     >
       <Image
         verticalAlign="top"
-        height={5}
+        width="45%"
         pixelated
         src={image_path}
         backgroundColor={noImageShadow ? null : "rgba(0,0,0,0.2)"}
       />
-      <CenteredText width={7} height={5} text={text} />
+      <CenteredText width="55%" height={height} text={text} />
     </Button>
   );
 };
