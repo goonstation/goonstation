@@ -1045,19 +1045,96 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			return
 		M.shakecamera = 1
 		var/client/client = M.client
-
+		// track total offsets to reset (rather than lazily setting pixel_x to 0)
+		var/total_off_x = 0
+		var/total_off_y = 0
 		for(var/i=0, i<duration, i++)
 			var/off_x = (rand(0, strength) * (prob(50) ? -1:1))
 			var/off_y = (rand(0, strength) * (prob(50) ? -1:1))
+			total_off_x -= off_x
+			total_off_y -= off_y
 			if(client)
 				animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			sleep(delay)
 
 		if (client)
-			client.pixel_x = 0
-			client.pixel_y = 0
+			animate(client, pixel_x = total_off_x, pixel_y = total_off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			M.shakecamera = 0
+		animate(pixel_x = total_off_x*-1, pixel_y = total_off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
+
+/proc/recoil_momentum_camera(mob/M, dir, strength=1, spread=3)
+	SPAWN(0)
+		if(!M || !M.client)
+			return
+		var/client/client = M.client
+		if (strength > M.recoilcamera_recoil_magnitude)
+			var/rand_angle =  rand(-spread, spread)
+			M.recoilcamera_angle = dir + rand_angle
+			M.recoilcamera_recoil_delta += strength
+		else
+			var/offset_angle = M.recoilcamera_angle - (dir)
+			var/rand_angle =  offset_angle + rand(-spread, spread)
+
+			//ok, so this odd math, but in essence:
+			//var/angle_relative_mult = max(0.4,cos(M.recoilcamera_angle - dir)) // this lowers recoil strength by 40%
+			var/angle_relative_mult = max(0,cos(M.recoilcamera_angle - dir))
+			var/max_reduction = rand(6,9)/10
+			//var/recoil_strength_reduction = min(max_reduction*M.recoilcamera_recoil_magnitude/(strength*6) * angle_relative_mult, max_reduction)
+			var/recoil_strength_reduction = min(M.recoilcamera_recoil_magnitude/(strength*6) * angle_relative_mult, max_reduction)
+
+			//back to normal
+			var/recoil_strength_adjusted = strength-recoil_strength_reduction
+			var/recoil_impulse = recoil_strength_adjusted * cos(offset_angle)
+			var/sway_strength = max(10,strength) * sin(rand_angle)
+			M.recoilcamera_sway_delta -= sway_strength
+			M.recoilcamera_recoil_delta += recoil_impulse
+		M.recoilcamera_last = TIME
+		if (!M.recoilcamera)
+			M.recoilcamera = TRUE
+			SPAWN(0)
+				do_momentum_recoil(M)
+
+var/elapsedTicks = 0
+/proc/do_momentum_recoil(mob/M)
+	if(!M || !M.client)
+		return
+	var/client/client = M.client
+	while(abs(M.recoilcamera_recoil_magnitude) > 0 || abs(M.recoilcamera_recoil_delta) > 0)
+		var/timer = TIME - M.recoilcamera_last
+		M.recoilcamera_recoil_magnitude = max(0, M.recoilcamera_recoil_magnitude + M.recoilcamera_recoil_delta)
+		M.recoilcamera_angle += M.recoilcamera_sway_delta
+		var/targetx = cos(M.recoilcamera_angle) * M.recoilcamera_recoil_magnitude
+		var/targety = sin(M.recoilcamera_angle) * M.recoilcamera_recoil_magnitude
+		var/deltax = targetx - M.recoilcamera_x
+		var/deltay = targety - M.recoilcamera_y
+
+		M.recoilcamera_sway_delta *= M.recoilcamera_sway_damp
+		M.recoilcamera_recoil_delta *= M.recoilcamera_damp
+		M.recoilcamera_recoil_delta -= M.recoilcamera_recoil_magnitude * M.recoilcamera_damp_distance
+		M.recoilcamera_recoil_delta -= 0.3
+		if (deltax >= 0)
+			deltax = round(deltax)
+		else
+			deltax = -round(-deltax)
+
+		if (deltay >= 0)
+			deltay = round(deltay)
+		else
+			deltay = -round(-deltay)
+
+		M.recoilcamera_x += deltax
+		M.recoilcamera_y += deltay
+
+		if (M.recoilcamera_recoil_magnitude == 0)
+			M.recoilcamera_recoil_delta = 0
+			M.recoilcamera_sway_delta = 0
+			M.recoilcamera_angle = 0
+		if(M.client)
+			animate(client, pixel_x = deltax, pixel_y = deltay, time = 1, flags = ANIMATION_RELATIVE)
+		sleep(1 DECI SECOND)
+	M.recoilcamera = FALSE
+
 
 /proc/findname(msg)
 	for(var/mob/M in mobs)

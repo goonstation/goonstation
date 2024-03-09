@@ -94,6 +94,18 @@
 	var/losebreath = 0
 	var/intent = null
 	var/shakecamera = 0
+	var/recoilcamera = 0 //! whether or not this mob's recoil camera is active
+	var/recoilcamera_x = 0 //! current camera x offset from recoil
+	var/recoilcamera_y = 0 //! current camera y offset from recoil
+	var/recoilcamera_last = 0 //! time of the last recoil impulse
+	var/recoilcamera_recoil_magnitude = 0 //! the magnitude of recoil this mob's experiencing (ie. how far away is the camera)
+	var/recoilcamera_recoil_delta = 0 //! the rate of change of recoil magnitude
+	var/recoilcamera_angle = 0 //! the current angle of the mob's recoil camera
+	var/recoilcamera_sway_delta = 0 //! the rate of change of the mob's recoil angle
+	var/recoilcamera_damp = 0.5 //! how much recoil delta should be multiplied by every 10th of a second
+	var/recoilcamera_damp_distance = 0.3 //! how much recoil delta should be decreased by, per pixel away from the centre
+	var/recoilcamera_sway_damp = 0.85 //! how much sway delta should be multiplied by every 10th of a second
+
 	var/a_intent = "help"
 	var/m_intent = "run"
 	var/lastKnownIP = null
