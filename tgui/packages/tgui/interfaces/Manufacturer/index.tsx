@@ -8,7 +8,7 @@
 import { useBackend, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
-import { Box, Button, Collapsible, Divider, Flex, Input, LabeledList, Section, Slider, Table } from '../../components';
+import { Box, Button, Collapsible, Divider, Flex, Input, LabeledList, Section, Slider, Stack, Table } from '../../components';
 import { ButtonWithBadge } from '../../components/goonstation/ButtonWithBadge';
 import { formatTime, truncate } from '../../format';
 import { TableCell, TableRow } from '../../components/Table';
@@ -75,7 +75,7 @@ const CategoryDropdown = (props, context) => {
   const { category, blueprints } = props;
   let buttons = [];
   for (let i in blueprints) {
-    buttons.push(<ButtonWithBadge width="16.4699%" height={5.75} image_path={blueprints[i].img} text={truncate(blueprints[i].name, 40)} onClick={() => act("product", { "blueprint_ref": blueprints[i].byondRef })} />);
+    buttons.push(<ButtonWithBadge width="16.4499%" height={5.75} image_path={blueprints[i].img} text={truncate(blueprints[i].name, 40)} onClick={() => act("product", { "blueprint_ref": blueprints[i].byondRef })} />);
   }
 
   return (
@@ -197,57 +197,69 @@ export const Manufacturer = (_, context) => {
     <Window width={1200} height={600} title={data.fabricator_name}>
       <Window.Content>
         <Flex>
-          <Flex.Item width="80%">
+          <Flex.Item width="75%">
             <Section>
               {dropdowns}
             </Section>
           </Flex.Item>
           <Flex.Item grow>
-            <Section>
-              <Input placeholder="Search..." icon="search" width="100%" />
-              <Section title="Materials Loaded" textAlign="center">
-                <LoadedMaterials resources={data.resources} resourceNames={data.resource_names} />
-              </Section>
-              <CardInfo />
-              <Box>
-                <Flex>
-                  <Flex.Item>
-                    Repeat: {repeat ? "On" : "Off"}
-                  </Flex.Item>
-                  <Flex.Item>
-                    <Button icon="repeat" onClick={() => toggleRepeat()}>Toggle Repeat</Button>
-                  </Flex.Item>
-                </Flex>
-                <Slider
-                  minValue={1}
-                  value={speed}
-                  maxValue={3}
-                  step={1}
-                  stepPixelSize={100}
-                  onChange={(_e:any, value:number) => updateSpeed(value)}
-                >
-                  Speed: {speed}
-                </Slider>
-              </Box>
-
-              {data.panel_open ? <CollapsibleWireMenu /> : ""}
-
-              {data.rockboxes.map((rockbox:Rockbox) => (
-                <Section
-                  key={rockbox.name}
-                  title={rockbox.name+ " at "+rockbox.area_name}
-                >
-                  {rockbox.ores.map((ore:Ore) => (
-                    <Button
-                      key={ore.name}
-                      onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
-                    >
-                      {ore.name}: {ore.amount} for {ore.cost}{credit_symbol} each
-                    </Button>
-                  ))}
+            <Stack vertical>
+              <Stack.Item>
+                <Input placeholder="Search..." icon="search" width="100%" />
+              </Stack.Item>
+              <Stack.Item>
+                <Section title="Materials Loaded" textAlign="center">
+                  <LoadedMaterials resources={data.resources} resourceNames={data.resource_names} />
                 </Section>
-              ))}
-            </Section>
+              </Stack.Item>
+              <Stack.Item>
+                <CardInfo />
+              </Stack.Item>
+              <Stack.Item>
+                <Box>
+                  <Flex>
+                    <Flex.Item>
+                      Repeat: {repeat ? "On" : "Off"}
+                    </Flex.Item>
+                    <Flex.Item>
+                      <Button icon="repeat" onClick={() => toggleRepeat()}>Toggle Repeat</Button>
+                    </Flex.Item>
+                  </Flex>
+                  <Slider
+                    minValue={1}
+                    value={speed}
+                    maxValue={3}
+                    step={1}
+                    stepPixelSize={100}
+                    onChange={(_e:any, value:number) => updateSpeed(value)}
+                  >
+                    Speed: {speed}
+                  </Slider>
+                </Box>
+              </Stack.Item>
+              <Stack.Item>
+                {data.panel_open ? <CollapsibleWireMenu /> : ""}
+              </Stack.Item>
+              <Stack.Item>
+                {data.rockboxes.map((rockbox:Rockbox) => (
+                  <Section
+                    key={rockbox.name}
+                    title={rockbox.name+ " at "+rockbox.area_name}
+                  >
+                    {rockbox.ores.map((ore:Ore) => (
+                      <Button
+                        fluid
+                        textAlign="center"
+                        key={ore.name}
+                        onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
+                      >
+                        {ore.name}: {ore.amount} for {ore.cost}{credit_symbol} each
+                      </Button>
+                    ))}
+                  </Section>
+                ))}
+              </Stack.Item>
+            </Stack>
           </Flex.Item>
         </Flex>
 

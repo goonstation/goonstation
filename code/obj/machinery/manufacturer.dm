@@ -360,6 +360,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Converts a manufacture datum to a list with string keys to relevant vars for the UI
 	proc/manufacture_as_list(datum/manufacture/M, mob/user)
 		return list(
+			"name" = "[M]",
 			"item_names" = M.item_names,
 			"item_amounts" = M.item_amounts,
 			"create" = M.create,
