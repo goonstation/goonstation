@@ -355,8 +355,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	material_prints = "high-quality synthetic fibers"
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	setupProperties()
 		..()

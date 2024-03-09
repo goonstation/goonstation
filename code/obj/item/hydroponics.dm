@@ -573,8 +573,8 @@ TYPEINFO(/obj/item/plantanalyzer)
 /obj/item/reagent_containers/glass/bottle/weedkiller
 	name = "weedkiller"
 	desc = "A small bottle filled with Atrazine, an effective weedkiller."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle1"
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "bottle_1"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -585,8 +585,8 @@ TYPEINFO(/obj/item/plantanalyzer)
 /obj/item/reagent_containers/glass/bottle/mutriant
 	name = "Mutagenic Plant Formula"
 	desc = "An unstable radioactive mixture that stimulates genetic diversity."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle3"
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -597,8 +597,8 @@ TYPEINFO(/obj/item/plantanalyzer)
 /obj/item/reagent_containers/glass/bottle/groboost
 	name = "Ammonia Plant Formula"
 	desc = "A nutrient-rich plant formula that encourages quick plant growth."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle3"
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -609,8 +609,8 @@ TYPEINFO(/obj/item/plantanalyzer)
 /obj/item/reagent_containers/glass/bottle/topcrop
 	name = "Potash Plant Formula"
 	desc = "A nutrient-rich plant formula that encourages large crop yields."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle3"
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -621,8 +621,8 @@ TYPEINFO(/obj/item/plantanalyzer)
 /obj/item/reagent_containers/glass/bottle/powerplant
 	name = "Saltpetre Plant Formula"
 	desc = "A nutrient-rich plant formula that encourages more potent crops."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle3"
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -633,8 +633,8 @@ TYPEINFO(/obj/item/plantanalyzer)
 /obj/item/reagent_containers/glass/bottle/fruitful
 	name = "Mutadone Plant Formula"
 	desc = "A nutrient-rich formula that attempts to rectify genetic problems."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle3"
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
@@ -656,8 +656,11 @@ TYPEINFO(/obj/item/plantanalyzer)
 
 /obj/item/reagent_containers/glass/water_pipe
 	name = "water pipe"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
 	icon_state = "bong"
+	fluid_overlay_states = 8
+	container_style = "bong"
+	fluid_overlay_scaling = RC_FLUID_OVERLAY_SCALING_SPHERICAL
 
 	filled
 

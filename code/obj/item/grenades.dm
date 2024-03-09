@@ -42,6 +42,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	var/issawfly = FALSE //for sawfly remote
 	///damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>screwdriver</b> to adjust the detonation time."})
 
 	attack_self(mob/user as mob)
 		if (!src.armed)
@@ -812,6 +813,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	not_in_mousetraps = TRUE
 	var/old_light_grenade = 0
 	var/destination
+	HELP_MESSAGE_OVERRIDE({""})
 
 	New()
 		..()
@@ -1402,19 +1404,27 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			for (var/turf/simulated/wall/W in range(src.expl_range, location))
 				if (W && istype(W) && !location.loc:sanctuary)
 					W.ReplaceWithFloor()
-			for (var/obj/structure/girder/G in range(src.expl_range, location))
-				var/area/a = get_area(G)
-				if (G && istype(G) && !a.sanctuary)
-					qdel(G)
-			for (var/obj/window/WD in range(src.expl_range, location))
-				var/area/a = get_area(WD)
-				if (WD && istype(WD) && prob(max(0, 100 - (WD.health / 3))) && !a.sanctuary)
-					WD.smash()
-			for (var/obj/grille/GR in range(src.expl_range, location))
-				var/area/a = get_area(GR)
-				if (GR && istype(GR) && GR.ruined != 1 && !a.sanctuary)
-					GR.ex_act(2)
-
+			for (var/obj/O in range(src.expl_range, location))
+				var/area/area = get_area(O)
+				if (area?.sanctuary)
+					continue
+				if (istype(O, /obj/structure/girder))
+					qdel(O)
+					continue
+				if (istype(O, /obj/window))
+					var/obj/window/window = O
+					if (prob(max(0, 100 - (window.health / 3))))
+						window.smash()
+					continue
+				if (istype(O, /obj/grille))
+					var/obj/grille/grille = O
+					if (!grille.ruined)
+						grille.ex_act(2)
+					continue
+				if (istype(O, /obj/machinery/door/firedoor))
+					var/obj/machinery/door/firedoor/firelock = O
+					qdel(firelock)
+					continue
 		qdel(src)
 		return
 
@@ -1546,18 +1556,28 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				var/area/a = get_area(DR)
 				if (!DR.cant_emag && !a.sanctuary)
 					DR.take_damage(DR.health)
-			for (var/obj/structure/girder/G in range(src.expl_range, location))
-				var/area/a = get_area(G)
-				if (G && istype(G) && !a.sanctuary)
-					qdel(G)
-			for (var/obj/window/W in range(src.expl_range, location))
-				var/area/a = get_area(W)
-				if (W && istype(W) && !a.sanctuary)
-					W.damage_heat(500)
-			for (var/obj/grille/GR in range(src.expl_range, location))
-				var/area/a = get_area(GR)
-				if (GR && istype(GR) && GR.ruined != 1 && !a.sanctuary)
-					GR.damage_heat(500)
+
+			for (var/obj/O in range(src.expl_range, location))
+				var/area/area = get_area(O)
+				if (area?.sanctuary)
+					continue
+				if (istype(O, /obj/structure/girder))
+					qdel(O)
+					continue
+				if (istype(O, /obj/window))
+					var/obj/window/window = O
+					if (prob(max(0, 100 - (window.health / 3))))
+						window.damage_heat(500)
+					continue
+				if (istype(O, /obj/grille))
+					var/obj/grille/grille = O
+					if (!grille.ruined)
+						grille.damage_heat(500)
+					continue
+				if (istype(O, /obj/machinery/door/firedoor))
+					var/obj/machinery/door/firedoor/firelock = O
+					qdel(firelock)
+					continue
 
 			for (var/mob/living/M in range(src.expl_range, location))
 				if(check_target_immunity(M)) continue

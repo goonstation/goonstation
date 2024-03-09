@@ -108,6 +108,9 @@
 	blob_act(power)
 		return
 
+	is_spacefaring()
+		return TRUE
+
 	proc/hurt(damage)
 		var/datum/healthHolder/Br = src.get_health_holder("brute")
 		Br?.TakeDamage(damage)

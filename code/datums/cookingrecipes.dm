@@ -2221,3 +2221,22 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 			lipstick.name = "[lipstick.color_name] lipstick"
 			lipstick.UpdateIcon()
 		return lipstick
+
+/datum/cookingrecipe/oven/melted_sugar
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/sugar
+	item2 = /obj/item/plate/tray
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/ingredient/melted_sugar
+
+/datum/cookingrecipe/mixer/brownie_batter
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
+	amt2 = 2
+	item3 = /obj/item/reagent_containers/food/snacks/candy/chocolate
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/ingredient/brownie_batter
+
+/datum/cookingrecipe/oven/brownie_batch
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/brownie_batter
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/brownie_batch/

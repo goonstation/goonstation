@@ -20,8 +20,8 @@ var/global/station_name_changing = 1 //Are people allowed to change the station 
 var/global/station_or_ship = null
 var/global/station_name = null
 var/global/the_station_name = null
-var/global/list/station_name_whitelist = new()
-var/global/list/station_name_whitelist_sectioned = new()
+var/global/list/station_name_whitelist = list()
+var/global/list/station_name_whitelist_sectioned = list()
 
 var/global/stationNameChangeDelay = 1 MINUTE //deciseconds. 600 = 60 seconds
 var/global/lastStationNameChange = 0 //timestamp
@@ -223,6 +223,9 @@ var/global/lastStationNameChange = 0 //timestamp
 				#endif
 			else
 				the_station_name = name
+
+	var/datum/eventRecord/StationName/stationNameEvent = new()
+	stationNameEvent.send(name)
 
 	station_name = name
 
