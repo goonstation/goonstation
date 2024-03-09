@@ -147,6 +147,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\abilities\santa.dm"
 #include "code\datums\abilities\vampiric_thrall.dm"
 #include "code\datums\abilities\zoldorfabilities.dm"
+#include "code\datums\abilities\critter\arc.dm"
 #include "code\datums\abilities\critter\bite.dm"
 #include "code\datums\abilities\critter\bloodbite.dm"
 #include "code\datums\abilities\critter\boilgib.dm"

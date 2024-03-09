@@ -38,6 +38,7 @@
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE
+	pull_w_class = W_CLASS_NORMAL
 	hand_count = 3
 	reagent_capacity = 100
 	health_brute = 25
@@ -51,10 +52,14 @@
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid)
 	no_stamina_stuns = TRUE
+	var/recolor = null
 
 	New()
 		..()
+		src.faction |= FACTION_FERMID
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
+		if(recolor)
+			color = color_mapping_matrix(inp=list("#cc0303", "#9d9d9b", "#343434"), out=list(recolor, "#9d9d9b", "#343434"))
 
 	is_spacefaring()
 		return TRUE
@@ -127,6 +132,10 @@
 		src.reagents.add_reagent("haloperidol", 50, null)
 		return ..()
 
+	radioactive
+		New()
+			..()
+			AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
 /mob/living/critter/fermid/polymorph
 	desc = "Extremely hostile asteroid-dwelling bugs. This one looks particularly annoyed about something."
 	health_brute = 50
@@ -145,21 +154,138 @@
 ///////////////////////////////////////////////
 // FERMID WORKER
 ///////////////////////////////////////////////
-// /mob/living/critter/fermid/worker
+/mob/living/critter/fermid/worker
+	name = "fermid"
+	real_name = "fermid"
+	desc = "Extremely hostile asteroid-dwelling bugs. Small, numble, and a whole lot of mandible."
+	icon_state = "fermid-s"
+	icon_state_dead = "fermid-s-dead"
+	health_brute = 20
+	health_burn = 20
+	flags = TABLEPASS
+	fits_under_table = 1
+
+	green
+		recolor = "#05da17"
+
+/mob/living/critter/fermid/spitter
+	name = "fermid"
+	real_name = "fermid"
+	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid whatever it in that enlarged gaster."
+	icon_state = "fermid-s"
+	icon_state_dead = "fermid-s-dead"
+	health_brute = 30
+	health_burn = 30
+
+
+	orange
+		recolor = "#e47f0c"
+		add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/flamethrower)
+
+		critter_ability_attack(var/mob/target)
+			var/datum/targetable/critter/fire = src.abilityHolder.getAbility(/datum/targetable/critter/flamethrower)
+			if (!fire.disabled && fire.cooldowncheck())
+				fire.handleCast(target)
+				return TRUE
+			. = ..()
+
+	blue
+		recolor = "#1156d8"
+		add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/arcflash)
+
+		critter_ability_attack(var/mob/target)
+			var/datum/targetable/critter/arc = src.abilityHolder.getAbility(/datum/targetable/critter/arcflash)
+			if (!arc.disabled && arc.cooldowncheck())
+				arc.handleCast(target)
+				return TRUE
+			. = ..()
+
 
 ///////////////////////////////////////////////
 // FERMID QUEEN
 ///////////////////////////////////////////////
-// /mob/living/critter/fermid/queen
+/mob/living/critter/fermid/queen
+	name = "fermid queen"
+	real_name = "fermid queen"
+	desc = "Extremely hostile asteroid-dwelling mother of bugs. A risk to life as we know it if left unchecked."
+	icon = 'icons/misc/bigcritter.dmi'
+	icon_state = "fermid-queen"
+	icon_state_dead = "fermid-queen-dead"
+	health_brute = 50
+	health_brute_vuln = 0.6
+	health_burn = 25
+	health_burn_vuln = 0.1
+	pull_w_class = W_CLASS_BULKY
+
+/mob/living/critter/fermid/hulk
+	name = "fermid hulk"
+	real_name = "fermid hulk"
+	desc = "Extremely hostile asteroid-dwelling mother of bugs. A huge guardian of some riches."
+	icon = 'icons/misc/bigcritter.dmi'
+	icon_state = "fermid-hulk"
+	icon_state_dead = "fermid-hulk-dead"
+	health_brute = 40
+	health_brute_vuln = 0.5
+	health_burn = 25
+	health_burn_vuln = 0.1
+	pull_w_class = W_CLASS_BULKY
+
+	purple
+		recolor = "#b90fab"
 
 ///////////////////////////////////////////////
 // FERMID GRUB
 ///////////////////////////////////////////////
-// /mob/living/critter/fermid/grub
+/mob/living/critter/fermid/grub
+	name = "fermid grub"
+	real_name = "fermid grub"
+	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid them wherever possible."
+	icon_state = "fermid-g"
+	icon_state_dead = "fermid-g-dead"
+	flags = TABLEPASS
+	fits_under_table = 1
+	pull_w_class = W_CLASS_NORMAL
+	health_brute = 15
+	health_brute_vuln = 1
+	health_burn = 15
+	health_burn_vuln = 0.5
 
 ///////////////////////////////////////////////
 // FERMID EGG
 ///////////////////////////////////////////////
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/fermid
+	name = "insectoid egg"
+	desc = "Looks like this could hatch into something fermid like."
+	critter_type = /mob/living/critter/fermid
+	color = null
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/fermid/random
+	New()
+		critter_type = weighted_pick(list(/mob/living/critter/fermid=10,
+										  /mob/living/critter/fermid/radioactive=1,
+										  /mob/living/critter/fermid/worker/green=5,
+										  /mob/living/critter/fermid/hulk/purple=1,
+										  /mob/living/critter/fermid/spitter/orange=2,
+										  /mob/living/critter/fermid/spitter/blue=2))
+		..()
+
+
+/obj/overlay/tile_effect/cracks/spawner/fermid
+	icon = 'icons/turf/walls/asteroid.dmi'
+	icon_state = "orifice2"
+	spawntype = /mob/living/critter/fermid
+
+	random
+		New()
+			spawntype = weighted_pick(list(/mob/living/critter/fermid=10,
+										/mob/living/critter/fermid/radioactive=1,
+										/mob/living/critter/fermid/worker/green=5,
+										/mob/living/critter/fermid/hulk/purple=1,
+										/mob/living/critter/fermid/spitter/orange=2,
+										/mob/living/critter/fermid/spitter/blue=2))
+			..()
+
 
 ///////////////////////////////////////////////
 // ROCK WORM

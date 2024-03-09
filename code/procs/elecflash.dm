@@ -110,7 +110,7 @@ var/global/mutable_appearance/elecflash_ma = null
 	if (isintangible(src) || check_target_immunity(src))
 		return
 	if (power > 1) // pretty light damage and stam damage :)
-		if (src.bioHolder.HasEffect("resist_electric"))
+		if (src.bioHolder?.HasEffect("resist_electric"))
 			boutput(src, SPAN_NOTICE("You feel electricity spark across you harmlessly!"))
 			return 0
 		if (src.hasStatus("weakened"))
