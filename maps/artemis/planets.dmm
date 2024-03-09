@@ -801,7 +801,7 @@
 /area/ship/artemis)
 "uZ" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/blue/checker,
 /area/ship/artemis)
 "vc" = (
@@ -941,7 +941,7 @@
 /area/space)
 "Ae" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/blue/checker,
 /area/ship/arjuna)
 "Ai" = (

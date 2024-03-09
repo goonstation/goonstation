@@ -1,5 +1,26 @@
 // Hydroponics procs not specific to the plantpot start here.
 
+proc/HYPchem_scaling(var/scaling_statistics)
+	//! This proc causes all chem production of botany to have a diminishing return with potency (or other stats for e.g. maneaters)
+	//For the graph in question with explanation, refer to this link: https://www.desmos.com/calculator/gy7tn43s6b
+	var/scaling_asymptote = 200 //! For potency reaching infinite, this times linear_factor will be the result
+	var/scaling_factor = 150 //! Refer to the graph in the explation on how this is calculated
+	var/result = 1
+	if (scaling_statistics > 0)
+		result *= scaling_asymptote / (scaling_statistics + scaling_factor)
+	return result
+
+proc/HYPfull_potency_calculation(var/datum/plantgenes/DNA, var/linear_factor = 1)
+	//! this proc is a shortcut to calculate the amount of chems to produce from a linear factor and the plantgenes
+	var/result = linear_factor
+	if(DNA)
+		var/potency_to_scale = DNA.get_effective_value("potency")
+		result *= potency_to_scale * HYPchem_scaling(potency_to_scale)
+	else
+		result = 0
+	return max(round(result), 0) //we return the rounded value or 0 when we have negative potency
+
+
 proc/HYPget_assoc_reagents(var/datum/plant/passed_plant, var/datum/plantgenes/passed_plantgenes)
 	//This proc returns a list with all reagents (or none) the plant currently is able to produce.
 	var/reagent_list = list()
@@ -49,7 +70,7 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 	if(special_condition == "jumbo")
 		basecapacity *= 2
 
-	var/to_add = basecapacity + DNA?.get_effective_value("potency")
+	var/to_add = basecapacity + HYPfull_potency_calculation(DNA)
 	I.reagents.maximum_volume = max(to_add, I.reagents.maximum_volume)
 	if(I.reagents.maximum_volume < 1)
 		I.reagents.maximum_volume = 1
@@ -124,6 +145,8 @@ proc/HYPgenerate_produce_name(var/atom/manipulated_atom, var/obj/machinery/plant
 
 
 proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
+	if(!PARENT || !CHILD)
+		return
 	// This is a proc used to copy genes from PARENT to CHILD. It's used in a whole bunch
 	// of places, usually when seeds or fruit are created and need to get their genes from
 	// the thing that spawned them.
@@ -144,12 +167,18 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype, var/parent_generation, var/location_to_create)
 	//This proc generates a seed at location_to_create with a copy of the planttype and genes of a given parent plant.
 	//This can be used, when you want to quickly generate seeds out of objects or other plants e.g. creeper or fruits.
-	var/obj/item/seed/child = new /obj/item/seed(location_to_create)
+	var/obj/item/seed/child
+	if (parent_planttype.unique_seed)
+		child = new parent_planttype.unique_seed(location_to_create)
+	else
+		child = new /obj/item/seed(location_to_create)
 	var/datum/plant/child_planttype = HYPgenerateplanttypecopy(child, parent_planttype)
 	var/datum/plantgenes/child_genes = child.plantgenes
-	var/datum/plantmutation/child_mutation = parent_genes.mutation
+	var/datum/plantmutation/child_mutation
+	if(parent_genes)
+		child_mutation = parent_genes.mutation
 	// If the plant is a standard plant, our work here is mostly done
-	if (!child_planttype.hybrid)
+	if (!child_planttype.hybrid && !parent_planttype.unique_seed)
 		child.generic_seed_setup(child_planttype)
 	else
 		child.planttype = child_planttype
@@ -161,8 +190,9 @@ proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/pare
 			seedname = "[child_mutation.name]"
 		else if(child_mutation.name_prefix || child_mutation.name_suffix)
 			seedname = "[child_mutation.name_prefix][child_planttype.name][child_mutation.name_suffix]"
-	HYPpassplantgenes(parent_genes, child_genes)
 	child.name = "[seedname] seed"
+	//What's missing is transfering genes and the generation
+	HYPpassplantgenes(parent_genes, child_genes)
 	child.generation = parent_generation
 	//Now the seed it created and we can release it upon the world
 	return child

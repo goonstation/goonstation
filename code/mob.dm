@@ -925,7 +925,7 @@
 			output += "&emsp;[medal]"
 		output += "<b>You have [length(medals)] medal\s.</b>"
 		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1"  target="_blank">Medal Details</a>"}
-		boutput(src, output.Join("<br>"))
+		tgui_message(src, output.Join("<br>"), "Medals")
 
 /mob/verb/setdnr()
 	set name = "Set DNR"
@@ -1045,12 +1045,6 @@
 
 		LI += W
 	.= LI
-
-/mob/proc/findname(msg)
-	for(var/mob/M in mobs)
-		if (M.real_name == text("[]", msg))
-			.= M
-	.= 0
 
 /mob/proc/movement_delay(var/atom/move_target = 0)
 	.= 2 + movement_delay_modifier
@@ -2361,8 +2355,8 @@
 	if (!ishuman(src)) // for the moment, only humans get dizzy
 		return
 
-	jitteriness = min(500, jitteriness + amount)	// store what will be new value
-													// clamped to max 500
+	jitteriness = min(400, jitteriness + amount)	// store what will be new value
+													// clamped to max 400
 	if (jitteriness > 100 && !is_jittery)
 		SPAWN(0)
 			jittery_process()

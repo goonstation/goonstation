@@ -82,7 +82,7 @@
 	max_amt2spawn = 1
 	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy/chocolate,
 	/obj/item/reagent_containers/food/snacks/candy/nougat,
-	/obj/item/reagent_containers/food/snacks/candy/butterscotch,
+	/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch,
 	/obj/item/reagent_containers/food/snacks/sandwich/meat_h,
 	/obj/item/reagent_containers/food/snacks/sandwich/meat_m,
 	/obj/item/reagent_containers/food/snacks/sandwich/meat_s,
@@ -1769,12 +1769,14 @@
 		min_amt2spawn = 5
 		max_amt2spawn = 7
 
-/obj/random_item_spawner/kineticgun // used in the 4th of july admin button.
+/obj/random_item_spawner/kineticgun //base type. split old behavior to fullrandom
 	name = "firearm spawner"
 	icon_state = "rand_gun"
 	min_amt2spawn = 1 // doing it this way to preserve current use of spawner while allowing random amounts
 	max_amt2spawn = 1
 	items2spawn = null
+
+/obj/random_item_spawner/kineticgun/fullrandom // used in the 4th of july admin button.
 	New()
 		items2spawn = concrete_typesof(/obj/item/gun/kinetic) - /obj/item/gun/kinetic/meowitzer //No, just no
 		. = ..()
@@ -1805,7 +1807,11 @@
 	/obj/item/gun/kinetic/sawnoff,
 	/obj/item/gun/kinetic/single_action/colt_saa,
 	/obj/item/gun/kinetic/single_action/flintlock,
-	/obj/item/gun/kinetic/zipgun)
+	/obj/item/gun/kinetic/zipgun,
+	/obj/item/gun/kinetic/makarov,
+	/obj/item/gun/kinetic/single_action/mts_255,
+	/obj/item/gun/kinetic/survival_rifle,
+	/obj/item/gun/kinetic/survival_rifle)
 
 	one
 		amt2spawn = 1

@@ -23,7 +23,8 @@
 	var/obj/item/shipcomponent/sensor/sensors = null
 	var/obj/item/shipcomponent/secondary_system/lock/lock = null
 	var/obj/item/shipcomponent/pod_lights/lights = null
-	var/rcs = 0		//bool, 1 for active, 0 for inactive
+	/// brake toggle
+	var/rcs = TRUE
 	var/uses_weapon_overlays = 0
 	var/health = 200
 	var/maxhealth = 200
@@ -309,6 +310,7 @@
 			src.add_dialog(usr)
 			if (href_list["unengine"])
 				if (src.engine)
+					logTheThing(LOG_STATION, usr, "ejects the engine system ([src.engine]) from [src] at [log_loc(src)]")
 					engine.deactivate()
 					components -= engine
 					engine.set_loc(src.loc)
@@ -328,6 +330,7 @@
 
 			else if (href_list["unlife"])
 				if (src.life_support)
+					logTheThing(LOG_VEHICLE, usr, "ejects the life support system ([src.life_support]) from [src] at [log_loc(src)]")
 					life_support.deactivate()
 					components -= life_support
 					life_support.set_loc(src.loc)
@@ -336,6 +339,7 @@
 
 			else if (href_list["uncom"])
 				if (src.com_system)
+					logTheThing(LOG_VEHICLE, usr, "ejects the comms system ([src.com_system]) from [src] at [log_loc(src)]")
 					com_system.deactivate()
 					components -= com_system
 					com_system.set_loc(src.loc)
@@ -347,6 +351,7 @@
 					if (!src.m_w_system.removable)
 						boutput(usr, SPAN_ALERT("[src.m_w_system] is fused to the hull and cannot be removed."))
 						return
+					logTheThing(LOG_VEHICLE, usr, "ejects the main weapon system ([src.m_w_system]) from [src] at [log_loc(src)]")
 					m_w_system.deactivate()
 					components -= m_w_system
 					if (uses_weapon_overlays && m_w_system.appearanceString)
@@ -357,11 +362,13 @@
 
 			else if (href_list["unloco"])
 				if (istype(src,/obj/machinery/vehicle/tank))
+					logTheThing(LOG_VEHICLE, usr, "ejects the locomotion system from [src] at [log_loc(src)]")
 					src:remove_locomotion()
 					src.updateDialog()
 
 			else if (href_list["unsec_system"])
 				if (src.sec_system)
+					logTheThing(LOG_VEHICLE, usr, "ejects the secondary system ([src.sec_system]) from [src] at [log_loc(src)]")
 					sec_system.deactivate()
 					components -= sec_system
 					sec_system.set_loc(src.loc)
@@ -370,6 +377,7 @@
 
 			else if (href_list["unsensors"])
 				if (src.sensors)
+					logTheThing(LOG_VEHICLE, usr, "ejects the sensors system ([src.sensors]) from [src] at [log_loc(src)]")
 					sensors.deactivate()
 					components -= sensors
 					sensors.set_loc(src.loc)
@@ -632,7 +640,7 @@
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
 				M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
-				logTheThing(LOG_COMBAT, src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] at [log_loc(target)].")
 				SPAWN(2.5 SECONDS)
 					if(M.health > 0)
 						vehicular_manslaughter = 0 //we now check if person was sent into crit after hit, if they did we get the achievement
@@ -646,7 +654,7 @@
 					var/turf/simulated/wall/T = target
 					T.dismantle_wall(1)
 
-				logTheThing(LOG_COMBAT, src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] at [log_loc(target)].")
 			else if (isobj(target) && power >= req_smash_velocity)
 				var/obj/O = target
 
@@ -667,7 +675,7 @@
 				if (istype(O,/obj/machinery/vending))
 					var/obj/machinery/vending/V = O
 					V.fall(src)
-				logTheThing(LOG_COMBAT, src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] at [log_loc(target)].")
 
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 
@@ -1843,8 +1851,8 @@
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		name = "syndicate minisub"
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src

@@ -168,10 +168,10 @@
 					if (isobj(owner.loc))
 						var/obj/location_as_object = owner.loc
 						breath = location_as_object.handle_internal_lifeform(owner, BREATH_VOLUME, mult)
-					else if (isturf(owner.loc))
+					else if (isturf(owner.loc) || ismob(owner.loc))
 						var/breath_moles = (TOTAL_MOLES(environment) * BREATH_PERCENTAGE * mult)
-
-						breath = owner.loc.remove_air(breath_moles)
+						var/turf/T = get_turf(owner)
+						breath = T?.remove_air(breath_moles)
 
 				else //Still give containing object the chance to interact
 					underwater = 0 // internals override underwater state

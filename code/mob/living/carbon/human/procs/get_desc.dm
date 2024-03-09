@@ -153,6 +153,12 @@
 			count++
 		. += "<br>[SPAN_ALERT("[src] has [count > 1 ? "arrows" : "an arrow"] stuck in [him_or_her(src)]!")]"
 
+	if (locate(/obj/item/implant/projectile/body_visible/seed) in src.implant)
+		var/count = 0
+		for (var/obj/item/implant/projectile/body_visible/seed/P in src.implant)
+			count++
+		. += "<br>[SPAN_ALERT("[src] has [count > 1 ? "seeds" : "a seed"] stuck in [him_or_her(src)]!")]"
+
 	if (src.is_jittery)
 		switch(src.jitteriness)
 			if (300 to INFINITY)
@@ -247,12 +253,10 @@
 		else
 			. += "<br>[SPAN_ALERT("<B>[src.name]'s entire chest is missing!</B>")]"
 
-
-		if (src.organHolder.back_op_stage > BACK_SURGERY_CLOSED)
-			if (!src.organHolder.butt)
-				. += "<br>[SPAN_ALERT("<B>[src.name]'s butt seems to be missing!</B>")]"
-			else
-				. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on [t_his] butt!</B>")]"
+		if (!src.organHolder.butt)
+			. += "<br>[SPAN_ALERT("<B>[src.name]'s butt seems to be missing!</B>")]"
+		else if (src.organHolder.back_op_stage > BACK_SURGERY_CLOSED)
+			. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on [t_his] butt!</B>")]"
 
 	if (src.limbs)
 		if (!src.limbs.l_arm)

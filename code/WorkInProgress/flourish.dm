@@ -172,7 +172,7 @@ var/list/possible_lost_items = list(
 	/obj/item/reagent_containers/food/snacks/onionchips,
 	/obj/item/reagent_containers/food/snacks/chips,
 	/obj/item/reagent_containers/food/snacks/candy/nougat,
-	/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
+	/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup,
 	/obj/item/kitchen/peach_rings,
 	/obj/item/reagent_containers/food/snacks/cookie/dog,
 	/obj/item/toy/plush/small/bee,

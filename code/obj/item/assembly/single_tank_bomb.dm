@@ -53,7 +53,7 @@
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 /obj/item/assembly/proximity_bomb/dropped()
-
+	. = ..()
 	SPAWN( 0 )
 		src.part1.sense()
 		return
