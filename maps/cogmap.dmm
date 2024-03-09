@@ -5383,6 +5383,14 @@
 	},
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
+/obj/blind_switch/area/north{
+	id = "baroffice"
+	},
+/obj/machinery/door_control{
+	id = "bar";
+	name = "Bar Shutter Control";
+	pixel_x = 24
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "auV" = (
@@ -43378,8 +43386,8 @@
 /area/station/security/hos)
 "guJ" = (
 /obj/machinery/door_control{
-	id = "kitchen";
-	name = "Kitchen Shutter Control";
+	id = "bar";
+	name = "Bar Shutter Control";
 	pixel_x = -24
 	},
 /obj/disposalpipe/segment{
@@ -54348,6 +54356,13 @@
 	},
 /turf/space,
 /area/space)
+"ppQ" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2{
+	id = "baroffice"
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/emergency)
 "pqX" = (
 /obj/machinery/door/airlock/pyro/glass/mining,
 /obj/mapping_helper/firedoor_spawn,
@@ -56770,9 +56785,9 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "kitchen";
+	id = "bar";
 	layer = 4;
-	name = "Kitchen Shutter";
+	name = "Bar Shutter";
 	opacity = 0;
 	panel_open = 1
 	},
@@ -116431,7 +116446,7 @@ rqj
 auR
 qQK
 etY
-bjh
+ppQ
 aAx
 aBX
 aDi
