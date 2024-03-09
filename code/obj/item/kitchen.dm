@@ -1115,13 +1115,13 @@ TRAYS
 		processing_items.Remove(src)
 
 	process()
-		if (!length(src.contents)) return
-		var/turf/T = get_turf(src.loc)
-		if (!T) return
-
-		for (var/obj/item/reagent_containers/food in src.contents)
-			var/datum/reagents/R = food.reagents
-			R.temperature_reagents(T.temperature, exposed_volume = (150 + R.total_volume * 2), change_cap = 100)
+        if (!length(src.contents)) return
+        var/turf/simulated/T = get_turf(src.loc)
+        if (!T) return
+        var/temp_to_expose = istype(T) ? T.air.temperature : T.temperature
+        for (var/obj/item/reagent_containers/food in src.contents)
+            var/datum/reagents/R = food.reagents
+            R.temperature_reagents(temp_to_expose, exposed_volume = (150 + R.total_volume * 2), change_cap = 100)
 
 	add_contents(obj/item/food, mob/user, click_params)
 		if (!food.edible)
