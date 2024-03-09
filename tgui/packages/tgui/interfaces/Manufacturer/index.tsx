@@ -75,7 +75,7 @@ const CategoryDropdown = (props, context) => {
   const { category, blueprints } = props;
   let buttons = [];
   for (let i in blueprints) {
-    buttons.push(<ButtonWithBadge width="16.4699%" height={5.75} image_path={blueprints[i].img} text={truncate(i, 40)} onClick={() => act("product", { "blueprint_ref": blueprints[i].byondRef })} />);
+    buttons.push(<ButtonWithBadge width="16.4699%" height={5.75} image_path={blueprints[i].img} text={truncate(blueprints[i].name, 40)} onClick={() => act("product", { "blueprint_ref": blueprints[i].byondRef })} />);
   }
 
   return (
