@@ -377,7 +377,9 @@
 	gildable = 1
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/deagle50cal
-
+	recoil_strength = 19
+	recoil_inaccuracy_max = 12
+	icon_recoil_cap = 30
 	New()
 		set_current_projectile(new/datum/projectile/bullet/deagle50cal)
 		ammo = new default_magazine
