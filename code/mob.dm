@@ -94,7 +94,6 @@
 	var/losebreath = 0
 	var/intent = null
 	var/shakecamera = 0
-
 	var/a_intent = "help"
 	var/m_intent = "run"
 	var/lastKnownIP = null
