@@ -78,7 +78,7 @@
 	item_state_base = "bluehb"
 
 /obj/item/scripture/skeletonhb
-	name = "bone tone"
+	name = "bone tome"
 	icon_state = "skeletonhb"
 	item_state = "skeletonhb"
 	desc = "A dusty leather text displaying images of skeletons. Its bookmark is actually a spine!"
