@@ -1,3 +1,4 @@
+#define BLOB_VICTORY_TILE_COUNT 500
 /datum/game_mode/blob
 	name = "Blob"
 	config_tag = "blob"
@@ -90,7 +91,7 @@
 			var/mob/living/intangible/blob_overmind/O = M.current
 			blobcount += 1
 			tilecount += O.blobs.len
-	if(tilecount < 500*blobcount)
+	if(tilecount < BLOB_VICTORY_TILE_COUNT*blobcount)
 		return 0
 	return 1
 
@@ -121,5 +122,10 @@
 		if (isblob(M.current))
 			blobs += M.current
 	src.finish_counter = length(blobs)
+	if (src.finish_counter)
+		var/mob/living/intangible/blob_overmind/blob = locate() in blobs
+		blob.go_critical()
 	boutput(world, src.victory_msg())
 	..()
+
+#undef BLOB_VICTORY_TILE_COUNT
