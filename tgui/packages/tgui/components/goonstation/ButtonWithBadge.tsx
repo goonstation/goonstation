@@ -16,6 +16,8 @@ type ButtonWithBadgeProps = {
   image_path: string;
   text?: string;
   onClick?: Function;
+  onMouseEnter?: Function;
+  onMouseLeave?: Function;
 }
 
 export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
@@ -28,13 +30,18 @@ export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
     image_path,
     text,
     onClick,
+    onMouseEnter,
+    onMouseLeave,
   } = props;
+
   return (
     <Button
       onClick={onClick}
       ellipsis
       width={width} height={height}
       p={0} mb={0}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <Image
         verticalAlign="top"

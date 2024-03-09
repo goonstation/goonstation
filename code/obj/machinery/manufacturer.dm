@@ -342,7 +342,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			rockboxes += list(list(
 				"name" = cloud_container.name,
 				"area_name" = get_area(cloud_container),
-				"reference" = "\ref[cloud_container]",
+				"byondRef" = "\ref[cloud_container]",
 				"ores" = ore_data,
 			))
 		return rockboxes
@@ -354,7 +354,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/datum/manufacture/M as anything in L)
 			if (length(as_list[M.category]) == 0)
 				as_list[M.category] = list()
-			as_list[M.category][M.name] = manufacture_as_list(M, user)
+			as_list[M.category] += list(manufacture_as_list(M, user))
 		return as_list
 
 	/// Converts a manufacture datum to a list with string keys to relevant vars for the UI
@@ -366,7 +366,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"time" = M.time,
 			"apply_material" = M.apply_material,
 			"img" = getItemIcon(M.item_outputs[1], C = user.client),
-			"ref" = "\ref[M]",
+			"byondRef" = "\ref[M]",
 		)
 
 	attack_hand(mob/user)
