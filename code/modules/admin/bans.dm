@@ -60,6 +60,11 @@
 		var/client/adminClient = find_client(admin_ckey)
 		var/client/targetClient = find_client(ckey)
 
+		if (targetClient)
+			logTheThing(LOG_DEBUG, null, "BAN DEBUG: Found targetClient for [ckey]")
+		else
+			logTheThing(LOG_DEBUG, null, "BAN DEBUG: Did NOT find targetClient for [ckey]")
+
 		var/durationHuman = duration ? src.getDurationHuman(duration) : "permanent"
 		var/adminKey = adminClient ? adminClient.key : admin_ckey
 		var/serverLogSnippet = server_id ? "from [server_id]" : "from all servers"
@@ -97,7 +102,7 @@
 
 			del(targetClient)
 		else
-			logTheThing(LOG_DEBUG, "Bans: unable to find client to kick for banned ckey [ckey]")
+			logTheThing(LOG_DEBUG, ckey, "Bans: unable to find client to kick for banned ckey [ckey]")
 
 	/// Check if a ban exists
 	proc/check(ckey, comp_id, ip)
