@@ -60,11 +60,6 @@
 		var/client/adminClient = find_client(admin_ckey)
 		var/client/targetClient = find_client(ckey)
 
-		if (targetClient)
-			logTheThing(LOG_DEBUG, null, "BAN DEBUG: Found targetClient for [ckey]")
-		else
-			logTheThing(LOG_DEBUG, null, "BAN DEBUG: Did NOT find targetClient for [ckey]")
-
 		var/durationHuman = duration ? src.getDurationHuman(duration) : "permanent"
 		var/adminKey = adminClient ? adminClient.key : admin_ckey
 		var/serverLogSnippet = server_id ? "from [server_id]" : "from all servers"
