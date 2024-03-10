@@ -48,3 +48,4 @@
 #define JOB_RESEARCH "research"
 #define JOB_ENGINEERING "engineering"
 #define JOB_CIVILIAN "civilian"
+#define JOB_CREATED "created"

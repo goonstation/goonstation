@@ -159,6 +159,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_card = /obj/item/card/id/command
 	map_can_autooverride = 0
 	can_join_gangs = FALSE
+	job_category = JOB_COMMAND
 
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
@@ -3042,4 +3043,5 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 /datum/job/created
 	name = "Special Job"
+	job_category = JOB_CREATED
 

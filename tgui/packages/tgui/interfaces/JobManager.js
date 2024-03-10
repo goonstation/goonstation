@@ -8,13 +8,18 @@ export const JobManager = (props, context) => {
   const {
     stapleJobs = [],
     specialJobs = [],
+    hiddenJobs = [],
     allowSpecialJobs,
   } = data;
 
   const jobCategories = [
     {
-      name: 'Command & Security Jobs',
-      jobs: [...stapleJobs.filter(job => job.type === 'command'), ...stapleJobs.filter(job => job.type === 'security')],
+      name: 'Command Jobs',
+      jobs: stapleJobs.filter(job => job.type === 'command'),
+    },
+    {
+      name: 'Security Jobs',
+      jobs: stapleJobs.filter(job => job.type === 'security'),
     },
     {
       name: 'Research Jobs',
@@ -30,7 +35,7 @@ export const JobManager = (props, context) => {
     },
   ];
 
-  if (!stapleJobs.length && !specialJobs.length) {
+  if (!stapleJobs.length && !specialJobs.length && !hiddenJobs.length) {
     return (
       <Window title="Job Manager" width={400} height={600}>
         <Window.Content scrollable>
@@ -41,23 +46,29 @@ export const JobManager = (props, context) => {
   }
 
   return (
-    <Window title="Job Manager" width={400} height={600}>
+    <Window title="Job Manager" width={500} height={600}>
       <Window.Content scrollable>
         <Section title="Job Controls">
           {jobCategories.map(category => (
             <Collapsible key={category.name} title={category.name}>
               <LabeledList>
                 {category.jobs.map(job => (
-                  <LabeledList.Item key={job.name} label={job.name}>
-                    <Button
-                      content={`${job.count}/${job.limit}`}
-                      onClick={() => act('alter_cap', { job: job.name })}
-                    />
-                    <Button
-                      content="Edit"
-                      onClick={() => act('edit', { job: job.name })}
-                    />
-                  </LabeledList.Item>
+                  <LabeledList.Item 
+                    key={job.name} 
+                    label={job.name}    
+                    buttons={
+                      <>
+                        <Button
+                          content={`${job.count}/${job.limit}`}
+                          onClick={() => act('alter_cap', { job: job.name })}
+                        />
+                        <Button
+                          content="Edit"
+                          onClick={() => act('edit', { job: job.name })}
+                        />
+                      </>
+                    }
+                  />
                 ))}
               </LabeledList>
             </Collapsible>
@@ -65,27 +76,64 @@ export const JobManager = (props, context) => {
           <Collapsible title="Special Jobs">
             <LabeledList>
               {specialJobs.map(job => (
-                <LabeledList.Item key={job.name} label={job.name}>
-                  <Button
-                    content={`${job.count}/${job.limit}`}
-                    onClick={() => act('alter_cap', { job: job.name })}
-                  />
-                  <Button
-                    content="Edit"
-                    onClick={() => act('edit', { job: job.name })}
-                  />
-                  {job.type === 'created' && (
-                    <Button
-                      content="Remove"
-                      onClick={() => act('remove_job', { job: job.name })}
-                    />
-                  )}
-                </LabeledList.Item>
+                <LabeledList.Item 
+                  key={job.name} 
+                  label={job.name}    
+                  buttons={
+                    <>
+                      <Button
+                        content={`${job.count}/${job.limit}`}
+                        onClick={() => act('alter_cap', { job: job.name })}
+                      />
+                      <Button
+                        content="Edit"
+                        onClick={() => act('edit', { job: job.name })}
+                      />
+                      {job.type === 'created' && (
+                        <Button.Confirm
+                          icon="trash"
+                          color="bad"
+                          onClick={() => act('remove_job', { job: job.name })}
+                        />
+                      )}
+                    </>
+                  }
+                />
               ))}
             </LabeledList>
           </Collapsible>
-          <Button
-            content={allowSpecialJobs ? 'Special Jobs Enabled' : 'Special Jobs Disabled'}
+          <Collapsible title="Hidden Jobs">
+            <LabeledList>
+              {hiddenJobs.map(job => (
+                <LabeledList.Item 
+                  key={job.name} 
+                  label={job.name}    
+                  buttons={
+                    <>
+                      <Button
+                        content={`${job.count}/${job.limit}`}
+                        onClick={() => act('alter_cap', { job: job.name })}
+                      />
+                      <Button
+                        content="Edit"
+                        onClick={() => act('edit', { job: job.name })}
+                      />
+                      {job.type === 'created' && (
+                        <Button.Confirm
+                          icon="trash"
+                          color="bad"
+                          onClick={() => act('remove_job', { job: job.name })}
+                        />
+                      )}
+                    </>
+                  }
+                />
+              ))}
+            </LabeledList>
+          </Collapsible>
+          <Button.Checkbox
+            content="Special Jobs"
+            checked={allowSpecialJobs}
             onClick={() => act('toggle_special_jobs')}
           />
           <Button content="Create New Job" onClick={() => act('job_creator')} />
