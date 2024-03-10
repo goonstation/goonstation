@@ -28,8 +28,6 @@
 		if (locked && istype(locked))
 			locked.unlock()
 			locked.open()
-			if (!locked.welded)
-				src.holder.owner.set_loc(locked.loc)
 
 		for(var/obj/machinery/door/G in oview(SPrange, holder.owner))
 			SPAWN(1 DECI SECOND)
