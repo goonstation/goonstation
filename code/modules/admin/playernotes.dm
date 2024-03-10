@@ -17,7 +17,8 @@
 		getPlayerNotes.queryParams = list(
 			"filters" = list(
 				"ckey" = player
-			)
+			),
+			"per_page" = 100
 		)
 		playerNotes = apiHandler.queryAPI(getPlayerNotes)
 	catch (var/exception/e)
@@ -62,7 +63,6 @@
 		for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 			var/list/row_classes = list()
 			var/noteReason = playerNote.note
-
 			if (playerNote.game_admin.ckey == "bot")
 				row_classes += "auto"
 
