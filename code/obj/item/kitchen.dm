@@ -1097,14 +1097,15 @@ TRAYS
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
 	icon_state = "coolingrack"
 	flags = FPRINT | TABLEPASS
-	force = 5
+	force = 3
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	pickup_sfx = 0 // to avoid using plate SFX
+	pickup_sfx = "step_lattice"
 	w_class = W_CLASS_NORMAL
 	hit_sound = "step_lattice"
 	can_headsmash = FALSE // no unbreakable smashing tool for you!
+	stackable = FALSE // and no stacking them on plates!
 
 	New()
 		. = ..()
