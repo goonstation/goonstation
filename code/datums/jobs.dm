@@ -2739,6 +2739,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			return
 		droneize(M, 0)
 
+ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily //Special daily jobs
 	var/day = ""
 /datum/job/daily/boxer
