@@ -199,6 +199,7 @@
 	if (src.key)
 		var/datum/eventRecord/Death/deathEvent = new
 		deathEvent.buildAndSend(src, gibbed)
+	#ifndef NO_SHUTTLE_CALLS
 	if (src.client && ticker.round_elapsed_ticks >= 12000 && VALID_MOB(src))
 		var/num_players = 0
 		for(var/client/C)
@@ -213,6 +214,7 @@
 					boutput(world, SPAN_NOTICE("<B>Alert: The emergency shuttle has been called.</B>"))
 					boutput(world, SPAN_NOTICE("- - - <b>Reason:</b> Crew shortages and fatalities."))
 					boutput(world, SPAN_NOTICE("<B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"))
+	#endif
 	#undef VALID_MOB
 
 	// Active if XMAS or manually toggled.

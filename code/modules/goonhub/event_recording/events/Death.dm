@@ -36,5 +36,5 @@
 			M.get_toxin_damage(),
 			M.get_oxygen_deprivation(),
 			gibbed ? TRUE : FALSE,
-			M.last_words
+			html_decode(M.last_words)
 		)

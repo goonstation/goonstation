@@ -292,7 +292,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			var/round_num = src.client.player.get_rounds_participated()
 			if (!isnull(round_num) && round_num < JOB.rounds_needed_to_play) //they havent played enough rounds!
 				return 0
-		if (JOB.limit < 0 || countJob(JOB.name) < JOB.limit)
+		if (JOB.limit < 0 || JOB.assigned < JOB.limit)
 			return 1
 		return 0
 
@@ -326,7 +326,10 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			if (isnull(character))
 				global.latespawning.unlock()
 				return
-
+			JOB.assigned++
+			if (JOB.counts_as)
+				var/datum/job/other = find_job_in_controller_by_string(JOB.counts_as)
+				other.assigned++
 			// Stop adding non game mode logic BEFORE game modes!
 			if(istype(ticker.mode, /datum/game_mode/football))
 				var/datum/game_mode/football/F = ticker.mode
@@ -442,75 +445,75 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 	proc/LateJoinLink(var/datum/job/J)
 		// This is pretty ugly but: whatever! I don't care.
 		// It likely needs some tweaking but everything does.
-		if (!J.no_late_join)
-			var/limit = J.limit
-			if (!IsJobAvailable(J))
-				// Show unavailable jobs, but no joining them
-				limit = 0
+		if (J.no_late_join)
+			return
+		var/limit = J.limit
+		if (!IsJobAvailable(J))
+			// Show unavailable jobs, but no joining them
+			limit = 0
 
-			var/c = countJob(J.name) 	// gross
-			if (limit == 0 && c == 0)
-				// 0 slots, nobody in it, don't show it
-				return
+		var/c = J.assigned
+		if (limit == 0 && c == 0)
+			// 0 slots, nobody in it, don't show it
+			return
 
-			//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
-			if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
-				c = max(c, limit)
+		//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
+		if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
+			c = max(c, limit)
 
-			var/hover_text = J.short_description || "Join the round as [J.name]."
+		var/hover_text = J.short_description || "Join the round as [J.name]."
 
-			// probalby could be a define but dont give a shite
-			var/maxslots = 5
-			var/list/slots = list()
-			var/shown = clamp(c, (limit == -1 ? maxslots : limit), maxslots)
-			// if there's still an open space, show a final join link
-			if (limit == -1 || (limit > maxslots && c < limit))
-				slots += {"<a href='byond://?src=\ref[src];
-				SelectedJob=\ref[J];latejoin=join' class='latejoin-card' style='border-color: [J.linkcolor];
-				' title='[hover_text]'>&#x2713;
-				&#xFE0E;
-				</a>"}
-			// show slots up to the limit
-			// extra people beyond the limit will be shown as a [+X] card, supposedly
-			for (var/i = shown, i > 0, i--)
-				// can you believe all these slot appendages were in one line before using nested ternaries? awful.
-				if (i <= c)
-					if (i == 1 && c > shown)
-						slots += {"
-						<div
-						class='latejoin-card latejoin-full'
-						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
-						title='Slot filled.'
-						>+[c - maxslots]
-						</div>
-						"}
-					else
-						slots += {"
-						<div
-						class='latejoin-card latejoin-full'
-						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
-						title='Slot filled.'
-						>&times;
-						</div>
-						"}
+		// probalby could be a define but dont give a shite
+		var/maxslots = 5
+		var/list/slots = list()
+		var/shown = clamp(c, (limit == -1 ? maxslots : limit), maxslots)
+		// if there's still an open space, show a final join link
+		if (limit == -1 || (limit > maxslots && c < limit))
+			slots += {"<a href='byond://?src=\ref[src];
+			SelectedJob=\ref[J];latejoin=join' class='latejoin-card' style='border-color: [J.linkcolor];
+			' title='[hover_text]'>&#x2713;
+			&#xFE0E;
+			</a>"}
+		// show slots up to the limit
+		// extra people beyond the limit will be shown as a [+X] card, supposedly
+		for (var/i = shown, i > 0, i--)
+			// can you believe all these slot appendages were in one line before using nested ternaries? awful.
+			if (i <= c)
+				if (i == 1 && c > shown)
+					slots += {"
+					<div
+					class='latejoin-card latejoin-full'
+					style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
+					title='Slot filled.'
+					>+[c - maxslots]
+					</div>
+					"}
 				else
 					slots += {"
-					<a
-					href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=join'
-					class='latejoin-card' style='border-color: [J.linkcolor];'
-					title='[hover_text]'
-					>&#x2713;&#xFE0E;
-					</a>
+					<div
+					class='latejoin-card latejoin-full'
+					style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
+					title='Slot filled.'
+					>&times;
+					</div>
 					"}
-			return {"
-				<tr><td class='latejoin-link'>
-					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' style='color: [J.linkcolor];' title='[hover_text]'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
-					</td>
-					<td class='latejoin-cards'>[jointext(slots, " ")]</td>
-				</tr>
+			else
+				slots += {"
+				<a
+				href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=join'
+				class='latejoin-card' style='border-color: [J.linkcolor];'
+				title='[hover_text]'
+				>&#x2713;&#xFE0E;
+				</a>
 				"}
-
-		return
+		return {"
+			<tr>
+				<td class='latejoin-link[J.is_highlighted() ? " highlighted" : ""]'>
+					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' style='color: [J.linkcolor];' title='[hover_text]'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
+				</td>
+				<td class='latejoin-cards'>[jointext(slots, " ")]</td>
+			</tr>
+			"}
 
 	proc/LateChoices()
 		// shut up
@@ -589,6 +592,10 @@ a.latejoin-card:hover {
 	display: inline-block;
 	vertical-align: top;
 	margin: 0 1em;
+}
+.highlighted {
+	border: 4px solid #FFE251;
+	border-radius: 3px;
 }
 </style>
 <h2 style='text-align: center; margin: 0 0 0.3em 0; font-size: 150%;'>You are joining a round in progress.</h2>
@@ -676,7 +683,7 @@ a.latejoin-card:hover {
 				if (IsJobAvailable(J) && !J.no_late_join)
 					var/hover_text = J.short_description || "Join the round as [J.name]."
 					dat += "<tr><td style='width:100%'>"
-					dat += {"<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' title='[hover_text]'><font color=[J.linkcolor]>[J.name]</font></a> ([countJob(J.name)][J.limit == -1 ? "" : "/[J.limit]"])<br>"}
+					dat += {"<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' title='[hover_text]'><font color=[J.linkcolor]>[J.name]</font></a> ([J.assigned][J.limit == -1 ? "" : "/[J.limit]"])<br>"}
 					dat += "</td></tr>"
 		dat += "</table></div>"
 
