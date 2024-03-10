@@ -19,7 +19,7 @@ export type ManufacturerData = {
   hidden_blueprints:Record<string, Manufacturable[]>;
 
   resource_data:Resource[];
-  wires:Record<string, string>;
+  wires:WireData[];
 
   delete_allowed:BooleanLike;
   hacked:BooleanLike;
@@ -69,4 +69,9 @@ export type WireIndicators = {
   malfunctioning: BooleanLike;
   hacked: BooleanLike;
   hasPower: BooleanLike;
+}
+
+export type WireData = {
+  colorName: string;
+  color: string;
 }

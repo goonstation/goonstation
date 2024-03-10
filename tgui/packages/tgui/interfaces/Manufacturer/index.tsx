@@ -15,7 +15,6 @@ import { formatMoney } from '../../format';
 import { Manufacturable, ManufacturerData, Ore, Resource, Rockbox, WireIndicators } from './type';
 import { CenteredText } from '../../components/goonstation/CenteredText';
 
-const backgroundPop = "rgba(0,0,0,0.2)";
 const credit_symbol = "⪽";
 
 const CategoryDropdown = (props, context) => {
@@ -36,14 +35,16 @@ const CategoryDropdown = (props, context) => {
 const CardInfo = (_, context) => {
   const { data, act } = useBackend<ManufacturerData>(context);
   return (data.card_owner === null || data.card_balance === null) ? (
-    <Flex backgroundColor={backgroundPop} p={1}>
-      <Flex.Item grow>
-        <CenteredText text="No Account Found" />
-      </Flex.Item>
-      <Flex.Item>
-        <Button icon="add" onClick={() => act("card", { "scan": true })}>Add Account</Button>
-      </Flex.Item>
-    </Flex>
+    <Section>
+      <Flex>
+        <Flex.Item grow>
+          <CenteredText text="No Account Found" />
+        </Flex.Item>
+        <Flex.Item>
+          <Button icon="add" onClick={() => act("card", { "scan": true })}>Add Account</Button>
+        </Flex.Item>
+      </Flex>
+    </Section>
   ) : (
     <Section
       title="Account Info"
@@ -99,9 +100,8 @@ export const CollapsibleWireMenu = (_, context) => {
     }
   }
   return (
-    <Collapsible
+    <Section
       title="Maintenence Panel"
-      open
     >
       <Box>
         {wireContent}
@@ -125,7 +125,7 @@ export const CollapsibleWireMenu = (_, context) => {
           </LabeledList.Item>
         </LabeledList>
       </Box>
-    </Collapsible>
+    </Section>
   );
 };
 
@@ -185,24 +185,32 @@ export const Manufacturer = (_, context) => {
               </Stack.Item>
               <Stack.Item>
                 <Box>
-                  <Flex>
-                    <Flex.Item>
-                      Repeat: {repeat ? "On" : "Off"}
-                    </Flex.Item>
-                    <Flex.Item>
-                      <Button icon="repeat" onClick={() => toggleRepeat()}>Toggle Repeat</Button>
-                    </Flex.Item>
-                  </Flex>
-                  <Slider
-                    minValue={1}
-                    value={speed}
-                    maxValue={3}
-                    step={1}
-                    stepPixelSize={100}
-                    onChange={(_e:any, value:number) => updateSpeed(value)}
+                  <Section
+                    title={"Fabricator Settings"}
                   >
-                    Speed: {speed}
-                  </Slider>
+                    <LabeledList>
+                      <LabeledList.Item
+                        label={"Repeat"}
+                        buttons={<Button icon="repeat" onClick={() => toggleRepeat()}>Toggle Repeat</Button>}
+                        textAlign="center"
+                      >
+                        {data.repeat ? "On" : "Off"}
+                      </LabeledList.Item>
+                      <LabeledList.Item
+                        label="Speed"
+                      >
+                        <Slider
+                          minValue={1}
+                          value={speed}
+                          maxValue={3}
+                          step={1}
+                          stepPixelSize={100}
+                          onChange={(_e:any, value:number) => updateSpeed(value)}
+                        />
+                      </LabeledList.Item>
+                    </LabeledList>
+                  </Section>
+
                 </Box>
               </Stack.Item>
               <Stack.Item>
@@ -219,14 +227,17 @@ export const Manufacturer = (_, context) => {
                         <LabeledList.Item
                           key={ore.name}
                           label={ore.name}
+                          buttons={
+                            <Button
+                              textAlign="center"
+                              onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
+                              icon="add"
+                            >
+                              Buy for {ore.cost}{credit_symbol}
+                            </Button>
+                          }
                         >
-                          <Button
-                            textAlign="center"
-                            onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
-                            key={ore.name}
-                          >
-                            {ore.amount} {"("}{ore.cost}{credit_symbol}{")"}
-                          </Button>
+                          {ore.amount}
                         </LabeledList.Item>
                       ))}
                     </LabeledList>
