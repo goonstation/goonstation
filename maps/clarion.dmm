@@ -6931,6 +6931,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "aDo" = (
+/obj/stool/chair/dining/wood,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fpurple2"
@@ -7483,7 +7484,9 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/specialroom/bar,
+/turf/simulated/floor/carpet/purple/decal/outercross{
+	desc = "The Bartender's special rug, storied to be extra-grippy for effective drink-sliding."
+	},
 /area/station/crew_quarters/bar)
 "aFK" = (
 /obj/disposalpipe/segment{
@@ -34724,6 +34727,10 @@
 	},
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
+"pyM" = (
+/obj/stool/chair/dining/wood,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/bar)
 "pzi" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -79152,7 +79159,7 @@ rvM
 aAq
 aBj
 aCr
-aAu
+pyM
 aEw
 aFB
 aGp
@@ -79665,7 +79672,7 @@ aym
 xsX
 azw
 aBj
-aCt
+eXK
 jLo
 aHx
 gju
@@ -79922,7 +79929,7 @@ gmX
 azz
 aAs
 aBk
-eXK
+aCt
 aDp
 wfB
 eYF
