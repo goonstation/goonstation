@@ -493,7 +493,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleportation)
 	cooldown = 600
 	targeted = 0
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
-
+	needs_turf = FALSE
 	cast(atom/target)
 		if (..())
 			return 1
