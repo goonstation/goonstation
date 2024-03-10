@@ -127,24 +127,12 @@ export const Manufacturer = (_, context) => {
     act("speed", { "value": newValue });
     setSpeedVar(newValue);
   };
-  let usable_blueprints = [data.available_blueprints];
-
-  /*
-  {Object.keys(usable_blueprints).map((category:string) => (
-  <Collapsible title={category} key={category}>
-    {data.available_blueprints[category].map((blueprintData:Manufacturable) => (
-      <ButtonWithBadge
-        key={blueprintData.name}
-        width={12.75}
-        height={5.5}
-        image_path={blueprintData.img}
-        text={truncate(blueprintData.name, 40)}
-        onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
-      />
-    ))}
-  </Collapsible>
-  ))}
-  */
+  let usable_blueprints = [
+    data.available_blueprints,
+    data.downloaded_blueprints,
+    data.drive_recipe_blueprints,
+    (data.hacked ? data.hidden_blueprints : []),
+  ];
 
   return (
     <Window width={1200} height={600} title={data.fabricator_name}>
@@ -153,23 +141,24 @@ export const Manufacturer = (_, context) => {
           <Stack.Item width="80%">
             <Section>
               {data.all_categories.map((category:string) => (
-                <>
+                <Collapsible open title={category} key={category}>
                   {usable_blueprints.map((blueprints:Record<string, Manufacturable[]>) => (
-                    <Collapsible open title={category} key={category}>
-                      {(Object.keys(blueprints).find((key) => (key === category)))
-                        ? blueprints[category].map((blueprintData:Manufacturable) => (
-                          <ButtonWithBadge
-                            key={blueprintData.name}
-                            width={12.75}
-                            height={5.5}
-                            image_path={blueprintData.img}
-                            text={truncate(blueprintData.name, 40)}
-                            onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
-                          />
-                        )) : null}
-                    </Collapsible>
+                    (Object.keys(blueprints).find((key) => (key === category)))
+                      ? blueprints[category].map((blueprintData:Manufacturable) => (
+                        (blueprintData.name.toLowerCase().includes(search)
+                          ? (
+                            <ButtonWithBadge
+                              key={blueprintData.name}
+                              width={12.75}
+                              height={5.5}
+                              image_path={blueprintData.img}
+                              text={truncate(blueprintData.name, 40)}
+                              onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
+                            />
+                          ) : null)
+                      )) : null
                   ))}
-                </>
+                </Collapsible>
               ))}
             </Section>
           </Stack.Item>
@@ -177,7 +166,7 @@ export const Manufacturer = (_, context) => {
           <Stack.Item grow>
             <Stack vertical>
               <Stack.Item>
-                <Input placeholder="Search..." width="100%" onChange={(_, value) => setSearchData(value)} />
+                <Input placeholder="Search..." width="100%" onInput={(_, value) => setSearchData(value)} />
               </Stack.Item>
               <Stack.Item>
                 <Section title="Materials Loaded" textAlign="center">
