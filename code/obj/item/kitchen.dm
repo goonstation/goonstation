@@ -1095,7 +1095,7 @@ TRAYS
 	name = "cooling rack"
 	desc = "A wire-mesh rack that lets food items cool down for safe(er?) consumption."
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
-	icon_state = "tray"
+	icon_state = "coolingrack"
 	flags = FPRINT | TABLEPASS
 	force = 5
 	throwforce = 5
@@ -1121,7 +1121,7 @@ TRAYS
 		var/temp_to_expose = istype(T) ? T.air.temperature : T.temperature
 		for (var/obj/item/reagent_containers/food in src.contents)
 			var/datum/reagents/R = food.reagents
-			R.temperature_reagents(temp_to_expose, exposed_volume = (150 + R.total_volume * 2), change_cap = 100)
+			R.temperature_reagents(temp_to_expose, exposed_volume = (150 + R.total_volume * 2), change_cap = 75)
 
 	add_contents(obj/item/food, mob/user, click_params)
 		if (!food.edible)
