@@ -26,7 +26,7 @@
 
 		var/obj/storage/secure/locked = src.holder.owner.loc
 		if (locked && istype(locked))
-			locked.locked = FALSE
+			locked.unlock()
 			locked.open()
 			if (!locked.welded)
 				src.holder.owner.set_loc(locked.loc)
@@ -36,7 +36,7 @@
 				G.open()
 		for(var/obj/storage/F in oview(SPrange, holder.owner))
 			if (F.locked)
-				F.locked = FALSE
+				F.unlock()
 			SPAWN(1 DECI SECOND)
 				F.open()
 		for(var/mob/living/silicon/robot/E in oview(SPrange, holder.owner))
