@@ -6166,7 +6166,9 @@
 /obj/disposalpipe/segment/mail,
 /obj/table/round,
 /obj/random_item_spawner/desk_stuff,
-/turf/simulated/floor/black,
+/turf/simulated/floor/carpet/purple/decal/outercross{
+	desc = "The Bartender's special rug, storied to be extra-grippy for effective drink-sliding."
+	},
 /area/station/hallway/primary/central)
 "aAq" = (
 /obj/machinery/light/emergency{
@@ -6938,9 +6940,8 @@
 	},
 /area/station/crew_quarters/bar)
 "aDp" = (
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fpurple5"
+/turf/simulated/floor/carpet/purple/fancy/junction/sw_n{
+	dir = 10
 	},
 /area/station/crew_quarters/bar)
 "aDr" = (
@@ -6948,9 +6949,8 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fpurple2"
+/turf/simulated/floor/carpet/purple/fancy/edge/west{
+	dir = 1
 	},
 /area/station/crew_quarters/bar)
 "aDs" = (
@@ -6971,9 +6971,8 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple2"
+/turf/simulated/floor/carpet/purple/fancy/edge/west{
+	dir = 5
 	},
 /area/station/crew_quarters/bar)
 "aDu" = (
@@ -7199,7 +7198,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/card_box/plain,
-/turf/unsimulated/floor/carpet/purple/fancy/narrow{
+/turf/simulated/floor/carpet/purple/fancy/narrow/T_west{
 	dir = 9
 	},
 /area/station/crew_quarters/bar)
@@ -7209,10 +7208,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple1"
-	},
+/turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
 /area/station/crew_quarters/bar)
 "aEB" = (
 /obj/stool/bar,
@@ -7224,9 +7220,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fpurple5"
+/turf/simulated/floor/carpet/purple/fancy/junction/sw_n{
+	dir = 4
 	},
 /area/station/crew_quarters/bar)
 "aED" = (
@@ -7242,9 +7237,7 @@
 	},
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg,
-/turf/unsimulated/floor/carpet/purple/standard{
-	dir = 6
-	},
+/turf/simulated/floor/carpet/purple/standard/narrow/northsouth,
 /area/station/crew_quarters/bar)
 "aEI" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -7390,7 +7383,7 @@
 /obj/stool/chair/dining/wood{
 	dir = 1
 	},
-/turf/unsimulated/floor/carpet/purple/fancy/narrow{
+/turf/simulated/floor/carpet/purple/fancy/narrow/T_west{
 	dir = 10
 	},
 /area/station/crew_quarters/bar)
@@ -7401,7 +7394,7 @@
 /obj/stool/chair/dining/wood{
 	dir = 1
 	},
-/turf/unsimulated/floor/carpet/purple/fancy/narrow{
+/turf/simulated/floor/carpet/purple/fancy/narrow/T_west{
 	dir = 6
 	},
 /area/station/crew_quarters/bar)
@@ -7415,7 +7408,7 @@
 	pixel_y = 11;
 	pixel_x = 11
 	},
-/turf/unsimulated/floor/carpet/purple/standard/innercorner/ne_triple{
+/turf/simulated/floor/carpet/purple/standard/narrow/east{
 	dir = 8
 	},
 /area/station/crew_quarters/bar)
@@ -7444,9 +7437,7 @@
 	pixel_y = 6;
 	pixel_x = 2
 	},
-/turf/unsimulated/floor/carpet/purple/standard{
-	dir = 10
-	},
+/turf/simulated/floor/carpet/purple/standard/narrow/eastwest,
 /area/station/crew_quarters/bar)
 "aFH" = (
 /obj/table/reinforced/bar/auto,
@@ -7463,9 +7454,7 @@
 	pixel_y = 6;
 	pixel_x = -4
 	},
-/turf/unsimulated/floor/carpet/purple/standard{
-	dir = 10
-	},
+/turf/simulated/floor/carpet/purple/standard/narrow/eastwest,
 /area/station/crew_quarters/bar)
 "aFI" = (
 /obj/table/reinforced/bar/auto,
@@ -7477,7 +7466,9 @@
 	pixel_y = 1;
 	pixel_x = -8
 	},
-/turf/unsimulated/floor/carpet/purple/standard/narrow/T_east,
+/turf/simulated/floor/carpet/purple/standard/narrow/se{
+	dir = 4
+	},
 /area/station/crew_quarters/bar)
 "aFJ" = (
 /obj/disposalpipe/segment{
@@ -7670,10 +7661,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fpurple2"
-	},
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/crew_quarters/bar)
 "aGs" = (
 /obj/item/device/radio/beacon,
@@ -7681,15 +7669,12 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/carpet{
-	icon_state = "fpurple1"
-	},
+/turf/simulated/floor/carpet/purple/fancy,
 /area/station/crew_quarters/bar)
 "aGt" = (
 /obj/stool/bar,
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fpurple5"
+/turf/simulated/floor/carpet/purple/fancy/junction/sw_n{
+	dir = 4
 	},
 /area/station/crew_quarters/bar)
 "aGu" = (
@@ -7701,9 +7686,7 @@
 /obj/machinery/glass_recycler/bar{
 	g_amt = 30
 	},
-/turf/unsimulated/floor/carpet/purple/standard{
-	dir = 6
-	},
+/turf/simulated/floor/carpet/purple/standard/narrow/northsouth,
 /area/station/crew_quarters/bar)
 "aGw" = (
 /obj/disposalpipe/segment,
@@ -7892,24 +7875,18 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aHv" = (
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fpurple5"
+/turf/simulated/floor/carpet/purple/fancy/junction/sw_n{
+	dir = 8
 	},
 /area/station/crew_quarters/bar)
 "aHx" = (
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple1"
-	},
+/turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
 /area/station/crew_quarters/bar)
 "aHy" = (
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/carpet{
-	icon_state = "fpurple1"
-	},
+/turf/simulated/floor/carpet/purple/fancy,
 /area/station/crew_quarters/bar)
 "aHG" = (
 /obj/machinery/manufacturer/general,
@@ -8055,7 +8032,7 @@
 /area/station/crew_quarters/bar)
 "aIx" = (
 /obj/stool/chair/dining/wood,
-/turf/unsimulated/floor/carpet/purple/fancy/narrow{
+/turf/simulated/floor/carpet/purple/fancy/narrow/T_west{
 	dir = 5
 	},
 /area/station/crew_quarters/bar)
@@ -8063,9 +8040,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fpurple5"
+/turf/simulated/floor/carpet/purple/fancy/junction/sw_n{
+	dir = 6
 	},
 /area/station/crew_quarters/bar)
 "aIA" = (
@@ -8316,7 +8292,7 @@
 "aJK" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/tableware,
-/turf/unsimulated/floor/carpet/purple/fancy/narrow{
+/turf/simulated/floor/carpet/purple/fancy/narrow/T_west{
 	dir = 10
 	},
 /area/station/crew_quarters/bar)
@@ -8337,7 +8313,9 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
-/turf/unsimulated/floor/carpet/purple/fancy/narrow,
+/turf/simulated/floor/carpet/purple/fancy/narrow/T_west{
+	dir = 2
+	},
 /area/station/crew_quarters/bar)
 "aJN" = (
 /obj/cable{
@@ -14098,10 +14076,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple1"
-	},
+/turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
 /area/station/crew_quarters/bar)
 "bsG" = (
 /obj/machinery/light{
@@ -17230,7 +17205,7 @@
 "bSk" = (
 /obj/stool/chair/dining/wood,
 /obj/landmark/start/job/assistant,
-/turf/unsimulated/floor/carpet/purple/fancy/narrow{
+/turf/simulated/floor/carpet/purple/fancy/narrow/T_west{
 	dir = 9
 	},
 /area/station/crew_quarters/bar)
@@ -21143,10 +21118,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple1"
-	},
+/turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
 /area/station/crew_quarters/bar)
 "eYI" = (
 /obj/disposalpipe/segment{
@@ -21604,7 +21576,7 @@
 /area/station/medical/medbay)
 "fsw" = (
 /obj/stool/chair/dining/wood,
-/turf/unsimulated/floor/carpet/purple/fancy/narrow{
+/turf/simulated/floor/carpet/purple/fancy/narrow/T_west{
 	dir = 1
 	},
 /area/station/crew_quarters/bar)
@@ -21650,9 +21622,7 @@
 "fxD" = (
 /obj/stool/bar,
 /obj/landmark/start/job/assistant,
-/turf/simulated/floor/carpet{
-	icon_state = "fpurple1"
-	},
+/turf/simulated/floor/carpet/purple/fancy,
 /area/station/crew_quarters/bar)
 "fyI" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -22276,9 +22246,8 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fpurple5"
+/turf/simulated/floor/carpet/purple/fancy/junction/sw_n{
+	dir = 10
 	},
 /area/station/crew_quarters/bar)
 "fVW" = (
@@ -22650,9 +22619,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/carpet{
-	icon_state = "fpurple1"
-	},
+/turf/simulated/floor/carpet/purple/fancy,
 /area/station/crew_quarters/bar)
 "gjz" = (
 /obj/decal/tile_edge/line/green{
@@ -23003,7 +22970,7 @@
 "guG" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/tableware,
-/turf/unsimulated/floor/carpet/purple/fancy/narrow{
+/turf/simulated/floor/carpet/purple/fancy/narrow/T_west{
 	dir = 6
 	},
 /area/station/crew_quarters/bar)
@@ -24829,7 +24796,7 @@
 "hRF" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/tableware,
-/turf/unsimulated/floor/carpet/purple/fancy/narrow{
+/turf/simulated/floor/carpet/purple/fancy/narrow/T_west{
 	dir = 5
 	},
 /area/station/crew_quarters/bar)
@@ -25020,9 +24987,7 @@
 	pixel_y = 8;
 	pixel_x = -4
 	},
-/turf/unsimulated/floor/carpet/purple/standard{
-	dir = 10
-	},
+/turf/simulated/floor/carpet/purple/standard/narrow/eastwest,
 /area/station/crew_quarters/bar)
 "hYL" = (
 /obj/machinery/atmospherics/binary/valve{
@@ -25606,8 +25571,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "itX" = (
-/turf/simulated/floor/carpet{
-	icon_state = "fpurple2"
+/turf/simulated/floor/carpet/purple/fancy/edge/west{
+	dir = 2
 	},
 /area/station/crew_quarters/bar)
 "itY" = (
@@ -27028,9 +26993,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fpurple2"
+/turf/simulated/floor/carpet/purple/fancy/edge/west{
+	dir = 4
 	},
 /area/station/crew_quarters/bar)
 "jrF" = (
@@ -27171,9 +27135,7 @@
 /area/space)
 "jyu" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/carpet{
-	icon_state = "fpurple1"
-	},
+/turf/simulated/floor/carpet/purple/fancy,
 /area/station/crew_quarters/bar)
 "jyO" = (
 /obj/machinery/light/emergency{
@@ -27513,9 +27475,8 @@
 /area/station/medical/dome)
 "jLo" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fpurple2"
+/turf/simulated/floor/carpet/purple/fancy/edge/west{
+	dir = 1
 	},
 /area/station/crew_quarters/bar)
 "jLz" = (
@@ -32510,7 +32471,7 @@
 	},
 /obj/table/reinforced/bar/auto,
 /obj/machinery/phone,
-/turf/unsimulated/floor/carpet/purple/standard/innercorner/ne_triple{
+/turf/simulated/floor/carpet/purple/standard/narrow/east{
 	dir = 2
 	},
 /area/station/crew_quarters/bar)
@@ -34367,8 +34328,8 @@
 /area/station/medical/robotics)
 "pdi" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/carpet{
-	icon_state = "fpurple2"
+/turf/simulated/floor/carpet/purple/fancy/edge/west{
+	dir = 2
 	},
 /area/station/crew_quarters/bar)
 "pgF" = (
@@ -34967,10 +34928,7 @@
 /area/station/science/lab)
 "pJs" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple1"
-	},
+/turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
 /area/station/crew_quarters/bar)
 "pJA" = (
 /obj/disposalpipe/segment,
@@ -36338,9 +36296,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/carpet{
-	icon_state = "fpurple1"
-	},
+/turf/simulated/floor/carpet/purple/fancy,
 /area/station/crew_quarters/bar)
 "qEG" = (
 /obj/machinery/guardbot_dock,
@@ -37462,7 +37418,7 @@
 /obj/disposalpipe/trunk/food{
 	dir = 8
 	},
-/turf/unsimulated/floor/carpet/purple/standard/innercorner/ne_triple{
+/turf/simulated/floor/carpet/purple/standard/narrow/east{
 	dir = 1
 	},
 /area/station/crew_quarters/bar)
@@ -38210,10 +38166,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple1"
-	},
+/turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
 /area/station/crew_quarters/bar)
 "rYH" = (
 /obj/machinery/light{
@@ -43566,9 +43519,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/carpet{
-	icon_state = "fpurple1"
-	},
+/turf/simulated/floor/carpet/purple/fancy,
 /area/station/crew_quarters/bar)
 "wfO" = (
 /obj/window/cubicle{
@@ -45093,10 +45044,7 @@
 "xyV" = (
 /obj/landmark/gps_waypoint,
 /obj/stool/bar,
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple1"
-	},
+/turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
 /area/station/crew_quarters/bar)
 "xzM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
