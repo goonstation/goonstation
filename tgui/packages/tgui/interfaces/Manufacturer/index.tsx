@@ -59,46 +59,48 @@ export const CollapsibleWireMenu = (props:MaintenencePanel, context) => {
     <Section
       title="Maintenence Panel"
     >
-      <Box>
+      <LabeledList>
         {props.wires.map((wire:WireData, i:number) => (
-          <Flex key="">
-            <Flex.Item textColor={wire.color}>
-              {wire.colorName}
-            </Flex.Item>
-            <Flex.Item>
-              <Button
-                content="Pulse"
-                onClick={() => act('wire', { action: "pulse", wire: i })}
-              />
-            </Flex.Item>
-            <Flex.Item>
-              <Button
-                content={is_set(props.wire_bitflags, i) ? "Cut" : "Mend"}
-                onClick={() => act("wire", { action: (is_set(props.wire_bitflags, i) ? "mend" : "cut"), wire: i })}
-              />
-            </Flex.Item>
-          </Flex>
+          <LabeledList.Item
+            key={i}
+            label={wire.colorName}
+            labelColor={wire.color}
+            buttons={[(<Button
+              key={i}
+              content="Pulse"
+              onClick={() => act('wire', { action: "pulse", wire: i })}
+            />),
+            (<Button
+              key={i}
+              content={is_set(props.wire_bitflags, i) ? "Cut" : "Mend"}
+              onClick={() => act("wire", { action: (is_set(props.wire_bitflags, i) ? "mend" : "cut"), wire: i })}
+            />)]}
+          />
         ))}
-        <Divider />
-        <LabeledList>
-          <LabeledList.Item
-            label="Electrification Risk">
-            {props.indicators.electrified ? "High" : "None"}
-          </LabeledList.Item>
-          <LabeledList.Item
-            label="System Stability">
-            {props.indicators.malfunctioning ? "Unstable" : "Stable"}
-          </LabeledList.Item>
-          <LabeledList.Item
-            label="Inventory">
-            {props.indicators.hacked ? "Expanded" : "Standard"}
-          </LabeledList.Item>
-          <LabeledList.Item
-            label="Power">
-            {props.indicators.hasPower ? "Sufficient" : "Insufficient"}
-          </LabeledList.Item>
-        </LabeledList>
-      </Box>
+      </LabeledList>
+      <Divider />
+      <LabeledList>
+        <LabeledList.Item
+          label="Electrification Risk"
+        >
+          {props.indicators.electrified ? "High" : "None"}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="System Stability"
+        >
+          {props.indicators.malfunctioning ? "Unstable" : "Stable"}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Inventory"
+        >
+          {props.indicators.hacked ? "Expanded" : "Standard"}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Power"
+        >
+          {props.indicators.hasPower ? "Sufficient" : "Insufficient"}
+        </LabeledList.Item>
+      </LabeledList>
     </Section>
   );
 };
