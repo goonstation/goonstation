@@ -179,9 +179,6 @@ export const Manufacturer = (_, context) => {
               </Section>
             </Stack.Item>
             <Stack.Item>
-              <CardInfo />
-            </Stack.Item>
-            <Stack.Item>
               <Section
                 textAlign="center"
                 title={"Fabricator Settings"}
@@ -211,6 +208,9 @@ export const Manufacturer = (_, context) => {
             </Stack.Item>
             <Stack.Item>
               {data.panel_open ? <CollapsibleWireMenu indicators={data.indicators} wires={data.wires} wire_bitflags={data.wire_bitflags} /> : ""}
+            </Stack.Item>
+            <Stack.Item>
+              <CardInfo />
             </Stack.Item>
             <Stack.Item>
               {data.rockboxes.map((rockbox:Rockbox) => (
