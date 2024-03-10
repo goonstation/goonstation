@@ -7405,25 +7405,72 @@
 	pixel_y = 5;
 	pixel_x = -4
 	},
+/obj/item/cigbutt{
+	pixel_y = 11;
+	pixel_x = 11
+	},
 /turf/unsimulated/floor/carpet/purple/standard/innercorner/ne_triple{
 	dir = 8
 	},
 /area/station/crew_quarters/bar)
 "aFG" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/decoration/ashtray,
+/obj/item/decoration/ashtray{
+	pixel_y = -1;
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style{
+	pixel_y = 1;
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style{
+	pixel_y = 14;
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
+	pixel_x = -12;
+	pixel_y = 7
+	},
+/obj/item/cigbutt{
+	pixel_y = 4
+	},
+/obj/item/cigbutt{
+	pixel_y = 6;
+	pixel_x = 2
+	},
 /turf/unsimulated/floor/carpet/purple/standard{
 	dir = 10
 	},
 /area/station/crew_quarters/bar)
 "aFH" = (
 /obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
+	pixel_y = 9;
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge{
+	pixel_y = -4;
+	pixel_x = -5
+	},
+/obj/item/cigbutt,
+/obj/item/implant/projectile/glass_shard{
+	pixel_y = 6;
+	pixel_x = -4
+	},
 /turf/unsimulated/floor/carpet/purple/standard{
 	dir = 10
 	},
 /area/station/crew_quarters/bar)
 "aFI" = (
 /obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/raw_material/shard/glass{
+	pixel_y = 1;
+	pixel_x = -8
+	},
 /turf/unsimulated/floor/carpet/purple/standard/narrow/T_east,
 /area/station/crew_quarters/bar)
 "aFJ" = (
@@ -14040,7 +14087,6 @@
 	location = "tour1";
 	name = "tour beacon - bar"
 	},
-/obj/machinery/light/small/floor,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -24966,6 +25012,17 @@
 /obj/item/matchbook{
 	pixel_x = 2;
 	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style{
+	pixel_y = 9;
+	pixel_x = 9
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
+	pixel_x = -12
+	},
+/obj/item/cocktail_stuff/celery{
+	pixel_y = 8;
+	pixel_x = -4
 	},
 /turf/unsimulated/floor/carpet/purple/standard{
 	dir = 10
