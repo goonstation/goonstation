@@ -5929,6 +5929,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "azw" = (
+/obj/landmark/start/job/assistant,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -5963,9 +5964,7 @@
 "azH" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/cookbook,
-/obj/item/kitchen/food_box/donut_box,
 /obj/item/instrument/bikehorn/dramatic,
-/obj/item/kitchen/food_box/donut_box,
 /obj/machinery/disposal/small{
 	dir = 1;
 	name = "food delivery unit-'Bar'";
@@ -5982,13 +5981,14 @@
 /area/station/crew_quarters/kitchen)
 "azI" = (
 /obj/table/reinforced/auto,
-/obj/machinery/mixer,
 /obj/machinery/disposal/small{
 	dir = 1;
 	name = "food delivery unit-'Brig'";
 	pixel_y = 32
 	},
 /obj/disposalpipe/trunk/food,
+/obj/item/kitchen/food_box/donut_box,
+/obj/item/kitchen/food_box/donut_box,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "azJ" = (
@@ -6001,7 +6001,6 @@
 	name = "Community Center"
 	})
 "azL" = (
-/obj/submachine/chef_oven,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -6011,6 +6010,11 @@
 /obj/noticeboard/persistent{
 	name = "Kitchen persistent notice board";
 	persistent_id = "kitchen"
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/glass_recycler{
+	pixel_y = 9;
+	pixel_x = -2
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -6082,7 +6086,7 @@
 /obj/decal/stage_edge,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_y = 3
+	pixel_y = 8
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
@@ -6422,6 +6426,7 @@
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
 	},
+/obj/reagent_dispensers/beerkeg,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "aBq" = (
@@ -6436,6 +6441,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/table/reinforced/auto,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aBw" = (
@@ -6476,7 +6482,6 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
 	},
-/obj/reagent_dispensers/beerkeg,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aBH" = (
@@ -6705,6 +6710,7 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/table/reinforced/auto,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aCC" = (
@@ -6964,7 +6970,6 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/obj/machinery/light/small/floor,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fpurple2"
@@ -17221,6 +17226,7 @@
 	})
 "bSk" = (
 /obj/stool/chair/dining/wood,
+/obj/landmark/start/job/assistant,
 /turf/unsimulated/floor/carpet/purple/fancy/narrow{
 	dir = 9
 	},
@@ -17677,10 +17683,6 @@
 	icon_state = "blue1"
 	},
 /area/station/hallway/secondary/central)
-"cfN" = (
-/obj/table/reinforced/auto,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "cha" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -18445,6 +18447,9 @@
 "cOk" = (
 /obj/submachine/chef_oven,
 /obj/landmark/bill_spawn,
+/obj/machinery/alarm{
+	pixel_y = 23
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "cOl" = (
@@ -18716,7 +18721,8 @@
 "cXK" = (
 /obj/item/device/radio/intercom/catering{
 	dir = 8;
-	pixel_y = 5
+	pixel_y = 5;
+	pixel_x = 21
 	},
 /obj/machinery/chem_dispenser/chemical,
 /obj/machinery/firealarm/north{
@@ -19608,12 +19614,6 @@
 /obj/item/kitchen/utensil/spoon,
 /obj/item/kitchen/utensil/fork,
 /obj/item/storage/box/plates,
-/obj/item/storage/box/cutlery{
-	pixel_x = 8
-	},
-/obj/item/storage/box/popsicle_sticks{
-	pixel_x = -7
-	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "dMz" = (
@@ -20758,6 +20758,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/landmark/start/job/chef,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "eJb" = (
@@ -20808,11 +20809,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/central)
-"eKZ" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/milk,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "eLa" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -21109,7 +21105,8 @@
 	},
 /obj/decal/stage_edge,
 /obj/swingsign{
-	message = "Big Rob's comedy hour<br>Coming soon!"
+	message = "Big Rob's comedy hour<br>Coming soon!";
+	anchored = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
@@ -23031,15 +23028,11 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "gxe" = (
-/obj/stove,
-/obj/item/soup_pot{
-	pixel_x = 4;
-	pixel_y = 10
+/obj/machinery/phone/wall{
+	pixel_y = 32
 	},
-/obj/item/ladle{
-	pixel_x = -2;
-	pixel_y = 11
-	},
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/breadloaf,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "gxZ" = (
@@ -24095,7 +24088,7 @@
 /area/station/chapel/funeral_parlor)
 "hvU" = (
 /obj/machinery/firealarm/north,
-/obj/machinery/deep_fryer,
+/obj/submachine/chef_oven,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "hwV" = (
@@ -25631,6 +25624,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"iui" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 5
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "iuo" = (
 /obj/machinery/power/smes{
 	name = "power storage unit (engine)"
@@ -25920,12 +25920,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/central)
-"iDL" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/breadloaf,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "iEg" = (
 /obj/disposalpipe/segment/mail{
 	dir = 8;
@@ -26905,6 +26899,12 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
 /area/station/storage/auxillary)
+"jnC" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/milk,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "joa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -27879,7 +27879,12 @@
 /area/station/garden/aviary)
 "kdK" = (
 /obj/table/reinforced/auto,
-/obj/machinery/mixer,
+/obj/item/storage/box/cutlery{
+	pixel_x = 8
+	},
+/obj/item/storage/box/popsicle_sticks{
+	pixel_x = -7
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "kea" = (
@@ -28266,10 +28271,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
-"kvU" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/bar)
 "kwx" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -32722,10 +32723,10 @@
 /area/station/engine/engineering/ce/private)
 "nPs" = (
 /obj/disposalpipe/segment,
-/obj/item/storage/wall/random{
+/obj/item/storage/wall{
 	dir = 4;
-	pixel_y = 0;
-	pixel_x = -31
+	pixel_x = -32;
+	spawn_contents = list(obj/item/storage/box/fruit_wedges, obj/item/storage/box/cocktail_doodads, obj/item/storage/box/cocktail_umbrellas, obj/item/storage/box/glassbox, obj/item/hand_labeler, obj/item/storage/firstaid/toxin, obj/item/device/reagentscanner, obj/item/reagent_containers/dropper, obj/item/reagent_containers/dropper/mechanical, /obj/item/storage/box/ic_cones = 2, obj/item/storage/toolbox/emergency)
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -34143,7 +34144,10 @@
 /area/station/crew_quarters/pool)
 "oSv" = (
 /obj/table/reinforced/auto,
-/obj/machinery/phone,
+/obj/machinery/mixer{
+	pixel_y = 3;
+	pixel_x = -6
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "oSJ" = (
@@ -34900,7 +34904,7 @@
 /obj/decal/poster/wallsign/chsl{
 	pixel_y = 32
 	},
-/obj/submachine/chef_sink,
+/obj/machinery/deep_fryer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "pGx" = (
@@ -37555,6 +37559,19 @@
 /obj/mapping_helper/access/engineering,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/core/nuclear)
+"rvM" = (
+/obj/table/round,
+/obj/item/reagent_containers/food/drinks/mug/random_color{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
+	pixel_y = 16
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/bar)
 "rvQ" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -42641,11 +42658,18 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "vsD" = (
-/obj/table/reinforced/auto,
-/obj/machinery/glass_recycler,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/stove,
+/obj/item/soup_pot{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/item/ladle{
+	pixel_x = -2;
+	pixel_y = 11
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -44929,14 +44953,6 @@
 /area/station/science/bot_storage)
 "xsX" = (
 /obj/machinery/firealarm/north,
-/obj/table/round,
-/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
-	pixel_y = 16
-	},
-/obj/item/reagent_containers/food/drinks/mug/random_color{
-	pixel_x = -4;
-	pixel_y = 2
-	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -79132,7 +79148,7 @@ doy
 uyl
 qwO
 gmX
-azw
+rvM
 aAq
 aBj
 aCr
@@ -80685,7 +80701,7 @@ aGt
 jrp
 aIA
 mBF
-kvU
+xlK
 jIw
 lKx
 aOE
@@ -80942,7 +80958,7 @@ aEB
 dhZ
 aAu
 aIv
-kvU
+xlK
 sAa
 lKx
 aOE
@@ -82988,8 +83004,8 @@ axB
 axB
 ayX
 azL
-lQz
-iDL
+iui
+aAC
 aAC
 aDB
 eQI
@@ -83245,8 +83261,8 @@ sKD
 ays
 ayX
 gxe
+jnC
 aAC
-eKZ
 rXO
 pIp
 eQI
@@ -83503,7 +83519,7 @@ pMB
 ayX
 vsD
 aAC
-cfN
+aAC
 lQz
 kdK
 ayX
