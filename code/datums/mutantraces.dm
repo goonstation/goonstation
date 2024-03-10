@@ -2109,7 +2109,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		return
 
 /obj/effect/rt/cow_distorts
-	icon = 'icons/mob/cow/spotted.dmi'
+	icon = 'icons/mob/cow/spotted_smallears.dmi'
 
 /obj/effect/rt/cow_distorts/under // extends jumpsuit icons to cover the udder
 	icon_state = "under_distort"
@@ -2121,15 +2121,15 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	icon_state = "satchel_distort"
 
 /obj/effect/rt/cow_gloves_mask // trims far-side glove sprites so they don't render on top of the udder
-	icon = 'icons/mob/cow/spotted.dmi'
+	icon = 'icons/mob/cow/spotted_smallears.dmi'
 	icon_state = "gloves_mask"
 /obj/effect/rt/cow_backpack_mask // trims the far-side backpack strap, so it appears to hide behind the udder
-	icon = 'icons/mob/cow/spotted.dmi'
+	icon = 'icons/mob/cow/spotted_smallears.dmi'
 	icon_state = "backpack_mask"
 
 /datum/mutantrace/cow
 	name = "cow"
-	icon = 'icons/mob/cow/spotted.dmi'
+	icon = 'icons/mob/cow/spotted_smallears.dmi'
 	icon_state = "body_m"
 	human_compatible = TRUE
 	uses_human_clothes = FALSE
@@ -2140,16 +2140,16 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	mutant_organs = list("tail" = /obj/item/organ/tail/cow,
 	"left_eye" = /obj/item/organ/eye/cow,
 	"right_eye" = /obj/item/organ/eye/cow)
-	mutant_folder = 'icons/mob/cow/spotted.dmi'
+	mutant_folder = 'icons/mob/cow/spotted_smallears.dmi'
 	special_head = HEAD_COW
-	special_hair_1_icon = 'icons/mob/cow/spotted.dmi'
+	special_hair_1_icon = 'icons/mob/cow/spotted_smallears.dmi'
 	special_hair_1_state = "head-detail1"
 	special_hair_1_color = CUST_1
-	special_hair_2_icon = 'icons/mob/cow/spotted.dmi'
+	special_hair_2_icon = 'icons/mob/cow/spotted_smallears.dmi'
 	special_hair_2_state = "cow_over_suit"
 	special_hair_2_color = null
 	special_hair_2_layer = MOB_HAIR_LAYER1
-	special_hair_3_icon = 'icons/mob/cow/spotted.dmi' //This makes the cowrace's new and ADORABLE ears poke through wigs, just like their horns do! Its a miracle that this works so well and easily.
+	special_hair_3_icon = 'icons/mob/cow/spotted_smallears.dmi' //This makes the cowrace's new and ADORABLE ears poke through wigs, just like their horns do! Its a miracle that this works so well and easily.
 	special_hair_3_state = "head-detail2"
 	special_hair_3_color = null
 	special_hair_3_layer = MOB_HAIR_LAYER1
