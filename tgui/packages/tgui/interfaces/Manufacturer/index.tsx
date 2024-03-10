@@ -57,6 +57,7 @@ export const CollapsibleWireMenu = (props:MaintenencePanel, context) => {
   const { act } = useBackend<ManufacturerData>(context);
   return (
     <Section
+      textAlign="center"
       title="Maintenence Panel"
     >
       <LabeledList>
@@ -181,34 +182,32 @@ export const Manufacturer = (_, context) => {
               <CardInfo />
             </Stack.Item>
             <Stack.Item>
-              <Box>
-                <Section
-                  title={"Fabricator Settings"}
-                >
-                  <LabeledList>
-                    <LabeledList.Item
-                      label={"Repeat"}
-                      buttons={<Button icon="repeat" onClick={() => toggleRepeat()}>Toggle Repeat</Button>}
-                      textAlign="center"
-                    >
-                      {data.repeat ? "On" : "Off"}
-                    </LabeledList.Item>
-                    <LabeledList.Item
-                      label="Speed"
-                    >
-                      <Slider
-                        minValue={1}
-                        value={speed}
-                        maxValue={3}
-                        step={1}
-                        stepPixelSize={100}
-                        onChange={(_e:any, value:number) => updateSpeed(value)}
-                      />
-                    </LabeledList.Item>
-                  </LabeledList>
-                </Section>
-
-              </Box>
+              <Section
+                textAlign="center"
+                title={"Fabricator Settings"}
+              >
+                <LabeledList>
+                  <LabeledList.Item
+                    label={"Repeat"}
+                    buttons={<Button icon="repeat" onClick={() => toggleRepeat()}>Toggle Repeat</Button>}
+                    textAlign="center"
+                  >
+                    {data.repeat ? "On" : "Off"}
+                  </LabeledList.Item>
+                  <LabeledList.Item
+                    label="Speed"
+                  >
+                    <Slider
+                      minValue={1}
+                      value={speed}
+                      maxValue={3}
+                      step={1}
+                      stepPixelSize={100}
+                      onChange={(_e:any, value:number) => updateSpeed(value)}
+                    />
+                  </LabeledList.Item>
+                </LabeledList>
+              </Section>
             </Stack.Item>
             <Stack.Item>
               {data.panel_open ? <CollapsibleWireMenu indicators={data.indicators} wires={data.wires} wire_bitflags={data.wire_bitflags} /> : ""}
@@ -216,6 +215,7 @@ export const Manufacturer = (_, context) => {
             <Stack.Item>
               {data.rockboxes.map((rockbox:Rockbox) => (
                 <Section
+                  textAlign="center"
                   key={rockbox.byondRef}
                   title={rockbox.area_name}
                 >
