@@ -14,8 +14,8 @@ TYPEINFO(/obj/machinery/space_heater)
 	var/on = FALSE
 	var/heating = FALSE // If its cooling down (false) or heating up (true) the current atmosphere
 	var/set_temperature = T0C+50
-	var/heating_power = 40000
-	var/cooling_power = -30000
+	var/heating_power = 400 /// fake heat capacity
+	var/cooling_power = -300
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = FPRINT | TGUI_INTERACTIVE
 
@@ -213,10 +213,10 @@ TYPEINFO(/obj/machinery/space_heater)
 						var/current_power = 0
 						if(src.heating)
 							current_power = src.emagged ? src.heating_power * 3: src.heating_power
-							removed.temperature = (removed.temperature*heat_capacity + current_power)/heat_capacity
+							removed.temperature = (removed.temperature*heat_capacity + current_power * src.set_temperature)/heat_capacity
 						else
 							current_power = src.emagged ? src.cooling_power * 3: src.cooling_power
-							removed.temperature = (removed.temperature*heat_capacity + current_power)/heat_capacity
+							removed.temperature = (removed.temperature*heat_capacity + current_power * src.set_temperature)/heat_capacity
 
 						src.cell.use(abs(current_power)/20000)
 

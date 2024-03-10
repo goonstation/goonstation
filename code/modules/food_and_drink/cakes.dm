@@ -589,7 +589,7 @@
 
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau
 	name = "Extravagant Chocolate Gateau"
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!"
+	desc = "Holy shit! This cake probably costs more than the peak market cap of Donk Co.!"
 
 	New()
 		..()

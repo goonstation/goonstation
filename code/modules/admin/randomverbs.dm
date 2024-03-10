@@ -2545,38 +2545,20 @@ var/global/night_mode_enabled = 0
 		boutput(usr, SPAN_ALERT("Transfer aborted."))
 		return
 	old_key = ckey(old_key)
-
 	var/new_key = ckey(input("Enter new account key", "New account key", null) as null|text)
 	if (!new_key)
 		boutput(usr, SPAN_ALERT("Transfer aborted."))
 		return
 
-	//criminal activity
-	var/datum/player/dummy_player = new
-	dummy_player.clouddata = list() // trick it into thinking we have cloud data I guess. only gets nullchecked
-	dummy_player.cloudsaves = list() // ditto
-	var/datum/preferences/dummy_preferences = new
-	var/list/save_names = dummy_player.cloud_fetch_target_saves_only(old_key) // technically a map from names to nums
-
-	if (!save_names)
-		boutput(usr, SPAN_ALERT("Couldn't find cloud data for that key."))
-		return
-	if (!length(save_names))
-		boutput(usr, SPAN_ALERT("Couldn't find any cloud saves for that key."))
-		return
-	if (tgui_alert(usr, "You're about to transfer [length(save_names)] saves from [old_key] to [new_key]. This will overwrite all the existing saves on the target account. Do it?", "Cloud Save Transfer", list("Yes", "No")) == "No")
+	if (tgui_alert(usr, "You're about to transfer all saves from [old_key] to [new_key]. This will overwrite all the existing saves on the target account. Do it?", "Cloud Save Transfer", list("Yes", "No")) == "No")
 		boutput(usr, SPAN_ALERT("Transfer aborted."))
 		return
 
-	for (var/name in save_names)
-		dummy_preferences.cloudsave_load(null, name, old_key)
-		var/ret = dummy_preferences.cloudsave_save(null, name, new_key)
-		if (ret != 1) //yes this is intentional
-			boutput(usr, SPAN_ALERT("Something went wrong while saving to the cloud. Return value was: ([ret]). Transfer aborted."))
-			return
-
-	dummy_player.cloud_put_target(new_key, "saves", save_names)
-	boutput(usr, SPAN_SUCCESS("Cloud saves transferred."))
+	try
+		cloud_saves_transfer(old_key, new_key)
+		boutput(usr, SPAN_SUCCESS("Cloud saves transferred."))
+	catch (var/exception/e)
+		boutput(usr, SPAN_ALERT("Transfer aborted because: [e.name]"))
 
 /client/proc/cmd_admin_disable()
 	set name = "Disable Admin Powers"
