@@ -32690,7 +32690,7 @@
 /obj/item/storage/wall{
 	dir = 4;
 	pixel_x = -32;
-	spawn_contents = list(obj/item/storage/box/fruit_wedges, obj/item/storage/box/cocktail_doodads, obj/item/storage/box/cocktail_umbrellas, obj/item/storage/box/glassbox, obj/item/hand_labeler, obj/item/storage/firstaid/toxin, obj/item/device/reagentscanner, obj/item/reagent_containers/dropper, obj/item/reagent_containers/dropper/mechanical, /obj/item/storage/box/ic_cones = 2, obj/item/storage/toolbox/emergency)
+	spawn_contents = list(/obj/item/storage/box/fruit_wedges, /obj/item/storage/box/cocktail_doodads, /obj/item/storage/box/cocktail_umbrellas, /obj/item/storage/box/glassbox, /obj/item/hand_labeler, /obj/item/storage/firstaid/toxin, /obj/item/device/reagentscanner, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/dropper/mechanical, /obj/item/storage/box/ic_cones = 2, /obj/item/storage/toolbox/emergency)
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
