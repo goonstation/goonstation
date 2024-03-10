@@ -16,16 +16,19 @@ const JobItem = ({ name, count, limit, type, onEdit, onAlterCap, onRemove }) => 
       <>
         <Button
           content={`${count}/${limit}`}
+          tooltip="Alter Cap"
           onClick={onAlterCap}
         />
         <Button
           icon="edit"
+          tooltip="Edit Job"
           onClick={onEdit}
         />
         {type === 'created' && (
           <Button.Confirm
             icon="trash"
             color="bad"
+            tooltip="Remove Job"
             onClick={onRemove}
           />
         )}
