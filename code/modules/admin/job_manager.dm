@@ -5,7 +5,7 @@
 	return tgui_admin_state.can_use_topic(src, user)
 
 /datum/job_manager/ui_status(mob/user)
-  return tgui_admin_state.can_use_topic(src, user)
+	return tgui_admin_state.can_use_topic(src, user)
 
 /datum/job_manager/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -24,11 +24,11 @@
 	for (var/datum/job/JOB in job_controls.hidden_jobs)
 		hidden_job_data += list(list(name = JOB.name, type = JOB.job_category, count = countJob(JOB.name), limit = JOB.limit))
 	. = list(
-			"stapleJobs" = staple_job_data,
-			"specialJobs" = special_job_data,
-			"hiddenJobs" = hidden_job_data,
-			"allowSpecialJobs" = job_controls.allow_special_jobs
-		)
+		"stapleJobs" = staple_job_data,
+		"specialJobs" = special_job_data,
+		"hiddenJobs" = hidden_job_data,
+		"allowSpecialJobs" = job_controls.allow_special_jobs
+	)
 
 /datum/job_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
