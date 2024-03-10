@@ -279,19 +279,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 			ui.open()
 
 	ui_data(mob/user)
-		// human-readable rather than matid
-		var/resource_names = list()
+		// Send material data as tuples of material name, material id, material amount
+		var/resource_data = list()
 		for (var/mat_id in resource_amounts)
-			resource_names += "[src.get_our_material(mat_id)]"
+			resource_data += list(list("name"="[src.get_our_material(mat_id)]", "id"=mat_id, "amount"=resource_amounts[mat_id]))
 		return list(
 			"panel_open" = src.panel_open,
 			"hacked" = src.hacked,
 			"malfunction" = src.malfunction,
 			"wire_bitflags" = src.wires,
+			"card_balance" = (!isnull(src.scan) ? FindBankAccountByName(src.scan.registered)["current_money"] : null),
+			"card_owner" = (!isnull(src.scan) ? src.scan.registered : null),
 			"speed" = src.speed,
 			"repeat" = src.repeat,
-			"resources" = src.resource_amounts,
-			"resource_names" = resource_names,
+			"resource_data" = resource_data,
 			"indicators" = list("electrified" = src.electrified,
 							    "malfunctioning" = src.malfunction,
 								"hacked" = src.hacked,
@@ -303,8 +304,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return list (
 			"fabricator_name" = src.name,
 			"all_categories" = src.categories,
-			"card_balance" = (!isnull(src.scan) ? FindBankAccountByName(src.scan.registered)["current_money"] : null),
-			"card_owner" = (!isnull(src.scan) ? src.scan.registered : null),
 			"delete_allowed" = src.allowed(user),
 			"available_blueprints" = blueprints_as_list(src.available, user),
 			"hidden_blueprints" = blueprints_as_list(src.hidden, user),
@@ -672,6 +671,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 						if (!howmuch || !isnum_safe(howmuch))
 							return
 						src.reagents.remove_reagent(the_reagent,howmuch)
+
+		tgui_process.try_update_ui(usr, src)
 
 	proc/buy_ore(ore_name, storage_ref)
 		var/obj/machinery/ore_cloud_storage_container/storage = locate(storage_ref)

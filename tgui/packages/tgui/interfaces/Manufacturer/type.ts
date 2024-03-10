@@ -9,7 +9,6 @@ import { BooleanLike } from "common/react";
 
 export type ManufacturerData = {
   all_categories:string[];
-  resource_names:string[];
 
   card_owner:string;
   fabricator_name:string;
@@ -19,7 +18,7 @@ export type ManufacturerData = {
   drive_recipe_blueprints:Record<string, Manufacturable[]>;
   hidden_blueprints:Record<string, Manufacturable[]>;
 
-  resources:Record<string, number>;
+  resource_data:Resource[];
   wires:Record<string, string>;
 
   delete_allowed:BooleanLike;
@@ -51,6 +50,12 @@ export type Rockbox = {
   area_name: string;
   byondRef: string;
   ores: Ore[];
+}
+
+export type Resource = {
+  name: string;
+  id: string;
+  amount: number;
 }
 
 export type Ore = {

@@ -8,8 +8,8 @@
 import { Box } from "../Box";
 
 type CenteredTextProps = {
-  width:number | string,
-  height:number | string,
+  width?:number | string,
+  height?:number | string,
   text:string;
 }
 
@@ -25,7 +25,9 @@ export const CenteredText = (props:CenteredTextProps) => {
     <Box
       preserveWhitespace
       inline
-      width={width} height={height} lineHeight={height}
+      width={(width !== undefined) ? width : "100%"}
+      height={(height !== undefined) ? height : "100%"}
+      lineHeight={(height !== undefined) ? height : "100%"}
       style={{ "text-align": "center" }}
       px={0.5} // comfort padding
     >

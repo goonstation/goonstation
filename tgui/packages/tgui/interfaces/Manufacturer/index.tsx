@@ -8,67 +8,15 @@
 import { useBackend, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
-import { Box, Button, Collapsible, Divider, Flex, Input, LabeledList, Section, Slider, Stack, Table } from '../../components';
+import { Box, Button, Collapsible, Divider, Flex, Input, LabeledList, Section, Slider, Stack } from '../../components';
 import { ButtonWithBadge } from '../../components/goonstation/ButtonWithBadge';
-import { formatTime, truncate } from '../../format';
-import { TableCell, TableRow } from '../../components/Table';
+import { truncate } from '../../format';
 import { formatMoney } from '../../format';
-import { Manufacturable, ManufacturerData, Ore, Rockbox, WireIndicators } from './type';
+import { Manufacturable, ManufacturerData, Ore, Resource, Rockbox, WireIndicators } from './type';
+import { CenteredText } from '../../components/goonstation/CenteredText';
 
 const backgroundPop = "rgba(0,0,0,0.2)";
 const credit_symbol = "⪽";
-
-const BlueprintTooltip = (props) => {
-  let { blueprint } = props;
-  let requirements = [];
-  for (let i in blueprint.item_names) {
-    requirements.push(<>{blueprint.item_amounts[i]/10} {blueprint.item_names[i]}<br /></>);
-  }
-  return (
-    <>
-      Resource Costs:<br />
-      {requirements} <br />
-      {formatTime(blueprint.time, "Instananeous")}
-    </>
-  );
-};
-
-const MaterialRow = (props, context) => {
-  let { act } = useBackend(context);
-  let { resource, resourceAmt } = props;
-
-  return (
-    <TableRow>
-      <TableCell collapsing>
-        <Button icon="eject" onClick={() => act("material_eject", { "material": resource })} />
-      </TableCell>
-      <TableCell>
-        <Button icon="add" onClick={() => act("material_swap", { "resource": resource })} />
-      </TableCell>
-      <TableCell header>
-        {toTitleCase(resource)}
-      </TableCell>
-      <TableCell>
-        {resourceAmt/10}
-      </TableCell>
-    </TableRow>
-  );
-};
-
-const LoadedMaterials = (props) => {
-  let { resources, resourceNames } = props;
-  let resourceRows = [];
-  let i = 0;
-  for (let resource in resources) {
-    resourceRows.push(<MaterialRow resource={resourceNames[i]} resourceAmt={resources[resource]} />);
-    i++;
-  }
-  return (
-    <Table>
-      {resourceRows}
-    </Table>
-  );
-};
 
 const CategoryDropdown = (props, context) => {
   const { act } = useBackend(context);
@@ -89,8 +37,8 @@ const CardInfo = (_, context) => {
   const { data, act } = useBackend<ManufacturerData>(context);
   return (data.card_owner === null || data.card_balance === null) ? (
     <Flex backgroundColor={backgroundPop} p={1}>
-      <Flex.Item>
-        No Card Inserted
+      <Flex.Item grow>
+        <CenteredText text="No Card Inserted" />
       </Flex.Item>
       <Flex.Item>
         <Button icon="add" onClick={() => act("card", { "scan": true })}>Insert Card</Button>
@@ -159,11 +107,11 @@ export const CollapsibleWireMenu = (_, context) => {
           </LabeledList.Item>
           <LabeledList.Item
             label="System Stability">
-            {data.indicators.malfunctioning ? "100%" : "0%"}
+            {data.indicators.malfunctioning ? "Unstable" : "Stable"}
           </LabeledList.Item>
           <LabeledList.Item
-            label="Warranty">
-            {data.indicators.hacked ? "Void" : "Valid"}
+            label="Inventory">
+            {data.indicators.hacked ? "Expanded" : "Standard"}
           </LabeledList.Item>
           <LabeledList.Item
             label="Power">
@@ -209,7 +157,21 @@ export const Manufacturer = (_, context) => {
               </Stack.Item>
               <Stack.Item>
                 <Section title="Materials Loaded" textAlign="center">
-                  <LoadedMaterials resources={data.resources} resourceNames={data.resource_names} />
+                  <LabeledList>
+                    {data.resource_data.map((resourceData:Resource) => (
+                      <LabeledList.Item
+                        key={resourceData.id}
+                        buttons={[
+                          <Button key="eject" icon="eject" onClick={() => act("material_eject", { "resource": resourceData.id })} />,
+                          <Button key="swap" icon="add" onClick={() => act("material_swap", { "resource": resourceData.id })} />,
+                        ]}
+                        label={toTitleCase(resourceData.name)}
+                        textAlign="center"
+                      >
+                        {resourceData.amount/10}
+                      </LabeledList.Item>
+                    ))}
+                  </LabeledList>
                 </Section>
               </Stack.Item>
               <Stack.Item>
@@ -243,19 +205,25 @@ export const Manufacturer = (_, context) => {
               <Stack.Item>
                 {data.rockboxes.map((rockbox:Rockbox) => (
                   <Section
-                    key={rockbox.name}
-                    title={rockbox.name+ " at "+rockbox.area_name}
+                    key={rockbox.byondRef}
+                    title={rockbox.area_name}
                   >
-                    {rockbox.ores.map((ore:Ore) => (
-                      <Button
-                        fluid
-                        textAlign="center"
-                        key={ore.name}
-                        onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
-                      >
-                        {ore.name}: {ore.amount} for {ore.cost}{credit_symbol} each
-                      </Button>
-                    ))}
+                    <LabeledList>
+                      {rockbox.ores.map((ore:Ore) => (
+                        <LabeledList.Item
+                          key={ore.name}
+                          label={ore.name}
+                        >
+                          <Button
+                            textAlign="center"
+                            onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
+                            key={ore.name}
+                          >
+                            {ore.amount} {"("}{ore.cost}{credit_symbol}{")"}
+                          </Button>
+                        </LabeledList.Item>
+                      ))}
+                    </LabeledList>
                   </Section>
                 ))}
               </Stack.Item>
