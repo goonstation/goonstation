@@ -76,4 +76,3 @@
 			job_controls.special_jobs -= JOB
 			job_controls.hidden_jobs -= JOB
 			. = TRUE
-			
