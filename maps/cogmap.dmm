@@ -5384,12 +5384,14 @@
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
 /obj/blind_switch/area/north{
-	id = "baroffice"
+	id = "baroffice";
+	pixel_y = 0;
+	pixel_x = 24
 	},
 /obj/machinery/door_control{
 	id = "bar";
 	name = "Bar Shutter Control";
-	pixel_x = 24
+	pixel_y = 24
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
