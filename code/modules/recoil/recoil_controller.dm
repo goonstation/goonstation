@@ -79,7 +79,6 @@
 	if(!client)
 		return
 	while(abs(recoilcamera_recoil_magnitude) > 0 || abs(recoilcamera_recoil_delta) > 0)
-		var/timer = TIME - recoilcamera_last
 		recoilcamera_recoil_magnitude = max(0, recoilcamera_recoil_magnitude + recoilcamera_recoil_delta)
 		recoilcamera_angle += recoilcamera_sway_delta
 		var/targetx = cos(recoilcamera_angle) * recoilcamera_recoil_magnitude
