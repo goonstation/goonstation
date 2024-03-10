@@ -229,11 +229,12 @@ export const Manufacturer = (_, context) => {
                           label={ore.name}
                           buttons={
                             <Button
+                              width={"100%"}
                               textAlign="center"
                               onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
                               icon="add"
                             >
-                              Buy for {ore.cost}{credit_symbol}
+                              {ore.cost}{credit_symbol}
                             </Button>
                           }
                         >
