@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { useBackend, useSharedState } from '../../backend';
+import { useBackend, useLocalState, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
 import { Box, Button, Collapsible, Divider, Flex, Input, LabeledList, Section, Slider, Stack } from '../../components';
@@ -16,21 +16,6 @@ import { Manufacturable, ManufacturerData, Ore, Resource, Rockbox, WireIndicator
 import { CenteredText } from '../../components/goonstation/CenteredText';
 
 const credit_symbol = "⪽";
-
-const CategoryDropdown = (props, context) => {
-  const { act } = useBackend(context);
-  const { category, blueprints } = props;
-  let buttons = [];
-  for (let i in blueprints) {
-    buttons.push(<ButtonWithBadge width={12.75} height={5.5} image_path={blueprints[i].img} text={truncate(blueprints[i].name, 40)} onClick={() => act("product", { "blueprint_ref": blueprints[i].byondRef })} />);
-  }
-
-  return (
-    <Collapsible open title={category}>
-      {buttons}
-    </Collapsible>
-  );
-};
 
 const CardInfo = (_, context) => {
   const { data, act } = useBackend<ManufacturerData>(context);
@@ -133,6 +118,7 @@ export const Manufacturer = (_, context) => {
   const { act, data } = useBackend<ManufacturerData>(context);
   const [repeat, toggleRepeatVar] = useSharedState(context, "repeat", data.repeat);
   const [speed, setSpeedVar] = useSharedState(context, "speed", data.speed);
+  const [search, setSearchData] = useLocalState(context, "query", "");
   let toggleRepeat = () => {
     act("repeat");
     toggleRepeatVar(!repeat);
@@ -141,25 +127,57 @@ export const Manufacturer = (_, context) => {
     act("speed", { "value": newValue });
     setSpeedVar(newValue);
   };
-  let usable_blueprints = data.available_blueprints;
-  let dropdowns = [];
-  for (let i of data.all_categories) {
-    if (!usable_blueprints[i]) continue;
-    dropdowns.push(<CategoryDropdown category={i} blueprints={usable_blueprints[i]} />);
-  }
+  let usable_blueprints = [data.available_blueprints];
+
+  /*
+  {Object.keys(usable_blueprints).map((category:string) => (
+  <Collapsible title={category} key={category}>
+    {data.available_blueprints[category].map((blueprintData:Manufacturable) => (
+      <ButtonWithBadge
+        key={blueprintData.name}
+        width={12.75}
+        height={5.5}
+        image_path={blueprintData.img}
+        text={truncate(blueprintData.name, 40)}
+        onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
+      />
+    ))}
+  </Collapsible>
+  ))}
+  */
+
   return (
     <Window width={1200} height={600} title={data.fabricator_name}>
       <Window.Content>
         <Stack>
           <Stack.Item width="80%">
             <Section>
-              {dropdowns}
+              {data.all_categories.map((category:string) => (
+                <>
+                  {usable_blueprints.map((blueprints:Record<string, Manufacturable[]>) => (
+                    <Collapsible open title={category} key={category}>
+                      {(Object.keys(blueprints).find((key) => (key === category)))
+                        ? blueprints[category].map((blueprintData:Manufacturable) => (
+                          <ButtonWithBadge
+                            key={blueprintData.name}
+                            width={12.75}
+                            height={5.5}
+                            image_path={blueprintData.img}
+                            text={truncate(blueprintData.name, 40)}
+                            onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
+                          />
+                        )) : null}
+                    </Collapsible>
+                  ))}
+                </>
+              ))}
             </Section>
           </Stack.Item>
+
           <Stack.Item grow>
             <Stack vertical>
               <Stack.Item>
-                <Input placeholder="Search..." icon="search" width="100%" />
+                <Input placeholder="Search..." width="100%" onChange={(_, value) => setSearchData(value)} />
               </Stack.Item>
               <Stack.Item>
                 <Section title="Materials Loaded" textAlign="center">
