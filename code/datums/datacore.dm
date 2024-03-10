@@ -428,11 +428,17 @@
 
 /datum/fine/proc/approve(var/approved_by,var/their_job)
 	if(approver || paid) return
-	if(!(their_job in list("Captain","Head of Security","Head of Personnel"))) return
+	if (amount > 500 && !(their_job in list("Captain","Head of Security","Head of Personnel","Nanotrasen Security Consultant"))) return
+	if (!(their_job in list("Captain","Head of Security","Head of Personnel","Nanotrasen Security Consultant","Security Officer","Inspector"))) return
 
 	approver = approved_by
 	approver_job = their_job
 	approver_byond_key = get_byond_key(approver)
+
+	if (bank_record["pda_net_id"])
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"=bank_record["pda_net_id"], "command"="text_message", "sender_name"="FINE-MAILBOT", "sender"="00000000", "message"="Notification: You have been fined [amount] credits by [issuer] for [reason].")
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 	if(bank_record["current_money"] >= amount)
 		bank_record["current_money"] -= amount
