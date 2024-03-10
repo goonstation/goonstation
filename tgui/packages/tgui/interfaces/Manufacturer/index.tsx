@@ -38,24 +38,30 @@ const CardInfo = (_, context) => {
   return (data.card_owner === null || data.card_balance === null) ? (
     <Flex backgroundColor={backgroundPop} p={1}>
       <Flex.Item grow>
-        <CenteredText text="No Card Inserted" />
+        <CenteredText text="No Account Found" />
       </Flex.Item>
       <Flex.Item>
-        <Button icon="add" onClick={() => act("card", { "scan": true })}>Insert Card</Button>
+        <Button icon="add" onClick={() => act("card", { "scan": true })}>Add Account</Button>
       </Flex.Item>
     </Flex>
   ) : (
-    <Box backgroundColor={backgroundPop} p={1}>
-      Card: {data.card_owner}
-      <Flex>
-        <Flex.Item>
-          Balance: {formatMoney(1000)}{credit_symbol}
-        </Flex.Item>
-        <Flex.Item>
-          <Button icon="subtract" onClick={() => act("card", { "remove": true })}>Remove Card</Button>
-        </Flex.Item>
-      </Flex>
-    </Box>
+    <Section
+      title="Account Info"
+      buttons={<Button icon="minus" onClick={() => act("card", { "remove": true })}>Log Out</Button>}
+    >
+      <LabeledList>
+        <LabeledList.Item
+          label="Owner"
+        >
+          {data.card_owner}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label="Balance"
+        >
+          {formatMoney(data.card_balance)}{credit_symbol}
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
   );
 };
 
