@@ -63,7 +63,7 @@ export const JobManager = (props, context) => {
                           onClick={() => act('alter_cap', { job: job.name })}
                         />
                         <Button
-                          content="Edit"
+                          icon="edit"
                           onClick={() => act('edit', { job: job.name })}
                         />
                       </>
@@ -86,7 +86,7 @@ export const JobManager = (props, context) => {
                         onClick={() => act('alter_cap', { job: job.name })}
                       />
                       <Button
-                        content="Edit"
+                        icon="edit"
                         onClick={() => act('edit', { job: job.name })}
                       />
                       {job.type === 'created' && (
@@ -115,7 +115,7 @@ export const JobManager = (props, context) => {
                         onClick={() => act('alter_cap', { job: job.name })}
                       />
                       <Button
-                        content="Edit"
+                        icon="edit"
                         onClick={() => act('edit', { job: job.name })}
                       />
                       {job.type === 'created' && (
