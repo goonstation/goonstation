@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/plantmutation)
 /datum/plantmutation
 	var/name = null // If this is set, plants will use this instead of regular plant name
 	var/crop = null // What crop does it give?

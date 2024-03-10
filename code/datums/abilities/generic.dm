@@ -244,7 +244,7 @@
 	cast(atom/movable/target)
 		if (!ishuman(src.holder.owner))
 			return
-		if (!src.empowered && target.anchored || target.anchored == ANCHORED_ALWAYS)
+		if (!src.empowered && (target.anchored || target == src.holder.owner) || target.anchored == ANCHORED_ALWAYS)
 			boutput(src.holder.owner, SPAN_ALERT("Your juggling abilities aren't quite enough to juggle that."))
 			return
 		var/mob/living/carbon/human/human = src.holder.owner

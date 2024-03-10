@@ -1,5 +1,7 @@
 
 (t)fri mar 08 24
+(u)LeahTheTech
+(*)Ocean tiles will no longer leak fluid if covered by a forcefield, and forcefields will now correctly update the tiles next to them when they shut down.
 (u)CalliopeSoups
 (p)18103
 (e)🗺💅|A-Mapping, C-QoL
