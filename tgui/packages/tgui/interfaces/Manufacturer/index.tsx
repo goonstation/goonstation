@@ -12,7 +12,7 @@ import { Box, Button, Collapsible, Divider, Flex, Input, LabeledList, Section, S
 import { ButtonWithBadge } from '../../components/goonstation/ButtonWithBadge';
 import { truncate } from '../../format';
 import { formatMoney } from '../../format';
-import { Manufacturable, ManufacturerData, Ore, Resource, Rockbox, WireIndicators } from './type';
+import { MaintenencePanel, Manufacturable, ManufacturerData, Ore, Resource, Rockbox, WireData } from './type';
 import { CenteredText } from '../../components/goonstation/CenteredText';
 
 const credit_symbol = "⪽";
@@ -53,60 +53,49 @@ const CardInfo = (_, context) => {
 
 const is_set = (bits, bit) => bits & (1 << bit);
 
-export const CollapsibleWireMenu = (_, context) => {
-  const { act, data } = useBackend<ManufacturerData>(context);
-  let wireContent = [];
-  let i = 0;
-  if (data.panel_open)
-  {
-    for (let wire in data.wires)
-    {
-      let cut = is_set(data.wire_bitflags, i);
-      i++;
-      wireContent.push(
-        <Flex>
-          <Flex.Item textColor={data.wires[wire]}>
-            {wire}
-          </Flex.Item>
-          <Flex.Item>
-            <Button
-              content="Pulse"
-              onClick={() => act('wire', { action: "pulse", wire: i })}
-            />
-          </Flex.Item>
-          <Flex.Item>
-            <Button
-              content={cut ? "Cut" : "Mend"}
-              onClick={() => act("wire", { action: (cut ? "mend" : "cut"), wire: i })}
-            />
-          </Flex.Item>
-        </Flex>
-      );
-    }
-  }
+export const CollapsibleWireMenu = (props:MaintenencePanel, context) => {
+  const { act } = useBackend<ManufacturerData>(context);
   return (
     <Section
       title="Maintenence Panel"
     >
       <Box>
-        {wireContent}
+        {props.wires.map((wire:WireData, i:number) => (
+          <Flex key="">
+            <Flex.Item textColor={wire.color}>
+              {wire.colorName}
+            </Flex.Item>
+            <Flex.Item>
+              <Button
+                content="Pulse"
+                onClick={() => act('wire', { action: "pulse", wire: i })}
+              />
+            </Flex.Item>
+            <Flex.Item>
+              <Button
+                content={is_set(props.wire_bitflags, i) ? "Cut" : "Mend"}
+                onClick={() => act("wire", { action: (is_set(props.wire_bitflags, i) ? "mend" : "cut"), wire: i })}
+              />
+            </Flex.Item>
+          </Flex>
+        ))}
         <Divider />
         <LabeledList>
           <LabeledList.Item
             label="Electrification Risk">
-            {data.indicators.electrified ? "High" : "None"}
+            {props.indicators.electrified ? "High" : "None"}
           </LabeledList.Item>
           <LabeledList.Item
             label="System Stability">
-            {data.indicators.malfunctioning ? "Unstable" : "Stable"}
+            {props.indicators.malfunctioning ? "Unstable" : "Stable"}
           </LabeledList.Item>
           <LabeledList.Item
             label="Inventory">
-            {data.indicators.hacked ? "Expanded" : "Standard"}
+            {props.indicators.hacked ? "Expanded" : "Standard"}
           </LabeledList.Item>
           <LabeledList.Item
             label="Power">
-            {data.indicators.hasPower ? "Sufficient" : "Insufficient"}
+            {props.indicators.hasPower ? "Sufficient" : "Insufficient"}
           </LabeledList.Item>
         </LabeledList>
       </Box>
@@ -136,127 +125,124 @@ export const Manufacturer = (_, context) => {
 
   return (
     <Window width={1200} height={600} title={data.fabricator_name}>
-      <Window.Content>
-        <Stack>
-          <Stack.Item width="80%">
-            <Section>
-              {data.all_categories.map((category:string) => (
-                <Collapsible open title={category} key={category}>
-                  {usable_blueprints.map((blueprints:Record<string, Manufacturable[]>) => (
-                    (Object.keys(blueprints).find((key) => (key === category)))
-                      ? blueprints[category].map((blueprintData:Manufacturable) => (
-                        (blueprintData.name.toLowerCase().includes(search)
-                          ? (
-                            <ButtonWithBadge
-                              key={blueprintData.name}
-                              width={12.75}
-                              height={5.5}
-                              image_path={blueprintData.img}
-                              text={truncate(blueprintData.name, 40)}
-                              onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
-                            />
-                          ) : null)
-                      )) : null
-                  ))}
-                </Collapsible>
-              ))}
-            </Section>
-          </Stack.Item>
+      <Stack>
+        <Stack.Item width="80%">
+          <Section scrollable>
+            {data.all_categories.map((category:string) => (
+              <Collapsible open title={category} key={category}>
+                {usable_blueprints.map((blueprints:Record<string, Manufacturable[]>) => (
+                  (Object.keys(blueprints).find((key) => (key === category)))
+                    ? blueprints[category].map((blueprintData:Manufacturable) => (
+                      (blueprintData.name.toLowerCase().includes(search)
+                        ? (
+                          <ButtonWithBadge
+                            key={blueprintData.name}
+                            width={12.5}
+                            height={5.5}
+                            image_path={blueprintData.img}
+                            text={truncate(blueprintData.name, 40)}
+                            onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
+                          />
+                        ) : null)
+                    )) : null
+                ))}
+              </Collapsible>
+            ))}
+          </Section>
+        </Stack.Item>
 
-          <Stack.Item grow>
-            <Stack vertical>
-              <Stack.Item>
-                <Input placeholder="Search..." width="100%" onInput={(_, value) => setSearchData(value)} />
-              </Stack.Item>
-              <Stack.Item>
-                <Section title="Materials Loaded" textAlign="center">
+        <Stack.Item grow>
+          <Stack vertical>
+            <Stack.Item>
+              <Input placeholder="Search..." width="100%" onInput={(_, value) => setSearchData(value)} />
+            </Stack.Item>
+            <Stack.Item>
+              <Section title="Materials Loaded" textAlign="center">
+                <LabeledList>
+                  {data.resource_data.map((resourceData:Resource) => (
+                    <LabeledList.Item
+                      key={resourceData.id}
+                      buttons={[
+                        <Button key="eject" icon="eject" onClick={() => act("material_eject", { "resource": resourceData.id })} />,
+                        <Button key="swap" icon="add" onClick={() => act("material_swap", { "resource": resourceData.id })} />,
+                      ]}
+                      label={toTitleCase(resourceData.name)}
+                      textAlign="center"
+                    >
+                      {resourceData.amount/10}
+                    </LabeledList.Item>
+                  ))}
+                </LabeledList>
+              </Section>
+            </Stack.Item>
+            <Stack.Item>
+              <CardInfo />
+            </Stack.Item>
+            <Stack.Item>
+              <Box>
+                <Section
+                  title={"Fabricator Settings"}
+                >
                   <LabeledList>
-                    {data.resource_data.map((resourceData:Resource) => (
+                    <LabeledList.Item
+                      label={"Repeat"}
+                      buttons={<Button icon="repeat" onClick={() => toggleRepeat()}>Toggle Repeat</Button>}
+                      textAlign="center"
+                    >
+                      {data.repeat ? "On" : "Off"}
+                    </LabeledList.Item>
+                    <LabeledList.Item
+                      label="Speed"
+                    >
+                      <Slider
+                        minValue={1}
+                        value={speed}
+                        maxValue={3}
+                        step={1}
+                        stepPixelSize={100}
+                        onChange={(_e:any, value:number) => updateSpeed(value)}
+                      />
+                    </LabeledList.Item>
+                  </LabeledList>
+                </Section>
+
+              </Box>
+            </Stack.Item>
+            <Stack.Item>
+              {data.panel_open ? <CollapsibleWireMenu indicators={data.indicators} wires={data.wires} wire_bitflags={data.wire_bitflags} /> : ""}
+            </Stack.Item>
+            <Stack.Item>
+              {data.rockboxes.map((rockbox:Rockbox) => (
+                <Section
+                  key={rockbox.byondRef}
+                  title={rockbox.area_name}
+                >
+                  <LabeledList>
+                    {rockbox.ores.map((ore:Ore) => (
                       <LabeledList.Item
-                        key={resourceData.id}
-                        buttons={[
-                          <Button key="eject" icon="eject" onClick={() => act("material_eject", { "resource": resourceData.id })} />,
-                          <Button key="swap" icon="add" onClick={() => act("material_swap", { "resource": resourceData.id })} />,
-                        ]}
-                        label={toTitleCase(resourceData.name)}
-                        textAlign="center"
+                        key={ore.name}
+                        label={ore.name}
+                        buttons={
+                          <Button
+                            width={"100%"}
+                            textAlign="center"
+                            onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
+                            icon="add"
+                          >
+                            {ore.cost}{credit_symbol}
+                          </Button>
+                        }
                       >
-                        {resourceData.amount/10}
+                        {ore.amount}
                       </LabeledList.Item>
                     ))}
                   </LabeledList>
                 </Section>
-              </Stack.Item>
-              <Stack.Item>
-                <CardInfo />
-              </Stack.Item>
-              <Stack.Item>
-                <Box>
-                  <Section
-                    title={"Fabricator Settings"}
-                  >
-                    <LabeledList>
-                      <LabeledList.Item
-                        label={"Repeat"}
-                        buttons={<Button icon="repeat" onClick={() => toggleRepeat()}>Toggle Repeat</Button>}
-                        textAlign="center"
-                      >
-                        {data.repeat ? "On" : "Off"}
-                      </LabeledList.Item>
-                      <LabeledList.Item
-                        label="Speed"
-                      >
-                        <Slider
-                          minValue={1}
-                          value={speed}
-                          maxValue={3}
-                          step={1}
-                          stepPixelSize={100}
-                          onChange={(_e:any, value:number) => updateSpeed(value)}
-                        />
-                      </LabeledList.Item>
-                    </LabeledList>
-                  </Section>
-
-                </Box>
-              </Stack.Item>
-              <Stack.Item>
-                {data.panel_open ? <CollapsibleWireMenu /> : ""}
-              </Stack.Item>
-              <Stack.Item>
-                {data.rockboxes.map((rockbox:Rockbox) => (
-                  <Section
-                    key={rockbox.byondRef}
-                    title={rockbox.area_name}
-                  >
-                    <LabeledList>
-                      {rockbox.ores.map((ore:Ore) => (
-                        <LabeledList.Item
-                          key={ore.name}
-                          label={ore.name}
-                          buttons={
-                            <Button
-                              width={"100%"}
-                              textAlign="center"
-                              onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
-                              icon="add"
-                            >
-                              {ore.cost}{credit_symbol}
-                            </Button>
-                          }
-                        >
-                          {ore.amount}
-                        </LabeledList.Item>
-                      ))}
-                    </LabeledList>
-                  </Section>
-                ))}
-              </Stack.Item>
-            </Stack>
-          </Stack.Item>
-        </Stack>
-
-      </Window.Content>
+              ))}
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+      </Stack>
     </Window>
   );
 };

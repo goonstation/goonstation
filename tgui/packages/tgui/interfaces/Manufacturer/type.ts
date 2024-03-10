@@ -66,6 +66,12 @@ export type Ore = {
   cost: number;
 }
 
+export type MaintenencePanel = {
+  indicators: WireIndicators;
+  wires: WireData[];
+  wire_bitflags:number;
+}
+
 export type WireIndicators = {
   electrified: number;
   malfunctioning: BooleanLike;
