@@ -99,6 +99,20 @@
 		src.UpdateStackAppearance()
 		return src
 
+	attackby(obj/item/I, mob/user)
+		if (istype(I,/obj/item/currency/spacecash))
+			var/obj/item/currency/spacecash/other = I
+			if (src.hasStatus("freshly_laundered") || other.hasStatus("freshly_laundered"))
+				if (!(src.hasStatus("freshly_laundered") && other.hasStatus("freshly_laundered")))
+					boutput(user, "Ew, this other cash is FILTHY. It's ruined the whole stack!")
+					I.delStatus("freshly_laundered")
+					src.delStatus("freshly_laundered")
+		..()
+
+	get_desc()
+		if (src.hasStatus("freshly_laundered"))
+			. += "It feels warm and soft."
+
 	_update_stack_appearance()
 		src.UpdateName()
 		src.inventory_counter.update_number(src.amount)
@@ -190,7 +204,9 @@
 	thousand
 		default_min_amount = 1000
 		default_max_amount = 1000
-
+	twothousandfivehundred
+		default_min_amount = 2500
+		default_max_amount = 2500
 	hundredthousand
 		default_min_amount = 100000
 		default_max_amount = 100000
