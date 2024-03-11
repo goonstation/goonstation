@@ -334,6 +334,8 @@
 		if (src.selected_item?.item_path)
 			var/obj/item/clothing/clothing_item = new src.selected_item.item_path
 			src.preview_item = clothing_item
+		if (src.dye)
+			src.preview_item.color = src.dye
 		preview_mob.force_equip(src.preview_item, src.selected_grouping.slot)
 		src.update_preview()
 
