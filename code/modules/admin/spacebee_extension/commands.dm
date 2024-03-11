@@ -49,40 +49,65 @@
 		ircmsg["msg"] = "Added a note for [ckey]: [note]"
 		ircbot.export("admin", ircmsg)
 
-/datum/spacebee_extension_command/notes
+/datum/spacebee_extension_command/state_based/notes
 	name = "notes"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
 	help_message = "retrieves player notes."
 	argument_types = list(/datum/command_argument/string/ckey="ckey")
+	var/page = 1
+	var/key_to_check = null
 
 	execute(user, ckey)
+		. = ..()
+		key_to_check = ckey
+		var/last_page = send_notes()
+		if(last_page > 1)
+			system.reply("viewing notes page [page] out of [last_page], enter ;;next to send next page")
+			page++
+			src.go_to_state("page_through")
+
+	proc/page_through(user, msg)
+		if(msg == "next")
+			var/last_page = send_notes()
+			if(last_page > page)
+				system.reply("viewing notes page [page] out of [last_page], enter ;;next to send next page")
+				src.go_to_state("page_through")
+			page++
+
+	proc/send_notes()
 		var/datum/apiModel/Paginated/PlayerNoteResourceList/playerNotes
 		try
 			var/datum/apiRoute/players/notes/get/getPlayerNotes = new
 			getPlayerNotes.queryParams = list(
 				"filters" = list(
-					"ckey" = ckey
-				)
+					"ckey" = key_to_check
+				),
+				"page" = page
 			)
 			playerNotes = apiHandler.queryAPI(getPlayerNotes)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
-			logTheThing(LOG_DEBUG, null, "viewPlayerNotes: Failed to fetch notes of player: [ckey] because: [error.message]")
-			system.reply("error fetching notes for [ckey]")
-			return
+			logTheThing(LOG_DEBUG, null, "viewPlayerNotes: Failed to fetch notes of player: [key_to_check] because: [error.message]")
+			system.reply("error fetching notes for [key_to_check]")
+			return 0
 
 		if (!length(playerNotes.data))
-			system.reply("No notes found for [ckey].")
+			system.reply("No notes found for [key_to_check].")
+			return 0
 
-		else
-			var/message = list()
-			message += "**Notes for [ckey]**"
-			message += ""
-			for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
-				message += "**\[[playerNote.server_id]\] [playerNote.game_admin.name]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
-				message += "[playerNote.note]"
-			message = jointext(message, "\n")
-			system.reply(message)
+		var/message = list()
+		message += "**Notes for [key_to_check][playerNotes.meta["last_page"] > 1 ? "**, page [page] out of [playerNotes.meta["last_page"]]" : "**"]"
+		for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
+			var/id = playerNote.server_id
+			if(!id && length(playerNote.legacy_data))
+				var/lData = json_decode(playerNote.legacy_data)
+				if(islist(lData) && lData["oldserver"])
+					id = lData["oldserver"]
+			message += "**\[[id]\] [playerNote.game_admin.name]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
+			message += "[playerNote.note]"
+		message = jointext(message, "\n")
+		system.reply(message)
+		return playerNotes.meta["last_page"]
 
 /datum/spacebee_extension_command/addnotice
 	name = "addnotice"
