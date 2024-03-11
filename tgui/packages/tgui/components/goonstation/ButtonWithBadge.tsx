@@ -37,7 +37,6 @@ export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
   return (
     <Button
       onClick={onClick}
-      ellipsis
       width={width} height={height}
       p={0} mb={0}
       onMouseEnter={onMouseEnter}
@@ -45,7 +44,7 @@ export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
     >
       <Image
         verticalAlign="top"
-        width="45%"
+        height={height}
         pixelated
         src={image_path}
         backgroundColor={noImageShadow ? null : "rgba(0,0,0,0.2)"}
