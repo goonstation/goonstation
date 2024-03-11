@@ -1236,8 +1236,8 @@ TYPEINFO(/obj/machinery/plantpot)
 	if(growing.harvestable) src.harvests = growing.harvests + DNA?.get_effective_value("harvests")
 	if(src.harvests < 1) src.harvests = 1
 	qdel(SEED)
-
-	src.HYPmutateplant(1)
+	if (!SEED.dont_mutate)
+		src.HYPmutateplant(1)
 	src.post_alert(list("event" = "new", "plant" = src.current.name))
 	src.recently_harvested = 0
 	src.UpdateIcon()
