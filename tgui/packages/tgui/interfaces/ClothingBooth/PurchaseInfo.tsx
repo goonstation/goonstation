@@ -6,7 +6,7 @@ import { ItemSwatch as ItemSwatch } from './ItemSwatch';
 
 export const PurchaseInfo = (_, context) => {
   const { act, data } = useBackend<ClothingBoothData>(context);
-  const { catalogue, money, selectedGroupingName, selectedItemName } = data;
+  const { catalogue, accountBalance, cash, selectedGroupingName, selectedItemName } = data;
 
   const selectedGrouping = catalogue[selectedGroupingName];
   let selectedGroupingSlot: ClothingBoothSlotKey | undefined;
@@ -59,8 +59,8 @@ export const PurchaseInfo = (_, context) => {
             </Stack.Item>
           )}
           <Stack.Item bold>
-            <Button color="good" disabled={selectedItem.cost > money} onClick={handlePurchase}>
-              {`${selectedItem.cost > money ? 'Insufficent Cash' : 'Purchase'} (${selectedItem.cost}⪽)`}
+            <Button color="good" disabled={selectedItem.cost > cash + accountBalance} onClick={handlePurchase}>
+              {`${selectedItem.cost > cash + accountBalance ? 'Insufficent Money' : 'Purchase'} (${selectedItem.cost}⪽)`}
             </Button>
           </Stack.Item>
         </>

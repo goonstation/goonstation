@@ -17,8 +17,8 @@ import type { ClothingBoothData } from './type';
 import { LocalStateKey } from './utils/enum';
 
 export const ClothingBooth = (_, context) => {
-  const { data } = useBackend<ClothingBoothData>(context);
-  const { name, money } = data;
+  const { act, data } = useBackend<ClothingBoothData>(context);
+  const { name, accountBalance, cash, scannedID } = data;
   const [hideUnaffordable, setHideUnaffordable] = useLocalState(context, LocalStateKey.HideUnaffordable, false);
   const [tagModal, setTagModal] = useLocalState(context, LocalStateKey.TagModal, false);
 
@@ -29,12 +29,31 @@ export const ClothingBooth = (_, context) => {
         <Stack fill vertical>
           <Stack.Item>
             <Section fill>
-              <Stack fluid align="baseline" justify="space-between">
-                <Stack.Item bold>Cash: {money}⪽</Stack.Item>
+              <Stack fill vertical>
                 <Stack.Item>
-                  <Button.Checkbox checked={hideUnaffordable} onClick={() => setHideUnaffordable(!hideUnaffordable)}>
-                    Hide Unaffordable
-                  </Button.Checkbox>
+                  <Stack fluid align="baseline" justify="space-between">
+                    <Stack.Item bold>Cash: {cash}⪽</Stack.Item>
+                    <Stack.Item>
+                      <Button.Checkbox
+                        checked={hideUnaffordable}
+                        onClick={() => setHideUnaffordable(!hideUnaffordable)}>
+                        Hide Unaffordable
+                      </Button.Checkbox>
+                    </Stack.Item>
+                  </Stack>
+                </Stack.Item>
+                <Stack.Item>
+                  <Stack align="center" justify="space-between">
+                    <Stack.Item grow bold>Money In Account: {accountBalance}⪽</Stack.Item>
+                    <Stack.Item grow textAlign="right">
+                      <Button
+                        ellipsis
+                        icon="id-card"
+                        content={scannedID ? scannedID : 'Insert Card'}
+                        onClick={() => { scannedID ? act('logout') : act('login'); }}
+                      />
+                    </Stack.Item>
+                  </Stack>
                 </Stack.Item>
               </Stack>
             </Section>

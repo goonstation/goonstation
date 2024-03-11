@@ -25,7 +25,7 @@ const getClothingBoothGroupingSortComparator
 
 export const StockList = (_props: unknown, context) => {
   const { act, data } = useBackend<ClothingBoothData>(context);
-  const { catalogue, money, selectedGroupingName } = data;
+  const { catalogue, accountBalance, cash, selectedGroupingName } = data;
   const catalogueItems = Object.values(catalogue);
 
   const [hideUnaffordable] = useLocalState(context, LocalStateKey.HideUnaffordable, false);
@@ -42,7 +42,7 @@ export const StockList = (_props: unknown, context) => {
   const handleSelectGrouping = (name: string) => act('select-grouping', { name });
 
   const affordableItemGroupings = hideUnaffordable
-    ? catalogueItems.filter((catalogueGrouping) => money >= catalogueGrouping.cost_min)
+    ? catalogueItems.filter((catalogueGrouping) => cash + accountBalance >= catalogueGrouping.cost_min)
     : catalogueItems;
   const slotFilteredItemGroupings = Object.values(slotFilters).some((filter) => filter)
     ? affordableItemGroupings.filter((itemGrouping) => slotFilters[itemGrouping.slot])
