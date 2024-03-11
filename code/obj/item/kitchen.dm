@@ -901,7 +901,6 @@ TRAYS
 	can_headsmash = FALSE
 	var/open = FALSE
 
-
 	add_contents(obj/item/food, mob/user, click_params) // Due to non-plates skipping some checks in the original add_contents() we'll have to do our own checks.
 
 		if (!src.open && !istype(food, /obj/item/plate/))
