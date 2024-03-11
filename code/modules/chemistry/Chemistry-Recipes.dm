@@ -2861,7 +2861,7 @@
 		name = "Cyclopentanol"
 		id = "cyclopentanol"
 		result = "cyclopentanol"
-		min_temperature = T0C + 275
+		min_temperature = T0C + 50
 		required_reagents = list("acetic_acid" = 1, "ether" = 1, "barium" = 1, "hydrogen" = 1, "oxygen" = 1)
 		result_amount = 3
 		mix_phrase = "The mixture fizzles into a colorless liquid."
@@ -4176,7 +4176,7 @@
 		name = "Bath Salts"
 		id= "bathsalts"
 		result = "bathsalts"
-		required_reagents = list("msg" = 1, "yuck" = 1, "denatured_enzyme" = 1, "saltpetre" = 1, "cleaner" = 1, "mercury" = 1, "mugwort" = 1)
+		required_reagents = list("msg" = 1, "yuck" = 1, "denatured_enzyme" = 1, "saltpetre" = 1, "cleaner" = 1, "mercury" = 1, "ghostchilijuice" = 1)
 		min_temperature = T0C + 100
 		result_amount = 6
 		mix_phrase = "Tiny cubic crystals precipitate out of the mixture. Huh."

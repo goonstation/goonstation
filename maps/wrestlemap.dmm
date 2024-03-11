@@ -13330,7 +13330,7 @@
 /area/station/hallway/secondary/entry)
 "fQB" = (
 /obj/table/wood/auto,
-/obj/item/pinpointer{
+/obj/item/pinpointer/disk{
 	pixel_y = 4
 	},
 /obj/item/paper/telecrystal_update,
@@ -21865,7 +21865,7 @@
 	pixel_x = 6;
 	pixel_y = 10
 	},
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
 "jAR" = (
@@ -54580,7 +54580,7 @@
 /area/station/engine/monitoring)
 "xUM" = (
 /obj/table/auto,
-/obj/item/blueprint,
+/obj/item/paper/blueprint,
 /obj/item/pen/pencil,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)

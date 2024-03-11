@@ -82,6 +82,8 @@
 	#define COMSIG_MOVABLE_CONTRABAND_CHANGED "mov_contraband_changed"
 	/// get contraband level of movable (check_nonfirearms, check_firearms)
 	#define COMSIG_MOVABLE_GET_CONTRABAND "mov_get_contraband"
+	/// when an AM is revealed from under a floor tile (turf revealed from)
+	#define COMSIG_MOVABLE_FLOOR_REVEALED "mov_floor_revealed"
 
 	// ---- complex ----
 

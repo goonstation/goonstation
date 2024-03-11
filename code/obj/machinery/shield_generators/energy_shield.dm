@@ -138,7 +138,7 @@
 	proc/createForcefieldObject(xa, ya, turf/T)
 		if(isnull(T))
 			T = locate((src.x + xa), (src.y + ya), src.z)
-		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield(T, src, TRUE)
+		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield(T, src)
 		S.layer = 2
 		src.deployed_shields += S
 		return S
@@ -221,7 +221,7 @@
 		. = ..()
 
 	proc/createDoorForcefield(var/obj/machinery/door/D)
-		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield (get_turf(D), src, 1) //1 update tiles
+		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield (get_turf(D), src)
 
 		S.layer = 2
 		S.set_dir(D.dir)

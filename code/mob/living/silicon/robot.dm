@@ -35,6 +35,8 @@
 	var/total_weight = 0
 	var/datum/robot_cosmetic/cosmetic_mods = null
 
+	var/datum/material/frame_material
+
 	var/list/obj/clothes = list()
 
 	var/next_cache = 0
@@ -112,9 +114,10 @@
 		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
 		src.internal_pda.name = "[src]'s Internal PDA Unit"
 		src.internal_pda.owner = "[src]"
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_base, "robot_health_slow_immunity")
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity")
 		if (frame)
 			src.freemodule = frame.freemodule
+			src.frame_material = frame.material
 		if (starter && !(src.dependent || src.shell))
 			var/obj/item/parts/robot_parts/chest/light/PC = new /obj/item/parts/robot_parts/chest/light(src)
 			var/obj/item/cell/supercell/charged/CELL = new /obj/item/cell/supercell/charged(PC)
@@ -257,6 +260,10 @@
 		if (prob(50))
 			src.sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
 
+		for (var/datum/movement_modifier/MM in src.movement_modifiers) // Spawning borgs applies human only movemods, this cleans that up
+			if (!istype(MM, /datum/movement_modifier/robot_part))
+				REMOVE_MOVEMENT_MODIFIER(src, MM, src.type)
+
 	set_pulling(atom/movable/A)
 		. = ..()
 		hud.update_pulling()
@@ -283,6 +290,7 @@
 						chest.cell = src.cell
 
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
+			frame.setMaterial(src.frame_material)
 			frame.emagged = src.emagged
 			frame.syndicate = src.syndicate
 			frame.freemodule = src.freemodule
@@ -885,6 +893,7 @@
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
 				if (RP.ropart_take_damage(brute_damage,burn_damage) == 1)
 					src.compborg_lose_limb(RP)
+				RP.ropart_ex_act(severity, lasttouched, power)
 
 		if (istype(cell,/obj/item/cell/erebite) && fire_protect != 1)
 			src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
@@ -1484,8 +1493,14 @@
 			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 			boutput(user, SPAN_NOTICE("You successfully attach the piece to [src.name]."))
 			src.update_bodypart(RP.slot)
-		else ..()
-		return
+		else if (istype(src.part_head, /obj/item/parts/robot_parts/head/screen) && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+			var/obj/item/parts/robot_parts/head/screen/screenhead = src.part_head
+			if (screenhead.smashed)
+				screenhead.start_repair(W, user)
+			else
+				..() //woo spooky badcode else chaining
+		else
+			..()
 
 	hand_attack(atom/target, params, location, control, origParams)
 		// Only allow it if the target is outside our contents or it is the equipped tool
@@ -1783,13 +1798,6 @@
 		for (var/obj/item/parts/robot_parts/arm as anything in list(src.part_arm_l, src.part_arm_r))
 			if (!arm)
 				. += ROBOT_MISSING_ARM_MOVEMENT_ADJUST
-
-
-		if (total_weight > 0)
-			if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/left/treads) && istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/right/treads))
-				. += total_weight / 3
-			else
-				. += total_weight
 
 
 	hotkey(name)
@@ -2226,6 +2234,19 @@
 			src.say("[number]. [laws[number]]")
 			sleep(1 SECOND)
 
+	verb/robot_set_fake_laws()
+		set category = "Robot Commands"
+		set name = "Set Fake Laws"
+		if (src.shell)
+			src.mainframe.set_fake_laws()
+		else
+			src.set_fake_laws()
+
+	verb/ai_state_fake_laws()
+		set category = "Robot Commands"
+		set name = "State Fake Laws"
+		src.state_fake_laws() //already handles being a shell
+
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"
 		set name = "Toggle Interface Lock"
@@ -2657,6 +2678,9 @@
 					if (istype(src.part_head, /obj/item/parts/robot_parts/head/screen))
 						eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
 						eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
+						var/obj/item/parts/robot_parts/head/screen/screenhead = src.part_head
+						if (screenhead.smashed)
+							src.i_head.overlays += image('icons/mob/robots.dmi', "screen-smashed", layer = FLOAT_LAYER + 0.1)
 					else
 						eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
 						eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")

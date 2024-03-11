@@ -373,10 +373,10 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		if(length(src.rc_entries) == 3) src.item_rewarders += new /datum/rc_itemreward/plant_cartridge
 		src.payout += 8000 * length(src.rc_entries)
 
-		if(prob(70))
+		if(prob(30))
 			src.item_rewarders += new /datum/rc_itemreward/strange_seed
 		else
-			src.item_rewarders += new /datum/rc_itemreward/uv_lamp_frame
+			src.item_rewarders += new /datum/rc_itemreward/tumbleweed
 		..()
 
 /datum/rc_entry/seed/scientific
@@ -428,6 +428,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		for (var/i in 1 to src.count)
 			seed_list += new /obj/item/seed/alien
 		return seed_list
+
+/datum/rc_itemreward/tumbleweed
+	name = "aggressive plant specimen"
+
+	build_reward()
+		return new /obj/item/plant/tumbling_creeper
 
 /datum/rc_itemreward/uv_lamp_frame
 	name = "ultraviolet botanical lamp"
