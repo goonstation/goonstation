@@ -36,6 +36,18 @@
 	/// Amount of inserted cash.
 	var/cash = 0
 
+	/// Optional dye color or matrix to apply to all sold objects.
+	var/dye
+
+	gbr
+		name = "Strange Clothing Booth"
+		color = list(0,1,0,1,0,1,1,1,0)
+		dye = list(0,1,0,0,0,1,1,0,0)
+	brg
+		name = "Unusual Clothing Booth"
+		color = list(1,0,1,1,1,0,0,1,1)
+		dye = list(0,0,1,1,0,0,0,1,0)
+
 	New()
 		..()
 		// Set up ambient lighting.
@@ -262,7 +274,10 @@
 		var/purchased_item_path = src.selected_item.item_path
 		if (!purchased_item_path)
 			return
-		target.put_in_hand_or_drop(new purchased_item_path(src))
+		var/obj/item/clothing/purchased_item = new purchased_item_path(src)
+		if (src.dye)
+			purchased_item.color = src.dye
+		target.put_in_hand_or_drop(purchased_item)
 
 	proc/add_occupant(mob/target)
 		if (src.occupant)
