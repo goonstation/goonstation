@@ -1,4 +1,4 @@
-
+ADMIN_INTERACT_PROCS(/obj/item/seed, proc/admin_set_mutation)
 /obj/item/seed
 	name = "plant seed"
 	desc = "Plant this in soil to grow something."
@@ -149,6 +149,18 @@
 			return 1 // We'll want to tell the manipulator that so it can inform the user, too.
 		else
 			return 0 // Passes an "Everything went fine" code to the manipulator.
+
+	proc/admin_set_mutation()
+		set name = "Mutate"
+		var/list/mutations = list()
+		for (var/datum/plantmutation/mutation in src.planttype.mutations)
+			mutations[mutation.name] = mutation
+
+		var/selected = tgui_input_list(usr, "Pick mutation", "Mutation select", mutations)
+		if (!selected)
+			return
+		src.plantgenes.mutation = mutations[selected]
+
 
 /obj/item/seed/grass
 	name = "grass seed"
