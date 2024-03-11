@@ -92,9 +92,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	proc/set_layer_from_settings()
 		if (!map_settings)
 			return
-		if (src.dir == NORTH && map_settings.window_layer_north)
+		if ((src.dir == NORTH || src.dir == WEST) && map_settings.window_layer_north)
 			src.layer = map_settings.window_layer_north
-		else if (src.dir == SOUTH && map_settings.window_layer_south)
+		else if ((src.dir == SOUTH || src.dir == EAST) && map_settings.window_layer_south)
 			src.layer = map_settings.window_layer_south
 		else if ((src.dir in ordinal) && map_settings.window_layer_full)
 			src.layer = map_settings.window_layer_full
@@ -126,6 +126,11 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			src.material_amt = 0.1
 		else
 			src.material_amt = 0.2
+		switch(new_dir)
+			if(WEST, NORTH)
+				src.layer = map_settings.window_layer_north
+			if(SOUTH, EAST)
+				src.layer = map_settings.window_layer_south
 
 	onMaterialChanged()
 		..()
