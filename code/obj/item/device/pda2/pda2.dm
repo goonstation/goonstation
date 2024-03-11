@@ -378,6 +378,9 @@
 		if(ismob(src.loc))
 			var/mob/mob = src.loc
 			get_all_character_setup_ringtones()
+			if(mob.mind)
+				mob.mind.originalPDA = src
+
 			if(mob.client && (mob.client.preferences.pda_ringtone_index in selectable_ringtones) && mob.client?.preferences.pda_ringtone_index != "Two-Beep")
 				src.set_ringtone(selectable_ringtones[mob.client.preferences.pda_ringtone_index], FALSE, FALSE, "main", null, FALSE)
 				var/rtone_program = src.ringtone2program(src.r_tone)

@@ -767,20 +767,19 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 
 
 /datum/objective/specialist/gang
-	explanation_text = "Kill the leaders of every other gang without being killed yourself."
+	explanation_text = "Become the biggest, baddest gang on the station!"
 
 	check_completion()
-		if (!owner.current || isdead(owner.current))
-			return FALSE
-
-		for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists(ROLE_GANG_LEADER))
+		var/our_score = 0
+		var/highest_score = 0
+		for (var/datum/antagonist/gang_leader/antagonist_role as anything in get_all_antagonists(ROLE_GANG_LEADER))
 			if (antagonist_role.owner == owner)
-				continue
+				our_score = antagonist_role.gang.gang_score()
 
-			if (antagonist_role.owner.current && !isdead(antagonist_role.owner.current))
-				return FALSE
+			else if (antagonist_role.gang)
+				highest_score = max(highest_score, antagonist_role.gang.gang_score())
 
-		return TRUE
+		return (our_score >= highest_score)
 
 /datum/objective/specialist/gang/member
 	explanation_text = "Protect your boss, recruit new members, tag up the station, and beware the other gangs!."

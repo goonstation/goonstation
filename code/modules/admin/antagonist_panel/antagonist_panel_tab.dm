@@ -252,8 +252,6 @@
 				"sectionName" = "Gang Locker",
 				"sectionData" = list(
 					"gangLocker" = "\ref[locker]",
-					"maxHealth" = locker.max_health,
-					"health" = locker.health,
 					"area" = A.name,
 					"coordinates" = "([T.x], [T.y], [T.z])",
 				),
