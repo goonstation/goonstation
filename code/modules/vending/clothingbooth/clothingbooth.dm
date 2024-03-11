@@ -218,7 +218,7 @@
 							else
 								src.insufficient_funds()
 						else
-							src.accessed_record["current_money"] -= money_on_card
+							src.accessed_record["current_money"] -= price_to_pay
 							src.purchase_item(usr)
 					else if (price_to_pay <= src.cash)
 						src.cash -= price_to_pay
@@ -241,12 +241,7 @@
 				src.equip_and_preview()
 				. = TRUE
 
-	proc/access_bank_record(obj/item/card/id/id_card)
-		var/accessed_record = data_core.bank.find_record("name", id_card.registered)
-		return !!accessed_record
-
 	proc/process_card(mob/user, obj/item/card/id/id_card)
-		user.visible_message(SPAN_NOTICE("[user.name] swipes [his_or_her(user)] ID card in [src]."))
 		if (src.scanned_id)
 			boutput(user, SPAN_ALERT("[src] already has an ID card loaded!"))
 			return
@@ -255,10 +250,11 @@
 			return
 		var/enter_pin = usr.enter_pin(src)
 		if (enter_pin == id_card.pin)
-			var/datum/db_record/record_to_access = src.access_bank_record(id_card)
+			var/datum/db_record/record_to_access = data_core.bank.find_record("name", id_card.registered)
 			if (record_to_access)
 				src.scanned_id = id_card
 				src.accessed_record = record_to_access
+				user.visible_message(SPAN_NOTICE("[user.name] swipes [his_or_her(user)] ID card in [src]."))
 			else
 				boutput(usr, SPAN_ALERT("Cannot find a bank record for this card."))
 		else
