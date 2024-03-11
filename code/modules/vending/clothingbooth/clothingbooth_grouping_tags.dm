@@ -46,5 +46,11 @@ ABSTRACT_TYPE(/datum/clothingbooth_grouping_tag/group_set)
 /datum/clothingbooth_grouping_tag/group_set
 	display_order = 3
 
+/datum/clothingbooth_grouping_tag/group_set/diner
+	name = "Diner"
+
 /datum/clothingbooth_grouping_tag/group_set/masquerade
 	name = "Masquerade"
+
+/datum/clothingbooth_grouping_tag/group_set/western
+	name = "Western"
