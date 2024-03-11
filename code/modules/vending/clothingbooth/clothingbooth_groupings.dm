@@ -107,6 +107,7 @@
 	item_paths = list(/datum/clothingbooth_item/head/cowboy)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/group_set/western,
 	)
 
 /datum/clothingbooth_grouping/cwhat
@@ -119,6 +120,7 @@
 	item_paths = list(/datum/clothingbooth_item/head/diner_waitress_hat)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/group_set/diner,
 	)
 
 /datum/clothingbooth_grouping/fedora
@@ -249,6 +251,7 @@
 	)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/group_set/western,
 	)
 
 /datum/clothingbooth_grouping/ushanka
@@ -308,6 +311,7 @@
 	)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/group_set/western,
 	)
 
 /datum/clothingbooth_grouping/dress_shoes
@@ -567,7 +571,8 @@
 		/datum/clothingbooth_item/w_uniform/diner_waitress_dress/pink
 	)
 	grouping_tags = list(
-		/datum/clothingbooth_grouping_tag/formality/costume
+		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/group_set/diner,
 	)
 
 /datum/clothingbooth_grouping/dirty_vest
@@ -758,12 +763,14 @@
 	item_paths = list(/datum/clothingbooth_item/w_uniform/western)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/group_set/western,
 	)
 
 /datum/clothingbooth_grouping/western_dress
 	item_paths = list(/datum/clothingbooth_item/w_uniform/western_dress)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/group_set/western,
 	)
 
 /datum/clothingbooth_grouping/yoga
