@@ -2999,29 +2999,29 @@
 	if (!src.juggling())
 		return
 	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything they were juggling!"))
-	for (var/obj/O in src.juggling)
-		src.remove_juggle(O)
-		if (istype(O, /obj/item/gun) && prob(80)) //prob(80)
-			var/obj/item/gun/gun = O
+	for (var/atom/movable/A in src.juggling)
+		src.remove_juggle(A)
+		if (istype(A, /obj/item/gun) && prob(80)) //prob(80)
+			var/obj/item/gun/gun = A
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
 		else if (prob(40)) //bombs might land funny
-			if (istype(O, /obj/item/chem_grenade) || istype(O, /obj/item/old_grenade) || istype(O, /obj/item/pipebomb/bomb))
-				var/obj/item/explosive = O
+			if (istype(A, /obj/item/chem_grenade) || istype(A, /obj/item/old_grenade) || istype(A, /obj/item/pipebomb/bomb))
+				var/obj/item/explosive = A
 				explosive.AttackSelf(src)
-			else if (istype(O, /obj/item/device/transfer_valve))
-				var/obj/item/device/transfer_valve/ttv = O
+			else if (istype(A, /obj/item/device/transfer_valve))
+				var/obj/item/device/transfer_valve/ttv = A
 				ttv.toggle_valve()
 				logTheThing(LOG_BOMBING, src, "accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
 				message_admins("[key_name(usr)] accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
-		O.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
+		A.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
 		if (prob(25))
-			O.throw_at(get_step(src, pick(alldirs)), 1, 1)
+			A.throw_at(get_step(src, pick(alldirs)), 1, 1)
 	src.drop_from_slot(src.r_hand)
 	src.drop_from_slot(src.l_hand)
 	src.update_body()
 	logTheThing(LOG_STATION, src, "drops the items they were juggling")
 
-/mob/living/carbon/human/proc/remove_juggle(obj/thing)
+/mob/living/carbon/human/proc/remove_juggle(atom/movable/thing)
 	UnregisterSignal(thing, COMSIG_MOVABLE_SET_LOC)
 	thing.layer = initial(thing.layer)
 	src.juggle_dummy.vis_contents -= thing
@@ -3031,7 +3031,7 @@
 	thing.layer = initial(thing.layer)
 	src.juggling -= thing
 
-/mob/living/carbon/human/proc/add_juggle(var/obj/thing as obj)
+/mob/living/carbon/human/proc/add_juggle(atom/movable/thing)
 	if (!thing || src.stat)
 		return
 	if (istype(thing, /obj/item/grab))
@@ -3042,12 +3042,12 @@
 	if (src.juggling())
 		var/items = ""
 		var/count = 0
-		for (var/obj/O in src.juggling)
+		for (var/atom/movable/juggled in src.juggling)
 			count ++
 			if (length(src.juggling) > 1 && count == src.juggling.len)
-				items += " and [O]"
+				items += " and [juggled]"
 				continue
-			items += ", [O]"
+			items += ", [juggled]"
 		items = copytext(items, 3)
 		src.visible_message("<b>[src]</b> adds [thing] to the [items] [he_or_she(src)]'s already juggling!")
 	else
@@ -3071,6 +3071,17 @@
 		i.on_spin_emote(src)
 	src.update_body()
 	logTheThing(LOG_STATION, src, "starts juggling [thing].")
+
+/mob/living/carbon/human/relaymove(mob/user, direction, delay, running)
+	if ((user in src.juggling) && !ON_COOLDOWN(user, "resist_juggle", 1 SECOND))
+		boutput(user, SPAN_ALERT("You attempt to wriggle free from the unending juggling."))
+		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+		if (prob(15))
+			src.remove_juggle(user)
+			user.set_loc(src.loc)
+
+/mob/living/carbon/human/return_air()
+	return src.loc?.return_air()
 
 /mob/living/carbon/human/does_it_metabolize()
 	return 1

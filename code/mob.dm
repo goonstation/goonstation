@@ -913,7 +913,7 @@
 			output += "&emsp;[medal]"
 		output += "<b>You have [length(medals)] medal\s.</b>"
 		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1"  target="_blank">Medal Details</a>"}
-		boutput(src, output.Join("<br>"))
+		tgui_message(src, output.Join("<br>"), "Medals")
 
 /mob/verb/setdnr()
 	set name = "Set DNR"
