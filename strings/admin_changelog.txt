@@ -1,3 +1,6 @@
+(t)fri mar 08 24
+(u)LeahTheTech
+(*)Added admin juggling ability for juggling people and things you shouldn't.
 (t)sun feb 25 24
 (u)Azrun
 (*)Caves added to Find Planets and Terrainify
