@@ -6,8 +6,8 @@
 		/datum/clothingbooth_item/mask/masquerade/peacock,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_GROUP_SET_MASQUERADE,
+		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/group_set/masquerade,
 	)
 
 /* ------------------------- Head ------------------------ */
@@ -22,7 +22,7 @@
 		/datum/clothingbooth_item/head/barrettes/silver,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/basecap
@@ -38,7 +38,7 @@
 		/datum/clothingbooth_item/head/basecap/purple,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/beret
@@ -54,13 +54,13 @@
 		/datum/clothingbooth_item/head/beret/blueberry,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/mime_bowler
 	item_paths = list(/datum/clothingbooth_item/head/bowler)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/butterfly_hairclip
@@ -70,7 +70,7 @@
 		/datum/clothingbooth_item/head/butterfly_hairclip/orange,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/cat_ears
@@ -87,7 +87,7 @@
 		/datum/clothingbooth_item/head/cat_ears/yellow,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/costume_goggles
@@ -100,27 +100,25 @@
 		/datum/clothingbooth_item/head/costume_goggles/purple,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME
+		/datum/clothingbooth_grouping_tag/formality/costume
 	)
 
 /datum/clothingbooth_grouping/cowboy
 	item_paths = list(/datum/clothingbooth_item/head/cowboy)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_GROUP_SET_WESTERN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/cwhat
 	item_paths = list(/datum/clothingbooth_item/head/cwhat)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/diner_waitress_hat
 	item_paths = list(/datum/clothingbooth_item/head/diner_waitress_hat)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_GROUP_SET_DINER,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/fedora
@@ -131,25 +129,25 @@
 		/datum/clothingbooth_item/head/fedora/white,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL
+		/datum/clothingbooth_grouping_tag/formality/formal
 	)
 
 /datum/clothingbooth_grouping/frog
 	item_paths = list(/datum/clothingbooth_item/head/frog)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/fthat
 	item_paths = list(/datum/clothingbooth_item/head/fthat)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/green_visor
 	item_paths = list(/datum/clothingbooth_item/head/green_visor)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 /datum/clothingbooth_grouping/hairbow
 	name = "Hairbow"
@@ -169,31 +167,31 @@
 		/datum/clothingbooth_item/head/hairbow/yellowpolkadot,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/maid
 	item_paths = list(/datum/clothingbooth_item/head/maid)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/lace_veil
 	item_paths = list(/datum/clothingbooth_item/head/lace_veil)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/leaf_hairclip
 	item_paths = list(/datum/clothingbooth_item/head/leaf_hairclip)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/pinwheel
 	item_paths = list(/datum/clothingbooth_item/head/pinwheel)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/pirate
@@ -203,7 +201,7 @@
 		/datum/clothingbooth_item/head/pirate/brown,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME
+		/datum/clothingbooth_grouping_tag/formality/costume
 	)
 
 /datum/clothingbooth_grouping/pomhat
@@ -213,8 +211,8 @@
 		/datum/clothingbooth_item/head/pomhat/blue,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
-		GROUPING_TAG_SEASON_WINTER,
+		/datum/clothingbooth_grouping_tag/formality/casual,
+		/datum/clothingbooth_grouping_tag/season/winter,
 	)
 
 /datum/clothingbooth_grouping/sunhat
@@ -225,8 +223,8 @@
 		/datum/clothingbooth_item/head/sunhat/green,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
-		GROUPING_TAG_SEASON_SUMMER,
+		/datum/clothingbooth_grouping_tag/formality/casual,
+		/datum/clothingbooth_grouping_tag/season/summer,
 	)
 
 /datum/clothingbooth_grouping/tophat
@@ -236,7 +234,7 @@
 		/datum/clothingbooth_item/head/tophat/white,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/westhat
@@ -250,41 +248,40 @@
 		/datum/clothingbooth_item/head/westhat/red,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_GROUP_SET_WESTERN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/ushanka
 	item_paths = list(/datum/clothingbooth_item/head/ushanka)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
-		GROUPING_TAG_SEASON_WINTER,
+		/datum/clothingbooth_grouping_tag/formality/casual,
+		/datum/clothingbooth_grouping_tag/season/winter,
 	)
 
 /* ----------------------- Glasses ----------------------- */
 /datum/clothingbooth_grouping/ftscanplate
 	item_paths = list(/datum/clothingbooth_item/glasses/ftscanplate)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/monocle
 	item_paths = list(/datum/clothingbooth_item/glasses/monocle)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /* ------------------------ Gloves ----------------------- */
 /datum/clothingbooth_grouping/handcomp
 	item_paths = list(/datum/clothingbooth_item/gloves/handcomp)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/ring_gold
 	item_paths = list(/datum/clothingbooth_item/gloves/ring_gold)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 /* ------------------------- Head ------------------------ */
 
@@ -298,7 +295,7 @@
 		/datum/clothingbooth_item/shoes/boots/blue,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/cowboy_boots
@@ -310,14 +307,13 @@
 		/datum/clothingbooth_item/shoes/cowboy_boots/brown,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_GROUP_SET_WESTERN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/dress_shoes
 	item_paths = list(/datum/clothingbooth_item/shoes/dress_shoes)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 /datum/clothingbooth_grouping/flats
 	name = "Flats"
@@ -329,13 +325,13 @@
 		/datum/clothingbooth_item/shoes/flats/pink,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/floppy_boots
 	item_paths = list(/datum/clothingbooth_item/shoes/floppy_boots)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 /datum/clothingbooth_grouping/heels
 	name = "Heels"
@@ -345,13 +341,13 @@
 		/datum/clothingbooth_item/shoes/heels/red,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/macando_boots
 	item_paths = list(/datum/clothingbooth_item/shoes/macando_boots)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/mary_janes
@@ -363,21 +359,20 @@
 		/datum/clothingbooth_item/shoes/mary_janes/white,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
-		GROUPING_TAG_GROUP_SET_DINER,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /* ------------------------ Suits ------------------------ */
 /datum/clothingbooth_grouping/baseball_jacket
 	item_paths = list(/datum/clothingbooth_item/wear_suit/baseball_jacket)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/dinosaur_pajamas
 	item_paths = list(/datum/clothingbooth_item/wear_suit/dinosaur_pajamas)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/dress
@@ -389,7 +384,7 @@
 		/datum/clothingbooth_item/wear_suit/dress/red,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/hoodie
@@ -409,7 +404,7 @@
 		/datum/clothingbooth_item/wear_suit/hoodie/black
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/jacket
@@ -425,28 +420,28 @@
 		/datum/clothingbooth_item/wear_suit/jacket/tan
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/jean_jacket
 	item_paths = list(/datum/clothingbooth_item/wear_suit/jean_jacket)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 /datum/clothingbooth_grouping/loose_jacket
 	item_paths = list(/datum/clothingbooth_item/wear_suit/loose_jacket)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 /datum/clothingbooth_grouping/offbrand_labcoat
 	item_paths = list(/datum/clothingbooth_item/wear_suit/offbrand_labcoat)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 /datum/clothingbooth_grouping/overcoat_and_scarf
 	item_paths = list(/datum/clothingbooth_item/wear_suit/overcoat_and_scarf)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/poncho
@@ -456,43 +451,43 @@
 		/datum/clothingbooth_item/wear_suit/poncho/leaf
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME
+		/datum/clothingbooth_grouping_tag/formality/costume
 	)
 
 /datum/clothingbooth_grouping/salesman_jacket
 	item_paths = list(/datum/clothingbooth_item/wear_suit/salesman_jacket)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/scarf
 	item_paths = list(/datum/clothingbooth_item/wear_suit/scarf)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/skull_mask_and_cloak
 	item_paths = list(/datum/clothingbooth_item/wear_suit/skull_mask_and_cloak)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/suspenders
 	item_paths = list(/datum/clothingbooth_item/wear_suit/suspenders)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/tuxedo_jacket
 	item_paths = list(/datum/clothingbooth_item/wear_suit/tuxedo_jacket)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/waistcoat
 	item_paths = list(/datum/clothingbooth_item/wear_suit/waistcoat)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 
@@ -500,19 +495,19 @@
 /datum/clothingbooth_grouping/bandshirt
 	item_paths = list(/datum/clothingbooth_item/w_uniform/bandshirt)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/bubble_shirt
 	item_paths = list(/datum/clothingbooth_item/w_uniform/bubble_shirt)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/butler
 	item_paths = list(/datum/clothingbooth_item/w_uniform/butler)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/card_suit_shirt
@@ -524,7 +519,7 @@
 		/datum/clothingbooth_item/w_uniform/card_suit_shirt/spades,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/shirt_and_pants
@@ -544,7 +539,7 @@
 		/datum/clothingbooth_item/w_uniform/shirt_and_pants/white_pants_blue_tie,
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/collar_dress
@@ -556,13 +551,13 @@
 		/datum/clothingbooth_item/w_uniform/collar_dress/red
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/cwfashion
 	item_paths = list(/datum/clothingbooth_item/w_uniform/cwfashion)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/diner_waitress_dress
@@ -572,14 +567,13 @@
 		/datum/clothingbooth_item/w_uniform/diner_waitress_dress/pink
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_GROUP_SET_DINER,
+		/datum/clothingbooth_grouping_tag/formality/costume
 	)
 
 /datum/clothingbooth_grouping/dirty_vest
 	item_paths = list(/datum/clothingbooth_item/w_uniform/dirty_vest)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/dress_shirt_wcoat
@@ -590,19 +584,19 @@
 		/datum/clothingbooth_item/w_uniform/dress_shirt_wcoat/red
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/fancy_vest
 	item_paths = list(/datum/clothingbooth_item/w_uniform/fancy_vest)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/fish
 	item_paths = list(/datum/clothingbooth_item/w_uniform/fish)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/flame_shirt
@@ -612,25 +606,25 @@
 		/datum/clothingbooth_item/w_uniform/flame_shirt/rainbow
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/flannel
 	item_paths = list(/datum/clothingbooth_item/w_uniform/flannel)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/ftuniform
 	item_paths = list(/datum/clothingbooth_item/w_uniform/ftuniform)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/hawaiian_dress
 	item_paths = list(/datum/clothingbooth_item/w_uniform/hawaiian_dress)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/little_dress
@@ -640,19 +634,19 @@
 		/datum/clothingbooth_item/w_uniform/little_dress/red
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/long_sleeved_shirt
 	item_paths = list(/datum/clothingbooth_item/w_uniform/long_sleeved_shirt)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/maid
 	item_paths = list(/datum/clothingbooth_item/w_uniform/maid)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/masquerade
@@ -662,20 +656,20 @@
 		/datum/clothingbooth_item/w_uniform/masquerade/peacock
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_GROUP_SET_MASQUERADE,
+		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/group_set/masquerade,
 	)
 
 /datum/clothingbooth_grouping/pink_collared_shirt
 	item_paths = list(/datum/clothingbooth_item/w_uniform/pink_collared_shirt)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/redtie
 	item_paths = list(/datum/clothingbooth_item/w_uniform/redtie)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/scifi
@@ -687,7 +681,7 @@
 		/datum/clothingbooth_item/w_uniform/scifi/bee
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME
+		/datum/clothingbooth_grouping_tag/formality/costume
 	)
 
 /datum/clothingbooth_grouping/shirt_and_jeans
@@ -704,7 +698,7 @@
 		/datum/clothingbooth_item/w_uniform/shirt_and_jeans/yellow
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/skirt_dress
@@ -716,19 +710,19 @@
 		/datum/clothingbooth_item/w_uniform/skirt_dress/purple
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL
+		/datum/clothingbooth_grouping_tag/formality/formal
 	)
 
 /datum/clothingbooth_grouping/tech_shirt
 	item_paths = list(/datum/clothingbooth_item/w_uniform/tech_shirt)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/tracksuit
 	item_paths = list(/datum/clothingbooth_item/w_uniform/tracksuit)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/tshirt_dress
@@ -745,33 +739,31 @@
 		/datum/clothingbooth_item/w_uniform/tshirt_dress/pink_leopard
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /datum/clothingbooth_grouping/tuxedo
 	item_paths = list(/datum/clothingbooth_item/w_uniform/tuxedo)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/wedding_dress
 	item_paths = list(/datum/clothingbooth_item/w_uniform/wedding_dress)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_FORMAL,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/western
 	item_paths = list(/datum/clothingbooth_item/w_uniform/western)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_GROUP_SET_WESTERN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/western_dress
 	item_paths = list(/datum/clothingbooth_item/w_uniform/western_dress)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_GROUP_SET_WESTERN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
 /datum/clothingbooth_grouping/yoga
@@ -782,7 +774,7 @@
 		/datum/clothingbooth_item/w_uniform/yoga/very_red
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_CASUAL,
+		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
 /* ------------------------------------------------------- */
@@ -794,30 +786,30 @@
 /datum/clothingbooth_grouping/autumn_tree
 	item_paths = list(/datum/clothingbooth_item/head/autumn_tree)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_SEASON_AUTUMN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/season/autumn,
 	)
 
 /datum/clothingbooth_grouping/
 	item_paths = list(/datum/clothingbooth_item/head/leaf_wreath)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_SEASON_AUTUMN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/season/autumn,
 	)
 
 /* ------------------------ Suits ------------------------ */
 /datum/clothingbooth_grouping/autumn_cape
 	item_paths = list(/datum/clothingbooth_item/wear_suit/autumn_cape)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_SEASON_AUTUMN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/season/autumn,
 	)
 
 /datum/clothingbooth_grouping/autumn_jacket
 	item_paths = list(/datum/clothingbooth_item/wear_suit/autumn_jacket)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_SEASON_AUTUMN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/season/autumn,
 	)
 
 #endif
@@ -831,23 +823,23 @@
 /datum/clothingbooth_grouping/tengumask
 	item_paths = list(/datum/clothingbooth_item/mask/tengumask)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_SEASON_HALLOWEEN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/season/halloween,
 	)
 
 /* ------------------------- Head ------------------------ */
 /datum/clothingbooth_grouping/giraffehat
 	item_paths = list(/datum/clothingbooth_item/head/giraffehat)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_SEASON_HALLOWEEN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/season/halloween,
 	)
 
 /datum/clothingbooth_grouping/axehat
 	item_paths = list(/datum/clothingbooth_item/head/axehat)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_SEASON_HALLOWEEN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/season/halloween,
 	)
 
 /datum/clothingbooth_grouping/beetlehat
@@ -857,8 +849,8 @@
 		/datum/clothingbooth_item/head/beetlehat/stagbeetle
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_SEASON_HALLOWEEN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/season/halloween,
 	)
 
 /datum/clothingbooth_grouping/elephanthat
@@ -870,8 +862,8 @@
 		/datum/clothingbooth_item/head/elephanthat/blue
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_SEASON_HALLOWEEN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/season/halloween,
 	)
 
 /datum/clothingbooth_grouping/mushroomcap
@@ -883,15 +875,15 @@
 		/datum/clothingbooth_item/head/mushroomcap/inky
 	)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_SEASON_HALLOWEEN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/season/halloween,
 	)
 
 /datum/clothingbooth_grouping/minotaurmask
 	item_paths = list(/datum/clothingbooth_item/head/minotaurmask)
 	grouping_tags = list(
-		GROUPING_TAG_FORMALITY_COSTUME,
-		GROUPING_TAG_SEASON_HALLOWEEN,
+		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/season/halloween,
 	)
 
 #endif
