@@ -271,7 +271,7 @@
 		SPAWN(0.5 SECONDS)
 			if (src.occupant)
 				return
-			src.icon_state = "clothingbooth-closed"
+			src.icon_state = "clothingbooth-close"
 			target.set_loc(src)
 			src.occupant = target
 			src.preview.add_client(target.client)
