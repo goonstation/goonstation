@@ -69,7 +69,7 @@ var/datum/job/priority_job = null
 				src.master.unload_program(src)
 
 	proc/job_info(datum/job/job)
-		var/job_text = "[job.name] \[[job.assigned]/[job.limit]\]"
+		var/job_text = "[job.name] \[[job.assigned]/[job.limit >= 0 ? job.limit : "∞"]\]"
 		if (job.is_highlighted())
 			job_text += " (PRIORITY)"
 		return job_text

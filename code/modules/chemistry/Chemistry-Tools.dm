@@ -215,6 +215,7 @@ proc/ui_describe_reagents(atom/A)
 	New()
 		. = ..()
 		src.container_style ||= src.icon_state
+		src.UpdateIcon()
 
 	on_reagent_change()
 		. = ..()
