@@ -250,14 +250,15 @@
 		if (src.scanned_id)
 			boutput(user, SPAN_ALERT("[src] already has an ID card loaded!"))
 			return
-		if (src.scanned_id.registered in global.FrozenAccounts)
+		if (id_card.registered in global.FrozenAccounts)
 			boutput(user, SPAN_ALERT("This account cannot currently be liquidated due to active borrows."))
 			return
 		var/enter_pin = usr.enter_pin(src)
 		if (enter_pin == id_card.pin)
-			src.accessed_record = src.access_bank_record(id_card)
-			if (src.accessed_record)
+			var/datum/db_record/record_to_access = src.access_bank_record(id_card)
+			if (record_to_access)
 				src.scanned_id = id_card
+				src.accessed_record = record_to_access
 			else
 				boutput(usr, SPAN_ALERT("Cannot find a bank record for this card."))
 		else
