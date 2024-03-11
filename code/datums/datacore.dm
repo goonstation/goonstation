@@ -400,6 +400,10 @@
 			var/datum/eventRecord/Ticket/ticketEvent = new()
 			ticketEvent.buildAndSend(src, usr)
 
+#define MAX_NO_APPROVAL 500
+#define JOBS_CAN_TICKET_SMALL list("Captain","Head of Security","Head of Personnel","Nanotrasen Security Consultant","Security Officer","Inspector")
+#define JOBS_CAN_TICKET_BIG list("Captain","Head of Security","Head of Personnel","Nanotrasen Security Consultant")
+
 /datum/fine
 	var/ID = null
 	var/name = "fine"
@@ -416,6 +420,9 @@
 	var/target_byond_key = null
 	var/issuer_byond_key = null
 	var/approver_byond_key = null
+	var/max_small = MAX_NO_APPROVAL
+	var/jobs_small = JOBS_CAN_TICKET_SMALL
+	var/jobs_big = JOBS_CAN_TICKET_BIG
 
 	New()
 		..()
@@ -428,8 +435,8 @@
 
 /datum/fine/proc/approve(var/approved_by,var/their_job)
 	if(approver || paid) return
-	if (amount > 500 && !(their_job in list("Captain","Head of Security","Head of Personnel","Nanotrasen Security Consultant"))) return
-	if (!(their_job in list("Captain","Head of Security","Head of Personnel","Nanotrasen Security Consultant","Security Officer","Inspector"))) return
+	if (amount > max_small && !(JOBS_CAN_TICKET_BIG)) return
+	if (!(their_job in JOBS_CAN_TICKET_SMALL)) return
 
 	approver = approved_by
 	approver_job = their_job
@@ -448,6 +455,10 @@
 		paid_amount += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
+
+#undef MAX_NO_APPROVAL
+#undef JOBS_CAN_TICKET_SMALL
+#undef JOBS_CAN_TICKET_BIG
 
 /datum/fine/proc/process_payment()
 	if(bank_record["current_money"] >= (amount-paid_amount))
