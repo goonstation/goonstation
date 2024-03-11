@@ -71,12 +71,12 @@
 
 	New()
 		..()
-		initial_name = name
+		src.initial_name = src.name
 
 	proc/special_setup(var/mob/M, no_special_spawn)
 		if (!M)
 			return
-		if (receives_miranda)
+		if (src.receives_miranda)
 			M.verbs += /mob/proc/recite_miranda
 			M.verbs += /mob/proc/add_miranda
 			if (!isnull(M.mind))
@@ -84,9 +84,9 @@
 		M.faction |= src.faction
 
 		SPAWN(0)
-			if (receives_implant && ispath(receives_implant))
+			if (src.receives_implant && ispath(src.receives_implant))
 				var/mob/living/carbon/human/H = M
-				var/obj/item/implant/I = new receives_implant(M)
+				var/obj/item/implant/I = new src.receives_implant(M)
 				if (src.receives_disk && ishuman(M))
 					if (H.back?.storage)
 						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back.storage.get_contents()
@@ -97,16 +97,16 @@
 
 			var/give_access_implant = ismobcritter(M)
 			if(!spawn_id && (length(access) > 0 || length(access) == 1 && access[1] != access_fuck_all))
-				give_access_implant = 1
+				give_access_implant = TRUE
 			if (give_access_implant)
 				var/obj/item/implant/access/I = new /obj/item/implant/access(M)
 				I.access.access = src.access.Copy()
 				I.uses = -1
 
 			if (src.special_spawn_location && !no_special_spawn)
-				var/location = special_spawn_location
-				if (!istype(special_spawn_location, /turf))
-					location = pick_landmark(special_spawn_location)
+				var/location = src.special_spawn_location
+				if (!istype(src.special_spawn_location, /turf))
+					location = pick_landmark(src.special_spawn_location)
 				if (!isnull(location))
 					M.set_loc(location)
 
