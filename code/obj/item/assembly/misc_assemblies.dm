@@ -31,16 +31,6 @@ Contains:
 	stamina_damage = 10
 	stamina_cost = 10
 	var/force_dud = 0
-	var/locked = FALSE
-
-
-	get_desc()
-		var/t = ""
-		if (locked)
-			t = "The control pad is disconnected."
-
-		return "[t] [..()]"
-
 
 
 /obj/item/assembly/proc/c_state(n, O as obj)
@@ -60,6 +50,12 @@ Contains:
 	var/sound_pipebomb = 'sound/weapons/armbomb.ogg'
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	var/locked = FALSE
+
+	get_desc()
+		. = ..()
+		if (locked)
+			. += " The control panel is disconnected."
 
 /obj/item/assembly/time_ignite/New()
 	..()
@@ -94,6 +90,8 @@ Contains:
 /obj/item/assembly/time_ignite/attack_self(mob/user as mob)
 	if (!src.locked)
 		src.part1.attack_self(user, src.status)
+	else
+		user.show_message(SPAN_NOTICE("The control panel is not connected! You need to use wirecutters to reconnect it."), 1)
 	src.add_fingerprint(user)
 	return
 
@@ -157,9 +155,9 @@ Contains:
 	if (issnippingtool(W))
 		src.locked = !(src.locked)
 		if (src.locked)
-			user.show_message("<span class='notice'>The control pad is now disconnected!</span>", 1)
+			user.show_message(SPAN_NOTICE("The control panel is now disconnected!"), 1)
 		else
-			user.show_message("<span class='notice'>The control pad is now reconnected!</span>", 1)
+			user.show_message(SPAN_NOTICE("The control panel is now reconnected!"), 1)
 		src.add_fingerprint(user)
 		return
 
@@ -307,6 +305,12 @@ Contains:
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
+	var/locked = FALSE
+
+	get_desc()
+		. = ..()
+		if (locked)
+			. += " The control panel is disconnected."
 
 /obj/item/assembly/prox_ignite/HasProximity(atom/movable/AM as mob|obj)
 
@@ -383,9 +387,9 @@ Contains:
 	if (issnippingtool(W))
 		src.locked = !(src.locked)
 		if (src.locked)
-			user.show_message("<span class='notice'>The control pad is now disconnected!</span>", 1)
+			user.show_message(SPAN_NOTICE("The control panel is now disconnected!"), 1)
 		else
-			user.show_message("<span class='notice'>The control pad is now reconnected!</span>", 1)
+			user.show_message(SPAN_NOTICE("The control panel is now reconnected!"), 1)
 		src.add_fingerprint(user)
 		return
 	if (iswrenchingtool(W) && !(src.status))
@@ -571,6 +575,12 @@ Contains:
 	var/sound_pipebomb = 'sound/weapons/armbomb.ogg'
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	var/locked = FALSE
+
+	get_desc()
+		. = ..()
+		if (locked)
+			. += " The control panel is disconnected."
 
 /obj/item/assembly/rad_ignite/New()
 	..()
@@ -607,11 +617,9 @@ Contains:
 	if (issnippingtool(W))
 		src.locked = !(src.locked)
 		if (src.locked)
-			desc = "A radio-activated igniter assembly."
-			user.show_message("<span class='notice'>The control pad is now disconnected!</span>", 1)
+			user.show_message(SPAN_NOTICE("The control panel is now disconnected!"), 1)
 		else
-			desc = "A radio-activated igniter assembly."
-			user.show_message("<span class='notice'>The control pad is now reconnected!</span>", 1)
+			user.show_message(SPAN_NOTICE("The control panel is now reconnected!"), 1)
 		src.add_fingerprint(user)
 		return
 	if (iswrenchingtool(W) && !(src.status))
@@ -659,9 +667,11 @@ Contains:
 	src.add_fingerprint(user)
 	return
 
-/obj/item/assembly/rad_ignite/attack_self(mob/user as mob)
+/obj/item/assembly/time_ignite/attack_self(mob/user as mob)
 	if (!src.locked)
 		src.part1.attack_self(user, src.status)
+	else
+		user.show_message(SPAN_NOTICE("The control panel is not connected! You need to use wirecutters to reconnect it."), 1)
 	src.add_fingerprint(user)
 	return
 
@@ -869,6 +879,12 @@ Contains:
 	var/obj/item/instrument/bikehorn/part2 = null
 	status = 0
 	flags = FPRINT | TABLEPASS | CONDUCT
+	var/locked = FALSE
+
+	get_desc()
+		. = ..()
+		if (locked)
+			. += " The control panel is disconnected."
 
 /obj/item/assembly/radio_horn/New()
 	..()
@@ -889,10 +905,25 @@ Contains:
 	..()
 	return
 
-obj/item/assembly/radio_horn/attack_self(mob/user as mob)
-	src.part1.attack_self(user)
+/obj/item/assembly/time_ignite/attack_self(mob/user as mob)
+	if (!src.locked)
+		src.part1.attack_self(user, src.status)
+	else
+		user.show_message(SPAN_NOTICE("The control panel is not connected! You need to use wirecutters to reconnect it."), 1)
 	src.add_fingerprint(user)
 	return
+
+/obj/item/assembly/rad_ignite/attackby(obj/item/W, mob/user)
+	if (!W)
+		return
+	if (issnippingtool(W))
+		src.locked = !(src.locked)
+		if (src.locked)
+			user.show_message(SPAN_NOTICE("The control panel is now disconnected!"), 1)
+		else
+			user.show_message(SPAN_NOTICE("The control panel is now reconnected!"), 1)
+		src.add_fingerprint(user)
+		return
 
 obj/item/assembly/radio_horn/receive_signal()
 	part2.play_note(rand(1,part2.sounds_instrument.len), user = null)
