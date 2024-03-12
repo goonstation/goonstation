@@ -167,6 +167,9 @@
 			src.scanned_id = null
 			src.accessed_record = null
 			. = TRUE
+		if ("eject_cash")
+			src.eject_cash(get_turf(src), usr)
+			. = TRUE
 		if ("select-grouping")
 			var/datum/clothingbooth_grouping/selected_grouping_buffer = global.clothingbooth_catalogue[params["name"]]
 			if (!selected_grouping_buffer)
@@ -252,6 +255,17 @@
 		boutput(usr, SPAN_ALERT("Incorrect pin number."))
 	tgui_process?.update_uis(src)
 
+/obj/machinery/clothingbooth/proc/eject_cash(turf/location, mob/target)
+	if (src.cash < 0)
+		return
+	if (!location)
+		location = get_turf(src)
+	if (ismob(target))
+		target.put_in_hand_or_drop(new /obj/item/currency/spacecash(location, src.cash))
+	else
+		new /obj/item/currency/spacecash(location, src.cash)
+	src.cash = 0
+
 /// A shame this will rarely fire, since having insufficient funds will just disable the purchase button.
 /obj/machinery/clothingbooth/proc/insufficient_funds()
 	boutput(usr, SPAN_ALERT("Insufficient funds!"))
@@ -296,19 +310,15 @@
 	var/turf/T = get_turf(src)
 	if (!target && src.occupant)
 		target = src.occupant
-	if (target?.loc == src) //ensure mob wasn't otherwise removed during out spawn call
+	if (target?.loc == src) // Ensure mob wasn't otherwise removed during out spawn call.
 		target.set_loc(T)
-		if (src.cash > 0)
-			target.put_in_hand_or_drop(new /obj/item/currency/spacecash(T, src.cash))
-		src.cash = 0
+		src.eject_cash(T, target)
 		for (var/obj/item/I in src.contents)
 			target.put_in_hand_or_drop(I)
 		for (var/atom/movable/AM in contents)
 			AM.set_loc(T)
 	else
-		if (src.cash > 0)
-			new /obj/item/currency/spacecash(T, src.cash)
-		src.cash = 0
+		src.eject_cash(T)
 		for (var/atom/movable/AM in contents)
 			AM.set_loc(T)
 	src.occupant = null
