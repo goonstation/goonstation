@@ -43,6 +43,7 @@
 		name = "Strange Clothing Booth"
 		color = list(0,1,0,1,0,1,1,1,0)
 		dye = list(0,1,0,0,0,1,1,0,0)
+
 	brg
 		name = "Unusual Clothing Booth"
 		color = list(1,0,1,1,1,0,0,1,1)
