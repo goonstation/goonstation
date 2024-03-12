@@ -1,4 +1,9 @@
 
+(t)tue mar 12 24
+(u)LeahTheTech
+(p)18145
+(e)⚖🐣|C-Balance, A-Respawning
+(+)Cryoing as a non-unique job will now immediately free up the slot.
 (t)fri mar 08 24
 (u)LeahTheTech
 (*)Ocean tiles will no longer leak fluid if covered by a forcefield, and forcefields will now correctly update the tiles next to them when they shut down.
