@@ -664,6 +664,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\buildmodes\meteor.dm"
 #include "code\modules\admin\buildmodes\paint.dm"
 #include "code\modules\admin\buildmodes\paint_matrix.dm"
+#include "code\modules\admin\buildmodes\plant.dm"
 #include "code\modules\admin\buildmodes\poddoors.dm"
 #include "code\modules\admin\buildmodes\precipitation.dm"
 #include "code\modules\admin\buildmodes\proccall.dm"
