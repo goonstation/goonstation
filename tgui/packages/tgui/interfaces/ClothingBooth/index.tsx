@@ -32,7 +32,16 @@ export const ClothingBooth = (_, context) => {
               <Stack fill vertical>
                 <Stack.Item>
                   <Stack fluid align="baseline" justify="space-between">
-                    <Stack.Item bold>Cash: {cash}⪽</Stack.Item>
+                    <Stack.Item>
+                      <Stack fluid align="baseline">
+                        <Stack.Item bold>Cash: {cash}⪽</Stack.Item>
+                        {!!cash && (
+                          <Stack.Item>
+                            <Button icon="eject" content="Eject Cash" onClick={() => act('eject_cash')} />
+                          </Stack.Item>
+                        )}
+                      </Stack>
+                    </Stack.Item>
                     <Stack.Item>
                       <Button.Checkbox
                         checked={hideUnaffordable}
@@ -43,14 +52,18 @@ export const ClothingBooth = (_, context) => {
                   </Stack>
                 </Stack.Item>
                 <Stack.Item>
-                  <Stack align="center" justify="space-between">
-                    <Stack.Item grow bold>Money In Account: {accountBalance}⪽</Stack.Item>
-                    <Stack.Item grow textAlign="right">
+                  <Stack fluid align="center" justify="space-between">
+                    <Stack.Item bold>
+                      {!!accountBalance && <>Money In Account: {accountBalance}⪽</>}
+                    </Stack.Item>
+                    <Stack.Item textAlign="right">
                       <Button
                         ellipsis
                         icon="id-card"
                         content={scannedID ? scannedID : 'Insert Card'}
-                        onClick={() => { scannedID ? act('logout') : act('login'); }}
+                        onClick={() => {
+                          scannedID ? act('logout') : act('login');
+                        }}
                       />
                     </Stack.Item>
                   </Stack>

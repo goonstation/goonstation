@@ -1,5 +1,10 @@
 /**
  * # Clothing Booth
+ *
+ * A vendor for purchasing clothing items using a TGUI interface that (should) allow for the easy navigation of an otherwise large pile of available
+ * stock.
+ *
+ * Pulls the list of available stock from `global.clothingbooth_catalogue`, see `clothingbooth_datums.dm` to see how those are all generated.
  */
 /obj/machinery/clothingbooth
 	name = "Clothing Booth"
@@ -102,7 +107,7 @@
 		SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, PROC_REF(remove_occupant), src.occupant, src.icon, src.icon_state, "[user] forces open [src]!", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
 /obj/machinery/clothingbooth/Click()
-	if ((usr in src) && !src.occupant)
+	if ((usr in src) && src.occupant)
 		var/obj/item/equipped_item = usr.equipped()
 		var/obj/item/card/id/id_card = get_id_card(equipped_item)
 		if (istype(id_card))
@@ -256,7 +261,7 @@
 	tgui_process?.update_uis(src)
 
 /obj/machinery/clothingbooth/proc/eject_cash(turf/location, mob/target)
-	if (src.cash < 0)
+	if (src.cash <= 0)
 		return
 	if (!location)
 		location = get_turf(src)
@@ -292,8 +297,8 @@
 		target.set_loc(src)
 		src.occupant = target
 		src.preview.add_client(target.client)
-		src.update_preview()
-		ui_interact(target)
+		src.equip_and_preview()
+		src.ui_interact(target)
 
 /obj/machinery/clothingbooth/proc/remove_occupant(mob/target)
 	if (!src.occupant)
@@ -323,6 +328,33 @@
 			AM.set_loc(T)
 	src.occupant = null
 
+// Blatantly stolen from `/datum/component/barber`.
+/obj/machinery/clothingbooth/proc/reference_clothes(mob/living/carbon/human/to_copy, mob/living/carbon/human/to_paste)
+	src.nullify_clothes(to_paste)
+	to_paste.wear_suit = SEMI_DEEP_COPY(to_copy.wear_suit)
+	to_paste.w_uniform = SEMI_DEEP_COPY(to_copy.w_uniform)
+	to_paste.shoes = SEMI_DEEP_COPY(to_copy.shoes)
+	to_paste.gloves = SEMI_DEEP_COPY(to_copy.gloves)
+	to_paste.glasses = SEMI_DEEP_COPY(to_copy.glasses)
+	to_paste.head = SEMI_DEEP_COPY(to_copy.head)
+	to_paste.wear_id = SEMI_DEEP_COPY(to_copy.wear_id)
+
+/obj/machinery/clothingbooth/proc/nullify_clothes(mob/living/carbon/human/to_nullify)
+	qdel(to_nullify.wear_suit)
+	qdel(to_nullify.w_uniform)
+	qdel(to_nullify.shoes)
+	qdel(to_nullify.gloves)
+	qdel(to_nullify.glasses)
+	qdel(to_nullify.head)
+	qdel(to_nullify.wear_id)
+	to_nullify.wear_suit = null
+	to_nullify.w_uniform = null
+	to_nullify.shoes = null
+	to_nullify.gloves = null
+	to_nullify.glasses = null
+	to_nullify.head = null
+	to_nullify.wear_id = null
+
 /obj/machinery/clothingbooth/proc/equip_and_preview()
 	var/mob/living/carbon/human/preview_mob = src.preview.preview_thing
 	if (src.preview_item)
@@ -333,7 +365,19 @@
 		src.preview_item = clothing_item
 	if (src.dye)
 		src.preview_item.color = src.dye
-	preview_mob.force_equip(src.preview_item, src.selected_grouping.slot)
+	if (src.show_clothing)
+		src.reference_clothes(src.occupant, preview_mob)
+	else
+		src.nullify_clothes(preview_mob)
+	if (src.preview_item)
+		preview_mob.u_equip(preview_mob.get_slot(src.selected_grouping.slot))
+		preview_mob.force_equip(src.preview_item, src.selected_grouping.slot)
+	var/datum/human_limbs/preview_mob_limbs = preview_mob.limbs
+	// Get those limbs!
+	preview_mob_limbs.replace_with("l_arm", src.occupant.limbs.l_arm.type, src.occupant)
+	preview_mob_limbs.replace_with("r_arm", src.occupant.limbs.r_arm.type, src.occupant)
+	preview_mob_limbs.replace_with("l_leg", src.occupant.limbs.l_leg.type, src.occupant)
+	preview_mob_limbs.replace_with("r_leg", src.occupant.limbs.r_leg.type, src.occupant)
 	src.update_preview()
 
 /obj/machinery/clothingbooth/proc/reset_clothingbooth_parameters()
@@ -346,16 +390,15 @@
 		qdel(src.preview_item)
 		src.preview_item = null
 
-/// generates a preview of the current occupant
 /obj/machinery/clothingbooth/proc/update_preview()
 	src.preview.update_appearance(src.occupant.bioHolder.mobAppearance, src.occupant.mutantrace, src.current_preview_direction, src.occupant.real_name)
 
-/obj/machinery/clothingboothgbr
+/obj/machinery/clothingbooth/clothingboothgbr
 	name = "Strange Clothing Booth"
 	color = list(0,1,0,1,0,1,1,1,0)
 	dye = list(0,1,0,0,0,1,1,0,0)
 
-/obj/machinery/clothingboothbrg
+/obj/machinery/clothingbooth/clothingboothbrg
 	name = "Unusual Clothing Booth"
 	color = list(1,0,1,1,1,0,0,1,1)
 	dye = list(0,0,1,1,0,0,0,1,0)

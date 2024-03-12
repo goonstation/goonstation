@@ -1,3 +1,7 @@
+/*
+	If you are looking to add more items/groupings to the booth, please see `./clothingbooth_items.dm` and `./clothingbooth_groupings.dm`.
+*/
+
 /// Global list of `clothingbooth_grouping` datums, generated at runtime.
 var/list/datum/clothingbooth_grouping/clothingbooth_catalogue = list()
 /// Serialized version of `global.clothingbooth_catalogue` for sending to the clothingbooth's interface.
