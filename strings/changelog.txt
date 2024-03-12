@@ -1,5 +1,9 @@
 
 (t)tue mar 12 24
+(u)mloccy
+(p)18138
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Adding jeans reagent.
 (u)LeahTheTech
 (p)18096
 (e)⚖🐣|C-Balance, A-Respawning
