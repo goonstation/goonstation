@@ -1,6 +1,10 @@
 
 (t)tue mar 12 24
 (u)LeahTheTech
+(p)18096
+(e)⚖🐣|C-Balance, A-Respawning
+(*)Security officer and assistant job slots are now reduced at lower populations.
+(u)LeahTheTech
 (p)18145
 (e)⚖🐣|C-Balance, A-Respawning
 (+)Cryoing as a non-unique job will now immediately free up the slot.
