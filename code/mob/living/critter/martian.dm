@@ -284,16 +284,16 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 		var/show_other_key = 0
 		if (C.stealth || C.alt_key)
 			show_other_key = 1
-		rendered = "<span class='game martiansay'>[SPAN_NAME("ADMIN([show_other_key ? C.fakekey : C.key])")] telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
-		adminrendered = "<span class='game martiansay'><span class='name' data-ctx='\ref[speaker.mind]'>[show_other_key ? "ADMIN([C.key] (as [C.fakekey])" : "ADMIN([C.key]"])</span> telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
+		rendered = SPAN_MARTIANSAY("[SPAN_NAME("ADMIN([show_other_key ? C.fakekey : C.key])")] telepathically messages, [SPAN_MESSAGE("\"[message]\"")]")
+		adminrendered = SPAN_MARTIANSAY("<span class='name' data-ctx='\ref[speaker.mind]'>[show_other_key ? "ADMIN([C.key] (as [C.fakekey])" : "ADMIN([C.key]"])</span> telepathically messages, [SPAN_MESSAGE("\"[message]\"")]")
 	else
 		var/class = "martiansay"
 		if(ismartian(speaker))
 			var/mob/living/critter/martian/M = speaker
 			if(M.leader)
 				class = "martianimperial"
-		rendered = "<span class='game [class]'>[SPAN_NAME("[speaker.real_name]")] telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
-		adminrendered = "<span class='game [class]'><span class='name' data-ctx='\ref[speaker.mind]'>[speaker.real_name]</span> telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
+		rendered = "<span class='[class]'>[SPAN_NAME("[speaker.real_name]")] telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
+		adminrendered = "<span class='[class]'><span class='name' data-ctx='\ref[speaker.mind]'>[speaker.real_name]</span> telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
 
 	for (var/client/CC)
 		if (!CC.mob) continue
@@ -333,11 +333,11 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 		// TEMPORARY THING TO ESTABLISH THESE DUDES AS EXPLICITLY ANTAGS OK
 		SPAWN(1 DECI SECOND)
 			src.show_antag_popup("martian")
-			boutput(src, "<h2><span class='alert'>You are a Martian Infiltrator!</span></h2>")
-			boutput(src, "<span class='alert'>Find a safe place to start building a base with your teammates!</span>")
+			boutput(src, "<h2>[SPAN_ALERT("You are a Martian Infiltrator!")]</h2>")
+			boutput(src, SPAN_ALERT("Find a safe place to start building a base with your teammates!"))
 			if(src.leader)
-				boutput(src, "<span class='alert'>You are the leader of your infiltration group, and have additional abilities they do not.</span>")
-				boutput(src, "<span class='alert'>You start with a biotech seed that can be used to start a base. It will spawn a seed grower. Plant it somewhere safe!</span>")
+				boutput(src, SPAN_ALERT("You are the leader of your infiltration group, and have additional abilities they do not."))
+				boutput(src, SPAN_ALERT("You start with a biotech seed that can be used to start a base. It will spawn a seed grower. Plant it somewhere safe!"))
 			if (src.mind && ticker.mode)
 				if (!src.mind.special_role)
 					src.mind.special_role = "martian"

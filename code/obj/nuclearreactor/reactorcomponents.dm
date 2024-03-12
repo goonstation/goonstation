@@ -304,8 +304,9 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	var/datum/gas_mixture/air_contents
 	gas_volume = 100
 	thermal_mass = 420*50//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
-	var/const/plasma_react_mols = 25
-	var/const/co2_react_mols = 10
+
+	return_air()
+		return air_contents
 
 	melt()
 		..()
@@ -316,47 +317,14 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		if(air_contents)
 			for(var/datum/neutron/N in .)
 				if(N.velocity > 0)
-					var/continue_reacting = TRUE
-					if(continue_reacting && air_contents.toxins > 1) //plasma acts crazy, producing fallout and a random bunch of neutrons
-						//number of neutrons directly proportional to number of moles
-						//for every 100 mol, one extra neutron, with the remainder acting as a prob
-						//couple cans of plasma at room temp is about 50 mol in each gas channel with standard setup
-						var/plasma_react_count = round((air_contents.toxins - (air_contents.toxins % src.plasma_react_mols))/src.plasma_react_mols) + prob(air_contents.toxins % src.plasma_react_mols)
-						for(var/i in 1 to plasma_react_count)
-							if(prob(50))
-								continue //so it's a bit probabilistic - basically each 25mol has a 50/50 chance to interact
+					var/neutron_count = src.air_contents.neutron_interact()
+					if(neutron_count > 1)
+						for(var/i in 1 to neutron_count)
 							. += new /datum/neutron(pick(alldirs), rand(1,3))
-							air_contents.toxins-=0.5
-							air_contents.radgas+=2
-							continue_reacting = FALSE
-					if(continue_reacting && air_contents.carbon_dioxide > 1) //CO2 acts like a gaseous control rod
-						var/co2_react_count = round((air_contents.carbon_dioxide - (air_contents.carbon_dioxide % src.co2_react_mols))/src.co2_react_mols) + prob(air_contents.carbon_dioxide % src.co2_react_mols)
-						for(var/i in 1 to co2_react_count)
-							if(prob(50))
-								. -= N
-								qdel(N)
-								air_contents.temperature += 1
-								continue_reacting = FALSE
-								break
-					if(continue_reacting && air_contents.radgas > 1)
-						//rare chance for radgas to decompose into a random gas when hit by a neutron
-						if(prob(air_contents.radgas))
-							air_contents.radgas -= 1
-							air_contents.temperature += 5
-							. -= N
-							qdel(N)
-							switch(rand(1,5))
-								if(1)
-									air_contents.oxygen += 0.5
-								if(2)
-									air_contents.nitrogen += 0.5
-								if(3)
-									air_contents.farts += 0.1
-								if(4)
-									air_contents.nitrous_oxide += 0.1
-								if(5)
-									air_contents.oxygen_agent_b += 0.01
-							continue_reacting = FALSE
+					else if(neutron_count < 1)
+						. -= N
+						qdel(N)
+
 
 	processGas(var/datum/gas_mixture/inGas)
 		if(src.air_contents)

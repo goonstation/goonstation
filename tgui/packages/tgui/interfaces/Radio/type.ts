@@ -24,6 +24,8 @@ export interface RadioData {
   code: number;
   hasMicrophone: BooleanLike;
   sendButton: BooleanLike;
+  hasToggleButton: BooleanLike;
+  power: BooleanLike;
 }
 
 export enum RadioWires {

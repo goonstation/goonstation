@@ -461,6 +461,7 @@ toxic - poisons
 			mult = 0.5
 		return ..(P, A) * mult
 
+
 /datum/projectile/laser/blaster/pod_pilot/blue_NT
 	name = "blue blaster bolt"
 	color_icon = "#3d9cff"
@@ -485,6 +486,47 @@ toxic - poisons
 		turret = 1
 		damage = 15
 
+/datum/projectile/laser/blaster/pod_pilot/blue_NT/smg
+	name = "blue blaster bolt"
+	color_icon = "#3d9cff"
+	color_red = 0.05
+	color_green = 0.28
+	color_blue = 0.51
+	cost = 10
+	damage = 12.5
+	fullauto_valid = 1
+	icon_state = "bolt_burst"
+	shot_sound = 'sound/weapons/laser_c.ogg'
+
+/datum/projectile/laser/blaster/pod_pilot/red_SY/smg
+	name = "red blaster bolt"
+	color_icon = "#ff4043"
+	color_red = 0.51
+	color_green = 0.05
+	color_blue = 0.28
+	cost = 10
+	damage = 12.5
+	fullauto_valid = 1
+	icon_state = "bolt_burst"
+	shot_sound = 'sound/weapons/laser_c.ogg'
+
+/datum/projectile/laser/blaster/pod_pilot/blue_NT/shotgun
+	name = "blue blaster bolt"
+	color_icon = "#3d9cff"
+	color_red = 0.05
+	color_green = 0.28
+	color_blue = 0.51
+	cost = 10
+	damage = 15
+
+/datum/projectile/laser/blaster/pod_pilot/red_SY/shotgun
+	name = "red blaster bolt"
+	color_icon = "#ff4043"
+	color_red = 0.51
+	color_green = 0.05
+	color_blue = 0.28
+	cost = 10
+	damage = 15
 
 // cogwerks- mining laser, first attempt
 
@@ -652,3 +694,31 @@ toxic - poisons
 			hit.delStatus("cornicened2")
 		else
 			hit.setStatus("cornicened")
+
+/datum/projectile/laser/ntso_cannon
+	name = "heavy assault laser"
+	icon_state = "u_laser"
+	damage = 80
+	cost = 65
+	dissipation_delay = 10
+	brightness = 0
+	sname = "heavy laser"
+	shot_sound = 'sound/weapons/Laser.ogg'
+	color_red = 0
+	color_green = 0
+	color_blue = 1
+
+	on_hit(atom/hit, dir, obj/projectile/P)
+		fireflash(get_turf(hit), 0)
+		hit.ex_act(2)
+		P.die() //explicitly kill projectile - not a mining laser
+
+/datum/projectile/laser/makeshift
+	cost = 1250
+	shot_sound = 'sound/weapons/laserlight.ogg'
+	icon_state = "laser_tiny"
+	damage = 20
+	/// lower bounds of heat added to the makeshift laser rifle this was fired from
+	var/heat_low = 10
+	/// higher bounds of heat added to the makeshift laser rifle this was fired from
+	var/heat_high = 12

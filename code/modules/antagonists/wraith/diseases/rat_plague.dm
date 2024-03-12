@@ -2,7 +2,8 @@
 	name = "Rat Plague"
 	max_stages = 4
 	spread = "Non-Contagious"
-	cure = "Mercury"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Mercury"
 	reagentcure = list("mercury")
 	associated_reagent = "rat_spit"
 	stage_prob = 6

@@ -3,6 +3,7 @@
 ABSTRACT_TYPE(/datum/reagent/fooddrink)
 ABSTRACT_TYPE(/datum/reagent/fooddrink/alcoholic)
 ABSTRACT_TYPE(/datum/reagent/fooddrink/temp_bioeffect)
+ABSTRACT_TYPE(/datum/reagent/fooddrink/caffeinated)
 
 datum
 	reagent
@@ -189,6 +190,46 @@ datum
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 
+		fooddrink/yoghurt
+			name = "yoghurt"
+			id = "yoghurt"
+			description = "A gloopy food made of fermented milk."
+			reagent_state = SOLID
+			fluid_r = 255
+			fluid_b = 200
+			fluid_g = 255
+			transparency = 255
+			hunger_value = 0.5
+			taste = "slightly sour"
+			viscosity = 0.6
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					H.organHolder.heal_organ(1 * mult, 1 * mult, 1 * mult, "intestines")
+				..()
+
+		fooddrink/cream
+			name = "cream"
+			id = "cream"
+			description = "A thick white liquid made from processed milk fats."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_b = 230
+			fluid_g = 255
+			transparency = 255
+			taste = "creamy"
+			thirst_value = 0.3
+			hunger_value = 0.3
+			bladder_value = -0.2
+			viscosity = 0.5
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(prob(25))
+					M.reagents.add_reagent(("milk"), 1 * mult)
+					M.reagents.add_reagent(("cholesterol"), 1 * mult)
+				..()
+
+
 		fooddrink/cocktail_fruit_punch
 			name = "fruit punch"
 			id = "fruit_punch"
@@ -366,9 +407,15 @@ datum
 		fooddrink/alcoholic/wine/white
 			name = "white wine"
 			id = "white_wine"
-			fluid_r = 252
-			fluid_g = 168
-			fluid_b = 177
+			fluid_r = 255
+			fluid_g = 229
+			fluid_b = 189
+			alch_strength = 0.13
+			depletion_rate = 0.7
+			description = "An alcoholic beverage derived from white grapes."
+			reagent_state = LIQUID
+			taste = "dry"
+			viscosity = 0.3
 
 		fooddrink/alcoholic/champagne
 			name = "champagne"
@@ -1311,7 +1358,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				flush(holder, 8 * mult)
+				flush(holder, 4.8 * mult)
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
 				if(probmult(20))
@@ -1984,6 +2031,49 @@ datum
 			description = "Illegal in some jurisdictions."
 			reagent_state = LIQUID
 			taste ="medicinal"
+
+		fooddrink/alcoholic/mulled_wine
+			name = "Mulled Wine"
+			id = "mulled_wine"
+			fluid_r = 188
+			fluid_g = 0
+			fluid_b = 22
+			alch_strength = 0.13
+			description = "A traditional drink during winter."
+			reagent_state = LIQUID
+			taste = list("sweet", "festive")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (M.bodytemperature < (T0C + 40))
+					M.bodytemperature += 5 * mult
+				..()
+
+		fooddrink/alcoholic/spacemas_spirit
+			name = "Spacemas Spirit"
+			id = "spacemas_spirit"
+			fluid_r = 226
+			fluid_g = 0
+			fluid_b = 26
+			alch_strength = 0.5
+#ifdef XMAS
+			description = "Will warm your heart."
+#else
+			description = "It's not spacemas yet!."
+#endif
+			reagent_state = LIQUID
+			taste = list("sweet", "festive")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (prob(5))
+					if (M.mind.special_role == ROLE_GRINCH)
+						boutput(M, pick("You lament your past memories with nostalgia and deep regret.", "You think about how your greed and selfishness hurts others.",
+						 "You imagine yourself dying alone."))
+					else
+						boutput(M, pick("You feel like your heart grew a size!", "You are overcome with joy!", "You feel generous!", "You feel compassionate!"))
+					modify_christmas_cheer(1)
+
+				..()
+				return
 
 		fooddrink/sodawater
 			name = "soda water"
@@ -3892,9 +3982,6 @@ datum
 				if(!M)
 					M = holder.my_atom
 
-				if(probmult(10))
-					new /obj/decal/cleanable/urine(M.loc)
-
 				if(probmult(15) && !M.reagents?.has_reagent("promethazine"))
 					M.visible_message(SPAN_ALERT("[M] pukes violently!"))
 					M.vomit()
@@ -3942,7 +4029,7 @@ datum
 
 					var/image/imagekey = pick(od_halluc)
 					M.AddComponent(/datum/component/hallucination/fake_attack, 10, list(imagekey), od_halluc[imagekey], 25, 5)
-					if(probmult(15)) boutput(SPAN_ALERT("<B>FRUIT IN MY EYES!!!</B>"))
+					if(probmult(15)) boutput(M, SPAN_ALERT("<B>FRUIT IN MY EYES!!!</B>"))
 
 					if(probmult(25) && !M.reagents?.has_reagent("promethazine"))
 						M.vomit()
@@ -4059,7 +4146,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/tea/sun_tea
+		fooddrink/caffeinated/tea/sun_tea
 			name = "sun tea"
 			id = "sun_tea"
 			fluid_r = 139
@@ -4371,7 +4458,7 @@ datum
 				..()
 
 		fooddrink/alcoholic/nicotini
-			name = "nicotini"
+			name = "Nicotini"
 			id = "nicotini"
 			description = "Why would you even mix this? How does nicotine even taste?"
 			reagent_state = LIQUID
@@ -4527,7 +4614,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 0)
 
 				if (!M) M = holder.my_atom
-				alch_counter += rand(0,0.05) + 0.1 // RNG rolls moved to accumulation proc for consistency
+				alch_counter += randfloat(0,0.05) + 0.1 // RNG rolls moved to accumulation proc for consistency
 
 				..()
 
@@ -4699,7 +4786,7 @@ datum
 				flush(holder, 3 * mult, flushed_reagents)
 				..()
 
-		fooddrink/iced/coconutmilkespresso
+		fooddrink/coconutmilkespresso
 			name = "iced coconut milk espresso"
 			id = "icedcoconutmilkespresso"
 			fluid_r = 177
@@ -4711,7 +4798,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/iced/pineapplematcha
+		fooddrink/pineapplematcha
 			name = "iced pineapple matcha"
 			id = "icedpineapplematcha"
 			fluid_r = 152
@@ -4723,7 +4810,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/iced/thaicoffee
+		fooddrink/thaicoffee
 			name = "Thai iced coffee"
 			id = "thaiicedcoffee"
 			fluid_r = 218

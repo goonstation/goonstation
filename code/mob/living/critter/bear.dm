@@ -58,7 +58,7 @@
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/MEraaargh.ogg', 70, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] roars!")]</b>"
+					return SPAN_ALERT("<b>[src] roars!</b>")
 		return null
 
 	specific_emote_type(var/act)
@@ -109,7 +109,7 @@
 
 	critter_basic_attack(mob/target)
 		if(!ON_COOLDOWN(src, "bear_scream", 3 SECONDS))
-			src.visible_message("<b>[SPAN_ALERT("[src] roars!")]</b>")
+			src.visible_message(SPAN_ALERT("<b>[src] roars!</b>"))
 			if(istype(src, /mob/living/critter/bear/care))
 				playsound(src.loc, 'sound/voice/babynoise.ogg', 40, 0)
 			else

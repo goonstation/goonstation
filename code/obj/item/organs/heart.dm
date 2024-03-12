@@ -68,7 +68,7 @@
 
 		if (src.donor)
 			for (var/datum/ailment_data/disease in src.donor.ailments)
-				if (disease.cure == "Heart Transplant")
+				if (disease.cure_flags & CURE_HEART_TRANSPLANT)
 					src.donor.cure_disease(disease)
 			src.donor.blood_id = (ischangeling(src.donor) && src.blood_id == "blood") ? "bloodc" : src.blood_id
 		if (ishuman(M) && islist(src.diseases))

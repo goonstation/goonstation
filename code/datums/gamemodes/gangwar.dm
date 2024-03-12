@@ -1,4 +1,5 @@
 #define CASH_DIVISOR 200
+#define DEFAULT_MAX_GANG_SIZE 4
 /datum/game_mode/gang
 	name = "Gang War (Beta)"
 	config_tag = "gang"
@@ -65,6 +66,7 @@
 	if (!length(leaders_possible))
 		return 0
 
+
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
 		if (!length(token_players))
@@ -76,6 +78,14 @@
 
 	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = ROLE_GANG_LEADER, amount = num_teams, recordChosen = 1)
 	src.traitors |= chosen_leader
+
+#ifndef ME_AND_MY_40_ALT_ACCOUNTS
+	// check if we can actually run the mode before assigning special roles to minds
+	if(length(get_possible_enemies(ROLE_GANG_MEMBER, round(num_teams * DEFAULT_MAX_GANG_SIZE), force_fill = FALSE) - src.traitors) < round(num_teams * DEFAULT_MAX_GANG_SIZE * 0.66)) //must have at least 2/3 full gangs or there's no point
+		//boutput(world, SPAN_ALERT("<b>ERROR: The readied players are not collectively gangster enough for the selected mode, aborting gangwars.</b>"))
+		return 0
+#endif
+
 	for (var/datum/mind/leader in src.traitors)
 		leaders_possible.Remove(leader)
 		leader.special_role = ROLE_GANG_LEADER
@@ -115,7 +125,7 @@
 	for(var/datum/gang/gang in src.gangs)
 		num_people_needed += min(gang.current_max_gang_members, max_member_count) - length(gang.members)
 	if(isnull(candidates))
-		candidates = get_possible_enemies(ROLE_GANG_LEADER, num_people_needed, allow_carbon=TRUE, filter_proc=PROC_REF(can_join_gangs))
+		candidates = get_possible_enemies(ROLE_GANG_MEMBER, num_people_needed, allow_carbon=TRUE, filter_proc=PROC_REF(can_join_gangs), force_fill = FALSE)
 	var/num_people_available = min(num_people_needed, length(candidates))
 	var/people_added_per_gang = round(num_people_available / num_teams)
 	num_people_available = people_added_per_gang * num_teams
@@ -203,6 +213,10 @@
 		var/datum/gang/winner = check_winner()
 		if (istype(winner))
 			boutput(world, "<h2><b>[winner.gang_name], led by [winner.leader.current.real_name], won the round!</b></h2>")
+
+			var/datum/hud/gang_victory/victory_hud = new(winner)
+			for (var/client/C in clients)
+				victory_hud.add_client(C)
 
 	..()
 
@@ -322,7 +336,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /datum/gang
 	/// The maximum number of gang members per gang.
-	var/static/current_max_gang_members = 4
+	var/static/current_max_gang_members = DEFAULT_MAX_GANG_SIZE
 	/// Gang tag icon states that are being used by other gangs.
 	var/static/list/used_tags
 	/// Gang names that are being used by other gangs.
@@ -439,7 +453,7 @@ proc/broadcast_to_all_gangs(var/message)
 					src.used_names += temporary_name
 
 					for(var/datum/mind/member in src.members + list(src.leader))
-						boutput(member.current, "<h4>[SPAN_ALERT("Your gang name is [src.gang_name]!")]</h4>")
+						boutput(member.current, SPAN_ALERT("<h4>Your gang name is [src.gang_name]!</h4>"))
 
 				if ("Reselect")
 					var/first_name = tgui_input_list(src.leader.current, "Select the first word in your gang's name:", "Gang Name Selection", first_names)
@@ -539,7 +553,7 @@ proc/broadcast_to_all_gangs(var/message)
 		"owl suit" = /obj/item/clothing/under/gimmick/owl,
 		"pinstripe suit" = /obj/item/clothing/under/suit/pinstripe,
 		"purple suit" = /obj/item/clothing/under/suit/purple,
-		"mailman's jumpsuit" = /obj/item/clothing/under/misc/mail,
+		"mail courier's jumpsuit" = /obj/item/clothing/under/misc/mail,
 		"comfy sweater" = /obj/item/clothing/under/gimmick/sweater,
 		"party princess uniform" = /obj/item/clothing/under/gimmick/princess,
 		"salesman's uniform" = /obj/item/clothing/under/gimmick/merchant,
@@ -595,7 +609,7 @@ proc/broadcast_to_all_gangs(var/message)
 		"smooth criminal's hat" = /obj/item/clothing/head/mj_hat,
 		"genki" = /obj/item/clothing/head/genki,
 		"purple butt hat" = /obj/item/clothing/head/purplebutt,
-		"mailman's hat" = /obj/item/clothing/head/mailcap,
+		"mail courier's hat" = /obj/item/clothing/head/mailcap,
 		"turban" = /obj/item/clothing/head/turban,
 		"formal turban" = /obj/item/clothing/head/formal_turban,
 		"constable's helmet" = /obj/item/clothing/head/helmet/bobby,
@@ -691,7 +705,6 @@ proc/broadcast_to_all_gangs(var/message)
 /datum/action/bar/icon/spray_gang_tag
 	duration = 15 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "spray_tag"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
 	var/turf/target_turf
@@ -1083,7 +1096,6 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/get_I_score_drug(var/obj/O)
 		var/score = 0
 		score += O.reagents.get_reagent_amount("bathsalts")
-		score += O.reagents.get_reagent_amount("jenkem")/2
 		score += O.reagents.get_reagent_amount("crank")*1.5
 		score += O.reagents.get_reagent_amount("LSD")/2
 		score += O.reagents.get_reagent_amount("lsd_bee")/3
@@ -1642,3 +1654,4 @@ proc/broadcast_to_all_gangs(var/message)
 // 		B1.reagents.add_reagent("infernite", 20)
 // 		beakers += B1
 #undef CASH_DIVISOR
+#undef DEFAULT_MAX_GANG_SIZE

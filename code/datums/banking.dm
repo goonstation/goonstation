@@ -897,6 +897,8 @@
 			return
 		switch(action)
 			if("buy")
+				if (ON_COOLDOWN(usr, "anti-spam", 0.5 SECONDS))
+					return
 				if(accessed_record["current_money"] >= 100)
 					src.accessed_record["current_money"] -= 100
 					boutput(usr, SPAN_ALERT("Ticket being dispensed. Good luck!"))
@@ -941,6 +943,7 @@
 				src.show_message("Log out successful. Have a secure day.", "success", "splash")
 				playsound(src.loc, sound_interact, 50, 1)
 				src.scan = null
+				src.accessed_record = null
 				src.state = STATE_LOGGEDOFF
 				. = TRUE
 			if("transfer_spacebux")

@@ -13,7 +13,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 		boutput(M, SPAN_ALERT("It's just not good enough on its own..."))
 
 	afterattack(atom/target, mob/user, flag)
-		if (!src.reagents || src.qdeled || src.disposed) return //how
+		if (!src.reagents || !src.reagents?.total_volume || QDELETED(src)) return //how
+		if (istype(target, /obj/item/reagent_containers/food/snacks/condiment))
+			boutput(user, "<span class='alert'>You can't flavour a condiment!</span>")
+			return
 
 		if (istype(target, /obj/item/reagent_containers/food/snacks/))
 			user.visible_message(SPAN_NOTICE("[user] adds [src] to \the [target]."), SPAN_NOTICE("You add [src] to \the [target]."))
@@ -101,6 +104,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	desc = "Not related to any kind of crop."
 	icon_state = "cream" //ITS NOT A GODDAMN COOKIE
 	food_color = "#F8F8F8"
+	initial_volume = 10
+	initial_reagents = list("cream"=10)
 
 /obj/item/reagent_containers/food/snacks/condiment/custard
 	name = "custard"

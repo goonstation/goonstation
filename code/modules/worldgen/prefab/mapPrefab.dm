@@ -134,7 +134,7 @@ proc/get_map_prefabs(prefab_type)
  *
  * Prefab max count is respected. However, note that the count of a prefab is only updated in prefab's applyTo() function.
  */
-proc/pick_map_prefab(prefab_type, list/wanted_tags=null, list/unwanted_tags=null)
+proc/pick_map_prefab(prefab_type, list/wanted_tags_any=null, list/wanted_tags_all=null,list/unwanted_tags=null)
 	RETURN_TYPE(/datum/mapPrefab)
 	var/prefab_list = get_map_prefabs(prefab_type)
 	if (!length(prefab_list))
@@ -144,10 +144,9 @@ proc/pick_map_prefab(prefab_type, list/wanted_tags=null, list/unwanted_tags=null
 	var/list/choices = list()
 	for (var/name in prefab_list)
 		var/datum/mapPrefab/prefab = prefab_list[name]
-		if (istype(prefab, /datum/mapPrefab/mining))
-			if (!(prefab.tags & wanted_tags)) // Uses bitflags inclusively IE if it has any wanted tag its viable
-				continue
-		else if (length(prefab.tags & wanted_tags) != length(wanted_tags)) // Compares length exclusive IE needs exactly that tag
+		if (!(prefab.tags & wanted_tags_any)) // Uses bitflags inclusively IE if it has any wanted tag its viable
+			continue
+		if (length(prefab.tags & wanted_tags_all) != length(wanted_tags_all)) // Compares length exclusive IE needs exactly that tag
 			continue
 		if (prefab.maxNum > 0 && prefab.nPlaced >= prefab.maxNum)
 			continue

@@ -110,7 +110,9 @@ var/list/pw_rewards_tier3 = null
 	// Add the player's team overlay to the general antagonist overlay image group, for Admin purposes.
 	if (antagonist_image_group.minds_with_associated_mob_image[mind])
 		antagonist_image_group.remove_mind_mob_overlay(mind)
-	antagonist_image_group.add_mind_mob_overlay(mind, image('icons/mob/antag_overlays.dmi', icon_state = overlay_icon_state))
+	var/image/antag_icon = image('icons/mob/antag_overlays.dmi', icon_state = overlay_icon_state)
+	antag_icon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+	antagonist_image_group.add_mind_mob_overlay(mind, antag_icon)
 
 	// Add the player's mind and their team overlay to the Pod Wars image group.
 	if (!pod_wars_image_group.subscribed_minds_with_subcount[mind])
@@ -118,7 +120,9 @@ var/list/pw_rewards_tier3 = null
 
 	if (pod_wars_image_group.minds_with_associated_mob_image[mind])
 		pod_wars_image_group.remove_mind_mob_overlay(mind)
-	pod_wars_image_group.add_mind_mob_overlay(mind, image('icons/mob/antag_overlays.dmi', icon_state = overlay_icon_state))
+	var/image/pod_wars_icon = image('icons/mob/antag_overlays.dmi', icon_state = overlay_icon_state)
+	pod_wars_icon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+	pod_wars_image_group.add_mind_mob_overlay(mind, pod_wars_icon)
 
 /datum/game_mode/pod_wars/proc/add_latejoin_to_team(var/datum/mind/mind, var/datum/job/JOB)
 	if (istype(JOB, /datum/job/special/pod_wars/nanotrasen))
@@ -452,7 +456,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	var/team_name_string = team?.name
 	if (team.team_num == TEAM_SYNDICATE)
 		team_name_string = "The Syndicate"
-	boutput(world, "<h3>[SPAN_ALERT("[team_name_string]'s [CS] has been destroyed!!")]</h3>")
+	boutput(world, SPAN_ALERT("<h3>[team_name_string]'s [CS] has been destroyed!!</h3>"))
 
 	//if all of this team's crit systems have been destroyed, atomatically end the round...
 	if (!length(team.mcguffins))
@@ -470,7 +474,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	var/team_name_string = team?.name
 	if (team.team_num == TEAM_SYNDICATE)
 		team_name_string = "The Syndicate"
-	boutput(world, "<h3>[SPAN_ALERT("[team_name_string]'s [CS] is under attack!!")]</h3>")
+	boutput(world, SPAN_ALERT("<h3>[team_name_string]'s [CS] is under attack!!</h3>"))
 
 
 /datum/game_mode/pod_wars/check_finished()

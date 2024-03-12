@@ -101,6 +101,7 @@ var/list/ai_move_scheduled = list()
 				T.reset()
 
 	proc/get_instance(taskType, list/nparams)
+		RETURN_TYPE(taskType)
 		if (taskType in task_cache)
 			return task_cache[taskType]
 		task_cache[taskType] = new taskType(arglist(nparams))
@@ -224,6 +225,9 @@ var/list/ai_move_scheduled = list()
 	var/atom/target = null
 	/// The maximum tile distance that we look for targets
 	var/max_dist = 5
+	/// If this is set score_target() is ignored and instead the target is chosen by distance only.
+	/// This is better for performance if there are multiple targets. Override to FALSE if you override score_target()!
+	var/score_by_distance_only = TRUE
 	/// if this is set, temporarily give this mob the HEAVYWEIGHT_AI mob flag for the duration of this task
 	var/ai_turbo = FALSE
 	/// If this task allows pathing through space
@@ -271,22 +275,32 @@ var/list/ai_move_scheduled = list()
 		var/best_score = -INFINITY
 		var/list/best_path = null
 		if(length(targets))
-			for(var/atom/A as anything in targets)
-				var/score = src.score_target(A)
-				if(score > best_score)
-					var/simulated_only = !move_through_space
-#ifdef UNDERWATER_MAP
-					//fucking unsimulated ocean tiles fuck
-					simulated_only = FALSE
-#endif
-					var/tmp_best_path = get_path_to(holder.owner, A, max_dist*2, distance_from_target, null, simulated_only)
-					if(length(tmp_best_path))
-						best_score = score
-						best_path = tmp_best_path
-						. = A
+			var/simulated_only = !move_through_space
+			#ifdef UNDERWATER_MAP
+			//fucking unsimulated ocean tiles fuck
+			simulated_only = FALSE
+			#endif
+			var/required_goals = null // find all targets
+			if(score_by_distance_only)
+				required_goals = 1 // we only need to find the first one
+			var/list/atom/paths_found = get_path_to(holder.owner, targets, max_distance=max_dist*2, mintargetdist=distance_from_target, simulated_only=simulated_only, required_goals=required_goals)
+			if(score_by_distance_only)
+				if(length(paths_found))
+					. = paths_found[1]
+					best_path = paths_found[.]
+			else
+				for(var/atom/A as anything in paths_found)
+					var/score = src.score_target(A)
+					if(score > best_score)
+						var/list/tmp_best_path = paths_found[A]
+						if(length(tmp_best_path))
+							best_score = score
+							best_path = tmp_best_path
+							. = A
 		holder.target = .
 		holder.target_path = best_path
 
+	/// If overriding also override [score_by_distance_only] to FALSE!
 	proc/score_target(atom/target)
 		. = 0
 		if(target)

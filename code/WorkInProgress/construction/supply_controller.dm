@@ -673,18 +673,18 @@ TYPEINFO(/obj/supply_pad/outgoing)
 			recheck()
 		if (href_list["purchase"] && href_list["control"])
 			if (!in_target)
-				message = SPAN_BAD("Cannot lock targeting vector, aborting purchase.")
+				message = "<span class='bad'>Cannot lock targeting vector, aborting purchase.</span>"
 			else
 				if (!in_target.is_ready())
 					if (!in_target.has_crystal)
-						message = SPAN_BAD("The supply pad requires a telecrystal to function.")
+						message = "<span class='bad'>The supply pad requires a telecrystal to function.</span>"
 					else
-						message = SPAN_BAD("The supply pad is recharging.")
+						message = "<span class='bad'>The supply pad is recharging.</span>"
 				else
 					var/turf/T = get_turf(in_target)
 					for (var/atom/movable/O in T)
 						if ((O != in_target && O.density) || isliving(O))
-							message = SPAN_BAD("Please clear the teleportation target area.")
+							message = "<span class='bad'>Please clear the teleportation target area.</span>"
 							attack_hand(usr)
 							return
 					var/datum/supply_packs/P = locate(href_list["purchase"])
@@ -696,20 +696,20 @@ TYPEINFO(/obj/supply_pad/outgoing)
 							wagesystem.shipping_budget -= P.cost
 							P.create(T)
 							showswirl(T)
-							message = SPAN_GOOD("Purchase complete. Cost: [P.cost] credits.")
+							message = "<span class='good'>Purchase complete. Cost: [P.cost] credits.</span>"
 						else
-							message = SPAN_BAD("Insufficient funds in budget to purchase that item.")
+							message = "<span class='bad'>Insufficient funds in budget to purchase that item.</span>"
 					else
-						message = SPAN_BAD("That item is currently not available.")
+						message = "<span class='bad'>That item is currently not available.</span>"
 		else if (href_list["sell"])
 			if (!out_target)
-				message = SPAN_BAD("Cannot lock targeting vector, aborting purchase.")
+				message = "<span class='bad'>Cannot lock targeting vector, aborting purchase.</span>"
 			else
 				if (!out_target.is_ready())
 					if (!out_target.has_crystal)
-						message = SPAN_BAD("The supply pad requires a telecrystal to function.")
+						message = "<span class='bad'>The supply pad requires a telecrystal to function.</span>"
 					else
-						message = SPAN_BAD("The supply pad is recharging.")
+						message = "<span class='bad'>The supply pad is recharging.</span>"
 				else
 					var/turf/T = get_turf(out_target)
 					var/obj/CR = null
@@ -719,11 +719,11 @@ TYPEINFO(/obj/supply_pad/outgoing)
 						if (is_sellable(O))
 							CR = O
 						else if (O.density || isliving(O) || isitem(O))
-							message = SPAN_BAD("Please remove all objects and lifeforms not being sold from the telepad.")
+							message = "<span class='bad'>Please remove all objects and lifeforms not being sold from the telepad.</spans>"
 							attack_hand(usr)
 							return
 					if (!CR)
-						message = SPAN_BAD("No objects slated for selling found on the pad.")
+						message = "<span class='bad'>No objects slated for selling found on the pad.</span>"
 					else
 						var/profit = 0
 						for (var/obj/item/Q in CR)
@@ -735,7 +735,7 @@ TYPEINFO(/obj/supply_pad/outgoing)
 								profit += do_sell(Q)
 								qdel(Q)
 						profit += do_sell(CR)
-						message = SPAN_GOOD("Sold [CR] from outgoing pad. Profit: [profit] credits")
+						message = "<span class='good'>Sold [CR] from outgoing pad. Profit: [profit] credits</span>"
 						qdel(CR)
 						showswirl(get_turf(out_target))
 						out_target.used()
@@ -794,23 +794,23 @@ h2 {
 			interface += "[message]<br><br>"
 		interface += "<strong>Expedition budget:</strong> [wagesystem.shipping_budget] credits<br>"
 		if (!in_target)
-			interface += "[SPAN_BAD("Incoming supply pad not detected. <a href='?src=\ref[src];recheck=1'>Re-check</a>")]<br>"
+			interface += "<span class='bad'>Incoming supply pad not detected. <a href='?src=\ref[src];recheck=1'>Re-check</a></span><br>"
 		else
 			if (in_target.has_crystal == 0)
-				interface += "[SPAN_BAD("Incoming supply pad telecrystal storage depleted.")]<br>"
+				interface += "<span class='bad'>Incoming supply pad telecrystal storage depleted.</span><br>"
 			else if (in_target.charge < 100)
-				interface += "[SPAN_BAD("Incoming supply pad is recharging. Current charge: [in_target.charge]%.")]<br>"
+				interface += "<span class='bad'>Incoming supply pad is recharging. Current charge: [in_target.charge]%.</span><br>"
 			else
-				interface += "[SPAN_GOOD("Incoming supply pad is ready. Available crystals: [in_target.has_crystal].")]<br>"
+				interface += "<span class='good'>Incoming supply pad is ready. Available crystals: [in_target.has_crystal].</span><br>"
 		if (!out_target)
-			interface += "[SPAN_BAD("Outgoing supply pad not detected. <a href='?src=\ref[src];recheck=1'>Re-check</a>")]<br>"
+			interface += "<span class='bad'>Outgoing supply pad not detected. <a href='?src=\ref[src];recheck=1'>Re-check</a></span><br>"
 		else
 			if (out_target.has_crystal == 0)
-				interface += "[SPAN_BAD("Outgoing supply pad telecrystal storage depleted.")]<br>"
+				interface += "<span class='bad'>Outgoing supply pad telecrystal storage depleted.</span><br>"
 			else if (out_target.charge < 100)
-				interface += "[SPAN_BAD("Outgoing supply pad is recharging. Current charge: [out_target.charge]%.")]<br>"
+				interface += "<span class='bad'>Outgoing supply pad is recharging. Current charge: [out_target.charge]%.</span><br>"
 			else
-				interface += "[SPAN_GOOD("Outgoing supply pad is ready. Available crystals: [out_target.has_crystal].")]<br>"
+				interface += "<span class='good'>Outgoing supply pad is ready. Available crystals: [out_target.has_crystal].</span><br>"
 		if (mode == 0)
 			interface += "<strong>Purchase items</strong> | <a href='?src=\ref[src];mode=1'>View market demand</a> | <a href='?src=\ref[src];sell=1'>Sell goods</a><br>"
 			interface += "<table class='orderable'><thead><tr><th>Item name and contents</th><th>Stock</th><th>Cost</th><th>Purchase</th></tr></thead>"

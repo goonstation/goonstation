@@ -1,6 +1,9 @@
 
 /obj/item/reagent_containers/food/snacks/sandwich
+	name = "sandwich"
+	desc = "An uninitialized sandwich. You shouldn't see this..."
 	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	icon_state = "sandwich_m"	// default sandwich-ish appearance
 	fill_amt = 3
 	bites_left = 4
 	heal_amt = 2
@@ -237,6 +240,13 @@
 	name = "buttburger"
 	desc = "This burger's all buns. It seems to be made out of a green synthetic butt."
 	icon_state = "synthbuttburger"
+
+/obj/item/reagent_containers/food/snacks/burger/slugburger
+	name = "slurger"
+	desc = "Unspeakable... And chewy."
+	icon_state = "slugBurger"
+	initial_reagents = "slime"
+	food_effects = list("food_slimy", "food_bad_breath")
 
 /obj/item/reagent_containers/food/snacks/burger/buttburger/cyber
 	name = "buttburger"
@@ -521,7 +531,7 @@
 	initial_volume = 330
 	initial_reagents = list("cholesterol"=200)
 	unlock_medal_when_eaten = "That's no moon, that's a GOURMAND!"
-	food_effects = list("food_hp_up_big", "food_sweaty_big", "food_bad_breath", "food_warm")
+	food_effects = list("food_hp_up_big", "food_sweaty_bigger", "food_bad_breath", "food_warm")
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/burger/aburgination

@@ -1,75 +1,75 @@
-// Controls the emergency shuttle
+/// Controls the emergency shuttle
 var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
-datum/shuttle_controller
-	var/location = 0 //0 = somewhere far away, 1 = at SS13, 2 = returned from SS13
-	var/online = 0
-	var/direction = 1 //-1 = going back to central command, 1 = going back to SS13
-	var/disabled = 0 //Block shuttle calling if it's disabled.
-	var/callcount = 0 //Number of shuttle calls required to break through interference (wizard mode)
-	var/endtime			// round_elapsed_ticks		that shuttle arrives
-	var/announcement_done = 0
-	var/can_recall = 1 // set to 0 in the admin call thing to make it not recallable
+/datum/shuttle_controller
+	var/location = SHUTTLE_LOC_CENTCOM //! 0 = somewhere far away, 1 = at SS13, 2 = returned from SS13.
+	var/online = FALSE
+	var/direction = SHUTTLE_DIRECTION_TO_STATION //! -1 = going back to central command, 1 = going back to SS13
+	var/disabled = SHUTTLE_CALL_ENABLED //! Block shuttle calling if it's disabled.
+	var/callcount = 0 //! Number of shuttle calls required to break through interference (wizard mode)
+	var/endtime			//! round_elapsed_ticks		that shuttle arrives
+	var/announcement_done = SHUTTLE_ANNOUNCEMENT_ZERO	//! the stages of the shuttle prepping for transit
+	var/can_recall = TRUE //! set to FALSE in the admin call thing to make it not recallable
 	var/list/airbridges = list()
-	var/map_turf = /turf/space //Set in New() by map settings
-	var/transit_turf = /turf/space/no_replace //Not currently modified
-	var/centcom_turf = /turf/unsimulated/floor/shuttlebay //Not currently modified
-	var/turf/sound_turf = null //!where to play takeoff sounds, defined by landmark
+	var/map_turf = /turf/space //! Set in New() by map settings
+	var/transit_turf = /turf/space/no_replace //! Not currently modified
+	var/centcom_turf = /turf/unsimulated/floor/shuttlebay //! Not currently modified
+	var/turf/sound_turf = null //! where to play takeoff sounds, defined by landmark
 
-	// call the shuttle
-	// if not called before, set the endtime to T+600 seconds
-	// otherwise if outgoing, switch to incoming
+	/// call the shuttle
+	/// if not called before, set the endtime to T+600 seconds
+	/// otherwise if outgoing, switch to incoming
 	proc/incall()
 		if (emergency_shuttle.disabled == SHUTTLE_CALL_FULLY_DISABLED)
 			message_admins("The shuttle would have been called now, but it has been fully disabled!")
 			return FALSE
 
-		if (!online || direction != 1)
+		if (!src.online || src.direction != SHUTTLE_DIRECTION_TO_CENTCOMM)
 			playsound_global(world, 'sound/misc/shuttle_enroute.ogg', 100)
 
-		if (online)
-			if(direction == -1)
-				setdirection(1)
+		if (src.online)
+			if(src.direction == SHUTTLE_DIRECTION_TO_CENTCOMM)
+				setdirection(SHUTTLE_DIRECTION_TO_STATION)
 		else
 			settimeleft(SHUTTLEARRIVETIME)
-			online = 1
+			src.online = TRUE
 
 		INVOKE_ASYNC(ircbot, TYPE_PROC_REF(/datum/ircbot, event), "shuttlecall", src.timeleft())
 
 		return TRUE
 
 	proc/recall()
-		if (online && direction == 1)
+		if (src.online && src.direction == SHUTTLE_DIRECTION_TO_STATION)
 			playsound_global(world, 'sound/misc/shuttle_recalled.ogg', 100)
-			setdirection(-1)
+			setdirection(SHUTTLE_DIRECTION_TO_CENTCOMM)
 			ircbot.event("shuttlerecall", src.timeleft())
 
 
-	// returns the time (in seconds) before shuttle arrival
-	// note if direction = -1, gives a count-up to SHUTTLEARRIVETIME
+	/// returns the time (in seconds) before shuttle arrival
+	/// note if direction = SHUTTLE_DIRECTION_TO_CENTCOMM, gives a count-up to SHUTTLEARRIVETIME
 	proc/timeleft()
-		if(online)
-			var/timeleft = round((endtime - ticker.round_elapsed_ticks)/10 ,1)
-			if(direction == 1)
+		if(src.online)
+			var/timeleft = round((src.endtime - ticker.round_elapsed_ticks)/10 ,1)
+			if(src.direction == SHUTTLE_DIRECTION_TO_STATION)
 				return timeleft
 			else
-				return SHUTTLEARRIVETIME-timeleft
+				return SHUTTLEARRIVETIME - timeleft
 		else
 			return SHUTTLEARRIVETIME
 
-	// sets the time left to a given delay (in seconds)
+	/// sets the time left to a given delay (in seconds)
 	proc/settimeleft(var/delay)
-		endtime = ticker.round_elapsed_ticks + delay * 10
+		src.endtime = ticker.round_elapsed_ticks + delay SECONDS
 
-	// sets the shuttle direction
-	// 1 = towards SS13, -1 = back to centcom
+	/// sets the shuttle direction
+	/// 1 = towards SS13, -1 = back to centcom. Uses defines like SHUTTLE_DIRECTION_TO_STATION
 	proc/setdirection(var/dirn)
-		if(direction == dirn)
+		if(src.direction == dirn)
 			return
-		direction = dirn
+		src.direction = dirn
 		// if changing direction, flip the timeleft by SHUTTLEARRIVETIME
-		var/ticksleft = endtime - ticker.round_elapsed_ticks
-		endtime = ticker.round_elapsed_ticks + (SHUTTLEARRIVETIME*10 - ticksleft)
+		var/ticksleft = src.endtime - ticker.round_elapsed_ticks
+		src.endtime = ticker.round_elapsed_ticks + (SHUTTLEARRIVETIME SECONDS - ticksleft)
 		return
 
 	proc/process()
@@ -81,7 +81,7 @@ datum/shuttle_controller
 			for_by_tcl(S, /obj/machinery/computer/airbr)
 				if (S.emergency && !(S in src.airbridges))
 					src.airbridges += S
-			map_turf = map_settings.shuttle_map_turf
+			src.map_turf = map_settings.shuttle_map_turf
 			src.sound_turf = pick_landmark(LANDMARK_SHUTTLE_SOUND)
 			if (!istype(src.sound_turf))
 				logTheThing(LOG_DEBUG, null, "Shuttle sound landmark not found, trying station shuttle area turfs")
@@ -91,36 +91,36 @@ datum/shuttle_controller
 						src.sound_turf = new_target
 						break
 		process()
-			if (!online)
+			if (!src.online)
 				return
-			var/timeleft = timeleft()
+			var/timeleft = src.timeleft()
 			if (timeleft > 1e5 || timeleft <= 0)		// midnight rollover protection
 				timeleft = 0
-			switch (location)
+			switch (src.location)
 				if (SHUTTLE_LOC_CENTCOM)
-					if (timeleft>SHUTTLEARRIVETIME)
-						online = 0
-						direction = 1
-						endtime = null
-						return 0
+					if (timeleft > SHUTTLEARRIVETIME)
+						src.online = FALSE
+						src.direction = SHUTTLE_DIRECTION_TO_STATION
+						src.endtime = null
+						return FALSE
 
 					else if (timeleft <= 0)
-						location = SHUTTLE_LOC_STATION
+						src.location = SHUTTLE_LOC_STATION
 						if (ticker?.mode)
 							if (ticker.mode.shuttle_available == SHUTTLE_AVAILABLE_DISABLED)
 								command_alert("CentCom has received reports of unusual activity on the station. The shuttle has been returned to base as a precaution, and will not be usable.");
-								online = 0
-								direction = 1
-								endtime = null
-								return 0
+								src.online = FALSE
+								src.direction = SHUTTLE_DIRECTION_TO_STATION
+								src.endtime = null
+								return FALSE
 							if (ticker.mode.shuttle_available == SHUTTLE_AVAILABLE_DELAY && (ticker.round_elapsed_ticks < max(0, ticker.mode.shuttle_available_threshold)) && callcount < 1)
-								callcount++
+								src.callcount++
 								command_alert("CentCom reports that the emergency shuttle has veered off course due to unknown interference. The next shuttle will be equipped with electronic countermeasures to break through.");
-								online = 0
-								direction = 1
-								location = SHUTTLE_LOC_CENTCOM
-								endtime = null
-								return 0
+								src.online = FALSE
+								src.direction = SHUTTLE_DIRECTION_TO_STATION
+								src.location = SHUTTLE_LOC_CENTCOM
+								src.endtime = null
+								return FALSE
 
 						processScheduler.disableProcess("Fluid_Turfs")
 
@@ -141,10 +141,14 @@ datum/shuttle_controller
 
 						for (var/turf/T in end_location)
 							dstturfs += T
-							if (T.y > northBound) northBound = T.y
-							if (T.y < southBound) southBound = T.y
-							if (T.x < westBound) westBound = T.x
-							if (T.x > eastBound) eastBound = T.x
+							if (T.y > northBound)
+								northBound = T.y
+							if (T.y < southBound)
+								southBound = T.y
+							if (T.x < westBound)
+								westBound = T.x
+							if (T.x > eastBound)
+								eastBound = T.x
 
 						// hey you, get out of the way!
 						var/shuttle_dir = map_settings ? map_settings.escape_dir : SOUTH
@@ -174,7 +178,7 @@ datum/shuttle_controller
 						start_location.move_contents_to(end_location, filler_turf, turf_to_skip=/turf/unsimulated/floor/shuttlebay)
 						for (var/turf/P in end_location)
 							if (istype(P, filler_turf))
-								P.ReplaceWith(map_turf, keep_old_material = 0, force=1)
+								P.ReplaceWith(src.map_turf, keep_old_material = 0, force = 1)
 
 
 						settimeleft(SHUTTLELEAVETIME)
@@ -183,47 +187,47 @@ datum/shuttle_controller
 							for (var/obj/machinery/computer/airbr/S in src.airbridges)
 								S.establish_bridge()
 
-						boutput(world, "<B>The Emergency Shuttle has docked with the station! You have [timeleft()/60] minutes to board the Emergency Shuttle.</B>")
+						boutput(world, "<B>The Emergency Shuttle has docked with the station! You have [src.timeleft()/60] minutes to board the Emergency Shuttle.</B>")
 						ircbot.event("shuttledock")
 						playsound_global(world, 'sound/misc/shuttle_arrive1.ogg', 100)
 
 						processScheduler.enableProcess("Fluid_Turfs")
 
-						return 1
+						return TRUE
 
 #ifdef SHUTTLE_TRANSIT // shuttle spends some time in transit to centcom before arriving
 				if (SHUTTLE_LOC_STATION)
-					if (!announcement_done && timeleft <= 60)
-						var/display_time = round(timeleft()/60)
+					if (!src.announcement_done && timeleft <= 60)
+						var/display_time = round(src.timeleft()/60)
 						//if (display_time <= 0) // The Emergency Shuttle will be entering the wormhole to CentCom in 0 minutes!
 							//display_time = 1 // fuckofffffffffff
 						boutput(world, "<B>The Emergency Shuttle will be entering the wormhole to CentCom in [display_time] minute[s_es(display_time)]! Please prepare for wormhole traversal.</B>")
-						announcement_done = 1
+						src.announcement_done = SHUTTLE_ANNOUNCEMENT_WILL_DEPART_IN
 
-					else if (announcement_done < 2 && timeleft < 30)
+					else if (src.announcement_done < SHUTTLE_ANNOUNCEMENT_SHIP_CHARGE && timeleft < 30)
 						if (istype(src.sound_turf))
 							playsound(src.sound_turf, 'sound/effects/ship_charge.ogg', 100)
-						announcement_done = 2
+						src.announcement_done = SHUTTLE_ANNOUNCEMENT_SHIP_CHARGE
 
-					else if (announcement_done < 3 && timeleft < 4)
+					else if (src.announcement_done < SHUTTLE_ANNOUNCEMENT_SHIP_ENGAGE && timeleft < 4)
 						if (istype(src.sound_turf))
 							playsound(src.sound_turf, 'sound/effects/ship_engage.ogg', 100)
-						announcement_done = 3
+						src.announcement_done = SHUTTLE_ANNOUNCEMENT_SHIP_ENGAGE
 
-					else if (announcement_done < 4 && timeleft < 1)
+					else if (src.announcement_done < SHUTTLE_ANNOUNCEMENT_SHIP_IGNITION && timeleft < 1)
 						if (istype(src.sound_turf))
 							playsound(src.sound_turf, 'sound/effects/explosion_new4.ogg', 75)
 							playsound(src.sound_turf, 'sound/effects/flameswoosh.ogg', 75)
-						announcement_done = 4
+						src.announcement_done = SHUTTLE_ANNOUNCEMENT_SHIP_IGNITION
 						if (src.airbridges.len)
 							for (var/obj/machinery/computer/airbr/S in src.airbridges)
 								S.remove_bridge()
 
 					else if (timeleft > 0)
-						return 0
+						return FALSE
 
 					else
-						location = SHUTTLE_LOC_TRANSIT
+						src.location = SHUTTLE_LOC_TRANSIT
 						var/area/start_location = locate(map_settings ? map_settings.escape_station : /area/shuttle/escape/station)
 						var/area/end_location = locate(map_settings ? map_settings.escape_transit : /area/shuttle/escape/transit)
 
@@ -235,16 +239,16 @@ datum/shuttle_controller
 								D.UpdateIcon()
 
 						for (var/atom/A in start_location)
-							if(istype( A, /obj/stool ))
+							if(istype(A, /obj/stool))
 								var/obj/stool/O = A
-								if( !O.anchored )
+								if(!O.anchored)
 									var/atom/target = get_edge_target_turf(O, pick(alldirs))
-									if( O.buckled_guy )
-										boutput( O.buckled_guy, SPAN_ALERT("The [O] shoots off due to being unsecured!") )
+									if(O.buckled_guy)
+										boutput(O.buckled_guy, SPAN_ALERT("The [O] shoots off due to being unsecured!"))
 										O.unbuckle()
-									if( target )
-										O.throw_at( target, 25, 1 )//dear god I am sorry in advance for doing this
-							else if(istype( A, /mob ))
+									if(target)
+										O.throw_at(target, 25, 1) //dear god I am sorry in advance for doing this
+							else if(istype(A, /mob))
 								var/mob/M = A
 								shake_camera(M, 32, 32)
 								if (!isturf(M.loc) || !isliving(M) || isintangible(M))
@@ -277,7 +281,7 @@ datum/shuttle_controller
 							particle_spawn.start_particles()
 
 						DEBUG_MESSAGE("Now moving shuttle!")
-						start_location.move_contents_to(end_location, map_turf, turf_to_skip=list(/turf/simulated/floor/plating, src.map_turf))
+						start_location.move_contents_to(end_location, map_turf, turf_to_skip = list(/turf/simulated/floor/plating, src.map_turf))
 
 						if(station_repair.station_generator)
 							var/list/turf/turfs_to_fix = get_area_turfs(start_location)
@@ -286,15 +290,15 @@ datum/shuttle_controller
 
 						DEBUG_MESSAGE("Done moving shuttle!")
 						settimeleft(SHUTTLETRANSITTIME)
-						boutput(world, "<B>The Emergency Shuttle has left for CentCom! It will arrive in [timeleft()/60] minute[s_es(timeleft()/60)]!</B>")
+						boutput(world, "<B>The Emergency Shuttle has left for CentCom! It will arrive in [src.timeleft() / 60] minute[s_es(src.timeleft() / 60)]!</B>")
 						playsound_global(world, 'sound/misc/shuttle_enroute.ogg', 100)
 						//online = 0
 
-						return 1
+						return TRUE
 
 				if (SHUTTLE_LOC_TRANSIT)
-					if (timeleft>0)
-						return 0
+					if (timeleft > 0)
+						return FALSE
 					else
 						var/area/start_location = locate(map_settings ? map_settings.escape_transit : /area/shuttle/escape/transit)
 						var/area/end_location = locate(map_settings ? map_settings.escape_centcom : /area/shuttle/escape/centcom)
@@ -313,37 +317,37 @@ datum/shuttle_controller
 						var/filler_turf = text2path(end_location.filler_turf)
 						if (!filler_turf)
 							filler_turf = centcom_turf
-						start_location.move_contents_to(end_location, transit_turf, turf_to_skip=/turf/space)
+						start_location.move_contents_to(end_location, src.transit_turf, turf_to_skip=/turf/space)
 						for (var/turf/G in end_location)
-							if (istype(G, transit_turf))
-								G.ReplaceWith(filler_turf, keep_old_material = 0, force=1)
+							if (istype(G, src.transit_turf))
+								G.ReplaceWith(filler_turf, keep_old_material = 0, force = 1)
 						boutput(world, "<BR><B>The Emergency Shuttle has arrived at CentCom!")
 						playsound_global(world, 'sound/misc/shuttle_centcom.ogg', 100)
 						logTheThing(LOG_STATION, null, "The emergency shuttle has arrived at Centcom.")
-						online = 0
+						src.online = FALSE
 
-						location = SHUTTLE_LOC_RETURNED
-						return 1
+						src.location = SHUTTLE_LOC_RETURNED
+						return TRUE
 				else
-					return 1
+					return TRUE
 
 #else // standard shuttle departure - immediately arrives at centcom
 				if (SHUTTLE_LOC_STATION)
-					if (timeleft>0)
-						return 0
+					if (timeleft > 0)
+						return FALSE
 					else
-						location = SHUTTLE_LOC_RETURNED
+						src.location = SHUTTLE_LOC_RETURNED
 						var/area/start_location = locate(map_settings ? map_settings.escape_station : /area/shuttle/escape/station)
 						var/area/end_location = locate(map_settings ? map_settings.escape_centcom : /area/shuttle/escape/centcom)
 
 						start_location.move_contents_to(end_location, map_turf)
 						for (var/turf/O in end_location)
 							if (istype(O, transit_turf))
-								O.ReplaceWith(centcom_turf, keep_old_material = 0, force=1)
+								O.ReplaceWith(centcom_turf, keep_old_material = 0, force = 1)
 						boutput(world, "<BR><B>The Emergency Shuttle has arrived at CentCom!")
 						logTheThing(LOG_STATION, null, "The emergency shuttle has arrived at Centcom.")
-						online = 0
-						return 1
+						src.online = FALSE
+						return TRUE
 				else
-					return 1
+					return TRUE
 #endif

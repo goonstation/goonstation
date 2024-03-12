@@ -568,7 +568,7 @@
 	desc = "Mmm! A delicious-looking cream sponge cake!"
 	heal_amt = 2
 	initial_volume = 50
-	initial_reagents = list("sugar"=30)
+	initial_reagents = list("sugar"=20, "cream"=10)
 
 	New()
 		..()
@@ -589,7 +589,7 @@
 
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau
 	name = "Extravagant Chocolate Gateau"
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!"
+	desc = "Holy shit! This cake probably costs more than the peak market cap of Donk Co.!"
 
 	New()
 		..()

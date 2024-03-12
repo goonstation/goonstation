@@ -267,7 +267,7 @@
 					if(!ON_COOLDOWN(src, "ai monkey punching bag", 1 MINUTE))
 						src.ai_target = bag
 						src.target = bag
-						src.ai_state = AI_ATTACKING
+						src.ai_set_state(AI_ATTACKING)
 						break
 			if(prob(1))
 				src.emote(pick("dance", "flip", "laugh"))
@@ -337,24 +337,27 @@
 		//src.ai_aggressive = 1
 		var/aggroed = src.ai_state != AI_ATTACKING
 		src.target = T
-		src.ai_state = AI_ATTACKING
+		if (src.ai_set_state(AI_ATTACKING))
+			src.ai_target = T
+			src.shitlist[T] ++
 		src.ai_threatened = world.timeofday
-		src.ai_target = T
-		src.shitlist[T] ++
 		if (prob(40))
 			if(!ON_COOLDOWN(src, "monkey_harmed_scream", 5 SECONDS))
 				src.emote("scream")
 		var/pals = 0
 		for_by_tcl(pal, /mob/living/carbon/human/npc/monkey)
+			if (pal == src)
+				continue
 			if (GET_DIST(src, pal) > 7)
 				continue
 			if (pals >= 5)
 				return
 			if (prob(10))
 				continue
-			//pal.ai_aggressive = 1
+			if (!pal.ai_set_state(AI_ATTACKING))
+				continue
 			pal.target = T
-			pal.ai_state = AI_ATTACKING
+			pal.ai_set_state(AI_ATTACKING)
 			pal.ai_threatened = world.timeofday
 			pal.ai_target = T
 			pal.shitlist[T] ++
@@ -390,7 +393,7 @@
 			return 0
 		if(isintangible(T))
 			if(!iswraith(T))
-				src.ai_state = 0
+				src.ai_set_state(AI_PASSIVE)
 				src.target = null
 				src.ai_target = null
 				src.ai_frustration = 0
@@ -398,7 +401,7 @@
 				return 1
 			else
 				if(!T.density)
-					src.ai_state = 0
+					src.ai_set_state(AI_PASSIVE)
 					src.target = null
 					src.ai_target = null
 					src.ai_frustration = 0
@@ -406,9 +409,9 @@
 					return 1
 		if (src.health <= 0 || (GET_DIST(src, T) >= 11))
 			if(src.health <= 0)
-				src.ai_state = AI_FLEEING
+				src.ai_set_state(AI_FLEEING)
 			else
-				src.ai_state = 0
+				src.ai_set_state(AI_PASSIVE)
 				src.target = null
 				src.ai_target = null
 			src.ai_frustration = 0
@@ -420,7 +423,7 @@
 			var/mob/M = T
 			if (M.health <= 0)
 				src.target = null
-				src.ai_state = 0
+				src.ai_set_state(AI_PASSIVE)
 				src.ai_target = null
 				src.ai_frustration = 0
 				walk_towards(src,null)
@@ -474,18 +477,15 @@
 				if(!length(choices))
 					return
 				thingy = pick(choices)
-				slot = thingy.equipped_in_slot
 			else if (theft_target.l_store && theft_target.r_store)
 				thingy = pick(theft_target.l_store, theft_target.r_store)
-				if (thingy == theft_target.r_store)
-					slot = 16
 			else if (theft_target.l_store)
 				thingy = theft_target.l_store
 			else if (theft_target.r_store)
 				thingy = theft_target.r_store
-				slot = 16
 			else // ???
 				return
+		slot = theft_target.get_slot_from_item(thingy)
 		walk_towards(src, null)
 		if(ismonkey(theft_target))
 			src.say("I help!")
@@ -534,7 +534,7 @@
 						spawn(0.5 SECONDS)
 							was_harmed(M)
 							var/singing_modifier = (M.singing & BAD_SINGING) ? "bad" : "loud"
-							src.visible_message("<B>[name]</B> becomes furious at [M] for their [singing_modifier] singing!", 1)
+							src.visible_message("<B>[name]</B> becomes furious at [M] for their [singing_modifier] singing!")
 							src.say(pick("Must take revenge for insult to music!", "I now attack you like your singing attacked my ears!"))
 					else
 						spawn(0.5 SECONDS)
@@ -553,19 +553,21 @@
 		..()
 
 	proc/pursuited_by(atom/movable/AM)
-		src.ai_state = AI_FLEEING
+		src.ai_set_state(AI_FLEEING)
 		src.ai_target = AM
 		src.target = AM
 
 /datum/action/bar/icon/filthyPickpocket
-	id = "pickpocket"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 
-	var/mob/living/carbon/human/npc/source  //The npc doing the action
-	var/mob/living/carbon/human/target  	//The target of the action
-	var/slot						    	//The slot number
+	/// NPC who is pickpocketing
+	var/mob/living/carbon/human/npc/source
+	/// The pick-pocketing victim
+	var/mob/living/carbon/human/target
+	/// The SLOT_* define (i.e. SLOT_BACK)
+	var/slot
 
 	New(var/Source, var/Target, var/Slot)
 		source = Source
@@ -649,6 +651,14 @@
 	onInterrupt()
 		..()
 		source.ai_picking_pocket = 0
+
+/mob/living/carbon/human/npc/monkey/friendly
+
+	ai_set_state(var/state)
+		if (state == AI_ANGERING || state == AI_ATTACKING)
+			return FALSE
+		else
+			return ..()
 
 /mob/living/carbon/human/npc/monkey/angry
 	ai_aggressive = 1

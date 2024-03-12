@@ -146,7 +146,7 @@
 			return FALSE
 		if (isdead(C))
 			return FALSE
-		if (!src.flock.isEnemy(C))
+		if (!src.isEnemy(C))
 			return FALSE
 		if (istype(C.loc,/obj/flock_structure/cage)) //already caged, stop shooting
 			return FALSE
@@ -171,6 +171,10 @@
 
 		return TRUE
 
+
+/obj/flock_structure/gnesisturret/angry
+	isEnemy(mob/M)
+		return istype(M) && isalive(M) && !isintangible(M)
 
 /datum/projectile/syringe/syringe_barbed/gnesis
 	name = "nanite spike"

@@ -2,7 +2,8 @@
 	name = "Berserker"
 	max_stages = 2
 	spread = "Non-Contagious"
-	cure = "Haloperidol"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Haloperidol"
 	reagentcure = list("haloperidol")
 	recureprob = 10
 	associated_reagent = "pubbie tears"

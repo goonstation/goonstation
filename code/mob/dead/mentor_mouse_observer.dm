@@ -2,6 +2,7 @@
 	name = "mentor mouse"
 	real_name = "mentor mouse"
 	is_respawnable = FALSE
+	locked = TRUE
 	var/image/ping
 	var/ping_id
 	var/mob/the_guy

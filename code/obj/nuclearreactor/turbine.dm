@@ -261,6 +261,9 @@
 					user.TakeDamage("head", 200, 0, 0, DAMAGE_CRUSH)
 				return TRUE
 
+	return_air()
+		return air_contents
+
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)

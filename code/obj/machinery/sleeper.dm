@@ -89,7 +89,7 @@ TYPEINFO(/obj/machinery/sleep_console)
 		// non-anchored sleeper assumed to be portable, don't want to eject
 		// in case someone is using it for body transport
 		if (isdead(src.our_sleeper.occupant) && src.our_sleeper.anchored)
-			src.our_sleeper.visible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Alert! No life signs detected from occupant.\"") // TODO maptext-ize
+			src.our_sleeper.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Alert! No life signs detected from occupant.\"")) // TODO maptext-ize
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 			src.time = 0
 			src.timing = 0
@@ -593,12 +593,6 @@ TYPEINFO(/obj/machinery/sleeper)
 	attack_hand(mob/user)
 		..()
 		eject_occupant(user)
-
-	mouse_drop(mob/user as mob)
-		if (can_operate(user))
-			eject_occupant(user)
-		else
-			..()
 
 	verb/eject()
 		set src in oview(1)

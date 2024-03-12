@@ -1039,9 +1039,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
-/mob/living/silicon/robot/spawnable/standard/metalman{
-	emagged = 1
-	},
+/mob/living/silicon/robot/spawnable/standard/metalman,
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
 	},

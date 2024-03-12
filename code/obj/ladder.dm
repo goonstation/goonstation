@@ -13,8 +13,10 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	var/id = null
 	/// if true, disables ladder climbing behavior
 	var/unclimbable = FALSE
+	/// list of active ladder climbers, used for loose item/mob expulsion
+	var/list/mob/climbers = list()
 	mat_changename = FALSE
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 
 /obj/ladder/broken
 	name = "broken ladder"
@@ -173,8 +175,8 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 
 	boutput(user, "You climb [src.icon_state == "ladder" ? "down" : "up"] the ladder.")
 
-	// do the fancy thing i stole from kitchen grinders
-	var/atom/movable/proxy = new(src)
+	// do the fancy thing stolen from kitchen gibbers
+	var/atom/movable/proxy = new
 	proxy.mouse_opacity = FALSE
 	proxy.appearance = user.appearance
 	proxy.transform = null
@@ -183,8 +185,10 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	if (src.icon_state == "ladder") // only filter if we're the top
 		proxy.add_filter("ladder_climbmask", 1, alpha_mask_filter(x=0, y=0, icon=icon('icons/obj/kitchen_grinder_mask.dmi', "ladder-mask")))
 
+	src.climbers += user
 	user.set_loc(src)
 	src.vis_contents += proxy
+	proxy.set_loc(src)
 
 	// if we're not the top ladder, animate up instead of down
 	var/climbdir = src.icon_state == "ladder" ? 1 : -1
@@ -199,6 +203,16 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 				user.set_loc(get_turf(otherLadder))
 			else
 				user.set_loc(get_turf(src))
-
+		src.climbers -= user
 		src.vis_contents -= proxy
 		qdel(proxy)
+
+/obj/ladder/Entered(atom/movable/AM, atom/OldLoc)
+	. = ..()
+	if ((AM in src.climbers) || (AM in src.vis_contents))
+		return
+	if (src.icon_state == "ladder")
+		var/obj/ladder/lower = src.get_other_ladder()
+		AM.set_loc(get_turf(lower))
+	else
+		AM.set_loc(get_turf(src))

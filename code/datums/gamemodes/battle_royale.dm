@@ -550,21 +550,5 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	//battler.Equip_Bank_Purchase(battler.mind.purchased_bank_item)
 	battler.set_clothing_icon_dirty()
 
-//returns a list of all areas on a station
-// Maybe nuclear could use this in the future???
-proc/get_accessible_station_areas()
-	if(global.station_areas && global.area_list_is_up_to_date) // In case someone makes a new area
-		return global.station_areas
-	// All areas
-	var/list/L = list()
-	for_by_tcl(AR, /area/station)
-		for(var/turf/T in AR)
-			if(!isfloor(T) && is_blocked_turf(T) && istype(T,/area/sim/test_area) && T.z == 1)
-				continue
-			L[AR.name] = AR
-	global.area_list_is_up_to_date = 1
-	global.station_areas = L
-	return L
-
 #undef STORM_REGULAR
 #undef STORM_FINAL

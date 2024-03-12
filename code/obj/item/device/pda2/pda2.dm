@@ -11,6 +11,7 @@
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	wear_layer = MOB_BELT_LAYER
+	force = 3
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/obj/item/pen = null // slap a pen into that thang
 	var/registered = null // so we don't need to replace all the dang checks for ID cards

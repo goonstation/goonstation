@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/binary/valve
 	icon = 'icons/obj/atmospherics/valve.dmi'
-	icon_state = "valve0"
+	icon_state = "valve0-map"
 	name = "manual valve"
 	desc = "A pipe valve"
 	layer = PIPE_MACHINE_LAYER
@@ -24,6 +24,8 @@
 		playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, 1)
 	else
 		icon_state = "valve[open]"
+	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 180), "medium", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node2, src.dir, "medium", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
 
 /obj/machinery/atmospherics/binary/valve/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node1)
@@ -123,6 +125,10 @@
 /obj/machinery/atmospherics/binary/valve/return_network_air(datum/pipe_network/reference)
 	return null
 
+/obj/machinery/atmospherics/binary/valve/opened
+	icon_state = "valve1-map"
+	open = TRUE
+
 /obj/machinery/atmospherics/binary/valve/purge
 	name = "purge valve"
 
@@ -163,6 +169,10 @@
 
 /obj/machinery/atmospherics/binary/valve/digital/attack_ai(mob/user)
 	return src.Attackhand(user)
+
+/obj/machinery/atmospherics/binary/valve/digital/opened
+	icon_state = "valve1-map"
+	open = TRUE
 
 /obj/machinery/atmospherics/binary/valve/digital/purge
 	name = "purge valve"

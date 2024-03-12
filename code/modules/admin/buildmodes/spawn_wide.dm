@@ -62,6 +62,8 @@ change the direction of created objects.<br>
 				boutput(usr, SPAN_ALERT("Corners must be on the same Z-level!"))
 				return
 			update_button_text("Spawning...")
+			var/total_area = abs(A.x - B.x) * abs(A.y - B.y)
+			logTheThing(LOG_ADMIN, usr, "used buildmode wide area spawn between [log_loc(A)] and [log_loc(B)] with type [src.objpath]. Total area [total_area] objects.")
 			var/cnt = 0
 			for (var/turf/Q in block(A,B))
 				//var/atom/sp = new objpath(Q)

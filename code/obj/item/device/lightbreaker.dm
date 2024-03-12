@@ -68,7 +68,6 @@ TYPEINFO(/obj/item/lightbreaker)
 		playsound(src.loc, 'sound/machines/click.ogg', 100, 1)
 
 /datum/action/bar/icon/rewind_tape
-	id = "rewind_tape"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 300
 	icon = 'icons/ui/actions.dmi'

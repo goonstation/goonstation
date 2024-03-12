@@ -2,7 +2,8 @@
 	name = "Avian Flu"
 	max_stages = 4
 	spread = "Non-Contagious"
-	cure = "Chicken Soup"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Chicken soup"
 	associated_reagent = "feather_fluid"
 	reagentcure = list("chickensoup")
 	affected_species = list("Human")

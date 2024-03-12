@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/trinary/filter
 	name = "Gas filter"
 	icon = 'icons/obj/atmospherics/filter.dmi'
-	icon_state = "intact_off"
+	icon_state = "off-map"
 	density = TRUE
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
@@ -13,12 +13,14 @@
 	var/filter_type = "toxins"
 
 /obj/machinery/atmospherics/trinary/filter/update_icon()
-	if(src.node1&&src.node2&&src.node3)
-		src.icon_state = "intact_[src.on?("on"):("off")]"
-	else
-		src.icon_state = "exposed_off"
-
+	if(!(src.node1 && src.node2 && src.node3))
 		src.on = FALSE
+
+	icon_state = src.on ? "on" : "off"
+
+	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, -180), "long", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node2, src.flipped ? turn(src.dir, 90) : turn(src.dir, -90), "long", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node3, src.dir, "long", issimplepipe(src.node3) ?  src.node3.color : null, FALSE)
 
 /obj/machinery/atmospherics/trinary/filter/process()
 	..()
@@ -61,3 +63,6 @@
 
 	return TRUE
 
+/obj/machinery/atmospherics/trinary/filter/active
+	icon_state = "on-map"
+	on = TRUE

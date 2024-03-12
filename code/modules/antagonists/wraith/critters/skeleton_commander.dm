@@ -168,7 +168,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 9, rand(5,7), can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("slashes", "stabs", "pierces")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action] [target] with their [src.holder]!")]</b>"
+		msgs.base_attack_message = SPAN_ALERT("<b>[user] [action] [target] with their [src.holder]!</b>")
 		msgs.played_sound = "sound/impact_sounds/Flesh_Stab_3.ogg"
 		msgs.damage_type = DAMAGE_STAB
 		msgs.flush(SUPPRESS_LOGS)

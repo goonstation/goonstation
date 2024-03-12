@@ -98,6 +98,7 @@ TYPEINFO(/obj/submachine/slot_machine)
 			if(!src.accessed_record)
 				src.visible_message(SPAN_SUBTLE("<b>[src]</b> says, 'Winnings not transferred, thank you for playing!'"))
 				return TRUE // jerks doing that "hide in a chute to glitch auto-update windows out" exploit caused a wall of runtime errors
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "cash_out=[src.available_funds]&total=0")
 			src.accessed_record["current_money"] += src.available_funds
 			src.available_funds = 0
 			src.accessed_record = null
@@ -112,20 +113,22 @@ TYPEINFO(/obj/submachine/slot_machine)
 			transfer_amount = clamp(transfer_amount,0,src.accessed_record["current_money"])
 			src.accessed_record["current_money"] -= transfer_amount
 			src.available_funds += transfer_amount
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "cash_in=[transfer_amount]&total=[src.available_funds]")
 			boutput(usr, SPAN_NOTICE("Funds transferred."))
 
 		if("cashout")
 			src.accessed_record["current_money"] += src.available_funds
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "cash_out=[src.available_funds]&total=0")
 			src.available_funds = 0
 			boutput(usr, SPAN_NOTICE("Funds transferred."))
 
 		if("set_wager")
 			src.wager = clamp(round(params["bet"]), 20, 1000)
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "wager=[src.wager]")
 			. = TRUE
 
 
 	src.add_fingerprint(usr)
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "machineUsed")
 
 /obj/submachine/slot_machine/attackby(var/obj/item/I, mob/user)
 	if(istype(I, /obj/item/card/id))
@@ -205,6 +208,9 @@ TYPEINFO(/obj/submachine/slot_machine)
 		src.visible_message(SPAN_SUBTLE("<b>[src]</b> says, '[exclamation][src.scan.registered] has won [amount] credits!'"))
 		playsound(src, "[win_sound]", 55, 1)
 		src.available_funds += amount
+
+	SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "plays=[src.plays]&total=[src.available_funds]&wager=[wager]&won=[amount]")
+
 
 /obj/submachine/slot_machine/cursed
 	name = "Slot Machine"

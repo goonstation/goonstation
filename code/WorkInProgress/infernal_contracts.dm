@@ -164,7 +164,7 @@ proc/is_weak_rollable_contract(type)
 	src.playsound_local(C.loc,'sound/effects/screech.ogg', 50, 1)
 	if(C.mind)
 		shake_camera(C, 20, 16)
-		boutput(C, "<span class='alert'>[screamstring]</span>")
+		boutput(C, SPAN_ALERT("[screamstring]"))
 		boutput(C, "<span style=\"color:purple; font-size:150%\"><i><b><font face = Tempus Sans ITC>You have sold your soul and become a Faustian cluwne! Oh no!</font></b></i></span>")
 		logTheThing(LOG_ADMIN, src, "has signed a contract and turned into a Faustian cluwne at [log_loc(C)]!")
 		C.choose_name(3)
@@ -182,7 +182,7 @@ proc/is_weak_rollable_contract(type)
 	force = 15
 	throwforce = 15
 	throw_range = 20
-	burn_possible = 0
+	burn_possible = FALSE
 	hit_type = DAMAGE_STAB
 	color = "#FF0000"
 	font_color = "#FF0000"
@@ -217,12 +217,12 @@ proc/is_weak_rollable_contract(type)
 	name = "box of demonic pens"
 	desc = "Contains a set of seven pens, great for collectors."
 	spawn_contents = list(/obj/item/pen/fancy/satan = 4)
-	burn_possible = 0 //Only makes sense since it's from hell.
+	burn_possible = FALSE //Only makes sense since it's from hell.
 
 /obj/item/paper/soul_selling_kit
 	color = "#FF0000"
 	name = "Paper-'Soul Stealing 101'"
-	burn_possible = 0 //Only makes sense since it's from hell.
+	burn_possible = FALSE //Only makes sense since it's from hell.
 	info = {"<b>You shouldn't be seeing this yet!</b>"}
 
 	New()
@@ -251,7 +251,7 @@ proc/is_weak_rollable_contract(type)
 	throwforce = 15
 	throw_speed = 1
 	throw_range = 8
-	burn_possible = 0 //Only makes sense since it's from hell.
+	burn_possible = FALSE //Only makes sense since it's from hell.
 	item_function_flags = IMMUNE_TO_ACID // we don't get a spare, better make sure it lasts.
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
@@ -372,7 +372,7 @@ END GUIDE
 	throw_speed = 4
 	throw_range = 10
 	desc = "A blank contract that's gone missing from hell."
-	burn_possible = 0 //Only makes sense since it's from hell.
+	burn_possible = FALSE //Only makes sense since it's from hell.
 	var/limiteduse = 0 //whether it has a limited number of uses. 1 is limited, 0 is unlimited.
 	var/inuse = 0 //is someone currently signing this thing?
 	var/used = 0 // how many times a limited use contract has been signed so far
@@ -439,6 +439,9 @@ END GUIDE
 				return
 			if (target == user)
 				boutput(user, SPAN_NOTICE("You can't sell your soul to yourself!"))
+				return
+			if (isdead(target))
+				boutput(user, SPAN_NOTICE("They are dead, you can't sell their soul now!"))
 				return
 			if (!target.literate)
 				// 'they' has to exist

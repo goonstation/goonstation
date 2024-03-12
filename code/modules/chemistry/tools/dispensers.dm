@@ -75,6 +75,11 @@
 
 		src.transfer_all_reagents(over_object, usr)
 
+	is_open_container(input)
+		if (input)
+			return TRUE
+		return ..()
+
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
@@ -198,6 +203,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
 	capacity = 500
+	_health = 250
+	_max_health = 250
 
 	var/has_tank = 1
 
@@ -292,11 +299,17 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 				user.show_text("That was the last cup!", "red")
 				src.UpdateIcon()
 
-	piss
+	bullet_act(obj/projectile/P)
+		src.changeHealth(-P.power * P.proj_data.ks_ratio)
+
+	onDestroy()
+		src.smash()
+
+	drugged
 		New()
 			..()
 			src.create_reagents(4000)
-			reagents.add_reagent("urine",400)
+			reagents.add_reagent("LSD",400)
 			reagents.add_reagent("water",600)
 			src.UpdateIcon()
 		name = "discolored water fountain"
@@ -307,10 +320,10 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		New()
 			..()
 			src.create_reagents(4000)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent("water",600)
 			src.UpdateIcon()
 		name = "discolored water fountain"
@@ -510,6 +523,11 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		..()
 		src.UpdateIcon()
 
+	is_open_container(input)
+		if (src.funnel_active && input) //Can pour stuff down the funnel even if the lid is closed
+			return TRUE
+		. = ..()
+
 	shatter_chemically(var/projectiles = FALSE) //needs sound probably definitely for sure
 		for(var/mob/M in AIviewers(src))
 			boutput(M, SPAN_ALERT("The <B>[src.name]</B> breaks open!"))
@@ -619,9 +637,11 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			boutput(user, SPAN_ALERT("Excuse me you are dead, get your gross dead hands off that!"))
 			return
 		if (BOUNDS_DIST(user, src) > 0)
+			// You have to be adjacent to the compost bin
 			boutput(user, SPAN_ALERT("You need to move closer to [src] to do that."))
 			return
-		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
+		if (BOUNDS_DIST(O, user) > 0)
+			// You have to be adjacent to the seeds also
 			boutput(user, SPAN_ALERT("[O] is too far away to load into [src]!"))
 			return
 		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) \
@@ -670,7 +690,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		if(istype(W, /obj/item/reagent_containers/food/snacks/plant))
 			var/obj/item/reagent_containers/food/snacks/plant/P = W
 			var/datum/plantgenes/DNA = P.plantgenes
-			brew_amount = max(DNA?.get_effective_value("potency"), 5) //always produce SOMETHING
+			brew_amount = max(HYPfull_potency_calculation(DNA), 5) //always produce SOMETHING
 
 		if (!brew_result)
 			return FALSE

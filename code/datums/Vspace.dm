@@ -105,7 +105,7 @@ datum/v_space
 			character.visible_message(SPAN_NOTICE("<b>[character.name] logs in!</b>"))
 		users.Add(character)
 		// Made much more prominent due to frequent a- and mhelps (Convair880).
-		character.show_text("<h2><span class='alert'><B>Death in virtual reality will result in a log-out. You can also press one of the logout buttons to leave.</B></span></h2>", "red")
+		character.show_text("<h2>[SPAN_ALERT("<B>Death in virtual reality will result in a log-out. You can also press one of the logout buttons to leave.</B>")]</h2>", "red")
 		return
 
 

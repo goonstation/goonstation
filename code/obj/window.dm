@@ -584,7 +584,6 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 /datum/action/bar/icon/deconstruct_window
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "deconstruct_window"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "decon"
 	var/obj/window/the_window
@@ -693,19 +692,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 /obj/window/bulletproof/pyro
 	icon_state = "rpyro"
-/*
-/obj/window/supernorn
-	icon = 'icons/Testing/newicons/obj/NEWstructures.dmi'
-	dir = 5
 
-	attackby() // TODO: need to be able to smash them, this is a hack
-	rotate()
-		set hidden = 1
-
-	New()
-		for (var/turf/simulated/wall/auto/T in orange(1))
-			T.UpdateIcon()
-*/
 /obj/window/north
 	dir = NORTH
 

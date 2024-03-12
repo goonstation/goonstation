@@ -374,7 +374,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/camera)
 	icon_state = "eye-camera"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Eye Cam"
-	var/camera_network = "Zeta"
+	var/camera_network = "public"
 	default_material = "pharosium"
 	iris_color = "#0d0558"
 

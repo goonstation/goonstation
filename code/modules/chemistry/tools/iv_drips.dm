@@ -10,7 +10,6 @@
 	desc = "A bag with a fine needle attached at the end, for injecting patients with fluids."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "IV"
-	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "IV"
 	w_class = W_CLASS_TINY
@@ -193,12 +192,14 @@
 	proc/start_transfusion()
 		src.in_use = 1
 		processing_items |= src
+		APPLY_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 2)
 		if (src.stand)
 			src.stand.UpdateIcon()
 
 	proc/stop_transfusion()
 		processing_items -= src
 		src.in_use = 0
+		REMOVE_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
 		src.patient = null
 		if (src.stand)
 			src.stand.UpdateIcon()

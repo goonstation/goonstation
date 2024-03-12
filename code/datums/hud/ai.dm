@@ -169,7 +169,7 @@
 
 			if ("viewport")
 				if(master.deployed_to_eyecam)
-					master.eyecam.create_viewport()
+					master.eyecam.create_viewport(VIEWPORT_ID_AI)
 				else
 					boutput(master, SPAN_ALERT("Deploy to an AI Eye first to create a viewport."))
 			if ("hologram")

@@ -57,6 +57,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	name = "monkeymeat"
 	desc = "A slab of meat from a monkey."
 
+/obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
+	name = "lesser slug"
+	desc = "Chopped up slug meat that's grown its own head, how talented."
+	icon_state = "lesserSlug"
+	fill_amt = 2
+	initial_volume = 25
+	initial_reagents = "slime"
+
+	heal(var/mob/M)
+		boutput(M, SPAN_ALERT("You can feel it wriggling..."))
+		..()
+
 /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	name = "fish fillet"
 	desc = "A slab of meat from a fish."
@@ -209,6 +221,24 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	food_color = "#FF6600"
 	heal_amt = 10
 	initial_reagents = list("capsaicin"=15)
+
+/obj/item/reagent_containers/food/snacks/ingredient/turkey
+	name = "raw turkey"
+	desc = "A raw turkey. It's ready to be roasted!"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "turkeyraw"
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
+			boutput(user, SPAN_ALERT("You need to cook it first, you greedy beast!"))
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
+			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg
 	name = "egg"
@@ -702,6 +732,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
 
+	attack_self(mob/user as mob)
+		attack(user, user)
+
 /obj/item/reagent_containers/food/snacks/ingredient/pizza3
 	name = "uncooked pizza"
 	desc = "A plain cheese and tomato pizza. You need to bake it..."
@@ -761,6 +794,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
 
+	attack_self(mob/user as mob)
+		attack(user, user)
+
 /obj/item/reagent_containers/food/snacks/ingredient/pizzam
 	name = "uncooked mushroom pizza"
 	desc = "A cheese and mushroom pizza. You need to bake it..."
@@ -774,6 +810,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 		else
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
 
 /obj/item/reagent_containers/food/snacks/ingredient/pizzab
 	name = "uncooked meatball pizza"
@@ -789,6 +828,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
 
+	attack_self(mob/user as mob)
+		attack(user, user)
+
 /obj/item/reagent_containers/food/snacks/ingredient/pizzap
 	name = "uncooked pepperoni pizza"
 	desc = "A cheese and pepperoni pizza. You need to bake it..."
@@ -802,6 +844,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 		else
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
 
 /obj/item/reagent_containers/food/snacks/ingredient/pasta
 	// generic uncooked pasta parent
@@ -1029,3 +1074,157 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 			M.reagents.add_reagent("omnizine", 3)
 			M.reagents.add_reagent("methamphetamine", 3)
 		..()
+
+/obj/item/reagent_containers/food/snacks/ingredient/melted_sugar
+	name = "tray of melted sugar"
+	desc = "Sugar that's melted enough to be soft and malleable."
+	icon_state = "meltedsugar-sheet"
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	item_state = "sugartray"
+	food_color = "#FFFFFF"
+	initial_volume = 45
+	initial_reagents = list("sugar"=15)
+	bites_left = 5
+	use_bite_mask = FALSE
+	food_color = null
+	var/image/image_sugar = null
+	var/image/image_tray = null
+	event_handler_flags = USE_FLUID_ENTER
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	w_class = W_CLASS_BULKY
+	two_handed = TRUE
+	dropped_item = /obj/item/plate/tray
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/melted_sugar_strip
+	slice_amount = 3
+	slice_suffix = "strip"
+
+	heal(var/mob/M)
+		boutput(M, SPAN_ALERT("It's scalding hot! The roof of your mouth burns!"))
+		M.TakeDamage("Head", 0, 5, damage_type = DAMAGE_BURN)
+		..()
+
+	New()
+		..()
+		src.flags |= OPENCONTAINER
+
+	on_reagent_change()
+		..()
+		src.UpdateIcon()
+
+	update_icon()
+		var/datum/color/average = src.reagents.get_average_color()
+		src.food_color = average.to_rgb()
+		if (!src.image_sugar)
+			src.image_sugar = image(src.icon, "meltedsugar-sheet")
+		src.image_sugar.color = src.food_color
+		src.image_sugar.alpha = round(average.a / 1.5)
+		if (!src.image_tray)
+			src.image_tray = image('icons/obj/foodNdrink/food_related.dmi', "tray")
+		src.UpdateOverlays(src.image_tray, "tray")
+		src.UpdateOverlays(src.image_sugar, "meltedsugar-sheet")
+
+	attackby(obj/item/W, mob/user)
+		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
+			new /obj/item/plate/tray(src.loc)
+		..()
+
+/obj/item/reagent_containers/food/snacks/ingredient/melted_sugar_strip
+	name = "melted sugar strips"
+	desc = "Sugar that's melted enough to be soft and malleable."
+	icon_state = "meltedsugar-strip"
+	food_color = "#FFFFFF"
+	initial_volume = 15
+	initial_reagents = list("sugar"=15)
+	food_color = null
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/candy/hard_candy
+	slice_amount = 3
+	slice_suffix = "piece"
+	var/circular = FALSE // if the strip has been made circular
+	var/floured = FALSE // if the strip has been covered in flour and is ready to be made into dragon's beard
+
+	heal(var/mob/M)
+		boutput(M, SPAN_ALERT("It's scalding hot! The roof of your mouth burns!"))
+		M.TakeDamage("Head", 0, 5, damage_type = DAMAGE_BURN)
+		..()
+
+	on_reagent_change()
+		..()
+		src.UpdateIcon()
+
+	update_icon()
+		var/datum/color/average = src.reagents.get_average_color()
+		src.food_color = average.to_rgba()
+		src.color = average.to_rgb()
+		if (src.floured)
+			src.alpha = average.a
+		else
+			src.alpha = round(average.a / 1.5)
+
+	attack_self(mob/user as mob)
+		if (!src.circular)
+			user.visible_message("[user] folds [src] into a ring.", "You fold [src] into a ring.")
+			name = "melted sugar torus"
+			src.icon_state = "meltedsugar-circle"
+			src.sliceable = FALSE
+			src.circular = TRUE
+		else if (src.floured)
+			user.visible_message("[user] twists [src], folding it in on itself!", "You twist [src] and fold it back into a ring.")
+			playsound(src.loc, "rustle", 50, 1)
+			var/obj/item/reagent_containers/food/snacks/candy/dragons_beard/A = new /obj/item/reagent_containers/food/snacks/candy/dragons_beard
+			A.reagents.clear_reagents()
+			src.reagents.trans_to(A, 15)
+			user.u_equip(src)
+			user.put_in_hand_or_drop(A)
+			qdel(src)
+			return
+		src.UpdateIcon()
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W,/obj/item/rods) || istype(W,/obj/item/stick))
+			if(istype(W,/obj/item/stick))
+				var/obj/item/stick/S = W
+				if(S.broken)
+					boutput(user, SPAN_ALERT("That stick is broken!"))
+					return
+			if (circular)
+				boutput(user, SPAN_NOTICE("You curl the sugar tighter and put it onto [W]."))
+				var/obj/item/reagent_containers/food/snacks/candy/swirl_lollipop/newcandy = new /obj/item/reagent_containers/food/snacks/candy/swirl_lollipop(get_turf(src))
+				newcandy.reagents.clear_reagents()
+				src.reagents.trans_to(newcandy, 15)
+				user.u_equip(src)
+				user.put_in_hand_or_drop(newcandy)
+			else
+				boutput(user, SPAN_NOTICE("The melted sugar solidifies on [W]. You give it a vaguely rocky texture."))
+				var/obj/item/reagent_containers/food/snacks/candy/rock_candy/newcandy = new /obj/item/reagent_containers/food/snacks/candy/rock_candy(get_turf(src))
+				newcandy.reagents.clear_reagents()
+				src.reagents.trans_to(newcandy, 15)
+				user.u_equip(src)
+				user.put_in_hand_or_drop(newcandy)
+
+			if(istype(W,/obj/item/rods)) W.change_stack_amount(-1)
+			if(istype(W,/obj/item/stick)) W.amount--
+			if(!W.amount) qdel(W)
+
+			qdel(src)
+		else if (src.circular && !src.floured && istype(W,/obj/item/reagent_containers/food/snacks/ingredient/flour))
+			boutput(user, SPAN_NOTICE("You flour [src]."))
+			src.floured = TRUE
+			src.UpdateIcon()
+		else
+			..()
+
+/obj/item/reagent_containers/food/snacks/ingredient/brownie_batter
+	name = "brownie batter"
+	desc = "As delicious as it may look, you MUST resist the temptation!"
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "brownie_batter"
+	bites_left = 12
+	heal_amt = 1
+	food_color = "#38130C"
+	initial_volume = 40
+	initial_reagents = list("chocolate" = 20)
+	use_bite_mask = FALSE
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	w_class = W_CLASS_BULKY

@@ -22,7 +22,7 @@
 				qdel(src)
 
 	proc/makeAntag(mob/M as mob)
-		M.show_text("<h2><span class='alert'><B>You have defected and become a traitor!</B></span></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You have defected and become a traitor!</B>")]</h2>", "red")
 		M.mind.add_antagonist(ROLE_TRAITOR)
 
 /obj/traitorifier/wizard
@@ -33,7 +33,7 @@
 	icon_state = "tombstone"
 
 	makeAntag(mob/M as mob)
-		M.show_text("<h2><span class='alert'><B>You have been seduced by magic and become a wizard!</B></span></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You have been seduced by magic and become a wizard!</B>")]</h2>", "red")
 		M.mind.add_antagonist(ROLE_WIZARD, do_relocate = FALSE)
 
 /obj/traitorifier/changeling
@@ -44,7 +44,7 @@
 	icon_state = "ganglion0"
 
 	makeAntag(mob/M as mob)
-		M.show_text("<h2><span class='alert'><B>You have mutated into a changeling!</B></span></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You have mutated into a changeling!</B>")]</h2>", "red")
 		M.mind.add_antagonist(ROLE_CHANGELING)
 
 /obj/traitorifier/vampire
@@ -56,7 +56,7 @@
 	color = "#FF0000"
 
 	makeAntag(mob/M as mob)
-		M.show_text("<h2><span class='alert'><B>You have joined the ranks of the undead and are now a vampire!</B></span></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You have joined the ranks of the undead and are now a vampire!</B>")]</h2>", "red")
 		M.mind.add_antagonist(ROLE_VAMPIRE)
 
 /obj/traitorifier/wrestler
@@ -67,7 +67,7 @@
 	icon_state = "machobelt"
 
 	makeAntag(mob/M as mob)
-		M.show_text("<h2><span class='alert'><B>You feel an urgent need to wrestle!</B></span></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You feel an urgent need to wrestle!</B>")]</h2>", "red")
 		M.mind.add_antagonist(ROLE_WRESTLER)
 
 /obj/traitorifier/hunter
@@ -90,7 +90,7 @@
 	color = "#000000"
 
 	makeAntag(mob/M as mob)
-		M.show_text("<h2><span class='alert'><B>You have become a werewolf!</B></span></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You have become a werewolf!</B>")]</h2>", "red")
 		M.mind?.add_antagonist(ROLE_WEREWOLF)
 
 /obj/traitorifier/omnitraitor

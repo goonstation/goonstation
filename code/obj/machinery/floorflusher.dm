@@ -22,7 +22,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	var/flushing = 0	// true if flushing in progress
 	var/mail_tag = null // mail_tag to apply on next flush
 	var/mail_id = null // id for linking a flusher for mail tagging
-
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>crowbar</b> to pry it open."})
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/door_timer (door_timer.dm)
@@ -96,7 +96,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	attackby(var/obj/item/I, var/mob/user)
 		if(status & BROKEN)
 			return
-
+		if (ispryingtool(I) && !src.open && !src.opening && !src.flushing)
+			playsound(src, 'sound/machines/airlock_pry.ogg', 35, TRUE)
+			src.openup()
+			return
 		if(open == 1)
 			if (istype(I, /obj/item/grab))
 				return
@@ -251,6 +254,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 			if(!trunk)
 				mode = 0
 				flush = 0
+				if (src.open)
+					src.closeup()
+				for (var/atom/movable/AM in src)
+					src.expel_thing(AM)
 			else
 				trunk.linked = src	// link the pipe trunk to self
 				mode = 1
@@ -330,19 +337,21 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	// called when holder is expelled from a disposal
 	// should usually only occur if the pipe network is modified
 	proc/expel(var/obj/disposalholder/H)
-
-		var/turf/target
 		playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 		for(var/atom/movable/AM in H)
-			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
-
-			AM.set_loc(get_turf(src))
-			AM.pipe_eject(0)
-			AM?.throw_at(target, 5, 1)
+			src.expel_thing(AM)
 
 		H.vent_gas(loc)
 		qdel(H)
 
+	proc/expel_thing(atom/movable/AM)
+		var/turf/target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
+		AM.set_loc(get_turf(src))
+		AM.pipe_eject(0)
+		AM?.throw_at(target, 5, 1)
+
+	return_air()
+		return air_contents
 
 /obj/machinery/floorflusher/industrial
 	name = "industrial loading chute"

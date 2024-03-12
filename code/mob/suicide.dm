@@ -188,7 +188,7 @@
 	if ((locate(/obj/flock_structure/relay) in src.flock.structures) && istype(src.controller, /mob/living/intangible/flock/flockmind) && !length(src.flock.getActiveTraces()))
 		boutput(src, SPAN_ALERT("You can't abandon your Flock with the Relay active!"))
 		return
-	if (tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No")) == "Yes")
+	if (tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"), theme = "flock") == "Yes")
 		var/mob/living/intangible/flock/C = src.controller
 		src.release_control()
 		C.do_suicide(TRUE)
@@ -200,7 +200,7 @@
 	if ((locate(/obj/flock_structure/relay) in src.flock.structures) && !length(src.flock.getActiveTraces()))
 		boutput(src, SPAN_ALERT("You can't abandon your Flock with the Relay active!"))
 		return
-	if (skip_prompt || tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No")) == "Yes")
+	if (skip_prompt || tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"), theme = "flock") == "Yes")
 		var/result = src.getTraceToPromote()
 		if (istype(result, /mob/living/intangible/flock/trace))
 			src.unlock_medal("Damned", 1)
@@ -211,6 +211,6 @@
 			src.death(suicide = TRUE)
 
 /mob/living/intangible/flock/trace/do_suicide(skip_prompt)
-	if (skip_prompt || tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No")) == "Yes")
+	if (skip_prompt || tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"), theme = "flock") == "Yes")
 		src.unlock_medal("Damned", 1)
 		src.death(suicide = TRUE)

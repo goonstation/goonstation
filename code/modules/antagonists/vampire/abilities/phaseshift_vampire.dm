@@ -24,7 +24,7 @@
 		if (!M)
 			return 1
 
-		if (level == UNDERFLOOR)
+		if (level == 1)
 			M.special_sprint &= ~SPRINT_BAT_CLOAKED
 
 			if (M.special_sprint & SPRINT_BAT)

@@ -1018,7 +1018,7 @@ TYPEINFO(/obj/machinery/chem_master)
 				// unused by log_phrase?
 				//global.phrase_log.log_phrase("patch", src.item_name, no_duplicates=TRUE)
 
-				patch.name = "[item_name] patch"
+				patch.name = "[item_name] [patch.name]"
 				patch.medical = src.check_patch_whitelist()
 				src.beaker.reagents.trans_to(patch, reagent_amount)
 

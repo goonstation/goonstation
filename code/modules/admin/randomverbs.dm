@@ -52,7 +52,7 @@
 			if (ASLoc)
 				M.set_loc(ASLoc)
 
-			M.show_text("<h2><span class='alert'><b>You have been unprisoned and sent back to the station.</b></span></h2>", "red")
+			M.show_text("<h2>[SPAN_ALERT("<b>You have been unprisoned and sent back to the station.</b>")]</h2>", "red")
 			message_admins("[key_name(usr)] has unprisoned [key_name(M)].")
 			logTheThing(LOG_ADMIN, usr, "has unprisoned [constructTarget(M,"admin")].")
 			logTheThing(LOG_DIARY, usr, "has unprisoned [constructTarget(M,"diary")].", "admin")
@@ -77,7 +77,7 @@
 				logTheThing(LOG_DIARY, usr, "couldn't send [constructTarget(M,"diary")] to the prison zone (no landmark found).")
 				return
 
-			M.show_text("<h2><span class='alert'><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></span></h2>", "red")
+			M.show_text("<h2>[SPAN_ALERT("<b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b>")]</h2>", "red")
 			logTheThing(LOG_ADMIN, usr, "sent [constructTarget(M,"admin")] to the prison zone.")
 			logTheThing(LOG_DIARY, usr, "[constructTarget(M,"diary")] to the prison zone.", "admin")
 			message_admins(SPAN_INTERNAL("[key_name(usr)] sent [key_name(M)] to the prison zone[isturf(origin_turf) ? " from [log_loc(origin_turf)]" : ""]."))
@@ -100,7 +100,7 @@
 	if (!msg)
 		return
 	if (src?.holder)
-		M.playsound_local(M, 'sound/misc/prayerchime.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+		M.playsound_local_not_inworld('sound/misc/prayerchime.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
 		boutput(Mclient.mob, SPAN_NOTICE("You hear a voice in your head... <i>[msg]</i>"))
 
 	logTheThing(LOG_ADMIN, src.mob, "Subtle Messaged [constructTarget(Mclient.mob,"admin")]: [msg]")
@@ -109,7 +109,7 @@
 	var/subtle_href = null
 	if(M.client)
 		subtle_href = "?src=%admin_ref%;action=subtlemsg&targetckey=[M.client.ckey]"
-	message_admins(SPAN_INTERNAL("<b>SubtleMessage: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]</b>"))
+	message_admins(SPAN_INTERNAL("<b>SubtleMessage</b>: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]"))
 
 /client/proc/cmd_admin_plain_message(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -760,24 +760,21 @@
 			src.tf_holder.mobAppearance.flavor_text = new_text
 
 		else if (href_list["customization_first"])
-			var/list/customization_types = concrete_typesof(/datum/customization_style)
-			var/new_style = select_custom_style(customization_types, usr)
+			var/new_style = select_custom_style(usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customization_first = new_style
 				src.tf_holder.mobAppearance.customization_first_original = new_style
 
 		else if (href_list["customization_second"])
-			var/list/customization_types = concrete_typesof(/datum/customization_style)
-			var/new_style = select_custom_style(customization_types, usr)
+			var/new_style = select_custom_style(usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customization_second = new_style
 				src.tf_holder.mobAppearance.customization_second_original = new_style
 
 		else if (href_list["customization_third"])
-			var/list/customization_types = concrete_typesof(/datum/customization_style)
-			var/new_style = select_custom_style(customization_types, usr)
+			var/new_style = select_custom_style(usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customization_third = new_style
@@ -1052,7 +1049,7 @@
 			customization_first_r = src.tf_holder.mobAppearance.customization_first.id
 			if(!customization_first_r)
 				customization_first_r = "none"
-			var/icon/hair_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_first_r)
+			var/icon/hair_s = new/icon("icon" =  src.tf_holder.mobAppearance.customization_first.icon, "icon_state" = customization_first_r)
 			hair_s.Blend(src.tf_holder.mobAppearance.customization_first_color, ICON_MULTIPLY)
 			eyes_s.Blend(hair_s, ICON_OVERLAY)
 
@@ -1060,7 +1057,7 @@
 			customization_second_r = src.tf_holder.mobAppearance.customization_second.id
 			if(!customization_second_r)
 				customization_second_r = "none"
-			var/icon/facial_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_second_r)
+			var/icon/facial_s = new/icon("icon" = src.tf_holder.mobAppearance.customization_second.icon, "icon_state" = customization_second_r)
 			facial_s.Blend(src.tf_holder.mobAppearance.customization_second_color, ICON_MULTIPLY)
 			eyes_s.Blend(facial_s, ICON_OVERLAY)
 
@@ -1068,7 +1065,7 @@
 			customization_third_r = src.tf_holder.mobAppearance.customization_third.id
 			if(!customization_third_r)
 				customization_third_r = "none"
-			var/icon/detail_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_third_r)
+			var/icon/detail_s = new/icon("icon" = src.tf_holder.mobAppearance.customization_third.icon, "icon_state" = customization_third_r)
 			detail_s.Blend(src.tf_holder.mobAppearance.customization_third_color, ICON_MULTIPLY)
 			eyes_s.Blend(detail_s, ICON_OVERLAY)
 
@@ -1184,7 +1181,8 @@
 	else
 		M.ghostize()
 	M.mind = M.oldmind
-	M.oldmind.current = M
+	if (M.oldmind) // If mob was an admin spawned human or npc, no need to set oldmind as there is none
+		M.oldmind.current = M
 	if(M.mind)
 		M.ckey = M.mind.key
 	boutput(M, SPAN_ALERT("Your soul is sucked back into your body!"))
@@ -2375,7 +2373,7 @@ var/global/night_mode_enabled = 0
 	if (announce == "Yes")
 		command_alert("[M.name] has been shamecubed in [where]!", "Dumb person detected!")
 
-	out(M, "<span class='bold alert'>You have been shame-cubed by an admin! Take this embarrassing moment to reflect on what you have done.</span>")
+	boutput(M, "<span class='bold alert'>You have been shame-cubed by an admin! Take this embarrassing moment to reflect on what you have done.</span>")
 	logTheThing(LOG_ADMIN, src, "shame-cubed [constructTarget(M,"admin")] at [where] ([log_loc(M)])")
 	logTheThing(LOG_DIARY, src, "shame-cubed [constructTarget(M,"diary")] at [where] ([log_loc(M)])", "admin")
 	message_admins("[key_name(src)] shame-cubed [key_name(M)] at [where] ([log_loc(M)])")
@@ -2547,38 +2545,20 @@ var/global/night_mode_enabled = 0
 		boutput(usr, SPAN_ALERT("Transfer aborted."))
 		return
 	old_key = ckey(old_key)
-
 	var/new_key = ckey(input("Enter new account key", "New account key", null) as null|text)
 	if (!new_key)
 		boutput(usr, SPAN_ALERT("Transfer aborted."))
 		return
 
-	//criminal activity
-	var/datum/player/dummy_player = new
-	dummy_player.clouddata = list() // trick it into thinking we have cloud data I guess. only gets nullchecked
-	dummy_player.cloudsaves = list() // ditto
-	var/datum/preferences/dummy_preferences = new
-	var/list/save_names = dummy_player.cloud_fetch_target_saves_only(old_key) // technically a map from names to nums
-
-	if (!save_names)
-		boutput(usr, SPAN_ALERT("Couldn't find cloud data for that key."))
-		return
-	if (!length(save_names))
-		boutput(usr, SPAN_ALERT("Couldn't find any cloud saves for that key."))
-		return
-	if (tgui_alert(usr, "You're about to transfer [length(save_names)] saves from [old_key] to [new_key]. This will overwrite all the existing saves on the target account. Do it?", "Cloud Save Transfer", list("Yes", "No")) == "No")
+	if (tgui_alert(usr, "You're about to transfer all saves from [old_key] to [new_key]. This will overwrite all the existing saves on the target account. Do it?", "Cloud Save Transfer", list("Yes", "No")) == "No")
 		boutput(usr, SPAN_ALERT("Transfer aborted."))
 		return
 
-	for (var/name in save_names)
-		dummy_preferences.cloudsave_load(null, name, old_key)
-		var/ret = dummy_preferences.cloudsave_save(null, name, new_key)
-		if (ret != 1) //yes this is intentional
-			boutput(usr, SPAN_ALERT("Something went wrong while saving to the cloud. Return value was: ([ret]). Transfer aborted."))
-			return
-
-	dummy_player.cloud_put_target(new_key, "saves", save_names)
-	boutput(usr, SPAN_SUCCESS("Cloud saves transferred."))
+	try
+		cloud_saves_transfer(old_key, new_key)
+		boutput(usr, SPAN_SUCCESS("Cloud saves transferred."))
+	catch (var/exception/e)
+		boutput(usr, SPAN_ALERT("Transfer aborted because: [e.name]"))
 
 /client/proc/cmd_admin_disable()
 	set name = "Disable Admin Powers"
@@ -2970,3 +2950,90 @@ var/global/force_radio_maptext = FALSE
 				return
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
+/client/proc/toggle_all_artifacts()
+	// Housekeeping
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Toggle All Artifacts"
+	if (holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("What would you like to do?",,"Activate All","Deactivate All","Cancel"))
+			if("Cancel")
+				return
+			if("Activate All")
+				// You definitely can activate an artnuke like this maybe be sure we're sure
+				var/response = input(src, "Extremely stupid button pressing shenanagains detected - Type YES to continue", "Caution!") as null|text
+				if (response != "YES")
+					message_admins("[key_name(usr)] aborted toggling every dang artifact due to failing to type 'YES'") // im telling on u!!!
+					return
+				logTheThing(LOG_ADMIN, src, "started activating all available artifacts.")
+				message_admins("[key_name(usr)] started activating all available artifacts.")
+				for(var/artifact as anything in by_cat[TR_CAT_ARTIFACTS])
+					var/obj/holder = artifact
+					holder.ArtifactActivated()
+			if("Deactivate All")
+				// No confirmation for this since you cant really activate an artnuke like this
+				logTheThing(LOG_ADMIN, src, "started deactivating all available artifacts.")
+				message_admins("[key_name(usr)] started deactivating all available artifacts.")
+				for(var/artifact as anything in by_cat[TR_CAT_ARTIFACTS])
+					var/obj/holder = artifact
+					holder.ArtifactDeactivated()
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+
+#define ARTIFACT_BULK_LIMIT 100
+#define ARTIFACT_HARD_LIMIT 2000
+#define ARTIFACT_MAX_SPAWN_ATTEMPTS 100
+
+/client/proc/spawn_tons_of_artifacts()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Bulk Spawn Artifacts"
+
+	var/artifacts_spawned = 0
+	var/spawn_fails = 0
+	var/artifact_spawn_attempts
+
+	if (holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("THIS COULD SERIOUSLY FUCK THINGS UP. That being said, do it anyway?","WOAH THERE BUCKAROO","Yes","No"))
+			if("No")
+				return
+			if("Yes")
+				var/amt_artifacts = min(input(usr,"How many artifacts do we want to spawn?\n(Default: 50)",,50) as num, ARTIFACT_HARD_LIMIT)
+				if (amt_artifacts > ARTIFACT_BULK_LIMIT)
+					var/response = input(src, "High number of types: [length(amt_artifacts)] - Type YES to continue", "Caution!") as null|text
+					if (response != "YES")
+						message_admins("[key_name(usr)] aborted spawning [amt_artifacts] due to failing to type 'YES'") // im telling on u!!!
+						return
+				var/floors_only = (alert(src, "Only spawn artifacts on floors?",, "Yes", "No") == "Yes")
+				logTheThing(LOG_ADMIN, src, "started spawning [amt_artifacts] artifacts.")
+				message_admins("[key_name(usr)] started spawning [amt_artifacts] artifacts.")
+
+				while (artifacts_spawned < amt_artifacts)
+					var/turf/T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
+
+					if (floors_only)
+						while (artifact_spawn_attempts < ARTIFACT_MAX_SPAWN_ATTEMPTS)
+							if (istype(T, /turf/simulated/floor) && checkTurfPassable(T))
+								break
+							artifact_spawn_attempts += 1
+							T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
+						if (artifact_spawn_attempts >= ARTIFACT_MAX_SPAWN_ATTEMPTS)
+							spawn_fails += 1
+						else
+							Artifact_Spawn(T)
+						artifact_spawn_attempts = 0
+					else
+						Artifact_Spawn(T)
+					artifacts_spawned += 1
+					if (artifacts_spawned % ARTIFACT_BULK_LIMIT == 0)
+						sleep(1 SECOND)
+
+				logTheThing(LOG_ADMIN, src, "finished spawning [amt_artifacts] artifacts.")
+				message_admins("[key_name(usr)] finished spawning [amt_artifacts] artifacts.")
+				if (spawn_fails > 0)
+					logTheThing(LOG_ADMIN, src, "[spawn_fails] artifact\s failed to spawn")
+					message_admins("[spawn_fails] artifact\s failed to spawn")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+
+#undef ARTIFACT_BULK_LIMIT
+#undef ARTIFACT_HARD_LIMIT
+#undef ARTIFACT_MAX_SPAWN_ATTEMPTS

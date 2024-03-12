@@ -40,19 +40,22 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 
 	attackby(obj/item/W, mob/user)
 		. = ..()
+		var/successful	//Whether we successfully built something or not
 		for	(var/obj/item/E in user.equipped_list())
-			if (isweldingtool(E) && E:try_weld(user,2,-1,1,1))
+			if (isweldingtool(E) && E:try_weld(user,0,0,0,0))
 				if (istype(W, /obj/item/scrapweapons/parts/blade))
 					qdel(W)
 					qdel(src)
 					user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/machete)
 					boutput(user, SPAN_NOTICE("You fuse the handle and blade into a scrap machete."))
+					successful = TRUE
 
 				if (istype(W, /obj/item/scrapweapons/parts/shaft))
 					qdel(W)
 					qdel(src)
 					user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/club)
 					boutput(user, SPAN_NOTICE("You fuse the handle and shaft into a scrap club."))
+					successful = TRUE
 
 
 				if (istype(W, /obj/item/scrapweapons/parts/pole))
@@ -60,6 +63,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 					qdel(src)
 					user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/spear)
 					boutput(user, SPAN_NOTICE("You fuse the handle and pole into a blunt scrap spear."))
+					successful = TRUE
 
 
 				if (istype(W, /obj/item/raw_material/scrap_metal))
@@ -67,6 +71,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 					qdel(src)
 					user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/dagger)
 					boutput(user, SPAN_NOTICE("You fuse the handle and scrap metal into a scrap dagger."))
+					successful = TRUE
 
 				else if (istype(W, /obj/item/raw_material/shard))
 					if (istype(W.material, /datum/material/crystal/glass))
@@ -74,12 +79,16 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 						qdel(src)
 						user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/dagger/glass)
 						boutput(user, SPAN_NOTICE("You fuse the handle and glass shard into a scrap dagger."))
+						successful = TRUE
 
 					else if (istype(W.material, /datum/material/crystal/plasmaglass))
 						W.change_stack_amount(-1)
 						qdel(src)
 						user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/dagger/plasmaglass)
 						boutput(user, SPAN_NOTICE("You fuse the handle and plasmaglass shard into a scrap dagger."))
+						successful = TRUE
+				if (successful == TRUE)
+					E:try_weld(user,2,-1,1,1)
 
 /obj/item/scrapweapons/parts/blade
 	name = "scrap blade"

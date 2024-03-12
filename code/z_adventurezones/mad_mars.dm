@@ -77,8 +77,8 @@
 
 	Entered(mob/living/carbon/M as mob )
 		..()
-		SPAWN(0.8)
-			if(ishuman(M))
+		if(ishuman(M))
+			SPAWN(0.8)
 				var/image/F = image('icons/misc/mars_outpost.dmi', icon_state = "footprint", dir = M.dir)
 				src.overlays += F
 				sleep(20 SECONDS)
@@ -376,7 +376,7 @@
 
 	proc/speak(var/message)
 		for(var/mob/O in hearers(src, null))
-			boutput(O, "<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[message]\"")
+			boutput(O, SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\""))
 		return
 
 	attackby(obj/item/W, mob/living/user)
@@ -682,7 +682,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 				processedMessage += pick("%","##A","-","- - -","ERROR")
 
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class='game say'>[SPAN_NAME("[src]")] blares, \"<B>[processedMessage]</B>\"",2)
+			O.show_message(SPAN_SAY("[SPAN_NAME("[src]")] blares, \"<B>[processedMessage]</B>\""), 2)
 
 		return
 

@@ -127,7 +127,7 @@
 	Click(location, control, params)
 		if (("alt" in params2list(params)) || !istype(usr, /mob/living/intangible/flock/flockmind))
 			return ..()
-		var/mode_select = tgui_input_list(usr, "Select mode", "Option select", list(CHARGING_BITS, CHARGING_DRONES, CHARGING_STRUCTURES, "Cancel"))
+		var/mode_select = tgui_input_list(usr, "Select mode", "Option select", list(CHARGING_BITS, CHARGING_DRONES, CHARGING_STRUCTURES, "Cancel"), theme = "flock")
 		if (!mode_select || mode_select == "Cancel")
 			return
 		if (mode_select == src.mode)

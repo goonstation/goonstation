@@ -107,7 +107,7 @@
 	butcher(mob/user)
 		src.original_bodypart?.set_loc(src.loc)
 		src.original_bodypart = null
-		return ..(user, FALSE)
+		return ..(user, FALSE, TRUE)
 
 	disposing()
 		..()
@@ -196,7 +196,7 @@
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/creepyshriek.ogg', 50, TRUE, 0, 2.1, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] screams!")]</b>"
+					return SPAN_ALERT("<b>[src] screams!</b>")
 			if("flip")
 				if(src.emote_check(voluntary, 50))
 					var/list/mob/living/possible_targets = list()
@@ -454,7 +454,7 @@
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/creepyshriek.ogg', 50, TRUE, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] screams!")]</b>"
+					return SPAN_ALERT("<b>[src] screams!</b>")
 		return null
 
 	specific_emote_type(var/act)
@@ -589,7 +589,7 @@
 					playsound(src,"sound/voice/farts/fart[rand(1,6)].ogg", 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					var/turf/fart_turf = get_turf(src)
 					fart_turf.fluid_react_single("[prob(20)?"very_":""]toxic_fart",1,airborne = 1)
-					return "<b>[SPAN_ALERT("[src] farts!")]</b>"
+					return SPAN_ALERT("<b>[src] farts!</b>")
 		return null
 
 	specific_emote_type(var/act)
@@ -660,7 +660,7 @@
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/creepyshriek.ogg', 50, TRUE, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] screams!")]</b>"
+					return SPAN_ALERT("<b>[src] screams!</b>")
 		return null
 
 	specific_emote_type(var/act)

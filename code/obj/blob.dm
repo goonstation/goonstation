@@ -40,6 +40,7 @@
 	mat_changedesc = 0
 	var/runOnLife = 0 //Should this obj run Life?
 	var/processed_on_killed = FALSE //! Whether onKilled already ran
+	var/surrounded = 0 //! bitfield of dirs we have other blob tiles around us on
 
 	New()
 		..()
@@ -298,8 +299,10 @@
 			tolerance *= 3
 		if(temp_difference > tolerance)
 			temp_difference = abs(temp_difference - tolerance)
-
-			src.take_damage(temp_difference / heat_divisor * min(1, volume / (CELL_VOLUME/3)), 1, "burn")
+			var/damage = temp_difference / heat_divisor * min(1, volume / (CELL_VOLUME/3))
+			if(air)
+				damage *= clamp(MIXTURE_PRESSURE(air) / ONE_ATMOSPHERE, 0, 1)
+			src.take_damage(damage, 1, "burn")
 
 	attack_hand(var/mob/user)
 		user.lastattacked = src
@@ -495,6 +498,7 @@
 				if (B)
 					dirs |= dir
 			icon_state = num2text(dirs)
+			src.surrounded = dirs
 
 		//else if(istext( special_icon ))
 		//	if(!BLOB_OVERLAYS[ special_icon ])
@@ -639,7 +643,7 @@
 			overmind.bio_points = 0
 			overmind.debuff_timestamp = world.timeofday + overmind.debuff_duration
 
-			out(overmind, SPAN_BLOBALERT("Your nucleus in [get_area(src)] has been destroyed! You feel a lot weaker for a short time..."))
+			boutput(overmind, SPAN_BLOBALERT("Your nucleus in [get_area(src)] has been destroyed! You feel a lot weaker for a short time..."))
 
 			if (prob(1))
 				src.visible_message(SPAN_BLOBALERT("With a great almighty wobble, the nucleus and nearby blob pieces wither and die! The time of jiggles is truly over."))
@@ -648,7 +652,7 @@
 
 		//all dead :(
 		else
-			out(overmind, SPAN_BLOBALERT("Your nucleus in [get_area(src)] has been destroyed!"))
+			boutput(overmind, SPAN_BLOBALERT("Your nucleus in [get_area(src)] has been destroyed!"))
 			if (prob(50))
 				playsound(src.loc, 'sound/voice/blob/blobdeploy.ogg', 100, 1)
 			else

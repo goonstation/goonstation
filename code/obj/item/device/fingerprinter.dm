@@ -28,11 +28,16 @@
 		. = ..()
 		src.toggle_mode(user)
 
+	mouse_drop(atom/over_object)
+		. = ..()
+		if (can_act(usr) && (src in usr.equipped_list()) && BOUNDS_DIST(usr, over_object) <= 0)
+			over_object.storage?.storage_item_attack_by(src, usr)
+
 	proc/update_text()
 		if (src.mode == FINGERPRINT_READ)
 			src.inventory_counter.update_text("<span style='color:#00ff00;font-size:0.7em;-dm-text-outline: 1px #000000'>READ</span>")
 		else
-			src.inventory_counter.update_text("<span style='color:#ff0000;font-size:0.7em;-dm-text-outline: 1px #000000'>PLANT</span>")
+			src.inventory_counter.update_text("<span stywle='color:#ff0000;font-size:0.7em;-dm-text-outline: 1px #000000'>PLANT</span>")
 
 	proc/pre_attackby(obj/item/source, atom/target, mob/user)
 		if (src.mode == FINGERPRINT_READ)

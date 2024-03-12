@@ -66,7 +66,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		if (!istype(O, /obj/item)) // dont recycle the floor!
 			return
 
-		if (isAI(user) || !in_interact_range(O, user) || !can_act(user) || !isliving(user))
+		if (isAI(user) || !in_interact_range(O, user) || !can_act(user) || !isliving(user) || !in_interact_range(src, user))
 			return
 
 		src.Attackby(O, user)

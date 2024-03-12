@@ -57,6 +57,8 @@
 		var/client_color = src.client.color
 		src.client.color = "#000000"
 		SPAWN(0) //let's try not hanging the entire server for 6 seconds every time an AI has wonky internet
+			if (!src.client) // just client things
+				return
 			src.client.images += aiImages
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.update_name_tag()
@@ -290,6 +292,11 @@
 		//return mainframe.gib(give_medal, include_ejectables) //re-enable this when you are SUPREMELY CONFIDENT that all calls to gib() have intangible checks
 
 
+	create_viewport(kind, title, size, share_planes)
+		if (length(src.client?.getViewportsByType(VIEWPORT_ID_AI)) >= src.mainframe.viewport_limit)
+			boutput(src, SPAN_ALERT("You lack the computing resources needed to open another viewport."))
+		else
+			. = ..()
 
 	proc/mainframe_check()
 		if (mainframe)

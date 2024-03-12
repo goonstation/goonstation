@@ -255,7 +255,10 @@
 
 	for(var/turf/T in turfs) //Go through all the turfs and generate them
 		assign_turf(T, flags)
-		LAGCHECK(LAG_MED)
+		if (current_state >= GAME_STATE_PLAYING)
+			LAGCHECK(LAG_LOW)
+		else
+			LAGCHECK(LAG_HIGH)
 
 /datum/map_generator/storehouse_generator/proc/assign_turf(turf/T, flags)
 	var/cell_value = cell_grid[T.x][T.y]
@@ -276,7 +279,7 @@
 				var/rarity = rand(1, 100)
 				switch(rarity)
 					if(1 to 10)
-						new /obj/storage/crate/loot/puzzle(T)
+						new /obj/storage/crate/loot(T)
 					if(11 to 90)
 						new /obj/storage/crate(T)
 					if(91 to 100)
@@ -340,7 +343,7 @@
 					var/rarity = rand(1, 100)
 					switch(rarity)
 						if(1 to 8)
-							new /obj/storage/crate/loot/puzzle(T)
+							new /obj/storage/crate/loot(T)
 						else
 							make_cleanable(/obj/decal/cleanable/blood/gibs, T)
 

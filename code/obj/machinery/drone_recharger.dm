@@ -73,7 +73,7 @@ TYPEINFO(/obj/machinery/drone_recharger)
 	proc/turnOn(mob/living/silicon/ghostdrone/G)
 		if (!G || G.getStatusDuration("stunned")) return 0
 
-		out(G, SPAN_NOTICE("The [src] grabs you as you float by and begins charging your power cell."))
+		boutput(G, SPAN_NOTICE("The [src] grabs you as you float by and begins charging your power cell."))
 		src.set_density(1)
 		G.canmove = 0
 

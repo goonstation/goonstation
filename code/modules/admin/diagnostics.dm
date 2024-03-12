@@ -1490,6 +1490,33 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.color = "#9944ff"
 			img.app.overlays = list(src.makeText(max_singulo_radius, RESET_ALPHA | RESET_COLOR))
 
+	flag_on_count
+		name = "flag on count"
+		help = "Select any variable and a flag to check for, and this will display the amount of atoms with that flag on each turf."
+		var/var_name = null
+		var/flag = 0
+
+		OnEnabled(client/C)
+			src.var_name = input(C, "var name to check: ", "flag var name") as text|null
+			src.flag = input(C, "flag to check for: ", "flag var name") as num|null
+			boutput(C, "Counting flag [src.flag] from var [src.var_name]")
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(isnull(var_name))
+				return
+			var/count = 0
+			for(var/atom/A as anything in theTurf.contents + list(theTurf, theTurf.loc))
+				if(hasvar(A, src.var_name))
+					var/val = A.vars[src.var_name]
+					if(val & src.flag)
+						count++
+			if(count > 0)
+				img.app.overlays = list(src.makeText("[count]"))
+				img.app.color = rgb(count * 10, count * 10, count * 10)
+				img.app.alpha = 100
+			else
+				img.app.alpha = 0
+
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay

@@ -6,7 +6,7 @@
 	name = "Cluwneing Arewund"
 	max_stages = 4
 	spread = "Non-Contagious"
-	cure = "Antibiotics"
+	cure_flags = CURE_ANTIBIOTICS
 	associated_reagent = "painbow fluid"
 	affected_species = list("Human")
 	var/oldjob
@@ -19,7 +19,7 @@
 		name += "[pick("AreoU","UroO","ArU","AoOro","AhRu")][pick("ndE","Ned","nhd")]"
 	cluwne
 		laugh_rate = 18
-		cure = "Incurable"
+		cure_flags = CURE_INCURABLE
 
 /datum/ailment/disease/cluwneing_around/on_infection(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	..()
@@ -27,7 +27,7 @@
 		src.oldname = affected_mob.real_name
 		src.oldjob = affected_mob.job
 	if (istype(affected_mob.wear_mask, /obj/item/clothing/mask/cursedclown_hat))
-		D.cure = "Incurable"
+		D.cure_flags = CURE_INCURABLE
 
 /datum/ailment/disease/cluwneing_around/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
@@ -60,8 +60,7 @@
 					affected_mob.say("THE RINGMASTER DOESN'T RUN THE CIRCUS... HUNKE!")
 
 		if(3)
-			if(D.cure != "Incurable")
-				D.cure = "Incurable"
+			D.cure_flags = CURE_INCURABLE
 
 			if (affected_mob.job != "Cluwne")
 				affected_mob.real_name = "cluwne"

@@ -24,7 +24,6 @@
 		src.item_state = "emerg_inj-[src.label]"
 		src.fluid_image = image(src.icon, "emerg_inj-fluid")
 		src.fluid_image.color = src.reagents.get_average_color().to_rgba()
-		src.vis_contents += src.fluid_image
 		src.UpdateIcon()
 
 	on_reagent_change()
@@ -220,7 +219,7 @@
 	label = "black"
 	desc = "An auto-injector containing uhh, well, y'see... Hmm. You're unsure on this one."
 	New()
-		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "lsd_bee", "space_drugs", "THC", "mucus", "green mucus", "crank", "bathsalts", "krokodil", "catdrugs", "jenkem", "psilocybin", "omnizine")
+		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "lsd_bee", "space_drugs", "THC", "mucus", "green mucus", "crank", "bathsalts", "krokodil", "catdrugs", "psilocybin", "omnizine")
 		..()
 
 

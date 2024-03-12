@@ -360,7 +360,7 @@
 		var/mob/living/carbon/human/H = null
 		if (ishuman(occupant))
 			H = occupant
-		if (H && isalive(H)) H.lastgasp()
+		if (H && isalive(H)) H.lastgasp(grunt = pick("GLUB", "blblbl", "BLUH", "BLURGH"))
 		//setunconcious(occupant)
 		if(src.occupant.bodytemperature < T0C)
 			if(src.air_contents.oxygen > 2 MOLES)

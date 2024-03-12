@@ -151,8 +151,9 @@
 			return ..()
 
 		switch (current_blood_amt)
-			if (-INFINITY to 0) // welp
+			if (-INFINITY to 1) // welp
 				owner.take_oxygen_deprivation(1 * mult)
+				owner.change_eye_blurry(7, 7)
 				owner.take_brain_damage(2 * mult)
 				owner.losebreath += (1 * mult)
 				owner.setStatus("drowsy", rand(15, 20) SECONDS)
@@ -165,49 +166,60 @@
 					var/feeling = pick("[extreme]ill", "[extreme]sick", "[extreme]numb", "[extreme]cold", "[extreme]dizzy", "[extreme]out of it", "[extreme]confused", "[extreme]off-balance", "[extreme]terrible", "[extreme]awful", "like death", "like you're dying", "[extreme]tingly", "like you're going to pass out", "[extreme]faint")
 					boutput(owner, SPAN_ALERT("<b>You feel [feeling]!</b>"))
 					owner.changeStatus("weakened", 4 SECONDS * mult)
+				if (prob(30))
+					owner.changeStatus("shivering", 6 SECONDS)
 				owner.contract_disease(/datum/ailment/malady/shock, null, null, 1) // if you have no blood you're gunna be in shock
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -3)
 				owner.add_stam_mod_max("hypotension", -15)
 
-			if (1 to 299) // very low (70/50)
+			if (1 to 300) // very low (70/50)
 				owner.take_oxygen_deprivation(0.8 * mult)
 				owner.take_brain_damage(0.8 * mult)
 				owner.losebreath += (0.8 * mult)
+				owner.change_eye_blurry(5, 5)
 				owner.setStatus("drowsy", rand(5, 10) SECONDS)
 				if (prob(6))
 					owner.change_misstep_chance(rand(1,2) * mult)
 				if (prob(8))
-					owner.emote(pick("faint", "collapse", "pale", "shudder", "shiver", "gasp", "moan"))
+					owner.emote(pick("faint", "collapse", "pale", "shudder", "gasp", "moan"))
 				if (prob(14))
 					var/extreme = pick("", "really ", "very ", "extremely ", "terribly ", "insanely ")
 					var/feeling = pick("[extreme]ill", "[extreme]sick", "[extreme]numb", "[extreme]cold", "[extreme]dizzy", "[extreme]out of it", "[extreme]confused", "[extreme]off-balance", "[extreme]terrible", "[extreme]awful", "like death", "like you're dying", "[extreme]tingly", "like you're going to pass out", "[extreme]faint")
 					boutput(owner, SPAN_ALERT("<b>You feel [feeling]!</b>"))
 					owner.changeStatus("weakened", 3 SECONDS * mult)
 				if (prob(25))
+					owner.changeStatus("shivering", 6 SECONDS) // Getting very cold (same duration as shivers from cold)
+				if (prob(25))
 					owner.contract_disease(/datum/ailment/malady/shock, null, null, 1)
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -2)
 				owner.add_stam_mod_max("hypotension", -10)
 
-			if (300 to 414) // low (100/65)
+			if (300 to 415) // low (100/65)
 				if (prob(2))
-					owner.emote(pick("pale", "shudder", "shiver"))
+					owner.emote(pick("pale", "shudder")) // Additional shivers handled by the status effect
 				if (prob(5))
 					var/extreme = pick("", "kinda ", "a little ", "sorta ", "a bit ")
 					var/feeling = pick("ill", "sick", "numb", "cold", "dizzy", "out of it", "confused", "off-balance", "tingly", "faint")
 					boutput(owner, SPAN_ALERT("<b>You feel [extreme][feeling]!</b>"))
 				if (prob(5))
 					owner.contract_disease(/datum/ailment/malady/shock, null, null, 1)
+				if (prob(15))
+					owner.setStatus("drowsy", 6 SECONDS * mult) // Drowsiness and stuttering
+					owner.stuttering += rand(6,10)
+				else if (probmult(20))
+					owner.changeStatus("shivering", 6 SECONDS) // Feeling cold from low blood pressure
+					owner.change_eye_blurry(5, 5)
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -1)
 				owner.add_stam_mod_max("hypotension", -5)
 
-			if (415 to 584) // normal (120/80)
+			if (415 to 585) // normal (120/80)
 				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypertension")
 				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension")
 				owner.remove_stam_mod_max("hypertension")
 				owner.remove_stam_mod_max("hypotension")
 				return ..()
 
-			if (585 to 665) // high (140/90)
+			if (585 to 666) // high (140/90)
 				if (prob(2))
 					var/msg = pick("You feel kinda sweaty",\
 					"You can feel your heart beat loudly in your chest",\
@@ -222,7 +234,7 @@
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypertension", -1)
 				owner.add_stam_mod_max("hypertension", -5)
 
-			if (666 to 749) // very high (160/100)
+			if (666 to 750) // very high (160/100)
 				if (prob(2))
 					var/msg = pick("You feel sweaty",\
 					"Your heart beats rapidly",\

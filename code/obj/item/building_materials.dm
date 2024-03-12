@@ -227,6 +227,10 @@ MATERIAL
 			else
 				boutput(user, SPAN_ALERT("You may only reinforce metal or crystal sheets."))
 				return
+		else if (iscuttingtool(W) && (src.material?.isSameMaterial(getMaterial("wood")) || src.material.isSameMaterial(getMaterial("bamboo"))))
+			boutput(user, SPAN_NOTICE("You whittle [src] down to make a useful stick."))
+			new /obj/item/stick(get_turf(src))
+			src.change_stack_amount(-1)
 		else
 			..()
 		return
@@ -1412,6 +1416,14 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 			sheet_cost = 6
 			icon = 'icons/obj/doors/SL_doors.dmi'
 			icon_state = "wood1"
+		swing_sign
+			recipe_id = "swing_sign"
+			craftedType = /obj/item/swingsignfolded
+			name = "Swing Sign"
+			sheet_cost = 2
+			icon = 'icons/obj/furniture/swingsign.dmi'
+			icon_state = "written"
+
 	zwood
 		zbarricade
 			recipe_id = "zbarricade"

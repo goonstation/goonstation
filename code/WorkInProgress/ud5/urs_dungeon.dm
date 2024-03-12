@@ -330,7 +330,7 @@
 				if (M.client)
 					M.client.playAmbience(our_area, AMBIENCE_FX_2, 50)
 			if(src.message)
-				M.show_message("<span class='game say bold'>[SPAN_MESSAGE("<span style='color: [src.text_color]'>[message]")]</span></span>", 2)
+				M.show_message("<span class='say bold'>[SPAN_MESSAGE("<span style='color: [src.text_color]'>[message]")]</span></span>", 2)
 
 /area/adventure/urs_dungeon
 	teleport_blocked = 2

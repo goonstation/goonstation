@@ -60,5 +60,5 @@
 				message = uppertext(message)
 
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[message]\"",2)
+			O.show_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\""), 2)
 		return

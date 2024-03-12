@@ -18,22 +18,24 @@
 		return
 	var/list/targets = list()
 	var/list/wtfbyond = list()
-	var/list/paths = get_path_to(src, landmarks[LANDMARK_GPS_WAYPOINT], max_distance=120, id=ID, skip_first=FALSE, cardinal_only=FALSE)
+	var/list/paths = get_path_to(src, landmarks[LANDMARK_GPS_WAYPOINT], max_distance=200, id=ID, skip_first=FALSE, cardinal_only=FALSE, mintargetdist=2)
 
-	for(var/turf/wp in paths)
+	for(var/turf/wp in landmarks[LANDMARK_GPS_WAYPOINT])
 		var/path = paths[wp]
-		if(path)
-			var/name = landmarks[LANDMARK_GPS_WAYPOINT][wp]
-			if(!name)
-				var/area/area = get_area(wp)
-				name = area.name
+		var/name = landmarks[LANDMARK_GPS_WAYPOINT][wp]
+		if(!name)
+			var/area/area = get_area(wp)
+			name = area.name
 #ifdef GPS_MAP_TESTING
-			if(targets[name])
-				boutput( usr, "*** Duplicate waypoint in ([name]): ([targets[name].x],[targets[name].y]) and ([wp.x],[wp.y])" )
+		if(targets[name])
+			boutput( usr, "*** Duplicate waypoint in ([name]): ([targets[name].x],[targets[name].y]) and ([wp.x],[wp.y])" )
 #endif
 
+		if(path)
 			targets[name] = wp
 			wtfbyond[++wtfbyond.len] = name
+		else
+			wtfbyond[++wtfbyond.len] = name + " \[No Path\]"
 
 #ifdef GPS_MAP_TESTING
 		else
@@ -62,7 +64,8 @@
 	var/target = tgui_input_list(src, "Choose a destination!", "GPS Destination Pick", sortList(wtfbyond, /proc/cmp_text_asc))
 	if(!target || !src.client) return
 	target = targets[target]
-	gpsToTurf(target, param = ID)
+	if(target)
+		gpsToTurf(target, param = ID)
 
 /mob/proc/gpsToTurf(var/turf/dest, var/doText = 1, param = null, cardinal_only=FALSE)
 	removeGpsPath(doText)

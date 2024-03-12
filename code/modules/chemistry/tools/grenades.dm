@@ -3,6 +3,8 @@
 /* -------------------- Grenades -------------------- */
 /* ================================================== */
 
+ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
+
 /obj/item/chem_grenade
 	name = "imcoder chemical grenade"
 	icon_state = "grenade-chem1"
@@ -14,7 +16,7 @@
 	force = 2
 	var/armed = 0
 	var/icon_state_armed = "grenade-chem-armed"
-	var/list/beakers = new/list()
+	var/list/obj/beakers = new/list()
 	throw_speed = 4
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY | NOSPLASH
@@ -43,6 +45,9 @@
 	src.create_reagents(150000)
 	src.initialize_assemby()
 
+///clone for grenade launcher purposes only. Not a real deep copy, just barely good enough to work for something that's going to be instantly detonated. Mostly for like, custom grenades or whatever
+/obj/item/chem_grenade/proc/launcher_clone()
+	return new src.type
 
 /obj/item/chem_grenade/proc/initialize_assemby()
 	// completed grenade + assemblies -> chemical grenade assembly
@@ -77,7 +82,12 @@
 				return
 
 /obj/item/chem_grenade/attack_self(mob/user as mob)
+	. = ..()
 	src.arm(user)
+
+/obj/item/chem_grenade/ex_act(severity)
+	src.explode()
+	. = ..()
 
 /obj/item/chem_grenade/get_desc()
 	. = ..()
@@ -260,6 +270,15 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	..()
 	src.fluid_image1 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid1", -1)
 	src.fluid_image2 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid2", -1)
+
+/obj/item/chem_grenade/custom/launcher_clone()
+	var/obj/item/chem_grenade/custom/out = ..()
+	out.beakers += new/obj/item/reagent_containers/glass/beaker(out)
+	out.beakers += new/obj/item/reagent_containers/glass/beaker(out)
+	src.beakers[1]?.reagents?.copy_to(out.beakers[1].reagents, 1, TRUE, TRUE)
+	src.beakers[2]?.reagents?.copy_to(out.beakers[2].reagents, 1, TRUE, TRUE)
+	out.chem_grenade_completing()
+	return out
 
 /obj/item/chem_grenade/custom/initialize_assemby()
 	if (src.stage == 2)

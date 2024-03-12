@@ -47,7 +47,7 @@
 		return TRUE
 
 	if (F)
-		if (tgui_alert(F,"Would you like to spawn a rift?","Spawn Rift?",list("Yes","No")) != "Yes")
+		if (tgui_alert(F,"Would you like to spawn a rift?","Spawn Rift?",list("Yes","No"), theme = "flock") != "Yes")
 			return TRUE
 
 	logTheThing(LOG_GAMEMODE, holder.get_controlling_mob(), "spawns a rift at [log_loc(src.holder.owner)].")

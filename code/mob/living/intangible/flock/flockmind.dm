@@ -16,11 +16,11 @@
 
 
 /mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null)
+	src.flock = F || new /datum/flock()
 	..()
 
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
 
-	src.flock = F || new /datum/flock()
 	src.real_name = "Flockmind [src.flock.name]"
 	src.name = src.real_name
 	if(src.flock.name == "ba.ba") //this easteregg used with permission from Hempuli. Thanks Hempuli!
@@ -34,7 +34,6 @@
 	else
 		src.started = TRUE
 		src.addAllAbilities()
-
 
 /mob/living/intangible/flock/flockmind/proc/start_tutorial()
 	if (src.tutorial)

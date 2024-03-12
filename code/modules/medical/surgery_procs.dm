@@ -177,7 +177,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		// Check if patient has item in chest already
 		if (patient.chest_item == null)
 			if(chest_item.w_class > W_CLASS_NORMAL && !(chest_item.type in chestitem_whitelist))
-				boutput(SPAN_ALERT("[chest_item] is too big to fit into [patient]'s chest cavity."))
+				boutput(surgeon, SPAN_ALERT("[chest_item] is too big to fit into [patient]'s chest cavity."))
 				return TRUE
 
 
@@ -1462,7 +1462,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /datum/action/bar/icon/remove_organ
 	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ACTION
-	id = "remove_organ"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 	resumable = FALSE
@@ -1558,7 +1557,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /datum/action/bar/icon/clamp_bleeders
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ACTION
-	id = "clamp_bleeders"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
 	resumable = FALSE

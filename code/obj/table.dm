@@ -297,7 +297,7 @@ TYPEINFO_NEW(/obj/table)
 			var/mob/living/carbon/human/H = user
 			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer) && !H.equipped())
 				slaps += 1
-				src.visible_message(SPAN_ALERT("<b>[H] slams their palms against [src]!</b>"))
+				src.visible_message(SPAN_ALERT("<b>[H] slams [his_or_her(H)] palms against [src]!</b>"))
 				if (slaps > 10 && prob(1)) //owned
 					if (H.hand && H.limbs && H.limbs.l_arm)
 						H.limbs.l_arm.sever()
@@ -376,10 +376,21 @@ TYPEINFO_NEW(/obj/table)
 			return
 		actions.start(new /datum/action/bar/icon/railing_jump/table_jump(M, src), M)
 
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
+		if (ismob(AM))
+			if (AM != thr.user && (BOUNDS_DIST(thr.user, src) <= 0))
+				var/remove_tablepass = HAS_FLAG(AM.flags, TABLEPASS) ? FALSE : TRUE //this sucks and should be a mob property x2 augh
+				AM.flags |= TABLEPASS
+				step(AM, get_dir(AM, src))
+				if (remove_tablepass)
+					REMOVE_FLAG(AM.flags, TABLEPASS)
+				src.harm_slam(thr.user, AM)
+
+
 //Replacement for monkies walking through tables: They now parkour over them.
 //Note: Max count of tables traversable is 2 more than the iteration limit
 /datum/action/bar/icon/railing_jump/table_jump
-	id = "table_jump"
 	var/const/throw_range = 7
 	var/const/iteration_limit = 5
 	resumable = TRUE
@@ -559,7 +570,7 @@ TYPEINFO_NEW(/obj/table/mauxite)
 			var/mob/living/carbon/human/H = user
 			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
 				slaps += 1
-				src.visible_message(SPAN_ALERT("<b>[H] slams their palms against [src]!</b>"))
+				src.visible_message(SPAN_ALERT("<b>[H] slams [his_or_her(H)] palms against [src]!</b>"))
 				if (slaps > 2 && prob(50))
 					src.visible_message(SPAN_ALERT("<b>The [src] collapses!</b>"))
 					deconstruct()
@@ -590,8 +601,8 @@ TYPEINFO_NEW(/obj/table/syndicate)
 	parts_type = /obj/item/furniture_parts/table/syndicate
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -785,7 +796,8 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 				/obj/item/reagent_containers/dropper/mechanical,
 				/obj/item/storage/box/lglo_kit,
 				/obj/item/storage/box/beaker_lids,
-				/obj/item/reagent_containers/glass/condenser = 4)
+				/obj/item/reagent_containers/glass/condenser = 3,
+				/obj/item/reagent_containers/glass/condenser/fractional = 1)
 
 
 
@@ -1254,7 +1266,6 @@ TYPEINFO(/obj/table/glass)
 /* ======================================== */
 
 /datum/action/bar/icon/table_tool_interact
-	id = "table_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 50
 	icon = 'icons/ui/actions.dmi'
@@ -1355,7 +1366,6 @@ TYPEINFO(/obj/table/glass)
 		owner.visible_message(SPAN_NOTICE("[owner] [verbens] [the_table]."))
 
 /datum/action/bar/icon/fold_folding_table
-	id = "fold_folding_table"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 15
 	icon = 'icons/ui/actions.dmi'
@@ -1398,7 +1408,6 @@ TYPEINFO(/obj/table/glass)
 		the_table.deconstruct()
 
 /datum/action/bar/icon/furnish_table
-	id = "furnish_table"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 5 SECONDS
 	icon = 'icons/ui/actions.dmi'

@@ -92,7 +92,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	for(var/image/chat_maptext/I in src.chat_text?.lines)
 		I.bump_up()
 	var/maptext = generateMapText(msg, textLoc, style = "color:[color];", alpha = 255)
-	target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
+	if(maptext)
+		target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
 
 /obj/item/device/radio/intercom/receive_silicon_hotkey(var/mob/user)
 	..()
@@ -101,7 +102,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 		return
 
 	if (!isAIeye(user))
-		boutput("Deploy to an AI Eye first to override intercoms.")
+		boutput(user, "Deploy to an AI Eye first to override intercoms.")
 		return
 
 	if(user.client.check_key(KEY_BOLT))

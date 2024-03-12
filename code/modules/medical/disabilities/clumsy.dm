@@ -1,10 +1,11 @@
 /datum/ailment/disability/clumsy
 	name = "Dyspraxia"
 	max_stages = 1
-	cure = "Unknown"
+	cure_flags = CURE_UNKNOWN
 	affected_species = list("Human")
 	cluwne
-		cure = "Decursing"
+		cure_flags = CURE_CUSTOM
+		cure_desc = "Decursing"
 		reagentcure = list("water_holy")
 
 /datum/ailment/disability/clumsy/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)

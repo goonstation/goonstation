@@ -42,6 +42,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	var/issawfly = FALSE //for sawfly remote
 	///damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>screwdriver</b> to adjust the detonation time."})
 
 	attack_self(mob/user as mob)
 		if (!src.armed)
@@ -106,6 +107,14 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 		else
 			src.icon_state = initial(src.icon_state)
 
+	ex_act(severity)
+		src.detonate(null)
+		. = ..()
+
+	///clone for grenade launcher purposes only. Not a real deep copy, just barely good enough to work for something that's going to be instantly detonated
+	proc/launcher_clone()
+		return new src.type
+
 	proc/detonate(mob/user) // Most grenades require a turf reference.
 		var/turf/T = get_turf(src)
 		if (!T || !isturf(T))
@@ -152,6 +161,12 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				else
 					new payload(T)
 		qdel(src)
+
+	launcher_clone() //for varedit shenanigans
+		var/obj/item/old_grenade/spawner/out = ..()
+		out.payload = src.payload
+		out.amount_to_spawn = src.amount_to_spawn
+		return out
 
 /obj/item/old_grenade/spawner/banana
 	name = "banana grenade"
@@ -206,6 +221,12 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				if(target)
 					thing.throw_at(target, rand(0, 10), rand(1, 4))
 		qdel(src)
+
+	launcher_clone() //for varedit shenanigans
+		var/obj/item/old_grenade/thing_thrower/out = ..()
+		out.payload = src.payload
+		out.count = src.count
+		return out
 
 TYPEINFO(/obj/item/old_grenade/graviton)
 	mats = 12
@@ -463,7 +484,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 				PJ.spread_projectile_type = src.custom_projectile_type
 				PJ.pellet_shot_volume = 75 / PJ.pellets_to_fire //anti-ear destruction
 			PJ.pellets_to_fire = src.pellets_to_fire
-			var/targetx = T.y - rand(-5,5)
+			var/targetx = T.x - rand(-5,5)
 			var/targety = T.y - rand(-5,5)
 			var/turf/newtarget = locate(targetx, targety, T.z)
 			shoot_projectile_ST_pixel_spread(T, PJ, newtarget)
@@ -473,6 +494,13 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 		else
 			qdel(src)
 		return
+
+
+	launcher_clone() //for varedit shenanigans
+		var/obj/item/old_grenade/stinger/out = ..()
+		out.custom_projectile_type = src.custom_projectile_type
+		out.pellets_to_fire = src.pellets_to_fire
+		return out
 
 /obj/item/old_grenade/stinger/frag
 	name = "frag grenade"
@@ -596,12 +624,18 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			burst_circle.spread_projectile_type = src.custom_projectile_type
 			burst_circle.pellet_shot_volume = 75 / burst_circle.pellets_to_fire
 		burst_circle.pellets_to_fire = src.pellets_to_fire
-		var/targetx = T.y - rand(-5,5)
+		var/targetx = T.x - rand(-5,5)
 		var/targety = T.y - rand(-5,5)
 		var/turf/newtarget = locate(targetx, targety, T.z)
 		shoot_projectile_ST_pixel_spread(T, burst_circle, newtarget)
 		SPAWN(0.5 SECONDS)
 			qdel(src)
+
+	launcher_clone() //for varedit shenanigans
+		var/obj/item/old_grenade/foam_dart/out = ..()
+		out.custom_projectile_type = src.custom_projectile_type
+		out.pellets_to_fire = src.pellets_to_fire
+		return out
 
 /obj/item/old_grenade/emp
 	desc = "It is set to detonate in 5 seconds."
@@ -779,6 +813,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	not_in_mousetraps = TRUE
 	var/old_light_grenade = 0
 	var/destination
+	HELP_MESSAGE_OVERRIDE({""})
 
 	New()
 		..()
@@ -874,7 +909,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		return
 
 ////////////////////////// Gimmick bombs /////////////////////////////////
-
+ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 /obj/item/gimmickbomb
 	name = "Don't spawn this directly!"
 	icon = 'icons/obj/items/grenade.dmi'
@@ -887,7 +922,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	proc/detonate()
 		playsound(src.loc, sound_explode, 45, 1)
 
-		var/obj/effects/explosion/E = new /obj/effects/explosion(src.loc)
+		var/obj/effects/explosion/E = new /obj/effects/explosion(get_turf(src))
 		E.fingerprintslast = src.fingerprintslast
 
 		invisibility = INVIS_ALWAYS_ISH
@@ -955,11 +990,10 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	sound_beep = 'sound/voice/animal/hoot.ogg'
 
 	detonate()
-		for(var/mob/living/carbon/human/M in range(5, src))
+		for(var/mob/living/carbon/human/M in range(5, get_turf(src)))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
-			SPAWN(0)
-				M.owlgib()
+			M.owlgib()
 		..()
 
 /obj/item/gimmickbomb/owlclothes
@@ -971,6 +1005,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/owl_mask)))
 			for(var/obj/item/clothing/O in H)
+				if(!O.equipped_in_slot)
+					continue
 				H.u_equip(O)
 				if (O)
 					O.set_loc(H.loc)
@@ -995,11 +1031,10 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			..()
 			return
 
-		for(var/mob/living/carbon/human/M in range(5, src))
+		for(var/mob/living/carbon/human/M in range(5, get_turf(src)))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
-			SPAWN(0)
-				src.dress_up(M)
+			src.dress_up(M)
 		..()
 
 /obj/item/gimmickbomb/hotdog
@@ -1010,6 +1045,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/gimmick/hotdog)))
 			for(var/obj/item/clothing/O in H)
+				if(!O.equipped_in_slot)
+					continue
 				H.u_equip(O)
 				if (O)
 					O.set_loc(H.loc)
@@ -1030,11 +1067,10 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			src.dress_up(hero, cant_self_remove=TRUE, cant_other_remove=TRUE)
 			..()
 			return
-		for(var/mob/living/carbon/human/M in range(5, src))
+		for(var/mob/living/carbon/human/M in range(5, get_turf(src)))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
-			SPAWN(0)
-				src.dress_up(M)
+			src.dress_up(M)
 		..()
 
 /obj/item/gimmickbomb/butt
@@ -1368,19 +1404,27 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			for (var/turf/simulated/wall/W in range(src.expl_range, location))
 				if (W && istype(W) && !location.loc:sanctuary)
 					W.ReplaceWithFloor()
-			for (var/obj/structure/girder/G in range(src.expl_range, location))
-				var/area/a = get_area(G)
-				if (G && istype(G) && !a.sanctuary)
-					qdel(G)
-			for (var/obj/window/WD in range(src.expl_range, location))
-				var/area/a = get_area(WD)
-				if (WD && istype(WD) && prob(max(0, 100 - (WD.health / 3))) && !a.sanctuary)
-					WD.smash()
-			for (var/obj/grille/GR in range(src.expl_range, location))
-				var/area/a = get_area(GR)
-				if (GR && istype(GR) && GR.ruined != 1 && !a.sanctuary)
-					GR.ex_act(2)
-
+			for (var/obj/O in range(src.expl_range, location))
+				var/area/area = get_area(O)
+				if (area?.sanctuary)
+					continue
+				if (istype(O, /obj/structure/girder))
+					qdel(O)
+					continue
+				if (istype(O, /obj/window))
+					var/obj/window/window = O
+					if (prob(max(0, 100 - (window.health / 3))))
+						window.smash()
+					continue
+				if (istype(O, /obj/grille))
+					var/obj/grille/grille = O
+					if (!grille.ruined)
+						grille.ex_act(2)
+					continue
+				if (istype(O, /obj/machinery/door/firedoor))
+					var/obj/machinery/door/firedoor/firelock = O
+					qdel(firelock)
+					continue
 		qdel(src)
 		return
 
@@ -1512,18 +1556,28 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 				var/area/a = get_area(DR)
 				if (!DR.cant_emag && !a.sanctuary)
 					DR.take_damage(DR.health)
-			for (var/obj/structure/girder/G in range(src.expl_range, location))
-				var/area/a = get_area(G)
-				if (G && istype(G) && !a.sanctuary)
-					qdel(G)
-			for (var/obj/window/W in range(src.expl_range, location))
-				var/area/a = get_area(W)
-				if (W && istype(W) && !a.sanctuary)
-					W.damage_heat(500)
-			for (var/obj/grille/GR in range(src.expl_range, location))
-				var/area/a = get_area(GR)
-				if (GR && istype(GR) && GR.ruined != 1 && !a.sanctuary)
-					GR.damage_heat(500)
+
+			for (var/obj/O in range(src.expl_range, location))
+				var/area/area = get_area(O)
+				if (area?.sanctuary)
+					continue
+				if (istype(O, /obj/structure/girder))
+					qdel(O)
+					continue
+				if (istype(O, /obj/window))
+					var/obj/window/window = O
+					if (prob(max(0, 100 - (window.health / 3))))
+						window.damage_heat(500)
+					continue
+				if (istype(O, /obj/grille))
+					var/obj/grille/grille = O
+					if (!grille.ruined)
+						grille.damage_heat(500)
+					continue
+				if (istype(O, /obj/machinery/door/firedoor))
+					var/obj/machinery/door/firedoor/firelock = O
+					qdel(firelock)
+					continue
 
 			for (var/mob/living/M in range(src.expl_range, location))
 				if(check_target_immunity(M)) continue
@@ -1555,7 +1609,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	name = "pipe frame"
 	desc = "Two small pipes joined together with grooves cut into the side."
 	icon_state = "Pipe_Frame"
-	burn_possible = 0
+	burn_possible = FALSE
 	material_amt = 0.3
 	HELP_MESSAGE_OVERRIDE("") // so there's the verb and stuff, actual message provided below
 	var/state = 1
@@ -1646,7 +1700,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 		// Pies won't do, they require a mob as the target. Obviously, the mousetrap roller is much more
 		// likely to bump into an inanimate object.
-		if (!checked_trap.grenade && !checked_trap.grenade_old && !checked_trap.pipebomb && !checked_trap.buttbomb)
+		if (!checked_trap.grenade && !checked_trap.grenade_old && !checked_trap.pipebomb && !checked_trap.gimmickbomb)
 			user.show_text("[checked_trap] must have a grenade or pipe bomb attached first.", "red")
 			return FALSE
 

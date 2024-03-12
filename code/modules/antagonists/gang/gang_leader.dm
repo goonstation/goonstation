@@ -2,6 +2,7 @@
 	id = ROLE_GANG_LEADER
 	display_name = "gang leader"
 	antagonist_icon = "gang_head"
+	antagonist_panel_tab_type = /datum/antagonist_panel_tab/gang
 
 	/// The gang that this gang leader belongs to.
 	var/datum/gang/gang
@@ -65,9 +66,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(src.gang)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()

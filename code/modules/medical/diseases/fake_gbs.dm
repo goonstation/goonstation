@@ -2,7 +2,8 @@
 	name = "GBS"
 	max_stages = 5
 	spread = "Airborne"
-	cure = "Cryoxadone"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Cryoxadone"
 	reagentcure = list("cryoxadone")
 	recureprob = 10
 	associated_reagent = "stringy gibbis"

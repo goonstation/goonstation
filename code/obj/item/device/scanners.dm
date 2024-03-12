@@ -791,7 +791,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			return
 
 		if (!target.face_visible())
-			boutput(user, "<span class='alert'>The device displays an error, the target's face must be visible.</span>")
+			boutput(user, SPAN_ALERT("The device displays an error, the target's face must be visible."))
 			return
 
 		////General Records
@@ -817,7 +817,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 		if(found == 0)
 			src.active1 = new /datum/db_record()
-			src.active1["id"] = num2hex(rand(1, 1.6777215E7),6)
+			src.active1["id"] = num2hex(rand(1, 0xffffff),6)
 			src.active1["rank"] = "Unassigned"
 			//Update Information
 			src.active1["name"] = target.real_name

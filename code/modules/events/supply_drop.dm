@@ -24,7 +24,7 @@
 			boutput(M.current, SPAN_NOTICE("A supply drop will happen soon in the [A.name]"))
 		SPAWN(20 SECONDS)
 			for(var/datum/mind/M in ticker.minds)
-				boutput(M.current, "[SPAN_NOTICE("A supply drop occurred in [A.name]")]!")
+				boutput(M.current, "[SPAN_NOTICE("A supply drop occurred in [A.name]!")]")
 
 /obj/effect/supplymarker
 	name = ""

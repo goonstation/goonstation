@@ -2,7 +2,7 @@
 	name = "Teleportitis"
 	max_stages = 1
 	spread = "Non-Contagious"
-	cure = "Electric Shock"
+	cure_flags = CURE_ELEC_SHOCK
 	associated_reagent = "liquid spacetime"
 	affected_species = list("Human")
 

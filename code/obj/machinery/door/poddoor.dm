@@ -1011,7 +1011,7 @@
 
 	SPAWN(0)
 		src.operating = 1
-		flick("[icon_base]1", src)
+		flick("[icon_base]c1", src)
 		src.icon_state = "[icon_base]1"
 		src.set_density(1)
 		if (src.visible)

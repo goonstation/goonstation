@@ -210,15 +210,12 @@
 	fullbright = 0
 	pathable = 0
 
-	Entered(atom/A as mob|obj) //stolen from ice moon abyss code
-		if (isobserver(A))
-			return ..()
-
-		var/turf/T = pick_landmark(LANDMARK_FALL_GREEK)
-		if(T)
-			fall_to(T, A)
-			return
-		else ..()
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/pitfall/target_landmark,\
+			BruteDamageMax = 50,\
+			FallTime = 0 SECONDS,\
+			TargetLandmark = LANDMARK_FALL_GREEK)
 
 // Misc Stuff
 

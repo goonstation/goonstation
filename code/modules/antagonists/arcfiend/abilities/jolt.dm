@@ -44,7 +44,6 @@
 /datum/action/bar/private/icon/jolt
 	duration = 12 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
-	id = "jolt"
 	icon = 'icons/mob/arcfiend.dmi'
 	icon_state = "jolt_icon"
 

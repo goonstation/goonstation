@@ -93,7 +93,6 @@
 	var/call_proc_on = null
 	// Copy-Pasted from Adhara's generic action bar
 	/// set to a string version of the callback proc path
-	id = null
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	/// set to the path of the proc that will be called if the action bar finishes
 	var/proc_path = null
@@ -311,7 +310,6 @@
 			call(post_callback)(src, R)
 
 /datum/action/bar/icon/cruiser_repair
-	id = "genproc"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 30
 	icon = 'icons/ui/actions.dmi'
@@ -414,7 +412,6 @@
 */
 /datum/action/bar/private/icon/callback
 	/// set to a string version of the callback proc path
-	id = null
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	/// set to the path of the proc that will be called if the action bar finishes
 	var/proc_path = null
@@ -503,7 +500,6 @@
 
 #define STAM_COST 30
 /datum/action/bar/icon/otherItem//Putting items on or removing items from others.
-	id = "otheritem"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
@@ -678,7 +674,6 @@
 /datum/action/bar/icon/internalsOther //This is used when you try to set someones internals
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "internalsother"
 	icon = 'icons/obj/clothing/item_masks.dmi'
 	icon_state = "breath"
 	var/mob/living/carbon/human/target
@@ -736,7 +731,6 @@
 /datum/action/bar/icon/handcuffSet //This is used when you try to handcuff someone.
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "handcuffsset"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 	var/mob/living/carbon/human/target
@@ -811,7 +805,6 @@
 /datum/action/bar/icon/handcuffRemovalOther //This is used when you try to remove someone elses handcuffs.
 	duration = 70
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "handcuffsother"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 	var/mob/living/carbon/human/target
@@ -862,7 +855,6 @@
 /datum/action/bar/private/icon/handcuffRemoval //This is used when you try to resist out of handcuffs.
 	duration = 600
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "handcuffs"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 
@@ -902,7 +894,6 @@
 /datum/action/bar/private/icon/shackles_removal // Resisting out of shackles (Convair880).
 	duration = 450
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "shackles"
 	icon = 'icons/obj/clothing/item_shoes.dmi'
 	icon_state = "orange1"
 
@@ -939,14 +930,12 @@
 /datum/action/bar/private/welding
 	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "welding"
 	var/call_proc_on = null
 	var/obj/effects/welding/E
 	var/list/start_offset
 	var/list/end_offset
 
 
-	id = null
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	/// set to the path of the proc that will be called if the action bar finishes
 	var/proc_path = null
@@ -1070,7 +1059,6 @@
 /datum/action/bar/private/icon/magPicker
 	duration = 30 //How long does this action take in ticks.
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "magpicker"
 	icon = 'icons/obj/items/items.dmi' //In these two vars you can define an icon you want to have on your little progress bar.
 	icon_state = "magtractor-small"
 
@@ -1096,7 +1084,7 @@
 		else
 			picker.working = 1
 			playsound(picker.loc, 'sound/machines/whistlebeep.ogg', 50, 1)
-			out(owner, SPAN_NOTICE("\The [picker.name] starts to pick up \the [target]."))
+			boutput(owner, SPAN_NOTICE("\The [picker.name] starts to pick up \the [target]."))
 			if (picker.highpower && isghostdrone(owner))
 				var/mob/living/silicon/ghostdrone/our_drone = owner
 				if (!our_drone.cell) return
@@ -1124,7 +1112,6 @@
 /datum/action/magPickerHold
 	duration = 30
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "magpickerhold"
 
 	var/obj/item/magtractor/picker = null //This is the magpicker.
 
@@ -1162,7 +1149,6 @@
 /datum/action/bar/icon/butcher_living_critter //Used when butchering a player-controlled critter
 	duration = 120
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "butcherlivingcritter"
 	var/mob/living/critter/target
 
 	New(Target,var/dur = null)
@@ -1200,7 +1186,6 @@
 /datum/action/bar/icon/critter_arm_removal // only supports things with left and right arms
 	duration = 60
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "removearmcritter"
 	var/mob/living/critter/target
 	var/left_or_right
 
@@ -1238,7 +1223,6 @@
 /datum/action/bar/icon/rev_flash
 	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "rev_flash"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "rev_imp"
 	var/mob/living/target
@@ -1271,6 +1255,7 @@
 					found_imp.on_remove(target)
 					H.implant.Remove(found_imp)
 					qdel(found_imp)
+					logTheThing(LOG_COMBAT, src.owner, "breaks [constructTarget(target)]'s counter-rev implant with a revolutionary flash at [log_loc(owner)]")
 
 					playsound(target.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
 					target.visible_message(SPAN_NOTICE("The counter-revolutionary implant inside [target] shatters into one million pieces!"))
@@ -1280,7 +1265,6 @@
 /datum/action/bar/icon/mop_thing
 	duration = 30
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "mop_thing"
 	icon = 'icons/obj/janitor.dmi' //In these two vars you can define an icon you want to have on your little progress bar.
 	icon_state = "mop"
 	var/atom/target
@@ -1315,7 +1299,6 @@
 
 /datum/action/bar/icon/CPR
 	duration = 4 SECONDS
-	id = "cpr"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "cpr"
@@ -1542,7 +1525,6 @@
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "spy_steal"
 	var/atom/target
 	var/obj/item/uplink/integrated/pda/spy/uplink
 
@@ -1577,7 +1559,6 @@
 
 /datum/action/bar/private/bombtest
 	duration = 100
-	id = "bombtest"
 
 	onEnd()
 		..()
@@ -1597,7 +1578,6 @@
 /datum/action/fire_roll //constant rolling
 	duration = -1
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "fire_roll"
 
 	var/mob/living/M = 0
 
@@ -1643,7 +1623,7 @@
 			if (istype(H))
 				H.hud.update_resting()
 			for (var/mob/O in AIviewers(M))
-				O.show_message(SPAN_ALERT("<B>[M] throws themselves onto the floor!</B>"), 1, group = "resist")
+				O.show_message(SPAN_ALERT("<B>[M] throws [himself_or_herself(M)] onto the floor!</B>"), 1, group = "resist")
 		else
 			for (var/mob/O in AIviewers(M))
 				O.show_message(SPAN_ALERT("<B>[M] rolls around on the floor, trying to extinguish the flames.</B>"), 1, group = "resist")
@@ -1666,7 +1646,6 @@
 /datum/action/bar/private/icon/pickup //Delayed pickup, used for mousedrags to prevent 'auto clicky' exploits but allot us to pickup with mousedrag as a possibel action
 	duration = 0
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "pickup"
 	var/obj/item/target
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "pickup"
@@ -1735,7 +1714,6 @@
 
 /// general purpose action to anchor or unanchor stuff
 /datum/action/bar/icon/anchor_or_unanchor
-	id = "table_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 5 SECONDS
 	icon = 'icons/ui/actions.dmi'

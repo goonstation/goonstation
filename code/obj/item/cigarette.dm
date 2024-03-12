@@ -8,7 +8,6 @@
 	icon = 'icons/obj/items/cigarettes.dmi'
 	wear_image_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "cig"
-	uses_multiple_icon_states = 1
 	item_state = "cig"
 	force = 0
 	hit_type = DAMAGE_BLUNT
@@ -333,16 +332,14 @@
 
 	dropped(mob/user as mob)
 		if (!isturf(src.loc))
-			return
+			return ..()
 		if (src.on == 1 && !src.exploding && src.reagents.total_volume <= 20)
 			src.put_out(user, SPAN_ALERT("<b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly."))
-			return ..()
 		else if (user.client)
 			if (!user.client.check_key(KEY_THROW)) //checks if player is in throw mode to avoid double messages
 				user.visible_message(SPAN_ALERT("<b>[user]</b> drops [src]. Guess [he_or_she(user)][ve_or_s(user)] had enough for the day."), group = "cig_drop")
-				return ..()
-		else
-			return ..()
+
+		return ..()
 
 
 	proc/trick_explode()
@@ -478,15 +475,15 @@
 
 	New()
 		src.flavor = pick("CBD","CBD","CBD","CBD","THC","THC","THC","THC","silicate","antihol","mutadone","rum","mutagen","toxin","water_holy","fuel","salbutamol","haloperidol",
-		"cryoxadone","cryostylane","omnizine","jenkem","vomit","carpet","charcoal","blood","cheese","bilk","atropine",
+		"cryoxadone","cryostylane","omnizine","vomit","carpet","charcoal","blood","cheese","bilk","atropine",
 		"lexorin","teporone","mannitol","spaceacillin","saltpetre","anti_rad","insulin","gvomit","milk","colors","diluted_fliptonium",
 		"something","honey_tea","tea","coffee","chocolate","guacamole","juice_pickle","vanilla","enriched_msg","egg","aranesp",
 		"paper","bread","green_goop","black_goop", "mint_tea", "juice_peach", "ageinium")
 		..()
 		if (src?.reagents) //Warc: copied ZeWaka's copy of Wire's fix for null.remove_any() way above
 			src.reagents.remove_any(15)
-			src.reagents.add_reagent(pick("CBD","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","jenkem","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","THC","THC","THC","bee","coffee","fuel","salbutamol","milk","grog"),5)
-			src.reagents.add_reagent(pick("CBD","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","jenkem","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","THC","THC","THC","bee","coffee","fuel","salbutamol","milk","grog"),5)
+			src.reagents.add_reagent(pick("CBD","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","THC","THC","THC","bee","coffee","fuel","salbutamol","milk","grog"),5)
+			src.reagents.add_reagent(pick("CBD","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","THC","THC","THC","bee","coffee","fuel","salbutamol","milk","grog"),5)
 			if(prob(5))
 				src.reagents.add_reagent("triplemeth",5)
 
@@ -501,7 +498,7 @@
 
 	New()
 		src.flavor = pick("silicate","antihol","mutadone","rum","mutagen","toxin","water_holy","fuel","salbutamol","haloperidol",
-		"cryoxadone","cryostylane","omnizine","jenkem","vomit","carpet","charcoal","blood","cheese","bilk","atropine",
+		"cryoxadone","cryostylane","omnizine","vomit","carpet","charcoal","blood","cheese","bilk","atropine",
 		"lexorin","teporone","mannitol","spaceacillin","saltpetre","anti_rad","insulin","gvomit","milk","colors","diluted_fliptonium",
 		"something","honey_tea","tea","coffee","chocolate","guacamole","juice_pickle","vanilla","enriched_msg","egg","aranesp",
 		"paper","bread","green_goop","black_goop", "mint_tea", "juice_peach", "ageinium", "synaptizine", "plasma", "morphine","oculine","CBD")
@@ -535,7 +532,6 @@
 	desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigpacket"
-	uses_multiple_icon_states = 1
 	item_state = "cigpacket"
 	w_class = W_CLASS_TINY
 	throwforce = 2
@@ -603,6 +599,7 @@
 	else
 		src.icon_state = "[src.package_style]o"
 		src.overlays += "cig[length(src.contents)]"
+		src.desc = initial(src.desc)
 	return
 
 /obj/item/cigpacket/attack_hand(mob/user)
@@ -668,7 +665,6 @@
 	desc = "The not-so-prestigeous brand of Space Cigars."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigarbox"
-	uses_multiple_icon_states = 1
 	item_state = "cigarbox"
 	w_class = W_CLASS_TINY
 	throwforce = 2
@@ -733,7 +729,6 @@
 	desc = "The most prestigeous brand of Space Cigars, made in Space Cuba."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigarbox"
-	uses_multiple_icon_states = 1
 	item_state = "cigarbox"
 	w_class = W_CLASS_TINY
 	throwforce = 2
@@ -820,7 +815,6 @@
 	desc = "A little bit of heavy paper with some matches in it, and a little strip to light them on."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "matchbook"
-	uses_multiple_icon_states = 1
 	w_class = W_CLASS_TINY
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
@@ -829,7 +823,7 @@
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 4
 	var/match_amt = 6 // -1 for infinite
 	rand_pos = 1
@@ -899,7 +893,6 @@
 	desc = "A little stick of wood with phosphorus on the tip, for lighting fires, or making you very frustrated and not lighting fires. Either or."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "match"
-	uses_multiple_icon_states = 1
 	w_class = W_CLASS_TINY
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
@@ -908,7 +901,7 @@
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 600
-	burn_possible = 1
+	burn_possible = TRUE
 
 	var/on = MATCH_UNLIT
 

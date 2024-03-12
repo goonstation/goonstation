@@ -77,7 +77,7 @@
 	var/msg = "Resource cache contents:"
 	for (var/r in cachedResources)
 		msg += "<br>[r]"
-	out(src, msg)
+	boutput(src, msg)
 
 
 /client/proc/toggleResourceCache()

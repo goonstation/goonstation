@@ -89,7 +89,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 				qdel(W)
 				return
 
-		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
+		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/) && W.is_open_container(FALSE))
 			if (!W.reagents.total_volume)
 				boutput(user, SPAN_ALERT("There is nothing in [W] to pour!"))
 

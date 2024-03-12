@@ -2,54 +2,76 @@
 	"cafeteria", "singulo", "plasma", "nukies", "hell", "botany", "maint", "ai", "bridge", "clown", \
 	"medbay", "security", "cargo", "nuclear", "janitorial")
 
+TYPEINFO(/datum/random_event/major/white_hole)
+	initialization_args = list(
+		EVENT_INFO("target_turf", DATA_INPUT_REFPICKER, "Pick location"),
+		EVENT_INFO_EXT("grow_duration", DATA_INPUT_NUM, "White Hole Growth Time", 0, 1 HOUR),
+		EVENT_INFO_EXT("duration", DATA_INPUT_NUM, "White Hole Duration", 0, 1 HOUR),
+		EVENT_INFO_EXT("activity_modifier", DATA_INPUT_NUM, "White Hole Activity Modifier", 0, 250),
+		EVENT_INFO_EXT("source_location", DATA_INPUT_LIST_PROVIDED, "Pick source location", VALID_WHITE_HOLE_LOCATIONS)
+	)
+
+
 /datum/random_event/major/white_hole
 	name = "White Hole"
 	required_elapsed_round_time = 20 MINUTES
 	customization_available = TRUE
 
+	var/turf/target_turf
+	var/grow_duration = 2 MINUTES
+	var/duration = 40 SECONDS
+	var/source_location
+	var/activity_modifier = 1
+
 	admin_call(source)
 		if (..())
 			return
 
-		var/turf/target_turf = null
-		switch(tgui_alert(usr, "Do you want to pick white hole location?", "Pick location", list("Pick", "Random", "Cancel")))
-			if("Pick")
-				target_turf = get_turf(pick_ref(usr))
-				if(isnull(target_turf))
-					boutput(usr, SPAN_ALERT("Cancelled. You must select a turf."))
+		var/datum/random_event_editor/E = new /datum/random_event_editor(usr, src)
+		if(E)
+			E.ui_interact(usr)
+		else
+			switch(tgui_alert(usr, "Do you want to pick white hole location?", "Pick location", list("Pick", "Random", "Cancel")))
+				if("Pick")
+					target_turf = get_turf(pick_ref(usr))
+					if(isnull(target_turf))
+						boutput(usr, SPAN_ALERT("Cancelled. You must select a turf."))
+						return
+				if("Random")
+					target_turf = null
+				if("Cancel")
+					boutput(usr, SPAN_ALERT("Cancelled."))
 					return
-			if("Random")
-				target_turf = null
-			if("Cancel")
+
+			grow_duration = tgui_input_number(usr, "How long should it take for the white hole to grow?", "White Hole Growth Time", 2 MINUTES, 1 HOUR, 0)
+			if(isnull(grow_duration))
 				boutput(usr, SPAN_ALERT("Cancelled."))
 				return
 
-		var/grow_duration = tgui_input_number(usr, "How long should it take for the white hole to grow?", "White Hole Growth Time", 2 MINUTES, 1 HOUR, 0)
-		if(isnull(grow_duration))
-			boutput(usr, SPAN_ALERT("Cancelled."))
-			return
-
-		var/duration = tgui_input_number(usr, "How long should the white hole be active?", "White Hole Duration", 40 SECONDS, 1 HOUR, 0)
-		if(isnull(duration))
-			boutput(usr, SPAN_ALERT("Cancelled."))
-			return
-
-		var/source_location = null
-		switch(tgui_alert(usr, "Do you want to pick white hole source location?", "Pick source location", list("Pick", "Random", "Cancel")))
-			if("Pick")
-				source_location = tgui_input_list(usr, "Which white hole source location?", "White Hole Source Location", VALID_WHITE_HOLE_LOCATIONS)
-			if("Random")
-				source_location = null
-			if("Cancel")
+			duration = tgui_input_number(usr, "How long should the white hole be active?", "White Hole Duration", 40 SECONDS, 1 HOUR, 0)
+			if(isnull(duration))
 				boutput(usr, SPAN_ALERT("Cancelled."))
 				return
 
-		var/activity_modifier = tgui_input_number(usr, "How much should the white hole activity be modified?", "White Hole Activity Modifier", 1, 10, 0, round_input=FALSE)
+			source_location = null
+			switch(tgui_alert(usr, "Do you want to pick white hole source location?", "Pick source location", list("Pick", "Random", "Cancel")))
+				if("Pick")
+					source_location = tgui_input_list(usr, "Which white hole source location?", "White Hole Source Location", VALID_WHITE_HOLE_LOCATIONS)
+				if("Random")
+					source_location = null
+				if("Cancel")
+					boutput(usr, SPAN_ALERT("Cancelled."))
+					return
 
-		src.event_effect(source, target_turf, grow_duration, duration, source_location, activity_modifier)
+			activity_modifier = tgui_input_number(usr, "How much should the white hole activity be modified?", "White Hole Activity Modifier", 1, 10, 0, round_input=FALSE)
 
-	event_effect(source, turf/T, grow_duration, duration, source_location, activity_modifier = 1)
+			src.event_effect(source, target_turf, grow_duration, duration, source_location, activity_modifier)
+
+	event_effect(source)
 		..()
+		var/turf/T = target_turf
+		if (isatom(T))
+			T = get_turf(target_turf)
 		if (!istype(T,/turf/))
 			if(isnull(random_floor_turfs))
 				build_random_floor_turf_list()
@@ -67,6 +89,7 @@
 		whitehole.activity_modifier = activity_modifier
 		message_admins("White Hole anomaly with origin [whitehole.source_location] spawning in [log_loc(T)]")
 		logTheThing(LOG_ADMIN, usr, "Spawned a white hole anomaly with origin [whitehole.source_location] at [log_loc(T)]")
+
 
 
 ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
@@ -274,8 +297,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			"ore" = 200,
 			/mob/living/critter/rockworm = 3,
 			/mob/living/critter/fermid = 10,
-			/obj/storage/crate/loot = 2,
-			/obj/storage/crate/loot/puzzle = 2,
+			/obj/storage/crate/loot = 4,
 			/mob/living/carbon/human/normal/miner = 0.1,
 			/obj/item/raw_material/scrap_metal = 4,
 			/obj/machinery/portable_reclaimer = 1,
@@ -434,6 +456,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/critter/killertomato = 0.5,
 			/mob/living/critter/small_animal/cat/synth = 1,
 			/mob/living/critter/plant/maneater = 0.3,
+			/obj/item/plant/tumbling_creeper = 3,
 		),
 		"maint" = list(
 			/obj/decal/cleanable/rust = 10,
@@ -711,7 +734,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/storage/closet/radiation = 10,
 			/obj/item/reagent_containers/pill/antirad = 10,
 			/obj/item/clothing/mask/gas = 5,
-			/obj/item/clothing/suit/rad = 5,
+			/obj/item/clothing/suit/hazard/rad = 5,
 			/obj/item/clothing/gloves/yellow = 5,
 			/obj/item/clothing/head/rad_hood = 5,
 			/obj/item/wrench/yellow = 10,
@@ -744,7 +767,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/mousetrap/armed = 5,
 			/obj/item/chem_grenade/cleaner = 10,
 			/obj/item/clothing/gloves/long = 3,
-			/obj/item/clothing/suit/bio_suit = 1,
+			/obj/item/clothing/suit/hazard/bio_suit = 1,
 			/obj/item/clothing/head/bio_hood = 1,
 			/obj/item/clothing/shoes/white = 1,
 			/obj/mopbucket = 3,
@@ -814,7 +837,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 	Bumped(atom/movable/A)
 		if(QDELETED(A) || A.throwing || istype(A, /obj/projectile))
 			return
-		if(prob(90)) // the 10% probability not to is there mostly just to prevent very rare infinite loops
+		if(!ON_COOLDOWN(A, "white_hole_bump", 0.2 SECONDS)) //okay this will REALLY prevent infinite loops (hopefully)
 			step_away(A, src)
 
 	attackby(obj/item/I, mob/user)
@@ -885,6 +908,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 		// push or throw things away from the white hole
 		for (var/atom/movable/X in range(7,src))
+			if (istype(X, /obj/structure/girder) && prob(40)) //mess up girders too
+				X.ex_act(3)
 			if (X.event_handler_flags & IMMUNE_SINGULARITY || X.anchored)
 				continue
 
@@ -900,6 +925,9 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 					bonus_throwforce = 50 / (1 + GET_DIST(X, src)) \
 				)
 
+		for (var/turf/simulated/wall/wall in range(1, src)) //make it a little harder to wall them off
+			wall.ex_act(3)
+			break //just smack one wall at a time
 
 		var/time_interval = 3 SECONDS
 		var/spew_count = round(randfloat(1, 15 * src.activity_modifier))
@@ -956,7 +984,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				var/obj/artifact = Artifact_Spawn(src.loc)
 				. = artifact
 				if(prob(25))
-					SPAWN(rand(0.1 SECONDS, 15 SECONDS))
+					SPAWN(randfloat(0.1 SECONDS, 15 SECONDS))
 						artifact?.ArtifactActivated()
 			if("plasma")
 				var/datum/gas_mixture/gas = new

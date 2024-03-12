@@ -214,7 +214,7 @@
 	desc = "Warp to somewhere else via the power of Christmas."
 	icon_state = "warp"
 	targeted = 0
-	cooldown = 30 SECONDS
+	cooldown = 80 SECONDS
 
 	cast()
 		var/list/tele_areas = get_teleareas()
@@ -228,6 +228,7 @@
 			return 1
 
 		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] poofs away in a puff of cold, snowy air!</B>"))
+
 		playsound(src.holder.owner.loc, 'sound/effects/bamf.ogg', 25, 1, -1)
 		playsound(src.holder.owner.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -244,7 +245,9 @@
 						break
 				if(clear)
 					L+=T
-		holder.owner.set_loc(pick(L))
+		var/turf/destination = pick(L)
+		logTheThing(LOG_COMBAT, holder.owner, "teleported from [log_loc(holder.owner)] to [log_loc(destination)].")
+		holder.owner.set_loc(destination)
 
 /datum/targetable/santa/banish
 	name = "Banish Krampus"

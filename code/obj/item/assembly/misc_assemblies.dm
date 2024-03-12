@@ -321,6 +321,7 @@ Contains:
 	return
 
 /obj/item/assembly/prox_ignite/dropped()
+	. = ..()
 	SPAWN( 0 )
 		if (src.part1)
 			src.part1.sense()
@@ -926,7 +927,8 @@ Contains:
 		return
 
 obj/item/assembly/radio_horn/receive_signal()
-	part2.play_note(rand(1,part2.sounds_instrument.len), user = null)
+	var/num_notes = part2.sounds_instrument.len
+	part2.play_note(rand(1, num_notes), user = null)
 	return
 
 /////////////////////////////////////////////////////// Remote signaller/timer /////////////////////////////////////
@@ -1060,6 +1062,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	return
 
 /obj/item/assembly/rad_prox/dropped()
+	. = ..()
 	SPAWN( 0 )
 		src.part2.sense()
 		return
@@ -1135,6 +1138,13 @@ ABSTRACT_TYPE(/datum/pipeshotrecipe)
 	result = /obj/item/ammo/bullets/pipeshot/glass
 	accepteditem = /obj/item/raw_material/shard
 	craftname = "shard"
+
+/datum/pipeshotrecipe/bone
+	thingsneeded = 2
+	result = /obj/item/ammo/bullets/pipeshot/bone
+	accepteditem = /obj/item/material_piece/bone
+	craftname = "bone chunk"
+
 
 /obj/item/assembly/pipehulls
 	name = "filled pipe hulls"

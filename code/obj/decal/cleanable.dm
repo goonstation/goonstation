@@ -19,7 +19,7 @@ proc/make_cleanable(var/type,var/loc)
 	var/sample_amt = 10
 	var/sample_reagent = "water"
 	var/sample_verb = "scoop"
-	var/slippery = 0 // set it to the probability that you want people to slip in the stuff, ie urine's slippery is 80 so you have an 80% chance to slip on it
+	var/slippery = 0 // set it to the probability that you want people to slip in the stuff, ie if slippery is 80 so you have an 80% chance to slip on it
 	var/slipped_in_blood = 0 // self explanitory hopefully
 	var/can_dry = 0
 	var/dry = 0 // if it's slippery to start, is it dry now?
@@ -881,62 +881,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		else
 			return ..()
 
-/obj/decal/cleanable/urine
-	name = "urine"
-	desc = "It's yellow, and it smells."
-	icon = 'icons/effects/urine.dmi'
-	icon_state = "floor1"
-	random_icon_states = list("floor1", "floor2", "floor3")
-	var/thrice_drunk = 0
-	can_dry = 1
-	slippery = 80
-	can_sample = 1
-	sample_amt = 4
-	sample_reagent = "urine"
-	stain = "piss-soaked"
-
-	Crossed(atom/movable/O)
-		if (istype(O, /obj/item/clothing/under/towel))
-			var/obj/item/clothing/under/towel/T = O
-			T.dry_turf(get_turf(src))
-			return
-		else
-			return ..()
-
-	Sample(var/obj/item/W as obj, var/mob/user as mob)
-		if (!src.can_sample)
-			return 0
-
-		if (W.is_open_container() && W.reagents)
-			if (W.reagents.total_volume >= W.reagents.maximum_volume - 2)
-				user.show_text("[W] is too full!", "red")
-				return
-
-			else
-				user.visible_message(SPAN_NOTICE("<b>[user]</b> is splashing the urine puddle into \the [W]. How singular."),\
-				SPAN_NOTICE("You splash a little urine into \the [W]."))
-
-				switch (thrice_drunk)
-					if (0)
-						W.reagents.add_reagent("urine", 1)
-					if (1)
-						W.reagents.add_reagent("urine", 1)
-						W.reagents.add_reagent("toeoffrog", 1)
-					if (2)
-						W.reagents.add_reagent("urine", 1)
-						W.reagents.add_reagent("woolofbat", 1)
-					if (3)
-						W.reagents.add_reagent("urine", 1)
-						W.reagents.add_reagent("tongueofdog", 1)
-					if (4)
-						W.reagents.add_reagent("triplepiss",1)
-
-				if (prob(25))
-					qdel(src)
-
-				W.reagents.handle_reactions()
-				return 1
-
 /obj/decal/cleanable/vomit
 	name = "pool of vomit"
 	desc = "Someone lost their lunch."
@@ -1226,7 +1170,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	var/slow_duration = 3 SECONDS
 
 	Crossed(atom/A)
-		if (ismob(A) && !isintangible(A))
+		if (ismob(A) && isliving(A) && !isintangible(A))
 			A.changeStatus("slowed", src.slow_duration)
 			SPAWN(-1)
 				qdel(src)		//break when walked over
@@ -1768,7 +1712,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		kind_of_cleanable = "BLOOD"
 	SPAWN(0)
 		/// Number of tiles where it should try to make a splatter
-		var/num_splats = rand(round(dist * 0.2), dist) + 1
+		var/num_splats = randfloat(round(dist * 0.2), dist) + 1
 		for (var/turf/T in linepath)
 			if(step_to(src, T, 0, 300) && num_splats-- >= 1)
 				switch(kind_of_cleanable)

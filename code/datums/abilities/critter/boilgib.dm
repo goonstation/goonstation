@@ -33,7 +33,7 @@
 			if(iscarbon(M))
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
-					if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit) && istype(H.head, /obj/item/clothing/head/bio_hood))
+					if(istype(H.wear_suit, /obj/item/clothing/suit/hazard/bio_suit) && istype(H.head, /obj/item/clothing/head/bio_hood))
 						boutput(M, SPAN_NOTICE("You are sprayed with blood, but your biosuit protects you!"))
 						continue
 				M.emote("scream")

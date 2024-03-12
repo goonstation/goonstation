@@ -34,10 +34,10 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 		..()
 		UpdateIcon()
 
-		SPAWN(rand(0.5 SECOND, 2 SECONDS))
+		SPAWN(randfloat(0.5 SECOND, 2 SECONDS))
 
 			//modified bumble
-			var/floatspeed = rand(1 SECOND,1.4 SECONDS)
+			var/floatspeed = randfloat(1 SECOND,1.4 SECONDS)
 			animate(src, pixel_y = 3, time = floatspeed, loop = -1, easing = LINEAR_EASING, , flags=ANIMATION_PARALLEL)
 			animate(pixel_y = -3, time = floatspeed, easing = LINEAR_EASING)
 
@@ -311,7 +311,8 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 
 	Move(NewLoc, direct)
 		. = ..()
-		animate(src, time=5 SECONDS, pixel_x=rand(-4,4), pixel_y=rand(-8,8))
+		if (!ON_COOLDOWN(src, "move_bumble", 5 SECONDS))
+			animate(src, time=5 SECONDS, pixel_x=rand(-4,4), pixel_y=rand(-8,8))
 
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W, /obj/item/reagent_containers/glass/jar) || istype(W, /obj/item/reagent_containers/glass/beaker/large))

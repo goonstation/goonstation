@@ -224,9 +224,9 @@
 		if (istype(I, /obj/item/grab/))
 			var/obj/item/grab/G = I
 			if  (!grab_smash(G, user))
-				return ..(I, user)
+				return ..()
 			else return
-		return ..(I, user)
+		return ..()
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		F["[path].type"] << type
@@ -443,15 +443,17 @@
 ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 /obj/proc/admin_command_obj_speak()
 	set name = "Object Speak"
-	src.obj_speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
+	var/msg = tgui_input_text(usr, "Speak message through [src]", "Speak", "")
+	if (msg)
+		src.obj_speak(msg)
 
 /obj/proc/obj_speak(message)
-	if(isnull(message))
-		message = tgui_input_text(usr, "Speak message through [src]", "Speak", "")
 	var/image/chat_maptext/chat_text = make_chat_maptext(src, message, "color: '#DDDDDD';", alpha = 255)
 
 	var/list/mob/targets = null
-	var/mob/holder = src.loc
+	var/mob/holder = src
+	while(holder && !istype(holder))
+		holder = holder.loc
 	ENSURE_TYPE(holder)
 	if(!holder)
 		targets = hearers(src, null)
@@ -461,4 +463,4 @@ ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 		chat_text.layer = 999
 
 	for(var/mob/O in targets)
-		O.show_message("<span class='game say'>[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]</span>", 2, assoc_maptext = chat_text)
+		O.show_message(SPAN_SAY("[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]"), 2, assoc_maptext = chat_text)

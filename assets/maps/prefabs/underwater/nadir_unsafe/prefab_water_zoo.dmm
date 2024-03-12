@@ -26,7 +26,7 @@
 	},
 /area/prefab/zoo)
 "h" = (
-/obj/critter/maneater,
+/mob/living/critter/plant/maneater,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

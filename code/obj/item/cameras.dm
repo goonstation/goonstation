@@ -209,21 +209,37 @@ TYPEINFO(/obj/item/camera_film/large)
 	tooltip_flags = REBUILD_DIST
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 
 	New(location, var/image/IM, var/icon/IC, var/nname, var/ndesc)
 		..(location)
 		if (istype(IM))
 			fullImage = IM
-			IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
-			IM.pixel_y = 1
-			src.UpdateOverlays(IM, "photo")
+			render_photo_image(src.layer)
 		if (istype(IC))
 			fullIcon = IC
 		if (nname)
 			src.name = nname
 		if (ndesc)
 			src.desc = ndesc
+
+	/// Resize and update photo overlay (layer)
+	proc/render_photo_image(var/layer)
+		var/image/IM = src.fullImage
+		IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
+		IM.pixel_y = 1
+		IM.layer = layer
+		src.UpdateOverlays(IM, "photo")
+
+	// Update overlay layer for photo to show in hand/backpack
+	pickup()
+		..()
+		render_photo_image(HUD_LAYER_2)
+
+	// Update overlay layer for photo when dropping on floor or in belt/bag/container
+	dropped()
+		..()
+		render_photo_image(src.layer)
 
 /obj/item/photo/get_desc(var/dist)
 	if(dist>1)
@@ -238,13 +254,13 @@ TYPEINFO(/obj/item/camera_film/large)
 		if (written)
 			. += "At the bottom is written: [written]"
 
-
 /obj/item/photo/attackby(obj/item/W, mob/user)
 	var/obj/item/pen/P = W
 	if(istype(P))
 		var/signwrite = input(user, "Sign or Write?", null, null) as null|anything in list("sign","write")
 		var/t = input(user, "What do you want to [signwrite]?", null, null) as null|text
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
+		logTheThing(LOG_STATION, user, "[signwrite]s '[t]' on [src]")
 		if(t)
 			if(signwrite == "sign")
 				var/image/signature = image(icon='icons/misc/photo_writing.dmi',icon_state="[signwrite]")

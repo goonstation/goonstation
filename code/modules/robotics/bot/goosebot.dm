@@ -15,7 +15,7 @@
 /obj/machinery/bot/goosebot/proc/quack(var/message)
 	if (!src.on || !message || src.muted)
 		return
-	src.visible_message("<span class='game say'>[SPAN_NAME("[src]")] blares, \"[message]\"")
+	src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] blares, \"[message]\""))
 	return
 
 /obj/machinery/bot/goosebot/proc/wakka_wakka()
@@ -71,7 +71,7 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	src.visible_message(SPAN_COMBAT("<B>[src] blows apart!</B>"), 1)
+	src.visible_message(SPAN_COMBAT("<B>[src] blows apart!</B>"))
 	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	explosion(src, src.loc , 0, 0, 1, 1)
 	qdel(src)

@@ -40,6 +40,9 @@
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
 
+	attack_self(mob/user as mob)
+		attack(user, user)
+
 	/// rolls to turn the bread loaf into a mimic once the requirement is reached
 	proc/mutate()
 		src.teleport_count += 1

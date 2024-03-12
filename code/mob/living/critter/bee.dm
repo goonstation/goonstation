@@ -62,7 +62,6 @@
 		real_name = name
 		SPAWN(0)
 			ADMIN_BEES_ONLY
-			//statlog_bees(src)
 			src.UpdateIcon()
 
 			if (!isdead(src))
@@ -206,7 +205,7 @@
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks))
 			if (findtext(W.name,"bee") && !istype(W, /obj/item/reagent_containers/food/snacks/beefood)) // You just know somebody will do this
-				src.visible_message("<b>[src]</b> buzzes in a repulsed manner!", 1)
+				src.visible_message("<b>[src]</b> buzzes in a repulsed manner!")
 				return
 			if (!W.reagents)
 				boutput(user, "<b>[src]</b> respectfully declines, being a strict nectarian.")
@@ -218,7 +217,7 @@
 				return
 
 			user.visible_message("<b>[user]</b> feeds [W] to [src]!","You feed [W] to [src].")
-			src.visible_message("<b>[src]</b> buzzes delightedly.", 1)
+			src.visible_message("<b>[src]</b> buzzes delightedly.")
 
 			user.HealDamage("All", 10, 10)
 			W.reagents.del_reagent("nectar")
@@ -412,7 +411,7 @@
 			return 0
 		if (!target.melee_attack_test(user))
 			return
-		src.custom_msg = "<b>[SPAN_COMBAT("[user] bites [target] with [his_or_her(user)] [pick(src.bite_adjectives)] [prob(50) ? "mandibles" : "bee-teeth"]!")]</b>"
+		src.custom_msg = SPAN_COMBAT("<b>[user] bites [target] with [his_or_her(user)] [pick(src.bite_adjectives)] [prob(50) ? "mandibles" : "bee-teeth"]!</b>")
 		..()
 
 /datum/limb/mouth/small/bee/queen
@@ -586,6 +585,7 @@
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, SPAN_ALERT("That is too far away to teleport away."))
 			return 1
+		logTheThing(LOG_COMBAT, src.holder.owner, "begins casting teleport stare on [constructTarget(target)] at [log_loc(src.holder.owner)]")
 		holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner]</b> stares at [MT]!"))
 		if(do_buzz)
 			playsound(holder.owner, 'sound/voice/animal/buzz.ogg', 100, 1)
@@ -597,8 +597,9 @@
 				MT.emote("scream")
 				MT.setStatusMin("paralysis", 20 SECONDS)
 				MT.take_brain_damage(10)
-
-				do_teleport(MT, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)
+				var/turf/turf = locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1)
+				logTheThing(LOG_COMBAT, src.holder.owner, "stuns and teleports [constructTarget(target)] to [log_loc(turf)] using teleport stare")
+				do_teleport(MT, turf, 0)
 
 
 /datum/targetable/critter/bee_puke_honey

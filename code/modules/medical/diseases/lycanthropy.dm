@@ -3,7 +3,8 @@
 	print_name = "Unidentified virus"
 	max_stages = 5
 	spread = "Saliva"
-	cure = "Incurable"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Silver nitrate"
 	reagentcure = list("silver_nitrate")
 	recureprob = 10
 	affected_species = list("Human")

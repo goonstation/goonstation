@@ -58,14 +58,14 @@
 			return TRUE
 		if (prob(20) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
 			playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 60, 1)
-			src.visible_message(SPAN_ALERT("<b>[src] laughs!</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[src] laughs!</b>"))
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/brullbar_roar.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] howls!")]</b>"
+					return SPAN_ALERT("<b>[src] howls!</b>")
 		return null
 
 	specific_emote_type(var/act)

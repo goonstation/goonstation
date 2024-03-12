@@ -283,6 +283,7 @@ TYPEINFO(/obj/vehicle/segway)
 	var/datum/light/light
 	ability_buttons_to_initialize = list(/obj/ability_button/weeoo)
 	var/obj/item/joustingTool = null // When jousting will be reference to lance being used
+	var/weeoo_sound = 'sound/machines/siren_police.ogg'
 
 /obj/vehicle/segway/New()
 	..()
@@ -296,7 +297,7 @@ TYPEINFO(/obj/vehicle/segway)
 
 	weewoo_cycles_remaining = 10
 	SPAWN(0)
-		playsound(src.loc, 'sound/machines/siren_police.ogg', 50, 1)
+		playsound(src.loc, src.weeoo_sound, 50, 1)
 		light.enable()
 		src.icon_state = "[src.icon_base][SEGWAY_STATE_WEEWOO]"
 		while (weewoo_cycles_remaining--)
@@ -349,7 +350,7 @@ TYPEINFO(/obj/vehicle/segway)
 	update()
 	..()
 	in_bump = TRUE
-	if(isturf(AM) && (src.emagged || src.rider.bioHolder.HasEffect("clumsy") || (src.rider.reagents && src.rider.reagents.has_reagent("ethanol"))))
+	if((isturf(AM) || istype(AM, /obj/window)) && (src.emagged || src.rider.bioHolder.HasEffect("clumsy") || (src.rider.reagents && src.rider.reagents.has_reagent("ethanol"))))
 		src.rider.visible_message(SPAN_ALERT("<b>[rider] crashes into the wall with \the [src]!</b>"), SPAN_ALERT("<b>[src] crashes into the wall!</b>"))
 		eject_rider(2)
 		JOB_XP(rider, "Clown", 1)
@@ -616,6 +617,7 @@ TYPEINFO(/obj/vehicle/segway)
 /obj/vehicle/segway/emag_act(mob/user, obj/item/card/emag/E)
 	if (!src.emagged)
 		src.emagged = TRUE
+		src.delay = 1.4
 		src.weeoo()
 		src.desc = src.desc + " It looks like the safety circuits have been shorted out."
 		src.visible_message(SPAN_ALERT("<b>[src] beeps ominously.</b>"))
@@ -751,6 +753,10 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 			sleep(0.3 SECONDS)
 			if (D_turf.active_liquid)
 				D_turf.active_liquid.try_connect_to_adjacent()
+
+			// clean floor drawings akin to the mop
+			var/turf/T = get_turf(src)
+			T.clean_forensic()
 
 			qdel(D)
 
@@ -1098,11 +1104,11 @@ TYPEINFO(/obj/vehicle/clowncar)
 		src.stuff_inside(user, mob_target)
 	else
 		return
-	for (var/mob/C in AIviewers(src))
-		if(C == user)
-			continue
-		C.show_message(msg, 3)
-	return
+	if(msg)
+		for (var/mob/C in AIviewers(src))
+			if(C == user)
+				continue
+			C.show_message(msg, 3)
 
 /obj/vehicle/clowncar/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
@@ -1771,13 +1777,13 @@ TYPEINFO(/obj/vehicle/adminbus)
 		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 		if(rider && prob(40))
 			playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-			src.visible_message(SPAN_ALERT("<b>[M] has pulled [rider] out of the [src]!</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[M] has pulled [rider] out of the [src]!</b>"))
 			rider.changeStatus("weakened", 2 SECONDS)
 			eject_rider(0,0,0)
 		else
 			if(src.contents.len)
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-				src.visible_message(SPAN_ALERT("<b>[M] opens up the [src], spilling the contents out!</b>"), 1)
+				src.visible_message(SPAN_ALERT("<b>[M] opens up the [src], spilling the contents out!</b>"))
 				for(var/atom/A in src.contents)
 					if(ismob(A))
 						var/mob/N = A
@@ -1998,14 +2004,14 @@ TYPEINFO(/obj/vehicle/adminbus)
 		src.moving_state = initial(src.moving_state)
 		src.nonmoving_state = initial(src.nonmoving_state)
 		src.is_badmin_bus = FALSE
-		boutput(usr, SPAN_INFO("Badmin mode disabled."))
+		boutput(usr, SPAN_NOTICE("Badmin mode disabled."))
 	else
 		src.name = src.badmin_name
 		src.desc = src.badmin_desc
 		src.moving_state = src.badmin_moving_state
 		src.nonmoving_state = src.badmin_nonmoving_state
 		src.is_badmin_bus = TRUE
-		boutput(usr, SPAN_INFO("Badmin mode enabled."))
+		boutput(usr, SPAN_NOTICE("Badmin mode enabled."))
 
 /client/proc/toggle_gib_onhit()
 	set category = "Adminbus"

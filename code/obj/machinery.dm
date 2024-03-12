@@ -432,7 +432,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		src.machine.visible_message(SPAN_ALERT("<b>[owner]</b> begins to rotate [src.machine]"), 1)
+		src.machine.visible_message(SPAN_ALERT("<b>[owner]</b> begins to rotate [src.machine]"))
 
 	onEnd()
 		..()

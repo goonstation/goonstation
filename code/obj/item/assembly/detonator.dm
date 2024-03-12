@@ -2,7 +2,6 @@
 	desc = "A failsafe timer, wired in an incomprehensible way to a detonator assembly"
 	name = "Detonator Assembly"
 	icon_state = "multitool-igniter"
-	uses_multiple_icon_states = 1
 	var/obj/item/device/multitool/part_mt = null
 	var/obj/item/device/igniter/part_ig = null
 	var/obj/item/tank/plasma/part_t = null
@@ -255,17 +254,17 @@
 	src.attachedTo.remove_simple_light("canister")
 
 	if (src.defused)
-		src.attachedTo.visible_message("<b>[SPAN_ALERT("The cut detonation wire emits a spark. The detonator signal never reached the detonator unit.")]</b>")
+		src.attachedTo.visible_message(SPAN_ALERT("<b>The cut detonation wire emits a spark. The detonator signal never reached the detonator unit.</b>"))
 		return
 	if (MIXTURE_PRESSURE(src.part_t.air_contents) < 400 || src.part_t.air_contents.toxins < (4*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C))
-		src.attachedTo.visible_message("<b>[SPAN_ALERT("A sparking noise is heard as the igniter goes off. The plasma tank fails to explode, merely burning the circuits of the detonator.")]</b>")
+		src.attachedTo.visible_message(SPAN_ALERT("<b>A sparking noise is heard as the igniter goes off. The plasma tank fails to explode, merely burning the circuits of the detonator.</b>"))
 		src.attachedTo.det = null
 		src.attachedTo.overlay_state = null
 		qdel(src)
 		return
-	src.attachedTo.visible_message("<b>[SPAN_ALERT("A sparking noise is heard as the igniter goes off. The plasma tank blows, creating a microexplosion and rupturing the canister.")]</b>")
+	src.attachedTo.visible_message(SPAN_ALERT("<b>A sparking noise is heard as the igniter goes off. The plasma tank blows, creating a microexplosion and rupturing the canister.</b>"))
 	if (MIXTURE_PRESSURE(attachedTo.air_contents) < 7000)
-		src.attachedTo.visible_message("<b>[SPAN_ALERT("The ruptured canister, due to a serious lack of pressure, fails to explode into shreds and leaks its contents into the air.")]</b>")
+		src.attachedTo.visible_message(SPAN_ALERT("<b>The ruptured canister, due to a serious lack of pressure, fails to explode into shreds and leaks its contents into the air.</b>"))
 		src.attachedTo.health = 0
 		src.attachedTo.healthcheck()
 		src.attachedTo.det = null
@@ -273,7 +272,7 @@
 		qdel(src)
 		return
 	if (attachedTo.air_contents.temperature < 100000)
-		src.attachedTo.visible_message("<b>[SPAN_ALERT("The ruptured canister shatters from the pressure, but its temperature isn't high enough to create an explosion. Its contents leak into the air.")]</b>")
+		src.attachedTo.visible_message(SPAN_ALERT("<b>The ruptured canister shatters from the pressure, but its temperature isn't high enough to create an explosion. Its contents leak into the air.</b>"))
 		src.attachedTo.health = 0
 		src.attachedTo.healthcheck()
 		src.attachedTo.det = null
@@ -284,7 +283,7 @@
 	var/turf/epicenter = get_turf(loc)
 	logTheThing(LOG_BOMBING, null, "A canister bomb detonates at [epicenter.loc.name] ([log_loc(epicenter)])")
 	message_admins("A canister bomb detonates at [epicenter.loc.name] ([log_loc(epicenter)])")
-	src.attachedTo.visible_message("<b>[SPAN_ALERT("The ruptured canister shatters from the pressure, and the hot gas ignites.")]</b>")
+	src.attachedTo.visible_message(SPAN_ALERT("<b>The ruptured canister shatters from the pressure, and the hot gas ignites.</b>"))
 
 	var/power = min(850 * (MIXTURE_PRESSURE(attachedTo.air_contents) + attachedTo.air_contents.temperature - 107000) / 233196469.0 + 200, 7000) //the second arg is the max explosion power
 	//if (power == 150000) //they reached the cap SOMEHOW? well dang they deserve a medal

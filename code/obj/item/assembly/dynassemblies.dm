@@ -71,7 +71,7 @@ For fruit DynAssemblies see: fruithat.dm
 			var/image/I = image(M.icon, M.icon_state)
 			I.pixel_x = rand(-6,6)
 			I.pixel_y = rand(-6,6)
-			I.layer += rand(0.25,0.75)
+			I.layer += randfloat(0.25,0.75)
 			if (usematerial)
 				if (M.material)
 					src.oldmat = M.material
@@ -83,7 +83,7 @@ For fruit DynAssemblies see: fruithat.dm
 		var/image/I = image(P.icon, P.icon_state)
 		I.pixel_x = rand(-6,6)
 		I.pixel_y = rand(-6,6)
-		I.layer += rand(0.25,0.75)
+		I.layer += randfloat(0.25,0.75)
 		if (usematerial)
 			I.color = P.color
 			I.alpha = P.alpha
@@ -121,7 +121,6 @@ For fruit DynAssemblies see: fruithat.dm
 /datum/action/bar/icon/dynassemblySecure //This is used when you are securing a dynassembly.
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "dynassSecure"
 	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/item/dynassembly/assembly
@@ -153,7 +152,6 @@ For fruit DynAssemblies see: fruithat.dm
 /datum/action/bar/icon/dynassemblyUnsecure //This is used when you are unsecuring a dynassembly.
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "dynassUnsecure"
 	icon = 'icons/obj/items/tools/wrench.dmi'
 	icon_state = "wrench"
 	var/obj/item/dynassembly/assembly

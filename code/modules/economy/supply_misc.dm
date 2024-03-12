@@ -107,16 +107,16 @@ TYPEINFO(/obj/strip_door)
 		..()
 		var/connectdir = get_connected_directions_bitflag(connects_to)
 		if ((connectdir & NORTH) && (connectdir & SOUTH))
-			src.dir = NORTH
+			src.dir = EAST
 			return
 		if ((connectdir & EAST) && (connectdir & WEST))
-			src.dir = EAST
-			return
-		if ((connectdir & NORTH) || (connectdir & SOUTH))
 			src.dir = NORTH
 			return
-		if ((connectdir & EAST) || (connectdir & WEST))
+		if ((connectdir & NORTH) || (connectdir & SOUTH))
 			src.dir = EAST
+			return
+		if ((connectdir & EAST) || (connectdir & WEST))
+			src.dir = NORTH
 			return
 
 	proc/change_direction()
@@ -146,6 +146,8 @@ TYPEINFO(/obj/strip_door)
 			var/mob/living/M = A
 			if (isghostdrone(M)) // except for drones
 				return TRUE
+			else if (isintangible(A))
+				return TRUE
 			else if (istype(A,/mob/living/critter/changeling/handspider) || istype(A,/mob/living/critter/changeling/eyespider))
 				return TRUE
 			else if (isdead(M))
@@ -159,6 +161,8 @@ TYPEINFO(/obj/strip_door)
 	Crossed(atom/A)
 		..()
 		if (!src.flap_material)
+			return
+		if (isintangible(A))
 			return
 		if (isliving(A))
 			var/mob/living/M = A

@@ -177,7 +177,7 @@ var/list/figure_high_rarity = list(\
 /datum/figure_info/boxer,
 /datum/figure_info/lawyer,
 /datum/figure_info/barber,
-/datum/figure_info/mailman,
+/datum/figure_info/mailcourier,
 /datum/figure_info/tourist,
 /datum/figure_info/vice,
 /datum/figure_info/clown,
@@ -268,8 +268,8 @@ var/list/figure_patreon_rarity = concrete_typesof(/datum/figure_info/patreon)
 		name = "barber"
 		icon_state = "barber"
 
-	mailman
-		name = "mailman"
+	mailcourier
+		name = "mail courier"
 		icon_state = "mailman"
 
 	atmos
@@ -986,16 +986,25 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "bowlofnuts"
 
 	joeled
-		name = "\improper Lawrence Crowley"
-		icon_state = "lawrencecrowley"
+		name = "\improper Tank Transfer"
+		icon_state = "tanktransfer"
 		ckey = "joeled"
+
+	firekestrel
+		name = "\improper Merryn Morse"
+		icon_state = "morse"
+		ckey = "firekestrel"
+
+	lyy
+		name = "\improper Jelly Fish"
+		icon_state = "jellyfish"
+		ckey = "lyy"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
 	icon = 'icons/obj/items/figures.dmi'
 	icon_state = "cap-y"
-	uses_multiple_icon_states = 1
 	contained_item = /obj/item/toy/figure
 	item_amount = 1
 	max_item_amount = 1
@@ -1047,7 +1056,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	var/sound_vend = 'sound/machines/capsulebuy.ogg'
 	var/image/capsule_image = null
 
-	create_products()
+	create_products(restocked)
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 35, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY_UNTRAINED*3)
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule/gaming_capsule, rand(4,10), cost=PAY_UNTRAINED/3, hidden=1)

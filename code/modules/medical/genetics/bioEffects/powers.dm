@@ -195,6 +195,7 @@
 			var/obj/item/I = the_object
 			if(I)
 				if(I.Eat(owner, owner, TRUE)) //eating can return false to indicate it failed
+					I.storage?.hide_hud(owner)
 					logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
 					// Organs and body parts have special behaviors we need to account for
 					if (ishuman(owner))
@@ -653,7 +654,7 @@
 		phrase_log.log_phrase("telepathy", msg)
 		msg = uppertext(msg)
 
-		owner.visible_message(SPAN_ALERT("<b>[owner]</b> puts their fingers to their temples and stares at [target] really hard."))
+		owner.visible_message(SPAN_ALERT("<b>[owner]</b> puts [his_or_her(owner)] fingers to [his_or_her(owner)] temples and stares at [target] really hard."))
 		owner.say(msg)
 
 		logTheThing(LOG_TELEPATHY, owner, "TELEPATHY misfire to [constructTarget(recipient,"telepathy")]: [msg]")
@@ -715,8 +716,8 @@
 		var/pain_condition = read.health
 		// lower health means more pain
 		var/list/randomthoughts = list("what to have for lunch","the future","the past","money",
-		"their hair","what to do next","their job","space","amusing things","sad things",
-		"annoying things","happy things","something incoherent","something they did wrong")
+		"[his_or_her(read)] hair","what to do next","[his_or_her(read)] job","space","amusing things","sad things",
+		"annoying things","happy things","something incoherent","something [he_or_she(read)] did wrong")
 		var/thoughts = "thinking about [pick(randomthoughts)]"
 		if (read.getStatusDuration("burning"))
 			pain_condition -= 50
@@ -735,7 +736,7 @@
 				boutput(owner, SPAN_NOTICE("<b>Condition</b>: [read.name] is suffering severe pain."))
 			else
 				boutput(owner, SPAN_NOTICE("<b>Condition</b>: [read.name] is suffering excruciating pain."))
-				thoughts = "haunted by their own mortality"
+				thoughts = "haunted by [his_or_her(read)] own mortality"
 
 		switch(read.a_intent)
 			if (INTENT_HELP)
@@ -989,7 +990,7 @@
 			boutput(owner, SPAN_ALERT("You're already farting! Be patient!"))
 			return 1
 
-		owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> hunches down and grits their teeth!"))
+		owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> hunches down and grits [his_or_her(owner)] teeth!"))
 		SF.farting = 1
 		var/stun_time = 3 * linked_power.power
 		var/fart_range = 6 * linked_power.power
@@ -1023,13 +1024,17 @@
 				shake_camera(V,10,64)
 				if (V == owner)
 					continue
-				boutput(V, SPAN_ALERT("You are sent flying!"))
 
 				V.changeStatus("weakened", stun_time SECONDS)
-				// why the hell was this set to 12 christ
-				while (throw_repeat > 0)
-					throw_repeat--
-					step_away(V,get_turf(owner),throw_speed)
+				if(!V.anchored)
+					boutput(V, SPAN_ALERT("You are sent flying!"))
+					// why the hell was this set to 12 christ
+					while (throw_repeat > 0)
+						throw_repeat--
+						step_away(V,get_turf(owner),throw_speed)
+				else
+					boutput(V, SPAN_ALERT("You are knocked down!"))
+
 			var/toxic = owner.bioHolder.HasEffect("toxic_farts")
 			if(toxic)
 				var/turf/fart_turf = get_turf(owner)
@@ -1427,7 +1432,7 @@
 			return 1
 
 		var/mob/living/carbon/C = target
-		owner.visible_message(SPAN_ALERT("<b>[owner] touches [C], enveloping them in a soft glow!</b>"))
+		owner.visible_message(SPAN_ALERT("<b>[owner] touches [C], enveloping [him_or_her(C)] in a soft glow!</b>"))
 		boutput(C, SPAN_NOTICE("You feel your pain fading away."))
 		var/amount_to_heal = 25 * linked_power.power
 		C.HealDamage("All", amount_to_heal, amount_to_heal)
@@ -1453,7 +1458,7 @@
 			return 1
 
 		var/mob/living/carbon/C = target
-		owner.visible_message(SPAN_ALERT("<b>[owner] touches [C], enveloping them in a bright glow!</b>"))
+		owner.visible_message(SPAN_ALERT("<b>[owner] touches [C], enveloping [him_or_her(C)] in a bright glow!</b>"))
 		boutput(C, SPAN_NOTICE("Your pain fades away rapidly."))
 		boutput(owner, SPAN_ALERT("You use too much life energy and hurt yourself!"))
 		var/amount_to_heal = 25 * linked_power.power
@@ -1548,7 +1553,7 @@
 			SPAWN(0.7 SECONDS)
 				owner.canmove = 1
 				owner.restrain_time = 0
-				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
+				var/obj/dummy/spell_invis/dimshift/invis_object = new /obj/dummy/spell_invis/dimshift(get_turf(owner), owner, P)
 				invis_object.canmove = 0
 				owner.set_loc(invis_object)
 				P.processing = FALSE
@@ -1565,13 +1570,6 @@
 				qdel(invis_object)
 			P.last_loc = null
 
-			owner.visible_message(SPAN_ALERT("<b>[owner] appears in a burst of blue light!</b>"))
-			playsound(owner.loc, 'sound/effects/ghost2.ogg', 50, 0)
-			SPAWN(0.7 SECONDS)
-				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
-				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
-				P.active = FALSE
-				P.processing = FALSE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1742,7 +1740,7 @@
 		if (..())
 			return 1
 
-		owner.visible_message(SPAN_ALERT("<b>[owner] manages to set themselves on fire!</b>"))
+		owner.visible_message(SPAN_ALERT("<b>[owner] manages to set [himself_or_herself(owner)] on fire!</b>"))
 		playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 		owner.set_burning(100)
 

@@ -93,9 +93,9 @@ var/global/noir = 0
 		return
 
 	if (usr.client != src.owner)
-		message_admins(SPAN_INTERNAL("[key_name(usr)] has attempted to override the admin panel!"))
-		logTheThing(LOG_ADMIN, usr, "tried to use the admin panel without authorization.")
-		logTheThing(LOG_DIARY, usr, "tried to use the admin panel without authorization.", "admin")
+		message_admins(SPAN_INTERNAL("[key_name(usr)] has attempted to override the admin panel with URL '[href]'!"))
+		logTheThing(LOG_ADMIN, usr, "tried to use the admin panel without authorization with URL '[href]'.")
+		logTheThing(LOG_DIARY, usr, "tried to use the admin panel without authorization with URL '[href]'.", "admin")
 		return
 
 	var/client/targetClient = null
@@ -125,37 +125,37 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("adminhelp_banner", usr.client.key)
+					C.player.cloudSaves.putData("adminhelp_banner", usr.client.key)
 					src.show_chatbans(C)
 		if ("ah_unmute")//guHGUHGUGHGUHG
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("adminhelp_banner", "")
+					C.player.cloudSaves.putData("adminhelp_banner", "")
 					src.show_chatbans(C)
 		if ("mh_mute")//AHDUASHDUHWUDHWDUHWDUWDH
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("mentorhelp_banner", usr.client.key)
+					C.player.cloudSaves.putData("mentorhelp_banner", usr.client.key)
 					src.show_chatbans(C)
 		if ("mh_unmute")//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("mentorhelp_banner", "")
+					C.player.cloudSaves.putData("mentorhelp_banner", "")
 					src.show_chatbans(C)
 		if ("pr_mute")
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("prayer_banner", usr.client.key)
+					C.player.cloudSaves.putData("prayer_banner", usr.client.key)
 					src.show_chatbans(C)
 		if ("pr_unmute")
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("prayer_banner", "")
+					C.player.cloudSaves.putData("prayer_banner", "")
 					src.show_chatbans(C)
 
 		if ("load_admin_prefs")
@@ -516,36 +516,11 @@ var/global/noir = 0
 		/////////////////////////////////////ban stuff
 		if ("addban") //Add ban
 			var/mob/M = (href_list["target"] ? locate(href_list["target"]) : null)
-			usr.client.addBanDialog(M)
+			usr.client.addBanTemp(M)
 
 		if ("sharkban") //Add ban
 			var/mob/M = (href_list["target"] ? locate(href_list["target"]) : null)
 			usr.client.sharkban(M)
-
-		if("unbane") //Edit ban
-			if (src.level >= LEVEL_SA)
-				var/id = html_decode(href_list["id"])
-				var/ckey = html_decode(href_list["target"])
-				var/compID = html_decode(href_list["compID"])
-				var/ip = html_decode(href_list["ip"])
-				var/reason = html_decode(href_list["reason"])
-				var/timestamp = html_decode(href_list["timestamp"])
-
-				usr.client.editBanDialog(id, ckey, compID, ip, reason, timestamp)
-			else
-				tgui_alert(usr,"You need to be at least a Secondary Administrator to edit bans.")
-
-		if("unbanf") //Delete ban
-			if (src.level >= LEVEL_SA)
-				var/id = html_decode(href_list["id"])
-				var/ckey = html_decode(href_list["target"])
-				var/compID = html_decode(href_list["compID"])
-				var/ip = html_decode(href_list["ip"])
-				var/akey = usr.client.ckey
-
-				usr.client.deleteBanDialog(id, ckey, compID, ip, akey)
-			else
-				tgui_alert(usr,"You need to be at least a Secondary Administrator to remove bans.")
 		/////////////////////////////////////end ban stuff
 
 		if("jobbanpanel")
@@ -564,7 +539,7 @@ var/global/noir = 0
 			else //It's a key. We need to cache it's ban history to not make 300 requests to the API.
 				target = M
 				action = "jobban_offline"
-				M = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+				M = jobban_get_for_player(M)
 			if (!M)
 				return
 
@@ -700,7 +675,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_SA)
 				var/M = href_list["target"]
 				var/job = href_list["type"]
-				var/list/cache = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+				var/list/cache = jobban_get_for_player(M)
 				if (!M) return
 				if (jobban_isbanned(cache, job))
 					if(cache.Find("Everything Except Assistant") && job != "Everything Except Assistant")
@@ -1145,7 +1120,7 @@ var/global/noir = 0
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
-				var/datum/viewport/viewport = usr.create_viewport("Admin: Viewport", title = "Following: [M.name]", size=9)
+				var/datum/viewport/viewport = usr.create_viewport(VIEWPORT_ID_ADMIN, title = "Following: [M.name]", size=9)
 				viewport.handler.listens = TRUE
 				viewport.start_following(M)
 			else
@@ -1406,6 +1381,7 @@ var/global/noir = 0
 				if (length(picklist))
 					var/string_version
 					for(pick in picklist)
+						M.onProcCalled("addBioEffect", list("idToAdd" = pick, "magical" = 1))
 						if(M.bioHolder.AddEffect(pick, magical = 1))
 							successes++
 
@@ -1419,7 +1395,7 @@ var/global/noir = 0
 					else if(successes > 0)
 						message_admins("[key_name(usr)] tried to dd the [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] but only [successes] succeeded to [key_name(M)].")
 					else
-						boutput(usr, "<b>[SPAN_ALERT("Failed to add [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] to [key_name(M)].")]</b>")
+						boutput(usr, SPAN_ALERT("<b>Failed to add [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] to [key_name(M)].</b>"))
 			else
 				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to bioeffect a player.")
 
@@ -1598,6 +1574,7 @@ var/global/noir = 0
 				var/ab_to_add = tgui_input_list(usr, "Add an Ability:", "Select", L)
 				if (!ab_to_add)
 					return // user canceled
+				M.onProcCalled("addAbility", list(ab_to_add))
 				M.abilityHolder.addAbility(ab_to_add)
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] added ability [ab_to_add] to [key_name(M)].")
@@ -1621,13 +1598,13 @@ var/global/noir = 0
 						for (var/datum/abilityHolder/AH in CH.holders)
 							abils += AH.abilities //get a list of all the different abilities in each holder
 					else
-						boutput(usr, "<b>[SPAN_ALERT("[M]'s composite holder lacks any ability holders to remove from!")]</b>")
+						boutput(usr, SPAN_ALERT("<b>[M]'s composite holder lacks any ability holders to remove from!</b>"))
 						return //no ability holders in composite holder
 				else
 					abils += M.abilityHolder.abilities
 
 				if(!abils.len)
-					boutput(usr, "<b>[SPAN_ALERT("[M] doesn't have any abilities!")]</b>")
+					boutput(usr, SPAN_ALERT("<b>[M] doesn't have any abilities!</b>"))
 					return //nothing to remove
 
 				sortList(abils, /proc/cmp_text_asc)
@@ -1706,6 +1683,7 @@ var/global/noir = 0
 				var/trait_to_add_name = tgui_input_list(usr, "Add a Trait:", "Select", traits_by_name)
 				if (!trait_to_add_name)
 					return // user canceled
+				M.onProcCalled("addTrait", list(all_traits[trait_to_add_name]))
 				M.traitHolder.addTrait(all_traits[trait_to_add_name])
 				message_admins("[key_name(usr)] added the trait [trait_to_add_name] to [key_name(M)].")
 				logTheThing(LOG_ADMIN, usr, "added the trait [trait_to_add_name] to [constructTarget(M,"admin")].")
@@ -1730,7 +1708,7 @@ var/global/noir = 0
 					traits.Add(trait_obj.name)
 
 				if(length(traits) == 0)
-					boutput(usr, "<b>[SPAN_ALERT("[M] doesn't have any traits!")]</b>")
+					boutput(usr, SPAN_ALERT("<b>[M] doesn't have any traits!</b>"))
 					return //nothing to remove
 
 				sortList(traits, /proc/cmp_text_asc)
@@ -1893,6 +1871,7 @@ var/global/noir = 0
 			if (tgui_alert(usr, "[M.real_name] (ckey [M.ckey]) will immediately become \a [selected_keyvalue]. Equipment and abilities will[do_equipment == "Yes" ? "" : " NOT"] be added. [do_objectives_text]. Is this what you want?", "Add Antagonist", list("Make it so.", "Cancel.")) != "Make it so.") // This is definitely not ideal, but it's what we have for now
 				return
 			boutput(usr, SPAN_NOTICE("Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.ckey])..."))
+			M.onProcCalled("add_antagonist", list(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE))
 			var/success = M.mind.add_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
 			if (success)
 				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue]."))
@@ -2193,9 +2172,10 @@ var/global/noir = 0
 				var/mob/M = locate(href_list["target"])
 				if (!M)
 					return
-				if (M.ckey && M.ckey == usr.ckey)
-					tgui_alert(usr, "You cannot modify your own antag tokens.")
-					return
+				//frick u im literally an admin
+				// if (M.ckey && M.ckey == usr.ckey)
+				// 	tgui_alert(usr, "You cannot modify your own antag tokens.")
+				// 	return
 				var/tokens = input(usr, "Current Tokens: [M.client.antag_tokens]","Set Antag Tokens to...") as null|num
 				if (isnull(tokens))
 					return
@@ -2313,7 +2293,7 @@ var/global/noir = 0
 							qdel(O)
 							LAGCHECK(LAG_LOW)
 					if("sec_classic1")
-						for(var/obj/item/clothing/suit/fire/O in world)
+						for(var/obj/item/clothing/suit/hazard/fire/O in world)
 							qdel(O)
 							LAGCHECK(LAG_LOW)
 						for(var/obj/grille/O in world)
@@ -2532,7 +2512,7 @@ var/global/noir = 0
 							if (tgui_alert(usr,"Do you want to give everyone a gun?", "Confirmation", list("Yes", "No")) != "Yes")
 								return
 							for (var/mob/living/L in mobs)
-								new /obj/random_item_spawner/kineticgun(get_turf(L))
+								new /obj/random_item_spawner/kineticgun/fullrandom(get_turf(L))
 							message_admins("[key_name(usr)] gave everyone a random firearm.")
 							logTheThing(LOG_ADMIN, usr, "gave everyone a random firearm.")
 							logTheThing(LOG_DIARY, usr, "gave everyone a random firearm.", "admin")
@@ -2561,6 +2541,16 @@ var/global/noir = 0
 							boutput(usr, SPAN_ALERT("<B>Time warped!</B>"))
 							logTheThing(LOG_ADMIN, usr, "triggered a time warp.")
 							logTheThing(LOG_DIARY, usr, "triggered a time warp.", "admin")
+						else
+							tgui_alert(usr,"You must be at least a Primary Administrator")
+							return
+					if ("brick_radios")
+						if (src.level >= LEVEL_PA)
+							if (tgui_alert(usr, "Really brick all radios for all time?", "Are you sure?", list("Yes", "Oops misclick")) == "Yes")
+								no_more_radio()
+								message_admins("[key_name(usr)] bricked all radios forever")
+								logTheThing(LOG_ADMIN, usr, "bricked all radios forever")
+								logTheThing(LOG_DIARY, usr, "bricked all radios forever", "admin")
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
@@ -2641,6 +2631,7 @@ var/global/noir = 0
 
 							var/ab_to_do = tgui_input_list(owner, "Which ability?", "[adding ? "Give" : "Remove"] Ability", childrentypesof(/datum/targetable))
 							if (adding)
+								M.onProcCalled("addAbility", list(ab_to_do))
 								M.abilityHolder.addAbility(ab_to_do)
 							else
 								M.abilityHolder.removeAbility(ab_to_do)
@@ -3254,152 +3245,11 @@ var/global/noir = 0
 
 				switch(href_list["type"])
 					if("check_antagonist")
-						if (ticker?.mode && current_state >= GAME_STATE_PLAYING)
-							#define isdeadplayer(M) (isdead(M) || (isVRghost(M) || isghostcritter(M) || inafterlife(M) || isghostdrone(M)))
-							var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1><A href='?src=\ref[src];action=secretsadmin;type=check_antagonist'>Refresh</A><br><br>"
-							dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
-							dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero(world.time / 600 % 60, 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B><BR>"
+						if (isnull(src.antagonist_panel))
+							src.antagonist_panel = new
 
-							if (istype(ticker.mode, /datum/game_mode/nuclear))
-								var/datum/game_mode/nuclear/NN = ticker.mode
-								dat += "<br><table cellspacing=5><tr><td><B>Syndicates</B></td><td></td></tr>"
-								for(var/datum/mind/N in NN.syndicates)
-									var/mob/M = N.current
-									if(!M) continue
-									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td></tr>"
+						src.antagonist_panel.ui_interact(src.owner.mob)
 
-								// This basic bit of info was missing, even though you could look up the
-								// location of the old auth disk here in the past (Convair880).
-								dat += "</table><br><table><tr><td><b>Nuclear bomb:</b></td></tr>"
-								if (NN.the_bomb && istype(NN.the_bomb, /obj/machinery/nuclearbomb/))
-									var/turf/T = get_turf(NN.the_bomb)
-									dat += "<tr><td>Location:"
-									if (T && istype(T, /turf))
-										dat += " <a href='?src=\ref[src];action=jumptocoords;target=[T.x],[T.y],[T.z]'>[T.x],[T.y],[T.z]</a> ([get_area(NN.the_bomb)])</tr></td>"
-									else
-										dat += " Found (unknown location)</tr></td>"
-								else
-									dat += "<tr><td>N/A (destroyed or not associated with objective)</tr></td>"
-
-								dat += "<tr><td>Target area:"
-								if (!isnull(NN.target_location_type))
-									dat += " [NN.concatenated_location_names]</tr></td>"
-								else
-									dat += " Unknown or not assigned</tr></td>"
-
-								dat += "</table>"
-
-							else if (istype(ticker.mode, /datum/game_mode/revolution))
-								dat += "<br><table cellspacing=5><tr><td><B>Revolutionaries</B></td><td></td></tr>"
-								for(var/datum/mind/N in ticker.mode:head_revolutionaries)
-									var/mob/M = N.current
-									if(!M) continue
-									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a> <b>(Leader)</b>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td></tr>"
-								for(var/datum/mind/N in ticker.mode:revolutionaries)
-									var/mob/M = N.current
-									if(!M) continue
-									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td></tr>"
-								dat += "</table><table cellspacing=5><tr><td><B>Target(s)</B></td><td></td><td><B>Location</B></td></tr>"
-								for(var/datum/mind/N in ticker.mode:get_all_heads())
-									var/mob/M = N.current
-									if(!M) continue
-									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-									var/turf/mob_loc = get_turf(M)
-									dat += "<td>[mob_loc.loc]</td></tr>"
-								dat += "</table>"
-
-							else if (istype(ticker.mode, /datum/game_mode/spy))
-								var/datum/game_mode/spy/spymode = ticker.mode
-								if(length(spymode.leaders))
-									dat += "<br><table cellspacing=5><tr><td><B>Infiltrators:</B></td><td></td><tr>"
-									for(var/datum/mind/leader in spymode.leaders)
-										var/mob/M = leader.current
-										if(!M) continue
-										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[key_name(M)]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-										dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-										dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>Show Objective</A></td></tr>"
-
-									dat += "</table>"
-								else
-									dat += "There are no infiltrators."
-
-								if(length(spymode.spies))
-									dat += "<br><table cellspacing=5><tr><td><B>Brainwashed Followers:</B></td><td></td><tr>"
-									for(var/datum/mind/spy in spymode.spies)
-										var/mob/M = spy.current
-										if(!M) continue
-										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-										dat += "<td>Obeys: "
-										var/datum/mind/obeycheck = spymode.spies[spy]
-										if (istype(obeycheck) && obeycheck.current)
-											dat += "[obeycheck.current.ckey]"
-										else
-											dat += "Nobody!"
-										dat += "</td><td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td></tr>"
-
-									dat += "</table>"
-								else
-									dat += "There are no brainwashed followers."
-
-							for(var/datum/gang/gang in get_all_gangs())
-								var/mob/M = gang.leader.current
-								dat += "<br><table cellspacing=5><tr><td>([format_frequency(gang.gang_frequency)]) <B>[gang.gang_name]:</B></td><td></td><tr>"
-								dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'><b>[M.real_name] ([M.ckey])</b></a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-								dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-								dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>Show Objective</A></td></tr>"
-								for(var/datum/mind/member in gang.members)
-									if(member.current)
-										dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[member.current]'>[member.current.real_name] ([member.current.ckey])</a>[member.current.client ? "" : " <i>(logged out)</i>"][isdeadplayer(member.current) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-										dat += "<td><a href='?action=priv_msg&target=[member.ckey]'>PM</A></td>"
-										dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[member.current]'>Show Objective</A></td></tr>"
-								dat += "</table>"
-
-							if (length(ticker.mode.traitors) > 0)
-								dat += "<br><table cellspacing=5><tr><td><B>Traitors</B></td><td></td><td></td></tr>"
-								for (var/datum/mind/traitor in ticker.mode.traitors)
-									var/mob/M = traitor.current
-									if (!M) continue
-									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>([M?.mind?.special_role])</A></td></tr>"
-								dat += "</table>"
-
-							if(length(ticker.mode.Agimmicks) > 0)
-								dat += "<br><table cellspacing=5><tr><td><B>Misc Foes</B></td><td></td><td></td></tr>"
-								for(var/datum/mind/gimmick in ticker.mode.Agimmicks)
-									var/mob/M = gimmick.current
-									if(!M) continue
-									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>([M?.mind?.special_role])</A></td></tr>"
-								dat += "</table>"
-
-							if (istype(ticker.mode, /datum/game_mode/spy_theft) || ticker.mode.spy_market)
-								var/datum/game_mode/spy_theft/game = istype(ticker.mode, /datum/game_mode/spy_theft) ? ticker.mode : ticker.mode.spy_market
-
-								var/refresh_time_formatted = round((game.last_refresh_time + game.bounty_refresh_interval)/10 ,1)
-								refresh_time_formatted = "[round(refresh_time_formatted / 3600)]:[add_zero(round(refresh_time_formatted % 3600 / 60), 2)]:[add_zero(num2text(refresh_time_formatted % 60), 2)]"
-
-								dat += "<br><tr><td><B>Current Bounties (Refresh at [refresh_time_formatted])  </B></td><td></td></tr>"
-								for(var/datum/bounty_item/B in game.active_bounties)
-									var/atext = ""
-									if (B.reveal_area && B.item && !B.claimed)
-										atext = "<br>(Last Seen : [get_area(B.item)])"
-									var/rtext = ""
-									if (B.reward)
-										rtext = "<br><b>Reward</b> : [B.reward.name]"
-
-									dat += "<br><br><tr><td><b>[B.name]</b>[rtext][atext]<br> [(B.claimed) ? "(<b>CLAIMED</b>)" : "(Deliver : <b>[B.delivery_area ? B.delivery_area : "Anywhere"]</b>)"]</td></tr>"
-
-							dat += "</body></html>"
-							usr.Browse(dat, "window=roundstatus;size=400x500")
-							#undef isdeadplayer
-						else
-							tgui_alert(usr,"The game hasn't started yet!")
 					if("shuttle_panel")
 						if (current_state >= GAME_STATE_PLAYING)
 							var/dat = "<html><head><title>Shuttle Controls</title></head><body><h1><B>Shuttle Controls</B></h1>"
@@ -3650,11 +3500,11 @@ var/global/noir = 0
 
 			usr.client.cmd_view_runtimes()
 
-		if ("viewantaghistory")
-			if (src.level < LEVEL_SA)
-				return tgui_alert(usr,"You must be at least a Secondary Admin to view antag history.")
+		// if ("viewantaghistory")
+		// 	if (src.level < LEVEL_SA)
+		// 		return tgui_alert(usr,"You must be at least a Secondary Admin to view antag history.")
 
-			usr.client.cmd_antag_history(href_list["targetckey"])
+		// 	usr.client.cmd_antag_history(href_list["targetckey"])
 
 		if ("show_player_stats")
 			if (src.level < LEVEL_SA)
@@ -3746,7 +3596,7 @@ var/global/noir = 0
 				alert ("No client found, sorry.")
 
 		else
-			world << "Undefined action [href_list["action"]]"
+			message_coders("Undefined action [href_list["action"]]")
 
 	//Wires bad hack part 2
 	sleep(0)
@@ -3968,6 +3818,7 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsfun;type=swaprooms'>Swap station rooms around</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=randomguns'>Give everyone a random firearm</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=timewarp'>Set up a time warp</A><BR>
+					<A href='?src=\ref[src];action=secretsfun;type=brick_radios'>Completely disable all radios ever</A><BR>
 				"}
 	if (src.level >= LEVEL_ADMIN)
 		dat += {"<A href='?src=\ref[src];action=secretsfun;type=sawarms'>Give everyone saws for arms</A><BR>
@@ -4011,7 +3862,7 @@ var/global/noir = 0
 		ircmsg["msg"] = "manually restarted the server."
 		ircbot.export_async("admin", ircmsg)
 
-		round_end_data(2) //Wire: export_async round end packet (manual restart)
+		roundManagement.recordEnd(crashed = TRUE)
 
 		sleep(3 SECONDS)
 		Reboot_server()
@@ -4328,26 +4179,23 @@ var/global/noir = 0
 		return
 
 /datum/admins/proc/show_chatbans(var/client/C)//do not use this as an example of how to write DM please.
-	if( !C.cloud_available() )
-		tgui_alert( "Failed to communicate to Goonhub." )
-		return
 	var/built = {"<title>Chat Bans (todo: prettify)</title>"}
-	if(C.cloud_get( "adminhelp_banner" ))
-		built += "<a href='?src=\ref[src];target=\ref[C];action=ah_unmute' class='alert'>Adminhelp Mute</a> (Last by [C.cloud_get( "adminhelp_banner" )])<br/>"
+	if(C.player.cloudSaves.getData( "adminhelp_banner" ))
+		built += "<a href='?src=\ref[src];target=\ref[C];action=ah_unmute' class='alert'>Adminhelp Mute</a> (Last by [C.player.cloudSaves.getData( "adminhelp_banner" )])<br/>"
 		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from adminhelping.")
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=ah_mute'>Adminhelp Mute</a><br/>"
 		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from adminhelping.")
 
-	if(C.cloud_get( "mentorhelp_banner" ))
-		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_unmute' class='alert'>Mentorhelp Mute</a> (Last by [C.cloud_get( "mentorhelp_banner" )])<br/>"
+	if(C.player.cloudSaves.getData( "mentorhelp_banner" ))
+		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_unmute' class='alert'>Mentorhelp Mute</a> (Last by [C.player.cloudSaves.getData( "mentorhelp_banner" )])<br/>"
 		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from mentorhelping.")
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_mute'>Mentorhelp Mute</a><br/>"
 		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from mentorhelping.")
 
-	if(C.cloud_get( "prayer_banner" ))
-		built += "<a href='?src=\ref[src];target=\ref[C];action=pr_unmute' class='alert'>Prayer Mute</a> (Last by [C.cloud_get( "prayer_banner" )])<br/>"
+	if(C.player.cloudSaves.getData( "prayer_banner" ))
+		built += "<a href='?src=\ref[src];target=\ref[C];action=pr_unmute' class='alert'>Prayer Mute</a> (Last by [C.player.cloudSaves.getData( "prayer_banner" )])<br/>"
 		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from praying.")
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=pr_mute'>Prayer Mute</a><br/>"

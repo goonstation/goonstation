@@ -546,13 +546,13 @@
 			else if(user.r_hand == can)
 				tileColour = STYLING_TILECOLOR2
 			else
-				boutput(user, SPAN_WARNING("You need to hold the paint can in your hand to use it!"))
+				boutput(user, SPAN_ALERT("You need to hold the paint can in your hand to use it!"))
 				return
 
 
 			//Check if the paint can is empty
 			if(can.uses <= 0)
-				boutput(user, SPAN_WARNING("The paint can is empty!"))
+				boutput(user, SPAN_ALERT("The paint can is empty!"))
 				return
 
 			//Apply the paint to the src.styling[tileColour]

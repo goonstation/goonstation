@@ -5,7 +5,8 @@
 	scantype = "Chemical Dependency"
 	max_stages = 5
 	stage_prob = 3
-	cure = "Time"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Time"
 	affected_species = list("Human")
 
 /datum/ailment/addiction/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/addiction/D, mult)

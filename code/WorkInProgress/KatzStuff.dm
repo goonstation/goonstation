@@ -5,7 +5,6 @@
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "ag3_rifle"
 	item_state = "assault_rifle"
-	uses_multiple_icon_states = 1
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_AUTO_308)
@@ -28,7 +27,7 @@
 	damage = 50
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 

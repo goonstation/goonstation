@@ -2,6 +2,7 @@
 	id = ROLE_REVOLUTIONARY
 	display_name = "revolutionary"
 	antagonist_icon = "rev"
+	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/revolution
 	succinct_end_of_round_antagonist_entry = TRUE
 	remove_on_death = TRUE
 
@@ -34,9 +35,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(ROLE_REVOLUTIONARY)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()
@@ -50,7 +50,7 @@
 
 	announce()
 		. = ..()
-		src.owner.current.show_text("<h4><span class='alert'>Kill the Heads of Staff and don't harm your fellow freedom fighters. You can identify your comrades by the R icons (blue = head rev, red = regular member).</span></h4>")
+		src.owner.current.show_text("<h4>[SPAN_ALERT("Kill the Heads of Staff and don't harm your fellow freedom fighters. You can identify your comrades by the R icons (blue = head rev, red = regular member).")]</h4>")
 
 	announce_removal()
 		. = ..()

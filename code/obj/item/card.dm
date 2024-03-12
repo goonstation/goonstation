@@ -71,7 +71,6 @@ TYPEINFO(/obj/item/card/emag)
 /obj/item/card/id
 	name = "identification card"
 	icon_state = "id"
-	uses_multiple_icon_states = 1
 	item_state = "card-id"
 	desc = "A standardized NanoTrasen microchipped identification card that contains data that is scanned when attempting to access various doors and computers."
 	flags = FPRINT | TABLEPASS | ATTACK_SELF_DELAY
@@ -162,6 +161,19 @@ TYPEINFO(/obj/item/card/emag)
 		..()
 		access = get_access("Captain")
 		src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job="Captain", message_admins_too=FALSE)
+
+/obj/item/card/id/nt_specialist
+	icon_state = "polaris"
+	keep_icon = TRUE
+
+/obj/item/card/id/pirate
+	access = list(access_maint_tunnels, access_pirate)
+	assignment = "Space Pirate"
+
+	first_mate
+		assignment = "Space Pirate First Mate"
+	captain
+		assignment = "Space Pirate Captain"
 
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
@@ -292,7 +304,7 @@ TYPEINFO(/obj/item/card/emag)
 	if(!src.registered)
 		var/reg = copytext(src.sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)), 1, 100)
 		var/ass = copytext(src.sanitize_name(input(user, "What occupation would you like to put on this card?\n Note: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Staff Assistant"), 1), 1, 100)
-		var/color = input(user, "What color should the ID's color band be?\nClick cancel to abort the forging process.") as null|anything in list("clown","golden","blue","red","green","purple","yellow","No band")
+		var/color = input(user, "What color should the ID's color band be?\nClick cancel to abort the forging process.") as null|anything in list("clown","golden","blue","red","green","purple","yellow","nanotrasen","syndicate","No band")
 		var/datum/pronouns/pronouns = choose_pronouns(user, "What pronouns would you like to put on this card?", "Pronouns")
 		src.pronouns = pronouns
 		switch (color)
@@ -312,6 +324,10 @@ TYPEINFO(/obj/item/card/emag)
 				src.icon_state = "id_res"
 			if ("yellow")
 				src.icon_state = "id_eng"
+			if ("nanotrasen")
+				src.icon_state = "polaris"
+			if ("syndicate")
+				src.icon_state = "id_syndie"
 			else
 				return // Abort process.
 		src.registered = reg
@@ -323,6 +339,14 @@ TYPEINFO(/obj/item/card/emag)
 
 /obj/item/card/id/syndicate/attackby(obj/item/W, mob/user)
 	var/obj/item/card/id/sourceCard = W
+	if (istype(sourceCard))
+		boutput(user, "You copy [sourceCard]'s accesses to [src].")
+		src.access |= sourceCard.access
+	else
+		return ..()
+
+/obj/item/card/id/syndicate/afterattack(atom/target, mob/user, reach, params)
+	var/obj/item/card/id/sourceCard = target
 	if (istype(sourceCard))
 		boutput(user, "You copy [sourceCard]'s accesses to [src].")
 		src.access |= sourceCard.access
@@ -396,7 +420,7 @@ TYPEINFO(/obj/item/card/emag)
 			else
 				assignment = "loading arena matches..."
 				tag = "gauntlet-id-[user.client.key]"
-				queryGauntletMatches(1, user.client.key)
+				queryGauntletMatches(user.client.key)
 		name = "[registered]'s ID Card ([assignment])"
 
 	proc/SetMatchCount(var/matches)
@@ -449,8 +473,8 @@ TYPEINFO(/obj/item/card/emag)
 			indicator.maptext_height = 64
 			var/col1 = "color: #fff; -dm-text-outline: 2px #000;"
 			var/col2 = "color: #f00; -dm-text-outline: 2px #000;"
-			var/blink1 = "<span class='c vb ps2p' style='[col1]'>[SPAN_VGA("KILL")]\n↓</span>"
-			var/blink2 = "<span class='c vb ps2p' style='[col2]'>[SPAN_VGA("KILL")]\n↓</span>"
+			var/blink1 = "<span class='c vb ps2p' style='[col1]'><span class='vga'>KILL</span>\n↓</span>"
+			var/blink2 = "<span class='c vb ps2p' style='[col2]'><span class='vga'>KILL</span>\n↓</span>"
 			indicator.maptext = blink1
 			animate(indicator, maptext = blink1, time = 3, loop = -1)
 			animate(maptext = blink2, time = 3, loop = -1)
@@ -460,7 +484,7 @@ TYPEINFO(/obj/item/card/emag)
 	process()
 		if(!owner) return
 		if(!owner.contains(src))
-			boutput(owner, "<h3>[SPAN_ALERT("You have lost your license to kill!")]</h3>")
+			boutput(owner, SPAN_ALERT("<h3>You have lost your license to kill!</h3>"))
 			logTheThing(LOG_COMBAT, owner, "dropped their license to kill")
 			logTheThing(LOG_ADMIN, owner, "dropped their license to kill")
 			message_admins("[key_name(owner)] dropped their license to kill")
@@ -474,7 +498,7 @@ TYPEINFO(/obj/item/card/emag)
 			logTheThing(LOG_COMBAT, user, "picked up a license to kill")
 			logTheThing(LOG_ADMIN, user, "picked up a license to kill")
 			message_admins("[key_name(user)] picked up a license to kill")
-			boutput(user, "<h3>[SPAN_ALERT("You now have a license to kill!")]</h3>")
+			boutput(user, SPAN_ALERT("<h3>You now have a license to kill!</h3>"))
 			user.mind?.add_antagonist(ROLE_LICENSED)
 			if (is_very_visible)
 				user.vis_contents += indicator

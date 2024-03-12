@@ -369,6 +369,10 @@ ABSTRACT_TYPE(/obj/item/parts)
 	proc/on_holder_examine()
 		return
 
+	///Called every life tick when attached to a mob
+	proc/on_life(datum/controller/process/mobs/parent)
+		return
+
 /obj/item/proc/streak_object(var/list/directions, var/streak_splatter) //stolen from gibs
 	var/destination
 	var/dist = rand(1,6)
@@ -388,7 +392,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 	SPAWN(0)
 		/// Number of tiles where it should try to make a splatter
-		var/num_splats = rand(round(dist * 0.2), dist) + 1
+		var/num_splats = randfloat(round(dist * 0.2), dist) + 1
 		for (var/turf/T in linepath)
 			if(step_to(src, T, 0, 300) || num_splats-- >= 1)
 				if (ispath(streak_splatter))

@@ -2689,7 +2689,7 @@
 /obj/decal/fakeobjects/skeleton{
 	icon_state = "skeleton_s"
 	},
-/obj/item/clothing/suit/bio_suit/paramedic/armored/para_troop{
+/obj/item/clothing/suit/hazard/paramedic/armored/para_troop{
 	pixel_x = -4;
 	pixel_y = -4
 	},

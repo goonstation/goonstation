@@ -5,7 +5,6 @@
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
 	icon_state = "black"
-	uses_multiple_icon_states = TRUE
 	item_state = "black"
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_jumpsuit_pattern
@@ -302,7 +301,6 @@
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	icon = 'icons/obj/clothing/item_hats.dmi'
-	uses_multiple_icon_states = TRUE
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_hat_pattern
 	blocked_from_petasusaphilic = TRUE
@@ -551,7 +549,6 @@
 	item_state = "hoodie"
 	icon = 'icons/obj/clothing/overcoats/hoods/hoodies.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi'
-	uses_multiple_icon_states = TRUE
 	over_hair = FALSE
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_suit_pattern/hoodie
@@ -890,7 +887,6 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	icon = 'icons/obj/clothing/item_glasses.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	wear_image_icon = 'icons/mob/clothing/eyes.dmi'
-	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_glasses_pattern
 
@@ -1019,7 +1015,6 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	icon = 'icons/obj/clothing/item_shoes.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	wear_image_icon = 'icons/mob/clothing/feet.dmi'
-	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_shoes_pattern
 	step_sound = "step_default"
@@ -1209,7 +1204,6 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	icon = 'icons/obj/clothing/item_gloves.dmi'
 	wear_image_icon = 'icons/mob/clothing/hands.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
-	uses_multiple_icon_states = TRUE
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_gloves_pattern
 	material_prints = "black leather fibers"
@@ -1371,7 +1365,6 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	icon = 'icons/obj/items/belts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
-	uses_multiple_icon_states = TRUE
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_belt_pattern
 
@@ -1505,7 +1498,6 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	item_state = "backpack"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	uses_multiple_icon_states = TRUE
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_backpack_pattern
 	spawn_contents = list()
@@ -1840,7 +1832,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		glasses_type = new/datum/chameleon_glasses_pattern/sunglasses
 		shoes_type = new/datum/chameleon_shoes_pattern/caps_boots
 		gloves_type = new/datum/chameleon_gloves_pattern/caps_gloves
-		belt_type = null
+		belt_type = new/datum/chameleon_belt_pattern
 		backpack_type = new/datum/chameleon_backpack_pattern/captain
 
 	head_of_security
@@ -1850,7 +1842,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		suit_type = new/datum/chameleon_suit_pattern/hos_jacket
 		glasses_type = new/datum/chameleon_glasses_pattern/sechud
 		shoes_type = new/datum/chameleon_shoes_pattern/swat
-		gloves_type = null
+		gloves_type = new/datum/chameleon_gloves_pattern
 		belt_type = new/datum/chameleon_belt_pattern/security
 		backpack_type = new/datum/chameleon_backpack_pattern/security
 
@@ -1861,7 +1853,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		suit_type = new/datum/chameleon_suit_pattern/winter_coat_command
 		glasses_type = new/datum/chameleon_glasses_pattern
 		shoes_type = new/datum/chameleon_shoes_pattern/brown
-		gloves_type = null
+		gloves_type = new/datum/chameleon_gloves_pattern
 		belt_type = new/datum/chameleon_belt_pattern
 		backpack_type = new/datum/chameleon_backpack_pattern
 
@@ -1979,7 +1971,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		name = "Quartermaster"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/cargo
 		hat_type = new/datum/chameleon_hat_pattern
-		suit_type = new/datum/chameleon_suit_pattern
+		suit_type = new/datum/chameleon_suit_pattern/winter_coat_engineering
 		glasses_type = new/datum/chameleon_glasses_pattern
 		shoes_type = new/datum/chameleon_shoes_pattern
 		gloves_type = new/datum/chameleon_gloves_pattern

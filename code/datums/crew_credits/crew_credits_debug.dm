@@ -113,7 +113,7 @@
 			what_role = "Head of Personnel"
 
 		else
-			what_role = pick("Communications Officer","Botanist","Apiculturist","Rancher","Bartender","Chef","Sous-Chef","Waiter","Clown","Mime","Chaplain","Mailman","Musician","Janitor","Coach","Boxer","Barber","Staff Assistant")
+			what_role = pick("Communications Officer","Botanist","Apiculturist","Rancher","Bartender","Chef","Sous-Chef","Waiter","Clown","Mime","Chaplain","Mail Courier","Musician","Janitor","Coach","Boxer","Barber","Staff Assistant")
 
 		src.crew_tab_data[CREW_TAB_SECTION_CIVILIAN] += src.generate_fake_crew_member(
 			real_name = src.fake_carbon_name(),

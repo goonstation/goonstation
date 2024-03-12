@@ -2,6 +2,7 @@
 	id = ROLE_HEAD_REVOLUTIONARY
 	display_name = "head revolutionary"
 	antagonist_icon = "rev_head"
+	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/revolution
 
 	var/static/list/datum/mind/heads_of_staff
 	/// A list of items that this head revolutionary has purchased using their uplink.
@@ -97,9 +98,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(ROLE_REVOLUTIONARY)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 		get_image_group(CLIENT_IMAGE_GROUP_HEADS_OF_STAFF).add_mind(src.owner)

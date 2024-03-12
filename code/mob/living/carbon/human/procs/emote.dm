@@ -22,6 +22,8 @@
 			param = copytext(act, t1 + 1, length(act) + 1)
 			act = copytext(act, 1, t1)
 
+	act = lowertext(act)
+
 	for (var/uid in src.pathogens)
 		var/datum/pathogen/P = src.pathogens[uid]
 		if (P.onemote(act, voluntary, param))
@@ -44,10 +46,10 @@
 			maptext_out = mutantrace_emote_stuff[2]
 
 	if (!message)
-		switch (lowertext(act))
+		switch (act)
 			// most commonly used emotes first for minor performance improvements
 			if ("scream")
-				if (src.emote_check(voluntary, 50))
+				if (src.emote_check(voluntary, 5 SECONDS))
 					if(src.bioHolder?.HasEffect("mute"))
 						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth, but no sound comes out",
 						"tries to scream, but can't", "emits an audible silence", "huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
@@ -88,6 +90,33 @@
 						m_type = 2
 					if (src.traitHolder && src.traitHolder.hasTrait("scaredshitless"))
 						src.emote("fart") //We can still fart if we're muzzled.
+
+			if ("monsterscream")
+				// three things:
+				// 1. monsters can scream through a muzzle
+				// 2. omnitraitors make all of these noises
+				// 3. this is bullshit copy paste. rework emotes and then sue me, in that order
+				if (src.emote_check(voluntary, 5 SECONDS))
+					var/screamed = FALSE
+					if (src.get_ability_holder(/datum/abilityHolder/werewolf)) // is_werewolf only checks mutantrace also kill me
+						playsound(src, 'sound/voice/animal/werewolf_howl.ogg', 80, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+						screamed = TRUE
+					if (ischangeling(src))
+						playsound(src, 'sound/voice/creepyshriek.ogg', 80, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+						screamed = TRUE
+					if (isvampire(src))
+						playsound(src, 'sound/effects/screech_tone.ogg', 90, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+						screamed = TRUE
+					if (isarcfiend(src))
+						playsound(src, 'sound/effects/elec_bzzz.ogg', 80, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+						screamed = TRUE
+					#ifdef HALLOWEEN
+					spooktober_GH.change_points(src.ckey, 100)
+					#endif
+
+					if (!screamed)
+						boutput(src, SPAN_ALERT("You don't feel monstrous enough to do that."))
+
 
 			if ("fart")
 				var/oxyplasmafart = 0
@@ -270,7 +299,7 @@
 		#ifdef DATALOGGER
 						game_stats.Increment("farts")
 		#endif
-				if(src.bioHolder && src.bioHolder.HasEffect("training_miner") && prob(1))
+				if(src.bioHolder && src.traitHolder.hasTrait("training_miner") && prob(1))
 					var/glowsticktype = pick(typesof(/obj/item/device/light/glowstick))
 					var/obj/item/device/light/glowstick/G = new glowsticktype
 					G.set_loc(src.loc)
@@ -524,7 +553,9 @@
 
 			if ("listtarget")
 				src.show_text("salute, bow, hug, wave, glare, stare, look, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive, fingerguns")
-
+			if ("list")
+				src.emote("listbasic")
+				src.emote("listtarget")
 			if ("suicide")
 				src.show_text("Suicide is a command, not an emote.  Please type 'suicide' in the input bar at the bottom of the game window to kill yourself.", "red")
 
@@ -620,7 +651,7 @@
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
 						m_type = 1
-						if ((src.mind && src.mind.assigned_role == "Clown") || src.can_juggle)
+						if (src.traitHolder?.hasTrait("training_clown") || src.traitHolder?.hasTrait("training_mime") || src.can_juggle)
 							var/obj/item/thing = src.equipped()
 							if (!thing)
 								if (src.l_hand)
@@ -1450,7 +1481,7 @@
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 						if (prob(5) && !istype(src.gloves, /obj/item/clothing/gloves/bladed))
-							message = "<span class='alert'><B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!</span>"
+							message = SPAN_ALERT("<B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!")
 							/*
 							if (src.bioHolder)
 								src.bioHolder.AddEffect("[src.hand ? "left" : "right"]_arm")
@@ -1982,102 +2013,8 @@
 
 			if ("pee", "piss", "urinate")
 				if (src.emote_check(voluntary))
-					var/bladder = sims?.getValue("Bladder")
-					if (!isnull(bladder))
-						var/obj/item/storage/toilet/toilet = locate() in src.loc
-						var/obj/item/reagent_containers/glass/beaker = locate() in src.loc
-						if (bladder > 75)
-							boutput(src, SPAN_NOTICE("You don't need to go right now."))
-							return
-						else if (bladder > 50)
-							if(toilet)
-								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
-								else
-									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.1
-								sims.affectMotive("Bladder", 100)
-								sims.affectMotive("Hygiene", -5)
-							else if(beaker)
-								boutput(src, SPAN_ALERT("You don't feel desperate enough to piss in the beaker."))
-							else if(wear_suit || w_uniform)
-								boutput(src, SPAN_ALERT("You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"]."))
-							else
-								boutput(src, SPAN_ALERT("You don't feel desperate enough to piss on the floor."))
-							return
-						else if (bladder > 25)
-							if(toilet)
-								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
-								else
-									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.1
-								sims.affectMotive("Bladder", 100)
-								sims.affectMotive("Hygiene", -5)
-							else if(beaker)
-								if(wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and pees in the beaker."
-								else
-									message = "<B>[src]</B> takes aim and pees in the beaker."
-								beaker.reagents.add_reagent("urine", 4)
-								sims.affectMotive("Bladder", 100)
-								sims.affectMotive("Hygiene", -25)
-							else
-								if(wear_suit || w_uniform)
-									boutput(src, SPAN_ALERT("You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"]."))
-									return
-								else
-									src.urinate()
-									sims.affectMotive("Bladder", 100)
-									sims.affectMotive("Hygiene", -50)
-						else
-							if (toilet)
-								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
-								else
-									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.1
-								sims.affectMotive("Bladder", 100)
-								sims.affectMotive("Hygiene", -5)
-							else if(beaker)
-								if(wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and fills the beaker with pee."
-								else
-									message = "<B>[src]</B> takes aim and fills the beaker with pee."
-								sims.affectMotive("Bladder", 100)
-								sims.affectMotive("Hygiene", -25)
-								beaker.reagents.add_reagent("urine", 4)
-							else
-								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> pisses all over [himself_or_herself(src)]!"
-									sims.affectMotive("Bladder", 100)
-									sims.affectMotive("Hygiene", -100)
-									if (w_uniform)
-										w_uniform.name = "piss-soaked [initial(w_uniform.name)]"
-									else
-										wear_suit.name = "piss-soaked [initial(wear_suit.name)]"
-								else
-									src.urinate()
-									sims.affectMotive("Bladder", 100)
-									sims.affectMotive("Hygiene", -50)
-
-					else
-						var/obj/item/storage/toilet/toilet = locate() in src.loc
-
-						if (toilet && (src.buckled != null))
-							if (src.urine >= 1)
-								for (var/obj/item/storage/toilet/T in src.loc)
-									message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", SPAN_NOTICE("Ahhh, sweet relief."))
-									src.urine = 0
-									T.clogged += 0.1
-									break
-							else
-								message = "<B>[src]</B> unzips [his_or_her(src)] pants but, try as [he_or_she(src)] might, [he_or_she(src)] can't pee in the toilet!"
-						else if (src.urine < 1)
-							message = "<B>[src]</B> pees [himself_or_herself(src)] a little bit."
-						else
-							src.urine--
-							src.urinate()
+					message = "<B>[src]</B> grunts for a moment. [prob(1) ? "Something" : "Nothing"] happens."
+					maptext_out = "<I>grunts</I>"
 
 			if ("poo", "poop", "shit", "crap")
 				if (src.emote_check(voluntary))

@@ -5,6 +5,8 @@
 	event_handler_flags = 0
 	var/atom/target
 	var/is_respawnable = TRUE
+	/// Is this observer locked to one particular owner?
+	var/locked = FALSE
 
 	New()
 		..()
@@ -134,6 +136,7 @@
 /mob/dead/target_observer/slasher_ghost
 	name = "spooky not-quite ghost"
 	is_respawnable = FALSE
+	locked = TRUE
 	var/start_time
 
 	New()

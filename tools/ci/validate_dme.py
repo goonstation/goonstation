@@ -24,13 +24,18 @@ FORBID_INCLUDE = [
     r'code/modules/tgs/**/*.dm',
 
     # Included by map.dm (which we have to whitelist)
-    r'maps**/*.dm'
+    r'maps**/*.dm',
+
+    # OpenDream pragma lint file
+    r'tools/ci/od_lints.dm'
 ]
 
 # Things we want to explicitly allow, even if they're in blocked dirs
 ALLOW_INCLUDE = [
      # The one file in maps we always include
-     r'maps/config/map.dm'
+     r'maps/config/map.dm',
+     # OD lint stuff that we want to live in `goonstation.dme`
+     r'_std\__odlint.dme'
 ]
 
 lines = []

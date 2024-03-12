@@ -1,11 +1,5 @@
 // If the game somtimes isn't registering a win properly, then ticker.mode.check_win() isn't being called somewhere.
 
-//uncomment to disable safety checks and win conditions to allow for local testing
-//#define THE_REVOLUTION_WILL_NOT_BE_TELEVISED 1
-
-#ifdef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
-#warn Revolution debug mode enabled. IF YOU COMMIT THIS TO LIVE EVERYTHING WILL BREAK AND YOUR KNEECAPS WILL BE FORFEIT!!1
-#endif
 /datum/game_mode/revolution
 	name = "Revolution"
 	config_tag = "revolution"
@@ -91,10 +85,10 @@
 /datum/game_mode/revolution/post_setup()
 	waittime = rand(waittime_l, waittime_h)
 	trackertime = rand(trackertime_min, trackertime_max)
-#ifndef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
+#ifndef ME_AND_MY_40_ALT_ACCOUNTS
 	var/list/heads = get_living_heads()
 	if(!head_revolutionaries || !heads)
-		boutput(world, "<B>[SPAN_ALERT("Not enough players for revolution game mode. Restarting world in 5 seconds.")]</B>")
+		boutput(world, SPAN_ALERT("<B>Not enough players for revolution game mode. Restarting world in 5 seconds.</B>"))
 		sleep(5 SECONDS)
 		Reboot_server()
 		return
@@ -120,7 +114,7 @@
 	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal2)
 	trackertimed = TRUE
 
-#ifndef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
+#ifndef ME_AND_MY_40_ALT_ACCOUNTS
 /datum/game_mode/revolution/process()
 	..()
 	if (!istype(ticker.mode, /datum/game_mode/revolution/extended) && ticker.round_elapsed_ticks >= round_limit && !gibwave_started)

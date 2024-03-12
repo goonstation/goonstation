@@ -45,8 +45,32 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 		SubscribeToProcess()
 		return 1
 
-	attackby(obj/item/W, mob/user)
-		if (isghostdrone(user) || isAI(user))
+	// It is time for borgs to get in on this hot electroplating action.
+	MouseDrop_T(var/obj/item/W, var/mob/user)
+		src.PlaterInteract(W, user)
+
+	attackby(var/obj/item/W, var/mob/user)
+		src.PlaterInteract(W, user)
+
+	// See if I can piece together how to make this fly.
+	proc/PlaterInteract(var/obj/item/W, var/mob/user)
+		// Please don't drag the nano-crucible into the plater. Or any other machine or mob for that matter.
+		if (!istype(W, /obj/item))
+			return
+		// Theres a suicide button for this.
+		if (W == user)
+			return
+		// Do not attempt to plate objects from a distance.
+		if (BOUNDS_DIST(user, src) > 0)
+			return
+		// Do not attempt to plate objects at a distance.
+		if (BOUNDS_DIST(W, src) > 0)
+			return
+		// Do not attempt to plate distant objects.
+		if (BOUNDS_DIST(W, user) > 0)
+			return
+		// No ghosts or AI or wraiths or blobs or flockminds shall use the plater. This is for the physical and the living.
+		if (iswraith(user) || isintangible(user) || is_incapacitated(user)|| isghostdrone(user) || isAI(user))
 			boutput(user, SPAN_ALERT("[src] refuses to interface with you!"))
 			return
 		if (W.cant_drop) //For borg held items
@@ -91,7 +115,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			boutput(user, SPAN_ALERT("You can't plate something this tiny!"))
 			return
 
-		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage/secure))
+		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage/secure) || W.anchored)
 			boutput(user, SPAN_ALERT("There is no way that could fit!"))
 			return
 

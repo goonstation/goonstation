@@ -189,7 +189,8 @@ TYPEINFO(/obj/machinery/recharge_station)
 		return
 	if (!isliving(user) || isAI(user))
 		return
-
+	if (isintangible(user))
+		return
 	if (isitem(AM) && can_act(user))
 		src.Attackby(AM, user)
 		return
@@ -491,7 +492,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 		if (R.module)
 			var/obj/item/robot_module/M = R.module
-			occupant_data["module"] = M.name
+			occupant_data["moduleName"] = M.name
 
 		var/list/occupant_upgrades = list()
 		if (length(R.upgrades))
@@ -514,13 +515,13 @@ TYPEINFO(/obj/machinery/recharge_station)
 		occupant_data["clothing"] = occupant_clothing
 
 		var/list/occupant_cosmetics = list()
-		if(istype(R.cosmetic_mods, /datum/robot_cosmetic))
+		if (istype(R.cosmetic_mods, /datum/robot_cosmetic))
 			var/datum/robot_cosmetic/COS = R.cosmetic_mods
-			if(COS.ches_mod) occupant_cosmetics["chest"] = COS.ches_mod
-			if(COS.painted) occupant_cosmetics["paint"] = COS.paint // hex color representation
-			if(COS.head_mod) occupant_cosmetics["head"] = COS.head_mod
-			if(COS.arms_mod) occupant_cosmetics["arms"] = COS.arms_mod
-			if(COS.legs_mod) occupant_cosmetics["legs"] = COS.legs_mod
+			if (COS.ches_mod) occupant_cosmetics["chest"] = COS.ches_mod
+			if (COS.painted) occupant_cosmetics["paint"] = COS.paint // hex color representation
+			if (COS.head_mod) occupant_cosmetics["head"] = COS.head_mod
+			if (COS.arms_mod) occupant_cosmetics["arms"] = COS.arms_mod
+			if (COS.legs_mod) occupant_cosmetics["legs"] = COS.legs_mod
 			occupant_cosmetics["fx"] = COS.fx // R,G,B representation
 
 		occupant_data["cosmetics"] = occupant_cosmetics
@@ -537,12 +538,12 @@ TYPEINFO(/obj/machinery/recharge_station)
 		occupant_data["name"] = E.name
 		occupant_data["kind"] = "eyebot"
 		if (E.cell)
-			var/list/this_cell = list()
 			var/obj/item/cell/C = E.cell
-			this_cell["name"] = C.name
-			this_cell["current"] = C.charge
-			this_cell["max"] = C.maxcharge
-			occupant_data["cell"] = this_cell
+			occupant_data["cell"] = list(
+				"name" = C.name,
+				"current" = C.charge,
+				"max" = C.maxcharge
+			)
 
 	.["occupant"] = occupant_data
 

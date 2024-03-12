@@ -26,7 +26,9 @@ TYPEINFO(/obj/item/cloak_gen)
 		var/obj/item/remote/cloak_gen/remote = new /obj/item/remote/cloak_gen(src.loc)
 		remote.my_gen = src
 
+		src.noise_image = image(icon='icons/misc/old_or_unused.dmi')
 		src.update_noise_image("noise2")
+		global.addGlobalRenderSource(src.noise_image, "*cloak_noise_[ref(src)]")
 
 	disposing()
 		if (src.active)
@@ -75,7 +77,7 @@ TYPEINFO(/obj/item/cloak_gen)
 					AM.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
 					O.vis_contents += AM
 
-		O.add_filter("cloak noise", 1, alpha_mask_filter(render_source="*noise_[ref(src)]"))
+		O.add_filter("cloak noise", 1, alpha_mask_filter(render_source="*cloak_noise_[ref(src)]"))
 
 	proc/turn_on(mob/user)
 		if (active) return
@@ -110,13 +112,7 @@ TYPEINFO(/obj/item/cloak_gen)
 			qdel(O)
 
 	proc/update_noise_image(var/set_icon_state)
-		src.overlays -= noise_image
-		qdel(src.noise_image)
-		src.noise_image = image(icon='icons/misc/old_or_unused.dmi', icon_state=set_icon_state)
-		noise_image.render_target = "*noise_[ref(src)]"
-		// hacky- we need the image on the map somewhere so it'll actually render as a render_source
-		// it won't actually render as an overlay since we prefix render_target with `*`
-		src.overlays += noise_image
+		src.noise_image.icon_state = set_icon_state
 
 /obj/item/remote/cloak_gen
 	name = "cloaking field generator remote"

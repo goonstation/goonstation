@@ -60,7 +60,6 @@
 
 #ifndef UNDERWATER_MAP
 /datum/action/bar/icon/magnet_build
-	id = "magnet_build"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 24 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -705,7 +704,7 @@
 				if (magnetNotReady)
 					return
 				if (!target || !src.get_magnetic_center())
-					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					src.visible_message("<b>[src.name]</b> armeds, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
 					return
 
 				if (target.check_for_unacceptable_content())
@@ -718,7 +717,7 @@
 				if (magnetNotReady)
 					return
 				if (!target || !src.get_magnetic_center())
-					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					src.visible_message("<b>[src.name]</b> armeds, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
 					return
 
 				if (target.check_for_unacceptable_content())
@@ -897,6 +896,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/mining_toughness = 1 //Incoming damage divided by this unless tool has power enough to overcome.
 	var/topnumber = 1
 	var/orenumber = 1
+	var/static/list/icon/topoverlaycache
 
 	dark
 		fullbright = 0
@@ -1061,6 +1061,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 
 	New(var/loc)
+		LAZYLISTINIT(topoverlaycache)
 		src.space_overlays = list()
 		src.topnumber = pick(1,2,3)
 		src.orenumber = pick(1,2,3)
@@ -1102,7 +1103,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (dist > 1)
 			return
 		if (ishuman(usr))
-			if (usr.bioHolder && usr.bioHolder.HasEffect("training_miner"))
+			if (usr.bioHolder && usr.traitHolder.hasTrait("training_miner"))
 				if (istype (src.ore,/datum/ore/))
 					var/datum/ore/O = src.ore
 					. = "It looks like it contains [O.name]."
@@ -1209,14 +1210,18 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		src.ore_overlays()
 
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
-		var/image/top_overlay = image('icons/turf/walls/asteroid.dmi',"top[src.topnumber]")
-		top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask2[src.icon_state]"))
+		var/image/top_overlay = mutable_appearance('icons/turf/walls/asteroid.dmi',"top[src.topnumber]")
+		var/icon/cached = topoverlaycache["mask2[src.icon_state]"]
+		if(!cached)
+			topoverlaycache["mask2[src.icon_state]"] = icon('icons/turf/walls/asteroid.dmi',"mask2[src.icon_state]")
+			cached = topoverlaycache["mask2[src.icon_state]"]
+		top_overlay.filters += filter(type="alpha", icon=cached)
 		top_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER
 		UpdateOverlays(top_overlay, "ast_top_rock")
 
 	proc/ore_overlays()
 		if(src.ore) // make sure ores dont turn invisible
-			var/image/ore_overlay = image('icons/turf/walls/asteroid.dmi',"[src.ore?.name][src.orenumber]")
+			var/image/ore_overlay = mutable_appearance('icons/turf/walls/asteroid.dmi',"[src.ore?.name][src.orenumber]")
 			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[src.icon_state]"))
 			ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
 			src.UpdateOverlays(ore_overlay, "ast_ore")
@@ -1236,7 +1241,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			if (skip_this)
 				A.ClearSpecificOverlays("ast_edge_[dir_from]")
 				continue
-			var/image/edge_overlay = image('icons/turf/walls/asteroid.dmi', "edge[dir_from]")
+			var/image/edge_overlay = mutable_appearance('icons/turf/walls/asteroid.dmi', "edge[dir_from]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + 1
 			edge_overlay.plane = PLANE_NOSHADOW_BELOW
@@ -2645,9 +2650,9 @@ TYPEINFO(/obj/item/ore_scoop)
 		if (!satchel)
 			src.collect_junk = !src.collect_junk
 			if (src.collect_junk)
-				boutput(user, SPAN_INFO("Now collecting junk."))
+				boutput(user, SPAN_NOTICE("Now collecting junk."))
 			else
-				boutput(user, SPAN_INFO("No longer collecting junk."))
+				boutput(user, SPAN_NOTICE("No longer collecting junk."))
 		else
 			user.visible_message("[user] unloads [satchel] from [src].", "You unload [satchel] from [src].")
 			user.put_in_hand_or_drop(satchel)

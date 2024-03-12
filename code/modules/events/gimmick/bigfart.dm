@@ -147,7 +147,7 @@
 	var/assmagic = magical ? "magical" : "notmagical"
 	H.TakeDamage("chest", 10, 0, 0, DAMAGE_STAB)
 	if(magical && prob(10))
-		boutput(H, SPAN_NOTIFICATION("[changer ? "We" : "You"] hear an otherworldly force let out a short, disappointed cluck at [changer ? "our" : "your"] lack of an arse."))
+		boutput(H, SPAN_NOTICE("[changer ? "We" : "You"] hear an otherworldly force let out a short, disappointed cluck at [changer ? "our" : "your"] lack of an arse."))
 	H.visible_message(SPAN_ALERT("[is_bot ? "Oily chunks of twisted shrapnel" : "Wadded hunks of blood and gore"] burst out of where <b>[H]</b>'s [magical ? "arse" : "ass"] used to be!"),\
 	SPAN_ALERT("[nobutt_phrase[assmagic]]"))
 	if(!magical)
@@ -188,68 +188,68 @@
 					if(severed)
 						boutput(H, SPAN_ALERT("[ch ? "Our" : "Your"] [L] snaps off at the [armleg == "arm" ? "shoulder" : "hip"] like a greasy toothpick!"))
 					else
-						boutput(H, SPAN_NOTIFICATION("...but it stays in one piece!"))
+						boutput(H, SPAN_NOTICE("...but it stays in one piece!"))
 				else
 					boutput(H, SPAN_ALERT("[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!"))
 					if(severed)
 						boutput(H, SPAN_ALERT("It bursts through [ch ? "our" : "your"] [armleg == "arm" ? "armpit" : "hip"] like a celestial zit, launching [ch ? "our" : "your"] [L] off with the force of a thousand suns!"))
 					else
-						boutput(H, SPAN_NOTIFICATION("...and then seems to just dissipate back into the aether!"))
+						boutput(H, SPAN_NOTICE("...and then seems to just dissipate back into the aether!"))
 			else if(HAS_FLAG(F,LIMB_HEAVY))
 				if(magical)
 					boutput(H, SPAN_ALERT("A pair of invisible hands clamp down around [ch ? "our" : "your"] [L] and yanks it with a powerful, otherworldly force!"))
-					boutput(H, SPAN_NOTIFICATION("...but the cyber-attachment medi-staples holding it in place extend so deep into [ch ? "our" : "your"] [armleg == "arm" ? "shoulder" : "hip"] that you'd be torn in half long before it'd pop free!"))
+					boutput(H, SPAN_NOTICE("...but the cyber-attachment medi-staples holding it in place extend so deep into [ch ? "our" : "your"] [armleg == "arm" ? "shoulder" : "hip"] that you'd be torn in half long before it'd pop free!"))
 				else
 					boutput(H, SPAN_ALERT("[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!"))
-					boutput(H, SPAN_NOTIFICATION("...but the cyberlimb's internal cosmic lighting rod safely conducts it back out into the aether!"))
+					boutput(H, SPAN_NOTICE("...but the cyberlimb's internal cosmic lighting rod safely conducts it back out into the aether!"))
 			else if(HAS_FLAG(F,LIMB_HEAVIER))
 				if(magical)
 					boutput(H, SPAN_ALERT("A pair of invisible hands try to clamp down around [ch ? "our" : "your"] [L]!"))
-					boutput(H, SPAN_NOTIFICATION("...but they just can't seem to find a good grip around that massive hunk of metal you call [armleg == "arm" ? "an arm" : "a leg"]!"))
+					boutput(H, SPAN_NOTICE("...but they just can't seem to find a good grip around that massive hunk of metal you call [armleg == "arm" ? "an arm" : "a leg"]!"))
 				else
 					boutput(H, SPAN_ALERT("[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!"))
-					boutput(H, SPAN_NOTIFICATION("...but the mass and material of [ch ? "our" : "your"] [L] absorbs and harmlessly radiates it back out into the aether!"))
+					boutput(H, SPAN_NOTICE("...but the mass and material of [ch ? "our" : "your"] [L] absorbs and harmlessly radiates it back out into the aether!"))
 			else
 				if(magical)
 					boutput(H, SPAN_ALERT("An invisible hand clamps down around [ch ? "our" : "your"] [L] and wrenches it with a powerful, otherworldly tug!"))
-					boutput(H, SPAN_NOTIFICATION("...but the cyber-attachment medi-staples holding it in place don't budge!"))
+					boutput(H, SPAN_NOTICE("...but the cyber-attachment medi-staples holding it in place don't budge!"))
 				else
 					boutput(H, SPAN_ALERT("[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!"))
-					boutput(H, SPAN_NOTIFICATION("...but the cyberlimb's \"creative\" wiring conducts it safely back out into the aether!"))
+					boutput(H, SPAN_NOTICE("...but the cyberlimb's \"creative\" wiring conducts it safely back out into the aether!"))
 
 		else if(HAS_FLAG(F,LIMB_ABOM))
 			if(ch)
 				if(magical)
 					boutput(H, SPAN_ALERT("An invisible being tried to grab our [L]!"))
-					boutput(H, SPAN_NOTIFICATION("We successfully fended off whatever this was."))
+					boutput(H, SPAN_NOTICE("We successfully fended off whatever this was."))
 				else
 					boutput(H, SPAN_ALERT("We've been flooded by some kind of disgusting... energy?!"))
-					boutput(H, SPAN_NOTIFICATION("...but we managed to drain it through our [L]. We remain whole!"))
+					boutput(H, SPAN_NOTICE("...but we managed to drain it through our [L]. We remain whole!"))
 			else
 				if(magical)
 					boutput(H, SPAN_ALERT("You feel an unseen hand grab onto your [L]!"))
-					boutput(H, SPAN_NOTIFICATION("...but a fleshy pseudopod pops out and bats it away[prob(50) ? "!" : "...?"]"))
+					boutput(H, SPAN_NOTICE("...but a fleshy pseudopod pops out and bats it away[prob(50) ? "!" : "...?"]"))
 				else
 					boutput(H, SPAN_ALERT("You feel a cosmic force conduct through your body, coursing into your [L]!"))
-					boutput(H, SPAN_NOTIFICATION("...it willomies for a moment, but otherwise it looks just fine."))
+					boutput(H, SPAN_NOTICE("...it willomies for a moment, but otherwise it looks just fine."))
 
 		else if(HAS_FLAG(F,LIMB_BEAR))
 			if(ch)
 				if(magical)
 					boutput(H, SPAN_ALERT("It felt like we just raked our [pick("viciously restless", "restlessly vicious")] bear claws through an invisible arm!"))
-					boutput(H, SPAN_NOTIFICATION("Whatever it was, it seems to be gone now."))
+					boutput(H, SPAN_NOTICE("Whatever it was, it seems to be gone now."))
 				else
 					boutput(H, SPAN_ALERT("We've been flooded by some kind of disgusting... energy?!"))
-					boutput(H, SPAN_NOTIFICATION("...but the manic flailing of our foreign limb seems to have dissippated it. We remain whole!"))
+					boutput(H, SPAN_NOTICE("...but the manic flailing of our foreign limb seems to have dissippated it. We remain whole!"))
 			else
 				var/as_what_1 = pick("an invisible", "a phantom", "a spectral")
 				var/as_what_2 = pick("ham", "rump roast", "burrito", "wacky water noodle")
 				if(magical)
 					boutput(H, SPAN_ALERT("You feel your [L] slice through what could only be described as [as_what_1] [as_what_2]!"))
-					boutput(H, SPAN_NOTIFICATION("You hear a faint whimper..."))
+					boutput(H, SPAN_NOTICE("You hear a faint whimper..."))
 				else
 					boutput(H, SPAN_ALERT("You feel a cosmic force conduct through your body, coursing into your [L]!"))
-					boutput(H, SPAN_NOTIFICATION("...it flails around and disperses the energy back into the aether."))
+					boutput(H, SPAN_NOTICE("...it flails around and disperses the energy back into the aether."))
 
 		else if (HAS_FLAG(F,LIMB_BRULLBAR))
 			if(magical)
@@ -257,13 +257,13 @@
 				if(severed)
 					boutput(H, SPAN_ALERT("[ch ? "Our" : "Your"] [L] rips free from its socket!"))
 				else
-					boutput(H, SPAN_NOTIFICATION("...but the [L]'s connection to [ch ? "our" : "your"] [armleg == "arm" ? "shoulder" : "hip"] proves to be stronger!"))
+					boutput(H, SPAN_NOTICE("...but the [L]'s connection to [ch ? "our" : "your"] [armleg == "arm" ? "shoulder" : "hip"] proves to be stronger!"))
 			else
 				boutput(H, SPAN_ALERT("[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!"))
 				if(severed)
 					boutput(H, SPAN_ALERT("It bursts through [ch ? "our" : "your"] [armleg == "arm" ? "armpit" : "hip"] like a celestial zit, launching [ch ? "our" : "your"] [L] off with the force of a thousand suns!"))
 				else
-					boutput(H, SPAN_NOTIFICATION("...and then seems to just dissipate back into the aether!"))
+					boutput(H, SPAN_NOTICE("...and then seems to just dissipate back into the aether!"))
 
 		else if (HAS_FLAG(F,LIMB_WOLF))
 			if(magical)
@@ -271,13 +271,13 @@
 				if(severed)
 					boutput(H, SPAN_ALERT("[ch ? "Our" : "Your"] [L] rips free from its socket!"))
 				else
-					boutput(H, SPAN_NOTIFICATION("...but it slips, only managing to rip out a clump of hair!"))
+					boutput(H, SPAN_NOTICE("...but it slips, only managing to rip out a clump of hair!"))
 			else
 				boutput(H, SPAN_ALERT("[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!"))
 				if(severed)
 					boutput(H, SPAN_ALERT("It bursts through [ch ? "our" : "your"] [armleg == "arm" ? "armpit" : "hip"] like a celestial zit, launching [ch ? "our" : "your"] [L] off with the force of a thousand suns!"))
 				else
-					boutput(H, SPAN_NOTIFICATION("...and then seems to just dissipate back into the aether!"))
+					boutput(H, SPAN_NOTICE("...and then seems to just dissipate back into the aether!"))
 
 		else if (HAS_FLAG(F,LIMB_STONE))
 			if(magical)
@@ -285,13 +285,13 @@
 				if(severed)
 					boutput(H, SPAN_ALERT("[ch ? "Our" : "Your"] [L] breaks off at the [armleg == "arm" ? "shoulder" : "hip"]!"))
 				else
-					boutput(H, SPAN_NOTIFICATION("...but it slips off the smooth stony finish of [ch ? "our" : "your"] [L]!"))
+					boutput(H, SPAN_NOTICE("...but it slips off the smooth stony finish of [ch ? "our" : "your"] [L]!"))
 			else
 				boutput(H, SPAN_ALERT("[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!"))
 				if(severed)
 					boutput(H, SPAN_ALERT("It bursts through [ch ? "our" : "your"] [armleg == "arm" ? "armpit" : "hip"] like a celestial zit, launching [ch ? "our" : "your"] [L] off with the force of a thousand suns!"))
 				else
-					boutput(H, SPAN_NOTIFICATION("...but [ch ? "our" : "your"] [L] grounds the energy!"))
+					boutput(H, SPAN_NOTICE("...but [ch ? "our" : "your"] [L] grounds the energy!"))
 
 		else if(HAS_FLAG(F, LIMB_ARTIFACT))
 			if(magical)
@@ -299,13 +299,13 @@
 				if(severed)
 					boutput(H, SPAN_ALERT("[ch ? "Our" : "Your"] [L] is ripped off!"))
 				else
-					boutput(H, SPAN_NOTIFICATION("...but [ch ? "our" : "your"] [L] resists it!"))
+					boutput(H, SPAN_NOTICE("...but [ch ? "our" : "your"] [L] resists it!"))
 			else
 				boutput(H, SPAN_ALERT("[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!"))
 				if(severed)
 					boutput(H, SPAN_ALERT("It bursts through [ch ? "our" : "your"] [armleg == "arm" ? "armpit" : "hip"] like a celestial zit, launching [ch ? "our" : "your"] [L] off with the force of a thousand suns!"))
 				else
-					boutput(H, SPAN_NOTIFICATION("...but [ch ? "our" : "your"] [L] absorbs the energy!"))
+					boutput(H, SPAN_NOTICE("...but [ch ? "our" : "your"] [L] absorbs the energy!"))
 
 		else
 			if(magical)
@@ -313,10 +313,10 @@
 				if(severed)
 					boutput(H, SPAN_ALERT("[ch ? "Our" : "Your"] [L] rips free from its socket!"))
 				else
-					boutput(H, SPAN_NOTIFICATION("...but [ch ? "our" : "your"] [armleg == "arm" ? "shoulder" : "hip"] manages to hold it on!"))
+					boutput(H, SPAN_NOTICE("...but [ch ? "our" : "your"] [armleg == "arm" ? "shoulder" : "hip"] manages to hold it on!"))
 			else
 				boutput(H, SPAN_ALERT("[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!"))
 				if(severed)
 					boutput(H, SPAN_ALERT("It bursts through [ch ? "our" : "your"] [armleg == "arm" ? "armpit" : "hip"] like a celestial zit, launching [ch ? "our" : "your"] [L] off with the force of a thousand suns!"))
 				else
-					boutput(H, SPAN_NOTIFICATION("...but then it dissipates!"))
+					boutput(H, SPAN_NOTICE("...but then it dissipates!"))

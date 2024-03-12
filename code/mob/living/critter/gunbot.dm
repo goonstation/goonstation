@@ -1,5 +1,5 @@
 TYPEINFO(/mob/living/critter/robotic/gunbot)
-	mats = 20
+	mats = list("MET-2" = 12, "CON-2" = 12, "DEN-1" = 6)
 
 /mob/living/critter/robotic/gunbot
 	name = "robot"
@@ -22,6 +22,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	speechverb_stammer = "states"
 	speechverb_exclaim = "declares"
 	speechverb_ask = "queries"
+	is_syndicate = TRUE
 
 	ai_retaliates = FALSE
 	ai_type = /datum/aiHolder/ranged
@@ -166,7 +167,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 			if(prob(10))
 				processedMessage += pick("%","##A","-","- - -","ERROR")
 
-		src.visible_message("<span class='game say'>[SPAN_NAME("[src]")] blares, \"<B>[processedMessage]</B>\"")
+		src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] blares, \"<B>[processedMessage]</B>\""))
 
 		return
 

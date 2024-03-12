@@ -236,7 +236,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return
 
 	blob_act(power)
-		src.take_damage(rand(power * 0.5, power * 1.5))
+		src.take_damage(randfloat(power * 0.5, power * 1.5))
 
 	meteorhit()
 		src.take_damage(rand(15,45))
@@ -1070,8 +1070,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			src.dismantle_stage = 3
 			src.status |= NOPOWER
-			var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(src.loc)
+			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 1
+			C.UpdateIcon()
 			src.build_icon()
 
 		else if (istype(W,/obj/item/sheet/steel/reinforced) && src.dismantle_stage == 2)
@@ -1083,7 +1084,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else if (istype(W,/obj/item/cable_coil) && src.dismantle_stage == 3)
 			user.visible_message("<b>[user]</b> adds cabling to [src].")
 			src.dismantle_stage = 2
-			qdel(W)
+			var/obj/item/cable_coil/C = W
+			C.use(1)
 			src.status &= ~NOPOWER
 			src.shock(user,100)
 			src.build_icon()
@@ -2413,6 +2415,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/robup_recharge,
 		/datum/manufacture/robup_repairpack,
 		/datum/manufacture/robup_speed,
+		/datum/manufacture/robup_mag,
 		/datum/manufacture/robup_meson,
 		/datum/manufacture/robup_aware,
 		/datum/manufacture/robup_physshield,
@@ -2543,6 +2546,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/chembarrel/yellow,
 		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/condenser,
+		/datum/manufacture/fractionalcondenser,
 		/datum/manufacture/beaker_lid_box,
 		/datum/manufacture/bunsen_burner,
 		/datum/manufacture/spectrogoggles,
@@ -2620,11 +2624,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 #endif
 		)
 
-	hidden = list(/datum/manufacture/RCD,
-		/datum/manufacture/RCDammo,
-		/datum/manufacture/RCDammomedium,
-		/datum/manufacture/RCDammolarge)
-
 /obj/machinery/manufacturer/hangar
 	name = "ship component fabricator"
 	supplemental_desc = "This one produces modules for space pods or minisubs."
@@ -2636,23 +2635,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/obj/item/material_piece/glass)
 	available = list(
 #ifdef UNDERWATER_MAP
-		/datum/manufacture/sub/engine,
-		/datum/manufacture/sub/boards,
-		/datum/manufacture/sub/control,
-		/datum/manufacture/sub/parts,
+		/datum/manufacture/sub/preassembeled_parts,
 #else
-		/datum/manufacture/putt/engine,
-		/datum/manufacture/putt/boards,
-		/datum/manufacture/putt/control,
-		/datum/manufacture/putt/parts,
+		/datum/manufacture/putt/preassembeled_parts,
+		/datum/manufacture/pod/preassembeled_parts,
 #endif
-		/datum/manufacture/pod/engine,
-		/datum/manufacture/pod/boards,
 		/datum/manufacture/pod/armor_light,
 		/datum/manufacture/pod/armor_heavy,
 		/datum/manufacture/pod/armor_industrial,
-		/datum/manufacture/pod/control,
-		/datum/manufacture/pod/parts,
 		/datum/manufacture/cargohold,
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
@@ -2661,6 +2651,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/engine,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
@@ -2920,6 +2911,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/soldering,
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
+		/datum/manufacture/RCD,
+		/datum/manufacture/RCDammo,
+		/datum/manufacture/RCDammomedium,
+		/datum/manufacture/RCDammolarge,
 		/datum/manufacture/atmos_goggles,
 		/datum/manufacture/engivac,
 		/datum/manufacture/lampmanufacturer,
@@ -3090,7 +3085,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 /datum/action/bar/manufacturer
 	duration = 100 SECONDS
-	id = "manufacturer"
 	var/obj/machinery/manufacturer/MA
 	var/completed = FALSE
 	var/datum/computer/file/manudrive/manudrive_file

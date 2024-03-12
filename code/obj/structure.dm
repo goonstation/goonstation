@@ -124,7 +124,6 @@ obj/structure/ex_act(severity)
 		..()
 
 /datum/action/bar/icon/girder_tool_interact
-	id = "girder_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 3 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -309,7 +308,8 @@ obj/structure/ex_act(severity)
 		FW.inherit_area()
 
 		FW.setFloorUnderlay(FloorIcon, FloorState, FloorIntact, 0, FloorBurnt, FloorName)
-		FW.known_by += user
+		if(user.mind)
+			FW.known_by |= user.mind
 		S.change_stack_amount(-1)
 		boutput(user, "You finish building the false wall.")
 		logTheThing(LOG_STATION, user, "builds a False Wall in [user.loc.loc] ([log_loc(user)])")
@@ -415,7 +415,6 @@ TYPEINFO(/obj/structure/woodwall)
 		return
 
 /datum/action/bar/icon/wood_repair_wall
-	id = "wood_repair_wall"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	#ifdef HALLOWEEN
 	duration = 20

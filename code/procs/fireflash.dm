@@ -88,7 +88,7 @@
 
 		// determine melting temp of turf
 		melting_point = 1643.15 // default for steel
-		if (T?.material.getProperty("flammable") > 4)
+		if (T?.material?.getProperty("flammable") > 4)
 			melting_point = 505.93 / 2 // 451F (temp paper burns at, / 2 to undo the * 2 below)
 			bypass_melt_RNG = TRUE
 

@@ -1,6 +1,9 @@
 var/datum/telescope_manager/tele_man
 var/list/special_places = list() //list of location names, which are coincidentally also landmark ids
 
+TYPEINFO(/obj/machinery/lrteleporter)
+	mats = list("telecrystal"=10, "MET-1"=10, "CON-1"=10)
+	
 /obj/machinery/lrteleporter
 	name = "Experimental long-range teleporter"
 	desc = "Well this looks somewhat unsafe."
@@ -227,7 +230,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 	projectile_type = /datum/projectile/laser/drill/cutter
 	current_projectile = new/datum/projectile/laser/drill/cutter
 	droploot = null
-	smashes_shit = 1
+	smashes_shit = FALSE
 
 	ChaseAttack(atom/M)
 		if(target && !attacking)

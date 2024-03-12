@@ -144,7 +144,7 @@
 		//time to un-apply the nucleus-destroyed debuff
 		if (src.debuff_timestamp && world.timeofday >= src.debuff_timestamp)
 			src.debuff_timestamp = 0
-			out(src, SPAN_ALERT("<b>You can feel your former power returning!</b>"))
+			boutput(src, SPAN_ALERT("<b>You can feel your former power returning!</b>"))
 
 		if (length(blobs) > 0)
 			/**
@@ -592,6 +592,25 @@
 		src.hat = hat
 		hat.set_loc(src)
 
+	proc/go_critical() //I'm sure this won't turn out to be a bad idea
+		SPAWN(0)
+			while (TRUE)
+				if (prob(10)) //pfff sure
+					sleep(1)
+				var/emergency_var = 0 //no infinite loops if we *really* can't find one
+				var/obj/blob/blob = pick(by_type[/obj/blob])
+				while ((blob.surrounded == (NORTH | SOUTH | EAST | WEST)) && emergency_var < 100)
+					blob = pick(by_type[/obj/blob])
+					emergency_var++
+				if (!blob) //give up and try again next iteration
+					continue
+				for (var/dir in cardinal)
+					if (!(blob.surrounded & dir))
+						var/turf/T = get_step(blob, dir)
+						if (T?.can_blob_spread_here(skip_adjacent = TRUE))
+							var/obj/blob/new_blob = new(T)
+							new_blob.setOvermind(blob.overmind)
+							blob.overmind.total_placed++
 
 /atom/movable/screen/blob
 	plane = PLANE_HUD

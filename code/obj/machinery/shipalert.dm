@@ -26,6 +26,7 @@ TYPEINFO(/obj/machinery/shipalert)
 
 	New()
 		..()
+		src.name = "[capitalize(station_or_ship())] Alert Button"
 		UnsubscribeProcess()
 
 /obj/machinery/shipalert/attack_hand(mob/user)
@@ -45,7 +46,7 @@ TYPEINFO(/obj/machinery/shipalert)
 			user.visible_message("[user] picks up \the [hammer]", "You pick up \the [hammer]")
 		if (HAMMER_TAKEN)
 			//no effect punch
-			out(user, SPAN_ALERT("The glass casing is too strong for your puny hands!"))
+			boutput(user, SPAN_ALERT("The glass casing is too strong for your puny hands!"))
 		if (SMASHED)
 			//activate
 			if (src.working)
@@ -56,27 +57,37 @@ TYPEINFO(/obj/machinery/shipalert)
 /obj/machinery/shipalert/attackby(obj/item/W, mob/user)
 	if (user.stat)
 		return
+	switch (src.usageState)
+		if (HAMMER_TAKEN)
+			if (istype(W, /obj/item/tinyhammer))
+				//break glass
+				var/area/T = get_turf(src)
+				T.visible_message(SPAN_ALERT("[src]'s glass housing shatters!"))
+				playsound(T, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
+				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+				G.set_loc(get_turf(user))
+				src.usageState = SMASHED
+				src.icon_state = "shipalert2"
+			else
+				//no effect
+				boutput(user, SPAN_ALERT("\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing."))
+		if (SMASHED)
+			if (istype(W, /obj/item/sheet) && (W.material.getMaterialFlags() & MATERIAL_CRYSTAL) && W.amount >= 2)
+				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(repair_callback), list(user, W), W.icon, W.icon_state, "[user] repairs [src]'s safety glass.", INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
-	if (src.usageState == HAMMER_TAKEN)
-		if (istype(W, /obj/item/tinyhammer))
-			//break glass
-			var/area/T = get_turf(src)
-			T.visible_message(SPAN_ALERT("[src]'s glass housing shatters!"))
-			playsound(T, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
-			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
-			G.set_loc(get_turf(user))
-			src.usageState = SMASHED
-			src.icon_state = "shipalert2"
-		else
-			//no effect
-			out(user, SPAN_ALERT("\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing."))
+/obj/machinery/shipalert/proc/repair_callback(mob/user, obj/item/sheet/glass)
+	if (src.usageState != SMASHED)
+		return
+	src.usageState = HAMMER_TAKEN
+	glass.change_stack_amount(-2)
+	src.icon_state = "shipalert1"
 
 /obj/machinery/shipalert/proc/toggleActivate(mob/user)
 	if (!user)
 		return
 
 	if (src.working)
-		out(user, SPAN_ALERT("The alert coils are currently discharging, please be patient."))
+		boutput(user, SPAN_ALERT("The alert coils are currently discharging, please be patient."))
 		return
 
 	src.working = TRUE
@@ -94,7 +105,7 @@ TYPEINFO(/obj/machinery/shipalert)
 
 	else
 		if (GET_COOLDOWN(src, "alert_cooldown"))
-			out(user, SPAN_ALERT("The alert coils are still priming themselves."))
+			boutput(user, SPAN_ALERT("The alert coils are still priming themselves."))
 			src.working = FALSE
 			return
 

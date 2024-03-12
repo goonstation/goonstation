@@ -50,10 +50,7 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
   * The explicitly defined entries are various blank unicode characters that don't get included as white space by \s
   */
 var/global/regex/is_blank_string_regex = new(@{"^(\s|[\u00A0\u00AC\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u200C\u200D\u200E\u200F\u2011\u2028\u2029\u202A\u202B\u202C\u202D\u202E\u202F\u205F\u2060\u2066\u2067\u2068\u2069\u206A\u206B\u206C\u206D\u206E\u206F\u3000])*$"})
-/proc/is_blank_string(var/txt)
-	if (is_blank_string_regex.Find(txt))
-		return 1
-	return 0 //not blank
+#define is_blank_string(txt) is_blank_string_regex.Find(txt)
 
 var/global/regex/discord_emoji_regex = new(@{"(?:<|&lt;)(?:a)?:([-a-zA-Z0-9_]+):(\d+)(?:>|&gt;)"}, "g")
 /proc/discord_emojify(text)
@@ -168,3 +165,16 @@ proc/pluralize(word)
 		. += "es"
 	else
 		. += "s"
+
+
+
+// DM simultaneously makes cursed shit like this work...
+// yet won't work with just the unicode raws - infinite pain
+var/const/___proper = "\proper"
+var/const/___improper = "\improper"
+var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
+
+/**
+  * Removes the special data inserted via use of \improper etc in strings
+  */
+#define stripTextMacros(text) replacetext(text, regexTextMacro, "")

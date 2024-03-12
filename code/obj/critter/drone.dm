@@ -506,7 +506,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 
 		assdrone // HEH
 			name = "Virtual Assault Drone"
-			desc = "This is a digital reconstruction of the BR-series breach drones employed by Nanotransen in space extraction and destruction missions."
+			desc = "This is a digital reconstruction of the BR-series breach drones employed by Nanotrasen in space extraction and destruction missions."
 			icon = 'icons/mob/critter/robotic/drone/assault.dmi'
 			icon_state = "drone_assault"
 			dead_state = "drone_assault"

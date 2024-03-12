@@ -43,7 +43,7 @@ datum/pathogeneffects
 				if(istype(M, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = I
 					if(prob(100-H.get_disease_protection()))
-						SPAWN(rand(0.5,2) SECONDS)
+						SPAWN(randfloat(0.5,2) SECONDS)
 							H.show_message("Pretty catchy tune...")
 							H.emote("snap") // consider yourself lucky I haven't implemented snap infection yet, human
 

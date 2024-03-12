@@ -4,6 +4,7 @@
 	antagonist_icon = "emagged"
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
+	keep_equipment_on_death = TRUE
 
 	is_compatible_with(datum/mind/mind)
 		return isrobot(mind.current)

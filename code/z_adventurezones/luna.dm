@@ -92,9 +92,18 @@ Contents:
 	desc = "An elevator shaft.  It's probably a bad idea to try to walk over this, unless you're Wile E. Coyote and don't look down."
 	pathable = 0
 	var/isHemera = 0
+	var/landmarktarget = LANDMARK_FALL_MOON_MUSEUM
 
 	New()
 		..()
+		if (isHemera)
+			src.landmarktarget = LANDMARK_FALL_MOON_HEMERA
+
+		src.AddComponent(/datum/component/pitfall/target_landmark,\
+			BruteDamageMax = 50,\
+			FallTime = 0 SECONDS,\
+			TargetLandmark = src.landmarktarget)
+
 		SPAWN(0.5 SECONDS)
 			if (istype( get_step(src, WEST), src.type))
 				if (istype( get_step(src, NORTH), src.type))
@@ -113,19 +122,6 @@ Contents:
 				else
 					//Upper left
 					set_dir(SOUTH)
-
-
-	Entered(atom/A as mob|obj)
-		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
-			return ..()
-
-		var/turf/T = pick_landmark(isHemera ? LANDMARK_FALL_MOON_HEMERA : LANDMARK_FALL_MOON_MUSEUM)
-		if (T)
-			fall_to(T, A)
-			return
-
-		else
-			..()
 
 /turf/unsimulated/floor/lunar
 	name = "lunar surface"
@@ -645,6 +641,8 @@ Contents:
 /datum/computer/file/guardbot_task/tourguide/lunar
 
 	wait_for_guests = 1
+	// focus, Molly.
+	tip_prob = 0
 
 	var/neat_things_underground = 0
 	var/has_been_underground = 0
@@ -839,6 +837,7 @@ Contents:
 	desc = "A security door used to separate museum compartments."
 	autoclose = FALSE
 	req_access_txt = ""
+	object_flags = BOTS_DIRBLOCK
 
 /obj/machinery/door/poddoor/blast/lunar/tour
 
@@ -1299,7 +1298,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		word-break: break-all;
 		background-color:#111F10;
 		color:#31C131;
-		font-family: Glass_TTY_VT220 !important;
+		font-family: Glass_TTY_VT220, 'Consolas', monospace !important;
 		font-size: 14pt;
 	}
 
@@ -1337,15 +1336,15 @@ obj/machinery/embedded_controller/radio/maintpanel
 			dat += "<div id='screenline[screenlineIndex]' class='outputline'></div>"
 
 		dat +={"</div>
-<a id="button1" class='controlbutton' style="top:290px; left:76px"  href='byond://?src=\ref[src];command=button1'>&#8678;</a>
-<a id="button2" class='controlbutton' style="top:290px; left:151px" href='byond://?src=\ref[src];command=button2'>&#8680;</a>
-<a id="button3" class='controlbutton' style="top:290px; left:226px" href='byond://?src=\ref[src];command=button3'>SEL</a>
-<a id="button4" class='controlbutton' style="top:290px; left:301px" href='byond://?src=\ref[src];command=button4'>BACK</a>
+<a class='controlbutton' id="button_up"     style="top:280px; left:110px" href='byond://?src=\ref[src];command=button_up'>&#8679;</a>
+<a class='controlbutton' id="button_left"   style="top:310px; left: 60px" href='byond://?src=\ref[src];command=button_left'>&#8678;</a>
+<a class='controlbutton' id="button_right"  style="top:310px; left:160px" href='byond://?src=\ref[src];command=button_right'>&#8680;</a>
+<a class='controlbutton' id="button_down"   style="top:340px; left:110px" href='byond://?src=\ref[src];command=button_down'>&#8681;</a>
 
-<a id="button5" class='controlbutton' style="top:330px; left:76px"  href='byond://?src=\ref[src];command=button5'>&#8681;</a>
-<a id="button6" class='controlbutton' style="top:330px; left:151px" href='byond://?src=\ref[src];command=button6'>&#8679;</a>
-<a id="button7" class='controlbutton' style="top:330px; left:226px" href='byond://?src=\ref[src];command=button7'>ACT</a>
-<a id="button8" class='controlbutton' style="top:330px; left:301px" href='byond://?src=\ref[src];command=button8'>DEAC</a>
+<a class='controlbutton' id="button_select" style="top:290px; left:226px" href='byond://?src=\ref[src];command=button_select'>SEL</a>
+<a class='controlbutton' id="button_back"   style="top:290px; left:301px" href='byond://?src=\ref[src];command=button_back'>BACK</a>
+<a class='controlbutton' id="button_act"    style="top:330px; left:226px" href='byond://?src=\ref[src];command=button_act'>ACT</a>
+<a class='controlbutton' id="button_deact"  style="top:330px; left:301px" href='byond://?src=\ref[src];command=button_deact'>DEAC</a>
 
 
 <script type="text/javascript">
@@ -1645,35 +1644,35 @@ datum/computer/file/embedded_program/maintpanel
 				src.device_entries += new /datum/maintpanel_device_entry/mannequin (src, controlTarget, entryName)
 
 		while (length(src.device_entries) < 16)
-			src.device_entries += new /datum/maintpanel_device_entry/dummy (src, pick("GEN$$E$C", "MANNEA83IN 13", "M@____$CC DOOR $$S9", "########?3"))
+			src.device_entries += new /datum/maintpanel_device_entry/dummy (src, pick("GEN$$E$C", "MANNEA83IN 13", "M@____$CC DOOR", "########?3"))
 
 	receive_user_command(command)
 		switch (command)
-			if ("button1")	//Left arrow
+			if ("button_left")	//Left arrow
 				if (state == PANELSTATE_MAIN_MENU)
 					selected_entry &= ~1		//Left side is all evens
 
-			if ("button2")	//Right arrow
+			if ("button_right")	//Right arrow
 				if (state == PANELSTATE_MAIN_MENU)
 					selected_entry |= 1			//Right side is all odds.
 
-			if ("button5")	//Down arrow
+			if ("button_down")	//Down arrow
 				if (state == PANELSTATE_MAIN_MENU)
 					selected_entry = min(selected_entry + 2, ENTRY_MAX)
 
-			if ("button6")	//Up arrow
+			if ("button_up")	//Up arrow
 				if (state == PANELSTATE_MAIN_MENU)
 					selected_entry = max(selected_entry - 2, 0)
 
-			if ("button3")	//Select
+			if ("button_select")	//Select
 				if (state == PANELSTATE_MAIN_MENU)
 					state = PANELSTATE_ENTRY_MENU
 
-			if ("button4")	//Back
+			if ("button_back")	//Back
 				if (state != PANELSTATE_MAIN_MENU)
 					state = PANELSTATE_MAIN_MENU
 
-			if ("button7")	//Activate
+			if ("button_act")	//Activate
 				if (state == PANELSTATE_ENTRY_MENU && selected_entry < device_entries.len)
 					var/datum/maintpanel_device_entry/currentEntry = src.device_entries[selected_entry + 1]
 					if (!istype(currentEntry))
@@ -1682,7 +1681,7 @@ datum/computer/file/embedded_program/maintpanel
 					currentEntry.activate()
 
 
-			if ("button8")	//Deactivate
+			if ("button_deact")	//Deactivate
 				if (state == PANELSTATE_ENTRY_MENU && selected_entry < device_entries.len)
 					var/datum/maintpanel_device_entry/currentEntry = src.device_entries[selected_entry + 1]
 					if (!istype(currentEntry))
@@ -1828,9 +1827,9 @@ datum/maintpanel_device_entry
 			active = open || !locked
 
 		getControlMenu()
-			return list("  SEALED: [src.active ? "NO" : "YES"]",\
+			return list("  CLASS: AIRLOCK - GENERIC",\
 			"  LOCKED: [src.locked ? "YES" : "NO"]",\
-			"  CLASS: AIRLOCK - GENERIC")
+			"  SEALED: [src.active ? "NO" : "YES"]")
 
 		receive_signal(datum/signal/signal)
 
@@ -2001,7 +2000,7 @@ datum/maintpanel_device_entry
 
 
 		getControlMenu()
-			return list("  CLASS MSTAR-80A", "  STATUS:  INACTIVE", "  OUTPUT: 0 W", "", " !! CHECK COOLANT PUMPS !!", " !! TURBINE TRIP !!")
+			return list("  CLASS MSTAR-80A", "  STATUS: INACTIVE", "  OUTPUT: 0 W", " ", " !! CHECK COOLANT PUMPS !!", " !! TURBINE TRIP !!")
 
 	dummyatmos
 		New(datum/computer/file/embedded_program/maintpanel/newMaster, entryName)

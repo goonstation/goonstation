@@ -138,7 +138,7 @@ TYPEINFO(/obj/item/disk)
 	invisibility = INVIS_ALWAYS
 	anchored = ANCHORED_ALWAYS
 	flags = TABLEPASS | UNCRUSHABLE
-	burn_possible = 0
+	burn_possible = FALSE
 	item_function_flags = IMMUNE_TO_ACID
 
 	disposing()
@@ -489,8 +489,8 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 			if(owner?.bioHolder.HasEffect("fire_resist"))
 				owner.bioHolder.RemoveEffect("fire_resist")
 			pickup_time = world.time
-			boutput(user, "<h3>[SPAN_ALERT("You have captured [src.name]!")]</h3>")
-			boutput(user, "<h3>[SPAN_ALERT("Don't let anyone else pick it up for 30 seconds and you'll respawn!")]</h3>")
+			boutput(user, SPAN_ALERT("<h3>You have captured [src.name]!</h3>"))
+			boutput(user, SPAN_ALERT("<h3>Don't let anyone else pick it up for 30 seconds and you'll respawn!</h3>"))
 			if(owner)
 				boutput(owner, "<h2>You have lost [src.name]!</h2>")
 			owner = user
@@ -508,7 +508,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	process()
 		if(!owner) return
 		if(world.time - pickup_time >= 300)
-			boutput(owner, "<h3>[SPAN_ALERT("You have held [src.name] long enough! Good job!")]</h3>")
+			boutput(owner, SPAN_ALERT("<h3>You have held [src.name] long enough! Good job!</h3>"))
 			if(owner?.client)
 				src.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
 				INVOKE_ASYNC(owner.client, TYPE_PROC_REF(/client, respawn_target), owner, 1)
@@ -642,6 +642,16 @@ TYPEINFO(/obj/item/reagent_containers/vape)
     The danger is unleashed only if you substantially disturb this place physically. This place is best shunned and left uninhabited.<br>
 	<br>
 	...spooky!"}
+
+	ex_act(severity)
+		// we look for the nearest floor because the jerks are probably gonna blow up a hole under the stone or something, rude
+		for(var/turf/simulated/floor/floor in range(3, get_turf(src)))
+			if(floor.parent?.spaced)
+				continue
+			var/datum/gas_mixture/gas = new
+			gas.radgas = 10 * 2 ** (3 - severity)
+			floor.assume_air(gas)
+			break // only the first floor we found
 
 /obj/item/boarvessel
 	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"

@@ -56,6 +56,8 @@
 
 		terminal.master = src
 
+		AddComponent(/datum/component/mechanics_holder)
+
 		UpdateIcon()
 
 /obj/machinery/power/pt_laser/disposing()
@@ -76,8 +78,23 @@
 	src.emagged = TRUE
 	if (user)
 		src.add_fingerprint(user)
-		src.visible_message(SPAN_ALERT("[src.name] looks a little wonky, as [user] has messed with the polarity using an electromagnetic card!"))
-	return 1
+		playsound(src.loc, 'sound/machines/bweep.ogg', 10, TRUE)
+		src.audible_message(SPAN_ALERT("The [src.name] chirps 'OUTPUT CONTROLS UNLOCKED: INVERSE POLARITY ENABLED' \
+		from some unseen speaker, then goes quiet."))
+	return TRUE
+
+/obj/machinery/power/pt_laser/demag(var/mob/user)
+	if (!src.emagged)
+		return FALSE
+
+	if (user)
+		user.show_text("You reset the [src.name]'s power output protocols.", "blue")
+
+	if (src.output_number < 0 || src.output < 0) //Checking both is redundant, but just in case
+		src.output_number = 0
+		src.output = 0
+	src.emagged = FALSE
+	return TRUE
 
 /obj/machinery/power/pt_laser/update_icon(var/started_firing = 0)
 	overlays = null
@@ -132,6 +149,7 @@
 
 	if(online) // if it's switched on
 		if(!firing) //not firing
+
 			if(charge >= adj_output && (adj_output >= PTLMINOUTPUT)) //have power to fire
 				start_firing() //creates all the laser objects then activates the right ones
 				dont_update = 1 //so the firing animation runs
@@ -151,6 +169,8 @@
 			if(length(blocking_objects) > 0)
 				melt_blocking_objects()
 			power_sold(adj_output)
+
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "[output * firing]") //sends 0 if not firing else give theoretical output
 
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))

@@ -36,7 +36,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	var/gen_analysis = 0 //Are we analysing the genes while reassembling the duder? (read: Do we work faster or do we give a material bonus?)
 	//Sound for scans and toggling gene analysis. They need to be the same so you can fake the former with the latter
 	var/sound_ping = 'sound/machines/ping.ogg'
-
+	var/emagged = FALSE
 	light_r =1
 	light_g = 0.6
 	light_b = 1
@@ -217,6 +217,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 			src.records.Remove(RIP)
 			qdel(RIP)
 	..()
+
+/obj/machinery/computer/cloning/emag_act(mob/user, obj/item/card/emag/E)
+	..()
+	if (!src.emagged)
+		src.emagged = TRUE
+		playsound(src, 'sound/effects/sparks4.ogg', 50)
+		logTheThing(LOG_ADMIN, user, "emagged the cloning console at \[[log_loc(src)]]")
+		if(user)
+			boutput(user, "You short out the access lock on [src].")
+		return 1
+	return 0
 
 // message = message you want to pass to the noticebox
 // status = warning/success/danger/info which changes the color of the noticebox on the frontend
@@ -771,7 +782,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 
 	switch(action)
 		if("delete")
-			if(!src.allowed(usr))
+			if(!(src.allowed(usr) || src.emagged))
 				show_message("You do not have permission to delete records.", "danger")
 				return TRUE
 			var/selected_record =	find_record_by_id(params["id"])
@@ -917,7 +928,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 
 	. = list(
 		"cloningWithRecords" = cloning_with_records,
-		"allowedToDelete" = src.allowed(user),
+		"allowedToDelete" = (src.allowed(user) || src.emagged),
 		"scannerGone" = isnull(src.scanner),
 		"occupantScanned" = FALSE,
 

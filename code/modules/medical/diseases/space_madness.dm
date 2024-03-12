@@ -3,7 +3,8 @@
 	scantype = "Psychological Condition"
 	max_stages = 5
 	spread = "Non-Contagious"
-	cure = "Haloperidol"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Haloperidol"
 	reagentcure = list("haloperidol")
 	associated_reagent = "loose_screws"
 	affected_species = list("Human")

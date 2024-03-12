@@ -5,7 +5,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -45,7 +46,8 @@
 "y" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)

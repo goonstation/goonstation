@@ -2,6 +2,8 @@
 #define MAXIMUM_MEAT_LEVEL		100
 #define DEFAULT_MEAT_USED_PER_TICK 0.6
 #define DEFAULT_SPEED_BONUS 1
+// a lower bound on the amount of meat used per clone, even if ejected instantly
+#define MINIMUM_MEAT_USED 4
 
 #define MEAT_LOW_LEVEL	MAXIMUM_MEAT_LEVEL * 0.15
 
@@ -55,6 +57,8 @@ TYPEINFO(/obj/machinery/clonepod)
 	var/datum/light/light
 
 	var/meat_level = MAXIMUM_MEAT_LEVEL / 4
+	///Total meat used to grow the current clone
+	var/meat_used
 
 	var/static/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.75,"pepperoni"=0.5,"meat_slurry"=1,"bloodc"=0.5)
 
@@ -255,7 +259,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		ghost.mind.transfer_to(src.occupant)
 		src.occupant.is_npc = FALSE
-
+		spawn_rules_controller.apply_to(src.occupant)
 		if (!defects)
 			stack_trace("Clone [identify_object(src.occupant)] generating with a null `defects` holder.")
 			defects = new /datum/cloner_defect_holder
@@ -376,7 +380,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		if(src.connected?.mindwipe)
 			if(prob(75))
 				src.occupant.show_antag_popup("mindwipe")
-				boutput(src.occupant, "<h2>[SPAN_ALERT("You have awakened with a new outlook on life!")]</h2>")
+				boutput(src.occupant, SPAN_ALERT("<h2>You have awakened with a new outlook on life!</h2>"))
 				src.occupant.mind.memory = "You cannot seem to remember much from before you were cloned. Weird!<BR>"
 			else
 				boutput(src.occupant, SPAN_ALERT("You feel your memories fading away, but you manage to hang on to them!"))
@@ -491,7 +495,10 @@ TYPEINFO(/obj/machinery/clonepod)
 				//Also heal some oxy ourselves because epinephrine is so bad at preventing it!!
 				src.occupant.take_oxygen_deprivation(-10 * mult) // cogwerks: speeding this up too
 
+				var/old_level = src.meat_level
 				src.meat_level = max( 0, src.meat_level - meat_used_per_tick * mult )
+				src.meat_used += old_level - src.meat_level //delta meat
+
 				if (!src.meat_level)
 					src.connected_message("Additional biomatter required to continue.", "warning")
 					src.send_pda_message("Low Biomatter")
@@ -658,7 +665,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		new /obj/item/cloneModule/mindhack_module(src.loc)
 		src.clonehack = FALSE
 		src.implant_hacker = null
-		boutput(user, "<span class='alert'>The mindhack cloning module falls to the floor!</span>")
+		boutput(user, SPAN_ALERT("The mindhack cloning module falls to the floor!"))
 		playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
 		src.light.disable()
 		src.UpdateIcon()
@@ -734,6 +741,9 @@ TYPEINFO(/obj/machinery/clonepod)
 			// changing to 30 and rewriting to consider the /damage/ someone has;
 			// max_health can vary depending on other
 			src.occupant.bioHolder.AddEffect("premature_clone")
+
+		if (src.meat_used < MINIMUM_MEAT_USED) //always make sure we use at least SOME meat
+			src.meat_level = max(0, src.meat_level - (MINIMUM_MEAT_USED - src.meat_used))
 
 		if (src.mess) //Clean that mess and dump those gibs!
 			src.mess = 0
@@ -1182,7 +1192,6 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		return 1
 
 /datum/action/bar/icon/put_in_reclaimer
-	id = "put_in_reclaimer"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 50
 	icon = 'icons/mob/screen1.dmi'
@@ -1261,3 +1270,4 @@ TYPEINFO(/obj/machinery/clonegrinder)
 #undef DEFAULT_MEAT_USED_PER_TICK
 #undef DEFAULT_SPEED_BONUS
 #undef MEAT_LOW_LEVEL
+#undef MINIMUM_MEAT_USED

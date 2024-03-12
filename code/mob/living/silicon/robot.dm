@@ -35,6 +35,8 @@
 	var/total_weight = 0
 	var/datum/robot_cosmetic/cosmetic_mods = null
 
+	var/datum/material/frame_material
+
 	var/list/obj/clothes = list()
 
 	var/next_cache = 0
@@ -112,9 +114,10 @@
 		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
 		src.internal_pda.name = "[src]'s Internal PDA Unit"
 		src.internal_pda.owner = "[src]"
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_base, "robot_health_slow_immunity")
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity")
 		if (frame)
 			src.freemodule = frame.freemodule
+			src.frame_material = frame.material
 		if (starter && !(src.dependent || src.shell))
 			var/obj/item/parts/robot_parts/chest/light/PC = new /obj/item/parts/robot_parts/chest/light(src)
 			var/obj/item/cell/supercell/charged/CELL = new /obj/item/cell/supercell/charged(PC)
@@ -257,6 +260,10 @@
 		if (prob(50))
 			src.sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
 
+		for (var/datum/movement_modifier/MM in src.movement_modifiers) // Spawning borgs applies human only movemods, this cleans that up
+			if (!istype(MM, /datum/movement_modifier/robot_part))
+				REMOVE_MOVEMENT_MODIFIER(src, MM, src.type)
+
 	set_pulling(atom/movable/A)
 		. = ..()
 		hud.update_pulling()
@@ -266,11 +273,7 @@
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)].")
-		src.mind?.register_death()
-		var/was_syndicate = src.syndicate
-		if (was_syndicate)
-			// This will set src.syndicate to FALSE as side effect
-			src.remove_syndicate("death")
+		src.on_disassembly()
 
 		src.eject_brain(fling = TRUE) //EJECT
 		for (var/slot in src.clothes)
@@ -287,8 +290,9 @@
 						chest.cell = src.cell
 
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
+			frame.setMaterial(src.frame_material)
 			frame.emagged = src.emagged
-			frame.syndicate = was_syndicate
+			frame.syndicate = src.syndicate
 			frame.freemodule = src.freemodule
 
 			src.ghostize()
@@ -743,7 +747,7 @@
 			else
 				var/mob/living/silicon/S = user
 				lr =  S.law_rack_connection
-			if(src.law_rack_connection != lr)
+			if(src.law_rack_connection != lr && !src.syndicate)
 				. += "[SPAN_ALERT("[src.name] is not connected to your law rack!")]<br>"
 			else
 				. += "[src.name] follows the same laws you do.<br>"
@@ -889,6 +893,7 @@
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
 				if (RP.ropart_take_damage(brute_damage,burn_damage) == 1)
 					src.compborg_lose_limb(RP)
+				RP.ropart_ex_act(severity, lasttouched, power)
 
 		if (istype(cell,/obj/item/cell/erebite) && fire_protect != 1)
 			src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
@@ -991,7 +996,7 @@
 			else
 				if (user)
 					boutput(user, "You emag [src]'s interface.")
-				src.visible_message("<span class='alert'><b>[src]</b> buzzes oddly!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> buzzes oddly!"))
 				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
 				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
 				update_appearance()
@@ -1007,7 +1012,7 @@
 			if (RP.ropart_take_damage(0,55) == 1) src.compborg_lose_limb(RP)
 
 	meteorhit(obj/O as obj)
-		src.visible_message("<span class='alert'><b>[src]</b> is struck by [O]!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]</b> is struck by [O]!"))
 		if (isdead(src))
 			src.gib()
 			return
@@ -1423,7 +1428,7 @@
 					update_bodypart("l_leg")
 				else return
 			src.module_active = null
-			hud.set_active_tool(null)
+			hud?.set_active_tool(null) // HUD will be null if we removed the chest and they fell apart
 			src.update_appearance()
 			return
 
@@ -1488,8 +1493,14 @@
 			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 			boutput(user, SPAN_NOTICE("You successfully attach the piece to [src.name]."))
 			src.update_bodypart(RP.slot)
-		else ..()
-		return
+		else if (istype(src.part_head, /obj/item/parts/robot_parts/head/screen) && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+			var/obj/item/parts/robot_parts/head/screen/screenhead = src.part_head
+			if (screenhead.smashed)
+				screenhead.start_repair(W, user)
+			else
+				..() //woo spooky badcode else chaining
+		else
+			..()
 
 	hand_attack(atom/target, params, location, control, origParams)
 		// Only allow it if the target is outside our contents or it is the equipped tool
@@ -1625,12 +1636,19 @@
 
 		add_fingerprint(user)
 
+	// Called when the robot is destroyed, head or brain removed
+	// May be called several times.
+	proc/on_disassembly()
+		if (src.mind)
+			src.mind.register_death()
+			for (var/datum/antagonist/antag in src.mind.antagonists)
+				antag.on_death()
+
 	proc/eject_brain(var/mob/user = null, var/fling = FALSE)
 		if (!src.part_head || !src.part_head.brain)
 			return
 
-		if (src.mind && src.mind.special_role && src.syndicate)
-			src.remove_syndicate("brain_removed")
+		src.on_disassembly()
 
 		if (user)
 			src.visible_message(SPAN_ALERT("[user] removes [src]'s brain!"))
@@ -1649,8 +1667,6 @@
 				newmob.corpse = null // Otherwise they could return to a brainless body.And that is weird.
 				newmob.mind.brain = src.part_head.brain
 				src.part_head.brain.owner = newmob.mind
-				for (var/datum/antagonist/antag in newmob.mind.antagonists) //we do this after they die to avoid un-emagging the frame
-					antag.on_death()
 
 		// Brain box is forced open if it wasn't already (suicides, killswitch)
 		src.locked = 0
@@ -1784,13 +1800,6 @@
 				. += ROBOT_MISSING_ARM_MOVEMENT_ADJUST
 
 
-		if (total_weight > 0)
-			if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/left/treads) && istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/right/treads))
-				. += total_weight / 3
-			else
-				. += total_weight
-
-
 	hotkey(name)
 		switch (name)
 			if ("help")
@@ -1903,6 +1912,16 @@
 //////////////////////////
 // Robot-specific Procs //
 //////////////////////////
+
+	proc/equip_slot(var/i, var/obj/item/tool)
+		src.module_states[i] = tool
+		tool.set_loc(src)
+		tool.pickup(src) // Handle light datums and the like.
+
+		hud.update_tools()
+		hud.update_equipment()
+
+		update_appearance()
 
 	proc/uneq_slot(var/i)
 		if (module_states[i])
@@ -2215,6 +2234,19 @@
 			src.say("[number]. [laws[number]]")
 			sleep(1 SECOND)
 
+	verb/robot_set_fake_laws()
+		set category = "Robot Commands"
+		set name = "Set Fake Laws"
+		if (src.shell)
+			src.mainframe.set_fake_laws()
+		else
+			src.set_fake_laws()
+
+	verb/ai_state_fake_laws()
+		set category = "Robot Commands"
+		set name = "State Fake Laws"
+		src.state_fake_laws() //already handles being a shell
+
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"
 		set name = "Toggle Interface Lock"
@@ -2423,7 +2455,11 @@
 				if (R.activated)
 					if (efficient) power_use_tally += R.drainrate / 2
 					else power_use_tally += R.drainrate
-			if (src.oil && power_use_tally > 0) power_use_tally /= 1.5
+
+			if (src.hasStatus("freshly_oiled") && power_use_tally > 0)
+				power_use_tally *= 0.5
+			if (src.hasStatus("oiled") && power_use_tally > 0)
+				power_use_tally *= 0.85
 
 			if (src.cell.genrate) power_use_tally -= src.cell.genrate
 
@@ -2507,7 +2543,10 @@
 					var/delta = src.max_upgrades - initial(src.max_upgrades)
 					power_use_tally += 3 ** delta
 
-				if (src.oil && power_use_tally > 0) power_use_tally /= 1.5
+				if (src.hasStatus("freshly_oiled") && power_use_tally > 0)
+					power_use_tally *= 0.5
+				if (src.hasStatus("oiled") && power_use_tally > 0)
+					power_use_tally *= 0.85
 
 				src.cell.use(power_use_tally)
 
@@ -2546,13 +2585,6 @@
 					change_misstep_chance(-1)
 
 		if (src.dizziness) dizziness--
-
-	proc/add_oil(var/amt)
-		if (oil <= 0)
-			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "robot_oil", 25)
-			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "robot_oil", 25)
-			APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_oil, "oil")
-		src.oil += amt
 
 	proc/borg_death_alert(modifier = ROBOT_DEATH_MOD_NONE)
 		var/message = null
@@ -2646,6 +2678,9 @@
 					if (istype(src.part_head, /obj/item/parts/robot_parts/head/screen))
 						eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
 						eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
+						var/obj/item/parts/robot_parts/head/screen/screenhead = src.part_head
+						if (screenhead.smashed)
+							src.i_head.overlays += image('icons/mob/robots.dmi', "screen-smashed", layer = FLOAT_LAYER + 0.1)
 					else
 						eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
 						eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
@@ -3239,6 +3274,45 @@
 
 /mob/living/silicon/robot/handle_event(var/event, var/sender)
 	hud.handle_event(event, sender)	// the HUD will handle icon_updated events, so proxy those
+
+/// Modify one tool in existing module, ex redeeming rewards or modifying sponge. Precondition of item being in hand
+/mob/living/silicon/robot/proc/swap_individual_tool(var/obj/item/old_tool, var/obj/item/new_tool)
+	var/tool_index
+	var/tool_module_index
+
+	// Find index of the tool in hand
+	for (var/i = 1 to length(src.module_states))
+		var/obj/module_content = src.module_states[i]
+		if (istype(module_content, old_tool.type))
+			tool_index = i
+
+	// Find module entry for the tool in module
+	for (var/i = 1 to length(src.module.tools))
+		var/obj/module_tool = src.module.tools[i]
+		if (istype(module_tool, old_tool.type))
+			tool_module_index = i
+
+	// If tool is not found in hand or in module let's stop
+	if ((!tool_index) || (!tool_module_index))
+		return
+
+	// Unequip the old tool in hand
+	src.uneq_slot(tool_index)
+
+	// Set new tool to same location as old tool in hand
+	src.module_states[tool_index] = new_tool
+
+	// Set loc and pickup our new tool in hand
+	new_tool.cant_drop = TRUE
+	new_tool.set_loc(src)
+	new_tool.pickup(src)
+
+	// Replace the tool module in the correct slot
+	src.module.tools[tool_module_index] = new_tool
+
+	// Update everything at the end
+	src.hud.update_tools()
+	src.hud.update_equipment()
 
 ///////////////////////////////////////////////////
 // Specific instances of robots can go down here //

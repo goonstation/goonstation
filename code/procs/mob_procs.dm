@@ -836,7 +836,7 @@
 	var/my_name = "<span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span>"
 	if (!use_voice_name)
 		my_name = src.get_heard_name()
-	var/rendered = "<span class='game say'>[my_name] [SPAN_MESSAGE("[message_a]")]</span>"
+	var/rendered = SPAN_SAY("[my_name] [SPAN_MESSAGE("[message_a]")]")
 
 	var/rendered_outside = null
 	if (length(olocs))
@@ -857,11 +857,11 @@
 		if (thickness < 0)
 			rendered_outside = rendered
 		else if (thickness == 0)
-			rendered_outside = "<span class='game say'>[my_name] (on [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]</span>"
+			rendered_outside = SPAN_SAY("[my_name] (on [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]")
 		else if (thickness < 10)
-			rendered_outside = "<span class='game say'>[my_name] (inside [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]</span>"
+			rendered_outside = SPAN_SAY("[my_name] (inside [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]")
 		else if (thickness < 20)
-			rendered_outside = "<span class='game say'>muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]</span>"
+			rendered_outside = SPAN_SAY("muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]")
 
 	for (var/mob/M in heard)
 		if (M in processed)
@@ -876,7 +876,7 @@
 				continue
 		else
 			if (isghostdrone(M) && !isghostdrone(src) && !istype(M, /mob/living/silicon/ghostdrone/deluxe))
-				thisR = "<span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> [SPAN_MESSAGE("[message_a]")]</span>"
+				thisR = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> [SPAN_MESSAGE("[message_a]")]")
 
 		if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
 			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"

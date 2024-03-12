@@ -47,7 +47,7 @@ TYPEINFO(/obj/item/storage/toilet)
 				user.visible_message(SPAN_NOTICE("[user] gives [G.affecting] a swirlie!"), SPAN_NOTICE("You give [G.affecting] a swirlie. It's like Middle School all over again!"))
 		else
 			user.visible_message(SPAN_NOTICE("[user] gives [G.affecting] a swirlie!"), SPAN_NOTICE("You give [G.affecting] a swirlie. It's like Middle School all over again!"))
-
+		G.affecting.lastgasp() // --BLUH
 		playsound(src, 'sound/effects/toilet_flush.ogg', 50, TRUE)
 		if (G.affecting.hasStatus("burning"))
 			G.affecting.changeStatus("burning", -2 SECONDS)
@@ -196,3 +196,4 @@ TYPEINFO(/obj/item/storage/toilet)
 	icon_state = "toilet$$gold"
 	desc = "The result of years of stolen Nanotrasen funds."
 	default_material = "gold"
+	uses_default_material_appearance = TRUE

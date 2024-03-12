@@ -498,7 +498,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		return
 	else
 		speak_text = make_chat_maptext(src, message, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
-		src.audible_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[message]\"</span>"), 2, assoc_maptext = speak_text)
+		src.audible_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\"")), assoc_maptext = speak_text)
 		if (speak_text && src.chat_text && length(src.chat_text.lines))
 			speak_text.measure(src)
 			for (var/image/chat_maptext/I in src.chat_text.lines)

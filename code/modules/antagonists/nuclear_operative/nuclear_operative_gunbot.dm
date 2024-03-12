@@ -2,6 +2,7 @@
 	id = ROLE_NUKEOP_GUNBOT
 	display_name = "\improper Syndicate gunbot"
 	antagonist_icon = "syndicate"
+	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/nuclear_operative
 	faction = FACTION_SYNDICATE
 	mob_path = /mob/living/critter/robotic/gunbot/syndicate
 
@@ -17,9 +18,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(ROLE_NUKEOP)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()

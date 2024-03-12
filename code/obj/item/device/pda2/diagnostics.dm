@@ -122,7 +122,7 @@
 
 
 	proc/receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
-		if(signal.data["address_1"] == master.net_id && signal.data["command"] == "ping_reply")
+		if(signal.data["address_1"] == master.net_id && signal.data["command"] == "ping_reply" && connection_id == "ping")
 			if(!result)
 				result = new/list()
 			result += "[signal.data["device"]] \[[signal.data["netid"]]\] [signal.data["data"]]<BR>"

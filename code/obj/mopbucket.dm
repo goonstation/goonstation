@@ -5,6 +5,7 @@
 	icon_state = "mopbucket"
 	density = 1
 	flags = FPRINT
+	pass_unstable = TRUE
 	pressure_resistance = ONE_ATMOSPHERE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	HELP_MESSAGE_OVERRIDE("You can drag and drop yourself to move onto the bucket.<br>The bucket has 7 storage slots inside of it.<br>To pour reagents into the bucket from a <b>cup</b> or similar, drag and drop the cup to the bucket.")
@@ -30,6 +31,15 @@
 	on_reagent_change()
 		..()
 		src.UpdateIcon()
+
+	Cross(atom/movable/mover)
+		if(isliving(mover)) // let people climb onto the bucket if the bucket is against a wall basically
+			var/move_dir = get_dir(mover, src)
+			var/turf/next_turf = get_step(src, move_dir)
+			if(next_turf && !total_cross(next_turf, src))
+				return TRUE
+		. = ..()
+
 
 /obj/mopbucket/disposing()
 	. = ..()

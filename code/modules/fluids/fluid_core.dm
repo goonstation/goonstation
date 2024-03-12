@@ -18,6 +18,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 	anchored = ANCHORED_ALWAYS
 	mouse_opacity = FALSE
 	layer = FLUID_LAYER
+	flags = UNCRUSHABLE | OPENCONTAINER
 
 	event_handler_flags = IMMUNE_MANTA_PUSH
 
@@ -79,10 +80,6 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			if (!waterflow_enabled)
 				src.removed()
 				return
-
-		flags |= OPENCONTAINER | UNCRUSHABLE
-
-		//src.floated_atoms = list()
 
 		for (var/dir in cardinal)
 			blocked_perspective_objects["[dir]"] = 0

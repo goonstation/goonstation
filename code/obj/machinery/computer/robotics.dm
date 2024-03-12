@@ -30,7 +30,8 @@
 	..()
 	return
 
-/obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj)
+/obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj, mob/user)
+	logTheThing(LOG_STATION, src, "is deconstructed by [key_name(user)] at [log_loc(src)]")
 	frame.circuit.id = src.id
 
 /obj/machinery/computer/robotics/process()
@@ -207,7 +208,7 @@
 					for (var/obj/item/roboupgrade/X in R.contents)
 						if (X.activated)
 							X.activated = 0
-							boutput(R, "<b>[SPAN_ALERT("[X] was shut down by the Weapon Lock!")]</b>")
+							boutput(R, SPAN_ALERT("<b>[X] was shut down by the Weapon Lock!</b>"))
 						if (istype(X, /obj/item/roboupgrade/jetpack))
 							R.jetpack = 0
 				else if(istype(A))

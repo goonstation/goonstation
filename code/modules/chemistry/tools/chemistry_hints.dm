@@ -40,13 +40,13 @@
 				user.organHolder.drop_organ("left_eye")
 				user.organHolder.drop_organ("right_eye")
 				sleep(4 SECONDS)
-				boutput(src.loc, "The chem hint scroll self-destructs!")
+				src.visible_message("The chem hint scroll self-destructs!")
 				playsound(src,'sound/effects/bamf.ogg')
 				src.combust()
 			return
 		icon_state = "scroll_open"
 		boutput(user, "You read the scroll:<br><div style='border: 3px solid #cf9f5f; font-size: 120%; color: #4f2f0f; text-align: center; background: #ffffdf;'><div style='font-size: 120%; color: #4f2f0f; text-align: center; background: #dfcf9f;padding:4px;'>[chem_name]</div><div style=' padding: 5px'>[hint_text]</div></div>", "blue")
 		SPAWN(5 SECONDS)
-			boutput(src.loc, "The chem hint scroll self-destructs!")
+			src.visible_message("The chem hint scroll self-destructs!")
 			playsound(src,'sound/effects/bamf.ogg')
 			qdel(src)

@@ -20,6 +20,7 @@ type AlertModalData = {
   content_window: string;
   timeout: number;
   title: string;
+  theme: string;
 };
 
 const KEY_DECREMENT = -1;
@@ -34,6 +35,7 @@ export const AlertModal = (props, context) => {
     content_window = '',
     timeout,
     title,
+    theme,
   } = data;
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
 
@@ -56,7 +58,11 @@ export const AlertModal = (props, context) => {
   };
 
   return (
-    <Window height={windowHeight} title={typedContentWindow ? typedContentWindow.title : title} width={windowWidth}>
+    <Window
+      height={windowHeight}
+      title={typedContentWindow ? typedContentWindow.title : title}
+      width={windowWidth}
+      theme={theme || 'nanotrasen'}>
       {!!timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(e) => {

@@ -2,7 +2,7 @@
 	//Tries to achieve target pressure at output (like a normal pump) except
 	//Uses no power but can not transfer gases from a low pressure area to a high pressure area
 	icon = 'icons/obj/atmospherics/passive_gate.dmi'
-	icon_state = "intact_off"
+	icon_state = "off-map"
 	name = "Passive gate"
 	desc = "A one-way air valve that does not require power"
 
@@ -23,16 +23,12 @@
 		. += "\nIt is currently turned off."
 
 /obj/machinery/atmospherics/binary/passive_gate/update_icon()
-	if(node1&&node2)
-		icon_state = "intact_[on?("on"):("off")]"
-	else
-		if(node1)
-			icon_state = "exposed_1_off"
-		else if(node2)
-			icon_state = "exposed_2_off"
-		else
-			icon_state = "exposed_3_off"
-		on = FALSE
+	if(!(node1&&node2))
+		src.on = FALSE
+
+	src.icon_state = src.on ? "on" : "off"
+	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 180), "long", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node2, src.dir, "long", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
 
 /obj/machinery/atmospherics/binary/passive_gate/process()
 	..()
@@ -66,6 +62,10 @@
 /obj/machinery/atmospherics/binary/passive_gate/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W))
 		src.ui.show_ui(user)
+
+/obj/machinery/atmospherics/binary/passive_gate/opened
+	icon_state = "on-map"
+	on = TRUE
 
 /datum/pump_ui/passive_gate_ui
 	value_name = "Release Pressure"

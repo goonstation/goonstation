@@ -26,6 +26,11 @@ TYPEINFO(/obj/machinery/crusher)
 	if(AM.flags & UNCRUSHABLE || AM.anchored == 2)
 		return
 
+	if(ismob(AM)) //don't crush me in godmode thx
+		var/mob/M = AM
+		if(M.nodamage)
+			return
+
 	var/turf/T = get_turf(src)
 	if (T.density) // no clipping through walls ty
 		return
@@ -43,6 +48,11 @@ TYPEINFO(/obj/machinery/crusher)
 	return_if_overlay_or_effect(AM)
 	if(AM.flags & UNCRUSHABLE || AM.anchored == 2)
 		return
+
+	if(ismob(AM)) //don't crush me in godmode thx
+		var/mob/M = AM
+		if(M.nodamage)
+			return
 
 	var/turf/T = get_turf(src)
 	if (T.density) // no clipping through walls ty
@@ -86,7 +96,7 @@ TYPEINFO(/obj/machinery/crusher)
 		if(!(BOUNDS_DIST(owner, target) == 0) || QDELETED(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (!ON_COOLDOWN(owner, "crusher_sound", rand(0.5, 2.5) SECONDS))
+		if (!ON_COOLDOWN(owner, "crusher_sound", randfloat(0.5, 2.5) SECONDS))
 			playsound(owner, 'sound/items/mining_drill.ogg', 40, TRUE,0,0.8)
 		if(!src.classic)
 			target.set_loc(owner.loc)

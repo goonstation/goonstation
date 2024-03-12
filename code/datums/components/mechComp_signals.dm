@@ -10,6 +10,8 @@
 #define _MECHCOMP_VALIDATE_RESPONSE_HALT 2
 #define _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER 3
 
+#define MAX_OUTGOING_PER_TICK 25
+
 /datum/mechanicsMessage
 	var/signal = "1"
 	var/list/nodes = list()
@@ -79,6 +81,9 @@
 	var/list/configs
 
 	var/defaultSignal = "1"
+
+	var/activation_count = 0
+	var/current_tick = 0
 
 TYPEINFO(/datum/component/mechanics_holder)
 	initialization_args = list()
@@ -223,6 +228,14 @@ TYPEINFO(/datum/component/mechanics_holder)
 //Fire an outgoing connection with given value. Try to re-use incoming messages for outgoing signals whenever possible!
 //This reduces load AND preserves the node list which prevents infinite loops.
 /datum/component/mechanics_holder/proc/fireOutgoing(var/comsig_target, var/datum/mechanicsMessage/msg)
+	//ratelimit components
+	if(current_tick == TIME)
+		if(activation_count++ > MAX_OUTGOING_PER_TICK)
+			return 0
+	else //if it's the next tick, reset the trackers
+		activation_count = 0
+		current_tick = TIME
+
 	//If we're already in the node list we will not send the signal on.
 	if(msg.hasNode(parent))
 		return 0
@@ -437,3 +450,5 @@ TYPEINFO(/datum/component/mechanics_holder)
 /datum/component/mechanics_connector/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 	. = ..()
+
+#undef MAX_OUTGOING_PER_TICK

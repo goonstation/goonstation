@@ -242,7 +242,7 @@
 		pf.layer = 7
 
 		playsound(pz.loc, 'sound/machines/fortune_laugh.ogg', 65, 1)
-		pz.visible_message("<span class='game say'>[SPAN_NAME("[pz]")] beeps, \"Ha ha ha ha ha!\"</span>")
+		pz.visible_message(SPAN_SAY("[SPAN_NAME("[pz]")] beeps, \"Ha ha ha ha ha!\""))
 
 
 /datum/targetable/zoldorfAbility/addsoul //debug tool

@@ -15,7 +15,7 @@
 	w_class = W_CLASS_TINY
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 	///what style of card sprite are we using?
 	var/card_style
 	///number of cards in a full deck (used for reference when updating stack size)
@@ -365,7 +365,7 @@ ABSTRACT_TYPE(/obj/item/card_group)
 	w_class = W_CLASS_TINY
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 	health = 10
 	inventory_counter_enabled = 1
 	/// same function as playing_card card name
@@ -1033,7 +1033,7 @@ ABSTRACT_TYPE(/obj/item/card_group)
 	w_class = W_CLASS_TINY
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 	health = 10
 	var/obj/item/card_group/stored_deck
 	var/box_style = "white"

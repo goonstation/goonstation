@@ -16,9 +16,6 @@
 	. += ..()
 	if (isalive(usr))
 		. += "<br>[SPAN_NOTICE("You look closely at <B>[src.name] ([src.get_pronouns()])</B>.")]"
-		sleep(GET_DIST(usr.client.eye, src) + 1)
-		if (!usr.client.eye)
-			return // heh heh
 
 	if (!istype(usr, /mob/dead/target_observer))
 		if (!ignore_checks && (GET_DIST(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
@@ -156,6 +153,12 @@
 			count++
 		. += "<br>[SPAN_ALERT("[src] has [count > 1 ? "arrows" : "an arrow"] stuck in [him_or_her(src)]!")]"
 
+	if (locate(/obj/item/implant/projectile/body_visible/seed) in src.implant)
+		var/count = 0
+		for (var/obj/item/implant/projectile/body_visible/seed/P in src.implant)
+			count++
+		. += "<br>[SPAN_ALERT("[src] has [count > 1 ? "seeds" : "a seed"] stuck in [him_or_her(src)]!")]"
+
 	if (src.is_jittery)
 		switch(src.jitteriness)
 			if (300 to INFINITY)
@@ -250,12 +253,10 @@
 		else
 			. += "<br>[SPAN_ALERT("<B>[src.name]'s entire chest is missing!</B>")]"
 
-
-		if (src.organHolder.back_op_stage > BACK_SURGERY_CLOSED)
-			if (!src.organHolder.butt)
-				. += "<br>[SPAN_ALERT("<B>[src.name]'s butt seems to be missing!</B>")]"
-			else
-				. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on [t_his] butt!</B>")]"
+		if (!src.organHolder.butt)
+			. += "<br>[SPAN_ALERT("<B>[src.name]'s butt seems to be missing!</B>")]"
+		else if (src.organHolder.back_op_stage > BACK_SURGERY_CLOSED)
+			. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on [t_his] butt!</B>")]"
 
 	if (src.limbs)
 		if (!src.limbs.l_arm)

@@ -68,6 +68,8 @@ Right Mouse Button                     = Select area to copy with two clicks<br>
 			if (A.z != B.z)
 				boutput(usr, SPAN_ALERT("Corners must be on the same Z-level!"))
 				return
+			var/total_area = abs(A.x - B.x) * abs(A.y - B.y)
+			logTheThing(LOG_ADMIN, usr, "used buildmode wide area clipboard between [log_loc(A)] and [log_loc(B)]. Total area [total_area] turfs.")
 			update_button_text("Copying...")
 			copying = 1
 			clipboard.len = 0

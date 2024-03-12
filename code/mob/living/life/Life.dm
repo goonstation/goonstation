@@ -174,6 +174,7 @@
 	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
+	add_lifeprocess(/datum/lifeprocess/faith)
 
 /mob/living/carbon/cube/restore_life_processes()
 	..()
@@ -193,6 +194,7 @@
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/disability)
+	add_lifeprocess(/datum/lifeprocess/faith)
 
 /mob/living/silicon/hivebot/restore_life_processes()
 	..()
@@ -213,9 +215,9 @@
 	add_lifeprocess(/datum/lifeprocess/robot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
-	add_lifeprocess(/datum/lifeprocess/robot_oil)
 	add_lifeprocess(/datum/lifeprocess/robot_locks)
 	add_lifeprocess(/datum/lifeprocess/disability)
+	add_lifeprocess(/datum/lifeprocess/faith)
 
 
 /mob/living/silicon/drone/restore_life_processes()
@@ -323,6 +325,16 @@
 	if (farty_party)
 		src.emote("fart")
 
+	if (length(src.juggling))
+		var/list/juggled_items = list()
+		for (var/obj/item/juggled in src.juggling)
+			juggled_items += juggled
+		if (length(juggled_items) > 1)
+			var/obj/item/item1 = pick(juggled_items)
+			juggled_items -= item1
+			var/obj/item/item2 = pick(juggled_items)
+			item2.Attackby(item1, src, silent = TRUE)
+
 	//Attaching a limb that didn't originally belong to you can do stuff
 	if(!isdead(src) && prob(2) && src.limbs)
 		if(src.limbs.l_arm && istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/))
@@ -343,6 +355,10 @@
 				D.foreign_limb_effect()
 
 	if (!isdead(src)) // Marq was here, breaking everything.
+		src.limbs.l_arm?.on_life(parent)
+		src.limbs.r_arm?.on_life(parent)
+		src.limbs.l_leg?.on_life(parent)
+		src.limbs.r_leg?.on_life(parent)
 
 		if (src.sims && src.ckey) // ckey will be null if it's an npc, so they're skipped
 			src.sims.Life()
@@ -387,6 +403,9 @@
 	process_killswitch()
 	process_locks()
 	update_canmove()
+
+	for (var/obj/item/parts/robot_parts/part in src.contents)
+		part.on_life(src)
 
 	if (metalman_skin && prob(1))
 		var/msg = pick("can't see...","feels bad...","leave me...", "you're cold...", "unwelcome...")

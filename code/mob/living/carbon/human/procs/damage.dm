@@ -127,7 +127,6 @@
 							implanted.owner = src
 							if (P.forensic_ID)
 								implanted.forensic_ID = P.forensic_ID
-							src.implant += implanted
 							implanted.setMaterial(P.proj_data.material)
 							implanted.implanted(src, null, 0)
 	return 1
@@ -382,6 +381,14 @@
 						make_cleanable(/obj/decal/cleanable/ash, get_turf(src))
 					qdel(P)
 
+	// roll a quick death roll if you're already really beat up
+	// same as the standard death rolls, but an additional penalty percentage is added, based on damage taken:
+	// The penalty is 5% at 5 damage, requiring 2x additional damage to raise another 5% (5 = 5%, 15 = 10%, 35 = 15%, 75 = 20%)
+	if ((src.health - brute) <= -100 && brute >= 5 && !ON_COOLDOWN(src, "Death from Impact", 4 DECI SECONDS ) ) // stupid bullet hoses
+		var/penalty = (5 * log(2, (brute+5)/5))
+		var/deathchance = min(99, ((src.get_brain_damage() * -5) + (src.health + (src.get_oxygen_deprivation() / 2))) * -0.01 + penalty)
+		if (prob(deathchance))
+			src.death()
 	src.bruteloss += brute
 	src.burnloss += burn
 

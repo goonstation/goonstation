@@ -30,6 +30,6 @@
 		if (!flockmind.tutorial)
 			boutput(holder.get_controlling_mob(), SPAN_ALERT("You're not in the tutorial!"))
 			return
-		if (tgui_alert(holder.get_controlling_mob(), "Exit tutorial?", "Confirm", list("Ok", "Cancel")) == "Ok")
+		if (tgui_alert(holder.get_controlling_mob(), "Exit tutorial?", "Confirm", list("Ok", "Cancel"), theme = "flock") == "Ok")
 			flockmind.tutorial.Finish()
 			flockmind.tutorial = null

@@ -3,7 +3,8 @@
 	scantype = "Medical Emergency"
 	max_stages = 3
 	spread = "The patient's appendicitis is dangerously enlarged"
-	cure = "Removal of organ"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Removal of organ"
 	recureprob = 10
 	affected_species = list("Human")
 	stage_prob = 1
@@ -59,7 +60,7 @@
 			if (probmult(5))
 				boutput(H, SPAN_ALERT("Your back aches terribly!"))
 			if (probmult(3))
-				boutput(H, SPAN_ALERT("You feel excruciating pain in your upper-right adbomen!"))
+				boutput(H, SPAN_ALERT("You feel excruciating pain in your upper-right abdomen!"))
 				// H.organHolder.takepancreas
 
 			if (probmult(5)) H.emote(pick("faint", "collapse", "groan"))

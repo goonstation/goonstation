@@ -113,6 +113,9 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 				return 2
 		return ..()
 
+	animate_lying(lying)
+		animate_180_rest(src, !lying)
+
 	death(var/gibbed)
 		if (src.master && istype(src.master, /mob/living/intangible/wraith))
 			src.master.summons -= src

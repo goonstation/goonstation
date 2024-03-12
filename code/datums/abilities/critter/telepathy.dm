@@ -33,7 +33,7 @@
         boutput(target, "<span class='[class]'><b>An alien voice echoes in your mind... </b> [message]</span>")
 
         // it'd be nice to let admins know what's been said
-        var/adminrendered = "<span class='game [class]'><span class='name' data-ctx='\ref[holder.owner.mind]'>[holder.owner.real_name]</span> telepathies <span class='name' data-ctx='\ref[T.mind]'>[T.real_name]</span>:[SPAN_MESSAGE("\"[message]\"")]</span>"
+        var/adminrendered = "<span class='[class]'><span class='name' data-ctx='\ref[holder.owner.mind]'>[holder.owner.real_name]</span> telepathies <span class='name' data-ctx='\ref[T.mind]'>[T.real_name]</span>:[SPAN_MESSAGE("\"[message]\"")]</span>"
 
         for (var/client/C)
           var/mob/M = C.mob

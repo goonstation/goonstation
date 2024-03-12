@@ -638,6 +638,7 @@ TYPEINFO(/atom/movable)
 	src.move_speed = TIME - src.l_move_time
 	src.l_move_time = TIME
 	if (A != src.loc && A?.z == src.z)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
 		src.last_move = get_dir(A, src.loc)
 		if (length(src.attached_objs))
 			for (var/atom/movable/M as anything in attached_objs)
@@ -645,7 +646,6 @@ TYPEINFO(/atom/movable)
 		if (islist(src.tracked_blood))
 			src.track_blood()
 		actions.interrupt(src, INTERRUPT_MOVE)
-		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
 	//note : move is still called when we are steping into a wall. sometimes these are unnecesssary i think
 
 	if(last_turf == src.loc)
@@ -856,22 +856,22 @@ TYPEINFO(/atom/movable)
 	return
 
 ///wrapper proc for /atom/proc/attackby so that signals are always sent. Call this, but do not override it.
-/atom/proc/Attackby(obj/item/W, mob/user, params, is_special = 0)
+/atom/proc/Attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
 	SHOULD_NOT_OVERRIDE(1)
 	if(SEND_SIGNAL(W, COMSIG_ITEM_ATTACKBY_PRE, src, user))
 		return
 	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user, params, is_special))
 		return
-	src.attackby(W, user, params, is_special)
+	src.attackby(W, user, params, is_special, silent)
 
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
-/atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0)
+/atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
 	PROTECTED_PROC(TRUE)
 	if (src.storage?.storage_item_attack_by(W, user))
 		return
 	src.material_trigger_when_attacked(W, user, 1)
-	if (user && W && !(W.flags & SUPPRESSATTACK))
+	if (user && W && !(W.flags & SUPPRESSATTACK) && !silent)
 		user.visible_message(SPAN_COMBAT("<B>[user] hits [src] with [W]!</B>"))
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin

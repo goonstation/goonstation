@@ -303,7 +303,9 @@ chui/window/security_cameras
 	OnTopic( client/clint, href, href_list[] )
 		var/mob/user = clint.mob
 		if (!islist(href_list))	//don't need to check for user. that is done in chui/Topic()
-			user.set_eye(null)
+			owner.current?.disconnect_viewer(user)
+			owner.current = null
+			owner.last_viewer = null
 			Unsubscribe(clint)
 			return
 
@@ -315,18 +317,18 @@ chui/window/security_cameras
 			//maybe I should change this, could be dumb for the movement mode - Kyle
 			if (!C.camera_status)
 				boutput(user, SPAN_ALERT("BEEEEPP. Camera broken."))
-				// user.set_eye(null)
-				// if( IsSubscribed( user.client ) )
-				// 	Unsubscribe( user.client )
 				return
-
 			else
 				owner.use_power(50)
 				if (length(clint.getViewportsByType("cameras: Viewport")))
 					owner.move_viewport_to_camera(C, clint)
+					return
+				else if (owner.current)
+					owner.current.move_viewer_to(user, C)
 				else
-					owner.current = C
-					user.set_eye(C)
+					C.connect_viewer(user)
+				owner.current = C
+				owner.last_viewer = user
 
 		else if (href_list["save"])
 			var/obj/machinery/camera/C = locate(href_list["save"])
@@ -344,7 +346,9 @@ chui/window/security_cameras
 				boutput(clint, "<b>You need to select a camera before creating a viewport.</b>")
 			else
 				create_viewport(clint, get_turf(owner.current))
-				clint.mob.set_eye(null)
+				owner.current?.disconnect_viewer(user)
+				owner.current = null
+				owner.last_viewer = null
 
 
 		//using arrowkeys/wasd/ijkl to move from camera to camera
@@ -371,4 +375,6 @@ chui/window/security_cameras
 	Unsubscribe( client/who )
 		..()
 		who.clearViewportsByType("cameras: Viewport")
-		who.mob.set_eye(null)
+		owner.current?.disconnect_viewer(who.mob)
+		owner.current = null
+		owner.last_viewer = null

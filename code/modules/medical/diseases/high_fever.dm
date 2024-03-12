@@ -3,7 +3,8 @@
 	name = "High Fever"
 	max_stages = 5
 	stage_prob = 10
-	cure = "ice"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Ice"
 	reagentcure = list("ice")
 
 	associated_reagent = "too much"

@@ -54,7 +54,7 @@ TRAYS
 
 	New()
 		..()
-		if(prob(60))
+		if(src.pixel_y == 0 && prob(60)) // Don't adjust map-set pixel adjustments
 			src.pixel_y = rand(0, 4)
 		BLOCK_SETUP(BLOCK_KNIFE)
 		return
@@ -430,7 +430,6 @@ TRAYS
 	desc = "A box that can hold food! Well, not this one, I mean. You shouldn't be able to see this one."
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
 	icon_state = "donutbox"
-	uses_multiple_icon_states = 1
 	var/count = 6
 	var/max_count = 6
 	var/box_type = "donutbox"
@@ -498,6 +497,9 @@ TRAYS
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tongs))
 			return src.Attackhand(user)
+		// Stops trying to fit sticker in the box when we want it ON the box
+		if (istype(W, /obj/item/sticker))
+			return
 		if(src.count >= src.max_count)
 			boutput(user, "You can't fit anything else in [src]!")
 			return
@@ -517,14 +519,21 @@ TRAYS
 			if(!user.put_in_hand(src))
 				return ..()
 
+	proc/find_food()
+		// First in, last out food search
+		// Mostly needed since stickers add themselves to contents and need to stay there to be able to be removed...
+		for (var/i = length(src.contents) to 1 step -1)
+			var/obj/content = src.contents[i]
+			if (istype(content, /obj/item/reagent_containers/food/snacks))
+				return content
+
 	attack_hand(mob/user)
 		if((!istype(src.loc, /turf) && !user.is_in_hands(src)) || src.count == 0)
 			..()
 			return
 		src.add_fingerprint(user)
-		var/list/obj/item/reagent_containers/food/snacks/myFoodList = src.contents
-		if(length(myFoodList) >= 1)
-			var/obj/item/reagent_containers/food/snacks/myFood = myFoodList[myFoodList.len]
+		var/obj/item/reagent_containers/food/snacks/myFood = find_food(src.contents)
+		if(myFood)
 			if(src.count >= 1)
 				src.count--
 				tooltip_rebuild = 1
@@ -903,7 +912,24 @@ TRAYS
 			boutput(user, SPAN_ALERT("There's no more space in \the [src]!"))
 			return
 
+		if (src.open && istype(food, /obj/item/tongs)) // Stops borgs from seeing duplicate messages
+			return
+
 		. = ..()
+
+	proc/mousetrap_check(mob/user)
+		for(var/obj/item/mousetrap/MT in src.food_inside)
+			if (MT.armed)
+				user?.visible_message(SPAN_ALERT("<B>[user] opens the pizza box and sets off a mousetrap!</B>"),\
+					SPAN_ALERT("<B>You open the pizza box, but there was a live mousetrap in there!</B>"))
+				MT.triggered(user, user?.hand ? "l_hand" : "r_hand")
+				return TRUE
+		for(var/obj/item/mine/M in src.food_inside)
+			if (M.armed && M.used_up != TRUE)
+				user?.visible_message(SPAN_ALERT("<B>[user] opens the pizza box and sets off a [M.name]!</B>"),\
+					SPAN_ALERT("<B>You open the pizza box, but there was a live [M.name] in there!</B>"))
+				M.triggered(user)
+				return TRUE
 
 	proc/toggle_box(mob/user)
 		if (length(src.contents - src.food_inside) > 0)
@@ -930,6 +956,9 @@ TRAYS
 			src.UpdateIcon()
 
 		else
+			if (src.mousetrap_check(user))
+				return FALSE
+
 			if (isnull(user)) // We only need a null-check here because of the shit_goes_everywhere proc
 				icon_state = "pizzabox_open"
 				src.open = TRUE
@@ -1215,13 +1244,6 @@ TRAYS
 /obj/surgery_tray/kitchen_island
 	name = "kitchen island"
 	desc = "a table! with WHEELS!"
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "kitchen_island"
-
-//kitchen island
-/obj/surgery_tray/kitchen_island
-	name = "kitchen island"
-	desc = "a table! with wheels!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "kitchen_island"
 

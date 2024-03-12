@@ -2,9 +2,8 @@
 	name = "Food Poisoning"
 	max_stages = 3
 	spread = "Non-Contagious"
-	cure = "Sleep"
+	cure_flags = (CURE_SLEEP | CURE_ANTIBIOTICS)
 	associated_reagent = "salmonella"
-	reagentcure = list("spaceacillin")
 	affected_species = list("Human")
 //
 /datum/ailment/disease/food_poisoning/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)

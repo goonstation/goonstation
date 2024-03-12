@@ -28,7 +28,6 @@
 /datum/action/bar/private/icon/robojumper
 	duration = 1 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
-	id = "robojumper"
 	icon = 'icons/mob/hud_robot.dmi'
 	icon_state = "robocable_charge"
 
@@ -140,7 +139,6 @@
 /datum/action/bar/private/icon/robojumper_to_silicon
 	duration = 1 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ACT
-	id = "robojumper_to_silicon"
 	icon = 'icons/mob/hud_robot.dmi'
 	icon_state = "robocable_charge"
 
@@ -703,7 +701,7 @@ ported and crapped up by: haine
 			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			user.show_text("You transfer [trans] unit\s of the solution to [target].")
 
-		if (reagents.total_volume == reagents.maximum_volume) // See if the juicer is full.
+		if (src.reagents.total_volume >= src.reagents.maximum_volume) // See if the juicer is full.
 			user.show_text("[src] is full!", "red")
 			return
 
