@@ -449,9 +449,9 @@
 			tgui_process.close_user_uis(src.mob)
 			return
 	#endif
-		// if (src.byond_version >= 515)
-		// 	if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", "Yes", "No") == "Yes")
-		// 		src << link("http://www.byond.com/download/")
+		if (src.byond_version >= 515)
+			if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", "Yes", "No") == "Yes")
+				src << link("https://www.byond.com/download/build/514/")
 #endif
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
