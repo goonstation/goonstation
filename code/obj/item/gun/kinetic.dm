@@ -2631,11 +2631,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst/armor_piercing)
 			else if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/remington))
 				if(mode_was_burst) // we were in burst shot mode
-					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst/remington)
+					set_current_projectile(new/datum/projectile/bullet/assault_rifle/remington)
 					projectiles = list(new/datum/projectile/bullet/assault_rifle/remington, current_projectile)
 				else // we were in single shot mode
-					set_current_projectile(new/datum/projectile/bullet/assault_rifle/armor_piercing)
-					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst/armor_piercing)
+					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst/remington)
+					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst/remington)
 			else // we switched from armor penetrating ammo to normal
 				if(mode_was_burst) // we were in burst shot mode
 					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst)
