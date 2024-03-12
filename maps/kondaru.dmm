@@ -6106,6 +6106,7 @@
 /obj/table/reinforced/auto,
 /obj/item/wrestlingbell,
 /obj/item/device/microphone,
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "awA" = (
@@ -7117,11 +7118,13 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aAB" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/brute,
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aAC" = (
@@ -9189,6 +9192,7 @@
 	},
 /area/station/hallway/primary/north)
 "aIO" = (
+/obj/decal/boxingropeenter,
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
@@ -9347,6 +9351,9 @@
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aJE" = (
@@ -10616,6 +10623,9 @@
 	},
 /obj/landmark/start/job/assistant,
 /obj/machinery/light/small/floor,
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aQc" = (
@@ -12907,6 +12917,7 @@
 	dir = 1;
 	name = "camera - boxing"
 	},
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aYZ" = (
@@ -34714,6 +34725,16 @@
 "fjh" = (
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
+"fjv" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/obj/decal/stage_edge{
+	dir = 10
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "fjF" = (
 /obj/table/auto,
 /obj/item/storage/box/stma_kit,
@@ -38671,7 +38692,11 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
-/turf/simulated/floor/specialroom/gym,
+/obj/decal/stage_edge{
+	dir = 2;
+	layer = 2.8
+	},
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "inn" = (
 /obj/machinery/conveyor/SN{
@@ -50897,6 +50922,16 @@
 	dir = 8
 	},
 /area/station/science/testchamber)
+"rrN" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/obj/decal/stage_edge{
+	dir = 9
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "rrU" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -52008,7 +52043,11 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
 	},
-/turf/simulated/floor/specialroom/gym,
+/obj/decal/stage_edge{
+	dir = 2;
+	layer = 2.8
+	},
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "sml" = (
 /obj/table/reinforced/bar/auto,
@@ -52062,6 +52101,14 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
+"spC" = (
+/obj/decal/boxingrope,
+/obj/decal/stage_edge{
+	dir = 2;
+	layer = 2.8
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "spY" = (
 /obj/stool/chair/dining/wood{
 	dir = 8
@@ -121017,8 +121064,8 @@ aqp
 uQv
 fdN
 xix
+atr
 aIO
-avl
 aHF
 aHF
 aHF
@@ -121320,7 +121367,7 @@ aun
 hqk
 azn
 atr
-avm
+spC
 aHF
 aHF
 aHF
@@ -121622,7 +121669,7 @@ ajf
 fdN
 vSu
 atr
-avm
+spC
 aHF
 aHF
 aHF
@@ -122226,12 +122273,12 @@ ajd
 ajd
 aty
 atr
-aJD
+fjv
 aJD
 aQa
 aJD
 aJD
-aJD
+rrN
 atr
 aNm
 kaJ

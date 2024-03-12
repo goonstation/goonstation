@@ -7228,21 +7228,30 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "awv" = (
+/obj/decal/boxingrope,
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/black,
-/obj/item/clothing/under/shorts/black,
+/obj/decal/stage_edge{
+	dir = 2
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aww" = (
 /obj/table/reinforced/auto,
+/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/under/shorts/blue,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/blue,
-/obj/item/clothing/under/shorts/blue,
+/obj/decal/boxingrope,
+/obj/decal/stage_edge{
+	dir = 2
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "awx" = (
 /obj/loudspeaker,
+/obj/decal/boxingrope,
+/obj/decal/stage_edge{
+	dir = 2
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "awy" = (
@@ -7855,6 +7864,9 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
 	dir = 4
+	},
+/obj/decal/stage_edge{
+	dir = 10
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -9104,6 +9116,9 @@
 	dir = 8;
 	name = "camera - boxing"
 	},
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aBj" = (
@@ -9718,6 +9733,9 @@
 /area/station/crew_quarters/fitness)
 "aCC" = (
 /obj/machinery/navbeacon/tour/cog2/tour3,
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aCD" = (
@@ -10197,6 +10215,9 @@
 	name = "barkley's basketball"
 	},
 /obj/fireworksbox,
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aDN" = (
@@ -58528,10 +58549,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "fOO" = (
+/obj/table/reinforced/auto,
+/obj/item/clothing/gloves/boxing,
+/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/under/shorts/black,
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
-/turf/simulated/floor/specialroom/gym,
+/obj/decal/stage_edge{
+	dir = 2
+	},
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "fPe" = (
 /obj/mapping_helper/firedoor_spawn,
@@ -74841,7 +74869,11 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
 	},
-/turf/simulated/floor/specialroom/gym,
+/obj/table/reinforced/auto,
+/obj/decal/stage_edge{
+	dir = 2
+	},
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "xoa" = (
 /obj/reagent_dispensers/fueltank,
@@ -111807,7 +111839,7 @@ arm
 asn
 ttZ
 atG
-awv
+atG
 fOO
 azI
 aBf
@@ -112109,8 +112141,8 @@ apW
 aso
 atG
 atG
+atG
 aww
-aya
 azJ
 azJ
 azJ
@@ -112411,8 +112443,8 @@ arn
 asp
 atH
 atG
+atG
 awx
-aya
 azJ
 asM
 azJ
@@ -112714,7 +112746,7 @@ asp
 atI
 atG
 awy
-aya
+awv
 azJ
 azJ
 azJ

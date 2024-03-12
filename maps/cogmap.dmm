@@ -5332,15 +5332,27 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
+/obj/decal/stage_edge{
+	dir = 2;
+	layer = 2.8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "auI" = (
 /obj/decal/boxingrope,
+/obj/decal/stage_edge{
+	dir = 2;
+	layer = 2.8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "auJ" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
+	},
+/obj/decal/stage_edge{
+	dir = 2;
+	layer = 2.8
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -6489,6 +6501,9 @@
 /obj/item/clothing/gloves/boxing,
 /obj/item/clothing/under/shorts/blue,
 /obj/item/clothing/under/shorts/blue,
+/obj/decal/stage_edge{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "ayH" = (
@@ -7042,6 +7057,9 @@
 /area/station/crew_quarters/fitness)
 "aAk" = (
 /obj/machinery/light,
+/obj/decal/stage_edge{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aAl" = (
@@ -38849,6 +38867,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
+"dnk" = (
+/obj/table/reinforced/auto,
+/obj/item/clothing/gloves/boxing,
+/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/under/shorts/black,
+/obj/decal/stage_edge{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "dnA" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -45104,6 +45132,12 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"hSZ" = (
+/obj/decal/stage_edge{
+	dir = 6
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "hTs" = (
 /obj/window_blinds/cog2/right,
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -110388,9 +110422,9 @@ apt
 aqI
 akT
 akT
-akT
+hSZ
 avS
-aqG
+dnk
 ayG
 aAk
 ajS

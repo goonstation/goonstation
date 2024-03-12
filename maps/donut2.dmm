@@ -7835,6 +7835,10 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
 	},
+/obj/decal/stage_edge{
+	dir = 2;
+	layer = 2.8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aOL" = (
@@ -12529,6 +12533,10 @@
 "bos" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
+	},
+/obj/decal/stage_edge{
+	dir = 2;
+	layer = 2.8
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -25157,6 +25165,9 @@
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "hFf" = (
@@ -28052,6 +28063,9 @@
 /obj/item/clothing/gloves/boxing,
 /obj/item/storage/box/kendo_box/hakama,
 /obj/item/bat,
+/obj/decal/stage_edge{
+	dir = 10
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "jzc" = (
@@ -33493,6 +33507,9 @@
 /obj/item/wrestlingbell,
 /obj/item/device/microphone,
 /obj/machinery/light/small/floor,
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "mTA" = (
@@ -33538,6 +33555,10 @@
 /area/station/ranch)
 "mVd" = (
 /obj/decal/boxingrope,
+/obj/decal/stage_edge{
+	dir = 2;
+	layer = 2.8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "mVq" = (
@@ -35406,6 +35427,7 @@
 	pixel_x = -28;
 	pixel_y = 2
 	},
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "obS" = (
@@ -39538,6 +39560,10 @@
 "qwR" = (
 /obj/decal/boxingrope,
 /obj/machinery/light/incandescent,
+/obj/decal/stage_edge{
+	dir = 2;
+	layer = 2.8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "qxw" = (
@@ -40191,6 +40217,12 @@
 /obj/storage/cart,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
+"qRg" = (
+/obj/decal/stage_edge{
+	dir = 9
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "qRG" = (
 /obj/machinery/disposal/mail/small/autoname/hydroponics/north{
 	pixel_y = 23
@@ -40995,6 +41027,10 @@
 	name = "autoname  - SS13";
 	pixel_y = 18;
 	tag = ""
+	},
+/obj/decal/stage_edge{
+	dir = 2;
+	layer = 2.8
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -89736,7 +89772,7 @@ hEQ
 pBy
 mTi
 hEQ
-aUn
+qRg
 aUn
 uns
 lum
