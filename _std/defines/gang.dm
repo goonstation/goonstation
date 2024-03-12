@@ -89,9 +89,9 @@
 // If they see a player, they will remember them until the next GANG_TAG_SCORE_INTERVAL.
 // Once the next GANG_TAG_SCORE_INTERVAL has elapsed, all memorised players provide heat, then are forgotten.
 
-/// how often gang tags search for nearby people, in deciseconds
-#define GANG_TAG_SCAN_RATE 10 DECI SECONDS
-/// how often tags calculate their heat & score, in seconds
+/// how often gang tags search for nearby people
+#define GANG_TAG_SCAN_RATE 1 SECOND
+/// how often tags calculate their heat & score
 #define GANG_TAG_SCORE_INTERVAL 15 SECONDS
 /// How many points a tag gives for each heat rating it has
 #define GANG_TAG_POINTS_PER_HEAT 1.5

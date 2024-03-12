@@ -1119,7 +1119,7 @@ TYPEINFO(/obj/item/bat)
 	stamina_crit_chance = 5
 	var/active = FALSE
 	w_class = W_CLASS_SMALL
-	HELP_MESSAGE_OVERRIDE({"Similarly to the Derringer, this can be concealed in clothing by hitting worn clothes with it, do the *snap emote to retrieve it.\n
+	HELP_MESSAGE_OVERRIDE({"This knife can be concealed in clothing by hitting worn clothes with it, do the *snap emote to retrieve it.\n
 	While unfolded, using this weapon's special attack grants increased critical chance & bleed effects."})
 
 	attack_self(mob/user)
@@ -1154,7 +1154,7 @@ TYPEINFO(/obj/item/bat)
 		tooltip_rebuild = TRUE
 
 	afterattack(obj/O as obj, mob/user as mob)
-		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
+		if (O.loc == user && istype(O, /obj/item/clothing))
 			if (active)
 				toggle_active(user)
 			icon_state = "switchblade-idle"
