@@ -56,7 +56,7 @@
 
 	execute(user, chars)
 		. = ..()
-		message = ""
+		var/message = ""
 		for (var/i in 1 to chars)
 			message += "[i%10]"
 
