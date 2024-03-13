@@ -5,7 +5,7 @@
 	var/linkcolor = "#0FF"
 	var/wages = 0
 	var/limit = -1
-	var/add_to_manifest = TRUE
+	var/add_to_manifest = TRUE //! On join, add to general, bank, and security records.
 	var/no_late_join = FALSE
 	var/no_jobban_from_this_job = FALSE
 	var/allow_traitors = TRUE
@@ -17,22 +17,22 @@
 	var/cant_spawn_as_con = FALSE // Prevents this job spawning as a conspirator in the conspiracy gamemode.
 	var/requires_whitelist = FALSE
 	var/mentor_only = FALSE
-	var/requires_supervisor_job = null // Enter job name, this job will only be present if the entered job has joined already
+	var/requires_supervisor_job = null //! String name of another job. The current job will only be available if the supervisor job is filled.
 	var/needs_college = 0
 	var/assigned = 0
 	var/high_priority_job = FALSE
 	var/low_priority_job = FALSE
-	var/cant_allocate_unwanted = FALSE
+	var/cant_allocate_unwanted = FALSE //! Job cannot be set to "unwanted" in player preferences.
 	var/receives_miranda = FALSE
-	var/receives_implant = null //Will be a path.
+	var/receives_implant = null //! Object path to the implant type given on spawn.
 	var/receives_disk = FALSE
 	var/receives_security_disk = FALSE
 	var/receives_badge = FALSE
-	var/announce_on_join = FALSE // that's the head of staff announcement thing
-	var/radio_announcement = TRUE // that's the latejoin announcement thing
+	var/announce_on_join = FALSE //! On join, send message to all players indicating who is fulfilling the role; primarily for heads of staff
+	var/radio_announcement = TRUE //! The announcement computer will send a message when the player joins after round-start.
 	var/list/alt_names = list()
-	var/slot_card = /obj/item/card/id
-	var/spawn_id = TRUE // will override slot_card if 1
+	var/slot_card = /obj/item/card/id //! Object path of the ID card type to issue player. Overridden by `spawn_id`.
+	var/spawn_id = TRUE //! Does player spawn with an ID. Overrides slot_card if TRUE.
 	// Following slots support single item list or weighted list - Do not use regular lists or it will error!
 	var/list/slot_head = list()
 	var/list/slot_mask = list()
@@ -58,7 +58,7 @@
 	var/bio_effects = null
 	var/objective = null
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
-	var/map_can_autooverride = TRUE // if set to 0 map can't change limit on this job automatically (it can still set it manually)
+	var/map_can_autooverride = TRUE //! Base the initial limit of job slots on the number of map-defined job start locations.
 	/// Does this job use the name and appearance from the character profile? (for tracking respawned names)
 	var/uses_character_profile = TRUE
 	/// The faction to be assigned to the mob on setup uses flags from factions.dm
