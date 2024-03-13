@@ -759,7 +759,7 @@
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
 	if (src.mind) // I think this is kinda important (Convair880).
-		if (src.mind.ckey)
+		if (src.mind.ckey && !inafterlife(src))
 			var/turf/where = get_turf(src)
 			var/where_text = "Unknown (?, ?, ?)"
 			if (where)
