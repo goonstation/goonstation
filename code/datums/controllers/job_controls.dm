@@ -60,27 +60,27 @@ var/datum/job_controller/job_controls
 		dat += "<b><u>Job Controls</u></b><HR>"
 		dat += "<b>Command & Security Jobs</b><BR>"
 		for(var/datum/job/command/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		for(var/datum/job/security/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		dat += "<BR>"
 		dat += "<b>Research Jobs</b><BR>"
 		for(var/datum/job/research/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		dat += "<BR>"
 		dat += "<b>Engineering Jobs</b><BR>"
 		for(var/datum/job/engineering/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		dat += "<BR>"
 		dat += "<b>Civilian Jobs</b><BR>"
 		for(var/datum/job/civilian/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		dat += "<BR>"
 		dat += "<b>Special Jobs</b><BR>"
 		for(var/datum/job/special/JOB in src.special_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		for(var/datum/job/created/JOB in src.special_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a>"
 			dat += " <a href='byond://?src=\ref[src];RemoveJob=\ref[JOB]'>(Remove)</A><BR>"
 		dat += "<BR>"
 		if (src.allow_special_jobs)

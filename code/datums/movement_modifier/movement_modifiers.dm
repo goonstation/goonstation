@@ -122,6 +122,9 @@
 		. *= 0.75
 	return list(0, .)
 
+/datum/movement_modifier/robot_mag_upgrade
+	additive_slowdown = 0.5
+
 // robot heads
 /datum/movement_modifier/robot_part/light_head
 	additive_slowdown = -0.1
