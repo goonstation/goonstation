@@ -1373,7 +1373,6 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 
 					results_msg = "&emsp;[lmove][lpstatus][lpreact]<br>&emsp;[rmove][rpstatus][rpreact]"
 
-		else if (isliving(target)) // other mooooooobs
 
 		user.tri_message(target, "[user] shines [src] in [target == user ? "[his_or_her(user)] own" : "[target]'s"] eyes.[results_msg ? "<br>[results_msg]" : null]",\
 			"You shine [src] in [target == user ? "your own" : "[target]'s"] eyes.[(target != user && results_msg) ? "<br>[results_msg]" : null]",\
