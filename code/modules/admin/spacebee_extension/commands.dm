@@ -116,7 +116,6 @@
 		var/message = list()
 		var/header
 		var/len = 0
-		message += "**Notes for [key_to_check][playerNotes.meta["last_page"] > 1 ? "**, page [page] out of [playerNotes.meta["last_page"]]" : "**"]"
 		for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 			var/id = playerNote.server_id
 			if(!id && length(playerNote.legacy_data))
@@ -127,21 +126,21 @@
 			len += length(header) + length(playerNote.note)
 			if(len >= 4000)
 				message = jointext(message, "\n")
-				export_message(message)
+				export_message(message, playerNotes.meta["last_page"])
 				message = list()
 				len = 0
-			message += "...continued\n\n"
+				message += "...cont\n"
 			message += header
 			message += "[playerNote.note]\n"
 
 		message = jointext(message, "\n")
-		export_message(message)
+		export_message(message, playerNotes.meta["last_page"])
 		return playerNotes.meta["last_page"]
 
-	proc/export_message(message)
+	proc/export_message(message, last_page)
 		var/ircmsg[] = new()
-		ircmsg["key"] = "garbo"
-		ircmsg["name"] = "Charlimit testing"
+		ircmsg["key"] = key_to_check
+		ircmsg["name"] = "Notes[last_page > 1 ? ", page [page] out of [last_page]" : ""]"
 		ircmsg["msg"] = message
 		ircbot.export("help", ircmsg)
 
