@@ -7835,10 +7835,6 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
 	},
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
-	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aOL" = (
@@ -12533,10 +12529,6 @@
 "bos" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
-	},
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -28063,9 +28055,6 @@
 /obj/item/clothing/gloves/boxing,
 /obj/item/storage/box/kendo_box/hakama,
 /obj/item/bat,
-/obj/decal/stage_edge{
-	dir = 10
-	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "jzc" = (
@@ -33555,10 +33544,6 @@
 /area/station/ranch)
 "mVd" = (
 /obj/decal/boxingrope,
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
-	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "mVq" = (
@@ -39560,10 +39545,6 @@
 "qwR" = (
 /obj/decal/boxingrope,
 /obj/machinery/light/incandescent,
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
-	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "qxw" = (
@@ -41027,10 +41008,6 @@
 	name = "autoname  - SS13";
 	pixel_y = 18;
 	tag = ""
-	},
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)

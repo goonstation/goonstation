@@ -34730,9 +34730,6 @@
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
-/obj/decal/stage_edge{
-	dir = 10
-	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "fjF" = (
@@ -38691,10 +38688,6 @@
 "ine" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
-	},
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -52043,10 +52036,6 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
 	},
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
-	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "sml" = (
@@ -52103,10 +52092,6 @@
 /area/station/crew_quarters/courtroom)
 "spC" = (
 /obj/decal/boxingrope,
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
-	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "spY" = (

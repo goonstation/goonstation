@@ -19348,20 +19348,12 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
-	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "brS" = (
 /obj/decal/boxingrope,
 /obj/disposalpipe/segment{
 	dir = 4
-	},
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
@@ -19372,19 +19364,12 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
 	},
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
-	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "brU" = (
 /obj/fireworksbox,
 /obj/disposalpipe/segment{
 	dir = 4
-	},
-/obj/decal/stage_edge{
-	dir = 10
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)

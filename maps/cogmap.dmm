@@ -5332,27 +5332,15 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
-	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "auI" = (
 /obj/decal/boxingrope,
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
-	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "auJ" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
-	},
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -45132,12 +45120,6 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
-"hSZ" = (
-/obj/decal/stage_edge{
-	dir = 6
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "hTs" = (
 /obj/window_blinds/cog2/right,
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -110422,7 +110404,7 @@ apt
 aqI
 akT
 akT
-hSZ
+akT
 avS
 dnk
 ayG

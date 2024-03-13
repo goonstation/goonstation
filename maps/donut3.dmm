@@ -6538,9 +6538,6 @@
 	pixel_x = -7;
 	pixel_y = 4
 	},
-/obj/decal/stage_edge{
-	dir = 2
-	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "bPo" = (
@@ -27479,9 +27476,6 @@
 	pixel_x = 13;
 	pixel_y = 1
 	},
-/obj/decal/stage_edge{
-	dir = 2
-	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "inf" = (
@@ -31711,9 +31705,6 @@
 /obj/item/clothing/under/shorts/black{
 	pixel_x = -6;
 	pixel_y = 4
-	},
-/obj/decal/stage_edge{
-	dir = 2
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -44130,9 +44121,6 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/decal/stage_edge{
-	dir = 2
-	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "npG" = (
@@ -51924,12 +51912,6 @@
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
-"pKB" = (
-/obj/decal/stage_edge{
-	dir = 6
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "pKF" = (
 /obj/decal/tile_edge/line/black{
 	dir = 6;
@@ -65353,9 +65335,6 @@
 /obj/item/bballbasket,
 /obj/item/bballbasket,
 /obj/disposalpipe/segment/morgue,
-/obj/decal/stage_edge{
-	dir = 2
-	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "tRB" = (
@@ -121770,7 +121749,7 @@ kCF
 bZs
 lJa
 pwN
-pKB
+pwN
 aPl
 vFq
 sbi

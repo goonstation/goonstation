@@ -13979,10 +13979,6 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
-	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "gfC" = (
@@ -35150,10 +35146,6 @@
 /obj/decal/stage_edge{
 	dir = 4
 	},
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
-	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "oLr" = (
@@ -40230,10 +40222,6 @@
 /area/station/medical/medbay)
 "rax" = (
 /obj/decal/boxingrope,
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
-	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "raO" = (
@@ -47327,12 +47315,6 @@
 "uha" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
-"uhc" = (
-/obj/decal/stage_edge{
-	dir = 6
-	},
-/turf/simulated/floor/grey,
-/area/station/crew_quarters/fitness)
 "uhy" = (
 /obj/machinery/manufacturer/general,
 /obj/disposalpipe/segment/mineral{
@@ -50684,10 +50666,6 @@
 	},
 /obj/decal/stage_edge{
 	dir = 8
-	},
-/obj/decal/stage_edge{
-	dir = 2;
-	layer = 2.8
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
@@ -91841,7 +91819,7 @@ bRa
 qmk
 amu
 lst
-uhc
+hmK
 vwI
 wke
 qSK
