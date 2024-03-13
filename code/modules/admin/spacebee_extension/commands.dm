@@ -114,6 +114,8 @@
 			return 0
 
 		var/message = list()
+		var/header
+		var/len = 0
 		message += "**Notes for [key_to_check][playerNotes.meta["last_page"] > 1 ? "**, page [page] out of [playerNotes.meta["last_page"]]" : "**"]"
 		for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 			var/id = playerNote.server_id
@@ -121,16 +123,27 @@
 				var/lData = json_decode(playerNote.legacy_data)
 				if(islist(lData) && lData["oldserver"])
 					id = lData["oldserver"]
-			message += "**\[[id]\] [playerNote.game_admin.name]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
+			header = "**\[[id]\] [playerNote.game_admin.name]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
+			len += length(header) + length(playerNote.note)
+			if(len >= 4000)
+				message = jointext(message, "\n")
+				export_message(message)
+				message = list()
+				len = 0
+			message += "...continued\n\n"
+			message += header
 			message += "[playerNote.note]\n"
+
 		message = jointext(message, "\n")
-		//system.reply(message)
+		export_message(message)
+		return playerNotes.meta["last_page"]
+
+	proc/export_message(message)
 		var/ircmsg[] = new()
 		ircmsg["key"] = "garbo"
 		ircmsg["name"] = "Charlimit testing"
 		ircmsg["msg"] = message
 		ircbot.export("help", ircmsg)
-		return playerNotes.meta["last_page"]
 
 /datum/spacebee_extension_command/addnotice
 	name = "addnotice"
