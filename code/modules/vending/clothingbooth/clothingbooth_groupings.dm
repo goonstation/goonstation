@@ -482,6 +482,12 @@
 		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
+/datum/clothingbooth_grouping/hitman
+	item_paths = list(/datum/clothingbooth_item/wear_suit/hitman)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/formal,
+	)
+
 /datum/clothingbooth_grouping/tuxedo_jacket
 	item_paths = list(/datum/clothingbooth_item/wear_suit/tuxedo_jacket)
 	grouping_tags = list(

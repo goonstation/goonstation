@@ -830,6 +830,9 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/poncho)
 	cost = PAY_TRADESMAN/3
 	item_path = /obj/item/clothing/suit/suspenders
 
+/datum/clothingbooth_item/wear_suit/hitman
+	item_path = /obj/item/clothing/suit/hitman
+
 /datum/clothingbooth_item/wear_suit/tuxedo_jacket
 	cost = PAY_DOCTORATE/3
 	item_path = /obj/item/clothing/suit/tuxedo_jacket
