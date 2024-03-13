@@ -1229,7 +1229,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	proc/selfdestruct(obj/item/parent, atom/target, mob/user, reach, params)
 		if(!ishuman(target) || src.ammo?.amount_left > 0)
 			return
-		var/mob/living/carbon/human/H = src.loc
+		var/mob/living/carbon/human/H = target
 		H.changeStatus("weakened", 3 SECONDS)
 		H.force_laydown_standup()
 		src.visible_message("<span class='alert'>The [src] hits [target] <b>hard</b>, shattering into dozens of tiny pieces!</span>")
