@@ -599,19 +599,13 @@ var/global/totally_random_jobs = FALSE
 /// Equip items from sensory traits
 /mob/living/carbon/human/proc/equip_sensory_items()
 	if (src.traitHolder.hasTrait("blind"))
-		if (src.autoequip_slot(src.glasses, SLOT_IN_BACKPACK))
-		else if (src.autoequip_slot(src.glasses, SLOT_L_HAND))
-		else qdel(src.glasses) 	//Should've brought less item :p, rarely happens and doesn't really matter since the original glasses can usually easily be obtained if they started with it
+		src.stow_in_available(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("shortsighted"))
-		if (src.autoequip_slot(src.glasses, SLOT_IN_BACKPACK))
-		else if (src.autoequip_slot(src.glasses, SLOT_L_HAND))
-		else qdel(src.glasses)
+		src.stow_in_available(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("deaf"))
-		if (src.autoequip_slot(src.ears, SLOT_IN_BACKPACK))
-		else if (src.autoequip_slot(src.ears, SLOT_R_HAND))
-		else qdel(src.ears)
+		src.stow_in_available(src.ears)
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), SLOT_EARS)
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)

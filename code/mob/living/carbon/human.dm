@@ -2283,6 +2283,19 @@
 	src.force_equip(I, slot)
 	return TRUE
 
+/mob/living/carbon/human/proc/stow_in_available(obj/item/I)
+	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
+		return
+	if (src.autoequip_slot(I, SLOT_L_STORE))
+		return
+	if (src.autoequip_slot(I, SLOT_R_STORE))
+		return
+	if (src.autoequip_slot(I, SLOT_L_HAND))
+		return
+	if (src.autoequip_slot(I, SLOT_R_HAND))
+		return
+	else qdel(I)
+
 /mob/living/carbon/human/swap_hand(var/specify=-1)
 	if(src.hand == specify)
 		return
