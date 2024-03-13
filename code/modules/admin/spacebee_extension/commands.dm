@@ -49,23 +49,6 @@
 		ircmsg["msg"] = "Added a note for [ckey]: [note]"
 		ircbot.export("admin", ircmsg)
 
-/datum/spacebee_extension_command/printgarbage
-	name = "printgarbage"
-	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
-	argument_types = list(/datum/command_argument/number = "chars")
-
-	execute(user, chars)
-		. = ..()
-		var/message = ""
-		for (var/i in 1 to chars)
-			message += "[i%10]"
-
-		var/ircmsg[] = new()
-		ircmsg["key"] = "garbo"
-		ircmsg["name"] = "Charlimit testing"
-		ircmsg["msg"] = message
-		ircbot.export("help", ircmsg)
-
 /datum/spacebee_extension_command/state_based/notes
 	name = "notes"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
