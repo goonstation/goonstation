@@ -99,7 +99,8 @@
 				"filters" = list(
 					"ckey" = key_to_check
 				),
-				"page" = page
+				"page" = page,
+				"per_page" = 10
 			)
 			playerNotes = apiHandler.queryAPI(getPlayerNotes)
 		catch (var/exception/e)
@@ -123,7 +124,12 @@
 			message += "**\[[id]\] [playerNote.game_admin.name]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
 			message += "[playerNote.note]"
 		message = jointext(message, "\n")
-		system.reply(message)
+		//system.reply(message)
+		var/ircmsg[] = new()
+		ircmsg["key"] = "garbo"
+		ircmsg["name"] = "Charlimit testing"
+		ircmsg["msg"] = message
+		ircbot.export("help", ircmsg)
 		return playerNotes.meta["last_page"]
 
 /datum/spacebee_extension_command/addnotice
