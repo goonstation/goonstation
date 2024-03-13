@@ -276,6 +276,28 @@
 	icon_state = "orifice2"
 	spawntype = /mob/living/critter/fermid
 
+	New()
+		..()
+		SPAWN(2 SECONDS)
+			update_icon()
+
+
+
+	update_icon(...)
+		. = ..()
+		var/dirs = get_connected_directions_bitflag(list(/turf/simulated/wall/auto/asteroid=1), null, TRUE, FALSE)
+		if(dirs)
+			for(var/direction in (cardinal - SOUTH))
+				if(dirs & direction)
+					if(prob(80))
+						var/turf/T = get_step(get_turf(src),direction)
+						icon_state = "orifice_wall"
+						src.color = T.color
+						src.dir = turn(direction, 180)
+						var/angle = dir2angle(direction)
+						src.pixel_x = (32) * sin(angle)
+						src.pixel_y = (32) * cos(angle)
+
 	random
 		New()
 			spawntype = weighted_pick(list(/mob/living/critter/fermid=10,
