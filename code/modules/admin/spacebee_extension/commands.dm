@@ -122,7 +122,7 @@
 
 	proc/export_message(message, last_page)
 		var/ircmsg[] = new()
-		ircmsg["key"] = key_to_check
+		ircmsg["key"] = "[key_to_check]/"
 		ircmsg["name"] = "Notes[last_page > 1 ? ", page [page] out of [last_page]" : ""]"
 		ircmsg["msg"] = message
 		ircbot.export("help", ircmsg)
