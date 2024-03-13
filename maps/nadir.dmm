@@ -10,7 +10,7 @@
 	},
 /obj/cable/orange,
 /obj/cable/orange{
-	icon_state = "1-10"
+	icon_state = "0-10"
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 4
@@ -863,9 +863,6 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4;
 	icon_state = "pipe-c"
-	},
-/obj/cable/yellow{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation/pylon{
@@ -3721,9 +3718,6 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/industrial,
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
@@ -4033,14 +4027,6 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"bKJ" = (
-/obj/cable/yellow{
-	icon_state = "4-10"
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/se{
-	name = "Southeast Breach Hull"
-	})
 "bKL" = (
 /obj/landmark/halloween,
 /obj/machinery/drainage,
@@ -4647,9 +4633,6 @@
 /area/pasiphae/sys)
 "caB" = (
 /obj/landmark/gps_waypoint,
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
@@ -6910,15 +6893,6 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
-"dbo" = (
-/obj/disposalpipe/segment/transport,
-/obj/cable/yellow{
-	icon_state = "4-10"
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/se{
-	name = "Southeast Breach Hull"
-	})
 "dbE" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/food_box/donut_box{
@@ -8098,9 +8072,6 @@
 /obj/cable/yellow{
 	icon_state = "1-10"
 	},
-/obj/cable/yellow{
-	icon_state = "4-10"
-	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
@@ -8611,14 +8582,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
-	})
-"dQV" = (
-/obj/cable/yellow{
-	icon_state = "5-10"
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/se{
-	name = "Southeast Breach Hull"
 	})
 "dRl" = (
 /obj/fitness/speedbag/wizard,
@@ -11735,17 +11698,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/surgery)
-"fkY" = (
-/obj/cable/orange{
-	icon_state = "1-2"
-	},
-/obj/cable/yellow{
-	icon_state = "2-9"
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/se{
-	name = "Southeast Breach Hull"
-	})
 "fkZ" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -13275,14 +13227,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
-"fNZ" = (
-/obj/cable/yellow{
-	icon_state = "5-8"
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/se{
-	name = "Southeast Breach Hull"
-	})
 "fPl" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -13471,20 +13415,6 @@
 /obj/pool_springboard,
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
-"fSV" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/se{
-	name = "Southeast Breach Hull"
-	})
 "fTc" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/cable/orange{
@@ -14150,9 +14080,6 @@
 "giE" = (
 /obj/cable/yellow{
 	icon_state = "1-6"
-	},
-/obj/cable/yellow{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon{
@@ -25908,9 +25835,6 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/cable/yellow{
-	icon_state = "6-10"
-	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
@@ -27789,17 +27713,6 @@
 "lDT" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
-"lDW" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/cable/yellow{
-	icon_state = "5-10"
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/se{
-	name = "Southeast Breach Hull"
-	})
 "lDX" = (
 /obj/shrub{
 	dir = 1
@@ -31963,17 +31876,6 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
-"nna" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/se{
-	name = "Southeast Breach Hull"
-	})
 "nny" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -38529,9 +38431,6 @@
 /obj/cable/yellow{
 	icon_state = "2-9"
 	},
-/obj/cable/yellow{
-	icon_state = "2-5"
-	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
@@ -43623,18 +43522,6 @@
 /obj/item/paper/book/from_file/monster_manual,
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/crew_quarters/arcade/dungeon)
-"sFj" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/obj/cable/yellow{
-	icon_state = "5-8"
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/se{
-	name = "Southeast Breach Hull"
-	})
 "sFr" = (
 /obj/decal/cleanable/dirt,
 /obj/table/reinforced/auto,
@@ -48196,9 +48083,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "uya" = (
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
 	},
@@ -49001,14 +48885,6 @@
 	dir = 4
 	},
 /area/station/engine/engineering)
-"uTK" = (
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/se{
-	name = "Southeast Breach Hull"
-	})
 "uTO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -49481,17 +49357,6 @@
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
-"vil" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/se{
-	name = "Southeast Breach Hull"
-	})
 "viB" = (
 /obj/machinery/light/small/warm/very{
 	dir = 4;
@@ -51081,9 +50946,6 @@
 "vTb" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
-	},
-/obj/cable/yellow{
-	icon_state = "5-8"
 	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se{
@@ -55245,14 +55107,6 @@
 "xKn" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/east)
-"xKL" = (
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/substation/pylon{
-	name = "South Catalytic Substation"
-	})
 "xLu" = (
 /turf/simulated/floor/carpet/red/fancy/junction/sw_e,
 /area/pasiphae/crew)
@@ -56019,12 +55873,6 @@
 /turf/simulated/floor/black,
 /area/station/security/beepsky)
 "yel" = (
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/cable/yellow{
-	icon_state = "4-10"
-	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
@@ -102756,7 +102604,7 @@ nsy
 dQM
 nlc
 psV
-xKL
+vtr
 qjE
 sQr
 laQ
@@ -104266,7 +104114,7 @@ mgm
 abz
 mif
 neB
-nna
+vTb
 elm
 dAB
 bzS
@@ -104568,7 +104416,7 @@ tBf
 abz
 neB
 neB
-nna
+vTb
 neB
 dAB
 hIJ
@@ -105171,7 +105019,7 @@ ihh
 cXD
 nFG
 cSH
-dbo
+cSH
 bWz
 rEP
 rEP
@@ -105473,7 +105321,7 @@ nve
 eRD
 nGd
 neB
-fNZ
+neB
 dAB
 dAB
 bzS
@@ -105774,7 +105622,7 @@ ouB
 tKo
 eRD
 nGi
-bKJ
+neB
 neB
 dAB
 hIJ
@@ -106076,7 +105924,7 @@ eRD
 eRD
 eRD
 nGm
-fNZ
+neB
 neB
 dAB
 bzS
@@ -106377,7 +106225,7 @@ lli
 glH
 gxN
 nCM
-bKJ
+neB
 hOA
 rEP
 rEP
@@ -106679,7 +106527,7 @@ uJB
 eRD
 eRD
 fxH
-fSV
+fxH
 dAB
 dAB
 bzS
@@ -106981,7 +106829,7 @@ pCj
 eRD
 lCi
 neB
-fNZ
+neB
 dAB
 hIJ
 bzS
@@ -107282,7 +107130,7 @@ eRD
 eRD
 eRD
 neB
-dQV
+neB
 neB
 dAB
 bzS
@@ -107583,7 +107431,7 @@ gTI
 wYR
 eRD
 neB
-bKJ
+neB
 hOA
 rEP
 rEP
@@ -107885,7 +107733,7 @@ bFf
 eRD
 eRD
 neB
-fNZ
+neB
 dAB
 dAB
 bzS
@@ -108186,7 +108034,7 @@ eRD
 usT
 eRD
 lCi
-bKJ
+neB
 neB
 dAB
 hIJ
@@ -108488,7 +108336,7 @@ eRD
 eRD
 eRD
 neB
-fNZ
+neB
 neB
 dAB
 bzS
@@ -108789,7 +108637,7 @@ eIV
 jDV
 lka
 neB
-bKJ
+neB
 hOA
 rEP
 rEP
@@ -109091,7 +108939,7 @@ kcY
 kRh
 kRh
 fxH
-vil
+fxH
 dAB
 dAB
 bzS
@@ -109393,7 +109241,7 @@ iLs
 kRh
 lCi
 neB
-fNZ
+neB
 dAB
 hIJ
 bzS
@@ -109694,7 +109542,7 @@ uod
 kRh
 kRh
 neB
-dQV
+neB
 neB
 dAB
 bzS
@@ -109995,7 +109843,7 @@ goK
 tnw
 lka
 neB
-bKJ
+neB
 hOA
 rEP
 rEP
@@ -110297,7 +110145,7 @@ uWj
 kRh
 kRh
 neB
-fNZ
+neB
 dAB
 dAB
 bzS
@@ -110598,7 +110446,7 @@ tQW
 ejL
 kRh
 lCi
-bKJ
+neB
 neB
 dAB
 hIJ
@@ -110900,7 +110748,7 @@ kRh
 kRh
 kRh
 neB
-fNZ
+neB
 neB
 dAB
 bzS
@@ -111201,7 +111049,7 @@ lqD
 mip
 kRh
 neB
-bKJ
+neB
 hOA
 rEP
 rEP
@@ -111503,7 +111351,7 @@ xPH
 kRh
 kRh
 fxH
-vil
+fxH
 dAB
 dAB
 bzS
@@ -111805,7 +111653,7 @@ aXj
 kRh
 lCi
 neB
-fNZ
+neB
 dAB
 hIJ
 bzS
@@ -112106,7 +111954,7 @@ kRh
 kRh
 kRh
 neB
-dQV
+neB
 neB
 dAB
 bzS
@@ -112407,7 +112255,7 @@ cnT
 jvJ
 lka
 neB
-bKJ
+neB
 hOA
 rEP
 rEP
@@ -112709,7 +112557,7 @@ kCh
 kRh
 kRh
 neB
-fNZ
+neB
 dAB
 dAB
 bzS
@@ -113010,7 +112858,7 @@ kXC
 aQD
 kRh
 lCi
-bKJ
+neB
 neB
 dAB
 hIJ
@@ -113312,7 +113160,7 @@ ntr
 kRh
 kRh
 neB
-fNZ
+neB
 neB
 dAB
 bzS
@@ -113613,7 +113461,7 @@ oZL
 cKo
 lka
 neB
-bKJ
+neB
 hOA
 rEP
 rEP
@@ -113915,7 +113763,7 @@ oZL
 kRh
 kRh
 fxH
-vil
+fxH
 dAB
 dAB
 bzS
@@ -114217,7 +114065,7 @@ uWj
 kRh
 lCi
 neB
-fNZ
+neB
 dAB
 hIJ
 bzS
@@ -114518,7 +114366,7 @@ itp
 kRh
 kRh
 neB
-dQV
+neB
 neB
 dAB
 bzS
@@ -114819,7 +114667,7 @@ xhh
 fpW
 lka
 neB
-bKJ
+neB
 hOA
 rEP
 rEP
@@ -115121,7 +114969,7 @@ sju
 kRh
 kRh
 neB
-fNZ
+neB
 dAB
 dAB
 bzS
@@ -115422,7 +115270,7 @@ oZL
 gvr
 kRh
 lCi
-bKJ
+neB
 neB
 dAB
 pFh
@@ -115724,7 +115572,7 @@ nLI
 kRh
 kRh
 neB
-uTK
+neB
 neB
 dAB
 vnv
@@ -116026,7 +115874,7 @@ bru
 jIK
 ftE
 neB
-sFj
+hOA
 neB
 rEP
 hnw
@@ -116327,7 +116175,7 @@ txY
 kRh
 kRh
 dvF
-lDW
+fxH
 iXQ
 iXQ
 iXQ
@@ -116931,7 +116779,7 @@ kRh
 kRh
 neB
 pbM
-fkY
+xkP
 fgI
 pSG
 aat
