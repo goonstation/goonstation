@@ -3,18 +3,40 @@
 /// How long the leader must cryo before gang members can take their role
 #define GANG_CRYO_LOCKOUT 15 MINUTES
 
-/// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
+// -------------------------
+// GANG ECONOMY
+// -------------------------
+// Every gang tag can provide anywhere between 0-6 * GANG_TAG_POINTS_PER_HEAT per GANG_TAG_SCORE_INTERVAL.
+// You can therefore estimate how many points a gang might have using this, A VERY successful gang may see mostly level 4 tags.
+//
+// Giving a gang 2 more spray bottles will therefore mean 2 more level 3~4 tags,
+// about 3.5*GANG_TAG_POINTS_PER_HEAT points every GANG_TAG_SCORE_INTERVAL
+// Use this to figure if something is too valuable/expensive!
+//
+// MATH FOR NERDS:
+// https:// www.desmos.com/calculator/p9uv6debrp
+// This works out to roughly:
+// Having the hottest tag gets level '5'
+// Having 63% of the top heat is level '4'
+// Having 40% of the top heat is level '3'
+// Having 25% of the top heat is level '2'
+// Having 10% of the top heat is level '1'
+// Having less than 10% is level '0'
+
+
+/// /// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
 #define GANG_STARTING_SPRAYPAINT 0
 /// time in seconds between gangs gaining spray bottles
-#define GANG_SPRAYPAINT_REGEN 450 SECONDS
+#define GANG_SPRAYPAINT_REGEN 7.5 MINUTES
 /// number of spray paints that are granted in this interval
 #define GANG_SPRAYPAINT_REGEN_QUANTITY 3
 
 
+/// Drug points:
 
-/// Each drug is worth GANG_DRUG_BONUS_MULT * their value until this many units are provided
+/// /// Each drug is worth GANG_DRUG_BONUS_MULT * their value until this many units are provided
 #define GANG_DRUG_BONUS_CAP 200
-/// Each drug has this much market behind it after GANG_DRUG_BONUS_CAP is used up.
+/// Each drug then has this much market behind it after GANG_DRUG_BONUS_CAP is used up.
 #define GANG_DRUG_LIMIT 1000
 /// The multiplier for drugs that a gang has handed in less than GANG_DRUG_BONUS_CAP units of
 #define GANG_DRUG_BONUS_MULT 5
@@ -100,28 +122,6 @@
 // If popular gang tags are staying too hot for too long after players leave, consider setting it lower.
 #define GANG_TAG_HEAT_DECAY_MUL 0.9
 
-// MATH FOR NERDS:
-// https:// www.desmos.com/calculator/p9uv6debrp
-// The original math for heat level is as follows, (located in the gangtag's 'apply_score' in gangwar.dm):
-// TAG HEAT LEVEL = log(10,10*X)*5
-// Where X is the % of how hot said tag is, compared to the hottest tag
-// This roughly translates to:
-// Having the hottest tag gets level '5'
-// Having 63% of the top heat is level '4'
-// Having 40% of the top heat is level '3'
-// Having 25% of the top heat is level '2'
-// Having 10% of the top heat is level '1'
-// Having less than 10% is level '0'
-
-
-// WHAT THIS MEANS:
-// Every gang tag can provide anywhere between 0-6 * GANG_TAG_POINTS_PER_HEAT per GANG_TAG_SCORE_INTERVAL.
-// You can therefore estimate how many points a gang might have using this, A VERY successful gang may see mostly level 4 tags
-
-// Giving a gang 2 more spray bottles will therefore mean 2 more level 3~4 tags - 3.5*GANG_TAG_POINTS_PER_HEAT points every GANG_TAG_SCORE_INTERVAL
-// With the default settings (scanrate 10, interval 15, points per heat 3), gangs will get roughly
-// Use this to figure if your item is too expensive!
-
 
 
 // GANG TAG SIZES:
@@ -158,4 +158,3 @@
 #define GANG_TAG_INFLUENCE_SQUARED GANG_TAG_INFLUENCE*GANG_TAG_INFLUENCE
 #define GANG_TAG_SIGHT_RANGE_SQUARED GANG_TAG_SIGHT_RANGE*GANG_TAG_SIGHT_RANGE
 
-#define CLIENT_IMAGE_GROUP_GANGS "client_image_group_gang"
