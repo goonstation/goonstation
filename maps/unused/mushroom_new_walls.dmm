@@ -1929,6 +1929,10 @@
 	dir = 4
 	},
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "mining";
+	name = "Mining"
+	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "akh" = (
@@ -13290,6 +13294,10 @@
 	dir = 4
 	},
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "mining";
+	name = "Mining"
+	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "bpo" = (
@@ -18355,6 +18363,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "southsolar";
+	name = "South Solars";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "fhs" = (
@@ -21700,6 +21713,10 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "northsolar";
+	name = "North Solars"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "iKJ" = (
@@ -22028,6 +22045,11 @@
 "jdW" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/engineering,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "southsolar";
+	name = "South Solars";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "jdY" = (
@@ -22056,6 +22078,10 @@
 /obj/mapping_helper/access/mining,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "mining";
+	name = "Mining"
+	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "jew" = (
@@ -30722,6 +30748,10 @@
 	req_access_txt = null
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "northmerch";
+	name = "North Merchant Dock"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "reY" = (
@@ -30731,6 +30761,10 @@
 /obj/mapping_helper/access/mining,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "mining";
+	name = "Mining"
+	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "rfC" = (
@@ -33465,6 +33499,10 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "southmerch";
+	name = "South Merchant Dock"
+	},
 /turf/simulated/floor,
 /area/station/hangar/main)
 "tse" = (
@@ -36527,6 +36565,10 @@
 "wcx" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "southmerch";
+	name = "South Merchant Dock"
+	},
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "wde" = (
@@ -37752,6 +37794,10 @@
 /obj/mapping_helper/access/engineering,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "northsolar";
+	name = "North Solars"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
