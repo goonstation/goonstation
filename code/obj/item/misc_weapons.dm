@@ -1104,7 +1104,6 @@ TYPEINFO(/obj/item/bat)
 /obj/item/switchblade
 	name = "switchblade"
 	desc = "Spring-loaded and therefore completely illegal in Space England."
-	tool_flags = TOOL_CUTTING
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = ""
 	icon = 'icons/obj/items/weapons.dmi'
@@ -1132,6 +1131,7 @@ TYPEINFO(/obj/item/bat)
 			user.visible_message("<span class='combat bold'>[user] flips \the [src] open!</span>")
 			w_class = W_CLASS_NORMAL
 			active = TRUE
+			tool_flags = TOOL_CUTTING
 			item_state = "knife"
 			src.setItemSpecial(/datum/item_special/simple/bloodystab)
 			icon_state = "switchblade-open"
@@ -1145,12 +1145,14 @@ TYPEINFO(/obj/item/bat)
 			w_class = W_CLASS_SMALL
 			active = FALSE
 			item_state = ""
+			tool_flags = 0
 			src.setItemSpecial(/datum/item_special/simple)
 			icon_state = "switchblade-close"
 			hit_type = DAMAGE_BLUNT
 			stamina_crit_chance = 5
 			force = 3
 			playsound(user, 'sound/machines/heater_off.ogg', 40, TRUE)
+		user.update_inhands()
 		tooltip_rebuild = TRUE
 
 	afterattack(obj/O as obj, mob/user as mob)

@@ -99,12 +99,12 @@
 		src.UpdateStackAppearance()
 		return src
 
-	attackby(obj/item/I, mob/user)
+	stack_item(obj/item/I)
 		if (istype(I,/obj/item/currency/spacecash))
-			var/obj/item/currency/spacecash/other = I
-			if (src.hasStatus("freshly_laundered") || other.hasStatus("freshly_laundered"))
-				if (!(src.hasStatus("freshly_laundered") && other.hasStatus("freshly_laundered")))
-					boutput(user, "Ew, this other cash is FILTHY. It's ruined the whole stack!")
+			if (src.hasStatus("freshly_laundered") || I.hasStatus("freshly_laundered"))
+				if (!(src.hasStatus("freshly_laundered") && I.hasStatus("freshly_laundered")))
+					if (ismob(src.loc))
+						boutput(src.loc, "Ew, this other cash is FILTHY. It's ruined the whole stack!")
 					I.delStatus("freshly_laundered")
 					src.delStatus("freshly_laundered")
 		..()

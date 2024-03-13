@@ -82,6 +82,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 		remove_self(take_gear, source)
 		owner.former_antagonist_roles.Add(owner.special_role)
 		owner.special_role = null // this isn't ideal, since the system should support multiple antagonists. once special_role is worked around, this won't be an issue
+		UnregisterSignal(src.owner, COMSIG_MIND_ATTACH_TO_MOB)
+		UnregisterSignal(src.owner, COMSIG_MIND_DETACH_FROM_MOB)
 
 		src.owner = target
 		src.owner.special_role = id

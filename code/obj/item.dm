@@ -1434,7 +1434,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	msgs.damage = power
 
 	if (is_special && src.special)
-		src.special.modify_attack_result(user, target, msgs)
+		msgs = src.special.modify_attack_result(user, target, msgs)
 
 	msgs.flush()
 	src.add_fingerprint(user)

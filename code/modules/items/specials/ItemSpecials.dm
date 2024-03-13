@@ -275,7 +275,7 @@
 
 	//For using the result of the attack to determine fancy behavior
 	proc/modify_attack_result(var/mob/user, var/mob/target, var/datum/attackResults/msgs)
-		return
+		return msgs
 
 /datum/item_special/rush
 	cooldown = 100
@@ -497,6 +497,7 @@
 			msgs.bleed_bonus = 10 + round(20 * clamp(msgs.damage / master.force, 0, 1))
 			msgs.played_sound= 'sound/impact_sounds/Flesh_Stab_1.ogg'
 			blood_slash(target,1,null, turn(user.dir,180), 3)
+		return msgs
 
 /datum/item_special/rangestab
 	cooldown = 0 //10
