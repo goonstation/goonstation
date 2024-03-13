@@ -5,6 +5,10 @@
 	var/linkcolor = "#0FF"
 	var/wages = 0
 	var/limit = -1
+	var/upper_limit = null //! defaults to `limit`
+	var/lower_limit = 0
+	var/admin_set_limit = FALSE //! has an admin manually set the limit to something
+	var/variable_limit = FALSE //! does this job scale down at lower population counts
 	var/add_to_manifest = TRUE //! On join, add to general, bank, and security records.
 	var/no_late_join = FALSE
 	var/no_jobban_from_this_job = FALSE
@@ -68,10 +72,43 @@
 	var/wiki_link = null //! Link to the wiki page for this job
 
 	var/counts_as = null //! Name of a job that we count towards the cap of
+	///if true, cryoing won't free up slots, only ghosting will
+	///basically there should never be two of these
+	var/unique = FALSE
 
 	New()
 		..()
 		src.initial_name = src.name
+		if (isnull(src.upper_limit))
+			src.upper_limit = src.limit
+
+#define SLOT_SCALING_UPPER_THRESHOLD 50 //the point at which we have maximum slots open
+#define SLOT_SCALING_LOWER_THRESHOLD 20 //the point at which we have minimum slots open
+
+	proc/recalculate_limit(player_count)
+		if (src.limit < 0 || src.admin_set_limit) //don't mess with infinite slot or admin limit set jobs
+			return src.limit
+		if (player_count >= SLOT_SCALING_UPPER_THRESHOLD) //above this just open everything up
+			src.limit = src.upper_limit
+			return src.limit
+		var/old_limit = src.limit
+		//basic linear scale between upper and lower limits
+		var/scalar = (player_count - SLOT_SCALING_LOWER_THRESHOLD) / (SLOT_SCALING_UPPER_THRESHOLD - SLOT_SCALING_LOWER_THRESHOLD)
+		src.limit = src.lower_limit + scalar * (src.upper_limit - src.lower_limit)
+		logTheThing(LOG_DEBUG, src, "Variable job limit for [src.name] calculated as [src.limit] slots at [player_count] player count")
+		src.limit = round(src.limit, 1)
+		src.limit = clamp(src.limit, src.lower_limit, src.upper_limit) //paranoia clamp, probably not needed
+		if (src.limit != old_limit)
+			logTheThing(LOG_DEBUG, src, "Altering variable job limit for [src.name] from [old_limit] to [src.limit] at [player_count] player count.")
+		return src.limit
+
+#undef SLOT_SCALING_UPPER_THRESHOLD
+#undef SLOT_SCALING_LOWER_THRESHOLD
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if (variable == "limit")
+			src.admin_set_limit = TRUE
 
 	proc/special_setup(var/mob/M, no_special_spawn)
 		if (!M)
@@ -157,6 +194,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_card = /obj/item/card/id/command
 	map_can_autooverride = FALSE
 	can_join_gangs = FALSE
+	unique = TRUE
 
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
@@ -481,11 +519,9 @@ ABSTRACT_TYPE(/datum/job/security)
 
 /datum/job/security/security_officer
 	name = "Security Officer"
-#ifdef MAP_OVERRIDE_MANTA
-	limit = 4
-#else
 	limit = 5
-#endif
+	lower_limit = 3
+	variable_limit = TRUE
 	wages = PAY_TRADESMAN
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
@@ -523,6 +559,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	assistant
 		name = "Security Assistant"
 		limit = 3
+		lower_limit = 2
 		cant_spawn_as_con = TRUE
 		wages = PAY_UNTRAINED
 		receives_implant = /obj/item/implant/health/security
@@ -2590,6 +2627,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	linkcolor = "#3348ff"
 	name = "Nanotrasen Security Consultant"
 	limit = 1 // backup during HELL WEEK. players will probably like it
+	unique = TRUE
 	wages = PAY_TRADESMAN
 	requires_whitelist = TRUE
 	requires_supervisor_job = "Head of Security"
