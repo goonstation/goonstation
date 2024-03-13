@@ -482,6 +482,7 @@ var/list/admin_verbs = list(
 		/client/proc/TestMarketReq,
 		/verb/adminDumpBlueprint,
 		/client/proc/debug_event_recorder,
+		/client/proc/debug_api_handler,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,

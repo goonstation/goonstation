@@ -19304,14 +19304,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"bet" = (
-/obj/warp_beacon/security,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/lattice,
-/turf/space,
-/area/space)
 "beu" = (
 /obj/landmark/spawner/loot,
 /obj/item/seed/cannabis,
@@ -59098,7 +59090,7 @@
 	dir = 6
 	},
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
@@ -67485,6 +67477,14 @@
 	dir = 9
 	},
 /area/space)
+"oXg" = (
+/obj/warp_beacon/security,
+/obj/lattice,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/space,
+/area/space)
 "oXr" = (
 /obj/cable/orange{
 	icon_state = "1-8"
@@ -67880,6 +67880,10 @@
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"ptq" = (
+/obj/storage/closet/fire,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "puo" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
@@ -72915,6 +72919,17 @@
 	icon_state = "red2"
 	},
 /area/station/quartermaster/office)
+"uJk" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/catwalk/north)
 "uKi" = (
 /obj/machinery/atmospherics/pipe/simple{
 	level = 2
@@ -74997,11 +75012,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
-"xyX" = (
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/storage/closet/fire,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "xAl" = (
 /obj/machinery/firealarm/west,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
@@ -129337,8 +129347,8 @@ kCK
 aYM
 oEg
 cha
-aaa
-aaa
+aaF
+aaI
 aaa
 aam
 oAf
@@ -129637,12 +129647,12 @@ aSZ
 aSZ
 cnG
 clX
-xyX
+aZZ
 cha
-aaa
-aaa
-aaa
-aam
+chU
+cXb
+emM
+aaF
 oAf
 aaa
 bgM
@@ -129939,13 +129949,13 @@ aVN
 aSZ
 aWF
 clX
-aZZ
-cha
-chU
-cXb
-emM
-aaF
-oAf
+ckp
+lSO
+bbi
+wnQ
+iNZ
+pdD
+uJk
 aaa
 bgM
 bhD
@@ -130241,12 +130251,12 @@ aRU
 aSZ
 cnG
 cma
-ckp
-lSO
-bbi
-wnQ
-iNZ
-pdD
+bad
+cha
+chU
+cXb
+jnB
+aaF
 gvO
 aaa
 bgM
@@ -130543,12 +130553,12 @@ aVO
 aXa
 aWI
 clX
-bad
+ptq
 cha
-chU
-cXb
-jnB
-aaF
+ani
+aaa
+aaa
+aam
 idk
 fHD
 bgK
@@ -130848,8 +130858,8 @@ clX
 ckr
 cha
 aaa
-acq
 aaa
+acq
 aam
 idk
 aaa
@@ -131149,9 +131159,9 @@ aWK
 clX
 baf
 cha
+aaa
 aag
-bet
-dlA
+oXg
 bcc
 uSj
 aaa
@@ -131452,8 +131462,8 @@ aYN
 ckt
 cha
 aaa
-abs
 aaa
+abs
 aam
 oAf
 aaa

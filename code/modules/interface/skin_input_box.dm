@@ -12,7 +12,7 @@
 
 	// Create a macro set for handling enter presses
 	winclone(src, "input_box_macro", "persist_[id]_macro")
-	winset(src, "[id]_macro_returnup", "parent=persist_[id]_macro;name=Return+UP;command=\".winset \\\"[id].is-visible=false\\\"\"")
+	winset(src, "[id]_macro_returnup", "parent=persist_[id]_macro;name=Return+UP;command=\".winset \\\"[id].is-visible=false\"")
 	// Return+UP allows us to close the window after typing in a command, pressing enter and releasing enter.
 	// Can't use just Return for this, because when there's text in the box Return is handled by BYOND and doesn't run the macro.
 
@@ -22,18 +22,18 @@
 
 	if(accept_verb)
 		winset(src, "[id].say-input", "command=\"[accept_verb] \\\"\"")
-		winset(src, "[id].accept", "command=\".winset \\\"command=\\\"[accept_verb] \\\\\\\"\[\[[id].say-input.text as escaped\]\]\\\";[id].is-visible=false\\\";[id].say-input.text=\\\"\\\"\"") //Invokes the accept verb using the inputted text, and hides the window.
+		winset(src, "[id].accept", "command=\".winset \\\"command=\\\"[accept_verb] \\\\\\\"\[\[[id].say-input.text as escaped\]\]\\\";[id].is-visible=false;[id].say-input.text=\\\"\\\"\"") //Invokes the accept verb using the inputted text, and hides the window.
 	if(cancel_verb)
 		//All of these close the window and invoke the cancel verb, as well as clear the input box of all text. The second arg is the method of which the window was closed.
-		winset(src, "[id].cancel", "command=\".winset \\\"command=\\\"[cancel_verb]\\\";[id].is-visible=false\\\";[id].say-input.text=\\\"\\\"\"")
-		winset(src, "[id]_macro_return", "parent=persist_[id]_macro;name=Return;command=\".winset \\\"command=\\\"[cancel_verb]\\\";[id].is-visible=false\\\";[id].say-input.text=\\\"\\\"\"")
-		winset(src, "[id]_macro_escape", "parent=persist_[id]_macro;name=Escape;command=\".winset \\\"command=\\\"[cancel_verb]\\\";[id].is-visible=false\\\";[id].say-input.text=\\\"\\\"\"")
+		winset(src, "[id].cancel", "command=\".winset \\\"command=\\\"[cancel_verb]\\\";[id].is-visible=false;[id].say-input.text=\\\"\\\"\"")
+		winset(src, "[id]_macro_return", "parent=persist_[id]_macro;name=Return;command=\".winset \\\"command=\\\"[cancel_verb]\\\";[id].is-visible=false;[id].say-input.text=\\\"\\\"\"")
+		winset(src, "[id]_macro_escape", "parent=persist_[id]_macro;name=Escape;command=\".winset \\\"command=\\\"[cancel_verb]\\\";[id].is-visible=false;[id].say-input.text=\\\"\\\"\"")
 		winset(src, id, "on-close=\"[cancel_verb]\"") //Invokes the cancel verb if you close the window
 	else
 		//Hides the window and does nothing else.
-		winset(src, "[id].cancel", "command=\".winset \\\"[id].is-visible=false\\\";[id].say-input.text=\\\"\\\"\"")
+		winset(src, "[id].cancel", "command=\".winset \\\"[id].is-visible=false;[id].say-input.text=\\\"\\\"\"")
 		winset(src, "[id]_macro_return", "parent=persist_[id]_macro;name=Return;command=\".winset \\\"[id].is-visible=false\\\"\"")
-		winset(src, "[id]_macro_escape", "parent=persist_[id]_macro;name=Escape;command=\".winset \\\"[id].is-visible=false\\\";[id].say-input.text=\\\"\\\"\"")
+		winset(src, "[id]_macro_escape", "parent=persist_[id]_macro;name=Escape;command=\".winset \\\"[id].is-visible=false;[id].say-input.text=\\\"\\\"\"")
 
 	//Window scaling!
 	//BYOND doesn't scale the window by DPI scaling, so it'll appear too big/too small with DPI scaling other than the one it was based on

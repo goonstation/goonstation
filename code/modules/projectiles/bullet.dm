@@ -724,6 +724,26 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/shrapnel
 	damage = 10
 
+/datum/projectile/bullet/improvbone
+	name = "bone"
+	sname = "bone"
+	icon_state = "trace"
+	dissipation_delay = 1
+	dissipation_rate = 3
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	implanted = null
+	damage = 9
+	hit_mob_sound = 'sound/effects/skeleton_break.ogg'
+	impact_image_state = null // in my mind these are just literal bones fragments being thrown at people, wouldn't stick into walls
+
+	on_hit(atom/hit)
+		var/turf/T = get_turf(hit)
+		T.fluid_react_single("calcium", 2) // Creates 5 units of calcium on hit
+	on_max_range_die(obj/projectile/O)
+		var/turf/T = get_turf(O)
+		T.fluid_react_single("calcium", 2) // Creates 5 units of caclium once it reaches max range.
+
 /datum/projectile/bullet/aex
 	name = "explosive slug"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
@@ -1578,7 +1598,7 @@ datum/projectile/bullet/autocannon
 	on_hit(atom/hit)
 		var/obj/machinery/the_singularity/S = hit
 		if(istype(S))
-			new /obj/bhole(S.loc,rand(100,300))
+			new /obj/whitehole(S.loc, 0 SECONDS, 30 SECONDS)
 			qdel(S)
 		else
 			new /obj/effects/rendersparks(hit.loc)

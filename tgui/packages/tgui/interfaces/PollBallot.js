@@ -2,23 +2,20 @@ import { useBackend } from '../backend';
 import { Button, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
+const getServerButtonType = (servers) => {
+  if (servers.includes("global")) {
+    return { tooltip: "Global Poll", icon: "globe" };
+  } else if (servers.includes("rp_only")) {
+    return { tooltip: "RP Only Poll", icon: "masks-theater" };
+  }
+  return { tooltip: "Local Poll", icon: "location-dot" };
+};
+
 const PollControls = ({ isAdmin, act, pollId, isExpired, multipleChoice, expiryDate, servers }) => {
+  const serverButtonProps = getServerButtonType(servers);
   return (
     <Stack>
       <Stack.Item>
-        {servers.includes("global") ? (
-          <Button
-            tooltip="Global Poll"
-            tooltipPosition="top"
-            icon="globe"
-          />
-        ) : servers.includes("rp_only") ? (
-          <Button
-            tooltip="RP Only Poll"
-            tooltipPosition="top"
-            icon="masks-theater"
-          />
-        ) : null}
         {multipleChoice ? (
           <Button
             tooltip="Multiple Choice"
@@ -27,10 +24,17 @@ const PollControls = ({ isAdmin, act, pollId, isExpired, multipleChoice, expiryD
           />
         ) : null}
         <Button
+          tooltip={serverButtonProps.tooltip}
+          tooltipPosition="top"
+          icon={serverButtonProps.icon}
+          onClick={() => act('editServers', { pollId })}
+        />
+        <Button
           tooltip={expiryDate ? expiryDate : "No Expiration Date"}
           tooltipPosition="top"
           color={isExpired ? 'bad' : 'good'}
           icon={isExpired ? 'lock' : 'lock-open'}
+          onClick={() => act('editExpiration', { pollId })}
         />
         {isAdmin ? (
           <>
@@ -61,7 +65,7 @@ const OptionControls = ({ isAdmin, act, pollId, optionId }) => {
   );
 };
 
-const Poll = ({ options, total_answers, act, pollId, isAdmin, isExpired, playerId }) => {
+const Poll = ({ options, total_answers, act, pollId, isAdmin, isExpired, playerId, showVotes }) => {
   if (!options || options.length === 0) return null;
   return (
     <Stack vertical>
@@ -70,13 +74,22 @@ const Poll = ({ options, total_answers, act, pollId, isAdmin, isExpired, playerI
           <Stack vertical>
             <Stack>
               <Stack.Item grow>
-                <Button.Checkbox
-                  disabled={isExpired}
-                  checked={option.answers_player_ids.includes(playerId)}
-                  onClick={() => act('vote', { pollId, optionId: option.id })}
-                >
-                  {option.option}
-                </Button.Checkbox>
+                <Stack>
+                  <Stack.Item grow>
+                    <Button.Checkbox
+                      disabled={isExpired}
+                      checked={option.answers_player_ids.includes(playerId)}
+                      onClick={() => act('vote', { pollId, optionId: option.id })}
+                    >
+                      {option.option}
+                    </Button.Checkbox>
+                  </Stack.Item>
+                  {showVotes ? (
+                    <Stack.Item align="right">
+                      {`(${option.answers_count} votes)`}
+                    </Stack.Item>
+                  ) : null}
+                </Stack>
               </Stack.Item>
               <Stack.Item>
                 <OptionControls
@@ -99,7 +112,7 @@ const Poll = ({ options, total_answers, act, pollId, isAdmin, isExpired, playerI
 
 export const PollBallot = (props, context) => {
   const { act, data } = useBackend(context);
-  const { isAdmin, filterInactive, polls, playerId } = data;
+  const { isAdmin, filterInactive, polls, playerId, showVotes } = data;
 
   return (
     <Window title="Poll Ballot" width="750" height="800">
@@ -111,6 +124,12 @@ export const PollBallot = (props, context) => {
                 <Button.Checkbox
                   checked={filterInactive}
                   onClick={() => act('toggle-filterInactive')}>Filter Closed Polls
+                </Button.Checkbox>
+              </Stack.Item>
+              <Stack.Item>
+                <Button.Checkbox
+                  checked={showVotes}
+                  onClick={() => act('toggle-showVotes')}>Show Votes
                 </Button.Checkbox>
               </Stack.Item>
               {isAdmin ? (
@@ -150,6 +169,7 @@ export const PollBallot = (props, context) => {
                       isAdmin={isAdmin}
                       isExpired={poll.expires_at && (new Date() > new Date(poll.expires_at))}
                       playerId={playerId}
+                      showVotes={showVotes}
                     />
                   </Stack>
                 </Section>
