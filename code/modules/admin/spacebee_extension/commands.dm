@@ -122,7 +122,7 @@
 				if(islist(lData) && lData["oldserver"])
 					id = lData["oldserver"]
 			message += "**\[[id]\] [playerNote.game_admin.name]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
-			message += "[playerNote.note]"
+			message += "[playerNote.note]\n"
 		message = jointext(message, "\n")
 		//system.reply(message)
 		var/ircmsg[] = new()
