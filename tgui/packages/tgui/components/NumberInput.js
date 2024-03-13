@@ -1,6 +1,7 @@
 /**
  * @file
  * @copyright 2020 Aleksej Komarov
+ * @author Changes Sovexe (https://github.com/Sovexe)
  * @license MIT
  */
 
@@ -136,6 +137,13 @@ export class NumberInput extends Component {
         catch {}
       }
     };
+  }
+
+  componentDidMount() {
+    // Only focus the input if autofocus is true
+    if (this.props.autofocus && this.inputRef.current) {
+      this.inputRef.current.focus();
+    }
   }
 
   render() {
@@ -291,4 +299,5 @@ NumberInput.defaultProps = {
   step: 1,
   stepPixelSize: 1,
   suppressFlicker: 50,
+  autofocus: false, // autofocus is off by default
 };

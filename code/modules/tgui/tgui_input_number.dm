@@ -21,7 +21,7 @@
  * * round_input - If the number in the numbox should be rounded to the nearest integer.
  * * theme - The TGUI theme used for the window.
  */
-/proc/tgui_input_number(mob/user, message, title = "Number Input", default, max_value = null, min_value = null, timeout = 0, round_input = TRUE, theme = null)
+/proc/tgui_input_number(mob/user, message, title = "Number Input", default, max_value = null, min_value = null, timeout = 0, round_input = TRUE, theme = null, autofocus = TRUE)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -36,7 +36,7 @@
 		CRASH("TGUI input number prompt opened with default number that is not a number.")
 	if (default > (!isnull(max_value) ? max_value : 1000) || default < min_value)
 		CRASH("TGUI input number prompt opened with a default number outside of the allowable range.")
-	var/datum/tgui_input_number/numbox = new(user, message, title, default, max_value, min_value, timeout, round_input, theme)
+	var/datum/tgui_input_number/numbox = new(user, message, title, default, max_value, min_value, timeout, round_input, theme, autofocus)
 	numbox.ui_interact(user)
 	numbox.wait()
 	if (numbox)
@@ -60,7 +60,7 @@
  * * round_input - If the number in the numbox should be rounded to the nearest integer.
  * * theme - The TGUI theme used for the window.
  */
-/proc/tgui_input_number_async(mob/user, message, title = "Number Input", default, max_value = null, min_value = null, datum/callback/callback, timeout = 60 SECONDS, round_input = TRUE, theme = null)
+/proc/tgui_input_number_async(mob/user, message, title = "Number Input", default, max_value = null, min_value = null, datum/callback/callback, timeout = 60 SECONDS, round_input = TRUE, theme = null, autofocus = TRUE)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -75,7 +75,7 @@
 		CRASH("TGUI input number prompt opened with default number that is not a number.")
 	if (default > (!isnull(max_value) ? max_value : 1000) || default < min_value)
 		CRASH("TGUI input number prompt opened with a default number outside of the allowable range.")
-	var/datum/tgui_input_number/async/numbox = new(user, message, title, default, max_value, min_value, callback, timeout, round_input, theme)
+	var/datum/tgui_input_number/async/numbox = new(user, message, title, default, max_value, min_value, callback, timeout, round_input, theme, autofocus)
 	numbox.ui_interact(user)
 
 /**
@@ -109,9 +109,11 @@
 	var/title
 	/// The TGUI theme used for the window.
 	var/theme
+	/// The bool that controls if this modal should grab window focus
+	var/autofocus
 
 
-/datum/tgui_input_number/New(mob/user, message, title, default, max_value, min_value, timeout, round_input, theme)
+/datum/tgui_input_number/New(mob/user, message, title, default, max_value, min_value, timeout, round_input, theme, autofocus)
 	src.user = user
 	src.default = default
 	src.max_value = max_value
@@ -120,6 +122,7 @@
 	src.round_input = round_input
 	src.title = title
 	src.theme = theme
+	src.autofocus = autofocus
 	if (timeout)
 		src.timeout = timeout
 		start_time = TIME
@@ -161,6 +164,7 @@
 		"round_input" = round_input,
 		"title" = title,
 		"theme" = theme,
+		"autofocus" = autofocus,
 	)
 	if(timeout)
 		.["timeout"] = clamp(((timeout - (TIME - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)), 0, 1)
