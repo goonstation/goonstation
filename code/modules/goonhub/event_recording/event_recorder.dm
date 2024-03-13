@@ -39,6 +39,11 @@ var/global/datum/eventRecorder/eventRecorder
 	proc/process()
 		if (!src.enabled || !length(src.events) || (!src.connected && !src.connect())) return
 
+		// Handle events that were added before a roundId existed
+		for (var/i = 1; i <= src.events.len; i++)
+			if (!src.events[i]["round_id"])
+				src.events[i]["round_id"] = roundId
+
 		var/res = rustg_redis_lpush(config.goonhub_events_channel, json_encode(src.events))
 		var/list/lRes = json_decode(res)
 
@@ -53,7 +58,7 @@ var/global/datum/eventRecorder/eventRecorder
 
 	/// Add an event to the event queue
 	proc/add(datum/eventRecord/event)
-		if (!src.enabled || !roundId) return
+		if (!src.enabled) return
 
 		var/list/data = event.body.ToList()
 		data["type"] = event.eventType
