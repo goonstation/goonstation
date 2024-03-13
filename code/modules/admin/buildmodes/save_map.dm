@@ -41,7 +41,7 @@ Right Mouse Button on the mode         = Cycle saving modes<br>
 
 	proc/mark_corner(atom/object)
 		A = get_turf(object)
-		boutput(usr, "<span class='notice'>Corner set!</span>")
+		boutput(usr, SPAN_NOTICE("Corner set!"))
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!A)
@@ -51,13 +51,13 @@ Right Mouse Button on the mode         = Cycle saving modes<br>
 			var/turf/B = get_turf(object)
 			blink(B)
 			if (!B || A.z != B.z)
-				boutput(usr, "<span class='alert'>Corners must be on the same Z-level!</span>")
+				boutput(usr, SPAN_ALERT("Corners must be on the same Z-level!"))
 				return
 			if(saving)
-				boutput(usr, "<span class='alert'>Already saving a map!</span>")
+				boutput(usr, SPAN_ALERT("Already saving a map!"))
 				return
 			if(alert("Are you sure you want to save an area of size [abs(A.x - B.x) + 1]x[abs(A.y - B.y) + 1]?",,"Yes","No") != "Yes")
-				boutput(usr, "<span class='alert'>Saving cancelled!</span>")
+				boutput(usr, SPAN_ALERT("Saving cancelled!"))
 				A = null
 				return
 			saving = 1
@@ -65,7 +65,7 @@ Right Mouse Button on the mode         = Cycle saving modes<br>
 			if (fexists(fname))
 				fdel(fname)
 			var/target = file(fname)
-			boutput(usr, "<span class='notice'>Saving started.</span>")
+			boutput(usr, SPAN_NOTICE("Saving started."))
 			var/flags = DMM_IGNORE_MOBS | DMM_IGNORE_OVERLAYS
 			if(mode_number == SAVE_MODE_NO_SPACE)
 				flags |= DMM_IGNORE_SPACE
@@ -75,14 +75,14 @@ Right Mouse Button on the mode         = Cycle saving modes<br>
 				flags |= DMM_IGNORE_AREAS
 			var/text = dmm_suite.write_map(A, B, flags)
 			target << text
-			boutput(usr, "<span class='notice'>Saving finished.</span>")
+			boutput(usr, SPAN_NOTICE("Saving finished."))
 			usr << ftp(target)
 			saving = 0
 			A = null
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		A = null
-		boutput(usr, "<span class='notice'>Corner cancelled!</span>")
+		boutput(usr, SPAN_NOTICE("Corner cancelled!"))
 
 #undef SAVE_MODE_DEFAULT
 #undef SAVE_MODE_NO_SPACE

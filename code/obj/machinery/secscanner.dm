@@ -58,10 +58,14 @@ TYPEINFO(/obj/machinery/secscanner)
 		if( icon_state != "scanner_on" )
 			return
 		src.use_power(15)
-		var/contraband = I.get_contraband()
 
-		if (contraband >= 2)
+		var/list/contraband_returned = list()
+		var/contraband = 0
 
+		if (SEND_SIGNAL(I, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
+			contraband = max(contraband_returned)
+
+		if (contraband > 2)
 			playsound( src.loc, fail_sound, 10, 0 )
 			icon_state = "scanner_red"
 			src.use_power(15)
@@ -172,11 +176,25 @@ TYPEINFO(/obj/machinery/secscanner)
 		if(src.emagged)
 			return rand(99,2000) //very high-end bad vibes level assessor
 
+		var/has_carry_permit = FALSE
+		var/has_contraband_permit = FALSE
+
 		if (!ishuman(target))
 			if (istype(target, /mob/living/critter/changeling))
 				return 6
-			for( var/obj/item/item in target.contents )
-				threatcount += item.get_contraband()
+
+			if (issilicon(target))
+				var/mob/living/silicon/S = target
+				var/obj/item/card/id/perp_id = S.botcard
+				if(weapon_access in perp_id.access)
+					has_carry_permit = TRUE
+				if(contraband_access in perp_id.access)
+					has_contraband_permit = TRUE
+
+			for(var/obj/item/item in target.contents)
+				var/list/contraband_returned = list()
+				if(SEND_SIGNAL(item, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !has_carry_permit, !has_carry_permit))
+					threatcount += max(contraband_returned)
 			return threatcount
 
 		var/mob/living/carbon/human/perp = target
@@ -200,87 +218,35 @@ TYPEINFO(/obj/machinery/secscanner)
 		if (!istype(perp_id))
 			perp_id = perp.wear_id
 
-		var/has_carry_permit = 0
-		var/has_contraband_permit = 0
-
-		if (!has_contraband_permit)
-			threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_CONTRABAND_OVERRIDE)
-
 		if(perp_id) //Checking for permits
 			if(weapon_access in perp_id.access)
-				has_carry_permit = 1
+				has_carry_permit = TRUE
 			if(contraband_access in perp_id.access)
-				has_contraband_permit = 1
+				has_contraband_permit = TRUE
 
-		if (istype(perp.l_hand))
-			if (istype(perp.l_hand, /obj/item/gun/))  // perp is carrying a gun
-				if(!has_carry_permit)
-					threatcount += perp.l_hand.get_contraband()
-			else // not carrying a gun
-				if(!has_contraband_permit)
-					threatcount += perp.l_hand.get_contraband()
+		if (!has_carry_permit || !has_contraband_permit)
+			var/list/contraband_returned = list()
+			if(SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !has_contraband_permit, !has_carry_permit))
+				threatcount += max(contraband_returned)
 
-		if (istype(perp.r_hand))
-			if (istype(perp.r_hand, /obj/item/gun/)) // perp is carrying a gun
-				if(!has_carry_permit)
-					threatcount += perp.r_hand.get_contraband()
-			else // not carrying a gun, but potential contraband?
-				if(!has_contraband_permit)
-					threatcount += perp.r_hand.get_contraband()
+			if (istype(perp.l_store))
+				contraband_returned = list()
+				if(SEND_SIGNAL(perp.l_store, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !has_contraband_permit, !has_carry_permit))
+					threatcount += max(contraband_returned) * 0.5
 
-		if (istype(perp.wear_suit))
-			if (!has_contraband_permit)
-				threatcount += perp.wear_suit.get_contraband()
+			if (istype(perp.r_store))
+				contraband_returned = list()
+				if(SEND_SIGNAL(perp.r_store, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !has_contraband_permit, !has_carry_permit))
+					threatcount += max(contraband_returned) * 0.5
 
-		if (istype(perp.belt))
-			if (istype(perp.belt, /obj/item/gun/))
-				if (!has_carry_permit)
-					threatcount += perp.belt.get_contraband() * 0.5
-			else
-				if (!has_contraband_permit)
-					threatcount += perp.belt.get_contraband() * 0.5
-				for( var/obj/item/item in perp.belt.contents )
-					if (istype(item, /obj/item/gun/))
-						if (!has_carry_permit)
-							threatcount += item.get_contraband() * 0.5
-					else
-						if (!has_contraband_permit)
-							threatcount += item.get_contraband() * 0.5
-
-		if (istype(perp.l_store))
-			if (istype(perp.l_store, /obj/item/gun/))
-				if (!has_carry_permit)
-					threatcount += perp.l_store.get_contraband() * 0.5
-			else
-				if (!has_contraband_permit)
-					threatcount += perp.l_store.get_contraband() * 0.5
-
-		if (istype(perp.r_store))
-			if (istype(perp.r_store, /obj/item/gun/))
-				if (!has_carry_permit)
-					threatcount += perp.r_store.get_contraband() * 0.5
-			else
-				if (!has_contraband_permit)
-					threatcount += perp.r_store.get_contraband() * 0.5
-
-		if (istype(perp.back))
-			if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
-				if (!has_carry_permit)
-					threatcount += perp.back.get_contraband() * 0.5
-			else // at moment of doing this we don't have other contraband back items, but maybe that'll change
-				if (!has_contraband_permit)
-					threatcount += perp.back.get_contraband() * 0.5
-			if (perp.back?.storage)
+			if (istype(perp.back) && perp.back?.storage)
 				for(var/obj/item/item in perp.back.storage.get_contents())
-					if (istype(item, /obj/item/gun/))
-						if (!has_carry_permit)
-							threatcount += item.get_contraband() * 0.5
-					else
-						if (!has_contraband_permit)
-							threatcount += item.get_contraband() * 0.5
+					contraband_returned = list()
+					if(SEND_SIGNAL(item, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !has_contraband_permit, !has_carry_permit))
+						threatcount += max(contraband_returned) * 0.5
 
 		//Agent cards lower threatlevel
-		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))
+		if(istype(perp_id, /obj/item/card/id/syndicate))
 			threatcount -= 2
 
 		// we have grounds to make an arrest, don't bother with further analysis
@@ -313,7 +279,7 @@ TYPEINFO(/obj/machinery/secscanner)
 			return
 
 		for (var/mob/O in hearers(src, null))
-			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2)
+			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\"")), 2)
 
 
 /obj/machinery/fakesecscanner

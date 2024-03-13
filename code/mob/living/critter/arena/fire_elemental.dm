@@ -2,8 +2,9 @@
 	name = "fire elemental"
 	real_name = "fire elemental"
 	desc = "You can't tell if this person is on fire, or made of it. Or both."
-	density = 1
+	icon = 'icons/mob/critter/humanoid/elemental/fire.dmi'
 	icon_state = "fire_elemental"
+	density = 1
 	custom_gib_handler = /proc/fire_elemental_gibs
 	hand_count = 3
 	can_throw = 1
@@ -17,7 +18,7 @@
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 1, pitch = 0.5, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b><span class='alert'>[src] wails!</span></b>"
+					return SPAN_ALERT("<b>[src] wails!</b>")
 
 		return null
 
@@ -74,3 +75,6 @@
 			make_cleanable(/obj/decal/cleanable/ash,src.loc)
 			ghostize()
 			qdel(src)
+
+	is_heat_resistant()
+		return TRUE

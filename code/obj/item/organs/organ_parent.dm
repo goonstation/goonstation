@@ -8,7 +8,6 @@
 	desc = "What does this thing even do? Is it something you need?"
 	var/organ_holder_name = "organ"
 	var/organ_holder_location = "chest"
-	var/organ_holder_required_op_stage = 0
 	icon = 'icons/obj/items/organs/brain.dmi'
 	icon_state = "brain1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
@@ -24,6 +23,8 @@
 	stamina_cost = 5
 	edible = 1	// currently overridden by material settings
 	material_amt = 0.3
+	uses_default_material_appearance = FALSE
+	uses_default_material_name = FALSE
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this
 	/// Whoever had this organ first, the original owner
 	var/mob/living/carbon/human/donor_original = null // So people'll know if a lizard's wearing someone else's tail
@@ -69,10 +70,20 @@
 	var/datum/bone/bones = null
 	rand_pos = 1
 
-	var/made_from = "flesh" //Material this organ will produce.
+	default_material = "flesh" //Material this organ will produce.
 
 	///if the organ is currently acting as an organ in a body
 	var/in_body = FALSE
+	///List of buttons we'll show when doing organ surgery
+	var/list/datum/contextAction/surgery_contexts = null
+	contextLayout = new /datum/contextLayout/experimentalcircle
+	///Which type of surgery tools do we need to operate on this organ?
+	var/surgery_flags = SURGERY_NONE
+	var/removal_stage = 0
+	///In which region is this organ supposed to be implanted? E.g. RIBS for the heart and lungs
+	var/region = null
+	///Can this organ be inserted on either side? (literally just kidneys, wegh)
+	var/either_side = FALSE
 
 	attack(var/mob/living/carbon/M, var/mob/user)
 		if (!ismob(M))
@@ -106,7 +117,7 @@
 			user.lastattacked = src
 			attack_particle(user,src)
 			hit_twitch(src)
-			playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 100, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 100, TRUE)
 			src.splat(get_turf(src))
 			if(W.hit_type == DAMAGE_BURN)
 				src.take_damage(0, W.force, 0, W.hit_type)
@@ -139,7 +150,6 @@
 			src.blood_type = src.donor.bioHolder?.bloodType
 			src.blood_color = src.donor.bioHolder?.bloodColor
 			src.blood_reagent = src.donor.blood_id
-		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		src.max_damage += passed_genes?.get_effective_value("endurance")
@@ -153,10 +163,10 @@
 					continue
 				if(holder.organ_list[thing] == src)
 					holder.organ_list[thing] = null
-				if(thing in holder.vars && holder.vars[thing] == src) // organ holders suck, refactor when they no longer suck
+				if((thing in holder.vars) && holder.vars[thing] == src) // organ holders suck, refactor when they no longer suck
 					holder.vars[thing] = null
 
-
+		donor_original = null
 		donor = null
 
 		if (bones)
@@ -168,7 +178,7 @@
 	proc/splat(turf/T)
 		if(!istype(T) || src.decal_done || !ispath(src.created_decal))
 			return FALSE
-		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
 		var/obj/decal/cleanable/cleanable = make_cleanable(src.created_decal, T)
 		cleanable.blood_DNA = src.blood_DNA
 		cleanable.blood_type = src.blood_type
@@ -266,6 +276,8 @@
 					src.remove_ability(aholder, abil)
 		src.donor = null
 		src.in_body = FALSE
+		if (src.surgery_contexts)
+			src.surgery_contexts = null
 
 		return
 
@@ -274,7 +286,7 @@
 			return
 		if (user)
 			user.show_text("You disable the safety limiters on [src].", "red")
-		src.visible_message("<span class='alert'><B>[src] sparks and shudders oddly!</B></span>", 1)
+		src.visible_message(SPAN_ALERT("<B>[src] sparks and shudders oddly!</B>"))
 		src.emagged = 1
 		return 1
 
@@ -326,7 +338,7 @@
 				src.bones.take_damage(damage_type)
 
 		// if (src.get_damage() >= max_damage)
-		if (brute_dam + burn_dam + tox_dam >= max_damage)
+		if (src.brute_dam + src.burn_dam + src.tox_dam >= src.max_damage)
 			src.breakme()
 			donor?.contract_disease(failure_disease,null,null,1)
 		health_update_queue |= donor
@@ -348,22 +360,40 @@
 		/* Checks if an organ can be attached to a target mob */
 		if (istype(/obj/item/organ/chest/, src))
 			// We can't transplant a chest
-			return 0
+			return FALSE
 
 		if (user.zone_sel.selecting != src.organ_holder_location)
-			return 0
+			return FALSE
 
 		if (!can_act(user))
-			return 0
+			return FALSE
 
 		if (!surgeryCheck(M, user))
-			return 0
+			return FALSE
 
 		var/mob/living/carbon/human/H = M
 		if (!H.organHolder)
-			return 0
+			return FALSE
+		switch (src.region)
+			//Check if our relevant region is opened up. For example hearts need the ribs to be opened up
+			if (null)
+				return TRUE
+			if (RIBS)
+				if (H.organHolder.ribs_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
+					return TRUE
+				return FALSE
+			if (ABDOMINAL)
+				if (H.organHolder.abdominal_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
+					return TRUE
+				return FALSE
+			if (SUBCOSTAL)
+				if (H.organHolder.subcostal_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
+					return TRUE
+			if (FLANKS)
+				if (H.organHolder.flanks_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
+					return TRUE
 
-		return 1
+		return FALSE
 
 	proc/attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Attempts to attach this organ to the target mob M, if sucessful, displays surgery notifications and updates states in both user and target.
@@ -375,16 +405,25 @@
 
 		var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 		var/obj/item/organ/organ_location = H.organHolder.get_organ(src.organ_holder_location)
+		src.removal_stage = 0
 
-		if (!H.organHolder.get_organ(src.organ_holder_name) && organ_location && organ_location.op_stage == src.organ_holder_required_op_stage)
+		var/full_organ_name = src.organ_holder_name
+		if (src.either_side)//Kidneys can go on the left or right, doesn't matter. Useful for cyber/synth kidneys
+			if (!H.organHolder.get_organ("left_kidney"))
+				full_organ_name = "left_kidney"
+			else if (!H.organHolder.get_organ("right_kidney"))
+				full_organ_name = "right_kidney"
+			else
+				return 0
+		if (!H.organHolder.get_organ(full_organ_name))
 
-			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] [src.organ_holder_location]!</span>",\
-				"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] [src.organ_holder_location]!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your [src.organ_holder_location]!</span>")
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] [src.organ_holder_location]!"),\
+				SPAN_ALERT("You [fluff] [src] into [user == H ? "your" : "[H]'s"] [src.organ_holder_location]!"),\
+				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your [src.organ_holder_location]!"))
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			H.organHolder.receive_organ(src, src.organ_holder_name, organ_location.op_stage)
+			H.organHolder.receive_organ(src, full_organ_name, organ_location.op_stage)
 			H.update_body()
 
 			return 1
@@ -417,3 +456,27 @@
 					src.add_ability(A, abil)
 			src.broken = 0
 			return TRUE
+
+	proc/build_organ_buttons()
+		.= 0
+
+		if (surgery_flags)
+			.= 1
+
+			if (src.surgery_contexts != null)
+				return
+
+			src.surgery_contexts = list()
+
+			if (surgery_flags & SURGERY_CUTTING)
+				var/datum/contextAction/organ_surgery/cut/action = new
+				surgery_contexts += action
+			if (surgery_flags & SURGERY_SNIPPING)
+				var/datum/contextAction/organ_surgery/snip/action = new
+				surgery_contexts += action
+			if (surgery_flags & SURGERY_SAWING)
+				var/datum/contextAction/organ_surgery/saw/action = new
+				surgery_contexts += action
+
+			.+= length(surgery_contexts)
+

@@ -40,8 +40,8 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/MEraaargh.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b><span class='alert'>[src] roars!</span></b>"
+					playsound(src, 'sound/voice/MEraaargh.ogg', 70, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					return SPAN_ALERT("<b>[src] roars!</b>")
 		return null
 
 	specific_emote_type(var/act)

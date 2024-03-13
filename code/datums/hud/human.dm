@@ -174,133 +174,131 @@
 		if(isnull(M))
 			CRASH("human HUD created with no master")
 		master = M
+		master.hud = src
 
-		SPAWN(0)
-			if(master?.disposed)
-				qdel(src)
-				return
-			if(src.disposed)
-				return
-			var/icon/hud_style = hud_style_selection[get_hud_style(master)]
-			if (isicon(hud_style))
-				src.icon_hud = hud_style
+		if(master?.disposed)
+			qdel(src)
+			return
+		if(src.disposed)
+			return
+		var/icon/hud_style = hud_style_selection[get_hud_style(master)]
+		if (isicon(hud_style))
+			src.icon_hud = hud_style
 
-			if (master?.client?.tg_layout)
-				layout_style = "tg"
+		if (master?.client?.tg_layout)
+			layout_style = "tg"
 
-			if (layouts[layout_style]["show_bg"])
-				create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_bg", "CENTER-5, SOUTH to CENTER+6, SOUTH", HUD_LAYER)
-				create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER-5, SOUTH+1 to CENTER+6, SOUTH+1", HUD_LAYER, SOUTH)
-				create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER-6, SOUTH+1", HUD_LAYER, SOUTHWEST)
-				create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER-6, SOUTH", HUD_LAYER, EAST)
-				create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER+7, SOUTH+1", HUD_LAYER, SOUTHEAST)
-				create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER+7, SOUTH", HUD_LAYER, WEST)
+		if (layouts[layout_style]["show_bg"])
+			create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_bg", "CENTER-5, SOUTH to CENTER+6, SOUTH", HUD_LAYER)
+			create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER-5, SOUTH+1 to CENTER+6, SOUTH+1", HUD_LAYER, SOUTH)
+			create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER-6, SOUTH+1", HUD_LAYER, SOUTHWEST)
+			create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER-6, SOUTH", HUD_LAYER, EAST)
+			create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER+7, SOUTH+1", HUD_LAYER, SOUTHEAST)
+			create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER+7, SOUTH", HUD_LAYER, WEST)
 
-			invtoggle = create_screen("invtoggle", "toggle inventory", src.icon_hud, "invtoggle", layouts[layout_style]["invtoggle"], HUD_LAYER+1)
-			belt = create_screen("belt", "belt", src.icon_hud, "belt", layouts[layout_style]["belt"], HUD_LAYER+1)
-			storage1 = create_screen("storage1", "pocket", src.icon_hud, "pocket", layouts[layout_style]["storage1"], HUD_LAYER+1)
-			storage2 = create_screen("storage2", "pocket", src.icon_hud, "pocket", layouts[layout_style]["storage2"], HUD_LAYER+1)
-			back = create_screen("back", "back", src.icon_hud, "back", layouts[layout_style]["back"], HUD_LAYER+1)
-			lhand = create_screen("lhand", "left hand", src.icon_hud, "handl0", layouts[layout_style]["lhand"], HUD_LAYER+1)
-			rhand = create_screen("rhand", "right hand", src.icon_hud, "handr0", layouts[layout_style]["rhand"], HUD_LAYER+1)
-			twohandl = create_screen("twohandl", "both hands", src.icon_hud, "twohandl", layouts[layout_style]["twohandl"], HUD_LAYER+1)
-			twohandr = create_screen("twohandr", "both hands", src.icon_hud, "twohandr", layouts[layout_style]["twohandr"], HUD_LAYER+1)
-			throwing = create_screen("throw", "throw mode", src.icon_hud, "throw0", layouts[layout_style]["throwing"], HUD_LAYER+1)
-			intent = create_screen("intent", "action intent", src.icon_hud, "intent-help", layouts[layout_style]["intent"], HUD_LAYER+1)
-			mintent = create_screen("mintent", "movement mode", src.icon_hud, "move-run", layouts[layout_style]["mintent"], HUD_LAYER+1)
-			resist = create_screen("resist", "resist", src.icon_hud, "resist", layouts[layout_style]["resist"], HUD_LAYER+1)
-			pulling = create_screen("pull", "pulling", src.icon_hud, "pull0", layouts[layout_style]["pull"], HUD_LAYER+1)
-			resting = create_screen("rest", "resting", src.icon_hud, "rest0", layouts[layout_style]["rest"], HUD_LAYER+1)
+		invtoggle = create_screen("invtoggle", "toggle inventory", src.icon_hud, "invtoggle", layouts[layout_style]["invtoggle"], HUD_LAYER+1)
+		belt = create_screen("belt", "belt", src.icon_hud, "belt", layouts[layout_style]["belt"], HUD_LAYER+1)
+		storage1 = create_screen("storage1", "pocket", src.icon_hud, "pocket", layouts[layout_style]["storage1"], HUD_LAYER+1)
+		storage2 = create_screen("storage2", "pocket", src.icon_hud, "pocket", layouts[layout_style]["storage2"], HUD_LAYER+1)
+		back = create_screen("back", "back", src.icon_hud, "back", layouts[layout_style]["back"], HUD_LAYER+1)
+		lhand = create_screen("lhand", "left hand", src.icon_hud, "handl0", layouts[layout_style]["lhand"], HUD_LAYER+1)
+		rhand = create_screen("rhand", "right hand", src.icon_hud, "handr0", layouts[layout_style]["rhand"], HUD_LAYER+1)
+		twohandl = create_screen("twohandl", "both hands", src.icon_hud, "twohandl", layouts[layout_style]["twohandl"], HUD_LAYER+1)
+		twohandr = create_screen("twohandr", "both hands", src.icon_hud, "twohandr", layouts[layout_style]["twohandr"], HUD_LAYER+1)
+		throwing = create_screen("throw", "throw mode", src.icon_hud, "throw0", layouts[layout_style]["throwing"], HUD_LAYER+1)
+		intent = create_screen("intent", "action intent", src.icon_hud, "intent-help", layouts[layout_style]["intent"], HUD_LAYER+1)
+		mintent = create_screen("mintent", "movement mode", src.icon_hud, "move-run", layouts[layout_style]["mintent"], HUD_LAYER+1)
+		resist = create_screen("resist", "resist", src.icon_hud, "resist", layouts[layout_style]["resist"], HUD_LAYER+1)
+		pulling = create_screen("pull", "pulling", src.icon_hud, "pull0", layouts[layout_style]["pull"], HUD_LAYER+1)
+		resting = create_screen("rest", "resting", src.icon_hud, "rest0", layouts[layout_style]["rest"], HUD_LAYER+1)
 
-			if (layouts[layout_style]["sprint"])
-				sprinting = create_screen("sprint", "sprinting", src.icon_hud, "sprint0", layouts[layout_style]["sprint"], HUD_LAYER+1)
-			if (layouts[layout_style]["swaphands"])
-				swaphands = create_screen("swaphands", "swap hands", src.icon_hud, "swap", layouts[layout_style]["swaphands"], HUD_LAYER+1)
-			if (layouts[layout_style]["equip"])
-				equip = create_screen("equip", "equip item", src.icon_hud, "equip", layouts[layout_style]["equip"], HUD_LAYER+1)
-			if (layouts[layout_style]["tg_butts"])
-				equip = create_screen("tg_butts", "extra buttons", src.icon_hud, "tg_butts", layouts[layout_style]["tg_butts"], HUD_LAYER+1)
+		if (layouts[layout_style]["sprint"])
+			sprinting = create_screen("sprint", "sprinting", src.icon_hud, "sprint0", layouts[layout_style]["sprint"], HUD_LAYER+1)
+		if (layouts[layout_style]["swaphands"])
+			swaphands = create_screen("swaphands", "swap hands", src.icon_hud, "swap", layouts[layout_style]["swaphands"], HUD_LAYER+1)
+		if (layouts[layout_style]["equip"])
+			equip = create_screen("equip", "equip item", src.icon_hud, "equip", layouts[layout_style]["equip"], HUD_LAYER+1)
+		if (layouts[layout_style]["tg_butts"])
+			equip = create_screen("tg_butts", "extra buttons", src.icon_hud, "tg_butts", layouts[layout_style]["tg_butts"], HUD_LAYER+1)
 
-			inventory_bg += create_screen("shoes", "shoes", src.icon_hud, "shoes", layouts[layout_style]["shoes"], HUD_LAYER+1)
-			inventory_bg += create_screen("gloves", "gloves", src.icon_hud, "gloves", layouts[layout_style]["gloves"], HUD_LAYER+1)
-			inventory_bg += create_screen("id", "ID", src.icon_hud, "id", layouts[layout_style]["id"], HUD_LAYER+1)
-			inventory_bg += create_screen("under", "clothing", src.icon_hud, "center", layouts[layout_style]["under"], HUD_LAYER+1)
-			inventory_bg += create_screen("suit", "suit", src.icon_hud, "armor", layouts[layout_style]["suit"], HUD_LAYER+1)
-			inventory_bg += create_screen("glasses", "glasses", src.icon_hud, "glasses", layouts[layout_style]["glasses"], HUD_LAYER+1)
-			inventory_bg += create_screen("ears", "ears", src.icon_hud, "ears", layouts[layout_style]["ears"], HUD_LAYER+1)
-			inventory_bg += create_screen("mask", "mask", src.icon_hud, "mask", layouts[layout_style]["mask"], HUD_LAYER+1)
-			inventory_bg += create_screen("head", "head", src.icon_hud, "hair", layouts[layout_style]["head"], HUD_LAYER+1)
+		inventory_bg += create_screen("shoes", "shoes", src.icon_hud, "shoes", layouts[layout_style]["shoes"], HUD_LAYER+1)
+		inventory_bg += create_screen("gloves", "gloves", src.icon_hud, "gloves", layouts[layout_style]["gloves"], HUD_LAYER+1)
+		inventory_bg += create_screen("id", "ID", src.icon_hud, "id", layouts[layout_style]["id"], HUD_LAYER+1)
+		inventory_bg += create_screen("under", "clothing", src.icon_hud, "center", layouts[layout_style]["under"], HUD_LAYER+1)
+		inventory_bg += create_screen("suit", "suit", src.icon_hud, "armor", layouts[layout_style]["suit"], HUD_LAYER+1)
+		inventory_bg += create_screen("glasses", "glasses", src.icon_hud, "glasses", layouts[layout_style]["glasses"], HUD_LAYER+1)
+		inventory_bg += create_screen("ears", "ears", src.icon_hud, "ears", layouts[layout_style]["ears"], HUD_LAYER+1)
+		inventory_bg += create_screen("mask", "mask", src.icon_hud, "mask", layouts[layout_style]["mask"], HUD_LAYER+1)
+		inventory_bg += create_screen("head", "head", src.icon_hud, "hair", layouts[layout_style]["head"], HUD_LAYER+1)
 
-			if (layouts[layout_style]["ignore_inventory_hide"])
-				for (var/id in layouts[layout_style]["ignore_inventory_hide"])
-					for (var/atom/movable/screen/hud/H in inventory_bg)
-						if (id == H.id)
-							inventory_bg -= H
-							break
+		if (layouts[layout_style]["ignore_inventory_hide"])
+			for (var/id in layouts[layout_style]["ignore_inventory_hide"])
+				for (var/atom/movable/screen/hud/H in inventory_bg)
+					if (id == H.id)
+						inventory_bg -= H
+						break
 
-			health = create_screen("health","Health", src.icon_hud, "health0", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
-			health.desc = "You feel fine."
+		health = create_screen("health","Health", src.icon_hud, "health0", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
+		health.desc = "You feel fine."
 
-			health_brute = create_screen("mbrute","Brute Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
-			health_burn = create_screen("mburn","Burn Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
-			health_tox = create_screen("mtox","Toxin Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
-			health_oxy = create_screen("moxy","Oxygen Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
+		health_brute = create_screen("mbrute","Brute Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
+		health_burn = create_screen("mburn","Burn Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
+		health_tox = create_screen("mtox","Toxin Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
+		health_oxy = create_screen("moxy","Oxygen Damage", src.icon_hud, "blank", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
 
-			bleeding = create_screen("bleeding","Bleed Warning", src.icon_hud, "blood0", "EAST-3, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
-			bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
+		bleeding = create_screen("bleeding","Bleed Warning", src.icon_hud, "blood0", "EAST-3, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
+		bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
 
-			stamina = create_screen("stamina","Stamina", src.icon_hud, "stamina", "EAST-1, NORTH", HUD_LAYER, tooltipTheme = "stamina")
-			stamina_back = create_screen("stamina_back","Stamina", src.icon_hud, "stamina_back", "EAST-1, NORTH", HUD_LAYER-2)
-			if (master?.stamina_bar)
-				stamina.desc = master.stamina_bar.getDesc(master)
+		stamina = create_screen("stamina","Stamina", src.icon_hud, "stamina", "EAST-1, NORTH", HUD_LAYER, tooltipTheme = "stamina")
+		stamina_back = create_screen("stamina_back","Stamina", src.icon_hud, "stamina_back", "EAST-1, NORTH", HUD_LAYER-2)
+		if (master?.stamina_bar)
+			stamina.desc = master.stamina_bar.getDesc(master)
 
-			bodytemp = create_screen("bodytemp","Temperature", src.icon_hud, "temp0", "EAST-2, NORTH", HUD_LAYER, tooltipTheme = "tempInd tempInd0")
-			bodytemp.desc = "The temperature feels fine."
+		bodytemp = create_screen("bodytemp","Temperature", src.icon_hud, "temp0", "EAST-2, NORTH", HUD_LAYER, tooltipTheme = "tempInd tempInd0")
+		bodytemp.desc = "The temperature feels fine."
 
-			oxygen = create_screen("oxygen","Suffocation Warning", src.icon_hud, "oxy0", "EAST-4, NORTH", HUD_LAYER, tooltipTheme = "statusOxy")
-			oxygen.desc = "This indicator warns that you are currently suffocating. You will take oxygen damage until the situation is remedied."
+		oxygen = create_screen("oxygen","Suffocation Warning", src.icon_hud, "oxy0", "EAST-4, NORTH", HUD_LAYER, tooltipTheme = "statusOxy")
+		oxygen.desc = "This indicator warns that you are currently suffocating. You will take oxygen damage until the situation is remedied."
 
-			fire = create_screen("fire","Fire Warning", src.icon_hud, "fire0", "EAST-5, NORTH", HUD_LAYER, tooltipTheme = "statusFire")
-			fire.desc = "This indicator warns that you are either on fire, or too hot. You will take burn damage until the situation is remedied."
+		fire = create_screen("fire","Fire Warning", src.icon_hud, "fire0", "EAST-5, NORTH", HUD_LAYER, tooltipTheme = "statusFire")
+		fire.desc = "This indicator warns that you are either on fire, or too hot. You will take burn damage until the situation is remedied."
 
-			toxin = create_screen("toxin","Toxic Warning",src.icon_hud, "toxin0", "EAST-6, NORTH", HUD_LAYER, tooltipTheme = "statusToxin")
-			toxin.desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied."
+		toxin = create_screen("toxin","Toxic Warning",src.icon_hud, "toxin0", "EAST-6, NORTH", HUD_LAYER, tooltipTheme = "statusToxin")
+		toxin.desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied."
 
-			rad = create_screen("rad","Radiation Warning", src.icon_hud, "rad0", "EAST-7, NORTH", HUD_LAYER, tooltipTheme = "statusRad")
-			rad.desc = "This indicator warns that you are being irradiated. You will accumulate rads and take burn damage until the situation is remedied."
+		rad = create_screen("rad","Radiation Warning", src.icon_hud, "rad0", "EAST-7, NORTH", HUD_LAYER, tooltipTheme = "statusRad")
+		rad.desc = "This indicator warns that you are being irradiated. You will accumulate rads and take burn damage until the situation is remedied."
 
-			ability_toggle = create_screen("ability", "Toggle Ability Hotbar", src.icon_hud, "[layouts[layout_style]["ability_icon"]]1", layouts[layout_style]["abiltoggle"], HUD_LAYER)
-			stats = create_screen("stats", "Character stats", src.icon_hud, "stats", layouts[layout_style]["stats"], HUD_LAYER,
-				tooltipTheme = master?.client?.preferences?.hud_style == "New" ? "newhud" : "item")
-			stats.desc = "..."
+		ability_toggle = create_screen("ability", "Toggle Ability Hotbar", src.icon_hud, "[layouts[layout_style]["ability_icon"]]1", layouts[layout_style]["abiltoggle"], HUD_LAYER)
+		stats = create_screen("stats", "Character stats", src.icon_hud, "stats", layouts[layout_style]["stats"], HUD_LAYER,
+			tooltipTheme = master?.client?.preferences?.hud_style == "New" ? "newhud" : "item")
+		stats.desc = "..."
 
-			legend = create_screen("legend", "Inline Icon Legend", src.icon_hud, "legend", layouts[layout_style]["legend"], HUD_LAYER,
-				tooltipTheme = master?.client?.preferences?.hud_style == "New" ? "newhud" : "item")
-			legend.desc = "When blocking:"+\
-			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/cutprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs cutting attacks"+\
-			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stabprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs stabbing attacks"+\
-			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/burnprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs burning attacks"+\
-			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/bluntprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs blunt attacks"+\
-			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/protdisorient.png")]\" width=\"12\" height=\"12\" /> Body Insulation (Disorient Resist): 20%"
+		legend = create_screen("legend", "Inline Icon Legend", src.icon_hud, "legend", layouts[layout_style]["legend"], HUD_LAYER,
+			tooltipTheme = master?.client?.preferences?.hud_style == "New" ? "newhud" : "item")
+		legend.desc = "When blocking:"+\
+		"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/cutprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs cutting attacks"+\
+		"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stabprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs stabbing attacks"+\
+		"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/burnprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs burning attacks"+\
+		"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/bluntprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs blunt attacks"+\
+		"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/protdisorient.png")]\" width=\"12\" height=\"12\" /> Body Insulation (Disorient Resist): 20%"
 
-			sel = create_screen("sel", "sel", src.icon_hud, "sel", null, HUD_LAYER+1.2)
-			sel.mouse_opacity = 0
-			default_sel_appearance = new(sel)
+		sel = create_screen("sel", "sel", src.icon_hud, "sel", null, HUD_LAYER+1.2)
+		sel.mouse_opacity = 0
+		default_sel_appearance = new(sel)
 
-			set_visible(twohandl, 0)
-			set_visible(twohandr, 0)
+		set_visible(twohandl, 0)
+		set_visible(twohandr, 0)
 
-			update_hands()
-			update_throwing()
-			update_intent()
-			update_mintent()
-			update_pulling()
-			update_resting()
-			update_sprinting()
-			update_indicators()
-			update_ability_hotbar()
-
-			master?.update_equipment_screen_loc()
+		update_hands()
+		update_throwing()
+		update_intent()
+		update_mintent()
+		update_pulling()
+		update_resting()
+		update_sprinting()
+		update_indicators()
+		update_ability_hotbar()
 
 	relay_click(id, mob/user, list/params)
 		switch (id)
@@ -310,41 +308,20 @@
 					if (I.try_specific_equip(user))
 						return
 
-					// this doesnt unequip the original item because that'd cause all the items to drop if you swapped your jumpsuit, I expect this to cause problems though
-					// ^-- You don't say.
-					// you can write multiline macros with \, please god don't write 400 character macros on one line
-					#define autoequip_slot(slot, var_name)\
-						if (master.can_equip(I, slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove))\
-						{\
-							master.u_equip(I);\
-							var/obj/item/C = master.var_name;\
-							if (C)\
-							{\
-								/*master.u_equip(C);*/\
-								C.unequipped(master);\
-								src.remove_item(C);\
-								master.var_name = null;\
-								if(!master.put_in_hand(C))\
-								{\
-									master.drop_from_slot(C, get_turf(C))\
-								}\
-							}\
-							master.force_equip(I, slot);\
-							return\
-						}
-					autoequip_slot(SLOT_SHOES, shoes)
-					autoequip_slot(SLOT_GLOVES, gloves)
-					autoequip_slot(SLOT_WEAR_ID, wear_id)
-					autoequip_slot(SLOT_W_UNIFORM, w_uniform)
-					autoequip_slot(SLOT_WEAR_SUIT, wear_suit)
-					autoequip_slot(SLOT_GLASSES, glasses)
-					autoequip_slot(SLOT_EARS, ears)
-					autoequip_slot(SLOT_WEAR_MASK, wear_mask)
-					autoequip_slot(SLOT_HEAD, head)
-					autoequip_slot(SLOT_BACK, back)
+					if(	master.autoequip_slot(I, SLOT_SHOES) || \
+						master.autoequip_slot(I, SLOT_GLOVES) || \
+						master.autoequip_slot(I, SLOT_WEAR_ID) || \
+						master.autoequip_slot(I, SLOT_W_UNIFORM) || \
+						master.autoequip_slot(I, SLOT_WEAR_SUIT) || \
+						master.autoequip_slot(I, SLOT_GLASSES) || \
+						master.autoequip_slot(I, SLOT_EARS) || \
+						master.autoequip_slot(I, SLOT_WEAR_MASK) || \
+						master.autoequip_slot(I, SLOT_HEAD) || \
+						master.autoequip_slot(I, SLOT_BACK))
+						return
 
 					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
-						autoequip_slot(SLOT_BELT, belt)
+						master.autoequip_slot(I, SLOT_BELT)
 						if (master.equipped() != I)
 							return
 
@@ -355,11 +332,9 @@
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.
 					if (!master.l_store)
-						autoequip_slot(SLOT_L_STORE, l_store)
+						master.autoequip_slot(I, SLOT_L_STORE)
 					if (!master.r_store)
-						autoequip_slot(SLOT_R_STORE, r_store)
-					#undef autoequip_slot
-
+						master.autoequip_slot(I, SLOT_R_STORE)
 					return
 
 				show_inventory = !show_inventory
@@ -393,20 +368,20 @@
 					if (I.try_specific_equip(user))
 						return
 
-					#define autoequip_slot(slot, var_name) if (master.can_equip(I, slot) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, slot); return }
-					autoequip_slot(SLOT_SHOES, shoes)
-					autoequip_slot(SLOT_GLOVES, gloves)
-					autoequip_slot(SLOT_WEAR_ID, wear_id)
-					autoequip_slot(SLOT_W_UNIFORM, w_uniform)
-					autoequip_slot(SLOT_WEAR_SUIT, wear_suit)
-					autoequip_slot(SLOT_GLASSES, glasses)
-					autoequip_slot(SLOT_EARS, ears)
-					autoequip_slot(SLOT_WEAR_MASK, wear_mask)
-					autoequip_slot(SLOT_HEAD, head)
-					autoequip_slot(SLOT_BACK, back)
+					if(	master.autoequip_slot(I, SLOT_SHOES) || \
+						master.autoequip_slot(I, SLOT_GLOVES) || \
+						master.autoequip_slot(I, SLOT_WEAR_ID) || \
+						master.autoequip_slot(I, SLOT_W_UNIFORM) || \
+						master.autoequip_slot(I, SLOT_WEAR_SUIT) || \
+						master.autoequip_slot(I, SLOT_GLASSES) || \
+						master.autoequip_slot(I, SLOT_EARS) || \
+						master.autoequip_slot(I, SLOT_WEAR_MASK) || \
+						master.autoequip_slot(I, SLOT_HEAD) || \
+						master.autoequip_slot(I, SLOT_BACK))
+						return
 
 					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
-						autoequip_slot(SLOT_BELT, belt)
+						master.autoequip_slot(I, SLOT_BELT)
 						if (master.equipped() != I)
 							return
 
@@ -417,10 +392,9 @@
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.
 					if (!master.l_store)
-						autoequip_slot(SLOT_L_STORE, l_store)
+						master.autoequip_slot(I, SLOT_L_STORE)
 					if (!master.r_store)
-						autoequip_slot(SLOT_R_STORE, r_store)
-					#undef autoequip_slot
+						master.autoequip_slot(I, SLOT_R_STORE)
 					return
 
 			if ("throw")
@@ -452,7 +426,7 @@
 					master.m_intent = "walk"
 				else
 					master.m_intent = "run"
-				out(master, "You are now [master.m_intent == "walk" ? "walking" : "running"].")
+				boutput(master, "You are now [master.m_intent == "walk" ? "walking" : "running"].")
 				src.update_mintent()
 
 			if ("pull")
@@ -461,7 +435,7 @@
 					master.remove_pulling()
 					src.update_pulling()
 				else if(!isturf(master.loc))
-					boutput(master, "<span class='notice'>You can't pull things while inside \a [master.loc].</span>")
+					boutput(master, SPAN_NOTICE("You can't pull things while inside \a [master.loc]."))
 				else
 					var/list/atom/movable/pullable = list()
 					for(var/atom/movable/AM in range(1, get_turf(master)))
@@ -472,7 +446,7 @@
 					if(length(pullable) == 1)
 						to_pull = pullable[1]
 					else if(length(pullable) < 1)
-						boutput(master, "<span class='notice'>There is nothing to pull.</span>")
+						boutput(master, SPAN_NOTICE("There is nothing to pull."))
 					else
 						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
 					if(!isnull(to_pull) && BOUNDS_DIST(master, to_pull) == 0)
@@ -508,7 +482,7 @@
 
 			if ("health")
 				if (isdead(master))
-					out(master, "Seems like you've died. Bummer.")
+					boutput(master, "Seems like you've died. Bummer.")
 					return
 				var/health_state = ((master.health - master.fakeloss) / master.max_health) * 100
 				var/class
@@ -528,39 +502,39 @@
 					else
 						class = "alert bold italic"
 
-				out(master, "<span class='[class]'>[health.desc]</span>")
+				boutput(master, "<span class='[class]'>[health.desc]</span>")
 
 			if ("bodytemp")
 				if(master.getStatusDuration("burning") && !master.is_heat_resistant())
 					boutput(master, "<span class='alert bold'>[bodytemp.desc]</span>")
 					return
 
-				out(master, bodytemp.desc)
+				boutput(master, bodytemp.desc)
 
 			if ("stamina")
-				out(master, "<span class='green'>[stamina.desc]</span>")
+				boutput(master, SPAN_SUCCESS("[stamina.desc]"))
 
 			if ("oxygen")
-				out(master, "<span class='alert'>[oxygen.desc]</span>")
+				boutput(master, SPAN_ALERT("[oxygen.desc]"))
 
 			if ("fire")
-				out(master, "<span class='alert'>[fire.desc]</span>")
+				boutput(master, SPAN_ALERT("[fire.desc]"))
 
 			if ("toxin")
-				out(master, "<span class='alert'>[toxin.desc]</span>")
+				boutput(master, SPAN_ALERT("[toxin.desc]"))
 
 			if ("rad")
-				out(master, "<span class='alert'>[rad.desc]</span>")
+				boutput(master, SPAN_ALERT("[rad.desc]"))
 
 			if ("bleeding")
-				out(master, "<span class='alert'>[bleeding.desc]</span>")
+				boutput(master, SPAN_ALERT("[bleeding.desc]"))
 
 			if ("stats")
 				src.update_stats()
-				out(master, "<span class='alert'>[stats.desc]</span>")
+				boutput(master, SPAN_ALERT("[stats.desc]"))
 
 			if ("legend")
-				out(master, "<span class='alert'>[legend.desc]</span>")
+				boutput(master, SPAN_ALERT("[legend.desc]"))
 
 			if ("tg_butts")
 				var/icon_x = text2num(params["icon-x"])
@@ -878,14 +852,15 @@
 
 		if (istype(master.loc,/obj/vehicle/)) //so we always see vehicle buttons
 			var/obj/vehicle/V = master.loc
-			for(var/obj/ability_button/B2 in V.ability_buttons)
-				B2.screen_loc = "NORTH-[pos_y],[pos_x]"
-				master.client.screen += B2
-				B2.the_mob = master
-				pos_x++
-				if(pos_x > 15)
-					pos_x = 1
-					pos_y++
+			if (V.rider == src.master) //unless we're a passenger
+				for(var/obj/ability_button/B2 in V.ability_buttons)
+					B2.screen_loc = "NORTH-[pos_y],[pos_x]"
+					master.client.screen += B2
+					B2.the_mob = master
+					pos_x++
+					if(pos_x > 15)
+						pos_x = 1
+						pos_y++
 
 
 	proc/update_sprinting()
@@ -1120,6 +1095,11 @@
 
 		bodytemp.icon_state = "temp[state]"
 		bodytemp.tooltipTheme = "tempInd tempInd[state]"
+
+	proc/update_breathing_indicators(datum/organ_status/lung/status_updates)
+		src.update_oxy_indicator(status_updates.show_oxy_indicator)
+		src.update_tox_indicator(status_updates.show_tox_indicator)
+		src.update_fire_indicator(status_updates.show_fire_indicator)
 
 	proc/update_tox_indicator(var/status)
 		if (!toxin)

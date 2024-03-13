@@ -13,7 +13,7 @@
 				drone_list += D
 
 		if (length(drone_list) < 1)
-			boutput(user, "<span class='alert'>No usable drones detected.</span>")
+			boutput(user, SPAN_ALERT("No usable drones detected."))
 			return
 
 		var/mob/living/silicon/drone/which = input("Which drone do you want to control?","Drone Controls") as mob in drone_list
@@ -21,13 +21,13 @@
 			var/attempt = which.connect_to_drone(user)
 			switch(attempt)
 				if(1)
-					boutput(user, "<span class='alert'>Connection error: Drone not found.</span>")
+					boutput(user, SPAN_ALERT("Connection error: Drone not found."))
 				if(2)
-					boutput(user, "<span class='alert'>Connection error: Drone already in use.</span>")
+					boutput(user, SPAN_ALERT("Connection error: Drone already in use."))
 
 /mob/living/silicon/drone
-	name = "Drone"
-	var/base_name = "Drone"
+	name = "drone"
+	var/base_name = "drone"
 	desc = "A small remote-controlled robot for doing risky work from afar."
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "base"
@@ -53,7 +53,7 @@
 
 	New()
 		..()
-		name = "Drone [rand(1,9)]*[rand(10,99)]"
+		name = "drone [rand(1,9)]*[rand(10,99)]"
 		base_name = name
 		hud = new(src)
 		src.attach_hud(hud)
@@ -83,9 +83,9 @@
 			. += "It is currently shut down and not being used."
 		if (src.health < 100)
 			if (src.health < 50)
-				. += "<span class='alert'>It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
+				. += SPAN_ALERT("It's rather badly damaged. It probably needs some wiring replaced inside.")
 			else
-				. += "<span class='alert'>It's a bit damaged. It looks like it needs some welding done.</span>"
+				. += SPAN_ALERT("It's a bit damaged. It looks like it needs some welding done.")
 
 	movement_delay()
 		var/tally = 0
@@ -100,41 +100,41 @@
 		if(isweldingtool(W))
 			if (user.a_intent == INTENT_HARM)
 				if (W:try_weld(user,0,-1,0,0))
-					user.visible_message("<span class='alert'><b>[user] burns [src] with [W]!</b></span>")
+					user.visible_message(SPAN_ALERT("<b>[user] burns [src] with [W]!</b>"))
 					damage_heat(W.force)
 				else
-					user.visible_message("<span class='alert'><b>[user] beats [src] with [W]!</b></span>")
+					user.visible_message(SPAN_ALERT("<b>[user] beats [src] with [W]!</b>"))
 					damage_blunt(W.force)
 			else
 				if (src.health >= src.health_max)
-					boutput(user, "<span class='alert'>It isn't damaged!</span>")
+					boutput(user, SPAN_ALERT("It isn't damaged!"))
 					return
 				if (get_fraction_of_percentage_and_whole(src.health,src.health_max) < 33)
-					boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
+					boutput(user, SPAN_ALERT("You need to use wire to fix the cabling first."))
 					return
 				if(W:try_weld(user, 1))
 					src.health = clamp(src.health + 10, 1, src.health_max)
 					user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 					if (src.health == src.health_max)
-						boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
+						boutput(user, SPAN_NOTICE("<b>[src] looks fully repaired!</b>"))
 
 		else if (istype(W,/obj/item/cable_coil/))
 			if (src.health >= src.health_max)
-				boutput(user, "<span class='alert'>It isn't damaged!</span>")
+				boutput(user, SPAN_ALERT("It isn't damaged!"))
 				return
 			var/obj/item/cable_coil/C = W
 			if (get_fraction_of_percentage_and_whole(src.health,src.health_max) >= 33)
-				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
+				boutput(user, SPAN_ALERT("The cabling looks fine. Use a welder to repair the rest of the damage."))
 				return
 			C.use(1)
 			src.health = clamp(src.health + 10, 1, src.health_max)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 50)
-				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
+				boutput(user, SPAN_NOTICE("The wiring is fully repaired. Now you need to weld the external plating."))
 
 		else
-			user.visible_message("<span class='alert'><b>[user] attacks [src] with [W]!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] attacks [src] with [W]!</b>"))
 			damage_blunt(W.force)
 
 	proc/take_damage(var/amount)
@@ -146,7 +146,7 @@
 		if (amount > 0)
 			playsound(src.loc, src.sound_damaged, 50, 2)
 			if (src.health == 0)
-				src.visible_message("<span class='alert'><b>[src.name] is destroyed!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[src.name] is destroyed!</b>"))
 				disconnect_user()
 				robogibs(src.loc)
 				playsound(src.loc, src.sound_destroyed, 50, 2)
@@ -271,7 +271,7 @@
 				message = "<B>[src]</B> buzzes dejectedly."
 			if ("glitch","malfunction")
 				playsound(src.loc, pick(glitchy_noise), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				src.visible_message("<span class='alert'><B>[src]</B> freaks the fuck out! That's [pick(glitch_con)] [pick(glitch_adj)]!</span>")
+				src.visible_message(SPAN_ALERT("<B>[src]</B> freaks the fuck out! That's [pick(glitch_con)] [pick(glitch_adj)]!"))
 				animate_glitchy_freakout(src)
 				return
 
@@ -406,7 +406,7 @@
 						src.visible_message("<b>[user]</b> disconnects [src]'s welded joints.")
 						src.construct_stage = 1
 					else
-						boutput(user, "<span class='alert'>[user.real_name], there's a time and a place for everything! But not now.</span>")
+						boutput(user, SPAN_ALERT("[user.real_name], there's a time and a place for everything! But not now."))
 
 		else if (iswrenchingtool(W))
 			switch(construct_stage)
@@ -439,7 +439,7 @@
 						part_plating.set_loc(D)
 					qdel(src)
 				else
-					boutput(user, "<span class='alert'>There's lots of good times to use a wrench, but this isn't one of them.</span>")
+					boutput(user, SPAN_ALERT("There's lots of good times to use a wrench, but this isn't one of them."))
 
 		else if(istype(W, /obj/item/cable_coil) && construct_stage == 2)
 			var/obj/item/cable_coil/C = W
@@ -471,7 +471,7 @@
 /obj/item/parts/robot_parts/drone
 	name = "drone part"
 	icon = 'icons/mob/drone.dmi'
-	desc = "It's a component intended for remote controlled drones. This one happens to be invisible and unusuable. Some things are like that."
+	desc = "It's a component intended for remote controlled drones. This one happens to be invisible and unusable. Some things are like that."
 	var/image/drone_overlay = null
 
 /obj/item/parts/robot_parts/drone/propulsion

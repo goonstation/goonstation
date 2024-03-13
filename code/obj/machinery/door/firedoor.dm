@@ -139,7 +139,7 @@ TYPEINFO(/obj/machinery/door/firedoor)
 				src.set_opacity(1)
 				src.operating = 0
 				return
-		playsound(src, 'sound/machines/airlock_pry.ogg', 50, 1)
+		playsound(src, 'sound/machines/airlock_pry.ogg', 50, TRUE)
 
 	return
 
@@ -147,7 +147,7 @@ TYPEINFO(/obj/machinery/door/firedoor)
 /obj/machinery/door/firedoor/attack_ai(mob/user as mob)
 	var/obj/machinery/door/airlock/mydoor = locate(/obj/machinery/door/airlock) in src.loc
 	if(mydoor?.aiControlDisabled == 1)
-		boutput(user, "<span class='notice'>You cannot control this firelock because its associated airlock's AI control is disabled!</span>")
+		boutput(user, SPAN_NOTICE("You cannot control this firelock because its associated airlock's AI control is disabled!"))
 		return
 	if(!blocked && !operating)
 		if(density)
@@ -226,7 +226,7 @@ TYPEINFO(/obj/machinery/door/firedoor)
 		return FALSE
 	if (src.density)
 		return FALSE
-	user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and closes it!</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] sticks [his_or_her(user)] head into [src] and closes it!</b>"))
 	src.close()
 	var/obj/head = user.organHolder.drop_organ("head")
 	qdel(head)

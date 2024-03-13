@@ -4,9 +4,11 @@
 	animate_movement = SLIDE_STEPS
 	text = ""
 
-	New()
+	New(loc)
 		..()
 		appearance_flags |= NO_CLIENT_COLOR
+		if(isatom(loc) && !istype(loc, /atom/movable/screen))
+			CRASH("HUD object [identify_object(src)] was created in [identify_object(loc)]")
 
 	set_loc(atom/newloc)
 		. = ..()
@@ -73,6 +75,7 @@
 	MouseWheel(dx, dy, loc, ctrl, parms)
 		if (master && (!master.click_check || (usr in master.mobs)))
 			master.scrolled(src.id, dx, dy, usr, parms, src)
+			return TRUE
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if (master && (!master.click_check || (usr in master.mobs)))
@@ -146,8 +149,8 @@
 
 	proc/add_client(client/C)
 		check_objects()
-		C.screen += src.objects
-		src.clients += C
+		C.screen |= src.objects
+		src.clients |= C
 
 	proc/remove_client(client/C)
 		src.clients -= C
@@ -155,6 +158,8 @@
 			C.screen -= A
 
 	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltipTheme = null, desc = null, customType = null, mouse_opacity = 1)
+		if(QDELETED(src))
+			CRASH("Tried to create a screen (id '[id]', name '[name]') on a deleted datum/hud")
 		var/atom/movable/screen/hud/S
 		if (customType)
 			if (!ispath(customType, /atom/movable/screen/hud))
@@ -500,7 +505,7 @@
 /// debug purposes only, call this to print ALL of the information you could ever need
 /datum/hud/proc/debug_print_all()
 	if (!length(src.hud_zones))
-		boutput(world, "<span class='admin'>no hud zones, aborting")
+		boutput(world, SPAN_ADMIN("no hud zones, aborting"))
 		return
 
 	boutput(world, "-------------------------------------------")

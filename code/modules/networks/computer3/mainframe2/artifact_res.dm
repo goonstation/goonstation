@@ -45,7 +45,7 @@
 				var/flag = copytext(flagString, n, n+1)
 				switch (flag)
 					if ("b") //Batch operation
-						//todo
+						; //todo
 
 					if ("s") //Silent operation
 						silent = 1
@@ -923,6 +923,7 @@
 //very WIP ok
 /obj/machinery/networked/artifact_console
 	name = "artifact research console"
+	desc = "It just sorta showed up in a giant box of test equipment."
 	density = 1
 	anchored = ANCHORED
 	device_tag = "PNET_ARTCONSOL"
@@ -938,6 +939,8 @@
 
 	New()
 		..()
+		if (prob(10))
+			src.desc = "Giant mystery science doodad."
 
 		entries = list("","","","","|cLoading...","","","")
 		SPAWN(0.5 SECONDS)
@@ -1142,7 +1145,7 @@
 		background-color:#1B1E1B;
 		color:#19A319;
 		font-family: "Consolas", monospace;
-		font-size: 19px;
+		font-size: 18px;
 	}
 
 	.consolelog_entry

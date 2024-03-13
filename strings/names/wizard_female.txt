@@ -6,7 +6,7 @@ names@=
 	Wicked Witch of the West
 	Morgan le Fay
 	Circe
-	Malificent
+	Maleficent
 	Hermione
 	Umbridge
 	The Worst Witch

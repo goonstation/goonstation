@@ -126,7 +126,6 @@ const angleUnits: Record<string, number> = {
 export const hexToHsva = (hex: string): HsvaColor => rgbaToHsva(hexToRgba(hex));
 
 export const hexToRgba = (hex: string): RgbaColor => {
-  console.log(hex);
   if (!hex) { return { r: 0, g: 0, b: 0, a: 0 }; }
 
   if (hex[0] === '#') hex = hex.substring(1);

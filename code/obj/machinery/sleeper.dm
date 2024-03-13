@@ -51,7 +51,6 @@ TYPEINFO(/obj/machinery/sleep_console)
 				if (prob(50))
 					qdel(src)
 					return
-			else
 
 	// Just relay emag_act() here.
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -70,10 +69,10 @@ TYPEINFO(/obj/machinery/sleep_console)
 			if (O.sleeping)
 				O.sleeping = 3
 				if (prob(5)) // Heh.
-					boutput(O, "<span class='success'> [bicon(src)] Wake up, Neo...</span>")
+					boutput(O, SPAN_SUCCESS(" [bicon(src)] Wake up, Neo..."))
 				else
-					boutput(O, "<span class='notice'> [bicon(src)] *beep* *beep*</span>")
-			src.visible_message("<span class='notice'>The [src.name]'s occupant alarm clock dings!</span>")
+					boutput(O, SPAN_NOTICE(" [bicon(src)] *beep* *beep*"))
+			src.visible_message(SPAN_NOTICE("The [src.name]'s occupant alarm clock dings!"))
 			playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 
 	process()
@@ -90,7 +89,7 @@ TYPEINFO(/obj/machinery/sleep_console)
 		// non-anchored sleeper assumed to be portable, don't want to eject
 		// in case someone is using it for body transport
 		if (isdead(src.our_sleeper.occupant) && src.our_sleeper.anchored)
-			src.our_sleeper.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Alert! No life signs detected from occupant.\"") // TODO maptext-ize
+			src.our_sleeper.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Alert! No life signs detected from occupant.\"")) // TODO maptext-ize
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 			src.time = 0
 			src.timing = 0
@@ -153,7 +152,7 @@ TYPEINFO(/obj/machinery/sleep_console)
 			if("timer")
 				if (src.our_sleeper?.occupant && !isdead(src.our_sleeper.occupant))
 					src.timing = !src.timing
-					src.visible_message("<span class='notice'>[usr] [src.timing ? "sets" : "stops"] the [src]'s occupant alarm clock.</span>")
+					src.visible_message(SPAN_NOTICE("[usr] [src.timing ? "sets" : "stops"] the [src]'s occupant alarm clock."))
 					if (src.timing)
 						src.time_started = TIME
 						// People do use sleepers for grief from time to time.
@@ -324,7 +323,7 @@ TYPEINFO(/obj/machinery/sleeper)
 			src.emagged = TRUE
 			if (user && ismob(user))
 				user.show_text("You short out [src]'s reagent synthesis safety protocols.", "blue")
-			src.visible_message("<span class='alert'><b>[src] buzzes oddly!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src] buzzes oddly!</b>"))
 			logTheThing(LOG_STATION, user, "emags \a [src] [src.occupant ? "with [constructTarget(src.occupant,"station")] inside " : ""](setting it to inject poisons) at [log_loc(src)].")
 			return TRUE
 
@@ -562,10 +561,10 @@ TYPEINFO(/obj/machinery/sleeper)
 		if (istype(M) && is_incapacitated(M))
 			return FALSE
 		if (src.occupant)
-			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
+			boutput(M, SPAN_NOTICE("<B>The scanner is already occupied!</B>"))
 			return FALSE
 		if (!ishuman(M))
-			boutput(usr, "<span class='alert'>You can't seem to fit into \the [src].</span>")
+			boutput(usr, SPAN_ALERT("You can't seem to fit into \the [src]."))
 			return FALSE
 		if (src.occupant)
 			usr.show_text("The [src.name] is already occupied!", "red")
@@ -594,12 +593,6 @@ TYPEINFO(/obj/machinery/sleeper)
 	attack_hand(mob/user)
 		..()
 		eject_occupant(user)
-
-	mouse_drop(mob/user as mob)
-		if (can_operate(user))
-			eject_occupant(user)
-		else
-			..()
 
 	verb/eject()
 		set src in oview(1)
@@ -728,13 +721,13 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 
 		if (tgui_alert(usr, "Set selected turf as home location?", "Set home location", list("Yes", "No")) == "Yes")
 			src.homeloc = over_object
-			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
+			usr.visible_message(SPAN_NOTICE("<b>[usr.name]</b> changes the [src.name]'s home turf."), SPAN_NOTICE("New home turf selected: [get_area(src.homeloc)]."))
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
 	move_inside()
-		boutput(usr, "<span class='notice'>You can't seem to shove yourself into the [src] without it tipping over as you climb in.</span>")
+		boutput(usr, SPAN_NOTICE("You can't seem to shove yourself into the [src] without it tipping over as you climb in."))
 		return
 
 /// Yells at doctors to check the thing when it's sent home

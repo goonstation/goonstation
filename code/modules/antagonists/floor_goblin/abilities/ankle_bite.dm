@@ -9,7 +9,7 @@
 
 	tryCast()
 		if (is_incapacitated(holder.owner))
-			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
+			boutput(holder.owner, SPAN_ALERT("You cannot cast this ability while you are incapacitated."))
 			src.holder.locked = FALSE
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		. = ..()
@@ -20,11 +20,11 @@
 		if(target == holder.owner || !ishuman(target))
 			return 1
 		if(!(BOUNDS_DIST(holder.owner, target) == 0))
-			boutput(holder.owner, "<span class='alert'>Target is too far away.</span>")
+			boutput(holder.owner, SPAN_ALERT("Target is too far away."))
 			return 1
 		var/mob/living/carbon/human/target_human = target
 		if(!target_human?.limbs?.l_leg || !target_human?.limbs?.r_leg)
-			boutput(holder.owner, "<span class='alert'>[target_human] has no ankles to bite!</span>")
+			boutput(holder.owner, SPAN_ALERT("[target_human] has no ankles to bite!"))
 			return 1
 
 		var/x_coeff = rand(0, 1)	// open the floor horizontally
@@ -37,22 +37,22 @@
 			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CANTMOVE, "floorbiting")
 			SPAWN(0.4 SECONDS)
 				if(holder.owner && target_human && (BOUNDS_DIST(holder.owner, target) == 0))
-					playsound(floorturf, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, 1, pitch = 1.3)
+					playsound(floorturf, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, TRUE, pitch = 1.3)
 					target_human.changeStatus("weakened", 2 SECONDS)
 					target_human.force_laydown_standup()
-					holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites at [target_human]'s ankles!</b></span>",\
-					"<span class='combat'><b>You bite at [target_human]'s ankles!</b></span>")
+					holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner] bites at [target_human]'s ankles!</b>"),\
+					SPAN_COMBAT("<b>You bite at [target_human]'s ankles!</b>"))
 					REMOVE_ATOM_PROPERTY(holder.owner, PROP_MOB_CANTMOVE, "floorbiting")
 				else
-					boutput(holder.owner, "<span class='alert'>[target_human] moved out of reach!</span>")
+					boutput(holder.owner, SPAN_ALERT("[target_human] moved out of reach!"))
 					REMOVE_ATOM_PROPERTY(holder.owner, PROP_MOB_CANTMOVE, "floorbiting")
 				sleep(0.4 SECONDS)
 				if(floorturf)
 					animate_slide(floorturf, 0, 0, 4)
 		else
-			playsound(floorturf, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, 1, pitch = 1.3)
+			playsound(floorturf, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, TRUE, pitch = 1.3)
 			target_human.changeStatus("weakened", 2 SECONDS)
 			target_human.force_laydown_standup()
-			holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites at [target_human]'s ankles!</b></span>",\
-			"<span class='combat'><b>You bite at [target_human]'s ankles!</b></span>")
+			holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner] bites at [target_human]'s ankles!</b>"),\
+			SPAN_COMBAT("<b>You bite at [target_human]'s ankles!</b>"))
 		return 0

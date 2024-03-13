@@ -51,7 +51,7 @@
 	},
 /area/shuttle/escape/centcom)
 "eA" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 4
 	},
@@ -89,7 +89,7 @@
 	},
 /area/centcom)
 "fJ" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 1
 	},
@@ -186,7 +186,7 @@
 /turf/space/fluid,
 /area/shuttle/escape/centcom)
 "kT" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1
 	},
 /turf/unsimulated/floor/marble/border_wb,
@@ -237,7 +237,7 @@
 	},
 /area/shuttle/escape/centcom)
 "qC" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 8
 	},
@@ -360,7 +360,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "CC" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 4
 	},
@@ -422,7 +422,7 @@
 /turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom)
 "DQ" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1
 	},
 /turf/unsimulated/floor/marble/black,
@@ -433,7 +433,7 @@
 	},
 /area/shuttle/escape/centcom)
 "Fg" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 8
 	},
@@ -559,7 +559,7 @@
 	},
 /area/shuttle/escape/centcom)
 "Mw" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 8
 	},
@@ -721,7 +721,7 @@
 	},
 /area/shuttle/escape/centcom)
 "SL" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 1
 	},
@@ -761,7 +761,7 @@
 /turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom)
 "Tj" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 4
 	},

@@ -516,7 +516,7 @@
 /turf/simulated/floor/wood/three,
 /area/prefab/shooting_range)
 "Lz" = (
-/obj/item/clothing/under/trash_bag/biohazard,
+/obj/item/trash_bag/biohazard,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 4;
 	pixel_x = 10

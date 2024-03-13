@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "f" = (
 /obj/table/wood/auto/desk{
@@ -13,7 +13,7 @@
 	pixel_y = 9;
 	switchon = 1
 	},
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "h" = (
 /obj/table/wood/auto/desk{
@@ -26,7 +26,7 @@
 	pixel_x = 9;
 	pixel_y = 1
 	},
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "j" = (
 /obj/table/wood/auto/desk{
@@ -38,13 +38,13 @@
 	pixel_x = 4;
 	pixel_y = 13
 	},
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "S" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
-/turf/simulated/floor/airless/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 
 (1,1,1) = {"

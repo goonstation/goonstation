@@ -13,7 +13,6 @@
 	name = "glass jar"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mason_jar"
-	uses_multiple_icon_states = 1
 	item_state = "beaker"
 	initial_volume = 75
 	var/image/color_underlay = null
@@ -32,26 +31,42 @@
 			return ..()
 
 		if(W.two_handed || W.w_class >= W_CLASS_GIGANTIC)
-			boutput(user, "<span class='alert'>That's too large to fit into the jar.</span>")
+			boutput(user, SPAN_ALERT("That's too large to fit into the jar."))
 			return
 
 		if(isgrab(W))
 			var/obj/item/grab/grab = W
-			boutput(user, "<span class='alert'>You can't seem to fit [grab.affecting] into \the [src].</span>")
+			boutput(user, SPAN_ALERT("You can't seem to fit [grab.affecting] into \the [src]."))
+			return
+
+		if(W.contraband)
+			boutput(user, SPAN_ALERT("[W] is too illegal to fit into the jar."))
 			return
 
 		if(W.cant_drop)
-			boutput(user, "<span class='alert'>You can't put that in the jar.</span>")
+			boutput(user, SPAN_ALERT("You can't put that in the jar."))
 			return
 
 		if (length(src.contents) > JAR_MAX_ITEMS || (locate(/mob/living) in src))
-			boutput(user, "<span class='alert'>There is no way that will fit into this jar.  This VERY FULL jar.</span>")
+			boutput(user, SPAN_ALERT("There is no way that will fit into this jar.  This VERY FULL jar."))
 			return
 
 		user.drop_item()
 		W.set_loc(src)
-		user.visible_message("<span class='notice'><b>[user]</b> puts [W] into [src].</span>", "<span class='notice'>You stuff [W] into [src].</span>")
+		user.visible_message(SPAN_NOTICE("<b>[user]</b> puts [W] into [src]."), SPAN_NOTICE("You stuff [W] into [src]."))
 		src.UpdateIcon()
+		src.update()
+
+	proc/update()
+		src.w_class = initial(src.w_class)
+		for(var/obj/item/item in src)
+			src.w_class = max(src.w_class, item.w_class)
+		var/obj/loc_storage = src.loc
+		if(loc_storage.storage)
+			if(loc_storage.storage.max_wclass < src.w_class)
+				var/turf/T = get_turf(src)
+				src.set_loc(T)
+				src.visible_message(SPAN_ALERT("[src] is too full to fit into [loc_storage] and tubmles onto [T]."))
 
 	get_desc(dist, mob/user)
 		. = ..()
@@ -89,11 +104,12 @@
 				var/pronoun = "it"
 				if(ismob(yoinked_out_thing))
 					pronoun = he_or_she(yoinked_out_thing)
-				boutput(user, "<span class='notice'>You try to pull [yoinked_out_thing] out of \the [src] but it seems like [pronoun] is stuck.</span>")
+				boutput(user, SPAN_NOTICE("You try to pull [yoinked_out_thing] out of \the [src] but it seems like [pronoun] is stuck."))
 			return FALSE
 		user.put_in_hand_or_drop(yoinked_out_thing)
-		user.visible_message("<span class='notice'><b>[user]</b> pulls [yoinked_out_thing] out of [src].</span>","<span class='notice'>You pull [yoinked_out_thing] out of [src].</span>")
+		user.visible_message(SPAN_NOTICE("<b>[user]</b> pulls [yoinked_out_thing] out of [src]."),SPAN_NOTICE("You pull [yoinked_out_thing] out of [src]."))
 		src.UpdateIcon()
+		src.update()
 		return TRUE
 
 	on_reagent_change()
@@ -121,10 +137,10 @@
 	custom_suicide = TRUE
 	suicide(mob/user)
 		if(length(src.contents) > 0)
-			boutput(user, "<span class='alert'>You need to empty \the [src] first!</span>")
+			boutput(user, SPAN_ALERT("You need to empty \the [src] first!"))
 			return 0
 		user.TakeDamage("chest", 100, 0)
-		user.visible_message("<span class='alert'><b>[user] somehow climbs into \the [src]! How is that even possible?!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] somehow climbs into \the [src]! How is that even possible?!</b>"))
 		user.u_equip(src)
 		src.set_loc(user.loc)
 		src.dropped(user)
@@ -157,7 +173,7 @@ proc/save_intraround_jars()
 			if(pickled.material)
 				pickled.removeMaterial()
 			pickled.reagents?.clear_reagents()
-			pickled.color = "#3f6718" // maybe picklify should be able to override this idk!!!
+			pickled.setMaterial(getMaterial("pickle"), setname=FALSE) // maybe picklify should be able to override this idk!!!
 			jar_contents += pickled
 
 		var/zname = global.zlevels[jar_turf.z].name
@@ -319,7 +335,7 @@ proc/load_intraround_jars()
 
 	ui_status(mob/user, datum/ui_state/state)
 		if(!user.literate)
-			boutput(user, "<span class='alert'>You don't know how to read.</span>")
+			boutput(user, SPAN_ALERT("You don't know how to read."))
 			return UI_CLOSE
 		. = max(..(), UI_DISABLED)
 		if(IN_RANGE(user, src, 8))

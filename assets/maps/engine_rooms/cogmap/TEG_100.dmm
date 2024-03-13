@@ -11,7 +11,7 @@
 /obj/item/extinguisher,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/decal/stripe_delivery,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
@@ -22,7 +22,7 @@
 	frequency = 1448;
 	name = "Toxins Lab Intercom"
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/cable{
@@ -38,7 +38,7 @@
 /obj/machinery/meter{
 	pixel_y = 1
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -111,7 +111,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "eZ" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/storage/crate/furnacefuel,
@@ -129,7 +129,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-4"
 	},
 /obj/landmark/start{
@@ -254,10 +254,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "pa" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -285,7 +283,7 @@
 	dir = 8;
 	level = 2
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -308,7 +306,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "sq" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
@@ -319,8 +317,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "sZ" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -379,10 +376,10 @@
 /obj/machinery/power/generatorTemp,
 /obj/item/paper/engine,
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-2"
 	},
-/obj/cable/brown,
+/obj/cable/orange,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -430,7 +427,7 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/decal/stripe_delivery,
@@ -446,7 +443,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "zx" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/item/device/radio/intercom/engineering{
@@ -575,16 +572,14 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "JD" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "Kh" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -619,7 +614,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -628,7 +623,7 @@
 /obj/machinery/atmospherics/binary/valve{
 	name = "outlet purge valve"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
@@ -654,7 +649,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "Sf" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,

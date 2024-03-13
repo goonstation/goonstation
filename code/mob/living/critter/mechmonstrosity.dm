@@ -1,9 +1,9 @@
 /mob/living/critter/mechmonstrosity
-	name = "Mechanical Monstrosity"
-	real_name = "mechmonstrosity"
+	name = "mechanical monstrosity"
+	real_name = "mechanical monstrosity"
 	desc = "A severely disfigured human torso which is forcibly kept alive by the mechanical parts.."
 	density = TRUE
-	icon = 'icons/misc/critter.dmi'
+	icon = 'icons/mob/critter/robotic/mechanical/monstrosity.dmi'
 	icon_state = "mechmonstrosity"
 	custom_gib_handler = /proc/robogibs
 	blood_id = "oil"
@@ -71,7 +71,7 @@
 
 		switch(speech_type)
 			if(1)
-				boutput(src,pick("<span class='alert'><b>You feel terrible.</b></span>","<span class='alert'><b>You are in severe agony. Why do they torture you like this!?</b></span>","<span class='alert'><b>You wish you could just die already but your augmentations keep you alive.</b></span>",))
+				boutput(src,pick(SPAN_ALERT("<b>You feel terrible.</b>"),SPAN_ALERT("<b>You are in severe agony. Why do they torture you like this!?</b>"),SPAN_ALERT("<b>You wish you could just die already but your augmentations keep you alive.</b>"),))
 			if(2)
 				src.emote("scream")
 			if(3)
@@ -85,14 +85,15 @@
 		switch (act)
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/killme.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/killme.ogg', 70, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> begs for mercy!"
 
 /mob/living/critter/mechmonstrosity/medical
-	icon_state = "mechmonstrosity_m"
 	name = "V.I.V.I-SECT-10N"
 	real_name = "V.I.V.I-SECT-10N"
 	desc = "You better wish that apples will keep this thing away from you.."
+	icon = 'icons/mob/critter/robotic/mechanical/vivisection.dmi'
+	icon_state = "vivisection"
 	hand_count = 2
 	var/smashes_shit = TRUE
 	can_grab = TRUE
@@ -139,7 +140,7 @@
 				else
 					AM.meteorhit()
 				playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
-				src.visible_message("<span class='alert'><B>[src]</B> smashes through \the [AM]!</span>")
+				src.visible_message(SPAN_ALERT("<B>[src]</B> smashes through \the [AM]!"))
 		..()
 
 	setup_healths()
@@ -188,21 +189,21 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to inject there.</span>")
+				boutput(holder.owner, SPAN_ALERT("Nothing to inject there."))
 				return TRUE
 		if (target == holder.owner)
 			return TRUE
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to inject.</span>")
+			boutput(holder.owner, SPAN_ALERT("That is too far away to inject."))
 			return TRUE
 		var/mob/MT = target
 		if (!MT.reagents)
-			boutput(holder.owner, "<span class='alert'>That does not hold reagents, apparently.</span>")
+			boutput(holder.owner, SPAN_ALERT("That does not hold reagents, apparently."))
 		if (!stealthy)
 			playsound(holder.owner.loc, 'sound/items/hypo.ogg', 70,1)
-			holder.owner.visible_message("<span class='alert'><b>[holder.owner] injects [target]!</b></span>")
+			holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] injects [target]!</b>"))
 		else
-			holder.owner.show_message("<span class='notice'>You stealthily inject [target].</span>")
+			holder.owner.show_message(SPAN_NOTICE("You stealthily inject [target]."))
 		MT.reagents.add_reagent(venom_id, inject_amount)
 
 
@@ -225,20 +226,20 @@
 			return TRUE
 
 		if (M == target)
-			boutput(M, "<span class='alert'>Why would you want to stun yourself?</span>")
+			boutput(M, SPAN_ALERT("Why would you want to stun yourself?"))
 			return TRUE
 
 		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
+			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return TRUE
 
 		if (isdead(target))
-			boutput(M, "<span class='alert'>It would be a waste of time to stun the dead.</span>")
+			boutput(M, SPAN_ALERT("It would be a waste of time to stun the dead."))
 			return TRUE
 
-		M.visible_message("<span class='alert'><B>[M] glares angrily at [target]!</B></span>")
+		M.visible_message(SPAN_ALERT("<B>[M] glares angrily at [target]!</B>"))
 		target.apply_flash(5, 5)
-		boutput(target, "<span class='alert'>You can feel a chill running down your spine as [M] glares at you with hatred burning in their  mechanical eyes.</span>")
+		boutput(target, SPAN_ALERT("You can feel a chill running down your spine as [M] glares at you with hatred burning in their  mechanical eyes."))
 		target.emote("shiver")
 
 		logTheThing(LOG_COMBAT, M, "uses glare on [constructTarget(target,"combat")] at [log_loc(M)].")
@@ -247,7 +248,6 @@
 /datum/action/bar/icon/mechanimateAbility
 	duration = 8 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "mechanimate"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "turn_over"
 	var/mob/living/target
@@ -272,7 +272,7 @@
 			return
 
 		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span class='alert'><B>[owner] attempts to inject [target]!</B></span>", 1)
+			O.show_message(SPAN_ALERT("<B>[owner] attempts to inject [target]!</B>"), 1)
 
 	onEnd()
 		..()
@@ -280,8 +280,8 @@
 		if(ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && mechanimate?.cooldowncheck())
 			logTheThing(LOG_COMBAT, ownerMob, "injects [constructTarget(target,"combat")]. Crawler transformation")
 			for(var/mob/O in AIviewers(ownerMob))
-				O.show_message("<span class='alert'><B>[owner] successfully injected [target]!</B></span>", 1)
-			playsound(ownerMob, 'sound/items/hypo.ogg', 80, 0)
+				O.show_message(SPAN_ALERT("<B>[owner] successfully injected [target]!</B>"), 1)
+			playsound(ownerMob, 'sound/items/hypo.ogg', 80, FALSE)
 
 			var/mob/living/critter/robotic/crawler/crawler = new /mob/living/critter/robotic/crawler(get_turf(target))
 			crawler.name = "[target]'s crawling head"
@@ -319,11 +319,11 @@
 			return TRUE
 
 		if (M == target)
-			boutput(M, "<span class='alert'>You can't do that to yourself.</span>")
+			boutput(M, SPAN_ALERT("You can't do that to yourself."))
 			return TRUE
 
 		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
+			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return TRUE
 		holder.owner.say("Transformation protocol engaged. Please stand clear of the recipient.")
 		actions.start(new/datum/action/bar/icon/mechanimateAbility(target, src), holder.owner)
@@ -349,20 +349,20 @@
 			return TRUE
 
 		if (M == target)
-			boutput(M, "<span class='alert'>Why would you want to dissect yourself?</span>")
+			boutput(M, SPAN_ALERT("Why would you want to dissect yourself?"))
 			return TRUE
 
 		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
+			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return TRUE
 
-		M.visible_message("<span class='alert'><B>With their double saw whirling, [M] swiftly severs all [target]'s limbs!</B></span>")
+		M.visible_message(SPAN_ALERT("<B>With their double saw whirling, [M] swiftly severs all [target]'s limbs!</B>"))
 		H.sever_limb("r_arm")
 		H.sever_limb("l_arm")
 		H.sever_limb("r_leg")
 		H.sever_limb("l_leg")
 		playsound(M.loc, 'sound/effects/sawhit.ogg', 90,1)
-		boutput(target, "<span class='alert'>All of your limbs were severed by [M]!</span>")
+		boutput(target, SPAN_ALERT("All of your limbs were severed by [M]!"))
 
 		logTheThing(LOG_COMBAT, M, "uses dissect on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return FALSE
@@ -432,8 +432,9 @@
 		src.read_only = TRUE
 
 /mob/living/critter/robotic/crawler
-	name = "Crawling Monstrosity"
+	name = "crawling monstrosity"
 	desc = "A crawling mechanical monstrosity."
+	icon = 'icons/mob/critter/robotic/mechanical/crawler.dmi'
 	icon_state = "mechmonstrosity_c"
 	icon_state_dead = "mechmonstrosity_c-dead"
 	can_throw = FALSE
@@ -482,7 +483,7 @@
 			src.revivalChance -= src.revivalDecrement
 			SPAWN(rand(40 SECONDS, 80 SECONDS))
 				src.full_heal()
-				src.visible_message("<span class='alert'>[src] re-assembles and is ready to fight once more!</span>")
+				src.visible_message(SPAN_ALERT("[src] re-assembles and is ready to fight once more!"))
 			return
 		if (!gibbed)
 			src.gib()

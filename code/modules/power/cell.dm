@@ -1,6 +1,6 @@
 /obj/item/cell
 	name = "power cell"
-	desc = "A rechargable electrochemical power cell. It's too large to fit into most handheld devices, but can be used to power cyborgs and APCs."
+	desc = "A rechargeable electrochemical power cell. It's too large to fit into most handheld devices, but can be used to power cyborgs and APCs."
 	icon = 'icons/obj/power.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "cell"
@@ -52,7 +52,7 @@
 
 /obj/item/cell/shell_cell
 	name = "AI shell power cell"
-	desc = "A rechargable electrochemical power cell. It's made for AI shells."
+	desc = "A rechargeable electrochemical power cell. It's made for AI shells."
 	maxcharge = 4000
 
 /obj/item/cell/hypercell
@@ -201,7 +201,7 @@
 			if (istype(src,/obj/item/cell/erebite))
 				message_admins("[key_name(user)] injected [src] with plasma, causing an explosion at [log_loc(user)].")
 				logTheThing(LOG_COMBAT, user, "injected [src] with plasma, causing an explosion at [log_loc(user)].")
-				boutput(user, "<span class='alert'>The plasma reacts with the erebite and explodes violently!</span>")
+				boutput(user, SPAN_ALERT("The plasma reacts with the erebite and explodes violently!"))
 				src.explode()
 			else
 				logTheThing(LOG_COMBAT, user, "rigged [src] to explode at [log_loc(user)].")
@@ -243,11 +243,11 @@
 
 /obj/item/cell/proc/zap(mob/user as mob, var/ignores_gloves = 0)
 	if (user.shock(src, src.charge, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, ignores_gloves))
-		boutput(user, "<span class='alert'>[src] shocks you!</span>")
+		boutput(user, SPAN_ALERT("[src] shocks you!"))
 
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span class='alert'>[user:name] was shocked by the [src:name]!</span>", 3, "<span class='alert'>You hear an electrical crack</span>", 2)
+			M.show_message(SPAN_ALERT("[user:name] was shocked by the [src:name]!"), 3, SPAN_ALERT("You hear an electrical crack"), 2)
 		return 1
 
 /obj/item/cell/ex_act(severity)
@@ -256,7 +256,7 @@
 
 /obj/item/cell/temperature_expose(null, temp, volume)
 	if (istype(src,/obj/item/cell/erebite))
-		src.visible_message("<span class='alert'>[src] violently detonates!</span>")
+		src.visible_message(SPAN_ALERT("[src] violently detonates!"))
 		src.explode()
 	else ..()
 
@@ -317,10 +317,11 @@
 	max_charge = 10
 	recharge_rate = 0
 
-/obj/item/ammo/power_cell/self_charging/potato/New(var/loc, var/potency, var/endurance)
+/obj/item/ammo/power_cell/self_charging/potato/New(var/loc, var/potency, var/endurance) //capped, approches double stats of disruptor cell
 	var/rngfactor = 2 + rand()
-	src.max_charge += round(potency/rngfactor)
-	src.recharge_rate = 0.25 * round(endurance/rand(25,30))
+//	src.max_charge += round(potency/rngfactor)
+	src.max_charge += round(190 * potency / (potency + 100 * rngfactor)) //asymptote at 200pu
+	src.recharge_rate = 0.25 * round(0.01 + 20 * endurance / (endurance + rand(400,500))) //asymptote at 5 recharge rate
 	src.charge = src.max_charge
 	..()
 

@@ -17,23 +17,23 @@
 
 		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
-			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
+			boutput(holder.owner, SPAN_ALERT("That ability is incompatible with our abilities. We should report this to a coder."))
 			return 1
 
 		var/mob/living/carbon/human/C = holder.owner
 		if (tgui_alert(C,"Are we sure?","Enter Regenerative Stasis?",list("Yes","No")) != "Yes")
-			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
+			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
 			return 1
 
 		if(!H.in_fakedeath)
-			boutput(holder.owner, "<span class='notice'>Repairing our wounds.</span>")
+			boutput(holder.owner, SPAN_NOTICE("Repairing our wounds."))
 			logTheThing(LOG_COMBAT, holder.owner, "enters regenerative stasis as a changeling [log_loc(holder.owner)].")
 			var/list/implants = list()
 			for (var/obj/item/implant/I in holder.owner) //Still preserving implants
 				implants += I
 
 			H.in_fakedeath = 1
-			APPLY_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, src.type)
+			APPLY_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, "regen_stasis")
 
 			C.lying = 1
 			C.canmove = 0
@@ -42,46 +42,47 @@
 			C.emote("deathgasp")
 
 			SPAWN(cooldown)
-				changeling_super_heal_step(C, 100, 100) //get those limbs back i didn't lay here for 45 seconds to be hopping around on one leg dang it
-				if (C && !isdead(C))
-					C.HealDamage("All", 1000, 1000)
-					C.take_brain_damage(-INFINITY)
-					C.take_toxin_damage(-INFINITY)
-					C.change_misstep_chance(-INFINITY)
-					C.take_oxygen_deprivation(-INFINITY)
-					C.delStatus("drowsy")
-					C.delStatus("passing_out")
-					C.delStatus("n_radiation")
-					C.delStatus("paralysis")
-					C.delStatus("slowed")
-					C.delStatus("stunned")
-					C.delStatus("weakened")
-					C.delStatus("radiation")
-					C.take_radiation_dose(-INFINITY)
-					C.delStatus("disorient")
-					C.health = 100
-					C.reagents.clear_reagents()
-					C.lying = 0
-					C.canmove = 1
-					boutput(C, "<span class='notice'>We have regenerated.</span>")
-					logTheThing(LOG_COMBAT, C, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
-					C.visible_message("<span class='alert'><B>[C] appears to wake from the dead, having healed all wounds.</span></span>")
-					for(var/obj/item/implant/I in implants)
-						if (istype(I, /obj/item/implant/projectile))
-							boutput(C, "<span class='alert'>\an [I] falls out of your abdomen.</span>")
-							I.on_remove(C)
-							C.implant.Remove(I)
-							I.set_loc(C.loc)
-							continue
-					if(C.bioHolder?.effects && length(C.bioHolder.effects))
-						for(var/bioEffectId in C.bioHolder.effects)
-							var/datum/bioEffect/gene = C.bioHolder.GetEffect(bioEffectId)
-							if (gene.curable_by_mutadone && gene.effectType == EFFECT_TYPE_DISABILITY)
-								C.bioHolder.RemoveEffect(gene.id)
+				if(H.in_fakedeath) //don't trigger this if we cancelled stasis via abomination form
+					changeling_super_heal_step(C, 100, 100) //get those limbs back i didn't lay here for 45 seconds to be hopping around on one leg dang it
+					if (C && !isdead(C))
+						C.HealDamage("All", 1000, 1000)
+						C.take_brain_damage(-INFINITY)
+						C.take_toxin_damage(-INFINITY)
+						C.change_misstep_chance(-INFINITY)
+						C.take_oxygen_deprivation(-INFINITY)
+						C.delStatus("drowsy")
+						C.delStatus("passing_out")
+						C.delStatus("n_radiation")
+						C.delStatus("paralysis")
+						C.delStatus("slowed")
+						C.delStatus("stunned")
+						C.delStatus("weakened")
+						C.delStatus("radiation")
+						C.take_radiation_dose(-INFINITY)
+						C.delStatus("disorient")
+						C.health = 100
+						C.reagents.clear_reagents()
+						C.lying = 0
+						C.canmove = 1
+						boutput(C, SPAN_NOTICE("We have regenerated."))
+						logTheThing(LOG_COMBAT, C, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
+						C.visible_message(SPAN_ALERT("<b>[C] appears to wake from the dead, having healed all wounds.</b>"))
+						for(var/obj/item/implant/I in implants)
+							if (istype(I, /obj/item/implant/projectile))
+								boutput(C, SPAN_ALERT("\an [I] falls out of your abdomen."))
+								I.on_remove(C)
+								C.implant.Remove(I)
+								I.set_loc(C.loc)
+								continue
+						if(C.bioHolder?.effects && length(C.bioHolder.effects))
+							for(var/bioEffectId in C.bioHolder.effects)
+								var/datum/bioEffect/gene = C.bioHolder.GetEffect(bioEffectId)
+								if (gene.curable_by_mutadone && gene.effectType == EFFECT_TYPE_DISABILITY)
+									C.bioHolder.RemoveEffect(gene.id)
 
-				C.set_clothing_icon_dirty()
-				H.in_fakedeath = 0
-				REMOVE_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, src.type)
+					C.set_clothing_icon_dirty()
+					H.in_fakedeath = 0
+					REMOVE_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, "regen_stasis")
 		return 0
 
 /proc/changeling_super_heal_step(var/mob/living/carbon/human/healed, var/limb_regen_prob = 25, var/eye_regen_prob = 25, var/mult = 1, var/changer = 1)
@@ -100,10 +101,10 @@
 			if (C.blood_volume < 500)
 				C.blood_volume += 10 * mult
 				//changelings can get this somehow and it stops speed regen ever turning off otherwise
-			boutput(C, "<span class='notice'>You feel your flesh knitting back together.</span>")
+			boutput(C, SPAN_NOTICE("You feel your flesh knitting back together."))
 			for(var/obj/item/implant/I in implants)
 				if (istype(I, /obj/item/implant/projectile))
-					boutput(C, "<span class='alert'>\an [I] falls out of your abdomen.</span>")
+					boutput(C, SPAN_ALERT("\an [I] falls out of your abdomen."))
 					I.on_remove(C)
 					C.implant.Remove(I)
 					I.set_loc(C.loc)
@@ -118,7 +119,7 @@
 				C.limbs.l_arm.holder = C
 				C.limbs.l_arm:original_holder = C
 				C.limbs.l_arm:set_skin_tone()
-				C.visible_message("<span class='alert'><B> [C]'s left arm grows back!</span>")
+				C.visible_message(SPAN_ALERT("<B> [C]'s left arm grows back!"))
 				C.set_body_icon_dirty()
 				C.hud.update_hands()
 
@@ -130,7 +131,7 @@
 				C.limbs.r_arm.holder = C
 				C.limbs.r_arm:original_holder = C
 				C.limbs.r_arm:set_skin_tone()
-				C.visible_message("<span class='alert'><B> [C]'s right arm grows back!</span>")
+				C.visible_message(SPAN_ALERT("<B> [C]'s right arm grows back!"))
 				C.set_body_icon_dirty()
 				C.hud.update_hands()
 
@@ -139,7 +140,7 @@
 				C.limbs.l_leg.holder = C
 				C.limbs.l_leg:original_holder = C
 				C.limbs.l_leg:set_skin_tone()
-				C.visible_message("<span class='alert'><B> [C]'s left leg grows back!</span>")
+				C.visible_message(SPAN_ALERT("<B> [C]'s left leg grows back!"))
 				C.set_body_icon_dirty()
 
 			if (!C.limbs.r_leg && prob(limb_regen_prob))
@@ -147,7 +148,7 @@
 				C.limbs.r_leg.holder = C
 				C.limbs.r_leg:original_holder = C
 				C.limbs.r_leg:set_skin_tone()
-				C.visible_message("<span class='alert'><B> [C]'s right leg grows back!</span>")
+				C.visible_message(SPAN_ALERT("<B> [C]'s right leg grows back!"))
 				C.set_body_icon_dirty()
 
 		C.organHolder.create_organs()
@@ -159,7 +160,7 @@
 
 		if (!ON_COOLDOWN(C, "cling_visible_message", 3 SECONDS))
 			if (changer)
-				C.visible_message("<span class='alert'><B>[C]'s flesh is moving and sliding around oddly!</B></span>")
+				C.visible_message(SPAN_ALERT("<B>[C]'s flesh is moving and sliding around oddly!</B>"))
 				playsound(C, 'sound/misc/cling_flesh.ogg', 30, TRUE)
 
 /datum/targetable/changeling/regeneration
@@ -184,12 +185,12 @@
 
 		var/datum/abilityHolder/changeling/aH = holder
 		if (!istype(aH))
-			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
+			boutput(holder.owner, SPAN_ALERT("That ability is incompatible with our abilities. We should report this to a coder."))
 			return 1
 
 		var/mob/living/carbon/human/H = holder.owner
 		if (tgui_alert(H, "Are we sure?", "Speed regen?", list("Yes","No")) != "Yes")
-			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
+			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
 			return 1
 
 		H.changeStatus("changeling_speedregen", 30 SECONDS)
@@ -210,8 +211,8 @@
 		var/mob/living/carbon/human/H
 		if (ishuman(owner))
 			H = owner
-			boutput(H, "<span class='notice'>We start regenerating.</span>")
-			H.visible_message("<span class='alert'><B>[H]'s flesh starts moving and sliding around oddly, repairing their wounds!</B></span>")
+			boutput(H, SPAN_NOTICE("We start regenerating."))
+			H.visible_message(SPAN_ALERT("<B>[H]'s flesh starts moving and sliding around oddly, repairing their wounds!</B>"))
 			return
 		else
 			owner.delStatus("changeling_speedregen")
@@ -225,14 +226,14 @@
 				changeling_super_heal_step(H, 25, 25)
 		else // lings are vulnerable to fire so it stopping their regen makes sense
 			if (!ON_COOLDOWN(H, "cling_fire_regen_cancellation", 3 SECONDS))
-				boutput(H, "<span class='alert'>The fire stops us from regenerating! Put it out!</span>")
-				H.visible_message("<span class='alert'><B>[H]'s flesh is moving weirdly in contact with the fire!</B></span>")
+				boutput(H, SPAN_ALERT("The fire stops us from regenerating! Put it out!"))
+				H.visible_message(SPAN_ALERT("<B>[H]'s flesh is moving weirdly in contact with the fire!</B>"))
 
 	onRemove()
 		. = ..()
 		var/mob/living/carbon/human/H
 		if (!ishuman(owner)) return
 		H = owner
-		boutput(H, "<span class='notice'>We stop regenerating.</span>")
-		H.visible_message("<span class='alert'><B>[H]'s flesh stops moving and sliding around!</B></span>")
+		boutput(H, SPAN_NOTICE("We stop regenerating."))
+		H.visible_message(SPAN_ALERT("<B>[H]'s flesh stops moving and sliding around!</B>"))
 		return

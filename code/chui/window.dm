@@ -285,7 +285,7 @@ chui/window
 				var/method = href_list[ "_path" ]
 				var/id = href_list[ "_id" ]
 				if( isnull( method ) || isnull( id ) )
-					world << "FATAL: Null ID/Method for BYREQ."
+					message_coders("FATAL: Null ID/Method for BYREQ.")
 					return
 				//TODO: When JSON is included. callJSFunction( "chui.reqReturn",
 			else if( action == "click" && href_list["id"] )

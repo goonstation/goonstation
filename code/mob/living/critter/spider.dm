@@ -84,19 +84,19 @@
 		if (..())
 			return 1
 		if (prob(15) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
-			playsound(src, 'sound/voice/babynoise.ogg', 30, 1)
-			src.visible_message("<span class='notice'><b>[src]</b> coos!</span>",\
-			"<span class='notice'>You coo!</span>")
+			playsound(src, 'sound/voice/babynoise.ogg', 30, TRUE)
+			src.visible_message(SPAN_NOTICE("<b>[src]</b> coos!"),\
+			SPAN_NOTICE("You coo!"))
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream","hiss")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> hisses!"
 			if ("smile","coo")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/babynoise.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/babynoise.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> coos!"
 		return null
 
@@ -137,12 +137,15 @@
 		for (var/obj/item/implant/access/infinite/assistant/I in src.contents)
 			has_implant = TRUE
 		src.unequip_all()
-		src.visible_message("<span class='alert'><b>[src] grows up!</b></span>",\
-		"<span class='notice'><b>You grow up!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src] grows up!</b>"),\
+		SPAN_NOTICE("<b>You grow up!</b>"))
 		SPAWN(0)
-			var/mob/new_mob = src.make_critter(src.adultpath)
+			var/mob/living/critter/spider/new_mob = src.make_critter(src.adultpath)
 			if (has_implant)
 				new /obj/item/implant/access/infinite/assistant(new_mob)
+			new_mob.ai_retaliate_patience = src.ai_retaliate_patience
+			if(!istype(new_mob.ai, src.ai_type))
+				new_mob.ai = new src.ai_type(new_mob)
 
 	valid_target(mob/living/C)
 		if (C.bioHolder.HasEffect("husk")) return FALSE
@@ -154,7 +157,7 @@
 
 		if(length(.) && prob(30))
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
-			src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
+			src.visible_message(SPAN_ALERT("<B>[src]</B> hisses!"))
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
@@ -352,20 +355,22 @@
 			return 1
 		if (isdead(src))
 			// I can't get the ejectables thing to work so for now we're doing this.
-			if (ispath(src.item_shoes))
-				var/obj/item/I = new src.item_shoes(get_turf(src))
-				if (I)
-					var/turf/T = get_edge_target_turf(I, pick(alldirs))
-					if (T)
-						I.throw_at(T, 12, 3)
-			if (prob(25) && ispath(src.item_mask))
-				var/obj/item/I = new src.item_mask(get_turf(src))
-				if (I)
-					var/turf/T = get_edge_target_turf(I, pick(alldirs))
-					if (T)
-						I.throw_at(T, 12, 3)
-			src.organHolder.drop_and_throw_organ("brain")
 			src.gib(1)
+
+	gib(give_medal, include_ejectables)
+		if (ispath(src.item_shoes))
+			var/obj/item/I = new src.item_shoes(get_turf(src))
+			if (I)
+				var/turf/T = get_edge_target_turf(I, pick(alldirs))
+				if (T)
+					I.throw_at(T, 12, 3)
+		if (prob(25) && ispath(src.item_mask))
+			var/obj/item/I = new src.item_mask(get_turf(src))
+			if (I)
+				var/turf/T = get_edge_target_turf(I, pick(alldirs))
+				if (T)
+					I.throw_at(T, 12, 3)
+		. = ..()
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
@@ -408,6 +413,11 @@
 		can_critter_scavenge()
 			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
 			return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
+
+/mob/living/critter/spider/clown/polymorph
+	gib(give_medal, include_ejectables)
+		src.organHolder.drop_and_throw_organ("brain")
+		. = ..()
 
 /mob/living/critter/spider/clownqueen
 	name = "queen clownspider"
@@ -527,9 +537,9 @@
 				continue
 			// IMMEDIATE INTERRUPT
 			var/datum/aiTask/task = CS.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(CS.ai, CS.ai.default_task))
-			task.target = T
 			CS.ai.priority_tasks += task
 			CS.ai.interrupt()
+			CS.ai.target = T
 			defenders++
 
 	critter_ability_attack(mob/target)
@@ -559,8 +569,8 @@
 
 /proc/funnygibs(atom/location, var/list/ejectables, var/bDNA, var/btype)
 	SPAWN(0)
-		playsound(location, 'sound/musical_instruments/Bikehorn_1.ogg', 100, 1)
-		playsound(location, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+		playsound(location, 'sound/musical_instruments/Bikehorn_1.ogg', 100, TRUE)
+		playsound(location, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, TRUE)
 	var/obj/decal/cleanable/blood/splatter/extra/blood = null
 
 	var/list/bloods = list()

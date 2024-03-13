@@ -7,7 +7,7 @@
 	blinded = 0
 	anchored = ANCHORED
 	throws_can_hit_me = FALSE
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | MOVE_NOCLIP
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP | MOVE_NOCLIP
 	canbegrabbed = FALSE
 
 	New()
@@ -63,7 +63,7 @@
 		//Mostly for manifested wraith. Dont move through everything.
 		if (src.density) return ..()
 
-		if (NewLoc && isrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
+		if (!can_ghost_be_here(src, NewLoc))
 			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (OS)
 				src.set_loc(OS)

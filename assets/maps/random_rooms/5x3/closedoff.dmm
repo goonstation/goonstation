@@ -12,7 +12,7 @@
 /area/dmm_suite/clear_area)
 "j" = (
 /obj/item/broken_egun,
-/obj/item/clothing/under/shorts/trashsinglet{
+/obj/item/clothing/under/gimmick/trashsinglet{
 	pixel_x = 11;
 	pixel_y = -9
 	},

@@ -46,12 +46,12 @@
 			effect = rand(1, 7)
 		switch (effect)
 			if (1)
-				boutput(holder.owner, "<span class='notice'>You flip some light switches near the designated location!!</span>")
+				boutput(holder.owner, SPAN_NOTICE("You flip some light switches near the designated location!!"))
 				for (var/obj/machinery/light_switch/L in range(10, holder.owner))
 					L.Attackhand(holder.owner)
 				return 0
 			if (2)
-				boutput(holder.owner, "<span class='notice'>You cause a few lights to burn out near the designated location!.</span>")
+				boutput(holder.owner, SPAN_NOTICE("You cause a few lights to burn out near the designated location!."))
 				var/c_prob = 100
 				for (var/obj/machinery/light/L in range(10, holder.owner))
 					if (L.status == 2 || L.status == 1)
@@ -61,7 +61,7 @@
 						c_prob *= 0.5
 				return 0
 			if (3)
-				boutput(holder.owner, "<span class='notice'>Smoke rises in the designated location.</span>")
+				boutput(holder.owner, SPAN_NOTICE("Smoke rises in the designated location."))
 				var/turf/trgloc = get_turf(holder.owner)
 				if (trgloc && isturf(trgloc))
 					var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(trgloc)
@@ -70,7 +70,7 @@
 						S.start()
 				return 0
 			if (4)
-				boutput(holder.owner, "<span class='notice'>Matter from your realm appears near the designated location!</span>")
+				boutput(holder.owner, SPAN_NOTICE("Matter from your realm appears near the designated location!"))
 				var/count = rand(5,9)
 				var/turf/trgloc = get_turf(holder.owner)
 				var/list/affected = block(locate(trgloc.x - 8,trgloc.y - 8,trgloc.z), locate(trgloc.x + 8,trgloc.y + 8,trgloc.z))
@@ -81,15 +81,15 @@
 				var/sapped_amt = src.holder.regenRate * 100
 				var/obj/machinery/power/apc/apc = locate() in get_area(holder.owner)
 				if (!apc)
-					boutput(holder.owner, "<span class='alert'>Power sap failed: local APC not found.</span>")
+					boutput(holder.owner, SPAN_ALERT("Power sap failed: local APC not found."))
 					return 0
-				boutput(holder.owner, "<span class='notice'>You sap the power of the chamber's power source.</span>")
+				boutput(holder.owner, SPAN_NOTICE("You sap the power of the chamber's power source."))
 				var/obj/item/cell/cell = apc.cell
 				if (cell)
 					cell.use(sapped_amt)
 				return 0
 			if (6)
-				boutput(holder.owner, "<span class='notice'>Mysterious messages haunt PDAs near the designated location!</span>")
+				boutput(holder.owner, SPAN_NOTICE("Mysterious messages haunt PDAs near the designated location!"))
 				for (var/mob/living/L in range(10, holder.owner))
 					var/obj/item/device/pda2/pda = locate() in L
 					if (pda)
@@ -97,7 +97,7 @@
 				for (var/obj/item/device/pda2/pda in range(10, holder.owner))
 					src.haunt_pda(pda)
 			if (7)
-				boutput(holder.owner, "<span class='notice'>Crates, lockers and doors mysteriously open and close in the designated area!</span>")
+				boutput(holder.owner, SPAN_NOTICE("Crates, lockers and doors mysteriously open and close in the designated area!"))
 				var/c_prob = 100
 				for(var/obj/machinery/door/G in range(10, holder.owner))
 					if (prob(c_prob))

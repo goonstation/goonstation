@@ -66,7 +66,7 @@
 	ADMIN_ONLY
 
 	if(!islist(L))
-		boutput(src, "<span class='alert'>That's not a List!</span>")
+		boutput(src, SPAN_ALERT("That's not a List!"))
 		return
 
 	var/list/names = sortList(L, /proc/cmp_text_asc)

@@ -66,10 +66,10 @@ var tooltip = {
 	showDelayInt: 0,
 	interrupt: false,
 
-	init: function(screen, tileSize, interface, map) {
+	init: function(screen, tileSize, tInterface, map) {
 		tooltip.screenProperties = screen;
 		tooltip.tileSize = parseInt(tileSize);
-		tooltip.interface = interface;
+		tooltip.interface = tInterface;
 
 		try {
 			tooltip.mapInterface = $.parseJSON(map);

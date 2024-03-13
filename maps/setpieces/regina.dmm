@@ -48,9 +48,7 @@
 	},
 /area/space)
 "aQ" = (
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/left_station"
-	},
+/obj/npc/trader/random,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -270,9 +268,7 @@
 /area/shuttle/merchant_shuttle/diner_centcom)
 "gP" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -409,7 +405,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 9;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/shuttleengine{
 	desc = "An electromagnetic clamping mechanism for hauling large cargo containers.";
@@ -542,9 +539,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "kL" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -589,7 +584,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 5;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/shuttleengine{
 	desc = "An electromagnetic clamping mechanism for hauling large cargo containers.";
@@ -788,7 +784,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 10;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/airless/engine,
 /area/regina)
@@ -850,7 +847,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 10;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/airless/engine,
 /area/regina)
@@ -1038,8 +1036,7 @@
 /area/space)
 "tp" = (
 /turf/simulated/shuttle/wall/cockpit{
-	icon_state = "shuttlecock_mining";
-	plane = 5
+	icon_state = "shuttlecock_mining"
 	},
 /area/regina)
 "ty" = (
@@ -1204,9 +1201,7 @@
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "wR" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1375,7 +1370,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 9;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/airless/engine,
 /area/regina)
@@ -1624,9 +1620,7 @@
 /area/space)
 "Fc" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1794,12 +1788,14 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 9;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 9;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/airless/engine,
 /area/regina)
@@ -1848,9 +1844,7 @@
 /area/regina)
 "Ki" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -2109,9 +2103,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "OH" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/machinery/computer/shuttle_bus/embedded/south{
-	plane = 6
-	},
+/obj/machinery/computer/shuttle_bus/embedded/south,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -2169,9 +2161,7 @@
 /turf/space,
 /area/regina)
 "Qf" = (
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -2430,9 +2420,7 @@
 /area/regina)
 "Vv" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/left_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -2469,7 +2457,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 6;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/airless/engine,
 /area/regina)
@@ -2578,7 +2567,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 5;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/airless/engine,
 /area/regina)
@@ -2708,9 +2698,7 @@
 /area/shuttle/merchant_shuttle/diner_centcom)
 "ZW" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},

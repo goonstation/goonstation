@@ -9,7 +9,6 @@ TYPEINFO(/obj/item/clothing/head/butt)
 	desc = "It's a butt. It goes on your head."
 	var/organ_holder_name = "butt"
 	var/organ_holder_location = "chest"
-	var/organ_holder_required_op_stage = 4
 	icon = 'icons/obj/items/organs/butt.dmi'
 	icon_state = "butt-nc"
 	force = 1
@@ -95,24 +94,15 @@ TYPEINFO(/obj/item/clothing/head/butt)
 		var/fluff = pick("shove", "place", "drop")
 		var/fluff2 = pick("hole", "gaping hole", "incision", "wound")
 
-		if (H.butt_op_stage == 4.0)
-			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[his_or_her(H)]" : "[H]'s"] butt used to be!</span>",\
-				"<span class='alert'>You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be!</span>")
+		if (H.organHolder?.back_op_stage >= BACK_SURGERY_OPENED)
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[his_or_her(H)]" : "[H]'s"] butt used to be!"),\
+				SPAN_ALERT("You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be!"),\
+				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be!"))
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "butt", 3.0)
-			H.butt_op_stage = 3
 			return 1
-		else if (H.butt_op_stage == 5.0)
-			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[his_or_her(H)]" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
-				"<span class='alert'>You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>")
-			if (user.find_in_hand(src))
-				user.u_equip(src)
-				set_loc(get_turf(H))
-			return null
 		else
 			return 0
 
@@ -138,15 +128,15 @@ TYPEINFO(/obj/item/clothing/head/butt)
 		if (!source || !target) return
 		if( src.unstaple()) //Try a staple if it worked, yay
 			if (!src.stapled) //That's the last staple!
-				source.visible_message("<span class='alert'><B>[source.name] rips out the staples from \the [src]!</B></span>", "<span class='alert'><B>You rip out the staples from \the [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
+				source.visible_message(SPAN_ALERT("<B>[source.name] rips out the staples from \the [src]!</B>"), SPAN_ALERT("<B>You rip out the staples from \the [src]!</B>"), SPAN_ALERT("You hear a loud ripping noise."))
 				. = 1
 			else //Did you get some of them?
-				source.visible_message("<span class='alert'><B>[source.name] rips out some of the staples from \the [src]!</B></span>", "<span class='alert'><B>You rip out some of the staples from \the [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
+				source.visible_message(SPAN_ALERT("<B>[source.name] rips out some of the staples from \the [src]!</B>"), SPAN_ALERT("<B>You rip out some of the staples from \the [src]!</B>"), SPAN_ALERT("You hear a loud ripping noise."))
 				. = 0
 
 			//Commence owie
 			take_bleeding_damage(target, null, rand(4, 8), DAMAGE_BLUNT)	//My
-			playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1) //head,
+			playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE) //head,
 			target.emote("scream") 									//FUCKING
 			target.TakeDamage("head", rand(8, 16), 0) 				//OW!
 

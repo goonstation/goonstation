@@ -6,13 +6,14 @@
 	. = ..()
 	var/obj/item/I = parent
 	var/mob/living/user = source.loc
-	if (I.no_gravity)
+	if (istype(user) && I.no_gravity)
 		user.no_gravity = 1
 
 /datum/component/loctargeting/no_gravity/on_removed(atom/movable/source, atom/old_loc)
 	. = ..()
-	var/mob/living/user = source.loc
-	user.no_gravity = 0
-	for (var/atom/movable/A as anything in user)
-		if (A.no_gravity)
-			user.no_gravity = 1 //keep on if we are still holdin stuff
+	var/mob/living/user = old_loc
+	if(istype(user))
+		user.no_gravity = 0
+		for (var/atom/movable/A as anything in user)
+			if (A.no_gravity)
+				user.no_gravity = 1 //keep on if we are still holdin stuff

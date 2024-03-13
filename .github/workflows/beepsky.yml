@@ -14,16 +14,16 @@ jobs:
     runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Cache SpacemanDMM
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: $HOME/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1.4.1
+        uses: hecrj/setup-rust-action@v2.0.0
 
       - name: Install Dependencies
         run: |
@@ -33,29 +33,58 @@ jobs:
           tools/bootstrap/python -c ''
           touch +secret/__secret.dme
 
+      - name: Check TGUI
+        run: |
+          tools/ci/build_tgui.sh
+
       - name: Misc Checks
         run: |
           tools/ci/check_filedirs.sh goonstation.dme
-          tools/ci/build_tgui.sh
           tools/ci/check_grep.sh
           tools/bootstrap/python tools/ci/validate_dme.py <goonstation.dme
+
+      - name: Check Maps
+        run: |
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test
+
+      - name: Check Duplicate DMI Icon States
+        uses: spacestation13/dmi-duplicate-state-checker@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Linter
         id: linter
         run: |
           ~/dreamchecker
 
+  odlint:
+    name: Lint with OpenDream
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      # - name: Setup dotnet
+      #   uses: actions/setup-dotnet@v4
+      #   with:
+      #     dotnet-version: "8.0"
+      - run: touch +secret/__secret.dme
+      - uses: robinraju/release-downloader@v1.9
+        with:
+          repository: "OpenDreamProject/OpenDream"
+          tag: "latest"
+          fileName: "DMCompiler_linux-x64.tar.gz"
+          extract: true
+      - run: ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented goonstation.dme --version=514.1584
+
   compile:
     name: Compile
     runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Cache BYOND
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: $HOME/BYOND
           key: ${{ runner.os }}-byond
@@ -82,7 +111,7 @@ jobs:
       #     cp goonstation.rsc artifacts
 
       # - name: Upload Artifacts
-      #   uses: actions/upload-artifact@v1
+      #   uses: actions/upload-artifact@v4
       #   with:
       #     name: DMB + RSC
       #     path: ${{github.workspace}}/artifacts
@@ -93,13 +122,13 @@ jobs:
     if: |
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-          token: '${{ secrets.ROBUDDYBOT_PAT }}'
+          token: "${{ secrets.ROBUDDYBOT_PAT }}"
 
       - name: Cache BYOND
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: $HOME/BYOND
           key: ${{ runner.os }}-byond
@@ -115,13 +144,13 @@ jobs:
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
 
       - name: Cache SpacemanDMM
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: $HOME/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1.4.1
+        uses: hecrj/setup-rust-action@v2.0.0
 
       - name: Install Dependencies
         run: |

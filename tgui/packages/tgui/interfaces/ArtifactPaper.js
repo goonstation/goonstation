@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Button, Section, Flex, TextArea } from '../components';
+import { Button, Flex, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 
 export const ArtifactPaper = (props, context) => {

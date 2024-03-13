@@ -121,8 +121,8 @@ TYPEINFO(/obj/machinery/genetics_booth)
 			if (started == 2)
 				if (!try_billing(occupant))
 					for (var/mob/O in hearers(src, null))
-						O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
-					occupant.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
+						O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"")), 2)
+					occupant.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"")), 2)
 
 					eject_occupant(0)
 		else if (started)
@@ -138,7 +138,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 			return
 
 		if (status & (NOPOWER | BROKEN))
-			boutput(user, "<span class='alert'>The gene booth is currently nonfunctional.</span>")
+			boutput(user, SPAN_ALERT("The gene booth is currently nonfunctional."))
 			return
 
 
@@ -260,7 +260,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 				if(selected_product?.BE)
 
 					var/datum/bioEffect/NEW = new selected_product.BE.type()
-					copy_datum_vars(selected_product.BE,NEW)
+					copy_datum_vars(selected_product.BE, NEW, blacklist=list("owner", "holder", "dnaBlocks"))
 					occupant.bioHolder.AddEffectInstanceNoDelay(NEW)
 
 					selected_product.uses -= 1
@@ -270,9 +270,9 @@ TYPEINFO(/obj/machinery/genetics_booth)
 						offered_genes -= selected_product
 						reload_contexts()
 
-					playsound(src, 'sound/machines/ding.ogg', 50, 1, 0, 1.4)
+					playsound(src, 'sound/machines/ding.ogg', 50, TRUE, 0, 1.4)
 			else
-				playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 0.5)
+				playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 0.5)
 
 			//occupant.set_loc(src.loc)
 
@@ -322,9 +322,10 @@ TYPEINFO(/obj/machinery/genetics_booth)
 
 							for (var/mob/O in hearers(src, null))
 								//if (src.glitchy_slogans)
-								//	O.show_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[voidSpeak(message)]\"", 2)
+								//	O.show_message("<span class='say'>[SPAN_NAME("[src]")] beeps,</span> \"[voidSpeak(message)]\"", 2)
 								//else
-								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Thank you for your patronage, <b>[M.name]<b>.\"</span></span>", 2)
+
+								O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Thank you for your patronage, <b>[M.name]<b>.\"")), 2)
 
 
 							.= 1
@@ -388,7 +389,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 
 	mob_flip_inside(var/mob/user)
 		..(user)
-		user.show_text("<span class='alert'>[src] [pick("bends","shakes","groans")].</span>")
+		user.show_text(SPAN_ALERT("[src] [pick("bends","shakes","groans")]."))
 		if (prob(33))
 			src.eject_occupant(add_power = 0)
 

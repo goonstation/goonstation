@@ -9,6 +9,10 @@
 #define AID_CONTRACT 2
 #define SCI_CONTRACT 3
 
+#define FOOD_REQ_BY_ITEM 0
+#define FOOD_REQ_BY_BITE 1
+#define FOOD_REQ_INTACT 2
+
 #define REQ_RETURN_NOSALE 0
 #define REQ_RETURN_SALE 1
 #define REQ_RETURN_FULLSALE 2

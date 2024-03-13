@@ -52,7 +52,7 @@
 		if (!H || H.id != "boxes") return
 		if (usr)
 			var/obj/item/I = usr.equipped()
-			if (src.master && I && src.master.linked_item.loc == usr && src.master.check_can_hold(I) == STORAGE_CAN_HOLD)
+			if (src.master && I && src.master.linked_item.loc == usr && src.master.hud_can_add(I))
 				sel.screen_loc = empty_obj_loc
 
 
@@ -133,30 +133,33 @@
 			I.mouse_drop(over_object, src_location, over_location, over_control, params)
 */
 	proc/update(mob/user = usr)
+		var/list/hud_contents = src.master.get_hud_contents()
+		var/num_contents = src.master.get_visible_slots()
+
 		var x = 1
-		var y = 1 + master.slots
+		var y = 1 + num_contents
 		var sx = 1
-		var sy = master.slots + 1
+		var sy = num_contents + 1
 		var/turfd = 0
 
 		if (isturf(master.linked_item.loc) && !istype(master.linked_item, /obj/item/bible)) // goddamn BIBLES (prevents conflicting positions within different bibles)
 			x = 7
 			y = 8
-			sx = (master.slots + 1) / 2
+			sx = (num_contents + 1) / 2
 			sy = 2
 
 			turfd = 1
 
 		if (user && user.client?.tg_layout) //MBC TG OVERRIDE IM SORTY
-			x = 11 - round(master.slots / 2)
+			x = 11 - round(num_contents / 2)
 			y = 3
-			sx = master.slots + 1
+			sx = num_contents + 1
 			sy = 1
 
 			if (turfd) // goddamn BIBLES (prevents conflicting positions within different bibles)
 				x = 8
 				y = 8
-				sx = (master.slots + 1) / 2
+				sx = (num_contents + 1) / 2
 				sy = 2
 
 		if (!boxes)
@@ -182,7 +185,7 @@
 
 		src.obj_locs = list()
 		var/i = 0
-		for (var/obj/item/I in master.get_contents())
+		for (var/obj/item/I as anything in hud_contents)
 			if (!(I in src.objects)) // ugh
 				add_object(I, HUD_LAYER+1)
 			var/obj_loc = "[x+(i%sx)],[y-round(i/sx)]" //no pixel coords cause that makes click detection harder above

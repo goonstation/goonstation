@@ -92,10 +92,10 @@ Hold down CTRL, ALT or SHIFT to modify, call or reset variable bound to those ke
 			else
 				object.vars[varn2use] = varv2use
 			object.onVarChanged(varn2use, ov, object.vars[varn2use])
-			boutput(usr, "<span class='notice'>Set [object].[varn2use] to [varv2use].</span>")
+			boutput(usr, SPAN_NOTICE("Set [object].[varn2use] to [varv2use]."))
 			blink(get_turf(object))
 		else
-			boutput(usr, "<span class='alert'>[object] has no var named [varn2use].</span>")
+			boutput(usr, SPAN_ALERT("[object] has no var named [varn2use]."))
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		var/varn2use = null
@@ -109,13 +109,13 @@ Hold down CTRL, ALT or SHIFT to modify, call or reset variable bound to those ke
 			varn2use = varname_n
 
 		if (!varn2use)
-			boutput(usr, "<span class='alert'>No var name defined[ctrl ? " for CTRL" : alt ? " for ALT" : shift ? " for SHIFT" : null]!</span>")
+			boutput(usr, SPAN_ALERT("No var name defined[ctrl ? " for CTRL" : alt ? " for ALT" : shift ? " for SHIFT" : null]!"))
 			return
 		if (varn2use in object.vars)
 			var/ov = object.vars[varn2use]
 			object.vars[varn2use] = initial(object.vars[varn2use])
 			object.onVarChanged(varn2use, ov, object.vars[varn2use])
-			boutput(usr, "<span class='notice'>Reset [object].[varn2use] to initial value ([object.vars[varn2use]]).</span>")
+			boutput(usr, SPAN_NOTICE("Reset [object].[varn2use] to initial value ([object.vars[varn2use]])."))
 			blink(get_turf(object))
 		else
-			boutput(usr, "<span class='alert'>[object] has no var named [varn2use].</span>")
+			boutput(usr, SPAN_ALERT("[object] has no var named [varn2use]."))

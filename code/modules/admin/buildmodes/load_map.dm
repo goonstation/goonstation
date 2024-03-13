@@ -33,7 +33,7 @@ Right Mouse Button on the mode         = Cycle loading modes<br>
 		if (!A) return
 		blink(A)
 		if(loading)
-			boutput(usr, "<span class='alert'>Already loading a map!</span>")
+			boutput(usr, SPAN_ALERT("Already loading a map!"))
 			return
 		var/target = input("Select the map to load.", "Saved map upload", null) as null|file
 		if(!target)
@@ -45,7 +45,7 @@ Right Mouse Button on the mode         = Cycle loading modes<br>
 			loading = 0
 			return
 		loading = 1
-		boutput(usr, "<span class='notice'>Loading started.</span>")
+		boutput(usr, SPAN_NOTICE("Loading started."))
 		var/overwrite_flags = 0
 		if(mode_number == LOAD_MODE_DEL_OBJS)
 			overwrite_flags |= DMM_OVERWRITE_OBJS
@@ -53,7 +53,7 @@ Right Mouse Button on the mode         = Cycle loading modes<br>
 			overwrite_flags |= DMM_OVERWRITE_OBJS | DMM_OVERWRITE_MOBS
 		var/datum/loadedProperties/props = dmm_suite.read_map(text, A.x, A.y, A.z, flags = overwrite_flags)
 		logTheThing(LOG_ADMIN, usr, "loaded an area [target] using build mode at [turf_log] with height [(props.maxY - props.sourceY) + 1], width [(props.maxX - props.sourceX) + 1], and mode: [src.mode_names[src.mode_number + 1]]")
-		boutput(usr, "<span class='notice'>Loading finished.</span>")
+		boutput(usr, SPAN_NOTICE("Loading finished."))
 		loading = 0
 
 

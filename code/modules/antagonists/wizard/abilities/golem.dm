@@ -40,11 +40,11 @@
 
 
 		if(!AnItem)
-			boutput(holder.owner, "<span class='alert'>You must be holding a container in your hand.</span>")
+			boutput(holder.owner, SPAN_ALERT("You must be holding a container in your hand."))
 			return 1 // No cooldown when it fails.
 
 		if(!TheReagents)
-			boutput(holder.owner, "<span class='alert'>You have no material to convert into a golem.</span>")
+			boutput(holder.owner, SPAN_ALERT("You have no material to convert into a golem."))
 			return 1
 
 
@@ -63,7 +63,7 @@
 
 		qdel(TheReagents)
 		qdel(AnItem)
-		boutput(holder.owner, "<span class='notice'>You conjure up [the_golem]!</span>")
+		boutput(holder.owner, SPAN_NOTICE("You conjure up [the_golem]!"))
 		logTheThing(LOG_COMBAT, holder.owner, "created a [constructTarget(the_golem,"combat")] at [log_loc(holder.owner)].")
-		holder.owner.visible_message("<span class='alert'>[holder.owner] conjures up [the_golem]!</span>")
+		holder.owner.visible_message(SPAN_ALERT("[holder.owner] conjures up [the_golem]!"))
 		playsound(holder.owner.loc, 'sound/effects/mag_golem.ogg', 25, 1, -1)

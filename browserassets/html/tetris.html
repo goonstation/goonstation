@@ -72,7 +72,8 @@
       this.cvs.height = 500;
 
       this.cvs.style.left = 0 + 'px';
-      this.cvs.style.top =  0 + 'px';
+      // shift down 46 pixels to avoid covering chui titlebar
+      this.cvs.style.top =  46 + 'px';
     },
 
     Initialize: function(){
@@ -553,12 +554,12 @@
     GameOver: function(){
       Page.Game.IsDirty = Page.ScoreBarCur.IsDirty = true;
 
-      if (this.ScoreCur > this.ScoreHigh){
-        this.ScoreHigh = this.ScoreCur;
-        Page.ScoreBarHigh.IsDirty = true;
+      // if (this.ScoreCur > this.ScoreHigh){
+			this.ScoreHigh = this.ScoreCur;
+			Page.ScoreBarHigh.IsDirty = true;
 
-        window.location = {{TOPICURL}}
-      }
+			window.location = {{TOPICURL}}
+      // }
 
       this.IsAlive = false;
     }
@@ -1002,9 +1003,8 @@
     if (GM.IsAlive){
       switch(keyDown){
 
-        case 38:
-        case 87:
-        case 69:
+        case 87: // w
+        case 69: // e
         case 88: // x
           if (!GM.CRotation) {
             Page.Game.IsDirty = GM.Pc.TryRotate(1);
@@ -1020,8 +1020,8 @@
           }
           break;
 
-        case 37:
-        case 65:
+        case 37: // left arrow
+        case 65: // a
           if (!GM.Left) {
             Page.Game.IsDirty = GM.Pc.TryMove(-1,0);
             GM.Left = true;
@@ -1030,8 +1030,8 @@
           }
           break;
 
-        case 39:
-        case 68:
+        case 39: // right arrow
+        case 68: // d
           if (!GM.Right) {
             Page.Game.IsDirty = GM.Pc.TryMove(1,0);
             GM.Right = true;
@@ -1040,8 +1040,8 @@
           }
           break;
 
-        case 40:
-        case 83:
+        case 40: // down arrow
+        case 83: // s
           if (!GM.SoftDrop) {
             Page.Game.IsDirty = GM.Pc.TryMove(0,1);
             if (GM.Pc.CheckCollisions(0, 0, 1) != 0) {
@@ -1052,7 +1052,9 @@
             GM.SoftDropTimer = GM.TimeCur;
           }
           break;
-        case 32:
+
+				case 32: // space
+				case 38: // up arrow
           if (!GM.HardDrop) {
             Page.Game.IsDirty = GM.Pc.TryDrop();
             GM.HardDrop = true;
@@ -1074,9 +1076,8 @@
     if (GM.IsAlive){
       switch(keyUp){
 
-        case 38:
-        case 87:
-        case 69:
+        case 87: // w
+        case 69: // e
         case 88: // x
           GM.CRotation = false;
           break;
@@ -1086,28 +1087,29 @@
           GM.CCRotation = false;
           break;
 
-        case 37:
-        case 65:
+				case 37: // left arrow
+        case 65: // a
           GM.Left = false;
           GM.LeftDasTimer = 0;
           GM.LeftHasPriority = false;
           break;
 
-        case 39:
-        case 68:
+				case 39: // right arrow
+        case 68: // d
           GM.Right = false;
           GM.RightDasTimer = 0;
           GM.LeftHasPriority = true;
           break;
 
-        case 40:
-        case 83:
+				case 40: // down arrow
+        case 83: // s
           GM.SoftDrop = false;
           GM.SoftDropTimer = 0;
           break;
 
 
-        case 32:
+				case 32: // space
+				case 38: // up arrow
           GM.HardDrop = false;
           break;
 

@@ -62,7 +62,7 @@
 
 			var/obj/item/I = user.equipped()
 			if(I) //no hitting the controls with stuff to operate them!
-				src.attackby(I,user)
+				src.Attackby(I,user)
 				return
 
 			//Determine spot that was clicked
@@ -171,7 +171,7 @@
 
 /obj/machinery/computer/siphon_control/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))
-		boutput(user, "<span class='alert'>Access Denied.</span>")
+		boutput(user, SPAN_ALERT("Access Denied."))
 		return
 
 	if(..())
@@ -344,7 +344,7 @@
 
 /obj/machinery/computer/siphon_db/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))
-		boutput(user, "<span class='alert'>Access Denied.</span>")
+		boutput(user, SPAN_ALERT("Access Denied."))
 		return
 
 	if(..())

@@ -103,7 +103,7 @@ obj/item/engivac/attackby(obj/item/I, mob/user)
 		if (!toolbox_contents_check(I))
 			if(!ON_COOLDOWN(src, "rejectsound", 2 SECONDS))
 				playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
-			boutput(user, "<span class='alert'>This toolbox has too many unrecognised things in it, and the vacuum rejects it.</span>")
+			boutput(user, SPAN_ALERT("This toolbox has too many unrecognised things in it, and the vacuum rejects it."))
 			return
 		user.u_equip(I)
 		held_toolbox = I
@@ -140,19 +140,19 @@ obj/item/engivac/attack_self(mob/user)
 	switch(input)
 		if ("Toggle collecting building materials")
 			collect_buildmats = !collect_buildmats
-			boutput(user, "<span class='notice'>\The [name] will now [collect_buildmats ? "collect" : "leave"] building materials.</span>")
+			boutput(user, SPAN_NOTICE("\The [name] will now [collect_buildmats ? "collect" : "leave"] building materials."))
 			rebuild_collection_list()
 			tooltip_rebuild = 1
 
 		if ("Toggle collecting debris")
 			collect_debris = !collect_debris
-			boutput(user, "<span class='notice'>\The [name] will now [collect_debris ? "collect" : "leave"] debris.</span>")
+			boutput(user, SPAN_NOTICE("\The [name] will now [collect_debris ? "collect" : "leave"] debris."))
 			rebuild_collection_list()
 			tooltip_rebuild = 1
 
 		if ("Toggle floor tile auto-placement")
 			placing_tiles = !placing_tiles
-			boutput(user, "<span class='notice'>\The [name]'s tile auto-placement has been [placing_tiles ? "enabled" : "disabled"].</span>")
+			boutput(user, SPAN_NOTICE("\The [name]'s tile auto-placement has been [placing_tiles ? "enabled" : "disabled"]."))
 			tooltip_rebuild = 1
 
 		if ("Remove Toolbox")
@@ -178,14 +178,14 @@ obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
 			placing_tiles = FALSE
 			tooltip_rebuild = 1
 			playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
-			boutput(M, "<span class='alert'>\The [name] does not have any floor tiles left, and deactivates auto-placing.</span>")
+			boutput(M, SPAN_ALERT("\The [name] does not have any floor tiles left, and deactivates auto-placing."))
 			return
 	if (istype(target, /turf/simulated/floor))
 		var/turf/simulated/floor/tile_target = target
 		if (tile_target.intact && !(tile_target.broken || tile_target.burnt)) //Does this need replacing?
 			return
 
-		tile_target.attackby(current_stack,M)
+		tile_target.Attackby(current_stack,M)
 
 		if (current_stack.disposed) //This stack just ran out
 			current_stack = null

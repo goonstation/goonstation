@@ -1,7 +1,8 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Box, Button, Section, Table, Image } from 'tgui/components';
+import { Box, Button, Image, Section } from 'tgui/components';
 import { Collapsible, Divider, Flex, LabeledList, Stack } from '../components';
+import { VendorCashTable } from './common/VendorCashTable';
 
 export const Vendors = (props, context) => {
   const { act, data } = useBackend(context);
@@ -192,31 +193,8 @@ export const Vendors = (props, context) => {
           </Stack.Item>
           {requiresMoney > 0 && (
             <Stack.Item>
-              <Table font-size="9pt" direction="row">
-                <Table.Row>
-                  <Table.Cell bold>
-                    {cardname && (
-                      <Button icon="id-card"
-                        mr="100%"
-                        content={cardname ? cardname : ""}
-                        onClick={() => act('logout')}
-                      />
-                    )}
-                    {(cardname && bankMoney >= 0) && ("Money on account: " + bankMoney + "⪽")}
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell bold direction="row">
-                    {(cash > 0) && ("Cash: " + cash + "⪽")}
-                    {(cash > 0 && cash) && (
-                      <Button icon="eject"
-                        ml="1%"
-                        content={"eject"}
-                        onClick={() => act('returncash')} />
-                    )}
-                  </Table.Cell>
-                </Table.Row>
-              </Table>
+              <VendorCashTable cardname={cardname} onCardClick={() => act('logout')} bankMoney={bankMoney}
+                cash={cash} onCashClick={() => act('returncash')} />
             </Stack.Item>
           )}
         </Stack>

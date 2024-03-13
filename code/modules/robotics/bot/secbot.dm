@@ -271,6 +271,12 @@
 			message = capitalize(ckeyEx(message))
 		. = ..()
 
+	pull(mob/user)
+		if (src.on)
+			boutput(user,SPAN_ALERT("<b>[src] resists being pulled around! Maybe deactivate it first.</b>"))
+			return 1
+		..()
+
 	Move(var/turf/NewLoc, direct)
 		var/oldloc = src.loc
 		. = ..()
@@ -318,6 +324,8 @@
 			src.on = !src.on
 			if (src.on)
 				add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
+				if (src.pulled_by)
+					src.pulled_by.remove_pulling()
 			else
 				remove_simple_light("secbot")
 			src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
@@ -377,25 +385,29 @@
 
 	attack_ai(mob/user as mob)
 		if (src.on && src.emagged)
-			boutput(user, "<span class='alert'>[src] refuses your authority!</span>")
+			boutput(user, SPAN_ALERT("[src] refuses your authority!"))
 			return
 		src.on = !src.on
+		if (src.on && src.pulled_by)
+			src.pulled_by.remove_pulling()
 		src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (src.emagged < emag_stages)
 			if (emagged)
 				if (user)
-					boutput(user, "<span class='alert'>You short out [src]'s system clock inhibition circuis.</span>")
+					boutput(user, SPAN_ALERT("You short out [src]'s system clock inhibition circuits."))
 				UpdateOverlays(null, "secbot_hat")
 				UpdateOverlays(null, "secbot_charge")
 			else if (user)
-				boutput(user, "<span class='alert'>You short out [src]'s target assessment circuits.</span>")
-			src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+				boutput(user, SPAN_ALERT("You short out [src]'s target assessment circuits."))
+			src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 
 
 			src.emagged++
 			src.on = 1
+			if (src.pulled_by)
+				src.pulled_by.remove_pulling()
 			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)
 
@@ -434,8 +446,10 @@
 		..()
 		if(!src.emagged && prob(75))
 			src.emagged = 1
-			src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 			src.on = 1
+			if (src.pulled_by)
+				src.pulled_by.remove_pulling()
 		else
 			src.explode()
 		return
@@ -447,12 +461,12 @@
 				boutput(M, "Controls are now [src.locked ? "locked." : "unlocked."]")
 				src.updateUsrDialog()
 			else
-				boutput(M, "<span class='alert'>Access denied.</span>")
+				boutput(M, SPAN_ALERT("Access denied."))
 
 		else if (isscrewingtool(I))
 			if (src.health < initial(health))
 				src.health = initial(health)
-				src.visible_message("<span class='alert'>[M] repairs [src]!</span>", "<span class='alert'>You repair [src].</span>")
+				src.visible_message(SPAN_ALERT("[M] repairs [src]!"), SPAN_ALERT("You repair [src]."))
 		else
 			switch(I.hit_type)
 				if (DAMAGE_BURN)
@@ -526,7 +540,7 @@
 		src.exploding = 1
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+			O.show_message(SPAN_ALERT("<B>[src] blows apart!</B>"), 1)
 		var/turf/Tsec = get_turf(src)
 
 		var/obj/item/secbot_assembly/Sa = new /obj/item/secbot_assembly(Tsec)
@@ -588,8 +602,8 @@
 
 				stuncount--
 				if (check_target_immunity(M))
-					src.visible_message("<span class='alert'><B>[src] tries to stun [M] with the [src.our_baton] but the attack bounces off uselessly!</B></span>")
-					playsound(src, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
+					src.visible_message(SPAN_ALERT("<B>[src] tries to stun [M] with the [src.our_baton] but the attack bounces off uselessly!</B>"))
+					playsound(src, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, TRUE, -1)
 				else
 					src.our_baton.do_stun(src, M, src.stun_type, 2)
 				if (!stuncount && maxstuns-- <= 0)
@@ -650,7 +664,7 @@
 
 			if(SECBOT_SUMMON)		// summoned to PDA
 				src.doing_something = 1
-				if(!src.path)
+				if (!src.path) //null path means we couldn't find the target
 					src.speak("ERROR 99-28: COULD NOT FIND PATH TO SUMMON TARGET. ABORTING.")
 					src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)	// switch back to what we should be
 
@@ -767,7 +781,7 @@
 				if(prob(50 + (src.emagged * 15)))
 					for(var/mob/M in hearers(C, null))
 						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>")
-					playsound(C, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+					playsound(C, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 					animate_storage_thump(C)
 				src.container_cool_off_counter++
 				if(src.container_cool_off_counter >= src.container_cool_off_max) // Give him some time to cool off
@@ -813,6 +827,8 @@
 	// look for a criminal in range of the bot
 	proc/look_for_perp()
 		src.anchored = UNANCHORED
+		if (!isturf(src.loc)) //no active searching while in lockers and stuff
+			return
 		for(var/mob/living/carbon/C in view(7, get_turf(src))) //Let's find us a criminal
 			if ((C.stat) || (C.hasStatus("handcuffed")))
 				continue
@@ -889,7 +905,7 @@
 				src.speak("PREPARE FOR JUSTICE.")
 			if('sound/voice/bfreeze.ogg')
 				src.speak("FREEZE. SCUMBAG.")
-		playsound(src, saything, 50, 0)
+		playsound(src, saything, 50, FALSE)
 
 	proc/weeoo()
 		if(weeooing)
@@ -897,7 +913,7 @@
 		SPAWN(0)
 			weeooing = 1
 			var/weeoo = 10
-			playsound(src, 'sound/machines/siren_police.ogg', 50, 1)
+			playsound(src, 'sound/machines/siren_police.ogg', 50, TRUE)
 			while (weeoo)
 				add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
 				sleep(0.3 SECONDS)
@@ -918,56 +934,20 @@
 		if((src.idcheck)) // bot is set to actively search for contraband
 			var/obj/item/card/id/perp_id = perp.equipped()
 			if (!istype(perp_id))
-				perp_id = perp.wear_id
+				perp_id = perp.get_id()
 
-			var/has_carry_permit = 0
-			var/has_contraband_permit = 0
+			//Agent cards lower threat level
+			if(istype(perp_id, /obj/item/card/id/syndicate))
+				threatcount -= 2
 
-			if (!has_contraband_permit)
-				threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_CONTRABAND_OVERRIDE)
-
-			if(perp_id) //Checking for permits
-				if(weapon_access in perp_id.access)
-					has_carry_permit = 1
-				if(contraband_access in perp_id.access)
-					has_contraband_permit = 1
-
-			if (istype(perp.l_hand))
-				if (istype(perp.l_hand, /obj/item/gun/)) // perp is carrying a gun
-					if(!has_carry_permit)
-						threatcount += perp.l_hand.get_contraband()
-				else // not carrying a gun, but potential contraband?
-					if(!has_contraband_permit)
-						threatcount += perp.l_hand.get_contraband()
-
-			if (istype(perp.r_hand))
-				if (istype(perp.r_hand, /obj/item/gun/)) // perp is carrying a gun
-					if(!has_carry_permit)
-						threatcount += perp.r_hand.get_contraband()
-				else // not carrying a gun, but potential contraband?
-					if(!has_contraband_permit)
-						threatcount += perp.r_hand.get_contraband()
-
-			if (istype(perp.belt))
-				if (istype(perp.belt, /obj/item/gun/))
-					if (!has_carry_permit)
-						threatcount += perp.belt.get_contraband() * 0.5
-				else
-					if (!has_contraband_permit)
-						threatcount += perp.belt.get_contraband() * 0.5
-
-			if (istype(perp.wear_suit))
-				if (!has_contraband_permit)
-					threatcount += perp.wear_suit.get_contraband()
-
-			if (istype(perp.back))
-				if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
-					if (!has_carry_permit)
-						threatcount += perp.back.get_contraband() * 0.5
-				else // at moment of doing this we don't have other contraband back items, but maybe that'll change
-					if (!has_contraband_permit)
-						threatcount += perp.back.get_contraband() * 0.5
-
+			if(perp_id) //Checking for targets and permits
+				var/list/contraband_returned = list()
+				if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !(contraband_access in perp_id.access), !(weapon_access in perp_id.access)))
+					threatcount += max(contraband_returned)
+			else
+				var/list/contraband_returned = list()
+				if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
+					threatcount += max(contraband_returned)
 
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5
@@ -975,10 +955,6 @@
 		if(perp.traitHolder.hasTrait("stowaway") && perp.traitHolder.hasTrait("jailbird"))
 			if(isnull(data_core.security.find_record("name", perp.name)))
 				threatcount += 5
-
-		//Agent cards lower threat level
-		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))
-			threatcount -= 2
 
 		// we have grounds to make an arrest, don't bother with further analysis
 		if(threatcount >= 4)
@@ -1247,14 +1223,13 @@
 				for(var/j in 1 to rand(2,5))
 					qbert += "[pick("!","?")]"
 				src.speak("[qbert]")
-		playsound(src, say_thing, 50, 0, 0, 1)
+		playsound(src, say_thing, 50, FALSE, 0, 1)
 		ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.target?.name]", src.last_target_cooldown)
 
 //secbot handcuff bar thing
 /datum/action/bar/icon/secbot_cuff
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "secbot_cuff"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "buddycuff"
 	var/obj/machinery/bot/secbot/master
@@ -1278,11 +1253,11 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(master, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
-		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [master.target]!</B></span>")
+		playsound(master, 'sound/weapons/handcuffs.ogg', 30, TRUE, -2)
+		master.visible_message(SPAN_ALERT("<B>[master] is trying to put handcuffs on [master.target]!</B>"))
 		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON)
 			duration = round(duration * 0.75)
-			playsound(master, 'sound/misc/winding.ogg', 30, 1, -2)
+			playsound(master, 'sound/misc/winding.ogg', 30, TRUE, -2)
 
 	onInterrupt()
 		..()
@@ -1352,7 +1327,6 @@
 /datum/action/bar/icon/secbot_stun
 	duration = 10
 	interrupt_flags = 0 //THE SECURITRON STOPS FOR NOTHING
-	id = "secbot_cuff"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "stunbaton_active"
 	var/obj/machinery/bot/secbot/master
@@ -1378,12 +1352,12 @@
 			return
 
 		master.baton_charging = 1
-		master.visible_message("<span class='alert'><B>[master] is energizing its prod, preparing to zap [master.target]!</B></span>")
+		master.visible_message(SPAN_ALERT("<B>[master] is energizing its prod, preparing to zap [master.target]!</B>"))
 		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON || master.emagged >= 2)
-			playsound(master, 'sound/machines/ArtifactBee2.ogg', 30, 1, -2)
+			playsound(master, 'sound/machines/ArtifactBee2.ogg', 30, TRUE, -2)
 			duration = round(duration * 0.6)
 		else
-			playsound(master, 'sound/effects/electric_shock_short.ogg', 30, 1, -2)
+			playsound(master, 'sound/effects/electric_shock_short.ogg', 30, TRUE, -2)
 
 	onEnd()
 		..()

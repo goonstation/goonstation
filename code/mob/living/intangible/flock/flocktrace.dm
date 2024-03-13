@@ -63,13 +63,13 @@
 /mob/living/intangible/flock/trace/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> [src.real_name]
-		<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none, somehow"]
-		<br><span class='bold'>Resources:</span> [src.flock.total_resources()]
-		<br><span class='bold'>System Integrity:</span> [round(src.flock.total_health_percentage()*100)]%
-		<br><span class='bold'>Cognition:</span> SYNAPTIC PROCESS
-		<br>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] [src.real_name]<br>\
+			[SPAN_BOLD("Flock:")] [src.flock ? src.flock.name : "none, somehow"]<br>\
+			[SPAN_BOLD("Resources:")] [src.flock.total_resources()]<br>\
+			[SPAN_BOLD("System Integrity:")] [round(src.flock.total_health_percentage()*100)]<br>\
+			[SPAN_BOLD("Cognition:")] SYNAPTIC PROCESS<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 /mob/living/intangible/flock/trace/select_drone(mob/living/critter/flock/drone/drone)
 	if (src.flock?.flockmind.tutorial)
@@ -83,7 +83,7 @@
 		was_in_drone = TRUE
 		controlled.release_control(FALSE)
 
-	boutput(src, "<span class='flocksay'><b>\[SYSTEM: New functions detected. Control of Flock assumed.\]</b></span>")
+	boutput(src, SPAN_FLOCKSAY("<b>\[SYSTEM: New functions detected. Control of Flock assumed.\]</b>"))
 	flock_speak(null, "Flocktrace [src.real_name] has been promoted to Flockmind.", src.flock)
 
 	var/mob/living/intangible/flock/flockmind/original = src.flock.flockmind
@@ -111,7 +111,7 @@
 	if (src.flock && src.compute != 0 && length(src.flock.traces) > src.flock.max_trace_count + src.flock.queued_trace_deaths && !src.dying)
 		src.dying = TRUE
 		src.flock.queued_trace_deaths++
-		boutput(src, "<span class='alert'>The Flock has insufficient compute to sustain your consciousness! You will die soon!</span>")
+		boutput(src, SPAN_ALERT("The Flock has insufficient compute to sustain your consciousness! You will die soon!"))
 		src.addOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 		src.updateOverlaysClient(src.client)
 		if (istype(src.loc, /mob/living/critter/flock/drone))
@@ -124,7 +124,7 @@
 					src.death()
 				else
 					src.dying = FALSE
-					boutput(src, "<span class='alert'>The Flock has gained enough compute to keep you alive!</span>")
+					boutput(src, SPAN_ALERT("The Flock has gained enough compute to keep you alive!"))
 					src.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 					src.updateOverlaysClient(src.client)
 				src.flock.queued_trace_deaths--
@@ -139,7 +139,7 @@
 	if(src.client)
 		if (suicide)
 			flock_speak(null, "Flocktrace [src.real_name] relinquishes their computational designation and reintegrates themselves back into the Flock.", src.flock)
-		boutput(src, "<span class='alert'>You cease to exist abruptly.</span>")
+		boutput(src, SPAN_ALERT("You cease to exist abruptly."))
 	src.flock?.removeTrace(src)
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	src.icon_state = "blank"
@@ -160,3 +160,5 @@
 	animate_bumble(O)
 	O.alpha = 160
 	return O
+
+

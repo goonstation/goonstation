@@ -148,7 +148,7 @@
 			light.enable()
 
 //space/fluid/ReplaceWith() this is for future ctrl Fs
-	ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, var/handle_dir = 1, force = 0)
+	ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, var/handle_dir = NORTH, force = 0)
 		.= ..(what, keep_old_material, handle_air)
 
 		if (handle_air)
@@ -306,23 +306,34 @@
 
 	name = "deep hole"
 	icon_state = "pit"
-	var/list/L = list()
 	spawningFlags = 0
-	randomIcon = 0
-	generateLight = 0
+	randomIcon = FALSE
+	generateLight = FALSE
 
-	allow_hole = 0
+	allow_hole = FALSE
 
 	color = OCEAN_COLOR
-	fullbright = 1
+	fullbright = TRUE
+
+	occlude_foreground_parallax_layers = TRUE
+	fulltile_foreground_parallax_occlusion_overlay = TRUE
 
 	New()
 		. = ..()
+		for (var/obj/venthole/hole in src)
+			qdel(hole)
 		var/noise_scale = 55
 		var/r1 = text2num(rustg_noise_get_at_coordinates("[global.server_start_time]", "[src.x / noise_scale]", "[src.y / noise_scale]"))
 		var/r2 = text2num(rustg_noise_get_at_coordinates("[global.server_start_time + 123465]", "[src.x / noise_scale]", "[src.y / noise_scale]"))
 		var/col = rgb(255 * (1 - r1 - r2), 255 * r2, 255 * r1)
-		UpdateIcon(140, col)
+		UpdateIcon(90, col)
+		src.initialise_component()
+
+	proc/initialise_component()
+		src.AddComponent(/datum/component/pitfall/target_area,\
+			BruteDamageMax = 6,\
+			FallTime = 0.3 SECONDS,\
+			TargetArea = /area/trench_landing)
 
 	edge
 		icon_state = "pit_wall"
@@ -335,81 +346,23 @@
 			STOP_TRACKING
 			. = ..()
 
-	proc/try_build_turf_list()
-		if (!L || length(L) == 0)
-			for(var/turf/T in get_area_turfs(/area/trench_landing))
-				L+=T
-
-	Entered(var/atom/movable/AM)
-		. = ..()
-		if (istype(AM,/mob/dead) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced) || istype(AM,/obj/torpedo_targeter) || istype(AM,/obj/overlay) || istype (AM, /obj/arrival_missile) || istype(AM, /obj/sea_ladder_deployed))
-			return
-		if (locate(/obj/lattice) in src)
-			return
-		if (AM.anchored == 2)
-			return
-		if (ismob(AM))
-			var/mob/M = AM
-			if (M.client?.flying)
-				return
-		return_if_overlay_or_effect(AM)
-
-		try_build_turf_list()
-
-		if (length(L))
-			SPAWN(0.3 SECONDS)//you can 'jump' over a hole by running real fast or being thrown!!
-				if (istype(AM.loc, /turf/space/fluid/warp_z5))
-					visible_message("<span class='alert'>[AM] falls down [src]!</span>")
-
-					if (istype(AM, /obj/machinery/vehicle))
-						var/obj/machinery/vehicle/V = AM
-						var/turf/target_turf = V.go_home()
-						if (V.going_home && target_turf)
-							V.going_home = 0
-							AM.set_loc(target_turf)
-							return
-
-					if (ismob(AM))
-						var/mob/M = AM
-						random_brute_damage(M, 6)
-						M.changeStatus("weakened", 2 SECONDS)
-						playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 10, 1)
-						M.emote("scream")
-
-					AM.set_loc(pick(L))
-
-
 /turf/space/fluid/warp_z5/realwarp
 	New()
 		..()
-		if (get_step(src, NORTH).type != /turf/space/fluid/warp_z5/realwarp)
+		src.initialise_component()
+		if (!istype(get_step(src, NORTH), /turf/space/fluid/warp_z5/realwarp))
 			icon_state = "pit_wall"
 
 		var/turf/space/fluid/under = get_step(src, SOUTH)
-		if (under.type == /turf/space/fluid/warp_z5/realwarp)
+		if (istype(under.type, /turf/space/fluid/warp_z5/realwarp))
 			under.icon_state = "pit"
 
-	try_build_turf_list()
-		if (!L || length(L) == 0)
-			for(var/turf/space/fluid/T in range(8,locate(src.x,src.y,5)))
-				L += T
-				break
-
-			if(length(L))
-				var/needlink = 1
-				var/turf/space/fluid/picked_turf = pick(L)
-
-				for(var/turf/space/fluid/T in range(5,picked_turf))
-					if(T.linked_hole)
-						needlink = 0
-						break
-
-				if(needlink)
-					if(!picked_turf.linked_hole)
-						picked_turf.linked_hole = src
-						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
-
-		..()
+	initialise_component()
+		src.AddComponent(/datum/component/pitfall/target_coordinates,\
+			BruteDamageMax = 6,\
+			FallTime = 0.3 SECONDS,\
+			TargetZ = 5,\
+			LandingRange = 8)
 
 
 //trench floor
@@ -434,7 +387,8 @@
 					T.blow_hole()
 					var/turf/space/fluid/warp_z5/hole = locate(x, y, 1)
 					if(istype(hole))
-						hole.L = list(src)
+						var/datum/component/pitfall/target_coordinates/getcomp = hole.GetComponent(/datum/component/pitfall/target_coordinates)
+						getcomp.TargetList = list(src)
 						src.linked_hole = hole
 						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
 						break
@@ -506,6 +460,10 @@
 
 	New()
 		..()
+		src.AddComponent(/datum/component/pitfall/target_landmark,\
+			BruteDamageMax = 25,\
+			FallTime = 0 SECONDS,\
+			TargetLandmark = LANDMARK_FALL_SEA)
 
 		var/turf/n = get_step(src,NORTH)
 		var/turf/e = get_step(src,EAST)
@@ -541,22 +499,6 @@
 	ex_act(severity)
 		return
 
-	Entered(atom/movable/A as mob|obj)
-		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
-			return ..()
-		var/turf/T = pick_landmark(LANDMARK_FALL_SEA)
-		if (isturf(T))
-			visible_message("<span class='alert'>[A] falls down [src]!</span>")
-			if (ismob(A))
-				var/mob/M = A
-				random_brute_damage(M, 25)
-				M.changeStatus("weakened", 5 SECONDS)
-				M.emote("scream")
-				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-			A.set_loc(T)
-			return
-		else ..()
-
 /turf/space/fluid/acid
 	name = "acid sea floor"
 	spawningFlags = SPAWN_ACID_DOODADS
@@ -568,85 +510,6 @@
 #ifdef IN_MAP_EDITOR
 		icon_state = "concrete"
 #endif
-
-/obj/machinery/computer/sea_elevator
-	name = "Elevator Control"
-	icon_state = "shuttle"
-	machine_registry_idx = MACHINES_ELEVATORCOMPS
-	var/active = 0
-	var/location = 1 // 0 for bottom, 1 for top
-
-/obj/machinery/computer/sea_elevator/attack_hand(mob/user)
-	if(..())
-		return
-	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
-
-	if(location)
-		dat += "Elevator Location: Upper level"
-	else
-		dat += "Elevator Location: Lower Level"
-	dat += "<BR>"
-	if(active)
-		dat += "Moving"
-	else
-		dat += "<a href='byond://?src=\ref[src];send=1'>Move Elevator</a><BR><BR>"
-
-	user.Browse(dat, "window=sea_elevator")
-	onclose(user, "sea_elevator")
-	return
-
-/obj/machinery/computer/sea_elevator/Topic(href, href_list)
-	if(..())
-		return
-	if (((src in usr.contents) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		src.add_dialog(usr)
-
-		if (href_list["send"])
-			if(!active)
-				for(var/obj/machinery/computer/sea_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-					active = 1
-					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
-					playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
-				SPAWN(5 SECONDS)
-					call_shuttle()
-
-		if (href_list["close"])
-			src.remove_dialog(usr)
-			usr.Browse(null, "window=sea_elevator")
-
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
-	return
-
-
-/obj/machinery/computer/sea_elevator/proc/call_shuttle()
-
-	if(location == 0) // at bottom
-		var/area/start_location = locate(/area/shuttle/sea_elevator/lower)
-		var/area/end_location = locate(/area/shuttle/sea_elevator/upper)
-		start_location.move_contents_to(end_location, /turf/simulated/floor/plating, ignore_fluid = 1)
-		location = 1
-	else // at top
-		var/area/start_location = locate(/area/shuttle/sea_elevator/upper)
-		var/area/end_location = locate(/area/shuttle/sea_elevator/lower)
-		for(var/mob/M in end_location) // oh dear, stay behind the yellow line kids
-			SPAWN(1 DECI SECOND)
-				random_brute_damage(M, 30)
-				M.changeStatus("weakened", 5 SECONDS)
-				M.emote("scream")
-				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 90, 1)
-		start_location.move_contents_to(end_location, /turf/simulated/floor/specialroom/sea_elevator_shaft, ignore_fluid = 1)
-		location = 0
-
-	for(var/obj/machinery/computer/sea_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-		active = 0
-		C.visible_message("<span class='alert'>The elevator has moved.</span>")
-		C.location = src.location
-
-	return
-
-
-
 
 proc/fluid_turf_setup(first_time=FALSE)
 	if(QDELETED(ocean_fluid_obj))

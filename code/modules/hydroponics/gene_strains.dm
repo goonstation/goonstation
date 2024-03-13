@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/plant_gene_strain)
 /datum/plant_gene_strain
 	var/name = null                 // self-explanatory
 	var/desc = null                 // this too
@@ -153,6 +154,42 @@
 			return
 		if (PP.growth > 1)
 			PP.growth--
+
+/datum/plant_gene_strain/invasive
+	name = "Invasive Growth"
+	desc = "This gene causes the plant to take over other trays and grow onto other plants."
+	chance = 4 //this is a rare gene that is worth hunting for
+
+	on_process(var/obj/machinery/plantpot/carrying_plantpot)
+		if (..())
+			return
+		var/damage_to_other_plants = 10 // the amount of damage the plant deals to other plants
+		var/chance_to_damage = 20 // the chance per tick to damage plants or spread per tick.
+		var/health_treshold_for_spreading = 50 // percentage amount of starting health of the plant needed to be able to spread
+
+		var/datum/plant/current_planttype = carrying_plantpot.current
+		var/datum/plantgenes/current_plantgenes = carrying_plantpot.plantgenes
+		//This is normal behaviour on the creeper, we don't need to let it run twice. Instead, we improve the base behaviour of the creeper in it's respectable logic
+		if (istype(current_planttype, /datum/plant/artifact/creeper))
+			return
+		// We check for the health treshold and if we have grown sufficiently
+		if (carrying_plantpot.growth > (current_planttype.growtime - current_plantgenes?.get_effective_value("growtime")) && carrying_plantpot.health > round(current_planttype.starthealth * health_treshold_for_spreading / 100) && prob(chance_to_damage))
+			for (var/obj/machinery/plantpot/checked_plantpot in range(1,carrying_plantpot))
+				var/datum/plant/growing = checked_plantpot.current
+				// We don't try to destroy plants of our own type and cannot attack crystals
+				if (!checked_plantpot.dead && growing && !istype(growing,/datum/plant/crystal) && !istype(growing, current_planttype))
+					checked_plantpot.HYPdamageplant("physical", damage_to_other_plants, 1)
+				else if (checked_plantpot.dead)
+					checked_plantpot.HYPdestroyplant()
+				//Seedless prevents the plant from replanting. And inhibited potential as well.... no infinite maneaters, folks
+				else if (!growing && !HYPCheckCommut(current_plantgenes, /datum/plant_gene_strain/seedless) && !HYPCheckCommut(current_plantgenes, /datum/plant_gene_strain/reagent_blacklist))
+					//we create a new seed now
+					var/obj/item/seed/temporary_seed = HYPgenerateseedcopy(current_plantgenes, current_planttype, carrying_plantpot.generation)
+					// now we are able to plant the seed
+					checked_plantpot.HYPnewplant(temporary_seed)
+					spawn(0.5 SECONDS)
+						qdel(temporary_seed)
+					break
 
 /datum/plant_gene_strain/yield
 	name = "Enhanced Yield"

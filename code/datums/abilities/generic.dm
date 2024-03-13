@@ -124,7 +124,7 @@
 			var/mob/living/M = hit_atom
 			SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 			if (check_target_immunity(M, source = src))
-				src.visible_message("<b><span class='alert'>[src] bounces off [M] harmlessly!</span></b>")
+				src.visible_message(SPAN_ALERT("<b>[src] bounces off [M] harmlessly!</b>"))
 				return
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 
@@ -179,11 +179,13 @@
 	cast(atom/target)
 		..()
 		var/mob/living/M = holder.owner
-		if (M.ai && M.is_npc)
-			if(M.ai.enabled )
+		if (M.ai)
+			if(M.ai.enabled)
 				M.ai.disable()
+				M.is_npc = FALSE
 			else
 				M.ai.enable()
+				M.is_npc = TRUE
 		else if( M.is_npc && ishuman(M) )
 			var/mob/living/carbon/human/H = M
 			H.ai_set_active(!H.ai_active)
@@ -220,3 +222,30 @@
 		for(var/obj/O in T.cameras)
 			shoot_projectile_ST_pixel_spread(O, current_projectile, T)
 
+/datum/targetable/crew_credits
+	name = "Crew credits"
+	desc = "Re-open the crew credits window."
+	icon = 'icons/mob/ghost_observer_abilities.dmi'
+	icon_state = "crew-credits"
+	targeted = FALSE
+	cooldown = 1 SECOND
+
+	cast(atom/target)
+		holder.owner.show_credits()
+
+/datum/targetable/juggle
+	name = "Juggle"
+	desc = "Juggle anything."
+	cooldown = 10 SECOND
+	targeted = TRUE
+	target_anything = TRUE
+	var/empowered = FALSE
+
+	cast(atom/movable/target)
+		if (!ishuman(src.holder.owner))
+			return
+		if (!src.empowered && (target.anchored || target == src.holder.owner) || target.anchored == ANCHORED_ALWAYS)
+			boutput(src.holder.owner, SPAN_ALERT("Your juggling abilities aren't quite enough to juggle that."))
+			return
+		var/mob/living/carbon/human/human = src.holder.owner
+		human.add_juggle(target)

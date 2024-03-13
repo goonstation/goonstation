@@ -48,7 +48,13 @@
 			if (isliving(M))
 				var/mob/living/L = M
 				L.hibernating = 0
-				L.removeOverlayComposition(/datum/overlayComposition/blinded)
+				if (isnull(L.bioHolder) || !L.bioHolder.HasEffect("blind"))
+					L.removeOverlayComposition(/datum/overlayComposition/blinded)
+				else
+					if(ishuman(L))
+						var/mob/living/carbon/human/H = L
+						if (H.glasses?.allow_blind_sight)
+							L.removeOverlayComposition(/datum/overlayComposition/blinded)
 		for (var/obj/O in src)
 			O.set_loc(T)
 		..()
@@ -70,6 +76,11 @@
 		boutput(person, "<b>Cryo-recovery process initiated.  Please wait . . .</b>")
 		if (!person.bioHolder.HasEffect("blind"))
 			person.removeOverlayComposition(/datum/overlayComposition/blinded)
+		else
+			if(ishuman(person))
+				var/mob/living/carbon/human/H = person
+				if (H.glasses?.allow_blind_sight)
+					person.removeOverlayComposition(/datum/overlayComposition/blinded)
 		return 1
 
 	proc/process()
@@ -117,6 +128,9 @@
 				return
 			if (thePerson.loc == firstLoc)
 				step(thePerson, SOUTH)
+			for (var/obj/O in src.loc) // dropped stuff & whatever spawned under them
+				if (O.anchored == UNANCHORED && O != src)
+					O.set_loc(locate(src.x, src.y-1, src.z)) // dump it in front of the cyrotron
 			src.icon_state = "cryotron_up"
 			flick("cryotron_go_up", src)
 
@@ -172,6 +186,9 @@
 		var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)
 		if (!isnull(crew_record))
 			crew_record["p_stat"] = "In Cryogenic Storage"
+		var/datum/job/job = find_job_in_controller_by_string(L.job, soft=TRUE)
+		if (job && !job.unique)
+			job.assigned = max(0, job.assigned - 1)
 		logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 		return 1
 
@@ -199,6 +216,9 @@
 							respawn_controller.subscribeNewRespawnee(user.ckey)
 							user.mind?.get_player()?.dnr = TRUE
 							user.ghostize()
+							var/datum/job/job = find_job_in_controller_by_string(user.job, soft=TRUE)
+							if (job)
+								job.assigned = max(0, job.assigned - 1)
 							qdel(user)
 							return 1
 
@@ -236,7 +256,7 @@
 		// Person entering is too far away
 		if (BOUNDS_DIST(src, L) > 0)
 			boutput(L, "<b>You need to be closer to [src] to enter cryogenic storage!</b>")
-			boutput(user, "<b>[L] needs to be closer to [src] for you to put them in cryogenic storage!</b>")
+			boutput(user, "<b>[L] needs to be closer to [src] for you to put [him_or_her(L)] in cryogenic storage!</b>")
 			return FALSE
 		// Person putting other person in is too far away
 		if (user && BOUNDS_DIST(src, user) > 0)
@@ -290,13 +310,16 @@
 		return 0
 
 	proc/ensure_storage()
-		if (!stored_mobs.len)
-			return
 		for (var/mob/living/L in stored_mobs)
-			if (L.loc != src)
-				L.hibernating = 0
-				L.removeOverlayComposition(/datum/overlayComposition/blinded)
-				stored_mobs[L] = null
+			if (L.loc != src || QDELETED(L))
+				if(!QDELETED(L))
+					L.hibernating = 0
+					if (!L.bioHolder.HasEffect("blind"))
+						L.removeOverlayComposition(/datum/overlayComposition/blinded)
+					if(ishuman(L))
+						var/mob/living/carbon/human/H = L
+						if (H.glasses?.allow_blind_sight)
+							L.removeOverlayComposition(/datum/overlayComposition/blinded)
 				stored_mobs -= L
 				if(!isnull(L.loc)) // loc only goes null when you ghost, probably
 					stored_crew_names -= L.real_name // you shouldn't be removed from the list when you ghost
@@ -304,40 +327,21 @@
 					if (!isnull(crew_record))
 						crew_record["p_stat"] = "Active"
 
-	attack_hand(var/mob/user)
-		if(isgrab(user.l_hand))
-			src.Attackby(user.l_hand, user)
-		else if(isgrab(user.r_hand))
-			src.Attackby(user.r_hand, user)
-		else if (!enter_prompt(user))
-			return ..()
-
-	attack_ai(mob/user as mob)
-		if(isAIeye(user))
-			boutput(user, "<span class='alert'>An incorporeal manifestation of an artificial intelligence's presence can't enter \the [src]!</span>")
-			return FALSE
-		if (!enter_prompt(user))
-			return ..()
-
-	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W, /obj/item/grab))
-			var/obj/item/grab/G = W
-			if (ismob(G.affecting) && insert_prompt(G.affecting, user))
-				user.u_equip(G)
-				qdel(G)
-		else if (!enter_prompt(user))
-			return ..()
+	/// Override to stop slamming mobs into the cryotron, without this the user will
+	/// drop the player mob they're trying to insert
+	attackby(obj/item/I, mob/user)
+		return
 
 	proc/insert_prompt(mob/target, mob/user)
 		if (target.client || !target.ckey)
-			boutput(user, "<span class='alert'>You can't force someone into cryosleep if they're still logged in or are an NPC!</span>")
+			boutput(user, SPAN_ALERT("You can't force someone into cryosleep if they're still logged in or are an NPC!"))
 			return FALSE
-		else if (tgui_alert(user, "Would you like to put [target] into cryogenic storage? They will be able to leave it immediately if they log back in.", "Confirmation", list("Yes", "No")) == "Yes")
+		else if (tgui_alert(user, "Would you like to put [target] into cryogenic storage? [he_or_she(target)] will be able to leave it immediately if they log back in.", "Confirmation", list("Yes", "No")) == "Yes")
 			if (!src.mob_can_enter_storage(target, user))
 				return FALSE
 			else
 				src.add_person_to_storage(target, FALSE)
-				src.visible_message("<span class='alert'><b>[user] forces [target] into [src]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[user] forces [target] into [src]!</b>"))
 				return TRUE
 		return FALSE
 
@@ -347,9 +351,65 @@
 		if (!exit_prompt(user))
 			return ..()
 
+	/// Handling dragging players in to cryo, mainly for silicon players.
 	MouseDrop_T(atom/target, mob/user as mob)
-		if (ishuman(target) && isrobot(user) && BOUNDS_DIST(src, user) == 0 && BOUNDS_DIST(src, target) == 0 && BOUNDS_DIST(user, target) == 0)
-			insert_prompt(target, user)
+		if (!ishuman(target) && !isrobot(user))
 			return
+
+		if (BOUNDS_DIST(src, user) != 0)
+			return
+
+		if (BOUNDS_DIST(src, target) != 0)
+			return
+
+		if (BOUNDS_DIST(user, target) != 0)
+			return
+
+		insert_prompt(target, user)
 		return ..()
 
+	/// Override for handling all interactions with the cryo chamber
+	Click()
+		if (!usr)
+			return
+
+		if (isAIeye(usr) || isintangible(usr))
+			return
+
+		if (!can_act(usr) || !in_interact_range(src, usr))
+			return
+
+		if (isdead(usr) || isobserver(usr))
+			return
+
+		if (issilicon(usr))
+			enter_prompt(usr)
+			return
+
+		var/obj/item/in_hand_item = usr.equipped()
+
+		if (in_hand_item != null)
+			if (istype(in_hand_item, /obj/item/grab))
+				var/obj/item/grab/G = in_hand_item
+
+				if (ismob(G.affecting) && insert_prompt(G.affecting, usr))
+					usr.u_equip(G)
+					qdel(G)
+			else
+				enter_prompt(usr)
+				return
+
+		else if (usr.equipped_limb() != null && in_hand_item == null)
+			if (isgrab(usr.l_hand))
+				src.Attackby(usr.l_hand, usr)
+
+			else if (isgrab(usr.r_hand))
+				src.Attackby(usr.r_hand, usr)
+
+			else
+				enter_prompt(usr)
+				return
+		else
+			enter_prompt(usr)
+
+		return ..()

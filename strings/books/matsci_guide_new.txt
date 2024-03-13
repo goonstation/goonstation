@@ -27,7 +27,7 @@ table td.unavaib {
 <body>
 <h3>Foreword:</h3>
 <hr>
-This text serves as a comprehensive overview to Materials Science. It is detailed but by no means exhaustive of all potential methods and projects. At the time of writing, all information in this book is correct. However, over time, the information may become out of date. Please see the footnote for additional reading.
+This text serves as a comprehensive overview of Material Science. It is detailed but by no means exhaustive of all potential methods and projects. At the time of writing, all information in this book is correct. However, over time, the information may become out of date. Please see the footnote for additional reading.
 <hr>
 <h2>
   Contents</h2>
@@ -36,21 +36,21 @@ This text serves as a comprehensive overview to Materials Science. It is detaile
 
   <section id="MatSci-W"><h3>Materials Science: What is it, Where is it, and Why is it?</h3></section>
 <hr>
-The field of Materials Science is long studied and long storied. To detail precisely the extensive history of this field would require a tome all on its own, and we will instead focus not on what has been done in the field, but what there is yet to do.
+The field of Materials Science is long studied and long storied. To detail precisely the extensive history of this field would require a tome all on its own, and we will instead focus not on what has been done in the field, but on what there is yet to do.
 <br><br>
 An aspiring metallurgist requires a suitable workshop in which they can create and refine alloys. Recommended for this line of work are:
 <ul><li><b>Nano-Crucible</b> - a large cuboid forge that melts two materials and reforms them as an alloyed bar
-<li><b>Slag Shovel</b> - used for removing slag buildup from impurities removed in the refining process. Modern Nano-Crucibles filter impurities with more accuracy and so the old practice of slag shovelling has fallen by the wayside.
-</li></ul><ul><li><b>Material Processer</b> - a machine with a rectangular surface and two clamps to hold bars of alloys in place; used to process raw ores and gems into more workable ingots
+<li><b>Slag Shovel</b> - used for removing slag buildup from impurities removed in the refining process. Modern Nano-Crucibles filter impurities with more accuracy and so the old practice of slag shoveling has fallen by the wayside.
+</li></ul><ul><li><b>Material Processor</b> - a machine with a rectangular surface and two clamps to hold bars of alloys in place; used to process raw ores and gems into more workable ingots
 </li></ul><ul><li><b>Portable Reclaimer</b> - a machine on wheels that can turn most materials into workable ingots, and is often used to restock fabricators around the station
 </li></ul><ul><li><b>Nano-Fabricator</b> - the machine with two upright arms embedded with lasers that precisely cut and mold materials into pre-loaded schematics
 <ul><li>Nano-Fabricator schematics describe needing either metal alloys, fabrics, rubber, or crystals, but it is possible for a single bar of alloyed material to possess all the properties needed for a schematic to begin working
 <li> You can store and view your stored materials under the “Storage” tab</li><br>
 <li>You can automatically store projects you make in the Nano-Fabricator by setting output to the Nano-Fabricator under the “Settings” tab</li><br>
-</li></ul><li><b>Material Analyzer</b> - a green handheld device that reports information of a material including electrical conductivity, thermal conductivity, hardness, density, and others. See "An Index of Properties and Their Effects" section below.
+</li></ul><li><b>Material Analyzer</b> - a green handheld device that reports information about a material including electrical conductivity, thermal conductivity, hardness, density, and others. See "An Index of Properties and Their Effects" section below.
 </ul>
-<ul><li><b>Arc Electroplater</b> - a machine that allows for you to place a material in an electrolyte bath and then place an object into the bath to transfer the electrolyzed material to the surface of the object.
-<ul><li>This allows for transfer of material properties to objects you cannot make through the Nano-Fabricator. Particularly of interest in thermo-electric systems.</li></ul>
+<ul><li><b>Arc Electroplater</b> - a machine that allows you to place a material in an electrolyte bath and then place an object into the bath to transfer the electrolyzed material to the surface of the object.
+<ul><li>This allows for the transfer of material properties to objects you cannot make through the Nano-Fabricator. Particularly of interest in thermo-electric systems.</li></ul>
 </ul></ul><br>
 The reasons for partaking in metallurgy are numerous and varied. You can, for example, create new types of walls and floorings with high reflectivity for defense from energy projectiles, which might be desirable in sensitive areas like an AI Core.
 <br><br>You may have an interest in producing infused jumpsuits that actively release small amounts of healing chemicals to patients who need long-term and intensive medical care (please consult with licensed medical professionals if you are considering implementing this).
@@ -192,7 +192,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">3</td>
 	<td align="right">3</td>
 	<td align="right">6</td>
-	<td align="right">2</td>
+	<td align="right">1</td>
 	</tr>
 	<tr><td align="right">Mauxite</td>
 	<td align="right">5</td>
@@ -436,6 +436,15 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">3</td>
 	<td align="right" class="unavaib">n/a</td>
 	</tr>
+	<tr><td align="right">Plastic</td>
+	<td align="right">2</td>
+	<td align="right">3</td>
+	<td align="right">1</td>
+	<td align="right">3</td>
+	<td align="right">1</td>
+	<td align="right">5</td>
+	<td align="right" class="unavaib">n/a</td>
+	</tr>
 	<tr><td align="right">Leather</td>
 	<td align="right">3</td>
 	<td align="right">3</td>
@@ -549,8 +558,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<tr><td align="right">Gemstone</td>
 	<td align="right">3</td>
 	<td align="right">3</td>
-	<td align="right">5</td>
-	<td align="right">4</td>
+	<td align="right">4-7</td>
+	<td align="right">3-6</td>
 	<td align="right">1</td>
 	<td align="right">5</td>
 	<td align="right" class="unavaib">n/a</td>
@@ -859,6 +868,7 @@ Thank you for your service to Nanotrasen.</i></p>
 
 <b>Rubber</b>
 <ul><li>Latex</li>
+<li>Plastic</li>
 <li>Synthrubber</li>
 <li>Synthblubber</li></ul>
 

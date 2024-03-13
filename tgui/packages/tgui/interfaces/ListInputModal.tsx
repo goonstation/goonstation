@@ -8,7 +8,7 @@
 import { Loader } from './common/Loader';
 import { InputButtons } from './common/InputButtons';
 import { Button, Input, Section, Stack } from '../components';
-import { KEY_A, KEY_DOWN, KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_Z, KEY_PAGEUP, KEY_PAGEDOWN, KEY_END, KEY_HOME, KEY_TAB } from 'common/keycodes';
+import { KEY_A, KEY_DOWN, KEY_END, KEY_ENTER, KEY_ESCAPE, KEY_HOME, KEY_PAGEDOWN, KEY_PAGEUP, KEY_TAB, KEY_UP, KEY_Z } from 'common/keycodes';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 
@@ -27,6 +27,7 @@ const nextTick
    title: string;
    start_with_search: number;
    capitalize: number;
+   theme: string;
  };
 
 
@@ -63,7 +64,7 @@ const getCanvasFont = (el = document.body) => {
 
 export const ListInputModal = (_, context) => {
   const { act, data } = useBackend<ListInputData>(context);
-  const { items = [], message, init_value, timeout, title, start_with_search, capitalize } = data;
+  const { items = [], message, init_value, timeout, title, start_with_search, capitalize, theme } = data;
   const [selected, setSelected] = useLocalState<number>(
     context,
     'selected',
@@ -237,7 +238,7 @@ export const ListInputModal = (_, context) => {
   }
 
   return (
-    <Window title={title} width={actualWindowWidth} height={windowHeight}>
+    <Window title={title} width={actualWindowWidth} height={windowHeight} theme={theme || 'nanotrasen'}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onkeydown={handleKey}>

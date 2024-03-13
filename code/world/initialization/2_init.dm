@@ -8,6 +8,9 @@
 	game_start_countdown = new()
 	UPDATE_TITLE_STATUS("Initializing world")
 
+	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
+	roundManagement.recordStart()
+
 	Z_LOG_DEBUG("World/Init", "Loading MOTD...")
 	src.load_motd()//GUH
 	Z_LOG_DEBUG("World/Init", "Loading admins...")
@@ -52,6 +55,9 @@
 	Z_LOG_DEBUG("World/Init", "Telemanager setup...")
 	tele_man = new()
 	tele_man.setup()
+
+	Z_LOG_DEBUG("World/Init", "M4GP13 setup...")
+	magpie_man.setup()
 
 	Z_LOG_DEBUG("World/Init", "Mining setup...")
 	mining_controls.setup_mining_landmarks()
@@ -99,8 +105,6 @@
 	logTheThing(LOG_STATION, null, "Map: [getMapNameFromID(map_setting)]")
 #endif
 
-	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
-	round_start_data() //Tell the hub site a round is starting
 	if (time2text(world.realtime,"DDD") == "Fri")
 		NT |= mentors
 
@@ -115,7 +119,6 @@
 	build_reagent_cache()
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
-	build_camera_network()
 	build_manufacturer_icons()
 	clothingbooth_setup()
 	initialize_biomes()
@@ -161,7 +164,7 @@
 	initialize_mail_system()
 	#endif
 
-	#if ENABLE_ARTEMIS && !defined(SKIP_PLANETS_SETUP)
+	#if defined(ENABLE_ARTEMIS) && !defined(SKIP_PLANETS_SETUP)
 	UPDATE_TITLE_STATUS("Building planet level")
 	Z_LOG_DEBUG("World/Init", "Setting up planet level...")
 	makePlanetLevel()
@@ -174,6 +177,7 @@
 
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
+	build_camera_network()
 	camera_coverage_controller.setup()
 
 	UPDATE_TITLE_STATUS("Preloading client data...")
@@ -274,7 +278,7 @@
 
 /proc/createRenderSourceHolder()
 	if(!renderSourceHolder)
-		renderSourceHolder = new(locate(1,1,1))
+		renderSourceHolder = new
 		renderSourceHolder.name = "SCREEN HOLDER"
 		renderSourceHolder.screen_loc = "CENTER"
 		renderSourceHolder.mouse_opacity = 0

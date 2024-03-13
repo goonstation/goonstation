@@ -72,16 +72,26 @@
 		if (parent?.group_processing)
 			parent.suspend_group_processing()
 
-		src.active_hotspot = new /obj/hotspot
-		src.active_hotspot.temperature = exposed_temperature
-		src.active_hotspot.volume = exposed_volume
-		src.active_hotspot.set_loc(src)
-		src.active_hotspot.set_real_color()
+		src.add_hotspot(exposed_temperature, exposed_volume)
 
 		src.active_hotspot.just_spawned = (current_cycle < air_master.current_cycle)
 		//remove just_spawned protection if no longer processing this cell
 
 	return igniting
+
+/// Adds a hotspot to self, deletes the previous if there was one. Sets processing to true also, since a fire kinda should be processed.
+/turf/proc/add_hotspot(temperature, volume)
+	src.active_hotspot?.dispose()
+	src.active_hotspot = new /obj/hotspot
+	src.active_hotspot.temperature = temperature
+	src.active_hotspot.volume = volume
+	src.active_hotspot.set_loc(src)
+	src.active_hotspot.set_real_color()
+	if (issimulatedturf(src))
+		var/turf/simulated/self = src
+		self.processing = TRUE
+		if(!self.parent)
+			air_master.active_singletons |= src
 
 /// The object that represents fire ingame. Very nice and warm.
 /obj/hotspot
@@ -220,7 +230,8 @@
 		var/datum/gas_mixture/affected = location.air.remove_ratio(src.volume/max((location.air.volume/5),1))
 
 		affected.temperature = src.temperature
-		affected.react()
+		if( affected.react() & CATALYST_ACTIVE)
+			src.catalyst_active = TRUE
 		src.temperature = affected.temperature
 
 		src.volume = affected.fuel_burnt*FIRE_GROWTH_RATE
@@ -275,6 +286,27 @@
 		L.update_burning(clamp(temperature / 60, 5, 33))
 
 	src.perform_exposure()
+	if(src.catalyst_active)
+		var/image/catalyst_overlay = SafeGetOverlayImage("catalyst", src.icon, src.icon_state)
+		var/list/rgb =  rgb2num(src.color)
+		var/list/hsl = rgb2hsl(rgb[1],rgb[2],rgb[3])
+		var/new_color = hsl2rgb(hsl[1]+60%255, clamp(hsl[2],50,180), hsl[3]*0.8)
+		var/hue_shift = normalize_color_to_matrix(new_color)
+
+		catalyst_overlay.appearance_flags = RESET_COLOR
+		if(length(hue_shift))
+			var/base_alpha = 0.3
+			var/add_alpha = 0.2
+			hue_shift[4] = add_alpha
+			hue_shift[8] = add_alpha
+			hue_shift[12] = add_alpha
+			hue_shift[16] = -1
+			hue_shift[20] = base_alpha
+			catalyst_overlay.color = hue_shift
+			UpdateOverlays(catalyst_overlay,"catalyst")
+	else
+		UpdateOverlays(null,"catalyst")
+
 
 	src.catalyst_active = FALSE
 	location.wet = 0

@@ -26,7 +26,7 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
 	var/list/spacemas_ornaments = get_spacemas_ornaments(only_if_loaded=TRUE)
-	if(spacemas_ornaments) world.save_intra_round_value("tree_ornaments", spacemas_ornaments)
+	if(spacemas_ornaments) world.save_intra_round_value("tree_ornaments_[BUILD_TIME_YEAR]", spacemas_ornaments)
 	global.save_noticeboards()
 	for_by_tcl(canvas, /obj/item/canvas/big_persistent)
 		canvas.save()
@@ -36,6 +36,7 @@
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
+	eventRecorder.process() // Ensure any remaining events are processed
 #if defined(CI_RUNTIME_CHECKING) || defined(UNIT_TESTS)
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", "hardrestart")
@@ -61,12 +62,13 @@
 #endif
 
 	SPAWN(world.tick_lag)
+		var/sound/round_end_sound = null
+		if (prob(40))
+			round_end_sound = sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg', 'sound/misc/TimeForANewRound.ogg'))
+		else
+			round_end_sound = sound('sound/misc/NewRound.ogg')
 		for (var/client/C)
-			if (C.mob)
-				if (prob(40))
-					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg', 'sound/misc/TimeForANewRound.ogg'))
-				else
-					C.mob << sound('sound/misc/NewRound.ogg')
+			C << round_end_sound
 
 #ifdef DATALOGGER
 	SPAWN(world.tick_lag*2)

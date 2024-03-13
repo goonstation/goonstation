@@ -1,5 +1,8 @@
 /proc/bug_report_form(mob/user, easteregg_chance=0)
 	var/client/user_client = user.client
+	if(!global.ircbot.loaded)
+		tgui_alert(user_client, "The bug report API is currently unavailable, please try again later!", "API unavailable!")
+		return
 	var/datum/tgui_bug_report_form/form = new
 	form.ui_interact(user)
 	UNTIL(form.done || form.closed)

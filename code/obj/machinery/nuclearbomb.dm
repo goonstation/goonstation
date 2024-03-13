@@ -20,7 +20,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	var/debugmode = 0
 	var/datum/hud/nukewires/wirepanel
 	var/obj/item/disk/data/floppy/read_only/authentication/disk = null
-	var/isitspacemas = 0
 
 	var/target_override = null // varedit to an area TYPE to allow the nuke to be deployed in that area instead of whatever the mode says (also enables the bomb in non-nuke gamemodes)
 	var/target_override_name = "" // how the area gets displayed if you try to deploy the nuke in a wrong area
@@ -37,17 +36,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		wirepanel = new(src)
 		#ifdef XMAS
 		icon_state = "nuke_gift[rand(1,2)]"
-		isitspacemas = "1"
 		#endif
 		image_light = image(src.icon, "nblight1")
+
 		src.UpdateOverlays(src.image_light, "light")
 		src.maptext_x = -16
 		src.maptext_y = 4
-
 		src.maptext_width = 64
 
 		// For status display updating
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
+
+		get_self_and_decoys() // links them up
 
 		START_TRACKING
 		..()
@@ -62,6 +62,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		qdel(wirepanel)
 		..()
 
+	proc/get_self_and_decoys()
+		RETURN_TYPE(/list/obj)
+		. = list(src)
+		for_by_tcl(decoy, /obj/bomb_decoy)
+			if(decoy.is_linked_to_bomb(src))
+				. += decoy
+
 	process()
 		if (done)
 			qdel(src)
@@ -72,22 +79,27 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		var/turf/T = get_turf(src)
 		if (T && istype(T))
 			for (var/obj/shrub/S in T.contents)
-				S.visible_message("<span class='alert'>[S] cannot withstand the intense radiation and crumbles to pieces!</span>")
+				S.visible_message(SPAN_ALERT("[S] cannot withstand the intense radiation and crumbles to pieces!"))
 				qdel(S)
 
 		if(det_time && src.simple_light && !src.started_light_animation && det_time - TIME <= 2 MINUTES)
 			src.started_light_animation = 1
 			var/matrix/trans = matrix()
 			trans.Scale(3)
-			animate(src.simple_light, time = 2 MINUTES, alpha = 255, color = "#ff4444", transform = trans)
+			for(var/obj/bomb_or_decoy as anything in get_self_and_decoys())
+				animate(bomb_or_decoy.simple_light, time = 2 MINUTES, alpha = 255, color = "#ff4444", transform = trans)
 
+		var/timer_string = null
 		if (det_time && TIME >= det_time)
 			SPAWN(0)
 				explode()
-			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">--:--</span>"
+			timer_string = "--:--"
 		else
-			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[get_countdown_timer()]</span>"
-		return
+			timer_string = get_countdown_timer()
+
+		for(var/obj/bomb_or_decoy as anything in get_self_and_decoys())
+			bomb_or_decoy.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[timer_string]</span>"
+
 
 	proc/set_time_left()
 		if (!src.armed)
@@ -100,36 +112,38 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			if (!isnull(input))
 				src.det_time = TIME + input SECONDS
 
-	examine(mob/user)
-		. = ..()
-		if(user.client)
-			if (src.armed)
-				. += "It is currently counting down to detonation. Ohhhh shit."
-				. += "The timer reads [get_countdown_timer()].[src.disk && istype(src.disk) ? " The authenticaion disk has been inserted." : ""]"
-			else
-				. += "It is not armed. That's a relief."
-				if (src.disk && istype(src.disk))
-					. += "The authenticaion disk has been inserted."
+	proc/base_desc()
+		. = list()
+		if (src.armed)
+			. += "It is currently counting down to detonation. Ohhhh shit."
+			. += "The timer reads [get_countdown_timer()].[src.disk && istype(src.disk) ? " The authenticaion disk has been inserted." : ""]"
+		else
+			. += "It is not armed. That's a relief."
+			if (src.disk && istype(src.disk))
+				. += "The authenticaion disk has been inserted."
 
-			if (!src.anchored)
-				. += "The floor bolts are unsecure. The bomb can be moved around."
-			else
-				. += "It is firmly anchored to the floor by its floor bolts."
+		if (!src.anchored)
+			. += "The floor bolts are unsecure. The bomb can be moved around."
+		else
+			. += "It is firmly anchored to the floor by its floor bolts."
+		. = jointext(., " ")
 
-			switch(src._health)
-				if(80 to 125)
-					. += "<span class='alert'>It is a little bit damaged.</span>"
-				if(40 to 79)
-					. += "<span class='alert'>It looks pretty beaten up.</span>"
-				if(1 to 39)
-					. += "<span class='alert'><b>It seems to be on the verge of falling apart!</b></span>"
+	get_desc(dist, mob/user)
+		. = ..() + base_desc()
+		switch(src._health)
+			if(80 to 125)
+				. += SPAN_ALERT("It is a little bit damaged.")
+			if(40 to 79)
+				. += SPAN_ALERT("It looks pretty beaten up.")
+			if(1 to 39)
+				. += SPAN_ALERT("<b>It seems to be on the verge of falling apart!</b>")
 
 	// Nuke round development was abandoned for 4 whole months, so I went out of my way to implement some user feedback from that 11 pages long forum thread (Convair880).
 	attack_hand(mob/user)
 		if (src.debugmode)
 			open_wire_panel(user)
 			return
-		if (!user.mind || BOUNDS_DIST(src, user) > 0)
+		if (!user.mind || BOUNDS_DIST(src, user) > 0 || isintangible(user))
 			return
 
 		user.lastattacked = src
@@ -153,24 +167,25 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			))
 
 		if(!src.target_override && !istype(ticker?.mode, /datum/game_mode/nuclear))
-			boutput(user, "<span class='alert'>[src.name] seems to be completely inert and useless.</span>")
+			boutput(user, SPAN_ALERT("[src.name] seems to be completely inert and useless."))
+
 		else if(src.armed)
 			if (user.mind in gamemode?.syndicates)
-				boutput(user, "<span class='notice'>You don't need to do anything else with the bomb.</span>")
+				boutput(user, SPAN_NOTICE("You don't need to do anything else with the bomb."))
 			else
-				user.visible_message("<span class='alert'><b>[user]</b> kicks [src] uselessly!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> kicks [src] uselessly!"))
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 		else if(!src.anyone_can_activate && !(user.mind in gamemode?.syndicates))
-			boutput(user, "<span class='alert'>It isn't deployed, and you don't know how to deploy it anyway.</span>")
+			boutput(user, SPAN_ALERT("It isn't deployed, and you don't know how to deploy it anyway."))
 		else if (!target_area)
 			stack_trace("Nuclear bomb deployment area definition missing or invalid")
-			boutput(user, "<span class='alert'>Deployment area definition missing or invalid! Please report this to a coder.</span>")
+			boutput(user, SPAN_ALERT("Deployment area definition missing or invalid! Please report this to a coder."))
 		else if (!NUKE_AREA_CHECK)
-			boutput(user, "<span class='alert'>You need to deploy the bomb in [target_name].</span>")
+			boutput(user, SPAN_ALERT("You need to deploy the bomb in [target_name]."))
 		else if(tgui_alert(user, "Deploy and arm [src] here?", src.name, list("Yes", "No")) != "Yes")
 			return
 		else if(src.armed || !NUKE_AREA_CHECK || !can_reach(user, src) || !can_act(user)) // gotta re-check after the alert!!!
-			boutput(user, "<span class='alert'>Deploying aborted due to you or [src] not being in [target_name].</span>")
+			boutput(user, SPAN_ALERT("Deploying aborted due to you or [src] not being in [target_name]."))
 		else
 			src.arm(user)
 
@@ -185,12 +200,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			src.change_status_display()
 		if (!src.image_light)
 			src.image_light = image(src.icon, "nblightc")
-			src.UpdateOverlays(src.image_light, "light")
+			for(var/obj/bomb_or_decoy as anything in get_self_and_decoys())
+				bomb_or_decoy.UpdateOverlays(src.image_light, "light")
 		else
 			src.image_light.icon_state = "nblightc"
-			src.UpdateOverlays(src.image_light, "light")
+			for(var/obj/bomb_or_decoy as anything in get_self_and_decoys())
+				bomb_or_decoy.UpdateOverlays(src.image_light, "light")
 		src.det_time = TIME + src.timer_default
-		src.add_simple_light("nuke", list(255, 127, 127, 127))
+		for(var/obj/bomb_or_decoy as anything in get_self_and_decoys())
+			bomb_or_decoy.add_simple_light("nuke", list(255, 127, 127, 127))
 		command_alert("\A [src] has been armed in [isturf(src.loc) ? get_area(src) : src.loc]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
 		if (!ON_COOLDOWN(global, "nuke_planted", 20 SECONDS))
 			playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
@@ -207,19 +225,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			var/datum/game_mode/nuclear/gamemode = ticker.mode
 			if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
 				if (src.disk && istype(src.disk))
-					boutput(user, "<span class='alert'>There's already something in the [src.name]'s disk drive.</span>")
+					boutput(user, SPAN_ALERT("There's already something in the [src.name]'s disk drive."))
 					return
 				if (!src.armed)
-					boutput(user, "<span class='alert'>The [src.name] isn't armed yet.</span>")
+					boutput(user, SPAN_ALERT("The [src.name] isn't armed yet."))
 					return
 
 				var/timer_modifier = 0
 				if (user.mind in gamemode.syndicates)
 					timer_modifier = -src.timer_modifier_disk
-					user.visible_message("<span class='alert'><b>[user]</b> inserts [W.name], shortening the bomb's timer by [src.timer_modifier_disk / 10] seconds!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user]</b> inserts [W.name], shortening the bomb's timer by [src.timer_modifier_disk / 10] seconds!"))
 				else
 					timer_modifier = src.timer_modifier_disk
-					user.visible_message("<span class='alert'><b>[user]</b> inserts [W.name], extending the bomb's timer by [src.timer_modifier_disk / 10] seconds!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user]</b> inserts [W.name], extending the bomb's timer by [src.timer_modifier_disk / 10] seconds!"))
 
 					if (user.mind && user.mind.assigned_role == "Captain") //the fat frog did it!
 						user.unlock_medal("Brown Pants", 1)
@@ -254,18 +272,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 								SPAWN(R.recharge)
 									R.recharging = 0
 
-			if (user.mind in gamemode.syndicates && !src.anyone_can_activate)
+			if ((user.mind in gamemode.syndicates) && !src.anyone_can_activate)
 				if (src.armed == 1)
-					boutput(user, "<span class='notice'>You don't need to do anything else with the bomb.</span>")
+					boutput(user, SPAN_NOTICE("You don't need to do anything else with the bomb."))
 					return
 				else
-					boutput(user, "<span class='alert'>Why would you want to damage the nuclear bomb?</span>")
+					boutput(user, SPAN_ALERT("Why would you want to damage the nuclear bomb?"))
 					return
 
 			if (src.armed && src.anchored && !(user.mind in gamemode.syndicates))
 				if (isscrewingtool(W))
 					// Give the player a notice so they realize what has happened
-					boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
+					boutput(user, SPAN_ALERT("The screws are all weird safety-bit types! You can't turn them!"))
 					return
 
 		if (istype(W, /obj/item/wrench/battle) && src._health <= src._max_health)
@@ -330,6 +348,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		return timeleft
 
 	proc/take_damage(var/amount)
+		if(QDELETED(src))
+			return
 		if(startswith(src.icon_state, "nuclearbomb") && src.icon == initial(src.icon))
 			switch(src._health)
 				if(80 to 125)
@@ -351,10 +371,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 				gamemode.the_bomb = null
 				logTheThing(LOG_GAMEMODE, null, "The nuclear bomb was destroyed at [log_loc(src)].")
 				message_admins("The nuclear bomb was destroyed at [log_loc(src)].")
+				message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)]!")
 			qdel(src)
 
 	proc/explode()
 		sleep(2 SECONDS)
+		if(QDELETED(src) || done)
+			return
 		done = 1
 		if(src.boom_size != "nuke")
 			var/area/A = get_area(src)
@@ -373,7 +396,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 		// Don't re-enable the explosion without asking me first -ZeWaka
 
-		if ((nuke_turf.z != 1 && !area_correct) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
+		if ((nuke_turf?.z != 1 && !area_correct) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
 			gamemode.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
 			//explosion(src, src.loc, 20, 30, 40, 50)
@@ -401,7 +424,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			if(!nukee.stat)
 				nukee.emote("scream")
 			// until we can fix the lag related to deleting mobs we should probably just leave the end of the animation up and kill everyone instead of firegibbing everyone
-			nukee.death()//firegib()
+			if (!istype(nukee.loc, /obj/storage/secure/closet/fridge))
+				nukee.death()//firegib()
 
 		creepify_station()
 
@@ -424,7 +448,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 /datum/action/bar/icon/unanchorNuke
 	duration = 55
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "unanchornuke"
 	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/machinery/nuclearbomb/the_bomb = null
@@ -450,7 +473,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			return
 
 		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span class='alert'><b>[owner]</b> begins to unscrew [the_bomb]'s floor bolts.</span>", 1)
+			O.show_message(SPAN_ALERT("<b>[owner]</b> begins to unscrew [the_bomb]'s floor bolts."), 1)
 
 	onEnd()
 		..()
@@ -459,12 +482,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			the_bomb.anchored = UNANCHORED
 
 			for (var/mob/O in AIviewers(owner))
-				O.show_message("<span class='alert'><b>[owner]</b> unscrews [the_bomb]'s floor bolts.</span>", 1)
+				O.show_message(SPAN_ALERT("<b>[owner]</b> unscrews [the_bomb]'s floor bolts."), 1)
 
 			if (TIME < (the_bomb.det_time - timer_modifier) && !the_bomb.motion_sensor_triggered)
 				the_bomb.motion_sensor_triggered = 1
 				the_bomb.det_time -= timer_modifier
-				the_bomb.visible_message("<span class='alert'><b>[the_bomb]'s motion sensor was triggered! The countdown has been halved to [the_bomb.get_countdown_timer()]!</b></span>")
+				the_bomb.visible_message(SPAN_ALERT("<b>[the_bomb]'s motion sensor was triggered! The countdown has been halved to [the_bomb.get_countdown_timer()]!</b>"))
 				logTheThing(LOG_GAMEMODE, owner, "unscrews [the_bomb] at [log_loc(the_bomb)], halving the countdown to [the_bomb.get_countdown_timer()].")
 
 /obj/machinery/nuclearbomb/event
@@ -486,18 +509,65 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		. = ..()
 		src.SafeScale(0.75, 0.75)
 
+/obj/machinery/nuclearbomb/event/micronuke/defended
+	arm(mob/user)
+		. = ..()
+		for(var/turf/T in orange(1, get_turf(src)))
+			if(isfloor(T))
+				new /obj/critter/gunbot/drone/miniature_syndie/robust(T)
+
 /obj/bomb_decoy
 	name = "nuclear bomb"
-	desc = "An extremely powerful balloon capable of deceiving the whole station."
+	desc = ""
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb"
 	density = 1
 	anchored = UNANCHORED
 	_health = 10
+	var/datum/weakref/our_bomb = null
+	var/recognizable_range = 2 //! people this far away and closer will see that this is a balloon in the description
+	var/extremely_convincing = FALSE //! set to true to fool everyone in description, includidng nukies (using it will give it away still)
+
+	New()
+		..()
+		#ifdef XMAS
+		icon_state = "nuke_gift[rand(1,2)]"
+		#endif
+		START_TRACKING
+		src.UpdateOverlays(image(src.icon, "nblight1"), "light")
+		src.maptext_x = -16
+		src.maptext_y = 4
+		src.maptext_width = 64
+		if(length(by_type[/obj/machinery/nuclearbomb]))
+			src.our_bomb = get_weakref(pick(by_type[/obj/machinery/nuclearbomb]))
+
+	proc/is_linked_to_bomb(obj/machinery/nuclearbomb/bomb)
+		if(isnull(src.our_bomb?.deref()))
+			src.our_bomb = get_weakref(bomb)
+			return TRUE
+		if(src.our_bomb.deref() == bomb)
+			return TRUE
+		return FALSE
+
+	get_desc(dist, mob/user)
+		var/can_user_recognize = !extremely_convincing && \
+			( \
+				user?.mind?.get_antagonist(ROLE_NUKEOP) || user?.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER) || \
+				dist <= src.recognizable_range || user?.faction == FACTION_SYNDICATE \
+			)
+		if(isnull(src.our_bomb?.deref()) || can_user_recognize)
+			. = "<br>An extremely powerful balloon capable of deceiving the whole station."
+		else
+			var/obj/machinery/nuclearbomb/bomb = src.our_bomb.deref()
+			. = list("<br>" + bomb.desc, " " + bomb.base_desc())
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	proc/checkhealth()
 		if (src._health <= 0)
-			src.visible_message("<span class='alert'><b>[src] pops!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src] pops!</b>"))
 			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			var/obj/decal/cleanable/balloon/decal = make_cleanable(/obj/decal/cleanable/balloon,src.loc)
 			decal.icon_state = "balloon_green_pop"
@@ -505,8 +575,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 	attackby(var/obj/item/W, mob/user)
 		..()
+		if(iswrenchingtool(W))
+			src.anchored = !src.anchored
+			boutput(user, SPAN_NOTICE("[src] is now [src.anchored ? "anchored" : "unanchored"]."))
+			return
 		user.lastattacked = src
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
 		src._health -= W.force
 		checkhealth()
-		return

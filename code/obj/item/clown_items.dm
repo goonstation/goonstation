@@ -41,9 +41,9 @@ VUVUZELA
 		var/mob/M =	AM
 		LAZYLISTADDUNIQUE(M.attached_objs, src)
 		src.glide_size = M.glide_size
-		RegisterSignal(M, COMSIG_MOVABLE_THROW_END, PROC_REF(on_mob_throw_end))
-		if (M.slip(walking_matters = 1, ignore_actual_delay = 1, throw_type=THROW_PEEL_SLIP, params=list("slip_obj"=src)))
-			boutput(M, "<span class='notice'>You slipped on the banana peel!</span>")
+		RegisterSignal(M, COMSIG_MOVABLE_THROW_END, PROC_REF(on_mob_throw_end), override=TRUE)
+		if (M.slip(walking_matters=TRUE, ignore_actual_delay=TRUE, throw_type=THROW_PEEL_SLIP, params=list("slip_obj"=src)))
+			boutput(M, SPAN_NOTICE("You slipped on the banana peel!"))
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.sims)
@@ -76,6 +76,7 @@ VUVUZELA
 			return
 		opened = 1
 		icon_state = "crushed-5"
+		w_class = W_CLASS_TINY
 		playsound(user.loc, 'sound/items/can_open.ogg', 50, 0)
 
 		SPAWN(0.5 SECONDS)

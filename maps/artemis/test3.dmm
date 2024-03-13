@@ -1,13 +1,13 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/background_canvas,
-/area)
+/area/background_canvas)
 "b" = (
 /obj/artemis/arjuna{
 	dir = 1
 	},
 /turf/background_canvas,
-/area)
+/area/background_canvas)
 
 (1,1,1) = {"
 a

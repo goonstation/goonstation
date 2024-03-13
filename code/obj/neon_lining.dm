@@ -50,22 +50,22 @@
 
 		if (lining_pattern % 2)												//1,3,5,7
 			if (lining_rotation == 0)
-				set_dir(2)
+				set_dir(SOUTH)
 			else if (lining_rotation == 1)
-				set_dir(8)
+				set_dir(WEST)
 			else if (lining_rotation == 2)
-				set_dir(1)
+				set_dir(NORTH)
 			else
-				set_dir(4)
+				set_dir(EAST)
 		else																//0,2,4,6
 			if (lining_rotation == 0)
-				set_dir(6)
+				set_dir(SOUTHEAST)
 			else if (lining_rotation == 1)
-				set_dir(9)
+				set_dir(NORTHWEST)
 			else if (lining_rotation == 2)
-				set_dir(10)
+				set_dir(SOUTHWEST)
 			else
-				set_dir(5)
+				set_dir(NORTHEAST)
 
 		if (lining_shape < 1 || lining_shape > 6)
 			lining_shape = 1

@@ -2,6 +2,7 @@
 	name = "mentor mouse"
 	real_name = "mentor mouse"
 	is_respawnable = FALSE
+	locked = TRUE
 	var/image/ping
 	var/ping_id
 	var/mob/the_guy
@@ -101,8 +102,8 @@
 		var/more_class = " mhelp"
 		if(src.is_admin)
 			more_class = " adminooc"
-		var/rendered = "<span class='game say[more_class]'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> whispers, <span class='message'>\"[message]\"</span></span>"
-		var/rendered_admin = "<span class='game say[more_class]'><span class='name' data-ctx='\ref[src.mind]'>[src.name] ([src.ckey])</span> whispers, <span class='message'>\"[message]\"</span></span>"
+		var/rendered = "<span class='game say[more_class]'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> whispers, [SPAN_MESSAGE("\"[message]\"")]</span>"
+		var/rendered_admin = "<span class='game say[more_class]'><span class='name' data-ctx='\ref[src.mind]'>[src.name] ([src.ckey])</span> whispers, [SPAN_MESSAGE("\"[message]\"")]</span>"
 
 		//show message to admins
 		for (var/client/C)

@@ -2,17 +2,16 @@
 
 /obj/machinery/computer/announcement
 	name = "Announcement Computer"
-	icon_state = "comm"
+	icon_state = "announcement"
 	machine_registry_idx = MACHINES_ANNOUNCEMENTS
 	circuit_type = /obj/item/circuitboard/announcement
+	var/theme = "ntos"
 	var/announcement_delay = 1200
 	var/obj/item/card/id/ID = null
 	var/unlocked = 0
 	var/announce_status = "Insert Card"
-	var/message = ""
-	var/inhibit_updates = 0
+	var/max_length = 400
 	var/announces_arrivals = 0
-	var/arrival_announcements_enabled = 1
 	var/say_language = "english"
 	var/arrivalalert = "$NAME has signed up as $JOB."
 	var/departurealert = "$NAME the $JOB has entered cryogenic storage."
@@ -32,117 +31,94 @@
 		if (src.announces_arrivals)
 			src.announcement_radio = new(src)
 
-	process()
-		if (!inhibit_updates) src.updateUsrDialog()
-
-	attack_hand(mob/user)
-		if(..()) return
-		if(isghostdrone(user))
-			boutput(user, "<span class='alert'>Your processors refuse to interact with this machine!</span>")
-			return 1
-		src.add_dialog(user)
-		var/dat = {"
-			<body>
-				<h1>Announcement Computer</h1>
-				<hr>
-				Status: [announce_status]<BR>
-				Card: <a href='?src=\ref[src];card=1'>[src.ID ? src.ID.name : "--------"]</a><br>
-				Broadcast delay: [nice_timer(user)]<br>
-				<br>
-				Message: "<a href='?src=\ref[src];edit_message=1'>[src.message ? src.message : "___________"]</a>" <a href='?src=\ref[src];clear_message=1'>(Clear)</a><br>
-				<br>
-				<b><a href='?src=\ref[src];send_message=1'>Transmit</a></b>
-			"}
-		if (src.announces_arrivals)
-			dat += "<hr>[src.arrival_announcements_enabled ? "Arrival Announcement Message: \"[src.arrivalalert]\"<br><br><b><a href='?src=\ref[src];set_arrival_message=1'>Change</a></b><br><b><a href='?src=\ref[src];toggle_arrival_message=1'>Disable</a></b>" : "Arrival Announcements Disabled<br><br><b><a href='?src=\ref[src];toggle_arrival_message=1'>Enable</a></b>"]"
-		dat += "</body>"
-		user.Browse(dat, "window=announcementcomputer")
-		onclose(user, "announcementcomputer")
-
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/card/id))
 			if (src.ID)
 				src.ID.set_loc(src.loc)
-				boutput(user, "<span class='notice'>[src.ID] is ejected from the ID scanner.</span>")
+				boutput(user, SPAN_NOTICE("[src.ID] is ejected from the ID scanner."))
 			user.drop_item()
 			W.set_loc(src)
 			src.ID = W
 			src.unlocked = check_access(ID, 1)
-			boutput(user, "<span class='notice'>You insert [W].</span>")
+			boutput(user, SPAN_NOTICE("You insert [W]."))
+			update_status()
 			return
 		..()
 
-	Topic(href, href_list[])
-		if(..()) return 1
-		if(isghostdrone(usr))
-			return 1
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "AnnouncementComputer", src.name)
+			ui.open()
 
-		if(href_list["card"])
-			if(src.ID)
-				src.ID.set_loc(src.loc)
-				usr.put_in_hand_or_eject(src.ID) // try to eject it into the users hand, if we can
-				src.ID = null
-				src.unlocked = 0
-			else
-				var/obj/item/I = usr.equipped()
-				if (istype(I, /obj/item/card/id))
-					usr.drop_item()
-					I.set_loc(src)
-					src.ID = I
-					src.unlocked = check_access(ID, 1)
-				else if (istype(I, /obj/item/magtractor))
-					var/obj/item/magtractor/mag = I
-					if (istype(mag.holding, /obj/item/card/id))
-						I = mag.holding
-						mag.dropItem(0)
+	ui_data(mob/user)
+		. = list(
+			"theme" = src.theme,
+			"card_name" = src.ID ? src.ID.name : null,
+			"status_message" = src.announce_status,
+			"time" = get_time(user) SECONDS,
+			"announces_arrivals" = 	src.announces_arrivals,
+			"arrivalalert" = src.arrivalalert,
+			"max_length" = src.max_length
+		)
+
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
+		switch(action)
+			if ("id")
+				if(src.ID)
+					src.ID.set_loc(src.loc)
+					usr.put_in_hand_or_eject(src.ID) // try to eject it into the users hand, if we can
+					src.ID = null
+					src.unlocked = 0
+				else
+					var/obj/item/I = usr.equipped()
+					if (istype(I, /obj/item/card/id))
+						usr.drop_item()
 						I.set_loc(src)
 						src.ID = I
 						src.unlocked = check_access(ID, 1)
-
-		else if(href_list["edit_message"])
-			inhibit_updates = 1
-			message = copytext( html_decode(trim(strip_html(html_decode(input("Select what you wish to announce.", "Announcement."))))), 1, 280 )
-			if(url_regex?.Find(message)) message = ""
-			inhibit_updates = 0
-			playsound(src.loc, "keyboard", 50, 1, -15)
-
-		else if (href_list["clear_message"])
-			message = ""
-
-		else if (href_list["send_message"])
-			send_message(usr)
-
-		else if (href_list["set_arrival_message"])
-			inhibit_updates = 1
-			src.set_arrival_alert(usr)
-			inhibit_updates = 0
-
-		else if (href_list["toggle_arrival_message"])
-			src.arrival_announcements_enabled = !(src.arrival_announcements_enabled)
-			boutput(usr, "Arrival announcements [src.arrival_announcements_enabled ? "en" : "dis"]abled.")
-
-		update_status()
-		src.updateUsrDialog()
+					else if (istype(I, /obj/item/magtractor))
+						var/obj/item/magtractor/mag = I
+						if (istype(mag.holding, /obj/item/card/id))
+							I = mag.holding
+							mag.dropItem(0)
+							I.set_loc(src)
+							src.ID = I
+							src.unlocked = check_access(ID, 1)
+				. = TRUE
+				update_status()
+			if ("transmit")
+				src.send_message(usr, params["value"])
+				. = TRUE
+			if ("arrival_message")
+				src.set_arrival_alert(usr, params["value"])
+				. = TRUE
+			if ("log")
+				logTheThing(LOG_STATION, usr, "Sets an announcement message to \"[params["value"]]\" from \"[params["old"]]\".")
 
 	proc/update_status()
 		if(!src.ID)
 			announce_status = "Insert Card"
 		else if(!src.unlocked)
 			announce_status = "Insufficient Access"
-		else if(!message)
-			announce_status = "Input message."
-		else if(get_time(usr) > 0)
-			announce_status = "Broadcast delay in effect."
 		else
-			announce_status = "Ready to transmit!"
+			announce_status = ""
 
-	proc/send_message(var/mob/user)
-		if(!message || !unlocked || get_time(user) > 0) return
+	proc/send_message(var/mob/user, message)
+		if(!message || length_char(message) > max_length || !unlocked || get_time(user) > 0) return
 		var/area/A = get_area(src)
 
 		if(user.bioHolder.HasEffect("mute"))
 			boutput(user, "You try to speak into \the [src] but you can't since you are mute.")
 			return
+		if(url_regex?.Find(message))
+			boutput(src, SPAN_NOTICE("<b>Web/BYOND links are not allowed in ingame chat.</b>"))
+			boutput(src, SPAN_ALERT("&emsp;<b>\"[message]</b>\""))
+			return
+		message = sanitize(adminscrub(message, src.max_length))
 
 		logTheThing(LOG_SAY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]")
 		logTheThing(LOG_DIARY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]", "say")
@@ -157,30 +133,13 @@
 
 		command_announcement(message, "[A.name] Announcement by [ID.registered] ([ID.assignment])", msg_sound)
 		ON_COOLDOWN(user,"announcement_computer",announcement_delay)
-		message = ""
-
-	proc/nice_timer(mob/user)
-		var/time = get_time(user)
-		if(time < 0)
-			return "--:--"
-		else
-			var/seconds = text2num(time) % 60 //ZeWaka: Should fix type mismatches.
-			var/flick_seperator = (seconds % 2 == 0) // why was this being calculated after converting BACK into a string?!!! - cirr
-			// VARIABLES SHOULDN'T CHANGE TYPE FROM STRING TO NUMBER TO STRING LIKE THIS IN LIKE SIX LINES AAGGHHHHH FUCK YOU DYNAMIC TYPING
-			var/minutes = round(text2num((time - seconds) / 60))
-			minutes = minutes < 10 ? "0[minutes]" : "[minutes]"
-			seconds = seconds < 10 ? "0[seconds]" : "[seconds]"
-
-			return "[minutes][flick_seperator ? ":" : " "][seconds]"
 
 	proc/get_time(mob/user)
 		return round(GET_COOLDOWN(user,"announcement_computer") / 10)
 
-	proc/set_arrival_alert(var/mob/user)
-		if (!user)
-			return
-		var/newalert = tgui_input_text(user, "Please enter a new arrival alert message. Valid tokens: $NAME, $JOB, $STATION, $THEY, $THEM, $THEIR", "Custom Arrival Alert", src.arrivalalert)
+	proc/set_arrival_alert(var/mob/user, newalert)
 		if (!newalert)
+			src.arrivalalert = ""
 			return
 		if (!findtext(newalert, "$NAME"))
 			user.show_text("The alert needs at least one $NAME token.", "red")
@@ -190,7 +149,6 @@
 			return
 		src.arrivalalert = sanitize(adminscrub(newalert, 200))
 		logTheThing(LOG_STATION, user, "sets the arrival announcement on [constructTarget(src,"station")] to \"[src.arrivalalert]\"")
-		user.show_text("Arrival alert set to '[newalert]'", "blue")
 		playsound(src.loc, "keyboard", 50, 1, -15)
 		return
 
@@ -205,6 +163,8 @@
 
 	proc/announce_arrival(var/mob/living/person)
 		if (!src.announces_arrivals)
+			return 1
+		if (!src.arrivalalert)
 			return 1
 		if ((person.traitHolder.hasTrait("stowaway")) || (person.traitHolder.hasTrait("pilot")) || (person.traitHolder.hasTrait("sleepy")))
 			return 1 //people who have been on the ship the whole time, or who aren't on the ship, won't be announced
@@ -250,3 +210,4 @@
 		req_access = null
 		name = "Syndicate Announcement computer"
 		voice_name = "Syndicate Announcement Computer"
+		theme = "syndicate"

@@ -24,7 +24,8 @@
 		/obj/item/disk/data/cartridge/syndicate,
 		/obj/item/disk/data/cartridge/ai,
 		/obj/item/disk/data/cartridge/cyborg,
-		/obj/item/disk/data/cartridge/ringtone_syndie)
+		/obj/item/disk/data/cartridge/ringtone_syndie,
+		/obj/item/disk/data/cartridge/hos)
 
 		var/list/spawnable = typesof(/obj/item/disk/data/cartridge)
 		spawnable -= invalid_carts

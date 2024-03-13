@@ -4,7 +4,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Button, Flex, NumberInput, LabeledList, Input, Section, Tooltip } from '../components';
+import { Box, Button, Flex, Input, LabeledList, NumberInput, Section, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 export const GimmickObject = (props, context) => {

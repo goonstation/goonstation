@@ -9,7 +9,7 @@ import { classes } from 'common/react';
 import { useBackend } from "../backend";
 import { AnimatedNumber, Box, Button, Dimmer, Icon, Knob, Section, SectionEx, Stack } from '../components';
 import { Window } from '../layouts';
-import { freezeTemperature, getTemperatureColor, getTemperatureIcon, getTemperatureChangeName } from './common/temperatureUtils';
+import { freezeTemperature, getTemperatureChangeName, getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 
 export const ChemHeater = (props, context) => {

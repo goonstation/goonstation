@@ -187,24 +187,13 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		. = ..()
 		src.ai = new /datum/aiHolder/wanderer(src)
 
-// how you gonna have father ted and father jack and not father dougal? smh
 
-/mob/living/carbon/human/fatherted
-	New()
-		..()
-		src.equip_new_if_possible(/obj/item/clothing/shoes/red, SLOT_SHOES)
-		src.equip_new_if_possible(/obj/item/clothing/under/rank/chaplain, SLOT_W_UNIFORM)
-
-	initializeBioholder()
-		. = ..()
-		bioHolder.mobAppearance.gender = "male"
-		src.real_name = "Father Ted"
-
-/mob/living/carbon/human/fatherjack
-	real_name = "Father Jack"
+ADMIN_INTERACT_PROCS(/mob/living/carbon/human/fathergrife, proc/chatter)
+/mob/living/carbon/human/fathergrife
+	real_name = "Father Grife"
 #ifdef IN_MAP_EDITOR
 	icon = 'icons/mob/map_mob.dmi'
-	icon_state = "father_jack"
+	icon_state = "father_grife"
 #endif
 	gender = MALE
 	is_npc = TRUE
@@ -214,6 +203,8 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		src.equip_new_if_possible(/obj/item/clothing/shoes/red, SLOT_SHOES)
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/chaplain, SLOT_W_UNIFORM)
 		src.traitHolder.addTrait("training_chaplain")
+		if(prob(20))
+			src.bioHolder.AddEffectInstance(random_accent().GetCopy())
 
 	initializeBioholder()
 		. = ..()
@@ -223,13 +214,33 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		if (..(parent))
 			return 1
 
-		if(prob(1) && !src.stat)
-			SPAWN(0) src.say(pick( "DRINK!", "FECK!", "ARSE!", "GIRLS!","That would be an ecumenical matter."))
+		var/area/area = get_area(src)
+		if(prob(1) && can_act(src) && area?.active)
+			chatter()
+
+	proc/say_helper_job()
+		. = pick(get_all_jobs())
+
+	proc/say_helper_crewmember()
+		var/datum/db_record/record = pick(data_core.general.records)
+		. = record["full_name"]
+
+	proc/say_helper_logged_phrase()
+		. = capitalize(phrase_log.random_phrase("say"))
+
+	proc/chatter()
+		set name = "Chatter"
+		var/phrase = pick_smart_string("father_grife.txt", "say", list(
+			"job" = PROC_REF(say_helper_job),
+			"crewmember" = PROC_REF(say_helper_crewmember),
+			"logged_phrase" = PROC_REF(say_helper_logged_phrase)
+		))
+		src.say(phrase)
 
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/postcard/owlery))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
+			boutput(M, SPAN_NOTICE("<b>You show [W] to [src]</b> "))
 			SPAWN(1 SECOND)
 				say("Aye! Bill won't stop talking about it!")
 			return
@@ -239,7 +250,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = AI_ATTACKING
+			src.ai_set_state(AI_ATTACKING)
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 
@@ -248,7 +259,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		//	for (var/mob/living/carbon/human/npc/diner_bartender/BT in all_viewers(7, src))
 			//	BT.protect_from(M, src)
 
-/mob/living/carbon/human/fatherjack/cow
+/mob/living/carbon/human/fathergrife/cow
 	New()
 		..()
 		src.bioHolder.AddEffect("cow")
@@ -651,13 +662,13 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/tug/invoice))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
+			boutput(M, SPAN_NOTICE("<b>You show [W] to [src]</b> "))
 			SPAWN(1 SECOND)
 				say("Hard to believe, but I think my [BILL_PICK("friends")] would be proud to see it.")
 			return
 		if (istype(W, /obj/item/paper/postcard/owlery))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
+			boutput(M, SPAN_NOTICE("<b>You show [W] to [src]</b> "))
 			SPAWN(1 SECOND)
 				say("Yep, can't wait to go on that trip! That [pick_string("johnbill.txt", "insults")] oughta be here soon!")
 			return
@@ -666,10 +677,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			return
 		if (istype(W, /obj/item/ursium/antiU))
 			var/obj/item/ursium/antiU/aU = W
-			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
+			boutput(M, SPAN_NOTICE("<b>You show [W] to [src]</b> "))
 			say("Whoa nelly! Mind if i have a taste?")
 			SPAWN(1 SECOND)
-				M.visible_message("<span class='alert'>[src] touches the [W]! Something isnt right! </span>")
+				M.visible_message(SPAN_ALERT("[src] touches the [W]! Something isnt right! "))
 				aU:annihilation(2 * aU.ursium)
 			return
 		..()
@@ -680,7 +691,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = AI_ATTACKING
+			src.ai_set_state(AI_ATTACKING)
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.set_a_intent(INTENT_HARM)
@@ -791,11 +802,11 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			step(src, pick(cardinal))
 	proc/illusion_expire(mob/user)
 		if(user)
-			boutput(user, "<span class='alert'><B>You reach out to attack the Waldo illusion but it explodes into dust, knocking you off your feet!</B></span>")
+			boutput(user, SPAN_ALERT("<B>You reach out to attack the Waldo illusion but it explodes into dust, knocking you off your feet!</B>"))
 			user.changeStatus("weakened", 4 SECONDS)
 		for(var/mob/M in viewers(src, null))
 			if(M.client && M != user)
-				M.show_message("<span class='alert'><b>The Waldo illusion explodes into smoke!</b></span>")
+				M.show_message(SPAN_ALERT("<b>The Waldo illusion explodes into smoke!</b>"))
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(1, 0, src.loc)
 		smoke.start()
@@ -838,7 +849,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/postcard/owlery))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
+			boutput(M, SPAN_NOTICE("<b>You show [W] to [src]</b> "))
 			SPAWN(1 SECOND)
 				say("Oh yeah sure, I seen it. That ol- how would he say it, [BILL_PICK("insults")]? He won't stop going on and on and on...")
 		..()
@@ -847,7 +858,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = AI_ATTACKING
+			src.ai_set_state(AI_ATTACKING)
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 
@@ -1017,7 +1028,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/tug/invoice))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
+			boutput(M, SPAN_NOTICE("<b>You show [W] to [src]</b> "))
 			SPAWN(1 SECOND)
 				say(pick("Brudder, I did that job months ago. Fuck outta here with that.","Oh come on, quit wastin my time [pick_string("johnbill.txt", "insults")]."))
 			return

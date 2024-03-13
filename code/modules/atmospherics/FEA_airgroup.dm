@@ -410,7 +410,7 @@
 /// Zeroes and spaces the air of the group and resumes group processing.
 /datum/air_group/proc/space_group()
 	for(var/turf/simulated/member as anything in members)
-		member.air?.zero()
+		member.air?.reset_to_space_gas()
 	if (length_space_border)
 		spaced = TRUE
 		if(!group_processing)

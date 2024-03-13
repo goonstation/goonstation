@@ -11,6 +11,7 @@
 	var/initial_volume = 100
 	///Does it get destroyed from exploding
 	var/reinforced = FALSE
+	var/shattered = FALSE
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | OPENCONTAINER
 	tooltip_flags = REBUILD_DIST
@@ -73,9 +74,9 @@
 		return "The handle is broken."
 	return "Contains [src.reagents.total_volume] units."
 
-/obj/item/extinguisher/attack(mob/M, mob/user)
+/obj/item/extinguisher/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	src.hide_attack = ATTACK_VISIBLE
-	if(user.a_intent == "help" && !safety) //don't smack people with a deadly weapon while you're trying to extinguish them, thanks
+	if(user.a_intent == "help" && !safety &&!shattered) //don't smack people with a deadly weapon while you're trying to extinguish them, thanks
 		src.hide_attack = ATTACK_FULLY_HIDDEN
 		return
 	..()
@@ -84,24 +85,47 @@
 	..()
 	//src.afterattack(target, user)
 
+/obj/item/extinguisher/shatter_chemically(var/projectiles = FALSE) //needs sound probably definitely for sure
+	for(var/mob/M in AIviewers(src))
+		boutput(M, SPAN_ALERT("The <B>[src.name]</B> breaks open!"))
+	if(projectiles)
+		var/datum/projectile/special/spreader/uniform_burst/circle/circle = new /datum/projectile/special/spreader/uniform_burst/circle/(get_turf(src))
+		circle.shot_sound = null //no grenade sound ty
+		circle.spread_projectile_type = /datum/projectile/bullet/shrapnel/shrapnel_implant
+		circle.pellet_shot_volume = 0
+		circle.pellets_to_fire = 10
+		shoot_projectile_ST_pixel_spread(get_turf(src), circle, get_step(src, NORTH))
+	src.reagents.reaction(get_turf(src), TOUCH, src.reagents.total_volume)
+	icon_state = "fire_extinguisher_shattered"
+	src.desc = "It's shattered beyond all use."
+	shattered = TRUE
+	return TRUE
+
 /obj/item/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
 	if (!src.reagents)
-		boutput(user, "<span class='alert'>Man, the handle broke off, you won't spray anything with this.</span>")
+		boutput(user, SPAN_ALERT("Man, the handle broke off, you won't spray anything with this."))
+		return
+
+	if (src.shattered)
+		boutput(user, SPAN_ALERT("The extinguisher is too damaged!"))
 		return
 
 	if ( is_reagent_dispenser(target) && BOUNDS_DIST(src, target) == 0)
 		var/obj/o = target
 		o.reagents.trans_to(src, (src.reagents.maximum_volume - src.reagents.total_volume))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
-		boutput(user, "<span class='notice'>Extinguisher refilled...</span>")
+		boutput(user, SPAN_NOTICE("Extinguisher refilled..."))
 		playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 		user.lastattacked = target
 		return
 
 	if (!safety && !target.storage)
 		if (src.reagents.total_volume < 1)
-			boutput(user, "<span class='alert'>The extinguisher is empty.</span>")
+			boutput(user, SPAN_ALERT("\The [src] is empty."))
+			return
+		if (!isturf(user.loc))
+			boutput(user, SPAN_ALERT("There's no room to use [src] here."))
 			return
 
 		if (src.reagents.has_reagent("infernite") && src.reagents.has_reagent("blackpowder")) // BAHAHAHAHA
@@ -111,14 +135,14 @@
 			src.reagents.remove_any(src.initial_volume)
 			if (src.reinforced)
 				return
-			user.visible_message("<span class='alert'>[src] violently bursts!</span>")
+			user.visible_message(SPAN_ALERT("[src] violently bursts!"))
 			user.drop_item()
 			new/obj/item/scrap(get_turf(user))
 			if (ishuman(user))
 				var/mob/living/carbon/human/M = user
 				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 				implanted.implanted(M, null, 4)
-				boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
+				boutput(M, SPAN_ALERT("You are struck by shrapnel!"))
 			qdel(src)
 			return
 
@@ -128,7 +152,7 @@
 			src.reagents.remove_any(src.initial_volume)
 			if (src.reinforced)
 				return
-			user.visible_message("<span class='alert'>[src] ruptures!</span>")
+			user.visible_message(SPAN_ALERT("[src] ruptures!"))
 			user.drop_item()
 			new/obj/item/scrap(get_turf(user))
 			qdel(src)
@@ -136,18 +160,18 @@
 
 		for (var/reagent in src.banned_reagents)
 			if (src.reagents.has_reagent(reagent))
-				boutput(user, "<span class='alert'>The nozzle is clogged!</span>")
+				boutput(user, SPAN_ALERT("The nozzle is clogged!"))
 				return
 
 		for (var/reagent in src.melting_reagents)
 			if (src.reagents.has_reagent(reagent))
-				user.visible_message("<span class='alert'>[src] melts!</span>")
+				user.visible_message(SPAN_ALERT("[src] melts!"))
 				user.drop_item()
 				make_cleanable(/obj/decal/cleanable/molten_item,get_turf(user))
 				qdel(src)
 				return
 
-		playsound(src, 'sound/effects/spray.ogg', 30, 1, -3)
+		playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -3)
 
 		var/direction = get_dir(src,target)
 
@@ -194,13 +218,15 @@
 	return
 
 /obj/item/extinguisher/attack_self(mob/user as mob)
+	if(shattered)
+		return
 	if (safety)
 		src.item_state = "fireextinguisher1"
 		set_icon_state("fire_extinguisher1")
 		user.update_inhands()
 		src.desc = "The safety is off."
 		boutput(user, "The safety is off.")
-		ADD_FLAG(src.flags, OPENCONTAINER)
+		src.set_open_container(TRUE)
 		safety = FALSE
 	else
 		src.item_state = "fireextinguisher0"
@@ -208,7 +234,7 @@
 		user.update_inhands()
 		src.desc = "The safety is on."
 		boutput(user, "The safety is on.")
-		REMOVE_FLAG(src.flags, OPENCONTAINER)
+		src.set_open_container(FALSE)
 		safety = TRUE
 
 /obj/item/extinguisher/move_trigger(var/mob/M, kindof)
@@ -227,3 +253,6 @@
 		..()
 		src.banned_reagents += src.melting_reagents
 		src.melting_reagents = list()
+
+	shatter_chemically(var/projectiles = FALSE)
+		return

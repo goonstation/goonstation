@@ -18,7 +18,7 @@
 
 /datum/game_mode/changeling/announce()
 	boutput(world, "<B>The current game mode is - Changeling!</B>")
-	boutput(world, "<B>There is a <span class='alert'>CHANGELING</span> on the station. Be on your guard! Trust no one!</B>")
+	boutput(world, "<B>There is a [SPAN_ALERT("CHANGELING")] on the station. Be on your guard! Trust no one!</B>")
 
 /datum/game_mode/changeling/pre_setup()
 	var/num_players = 0

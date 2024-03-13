@@ -3,10 +3,13 @@
 	organ_name = "kidney_t"
 	desc = "Bean shaped, but not actually beans. You can still eat them, though!"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 7
+	organ_holder_name = "kidney"
+	either_side = TRUE
 	icon = 'icons/obj/items/organs/kidney.dmi'
 	icon_state = "kidneys"
 	failure_disease = /datum/ailment/disease/kidney_failure
+	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING
+	region = FLANKS
 	var/chem_metabolism_modifier = 1
 	// this is just used for setting them, so I will use the *100 values
 	var/min_chem_metabolism_modifier = 100
@@ -41,7 +44,7 @@
 			REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_METABOLIC_RATE, src)
 
 	on_broken(var/mult = 1)
-		if (!holder.get_working_kidney_amt())
+		if (!holder.get_working_kidney_amt() && !donor.hasStatus("dialysis"))
 			donor.take_toxin_damage(2*mult, 1)
 
 	disposing()
@@ -51,52 +54,6 @@
 			if (holder.right_kidney == src)
 				holder.right_kidney = null
 		..()
-
-	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
-		/* Overrides parent function to handle special case for attaching kidneys. */
-		var/mob/living/carbon/human/H = M
-		if (!src.can_attach_organ(H, user))
-			return 0
-
-		if (H.organHolder.chest && H.organHolder.chest.op_stage == 7.0)
-			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
-			var/target_organ_location = null
-
-			if (user.find_in_hand(src, "right"))
-				target_organ_location = "right"
-			else if (user.find_in_hand(src, "left"))
-				target_organ_location = "left"
-			else if (!user.find_in_hand(src))
-				// Organ is not in the attackers hand. This was likely a drag and drop. If you're just tossing an organ at a body, where it lands will be imprecise
-				target_organ_location = pick("right", "left")
-
-			if (target_organ_location == "right" && !H.organHolder.right_kidney)
-				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right kidney socket!</span>",\
-					"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] right kidney socket!</span>",\
-					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your right kidney socket!</span>")
-
-				if (user.find_in_hand(src))
-					user.u_equip(src)
-				H.organHolder.receive_organ(src, "right_kidney", 2)
-				H.update_body()
-			else if (target_organ_location == "left" && !H.organHolder.left_kidney)
-				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left kidney socket!</span>",\
-					"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] left kidney socket!</span>",\
-					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your left kidney socket!</span>")
-
-				if (user.find_in_hand(src))
-					user.u_equip(src)
-				H.organHolder.receive_organ(src, "left_kidney", 2)
-				H.update_body()
-			else
-				user.tri_message(H, "<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right kidney socket!<br>But there's something already there!</span>",\
-					"<span class='alert'>You try to [fluff] the [src] into [user == H ? "your" : "[H]'s"] right kidney socket!<br>But there's something already there!</span>",\
-					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [H == user ? "try" : "tries"] to [fluff] the [src] into your right kidney socket!<br>But there's something already there!</span>")
-				return 0
-
-			return 1
-		else
-			return 0
 
 	/// sets the chem_metabolism_modifier for this kidney, clamping it to the min and max value and dividing it by 100
 	proc/set_chem_metabolism_modifier(var/new_modifier)
@@ -140,7 +97,7 @@ TYPEINFO(/obj/item/organ/kidney/cyber)
 	desc = "A fancy robotic kidney to replace one that someone's lost!"
 	icon_state = "cyber-kidney-L"
 	// item_state = "heart_robo1"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0

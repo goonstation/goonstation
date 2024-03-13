@@ -6,7 +6,7 @@
  */
 
 import { BooleanLike } from 'common/react';
-import type { ApcData, ApcInterfaceData, ApcAccessPanelData } from './types';
+import type { ApcAccessPanelData, ApcData, ApcInterfaceData } from './types';
 import { InterfaceType } from './types';
 
 export const formatWatts = (watts: number | undefined) => `${isNaN(watts) ? 0 : Math.floor(watts)} W`;
