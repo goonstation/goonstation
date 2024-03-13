@@ -8,8 +8,8 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/cable/orange,
-/obj/cable/orange{
+/obj/cable/blue,
+/obj/cable/blue{
 	icon_state = "0-10"
 	},
 /turf/simulated/floor/yellowblack{
@@ -1065,7 +1065,7 @@
 /area/station/mining/staff_room)
 "axj" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
@@ -1127,7 +1127,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
@@ -1395,7 +1395,7 @@
 "aEI" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/landmark/gps_waypoint,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-6"
 	},
 /turf/simulated/floor/black,
@@ -1868,12 +1868,6 @@
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
 	})
-"aTf" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/ptl)
 "aTq" = (
 /obj/machinery/conveyor/EW{
 	id = "ghostdrone"
@@ -2164,10 +2158,10 @@
 /area/station/maintenance/north)
 "aYG" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "0-9"
 	},
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
@@ -2404,7 +2398,7 @@
 /area/station/storage/tech)
 "bdB" = (
 /obj/disposalpipe/segment/transport,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellowblack,
@@ -3809,7 +3803,7 @@
 /area/station/hallway/secondary/west)
 "bFd" = (
 /obj/grille/catwalk,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black/grime,
@@ -4754,7 +4748,7 @@
 /area/station/medical/medbay/cloner)
 "cec" = (
 /obj/disposalpipe/segment/transport,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
@@ -6538,7 +6532,7 @@
 /area/station/hallway/primary/northwest)
 "cUo" = (
 /obj/random_item_spawner/junk/one_or_zero,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/industrial,
@@ -7598,7 +7592,7 @@
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "6-8"
 	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se{
@@ -7820,7 +7814,7 @@
 "dyF" = (
 /obj/machinery/portable_reclaimer,
 /obj/decal/cleanable/dirt,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
@@ -8527,7 +8521,7 @@
 	})
 "dOr" = (
 /obj/disposalpipe/segment/mail/vertical,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellowblack,
@@ -9858,7 +9852,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "euK" = (
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-10"
 	},
 /turf/simulated/floor/industrial,
@@ -10881,7 +10875,7 @@
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "0-5"
 	},
 /turf/simulated/floor/yellowblack{
@@ -11557,8 +11551,11 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "9-10"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/ptl)
@@ -11593,11 +11590,13 @@
 /area/station/storage/tech)
 "fhD" = (
 /obj/machinery/power/apc/autoname_west,
-/obj/cable,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "0-5"
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 9
@@ -13417,7 +13416,7 @@
 /area/station/crew_quarters/pool)
 "fTc" = (
 /obj/random_item_spawner/junk/one_or_zero,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "6-8"
 	},
 /turf/simulated/floor/plating,
@@ -16667,14 +16666,15 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "hhO" = (
+/obj/cable/orange,
 /obj/cable/orange{
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
 /obj/cable/orange{
-	icon_state = "1-4"
+	icon_state = "0-8"
 	},
-/obj/cable/orange{
-	icon_state = "4-10"
+/obj/cable/blue{
+	icon_state = "0-10"
 	},
 /turf/simulated/floor/black,
 /area/station/engine/monitoring{
@@ -16700,7 +16700,7 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/disposalpipe/segment/transport,
 /obj/mapping_helper/firedoor_spawn,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellowblack{
@@ -19463,7 +19463,7 @@
 /obj/mapping_helper/access/engineering_engine,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/airlock/cycler{
@@ -20418,7 +20418,7 @@
 	name = "Northwest Breach Hull"
 	})
 "iDK" = (
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "6-9"
 	},
 /turf/simulated/floor/industrial,
@@ -21986,7 +21986,7 @@
 /turf/simulated/floor/grey,
 /area/station/crewquarters/cryotron)
 "jqr" = (
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "4-9"
 	},
 /turf/simulated/floor/plating,
@@ -24340,7 +24340,7 @@
 "kmb" = (
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/horizontal,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-6"
 	},
 /turf/simulated/floor/plating,
@@ -24509,7 +24509,7 @@
 	name = "Southwest Breach Hull"
 	})
 "kpw" = (
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "2-9"
 	},
 /turf/simulated/floor/black,
@@ -25831,14 +25831,6 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
-"kPo" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/se{
-	name = "Southeast Breach Hull"
-	})
 "kPR" = (
 /obj/table/wood/round/auto,
 /obj/item/device/light/candle{
@@ -25970,7 +25962,7 @@
 /area/station/engine/engineering)
 "kRD" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "6-9"
 	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se{
@@ -26588,7 +26580,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
@@ -26927,7 +26919,7 @@
 	name = "The Warrens"
 	})
 "llJ" = (
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
@@ -29393,7 +29385,7 @@
 	})
 "mhP" = (
 /obj/disposalpipe/segment/mail/vertical,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellowblack{
@@ -34218,7 +34210,7 @@
 	},
 /obj/machinery/navbeacon/mule/engineering_north/east,
 /obj/decal/stripe_caution,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
@@ -35858,7 +35850,7 @@
 /turf/simulated/floor/blue,
 /area/pasiphae/bridge)
 "pbM" = (
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "2-5"
 	},
 /turf/simulated/floor/industrial,
@@ -36028,7 +36020,7 @@
 	name = "ratty blue couch"
 	},
 /obj/landmark/start/job/assistant,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "6-8"
 	},
 /turf/simulated/floor/industrial,
@@ -36487,7 +36479,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black/grime,
@@ -37690,7 +37682,7 @@
 /turf/simulated/floor/yellowblack,
 /area/station/hallway/primary/southeast)
 "pSG" = (
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellowblack{
@@ -38265,7 +38257,7 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellow,
@@ -38374,7 +38366,7 @@
 	name = "Southwest Breach Hull"
 	})
 "qif" = (
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellowblack,
@@ -39764,7 +39756,7 @@
 /area/station/crew_quarters/pool)
 "qRe" = (
 /obj/random_item_spawner/junk/some,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/industrial,
@@ -41333,7 +41325,7 @@
 	},
 /area/station/security/main)
 "rGv" = (
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/false_wall,
@@ -41744,7 +41736,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
@@ -44167,7 +44159,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
@@ -45054,7 +45046,7 @@
 /area/station/storage/warehouse)
 "tlH" = (
 /obj/decal/cleanable/dirt,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
@@ -46141,7 +46133,7 @@
 	})
 "tJc" = (
 /obj/storage/closet/wardrobe/yellow,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "4-9"
 	},
 /turf/simulated/floor/plating,
@@ -47289,7 +47281,7 @@
 	icon_state = "4-8"
 	},
 /obj/landmark/gps_waypoint,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "2-5"
 	},
 /turf/simulated/floor/black,
@@ -48297,7 +48289,7 @@
 /area/station/hallway/secondary/exit)
 "uEI" = (
 /obj/disposalpipe/segment/mail/bent/south,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
@@ -48448,7 +48440,7 @@
 	})
 "uJE" = (
 /obj/random_item_spawner/junk/one_or_zero,
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
@@ -50820,7 +50812,7 @@
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/cafeteria)
 "vPx" = (
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black/grime,
@@ -53953,7 +53945,7 @@
 /turf/simulated/floor/redblack,
 /area/station/hallway/primary/northeast)
 "xkP" = (
-/obj/cable/orange{
+/obj/cable/blue{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/industrial,
@@ -116476,9 +116468,9 @@ mTx
 gYB
 kRh
 lCi
-kPo
+neB
 kRD
-aTf
+iXQ
 fhD
 sAj
 eRb
