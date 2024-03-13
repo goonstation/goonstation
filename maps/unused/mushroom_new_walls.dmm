@@ -8605,11 +8605,11 @@
 	},
 /area/station/crew_quarters/courtroom)
 "aSo" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-10"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "aSq" = (
@@ -14501,7 +14501,9 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/turret_protected/Zeta)
 "bAF" = (
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "bAQ" = (
@@ -14693,10 +14695,10 @@
 /turf/simulated/floor/circuit/red,
 /area/station/turret_protected/ai)
 "bIc" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "2-9"
 	},
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bIl" = (
@@ -14707,11 +14709,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/central)
-"bJB" = (
-/obj/mapping_helper/firedoor_spawn,
-/obj/disposalpipe/segment,
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "bJT" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -14902,11 +14899,11 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "bSX" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "bTf" = (
@@ -16770,7 +16767,9 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "dHY" = (
@@ -18183,7 +18182,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "eYt" = (
@@ -18363,8 +18364,10 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "fhB" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -18750,8 +18753,8 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "fFr" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "fFB" = (
@@ -18982,7 +18985,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "fQl" = (
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "fQR" = (
@@ -21106,7 +21109,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "iex" = (
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -21271,7 +21274,9 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "inl" = (
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "iny" = (
@@ -22064,7 +22069,7 @@
 	},
 /area/station/ranch)
 "jeA" = (
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "jfe" = (
@@ -23945,7 +23950,9 @@
 /turf/simulated/floor/purplewhite,
 /area/station/medical/medbay/lobby)
 "lfI" = (
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
@@ -24189,8 +24196,8 @@
 /turf/simulated/floor/purple,
 /area/station/science/hall)
 "lum" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "luS" = (
@@ -24565,11 +24572,13 @@
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
 "lPK" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-10"
 	},
 /obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -26629,7 +26638,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/neutral/corner{
 	dir = 8
 	},
@@ -27252,10 +27263,10 @@
 	},
 /area/station/medical/dome)
 "oyV" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "ozy" = (
@@ -29020,7 +29031,9 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
@@ -30233,10 +30246,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
-"qOV" = (
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "qOX" = (
 /obj/grille/steel,
 /obj/cable/yellow{
@@ -31150,7 +31159,9 @@
 	},
 /area/station/crew_quarters/bar)
 "ryr" = (
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "ryF" = (
@@ -31545,8 +31556,8 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
 "rMw" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/produce,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "rMy" = (
@@ -32613,8 +32624,10 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "sMF" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -34134,7 +34147,9 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "tWo" = (
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/blue/side,
 /area/station/hallway/primary/central)
 "tWD" = (
@@ -35658,10 +35673,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "vpg" = (
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "1-2"
-	},
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "vqf" = (
@@ -35936,7 +35948,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/west)
 "vDG" = (
@@ -36755,6 +36769,10 @@
 "wrZ" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
+"wso" = (
+/obj/machinery/door/firedoor/pyro,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "wsx" = (
 /obj/decal/poster/wallsign/poster_sol,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -37607,7 +37625,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "xkn" = (
@@ -38229,7 +38249,9 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -80974,7 +80996,7 @@ aoJ
 aoJ
 aKD
 aLF
-qOV
+aoJ
 aPu
 aPu
 aPu
@@ -81276,7 +81298,7 @@ aDS
 aDS
 aDS
 aDS
-bJB
+aDS
 aPv
 aPv
 aPv
@@ -81578,7 +81600,7 @@ aDV
 aoJ
 aoJ
 aoJ
-qOV
+aoJ
 cZy
 aPu
 aPu
@@ -86126,7 +86148,7 @@ aPu
 aPu
 aWm
 aPu
-ryr
+vpg
 aPu
 aPu
 aPu
@@ -86428,7 +86450,7 @@ ban
 aPu
 qFt
 aPu
-ryr
+vpg
 aPu
 bfc
 bfY
@@ -88270,7 +88292,7 @@ urS
 roE
 swh
 tuz
-bAF
+wso
 swh
 wqZ
 urS
