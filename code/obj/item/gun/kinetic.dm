@@ -2653,9 +2653,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			spread_angle = 0
 			shoot_delay = 3 DECI SECONDS
 
-	disposing()
-		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
 
 
 // heavy
