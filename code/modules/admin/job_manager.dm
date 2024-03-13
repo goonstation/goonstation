@@ -41,6 +41,7 @@
 			var/newcap = tgui_input_number(ui.user, "Enter a new job cap", "Alter Cap", job.limit, 100, -1)
 			if (isnull(newcap)) return
 			job.limit = newcap
+			job.admin_set_limit = TRUE
 			message_admins("Admin [key_name(ui.user)] altered [job.name] job cap to [newcap]")
 			logTheThing(LOG_ADMIN, ui.user, "altered [job.name] job cap to [newcap]")
 			logTheThing(LOG_DIARY, ui.user, "altered [job.name] job cap to [newcap]", "admin")
