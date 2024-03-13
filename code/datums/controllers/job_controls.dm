@@ -52,6 +52,7 @@ var/datum/job_controller/job_controls
 		for (var/datum/job/J in staple_jobs)
 			if (J.limit > 0)
 				J.limit *= 4
+				J.upper_limit = J.limit
 		#endif
 
 	proc/check_user_changed()//Since this is a 'public' window that everyone can get to, make sure we keep the user contained to their own savefile
