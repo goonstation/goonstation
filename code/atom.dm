@@ -1417,3 +1417,11 @@ TYPEINFO(/atom/movable)
 		if("icon_state")
 			src.icon_state = oldval
 			src.set_icon_state(newval)
+
+/atom/movable/proc/is_that_in_this(atom/movable/target)
+	if (target.loc == src)
+		return TRUE
+	for(var/atom/movable/AM in container)
+		if(AM.contents.len && AM.is_that_in_this(target))
+			return TRUE
+	return FALSE
