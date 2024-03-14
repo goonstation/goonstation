@@ -579,7 +579,7 @@
 	amount_left = 12
 	max_amount = 12
 	ammo_type = new/datum/projectile/bullet/nine_mm_surplus
-	ammo_cat = AMMO_PISTOL_9MM
+	ammo_cat = AMMO_SMG_9MM
 
 	mag_mor
 		icon_state = "uzi"
@@ -790,13 +790,12 @@
 
 
 	bird //for gangs
-		ammo_type = new/datum/projectile/bullet/bird12
+		ammo_type = new/datum/projectile/special/spreader/uniform_burst/bird12
 		ammo_cat = AMMO_SHOTGUN_LOW
 		sound_load = 'sound/weapons/gunload_click.ogg'
 		sname = "12ga Birdshot"
 		name = "12ga birdshot ammo box"
 		desc = "A box of birdshot shells, still more than capable of murder."
-		ammo_type = new/datum/projectile/bullet/bird12
 
 		seven //for striker
 			amount_left = 7

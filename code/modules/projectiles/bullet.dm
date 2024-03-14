@@ -364,6 +364,10 @@ toxic - poisons
 		damage = 20
 		cost = 3
 		shot_number = 3
+		auto
+			fullauto_valid = 1
+			cost = 1
+			shot_number = 1
 
 
 /datum/projectile/bullet/nine_mm_NATO
@@ -707,10 +711,18 @@ toxic - poisons
 		damage = 50 //can have a little throwing, as a treat
 
 /datum/projectile/bullet/bird12 //birdshot, for gangs. just much worse overall
-	implanted = /obj/item/implant/projectile/bullet_12ga/bird
+	icon_state = "birdshot1"
 	hit_ground_chance = 66
-	damage = 38
-	dissipation_rate = 6
+	damage = 13
+	hit_type = DAMAGE_CUT //birdshot mutilates your skin more, but doesnt hurt organs like shotties
+	dissipation_rate = 2
+	shot_sound = 'sound/weapons/birdshot.ogg'
+	dissipation_delay = 4
+	casing = /obj/item/casing/shotgun/red
+	on_launch(obj/projectile/O)
+		icon_state = "birdshot[rand(1,3)]"
+		. = ..()
+
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (istype(hit, /mob/living/critter/small_animal/bird))
 			var/mob/living/critter/small_animal/bird/M = hit
@@ -718,14 +730,6 @@ toxic - poisons
 			var/turf/target = get_edge_target_turf(M, dirflag)
 			M.throw_at(target, 4, 1, throw_type = THROW_GUNIMPACT)
 			M.update_canmove()
-
-		else if (ishuman(hit))
-			var/mob/living/carbon/human/M = hit
-			if (M.organHolder)
-				var/targetorgan
-				for (var/i in 1 to (power/10)-2)
-					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
-					M.organHolder.damage_organ(proj.power/M.get_ranged_protection(), 0, 0, prob(5) ? "heart" : targetorgan) //5% chance to hit the heart
 		..()
 
 

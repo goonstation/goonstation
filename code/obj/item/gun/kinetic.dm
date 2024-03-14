@@ -890,7 +890,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	has_empty_state = TRUE
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
-	ammo_cats = list(AMMO_PISTOL_9MM_ALL)
+	ammo_cats = list(AMMO_SMG_9MM)
 	max_ammo_capacity = 30
 	auto_eject = TRUE
 	fire_animation = TRUE
@@ -919,6 +919,26 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			spread_angle = 8
 			shoot_delay = 5
 
+	//warcrimes brought to you by bullets telling guns how to shoot!
+	attackby(obj/item/ammo/bullets/b, mob/user)
+		var/obj/previous_ammo = ammo
+		var/mode_was_auto = current_projectile.fullauto_valid
+		..()
+		if(previous_ammo.type != ammo.type)  // we switched ammo types
+			if(istype(ammo, /obj/item/ammo/bullets/nine_mm_surplus))
+				if(mode_was_auto)
+					set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
+					projectiles = list(new/datum/projectile/bullet/nine_mm_surplus/burst, current_projectile)
+				else
+					set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/burst)
+					projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_surplus/auto)
+			else if(istype(ammo, /obj/item/ammo/bullets/bullet_9mm))
+				if(mode_was_auto)
+					set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg/auto)
+					projectiles = list(new/datum/projectile/bullet/bullet_9mm/smg, current_projectile)
+				else
+					set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg)
+					projectiles = list(current_projectile, new/datum/projectile/bullet/bullet_9mm/smg/auto)
 
 /obj/item/gun/kinetic/greasegun
 	name = "\improper Grease Gun"
@@ -926,22 +946,21 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "grease"
 	item_state = "grease"
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
-	spread_angle = 8
+	spread_angle = 14
 	shoot_delay = 5
 	has_empty_state = TRUE
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
-	ammo_cats = list(AMMO_PISTOL_9MM_ALL)
+	ammo_cats = list(AMMO_SMG_9MM)
 	max_ammo_capacity = 30
 	auto_eject = TRUE
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/nine_mm_surplus/mag_grease
-	var/greased = FALSE //guh
-	var/glued = FALSE // :'(
+	var/grease = 0 //guh
 	get_desc(dist, mob/user)
-		if (!greased && !glued)
+		if (grease == 0)
 			. += "It's all seized up and could do with maintenance."
-		else if (glued)
+		else if (grease < 0)
 			. += "It's, er, all sticky and covered glue. WHY is it covered with glue???"
 		else
 			. += "It's greasy, alright..."
@@ -957,27 +976,27 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 					boutput(user, SPAN_ALERT("Can't switch to 2-handed while your other hand is full."))
 				else
 					icon_state = "greaseunfolded"
-					src.spread_angle = 4
+					src.spread_angle = 6
 		..()
 
 	shoot() // fuck up firerate speed
 		var/datum/component/holdertargeting/fullauto/firemode = GetComponent(/datum/component/holdertargeting/fullauto)
 		var/delay = firemode.delaystart*10
-		if (greased)
-			delay = 10
-		else if (glued)
+		if (grease > 0)
+			delay = 18 - (grease)
+			grease--
+		else if (grease < 0)
 			delay = 30
+			grease++
 		else
-			delay = clamp(delay + rand(-8,8),8,26)// slightly faster than greased occasionally to maximise variance
+			delay = clamp(delay + rand(-8,8),10,26)
 		firemode.delaystart = (delay/10) //not ideal to do it here, but this is a jank use case anyway
 		..()
 	reagent_act(reagent_id,volume)
 		if ((reagent_id in list("oil","lube", "superlube")) && volume >= 5)
-			greased = TRUE
-			glued = FALSE
+			grease = 15
 		if (reagent_id == "spaceglue" && volume >= 5)
-			greased = FALSE
-			glued = TRUE
+			grease = -30
 	New()
 		if (prob(33))
 			name = "\improper [pick ("Greafe","Grief","Greef","Griff","Greece")] Gun"
@@ -986,7 +1005,16 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
 		..()
 
-
+	//copy pastes brought to you by bullets telling guns how to shoot!
+	attackby(obj/item/ammo/bullets/b, mob/user)
+		var/obj/previous_ammo = ammo
+		var/mode_was_auto = current_projectile.fullauto_valid
+		..()
+		if(previous_ammo.type != ammo.type)  // we switched ammo types
+			if(istype(ammo, /obj/item/ammo/bullets/nine_mm_surplus))
+				set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
+			else if(istype(ammo, /obj/item/ammo/bullets/bullet_9mm))
+				set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg/auto)
 /obj/item/gun/kinetic/draco
 	name = "\improper Draco Pistol"
 	desc = "A full size 7.62x39mm 'Pistol'. With no stock. "
@@ -1227,9 +1255,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	// teehee. get it? 'throw' it away?
 	proc/selfdestruct(obj/item/parent, atom/target, mob/user, reach, params)
-		if(!ishuman(target) || src.ammo?.amount_left > 0)
+		if(!isliving(target) || src.ammo?.amount_left > 0)
 			return
-		var/mob/living/carbon/human/H = target
+		var/mob/living/H = target
 		H.changeStatus("weakened", 3 SECONDS)
 		H.force_laydown_standup()
 		src.visible_message("<span class='alert'>The [src] hits [target] <b>hard</b>, shattering into dozens of tiny pieces!</span>")
@@ -1836,7 +1864,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new /datum/projectile/bullet/bird12)
+		set_current_projectile(new /datum/projectile/special/spreader/uniform_burst/bird12)
 		..()
 
 	attack_self(mob/user as mob)
