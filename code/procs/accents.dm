@@ -923,14 +923,27 @@ proc/random_accent()
 
 /proc/germify(var/string) // pretty much the same thing as scots and tyke, but instead with some common cognates between english and german. The list is significantly smaller
 
-	var/list/phrases = list("excuse me=entschuldigung","yes sir=javol","yes ma'am=javol","you stink=du stinkst","good morning=guten morgen"
-	,"good day=guten tag", "good evening=guten abend", "good night=guten nacht","thank you=danke","thank you very much=danke schoen","I'm sorry=es tut mir leid","that's too bad=schade","no problem=kein problem"
-	,"good luck=viel glueck","bless you=gezundheit","good afternoon=guten tag")//this is horrible. I'll come up with a better system later, but I have work to do right now. This is for multi-word phrases the document can't pick up. I'm going to convert this list to a text document when I have time.
-	for(var/i=1,i < length(phrases),i = i)
-		var/list/splitPhrase = splittext(phrases[i],"=")
-		if(findtext(string, splitPhrase[1]))
-			string = replacetext(string, splitPhrase[1],splitPhrase[2])
-		i += 1
+	var/list/phrase = list()
+	phrase["excuse me"] = "entschuldigung"
+	phrase["yes sir"] = "javol"
+	phrase["yes maaam"] = "javol"
+	phrase["yes ma'am"] = "javol"
+	phrase["good morning"] = "guten morgen"
+	phrase["good day"] = "guten tag"
+	phrase["good afternoon"] = "guten tag"
+	phrase["good evening"] = "guten abend"
+	phrase["good night"] = "guten nacht"
+	phrase["thank you"] = "danke"
+	phrase["that's too bad"] = "schade"
+	phrase ["thats too bad"] = "schade"
+	phrase["too bad"] = "schade"
+	phrase["no problem"] = "kein problem"
+	phrase["good luck"] = "viel glueck"
+	var/substitute = null
+	for(var/i=1,i <= length(phrase),i++)
+		substitute = phrase[i]
+		string = replacetext(string, substitute, phrase[substitute])
+
 	var/list/tokens = splittext(string, " ")
 	var/list/modded_tokens = list()
 
