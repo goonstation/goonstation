@@ -5,6 +5,8 @@
 	var/linkcolor = "#0FF"
 	var/wages = 0
 	var/limit = -1
+	/// job category flag for use with loops rather than a needing a bunch of type checks
+	var/job_category = JOB_SPECIAL
 	var/upper_limit = null //! defaults to `limit`
 	var/lower_limit = 0
 	var/admin_set_limit = FALSE //! has an admin manually set the limit to something
@@ -194,6 +196,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_card = /obj/item/card/id/command
 	map_can_autooverride = FALSE
 	can_join_gangs = FALSE
+	job_category = JOB_COMMAND
 	unique = TRUE
 
 	special_setup(mob/M, no_special_spawn)
@@ -516,6 +519,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	linkcolor = "#FF0000"
 	slot_card = /obj/item/card/id/security
 	receives_miranda = TRUE
+	job_category = JOB_SECURITY
 
 /datum/job/security/security_officer
 	name = "Security Officer"
@@ -640,6 +644,7 @@ ABSTRACT_TYPE(/datum/job/research)
 /datum/job/research
 	linkcolor = "#9900FF"
 	slot_card = /obj/item/card/id/research
+	job_category = JOB_RESEARCH
 
 /datum/job/research/geneticist
 	name = "Geneticist"
@@ -787,6 +792,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 /datum/job/engineering
 	linkcolor = "#FF9900"
 	slot_card = /obj/item/card/id/engineering
+	job_category = JOB_ENGINEERING
 
 /datum/job/engineering/quartermaster
 	name = "Quartermaster"
@@ -905,6 +911,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian
 	linkcolor = "#0099FF"
 	slot_card = /obj/item/card/id/civilian
+	job_category = JOB_CIVILIAN
 
 /datum/job/civilian/chef
 	name = "Chef"
@@ -2747,6 +2754,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			return
 		droneize(M, 0)
 
+ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily //Special daily jobs
 	var/day = ""
 /datum/job/daily/boxer
@@ -3051,4 +3059,5 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 /datum/job/created
 	name = "Special Job"
+	job_category = JOB_CREATED
 
