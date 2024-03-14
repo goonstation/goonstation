@@ -292,7 +292,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/uniform_burst/bird12
 	name = "birdshot"
 	sname = "birdshot"
-	spread_angle = 10
+	spread_angle = 8
 	cost = 1
 	pellets_to_fire = 3
 	spread_projectile_type = /datum/projectile/bullet/bird12

@@ -200,7 +200,7 @@ toxic - poisons
 /datum/projectile/bullet/draco
 	name = "bullet"
 	shot_sound = 'sound/weapons/akm.ogg'
-	damage = 34
+	damage = 31
 	cost = 1
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
@@ -713,11 +713,12 @@ toxic - poisons
 /datum/projectile/bullet/bird12 //birdshot, for gangs. just much worse overall
 	icon_state = "birdshot1"
 	hit_ground_chance = 66
-	damage = 13
+	implanted = null
+	damage = 18
 	hit_type = DAMAGE_CUT //birdshot mutilates your skin more, but doesnt hurt organs like shotties
 	dissipation_rate = 2
 	shot_sound = 'sound/weapons/birdshot.ogg'
-	dissipation_delay = 4
+	dissipation_delay = 3
 	casing = /obj/item/casing/shotgun/red
 	on_launch(obj/projectile/O)
 		icon_state = "birdshot[rand(1,3)]"
@@ -730,6 +731,9 @@ toxic - poisons
 			var/turf/target = get_edge_target_turf(M, dirflag)
 			M.throw_at(target, 4, 1, throw_type = THROW_GUNIMPACT)
 			M.update_canmove()
+		if (ismob(hit))
+			var/mob/M = hit
+			take_bleeding_damage(M, proj.shooter, 3, DAMAGE_CUT, 1)
 		..()
 
 
