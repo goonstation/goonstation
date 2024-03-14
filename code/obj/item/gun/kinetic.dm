@@ -1109,7 +1109,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			user.visible_message(SPAN_ALERT("<b>[user]</b> snaps shut [src] with a [pick("spin", "twirl")]!"))
 		..()
 	attack_hand(mob/user)
-		var/can_fan = FALSE
 		if (ishuman(loc))
 			var/mob/living/carbon/human/H = src.loc
 			if ( (H.l_store == src || H.r_store == src) && H.l_hand == null && H.r_hand == null)
