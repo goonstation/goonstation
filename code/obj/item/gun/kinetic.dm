@@ -1012,7 +1012,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if(previous_ammo.type != ammo.type)  // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/nine_mm_surplus))
 				set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
-			else if(istype(ammo, /obj/item/ammo/bullets/bullet_9mm))
+			else if(istype(ammo, /obj/item/ammo/bullets/bullet_9mm/smg))
 				set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg/auto)
 /obj/item/gun/kinetic/draco
 	name = "\improper Draco Pistol"
