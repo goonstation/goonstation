@@ -1008,7 +1008,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	//copy pastes brought to you by bullets telling guns how to shoot!
 	attackby(obj/item/ammo/bullets/b, mob/user)
 		var/obj/previous_ammo = ammo
-		var/mode_was_auto = current_projectile.fullauto_valid
 		..()
 		if(previous_ammo.type != ammo.type)  // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/nine_mm_surplus))
