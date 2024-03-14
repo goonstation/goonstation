@@ -416,6 +416,7 @@
 	var/datum/db_record/bank_record = null
 	var/target_byond_key = null
 	var/issuer_byond_key = null
+	var/approver_byond_key = null
 
 	New()
 		..()
@@ -433,6 +434,7 @@
 
 	approver = approved_by
 	approver_job = their_job
+	approver_byond_key = usr.key
 	logTheThing(LOG_ADMIN, usr, "approved a fine using [approver]([their_job])'s PDA. It is a [amount] credit fine on <b>[target]</b> with the reason: [reason].")
 
 	if (bank_record["pda_net_id"])
