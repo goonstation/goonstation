@@ -1215,7 +1215,6 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (src.stored)
 		src.stored.transfer_stored_item(src, user, user = user)
 		oldloc_sfx = oldloc.loc
-
 	user.put_in_hand_or_drop(src)
 
 	if (src.artifact)
