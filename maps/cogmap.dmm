@@ -6489,6 +6489,9 @@
 /obj/item/clothing/gloves/boxing,
 /obj/item/clothing/under/shorts/blue,
 /obj/item/clothing/under/shorts/blue,
+/obj/decal/stage_edge{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "ayH" = (
@@ -7042,6 +7045,9 @@
 /area/station/crew_quarters/fitness)
 "aAk" = (
 /obj/machinery/light,
+/obj/decal/stage_edge{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aAl" = (
@@ -38849,6 +38855,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
+"dnk" = (
+/obj/table/reinforced/auto,
+/obj/item/clothing/gloves/boxing,
+/obj/item/clothing/under/shorts/black,
+/obj/item/clothing/under/shorts/black,
+/obj/decal/stage_edge{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "dnA" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -110390,7 +110406,7 @@ akT
 akT
 akT
 avS
-aqG
+dnk
 ayG
 aAk
 ajS

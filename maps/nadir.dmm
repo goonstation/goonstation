@@ -8356,6 +8356,9 @@
 	broadcasting = 0;
 	pixel_y = -1
 	},
+/obj/decal/stage_edge{
+	dir = 4
+	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "dIW" = (
@@ -13905,7 +13908,7 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "gfC" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -16590,6 +16593,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/decal/stage_edge,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "hgd" = (
@@ -23698,6 +23702,7 @@
 	})
 "jZZ" = (
 /obj/disposalpipe/segment/vertical,
+/obj/decal/stage_edge,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "kad" = (
@@ -35030,6 +35035,13 @@
 	dir = 4
 	},
 /area/listeningpost)
+"oLp" = (
+/obj/decal/boxingrope,
+/obj/decal/stage_edge{
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/fitness)
 "oLr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -36993,7 +37005,7 @@
 "pBT" = (
 /obj/decal/boxingropeenter,
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/specialroom/gym,
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "pCc" = (
 /obj/machinery/door/airlock/pyro/glass/security{
@@ -39839,6 +39851,9 @@
 "qSK" = (
 /obj/table/reinforced/auto,
 /obj/item/wrestlingbell,
+/obj/decal/stage_edge{
+	dir = 4
+	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "qSY" = (
@@ -40096,6 +40111,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"rax" = (
+/obj/decal/boxingrope,
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/fitness)
 "raO" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 2
@@ -50030,6 +50049,12 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
+"vwI" = (
+/obj/decal/stage_edge{
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/fitness)
 "vwQ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -50496,7 +50521,10 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
 	},
-/turf/simulated/floor/specialroom/gym,
+/obj/decal/stage_edge{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "vII" = (
 /obj/rack,
@@ -51745,6 +51773,9 @@
 	c_tag = "The Blue Ring";
 	dir = 4;
 	name = "camera - boxing"
+	},
+/obj/decal/stage_edge{
+	dir = 4
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
@@ -91629,7 +91660,7 @@ qmk
 amu
 lst
 hmK
-hmK
+vwI
 wke
 qSK
 dII
@@ -92232,7 +92263,7 @@ qmk
 hFL
 nlU
 eQn
-glb
+rax
 uzl
 nSd
 uzl
@@ -92534,7 +92565,7 @@ qmk
 vhP
 fXA
 kbv
-glb
+oLp
 uzl
 uzl
 uzl
