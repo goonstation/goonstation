@@ -434,7 +434,7 @@
 
 	approver = approved_by
 	approver_job = their_job
-	approver_byond_key = usr.key
+	approver_byond_key = get_byond_key(approver)
 	logTheThing(LOG_ADMIN, usr, "approved a fine using [approver]([their_job])'s PDA. It is a [amount] credit fine on <b>[target]</b> with the reason: [reason].")
 
 	if (bank_record["pda_net_id"])
