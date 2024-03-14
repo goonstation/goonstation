@@ -1046,7 +1046,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					for (var/datum/fine/F in data_core.fines)
 						if(!F.approver)
 							dat += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>Requested by: [F.issuer] - [F.issuer_job]"
-							if((PDAownerjob in F.jobs_big) || ((PDAownerjob in F.jobs_small) && F.amount <= F.max_small)) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
+							if((PDAownerjob in JOBS_CAN_TICKET_BIG) || ((PDAownerjob in JOBS_CAN_TICKET_SMALL) && F.amount <= MAX_FINE_NO_APPROVAL)) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
 							dat += "<br><br>"
 
 				if(3) //unpaid fines
@@ -1145,12 +1145,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			F.target_byond_key = get_byond_key(F.target)
 			F.issuer_byond_key = usr.key
 			data_core.fines += F
-			var/max_no_approval = F.max_small
-			var/jobs_can_ticket_small = F.jobs_small
-			var/jobs_can_ticket_big = F.jobs_big
 
-			logTheThing(LOG_ADMIN, usr, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
-			if((fine_amount <= max_no_approval && (PDAownerjob in jobs_can_ticket_small)) || (PDAownerjob in jobs_can_ticket_big))
+			logTheThing(LOG_ADMIN, usr, "requested a fine using [PDAowner]([PDAownerjob])'s PDA. It is a [fine_amount] credit fine on <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			if((fine_amount <= MAX_FINE_NO_APPROVAL && (PDAownerjob in JOBS_CAN_TICKET_SMALL)) || (PDAownerjob in JOBS_CAN_TICKET_BIG))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
 				playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 				SPAWN(3 SECONDS)
@@ -1161,10 +1158,10 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					p.info = ticket_text
 					p.icon_state = "paper_caution"
 
-			else if(fine_amount <= max_no_approval)
-				message = "Fine request created, awaiting approval from one of the following personnel : [english_list(jobs_can_ticket_small)]."
+			else if(fine_amount <= MAX_FINE_NO_APPROVAL)
+				message = "Fine request created, awaiting approval from the [english_list(JOBS_CAN_TICKET_SMALL, "nobody", " or ")]."
 			else
-				message = "Fine request created, awaiting approval from one of the following personnel : [english_list(jobs_can_ticket_big)]."
+				message = "Fine request created, awaiting approval from the [english_list(JOBS_CAN_TICKET_BIG, "nobody", " or ")]."
 
 		else if(href_list["approve"])
 			var/PDAowner = src.master.owner

@@ -400,9 +400,6 @@
 			var/datum/eventRecord/Ticket/ticketEvent = new()
 			ticketEvent.buildAndSend(src, usr)
 
-#define MAX_NO_APPROVAL 500
-#define JOBS_CAN_TICKET_SMALL list("Captain","Head of Security","Head of Personnel","Nanotrasen Security Consultant","Security Officer","Inspector")
-#define JOBS_CAN_TICKET_BIG list("Captain","Head of Security","Head of Personnel","Nanotrasen Security Consultant")
 
 /datum/fine
 	var/ID = null
@@ -419,10 +416,6 @@
 	var/datum/db_record/bank_record = null
 	var/target_byond_key = null
 	var/issuer_byond_key = null
-	var/approver_byond_key = null
-	var/max_small = MAX_NO_APPROVAL
-	var/jobs_small = JOBS_CAN_TICKET_SMALL
-	var/jobs_big = JOBS_CAN_TICKET_BIG
 
 	New()
 		..()
@@ -435,12 +428,12 @@
 
 /datum/fine/proc/approve(var/approved_by,var/their_job)
 	if(approver || paid) return
-	if (amount > max_small && !(JOBS_CAN_TICKET_BIG)) return
+	if (amount > MAX_FINE_NO_APPROVAL && !(JOBS_CAN_TICKET_BIG)) return
 	if (!(their_job in JOBS_CAN_TICKET_SMALL)) return
 
 	approver = approved_by
 	approver_job = their_job
-	approver_byond_key = get_byond_key(approver)
+	logTheThing(LOG_ADMIN, usr, "approved a fine using [approver]([their_job])'s PDA. It is a [amount] credit fine on <b>[target]</b> with the reason: [reason].")
 
 	if (bank_record["pda_net_id"])
 		var/datum/signal/pdaSignal = get_free_signal()
@@ -449,24 +442,24 @@
 
 	if(bank_record["current_money"] >= amount)
 		bank_record["current_money"] -= amount
+		wagesystem.station_budget += amount
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
+		wagesystem.station_budget += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
-
-#undef MAX_NO_APPROVAL
-#undef JOBS_CAN_TICKET_SMALL
-#undef JOBS_CAN_TICKET_BIG
 
 /datum/fine/proc/process_payment()
 	if(bank_record["current_money"] >= (amount-paid_amount))
 		bank_record["current_money"] -= (amount-paid_amount)
+		wagesystem.station_budget += (amount-paid_amount)
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
+		wagesystem.station_budget += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 
