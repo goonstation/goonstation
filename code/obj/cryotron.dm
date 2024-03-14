@@ -186,6 +186,9 @@
 		var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)
 		if (!isnull(crew_record))
 			crew_record["p_stat"] = "In Cryogenic Storage"
+		var/datum/job/job = find_job_in_controller_by_string(L.job, soft=TRUE)
+		if (job && !job.unique)
+			job.assigned = max(0, job.assigned - 1)
 		logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 		return 1
 
