@@ -2282,7 +2282,7 @@
 			src.drop_from_slot(current, get_turf(current))
 	src.force_equip(I, slot)
 	return TRUE
-
+///Tries to put an item in an available backpack, pocket, or hand slot; will delete the item if unable to place.
 /mob/living/carbon/human/proc/stow_in_available(obj/item/I)
 	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
 		return
