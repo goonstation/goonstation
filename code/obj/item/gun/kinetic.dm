@@ -932,7 +932,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				else
 					set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/burst)
 					projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_surplus/auto)
-			else if(istype(ammo, /obj/item/ammo/bullets/bullet_9mm))
+			else if(istype(ammo, /obj/item/ammo/bullets/bullet_9mm/smg))
 				if(mode_was_auto)
 					set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg/auto)
 					projectiles = list(new/datum/projectile/bullet/bullet_9mm/smg, current_projectile)

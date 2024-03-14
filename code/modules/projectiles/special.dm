@@ -296,6 +296,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 1
 	pellets_to_fire = 3
 	spread_projectile_type = /datum/projectile/bullet/bird12
+	casing = /obj/item/casing/shotgun/red
 	shot_sound = 'sound/weapons/birdshot.ogg'
 
 
