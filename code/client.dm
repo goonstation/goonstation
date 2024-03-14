@@ -451,7 +451,7 @@
 	#endif
 		if (src.byond_version >= 515)
 			if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", "Yes", "No") == "Yes")
-				src << link("http://www.byond.com/download/")
+				src << link("https://www.byond.com/download/build/514/")
 #endif
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
@@ -716,15 +716,15 @@
 
 
 /client/proc/load_persistent_bank()
-	persistent_bank_valid = TRUE
 
 #ifdef BONUS_POINTS
 	persistent_bank = 99999999
 #else
+	if (!src.player.cloudSaves.loaded) return
 	var/cPersistentBank = src.player.cloudSaves.getData("persistent_bank")
 	persistent_bank = cPersistentBank ? text2num(cPersistentBank) : FALSE
 #endif
-
+	persistent_bank_valid = TRUE //moved down to below api call so if it runtimes it won't be considered valid
 	persistent_bank_item = src.player.cloudSaves.getData("persistent_bank_item")
 
 //MBC TODO : PERSISTENTBANK_VERSION_MIN, MAX FOR BANKING SO WE CAN WIPE AWAY EVERYONE'S HARD WORK WITH A SINGLE LINE OF CODE CHANGE

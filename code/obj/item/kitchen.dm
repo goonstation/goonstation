@@ -54,7 +54,7 @@ TRAYS
 
 	New()
 		..()
-		if(prob(60))
+		if(src.pixel_y == 0 && prob(60)) // Don't adjust map-set pixel adjustments
 			src.pixel_y = rand(0, 4)
 		BLOCK_SETUP(BLOCK_KNIFE)
 		return
@@ -607,6 +607,8 @@ TRAYS
 	var/stackable = TRUE
 	/// Do we have a plate stacked on us?
 	var/plate_stacked = FALSE
+	/// Can this smash someone on the head?
+	var/can_headsmash = TRUE
 
 	New()
 		..()
@@ -814,7 +816,7 @@ TRAYS
 				src.remove_contents(pick(src.contents))
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(user.a_intent == INTENT_HARM && src.is_plate)
+		if(user.a_intent == INTENT_HARM && src.can_headsmash)
 			if(target == user)
 				boutput(user, SPAN_ALERT("<B>You smash [src] over your own head!</b>"))
 			else
@@ -896,6 +898,7 @@ TRAYS
 	is_plate = FALSE
 	max_space = 6
 	space_left = 6
+	can_headsmash = FALSE
 	var/open = FALSE
 
 	add_contents(obj/item/food, mob/user, click_params) // Due to non-plates skipping some checks in the original add_contents() we'll have to do our own checks.
@@ -1085,6 +1088,50 @@ TRAYS
 		tray_health--
 
 	shatter() // don't
+		return
+
+/obj/item/plate/cooling_rack // because grilled and fried foods always scalding you is annoying. This also lets you cook things in plasma fires.
+	name = "cooling rack"
+	desc = "A wire-mesh rack that lets food items cool down for safe(er?) consumption."
+	icon = 'icons/obj/foodNdrink/food_related.dmi'
+	icon_state = "coolingrack"
+	flags = FPRINT | TABLEPASS
+	force = 3
+	throwforce = 5
+	throw_speed = 3
+	throw_range = 5
+	pickup_sfx = "step_lattice"
+	w_class = W_CLASS_NORMAL
+	hit_sound = "step_lattice"
+	can_headsmash = FALSE // no unbreakable smashing tool for you!
+	stackable = FALSE // and no stacking them on plates!
+
+	New()
+		. = ..()
+		processing_items |= src
+
+	disposing()
+		. = ..()
+		processing_items.Remove(src)
+
+	process()
+		if (!length(src.contents)) return
+		var/turf/simulated/T = get_turf(src.loc)
+		if (!T) return
+		var/temp_to_expose = istype(T) ? T.air.temperature : T.temperature
+		for (var/obj/item/reagent_containers/food in src.contents)
+			var/datum/reagents/R = food.reagents
+			R.temperature_reagents(temp_to_expose, exposed_volume = (150 + R.total_volume * 2), change_cap = 75)
+
+	add_contents(obj/item/food, mob/user, click_params)
+		if (!food.edible)
+			boutput(user, SPAN_ALERT("That's not food, it doesn't belong on \the [src]!"))
+			return
+		..()
+
+	shatter()//mesh trays don't shatter
+		shit_goes_everywhere()
+
 		return
 
 //sushiiiiiii

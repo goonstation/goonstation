@@ -55,6 +55,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			afro_fade
 				name = "Afro: Faded"
 				id = "afro_fade"
+				random_allowed = FALSE
 			afroHR
 				name = "Afro: Left Half"
 				id = "afroHR"

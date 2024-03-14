@@ -229,42 +229,7 @@
 		Vspread = locate(src.x + rand(-1,1),src.y,src.z)
 	else
 		Vspread = locate(src.x,src.y + rand(-1, 1),src.z)
-	var/dogrowth = 1
-	if (!istype(Vspread, /turf/simulated/floor) || isfeathertile(Vspread))
-		dogrowth = 0
-		return
 
-	for (var/obj/O in Vspread)
-
-		if (istype(O, /obj/window) || istype(O, /obj/blob) || istype(O, /obj/spacevine) || istype(O, /obj/kudzu_marker))
-			dogrowth = 0
-			return
-		if (istype(O, /obj/forcefield) && O.density) //atmos and fluid fields shouldn't block
-			dogrowth = 0
-			return
-		if (istype(O, /obj/machinery/door))
-			var/obj/machinery/door/door = O
-			if(!door.density)
-				dogrowth = 1
-				continue
-			if (door_open_prob())
-				//force open doors too and keep it open
-				door.interrupt_autoclose = 1
-				// var/temp_op = door.operating
-				// door.operating = 1
-				// door.locked = 0
-				door.open()
-				// door.operating = temp_op
-				// door.locked = 1
-
-				dogrowth = 1 //for clarity
-			else
-				dogrowth = 0
-
-	if (dogrowth == 1)
-		var/obj/V = new src.vinepath(loc=Vspread, to_spread=to_spread-1)
-		if(!QDELETED(V))
-			V.set_loc(Vspread)
 	if (src.growth < 20 && !stunted)
 		src.growth++
 		src.update_self()
@@ -272,6 +237,36 @@
 		var/datum/controller/process/kudzu/K = get_master_kudzu_controller()
 		if (K)
 			K.kudzu -= src
+
+	var/spread_vines = TRUE
+
+	if (!istype(Vspread, /turf/simulated/floor) || isfeathertile(Vspread))
+		spread_vines = FALSE
+		return
+
+	for (var/obj/O in Vspread)
+		if (istype(O, /obj/window) || istype(O, /obj/blob) || istype(O, /obj/spacevine) || istype(O, /obj/kudzu_marker))
+			spread_vines = FALSE
+			return
+		if (istype(O, /obj/forcefield) && O.density) //atmos and fluid fields shouldn't block
+			spread_vines = FALSE
+			return
+		if (istype(O, /obj/machinery/door))
+			var/obj/machinery/door/door = O
+			if(!door.density)
+				spread_vines = TRUE
+				continue
+			if (door_open_prob())
+				door.interrupt_autoclose = TRUE //force open doors
+				door.open()
+				spread_vines = TRUE //for clarity
+			else
+				spread_vines = FALSE
+
+	if (spread_vines)
+		var/obj/V = new src.vinepath(loc=Vspread, to_spread=to_spread-1)
+		if(!QDELETED(V))
+			V.set_loc(Vspread)
 		return
 
 /obj/spacevine/proc/door_open_prob()

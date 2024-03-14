@@ -2512,7 +2512,7 @@ var/global/noir = 0
 							if (tgui_alert(usr,"Do you want to give everyone a gun?", "Confirmation", list("Yes", "No")) != "Yes")
 								return
 							for (var/mob/living/L in mobs)
-								new /obj/random_item_spawner/kineticgun(get_turf(L))
+								new /obj/random_item_spawner/kineticgun/fullrandom(get_turf(L))
 							message_admins("[key_name(usr)] gave everyone a random firearm.")
 							logTheThing(LOG_ADMIN, usr, "gave everyone a random firearm.")
 							logTheThing(LOG_DIARY, usr, "gave everyone a random firearm.", "admin")
@@ -3278,7 +3278,10 @@ var/global/noir = 0
 						dat += "</table>"
 						usr.Browse(dat, "window=manifest;size=440x410")
 					if("jobcaps")
-						job_controls.job_config()
+						if (isnull(src.job_manager))
+							src.job_manager = new
+
+						src.job_manager.ui_interact(src.owner.mob)
 					if("respawn_panel")
 						usr.client.cmd_custom_spawn_event()
 					if("randomevents")

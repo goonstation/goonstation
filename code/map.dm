@@ -191,10 +191,12 @@ var/global/list/mapNames = list(
 			for(var/datum/job/J in job_controls.staple_jobs)
 				if(J.map_can_autooverride && (J.name in job_start_locations))
 					J.limit = length(job_start_locations[J.name])
+					J.upper_limit = J.limit
 
 		for(var/datum/job/J in job_controls.staple_jobs + job_controls.special_jobs)
 			if(J.type in src.job_limits_override)
 				J.limit = src.job_limits_override[J.type]
+				J.upper_limit = J.limit
 
 		SPAWN(5 SECONDS)
 			src.load_shuttle()
