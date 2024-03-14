@@ -900,7 +900,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if (user.get_gang() != null)
 			. += "For when you need MOR' DAKKA. Uses 9mm NATO rounds."
 		else
-			. += "Its' firemodes are labelled 'DAKKA' and 'MOR'... Uses 9mm NATO rounds."
+			. += "Its firemodes are labelled 'DAKKA' and 'MOR'... Uses 9mm NATO rounds."
 
 	New()
 		ammo = new default_magazine
