@@ -1211,6 +1211,9 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (src.stored)
 		src.stored.transfer_stored_item(src, user, user = user)
 		oldloc_sfx = oldloc.loc
+
+	if(src.two_handed && !user.can_hold_two_handed() && NOT_A_REAL_MACRO_TO_CHECK_IF_THE_ITEM_IS_ON_YOU_OR_IN_YOUR_STORAGE(src, user)) // prevent accidentally donating weapons to your enemies
+		return FALSE
 	user.put_in_hand_or_drop(src)
 
 	if (src.artifact)

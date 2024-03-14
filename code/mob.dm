@@ -1502,6 +1502,9 @@
 /mob/proc/put_in_hand(obj/item/I, hand)
 	. = 0
 
+/mob/proc/can_hold_two_handed(obj/item/I, hand)
+	. = FALSE
+
 /mob/proc/get_damage()
 	. = src.health
 
