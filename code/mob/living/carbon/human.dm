@@ -2294,7 +2294,7 @@
 		return
 	if (src.autoequip_slot(I, SLOT_R_HAND))
 		return
-	else qdel(I)
+	qdel(I)
 
 /mob/living/carbon/human/swap_hand(var/specify=-1)
 	if(src.hand == specify)
