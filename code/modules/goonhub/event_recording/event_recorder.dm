@@ -11,6 +11,8 @@ var/global/datum/eventRecorder/eventRecorder
 	var/list/queue = list()
 	/// The total amount of events pushed to the redis server
 	var/eventsPushed = 0
+	/// The maximum amount of events pushed to the redis server at once
+	var/maxEventsToPush = 1000
 
 	New()
 		..()
@@ -54,12 +56,25 @@ var/global/datum/eventRecorder/eventRecorder
 
 		if (!length(src.events)) return
 
-		var/res = rustg_redis_lpush(config.goonhub_events_channel, json_encode(src.events))
+		// Ensure we only push up to a certain amount of events at once
+		var/list/eventsToPush = list()
+		if (length(src.events) > src.maxEventsToPush)
+			eventsToPush = src.events.Copy(1, src.maxEventsToPush + 1)
+		else
+			eventsToPush = src.events
+
+		var/res = rustg_redis_lpush(config.goonhub_events_channel, json_encode(eventsToPush))
 		var/list/lRes = json_decode(res)
 
 		if (lRes["success"])
-			src.eventsPushed += length(src.events)
-			src.events.Cut()
+			src.eventsPushed += length(eventsToPush)
+			src.events.Cut(1, length(eventsToPush) + 1)
+
+			// If we still have events waiting, then we were over the max quantity to push at once
+			// But we don't want to clog the event process scheduler forever, so queue another process with a short delay
+			if (length(src.events))
+				SPAWN(3 SECONDS)
+					src.process()
 		else
 			var/msg = lRes["content"]
 			var/logMsg = "Failed to push data to Goonhub Event Recording service. Reason: [msg]"
@@ -88,6 +103,7 @@ var/global/datum/eventRecorder/eventRecorder
 		html += "<strong>Events Pending:</strong> [length(src.events)]<br>"
 		html += "<strong>Events Queued:</strong> [length(src.queue)]<br>"
 		html += "<strong>Events Pushed:</strong> [src.eventsPushed]<br>"
+		html += "<strong>Maximum Events At Once:</strong> [src.maxEventsToPush]<br>"
 		usr.Browse(html.Join(), "window=eventRecorderDebug")
 
 /client/proc/debug_event_recorder()
