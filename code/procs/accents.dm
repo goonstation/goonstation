@@ -924,19 +924,19 @@ proc/random_accent()
 /proc/germify(var/string) // pretty much the same thing as scots and tyke, but instead with some common cognates between english and german. The list is significantly smaller
 
 	var/list/phrase = list(
-		"excuse me" = "entschuldigung"
-		"yes sir" = "javol"
-		"yes maam" = "javol"
-		"yes ma'am" = "javol"
-		"good morning" = "guten morgen"
-		"good day" = "guten tag"
-		"good afternoon" = "guten tag"
-		"good evening" = "guten abend"
-		"good night" = "guten nacht"
-		"thank you" = "danke"
-		"that's too bad" = "schade"
-		"thats too bad" = "schade"
-		"too bad" = "schade"
+		"excuse me" = "entschuldigung",
+		"yes sir" = "javol",
+		"yes maam" = "javol",
+		"yes ma'am" = "javol",
+		"good morning" = "guten morgen",
+		"good day" = "guten tag",
+		"good afternoon" = "guten tag",
+		"good evening" = "guten abend",
+		"good night" = "guten nacht",
+		"thank you" = "danke",
+		"that's too bad" = "schade",
+		"thats too bad" = "schade",
+		"too bad" = "schade",
 		"no problem" = "kein problem"
 	)
 	var/substitute = null

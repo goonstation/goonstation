@@ -152,7 +152,7 @@
 
 /datum/bioEffect/speech/german
 	name = "Frontal Gyrus Alteration Type-DE"
-	desc = "Forces the language center of the subject's brain to construct scentences in a German manner."
+	desc = "Forces the language center of the subject's brain to construct sentences in a German manner."
 	id = "accent_german"
 	effectType =  EFFECT_TYPE_DISABILITY
 	isBad = TRUE
