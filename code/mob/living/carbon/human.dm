@@ -1884,7 +1884,7 @@
 			return 1
 		return 0
 	if (I.two_handed) //MARKER1
-		if (src.can_hold_two_handed())
+		if (!src.can_hold_two_handed())
 			return FALSE
 		src.l_hand = I
 		src.r_hand = I
