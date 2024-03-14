@@ -207,7 +207,7 @@
 			if (W.hitsound)
 				playsound(src.loc, W.hitsound, 50, 1)
 			if (W.force)
-				src.health = max(src.health - rand(W.force/1.5, W.force),0)
+				src.health = max(src.health - randfloat(W.force/1.5, W.force),0)
 
 				attack_particle(user,src)
 				hit_twitch(src)
