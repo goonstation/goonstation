@@ -563,7 +563,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		dat+= src.temp
 		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
-			if(S.broken)
+			if(S.status & BROKEN)
 				continue
 			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
 			var/list/ores = S.ores
@@ -843,7 +843,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				var/price = OCD.price
 				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
 
-				if(storage?.broken)
+				if(storage?.status & BROKEN)
 					return
 
 				if(!scan)

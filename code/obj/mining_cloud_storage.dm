@@ -6,6 +6,8 @@
 	var/list/stats = list()
 	var/amount_sold = 0
 
+#define ROCKBOX_MAX_HEALTH 100
+
 /obj/machinery/ore_cloud_storage_container
 	name = "Rockbox™ Ore Cloud Storage Container"
 	desc = "This thing stores ore in \"the cloud\" for the station to use. Best not to think about it too hard."
@@ -15,12 +17,13 @@
 	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 
+	var/sound_destroyed = 'sound/impact_sounds/Machinery_Break_1.ogg'
 	var/list/datum/ore_cloud_data/ores = list()
 	var/default_price = 20
 	var/autosell = TRUE
 
-	var/health = 100
-	var/broken = FALSE
+	var/health = ROCKBOX_MAX_HEALTH
+
 	var/sound/sound_load = sound('sound/items/Deconstruct.ogg')
 
 	var/output_target = null
@@ -34,6 +37,9 @@
 		STOP_TRACKING
 
 	mouse_drop(over_object, src_location, over_location)
+		if (src.status & BROKEN)
+			return
+
 		if(!isliving(usr) || isintangible(usr))
 			boutput(usr, SPAN_ALERT("Only tangible, living mobs are able to set the output target for [src]."))
 			return
@@ -164,6 +170,9 @@
 		return
 
 	attackby(obj/item/W, mob/user)
+		if (src.status & BROKEN)
+			return
+
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W
 			if (!scoop?.satchel)
@@ -195,15 +204,29 @@
 			else
 				boutput(user, SPAN_ALERT("[satchel] is empty!"))
 		else
-			src.health = max(src.health-W.force,0)
-			src.check_health()
+			if (W.hitsound)
+				playsound(src.loc, W.hitsound, 50, 1)
+			if (W.force)
+				src.health = max(src.health - rand(W.force/1.5, W.force),0)
+
+				attack_particle(user,src)
+				hit_twitch(src)
+				src.check_health()
+
+				if (src.health < ROCKBOX_MAX_HEALTH / 1.5)
+					if (prob(66))
+						elecflash(src.loc, 1, 4, 0)
 			..()
 
 	proc/check_health()
-		if(!src.health && !broken)
-			src.broken = TRUE
+		if(!src.health && !(status & BROKEN))
+			src.status |= BROKEN
 			src.visible_message(SPAN_ALERT("[src] breaks!"))
 			src.icon_state = "ore_storage_unit-broken"
+			robogibs(src.loc)
+			playsound(src.loc, src.sound_destroyed, 50, 2)
+
+
 
 	proc/load_item(var/obj/item/raw_material/R,var/mob/living/user)
 		if (!R)
@@ -329,7 +352,17 @@
 
 		return src.loc
 
+	get_desc(dist, mob/user)
+		. = ..()
+
+		if (src.status & BROKEN)
+			. += "It looks broken and inoperable."
+
+
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.status & BROKEN)
+			return
+
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
 			ui = new(user, src, "Rockbox")
@@ -379,3 +412,4 @@
 				update_ore_price(ore, price)
 				. = TRUE
 
+#undef ROCKBOX_MAX_HEALTH
