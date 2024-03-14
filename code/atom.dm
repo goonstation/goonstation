@@ -1421,7 +1421,7 @@ TYPEINFO(/atom/movable)
 /atom/movable/proc/is_that_in_this(atom/movable/target)
 	if (target.loc == src)
 		return TRUE
-	for(var/atom/movable/AM in container)
+	for(var/atom/movable/AM in src)
 		if(AM.contents.len && AM.is_that_in_this(target))
 			return TRUE
 	return FALSE
