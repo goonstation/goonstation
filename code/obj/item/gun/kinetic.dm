@@ -1063,6 +1063,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	HELP_MESSAGE_OVERRIDE({"If your hands are empty, drawing this gun from a pocket grants a short, large firerate increase at the cost of accuracy."})
 
 	var/broke_open = FALSE
+	var/locked_shut = FALSE // stop folk doing weird stuff while fanning the hammer
 	var/shells_to_eject = 0
 
 	New() //uses a special box of ammo that only starts with 2 shells to prevent issues with overloading
@@ -1112,19 +1113,27 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if (ishuman(loc))
 			var/mob/living/carbon/human/H = src.loc
 			if ( (H.l_store == src || H.r_store == src) && H.l_hand == null && H.r_hand == null)
-				can_fan = TRUE
+				fan_the_hammer(user)
 		..()
-		if (can_fan && !ON_COOLDOWN(src, "twirl_spam", 2 SECONDS))
+
+	proc/fan_the_hammer(mob/user)
+		if (!ON_COOLDOWN(src, "twirl_spam", 2 SECONDS))
+			locked_shut = TRUE
 			shoot_delay = 1
 			spread_angle = 15
 			src.on_spin_emote(user)
 			animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 			user.show_message(SPAN_ALERT("[user] whips \the [src] out of [his_or_her(user)] pocket, seating their free hand over the hammer!"), 1)
+			src.current_projectile.power *= 0.7 //a full pelting puts you INCHES from death
 			SPAWN (2 SECONDS)
+				locked_shut = FALSE
 				spread_angle = 2
 				shoot_delay = 4
+				src.current_projectile.generate_stats() //regenerate power
 
 	proc/toggle_action(mob/user)
+		if (locked_shut)
+			return
 		if (!src.broke_open)
 			src.casings_to_eject = src.shells_to_eject
 
