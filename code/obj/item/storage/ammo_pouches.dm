@@ -344,6 +344,9 @@
 	slots = 6
 	opens_if_worn = TRUE
 	can_hold = list(/obj/item/ammo, /obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/reagent_containers, /obj/item/deployer/barricade, /obj/item/tool, /obj/item/breaching_charge, /obj/item/pinpointer, /obj/item/mine, /obj/item/remote, /obj/item/device/)
+	midcap //! weaker pouch for gangs
+		desc = "A moderately sized pouch for carrying multiple miscellaneous things at once."
+		slots = 4
 
 /obj/item/storage/sawfly_pouch
 	name = "sawfly pouch"
