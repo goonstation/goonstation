@@ -3045,10 +3045,13 @@ var/global/force_radio_maptext = FALSE
 	containers["Grenade"] = /obj/item/chem_grenade/custom
 
 
-	var/matid = tgui_input_list(src, "Select material to transmute to:", "Set Material", material_cache)
-	var/material_selected = getMaterial(matid)
+	var/matId = tgui_input_list(src, "Select material to transmute to:", "Set Material", material_cache)
+	if (!matId)
+		return
+
+	var/material_selected = getMaterial(matId)
 	if(!material_selected)
-		alert(src, "Invalid material selected: [matid]", "Invalid Material", "Ok")
+		alert(src, "Invalid material selected: [matId]", "Invalid Material", "Ok")
 		return
 
 	var/containerId = tgui_input_list(src, "Select container for custom reagent:", "Select container", containers)
@@ -3061,7 +3064,7 @@ var/global/force_radio_maptext = FALSE
 	if (containerId == "Grenade")
 		var/obj/item/chem_grenade/custom/grenade = container
 		var/obj/item/reagent_containers/glass/beaker/grenadeBeaker = new()
-		grenadeBeaker.reagents.add_reagent("custom_transmutation", 50, sdata=matid)
+		grenadeBeaker.reagents.add_reagent("custom_transmutation", 50, sdata=matId)
 		grenade.beakers += grenadeBeaker
 		grenade.stage = 2
 		grenade.set_loc(usr.loc)
@@ -3069,7 +3072,7 @@ var/global/force_radio_maptext = FALSE
 	else
 
 		var/amount = tgui_input_number(src, "Please select reagent amount:", "Reagent Amount", 1, container.reagents.maximum_volume, 1)
-		container.reagents.add_reagent("custom_transmutation", amount, sdata=matid)
+		container.reagents.add_reagent("custom_transmutation", amount, sdata=matId)
 		container.set_loc(usr.loc)
 	usr.put_in_hand_or_drop(container)
 
