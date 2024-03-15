@@ -22,7 +22,7 @@
 /**
  * # tgui_input_bitfield
  *
- * Datum used for instantiating and using a TGUI-controlled color picker.
+ * Datum used for instantiating and using a TGUI-controlled bitfield editor.
  */
 /datum/tgui_input_bitfield
 	/// The title of the TGUI window
