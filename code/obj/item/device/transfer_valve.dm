@@ -190,8 +190,6 @@ TYPEINFO(/obj/item/device/transfer_valve)
 	attack_self(mob/user as mob)
 		if (isghostdrone(user))
 			return
-		if (user.get_gang())
-			boutput(user, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
 		src.ui_interact(user)
 
 #define TANK_PRESSURE(item_tank) (hasvar(item_tank, "air_contents")) ? MIXTURE_PRESSURE(item_tank.air_contents) : 0
@@ -220,8 +218,6 @@ TYPEINFO(/obj/item/device/transfer_valve)
 		..()
 		if (isghostdrone(usr) || usr.stat || usr.restrained())
 			return
-		if (usr.get_gang())
-			boutput(usr, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
 		switch(action)
 			if ("add_item")
 				if (params["tank"])

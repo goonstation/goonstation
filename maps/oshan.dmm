@@ -19540,6 +19540,9 @@
 	pixel_x = -7;
 	pixel_y = -5
 	},
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "bsF" = (
@@ -19730,6 +19733,9 @@
 	},
 /obj/item/shinai_bag,
 /obj/item/storage/box/kendo_box/hakama,
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "btn" = (
@@ -19951,6 +19957,9 @@
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
 "bug" = (
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "buh" = (
@@ -20139,6 +20148,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "buK" = (
@@ -39212,6 +39222,13 @@
 /obj/storage/crate/freezer/milk,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
+"mst" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/stage_edge,
+/turf/simulated/floor/wood/three,
+/area/station/crew_quarters/fitness)
 "mud" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/mapping_helper/firedoor_spawn,
@@ -40915,6 +40932,15 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
+"oLj" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/stage_edge{
+	dir = 9
+	},
+/turf/simulated/floor/wood/three,
+/area/station/crew_quarters/fitness)
 "oLv" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -78793,7 +78819,7 @@ bsA
 btj
 btG
 bBC
-bqs
+mst
 buL
 btZ
 bJw
@@ -79095,7 +79121,7 @@ bsB
 bsB
 bsB
 bFZ
-bqs
+mst
 buL
 btZ
 jqt
@@ -79397,7 +79423,7 @@ bsC
 mRh
 wem
 bFZ
-bqs
+mst
 buL
 bua
 bJA
@@ -80001,7 +80027,7 @@ bsD
 bsD
 btI
 bKO
-bqs
+mst
 buL
 btZ
 bJA
@@ -80303,7 +80329,7 @@ bsE
 btl
 btJ
 bug
-bqs
+oLj
 buL
 btZ
 bJA
