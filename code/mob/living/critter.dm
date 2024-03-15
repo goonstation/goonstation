@@ -1611,7 +1611,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	. = ..()
 	wake_from_hibernation()
 
-/mob/living/carbon/human/can_hold_two_handed()
+/mob/living/critter/can_hold_two_handed()
 	return TRUE // critters can hold two handed items in one hand
 
 ABSTRACT_TYPE(/mob/living/critter/robotic)
