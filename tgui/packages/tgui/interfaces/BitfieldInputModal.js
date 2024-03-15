@@ -9,9 +9,11 @@ import { InputButtons } from './common/InputButtons';
 import { Autofocus, Box, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { DataInputBitFieldEntry } from './common/DataInput';
+import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
+
 
 export const BitfieldInputModal = (_, context) => {
-  const { data } = useBackend(context);
+  const { act, data } = useBackend(context);
   const { timeout, message, title, autofocus, default_value = 0 } = data;
 
   return (
