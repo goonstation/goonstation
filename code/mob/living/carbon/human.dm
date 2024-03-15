@@ -1866,8 +1866,8 @@
 	return FALSE
 
 /mob/living/carbon/human/can_hold_two_handed()
-    . = ..()
-    if (src.r_hand || src.l_hand)
+	. = ..()
+	if (src.r_hand || src.l_hand)
 		return FALSE
 	if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
 		return FALSE
