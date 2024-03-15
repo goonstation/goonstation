@@ -1117,11 +1117,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	proc/fan_the_hammer(mob/user)
 		if (!ON_COOLDOWN(src, "twirl_spam", 2 SECONDS))
+			src.on_spin_emote(user)
+			animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 			locked_shut = TRUE
 			shoot_delay = 1
 			spread_angle = 15
-			src.on_spin_emote(user)
-			animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 			user.show_message(SPAN_ALERT("[user] whips \the [src] out of [his_or_her(user)] pocket, seating their free hand over the hammer!"), 1)
 			src.current_projectile.power *= 0.7 //a full pelting puts you INCHES from death
 			SPAWN (2 SECONDS)
