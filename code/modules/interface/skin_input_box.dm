@@ -87,7 +87,7 @@
 			window_width  = 402
 			window_height = 106
 			font_size = 8
-		if(50 to 60)
+		if(50 to INFINITY)
 			scaling = 1.5
 			window_width  = 503
 			window_height = 133
