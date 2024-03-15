@@ -1422,5 +1422,5 @@ TYPEINFO(/atom/movable)
 	if (target.loc == src)
 		return TRUE
 	if (istype(target.loc, /atom/movable))
-	    return src.is_that_in_this(target.loc)
+		return src.is_that_in_this(target.loc)
 	return FALSE
