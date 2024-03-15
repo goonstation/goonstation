@@ -3034,7 +3034,7 @@ var/global/force_radio_maptext = FALSE
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
 
-
+/// Spawn custom reagent that can transform turfs and objs to whatever material you desire.
 /client/proc/spawn_custom_transmutation()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Spawn Custom Transmutation Reagent"
@@ -3067,13 +3067,11 @@ var/global/force_radio_maptext = FALSE
 		grenadeBeaker.reagents.add_reagent("custom_transmutation", 50, sdata=matId)
 		grenade.beakers += grenadeBeaker
 		grenade.stage = 2
-		grenade.set_loc(usr.loc)
 		grenade.icon_state = "grenade-chem3"
 	else
 
 		var/amount = tgui_input_number(src, "Please select reagent amount:", "Reagent Amount", 1, container.reagents.maximum_volume, 1)
 		container.reagents.add_reagent("custom_transmutation", amount, sdata=matId)
-		container.set_loc(usr.loc)
 	usr.put_in_hand_or_drop(container)
 
 #undef ARTIFACT_BULK_LIMIT
