@@ -483,9 +483,7 @@
 
 	/// Returns the largest empty rectangle possible, prioritising length rather than area.
 	proc/get_largest_space(startX,startY)
-		var/size = new/list(2)
-		size[1] = 1
-		size[2] = 1
+		var/size = list(1,1)
 		while (startX+size[1]-1 < size_x && !grid[startX+size[1]][startY])
 			size[1]++
 
