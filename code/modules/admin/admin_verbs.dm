@@ -307,6 +307,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
+		/client/proc/spawn_custom_transmutation,
 		/client/proc/respawn_cinematic,
 		/client/proc/idkfa,
 		/client/proc/cmd_move_lobby,

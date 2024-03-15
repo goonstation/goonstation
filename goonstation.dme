@@ -1041,6 +1041,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\chemistry\Reagents-Medical.dm"
 #include "code\modules\chemistry\Reagents-Misc.dm"
 #include "code\modules\chemistry\Reagents-PoisonEtc.dm"
+#include "code\modules\chemistry\Reagents-Transmutation.dm"
 #include "code\modules\chemistry\tools\ampoules.dm"
 #include "code\modules\chemistry\tools\balloons.dm"
 #include "code\modules\chemistry\tools\beakers.dm"

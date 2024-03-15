@@ -3034,6 +3034,45 @@ var/global/force_radio_maptext = FALSE
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
 
+
+/client/proc/spawn_custom_transmutation()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Spawn Custom Transmutation Reagent"
+	ADMIN_ONLY
+	var/containers = list()
+	containers["Small Beaker"] = /obj/item/reagent_containers/glass/beaker
+	containers["Large Beaker"] = /obj/item/reagent_containers/glass/beaker/large
+	containers["Grenade"] = /obj/item/chem_grenade/custom
+
+
+	var/matid = tgui_input_list(src, "Select material to transmute to:", "Set Material", material_cache)
+	var/material_selected = getMaterial(matid)
+	if(!material_selected)
+		alert(src, "Invalid material selected: [matid]", "Invalid Material", "Ok")
+		return
+
+	var/containerId = tgui_input_list(src, "Select container for custom reagent:", "Select container", containers)
+	if (!containerId)
+		alert(src, "Invalid container selected: [containerId]", "Invalid Container", "Ok")
+
+	var/containerType = containers[containerId]
+
+	var/obj/item/container = new containerType()
+	if (containerId == "Grenade")
+		var/obj/item/chem_grenade/custom/grenade = container
+		var/obj/item/reagent_containers/glass/beaker/grenadeBeaker = new()
+		grenadeBeaker.reagents.add_reagent("custom_transmutation", 50, sdata=matid)
+		grenade.beakers += grenadeBeaker
+		grenade.stage = 2
+		grenade.set_loc(usr.loc)
+		grenade.icon_state = "grenade-chem3"
+	else
+
+		var/amount = tgui_input_number(src, "Please select reagent amount:", "Reagent Amount", 1, container.reagents.maximum_volume, 1)
+		container.reagents.add_reagent("custom_transmutation", amount, sdata=matid)
+		container.set_loc(usr.loc)
+	usr.put_in_hand_or_drop(container)
+
 #undef ARTIFACT_BULK_LIMIT
 #undef ARTIFACT_HARD_LIMIT
 #undef ARTIFACT_MAX_SPAWN_ATTEMPTS
