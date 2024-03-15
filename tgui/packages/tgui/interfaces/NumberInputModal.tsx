@@ -2,6 +2,7 @@
  * @file
  * @copyright 2022
  * @author jlsnow301 (https://github.com/jlsnow301)
+ * @author Changes Sovexe (https://github.com/Sovexe)
  * @license ISC
  */
 
@@ -21,6 +22,7 @@ import { Window } from '../layouts';
    round_input: boolean;
    title: string;
    theme: string;
+   autofocus: boolean;
  };
 
 export const NumberInputModal = (_, context) => {
@@ -71,7 +73,7 @@ export const NumberInputModal = (_, context) => {
 /** Gets the user input and invalidates if there's a constraint. */
 const InputArea = (props, context) => {
   const { data } = useBackend<NumberInputData>(context);
-  const { min_value, max_value, init_value } = data;
+  const { autofocus, min_value, max_value, init_value } = data;
   const { input, onClick, onChange } = props;
 
   return (
@@ -85,7 +87,7 @@ const InputArea = (props, context) => {
       </Stack.Item>
       <Stack.Item grow>
         <NumberInput
-          autoFocus
+          autofocus={autofocus}
           autoSelect
           fluid
           minValue={min_value}
