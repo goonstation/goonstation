@@ -104,6 +104,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	name_prefix = "Suspicious "
 	crop = /obj/critter/killertomato
 	iconmod = "TomatoKiller"
+	assoc_reagents = list("blood")
 	harvest_cap = 3
 	infusion_chance = 50
 	infusion_reagents = list("strange_reagent")
