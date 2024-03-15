@@ -68,8 +68,8 @@
 	var/font_size = 7
 
 	//The values used here were sampled from BYOND in practice, I couldn't find a formula that would describe them
-	switch(titlebarHeight)
 	#if DM_VERSION < 515
+	switch(titlebarHeight)
 		if(30 to 37)
 			scaling = 1.25
 			window_width  = 402
@@ -81,6 +81,7 @@
 			window_height = 133
 			font_size = 8
 	#else
+	switch(titlebarHeight)
 		if(40 to 50)
 			scaling = 1.25
 			window_width  = 402
