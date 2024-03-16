@@ -795,11 +795,14 @@
 		sound_load = 'sound/weapons/gunload_click.ogg'
 		sname = "12ga Birdshot"
 		name = "12ga birdshot ammo box"
-		desc = "A box of birdshot shells, still more than capable of murder."
+		desc = "A box of birdshot shells. Still capable of murder. Likely by exsanguination."
 
 		seven //for striker
 			amount_left = 7
 			max_amount = 7
+		two //for coachgun
+			amount_left = 2
+			max_amount = 2
 
 
 /obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo
