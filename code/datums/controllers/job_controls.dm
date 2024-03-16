@@ -810,10 +810,7 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["ChangeName"])
-			if (src.job_creator.change_name_on_spawn == 0)
-				src.job_creator.change_name_on_spawn = 1
-			else
-				src.job_creator.change_name_on_spawn = 0
+			src.job_creator.change_name_on_spawn = !src.job_creator.change_name_on_spawn
 			src.job_creator()
 
 		if(href_list["SetSpawnLoc"])
