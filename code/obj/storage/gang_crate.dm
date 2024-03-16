@@ -1113,9 +1113,9 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/medium_tall)
 
 	hat
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats)),off_y=-2,scale_x=0.7,scale_y=0.7)
+			spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head, PROC_REF(filter_trait_hats))),off_y=-2,scale_x=0.7,scale_y=0.7)
 			spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head, PROC_REF(filter_trait_hats))),off_y=0,scale_x=0.7,scale_y=0.7)
-			spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats)),off_y=2,scale_x=0.7,scale_y=0.7)
+			spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head, PROC_REF(filter_trait_hats))),off_y=2,scale_x=0.7,scale_y=0.7)
 	medkits
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			spawn_item(C,I,/obj/item/storage/firstaid/crit,off_y=2)
