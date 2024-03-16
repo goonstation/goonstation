@@ -31668,6 +31668,10 @@
 "rOY" = (
 /obj/table/wood/auto,
 /obj/item/paper/book/from_file/dwainedummies,
+/obj/item/disk/data/tape,
+/obj/item/disk/data/tape{
+	pixel_x = -4
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
@@ -32323,6 +32327,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
+"swm" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor,
+/area/station/science/artifact)
 "swA" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
@@ -98597,7 +98611,7 @@ aaB
 abm
 abm
 ivd
-jLz
+swm
 lFU
 nAs
 oLv
