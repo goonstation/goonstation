@@ -113,36 +113,36 @@
 
 			if(istype(T, /datum/trait/deaf))
 				majorDisabilities.Add("Deaf")
-				majorDisabilityDesc.Add("Patient suffers from permanent hearing loss.")
+				majorDisabilityDesc.Add("Permanent hearing loss.")
 				continue
 			if(istype(T, /datum/trait/blind))
 				majorDisabilities.Add("Blind")
-				majorDisabilityDesc.Add("Patient suffers from permanent vision loss.")
+				majorDisabilityDesc.Add("Permanent vision loss.")
 				continue
 			if(istype(T, /datum/trait/nolegs))
 				majorDisabilities.Add("Legless")
-				majorDisabilityDesc.Add("Patient's lower limbs have been severed.")
+				majorDisabilityDesc.Add("Legs have been severed.")
 				continue
 			if(istype(T, /datum/trait/puritan))
 				majorDisabilities.Add("Clone Instability")
-				majorDisabilityDesc.Add("Patient's genetics are incompatible with cloning technology.")
+				majorDisabilityDesc.Add("Genetic structure incompatible with cloning.")
 				continue
 
 			if(istype(T, /datum/trait/shortsighted))
 				minorDisabilities.Add("Myopic")
-				minorDisabilityDesc.Add("Patient requires glasses for visual acuity.")
+				minorDisabilityDesc.Add("Requires glasses for visual acuity.")
 				continue
 			if(istype(T, /datum/trait/hemo))
 				minorDisabilities.Add("Hemophilia")
-				minorDisabilityDesc.Add("Patient bleeds more readily.")
+				minorDisabilityDesc.Add("Prone to blood loss.")
 				continue
 			if(istype(T, /datum/trait/weakorgans))
 				minorDisabilities.Add("Organ Sensitivity")
-				minorDisabilityDesc.Add("Patient's organs are more sensitive to damage.")
+				minorDisabilityDesc.Add("Organs are more prone to damage.")
 				continue
 			if(istype(T, /datum/trait/allergic))
 				minorDisabilities.Add("Hyperallergic")
-				minorDisabilityDesc.Add("Patient has an acute response to allergens.")
+				minorDisabilityDesc.Add("Acute response to allergens.")
 				continue
 
 	M["traits"] = traitStr
