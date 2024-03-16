@@ -3278,7 +3278,10 @@ var/global/noir = 0
 						dat += "</table>"
 						usr.Browse(dat, "window=manifest;size=440x410")
 					if("jobcaps")
-						job_controls.job_config()
+						if (isnull(src.job_manager))
+							src.job_manager = new
+
+						src.job_manager.ui_interact(src.owner.mob)
 					if("respawn_panel")
 						usr.client.cmd_custom_spawn_event()
 					if("randomevents")
