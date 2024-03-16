@@ -88,11 +88,20 @@
 	M["dnasample"] = create_new_dna_sample_file(H)
 
 	var/traitStr = ""
+	var/list/minorDisabilities = list()
+	var/list/minorDisabilityDesc = list()
+	var/list/majorDisabilities = list()
+	var/list/majorDisabilityDesc = list()
+
 	if(H.traitHolder)
 		for(var/id in H.traitHolder.traits)
 			var/datum/trait/T = H.traitHolder.traits[id]
-			if(length(traitStr)) traitStr += " | [T.name]"
-			else traitStr = T.name
+
+			if(length(traitStr))
+				traitStr += " | [T.name]"
+			else
+				traitStr = T.name
+
 			if (istype(T, /datum/trait/random_allergy))
 				var/datum/trait/random_allergy/AT = T
 				if (M["alg"] == "None") //is it in its default state?
@@ -100,8 +109,50 @@
 					M["alg_d"] = "Allergy information imported from CentCom database."
 				else
 					M["alg"] += ", [reagent_id_to_name(AT.allergen)]"
+				continue
+
+			if(istype(T, /datum/trait/deaf))
+				majorDisabilities.Add("Deaf")
+				majorDisabilityDesc.Add("Patient suffers from permanent hearing loss.")
+				continue
+			if(istype(T, /datum/trait/blind))
+				majorDisabilities.Add("Blind")
+				majorDisabilityDesc.Add("Patient suffers from permanent vision loss.")
+				continue
+			if(istype(T, /datum/trait/nolegs))
+				majorDisabilities.Add("Legless")
+				majorDisabilityDesc.Add("Patient's lower limbs have been severed.")
+				continue
+			if(istype(T, /datum/trait/puritan))
+				majorDisabilities.Add("Clone Instability")
+				majorDisabilityDesc.Add("Patient's genetics are incompatible with cloning technology.")
+				continue
+
+			if(istype(T, /datum/trait/shortsighted))
+				minorDisabilities.Add("Myopic")
+				minorDisabilityDesc.Add("Patient requires glasses for visual acuity.")
+				continue
+			if(istype(T, /datum/trait/hemo))
+				minorDisabilities.Add("Hemophilia")
+				minorDisabilityDesc.Add("Patient bleeds more readily.")
+				continue
+			if(istype(T, /datum/trait/weakorgans))
+				minorDisabilities.Add("Organ Sensitivity")
+				minorDisabilityDesc.Add("Patient's organs sensitive to damage.")
+				continue
+			if(istype(T, /datum/trait/allergic))
+				minorDisabilities.Add("Hypoallergic")
+				minorDisabilityDesc.Add("Patient has an acute response to allergens.")
+				continue
 
 	M["traits"] = traitStr
+
+	if(minorDisabilities.len)
+		M["mi_dis"] = jointext(minorDisabilities, ", ")
+		M["mi_dis_d"] = jointext(minorDisabilityDesc, " ")
+	if(majorDisabilities.len)
+		M["ma_dis"] = jointext(majorDisabilities, ", ")
+		M["ma_dis_d"] = jointext(majorDisabilityDesc, " ")
 
 	if(!length(sec_note))
 		S["notes"] = "No notes."
