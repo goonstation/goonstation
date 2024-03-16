@@ -141,7 +141,7 @@
 				minorDisabilityDesc.Add("Patient's organs sensitive to damage.")
 				continue
 			if(istype(T, /datum/trait/allergic))
-				minorDisabilities.Add("Hypoallergenic")
+				minorDisabilities.Add("Hyperallergic")
 				minorDisabilityDesc.Add("Patient has an acute response to allergens.")
 				continue
 
