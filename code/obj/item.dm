@@ -668,12 +668,13 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	return 1
 
 /obj/item/proc/split_stack(var/toRemove)
-	if(toRemove >= amount || toRemove < 1) return null
+	if(toRemove >= src.amount || toRemove < 1) return null
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
 		P.setMaterial(src.material, mutable = src.material.isMutable())
-
+	for (var/datum/statusEffect/effect as anything in src.statusEffects)
+		P.changeStatus(effect.id, effect.duration)
 	src.change_stack_amount(-toRemove)
 	P.change_stack_amount(toRemove - P.amount)
 	return P
@@ -1168,6 +1169,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		src.storage?.storage_item_attack_hand(user)
 		return 0
 
+	if(src.two_handed && !user.can_hold_two_handed() && user.is_that_in_this(src)) // prevent accidentally donating weapons to your enemies
+		boutput(user, SPAN_ALERT("You don't have the hands to hold this item."))
+		return FALSE
+
 	src.throwing = 0
 
 	if (isobj(src.loc))
@@ -1431,6 +1436,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 
 	msgs.damage = power
+
+	if (is_special && src.special)
+		msgs = src.special.modify_attack_result(user, target, msgs)
+
 	msgs.flush()
 	src.add_fingerprint(user)
 	#ifdef COMSIG_ITEM_ATTACK_POST
@@ -1643,6 +1652,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	logTheThing(LOG_BOMBING, M, "[msg]")
 
 /obj/item/proc/dropped(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
 	SPAWN(0) //need to spawn to know if we've been dropped or thrown instead
 		if ((firesource == FIRESOURCE_OPEN_FLAME) && throwing)
 			RegisterSignal(src, COMSIG_MOVABLE_THROW_END, PROC_REF(log_firesource))

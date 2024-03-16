@@ -1836,6 +1836,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/drinkingglass/icing, 3)
 		product_list += new/datum/data/vending_product(/obj/item/kitchen/chopsticks_package, 5)
 		product_list += new/datum/data/vending_product(/obj/item/plate/tray, 3)
+		product_list += new/datum/data/vending_product(/obj/item/plate/cooling_rack, 3)
 		product_list += new/datum/data/vending_product(/obj/surgery_tray/kitchen_island, 2)
 		product_list += new/datum/data/vending_product(/obj/item/storage/lunchbox, 12)
 		product_list += new/datum/data/vending_product(/obj/item/ladle, 1)
@@ -3135,6 +3136,13 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	ex_act(severity)
 		. = ..()
 
+/obj/machinery/vending/air_vendor/plasma/pod_wars
+	air_cost = 0
+	can_fall = FALSE
+	can_hack = FALSE
+
+	ex_act(severity)
+		. = ..()
 /obj/machinery/vending/jobclothing/security
 	name = "Security Apparel"
 	desc = "A vending machine that vends Security clothing."

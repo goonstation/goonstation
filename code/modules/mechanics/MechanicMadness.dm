@@ -3212,6 +3212,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set A", PROC_REF(setA))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set B", PROC_REF(setB))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Evaluate", PROC_REF(evaluate))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Mode", PROC_REF(compSetMode))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set A",PROC_REF(setAManually))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set B",PROC_REF(setBManually))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Mode",PROC_REF(setMode))
@@ -3267,6 +3268,11 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			tooltip_rebuild = 1
 			if (autoEval)
 				src.evaluate()
+	proc/compSetMode(var/datum/mechanicsMessage/input)
+		LIGHT_UP_HOUSING
+		tooltip_rebuild = 1
+		if(input.signal in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte"))
+			mode = input.signal
 	proc/evaluate()
 		switch(mode)
 			if("add")
@@ -4065,9 +4071,9 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (ON_COOLDOWN(src, "movement_delay", move_lag))
 			return
 		var/direction = text2num_safe(input.signal)
-		if (!direction)
+		if (!isnum_safe(direction))
 			direction = dirname_to_dir(input.signal)
-		if (!(direction in alldirs))
+		if (!(direction in alldirs) && direction != 0)
 			return
 		var/obj/item/storage/S = src.stored?.linked_item
 		if (!walk_check(S))

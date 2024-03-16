@@ -17,6 +17,7 @@ TYPEINFO(/obj/item/gun/energy)
 	var/can_swap_cell = 1
 	var/uses_charge_overlay = FALSE //! Does this gun use charge overlays on the sprite?
 	var/charge_icon_state
+	var/restrict_cell_type
 	var/image/charge_image = null
 	muzzle_flash = null
 	inventory_counter_enabled = 1
@@ -25,7 +26,7 @@ TYPEINFO(/obj/item/gun/energy)
 		var/cell = null
 		if(cell_type)
 			cell = new cell_type
-		AddComponent(/datum/component/cell_holder, cell, rechargeable, custom_cell_max_capacity, can_swap_cell)
+		AddComponent(/datum/component/cell_holder, cell, rechargeable, custom_cell_max_capacity, can_swap_cell, restrict_cell_type)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		..()
 		UpdateIcon()
@@ -215,6 +216,7 @@ TYPEINFO(/obj/item/gun/energy)
 /obj/item/gun/energy/laser_gun/antique
 	name = "antique laser gun"
 	icon_state = "caplaser"
+	item_state = "capgun"
 	desc = "It's a kit model of the Mod.00 'Lunaport Legend' laser gun from Super! Protector Friend. With realistic sound fx and exciting LED display! This one has been hazardously upgraded."
 	muzzle_flash = "muzzle_flash_laser"
 	cell_type = null
@@ -2163,6 +2165,47 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		src.attach_cell(C)
 		var/obj/item/light/tube/T = new /obj/item/light/tube
 		src.attach_light(T)
+
+
+/obj/item/gun/energy/lasergat
+	name = "\improper Hafgan Mod.93R Repeating Laser"
+	rechargeable = 0
+	icon_state = "burst_laser_idle"
+	cell_type = /obj/item/ammo/power_cell/lasergat
+	desc = "Introduced to compete with the Clock line of military sidearms. The Mod. 93R repeating laser masked early laser tech's heat problems with expendable liquid coolant cartridges, whose off-gassing caused unpredictable recoil that made it widely unpopular."
+	item_state = "egun-kill"
+	force = 5
+	add_residue = 1 // this is unique in that it spews energy-gun-gas or something
+	muzzle_flash = "muzzle_flash_elec"
+	uses_charge_overlay = TRUE
+	charge_icon_state = "burst_laser"
+	shoot_delay = 6
+	spread_angle = 6
+	restrict_cell_type = /obj/item/ammo/power_cell/lasergat
+	New()
+		set_current_projectile(new/datum/projectile/laser/lasergat/burst)
+		projectiles = list(current_projectile)
+		..()
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if (canshoot(user))
+			..()
+			flick("burst_laser", src)
+			flick(src.charge_image, src.charge_image)
+			SPAWN(6 DECI SECONDS)
+				playsound(user, 'sound/effects/tinyhiss.ogg', 60, TRUE)
+			return
+		..()
+
+	update_icon()
+		if (!canshoot())
+			src.icon_state = "burst_laser_empty"
+		else
+			src.icon_state = "burst_laser_idle"
+		..()
+	attack_self(var/mob/M)
+		..()
+		UpdateIcon()
+		M.update_inhands()
 
 #undef HEAT_REMOVED_PER_PROCESS
 #undef FIRE_THRESHOLD

@@ -319,6 +319,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	var/id = 1 //crema switch uses this when finding crematoria
 	var/obj/machinery/crema_switch/igniter = null
 	tray_type = /obj/machine_tray/crematorium
+	var/active = FALSE
 
 	icon_trayopen = "crema0"
 	icon_unoccupied = "crema1"
@@ -344,10 +345,13 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		return
 	if (src.locked)
 		return //don't let you cremate something twice or w/e
+	if (src.active)
+		return
 	if (!src.contents || !length(src.contents))
 		src.visible_message(SPAN_ALERT("You hear a hollow crackle, but nothing else happens."))
 		return
 
+	src.active = TRUE
 	src.visible_message(SPAN_ALERT("You hear a roar as \the [src.name] activates."))
 	var/ashes = 0
 	power_usage = powerdraw_use //gotta chug them watts
@@ -414,6 +418,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		return
 	src.visible_message(SPAN_ALERT("\The [src.name] finishes and shuts down."))
 	src.locked = FALSE
+	src.active = FALSE
 	power_usage = initial(power_usage)
 	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 

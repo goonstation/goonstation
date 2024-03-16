@@ -107,7 +107,9 @@
 					if (isvampire(src))
 						playsound(src, 'sound/effects/screech_tone.ogg', 90, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 						screamed = TRUE
-
+					if (isarcfiend(src))
+						playsound(src, 'sound/effects/elec_bzzz.ogg', 80, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+						screamed = TRUE
 					#ifdef HALLOWEEN
 					spooktober_GH.change_points(src.ckey, 100)
 					#endif
@@ -551,7 +553,9 @@
 
 			if ("listtarget")
 				src.show_text("salute, bow, hug, wave, glare, stare, look, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive, fingerguns")
-
+			if ("list")
+				src.emote("listbasic")
+				src.emote("listtarget")
 			if ("suicide")
 				src.show_text("Suicide is a command, not an emote.  Please type 'suicide' in the input bar at the bottom of the game window to kill yourself.", "red")
 
@@ -1487,8 +1491,23 @@
 							playsound(src.loc, src.sound_snap, 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 						else
 							message = "<B>[src]</B> snaps [his_or_her(src)] fingers."
-							playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-							if(!ON_COOLDOWN(src, "blade_deploy", 1 SECOND))
+							playsound(src.loc, src.sound_fingersnap, 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+
+							var/hasSwitch = FALSE
+							for (var/obj/item/container as anything in src.get_equipped_items())
+								if (!(locate(/obj/item/switchblade) in container))
+									continue
+								var/obj/item/switchblade/blade = (locate(/obj/item/switchblade) in container)
+								var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
+								drop_item()
+								blade.set_loc(get_turf(src))
+								equip_if_possible(blade, drophand)
+								src.visible_message("<span class='alert'><B>[src] pulls a [blade] out of \the [container]!</B></span>")
+								playsound(src.loc, "rustle", 60, TRUE)
+								hasSwitch = TRUE
+								break
+
+							if(!hasSwitch && !ON_COOLDOWN(src, "blade_deploy", 1 SECOND))
 								if(istype(gloves, /obj/item/clothing/gloves/bladed))
 									var/obj/item/clothing/gloves/bladed/blades = src.gloves
 									blades.sheathe_blades_toggle(src)
