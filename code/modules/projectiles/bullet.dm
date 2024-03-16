@@ -87,6 +87,27 @@ toxic - poisons
 	silentshot = 1 // It's supposed to be a stealth weapon, right (Convair880)?
 	ricochets = TRUE
 
+	a180
+		fullauto_valid = 1
+		shot_number = 1
+		damage = 15 //less accurate, hitting random parts instead of centre mass
+		cost = 1
+		shot_volume = 30
+		sname = "full auto"
+		on_pre_hit(atom/hit, angle, var/obj/projectile/O)
+			if (isliving(hit))
+				if (ON_COOLDOWN(hit, "american180_miss", 4 DECI SECONDS))
+					return TRUE
+				else
+					return FALSE
+
+		get_power(obj/projectile/P, atom/A)
+			var/standard_damage = P.initial_power - max(0, (P.travelled/32 - src.dissipation_delay))*src.dissipation_rate
+			if (isliving(A))
+				return rand(standard_damage/2,standard_damage) //dont kill dudes as hard
+			else
+				return min(2,standard_damage) // dont break shit as hard
+
 /datum/projectile/bullet/bullet_22/smartgun
 	shot_sound = 'sound/weapons/smartgun.ogg'
 	shot_volume = 70
@@ -126,6 +147,8 @@ toxic - poisons
 		damage_type = D_PIERCING
 		hit_type = DAMAGE_STAB
 		armor_ignored = 0.66
+	remington
+		damage = 31
 
 /datum/projectile/bullet/assault_rifle/burst
 	sname = "burst fire"
@@ -137,6 +160,8 @@ toxic - poisons
 		damage_type = D_PIERCING
 		hit_type = DAMAGE_STAB
 		armor_ignored = 0.66
+	remington
+		damage = 24
 
 //0.308
 /datum/projectile/bullet/minigun
@@ -167,6 +192,20 @@ toxic - poisons
 	hit_type = DAMAGE_CUT
 	shot_number = 3
 	shot_delay = 120 MILLI SECONDS
+	impact_image_state = "bullethole-small"
+	implanted = /obj/item/implant/projectile/bullet_308
+	casing = /obj/item/casing/rifle
+	ricochets = TRUE
+
+/datum/projectile/bullet/draco
+	name = "bullet"
+	shot_sound = 'sound/weapons/akm.ogg'
+	damage = 31
+	cost = 1
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_CUT
+	shot_number = 1
+	fullauto_valid = 1
 	impact_image_state = "bullethole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
@@ -325,6 +364,10 @@ toxic - poisons
 		damage = 20
 		cost = 3
 		shot_number = 3
+		auto
+			fullauto_valid = 1
+			cost = 1
+			shot_number = 1
 
 
 /datum/projectile/bullet/nine_mm_NATO
@@ -354,6 +397,34 @@ toxic - poisons
 	sname = "burst fire"
 
 /datum/projectile/bullet/nine_mm_NATO/auto
+	fullauto_valid = 1
+	shot_number = 1
+	cost = 1
+	shot_volume = 66
+	sname = "full auto"
+
+
+
+/datum/projectile/bullet/nine_mm_surplus
+	name = "bullet"
+	shot_sound = 'sound/weapons/9x19NATO.ogg'
+	damage = 16
+	shot_number = 1
+	cost = 1
+	hit_ground_chance = 75
+	dissipation_rate = 3
+	dissipation_delay = 8
+	projectile_speed = 60
+	impact_image_state = "bhole-small"
+	hit_type = DAMAGE_CUT
+	implanted = /obj/item/implant/projectile/bullet_9mm
+	casing = /obj/item/casing/small
+/datum/projectile/bullet/nine_mm_surplus/burst
+	shot_number = 3
+	cost = 3
+	sname = "burst fire"
+
+/datum/projectile/bullet/nine_mm_surplus/auto
 	fullauto_valid = 1
 	shot_number = 1
 	cost = 1
@@ -639,6 +710,34 @@ toxic - poisons
 	weak
 		damage = 50 //can have a little throwing, as a treat
 
+/datum/projectile/bullet/bird12 //birdshot, for gangs. just much worse overall
+	icon_state = "birdshot1"
+	hit_ground_chance = 66
+	implanted = null
+	damage = 18
+	hit_type = DAMAGE_CUT //birdshot mutilates your skin more, but doesnt hurt organs like shotties
+	dissipation_rate = 2
+	shot_sound = 'sound/weapons/birdshot.ogg'
+	dissipation_delay = 3
+	casing = /obj/item/casing/shotgun/red
+	on_launch(obj/projectile/O)
+		icon_state = "birdshot[rand(1,3)]"
+		. = ..()
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (istype(hit, /mob/living/critter/small_animal/bird))
+			var/mob/living/critter/small_animal/bird/M = hit
+			M.TakeDamage("chest", proj.power * 3 / M.get_ranged_protection()) //it's in the name
+			var/turf/target = get_edge_target_turf(M, dirflag)
+			M.throw_at(target, 4, 1, throw_type = THROW_GUNIMPACT)
+			M.update_canmove()
+		if (ismob(hit))
+			var/mob/M = hit
+			take_bleeding_damage(M, proj.shooter, 3, DAMAGE_CUT, 1)
+		..()
+
+
+
 /datum/projectile/bullet/flak_chunk
 	name = "flak chunk"
 	sname = "flak chunk"
@@ -723,6 +822,26 @@ toxic - poisons
 	dissipation_rate = 1
 	implanted = /obj/item/implant/projectile/shrapnel
 	damage = 10
+
+/datum/projectile/bullet/improvbone
+	name = "bone"
+	sname = "bone"
+	icon_state = "trace"
+	dissipation_delay = 1
+	dissipation_rate = 3
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	implanted = null
+	damage = 9
+	hit_mob_sound = 'sound/effects/skeleton_break.ogg'
+	impact_image_state = null // in my mind these are just literal bones fragments being thrown at people, wouldn't stick into walls
+
+	on_hit(atom/hit)
+		var/turf/T = get_turf(hit)
+		T.fluid_react_single("calcium", 2) // Creates 5 units of calcium on hit
+	on_max_range_die(obj/projectile/O)
+		var/turf/T = get_turf(O)
+		T.fluid_react_single("calcium", 2) // Creates 5 units of caclium once it reaches max range.
 
 /datum/projectile/bullet/aex
 	name = "explosive slug"
@@ -1838,3 +1957,13 @@ datum/projectile/bullet/autocannon
 			//let's pretend these walls/objects were destroyed in the explosion
 			hit.ex_act(pick(1,2))
 		. = ..()
+
+/datum/projectile/bullet/webley
+	name = "bullet"
+	damage = 45
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_CUT
+	implanted = /obj/item/implant/projectile/bullet_455
+	impact_image_state = "bullethole-small"
+	casing = /obj/item/casing/medium
+	ricochets = TRUE
