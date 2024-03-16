@@ -2599,5 +2599,5 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 /// Find a client based on ckey
 /proc/find_client(ckey)
 	for (var/client/C in clients)
-		if (C == ckey)
+		if (C.ckey == ckey)
 			return C

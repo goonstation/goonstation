@@ -1,4 +1,45 @@
-
+(t)fri mar 15 24
+(u)LeahTheTech
+(+)The salbutamol/salicylic acid recipe no longer begins reacting until it receives stimulus (ie either heat or physical shock)
+(t)thu mar 14 24
+(u)crunchwarp
+(p)18034
+(e)🗺|A-Mapping
+(*)The Clarion ranch has emerged from its chrysalis at last, transformed...!
+(t)wed mar 13 24
+(u)DecidedlyUnethical, MylieDaniels
+(p)18170
+(e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
+(+)Added some cooling racks to the kitchen. Find them waiting in the FoodTech!
+(u)NibChocolateeny
+(p)18193
+(e)🆕💅🌱|C-Feature, C-QoL, A-Hydroponics
+(+)Coconuts can now be opened with saw-like tools.
+(t)tue mar 12 24
+(u)mloccy
+(p)18138
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Adding jeans reagent.
+(u)LeahTheTech
+(p)18096
+(e)⚖🐣|C-Balance, A-Respawning
+(*)Security officer and assistant job slots are now reduced at lower populations.
+(u)LeahTheTech
+(p)18145
+(e)⚖🐣|C-Balance, A-Respawning
+(+)Cryoing as a non-unique job will now immediately free up the slot.
+(t)fri mar 08 24
+(u)LeahTheTech
+(*)Ocean tiles will no longer leak fluid if covered by a forcefield, and forcefields will now correctly update the tiles next to them when they shut down.
+(u)CalliopeSoups
+(p)18103
+(e)🗺💅|A-Mapping, C-QoL
+(+)Cog1 hydroponics has had a couple QoL edits.
+(t)thu mar 07 24
+(u)MeggalBozale
+(p)17813
+(e)🆕💨🔬|C-Feature, A-Atmospherics, A-Science
+(*)Radioactive material at sufficient temperature will now decay some plasma into fallout gas.
 (t)wed mar 06 24
 (u)Cindertroy
 (p)18112

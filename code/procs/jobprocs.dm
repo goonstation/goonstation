@@ -106,6 +106,8 @@ var/global/totally_random_jobs = FALSE
 
 
 	for(var/datum/job/JOB in job_controls.staple_jobs)
+		if (JOB.variable_limit)
+			JOB.recalculate_limit(length(unassigned))
 		// If it's hi-pri, add it to that list. Simple enough
 		if (JOB.high_priority_job)
 			high_priority_jobs.Add(JOB)

@@ -232,3 +232,20 @@
 
 	cast(atom/target)
 		holder.owner.show_credits()
+
+/datum/targetable/juggle
+	name = "Juggle"
+	desc = "Juggle anything."
+	cooldown = 10 SECOND
+	targeted = TRUE
+	target_anything = TRUE
+	var/empowered = FALSE
+
+	cast(atom/movable/target)
+		if (!ishuman(src.holder.owner))
+			return
+		if (!src.empowered && (target.anchored || target == src.holder.owner) || target.anchored == ANCHORED_ALWAYS)
+			boutput(src.holder.owner, SPAN_ALERT("Your juggling abilities aren't quite enough to juggle that."))
+			return
+		var/mob/living/carbon/human/human = src.holder.owner
+		human.add_juggle(target)

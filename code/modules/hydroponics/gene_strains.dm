@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/plant_gene_strain)
 /datum/plant_gene_strain
 	var/name = null                 // self-explanatory
 	var/desc = null                 // this too
