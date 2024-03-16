@@ -1,3 +1,10 @@
+
+(t)sat mar 16 24
+(u)Chatauscours
+(p)18171
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)Security officers and Inspectors can now isssue fines for up to 500 credits without further approval.
+(+)You will now be alerted by PDA when you recieve a fine.
 (t)fri mar 15 24
 (u)LeahTheTech
 (+)The salbutamol/salicylic acid recipe no longer begins reacting until it receives stimulus (ie either heat or physical shock)
