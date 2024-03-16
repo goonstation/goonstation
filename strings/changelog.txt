@@ -1,4 +1,6 @@
-
+(t)fri mar 15 24
+(u)LeahTheTech
+(+)The salbutamol/salicylic acid recipe no longer begins reacting until it receives stimulus (ie either heat or physical shock)
 (t)thu mar 14 24
 (u)crunchwarp
 (p)18034
