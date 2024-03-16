@@ -758,8 +758,10 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/short)
 		tier = GIMMICK
 		weight=5
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
+			var/prefix = pick("very","somewhat","extremely","", "dangerously") // these ain't standard issue
 			for(var/i=1 to 4)
 				var/obj/item/cake = spawn_item(C,I,/obj/item/reagent_containers/food/snacks/cookie/jaffa,off_y=2*(2-i),scale_x=0.7,scale_y=0.85)
+				cake.name = "[prefix] illegal [cake.name]"
 				cake.reagents.add_reagent("omnizine", 5)
 				cake.reagents.add_reagent("msg", 1) // make em taste different
 	weed

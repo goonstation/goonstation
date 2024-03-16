@@ -993,7 +993,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		firemode.delaystart = (delay/10) //not ideal to do it here, but this is a jank use case anyway
 		..()
 	reagent_act(reagent_id,volume)
-		if ((reagent_id in list("oil","lube", "superlube")) && volume >= 5)
+		if ((reagent_id in list("oil","lube", "superlube", "grease", "badgrease", "fishoil")) && volume >= 5)
 			grease = 15
 		if (reagent_id == "spaceglue" && volume >= 5)
 			grease = -30
@@ -1060,7 +1060,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = TRUE
 	spread_angle = 2
 	default_magazine = /obj/item/ammo/bullets/webley
-	HELP_MESSAGE_OVERRIDE({"If your hands are empty, drawing this gun from a pocket grants a short, large firerate increase at the cost of accuracy."})
+	safe_spin = TRUE // so you dont shoot yourself drawing the gun
+
+	HELP_MESSAGE_OVERRIDE({"If your hands are empty, drawing this gun from a pocket grants a brief, large firerate increase, at the cost of accuracy."})
 
 	var/broke_open = FALSE
 	var/locked_shut = FALSE // stop folk doing weird stuff while fanning the hammer

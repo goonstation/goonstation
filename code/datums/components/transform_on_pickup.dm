@@ -7,4 +7,6 @@
 /datum/component/reset_transform_on_pickup/proc/fix_transform(source)
 	var/obj/O = parent
 	O.transform = matrix()
+	O.pixel_x = 0
+	O.pixel_y = 0
 	qdel(src)
