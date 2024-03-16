@@ -138,7 +138,7 @@
 				continue
 			if(istype(T, /datum/trait/weakorgans))
 				minorDisabilities.Add("Organ Sensitivity")
-				minorDisabilityDesc.Add("Patient's organs sensitive to damage.")
+				minorDisabilityDesc.Add("Patient's organs are more sensitive to damage.")
 				continue
 			if(istype(T, /datum/trait/allergic))
 				minorDisabilities.Add("Hyperallergic")
