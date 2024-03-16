@@ -1092,7 +1092,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/medium_tall)
 	helmet
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/helmet = pick(filtered_concrete_typesof(/obj/item/clothing/head/helmet, /proc/filter_trait_hats))
+			var/helmet = pick(filtered_concrete_typesof(/obj/item/clothing/head/helmet, PROC_REF(filter_trait_hats)))
 			spawn_item(C,I,helmet,off_y=-2,scale_x=0.7,scale_y=0.7)
 			spawn_item(C,I,helmet,off_y=0,scale_x=0.7,scale_y=0.7)
 			spawn_item(C,I,helmet,off_y=2,scale_x=0.7,scale_y=0.7)
