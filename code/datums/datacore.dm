@@ -111,48 +111,22 @@
 					M["alg"] += ", [reagent_id_to_name(AT.allergen)]"
 				continue
 
-			if(istype(T, /datum/trait/deaf))
-				majorDisabilities.Add("Deaf")
-				majorDisabilityDesc.Add("Permanent hearing loss.")
-				continue
-			if(istype(T, /datum/trait/blind))
-				majorDisabilities.Add("Blind")
-				majorDisabilityDesc.Add("Permanent vision loss.")
-				continue
-			if(istype(T, /datum/trait/nolegs))
-				majorDisabilities.Add("Legless")
-				majorDisabilityDesc.Add("Legs have been severed.")
-				continue
-			if(istype(T, /datum/trait/puritan))
-				majorDisabilities.Add("Clone Instability")
-				majorDisabilityDesc.Add("Genetic structure incompatible with cloning.")
-				continue
-
-			if(istype(T, /datum/trait/shortsighted))
-				minorDisabilities.Add("Myopic")
-				minorDisabilityDesc.Add("Requires glasses for visual acuity.")
-				continue
-			if(istype(T, /datum/trait/hemo))
-				minorDisabilities.Add("Hemophilia")
-				minorDisabilityDesc.Add("Prone to blood loss.")
-				continue
-			if(istype(T, /datum/trait/weakorgans))
-				minorDisabilities.Add("Organ Sensitivity")
-				minorDisabilityDesc.Add("Organs are more prone to damage.")
-				continue
-			if(istype(T, /datum/trait/allergic))
-				minorDisabilities.Add("Hyperallergic")
-				minorDisabilityDesc.Add("Acute response to allergens.")
-				continue
+			switch(T.disability_type)
+				if (TRAIT_DISABILITY_MAJOR)
+					majorDisabilities.Add(T.disability_name)
+					majorDisabilityDesc.Add(T.disability_desc)
+				if (TRAIT_DISABILITY_MINOR)
+					minorDisabilities.Add(T.disability_name)
+					minorDisabilityDesc.Add(T.disability_desc)
 
 	M["traits"] = traitStr
 
 	if(minorDisabilities.len)
 		M["mi_dis"] = jointext(minorDisabilities, ", ")
-		M["mi_dis_d"] = jointext(minorDisabilityDesc, " ")
+		M["mi_dis_d"] = jointext(minorDisabilityDesc, ". ")
 	if(majorDisabilities.len)
 		M["ma_dis"] = jointext(majorDisabilities, ", ")
-		M["ma_dis_d"] = jointext(majorDisabilityDesc, " ")
+		M["ma_dis_d"] = jointext(majorDisabilityDesc, ". ")
 
 	if(!length(sec_note))
 		S["notes"] = "No notes."
