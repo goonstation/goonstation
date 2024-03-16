@@ -1188,13 +1188,13 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		if(!owner.current || isdead(owner.current))
 			return FALSE
 
-		if(isghostcritter(owner.current))
+		if(isghostcritter(owner.current) || isghostdrone(owner.current))
 			return FALSE
 
 		for(var/mob/living/player in mobs)
 			if (player.mind && (player.mind != owner) && !(player.mind in accomplices))
 				if (!isdead(player)) //they're not dead
-					if (in_centcom(player))
+					if (in_centcom(player) && !isghostcritter(player) && !isghostdrone(player)) //you've already killed them once, ghostcritters don't count
 						return FALSE
 
 		return TRUE
