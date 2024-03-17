@@ -35624,8 +35624,11 @@
 	},
 /area/station/security/detectives_office)
 "viT" = (
-/obj/lattice,
 /obj/item/clothing/head/snake,
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
 /turf/space,
 /area/space)
 "vkx" = (
@@ -89564,13 +89567,13 @@ aYR
 bdu
 gwA
 xBo
-aaB
+anA
 aaa
 aaa
 aaa
 aaa
 aaa
-aaB
+bqF
 aaa
 wuu
 hUT
@@ -89866,14 +89869,14 @@ aYR
 nwg
 oJx
 aYR
-aaB
+aLg
 aaa
 aaa
 aaa
 aaa
 aaa
 eIY
-aaB
+wFK
 gLy
 hXL
 joQ
@@ -90173,8 +90176,8 @@ aaa
 aaa
 aaa
 aaa
-aaB
-aaB
+baI
+anw
 aaa
 wuu
 hZc
