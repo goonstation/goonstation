@@ -1859,9 +1859,8 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/stool/chair{
-	dir = 1;
-	name = "engineering chair"
+/obj/stool/chair/yellow{
+	dir = 1
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/inner)
@@ -7568,6 +7567,15 @@
 	},
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
+"aMi" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/morgue)
 "aMl" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/specialroom/chapel{
@@ -10692,6 +10700,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/stool/chair/yellow{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/engine/power)
 "bcN" = (
@@ -11556,13 +11567,24 @@
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "bgv" = (
-/obj/storage/secure/closet/animal,
+/obj/table/auto,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/scalpel,
+/obj/item/staple_gun,
+/obj/item/suture,
+/obj/item/hemostat,
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/item/reagent_containers/syringe,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "bgy" = (
 /obj/cable{
 	icon_state = "1-10"
 	},
+/obj/storage/secure/closet/animal,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "bgz" = (
@@ -13649,6 +13671,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/stool/chair/blue{
+	dir = 1
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "bqW" = (
@@ -13792,10 +13817,10 @@
 	},
 /area/station/medical/research)
 "brs" = (
-/obj/stool/chair{
+/obj/landmark/start/job/geneticist,
+/obj/stool/chair/blue{
 	dir = 4
 	},
-/obj/landmark/start/job/geneticist,
 /turf/simulated/floor/airless/blue/checker,
 /area/station/medical/research)
 "bru" = (
@@ -14240,7 +14265,9 @@
 /area/station/medical/head)
 "btr" = (
 /obj/landmark/start/job/geneticist,
-/obj/stool/chair,
+/obj/stool/chair/blue{
+	dir = 1
+	},
 /turf/simulated/floor/airless/blue/checker,
 /area/station/medical/research)
 "bts" = (
@@ -15268,6 +15295,9 @@
 	icon_state = "0-4"
 	},
 /obj/landmark/start/job/miner,
+/obj/stool/chair/yellow{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "ciA" = (
@@ -15999,6 +16029,12 @@
 	dir = 1
 	},
 /area/station/mining/staff_room)
+"cRp" = (
+/obj/stool/chair/green{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/baroffice)
 "cRG" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -17254,7 +17290,7 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
-/obj/stool/chair{
+/obj/stool/chair/green{
 	dir = 4
 	},
 /turf/simulated/floor/greenblack{
@@ -20749,6 +20785,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/stool/chair/yellow{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/engine/elect)
 "hGD" = (
@@ -20968,6 +21007,9 @@
 /area/station/hydroponics/bay)
 "hVM" = (
 /obj/machinery/firealarm/south,
+/obj/stool/chair/yellow{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -24265,8 +24307,8 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "lwp" = (
-/obj/stool/chair,
 /obj/landmark/start/job/security_assistant,
+/obj/stool/chair/red,
 /turf/simulated/floor,
 /area/station/security/main)
 "lwG" = (
@@ -28270,14 +28312,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "piv" = (
-/obj/stool/chair{
-	dir = 8;
-	tag = "icon-chair (WEST)"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/stool/chair/red{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/security/processing)
 "piX" = (
@@ -33822,10 +33863,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/stool/chair{
+/obj/landmark/start/job/security_assistant,
+/obj/stool/chair/red{
 	dir = 1
 	},
-/obj/landmark/start/job/security_assistant,
 /turf/simulated/floor,
 /area/station/security/main)
 "tFn" = (
@@ -34126,10 +34167,10 @@
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "tRA" = (
-/obj/stool/chair{
+/obj/landmark/start/job/security_officer,
+/obj/stool/chair/red{
 	dir = 4
 	},
-/obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/main)
 "tRY" = (
@@ -35201,11 +35242,10 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "uLR" = (
-/obj/stool/chair{
-	dir = 8;
-	tag = "icon-chair (WEST)"
-	},
 /obj/landmark/start/job/security_officer,
+/obj/stool/chair/red{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "uLU" = (
@@ -35271,6 +35311,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/stool/chair/green,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "uPR" = (
@@ -36332,10 +36373,10 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/stool/chair{
+/obj/landmark/start/job/security_assistant,
+/obj/stool/chair/red{
 	dir = 1
 	},
-/obj/landmark/start/job/security_assistant,
 /turf/simulated/floor,
 /area/station/security/main)
 "vPN" = (
@@ -37973,13 +38014,12 @@
 /turf/simulated/floor/purple/side,
 /area/station/science/teleporter)
 "xvS" = (
-/obj/stool/chair{
-	dir = 8;
-	tag = "icon-chair (WEST)"
-	},
 /obj/landmark/start/job/security_officer,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/stool/chair/red{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -70876,7 +70916,7 @@ ssQ
 gSi
 aEa
 caY
-aEa
+cRp
 eMY
 kir
 kir
@@ -96204,7 +96244,7 @@ aaa
 aaa
 bqE
 eij
-aQv
+aMi
 bhM
 aQu
 aQu
