@@ -42,6 +42,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
 
 	var/fire_animation = FALSE //Used for guns that have animations when firing
+	var/safe_spin = FALSE //! Can this gun be *spin emoted without a chance to shoot yourself?
 
 
 
@@ -498,7 +499,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/on_spin_emote(var/mob/living/carbon/human/user as mob)
 	. = ..(user)
-	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
+	if (((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5)) && !safe_spin)
 		user.visible_message(SPAN_ALERT("<b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b>"))
 		src.ShootPointBlank(user, user)
 		JOB_XP(user, "Clown", 3)
