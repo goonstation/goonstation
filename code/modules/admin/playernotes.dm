@@ -16,7 +16,8 @@
 		var/datum/apiRoute/players/notes/get/getPlayerNotes = new
 		getPlayerNotes.queryParams = list(
 			"filters" = list(
-				"ckey" = player
+				"ckey" = player,
+				"exact" = TRUE
 			),
 			"per_page" = 100
 		)
