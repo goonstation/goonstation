@@ -960,6 +960,7 @@
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
+/obj/voting_box,
 /turf/simulated/floor/arrival{
 	dir = 8
 	},
@@ -2096,7 +2097,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/mining/magnet)
 "alf" = (
-/obj/lattice,
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
 /turf/space,
 /area/station/com_dish/auxdish)
 "alh" = (
@@ -2112,7 +2116,7 @@
 /turf/simulated/floor/airless/engine,
 /area/station/engine/singcore)
 "alo" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/black,
 /area/station/engine/storage)
 "alp" = (
@@ -5916,6 +5920,7 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aDJ" = (
+/obj/machinery/manufacturer/qm,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -15937,6 +15942,14 @@
 /obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
+"cOt" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "cOC" = (
 /obj/table/reinforced/bar,
 /obj/machinery/glass_recycler,
@@ -22648,7 +22661,7 @@
 	},
 /area/station/security/processing)
 "jIc" = (
-/obj/machinery/manufacturer/general,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/purple,
 /area/station/science/hall)
 "jIe" = (
@@ -24260,6 +24273,13 @@
 /obj/machinery/computer/supplycomp,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"lxY" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/com_dish/auxdish)
 "lyd" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -27342,7 +27362,9 @@
 	},
 /area/station/bridge)
 "oDt" = (
-/obj/lattice,
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
 /turf/space,
 /area/station/com_dish/comdish)
 "oDO" = (
@@ -69936,17 +69958,17 @@ aaa
 aaa
 aaa
 aaa
-aaB
-aaB
+baI
+giH
 aaa
 aaa
 aaa
 aaa
-aaB
+baI
 abm
 abm
-aaB
-aaB
+bkQ
+giH
 aaa
 aaa
 aaa
@@ -70219,15 +70241,15 @@ aaa
 aaa
 aaa
 aaa
-aaB
-aaB
+baI
+giH
 aaa
 aaa
 aaa
 aaa
 aaa
-aaB
-aaB
+baI
+giH
 aaa
 aaa
 aaa
@@ -70235,10 +70257,10 @@ aaa
 aaa
 aaa
 aaa
-aaB
+adD
 aaa
 aaa
-aaB
+bqE
 kir
 kir
 kir
@@ -70248,7 +70270,7 @@ orF
 orF
 orF
 kir
-aaB
+anw
 aaa
 aaa
 aaa
@@ -70521,7 +70543,7 @@ aaa
 aaa
 aaa
 aaa
-aaB
+blm
 toE
 toE
 wha
@@ -70529,10 +70551,10 @@ non
 rXk
 toE
 toE
-aaB
+anA
 aaa
 aaa
-aaB
+baI
 jNm
 fAH
 fAH
@@ -70833,7 +70855,7 @@ lJM
 toE
 rrx
 paz
-aaB
+bkQ
 jNm
 aOd
 ubp
@@ -70854,7 +70876,7 @@ eMY
 kir
 kir
 kir
-aaB
+giH
 aaa
 aaa
 aaa
@@ -71121,7 +71143,7 @@ nkc
 vuG
 aaa
 aaa
-aaB
+apU
 aaa
 rrx
 jbi
@@ -71156,7 +71178,7 @@ aFc
 kir
 qQL
 kir
-aaB
+anA
 aaa
 aaa
 aaa
@@ -71423,8 +71445,8 @@ bpo
 vuG
 aaa
 aaa
-aaB
-aaB
+blm
+wFK
 qDY
 awf
 ect
@@ -71458,7 +71480,7 @@ vYV
 vYV
 vYV
 vYV
-aaB
+anA
 aaa
 aaa
 aaa
@@ -71725,7 +71747,7 @@ uHu
 vuG
 aaa
 aaa
-aaa
+abd
 toE
 toE
 pfg
@@ -72668,7 +72690,7 @@ pcb
 kFq
 abm
 abm
-aaB
+bkQ
 abm
 aaa
 aaa
@@ -73235,7 +73257,7 @@ and
 anJ
 axT
 aaa
-aaB
+baI
 toE
 awf
 vNm
@@ -73274,7 +73296,7 @@ qzc
 aJS
 tID
 wmR
-aaB
+anA
 aaa
 aaa
 aaa
@@ -73537,7 +73559,7 @@ anf
 bFV
 iVl
 aaa
-aaB
+aDR
 toE
 toE
 pfg
@@ -73840,7 +73862,7 @@ anJ
 iVl
 aaa
 aaa
-aaB
+aDR
 rrx
 awf
 efD
@@ -74086,7 +74108,7 @@ aiP
 aaa
 aaa
 aaa
-aaB
+apU
 aaa
 aaa
 aaa
@@ -74415,7 +74437,7 @@ aaa
 aaa
 aaa
 aaa
-aaB
+baI
 nJv
 afe
 jCK
@@ -74714,9 +74736,9 @@ aaa
 aaa
 aaa
 aaa
-aaB
-aaB
-aaB
+baI
+bkQ
+bkQ
 aaB
 nJv
 urh
@@ -74748,7 +74770,7 @@ wIC
 wIC
 aaa
 aaa
-aaB
+ctu
 aaa
 toE
 toE
@@ -74784,7 +74806,7 @@ jsv
 cEp
 aKF
 wmR
-aaB
+anw
 aaa
 aaa
 aaa
@@ -75050,7 +75072,7 @@ fqs
 wIC
 wIC
 aaa
-aaB
+ctu
 aaa
 aaa
 lje
@@ -75086,7 +75108,7 @@ wmR
 wmR
 wmR
 wmR
-aaB
+aLg
 aaa
 aaa
 aaa
@@ -75351,10 +75373,10 @@ brv
 yam
 raE
 wIC
-aaB
+wFK
 abm
-aaB
-aaB
+wFK
+wFK
 xdt
 lOU
 aty
@@ -75384,10 +75406,10 @@ vYV
 vYV
 vYV
 vYV
-aaB
+anw
 aaa
 aaa
-aaB
+abd
 aaa
 aaa
 aaa
@@ -75654,7 +75676,7 @@ xEf
 gcn
 wIC
 aaa
-aaB
+ctu
 aaa
 aaa
 dmO
@@ -75687,7 +75709,7 @@ cTU
 eqv
 cTU
 abm
-aaB
+giH
 aaa
 aaa
 aaa
@@ -75958,7 +75980,7 @@ apI
 aaa
 abm
 abm
-aaB
+wFK
 toE
 mOd
 oZw
@@ -76259,7 +76281,7 @@ tds
 apJ
 aaa
 aaa
-aaB
+ctu
 aaa
 toE
 asR
@@ -76806,7 +76828,7 @@ anr
 aoQ
 apD
 alA
-aaB
+giH
 aaa
 aaa
 aaa
@@ -77108,7 +77130,7 @@ anv
 aoR
 apQ
 alA
-aaB
+anw
 aaa
 aaa
 aaa
@@ -77463,7 +77485,7 @@ ani
 boO
 aaa
 aaa
-aaB
+apU
 aaa
 aaa
 aaa
@@ -79917,8 +79939,8 @@ olQ
 aaa
 aaa
 aaa
-aaB
-aaB
+baI
+giH
 aaa
 aaa
 aaa
@@ -80213,7 +80235,7 @@ aaa
 aaa
 olQ
 tAB
-oDt
+cOt
 tAB
 olQ
 aaa
@@ -80510,16 +80532,16 @@ tip
 tip
 tip
 sjH
-aaa
-aaa
-aaa
+iNv
+iNv
+iNv
 olQ
 oDt
 ehp
 oDt
 olQ
-aaB
-aaB
+iNv
+iNv
 sjH
 aME
 aME
@@ -81137,8 +81159,8 @@ aSP
 wrZ
 upu
 upu
-aaB
-aaB
+iNv
+iNv
 tga
 tga
 vgF
@@ -81152,9 +81174,9 @@ eJj
 vZV
 olp
 uLU
-aaB
-aaB
-aaB
+bkQ
+bkQ
+giH
 aaa
 aaa
 aaa
@@ -81457,7 +81479,7 @@ uLU
 uLU
 uLU
 uLU
-aaB
+giH
 aaa
 aaa
 aaa
@@ -81759,7 +81781,7 @@ uLU
 vRA
 uaO
 urL
-aaB
+anA
 aaa
 aaa
 aaa
@@ -82061,7 +82083,7 @@ mhL
 xyV
 lyg
 mfc
-aaB
+anA
 aaa
 aaa
 aaa
@@ -82364,7 +82386,7 @@ uLU
 uLU
 uLU
 aaB
-aaB
+giH
 aaa
 aaa
 aaa
@@ -82530,7 +82552,7 @@ fEr
 aaa
 aaa
 aaa
-aaB
+bqE
 adP
 adP
 adP
@@ -82666,7 +82688,7 @@ vwN
 pda
 ojQ
 aaB
-aaB
+aLg
 aaa
 aaa
 aaa
@@ -82832,7 +82854,7 @@ fEr
 aaa
 aaa
 aaa
-aaB
+ctu
 aaa
 aaa
 adX
@@ -82967,7 +82989,7 @@ jdH
 oXl
 kyU
 qeo
-aaB
+aLg
 aaa
 aaa
 aaa
@@ -83134,7 +83156,7 @@ fEr
 aaa
 aaa
 aaa
-aaB
+ctu
 aaa
 aaa
 ulQ
@@ -83436,8 +83458,8 @@ fEr
 aaa
 aaa
 aaa
-aaB
-aaB
+bqE
+giH
 aaa
 adX
 fDF
@@ -84175,7 +84197,7 @@ bTz
 uap
 tAE
 nib
-aaB
+giH
 aaa
 aaa
 aaa
@@ -84478,7 +84500,7 @@ ivX
 gZS
 qeo
 aaB
-aaB
+giH
 aaa
 aaa
 aaa
@@ -84780,7 +84802,7 @@ oXl
 lPd
 qeo
 aaB
-aaB
+aLg
 aaa
 aaa
 aaa
@@ -85081,7 +85103,7 @@ jdH
 gIn
 hPh
 qeo
-aaB
+aLg
 aaa
 aaa
 aaa
@@ -85684,7 +85706,7 @@ mKo
 rYL
 uUE
 dBx
-aaB
+anw
 aaa
 aaa
 aaa
@@ -85983,10 +86005,10 @@ anw
 aaa
 aaa
 aaa
-aaB
-aaB
-aaB
-aaB
+aDR
+bcc
+bcc
+aLg
 aaa
 aaa
 aaa
@@ -86766,7 +86788,7 @@ aaa
 aaa
 aaa
 aaa
-aaB
+aDR
 amt
 aoD
 apw
@@ -87372,8 +87394,8 @@ aaa
 aaa
 aaa
 amw
-aaB
-aaB
+bcc
+bcc
 aaB
 kJH
 asl
@@ -87974,7 +87996,7 @@ adG
 adG
 adG
 amS
-alf
+lxY
 amR
 alx
 alx
@@ -88280,7 +88302,7 @@ alx
 alx
 alx
 amS
-aaB
+bcc
 caz
 gIB
 xDV
@@ -88290,21 +88312,21 @@ avP
 auB
 aaa
 aaB
-aaB
-aaB
-aaB
+bcc
+bcc
+bcc
 abm
-aaB
-aaB
-aaB
+bcc
+bcc
+anw
 aaa
-aaB
-aaB
-aaB
-aaB
-aaB
-aaB
-aaB
+blm
+bcc
+bcc
+bcc
+bcc
+bcc
+bcc
 abm
 aCs
 aQB
@@ -88586,8 +88608,8 @@ aaa
 aaa
 asK
 atl
-aaB
-aaB
+bcc
+aLg
 aaa
 aaa
 aaa
@@ -88595,19 +88617,19 @@ aaa
 aaa
 aaa
 aaa
-aaB
+bqF
 aaa
 aaa
-aaB
+abd
 aaa
-aaB
-aaa
-aaa
-aaa
+abd
 aaa
 aaa
 aaa
-aaB
+aaa
+aaa
+aaa
+bqE
 aCs
 aQC
 aRX
@@ -88897,7 +88919,7 @@ aaa
 aaa
 aaa
 aaa
-aaB
+bqF
 aaa
 aaa
 aaa
@@ -88909,7 +88931,7 @@ aaa
 aaa
 aaa
 aaa
-aaB
+aDR
 aCs
 aQH
 aRY
@@ -89199,7 +89221,7 @@ aaa
 aaa
 aaa
 aaa
-aaB
+bqF
 aaa
 aaa
 aaa
@@ -89564,7 +89586,7 @@ mGW
 aaa
 aaa
 aaa
-aaB
+ctu
 aaa
 aaa
 aaa
@@ -89866,7 +89888,7 @@ mGW
 aaa
 aaa
 aaa
-aaB
+ctu
 aaa
 aaa
 aaa
@@ -90462,9 +90484,9 @@ fHA
 wuu
 aaa
 aaa
-aaB
+ctu
 aaa
-aaB
+ctu
 aaa
 aaa
 aaa
@@ -90764,9 +90786,9 @@ leo
 bpU
 aaa
 aaa
-aaB
+ctu
 aaa
-aaB
+ctu
 aaa
 aaa
 aaa
@@ -90784,7 +90806,7 @@ mGW
 mGW
 mGW
 aaa
-aaB
+aDR
 mGW
 aaa
 aaa
@@ -91084,7 +91106,7 @@ aaa
 aaa
 aaa
 mGW
-aaB
+aLg
 aaa
 aaa
 aaa
@@ -91336,7 +91358,7 @@ vSL
 qhg
 iKt
 aTr
-aaB
+giH
 aaa
 aaa
 aYR
@@ -91632,14 +91654,14 @@ aaa
 aaa
 aaa
 aaa
-aaB
+baI
 aTr
 hkD
 juN
 dnw
 aTr
 abm
-aaB
+giH
 aaa
 aaa
 aYR
@@ -92244,8 +92266,8 @@ aXG
 aUY
 aYX
 aTr
-aaB
-aaB
+bkQ
+bkQ
 aYR
 bcy
 bdu
@@ -92848,8 +92870,8 @@ aUY
 aUY
 iNF
 aTr
-aaB
-aaB
+bcc
+bcc
 tAQ
 bcB
 bdy
@@ -94056,7 +94078,7 @@ aTr
 aTr
 aTr
 ffM
-aaB
+giH
 aaa
 aYR
 bcy
@@ -94358,7 +94380,7 @@ knI
 knI
 knI
 dKp
-aaB
+anA
 aaa
 aYR
 bcA
@@ -94659,8 +94681,8 @@ aND
 aaa
 aaa
 aaa
-aaB
-aaB
+aDR
+anw
 aaa
 aYR
 bcD
@@ -94962,7 +94984,7 @@ aaa
 aaa
 aaa
 aaa
-aaB
+bqE
 aYR
 aYR
 aYR
@@ -95565,7 +95587,7 @@ aaa
 aaa
 aaa
 aaa
-aaB
+baI
 abm
 aYR
 aYR
@@ -95867,12 +95889,12 @@ aaa
 aaa
 aaa
 aaa
-aaB
+aDR
 abm
 abm
 abm
 abm
-aaB
+bcc
 aaB
 aOf
 bgt
@@ -96170,12 +96192,12 @@ aaa
 aaa
 aaa
 aaa
-aaB
-aaB
+aDR
+aLg
 aaa
 aaa
 aaa
-aaB
+bqE
 eij
 aQv
 bhM
@@ -96477,7 +96499,7 @@ aaa
 aaa
 aaa
 aaa
-aaB
+bqE
 aOf
 bgv
 bhN
@@ -96779,7 +96801,7 @@ aaa
 aaa
 aaa
 aaa
-aaB
+aDR
 bft
 ahW
 oyp
@@ -97389,7 +97411,7 @@ bgz
 bhQ
 cxt
 vGY
-aaB
+bcc
 wJv
 elO
 elO
@@ -97693,11 +97715,11 @@ bgD
 vGY
 aaa
 aaa
-aaB
-aaB
-aaB
-aaB
-aaB
+aDR
+bcc
+bcc
+bcc
+bcc
 bVj
 dbJ
 ebm
@@ -98607,7 +98629,7 @@ aaa
 aaa
 abm
 abm
-aaB
+bcc
 abm
 abm
 ivd
