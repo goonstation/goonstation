@@ -5543,7 +5543,7 @@
 	},
 /area/station/quartermaster/office)
 "aBH" = (
-/obj/storage/secure/closet/personal,
+/obj/machinery/vending/pizza,
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/west)
 "aBI" = (
@@ -8560,6 +8560,7 @@
 /area/station/teleporter)
 "aRM" = (
 /obj/item/cable_coil,
+/obj/machinery/printing_press,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aRQ" = (
@@ -15047,7 +15048,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "bWc" = (
-/obj/machinery/plantpot,
 /obj/machinery/camera,
 /obj/cable{
 	icon_state = "1-2"
@@ -15055,6 +15055,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
+/obj/submachine/seed_manipulator,
 /turf/simulated/floor/grass{
 	name = "astroturf";
 	tag = "icon-grass1"
@@ -16126,8 +16127,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/med{
+	aiControlDisabled = 1;
+	cant_emag = 1;
 	dir = 4;
-	id = "cloning_exit"
+	hardened = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
@@ -16847,8 +16850,8 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/supplylobby)
 "dJn" = (
-/obj/storage/secure/closet/personal,
 /obj/machinery/light/incandescent,
+/obj/machinery/vending/cola/blue,
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/west)
 "dJO" = (
@@ -18918,10 +18921,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4;
-	id = "cloning_exit"
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -19429,6 +19430,10 @@
 /obj/machinery/shieldgenerator/energy_shield,
 /turf/simulated/floor,
 /area/station/storage/emergency)
+"gnn" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/neutral/side,
+/area/station/hallway/primary/west)
 "gnB" = (
 /obj/lattice{
 	dir = 10;
@@ -20390,6 +20395,7 @@
 /area/listeningpost)
 "hnc" = (
 /obj/machinery/light/incandescent,
+/obj/machinery/vending/hydroponics,
 /turf/simulated/floor/greenblack,
 /area/station/hydroponics/bay)
 "hnm" = (
@@ -22998,8 +23004,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/med{
+	aiControlDisabled = 1;
+	cant_emag = 1;
 	dir = 4;
-	id = "cloning_exit"
+	hardened = 1;
+	id = "medbay_entrance"
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -23347,6 +23356,9 @@
 "ksj" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/submachine/seed_manipulator{
+	dir = 8
 	},
 /turf/simulated/floor/greenblack{
 	dir = 4
@@ -24232,10 +24244,8 @@
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
 "lqu" = (
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4;
-	id = "cloning_exit"
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/hallway/primary/south)
@@ -29284,7 +29294,8 @@
 "pXB" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
-	pixel_y = -24
+	pixel_y = -24;
+	pixel_x = 8
 	},
 /obj/machinery/door_control{
 	id = "deliverydoor";
@@ -33900,6 +33911,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/submachine/foodprocessor,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "tHt" = (
@@ -82387,7 +82399,7 @@ avF
 ayW
 azF
 eqv
-aBH
+gnn
 apd
 apd
 apd
