@@ -3139,6 +3139,12 @@
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
+"aqg" = (
+/obj/table/auto,
+/obj/machinery/recharger,
+/obj/item/wrench,
+/turf/simulated/floor,
+/area/station/security/main)
 "aqi" = (
 /obj/item/caution{
 	desc = "Caution! Construction Zone!";
@@ -5866,15 +5872,14 @@
 	},
 /area/station/chapel/sanctuary)
 "aDq" = (
-/obj/machinery/disposal{
-	desc = "A pneumatic waste..err, PRODUCE transport unit.";
-	name = "kitchen/bar chute"
-	},
 /obj/disposalpipe/trunk/produce{
 	dir = 1
 	},
 /obj/machinery/light/incandescent{
 	dir = 8
+	},
+/obj/disposaloutlet/north{
+	name = "produce outlet"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -15761,6 +15766,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/research)
+"cBQ" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "cBV" = (
 /obj/machinery/optable,
 /obj/iv_stand,
@@ -37406,6 +37417,14 @@
 "wRJ" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/blue,
+/area/station/hallway/primary/central)
+"wRQ" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
 /area/station/hallway/primary/central)
 "wSc" = (
 /obj/decal/tile_edge/floorguide/mining,
@@ -86356,7 +86375,7 @@ jkG
 lwp
 bzn
 mmD
-bzn
+aqg
 tEO
 aIq
 aJo
@@ -87530,7 +87549,7 @@ bng
 bng
 bng
 bng
-bng
+wRQ
 bng
 btE
 aPu
@@ -87825,7 +87844,7 @@ aYR
 bee
 bcB
 aqj
-aPu
+cBQ
 aPu
 aPu
 aPu
