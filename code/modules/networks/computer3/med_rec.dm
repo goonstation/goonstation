@@ -28,8 +28,7 @@
 #define FIELDNUM_ALGDET 16
 #define FIELDNUM_DISEASE 17
 #define FIELDNUM_DISDET 18
-#define FIELDNUM_TRAITS 19
-#define FIELDNUM_NOTES  20
+#define FIELDNUM_NOTES  19
 
 #define FIELDNUM_DELETE "d"
 #define FIELDNUM_NEWREC 99
@@ -178,7 +177,6 @@
 							<br><br>Details: [src.active_medical["alg_d"]]
 							<br><br><br>Current Diseases: [src.active_medical["cdi"]] (per disease info placed in log/comment section)
 							<br>Details: [src.active_medical["cdi_d"]]<br><br><br>
-							<br>Traits: [src.active_medical["traits"]]<br><br><br>
 							Important Notes:<br>
 							<br>&emsp;[src.active_medical["notes"]]<br>"}
 
@@ -242,7 +240,6 @@
 						R["cdi_d"] = "No diseases have been diagnosed at the moment."
 						R["notes"] = "No notes."
 						R["h_imp"] = "No health implant detected."
-						R["traits"] = "No known traits."
 						data_core.medical.add_record(R)
 						src.active_medical = R
 
@@ -452,17 +449,6 @@
 
 						if (ckey(inputText))
 							src.active_medical["cdi_d"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
-						else
-							return
-
-					if (FIELDNUM_TRAITS)
-						if (!src.active_medical)
-							src.print_text("No medical record loaded!")
-							src.menu = MENU_IN_RECORD
-							return
-
-						if (ckey(inputText))
-							src.active_medical["traits"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
 						else
 							return
 
@@ -742,8 +728,7 @@
 				<br>\[16]Details: [src.active_medical["alg_d"]]
 				<br>\[17]<br>Current Diseases: [src.active_medical["cdi"]] (per disease info placed in log/comment section)
 				<br>\[18]Details: [src.active_medical["cdi_d"]]
-				<br>\[19]Traits: [src.active_medical["traits"]]
-				<br>\[20]Important Notes:
+				<br>\[19]Important Notes:
 				<br>&emsp;[src.active_medical["notes"]]"}
 			else
 				view_string += "<br><br><b>Medical Record Lost!</b>"

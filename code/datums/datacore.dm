@@ -87,7 +87,6 @@
 
 	M["dnasample"] = create_new_dna_sample_file(H)
 
-	var/traitStr = ""
 	var/list/minorDisabilities = list()
 	var/list/minorDisabilityDesc = list()
 	var/list/majorDisabilities = list()
@@ -96,11 +95,6 @@
 	if(H.traitHolder)
 		for(var/id in H.traitHolder.traits)
 			var/datum/trait/T = H.traitHolder.traits[id]
-
-			if(length(traitStr))
-				traitStr += " | [T.name]"
-			else
-				traitStr = T.name
 
 			if (istype(T, /datum/trait/random_allergy))
 				var/datum/trait/random_allergy/AT = T
@@ -118,8 +112,6 @@
 				if (TRAIT_DISABILITY_MINOR)
 					minorDisabilities.Add(T.disability_name)
 					minorDisabilityDesc.Add(T.disability_desc)
-
-	M["traits"] = traitStr
 
 	if(minorDisabilities.len)
 		M["mi_dis"] = jointext(minorDisabilities, ", ")
