@@ -20116,6 +20116,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/stool/chair/blue{
+	dir = 1
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "haV" = (
