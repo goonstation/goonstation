@@ -28973,6 +28973,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/bot/guardbot/smoke,
 /turf/simulated/floor/orangeblack,
 /area/station/science/hall)
 "pIJ" = (
