@@ -22,7 +22,7 @@ var/datum/job/priority_job = null
 			return TRUE
 
 		var/list/command_list = parse_string(text)
-		var/command = command_list[1]
+		var/command = lowertext(command_list[1])
 		command_list.Cut(1,2)
 
 		switch(command)

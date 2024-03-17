@@ -993,7 +993,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		firemode.delaystart = (delay/10) //not ideal to do it here, but this is a jank use case anyway
 		..()
 	reagent_act(reagent_id,volume)
-		if ((reagent_id in list("oil","lube", "superlube")) && volume >= 5)
+		if ((reagent_id in list("oil","lube", "superlube", "grease", "badgrease", "fishoil")) && volume >= 5)
 			grease = 15
 		if (reagent_id == "spaceglue" && volume >= 5)
 			grease = -30
@@ -1060,7 +1060,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = TRUE
 	spread_angle = 2
 	default_magazine = /obj/item/ammo/bullets/webley
-	HELP_MESSAGE_OVERRIDE({"If your hands are empty, drawing this gun from a pocket grants a short, large firerate increase at the cost of accuracy."})
+	safe_spin = TRUE // so you dont shoot yourself drawing the gun
+
+	HELP_MESSAGE_OVERRIDE({"If your hands are empty, drawing this gun from a pocket grants a brief, large firerate increase, at the cost of accuracy."})
 
 	var/broke_open = FALSE
 	var/locked_shut = FALSE // stop folk doing weird stuff while fanning the hammer
@@ -2996,17 +2998,22 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	add_residue = TRUE
 	gildable = TRUE
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
-
+	default_magazine = /obj/item/ammo/bullets/abg/two
 	var/broke_open = FALSE
 	var/shells_to_eject = 0
 
 	New() //uses a special box of ammo that only starts with 2 shells to prevent issues with overloading
 		if (prob(25))
 			name = pick ("Bessie", "Mule", "Loud Louis", "Boomstick", "Coach Gun", "Shorty", "Sawn-off Shotgun", "Street Sweeper", "Street Howitzer", "Big Boy", "Slugger", "Closing Time", "Garbage Day", "Rooty Tooty Point and Shooty", "Twin 12 Gauge", "Master Blaster", "Ass Blaster", "Blunderbuss", "Dr. Bullous' Thunder-Clapper", "Super Shotgun", "Insurance Policy", "Last Call", "Super-Duper Shotgun")
-
-		ammo = new/obj/item/ammo/bullets/abg/two
+		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()
+
+	birdshot
+		default_magazine = /obj/item/ammo/bullets/a12/bird/two
+		New()
+			..()
+			set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/bird12)
 
 	update_icon()
 		. = ..()
