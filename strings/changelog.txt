@@ -1,6 +1,7 @@
 
 (t)sun mar 17 24
 (u)LeahTheTech
+(+)Repairing or replacing one floor tile with another will no longer hide items on that tile under it.
 (p)18222
 (e)⚖🔄🧛|C-Balance, C-Rework, A-Gamemodes
 (*)Reworked a lot of stealing and assassinate objectives to be more realistically completable.
