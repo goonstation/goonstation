@@ -8144,6 +8144,7 @@
 /area/station/medical/crematorium)
 "aPB" = (
 /obj/disposalpipe/segment/mail,
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 9
 	},
@@ -20317,7 +20318,6 @@
 	icon_state = "2-4";
 	pixel_y = 0
 	},
-/obj/item/device/radio/beacon,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
