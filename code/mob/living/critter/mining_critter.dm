@@ -233,6 +233,12 @@
 	purple
 		recolor = "#b90fab"
 
+	radioactive
+		New()
+			..()
+			AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
+
+
 ///////////////////////////////////////////////
 // FERMID GRUB
 ///////////////////////////////////////////////
@@ -250,6 +256,11 @@
 	health_burn = 15
 	health_burn_vuln = 0.5
 
+	New()
+		..()
+		var/datum/targetable/critter/bite = src.abilityHolder.getAbility(/datum/targetable/critter/bite/fermid_bite)
+		bite.disabled = TRUE
+
 ///////////////////////////////////////////////
 // FERMID EGG
 ///////////////////////////////////////////////
@@ -257,6 +268,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/fermid
 	name = "insectoid egg"
 	desc = "Looks like this could hatch into something fermid like."
+	icon_state = "fermid-egg"
 	critter_type = /mob/living/critter/fermid
 	color = null
 
