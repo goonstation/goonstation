@@ -6989,6 +6989,7 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /obj/machinery/photocopier,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "aJA" = (
@@ -16395,7 +16396,6 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "dmA" = (
-/obj/machinery/light/incandescent,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -27050,6 +27050,7 @@
 "onw" = (
 /obj/random_item_spawner/desk_stuff,
 /obj/table/glass/auto,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/purplewhite{
 	dir = 5
 	},
