@@ -24865,6 +24865,10 @@
 /obj/item/storage/box/revimp_kit{
 	pixel_x = -3
 	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 11;
+	pixel_y = 3
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "red2"
 	},
