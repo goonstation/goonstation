@@ -6981,7 +6981,6 @@
 	dir = 4
 	},
 /obj/npc/trader/robot/syndicate{
-	desc = ";
 	icon_state = "SecBot";
 	name = "Dirty HAROLD"
 	},
