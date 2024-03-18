@@ -46093,6 +46093,8 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/taser,
+/obj/item/shipcomponent/mainweapon/taser,
+/obj/item/shipcomponent/secondary_system/tractor_beam,
 /obj/item/shipcomponent/secondary_system/tractor_beam,
 /turf/simulated/floor/redblack{
 	dir = 4
