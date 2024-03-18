@@ -59,7 +59,7 @@
 		src.faction |= FACTION_FERMID
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		if(recolor)
-			color = color_mapping_matrix(inp=list("#cc0303", "#9d9d9b", "#343434"), out=list(recolor, "#9d9d9b", "#343434"))
+			color = color_mapping_matrix(inp=list("#cc0303", "#9d9696", "#444142"), out=list(recolor, "#9d9696", "#444142"))
 
 	is_spacefaring()
 		return TRUE
@@ -172,11 +172,10 @@
 	name = "fermid"
 	real_name = "fermid"
 	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid whatever it in that enlarged gaster."
-	icon_state = "fermid-s"
-	icon_state_dead = "fermid-s-dead"
+	icon_state = "fermid-r"
+	icon_state_dead = "fermid-r-dead"
 	health_brute = 30
 	health_burn = 30
-
 
 	orange
 		recolor = "#e47f0c"
@@ -204,6 +203,9 @@
 ///////////////////////////////////////////////
 // FERMID QUEEN
 ///////////////////////////////////////////////
+/datum/movement_modifier/big_fermid
+	additive_slowdown = 2.5
+
 /mob/living/critter/fermid/queen
 	name = "fermid queen"
 	real_name = "fermid queen"
@@ -216,6 +218,10 @@
 	health_burn = 25
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
+
+	New()
+		..()
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/big_fermid, src)
 
 /mob/living/critter/fermid/hulk
 	name = "fermid hulk"
@@ -230,6 +236,10 @@
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
 
+	New()
+		..()
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/big_fermid, src)
+
 	purple
 		recolor = "#b90fab"
 
@@ -242,6 +252,9 @@
 ///////////////////////////////////////////////
 // FERMID GRUB
 ///////////////////////////////////////////////
+/datum/movement_modifier/grub_fermid
+	additive_slowdown = 4
+
 /mob/living/critter/fermid/grub
 	name = "fermid grub"
 	real_name = "fermid grub"
@@ -255,11 +268,11 @@
 	health_brute_vuln = 1
 	health_burn = 15
 	health_burn_vuln = 0.5
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite)
 
 	New()
 		..()
-		var/datum/targetable/critter/bite = src.abilityHolder.getAbility(/datum/targetable/critter/bite/fermid_bite)
-		bite.disabled = TRUE
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/grub_fermid, src)
 
 ///////////////////////////////////////////////
 // FERMID EGG
@@ -270,7 +283,10 @@
 	desc = "Looks like this could hatch into something fermid like."
 	icon_state = "fermid-egg"
 	critter_type = /mob/living/critter/fermid
-	color = null
+
+	New()
+		..()
+		color = null
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/fermid/random
 	New()

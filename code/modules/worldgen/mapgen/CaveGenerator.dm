@@ -75,7 +75,7 @@
 	turf_type = /turf/unsimulated/floor/cave/asteroid
 
 /datum/biome/asteroid/wall
-	turf_type = /turf/simulated/wall/auto/asteroid/mountain
+	turf_type = /turf/simulated/wall/auto/asteroid
 
 /datum/biome/asteroid/fermid
 	flora_types = list(/obj/overlay/tile_effect/cracks/spawner/fermid/random=5, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/fermid=1)
@@ -83,7 +83,7 @@
 
 	fauna_types = list(/mob/living/critter/fermid=100, /obj/overlay/tile_effect/cracks/spawner/fermid=50, /mob/living/critter/fermid/spitter=5, /mob/living/critter/fermid/worker=25, /mob/living/critter/fermid/worker/green=25, /mob/living/critter/fermid/spitter/blue=1, /mob/living/critter/fermid/spitter/orange=1, /mob/living/critter/fermid/hulk=10, /mob/living/critter/fermid/hulk/purple=1)
 	fauna_density = 1
-	minimum_fauna_distance = 3
+	minimum_fauna_distance = 5
 
 /datum/biome/asteroid/fermid/hive
 	fauna_density = 2
@@ -91,10 +91,10 @@
 
 /datum/biome/asteroid/fermid/nest
 	flora_types = list(/obj/overlay/tile_effect/cracks/spawner/fermid=10, /obj/overlay/tile_effect/cracks/spawner/fermid/random=5, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/fermid=5, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/fermid/random=1)
-	flora_density = 3
+	flora_density = 4
 
 	fauna_types = list(/mob/living/critter/fermid=100, /obj/overlay/tile_effect/cracks/spawner/fermid=25, /mob/living/critter/fermid/worker=25, /mob/living/critter/fermid/hulk=10, /mob/living/critter/fermid/queen=5, /mob/living/critter/fermid/grub=5)
-	fauna_density = 0.9
+	fauna_density = 2
 	minimum_fauna_distance = 2
 
 /datum/map_generator/cave_generator/asteroid
