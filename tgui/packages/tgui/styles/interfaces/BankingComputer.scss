@@ -1,0 +1,18 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author mloccy (https://github.com/mloccy)
+ * @license MIT
+ */
+
+@use '../colors.scss';
+@use '~tgui/styles/base.scss';
+
+.headerRow {
+  font-size: larger;
+}
+
+.buttonCell {
+  margin-right: 10px;
+  float: right;
+}
