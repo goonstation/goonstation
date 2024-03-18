@@ -316,12 +316,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 	if (!istype(traitor) || !isnum(allow_hijack))
 		return null
 
-	var/upperbound = 3
-	if (allow_hijack)
-		upperbound = 4
-
 	var/objective_path = null
-	var/picker = rand(1,upperbound)
+	var/picker = rand(1,3)
 	switch(picker)
 		if(1)
 			objective_path = /datum/objective/escape
@@ -329,8 +325,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 			objective_path = /datum/objective/escape/survive
 		if(3)
 			objective_path = /datum/objective/escape/kamikaze
-		if(4)
-			objective_path = /datum/objective/escape/hijack
+
 
 	var/datum/objective/O = new objective_path(null, traitor)
 

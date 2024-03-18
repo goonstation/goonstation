@@ -1,5 +1,30 @@
 
+(t)sun mar 17 24
+(u)LeahTheTech
+(+)Repairing or replacing one floor tile with another will no longer hide items on that tile under it.
+(+)Standardized maps so every security department now has one riot control grenade outside of the armoury. For riots.
+(p)18222
+(e)⚖🔄🧛|C-Balance, C-Rework, A-Gamemodes
+(*)Reworked a lot of stealing and assassinate objectives to be more realistically completable.
+(t)sat mar 16 24
+(u)Chatauscours
+(p)18171
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)Security officers and Inspectors can now isssue fines for up to 500 credits without further approval.
+(+)You will now be alerted by PDA when you recieve a fine.
+(t)fri mar 15 24
+(u)LeahTheTech
+(+)The salbutamol/salicylic acid recipe no longer begins reacting until it receives stimulus (ie either heat or physical shock)
+(t)thu mar 14 24
+(u)crunchwarp
+(p)18034
+(e)🗺|A-Mapping
+(*)The Clarion ranch has emerged from its chrysalis at last, transformed...!
 (t)wed mar 13 24
+(u)DecidedlyUnethical, MylieDaniels
+(p)18170
+(e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
+(+)Added some cooling racks to the kitchen. Find them waiting in the FoodTech!
 (u)NibChocolateeny
 (p)18193
 (e)🆕💅🌱|C-Feature, C-QoL, A-Hydroponics
