@@ -198,12 +198,7 @@ TYPEINFO(/turf/simulated/wall/auto/jen)
 	connect_overlay = 1
 TYPEINFO_NEW(/turf/simulated/wall/auto/jen)
 	. = ..()
-	connects_to = typecacheof(list(
-		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall,
-		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen
-	))
+	connects_to = typecacheof(list(/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen, /turf/simulated/wall/false_wall))
 /turf/simulated/wall/auto/jen
 	icon = 'icons/turf/walls/jen.dmi'
 #ifdef PERSPECTIVE_EDITOR_WALL
@@ -263,12 +258,7 @@ TYPEINFO(/turf/simulated/wall/auto/reinforced/jen)
 	connect_overlay = 1
 TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/jen)
 	. = ..()
-	connects_to = typecacheof(list(
-		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/false_wall,
-		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred
-	))
+	connects_to = typecacheof(list(/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen, /turf/simulated/wall/false_wall))
 	connects_with_overlay_exceptions = typecacheof(list(/turf/simulated/wall/auto/reinforced/jen))
 /turf/simulated/wall/auto/reinforced/jen
 	icon = 'icons/turf/walls/jen.dmi'
@@ -331,12 +321,7 @@ TYPEINFO(/turf/simulated/wall/auto/supernorn)
 	connect_diagonal = 1
 TYPEINFO_NEW(/turf/simulated/wall/auto/supernorn)
 	. = ..()
-	connects_to = typecacheof(list(
-		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old
-	))
+	connects_to = typecacheof(list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/false_wall))
 /turf/simulated/wall/auto/supernorn
 	icon = 'icons/turf/walls/supernorn/smooth.dmi'
 	mod = "norn-"
@@ -363,10 +348,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn)
 	. = ..()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
+		/turf/simulated/wall/false_wall,
 		/turf/simulated/wall/auto/reinforced/supernorn/yellow,
-		/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
-		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old
+		/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange
 	))
 /turf/simulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls/supernorn/smooth.dmi'
@@ -394,7 +378,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/yellow)
 	. = ..()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
+		/turf/simulated/wall/false_wall
 	))
 /turf/simulated/wall/auto/reinforced/supernorn/yellow
 	icon = 'icons/turf/walls/supernorn/yellow.dmi'
@@ -414,7 +398,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/orange)
 	. = ..()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
+		/turf/simulated/wall/false_wall
 	))
 
 /turf/simulated/wall/auto/reinforced/supernorn/orange
@@ -462,8 +446,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/blackred)
 	. = ..()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle
+		/turf/simulated/wall/false_wall
 	))
 /turf/simulated/wall/auto/reinforced/supernorn/blackred
 	icon = 'icons/turf/walls/supernorn/blackred.dmi'
@@ -481,10 +464,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/blackred)
 TYPEINFO(/turf/simulated/wall/auto/reinforced/paper)
 TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/paper)
 	. = ..()
-	connects_to = typecacheof(list(
-		/turf/simulated/wall/auto/reinforced/paper, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/auto
-	))
+	connects_to = typecacheof(list(/turf/simulated/wall/auto/reinforced/paper))
 /turf/simulated/wall/auto/reinforced/paper
 	icon = 'icons/turf/walls/paper.dmi'
 	default_material = "bamboo"
@@ -510,10 +490,7 @@ TYPEINFO(/turf/simulated/wall/auto/marsoutpost)
 	connect_overlay = 1
 TYPEINFO_NEW(/turf/simulated/wall/auto/marsoutpost)
 	. = ..()
-	connects_to = typecacheof(list(
-		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall
-	))
+	connects_to = typecacheof(list(/turf/simulated/wall/false_wall))
 /turf/simulated/wall/auto/marsoutpost
 	icon = 'icons/turf/walls/marsoutpost.dmi'
 #ifdef PERSPECTIVE_EDITOR_WALL
@@ -543,10 +520,8 @@ TYPEINFO(/turf/simulated/wall/auto/old)
 TYPEINFO_NEW(/turf/simulated/wall/auto/old)
 	. = ..()
 	connects_to = typecacheof(list(
-		/turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
-		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
-		/turf/simulated/wall/auto/martian, /obj/indestructible/shuttle_corner
+		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old, /obj/indestructible/shuttle_corner
 	))
 /turf/simulated/wall/auto/old
 	icon = 'icons/turf/walls/derelict.dmi'
@@ -565,10 +540,8 @@ TYPEINFO(/turf/simulated/wall/auto/reinforced/old)
 TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/old)
 	. = ..()
 	connects_to = typecacheof(list(
-		/turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
-		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
-		/turf/simulated/wall/auto/martian, /obj/indestructible/shuttle_corner
+		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old, /obj/indestructible/shuttle_corner
 	))
 
 /turf/simulated/wall/auto/reinforced/old
@@ -588,11 +561,7 @@ TYPEINFO(/turf/simulated/wall/auto/hedge)
 TYPEINFO_NEW(/turf/simulated/wall/auto/hedge)
 	. = ..()
 	connects_to = typecacheof(list(
-		/turf/simulated/wall/auto/hedge, /turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
-		/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
-		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old
+		/turf/simulated/wall/auto/hedge, /turf/simulated/wall/false_wall
 	))
 /turf/simulated/wall/auto/hedge // Some fun walls by Walpvrgis
 	name = "hedge"
@@ -720,9 +689,6 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/reinforced/supernorn)
 		/turf/unsimulated/wall/auto/supernorn,
 		/turf/unsimulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/false_wall/reinforced,
-		/turf/unsimulated/wall/auto/adventure/old,
-		/turf/unsimulated/wall/auto/adventure/fake_window,
-		/turf/unsimulated/wall/auto/adventure/meat
 	))
 /turf/unsimulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls/supernorn/smooth.dmi'
@@ -742,8 +708,6 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn/wood)
 	connect_overlay = FALSE
 	connect_diagonal = TRUE
 	connects_to = typecacheof(list(
-		/turf/unsimulated/wall/auto/supernorn,
-		/turf/unsimulated/wall/auto/reinforced/supernorn,
 		/turf/unsimulated/wall/auto/supernorn/wood
 	))
 /turf/unsimulated/wall/auto/supernorn/wood
@@ -1113,6 +1077,10 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 	connect_diagonal = TRUE
 	connect_overlay = FALSE
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/fake_window)
+	. = ..()
+	connect_diagonal = 1
+	connects_to = typecacheof(list(/turf/unsimulated/wall/auto/adventure/fake_window))
 /turf/unsimulated/wall/auto/adventure/fake_window
 	name = "strong window"
 	desc = "Wow this looks like a tough god damn window, damn."
