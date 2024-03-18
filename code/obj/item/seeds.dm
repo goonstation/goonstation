@@ -12,6 +12,7 @@ ADMIN_INTERACT_PROCS(/obj/item/seed, proc/admin_set_mutation)
 	var/seeddamage = 0 // This is used mostly for infusions. How likely a seed is to be destroyed.
 	var/isstrange = 0  // Seeds cannot be gene scanned if they're strange seeds.
 	var/generation = 0 // Keeps track of how many times a plant has been bred from the initial seed.
+	var/dont_mutate = FALSE //! Do not randomly mutate this seed on plant
 	stamina_damage = 0
 	stamina_cost = 0
 	rand_pos = 1

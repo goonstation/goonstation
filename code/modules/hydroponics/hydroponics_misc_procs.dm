@@ -308,7 +308,7 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 	// or not the mutation will actually appear is HYPmutationcheck_full.
 	if(!P || !DNA)
 		return
-	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer))
+	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer) || S?.dont_mutate)
 		return
 	if(P.mutations.len)
 		for (var/datum/plantmutation/MUT in P.mutations)
