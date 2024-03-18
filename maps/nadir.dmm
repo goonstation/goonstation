@@ -32604,6 +32604,10 @@
 	dir = 1;
 	pixel_y = 26
 	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 5;
+	pixel_y = 2
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},

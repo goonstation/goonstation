@@ -1169,6 +1169,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		src.storage?.storage_item_attack_hand(user)
 		return 0
 
+	if(src.two_handed && !user.can_hold_two_handed() && user.is_that_in_this(src)) // prevent accidentally donating weapons to your enemies
+		boutput(user, SPAN_ALERT("You don't have the hands to hold this item."))
+		return FALSE
+
 	src.throwing = 0
 
 	if (isobj(src.loc))
