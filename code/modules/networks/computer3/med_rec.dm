@@ -181,7 +181,7 @@
 							<br><br><br>Current Diseases: [src.active_medical["cdi"]] (per disease info placed in log/comment section)
 							<br>Details: [src.active_medical["cdi_d"]]<br><br><br>
 							<br>Traits: [src.active_medical["traits"]]<br><br><br>
-							<br>Clone Defects: [src.active_medical["cl_def"]]<br>
+							<br>Cloner Defects: [src.active_medical["cl_def"]]<br>
 							<br>Details: [src.active_medical["cl_def_d"]]<br><br><br>
 							Important Notes:<br>
 							<br>&emsp;[src.active_medical["notes"]]<br>"}

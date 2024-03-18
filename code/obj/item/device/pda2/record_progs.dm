@@ -150,7 +150,7 @@
 					dat += "Current Diseases: [src.active2["cdi"]]<br>"
 					dat += "Details: [src.active2["cdi_d"]]<br><br>"
 
-					dat += "Clone Defects: [src.active2["cl_def"]]<br>"
+					dat += "Cloner Defects: [src.active2["cl_def"]]<br>"
 					dat += "Details: [src.active2["cl_def_d"]]<br><br>"
 
 					dat += "Traits: [src.active2["traits"]]<br><br>"
