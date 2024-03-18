@@ -18709,6 +18709,10 @@
 	},
 /obj/rack,
 /obj/item/gun/implanter,
+/obj/item/chem_grenade/pepper{
+	pixel_x = -7;
+	pixel_y = -6
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "pLJ" = (

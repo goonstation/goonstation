@@ -289,6 +289,16 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_projectile_type = /datum/projectile/bullet/spike
 	shot_sound = 'sound/weapons/radxbow.ogg'
 
+/datum/projectile/special/spreader/uniform_burst/bird12
+	name = "birdshot"
+	sname = "birdshot"
+	spread_angle = 8
+	cost = 1
+	pellets_to_fire = 3
+	spread_projectile_type = /datum/projectile/bullet/bird12
+	casing = /obj/item/casing/shotgun/red
+	shot_sound = 'sound/weapons/birdshot.ogg'
+
 
 /datum/projectile/special/spreader/buckshot_burst/foamdarts
 	name = "foam dart"
