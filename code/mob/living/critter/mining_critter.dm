@@ -171,14 +171,22 @@
 /mob/living/critter/fermid/spitter
 	name = "fermid"
 	real_name = "fermid"
-	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid whatever it in that enlarged gaster."
+	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid whatever is in that enlarged gaster."
 	icon_state = "fermid-r"
 	icon_state_dead = "fermid-r-dead"
 	health_brute = 30
 	health_burn = 30
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/spit)
+
+	critter_ability_attack(var/mob/target)
+		var/datum/targetable/critter/spit/spit = src.abilityHolder.getAbility(/datum/targetable/critter/spit)
+		if (!spit.disabled && spit.cooldowncheck())
+			spit.handleCast(target)
+			return TRUE
+		. = ..()
 
 	orange
-		recolor = "#e47f0c"
+		recolor = "#ca710a"
 		add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/flamethrower)
 
 		critter_ability_attack(var/mob/target)
