@@ -520,17 +520,14 @@
 	dir = 6
 	},
 /obj/disposalpipe/segment/produce{
-	dir = 4
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "abr" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
-	},
-/obj/disposalpipe/segment/produce{
-	dir = 2;
-	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
@@ -589,7 +586,6 @@
 	name = "autoname  - SS13";
 	pixel_x = 10
 	},
-/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aby" = (
@@ -689,7 +685,6 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
 	},
-/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "abH" = (
@@ -702,7 +697,6 @@
 	dir = 4
 	},
 /obj/storage/crate/bloody,
-/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "abI" = (
@@ -710,25 +704,11 @@
 	dir = 4;
 	level = 2
 	},
-/obj/disposalpipe/segment/produce{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
 "abJ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northwest)
-"abK" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1;
-	level = 2
-	},
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/kitchen)
 "abL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -751,9 +731,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
 	level = 2
-	},
-/obj/disposalpipe/segment/produce{
-	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -817,9 +794,6 @@
 /area/station/garden/aviary)
 "abX" = (
 /obj/decal/cleanable/dirt,
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/maintenance/east)
 "abY" = (
@@ -860,29 +834,17 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northeast)
 "acd" = (
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
 /turf/simulated/floor/caution/south,
 /area/station/maintenance/east)
 "ace" = (
 /obj/landmark/pest,
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
 /turf/simulated/floor/caution/south,
 /area/station/maintenance/east)
 "acf" = (
 /obj/decal/cleanable/dirt,
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
 /turf/simulated/floor/caution/south,
 /area/station/maintenance/east)
 "acg" = (
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "corner_east"
 	},
@@ -956,10 +918,6 @@
 /obj/disposaloutlet{
 	dir = 8;
 	name = "Produce Chute"
-	},
-/obj/disposalpipe/trunk/produce{
-	dir = 8;
-	icon_state = "pipe-t"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -6762,7 +6720,13 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
 	},
-/obj/reagent_dispensers/beerkeg,
+/obj/disposalpipe/trunk/produce{
+	dir = 1
+	},
+/obj/disposaloutlet{
+	dir = 4;
+	name = "Produce Chute"
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aBH" = (
@@ -36431,6 +36395,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"qEN" = (
+/obj/disposalpipe/segment,
+/obj/reagent_dispensers/beerkeg,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "qEW" = (
 /obj/machinery/disposal/small{
 	dir = 8;
@@ -81468,7 +81437,7 @@ aFJ
 aGw
 cSn
 aGw
-aGw
+qEN
 uOk
 aMs
 foX
@@ -85061,7 +85030,7 @@ ayX
 ayX
 sKg
 aDI
-abK
+aEJ
 eGl
 aGG
 jbP
