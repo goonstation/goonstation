@@ -454,3 +454,18 @@
 	/obj/item/clothing/suit/witchcape_mint,
 	/obj/item/device/light/glowstick/cyan)
 
+/obj/item/storage/box/costume/blossom
+	name = "Cherry Blossom Masquerade Clothes"
+	desc = "Red clothing with flower motifs, all in this box"
+	spawn_contents = list(/obj/item/clothing/under/blossomdress,
+	/obj/item/clothing/under/blossomoutfit,
+	/obj/item/clothing/under/blossomsuit,
+	/obj/item/clothing/mask/blossommask = 3)
+
+/obj/item/storage/box/costume/peacock
+	name = "Peacock Masquerade Clothes"
+	desc = "Blue clothing with peacock motifs, all in this box"
+	spawn_contents = list(/obj/item/clothing/under/peacockdress,
+	/obj/item/clothing/under/peacockoutfit,
+	/obj/item/clothing/under/peacocksuit,
+	/obj/item/clothing/mask/peacockmask = 3)

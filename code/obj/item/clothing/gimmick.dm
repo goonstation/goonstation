@@ -1734,11 +1734,35 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	icon_state = "blossomdress"
 	item_state = "blossomdress"
 
+/obj/item/clothing/under/blossomsuit
+	name = "cherryblossom suit"
+	desc = "A suit. Specifically for masquerades."
+	icon_state = "blossomsuit"
+	item_state = "blossomsuit"
+
+/obj/item/clothing/under/blossomoutfit
+	name = "cherryblossom outfit"
+	desc = "An outfit. Specifically for masquerades"
+	icon_state = "blossomoutfit"
+	item_state = "blossomoutfit"
+
 /obj/item/clothing/under/peacockdress
 	name = "peacock dress"
 	desc = "A dress. Specifically for masquerades."
 	icon_state = "peacockdress"
 	item_state = "peacockdress"
+
+/obj/item/clothing/under/peacocksuit
+	name = "peakcock suit"
+	desc = "A suit. Specifically for masquerades."
+	icon_state = "peacocksuit"
+	item_state = "peacocksuit"
+
+/obj/item/clothing/under/peacockoutfit
+	name = "peacock outfit"
+	desc = "An outfit. Specifically for masquerades"
+	icon_state = "peacockoutfit"
+	item_state = "peacockoutfit"
 
 /obj/item/clothing/under/collardressbl
 	name = "collar dress"

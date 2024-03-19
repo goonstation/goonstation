@@ -689,6 +689,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Party Supplies"
 
+/datum/supply_packs/masquerade
+	name = "Masquerade Supplies"
+	desc = "Perfect for that one kind of party"
+	contains = list(/obj/item/storage/box/costume/blossom = 2,
+					/obj/item/storage/box/costume/peacock = 2)
+	cost = PAY_EXECUTIVE*2
+	containertype = /obj/storage/crate
+	containername = "Masquerade Supplies"
+
 /datum/supply_packs/wedding
 	name = "Wedding Supplies"
 	desc = "Your very own DIY wedding! Chaplain not included."
@@ -1213,12 +1222,12 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/clothing/head/headband/nyan/random = 1)
 
 /datum/supply_packs/mask
-	name = "Masquerade Crate"
+	name = "Mask Crate"
 	desc = "For hosting a masked ball in the bar."
 	contains = list(/obj/random_item_spawner/mask)
 	cost = PAY_IMPORTANT*2
 	containertype = /obj/storage/crate/packing
-	containername = "Masquerade Crate"
+	containername = "Mask Crate"
 
 /datum/supply_packs/shoe
 	name = "Shoe Crate"
