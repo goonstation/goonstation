@@ -544,7 +544,7 @@ TYPEINFO(/obj/item/rcd)
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		boutput(user, "You start [what]... ([issilicon(user) ? "[ammo * src.silicon_cost_multiplier] charge" : "[ammo] matter units"][delay ? ", [delay / 10] seconds" : ""])")
 
-		if ((!delay || do_after(user, delay)) && ammo_check(user, ammo))
+		if ((!delay || do_after(user, delay)) && ammo_check(user, ammo) && src == user.equipped())
 			ammo_consume(user, ammo)
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 			shitSparks()
