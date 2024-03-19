@@ -119,7 +119,7 @@
 		var/obj/cathode_rod = src.cathode_unit.contained_rod
 
 		if(!anode_rod || !cathode_rod)
-			src.visible_message("<span class='alert'>[src] shuts down due to an insufficient rod configuration.</span>")
+			src.visible_message(SPAN_ALERT("[src] shuts down due to an insufficient rod configuration."))
 			playsound(src.loc, sound_grump, 50, 0)
 			src.anode_unit.update_mode(UNIT_OPEN)
 			src.cathode_unit.update_mode(UNIT_OPEN)
@@ -133,7 +133,7 @@
 			var/anode_level = src.anode_unit.use_rod()
 			var/cathode_level = src.cathode_unit.use_rod()
 			if(!anode_level || !cathode_level)
-				src.visible_message("<span class='alert'>[src] shuts down due to insufficient rod efficacy.</span>")
+				src.visible_message(SPAN_ALERT("[src] shuts down due to insufficient rod efficacy."))
 				playsound(src.loc, sound_grump, 50, 0)
 				if(!anode_level) src.anode_unit.update_mode(UNIT_OPEN)
 				if(!cathode_level) src.cathode_unit.update_mode(UNIT_OPEN)
@@ -231,7 +231,7 @@
 		if(src.mode == UNIT_OPEN)
 			if(src.contained_rod)
 				if(src.toggling) return
-				boutput(user, "<span class='notice'>You [ejected_by_bot ? "eject" : "remove"] \the [contained_rod] from [src]'s retention clamp.</span>")
+				boutput(user, SPAN_NOTICE("You [ejected_by_bot ? "eject" : "remove"] \the [contained_rod] from [src]'s retention clamp."))
 				playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 				src.contained_rod.UpdateIcon()
 				if(ejected_by_bot)
@@ -252,7 +252,7 @@
 		if(src.mode == UNIT_OPEN && istype(I,/obj/item/catalytic_rod))
 			if(!src.contained_rod)
 				if(src.toggling) return
-				boutput(user, "<span class='notice'>You insert \the [I] into [src]'s retention clamp.</span>")
+				boutput(user, SPAN_NOTICE("You insert \the [I] into [src]'s retention clamp."))
 				playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 				user.u_equip(I)
@@ -267,24 +267,24 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if(!isliving(user))
-			boutput(user, "<span class='alert'>Your tether to the mortal realm is insufficient for rod loading.</span>")
+			boutput(user, SPAN_ALERT("Your tether to the mortal realm is insufficient for rod loading."))
 			return
 
 		if(!can_act(user))
 			return
 
 		if (!in_interact_range(src,user))
-			boutput(user, "<span class='alert'>You are too far away to do that.</span>")
+			boutput(user, SPAN_ALERT("You are too far away to do that."))
 			return
 
 		if (!in_interact_range(src,O))
-			boutput(user, "<span class='alert'>[O] is too far away to do that.</span>")
+			boutput(user, SPAN_ALERT("[O] is too far away to do that."))
 			return
 
 		if (src.mode == UNIT_OPEN && istype(O,/obj/item/catalytic_rod) && isturf(O.loc))
 			if(!src.contained_rod)
 				if(src.toggling) return
-				boutput(user, "<span class='notice'>You insert \the [O] into [src]'s retention clamp.</span>")
+				boutput(user, SPAN_NOTICE("You insert \the [O] into [src]'s retention clamp."))
 				playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 				O.set_loc(src)

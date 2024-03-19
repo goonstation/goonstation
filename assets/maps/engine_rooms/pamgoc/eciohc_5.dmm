@@ -1,0 +1,343 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/cable/orange,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"b" = (
+/obj/cable/orange{
+	d1 = 0;
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"c" = (
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"d" = (
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"e" = (
+/obj/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"f" = (
+/obj/cable{
+	d1 = 0;
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"g" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"h" = (
+/obj/machinery/atmospherics/binary/passive_gate/opened{
+	dir = 4;
+	target_pressure = 1e+031
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"i" = (
+/obj/machinery/atmospherics/binary/passive_gate/opened{
+	dir = 8;
+	target_pressure = 1e+031
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"j" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 8;
+	name = "cold loop inlet valve"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"k" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 8;
+	name = "hot loop inlet valve"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"l" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "outlet purge valve"
+	},
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"m" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "outlet purge valve"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"n" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"o" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"p" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"q" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"r" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 10
+	},
+/obj/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"s" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 10
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"t" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"u" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"v" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 6
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"w" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"x" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 9
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"y" = (
+/obj/machinery/light/small/floor,
+/obj/landmark/engine_room,
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"z" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"A" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/grey/side{
+	dir = 1
+	},
+/area/station/engine/inner)
+"B" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"C" = (
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"D" = (
+/turf/simulated/floor/grey/side,
+/area/station/engine/inner)
+"E" = (
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+
+(1,1,1) = {"
+A
+E
+j
+E
+E
+E
+E
+i
+E
+D
+y
+"}
+(2,1,1) = {"
+E
+E
+s
+q
+q
+q
+q
+n
+q
+t
+C
+"}
+(3,1,1) = {"
+E
+E
+E
+E
+E
+E
+E
+E
+E
+u
+C
+"}
+(4,1,1) = {"
+E
+E
+E
+B
+E
+E
+E
+B
+E
+u
+C
+"}
+(5,1,1) = {"
+E
+E
+E
+E
+E
+E
+E
+b
+c
+r
+l
+"}
+(6,1,1) = {"
+c
+c
+d
+E
+E
+E
+E
+E
+E
+f
+g
+"}
+(7,1,1) = {"
+E
+E
+e
+a
+E
+E
+E
+E
+E
+v
+m
+"}
+(8,1,1) = {"
+E
+E
+E
+B
+E
+E
+E
+B
+E
+w
+C
+"}
+(9,1,1) = {"
+E
+E
+E
+E
+E
+E
+E
+E
+E
+w
+C
+"}
+(10,1,1) = {"
+E
+E
+v
+p
+p
+p
+p
+o
+p
+x
+C
+"}
+(11,1,1) = {"
+A
+E
+k
+E
+E
+E
+E
+h
+E
+D
+z
+"}

@@ -76,7 +76,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 			if (!src.open && grab_stuff_on_spawn)		// if closed, any item at src's loc is put in the contents
 				for (var/atom/movable/A in src.loc)
-					if (src.is_acceptable_content(A))
+					if (!A.anchored && src.is_acceptable_content(A) && !isintangible(A) && !istype(A, /mob/dead))
 						A.set_loc(src)
 
 	disposing()
@@ -151,7 +151,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	Entered(atom/movable/Obj, OldLoc)
 		. = ..()
-		if(src.open || length(contents) >= src.max_capacity)
+		if(src.open || length(contents) > src.max_capacity)
 			Obj.set_loc(get_turf(src))
 
 	update_icon()
@@ -239,14 +239,14 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 					src.jiggled = 0
 
 			if (prob(10) && src.can_flip_bust)
-				user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
+				user.show_text(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]."))
 				src.bust_out()
 
 			return
 
 		// if all else fails:
 		src.open(user=user)
-		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
+		src.visible_message(SPAN_ALERT("<b>[user]</b> kicks [src] open!"))
 
 	attack_hand(mob/user)
 		if(world.time == src.last_attackhand) // prevent double-attackhand when entering
@@ -273,7 +273,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				return
 			var/amt = length(I.contents)
 			if (amt)
-				user.visible_message("<span class='notice'>[user] dumps out [I]'s contents into [src]!</span>")
+				user.visible_message(SPAN_NOTICE("[user] dumps out [I]'s contents into [src]!"))
 				var/amtload = 0
 				for (var/obj/item/C in I.contents)
 					if(length(contents) >= max_capacity)
@@ -298,12 +298,12 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 						if(!weldingtool.try_weld(user, 1, burn_eyes = TRUE))
 							return
 						src._health = src._max_health
-						src.visible_message("<span class='alert'>[user] repairs [src] with [I].</span>")
+						src.visible_message(SPAN_ALERT("[user] repairs [src] with [I]."))
 					else if (!src.is_short && !src.legholes)
 						if (!weldingtool.try_weld(user, 1))
 							return
 						src.legholes = 1
-						src.visible_message("<span class='alert'>[user] adds some holes to the bottom of [src] with [I].</span>")
+						src.visible_message(SPAN_ALERT("[user] adds some holes to the bottom of [src] with [I]."))
 					return
 				if(!issilicon(user))
 					if(user.drop_item())
@@ -329,7 +329,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/storage/proc/weld_action, \
 					list(I, user), null, positions[1], positions[2]),user)
 				return
-			else if (ispryingtool(I))
+			else if (ispryingtool(I) && src.needs_prying)
 				SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 1 SECOND, /obj/storage/proc/pry_open, user, I.icon, I.icon_state,\
 				"[user] pries open \the [src]", INTERRUPT_ACTION | INTERRUPT_STUNNED)
 
@@ -338,10 +338,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				user.show_text("It appears to be broken.", "red")
 				return
 			else if (src.personal)
-				var/obj/item/card/id/ID = null
-				if (istype(I, /obj/item/card/id))
-					ID = I
-				else
+				var/obj/item/card/id/ID = get_id_card(I)
+				if (!istype(ID))
 					if (ishuman(user))
 						var/mob/living/carbon/human/H = user
 						if (H.wear_id)
@@ -349,7 +347,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				if ((src.req_access && src.allowed(user)) || (ID && length(ID.registered) && (src.registered == ID.registered || !src.registered)))
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
-					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
+					user.visible_message(SPAN_NOTICE("The locker has been [src.locked ? null : "un"]locked by [user]."))
 					src.UpdateIcon()
 					if (!src.registered)
 						src.registered = ID.registered
@@ -361,7 +359,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			else if (!src.personal && src.allowed(user))
 				if (!src.open)
 					src.locked = !src.locked
-					user.visible_message("<span class='notice'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
+					user.visible_message(SPAN_NOTICE("[src] has been [src.locked ? null : "un"]locked by [user]."))
 					src.UpdateIcon()
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")
@@ -397,6 +395,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	proc/pry_open(var/mob/user)
 		playsound(src, 'sound/items/Crowbar.ogg', 60, 1)
 		src.pried_open = TRUE
+		src.locked = FALSE
 		src.open = TRUE
 		src.dump_contents(user)
 		src.UpdateIcon()
@@ -407,10 +406,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			return
 		if (!src.welded)
 			src.weld(1, user)
-			src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
+			src.visible_message(SPAN_ALERT("[user] welds [src] closed with [W]."))
 		else
 			src.weld(0, user)
-			src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
+			src.visible_message(SPAN_ALERT("[user] unwelds [src] with [W]."))
 
 	proc/check_if_enterable(var/atom/movable/thing, var/skip_penalty=0)
 		//return 1 if an atom can enter, 0 if not (this is used for scooting over crates and dragging things into crates)
@@ -459,7 +458,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			return
 
 		if (isitem(O) && (O:cant_drop || (issilicon(user) && O.loc == user))) //For borg held items
-			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
 			return
 
 		src.add_fingerprint(user)
@@ -471,8 +470,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			if (iscarbon(O))
 				var/mob/living/carbon/M = user
 				if (M.bioHolder && M.bioHolder.HasEffect("clumsy") && prob(40))
-					user.visible_message("<span class='alert'><b>[user]</b> trips over [src]!</span>",\
-					"<span class='alert'>You trip over [src]!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user]</b> trips over [src]!"),\
+					SPAN_ALERT("You trip over [src]!"))
 					playsound(user.loc, 'sound/impact_sounds/Generic_Hit_2.ogg', 15, 1, -3)
 					user.set_loc(T)
 					if (!user.hasStatus("weakened"))
@@ -532,8 +531,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 					continue
 				stuffed = TRUE
 				var/type_name = draggable_types[drag_type]
-				user.visible_message("<span class='notice'>[user] begins quickly stuffing [type_name] into [src]!</span>",\
-				"<span class='notice'>You begin quickly stuffing [type_name] into [src]!</span>")
+				user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing [type_name] into [src]!"),\
+				SPAN_NOTICE("You begin quickly stuffing [type_name] into [src]!"))
 				var/staystill = user.loc
 				for (var/obj/thing in view(1,user))
 					if(!istype(thing, drag_type))
@@ -563,8 +562,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				if(check_if_enterable(O) && in_interact_range(user, src) && in_interact_range(user, O))
 					O.set_loc(T)
 					if (user != O)
-						user.visible_message("<span class='alert'>[user] stuffs [O] into [src]!</span>",\
-						"<span class='alert'>You stuff [O] into [src]!</span>")
+						user.visible_message(SPAN_ALERT("[user] stuffs [O] into [src]!"),\
+						SPAN_ALERT("You stuff [O] into [src]!"))
 					SPAWN(0.5 SECONDS)
 						if (src.open)
 							src.close()
@@ -625,7 +624,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			flick(src.opening_anim,src)
 
 		if(entangled && !entangleLogic && !entangled.can_close())
-			visible_message("<span class='alert'>It won't budge!</span>")
+			visible_message(SPAN_ALERT("It won't budge!"))
 			return 0
 
 		if(entangled && !entangleLogic)
@@ -651,20 +650,20 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (!src.open)
 			return 0
 		if (src._health <= 0)
-			visible_message("<span class='alert'>[src] can't close; it's been smashed open!</span>")
+			visible_message(SPAN_ALERT("[src] can't close; it's been smashed open!"))
 			return 0
 		if (src.pried_open)
-			visible_message("<span class='alert'>[src] can't close; the prying broke its hinges!</span>")
+			visible_message(SPAN_ALERT("[src] can't close; the prying broke its hinges!"))
 			return 0
 		if (!src.can_close())
-			visible_message("<span class='alert'>[src] can't close; looks like it's too full!</span>")
+			visible_message(SPAN_ALERT("[src] can't close; looks like it's too full!"))
 			return 0
 		if (!src.intact_frame())
-			visible_message("<span class='alter'>[src] can't close; the door is completely bend out of shape!</span>")
+			visible_message(SPAN_ALERT("[src] can't close; the door is completely bend out of shape!"))
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_open())
-			visible_message("<span class='alert'>It won't budge!</span>")
+			visible_message(SPAN_ALERT("It won't budge!"))
 			return 0
 		if (!is_short)
 			src.set_density(1)
@@ -788,10 +787,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	proc/bust_out()
 		if (src.flip_health)
-			src.visible_message("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
+			src.visible_message(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]."))
 			src.flip_health--
 		if (src.flip_health <= 0)
-			src.visible_message("<span class='alert'>[src] breaks apart!</span>")
+			src.visible_message(SPAN_ALERT("[src] breaks apart!"))
 			src.dump_contents()
 			SPAWN(1 DECI SECOND)
 				var/newloc = get_turf(src)
@@ -800,10 +799,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	proc/weld(var/shut = 0, var/mob/weldman as mob)
 		if (shut)
-			weldman.visible_message("<span class='alert'>[weldman] welds [src] shut.</span>")
+			weldman.visible_message(SPAN_ALERT("[weldman] welds [src] shut."))
 			src.welded = 1
 		else
-			weldman.visible_message("<span class='alert'>[weldman] unwelds [src].</span>") // walt-fuck_you.ogg
+			weldman.visible_message(SPAN_ALERT("[weldman] unwelds [src].")) // walt-fuck_you.ogg
 			src.welded = 0
 		src.UpdateIcon()
 		for (var/mob/M in src.contents)
@@ -887,11 +886,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	mob_flip_inside(var/mob/user)
 		..(user)
 		if (prob(33) && src.can_flip_bust)
-			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
+			user.show_text(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]."))
 			src.bust_out()
 
 /datum/action/bar/icon/storage_disassemble
-	id = "storage_disassemble"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 20
 	icon = 'icons/obj/items/tools/wrench.dmi'
@@ -927,12 +925,13 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	onStart()
 		..()
 		playsound(the_storage, 'sound/items/Ratchet.ogg', 50, TRUE)
-		owner.visible_message("<span class='notice'>[owner] begins taking apart [the_storage].</span>")
+		owner.visible_message(SPAN_NOTICE("[owner] begins taking apart [the_storage]."))
 
 	onEnd()
 		..()
 		playsound(the_storage, 'sound/items/Deconstruct.ogg', 50, TRUE)
-		owner.visible_message("<span class='notice'>[owner] takes apart [the_storage].</span>")
+		owner.visible_message(SPAN_NOTICE("[owner] takes apart [the_storage]."))
+		the_storage.dump_contents(owner)
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
 		if (the_storage.material)
 			I.setMaterial(the_storage.material)

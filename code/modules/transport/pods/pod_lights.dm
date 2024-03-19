@@ -12,7 +12,7 @@
 	// base class for pod lights
 
 	activate()
-		..()
+		return ..()
 
 	deactivate()
 		..()
@@ -22,10 +22,11 @@
 
 		// defined to have a single light point
 		activate()
-			..()
-			ship.add_sm_light("pod_lights\ref[src]", list(col_r*255,col_g*255,col_b*255,255), directional = 1)
-			ship.toggle_sm_light(1)
-			return
+			if(..())
+				ship.add_sm_light("pod_lights\ref[src]", list(col_r*255,col_g*255,col_b*255,255), directional = 1)
+				ship.toggle_sm_light(1)
+				return TRUE
+			return FALSE
 
 		deactivate()
 			..()
@@ -57,16 +58,17 @@
 			light4.set_color(col_r, col_g, col_b)
 
 		activate()
-			..()
-			light1.attach(ship, 0, 0)	// attach bottom left
-			light2.attach(ship, 0, 2)	// attach top left
-			light3.attach(ship, 2, 2)	// attach top right
-			light4.attach(ship, 2, 0)	// attach bottom right
-			light1.enable()
-			light2.enable()
-			light3.enable()
-			light4.enable()
-			return
+			if(..())
+				light1.attach(ship, 0, 0)	// attach bottom left
+				light2.attach(ship, 0, 2)	// attach top left
+				light3.attach(ship, 2, 2)	// attach top right
+				light4.attach(ship, 2, 0)	// attach bottom right
+				light1.enable()
+				light2.enable()
+				light3.enable()
+				light4.enable()
+				return TRUE
+			return FALSE
 
 		deactivate()
 			..()
@@ -89,9 +91,10 @@
 
 
 	activate()
-		..()
-		weeoo()
-		return
+		if(..())
+			weeoo()
+			return TRUE
+		return FALSE
 
 	deactivate()
 		if (weeoo_in_progress)

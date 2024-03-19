@@ -42,7 +42,7 @@ Alt+Shift+Left Mouse Button = Set a multiplier for matrix randomization value ge
 			if(num_input && num_input > 0)
 				randomization_multiplier = num_input
 			else
-				boutput(usr, "<span class='alert'>Invalid value or canceled input, randomization multiplier remains at [randomization_multiplier].</span>")
+				boutput(usr, SPAN_ALERT("Invalid value or canceled input, randomization multiplier remains at [randomization_multiplier]."))
 			return
 		if(alt) // random matrix
 			using_random = TRUE
@@ -62,7 +62,7 @@ Alt+Shift+Left Mouse Button = Set a multiplier for matrix randomization value ge
 			if(1)
 				color_one_picked = get_color_of_clicked_pixel(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 				if(!color_one_picked)
-					boutput(usr, "<span class='alert'>Couldn't get a color. Probably an issue with how getFlatIcon interacts with target. Try again.</span>")
+					boutput(usr, SPAN_ALERT("Couldn't get a color. Probably an issue with how getFlatIcon interacts with target. Try again."))
 					return
 				busy = TRUE
 				color_one_mapped_to = get_color_from_user_input(color_one_picked, "Choose a color to map into.")
@@ -70,7 +70,7 @@ Alt+Shift+Left Mouse Button = Set a multiplier for matrix randomization value ge
 			if(2)
 				color_two_picked = get_color_of_clicked_pixel(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 				if(!color_two_picked)
-					boutput(usr, "<span class='alert'>Couldn't get a color. Probably an issue with how getFlatIcon interacts with target. Try again.</span>")
+					boutput(usr, SPAN_ALERT("Couldn't get a color. Probably an issue with how getFlatIcon interacts with target. Try again."))
 					return
 				busy = TRUE
 				color_two_mapped_to = get_color_from_user_input(color_two_picked, "Choose a color to map into.")
@@ -78,14 +78,14 @@ Alt+Shift+Left Mouse Button = Set a multiplier for matrix randomization value ge
 			if(3)
 				color_three_picked = get_color_of_clicked_pixel(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 				if(!color_three_picked)
-					boutput(usr, "<span class='alert'>Couldn't get a color. Probably an issue with how getFlatIcon interacts with target. Try again.</span>")
+					boutput(usr, SPAN_ALERT("Couldn't get a color. Probably an issue with how getFlatIcon interacts with target. Try again."))
 					return
 				busy = TRUE
 				color_three_mapped_to = get_color_from_user_input(color_three_picked, "Choose a color to map into.")
 				busy = FALSE
 				calculated_matrix = calculate_color_matrix()
 				if(!calculated_matrix)
-					boutput(usr, "<span class='alert'>Original color inputs aren't linearly independent, couldn't calculate matrix. Try again with different inputs. Reset with ctrl+leftclick or tweak manually by rightclicking the buildmode icon.</span>")
+					boutput(usr, SPAN_ALERT("Original color inputs aren't linearly independent, couldn't calculate matrix. Try again with different inputs. Reset with ctrl+leftclick or tweak manually by rightclicking the buildmode icon."))
 				else
 					boutput(usr, "Calculated color matrix: <br>[json_encode(calculated_matrix)]")
 			else // matrix should be ready, trying to apply
@@ -147,7 +147,7 @@ Alt+Shift+Left Mouse Button = Set a multiplier for matrix randomization value ge
 		if(!calculated_matrix)
 			calculated_matrix = calculate_color_matrix()
 			if(!calculated_matrix)
-				boutput(usr, "<span class='alert'>Original color inputs aren't linearly independent, couldn't calculate matrix. Try again with different inputs. Reset with ctrl+leftclick or tweak manually by rightclicking the buildmode icon.</span>")
+				boutput(usr, SPAN_ALERT("Original color inputs aren't linearly independent, couldn't calculate matrix. Try again with different inputs. Reset with ctrl+leftclick or tweak manually by rightclicking the buildmode icon."))
 				return
 			else
 				boutput(usr, "Calculated color matrix: <br>[json_encode(calculated_matrix)]")
@@ -193,7 +193,7 @@ Alt+Shift+Left Mouse Button = Set a multiplier for matrix randomization value ge
 		if (stage == 4)
 			calculated_matrix = calculate_color_matrix()
 			if(!calculated_matrix)
-				boutput(usr, "<span class='alert'>Original color inputs aren't linearly independent, couldn't calculate matrix. Try again with different inputs. Reset with ctrl+leftclick or tweak manually by rightclicking the buildmode icon.</span>")
+				boutput(usr, SPAN_ALERT("Original color inputs aren't linearly independent, couldn't calculate matrix. Try again with different inputs. Reset with ctrl+leftclick or tweak manually by rightclicking the buildmode icon."))
 				return
 			else
 				boutput(usr, "Calculated color matrix: <br>[json_encode(calculated_matrix)]")

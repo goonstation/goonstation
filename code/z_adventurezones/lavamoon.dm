@@ -557,10 +557,11 @@ var/sound/iomoon_alarm_sound = null
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "magic"
 
-	pickup(mob/user)
+	attack_hand(mob/user)
 		var/mob/living/carbon/human/H = user
 		if(istype(H))
 			boutput(user, "<i><b><font face = Tempus Sans ITC>EI NATH</font></b></i>")
+			logTheThing(LOG_COMBAT, H, "Becomes unkillable via Shield of Souls (unkill_shield))")
 
 			//EI NATH!!
 			elecflash(user,radius = 2, power = 6)
@@ -569,9 +570,11 @@ var/sound/iomoon_alarm_sound = null
 			H.setStatus("maxhealth-", null, -90)
 			H.gib(1)
 			qdel(src)
+		else
+			. = ..()
 
 //Clothing & Associated Equipment
-/obj/item/clothing/suit/rad/iomoon
+/obj/item/clothing/suit/hazard/rad/iomoon
 	name = "FB-8 Environment Suit"
 	desc = "A rather old-looking suit designed to guard against extreme heat and radiation."
 	icon_state = "rad_io"
@@ -595,7 +598,7 @@ var/sound/iomoon_alarm_sound = null
 	icon_state = "syndicate"
 	icon_opened = "syndicate-open"
 	icon_closed = "syndicate"
-	spawn_contents = list(/obj/item/clothing/suit/rad/iomoon,\
+	spawn_contents = list(/obj/item/clothing/suit/hazard/rad/iomoon,\
 	/obj/item/clothing/head/rad_hood/iomoon)
 
 /obj/machinery/light/small/iomoon
@@ -706,7 +709,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands())
 				return
 
-			user.visible_message("<span class='alert'>[user] presses [src].</span>", "<span class='alert'>You press [src].</span>")
+			user.visible_message(SPAN_ALERT("[user] presses [src]."), SPAN_ALERT("You press [src]."))
 			if (b_pressed)
 				boutput(user, "Nothing happens.")
 				return
@@ -734,7 +737,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				return
 
 			user.lastattacked = src
-			user.visible_message("<span class='alert'><b>[user] bonks [src] with [I]!</b></span>","<span class='alert'><b>You hit [src] with [I]!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] bonks [src] with [I]!</b>"),SPAN_ALERT("<b>You hit [src] with [I]!</b>"))
 			if (iomoon_blowout_state == 0)
 				playsound(src.loc, 'sound/machines/lavamoon_alarm1.ogg', 70,0)
 				event_iomoon_blowout()
@@ -749,7 +752,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (src.health <= 0 && src.functional)
 				src.icon_state = "bot_spawner_dead"
 				src.functional = FALSE
-				src.visible_message("<span class='alert'>[src] shuts down. Forever.</span>")
+				src.visible_message(SPAN_ALERT("[src] shuts down. Forever."))
 				return
 
 
@@ -762,13 +765,13 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			src.icon_state = "bot_spawner_start"
 			SPAWN(0.7 SECONDS)
 				src.icon_state = "bot_spawner_active"
-			src.visible_message("<span class='alert'>[src] begins to whirr ominously!</span>")
+			src.visible_message(SPAN_ALERT("[src] begins to whirr ominously!"))
 			SPAWN(2 SECONDS)
 				if (health <= 0)
 					src.icon_state = "bot_spawner_dead"
 					return
 				if(prob(50)) //cheese reduction
-					src.visible_message("<span class='alert'>[src] produces a terrifying vibration!</span>")
+					src.visible_message(SPAN_ALERT("[src] produces a terrifying vibration!"))
 					for(var/atom/A in orange(3, src))
 						if(!(ismob(A) || iscritter(A))) //only target inanimate objects mostly
 							A.ex_act(1)
@@ -784,7 +787,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					new /mob/living/critter/robotic/repairbot/security (src.loc)
 				max_bots--
 
-				src.visible_message("<span class='alert'>[src] plunks out a robot! Oh dear!</span>")
+				src.visible_message(SPAN_ALERT("[src] plunks out a robot! Oh dear!"))
 				makingbot = FALSE
 
 			return
@@ -848,7 +851,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			else
 				src.health -= I.force * 0.5
 
-			user.visible_message("<span class='alert'><b>[user] bonks [src] with [I]!</b></span>","<span class='alert'><b>You hit [src] with [I]!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] bonks [src] with [I]!</b>"),SPAN_ALERT("<b>You hit [src] with [I]!</b>"))
 			if (src.health <= 0)
 				death()
 				return
@@ -879,11 +882,11 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			user.lastattacked = src
 			if (user.a_intent == "harm")
 				src.health -= rand(1,2) * 0.5
-				user.visible_message("<span class='alert'><b>[user]</b> punches [src]!</span>", "<span class='alert'>You punch [src]![prob(25) ? " It's about as effective as you would expect!" : null]</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> punches [src]!"), SPAN_ALERT("You punch [src]![prob(25) ? " It's about as effective as you would expect!" : null]"))
 				playsound(src.loc, "punch", 50, 1)
 
 			else
-				src.visible_message("<span class='alert'><b>[user]</b> pets [src]!  For some reason!</span>")
+				src.visible_message(SPAN_ALERT("<b>[user]</b> pets [src]!  For some reason!"))
 
 		bullet_act(var/obj/projectile/P)
 
@@ -1512,13 +1515,13 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (istype(I))
 			if (icon_state == initial(icon_state) && I.keytype == src.locktype)
 				src.icon_state += "-active"
-				user.visible_message("<span class='alert'>[user] plugs [I] into [src]!</span>", "You pop [I] into [src].")
+				user.visible_message(SPAN_ALERT("[user] plugs [I] into [src]!"), "You pop [I] into [src].")
 				playsound(src.loc, 'sound/effects/syringeproj.ogg', 50, 1)
 				user.drop_item()
 				I.dispose()
 				src.activate()
 			else
-				boutput(user, "<span class='alert'>It won't fit!</span>")
+				boutput(user, SPAN_ALERT("It won't fit!"))
 
 		else
 			..()
@@ -1571,7 +1574,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0 || !user.can_use_hands() || !ishuman(user))
 			return
 
-		user.visible_message("<span class='alert'>[user] presses [src].</span>", "<span class='alert'>You press [src].</span>")
+		user.visible_message(SPAN_ALERT("[user] presses [src]."), SPAN_ALERT("You press [src]."))
 		return toggle()
 
 	proc/toggle()

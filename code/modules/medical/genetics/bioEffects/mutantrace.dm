@@ -1,6 +1,6 @@
 /datum/bioEffect/mutantrace
 	name = "Saurian Genetics"
-	desc = "Enables vestigal non-mammal traits in the subject's body."
+	desc = "Enables vestigial non-mammal traits in the subject's body."
 	id = "lizard"
 	mutantrace_option = "Lizard"
 	effectType = EFFECT_TYPE_MUTANTRACE
@@ -65,7 +65,7 @@
 
 /datum/bioEffect/mutantrace/ithillid
 	name = "Aquatic Genetics"
-	desc = "Re-enables ancient vestigal genes in the subject's body."
+	desc = "Re-enables ancient vestigial genes in the subject's body."
 	id = "ithillid"
 	mutantrace_option = "Squid"
 	mutantrace_path = /datum/mutantrace/ithillid
@@ -75,7 +75,7 @@
 
 /datum/bioEffect/mutantrace/roach
 	name = "Blattodean Genetics"
-	desc = "Re-enables ancient vestigal genes in the subject's body."
+	desc = "Re-enables ancient vestigial genes in the subject's body."
 	id = "roach"
 	mutantrace_option = "Roach"
 	mutantrace_path = /datum/mutantrace/roach
@@ -96,7 +96,7 @@
 
 /datum/bioEffect/mutantrace/monkey
 	name = "Primal Genetics"
-	desc = "Enables and exaggerates vestigal ape traits."
+	desc = "Enables and exaggerates vestigial ape traits."
 	id = "monkey"
 	mutantrace_option = "Monkey"
 	mutantrace_path = /datum/mutantrace/monkey
@@ -107,7 +107,7 @@
 
 /datum/bioEffect/mutantrace/seamonkey
 	name = "Aquatic Primal Genetics"
-	desc = "Enables and exaggerates vestigal aquatic ape traits."
+	desc = "Enables and exaggerates vestigial aquatic ape traits."
 	id = "seamonkey"
 	mutantrace_option = "Seamonkey"
 	mutantrace_path = /datum/mutantrace/monkey/seamonkey

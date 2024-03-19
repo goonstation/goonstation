@@ -1,5 +1,3 @@
-/obj/effect/event_handler_flags = IMMUNE_MANTA_PUSH //mbc dont know where to put this because we have no master effects file lol lets leave it here, maybe someone wil clean up later >:)
-
 proc/BeginSpacePush(var/atom/movable/A)
 	if (!(A.temp_flags & SPACE_PUSHING))
 		spacePushList += A
@@ -63,7 +61,7 @@ proc/EndSpacePush(var/atom/movable/A)
 					prob_slip = round(prob_slip)
 					if (prob_slip < 5) //next to something, but they might slip off
 						if (prob(prob_slip) )
-							boutput(tmob, "<span class='notice'><B>You slipped!</B></span>")
+							boutput(tmob, SPAN_NOTICE("<B>You slipped!</B>"))
 							tmob.inertia_dir = tmob.last_move
 							step(tmob, tmob.inertia_dir)
 							continue

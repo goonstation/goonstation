@@ -327,8 +327,8 @@
 	spawn_contents = list(/obj/item/storage/box/starter)
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -564,8 +564,8 @@
 	slots = 7
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -618,20 +618,20 @@
 		var/mob/M = usr
 		if (istype(over_object,/obj/item) || istype(over_object,/mob/)) // covers pretty much all the situations we're trying to prevent; namely transferring storage and opening while on ground
 			if(!can_use())
-				boutput(M, "<span class='alert'>You need to wear [src] for that.</span>")
+				boutput(M, SPAN_ALERT("You need to wear [src] for that."))
 				return
 		return ..()
 
 
 	attack_hand(mob/user)
 		if (src.loc == user && !can_use())
-			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
+			boutput(user, SPAN_ALERT("You need to wear [src] for that."))
 			return
 		return ..()
 
 	attackby(obj/item/W, mob/user)
 		if(!can_use())
-			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
+			boutput(user, SPAN_ALERT("You need to wear [src] for that."))
 			return
 		return ..()
 
@@ -674,7 +674,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/wearertargeting/energy_shield/ceshield, list(SLOT_BELT), 0.75, 0.2, FALSE, 5) //blocks 3/4 of incoming damage, up to 200 points, on a full charge, but loses charge quickly while active
+		AddComponent(/datum/component/wearertargeting/energy_shield/ceshield, list(SLOT_BELT), 0.75, 0.3, FALSE, 5) //blocks 3/4 of incoming damage, up to 200 points, on a full charge, but loses charge quickly while active
 		var/obj/item/ammo/power_cell/self_charging/cell = new/obj/item/ammo/power_cell/self_charging{recharge_rate = 3; recharge_delay = 10 SECONDS}
 		AddComponent(/datum/component/cell_holder, cell, FALSE, 100, FALSE)
 		cell.set_loc(null) //otherwise it takes a slot in the belt. aaaaa
@@ -854,13 +854,13 @@
 		spawn_contents = list(/obj/item/barrier, /obj/item/device/detective_scanner, /obj/item/device/ticket_writer)
 
 	ntsc
-		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/baton/ntso, /obj/item/instrument/whistle, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntsc_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSC, not in vendor
+		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/baton/ntso, /obj/item/instrument/whistle/security, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntsc_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSC, not in vendor
 
 	ntso
 		spawn_contents = list(/obj/item/gun/energy/cornicen3, /obj/item/old_grenade/energy_frag = 2, /obj/item/old_grenade/energy_concussion = 2, /obj/item/tank/emergency_oxygen/extended, /obj/item/reagent_containers/food/snacks/donkpocket/warm)
 
 	baton
-		spawn_contents = list(/obj/item/baton, /obj/item/barrier, /obj/item/requisition_token/security/utility)
+		spawn_contents = list(/obj/item/baton, /obj/item/ammo/bullets/stunbaton, /obj/item/barrier, /obj/item/requisition_token/security/utility)
 
 	tasersmg
 		spawn_contents = list(/obj/item/gun/energy/tasersmg, /obj/item/baton, /obj/item/barrier)
@@ -987,12 +987,12 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 
 	equipped(var/mob/user)
 		..()
-		if (!user.mind.get_antagonist(ROLE_WRESTLER))
-			user.add_wrestle_powers(src.fake)
+		if (!user.mind?.get_antagonist(ROLE_WRESTLER))
+			user.add_wrestle_powers(src.fake, TRUE)
 
 	unequipped(var/mob/user)
 		..()
-		if (!user.mind.get_antagonist(ROLE_WRESTLER))
+		if (!user.mind?.get_antagonist(ROLE_WRESTLER))
 			user.remove_wrestle_powers(src.fake)
 
 /obj/item/storage/belt/wrestling/fake

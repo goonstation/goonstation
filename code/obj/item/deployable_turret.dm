@@ -23,7 +23,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 		icon_state = "[src.icon_tag]_deployer"
 
 	get_desc()
-		. = "<br><span class='notice'>It looks [damage_words]</span>"
+		. = "<br>[SPAN_NOTICE("It looks [damage_words]")]"
 
 
 	attack_self(mob/user as mob)
@@ -65,8 +65,8 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	associated_turret = /obj/deployable_turret/syndicate
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -129,7 +129,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	var/deconstructable = TRUE
 	var/can_toggle_activation = TRUE // whether you can enable or disable the turret with a screwdriver, used for map setpiece turrets
 
-	New(var/loc, var/direction)
+	New(loc, direction)
 		..()
 		src.set_dir(direction || src.dir) // don't set the dir if we weren't passed one
 		src.set_initial_angle()
@@ -157,7 +157,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 
 	get_desc(dist)
-		. = "<br><span class='notice'>It looks [src.damage_words]. It is [src.anchored ? "secured to" : "unsecured from"] the floor and powered [src.active ? "on" : "off"].</span>"
+		. = "<br>[SPAN_NOTICE("It looks [src.damage_words]. It is [src.anchored ? "secured to" : "unsecured from"] the floor and powered [src.active ? "on" : "off"].")]"
 
 	proc/set_initial_angle()
 		switch(src.dir)
@@ -216,7 +216,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 		else if (isweldingtool(W) && (src.active))
 			if (src.health >= max_health)
-				user.show_message("<span class='notice'>The turret is already fully repaired!.</span>")
+				user.show_message(SPAN_NOTICE("The turret is already fully repaired!."))
 				return
 
 			if(!W:try_weld(user, 1))
@@ -231,7 +231,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 			if(src.anchored)
 
-				user.show_message("<span class='notice'>Click where you want to aim the turret!</span>")
+				user.show_message(SPAN_NOTICE("Click where you want to aim the turret!"))
 				var/datum/targetable/deployable_turret_aim/A = new()
 				user.targeting_ability = A
 				user.update_cursor()
@@ -251,11 +251,11 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			if(src.can_toggle_activation == TRUE)
 
 				if(!src.anchored)
-					user.show_message("<span class='notice'>The turret is too unstable to fire! Secure it to the ground with a welding tool first!</span>")
+					user.show_message(SPAN_NOTICE("The turret is too unstable to fire! Secure it to the ground with a welding tool first!"))
 					return
 
 				if (!src.deconstructable)
-					user.show_message("<span class='alert'>You can't power the turret off! The controls are too secure!</span>")
+					user.show_message(SPAN_ALERT("You can't power the turret off! The controls are too secure!"))
 					return
 
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -265,7 +265,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			 	 INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 			else
-				user.show_message("<span class='alert'>The activation switch is protected! You can't toggle the power!</span>")
+				user.show_message(SPAN_ALERT("The activation switch is protected! You can't toggle the power!"))
 				return
 
 		else
@@ -302,7 +302,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		if(!(src.quick_deploy_fuel > 0))
 			return
 		src.quick_deploy_fuel--
-		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
+		src.visible_message(SPAN_ALERT("[src]'s quick deploy system engages, automatically securing it!"))
 		playsound(src.loc, 'sound/items/Welder2.ogg', 30, 1)
 		set_projectile()
 		src.anchored = ANCHORED
@@ -462,7 +462,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	icon_tag = "st"
 	associated_deployer = /obj/item/turret_deployer/syndicate
 
-	New()
+	New(loc, direction)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
@@ -516,7 +516,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	projectile_type = /datum/projectile/bullet/revolver_38/lb
 	burst_size = 2
 	fire_rate = 1
-	angle_arc_size = 90
+	angle_arc_size = 60
 	icon_tag = "op"
 	quick_deploy_fuel = 0
 	associated_deployer = /obj/item/turret_deployer/outpost
@@ -563,11 +563,11 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		if (istype(M))
 
 			if(!iswrenchingtool(M.equipped()))
-				boutput(M, "<span class='alert'>You need to be holding a wrench or similar to modify the turret's facing.</span>")
+				boutput(M, SPAN_ALERT("You need to be holding a wrench or similar to modify the turret's facing."))
 				return
 
 			if (!my_turret.deconstructable)
-				boutput(M, "<span class='alert'>You can't modify this turret's facing- it's bolted in place!</span>")
+				boutput(M, SPAN_ALERT("You can't modify this turret's facing- it's bolted in place!"))
 				return
 
 			if(!(get_turf(usr) == src.user_turf))

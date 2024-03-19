@@ -248,7 +248,7 @@
 			if (3)
 				ORE = pick(minor_ores)
 			else
-				// default
+				; // default
 		if (ORE)
 			AST.ore = ORE
 			AST.hardness += ORE.hardness_mod

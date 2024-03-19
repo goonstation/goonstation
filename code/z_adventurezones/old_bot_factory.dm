@@ -274,26 +274,22 @@
 	icon_state = "filecabinet"
 	icon_closed = "filecabinet"
 	icon_opened = "filecabinet-open"
+	icon_redlight = null
+	icon_greenlight = null
 	secure = 2
 
-	update_icon()
-
-		if (src.open)
-			src.locked = 0
-			src.remove_prefixes("locked")
-			src.UpdateName()
-			src.icon_state = src.icon_opened
-		else
+	close()
+		..()
+		if(!src.locked)
 			src.locked = 1
 			src.name_prefix("locked")
 			src.UpdateName()
-			src.icon_state = src.icon_closed
 
 	receive_signal()
 		return
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		boutput(user, "<span class='alert'>You...realize that this is just a key lock, right?  It isn't electronic.  Emags aren't magic.</span>")
+		boutput(user, SPAN_ALERT("You...realize that this is just a key lock, right?  It isn't electronic.  Emags aren't magic."))
 
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/device/key/filing_cabinet))

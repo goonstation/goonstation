@@ -81,10 +81,14 @@
 		if(attack_type == "all")
 			curAttack = pick("lightning","fire","ice","sonic")
 
+		// copied from gun_parent.dm->shoot
+		for(var/mob/viewer in AIviewers(user, null))
+			viewer.show_message(SPAN_ALERT("<B>[user] points [O] at [T]!</B>"), 1, SPAN_ALERT("You hear surge of magic!"), 2)
+
 		switch(curAttack)
 			if("fire")
 				playsound(T, 'sound/effects/bamf.ogg', 50, TRUE, 0)
-				tfireflash(T, powerVars["fireRadius"], powerVars["fireTemp"])
+				fireflash(T, powerVars["fireRadius"], powerVars["fireTemp"])
 
 				ArtifactLogs(user, T, O, "used", "creating fireball on target turf", 0) // Attack wands need special log handling (Convair880).
 

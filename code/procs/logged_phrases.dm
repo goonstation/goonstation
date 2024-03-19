@@ -102,7 +102,8 @@ var/global/datum/phrase_log/phrase_log = new
 			@"admeme",
 			@"sadge",
 			@"\bmorb(?!id)",
-			@"1984"
+			@"1984",
+			@"skibidi"
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
 		var/list/ic_sussy_word_list = list(
@@ -155,10 +156,10 @@ var/global/datum/phrase_log/phrase_log = new
 			phrase = strip_html_tags(phrase)
 		phrase = html_decode(phrase)
 		if(is_sussy(phrase))
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Sussy word - [key_name(user)] [category]: \"[phrase]\"</span>")
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, SPAN_ADMIN("Sussy word - [key_name(user)] [category]: \"[phrase]\""))
 		#ifdef RP_MODE
 		if(category != "ooc" && category != "looc" && category != "deadsay" && is_ic_sussy(phrase))
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Low RP word - [key_name(user)] [category]: \"[phrase]\"</span>")
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, SPAN_ADMIN("Low RP word - [key_name(user)] [category]: \"[phrase]\""))
 		#endif
 		if(is_uncool(phrase))
 			var/ircmsg[] = new()
@@ -167,7 +168,7 @@ var/global/datum/phrase_log/phrase_log = new
 			ircmsg["msg"] = "triggered the uncool word detection: [category]: \"[phrase]\""
 			SPAWN(0)
 				ircbot.export("admin", ircmsg)
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_UNCOOL_PHRASE, "<span class=\"admin\">Uncool word - [key_name(user)] [category]: \"[phrase]\"</span>")
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_UNCOOL_PHRASE, SPAN_ADMIN("Uncool word - [key_name(user)] [category]: \"[phrase]\""))
 			return
 		if(category in src.phrases)
 			if(no_duplicates)

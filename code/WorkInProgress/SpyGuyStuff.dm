@@ -33,7 +33,7 @@ Fibre wire
 			var/obj/machinery/bot/skullbot/B = new /obj/machinery/bot/skullbot
 			B.icon = icon('icons/obj/bots/aibots.dmi', "skullbot-ominous")
 			B.name = "ominous skullbot"
-			boutput(user, "<span class='notice'>You add [W] to [src]. That's neat.</span>")
+			boutput(user, SPAN_NOTICE("You add [W] to [src]. That's neat."))
 			B.set_loc(get_turf(user))
 			qdel(W)
 			qdel(src)
@@ -210,7 +210,7 @@ proc/Create_Tommyname()
 
 /obj/item/gun/energy/tommy_gun
 	name = "Tommy Gun"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "tommygun"
 	m_amt = 4000
 	rechargeable = 1
@@ -225,7 +225,7 @@ proc/Create_Tommyname()
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		for(var/mob/O in AIviewers(user, null))
-			O.show_message("<span class='alert'><B>[user] fires the [src] at [target]!</B></span>", 1, "<span class='alert'>You hear a loud crackling noise.</span>", 2)
+			O.show_message(SPAN_ALERT("<B>[user] fires the [src] at [target]!</B>"), 1, SPAN_ALERT("You hear a loud crackling noise."), 2)
 		sleep(0.1 SECONDS)
 		return ..(target, start, user)
 
@@ -933,11 +933,11 @@ proc/Create_Tommyname()
 		return FALSE
 
 	if(!wire_readied)
-		assailant.show_message("<span class='combat'>You have to have a firm grip of the wire before you can strangle [target]!</span>")
+		assailant.show_message(SPAN_COMBAT("You have to have a firm grip of the wire before you can strangle [target]!"))
 		return FALSE
 
 	if(chokehold)
-		assailant.show_message("<span class='combat'>You're too busy strangling [chokehold.affecting] to strangle someone else!</span>")
+		assailant.show_message(SPAN_COMBAT("You're too busy strangling [chokehold.affecting] to strangle someone else!"))
 		return FALSE
 
 	// TODO: check that target has their back turned
@@ -946,7 +946,7 @@ proc/Create_Tommyname()
 		actions.start(new/datum/action/bar/private/icon/garrote_target(target, src), assailant)
 		return TRUE
 	else
-		assailant.show_message("<span class='combat'>You have to be behind your target or they'll see you coming!</span>")
+		assailant.show_message(SPAN_COMBAT("You have to be behind your target or they'll see you coming!"))
 
 // Actually apply the grab (called via action bar)
 /obj/item/garrote/try_grab(var/mob/living/target, var/mob/living/assailant)
@@ -1001,7 +1001,7 @@ proc/Create_Tommyname()
 	else
 		src.try_upgrade_grab()
 
-/obj/item/garrote/attack(mob/target, mob/user, def_zone, is_special = 0)
+/obj/item/garrote/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (target && target == src.chokehold?.affecting)
 		src.try_upgrade_grab()
 	else
@@ -1011,7 +1011,6 @@ proc/Create_Tommyname()
 /datum/action/bar/private/icon/garrote_target
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED
-	id = "garrote_target"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "neck_over"
 	var/mob/living/target

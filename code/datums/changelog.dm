@@ -64,7 +64,7 @@ so you'll want your single-digit days to have 0s in front
 	if (!text)
 		logDiary("Failed to load changelog.")
 	else
-		html += "<ul class=\"log\"><li class=\"title\"><i class=\"icon-bookmark\"></i> [title] as of [copytext(ORIGIN_REVISION, 1, 8)]</li>" //truncate to 7 long
+		html += "<ul class='log'><li class='title'><i class='icon-bookmark'></i> [title] as of [copytext(ORIGIN_REVISION, 1, 8)]</li>" //truncate to 7 long
 
 		var/list/collapsible_html = list()
 		var/added_collapsible_author = 0
@@ -96,16 +96,16 @@ so you'll want your single-digit days to have 0s in front
 					emoji_labels = copytext(line, 4, 0)
 				if("(t)")
 					if (copytext(line, 4, 13) == "Testmerge") // special case, we don't care about dates
-						html += "<li class=\"date testmerge\">Current Testmerged PRs</li>"
+						html += "<li class='date testmerge'>Current Testmerged PRs</li>"
 						continue
 					if (length(collapsible_html)) // test -1 below because the prior changes would've eaten it
-						html += "<li class=\"collapse-button[tmerge_lines_left > -1 ? " testmerge" : ""]\">Minor Changes</li><div class='collapsible'>[collapsible_html.Join()]</div>"
+						html += "<li class='collapse-button[tmerge_lines_left > -1 ? " testmerge" : ""]'>Minor Changes</li><div class='collapsible'>[collapsible_html.Join()]</div>"
 						collapsible_html.Cut()
 						author = null
 						added_collapsible_author = 0
 						added_author = 0
 					var/day = copytext(line, 4, 7)
-					html += "<li class=\"date\">"
+					html += "<li class='date'>"
 					switch(day)
 						if("sun")
 							html += "Sunday, "
@@ -192,7 +192,7 @@ so you'll want your single-digit days to have 0s in front
 					emoji_labels = null
 				if("(*)")
 					if(!added_author && author)
-						html += "<li class=\"admin[tmerge_lines_left > 0 ? " testmerge" : ""]\"><span><i class=\"icon-check\"></i> [author]</span> updated:"
+						html += "<li class='admin[tmerge_lines_left > 0 ? " testmerge" : ""]'><span><i class='icon-check'></i> [author]</span> updated:"
 						if(emoji_labels)
 							var/list/emoji_parts = splittext(emoji_labels, "|")
 							#ifdef APRIL_FOOLS_2021
@@ -210,10 +210,10 @@ so you'll want your single-digit days to have 0s in front
 							html += "<a target='_blank' href='https://github.com/goonstation/goonstation/pull/[pr_num]' class='pr_link'><span class='pr_number'>#[pr_num]</span>&gt;</a>"
 						html += "</li>"
 						added_author = 1
-					html += "<li[tmerge_lines_left > 0 ? " class=\"testmerge\"" : ""]>[copytext(line, 4, 0)]</li>"
+					html += "<li[tmerge_lines_left > 0 ? " class='testmerge'" : ""]>[copytext(line, 4, 0)]</li>"
 				if("(+)")
 					if(!added_collapsible_author && author)
-						collapsible_html += "<li class=\"admin[tmerge_lines_left > 0 ? " testmerge" : ""]\"><span><i class=\"icon-check\"></i> [author]</span> updated:"
+						collapsible_html += "<li class='admin[tmerge_lines_left > 0 ? " testmerge" : ""]'><span><i class='icon-check'></i> [author]</span> updated:"
 						if(emoji_labels)
 							var/list/emoji_parts = splittext(emoji_labels, "|")
 							collapsible_html += "<span class='emoji'>[emoji_parts[1]]"
@@ -224,12 +224,12 @@ so you'll want your single-digit days to have 0s in front
 							collapsible_html += "<a target='_blank' href='https://github.com/goonstation/goonstation/pull/[pr_num]' class='pr_link'><span class='pr_number'>#[pr_num]</span>&gt;</a>"
 						collapsible_html += "</li>"
 						added_collapsible_author = 1
-					collapsible_html += "<li[tmerge_lines_left > 0 ? " class=\"testmerge\"" : ""]>[copytext(line, 4, 0)]</li>"
+					collapsible_html += "<li[tmerge_lines_left > 0 ? " class='testmerge'" : ""]>[copytext(line, 4, 0)]</li>"
 				else
 					continue
 
 		if(collapsible_html.len)
-			html += "<li class=\"collapse-button[tmerge_lines_left > 0 ? " testmerge" : ""]\">Minor Changes</li><div class='collapsible'>[collapsible_html.Join()]</div>"
+			html += "<li class='collapse-button[tmerge_lines_left > 0 ? " testmerge" : ""]'>Minor Changes</li><div class='collapsible'>[collapsible_html.Join()]</div>"
 		html += "</ul>"
 		return html.Join()
 
@@ -249,8 +249,8 @@ so you'll want your single-digit days to have 0s in front
 <h1>Goonstation 13 <a href="#license"><img alt="Creative Commons CC-BY-NC-SA License" src="[resource("images/changelog/88x31.png")]" /></a></h1>
 
 <ul class="links cf">
-    <li>Official Wiki<br><strong><a target="_blank" href="http://wiki.ss13.co/">https://wiki.ss13.co</a></strong><span></span></li>
-    <li>Official Forums<br><strong><a target="_blank" href="https://forum.ss13.co/">https://forum.ss13.co</a></strong></li>
+    <li>Official Wiki<br><strong><a target="_blank" href="http://wiki.ss13.co/" target="_blank">https://wiki.ss13.co</a></strong><span></span></li>
+    <li>Official Forums<br><strong><a target="_blank" href="https://forum.ss13.co/" target="_blank">https://forum.ss13.co</a></strong></li>
 </ul>"}
 
 	html += changelog_parse(file2text("strings/changelog.txt"), "Changelog", src.testmerge_changes)

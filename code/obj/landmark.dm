@@ -318,6 +318,12 @@ var/global/list/job_start_locations = list()
 /obj/landmark/shuttle_transit
 	name = LANDMARK_SHUTTLE_TRANSIT
 
+///emergency shuttle launch sound origin
+/obj/landmark/shuttle_subwoofer
+	name = LANDMARK_SHUTTLE_SOUND
+	icon = 'icons/turf/areas.dmi'
+	icon_state = "shuttle_transit_sound"
+
 /obj/landmark/telesci // Allowed turf marker for telesci
 	name = LANDMARK_TELESCI
 	icon_state = "telesci"
@@ -328,7 +334,7 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/escape_pod_succ
 	name = LANDMARK_ESCAPE_POD_SUCCESS
-	icon_state = "xp"
+	icon_state = "escape_pod_succ"
 
 	New()
 		src.data = src.dir

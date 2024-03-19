@@ -7,15 +7,15 @@
 
 	for(var/mob/living/M in range(1,center))
 		if (M.bioHolder?.HasEffect("resist_electric") || M.traitHolder?.hasTrait("training_chaplain"))
-			boutput(M, "<span class='notice'>The lightning bolt arcs around you harmlessly.</span>")
+			boutput(M, SPAN_NOTICE("The lightning bolt arcs around you harmlessly."))
 		if (M != caster && iswizard(M))
-			boutput(M, "<span class='notice'>The other wizard's lightning strike refuses to hurt you out of respect to other wizards.</span>")
+			boutput(M, SPAN_NOTICE("The other wizard's lightning strike refuses to hurt you out of respect to other wizards."))
 			continue
 		else if (check_target_immunity(M))
 			continue
 		else
 			M.TakeDamage("chest", 0, 10, 0, DAMAGE_BURN)
-			boutput(M, "<span class='alert'>You feel a strong electric shock!</span>")
+			boutput(M, SPAN_ALERT("You feel a strong electric shock!"))
 			M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10)
 			if (M.loc == center)
 				M.TakeDamage("chest", 0, 25, 0, DAMAGE_BURN)

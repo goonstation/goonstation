@@ -3,7 +3,7 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "p" = (
-/obj/storage/crate/loot/puzzle,
+/obj/storage/crate/loot,
 /turf/variableTurf/clear,
 /area/allowGenerate)
 

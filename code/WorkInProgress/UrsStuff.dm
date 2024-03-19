@@ -51,6 +51,9 @@
 
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled
 
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep
+	var/secret_thing = 0
+
 /mob/living/critter/robotic/bot/engibot
 
 /obj/overlay/simple_light/disco_lighting

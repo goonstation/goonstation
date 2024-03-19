@@ -26,7 +26,7 @@
 		if(holder.owner.wizard_spellpower(src))
 			SPtime = 50
 		else
-			boutput(holder.owner, "<span class='alert'>Your spell doesn't last as long without a staff to focus it!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your spell doesn't last as long without a staff to focus it!"))
 		playsound(holder.owner.loc, 'sound/effects/mag_phase.ogg', 25, 1, -1)
 		spell_invisibility(holder.owner, SPtime, 0, 1)
 
@@ -58,7 +58,7 @@
 
 	if (stop_burning == 1)
 		if (H.getStatusDuration("burning"))
-			boutput(H, "<span class='notice'>The flames sputter out as you phase shift.</span>")
+			boutput(H, SPAN_NOTICE("The flames sputter out as you phase shift."))
 			H.delStatus("burning")
 
 	SPAWN(0)
@@ -363,7 +363,7 @@
 
 		relaymove()
 			..()
-			tfireflash(get_turf(owner), 0, 100)
+			fireflash(get_turf(owner), 0, 100)
 
 
 		dispel()

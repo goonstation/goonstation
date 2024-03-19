@@ -39,7 +39,7 @@
 		if (src.triggering_device:state)
 			//boutput(world, "sending signal")
 			receive_signal()
-		else
+		//else
 			//boutput(world, "not active")
 	..()
 

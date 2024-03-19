@@ -18,6 +18,8 @@
 				continue
 			if (!H.bioHolder || H.bioHolder.HasEffect("resist_electric") || H.traitHolder.hasTrait("unionized")) // a pun!
 				continue
+			if (!isonstationz(get_z(H)))
+				continue
 			eligible_mobs += H
 
 		if (!eligible_mobs.len)

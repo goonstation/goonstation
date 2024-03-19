@@ -3,7 +3,6 @@
 // ----------------------
 /datum/action/invisibility
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "invisibility"
 	var/icon = 'icons/mob/critter_ui.dmi'
 	var/icon_state = "invisible_over"
 	var/obj/overlay/iicon = null
@@ -73,7 +72,7 @@
 		if (..())
 			return 1
 		disabled = 1
-		boutput(holder.owner, "<span class='notice'>You fade out of sight.</span>")
+		boutput(holder.owner, SPAN_NOTICE("You fade out of sight."))
 		var/datum/action/invisibility/I = new
 		I.owner = holder.owner
 		I.ability = src
@@ -91,7 +90,7 @@
 
 	proc/fade_in()
 		if (holder.owner)
-			boutput(holder.owner, "<span class='alert'>You fade back into sight!</span>")
+			boutput(holder.owner, SPAN_ALERT("You fade back into sight!"))
 			disabled = 0
 			doCooldown()
 			SPAWN(linger_time)

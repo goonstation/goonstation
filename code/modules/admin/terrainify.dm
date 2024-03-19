@@ -52,6 +52,7 @@ var/datum/station_zlevel_repair/station_repair = new
 					var/obj/effects/E = locate(src.weather_effect) in T
 					if(!E)
 						new src.weather_effect(T)
+				T.UpdateOverlays(null, "foreground_parallax_occlusion_overlay")
 
 	proc/clean_up_station_level(replace_with_cars, add_sub, remove_parallax = TRUE)
 		mass_driver_fixup()
@@ -74,10 +75,6 @@ var/datum/station_zlevel_repair/station_repair = new
 		if(add_sub)
 			for_by_tcl(man, /obj/machinery/manufacturer)
 				if(istype(man, /obj/machinery/manufacturer/hangar) && (man.z == Z_LEVEL_STATION))
-					man.add_schematic(/datum/manufacture/sub/engine)
-					man.add_schematic(/datum/manufacture/sub/boards)
-					man.add_schematic(/datum/manufacture/sub/control)
-					man.add_schematic(/datum/manufacture/sub/parts)
 					man.add_schematic(/datum/manufacture/sub/wheels)
 
 	proc/mass_driver_fixup()
@@ -147,10 +144,16 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify
 	var/name
 	var/desc
-	var/additional_options
-	var/additional_toggles
+	var/additional_options = list()
+	var/additional_toggles = list()
 	var/static/datum/terrainify/terrainify_lock
 	var/allow_underwater = FALSE
+	var/syndi_camo_color = null
+
+	New()
+		..()
+		if(length(syndi_camo_color))
+			additional_toggles["Syndi Camo"] = FALSE
 
 	proc/special_repair(list/turf/TS)
 		return FALSE
@@ -184,6 +187,13 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.allows_vehicles = (params["vehicle"] & TERRAINIFY_ALLOW_VEHCILES) == TERRAINIFY_ALLOW_VEHCILES
 
+			if(params["Syndi Camo"] && length(syndi_camo_color))
+				nuke_op_camo_matrix = syndi_camo_color
+
+				var/color_matrix = color_mapping_matrix(nuke_op_color_matrix, nuke_op_camo_matrix)
+				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
+					A.color = color_matrix
+
 			message_admins("[key_name(ui.user)] started Terrainify: [name].")
 			terrainify_lock = src
 			tgui_process.close_uis(ui.src_object)
@@ -199,7 +209,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	proc/handle_mining(params, list/turfs)
 		var/mining = params["Mining"]
-		mining = (mining == "No") ? null : mining
+		mining = (mining == "None") ? null : mining
 		if(mining)
 			var/list/turf/valid_spots = list()
 			for(var/turf/simulated/wall/auto/asteroid/AST in turfs)
@@ -233,7 +243,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	proc/place_prefabs(prefabs_to_place, flags)
 		var/failsafe = 800
 		for (var/n = 1, n <= prefabs_to_place && failsafe-- > 0)
-			var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet)
+			var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
 			if (P)
 				var/maxX = (world.maxx - AST_MAPBORDER)
 				var/maxY = (world.maxy - AST_MAPBORDER)
@@ -276,6 +286,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 	additional_options = list("Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=TRUE)
 
+	New()
+		syndi_camo_color = list(nuke_op_color_matrix[1], "#efc998", nuke_op_color_matrix[3])
+		..()
+
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
 			var/const/ambient_light = "#cfcfcf"
@@ -309,6 +323,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/void
 	name = "Void Station"
 	desc = "Turn space into the unknowable void? Space if filled with the void, inhibited by those departed, and chunks of scaffolding."
+
+	New()
+		syndi_camo_color = list(nuke_op_color_matrix[1], "#a223d2", nuke_op_color_matrix[3])
+		..()
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
@@ -422,6 +440,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 	desc = "Turns space into a swamp"
 	additional_options = list("Rain"=list("Yes","No", "Particles"), "Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
+
+	New()
+		syndi_camo_color = list(nuke_op_color_matrix[1], "#6f7026", nuke_op_color_matrix[3])
+		..()
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
@@ -612,6 +634,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 	additional_options = list("Weather"=list("Snow", "Light Snow", "None"), "Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
 
+	New()
+		syndi_camo_color = list("#50587a", "#bbdbdd", nuke_op_color_matrix[3])
+		..()
+
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
 			var/const/ambient_light = "#222"
@@ -659,12 +685,20 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Forest Station"
 	desc = "Turns space into a lush and wooden place"
 	additional_options = list("Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Spooky"=FALSE)
+
+	New()
+		syndi_camo_color = list(nuke_op_color_matrix[1], "#3d8f29", nuke_op_color_matrix[3])
+		..()
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
-			var/const/ambient_light = "#222"
-			station_repair.station_generator = new/datum/map_generator/forest_generator
+			var/const/ambient_light = "#211"
+
+			if(params["Spooky"])
+				station_repair.station_generator = new/datum/map_generator/forest_generator/dark
+			else
+				station_repair.station_generator = new/datum/map_generator/forest_generator
 
 			if(params["Ambient Light Obj"])
 				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
@@ -688,6 +722,20 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 			handle_mining(params, space)
+
+			if(params["Spooky"])
+				// The following should be removed iff Caustics Parallax #16477 is merged
+				var/list/station_areas = get_accessible_station_areas()
+				for(var/area_name in station_areas)
+					var/area/A = station_areas[area_name]
+					if(!A.occlude_foreground_parallax_layers)
+						A.occlude_foreground_parallax_layers = TRUE
+						for(var/turf/T in get_area_turfs(A))
+							if(T.z == Z_LEVEL_STATION)
+								T.update_parallax_occlusion_overlay()
+								LAGCHECK(LAG_MED)
+
+				ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/foreground/fog, 20 SECONDS)
 
 			logTheThing(LOG_ADMIN, ui.user, "turned space into a forest.")
 			logTheThing(LOG_DIARY, ui.user, "turned space into a forest.", "admin")
@@ -716,7 +764,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/storehouse
 	name = "Storehouse"
 	desc = "Load some nearby storehouse (Run before other Generators!)"
-	additional_toggles = list("Fill Z-Level"=FALSE)
+	additional_toggles = list("Fill Z-Level"=FALSE, "Meaty"=FALSE)
 
 	convert_station_level(params, datum/tgui/ui)
 		if (!..())
@@ -724,13 +772,18 @@ ABSTRACT_TYPE(/datum/terrainify)
 		var/list/turf/space = list()
 		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 			space += S
-		var/datum/map_generator/storehouse_generator/generator = new/datum/map_generator/storehouse_generator
+		var/datum/map_generator/storehouse_generator/generator
+		if(params["Meaty"])
+			generator = new/datum/map_generator/storehouse_generator/meaty
+		else
+			generator = new/datum/map_generator/storehouse_generator
 		station_repair.station_generator = generator
 
 		if(params["Fill Z-Level"])
-			generator.wall_path = /turf/unsimulated/wall/auto/lead/gray
-			generator.floor_path = /turf/unsimulated/floor/industrial
-			generator.fill_map()
+			if(!(params["Meaty"]))
+				generator.wall_path = /turf/unsimulated/wall/auto/lead/gray
+				generator.floor_path = /turf/unsimulated/floor/industrial
+			generator.fill_map_bsp()
 		else
 			generator.generate_map()
 
@@ -738,7 +791,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 		turfs_to_clear += station_repair.get_mass_driver_turfs()
 		generator.clear_walls(turfs_to_clear)
 
-		generator.generate_terrain(space, reuse_seed=TRUE)
+		generator.generate_terrain(space, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
 
 		logTheThing(LOG_ADMIN, ui.user, "added some storehouses to space.")
 		logTheThing(LOG_DIARY, ui.user, "added some storehouses to space.", "admin")

@@ -173,6 +173,7 @@
 			src.network3.dispose()
 			src.network3 = null
 		src.node3 = null
+	UpdateIcon()
 
 /obj/machinery/atmospherics/trinary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == src.node1)

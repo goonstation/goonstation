@@ -156,7 +156,7 @@
 	proximity_act()
 		..()
 		if(prob(40))
-			src.visible_message("<span class='alert'><B>[src] passes its arm through [target]!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] passes its arm through [target]!</B>"))
 			//playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 			target.change_eye_blurry(10)
 			boutput(target, "<span><B>no no no no no no no no no no no no non&#9617;NO&#9617;NNnNNO</B></span>")
@@ -180,6 +180,7 @@
 
 			else
 				target.vaporize(,1)
+				src.target = null
 
 			maniac_active &= ~2
 			qdel(src)
@@ -478,7 +479,7 @@
 		//some of the death lines are just transliterated normal death lines, because parts of the soviet buddy rom were just copied from the original buds wholesale.
 		var/death_message = pick("A muzhiki-to, muzhiki, kak umirayut!","Malfunction!","Neispravnost'!","I had a good run.")
 		speak(death_message)
-		src.visible_message("<span class='combat'><b>[src] blows apart!</b></span>")
+		src.visible_message(SPAN_COMBAT("<b>[src] blows apart!</b>"))
 		var/turf/T = get_turf(src)
 		if(src.mover)
 			src.mover.master = null

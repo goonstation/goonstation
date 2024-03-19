@@ -173,6 +173,6 @@
 			clock_modes += list("Head of Personnel Quality Score", "Jones Quantity")
 			emagged = TRUE
 
-	attack(mob/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		user.visible_message("[user] dangles the [src] in front of [target]'s face hypnotically! [pick("How silly!", "How goofy!", "How strange!")]")
 		return

@@ -154,7 +154,7 @@
 	if(!src.emagged)
 		if(user)
 			user.show_text("You short out the vocal emitter on [src].", "red")
-		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+		src.visible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 		playsound(src.loc, 'sound/misc/extreme_ass.ogg', 35, 1)
 		src.emagged = 1
 		return 1
@@ -170,9 +170,9 @@
 
 /obj/machinery/bot/buttbot/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/card/emag))
-		//Do not hit the buttbot with the emag tia
+		return // Do not hit the buttbot with the emag tia
 	else
-		src.visible_message("<span class='alert'>[user] hits [src] with [W]!</span>")
+		src.visible_message(SPAN_ALERT("[user] hits [src] with [W]!"))
 		src.health -= W.force * 0.5
 		if(src.health <= 0)
 			src.explode()
@@ -267,7 +267,7 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>")
+	src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"))
 	var/list/throwstuff = list()
 	throwstuff += src.butt
 	throwstuff += src.buttarm
@@ -282,11 +282,11 @@
 		robogibs(get_turf(src))
 		handle_ejectables(get_turf(src), throwstuff)
 		if(buttsploded)
-			src.visible_message("<span class='alert'><B>[src]'s butt shatters into a pile of scrap!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src]'s butt shatters into a pile of scrap!</B>"))
 	else
 		gibs(get_turf(src), throwstuff)
 		if(buttsploded)
-			src.visible_message("<span class='alert'><B>[src]'s butt explodes into gore!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src]'s butt explodes into gore!</B>"))
 
 	qdel(src)
 	return
@@ -309,12 +309,12 @@
 /obj/machinery/bot/buttbot/proc/superfart()
 	src.exploding = 1
 	var/oldtransform = src.transform
-	src.visible_message("<span class='alert'><b>[src]</b>'s exhaust port clogs!</span>")
+	src.visible_message(SPAN_ALERT("<b>[src]</b>'s exhaust port clogs!"))
 	violent_standup_twitch(src)
 	playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 	SPAWN(2 SECONDS)
 		var/jitters = 30
-		src.visible_message("<span class='alert'><b>[src]</b> creaks ominously!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]</b> creaks ominously!"))
 		src.transform *= 1.1
 		var/old_x = src.pixel_x
 		var/old_y = src.pixel_y
@@ -325,7 +325,7 @@
 			sleep(0.1 SECONDS)
 		SPAWN(3 SECONDS)
 			jitters = 30
-			src.visible_message("<span class='alert'><b>[src]</b> bulges!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> bulges!"))
 			src.transform *= 1.1
 			while(jitters-- >= 1)
 				var/amplitude = 5
@@ -336,7 +336,7 @@
 				pixel_y = old_y + rand(-amplitude/3, amplitude/3)
 				sleep(0.1 SECONDS)
 			SPAWN(3 SECONDS)
-				src.visible_message("<span class='alert'><b>[src]</b>'s ass explodes!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b>'s ass explodes!"))
 				playsound(src.loc, 'sound/voice/farts/superfart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.robo_expel_fart_gas(2)
 				var/turf/src_turf = get_turf(src)
@@ -344,7 +344,7 @@
 					src_turf.fluid_react_single("toxic_fart",50,airborne = 1)
 					for(var/mob/living/V in range(get_turf(src),8))
 						shake_camera(V,10,64)
-						boutput(V, "<span class='alert'>You are sent flying!</span>")
+						boutput(V, SPAN_ALERT("You are sent flying!"))
 						V.changeStatus("weakened", 3 SECONDS)
 						var/turf/target = get_edge_target_turf(V, get_dir(src, V))
 						V.throw_at(target, 8, 3, throw_type = THROW_GUNIMPACT)
@@ -353,19 +353,19 @@
 				for (var/obj/item/bible/B in src.loc)
 					go2hell = 1
 					var/turf/oldloc = get_turf(src)
-					src.visible_message("<span class='alert'>[src] blasts its ass all over the bible.<br><b>A mysterious force <u>is not pleased</u>!</b></span>")
+					src.visible_message(SPAN_ALERT("[src] blasts its ass all over the bible.<br><b>A mysterious force <u>is not pleased</u>!</b>"))
 					src.set_loc(pick(get_area_turfs(/area/afterlife/hell/hellspawn)))
-					B.burn_possible = 0 // protect the book
+					B.burn_possible = FALSE // protect the book
 					SPAWN(1 SECOND)
 						if(B)
 							B.burn_possible = initial(B.burn_possible) // But only till the explosion's gone
 					explosion_new(oldloc, oldloc, 1, 1)
 					if(src.butt_fluff == BUTT_ROBOT)
 						robogibs(oldloc)
-						src.visible_message("<span class='alert'><B>[src]'s butt shatters into a pile of scrap!</B></span>")
+						src.visible_message(SPAN_ALERT("<B>[src]'s butt shatters into a pile of scrap!</B>"))
 					else
 						gibs(oldloc)
-						src.visible_message("<span class='alert'><B>[src]'s butt explodes into gore!</B></span>")
+						src.visible_message(SPAN_ALERT("<B>[src]'s butt explodes into gore!</B>"))
 					src.exploding = 0
 					src.no_more_butt_explosions = 1
 					break
@@ -381,10 +381,7 @@
 	if(istype(src, /obj/machinery/bot/buttbot/cyber))
 		playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 	else
-		if(narrator_mode)
-			playsound(src, 'sound/vox/fart.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-		else
-			playsound(src, pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src, pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	var/fart_on_other = 0
 	for (var/atom/A as anything in src.loc)
@@ -393,19 +390,19 @@
 				var/mob/living/M = A
 				if(M == src || !M.lying)
 					continue
-				. = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
+				. = SPAN_ALERT("<B>[src]</B> farts in [M]'s face!")
 				fart_on_other = 1
 				src.fart_memory += A
 				break
 			else if(istype(A,/obj/item/bible))
-				src.visible_message("<span class='alert'>[src] farts on the bible.<br><b>A mysterious force smites [src]!</b></span>")
+				src.visible_message(SPAN_ALERT("[src] farts on the bible.<br><b>A mysterious force smites [src]!</b>"))
 				fart_on_other = 1
 				src.fart_memory += A
 				src.gib()
 				break
 			else if(istype(A,/obj/item/book_kinginyellow))
 				var/obj/item/book_kinginyellow/K = A
-				src.visible_message("<span class='alert'>[src] farts on [A].<br><b>A mysterious force sucks [src] into the book!!</b></span>")
+				src.visible_message(SPAN_ALERT("[src] farts on [A].<br><b>A mysterious force sucks [src] into the book!!</b>"))
 				fart_on_other = 1
 				src.fart_memory += A
 				new/obj/decal/implo(get_turf(src))
@@ -419,13 +416,13 @@
 					continue
 				playsound(M, pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
 				switch(rand(1, 7))
-					if(1) M.visible_message("<span class='emote'><b>[M]</b> suddenly radiates an unwelcoming odor.</span>")
-					if(2) M.visible_message("<span class='emote'><b>[M]</b> is visited by ethereal incontinence.</span>")
-					if(3) M.visible_message("<span class='emote'><b>[M]</b> experiences paranormal gastrointestinal phenomena.</span>")
-					if(4) M.visible_message("<span class='emote'><b>[M]</b> involuntarily telecommutes to the farty party.</span>")
-					if(5) M.visible_message("<span class='emote'><b>[M]</b> is swept over by a mysterious draft.</span>")
-					if(6) M.visible_message("<span class='emote'><b>[M]</b> abruptly emits an odor of cheese.</span>")
-					if(7) M.visible_message("<span class='emote'><b>[M]</b> is set upon by extradimensional flatulence.</span>")
+					if(1) M.visible_message(SPAN_EMOTE("<b>[M]</b> suddenly radiates an unwelcoming odor."))
+					if(2) M.visible_message(SPAN_EMOTE("<b>[M]</b> is visited by ethereal incontinence."))
+					if(3) M.visible_message(SPAN_EMOTE("<b>[M]</b> experiences paranormal gastrointestinal phenomena."))
+					if(4) M.visible_message(SPAN_EMOTE("<b>[M]</b> involuntarily telecommutes to the farty party."))
+					if(5) M.visible_message(SPAN_EMOTE("<b>[M]</b> is swept over by a mysterious draft."))
+					if(6) M.visible_message(SPAN_EMOTE("<b>[M]</b> abruptly emits an odor of cheese."))
+					if(7) M.visible_message(SPAN_EMOTE("<b>[M]</b> is set upon by extradimensional flatulence."))
 				//break deliberately omitted
 
 	if(!fart_on_other)
@@ -464,7 +461,7 @@
 			if(32) . = "<B>[src]</B> farts voraciously."
 			if(33) . = "<B>[src]</B> farts cantankerously."
 			if(34) . = "<B>[src]</B> fart in they own butt. A shameful [src]."
-			if(35) . = "<B>[src]</B> pretends to fart out pure plasma! <span class='alert'><B>Oh you!</B></span>"
+			if(35) . = "<B>[src]</B> pretends to fart out pure plasma! [SPAN_ALERT("<B>Oh you!</B>")]"
 			if(36) . = "<B>[src]</B> pretends to farts out pure oxygen. What the fuck did they eat?"
 			if(37) . = "<B>[src]</B> breaks wind noisily!"
 			if(38) . = "<B>[src]</B> releases gas with the power of the gods! The very station trembles!!"

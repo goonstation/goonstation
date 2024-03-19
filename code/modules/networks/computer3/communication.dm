@@ -245,7 +245,7 @@
 				generate_signal(comm_net_id, "command", "call", "shuttle_id", "emergency", "acc_code", netpass_heads, "reason", call_reason)
 				logTheThing(LOG_ADMIN, usr,  "attempted to call the Emergency Shuttle via COMMaster (reason: [call_reason])")
 				logTheThing(LOG_DIARY, usr, "attempted to call the Emergency Shuttle via COMMaster (reason: [call_reason])", "admin")
-				message_admins("<span class='internal'>[key_name(usr)] attempted to call the Emergency Shuttle to the station via COMMaster</span>")
+				message_admins(SPAN_INTERNAL("[key_name(usr)] attempted to call the Emergency Shuttle to the station via COMMaster"))
 
 			if(MENU_TRANSMIT_TITLE)
 				src.transmit_title = copytext(trim(strip_html(text)), 1, 140)

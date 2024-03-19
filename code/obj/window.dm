@@ -38,6 +38,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	gas_impermeable = TRUE
 	anchored = ANCHORED
 	material_amt = 0.1
+	HELP_MESSAGE_OVERRIDE(null)
 
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -95,7 +96,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			src.layer = map_settings.window_layer_north
 		else if (src.dir == SOUTH && map_settings.window_layer_south)
 			src.layer = map_settings.window_layer_south
-		else if (src.dir in ordinal && map_settings.window_layer_full)
+		else if ((src.dir in ordinal) && map_settings.window_layer_full)
 			src.layer = map_settings.window_layer_full
 		else
 			src.layer = initial(src.layer)
@@ -375,7 +376,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
-		src.visible_message("<span class='alert'><B>[src] was hit by [AM].</B></span>")
+		src.visible_message(SPAN_ALERT("<B>[src] was hit by [AM].</B>"))
 		playsound(src.loc, src.hitsound , 100, 1)
 		if (ismob(AM))
 			damage_blunt(15)
@@ -396,17 +397,17 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		attack_particle(user,src)
 		if (user.a_intent == "harm")
 			if (user.is_hulk())
-				user.visible_message("<span class='alert'><b>[user]</b> punches the window.</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> punches the window."))
 				playsound(src.loc, src.hitsound, 100, 1)
 				src.damage_blunt(10)
 				return
 			else
-				src.visible_message("<span class='alert'><b>[user]</b> beats [src] uselessly!</span>")
+				src.visible_message(SPAN_ALERT("<b>[user]</b> beats [src] uselessly!"))
 				playsound(src.loc, src.hitsound, 100, 1)
 				return
 		else
 			if (ishuman(user))
-				src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
+				src.visible_message(SPAN_ALERT("<b>[user]</b> knocks on [src]."))
 				playsound(src.loc, src.hitsound, 100, 1)
 				SPAWN(-1) //uhhh maybe let's not sleep() an attack_hand. fucky effects up the chain?
 					sleep(0.3 SECONDS)
@@ -468,7 +469,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			var/time = 4 SECONDS
 			if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
 				time = 2 SECONDS
-			SETUP_GENERIC_ACTIONBAR(user, src, time, /obj/window/proc/fix_window, list(W), null, null, "<span class='notice'> [user] repairs \the [src] with \the [W] </span>", null)
+			SETUP_GENERIC_ACTIONBAR(user, src, time, /obj/window/proc/fix_window, list(W), null, null, SPAN_NOTICE(" [user] repairs \the [src] with \the [W] "), null)
 		else
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
@@ -583,7 +584,6 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 /datum/action/bar/icon/deconstruct_window
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "deconstruct_window"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "decon"
 	var/obj/window/the_window
@@ -613,7 +613,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		if(BOUNDS_DIST(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		boutput(owner, "<span class='notice'>Now disassembling [the_window]</span>")
+		boutput(owner, SPAN_NOTICE("Now disassembling \the [the_window]"))
 		playsound(the_window.loc, 'sound/items/Ratchet.ogg', 100, 1)
 
 	onEnd()
@@ -626,7 +626,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			if (!(the_tool in M.equipped_list()))
 				interrupt(INTERRUPT_ALWAYS)
 				return
-		boutput(owner, "<span class='notice'>You dissasembled [the_window]!</span>")
+		boutput(owner, SPAN_NOTICE("You disassemble \the [the_window]!"))
 		var/obj/item/sheet/A = new /obj/item/sheet(get_turf(the_window))
 		if(the_window.material)
 			A.setMaterial(the_window.material)
@@ -641,7 +641,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 	onInterrupt()
 		if (owner)
-			boutput(owner, "<span class='alert'>Deconstruction of [the_window] interrupted!</span>")
+			boutput(owner, SPAN_ALERT("Deconstruction of \the [the_window] interrupted!"))
 		..()
 
 /obj/window/pyro
@@ -692,19 +692,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 /obj/window/bulletproof/pyro
 	icon_state = "rpyro"
-/*
-/obj/window/supernorn
-	icon = 'icons/Testing/newicons/obj/NEWstructures.dmi'
-	dir = 5
 
-	attackby() // TODO: need to be able to smash them, this is a hack
-	rotate()
-		set hidden = 1
-
-	New()
-		for (var/turf/simulated/wall/auto/T in orange(1))
-			T.UpdateIcon()
-*/
 /obj/window/north
 	dir = NORTH
 
@@ -910,7 +898,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 	attack_hand(mob/user)
 		if(!ON_COOLDOWN(user, "glass_tap", 5 SECONDS))
-			src.visible_message("<span class='alert'><b>[user]</b> knocks on [src].</span>")
+			src.visible_message(SPAN_ALERT("<b>[user]</b> knocks on [src]."))
 			playsound(src.loc, src.hitsound, 100, 1)
 			sleep(0.3 SECONDS)
 			playsound(src.loc, src.hitsound, 100, 1)
@@ -1048,10 +1036,10 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 /obj/window/auto/feather/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> [src.flock_id]
-		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+		[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
 /obj/window/auto/feather/proc/repair(resources_available)
 	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
@@ -1096,10 +1084,10 @@ TYPEINFO(/obj/window/feather)
 /obj/window/feather/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> [src.flock_id]
-		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+		[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
 /obj/window/feather/proc/repair(resources_available)
 	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)

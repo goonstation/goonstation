@@ -642,15 +642,15 @@
 "bH" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	density = 1;
 	desc = "An old plasma tank that probably ran out eons ago.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/orange_pipe_tank.dmi';
-	icon_state = "intact";
+	icon_state = "tank-map";
 	name = "depleted plasma tank";
 	tag = ""
 	},
@@ -1086,7 +1086,7 @@
 	name = "factory conveyor belt";
 	pixel_y = 2
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/unsimulated/floor{
 	icon_state = "engine_caution_we"
 	},
@@ -1232,7 +1232,7 @@
 	desc = "An old plasma tank that probably ran out eons ago.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/grey_pipe_tank.dmi';
-	icon_state = "intact";
+	icon_state = "tank-map";
 	name = "depleted plasma tank";
 	tag = ""
 	},

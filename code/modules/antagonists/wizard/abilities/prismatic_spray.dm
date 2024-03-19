@@ -83,7 +83,7 @@
 							P.launch()
 							sleep(0.1 SECONDS)
 		else
-			boutput(holder.owner, "<span class='alert'>Your spell doesn't work without a staff to refract the light!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your spell doesn't work without a staff to refract the light!"))
 			return 1
 
 /datum/targetable/spell/prismatic_spray/admin

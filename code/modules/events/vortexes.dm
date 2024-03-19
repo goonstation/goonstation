@@ -46,5 +46,5 @@
 					Artifact_Spawn(vortexpick)
 				sleep(rand(1, 15))
 
-		message_admins("<span class='internal'>Spawning some vortexes. Source: [source ? "[source]" : "random"]</span>")
+		message_admins(SPAN_INTERNAL("Spawning some vortexes. Source: [source ? "[source]" : "random"]"))
 		logTheThing(LOG_ADMIN, null, "Spawning some vortexes. Source: [source ? "[source]" : "random"]")

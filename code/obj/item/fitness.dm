@@ -37,12 +37,8 @@
 		attack_hand(mob/user)
 			user.lastattacked = src
 			flick("[icon_state]2", src)
-			if (narrator_mode)
-				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
-				playsound(src.loc, 'sound/vox/honk.ogg', 50, 1, -1)
-			else
-				playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
-				playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
+			playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
+			playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
 			user.changeStatus("fitness_stam_regen", 100 SECONDS)
 
 /obj/fitness/stacklifter
@@ -57,7 +53,7 @@
 
 	attack_hand(mob/user)
 		if(in_use)
-			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
+			boutput(user, SPAN_ALERT("Its already in use - wait a bit."))
 			return
 		else
 			in_use = 1
@@ -67,7 +63,7 @@
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			user.visible_message(text("<span class='alert'><B>[user] is [bragmessage]!</B></span>"))
+			user.visible_message(SPAN_ALERT("<B>[user] is [bragmessage]!</B>"))
 			var/lifts = 0
 			while (lifts++ < 6)
 				if (user.loc != src.loc)
@@ -91,7 +87,7 @@
 			var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 			icon_state = "fitnesslifter"
 			user.changeStatus("fitness_stam_regen", 100 SECONDS)
-			boutput(user, "<span class='notice'>[finishmessage]</span>")
+			boutput(user, SPAN_NOTICE("[finishmessage]"))
 
 /obj/fitness/weightlifter
 	name = "Weight Machine"
@@ -105,7 +101,7 @@
 
 	attack_hand(mob/user)
 		if(in_use)
-			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
+			boutput(user, SPAN_ALERT("Its already in use - wait a bit."))
 			return
 		else if(HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE))
 			return
@@ -123,7 +119,7 @@
 			W.anchored = ANCHORED
 			W.layer = MOB_LAYER_BASE+1
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			user.visible_message(text("<span class='alert'><B>[user] is [bragmessage]!</B></span>"))
+			user.visible_message(SPAN_ALERT("<B>[user] is [bragmessage]!</B>"))
 			var/reps = 0
 			user.pixel_y = 5
 			while (reps++ < 6)
@@ -151,5 +147,5 @@
 			var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 			icon_state = "fitnessweight"
 			qdel(W)
-			boutput(user, "<span class='notice'>[finishmessage]</span>")
+			boutput(user, SPAN_NOTICE("[finishmessage]"))
 			user.changeStatus("fitness_stam_max", 100 SECONDS)

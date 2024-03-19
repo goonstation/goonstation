@@ -155,7 +155,7 @@
 	},
 /area/space)
 "hC" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/securearea{
 	desc = "";
 	icon_state = "shock";
@@ -309,11 +309,12 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
+/obj/landmark/shuttle_subwoofer,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
 	name = "steel shuttle bay plating"
 	},
-/area/shuttle_sound_spawn)
+/area/shuttle/arrival/station)
 "nn" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -349,12 +350,10 @@
 	},
 /area/built_zone)
 "op" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Purge Pump";
-	on = 1;
 	tag = "icon-intact_on (NORTH)";
 	target_pressure = 2000
 	},
@@ -529,7 +528,6 @@
 /area/shuttle/arrival/station)
 "vM" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	icon_state = "manifold";
 	level = 2
 	},
 /obj/machinery/light/small/floor/harsh/very,
@@ -581,7 +579,7 @@
 /obj/item/fuel_pellet/cerenkite,
 /obj/item/fuel_pellet/cerenkite,
 /obj/item/clothing/head/rad_hood,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
@@ -1105,7 +1103,6 @@
 "Pa" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
-	icon_state = "intact";
 	level = 2;
 	tag = "icon-intact (NORTHEAST)"
 	},
@@ -1195,7 +1192,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "Sl" = (
-/obj/machinery/atmospherics/pipe/tank/air,
+/obj/machinery/atmospherics/unary/tank/air,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "SE" = (
@@ -1255,7 +1252,6 @@
 "UC" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
-	icon_state = "intact";
 	level = 2;
 	tag = "icon-intact (NORTHWEST)"
 	},

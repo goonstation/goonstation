@@ -7,7 +7,7 @@
 		..()
 		foam_size = input("How many units of fluorosurfactant and water to mix?", "Foam size", 25) as num
 		reagent = input("What reagent to foam? (reagent id)", "Reagent", "lube")
-		boutput(usr, "<span class='notice'>Left click to place trap. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, SPAN_NOTICE("Left click to place trap. Ctrl+click anywhere to finish."))
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if ("left" in pa)

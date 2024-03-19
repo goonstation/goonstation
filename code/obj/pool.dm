@@ -49,7 +49,7 @@
 
 	attack_hand(mob/user)
 		if(in_use)
-			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
+			boutput(user, SPAN_ALERT("Its already in use - wait a bit."))
 			return
 		else
 			in_use = 1
@@ -89,7 +89,7 @@
 			user.pixel_y = 25
 			playsound(user, 'sound/effects/brrp.ogg', 15, TRUE)
 			sleep(0.2 SECONDS)
-			if(range == 1) boutput(user, "<span class='alert'>You slip...</span>")
+			if(range == 1) boutput(user, SPAN_ALERT("You slip..."))
 			user.layer = MOB_LAYER
 			user.buckled = null
 			if (user.targeting_ability == user.chair_flip_ability) //we havent chair flipped, just do normal jump
@@ -97,7 +97,7 @@
 				user:changeStatus("weakened", 2 SECONDS)
 			user.end_chair_flip_targeting()
 			if(suiciding || deadly)
-				src.visible_message("<span class='alert'><b>[user.name] dives headfirst at the [target.name]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[user.name] dives headfirst at the [target.name]!</b>"))
 				SPAWN(0.3 SECONDS) //give them time to land
 					if (user)
 						user.TakeDamage("head", 200, 0)

@@ -191,8 +191,8 @@
 		var/immunity = check_target_immunity(A, source = src)
 		if (immunity)
 			log_shot(src, A, 1)
-			A.visible_message("<b><span class='alert'>The projectile narrowly misses [A]!</span></b>")
-			//A.visible_message("<b><span class='alert'>The projectile thuds into [A] uselessly!</span></b>")
+			A.visible_message(SPAN_ALERT("<b>The projectile narrowly misses [A]!</b>"))
+			//A.visible_message(SPAN_ALERT("<b>The projectile thuds into [A] uselessly!</b>"))
 			//die()
 			return
 
@@ -299,7 +299,7 @@
 	proc/setup()
 		if(QDELETED(src))
 			return
-		if (src.proj_data == null || (xo == 0 && yo == 0) || proj_data.projectile_speed == 0)
+		if (src.proj_data == null)
 			die()
 			return
 
@@ -311,9 +311,9 @@
 
 		var/len = sqrt(src.xo**2 + src.yo**2)
 
-		if (len == 0)
-			die()
-			return
+		if (len == 0 || proj_data.projectile_speed == 0)
+			return //will die on next step before moving
+
 		src.xo = src.xo / len
 		src.yo = src.yo / len
 
@@ -336,6 +336,7 @@
 		transform = null
 		Turn(angle)
 		if (!proj_data.precalculated)
+			src.was_setup = 1
 			return
 		var/speed = internal_speed || proj_data.projectile_speed
 		var/x32 = 0
@@ -379,6 +380,9 @@
 		curr_t = 0
 		src.was_setup = 1
 
+	ex_act(severity)
+		return
+
 	bump(var/atom/A)
 		src.collide(A)
 
@@ -416,6 +420,11 @@
 		src.ticks_until_can_hit_mob--
 		proj_data.tick(src)
 		if (QDELETED(src))
+			return
+
+		if(!was_setup) //if setup failed due to us having no speed or no direction, try to collide with something before dying
+			collide_with_applicable_in_tile(loc)
+			die()
 			return
 
 		var/turf/curr_turf = loc
@@ -704,7 +713,7 @@ ABSTRACT_TYPE(/datum/projectile)
 		var/immunity = check_target_immunity(T) // Point-blank overrides, such as stun bullets (Convair880).
 		if (immunity)
 			log_shot(P, T, 1)
-			T.visible_message("<b><span class='alert'>...but the projectile bounces off uselessly!</span></b>")
+			T.visible_message(SPAN_ALERT("<b>...but the projectile bounces off uselessly!</b>"))
 			P.die()
 			return
 		if (P.proj_data)
@@ -820,13 +829,13 @@ ABSTRACT_TYPE(/datum/projectile)
 		shooter = remote_sound_source
 
 	if (play_shot_sound)
-		if (narrator_mode)
-			playsound(S, 'sound/vox/shoot.ogg', 50, TRUE)
+		var/atom/sound_source = S
+		if(S == get_turf(shooter))
+			sound_source = shooter
+		if (narrator_mode) // yeah sorry I don't have a good way of getting rid of this one
+			playsound(sound_source, 'sound/vox/shoot.ogg', 50, TRUE)
 		else if(DATA.shot_sound && DATA.shot_volume && shooter)
-			playsound(S, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange)
-			if (isobj(shooter))
-				for (var/mob/M in shooter)
-					M << sound(DATA.shot_sound, volume=DATA.shot_volume)
+			playsound(sound_source, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange)
 
 #ifdef DATALOGGER
 	if (game_stats && istype(game_stats))

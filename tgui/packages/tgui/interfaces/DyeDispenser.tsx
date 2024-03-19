@@ -7,9 +7,9 @@
 
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
-import { Stack, Button, Dimmer, ColorBox } from '../components';
+import { Button, ColorBox, Dimmer, Stack } from '../components';
 import { ColorSelector } from './ColorPickerModal';
-import { HsvaColor, hexToHsva, hsvaToHex } from 'common/color';
+import { hexToHsva, HsvaColor, hsvaToHex } from 'common/color';
 
 type DyeDispenserParams = {
   bottle: boolean,

@@ -16,7 +16,7 @@
 				targpick = pick(random_floor_turfs)
 				var/obj/portal/P = new /obj/portal/wormhole
 				P.set_loc(holepick)
-				P.target = targpick
+				P.set_target(targpick)
 				SPAWN(rand(18 SECONDS, 32 SECONDS))
 					qdel(P)
 				if (rand(1,1000) == 1)

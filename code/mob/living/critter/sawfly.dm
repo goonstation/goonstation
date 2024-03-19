@@ -51,7 +51,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable but it works
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_base, "robot_health_slow_immunity") //prevents them from having movespeed slowdown when injured
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity") //prevents them from having movespeed slowdown when injured
 		START_TRACKING
 
 	setup_healths()
@@ -109,7 +109,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 	emp_act() // allows armory's pulse rifles to wreck their shit
 		if(prob(80))
-			src.visible_message("<span class='combat'>[src] buzzes oddly and starts to spiral out of control!</span>")
+			src.visible_message(SPAN_COMBAT("[src] buzzes oddly and starts to spiral out of control!"))
 			SPAWN(2 SECONDS)
 				src.blowup()
 		else
@@ -130,7 +130,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 				if(ai && (ai.target != user))
 					src.lastattacker = user
 					src.retaliate = TRUE
-					src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify [user] as a high priority threat!</b></span>")
+					src.visible_message(SPAN_ALERT("<b>[src]'s targeting subsystems identify [user] as a high priority threat!</b>"))
 					playsound(src, pick(src.beeps), 40, 1)
 					ai.interrupt()
 
@@ -152,7 +152,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 			if(prob(22)) // congrats, little guy! You're special! You're going to blow up!
 				if(prob(70)) //decide whether or not people get a warning
-					src.visible_message("<span class='combat'>[src] makes a[pick(" gentle", "n odd", " slight", " weird", " barely audible", " concerning", " quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")]...<span>")
+					src.visible_message(SPAN_COMBAT("[src] makes a[pick(" gentle", "n odd", " slight", " weird", " barely audible", " concerning", " quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")]..."))
 				SPAWN(rand(1, 5) SECONDS)
 					src?.blowup()
 
@@ -175,11 +175,11 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 	proc/blowup() //chance to activate when they die and get EMP'd
 		if(prob(66))
-			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!<span>")
-			fireflash(src,1,TRUE)
+			src.visible_message(SPAN_COMBAT("[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!"))
+			fireflash(src,1, checkLos = FALSE)
 		else
-			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!<span>")
-			fireflash(src,0,TRUE)
+			src.visible_message(SPAN_COMBAT("[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!"))
+			fireflash(src,0, checkLos = FALSE)
 			explosion(src, get_turf(src), 0, 0.75, 1.5, 3)
 			qdel(src)
 
@@ -195,7 +195,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 					src.foldself()
 			else
 				if(prob(50)&& !isdead(src))
-					boutput(user, "<span class='alert'>In your attempt to pet [src], you cut yourself on it's blades!</span>")
+					boutput(user, SPAN_ALERT("In your attempt to pet [src], you cut yourself on it's blades!"))
 				random_brute_damage(user, 7)
 				take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
 		else //harm or shove intent is an attack
@@ -221,7 +221,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 				continue
 			if(C.mind?.special_role && issawflybuddy(C))
 				if(!(C.weakref in src.friends))
-					boutput(C, "<span class='alert'>[src]'s IFF system silently flags you as an ally! </span>")
+					boutput(C, SPAN_ALERT("[src]'s IFF system silently flags you as an ally! "))
 					src.friends += get_weakref(C)
 				continue
 			if(C.job in priority_target_jobs)

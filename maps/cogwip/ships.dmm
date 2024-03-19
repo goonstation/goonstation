@@ -1539,7 +1539,8 @@
 /area/diner/tug)
 "eA" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -1646,7 +1647,8 @@
 /area/diner/tug)
 "eP" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -3856,7 +3858,7 @@
 /obj/storage/closet,
 /obj/item/storage/box/trash_bags,
 /obj/item/clothing/head/bio_hood,
-/obj/item/clothing/suit/bio_suit,
+/obj/item/clothing/suit/hazard/bio_suit,
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/item/caution,
 /obj/item/caution,
@@ -4158,7 +4160,8 @@
 /area/space)
 "lC" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -4170,13 +4173,15 @@
 /area/space)
 "lE" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
 "lF" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -4191,7 +4196,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -4216,7 +4222,8 @@
 /area/space)
 "lL" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -4224,7 +4231,8 @@
 /area/space)
 "lM" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -4237,7 +4245,8 @@
 /area/space)
 "lO" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -4255,7 +4264,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -4271,7 +4281,8 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -4281,13 +4292,15 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
 "lU" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -4296,7 +4309,8 @@
 /area/space)
 "lV" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -4317,7 +4331,8 @@
 /area/space)
 "lZ" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -4326,7 +4341,8 @@
 "ma" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -4530,7 +4546,9 @@
 /area/space)
 "my" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/space,
 /area/space)
 "mz" = (
@@ -4642,7 +4660,8 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -4652,7 +4671,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -4662,13 +4682,15 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
 "mR" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3_space"
@@ -4790,7 +4812,8 @@
 /area/space)
 "nd" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1
+	dir = 1;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -4826,7 +4849,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 6;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -4834,7 +4858,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 5;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/shuttleengine{
 	desc = "An electromagnetic clamping mechanism for hauling large cargo containers.";
@@ -4856,7 +4881,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 9;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/shuttleengine{
 	desc = "An electromagnetic clamping mechanism for hauling large cargo containers.";
@@ -4871,7 +4897,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 10;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -4879,7 +4906,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 9;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -4906,7 +4934,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 5;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -4936,7 +4965,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 10;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -4944,12 +4974,14 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 9;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for hauling oversized crates.";
 	dir = 9;
-	name = "actuating frame"
+	name = "actuating frame";
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -4970,7 +5002,8 @@
 	},
 /obj/item/cable_coil/cut,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8
@@ -4991,7 +5024,9 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/space,
 /area/space)
 "nD" = (
@@ -5236,7 +5271,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -5263,7 +5299,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/critter/gunbot/drone/buzzdrone,
 /turf/space,
@@ -5563,7 +5600,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/shuttle{
@@ -5594,7 +5631,8 @@
 /area/space)
 "pl" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/shuttle{
@@ -5622,7 +5660,8 @@
 /area/space)
 "po" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -5710,7 +5749,8 @@
 /area/space)
 "pz" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/indestructible/shuttle_corner{
@@ -6282,7 +6322,8 @@
 "rb" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/floatingtiles{
 	dir = 1
@@ -6292,7 +6333,8 @@
 "rc" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -6309,7 +6351,8 @@
 /obj/lattice,
 /obj/decal/cleanable/machine_debris,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/floatingtiles{
 	icon_state = "floattiles4"
@@ -6370,7 +6413,8 @@
 /obj/lattice,
 /obj/decal/cleanable/machine_debris,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -6378,7 +6422,8 @@
 /obj/lattice,
 /obj/decal/cleanable/machine_debris,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/item/raw_material/shard/glass,
 /turf/space,
@@ -6438,11 +6483,13 @@
 /area/space)
 "rx" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	tag = "icon-intact (NORTH)"
+	tag = "icon-intact (NORTH)";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/shuttlebay,
@@ -6615,7 +6662,9 @@
 /area/space)
 "rN" = (
 /obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi'
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	color = "b4b4b4";
+	icon_state = "vent-map"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -6663,12 +6712,12 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "rQ" = (
-/obj/decal/fakeobjects{
+/obj/decal/fakeobjects/pipe{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "crusty vent"
 	},
 /obj/decal/fakeobjects{
@@ -6694,12 +6743,12 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/space)
 "rS" = (
-/obj/decal/fakeobjects{
+/obj/decal/fakeobjects/pipe{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact-f";
+	icon_state = "vent-map";
 	name = "crusty vent"
 	},
 /obj/decal/cleanable/dirt,
@@ -6712,14 +6761,15 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	name = "rusted vent"
+	name = "rusted vent";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/space)
 "rU" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/shuttlebay,
@@ -6727,18 +6777,19 @@
 "rV" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	tag = "icon-intact (SOUTHWEST)"
+	tag = "icon-intact (SOUTHWEST)";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/shuttlebay,
 /area/space)
 "rW" = (
-/obj/decal/fakeobjects{
+/obj/decal/fakeobjects/pipe{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "crusty vent"
 	},
 /obj/decal/cleanable/dirt,
@@ -6781,7 +6832,8 @@
 "sc" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	tag = "icon-intact (NORTH)"
+	tag = "icon-intact (NORTH)";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/shuttle{
@@ -6824,11 +6876,12 @@
 /area/space)
 "sg" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/space)
@@ -9863,7 +9916,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "pipe";
-	pixel_y = 0
+	pixel_y = 0;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -9876,7 +9930,8 @@
 /area/space)
 "zH" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -9911,7 +9966,8 @@
 /area/space)
 "zM" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -9956,7 +10012,7 @@
 "zQ" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 2;
-
+	
 	},
 /turf/simulated/floor/caution/north,
 /area/space)
@@ -9970,7 +10026,7 @@
 "zS" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /turf/simulated/shuttle/wall{
 	dir = 6;
@@ -9994,7 +10050,8 @@
 /area/space)
 "zU" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -10339,7 +10396,7 @@
 "AT" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8;
-
+	
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4;
@@ -10676,10 +10733,12 @@
 /area/space)
 "Jv" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 1
+	dir = 1;
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt,
 /obj/storage/crate{

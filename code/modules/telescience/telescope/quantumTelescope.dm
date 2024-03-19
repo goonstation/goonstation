@@ -35,7 +35,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 		boot_if_away()
 
 		if(using && using != user)
-			boutput(user, "<span class='alert'>Somebody is already using that machine.</span>")
+			boutput(user, SPAN_ALERT("Somebody is already using that machine."))
 			return
 
 		using = user

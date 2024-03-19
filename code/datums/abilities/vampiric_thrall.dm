@@ -20,11 +20,11 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.UpdateIcon()
-				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
+				boutput(usr, SPAN_NOTICE("Please press a number to bind this ability to..."))
 				return
 
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
+			boutput(owner.holder.owner, SPAN_ALERT("You can't use this spell here."))
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -44,7 +44,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Thrall"
-	notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
+	notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
 	points = 0
 	remove_on_clone = TRUE
 
@@ -119,7 +119,7 @@
 	onAttach(var/datum/abilityHolder/H)
 		..() // Start_on_cooldown check.
 		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
+			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>"))
 		return
 
 	updateObject()
@@ -174,23 +174,23 @@
 			return 0
 
 		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
+			boutput(M, SPAN_ALERT("You cannot use any powers in your current form."))
 			return 0
 
 		if (M.transforming)
-			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
+			boutput(M, SPAN_ALERT("You can't use any powers right now."))
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
 			return 0
 
 		if (istype(get_area(M), /area/station/chapel))
-			boutput(M, "<span class='alert'>Your powers do not work in this holy place!</span>")
+			boutput(M, SPAN_ALERT("Your powers do not work in this holy place!"))
 			return 0
 
 		return 1

@@ -56,6 +56,7 @@ class DMM:
     def set_tile(self, coord, tile):
         tile = tuple(tile)
         self.grid[coord] = self.get_or_generate_key(tile)
+        return self.grid[coord]
 
     def generate_new_key(self):
         self._ensure_free_keys(1)
@@ -85,7 +86,7 @@ class DMM:
 
     # From san7890 @ https://github.com/tgstation/tgstation/pull/68039
     def remove_unused_keys(self, modified_keys = None):
-        unused_keys = list(set(modified_keys)) if modified_keys is not None else self.dictionary.keys()
+        unused_keys = set(modified_keys) if modified_keys is not None else set(self.dictionary.keys())
         for key in self.grid.values():
             if key in unused_keys:
                 unused_keys.remove(key)

@@ -19,7 +19,7 @@
 
 	examine()
 		. = ..()
-		. += "[bicon(src)] <span class='notice'>There [src.amount == 1 ? "is" : "are"] [src.amount] [src.name]\s left on the stack!</span>"
+		. += "[bicon(src)] [SPAN_NOTICE("There [src.amount == 1 ? "is" : "are"] [src.amount] [src.name]\s left on the stack!")]"
 
 	attack_hand(mob/user)
 		if (user.r_hand == src || user.l_hand == src)
@@ -56,8 +56,8 @@
 			qdel(src)
 		return
 
-	attack(mob/M, mob/user)
-		if (issilicon(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (issilicon(target))
 			if (prob(5))
 				user.show_text("I'm a doctor, not a mechanic.", "red")
 			else
@@ -65,10 +65,10 @@
 			return
 		if (user)
 			var/self = FALSE
-			if (M != user)
+			if (target != user)
 				self = TRUE
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/medical/proc/do_use, list(M, user),\
-			src.icon, src.icon_state, "<span class='alert'>[user] applies [src] to [self ? "[M]" : "[himself_or_herself(M)]"].</span>", null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/medical/proc/do_use, list(target, user),\
+			src.icon, src.icon_state, SPAN_ALERT("[user] applies [src] to [self ? "[target]" : "[himself_or_herself(target)]"]."), null)
 
 	proc/do_use(mob/M, mob/user)
 		if (M != user && ishuman(M) && ishuman(user))

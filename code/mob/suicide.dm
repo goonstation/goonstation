@@ -20,7 +20,7 @@
 /mob/verb/suicide()
 
 	if ((!isliving(src) || isdead(src)) && !isAIeye(src) && !istype(src, /mob/zoldorf))
-		boutput(src, "<span class='alert'>You're already dead!</span>")
+		boutput(src, SPAN_ALERT("You're already dead!"))
 		return
 
 	if(src.suiciding)
@@ -28,7 +28,7 @@
 			if(src.suiciding)
 				src.death()
 			else
-				boutput(src, "<span class='alert'>Too late! You've decided to live on.</span>")
+				boutput(src, SPAN_ALERT("Too late! You've decided to live on."))
 		return
 
 	if (src.health < 0)
@@ -36,25 +36,25 @@
 		return
 
 	if(src.mind && src.mind.damned)
-		boutput(src,"<span class='alert'>You can't suicide. You're already in hell!</span>")
+		boutput(src,SPAN_ALERT("You can't suicide. You're already in hell!"))
 		return
 
 	if(src.is_zombie)
-		boutput(src,"<span class='alert'>You can't suicide. Brains...</span>")
+		boutput(src,SPAN_ALERT("You can't suicide. Brains..."))
 		return
 
 	if (!ticker)
-		boutput(src, "<span class='alert'>You can't commit suicide before the game starts!</span>")
+		boutput(src, SPAN_ALERT("You can't commit suicide before the game starts!"))
 		return
 
 	if (!suicide_allowed)
-		boutput(src, "<span class='alert'>You find yourself unable to go through with killing yourself!</span>")
+		boutput(src, SPAN_ALERT("You find yourself unable to go through with killing yourself!"))
 		return
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(HAS_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM))
-			boutput(H, "<span class='alert'>You cannot bring yourself to commit suicide!</span>")
+			boutput(H, SPAN_ALERT("You cannot bring yourself to commit suicide!"))
 			return
 
 	if (src.do_suicide()) //                           <------ put mob unique behaviour here in an override!!!!
@@ -114,7 +114,7 @@
 
 	if (selection == "hold your breath") //breath suicide - special case, non-associative
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-		src.visible_message("<span class='alert'><b>[src] is holding [his_or_her(src)] breath. It looks like [hes_or_shes(src)] trying to commit suicide.</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src] is holding [his_or_her(src)] breath. It looks like [hes_or_shes(src)] trying to commit suicide.</b>"))
 		src.take_oxygen_deprivation(175)
 		SPAWN(20 SECONDS) //dunno why this one is only 20 seconds but I guess I'll preserve that
 			if (src && !isdead(src))
@@ -126,7 +126,7 @@
 	if (selection == src.on_chair) //chair suicide
 		if (!src.on_chair)
 			return FALSE //can't suicide on a chair when you aren't on a chair
-		src.visible_message("<span class='alert'><b>[src] jumps off of the chair straight onto [his_or_her(src)] head!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src] jumps off of the chair straight onto [his_or_her(src)] head!</b>"))
 		src.TakeDamage("head", 200, 0)
 		src.pixel_y = 0
 		reset_anchored(src)
@@ -149,7 +149,7 @@
 /mob/living/silicon/ai/do_suicide()
 	var/confirm = tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"), 15 SECONDS)
 	if (confirm == "Yes")
-		src.visible_message("<span class='alert'><b>[src] is powering down. It looks like \he's trying to commit suicide.</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src] is powering down. It looks like \he's trying to commit suicide.</b>"))
 		src.unlock_medal("Damned", 1)
 		SPAWN(3 SECONDS)
 			src.death()
@@ -160,7 +160,7 @@
 	var/confirm = tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"), 15 SECONDS)
 	if (confirm == "Yes")
 		var/mob/living/silicon/robot/R = src
-		src.visible_message("<span class='alert'><b>[src] is clutching its head strangely!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src] is clutching its head strangely!</b>"))
 		SPAWN(2 SECONDS)
 			R.emote("scream")
 		SPAWN(3 SECONDS)
@@ -173,7 +173,7 @@
 /mob/living/silicon/ghostdrone/do_suicide()
 	. = ..()
 	if (.)
-		src.visible_message("<span class='alert'><b>[src] forcefully rips it's own soul from its body!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src] forcefully rips it's own soul from its body!</b>"))
 
 /mob/living/carbon/cube/do_suicide()
 	src.unlock_medal("Damned", 1)
@@ -182,13 +182,13 @@
 /mob/living/critter/do_suicide() // :effort:
 	. = ..()
 	if (.)
-		src.visible_message("<span class='alert'><b>[src] suddenly dies for no adequately explained reason!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src] suddenly dies for no adequately explained reason!</b>"))
 
 /mob/living/critter/flock/drone/do_suicide()
 	if ((locate(/obj/flock_structure/relay) in src.flock.structures) && istype(src.controller, /mob/living/intangible/flock/flockmind) && !length(src.flock.getActiveTraces()))
-		boutput(src, "<span class='alert'>You can't abandon your Flock with the Relay active!</span>")
+		boutput(src, SPAN_ALERT("You can't abandon your Flock with the Relay active!"))
 		return
-	if (tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No")) == "Yes")
+	if (tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"), theme = "flock") == "Yes")
 		var/mob/living/intangible/flock/C = src.controller
 		src.release_control()
 		C.do_suicide(TRUE)
@@ -198,9 +198,9 @@
 
 /mob/living/intangible/flock/flockmind/do_suicide(skip_prompt)
 	if ((locate(/obj/flock_structure/relay) in src.flock.structures) && !length(src.flock.getActiveTraces()))
-		boutput(src, "<span class='alert'>You can't abandon your Flock with the Relay active!</span>")
+		boutput(src, SPAN_ALERT("You can't abandon your Flock with the Relay active!"))
 		return
-	if (skip_prompt || tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No")) == "Yes")
+	if (skip_prompt || tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"), theme = "flock") == "Yes")
 		var/result = src.getTraceToPromote()
 		if (istype(result, /mob/living/intangible/flock/trace))
 			src.unlock_medal("Damned", 1)
@@ -211,6 +211,6 @@
 			src.death(suicide = TRUE)
 
 /mob/living/intangible/flock/trace/do_suicide(skip_prompt)
-	if (skip_prompt || tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No")) == "Yes")
+	if (skip_prompt || tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"), theme = "flock") == "Yes")
 		src.unlock_medal("Damned", 1)
 		src.death(suicide = TRUE)

@@ -14,9 +14,10 @@
 
 	turf_flags = IS_TYPE_SIMULATED | MOB_SLIP | MOB_STEP
 
-	var/broken = 0
-	var/burnt = 0
+	can_burn = TRUE
+	can_break = TRUE
 	var/has_material = TRUE
+
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
 	var/reinforced = FALSE
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
@@ -27,8 +28,6 @@
 
 	New()
 		..()
-		if (has_material && isnull(default_material))
-			setMaterial(getMaterial("steel"))
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
 		#ifdef XMAS
@@ -859,9 +858,11 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
 	mat_changename = FALSE
+	can_burn = FALSE
+	can_break = FALSE
 
 	pry_tile(obj/item/C as obj, mob/user as mob, params)
-		boutput(user, "<span class='alert'>This is glass flooring, you can't pry this up!</span>")
+		boutput(user, SPAN_ALERT("This is glass flooring, you can't pry this up!"))
 
 	to_plating()
 		return
@@ -878,10 +879,10 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 
 	attackby(obj/item/C, mob/user, params)
 		if (istype(C, /obj/item/rods))
-			boutput(user, "<span class='alert'>You can't reinforce this tile.</alert>")
+			boutput(user, SPAN_ALERT("You can't reinforce this tile."))
 			return
 		if(istype(C, /obj/item/cable_coil))
-			boutput(user, "<span class='alert'>You can't put cable over this tile, it would be too exposed.</span>")
+			boutput(user, SPAN_ALERT("You can't put cable over this tile, it would be too exposed."))
 			return
 		..()
 
@@ -1009,11 +1010,12 @@ DEFINE_FLOORS(minitiles/black,
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
-
 	reinforced = TRUE
-	allows_vehicles = 1
+	allows_vehicles = TRUE
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 
 	event_handler_flags = IMMUNE_SINGULARITY_INACTIVE
 
@@ -1311,7 +1313,7 @@ TYPEINFO(/turf/simulated/floor/snow)
 	mat_appearances_to_ignore = list("steel")
 /turf/simulated/floor/snow
 	name = "snow"
-	has_material = FALSE
+	default_material = null
 	icon_state = "snow1"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
@@ -1430,25 +1432,64 @@ TYPEINFO(/turf/simulated/floor/grass)
 /turf/simulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
+	#ifdef SEASON_AUTUMN
+	icon_state = "grass_autumn"
+	#else
 	icon_state = "grass"
+	#endif
 	mat_changename = 0
 	mat_changedesc = 0
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 	default_material = "synthrubber"
 
-	#ifdef XMAS
+	#ifdef SEASON_WINTER
 	New()
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			if(prob(10))
 				new /obj/item/reagent_containers/food/snacks/snowball/unmelting(src)
-			src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
+			..()
+			SPAWN(0)
+				src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
 			return
 		..()
 	#endif
 
 /turf/proc/grassify()
 	.=0
+
+/// wetType: [-2 = glue, -1 = slime, 0 = dry, 1 = water, 2 = lube, 3 = superlube]
+/// silent: makes the overlay invisible and prevents the sound effect
+/turf/simulated/proc/wetify(var/wetType = 2, var/timeout = 80 SECONDS, var/color = null, var/silent = FALSE)
+	var/obj/grille/catwalk/catwalk = null
+	var/image/overlay = null
+	var/alpha = 60
+
+	if (wetType <= 0)
+		overlay = image('icons/effects/water.dmi', "sticky_floor")
+	else
+		overlay = image('icons/effects/water.dmi', "wet_floor")
+
+	if (!silent)
+		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
+	else
+		alpha = 0
+
+	overlay.blend_mode = BLEND_ADD
+	overlay.alpha = alpha
+	overlay.color = color
+
+	if (istype(src, /turf/simulated/floor/airless/plating/catwalk)) // "Guh" - Leah
+		catwalk = locate() in src
+		catwalk.UpdateOverlays(overlay, "wet_overlay")
+
+	src.UpdateOverlays(overlay, "wet_overlay")
+	src.wet = wetType
+
+	SPAWN(timeout)
+		src.UpdateOverlays(null, "wet_overlay")
+		catwalk?.UpdateOverlays(null, "wet_overlay")
+		src.wet = 0
 
 /turf/simulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
@@ -1472,7 +1513,11 @@ TYPEINFO(/turf/simulated/floor/grass)
 	step_priority = STEP_PRIORITY_MED
 
 /turf/simulated/floor/grass/leafy
+#ifdef SEASON_AUTUMN
+	icon_state = "grass_leafy_autumn"
+#else
 	icon_state = "grass_leafy"
+#endif
 
 /turf/simulated/floor/grass/random
 	New()
@@ -1487,7 +1532,11 @@ TYPEINFO(/turf/simulated/floor/grasstodirt)
 /turf/simulated/floor/grasstodirt
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
+	#ifdef SEASON_AUTUMN
+	icon_state = "autumntodirt"
+	#else
 	icon_state = "grasstodirt"
+	#endif
 	mat_changename = 0
 	mat_changedesc = 0
 
@@ -1603,6 +1652,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	icon_state = "engine"
 	allows_vehicles = 1
 	reinforced = TRUE
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/simulated/floor/shuttlebay
 	name = "shuttle bay plating"
@@ -1611,6 +1662,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 	reinforced = TRUE
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/simulated/floor/metalfoam
 	icon = 'icons/turf/floors.dmi'
@@ -1632,10 +1685,12 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	desc = "Blob floors to lob blobs over."
 	icon = 'icons/mob/blob_organs.dmi'
 	icon_state = "bridge"
-	default_melt_cap = 80
+	default_melt_chance = 80
 	allows_vehicles = 1
 	default_material = "blob"
 	mat_changename = FALSE
+	can_burn = FALSE
+	can_break = FALSE
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
 		setMaterial(O.my_material)
@@ -1812,101 +1867,21 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	return
 
 /turf/simulated/floor/proc/break_tile_to_plating()
-	if(intact) to_plating()
+	if (intact)
+		to_plating()
 	break_tile()
 
-/turf/simulated/floor/proc/break_tile(var/force_break)
-	if(!force_break)
-		if(src.reinforced) return
-
-	if(broken) return
-	var/image/damage_overlay
-	if (!icon_old)
-		icon_old = icon_state
-	if(intact)
-		damage_overlay = image('icons/turf/floors.dmi',"damaged[pick(1,2,3,4,5)]")
-		damage_overlay.alpha = 200
-	else
-		damage_overlay = image('icons/turf/floors.dmi',"platingdmg[pick(1,2,3)]")
-		damage_overlay.alpha = 200
-	broken = 1
-	UpdateOverlays(damage_overlay,"damage")
-	src.UpdateIcon()
-
-/turf/simulated/floor/proc/burn_tile()
-	if(broken || burnt || reinforced) return
-	var/image/burn_overlay
-	if (!icon_old)
-		icon_old = icon_state
-	if(intact)
-		burn_overlay = image('icons/turf/floors.dmi',"floorscorched[pick(1,2)]")
-		burn_overlay.alpha = 200
-	else
-		burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
-		burn_overlay.alpha = 200
-	UpdateOverlays(burn_overlay,"burn")
-	src.UpdateIcon()
-	burnt = 1
-
-/turf/simulated/floor/shuttle/burn_tile()
-	return
-
-/turf/simulated/floor/proc/restore_tile()
-	if(intact) return
-	setIntact(TRUE)
-	broken = 0
-	burnt = 0
-	icon = initial(icon)
-	if(icon_old)
-		icon_state = icon_old
-	else
-		icon_state = "floor"
-	UpdateOverlays(null,"burn")
-	UpdateOverlays(null,"damage")
-	src.UpdateIcon()
-	if (name_old)
-		name = name_old
-	levelupdate()
-
 /turf/simulated/floor/var/global/girder_egg = 0
-
-/turf/simulated/floor/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
-	if (!user || !istype(W, /obj/item/light_parts/floor))
-		return
-	if(!instantly)
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
-		boutput(user, "You begin to attach the light fixture to [src]...")
-		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/floor/proc/finish_attaching,\
-			list(W, user), W.icon, W.icon_state, null, null)
-		return
-
-	finish_attaching(W, user)
-	return
-
-/turf/simulated/floor/proc/finish_attaching(obj/item/W, mob/user)
-	// the floor is the target turf
-	var/turf/target = src
-	var/obj/item/light_parts/parts = W
-	var/obj/machinery/light/newlight = new parts.fixture_type(target)
-	boutput(user, "You attach the light fixture to [src].")
-	newlight.icon_state = parts.installed_icon_state
-	newlight.base_state = parts.installed_base_state
-	newlight.fitting = parts.fitting
-	newlight.status = 1 // LIGHT_EMPTY
-	newlight.add_fingerprint(user)
-	src.add_fingerprint(user)
-	user.u_equip(parts)
-	qdel(parts)
 
 /turf/simulated/floor/proc/pry_tile(obj/item/C as obj, mob/user as mob, params)
 	if (!intact)
 		return
 	if(src.reinforced)
-		boutput(user, "<span class='alert'>You can't pry apart reinforced flooring! You'll have to loosen it with a welder or wrench instead.</span>")
+		boutput(user, SPAN_ALERT("You can't pry apart reinforced flooring! You'll have to loosen it with a welder or wrench instead."))
 		return
 
 	if(broken || burnt)
-		boutput(user, "<span class='alert'>You remove the broken plating.</span>")
+		boutput(user, SPAN_ALERT("You remove the broken plating."))
 		UpdateOverlays(null,"burn")
 		UpdateOverlays(null,"damage")
 	else
@@ -1936,39 +1911,23 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		P.write_on_turf(src, user, params)
 		return
 
-	if (istype(C, /obj/item/light_parts/floor))
-		src.attach_light_fixture_parts(user, C) // Made this a proc to avoid duplicate code (Convair880).
-		return
-
 	if (src.reinforced && ((isweldingtool(C) && C:try_weld(user,0,-1,1,1)) || iswrenchingtool(C)))
-		boutput(user, "<span class='notice'>Loosening rods...</span>")
+		boutput(user, SPAN_NOTICE("Loosening rods..."))
 		if(iswrenchingtool(C))
 			playsound(src, 'sound/items/Ratchet.ogg', 80, TRUE)
-		if(do_after(user, 3 SECONDS))
-			if(!src.reinforced)
-				return
-			var/obj/R1 = new /obj/item/rods(src)
-			var/obj/R2 = new /obj/item/rods(src)
-			if (material)
-				R1.setMaterial(material)
-				R2.setMaterial(material)
-			else
-				R1.setMaterial(getMaterial("steel"))
-				R2.setMaterial(getMaterial("steel"))
-			ReplaceWithFloor()
-			src.to_plating()
-			return
+		SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /turf/simulated/floor/proc/remove_reinforcement, null, C.icon, C.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+		return
 
 	if(istype(C, /obj/item/rods))
 		if (!src.intact)
 			if (C.amount >= 2)
-				boutput(user, "<span class='notice'>Reinforcing the floor...</span>")
+				boutput(user, SPAN_NOTICE("Reinforcing the floor..."))
 
 				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /turf/simulated/floor/proc/reinforce, C, C.icon, C.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 			else
-				boutput(user, "<span class='alert'>You need more rods.</span>")
+				boutput(user, SPAN_ALERT("You need more rods."))
 		else
-			boutput(user, "<span class='alert'>You must remove the plating first.</span>")
+			boutput(user, SPAN_ALERT("You must remove the plating first."))
 		return
 
 	if(istype(C, /obj/item/tile))
@@ -2011,7 +1970,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		var/obj/item/sheet/S = C
 		if (!S.amount_check(2,user)) return
 		if (S?.material?.getMaterialFlags() & MATERIAL_METAL)
-			var/msg = "a girder"
+			var/msg = "the girder"
 
 			if(!girder_egg)
 				var/count = 0
@@ -2091,23 +2050,23 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				msg = insert_girder[min(count+1, insert_girder.len)]
 				if(count >= 69) //nice
 					girder_egg = 1
-					actions.start(new /datum/action/bar/icon/build(S, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive, 2, null, 1, 'icons/obj/structures.dmi', "girder egg", msg, null), user)
+					actions.start(new /datum/action/bar/icon/build(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive, src.loc, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder egg", name = msg), user)
 				else
-					actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, 2, S.material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
+					actions.start(new /datum/action/bar/icon/build(/obj/structure/girder, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder", name = msg), user)
 			else
-				actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, 2, S.material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
+				actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder", name = msg), user)
 		else if ((S?.material?.getMaterialFlags() & MATERIAL_CRYSTAL) && !(locate(/obj/window) in src))
 			if(S.reinforcement)
-				actions.start(new /datum/action/bar/icon/build(S, map_settings ? map_settings.rwindows : /obj/window/reinforced, 2, S.material, 1, 'icons/obj/window.dmi', "window", "a full window", /proc/window_reinforce_full_callback, spot = src), user)
+				actions.start(new /datum/action/bar/icon/build(map_settings ? map_settings.rwindows : /obj/window/reinforced, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/window.dmi', "window", /proc/window_reinforce_full_callback, "a full window"), user)
 			else
-				actions.start(new /datum/action/bar/icon/build(S, map_settings ? map_settings.windows : /obj/window, 2, S.material, 1, 'icons/obj/window.dmi', "window", "a full window", /proc/window_reinforce_full_callback, spot = src), user)
+				actions.start(new /datum/action/bar/icon/build(map_settings ? map_settings.windows : /obj/window, 			  src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/window.dmi', "window", /proc/window_reinforce_full_callback, "a full window"), user)
 
 	if(istype(C, /obj/item/cable_coil))
 		if(!intact)
 			var/obj/item/cable_coil/coil = C
 			coil.turf_place(src, get_turf(user), user)
 		else
-			boutput(user, "<span class='alert'>You must remove the plating first.</span>")
+			boutput(user, SPAN_ALERT("You must remove the plating first."))
 
 //grabsmash??
 	else if (istype(C, /obj/item/grab/))
@@ -2134,6 +2093,20 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		src.setMaterial(I.material)
 	I.change_stack_amount(-2)
 	playsound(src, 'sound/items/Deconstruct.ogg', 80, TRUE)
+
+/turf/simulated/floor/proc/remove_reinforcement()
+	if(!src.reinforced)
+		return
+	var/obj/R1 = new /obj/item/rods(src)
+	var/obj/R2 = new /obj/item/rods(src)
+	if (material)
+		R1.setMaterial(material)
+		R2.setMaterial(material)
+	else
+		R1.setMaterial(getMaterial("steel"))
+		R2.setMaterial(getMaterial("steel"))
+	ReplaceWithFloor()
+	src.to_plating()
 
 /turf/simulated/floor/MouseDrop_T(atom/A, mob/user as mob)
 	..(A,user)
@@ -2244,7 +2217,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		attackby(obj/item/W, mob/user)
 			if (istype(W, /obj/item/device/key/generic/coldsteel))
 				playsound(src, 'sound/effects/mag_warp.ogg', 50, TRUE)
-				src.visible_message("<span class='notice'><b>[src] slides away!</b></span>")
+				src.visible_message(SPAN_NOTICE("<b>[src] slides away!</b>"))
 				src.ReplaceWithSpace() // make sure the area override says otherwise - maybe this sucks
 
 	hive
@@ -2274,28 +2247,6 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	icon_state = "gauntwall"
 // --------------------------------------------
 
-/turf/proc/fall_to(var/turf/T, var/atom/movable/A)
-	if(istype(A, /obj/overlay) || A.anchored == 2)
-		return
-	#ifdef CHECK_MORE_RUNTIMES
-	if(current_state <= GAME_STATE_WORLD_NEW)
-		CRASH("[identify_object(A)] fell into [src] at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
-	#endif
-	if (isturf(T))
-		visible_message("<span class='alert'>[A] falls into [src]!</span>")
-		if (ismob(A))
-			var/mob/M = A
-			if(!M.stat && ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.gender == MALE) playsound(H.loc, 'sound/voice/screams/male_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-				else playsound(H.loc, 'sound/voice/screams/female_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-			random_brute_damage(M, 50)
-			M.changeStatus("paralysis", 7 SECONDS)
-			SPAWN(0)
-				playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
-		A.set_loc(T)
-		return
-
 /turf/unsimulated/floor/setpieces
 	icon = 'icons/misc/worlds.dmi'
 	fullbright = 0
@@ -2304,39 +2255,27 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		name = "broken staircase"
 		desc = "You can't see the bottom."
 		icon_state = "black"
-		var/target_landmark = LANDMARK_FALL_ANCIENT
+		var/falltarget = LANDMARK_FALL_ANCIENT
 
-		Entered(atom/A as mob|obj)
-			if (isobserver(A) || (istype(A, /obj/critter) && A:flying))
-				return ..()
-
-			var/turf/T = pick_landmark(target_landmark)
-			if(T)
-				fall_to(T, A)
-				return
-			else ..()
+		New()
+			. = ..()
+			src.AddComponent(/datum/component/pitfall/target_landmark,\
+				BruteDamageMax = 50,\
+				FallTime = 0 SECONDS,\
+				TargetLandmark = src.falltarget)
 
 		shaft
 			name = "Elevator Shaft"
-			target_landmark = LANDMARK_FALL_BIO_ELE
+			falltarget = LANDMARK_FALL_BIO_ELE
 
 			Entered(atom/A as mob|obj)
 				if (istype(A, /mob) && !istype(A, /mob/dead))
 					bioele_accident()
-				return ..()
+				..()
 
 		hole_xy
 			name = "deep pit"
-			target_landmark = LANDMARK_FALL_DEBUG
-			Entered(atom/A as mob|obj)
-				if (isobserver(A) || (istype(A, /obj/critter) && A:flying))
-					return ..()
-
-				if(warptarget)
-					fall_to(warptarget, A)
-					return
-				else ..()
-
+			falltarget = LANDMARK_FALL_DEBUG
 
 	bloodfloor
 		name = "bloody floor"
@@ -2368,15 +2307,12 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 			desc = "You can't see the bottom."
 			icon_state = "deeps"
 
-			Entered(atom/A as mob|obj)
-				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
-					return ..()
-
-				var/turf/T = pick_landmark(LANDMARK_FALL_DEEP)
-				if(T)
-					fall_to(T, A)
-					return
-				else ..()
+			New()
+				. = ..()
+				src.AddComponent(/datum/component/pitfall/target_landmark,\
+					BruteDamageMax = 50,\
+					FallTime = 0 SECONDS,\
+					TargetLandmark = LANDMARK_FALL_DEEP)
 
 	hivefloor
 		name = "hive floor"
@@ -2401,9 +2337,27 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		icon = 'icons/misc/worlds.dmi'
 		icon_state = "swampgrass_edge"
 
+TYPEINFO(/turf/simulated/floor/auto)
+	/// List of types this autowall connects to
+	var/list/connects_to = null
+	/// Because connections now work by parent type searches, this is for when you don't want certain subtypes to connect.
+	/// This must be a typecache ([/proc/typecachesof]) list
+	var/list/connects_to_exceptions = null
+	/// do we have wall connection overlays, ex nornwalls?
+	var/connect_overlay = 0
+	var/list/connects_with_overlay = null
+	var/list/connects_with_overlay_exceptions = null // same as above comment
+	var/connect_across_areas = TRUE
+	/// 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
+	var/connect_diagonal = 0
+
 /turf/simulated/floor/auto
 	name = "auto edging turf"
 
+	var/mod = null
+	var/light_mod = null
+	/// The image we're using to connect to stuff with
+	var/image/connect_image = null
 	///turf won't draw edges on turfs with higher or equal priority
 	var/edge_priority_level = 0
 	var/icon_state_edge = null
@@ -2411,8 +2365,45 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	New()
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
-		SPAWN(0.5 SECONDS) //give neighbors a chance to spawn in
-			edge_overlays()
+		if (current_state > GAME_STATE_WORLD_NEW)
+			SPAWN(0) //worldgen overrides ideally
+				UpdateIcon()
+				if(istype(src))
+					update_neighbors()
+		else
+			worldgenCandidates += src
+
+	generate_worldgen()
+		src.UpdateIcon()
+		if(istype(src))
+			update_neighbors()
+
+	update_icon()
+		. = ..()
+		src.edge_overlays()
+		if(src.mod)
+			var/typeinfo/turf/simulated/floor/auto/typinfo = get_typeinfo()
+			var/connectdir = get_connected_directions_bitflag(typinfo.connects_to, typinfo.connects_to_exceptions, typinfo.connect_across_areas, typinfo.connect_diagonal)
+			var/the_state = "[mod][connectdir]"
+			icon_state = the_state
+
+			// if (light_mod)
+			// 	src.RL_SetSprite("[light_mod][connectdir]")
+
+			if (typinfo.connect_overlay)
+				var/overlaydir = get_connected_directions_bitflag(typinfo.connects_with_overlay, typinfo.connects_with_overlay_exceptions, typinfo.connect_across_areas)
+				if (overlaydir)
+					if (!src.connect_image)
+						src.connect_image = image(src.icon, "connect[overlaydir]")
+					else
+						src.connect_image.icon_state = "connect[overlaydir]"
+					src.UpdateOverlays(src.connect_image, "connect")
+				else
+					src.UpdateOverlays(null, "connect")
+
+	proc/update_neighbors()
+		for (var/turf/simulated/floor/auto/T in orange(1,src))
+			T.UpdateIcon()
 
 	proc/edge_overlays()
 		for (var/turf/T in orange(src,1))
@@ -2443,9 +2434,14 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	name = "grass"
 	desc = "some leafy grass."
 	icon = 'icons/turf/outdoors.dmi'
+#ifdef SEASON_AUTUMN
+	icon_state = "grass_leafy_autumn"
+	icon_state_edge = "leafy_edge_autumn"
+#else
 	icon_state = "grass_leafy"
-	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS - 1
 	icon_state_edge = "grass_leafyedge"
+#endif
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS - 1
 
 /turf/simulated/floor/auto/dirt
 	name = "dirt"

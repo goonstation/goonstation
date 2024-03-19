@@ -329,16 +329,16 @@
 		switch(firemode)
 			if(CRUISER_FIREMODE_BOTH)
 				firemode = CRUISER_FIREMODE_ALT
-				boutput(usr, "<span class='alert'>Fire mode now: Alternate</span>")
+				boutput(usr, SPAN_ALERT("Fire mode now: Alternate"))
 			if(CRUISER_FIREMODE_ALT)
 				firemode = CRUISER_FIREMODE_LEFT
-				boutput(usr, "<span class='alert'>Fire mode now: Left only</span>")
+				boutput(usr, SPAN_ALERT("Fire mode now: Left only"))
 			if(CRUISER_FIREMODE_LEFT)
 				firemode = CRUISER_FIREMODE_RIGHT
-				boutput(usr, "<span class='alert'>Fire mode now: Right only</span>")
+				boutput(usr, SPAN_ALERT("Fire mode now: Right only"))
 			if(CRUISER_FIREMODE_RIGHT)
 				firemode = CRUISER_FIREMODE_BOTH
-				boutput(usr, "<span class='alert'>Fire mode now: Simultaneous</span>")
+				boutput(usr, SPAN_ALERT("Fire mode now: Simultaneous"))
 		return
 
 	bump(atom/O)
@@ -760,7 +760,7 @@
 
 		if(turret_left)
 			if(get_dir(origins["left"], target) != src.dir && get_dir(origins["left"], target) != turn(src.dir,45) && get_dir(origins["left"], target) != turn(src.dir,-45))
-				//internal_sound(src.loc, 'sound/machines/shielddown.ogg', 100, 1, -1)
+				; //internal_sound(src.loc, 'sound/machines/shielddown.ogg', 100, 1, -1)
 			else
 				if(!(firemode & CRUISER_FIREMODE_RIGHT))
 					if((firemode & CRUISER_FIREMODE_ALT && alt_weapon == 0) || !(firemode & CRUISER_FIREMODE_ALT))
@@ -776,7 +776,7 @@
 
 		if(turret_right)
 			if(get_dir(origins["right"], target) != src.dir && get_dir(origins["right"], target) != turn(src.dir,45) && get_dir(origins["right"], target) != turn(src.dir,-45))
-				//internal_sound(src.loc, 'sound/machines/shielddown.ogg', 100, 1, -1)
+				; //internal_sound(src.loc, 'sound/machines/shielddown.ogg', 100, 1, -1)
 			else
 				if(!(firemode & CRUISER_FIREMODE_LEFT))
 					if((firemode & CRUISER_FIREMODE_ALT && alt_weapon == 1) || !(firemode & CRUISER_FIREMODE_ALT))
@@ -806,7 +806,7 @@
 			user.set_loc(getExitLoc())
 			if(ismob(user)) crew.Remove(user)
 		else
-			boutput(user, "<span class='alert'>The exit is blocked.</span>")
+			boutput(user, SPAN_ALERT("The exit is blocked."))
 		return
 
 	proc/enterShip(atom/movable/O as obj, mob/user as mob)
@@ -817,9 +817,9 @@
 				O.set_loc(entrance)
 				if(ismob(O))
 					crew.Add(O)
-				boutput(user, "<span class='alert'>You put [O] into [src].</span>")
+				boutput(user, SPAN_ALERT("You put [O] into [src]."))
 			else
-				boutput(user, "<span class='alert'>[O] is too far away from [src]'s airlock.</span>")
+				boutput(user, SPAN_ALERT("[O] is too far away from [src]'s airlock."))
 		return
 
 	proc/shakeCruiser(duration, strength=1, delay=0.2)
@@ -1098,7 +1098,7 @@
 				break
 		if(check_blocked && blocked && !ignore_blocked)
 			if(user)
-				boutput(user, "<span class='alert'>Something is preventing the [src] from opening.</span>")
+				boutput(user, SPAN_ALERT("Something is preventing the [src] from opening."))
 		else
 			ready = 0
 			SPAWN(1 SECOND) ready = 1
@@ -1112,7 +1112,7 @@
 	proc/close(var/mob/user = null)
 		if(!open) return
 		if(rebooting)
-			boutput(user, "<span class='alert'>This device is currently disabled.</span>")
+			boutput(user, SPAN_ALERT("This device is currently disabled."))
 			return
 		ready = 0
 		SPAWN(1 SECOND) ready = 1
@@ -1253,12 +1253,12 @@
 		if ((!( istype(G, /obj/item/grab) ) || !( ismob(G.affecting) )))
 			return
 		if (G.state == GRAB_PASSIVE)
-			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
+			boutput(user, SPAN_ALERT("You need a tighter grip!"))
 			return
 		var/mob/M = G.affecting
 		var/area/cruiser/interior = get_area(src)
 		if(interior.ship)
-			user.visible_message("<span class='alert'><b>[user] throws [M] out of \the [src]!", "<span class='alert'><b>You throw [M] out of \the [src]!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] throws [M] out of \the [src]!"), SPAN_ALERT("<b>You throw [M] out of \the [src]!</b>"))
 			interior.ship.leaveShip(M)
 			M.changeStatus("weakened", 2 SECONDS)
 		qdel(G)
@@ -1351,10 +1351,10 @@
 
 	attack_hand(mob/user)
 		if(broken)
-			boutput(user, "<span class='alert'>This pod is broken and must be repaired before it can be used again.</span>")
+			boutput(user, SPAN_ALERT("This pod is broken and must be repaired before it can be used again."))
 			return
 		if(using)
-			boutput(user, "<span class='alert'>This pod is already being used.</span>")
+			boutput(user, SPAN_ALERT("This pod is already being used."))
 			return
 		else
 			enterPod(user)
@@ -1366,7 +1366,7 @@
 	proc/enterPod(mob/user as mob)
 		var/obj/machinery/cruiser/C = interior.ship
 		if(rebooting)
-			boutput(user, "<span class='alert'>This device is currently disabled.</span>")
+			boutput(user, SPAN_ALERT("This device is currently disabled."))
 			return
 		using = user
 		user.set_loc(src)

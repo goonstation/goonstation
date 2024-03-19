@@ -188,7 +188,7 @@
 /area/noGenerate)
 "nV" = (
 /obj/forcefield/energyshield/perma,
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/conveyor/SN{
 	id = "lostrouter"
 	},

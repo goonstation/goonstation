@@ -31,7 +31,7 @@
 		#ifndef UNDERWATER_MAP
 		if (istype(W,/obj/item/magnet_parts))
 			if (istype(src.linked_magnet))
-				boutput(user, "<span class='alert'>There's already a magnet installed.</span>")
+				boutput(user, SPAN_ALERT("There's already a magnet installed."))
 				return
 			actions.start(new/datum/action/bar/icon/magnet_build(W, src, user), user)
 		else
@@ -60,7 +60,6 @@
 
 #ifndef UNDERWATER_MAP
 /datum/action/bar/icon/magnet_build
-	id = "magnet_build"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 24 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -91,7 +90,7 @@
 				interrupt(INTERRUPT_ALWAYS)
 		else if (mag_parts != master.equipped())
 			interrupt(INTERRUPT_ALWAYS)
-		owner.visible_message("<span class='notice'>[master] begins to assemble [mag_parts]!</span>")
+		owner.visible_message(SPAN_NOTICE("[master] begins to assemble [mag_parts]!"))
 
 	onUpdate()
 		..()
@@ -110,7 +109,7 @@
 		var/obj/machinery/mining_magnet/magnet = new mag_parts.constructed_magnet(get_turf(chassis))
 		magnet.set_dir(chassis.dir)
 		qdel(mag_parts)
-		owner.visible_message("<span class='notice'>[owner] constructs [magnet]!</span>")
+		owner.visible_message(SPAN_NOTICE("[owner] constructs [magnet]!"))
 
 /obj/item/magnet_parts
 	name = "mineral magnet parts"
@@ -136,6 +135,7 @@
 	var/scan_range = 7
 	var/turf/magnetic_center
 	alpha = 128
+	anchored = ANCHORED_ALWAYS
 
 	small
 		width = 7
@@ -254,11 +254,11 @@
 		var/turf/origin = get_turf(src)
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 			if (!T)
-				boutput(usr, "<span class='alert'>Error: magnet area spans over construction area bounds.</span>")
+				boutput(usr, SPAN_ALERT("Error: magnet area spans over construction area bounds."))
 				return 0
 			var/isterrain = T.GetComponent(/datum/component/buildable_turf) && istype(T,/turf/unsimulated)
 			if ((!istype(T, /turf/space) && !isterrain) && !istype(T, /turf/simulated/floor/plating/airless/asteroid) && !istype(T, /turf/simulated/wall/auto/asteroid))
-				boutput(usr, "<span class='alert'>Error: [T] detected in [width]x[height] magnet area. Cannot magnetize.</span>")
+				boutput(usr, SPAN_ALERT("Error: [T] detected in [width]x[height] magnet area. Cannot magnetize."))
 				return 0
 
 		var/borders = list()
@@ -266,13 +266,13 @@
 			var/turf/S = locate(cx, origin.y - 1, origin.z)
 			var/isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
-				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
+				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
 			borders += S
 			S = locate(cx, origin.y + height, origin.z)
 			isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
-				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
+				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
 			borders += S
 
@@ -280,13 +280,13 @@
 			var/turf/S = locate(origin.x - 1, cy, origin.z)
 			var/isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
-				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
+				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
 			borders += S
 			S = locate(origin.x + width, cy, origin.z)
 			isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
-				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
+				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
 			borders += S
 
@@ -307,16 +307,16 @@
 	examine()
 		. = ..()
 		if (loaded)
-			. += "<span class='notice'>The magnetizer is loaded with a plasmastone. Designate the mineral magnet to attach, then designate the lower left tile of the area to magnetize.</span>"
-			. += "<span class='notice'>The magnetized area must be a clean shot of space, surrounded by bordering tiles on all sides.</span>"
-			. += "<span class='notice'>A small mineral magnet requires an 7x7 area of space, a large one requires a 15x15 area of space.</span>"
+			. += SPAN_NOTICE("The magnetizer is loaded with a plasmastone. Designate the mineral magnet to attach, then designate the lower left tile of the area to magnetize.")
+			. += SPAN_NOTICE("The magnetized area must be a clean shot of space, surrounded by bordering tiles on all sides.")
+			. += SPAN_NOTICE("A small mineral magnet requires an 7x7 area of space, a large one requires a 15x15 area of space.")
 		else
-			. += "<span class='alert'>The magnetizer must be loaded with a chunk of plasmastone to use.</span>"
+			. += SPAN_ALERT("The magnetizer must be loaded with a chunk of plasmastone to use.")
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/plasmastone) && !loaded)
 			loaded = 1
-			boutput(user, "<span class='notice'>You charge the magnetizer with the plasmastone.</span>")
+			boutput(user, SPAN_NOTICE("You charge the magnetizer with the plasmastone."))
 			qdel(W)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -329,18 +329,18 @@
 			ENSURE_TYPE(magnet)
 			else
 				if (!loaded)
-					boutput(user, "<span class='alert'>The magnetizer needs to be loaded with a plasmastone chunk first.</span>")
+					boutput(user, SPAN_ALERT("The magnetizer needs to be loaded with a plasmastone chunk first."))
 					magnet = null
 				else if (magnet.target)
-					boutput(user, "<span class='alert'>That magnet is already locked onto a location.</span>")
+					boutput(user, SPAN_ALERT("That magnet is already locked onto a location."))
 					magnet = null
 				else
-					boutput(user, "<span class='notice'>Magnet locked. Designate lower left tile of target area (excluding the borders).</span>")
+					boutput(user, SPAN_NOTICE("Magnet locked. Designate lower left tile of target area (excluding the borders)."))
 		else if ((istype(target, /turf/space) || isterrain) && magnet)
 			if (!loaded)
-				boutput(user, "<span class='alert'>The magnetizer needs to be loaded with a plasmastone chunk first.</span>")
+				boutput(user, SPAN_ALERT("The magnetizer needs to be loaded with a plasmastone chunk first."))
 			if (magnet.target)
-				boutput(user, "<span class='alert'>Magnet target already designated. Unlocking.</span>")
+				boutput(user, SPAN_ALERT("Magnet target already designated. Unlocking."))
 				magnet = null
 				return
 			var/turf/T = target
@@ -352,13 +352,13 @@
 			var/turf/O = get_turf(target)
 			var/dist = min(min(GET_DIST(A, O), GET_DIST(B, O)), min(GET_DIST(C, O), GET_DIST(D, O)))
 			if (dist > 10)
-				boutput(user, "<span class='alert'>Designation failed: designated tile is outside magnet range.</span>")
+				boutput(user, SPAN_ALERT("Designation failed: designated tile is outside magnet range."))
 				qdel(M)
 			else if (!M.construct())
-				boutput(user, "<span class='alert'>Designation failed.</span>")
+				boutput(user, SPAN_ALERT("Designation failed."))
 				qdel(M)
 			else
-				boutput(user, "<span class='notice'>Designation successful. The magnet is now fully operational.</span>")
+				boutput(user, SPAN_NOTICE("Designation successful. The magnet is now fully operational."))
 				magnet.target = M
 				loaded = 0
 				magnet = null
@@ -481,9 +481,9 @@
 		. = ..()
 		if (src.health < 100)
 			if (src.health < 50)
-				. += "<span class='alert'>It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
+				. += SPAN_ALERT("It's rather badly damaged. It probably needs some wiring replaced inside.")
 			else
-				. += "<span class='alert'>It's a bit damaged. It looks like it needs some welding done.</span>"
+				. += SPAN_ALERT("It's a bit damaged. It looks like it needs some welding done.")
 
 	ex_act(severity)
 		switch(severity)
@@ -506,31 +506,31 @@
 
 	attackby(obj/item/W, mob/user)
 		if (src.active)
-			boutput(user, "<span class='alert'>It's way too dangerous to do that while it's active!</span>")
+			boutput(user, SPAN_ALERT("It's way too dangerous to do that while it's active!"))
 			return
 
 		if (isweldingtool(W))
 			if (src.health < 50)
-				boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
+				boutput(user, SPAN_ALERT("You need to use wire to fix the cabling first."))
 				return
 			if(W:try_weld(user, 1))
 				src.damage(-10)
 				src.malfunctioning = 0
 				user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 				if (src.health >= 100)
-					boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
+					boutput(user, SPAN_NOTICE("<b>[src] looks fully repaired!</b>"))
 
 		else if (istype(W,/obj/item/cable_coil/))
 			var/obj/item/cable_coil/C = W
 			if (src.health > 50)
-				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
+				boutput(user, SPAN_ALERT("The cabling looks fine. Use a welder to repair the rest of the damage."))
 				return
 			C.use(1)
 			src.damage(-10)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 50)
-				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
+				boutput(user, SPAN_NOTICE("The wiring is fully repaired. Now you need to weld the external plating."))
 				src.malfunctioning = 0
 
 		else
@@ -704,7 +704,7 @@
 				if (magnetNotReady)
 					return
 				if (!target || !src.get_magnetic_center())
-					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					src.visible_message("<b>[src.name]</b> armeds, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
 					return
 
 				if (target.check_for_unacceptable_content())
@@ -717,7 +717,7 @@
 				if (magnetNotReady)
 					return
 				if (!target || !src.get_magnetic_center())
-					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					src.visible_message("<b>[src.name]</b> armeds, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
 					return
 
 				if (target.check_for_unacceptable_content())
@@ -728,11 +728,11 @@
 					. = TRUE
 			if("overridecooldown")
 				if (!ishuman(usr))
-					boutput(usr, "<span class='alert'>AI and robotic personnel may not access the override.</span>")
+					boutput(usr, SPAN_ALERT("AI and robotic personnel may not access the override."))
 				else
 					var/mob/living/carbon/human/H = usr
 					if(!src.allowed(H))
-						boutput(usr, "<span class='alert'>Access denied. Please contact the Chief Engineer or Captain to access the override.</span>")
+						boutput(usr, SPAN_ALERT("Access denied. Please contact the Chief Engineer or Captain to access the override."))
 					else
 						src.cooldown_override = !src.cooldown_override
 					. = TRUE
@@ -896,6 +896,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/mining_toughness = 1 //Incoming damage divided by this unless tool has power enough to overcome.
 	var/topnumber = 1
 	var/orenumber = 1
+	var/static/list/icon/topoverlaycache
 
 	dark
 		fullbright = 0
@@ -1060,6 +1061,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 
 	New(var/loc)
+		LAZYLISTINIT(topoverlaycache)
 		src.space_overlays = list()
 		src.topnumber = pick(1,2,3)
 		src.orenumber = pick(1,2,3)
@@ -1069,7 +1071,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.color = src.stone_color
 		else
 			SPAWN(1)
-				space_overlays()
+				if(istype(src, /turf/simulated/wall/auto/asteroid))
+					space_overlays()
 
 	generate_worldgen()
 		. = ..()
@@ -1100,14 +1103,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (dist > 1)
 			return
 		if (ishuman(usr))
-			if (usr.bioHolder && usr.bioHolder.HasEffect("training_miner"))
+			if (usr.bioHolder && usr.traitHolder.hasTrait("training_miner"))
 				if (istype (src.ore,/datum/ore/))
 					var/datum/ore/O = src.ore
 					. = "It looks like it contains [O.name]."
 				else
 					. = "Doesn't look like there's any valuable ore here."
 				if (src.event)
-					. += "<br><span class='alert'>There's something not quite right here...</span>"
+					. += "<br>[SPAN_ALERT("There's something not quite right here...")]"
 
 	attack_hand(var/mob/user)
 		if(ishuman(user))
@@ -1117,7 +1120,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				src.dig_asteroid(user,C.tool)
 				return
 			else if (H.is_hulk())
-				H.visible_message("<span class='alert'><b>[H.name] punches [src] with great strength!</span>")
+				H.visible_message(SPAN_ALERT("<b>[H.name] punches [src] with great strength!"))
 				playsound(H.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 100, 1)
 				src.damage_asteroid(3)
 				return
@@ -1159,11 +1162,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				message += "The rock here has been weakened.<br>"
 			if (E)
 				if (E.analysis_string)
-					message += "<span class='alert'>[E.analysis_string]</span><br>"
+					message += "[SPAN_ALERT("[E.analysis_string]")]<br>"
 			message += "----------------------------------"
 			boutput(user, message)
 		else
-			boutput(user, "<span class='alert'>You hit the [src.name] with [W], but nothing happens!</span>")
+			boutput(user, SPAN_ALERT("You hit the [src.name] with [W], but nothing happens!"))
 		return
 
 	proc/change_health(var/amount=0)
@@ -1207,14 +1210,18 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		src.ore_overlays()
 
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
-		var/image/top_overlay = image('icons/turf/walls/asteroid.dmi',"top[src.topnumber]")
-		top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask2[src.icon_state]"))
+		var/image/top_overlay = mutable_appearance('icons/turf/walls/asteroid.dmi',"top[src.topnumber]")
+		var/icon/cached = topoverlaycache["mask2[src.icon_state]"]
+		if(!cached)
+			topoverlaycache["mask2[src.icon_state]"] = icon('icons/turf/walls/asteroid.dmi',"mask2[src.icon_state]")
+			cached = topoverlaycache["mask2[src.icon_state]"]
+		top_overlay.filters += filter(type="alpha", icon=cached)
 		top_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER
 		UpdateOverlays(top_overlay, "ast_top_rock")
 
 	proc/ore_overlays()
 		if(src.ore) // make sure ores dont turn invisible
-			var/image/ore_overlay = image('icons/turf/walls/asteroid.dmi',"[src.ore?.name][src.orenumber]")
+			var/image/ore_overlay = mutable_appearance('icons/turf/walls/asteroid.dmi',"[src.ore?.name][src.orenumber]")
 			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[src.icon_state]"))
 			ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
 			src.UpdateOverlays(ore_overlay, "ast_ore")
@@ -1234,7 +1241,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			if (skip_this)
 				A.ClearSpecificOverlays("ast_edge_[dir_from]")
 				continue
-			var/image/edge_overlay = image('icons/turf/walls/asteroid.dmi', "edge[dir_from]")
+			var/image/edge_overlay = mutable_appearance('icons/turf/walls/asteroid.dmi', "edge[dir_from]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + 1
 			edge_overlay.plane = PLANE_NOSHADOW_BELOW
@@ -1274,7 +1281,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		if (src.ore)
 			src.ore.onHit(src)
-		//user.visible_message("<span class='alert'>[user.name] strikes [src] with [tool].</span>")
+		//user.visible_message(SPAN_ALERT("[user.name] strikes [src] with [tool]."))
 
 		var/dig_chance = 100
 		var/dig_feedback = null
@@ -1294,7 +1301,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			destroy_asteroid()
 		else
 			if (dig_feedback)
-				boutput(user, "<span class='alert'>[dig_feedback]</span>")
+				boutput(user, SPAN_ALERT("[dig_feedback]"))
 
 		return
 
@@ -1340,7 +1347,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			return
 		if (E)
 			if (E.excavation_string)
-				src.visible_message("<span class='alert'>[E.excavation_string]</span>")
+				src.visible_message(SPAN_ALERT("[E.excavation_string]"))
 			E.onExcavate(src)
 		var/ore_to_create = src.default_ore
 		if (ispath(ore_to_create) && dropOre)
@@ -1349,13 +1356,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				O.onExcavate(src)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
-				var/obj/item/raw_material/MAT = new ore_to_create
+				var/obj/item/raw_material/MAT = new ore_to_create(src)
 
 				// rocks don't deserve quality; moreover this speeds up big explosions since rocks don't need to copyMaterial() anymore
 				if(ore_to_create ==  /obj/item/raw_material/rock)
 					continue
-
-				MAT.set_loc(src)
 
 				if(MAT.material)
 					//If we don't use quality anymore, remove this
@@ -1430,12 +1435,12 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	icon = 'icons/turf/walls/asteroid.dmi'
 	icon_state = "astfloor1"
 	plane = PLANE_FLOOR //Try to get the edge overlays to work with shadowing. I dare ya.
-	oxygen = 0.001
-	nitrogen = 0.001
+	oxygen = 0
+	nitrogen = 0
 	temperature = TCMB
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
-	has_material = FALSE
+	default_material = null
 	var/sprite_variation = 1
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
@@ -1475,7 +1480,8 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		worldgenCandidates += src
 		if(current_state > GAME_STATE_PREGAME)
 			SPAWN(1)
-				space_overlays()
+				if(istype(src, /turf/simulated/floor/plating/airless/asteroid))
+					space_overlays()
 
 	generate_worldgen()
 		. = ..()
@@ -1499,6 +1505,8 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			tile.build(src)
 
 	update_icon()
+		. = ..()
+
 		var/image/ambient_light = src.GetOverlayImage("ambient")
 		var/image/weather = src.GetOverlayImage("weather")
 
@@ -1649,7 +1657,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			src.power_down()
 			OVERRIDE_COOLDOWN(src, "depowered", 8 SECONDS)
 			var/turf/T = get_turf(src)
-			T.visible_message("<span class='alert'>[src] runs out of charge and triggers an emergency shutdown!</span>")
+			T.visible_message(SPAN_ALERT("[src] runs out of charge and triggers an emergency shutdown!"))
 		return 1
 
 	attack_self(var/mob/user as mob)
@@ -1657,17 +1665,17 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			return
 		if (src.process_charges(0))
 			if(GET_COOLDOWN(src, "depowered"))
-				boutput(user, "<span class='alert'>[src] was recently power cycled and is still cooling down!</span>")
+				boutput(user, SPAN_ALERT("[src] was recently power cycled and is still cooling down!"))
 				return
 			if (!src.status)
-				boutput(user, "<span class='notice'>You power up [src].</span>")
+				boutput(user, SPAN_NOTICE("You power up [src]."))
 				src.power_up()
 				playsound(user.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 			else
-				boutput(user, "<span class='notice'>You power down [src].</span>")
+				boutput(user, SPAN_NOTICE("You power down [src]."))
 				src.power_down()
 		else
-			boutput(user, "<span class='alert'>No charge left in [src].</span>")
+			boutput(user, SPAN_ALERT("No charge left in [src]."))
 
 	afterattack(target as mob, mob/user as mob)
 		..()
@@ -1691,7 +1699,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			signal_event("icon_updated")
 		return
 
-obj/item/clothing/gloves/concussive
+/obj/item/clothing/gloves/concussive
 	name = "concussion gauntlets"
 	desc = "These gloves enable miners to punch through solid rock with their hands instead of using tools."
 	icon_state = "cgaunts"
@@ -1918,9 +1926,9 @@ TYPEINFO(/obj/item/mining_tool/drill)
 				if(user.bioHolder.HasEffect("clumsy") || src.emagged)
 					if(src.emagged)
 						user.visible_message("<b>CLICK</b>")
-						boutput(user, "<span class='alert'>The timing mechanism malfunctions!</span>")
+						boutput(user, SPAN_ALERT("The timing mechanism malfunctions!"))
 					else
-						boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
+						boutput(user, SPAN_ALERT("Huh? How does this thing work?!"))
 					logTheThing(LOG_COMBAT, user, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
 					SPAWN(0.5 SECONDS)
 						concussive_blast()
@@ -1928,8 +1936,8 @@ TYPEINFO(/obj/item/mining_tool/drill)
 						return
 				else
 					if (istype(target, /turf/simulated/wall/auto/asteroid/) && !src.hacked)
-						boutput(user, "<span class='alert'>You slap the charge on [target], [det_time/10] seconds!</span>")
-						user.visible_message("<span class='alert'>[user] has attached [src] to [target].</span>")
+						boutput(user, SPAN_ALERT("You slap the charge on [target], [det_time/10] seconds!"))
+						user.visible_message(SPAN_ALERT("[user] has attached [src] to [target]."))
 						src.icon_state = "bcharge2"
 						user.drop_item()
 
@@ -1950,28 +1958,28 @@ TYPEINFO(/obj/item/mining_tool/drill)
 							qdel(src)
 							return
 					else if (src.hacked) ..()
-					else boutput(user, "<span class='alert'>These will only work on asteroids.</span>")
+					else boutput(user, SPAN_ALERT("These will only work on asteroids."))
 			return
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 
 		if(!src.emagged && !src.hacked)
 			if (user)
-				boutput(user, "<span class='notice'>You short out the timing mechanism!</span>")
+				boutput(user, SPAN_NOTICE("You short out the timing mechanism!"))
 
 			src.desc += " It has been tampered with."
 			src.emagged = 1
 			return 1
 		else
 			if (user)
-				boutput(user, "<span class='alert'>This has already been tampered with.</span>")
+				boutput(user, SPAN_ALERT("This has already been tampered with."))
 			return 0
 
 	demag(var/mob/user)
 		if (!src.emagged)
 			return 0
 		if (user)
-			boutput(user, "<span class='notice'>You repair the timing mechanism!</span>")
+			boutput(user, SPAN_NOTICE("You repair the timing mechanism!"))
 		src.emagged = 0
 		src.desc = null
 		src.desc = "It is set to detonate in 5 seconds."
@@ -1980,11 +1988,11 @@ TYPEINFO(/obj/item/mining_tool/drill)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/chargehacker))
 			if(!src.emagged && !src.hacked)
-				boutput(user, "<span class='notice'>You short out the attachment mechanism, removing its restrictions!</span>")
+				boutput(user, SPAN_NOTICE("You short out the attachment mechanism, removing its restrictions!"))
 				src.desc += " It has been tampered with."
 				src.hacked = 1
 			else
-				boutput(user, "<span class='alert'>This has already been tampered with.</span>")
+				boutput(user, SPAN_ALERT("This has already been tampered with."))
 		else ..()
 
 	proc/concussive_blast()
@@ -2003,10 +2011,10 @@ TYPEINFO(/obj/item/mining_tool/drill)
 				C.changeStatus("stunned", 8 SECONDS)
 				C.changeStatus("weakened", 10 SECONDS)
 				C.stuttering += 15
-				boutput(C, "<span class='alert'>The concussive blast knocks you off your feet!</span>")
+				boutput(C, SPAN_ALERT("The concussive blast knocks you off your feet!"))
 			if(GET_DIST(src,C) <= src.expl_heavy)
 				C.TakeDamage("All",rand(15,25)*(1-C.get_explosion_resistance()),0)
-				boutput(C, "<span class='alert'>You are battered by the concussive shockwave!</span>")
+				boutput(C, SPAN_ALERT("You are battered by the concussive shockwave!"))
 
 /// Multiplier for power usage if the user is a silicon and the charge is coming from their internal cell
 #define SILICON_POWER_COST_MOD 10
@@ -2021,6 +2029,8 @@ TYPEINFO(/obj/item/cargotele)
 	icon_state = "cargotele"
 	/// Power cost per teleport
 	var/cost = 25
+	/// Length of action bar before teleport completes
+	var/teleport_delay = 3 SECONDS
 	/// Target pad we send cargo to. Make sure you're sending to the pad's loc and not the pad itself
 	var/obj/submachine/cargopad/target = null
 	/// Type of cell used in this
@@ -2059,16 +2069,16 @@ TYPEINFO(/obj/item/cargotele)
 		else
 			var/list/ret = list()
 			if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
-				. += "<span class='alert'>No power cell installed.</span>"
+				. += SPAN_ALERT("No power cell installed.")
 			else
 				. += "There are [ret["charge"]]/[ret["max_charge"]] PUs left! Each use will consume [cost]PU."
 
 	attack_self(mob/user) // Fixed --melon
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
-			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
+			boutput(user, SPAN_ALERT("The transporter is out of charge."))
 			return
 		if (!length(global.cargo_pad_manager.pads))
-			boutput(user, "<span class='alert'>No receivers available.</span>")
+			boutput(user, SPAN_ALERT("No receivers available."))
 		else
 			var/mob/holder = src.loc
 			var/selection = tgui_input_list(user, "Select Cargo Pad Location:", "Cargo Pads", global.cargo_pad_manager.pads, 15 SECONDS)
@@ -2083,21 +2093,21 @@ TYPEINFO(/obj/item/cargotele)
 			return ..()
 		if (O.artifact || src.allowed_types[O.type])
 			if (O.anchored)
-				boutput(user, "<span class='alert'>You can't teleport [O] while it is anchored!</span>")
+				boutput(user, SPAN_ALERT("You can't teleport [O] while it is anchored!"))
 				return
 			src.try_teleport(O, user)
 
 	proc/can_teleport(var/obj/cargo, var/mob/user)
 		if (!src.target)
-			boutput(user, "<span class='alert'>You need to set a target first!</span>")
+			boutput(user, SPAN_ALERT("You need to set a target first!"))
 			return FALSE
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
-			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
+			boutput(user, SPAN_ALERT("The transporter is out of charge."))
 			return FALSE
 		if (isrobot(user))
 			var/mob/living/silicon/robot/R = user
 			if (R.cell.charge < src.cost * SILICON_POWER_COST_MOD)
-				boutput(user, "<span class='alert'>There is not enough charge left in your cell to use this.</span>")
+				boutput(user, SPAN_ALERT("There is not enough charge left in your cell to use this."))
 				return FALSE
 
 		return TRUE
@@ -2111,9 +2121,9 @@ TYPEINFO(/obj/item/cargotele)
 		if (!src.can_teleport(cargo, user))
 			return FALSE
 
-		boutput(user, "<span class='notice'>Teleporting [cargo] to [src.target]...</span>")
+		boutput(user, SPAN_NOTICE("Teleporting [cargo] to [src.target]..."))
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
-		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null)
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, src.teleport_delay, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null)
 		return TRUE
 
 
@@ -2145,11 +2155,18 @@ TYPEINFO(/obj/item/cargotele)
 		else
 			var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
 			if (ret & CELL_INSUFFICIENT_CHARGE)
-				boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
+				boutput(user, SPAN_ALERT("Transfer successful. The transporter is now out of charge."))
 			else
-				boutput(user, "<span class='notice'>Transfer successful.</span>")
+				boutput(user, SPAN_NOTICE("Transfer successful."))
 
 #undef SILICON_POWER_COST_MOD
+
+/obj/item/cargotele/efficient
+	name = "Hedron cargo transporter"
+	desc = "A device for teleporting crated goods. It's modified a bit from the standard design, and boasts improved efficiency and transport speed."
+	cost = 20
+	teleport_delay = 2 SECONDS
+	icon_state = "cargotelegreen"
 
 /obj/item/cargotele/traitor
 	cost = 15
@@ -2163,7 +2180,7 @@ TYPEINFO(/obj/item/cargotele)
 
 	can_teleport(obj/cargo, mob/user)
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
-			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
+			boutput(user, SPAN_ALERT("The transporter is out of charge."))
 			return FALSE
 		return TRUE
 
@@ -2174,7 +2191,7 @@ TYPEINFO(/obj/item/cargotele)
 
 	finish_teleport(var/obj/cargo, var/mob/user)
 		src.target = random_space_turf() || random_nonrestrictedz_turf()
-		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
+		boutput(user, SPAN_NOTICE("Teleporting [cargo]..."))
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
 		var/value = shippingmarket.appraise_value(cargo.contents, sell = FALSE)
 		// Logs for good measure (Convair880).
@@ -2201,7 +2218,7 @@ TYPEINFO(/obj/item/cargotele)
 		else
 			boutput(user, "[bicon(src)] The [src.name] beeps: transfer successful, no account registered.")
 		if (ret & CELL_INSUFFICIENT_CHARGE)
-			boutput(user, "<span class='alert'>[src] is now out of charge.</span>")
+			boutput(user, SPAN_ALERT("[src] is now out of charge."))
 
 	attackby(obj/item/item, mob/user)
 		var/owner_name = null
@@ -2215,7 +2232,7 @@ TYPEINFO(/obj/item/cargotele)
 			var/obj/item/card/id/card = item
 			owner_name = card.registered
 		if (owner_name)
-			boutput(user, "<span class='notice'>You set [src]'s payout account.</span>")
+			boutput(user, SPAN_NOTICE("You set [src]'s payout account."))
 			src.account = data_core.bank.find_record("name", owner_name)
 			return
 		..()
@@ -2323,7 +2340,7 @@ TYPEINFO(/obj/item/cargotele)
 		..()
 
 	attack_hand(var/mob/user)
-		if (!src.cell) boutput(user, "<span class='alert'>It won't work without a power cell!</span>")
+		if (!src.cell) boutput(user, SPAN_ALERT("It won't work without a power cell!"))
 		else
 			var/action = tgui_input_list(user, "What do you want to do?", "Mineral Accumulator", list("Flip the power switch","Change the destination","Remove the power cell"))
 			if (action == "Remove the power cell")
@@ -2352,7 +2369,7 @@ TYPEINFO(/obj/item/cargotele)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/cell/))
-			if (src.cell) boutput(user, "<span class='alert'>It already has a power cell inserted!</span>")
+			if (src.cell) boutput(user, SPAN_ALERT("It already has a power cell inserted!"))
 			else
 				user.drop_item()
 				W.set_loc(src)
@@ -2364,14 +2381,14 @@ TYPEINFO(/obj/item/cargotele)
 		var/moved = 0
 		if (src.active)
 			if (!src.cell)
-				src.visible_message("<span class='alert'>[src] instantly shuts itself down.</span>")
+				src.visible_message(SPAN_ALERT("[src] instantly shuts itself down."))
 				src.active = 0
 				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
 			var/obj/item/cell/PCEL = src.cell
 			if (PCEL.charge <= 0)
-				src.visible_message("<span class='alert'>[src] runs out of power and shuts down.</span>")
+				src.visible_message(SPAN_ALERT("[src] runs out of power and shuts down."))
 				src.active = 0
 				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
@@ -2415,7 +2432,7 @@ TYPEINFO(/obj/item/cargotele)
 
 	proc/change_dest(mob/user as mob)
 		if (!length(cargo_pad_manager.pads))
-			boutput(user, "<span class='alert'>No receivers available.</span>")
+			boutput(user, SPAN_ALERT("No receivers available."))
 		else
 			var/list/L
 			if (src.group)
@@ -2430,7 +2447,7 @@ TYPEINFO(/obj/item/cargotele)
 				return
 			var/turf/T = get_turf(selection)
 			if (!T)
-				boutput(user, "<span class='alert'>Target not set!</span>")
+				boutput(user, SPAN_ALERT("Target not set!"))
 				return
 			boutput(user, "Target set to [selection] at [T.loc].")
 			src.target = T
@@ -2559,12 +2576,12 @@ TYPEINFO(/obj/submachine/cargopad)
 
 	proc/toggle(mob/user)
 		if (src.active == 1)
-			boutput(user, "<span class='notice'>You switch the receiver off.</span>")
+			boutput(user, SPAN_NOTICE("You switch the receiver off."))
 			UpdateOverlays(null, "lights")
 			src.active = FALSE
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_DISABLED, src)
 		else
-			boutput(user, "<span class='notice'>You switch the receiver on.</span>")
+			boutput(user, SPAN_NOTICE("You switch the receiver on."))
 			UpdateOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
 			src.active = TRUE
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
@@ -2621,21 +2638,21 @@ TYPEINFO(/obj/item/ore_scoop)
 				src.icon_state = "scoop-bag"
 				user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
 			else
-				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
+				boutput(user, SPAN_ALERT("The satchel is firmly secured to the scoop."))
 		else
 			..()
 			return
 
 	attack_self(var/mob/user as mob)
 		if(issilicon(user))
-			boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
+			boutput(user, SPAN_ALERT("The satchel is firmly secured to the scoop."))
 			return
 		if (!satchel)
 			src.collect_junk = !src.collect_junk
 			if (src.collect_junk)
-				boutput(user, "<span class='info'>Now collecting junk.</span>")
+				boutput(user, SPAN_NOTICE("Now collecting junk."))
 			else
-				boutput(user, "<span class='info'>No longer collecting junk.</span>")
+				boutput(user, SPAN_NOTICE("No longer collecting junk."))
 		else
 			user.visible_message("[user] unloads [satchel] from [src].", "You unload [satchel] from [src].")
 			user.put_in_hand_or_drop(satchel)
@@ -2646,10 +2663,10 @@ TYPEINFO(/obj/item/ore_scoop)
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if(isturf(target))
 			if (!satchel)
-				boutput(user, "<span class='alert'>There's no satchel in [src] to dump out.</span>")
+				boutput(user, SPAN_ALERT("There's no satchel in [src] to dump out."))
 				return
 			if (length(satchel.contents) < 1)
-				boutput(user, "<span class='alert'>The satchel in [src] is empty.</span>")
+				boutput(user, SPAN_ALERT("The satchel in [src] is empty."))
 				return
 			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
 			for (var/obj/item/I in satchel.contents)
@@ -2682,7 +2699,7 @@ TYPEINFO(/obj/item/ore_scoop)
 				src.icon_state = "scoop-bag"
 				user.visible_message("[user] inserts [new_satchel] into [src].", "You insert [new_satchel] into [src].")
 			else
-				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
+				boutput(user, SPAN_ALERT("The satchel is firmly secured to the scoop."))
 
 ////// Shit that goes in the asteroid belt, might split it into an exploring.dm later i guess
 
@@ -2692,7 +2709,7 @@ TYPEINFO(/obj/item/ore_scoop)
 	icon_state = "ancient"
 
 	attackby(obj/item/W, mob/user)
-		boutput(user, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		boutput(user, SPAN_COMBAT("You attack [src] with [W] but fail to even make a dent!"))
 		return
 
 	ex_act(severity)
@@ -2712,7 +2729,7 @@ TYPEINFO(/obj/item/ore_scoop)
 	step_priority = STEP_PRIORITY_MED
 
 	attackby(obj/item/W, mob/user)
-		boutput(user, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		boutput(user, SPAN_COMBAT("You attack [src] with [W] but fail to even make a dent!"))
 		return
 
 	ex_act(severity)
@@ -2726,7 +2743,7 @@ TYPEINFO(/obj/item/ore_scoop)
 	step_priority = STEP_PRIORITY_MED
 
 	attackby(obj/item/W, mob/user)
-		boutput(user, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		boutput(user, SPAN_COMBAT("You attack [src] with [W] but fail to even make a dent!"))
 		return
 
 	ex_act(severity)

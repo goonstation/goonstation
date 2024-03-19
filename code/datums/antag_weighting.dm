@@ -17,7 +17,7 @@ var/global/datum/antagWeighter/antagWeighter
 
 
 	proc/debugLog(msg)
-		out(world, msg)
+		boutput(world, msg)
 		//logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> [msg]")
 
 

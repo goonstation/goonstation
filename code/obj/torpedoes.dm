@@ -11,13 +11,13 @@
 		if (T)
 			for (var/mob/living/carbon/human/M in view(src, 2))
 				if (istype(M.wear_suit, /obj/item/clothing/suit/armor))
-					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
+					boutput(M, SPAN_ALERT("Your armor blocks the shrapnel!"))
 					M.TakeDamage("chest", 5, 0)
 				else
 					M.TakeDamage("chest", 15, 0)
 					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
-					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
+					boutput(M, SPAN_ALERT("You are struck by shrapnel!"))
 					if (!M.stat)
 						M.emote("scream")
 		qdel(src)
@@ -46,7 +46,7 @@
 
 	explode()
 		new/obj/effect/supplyexplosion(src.loc)
-		tfireflash(src, 8, 9800, 0)
+		fireflash(src, 8, 9800)
 		qdel(src)
 		return
 
@@ -123,9 +123,6 @@
 		targeter = new(src.loc, src)
 		return ..()
 
-	get_movement_controller()
-		return movement_controller
-
 	attack_hand(mob/user)
 		if(src.controller && src.controller.loc != src)
 			src.exit(0)
@@ -144,8 +141,9 @@
 		if(tube)
 			inUse = TRUE
 			user.set_loc(src)
+			user.override_movement_controller = src.movement_controller
 			user.pixel_y = -8
-			boutput(user, "<span class='hint'><b>Press Q or E to exit targeting.</b></span>")
+			boutput(user, SPAN_HINT("<b>Press Q or E to exit targeting.</b>"))
 			vis_contents += user
 			controller = user
 			user.reset_keymap()
@@ -189,6 +187,7 @@
 			if(controller.client && targeter)
 				controller.client.images -= targeter.trgImage
 				controller.client.eye = controller
+			controller.override_movement_controller = null
 			controller = null
 			inUse = FALSE
 		return
@@ -289,7 +288,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
 
 	proc/open()
 		if(is_blocked_turf(get_step(src, SOUTH)))
-			boutput(usr, "<span class='alert'><b>You can't open the tube, something is blocking the way.</b></span>")
+			boutput(usr, SPAN_ALERT("<b>You can't open the tube, something is blocking the way.</b>"))
 			return
 		tray_obj = new/obj/torpedo_tube_tray(get_step(src, SOUTH))
 		tray_obj.parent = src
@@ -384,12 +383,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
 				M.set_loc(src.loc)
 				logTheThing(LOG_COMBAT, user, " laods [constructTarget(target,"combat")] onto \the [src] at [log_loc(user)]")
 				logTheThing(LOG_DIARY, user, " laods [constructTarget(target,"diary")] onto \the [src] at [log_loc(user)]", "combat")
-				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto [src]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user.name] shoves [target.name] onto [src]!</b>"))
 			else
 				M.set_loc(src.loc)
 				logTheThing(LOG_COMBAT, user, " loads [constructTarget(target,"combat")] into \the [src] at [log_loc(src)]")
 				logTheThing(LOG_DIARY, user, " loads [constructTarget(target,"diary")] into \the [src] at [log_loc(src)]", "combat")
-				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto \the [src]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user.name] shoves [target.name] onto \the [src]!</b>"))
 				return
 
 	attackby(var/obj/item/I, var/mob/user)
@@ -400,7 +399,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
 				GM.set_loc(src.loc)
 				GM.setStatus("resting", INFINITE_STATUS)
 				GM.force_laydown_standup()
-				user.visible_message("<span class='alert'><b>[user.name] shoves [GM.name] onto [src]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user.name] shoves [GM.name] onto [src]!</b>"))
 				logTheThing(LOG_COMBAT, user, " loads [constructTarget(GM,"combat")] into \the [src] at [log_loc(src)]")
 				logTheThing(LOG_DIARY, user, " loads [constructTarget(GM,"diary")] into \the [src] at [log_loc(src)]", "combat")
 				qdel(G)
@@ -410,7 +409,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
 	hitby(var/atom/movable/M, var/datum/thrown_thing/thr)
 		if (ishuman(M) && M.throwing)
 			var/mob/living/carbon/human/thrown_person = M
-			M.visible_message("<span class='alert'><b>[thrown_person] [thrown_person.throwing & THROW_SLIP ? "slips" : "falls"] onto [src]! [src] slams closed!</b></span>")
+			M.visible_message(SPAN_ALERT("<b>[thrown_person] [thrown_person.throwing & THROW_SLIP ? "slips" : "falls"] onto [src]! [src] slams closed!</b>"))
 			logTheThing(LOG_COMBAT, thrown_person, " falls into \the [src] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
 			thrown_person.set_loc(src.loc)
 			parent?.close()

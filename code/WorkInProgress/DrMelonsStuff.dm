@@ -14,14 +14,14 @@
 	process()
 		if(reagents.has_reagent("radium"))
 			src.reagents.clear_reagents()
-			src.visible_message("<span class='alert'>The <B>[src]</B> makes an odd sound, and releases a puff of green steam.</span>")
+			src.visible_message(SPAN_ALERT("The <B>[src]</B> makes an odd sound, and releases a puff of green steam."))
 
 		if(on == 1)
 			if(length(reagents.reagent_list) < 1 || reagents.total_volume < 1)
 				on = 0
 				icon_state = "fogmachine0"
 
-				src.visible_message("<span class='alert'>The <B>[src]</B> splutters to a halt.</span>")
+				src.visible_message(SPAN_ALERT("The <B>[src]</B> splutters to a halt."))
 				playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 			else
 				SPAWN(5 SECONDS)
@@ -80,13 +80,13 @@
 	attack_hand(mob/user)
 		if(on == 0)
 			on = 1
-			boutput(user, "<span class='notice'>You flip the switch on the FogMachine-3000 to the On position.</span>")
+			boutput(user, SPAN_NOTICE("You flip the switch on the FogMachine-3000 to the On position."))
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			return
 		if(on == 1)
 			on = 0
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-			boutput(user, "<span class='notice'>You flip the switch on the FogMachine-3000 to the Off position.</span>")
+			boutput(user, SPAN_NOTICE("You flip the switch on the FogMachine-3000 to the Off position."))
 			return
 
 /obj/machinery/bathtub
@@ -116,7 +116,7 @@
 
 	mob_flip_inside(var/mob/user)
 		if (src.reagents.total_volume)
-			user.visible_message("<span class='notice'>[src.occupant] splish-splashes around.</span>", "<span class='alert'>You splash around enough to shake the tub!</span>", "<span class='notice'>You hear liquid splash on the ground.</span>")
+			user.visible_message(SPAN_NOTICE("[src.occupant] splish-splashes around."), SPAN_ALERT("You splash around enough to shake the tub!"), SPAN_NOTICE("You hear liquid splash on the ground."))
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			animate_wiggle_then_reset(src, 1, 3)
 			src.reagents.trans_to(src.last_turf, 5)
@@ -143,7 +143,7 @@
 		if (isintangible(usr))
 			return
 		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
-			boutput(usr, "<span class='alert'>That's too far!</span>")
+			boutput(usr, SPAN_ALERT("That's too far!"))
 			return
 		if (src.occupant)
 			eject_occupant(usr, over_object)
@@ -160,7 +160,7 @@
 			return
 		if (!reagents)
 			return
-		. += "<br><span class='notice'>[reagents.get_description(user,RC_FULLNESS|RC_VISIBLE|RC_SPECTRO)]</span>"
+		. += "<br>[SPAN_NOTICE("[reagents.get_description(user,RC_FULLNESS|RC_VISIBLE|RC_SPECTRO)]")]"
 		return
 
 	// using overlay levels so it looks like you're in the bath
@@ -211,10 +211,10 @@
 		if (is_incapacitated(user))
 			return
 		if (issilicon(user) || isAI(user))
-			boutput("<span class='alert'>You can't quite lift [src.occupant] out of the tub!</span>")
+			boutput(user, SPAN_ALERT("You can't quite lift [src.occupant] out of the tub!"))
 			return
 		if (!src.occupant)
-			boutput("<span class='alert'>There's no one inside!</span>")
+			boutput(user, SPAN_ALERT("There's no one inside!"))
 			return
 		src.occupant.set_loc(get_turf(src))
 
@@ -248,14 +248,14 @@
 	proc/turn_tap(mob/user)
 		src.add_fingerprint(user)
 		if (on)
-			user.visible_message("[user] turns off the bathtub's tap.", "You turn off the bathtub's tap.")
+			user.visible_message(SPAN_NOTICE("[user] turns off the bathtub's tap."), SPAN_NOTICE("You turn off the bathtub's tap."))
 			playsound(src.loc, 'sound/effects/valve_creak.ogg', 30, 2)
 			on = FALSE
 		else
 			if(src.reagents.is_full())
-				boutput(user, "<span class='alert'>The tub is already full!</alert>")
+				boutput(user, SPAN_NOTICE("The tub is already full!</alert>"))
 			else
-				user.visible_message("[user] turns on the bathtub's tap.", "You turn on the bathtub's tap.")
+				user.visible_message(SPAN_NOTICE("[user] turns on the bathtub's tap."), SPAN_NOTICE("You turn on the bathtub's tap."))
 				playsound(src.loc, 'sound/misc/pourdrink.ogg', 60, 4)
 				src.on_reagent_change()
 				on = TRUE
@@ -264,7 +264,7 @@
 		src.add_fingerprint(user)
 		if (GET_DIST(user, src) <= 1 && !is_incapacitated(user))
 			if (src.reagents.total_volume)
-				user.visible_message("<span class='notice'>[user] reaches into the bath and pulls the plug.", "<span class='notice'>You reach into the bath and pull the plug.</span>")
+				user.visible_message(SPAN_NOTICE("[user] reaches into the bath and pulls the plug."), SPAN_NOTICE("You reach into the bath and pull the plug."))
 				if (ishuman(user))
 					var/mob/living/carbon/human/H = user
 					if(!H.gloves)
@@ -278,9 +278,9 @@
 					count++
 					qdel(O)
 				if (count > 0)
-					user.visible_message("<span class='alert'>...and something flushes down the drain. Damn!", "<span class='alert'>...and flush something down the drain. Damn!</span>")
+					user.visible_message(SPAN_ALERT("...and something flushes down the drain. Damn!"), SPAN_ALERT("...and flushes something down the drain. Damn!"))
 			else
-				boutput(user, "<span class='notice'>The bathtub's already empty.</span>")
+				boutput(user, SPAN_NOTICE("The bathtub's already empty."))
 
 	relaymove(mob/user)
 		user.set_loc(src.loc)
@@ -290,7 +290,7 @@
 			src.reagents.add_reagent(src.default_reagent, 100)
 			src.on_reagent_change()
 			if (src.reagents.is_full())
-				src.visible_message("<span class='notice'>As the [src] finishes filling, the tap shuts off automatically.</span>")
+				src.visible_message(SPAN_NOTICE("As the [src] finishes filling, the tap shuts off automatically."))
 				playsound(src.loc, 'sound/misc/pourdrink2.ogg', 60, 5)
 				src.on = FALSE
 		if (src.occupant)
@@ -316,7 +316,7 @@
 		..()
 		if (Obj == src.occupant)
 			var/mob/M = Obj
-			src.visible_message("<span class='notice'>[M] gets out of the bath.</span>", "<span class='notice'>You get out of the bath.</span>")
+			src.visible_message(SPAN_NOTICE("[M] gets out of the bath."), SPAN_NOTICE("You get out of the bath."))
 			if (src.reagents?.total_volume)
 				playsound(src.loc, 'sound/misc/splash_1.ogg', 70, 3)
 				src.blood_bath(M)
@@ -334,13 +334,13 @@
 		if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 1 || BOUNDS_DIST(user, target) > 1 || is_incapacitated(user) || isAI(user))
 			return
 		if (src.occupant)
-			boutput(user, "<span class='alert'>Someone's already in the [src]!</span>")
+			boutput(user, SPAN_ALERT("Someone's already in the [src]!"))
 			return
 
 		if(target == user && !user.stat)
 			target.visible_message("[user.name] climbs into the [src].", "You climb into the [src]")
 		else if(target != user && !user.restrained())
-			target.visible_message("<span class='alert'>[user.name] pushes [target.name] into the [src]!</alert>", "<span class='alert'>[user.name] pushes you into the [src]!</span>")
+			target.visible_message(SPAN_ALERT("[user.name] pushes [target.name] into the [src]!"), SPAN_NOTICE("[user.name] pushes you into the [src]!"))
 		else
 			return
 
@@ -354,17 +354,17 @@
 	proc/fantasia()
 		if(ticker?.mode && istype(ticker.mode, /datum/game_mode/wizard))
 			for (var/obj/item/mop/M in orange(5,src))
-				src.visible_message("<span class='alert'>[src] begins to twitch and move!</span>")
+				src.visible_message(SPAN_ALERT("[src] begins to twitch and move!"))
 				var/moveto = locate(M.x + rand(-1,1),M.y + rand(-1, 1),src.z)
 				//make the mops move
 				if (istype(moveto, /turf/simulated/floor) || istype(moveto, /turf/simulated/floor/shuttle) || istype(moveto, /turf/simulated/aprilfools/floor) || istype(moveto, /turf/unsimulated/floor) || istype(moveto, /turf/unsimulated/aprilfools)) step_towards(M, moveto)
 				SPAWN(5 SECONDS)
-					src.visible_message("<span class='notice'>Thankfully, [src] settles down.</span>")
+					src.visible_message(SPAN_NOTICE("Thankfully, [src] settles down."))
 		else
 			for (var/obj/item/mop/M in orange(5,src))
-				src.visible_message("<span class='alert'>[src] begins to twitch and mov- oh. No. No it doesn't.</span>")
+				src.visible_message(SPAN_ALERT("[src] begins to twitch and mov- oh. No. No it doesn't."))
 
 /obj/item/clothing/head/apprentice/equipped(var/mob/user, var/slot)
-	boutput(user, "<span class='notice'>Your head tingles with magic! Or asbestos. Probably asbestos.</span>")
+	boutput(user, SPAN_NOTICE("Your head tingles with magic! Or asbestos. Probably asbestos."))
 	src.fantasia()
 	..()

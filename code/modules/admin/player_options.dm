@@ -22,6 +22,7 @@
 
 	var/mentor = M.client?.player?.mentor
 	var/hos = (M.ckey in NT)
+	var/is_admin = M.client?.holder && ! M.client.player_mode
 
 	// The topBar style here is so that it can continue to happily chill at the top of even chui windows
 	var/header_thing_chui_toggle = (usr.client && !usr.client.use_chui) ? "<style type='text/css'>#topBar { top: 0; left: 0; right: 0; background-color: white; } </style>" : "<style type='text/css'>#topBar { top: 46px; left: 4px; right: 10px; background: inherit; }</style>"
@@ -91,6 +92,10 @@
 			color: #2237AD;
 		}
 
+		.admin {
+			color: #BE6E53;
+		}
+
 		#topBar {
 			position: fixed;
 			padding: 0.2em 0.5em;
@@ -146,7 +151,7 @@
 		<a href='?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.key ? M.key : M.name];origin=adminplayeropts'>Logs</a> &bull;
 		<a href='?src=\ref[src];action=refreshoptions;targetckey=[M.ckey];targetmob=\ref[M];'>&#8635;</a>
 	</div>
-	<b>[M.name]</b> (<tt>[html_key_string]</tt>)[mentor ? " <b class='mentor'>(Mentor)</b>" : ""][hos ? " <b class='hos'>(HoS)</b>" : ""]
+	<b>[M.name]</b> (<tt>[html_key_string]</tt>)[mentor ? " <b class='mentor'>(Mentor)</b>" : ""][hos ? " <b class='hos'>(HoS)</b>" : ""][is_admin ? " <b class='admin'>(Admin)</b>" : ""]
 </div>
 
 <div id="mobInfo">
@@ -170,7 +175,8 @@
 						<a href='[playeropt_link(M, "subtlemsg")]'>Subtle PM</a> &bull;
 						<a href='[playeropt_link(M, "plainmsg")]'>Plain Message</a> &bull;
 						<a href='[playeropt_link(M, "adminalert")]'>Alert</a> &bull;
-						<a href='[playeropt_link(M, "showrules")]'>Show Rules</a>
+						<a href='[playeropt_link(M, "showrules;type=normal")]'>Show Rules</a> &bull;
+						<a href='[playeropt_link(M, "showrules;type=rp")]'>Show RP Rules</a>
 					</div>
 				</div>
 			</div>
@@ -281,7 +287,8 @@
 						<a href='[playeropt_link(M, "jumpto")]'>Jump to</A> &bull;
 						<a href='[playeropt_link(M, "observe")]'>Observe</A> &bull;
 						<a href='[playeropt_link(M, "getmob")]'>Get</a> &bull;
-						<a href='[playeropt_link(M, "sendmob")]'>Send to...</a>
+						<a href='[playeropt_link(M, "sendmob")]'>Send to...</a> &bull;
+						<a href='[playeropt_link(M, "viewport")]'>Viewport</a>
 						<br>Currently in [A]
 			"}
 		if (T) //runtime fix for mobs in null space
@@ -360,6 +367,7 @@
 				<div class='optionGroup' style='border-color: #B57EDC;'>
 					<h2 style='background-color: #B57EDC;'>Antagonist Options</h2>
 					<div>
+						[jobban_isbanned(M, "Syndicate") ? "<div class='antag'>⚠ This player is antag banned ⚠</div>" : ""]
 						<div class='l'>Options</div>
 						<div class='r'>
 							<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a> &bull;

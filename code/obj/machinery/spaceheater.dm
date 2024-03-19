@@ -91,13 +91,13 @@ TYPEINFO(/obj/machinery/space_heater)
 						C.set_loc(src)
 						C.add_fingerprint(user)
 
-						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
+						user.visible_message(SPAN_NOTICE("[user] inserts a power cell into [src]."), SPAN_NOTICE("You insert the power cell into [src]."))
 			else
 				boutput(user, "The hatch must be open to insert a power cell.")
 				return
 		else if (isscrewingtool(I))
 			open = !open
-			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] [open ? "opens" : "closes"] the hatch on the [src]."), SPAN_NOTICE("You [open ? "open" : "close"] the hatch on the [src]."))
 			UpdateIcon()
 			if(!open && user.using_dialog_of(src))
 				user.Browse(null, "window=spaceheater")
@@ -144,7 +144,7 @@ TYPEINFO(/obj/machinery/space_heater)
 				user.show_text("The button seems to be stuck!", "red")
 			else
 				on = !on
-				user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
+				user.visible_message(SPAN_NOTICE("[user] switches [on ? "on" : "off"] the [src]."),SPAN_NOTICE("You switch [on ? "on" : "off"] the [src]."))
 				UpdateIcon()
 
 
@@ -185,7 +185,7 @@ TYPEINFO(/obj/machinery/space_heater)
 						usr.put_in_hand_or_drop(cell)
 						cell = null
 
-						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
+						usr.visible_message(SPAN_NOTICE("[usr] removes the power cell from \the [src]."), SPAN_NOTICE("You remove the power cell from \the [src]."))
 
 
 				if("cellinstall")
@@ -197,7 +197,7 @@ TYPEINFO(/obj/machinery/space_heater)
 							C.set_loc(src)
 							C.add_fingerprint(usr)
 
-							usr.visible_message("<span class='notice'>[usr] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
+							usr.visible_message(SPAN_NOTICE("[usr] inserts a power cell into \the [src]."), SPAN_NOTICE("You insert the power cell into \the [src]."))
 
 			updateDialog()
 		else
@@ -324,13 +324,13 @@ TYPEINFO(/obj/machinery/sauna_stove)
 						C.set_loc(src)
 						C.add_fingerprint(user)
 
-						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
+						user.visible_message(SPAN_NOTICE("[user] inserts a power cell into [src]."), SPAN_NOTICE("You insert the power cell into [src]."))
 			else
 				boutput(user, "The hatch must be open to insert a power cell.")
 				return
 		else if (isscrewingtool(I))
 			open = !open
-			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] [open ? "opens" : "closes"] the hatch on the [src]."), SPAN_NOTICE("You [open ? "open" : "close"] the hatch on the [src]."))
 			UpdateIcon()
 			if(!open && user.using_dialog_of(src))
 				user.Browse(null, "window=saunastove")
@@ -368,7 +368,7 @@ TYPEINFO(/obj/machinery/sauna_stove)
 
 		else
 			on = !on
-			user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] switches [on ? "on" : "off"] the [src]."),SPAN_NOTICE("You switch [on ? "on" : "off"] the [src]."))
 			UpdateIcon()
 
 			if (on)
@@ -398,7 +398,7 @@ TYPEINFO(/obj/machinery/sauna_stove)
 						usr.put_in_hand_or_drop(cell)
 						cell = null
 
-						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
+						usr.visible_message(SPAN_NOTICE("[usr] removes the power cell from \the [src]."), SPAN_NOTICE("You remove the power cell from \the [src]."))
 
 
 				if("cellinstall")
@@ -410,7 +410,7 @@ TYPEINFO(/obj/machinery/sauna_stove)
 							C.set_loc(src)
 							C.add_fingerprint(usr)
 
-							usr.visible_message("<span class='notice'>[usr] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
+							usr.visible_message(SPAN_NOTICE("[usr] inserts a power cell into \the [src]."), SPAN_NOTICE("You insert the power cell into \the [src]."))
 
 			updateDialog()
 		else

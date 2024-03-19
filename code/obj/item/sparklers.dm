@@ -33,22 +33,22 @@
 	attackby(obj/item/W, mob/user)
 		if (!src.on && sparks)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
+				src.light(user, SPAN_ALERT("<b>[user]</b> casually lights [src] with [W], what a badass."))
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</span>")
+				src.light(user, SPAN_ALERT("Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit."))
 
 			else if (istype(W, /obj/item/device/igniter))
-				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; sparks erupt from [src].</span>")
+				src.light(user, SPAN_ALERT("<b>[user]</b> fumbles around with [W]; sparks erupt from [src]."))
 
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
-				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				src.light(user, SPAN_ALERT("With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool."))
 
 			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
-				src.light(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
+				src.light(user, SPAN_ALERT("<b>[user] lights [src] with [W]."))
 
 			else if (W.burning)
-				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				src.light(user, SPAN_ALERT("<b>[user]</b> lights [src] with [W]. Goddamn."))
 		else
 			return ..()
 
@@ -133,7 +133,7 @@
 				src.open = 1
 				src.icon_state = "sparkler_box-open"
 				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 20, 1, -2)
-				boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
+				boutput(user, SPAN_NOTICE("You snap open the child-protective safety tape on [src]."))
 		else
 			..()
 
@@ -144,7 +144,7 @@
 			src.open = 1
 			src.icon_state = "sparkler_box-open"
 			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 20, 1, -2)
-			boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
+			boutput(user, SPAN_NOTICE("You snap open the child-protective safety tape on [src]."))
 
 	mouse_drop(atom/over_object, src_location, over_location)
 		if(!src.open)

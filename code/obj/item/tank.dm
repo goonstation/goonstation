@@ -40,6 +40,8 @@ Contains:
 	var/integrity = 3
 	/// Whether or not this tank can be used in a tank transfer valve.
 	var/compatible_with_TTV = TRUE
+	/// Tank's previous pressure. Used for tanks that are going to explode
+	var/previous_pressure = null
 
 	New()
 		..()
@@ -92,7 +94,7 @@ Contains:
 		return FALSE
 
 	proc/set_release_pressure(pressure)
-		distribute_pressure = clamp(pressure, 0, TANK_MAX_RELEASE_PRESSURE)
+		distribute_pressure = clamp(pressure, 1, TANK_MAX_RELEASE_PRESSURE)
 
 	proc/toggle_valve()
 		if (iscarbon(src.loc))
@@ -107,13 +109,13 @@ Contains:
 				location.internal = null
 				if (location.internals)
 					location.internals.icon_state = "internal0"
-				boutput(location, "<span class='notice'>You close the tank release valve.</span>")
+				boutput(location, SPAN_NOTICE("You close the tank release valve."))
 				return FALSE
 			else
 				if(location.wear_mask && (location.wear_mask.c_flags & MASKINTERNALS))
 					if(!isnull(location.internal)) //you're already using a tank and it's not this one
 						location.internal.toggle_valve()
-						boutput(location, "<span class='notice'>After closing the valve on your other tank, you switch to this one.</span>")
+						boutput(location, SPAN_NOTICE("After closing the valve on your other tank, you switch to this one."))
 					location.internal = src
 
 					for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
@@ -121,10 +123,10 @@ Contains:
 							T.icon_state = "airon"
 					if (location.internals)
 						location.internals.icon_state = "internal1"
-					boutput(location, "<span class='notice'>You open the tank release valve.</span>")
+					boutput(location, SPAN_NOTICE("You open the tank release valve."))
 					return TRUE
 				else
-					boutput(location, "<span class='alert'>The valve immediately closes! You need to put on a mask first.</span>")
+					boutput(location, SPAN_ALERT("The valve immediately closes! You need to put on a mask first."))
 					playsound(src.loc, 'sound/items/penclick.ogg', 50, TRUE)
 					return FALSE
 
@@ -138,6 +140,7 @@ Contains:
 	process()
 		//Allow for reactions
 		if (air_contents)
+			src.previous_pressure = MIXTURE_PRESSURE(air_contents)
 			air_contents.react()
 			src.inventory_counter.update_text("[round(MIXTURE_PRESSURE(air_contents))]\nkPa")
 		check_status()
@@ -148,36 +151,45 @@ Contains:
 			return FALSE
 		var/pressure = MIXTURE_PRESSURE(air_contents)
 		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
+			// How much pressure we needed to hit the fragment limit. Makes it so there is almost always only 3 additional reacts.
+			// (Hard limit above meant that you could get effectively either ~3.99 reacts or ~2.99, creating inconsistency in explosions)
+			var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / (pressure - src.previous_pressure))
 			//Give the gas a chance to build up more pressure through reacting
 			playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 			air_contents.react()
 			air_contents.react()
-			air_contents.react()
+			air_contents.react(mult=0.5)
+			air_contents.react(mult=react_compensation)
 			pressure = MIXTURE_PRESSURE(air_contents)
 
-			var/range = (pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
+			//wooo magic numbers! 70 is the default volume of an air tank and quad rooting it seems to produce pretty reasonable scaling
+			// scale for pocket oxy (3L): ~0.455 | extended pocket oxy (7L): ~0.562 | handheld (70L): 1
+			var/volume_scale = (air_contents.volume / 70) ** (1/4)
+			var/range = (pressure - TANK_FRAGMENT_PRESSURE) * volume_scale / TANK_FRAGMENT_SCALE
 			// (pressure - 5066.25 kpa) divided by 1013.25 kpa
 			range = min(range, 12)
 
 			if(src in bible_contents)
+				var/bible_count = length(by_type[/obj/item/bible])
+				range /= sqrt(bible_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
 				for_by_tcl(B, /obj/item/bible)
 					var/turf/T = get_turf(B.loc)
 					if(T)
 						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
-						explosion(src, T, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
+						explosion(src, T, range * 0.25, range * 0.5, range, range * 1.5)
 				qdel(src)
 				return
 			var/turf/epicenter = get_turf(loc)
 			logTheThing(LOG_BOMBING, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
-			src.visible_message("<span class='alert'><b>[src] explosively ruptures!</b></span>")
-			explosion(src, epicenter, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
+			src.visible_message(SPAN_ALERT("<b>[src] explosively ruptures!</b>"))
+			explosion(src, epicenter, range * 0.25, range * 0.5, range, range * 1.5)
 			qdel(src)
 
 		else if(pressure > TANK_RUPTURE_PRESSURE)
 			if(integrity <= 0)
 				loc.assume_air(air_contents)
 				air_contents = null
-				src.visible_message("<span class='alert'>[src] violently ruptures!</span>")
+				src.visible_message(SPAN_ALERT("[src] violently ruptures!"))
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, TRUE)
 				qdel(src)
 			else
@@ -228,22 +240,22 @@ Contains:
 		// thus, we need some tangled logic here to make it work as intended
 		if (istype(src.loc, /obj/item/assembly))
 			if (in_interact_range(src.loc, user) || isobserver(user))
-				. += "<span class='notice'>[bicon(src)] [src] feels [descriptive]</span>"
+				. += SPAN_NOTICE("[bicon(src)] [src] feels [descriptive]")
 			return .
 		. += ..()
 		if (!can_interact)
 			return .
-		. += "<br><span class='notice'>It feels [descriptive]</span>"
+		. += "<br>[SPAN_NOTICE("It feels [descriptive]")]"
 		var/cur_pressure = MIXTURE_PRESSURE(air_contents)
 		if (cur_pressure >= TANK_RUPTURE_PRESSURE)
-			. += "<span class='alert'><b>It's starting to rupture! Better get rid of it quick!</b></span>"
+			. += SPAN_ALERT("<b>It's starting to rupture! Better get rid of it quick!</b>")
 		else if (cur_pressure >= TANK_LEAK_PRESSURE)
-			. += "<br><span class='alert'>It's leaking air!</span>"
+			. += "<br>[SPAN_ALERT("It's leaking air!")]"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/mask/breath))
 			var/obj/item/clothing/mask/breath/B = W
-			boutput(user, "<span class='notice'>You hook up [B] to [src].</span>")
+			boutput(user, SPAN_NOTICE("You hook up [B] to [src]."))
 			B.auto_setup(src, user)
 		else
 			..()
@@ -324,7 +336,6 @@ TYPEINFO(/obj/item/tank/jetpack)
 
 /obj/item/tank/jetpack
 	name = "jetpack (oxygen)"
-	uses_multiple_icon_states = TRUE
 	w_class = W_CLASS_BULKY
 	force = 8
 	desc = "A jetpack that can use oxygen as a propellant, allowing the wearer to maneuver freely in space. It can also be used as a gas source for internals like a regular tank."
@@ -359,7 +370,7 @@ TYPEINFO(/obj/item/tank/jetpack)
 	proc/toggle()
 		src.on = !(src.on)
 		src.icon_state = "[base_icon_state][src.on]"
-		boutput(usr, "<span class='notice'>You [src.on ? "" : "de"]activate [src]'s propulsion.</span>")
+		boutput(usr, SPAN_NOTICE("You [src.on ? "" : "de"]activate [src]'s propulsion."))
 		playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
 		UpdateIcon()
 		if (ismob(src.loc))
@@ -414,8 +425,8 @@ TYPEINFO(/obj/item/tank/jetpack)
 	extra_desc = "It's painted in a sinister yet refined shade of red."
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -459,11 +470,11 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	c_flags = null
 	health = 5
 	w_class = W_CLASS_TINY
-	force = 1
 	stamina_damage = 20
 	stamina_cost = 8
 	desc = "A tiny personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
 	distribute_pressure = 17
+	compatible_with_TTV = FALSE
 
 	New()
 		..()
@@ -489,8 +500,6 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			src.air_contents.oxygen = null
 			return
 
-
-
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
@@ -505,6 +514,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	desc = "A personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	distribute_pressure = 17
+	compatible_with_TTV = FALSE
 
 	New()
 		..()
@@ -553,6 +563,8 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 		if(src in bible_contents)
 			strength = fuel_moles/20
+			var/bible_count = length(by_type[/obj/item/bible])
+			strength /= sqrt(bible_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
 			for_by_tcl(B, /obj/item/bible)//world)
 				var/turf/T = get_turf(B.loc)
 				if(T)

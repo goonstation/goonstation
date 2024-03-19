@@ -394,7 +394,7 @@ var/global/list/mapNames = list(
 		"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
 		"the robotics lab" = list(/area/station/medical/robotics),
 		"the bridge" = list(/area/station/bridge),
-		"the stock exchange at the public market" = list(/area/station/crew_quarters/stockex),
+		"the public market" = list(/area/station/crew_quarters/market),
 		"the escape arm" = list(/area/station/hallway/secondary/exit),
 		"the central room of the crew lounge" = list(/area/station/crew_quarters/quarters),
 		"the chapel" = list(/area/station/chapel/sanctuary))
@@ -764,7 +764,9 @@ var/global/list/mapNames = list(
 
 	arrivals_type = MAP_SPAWN_MISSILE
 
-	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list()
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/foreground/caustics,
+	)
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list()
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list()
 
@@ -793,6 +795,8 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+	shipping_destinations = list("North", "South")
 
 	valid_nuke_targets = list("the fitness room" = list(/area/station/crew_quarters/fitness),
 		"the quartermaster's office" = list(/area/station/quartermaster/office),
@@ -1199,7 +1203,7 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
-	valid_nuke_targets = list("the developer zone" = list(/area/devzone),
+	valid_nuke_targets = list("the developer zone" = list(/area/station/devzone),
 		"the test chamber or space" = list(/area/space))
 
 

@@ -29,7 +29,6 @@
 	name = "paper"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_blank"
-	uses_multiple_icon_states = 1
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
@@ -43,7 +42,7 @@
 	//cogwerks - burning vars
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 	var/list/form_startpoints
 	var/list/form_endpoints
 	var/font_css_crap = null
@@ -84,7 +83,7 @@
 /obj/item/paper/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span class='alert'><b>[user] cuts [him_or_her(user)]self over and over with the paper.</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] cuts [him_or_her(user)]self over and over with the paper.</b>"))
 	user.TakeDamage("chest", 150, 0)
 	return 1
 
@@ -147,7 +146,7 @@
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
 	if(!user.literate)
-		boutput(user, "<span class='alert'>You don't know how to read.</span>")
+		boutput(user, SPAN_ALERT("You don't know how to read."))
 		return UI_CLOSE
 	if(istype(src.loc, /obj/item/clipboard))
 		if (isliving(user))
@@ -164,12 +163,12 @@
 	if(.)
 		return
 	if(src.sealed)
-		boutput(usr, "<span class='alert'>You can't do that while [src] is folded up.</span>")
+		boutput(usr, SPAN_ALERT("You can't do that while [src] is folded up."))
 		return
 	switch(action)
 		if("stamp")
 			if(!src.stampable)
-				boutput(usr, "<span class='alert'>You can't stamp [src].</span>")
+				boutput(usr, SPAN_ALERT("You can't stamp [src]."))
 				return
 			var/stamp_x = text2num_safe(params["x"])
 			var/stamp_y = text2num_safe(params["y"])
@@ -179,7 +178,7 @@
 			if(length(stamps) < PAPER_MAX_STAMPS)
 				stamp(stamp_x, stamp_y, stamp_r, stamp.current_state, stamp.icon_state)
 				update_static_data(usr, ui)
-				boutput(usr, "<span class='notice'>[ui.user] stamps [src] with \the [stamp.name]!</span>")
+				boutput(usr, SPAN_NOTICE("[ui.user] stamps [src] with \the [stamp.name]!"))
 				playsound(usr.loc, 'sound/misc/stamp_paper.ogg', 50, 0.5)
 			else
 				boutput(usr, "There is no where else you can stamp!")
@@ -252,6 +251,12 @@
 		"stamp-sprite-centcom" = "[resource("images/tgui/stamp_icons/stamp-centcom.png")]",
 		"stamp-sprite-syndicate" = "[resource("images/tgui/stamp_icons/stamp-syndicate.png")]",
 		"stamp-sprite-void" = "[resource("images/tgui/stamp_icons/stamp-void.png")]",
+		"stamp-sprite-classified" = "[resource("images/tgui/stamp_icons/stamp-classified.png")]",
+		"stamp-sprite-req-nt" = "[resource("images/tgui/stamp_icons/stamp-req-nt.png")]",
+		"stamp-sprite-stain-1" = "[resource("images/tgui/stamp_icons/stamp-stain-1.png")]",
+		"stamp-sprite-stain-2" = "[resource("images/tgui/stamp_icons/stamp-stain-2.png")]",
+		"stamp-sprite-stain-3" = "[resource("images/tgui/stamp_icons/stamp-stain-3.png")]",
+		"stamp-sprite-gtc" = "[resource("images/tgui/stamp_icons/stamp-gtc.png")]",
 		"stamp-text-time" =  T,
 		"stamp-text-name" = user.name
 	)
@@ -298,22 +303,22 @@
 		return // suppress attack sound, the typewriter will load the paper in afterattack
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/pen/crayon))
 		if(src.sealed)
-			boutput(user, "<span class='alert'>You can't write on [src].</span>")
+			boutput(user, SPAN_ALERT("You can't write on [src]."))
 			return
 		if(length(info) >= PAPER_MAX_LENGTH) // Sheet must have less than 1000 charaters
-			boutput(user, "<span class='warning'>This sheet of paper is full!</span>")
+			boutput(user, SPAN_ALERT("This sheet of paper is full!"))
 			return
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))
 		if(src.sealed)
-			boutput(user, "<span class='alert'>You can't stamp [src].</span>")
+			boutput(user, SPAN_ALERT("You can't stamp [src]."))
 			return
-		boutput(user, "<span class='notice'>You ready your stamp over the paper! </span>")
+		boutput(user, SPAN_NOTICE("You ready your stamp over the paper! "))
 		ui_interact(user)
 		return // Normaly you just stamp, you don't need to read the thing
 	else if (issnippingtool(P))
-		boutput(user, "<span class='notice'>You cut the paper into a mask.</span>")
+		boutput(user, SPAN_NOTICE("You cut the paper into a mask."))
 		playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
 		var/obj/item/paper_mask/M = new /obj/item/paper_mask(get_turf(src.loc))
 		user.put_in_hand_or_drop(M)
@@ -329,7 +334,7 @@
 			booklet.Attackby(P, user, params)
 			return
 		else
-			boutput(user, "<span class='alert'>You need a loaded stapler in hand to staple the sheets into a booklet.</span>")
+			boutput(user, SPAN_ALERT("You need a loaded stapler in hand to staple the sheets into a booklet."))
 	else
 		// cut paper?  the sky is the limit!
 		ui_interact(user)	// The other ui will be created with just read mode outside of this
@@ -565,8 +570,7 @@
 	name = "paper bin"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_bin1"
-	uses_multiple_icon_states = 1
-	amount = 10
+	var/amount_left = 10
 	item_state = "sheet-metal"
 	throwforce = 1
 	w_class = W_CLASS_NORMAL
@@ -576,7 +580,7 @@
 	//cogwerks - burn vars
 	burn_point = 600
 	burn_output = 800
-	burn_possible = 1
+	burn_possible = TRUE
 
 	/// the item type this bin contains, should always be a subtype for /obj/item for reasons...
 	var/bin_type = /obj/item/paper
@@ -586,7 +590,7 @@
 	desc = "A tray full of forms for classifying alien artifacts."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "artifact_form_tray"
-	amount = INFINITY
+	amount_left = INFINITY
 	bin_type = /obj/item/sticker/postit/artifact_paper
 
 	update()
@@ -594,7 +598,7 @@
 
 /obj/item/paper_bin/proc/update()
 	tooltip_rebuild = 1
-	src.icon_state = "paper_bin[(src.amount || locate(bin_type, src)) ? "1" : null]"
+	src.icon_state = "paper_bin[(src.amount_left || locate(bin_type, src)) ? "1" : null]"
 	return
 
 /obj/item/paper_bin/mouse_drop(mob/user as mob)
@@ -608,8 +612,8 @@
 	if (paper)
 		user.put_in_hand_or_drop(paper)
 	else
-		if (src.amount >= 1 && user) //Wire: Fix for Cannot read null.loc (&& user)
-			src.amount--
+		if (src.amount_left >= 1 && user) //Wire: Fix for Cannot read null.loc (&& user)
+			src.amount_left--
 			var/obj/item/P = new bin_type(src)
 			user.put_in_hand_or_drop(P)
 			if (rand(1,100) == 13 && istype(P, /obj/item/paper))
@@ -631,7 +635,7 @@
 		return ..()
 
 /obj/item/paper_bin/get_desc()
-	var/n = src.amount
+	var/n = src.amount_left
 	if (n == INFINITY)
 		return "There's an infinite amount of paper in \the [src], the wonders of future technology."
 	for(var/obj/item/paper/P in src)
@@ -643,10 +647,10 @@
 	var/next_generate = 0
 
 	attack_self(mob/user as mob)
-		if (src.amount < 1 && isnull(locate(bin_type) in src))
+		if (src.amount_left < 1 && isnull(locate(bin_type) in src))
 			if (src.next_generate < TIME)
 				boutput(user, "The [src] generates another sheet of paper using the power of [pick("technology","science","computers","nanomachines",5;"magic",5;"extremely tiny clowns")].")
-				src.amount++
+				src.amount_left++
 				src.update()
 				src.next_generate = TIME + 5 SECONDS
 				return
@@ -698,16 +702,16 @@
 	if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
 		if (!src.is_reassignable)
-			boutput(user, "<span class='alert'>This rubber stamp cannot be reassigned!</span>")
+			boutput(user, SPAN_ALERT("This rubber stamp cannot be reassigned!"))
 			return
 		if (!isnull(src.assignment))
-			boutput(user, "<span class='alert'>This rubber stamp has already been assigned!</span>")
+			boutput(user, SPAN_ALERT("This rubber stamp has already been assigned!"))
 			return
 		else if (!ID.assignment)
-			boutput(user, "<span class='alert'>This ID isn't assigned to a job!</span>")
+			boutput(user, SPAN_ALERT("This ID isn't assigned to a job!"))
 			return
 		src.set_assignment(ID.assignment)
-		boutput(user, "<span class='notice'>You update the assignment of the rubber stamp.</span>")
+		boutput(user, SPAN_NOTICE("You update the assignment of the rubber stamp."))
 		return
 
 /obj/item/stamp/attack_self() // change current mode
@@ -715,7 +719,7 @@
 	if (!NM || !length(NM) || !(NM in src.available_modes))
 		return
 	src.current_mode = NM
-	boutput(usr, "<span class='notice'>You set \the [src] to '[NM]'.</span>")
+	boutput(usr, SPAN_NOTICE("You set \the [src] to '[NM]'."))
 	return
 
 /obj/item/stamp/get_desc()
@@ -738,7 +742,7 @@
 /obj/item/stamp/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span class='alert'><b>[user] stamps 'VOID' on [his_or_her(user)] forehead!</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] stamps 'VOID' on [his_or_her(user)] forehead!</b>"))
 	user.TakeDamage("head", 250, 0)
 	return 1
 
@@ -839,7 +843,7 @@
 /obj/item/paper/folded
 	name = "folded paper"
 	icon_state = "paper"
-	burn_possible = 1
+	burn_possible = TRUE
 	sealed = 1
 	var/old_desc = null
 	var/old_icon_state = null
@@ -888,11 +892,11 @@
 	desc = "It's really fun pelting your coworkers with these."
 	icon_state = "paperball"
 
-/obj/item/paper/folded/ball/attack(mob/M, mob/user)
-	if (iscarbon(M) && M == user && src.sealed)
-		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
-		playsound(M, 'sound/misc/gulp.ogg', 30, TRUE)
-		eat_twitch(M)
+/obj/item/paper/folded/ball/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	if (iscarbon(target) && target == user && src.sealed)
+		target.visible_message(SPAN_NOTICE("[target] stuffs [src] into [his_or_her(target)] mouth and eats it."))
+		playsound(target, 'sound/misc/gulp.ogg', 30, TRUE)
+		eat_twitch(target)
 		var/obj/item/paper/P = src
 		user.u_equip(P)
 		qdel(P)

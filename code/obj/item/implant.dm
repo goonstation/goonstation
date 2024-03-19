@@ -498,7 +498,7 @@ THROWING DARTS
 			H.reagents.add_reagent("epinephrine", 15) //inaprovaline no longer exists
 			H.reagents.add_reagent("omnizine", 25)
 			H.reagents.add_reagent("teporone", 20)
-			if (H.mind) boutput(src, "<span class='notice'>Your Robusttec-Implant uses all of its remaining energy to save you and deactivates.</span>")
+			if (H.mind) boutput(src, SPAN_NOTICE("Your Robusttec-Implant uses all of its remaining energy to save you and deactivates."))
 			src.deactivate()
 		..()
 
@@ -526,7 +526,7 @@ THROWING DARTS
 		var/mob/living/carbon/human/H = src.owner
 
 		if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
-			H.visible_message("<span class='alert'><b>[H] resists the counter-revolutionary implant!</b></span>")
+			H.visible_message(SPAN_ALERT("<b>[H] resists the counter-revolutionary implant!</b>"))
 			H.changeStatus("weakened", 1 SECOND)
 			H.force_laydown_standup()
 			playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 2.4)
@@ -633,7 +633,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	proc/do_effect(power)
 		SHOULD_CALL_PARENT(TRUE)
 		if (. >= 6)
-			src.owner.visible_message("<span class='alert'><b>[src.owner][big_message]!</b></span>")
+			src.owner.visible_message(SPAN_ALERT("<b>[src.owner][big_message]!</b>"))
 		else
 			src.owner.visible_message("[src.owner][small_message].")
 
@@ -785,7 +785,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if (ismob(user)) user.show_text("[src] has been used up!", "red")
 			return FALSE
 		for(var/obj/item/implant/health/security/anti_mindhack/AM in H.implant)
-			boutput(user, "<span class='alert'>[H] is protected from mindhacking by \an [AM.name]!</span>")
+			boutput(user, SPAN_ALERT("[H] is protected from mindhacking by \an [AM.name]!"))
 			return FALSE
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
 		if (H.mind && ((H.mind.special_role == ROLE_VAMPTHRALL) || (H.mind.special_role == "spyminion")))
@@ -806,12 +806,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (!ishuman(M) || (src.uses <= 0))
 			return
 
-		boutput(M, "<span class='alert'>A stunning pain shoots through your brain!</span>")
+		boutput(M, SPAN_ALERT("A stunning pain shoots through your brain!"))
 		M.changeStatus("stunned", 10 SECONDS)
 		M.changeStatus("weakened", 10 SECONDS)
 
 		if(M == I)
-			boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
+			boutput(M, SPAN_ALERT("You feel utterly strengthened in your resolve! You are the most important person in the universe!"))
 			tgui_alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
 			return
 		logTheThing(LOG_COMBAT, M, "is mindhacked ([src.expire ? "regular" : "deluxe"]) by [constructTarget(I,"combat")] at [log_loc(I)].")
@@ -1020,6 +1020,22 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				..()
 				implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "syringe_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
 
+			implanted(var/mob/receiving_mob, var/mob/implanting_mob)
+				..()
+				RegisterSignal(receiving_mob, COMSIG_MOB_EX_ACT, PROC_REF(on_explosion_reaction))
+
+			on_remove(var/mob/losing_mob)
+				..()
+				UnregisterSignal(losing_mob, COMSIG_MOB_EX_ACT)
+
+			proc/on_explosion_reaction(var/mob/exploding_mob, var/severity)
+				if (ishuman(exploding_mob))
+					var/mob/living/carbon/human/human_owner = exploding_mob
+					SPAWN(0.1 SECONDS)
+						src.on_remove(human_owner)
+						human_owner.implant.Remove(src)
+						qdel(src)
+
 			syringe_barbed
 				name = "barbed syringe round"
 				desc = "An empty syringe round, of the type that is fired from a syringe gun. It has a barbed tip. Nasty!"
@@ -1074,7 +1090,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	src.bleed_timer = src.bleed_time
 	SPAWN(0.5 SECONDS)
-//		boutput(C, "<span class='alert'>You start bleeding!</span>") // the blood system takes care of this bit now
+//		boutput(C, SPAN_ALERT("You start bleeding!")) // the blood system takes care of this bit now
 		src.bleed_loop()
 
 /obj/item/implant/projectile/proc/bleed_loop() // okay it doesn't actually cause bleeding now but um w/e
@@ -1099,13 +1115,13 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if(prob(4))
 			C.emote(pick("pale", "shiver"))
 		if(prob(4))
-			boutput(C, "<span class='alert'>You feel a [pick("sharp", "stabbing", "startling", "worrying")] pain in your chest![pick("", " It feels like there's something lodged in there!", " There's gotta be something stuck in there!", " You feel something shift around painfully!")]</span>")
+			boutput(C, SPAN_ALERT("You feel a [pick("sharp", "stabbing", "startling", "worrying")] pain in your chest![pick("", " It feels like there's something lodged in there!", " There's gotta be something stuck in there!", " You feel something shift around painfully!")]"))
 		//werewolf silver implants handling
 		if (prob(60) && iswerewolf(C) && istype(src:material, /datum/material/metal/silver))
 			random_burn_damage(C, rand(5,10))
 			C.take_toxin_damage(rand(1,3))
 			C.stamina -= 30
-			boutput(C, "<span class='alert'>You feel a [pick("searing", "hot", "burning")] pain in your chest![pick("", "There's gotta be silver in there!", )]</span>")
+			boutput(C, SPAN_ALERT("You feel a [pick("searing", "hot", "burning")] pain in your chest![pick("", "There's gotta be silver in there!", )]"))
 	SPAWN(rand(40,70))
 		src.bleed_loop()
 	return
@@ -1189,7 +1205,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		artifact_implant_type = "wizard"
 		impcolor = "wizard"
 
-	proc/implant_activate(var/volume, var/unremovable = FALSE)
+	proc/implant_activate(var/volume)
 		var/turf/T = get_turf(src.owner)
 		switch(src.artifact_implant_type)
 			if ("eldritch")
@@ -1198,9 +1214,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				playsound(T, 'sound/machines/ArtifactAnc1.ogg', volume, 1)
 			if ("wizard")
 				playsound(T, 'sound/machines/ArtifactWiz1.ogg', volume, 1)
-
-		if (unremovable)
-			src.cant_take_out = TRUE
 
 	implanted(mob/M, mob/I)
 		..()
@@ -1231,10 +1244,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			var/obj/item/organ/current_organ = null
 
 			for (var/organ in organs)
-				if (!organ_found)
-					current_organ = H.get_organ(organ)
-					if (!current_organ || current_organ.get_damage() > current_organ.fail_damage)
-						organ_found = organ
+				current_organ = H.get_organ(organ)
+				if (!current_organ || current_organ.get_damage() > current_organ.fail_damage)
+					organ_found = organ
+					break
+				current_organ?.heal_damage(0.1667 * mult, 0.1667 * mult, 0.1667 * mult) // 5 minutes to heal a 100 hp organ with 2 second process ticks
 
 			if (organ_found)
 				active = TRUE
@@ -1265,7 +1279,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			active = TRUE
 			var/mob/living/carbon/human/H = owner
 
-			SPAWN((180 + rand(-60, 60)) SECONDS)
+			SPAWN((20 + rand(-10, 10)) SECONDS)
 				active = FALSE
 				if (H && src && (src in H.implant))
 					var/obj/decal/cleanable/blood/dynamic/B = make_cleanable(/obj/decal/cleanable/blood/dynamic, get_turf(H))
@@ -1275,39 +1289,69 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					B.blood_type = "unknown"
 
 					if (prob(10))
-						boutput(H, "<span class='alert'><i>Bloooood.....</i></span>")
+						boutput(H, SPAN_ALERT("<i>Bloooood.....</i>"))
 		..()
 
 /obj/item/implant/artifact/eldritch/eldritch_bad
+	var/list/organs
+	var/activated = FALSE
+
+	New()
+		..()
+		src.organs = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+		shuffle_list(src.organs)
 
 	do_process(var/mult = 1)
-		if (ishuman(src.owner) && !active)
-			var/mob/living/carbon/human/H = owner
+		if (!ishuman(src.owner) || src.active)
+			return ..()
 
-			if (H.get_brute_damage() > 100)
-				active = TRUE
-				src.implant_activate(50, TRUE)
+		var/mob/living/carbon/human/H = owner
+		var/failed_organs = 0
 
-				SPAWN(2 SECONDS)
-					if (H && src)
-						H.make_jittery(1000)
-						boutput(H, "<span class='alert'><b>You feel an ancient force begin to seize your body!</b></span>")
+		if (H.get_brute_damage() > 75)
+			if (!src.activated)
+				src.activated = TRUE
+				src.implant_activate(50)
+				boutput(H, SPAN_ALERT("<b>Your insides doesn't feel so good... Wait... what?</b>"))
 
-					sleep(3 SECONDS)
-					if (H && src)
-						H.emote("scream")
-						playsound(H.loc, pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_noises"), 50, 1)
+			H.TakeDamage("All", 2, damage_type = DAMAGE_STAB)
 
-					sleep(3 SECONDS)
-					if (H && src)
-						H.emote("faint")
-						H.changeStatus("paralysis", 10 SECONDS)
-						H.losebreath += 5
-						playsound(H.loc, pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_noises"), 50, 1)
+			var/obj/item/organ/current_organ = null
 
-					sleep(3 SECONDS)
-					if (H && src)
-						H.gib()
+			for (var/organ in organs)
+				current_organ = H.get_organ(organ)
+				current_organ?.take_damage(4, 0, 0, DAMAGE_STAB)
+				if (!current_organ || current_organ.get_damage() > current_organ.fail_damage)
+					failed_organs += 1
+
+		if (H.get_brute_damage() > 175 || failed_organs > 5)
+			src.active = TRUE
+			src.cant_take_out = TRUE
+			SPAWN(2 SECONDS)
+				if (H && src)
+					H.make_jittery(1000)
+					boutput(H, SPAN_ALERT("<b>You feel an ancient force begin to seize your body!</b>"))
+
+				sleep(3 SECONDS)
+				if (H && src)
+					H.emote("scream")
+					playsound(H.loc, pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_noises"), 50, 1)
+
+				sleep(3 SECONDS)
+				if (H && src)
+					H.emote("faint")
+					H.changeStatus("paralysis", 10 SECONDS)
+					H.losebreath += 5
+					playsound(H.loc, pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_noises"), 50, 1)
+
+				sleep(3 SECONDS)
+				if (H && src)
+					H.gib()
+
+		..()
+
+	on_remove()
+		src.activated = FALSE
 		..()
 
 /obj/item/implant/artifact/ancient/ancient_good
@@ -1370,24 +1414,34 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		..()
 
 /obj/item/implant/artifact/ancient/ancient_bad
+	var/activated = FALSE
 
 	do_process(var/mult = 1)
-		if (ishuman(src.owner) && !active)
-			var/mob/living/carbon/human/H = owner
-			if (H.get_oxygen_deprivation() > 100)
-				active = TRUE
-				src.implant_activate(50, TRUE)
-				boutput(H, "<span class='alert'><b>You feel something start to rip apart your insides!</b></span>")
+		if (!ishuman(src.owner) || src.active)
+			return ..()
+		var/mob/living/carbon/human/H = owner
+		if (H.get_oxygen_deprivation() > 75)
+			if (!src.activated)
+				src.activated = TRUE
+				src.implant_activate(50)
+				boutput(H, SPAN_ALERT("<b>You feel its harder to breath. Oh GOD YOUR LUNGS. WHAT THE HELL?</b>"))
+				H.losebreath += 75
+			H.take_oxygen_deprivation(3 * mult)
 
-				SPAWN(3 SECONDS)
-					for (var/limb in list("l_arm", "r_arm", "l_leg", "r_leg"))
-						if (H && src)
-							playsound(get_turf(H), pick('sound/impact_sounds/circsaw.ogg', 'sound/machines/rock_drill.ogg'), 50, 1)
-							H.sever_limb(limb)
-							sleep(1 SECOND)
+		if (H.get_oxygen_deprivation() > 175)
+			active = TRUE
+			src.cant_take_out = TRUE
+			boutput(H, SPAN_ALERT("<b>You feel something start to rip apart your insides!</b>"))
 
+			SPAWN(3 SECONDS)
+				for (var/limb in list("l_arm", "r_arm", "l_leg", "r_leg"))
 					if (H && src)
-						H.gib()
+						playsound(get_turf(H), pick('sound/impact_sounds/circsaw.ogg', 'sound/machines/rock_drill.ogg'), 50, 1)
+						H.sever_limb(limb)
+						sleep(1 SECOND)
+
+				if (H && src)
+					H.gib()
 		..()
 
 /obj/item/implant/artifact/wizard/wizard_good
@@ -1457,41 +1511,54 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		..()
 
 /obj/item/implant/artifact/wizard/wizard_bad
+	var/effect_type
+	var/activated = FALSE
+
+	New()
+		..()
+		src.effect_type = pick("fire", "ice")
 
 	do_process(var/mult = 1)
-		if (ishuman(src.owner) && !active)
-			var/mob/living/carbon/human/H = owner
-			if (H.get_burn_damage() > 100)
-				active = TRUE
-				src.implant_activate(50, TRUE)
+		if (!ishuman(src.owner))
+			return ..()
 
-				SPAWN(2 SECONDS)
-					if (H && src)
-						if (prob(50))
-							boutput(H, "<span class='alert'><b>You feel really, REALLY HOT!</b></span>")
-							if (H.is_heat_resistant())
-								boutput(H, "<span class='alert'><b>You get a feeling that your fire resistance isn't working right...</b></span>")
-							H.bodytemperature = max(H.bodytemperature, 10000)
+		var/mob/living/carbon/human/H = owner
+		if (H.get_burn_damage() <= 75)
+			return ..()
 
-							sleep(2 SECONDS)
-							if (H && src)
-								H.emote("scream")
-								H.set_burning(100)
-							sleep(4 SECONDS)
-							if (H && src)
-								make_cleanable(/obj/decal/cleanable/ash, get_turf(H))
-								playsound(get_turf(H), 'sound/effects/mag_fireballlaunch.ogg', 50, 1)
-								H.firegib(FALSE)
-						else
-							boutput(H, "<span class='alert'><b>Oh god, it's SO COLD!</b></span>")
-							if (H.is_cold_resistant())
-								boutput(H, "<span class='alert'><b>You get a feeling that your cold resistance isn't working right...</b></span>")
-							H.bodytemperature = min(H.bodytemperature, 0)
+		if (!src.activated)
+			src.activated = TRUE
+			src.implant_activate(50)
+			if (src.effect_type == "fire")
+				boutput(H, SPAN_ALERT("<b>You feel really, REALLY HOT!</b>"))
+				if (H.is_heat_resistant())
+					boutput(H, SPAN_ALERT("<b>You get a feeling that your fire resistance isn't working right...</b>"))
+			else
+				boutput(H, SPAN_ALERT("<b>Oh god, it's SO COLD!</b>"))
+				if (H.is_cold_resistant())
+					boutput(H, SPAN_ALERT("<b>You get a feeling that your cold resistance isn't working right...</b>"))
 
-							sleep(4 SECONDS)
-							if (H && src)
-								playsound(get_turf(H), 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 1)
-								H.become_statue(getMaterial("ice"), "Someone completely frozen in ice. How this happened, you have no clue!")
+		if (src.effect_type == "fire")
+			H.bodytemperature = max(H.bodytemperature, 10000)
+			H.set_burning(100)
+		else
+			H.bodytemperature = min(H.bodytemperature, 0)
+			H.TakeDamage("All", 0, 3, 0, DAMAGE_BURN)
+
+		if (H.get_burn_damage() > 175)
+			if (src.effect_type == "fire")
+				make_cleanable(/obj/decal/cleanable/ash, get_turf(H))
+				playsound(get_turf(H), 'sound/effects/mag_fireballlaunch.ogg', 50, TRUE)
+				H.firegib(FALSE)
+			else
+				playsound(get_turf(H), 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, TRUE)
+				H.become_statue(getMaterial("ice"), "Someone completely frozen in ice. How this happened, you have no clue!")
+
+		..()
+
+	on_remove()
+		src.effect_type = pick("fire", "ice")
+		src.activated = FALSE
 		..()
 
 /* ============================================================= */
@@ -1504,7 +1571,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon = 'icons/obj/surgery.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "implanter0"
-	uses_multiple_icon_states = 1
 	var/obj/item/implant/imp = null
 	item_state = "syringe_0"
 	throw_speed = 1
@@ -1533,33 +1599,40 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	proc/implant(mob/M as mob, mob/user as mob)
 		if(!in_interact_range(M, user))
-			boutput(user, "<span class='alert'>You are too far away from [M]!</span>")
+			boutput(user, SPAN_ALERT("You are too far away from [M]!"))
 			return
 
-		if (sneaky)
-			boutput(user, "<span class='alert'>You implanted the implant into [M].</span>")
+		if (M == user)
+			if (sneaky)
+				boutput(user, SPAN_ALERT("You implanted yourself."))
+			else
+				user.visible_message(SPAN_ALERT("[user] has implanted [him_or_her(user)]self."),\
+					SPAN_ALERT("You implanted yourself."))
 		else
-			M.tri_message(user, "<span class='alert'>[M] has been implanted by [user].</span>",\
-				"<span class='alert'>You have been implanted by [user].</span>",\
-				"<span class='alert'>You implanted the implant into [M].</span>")
+			if (sneaky)
+				boutput(user, SPAN_ALERT("You implanted the implant into [M]."))
+			else
+				M.tri_message(user, SPAN_ALERT("[M] has been implanted by [user]."),\
+					SPAN_ALERT("You have been implanted by [user]."),\
+					SPAN_ALERT("You implanted the implant into [M]."))
 
 		src.imp.implanted(M, user)
 
 		src.imp = null
 		src.update()
 
-	attack(mob/M, mob/user)
-		if (!ishuman(M) && !ismobcritter(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!ishuman(target) && !ismobcritter(target))
 			return ..()
 
-		if (src.imp && !src.imp.can_implant(M, user))
+		if (src.imp && !src.imp.can_implant(target, user))
 			return
 
 		if (user && src.imp)
 			if(src.imp.instant)
-				src.implant(M, user)
+				src.implant(target, user)
 			else
-				actions.start(new/datum/action/bar/icon/implanter(src,M), user)
+				actions.start(new/datum/action/bar/icon/implanter(src,target), user)
 			return
 
 	attackby(obj/item/W, mob/user)
@@ -1607,7 +1680,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /datum/action/bar/icon/implanter
 	duration = 20
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "implanter"
 	icon = 'icons/obj/surgery.dmi' //In these two vars you can define an icon you want to have on your little progress bar.
 	icon_state = "implanter1-g"
 	var/mob/living/target
@@ -1896,6 +1968,7 @@ TYPEINFO(/obj/item/gun/implanter)
 /obj/item/gun/implanter
 	name = "implant gun"
 	desc = "A gun that accepts an implant, that you can then shoot into other people! Or a wall, which certainly wouldn't be too big of a waste, since you'd only be using this to shoot people with things like health monitor implants or machine translators. Right?"
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "implant"
 	contraband = 1
 	var/obj/item/implant/my_implant = null
@@ -1981,7 +2054,7 @@ TYPEINFO(/obj/item/gun/implanter)
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	casing = /obj/item/casing/small
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	shot_number = 1
 	//silentshot = 1
 	var/obj/item/implant/my_implant = null
@@ -2030,7 +2103,7 @@ TYPEINFO(/obj/item/gun/implanter)
 		if (ishuman(M) && prob(5))
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
-			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
+			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 			random_brute_damage(M, 1)
 			src.implanted(M)
@@ -2058,7 +2131,7 @@ TYPEINFO(/obj/item/gun/implanter)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
-			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
+			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
 			random_brute_damage(M, 20)//if it can get in you, it probably doesn't give a damn about your armor

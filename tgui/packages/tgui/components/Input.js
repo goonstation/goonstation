@@ -7,7 +7,7 @@
 import { classes } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
-import { KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_DOWN } from 'common/keycodes';
+import { KEY_DOWN, KEY_ENTER, KEY_ESCAPE, KEY_UP } from 'common/keycodes';
 
 export const toInputValue = value => (
   typeof value !== 'number' && typeof value !== 'string'

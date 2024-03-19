@@ -66,17 +66,17 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		if (!istype(O, /obj/item)) // dont recycle the floor!
 			return
 
-		if (isAI(user) || !in_interact_range(O, user) || !can_act(user) || !isliving(user))
+		if (isAI(user) || !in_interact_range(O, user) || !can_act(user) || !isliving(user) || !in_interact_range(src, user))
 			return
 
 		src.Attackby(O, user)
 
 	attackby(obj/item/W, mob/user)
 		if(W.cant_drop)
-			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
+			boutput(user, SPAN_ALERT("You cannot put [W] into [src]!"))
 			return
 		if(istype(W, /obj/item/reagent_containers/glass/jar) && length(W.contents))
-			boutput(user, "<span class='alert'>You need to empty [W] first!</span>")
+			boutput(user, SPAN_ALERT("You need to empty [W] first!"))
 			return
 		if(W.reagents?.total_volume) // Ask if they really want to lose the contents of the beaker
 			if (tgui_alert(user,"The [W] has reagents in it, are you sure you want to recycle it?","Recycler alert!",list("Yes","No")) != "Yes")
@@ -119,7 +119,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 			glass_amt += W.amount
 		else if (istype(W, /obj/item/plate))
 			if (length(W.contents))
-				boutput(user, "<span class='alert'>You can't put [W] into [src] while it has things on it!</span>")
+				boutput(user, SPAN_ALERT("You can't put [W] into [src] while it has things on it!"))
 				return FALSE // early return for custom messageP
 			success = TRUE
 			glass_amt += PLATE_COST
@@ -131,7 +131,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		if (success)
 			W.stored?.transfer_stored_item(W, src, user = user)
 
-			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] inserts [W] into [src]."))
 			user.u_equip(W)
 			qdel(W)
 			ui_interact(user)
@@ -139,7 +139,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 			playsound(src.loc, sound, 40, 0, 0.1)
 			return TRUE
 		else
-			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
+			boutput(user, SPAN_ALERT("You cannot put [W] into [src]!"))
 			return FALSE
 
 	proc/get_products()
@@ -176,14 +176,14 @@ TYPEINFO(/obj/machinery/glass_recycler)
 			return
 
 		if (src.glass_amt < target_product.product_cost)
-			src.visible_message("<span class='alert'>[src] doesn't have enough glass to make that!</span>")
+			src.visible_message(SPAN_ALERT("[src] doesn't have enough glass to make that!"))
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 40, 0, 0.1)
 			return
 
 		var/obj/item/G = new target_product.product_path(get_turf(src))
 		src.glass_amt -= target_product.product_cost
 
-		src.visible_message("<span class='notice'>[src] manufactures \a [G]!</span>")
+		src.visible_message(SPAN_NOTICE("[src] manufactures \a [G]!"))
 		playsound(src.loc, 'sound/machines/vending_dispense_small.ogg', 40, 0, 0.1)
 		user?.put_in_hand_or_eject(G)
 		use_power(20 WATTS)

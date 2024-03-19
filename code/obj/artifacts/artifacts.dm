@@ -104,7 +104,7 @@
 	mob_flip_inside(mob/user)
 		. = ..()
 		src.ArtifactTakeDamage(rand(5,20))
-		boutput(user, "<span class='alert'>It seems to be a bit more damaged!</span>")
+		boutput(user, SPAN_ALERT("It seems to be a bit more damaged!"))
 
 /obj/machinery/artifact
 	name = "artifact large art piece"
@@ -276,7 +276,7 @@
 		..()
 		var/turf/T = get_turf(src)
 		if (cinematic)
-			T.visible_message("<span class='alert'><b>An artifact suddenly warps into existence!</b></span>")
+			T.visible_message(SPAN_ALERT("<b>An artifact suddenly warps into existence!</b>"))
 			playsound(T, 'sound/effects/teleport.ogg', 50,TRUE)
 			var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 			swirl.set_loc(T)

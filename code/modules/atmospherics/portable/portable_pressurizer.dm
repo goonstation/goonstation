@@ -189,7 +189,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 		if (!src.emagged)
 			if (user)
 				user.show_text("You short out the material processor on [src].", "red")
-			src.audible_message("<span class='combat'><B>[src] buzzes oddly!</B></span>")
+			src.audible_message(SPAN_COMBAT("<B>[src] buzzes oddly!</B>"))
 			playsound(src.loc, "sparks", 50, 1, -1)
 			whitelist += blacklist
 			src.emagged = TRUE
@@ -214,7 +214,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 			..()
 			return
 		if(istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor) || (istype(I,/obj/item/device/pda2)))
-			user.visible_message("<span class='alert'><B>[user] hits [src] with [I]!</B></span>")
+			user.visible_message(SPAN_ALERT("<B>[user] hits [src] with [I]!</B>"))
 			return
 		if (istype(I,/obj/item/satchel/) && I.contents.len)
 			var/obj/item/satchel/S = I
@@ -232,13 +232,13 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 		var/obj/item/grab/G = I
 		if(istype(G))	// handle grabbed mob
 			if(ismob(G.affecting))
-				boutput(user, "<span class='alert'>That won't fit!</span>")
+				boutput(user, SPAN_ALERT("That won't fit!"))
 				return
 		else
 			if(!user.drop_item())
 				return
 			else if(I.w_class > W_CLASS_NORMAL)
-				boutput(user, "<span class='alert'>That won't fit!</span>")
+				boutput(user, SPAN_ALERT("That won't fit!"))
 				return
 			I.set_loc(src)
 			user.visible_message("[user.name] places \the [I] into \the [src].",\

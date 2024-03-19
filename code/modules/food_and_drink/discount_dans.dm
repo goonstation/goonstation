@@ -279,7 +279,7 @@
 			return
 
 		if (prob(10) || user.is_hulk())
-			user.visible_message("<span class='alert'><b>[user]</b> snaps the burrito in half!</span>", "<span class='alert'>You accidentally snap the burrito apart. Fuck!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> snaps the burrito in half!"), SPAN_ALERT("You accidentally snap the burrito apart. Fuck!"))
 			src.splat()
 			return
 
@@ -302,7 +302,7 @@
 		..()
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
+				boutput(M, SPAN_NOTICE("You find a shiny golden ticket in this bite!"))
 				new /obj/item/ticket/golden(get_turf(M))
 			else
 				M.emote("choke")
@@ -355,7 +355,7 @@
 
 		var/i = 3
 		while(i-- > 0)
-			reagents.add_reagent(pick("beff","sugar","eggnog","chocolate","vanilla","cleaner","luminol","poo","urine","nicotine","weedkiller","venom","jenkem","ethanol","ectoplasm","itching","infernite","histamine","foof","pancuronium","cyanide"), 5)
+			reagents.add_reagent(pick("beff","sugar","eggnog","chocolate","vanilla","cleaner","luminol","poo","nicotine","weedkiller","venom","ethanol","ectoplasm","itching","infernite","histamine","foof","pancuronium","cyanide"), 5)
 
 		if (prob(color_prob))
 			src.color = random_saturated_hex_color()
@@ -363,7 +363,7 @@
 	/*heal(var/mob/M)
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span class='notice'>You find a shiny platinum ticket in this bite!</span>")
+				boutput(M, SPAN_NOTICE("You find a shiny platinum ticket in this bite!"))
 				new /obj/item/ticket/platinum(get_turf(M))
 			else
 				M.emote("choke")*/
@@ -567,7 +567,7 @@
 		..()
 		if (prob(8))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
+				boutput(M, SPAN_NOTICE("You find a shiny golden ticket in this bite!"))
 				new /obj/item/ticket/golden(get_turf(M))
 			else
 				M.emote("choke")
@@ -590,14 +590,14 @@
 
 		var/i = 3
 		while(i-- > 0)
-			reagents.add_reagent(pick("beff","sugar","eggnog","chocolate","cleaner","luminol","poo","urine","nicotine","mint","tea","juice_lemon","juice_lime","juice_apple","juice_banana","juice_cherry","guacamole","egg","sewage","uranium"), 3)
+			reagents.add_reagent(pick("beff","sugar","eggnog","chocolate","cleaner","luminol","poo","nicotine","mint","tea","juice_lemon","juice_lime","juice_apple","juice_banana","juice_cherry","guacamole","egg","sewage","uranium"), 3)
 
 
 	heal(var/mob/M)
 		..()
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
-				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
+				boutput(M, SPAN_NOTICE("You find a shiny golden ticket in this bite!"))
 				new /obj/item/ticket/golden(get_turf(M))
 			else
 				M.emote("choke")

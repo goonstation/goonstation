@@ -15,7 +15,7 @@
 		if(!holder)
 			return
 		if(holder.owner.spellshield)
-			boutput(holder.owner, "<span class='alert'>You already have a Spell Shield active!</span>")
+			boutput(holder.owner, SPAN_ALERT("You already have a Spell Shield active!"))
 			return
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
@@ -27,14 +27,14 @@
 		holder.owner.spellshield = 1
 		shield_overlay = image('icons/effects/effects.dmi', holder.owner, "enshield", MOB_LAYER+1)
 		holder.owner.underlays += shield_overlay
-		boutput(holder.owner, "<span class='notice'><b>You are surrounded by a magical barrier!</b></span>")
-		holder.owner.visible_message("<span class='alert'>[holder.owner] is encased in a protective shield.</span>")
+		boutput(holder.owner, SPAN_NOTICE("<b>You are surrounded by a magical barrier!</b>"))
+		holder.owner.visible_message(SPAN_ALERT("[holder.owner] is encased in a protective shield."))
 		playsound(holder.owner, 'sound/effects/MagShieldUp.ogg', 50,1)
 		SPAWN(10 SECONDS)
 			if(holder.owner && holder.owner.spellshield)
 				holder.owner.spellshield = 0
 				holder.owner.underlays -= shield_overlay
 				shield_overlay = null
-				boutput(holder.owner, "<span class='notice'><b>Your magical barrier fades away!</b></span>")
-				holder.owner.visible_message("<span class='alert'>The shield protecting [holder.owner] fades away.</span>")
+				boutput(holder.owner, SPAN_NOTICE("<b>Your magical barrier fades away!</b>"))
+				holder.owner.visible_message(SPAN_ALERT("The shield protecting [holder.owner] fades away."))
 				playsound(usr, 'sound/effects/MagShieldDown.ogg', 50, TRUE)

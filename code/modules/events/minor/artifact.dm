@@ -7,7 +7,7 @@
 		if(!T)
 			return
 		Artifact_Spawn(T)
-		T.visible_message("<span class='alert'><b>An artifact suddenly warps into existence!</b></span>")
+		T.visible_message(SPAN_ALERT("<b>An artifact suddenly warps into existence!</b>"))
 		playsound(T, 'sound/effects/teleport.ogg', 50,TRUE)
 
 		var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl

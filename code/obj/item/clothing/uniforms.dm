@@ -14,7 +14,7 @@
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 800
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 10
 	var/team_num
 
@@ -157,7 +157,7 @@
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_pride.dmi'
 	icon_state = "gay"
 	item_state = "gay"
-	burn_possible = 0
+	burn_possible = FALSE
 
 	ace
 		name = "ace pride jumpsuit"
@@ -669,7 +669,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 	item_state = "hydro-senior"
 
 /obj/item/clothing/under/misc/mail
-	name = "mailman's jumpsuit"
+	name = "postmaster's jumpsuit"
 	desc = "The crisp threads of a postmaster."
 	icon_state = "mail"
 	item_state = "mail"
@@ -750,7 +750,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 		if (get_pod_wars_team_num(user) == team_num)
 			..()
 		else
-			boutput(user, "<span class='alert'>The jumpsuit <b>explodes</b> as you reach out to grab it!</span>")
+			boutput(user, SPAN_ALERT("The jumpsuit <b>explodes</b> as you reach out to grab it!"))
 			make_fake_explosion(src)
 			user.u_equip(src)
 			src.dropped(user)
@@ -768,7 +768,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 		if (get_pod_wars_team_num(user) == team_num)
 			..()
 		else
-			boutput(user, "<span class='alert'>The jumpsuit <b>explodes</b> as you reach out to grab it!</span>")
+			boutput(user, SPAN_ALERT("The jumpsuit <b>explodes</b> as you reach out to grab it!"))
 			make_fake_explosion(src)
 			user.u_equip(src)
 			src.dropped(user)
@@ -1246,7 +1246,7 @@ TYPEINFO(/obj/item/clothing/under/towel)
 	body_parts_covered = TORSO
 	burn_point = 450
 	burn_output = 800
-	burn_possible = 1
+	burn_possible = TRUE
 	rand_pos = 0
 	mat_changename = FALSE
 	default_material = "cotton"
@@ -1280,7 +1280,7 @@ TYPEINFO(/obj/item/clothing/under/towel)
 		if (issnippingtool(W))
 			boutput(user, "You begin cutting up [src].")
 			if (!do_after(user, 3 SECONDS))
-				boutput(user, "<span class='alert'>You were interrupted!</span>")
+				boutput(user, SPAN_ALERT("You were interrupted!"))
 				return
 			else
 				for (var/i=3, i>0, i--)
@@ -1293,10 +1293,10 @@ TYPEINFO(/obj/item/clothing/under/towel)
 		else
 			return ..()
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.add_fingerprint(user)
 		if (user.a_intent != "harm")
-			M.visible_message("[user] towels [M == user ? "[him_or_her(user)]self" : M] dry.")
+			target.visible_message("[user] towels [target == user ? "[him_or_her(user)]self" : target] dry.")
 		else
 			return ..()
 
@@ -1319,9 +1319,6 @@ TYPEINFO(/obj/item/clothing/under/towel)
 			dried ++
 		for (var/obj/decal/cleanable/water/W in T)
 			qdel(W)
-			dried ++
-		for (var/obj/decal/cleanable/urine/U in T) // ew
-			qdel(U)
 			dried ++
 		return dried
 
@@ -1846,3 +1843,17 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
     desc = "A shirt imbued with the color scheme of the scientifically best icecream flavor."
     icon_state = "mint_chip"
     item_state = "mint_chip"
+
+//Seasonal Stuff
+
+/obj/item/clothing/under/gimmick/clown_autumn
+	name = "autumn clown suit"
+	desc = "Lets you celebrate the season while still remaining autumnomous."
+	icon_state = "clown_autumn"
+	item_state = "clown_autumn"
+
+/obj/item/clothing/under/gimmick/clown_winter
+	name = "winter clown suit"
+	desc = "Lets you stay nice and warm while keeping that festive atmosphere. Actually kinda breezy, not very comfortable for the cold at all, but it still looks festive."
+	icon_state = "clown_winter"
+	item_state = "clown_winter"

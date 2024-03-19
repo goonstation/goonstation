@@ -250,7 +250,7 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 
 /datum/bioEffect/hemochromia/purple
 	name = "Hemochromia Type-P"
-	desc = "Causes the subject's blood cells to take on a lavander coloration. Also slightly increases blood viscosity."
+	desc = "Causes the subject's blood cells to take on a lavender coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_purple"
 	lockProb = 45
 	lockedChars = list("T","C")

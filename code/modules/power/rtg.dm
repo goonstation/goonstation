@@ -12,7 +12,8 @@
 			lastgen = (4800 + rand(-100, 100)) * fuel_pellet.material.getProperty("radioactive") * 0.75
 			if(!fuel_pellet.material.isMutable())
 				fuel_pellet.material = fuel_pellet.material.getMutable()
-			fuel_pellet.material.adjustProperty("radioactive", -1)
+			if(prob(5))
+				fuel_pellet.material.adjustProperty("radioactive", -1)
 			add_avail(lastgen)
 			UpdateIcon()
 
@@ -41,7 +42,7 @@
 				fuel_pellet = I
 				UpdateIcon()
 			else
-				boutput(user, "<span class='notice'>A fuel pellet has already been inserted.</span>")
+				boutput(user, SPAN_NOTICE("A fuel pellet has already been inserted."))
 
 	Topic(href, href_list)
 		if (..())
@@ -49,7 +50,7 @@
 		if (href_list["close"])
 			usr.Browse(null, "window=rtg")
 			src.remove_dialog(usr)
-		else if (href_list["eject"] && in_interact_range(src, usr))
+		else if (href_list["eject"] && in_interact_range(src, usr) && fuel_pellet)
 			fuel_pellet.set_loc(src.loc)
 			usr.put_in_hand_or_eject(src.fuel_pellet) // try to eject it into the users hand, if we can
 			fuel_pellet = null

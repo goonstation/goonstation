@@ -1,5 +1,4 @@
 #ifndef UNDERWATER_MAP
-#ifndef HALLOWEEN
 /datum/random_event/major/pretty_space
 	name = "Space Colors"
 	customization_available = 1
@@ -30,5 +29,4 @@
 
 		SPAWN(duration)
 			RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_STATION, list(), 10 SECONDS)
-#endif
 #endif

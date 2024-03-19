@@ -16,7 +16,7 @@
 /obj/item/railgun
 	name = "Railgun"
 	desc = "Bzooom"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/energy.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "railgun"
 	item_state = "gun"

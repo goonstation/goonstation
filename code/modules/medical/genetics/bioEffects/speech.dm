@@ -24,7 +24,7 @@
 
 /datum/bioEffect/speech/smile
 	name = "Frontal Gyrus Alteration Type-S"
-	desc = "Causes the speech center of the subject's brain to produce large amounts of seratonin when engaged."
+	desc = "Causes the speech center of the subject's brain to produce large amounts of serotonin when engaged."
 	id = "accent_smiling"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = TRUE
@@ -1010,3 +1010,18 @@
 			return ""
 		message = accent_piglatin(message)
 		return message
+
+/datum/bioEffect/speech/bingus
+	name = "Frontal Gyrus Alteration Type-bingus"
+	desc = "Reconstructs the language center of the subject's brain to love bingus."
+	id = "accent_bingus"
+	effectType = EFFECT_TYPE_DISABILITY
+	msgGain = "Bingus my beloved :)"
+	msgLose = "Bingus my beloved :("
+	occur_in_genepools = FALSE
+	probability = 0 // Should not be player accessible
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		return bingus_parse(message)

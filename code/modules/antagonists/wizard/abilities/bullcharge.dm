@@ -55,7 +55,7 @@
 
 /obj/effects/bullshead
 	name = "magic"
-	desc = "i aint gotta explain shit"
+	desc = "i ain't gotta explain shit"
 	density = 0
 	opacity = 0
 	anchored = ANCHORED

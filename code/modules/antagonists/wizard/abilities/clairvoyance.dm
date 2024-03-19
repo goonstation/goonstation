@@ -33,24 +33,24 @@
 		var/turf/T = get_turf(M)
 		var/area/A = get_area(M)
 		if (isnull(T))
-			boutput(holder.owner, "<span class='alert'>[M] appears to be trapped in some sort of Schrödinger's cat-like existence neither truly residing in nor completely removed from the universe!</span>")
+			boutput(holder.owner, SPAN_ALERT("[M] appears to be trapped in some sort of Schrödinger's cat-like existence neither truly residing in nor completely removed from the universe!"))
 			return //oh shit they're in null space
 
 		//immunity checks
 		if (M.traitHolder.hasTrait("training_chaplain"))
-			boutput(holder.owner, "<span class='alert'>[M] has divine protection. Your scrying spell fails!</span>")
-			boutput(M, "<span class='alert'>You sense a Wizard's scrying spell!</span>")
+			boutput(holder.owner, SPAN_ALERT("[M] has divine protection. Your scrying spell fails!"))
+			boutput(M, SPAN_ALERT("You sense a Wizard's scrying spell!"))
 			JOB_XP(M, "Chaplain", 2)
 			return
 		else if(check_target_immunity(M))
-			boutput(holder.owner, "<span class='alert'>[M] seems to be warded from the effects!</span>" )
+			boutput(holder.owner, SPAN_ALERT("[M] seems to be warded from the effects!") )
 			return
 		else if (A.name == "Chapel")
-			boutput(holder.owner, "<span class='alert'>Your scrying spell fails! It just can't seem to find [M.real_name].</span>")
-			boutput(M, "<span class='alert'>You sense a Wizard's scrying spell!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your scrying spell fails! It just can't seem to find [M.real_name]."))
+			boutput(M, SPAN_ALERT("You sense a Wizard's scrying spell!"))
 			return
 		else if (isrestrictedz(M.z))
-			boutput(holder.owner, "<span class='alert'><B>[M.real_name]</B> is in some strange place!</span>")
+			boutput(holder.owner, SPAN_ALERT("<B>[M.real_name]</B> is in some strange place!"))
 			return
 
 		var/spellstring = "<B>[M.real_name]</B> is "
@@ -64,5 +64,5 @@
 		if (isdead(M))
 			spellstring += " They also seem to be dead."
 
-		boutput(holder.owner, "<span class='notice'>[spellstring]</span>")
+		boutput(holder.owner, SPAN_NOTICE("[spellstring]"))
 		return

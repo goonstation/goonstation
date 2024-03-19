@@ -16,7 +16,9 @@
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/prefab/space_casino)
 "co" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/plating,
 /area/prefab/space_casino)
@@ -99,7 +101,8 @@
 /area/prefab/space_casino)
 "le" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/plating,
 /area/prefab/space_casino)
@@ -142,7 +145,9 @@
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/prefab/space_casino)
 "po" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/plating,
 /area/prefab/space_casino)
@@ -338,7 +343,9 @@
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/prefab/space_casino)
 "Jb" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/simulated/floor/plating,
 /area/prefab/space_casino)
 "Jo" = (
@@ -365,7 +372,8 @@
 /area/prefab/space_casino)
 "Mx" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/plating,
 /area/prefab/space_casino)
@@ -407,7 +415,8 @@
 /area/noGenerate)
 "QF" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/plating,
 /area/prefab/space_casino)
@@ -457,7 +466,9 @@
 /turf/simulated/floor/plating,
 /area/prefab/space_casino)
 "XW" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/decal/cleanable/blood/tracks,
 /turf/simulated/floor/plating,
 /area/prefab/space_casino)

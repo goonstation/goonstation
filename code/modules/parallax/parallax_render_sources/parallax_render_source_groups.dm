@@ -45,6 +45,13 @@ Z_LEVEL_PARALLAX_RENDER_SOURCE_GROUP(5)
 		/atom/movable/screen/parallax_render_source/asteroids_far,
 	)
 
+/datum/parallax_render_source_group/area/pirate
+	parallax_render_source_types = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/asteroids_far,
+	)
+
 /datum/parallax_render_source_group/area/void
 	parallax_render_source_types = list(
 		/atom/movable/screen/parallax_render_source/void,

@@ -19,21 +19,21 @@ TYPEINFO(/obj/item/device/flyswatter)
 		..()
 		src.setItemSpecial(/datum/item_special/elecflash)
 
-	attack(mob/M, mob/user, def_zone)
-		if (ismobcritter(M))
-			var/mob/living/critter/MC = M
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (ismobcritter(target))
+			var/mob/living/critter/MC = target
 			if (istype(MC, /mob/living/critter/small_animal/fly) || istype(MC, /mob/living/critter/small_animal/butterfly) || istype(MC, /mob/living/critter/small_animal/cockroach) || istype(MC, /mob/living/critter/small_animal/wasp))
-				SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
-				if (SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, M, user) & ATTACK_PRE_DONT_ATTACK)
+				SEND_SIGNAL(target, COMSIG_MOB_ATTACKED_PRE, user, src)
+				if (SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, target, user) & ATTACK_PRE_DONT_ATTACK)
 					return
-				smack_bug(M, user)
-				logTheThing(LOG_COMBAT, user, "kills [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]).")
-				SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_POST, M, user, 20)
+				smack_bug(target, user)
+				logTheThing(LOG_COMBAT, user, "kills [constructTarget(target,"combat")] with [src] ([type], object name: [initial(name)]).")
+				SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_POST, target, user, 20)
 				return
 		return ..()
 
 	proc/smack_bug(atom/target as obj|mob, mob/user as mob)
-		user.visible_message("<span class='notice'><b>[user] smacks [target] with [src]. KO!</b></span>")
+		user.visible_message(SPAN_NOTICE("<b>[user] smacks [target] with [src]. KO!</b>"))
 		playsound(target, 'sound/effects/electric_shock_short.ogg', 50, TRUE)
 		SPAWN(0.2 SECONDS)
 			playsound(target, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, TRUE)

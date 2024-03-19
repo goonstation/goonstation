@@ -31,7 +31,6 @@
 	desc = "Clak clak, motherfucker."
 	icon = 'icons/mob/critter/humanoid/skeleton.dmi'
 	icon_state = "skeleton"
-	icon_state_dead = "skeleton"
 	custom_gib_handler = /proc/bonegibs
 	hand_count = 2
 	can_throw = TRUE
@@ -74,7 +73,7 @@
 			if ("scream", "clak")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/items/Scissor.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='alert'>[src] claks!</span>"
+					return SPAN_ALERT("[src] claks!")
 		return null
 
 	specific_emote_type(var/act)
@@ -126,10 +125,10 @@
 			src.revivalChance -= src.revivalDecrement
 			SPAWN(rand(40 SECONDS, 80 SECONDS))
 				src.full_heal()
-				src.visible_message("<span class='alert'>[src] re-assembles and is ready to fight once more!</span>")
+				src.visible_message(SPAN_ALERT("[src] re-assembles and is ready to fight once more!"))
 			return
 		if (!gibbed)
-			src.visible_message("<span class='alert'>[src] explodes into bones!</span>")
+			src.visible_message(SPAN_ALERT("[src] explodes into bones!"))
 			src.unequip_all()
 			src.gib()
 		return ..()

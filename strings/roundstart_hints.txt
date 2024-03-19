@@ -1,14 +1,14 @@
 You can step over crates by click-dragging yourself onto them.
-Hold SPACE and click on a tile to throw your current item there
+Hold SPACE and click on a tile to throw your current item there.
 Hold ALT and click on something to examine it.
 Hold CTRL and click on a nearby object to start pulling it.
-Hit CTRL-F to fart. All the cool kids are doing it.
-If you suspect someone's being shit, adminhelp it with F1.
+Hit F to fart. All the cool kids are doing it.
+If you suspect someone's being shit, adminhelp it with F1. You might not always get a reply, but that doesn't mean it hasn't been looked into.
 Admins can always see adminhelps no matter whether they are currently on the server or not.
 Admins and mentors may not be able to give you feedback about certain subjects, e.g. identities of traitors.
 Anyone who intentionally put "Hitler" in their name is adminhelpable.
 Don't forget your PDA has a built-in flashlight.
-Lie down on the ground and hit Z to RESIST if you're on fire to try and extinguish it.
+If you're on fire, hit Z to RESIST and stop, drop, and roll to try and extinguish it.
 Make sure the AI is actually alive before asking it for help.
 You can pass by people when both parties are on Help intent.
 Dying is not uncommon. Don't get frustrated if it happens to you.
@@ -46,7 +46,7 @@ The medical computer can list a person's traits; no more accidental puritan clon
 Want to help? Geneticists might have an interest in checking your genes for cool stuff! Hop down to medical research.
 Are you done for and yet your body just keeps on living? Use the 'succumb' command to hasten your demise so you can start observing.
 Looking for a job? Go to the Head of Personnel's desk for a job change, or ask over the radio if you can be of help.
-New around here? Botany might be a good starting job, check the wiki page or ask your coworkers for assistance.
+New around here? Botany might be a good starting job; check the wiki page or ask your coworkers for assistance.
 Bored? Come to the Bar and have a chat with other crewmembers over a drink.
 While pulling an object, you can move it to the side by clicking adjacent tiles.
 Firearms are a very rare sight on station; if you want to defend yourself then you'll need to get creative!
@@ -59,7 +59,6 @@ The AI is watching, you better behave!
 You can often get a sentence reduced or even negated entirely by just cooperating with Security.
 We were all new once, be patient and guide new players in the right direction!
 You can use a sponge to extract the contents of a bathtub.
-You can interact with things that are diagonal to you, even if they're blocked by something on both cardinal sides.
 Light cyborg arms still work in bot construction. Mass-produce amusing ducks for a limitless source of toys, and a limitless source of frustration from everyone else in a 20-mile radius!
 You can put pizza in the material processor. Make a weapon and eat the evidence, the perfect crime!
 There's more records to play than just the ones in the radio station. Go explore!
@@ -89,7 +88,7 @@ You can tell if the shuttle's been called and how long it has to arrive or leave
 Doctors can't heal you if you keep running away from them. Stay still and they'll patch you up in no time!
 Never trust pills you find on the floor.
 Looking for a quick way to earn cash? Try the slot machines that are usually near the bar!
-If you have a health implant, medical staff will know exactly when and where you (inevitably) die. They can also teleport to your corpse using a hand teleporter.
+If you have a health implant, medical staff will know when you die, after a brief delay.
 Merely getting close to lava will melt your body if you're not wearing protective clothing.
 Helpful mutations can be sold by Genetics via the gene booth. Stop in from time to time to see what they have!
 The key to a long lifespan is meticulous preparation before the crisis.
@@ -100,14 +99,14 @@ You will frequently start with a breath mask and an emergency 02 tank in a box i
 The chaplain is more than just a spiritual guide. They're the station's greatest weapon when facing magical and supernatural foes.
 God doesn't like it when you fart on their book.
 Never trust a wizard.
-Styptic powder, silver sulfadiazine, charcoal, and salbumatol are the four common treatments for BRUTE, BURN, TOX, and OXY damage respectively.
+Styptic powder, silver sulfadiazine, charcoal, and salbutamol are the four common treatments for BRUTE, BURN, TOX, and OXY damage respectively.
 Administering sedatives and painkillers to patients improves the odds of a successful surgery.
 There is a right and wrong way to use a stun baton. Trying to use it on HARM intent will stun you instead!
 If you're desperate, you can use your own money to buy shipments from Cargo.
 To defeat the cyber demons, shoot at them until they die.
 Read the chat!
 Instead of taking each tool out of the toolbox one by one to put it into your belt of choice, you can just grab a toolbox into your active hand, and click it on the toolbelt to transfer all of its contents right to the belt! This also works BETWEEN belts!
-You can refill the janitor buffer with up to 1700u of ANY chemical.
+You can refill the janitor buffer with up to 1250u of ANY chemical.
 In a crowded area and tried of being shoved around? Try crawling in between others' legs to get through.
 Need to move a person or two and dragging them takes too long? Carry around a body bag. Not only can multiple people fit inside, you won't be slowed down while dragging it.
 Trash bags can hold more than just garbage. Keep one handy to store some extra items you don't mind fishing around for.
@@ -118,7 +117,7 @@ Never be afraid to ask others for help, whether in game or through mentorhelp (F
 Completing traitor objectives isn't mandatory. Try to come up with your own goals and gimmicks.
 Being arrested isn't the end of the world.
 A talkative antagonist is fun for everyone.
-By default, you can hold SHIFT (SPACE on TG layout) while moving to sprint, burning stamina to push through slows.
+By default, you can hold SHIFT (SPACE on TG layout) while moving to sprint, burning stamina to push through slowness.
 If a purple mouse runs up to you and squeaks, click it with an empty hand! They're a Mentor Mouse and can provide you useful information!
 When used in conjunction, synaptizine and atropine together in a patient in critical condition will greatly help stave off death!
 Bug reports don't have to be about anything major. Feel free to report minor things like typos, grammatical errors and similar.
@@ -134,3 +133,30 @@ Certain items have unique suicide options. Feel free to experiment with them if 
 While holding an object, you can press C (Z on TG Controls) to Use/Interact with it. This can either open the crafting menu when holding a sheet of metal, activate a welding tool or make you eat a burger.
 Most PDAs start with a writing utensil which can be ejected to access it! Other things fit in the pen slot as well!
 Your character isn't you. Building up a wall in between the two is important for your mental health.
+If a hole in the ocean floor is just one tile wide you can jump over it by sprinting!
+If you've grabbed someone with an empty hand, you can pin them by clicking a nearby tile! Stronger grabs and more exhausted people means faster pins.
+Some objects can be used to grab people by clicking someone with that object while in the grab intent. Strangle them with a cable coil, or put a knife to their neck so they bleed while being strangled.
+Many items do more damage thrown than used in melee. Throw a chair at the traitor chasing you down with a revolver -- or at the traitor fleeing your toolbox of justice!
+You can only throw a standing person with an aggressive (upgraded) grab, but if someone is knocked down, you can throw them with a passive grab!
+Getting thrown into a vending machine can be quite painful! Watch where you fistfight.
+Sliding (block with an empty hand and throw at a direction) into objects on the ground causes you to kick them in that direction.
+Veteran players are known to choose staff assistant as their job for the shift. Don't underestimate people in grey jumpsuits!
+Engineers are responsible for power generation and station integrity, but they also have the <a href="byond://winset?command=.openlink https://wiki.ss13.co/MechComp">MechComp</a> system, which allows them to build wondrous and bizarre automated devices.
+Botanists don't just grow food and medicine; some plants are extremely dangerous, either as poisons or as creatures in themself!
+The bartender has a shotgun for keeping the peace when Security isn't on the scene. Some bartenders are known to replace the rubber slugs with deadlier loads.
+There are many improvised weapons you can make from the components in various tool storages. Check the <a href="byond://winset?command=.openlink https://wiki.ss13.co/Construction">construction</a> page on the wiki.
+Ranchers raise chickens, which can mutate into different subspecies depending on their feed. Check the <a href="byond://winset?command=.openlink https://wiki.ss13.co/Rancher">wiki</a>, and feel free to experiment!
+Command, security personnel, and the bartender are the only people who typically have firearms. Any other armed persons are likely a serious threat!
+Many devices on the station receive and send "packets". You can use this system for your own ends. <a href="byond://winset?command=.openlink https://wiki.ss13.co/Packets">Read more here.</a>
+If you get the chance to scream for help, try to also scream your location. You may only have that one shout before you're rendered unconscious.
+If someone tries to remove your headset, they probably don't have your best interests in mind.
+Insulated gloves are an excellent accessory for fiddling with wired devices such as doors and vending machines. Electric shocks can seriously injure you.
+Mixing chemicals can combine their effects more effectively than a huge dose of a single chemical. Try combining healing chemicals to keep yourself and others alive, or dangerous chemicals for more nefarious purposes.
+Watch where you're running and sprinting. Moving over puddles too quickly can cause you to slip; space lube will ALWAYS cause you to slip, unless you're wearing activated magboots.
+Activated magboots can give you an edge in a wrestling match, or to stop someone from dragging your unconscious body into maintenace. They stop you from being teleported, thrown, or dragged by anyone who doesn't have you in an upgraded grab.
+Dangerous weapons typically have conspicuous sprites, and usually play a distinctive noise when put in-hand.
+The Head of Security's boots have a distinctive footstep noise. Keep your ears sharp if you're up to no good; an ass-whooping elemental may be in the vicinity!
+Most weapons will cause blood spatter on the victim and the assailant. A blood-covered person sprinting down the hall will attract interest. Showering will remove all the blood from you and your clothes.
+Click yourself with help intent if you're cold; you'll shake yourself to warm up and partially undo the slowdowns from it. Clothing and some chemicals can also help keep you warm.
+Different items do different types of damage in different amounts, both to your health and your stamina. A weapon that does low physical damage may do high stamina damage, which can keep a person locked in "stam crit", preventing them from fighting back.
+The cloning console displays a red flashing icon when someone can be cloned.

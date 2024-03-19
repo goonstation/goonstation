@@ -4,9 +4,9 @@
 	icon_state = "cbbolt" // changed from radbolt - cogwerks
 //How much of a punch this has, tends to be seconds/damage before any resist
 	damage = 80
-	stun = 40
+	stun = 20
 //How much ammo this costs
-	cost = 40
+	cost = 60
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power

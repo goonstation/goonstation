@@ -16,7 +16,7 @@
 			src.owner.current.name = src.owner.current.real_name
 			src.owner.current.traitHolder.addTrait("deathwish")
 			src.owner.current.traitHolder.addTrait("glasscannon")
-			boutput(src.owner.current, "<span class='notice'>You weren't able to absorb all the macho waves you were bombarded with! You have been left an incomplete macho man, with a frail body, and only one macho power. However, you inflict double damage with most melee weapons. Use your newfound form wisely to prove your worth as a macho champion of justice. Do not kill innocent crewmembers.</span>")
+			boutput(src.owner.current, SPAN_NOTICE("You weren't able to absorb all the macho waves you were bombarded with! You have been left an incomplete macho man, with a frail body, and only one macho power. However, you inflict double damage with most melee weapons. Use your newfound form wisely to prove your worth as a macho champion of justice. Do not kill innocent crewmembers."))
 
 		else
 			src.owner.current.assign_gimmick_skull()

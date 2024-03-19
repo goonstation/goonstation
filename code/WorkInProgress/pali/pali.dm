@@ -32,6 +32,7 @@
 /obj/item/gun/kinetic/beepsky
 	name = "\improper Loose Cannon"
 	desc = "Gets the job done."
+	icon = 'icons/obj/items/guns/toy.dmi'
 	icon_state = "buff_airzooka"
 	color = "#555555"
 	force = 5
@@ -62,7 +63,7 @@
 	afterattack(atom/A, mob/user as mob)
 		if(istype(A, /obj/machinery/bot/secbot))
 			src.ammo.amount_left += 1
-			user.visible_message("<span class='alert'>[user] loads \the [A] into \the [src].</span>", "<span class='alert'>You load \the [A] into \the [src].</span>")
+			user.visible_message(SPAN_ALERT("[user] loads \the [A] into \the [src]."), SPAN_ALERT("You load \the [A] into \the [src]."))
 			qdel(A)
 			return
 		else
@@ -87,7 +88,6 @@
 	harm(atom/target, var/mob/living/user)
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/M = target
-			var/list/all_slots = list(SLOT_BACK, SLOT_WEAR_MASK, SLOT_L_HAND, SLOT_R_HAND, SLOT_BELT, SLOT_WEAR_ID, SLOT_EARS, SLOT_GLASSES, SLOT_GLOVES, SLOT_HEAD, SLOT_SHOES, SLOT_WEAR_SUIT, SLOT_L_STORE, SLOT_R_STORE)
 			var/list/slots = list()
 			for(var/slot in all_slots)
 				if(M.get_slot(slot))
@@ -208,7 +208,7 @@
 		var/atom/zomb = new src.critter_type(src.loc)
 		zomb.alpha = 0
 		animate(zomb, alpha = 255, time = 1 SECOND, easing = SINE_EASING)
-		src.visible_message("<span style=\"color:red\"><b> \The [zomb] emerges from \the [src]!</b></span>")
+		src.visible_message(SPAN_ALERT("<b> \The [zomb] emerges from \the [src]!</b>"))
 		sleep(2.5 SECONDS)
 		if(zomb.loc == src.loc)
 			step(zomb, pick(alldirs))
@@ -428,7 +428,7 @@
 			list("#296C3F", "#CDCDD6", "#BC9800"),
 			list("#5ea2a8", suit_color, boots_color)
 		)
-		var/obj/item/clothing/suit/bio_suit/suit = new(src.loc)
+		var/obj/item/clothing/suit/hazard/bio_suit/suit = new(src.loc)
 		var/obj/item/clothing/head/bio_hood/hood = new(src.loc)
 		suit.color = col
 		hood.color = col
@@ -458,7 +458,7 @@
 				old_hat.set_loc(H.loc)
 			H.force_equip(suit, SLOT_WEAR_SUIT)
 			H.force_equip(hood, SLOT_HEAD)
-			boutput(H, "<span class='alert'>There's 1 impostor among us.</alert>")
+			boutput(H, SPAN_ALERT("There's 1 impostor among us.</alert>"))
 		qdel(src)
 
 /obj/spawner/amongus_clothing/cursed
@@ -561,7 +561,7 @@ ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)
 		animate_self()
 
 	teleport(atom/movable/AM)
-		src.target = random_space_turf() || random_nonrestrictedz_turf()
+		src.set_target(random_space_turf() || random_nonrestrictedz_turf())
 		var/turf/throw_target = locate(rand(1, world.maxx), rand(1, world.maxy), src.target.z)
 		. = ..()
 		if (tele_throw_speed > 0)
@@ -572,11 +572,11 @@ ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)
 			var/mob/living/L = AM
 			for (var/mob/M in AIviewers(Center=src))
 				if (M == L)
-					boutput(M, "<span class='alert'>You are sucked into \the [src]!</span>")
+					boutput(M, SPAN_ALERT("You are sucked into \the [src]!"))
 				else if (isadmin(M) && !M.client.player_mode)
-					boutput(M, "<span class='alert'>[L] ([key_name(L, admins=FALSE, user=M)]) is sucked into \the [src], landing <a href='?src=\ref[M.client.holder];action=jumptocoords;target=[target.x],[target.y],[target.z]' title='Jump to Coords'>here</a></span></span>")
+					boutput(M, SPAN_ALERT("[L] ([key_name(L, admins=FALSE, user=M)]) is sucked into \the [src], landing <a href='?src=\ref[M.client.holder];action=jumptocoords;target=[target.x],[target.y],[target.z]' title='Jump to Coords'>here</a>"))
 				else
-					boutput(M, "<span class='alert'>[L] is sucked into \the [src]!</span>")
+					boutput(M, SPAN_ALERT("[L] is sucked into \the [src]!"))
 
 	proc/give_counter()
 		set name = "give counter"
@@ -635,10 +635,10 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 	throwforce = 6
 	var/can_switch_target = TRUE
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		. = ..()
 		if(can_switch_target)
-			src.AddComponent(/datum/component/angle_watcher, M, base_transform=matrix())
+			src.AddComponent(/datum/component/angle_watcher, target, base_transform=matrix())
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		. = ..()
@@ -667,9 +667,9 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 		set name = "Toggle Target Switching"
 		can_switch_target = !can_switch_target
 		if(can_switch_target)
-			boutput(usr, "<span class='notice'>Knife user can now stab someone else to track them.</span>")
+			boutput(usr, SPAN_NOTICE("Knife user can now stab someone else to track them."))
 		else
-			boutput(usr, "<span class='notice'>Knife user can no longer switch targets.</span>")
+			boutput(usr, SPAN_NOTICE("Knife user can no longer switch targets."))
 
 
 
@@ -686,3 +686,129 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 			knives += knife
 		knives[1].AddComponent(/datum/component/angle_watcher, knives[how_many_knives], base_transform=matrix())
 		qdel(src)
+
+
+
+/obj/item/letter
+	name = "letter"
+	icon = 'icons/effects/letter_overlay.dmi'
+	rand_pos = TRUE
+	var/letter = null
+	var/bg_color = null
+	var/inhand = TRUE
+
+	New()
+		..()
+		randomize_state(force=FALSE)
+
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if(!isturf(target) || !islist(params) || !("icon-x" in params) || !("icon-y" in params))
+			return
+		user.drop_item(src)
+		src.set_loc(target)
+		var/px = text2num(params["icon-x"]) - 16
+		var/py = text2num(params["icon-y"]) - 16
+		var/turf_pixel_x = target.x * world.icon_size
+		var/turf_pixel_y = target.y * world.icon_size
+		px += turf_pixel_x
+		py += turf_pixel_y
+		px -= px % 10 - 5
+		py -= py % 10 - 5
+		px -= turf_pixel_x
+		py -= turf_pixel_y
+		src.pixel_x = px
+		src.pixel_y = py
+
+	proc/randomize_state(force=FALSE)
+		if(isnull(letter) || force)
+			letter = pick(global.uppercase_letters)
+		if(isnull(bg_color) || force)
+			bg_color = rgb(rand(0,255), rand(0,255), rand(0,255))
+		UpdateIcon()
+		UpdateName()
+
+	UpdateName()
+		. = ..()
+		src.letter = uppertext(src.letter)
+		src.name = "[name_prefix(null, 1)]letter [src.letter][name_suffix(null, 1)]"
+
+	update_icon(...)
+		. = ..()
+		src.letter = uppertext(src.letter)
+		src.icon_state = letter
+		var/image/bg = image('icons/effects/letter_overlay.dmi', icon_state = "[letter]2")
+		var/list/rgb_list = rgb2num(src.bg_color)
+		var/c = 1 / 139
+		bg.color = list(rgb_list[1]*c,0,0, 0,rgb_list[2]*c,0, 0,0,rgb_list[3]*c)
+		src.underlays = list(bg)
+		if(inhand)
+			if(isnull(src.inhand_image))
+				src.inhand_image = new
+			var/image/inhand = image(src.icon, src.icon_state)
+			inhand.underlays = list(bg)
+			inhand.pixel_x = 11
+			inhand.pixel_y = 11
+			src.inhand_image.underlays = list(inhand)
+		else
+			src.inhand_image?.underlays = null
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		src.UpdateIcon()
+		src.UpdateName()
+
+/obj/item/letter/traitor
+	name = "letter T"
+	bg_color = "#ff0000"
+	letter = "T"
+
+/obj/item/letter/vowel
+	name = "vowel"
+	randomize_state(force=FALSE)
+		if(isnull(letter) || force)
+			letter = pick(global.vowels_upper)
+		..()
+
+/obj/item/letter/consonant
+	name = "consonant"
+	randomize_state(force=FALSE)
+		if(isnull(letter) || force)
+			letter = pick(global.consonants_upper)
+		..()
+
+/obj/item/letter/scrabble_odds
+	var/static/list/scrabble_weights = list(
+		"A" = 9, "B" = 2, "C" = 2, "D" = 4, "E" = 12, "F" = 2, "G" = 3, "H" = 2, "I" = 9, "J" = 1, "K" = 1, "L" = 4, "M" = 2, "N" = 6, "O" = 8, "P" = 2,
+		"Q" = 1, "R" = 6, "S" = 4, "T" = 6, "U" = 4, "V" = 2, "W" = 2, "X" = 1, "Y" = 2, "Z" = 1
+	)
+
+	randomize_state(force=FALSE)
+		if(isnull(letter) || force)
+			letter = weighted_pick(scrabble_weights)
+		..()
+
+/obj/machinery/vending/letters
+	name = "LetterMatic"
+	desc = "Good vibes, one letter at a time."
+	icon_state = "letters"
+	icon_panel = "standard-panel"
+	icon_off = "standard-off"
+	icon_broken = "standard-broken"
+	icon_fallen = "standard-fallen"
+	slogan_chance = 5
+	slogan_list = list(
+		"Can I get a vowel?"
+	)
+	pay = TRUE
+
+	light_r = 0.5
+	light_g = 0.6
+	light_b = 0.2
+
+	create_products(restocked)
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/letter/scrabble_odds, amount=1, infinite=TRUE, cost=5)
+		product_list += new/datum/data/vending_product(/obj/item/letter/vowel, amount=1, infinite=TRUE, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/letter/consonant, amount=1, infinite=TRUE, cost=20)
+		product_list += new/datum/data/vending_product(/obj/item/letter/traitor, amount=1, cost=1000, hidden=TRUE)

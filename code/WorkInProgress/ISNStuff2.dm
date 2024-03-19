@@ -107,7 +107,7 @@
 	var/obj/item/I = H.get_current_active_item()
 
 	if (istype(I))
-		boutput(src, "<span class='alert'><b>[H.name] attacks [src.name] with [I]!</b></span>")
+		boutput(src, SPAN_ALERT("<b>[H.name] attacks [src.name] with [I]!</b>"))
 		if (I.hitsound)
 			src.playsound_local(src.loc, I.hitsound, 50, 1)
 		src.fake_damage(I.force,100)
@@ -116,10 +116,10 @@
 			return
 		if (!src.canmove)
 			src.playsound_local(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 25, 1, -1)
-			boutput(src, "<span class='alert'><B>[H.name] kicks [src.name]!</B></span>")
+			boutput(src, SPAN_ALERT("<B>[H.name] kicks [src.name]!</B>"))
 		else
 			src.playsound_local(src.loc, pick(sounds_punch), 25, 1, -1)
-			boutput(src, "<span class='alert'><B>[H.name] punches [src.name]!</B></span>")
+			boutput(src, SPAN_ALERT("<B>[H.name] punches [src.name]!</B>"))
 		src.fake_damage(rand(2,9),100)
 	hit_twitch(src)
 
@@ -173,63 +173,63 @@
 
 	attack_hand(mob/user)
 		if (being_pressed)
-			boutput(user, "<span class='alert'>You can't press it while someone else is about to press it!</span>")
+			boutput(user, SPAN_ALERT("You can't press it while someone else is about to press it!"))
 			return
 		if (has_been_pressed)
-			boutput(user, "<span class='alert'>Someone has already pressed the button!</span>")
+			boutput(user, SPAN_ALERT("Someone has already pressed the button!"))
 			return
 
 		if (steps_until_pressable > 0)
-			boutput(user, "<span class='alert'>You can't press the button.</span>")
+			boutput(user, SPAN_ALERT("You can't press the button."))
 			return
 		else
 			being_pressed = 1
-			user.visible_message("<span class='alert'><b>[user] reaches for the button...</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] reaches for the button...</b>"))
 			var/input = null
 
 			input = tgui_alert(user, "Are you sure you want to press the button?", "DONT PRESS IT", list("Yes","No"))
 			if (input != "Yes")
-				boutput(user, "<span class='notice'>You made the right decision.</span>")
+				boutput(user, SPAN_NOTICE("You made the right decision."))
 				being_pressed = 0
 				return
 
 			input = tgui_alert(user, "Are you REALLY sure?", "DONT PRESS IT", list("Yes", "No"))
 			if (input != "Yes")
-				boutput(user, "<span class='notice'>You made the right decision.</span>")
+				boutput(user, SPAN_NOTICE("You made the right decision."))
 				being_pressed = 0
 				return
 
 			input = tgui_alert(user, "Should you press the button?", "DONT PRESS IT", list("Yes", "No"))
 			if (input != "No")
-				boutput(user, "<span class='alert'>Haven't you been paying attention?</span>")
+				boutput(user, SPAN_ALERT("Haven't you been paying attention?"))
 				being_pressed = 0
 				return
 
 			input = tgui_alert(user, "Are you like double-ultra turbo sure you want to press the button?", "DONT PRESS IT", list("No", "Yes"))
 			if (input != "Yes")
-				boutput(user, "<span class='notice'>You made the right decision.</span>")
+				boutput(user, SPAN_NOTICE("You made the right decision."))
 				being_pressed = 0
 				return
 
-			boutput(user, "<span class='alert'>Pressing button. Please wait thirty seconds.</span>")
+			boutput(user, SPAN_ALERT("Pressing button. Please wait thirty seconds."))
 			sleep(30 SECONDS)
 
 			input = tgui_alert(user, "For real though, you're okay with pressing the button?", "DONT PRESS IT", list("Yes", "No"))
 			if (input != "Yes")
-				boutput(user, "<span class='notice'>You made the right decision.</span>")
+				boutput(user, SPAN_NOTICE("You made the right decision."))
 				being_pressed = 0
 				return
 
 			if (is_incapacitated(user))
-				boutput(user, "<span class='alert'>You can't press it when you're incapacitated.</span>")
+				boutput(user, SPAN_ALERT("You can't press it when you're incapacitated."))
 				being_pressed = 0
 				return
 			if (BOUNDS_DIST(user, src) > 0)
-				boutput(user, "<span class='alert'>You can't press it from over there.</span>")
+				boutput(user, SPAN_ALERT("You can't press it from over there."))
 				being_pressed = 0
 				return
 
-			user.visible_message("<span class='alert'><b>[user] presses the button!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] presses the button!</b>"))
 			user.unlock_medal("Button Pusher", 1)
 			has_been_pressed = 1
 			being_pressed = 0
@@ -256,92 +256,92 @@
 				A.UpdateIcon()
 
 			for_by_tcl(G, /mob/living/critter/small_animal/dog/george)
-				G.visible_message("<span class='alert'><b>[G]</b> pees on the floor. Bad dog!</span>")
-				make_cleanable( /obj/decal/cleanable/urine ,get_turf(G))
+				G.visible_message(SPAN_ALERT("<b>[G]</b> pees on the floor. Bad dog!"))
+				make_cleanable( /obj/decal/cleanable/water ,get_turf(G))
 		return
 
 	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && steps_until_pressable == 18)
-			boutput(user, "<span class='notice'>You remove the metal bolts.</span>")
+			boutput(user, SPAN_NOTICE("You remove the metal bolts."))
 			steps_until_pressable--
 			return
 		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0) && steps_until_pressable == 17)
-			boutput(user, "<span class='notice'>You un-weld the casing.</span>")
+			boutput(user, SPAN_NOTICE("You un-weld the casing."))
 			steps_until_pressable--
 			return
 		if (ispryingtool(W) && steps_until_pressable == 16)
-			boutput(user, "<span class='notice'>You pry off the casing. Now what?</span>")
+			boutput(user, SPAN_NOTICE("You pry off the casing. Now what?"))
 			steps_until_pressable--
 			return
 		if (issnippingtool(W) && steps_until_pressable == 15)
-			boutput(user, "<span class='notice'>You cut up the metal mesh. This is kind of a pain in the ass.</span>")
+			boutput(user, SPAN_NOTICE("You cut up the metal mesh. This is kind of a pain in the ass."))
 			steps_until_pressable--
 			return
 		if (isscrewingtool(W) && steps_until_pressable == 14)
-			boutput(user, "<span class='notice'>You unscrew the case. There's no way this is worth it.</span>")
+			boutput(user, SPAN_NOTICE("You unscrew the case. There's no way this is worth it."))
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/kitchen/utensil/knife) && steps_until_pressable == 13)
-			boutput(user, "<span class='notice'>You pry out the loose screw with the knife. This is just ridiculous.</span>")
+			boutput(user, SPAN_NOTICE("You pry out the loose screw with the knife. This is just ridiculous."))
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/knife/butcher) && steps_until_pressable == 13)
-			boutput(user, "<span class='alert'>That's a bit excessive. A regular knife will do.</span>")
+			boutput(user, SPAN_ALERT("That's a bit excessive. A regular knife will do."))
 			return
 		if (istype(W,/obj/item/shovel) && steps_until_pressable == 12)
-			boutput(user, "<span class='notice'>You lever off the case with the shovel. You should probably give up.</span>")
+			boutput(user, SPAN_NOTICE("You lever off the case with the shovel. You should probably give up."))
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/slag_shovel) && steps_until_pressable == 12)
-			boutput(user, "<span class='notice'>You lever off the case with the shovel. You should probably give up.</span>")
+			boutput(user, SPAN_NOTICE("You lever off the case with the shovel. You should probably give up."))
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/sponge) && steps_until_pressable == 11)
-			boutput(user, "<span class='notice'>You clean off the lock. You should definitely give up.</span>")
+			boutput(user, SPAN_NOTICE("You clean off the lock. You should definitely give up."))
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/stamp) && steps_until_pressable == 10)
-			boutput(user, "<span class='notice'>You stamp the lock. Stop. Stop now. Please. Stop.</span>")
+			boutput(user, SPAN_NOTICE("You stamp the lock. Stop. Stop now. Please. Stop."))
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/gun/russianrevolver) && steps_until_pressable == 9)
-			boutput(user, "<span class='notice'>You stick the revolver in the lock. No, seriously. Stop. This isn't worth it.</span>")
+			boutput(user, SPAN_NOTICE("You stick the revolver in the lock. No, seriously. Stop. This isn't worth it."))
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/staple_gun) && steps_until_pressable == 8)
-			boutput(user, "<span class='notice'>You staple the locks. Come on, man. Know when to fold em. Just walk away.</span>")
+			boutput(user, SPAN_NOTICE("You staple the locks. Come on, man. Know when to fold em. Just walk away."))
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/surgical_spoon) && steps_until_pressable == 7)
-			boutput(user, "<span class='notice'>You remove the eyeball. Stop now. I'm not kidding.</span>")
+			boutput(user, SPAN_NOTICE("You remove the eyeball. Stop now. I'm not kidding."))
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/mining_tool) && steps_until_pressable == 6)
-			boutput(user, "<span class='notice'>You cut the wires. This is a very, VERY bad idea. You won't be able to undo this.</span>")
+			boutput(user, SPAN_NOTICE("You cut the wires. This is a very, VERY bad idea. You won't be able to undo this."))
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/baton) && steps_until_pressable == 5)
-			boutput(user, "<span class='notice'>You stun the button. Look, honestly, your persistence is NOT doing you any favors here.</span>")
+			boutput(user, SPAN_NOTICE("You stun the button. Look, honestly, your persistence is NOT doing you any favors here."))
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/device/igniter) && steps_until_pressable == 4)
-			boutput(user, "<span class='notice'>You warm up the button. Have you not considered WHY there's so many steps stopping you?</span>")
+			boutput(user, SPAN_NOTICE("You warm up the button. Have you not considered WHY there's so many steps stopping you?"))
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/paint_can) && steps_until_pressable == 3)
-			boutput(user, "<span class='notice'>You paint the butOH FOR FUCKS SAKE JUST STOP LIKE IVE BEEN ASKING YOU TO</span>")
+			boutput(user, SPAN_NOTICE("You paint the butOH FOR FUCKS SAKE JUST STOP LIKE IVE BEEN ASKING YOU TO"))
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/paint) && steps_until_pressable == 3)
-			boutput(user, "<span class='notice'>You paint the butOH FOR FUCKS SAKE JUST STOP LIKE IVE BEEN ASKING YOU TO</span>")
+			boutput(user, SPAN_NOTICE("You paint the butOH FOR FUCKS SAKE JUST STOP LIKE IVE BEEN ASKING YOU TO"))
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/reagent_containers/glass/bottle/holywater) && steps_until_pressable == 2)
-			boutput(user, "<span class='alert'>Stop it.</span>")
+			boutput(user, SPAN_ALERT("Stop it."))
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/gnomechompski) && steps_until_pressable == 1)
-			boutput(user, "<span class='alert'>You are nearing the point of no return. Walk away. Please.</span>")
+			boutput(user, SPAN_ALERT("You are nearing the point of no return. Walk away. Please."))
 			steps_until_pressable--
 			return
 

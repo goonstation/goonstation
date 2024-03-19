@@ -6,43 +6,36 @@ var/list/xpRewardButtons = list() //Assoc, datum:button obj
 mob/verb/checkrewards()
 	set name = "Check Job Rewards"
 	set category = "Commands"
-	var/txt = input(usr, "Which job? (Case sensitive)","Check Job Rewards", src.job)
-	if(txt == null || length(txt) == 0) txt = src.job
-	showJobRewards(txt)
-	return
 
-/proc/showJobRewards(var/job) //Pass in job instead
 	SPAWN(0)
 		var/mob/M = usr
-		if(job)
-			if(!winexists(M, "winjobrewards_[M.ckey]"))
-				winclone(M, "winJobRewards", "winjobrewards_[M.ckey]")
+		if(!winexists(M, "winjobrewards_[M.ckey]"))
+			winclone(M, "winJobRewards", "winjobrewards_[M.ckey]")
 
-			var/list/valid = list()
-			for(var/datum/jobXpReward/J in xpRewardButtons) //This could be cached later.
-				if(job in J.required_levels)
-					valid.Add(J)
-					valid[J] = xpRewardButtons[J]
+		var/list/valid = list()
+		for(var/datum/jobXpReward/J in xpRewardButtons) //This could be cached later.
+			if(job in J.required_levels)
+				valid.Add(J)
+				valid[J] = xpRewardButtons[J]
 
-			if(valid.len)
-				winset(M, "winjobrewards_[M.ckey].grdJobRewards", "cells=\"1x[valid.len]\"")
-				var/count = 0
-				for(var/S in valid)
-					winset(M, "winjobrewards_[M.ckey].grdJobRewards", "current-cell=1,[++count]")
-					M << output(valid[S], "winjobrewards_[M.ckey].grdJobRewards")
-				winset(M, "winjobrewards_[M.ckey].lblJobName", "text=\"Job rewards for '[job]', Lvl [get_level(M.key, job)]\"")
-			else
-				winset(M, "winjobrewards_[M.ckey].grdJobRewards", "cells=\"1x0\"")
-				winset(M, "winjobrewards_[M.ckey].lblrewarddesc", "text=\"Sorry nothing.\"")
-				winset(M, "winjobrewards_[M.ckey].lblJobName", "text=\"Sorry there's no rewards for the [job] yet :(\"")
-			winshow(M, "winjobrewards_[M.ckey]")
+		if(valid.len)
+			winset(M, "winjobrewards_[M.ckey].grdJobRewards", "cells=\"1x[valid.len]\"")
+			var/count = 0
+			for(var/S in valid)
+				winset(M, "winjobrewards_[M.ckey].grdJobRewards", "current-cell=1,[++count]")
+				M << output(valid[S], "winjobrewards_[M.ckey].grdJobRewards")
+			winset(M, "winjobrewards_[M.ckey].lblJobName", "text=\"Job rewards for '[job]', Lvl [get_level(M.key, job)]\"")
 		else
-			boutput(M, "<span class='alert'>Woops! That's not a valid job, sorry!</span>")
+			winset(M, "winjobrewards_[M.ckey].grdJobRewards", "cells=\"1x0\"")
+			winset(M, "winjobrewards_[M.ckey].lblrewarddesc", "text=\"Sorry nothing.\"")
+			winset(M, "winjobrewards_[M.ckey].lblJobName", "text=\"Sorry there's no rewards for the [job] yet :(\"")
+		winshow(M, "winjobrewards_[M.ckey]")
 
 //Once again im forced to make fucking objects to properly use byond skin stuff.
 /obj/jobxprewardbutton
 	icon = 'icons/ui/jobxp.dmi'
 	icon_state = "?"
+	flags = NOSPLASH
 	var/datum/jobXpReward/rewardDatum = null
 
 	Click(location,control,params)
@@ -65,9 +58,9 @@ mob/verb/checkrewards()
 								else
 									rewardDatum.claimedNumbers[usr.key] = 1
 							else
-								boutput(usr, "<span class='alert'>Looks like you haven't earned this yet, sorry!</span>")
+								boutput(usr, SPAN_ALERT("Looks like you haven't earned this yet, sorry!"))
 					else
-						boutput(usr, "<span class='alert'>Sorry, you can not claim any more of this reward, this round.</span>")
+						boutput(usr, SPAN_ALERT("Sorry, you can not claim any more of this reward, this round."))
 		return
 
 	MouseEntered(location,control,params)
@@ -253,7 +246,7 @@ mob/verb/checkrewards()
 	claimPerRound = 1
 
 	activate(var/client/C)
-		boutput(C, "<span class='hint'>The jumpsuit pops into existance!</span>")
+		boutput(C, SPAN_HINT("The jumpsuit pops into existance!"))
 		var/obj/item/I = new /obj/item/clothing/under/misc/hydroponics(get_turf(C.mob))
 		C.mob.put_in_hand(I)
 
@@ -307,7 +300,7 @@ mob/verb/checkrewards()
 		if (istype(O, sacrifice_path))
 			var/obj/item/gun/energy/E = O
 			var/list/ret = list()
-			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			if(SEND_SIGNAL(E, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 				charge = ret["charge"]
 				max_charge = ret["max_charge"]
 			C.mob.remove_item(E)
@@ -333,7 +326,7 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand(LG)
 		boutput(C.mob, "Your E-Gun vanishes and is replaced with [LG]!")
 		C.mob.put_in_hand_or_drop(LGP)
-		boutput(C.mob, "<span class='emote'>A pamphlet flutters out.</span>")
+		boutput(C.mob, SPAN_EMOTE("A pamphlet flutters out."))
 		return
 
 //Captain
@@ -692,7 +685,7 @@ ABSTRACT_TYPE(/datum/jobXpReward/ai)
 			A.update_appearance()
 			return 1
 		else
-			boutput(C, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+			boutput(C, SPAN_ALERT("You need to be an AI to use this, you goof!"))
 
 /datum/jobXpReward/ai/aiframedefault
 	name = "AI Core Frame - Standard"

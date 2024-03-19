@@ -21,10 +21,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 			var/mob/M = hit_atom
 			var/mob/thrower = thr.thrown_by
 			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
-			if (thrower.mind?.assigned_role == "Clown" && ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain") && !M.GetOverlayImage("face_pie"))
+			if (thrower?.mind?.assigned_role == "Clown" && ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain") && !M.GetOverlayImage("face_pie"))
 				var/mob/living/carbon/human/H = M
 				var/image/face_pie = image('icons/obj/foodNdrink/food_dessert.dmi', "face_pie")
-				src.visible_message("<span class='notice'>[src] splats right in [H]'s face and remains stuck there!</span>")
+				src.visible_message(SPAN_NOTICE("[src] splats right in [H]'s face and remains stuck there!"))
 				face_pie.layer = MOB_OVERLAY_BASE
 				face_pie.appearance_flags = RESET_COLOR | PIXEL_SCALE
 				var/overlay_key = "face_pie"
@@ -41,12 +41,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 					M.UpdateOverlays(null, overlay_key)
 					if (QDELETED(src))
 						return
-					src.visible_message("<span class='notice'>[src] falls off of [M]'s face.</span>")
+					src.visible_message(SPAN_NOTICE("[src] falls off of [M]'s face."))
 					src.set_loc(M.loc)
 					qdel(face_pie)
 				return
 			else
-				src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
+				src.visible_message(SPAN_ALERT("[src] splats in [M]'s face!"))
 				M.change_eye_blurry(rand(5,10))
 				M.take_eye_damage(rand(0, 2), 1)
 				if (prob(40))
@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 		name = "slice of blackberry pie"
 		icon_state = "blackberrypie-slice"
 		initial_reagents = list("juice_blackberry"=3)
-		desc = "A slice of balckberry pie. The stains will be oh so worth it."
+		desc = "A slice of blackberry pie. The stains will be oh so worth it."
 	blueberry
 		name = "slice of blueberry pie"
 		icon_state = "blueberrypie-slice"
@@ -129,6 +129,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "apple pie"
 	desc = "Is there anything more Space-American?"
 	icon_state = "applepie"
+	item_state = "apple_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 30
@@ -140,6 +141,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "key lime pie"
 	desc = "Tart, sweet, and with a dollop of cream on top."
 	icon_state = "limepie"
+	item_state = "lime_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 30
@@ -152,6 +154,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "lemon meringue pie"
 	desc = "A fine use of fruit curd."
 	icon_state = "lemonpie"
+	item_state = "lemon_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 32
@@ -163,6 +166,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "strawberry pie"
 	desc = "It smells like summertime memories."
 	icon_state = "strawberrypie"
+	item_state = "strawberry_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 32
@@ -174,6 +178,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "pumpkin pie"
 	desc = "An autumn favourite."
 	icon_state = "pumpie"
+	item_state = "pumpkin_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 32
@@ -185,12 +190,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "cream pie"
 	desc = "More often used in pranks than culinary matters..."
 	icon_state = "creampie"
+	item_state = "cream_pie"
 	splat = 1
 	required_utensil = REQUIRED_UTENSIL_SPOON
 	throwforce = 0
 	force = 0
 	bites_left = 2
 	heal_amt = 6
+	initial_reagents = list("cream"=10)
 
 /obj/item/reagent_containers/food/snacks/pie/anything
 	name = "anything pie"
@@ -201,38 +208,36 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	use_bite_mask = FALSE
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
-		if (contents)
-			var/atom/movable/random_content
-			if (length(contents) >= 1)
-				random_content = pick(contents)
-			else
-				random_content = src
-
- 			hit_atom.Attackby(random_content, thr?.user)
-			//for afterattack, we want to filter out mobs since pies hit also the turf the person is standing on. Also, we need to call it on an actual item
-			if (hit_atom && random_content && istype(random_content, /obj/item) && ismob(hit_atom))
-				var/obj/item/randomed_item = random_content
-				randomed_item.AfterAttack(hit_atom, thr?.user)
-
-
+		var/atom/movable/random_content = src
+		if(length(src.contents) >= 1)
+			random_content = pick(src.contents)
+		if(random_content && thr.user && istype(random_content, /obj/item))
+			var/obj/item/randomed_item = random_content
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+			//for Attackby, we specifically need any atom as target (TIL ID-pies to open doors are a thing and it fills me with joy)
+			hit_atom.Attackby(randomed_item, thr.user)
 			if (ismob(hit_atom))
-				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-				var/mob/M = hit_atom
-				if (M == thr.user)
-					src.visible_message("<span class='alert'>[thr.user] fumbles and smacks the [src] into their own face!</span>")
+				var/mob/hit_mob = hit_atom
+				//for AfterAttack, we specifically need a mob as target
+				randomed_item.AfterAttack(hit_mob, thr.user)
+				if (hit_mob == thr.user)
+					src.visible_message(SPAN_ALERT("[thr.user] fumbles and smacks the [src] into their own face!"))
 				else
-					src.visible_message("<span class='alert'>[src] smacks into [M]!</span>")
+					src.visible_message(SPAN_ALERT("[src] smacks into [hit_mob]!"))
+		else
+			..()
 
 	Exited(atom/movable/Obj, newloc)
 		. = ..()
 		if(!QDELETED(Obj))
-			Obj.visible_message("<span class='alert'>[Obj] dissolves completely upon leaving [src]!</span>")
+			Obj.visible_message(SPAN_ALERT("[Obj] dissolves completely upon leaving [src]!"))
 			qdel(Obj)
 
 /obj/item/reagent_containers/food/snacks/pie/slurry
 	name = "slurry pie"
 	desc = "Though dangerous to eat raw, the slurrypod produces a fine, tart pie noted for its curative properties."
 	icon_state = "slurrypie"
+	item_state = "slurry_pie"
 	bites_left = 3
 	heal_amt = 5
 	initial_volume = 30
@@ -243,6 +248,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "bacon pie"
 	desc = "Named in honor of Sir Francis Bacon, who tragically died as the result of an early experiment into the field of bacon ice cream."
 	icon_state = "baconpie"
+	item_state = "bacon_pie"
 	bites_left = 3
 	heal_amt = 6
 	initial_volume = 80
@@ -259,6 +265,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "moon pie" // it's 2020 jabronis, out with the ableism ;)
 	desc = "Thicc."
 	icon_state = "asspie"
+	item_state = "butt_pie"
 	splat = 1
 	throwforce = 0
 	force = 0
@@ -274,6 +281,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "chocolate mud pie"
 	desc = "Like a chocolate cake, but a pie, and also very different."
 	icon_state = "chocolatepie"
+	item_state = "chocolate_pie"
 	heal_amt = 6
 	bites_left = 3
 	initial_volume = 30
@@ -286,6 +294,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "space-chicken pot pie"
 	desc = "Space-chickens are identical to regular chickens, but in space.  This is a pastry filled with their cooked flesh, some vegetables, and a cream gravy."
 	icon_state = "chickenpie"
+	item_state = "pot_pie"
 	heal_amt = 6
 	bites_left = 3
 	initial_volume = 30
@@ -296,6 +305,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "chicken \"pot\" pie"
 	desc = "Something about this pie seems off.  Guaranteed to get you pie-in-the-sky high."
 	icon_state = "weedpie"
+	item_state = "weed_pie"
 	heal_amt = 4
 	bites_left = 3
 	initial_volume = 30
@@ -306,6 +316,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "stargazy pie"
 	desc = "The snack that stares back."
 	icon_state = "fishpie"
+	item_state = "fish_pie"
 	heal_amt = 4
 	bites_left = 3
 	initial_volume = 30
@@ -315,6 +326,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "raspberry pie"
 	desc = "Those are fresh raspberries, too. Oh man."
 	icon_state = "raspberrypie"
+	item_state = "raspberry_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 32
@@ -326,6 +338,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "blackberry pie"
 	desc = "The stains will be oh so worth it."
 	icon_state = "blackberrypie"
+	item_state = "blackberry_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 32
@@ -337,6 +350,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "blueberry pie"
 	desc = "Blueberries cook up purple, who knew?"
 	icon_state = "blueberrypie"
+	item_state = "blueberry_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 32
@@ -348,6 +362,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "cherry pie"
 	desc = "It looks so good, it brings a tear to you eye."
 	icon_state = "cherrypie"
+	item_state = "cherry_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 32

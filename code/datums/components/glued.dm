@@ -72,11 +72,11 @@ TYPEINFO(/datum/component/glued)
 		return
 	var/atom/movable/parent = src.parent
 	var/turf/T = get_turf(parent)
-	T.visible_message("<span class='notice'>The glue on [parent] dries up and it falls off from [glued_to].</span>")
+	T.visible_message(SPAN_NOTICE("The glue on [parent] dries up and it falls off from [glued_to]."))
 	qdel(src)
 
 /datum/component/glued/proc/on_attackhand(atom/movable/parent, mob/user)
-	if(user?.a_intent == INTENT_HELP)
+	if(user?.a_intent == INTENT_HELP && !isintangible(user))
 		src.start_ungluing(parent, user)
 	else
 		src.glued_to.Attackhand(user)
@@ -84,16 +84,16 @@ TYPEINFO(/datum/component/glued)
 
 /datum/component/glued/proc/start_ungluing(atom/movable/parent, mob/user)
 	if(isnull(src.glue_removal_time))
-		boutput(user, "<span class='alert'>You try to unglue [parent] from [src.glued_to] but the glue is too strong.</span>")
+		boutput(user, SPAN_ALERT("You try to unglue [parent] from [src.glued_to] but the glue is too strong."))
 		return FALSE
 	var/turf/T = get_turf(parent)
 	if(parent == user)
-		T.visible_message("<span class='notice'>[user] starts ungluing [himself_or_herself(user)] from [src.glued_to].</span>")
+		T.visible_message(SPAN_NOTICE("[user] starts ungluing [himself_or_herself(user)] from [src.glued_to]."))
 	else
-		T.visible_message("<span class='notice'>[user] starts ungluing [parent] from [src.glued_to].</span>")
+		T.visible_message(SPAN_NOTICE("[user] starts ungluing [parent] from [src.glued_to]."))
 	actions.start(
 		new /datum/action/bar/icon/callback(user, parent, src.glue_removal_time, PROC_REF(delete_self), null, parent.icon, parent.icon_state,\
-		"<span class='notice'>[user] manages to unglue [parent] from [src.glued_to].</span>", 0, src), user)
+		SPAN_NOTICE("[user] manages to unglue [parent] from [src.glued_to]."), 0, src), user)
 	return TRUE
 
 /datum/component/glued/proc/on_resist(mob/living/parent)
@@ -117,7 +117,7 @@ TYPEINFO(/datum/component/glued)
 		SPAWN(1) // but first wait if the glued_to doesn't move in with us 🥺
 			if(src.set_loc_rippoff_in_progress && !QDELETED(src))
 				var/turf/T = get_turf(parent)
-				T?.visible_message("<span class='notice'>\The [parent] is ripped off from [glued_to].</span>")
+				T?.visible_message(SPAN_NOTICE("\The [parent] is ripped off from [glued_to]."))
 				qdel(src)
 
 /datum/component/glued/proc/on_explode(atom/movable/parent, list/explode_args)

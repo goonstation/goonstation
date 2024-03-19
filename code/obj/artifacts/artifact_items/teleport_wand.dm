@@ -25,7 +25,7 @@
 					if(H.shoes?.magnetic && istype(H.shoes, /obj/item/clothing/shoes/magnetic))
 						var/obj/item/clothing/shoes/magnetic/stay_behind = H.shoes
 
-						boutput(user, "<span class='alert'><b>The magnetic attractor on [stay_behind] overloads!</b></span>")
+						boutput(user, SPAN_ALERT("<b>The magnetic attractor on [stay_behind] overloads!</b>"))
 						playsound(H, pick('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg'), 30)
 						H.u_equip(stay_behind)
 						stay_behind.set_loc(H.loc)

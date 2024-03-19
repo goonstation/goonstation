@@ -42,7 +42,7 @@ TYPEINFO(/obj/item/hand_tele)
 		. = ..()
 		var/ret = list()
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
-			. += "<span class='alert'>No power cell installed.</span>"
+			. += SPAN_ALERT("No power cell installed.")
 		else
 			. += "The power cell has [ret["charge"]]/[ret["max_charge"]] PUs left! Each portal will use [src.power_cost] PUs."
 
@@ -144,7 +144,7 @@ TYPEINFO(/obj/item/hand_tele)
 			t1 = pick(L)
 		users -= user // We're done showing the UI
 
-		if (user.stat || user.restrained())
+		if (user.stat || user.restrained() || !(src in user.equipped_list())) //let's check if you actually still HAVE the hand tele
 			return
 
 		if (t1 == "Cancel")
@@ -194,11 +194,11 @@ TYPEINFO(/obj/item/hand_tele)
 		P.set_loc(our_loc)
 		portals += P
 		if (!src.our_target)
-			P.target = src.our_random_target
+			P.set_target(src.our_random_target)
 		else
-			P.target = src.our_target
+			P.set_target(src.our_target)
 
-		user.visible_message("<span class='notice'>Portal opened.</span>")
+		user.visible_message(SPAN_NOTICE("Portal opened."))
 		SEND_SIGNAL(src, COMSIG_CELL_USE, src.power_cost)
 		logTheThing(LOG_STATION, user, "creates a hand tele portal (<b>Destination:</b> [src.our_target ? "[log_loc(src.our_target)]" : "*random coordinates*"]) at [log_loc(user)].")
 

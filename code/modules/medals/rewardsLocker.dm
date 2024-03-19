@@ -25,14 +25,14 @@
 			return
 
 		if (!activator.back)
-			boutput(activator, "<span class='alert'>You can't reskin a backpack if you're not wearing one!</span>")
+			boutput(activator, SPAN_ALERT("You can't reskin a backpack if you're not wearing one!"))
 			return
 
 		var/obj/item/storage/backpack/M = activator.back
 		var/prev_desc
 
 		if(!istype(M))
-			boutput(activator, "<span class='alert'>Whatever it is you've got on your back, it isn't a backpack!</span>")
+			boutput(activator, SPAN_ALERT("Whatever it is you've got on your back, it isn't a backpack!"))
 			return
 
 		//SPACEBUX REWARD BACKPACKS
@@ -207,7 +207,7 @@
 			M.item_state = "satchel_robotics"
 			M.name = "robotics satchel"
 			M.real_name = "robotics satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromaticly on the shoulder of roboticists.(Base Item: robotics backpack)"
+			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromatically on the shoulder of roboticists.(Base Item: robotics backpack)"
 
 		else if (istype(M, /obj/item/storage/backpack/genetics) || activator.back.icon_state == "bp_genetics")
 			M.icon_state = "satchel_genetics"
@@ -259,7 +259,7 @@
 			M.real_name = "satchel"
 			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: backpack)"
 		else
-			boutput(activator, "<span class='alert'>Whatever it is you've got on your back, it can't be reskinned!</span>")
+			boutput(activator, SPAN_ALERT("Whatever it is you've got on your back, it can't be reskinned!"))
 			return
 
 		//Updates to ensure satchel is displayed correctly
@@ -279,7 +279,7 @@
 	required_medal = "Newton's Crew"
 
 	rewardActivate(var/mob/activator)
-		boutput(usr, "<span class='notice'>The Kit has been dropped at your current location.</span>")
+		boutput(usr, SPAN_NOTICE("The Kit has been dropped at your current location."))
 		new /obj/item/pod/paintjob/tronthing(get_turf(activator))
 		return 1
 
@@ -306,7 +306,7 @@
 			activator.set_clothing_icon_dirty()
 			return 1
 
-		boutput(activator, "<span class='alert'>Unable to redeem... are you wearing a gas mask?</span>")
+		boutput(activator, SPAN_ALERT("Unable to redeem... are you wearing a gas mask?"))
 		return
 
 /datum/achievementReward/swatgasmask
@@ -330,7 +330,7 @@
 			M.color_b = 1
 			activator.set_clothing_icon_dirty()
 			return 1
-		boutput(activator, "<span class='alert'>Unable to redeem... are you wearing a gas mask?</span>")
+		boutput(activator, SPAN_ALERT("Unable to redeem... are you wearing a gas mask?"))
 		return
 
 /datum/achievementReward/colorfulberet
@@ -343,7 +343,10 @@
 			var/mob/living/carbon/human/H = activator
 			if (!istype(H.head, /obj/item/clothing/head/helmet) && istype(H.head, /obj/item/clothing/head)) // ha...
 				var/obj/item/clothing/head/M = H.head
+				M.icon = 'icons/obj/clothing/item_hats.dmi'
 				M.icon_state = "beret_base"
+				M.item_state = "beret_base"
+				M.wear_state = "beret_base"
 				M.wear_image_icon = 'icons/mob/clothing/head.dmi'
 				M.color = random_saturated_hex_color(1)
 				M.name = "beret"
@@ -351,9 +354,9 @@
 				M.desc = "A colorful beret."
 				activator.set_clothing_icon_dirty()
 				return 1
-			boutput(activator, "<span class='alert'>Unable to redeem... are you wearing a hat?</span>")
+			boutput(activator, SPAN_ALERT("Unable to redeem... are you wearing a hat?"))
 		else
-			boutput(activator, "<span class='alert'>Unable to redeem... only humans can redeem this.</span>")
+			boutput(activator, SPAN_ALERT("Unable to redeem... only humans can redeem this."))
 
 		return 0
 
@@ -379,7 +382,7 @@
 			activator.set_clothing_icon_dirty()
 			return 1
 		else
-			boutput(activator, "<span class='alert'>Unable to redeem... you need to have a large beaker in your hands.</span>")
+			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a large beaker in your hands."))
 			return
 
 /datum/achievementReward/red_bucket
@@ -404,11 +407,16 @@
 			skin_target.fingerprints = null
 			skin_target.fingerprints_full = null
 			skin_target.fingerprintslast = null
+			// Update borg's bucket in their module, don't drop it
+			if (issilicon(activator))
+				var/mob/living/silicon/robot/borg_activator = activator
+				borg_activator.swap_individual_tool(skin_target, new_bucket)
+			else
+				activator.put_in_hand(new_bucket)
 			qdel(skin_target)
-			activator.put_in_hand(new_bucket)
 			return 1
 		else
-			boutput(activator, "<span class='alert'>Unable to redeem... you need to have a bucket in your hands.</span>")
+			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a bucket in your hands."))
 			return
 
 
@@ -435,10 +443,10 @@
 				M.desc = "A sleek but comfortable pilot's jumpsuit. (Base Item: [prev])"
 				H.set_clothing_icon_dirty()
 				return 1
-			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a jumpsuit.</span>")
+			boutput(activator, SPAN_ALERT("Unable to redeem... you need to be wearing a jumpsuit."))
 			return
 
-		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+		boutput(activator, SPAN_ALERT("Unable to redeem... Only humans can redeem this."))
 		return
 
 /datum/achievementReward/flower_scrubs
@@ -453,7 +461,7 @@
 			if (H.w_uniform)
 				var/obj/item/clothing/under/scrub/M = H.w_uniform
 				if (!istype(M))
-					boutput(activator, "<span class='alert'>You're not wearing medical scrubs!</span>")
+					boutput(activator, SPAN_ALERT("You're not wearing medical scrubs!"))
 					return
 				var/prev = M.name
 				M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
@@ -469,7 +477,7 @@
 				H.set_clothing_icon_dirty()
 				return 1
 
-		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+		boutput(activator, SPAN_ALERT("Unable to redeem... Only humans can redeem this."))
 		return
 
 /datum/achievementReward/stylish
@@ -483,18 +491,31 @@
 			if (H.w_uniform)
 				var/obj/item/clothing/under/rank/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/head_of_security))
+					M.icon = initial(M.icon)
+					M.inhand_image_icon = initial(M.inhand_image_icon)
+					M.wear_image_icon = initial(M.wear_image_icon)
+					M.item_state = initial(M.item_state)
+					M.name = initial(M.name)
+					M.real_name = initial(M.real_name)
+					M.desc = initial(M.desc)
 					M.icon_state = "hos-old"
 					H.set_clothing_icon_dirty()
 					return 1
 				else if (istype(M, /obj/item/clothing/under/rank/security))
+					M.icon = initial(M.icon)
+					M.inhand_image_icon = initial(M.inhand_image_icon)
+					M.wear_image_icon = initial(M.wear_image_icon)
+					M.name = initial(M.name)
+					M.real_name = initial(M.real_name)
+					M.desc = initial(M.desc)
 					M.icon_state = "security-old"
 					M.item_state = "security-relic"
 					H.set_clothing_icon_dirty()
 					return 1
 
-			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a HoS or Security jumpsuit.</span>")
+			boutput(activator, SPAN_ALERT("Unable to redeem... you need to be wearing a HoS or Security jumpsuit."))
 			return
-		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+		boutput(activator, SPAN_ALERT("Unable to redeem... Only humans can redeem this."))
 		return
 
 /datum/achievementReward/med_labcoat
@@ -520,10 +541,10 @@
 					H.set_clothing_icon_dirty()
 					return 1
 
-			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a medical labcoat.</span>")
+			boutput(activator, SPAN_ALERT("Unable to redeem... you need to be wearing a medical labcoat."))
 			return
 
-		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+		boutput(activator, SPAN_ALERT("Unable to redeem... Only humans can redeem this."))
 		return
 
 /datum/achievementReward/sci_labcoat
@@ -562,10 +583,10 @@
 					H.set_clothing_icon_dirty()
 					return 1
 
-			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a labcoat.</span>")
+			boutput(activator, SPAN_ALERT("Unable to redeem... you need to be wearing a labcoat."))
 			return
 
-		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+		boutput(activator, SPAN_ALERT("Unable to redeem... Only humans can redeem this."))
 		return
 
 /datum/achievementReward/alchemistrobes
@@ -594,10 +615,10 @@
 					M.desc = "Well you sure LOOK the part with these on. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					return 1
-			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a labcoat.</span>")
+			boutput(activator, SPAN_ALERT("Unable to redeem... you need to be wearing a labcoat."))
 			return
 
-		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+		boutput(activator, SPAN_ALERT("Unable to redeem... Only humans can redeem this."))
 		return
 
 /datum/achievementReward/dioclothes
@@ -624,7 +645,7 @@
 					H.set_clothing_icon_dirty()
 					return 1
 
-		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts<i>. </span>")
+		boutput(activator, SPAN_ALERT("Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts<i>."))
 		return
 
 /datum/achievementReward/clown_college
@@ -643,7 +664,7 @@
 				return 1
 			boutput(H, "You're not a honking clown, you imposter!")
 
-		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+		boutput(activator, SPAN_ALERT("Unable to redeem... Only humans can redeem this."))
 		return
 
 /datum/achievementReward/Aerostaticjacket
@@ -666,10 +687,10 @@
 				return 1
 
 			if(H.mind.assigned_role == "Detective")
-				boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing your jacket, detective.</span>")
+				boutput(activator, SPAN_ALERT("Unable to redeem... you need to be wearing your jacket, detective."))
 				return
 
-			boutput(activator, "<span class='alert'>Unable to redeem... you need to be wearing a detective's jacket.</span>")
+			boutput(activator, SPAN_ALERT("Unable to redeem... you need to be wearing a detective's jacket."))
 		return
 
 /datum/achievementReward/inspectorscloths
@@ -771,10 +792,10 @@
 					succ = TRUE
 
 			if (!succ)
-				boutput(activator, "<span class='alert'>Unable to redeem... now that's a case for a real detective, not you.</span>")
+				boutput(activator, SPAN_ALERT("Unable to redeem... now that's a case for a real detective, not you."))
 			return succ
 
-		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+		boutput(activator, SPAN_ALERT("Unable to redeem... Only humans can redeem this."))
 		return
 
 /datum/achievementReward/ntso_commander
@@ -836,7 +857,7 @@
 					M.item_state = "centcoat"
 					M.name = "commander's coat"
 					M.real_name = "commander's coat"
-					M.desc = "A luxorious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
+					M.desc = "A luxurious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -940,13 +961,13 @@
 					H.update_inhands()
 					succ = TRUE
 				else
-					boutput(H, "<span class='alert'>That megaphone is WAY too loud to disguise.</span>")
+					boutput(H, SPAN_ALERT("That megaphone is WAY too loud to disguise."))
 
 			if (!succ)
-				boutput(activator, "<span class='alert'>Unable to redeem... What kind of fake captain are you!?</span>")
+				boutput(activator, SPAN_ALERT("Unable to redeem... What kind of fake captain are you!?"))
 			return succ
 		else
-			boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+			boutput(activator, SPAN_ALERT("Unable to redeem... Only humans can redeem this."))
 			return FALSE
 
 //red captain medal, after all this time!
@@ -1008,7 +1029,7 @@
 					M.item_state = "centcoat-red"
 					M.name = "\improper CentCom coat"
 					M.real_name = "\improper CentCom coat"
-					M.desc = "A luxorious formal coat. It is specifically made for CENTCOM executives.(Base Item: [prev])"
+					M.desc = "A luxurious formal coat. It is specifically made for CENTCOM executives.(Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -1110,14 +1131,14 @@
 					H.update_inhands()
 					succ = TRUE
 				else
-					boutput(H, "<span class='alert'>That megaphone is WAY too loud to disguise.</span>")
+					boutput(H, SPAN_ALERT("That megaphone is WAY too loud to disguise."))
 
 
 			if (!succ)
-				boutput(activator, "<span class='alert'>Unable to redeem... What kind of fake captain are you!?</span>")
+				boutput(activator, SPAN_ALERT("Unable to redeem... What kind of fake captain are you!?"))
 			return succ
 		else
-			boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+			boutput(activator, SPAN_ALERT("Unable to redeem... Only humans can redeem this."))
 			return FALSE
 
 /datum/achievementReward/ai_malf
@@ -1137,7 +1158,7 @@
 			//A.icon_state = "ai-malf"
 			return 1
 		else
-			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+			boutput(activator, SPAN_ALERT("You need to be an AI to use this, you goof!"))
 
 /datum/achievementReward/ai_tetris
 	title = "(AI Face) Tetris"
@@ -1156,7 +1177,7 @@
 			A.update_appearance()
 			return 1
 		else
-			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+			boutput(activator, SPAN_ALERT("You need to be an AI to use this, you goof!"))
 
 
 /datum/achievementReward/borg_automoton
@@ -1171,7 +1192,7 @@
 			C.update_appearance()
 			return 1
 		else
-			boutput(activator, "<span class='alert'>You need to be a cyborg to use this, you goof!</span>")
+			boutput(activator, SPAN_ALERT("You need to be a cyborg to use this, you goof!"))
 
 /*
 /datum/achievementReward/secbelt
@@ -1213,15 +1234,17 @@
 			else if (istype(H.r_hand, /obj/item/gun/kinetic))
 				gunmod = H.r_hand
 			if (!gunmod)
-				boutput(activator, "<span class='alert'>You can't be the man with the golden gun if you ain't got a got dang gun!</span>")
+				boutput(activator, SPAN_ALERT("You can't be the man with the golden gun if you ain't got a got dang gun!"))
 				return
 			if(!gunmod.gildable)
-				boutput(activator, "<span class='alert'>This gun doesn't seem to be gildable!</span>")
+				boutput(activator, SPAN_ALERT("This gun doesn't seem to be gildable!"))
 				return
 
 			gunmod.name = "Golden [gunmod.name]"
 			gunmod.icon_state = "[initial(gunmod.icon_state)]-golden"
 			gunmod.item_state = "[initial(gunmod.item_state)]-golden"
+			if(gunmod.wear_state)
+				gunmod.wear_state = "[initial(gunmod.wear_state)]-golden"
 			gunmod.gilded = TRUE
 			gunmod.UpdateIcon()
 			H.update_inhands()
@@ -1247,7 +1270,7 @@
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
 			return
-		boutput(usr, "<span class='notice'>:shelterbee:</span>")
+		boutput(usr, SPAN_NOTICE(":shelterbee:"))
 		animate_emote(usr, /obj/effect/shelterbee)
 		return 1
 
@@ -1267,7 +1290,10 @@
 
 	rewardActivate(var/mob/activator)
 		if (!isobserver(activator))
-			boutput(activator, "<span class='alert'>You gotta be dead to use this, you goof!</span>")
+			boutput(activator, SPAN_ALERT("You gotta be dead to use this, you goof!"))
+			return
+		if(istype(activator, /mob/dead/target_observer) && !istype_exact(activator, /mob/dead/target_observer))
+			boutput(activator, SPAN_ALERT("You gotta be a ghost to use this, you goof!"))
 			return
 		var/mob/living/object/O = new /mob/living/object(get_turf(usr), new /obj/item/sticker/ribbon/participant, usr)
 		O.say_language = "animal"
@@ -1290,7 +1316,7 @@
 			qdel(skin_target)
 			return 1
 
-		boutput(activator, "<span class='alert'>You need to be holding a PR-4 Guardbuddy frame in order to claim this reward!</span>")
+		boutput(activator, SPAN_ALERT("You need to be holding a PR-4 Guardbuddy frame in order to claim this reward!"))
 		return
 
 
@@ -1303,7 +1329,7 @@
 	usr.verbs -= /proc/smugproc
 	usr.verbs += /proc/smugprocCD
 	SPAWN(30 SECONDS)
-		boutput(usr, "<span class='notice'>You can now be smug again! Go hog wild.</span>")
+		boutput(usr, SPAN_NOTICE("You can now be smug again! Go hog wild."))
 		usr.verbs += /proc/smugproc
 		usr.verbs -= /proc/smugprocCD
 	return
@@ -1313,7 +1339,7 @@
 	set desc = "Currently on cooldown."
 	set category = "Commands"
 
-	boutput(usr, "<span class='alert'>You can't use that again just yet.</span>")
+	boutput(usr, SPAN_ALERT("You can't use that again just yet."))
 	return
 
 /obj/effect/smug
@@ -1332,7 +1358,7 @@
 	rewardActivate(var/mob/activator)
 		if (!activator.reagents) return
 		activator.reagents.add_reagent("bee", 5)
-		boutput (activator, "<span class='alert'>Pleeze hold, bee will bee with thee shortlee!</span>" )
+		boutput (activator, SPAN_ALERT("Pleeze hold, bee will bee with thee shortlee!") )
 		return 1
 
 /datum/achievementReward/bloodflood
@@ -1343,10 +1369,10 @@
 
 	rewardActivate(var/mob/activator)
 		if (isdead(activator))
-			boutput(activator, "<span class='alert'>You uh, yeah no- you already popped, buddy.</span>")
+			boutput(activator, SPAN_ALERT("You uh, yeah no- you already popped, buddy."))
 			return
 		if (activator.restrained() || is_incapacitated(activator))
-			boutput(activator, "<span style=\"color:red\">Absolutely Not. You can't be incapacitated.</span>")
+			boutput(activator, SPAN_ALERT("Absolutely Not. You can't be incapacitated."))
 			return
 		var/blood_id = "blood"
 		var/blood_amount = 500
@@ -1363,10 +1389,10 @@
 		if (L?.traitHolder?.hasTrait("hemophilia"))
 			blood_mult = blood_mult + 3
 		T.fluid_react_single(blood_id,blood_mult * blood_amount)
-		var/result = world.ClearMedal("Original Sin", activator, config.medal_hub, config.medal_password)
+		var/result = activator.mind.get_player().clear_medal("Original Sin")
 		logTheThing(LOG_COMBAT, activator, "Activated the blood flood gib reward thing (Original Sin)")
 		if (result)
-			boutput(activator, "<span class='alert'>You feel your soul cleansed of sin.</span>")
+			boutput(activator, SPAN_ALERT("You feel your soul cleansed of sin."))
 			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, TRUE)
 		activator.gib()
 		return 1
@@ -1393,7 +1419,7 @@
 			activator.put_in_hand_or_drop(new_helmet)
 			return 1
 		else
-			boutput(activator, "<span class='alert'>Unable to redeem... you need to have a welding helmet in your hands.</span>")
+			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a welding helmet in your hands."))
 			return
 
 
@@ -1449,10 +1475,10 @@
 		var/mob/living/living = M
 		if(istype( living ))
 			living.sound_scream = pick('sound/voice/screams/sillyscream1.ogg','sound/voice/screams/sillyscream2.ogg')
-			M.client << sound( living.sound_scream )
+			M.playsound_local_not_inworld(living.sound_scream, 100)
 			return 1
 		else
-			boutput( usr, "<span class='alert'>Hmm.. I can't set the scream sound of that!</span>" )
+			boutput( usr, SPAN_ALERT("Hmm.. I can't set the scream sound of that!") )
 			return 0
 
 /// Keeps track of once-per-round rewards
@@ -1467,7 +1493,7 @@
 
 	SPAWN(0)
 		src.verbs -= /client/verb/claimreward
-		boutput(usr, "<span class='alert'>Checking your eligibility. There might be a short delay, please wait.</span>")
+		boutput(usr, SPAN_ALERT("Checking your eligibility. There might be a short delay, please wait."))
 		var/list/eligible = list()
 		for(var/A in rewardDB)
 			var/datum/achievementReward/D = rewardDB[A]
@@ -1479,7 +1505,7 @@
 					eligible[D.title] = D
 
 		if(!length(eligible))
-			boutput(usr, "<span class='alert'>Sorry, you don't have any rewards available.</span>")
+			boutput(usr, SPAN_ALERT("Sorry, you don't have any rewards available."))
 			src.verbs += /client/verb/claimreward
 			return
 
@@ -1498,11 +1524,11 @@
 				break
 
 		if(S == null)
-			boutput(usr, "<span class='alert'>Invalid Rewardtype after selection. Please inform a coder.</span>")
+			boutput(usr, SPAN_ALERT("Invalid Rewardtype after selection. Please inform a coder."))
 			return
 
 		if(S.once_per_round && src.player.claimed_rewards.Find(S.type))
-			boutput(usr, "<span class='alert'>You already claimed this!</span>")
+			boutput(usr, SPAN_ALERT("You already claimed this!"))
 			return
 
 		var/confirm = tgui_alert(usr, S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)", "Claim this Reward?", list("Yes", "No"))
@@ -1510,8 +1536,8 @@
 		if(confirm == "Yes")
 			var/worked = S.rewardActivate(src.mob)
 			if (worked)
-				boutput(usr, "<span class='alert'>Successfully claimed \"[S.title]\".</span>")
+				boutput(usr, SPAN_ALERT("Successfully claimed \"[S.title]\"."))
 				if(S.once_per_round)
 					src.player.claimed_rewards.Add(S.type)
 			else
-				boutput(usr, "<span class='alert'>Redemption of \"[S.title]\" failed.</span>")
+				boutput(usr, SPAN_ALERT("Redemption of \"[S.title]\" failed."))

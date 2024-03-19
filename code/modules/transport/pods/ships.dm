@@ -9,7 +9,7 @@
 	anchored = UNANCHORED
 //////////Recon
 /obj/machinery/vehicle/recon
-	name = "Reconaissance Ship 7X-"
+	name = "Reconnaissance Ship 7X-"
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "recon"
 	capacity = 1
@@ -191,8 +191,8 @@ obj/machinery/vehicle/miniputt/pilot
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
 		src.components += src.lock
@@ -405,7 +405,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "dbox"
 
 	attack_self(mob/user as mob)
-		boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
+		boutput(user, SPAN_NOTICE("You dump out the box of parts onto the floor."))
 		var/obj/O = new /obj/structure/vehicleframe/puttframe( get_turf(user) )
 		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 		O.fingerprints = src.fingerprints
@@ -419,7 +419,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon_state = "dbox"
 
 	attack_self(mob/user as mob)
-		boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
+		boutput(user, SPAN_NOTICE("You dump out the box of parts onto the floor."))
 		var/obj/O = new /obj/structure/vehicleframe/subframe( get_turf(user) )
 		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 		O.fingerprints = src.fingerprints
@@ -488,10 +488,10 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		if(do_after(usr, 1 SECONDS))
 			timer -= 10
 		else
-			boutput(usr, "<span class='alert'>You were interrupted!</span>")
+			boutput(usr, SPAN_ALERT("You were interrupted!"))
 			return
 
-	boutput(usr, "<span class='notice'>You deconstructed the [src].</span>")
+	boutput(usr, SPAN_NOTICE("You deconstructed the [src]."))
 	var/obj/O
 	if (stage == 10)
 		O = new src.control_type( get_turf(src) )
@@ -548,7 +548,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				boutput(user, "You begin to secure the frame...")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return
 				boutput(user, "You wrench some of the frame parts together.")
 				src.overlays += image(src.icon, "[pick("frame1", "frame2")]")
@@ -561,7 +561,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				boutput(user, "You begin to secure the rest of the frame...")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return
 				boutput(user, "You finish wrenching the frame parts together.")
 				src.overlays -= image(src.icon, "frame1")
@@ -577,7 +577,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 					return
 				boutput(user, "You begin to weld the joints of the frame...")
 				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return
 				boutput(user, "You weld the joints of the frame together.")
 				stage = 3
@@ -588,12 +588,12 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 			var/obj/item/cable_coil/C = W
 			if(istype(C))
 				if(C.amount < src.cable_amt)
-					boutput(user, "<span class='notice'>You need at least [src.cable_amt] lengths of cable.</span>")
+					boutput(user, SPAN_NOTICE("You need at least [src.cable_amt] lengths of cable."))
 					return
 				boutput(user, "You begin to install the wiring...")
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS) || !C.use(src.cable_amt))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return
 				boutput(user, "You add power cables to the MiniPutt frame.")
 				src.overlays += image(src.icon, "wires")
@@ -606,7 +606,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				boutput(user, "You begin to install the circuit boards...")
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return
 				boutput(user, "You install the internal circuitry parts.")
 				user.u_equip(W)
@@ -621,18 +621,18 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				var/obj/item/sheet/S = W
 				if (S.material && S.material.getMaterialFlags() & MATERIAL_METAL)
 					if( S.amount < src.metal_amt)
-						boutput(user, text("<span class='alert'>You need at least [src.metal_amt] metal sheets to make the internal plating.</span>"))
+						boutput(user, SPAN_ALERT("You need at least [src.metal_amt] metal sheets to make the internal plating."))
 						return
 					boutput(user, "You begin to install the internal plating...")
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-src.metal_amt))
-						boutput(user, "<span class='alert'>You were interrupted!</span>")
+						boutput(user, SPAN_ALERT("You were interrupted!"))
 						return
 					boutput(user, "You construct internal covers over the circuitry systems.")
 					src.overlays += image(src.icon, "covers")
 					stage = 6
 				else
-					boutput(user, "<span class='alert'>These sheets aren't the right kind of material. You need metal!</span>")
+					boutput(user, SPAN_ALERT("These sheets aren't the right kind of material. You need metal!"))
 			else
 				boutput(user, "You shouldn't just leave all those circuits exposed! That's dangerous! You'll need [src.metal_amt] sheets of metal to cover it all up.")
 
@@ -641,7 +641,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				boutput(user, "You begin to install the engine...")
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return
 				boutput(user, "You install the engine.")
 				user.u_equip(W)
@@ -660,7 +660,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				boutput(user, "You begin to install the [W]...")
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return
 				boutput(user, "You loosely attach the light armor plating.")
 				user.u_equip(W)
@@ -680,7 +680,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 					return
 				boutput(user, "You begin to weld the exterior...")
 				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return
 				boutput(user, "You weld the seams of the outer skin to make it air-tight.")
 				stage = 9
@@ -692,7 +692,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				boutput(user, "You begin to install the control system...")
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return
 				boutput(user, "You install the control system.")
 				user.u_equip(W)
@@ -713,12 +713,12 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 					return
 
 				if (S.amount < src.glass_amt)
-					boutput(user, text("<span class='alert'>You need at least [src.glass_amt] reinforced glass sheets to make the cockpit window and outer indicator surfaces.</span>"))
+					boutput(user, SPAN_ALERT("You need at least [src.glass_amt] reinforced glass sheets to make the cockpit window and outer indicator surfaces."))
 					return
 				boutput(user, "You begin to install the glass...")
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-src.glass_amt))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return
 				boutput(user, "With the cockpit and exterior indicators secured, the control system automatically starts up.")
 
@@ -977,8 +977,8 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 			return*/
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		myhud.update_systems()
 		myhud.update_states()
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
@@ -1009,7 +1009,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 /obj/machinery/vehicle/pod_smooth/industrial
 	name = "Pod I-"
-	desc = "A slow yet sturdy industrial pod, designed for hazardous work in asteroid belts. Can accomodate up to four passengers."
+	desc = "A slow yet sturdy industrial pod, designed for hazardous work in asteroid belts. Can accommodate up to four passengers."
 	armor_score_multiplier = 1.25
 	icon_state = "pod_industrial"
 	health = 550
@@ -1108,15 +1108,15 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	set category = "Local"
 
 	//if(boarding) // stop multiple inputs from ruining shit
-		//boutput(usr, "<span class='alert'>The access door is already in use!</span>")
+		//boutput(usr, SPAN_ALERT("The access door is already in use!"))
 		//return
 
 	if(locked)
-		boutput(usr, "<span class='alert'>[src] is locked!</span>")
+		boutput(usr, SPAN_ALERT("[src] is locked!"))
 		return
 
 	if(panel_status)
-		boutput(usr, "<span class='alert'>Close the maintenance panel first!</span>")
+		boutput(usr, SPAN_ALERT("Close the maintenance panel first!"))
 		return
 
 	if(!isliving(usr))
@@ -1126,7 +1126,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		return
 
 	if (usr in src) // fuck's sake
-		boutput(usr, "<span class='alert'>You're already inside [src]!</span>")
+		boutput(usr, SPAN_ALERT("You're already inside [src]!"))
 		return
 
 	boarding = 1
@@ -1137,14 +1137,14 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		passengers++
 		if(M.stat || !M.client)
 			eject(M)
-			boutput(usr, "<span class='alert'>You pull [M] out of [src].</span>")
+			boutput(usr, SPAN_ALERT("You pull [M] out of [src]."))
 		else if(!isliving(M))
 			eject(M)
-			boutput(usr, "<span class='alert'>You scrape [M] out of [src].</span>")
+			boutput(usr, SPAN_ALERT("You scrape [M] out of [src]."))
 
 
 	for(var/obj/decal/cleanable/O in src)
-		boutput(usr, "<span class='alert'>You [pick(</span>"scrape","scrub","clean")] [O] out of [src].")
+		boutput(usr, SPAN_ALERT("You [pick(")scrape","scrub","clean")] [O] out of [src].")
 		sleep(0.1 SECONDS)
 		var/floor = get_turf(src)
 		O.set_loc(floor)
@@ -1174,7 +1174,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 /*/obj/machinery/vehicle/pod_smooth/handle_occupants_shipdeath()
 	for(var/mob/M in src)
-		boutput(M, "<span class='alert'><b>You are ejected from [src]!</b></span>")
+		boutput(M, SPAN_ALERT("<b>You are ejected from [src]!</b>"))
 		src.eject(M)
 		var/atom/target = get_edge_target_turf(M,pick(alldirs))
 		SPAWN(0)
@@ -1377,19 +1377,19 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 				continue
 			if (!T.allows_vehicles || T.density)
 				canbuild = 0
-				boutput(user, "<span class='alert'>You can't build a pod here! It'd get stuck.</span>")
+				boutput(user, SPAN_ALERT("You can't build a pod here! It'd get stuck."))
 				break
 			for (A in T)
 				if (A == user)
 					continue
 				if (A.density)
 					canbuild = 0
-					boutput(user, "<span class='alert'>You can't build a pod here! [A] is in the way.</span>")
+					boutput(user, SPAN_ALERT("You can't build a pod here! [A] is in the way."))
 					goto out // break isn't enough since this loop is nested
 		out:
 
 		if (canbuild)
-			boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
+			boutput(user, SPAN_NOTICE("You dump out the box of parts onto the floor."))
 			var/obj/O = new /obj/structure/vehicleframe/podframe( get_turf(user) )
 			logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 			O.fingerprints = src.fingerprints
@@ -1511,7 +1511,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 			P.set_loc(get_turf(src))
 			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
 			src.set_dir(map_settings ? map_settings.escape_dir : SOUTH)
-			P.target = T
+			P.set_target(T)
 			src.set_loc(T)
 			logTheThing(LOG_STATION, src, "creates an escape portal at [log_loc(src)].")
 
@@ -1523,24 +1523,24 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 			if(1) //dies
 				shipdeath()
 			if(2) //fuel tank explodes??
-				pilot << sound('sound/machines/engine_alert1.ogg')
-				boutput(pilot, "<span class='alert'>The fuel tank of your escape pod explodes!</span>")
+				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+				boutput(pilot, SPAN_ALERT("The fuel tank of your escape pod explodes!"))
 				explosion(src, src.loc, 2, 3, 4, 6)
 			if(3) //falls apart
-				pilot << sound('sound/machines/engine_alert1.ogg')
-				boutput(pilot, "<span class='alert'>Your escape pod is falling apart around you!</span>")
+				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+				boutput(pilot, SPAN_ALERT("Your escape pod is falling apart around you!"))
 				while(src)
 					step(src,src.dir)
 					if(prob(50))
 						make_cleanable(/obj/decal/cleanable/robot_debris/gib, src.loc)
 					if(prob(20) && pilot)
-						boutput(pilot, "<span class='alert'>You fall out of the rapidly disintegrating escape pod!</span>")
+						boutput(pilot, SPAN_ALERT("You fall out of the rapidly disintegrating escape pod!"))
 						src.leave_pod(pilot)
 					if(prob(10)) shipdeath()
 					sleep(0.4 SECONDS)
 			if(4) //flies off course
-				pilot << sound('sound/machines/engine_alert1.ogg')
-				boutput(pilot, "<span class='alert'>Your escape pod is veering out of control!</span>")
+				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+				boutput(pilot, SPAN_ALERT("Your escape pod is veering out of control!"))
 				while(src)
 					if(prob(10)) src.set_dir(turn(dir,pick(90,-90)))
 					var/loc = src.loc
@@ -1550,16 +1550,16 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 						break
 					sleep(0.4 SECONDS)
 			if(5)
-				boutput(pilot, "<span class='alert'>Your escape pod sputters to a halt!</span>")
+				boutput(pilot, SPAN_ALERT("Your escape pod sputters to a halt!"))
 			if(6)
-				boutput(pilot, "<span class='alert'>Your escape pod explosively decompresses, hurling you into space!</span>")
-				pilot << sound('sound/effects/Explosion2.ogg')
+				boutput(pilot, SPAN_ALERT("Your escape pod explosively decompresses, hurling you into space!"))
+				pilot.playsound_local_not_inworld('sound/effects/Explosion2.ogg', vol=100)
 				if(ishuman(pilot))
 					var/mob/living/carbon/human/H = pilot
-					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
-						if(prob(40))
-							SPAWN(rand(0,5))
-								H.bioHolder.AddEffect(effect)
+					if(prob(40))
+						var/limb = pick(list("l_arm","r_arm","l_leg","r_leg"))
+						SPAWN(rand(0,5))
+							H.sever_limb(limb)
 				src.leave_pod(pilot)
 				src.icon_state = "escape_nowindow"
 				while(src)
@@ -1572,7 +1572,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 					sleep(0.4 SECONDS)
 
 			if(7)
-				boutput(pilot, "<span class='alert'>Your escape pod begins to accelerate!</span>")
+				boutput(pilot, SPAN_ALERT("Your escape pod begins to accelerate!"))
 				var/speed = 5
 				while(speed)
 					var/loc = src.loc
@@ -1582,14 +1582,14 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 						break
 					if(speed > 1 && prob(10)) speed--
 					if(speed == 1 && prob(5))
-						boutput(pilot, "<span class='alert'>Your escape pod is moving so fast that it tears itself apart!</span>")
+						boutput(pilot, SPAN_ALERT("Your escape pod is moving so fast that it tears itself apart!"))
 						shipdeath()
 					else if(prob(10/speed))
-						boutput(pilot, "<span class='alert'>Your escape pod is [pick("vibrating","shuddering","shaking")] [pick("alarmingly","worryingly","violently","terribly","scarily","weirdly","distressingly")]!</span>")
+						boutput(pilot, SPAN_ALERT("Your escape pod is [pick("vibrating","shuddering","shaking")] [pick("alarmingly","worryingly","violently","terribly","scarily","weirdly","distressingly")]!"))
 					sleep(speed)
 			if(8)
-				boutput(pilot, "<span class='alert'>Your escape pod starts to fly around in circles [pick("awkwardly","embarrassingly","sadly","pathetically","shamefully","ridiculously")]!</span>")
-				pilot << sound('sound/machines/engine_alert1.ogg')
+				boutput(pilot, SPAN_ALERT("Your escape pod starts to fly around in circles [pick("awkwardly","embarrassingly","sadly","pathetically","shamefully","ridiculously")]!"))
+				pilot?.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				var/spin_dir = pick(90,-90)
 				while(src)
 					src.set_dir(turn(dir,spin_dir))

@@ -2,7 +2,7 @@
 	name = "Space Rhinovirus"
 	max_stages = 4
 	spread = "Airborne"
-	cure = "Antibiotics"
+	cure_flags = CURE_ANTIBIOTICS
 	// associated_reagent = "liquid dna"
 	affected_species = list("Human")
 	//Also important for rhinovirus is strain_data on ailment_data/disease, which is where the bioholders transformed from/to are stored
@@ -25,11 +25,11 @@
 			if(probmult(8))
 				affected_mob.emote("cough")
 			if(probmult(D.stage)) //Making these two slightly spicier than probmult(1)
-				boutput(affected_mob, "<span class='alert'>Your muscles ache.</span>")
+				boutput(affected_mob, SPAN_ALERT("Your muscles ache."))
 				if(prob(20))
 					random_brute_damage(affected_mob, 1)
 			if(probmult(D.stage))
-				boutput(affected_mob, "<span class='alert'>Your stomach hurts.</span>")
+				boutput(affected_mob, SPAN_ALERT("Your stomach hurts."))
 				if(prob(20))
 					affected_mob.take_toxin_damage(2)
 		if(4)
@@ -50,7 +50,7 @@
 					affected_mob.set_mutantrace(affected_mob.bioHolder.mobAppearance.mutant_race.type)
 				affected_mob.UpdateName()
 
-				boutput(affected_mob, "<span class='alert'>You don't feel like yourself..</span>")
+				boutput(affected_mob, SPAN_ALERT("You don't feel like yourself.."))
 				D.state = "Dormant" //Just chill out at stage 4
 	return
 
@@ -62,5 +62,5 @@
 			if (affected_mob.bioHolder?.mobAppearance?.mutant_race)
 				affected_mob.set_mutantrace(affected_mob.bioHolder.mobAppearance.mutant_race.type)
 			affected_mob.UpdateName()
-			boutput(affected_mob, "<span class='notice'>You feel more like yourself.</span>")
+			boutput(affected_mob, SPAN_NOTICE("You feel more like yourself."))
 	..()

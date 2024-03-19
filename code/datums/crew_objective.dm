@@ -265,6 +265,11 @@ ABSTRACT_TYPE(/datum/objective/crew/quartermaster)
 	check_completion()
 		return length(shippingmarket.complete_orders)
 
+/datum/objective/crew/quartermaster/maildelivery
+	explanation_text = "Ensure 30 pieces of mail are opened by their addressees."
+	check_completion()
+		return game_stats.GetStat("mail_opened") >= 30
+
 ABSTRACT_TYPE(/datum/objective/crew/detective)
 /datum/objective/crew/detective/drunk
 	explanation_text = "Have alcohol in your bloodstream at the end of the round."
@@ -804,7 +809,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 				check_result = TRUE
 		return check_result
 /datum/objective/crew/medicaldirector/healself
-	explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."
+	explanation_text = "Make sure you are completely unhurt at the end of the round."
 	medal_name = "Smooth Operator"
 	check_completion()
 		if(owner.current && !isdead(owner.current) && (owner.current.get_brute_damage() + owner.current.get_oxygen_deprivation() + owner.current.get_burn_damage() + owner.current.get_toxin_damage()) == 0)
@@ -911,7 +916,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldoctor)
 				check_result = TRUE
 		return check_result
 /datum/objective/crew/medicaldoctor/healself
-	explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."
+	explanation_text = "Make sure you are completely unhurt at the end of the round."
 	medal_name = "Smooth Operator"
 	check_completion()
 		if(owner.current && !isdead(owner.current) && (owner.current.get_brute_damage() + owner.current.get_oxygen_deprivation() + owner.current.get_burn_damage() + owner.current.get_toxin_damage()) == 0)
@@ -941,7 +946,7 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 	check_completion()
 		if(owner.current && ishuman(owner.current))
 			var/mob/living/carbon/human/H = owner.current
-			if(H.butt_op_stage == 4) return 1
+			if (H.organHolder && !H.organHolder.get_organ("butt")) return 1
 		return 0
 
 /datum/objective/crew/staffassistant/wearbutt
@@ -978,12 +983,12 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 	explanation_text = "Ensure that Gnome Chompski escapes on the shuttle."
 	medal_name = "Guardin' gnome"
 	check_completion()
-		for_by_tcl(G, /obj/item/gnomechompski)
+		for(var/obj/item/gnomechompski/G in by_cat[TR_CAT_GHOST_OBSERVABLES])
 			if (in_centcom(G)) return 1
 		return 0
 
-/datum/objective/crew/staffassistant/mailman
-	explanation_text = "Escape on the shuttle alive wearing at least one piece of mailman clothing."
+/datum/objective/crew/staffassistant/mailcourier
+	explanation_text = "Escape on the shuttle alive wearing at least one piece of mail courier clothing."
 	medal_name = "The mail always goes through"
 	check_completion()
 		if(owner.current && ishuman(owner.current))
@@ -1027,8 +1032,8 @@ ABSTRACT_TYPE(/datum/objective/crew/technicalassistant)
 			var/mob/living/carbon/human/H = owner.current
 			if(in_centcom(H) && H.head && H.head.name == "[H.real_name]'s butt") return 1
 		return 0
-/datum/objective/crew/technicalassistant/mailman
-	explanation_text = "Escape on the shuttle alive wearing at least one piece of mailman clothing."
+/datum/objective/crew/technicalassistant/mailcourier
+	explanation_text = "Escape on the shuttle alive wearing at least one piece of mail courier clothing."
 	medal_name = "The mail always goes through"
 	check_completion()
 		if(owner.current && ishuman(owner.current))
@@ -1073,7 +1078,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicalassistant)
 					return TRUE
 
 /datum/objective/crew/medicalassistant/healself
-	explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."
+	explanation_text = "Make sure you are completely unhurt at the end of the round."
 	medal_name = "Smooth Operator"
 	check_completion()
 		if(owner.current && !isdead(owner.current) && (owner.current.get_brute_damage() + owner.current.get_oxygen_deprivation() + owner.current.get_burn_damage() + owner.current.get_toxin_damage()) == 0)

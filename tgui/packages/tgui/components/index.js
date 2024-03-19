@@ -25,6 +25,7 @@ export { Icon } from './Icon';
 export { Image } from './Image';
 export { Input } from './Input';
 export { Interactive } from './Interactive';
+export { ItemList } from './goonstation/ItemList';
 export { Knob } from './Knob';
 export { LabeledControls } from './LabeledControls';
 export { LabeledList } from './LabeledList';

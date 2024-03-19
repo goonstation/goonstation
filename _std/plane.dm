@@ -144,6 +144,20 @@ client
 			apply_depth_filter()
 		..()
 
+	// yeah whatever lets just define these right here because fucking alphabetical preprocessor
+	// needs them super early for this file
+	#define SCROLL_TARGET_NEVER 1
+	#define SCROLL_TARGET_HOVER 2
+	#define SCROLL_TARGET_ALWAYS 3
+	MouseWheel(atom/A, delta_x, delta_y, location, control, params)
+		if(A?.MouseWheel(delta_x, delta_y, location, control, params))
+			return
+		var/mob/M = src.mob
+		if(!M?.zone_sel)
+			return
+		if(src.preferences?.scrollwheel_limb_targeting == SCROLL_TARGET_ALWAYS)
+			M.zone_sel.scroll_target(delta_y)
+
 	proc/add_plane(var/atom/movable/screen/plane_parent/plane)
 		RETURN_TYPE(/atom/movable/screen/plane_parent)
 		src.plane_parents["[plane.plane]"] = plane

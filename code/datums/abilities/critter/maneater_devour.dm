@@ -2,7 +2,6 @@
 	duration = 8 SECONDS
 	//no cancelling by moving the maneater. You gotta rip the person right out of their hands!
 	interrupt_flags =  INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "maneater_devour"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	bar_icon_state = "bar"
@@ -39,15 +38,15 @@
 		return
 
 	var/mob/ownerMob = owner
-	ownerMob.show_message("<span class='notice'>We must hold still for a moment...</span>", 1)
+	ownerMob.show_message(SPAN_NOTICE("We must hold still for a moment..."), 1)
 
 /datum/action/bar/icon/maneater_devour/onEnd()
 	..()
 
 	var/mob/ownerMob = owner
 	if(owner && ownerMob && target && BOUNDS_DIST(owner, target) == 0 && originating_ability)
-		boutput(ownerMob, "<span class='notice'>You devour [target]!</span>")
-		ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] hungrily devours [target]!</B></span>"))
+		boutput(ownerMob, SPAN_NOTICE("You devour [target]!"))
+		ownerMob.visible_message(SPAN_ALERT("<B>[ownerMob] hungrily devours [target]!</B>"))
 		playsound(ownerMob.loc, 'sound/voice/burp_alien.ogg', 50, 1)
 		logTheThing(LOG_COMBAT, ownerMob, "devours [constructTarget(target,"combat")] whole at [log_loc(owner)].")
 		//if we got a maneater as a user, we store it because of its unique behaviour
@@ -90,7 +89,7 @@
 
 /datum/action/bar/icon/maneater_devour/onInterrupt()
 	..()
-	boutput(owner, "<span class='alert'>Our feasting on [target] has been interrupted!</span>")
+	boutput(owner, SPAN_ALERT("Our feasting on [target] has been interrupted!"))
 
 /datum/targetable/critter/maneater_devour
 	name = "Devour"
@@ -111,7 +110,7 @@
 	var/mob/living/carbon/human/victim = G.affecting
 
 	if (!istype(victim))
-		boutput(caster, "<span class='alert'>This creature isn't suitable for your stomach.</span>")
+		boutput(caster, SPAN_ALERT("This creature isn't suitable for your stomach."))
 		return 1
 
 	actions.start(new/datum/action/bar/icon/maneater_devour(victim, src), caster)

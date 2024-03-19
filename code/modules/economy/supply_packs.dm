@@ -9,6 +9,7 @@
 	var/orderedby = null
 	var/comment = null
 	var/whos_id = null
+	var/address = null
 	var/console_location = null
 
 	proc/create(var/mob/orderer)
@@ -21,6 +22,10 @@
 
 		if(comment)
 			S.delivery_destination = comment
+
+		object.exhaustion += 1
+		if(object.exhaustion > 10)
+			object.cost = round(object.cost*(1+object.exhaustion/50))
 
 		return S
 
@@ -43,6 +48,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	var/id = 0 //What jobs can order it
 	var/whos_id = null //linked ID
 	var/basecost // the original cost
+	///This value will be used to increase the price of the supply pack if it's bought too many times.
+	var/exhaustion = 0
 
 	New()
 		. = ..()
@@ -101,7 +108,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/specialops
 	name = "Special Ops Supplies"
-	desc = "x1 Sleepy Pen, x1 Holographic Disguiser, x1 Signal Jammer, x1 Agent Card, x1 EMP Grenade Kit, x1 Tactical Grenades Kit"
+	desc = "x1 Holographic Disguiser, x1 Signal Jammer, x1 Agent Card, x1 EMP Grenade Kit, x1 Tactical Grenades Kit"
 	contains = list(/obj/item/card/id/syndicate,
 					/obj/item/storage/box/emp_kit,
 					/obj/item/storage/box/tactical_kit,
@@ -113,12 +120,12 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	syndicate = 1
 
 /datum/supply_packs/paint
-	name = "Paint Cans"
-	desc = "A selection of random paints."
-	contains = list(/obj/item/paint_can/random = 4)
+	name = "Artistic Supplies Crate"
+	desc = "A selection of random paints, and an artistic toolbox. Get arty!"
+	contains = list(/obj/item/paint_can/random = 4, /obj/item/storage/toolbox/artistic)
 	cost = PAY_TRADESMAN*3
-	containertype = /obj/storage/crate
-	containername = "Paint Crate"
+	containertype = /obj/storage/crate/packing
+	containername = "Artistic Crate"
 
 /datum/supply_packs/neon_lining
 	name = "Neon Lining Crate"
@@ -303,7 +310,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Engineering Department"
 	contains = list(/obj/item/extinguisher = 3,
 	/obj/item/chem_grenade/firefighting = 3,
-	/obj/item/clothing/suit/fire = 2,
+	/obj/item/clothing/suit/hazard/fire = 2,
 	/obj/item/clothing/head/helmet/firefighter = 2)
 	cost = PAY_TRADESMAN*2
 	containertype = /obj/storage/crate
@@ -430,7 +437,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Engineering Department"
 	contains = list(/obj/item/mining_tool/power_pick,
 					/obj/item/mining_tool/powerhammer,
-					/obj/item/clothing/glasses/meson,
+					/obj/item/clothing/glasses/toggleable/meson,
 					/obj/item/oreprospector,
 					/obj/item/satchel/mining = 2,
 					/obj/item/breaching_charge/mining = 3)
@@ -473,6 +480,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 		for(var/obj/item/bee_egg_carton/carton in beez)
 			carton.ourEgg.blog = "ordered by [key_name(creator)]|"
 		return beez
+
+/datum/supply_packs/sheep
+	name = "Wool Production Kit"
+	desc = "For use with existing Ranch."
+	category = "Civilian Department"
+	contains = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep, /obj/item/storage/box/knitting)
+	cost = PAY_TRADESMAN*10
+	containertype = /obj/storage/crate
+	containername = "Wool Production Kit"
 
 /datum/supply_packs/fishing
 	name = "Angling Starter Kit"
@@ -572,7 +588,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_EXECUTIVE*2
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Macro Phaser (Cardlocked \[Armory Equipment])"
-	access = access_armory
+	access = access_maxsec
 
 /datum/supply_packs/evacuation
 	name = "Emergency Equipment"
@@ -1045,7 +1061,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Radiation Emergency Supplies"
 	desc = "Equipment for dealing with a radiation emergency. No, the crate itself is not irradiated."
 	category = "Basic Materials"
-	contains = list(/obj/item/clothing/suit/rad = 4,
+	contains = list(/obj/item/clothing/suit/hazard/rad = 4,
 					/obj/item/clothing/head/rad_hood = 4,
 					/obj/item/storage/pill_bottle/antirad = 2,
 					/obj/item/reagent_containers/emergency_injector/anti_rad = 4,
@@ -1131,7 +1147,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/counterrevimplant
 	name = "Counter-Revolutionary Kit"
-	desc = "Implanters and counter-revolutionary implants to supress rebellion against Nanotrasen."
+	desc = "Implanters and counter-revolutionary implants to suppress rebellion against Nanotrasen."
 	category = "Security Department"
 	contains = list(/obj/item/implantcase/counterrev = 4,
 					/obj/item/implanter = 2)
@@ -1220,6 +1236,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/clothing/head/headband/nyan/snowleopard = 1,
 					/obj/item/clothing/head/headband/bee = 2,
 					/obj/item/clothing/head/headband/nyan/random = 1)
+	containertype = /obj/storage/crate/packing
+	containername = "Bows and Bands Box"
 
 /datum/supply_packs/mask
 	name = "Mask Crate"
@@ -1292,8 +1310,9 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/light
 	name = "Lighting Crate"
-	desc = "Afraid of the dark? Lighten up your life with a couple of torches and a pile of glowsticks."
-	contains = list(/obj/item/device/light/glowstick = 8,
+	desc = "Afraid of the dark? Lighten up your life with a couple of torches, some emergency flares and a pile of glowsticks."
+	contains = list(/obj/item/device/light/glowstick = 6,
+					/obj/item/roadflare = 3,
 					/obj/item/device/light/flashlight = 2)
 	cost = PAY_UNTRAINED*2
 	containertype = /obj/storage/crate/packing
@@ -1443,7 +1462,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Construction Equipment"
 	desc = "The mothballed tools of our former Construction Workers, in a crate, for you!"
 	category = "Engineering Department"
-	contains = list(/obj/item/lamp_manufacturer/organic,/obj/item/room_planner,/obj/item/clothing/under/rank/orangeoveralls)
+	contains = list(/obj/item/lamp_manufacturer/organic,/obj/item/room_planner, /obj/item/room_marker, /obj/item/clothing/under/rank/orangeoveralls)
 	cost = PAY_TRADESMAN*5
 	containertype = /obj/storage/secure/crate
 	containername = "Construction Equipment"
@@ -1457,6 +1476,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/secure/crate
 	containername = "AI Law Rack ManuDrive Crate (Cardlocked \[Heads])"
 	access = access_heads
+
+/datum/supply_packs/pressure_crystals_qt5
+	name = "Pressure Crystal Resupply"
+	desc = "Five (5) pressure crystals used in high-energy research."
+	category = "Research Department"
+	contains = list(/obj/item/pressure_crystal = 5)
+	cost = 2500
+	containertype = /obj/storage/crate
+	containername = "Pressure Crystal Crate"
 
 /* ================================================= */
 /* -------------------- Complex -------------------- */
@@ -1628,7 +1656,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containername = "Status Display Kit"
 
 /datum/supply_packs/complex/eppd_kit
-	name = "Emergency Pressurzation Kit"
+	name = "Emergency Pressurization Kit"
 	desc = "Frames: 1x Extreme-Pressure Pressurization Device"
 	category = "Engineering Department"
 	frames = list(/obj/machinery/portable_atmospherics/pressurizer)
@@ -1810,6 +1838,8 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/item/reagent_containers/food/drinks/coffee = 2)
 	frames = list(/obj/machinery/space_heater = 2)
 	cost = PAY_TRADESMAN*2
+	containertype = /obj/storage/crate/wooden
+	containername = "Cold Weather Gear"
 
 /datum/supply_packs/complex/hydrostarter
 	name = "Hydroponics: Starter Crate"

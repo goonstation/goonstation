@@ -1,3 +1,39 @@
+(t)wed jan 24 24
+(u)LeahTheTech
+(*)The law rack corruption random event can now be configured with custom laws.
+(t)mon jan 08 24
+(u)LeahTheTech
+(*)Added a pixel offsets editor to the admin interact menu to make pixel shifting easier.
+(t)mon dec 04 23
+(u)LeahTheTech
+(*)Added a "spawn rules" system for setting persistant varedits for all players. Type `spawn template` to access the template mob.
+(u)pali
+(*)The job creator can now edit existing jobs. Give staff assistants clown masks on spawn or whatever!
+(t)thu nov 09 23
+(u)Zamujasa
+(*)Added an admin object `/obj/admin_spacebux_store`. Spawn it, click it, and then click an item you want to sell copies of. It'll ask for how much (in spacebux, 0 is free), how many, and how many a player should be able to buy. May have bugs! I dunno yet!
+(t)fri nov 03 23
+(u)LeahTheTech
+(*)Added an admin spawned beacon item `/obj/item/device/event_beacon` that send a notification to the admin that spawned it when used. May be useful for gimmicks where you want players to be able to "summon" some kind of admin intervention.
+(t)tue oct 31 23
+(u)Zamujasa
+(*)Added "Object Speak" to /obj in the tilde menu.
+(t)fri oct 27 23
+(u)pali
+(*)You can now show RP rules to a person from player options.
+(*)Also the viewports I added can follow things. There's a Create-Viewport-Following verb that lets you click on a target. There's also a button for this in player options.
+(t)tue oct 24 23
+(u)pali
+(*)Admin Create-Viewport verb, does the obvious.
+(t)mon oct 23 23
+(u)pali
+(*)New verb Observe-Next-Player with alias ONP which is nice if you want to loop through all players quickly. (Like ORP but you don't get repeats.)
+(t)thu oct 19 23
+(u)pali
+(*)Fluids build mode has been added.
+(t)fri sep 29 23
+(u)Flappybat
+(*)New verb Spawn-All-Of-A-Type that creates all of a type.<br>Primarily intended for debugging, please exercise caution on a live server!
 (t)sat sep 23 23
 (u)pali
 (*)New verb Replace-Type that lets you replace a type with another type globally across the whole world.<br>Stuff just on the ground should work fine. Should also work ok for stuff like equipment and storage but other stuff like globally replacing organs or limbs is not yet fully supported.
@@ -13,9 +49,6 @@
 (t)tue jul 11 23
 (u)Azrun
 (*)Bulk law changes now support paths (Now you can add hologram and ability modules)
-(t)tue jun 27 23
-(u)tarmunora
-(*)Admin PMs will display admin keys as ckey (as altkey) if alt key is set
 (t)fri jun 16 23
 (u)Sord
 (+)ASAY now shows your current alt key if you have one set

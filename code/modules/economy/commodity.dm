@@ -153,7 +153,7 @@
 	comname = "Gemstone"
 	comtype = /obj/item/raw_material/gemstone
 	onmarket = 1
-	value = 1.5
+	value = 4
 
 /datum/commodity/ore/cobryl
 	comname = "Cobryl"
@@ -238,7 +238,7 @@
 	comname = "Stamped Gold Bullion"
 	comtype = /obj/item/stamped_bullion
 	onmarket = 1
-	price = PAY_EMBEZZLED
+	price = PAY_EMBEZZLED*2
 
 /datum/commodity/laser_gun
 	comname = "Laser Gun"
@@ -496,12 +496,6 @@
 	desc = "A sketchy homemade opiate often used by disgruntled Cosmonauts."
 	price = PAY_UNTRAINED
 
-/datum/commodity/drugs/jenkem
-	comname = "Jenkem (1x syringe)"
-	comtype = /obj/item/reagent_containers/syringe/jenkem
-	desc = "A low quality sewage drug used by no one in the right state of mind."
-	price = PAY_UNTRAINED
-
 /datum/commodity/drugs/lsd
 	comname = "LSD (1x patch)"
 	comtype = /obj/item/reagent_containers/patch/LSD
@@ -642,6 +636,12 @@
 	desc = "Pretty much exactly what it sounds like."
 	price = PAY_IMPORTANT
 
+/datum/commodity/contraband/swatmask/NT
+	comname = "Scary NanoTrasen Gasmask"
+	comtype = /obj/item/clothing/mask/gas/swat/NT
+	desc = "Pretty much exactly what it sounds like, but in blue."
+	price = PAY_IMPORTANT
+
 /datum/commodity/contraband/plutonium
 	comname = "Plutonium Core"
 	comtype = /obj/item/plutonium_core
@@ -759,16 +759,13 @@
 	comname = "Scrap Metal"
 	comtype = /obj/item/scrap
 	price = PAY_UNTRAINED/10
+	desc_buy = "We are interested in recycling ground metal scrap."
 
-/datum/commodity/salvage/machinedebris
-	comname = "Twisted Shrapnel"
-	comtype = /obj/decal/cleanable/machine_debris
-	price = PAY_UNTRAINED
-
-/datum/commodity/salvage/robotdebris
-	comname = "Robot Debris"
-	comtype = /obj/decal/cleanable/robot_debris
-	price = PAY_UNTRAINED
+/datum/commodity/salvage/electronic_debris
+	comname = "Electronic Debris"
+	comtype = /obj/item/electronics
+	price = PAY_UNTRAINED/10
+	desc_buy = "We will recover metals from resistors, fuses, and other electronic debris."
 
 /datum/commodity/salvage/robot_upgrades
 	comname = "Cyborg Upgrade"
@@ -1447,7 +1444,7 @@
 /datum/commodity/costume/vampire
 	comname = "Vampire Costume"
 	comtype = /obj/item/storage/box/costume/vampire
-	desc = "A bunch of clothing that kinda resembles a vampire from some old piece of cienema."
+	desc = "A bunch of clothing that kinda resembles a vampire from some old piece of cinema."
 	price = PAY_TRADESMAN*2
 
 /datum/commodity/costume/abomination
@@ -1798,7 +1795,7 @@
 /datum/commodity/flock/tech/ai_kit_flock
 	comname = "Flock Plating Kit"
 	comtype = /obj/item/ai_plating_kit/flock
-	desc = "A decorative plating kit for a computational core. We cannot guarantee an absense of side effects."
+	desc = "A decorative plating kit for a computational core. We cannot guarantee an absence of side effects."
 	price = PAY_IMPORTANT
 
 /////////////////////////////////
@@ -1894,7 +1891,7 @@
 /datum/commodity/clothing/chameleon
 	comname = "Black jumpsuit"
 	comtype = /obj/item/clothing/under/chameleon
-	desc = "A plain black jumpsuit. Not very myserious at all, no."
+	desc = "A plain black jumpsuit. Not very mysterious at all, no."
 	price = PAY_EMBEZZLED
 
 /datum/commodity/banana_grenade

@@ -7,6 +7,10 @@
 	var/list/atom/movable/screen/parallax_layer/parallax_layers
 	/// A list of all the render source groups that the client is currently a member of.
 	var/list/datum/parallax_render_source_group/render_source_groups
+	/// The z-level that the outermost movable was in when `update_z_level_parallax_layers()` was last called.
+	var/previous_z_level
+	/// The area that the outermost movable was in when `update_area_parallax_layers()` was last called.
+	var/area/previous_area
 	/// The turf that the client's eye was centred upon when `update_parallax_layers()` was last called.
 	var/turf/previous_turf
 	/// The outermost atom/movable in the client's mob's .loc chain.
@@ -55,9 +59,10 @@
 		UPDATE_TESSELLATION_ALIGNMENT(parallax_layer)
 
 /// Updates the parallax render sources and layers displayed to a client by a z-level.
-/datum/parallax_controller/proc/update_parallax_z(old_z_level, new_z_level)
-	var/datum/parallax_render_source_group/old_render_source_group = get_parallax_render_source_group(old_z_level)
+/datum/parallax_controller/proc/update_z_level_parallax_layers(new_z_level)
+	var/datum/parallax_render_source_group/old_render_source_group = get_parallax_render_source_group(src.previous_z_level)
 	var/datum/parallax_render_source_group/new_render_source_group = get_parallax_render_source_group(new_z_level)
+	src.previous_z_level = new_z_level
 
 	if (old_render_source_group == new_render_source_group)
 		return
@@ -73,9 +78,10 @@
 		new_render_source_group.members += src.owner
 
 /// Updates the parallax render sources and layers displayed to a client by an area.
-/datum/parallax_controller/proc/update_area_parallax_layers(area/old_area, area/new_area)
-	var/datum/parallax_render_source_group/old_render_source_group = get_parallax_render_source_group(old_area)
+/datum/parallax_controller/proc/update_area_parallax_layers(area/new_area)
+	var/datum/parallax_render_source_group/old_render_source_group = get_parallax_render_source_group(src.previous_area)
 	var/datum/parallax_render_source_group/new_render_source_group = get_parallax_render_source_group(new_area)
+	src.previous_area = new_area
 
 	if (old_render_source_group == new_render_source_group)
 		return
@@ -142,14 +148,14 @@
 
 	RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(update_parallax))
 	RegisterSignal(src, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(update_area_parallax))
-	RegisterSignal(src, XSIG_MOVABLE_Z_CHANGED, PROC_REF(update_parallax_z))
+	RegisterSignal(src, XSIG_MOVABLE_Z_CHANGED, PROC_REF(update_z_level_parallax))
 	RegisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(update_outermost_movable))
 
 	var/datum/component/complexsignal/outermost_movable/C = src.GetComponent(/datum/component/complexsignal/outermost_movable)
 	var/atom/movable/outermost_movable = C.get_outermost_movable()
 	src.client.parallax_controller.outermost_movable = outermost_movable
-	src.update_area_parallax(null, get_area(src.client.parallax_controller.previous_turf), get_area(outermost_movable))
-	src.update_parallax_z(null, src.client.parallax_controller.previous_turf?.z, outermost_movable.z)
+	src.update_area_parallax(null, null, get_area(outermost_movable))
+	src.update_z_level_parallax(null, null, outermost_movable.z)
 
 /mob/proc/unregister_parallax_signals()
 	if (!src.GetComponent(/datum/component/complexsignal/outermost_movable))
@@ -163,11 +169,11 @@
 /mob/proc/update_parallax(datum/component/component, turf/old_turf, turf/new_turf)
 	src.client?.parallax_controller?.update_parallax_layers(old_turf, new_turf)
 
-/mob/proc/update_parallax_z(datum/component/component, old_z_level, new_z_level)
-	src.client?.parallax_controller?.update_parallax_z(old_z_level, new_z_level)
+/mob/proc/update_z_level_parallax(datum/component/component, old_z_level, new_z_level)
+	src.client?.parallax_controller?.update_z_level_parallax_layers(new_z_level)
 
 /mob/proc/update_area_parallax(datum/component/component, area/old_area, area/new_area)
-	src.client?.parallax_controller?.update_area_parallax_layers(old_area, new_area)
+	src.client?.parallax_controller?.update_area_parallax_layers(new_area)
 
 /mob/proc/update_outermost_movable(datum/component/component, atom/movable/old_outermost, atom/movable/new_outermost)
 	src.client?.parallax_controller?.outermost_movable = new_outermost

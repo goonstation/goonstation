@@ -116,8 +116,8 @@
 /obj/machinery/bot/firebot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		if(user)
-			boutput(user, "<span class='alert'>You short out [src]'s valve control circuit!</span>")
-		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+			boutput(user, SPAN_ALERT("You short out [src]'s valve control circuit!"))
+		src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 		flick("firebot_spark", src)
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
@@ -139,7 +139,7 @@
 /obj/machinery/bot/firebot/emp_act()
 	..()
 	if (!src.emagged && prob(75))
-		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+		src.visible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 		flick("firebot_spark", src)
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
@@ -160,12 +160,12 @@
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			src.updateUsrDialog()
 		else
-			boutput(user, "<span class='alert'>Access denied.</span>")
+			boutput(user, SPAN_ALERT("Access denied."))
 
 	else if (isscrewingtool(W))
 		if (src.health < initial(src.health))
 			src.health = initial(src.health)
-			src.visible_message("<span class='notice'>[user] repairs [src]!</span>", "<span class='notice'>You repair [src].</span>")
+			src.visible_message(SPAN_NOTICE("[user] repairs [src]!"), SPAN_NOTICE("You repair [src]."))
 	else
 		switch(W.hit_type)
 			if (DAMAGE_BURN)
@@ -220,7 +220,7 @@
 		ON_COOLDOWN(src, FIREBOT_SEARCH_COOLDOWN, src.found_cooldown)
 		src.frustration = 0
 		src.doing_something = 1
-		if(IN_RANGE(src,src.target,3))
+		if(reachable_in_n_steps(get_turf(src), get_turf(src.target), 3, use_gas_cross=TRUE))
 			spray_at(src.target)
 		else
 			src.navigate_to(get_turf(src.target), FIREBOT_MOVE_SPEED, max_dist = 30)
@@ -268,7 +268,7 @@
 
 /obj/machinery/bot/firebot/DoWhileMoving()
 	. = ..()
-	if (IN_RANGE(src, src.target, 3) && !ON_COOLDOWN(src, FIREBOT_SPRAY_COOLDOWN, src.spray_cooldown))
+	if (IN_RANGE(src, src.target, 3) && !ON_COOLDOWN(src, FIREBOT_SPRAY_COOLDOWN, src.spray_cooldown) && reachable_in_n_steps(get_turf(src), get_turf(src.target), 3, use_gas_cross=TRUE))
 		src.frustration = 0
 		spray_at(src.target)
 		return TRUE
@@ -328,7 +328,7 @@
 		var/atom/targetTurf = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 
 		var/mob/living/carbon/Ctarget = target
-		boutput(Ctarget, "<span class='alert'><b>[src] knocks you back!</b></span>")
+		boutput(Ctarget, SPAN_ALERT("<b>[src] knocks you back!</b>"))
 		Ctarget.changeStatus("weakened", 2 SECONDS)
 		Ctarget.throw_at(targetTurf, 200, 4)
 
@@ -369,7 +369,7 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"))
 	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 
@@ -424,7 +424,7 @@
 		return
 
 	if(length(src.contents) >= 1)
-		boutput(user, "<span class='alert'>You need to empty [src] out first!</span>")
+		boutput(user, SPAN_ALERT("You need to empty [src] out first!"))
 		return
 
 	var/obj/item/toolbox_arm/B = new /obj/item/toolbox_arm

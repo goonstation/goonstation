@@ -29,7 +29,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
 		if(istype(hit, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = hit
-			boutput(H, "<span class='alert'><B>You catch the kiss and save it for later.</B></span>")
+			boutput(H, SPAN_ALERT("<B>You catch the kiss and save it for later.</B>"))
 
 /datum/projectile/special/acid
 	name = "acid"
@@ -267,16 +267,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_angle = 180
 	pellets_to_fire = 20
 
-/datum/projectile/special/spreader/uniform_burst/blaster
-	name = "blaster wave"
-	sname = "wave fire"
-	spread_angle = 25
-	cost = 200
-	pellets_to_fire = 5
-	spread_projectile_type = /datum/projectile/laser/blaster/blast
-	shot_sound = 'sound/weapons/laser_f.ogg'
-
-
 /datum/projectile/special/spreader/uniform_burst/spikes
 	name = "spike wave"
 	sname = "spike wave"
@@ -379,11 +369,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/temperature = 800
 
 	tick(var/obj/projectile/P)
-		fireflash_sm(get_turf(P), burn_range, temperature)
+		fireflash_melting(get_turf(P), burn_range, temperature)
 
 	on_hit(var/atom/A)
 		playsound(A, 'sound/effects/ExplosionFirey.ogg', 100, TRUE)
-		fireflash_sm(get_turf(A), blast_size, temperature)
+		fireflash_melting(get_turf(A), blast_size, temperature)
 
 /datum/projectile/special/howitzer
 	name = "plasma howitzer"
@@ -413,7 +403,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	tick(var/obj/projectile/P)
 		var/T1 = get_turf(P)
 		if((!istype(T1,/turf/space))) // so uh yeah this will be pretty mean
-			fireflash_sm(T1, burn_range, temperature)
+			fireflash_melting(T1, burn_range, temperature,  checkLos = TRUE)
 			new /obj/effects/explosion/dangerous(get_step(P.loc,P.dir))
 
 
@@ -680,7 +670,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			else
 				if (dropme.loc == P)
 					dropme.set_loc(get_turf(P))
-					boutput(dropme, "<span class='alert'>Your coffin was lost or destroyed! Oh no!!!</span>")
+					boutput(dropme, SPAN_ALERT("Your coffin was lost or destroyed! Oh no!!!"))
 		..()
 
 /datum/projectile/special/homing/magicmissile
@@ -736,7 +726,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			var/mob/living/M = A
 			M.changeStatus("weakened", src.weaken_length)
 			M.force_laydown_standup()
-			boutput(M, text("<span class='notice'>[slam_text]</span>"))
+			boutput(M, SPAN_NOTICE("[slam_text]"))
 			playsound(M.loc, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
 			M.lastattacker = src.master?.shooter
 			M.lastattackertime = TIME
@@ -907,7 +897,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_number = 1
 	silentshot = 1 //any noise will be handled by the egg splattering anyway
 	damage = 60
-	cost = 40
+	cost = 60
 	dissipation_rate = 70
 	dissipation_delay = 0
 	window_pass = 0
@@ -942,7 +932,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	casing = null
 	impact_image_state = null
 	var/typetospawn = null
-	var/hasspawned = null
 	var/hit_sound = null
 	///Do we get our icon from typetospawn?
 	var/use_type_icon = FALSE
@@ -955,21 +944,21 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		src.icon = initial(thing.icon)
 		src.icon_state = initial(thing.icon_state)
 
-	on_hit(atom/hit, direction, projectile)
+	on_hit(atom/hit, direction, obj/projectile/O)
 		if(src.hit_sound)
 			playsound(hit, src.hit_sound, 50, 1)
-		if(ismob(hit) && typetospawn && !hasspawned)
-			hasspawned = TRUE
+		if(ismob(hit) && typetospawn && !O.special_data["hasspawned"])
+			O.special_data["hasspawned"] = TRUE
 			. = new typetospawn(get_turf(hit))
+		else
+			on_end(O)
 		return
 
 
 	on_end(obj/projectile/O)
-		if(!hasspawned && typetospawn)
+		if(typetospawn && !O.special_data["hasspawned"])
+			O.special_data["hasspawned"] = TRUE
 			. = new typetospawn(get_turf(O))
-			hasspawned = TRUE
-		else
-			hasspawned = null
 		return
 
 /datum/projectile/special/spawner/gun //shoot guns
@@ -995,13 +984,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_number = 1
 	silentshot = 1 //any noise will be handled by the egg splattering anyway
 	hit_ground_chance = 0
-	damage_type = D_KINETIC
+	damage_type = D_SPECIAL
 	damage = 15
 	dissipation_delay = 30
 	dissipation_rate = 1
 	cost = 10
 	window_pass = 0
 	typetospawn = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
+
+	on_pre_hit(atom/hit, angle, obj/projectile/O)
+		if (istype(hit, /mob/living/critter/small_animal/wasp))
+			return TRUE
+		. = ..()
 
 	on_hit(atom/hit, direction, projectile)
 		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = ..()
@@ -1171,7 +1165,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if (ishuman(hit))
 			var/obj/item/handcuffs/cuffs = new src.typetospawn
 			cuffs.try_cuff(hit, instant = TRUE)
-			src.hasspawned = TRUE
+			O.special_data["hasspawned"] = TRUE
 		else
 			..()
 

@@ -168,6 +168,12 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 			M = M.Translate(actual_x, actual_y)
 			animate(src, transform = M, time = animation_speed, loop = 0, flags = ANIMATION_PARALLEL)
 
+/area/background_canvas
+	name = "background_canvas"
+	icon_state = "yellow"
+	teleport_blocked = 2
+	expandable = 0
+	requires_power = FALSE
 
 /turf/background_canvas
 	icon = 'icons/misc/background_stars.dmi'

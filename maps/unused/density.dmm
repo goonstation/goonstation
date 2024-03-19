@@ -264,10 +264,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"aI" = (
-/obj/plasticflaps,
-/turf/simulated/floor/plating,
-/area/station/security/main)
 "aJ" = (
 /obj/machinery/flasher/solitary/new_walls/west{
 	name = "\improper Mounted Flash"
@@ -687,16 +683,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
-"bH" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/obj/item/room_planner,
-/obj/item/clothing/glasses/meson,
-/turf/simulated/floor/red,
-/area/station/storage/warehouse)
 "bI" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
@@ -1032,11 +1018,6 @@
 "cG" = (
 /turf/simulated/floor/red,
 /area/station/crew_quarters/garden)
-"cH" = (
-/obj/item/room_planner,
-/obj/item/clothing/glasses/meson,
-/turf/simulated/floor/red,
-/area/station/storage/warehouse)
 "cI" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -1403,17 +1384,6 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
-"dy" = (
-/obj/plasticflaps,
-/obj/machinery/door/poddoor{
-	id = "cargodock_in";
-	name = "Cargo Routing Door"
-	},
-/obj/machinery/conveyor/WE{
-	id = "qmin"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
 "dz" = (
 /obj/machinery/conveyor/WE{
 	id = "qmin"
@@ -1707,24 +1677,21 @@
 /area/station/maintenance/central)
 "em" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6;
-	icon_state = "intact"
+	dir = 6
 	},
 /turf/space,
 /area/station/engine/coldloop)
 "en" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	icon_state = "intact"
+	dir = 4
 	},
 /turf/space,
 /area/station/engine/coldloop)
 "eo" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	icon_state = "intact"
+	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 4
 	},
 /turf/space,
@@ -1791,17 +1758,6 @@
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "ex" = (
-/obj/machinery/conveyor/WE{
-	id = "qmout"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
-"ey" = (
-/obj/plasticflaps,
-/obj/machinery/door/poddoor{
-	id = "cargodock_out";
-	name = "Cargo Routing Door"
-	},
 /obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
@@ -1986,21 +1942,18 @@
 /area/mining/magnet)
 "eQ" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5;
-	icon_state = "intact"
+	dir = 5
 	},
 /turf/space,
 /area/station/engine/coldloop)
 "eR" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
-	dir = 8;
-	icon_state = "intact"
+	dir = 8
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/elect)
 "eS" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	icon_state = "manifold";
 	level = 2
 	},
 /obj/machinery/rkit,
@@ -2244,14 +2197,6 @@
 "fx" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/janitor/supply)
-"fy" = (
-/obj/machinery/conveyor/SN{
-	id = "garbage";
-	operating = 1
-	},
-/obj/plasticflaps,
-/turf/simulated/floor/plating,
-/area/station/janitor/supply)
 "fz" = (
 /obj/storage/secure/closet/command/chief_engineer,
 /turf/simulated/floor/carpet{
@@ -2322,8 +2267,7 @@
 /area/station/engine/core)
 "fJ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10;
-	icon_state = "intact"
+	dir = 10
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -2340,10 +2284,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "fL" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 2;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -2489,11 +2431,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "gg" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 1;
-	icon_state = "intact_off";
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -2516,11 +2455,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
 	},
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 1;
-	icon_state = "intact_off";
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -2730,7 +2666,7 @@
 /area/mining/magnet)
 "gH" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 4
 	},
 /turf/space,
@@ -2745,7 +2681,6 @@
 "gJ" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
-	icon_state = "manifold";
 	level = 2
 	},
 /obj/machinery/light{
@@ -2759,13 +2694,12 @@
 "gK" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
-	icon_state = "manifold";
 	level = 2
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "gL" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -2960,17 +2894,15 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "hg" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 2;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "hh" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -2978,7 +2910,6 @@
 /area/station/engine/core)
 "hi" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	icon_state = "manifold";
 	level = 2
 	},
 /obj/storage/secure/closet/engineering/mining,
@@ -3290,12 +3221,10 @@
 	pixel_x = -24;
 	pixel_y = -8
 	},
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/machinery/dispenser,
@@ -3543,7 +3472,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/science/lab)
 "is" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/cable{
@@ -3568,7 +3497,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
-	icon_state = "manifold";
 	level = 2
 	},
 /obj/landmark/start/job/scientist,
@@ -3587,7 +3515,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "iw" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -3792,30 +3720,25 @@
 /area/station/storage/warehouse)
 "iQ" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 9;
-	icon_state = "intact"
+	dir = 9
 	},
 /turf/space,
 /area/station/engine/coldloop)
 "iR" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5;
-	icon_state = "intact"
+	dir = 5
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
 "iS" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 9;
-	icon_state = "intact"
+	dir = 9
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
 "iT" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/machinery/sparker{
 	id = "tox_ignition1";
@@ -3838,12 +3761,10 @@
 	name = "Chamber One Exhaust";
 	pixel_y = -24
 	},
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/stool/chair{
@@ -4003,7 +3924,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lobby)
 "jr" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -4782,8 +4703,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "lc" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "ld" = (
 /obj/machinery/computer/genetics{
 	dir = 1;
@@ -5387,7 +5309,6 @@
 "mp" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
-	icon_state = "manifold";
 	level = 2
 	},
 /obj/landmark/start/job/medical_doctor,
@@ -5425,8 +5346,7 @@
 /area/station/medical/cdc)
 "mt" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	icon_state = "intact"
+	dir = 4
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -5471,13 +5391,12 @@
 "my" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold{
-	icon_state = "manifold";
 	level = 2
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "mz" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -6067,7 +5986,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
 "nR" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/light{
@@ -6169,8 +6088,8 @@
 /area/station/science/artifact)
 "od" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/storage/belt/medical,
 /obj/item/reagent_containers/hypospray,
@@ -6243,7 +6162,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "oi" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
@@ -6360,8 +6279,7 @@
 /area/mining/magnet)
 "ov" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	icon_state = "intact"
+	dir = 4
 	},
 /obj/grille/catwalk{
 	dir = 10;
@@ -6380,8 +6298,7 @@
 /area/station/engine/coldloop)
 "ow" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	icon_state = "intact"
+	dir = 4
 	},
 /obj/grille/catwalk{
 	dir = 6
@@ -6394,8 +6311,7 @@
 /area/station/engine/coldloop)
 "ox" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	icon_state = "intact"
+	dir = 4
 	},
 /obj/grille/catwalk{
 	dir = 6;
@@ -6408,8 +6324,7 @@
 /area/station/engine/coldloop)
 "oy" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	icon_state = "intact"
+	dir = 4
 	},
 /obj/grille/catwalk{
 	dir = 6;
@@ -6560,6 +6475,24 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
+"yt" = (
+/obj/machinery/conveyor/SN{
+	id = "garbage";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/janitor/supply)
+"BJ" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
+/obj/item/room_planner,
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/red,
+/area/station/storage/warehouse)
 "Ch" = (
 /obj/storage/secure/closet/security/forensics,
 /obj/item/reagent_containers/glass/bottle/formaldehyde,
@@ -6590,6 +6523,32 @@
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"Hc" = (
+/obj/strip_door,
+/obj/machinery/door/poddoor{
+	id = "cargodock_out";
+	name = "Cargo Routing Door"
+	},
+/obj/machinery/conveyor/WE{
+	id = "qmout"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
+"Je" = (
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/security/main)
+"NA" = (
+/obj/strip_door,
+/obj/machinery/door/poddoor{
+	id = "cargodock_in";
+	name = "Cargo Routing Door"
+	},
+/obj/machinery/conveyor/WE{
+	id = "qmin"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
 "Ri" = (
 /obj/machinery/recharger/wall/sticky{
 	dir = 1
@@ -6611,6 +6570,11 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
+"ZG" = (
+/obj/item/room_planner,
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/red,
+/area/station/storage/warehouse)
 
 (1,1,1) = {"
 aa
@@ -46608,11 +46572,11 @@ aa
 aa
 aa
 ei
-bH
+BJ
 ke
-cH
+ZG
 ke
-cH
+ZG
 bX
 cF
 df
@@ -52643,9 +52607,9 @@ ab
 nr
 aq
 ax
-aI
+Je
 aO
-aI
+Je
 ax
 bl
 bu
@@ -55977,9 +55941,9 @@ bR
 cK
 cK
 cU
-dy
+NA
 bL
-ey
+Hc
 bL
 fx
 fS
@@ -56887,7 +56851,7 @@ dA
 eb
 eA
 fd
-fy
+yt
 fV
 gq
 gT

@@ -28,14 +28,14 @@
 		src.setItemSpecial(/datum/item_special/tile_fling)
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attack(mob/living/carbon/M, mob/user)
-		if (!pry_surgery(M, user))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!pry_surgery(target, user))
 			return ..()
 
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] beats [him_or_her(user)]self in the head with a crowbar, like some kind of suicidal theoretical physicist.</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] beats [him_or_her(user)]self in the head with a crowbar, like some kind of suicidal theoretical physicist.</b>"))
 		take_bleeding_damage(user, null, 25, src.hit_type)
 		user.TakeDamage("head", 160, 0)
 		return 1
@@ -67,3 +67,18 @@
 /obj/item/crowbar/green
 	desc = "A tool used as a lever to pry objects, with added green."
 	icon_state = "crowbar-green"
+
+/obj/item/crowbar/glowbar
+	desc = "That doesn't look safe to handle, at all. The name 'KANG' is etched into the metal."
+	name = "glowbar"
+	icon_state = "crowbar-green"
+	rarity = 7
+	quality = 100
+
+	New()
+		..()
+		AddComponent(/datum/component/radioactive, 25, FALSE, TRUE, 1)
+		AddComponent(/datum/component/loctargeting/simple_light, 255, 50, 135, 135)
+		src.setProperty("searing", 7)
+		src.setProperty("unstable", 7)
+		setItemSpecial(/datum/item_special/suck)

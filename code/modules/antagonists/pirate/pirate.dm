@@ -2,13 +2,14 @@
 	id = ROLE_PIRATE
 	display_name = "\improper Pirate"
 	antagonist_icon = "pirate"
+	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/pirate
 
 	is_compatible_with(datum/mind/mind)
 		return isliving(mind.current)
 
 	give_equipment()
 		if (!ishuman(src.owner.current))
-			boutput(src.owner.current, "<span class='alert'>Due to your lack of opposable thumbs, the pirates were unable to provide you with your equipment. That's biology for you.</span>")
+			boutput(src.owner.current, SPAN_ALERT("Due to your lack of opposable thumbs, the pirates were unable to provide you with your equipment. That's biology for you."))
 			return FALSE
 		var/mob/living/carbon/human/H = src.owner.current
 		var/obj/trinket
@@ -60,9 +61,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(ROLE_PIRATE)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()
@@ -94,7 +94,7 @@ TYPEINFO(/obj/gold_bee)
 	mat_appearances_to_ignore = list("gold")
 /obj/gold_bee
 	name = "\improper Gold Bee Statue"
-	desc = "The artist has painstainkly sculpted every individual strand of bee wool to achieve this breath-taking result. You could almost swear this bee is about to spontaneously take flight."
+	desc = "The artist has painstakingly sculpted every individual strand of bee wool to achieve this breath-taking result. You could almost swear this bee is about to spontaneously take flight."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "gold_bee"
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
@@ -115,13 +115,13 @@ TYPEINFO(/obj/gold_bee)
 		src.add_fingerprint(user)
 
 		if (user.a_intent != INTENT_HARM)
-			src.visible_message("<span class='notice'><b>[user]</b> pets [src]!</span>")
+			src.visible_message(SPAN_NOTICE("<b>[user]</b> pets [src]!"))
 
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
 		user.lastattacked = src
 
-		src.visible_message("<span class='combat'><b>[user]</b> hits [src] with [W]!</span>")
+		src.visible_message(SPAN_COMBAT("<b>[user]</b> hits [src] with [W]!"))
 		src.take_damage(W.force / 3)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 		attack_particle(user, src)
@@ -130,7 +130,7 @@ TYPEINFO(/obj/gold_bee)
 		var/damage = 0
 		damage = round(((P.power/6)*P.proj_data.ks_ratio), 1.0)
 
-		src.visible_message("<span class='combat'><b>[src]</b> is hit by [P]!</span>")
+		src.visible_message(SPAN_COMBAT("<b>[src]</b> is hit by [P]!"))
 		if (damage <= 0)
 			return
 		if(P.proj_data.damage_type == D_KINETIC || (P.proj_data.damage_type == D_ENERGY && damage))
@@ -144,7 +144,7 @@ TYPEINFO(/obj/gold_bee)
 		src._health = max(0,src._health - amount)
 
 		if (src._health < 1)
-			src.visible_message("<span class='alert'><b>[src]</b> breaks and shatters into many peices!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> breaks and shatters into many peices!"))
 			playsound(src.loc, 'sound/impact_sounds/plate_break.ogg', 50, 0.1, 0, 0.5)
 			if (length(gibs))
 				for (var/atom/movable/I in gibs)

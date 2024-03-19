@@ -105,12 +105,13 @@
 
 	proc/play(var/mob/user)
 		if (pick_random_note && length(sounds_instrument))
-			play_note(rand(1, length(sounds_instrument)),user)
+			if(play_note(rand(1, length(sounds_instrument)),user))
+				src.show_play_message(user)
 		if(length(contextActions))
 			user.showContextActions(contextActions, src)
 
 	proc/show_play_message(mob/user as mob)
-		if (user) return user.visible_message("<B>[user]</B> [islist(src.desc_verb) ? pick(src.desc_verb) : src.desc_verb] \a [islist(src.desc_sound) ? pick(src.desc_sound) : src.desc_sound] [islist(src.desc_music) ? pick(src.desc_music) : src.desc_music] on [his_or_her(user)] [src.name]!")
+		if (user) return user.visible_message("<B>[user]</B> [islist(src.desc_verb) ? pick(src.desc_verb) : src.desc_verb] \a [islist(src.desc_sound) ? pick(src.desc_sound) : src.desc_sound] [islist(src.desc_music) ? pick(src.desc_music) : src.desc_music] on [his_or_her(user)] [src.name]!", group="instrument_[src]")
 
 	proc/post_play_effect(mob/user as mob)
 		return
@@ -252,7 +253,7 @@
 			src.play(user)
 
 	show_play_message(mob/user as mob)
-		if (user) return src.visible_message("<B>[user]</B> [islist(src.desc_verb) ? pick(src.desc_verb) : src.desc_verb] \a [islist(src.desc_sound) ? pick(src.desc_sound) : src.desc_sound] [islist(src.desc_music) ? pick(src.desc_music) : src.desc_music] on [src]!")
+		if (user) return src.visible_message("<B>[user]</B> [islist(src.desc_verb) ? pick(src.desc_verb) : src.desc_verb] \a [islist(src.desc_sound) ? pick(src.desc_sound) : src.desc_sound] [islist(src.desc_music) ? pick(src.desc_music) : src.desc_music] on [src]!", group="instrument_[src]")
 
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
@@ -341,11 +342,11 @@
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
-/obj/item/instrument/saxophone/attack(mob/M, mob/user)
-	if(ismob(M))
+/obj/item/instrument/saxophone/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	if(ismob(target))
 		playsound(src, pick(sounds_punch), 50, 1, -1)
 		playsound(src, pick('sound/musical_instruments/saxbonk.ogg', 'sound/musical_instruments/saxbonk2.ogg', 'sound/musical_instruments/saxbonk3.ogg'), 50, 1, -1)
-		user.visible_message("<span class='alert'><b>[user] bonks [M] with [src]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] bonks [target] with [src]!</b>"))
 	else
 		. = ..()
 
@@ -400,8 +401,8 @@
 				sounds_instrument += "sound/musical_instruments/guitar/guitar_[i].ogg"
 		..()
 
-	attack(mob/M, mob/user)
-		if(ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ismob(target))
 			playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
 		..()
 
@@ -437,8 +438,8 @@
 
 
 
-	attack(mob/M, mob/user)
-		if(ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ismob(target))
 			playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
 		..()
 
@@ -473,8 +474,8 @@
 
 
 
-	attack(mob/M, mob/user)
-		if(ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ismob(target))
 			playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
 		..()
 
@@ -499,8 +500,8 @@
 	show_play_message(mob/user as mob)
 		return
 
-	attack(mob/M, mob/user)
-		if(ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ismob(target))
 			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
 		..()
 
@@ -511,7 +512,7 @@
 		else
 			var/obj/machinery/bot/duckbot/D = new /obj/machinery/bot/duckbot
 			D.eggs = rand(2,5) // LAY EGG IS TRUE!!!
-			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
+			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
 			D.set_loc(get_turf(user))
 			qdel(W)
 			qdel(src)
@@ -565,7 +566,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			return
 		else
 			var/obj/machinery/bot/chefbot/D = new /obj/machinery/bot/chefbot
-			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
+			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
 			D.set_loc(get_turf(user))
 			qdel(W)
 			qdel(src)
@@ -581,6 +582,24 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	volume = 100
 	note_time = 1 SECOND
 	pick_random_note = 1
+
+/* -------------------- Lucky bike horn ------------- */
+// some loot associated with the tragedy of the Blue Clown
+/obj/item/instrument/bikehorn/lucky
+	name = "lucky bike horn"
+	desc = "The bulb is well-worn from years of use in the space circus, where it accompanied its clown through acrobatic hoops and big cat stunts."
+	sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
+	rarity = 6
+	quality = 80
+
+	New()
+		..()
+		src.setProperty("block", 45)
+		src.setProperty("deflection",45)
+		src.setProperty("vault_speed",3)
+		src.setProperty("disorient_resist",45)
+
+
 
 /* -------------------- Harmonica -------------------- */
 
@@ -639,6 +658,27 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			else
 				sleep(5 SECONDS)
 		return 1
+
+/obj/item/instrument/whistle/security
+	name = "security whistle"
+	desc = "A whistle with a red stripe. Good for getting the attention of nearby securitrons."
+	icon_state = "whistle-sec"
+	contraband = 4 //beepsky takes stolen whistles seriously
+	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby securitrons to follow your pointing, point at a perp to have them arrested.")
+
+	post_play_effect(mob/user)
+		var/list/bots = list()
+		for (var/obj/machinery/bot/secbot/secbot in view(user.client.view, user)) //cursed awful byond screen syntax
+			if (secbot.emagged)
+				continue
+			secbot.KillPathAndGiveUp(1)
+			secbot.speak("Awaiting command...")
+			bots += secbot
+			break
+
+		if (length(bots))
+			user.AddComponent(/datum/component/secbot_command, bots, 3 SECONDS)
+
 
 /* -------------------- Vuvuzela -------------------- */
 
@@ -724,7 +764,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 
 	attack_self(mob/user as mob)
 		if(GET_COOLDOWN(user, "instrument_play"))
-			boutput(user, "<span class='alert'>\The [src] needs time to recharge its spooky strength!</span>")
+			boutput(user, SPAN_ALERT("\The [src] needs time to recharge its spooky strength!"))
 			return
 		else
 			playsound(src, 'sound/musical_instruments/Bikehorn_2.ogg', 70, FALSE, 0, 0.5)
@@ -742,12 +782,12 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 		if (!istype(S))
 			return
 		if (S.mob_flags & IS_BONEY)
-			S.visible_message("<span class='notice'><b>[S.name]</b> claks in appreciation!</span>")
+			S.visible_message(SPAN_NOTICE("<b>[S.name]</b> claks in appreciation!"))
 			playsound(S.loc, 'sound/items/Scissor.ogg', 50, 0)
 			return
 		else
 			logTheThing(LOG_COMBAT, S, "was skeletonized by a dootdoot trumpet played by [constructTarget(M,"combat")] at [log_loc(src)].")
-			S.visible_message("<span class='alert'><b>[S.name]'s skeleton rips itself free upon hearing the song of its people!</b></span>")
+			S.visible_message(SPAN_ALERT("<b>[S.name]'s skeleton rips itself free upon hearing the song of its people!</b>"))
 			playsound(S, S.gender == "female" ? 'sound/voice/screams/female_scream.ogg' : 'sound/voice/screams/male_scream.ogg', 50, 0, 0, S.get_age_pitch())
 			playsound(S, 'sound/effects/bubbles.ogg', 50, FALSE)
 			playsound(S, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, FALSE)
@@ -785,11 +825,11 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	var/charge = 0 //A certain level of UNHOLY ENERGY is required to knock out a soul, ok.
 	var/charge_required = 10
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.add_fingerprint(user)
 		playsound(src, "swing_hit", 50, 1, -1)
 		..()
-		satanic_home_run(M, user)
+		satanic_home_run(target, user)
 
 	post_play_effect(mob/user as mob)
 		src.charge++

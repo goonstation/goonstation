@@ -76,8 +76,23 @@
 	src.emagged = TRUE
 	if (user)
 		src.add_fingerprint(user)
-		src.visible_message("<span class='alert'>[src.name] looks a little wonky, as [user] has messed with the polarity using an electromagnetic card!</span>")
-	return 1
+		playsound(src.loc, 'sound/machines/bweep.ogg', 10, TRUE)
+		src.audible_message(SPAN_ALERT("The [src.name] chirps 'OUTPUT CONTROLS UNLOCKED: INVERSE POLARITY ENABLED' \
+		from some unseen speaker, then goes quiet."))
+	return TRUE
+
+/obj/machinery/power/pt_laser/demag(var/mob/user)
+	if (!src.emagged)
+		return FALSE
+
+	if (user)
+		user.show_text("You reset the [src.name]'s power output protocols.", "blue")
+
+	if (src.output_number < 0 || src.output < 0) //Checking both is redundant, but just in case
+		src.output_number = 0
+		src.output = 0
+	src.emagged = FALSE
+	return TRUE
 
 /obj/machinery/power/pt_laser/update_icon(var/started_firing = 0)
 	overlays = null
@@ -277,7 +292,12 @@
 
 /obj/machinery/power/pt_laser/proc/melt_blocking_objects()
 	for (var/obj/O in blocking_objects)
-		if (istype(O, /obj/machinery/door/poddoor) || istype(O, /obj/laser_sink) || istype(O, /obj/machinery/vehicle) || istype(O, /obj/machinery/bot/mulebot) || isrestrictedz(O.z))
+		if (istype(O, /obj/machinery/door/poddoor) || \
+				istype(O, /obj/laser_sink) || \
+				istype(O, /obj/machinery/vehicle) || \
+				istype(O, /obj/machinery/bot/mulebot) || \
+				istype(O, /obj/machinery/the_singularity) || /* could be interesting to add some interaction here, maybe when singulo behviours are abstracted away in #16731*/ \
+				isrestrictedz(O.z))
 			continue
 		else if (prob((abs(output)*PTLEFFICIENCY)/5e5))
 			O.visible_message("<b>[O.name] is melted away by the [src]!</b>")
@@ -437,7 +457,7 @@
 		else if (istype(newL.glasses, /obj/item/clothing/glasses/sunglasses) || newL.eye_istype(/obj/item/organ/eye/cyber/sunglass))
 			safety = 2
 
-		boutput(L, "<span class='alert'>Your eyes are burned by the laser!</span>")
+		boutput(L, SPAN_ALERT("Your eyes are burned by the laser!"))
 		L.take_eye_damage(power/(safety*1e5)) //this will damage them a shitload at the sorts of power the laser will reach, as it should.
 		L.change_eye_blurry(rand(power / (safety * 2e5)), 50) //don't stare into 100MW lasers, kids
 
@@ -518,7 +538,7 @@ TYPEINFO(/obj/laser_sink/mirror)
 /obj/laser_sink/mirror/attackby(obj/item/I, mob/user)
 	if (isscrewingtool(I))
 		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
-		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
+		user.visible_message(SPAN_NOTICE("[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor."))
 		src.anchored = !src.anchored
 	else
 		..()
@@ -589,7 +609,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/laser_sink/splitter/attackby(obj/item/I, mob/user)
 	if (isscrewingtool(I))
 		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
-		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
+		user.visible_message(SPAN_NOTICE("[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor."))
 		src.anchored = !src.anchored
 	else if (ispryingtool(I))
 		if (ON_COOLDOWN(src, "rotate", 0.3 SECONDS))

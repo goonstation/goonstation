@@ -13,9 +13,9 @@
 		if (ishuman(target) && !isdead(target))
 			var/mob/living/carbon/human/H = target
 			if (H.traitHolder.hasTrait("training_chaplain"))
-				boutput(holder.owner, "<span class='notice'>This one does not fear what lurks in the dark. Your effort is wasted.</span>")
+				boutput(holder.owner, SPAN_NOTICE("This one does not fear what lurks in the dark. Your effort is wasted."))
 				return 0
-			boutput(holder.owner, "<span class='notice'>We curse this being with a creeping feeling of dread.</span>")
+			boutput(holder.owner, SPAN_NOTICE("We curse this being with a creeping feeling of dread."))
 			H.setStatus("creeping_dread", 30 SECONDS)
 			holder.owner.playsound_local(holder.owner, "sound/voice/wraith/wraithspook[pick("1","2")].ogg", 60)
 			return 0

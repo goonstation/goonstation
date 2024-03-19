@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Chart, LabeledList, Section, Divider } from '../components';
+import { Box, Chart, Divider, LabeledList, Section } from '../components';
 import { formatPower, formatSiUnit } from '../format';
 import { Window } from '../layouts';
 

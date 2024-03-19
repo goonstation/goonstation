@@ -19,9 +19,9 @@
 		return
 	if (M.buckled)	return
 	if (M == user)
-		user.visible_message("<span class='notice'>[M] buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
+		user.visible_message(SPAN_NOTICE("[M] buckles in!"), SPAN_NOTICE("You buckle yourself in."))
 	else
-		user.visible_message("<span class='notice'>[M] is buckled in by [user].</span>", "<span class='notice'>You buckle in [M].</span>")
+		user.visible_message(SPAN_NOTICE("[M] is buckled in by [user]."), SPAN_NOTICE("You buckle in [M]."))
 	M.anchored = ANCHORED
 	M.buckled = src
 	M.set_loc(src.loc)
@@ -35,9 +35,9 @@
 	for(var/mob/M in src.loc)
 		if (M.buckled)
 			if (M != user)
-				user.visible_message("<span class='notice'>[M] is unbuckled by [user].</span>", "<span class='notice'>You unbuckle [M].</span>")
+				user.visible_message(SPAN_NOTICE("[M] is unbuckled by [user]."), SPAN_NOTICE("You unbuckle [M]."))
 			else
-				user.visible_message("<span class='notice'>[M] unbuckles.</span>", "<span class='notice'>You unbuckle.</span>")
+				user.visible_message(SPAN_NOTICE("[M] unbuckles."), SPAN_NOTICE("You unbuckle."))
 			reset_anchored(M)
 			M.buckled = null
 			src.add_fingerprint(user)
@@ -50,7 +50,7 @@
 
 	src.imp = new/obj/item/implant/counterrev(src)
 
-	M.visible_message("<span class='alert'>[M] has been implanted by the [src].</span>")
+	M.visible_message(SPAN_ALERT("[M] has been implanted by the [src]."))
 
 	src.imp.implanted(M)
 	src.imp = null

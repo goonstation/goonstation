@@ -3,10 +3,11 @@
 	organ_name = "pancreas"
 	organ_holder_name = "pancreas"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 6
 	icon_state = "pancreas"
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/pancreatitis
+	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING
+	region = SUBCOSTAL
 
 	on_life(var/mult = 1)
 		if (!..())

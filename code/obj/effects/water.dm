@@ -32,8 +32,11 @@
 	SPAWN(0)
 		var/turf/T
 		for(var/b=0, b<5, b++)
-			step_towards(src,target)
+			var/turf/next_turf = get_step_towards(src, target)
 			T = get_turf(src)
+			if (T.gas_cross(next_turf))
+				src.set_loc(next_turf)
+				T = next_turf
 			if(!R || !R.total_volume)
 				break
 			R.reaction(T,TOUCH,1)

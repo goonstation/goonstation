@@ -1,7 +1,7 @@
 /datum/random_event/major/spatial_tear
 	name = "Spatial Tear"
 	centcom_headline = "Spatial Anomaly"
-	centcom_message = "A severe spatial anomaly has been detected near the station. Personnel are advised to avoid any unusual phenomenae."
+	centcom_message = "A severe spatial anomaly has been detected near the station. Personnel are advised to avoid any unusual phenomena."
 	centcom_origin = ALERT_ANOMALY
 	required_elapsed_round_time = 10 MINUTES
 
@@ -83,7 +83,6 @@
 /datum/action/bar/icon/push_through_tear
 	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "push_through_tear"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "tear_push"
 	var/mob/ownerMob

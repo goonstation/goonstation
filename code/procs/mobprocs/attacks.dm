@@ -1,5 +1,6 @@
 
 /mob/attackby(obj/item/W, mob/user, params, is_special = 0)
+	set waitfor = 0
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 
 	// why is this not in human/attackby?
@@ -19,36 +20,33 @@
 
 	var/obj/item/grab/block/block = user.check_block()
 	if (block)
-		block.attack(src,user)
+		block.attack(src, user, FALSE, params) // idk if we are meant to pass is_special here
 		return
 
 	var/shielded = 0
 	if (src.spellshield)
 		shielded = 1
-		boutput(user, "<span class='alert'><b>[src]'s Spell Shield prevents your attack!</b></span>")
+		boutput(user, SPAN_ALERT("<b>[src]'s Spell Shield prevents your attack!</b>"))
 
 	if (!shielded || !(W.flags & NOSHIELD))
-		SPAWN( 0 )
 		// drsingh Cannot read null.force
 #ifdef DATALOGGER
-			if (W.force)
-				game_stats.Increment("violence")
+		if (W.force)
+			game_stats.Increment("violence")
 #endif
-			if (!isnull(W))
-				W.attack(src, user, (user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null), is_special) // def_zone var was apparently useless because the only thing that ever passed def_zone anything was shitty bill when he attacked people
-				if (W && user != src) //ZeWaka: Fix for cannot read null.hide_attack
-					var/anim_mult = clamp(0.5, W.force / 10, 4)
-					if (!W.hide_attack)
-						attack_particle(user,src)
-						attack_twitch(user, anim_mult, anim_mult)
-					else if (W.hide_attack == ATTACK_PARTIALLY_HIDDEN)
-						attack_twitch(user, anim_mult, , anim_mult)
+		if (!isnull(W))
+			W.attack(src, user, (user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null), is_special, params) // def_zone var was apparently useless because the only thing that ever passed def_zone anything was shitty bill when he attacked people
+			if (W && user != src) //ZeWaka: Fix for cannot read null.hide_attack
+				var/anim_mult = clamp(0.5, W.force / 10, 4)
+				if (!W.hide_attack)
+					attack_particle(user,src)
+					attack_twitch(user, anim_mult, anim_mult)
+				else if (W.hide_attack == ATTACK_PARTIALLY_HIDDEN)
+					attack_twitch(user, anim_mult, , anim_mult)
 
 
-				if (W.force)
-					message_admin_on_attack(user, "uses \a [W.name] on")
-			return
-	return
+			if (W.force)
+				message_admin_on_attack(user, "uses \a [W.name] on")
 
 
 /mob/proc/message_admin_on_attack(var/mob/attacker, var/attack_type = "attacks")

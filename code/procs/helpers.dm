@@ -260,13 +260,14 @@ proc/get_angle(atom/a, atom/b)
 		return 1
 
 /proc/is_blocked_turf(var/turf/T)
-	// drsingh for cannot read null.density
-	if (!T) return 0
-	if(T.density) return 1
+	. = FALSE
+	if (!T)
+		return FALSE
+	if (T.density)
+		return TRUE
 	for(var/atom/A in T)
-		if(A?.density)//&&A.anchored
-			return 1
-	return 0
+		if(A?.density) // && A.anchored
+			return TRUE
 
 //is_blocked_turf for flock
 /proc/flock_is_blocked_turf(var/turf/T)
@@ -404,7 +405,7 @@ proc/get_angle(atom/a, atom/b)
 		. = file_path
 	else
 		. = file(file_path)
-	. = file2text(.)
+	. = trim(file2text(.))
 	if(can_escape)
 		. = replacetext(., "\\[separator]", "") // To be complete we should also replace \\ with \ etc. but who cares
 	. = splittext(., separator)
@@ -524,6 +525,8 @@ proc/get_angle(atom/a, atom/b)
 			return TRUE
 
 /proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
+	M = get_turf(M)
+	N = get_turf(N)
 	var/px=M.x		//starting x
 	var/py=M.y
 	. = list(locate(px,py,M.z))
@@ -622,7 +625,7 @@ proc/get_angle(atom/a, atom/b)
 	* Returns true if the given key is a guest key
 	*/
 /proc/IsGuestKey(key)
-	. = copytext(key, 1, 7) == "Guest-"
+	. = lowertext(copytext(key, 1, 7)) == "guest-"
 
 
 /**
@@ -689,8 +692,7 @@ proc/get_angle(atom/a, atom/b)
 //Include details shows traitor status etc
 //Admins replaces the src ref for links with a placeholder for message_admins
 //Mentor just changes the private message link
-/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null, mob/user=null, ckey_and_alt_key = FALSE,
-		additional_url_data = null)
+/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null, mob/user=null, additional_url_data = null)
 	var/mob/the_mob = null
 	var/client/the_client = null
 	var/the_key = ""
@@ -752,10 +754,7 @@ proc/get_angle(atom/a, atom/b)
 			if (the_client.holder && the_client.stealth && !include_details)
 				text += "Administrator"
 			else if (the_client.holder && the_client.alt_key && !include_details)
-				if(ckey_and_alt_key && FALSE)
-					text += "[the_key] (as [the_client.fakekey])"
-				else
-					text += "[the_client.fakekey]"
+				text += "[the_client.fakekey]"
 			else
 				text += "[the_key]"
 		else
@@ -1027,16 +1026,16 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		var/n_letter = copytext(te, p, p + 1)
 		if (prob(80))
 			if (prob(10))
-				n_letter = text("[n_letter][n_letter][n_letter][n_letter]")
+				n_letter = "[n_letter][n_letter][n_letter][n_letter]"
 			else
 				if (prob(20))
-					n_letter = text("[n_letter][n_letter][n_letter]")
+					n_letter = "[n_letter][n_letter][n_letter]"
 				else
 					if (prob(5))
-						n_letter = null
+						n_letter = n_letter
 					else
-						n_letter = text("[n_letter][n_letter]")
-		t = text("[t][n_letter]")
+						n_letter = "[n_letter][n_letter]"
+		t = "[t][n_letter]"
 		p++
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
@@ -1059,12 +1058,6 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			client.pixel_x = 0
 			client.pixel_y = 0
 			M.shakecamera = 0
-
-/proc/findname(msg)
-	for(var/mob/M in mobs)
-		if (M.real_name == text("[msg]"))
-			return 1
-	return 0
 
 /proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
 	//returns only NORTH, SOUTH, EAST, or WEST
@@ -1278,6 +1271,10 @@ proc/outermost_movable(atom/movable/target)
 		// this turf is being shown elsewhere through a visual mirror, make sure they get to hear too
 		. |= all_hearers(range, T.vistarget)
 
+	for(var/atom/movable/screen/viewport_handler/viewport_handler in T?.vis_locs)
+		if(viewport_handler.listens)
+			. |= viewport_handler.viewer.mob
+
 /proc/all_viewers(var/range,var/centre)
 	. = list()
 	for (var/atom/A as anything in viewers(range,centre))
@@ -1381,13 +1378,17 @@ proc/outermost_movable(atom/movable/target)
         ((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))
 
 //Shoves a jump to link or whatever in the thing :effort:
-/proc/showCoords(x, y, z, plaintext, holder)
+/proc/showCoords(x, y, z, plaintext, holder, ghostjump)
 	var text
+	if(isrestrictedz(z) && ghostjump)
+		ghostjump = FALSE
+		plaintext = TRUE
 	if (plaintext)
 		text += "[x], [y], [z]"
+	else if(ghostjump)
+		text += "<a href='byond://winset?command=.ghostjump [x] [y] [z]' title='Jump to Coords'>[x],[y],[z]</a>"
 	else
 		text += "<a href='?src=[holder ? "\ref[holder]" : "%admin_ref%"];action=jumptocoords;target=[x],[y],[z]' title='Jump to Coords'>[x],[y],[z]</a>"
-
 	return text
 
 // hi I'm haine -throws more crap onto the pile-
@@ -1747,12 +1748,12 @@ proc/countJob(rank)
 	src.letter_overlay(letter, lcolor, text2dir(dir))
 
 /// Returns a list of eligible dead players that COULD choose to respawn or whatever
-/proc/eligible_dead_player_list(var/allow_dead_antags = 0, var/require_client = FALSE)
+/proc/eligible_dead_player_list(var/allow_dead_antags = 0, var/require_client = FALSE, var/for_antag = TRUE, allow_dnr = FALSE)
 	. = list()
 	for (var/datum/mind/M in ticker.minds)
 		if (M.current && M.current.client)
 			var/client/C = M.current.client
-			if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
+			if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag, allow_dnr=allow_dnr) != 1)
 				continue
 			if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 				continue
@@ -1760,8 +1761,9 @@ proc/countJob(rank)
 
 /// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 /// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
+/// for_antag indicates that we are polling for an antag role and so should exclude antag-banned players
 /proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0,
-		var/require_client = FALSE, var/do_popup = TRUE)
+		var/require_client = FALSE, var/do_popup = TRUE, var/for_antag = TRUE, allow_dnr = FALSE)
 	var/list/candidates = list()
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
 	if (confirmation_spawn > 0)
@@ -1782,16 +1784,16 @@ proc/countJob(rank)
 			if (length(text_messages) >= 5) text_chat_toolate = text_messages[5]
 
 		text_alert = strip_html(text_alert, MAX_MESSAGE_LEN, 1)
-		text_chat_alert = "<span class='notice'><h3>[strip_html(text_chat_alert, MAX_MESSAGE_LEN)]</h3></span>"
-		text_chat_added = "<span class='notice'><h3>[strip_html(text_chat_added, MAX_MESSAGE_LEN)]</h3></span>"
-		text_chat_failed = "<span class='alert'><b>[strip_html(text_chat_failed, MAX_MESSAGE_LEN)]</b></span>"
-		text_chat_toolate = "<span class='alert'><b>[strip_html(text_chat_toolate, MAX_MESSAGE_LEN)]</b></span>"
+		text_chat_alert = SPAN_NOTICE("<h3>[strip_html(text_chat_alert, MAX_MESSAGE_LEN)]</h3>")
+		text_chat_added = SPAN_NOTICE("<h3>[strip_html(text_chat_added, MAX_MESSAGE_LEN)]</h3>")
+		text_chat_failed = SPAN_ALERT("<b>[strip_html(text_chat_failed, MAX_MESSAGE_LEN)]</b>")
+		text_chat_toolate = SPAN_ALERT("<b>[strip_html(text_chat_toolate, MAX_MESSAGE_LEN)]</b>")
 
 		// Run prompts. Minds are preferable to mob references because of the confirmation delay.
 		for (var/datum/mind/M in ticker.minds)
 			if (M.current && M.current.client)
 				var/client/C = M.current.client
-				if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
+				if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag, allow_dnr=allow_dnr) != 1)
 					continue
 				if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 					continue
@@ -1807,7 +1809,7 @@ proc/countJob(rank)
 						if (ghost_timestamp && (TIME > ghost_timestamp + confirmation_spawn))
 							if (M.current) boutput(M.current, text_chat_toolate)
 							return
-						if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
+						if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag, allow_dnr=allow_dnr) != 1)
 							if (M.current) boutput(M.current, text_chat_failed)
 							return
 
@@ -1826,7 +1828,7 @@ proc/countJob(rank)
 		// Filter list again.
 		if (candidates.len)
 			for (var/datum/mind/M2 in candidates)
-				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current, allow_dead_antags, require_client) != 1)
+				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current, allow_dead_antags, require_client, for_antag, allow_dnr=allow_dnr) != 1)
 					candidates.Remove(M2)
 					continue
 
@@ -1851,7 +1853,7 @@ proc/countJob(rank)
 	candidates = list()
 
 	for (var/mob/O in mobs)
-		if (dead_player_list_helper(O, allow_dead_antags, require_client) != 1)
+		if (dead_player_list_helper(O, allow_dead_antags, require_client, for_antag, allow_dnr=allow_dnr) != 1)
 			continue
 		if (!(O in candidates))
 			candidates.Add(O.mind)
@@ -1889,8 +1891,8 @@ proc/countJob(rank)
 	logTheThing(LOG_ADMIN, mind.current, " was chosen to respawn as a random event [respawning_as][is_round_observer ? " after joining as an observer" : ""]. Source: [source ? "[source]" : "random"]")
 
 // So there aren't multiple instances of C&P code (Convair880).
-/proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE)
-	if (!G?.mind || G.mind.get_player()?.dnr)
+/proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE, var/for_antag = TRUE, allow_dnr = FALSE)
+	if (!G?.mind || !allow_dnr && G.mind.get_player()?.dnr)
 		return 0
 	// if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
 	// 	return 0
@@ -1900,7 +1902,7 @@ proc/countJob(rank)
 		return 0
 	if (istype(G, /mob/new_player) || G.respawning)
 		return 0
-	if (jobban_isbanned(G, "Syndicate"))
+	if (for_antag && jobban_isbanned(G, "Syndicate"))
 		return 0
 	if (jobban_isbanned(G, "Special Respawn"))
 		return 0
@@ -2058,15 +2060,13 @@ var/global/lastDectalkUse = 0
 	else
 		return list("cooldown" = 1)
 
-proc/copy_datum_vars(var/atom/from, var/atom/target)
+proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 	if (!target || !from) return
 	for(var/V in from.vars)
 		if (!issaved(from.vars[V]))
 			continue
 
-		if(V == "type") continue
-		if(V == "parent_type") continue
-		if(V == "vars") continue
+		if(V == "type" || V == "parent_type" || V == "vars" || (V in blacklist)) continue
 		target.vars[V] = from.vars[V]
 
 /**
@@ -2087,9 +2087,6 @@ proc/copy_datum_vars(var/atom/from, var/atom/target)
 	var/name = get_nearest_color(C)
 	if (name)
 		return name
-
-var/list/uppercase_letters = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
-var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 
 // Helper for blob, wraiths and whoever else might need them (Convair880).
 /proc/restricted_z_allowed(var/mob/M, var/T)
@@ -2233,7 +2230,7 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 		if (M.mind.special_role)
 			var/special = uppertext(copytext(M.mind.special_role, 1, 2)) + copytext(M.mind.special_role, 2)
 			if (!strip)
-				special = "<span class='alert'>[special]</span>"
+				special = SPAN_ALERT("[special]")
 
 			role += " \[[special]]"
 
@@ -2241,18 +2238,6 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 		role += M.job
 
 	return role
-
-// DM simultaneously makes cursed shit like this work...
-// yet won't work with just the unicode raws - infinite pain
-var/const/___proper = "\proper"
-var/const/___improper = "\improper"
-var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
-
-/**
-  * Removes the special data inserted via use of \improper etc in strings
-  */
-/proc/stripTextMacros(text)
-	return replacetext(text, regexTextMacro, "")
 
 /**
   * Returns true if given mob/client/mind is an admin
@@ -2378,7 +2363,7 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 	if (!whitelist || (!TA || !TA.reagents) || (islist(whitelist) && !length(whitelist)))
 		return
 	if (!custom_message)
-		custom_message = "<span class='alert'>[TA] identifies and removes a harmful substance.</span>"
+		custom_message = SPAN_ALERT("[TA] identifies and removes a harmful substance.")
 
 	var/found = 0
 	for (var/reagent_id in TA.reagents.reagent_list)
@@ -2595,3 +2580,49 @@ proc/total_density(turf/T)
 	. = T.density
 	for (var/atom/A in T)
 		. += A.density
+
+/// Checks if Cross succeeds for the turf and all atoms in it
+proc/total_cross(turf/T, atom/movable/mover)
+	. = T.Cross(mover)
+	if(!.)
+		return
+	for (var/atom/A in T)
+		. = A.Cross(mover)
+		if(!.)
+			return
+
+
+// Used to send a message to all ghosts when something Interesting has happened
+// Any message sent to this should just be a funny comment on something logged elsewhere,
+// so they probably don't need to be logged here again (e.g. death alerts)
+proc/message_ghosts(var/message, show_wraith = FALSE)
+	if (!message)
+		return
+
+	var/rendered = SPAN_DEADSAY("[message]")
+	for (var/client/C)
+		if (C.deadchatoff) continue
+		if (!C.mob) continue
+		var/mob/M = C.mob
+		if (istype(M, /mob/new_player)) continue
+
+		// If an admin, show message
+		if (M.try_render_chat_to_admin(C, rendered))
+			// admin saw message, no need to continue tests
+			continue
+
+		// Skip forced-observers (hivemind, etc)
+		if (istype(M, /mob/dead/target_observer))
+			var/mob/dead/target_observer/tobserver = M
+			if(!tobserver.is_respawnable)
+				continue
+
+		// Skip the wraith if show_wraith is off or they have deadchat off
+		if (iswraith(M))
+			var/mob/living/intangible/wraith/the_wraith = M
+			if (!show_wraith || !the_wraith.hearghosts)
+				continue
+
+		// Otherwise, output to ghosts
+		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
+			boutput(M, rendered)

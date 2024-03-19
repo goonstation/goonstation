@@ -15,6 +15,12 @@
 /// rounds down to the nearest integer, note that the built-in round() function alwys roundsd to the lower integer
 #define nround(x) ((((x) % 1) >= 0.5) ? round(x) : ceil(x))
 
+/// decimal part of a number but always positive. Basically modulo 1 in a way
+#define posfract(x) ((x) - roundfloor(x))
+
+/// x % y but without rounding x first (i.e. fractmodulo(5.7, 2) = 1.7), also always positive
+#define fractmodulo(x, y) ((x) - (y) * roundfloor((x) / (y)))
+
 /// Returns the sign of the given number (1 or -1)
 #define sign(x) (((x) > 0) - ((x) < 0))
 
@@ -45,7 +51,7 @@ proc/text2num_safe(x)
 	return null
 
 /// rand() but for floats, returns a random floating point number between L and H
-#define randfloat(L, H) (L + rand() * (H - L))
+#define randfloat(L, H) ((L) + rand() * ((H) - (L)))
 
 //bit math helpers
 

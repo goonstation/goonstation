@@ -88,7 +88,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 
 	attack_hand(mob/user)
 		if (src.stance == "defensive")
-			src.visible_message("<span class='alert'><B>[user] attempts to attack [src]!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[user] attempts to attack [src]!</B>"))
 			playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
 			SPAWN(0.2 SECONDS)
 				macho_parry(user)
@@ -98,7 +98,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 
 	attackby(obj/item/W, mob/user)
 		if (src.stance == "defensive")
-			src.visible_message("<span class='alert'><B>[user] swings at [src] with the [W.name]!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[user] swings at [src] with the [W.name]!</B>"))
 			playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
 			sleep(0.2 SECONDS)
 			macho_parry(user, W)
@@ -113,10 +113,10 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			now_pushing = 1
 			if (ismob(AM))
 				var/mob/M = AM
-				boutput(src, "<span class='alert'><B>You power-clothesline [M]!</B></span>")
+				boutput(src, SPAN_ALERT("<B>You power-clothesline [M]!</B>"))
 				for (var/mob/C in oviewers(src))
 					shake_camera(C, 8, 24)
-					C.show_message("<span class='alert'><B>[src] clotheslines [M] into oblivion!</B></span>", 1)
+					C.show_message(SPAN_ALERT("<B>[src] clotheslines [M] into oblivion!</B>"), 1)
 				M.changeStatus("stunned", 8 SECONDS)
 				M.changeStatus("weakened", 5 SECONDS)
 				var/turf/target = get_edge_target_turf(src, src.dir)
@@ -129,22 +129,22 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					if (istype(O, /obj/machinery/door))
 						var/obj/machinery/door/D = O
 						if (D.open())
-							boutput(src, "<span class='alert'><B>You forcefully kick open [D]!</B></span>")
+							boutput(src, SPAN_ALERT("<B>You forcefully kick open [D]!</B>"))
 							for (var/mob/C in oviewers(D))
 								shake_camera(C, 8, 24)
-								C.show_message("<span class='alert'><B>[src] forcefully kicks open [D]!</B></span>", 1)
+								C.show_message(SPAN_ALERT("<B>[src] forcefully kicks open [D]!</B>"), 1)
 						else
-							boutput(src, "<span class='alert'><B>You forcefully kick [D]!</B></span>")
+							boutput(src, SPAN_ALERT("<B>You forcefully kick [D]!</B>"))
 							for (var/mob/C in oviewers(src))
 								shake_camera(C, 8, 24)
-								C.show_message("<span class='alert'><B>[src] forcefully kicks [D]!</B></span>", 1)
+								C.show_message(SPAN_ALERT("<B>[src] forcefully kicks [D]!</B>"), 1)
 							if (prob(33))
 								qdel(D)
 					else if(O.anchored != 2)
-						boutput(src, "<span class='alert'><B>You crash into [O]!</B></span>")
+						boutput(src, SPAN_ALERT("<B>You crash into [O]!</B>"))
 						for (var/mob/C in oviewers(src))
 							shake_camera(C, 8, 24)
-							C.show_message("<span class='alert'><B>[src] crashes into [O]!</B></span>", 1)
+							C.show_message(SPAN_ALERT("<B>[src] crashes into [O]!</B>"), 1)
 						if ((istype(O, /obj/window) && !istype(O, /obj/window/auto/reinforced/indestructible)) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 							qdel(O)
 						else
@@ -164,9 +164,9 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				M.u_equip(W)
 				W.layer = HUD_LAYER
 				src.put_in_hand_or_drop(W)
-				src.visible_message("<span class='alert'><B>[src] grabs the [W.name] out of [M]'s hands, shoving [M] to the ground!</B></span>")
+				src.visible_message(SPAN_ALERT("<B>[src] grabs the [W.name] out of [M]'s hands, shoving [M] to the ground!</B>"))
 			else
-				src.visible_message("<span class='alert'><B>[src] parries [M]'s attack, knocking them to the ground!</B></span>")
+				src.visible_message(SPAN_ALERT("<B>[src] parries [M]'s attack, knocking them to the ground!</B>"))
 			M.changeStatus("weakened", 10 SECONDS)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 65, 1)
 			SPAWN(2 SECONDS)
@@ -343,7 +343,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					..()
 				else
 					playsound(src.loc, pick(snd_macho_rage), 75, 0, 0, src.get_age_pitch())
-					src.visible_message("<span class='alert'><b>[src] yells out a battle cry!</b></span>")
+					src.visible_message(SPAN_ALERT("<b>[src] yells out a battle cry!</b>"))
 			else
 				..()
 /obj/critter/microman
@@ -374,7 +374,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 
 	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
-			src.visible_message("<span class='alert'><b>[user]</b> pets [src]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[user]</b> pets [src]!"))
 			return
 		..()
 
@@ -390,7 +390,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				if (3)
 					attack_message = "<B>[src]</B> headbutts [src.target]!"
 			for (var/mob/O in viewers(src, null))
-				O.show_message("<span class='alert'>[attack_message]</span>", 1)
+				O.show_message(SPAN_ALERT("[attack_message]"), 1)
 			playsound(src.loc, "swing_hit", 30, 0)
 			if (prob(10))
 				playsound(src.loc, pick(snd_macho_rage), 50, 1, 0, 1.75)
@@ -400,7 +400,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 
 	ChaseAttack(mob/M)
 		for (var/mob/O in viewers(src, null))
-			O.show_message("<span class='alert'><B>[src]</B> charges at [M]!</span>", 1)
+			O.show_message(SPAN_ALERT("<B>[src]</B> charges at [M]!"), 1)
 		if (prob(50))
 			playsound(src.loc, pick(snd_macho_rage), 50, 1, 0, 1.75)
 		M.changeStatus("stunned", 1 SECOND)
@@ -475,13 +475,13 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	item_state = "chefhat" // lol
 	w_class = W_CLASS_TINY
 
-	attack(mob/target)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (istype(target, /mob/living/carbon/human/machoman))
-			target.visible_message("<span class='alert'>[target] shoves [his_or_her(target)] face deep into [src] and breathes deeply!</span>")
+			target.visible_message(SPAN_ALERT("[target] shoves [his_or_her(target)] face deep into [src] and breathes deeply!"))
 			playsound(target.loc, 'sound/voice/macho/macho_breathing02.ogg', 50, 1)
 			sleep(2.5 SECONDS)
 			playsound(target.loc, 'sound/voice/macho/macho_freakout.ogg', 50, 1)
-			target.visible_message("<span class='alert'>[target] appears visibly stronger!</span>")
+			target.visible_message(SPAN_ALERT("[target] appears visibly stronger!"))
 			target.changeStatus("stimulants", 7.5 MINUTES)
 			if (ishuman(target))
 				var/mob/living/carbon/human/machoman/H = target
@@ -489,9 +489,9 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				H.UpdateDamageIcon()
 				H.bodytemperature = H.base_body_temp
 		else
-			target.visible_message("<span class='alert'>[target] shoves [his_or_her(target)] face deep into [src]!</span>")
+			target.visible_message(SPAN_ALERT("[target] shoves [his_or_her(target)] face deep into [src]!"))
 			SPAWN(2.5 SECONDS)
-			target.visible_message("<span class='alert'>[target]'s pupils dilate.</span>")
+			target.visible_message(SPAN_ALERT("[target]'s pupils dilate."))
 			target.changeStatus("stunned", 10 SECONDS)
 
 /obj/item/reagent_containers/food/snacks/slimjim
@@ -510,7 +510,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 75, 1)
 			playsound(user.loc, 'sound/voice/macho/macho_slimjim.ogg', 60)
 			for (var/mob/O in viewers(user))
-				O.show_message("<span class='alert'><B>[user] snaps into a Space Jim!!</B></span>", 1)
+				O.show_message(SPAN_ALERT("<B>[user] snaps into a Space Jim!!</B>"), 1)
 			sleep(rand(10,20))
 			var/turf/T = get_turf(M)
 			playsound(user.loc, "explosion", 100, 1)

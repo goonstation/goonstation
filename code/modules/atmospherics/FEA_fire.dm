@@ -72,16 +72,26 @@
 		if (parent?.group_processing)
 			parent.suspend_group_processing()
 
-		src.active_hotspot = new /obj/hotspot
-		src.active_hotspot.temperature = exposed_temperature
-		src.active_hotspot.volume = exposed_volume
-		src.active_hotspot.set_loc(src)
-		src.active_hotspot.set_real_color()
+		src.add_hotspot(exposed_temperature, exposed_volume)
 
 		src.active_hotspot.just_spawned = (current_cycle < air_master.current_cycle)
 		//remove just_spawned protection if no longer processing this cell
 
 	return igniting
+
+/// Adds a hotspot to self, deletes the previous if there was one. Sets processing to true also, since a fire kinda should be processed.
+/turf/proc/add_hotspot(temperature, volume)
+	src.active_hotspot?.dispose()
+	src.active_hotspot = new /obj/hotspot
+	src.active_hotspot.temperature = temperature
+	src.active_hotspot.volume = volume
+	src.active_hotspot.set_loc(src)
+	src.active_hotspot.set_real_color()
+	if (issimulatedturf(src))
+		var/turf/simulated/self = src
+		self.processing = TRUE
+		if(!self.parent)
+			air_master.active_singletons |= src
 
 /// The object that represents fire ingame. Very nice and warm.
 /obj/hotspot

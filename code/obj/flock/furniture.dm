@@ -36,9 +36,9 @@ TYPEINFO(/obj/table/flock)
 /obj/table/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Storage Surface
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] Storage Surface<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 /obj/table/flock/Crossed(atom/movable/mover)
 	. = ..()
@@ -71,10 +71,10 @@ TYPEINFO(/obj/item/furniture_parts/table/flock)
 /obj/item/furniture_parts/table/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Storage Surface, Deployable State
-		<br><span class='bold'>Instructions:</span> Activate within grip tool to deploy.
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] Storage Surface, Deployable State<br>\
+			[SPAN_BOLD("Instructions:")] Activate within grip tool to deploy<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 ///////////////////////////
 // CHAIR & PARTS
@@ -104,9 +104,9 @@ TYPEINFO(/obj/stool/chair/comfy/flock)
 /obj/stool/chair/comfy/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Resting Chamber
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] Resting Chamber<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 TYPEINFO(/obj/item/furniture_parts/flock_chair)
 	mat_appearances_to_ignore = list("gnesis")
@@ -127,11 +127,9 @@ TYPEINFO(/obj/item/furniture_parts/flock_chair)
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Resting Chamber, Deployable State
-		<br><span class='bold'>Instructions:</span> Activate within grip tool to deploy.
-		<br><span class='bold'>###=-</span></span>"}
-
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] Resting Chamber<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 ///////////////////////////
 // LOCKER
@@ -181,9 +179,9 @@ TYPEINFO(/obj/storage/closet/flock)
 
 	if (!src.open)
 		if (istype(W, /obj/item/cargotele))
-			boutput(user, "<span class='alert'>For some reason, it refuses to budge.</span>")
+			boutput(user, SPAN_ALERT("For some reason, it refuses to budge."))
 		else if (isweldingtool(W) && W:try_weld(user, 0, -1, FALSE, FALSE))
-			boutput(user, "<span class='alert'>It doesn't matter what you try, it doesn't seem to keep welded shut.</span>")
+			boutput(user, SPAN_ALERT("It doesn't matter what you try, it doesn't seem to keep welded shut."))
 		else if (isitem(W))
 			if(SEND_SIGNAL(src, COMSIG_FLOCK_ATTACK, user, TRUE))
 				return
@@ -223,15 +221,15 @@ TYPEINFO(/obj/storage/closet/flock)
 		if (!src.toggle())
 			return src.Attackby(null, user)
 	else
-		boutput(user, "<span class='alert'>Nothing you can do can persuade this thing to either open or close. Bummer.</span>")
+		boutput(user, SPAN_ALERT("Nothing you can do can persuade this thing to either open or close. Bummer."))
 
 /obj/storage/closet/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> [src.flock_id]
-		<br><span class='bold'>System Integrity:</span> [round((src.health_attack/src.health_max)*100)]%
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+			[SPAN_BOLD("System Integrity:")] [round((src.health_attack/src.health_max)*100)]%<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 // flockdrones can always move through
 /obj/storage/closet/flock/Crossed(atom/movable/mover)
@@ -288,9 +286,9 @@ TYPEINFO(/obj/machinery/light/flock)
 /obj/machinery/light/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> [src.flock_id]
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 /obj/machinery/light/flock/floor
 	icon_state = "flock_floor1"
@@ -327,15 +325,15 @@ TYPEINFO(/obj/lattice/flock)
 	if (isweldingtool(C) && C:try_weld(user,0,-1,FALSE,FALSE))
 		if(SEND_SIGNAL(src, COMSIG_FLOCK_ATTACK, user, TRUE))
 			return
-		boutput(user, "<span class='notice'>The fibres burn away in the same way glass doesn't. Huh.</span>")
+		boutput(user, SPAN_NOTICE("The fibres burn away in the same way glass doesn't. Huh."))
 		qdel(src)
 
 /obj/lattice/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Structural Foundation
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] Structural Foundation<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 /////////////
 // BARRICADE
@@ -401,10 +399,10 @@ TYPEINFO(/obj/grille/flock)
 /obj/grille/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> [src.flock_id]
-		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+			[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 /obj/grille/flock/attack_hand(mob/user)
 	if (user.a_intent != INTENT_HARM)
