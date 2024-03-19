@@ -1847,7 +1847,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\artifacts\artifact_items\energy_gun.dm"
 #include "code\obj\artifacts\artifact_items\gun_cell.dm"
 #include "code\obj\artifacts\artifact_items\handheld_storage.dm"
-#include "code\obj\artifacts\artifact_items\healing_wand.dm"
 #include "code\obj\artifacts\artifact_items\instrument.dm"
 #include "code\obj\artifacts\artifact_items\melee_weapon.dm"
 #include "code\obj\artifacts\artifact_items\pitcher.dm"
