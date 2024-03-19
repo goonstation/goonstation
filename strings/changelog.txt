@@ -1,4 +1,7 @@
 
+(t)mon mar 18 24
+(u)Sord
+(+)Added a new, rare, handheld artifact: the healing wand! This artifact will heal your target, and rarely even yourself!
 (t)sun mar 17 24
 (u)LeahTheTech
 (+)Repairing or replacing one floor tile with another will no longer hide items on that tile under it.
