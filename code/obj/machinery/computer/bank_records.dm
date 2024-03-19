@@ -100,8 +100,10 @@
 				. = TRUE
 
 			if ("transfer")
-				handle_transfer(params)
+				if (!handle_transfer(params))
+					doKeyboardSound = FALSE
 				. = TRUE
+
 			if ("edit_wage")
 				var/id = params["id"]
 
@@ -117,6 +119,7 @@
 			playsound(src.loc, "keyboard", 50, 1, -15)
 
 	proc/handle_transfer(params)
+		. = FALSE
 		if (!params)
 			return
 
@@ -186,6 +189,7 @@
 							LOG_STATION,
 							usr,
 							"transfers [amount][CREDIT_SIGN] to <b>[toId] Budget</b> from <b>[fromId] Budget</b>.")
+		. = TRUE
 
 
 

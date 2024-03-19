@@ -4,6 +4,7 @@
  * @author mloccy (https://github.com/mloccy)
  * @license MIT
  */
+export const CREDIT_SIGN = "⪽";
 
 export type Transfer = {
   fromId: string,
@@ -30,8 +31,8 @@ export type CrewAccount = {
 export type PayrollData = {
   stipend: number,
   cost: number,
-  surplus:number,
-  total:number
+  surplus: number,
+  total: number
 }
 
 export interface BankComputerStatus {

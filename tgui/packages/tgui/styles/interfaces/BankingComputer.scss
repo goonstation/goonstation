@@ -6,13 +6,25 @@
  */
 
 @use '../colors.scss';
-@use '~tgui/styles/base.scss';
+@use '../base.scss';
 
 .headerRow {
   font-size: larger;
 }
 
 .buttonCell {
-  margin-right: 10px;
+  padding: 10px;
   float: right;
+}
+
+.budgetRow {
+
+  border: #252525;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-width: 2px;
+}
+
+.budgetSummery {
+  font-size: larger;
 }
