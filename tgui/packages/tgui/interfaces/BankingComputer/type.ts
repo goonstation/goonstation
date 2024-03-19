@@ -1,10 +1,35 @@
 /**
- * @file
- * @copyright 2024
- * @author mloccy (https://github.com/mloccy)
- * @license MIT
- */
+* @file
+* @copyright 2024
+* @author mloccy (https://github.com/mloccy)
+* @license MIT
+*/
+
+import { SortDirection } from "../PlayerPanel/constant";
 export const CREDIT_SIGN = "⪽";
+
+export enum TabState {
+  BudgetStatus,
+  PayrollDetails,
+  CrewAccounts
+}
+
+export enum SearchFilter {
+  Name = "Name",
+  Job = "Job"
+}
+
+export enum ColumnSortField {
+  Name,
+  Job,
+  Salery,
+  Balance
+}
+
+export type CrewColumnSortConfig = {
+  dir: SortDirection,
+  field: ColumnSortField
+}
 
 export type Transfer = {
   fromId: string,

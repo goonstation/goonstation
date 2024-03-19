@@ -5,17 +5,18 @@
  * @license MIT
  */
 
-import { useBackend } from '../../backend';
-import { Divider, Section } from '../../components';
+import { useBackend, useLocalState } from '../../backend';
+import { Section, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { AuthenticationControl } from './AuthenticationControl';
 import { BudgetSection } from './BudgetSection';
 import { CrewAccounts } from './CrewAccounts';
 import { PayrollDetails } from './PayrollDetails';
-import { BankComputerStatus } from './type';
+import { BankComputerStatus, TabState } from './type';
 
 export const BankingComputer = (_props, context) => {
   const { act, data } = useBackend<BankComputerStatus>(context);
+  const [selectedTab, setSelectedTab] = useLocalState(context, "selectedTab", TabState.BudgetStatus);
 
   return (
     <Window
@@ -23,17 +24,33 @@ export const BankingComputer = (_props, context) => {
       height={680}
       title={"Banking Records"}>
       <Window.Content scrollable>
-        <Section>
-          <AuthenticationControl />
-        </Section>
-        <Section title="Budgets Status">
-          <BudgetSection budgets={data.budgets} />
-        </Section>
-        <Section title="Payroll Details">
-          {data.authenticated ? <PayrollDetails data={data.payroll} payrollActive={data.payrollActive} /> : "Please authenticate to view and modify the payroll and crew accounts."}
-        </Section>
-        <Divider />
-        {data.authenticated ? <CrewAccounts accounts={data.accounts} /> : ""}
+        <AuthenticationControl />
+        <Tabs>
+          <Tabs.Tab onClick={() => setSelectedTab(TabState.BudgetStatus)} selected={selectedTab === TabState.BudgetStatus} title="Budget Status">
+            Budgets
+          </Tabs.Tab>
+          <Tabs.Tab
+            onClick={() => setSelectedTab(TabState.PayrollDetails)} selected={selectedTab === TabState.PayrollDetails}>
+            Payroll
+          </Tabs.Tab>
+          <Tabs.Tab
+            onClick={() => setSelectedTab(TabState.CrewAccounts)} selected={selectedTab === TabState.CrewAccounts}>
+            Accounts
+          </Tabs.Tab>
+        </Tabs>
+        {selectedTab === TabState.BudgetStatus
+          ? <Section title="Budgets Status"><BudgetSection budgets={data.budgets} /></Section>
+          : ""}
+        {selectedTab === TabState.PayrollDetails
+          ? data.authenticated
+            ? <PayrollDetails data={data.payroll} payrollActive={data.payrollActive} />
+            : <Section>Please authenticate to view payroll details.</Section>
+          : ""}
+        {selectedTab === TabState.CrewAccounts
+          ? data.authenticated
+            ? <CrewAccounts accounts={data.accounts} />
+            : <Section>Please authenticate to modify crew accounts.</Section>
+          : ""}
       </Window.Content>
     </Window>
   );

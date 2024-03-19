@@ -15,7 +15,7 @@
 	var/authenticated = FALSE
 	var/failedLogin = FALSE
 	var/authenticatedAs = ""
-	var/payroll_rate_limit_time = 0 //for preventing coammand message spam
+	var/payroll_rate_limit_time = 0 //for preventing command message spam
 
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
@@ -86,6 +86,10 @@
 				else
 					boutput(usr, SPAN_ALERT("Nanotrasen policy forbids the modification station payroll status more than once every ten seconds!"))
 					return
+
+				if (!src.authenticated)
+					return
+
 				if (wagesystem.pay_active)
 					wagesystem.pay_active = 0
 					logTheThing(LOG_STATION, usr, "suspends the station payroll.")
@@ -108,7 +112,7 @@
 				var/id = params["id"]
 
 				var/record = data_core.bank.find_record("id", id)
-				if (record)
+				if (record && src.authenticated)
 					var/newWage = tgui_input_number(usr, "Choose new wage", "Modify Wage", 0, MAX_WAGES, 0)
 					if (newWage != null)
 						logTheThing(LOG_STATION, usr, "sets <b>[record["name"]]</b>'s wage to [newWage][CREDIT_SIGN].")
@@ -121,6 +125,9 @@
 	proc/handle_transfer(params)
 		. = FALSE
 		if (!params)
+			return
+
+		if (!src.authenticated)
 			return
 
 		var/fromType = params["fromType"]
@@ -190,8 +197,6 @@
 							usr,
 							"transfers [amount][CREDIT_SIGN] to <b>[toId] Budget</b> from <b>[fromId] Budget</b>.")
 		. = TRUE
-
-
 
 	proc/get_amount_to_transfer(max)
 		. = tgui_input_number(
