@@ -7797,15 +7797,26 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 10
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aya" = (
 /obj/decal/boxingrope,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "ayb" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -8425,6 +8436,10 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "azJ" = (
@@ -8433,6 +8448,14 @@
 "azK" = (
 /obj/decal/boxingropeenter{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -9026,6 +9049,10 @@
 	density = 0;
 	dir = 8
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aBg" = (
@@ -9042,6 +9069,10 @@
 "aBh" = (
 /obj/decal/boxingrope{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -9664,6 +9695,10 @@
 	dir = 4
 	},
 /obj/stool,
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aCC" = (
@@ -60735,6 +60770,13 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"idN" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "ied" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -112129,7 +112171,7 @@ atG
 atG
 atG
 aww
-azJ
+idN
 azJ
 azJ
 aya
@@ -112431,7 +112473,7 @@ atH
 atG
 atG
 awx
-azJ
+idN
 asM
 azJ
 aya
@@ -112733,7 +112775,7 @@ atI
 atG
 awy
 awv
-azJ
+idN
 azJ
 azJ
 aya
