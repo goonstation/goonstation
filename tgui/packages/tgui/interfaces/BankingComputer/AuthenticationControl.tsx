@@ -21,17 +21,8 @@ export const AuthenticationControl = (props, context) => {
             {data.cardInserted ? data.cardName : "Insert Card"}
           </Button>
         </Stack.Item>
-        <Stack.Item>
-          <Button icon="key"
-            onClick={() => act("login")}
-            title={(!data.authenticated && !data.cardInserted) ? "Please insert a valid ID card to login" : ""}
-            disabled={!data.cardInserted && !data.authenticated}>
-            {data.authenticated ? "Log out" : "Login"}
-          </Button>
-        </Stack.Item>
-        <Stack.Item textColor={data.failedLogin ? "red" : ""}>
-          {data.authenticated ? "Currently logged in as " + data.loggedInName : ""}
-          {data.failedLogin ? "Login failed" : ""}
+        <Stack.Item textColor={(!data.authenticated && data.cardInserted) ? "red" : ""}>
+          {(!data.authenticated && data.cardInserted) ? "Not authorized to use console" : ""}
         </Stack.Item>
       </Stack>
     </Section>

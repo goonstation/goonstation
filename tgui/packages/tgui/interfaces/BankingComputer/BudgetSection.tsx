@@ -18,13 +18,13 @@ const BudgetLine = (props: BudgetProps) => {
 
   return (
     <Table.Row className={props.rowClassName}>
-      <Table.Cell bold>
+      <Table.Cell className="budgetStatusCell" bold>
         {props.currentBudget.name}
       </Table.Cell>
-      <Table.Cell>
+      <Table.Cell className="budgetStatusCell">
         {props.currentBudget.amount.toLocaleString()}{CREDIT_SIGN}
       </Table.Cell>
-      <Table.Cell className="buttonCell">
+      <Table.Cell className="budgetButtonCell">
         {props.allowTransfer
           ? <TransferButton frozen={false} id={props.currentBudget.name} type={"budget"} />
           : ""}
@@ -49,16 +49,11 @@ const BudgetSummery = (props: BudgetSectionProps) => {
 };
 export const BudgetSection = (props: BudgetSectionProps) => {
   return (
-    <Table className="budgetTable">
-      <Table.Row className="headerRow">
-        <Table.Cell bold>Budget Name</Table.Cell>
-        <Table.Cell bold>Balance</Table.Cell>
-        <Table.Cell />
-      </Table.Row>
+    <Table>
       {
         props.budgets.map(budget => {
           return (
-            <BudgetLine rowClassName="budgetRow" key={budget.name} allowTransfer currentBudget={budget} />
+            <BudgetLine key={budget.name} allowTransfer currentBudget={budget} />
           );
         })
       }

@@ -20,12 +20,12 @@ const CrewAccountLine = (props: CrewAccountLineProps, context) => {
   const { data, act } = useBackend(context);
   return (
     <>
-      <Table.Cell bold>{props.account.name}</Table.Cell>
-      <Table.Cell>{props.account.job}</Table.Cell>
-      <Table.Cell>{props.account.wage.toLocaleString()}{CREDIT_SIGN}</Table.Cell>
-      <Table.Cell><Button onClick={() => act("edit_wage", { "id": props.account.id })} icon="pen" /></Table.Cell>
-      <Table.Cell>{props.account.balance.toLocaleString()}{CREDIT_SIGN}</Table.Cell>
-      <Table.Cell><TransferButton frozen={props.account.frozen} id={props.account.id} type={"crew"} /></Table.Cell>
+      <Table.Cell className="crewAccountCell" bold>{props.account.name}</Table.Cell>
+      <Table.Cell className="crewAccountCell">{props.account.job}</Table.Cell>
+      <Table.Cell className="crewAccountCell">{props.account.wage.toLocaleString()}{CREDIT_SIGN}</Table.Cell>
+      <Table.Cell className="crewAccountCell"><Button onClick={() => act("edit_wage", { "id": props.account.id })} icon="pen" /></Table.Cell>
+      <Table.Cell className="crewAccountCell">{props.account.balance.toLocaleString()}{CREDIT_SIGN}</Table.Cell>
+      <Table.Cell className="crewAccountCell"><TransferButton frozen={props.account.frozen} id={props.account.id} type={"crew"} /></Table.Cell>
     </>
   );
 };
@@ -80,12 +80,12 @@ const CrewAccountsTableHeader = (props: CrewAccountsTableHeaderProps, context) =
       <Table.Cell bold>
         <Header
           sortDirection={
-            props.currentColumnConfig?.field === ColumnSortField.Salery
+            props.currentColumnConfig?.field === ColumnSortField.Salary
               ? props.currentColumnConfig?.dir
               : null
           }
-          onSortClick={() => setColumnConfig(ColumnSortField.Salery)}>
-          Salery
+          onSortClick={() => setColumnConfig(ColumnSortField.Salary)}>
+          Salary
         </Header>
       </Table.Cell>
       <Table.Cell />
@@ -163,7 +163,7 @@ export const CrewAccounts = (props: CrewAccountsProps, context) => {
       case ColumnSortField.Balance:
         return numCompare(a.balance, b.balance);
 
-      case ColumnSortField.Salery:
+      case ColumnSortField.Salary:
         return numCompare(a.wage, b.wage);
     }
 

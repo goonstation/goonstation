@@ -22,7 +22,7 @@ export enum SearchFilter {
 export enum ColumnSortField {
   Name,
   Job,
-  Salery,
+  Salary,
   Balance
 }
 
@@ -68,9 +68,6 @@ export interface BankComputerStatus {
   payrollActive: boolean,
 
   authenticated: boolean,
-  failedLogin: boolean,
-  loggedInName: string,
-
   cardInserted: boolean,
   cardName: string,
 }

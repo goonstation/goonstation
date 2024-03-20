@@ -39,7 +39,7 @@ export const BankingComputer = (_props, context) => {
           </Tabs.Tab>
         </Tabs>
         {selectedTab === TabState.BudgetStatus
-          ? <Section title="Budgets Status"><BudgetSection budgets={data.budgets} /></Section>
+          ? <Section title="Budget Status"><BudgetSection budgets={data.budgets} /></Section>
           : ""}
         {selectedTab === TabState.PayrollDetails
           ? data.authenticated

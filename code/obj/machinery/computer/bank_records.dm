@@ -13,8 +13,6 @@
 
 	var/obj/item/card/id/card = null
 	var/authenticated = FALSE
-	var/failedLogin = FALSE
-	var/authenticatedAs = ""
 	var/payroll_rate_limit_time = 0 //for preventing command message spam
 
 	attack_ai(mob/user as mob)
@@ -27,6 +25,9 @@
 				user.drop_item()
 				I.set_loc(src)
 				src.card = I
+				if (check_access(src.card))
+					src.authenticated = TRUE
+
 				tgui_process.update_uis(src)
 			else
 				boutput(user, SPAN_NOTICE("There is already a card inserted."))
@@ -53,6 +54,7 @@
 				if (src.card)
 					usr.put_in_hand_or_drop(src.card)
 					src.card = null
+					src.authenticated = FALSE
 				else
 					var/obj/item/card/id/id_card = usr.equipped()
 
@@ -60,25 +62,12 @@
 						src.card = id_card
 						usr.drop_item()
 						id_card.set_loc(src)
-				. = TRUE
-				doKeyboardSound = FALSE
-
-			if ("login")
-				src.failedLogin = FALSE
-				if (!src.authenticated)
-					if (src.card)
 						if (check_access(src.card))
 							src.authenticated = TRUE
 						else
-							src.failedLogin = TRUE
-					else if(issilicon(usr) || isAIeye(usr))
-						src.authenticated = TRUE
-				else
-					src.authenticated = FALSE
-
-				if (src.authenticated)
-					src.authenticatedAs = src.card.registered
+							src.authenticated = FALSE
 				. = TRUE
+				doKeyboardSound = FALSE
 
 			if ("togglePayroll")
 				if(world.time >= src.payroll_rate_limit_time)
@@ -278,11 +267,9 @@
 	ui_data(mob/user)
 		var/list/data = new()
 		data["authenticated"] = src.authenticated
-		data["loggedInName"] = src.authenticatedAs
 		data["cardInserted"] = src.card != null
 		data["cardName"] = src.card?.name
 		data["budgets"] = gather_budget_info()
-		data["failedLogin"] = src.failedLogin
 
 		if (src.authenticated)
 			var/payrollSum = 0

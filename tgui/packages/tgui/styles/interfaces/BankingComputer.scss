@@ -12,19 +12,22 @@
   font-size: larger;
 }
 
-.buttonCell {
-  padding: 10px;
+.budgetButtonCell {
+  padding-top: 5px;
   float: right;
 }
 
-.budgetRow {
-
-  border: #252525;
-  border-top-style: solid;
-  border-bottom-style: solid;
-  border-width: 2px;
+.budgetStatusCell {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  vertical-align: middle;
 }
 
 .budgetSummery {
   font-size: larger;
+}
+
+.crewAccountCell {
+  padding-top: 5px;
+  // padding-bottom: 5px;
 }
