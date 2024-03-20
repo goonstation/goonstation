@@ -1991,6 +1991,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\retribution.dm"
 #include "code\obj\item\satchel.dm"
 #include "code\obj\item\scrapweapons.dm"
+#include "code\obj\item\scripture.dm"
 #include "code\obj\item\sec_tape.dm"
 #include "code\obj\item\seeds.dm"
 #include "code\obj\item\solo_card_game.dm"

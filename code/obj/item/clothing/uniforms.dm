@@ -1883,3 +1883,11 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 	desc = "Lets you stay nice and warm while keeping that festive atmosphere. Actually kinda breezy, not very comfortable for the cold at all, but it still looks festive."
 	icon_state = "clown_winter"
 	item_state = "clown_winter"
+
+// New chaplain stuff
+
+/obj/item/clothing/under/gimmick/weirdo
+	name = "outlander's jumpsuit"
+	desc = "The symbols on this teal jumpsuit are entirely alien to you. It almost speaks to you of an ancient belief lost to time"
+	icon_state = "weirdo"
+	item_state = "weirdo"
