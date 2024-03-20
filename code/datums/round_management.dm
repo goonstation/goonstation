@@ -18,7 +18,7 @@ var/global/datum/roundManagement/roundManagement
 			#ifdef RP_MODE
 			rpMode = TRUE
 			#endif
-			addRound.buildBody(map_setting, config.server_id, rpMode)
+			addRound.buildBody(map_setting, config.server_id, rpMode, TESTMERGE_PRS)
 			gameRound = apiHandler.queryAPI(addRound)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
