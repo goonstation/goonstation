@@ -4,6 +4,7 @@
 		"map", // string
 		"server_id", // string
 		"rp_mode", // boolean
+		"test_merges" // array
 	)
 
 /datum/apiBody/rounds/post/VerifyIntegrity()

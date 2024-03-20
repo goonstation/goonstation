@@ -5,6 +5,7 @@ var/list/admin_verbs = list(
 		// LEVEL_BABBY, goat fart, ayn rand's armpit
 		/client/proc/cmd_admin_say,
 		/client/proc/cmd_admin_gib_self,
+		/client/proc/cmd_help,
 		),
 
 
@@ -2661,3 +2662,22 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 	get_singleton(/datum/antagPopups).showPanel()
+
+/client/proc/cmd_help()
+	set name = "command help"
+	set desc = "gets the desc of a verb, if it has one"
+
+	ADMIN_ONLY
+	var/list/procpath/L = list()
+	for(var/i in 1 to src.holder.level)
+		for (var/procpath/P as anything in admin_verbs[i])
+			if(P.desc)
+				L[P.name] = P.desc
+	for (var/procpath/P as anything in special_admin_observing_verbs)
+		if(P.desc)
+			L[P.name] = P.desc
+	for (var/procpath/P as anything in special_pa_observing_verbs)
+		if(P.desc)
+			L[P.name] = P.desc
+	var/choice = tgui_input_list(usr, "Select a verb to get the desc of", "command help", L)
+	tgui_alert(usr, "[L[choice]]", "[choice]")
