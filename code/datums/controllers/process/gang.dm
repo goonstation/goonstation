@@ -78,15 +78,14 @@
 /datum/controller/process/gang_crate_drop
 	var/list/potential_hot_zones[0]
 	var/crate_spawn_repeats = 0
+	name = "Gang_Crate_Drops"
+	schedule_interval = GANG_CRATE_INITIAL_DROP
 	setup()
-		name = "Gang_Crate_Drops"
-		schedule_interval = GANG_CRATE_INITIAL_DROP
 		var/list/areas = get_accessible_station_areas()
-		for(var/k in areas)
-			if(istype(areas[k], /area/station/security))
+		for(var/area in areas)
+			if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked || istype(areas[area], /area/station/turret_protected))
 				continue
-			potential_hot_zones += areas[k]
-		return
+			potential_hot_zones += areas[area]
 	doWork()
 		if (!istype(ticker.mode, /datum/game_mode/gang))
 			src.disable()
@@ -111,8 +110,8 @@
 		if (!length(turfList))
 			message_admins("All attempts to find a valid location to spawn a weapons crate failed!")
 			return
-		var/obj/storage/crate/gang_crate/guns_and_gear/crate = new/obj/storage/crate/gang_crate/guns_and_gear(pick(turfList))
-		logTheThing(LOG_GAMEMODE, crate, "Created a loot crate in [drop_zone.name] at [crate.x],[crate.y].")
+		var/obj/storage/crate/gang_crate/guns_and_gear/crate = new(pick(turfList))
+		var/obj/storage/crate/gang_crate/guns_and_gear/crate = new(pick(turfList))
 		broadcast_to_all_gangs("<span style='font-size:24px'> We've dropped off weapons & ammunition at <b>\the [drop_zone.name]!</b> It's anchored in place for 5 minutes, so get fortifying!</span>")
 
 

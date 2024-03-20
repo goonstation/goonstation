@@ -30,8 +30,6 @@
 	var/shuttle_called = FALSE
 	var/mob/kidnapping_target
 
-	var/gangtag_scheduler = new /datum/controller/processScheduler()
-
 /datum/game_mode/gang/announce()
 	boutput(world, "<B>The current game mode is - Gang War!</B>")
 	boutput(world, "<B>A number of gangs are competing for control of the station!</B>")
@@ -246,10 +244,10 @@
 /datum/game_mode/gang/proc/find_potential_hot_zones()
 	potential_hot_zones = list()
 	var/list/areas = get_accessible_station_areas()
-	for(var/k in areas)
-		if(istype(areas[k], /area/station/security))
+	for(var/area in areas)
+		if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked || istype(areas[area], /area/station/turret_protected))
 			continue
-		potential_hot_zones += areas[k]
+		potential_hot_zones += areas[area]
 	return
 
 /datum/game_mode/gang/proc/process_kidnapping_event()
@@ -409,10 +407,10 @@ proc/broadcast_to_all_gangs(var/message)
 	/// Whether or not the leader of this gang has claimed a recruitment briefcase
 	var/claimed_briefcase = FALSE
 
-	/// Starting price of the janktank II (gang member revival syringe)
+	/// Price of the janktank II, for this gang (gang member revival syringe)
 	var/current_revival_price = GANG_REVIVE_COST
 
-	/// Price to hire a spectator gang member
+	/// Price to hire a spectator gang member, for this gang
 	var/current_newmember_price = GANG_NEW_MEMBER_COST
 
 	/// Whether a gang member can claim to be leader. For when the leader cryos & observes (and NOT when the leader dies)
@@ -672,7 +670,7 @@ proc/broadcast_to_all_gangs(var/message)
 			var/client/userClient = userMind.current.client
 			if (userClient?.preferences?.flying_chat_hidden)
 				chat_text.show_to(userClient)
-	/// add points to this gang, bonusMind optionally getting a bonus
+	/// add points to this gang, bonusMob optionally getting a bonus
 	/// if location is defined, maptext will come from that location, for all members.
 	proc/add_points(amount, mob/bonusMob = null, turf/location = null, showText = FALSE)
 		street_cred += amount
@@ -845,11 +843,10 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/find_potential_drop_zones()
 		potential_drop_zones = list()
 		var/list/area/areas = get_accessible_station_areas()
-		for(var/k in areas)
-			if(istype(areas[k], /area/station/security) || areas[k].teleport_blocked)
+		for(var/area in areas)
+			if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked)
 				continue
-			potential_drop_zones += areas[k]
-		return
+			potential_drop_zones += areas[area]
 
 	/// hide a loot bag somewhere, return a probably-somewhat-believable PDA message explaining its' location
 	proc/lootbag_spawn()
@@ -1168,7 +1165,6 @@ proc/broadcast_to_all_gangs(var/message)
 	var/image/default_screen_overlay = null
 	var/HTML = null
 
-	/// the overlay this locker should show, after doing stuff like blinking red for errors
 	var/list/buyable_items = list()
 	/// time that ghosts get to choose to be a gang member
 	var/ghost_confirmation_delay  = 30 SECONDS
