@@ -831,7 +831,7 @@ proc/broadcast_to_all_gangs(var/message)
 		newsignal.data["message"] = "[message]"
 		newsignal.data["address_1"] = civvie.originalPDA.net_id
 
-		logTheThing(LOG_GAMEMODE, civvie, "Informed [civvie.ckey]/[civvie.current.name] on their PDA [civvie.originalPDA] about the loot bag.")
+		logTheThing(LOG_GAMEMODE, civvie, "Informed [civvie.ckey]/[civvie.current.name] on their PDA [civvie.originalPDA] about the loot bag for [src.gang_name].")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(newsignal)
 
 	/// pick a random civilian (non-gang, non-sec), ideally not picking any deferred_minds
@@ -900,19 +900,19 @@ proc/broadcast_to_all_gangs(var/message)
 			target.last_use = 0
 
 			message += " we left some goods in a bush [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]."
-			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone], inside a shrub: [target] at [target.x],[target.y]")
+			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [gang.gang_name], inside a shrub: [target] at [target.x],[target.y]")
 
 		else if(length(crateList) && prob(80))
 			var/obj/storage/target = pick(crateList)
 			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
 			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
-			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone], inside a crate: [target] at [target.x],[target.y]")
+			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [gang.gang_name], inside a crate: [target] at [target.x],[target.y]")
 
 		else if(length(disposalList) && prob(85))
 			var/obj/machinery/disposal/target = pick(disposalList)
 			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
 			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
-			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone], inside a chute: [target] at [target.x],[target.y]")
+			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [gang.gang_name], inside a chute: [target] at [target.x],[target.y]")
 		else if(length(tableList) && prob(65))
 			var/turf/simulated/floor/target = pick(tableList)
 			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
@@ -927,21 +927,21 @@ proc/broadcast_to_all_gangs(var/message)
 			loot.AddComponent(/datum/component/reset_transform_on_pickup)
 
 			message += " we hid a bag in \the [loot_zone], under a table. "
-			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone], under a table: [target] at [target.x],[target.y]")
+			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [gang.gang_name], under a table: [target] at [target.x],[target.y]")
 		else if(length(turfList))
 			var/turf/simulated/floor/target = pick(turfList)
 			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
 			loot.hide(target.intact)
 			message += " we had to hide a bag in \the [loot_zone], under the floor tiles. "
-			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone], under the floor at [loot.x],[loot.y]")
+			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [gang.gang_name], under the floor at [loot.x],[loot.y]")
 		else
 			var/turf/simulated/floor/target = pick(uncoveredTurfList)
 			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
 			loot.hide(target.intact)
 			message += " we had to hide a bag in \the [loot_zone]. "
-			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone], on the floor at [loot.x],[loot.y].")
+			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [gang.gang_name], on the floor at [loot.x],[loot.y].")
 
 		message += " there are folks aboard who will probably come looking. "
 
@@ -1378,7 +1378,7 @@ proc/broadcast_to_all_gangs(var/message)
 			else
 				boutput(user, "You've got a full gang! Choose a dead member to hire over.")
 				var/list/datum/mind/members = gang.get_dead_memberlist()
-				var/datum/mind/chosenPlayer = input("Select a gang member to remove.", "Remove gang member") as null|anything in members
+				var/datum/mind/chosenPlayer = tgui_input_list(usr, "Select a gang member to remove.", "Remove Gang Member", members)
 				if (!chosenPlayer)
 					return
 				else
@@ -1652,6 +1652,20 @@ proc/broadcast_to_all_gangs(var/message)
 				item.reagents.clear_reagents()
 				boutput(user, SPAN_ALERT("You pour the contents of the beaker into the handy drug receptacle."))
 				return TRUE
+
+		else if (istype(item, /obj/item/storage/pill_bottle))
+			var/itemInserted = FALSE
+			for (var/obj/item/sub_item in item.contents)
+				var/temp_score_drug = get_I_score_drug(sub_item)
+				if(temp_score_drug == 0)
+					continue
+				gang.add_points(temp_score_drug,user)
+				aggregate_score(temp_score_drug)
+				gang.score_drug += temp_score_drug
+				sub_item.dropped(user)
+				sub_item.set_loc(src)
+			boutput(user, SPAN_ALERT("You add the contents of the pill bottle to the handy drug receptacle."))
+			return itemInserted
 
 
 		user.u_equip(item)

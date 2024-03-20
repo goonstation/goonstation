@@ -79,8 +79,8 @@
 	var/list/potential_hot_zones[0]
 	var/crate_spawn_repeats = 0
 	name = "Gang_Crate_Drops"
-	schedule_interval = GANG_CRATE_INITIAL_DROP
 	setup()
+		schedule_interval = GANG_CRATE_INITIAL_DROP
 		var/list/areas = get_accessible_station_areas()
 		for(var/area in areas)
 			if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked || istype(areas[area], /area/station/turret_protected))
