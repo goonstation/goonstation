@@ -398,6 +398,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 	else if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
+		if (porter.opmode == 2)
+			return
 		if (length(porter.contents) >= porter.capacity) boutput(user, SPAN_ALERT("Your [W] is full!"))
 		else if (src.anchored) boutput(user, SPAN_ALERT("\The [src] is attached!"))
 		else

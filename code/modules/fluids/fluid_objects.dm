@@ -340,6 +340,8 @@ TYPEINFO(/obj/machinery/fluid_canister)
 /obj/machinery/fluid_canister/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
+		if (porter.opmode == 2)
+			return
 		if (length(porter.contents) >= porter.capacity) boutput(user, SPAN_ALERT("Your [W] is full!"))
 		else
 			user.visible_message(SPAN_NOTICE("[user] collects the [src]."), SPAN_NOTICE("You collect the [src]."))
