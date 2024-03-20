@@ -5,6 +5,7 @@ var/list/admin_verbs = list(
 		// LEVEL_BABBY, goat fart, ayn rand's armpit
 		/client/proc/cmd_admin_say,
 		/client/proc/cmd_admin_gib_self,
+		/client/proc/cmd_help,
 		),
 
 
@@ -2585,3 +2586,8 @@ var/list/fun_images = list()
 		new type(T)
 	logTheThing(LOG_ADMIN, src, "Created [length(spawn_matches)] types of: [spawn_path] at ([log_loc(usr)]")
 	boutput(src, "Created [length(spawn_matches)] types.")
+
+/client/proc/cmd_help(var/procpath/cmd as anything in (usr.verbs + usr.client.verbs))
+	set name = "command help"
+	set desc = "gets the desc of a verb, if it has one"
+	boutput(usr, "[cmd.name]: [cmd.desc]")
