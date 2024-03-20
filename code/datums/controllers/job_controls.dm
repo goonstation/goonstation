@@ -52,45 +52,8 @@ var/datum/job_controller/job_controls
 		for (var/datum/job/J in staple_jobs)
 			if (J.limit > 0)
 				J.limit *= 4
+				J.upper_limit = J.limit
 		#endif
-
-
-	proc/job_config()
-		var/dat = "<html><body><title>Job Controller</title>"
-		dat += "<b><u>Job Controls</u></b><HR>"
-		dat += "<b>Command & Security Jobs</b><BR>"
-		for(var/datum/job/command/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		for(var/datum/job/security/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Research Jobs</b><BR>"
-		for(var/datum/job/research/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Engineering Jobs</b><BR>"
-		for(var/datum/job/engineering/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Civilian Jobs</b><BR>"
-		for(var/datum/job/civilian/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Special Jobs</b><BR>"
-		for(var/datum/job/special/JOB in src.special_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		for(var/datum/job/created/JOB in src.special_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a>"
-			dat += " <a href='byond://?src=\ref[src];RemoveJob=\ref[JOB]'>(Remove)</A><BR>"
-		dat += "<BR>"
-		if (src.allow_special_jobs)
-			dat += "<A href='?src=\ref[src];SpecialToggle=1'>Special Jobs Enabled</A><BR>"
-		else
-			dat += "<A href='?src=\ref[src];SpecialToggle=1'>Special Jobs Disabled</A><BR>"
-		dat += "<A href='?src=\ref[src];JobCreator=1'>Create New Job</A>"
-		dat += "</body></html>"
-
-		usr.Browse(dat,"window=jobconfig;size=300x600")
 
 	proc/check_user_changed()//Since this is a 'public' window that everyone can get to, make sure we keep the user contained to their own savefile
 		if (last_client != usr.client)
@@ -189,48 +152,7 @@ var/datum/job_controller/job_controls
 		usr.Browse(dat.Join(),"window=jobcreator;size=500x650")
 
 	Topic(href, href_list[])
-		// JOB CONFIG COMMANDS
 		USR_ADMIN_ONLY
-		if(href_list["AlterCap"])
-			var/list/alljobs = src.staple_jobs | src.special_jobs
-			var/datum/job/JOB = locate(href_list["AlterCap"]) in alljobs
-			var/newcap = input("Choose the new cap.","Job Cap Config", JOB.limit) as null|num
-			if (isnull(newcap))
-				return
-			JOB.limit = newcap
-			message_admins("Admin [key_name(usr)] altered [JOB.name] job cap to [newcap]")
-			logTheThing(LOG_ADMIN, usr, "altered [JOB.name] job cap to [newcap]")
-			logTheThing(LOG_DIARY, usr, "altered [JOB.name] job cap to [newcap]", "admin")
-			src.job_config()
-
-		if(href_list["RemoveJob"])
-			var/list/alljobs = src.staple_jobs | src.special_jobs
-			var/datum/job/JOB = locate(href_list["RemoveJob"]) in alljobs
-			if (!istype(JOB,/datum/job/created/))
-				boutput(usr, SPAN_ALERT("<b>Removing integral jobs is not allowed. Bad for business, y'know.</b>"))
-				return
-			message_admins("Admin [key_name(usr)] removed special job [JOB.name]")
-			logTheThing(LOG_ADMIN, usr, "removed special job [JOB.name]")
-			logTheThing(LOG_DIARY, usr, "removed special job [JOB.name]", "admin")
-			src.special_jobs -= JOB
-			src.job_config()
-
-		if(href_list["SpecialToggle"])
-			src.allow_special_jobs = !src.allow_special_jobs
-			message_admins("Admin [key_name(usr)] toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]")
-			logTheThing(LOG_ADMIN, usr, "toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]")
-			logTheThing(LOG_DIARY, usr, "toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]", "admin")
-			src.job_config()
-
-		if(href_list["JobCreator"])
-			savefile_fix(usr.client)
-			src.job_creator()
-
-		if(href_list["Edit"])
-			src.job_creator = locate(href_list["Edit"])
-			savefile_fix(usr.client)
-			src.job_creator()
-
 		// JOB CREATOR COMMANDS
 
 		// I tweaked this section a little so you can actual search for certain items.
@@ -906,6 +828,9 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["CreateJob"])
+			if (!length(src.job_creator.name))
+				alert("You must give your job a name.")
+				return
 			var/datum/job/match_check
 			try
 				match_check = find_job_in_controller_by_string(src.job_creator.name)
@@ -990,7 +915,8 @@ var/datum/job_controller/job_controls
 				alert(usr, "Could not find a savefile with that ckey!.")
 			src.job_creator()
 
-/proc/find_job_in_controller_by_string(var/string, var/staple_only = 0)
+///Soft supresses crash on failing to find a job
+/proc/find_job_in_controller_by_string(var/string, var/staple_only = 0, var/soft = FALSE, var/case_sensitive = TRUE)
 	RETURN_TYPE(/datum/job)
 	if (!string || !istext(string))
 		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
@@ -1007,21 +933,22 @@ var/datum/job_controller/job_controls
 		return null
 	var/list/results = list()
 	for (var/datum/job/J in job_controls.staple_jobs)
-		if (J.name == string || (string in J.alias_names))
+		if (J.match_to_string(string, case_sensitive))
 			results += J
 	if (!staple_only)
 		for (var/datum/job/J in job_controls.special_jobs)
-			if (J.name == string || (string in J.alias_names))
+			if (J.match_to_string(string, case_sensitive))
 				results += J
 		for (var/datum/job/J in job_controls.hidden_jobs)
-			if (J.name == string || (string in J.alias_names))
+			if (J.match_to_string(string, case_sensitive))
 				results += J
 	if(length(results) == 1)
 		return results[1]
 	else if(length(results) > 1)
 		stack_trace("Multiple jobs share the name '[string]'!")
 		return results[1]
-	CRASH("No job found with name '[string]'!")
+	if (!soft)
+		CRASH("No job found with name '[string]'!")
 
 /proc/find_job_in_controller_by_path(var/path)
 	if (!path || !ispath(path) || !istype(path,/datum/job/))

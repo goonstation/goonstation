@@ -25157,6 +25157,9 @@
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "hFf" = (
@@ -33493,6 +33496,9 @@
 /obj/item/wrestlingbell,
 /obj/item/device/microphone,
 /obj/machinery/light/small/floor,
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "mTA" = (
@@ -35406,6 +35412,7 @@
 	pixel_x = -28;
 	pixel_y = 2
 	},
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "obS" = (
@@ -40191,6 +40198,12 @@
 /obj/storage/cart,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
+"qRg" = (
+/obj/decal/stage_edge{
+	dir = 9
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "qRG" = (
 /obj/machinery/disposal/mail/small/autoname/hydroponics/north{
 	pixel_y = 23
@@ -89736,7 +89749,7 @@ hEQ
 pBy
 mTi
 hEQ
-aUn
+qRg
 aUn
 uns
 lum

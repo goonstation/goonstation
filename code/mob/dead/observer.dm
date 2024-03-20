@@ -282,6 +282,10 @@
 			if(confirm == "Yes")
 				respawn_controller.subscribeNewRespawnee(src.ckey)
 				src.mind?.get_player()?.dnr = TRUE
+				if (istype(src.loc, /obj/cryotron))
+					var/datum/job/job = find_job_in_controller_by_string(src.job, soft=TRUE)
+					if (job)
+						job.assigned = max(0, job.assigned - 1)
 				src.ghostize()
 				qdel(src)
 			else

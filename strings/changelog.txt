@@ -1,3 +1,152 @@
+
+(t)thu mar 14 24
+(u)crunchwarp
+(p)18034
+(e)🗺|A-Mapping
+(*)The Clarion ranch has emerged from its chrysalis at last, transformed...!
+(t)wed mar 13 24
+(u)DecidedlyUnethical, MylieDaniels
+(p)18170
+(e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
+(+)Added some cooling racks to the kitchen. Find them waiting in the FoodTech!
+(u)NibChocolateeny
+(p)18193
+(e)🆕💅🌱|C-Feature, C-QoL, A-Hydroponics
+(+)Coconuts can now be opened with saw-like tools.
+(t)tue mar 12 24
+(u)mloccy
+(p)18138
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Adding jeans reagent.
+(u)LeahTheTech
+(p)18096
+(e)⚖🐣|C-Balance, A-Respawning
+(*)Security officer and assistant job slots are now reduced at lower populations.
+(u)LeahTheTech
+(p)18145
+(e)⚖🐣|C-Balance, A-Respawning
+(+)Cryoing as a non-unique job will now immediately free up the slot.
+(t)fri mar 08 24
+(u)LeahTheTech
+(*)Ocean tiles will no longer leak fluid if covered by a forcefield, and forcefields will now correctly update the tiles next to them when they shut down.
+(u)CalliopeSoups
+(p)18103
+(e)🗺💅|A-Mapping, C-QoL
+(+)Cog1 hydroponics has had a couple QoL edits.
+(t)thu mar 07 24
+(u)MeggalBozale
+(p)17813
+(e)🆕💨🔬|C-Feature, A-Atmospherics, A-Science
+(*)Radioactive material at sufficient temperature will now decay some plasma into fallout gas.
+(t)wed mar 06 24
+(u)Cindertroy
+(p)18112
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Added a bone pipeshot, crafted with 2 "bits of bone"
+(u)mintyphresh, Geonightman
+(p)18104
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Pride jumpsuits can be cut up into flags.
+(u)Vincent983 + Ikea
+(p)18083
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(*)Borgs can now get their hands on a magnetic traction upgrade which has the same effect as magboots
+(u)LeahTheTech
+(*)Blob victories now cause the blob to automatically spread uncontrollably. I'm at least 70% sure this won't crash the server.
+(u)Knipje
+(p)18120
+(e)🆕💅💡|C-Feature, C-QoL, A-Station-Systems
+(+)Current PTL output can now be read through MechComp.
+(t)mon mar 04 24
+(u)ithebinman
+(p)18087
+(e)|
+(*)Removed mugwort from the bathsalts chemistry recipe
+(+)Added ghost chili juice to the bathsalts chemistry recipe
+(u)LeahTheTech
+(p)18091
+(e)⚖🐣|C-Balance, A-Respawning
+(*)NTSCs now take up a security officer slot.
+(t)sun mar 03 24
+(u)LeahTheTech
+(+)The botanical mister can now be emptied with click-drag.
+(u)Sovexe
+(p)18092
+(e)🚗|A-Vehicles
+(+)The brake is now engaged by default in pods and subs
+(t)fri mar 01 24
+(u)LeahTheTech
+(+)The general alert button safety glass can now be repaired with glass sheets.
+(+)Cyborgs can now use the fake law commands too.
+(t)thu feb 29 24
+(u)LeahTheTech
+(p)18064
+(e)🆕🐣|C-Feature, A-Respawning
+(*)Added a new program to communications consoles: RoleControl. Requires ID computer access and allows you to set a priority role to be highlighted on the latejoin menu.
+(t)wed feb 28 24
+(u)mloccy
+(p)17907
+(e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
+(*)Added an LED on the kitchen mixer to indicate if it's powered on / off or mixing.
+(u)Elettra
+(p)17947
+(e)📄🍝|A-UI, A-Catering
+(+)New UI for the Ice Cream machine using TGUI.
+(u)Mr. Moriarty & TealSeer
+(p)18044
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Power and data terminals now have modern, visually distinct sprites.
+(u)LeahTheTech
+(+)Newspapers now correctly hide your face when unfurled.
+(t)tue feb 27 24
+(u)Lord_Earthfire
+(p)17938
+(e)⚖🌱|C-Balance, A-Hydroponics
+(*)Chemicals produced by plants show diminishing returns with increasing potency. See the minor logs for more information.
+(+)Diminishing returns for botany scaling start at 50 potency, with 80% effectivity at 100 potency.
+(u)Lord_Earthfire
+(p)17937
+(e)🪲📦🌱|C-Bug, A-Game-Objects, A-Hydroponics
+(+)Sunflowers now transfers up to 50% of their chems unto their sunflower seeds
+(t)sun feb 25 24
+(u)tanker4390
+(*)Resprited THE MONSTER and MacGuffin burgers.
+(u)LeahTheTech
+(+)The appendicitis random event now only affects crew that have medical records. No more NT records indicating salvager organ health.
+(p)18022
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Vampiric thralls no longer have zombie arms.
+(*)Vampiric thralls now rapidly lose blood and die if they stray too far from their vampire master.
+(+)Vampiric thrall passive blood drain halved.
+(u)GuvGuvington
+(p)17932
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Updated the rubber hammer sprite.
+(u)Lord_Earthfire
+(p)17928
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Fishes within aquatic research pools have begun to fear explosions and actively jump out of their pool when exposed to them.
+(u)MeggalBozale
+(p)17922
+(e)💅📄🔬|C-QoL, A-UI, A-Science
+(*)Pump Control Computers now use TGUI, and can set the specific pressure of pumps they control. Give it a try!
+(t)sat feb 24 24
+(u)LeahTheTech
+(+)Space HVACs have had some internal mathy parts hit with a wrench and should have a bit more oomph now.
+(u)Cherman0
+(p)17872
+(e)🆕⚖🌠|C-Feature, C-Balance, A-Events
+(+)Using the singularity buster to destroy a singularity now causes a white hole to spawn.
+(t)fri feb 23 24
+(u)IPingu
+(p)17963
+(e)🔄📄🧛|C-Rework, A-UI, A-Gamemodes
+(+)Converts wizard spellbook interface to TGUI
+(t)thu feb 22 24
+(u)Tyrant
+(p)17977
+(e)🔎📦⚙💡|C-Code-Quality, A-Game-Objects, A-Internal, A-Station-Systems
+(+)Massive backend reshuffling of the airlock code has taken place. report any bugs with door bolting/opening/closing.
 (t)mon feb 19 24
 (u)LeahTheTech
 (+)Shrapnel created by reactor meltdowns is now a bit more destructive.

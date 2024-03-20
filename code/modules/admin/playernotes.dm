@@ -16,8 +16,10 @@
 		var/datum/apiRoute/players/notes/get/getPlayerNotes = new
 		getPlayerNotes.queryParams = list(
 			"filters" = list(
-				"ckey" = player
-			)
+				"ckey" = player,
+				"exact" = TRUE
+			),
+			"per_page" = 100
 		)
 		playerNotes = apiHandler.queryAPI(getPlayerNotes)
 	catch (var/exception/e)
@@ -62,7 +64,6 @@
 		for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 			var/list/row_classes = list()
 			var/noteReason = playerNote.note
-
 			if (playerNote.game_admin.ckey == "bot")
 				row_classes += "auto"
 
@@ -71,10 +72,16 @@
 				row_classes += "ban"
 				noteReason = R.Replace(noteReason, "<b>BANNED</b> from <b>$1</b> by <b>$2</b> &mdash; $4<br><blockquote>$3</blockquote>")
 
+			var/id = playerNote.server_id
+			if(!id && length(playerNote.legacy_data))
+				var/lData = json_decode(playerNote.legacy_data)
+				if(islist(lData) && lData["oldserver"])
+					id = lData["oldserver"]
+
 			var/classes = row_classes.Join(" ")
 			dat += {"
 			<tr class="[classes]">
-				<th>[playerNote.server_id]</th>
+				<th>[id]</th>
 				<th>[playerNote.created_at]</th>
 				<th style='width: 0; white-space: pre;'>#[playerNote.id] <a href="?src=\ref[src];action=notes2;target=[player];type=del;id=[playerNote.id]" style="background: red; color: white; display: inline-block; text-align: center; padding: 0.1em 0.25em; border-radius: 4px; text-decoration: none;">&times;</a></th>
 			</tr>
