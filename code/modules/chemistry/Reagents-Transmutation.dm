@@ -1,7 +1,5 @@
 #define MIN_REAGENT_FOR_CONVERSION 5
-datum
-	reagent
-		transmutation
+/datum/reagent/transmutation
 			var/material_name = "steel"
 
 			reaction_turf(var/turf/T, var/volume)
@@ -24,7 +22,7 @@ datum
 
 				O.setMaterial(getMaterial(src.material_name))
 
-			custom
+/datum/reagent/transmutation/custom
 				name = "transmutium"
 				id = "custom_transmutation"
 				on_add()
@@ -41,9 +39,9 @@ datum
 					fluid_b = colorList[3]
 
 
-			/// Jeans reagent turns turfs and objects into jeans
-			/// and on touch on humans will convert their clothes into jeans material
-			jeans
+/// Jeans reagent turns turfs and objects into jeans
+/// and on touch on humans will convert their clothes into jeans material
+/datum/reagent/transmutation/jeans
 				name = "liquid jeans"
 				id = "jeans"
 				fluid_r = 39
@@ -103,7 +101,8 @@ datum
 						return
 
 					handle_mob_touch(M, volume)
-			carpet
+
+/datum/reagent/transmutation/carpet
 				name = "carpet"
 				id = "carpet"
 				description = "A covering of thick fabric used on floors. This type looks particularly gross."
