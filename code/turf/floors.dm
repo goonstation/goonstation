@@ -1587,8 +1587,31 @@ TYPEINFO(/turf/simulated/floor/stone)
 
 /////////////////////////////////////////
 
+/* Misc Adventure tilesets - Walp */
+
+TYPEINFO(/turf/simulated/floor/honeyblocks)
+	mat_appearances_to_ignore = list("steel","synthrubber")
+
+DEFINE_FLOORS(honeyblocks,
+	name = "crystallized honey";\
+	desc = "Probably not edible.";\
+	icon = 'icons/turf/adventure_walpvrgis.dmi';\
+	icon_state = "honeyblock";\
+	mat_changename = 0;\
+	mat_changedesc = 0;\
+	step_material = "step_plating";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(honeyblocks/border,
+	icon_state = "honeyblock_border")
+
+DEFINE_FLOORS(honeyblocks/corner,
+	icon_state = "honeyblock_corner")
+
+/////////////////////////////////////////
 
 /* Outdoors tilesets - Walp */
+
 TYPEINFO(/turf/simulated/floor/grasslush)
 	mat_appearances_to_ignore = list("steel","synthrubber")
 TYPEINFO(/turf/simulated/floor/grasslush/airless)

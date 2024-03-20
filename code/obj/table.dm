@@ -642,6 +642,13 @@ TYPEINFO_NEW(/obj/table/nanotrasen)
 	icon_state = "endtable-gothic"
 	parts_type = /obj/item/furniture_parts/endtable_gothic
 
+/obj/table/endtable_honey
+	name = "block of solidified honey"
+	desc = "Preferred work surface of Space Bees."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtablehoney"
+	parts_type = /obj/item/furniture_parts/endtable_honey
+
 /obj/table/podium_wood
 	name = "wooden podium"
 	desc = "A wooden podium. Looks official."
