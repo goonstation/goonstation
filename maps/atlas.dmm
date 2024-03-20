@@ -18479,7 +18479,9 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "ofD" = (
-/turf/space,
+/turf/simulated/floor/white/side{
+	dir = 5
+	},
 /area/station/crew_quarters/catering)
 "ogd" = (
 /obj/machinery/door/airlock/pyro/security{
