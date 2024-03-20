@@ -1817,7 +1817,7 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 
 
-		if (istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/currency/spacecash) || istype(W,/obj/item/device/transfer_valve))
+		if (istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/currency/spacecash) || istype(W,/obj/item/device/transfer_valve)|| istype(W,/obj/item/storage/pill_bottle))
 			if (insert_item(W,user))
 				user.visible_message(SPAN_NOTICE("[user] puts [W] into [src]!"))
 			return
