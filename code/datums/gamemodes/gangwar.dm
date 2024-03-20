@@ -344,7 +344,7 @@ proc/broadcast_to_all_gangs(var/message)
 	/// Mask or hat items that are being used by other gangs as part of their gang uniform.
 	var/static/list/headwear_list
 	var/static/list/color_list = list("#88CCEE","#117733","#332288","#DDCC77","#CC6677","#AA4499") //(hopefully) colorblind friendly palette
-	var/static/list/colors_left =  list(1,2,3,4,5,6)
+	var/static/list/colors_left = null
 	/// The radio source for the gang's announcer, who will announce various messages of importance over the gang's frequency.
 	var/datum/generic_radio_source/announcer_source
 	/// The radio headset that the gang's announcer will use.
@@ -382,6 +382,8 @@ proc/broadcast_to_all_gangs(var/message)
 	var/street_cred = 0
 	/// The number of tiles this gang controls.
 	var/tiles_controlled = 0
+	/// Associative list between Gang members -> their points
+	var/gang_points = list()
 
 #ifdef BONUS_POINTS
 	street_cred = 99999
@@ -542,6 +544,10 @@ proc/broadcast_to_all_gangs(var/message)
 
 	New()
 		. = ..()
+		if (colors_left == null)
+			colors_left = new/list(length(color_list))
+			for (var/color = 1 to length(color_list))
+				colors_left[color] = color
 		if (!src.used_tags)
 			src.used_tags = list()
 		if (!src.used_names)
@@ -676,15 +682,19 @@ proc/broadcast_to_all_gangs(var/message)
 		street_cred += amount
 		var/datum/mind/bonusMind = bonusMob?.mind
 		if (leader)
+			if (gang_points[leader] == null)
+				gang_points[leader] = 0
 			if (leader == bonusMind)
-				leader.gang_points += round(amount * 1.25) //give a 25% reward for the one providing
+				gang_points[leader] += round(amount * 1.25) //give a 25% reward for the one providing
 			else
-				leader.gang_points += amount
+				gang_points[leader] += amount
 		for (var/datum/mind/M in members)
+			if (gang_points[M] == null)
+				gang_points[M] = 0
 			if (M == bonusMind)
-				M.gang_points += round(amount * 1.25)
+				gang_points[leader] += round(amount * 1.25)
 			else
-				M.gang_points += amount
+				gang_points[leader] += amount
 
 		if (!showText)
 			return
@@ -1261,7 +1271,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 
 		dat += {"
-		<font size="3">You have [M.gang_points] points to spend! These aren't shared with your gang.</font>
+		<font size="3">You have [src.gang.gang_points[M]] points to spend! These aren't shared with your gang.</font>
 		<table>
 		<tr>
 			<th></th>
@@ -1321,10 +1331,10 @@ proc/broadcast_to_all_gangs(var/message)
 				return
 			var/datum/gang_item/GI = locate(href_list["buy_item"])
 			if (locate(GI) in buyable_items)
-				if (GI.price <= usr.mind.gang_points)
-					usr.mind.gang_points -= GI.price
+				if (GI.price <= src.gang.gang_points[usr.mind])
+					src.gang.gang_points[usr.mind] -= GI.price
 
-					boutput(usr, SPAN_NOTICE("You purchase [GI.name] for [GI.price]. Remaining balance = [usr.mind.gang_points] points."))
+					boutput(usr, SPAN_NOTICE("You purchase [GI.name] for [GI.price]. Remaining balance = [src.gang.gang_points[usr.mind]] points."))
 					if (!GI.on_purchase(src, usr))
 						new GI.item_path(src.loc)
 					gang.items_purchased[GI.item_path]++
@@ -1383,17 +1393,17 @@ proc/broadcast_to_all_gangs(var/message)
 			target.remove_antagonist(ROLE_GANG_LEADER)
 		else
 			target.remove_antagonist(ROLE_GANG_MEMBER)
-		var/mob/living/carbon/human/normal/P = new/mob/living/carbon/human/normal(src.loc)
-		P.initializeBioholder(target.current?.client?.preferences?.gender) //try to preserve gender if we can
+		var/mob/living/carbon/human/normal/H = new/mob/living/carbon/human/normal(src.loc)
+		H.initializeBioholder(target.current?.client?.preferences?.gender) //try to preserve gender if we can
 		SPAWN(0)
-			P.JobEquipSpawned("Gang Respawn")
-			target.transfer_to(P)
+			H.JobEquipSpawned("Gang Respawn")
+			target.transfer_to(H)
 			target.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = src.gang.leader)
 			message_admins("[target.key] respawned as a gang member for [src.gang.gang_name].")
 			log_respawn_event(target, "gang member respawn", src.gang.gang_name)
-			boutput(P, SPAN_NOTICE("<b>You have been respawned as a gang member!</b>"))
-			boutput(P, SPAN_ALERT("<b>You're allied with [src.gang.gang_name]! Work with your leader, [src.gang.leader.current.real_name], to become the baddest gang ever!</b>"))
-			get_gang_gear(P)
+			boutput(H, SPAN_NOTICE("<b>You have been respawned as a gang member!</b>"))
+			boutput(H, SPAN_ALERT("<b>You're allied with [src.gang.gang_name]! Work with your leader, [src.gang.leader.current.real_name], to become the baddest gang ever!</b>"))
+			get_gang_gear(H)
 
 	/// Tries to find a ghost to respawn
 	proc/try_gang_respawn(var/mob/living/carbon/human/user)
@@ -1409,13 +1419,13 @@ proc/broadcast_to_all_gangs(var/message)
 		hunting_for_ghosts = FALSE
 
 		if (length(src.gang.members) >= GANG_MAX_MEMBERS)
-			logTheThing(LOG_ADMIN, null, "Couldn't set up gang member respawn ; gang full. Source: [user]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up gang member respawn for gang [src.name] ; gang full. Source: [user]")
 			boutput(user, "Your gang is full, search for a new candidate cancelled.")
 			return
 
 		if (!islist(candidates) || !length(candidates))
 			message_admins("Couldn't set up gang member respawn for [src.gang.gang_name]; no ghosts responded. Source: [user]")
-			logTheThing(LOG_ADMIN, null, "Couldn't set up gang member respawn ; no ghosts responded. Source: [user]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up gang member respawn for gang [src.name]; no ghosts responded. Source: [user]")
 			boutput(user, "We couldn't find any new recruits. Your street cred is refunded.")
 			gang.street_cred += gang.current_newmember_price
 			return
@@ -1427,7 +1437,7 @@ proc/broadcast_to_all_gangs(var/message)
 			gang.current_newmember_price = round(gang.current_newmember_price*GANG_NEW_MEMBER_COST_MULT/100)*100
 		else
 			message_admins("Couldn't set up gang member respawn for [src.gang.gang_name]; [lucky_dude] had no current mob. Source: [user]")
-			logTheThing(LOG_DEBUG, null, "Couldn't set up gang member respawn ; [lucky_dude] had no current mob. Source: [user]")
+			logTheThing(LOG_DEBUG, null, "Couldn't set up gang member respawn for gang [src.name]; [lucky_dude] had no current mob. Source: [user]")
 
 	/// Attempt to buy a janktank II
 	proc/handle_respawn_syringe(var/mob/living/carbon/human/user)
@@ -1561,7 +1571,7 @@ proc/broadcast_to_all_gangs(var/message)
 			if (stolenCash == 0)
 				return
 			src.stored_cash -= stolenCash
-			var/obj/item/currency/spacecash/cashObj = new/obj/item/currency/spacecash(src.loc,stolenCash)
+			var/obj/item/currency/spacecash/cashObj = new(src.loc,stolenCash)
 			ThrowRandom(cashObj, 1, bonus_throwforce = -10)
 			superlaunder_stacks = min(superlaunder_stacks, round(src.stored_cash/(GANG_LAUNDER_RATE*1.5)))
 			if (!ON_COOLDOWN(src, "damage_warning", 60 SECONDS))
@@ -1717,11 +1727,11 @@ proc/broadcast_to_all_gangs(var/message)
 		var/datum/antagonist/leaderRole = src.gang.leader.get_antagonist(ROLE_GANG_LEADER)
 		var/datum/antagonist/oldRole = user.mind.get_antagonist(ROLE_GANG_MEMBER)
 		oldRole.silent = TRUE // so they dont get a spooky 'you are no longer a gang member' popup!
-		user.mind.remove_antagonist(ROLE_GANG_MEMBER,ANTAGONIST_SOURCE_OTHER,FALSE)
+		user.mind.remove_antagonist(ROLE_GANG_MEMBER,ANTAGONIST_REMOVAL_SOURCE_OVERRIDE,FALSE)
 		leaderRole.transfer_to(user.mind)
 		boutput(user, "You're the leader of your gang now!")
-		logTheThing(LOG_ADMIN, user, "claims the role of leader for their gang.")
-		message_admins("[user.key] has claimed the role of leader for their gang.")
+		logTheThing(LOG_ADMIN, user, "claims the role of leader for [src.gang.gang_name].")
+		message_admins("[user.key] has claimed the role of leader for their gang, [src.gang.gang_name].")
 
 	proc/print_drug_prices(var/mob/living/carbon/human/user)
 		var/multiplier = 3/((untracked_drugs_score/1000)+1)
@@ -1823,13 +1833,17 @@ proc/broadcast_to_all_gangs(var/message)
 			if (DAMAGE_BURN)
 				user.visible_message(SPAN_ALERT("[user] ineffectually hits the [src] with [W]!"))
 			else
-				if (src.stored_cash > 0) //if it isn't obvious hitting an empty locker does nothing
-					attack_particle(user,src)
-					hit_twitch(src)
+				attack_particle(user,src)
+				hit_twitch(src)
+				if (src.stored_cash > 0)
+					take_damage(W.force)
 					if (W.hitsound)
 						playsound(src.loc, W.hitsound, 50, TRUE)
-				take_damage(W.force)
-				user.visible_message(SPAN_ALERT("<b>[user] hits the [src] with [W]!</b>"))
+					user.visible_message(SPAN_ALERT("<b>[user] hits the [src] with [W]!</b>"))
+				else
+					if (W.hitsound)
+						playsound(src.loc, W.hitsound, 20, TRUE)
+					user.visible_message(SPAN_ALERT("<b>[user] hits the [src] with [W], but it's empty!</b>"))
 
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
@@ -2381,10 +2395,10 @@ proc/broadcast_to_all_gangs(var/message)
 	var/active = TRUE
 	/// Deletes all duplicate tags (IE, from the same gang) on this tile
 	proc/delete_same_tags()
-		for(var/obj/decal/gangtag/T in get_turf(src))
-			if(T.owners == src.owners && T != src) qdel(T)
+		for(var/obj/decal/gangtag/tag in get_turf(src))
+			if(tag.owners == src.owners && tag != src) qdel(tag)
 
-	/// Makes this tag insert, so it no longer provides points.
+	/// Makes this tag inert, so it no longer provides points.
 	proc/disable()
 		active = FALSE
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
@@ -2407,16 +2421,16 @@ proc/broadcast_to_all_gangs(var/message)
 		return heat
 
 	proc/apply_score(var/largestHeat)
-		var/mappedHeat
+		var/mappedHeat // the 'heat' value mapped to the scale of 0-5
 		if (heat == 0 || largestHeat == 0)
 			mappedHeat = 0
 		else
 			var/pct = heat/largestHeat
-			var/calculatedHeat = log(10,10*pct)*5
-			if (calculatedHeat < 0)
+			var/calculatedHeat = log(10,10*pct)*5 // the raw value of the heat calc, before rounding
+			if (calculatedHeat <= 0)
 				mappedHeat = 0
 			else
-				mappedHeat = round(max(0,calculatedHeat))+1
+				mappedHeat = round(max(0,calculatedHeat))+1 //round it to create mappedHeat
 
 
 		var/score = 0
@@ -2429,8 +2443,8 @@ proc/broadcast_to_all_gangs(var/message)
 	New()
 		..()
 		START_TRACKING
-		for(var/obj/decal/gangtag/T in get_turf(src))
-			T.layer = SUB_TAG_LAYER
+		for(var/obj/decal/gangtag/tag in get_turf(src))
+			tag.layer = SUB_TAG_LAYER
 		src.layer = TAG_LAYER
 		src.mobs = new/list()
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)

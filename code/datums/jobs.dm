@@ -3063,6 +3063,8 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	slot_card = /obj/item/card/id/civilian
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	announce_on_join = FALSE
+	add_to_manifest = FALSE
 
 	New()
 		..()

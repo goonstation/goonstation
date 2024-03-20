@@ -160,7 +160,7 @@
 		if (!locker)
 			boutput(M, SPAN_ALERT("Your gang doesn't have a locker!"))
 			return TRUE
-		if (M.GetComponent(/datum/component/tracker_hud))
+		if (M.GetComponent(/datum/component/tracker_hud/gang))
 			return TRUE
 		M.AddComponent(/datum/component/tracker_hud/gang, get_turf(locker))
 		SPAWN(3 SECONDS)
@@ -205,51 +205,45 @@
 	targeted = 0
 	can_cast_anytime = 1
 
-	cast()
-		var/mob/M = holder.owner
-		var/area/area = get_area(M)
-
-		if(!istype(area, /area/station))
+	proc/check_valid(mob/M, area/targetArea)
+		if(!istype(targetArea, /area/station))
 			boutput(M, SPAN_ALERT("You can only set your gang's base on the station."))
-			return
+			return FALSE
 
 		if(M.stat)
 			boutput(M, SPAN_ALERT("Not when you're incapacitated."))
-			return
-
-		var/datum/antagonist/gang_leader/antag_role = M.mind.get_antagonist(ROLE_GANG_LEADER)
-		if (!antag_role)
-			return
+			return FALSE
 
 		//stop people setting up a locker they can't place
 		var/turf/T = get_turf(M)
 		if (length(T.controlling_gangs))
 			boutput(M, SPAN_ALERT("You can't place your base in another gang's turf!"))
-			return
+			return FALSE
 		for (var/obj/ganglocker/locker in range(1.5*GANG_TAG_INFLUENCE, T))
 			if(!IN_EUCLIDEAN_RANGE(locker, T, 1.5*GANG_TAG_INFLUENCE)) continue
 			boutput(M, SPAN_ALERT("You can't place your base so close to another gang's locker!"))
+			return FALSE
+
+		if((targetArea.teleport_blocked) || istype(targetArea, /area/supply) || istype(targetArea, /area/shuttle/))
+			boutput(M, SPAN_ALERT("You can't place your base here!"))
+			return FALSE
+		return TRUE
+
+	cast()
+		var/mob/M = holder.owner
+		var/area/area = get_area(M)
+
+		if (!check_valid(M, area))
+			return
+		var/datum/antagonist/gang_leader/antag_role = M.mind.get_antagonist(ROLE_GANG_LEADER)
+		if (!antag_role)
 			return
 
-		if((area.teleport_blocked) || istype(area, /area/supply) || istype(area, /area/shuttle/))
-			boutput(M, SPAN_ALERT("You can't place your base here!"))
-			return
 		antag_role.gang.select_gang_uniform()
 
-		T = get_turf(M)
-		for (var/obj/ganglocker/locker in range(1.5*GANG_TAG_INFLUENCE, T))
-			if(!IN_EUCLIDEAN_RANGE(locker, T, 1.5*GANG_TAG_INFLUENCE)) continue
-			boutput(M, SPAN_ALERT("You can't place your base so close to another gang's locker!"))
+		if (!check_valid(M, area))
 			return
 
-		area = get_area(M)
-
-		if((area.teleport_blocked) || istype(area, /area/supply) || istype(area, /area/shuttle/))
-			boutput(M, SPAN_ALERT("You can't place your base here!"))
-			return
-		if (length(T.controlling_gangs))
-			boutput(M, SPAN_ALERT("You can't place your base in another gang's turf!"))
-			return
 		for(var/datum/mind/member in antag_role.gang.members)
 			boutput(member.current, SPAN_ALERT("Your gang's base has been set up in [area]!"))
 

@@ -16,7 +16,8 @@
 		src.gang = antagrole.gang
 		antagonist_icon = "gang_member_[gang.color_id]"
 		src.gang.members += new_owner
-
+		if (src.gang.gang_points[new_owner] == null)
+			src.gang.gang_points[new_owner] = 0
 		. = ..()
 
 	disposing()
@@ -32,14 +33,14 @@
 			return FALSE
 
 
-		var/datum/abilityHolder/gang/A = src.owner.current.get_ability_holder(/datum/abilityHolder/gang)
-		if (!A)
+		var/datum/abilityHolder/gang/gangHolder = src.owner.current.get_ability_holder(/datum/abilityHolder/gang)
+		if (!gangHolder)
 			src.ability_holder = src.owner.current.add_ability_holder(/datum/abilityHolder/gang)
 		else
-			src.ability_holder = A
+			src.ability_holder = gangHolder
+
 		src.ability_holder.addAbility(/datum/targetable/gang/toggle_overlay)
 		src.ability_holder.addAbility(/datum/targetable/gang/locker_spot)
-
 
 		var/mob/living/carbon/human/H = src.owner.current
 

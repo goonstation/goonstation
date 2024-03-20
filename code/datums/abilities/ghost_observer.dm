@@ -630,7 +630,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		var/togglingOn = FALSE
-		 if (imgroup.subscribed_minds_with_subcount[M.mind] > 0)
+		if (imgroup.subscribed_minds_with_subcount[M.mind] > 0)
 			imgroup.remove_mind(M.mind)
 		else
 			togglingOn = TRUE

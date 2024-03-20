@@ -111,7 +111,6 @@
 			message_admins("All attempts to find a valid location to spawn a weapons crate failed!")
 			return
 		var/obj/storage/crate/gang_crate/guns_and_gear/crate = new(pick(turfList))
-		var/obj/storage/crate/gang_crate/guns_and_gear/crate = new(pick(turfList))
 		broadcast_to_all_gangs("<span style='font-size:24px'> We've dropped off weapons & ammunition at <b>\the [drop_zone.name]!</b> It's anchored in place for 5 minutes, so get fortifying!</span>")
 
 
