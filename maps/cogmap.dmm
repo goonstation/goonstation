@@ -15290,7 +15290,7 @@
 /turf/simulated/wall/false_wall,
 /area/station/chapel/sanctuary)
 "aYU" = (
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;

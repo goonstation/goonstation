@@ -2006,6 +2006,7 @@ var/list/fun_images = list()
 	set name = "Show Loading Hint"
 	set desc = "Show everyone a fun loading screen hint."
 	set waitfor = FALSE
+	ADMIN_ONLY
 
 	if (global.current_state != GAME_STATE_PREGAME)
 		return
