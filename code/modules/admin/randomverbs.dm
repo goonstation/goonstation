@@ -3039,10 +3039,9 @@ var/global/force_radio_maptext = FALSE
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Spawn Custom Transmutation Reagent"
 	ADMIN_ONLY
-	var/containers = list()
-	containers["Small Beaker"] = /obj/item/reagent_containers/glass/beaker
-	containers["Large Beaker"] = /obj/item/reagent_containers/glass/beaker/large
-	containers["Grenade"] = /obj/item/chem_grenade/custom
+	var/containers = list("Small Beaker" = /obj/item/reagent_containers/glass/beaker,
+	"Large Beaker" = /obj/item/reagent_containers/glass/beaker/large,
+	"Grenade" = /obj/item/chem_grenade/custom)
 
 
 	var/matId = tgui_input_list(src, "Select material to transmute to:", "Set Material", material_cache)
