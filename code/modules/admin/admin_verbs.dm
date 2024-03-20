@@ -2588,7 +2588,21 @@ var/list/fun_images = list()
 	logTheThing(LOG_ADMIN, src, "Created [length(spawn_matches)] types of: [spawn_path] at ([log_loc(usr)]")
 	boutput(src, "Created [length(spawn_matches)] types.")
 
-/client/proc/cmd_help(var/procpath/cmd as anything in (usr.verbs + usr.client.verbs))
+/client/proc/cmd_help()
 	set name = "command help"
 	set desc = "gets the desc of a verb, if it has one"
-	boutput(usr, "[cmd.name]: [cmd.desc]")
+
+	ADMIN_ONLY
+	var/list/procpath/L = list()
+	for(var/i in 1 to src.holder.level)
+		for (var/procpath/P as anything in admin_verbs[i])
+			if(P.desc)
+				L[P.name] = P.desc
+	for (var/procpath/P as anything in special_admin_observing_verbs)
+		if(P.desc)
+			L[P.name] = P.desc
+	for (var/procpath/P as anything in special_pa_observing_verbs)
+		if(P.desc)
+			L[P.name] = P.desc
+	var/choice = tgui_input_list(usr, "Select a verb to get the desc of", "command help", L)
+	tgui_alert(usr, "[L[choice]]", "[choice]")
