@@ -9,3 +9,15 @@
 #define DENY_TEMPMIN if(!src.holder || src.holder.tempmin) {boutput(src, SPAN_ADMIN("Only administrators may use this command.")); return}
 #define MENTOR_ONLY if(!src.mentor) {boutput(src, SPAN_ADMIN("Only mentors may use this command.")); return}
 #define USR_ADMIN_ONLY if(usr?.client && !usr.client.holder) {boutput(usr, SPAN_ADMIN("Only administrators may use this command.")); return}
+
+#ifdef SPACEMAN_DMM //spaceman doesn't like ....... syntax, can't think why
+	#define SHOW_VERB_DESC
+#else
+	#define SHOW_VERB_DESC do {\
+		var/procpath/this_proc = .......;\
+		if(usr.client.check_key(KEY_EXAMINE)) {\
+			boutput(usr, this_proc.desc || "No verb desc found");\
+			return\
+		}\
+	} while(FALSE)
+#endif
