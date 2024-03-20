@@ -1659,12 +1659,14 @@ proc/broadcast_to_all_gangs(var/message)
 				var/temp_score_drug = get_I_score_drug(sub_item)
 				if(temp_score_drug == 0)
 					continue
+				itemInserted = TRUE
 				gang.add_points(temp_score_drug,user)
 				aggregate_score(temp_score_drug)
 				gang.score_drug += temp_score_drug
 				sub_item.dropped(user)
 				sub_item.set_loc(src)
-			boutput(user, SPAN_ALERT("You add the contents of the pill bottle to the handy drug receptacle."))
+			if (itemInserted)
+				boutput(user, SPAN_ALERT("You add the contents of the pill bottle to the handy drug receptacle."))
 			return FALSE
 
 
