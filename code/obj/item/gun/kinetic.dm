@@ -762,8 +762,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/rifle_3006
 	fire_animation = TRUE
-	recoil_strength = 30
-	recoil_max = 30
+	recoil_strength = 14
+	recoil_max = 14
 	recoil_inaccuracy_max = 20
 
 	New()
@@ -1052,6 +1052,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
+	recoil_strength = 8
+	recoil_stacking_enabled = TRUE
+	recoil_stacking_max_stacks = 8 //make this thing go HARD if you hold it down
+	recoil_stacking_amount = 1
+	camera_recoil_sway_multiplier = 1 //though it could do with less sway
+	icon_recoil_cap = 30
 
 	New()
 		ammo = new default_magazine
@@ -1711,7 +1717,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/a12
 	ammobag_magazines = list(/obj/item/ammo/bullets/a12, /obj/item/ammo/bullets/aex)
 	ammobag_restock_cost = 2
-	recoil_strength = 20
+	recoil_strength = 10
 	recoil_max = 60
 
 	New()
@@ -1768,7 +1774,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/abg
 	var/racked_slide = FALSE
-	recoil_strength = 30
+	recoil_strength = 14
 	recoil_max = 60
 
 
@@ -1851,7 +1857,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	gildable = TRUE
 	default_magazine = /obj/item/ammo/bullets/pipeshot/scrap/five
-	recoil_strength = 20
+	recoil_strength = 10
 	recoil_max = 60
 
 	New()
@@ -1933,7 +1939,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 1
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/flare/single
-	recoil_strength = 20
+	recoil_strength = 10
 	recoil_max = 20
 
 	New()
@@ -1961,8 +1967,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	default_magazine = /obj/item/ammo/bullets/a12
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
-	recoil_strength = 30
-	recoil_max = 30
+	recoil_strength = 14
+	recoil_max = 14
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/a12)
@@ -2436,7 +2442,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/meowitzer
-	recoil_strength = 25
+	recoil_strength = 17
 
 	New()
 		ammo = new default_magazine
@@ -2601,7 +2607,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/buckshot_burst
 	fire_animation = TRUE
 	has_empty_state = TRUE
-	recoil_strength = 20
+	recoil_strength = 10
 	recoil_max = 60
 
 	New()
@@ -2803,8 +2809,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	auto_eject = 1
 	fire_animation = TRUE
 
-	recoil_strength = 50
-	recoil_max = 50 //seriously how are you going to fire this more than once
+	recoil_strength = 20
+	recoil_max = 25 //seriously how are you going to fire this more than once
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
@@ -3032,7 +3038,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	add_residue = TRUE
 	gildable = TRUE
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
-	recoil_strength = 20
+	recoil_strength = 10
 	recoil_max = 60
 	default_magazine = /obj/item/ammo/bullets/abg/two
 	var/broke_open = FALSE
