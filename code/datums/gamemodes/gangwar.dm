@@ -1141,15 +1141,21 @@ proc/broadcast_to_all_gangs(var/message)
 
 		S.in_use = FALSE
 		target_area.being_captured = FALSE
+		var/sprayOver = FALSE
 		for (var/obj/decal/gangtag/otherTag in range(1,target_turf))
 			otherTag.owners.unclaim_tiles(target_turf,GANG_TAG_INFLUENCE, GANG_TAG_SIGHT_RANGE)
 			otherTag.disable()
+			sprayOver = TRUE
 
 		src.gang.make_tag(target_turf)
 		S.empty = TRUE
 		S.icon_state = "spraycan_crushed"
 		var/mob/M = owner
 		gang.add_points(round(100), M, showText = TRUE)
+		if(sprayOver)
+			logTheThing(LOG_GAMEMODE, owner, "[owner] has successfully tagged the [target_area], spraying over another tag.")
+		else
+			logTheThing(LOG_GAMEMODE, owner, "[owner] has successfully tagged the [target_area]")
 		boutput(M, SPAN_NOTICE("You have claimed this area for your gang and gained bonus points!"))
 
 /obj/ganglocker
