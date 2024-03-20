@@ -900,19 +900,19 @@ proc/broadcast_to_all_gangs(var/message)
 			target.last_use = 0
 
 			message += " we left some goods in a bush [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]."
-			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [gang.gang_name], inside a shrub: [target] at [target.x],[target.y]")
+			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a shrub: [target] at [target.x],[target.y]")
 
 		else if(length(crateList) && prob(80))
 			var/obj/storage/target = pick(crateList)
 			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
 			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
-			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [gang.gang_name], inside a crate: [target] at [target.x],[target.y]")
+			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a crate: [target] at [target.x],[target.y]")
 
 		else if(length(disposalList) && prob(85))
 			var/obj/machinery/disposal/target = pick(disposalList)
 			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
 			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
-			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [gang.gang_name], inside a chute: [target] at [target.x],[target.y]")
+			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a chute: [target] at [target.x],[target.y]")
 		else if(length(tableList) && prob(65))
 			var/turf/simulated/floor/target = pick(tableList)
 			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
@@ -927,21 +927,21 @@ proc/broadcast_to_all_gangs(var/message)
 			loot.AddComponent(/datum/component/reset_transform_on_pickup)
 
 			message += " we hid a bag in \the [loot_zone], under a table. "
-			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [gang.gang_name], under a table: [target] at [target.x],[target.y]")
+			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [src.gang_name], under a table: [target] at [target.x],[target.y]")
 		else if(length(turfList))
 			var/turf/simulated/floor/target = pick(turfList)
 			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
 			loot.hide(target.intact)
 			message += " we had to hide a bag in \the [loot_zone], under the floor tiles. "
-			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [gang.gang_name], under the floor at [loot.x],[loot.y]")
+			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [src.gang_name], under the floor at [loot.x],[loot.y]")
 		else
 			var/turf/simulated/floor/target = pick(uncoveredTurfList)
 			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
 			loot.hide(target.intact)
 			message += " we had to hide a bag in \the [loot_zone]. "
-			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [gang.gang_name], on the floor at [loot.x],[loot.y].")
+			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [src.gang_name], on the floor at [loot.x],[loot.y].")
 
 		message += " there are folks aboard who will probably come looking. "
 
@@ -1651,7 +1651,7 @@ proc/broadcast_to_all_gangs(var/message)
 			if (istype(item, /obj/item/reagent_containers/glass))
 				item.reagents.clear_reagents()
 				boutput(user, SPAN_ALERT("You pour the contents of the beaker into the handy drug receptacle."))
-				return TRUE
+				return FALSE
 
 		else if (istype(item, /obj/item/storage/pill_bottle))
 			var/itemInserted = FALSE
@@ -1665,7 +1665,7 @@ proc/broadcast_to_all_gangs(var/message)
 				sub_item.dropped(user)
 				sub_item.set_loc(src)
 			boutput(user, SPAN_ALERT("You add the contents of the pill bottle to the handy drug receptacle."))
-			return itemInserted
+			return FALSE
 
 
 		user.u_equip(item)
