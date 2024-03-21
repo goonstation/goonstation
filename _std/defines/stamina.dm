@@ -60,6 +60,8 @@
 #define SUSTAINED_RUN_GRACE 0.5 SECONDS
 /// how many tiles to start sustained run
 #define SUSTAINED_RUN_REQ 8
+/// how much additional stamina damage on crit
+#define STAMINA_CRIT_DAMAGE 40
 
 //This is a bad solution. Optimally this should scale.
 /// Minimum weightclass (w_class) of an item that allows for knock-outs and critical hits.
