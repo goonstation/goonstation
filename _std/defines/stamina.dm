@@ -30,12 +30,6 @@
 #define STAMINA_FLIP_COST 25
 /// Base chance of landing a critical hit to stamina.
 #define STAMINA_CRIT_CHANCE 25
-/// Divide stamina by how much on a crit
-#define STAMINA_CRIT_DIVISOR 2
-/// Chance to block an attack in disarm mode. Settings this to 0 effectively disables the blocking system.
-#define STAMINA_BLOCK_CHANCE 40
-/// Chance to block grabs.
-#define STAMINA_GRAB_BLOCK_CHANCE 85
 /// Chance to resist out of passive grabs.
 #define STAMINA_P_GRAB_RESIST_CHANCE 100
 /// Chance to resist out of a strong grab (i.e. werewolves)
