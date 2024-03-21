@@ -24362,6 +24362,10 @@
 /obj/machinery/computer/supplycomp,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"lxR" = (
+/obj/machinery/vending/chapel,
+/turf/simulated/floor/black,
+/area/station/chapel/office)
 "lxY" = (
 /obj/lattice{
 	dir = 1;
@@ -82383,7 +82387,7 @@ aDW
 aDW
 aDW
 aDW
-aET
+lxR
 aKI
 aLG
 aMZ
