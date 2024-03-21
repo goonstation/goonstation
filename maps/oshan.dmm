@@ -4102,7 +4102,7 @@
 	},
 /area/station/crew_quarters/quartersA)
 "anF" = (
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /obj/item/storage/toolbox/artistic,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -4892,6 +4892,10 @@
 /obj/item/reagent_containers/syringe,
 /obj/machinery/light/incandescent/cool,
 /obj/item/storage/firstaid/regular,
+/obj/item/chem_grenade/pepper{
+	pixel_x = 11;
+	pixel_y = 3
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aqm" = (

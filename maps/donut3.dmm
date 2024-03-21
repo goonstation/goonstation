@@ -2499,7 +2499,7 @@
 	},
 /area/station/hallway/primary/east)
 "aHe" = (
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
