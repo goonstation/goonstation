@@ -964,12 +964,12 @@ proc/broadcast_to_all_gangs(var/message)
 
 	/// Checks a tile has no nearby claims from other tags
 	proc/check_tile_unclaimed(turf/target, mob/user)
-		for (var/obj/decal/gangtag/tag in range(GANG_TAG_SIGHT_RANGE,target))
+		for_by_tcl(tag, /obj/decal/gangtag)
 			if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_SIGHT_RANGE)) continue
 			if (tag.owners == user.get_gang() && tag.active)
 				boutput(user, SPAN_ALERT("This is too close to an existing tag!"))
 				return
-		for (var/obj/ganglocker/locker in range(GANG_TAG_SIGHT_RANGE_LOCKER,target))
+		for_by_tcl(locker, /obj/ganglocker)
 			if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_SIGHT_RANGE_LOCKER)) continue
 			if (locker.gang == user.get_gang())
 				boutput(user, SPAN_ALERT("This is too close to your locker!"))
@@ -998,7 +998,7 @@ proc/broadcast_to_all_gangs(var/message)
 				return
 		else
 			//we're tagging, check it's in our territory and not someone else's territory
-			for (var/obj/decal/gangtag/tag in range(GANG_TAG_INFLUENCE,target))
+			for_by_tcl(tag, /obj/decal/gangtag)
 				if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_INFLUENCE)) continue
 				if (tag.owners == user.get_gang())
 					validLocation = TRUE
@@ -1014,7 +1014,7 @@ proc/broadcast_to_all_gangs(var/message)
 						var/datum/component/tracker_hud/gang/component = user.GetComponent(/datum/component/tracker_hud/gang)
 						component.RemoveComponent()
 					return
-			for (var/obj/ganglocker/locker in range(GANG_TAG_INFLUENCE_LOCKER,target))
+			for_by_tcl(locker, /obj/ganglocker)
 				if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE_LOCKER)) continue
 				if (locker.gang == user.get_gang())
 					validLocation = TRUE
@@ -2338,12 +2338,12 @@ proc/broadcast_to_all_gangs(var/message)
 	name = "Omnizine Injector"
 	desc = "A single, convenient dose of omnizine."
 	class2 = "Healing"
-	price = 2400
+	price = 1800
 	item_path = /obj/item/reagent_containers/emergency_injector/omnizine
 
 /datum/gang_item/consumable/quickhack
-	name = "Doorjack"
-	desc = "A highly illegal tool able to fake up to 5 AI 'open' signals to unbolted doors."
+	name = "Quickhack"
+	desc = "An illegal, home-made tool able to fake up to 5 AI 'open' signals to unbolted doors."
 	class2 = "Tools"
 	price = 1000
 	item_path = /obj/item/tool/quickhack
