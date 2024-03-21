@@ -3580,7 +3580,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/crematorium)
 "alC" = (
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -24864,6 +24864,10 @@
 /obj/table/reinforced/auto,
 /obj/item/storage/box/revimp_kit{
 	pixel_x = -3
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 11;
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "red2"
