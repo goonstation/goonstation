@@ -2060,19 +2060,20 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	contraband = 7
 	ammo_cats = list(AMMO_FOUR_BORE)
 	spread_angle = 2
-	max_ammo_capacity = 1
-	default_magazine = /obj/item/ammo/bullets/four_bore/stun/single
+	shoot_delay = 1 SECOND
+	max_ammo_capacity = 4
+	default_magazine = /obj/item/ammo/bullets/four_bore/stun
 	fire_animation = FALSE
 
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/four_bore_stunners)
-		AddComponent(/datum/component/holdertargeting/sniper_scope, 12, 1600, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
+		AddComponent(/datum/component/holdertargeting/sniper_scope, 12, 512, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
 		..()
 
 	setupProperties()
 		..()
-		setProperty("carried_movespeed", 0.9)
+		setProperty("carried_movespeed", 0.6)
 
 //1.57
 /obj/item/gun/kinetic/riot40mm

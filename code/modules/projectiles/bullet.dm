@@ -1110,10 +1110,10 @@ toxic - poisons
 	sname = "terminate"
 	icon_state = "20mm"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
-	damage = 85
+	damage = 95
 	dissipation_rate = 8
-	dissipation_delay = 5
-	armor_ignored = 0.5
+	dissipation_delay = 8
+	armor_ignored = 0.4
 	cost = 1
 	projectile_speed = 72
 	implanted = null
@@ -1174,7 +1174,7 @@ toxic - poisons
 	damage = 15
 	stun = 45
 	dissipation_rate = 6
-	dissipation_delay = 7
+	dissipation_delay = 10
 	cost = 1
 	projectile_speed = 54
 	implanted = null
