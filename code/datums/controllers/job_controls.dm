@@ -55,44 +55,6 @@ var/datum/job_controller/job_controls
 				J.upper_limit = J.limit
 		#endif
 
-
-	proc/job_config()
-		var/dat = "<html><body><title>Job Controller</title>"
-		dat += "<b><u>Job Controls</u></b><HR>"
-		dat += "<b>Command & Security Jobs</b><BR>"
-		for(var/datum/job/command/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		for(var/datum/job/security/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Research Jobs</b><BR>"
-		for(var/datum/job/research/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Engineering Jobs</b><BR>"
-		for(var/datum/job/engineering/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Civilian Jobs</b><BR>"
-		for(var/datum/job/civilian/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Special Jobs</b><BR>"
-		for(var/datum/job/special/JOB in src.special_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		for(var/datum/job/created/JOB in src.special_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [JOB.assigned]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a>"
-			dat += " <a href='byond://?src=\ref[src];RemoveJob=\ref[JOB]'>(Remove)</A><BR>"
-		dat += "<BR>"
-		if (src.allow_special_jobs)
-			dat += "<A href='?src=\ref[src];SpecialToggle=1'>Special Jobs Enabled</A><BR>"
-		else
-			dat += "<A href='?src=\ref[src];SpecialToggle=1'>Special Jobs Disabled</A><BR>"
-		dat += "<A href='?src=\ref[src];JobCreator=1'>Create New Job</A>"
-		dat += "</body></html>"
-
-		usr.Browse(dat,"window=jobconfig;size=300x600")
-
 	proc/check_user_changed()//Since this is a 'public' window that everyone can get to, make sure we keep the user contained to their own savefile
 		if (last_client != usr.client)
 			src.savefile_unlock(usr)
@@ -190,49 +152,7 @@ var/datum/job_controller/job_controls
 		usr.Browse(dat.Join(),"window=jobcreator;size=500x650")
 
 	Topic(href, href_list[])
-		// JOB CONFIG COMMANDS
 		USR_ADMIN_ONLY
-		if(href_list["AlterCap"])
-			var/list/alljobs = src.staple_jobs | src.special_jobs
-			var/datum/job/JOB = locate(href_list["AlterCap"]) in alljobs
-			var/newcap = input("Choose the new cap.","Job Cap Config", JOB.limit) as null|num
-			if (isnull(newcap))
-				return
-			JOB.limit = newcap
-			JOB.admin_set_limit = TRUE
-			message_admins("Admin [key_name(usr)] altered [JOB.name] job cap to [newcap]")
-			logTheThing(LOG_ADMIN, usr, "altered [JOB.name] job cap to [newcap]")
-			logTheThing(LOG_DIARY, usr, "altered [JOB.name] job cap to [newcap]", "admin")
-			src.job_config()
-
-		if(href_list["RemoveJob"])
-			var/list/alljobs = src.staple_jobs | src.special_jobs
-			var/datum/job/JOB = locate(href_list["RemoveJob"]) in alljobs
-			if (!istype(JOB,/datum/job/created/))
-				boutput(usr, SPAN_ALERT("<b>Removing integral jobs is not allowed. Bad for business, y'know.</b>"))
-				return
-			message_admins("Admin [key_name(usr)] removed special job [JOB.name]")
-			logTheThing(LOG_ADMIN, usr, "removed special job [JOB.name]")
-			logTheThing(LOG_DIARY, usr, "removed special job [JOB.name]", "admin")
-			src.special_jobs -= JOB
-			src.job_config()
-
-		if(href_list["SpecialToggle"])
-			src.allow_special_jobs = !src.allow_special_jobs
-			message_admins("Admin [key_name(usr)] toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]")
-			logTheThing(LOG_ADMIN, usr, "toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]")
-			logTheThing(LOG_DIARY, usr, "toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]", "admin")
-			src.job_config()
-
-		if(href_list["JobCreator"])
-			savefile_fix(usr.client)
-			src.job_creator()
-
-		if(href_list["Edit"])
-			src.job_creator = locate(href_list["Edit"])
-			savefile_fix(usr.client)
-			src.job_creator()
-
 		// JOB CREATOR COMMANDS
 
 		// I tweaked this section a little so you can actual search for certain items.
@@ -890,10 +810,7 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["ChangeName"])
-			if (src.job_creator.change_name_on_spawn == 0)
-				src.job_creator.change_name_on_spawn = 1
-			else
-				src.job_creator.change_name_on_spawn = 0
+			src.job_creator.change_name_on_spawn = !src.job_creator.change_name_on_spawn
 			src.job_creator()
 
 		if(href_list["SetSpawnLoc"])
@@ -908,6 +825,9 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["CreateJob"])
+			if (!length(src.job_creator.name))
+				alert("You must give your job a name.")
+				return
 			var/datum/job/match_check
 			try
 				match_check = find_job_in_controller_by_string(src.job_creator.name)
