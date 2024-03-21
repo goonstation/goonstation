@@ -1283,9 +1283,6 @@
 		var/datum/gang/gang
 		var/on_turf = 0
 
-		var/elapsedTime = 0
-		var/const/tickSpacing = 1 SECOND //Time between regen/buff ticks.
-
 		onAdd(optional=null)
 			. = ..()
 			if (ishuman(owner))
@@ -1315,20 +1312,16 @@
 			if(!ishuman(owner))
 				return
 			H = owner
-			elapsedTime += timePassed
-			var/times = (elapsedTime / tickSpacing)
-			if(times >= 1)
-				elapsedTime -= (round(times) * tickSpacing)
-				for(var/i in 1 to times)
-					H.HealDamage("All", 0.2, 0.2, 0)
-					if (GET_DIST(owner,gang.locker) < 4) //give a boost to folks camping round their locker
-						H.HealDamage("All", 0.5, 0.5, 0.5)
-						icon_state = "ganger_heal"
-					else
-						icon_state = "ganger"
+			if(ON_COOLDOWN(H, "ganger_heal", 1 SECOND))
+				H.HealDamage("All", 0.2, 0.2, 0)
+				if (GET_DIST(owner,gang.locker) < 4) //give a boost to folks camping round their locker
+					H.HealDamage("All", 0.5, 0.5, 0.5)
+					icon_state = "ganger_heal"
+				else
+					icon_state = "ganger"
 
-					if (H.bleeding && prob(20))
-						repair_bleeding_damage(H, 5, 1)
+				if (H.bleeding && prob(20))
+					repair_bleeding_damage(H, 5, 1)
 
 
 			var/list/statusList = H.getStatusList()
