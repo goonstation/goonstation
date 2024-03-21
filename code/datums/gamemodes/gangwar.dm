@@ -223,7 +223,7 @@
 
 /datum/game_mode/gang/proc/find_potential_hot_zones()
 	potential_hot_zones = list()
-	var/list/areas = get_accessible_station_areas()
+	var/list/area/areas = get_accessible_station_areas()
 	for(var/area/area in areas)
 		if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked || istype(areas[area], /area/station/turret_protected))
 			continue
