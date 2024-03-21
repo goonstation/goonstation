@@ -88,7 +88,8 @@ var/global/datum/eventRecorder/eventRecorder
 		var/list/data = event.body.ToList()
 		data["type"] = event.eventType
 		data["round_id"] = roundId
-		data["created_at"] = "[time2text(world.realtime, "YYYY-MM-DD")] [time2text(world.timeofday, "hh:mm:ss")]"
+		// data["created_at"] = "[time2text(world.realtime, "YYYY-MM-DD")] [time2text(world.timeofday, "hh:mm:ss")]"
+		data["created_at_unix"] = "[rustg_unix_timestamp()]"
 
 		if (roundId)
 			src.events += list(data)
