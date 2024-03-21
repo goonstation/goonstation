@@ -18709,10 +18709,13 @@
 	},
 /obj/rack,
 /obj/item/gun/implanter,
+<<<<<<< HEAD
 /obj/item/chem_grenade/pepper{
 	pixel_x = -7;
 	pixel_y = -6
 
+=======
+>>>>>>> 09a89b2514 (Puts the grenade back)
 /obj/item/gun/kinetic/riot40mm{
 	pixel_x = -4;
 	pixel_y = 10
@@ -18729,6 +18732,9 @@
 	pixel_x = 8;
 	pixel_y = -7
 	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -7;
+	pixel_y = -6
 /turf/simulated/floor/red,
 /area/station/security/main)
 "pLJ" = (
