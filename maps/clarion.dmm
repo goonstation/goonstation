@@ -4867,7 +4867,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
@@ -20844,6 +20844,10 @@
 	pixel_y = -11
 	},
 /obj/item/storage/toolbox/emergency,
+/obj/item/chem_grenade/pepper{
+	pixel_x = 5;
+	pixel_y = 10
+	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},

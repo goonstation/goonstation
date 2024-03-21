@@ -34402,7 +34402,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "nvT" = (
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /obj/item/device/light/zippo,
 /obj/item/clothing/head/helmet/greek,
 /obj/item/clothing/suit/greek,
@@ -40157,6 +40157,10 @@
 /obj/item/gun/implanter{
 	pixel_x = 7;
 	pixel_y = -7
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -7;
+	pixel_y = -6
 	},
 /turf/simulated/floor,
 /area/station/security/equipment)
