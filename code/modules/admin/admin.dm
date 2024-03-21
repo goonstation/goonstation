@@ -2509,13 +2509,23 @@ var/global/noir = 0
 					// FUN SECRETS CODE
 					if ("randomguns")
 						if (src.level >= LEVEL_PA)
-							if (tgui_alert(usr,"Do you want to give everyone a gun?", "Confirmation", list("Yes", "No")) != "Yes")
-								return
-							for (var/mob/living/L in mobs)
-								new /obj/random_item_spawner/kineticgun/fullrandom(get_turf(L))
-							message_admins("[key_name(usr)] gave everyone a random firearm.")
-							logTheThing(LOG_ADMIN, usr, "gave everyone a random firearm.")
-							logTheThing(LOG_DIARY, usr, "gave everyone a random firearm.", "admin")
+							switch(tgui_alert(usr, "What kind of guns do you want to give everyone?", "Guns2Give", list("Safe-ish Guns", "ANY GUN", "Cancel")))
+								if("Cancel")
+									return
+								if("Safe-ish Guns")
+									message_admins("[key_name(usr)] gave everyone a random safe firearm.")
+									logTheThing(LOG_ADMIN, usr, "gave everyone a random safe firearm.")
+									logTheThing(LOG_DIARY, usr, "gave everyone a random safe firearm.", "admin")
+									for (var/mob/living/L in mobs)
+										new /obj/random_item_spawner/kineticgun/safer/one(get_turf(L))
+								if("ANY GUN")
+									message_admins("[key_name(usr)] gave everyone a completely random firearm.")
+									logTheThing(LOG_ADMIN, usr, "gave everyone a completely random firearm.")
+									logTheThing(LOG_DIARY, usr, "gave everyone a completely random firearm.", "admin")
+									for (var/mob/living/L in mobs)
+										new /obj/random_item_spawner/kineticgun/fullrandom(get_turf(L))
+
+
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
