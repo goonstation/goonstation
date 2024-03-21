@@ -7,7 +7,7 @@
 	var/random_gangs = FALSE
 
 	antag_token_support = TRUE
-	var/list/gangs = list()
+	var/list/datum/gang/gangs = list()
 
 	var/const/setup_min_teams = 2
 	var/const/setup_max_teams = 6
