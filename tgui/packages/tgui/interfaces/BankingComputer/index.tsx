@@ -21,7 +21,7 @@ export const BankingComputer = (_props, context) => {
   return (
     <Window
       width={580}
-      height={680}
+      height={380}
       title={"Banking Records"}>
       <Window.Content scrollable>
         <AuthenticationControl />
