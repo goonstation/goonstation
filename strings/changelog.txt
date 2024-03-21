@@ -1,5 +1,7 @@
 
 (t)thu mar 21 24
+(u)Sord
+(+)Canister bombs priming announcement now also plays an alarm. Scary.
 (u)JORJ949
 (p)18262
 (e)🆕🗺|C-Feature, A-Mapping
