@@ -17445,6 +17445,10 @@
 	name = "Kitchen"
 	},
 /obj/mapping_helper/access/bar,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "cpW" = (
@@ -18352,8 +18356,8 @@
 	pixel_y = -10;
 	dir = 8
 	},
-/obj/machinery/chem_dispenser/alcohol/bar,
-/turf/simulated/floor/specialroom/bar,
+/obj/machinery/chem_dispenser/chemical,
+/turf/simulated/floor/caution/corner/sw,
 /area/station/crew_quarters/bar)
 "cYv" = (
 /obj/landmark/start/job/chaplain,
@@ -19744,7 +19748,11 @@
 	pixel_y = 1;
 	pixel_x = -8
 	},
-/turf/simulated/floor/carpet/purple/standard/narrow/northsouth,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "egk" = (
 /obj/disposalpipe/segment,
@@ -19775,7 +19783,9 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/chem_dispenser/chemical,
+/obj/submachine/chem_extractor{
+	dir = 8
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "egI" = (
@@ -20018,7 +20028,11 @@
 	dir = 4
 	},
 /obj/table/reinforced/bar/auto,
-/turf/simulated/floor/carpet/purple/standard/narrow/northsouth,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "epv" = (
 /obj/disposalpipe/trunk{
@@ -23692,7 +23706,11 @@
 "hrM" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg,
-/turf/simulated/floor/carpet/purple/standard/narrow/northsouth,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "huq" = (
 /obj/table/round,
@@ -26022,7 +26040,11 @@
 /obj/machinery/glass_recycler/bar{
 	g_amt = 30
 	},
-/turf/simulated/floor/carpet/purple/standard/narrow/northsouth,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "iRX" = (
 /obj/table,
@@ -33286,9 +33308,11 @@
 	pixel_x = -1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/carpet/purple/standard/narrow/east{
-	dir = 1
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
 	},
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "otP" = (
 /obj/machinery/power/apc{
@@ -35388,10 +35412,8 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/submachine/chem_extractor{
-	dir = 8
-	},
-/turf/simulated/floor/specialroom/bar,
+/obj/machinery/chem_dispenser/alcohol/bar,
+/turf/simulated/floor/caution/west,
 /area/station/crew_quarters/bar)
 "qcy" = (
 /obj/machinery/light{
@@ -35877,6 +35899,12 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Bar"
+	},
+/obj/mapping_helper/access/bar,
+/obj/mapping_helper/access/kitchen,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
@@ -41798,9 +41826,11 @@
 	},
 /obj/table/reinforced/bar/auto,
 /obj/machinery/phone,
-/turf/simulated/floor/carpet/purple/standard/narrow/east{
-	dir = 2
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
 	},
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "uJC" = (
 /obj/machinery/light_switch/north{
@@ -42225,6 +42255,9 @@
 	})
 "uWN" = (
 /obj/table/reinforced/auto,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "uXk" = (
@@ -42468,6 +42501,10 @@
 "vjR" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "vjW" = (
@@ -44950,6 +44987,14 @@
 /obj/stool/bar,
 /turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
 /area/station/crew_quarters/bar)
+"xqt" = (
+/obj/table/reinforced/auto,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "xrp" = (
 /obj/machinery/optable{
 	id = "OR2"
@@ -45709,7 +45754,7 @@
 /obj/machinery/chem_heater{
 	dir = 8
 	},
-/turf/simulated/floor/specialroom/bar,
+/turf/simulated/floor/caution/corner/nw,
 /area/station/crew_quarters/bar)
 "xUN" = (
 /obj/disposalpipe/segment/mail{
@@ -80744,7 +80789,7 @@ tHq
 epv
 ayX
 qps
-uWN
+xqt
 vjR
 aAu
 cLa
