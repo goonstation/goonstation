@@ -1236,12 +1236,12 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 	explosives_jackpot
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,	/obj/item/mine/stun,off_x=-10, off_y=-2,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,	/obj/item/mine/stun,off_x=-10, off_y=2,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,	/obj/item/mine/stun,off_x=-2, off_y=-2,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,	/obj/item/mine/stun,off_x=-2, off_y=2,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=2,off_y=2,scale_y=0.8)
-			spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=2,off_y=2,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/mine/blast,off_x=-10, off_y=-2,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/mine/blast,off_x=-10, off_y=2,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/mine/incendiary,off_x=-2, off_y=-2,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/mine/incendiary,off_x=-2, off_y=2,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/chem_grenade/shock,off_x=2,off_y=2,scale_y=0.8)
+			spawn_item(C,I,/obj/item/chem_grenade/incendiary,off_x=2,off_y=2,scale_y=0.8)
 			spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=2,off_y=2,scale_y=0.8)
 			spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=2,off_y=2,scale_y=0.8)
 

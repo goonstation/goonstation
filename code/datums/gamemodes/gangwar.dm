@@ -1200,6 +1200,7 @@ proc/broadcast_to_all_gangs(var/message)
 			new/datum/gang_item/consumable/quickhack,
 			new/datum/gang_item/misc/ratstick,
 			new/datum/gang_item/street/switchblade,
+			new/datum/gang_item/ninja/nunchucks,
 			new/datum/gang_item/ninja/throwing_knife,
 			new/datum/gang_item/ninja/shuriken,
 			new/datum/gang_item/ninja/discount_katana,
@@ -1603,9 +1604,14 @@ proc/broadcast_to_all_gangs(var/message)
 				boutput(user, SPAN_ALERT("<b>You cant stash toy guns in the locker</b>"))
 
 				return
-			// var/obj/item/gun/gun = item
-			gang.score_gun += round(300)
-			gang.add_points(round(300),user, showText = TRUE)
+
+			if(istype(item, /obj/item/gun/kinetic/slamgun))
+				boutput(user, SPAN_ALERT("<b>You cant stash toy guns in the locker</b>"))
+				gang.score_gun += round(100)
+				gang.add_points(round(100),user, showText = TRUE)
+			else
+				gang.score_gun += round(300)
+				gang.add_points(round(300),user, showText = TRUE)
 
 		else if (istype(item, /obj/item/device/transfer_valve))
 			if (!has_sold_ttv) //double points for our saviors
