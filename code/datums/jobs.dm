@@ -3059,8 +3059,9 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 /datum/job/special/gang_respawn
 	name = "Gang Respawn"
 	limit = 0
-	wages = 200
+	wages = 0
 	slot_card = /obj/item/card/id/civilian
+	slot_jump = list(/obj/item/clothing/under/rank/assistant)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	announce_on_join = FALSE
@@ -3072,10 +3073,10 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		return
 
 	special_setup(var/mob/living/carbon/human/M)
+		..()
 		var/obj/item/card/id/C = M.get_slot(SLOT_WEAR_ID)
 		C.assignment = "Staff Assistant"
 		C.name = "[C.registered]'s ID Card ([C.assignment])"
-		..()
 
 
 
