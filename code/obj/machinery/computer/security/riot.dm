@@ -197,6 +197,10 @@
 	if (!user)
 		return
 
+	if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
+		src.unauthorize()
+		return
+
 	var/obj/item/card/id/id_card = get_id_card(W)
 
 	if (!istype(id_card, /obj/item/card/id))
