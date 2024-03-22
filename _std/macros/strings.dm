@@ -4,6 +4,7 @@
 
 #define JOHN_PICK(WHAT) pick_string("johnbill.txt", WHAT)
 #define SPACER_PICK(WHAT) pick_string("spacers.txt", WHAT)
+#define LUNA_PICK(WHAT) pick_string("luna_npc.txt", WHAT)
 
 /// Takes an input string like "A" and turns it into a macro A
 #define TEXT_TO_MACRO(Y) if(#Y) return Y

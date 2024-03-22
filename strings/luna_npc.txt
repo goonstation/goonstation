@@ -1,0 +1,106 @@
+starters@=
+	Did you hear
+	You know
+	Some shmuck suggested
+	I have it on good authority
+	My contact said
+	Apparently
+	I guess
+	Scuttlebutt is
+	I heard
+	According to the boss
+	The train operators say
+	Word around the port is
+
+qualifier@=
+	might
+	could
+	will
+	won't
+	can't
+	wants to
+
+places@=
+	Lunaport
+	Buttes Junction
+	Piedra de Oro
+	Rota Fortuna
+	Gardner Megadome
+	Von Burg University
+	Theophilus
+	Stadus Arena
+	Dreamers' Lake
+	Goodacre
+	Tycho City
+	the Somnus Center
+	the Io Infernos
+	the Europa Jets
+
+
+companies@=
+	NanoTrasen
+	Hogge & Wilde
+	Zvezda
+	GardenGear
+	Thinktronic
+	Xiang-Giesel
+	Hafgan Industries
+	BonkTek
+	DynaCorp
+	Sagittarius Labs
+	Tradecraft Seneca
+	Terra Nivium
+	Decirprevo
+	Aurora Lithographics
+	The Pallas Society
+
+corpoactions@=
+	expand into
+	pull out of
+	partner with
+	refuse to service
+	look for investors in
+	sign a contract with
+	sue
+
+corporeasons@=
+	increase profits
+	advance their interests
+	prove a point
+	maximize their investment
+	make a better deal
+	write it off their taxes
+	show they aren't kidding around
+	put everyone on notice
+	mess with market analysts
+	hedge their bets
+
+
+celebrities@=
+	Josh
+	a martian
+	Baroness Beth Bjørnsnoble
+	Crocodile Louis
+	Bim Zamalam
+	Laszlo Price
+	Bazimuth Brackley
+	Andromeda Celestia
+	Cyborg Gamma-1073
+	Jebediah Wiggins
+	Brick Bronson
+	Isaac Peterson
+	John NanoTrasen
+
+celebactions@=
+	perform
+	tour
+	visit
+
+celebreasons@=
+	it's not safe
+	the weather
+	of the "fans"
+	of contractual obligations
+	of contractual "obligations"
+	it's boring
+	of local security
