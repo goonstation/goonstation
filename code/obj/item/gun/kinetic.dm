@@ -2047,6 +2047,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	name = "\improper Albatross four-bore rifle"
 	desc = "A behemoth of a scoped rifle developed by Cormorant Precision Arms. Intended for suppression or elimination of monstrous targets."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "four_bore"
 	item_state = "four_bore"
 	w_class = W_CLASS_BULKY
@@ -2061,8 +2062,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_FOUR_BORE)
 	spread_angle = 2
 	shoot_delay = 1 SECOND
-	max_ammo_capacity = 4
-	default_magazine = /obj/item/ammo/bullets/four_bore/stun
+	max_ammo_capacity = 2
+	default_magazine = /obj/item/ammo/bullets/four_bore/stun/two
 	fire_animation = FALSE
 
 	New()

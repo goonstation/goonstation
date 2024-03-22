@@ -1106,13 +1106,13 @@ toxic - poisons
 		explosion_new(null, get_turf(hit), 5)
 
 /datum/projectile/bullet/four_bore
-	name = "\"termination\" round"
+	name = "termination round"
 	sname = "terminate"
 	icon_state = "20mm"
-	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	shot_sound = 'sound/weapons/fourboreshot.ogg'
 	damage = 95
 	dissipation_rate = 8
-	dissipation_delay = 8
+	dissipation_delay = 10
 	armor_ignored = 0.4
 	cost = 1
 	projectile_speed = 72
@@ -1123,6 +1123,7 @@ toxic - poisons
 	casing = /obj/item/casing/cannon
 	ricochets = FALSE
 	hit_ground_chance = 50
+	shot_volume = 130
 	shot_sound_extrarange = 1
 
 	on_launch(obj/projectile/proj)
@@ -1158,7 +1159,7 @@ toxic - poisons
 					H.changeStatus("weakened", 3 SECONDS)
 	#endif
 			var/turf/target = get_edge_target_turf(hit, dirflag)
-			M.throw_at(target, max(round(power / 15), 0), 3, throw_type = THROW_GUNIMPACT)
+			M.throw_at(target, max(round(power / 20), 0), 3, throw_type = THROW_GUNIMPACT)
 
 		if(hit && isturf(hit))
 			new /obj/effects/rendersparks (T)
@@ -1167,10 +1168,10 @@ toxic - poisons
 		..()
 
 /datum/projectile/bullet/four_bore_stunners //behavior is distinct enough to not be a child of four_bore lethals
-	name = "\"roundhouse\" round"
+	name = "roundhouse slug"
 	sname = "roundhouse"
 	icon_state = "20mm"
-	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	shot_sound = 'sound/weapons/fourboreshot.ogg'
 	damage = 15
 	stun = 45
 	dissipation_rate = 6
@@ -1204,7 +1205,7 @@ toxic - poisons
 					H.changeStatus("weakened", 3 SECONDS)
 	#endif
 			var/turf/target = get_edge_target_turf(hit, dirflag)
-			M.throw_at(target, max(round(power / 15), 0), 3, throw_type = THROW_GUNIMPACT)
+			M.throw_at(target, max(round(power / 20), 0), 3, throw_type = THROW_GUNIMPACT)
 		..()
 
 //1.57
