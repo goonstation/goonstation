@@ -27,7 +27,7 @@
 /datum/computer/file/terminal_program/email
 	name = "ViewPoint"
 	size = 4
-
+	req_access = list(access_fuck_all)
 	var/tmp/obj/item/peripheral/network/netCard = null
 	var/tmp/server_netid = null
 	var/tmp/potential_server_netid = null
