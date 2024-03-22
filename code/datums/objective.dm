@@ -1212,7 +1212,7 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 	explanation_text = "Hijack the emergency shuttle by ensuring only you and your... body parts remain alive by the time it reaches Centcom."
 	check_completion()
 		var/datum/abilityHolder/changeling/lingholder = owner.current?.get_ability_holder(/datum/abilityHolder/changeling)
-		for (var/mob/M in lingholder.hivemind)
+		for (var/mob/M in lingholder?.hivemind)
 			src.accomplices |= M.mind
 		. = ..()
 
