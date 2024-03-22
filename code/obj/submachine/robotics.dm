@@ -275,11 +275,11 @@
 
 	attack_self(var/mob/user as mob) // Switch our operating mode here
 		switch (src.opmode)
-			if (1)
-				src.opmode = 2
-				user.show_text("Operating mode set to Dropoff / Interact.", "red")
-			if (2)
-				src.opmode = 1
+			if (ATMOSPORTER_MODE_PICKUP)
+				src.opmode = ATMOSPORTER_MODE_INTERACT
+				user.show_text("Operating mode set to Drop / Interact.", "red")
+			if (ATMOSPORTER_MODE_INTERACT)
+				src.opmode = ATMOSPORTER_MODE_PICKUP
 				user.show_text("Operating mode set to Pick-up", "green")
 
 	afterattack(atom/A, mob/user as mob) // I have no idea what I am doing but let's go for it.
