@@ -271,7 +271,7 @@
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "atmosporter"
 	var/capacity = 2
-	var/opmode = 1 // operating mode. 1 will be pickup and 2 will be interact (drop, attack)
+	var/opmode = ATMOSPORTER_MODE_PICKUP //! current operating mode, when clicking on objects
 
 	attack_self(var/mob/user as mob) // Switch our operating mode here
 		switch (src.opmode)
@@ -287,46 +287,45 @@
 		// Time to consider our operating mode.
 		if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0) // If it is too far away do nothing.
 			return
-		if (src.opmode == ATMOSPORTER_MODE_PICKUP) // We are in pickup mode, no reason to do anything.
+		if (src.opmode != ATMOSPORTER_MODE_INTERACT)
 			return
-		else // We are in dropoff or interact mode.
-			if (length(src.contents) == 0) // We have nothing with which to interact/dropoff with.
-				boutput(user, SPAN_ALERT("You have nothing stored!"))
-				return
-			else
-				//Let us determine if we are dealing with a floor/space or an object/machine.
-				if (istype(A, /turf/simulated/floor) || istype(A, /obj/lattice) || istype(A, /turf/space)) // Floor/space it is.
-					if (A.density) // really hoping this just check if a given turf is impassable
-						boutput(user, SPAN_ALERT("Not enough space here!"))
-						return
-					var/selection = tgui_input_list(user, "What do you want to drop?", "Atmospherics Transporter", src.contents) // Let us choose our thing to drop.
-					if(!selection)
-						return
-					if (istype(selection, /obj/machinery/fluid_canister))
-						var/obj/machinery/fluid_canister/S = selection
-						S.set_loc(A)
-						S.contained = 0
-					else if (istype(selection, /obj/machinery/portable_atmospherics))
-						var/obj/machinery/portable_atmospherics/S = selection
-						S.set_loc(A)
-						S.contained = 0
-					else if (istype(selection, /obj/item/tank))
-						var/obj/item/tank/S = selection
-						S.set_loc(A)
-					else return //no sparks for unintended items
-					elecflash(user)
+		if (length(src.contents) == 0) // We have nothing with which to interact/dropoff with.
+			boutput(user, SPAN_ALERT("You have nothing stored!"))
+			return
+		else
+			//Let us determine if we are dealing with a floor/space or an object/machine.
+			if (istype(A, /turf/simulated/floor) || istype(A, /obj/lattice) || istype(A, /turf/space)) // Floor/space it is.
+				if (A.density) // really hoping this just check if a given turf is impassable
+					boutput(user, SPAN_ALERT("Not enough space here!"))
 					return
-				if (istype(A, /obj/machinery/portable_atmospherics) || istype(A, /obj/machinery/power/collector_array)) // It is a portable atmos machine, cannister, or a singulo collector array.
-					var/selection = tgui_input_list(user, "What do you want to use?", "Atmospherics Transporter", src.contents) // Let us choose an item to smack it with.
-					if(!selection)
-						return
-					if (!istype(selection, /obj/item/tank))
-						boutput(user, SPAN_ALERT("Please choose a (small) tank."))
-						return
-						var/obj/item/tank/S = selection
-						A.Attackby(S, user)
-						boutput(user, SPAN_ALERT("You use the [S] on the [A]"))
-						return
+				var/selection = tgui_input_list(user, "What do you want to drop?", "Atmospherics Transporter", src.contents) // Let us choose our thing to drop.
+				if(!selection)
+					return
+				if (istype(selection, /obj/machinery/fluid_canister))
+					var/obj/machinery/fluid_canister/S = selection
+					S.set_loc(A)
+					S.contained = 0
+				else if (istype(selection, /obj/machinery/portable_atmospherics))
+					var/obj/machinery/portable_atmospherics/S = selection
+					S.set_loc(A)
+					S.contained = 0
+				else if (istype(selection, /obj/item/tank))
+					var/obj/item/tank/S = selection
+					S.set_loc(A)
+				else return //no sparks for unintended items
+				elecflash(user)
+				return
+			if (istype(A, /obj/machinery/portable_atmospherics) || istype(A, /obj/machinery/power/collector_array)) // It is a portable atmos machine, cannister, or a singulo collector array.
+				var/selection = tgui_input_list(user, "What do you want to use?", "Atmospherics Transporter", src.contents) // Let us choose an item to smack it with.
+				if(!selection)
+					return
+				if (!istype(selection, /obj/item/tank))
+					boutput(user, SPAN_ALERT("Please choose a (small) tank."))
+					return
+				var/obj/item/tank/active_tank= selection
+				A.Attackby(active_tank, user)
+				boutput(user, SPAN_ALERT("You use the [active_tank] on the [A]"))
+				return
 
 
 /obj/item/lamp_manufacturer
