@@ -1,0 +1,30 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author Glowbold (https://github.com/pgmzeta)
+ * @license MIT
+ */
+
+import { BooleanLike } from "common/react";
+
+export interface ZoldorfPlayerShopData {
+  soul_products: ZoldorfSoulProductData[],
+  credit_products: ZoldorfCreditProductData[],
+  credits: number,
+}
+
+export interface ZoldorfProductData {
+  name: string,
+  stock: number,
+  infinite: BooleanLike,
+  img: string,
+}
+
+export interface ZoldorfSoulProductData extends ZoldorfProductData {
+  soul_percentage: number,
+}
+
+export interface ZoldorfCreditProductData extends ZoldorfProductData {
+  price: number,
+}
+
