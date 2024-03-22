@@ -48,7 +48,7 @@
 
 /obj/item/storage/box/starter // the one you get in your backpack
 	icon_state = "emergbox"
-	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/emergency_oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/emergency_oxygen, /obj/item/rcd)
 	make_my_stuff(onlyMaskAndOxygen)
 		..()
 		if (prob(15) || ticker?.round_elapsed_ticks > 20 MINUTES && !onlyMaskAndOxygen) //aaaaaa
