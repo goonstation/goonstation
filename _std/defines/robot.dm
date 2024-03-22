@@ -13,3 +13,7 @@
 #define ROBOT_MISSING_LEG_ARM_OFFSET -1
 /// Amount a missing arm will speed you up (as long as you have legs)
 #define ROBOT_MISSING_ARM_MOVEMENT_ADJUST -0.1
+
+// Borg atmosphere transporter defines for the operating modes
+#define ATMOSPORTER_MODE_PICKUP 1 // This is for the pickup operating mode, we pick up valid objects
+#define ATMOSPORTER_MODE_INTERACT 2 // This is for the interact and dropoff mode
