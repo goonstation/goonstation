@@ -1142,24 +1142,24 @@ toxic - poisons
 			if(istype(hit, /obj/machinery/door))
 				var/obj/machinery/door/D = hit
 				if(!D.cant_emag)
-					D.take_damage(power * 2.5) //mess up doors a ton
+					D.take_damage(P.power * 2.5) //mess up doors a ton
 
 			else if(istype(hit, /obj/window))
 				var/obj/window/W = hit
-				W.damage_blunt(power * 1.75) //and windows too, but maybe a bit less
+				W.damage_blunt(P.power * 1.75) //and windows too, but maybe a bit less
 
 		if (hit && ismob(hit))
 			var/mob/M = hit
 			if(ishuman(hit))
 				var/mob/living/carbon/human/H = hit
 				#ifdef USE_STAMINA_DISORIENT
-				H.do_disorient(max(power,10), weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
+				H.do_disorient(max(P.power,10), weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
 				#else
 				H.changeStatus("stunned", 4 SECONDS)
 				H.changeStatus("weakened", 3 SECONDS)
 				#endif
 			var/turf/target = get_edge_target_turf(hit, dirflag)
-			M.throw_at(target, max(round(power / 20), 0), 3, throw_type = THROW_GUNIMPACT)
+			M.throw_at(target, max(round(P.power / 20), 0), 3, throw_type = THROW_GUNIMPACT)
 
 		if(hit && isturf(hit))
 			new /obj/effects/rendersparks (T)
@@ -1192,20 +1192,20 @@ toxic - poisons
 	on_hit(atom/hit, dirflag, obj/projectile/P)
 		if(hit && isobj(hit) && istype(hit, /obj/window))
 			var/obj/window/W = hit
-			W.damage_blunt(power / 2.5) //even if it aint metal, its gonna crack a window
+			W.damage_blunt(P.power / 2.5) //even if it aint metal, its gonna crack a window
 
 		if (hit && ismob(hit))
 			var/mob/M = hit
 			if(ishuman(hit))
 				var/mob/living/carbon/human/H = hit
 				#ifdef USE_STAMINA_DISORIENT
-				H.do_disorient(max(power,10), weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
+				H.do_disorient(max(P.power,10), weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
 				#else
 				H.changeStatus("stunned", 4 SECONDS)
 				H.changeStatus("weakened", 3 SECONDS)
 				#endif
 			var/turf/target = get_edge_target_turf(hit, dirflag)
-			M.throw_at(target, max(round(power / 20), 0), 3, throw_type = THROW_GUNIMPACT)
+			M.throw_at(target, max(round(P.power / 20), 0), 3, throw_type = THROW_GUNIMPACT)
 		..()
 
 //1.57
