@@ -672,9 +672,9 @@ proc/broadcast_to_all_gangs(var/message)
 			if (gang_points[M] == null)
 				gang_points[M] = 0
 			if (M == bonusMind)
-				gang_points[leader] += round(amount * 1.25)
+				gang_points[M] += round(amount * 1.25)
 			else
-				gang_points[leader] += amount
+				gang_points[M] += amount
 
 		if (!showText)
 			return
