@@ -5,6 +5,7 @@ var/list/admin_verbs = list(
 		// LEVEL_BABBY, goat fart, ayn rand's armpit
 		/client/proc/cmd_admin_say,
 		/client/proc/cmd_admin_gib_self,
+		/client/proc/cmd_help,
 		),
 
 
@@ -2005,6 +2006,7 @@ var/list/fun_images = list()
 	set name = "Show Loading Hint"
 	set desc = "Show everyone a fun loading screen hint."
 	set waitfor = FALSE
+	ADMIN_ONLY
 
 	if (global.current_state != GAME_STATE_PREGAME)
 		return
@@ -2585,3 +2587,22 @@ var/list/fun_images = list()
 		new type(T)
 	logTheThing(LOG_ADMIN, src, "Created [length(spawn_matches)] types of: [spawn_path] at ([log_loc(usr)]")
 	boutput(src, "Created [length(spawn_matches)] types.")
+
+/client/proc/cmd_help()
+	set name = "command help"
+	set desc = "gets the desc of a verb, if it has one"
+
+	ADMIN_ONLY
+	var/list/procpath/L = list()
+	for(var/i in 1 to src.holder.level)
+		for (var/procpath/P as anything in admin_verbs[i])
+			if(P.desc)
+				L[P.name] = P.desc
+	for (var/procpath/P as anything in special_admin_observing_verbs)
+		if(P.desc)
+			L[P.name] = P.desc
+	for (var/procpath/P as anything in special_pa_observing_verbs)
+		if(P.desc)
+			L[P.name] = P.desc
+	var/choice = tgui_input_list(usr, "Select a verb to get the desc of", "command help", L)
+	tgui_alert(usr, "[L[choice]]", "[choice]")

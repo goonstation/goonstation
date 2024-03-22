@@ -4825,7 +4825,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{

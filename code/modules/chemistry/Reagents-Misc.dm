@@ -806,7 +806,7 @@ datum
 			reaction_turf(var/turf/target, var/volume)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
-					simulated_target.wetify(2, 60, 60 SECONDS)
+					simulated_target.wetify(2, 60 SECONDS)
 
 		superlube
 			name = "organic superlubricant"
