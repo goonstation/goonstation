@@ -1487,52 +1487,8 @@
 	set category = "Commands"
 	set src = usr
 
-	if (src.hideturfs)
-		src.SWTurf?.alpha = src.SWAlpha
-		src.STurf?.alpha = src.SAlpha
-		src.SETurf?.alpha = src.SEAlpha
-		src.ETurf?.alpha = src.EAlpha
-		src.NETurf?.alpha = src.NEAlpha
-		src.SWTurf?.mouse_opacity = 1
-		src.STurf?.mouse_opacity = 1
-		src.SETurf?.mouse_opacity = 1
-		src.ETurf?.mouse_opacity = 1
-		src.NETurf?.mouse_opacity = 1
-		src.SWTurf = null
-		src.STurf = null
-		src.SETurf = null
-		src.ETurf = null
-		src.NETurf = null
-	else
-		var/turf/temp1 = get_step(src, SOUTHWEST)
-		var/turf/temp2 = get_step(src, SOUTH)
-		var/turf/temp3 = get_step(src, SOUTHEAST)
-		var/turf/temp4 = get_step(src, EAST)
-		var/turf/temp5 = get_step(src, NORTHEAST)
-
-		src.SWTurf = (istype(temp1, /turf/simulated/wall) || istype(temp1, /turf/unsimulated/wall)) ? temp1 : null
-		src.STurf = (istype(temp2, /turf/simulated/wall) || istype(temp1, /turf/unsimulated/wall)) ? temp2 : null
-		src.SETurf = (istype(temp3, /turf/simulated/wall) || istype(temp2, /turf/unsimulated/wall)) ? temp3 : null
-		src.ETurf = (istype(temp4, /turf/simulated/wall) || istype(temp3, /turf/unsimulated/wall)) ? temp4 : null
-		src.NETurf = (istype(temp5, /turf/simulated/wall) || istype(temp1, /turf/unsimulated/wall)) ? temp5 : null
-
-		src.SWAlpha = src.SWTurf?.alpha
-		src.SAlpha = src.STurf?.alpha
-		src.SEAlpha = src.SETurf?.alpha
-		src.EAlpha = src.ETurf?.alpha
-		src.NEAlpha = src.NETurf?.alpha
-		src.SWTurf?.alpha = 96
-		src.STurf?.alpha = 96
-		src.SETurf?.alpha = 96
-		src.ETurf?.alpha = 96
-		src.NETurf?.alpha = 96
-		src.SWTurf?.mouse_opacity = 0
-		src.STurf?.mouse_opacity = 0
-		src.SETurf?.mouse_opacity = 0
-		src.ETurf?.mouse_opacity = 0
-		src.NETurf?.mouse_opacity = 0
 	src.hideturfs = !src.hideturfs
-
+	src.calc_hidden_turfs()
 
 /mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))

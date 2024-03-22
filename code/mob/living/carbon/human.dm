@@ -575,21 +575,8 @@
 	src.juggle_dummy = null
 
 
-	src.SWTurf?.alpha = src.SWAlpha
-	src.STurf?.alpha = src.SAlpha
-	src.SETurf?.alpha = src.SEAlpha
-	src.ETurf?.alpha = src.EAlpha
-	src.NETurf?.alpha = src.NEAlpha
-	src.SWTurf?.mouse_opacity = 1
-	src.STurf?.mouse_opacity = 1
-	src.SETurf?.mouse_opacity = 1
-	src.ETurf?.mouse_opacity = 1
-	src.NETurf?.mouse_opacity = 1
-	src.SWTurf = null
-	src.STurf = null
-	src.SETurf = null
-	src.ETurf = null
-	src.NETurf = null
+	src.hideturfs = FALSE
+	src.calc_hidden_turfs()
 
 	..()
 
@@ -1430,6 +1417,9 @@
 	..()
 	if (!ai_active && is_npc)
 		ai_set_active(1)
+
+	src.hideturfs = FALSE //dont want stuck walls
+	src.calc_hidden_turfs()
 
 /mob/living/carbon/human/get_heard_name(just_name_itself=FALSE)
 	var/alt_name = ""
@@ -3381,19 +3371,31 @@
 				S.layer = initial(S.layer)
 				if (prob(20)) boutput(src, "You run right the fuck out of your shoes. [SPAN_ALERT("Shit!")]")
 
-	if(src.client && src.hideturfs)
-		//turf hider ew ew ew
-		src.SWTurf?.alpha = src.SWAlpha
-		src.STurf?.alpha = src.SAlpha
-		src.SETurf?.alpha = src.SEAlpha
-		src.ETurf?.alpha = src.EAlpha
-		src.NETurf?.alpha = src.NEAlpha
-		src.SWTurf?.mouse_opacity = 1
-		src.STurf?.mouse_opacity = 1
-		src.SETurf?.mouse_opacity = 1
-		src.ETurf?.mouse_opacity = 1
-		src.NETurf?.mouse_opacity = 1
+	src.calc_hidden_turfs()
 
+	..()
+#undef can_step_sfx
+
+
+/mob/living/carbon/human/proc/calc_hidden_turfs() //turf hider ew ew ew
+	//gotta clean up our previous shit regardless
+	src.SWTurf?.alpha = src.SWAlpha
+	src.STurf?.alpha = src.SAlpha
+	src.SETurf?.alpha = src.SEAlpha
+	src.ETurf?.alpha = src.EAlpha
+	src.NETurf?.alpha = src.NEAlpha
+	src.SWTurf?.mouse_opacity = 1
+	src.STurf?.mouse_opacity = 1
+	src.SETurf?.mouse_opacity = 1
+	src.ETurf?.mouse_opacity = 1
+	src.NETurf?.mouse_opacity = 1
+	src.SWTurf = null
+	src.STurf = null
+	src.SETurf = null
+	src.ETurf = null
+	src.NETurf = null
+
+	if(src.client && src.hideturfs) //so like, we dont hide anything if we cant or dont wanna do it
 		var/turf/temp1 = get_step(src, SOUTHWEST)
 		var/turf/temp2 = get_step(src, SOUTH)
 		var/turf/temp3 = get_step(src, SOUTHEAST)
@@ -3411,7 +3413,7 @@
 		src.SEAlpha = src.SETurf?.alpha
 		src.EAlpha = src.ETurf?.alpha
 		src.NEAlpha = src.NETurf?.alpha
-		src.SWTurf?.alpha = 96
+		src.SWTurf?.alpha = 96 // arbritrary value that looks good enough
 		src.STurf?.alpha = 96
 		src.SETurf?.alpha = 96
 		src.ETurf?.alpha = 96
@@ -3421,10 +3423,6 @@
 		src.SETurf?.mouse_opacity = 0
 		src.ETurf?.mouse_opacity = 0
 		src.NETurf?.mouse_opacity = 0
-
-	..()
-#undef can_step_sfx
-
 
 /mob/living/carbon/human/set_loc(var/newloc as turf|mob|obj in world)
 	if (abilityHolder)
