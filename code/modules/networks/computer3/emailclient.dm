@@ -27,6 +27,9 @@
 /datum/computer/file/terminal_program/email
 	name = "ViewPoint"
 	size = 4
+
+	// No special permissions required, but authentication is required to send email as *someone* and obviously
+	// to recieve email
 	req_access = list(access_fuck_all)
 	var/tmp/obj/item/peripheral/network/netCard = null
 	var/tmp/server_netid = null
