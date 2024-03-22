@@ -711,7 +711,7 @@ body
 	boutput(usr, "Gang scores:")
 
 	for(var/datum/gang/G in get_all_gangs())
-		boutput(usr, "[G.gang_name]: [G.gang_score()] ([G.num_areas_controlled()] areas)")
+		boutput(usr, "[G.gang_name]: [G.gang_score()] ([G.num_tiles_controlled()] tiles)")
 
 /client/proc/scenario()
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)

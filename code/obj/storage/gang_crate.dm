@@ -123,7 +123,7 @@
 			if (locker.gang == user.get_gang() && locked)
 				locked = FALSE
 				UpdateIcon()
-				//COMMENTED FOR MERGE locker.gang.add_points(GANG_CRATE_SCORE, user, get_turf(locker), showText = TRUE)
+				locker.gang.add_points(GANG_CRATE_SCORE, user, get_turf(locker), showText = TRUE)
 				locker.gang.score_event += GANG_CRATE_SCORE
 				var/datum/gang/userGang = user.get_gang()
 				userGang.broadcast_to_gang("[user.name] just opened a gang crate! Keep what's inside, everyone earns [GANG_CRATE_SCORE] points.",locker.gang)
@@ -223,7 +223,7 @@
 				object.set_loc(user.loc)
 			playsound(src.loc, 'sound/misc/zipper.ogg', 100, TRUE)
 			boutput(user, "You unzip the duffel bag and its' contents spill out!")
-			//COMMENTED FOR MERGE gang.add_points(GANG_LOOT_SCORE,user, showText = TRUE)
+			gang.add_points(GANG_LOOT_SCORE,user, showText = TRUE)
 			gang.score_event += GANG_CRATE_SCORE
 			user.drop_item(src)
 			open = TRUE
@@ -746,7 +746,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/short)
 		weight = 1
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			//COMMENTED FOR MERGE spawn_item(C,I,/obj/item/tool/quickhack,scale_x=0.6, scale_y = 0.6)
+			spawn_item(C,I,/obj/item/tool/quickhack,scale_x=0.6, scale_y = 0.6)
 
 
 	// GIMMICKS
@@ -1002,7 +1002,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/short_tall)
 	janktanktwo
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			//COMMENTED FOR MERGE spawn_item(C,I,/obj/item/tool/janktanktwo,rot=135,off_x=2,scale_x=0.65,scale_y=0.65)
+			spawn_item(C,I,/obj/item/tool/janktanktwo,rot=135,off_x=2,scale_x=0.65,scale_y=0.65)
 	robusttecs
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -1169,12 +1169,12 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/long_tall)
 			A.amount = 4
 			A.amount_left = 4
 
-	draco
+	/*draco
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			spawn_item(C,I,/obj/item/gun/kinetic/draco,off_x=-7,scale_x=0.8,scale_y=0.8)
 			//no mags for you! that would be crazy!
-
+	*/ // disabled until recoil is in. boo hoo
 	greasegun
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -1236,12 +1236,12 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 	explosives_jackpot
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,	/obj/item/mine/stun,off_x=-10, off_y=-2,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,	/obj/item/mine/stun,off_x=-10, off_y=2,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,	/obj/item/mine/stun,off_x=-2, off_y=-2,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,	/obj/item/mine/stun,off_x=-2, off_y=2,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=2,off_y=2,scale_y=0.8)
-			spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=2,off_y=2,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/mine/blast,off_x=-10, off_y=-2,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/mine/blast,off_x=-10, off_y=2,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/mine/incendiary,off_x=-2, off_y=-2,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/mine/incendiary,off_x=-2, off_y=2,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/chem_grenade/shock,off_x=2,off_y=2,scale_y=0.8)
+			spawn_item(C,I,/obj/item/chem_grenade/incendiary,off_x=2,off_y=2,scale_y=0.8)
 			spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=2,off_y=2,scale_y=0.8)
 			spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=2,off_y=2,scale_y=0.8)
 
