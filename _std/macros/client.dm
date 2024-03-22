@@ -21,7 +21,7 @@
 #define SHOW_VERB_DESC do {\
 	var/procpath/this_proc = CURRENT_PROC_PATH;\
 	if(usr.client.check_key(KEY_EXAMINE)) {\
-		boutput(usr, this_proc.desc || "No verb desc found");\
+		boutput(usr, "<span class='helpmsg'>[this_proc.desc || "No verb desc found"]</span>");\
 		return\
 	}\
 } while(FALSE)
