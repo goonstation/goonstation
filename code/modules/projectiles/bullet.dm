@@ -1152,12 +1152,12 @@ toxic - poisons
 			var/mob/M = hit
 			if(ishuman(hit))
 				var/mob/living/carbon/human/H = hit
-	#ifdef USE_STAMINA_DISORIENT
-					H.do_disorient(max(power,10), weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
-	#else
-					H.changeStatus("stunned", 4 SECONDS)
-					H.changeStatus("weakened", 3 SECONDS)
-	#endif
+				#ifdef USE_STAMINA_DISORIENT
+				H.do_disorient(max(power,10), weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
+				#else
+				H.changeStatus("stunned", 4 SECONDS)
+				H.changeStatus("weakened", 3 SECONDS)
+				#endif
 			var/turf/target = get_edge_target_turf(hit, dirflag)
 			M.throw_at(target, max(round(power / 20), 0), 3, throw_type = THROW_GUNIMPACT)
 
@@ -1198,12 +1198,12 @@ toxic - poisons
 			var/mob/M = hit
 			if(ishuman(hit))
 				var/mob/living/carbon/human/H = hit
-	#ifdef USE_STAMINA_DISORIENT
-					H.do_disorient(max(power,10), weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
-	#else
-					H.changeStatus("stunned", 4 SECONDS)
-					H.changeStatus("weakened", 3 SECONDS)
-	#endif
+				#ifdef USE_STAMINA_DISORIENT
+				H.do_disorient(max(power,10), weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
+				#else
+				H.changeStatus("stunned", 4 SECONDS)
+				H.changeStatus("weakened", 3 SECONDS)
+				#endif
 			var/turf/target = get_edge_target_turf(hit, dirflag)
 			M.throw_at(target, max(round(power / 20), 0), 3, throw_type = THROW_GUNIMPACT)
 		..()
