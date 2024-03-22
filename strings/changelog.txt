@@ -1,5 +1,9 @@
 
 (t)thu mar 21 24
+(u)glowbold
+(p)18192
+(e)🪲⚖📦💡|C-Bug, C-Balance, A-Game-Objects, A-Station-Systems
+(*)Deconstructed cameras now show as "Deactivated" instead of disappearing from the camera list.
 (u)Sord
 (+)Canister bombs priming announcement now also plays an alarm. Scary.
 (u)JORJ949
