@@ -5,7 +5,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "gun"
 	m_amt = 2000
 	camera_recoil_sway_min = 5 // kinetics can be more shuddery than lasers
-	recoil_inaccuracy_max = 10 // 10 degrees of seperation at max recoil
+	recoil_inaccuracy_max = 10 // +10 degrees of seperation at max recoil
 	var/obj/item/ammo/bullets/ammo = null
 	/// How much ammo can this gun hold? Don't make this null (Convair880).
 	var/max_ammo_capacity = 1
@@ -516,7 +516,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	var/failure_chance = 6
 	var/failured = 0
 	default_magazine = /obj/item/ammo/bullets/staples
-
+	icon_recoil_cap = 30
 	New()
 
 		ammo = new default_magazine
@@ -642,8 +642,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/bullet_22/faith
 	fire_animation = TRUE
-	recoil_strength = 6
-
+	recoil_strength = 4
+	icon_recoil_cap = 30
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_22)
@@ -667,8 +667,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/bullet_22HP
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_22, /obj/item/ammo/bullets/bullet_22HP)
 	ammobag_restock_cost = 1
-	recoil_strength = 6
-
+	recoil_strength = 3
+	icon_recoil_cap = 30
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_22/HP)
@@ -815,7 +815,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO
 	recoil_stacking_enabled = TRUE
 	recoil_strength = 6
-
+	icon_recoil_cap = 30
 	New()
 		if (prob(70))
 			icon_state = "glocktan"
@@ -911,7 +911,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	auto_eject = TRUE
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/nine_mm_surplus/mag_mor
-
+	icon_recoil_cap = 15
 	get_desc(dist, mob/user)
 		if (user.get_gang() != null)
 			. += "For when you need MOR' DAKKA. Uses 9mm NATO rounds."
@@ -973,6 +973,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/nine_mm_surplus/mag_grease
 	var/grease = 0 //guh
+	icon_recoil_cap = 20
 	get_desc(dist, mob/user)
 		if (grease == 0)
 			. += "It's all seized up and could do with maintenance."
@@ -986,12 +987,16 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			if(two_handed)
 				setTwoHanded(0) //Go 1-handed.
 				src.spread_angle = initial(src.spread_angle)
+				icon_recoil_cap = initial(src.icon_recoil_cap)
+				recoil_max = initial(src.recoil_max)
 				icon_state = "grease"
 			else
 				if(!setTwoHanded(1)) //Go 2-handed.
 					boutput(user, SPAN_ALERT("Can't switch to 2-handed while your other hand is full."))
 				else
+					icon_recoil_cap = 10
 					icon_state = "greaseunfolded"
+					recoil_max = 100 // double how easy it is to control
 					src.spread_angle = 6
 		..()
 
@@ -1941,7 +1946,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/flare/single
 	recoil_strength = 10
 	recoil_max = 20
-
+	icon_recoil_cap = 30
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flare)
@@ -2486,7 +2491,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm)
 	ammobag_restock_cost = 1
 	recoil_strength = 8
-
+	icon_recoil_cap = 30
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_9mm)
@@ -2507,7 +2512,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_PISTOL_22)
 	default_magazine = /obj/item/ammo/bullets/bullet_22/smartgun
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_22/smartgun)
-	recoil_strength = 6
+	recoil_enabled = 0
 
 	New()
 		..()
@@ -2553,11 +2558,17 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			if(two_handed)
 				setTwoHanded(0) //Go 1-handed.
 				src.spread_angle = initial(src.spread_angle)
+				icon_recoil_cap = initial(src.icon_recoil_cap)
+				recoil_max = initial(src.recoil_max)
+				recoil_strength = initial(src.recoil_strength)
 			else
 				if(!setTwoHanded(1)) //Go 2-handed.
 					boutput(user, SPAN_ALERT("Can't switch to 2-handed while your other hand is full."))
 				else
+					icon_recoil_cap = 10
+					recoil_max = 100
 					src.spread_angle = 4
+					recoil_strength = 5
 		..()
 
 /obj/item/gun/kinetic/smg/empty
@@ -2585,7 +2596,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/tranq_darts/syndicate/pistol)
 	ammobag_restock_cost = 2
 	recoil_strength = 7
-
+	icon_recoil_cap = 30
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/tranq_dart/syndicate/pistol)
@@ -2761,11 +2772,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_AUTO_308)
 	max_ammo_capacity = 100
 	auto_eject = 0
+	shoot_delay = 7
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
-	spread_angle = 8
+	spread_angle = 6
 	can_dual_wield = 0
 
 	two_handed = 1
@@ -2773,11 +2785,16 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/lmg
 	ammobag_magazines = list(/obj/item/ammo/bullets/lmg)
 	ammobag_restock_cost = 3
+
+	camera_recoil_multiplier = 0.65 // this thing packs possibly excessive punch
+	camera_recoil_sway_max = 10 // lower the wobblies when shooting huge volumes of lead
+
+	recoil_strength = 5
 	recoil_stacking_enabled = TRUE
 	recoil_stacking_safe_stacks = 8
-	recoil_stacking_max_stacks = 16
-	recoil_stacking_amount = 1
-	recoil_max = 100
+	recoil_stacking_max_stacks = 8
+	recoil_stacking_amount = 0.5
+	recoil_max = 100 // eat more recoil
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)

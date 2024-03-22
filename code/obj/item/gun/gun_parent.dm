@@ -70,7 +70,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	// Good for making spray & pray kick harder, so just use it on automatic weapons.
 	var/recoil_stacking_enabled = FALSE			//! Should this gun gain more recoil strength as it shoots?
 	var/recoil_stacking_safe_stacks = 3 //! Ignore this many shots before stacking up (if you want 3-shot bursts not to be penalsied)
-	var/recoil_stacking_amount = 2 		//! How much should recoil_strength go up by, every shot
+	var/recoil_stacking_amount = 1 		//! How much should recoil_strength go up by, every shot
 	var/recoil_stacking_max_stacks = 3 	//! How many times can recoil-stacking_amount apply?
 
 	// RECOIL RESET
@@ -536,12 +536,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			recoil = clamp(recoil,0, recoil_max)
 			recoil_stacks = clamp(round(recoil_stacks) - 0.25, 0, recoil_stacking_max_stacks)
 
+		var/base_icon_recoil = round((recoil/recoil_max)*icon_recoil_cap)
 		var/matrix/M = src.transform
-		var/jitter = round(recoil/10)
+		var/jitter = base_icon_recoil/5
 		var/jittervalue = rand(-jitter, jitter)
 		if (src.recoil < current_anim_recoil || timediff > 0.2 DECI SECONDS) // stop the gun jerking up after you stop shooting
 			jittervalue = 0
-		var/target_recoil = round((recoil/recoil_max)*icon_recoil_cap) + jittervalue
+		var/target_recoil = base_icon_recoil + jittervalue
 
 		var/recoil_diff = (current_anim_recoil - target_recoil)
 		current_anim_recoil = target_recoil
