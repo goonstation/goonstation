@@ -130,7 +130,7 @@ var/global/current_state = GAME_STATE_INVALID
 			if("action")
 				src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
 			if("intrigue")
-				src.mode = config.pick_mode(pick(prob(300);"traitor", prob(200);"mixed_rp", prob(75);"changeling",prob(75);"vampire", prob(50);"spy_theft", prob(50);"arcfiend", prob(50);"salvager", prob(50);"extended"))
+				src.mode = config.pick_mode(pick(prob(300);"traitor", prob(200);"mixed_rp", prob(75);"changeling",prob(75);"vampire", prob(50);"spy_theft", prob(50);"arcfiend", prob(50);"salvager", prob(50);"extended", prob(50);"gang"))
 			if("pod_wars") src.mode = config.pick_mode("pod_wars")
 			else src.mode = config.pick_mode(master_mode)
 
@@ -490,11 +490,11 @@ var/global/current_state = GAME_STATE_INVALID
 
 			// This does a little more than just declare - it handles all end of round processing
 			//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] Starting declare_completion.")
-			try
-				declare_completion()
-			catch(var/exception/e)
-				logTheThing(LOG_DEBUG, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
-				logTheThing(LOG_DIARY, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]", "debug")
+			// try
+			declare_completion()
+			// catch(var/exception/e)
+			// 	logTheThing(LOG_DEBUG, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
+			// 	logTheThing(LOG_DIARY, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]", "debug")
 
 			// In a funny twist of fate there was no actual logging that the round was officially over.
 			var/total_round_time = (TIME - round_start_time) / (1 SECOND)
