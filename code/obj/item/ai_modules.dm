@@ -346,27 +346,12 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 				phrase_log.log_phrase("ailaw", src.get_law_text(allow_list=FALSE), no_duplicates=TRUE)
 		return
 
-/******************** Disguised ********************/
+/* Disguised */
 
-/obj/item/aiModule/disguised_module
+/obj/item/aiModule/freeform/disguised
 	name = "AI Law Module - 'Disguised'"
 	highlight_color = rgb(0, 138, 0, 255)
-	input_char_limit = 400
-	lawText = "Commit random acts of evil."
 	is_syndicate = TRUE
-
-
-	update_law_text(user, lawTarget)
-		src.lawText = lawTarget ? lawTarget : "Commit random acts of evil."
-		return ..()
-
-	attack_self(mob/user)
-		var/lawTarget = input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Probably murder.", src.lawText)
-		if(lawTarget)
-			src.update_law_text(user, lawTarget)
-			if (lawTarget != initial(lawText))
-				phrase_log.log_phrase("ailaw", src.get_law_text(allow_list=FALSE), no_duplicates=TRUE)
-		return
 
 /******************** Random ********************/
 
