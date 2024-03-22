@@ -287,7 +287,7 @@
 		// Time to consider our operating mode.
 		if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0) // If it is too far away do nothing.
 			return
-		if (src.opmode == 1) // We are in pickup mode, no reason to do anything.
+		if (src.opmode == ATMOSPORTER_MODE_PICKUP) // We are in pickup mode, no reason to do anything.
 			return
 		else // We are in dropoff or interact mode.
 			if (length(src.contents) == 0) // We have nothing with which to interact/dropoff with.
