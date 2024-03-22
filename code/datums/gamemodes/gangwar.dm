@@ -2081,7 +2081,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /obj/item/storage/box/gang_flyers
 	name = "gang recruitment flyer case"
-	desc = "A briefcase full of flyers advertising a gang, and some other neat stuff."
+	desc = "A briefcase full of neat stuff."
 	icon_state = "briefcase_black"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
@@ -2096,7 +2096,11 @@ proc/broadcast_to_all_gangs(var/message)
 		..()
 
 	random_gangs
+		name = "gang equipment case"
 		spawn_contents = list(/obj/item/spray_paint = 3, /obj/item/tool/quickhack = 1, /obj/item/switchblade = 1, /obj/item/tool/janktanktwo = 1)
+		New(turf/newloc, datum/gang/gang)
+			..()
+			src.desc = "A briefcase full of equipment for the [gang.gang_name] gang."
 
 	make_my_stuff()
 		..()
