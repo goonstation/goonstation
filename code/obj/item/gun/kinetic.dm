@@ -1055,7 +1055,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/akm/draco
 	fire_animation = TRUE
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	recoil_strength = 8
 	recoil_stacking_enabled = TRUE
@@ -1878,7 +1877,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "striker12"
 	item_state = "striker"
 	flags =  FPRINT | TABLEPASS | CONDUCT
-	c_flags = EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = EQUIPPED_WHILE_HELD
 	force = MELEE_DMG_RIFLE
 	contraband = 7
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
@@ -2703,7 +2702,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "m16"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	c_flags = EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = EQUIPPED_WHILE_HELD
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_AUTO_556)

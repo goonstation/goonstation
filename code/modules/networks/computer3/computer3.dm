@@ -854,6 +854,7 @@
 
 		if (src.loc == user)
 			user.drop_item()
+			user.u_equip(src)
 		src.luggable.set_loc(T)
 		src.luggable.case = src
 		src.luggable.deployed = 1
