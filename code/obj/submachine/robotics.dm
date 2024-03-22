@@ -327,9 +327,6 @@
 						A.Attackby(S, user)
 						boutput(user, SPAN_ALERT("You use the [S] on the [A]"))
 						return
-					else // You have chosen not a tank, but a cannister or a machine, illegal..
-						boutput(user, SPAN_ALERT("Please choose a (small) tank."))
-						return
 
 
 /obj/item/lamp_manufacturer
