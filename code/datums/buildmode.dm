@@ -234,6 +234,8 @@ ABSTRACT_TYPE(/datum/buildmode)
 	set name = "Reset Build Mode"
 	set desc = "If your build mode save got screwed up use this to reset it!"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(src.buildmode?.is_active)
 		src.togglebuildmode()
@@ -247,6 +249,8 @@ ABSTRACT_TYPE(/datum/buildmode)
 	set name = "Build Mode"
 	set desc = "Toggle build Mode on/off."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(!src.buildmode)
 		src.buildmode = src.player.get_buildmode()

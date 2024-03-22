@@ -21644,6 +21644,10 @@
 /area/station/security/main)
 "jfZ" = (
 /obj/rack/organized/techstorage_med,
+/obj/item/circuitboard/siphon_control{
+	pixel_x = 5;
+	pixel_y = -7
+	},
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "jge" = (

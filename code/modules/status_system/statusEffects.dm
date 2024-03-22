@@ -1279,7 +1279,6 @@
 		var/const/max_health = 30
 		var/const/max_stam = 60
 		var/const/regen_stam = 5
-		var/const/max_dist = 50
 		var/mob/living/carbon/human/H
 		var/datum/gang/gang
 		var/on_turf = 0
@@ -1290,6 +1289,7 @@
 				H = owner
 			else
 				owner.delStatus("ganger")
+				return
 			H.max_health += max_health
 			health_update_queue |= H
 			H.add_stam_mod_max("ganger_max", max_stam)
@@ -1308,37 +1308,76 @@
 			gang = null
 
 		onUpdate(timePassed)
-			var/area/cur_area = get_area(H)
-			if (cur_area?.gang_owners == gang && prob(50))
-				on_turf = 1
+			var/mob/living/carbon/human/H
+			if(!ishuman(owner))
+				return
+			H = owner
+			if(ON_COOLDOWN(H, "ganger_heal", 1 SECOND))
+				H.HealDamage("All", 0.2, 0.2, 0)
+				if (GET_DIST(owner,gang.locker) < 4) //give a boost to folks camping round their locker
+					H.HealDamage("All", 0.5, 0.5, 0.5)
+					icon_state = "ganger_heal"
+				else
+					icon_state = "ganger"
 
-				//get distance divided by max distance and invert it. Result will be between 0 and 1
-				var/buff_mult = round(1-(min(GET_DIST(owner,gang.locker), max_dist) / max_dist), 0.1)
-				if (buff_mult <=0)
-					buff_mult = 0.1
+				if (H.bleeding && prob(20))
+					repair_bleeding_damage(H, 5, 1)
 
-				var/mob/living/carbon/human/H
-				if(ishuman(owner))
-					H = owner
-					H.HealDamage("All", 10*buff_mult, 0, 0)
-					if (H.bleeding && prob(100*buff_mult))
-						repair_bleeding_damage(H, 5, 1)
 
-					var/list/statusList = H.getStatusList()
+			var/list/statusList = H.getStatusList()
 
-					if(statusList["paralysis"])
-						H.changeStatus("paralysis", -3*buff_mult)
-					if(statusList["stunned"])
-						H.changeStatus("stunned", -3*buff_mult)
-					if(statusList["weakened"])
-						H.changeStatus("weakened", -3*buff_mult)
-			else
-				on_turf = 0
-
-			return
+			if(statusList["paralysis"])
+				H.changeStatus("paralysis", -1)
+			if(statusList["stunned"])
+				H.changeStatus("stunned", -1)
+			if(statusList["weakened"])
+				H.changeStatus("weakened", -1)
 
 		getTooltip()
-			. = "Your max health, max stamina, and stamina regen have been increased because of the pride you feel while wearing your uniform. [on_turf?"You are on home turf and receiving healing and stun reduction buffs when nearer your locker.":""]"
+			if (GET_DIST(owner,gang.locker) < 4)
+				. = "You're healing quickly, proudly wearing your uniform next to your locker."
+			else
+				. = "Your endurance and recovery are improved because of the pride you feel while wearing your uniform in your territory."
+
+	ganger_debuff
+		id = "ganger_debuff"
+		name = "Gang Member"
+		desc = "You're hiding your gang uniform in enemy territory. Shameful!"
+		icon_state = "ganger"
+		unique = TRUE
+		duration = INFINITE_STATUS
+		maxDuration = null
+		effect_quality = STATUS_QUALITY_NEGATIVE
+		var/const/max_stam = -20
+		var/const/regen_stam = -2
+		var/mob/living/carbon/human/H
+		var/datum/gang/gang
+		var/on_turf = 0
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+			else
+				owner.delStatus("ganger_debuff")
+				return
+			H.add_stam_mod_max("ganger_debuff_max", max_stam)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "ganger_debuff_regen", regen_stam)
+			gang = H.get_gang()
+
+		onRemove()
+			. = ..()
+			H.remove_stam_mod_max("ganger_debuff_max")
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "ganger_debuff_regen")
+			gang = null
+			H = null
+			gang = null
+		onUpdate(timePassed)
+			if (prob(5))
+				H.emote(pick("shiver","flinch","twitch"))
+
+		getTooltip()
+			. = "Your vitals have dropped from the shame you feel hiding your true colors inside enemy territory."
 
 	janktank
 		id = "janktank"

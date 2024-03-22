@@ -106,5 +106,6 @@ function sortTable(n) {
 	set name = "Inspect Radio Frequencies"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	global.radio_controller.debug_window(src)

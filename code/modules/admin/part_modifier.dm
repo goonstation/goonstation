@@ -8,6 +8,7 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (!istype(target))
 		return
 	if (!target.limbs)
