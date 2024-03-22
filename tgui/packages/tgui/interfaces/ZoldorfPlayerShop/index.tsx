@@ -8,7 +8,7 @@
 import { useBackend } from "../../backend";
 import { Box, Button, Flex, Stack, Table } from "../../components";
 import { Window } from "../../layouts";
-import { ZoldorfPlayerShopData } from "./type";
+import { ZoldorfPlayerShopData, ZoldorfProductListProps } from "./type";
 
 export const ZoldorfPlayerShop = (_, context) => {
   const { act, data } = useBackend<ZoldorfPlayerShopData>(context);
@@ -26,39 +26,13 @@ export const ZoldorfPlayerShop = (_, context) => {
               {
                 soul_products.map(product => {
                   return (
-                    <Flex key={product.name} justify="space-between" align="stretch" style={{ "border-bottom": "1px #555 solid" }}>
-                      <Flex.Item direction="row">
-                        {product.img && (
-                          <Box style={{ "overflow": "show", "height": "24px" }}>
-                            <img
-                              src={`data:image/png;base64,${product.img}`}
-                              style={{
-                                'transform': 'translate(0, -4px)',
-                              }}
-                            />
-                          </Box>)}
-                      </Flex.Item>
-                      <Flex.Item direction="row"
-                        grow style={{
-                          "display": "flex",
-                          "justify-content": "center",
-                          "flex-direction": "column",
-                        }}>
-                        <Box>
-                          <Box inline italic>
-                            {!product.infinite && `${product.stock} x`}&nbsp;
-                          </Box>
-                          <Box inline>{product.name}</Box>
-                        </Box>
-                      </Flex.Item>
-                      <Flex.Item>
-                        <Button
-                          color="red"
-                          onClick={() => act('soul_purchase', { "item": product.name })}
-                        >{("" + product.soul_percentage + "%")}
-                        </Button>
-                      </Flex.Item>
-                    </Flex>
+                    <ZoldorfProductList {...product} key={product.name}>
+                      <Button
+                        color="red"
+                        onClick={() => act('soul_purchase', { "item": product.name })}
+                      >{("" + product.soul_percentage + "%")}
+                      </Button>
+                    </ZoldorfProductList>
                   );
                 })
               }
@@ -67,40 +41,14 @@ export const ZoldorfPlayerShop = (_, context) => {
               {
                 credit_products.map(product => {
                   return (
-                    <Flex key={product.name} justify="space-between" align="stretch" style={{ "border-bottom": "1px #555 solid" }}>
-                      <Flex.Item direction="row">
-                        {product.img && (
-                          <Box style={{ "overflow": "show", "height": "24px" }}>
-                            <img
-                              src={`data:image/png;base64,${product.img}`}
-                              style={{
-                                'transform': 'translate(0, -4px)',
-                              }}
-                            />
-                          </Box>)}
-                      </Flex.Item>
-                      <Flex.Item direction="row"
-                        grow style={{
-                          "display": "flex",
-                          "justify-content": "center",
-                          "flex-direction": "column",
-                        }}>
-                        <Box>
-                          <Box inline italic>
-                            {!product.infinite && `${product.stock} x`}&nbsp;
-                          </Box>
-                          <Box inline>{product.name}</Box>
-                        </Box>
-                      </Flex.Item>
-                      <Flex.Item>
-                        <Button
-                          color="green"
-                          disabled={product.price > credits}
-                          onClick={() => act('credit_purchase', { "item": product.name })}
-                        >{("" + product.price + "⪽")}
-                        </Button>
-                      </Flex.Item>
-                    </Flex>
+                    <ZoldorfProductList {...product} key={product.name}>
+                      <Button
+                        color="green"
+                        disabled={product.price > credits}
+                        onClick={() => act('credit_purchase', { "item": product.name })}
+                      >{("" + product.price + "⪽")}
+                      </Button>
+                    </ZoldorfProductList>
                   );
                 })
               }
@@ -124,5 +72,46 @@ export const ZoldorfPlayerShop = (_, context) => {
         </Stack>
       </Window.Content>
     </Window>
+  );
+};
+
+const ZoldorfProductList = (props: ZoldorfProductListProps) => {
+  const {
+    name,
+    img,
+    stock,
+    infinite,
+    children,
+  } = props;
+  return (
+    <Flex justify="space-between" align="stretch" style={{ "border-bottom": "1px #555 solid" }}>
+      <Flex.Item direction="row">
+        {img && (
+          <Box style={{ "overflow": "show", "height": "24px" }}>
+            <img
+              src={`data:image/png;base64,${img}`}
+              style={{
+                'transform': 'translate(0, -4px)',
+              }}
+            />
+          </Box>)}
+      </Flex.Item>
+      <Flex.Item direction="row"
+        grow style={{
+          "display": "flex",
+          "justify-content": "center",
+          "flex-direction": "column",
+        }}>
+        <Box>
+          <Box inline italic>
+            {!infinite && `${stock} x`}&nbsp;
+          </Box>
+          <Box inline>{name}</Box>
+        </Box>
+      </Flex.Item>
+      <Flex.Item>
+        {children}
+      </Flex.Item>
+    </Flex>
   );
 };

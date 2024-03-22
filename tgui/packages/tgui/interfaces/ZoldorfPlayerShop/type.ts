@@ -6,6 +6,7 @@
  */
 
 import { BooleanLike } from "common/react";
+import { InfernoNode } from "inferno";
 
 export interface ZoldorfPlayerShopData {
   soul_products: ZoldorfSoulProductData[],
@@ -28,3 +29,6 @@ export interface ZoldorfCreditProductData extends ZoldorfProductData {
   price: number,
 }
 
+export interface ZoldorfProductListProps extends ZoldorfProductData {
+  children: InfernoNode,
+}
