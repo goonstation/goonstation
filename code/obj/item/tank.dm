@@ -259,7 +259,7 @@ Contains:
 			B.auto_setup(src, user)
 		else if(istype(W, /obj/item/atmosporter))
 			var/obj/item/atmosporter/porter = W
-			if (porter.opmode == 2)
+			if (porter.opmode == ATMOSPORTER_MODE_INTERACT)
 				return
 			if (length(porter.contents) >= porter.capacity) boutput(user, SPAN_ALERT("Your [W] is full!"))
 			else
