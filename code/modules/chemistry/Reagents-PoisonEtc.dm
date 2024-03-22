@@ -286,21 +286,27 @@ datum
 					M.losebreath += (1 * mult)
 					M.emote("gasp")
 				switch(counter += (1 * mult))
-					if (20 to 30)
+					if (10 to 20)
 						if (prob(15))
 							boutput(M, SPAN_ALERT("You feel weak."))
-							M.setStatusMin("stunned", 0.5 SECONDS * mult)
 							M.take_toxin_damage(0.5 * mult)
-					if (30 to 45)
+							if (ishuman(M))
+								var/mob/living/carbon/human/H = M
+								H.numb_limb(6 SECONDS * mult)
+					if (20 to 35)
 						if (prob(20))
 							boutput(M, SPAN_ALERT("You feel very weak."))
-							M.setStatusMin("stunned", 1 SECONDS * mult)
 							M.take_toxin_damage(1 * mult)
-					if (45 to INFINITY)
+							if (ishuman(M))
+								var/mob/living/carbon/human/H = M
+								H.numb_limb(9 SECONDS * mult)
+					if (35 to INFINITY)
 						if (prob(25))
 							boutput(M, SPAN_ALERT("You feel horribly weak."))
-							M.setStatusMin("stunned", 2 SECONDS * mult)
 							M.take_toxin_damage(1.5 * mult)
+							if (ishuman(M))
+								var/mob/living/carbon/human/H = M
+								H.numb_limb(9 SECONDS * mult, 2)
 
 				..()
 				return
