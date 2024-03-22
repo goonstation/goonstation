@@ -112,4 +112,5 @@ var/global/datum/eventRecorder/eventRecorder
 	set name = "Debug Event Recorder"
 	set desc = "Display debug information about the event recorder"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	eventRecorder.debug()
