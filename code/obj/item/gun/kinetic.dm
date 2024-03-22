@@ -1037,7 +1037,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg/auto)
 /obj/item/gun/kinetic/draco
 	name = "\improper Draco Pistol"
-	desc = "A full size 7.62x39mm 'Pistol'. With no stock. "
+	desc = "A full size 7.62x39mm 'Pistol'. With no stock. You should shoot this in bursts."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "draco"
 	item_state = "draco"
@@ -1056,12 +1056,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	w_class = W_CLASS_BULKY
-	recoil_strength = 8
+	recoil_strength = 7
 	recoil_stacking_enabled = TRUE
-	recoil_stacking_max_stacks = 8 //make this thing go HARD if you hold it down
-	recoil_stacking_amount = 1
-	camera_recoil_sway_multiplier = 1 //though it could do with less sway
+	recoil_stacking_max_stacks = 4 //make this thing go HARD if you hold it down
+	recoil_stacking_amount = 3
+	recoil_inaccuracy_max = 25
+	recoil_max = 100 // can eat more recoil for worse effects
 	icon_recoil_cap = 30
+
 
 	New()
 		ammo = new default_magazine
