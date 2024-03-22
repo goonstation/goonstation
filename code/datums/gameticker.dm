@@ -489,12 +489,11 @@ var/global/current_state = GAME_STATE_INVALID
 			current_state = GAME_STATE_FINISHED
 
 			// This does a little more than just declare - it handles all end of round processing
-			//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] Starting declare_completion.")
-			// try
-			declare_completion()
-			// catch(var/exception/e)
-			// 	logTheThing(LOG_DEBUG, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
-			// 	logTheThing(LOG_DIARY, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]", "debug")
+			try
+				declare_completion()
+			catch(var/exception/e)
+				logTheThing(LOG_DEBUG, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
+				logTheThing(LOG_DIARY, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]", "debug")
 
 			// In a funny twist of fate there was no actual logging that the round was officially over.
 			var/total_round_time = (TIME - round_start_time) / (1 SECOND)
