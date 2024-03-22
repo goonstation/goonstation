@@ -41902,6 +41902,13 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
 "fpA" = (
