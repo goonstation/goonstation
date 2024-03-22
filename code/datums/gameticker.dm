@@ -495,6 +495,11 @@ var/global/current_state = GAME_STATE_INVALID
 				logTheThing(LOG_DEBUG, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
 				logTheThing(LOG_DIARY, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]", "debug")
 
+			// Various round end tracking for Goonhub
+			src.sendEvents()
+			record_player_playtime()
+			roundManagement.recordEnd()
+
 			// In a funny twist of fate there was no actual logging that the round was officially over.
 			var/total_round_time = (TIME - round_start_time) / (1 SECOND)
 			logTheThing(LOG_STATION, null, "The round is now over. Round time: [round(total_round_time / 3600)]:[add_zero(total_round_time / 60 % 60, 2)]:[add_zero(total_round_time % 60, 2)]")
@@ -557,35 +562,37 @@ var/global/current_state = GAME_STATE_INVALID
 				ticker.round_elapsed_ticks += elapsed
 
 	proc/sendEvents()
-		// Antags and antag objectives
-		for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists())
-			var/datum/mind/M = antagonist_role.owner
-			var/datum/eventRecord/Antag/antagEvent = new()
-			antagEvent.buildAndSend(antagonist_role)
+		try
+			// Antags and antag objectives
+			for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists())
+				var/datum/mind/M = antagonist_role.owner
+				var/datum/eventRecord/Antag/antagEvent = new()
+				antagEvent.buildAndSend(antagonist_role)
 
-			if (M.objectives)
-				for (var/datum/objective/objective in M.objectives)
-	#ifdef CREW_OBJECTIVES
-					if (istype(objective, /datum/objective/crew)) continue
-	#endif
-					var/datum/eventRecord/AntagObjective/antagObjectiveEvent = new()
-					antagObjectiveEvent.buildAndSend(antagonist_role, objective)
+				if (M.objectives)
+					for (var/datum/objective/objective in M.objectives)
+		#ifdef CREW_OBJECTIVES
+						if (istype(objective, /datum/objective/crew)) continue
+		#endif
+						var/datum/eventRecord/AntagObjective/antagObjectiveEvent = new()
+						antagObjectiveEvent.buildAndSend(antagonist_role, objective)
 
-		// AI Laws
-		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
-			var/laws[] = new()
-			if (aiPlayer.law_rack_connection)
-				laws = aiPlayer.law_rack_connection.format_for_irc()
-			for (var/key in laws)
-				var/datum/eventRecord/AILaw/aiLawEvent = new()
-				aiLawEvent.buildAndSend(aiPlayer, key, laws[key])
+			// AI Laws
+			for_by_tcl(aiPlayer, /mob/living/silicon/ai)
+				var/laws[] = new()
+				if (aiPlayer.law_rack_connection)
+					laws = aiPlayer.law_rack_connection.format_for_irc()
+				for (var/key in laws)
+					var/datum/eventRecord/AILaw/aiLawEvent = new()
+					aiLawEvent.buildAndSend(aiPlayer, key, laws[key])
+		catch(var/exception/e)
+			logTheThing(LOG_DEBUG, null, "Gameticker Send Events Runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
+			logTheThing(LOG_DIARY, null, "Gameticker Send Events Runtime: [e.file]:[e.line] - [e.name] - [e.desc]", "debug")
 
 
 /datum/controller/gameticker/proc/declare_completion()
 	//End of round statistic collection for goonhub
 	save_flock_stats()
-	src.sendEvents()
-	roundManagement.recordEnd()
 
 	var/pets_rescued = 0
 	for(var/pet in by_cat[TR_CAT_PETS])
@@ -892,26 +899,6 @@ var/global/current_state = GAME_STATE_INVALID
 					creds.ui_interact(E)
 				SPAWN(0) show_xp_summary(E.key, E)
 	logTheThing(LOG_DEBUG, null, "Did credits")
-
-	var/count = 1
-	var/list/playtimes = list() //associative list with the format list("ckeys\[[player_ckey]]" = playtime_in_seconds)
-	for_by_tcl(P, /datum/player)
-		if (!P.ckey)
-			continue
-		P.log_leave_time() //get our final playtime for the round (wont cause errors with people who already d/ced bc of smart code)
-		if (!P.current_playtime)
-			continue
-		playtimes["[count]"] = list("id" = P.id, "seconds_played" = round((P.current_playtime / (1 SECOND)))) //rounds 1/10th seconds to seconds
-		count++
-
-	try
-		var/datum/apiRoute/players/playtime/addPlaytime = new
-		addPlaytime.buildBody(config.server_id, playtimes)
-		apiHandler.queryAPI(addPlaytime)
-	catch (var/exception/e)
-		var/datum/apiModel/Error/error = e.name
-		logTheThing(LOG_DEBUG, null, "playtime was unable to be logged because of: [error.message]")
-		logTheThing(LOG_DIARY, null, "playtime was unable to be logged because of: [error.message]", "debug")
 
 	if(global.lag_detection_process.automatic_profiling_on)
 		global.lag_detection_process.automatic_profiling(force_stop=TRUE)
