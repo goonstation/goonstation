@@ -320,7 +320,9 @@
 					var/selection = tgui_input_list(user, "What do you want to use?", "Atmospherics Transporter", src.contents) // Let us choose an item to smack it with.
 					if(!selection)
 						return
-					if (istype(selection, /obj/item/tank)) // You have chosen a tank, wise.
+					if (!istype(selection, /obj/item/tank))
+						boutput(user, SPAN_ALERT("Please choose a (small) tank."))
+						return
 						var/obj/item/tank/S = selection
 						A.Attackby(S, user)
 						boutput(user, SPAN_ALERT("You use the [S] on the [A]"))
