@@ -173,7 +173,12 @@
 	name = "Toggle gang territory overlay"
 	desc = "Toggles the colored gang overlay."
 	icon_state = "toggle_overlays"
+	var/datum/mind/ownerMind
 
+	proc/remove_self(mind)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		if (imgroup.subscribed_minds_with_subcount[mind] > 0)
+			imgroup.remove_mind(mind)
 	cast(mob/target)
 		if (!holder)
 			return TRUE
@@ -186,17 +191,26 @@
 		if (!M.mind && !M.get_gang())
 			boutput(M, SPAN_ALERT("Gang territory? What? You'd need to be in a gang to get it."))
 			return TRUE
+
+		ownerMind = M.mind
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		var/togglingOn = FALSE
-		if (imgroup.subscribed_minds_with_subcount[M.mind] && imgroup.subscribed_minds_with_subcount[M.mind] > 0)
-			imgroup.remove_mind(M.mind)
+		if (imgroup.subscribed_minds_with_subcount[M.mind] > 0)
+			imgroup.remove_mind(ownerMind)
+			UnregisterSignal(ownerMind, COMSIG_MIND_DETACH_FROM_MOB)
 		else
 			togglingOn = TRUE
-			imgroup.add_mind(M.mind)
+			imgroup.add_mind(ownerMind)
+			RegisterSignal(ownerMind, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(remove_self))
 
 		boutput(M, "Gang territories turned [togglingOn ? "on" : "off"].")
 		return FALSE
-
+	disposing()
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		if (imgroup.subscribed_minds_with_subcount[ownerMind] > 0)
+			imgroup.remove_mind(ownerMind)
+		UnregisterSignal(ownerMind, COMSIG_MIND_DETACH_FROM_MOB)
+		..()
 
 /datum/targetable/gang/set_gang_base
 	name = "Set Gang Base"
