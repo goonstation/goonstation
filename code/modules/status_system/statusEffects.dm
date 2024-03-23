@@ -1374,7 +1374,7 @@
 			gang = null
 		onUpdate(timePassed)
 			if (prob(5))
-				H.emote(pick("shiver","flinch","twitch"))
+				H?.emote(pick("shiver","flinch","twitch"))
 
 		getTooltip()
 			. = "Your vitals have dropped from the shame you feel hiding your true colors inside enemy territory."
