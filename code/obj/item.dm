@@ -22,6 +22,10 @@ ABSTRACT_TYPE(/obj/item)
 	var/inhand_color = null
 	/// storage datum holding it
 	var/datum/storage/stored = null
+	/// Used for the hattable component
+	var/hat_offset_y = 0
+	/// Used for the hattable component
+	var/hat_offset_x = 0
 
 	/*_______*/
 	/*Burning*/
@@ -1154,14 +1158,13 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	return "It is \an [t] item."
 
 /obj/item/attack_hand(mob/user)
-	var/checkloc = src.loc
+	var/obj/item/checkloc = src.loc
 	while(checkloc && !istype(checkloc,/turf))
-		if (isliving(checkloc) && checkloc != user)
-			if(src in bible_contents)
-				break
-			else
-				return 0
-		checkloc = checkloc:loc
+		if(isliving(checkloc) && checkloc != user)
+			break
+		else
+			return 0
+		checkloc = checkloc.loc
 
 	if(!src.can_pickup(user))
 		// unholdable storage items

@@ -30,11 +30,11 @@
 	var/welded = FALSE
 	var/can_be_welded = FALSE
 	var/can_be_anchored = UNANCHORED
-	var/obj/hat = null
 	custom_suicide = TRUE
 	open_to_sound = TRUE
 
 	New()
+		AddComponent(/datum/component/hattable)
 		processing_items |= src
 		..()
 
@@ -48,48 +48,6 @@
 		src.light_time += CONTAINER_LIGHT_TIME
 		src.light_time = max(src.light_time, MAX_CONTAINER_LIGHT_TIME)
 		src.UpdateIcon()
-
-	proc/putonHat(obj/item/clothing/head/W as obj, mob/user as mob) // Hat code graciously swiped from ghostdrones
-		if(src.hat)
-			boutput(user, SPAN_ALERT("[src] is already wearing a hat!"))
-			return
-
-		user.drop_item()
-		src.hat = W
-		W.set_loc(src)
-		var/image/hatImage = null
-
-		// Treat wigs differently as their icon_state is always bald
-		if (istype(W, /obj/item/clothing/head/wig))
-			hatImage = W.wear_image
-			hatImage.layer = src.layer+0.1
-			if (src.name == "Component Cabinet")
-				hatImage.pixel_y = 6
-			else
-				hatImage.pixel_y = -7
-				hatImage.pixel_x = -1
-		else if (istype(W, /obj/item/clothing/head/constructioncone)) // Hats with bottom aligned inhand sprites go here for a boost
-			hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
-			if(src.name == "Component Cabinet")
-				hatImage.pixel_y = 22
-			else
-				hatImage.pixel_y = 18
-				hatImage.pixel_x = -1
-		else
-			hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
-			if(src.name == "Component Cabinet")
-				hatImage.pixel_y = 14
-			else
-				hatImage.pixel_y = 7
-				hatImage.pixel_x = -1
-		UpdateOverlays(hatImage, "hat")
-		return 1
-
-	proc/takeoffHat(mob/user as mob)
-		UpdateOverlays(null, "hat")
-		src.hat.set_loc(get_turf(src))
-		src.hat = null
-		return 1
 
 	ex_act(severity)
 		switch(severity)
@@ -145,11 +103,6 @@
 				src.light_time=0
 			src.UpdateIcon()
 			return 1
-
-		else if (istype(W, /obj/item/clothing/head))
-			src.putonHat(W, user)
-			return
-
 		else if (iswrenchingtool(W))
 			if(!src.can_be_anchored)
 				boutput(user,SPAN_ALERT("[src] cannot be anchored to the ground."))
@@ -247,9 +200,6 @@
 	mouse_drop(atom/target)
 		if(!istype(usr))
 			return
-		if(src.hat)
-			src.takeoffHat()
-			return
 		if(src.open && target == usr)
 			if(!(usr in src.users))
 				src.users+=usr
@@ -275,6 +225,8 @@
 		icon_state="housing_cabinet"
 		flags = FPRINT | EXTRADELAY | CONDUCT
 		light_color = list(0, 179, 255, 255)
+		hat_offset_y = 14
+		hat_offset_x = 0
 
 		attack_hand(mob/user)
 			if (istype(user,/mob/living/object) && user == src.loc) // prevent wacky nullspace bug
@@ -316,6 +268,8 @@
 		c_flags = ONBELT
 		light_color = list(51, 0, 0, 0)
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
+		hat_offset_y = 7
+		hat_offset_x = -1
 
 		proc/find_trigger() // find the trigger comp, return 1 if found.
 			if (!istype(src.the_trigger))
