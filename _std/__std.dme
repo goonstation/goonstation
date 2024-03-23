@@ -180,6 +180,7 @@
 #include "sorting.dm"
 #include "spatial_hashing.dm"
 #include "text.dm"
+#include "tgs.config.dm"
 #include "tgs.dm"
 #include "tgui.dm"
 #include "unionfind.dm"

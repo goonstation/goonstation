@@ -3,6 +3,9 @@
 	custom_commands = list()
 	for(var/I in typesof(/datum/tgs_chat_command) - /datum/tgs_chat_command)
 		var/datum/tgs_chat_command/stc = new I
+		if(stc.ignore_type == I)
+			continue
+
 		var/command_name = stc.name
 		if(!command_name || findtext(command_name, " ") || findtext(command_name, "'") || findtext(command_name, "\""))
 			TGS_ERROR_LOG("Custom command [command_name] ([I]) can't be used as it is empty or contains illegal characters!")
@@ -12,7 +15,7 @@
 			var/datum/other = custom_commands[command_name]
 			TGS_ERROR_LOG("Custom commands [other.type] and [I] have the same name (\"[command_name]\"), only [other.type] will be available!")
 			continue
-		results += list(list("name" = command_name, "help_text" = stc.help_text, "admin_only" = stc.admin_only_goon_sucks))
+		results += list(list("name" = command_name, "help_text" = stc.help_text, "admin_only" = stc.admin_only))
 		custom_commands[command_name] = stc
 
 	var/commands_file = chat_commands_json_path
@@ -34,8 +37,8 @@
 
 	var/datum/tgs_chat_command/sc = custom_commands[command]
 	if(sc)
-		var/result = sc.Run(u, params)
-		if(result == null)
-			result = ""
-		return result
+		var/datum/tgs_message_content/result = sc.Run(u, params)
+		result = UpgradeDeprecatedCommandResponse(result, command)
+
+		return result ? result.text : TRUE
 	return "Unknown command: [command]!"
