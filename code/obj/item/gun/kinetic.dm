@@ -2104,7 +2104,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/smoke/single
 	fire_animation = TRUE
-	recoil_strength = 14
+	recoil_strength = 12
 
 	New()
 		ammo = new default_magazine
@@ -2926,8 +2926,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_spec_required = TRUE
 	ammobag_restock_cost = 3
 	sound_load_override = 'sound/weapons/gunload_rigil.ogg'
-	recoil_strength = 15
-	recoil_max = 50
+	recoil_strength = 12
+	recoil_max = 40
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
