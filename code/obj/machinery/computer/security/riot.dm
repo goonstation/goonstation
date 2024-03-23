@@ -205,6 +205,7 @@
 			return // prevent someone from turbo-spamming announcements
 		playsound(src, 'sound/machines/pc_process.ogg', 50, TRUE)
 		src.visible_message(SPAN_ALERT("<B>[user] uses the [W] to issue an emergency override!</B>"))
+		logTheThing(LOG_STATION, user, "used [W] to override armory authorization status.")
 		if (src.authed)
 			src.unauthorize()
 		else
