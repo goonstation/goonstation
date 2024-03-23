@@ -2014,6 +2014,19 @@ proc/broadcast_to_all_gangs(var/message)
 		H.remove_ailments()
 
 		setalive(H)
+
+		var/mob/G = find_ghost_by_key((H.mind?.key || H.ghost?.mind?.key))
+		logTheThing(LOG_COMBAT, H, "is resuscitated with a JankTank at [log_loc(H)].")
+
+		if (G)
+			if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
+				G.show_text(SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
+				G.ghostize()?.mind?.transfer_to(H)
+			else
+				G.show_text(SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
+				G.mind?.transfer_to(H)
+			qdel(G)
+			H.visible_message(SPAN_ALERT("<b>[H]</b> [pick("barfs up","spews", "projectile vomits")] as they're wrenched cruelly back to life!"),SPAN_ALERT("<b>[pick("JESUS CHRIST","THE PAIN!","IT BURNS!!")]</b>"))
 		SPAWN(0) //some part of the vomit proc makes these duplicate
 			H.reagents.clear_reagents()
 			H.reagents.add_reagent("atropine", 2.5) //don't slip straight back into crit
