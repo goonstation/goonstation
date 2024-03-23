@@ -10,6 +10,7 @@ TYPEINFO(/obj/item/gun/energy)
 	add_residue = 0 // Does this gun add gunshot residue when fired? Energy guns shouldn't.
 	recoil_inaccuracy_max = 0 //lasers probably dont shudder as you shoot them
 	icon_recoil_enabled = FALSE // same, this is probably better to visualize inaccuracy anyway
+	camera_recoil_enabled = FALSE // no camera recoil on tasers etc please
 
 	var/rechargeable = 1 // Can we put this gun in a recharger? False should be a very rare exception.
 	var/robocharge = 800
@@ -885,6 +886,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 	rarity = 5
 	muzzle_flash = "muzzle_flash_bluezap"
+	camera_recoil_enabled = TRUE
 
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/cannon)
@@ -1357,26 +1359,31 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 					set_current_projectile(projectiles["detain"])
 					item_state = "lawg-detain"
 					playsound(M, 'sound/vox/detain.ogg', 50)
+					src.toggle_recoil(FALSE)
 				if ("execute", "exterminate")
 					set_current_projectile(projectiles["execute"])
 					current_projectile.cost = 30
 					item_state = "lawg-execute"
 					playsound(M, 'sound/vox/exterminate.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("smokeshot","fog")
 					set_current_projectile(projectiles["smokeshot"])
 					current_projectile.cost = 50
 					item_state = "lawg-smokeshot"
 					playsound(M, 'sound/vox/smoke.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("knockout", "sleepshot")
 					set_current_projectile(projectiles["knockout"])
 					current_projectile.cost = 60
 					item_state = "lawg-knockout"
 					playsound(M, 'sound/vox/sleep.ogg', 50)
+					src.toggle_recoil(FALSE)
 				if ("hotshot","incendiary")
 					set_current_projectile(projectiles["hotshot"])
 					current_projectile.cost = 60
 					item_state = "lawg-hotshot"
 					playsound(M, 'sound/vox/hot.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("bigshot","highexplosive","he")
 					set_current_projectile(projectiles["bigshot"])
 					current_projectile.cost = 170
@@ -1384,16 +1391,17 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 					playsound(M, 'sound/vox/high.ogg', 50)
 					SPAWN(0.4 SECONDS)
 						playsound(M, 'sound/vox/explosive.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("clownshot","clown")
 					set_current_projectile(projectiles["clownshot"])
 					item_state = "lawg-clownshot"
 					playsound(M, 'sound/vox/clown.ogg', 30)
+					src.toggle_recoil(FALSE)
 				if ("pulse", "push", "throw")
 					set_current_projectile(projectiles["pulse"])
 					item_state = "lawg-pulse"
 					playsound(M, 'sound/vox/push.ogg', 50)
-
-					/datum/projectile/energy_bolt/pulse
+					src.toggle_recoil(FALSE)
 		else		//if you're not the owner and try to change it, then fuck you
 			switch(text)
 				if ("detain","execute","knockout","hotshot","incendiary","bigshot","highexplosive","he","clownshot","clown", "pulse", "punch")
@@ -1423,6 +1431,16 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 					return 0
 				else
 					return 1
+
+	proc/toggle_recoil(on)
+		if(on)
+			recoil_inaccuracy_max = 5
+			icon_recoil_enabled = TRUE
+			camera_recoil_enabled = TRUE
+		else
+			recoil_inaccuracy_max = 0
+			icon_recoil_enabled = FALSE
+			camera_recoil_enabled = FALSE
 
 	//all gun modes use the same base sprite icon "lawbringer0" depending on the current projectile/current mode, we apply a coloured overlay to it.
 	update_icon()
@@ -1763,6 +1781,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 	var/state = TRUE
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_LARGE
+	camera_recoil_enabled = TRUE
 
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
