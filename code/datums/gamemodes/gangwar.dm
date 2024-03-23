@@ -1383,7 +1383,10 @@ proc/broadcast_to_all_gangs(var/message)
 			message_admins("[target.key] respawned as a gang member for [src.gang.gang_name].")
 			log_respawn_event(target, "gang member respawn", src.gang.gang_name)
 			boutput(H, SPAN_NOTICE("<b>You have been respawned as a gang member!</b>"))
-			boutput(H, SPAN_ALERT("<b>You're allied with [src.gang.gang_name]! Work with your leader, [src.gang.leader.current.real_name], to become the baddest gang ever!</b>"))
+			if (src.gang.leader)
+				boutput(H, SPAN_ALERT("<b>You're allied with [src.gang.gang_name]! Work with your leader, [src.gang.leader.current.real_name], to become the baddest gang ever!</b>"))
+			else
+				boutput(H, SPAN_ALERT("<b>You're allied with [src.gang.gang_name]! Work to become the baddest gang ever!</b>"))
 			get_gang_gear(H)
 
 	/// Tries to find a ghost to respawn
