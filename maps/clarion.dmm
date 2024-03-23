@@ -13240,7 +13240,7 @@
 	pixel_y = 16
 	},
 /turf/simulated/floor/black,
-/area/station/teleporter)
+/area/station/hallway/primary/east)
 "blz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13402,7 +13402,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/black,
-/area/station/teleporter)
+/area/station/hallway/primary/east)
 "bmR" = (
 /obj/stool/chair/office/purple{
 	dir = 4
@@ -43816,7 +43816,7 @@
 /obj/stool/chair,
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/black,
-/area/station/teleporter)
+/area/station/hallway/primary/east)
 "wtk" = (
 /obj/cable{
 	icon_state = "4-8"
