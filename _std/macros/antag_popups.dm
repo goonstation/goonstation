@@ -332,12 +332,6 @@
 		M.Browse(html, "window=antagTips;size=700x450;title=[window_title]")
 
 
-/client/proc/cmd_admin_antag_popups()
-	set name = "View Special Role Popups"
-	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	if (src.holder)
-		get_singleton(/datum/antagPopups).showPanel()
-
 /mob
 	///Stores the name of the last antag popup shown to the mob
 

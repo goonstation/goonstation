@@ -22,6 +22,7 @@ TRAYS
 	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 2
+	c_flags = ONBELT
 
 	New()
 		..()
@@ -371,6 +372,7 @@ TRAYS
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	c_flags = ONBELT
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
