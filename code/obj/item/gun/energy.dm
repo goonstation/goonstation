@@ -581,6 +581,8 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 	force = 6
 	desc = "I think it stands for Banned For Griefing?"
 	cell_type = /obj/item/ammo/power_cell/high_power
+	recoil_strength = 30
+	camera_recoil_enabled = TRUE
 
 	New()
 		set_current_projectile(new/datum/projectile/bfg)
@@ -886,6 +888,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 	rarity = 5
 	muzzle_flash = "muzzle_flash_bluezap"
+	recoil_strength = 30
 	camera_recoil_enabled = TRUE
 
 	New()
@@ -1784,6 +1787,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_LARGE
 	camera_recoil_enabled = TRUE
+	recoil_strength = 30
 
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
