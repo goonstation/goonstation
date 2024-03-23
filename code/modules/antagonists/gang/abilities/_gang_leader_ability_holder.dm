@@ -174,6 +174,10 @@
 	desc = "Toggles the colored gang overlay."
 	icon_state = "toggle_overlays"
 
+	proc/remove_self(mind)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		if (imgroup.subscribed_minds_with_subcount[mind] > 0)
+			imgroup.remove_mind(mind)
 	cast(mob/target)
 		if (!holder)
 			return TRUE
@@ -188,11 +192,13 @@
 			return TRUE
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		var/togglingOn = FALSE
-		if (imgroup.subscribed_minds_with_subcount[M.mind] && imgroup.subscribed_minds_with_subcount[M.mind] > 0)
+		if (imgroup.subscribed_minds_with_subcount[M.mind] > 0)
 			imgroup.remove_mind(M.mind)
+			UnregisterSignal(M.mind, COMSIG_MIND_DETACH_FROM_MOB)
 		else
 			togglingOn = TRUE
 			imgroup.add_mind(M.mind)
+			RegisterSignal(M.mind, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(remove_self))
 
 		boutput(M, "Gang territories turned [togglingOn ? "on" : "off"].")
 		return FALSE

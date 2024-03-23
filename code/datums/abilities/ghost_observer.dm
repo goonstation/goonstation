@@ -623,6 +623,10 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	icon_state = "gang_overlay"
 	targeted = 0
 	cooldown = 0
+	proc/remove_self(mind)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		if (imgroup.subscribed_minds_with_subcount[mind] > 0)
+			imgroup.remove_mind(mind)
 	cast()
 		if (!holder)
 			return TRUE
@@ -632,9 +636,11 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		var/togglingOn = FALSE
 		if (imgroup.subscribed_minds_with_subcount[M.mind] > 0)
 			imgroup.remove_mind(M.mind)
+			UnregisterSignal(M.mind, COMSIG_MIND_DETACH_FROM_MOB)
 		else
 			togglingOn = TRUE
 			imgroup.add_mind(M.mind)
+			RegisterSignal(M.mind, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(remove_self))
 
 		boutput(M, "Gang territories turned [togglingOn ? "on" : "off"].")
 		return FALSE
