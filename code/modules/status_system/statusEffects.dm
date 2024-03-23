@@ -1367,7 +1367,7 @@
 
 		onRemove()
 			. = ..()
-			H.remove_stam_mod_max("ganger_debuff_max")
+			H?.remove_stam_mod_max("ganger_debuff_max")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "ganger_debuff_regen")
 			gang = null
 			H = null
