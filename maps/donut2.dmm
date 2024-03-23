@@ -37418,7 +37418,7 @@
 "piF" = (
 /obj/storage/crate{
 	name = "Special Syllogí";
-	desc = "Éna megálo metallikó koutí sto opoío boreíte na válete prágmata. Poios xérei, boreí na échei ídi prágmata mésa tou."
+	desc = "Ένα μεγάλο μεταλλικό κουτί στο οποίο μπορείτε να βάλετε πράγματα. Ποιος ξέρει, μπορεί να έχει ήδη πράγματα μέσα του."
 	},
 /obj/item/clothing/under/gimmick/toga,
 /obj/item/clothing/suit/greek,
