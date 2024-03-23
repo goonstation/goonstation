@@ -679,12 +679,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	/// Put the defib back in the mount, by force if necessary.
 	proc/put_back_defib()
 		if (src.defib)
-			if (isliving(src.defib.loc))
-				var/mob/living/L = src.defib.loc
-				L.drop_item(defib) // drop held items
-			if (istype(src.defib.loc, /obj/item/parts/human_parts/arm))
-				var/obj/item/parts/human_parts/arm/defib_arm = src.defib.loc
-				defib_arm.sever() // detatch item arms
+			src.defib.force_drop(sever=TRUE)
 			src.defib.set_loc(src)
 			src.defib.parent = null
 
