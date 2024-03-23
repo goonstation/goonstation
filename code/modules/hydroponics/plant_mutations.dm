@@ -321,7 +321,6 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	assoc_reagents = list("iron")
 	crop = /obj/item/plant/wheat/metal
 	infusion_reagents = list("iron")
-	chance = 0
 
 // Rice Mutations
 
