@@ -424,6 +424,7 @@
 	max_amount = 30
 	ammo_cat = AMMO_AUTO_762
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
 	draco
 		name = "Draco Magazine"
 		desc = "A curved 30 round magazine, for the Draco Pistol."
@@ -1349,6 +1350,19 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 			new/obj/item/implant/projectile/staple(get_turf(src))
 		qdel(src)
 
+/obj/item/ammo/bullets/webley
+	sname = ".455 Webley"
+	name = ".455 Webley Bullets"
+	desc = "A small speedloader, full of ammunition for a Webley Revolver."
+	icon_state = "455-6"
+	amount_left = 6
+	max_amount = 6
+	ammo_type = new/datum/projectile/bullet/webley
+	ammo_cat = AMMO_WEBLEY
+	icon_dynamic = 1
+	icon_short = "455"
+	icon_empty = "speedloader_empty"
+
 //////////////////////////////////// Power cells for eguns //////////////////////////
 
 /obj/item/ammo/power_cell
@@ -1645,15 +1659,4 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 				if(99)
 					overlays += "burst_laspistol-100"
 			return
-/obj/item/ammo/bullets/webley
-	sname = ".455 Webley"
-	name = ".455 Webley Bullets"
-	desc = "A small speedloader, full of ammunition for a Webley Revolver."
-	icon_state = "455-6"
-	amount_left = 6
-	max_amount = 6
-	ammo_type = new/datum/projectile/bullet/webley
-	ammo_cat = AMMO_WEBLEY
-	icon_dynamic = 1
-	icon_short = "455"
-	icon_empty = "speedloader_empty"
+
