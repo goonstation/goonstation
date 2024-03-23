@@ -304,7 +304,6 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/egg
 	assoc_reagents = list("egg")
 	infusion_chance = 80
-	chance = 0
 	infusion_reagents = list("eggnog")
 
 // Wheat Mutations
