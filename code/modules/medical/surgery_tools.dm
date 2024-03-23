@@ -685,11 +685,11 @@ TYPEINFO(/obj/machinery/defib_mount)
 			if (istype(src.defib.loc, /obj/item/parts/human_parts/arm))
 				var/obj/item/parts/human_parts/arm/defib_arm = src.defib.loc
 				defib_arm.sever() // detatch item arms
-		src.defib.set_loc(src)
-		src.defib.parent = null
+			src.defib.set_loc(src)
+			src.defib.parent = null
 
-		playsound(src, 'sound/items/putback_defib.ogg', 65, vary=0.2)
-		UpdateIcon()
+			playsound(src, 'sound/items/putback_defib.ogg', 65, vary=0.2)
+			UpdateIcon()
 
 
 /* ================================================ */
