@@ -1227,6 +1227,18 @@ proc/broadcast_to_all_gangs(var/message)
 		user.Browse(page, "window=gang_locker;size=650x630")
 		//onclose(user, "gang_locker")
 
+	proc/set_gang(datum/gang/gang)
+		src.name = "[gang.gang_name] Locker"
+		src.desc = "A locker with a small screen attached to the door, and the words 'Property of [gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
+		src.gang = gang
+		src.gang.claim_tiles(usr.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
+		src.UpdateIcon()
+
+		var/image/antag_icon = image('icons/mob/antag_overlays.dmi', icon_state = "gang_locker_[src.gang.color_id]", loc=src)
+		antag_icon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_image(antag_icon)
+		get_image_group(src.gang).add_image(antag_icon)
+
 	//puts the html string in the var/HTML on src
 	proc/generate_HTML(var/mob/living/carbon/human/user)
 		var/datum/mind/M = user.mind
