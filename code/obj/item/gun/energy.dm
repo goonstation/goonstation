@@ -1631,6 +1631,8 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	two_handed = 1
 	can_dual_wield = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/howitzer
+	camera_recoil_enabled = TRUE
+	recoil_strength = 50
 
 	New()
 		..()
