@@ -609,6 +609,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	wages = PAY_TRADESMAN
 	receives_badge = TRUE
 	cant_spawn_as_rev = TRUE
+	can_join_gangs = FALSE
 	allow_antag_fallthrough = FALSE
 	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/storage/belt/security/shoulder_holster)

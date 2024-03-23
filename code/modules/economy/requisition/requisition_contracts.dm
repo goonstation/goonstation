@@ -21,7 +21,8 @@
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Requisition Test"
 	set desc = "Generates a specified requisition path and pins it to market."
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/contract_path = input("Specify type path", "Requisition", null, null)
 	if (!contract_path) return
 	if (istext(contract_path))

@@ -252,8 +252,8 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	var/obj/item/gun/G = parent
 	shooting = 1
 
+	var/delay = delaystart
 	while(!stopping)
-		var/delay = delaystart
 		if(G.canshoot(L))
 			G.Shoot(target ? target : get_step(L, NORTH), get_turf(L), L, src.target_pox, src.target_poy, called_target = target)
 			G.suppress_fire_msg = 1

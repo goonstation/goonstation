@@ -944,11 +944,13 @@ proc/broadcast_to_all_gangs(var/message)
 
 	/// Checks a tile has no nearby claims from other tags
 	proc/check_tile_unclaimed(turf/target, mob/user)
+		// check it's far enough from another tag to claim
 		for_by_tcl(tag, /obj/decal/gangtag)
 			if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_SIGHT_RANGE)) continue
 			if (tag.owners == user.get_gang() && tag.active)
 				boutput(user, SPAN_ALERT("This is too close to an existing tag!"))
 				return
+		// check it's far enough from lockers
 		for_by_tcl(locker, /obj/ganglocker)
 			if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_SIGHT_RANGE_LOCKER)) continue
 			if (locker.gang == user.get_gang())
@@ -965,11 +967,11 @@ proc/broadcast_to_all_gangs(var/message)
 			if (existingTag.owners != user.get_gang())
 				//if we're tagging over someone's tag, double our search radius
 				//(this will find any tags whose influence intersects with the target tag's influence)
-				for (var/obj/ganglocker/locker in range(GANG_TAG_INFLUENCE_LOCKER+GANG_TAG_INFLUENCE,target))
+				for_by_tcl(locker, /obj/ganglocker)
 					if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE_LOCKER+GANG_TAG_INFLUENCE)) continue
 					if (locker.gang == user.get_gang())
 						validLocation = TRUE
-				for (var/obj/decal/gangtag/otherTag in range(GANG_TAG_INFLUENCE*2,target))
+				for_by_tcl(otherTag, /obj/decal/gangtag)
 					if(!IN_EUCLIDEAN_RANGE(otherTag, target, GANG_TAG_INFLUENCE*2)) continue
 					if (otherTag.owners && otherTag.owners == user.get_gang())
 						validLocation = TRUE
@@ -1105,9 +1107,6 @@ proc/broadcast_to_all_gangs(var/message)
 	onUpdate()
 		..()
 		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		if(!S.check_tile_unclaimed(target_turf, owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(src.time_spent() > next_spray)
