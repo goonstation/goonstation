@@ -1367,14 +1367,14 @@
 
 		onRemove()
 			. = ..()
-			H.remove_stam_mod_max("ganger_debuff_max")
+			H?.remove_stam_mod_max("ganger_debuff_max")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "ganger_debuff_regen")
 			gang = null
 			H = null
 			gang = null
 		onUpdate(timePassed)
 			if (prob(5))
-				H.emote(pick("shiver","flinch","twitch"))
+				H?.emote(pick("shiver","flinch","twitch"))
 
 		getTooltip()
 			. = "Your vitals have dropped from the shame you feel hiding your true colors inside enemy territory."
