@@ -3846,32 +3846,10 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/lobby)
 "aoK" = (
-/obj/rack,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/item/tank/air{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/clothing/suit/space/emerg{
-	pixel_x = 6
-	},
-/obj/item/crowbar{
-	pixel_x = 3;
-	pixel_y = -1
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = 5;
-	pixel_y = 1
-	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/storage/closet/welding_supply,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "aoN" = (
@@ -4832,6 +4810,9 @@
 	pixel_x = 10;
 	pixel_y = -2
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "asW" = (
@@ -5174,16 +5155,24 @@
 	},
 /area/station/hydroponics/bay)
 "aue" = (
-/obj/reagent_dispensers/fueltank,
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24
 	},
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/table/auto,
+/obj/item/crowbar{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/obj/item/hand_labeler{
+	pixel_x = 4
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
@@ -5502,21 +5491,10 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "avo" = (
-/obj/table/auto,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -4;
-	pixel_y = 7
-	},
-/obj/item/crowbar{
-	pixel_x = 1;
-	pixel_y = 6
-	},
-/obj/item/hand_labeler{
-	pixel_x = 4
-	},
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "avp" = (
@@ -53307,8 +53285,6 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -53319,6 +53295,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big{
 	dir = 8
 	},
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "oCM" = (
@@ -64019,7 +63996,6 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
 "wJN" = (
-/obj/storage/closet/welding_supply,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -64027,6 +64003,10 @@
 	dir = 10
 	},
 /obj/machinery/door_control/podbay/security/new_walls/east,
+/obj/machinery/manufacturer/hangar,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "wKl" = (

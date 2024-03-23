@@ -35285,7 +35285,7 @@
 	},
 /area/station/engine/inner)
 "kKy" = (
-/obj/storage/closet/welding_supply,
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -40704,6 +40704,7 @@
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
 "mog" = (
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -48104,7 +48105,7 @@
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai_upload)
 "oCX" = (
-/obj/reagent_dispensers/fueltank,
+/obj/storage/closet/welding_supply,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
