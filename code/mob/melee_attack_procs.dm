@@ -1015,7 +1015,7 @@
 						target.lastgasp()
 
 			if (stamina_crit)
-				target.handle_stamina_crit(stamina_target)
+				target.handle_stamina_crit()
 
 			if (src.disarm != 1)
 				owner.attack_finished(target)

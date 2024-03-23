@@ -2898,7 +2898,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "akh" = (
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "akj" = (
@@ -5815,10 +5815,16 @@
 /area/station/hallway/primary/north)
 "avl" = (
 /obj/decal/boxingropeenter,
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "avm" = (
 /obj/decal/boxingrope,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "avo" = (
@@ -6801,6 +6807,10 @@
 /obj/decal/boxingrope{
 	dir = 8
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "azC" = (
@@ -7325,6 +7335,10 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aBy" = (
@@ -7783,6 +7797,10 @@
 "aDp" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 10
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -8347,6 +8365,10 @@
 "aFC" = (
 /obj/decal/boxingrope{
 	dir = 8
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -10187,6 +10209,10 @@
 /obj/decal/boxingrope{
 	dir = 4
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aOo" = (
@@ -11265,6 +11291,10 @@
 /obj/stool,
 /obj/decal/boxingrope{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -27166,6 +27196,13 @@
 "cfu" = (
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/quarters_south)
+"cfv" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "cfw" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/carpet/green/fancy/edge/south,
@@ -33640,6 +33677,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"ewU" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "exl" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -43441,6 +43485,16 @@
 	dir = 10
 	},
 /area/station/engine/monitoring)
+"lGP" = (
+/obj/decal/boxingrope{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "lGU" = (
 /obj/disposalpipe/segment/brig{
 	dir = 2;
@@ -121055,7 +121109,7 @@ fdN
 xix
 atr
 aIO
-aHF
+cfv
 aHF
 aHF
 avm
@@ -121357,7 +121411,7 @@ hqk
 azn
 atr
 spC
-aHF
+ewU
 aHF
 aHF
 avm
@@ -121659,7 +121713,7 @@ fdN
 vSu
 atr
 spC
-aHF
+ewU
 aHF
 aHF
 avl
@@ -121961,7 +122015,7 @@ aEs
 aAa
 atr
 smb
-aOn
+lGP
 aOn
 aSp
 aBw
