@@ -204,7 +204,7 @@
 			boutput(user, SPAN_NOTICE("Armory authorization override is still [pick("loading", "processing", "readying")]!"), "armory_authdisk_cooldown")
 			return // prevent someone from turbo-spamming announcements
 		playsound(src, 'sound/machines/pc_process.ogg', 50, TRUE)
-		src.visible_message(SPAN_ALERT("<B>[user] uses the authentication disk to issue an emergency override!</B>"))
+		src.visible_message(SPAN_ALERT("<B>[user] uses the [W] to issue an emergency override!</B>"))
 		if (src.authed)
 			src.unauthorize()
 		else
