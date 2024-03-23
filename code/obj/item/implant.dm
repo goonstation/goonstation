@@ -2014,6 +2014,7 @@ TYPEINFO(/obj/item/gun/implanter)
 	icon_state = "implant"
 	contraband = 1
 	var/obj/item/implant/my_implant = null
+	recoild_strength = 1
 
 	New()
 		set_current_projectile(new/datum/projectile/implanter)
