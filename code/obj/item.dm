@@ -1595,8 +1595,15 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/proc/registered_owner()
 	.= 0
 
+/// Force the item to drop from the mob's hands.
+/// If `sever` is TRUE, items will be severed from item arms
+/obj/item/proc/force_drop(var/mob/possible_mob_holder = 0, sever=TRUE)
+	if(sever && (src.temp_flags & IS_LIMB_ITEM))
+		if (istype(src.loc, /obj/item/parts/human_parts/arm/left/item) || istype(src.loc, /obj/item/parts/human_parts/arm/right/item))
+			var/obj/item/parts/human_parts/arm/item_arm = src.loc
+			item_arm.sever()
+			return
 
-/obj/item/proc/force_drop(var/mob/possible_mob_holder = 0)
 	if (!possible_mob_holder)
 		if (ismob(src.loc))
 			possible_mob_holder = src.loc
