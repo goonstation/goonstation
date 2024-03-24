@@ -444,6 +444,7 @@ var/global/list/module_editors = list()
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (!istype(M))
 		boutput(src, SPAN_ALERT("That thing has no module!"))

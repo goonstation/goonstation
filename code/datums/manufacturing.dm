@@ -1738,7 +1738,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("MET-1","MET-2","CON-1","ALL")
 	item_amounts = list(15,5,10,5)
 	item_outputs = list(/obj/machinery/bot/mining)
-	time = 0 SECONDS
+	time = 10 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -1756,6 +1756,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("CON-1","CRY-1")
 	item_amounts = list(3,5)
 	item_outputs = list(/obj/item/roboupgrade/speed)
+	time = 60 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/robup_mag
+	name = "Magnetic Traction Upgrade"
+	item_paths = list("CON-1","CRY-1")
+	item_amounts = list(5,3)
+	item_outputs = list(/obj/item/roboupgrade/magboot)
 	time = 60 SECONDS
 	create = 1
 	category = "Component"

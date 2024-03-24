@@ -1,5 +1,121 @@
 
+(t)sun mar 24 24
+(u)JORJ949
+(p)18287
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added a camera to the top right of Inner Engineering on Cog1. AIs rejoice.
+(t)fri mar 22 24
+(u)JORJ949
+(p)18263
+(e)🆕🤖|C-Feature, A-Silicons
+(*)Added Disguised law module to head of staff traitor uplinks.
+(u)TDHooligan
+(p)18236
+(e)🎨❗|C-Sprites, E-FUCK
+(*)Gangs has been reworked! Read below for deets. Send feedback in the discord thread or forum.
+(*)Gang member point pools are separate now. Huzzah!
+(*)Gang lockers can no longer be broken.
+(*)Gang leaders can buy the new 'Janktank II' to revive fellow gang members
+(*)You can now launder thousands of credits at once.
+(*)Tagging has been reworked, read below for details.
+(*)New gang loot bags & crates are hidden throughout the shift. Watch your radios, gang!
+(+)Territory is now a circle around tags, and tags now provide points based on how many people they see pass by.
+(+)You can only tag near your existing territory, starting where your locker is placed
+(+)You should look to expand to populated areas, as quickly as possible!
+(+)Your uniform also grants buffs if you're in your territory, and regen if you're by your locker.
+(+)---
+(+)Every point earned also grants the gang 1 point of 'Street Cred'
+(+)Street cred can be spent by leaders to hire new gang members, or buy revival syringes for their gang.
+(+)---
+(+)Check your gang radio for new events:
+(+)A few times a shift, loot bags are randomly hidden. Interrogate civilians, or their PDAs, to find where they are!
+(+)Twice per shift, a large weapons cache will spawn, locked in place. fight to drag it back to your locker!
+(+)---
+(+)Sprites by Mora, Guv, JOEL, Blackrep, what, Moriarty, Rubi, Shmiggy and Cogwerks. thank you so much :)
+(t)thu mar 21 24
+(u)glowbold
+(p)18192
+(e)🪲⚖📦💡|C-Bug, C-Balance, A-Game-Objects, A-Station-Systems
+(*)Deconstructed cameras now show as "Deactivated" instead of disappearing from the camera list.
+(u)Sord
+(+)Canister bombs priming announcement now also plays an alarm. Scary.
+(u)JORJ949
+(p)18262
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Added riot launchers to Atlas security.
+(t)mon mar 18 24
+(u)Sord
+(+)Added a new, rare, handheld artifact: the healing wand! This artifact will heal your target, and rarely even yourself!
+(t)sun mar 17 24
+(u)LeahTheTech
+(+)Repairing or replacing one floor tile with another will no longer hide items on that tile under it.
+(+)Standardized maps so every security department now has one riot control grenade outside of the armoury. For riots.
+(p)18222
+(e)⚖🔄🧛|C-Balance, C-Rework, A-Gamemodes
+(*)Reworked a lot of stealing and assassinate objectives to be more realistically completable.
+(t)sat mar 16 24
+(u)Chatauscours
+(p)18171
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)Security officers and Inspectors can now isssue fines for up to 500 credits without further approval.
+(+)You will now be alerted by PDA when you recieve a fine.
+(t)fri mar 15 24
+(u)LeahTheTech
+(+)The salbutamol/salicylic acid recipe no longer begins reacting until it receives stimulus (ie either heat or physical shock)
+(t)thu mar 14 24
+(u)crunchwarp
+(p)18034
+(e)🗺|A-Mapping
+(*)The Clarion ranch has emerged from its chrysalis at last, transformed...!
+(t)wed mar 13 24
+(u)DecidedlyUnethical, MylieDaniels
+(p)18170
+(e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
+(+)Added some cooling racks to the kitchen. Find them waiting in the FoodTech!
+(u)NibChocolateeny
+(p)18193
+(e)🆕💅🌱|C-Feature, C-QoL, A-Hydroponics
+(+)Coconuts can now be opened with saw-like tools.
+(t)tue mar 12 24
+(u)mloccy
+(p)18138
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Adding jeans reagent.
+(u)LeahTheTech
+(p)18096
+(e)⚖🐣|C-Balance, A-Respawning
+(*)Security officer and assistant job slots are now reduced at lower populations.
+(u)LeahTheTech
+(p)18145
+(e)⚖🐣|C-Balance, A-Respawning
+(+)Cryoing as a non-unique job will now immediately free up the slot.
+(t)fri mar 08 24
+(u)LeahTheTech
+(*)Ocean tiles will no longer leak fluid if covered by a forcefield, and forcefields will now correctly update the tiles next to them when they shut down.
+(u)CalliopeSoups
+(p)18103
+(e)🗺💅|A-Mapping, C-QoL
+(+)Cog1 hydroponics has had a couple QoL edits.
+(t)thu mar 07 24
+(u)MeggalBozale
+(p)17813
+(e)🆕💨🔬|C-Feature, A-Atmospherics, A-Science
+(*)Radioactive material at sufficient temperature will now decay some plasma into fallout gas.
 (t)wed mar 06 24
+(u)Cindertroy
+(p)18112
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Added a bone pipeshot, crafted with 2 "bits of bone"
+(u)mintyphresh, Geonightman
+(p)18104
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Pride jumpsuits can be cut up into flags.
+(u)Vincent983 + Ikea
+(p)18083
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(*)Borgs can now get their hands on a magnetic traction upgrade which has the same effect as magboots
+(u)LeahTheTech
+(*)Blob victories now cause the blob to automatically spread uncontrollably. I'm at least 70% sure this won't crash the server.
 (u)Knipje
 (p)18120
 (e)🆕💅💡|C-Feature, C-QoL, A-Station-Systems

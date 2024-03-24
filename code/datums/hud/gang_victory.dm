@@ -1,3 +1,4 @@
+// #define TESTING_TESTING
 /datum/hud/gang_victory
 	click_check = 0
 	var/atom/movable/screen/text
@@ -15,7 +16,11 @@
 
 		//individual gang member portraits
 		var/member_count = 0
-		var/list/members = winning_gang.members
+#ifdef TESTING_TESTING
+		var/list/members = list(winning_gang.leader, winning_gang.leader, winning_gang.leader, winning_gang.leader)
+#else
+		var/list/members = winning_gang.members.Copy()
+#endif
 		members.Insert(round(length(members)/2), winning_gang.leader) //put the leader roughly in the middle
 		for (var/datum/mind/gang_mind in members)
 			var/mob/ganger = gang_mind.current
@@ -28,7 +33,7 @@
 				else
 					ganger = ganger.ghost
 
-			var/position = -round(length(members)/2) + member_count
+			var/position = (-round(length(members)/2) + member_count) * 2.2
 			var/position_string = "CENTER[position > 0 ? "+" : ""][position ? position : ""], CENTER+1.8"
 
 			//getFlatIcon's dir argument doesn't work here for some reason

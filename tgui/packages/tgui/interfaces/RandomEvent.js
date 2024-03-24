@@ -15,7 +15,6 @@ export const RandomEvent = (props, context) => {
     eventOptions,
   } = data;
 
-
   return (
     <Window
       title="Random Event"
