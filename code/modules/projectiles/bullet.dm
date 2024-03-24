@@ -1013,7 +1013,7 @@ toxic - poisons
 	name = "cannon round"
 	brightness = 0.7
 	window_pass = 0
-	icon_state = "20mmAPHE"
+	icon_state = "20mm"
 	damage_type = D_PIERCING
 	armor_ignored = 0.66
 	hit_type = DAMAGE_CUT
@@ -1029,8 +1029,6 @@ toxic - poisons
 	casing = /obj/item/casing/cannon
 	pierces = 4
 	shot_sound_extrarange = 1
-
-
 
 	on_launch(obj/projectile/proj)
 		proj.AddComponent(/datum/component/sniper_wallpierce, 4) //pierces 4 walls/lockers/doors/etc. Does not function on restricted Z, rwalls and blast doors use 2 pierces
@@ -1067,8 +1065,6 @@ toxic - poisons
 						targetorgan = pick("left_lung", "heart", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 						H.organHolder.damage_organ(proj.power/H.get_ranged_protection(), 0, 0,  targetorgan)
 				M.ex_act(impact)
-
-
 
 			if(hit && isobj(hit))
 				var/obj/O = hit

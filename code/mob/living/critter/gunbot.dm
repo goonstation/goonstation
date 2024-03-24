@@ -296,3 +296,175 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "hand38"
 		HH.limb_name = "9mm Anti-Personnel Arm"
+
+
+/mob/living/critter/robotic/gunbot/mrl
+	icon_state = "gunbot-base"
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/kinetic/mrl
+		HH.name = "Fomalhaut MRL Arm"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "hand38"
+		HH.limb_name = "Fomalhaut MRL Arm"
+
+		src.UpdateOverlays(image(src.icon,"gunbot-mrl"), "guns")
+
+/mob/living/critter/robotic/gunbot/flame
+	icon_state = "gunbot-base"
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/fluid/flamethrower
+		HH.name = "Vega flamethrower Arm"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "hand38"
+		HH.limb_name = "Vega flamethrower Arm"
+
+		src.UpdateOverlays(image(src.icon, "gunbot-flamethrower"), "guns")
+
+/mob/living/critter/robotic/gunbot/cannon
+	icon_state = "gunbot-base"
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/kinetic/cannon
+		HH.name = "Alphard 20mm cannon Arm"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "hand38"
+		HH.limb_name = "Alphard 20mm cannon Arm"
+
+		src.UpdateOverlays(image(src.icon, "gunbot-cannon"), "guns")
+
+/mob/living/critter/robotic/gunbot/striker
+	icon_state = "gunbot-base"
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/kinetic/striker
+		HH.name = "Striker-7 Arm"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "hand38"
+		HH.limb_name = "Striker-7 Arm"
+
+		src.UpdateOverlays(image(src.icon, "gunbot-striker"), "guns")
+
+/mob/living/critter/robotic/gunbot/minigun
+	icon_state = "gunbot-base"
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/kinetic/minigun
+
+		HH.name = "Alpha Hydrae minigun Arm"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "hand38"
+		HH.limb_name = "Alpha Hydrae minigun Arm"
+
+		src.UpdateOverlays(image(src.icon, "gunbot-heavy"), "guns")
+
+/mob/living/critter/robotic/gunbot/chainsaw
+	icon_state = "gunbot-base"
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/item
+		HH.item = new /obj/item/saw/syndie(src)
+		HH.icon_state = "saw"
+		HH.name = "red chainsaw Arm"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.limb_name = "red chainsaw Arm"
+
+		var/obj/item/saw/S = HH.item
+		S.base_state = "blank"
+		S.cant_drop = 1
+		S.cant_self_remove = 1
+		S.cant_other_remove = 1
+
+		src.UpdateOverlays(image(src.icon, "gunbot-chainsaw"), "guns")
+
+
+/obj/machinery/fabricator/gunbot
+	icon = 'icons/obj/large/64x64.dmi'
+	icon_state = "gunbot_fab"
+	bound_width = 64
+	bound_height = 32
+	density = 1
+	anchored = 1
+	var/minimum_gunbots = 1
+	var/building = FALSE
+	var/progress = 0
+
+	New()
+		src.AddComponent(/datum/component/obj_projectile_damage)
+		. = ..()
+		var/image/arms = SafeGetOverlayImage("arms", 'icons/obj/manufacturer.dmi', "gunbot_fab-arms")
+		src.UpdateOverlays(arms, "arms")
+
+		var/image/light = SafeGetOverlayImage("light", 'icons/obj/manufacturer.dmi', "gunbot_fab-lights", pixel_x=32)
+		light.plane = PLANE_SELFILLUM
+		src.UpdateOverlays(light, "light")
+
+	update_icon()
+		if(src.status & BROKEN)
+			src.icon_state = "gunbot_fab-broken"
+			src.ClearSpecificOverlays("arms", "light")
+
+	attackby(var/obj/item/I, var/mob/user)
+		src.add_fingerprint(user)
+		user.lastattacked = src
+		changeHealth(-I.force)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+		hit_twitch(src)
+		..()
+
+
+	onDestroy()
+		src.status |= BROKEN
+		src.UnsubscribeProcess()
+		src.UpdateIcon()
+
+	ex_act(severity)
+		src.material_trigger_on_explosion(severity)
+		switch(severity)
+			if(1)
+				changeHealth(-100)
+				return
+			if(2)
+				changeHealth(-90)
+				return
+			if(3)
+				changeHealth(-60)
+				return
+
+	process(var/mult)
+		if(src.status & BROKEN)
+			return
+
+		if(src.building)
+			src.progress++
+
+			if(src.progress > 10)
+				var/path = weighted_pick(list(/mob/living/critter/robotic/gunbot=50,
+											  /mob/living/critter/robotic/gunbot/minigun=5,
+											  /mob/living/critter/robotic/gunbot/flame=5,
+											  /mob/living/critter/robotic/gunbot/striker=10,
+											  /mob/living/critter/robotic/gunbot/cannon=2,
+											  /mob/living/critter/robotic/gunbot/mrl=1
+											))
+				var/mob/G = new path(src)
+				G.Move(get_step(src,SOUTH))
+
+				progress = 0
+				building = FALSE
+
+		else
+			var/area/A = get_area(src)
+			var/count = 0
+			for(var/mob/living/critter/robotic/gunbot/G in A)
+				count++
+
+			if(count < src.minimum_gunbots)
+				building = TRUE
+
