@@ -2002,8 +2002,20 @@
 		id = "cola_syrup"
 		result = "cola_syrup"
 		required_reagents = list("cola" = 4, "VHFCS" = 1, "plasma" = 1)
-		inhibitors = "sodawater"
 		result_amount = 2
+		min_temperature = 360
+		mix_phrase = "The cola simmers into a noxious black syrup."
+		on_reaction(datum/reagents/holder, created_volume)
+			. = ..()
+			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+			smoke.set_up(1, 0, get_turf(src))
+			smoke.start()
+
+	acid/cola_syrup //mintodo fix this shit
+		name = "Cola syrup"
+		id = "cola_syrup2"
+		required_reagents = list("cola" = 4, "VHFCS" = 1, "plasma" = 1) //Must be done alongside Sulfuric Acid rxn
+		result_amount = 4
 		min_temperature = 360
 		mix_phrase = "The cola simmers into a noxious black syrup."
 		on_reaction(datum/reagents/holder, created_volume)
@@ -2054,29 +2066,6 @@
 		result_amount = 10
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		mix_phrase = "A cool mist forms over the container as the waters crash over the ice."
-
-	strafers_soda
-		name = "Strafer's Soda"
-		id = "gamerdrink"
-		result = "gamerdrink"
-		required_reagents = list("powercola" = 3, "salt" = 2, "toxin" = 1)
-		reaction_icon_state = list("reaction_explode-1", "reaction_explode-2")
-		reaction_icon_color = "#ffffff"
-		result_amount = 6
-		mix_phrase = "Looks like someone forgot to put a mix_phrase here. LOL."
-
-
-
-		/*for (var/mob/living/carbon/human/H in range(2, holder.my_atom)) //MINTODO THIS SHIT
-			var/obj/item/I = get_id_card(H.wear_id)
-			if(istype(I, /obj/item/card/id/dabbing_license))
-				greg
-			else
-				for(var/mob/M in all_viewers(null, get_turf(holder.my_atom)))
-					boutput(M, SPAN_ALERT("The bevvy shrinks away into nothing as the ingredients mix. You determine that it needs more swag."))*/
-		//mintodo: dynamic mix sounds with MLG quickscope sound, "oh baby a triple" if done thrice in succession, "that ain't falco," etc.
-		//mintodo: Require dabbing license to mix
-		//"You don't have nearly enough swag to do this bevvy justice. You pour it out before someone notices."
 
 	lostcoke
 		name = "The Lost Treasure of Kalimero"
@@ -2134,15 +2123,6 @@
 		required_reagents = list("powercola" = 1, "steam" = 1, "lipolicide" = 1, "ethanol" = 1)
 		result_amount = 4
 		mix_phrase = "The cola bubbles and steams."
-		mix_sound = 'sound/misc/drinkfizz.ogg'
-
-	spinningpipe
-		name = "Spinning Pipe"
-		id = "spinningpipe"
-		result = "spinningpipe"
-		required_reagents = list("powercola" = 1, "bojack" = 1, "atropine" = 1, "methamphetamine" = 1)
-		result_amount = 2
-		mix_phrase = "The container spins violently as the ingredients mix."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
 	vampire

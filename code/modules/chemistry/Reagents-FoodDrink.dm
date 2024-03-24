@@ -2045,39 +2045,6 @@ datum
 				..()
 				return
 
-		fooddrink/alcoholic/spinningpipe
-			name = "Spinning Pipe"
-			id = "spinningpipe"
-			fluid_r = 97
-			fluid_g = 97
-			fluid_b = 97
-			transparency = 50
-			alch_strength = 3
-			thirst_value = 0.5
-			depletion_rate = 0.4
-			description = "A mix of vestibular disruptors and stimulants, its effects worsen with high doses of ethanol."
-			taste = "confusing"
-			reagent_state = LIQUID
-			var/total_misstep
-
-			on_add()
-				src.total_misstep = 0
-				..()
-
-			on_remove()
-				if (ismob(holder.my_atom))
-					var/mob/M = holder.my_atom
-					M.change_misstep_chance(-src.total_misstep)
-				..()
-
-			on_mob_life(var/mob/M, var/mult = 1)
-				if(!M) M = holder.my_atom
-				var/alch_mod = (holder.get_reagent_amount("ethanol")) / 15
-				M.change_misstep_chance(alch_mod * mult)
-				src.total_misstep += alch_mod * mult
-				..()
-				return
-
 		fooddrink/maunacola
 			name = "Mauna Cola Awakens"
 			id = "maunacola"
@@ -2656,26 +2623,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.reagents.add_reagent("sugar", 0.7 * mult)
-				..()
-
-		fooddrink/caffeinated/space_cola/gamerdrink
-			name = "Strafer's Soda"
-			id = "gamerdrink"
-			description = "No scrubs were left unrekt in the making of this beverage."
-			fluid_r = 150
-			fluid_g = 213
-			fluid_b = 18
-			transparency = 200
-			taste = "like gaming"
-			caffeine_content = 0.3
-
-			on_mob_life(var/mob/M, var/mult = 1)
-				if(!M) M = holder.my_atom
-				M.reagents.add_reagent("sugar", 2 * mult)
-				M.reagents.add_reagent("salt", 2 * mult)
-				M.add_karma(-1)
-				if (prob(1))
-					M.reagents.add_reagent("liquid_code", 1 * mult)
 				..()
 
 		fooddrink/alcoholic/wipeout

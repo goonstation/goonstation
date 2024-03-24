@@ -124,16 +124,10 @@
 			if (prob(DISORIENT_MISSTEP_CHANCE) && src.getStatusDuration("disorient"))
 				misstep_angle += 45
 			if (prob(src.misstep_chance)) // 1.5 beecause going off straight chance felt weird; I don't want to totally nerf effects that rely on this
-				if(src.reagents.get_reagent_amount("spinningpipe"))
-					misstep_angle += randfloat(0,src.misstep_chance*1.8) // true random direction if you have spinningpipe in you & 100% chance
-				else
-					misstep_angle += randfloat(0,src.misstep_chance*1.5)  // 66% Misstep Chance = 9% chance of 90 degree turn
+				misstep_angle += randfloat(0,src.misstep_chance*1.5)  // 66% Misstep Chance = 9% chance of 90 degree turn
 
 			if(misstep_angle)
-				if(src.reagents.get_reagent_amount("spinningpipe"))
-					misstep_angle = min(misstep_angle,180)
-				else
-					misstep_angle = min(misstep_angle,90)
+				misstep_angle = min(misstep_angle,90)
 				var/move_angle = dir2angle(move_dir)
 				move_angle += pick(-misstep_angle,misstep_angle)
 				move_dir = angle2dir(move_angle)
