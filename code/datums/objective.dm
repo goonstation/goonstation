@@ -27,14 +27,14 @@ ABSTRACT_TYPE(/datum/objective)
 	proc/set_up()
 		return
 
-	/// Check if a mind's current mob is alive.
-	/// If `silicon_counts_as_eliminated` is TRUE, getting borged does not count.
-	proc/is_target_eliminated(datum/mind/target, silicon_counts_as_eliminated=TRUE)
+	/// Check if a mind's current mob is eliminated from the round
+	/// If `silicons_eliminated` is FALSE, then the target being a cyborg/AI counts as surviving
+	proc/is_target_eliminated(datum/mind/target, silicons_eliminated=TRUE)
 		if (!target?.current)
 			return TRUE
 		if(isdead(target.current))
 			return TRUE
-		if(silicon_counts_as_eliminated)
+		if(silicons_eliminated)
 			if(!iscarbon(target.current))
 				return TRUE
 		else
@@ -107,7 +107,7 @@ ABSTRACT_TYPE(/datum/objective)
 
 /datum/objective/regular/assassinate/bodyguard //the INVERSE of an assassin
 	check_completion()
-		if(src.is_target_eliminated(target, silicon_counts_as_eliminated=FALSE)) // Dead or alive
+		if(src.is_target_eliminated(target, silicons_eliminated=FALSE)) // Dead or alive
 			if(in_centcom(target.current))
 				return 1
 
