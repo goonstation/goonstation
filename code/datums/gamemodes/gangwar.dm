@@ -4,7 +4,7 @@
 	regular = FALSE
 
 	/// Makes it so gang members are chosen randomly at roundstart instead of being recruited.
-	var/random_gangs = FALSE
+	var/random_gangs = TRUE
 
 	antag_token_support = TRUE
 	var/list/datum/gang/gangs = list()
@@ -1227,6 +1227,18 @@ proc/broadcast_to_all_gangs(var/message)
 		user.Browse(page, "window=gang_locker;size=650x630")
 		//onclose(user, "gang_locker")
 
+	proc/set_gang(datum/gang/gang)
+		src.name = "[gang.gang_name] Locker"
+		src.desc = "A locker with a small screen attached to the door, and the words 'Property of [gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
+		src.gang = gang
+		src.gang.claim_tiles(usr.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
+		src.UpdateIcon()
+
+		var/image/antag_icon = image('icons/mob/antag_overlays.dmi', icon_state = "gang_locker_[src.gang.color_id]", loc=src)
+		antag_icon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_image(antag_icon)
+		get_image_group(src.gang).add_image(antag_icon)
+
 	//puts the html string in the var/HTML on src
 	proc/generate_HTML(var/mob/living/carbon/human/user)
 		var/datum/mind/M = user.mind
@@ -1382,7 +1394,10 @@ proc/broadcast_to_all_gangs(var/message)
 			message_admins("[target.key] respawned as a gang member for [src.gang.gang_name].")
 			log_respawn_event(target, "gang member respawn", src.gang.gang_name)
 			boutput(H, SPAN_NOTICE("<b>You have been respawned as a gang member!</b>"))
-			boutput(H, SPAN_ALERT("<b>You're allied with [src.gang.gang_name]! Work with your leader, [src.gang.leader.current.real_name], to become the baddest gang ever!</b>"))
+			if (src.gang.leader)
+				boutput(H, SPAN_ALERT("<b>You're allied with [src.gang.gang_name]! Work with your leader, [src.gang.leader.current.real_name], to become the baddest gang ever!</b>"))
+			else
+				boutput(H, SPAN_ALERT("<b>You're allied with [src.gang.gang_name]! Work to become the baddest gang ever!</b>"))
 			get_gang_gear(H)
 
 	/// Tries to find a ghost to respawn
@@ -2013,6 +2028,19 @@ proc/broadcast_to_all_gangs(var/message)
 		H.remove_ailments()
 
 		setalive(H)
+
+		var/mob/G = find_ghost_by_key((H.mind?.key || H.ghost?.mind?.key))
+		logTheThing(LOG_COMBAT, H, "is resuscitated with a JankTank at [log_loc(H)].")
+
+		if (G)
+			if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
+				G.show_text(SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
+				G.ghostize()?.mind?.transfer_to(H)
+			else
+				G.show_text(SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
+				G.mind?.transfer_to(H)
+			qdel(G)
+			H.visible_message(SPAN_ALERT("<b>[H]</b> [pick("barfs up","spews", "projectile vomits")] as they're wrenched cruelly back to life!"),SPAN_ALERT("<b>[pick("JESUS CHRIST","THE PAIN!","IT BURNS!!")]</b>"))
 		SPAWN(0) //some part of the vomit proc makes these duplicate
 			H.reagents.clear_reagents()
 			H.reagents.add_reagent("atropine", 2.5) //don't slip straight back into crit

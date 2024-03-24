@@ -702,7 +702,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/minigun)
-		AddComponent(/datum/component/holdertargeting/fullauto, 2.5, 0.4, 0.9) //you only get full auto, why would you burst fire with a minigun?
+		AddComponent(/datum/component/holdertargeting/fullauto/ramping, 2.5, 0.4, 0.9) //you only get full auto, why would you burst fire with a minigun?
 		..()
 
 	setupProperties()
@@ -831,7 +831,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			projectiles = list(current_projectile)
 		else
 			projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_NATO/auto)
-			AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
+			AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
 	attack_self(mob/user as mob)
@@ -923,7 +923,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 		set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/burst)
 		projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_surplus/auto)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.5, 1.5, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.5)
 		..()
 
 	attack_self(mob/user)
@@ -974,6 +974,16 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/nine_mm_surplus/mag_grease
 	var/grease = 0 //guh
 	icon_recoil_cap = 20
+
+	New()
+		if (prob(33))
+			name = "\improper [pick ("Greafe","Grief","Greef","Griff","Greece")] Gun"
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
+		var/datum/callback/delay_callback = new(src, PROC_REF(set_auto_delay))
+		AddComponent(/datum/component/holdertargeting/fullauto/callback, 1.2, delay_callback)
+		..()
+
 	get_desc(dist, mob/user)
 		if (grease == 0)
 			. += "It's all seized up and could do with maintenance."
@@ -1000,31 +1010,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 					src.spread_angle = 6
 		..()
 
-	shoot() // fuck up firerate speed
-		var/datum/component/holdertargeting/fullauto/firemode = GetComponent(/datum/component/holdertargeting/fullauto)
-		var/delay = firemode.delaystart*10
-		if (grease > 0)
-			delay = 18 - (grease)
-			grease--
-		else if (grease < 0)
-			delay = 30
-			grease++
-		else
-			delay = clamp(delay + rand(-8,8),10,26)
-		firemode.delaystart = (delay/10) //not ideal to do it here, but this is a jank use case anyway
-		..()
 	reagent_act(reagent_id,volume)
 		if ((reagent_id in list("oil","lube", "superlube", "grease", "badgrease", "fishoil")) && volume >= 5)
 			grease = 15
 		if (reagent_id == "spaceglue" && volume >= 5)
 			grease = -30
-	New()
-		if (prob(33))
-			name = "\improper [pick ("Greafe","Grief","Greef","Griff","Greece")] Gun"
-		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
-		..()
 
 	//copy pastes brought to you by bullets telling guns how to shoot!
 	attackby(obj/item/ammo/bullets/b, mob/user)
@@ -1035,6 +1025,19 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
 			else if(istype(ammo, /obj/item/ammo/bullets/bullet_9mm/smg))
 				set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg/auto)
+
+	proc/set_auto_delay(delay)
+		. = delay * 10
+		if (grease > 0)
+			. = 18 - (grease)
+			grease--
+		else if (grease < 0)
+			. = 30
+			grease++
+		else
+			. = clamp(. + rand(-8,8),10,26)
+		. /= 10
+
 /obj/item/gun/kinetic/draco
 	name = "\improper Draco Pistol"
 	desc = "A full size 7.62x39mm 'Pistol'. With no stock. You should shoot this in bursts."
@@ -1068,7 +1071,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/draco)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.6, 1.6, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.6)
 		..()
 /obj/item/gun/kinetic/webley
 	name = "Webley 'Holdout' Snubnose"
@@ -1203,7 +1206,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		ammo = new default_magazine
 
 		set_current_projectile(new/datum/projectile/bullet/bullet_22/a180)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
 /obj/item/gun/kinetic/makarov
@@ -2802,7 +2805,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/lmg)
 		projectiles = list(current_projectile, new/datum/projectile/bullet/lmg/auto)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.5 DECI SECONDS, 1.5 DECI SECONDS, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.5 DECI SECONDS)
 		..()
 
 	disposing()

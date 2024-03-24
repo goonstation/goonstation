@@ -173,7 +173,12 @@
 	name = "Toggle gang territory overlay"
 	desc = "Toggles the colored gang overlay."
 	icon_state = "toggle_overlays"
+	var/datum/mind/ownerMind
 
+	proc/remove_self(mind)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		if (imgroup.subscribed_minds_with_subcount[mind] > 0)
+			imgroup.remove_mind(mind)
 	cast(mob/target)
 		if (!holder)
 			return TRUE
@@ -186,17 +191,26 @@
 		if (!M.mind && !M.get_gang())
 			boutput(M, SPAN_ALERT("Gang territory? What? You'd need to be in a gang to get it."))
 			return TRUE
+
+		ownerMind = M.mind
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		var/togglingOn = FALSE
-		if (imgroup.subscribed_minds_with_subcount[M.mind] && imgroup.subscribed_minds_with_subcount[M.mind] > 0)
-			imgroup.remove_mind(M.mind)
+		if (imgroup.subscribed_minds_with_subcount[M.mind] > 0)
+			imgroup.remove_mind(ownerMind)
+			UnregisterSignal(ownerMind, COMSIG_MIND_DETACH_FROM_MOB)
 		else
 			togglingOn = TRUE
-			imgroup.add_mind(M.mind)
+			imgroup.add_mind(ownerMind)
+			RegisterSignal(ownerMind, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(remove_self))
 
 		boutput(M, "Gang territories turned [togglingOn ? "on" : "off"].")
 		return FALSE
-
+	disposing()
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		if (imgroup.subscribed_minds_with_subcount[ownerMind] > 0)
+			imgroup.remove_mind(ownerMind)
+		UnregisterSignal(ownerMind, COMSIG_MIND_DETACH_FROM_MOB)
+		..()
 
 /datum/targetable/gang/set_gang_base
 	name = "Set Gang Base"
@@ -248,12 +262,8 @@
 			boutput(member.current, SPAN_ALERT("Your gang's base has been set up in [area]!"))
 
 		var/obj/ganglocker/locker = new /obj/ganglocker(get_turf(M))
-		locker.name = "[antag_role.gang.gang_name] Locker"
-		locker.desc = "A locker with a small screen attached to the door, and the words 'Property of [antag_role.gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
-		locker.gang = antag_role.gang
-		locker.gang.claim_tiles(usr.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
+		locker.set_gang(antag_role.gang)
 		antag_role.gang.locker = locker
-		locker.UpdateIcon()
 
 		M.abilityHolder.removeAbility(/datum/targetable/gang/set_gang_base)
 

@@ -1380,6 +1380,14 @@ datum
 			description = "The favorite drink of unfaithful, alcoholic executives in really nice suits."
 			reagent_state = LIQUID
 
+			reaction_mob(mob/M, method=TOUCH, volume_passed)
+				. = ..()
+				if(!volume_passed)
+					return
+				if(method == INGEST)
+					//use a status to make it a little more robust with regard to not getting stuck in noir vision hopefully?
+					M.changeStatus("noir", 5 SECONDS * volume_passed)
+
 		fooddrink/alcoholic/planter
 			name = "Planter's Punch"
 			id = "planter"
