@@ -1305,7 +1305,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		reagents.add_reagent("coconut_milk",30)
 
 	attackby(obj/item/W, mob/user)
-		if (iscuttingtool(W))
+		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
 			user.visible_message("[user] cracks [src] open.", "You crack open [src].")
 			src.split()
 		..()

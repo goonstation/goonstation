@@ -897,7 +897,7 @@
 		dat += "<a href='byond://?src=\ref[src];real_name=input'><b>[src.real_name]</b></a> "
 		dat += "<br>"
 
-		dat += "<b>Gender:</b> <a href='byond://?src=\ref[src];gender=input'><b>[src.tf_holder.mobAppearance.gender == MALE ? "Male" : "Female"]</b></a><br>"
+		dat += "<b>Body Type:</b> <a href='byond://?src=\ref[src];gender=input'><b>[src.tf_holder.mobAppearance.gender == MALE ? "Male" : "Female"]</b></a><br>"
 		dat += "<b>Age:</b> <a href='byond://?src=\ref[src];age=input'>[src.tf_holder.age]</a>"
 
 		dat += "<hr><table><tr><td><b>Body</b><br>"

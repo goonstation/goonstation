@@ -46,6 +46,7 @@
 	var/datum/abilitymanager/abilitymanager = null
 	var/datum/ban_panel/ban_panel = null
 	var/datum/antagonist_panel/antagonist_panel = null
+	var/datum/job_manager/job_manager = null
 
 	var/list/hidden_categories = null
 

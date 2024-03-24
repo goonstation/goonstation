@@ -20,13 +20,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	seedcolor = "#AA2222"
 	crop = /obj/item/plant/flower/rose
 	commuts = list(/datum/plant_gene_strain/immunity_radiation,/datum/plant_gene_strain/damage_res/bad)
-
-	HYPinfusionP(var/obj/item/seed/S,var/reagent)
-		..()
-		var/datum/plantgenes/DNA = S.plantgenes
-		if (!DNA) return
-		if (reagent == "luminol")
-			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/rose/holorose)
+	mutations = list(/datum/plantmutation/rose/holorose)
 
 /datum/plant/flower/sunflower
 	name = "Sunflower"

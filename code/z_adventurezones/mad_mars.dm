@@ -77,8 +77,8 @@
 
 	Entered(mob/living/carbon/M as mob )
 		..()
-		SPAWN(0.8)
-			if(ishuman(M))
+		if(ishuman(M))
+			SPAWN(0.8)
 				var/image/F = image('icons/misc/mars_outpost.dmi', icon_state = "footprint", dir = M.dir)
 				src.overlays += F
 				sleep(20 SECONDS)

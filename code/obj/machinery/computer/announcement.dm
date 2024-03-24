@@ -42,6 +42,8 @@
 			src.unlocked = check_access(ID, 1)
 			boutput(user, SPAN_NOTICE("You insert [W]."))
 			update_status()
+			return
+		..()
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)

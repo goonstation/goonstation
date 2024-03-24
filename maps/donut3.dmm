@@ -29960,6 +29960,9 @@
 	icon_state = "2-8"
 	},
 /obj/disposalpipe/segment,
+/obj/decal/stage_edge{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "jcb" = (
@@ -59477,6 +59480,9 @@
 /area/station/turret_protected/ai_upload)
 "sbi" = (
 /obj/disposalpipe/junction/middle/south,
+/obj/decal/stage_edge{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "sbn" = (
@@ -71174,6 +71180,12 @@
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/medical/breakroom)
+"vFq" = (
+/obj/decal/stage_edge{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "vFt" = (
 /obj/decal/tile_edge/line/purple{
 	icon_state = "tile1"
@@ -121739,7 +121751,7 @@ lJa
 pwN
 pwN
 aPl
-pwN
+vFq
 sbi
 jbV
 ask

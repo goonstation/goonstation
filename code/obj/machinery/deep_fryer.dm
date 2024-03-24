@@ -165,9 +165,6 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		UnsubscribeProcess()
 		return
 
-	if (!src.fryitem.reagents)
-		src.fryitem.create_reagents(50)
-
 	src.reagents.trans_to(src.fryitem, 2)
 
 	if (src.cooktime < 60)
@@ -207,6 +204,10 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	src.cooktime = 0
 	src.fryitem = frying
 	src.UpdateIcon()
+	if (!src.fryitem.reagents)
+		src.fryitem.create_reagents(50)
+	if (round(src.fryitem.reagents.total_volume, 1) == round(src.fryitem.reagents.maximum_volume, 1)) //I LOVE FLOATING POINTS
+		src.fryitem.reagents.maximum_volume += 25
 	SubscribeToProcess()
 
 /obj/machinery/deep_fryer/proc/fryify(atom/movable/thing, burnt=FALSE)

@@ -308,7 +308,7 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 	// or not the mutation will actually appear is HYPmutationcheck_full.
 	if(!P || !DNA)
 		return
-	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer))
+	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer) || S?.dont_mutate)
 		return
 	if(P.mutations.len)
 		for (var/datum/plantmutation/MUT in P.mutations)
@@ -321,7 +321,7 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 						chance += M.chance_mod
 			chance = clamp(chance*frequencymult, 0, 100)
 			if(prob(chance))
-				if(HYPmutationcheck_full(P,DNA,MUT))
+				if(HYPmutationcheck_full(DNA,MUT))
 					DNA.mutation = HY_get_mutation_from_path(MUT.type)
 					MUT.HYPon_mutation_general(P, DNA)
 					if(PP)
@@ -411,7 +411,7 @@ proc/HYPmutateDNA(var/datum/plantgenes/DNA,var/severity = 1)
 	DNA.potency += rand(-5 * severity,5 * severity)
 	DNA.endurance += rand(-3 * severity,3 * severity)
 
-proc/HYPmutationcheck_full(var/datum/plant/growing,var/datum/plantgenes/DNA,var/datum/plantmutation/MUT)
+proc/HYPmutationcheck_full(var/datum/plantgenes/DNA,var/datum/plantmutation/MUT)
 	// This proc iterates through all of the various boundaries and requirements a mutation must
 	// have to appear, and if all of them are matchedit gives the green light to go ahead and
 	// add it - though there's still a % chance involved after this check passes which is handled

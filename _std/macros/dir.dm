@@ -3,24 +3,29 @@
 #define SOUTHEAST_UNIQUE (1<<8)
 #define NORTHEAST_UNIQUE (1<<9)
 
-var/global/list
-	cardinal = list(NORTH, SOUTH, EAST, WEST)
-	ordinal = list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
-	ordinal_unique = list(NORTHEAST_UNIQUE, SOUTHEAST_UNIQUE, SOUTHWEST_UNIQUE, NORTHWEST_UNIQUE)
-	alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
-	alldirs_unique = list(NORTH, SOUTH, EAST, WEST, NORTHEAST_UNIQUE, SOUTHEAST_UNIQUE, SOUTHWEST_UNIQUE, NORTHWEST_UNIQUE)
-	modulo_angle_to_dir = list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST)
-	dirnames = list("north"=NORTH, "south"=SOUTH, "east"=EAST, "west"=WEST, "northeast"=NORTHEAST, "southeast"=SOUTHEAST, "southwest"=SOUTHWEST, "northwest"=NORTHWEST)
+/// Never Soggy Eat Waffles
+var/global/list/cardinal = list(NORTH, SOUTH, EAST, WEST)
+/// Diagonal directions
+var/global/list/ordinal = list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
+var/global/list/ordinal_unique = list(NORTHEAST_UNIQUE, SOUTHEAST_UNIQUE, SOUTHWEST_UNIQUE, NORTHWEST_UNIQUE)
+/// Every direction known to 2D tile-grid-locked spessmen
+var/global/list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
+var/global/list/alldirs_unique = list(NORTH, SOUTH, EAST, WEST, NORTHEAST_UNIQUE, SOUTHEAST_UNIQUE, SOUTHWEST_UNIQUE, NORTHWEST_UNIQUE)
+var/global/list/modulo_angle_to_dir = list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST)
+/// Assoc. list of dirs like `"north"=NORTH`
+var/global/list/dirnames = list("north"=NORTH, "south"=SOUTH, "east"=EAST, "west"=WEST, "northeast"=NORTHEAST, "southeast"=SOUTHEAST, "southwest"=SOUTHWEST, "northwest"=NORTHWEST)
+/// Assoc. list of dirs like `"[NORTH]" = "NORTH"`, useful for screen_loc
+var/global/list/dirvalues = list("[NORTH]" = "NORTH", "[SOUTH]" = "SOUTH", "[EAST]" = "EAST", "[WEST]" = "WEST", "[NORTHEAST]" = "NORTHEAST", "[SOUTHEAST]" = "SOUTHEAST", "[SOUTHWEST]" = "SOUTHWEST", "[NORTHWEST]" = "NORTHWEST")
 
-proc/dir_to_dirname(dir)
-	for(var/name in global.dirnames)
-		if(dirnames[name] == dir)
-			return name
+/// Returns the lowercase english word for a direction (num)
+/proc/dir_to_dirname(dir)
+	return lowertext(global.dirvalues["[dir]"])
 
-proc/dirname_to_dir(dir)
-	return global.dirnames[dir]
+/// Returns the direction (num) of a given lowercase english direction
+proc/dirname_to_dir(dirname)
+	return global.dirnames[dirname]
 
-/// returns true if a direction is cardinal
+/// Returns true if a direction is cardinal
 #define is_cardinal(DIR) (!((DIR - 1) & DIR))
 
 /// Given an angle, matches it to the closest direction and returns it.

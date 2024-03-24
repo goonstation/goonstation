@@ -4071,9 +4071,9 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (ON_COOLDOWN(src, "movement_delay", move_lag))
 			return
 		var/direction = text2num_safe(input.signal)
-		if (!direction)
+		if (!isnum_safe(direction))
 			direction = dirname_to_dir(input.signal)
-		if (!(direction in alldirs))
+		if (!(direction in alldirs) && direction != 0)
 			return
 		var/obj/item/storage/S = src.stored?.linked_item
 		if (!walk_check(S))

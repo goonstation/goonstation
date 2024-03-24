@@ -119,6 +119,12 @@
 	label = "blue"
 	desc = "An auto-injector containing pentetic acid, an experimental and aggressive chelation agent."
 
+/obj/item/reagent_containers/emergency_injector/omnizine
+	name = "emergency auto-injector (omnizine)"
+	initial_reagents = list("omnizine"=5)
+	label = "white"
+	desc = "An auto-injector containing omnizine, the manufacturer's label is scratched off."
+
 /obj/item/reagent_containers/emergency_injector/insulin
 	name = "emergency auto-injector (insulin)"
 	initial_reagents = "insulin"

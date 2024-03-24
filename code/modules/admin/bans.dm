@@ -97,7 +97,7 @@
 
 			del(targetClient)
 		else
-			logTheThing(LOG_DEBUG, "Bans: unable to find client to kick for banned ckey [ckey]")
+			logTheThing(LOG_DEBUG, ckey, "Bans: unable to find client to kick for banned ckey [ckey]")
 
 	/// Check if a ban exists
 	proc/check(ckey, comp_id, ip)

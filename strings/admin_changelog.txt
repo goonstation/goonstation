@@ -1,3 +1,12 @@
+(t)mon mar 13 24
+(u)Sovexe
+(*)The Job Manager has been remade in TGUI
+(t)mon mar 11 24
+(u)LeahTheTech
+(*)Added "Plant" buildmode that lets you plant plants in things. You can set the mutation and density of the plants.
+(t)fri mar 08 24
+(u)LeahTheTech
+(*)Added admin juggling ability for juggling people and things you shouldn't.
 (t)sun feb 25 24
 (u)Azrun
 (*)Caves added to Find Planets and Terrainify

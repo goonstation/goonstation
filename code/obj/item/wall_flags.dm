@@ -102,6 +102,6 @@
 	mlmachi
 		name = "\improper Achilean MLM pride flag"
 		icon_state = "mlmachi"
-		associated_flag = /obj/item/flag/mlmachi
+		associated_flag = /obj/decal/poster/flag/mlmachi
 		altside_flag = /obj/item/flag/mlmvinc
 
