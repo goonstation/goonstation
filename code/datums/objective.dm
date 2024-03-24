@@ -27,18 +27,18 @@ ABSTRACT_TYPE(/datum/objective)
 	proc/set_up()
 		return
 
-	/// Checks if a target is no longer considered in the round.
+	/// Checks if a mind is not considered alive for objectives.
 	/// Being a silicon (cyborg or AI) does not count.
-	proc/is_target_eliminated(datum/mind/target)
-		if (!target?.current)
+	proc/is_target_eliminated(datum/mind/M)
+		if (!M?.current)
 			return TRUE
-		if(isdead(target.current))
+		if(isdead(M.current))
 			return TRUE
-		if(inafterlife(target.current))
+		if(inafterlife(M.current))
 			return TRUE
-		if(isVRghost(target.current))
+		if(isVRghost(M.current))
 			return TRUE
-		if(!iscarbon(target.current))
+		if(!iscarbon(M.current))
 			return TRUE
 		return FALSE
 
