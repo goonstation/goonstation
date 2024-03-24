@@ -841,7 +841,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/burst)
 		projectiles = list(current_projectile)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
 /obj/item/gun/energy/blaster_carbine
@@ -1722,7 +1722,7 @@ TYPEINFO(/obj/item/gun/energy/cornicen3)
 	New()
 		set_current_projectile(new/datum/projectile/laser/plasma/auto)
 		projectiles = list(current_projectile,new/datum/projectile/laser/plasma/burst)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.5, 1.5, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.5)
 		..()
 
 	update_icon()
@@ -1825,7 +1825,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 		set_current_projectile(new/datum/projectile/energy_bolt/smgburst)
 
 		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/smgauto)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
 	update_icon()

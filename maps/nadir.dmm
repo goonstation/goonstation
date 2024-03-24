@@ -6306,6 +6306,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/office)
+"cPz" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "cPI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -6603,6 +6612,10 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 6;
 	icon_state = "ringrope"
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
@@ -10120,6 +10133,13 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/janitor/supply)
+"eBk" = (
+/obj/decal/boxingrope,
+/obj/grille/catwalk,
+/turf/simulated/floor/black/grime,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "eBt" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -11016,6 +11036,10 @@
 /obj/decal/boxingropeenter{
 	dir = 8
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -11251,6 +11275,10 @@
 	dir = 4
 	},
 /obj/stool,
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "eXy" = (
@@ -14201,6 +14229,9 @@
 /area/station/storage/warehouse)
 "glb" = (
 /obj/decal/boxingrope,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "gli" = (
@@ -14412,6 +14443,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/decal/stage_edge,
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -15338,7 +15370,8 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
-/turf/simulated/floor/specialroom/gym/alt,
+/obj/grille/catwalk,
+/turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
@@ -16379,6 +16412,16 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/east)
+"hbx" = (
+/obj/grille/catwalk,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/stage_edge,
+/turf/simulated/floor/black/grime,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "hbK" = (
 /obj/machinery/light,
 /obj/cable{
@@ -18068,6 +18111,14 @@
 	},
 /turf/simulated/floor/engine/caution/north,
 /area/listeningpost/power)
+"hHS" = (
+/obj/decal/boxingropeenter,
+/turf/simulated/floor/stairs{
+	dir = 1
+	},
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "hIn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19855,6 +19906,10 @@
 /obj/decal/boxingrope{
 	dir = 4
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -20299,6 +20354,10 @@
 "izU" = (
 /obj/decal/boxingrope{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
@@ -21644,6 +21703,10 @@
 /area/station/security/main)
 "jfZ" = (
 /obj/rack/organized/techstorage_med,
+/obj/item/circuitboard/siphon_control{
+	pixel_x = 5;
+	pixel_y = -7
+	},
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "jge" = (
@@ -23785,6 +23848,18 @@
 /turf/simulated/floor,
 /area/station/quartermaster/storage{
 	name = "Cargo Auxiliary Endpoint"
+	})
+"kci" = (
+/obj/grille/catwalk,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/stage_edge{
+	dir = 8
+	},
+/turf/simulated/floor/black/grime,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
 	})
 "kcx" = (
 /obj/machinery/camera{
@@ -29118,6 +29193,19 @@
 	dir = 1
 	},
 /area/station/hallway/primary/northwest)
+"mcK" = (
+/obj/grille/catwalk,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/stage_edge{
+	dir = 8
+	},
+/turf/simulated/floor/black/grime,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "mdl" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/machinery/light{
@@ -32821,6 +32909,10 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "nHe" = (
@@ -32951,6 +33043,9 @@
 "nJl" = (
 /obj/decal/boxingrope,
 /obj/disposalpipe/segment/vertical,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "nJn" = (
@@ -34611,6 +34706,10 @@
 /obj/decal/boxingrope{
 	dir = 8
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "ozU" = (
@@ -34920,6 +35019,15 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
+"oHc" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "oHj" = (
 /obj/machinery/manufacturer/robotics,
 /obj/item/device/radio/intercom/medical{
@@ -35940,6 +36048,14 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
+	})
+"pdd" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/stairs,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
 	})
 "pds" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -38199,6 +38315,9 @@
 	})
 "qcT" = (
 /obj/decal/boxingropeenter,
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "qdz" = (
@@ -38505,6 +38624,9 @@
 /area/station/maintenance/inner/east)
 "qlx" = (
 /obj/decal/boxingropeenter,
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -39089,6 +39211,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"qxX" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "qxZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39383,7 +39512,8 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
 	},
-/turf/simulated/floor/specialroom/gym/alt,
+/obj/grille/catwalk,
+/turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
@@ -43383,6 +43513,10 @@
 /obj/decal/boxingrope{
 	dir = 8
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -43939,6 +44073,16 @@
 /area/station/bridge/customs{
 	name = "Bridge Reception"
 	})
+"sNH" = (
+/obj/decal/boxingrope{
+	dir = 8
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "sNK" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -44546,6 +44690,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
+"tbf" = (
+/obj/decal/boxingrope{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "tbq" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
@@ -45574,6 +45730,10 @@
 "txs" = (
 /obj/decal/boxingrope{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -48280,6 +48440,10 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 10
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "uDy" = (
@@ -49185,12 +49349,19 @@
 	dir = 10;
 	icon_state = "ringrope"
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
 "vbY" = (
 /obj/decal/boxingrope,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -49709,6 +49880,10 @@
 	dir = 8
 	},
 /obj/stool,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "vrF" = (
@@ -52492,6 +52667,14 @@
 	dir = 4
 	},
 /area/station/crew_quarters/market)
+"wAX" = (
+/obj/disposalpipe/segment/vertical,
+/obj/decal/tile_edge/line/grey{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "wBt" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black/grime,
@@ -91966,7 +92149,7 @@ qmk
 bVu
 qxZ
 gfw
-ozL
+sNH
 ozL
 vrx
 uDj
@@ -92268,7 +92451,7 @@ hFL
 nlU
 eQn
 rax
-uzl
+qxX
 nSd
 uzl
 qcT
@@ -92570,7 +92753,7 @@ vhP
 fXA
 kbv
 oLp
-uzl
+qxX
 uzl
 uzl
 glb
@@ -92872,7 +93055,7 @@ nlU
 xhs
 fpY
 pBT
-pRy
+wAX
 fCR
 pRy
 nJl
@@ -108658,7 +108841,7 @@ eTx
 sCL
 sCL
 vbO
-oZL
+hbx
 nQG
 eIV
 jDV
@@ -108955,12 +109138,12 @@ mlm
 mlm
 mlm
 txY
-qlx
-pRb
+hHS
+oHc
 pRb
 pRb
 vbY
-oZL
+hbx
 bSU
 kcY
 kRh
@@ -109257,8 +109440,8 @@ nQG
 nQG
 bSU
 nQG
-vbY
-pRb
+eBk
+cPz
 ktO
 pRb
 vbY
@@ -109559,12 +109742,12 @@ fFt
 apM
 apM
 jTn
-vbY
-pRb
+eBk
+cPz
 pRb
 pRb
 qlx
-oZL
+pdd
 uod
 kRh
 kRh
@@ -109862,7 +110045,7 @@ kRh
 nQG
 oZL
 qEV
-izU
+tbf
 izU
 iti
 cVe
@@ -110164,10 +110347,10 @@ kRh
 nQG
 fhi
 apM
-kXF
-apM
-apM
-apM
+mcK
+kci
+kci
+kci
 uWj
 kRh
 kRh

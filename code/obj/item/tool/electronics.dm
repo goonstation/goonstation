@@ -168,6 +168,10 @@
 				viewstat = 0
 				boutput(user, SPAN_NOTICE("You unsecure the [src]."))
 			else if(secured == 2)
+				if(!isturf(user.loc))
+					boutput(user, SPAN_ALERT("You can't deploy the [src] from in here!"))
+					return
+
 				boutput(user, SPAN_ALERT("You deploy the [src]!"))
 				logTheThing(LOG_STATION, user, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
 				if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))

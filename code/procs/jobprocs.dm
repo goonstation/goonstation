@@ -803,6 +803,9 @@ var/global/totally_random_jobs = FALSE
 		PDA.ownerAssignment = JOB.name
 		PDA.name = "PDA-[src.real_name]"
 
+		if(src.mind)
+			src.mind.originalPDA = PDA
+
 	boutput(src, SPAN_NOTICE("Your pin to your ID is: [C.pin]"))
 	if (src.mind)
 		src.mind.store_memory("Your pin to your ID is: [C.pin]")
