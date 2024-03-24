@@ -25010,6 +25010,9 @@
 /obj/machinery/status_display{
 	pixel_y = -30
 	},
+/obj/storage/secure/crate/plasma/armory/anti_biological{
+	req_access = list(38)
+	},
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -31570,9 +31573,9 @@
 	req_access = null
 	},
 /obj/mapping_helper/access/hos,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/black,
-/area/station/security/hos)
+/area/cruiser)
 "mOf" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -35957,7 +35960,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
 /obj/machinery/computer/riotgear{
 	dir = 8;
 	pixel_x = 28
@@ -37081,10 +37083,6 @@
 /obj/critter/opossum/morty,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
-"rcS" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
 "rdb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -37160,6 +37158,9 @@
 /area/station/medical/morgue)
 "rex" = (
 /obj/disposalpipe/segment/food,
+/obj/stool/chair/office/red{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "rfa" = (
@@ -76037,7 +76038,7 @@ qYU
 fko
 bgz
 dHR
-rcS
+bgz
 bld
 tvE
 bgz
