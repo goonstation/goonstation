@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/datum/objective)
 
 		if(target?.current)
 			if(isdead(target.current) || !iscarbon(target.current) || inafterlife(target.current))
-				if(in_centcom(target.current))
+				if (in_centcom(target.current))
 					return 1
 				else
 					return 0
