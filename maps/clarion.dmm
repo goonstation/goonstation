@@ -13218,6 +13218,10 @@
 	pixel_x = 5
 	},
 /obj/disposalpipe/trunk/mail,
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/station/security/hos)
 "bls" = (
@@ -15565,12 +15569,25 @@
 	},
 /area/station/hallway/secondary/central)
 "bzM" = (
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
+/obj/table/auto,
+/obj/item/device/radio{
+	pixel_x = -9;
+	pixel_y = 6
 	},
-/turf/simulated/floor/black,
-/area/station/security/hos)
+/obj/item/device/radio{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/device/radio{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/device/gps{
+	pixel_x = 11;
+	pixel_y = 7
+	},
+/turf/simulated/floor/circuit/off,
+/area/station/communications/office)
 "bzS" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -19178,15 +19195,10 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "dlx" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 4;
-	setup_os_string = "ZETA_MAINFRAME"
-	},
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "4-8"
 	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/circuit/off,
+/turf/simulated/floor/black,
 /area/station/communications/office)
 "dlP" = (
 /obj/cable{
@@ -20249,10 +20261,15 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "efw" = (
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
+/obj/table/auto,
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 4;
+	pixel_y = 10
 	},
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = -1
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/communications/office)
 "egk" = (
 /obj/disposalpipe/segment,
@@ -20401,7 +20418,16 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/east)
 "ekP" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/table/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 2
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/communications/office)
 "elh" = (
 /obj/disposalpipe/junction{
@@ -22230,7 +22256,11 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/machinery/power/data_terminal,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "E APC";
+	pixel_x = 24
+	},
 /turf/simulated/floor/circuit/off,
 /area/station/communications/office)
 "fNa" = (
@@ -33228,12 +33258,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"ocM" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/communications/office)
 "odA" = (
 /obj/strip_door,
 /obj/cable{
@@ -38097,24 +38121,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "rTC" = (
-/obj/table/auto,
-/obj/item/device/radio{
-	pixel_x = -9;
-	pixel_y = 6
-	},
-/obj/item/device/radio{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/device/radio{
-	pixel_x = -1;
-	pixel_y = 8
-	},
-/obj/item/device/gps{
-	pixel_x = 11;
-	pixel_y = 7
-	},
-/turf/simulated/floor/circuit/off,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/communications/office)
 "rUk" = (
 /obj/machinery/camera{
@@ -38972,18 +38979,6 @@
 	icon_state = "fblue2"
 	},
 /area/station/medical/head)
-"syy" = (
-/obj/table/auto,
-/obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged{
-	pixel_x = 7;
-	pixel_y = 11
-	},
-/obj/item/cell/supercell/charged{
-	pixel_x = 2
-	},
-/turf/simulated/floor/circuit/off,
-/area/station/communications/office)
 "szi" = (
 /obj/machinery/light/small/sticky/cool/very{
 	dir = 1
@@ -41111,17 +41106,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor,
 /area/station/science/lab)
-"uiq" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/electrical{
-	pixel_x = 4;
-	pixel_y = 10
-	},
-/obj/item/disk/data/floppy/read_only/communications{
-	pixel_x = -1
-	},
-/turf/simulated/floor/circuit/off,
-/area/station/communications/office)
 "uja" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/ce/private)
@@ -42567,14 +42551,16 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "voa" = (
-/obj/machinery/door/airlock/pyro/command{
-	name = "Communications Office"
+/obj/machinery/computer3/terminal/zeta{
+	dir = 4;
+	setup_os_string = "ZETA_MAINFRAME"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
+/obj/cable{
+	icon_state = "0-4"
 	},
-/area/station/turret_protected/ai)
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/circuit/off,
+/area/station/communications/office)
 "vpa" = (
 /obj/machinery/chem_master{
 	name = "Rusty CheMaster"
@@ -78130,7 +78116,7 @@ uPS
 cuC
 aJf
 jtY
-bzM
+jtY
 biM
 bll
 leh
@@ -78386,12 +78372,12 @@ tKE
 csQ
 tFW
 awa
-ekP
-ekP
-ekP
-ekP
-ekP
-ekP
+rTC
+rTC
+rTC
+rTC
+rTC
+rTC
 boQ
 hVf
 brc
@@ -78643,12 +78629,12 @@ bda
 iwR
 clS
 vSX
-ekP
-dlx
-uiq
-syy
 rTC
+voa
+efw
 ekP
+bzM
+rTC
 boR
 qcM
 brm
@@ -78901,7 +78887,7 @@ gRL
 qko
 boM
 fzx
-ocM
+dlx
 kcn
 kcn
 kcn
@@ -79157,7 +79143,7 @@ dpZ
 osW
 vYR
 oAz
-efw
+rTC
 eJJ
 lhN
 pop
@@ -79414,7 +79400,7 @@ iOK
 bem
 bem
 rgk
-voa
+bem
 bem
 bem
 bem
