@@ -364,6 +364,7 @@ toxic - poisons
 		damage = 20
 		cost = 3
 		shot_number = 3
+
 		auto
 			fullauto_valid = 1
 			cost = 1

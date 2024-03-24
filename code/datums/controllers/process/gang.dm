@@ -82,10 +82,10 @@
 	setup()
 		schedule_interval = GANG_CRATE_INITIAL_DROP
 		var/list/area/areas = get_accessible_station_areas()
-		for(var/area/area in areas)
-			if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked || istype(areas[area], /area/station/turret_protected))
+		for(var/area_name in areas)
+			if(istype(areas[area_name], /area/station/security) || areas[area_name].teleport_blocked || istype(areas[area_name], /area/station/turret_protected))
 				continue
-			potential_hot_zones += areas[area]
+			potential_hot_zones += areas[area_name]
 	doWork()
 		if (!istype(ticker.mode, /datum/game_mode/gang))
 			src.disable()

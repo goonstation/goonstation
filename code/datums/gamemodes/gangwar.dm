@@ -944,11 +944,13 @@ proc/broadcast_to_all_gangs(var/message)
 
 	/// Checks a tile has no nearby claims from other tags
 	proc/check_tile_unclaimed(turf/target, mob/user)
+		// check it's far enough from another tag to claim
 		for_by_tcl(tag, /obj/decal/gangtag)
 			if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_SIGHT_RANGE)) continue
 			if (tag.owners == user.get_gang() && tag.active)
 				boutput(user, SPAN_ALERT("This is too close to an existing tag!"))
 				return
+		// check it's far enough from lockers
 		for_by_tcl(locker, /obj/ganglocker)
 			if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_SIGHT_RANGE_LOCKER)) continue
 			if (locker.gang == user.get_gang())
@@ -965,11 +967,11 @@ proc/broadcast_to_all_gangs(var/message)
 			if (existingTag.owners != user.get_gang())
 				//if we're tagging over someone's tag, double our search radius
 				//(this will find any tags whose influence intersects with the target tag's influence)
-				for (var/obj/ganglocker/locker in range(GANG_TAG_INFLUENCE_LOCKER+GANG_TAG_INFLUENCE,target))
+				for_by_tcl(locker, /obj/ganglocker)
 					if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE_LOCKER+GANG_TAG_INFLUENCE)) continue
 					if (locker.gang == user.get_gang())
 						validLocation = TRUE
-				for (var/obj/decal/gangtag/otherTag in range(GANG_TAG_INFLUENCE*2,target))
+				for_by_tcl(otherTag, /obj/decal/gangtag)
 					if(!IN_EUCLIDEAN_RANGE(otherTag, target, GANG_TAG_INFLUENCE*2)) continue
 					if (otherTag.owners && otherTag.owners == user.get_gang())
 						validLocation = TRUE
@@ -1105,9 +1107,6 @@ proc/broadcast_to_all_gangs(var/message)
 	onUpdate()
 		..()
 		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		if(!S.check_tile_unclaimed(target_turf, owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(src.time_spent() > next_spray)
@@ -1383,7 +1382,10 @@ proc/broadcast_to_all_gangs(var/message)
 			message_admins("[target.key] respawned as a gang member for [src.gang.gang_name].")
 			log_respawn_event(target, "gang member respawn", src.gang.gang_name)
 			boutput(H, SPAN_NOTICE("<b>You have been respawned as a gang member!</b>"))
-			boutput(H, SPAN_ALERT("<b>You're allied with [src.gang.gang_name]! Work with your leader, [src.gang.leader.current.real_name], to become the baddest gang ever!</b>"))
+			if (src.gang.leader)
+				boutput(H, SPAN_ALERT("<b>You're allied with [src.gang.gang_name]! Work with your leader, [src.gang.leader.current.real_name], to become the baddest gang ever!</b>"))
+			else
+				boutput(H, SPAN_ALERT("<b>You're allied with [src.gang.gang_name]! Work to become the baddest gang ever!</b>"))
 			get_gang_gear(H)
 
 	/// Tries to find a ghost to respawn
@@ -2014,6 +2016,19 @@ proc/broadcast_to_all_gangs(var/message)
 		H.remove_ailments()
 
 		setalive(H)
+
+		var/mob/G = find_ghost_by_key((H.mind?.key || H.ghost?.mind?.key))
+		logTheThing(LOG_COMBAT, H, "is resuscitated with a JankTank at [log_loc(H)].")
+
+		if (G)
+			if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
+				G.show_text(SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
+				G.ghostize()?.mind?.transfer_to(H)
+			else
+				G.show_text(SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
+				G.mind?.transfer_to(H)
+			qdel(G)
+			H.visible_message(SPAN_ALERT("<b>[H]</b> [pick("barfs up","spews", "projectile vomits")] as they're wrenched cruelly back to life!"),SPAN_ALERT("<b>[pick("JESUS CHRIST","THE PAIN!","IT BURNS!!")]</b>"))
 		SPAWN(0) //some part of the vomit proc makes these duplicate
 			H.reagents.clear_reagents()
 			H.reagents.add_reagent("atropine", 2.5) //don't slip straight back into crit

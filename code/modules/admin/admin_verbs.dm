@@ -471,8 +471,8 @@ var/list/admin_verbs = list(
 		/client/proc/clear_string_cache,
 		/client/proc/test_flock_panel,
 		/client/proc/temporary_deadmin_self,
-		/verb/rebuild_flow_networks,
-		/verb/print_flow_networks,
+		/client/proc/rebuild_flow_networks,
+		/client/proc/print_flow_networks,
 		/client/proc/toggle_hard_reboot,
 		/client/proc/cmd_modify_respawn_variables,
 		/client/proc/set_nukie_score,
@@ -686,9 +686,8 @@ var/list/special_pa_observing_verbs = list(
 /client/proc/admin_invisible()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Set Invisible"
-	if(!src.holder)
-		alert("You are not an admin")
-		return
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(src.mob.mouse_opacity)
 		src.mob.mouse_opacity = 0
 		src.mob.alpha = 0
@@ -701,9 +700,8 @@ var/list/special_pa_observing_verbs = list(
 /client/proc/admin_observe()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Set Observe"
-	if(!src.holder)
-		alert("You are not an admin")
-		return
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(!src.holder.popuptoggle) //Hrngh
 		var/rank = src.holder.rank
@@ -723,9 +721,8 @@ var/list/special_pa_observing_verbs = list(
 /client/proc/admin_play()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Set Play"
-	if(!src.holder)
-		alert("You are not an admin")
-		return
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(!src.holder.popuptoggle) //Hrngh x2
 		var/rank = src.holder.rank
@@ -758,6 +755,7 @@ var/list/special_pa_observing_verbs = list(
 	set name = "Player Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (src.holder.tempmin)
 		logTheThing(LOG_ADMIN, usr, "tried to access the player panel")
 		logTheThing(LOG_DIARY, usr, "tried to access the player panel", "admin")
@@ -774,6 +772,8 @@ var/list/special_pa_observing_verbs = list(
 		logTheThing(LOG_ADMIN, src, "tried to access the ban panel")
 		logTheThing(LOG_DIARY, src, "tried to access the ban panel", "admin")
 		message_admins("[key_name(src)] tried to access the ban panel but was denied.")
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (isnull(src.holder.ban_panel))
 		src.holder.ban_panel = new
 	src.holder.ban_panel.ui_interact(src.mob)
@@ -781,12 +781,16 @@ var/list/special_pa_observing_verbs = list(
 /client/proc/jobbans(key as text)
 	set name = "Jobban Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	src.holder?.Topic(null, list("action"="jobbanpanel","target"=key))
 	return
 
 /client/proc/game_panel()
 	set name = "Game Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (src.holder)
 		src.holder.Game()
 	return
@@ -794,6 +798,8 @@ var/list/special_pa_observing_verbs = list(
 /client/proc/game_panel_but_called_secrets()
 	set name = "Secrets"
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (src.holder)
 		src.holder.Game()
 	return
@@ -802,6 +808,7 @@ var/list/special_pa_observing_verbs = list(
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Stealth Mode"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	//fuck u
 	src.holder.set_stealth_mode(null, 0)
@@ -855,6 +862,7 @@ var/list/special_pa_observing_verbs = list(
 	set name = "Alternate Key"
 	set desc = "Shows your key as something else!"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	src.holder.set_alt_key(null, 0)
 
@@ -898,6 +906,7 @@ var/list/special_pa_observing_verbs = list(
 	set name = "OOC (Un)Ban"
 	set desc = "Ban or unban a player from using OOC"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/mob/target
 	var/client/selection = tgui_input_list(src.mob, "Please, select a player!", "OOC Ban", clients)
 	if (!selection)
@@ -920,6 +929,7 @@ var/list/special_pa_observing_verbs = list(
 	set name = "Warn"
 	set desc = "Warn a player"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(M.client && M.client.holder && (M.client.holder.level >= src.holder.level))
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 		return
@@ -942,6 +952,8 @@ var/list/special_pa_observing_verbs = list(
 /client/proc/clear_area_overlays()
 	set name = "Clear Area Overlays"
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	for(var/area/A in world)
 		A.icon_state = ""
@@ -950,6 +962,8 @@ var/list/fun_images = list()
 /client/proc/show_image_to_all()
 	set name = "Show Image to All"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(fun_images.len)
 		switch(alert("There is already an existing image.", "Warning", "Ignore", "Clear", "Cancel"))
@@ -976,6 +990,8 @@ var/list/fun_images = list()
 	set name = "Show Rules to Player"
 	set popup_menu = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/crossness = tgui_alert(src.mob, "How cross are we with this guy?", "Enter Crossness", list("A bit", "A lot", "Cancel"))
 	if (!crossness || crossness == "Cancel")
@@ -1008,6 +1024,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(!O.fingerprints_full || !length(O.fingerprints_full))
 		alert("There are no fingerprints on this object.", null, null, null, null, null)
 		return
@@ -1026,6 +1043,7 @@ var/list/fun_images = list()
 	set desc = "Respawn yourself with a special effect"
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/list/respawn_types = list("Heavenly", "Demonically", "Beam")
 	var/selection = tgui_input_list(src.mob, "Select Respawn type.", "Cinematic Respawn", respawn_types)
@@ -1050,6 +1068,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (!cli)
 		cli = tgui_input_list(src.mob, "Please, select a player!", "Respawn As", null, null, clients)
@@ -1078,6 +1097,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	respawn_as_self_internal(new_self=TRUE, jobstring = J.name)
 
@@ -1087,6 +1107,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	respawn_as_self_internal(new_self=TRUE)
 
@@ -1097,12 +1118,14 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	respawn_as_self_internal(new_self=FALSE)
 
 
 /client/proc/respawn_as_self_internal(new_self=FALSE, jobstring = "Staff Assistant")
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (!src.preferences)
 		boutput(src, SPAN_ALERT("No preferences found on your client."))
@@ -1150,6 +1173,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = FALSE
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/list/ckeys = splittext(input(src, "Input list of players", "Ckeys with spaces as delimiters", null) as null|text, " ")
 	if (!length(ckeys))
@@ -1170,6 +1194,8 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Humanize"
 	set popup_menu = 0
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (!ticker)
 		SPAWN(0)
@@ -1227,6 +1253,8 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Pop off everyone's limbs"
 	set desc = "Oh christ no don't do this"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(alert("Really pop off everyone's limbs?", "JESUS CHRIST", "Yes, I'm a crazy bastard", "No") == "Yes, I'm a crazy bastard")
 		logTheThing(LOG_ADMIN, src, "popped off all limbs.")
@@ -1247,6 +1275,8 @@ var/list/fun_images = list()
 	set name = "Map World"
 	set desc = "Takes a series of screenshots for mapping"
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	//Gotta prevent dummies
 	var/confirm = tgui_alert(src.mob, "WARNING: This proc should absolutely not be run on a live server! Make sure you know what you are doing!", "WARNING", list("Cancel", "Proceed"))
@@ -1379,6 +1409,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	view_client_compid_list(usr, C)
 
@@ -1387,6 +1418,7 @@ var/list/fun_images = list()
 	set name = "blobsay"
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (!src.mob || src.player_mode)
 		return
 
@@ -1419,6 +1451,7 @@ var/list/fun_images = list()
 	set name = "hivesay"
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (!src.mob || src.player_mode)
 		return
 
@@ -1457,6 +1490,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "silisay"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (!src.mob || src.player_mode)
 		return
 
@@ -1488,6 +1522,7 @@ var/list/fun_images = list()
 	set name = "dronesay"
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (!src.mob || src.player_mode)
 		return
 
@@ -1521,6 +1556,7 @@ var/list/fun_images = list()
 	set name = "marsay"
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (!src.mob || src.player_mode)
 		return
 
@@ -1538,6 +1574,7 @@ var/list/fun_images = list()
 	set name = "flocksay"
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (!src.mob || src.player_mode)
 		return
 
@@ -1556,6 +1593,8 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set desc = "Sends a message as voice to all players"
 	set popup_menu = 0
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (!isadmin(src) && !src.non_admin_dj)
 		boutput(src, "Only administrators or those with access may use this command.")
@@ -1598,6 +1637,7 @@ var/list/fun_images = list()
 	set desc = "Assigns someone a pet!  Woo!"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (!M)
 		M = tgui_input_list(src.mob, "Choose a target.", "Selection", mobs)
@@ -1629,6 +1669,7 @@ var/list/fun_images = list()
 	set desc = "Assigns everyone a pet! Enter part of the path of the thing you want to give."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(isnull(pet_input))
 		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
@@ -1661,6 +1702,7 @@ var/list/fun_images = list()
 	set desc = "Assigns every living player a pet! Enter part of the path of the thing you want to give."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(isnull(pet_input))
 		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
@@ -1695,6 +1737,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set desc = "Create a custom object spewing grenade"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/new_grenade = tgui_alert(src.mob, "Use the new thing throwing grenade?", "Cool new grenade?", list("Yes", "No")) == "Yes"
 	var/obj_input = input("Enter path of the object you want the grenade to have or enter a part of the path to search", "Enter Path") as null|text
@@ -1724,6 +1767,7 @@ var/list/fun_images = list()
 	set name = "Admin Changelog"
 	set desc = "Show or hide the admin changelog"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (winexists(src, "adminchanges") && winget(src, "adminchanges", "is-visible") == "true")
 		src.Browse(null, "window=adminchanges")
@@ -1751,6 +1795,7 @@ var/list/fun_images = list()
 	set desc = "Simply removes you from existence"
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (!src.mob)
 		boutput(src, SPAN_ALERT("You don't even exist!"))
@@ -1778,6 +1823,7 @@ var/list/fun_images = list()
 	set desc = "Remove some other dude from the mortal plain"
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (!M)
 		boutput(src, SPAN_ALERT("You need to select someone to remove!"))
@@ -1997,6 +2043,7 @@ var/list/fun_images = list()
 	set desc = "Send a notice to ghosts that something weird is happening at a person"
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(ghost_notifier)
 		ghost_notifier.send_notification(src, target, /datum/ghost_notification/observe/admin)
@@ -2007,6 +2054,7 @@ var/list/fun_images = list()
 	set desc = "Show everyone a fun loading screen hint."
 	set waitfor = FALSE
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (global.current_state != GAME_STATE_PREGAME)
 		return
@@ -2034,6 +2082,7 @@ var/list/fun_images = list()
 	set desc = "Tired of boring map gimmicks on the pregame screen? Try HTML!"
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	// Previous HTML (so you can replace without always resetting to the default)
 	if(pregameHTML)
 		if(alert("There's already some HTML shown. Do you want to remove or replace it?", "HTML clear?", "Remove", "Replace") == "Remove")
@@ -2078,6 +2127,7 @@ var/list/fun_images = list()
 	set desc = "Gives everyone a microbomb. You cannot undo this!!"
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	microbombs_4_everyone()
 
 
@@ -2108,6 +2158,7 @@ var/list/fun_images = list()
 	set desc = "Manually assign values to the nuke ops win/loss scoreboard."
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	DENY_TEMPMIN
 
 	var/win_value = input("Enter new win value.") as num
@@ -2128,6 +2179,7 @@ var/list/fun_images = list()
 	set desc = "Manually assign values to the Pod Wars Nanotrasen/Syndicate wins scoreboard."
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	DENY_TEMPMIN
 
 	var/nt_win_value = input("Enter new Nanotrasen win value.") as num
@@ -2148,6 +2200,7 @@ var/list/fun_images = list()
 	set desc = "Manually assign values to the Pod Wars Nanotrasen/Syndicate deaths scoreboard."
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	DENY_TEMPMIN
 
 	var/nt_death_value = input("Enter new Nanotrasen death value.") as num
@@ -2168,6 +2221,7 @@ var/list/fun_images = list()
 	set desc = "Wipe the intra-round stats of the nukeop commander's uplink purchases"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	DENY_TEMPMIN
 
 	var/confirm = input(usr, "Are you SURE you want to clear the stats?") in list("Yes", "No")
@@ -2184,6 +2238,7 @@ var/list/fun_images = list()
 	set name = "admin_interact"
 	set hidden = 1
 	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	src.client.admin_intent = 1
 	src.client.show_popup_menus = 0
 	src.update_cursor()
@@ -2193,6 +2248,7 @@ var/list/fun_images = list()
 	src.client.show_popup_menus = 1
 	src.update_cursor()
 	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 
 
 	if (parameters["right"])
@@ -2353,6 +2409,7 @@ var/list/fun_images = list()
 	set name = "VPN whitelist add"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	DENY_TEMPMIN
 	vpnckey = ckey(vpnckey)
 	try
@@ -2374,6 +2431,7 @@ var/list/fun_images = list()
 	set name = "VPN whitelist remove"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	DENY_TEMPMIN
 	vpnckey = ckey(vpnckey)
 	try
@@ -2394,6 +2452,7 @@ var/list/fun_images = list()
 	set name = "Lights Out"
 	set desc = "Force off all station lighting for a duration"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")
 		return
@@ -2412,6 +2471,8 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Flock cheats"
 	set desc = "Toggle cheats on or off on a particular flock"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/cheats = list(FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES, FLOCK_ACHIEVEMENT_CHEAT_COMPUTE)
 	var/cheat = tgui_input_list(src, "Pick a cheat to enable", "Flock cheats", cheats)
@@ -2436,6 +2497,7 @@ var/list/fun_images = list()
 	set name = "Upload Uncool Words"
 	set desc = "Upload a JSON file for the uncool words list"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	DENY_TEMPMIN
 
 	global.phrase_log?.upload_uncool_words()
@@ -2448,6 +2510,7 @@ var/list/fun_images = list()
 	set name = "Whitelist Add Temp"
 	set desc = "Temporarily whitelist a ckey (for this round only)"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	DENY_TEMPMIN
 
 	ckey = ckey(ckey)
@@ -2464,6 +2527,7 @@ var/list/fun_images = list()
 	set name = "Toggle Whitelist"
 	set desc = "Toggle the server whitelist on or off"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	DENY_TEMPMIN
 
 	var/current_status = config.whitelistEnabled ? "ON" : "OFF"
@@ -2512,6 +2576,7 @@ var/list/fun_images = list()
 	set name = "Set Conspiracy Objective"
 	set desc = "Set a custom objective for all conspirators. Works fine in non-conspiracy modes."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	//comedic type abuse time
 	var/datum/antagonist/conspirator/type = /datum/antagonist/conspirator
 	var/objective_text = input(usr, "Input a custom objective for the conspiracy to follow (leave blank for random)", "Custom objective")
@@ -2527,6 +2592,7 @@ var/list/fun_images = list()
 	set name = "Check Gamemode Stats"
 	set desc = "Check the stats for the current gamemode"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/nukie_wins = world.load_intra_round_value("nukie_win") || 0
 	var/nukie_losses = world.load_intra_round_value("nukie_loss") || 0
@@ -2548,6 +2614,7 @@ var/list/fun_images = list()
 	set name = "Distribute Tokens"
 	set desc = "Give all roundstart antagonists an antag token. For when you blown up server oops."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/list/players = list()
 	for (var/mob/M as anything in mobs)
 		for (var/datum/antagonist/antag in M?.mind?.antagonists)
@@ -2567,6 +2634,7 @@ var/list/fun_images = list()
 	set name = "Spawn All Of A Type"
 	set desc = "Creates one of every subtype instance of a type at your loc."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/spawn_input = input(src, "Enter path", "Enter Path") as null|text
 	if (spawn_input == "")
 		return
@@ -2587,6 +2655,13 @@ var/list/fun_images = list()
 		new type(T)
 	logTheThing(LOG_ADMIN, src, "Created [length(spawn_matches)] types of: [spawn_path] at ([log_loc(usr)]")
 	boutput(src, "Created [length(spawn_matches)] types.")
+
+/client/proc/cmd_admin_antag_popups()
+	set name = "View Special Role Popups"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+	get_singleton(/datum/antagPopups).showPanel()
 
 /client/proc/cmd_help()
 	set name = "command help"

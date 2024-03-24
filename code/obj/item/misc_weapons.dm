@@ -798,6 +798,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+	c_flags = ONBELT
 	var/makemeat = 1
 	HELP_MESSAGE_OVERRIDE({"Throw the knife at someone for a guaranteed short stun. Use the knife on a dead body to instantly turn it into meat."})
 
