@@ -173,6 +173,10 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "Circuit board (Announcement Computer)"
 	computertype = "/obj/machinery/computer/announcement"
 
+/obj/item/circuitboard/siphon_control
+	name = "Circuit board (Siphon Control)"
+	computertype = /obj/machinery/computer/siphon_control
+
 /obj/computerframe/meteorhit(obj/O as obj)
 	qdel(src)
 

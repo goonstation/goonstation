@@ -132,6 +132,7 @@ var/global/deathConfettiActive = 0
 	set name = "Toggle Death Confetti"
 	set desc = "Toggles the fun confetti effect and sound whenever a mob dies"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	deathConfettiActive = !deathConfettiActive
 
@@ -222,6 +223,7 @@ var/global/deathConfettiActive = 0
 	set desc = "A hard reboot is when the game instance outright ends, and the backend server reinitialises it"
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/hardRebootFileExists = fexists(hardRebootFilePath)
 	var/logMessage = ""

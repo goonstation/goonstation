@@ -5,7 +5,8 @@ var/datum/job/priority_job = null
 	req_access = list(access_change_ids) //maybe should just be heads, but I like this being an HoP/captain thing
 
 	initialize()
-		..()
+		if (..())
+			return TRUE
 		src.master.temp = null //clear the screen
 		var/intro_text = {"<br>Welcome to RoleControl!
 		<br>Recruitment management system.
