@@ -101,16 +101,17 @@ ABSTRACT_TYPE(/datum/objective)
 
 /datum/objective/regular/assassinate/bodyguard //the INVERSE of an assassin
 	check_completion()
-		if(!target?.current)
-			return FALSE
 
-		if(isdead(target.current) || !iscarbon(target.current) || inafterlife(target.current))
-			if(in_centcom(owner.current))
-				return 1
+		if(target?.current)
+			if(isdead(target.current) || !iscarbon(target.current) || inafterlife(target.current))
+				if(in_centcom(target.current))
+					return 1
+				else
+					return 0
 			else
-				return 0
+				return 1
 		else
-			return 1
+			return 0
 
 	create_objective_string(datum/mind/target)
 		if(!(target?.current))
