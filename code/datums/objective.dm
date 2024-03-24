@@ -27,9 +27,9 @@ ABSTRACT_TYPE(/datum/objective)
 	proc/set_up()
 		return
 
-	/// Check if a mind's current mob is eliminated from the round
-	/// If `silicons_eliminated` is FALSE, then the target being a cyborg/AI counts as surviving
-	proc/is_target_eliminated(datum/mind/target, silicons_eliminated=TRUE)
+	/// Checks if a target is no longer considered in the round.
+	/// Being a silicon (cyborg or AI) does not count.
+	proc/is_target_eliminated(datum/mind/target)
 		if (!target?.current)
 			return TRUE
 		if(isdead(target.current))
@@ -38,12 +38,8 @@ ABSTRACT_TYPE(/datum/objective)
 			return TRUE
 		if(isVRghost(target.current))
 			return TRUE
-		if(silicons_eliminated)
-			if(!iscarbon(target.current))
-				return TRUE
-		else
-			if(!iscarbon(target.current) && !isrobot(target.current) && !isAI(target.current))
-				return TRUE
+		if(!iscarbon(target.current))
+			return TRUE
 		return FALSE
 
 ///////////////////////////////////////////////////
