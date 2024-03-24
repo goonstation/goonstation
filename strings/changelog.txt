@@ -1,4 +1,9 @@
 
+(t)sun mar 24 24
+(u)JORJ949
+(p)18287
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added a camera to the top right of Inner Engineering on Cog1. AIs rejoice.
 (t)fri mar 22 24
 (u)JORJ949
 (p)18263
