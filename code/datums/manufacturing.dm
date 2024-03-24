@@ -1738,7 +1738,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("MET-1","MET-2","CON-1","ALL")
 	item_amounts = list(15,5,10,5)
 	item_outputs = list(/obj/machinery/bot/mining)
-	time = 0 SECONDS
+	time = 10 SECONDS
 	create = 1
 	category = "Machinery"
 

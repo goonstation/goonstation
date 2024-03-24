@@ -7,6 +7,7 @@
 	set name = "Terrainify"
 	set desc = "Turns space into a terrain type"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(holder)
 		var/datum/terrainify_editor/E = new /datum/terrainify_editor(src.mob)

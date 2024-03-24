@@ -1587,8 +1587,31 @@ TYPEINFO(/turf/simulated/floor/stone)
 
 /////////////////////////////////////////
 
+/* Misc Adventure tilesets - Walp */
+
+TYPEINFO(/turf/simulated/floor/honeyblocks)
+	mat_appearances_to_ignore = list("steel","synthrubber")
+
+DEFINE_FLOORS(honeyblocks,
+	name = "crystallized honey";\
+	desc = "Probably not edible.";\
+	icon = 'icons/turf/adventure_walpvrgis.dmi';\
+	icon_state = "honeyblock";\
+	mat_changename = 0;\
+	mat_changedesc = 0;\
+	step_material = "step_plating";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(honeyblocks/border,
+	icon_state = "honeyblock_border")
+
+DEFINE_FLOORS(honeyblocks/corner,
+	icon_state = "honeyblock_corner")
+
+/////////////////////////////////////////
 
 /* Outdoors tilesets - Walp */
+
 TYPEINFO(/turf/simulated/floor/grasslush)
 	mat_appearances_to_ignore = list("steel","synthrubber")
 TYPEINFO(/turf/simulated/floor/grasslush/airless)
@@ -1945,17 +1968,19 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 	if(istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
+		var/do_hide = TRUE
 		if(intact)
 			var/obj/P = user.find_tool_in_hand(TOOL_PRYING)
 			if (!P)
 				return
 			// Call ourselves w/ the tool, then continue
 			src.Attackby(P, user)
+			do_hide = FALSE //don't stuff things under the floor if we're just swapping/replacing a broken tile
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
 			if(T.amount >= 1)
-				restore_tile()
+				restore_tile(do_hide)
 				src.default_material = src.material
 
 				// if we have a special icon state and it doesn't have a material variant
@@ -2146,8 +2171,10 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		qdel(old_hidden_contents)
 	return newfloor
 
-/turf/simulated/floor/restore_tile()
+/turf/simulated/floor/restore_tile(do_hide = TRUE)
 	..()
+	if (!do_hide)
+		return
 	for (var/obj/item/item in src.contents)
 		if (item.w_class <= W_CLASS_TINY && !item.anchored) //I wonder if this will cause problems
 			src.hide_inside(item)

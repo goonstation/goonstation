@@ -143,6 +143,25 @@
 /obj/dummy/spell_invis/bullet_act(obj/projectile/P)
 	return
 
+/obj/dummy/spell_invis/dimshift
+	var/mob/living/carbon/human/owner
+	var/datum/bioEffect/power/dimension_shift/P
+
+/obj/dummy/spell_invis/dimshift/New(loc, owner, power)
+	. = ..()
+	src.owner = owner
+	src.P = power
+/obj/dummy/spell_invis/dimshift/Exited(Obj, newloc)
+	. = ..()
+	if(Obj == owner)
+		owner.visible_message(SPAN_ALERT("<b>[owner] appears in a burst of blue light!</b>"))
+		playsound(owner.loc, 'sound/effects/ghost2.ogg', 50, 0)
+		SPAWN(0.7 SECONDS)
+			animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
+			animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
+			P.active = FALSE
+			P.processing = FALSE
+		qdel(src)
 
 
 /proc/spell_batpoof(var/mob/H, var/cloak = 0)

@@ -913,7 +913,7 @@
 			output += "&emsp;[medal]"
 		output += "<b>You have [length(medals)] medal\s.</b>"
 		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1"  target="_blank">Medal Details</a>"}
-		boutput(src, output.Join("<br>"))
+		tgui_message(src, output.Join("<br>"), "Medals")
 
 /mob/verb/setdnr()
 	set name = "Set DNR"
@@ -1501,6 +1501,9 @@
 
 /mob/proc/put_in_hand(obj/item/I, hand)
 	. = 0
+
+/mob/proc/can_hold_two_handed()
+	. = FALSE
 
 /mob/proc/get_damage()
 	. = src.health

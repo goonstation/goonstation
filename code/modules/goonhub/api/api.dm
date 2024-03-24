@@ -8,6 +8,8 @@ var/global/datum/apiHandler/apiHandler
 /datum/apiHandler
 	/// Is the api handler available for use? only set to false if we try a bunch of times and still fail
 	var/enabled = TRUE
+	/// Is debug logging on? If true, detailed logs for each API request will be logged to debug
+	var/debug = FALSE
 
 	/// how many times should a query attempt to run before giving up
 	var/maxApiRetries = 5
@@ -48,6 +50,19 @@ var/global/datum/apiHandler/apiHandler
 		sleep(src.apiRetryDelay * attempt)
 		attempt++
 		return src.queryAPI(route, attempt)
+
+
+	/**
+	 * Log an API request
+	 *
+	 * @method (string) HTTP method of the request
+	 * @route (string) URL of the request
+	 * @body (string) JSON encoded body of the request if applicable
+	 */
+	proc/debugLog(method, route, body)
+		var/msg = "([method]) [route]<br>[body]"
+		logTheThing(LOG_DEBUG, null, "<b>API DEBUG:</b> [msg]")
+		logTheThing(LOG_DIARY, null, "API DEBUG: [msg]", "debug")
 
 
 	/**
@@ -108,6 +123,7 @@ var/global/datum/apiHandler/apiHandler
 		var/req_body = route.body ? route.body.toJson() : ""
 		request.prepare(route.method, req_route, req_body, headers, "")
 		request.begin_async()
+		if (src.debug) src.debugLog(route.method, req_route, req_body)
 		var/time_started = TIME
 		UNTIL(request.is_complete() || (TIME - time_started) > 10 SECONDS)
 		if (!request.is_complete())
@@ -180,3 +196,15 @@ var/global/datum/apiHandler/apiHandler
 			return FALSE
 
 		return model
+
+/client/proc/debug_api_handler()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Debug API Handler"
+	set desc = "Toggle debug logging of API requests"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+	apiHandler.debug = !apiHandler.debug
+	if (apiHandler.debug)
+		boutput(src, "Enabled debug logging of API requests")
+	else
+		boutput(src, "Disabled debug logging of API requests")

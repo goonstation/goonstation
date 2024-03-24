@@ -686,7 +686,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	proc/take_a_drink(var/mob/consumer, var/mob/feeder)
 		var/tasteMessage = SPAN_NOTICE("[src.reagents.get_taste_string(consumer)]")
 		if (consumer == feeder)
-			consumer.visible_message(SPAN_NOTICE("[consumer] takes a sip from [src]."),"[SPAN_NOTICE("You take a sip from [src].")]\n[tasteMessage]", group = "drinkMessages")
+			consumer.visible_message(SPAN_NOTICE("[consumer] takes a sip from [src]."),"[SPAN_NOTICE("You take a sip from [src].")]\n[tasteMessage]", group = "[consumer]_drink_messages")
 		else
 			consumer.visible_message(SPAN_ALERT("[feeder] makes [consumer] drink from the [src]."),
 			"[SPAN_ALERT("[feeder] makes you drink from the [src].")]\n[tasteMessage]",
