@@ -269,7 +269,7 @@
 	name = "atmospherics transporter"
 	desc = "Used for convenient transport of siphons and tanks."
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "atmosporter"
+	icon_state = "atmosporter-input"
 	var/capacity = 2
 	var/opmode = ATMOSPORTER_MODE_PICKUP //! current operating mode, when clicking on objects
 
@@ -278,9 +278,11 @@
 			if (ATMOSPORTER_MODE_PICKUP)
 				src.opmode = ATMOSPORTER_MODE_INTERACT
 				user.show_text("Operating mode set to Drop / Interact.", "red")
+				src.icon_state = "atmosporter-output"
 			if (ATMOSPORTER_MODE_INTERACT)
 				src.opmode = ATMOSPORTER_MODE_PICKUP
 				user.show_text("Operating mode set to Pick-up", "green")
+				src.icon_state = "atmosporter-input"
 
 	afterattack(atom/A, mob/user as mob) // I have no idea what I am doing but let's go for it.
 		if (!A) return // I assume this is so we don't try and interact with a non-existent atom.
