@@ -34,17 +34,16 @@ ABSTRACT_TYPE(/datum/objective)
 			return TRUE
 		if(isdead(target.current))
 			return TRUE
-		if(silicons_eliminated)
-			if(!iscarbon(target.current))
-				return TRUE
-		else
-			if(iscarbon(target.current) || isrobot(target.current) || isAI(target.current))
-				return FALSE
 		if(inafterlife(target.current))
 			return TRUE
 		if(isVRghost(target.current))
 			return TRUE
-
+		if(silicons_eliminated)
+			if(!iscarbon(target.current))
+				return TRUE
+		else
+			if(!iscarbon(target.current) && !isrobot(target.current) && !isAI(target.current))
+				return TRUE
 		return FALSE
 
 ///////////////////////////////////////////////////
