@@ -91,8 +91,7 @@ ABSTRACT_TYPE(/datum/objective)
 		return target
 
 	check_completion()
-		if(src.is_target_eliminated(target))
-			return 1
+		return src.is_target_eliminated(target)
 
 	proc/create_objective_string(datum/mind/target)
 		if(!(target?.current))
@@ -106,9 +105,13 @@ ABSTRACT_TYPE(/datum/objective)
 
 /datum/objective/regular/assassinate/bodyguard //the INVERSE of an assassin
 	check_completion()
-		if(src.is_target_eliminated(target, silicons_eliminated=FALSE)) // Dead or alive
-			if(in_centcom(target.current))
+		if(target?.current)
+			if(isdead(target.current) || !iscarbon(target.current) || inafterlife(target.current))
 				return 1
+			else
+				return 0
+		else
+			return 1
 
 	create_objective_string(datum/mind/target)
 		if(!(target?.current))
