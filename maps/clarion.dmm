@@ -15564,6 +15564,13 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/central)
+"bzM" = (
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/black,
+/area/station/security/hos)
 "bzS" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -19171,17 +19178,16 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "dlx" = (
-/obj/table/auto,
-/obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged{
-	pixel_x = 7;
-	pixel_y = 11
+/obj/machinery/computer3/terminal/zeta{
+	dir = 4;
+	setup_os_string = "ZETA_MAINFRAME"
 	},
-/obj/item/cell/supercell/charged{
-	pixel_x = 2
+/obj/cable{
+	icon_state = "0-4"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/off,
-/area/station/security/hos)
+/area/station/communications/office)
 "dlP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -20247,7 +20253,7 @@
 	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
-/area/station/bridge)
+/area/station/communications/office)
 "egk" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
@@ -20395,16 +20401,8 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/east)
 "ekP" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/electrical{
-	pixel_x = 4;
-	pixel_y = 10
-	},
-/obj/item/disk/data/floppy/read_only/communications{
-	pixel_x = -1
-	},
-/turf/simulated/floor/circuit/off,
-/area/station/security/hos)
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/communications/office)
 "elh" = (
 /obj/disposalpipe/junction{
 	dir = 8;
@@ -20954,7 +20952,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/circuit/off,
-/area/station/bridge)
+/area/station/communications/office)
 "eKZ" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/milk,
@@ -21833,10 +21831,10 @@
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/command{
-	name = "Radio Room"
+	name = "Communications Office"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
+/area/station/communications/office)
 "fAe" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22234,7 +22232,7 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/off,
-/area/station/bridge)
+/area/station/communications/office)
 "fNa" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -27956,12 +27954,8 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "kcn" = (
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
-	},
 /turf/simulated/floor/black,
-/area/station/security/hos)
+/area/station/communications/office)
 "kcx" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -29402,7 +29396,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/circuit/off,
-/area/station/bridge)
+/area/station/communications/office)
 "liM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33234,6 +33228,12 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"ocM" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/communications/office)
 "odA" = (
 /obj/strip_door,
 /obj/cable{
@@ -34665,7 +34665,7 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/off,
-/area/station/bridge)
+/area/station/communications/office)
 "poq" = (
 /obj/machinery/genetics_scanner,
 /turf/simulated/floor/blue/checker,
@@ -38097,16 +38097,25 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "rTC" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 4;
-	setup_os_string = "ZETA_MAINFRAME"
+/obj/table/auto,
+/obj/item/device/radio{
+	pixel_x = -9;
+	pixel_y = 6
 	},
-/obj/cable{
-	icon_state = "0-4"
+/obj/item/device/radio{
+	pixel_x = -5;
+	pixel_y = 7
 	},
-/obj/machinery/power/data_terminal,
+/obj/item/device/radio{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/device/gps{
+	pixel_x = 11;
+	pixel_y = 7
+	},
 /turf/simulated/floor/circuit/off,
-/area/station/security/hos)
+/area/station/communications/office)
 "rUk" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -38963,6 +38972,18 @@
 	icon_state = "fblue2"
 	},
 /area/station/medical/head)
+"syy" = (
+/obj/table/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 2
+	},
+/turf/simulated/floor/circuit/off,
+/area/station/communications/office)
 "szi" = (
 /obj/machinery/light/small/sticky/cool/very{
 	dir = 1
@@ -41092,24 +41113,15 @@
 /area/station/science/lab)
 "uiq" = (
 /obj/table/auto,
-/obj/item/device/radio{
-	pixel_x = -9;
-	pixel_y = 6
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 4;
+	pixel_y = 10
 	},
-/obj/item/device/radio{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/device/radio{
-	pixel_x = -1;
-	pixel_y = 8
-	},
-/obj/item/device/gps{
-	pixel_x = 11;
-	pixel_y = 7
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = -1
 	},
 /turf/simulated/floor/circuit/off,
-/area/station/security/hos)
+/area/station/communications/office)
 "uja" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/ce/private)
@@ -41679,7 +41691,7 @@
 	explosion_resistance = 15;
 	name = "very reinforced wall"
 	},
-/area/station/bridge)
+/area/station/communications/office)
 "uCt" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor,
@@ -42555,11 +42567,14 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "voa" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/machinery/door/airlock/pyro/command{
+	name = "Communications Office"
 	},
-/turf/simulated/floor/black,
-/area/station/bridge)
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
+	name = "very reinforced wall"
+	},
+/area/station/turret_protected/ai)
 "vpa" = (
 /obj/machinery/chem_master{
 	name = "Rusty CheMaster"
@@ -78115,7 +78130,7 @@ uPS
 cuC
 aJf
 jtY
-kcn
+bzM
 biM
 bll
 leh
@@ -78371,12 +78386,12 @@ tKE
 csQ
 tFW
 awa
-csQ
-csQ
-csQ
-csQ
-csQ
-csQ
+ekP
+ekP
+ekP
+ekP
+ekP
+ekP
 boQ
 hVf
 brc
@@ -78628,12 +78643,12 @@ bda
 iwR
 clS
 vSX
-csQ
-rTC
 ekP
 dlx
 uiq
-csQ
+syy
+rTC
+ekP
 boR
 qcM
 brm
@@ -78886,10 +78901,10 @@ gRL
 qko
 boM
 fzx
-voa
-boM
-boM
-boM
+ocM
+kcn
+kcn
+kcn
 fzx
 lWI
 ebq
@@ -79399,7 +79414,7 @@ iOK
 bem
 bem
 rgk
-bem
+voa
 bem
 bem
 bem
