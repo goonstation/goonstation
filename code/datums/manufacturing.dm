@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture
 	var/name = null                // Name of the schematic
 	var/list/item_paths = null   // Materials required (generate from `mats` if null)
-	var/list/item_names = null   // Name of each material (generated automatically if null)
+	var/list/item_names = list()   // Player-read name of each material
 	var/list/item_amounts = list() // How many of each material is needed
 	var/list/item_outputs = list() // What the schematic outputs
 	var/randomise_output = 0
@@ -39,11 +39,16 @@ ABSTRACT_TYPE(/datum/manufacture)
 					item_amounts += amt
 		if(isnull(item_paths))
 			item_paths = list() // a bunch of places expect this to be non-null, like the sanity check
+		if (!length(src.item_names))
+			for (var/path in src.item_paths)
+				src.item_names += get_nice_mat_name_for_manufacturers(path)
 		if (!sanity_check_exemption)
 			src.sanity_check()
 
 	proc/sanity_check()
-		if (item_paths.len != item_amounts.len || !isnull(item_names) && (item_paths.len != item_names.len || item_names.len != item_amounts.len))
+		if (length(item_paths) != length(item_amounts)\
+		    || length(item_paths) != length(item_names)\
+			|| length(item_names) != length(item_amounts))
 			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic requirement lists not properly configured")
 			qdel(src)
 			return

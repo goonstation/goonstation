@@ -5,7 +5,7 @@
 #define WIRE_SHOCK 4
 #define MAX_SPEED 3
 #define MAX_SPEED_HACKED 5
-
+#define IS_NOT_OPERATIONAL (src.status & BROKEN || src.status & NOPOWER)
 TYPEINFO(/obj/machinery/manufacturer)
 	mats = 20
 
@@ -60,7 +60,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/free_resource_amt = 0 //! The amount of each free resource that the manufacturer comes preloaded with
 	var/list/obj/item/material_piece/free_resources = list() //! See free_resource_amt; this is the list of resources being populated from
 	var/obj/item/reagent_containers/glass/beaker = null
-	var/obj/item/disk/data/floppy/manudrive = null
+	var/obj/item/disk/data/floppy/manudrive/manudrive = null
 	var/list/resource_amounts = list()
 	var/list/materials_in_use = list()
 	var/list/stored_materials_by_id = list()
@@ -272,6 +272,103 @@ TYPEINFO(/obj/machinery/manufacturer)
 					status |= NOPOWER
 					src.build_icon()
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "Manufacturer")
+			ui.open()
+
+	ui_data(mob/user)
+		// Send material data as tuples of material name, material id, material amount
+		var/resource_data = list()
+		for (var/mat_id in resource_amounts)
+			resource_data += list(list("name"="[src.get_our_material(mat_id)]", "id"=mat_id, "amount"=resource_amounts[mat_id]))
+		return list(
+			"panel_open" = src.panel_open,
+			"hacked" = src.hacked,
+			"malfunction" = src.malfunction,
+			"wire_bitflags" = src.wires,
+			"card_balance" = (!isnull(src.scan) ? FindBankAccountByName(src.scan.registered)["current_money"] : null),
+			"card_owner" = (!isnull(src.scan) ? src.scan.registered : null),
+			"speed" = src.speed,
+			"repeat" = src.repeat,
+			"resource_data" = resource_data,
+			"indicators" = list("electrified" = src.electrified,
+							    "malfunctioning" = src.malfunction,
+								"hacked" = src.hacked,
+								"hasPower" = !IS_NOT_OPERATIONAL,
+							   ),
+		)
+
+	ui_static_data(mob/user)
+		return list (
+			"fabricator_name" = src.name,
+			"all_categories" = src.categories,
+			"delete_allowed" = src.allowed(user),
+			"available_blueprints" = blueprints_as_list(src.available, user),
+			"hidden_blueprints" = blueprints_as_list(src.hidden, user),
+			"downloaded_blueprints" = blueprints_as_list(src.download, user),
+			"drive_recipe_blueprints" = blueprints_as_list(src.drive_recipes, user),
+			"wires" = list(list(colorName="Amber",  color="#21868C"),
+						   list(colorName="Teal",   color="#6f0fb4"),
+						   list(colorName="Indigo", color="#FFBF00"),
+						   list(colorName="Lime",   color="#99FF1D"),
+						  ),
+			"rockboxes" = rockboxes_as_list(),
+			"manudrive" = list ("name" = "[src.manudrive]",
+							   	"limit" = src.manudrive?.fablimit,
+							   ),
+			"reagents" = (src.beaker && src.beaker.reagents) ? src.beaker.reagents.reagent_list : null,
+		)
+
+	#define ORE_TAX(price) round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01)
+	/// Gets rockbox data as list for ui_static_data
+	proc/rockboxes_as_list()
+		var/rockboxes = list()
+		for_by_tcl(cloud_container, /obj/machinery/ore_cloud_storage_container)
+			if(cloud_container.broken)
+				continue
+			var/ore_data = list()
+			for(var/ore_name as anything in cloud_container.ores)
+				var/datum/ore_cloud_data/oredata = cloud_container.ores[ore_name]
+				if(!oredata.for_sale || !oredata.amount)
+					continue
+				ore_data += list(list(
+					"name" = ore_name,
+					"amount" = oredata.amount,
+					"cost" = oredata.price + ORE_TAX(oredata.price),
+				))
+			rockboxes += list(list(
+				"name" = cloud_container.name,
+				"area_name" = get_area(cloud_container),
+				"byondRef" = "\ref[cloud_container]",
+				"ores" = ore_data,
+			))
+		return rockboxes
+	#undef ORE_TAX
+
+	/// Converts list of manufacture datums to list keyed by category containing listified manufacture datums of said category.
+	proc/blueprints_as_list(var/list/L, mob/user)
+		var/list/as_list = list()
+		for (var/datum/manufacture/M as anything in L)
+			if (length(as_list[M.category]) == 0)
+				as_list[M.category] = list()
+			as_list[M.category] += list(manufacture_as_list(M, user))
+		return as_list
+
+	/// Converts a manufacture datum to a list with string keys to relevant vars for the UI
+	proc/manufacture_as_list(datum/manufacture/M, mob/user)
+		return list(
+			"name" = "[M]",
+			"item_names" = M.item_names,
+			"item_amounts" = M.item_amounts,
+			"create" = M.create,
+			"time" = M.time,
+			"apply_material" = M.apply_material,
+			"img" = getItemIcon(M.item_outputs[1], C = user.client),
+			"byondRef" = "\ref[M]",
+		)
+
 	attack_hand(mob/user)
 		if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
 			claim_free_resources()
@@ -279,203 +376,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (!(status & NOPOWER || status & BROKEN))
 				if (src.shock(user, 33))
 					return
-
-		src.add_dialog(user)
-
-		var/HTML = {"
-		<title>[src.name]</title>
-		<style type='text/css'>
-
-			/* will probaby break chui, dont care */
-			body { background: #222; color: white; font-family: Tahoma, sans-serif; }
-			a { color: #88f; }
-
-			.l { text-align: left; } .r { text-align: right; } .c { text-align: center; }
-			.buttonlink { background: #66c; min-width: 1.1em; height: 1.2em; padding: 0.2em 0.2em; margin-bottom: 2px; border-radius: 4px; font-size: 90%; color: white; text-decoration: none; display: inline-block; vertical-align: middle; }
-			thead { background: #555555; }
-
-			table {
-				border-collapse: collapse;
-				width: 100%;
-				}
-			td, th { padding: 0.2em; 0.5em; }
-			.outline td, .outline th {
-				border: 1px solid #666;
-			}
-
-			img, a img {
-				border: 0;
-				}
-
-			#info {
-				position: absolute;
-				right: 0.5em;
-				top: 50px;
-				width: 25%;
-				padding: 0.5em;
-				}
-
-			#products {
-				position: absolute;
-				left: 0;
-				top:50px;
-				width: 73%;
-				padding: 0.25em;
-			}
-			.tabs {
-				position:fixed;
-				background-color: inherit;
-				z-index:1;
-				top: 0;
-				left: 0;
-			}
-			.tabs a {
-				background-color: inherit;
-				float: left;
-				border: none;
-				outline: none;
-				padding: 14px 16px;
-                margin-left: 10px;
-                margin-top: 6px;
-                margin-bottom: 6px;
-				border-radius: 5px;
-			}
-			.tabs a:hover {
-				background-color: #ddd;
-			}
-			.tabs a.active {
-				background-color: #ccc;
-			}
-
-			.queue, .product {
-				position: relative;
-				display: inline-block;
-				width: 12em;
-				padding: 0.25em 0.5em;
-				border-radius: 5px;
-				margin: 0.5em;
-				background: #555;
-				box-shadow: 3px 3px 0 2px #000;
-				}
-
-			.queue {
-				vertical-align: middle;
-				clear: both;
-				}
-			.queue .icon {
-				float: left;
-				margin: 0.2em;
-				}
-			.product {
-				vertical-align: top;
-				text-align: center;
-				}
-			.product .time {
-				position: absolute;
-				bottom: 0.3em;
-				right: 0.3em;
-				}
-			.product .mats {
-				position: absolute;
-				bottom: 0.3em;
-				left: 0.3em;
-				}
-			.product .icon {
-				display: block;
-				height: 64px;
-				width: 64px;
-				margin: 0.2em auto 0.5em auto;
-				-ms-interpolation-mode: nearest-neighbor; /* pixels go cronch */
-				}
-			.product.disabled {
-				background: #333;
-				color: #aaa;
-			}
-			.required {
-				display: none;
-				}
-
-			.product:hover {
-				cursor: pointer;
-				background: #666;
-			}
-			.product:hover .required {
-				display: block;
-				position: absolute;
-				left: 0;
-				right: 0;
-				}
-			.product .delete {
-				color: #c44;
-				background: #222;
-				padding: 0.25em 0.5em;
-				border-radius: 10px;
-				}
-			.required div {
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				background: #333;
-				border: 1px solid #888888;
-				padding: 0.25em 0.5em;
-				margin: 0.25em 0.5em;
-				font-size: 80%;
-				text-align: left;
-				border-radius: 5px;
-				}
-			.mat-missing {
-				color: #f66;
-			}
-		</style>
-		<script type="text/javascript">
-			function product(ref) {
-				window.location = "?src=\ref[src];disp=" + ref;
-			}
-
-			function delete_product(ref) {
-				window.location = "?src=\ref[src];delete=1;disp=" + ref;
-			}
-		</script>
-		"}
-
-
+		src.ui_interact(user)
+		return
+		/*
 		var/list/dat = list()
-		var/delete_allowed = src.allowed(user)
-
-		if (src.panel_open || isAI(user))
-			var/list/manuwires = list(
-			"Amber" = 1,
-			"Teal" = 2,
-			"Indigo" = 3,
-			"Lime" = 4,
-			)
-			var/list/pdat = list("<B>[src] Maintenance Panel</B><hr>")
-			for(var/wiredesc in manuwires)
-				var/is_uncut = src.wires & APCWireColorToFlag[manuwires[wiredesc]]
-				pdat += "[wiredesc] wire: "
-				if(!is_uncut)
-					pdat += "<a href='?src=\ref[src];cutwire=[manuwires[wiredesc]]'>Mend</a>"
-				else
-					pdat += "<a href='?src=\ref[src];cutwire=[manuwires[wiredesc]]'>Cut</a> "
-					pdat += "<a href='?src=\ref[src];pulsewire=[manuwires[wiredesc]]'>Pulse</a> "
-				pdat += "<br>"
-
-			pdat += "<br>"
-			if (status & BROKEN || status & NOPOWER)
-				pdat += "The yellow light is off.<BR>"
-				pdat += "The blue light is off.<BR>"
-				pdat += "The white light is off.<BR>"
-				pdat += "The red light is off.<BR>"
-			else
-				pdat += "The yellow light is [(src.electrified == 0) ? "off" : "on"].<BR>"
-				pdat += "The blue light is [src.malfunction ? "flashing" : "on"].<BR>"
-				pdat += "The white light is [src.hacked ? "on" : "off"].<BR>"
-				pdat += "The red light is on.<BR>"
-
-			user.Browse(pdat.Join(), "window=manupanel")
-			onclose(user, "manupanel")
-
 		if (status & BROKEN || status & NOPOWER)
 			dat = "The screen is blank."
 			user.Browse(dat, "window=manufact;size=750x500")
@@ -554,35 +458,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		//Search
 		dat += " <A href='?src=\ref[src];search=1'>(Search: \"[istext(src.search) ? html_encode(src.search) : "----"]\")</A><BR>"
 		// This is not re-formatted yet just b/c i don't wanna mess with it
-		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
-		if(scan)
-			var/datum/db_record/account = null
-			account = FindBankAccountByName(src.scan.registered)
-			if (account)
-				dat+="<B>Current Funds</B>: [account["current_money"]] Credits<br>"
-		dat+= src.temp
-		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
-		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
-			if(S.broken)
-				continue
-			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
-			var/list/ores = S.ores
-			for(var/ore in ores)
-				var/datum/ore_cloud_data/OCD = ores[ore]
-				if(!OCD.for_sale || !OCD.amount)
-					continue
-				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(OCD.price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
-				dat += "[ore]: [OCD.amount] ([OCD.price+taxes+(!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0)][CREDIT_SIGN]/ore) (<A href='?src=\ref[src];purchase=1;storage=\ref[S];ore=[ore]'>Purchase</A>)<br>"
-
-		dat += "</small><HR>"
-
-		dat += build_control_panel(user)
-
-
-		user.Browse(HTML + dat.Join(), "window=manufact;size=1111x600")
-		onclose(user, "manufact")
-
-		interact_particle(user,src)
+		*/
 
 	// Validate that an item is inside this machine for HREF check purposes
 	proc/validate_disp(datum/manufacture/M)
@@ -599,146 +475,26 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if(src.hacked && src.hidden && (M in src.hidden))
 			return TRUE
 
+	ui_act(action, params)
 
-	Topic(href, href_list)
-
-		if(!(href_list["cutwire"] || href_list["pulsewire"]))
-			if(status & BROKEN || status & NOPOWER)
+		if(!(action == "wire_cut" || action == "wire_pulse"))
+			if (IS_NOT_OPERATIONAL)
 				return
 
 		if(usr.stat || usr.restrained())
 			return
 
 		if(src.electrified)
-			if (!(status & NOPOWER || status & BROKEN))
+			if (!(IS_NOT_OPERATIONAL))
 				if (src.shock(usr, 10))
 					return
 
-		if (((BOUNDS_DIST(src, usr) == 0 || (isAI(usr) || isrobot(usr))) && istype(src.loc, /turf)))
-			src.add_dialog(usr)
+		if (((BOUNDS_DIST(src, usr) != 0 && !(isAI(usr) || isrobot(usr))) && istype(src.loc, /turf)))
+			return
 
-			if (src.malfunction && prob(10))
-				src.flip_out()
-
-			if (href_list["eject"])
-				if (src.mode != "ready")
-					boutput(usr, SPAN_ALERT("You cannot eject materials while the unit is working."))
-				else
-					var/mat_id = href_list["eject"]
-					var/ejectamt = 0
-					var/turf/ejectturf = get_turf(usr)
-					for(var/obj/item/O in src.contents)
-						if (O.material && O.material.getID() == mat_id)
-							if (!ejectamt)
-								ejectamt = input(usr,"How many material pieces do you want to eject?","Eject Materials") as num
-								if (ejectamt <= 0 || src.mode != "ready" || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
-									break
-								if (round(ejectamt) != ejectamt)
-									boutput(usr, SPAN_ALERT("You can only eject a whole number of a material"))
-									break
-							if (!ejectturf)
-								break
-							if (ejectamt > O.amount)
-								playsound(src.loc, src.sound_grump, 50, 1)
-								boutput(usr, SPAN_ALERT("There's not that much material in [name]. It has ejected what it could."))
-								ejectamt = O.amount
-							src.update_resource_amount(mat_id, -ejectamt * 10) // ejectamt will always be <= actual amount
-							if (ejectamt == O.amount)
-								O.set_loc(get_output_location(O))
-							else
-								var/obj/item/material_piece/P = new O.type
-								P.setMaterial(O.material)
-								P.change_stack_amount(ejectamt - P.amount)
-								O.change_stack_amount(-ejectamt)
-								P.set_loc(get_output_location(O))
-							break
-
-			if (href_list["speed"])
-				var/upperbound = src.hacked ? MAX_SPEED_HACKED : MAX_SPEED
-				var/given_speed = text2num(href_list["speed"])
-				if (src.mode == "working")
-					boutput(usr, SPAN_ALERT("You cannot alter the speed setting while the unit is working."))
-				else if (given_speed >= 1 && given_speed <= upperbound)
-					src.speed = given_speed
-				else
-					var/newset = input(usr, "Enter from 1 to [upperbound]. Higher settings consume more power.", "Manufacturing Speed") as num
-					src.speed = clamp(newset, 1, upperbound)
-
-			if (href_list["clearQ"])
-				var/Qlength = length(src.queue)
-				if (Qlength < 1) // Nothing in list
-					return
-
-				if (Qlength > 2)
-					src.queue.Cut(2)
-
-				if (src.mode != "working")
-					src.queue -= src.queue[1]
-
-				if (src.mode == "halt") // Set ready if halted
-					src.manual_stop = FALSE
-					src.error = null
-					src.mode = "ready"
-
-					src.build_icon()
-
-			if (href_list["removefromQ"])
-				var/operation = text2num_safe(href_list["removefromQ"])
-				if (!isnum(operation) || length(src.queue) < 1 || operation > length(src.queue))
-					boutput(usr, SPAN_ALERT("Invalid operation."))
-					return
-
-				if(world.time < last_queue_op + 5) //Anti-spam to prevent people lagging the server with autoclickers
-					return
-				else
-					last_queue_op = world.time
-
-				src.queue -= src.queue[operation]
-				begin_work()//pesky exploits
-
-			if (href_list["repeat"])
-				src.repeat = !src.repeat
-
-			if (href_list["search"])
-				src.search = input("Enter text to search for in schematics.","Manufacturing Unit") as null|text
-				if (length(src.search) == 0)
-					src.search = null
-
-			if (href_list["category"])
-				var/category = href_list["category"]
-				if (category == "All")
-					src.category = null
-				else if (category in src.categories)
-					src.category = category
-
-			if (href_list["continue"])
-				if (length(src.queue) < 1)
-					boutput(usr, SPAN_ALERT("Cannot find any items in queue to continue production."))
-					return
-				if (!check_enough_materials(src.queue[1]))
-					boutput(usr, SPAN_ALERT("Insufficient usable materials to manufacture first item in queue."))
-				else
-					src.begin_work(0)
-
-			if (href_list["pause"])
-				src.mode = "halt"
-				src.build_icon()
-				if (src.action_bar)
-					src.action_bar.interrupt(INTERRUPT_ALWAYS)
-
-			if (href_list["delete"])
-				if(!src.allowed(usr))
-					boutput(usr, SPAN_ALERT("Access denied."))
-					return
-				var/datum/manufacture/I = locate(href_list["disp"])
-				if (!istype(I,/datum/manufacture/mechanics/))
-					boutput(usr, SPAN_ALERT("Cannot delete this schematic."))
-					return
-				last_queue_op = world.time
-				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
-					src.download -= I
-			else if (href_list["disp"])
-				var/datum/manufacture/I = locate(href_list["disp"])
+		switch(action)
+			if ("product")
+				var/datum/manufacture/I = locate(params["blueprint_ref"])
 				if (!istype(I,/datum/manufacture/))
 					return
 				if(world.time < last_queue_op + 5) //Anti-spam to prevent people lagging the server with autoclickers
@@ -762,155 +518,232 @@ TYPEINFO(/obj/machinery/manufacturer)
 						src.begin_work(1)
 						src.updateUsrDialog()
 
-				if (length(src.queue) > 0 && src.mode == "ready")
-					src.begin_work(1)
-					src.updateUsrDialog()
-					return
+			if ("material_eject")
+				src.eject_material(params["material"])
 
-			if (href_list["ejectmanudrive"])
-				src.eject_manudrive(usr)
+			if ("material_swap")
+				//NYI
+				return
 
-			if (href_list["ejectbeaker"])
-				if (src.beaker)
-					src.beaker.set_loc(get_output_location(beaker))
-				src.beaker = null
-
-			if (href_list["transto"])
-				// reagents are going into beaker
-				var/obj/item/reagent_containers/glass/B = locate(href_list["transto"])
-				if (!istype(B,/obj/item/reagent_containers/glass/))
-					return
-				var/howmuch = input("Transfer how much to [B]?","[src.name]",B.reagents.maximum_volume - B.reagents.total_volume) as null|num
-				if (!howmuch || !B || B != src.beaker || !isnum_safe(howmuch) )
-					return
-				src.reagents.trans_to(B,howmuch)
-
-			if (href_list["transfrom"])
-				// reagents are being drawn from beaker
-				var/obj/item/reagent_containers/glass/B = locate(href_list["transfrom"])
-				if (!istype(B,/obj/item/reagent_containers/glass/))
-					return
-				var/howmuch = input("Transfer how much from [B]?","[src.name]",B.reagents.total_volume) as null|num
-				if (!howmuch || !isnum_safe(howmuch))
-					return
-				B.reagents.trans_to(src,howmuch)
-
-			if (href_list["flush"])
-				var/the_reagent = href_list["flush"]
-				if (!istext(the_reagent))
-					return
-				var/howmuch = input("Flush how much [the_reagent]?","[src.name]",0) as null|num
-				if (!howmuch || !isnum_safe(howmuch))
-					return
-				src.reagents.remove_reagent(the_reagent,howmuch)
-
-			if ((href_list["cutwire"]) && (src.panel_open || isAI(usr)))
-				if (src.electrified)
-					if (src.shock(usr, 100))
-						return
-				var/twire = text2num_safe(href_list["cutwire"])
-				if (!usr.find_tool_in_hand(TOOL_SNIPPING))
-					boutput(usr, "You need a snipping tool!")
-					return
-				else if (src.isWireColorCut(twire))
-					src.mend(usr, twire)
-				else
-					src.cut(usr, twire)
-				src.build_icon()
-
-			if ((href_list["pulsewire"]) && (src.panel_open || isAI(usr)))
-				var/twire = text2num_safe(href_list["pulsewire"])
-				if ( !(usr.find_tool_in_hand(TOOL_PULSING) || isAI(usr)) )
-					boutput(usr, "You need a multitool or similar!")
-					return
-				else if (src.isWireColorCut(twire))
-					boutput(usr, "You can't pulse a cut wire.")
-					return
-				else
-					src.pulse(usr, twire)
-				src.build_icon()
-
-			if (href_list["card"])
-				if (src.scan) src.scan = null
-				else
+			if ("card")
+				if (params["scan"])
 					var/obj/item/I = usr.equipped()
 					src.scan_card(I)
+				if (params["remove"])
+					src.scan = null
 
-			if (href_list["purchase"])
-				var/obj/machinery/ore_cloud_storage_container/storage = locate(href_list["storage"])
-				var/ore = href_list["ore"]
-				var/datum/ore_cloud_data/OCD = storage.ores[ore]
-				var/price = OCD.price
-				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
-
-				if(storage?.broken)
-					return
-
-				if(!scan)
-					src.temp = {"You have to scan a card in first.<BR>"}
-					src.updateUsrDialog()
-					return
+			if ("toggle_panel")
+				if (isscrewingtool(usr.equipped()))
+					src.panel_open = !src.panel_open
 				else
-					src.temp = null
-				if (src.scan.registered in FrozenAccounts)
-					boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
+					boutput(usr, SPAN_ALERT("You need to be holding a screwing tool to unfasten the screws on the panel!"))
+
+			if ("wire")
+				if (!(src.panel_open || isAI(usr)))
+					boutput(usr, SPAN_ALERT("The panel is closed!"))
 					return
-				var/datum/db_record/account = null
-				account = FindBankAccountByName(src.scan.registered)
-				if (account)
-					var/quantity = 1
-					quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
-					if(!isnum_safe(quantity))
+
+				switch (params["action"])
+					if ("cut", "mend")
+						if (src.electrified)
+							if (src.shock(usr, 100))
+								return
+						if (!(issnippingtool(usr.equipped())))
+							boutput(usr, SPAN_ALERT("You need to be holding a snipping tool for that!"))
+							return
+
+					if ("cut")
+						src.cut(APCIndexToWireColor[text2num_safe(params["wire"])])
+
+					if ("mend")
+						src.mend(APCIndexToWireColor[text2num_safe(params["wire"])])
+
+					if ("pulse")
+						if (!(ispulsingtool(usr.equipped()) || isAI(usr)))
+							boutput(usr, SPAN_ALERT("You need to be holding a pulsing tool or similar for that!"))
+							return
+						src.pulse(APCIndexToWireColor[text2num_safe(params["wire"])])
+
+			if ("speed")
+				if (src.mode == "working")
+					boutput(usr, SPAN_ALERT("You cannot alter the speed setting while the unit is working."))
+					return
+				src.speed = clamp(params["speed"], 0, (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
+
+			if ("repeat")
+				src.repeat = !src.repeat
+
+			if ("ore_purchase")
+				src.buy_ore(params["ore"], params["storage_ref"])
+
+			if ("clear") // clear entire queue
+				var/Qlength = length(src.queue)
+				if (Qlength < 1) // Nothing in list
+					return
+
+				if (Qlength > 2)
+					src.queue.Cut(2)
+
+				if (src.mode != "working")
+					src.queue -= src.queue[1]
+
+				if (src.mode == "halt") // Set ready if halted
+					src.manual_stop = FALSE
+					src.error = null
+					src.mode = "ready"
+					src.build_icon()
+
+			if ("pause_toggle")
+				if (params["action"] == "continue")
+					if (length(src.queue) < 1)
+						boutput(usr, SPAN_ALERT("Cannot find any items in queue to continue production."))
 						return
-					////////////
-
-					if(OCD.amount >= quantity && quantity > 0)
-						var/subtotal = round(price * quantity)
-						var/sum_taxes = round(taxes * quantity)
-						var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
-						var/total = subtotal + sum_taxes + rockbox_fees
-						if(account["current_money"] >= total)
-							account["current_money"] -= total
-							storage.eject_ores(ore, get_output_location(), quantity, transmit=1, user=usr)
-
-							 // This next bit is stolen from PTL Code
-							var/list/accounts = \
-								data_core.bank.find_records("job", "Chief Engineer") + \
-								data_core.bank.find_records("job", "Chief Engineer") + \
-								data_core.bank.find_records("job", "Miner")
-
-
-							var/datum/signal/minerSignal = get_free_signal()
-							minerSignal.source = src
-							//any non-divisible amounts go to the shipping budget
-							var/leftovers = 0
-							if(length(accounts))
-								leftovers = subtotal % length(accounts)
-								var/divisible_amount = subtotal - leftovers
-								if(divisible_amount)
-									var/amount_per_account = divisible_amount/length(accounts)
-									for(var/datum/db_record/t as anything in accounts)
-										t["current_money"] += amount_per_account
-									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
-							else
-								leftovers = subtotal
-								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
-							wagesystem.shipping_budget += (leftovers + sum_taxes)
-							SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
-
-							src.temp = {"Enjoy your purchase!<BR>"}
-						else
-							src.temp = {"You don't have enough dosh, bucko.<BR>"}
+					if (!check_enough_materials(src.queue[1]))
+						boutput(usr, SPAN_ALERT("Insufficient usable materials to manufacture first item in queue."))
 					else
-						if(quantity > 0)
-							src.temp = {"I don't have that many for sale, champ.<BR>"}
-						else
-							src.temp = {"Enter some actual valid number, you doofus!<BR>"}
-				else
-					src.temp = {"That card doesn't have an account anymore, you might wanna get that checked out.<BR>"}
+						src.begin_work(0)
+				else if (params["action"] == "pause")
+					src.mode = "halt"
+					src.build_icon()
+					if (src.action_bar)
+						src.action_bar.interrupt(INTERRUPT_ALWAYS)
 
+			if ("remove") // remove queued blueprint
+				var/operation = text2num_safe(params["index"])
+				if (!isnum(operation) || length(src.queue) < 1 || operation > length(src.queue))
+					boutput(usr, SPAN_ALERT("Invalid operation."))
+					return
+
+				if (ON_COOLDOWN(src, "remove", 0.5 SECONDS)) //Anti-spam to prevent people lagging the server with autoclickers
+					return
+
+				src.queue -= src.queue[operation]
+				begin_work()//pesky exploits // romayne update: i have no idea what exploit this prevents
+
+			if ("delete") // remove blueprint from storage
+				if(!src.allowed(usr))
+					boutput(usr, SPAN_ALERT("Access denied."))
+					return
+				var/datum/manufacture/I = locate(params["blueprint_ref"])
+				if (!istype(I,/datum/manufacture/mechanics/))
+					boutput(usr, SPAN_ALERT("Cannot delete this schematic."))
+					return
+				last_queue_op = world.time
+				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
+					src.download -= I
+
+			if ("manudrive")
+				if (params["action"] == "eject")
+					src.eject_manudrive(usr)
+
+			if ("beaker")
+				switch(params["action"])
+					if ("eject")
+						if (src.beaker)
+							src.beaker.set_loc(get_output_location(beaker))
+						src.beaker = null
+
+					if ("transfer_to")
+						// reagents are going into beaker
+						var/obj/item/reagent_containers/glass/B = locate(params["beaker_ref"])
+						if (!istype(B,/obj/item/reagent_containers/glass/))
+							return
+						var/howmuch = input("Transfer how much to [B]?","[src.name]",B.reagents.maximum_volume - B.reagents.total_volume) as null|num
+						if (!howmuch || !B || B != src.beaker || !isnum_safe(howmuch) )
+							return
+						src.reagents.trans_to(B,howmuch)
+
+					if ("transfer_from")
+						// reagents are being drawn from beaker
+						var/obj/item/reagent_containers/glass/B = locate(params["beaker_ref"])
+						if (!istype(B,/obj/item/reagent_containers/glass/))
+							return
+						var/howmuch = tgui_input_number(usr, "Transfer how much from [B]?","[src.name]",B.reagents.total_volume)
+						if (!howmuch || !isnum_safe(howmuch))
+							return
+						B.reagents.trans_to(src,howmuch)
+
+					if ("flush")
+						var/the_reagent = params["reagent_ref"]
+						if (!istext(the_reagent))
+							return
+						var/howmuch = tgui_input_number(usr, "Flush how much [the_reagent]?","[src.name]",0)
+						if (!howmuch || !isnum_safe(howmuch))
+							return
+						src.reagents.remove_reagent(the_reagent,howmuch)
+
+		tgui_process.try_update_ui(usr, src)
+
+	proc/buy_ore(ore_name, storage_ref)
+		var/obj/machinery/ore_cloud_storage_container/storage = locate(storage_ref)
+		var/datum/ore_cloud_data/OCD = storage.ores[ore_name]
+		var/price = OCD.price
+		var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
+
+		if(storage?.broken)
+			return
+
+		if(!scan)
+			src.temp = {"You have to scan a card in first.<BR>"}
 			src.updateUsrDialog()
-		return
+			return
+		else
+			src.temp = null
+		if (src.scan.registered in FrozenAccounts)
+			boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
+			return
+		var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+		if (account)
+			var/quantity = 1
+			quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
+			if(!isnum_safe(quantity))
+				return
+			////////////
+
+			if(OCD.amount >= quantity && quantity > 0)
+				var/subtotal = round(price * quantity)
+				var/sum_taxes = round(taxes * quantity)
+				var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
+				var/total = subtotal + sum_taxes + rockbox_fees
+				if(account["current_money"] >= total)
+					account["current_money"] -= total
+					storage.eject_ores(ore_name, get_output_location(), quantity, transmit=1, user=usr)
+
+						// This next bit is stolen from PTL Code
+					var/list/accounts = \
+						data_core.bank.find_records("job", "Chief Engineer") + \
+						data_core.bank.find_records("job", "Chief Engineer") + \
+						data_core.bank.find_records("job", "Miner")
+
+
+					var/datum/signal/minerSignal = get_free_signal()
+					minerSignal.source = src
+					//any non-divisible amounts go to the shipping budget
+					var/leftovers = 0
+					if(length(accounts))
+						leftovers = subtotal % length(accounts)
+						var/divisible_amount = subtotal - leftovers
+						if(divisible_amount)
+							var/amount_per_account = divisible_amount/length(accounts)
+							for(var/datum/db_record/t as anything in accounts)
+								t["current_money"] += amount_per_account
+							minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
+					else
+						leftovers = subtotal
+						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
+					wagesystem.shipping_budget += (leftovers + sum_taxes)
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
+
+					src.temp = {"Enjoy your purchase!<BR>"}
+				else
+					src.temp = {"You don't have enough dosh, bucko.<BR>"}
+			else
+				if(quantity > 0)
+					src.temp = {"I don't have that many for sale, champ.<BR>"}
+				else
+					src.temp = {"Enter some actual valid number, you doofus!<BR>"}
+		else
+			src.temp = {"That card doesn't have an account anymore, you might wanna get that checked out.<BR>"}
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (!src.hacked)
@@ -1104,7 +937,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					user.u_equip(W)
 					W.dropped(user)
 
-		else if (istype(W,/obj/item/disk/data/floppy))
+		else if (istype(W,/obj/item/disk/data/floppy/manudrive))
 			if (src.manudrive)
 				boutput(user, SPAN_ALERT("You swap out the disk in the manufacturer with a different one."))
 				src.eject_manudrive(user)
@@ -1161,6 +994,38 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.take_damage(damage)
 
 		src.updateUsrDialog()
+
+	proc/eject_material(var/mat_id)
+		if (src.mode != "ready")
+			boutput(usr, SPAN_ALERT("You cannot eject materials while the unit is working."))
+			return
+		var/ejectamt = 0
+		var/turf/ejectturf = get_turf(usr)
+		for(var/obj/item/O in src.contents)
+			if (O.material && O.material.getID() == mat_id)
+				if (!ejectamt)
+					ejectamt = tgui_input_number(usr,"How many material pieces do you want to eject?","Eject Materials", 0, O.amount, 0)
+					if (ejectamt <= 0 || src.mode != "ready" || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
+						break
+					if (round(ejectamt) != ejectamt)
+						boutput(usr, SPAN_ALERT("You can only eject a whole number of a material"))
+						break
+				if (!ejectturf)
+					break
+				if (ejectamt > O.amount)
+					playsound(src.loc, src.sound_grump, 50, 1)
+					boutput(usr, SPAN_ALERT("There's not that much material in [name]. It has ejected what it could."))
+					ejectamt = O.amount
+				src.update_resource_amount(mat_id, -ejectamt * 10) // ejectamt will always be <= actual amount
+				if (ejectamt == O.amount)
+					O.set_loc(get_output_location(O))
+				else
+					var/obj/item/material_piece/P = new O.type
+					P.setMaterial(O.material)
+					P.change_stack_amount(ejectamt - P.amount)
+					O.change_stack_amount(-ejectamt)
+					P.set_loc(get_output_location(O))
+				break
 
 	proc/scan_card(obj/item/I)
 		var/obj/item/card/id/ID = get_id_card(I)
@@ -1494,7 +1359,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/accept_loading(mob/user,allow_silicon)
 		if (!user)
 			return FALSE
-		if (src.status & BROKEN || src.status & NOPOWER)
+		if IS_NOT_OPERATIONAL
 			return FALSE
 		if (src.dismantle_stage > 0)
 			return FALSE
@@ -1527,7 +1392,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if(WIRE_MALF)
 				src.malfunction = TRUE
 			if(WIRE_POWER)
-				if(!(src.status & BROKEN || src.status & NOPOWER))
+				if(!IS_NOT_OPERATIONAL)
 					src.shock(user, 100)
 					src.status |= NOPOWER
 
@@ -1555,7 +1420,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (WIRE_MALF)
 				src.malfunction = !src.malfunction
 			if (WIRE_POWER)
-				if(!(src.status & BROKEN || src.status & NOPOWER))
+				if(!IS_NOT_OPERATIONAL)
 					src.shock(user, 100)
 
 	proc/shock(mob/user, prb)
@@ -1786,7 +1651,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/datum/computer/file/manudrive/manudrive_file = null
 		if(src.manudrive)
 			if(src.queue[1] in src.drive_recipes)
-				var/obj/item/disk/data/floppy/ManuD = src.manudrive
+				var/obj/item/disk/data/floppy/manudrive/ManuD = src.manudrive
 				for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
 					if(MD.fablimit != -1 && MD.fablimit - MD.num_working <= 0)
 						src.mode = "halt"
@@ -1961,49 +1826,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			src.UpdateOverlays(null, "panel")
 
-	proc/build_material_list()
-		var/list/dat = list()
-		dat += {"
-<table class="outline" style="width: 100%;">
-	<thead>
-		<tr><th colspan='2'>Loaded Materials</th></tr>
-	</thead>
-	<tbody>
-		"}
-		for(var/mat_id in src.resource_amounts)
-			var/datum/material/mat = src.get_our_material(mat_id)
-			dat += {"
-		<tr>
-			<td><a href='?src=\ref[src];eject=[url_encode(mat_id)]' class='buttonlink'>&#9167;</a>  [mat]</td>
-			<td class='r'>[src.resource_amounts[mat_id]/10]</td>
-		</tr>
-			"}
-		if (length(dat) == 1)
-			dat += {"
-		<tr>
-			<td colspan='2' class='c'>No materials loaded.</td>
-		</tr>
-			"}
-
-		if (src.manudrive)
-			dat += {"
-		<tr><th colspan='2'>Manufacturer drive</th></tr>
-			"}
-
-			dat += {"
-		<tr><td colspan='2'><a href='?src=\ref[src];ejectmanudrive=\ref[src]' class='buttonlink'>&#9167;</a> [src.manudrive.name]</td></tr>
-			"}
-
-			var/obj/item/disk/data/floppy/ManuD = src.manudrive
-			for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
-				if(MD.fablimit >= 0)
-					dat += {"
-				<tr>
-					<td>ManuDrive Usages</td>
-					<td class='r'>[MD.fablimit]</td>
-				</tr>
-					"}
-
+		/*
 		if (src.reagents.total_volume > 0)
 			dat += {"
 		<tr><th colspan='2'>Loaded Reagents</th></tr>
@@ -2127,6 +1950,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			queue_num++
 
 		return dat.Join()
+	*/
 
 	proc/eject_manudrive(mob/living/user)
 		src.drive_recipes = null
