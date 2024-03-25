@@ -28,9 +28,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 	var/static/regex/monospace_say_regex = new(@"`([^`]+)`", "g")
 
-	var/hat_offset_y = 0
-	var/hat_offset_x = 0
-
 	can_bleed = FALSE
 	blood_id = "oil"
 	use_stamina = FALSE

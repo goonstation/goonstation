@@ -14,7 +14,7 @@
 	punchMessage = "whaps"
 	kickMessage = "bonks"
 
-	hat_offset_y = 7 // offset for hattable component
+	var/default_hat_y = 7
 
 	var/datum/hud/ghostdrone/hud
 	var/obj/item/device/radio/radio = null
@@ -36,7 +36,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/hattable, TRUE)
+		AddComponent(/datum/component/hattable, TRUE, FALSE, default_hat_y, 0, 0.75)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		START_TRACKING

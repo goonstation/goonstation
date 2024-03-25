@@ -30,11 +30,12 @@
 	var/welded = FALSE
 	var/can_be_welded = FALSE
 	var/can_be_anchored = UNANCHORED
+	var/default_hat_y = 0
+	var/default_hat_x = 0
 	custom_suicide = TRUE
 	open_to_sound = TRUE
 
 	New()
-		AddComponent(/datum/component/hattable)
 		processing_items |= src
 		..()
 
@@ -225,8 +226,11 @@
 		icon_state="housing_cabinet"
 		flags = FPRINT | EXTRADELAY | CONDUCT
 		light_color = list(0, 179, 255, 255)
-		hat_offset_y = 14
-		hat_offset_x = 0
+		default_hat_y = 14
+
+		New()
+			AddComponent(/datum/component/hattable, FALSE, FALSE, default_hat_y)
+			..()
 
 		attack_hand(mob/user)
 			if (istype(user,/mob/living/object) && user == src.loc) // prevent wacky nullspace bug
@@ -268,8 +272,12 @@
 		c_flags = ONBELT
 		light_color = list(51, 0, 0, 0)
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
-		hat_offset_y = 7
-		hat_offset_x = -1
+		default_hat_y = 7
+		default_hat_x = -1
+
+		New()
+			AddComponent(/datum/component/hattable, FALSE, FALSE, default_hat_y, default_hat_x)
+			..()
 
 		proc/find_trigger() // find the trigger comp, return 1 if found.
 			if (!istype(src.the_trigger))

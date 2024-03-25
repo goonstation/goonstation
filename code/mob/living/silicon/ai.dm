@@ -86,8 +86,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	density = 1
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
-	hat_offset_y = 14
-	hat_offset_x = 0
+	var/default_hat_y = 14
 	var/datum/hud/silicon/ai/hud
 	var/last_notice = 0//attack notices
 	var/network = "SS13"
@@ -277,9 +276,9 @@ or don't if it uses a custom topopen overlay
 	AddComponent(/datum/component/minimap_marker, MAP_AI | MAP_SYNDICATE, "ai")
 	SPAWN(0)
 		if (bought_hat || prob(5))
-			AddComponent(/datum/component/hattable, TRUE, TRUE)
+			AddComponent(/datum/component/hattable, TRUE, TRUE, default_hat_y)
 		else
-			AddComponent(/datum/component/hattable, TRUE, FALSE)
+			AddComponent(/datum/component/hattable, TRUE, FALSE, default_hat_y)
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
 	light.set_brightness(0.6)

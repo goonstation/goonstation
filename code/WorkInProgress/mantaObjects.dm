@@ -717,8 +717,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	max_stack = 5
 	item_state = "cone_1"
 	wear_state = "cone_hat_1"
-	hat_offset_y = 11
-	hat_offset_x = 0
+	hat_offset_y = 8
 
 	setupProperties()
 		..()
