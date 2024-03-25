@@ -152,6 +152,8 @@ var/makingpowernetssince = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc = "Attempts for fix the powernets."
 	set name = "Fix powernets"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	unfuck_makepowernets()
 	makepowernets()
 

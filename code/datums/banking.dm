@@ -820,5 +820,12 @@ proc/FindBankAccountByName(var/nametosearch)
 	if (!nametosearch) return
 	return data_core.bank.find_record("name", nametosearch)
 
+/// Given a list of jobs, return the associated bank account records. Does not de-duplicate bank account records.
+proc/FindBankAccountsByJobs(var/list/job_list)
+	RETURN_TYPE(/list/datum/db_record)
+	. = list()
+	for (var/each_job in job_list)
+		. += data_core.bank.find_records("job", each_job)
+
 #undef STATE_LOGGEDOFF
 #undef STATE_LOGGEDIN

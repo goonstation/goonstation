@@ -148,7 +148,7 @@ toxic - poisons
 		hit_type = DAMAGE_STAB
 		armor_ignored = 0.66
 	remington
-		damage = 31
+		damage = 34
 
 /datum/projectile/bullet/assault_rifle/burst
 	sname = "burst fire"
@@ -161,7 +161,7 @@ toxic - poisons
 		hit_type = DAMAGE_STAB
 		armor_ignored = 0.66
 	remington
-		damage = 24
+		damage = 26
 
 //0.308
 /datum/projectile/bullet/minigun
@@ -364,6 +364,7 @@ toxic - poisons
 		damage = 20
 		cost = 3
 		shot_number = 3
+
 		auto
 			fullauto_valid = 1
 			cost = 1
