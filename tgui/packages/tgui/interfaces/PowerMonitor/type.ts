@@ -6,7 +6,7 @@
  */
 
 import { BooleanLike } from '../../../common/react';
-import { SortDirection } from '../PlayerPanel/constant';
+import { SortDirection } from '../common/sorting/constant';
 
 export enum PowerMonitorType {
   Apc = 'apc',

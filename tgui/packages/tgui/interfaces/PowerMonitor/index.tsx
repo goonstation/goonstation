@@ -8,7 +8,7 @@
 import { useBackend, useSharedState } from '../../backend';
 import { Input, LabeledList, Section, Stack, Table } from '../../components';
 import { Window } from '../../layouts';
-import { SortDirection } from '../PlayerPanel/constant';
+import { SortDirection } from '../common/sorting/constant';
 import { PowerMonitorApcGlobal, PowerMonitorApcTableHeader, PowerMonitorApcTableRows } from './Apc';
 import { PowerMonitorSmesGlobal, PowerMonitorSmesTableHeader, PowerMonitorSmesTableRows } from './Smes';
 import { ApcTableHeaderColumns, ApcTableHeaderColumnSortState, isDataForApc, isDataForSmes, PowerMonitorData, SmesTableHeaderColumns, SmesTableHeaderColumnSortState } from './type';

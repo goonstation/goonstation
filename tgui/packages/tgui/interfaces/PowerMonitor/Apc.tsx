@@ -8,8 +8,8 @@
 import { useBackend } from '../../backend';
 import { Box, Chart, LabeledList, Stack, Table, Tooltip } from '../../components';
 import { formatPower } from '../../format';
-import { SortDirection } from '../PlayerPanel/constant';
-import { Header } from '../PlayerPanel/Header';
+import { SortDirection } from '../common/sorting/constant';
+import { Header } from '../common/sorting/Header';
 import { ApcTableHeaderColumns, ApcTableHeaderColumnSortState, numericCompare, PowerMonitorApcData, PowerMonitorApcItemData } from './type';
 
 const apcState = {

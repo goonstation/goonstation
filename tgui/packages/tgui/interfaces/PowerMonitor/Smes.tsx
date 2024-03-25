@@ -8,8 +8,8 @@
 import { useBackend } from '../../backend';
 import { Chart, LabeledList, Stack, Table } from '../../components';
 import { formatPower } from '../../format';
-import { SortDirection } from '../PlayerPanel/constant';
-import { Header } from '../PlayerPanel/Header';
+import { SortDirection } from '../common/sorting/constant';
+import { Header } from '../common/sorting/Header';
 import { numericCompare, PowerMonitorSmesData, PowerMonitorSmesItemData, SmesTableHeaderColumns, SmesTableHeaderColumnSortState } from './type';
 
 export const PowerMonitorSmesGlobal = (_props, context) => {

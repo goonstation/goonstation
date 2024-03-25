@@ -1,8 +1,8 @@
 /**
  * @file
- * @copyright 2024
+ * @copyright 2021
+ * @author Mordent (https://github.com/mordent-goonstation)
  * @author Sovexe (https://github.com/Sovexe)
- * @author mloccy (https://github.com/mloccy)
  * @license ISC
  */
 
@@ -10,4 +10,9 @@ export enum Action {
   JumpToPlayerLocation = 'jump-to-player-loc',
   OpenPlayerOptions = ':pen-player-options',
   PrivateMessagePlayer = 'private-message-player',
+}
+
+export enum SortDirection {
+  Asc = 'asc',
+  Desc = 'desc',
 }

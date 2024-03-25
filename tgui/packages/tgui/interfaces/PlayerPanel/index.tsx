@@ -9,9 +9,10 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Button, Input, Table } from '../../components';
 import { Window } from '../../layouts';
-import { Header } from './Header';
-import { Action, SortDirection } from './constant';
+import { Header } from '../common/sorting/Header';
+import { SortDirection } from '../common/sorting/constant';
 import { CellTemplateConfig, CellValueSelectorConfig, Column, PlayerData, PlayerPanelData, SortConfig } from './type';
+import { Action } from './constant';
 
 const defaultTemplate = <Row extends object, Value>(config: CellTemplateConfig<Row, Value>) => `${config.value}`;
 const ckeyTemplate = (config: CellTemplateConfig<PlayerData, string>) => {
@@ -111,9 +112,11 @@ export const PlayerPanel = (props, context) => {
   let resolvedPlayers = Object.keys(players).map(ckey => players[ckey]);
 
   // generate all values up front (to avoid having to generate multiple times)
-  const playerValues: { [ckey: string]: {
-    [id: string]: unknown,
-  } } = resolvedPlayers.reduce((prevPlayerValues, currPlayer) => {
+  const playerValues: {
+    [ckey: string]: {
+      [id: string]: unknown,
+    }
+  } = resolvedPlayers.reduce((prevPlayerValues, currPlayer) => {
     prevPlayerValues[currPlayer.ckey] = columns.reduce((prevValues, currColumn) => {
       const {
         id,
