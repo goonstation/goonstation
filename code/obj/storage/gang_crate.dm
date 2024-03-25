@@ -170,6 +170,7 @@
 	desc = "A greasy, black duffle bag, this isn't station issue..."
 	icon_state = "gang_dufflebag"
 	item_state = "bowling"
+	w_class = W_CLASS_GIGANTIC
 	var/hidden = TRUE
 	var/open = FALSE
 	level = UNDERFLOOR
