@@ -1,4 +1,9 @@
+
 (t)mon mar 25 24
+(u)TDHooligan
+(p)18161
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Firearms now have recoil; As a result, big kinetic guns could get hard to control if you apply too much dakka!
 (u)LeahTheTech
 (+)Gang duffle bags no longer fit in backpacks.
 (t)sun mar 24 24
