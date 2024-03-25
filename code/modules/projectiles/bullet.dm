@@ -1963,7 +1963,7 @@ datum/projectile/bullet/autocannon
 /datum/projectile/bullet/webley
 	name = "bullet"
 	damage = 45
-	stun = 15
+	stun = 7
 	damage_type = D_PIERCING
 	armor_ignored = 0.5 //just enough to get past gang vests in 3 shots
 	implanted = /obj/item/implant/projectile/bullet_455
