@@ -8523,6 +8523,10 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/cable{
+	icon_state = "2-4";
+	pixel_y = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
 "aRn" = (
@@ -8689,8 +8693,12 @@
 	name = "Beepsky's Shoes"
 	},
 /obj/item/storage/photo_album/beepsky,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/item/clothing/suit/det_suit/beepsky,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/courtroom)
+/area/station/security/beepsky)
 "aSb" = (
 /obj/reagent_dispensers/watertank/fountain,
 /obj/machinery/light/incandescent{
@@ -8821,6 +8829,9 @@
 /area/station/teleporter)
 "aSP" = (
 /obj/storage/crate/bin/lostandfound,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
@@ -8829,8 +8840,12 @@
 /obj/machinery/bot/secbot/beepsky,
 /obj/item/clothing/suit/bedsheet,
 /obj/decal/cleanable/dirt,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/courtroom)
+/area/station/security/beepsky)
 "aSS" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -26071,6 +26086,12 @@
 /obj/cable,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
+"ngG" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/courtroom)
 "nhE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -31812,6 +31833,9 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/breakroom)
+"rJq" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/security/beepsky)
 "rKh" = (
 /obj/machinery/power/data_terminal,
 /obj/table/wood/auto,
@@ -32671,8 +32695,11 @@
 	name = "Beepsky's room";
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/courtroom)
+/area/station/security/beepsky)
 "swm" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -80658,10 +80685,10 @@ aaa
 aaa
 aaa
 upu
-upu
-upu
-upu
-upu
+rJq
+rJq
+rJq
+rJq
 aaa
 aaa
 aaa
@@ -80960,10 +80987,10 @@ aLQ
 aLQ
 aLQ
 upu
-upu
+rJq
 aRZ
 aSQ
-upu
+rJq
 upu
 aaa
 aaa
@@ -81262,10 +81289,10 @@ rwf
 aOR
 aQj
 xEQ
-upu
-upu
+rJq
+rJq
 swi
-upu
+rJq
 upu
 aaa
 aaa
@@ -81566,7 +81593,7 @@ bMY
 syg
 aRm
 aSP
-wrZ
+ngG
 upu
 upu
 iNv
