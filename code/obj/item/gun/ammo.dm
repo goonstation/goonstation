@@ -555,8 +555,8 @@
 
 	lopoint
 		name = "9mm Lo-Point magazine"
-		amount_left = 12
-		max_amount = 12
+		amount_left = 10
+		max_amount = 10
 
 /obj/item/ammo/bullets/nine_mm_NATO
 	sname = "9mm frangible"
