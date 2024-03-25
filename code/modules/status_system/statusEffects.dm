@@ -135,6 +135,9 @@
 	proc/move_trigger(mob/user, ev)
 		. = 0
 
+	proc/remove_self()
+		src.owner.delStatus(src)
+
 	disposing()
 		if (owner?.statusEffects)
 			owner.statusEffects -= src
@@ -1277,7 +1280,7 @@
 		maxDuration = null
 		effect_quality = STATUS_QUALITY_POSITIVE
 		var/const/max_health = 30
-		var/const/max_stam = 60
+		var/const/max_stam = 40
 		var/const/regen_stam = 5
 		var/mob/living/carbon/human/H
 		var/datum/gang/gang
@@ -2687,3 +2690,25 @@
 	icon_state = "possess"
 	maxDuration = 30 MINUTES
 	effect_quality = STATUS_QUALITY_NEGATIVE
+
+/datum/statusEffect/noir
+	id = "noir"
+	name = "Noir"
+	maxDuration = 2 MINUTES
+	visible = FALSE
+
+	onAdd(optional)
+		..()
+		var/mob/M = src.owner
+		if (M.client)
+			animate_fade_grayscale(M.client, 5 SECONDS)
+		if (M.mind)
+			RegisterSignal(M.mind, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(remove_self)) //we're editing the client directly so we should be Cautious
+
+	onRemove()
+		..()
+		var/mob/M = src.owner
+		if (M.mind)
+			UnregisterSignal(M.mind, COMSIG_MIND_DETACH_FROM_MOB)
+		if (M.client)
+			animate_fade_from_grayscale(M.client, 5 SECONDS)
