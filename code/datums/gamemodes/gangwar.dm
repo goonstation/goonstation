@@ -150,26 +150,6 @@
 /datum/game_mode/gang/send_intercept()
 	..(src.traitors)
 
-/datum/game_mode/gang/check_finished()
-	if(emergency_shuttle.location == SHUTTLE_LOC_RETURNED)
-		return 1
-
-	if (no_automatic_ending)
-		return 0
-
-	var/leadercount = 0
-	for (var/datum/mind/L in ticker.mode:traitors)
-		leadercount++
-
-	if(leadercount <= 1 && ticker.round_elapsed_ticks > 12000 && !emergency_shuttle.online)
-#ifndef RP_MODE
-		force_shuttle()
-		return 1
-#else
-		return 0
-#endif
-
-	else return 0
 
 /datum/game_mode/gang/process()
 	..()

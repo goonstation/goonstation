@@ -34402,7 +34402,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "nvT" = (
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /obj/item/device/light/zippo,
 /obj/item/clothing/head/helmet/greek,
 /obj/item/clothing/suit/greek,
