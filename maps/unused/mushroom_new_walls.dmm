@@ -5124,6 +5124,10 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/window_blinds/cog2/right{
+	id = "capoffice";
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
 "azM" = (
@@ -19312,6 +19316,10 @@
 	tag = "icon-grass1"
 	},
 /area/station/hydroponics/bay)
+"ghm" = (
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "ghI" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -19632,6 +19640,11 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
+"guZ" = (
+/obj/disposalpipe/junction/right/north,
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "gvN" = (
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
@@ -24654,6 +24667,10 @@
 "lMm" = (
 /turf/simulated/floor/stairs/wide/other,
 /area/station/hydroponics/bay)
+"lMq" = (
+/obj/xmastree/ephemeral,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "lME" = (
 /turf/simulated/floor/plating/random{
 	icon_state = "quiltystair"
@@ -24950,11 +24967,14 @@
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "mfc" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/cable,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	id = "capoffice"
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
 "mfA" = (
@@ -25910,6 +25930,10 @@
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/window_blinds/cog2/middle{
+	id = "capoffice";
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
@@ -28612,6 +28636,13 @@
 /obj/storage/closet/welding_supply,
 /turf/simulated/floor,
 /area/station/hangar/qm)
+"pta" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/landmark/halloween,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/cafeteria)
 "ptB" = (
 /obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 8
@@ -28626,6 +28657,10 @@
 	},
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/middle{
+	id = "capoffice";
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
@@ -30478,6 +30513,10 @@
 "qRM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
+/obj/window_blinds/cog2/left{
+	id = "capoffice";
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
 "qRW" = (
@@ -32122,6 +32161,13 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
+"shp" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "shs" = (
 /obj/machinery/camera{
 	c_tag = "Security West";
@@ -34857,6 +34903,9 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/window_blinds/cog2/left{
+	id = "capoffice"
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
 "urS" = (
@@ -36554,6 +36603,18 @@
 	dir = 8
 	},
 /area/station/hallway/arrivals)
+"vUP" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/landmark/halloween,
+/turf/simulated/floor/neutral/corner{
+	dir = 1
+	},
+/area/station/hallway/primary/west)
 "vUU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37391,6 +37452,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"wQF" = (
+/obj/landmark/halloween,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "wQW" = (
 /obj/machinery/drainage,
 /turf/simulated/floor,
@@ -71871,7 +71936,7 @@ sYY
 wKX
 nUS
 qjB
-qjB
+pta
 wKX
 wKX
 gjn
@@ -77609,7 +77674,7 @@ tnV
 ulZ
 eol
 mks
-uHC
+vUP
 aAl
 smU
 goc
@@ -79396,7 +79461,7 @@ bhd
 bis
 aqj
 qin
-aPu
+wQF
 bpx
 aqj
 brJ
@@ -81460,7 +81525,7 @@ xDN
 lov
 aoJ
 aoJ
-aoJ
+ghm
 aoJ
 aoJ
 akL
@@ -81765,7 +81830,7 @@ aoJ
 aoJ
 aoJ
 arK
-aoJ
+lMq
 aoJ
 aoJ
 aoJ
@@ -84857,7 +84922,7 @@ aAM
 bpc
 wxS
 wxS
-bpc
+guZ
 wxS
 wxS
 wxS
@@ -89043,7 +89108,7 @@ aTl
 aUd
 aqj
 xXH
-aZw
+shp
 mOy
 aqj
 aYW
