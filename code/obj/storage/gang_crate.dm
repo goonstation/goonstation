@@ -1170,12 +1170,12 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/long_tall)
 			A.amount = 4
 			A.amount_left = 4
 
-	/*draco
+	draco
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			spawn_item(C,I,/obj/item/gun/kinetic/draco,off_x=-7,scale_x=0.8,scale_y=0.8)
 			//no mags for you! that would be crazy!
-	*/ // disabled until recoil is in. boo hoo
+
 	greasegun
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
