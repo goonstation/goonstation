@@ -8,7 +8,9 @@
 import { useBackend } from '../../backend';
 import { Box, Chart, LabeledList, Stack, Table, Tooltip } from '../../components';
 import { formatPower } from '../../format';
-import { PowerMonitorApcData, PowerMonitorApcItemData } from './type';
+import { SortDirection } from '../PlayerPanel/constant';
+import { Header } from '../PlayerPanel/Header';
+import { ApcTableHeaderColumns, ApcTableHeaderColumnSortState, numericCompare, PowerMonitorApcData, PowerMonitorApcItemData } from './type';
 
 const apcState = {
   [0]: 'Off',
@@ -81,48 +83,112 @@ export const PowerMonitorApcGlobal = (_props, context) => {
     </Stack>
   );
 };
-
-export const PowerMonitorApcTableHeader = () => {
+interface PowerMonitorApcTableHeaderProps {
+  setSortBy: (type: ApcTableHeaderColumns) => any,
+  state: ApcTableHeaderColumnSortState
+}
+export const PowerMonitorApcTableHeader = (props: PowerMonitorApcTableHeaderProps) => {
   return (
     <>
-      <Table.Cell header>Area</Table.Cell>
+      <Table.Cell header>
+        <Header
+          sortDirection={props.state?.field === ApcTableHeaderColumns.Area ? props.state.dir : null}
+          onSortClick={() => props.setSortBy(ApcTableHeaderColumns.Area)}>
+          Area
+        </Header>
+      </Table.Cell>
       <Tooltip content="Equipment">
         <Table.Cell header collapsing>
-          Eqp.
+          <Header
+            sortDirection={props.state?.field === ApcTableHeaderColumns.Equipment ? props.state.dir : null}
+            onSortClick={() => props.setSortBy(ApcTableHeaderColumns.Equipment)}>
+            Eqp.
+          </Header>
         </Table.Cell>
       </Tooltip>
       <Tooltip content="Lighting">
         <Table.Cell header collapsing>
-          Lgt.
+          <Header
+            sortDirection={props.state?.field === ApcTableHeaderColumns.Lighting ? props.state.dir : null}
+            onSortClick={() => props.setSortBy(ApcTableHeaderColumns.Lighting)}>
+            Lgt.
+          </Header>
         </Table.Cell>
       </Tooltip>
       <Tooltip content="Environment">
         <Table.Cell header collapsing>
-          Env.
+          <Header
+            sortDirection={props.state?.field === ApcTableHeaderColumns.Environment ? props.state.dir : null}
+            onSortClick={() => props.setSortBy(ApcTableHeaderColumns.Environment)}>
+            Env.
+          </Header>
         </Table.Cell>
       </Tooltip>
       <Table.Cell header textAlign="right">
-        Load
+        <Header
+          sortDirection={props.state?.field === ApcTableHeaderColumns.Load ? props.state.dir : null}
+          onSortClick={() => props.setSortBy(ApcTableHeaderColumns.Load)}>
+          Load
+        </Header>
       </Table.Cell>
       <Table.Cell header textAlign="right">
-        Cell Charge
+        <Header
+          sortDirection={props.state?.field === ApcTableHeaderColumns.CellCharge ? props.state.dir : null}
+          onSortClick={() => props.setSortBy(ApcTableHeaderColumns.CellCharge)}>
+          Cell Charge
+        </Header>
       </Table.Cell>
-      <Table.Cell header>Cell State</Table.Cell>
+      <Table.Cell header>
+        <Header
+          sortDirection={props.state?.field === ApcTableHeaderColumns.CellState ? props.state.dir : null}
+          onSortClick={() => props.setSortBy(ApcTableHeaderColumns.CellState)}>
+          Cell State
+        </Header>
+      </Table.Cell>
     </>
   );
 };
 
+const apcDataComparer
+  = (a: PowerMonitorApcItemData,
+    b: PowerMonitorApcItemData,
+    names: Record<string, string>,
+    field: ApcTableHeaderColumns): number => {
+
+    if (field === ApcTableHeaderColumns.Area) {
+      return names[a[field]].localeCompare(names[b[field]]);
+    } else {
+      return numericCompare(a[field], (b[field]));
+    }
+  };
+
+const sortApcData
+  = (data: PowerMonitorApcItemData[],
+    names: Record<string, string>,
+    state: ApcTableHeaderColumnSortState): PowerMonitorApcItemData[] => {
+
+    if (state !== null) {
+      data.sort((a, b) => apcDataComparer(a, b, names, state.field));
+      if (state.dir === SortDirection.Asc) {
+        data.reverse();
+      }
+    }
+
+
+    return data;
+  };
+
 type PowerMonitorApcTableRowsProps = {
   search: string;
+  sortState: ApcTableHeaderColumnSortState;
 };
-
 export const PowerMonitorApcTableRows = (props: PowerMonitorApcTableRowsProps, context) => {
   const { search } = props;
   const { data } = useBackend<PowerMonitorApcData>(context);
 
   return (
     <>
-      {data.apcs.map((apc) => (
+      {sortApcData(data.apcs, data.apcNames, props.sortState).map((apc) => (
         <PowerMonitorApcTableRow key={apc[0]} apc={apc} search={search} />
       ))}
     </>

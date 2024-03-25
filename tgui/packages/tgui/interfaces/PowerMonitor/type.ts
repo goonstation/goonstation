@@ -6,6 +6,7 @@
  */
 
 import { BooleanLike } from '../../../common/react';
+import { SortDirection } from '../PlayerPanel/constant';
 
 export enum PowerMonitorType {
   Apc = 'apc',
@@ -67,3 +68,45 @@ export interface PowerMonitorSmesStaticItemData {
 export const isDataForApc = (data: PowerMonitorData): data is PowerMonitorApcData => data.type === PowerMonitorType.Apc;
 export const isDataForSmes = (data: PowerMonitorData): data is PowerMonitorSmesData =>
   data.type === PowerMonitorType.Smes;
+
+export enum ApcTableHeaderColumns {
+  Area = 0,
+  Equipment = 1,
+  Lighting = 2,
+  Environment = 3,
+  Load = 4,
+  CellCharge = 5,
+  CellState = 6
+}
+
+export type ApcTableHeaderColumnSortState = {
+  dir: SortDirection,
+  field: ApcTableHeaderColumns
+}
+
+export enum SmesTableHeaderColumns {
+  Area = 0,
+  StoredPower = 1,
+  Charging = 2,
+  Input = 3,
+  Output = 4,
+  Active = 5,
+  Load = 6
+}
+
+export type SmesTableHeaderColumnSortState = {
+  dir: SortDirection,
+  field: SmesTableHeaderColumns
+}
+
+export const numericCompare = (a: number, b: number): number => {
+
+  if (a === b) {
+    return 0;
+  } else if (a > b) {
+    return 1;
+  } else {
+    return -1;
+  }
+
+};

@@ -8,7 +8,9 @@
 import { useBackend } from '../../backend';
 import { Chart, LabeledList, Stack, Table } from '../../components';
 import { formatPower } from '../../format';
-import { PowerMonitorSmesData, PowerMonitorSmesItemData } from './type';
+import { SortDirection } from '../PlayerPanel/constant';
+import { Header } from '../PlayerPanel/Header';
+import { numericCompare, PowerMonitorSmesData, PowerMonitorSmesItemData, SmesTableHeaderColumns, SmesTableHeaderColumnSortState } from './type';
 
 export const PowerMonitorSmesGlobal = (_props, context) => {
   const { data } = useBackend<PowerMonitorSmesData>(context);
@@ -55,31 +57,117 @@ export const PowerMonitorSmesGlobal = (_props, context) => {
   );
 };
 
-export const PowerMonitorSmesTableHeader = (props, context) => {
+interface PowerMonitorSemsTableHeaderProps {
+  setSortBy: (field: SmesTableHeaderColumns) => any;
+  state: SmesTableHeaderColumnSortState;
+}
+
+export const PowerMonitorSmesTableHeader = (props: PowerMonitorSemsTableHeaderProps) => {
   return (
     <>
-      <Table.Cell header>Area</Table.Cell>
-      <Table.Cell header>Stored Power</Table.Cell>
-      <Table.Cell header>Charging</Table.Cell>
-      <Table.Cell header>Input</Table.Cell>
-      <Table.Cell header>Output</Table.Cell>
-      <Table.Cell header>Active</Table.Cell>
-      <Table.Cell header>Load</Table.Cell>
+      <Table.Cell header>
+        <Header
+          sortDirection={props.state?.field === SmesTableHeaderColumns.Area ? props.state.dir : null}
+          onSortClick={() => props.setSortBy(SmesTableHeaderColumns.Area)} >
+          Area
+        </Header>
+      </Table.Cell>
+      <Table.Cell header>
+        <Header
+          sortDirection={props.state?.field === SmesTableHeaderColumns.StoredPower ? props.state.dir : null}
+          onSortClick={() => props.setSortBy(SmesTableHeaderColumns.StoredPower)}>
+          Stored Power#
+        </Header>
+      </Table.Cell>
+      <Table.Cell header>
+        <Header
+          sortDirection={props.state?.field === SmesTableHeaderColumns.Charging ? props.state.dir : null}
+          onSortClick={() => props.setSortBy(SmesTableHeaderColumns.Charging)} >
+          Charging
+        </Header>
+      </Table.Cell>
+      <Table.Cell header>
+        <Header
+          sortDirection={props.state?.field === SmesTableHeaderColumns.Input ? props.state.dir : null}
+          onSortClick={() => props.setSortBy(SmesTableHeaderColumns.Input)}>
+          Input
+        </Header>
+      </Table.Cell>
+      <Table.Cell header>
+        <Header
+          sortDirection={props.state?.field === SmesTableHeaderColumns.Output ? props.state.dir : null}
+          onSortClick={() => props.setSortBy(SmesTableHeaderColumns.Output)}>
+          Output
+        </Header>
+      </Table.Cell>
+      <Table.Cell header>
+        <Header
+          sortDirection={props.state?.field === SmesTableHeaderColumns.Active ? props.state.dir : null}
+          onSortClick={() => props.setSortBy(SmesTableHeaderColumns.Active)}>
+          Active
+        </Header>
+      </Table.Cell>
+      <Table.Cell header>
+        <Header
+          sortDirection={props.state?.field === SmesTableHeaderColumns.Load ? props.state.dir : null}
+          onSortClick={() => props.setSortBy(SmesTableHeaderColumns.Load)} >
+          Load
+        </Header>
+      </Table.Cell>
     </>
   );
 };
 
+const smesDataComparer
+  = (a: PowerMonitorSmesItemData,
+    b: PowerMonitorSmesItemData,
+    names: Record<string, string>,
+    field: SmesTableHeaderColumns): number => {
+
+    if (field === SmesTableHeaderColumns.Area) {
+      return names[a[field]].localeCompare(names[b[field]]);
+    } else if (field === SmesTableHeaderColumns.Charging || field === SmesTableHeaderColumns.Active) {
+      if (a[field] === a[field]) {
+        return 0;
+      } else if (a[field] > b[field]) {
+        return 1;
+      } else {
+        return -1;
+      }
+    } else {
+      return numericCompare(a[field], (b[field]));
+    }
+  };
+
+const sortSmesData
+  = (data: PowerMonitorSmesItemData[],
+    names: Record<string, string>,
+    state: SmesTableHeaderColumnSortState): PowerMonitorSmesItemData[] => {
+
+    if (state !== null) {
+      data.sort((a, b) => smesDataComparer(a, b, names, state.field));
+      if (state.dir === SortDirection.Asc) {
+        data.reverse();
+      }
+    }
+
+
+    return data;
+  };
+
 type PowerMonitorSmesTableRowsProps = {
   search: string;
+  sortState: SmesTableHeaderColumnSortState;
 };
 
 export const PowerMonitorSmesTableRows = (props: PowerMonitorSmesTableRowsProps, context) => {
   const { search } = props;
   const { data } = useBackend<PowerMonitorSmesData>(context);
 
+
   return (
     <>
-      {data.units.map((unit) => (
+      {sortSmesData(data.units, data.unitNames, props.sortState).map((unit) => (
         <PowerMonitorSmesTableRow key={unit[0]} unit={unit} search={search} />
       ))}
     </>
