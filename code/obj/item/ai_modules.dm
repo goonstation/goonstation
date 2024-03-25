@@ -346,6 +346,12 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 				phrase_log.log_phrase("ailaw", src.get_law_text(allow_list=FALSE), no_duplicates=TRUE)
 		return
 
+/* Disguised */
+
+/obj/item/aiModule/freeform/disguised
+	name = "AI Law Module - 'Disguised'"
+	highlight_color = rgb(0, 138, 0, 255)
+	is_syndicate = TRUE
 
 /******************** Random ********************/
 

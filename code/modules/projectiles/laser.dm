@@ -730,8 +730,9 @@ toxic - poisons
 	name = "single"
 	sname = "single"
 	damage = 11
-	burst
-		name = "burst laser"
-		sname = "burst laser"
-		cost = 15
-		shot_number = 3
+
+/datum/projectile/laser/lasergat/burst
+	name = "burst laser"
+	sname = "burst laser"
+	cost = 15
+	shot_number = 3
