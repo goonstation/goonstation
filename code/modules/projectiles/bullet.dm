@@ -1963,8 +1963,9 @@ datum/projectile/bullet/autocannon
 /datum/projectile/bullet/webley
 	name = "bullet"
 	damage = 45
-	damage_type = D_KINETIC
-	hit_type = DAMAGE_CUT
+	stun = 15
+	damage_type = D_PIERCING
+	armor_ignored = 0.5 //just enough to get past gang vests in 3 shots
 	implanted = /obj/item/implant/projectile/bullet_455
 	impact_image_state = "bullethole-small"
 	casing = /obj/item/casing/medium

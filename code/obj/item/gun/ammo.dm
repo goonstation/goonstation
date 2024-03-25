@@ -1353,7 +1353,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 /obj/item/ammo/bullets/webley
 	sname = ".455 Webley"
 	name = ".455 Webley Bullets"
-	desc = "A small speedloader, full of ammunition for a Webley Revolver."
+	desc = "A small speedloader of reproduction .455 Webley ammunition, with a custom armor-penetrating core."
 	icon_state = "455-6"
 	amount_left = 6
 	max_amount = 6
