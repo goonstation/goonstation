@@ -19749,18 +19749,6 @@
 /obj/machinery/crusher,
 /turf/simulated/floor/caution/corner/sw,
 /area/station/maintenance/disposal)
-"dHR" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
 "dII" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -20536,19 +20524,20 @@
 	},
 /area/station/engine/inner)
 "emT" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
 /obj/disposalpipe/segment,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/left{
 	dir = 8
 	},
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
@@ -23098,12 +23087,6 @@
 	},
 /area/station/solar/east)
 "grl" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
@@ -25963,9 +25946,6 @@
 /area/station/engine/core/nuclear)
 "iyA" = (
 /obj/machinery/light,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment/brig{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -25974,6 +25954,9 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/instrument/harmonica,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "izQ" = (
@@ -27771,6 +27754,9 @@
 /obj/disposalpipe/junction{
 	dir = 1;
 	name = "brig pipe"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -29580,13 +29566,13 @@
 	},
 /area/station/hallway/secondary/central)
 "lmJ" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
 /obj/disposaloutlet{
 	name = "brig delivery chute"
 	},
 /obj/disposalpipe/trunk/brig,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/neutral/corner{
 	dir = 4
 	},
@@ -33150,10 +33136,6 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "nXV" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/rack,
 /obj/item/clothing/glasses/nightvision{
 	pixel_x = 4;
@@ -34088,6 +34070,9 @@
 /area/listeningpost/power)
 "oJh" = (
 /obj/disposalpipe/junction/right/north,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "oJy" = (
@@ -35526,6 +35511,10 @@
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
@@ -39912,9 +39901,6 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "tme" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/disposalpipe/segment/mail,
 /obj/machinery/secscanner{
 	pixel_y = -10
@@ -40115,12 +40101,6 @@
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
-"tvE" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
 "tvK" = (
 /obj/machinery/atmospherics/unary/tank{
 	dir = 4
@@ -40987,12 +40967,13 @@
 	},
 /area/station/hallway/primary/central)
 "udk" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/middle{
 	dir = 8
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
@@ -41429,9 +41410,6 @@
 	},
 /area/station/crew_quarters/ce)
 "utp" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -41439,6 +41417,10 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/middle{
 	dir = 8
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
@@ -42061,10 +42043,6 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "uPa" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -43434,10 +43412,6 @@
 	name = "Crew Quarters P02"
 	})
 "wad" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable,
 /obj/machinery/weapon_stand/rifle_rack/recharger,
 /obj/machinery/light{
 	dir = 8;
@@ -76113,10 +76087,10 @@ egp
 qYU
 fko
 bgz
-dHR
+bgz
 bgz
 bld
-tvE
+bgz
 bgz
 boJ
 qda
