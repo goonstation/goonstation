@@ -27013,6 +27013,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/blind_switch/area/south{
+	id = "capoffice"
+	},
 /turf/simulated/floor/blueblack,
 /area/station/crew_quarters/captain)
 "ocg" = (
