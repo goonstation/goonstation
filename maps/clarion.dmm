@@ -5501,6 +5501,10 @@
 	pixel_y = 13
 	},
 /obj/table/wood/auto,
+/obj/disposalpipe/segment/food{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/security/hos)
 "awb" = (
@@ -8457,6 +8461,9 @@
 	icon_state = "0-2"
 	},
 /obj/stool/chair/comfy/red{
+	dir = 4
+	},
+/obj/disposalpipe/segment/food{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
@@ -12679,11 +12686,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ai_monitored/armory)
 "bgy" = (
-/obj/disposalpipe/segment/food{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "bgz" = (
@@ -13730,18 +13736,15 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
 "boP" = (
+/obj/disposalpipe/segment/food,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/communications/office)
+"boQ" = (
+/obj/machinery/vending/paint/broken,
 /obj/disposalpipe/segment/food{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/decal/cleanable/dirt,
-/obj/grille/steel,
-/obj/structure/girder,
-/turf/simulated/floor/plating,
-/area/station/maintenance/central)
-"boQ" = (
-/obj/grille/steel,
-/obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "boR" = (
@@ -15363,7 +15366,9 @@
 /turf/simulated/floor/sanitary,
 /area/station/science/chemistry)
 "bxH" = (
-/obj/machinery/vending/paint/broken,
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bxM" = (
@@ -30399,13 +30404,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "lSe" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	dir = null
+	},
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/armory)
 "lSW" = (
@@ -36460,10 +36465,6 @@
 /area/station/crew_quarters/heads{
 	name = "Head of Personnel's Quarters"
 	})
-"qAY" = (
-/obj/disposalpipe/segment/food,
-/turf/simulated/floor/black,
-/area/station/security/hos)
 "qBa" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/black{
@@ -37221,7 +37222,6 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "rex" = (
-/obj/disposalpipe/segment/food,
 /obj/stool/chair/office/red{
 	dir = 8
 	},
@@ -40135,7 +40135,6 @@
 	},
 /area/station/hallway/primary/west)
 "txc" = (
-/obj/disposalpipe/segment/food,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -41743,7 +41742,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "uDF" = (
-/obj/disposalpipe/segment/food,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -77635,7 +77633,7 @@ lsG
 tEi
 naa
 csQ
-tDS
+bxH
 bcT
 brk
 bso
@@ -77886,13 +77884,13 @@ ksO
 vRz
 jtY
 bgy
-qAY
-qAY
+jtY
+jtY
 uDF
 rex
 txc
-bnE
-boP
+csQ
+tDS
 eQi
 brl
 bso
@@ -78400,12 +78398,12 @@ tKE
 csQ
 tFW
 awa
-rTC
-rTC
-rTC
-rTC
-rTC
-rTC
+boP
+boP
+boP
+boP
+boP
+boP
 boQ
 hVf
 brc
