@@ -731,7 +731,8 @@
 /client/proc/cmd_modify_market_variables()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Edit Market Variables"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (shippingmarket == null) boutput(src, "UH OH!")
 	else src.debug_variables(shippingmarket)
 
@@ -739,7 +740,8 @@
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Financial Info"
 	set desc = "Shows budget variables and current market prices."
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/payroll = 0
 	var/totalfunds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
 	for(var/datum/db_record/R as anything in data_core.bank.records)
@@ -780,7 +782,8 @@
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Alter Budget"
 	set desc = "Add to or subtract from a budget."
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/trans = input("Which budget?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
 	if (!trans) return
 
