@@ -8,6 +8,6 @@
 
 export enum Action {
   JumpToPlayerLocation = 'jump-to-player-loc',
-  OpenPlayerOptions = ':pen-player-options',
+  OpenPlayerOptions = 'open-player-options',
   PrivateMessagePlayer = 'private-message-player',
 }

@@ -6,12 +6,6 @@
  * @license ISC
  */
 
-export enum Action {
-  JumpToPlayerLocation = 'jump-to-player-loc',
-  OpenPlayerOptions = ':pen-player-options',
-  PrivateMessagePlayer = 'private-message-player',
-}
-
 export enum SortDirection {
   Asc = 'asc',
   Desc = 'desc',
