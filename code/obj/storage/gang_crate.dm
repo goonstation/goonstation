@@ -167,11 +167,14 @@
 /obj/item/gang_loot
 	icon = 'icons/obj/items/storage.dmi'
 	name = "suspicious looking duffle bag"
-	desc = "A greasy, black duffle bag, this isn't station issue..."
+	desc = "A greasy, black duffle bag, this isn't station issue, you should probably leave it alone..."
 	icon_state = "gang_dufflebag"
 	item_state = "bowling"
 	var/hidden = TRUE
 	var/open = FALSE
+	var/trapped = TRUE
+	///The civilian who has this in their hands, if the trap is active.
+	var/mob/idiot = null
 	level = UNDERFLOOR
 
 	New()
@@ -198,6 +201,30 @@
 			lootMaster.add_random_loot(src, GANG_CRATE_GEAR, 2)
 			lootMaster.fill_remaining(src, GIMMICK)
 			..()
+
+	pickup(mob/user)
+		if (!user.get_gang() && trapped)
+			if (isliving(user))
+				trapped = FALSE
+				cant_self_remove = TRUE
+				cant_drop = TRUE
+				boutput(user, SPAN_ALERT("As you pick up \the [src.name], a series of hooks emerge from the handle, lodging in your hand!"))
+				var/mob/living/H = user
+				idiot = user
+				H.emote("scream")
+				H.bleeding = min(H.bleeding +2 , 2)
+				SPAWN(0)
+					bleed_process()
+	dropped()
+		if (idiot)
+			cant_self_remove = FALSE
+			cant_drop = FALSE
+			idiot = null
+
+	proc/bleed_process()
+		while(cant_drop)
+			H.bleeding = min(H.bleeding +2 , 2)
+			sleep(4 SECONDS)
 
 	/// Uses the boolean 'intact' value of the floor it's beneath to hide, if applicable
 	hide(var/floor_intact)
