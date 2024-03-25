@@ -372,6 +372,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Change Admin Preferences"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	src.holder.show_pref_window(src.mob)
 

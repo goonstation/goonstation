@@ -101,6 +101,8 @@
 	icon_state = "engine1"
 	req_access = list(access_research)
 	object_flags = CAN_REPROGRAM_ACCESS
+	circuit_type = /obj/item/circuitboard/siphon_control
+
 	var/net_id
 	var/temp = null
 	///list of devices known to the siphon control device

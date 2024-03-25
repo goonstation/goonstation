@@ -1,4 +1,43 @@
 
+(t)sun mar 24 24
+(u)LeahTheTech
+(+)The Old Fashioned drink now gives you temporary "old fashioned" vision.
+(u)JORJ949
+(p)18288
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Clarion AI turrets no longer try to shoot through the wall at bridge.
+(u)JORJ949
+(p)18287
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added a camera to the top right of Inner Engineering on Cog1. AIs rejoice.
+(t)fri mar 22 24
+(u)JORJ949
+(p)18263
+(e)🆕🤖|C-Feature, A-Silicons
+(*)Added Disguised law module to head of staff traitor uplinks.
+(u)TDHooligan
+(p)18236
+(e)🎨❗|C-Sprites, E-FUCK
+(*)Gangs has been reworked! Read below for deets. Send feedback in the discord thread or forum.
+(*)Gang member point pools are separate now. Huzzah!
+(*)Gang lockers can no longer be broken.
+(*)Gang leaders can buy the new 'Janktank II' to revive fellow gang members
+(*)You can now launder thousands of credits at once.
+(*)Tagging has been reworked, read below for details.
+(*)New gang loot bags & crates are hidden throughout the shift. Watch your radios, gang!
+(+)Territory is now a circle around tags, and tags now provide points based on how many people they see pass by.
+(+)You can only tag near your existing territory, starting where your locker is placed
+(+)You should look to expand to populated areas, as quickly as possible!
+(+)Your uniform also grants buffs if you're in your territory, and regen if you're by your locker.
+(+)---
+(+)Every point earned also grants the gang 1 point of 'Street Cred'
+(+)Street cred can be spent by leaders to hire new gang members, or buy revival syringes for their gang.
+(+)---
+(+)Check your gang radio for new events:
+(+)A few times a shift, loot bags are randomly hidden. Interrogate civilians, or their PDAs, to find where they are!
+(+)Twice per shift, a large weapons cache will spawn, locked in place. fight to drag it back to your locker!
+(+)---
+(+)Sprites by Mora, Guv, JOEL, Blackrep, what, Moriarty, Rubi, Shmiggy and Cogwerks. thank you so much :)
 (t)thu mar 21 24
 (u)glowbold
 (p)18192
