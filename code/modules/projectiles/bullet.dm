@@ -718,9 +718,9 @@ toxic - poisons
 	damage = 18
 	stun = 6
 	hit_type = DAMAGE_CUT //birdshot mutilates your skin more, but doesnt hurt organs like shotties
-	dissipation_rate = 1 //spread handles most of this
+	dissipation_rate = 4 //spread handles most of this
 	shot_sound = 'sound/weapons/birdshot.ogg'
-	dissipation_delay = 3
+	dissipation_delay = 6
 	casing = /obj/item/casing/shotgun/red
 	on_launch(obj/projectile/O)
 		icon_state = "birdshot[rand(1,3)]"
