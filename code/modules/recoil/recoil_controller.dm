@@ -13,9 +13,9 @@
 
 	// Reset/damping rates
 	var/recoilcamera_sway_damp = 0.85 //! how much sway delta should be multiplied by every 10th of a second
-	var/recoilcamera_damp = 0.5 //! how much recoil delta should be multiplied by every 10th of a second
-	var/recoilcamera_damp_distance = 0.3 //! how much recoil delta should be decreased by, per pixel away from the centre
-	var/recoilcamera_flat_reset_speed = 1 //! how much recoil_delta is reduced by, every 10th of a second
+	var/recoilcamera_damp = 0.6 //! how much recoil delta should be multiplied by every 10th of a second
+	var/recoilcamera_damp_distance = 0.4 //! how much recoil delta should be decreased by, per pixel away from the centre
+	var/recoilcamera_flat_reset_speed = 2 //! how much recoil_delta is reduced by, every 10th of a second
 
 /datum/recoil_controller/New(client/owner)
 	. = ..()
