@@ -318,6 +318,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 	if (!menuchoice)
 		return
 	if (menuchoice == "Fidget")
+		animate_door_squeeze(src) //squish
 		user.visible_message(SPAN_EMOTE("[user] fidgets with [src]."))
 		boutput(user, SPAN_NOTICE("You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")]."))
 	else if (menuchoice == "Say")

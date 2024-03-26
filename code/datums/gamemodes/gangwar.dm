@@ -4,7 +4,7 @@
 	regular = FALSE
 
 	/// Makes it so gang members are chosen randomly at roundstart instead of being recruited.
-	var/random_gangs = FALSE
+	var/random_gangs = TRUE
 
 	antag_token_support = TRUE
 	var/list/datum/gang/gangs = list()
@@ -45,7 +45,7 @@
 #ifdef RP_MODE
 #define PLAYERS_PER_GANG_GENERATED 15
 #else
-#define PLAYERS_PER_GANG_GENERATED 9
+#define PLAYERS_PER_GANG_GENERATED 12
 #endif
 	var/num_teams = clamp(round((num_players) / PLAYERS_PER_GANG_GENERATED), setup_min_teams, setup_max_teams) //1 gang per 9 players, 15 on RP
 #undef PLAYERS_PER_GANG_GENERATED
@@ -548,6 +548,7 @@ proc/broadcast_to_all_gangs(var/message)
 		while(src.gang_frequency in src.used_frequencies)
 			src.gang_frequency = rand(1360, 1420)
 		src.used_frequencies += src.gang_frequency
+		protected_frequencies += gang_frequency
 
 		src.announcer_source = new /datum/generic_radio_source()
 		src.announcer_source.set_name("The [pick("Kingpin","Cabal","Council","Boss")]")
@@ -1226,6 +1227,21 @@ proc/broadcast_to_all_gangs(var/message)
 
 		user.Browse(page, "window=gang_locker;size=650x630")
 		//onclose(user, "gang_locker")
+
+	ex_act()
+		return //no!
+
+	proc/set_gang(datum/gang/gang)
+		src.name = "[gang.gang_name] Locker"
+		src.desc = "A locker with a small screen attached to the door, and the words 'Property of [gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
+		src.gang = gang
+		src.gang.claim_tiles(usr.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_SIGHT_RANGE_LOCKER)
+		src.UpdateIcon()
+
+		var/image/antag_icon = image('icons/mob/antag_overlays.dmi', icon_state = "gang_locker_[src.gang.color_id]", loc=src)
+		antag_icon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_image(antag_icon)
+		get_image_group(src.gang).add_image(antag_icon)
 
 	//puts the html string in the var/HTML on src
 	proc/generate_HTML(var/mob/living/carbon/human/user)
