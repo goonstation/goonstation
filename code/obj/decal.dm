@@ -567,6 +567,7 @@ obj/decal/fakeobjects/teleport_pad
 	layer = OBJ_LAYER
 	event_handler_flags = USE_FLUID_ENTER
 	pass_unstable = TRUE
+	deconstructable = FALSE
 
 	rotatable = 0
 	foldable = 0

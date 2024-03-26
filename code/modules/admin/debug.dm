@@ -10,6 +10,7 @@ var/global/debug_messages = 0
 	set name = "HDM" // debug ur haines
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	debug_messages = !(debug_messages)
 	logTheThing(LOG_ADMIN, usr, "toggled debug messages [debug_messages ? "on" : "off"].")
@@ -20,6 +21,7 @@ var/global/debug_messages = 0
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Deletions"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/deletedJson = "\[{path:null,count:0}"
 	var/deletionWhat = "Deleted Object Counts:"
 	#ifdef DELETE_QUEUE_DEBUG
@@ -71,12 +73,14 @@ var/global/debug_messages = 0
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Clear Image Deletion Log"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	deletedImageData = new
 
 /client/proc/debug_image_deletions()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Image Deletions"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	#ifdef IMAGE_DEL_DEBUG
 	var/deletedJson = "\[''"
 	var/deletionWhat = "Deleted Image data:"
@@ -116,6 +120,7 @@ var/global/debug_messages = 0
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Object Pools"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	#ifndef DETAILED_POOL_STATS
 	var/poolsJson = "\[{pool:null,count:0}"
@@ -197,6 +202,8 @@ var/global/debug_messages = 0
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Call Proc All"
 	set desc = "Call proc on all instances of a type, will probably slow shit down"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (!typename)
 		typename = input("Input part of type:", "Type Input") as null|text
@@ -225,6 +232,7 @@ var/global/debug_messages = 0
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Advanced ProcCall"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/target = null
 
 	switch (alert("Proc owned by obj?",,"Yes","No","Cancel"))
@@ -369,6 +377,7 @@ var/global/debug_messages = 0
 
 /datum/proccall_editor/ui_act(action, list/params, datum/tgui/ui)
 	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	. = ..()
 	if(.)
 		return
@@ -511,7 +520,8 @@ var/global/debug_messages = 0
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Del-All"
 	set desc = "Delete all instances of the selected type."
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	// to prevent REALLY stupid deletions on live
 	var/hsbitem = get_one_match(typename, /atom, use_concrete_types=FALSE)
 	var/background =  alert("Run the process in the background?",,"Yes" ,"No")
@@ -556,7 +566,8 @@ var/global/debug_messages = 0
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Del-Half"
 	set desc = "Delete approximately half of instances of the selected type. *snap"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	// to prevent REALLY stupid deletions
 	var/hsbitem = get_one_match(typename, /atom, use_concrete_types=FALSE)
 	var/background =  alert("Run the process in the background?",,"Yes" ,"No")
@@ -604,14 +615,16 @@ var/global/debug_messages = 0
 /client/proc/cmd_debug_del_all_cancel()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Del-All Cancel"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	src.delete_state = DELETE_STOP
 
 // makes del_all print how much is currently deleted
 /client/proc/cmd_debug_del_all_check()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Del-All Progress"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	src.delete_state = DELETE_CHECK
 
 // fuck this
@@ -640,6 +653,8 @@ var/global/debug_messages = 0
 	set name = "Change Mutant Race"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set popup_menu = 0
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(!ishuman(mob))
 		alert("[mob] is not a human mob!")
 		return
@@ -707,11 +722,12 @@ body
 /client/proc/check_gang_scores()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Check Gang Scores"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	boutput(usr, "Gang scores:")
 
 	for(var/datum/gang/G in get_all_gangs())
-		boutput(usr, "[G.gang_name]: [G.gang_score()] ([G.num_areas_controlled()] areas)")
+		boutput(usr, "[G.gang_name]: [G.gang_score()] ([G.num_tiles_controlled()] tiles)")
 
 /client/proc/scenario()
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
@@ -821,7 +837,8 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Reaction Structure"
 	set desc = "Checks the current reaction structure."
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/T = "<h1>Reaction Structure</h1><hr>"
 	for(var/reagent in total_chem_reactions)
 		T += "<h3>[reagent]</h3>"
@@ -835,7 +852,8 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Reagents Cache"
 	set desc = "Check which things are in the reaction cache."
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/T = "<h1>Reagents Cache</h1><hr><table border=1><tr><td><B><center>ID</center></B></td><td><B><center>Name</center></B></td><td><B><center>Type</center></B></td>"
 	for(var/reagent in reagents_cache)
 		var/datum/reagent/R = reagents_cache[reagent]
@@ -886,7 +904,8 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set name = "Find One"
 	set desc = "Show the location of one instance of type."
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
 		var/atom/theinstance = find_first_by_type(thetype)
@@ -903,7 +922,8 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set name = "Find All"
 	set desc = "Show the location of all instances of a type. Performance warning!!"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
 		boutput(usr, SPAN_NOTICE("<b>All instances of [thetype]: </b>"))
@@ -918,7 +938,8 @@ body
 	set name = "Find Thing"
 	set desc = "Show the location of an atom by name."
 	set popup_menu = 0
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (!A)
 		return
 
@@ -929,7 +950,8 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
 	set name = "Count All"
 	set desc = "Returns the number of all instances of a type that exist."
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
 		boutput(usr, SPAN_NOTICE("There are <b>[length(find_all_by_type(thetype))]</b> instances total of [thetype]."))
@@ -943,6 +965,7 @@ body
 	set desc = "Allows you to change your admin level at will for testing. Does not change your available verbs."
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/new_level = input(src, null, "Choose New Rank", "Coder") as anything in null|list("Host", "Coder", "Shit Guy", "Primary Admin", "Admin", "Secondary Admin", "Mod", "Babby")
 	if (!new_level)
@@ -971,6 +994,7 @@ var/global/debug_camera_paths = 0
 	set name = "Toggle camera connections"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (!debug_camera_paths && alert(src, "DO YOU REALLY WANT TO TURN THIS ON? THE SERVER WILL SHIT ITSELF AND DIE DO NOT DO IT ON THE LIVE SERVERS THANKS", "Confirmation", "Yes", "No") == "No")
 		return
@@ -1004,6 +1028,7 @@ proc/display_camera_paths()
 	set name = "Hide camera connections"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	remove_camera_paths()
 */
 
@@ -1017,6 +1042,7 @@ proc/display_camera_paths()
 	set desc = "Toggle AI camera connection behaviour, off to select each node based on the individual camera, on to force cameras to reciprocate the connection"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	camera_network_reciprocity = !camera_network_reciprocity
 	boutput(usr, SPAN_NOTICE("Toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]"))
@@ -1046,6 +1072,7 @@ proc/display_camera_paths()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (!ishuman(src.mob))
 		return boutput(usr, SPAN_ALERT("Error: client mob is invalid type or does not exist"))
 	randomize_look(src.mob)
@@ -1058,6 +1085,7 @@ proc/display_camera_paths()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (src.mob && src.mob.mind)
 		src.mob.mind.handwriting = pick(handwriting_styles)
 		boutput(usr, SPAN_NOTICE("Handwriting style is now: [src.mob.mind.handwriting]"))
@@ -1070,6 +1098,7 @@ proc/display_camera_paths()
 	set desc = "Displays the statistics for how machines are processed."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/output = ""
 	for(var/T in detailed_machine_timings)
@@ -1123,6 +1152,7 @@ proc/display_camera_paths()
 	set desc = "Displays the statistics for how much power machines are using."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(holder)
 		var/datum/power_usage_viewer/E = new(src.mob)
@@ -1137,6 +1167,7 @@ proc/display_camera_paths()
 	set desc = "Displays the statistics for how queue stuff is processed."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/output = ""
 	for(var/T in queue_stat_list)
@@ -1191,6 +1222,7 @@ proc/display_camera_paths()
 	set desc = "Adds a dmi to the global list of available huds, for every player to use."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/icon/new_style = input("Please choose a new icon file to upload", "Upload Icon") as null|icon
 	if (!isicon(new_style))
@@ -1211,6 +1243,7 @@ proc/display_camera_paths()
 	set desc = "Animates the client to a randomised color matrix"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(!islist(usr.client.color))
 		src.set_color()
@@ -1242,6 +1275,7 @@ proc/display_camera_paths()
 	set desc = "Convert a part of the area to flock"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(isnull(force))
 		force = tgui_alert(src, "Force convert unsimulated too?", "Force?", list("Yes", "No")) == "Yes"
@@ -1265,6 +1299,7 @@ var/datum/flock/testflock
 	set name = "Test Flock Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(isnull(testflock))
 		testflock = new()
@@ -1276,6 +1311,7 @@ var/datum/flock/testflock
 	set desc = "Invalidates/clears the string cache to allow for files to be reloaded."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(alert("Really clear the string cache?","Invalidate String Cache","OK","Cancel") == "OK")
 		var/length = length(string_cache)
@@ -1289,6 +1325,7 @@ var/datum/flock/testflock
 	set desc = "Deadmin you're own self. Temporarily."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(src.holder)
 		var/seconds = input("How many seconds would you like to be deadminned?", "Temporary Deadmin", 60) as num
@@ -1303,6 +1340,8 @@ var/datum/flock/testflock
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Spawn"
 	set desc = "Displays all the spawns that've happened so far or dies trying"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(src.holder)
 		if(!src.mob)
 			return
@@ -1324,6 +1363,8 @@ var/datum/flock/testflock
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Spawn"
 	set desc = "Displays all the spawns that've happened so far or dies trying"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(src.holder)
 		if(!src.mob)
 			return
@@ -1374,6 +1415,7 @@ var/datum/flock/testflock
 	set name = "Delete profiling logs"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(input(usr, "Type in: 'delete profiling logs' to confirm:", "Confirmation of prof. logs deletion") != "delete profiling logs")
 		boutput(usr, "Deletion of profiling logs aborted.")
@@ -1389,6 +1431,7 @@ var/datum/flock/testflock
 	set name = "cause lag"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(alert("Are you sure you want to cause lag?","Why would you do this?","Yes","No") != "Yes")
 		return
@@ -1407,6 +1450,7 @@ var/datum/flock/testflock
 	set name = "persistent lag"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(alert("Are you sure you want to set persistent lag to [cpu_usage]?","Why would you do this?","Yes","No") != "Yes")
 		return
@@ -1425,6 +1469,7 @@ var/datum/flock/testflock
 /client/proc/list_adminteract_buttons()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/list/lines = list("<html><head><title>Admin Interact Buttons</title></head><body>")
 	for(var/type in typesof(/typeinfo/atom))
@@ -1454,6 +1499,7 @@ var/datum/flock/testflock
 	set desc = "Test disposal and mail chutes for broken routing."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/input_x = input(usr, "Enter X coordinate") as null | num
 	if(isnull(input_x))

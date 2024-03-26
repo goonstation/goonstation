@@ -46,6 +46,7 @@
 	var/datum/abilitymanager/abilitymanager = null
 	var/datum/ban_panel/ban_panel = null
 	var/datum/antagonist_panel/antagonist_panel = null
+	var/datum/job_manager/job_manager = null
 
 	var/list/hidden_categories = null
 
@@ -371,6 +372,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Change Admin Preferences"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	src.holder.show_pref_window(src.mob)
 

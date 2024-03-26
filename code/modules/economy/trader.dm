@@ -473,8 +473,8 @@
 		showswirl(pickedloc)
 		A.name = "Goods Crate ([src.name])"
 		if (!custom)
-			for(var/obj/O in shopping_cart)
-				O.set_loc(A)
+			for(var/atom/movable/purchased as anything in shopping_cart)
+				purchased.set_loc(A)
 			shopping_cart = new/list()
 		else
 			new custom(A)

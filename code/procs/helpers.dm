@@ -1028,19 +1028,29 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			return
 		M.shakecamera = 1
 		var/client/client = M.client
-
+		// track total offsets to reset (rather than lazily setting pixel_x to 0)
+		var/total_off_x = 0
+		var/total_off_y = 0
 		for(var/i=0, i<duration, i++)
 			var/off_x = (rand(0, strength) * (prob(50) ? -1:1))
 			var/off_y = (rand(0, strength) * (prob(50) ? -1:1))
+			total_off_x -= off_x
+			total_off_y -= off_y
 			if(client)
 				animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			sleep(delay)
 
 		if (client)
-			client.pixel_x = 0
-			client.pixel_y = 0
+			animate(client, pixel_x = total_off_x, pixel_y = total_off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			M.shakecamera = 0
+		animate(pixel_x = total_off_x*-1, pixel_y = total_off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
+
+/proc/recoil_camera(mob/M, dir, strength=1, spread=3)
+	if(!M || !M.client || !M.client.recoil_controller)
+		return
+	M.client.recoil_controller.recoil_camera(dir,strength,spread)
+
 
 /proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
 	//returns only NORTH, SOUTH, EAST, or WEST
@@ -2599,5 +2609,5 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 /// Find a client based on ckey
 /proc/find_client(ckey)
 	for (var/client/C in clients)
-		if (C == ckey)
+		if (C.ckey == ckey)
 			return C
