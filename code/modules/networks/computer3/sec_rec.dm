@@ -116,7 +116,7 @@
 						src.print_index()
 
 					if ("2") //Search records
-						src.print_text("Please enter target name, ID, DNA, rank, or fingerprint.")
+						src.print_text("Please enter target name, ID, DNA, rank, fingerprint, or criminal status.")
 
 						src.menu = MENU_SEARCH_INPUT
 						return
@@ -599,6 +599,10 @@
 				var/list/datum/db_record/results = list()
 				for(var/datum/db_record/R as anything in data_core.general.records)
 					var/haystack = jointext(list(ckey(R["name"]), ckey(R["dna"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
+					var/test_one = data_core.security.find_record("name", R["name"])
+					if(istype(test_one, /datum/db_record))
+						haystack = jointext(list(haystack, ckey(test_one["criminal"])), " ")
+					src.print_text(haystack)
 					if(findtext(haystack, searchText))
 						results += R
 
