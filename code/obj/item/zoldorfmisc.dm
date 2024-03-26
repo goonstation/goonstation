@@ -1,12 +1,36 @@
-//scroll used to take on zoldorf's curse
-/obj/item/zolscroll //the contract people sign to become zoldorf. stores the name of the signer so players cant sell someone elses soul in a forced zoldorfing
+#define SIGNING_DURATION 4.6 SECONDS
+#define UNSIGNED 1
+#define SIGNING 2
+#define SIGNED 3
+
+/datum/action/bar/icon/callback/signingBar
+
+	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags, call_proc_on)
+		. = ..(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags, call_proc_on)
+	onInterrupt(flag)
+		. = ..(flag)
+		var/obj/item/zolscroll/scroll = src.target
+
+		if (istype(scroll))
+			scroll.icon_state = "scrollopen"
+			scroll.signing_state = UNSIGNED
+			scroll.UpdateIcon()
+
+/// Scroll used to take on zoldorf's curse
+/// The contract people sign to become zoldorf.
+/// Stores the name of the signer so players can't sell someone elses soul in a forced zoldorfing.
+/obj/item/zolscroll
 	name = "weird burrito"
 	desc = "Hmmm...It's a burrito with no filling and the texture of old parchment."
 	icon = 'icons/obj/zoldorf.dmi'
 	inhand_image_icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "scrollclosed"
 	item_state = "scroll"
+	var/signing_state = UNSIGNED
 	var/signer
+	// New()
+	// 	..()
+	// 	src.signing_state =
 
 	attack_self(mob/user as mob)
 		if(src.icon_state == "scrollclosed")
@@ -15,18 +39,34 @@
 			src.desc = "This is one WEIRD burrito..."
 
 	attackby(obj/item/weapon, mob/user)
-		if(istype(weapon, /obj/item/pen) && src.icon_state=="scrollopen")
-			user.visible_message(SPAN_ALERT("<b>[user.name] stabs themself with the [weapon] and starts signing the contract in blood!</b>"),SPAN_ALERT("<b>You stab yourself with the [weapon] and start signing the contract in blood!</b>"))
-			playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
-			take_bleeding_damage(user, null, 10, DAMAGE_STAB)
-			src.icon_state = "signing"
-			if (do_after(user, 4.6 SECONDS))
-				user.visible_message(SPAN_ALERT("<b>[user.name] finishes signing the contract in blood!</b>"),SPAN_ALERT("<b>You finish signing the contract in blood!</b>"))
-				src.signer = user.real_name
-				src.name = "[user.real_name]'s signed demonic contract"
-				src.icon_state = "signed"
-			else
-				src.icon_state = "scrollopen"
+		if (!istype(weapon, /obj/item/pen) || src.signing_state != UNSIGNED)
+			return
+		user.visible_message(
+			SPAN_ALERT("<b>[user.name] stabs [himself_or_herself(user)] with the [weapon] and starts signing the contract in blood!</b>"),
+			SPAN_ALERT("<b>You stab yourself with the [weapon] and start signing the contract in blood!</b>"))
+		src.signing_state = SIGNING
+		playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
+		take_bleeding_damage(user, null, 10, DAMAGE_STAB)
+		src.icon_state = "signing"
+		var/actionBar = new /datum/action/bar/icon/callback/signingBar(
+			user,
+			src,
+			SIGNING_DURATION,
+			PROC_REF(complete_signing),
+			list(user),
+			src.icon,
+			src.icon_state,
+			"<b>[user.name] finishes signing the contract in blood!</b>",
+			(INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE))
+		src.UpdateIcon()
+		actions.start(actionBar, user)
+
+	proc/complete_signing(mob/user)
+		src.signer = user.real_name
+		src.name = "[user.real_name]'s signed demonic contract"
+		src.icon_state = "signed"
+		src.UpdateIcon()
+		src.signing_state = SIGNED
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if((user == target)&&(src.icon_state == "scrollclosed"))
