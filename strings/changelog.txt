@@ -11,6 +11,7 @@
 (+)Added a Nuclear Preparations closet to the Cairngorm.
 (u)LeahTheTech
 (+)The Cosmopolitan drink now gives you a taste of a random accent with every sip.
+(+)Diesel can now be used to fuel combustion generators. There is nothing strange about this.
 (t)mon mar 25 24
 (u)TDHooligan
 (p)18161
