@@ -62,6 +62,11 @@ var/list/pw_rewards_tier3 = null
 
 //setup teams and commanders
 /datum/game_mode/pod_wars/pre_setup()
+#ifndef MAP_OVERRIDE_POD_WARS
+	message_admins("Pod wars gamemode attempted to start with a non pod wars map, aborting!")
+	logTheThing(LOG_DEBUG, "Pod wars gamemode attempted to start with a non pod wars map, aborting!")
+	return 0
+#endif
 	board = new()
 	stats_manager = new()
 	if (!setup_teams())
