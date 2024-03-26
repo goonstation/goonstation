@@ -845,7 +845,6 @@ var/datum/job_controller/job_controls
 					src.hidden_jobs += JOB
 				else
 					src.special_jobs += JOB
-				wagesystem.jobs[JOB.name] = src.job_creator.wages
 
 				JOB.name = src.job_creator.name
 				JOB.wages = src.job_creator.wages

@@ -3,6 +3,8 @@
 	var/list/alias_names = null
 	var/initial_name = null
 	var/linkcolor = "#0FF"
+
+	/// Job starting wages
 	var/wages = 0
 	var/limit = -1
 	/// job category flag for use with loops rather than a needing a bunch of type checks
@@ -696,7 +698,7 @@ ABSTRACT_TYPE(/datum/job/research)
 /datum/job/research/roboticist
 	name = "Roboticist"
 	limit = 3
-	wages = 200
+	wages = PAY_DOCTORATE
 	slot_back = list(/obj/item/storage/backpack/robotics)
 	slot_belt = list(/obj/item/storage/belt/roboticist/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/roboticist)

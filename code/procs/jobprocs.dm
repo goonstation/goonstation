@@ -811,13 +811,13 @@ var/global/totally_random_jobs = FALSE
 		src.mind.store_memory("Your pin to your ID is: [C.pin]")
 	src.mind?.remembered_pin = C.pin
 
-	if (wagesystem.jobs[JOB.name])
+	if (JOB.wages > 0)
 		var/cashModifier = 1
 		if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 			cashModifier = 1.25
 
 		var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
-		S.setup(src,round(wagesystem.jobs[JOB.name] * cashModifier))
+		S.setup(src,round(JOB.wages * cashModifier))
 
 		if (isnull(src.get_slot(SLOT_R_STORE)))
 			src.equip_if_possible(S, SLOT_R_STORE)

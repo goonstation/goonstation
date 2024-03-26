@@ -717,8 +717,10 @@ var/global/current_state = GAME_STATE_INVALID
 
 			//get base wage + initial earnings calculation
 			var/job_wage = 100
-			if (player.mind.assigned_role in wagesystem.jobs)
-				job_wage = wagesystem.jobs[player.mind.assigned_role]
+			if (player.mind.assigned_role != null && istext(player.mind.assigned_role))
+				var/datum/job/J = find_job_in_controller_by_string(player.mind.assigned_role)
+				if (istype(J))
+					job_wage = J.wages
 
 			var/job_wage_converted = 100
 			switch(job_wage)
