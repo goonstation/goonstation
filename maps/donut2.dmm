@@ -34438,15 +34438,6 @@
 /area/station/crew_quarters/catering)
 "nvT" = (
 /obj/machinery/vending/chapel,
-/obj/item/device/light/zippo,
-/obj/item/clothing/head/helmet/greek,
-/obj/item/clothing/suit/greek,
-/obj/item/clothing/under/gimmick/toga,
-/obj/item/clothing/head/laurels,
-/obj/item/clothing/head/laurels/gold,
-/obj/decal/poster/wallsign/poster_sol{
-	pixel_y = 31
-	},
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/office)
 "nwC" = (
@@ -37454,6 +37445,19 @@
 "piD" = (
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
+"piF" = (
+/obj/storage/crate{
+	name = "Special Syllogí";
+	desc = "Ένα μεγάλο μεταλλικό κουτί στο οποίο μπορείτε να βάλετε πράγματα. Ποιος ξέρει, μπορεί να έχει ήδη πράγματα μέσα του."
+	},
+/obj/item/clothing/under/gimmick/toga,
+/obj/item/clothing/suit/greek,
+/obj/item/clothing/head/helmet/greek,
+/obj/item/clothing/head/laurels/gold,
+/obj/item/device/light/zippo,
+/obj/item/clothing/head/laurels,
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/office)
 "piG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -93103,7 +93107,7 @@ wNr
 pCJ
 avj
 nvT
-axt
+piF
 hRa
 avj
 cay
