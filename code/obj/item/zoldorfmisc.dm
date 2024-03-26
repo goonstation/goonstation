@@ -538,3 +538,8 @@
 /obj/item/zspellscroll/hat
 	icon_state = "scrollpurple"
 	scrolltype = "hat"
+
+#undef SIGNING_DURATION
+#undef UNSIGNED
+#undef SIGNING
+#undef SIGNED
