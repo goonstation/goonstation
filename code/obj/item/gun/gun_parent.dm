@@ -57,7 +57,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	// RECOIL STRENGTH
 	// Basic recoil strength, this is how hard the weapon kicks by default
 	// recoil_strength is added to recoil every shot, and kicks the camera similarly.
-	var/recoil_strength = 9 //! How strong this gun's base recoil impulse is.
+	var/recoil_strength = 10 //! How strong this gun's base recoil impulse is.
 	var/recoil_max = 50		//! What's the max cumulative recoil this gun can hit?
 	var/recoil_inaccuracy_max = 0 //! at recoil_max, the weapon has this much additional spread
 
