@@ -6,6 +6,8 @@
 (*)Firearms now have recoil; As a result, big kinetic guns could get hard to control if you apply too much dakka!
 (u)LeahTheTech
 (+)Gang duffle bags no longer fit in backpacks.
+(+)Gang lockers are now properly explosion immune.
+(+)Gang crates spawn a bit earlier on classic now.
 (t)sun mar 24 24
 (u)LeahTheTech
 (+)The Old Fashioned drink now gives you temporary "old fashioned" vision.
