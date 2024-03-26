@@ -1228,6 +1228,9 @@ proc/broadcast_to_all_gangs(var/message)
 		user.Browse(page, "window=gang_locker;size=650x630")
 		//onclose(user, "gang_locker")
 
+	ex_act()
+		return //no!
+
 	proc/set_gang(datum/gang/gang)
 		src.name = "[gang.gang_name] Locker"
 		src.desc = "A locker with a small screen attached to the door, and the words 'Property of [gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
