@@ -12,6 +12,7 @@ export interface ZoldorfPlayerShopData {
   soul_products: ZoldorfSoulProductData[],
   credit_products: ZoldorfCreditProductData[],
   credits: number,
+  user_soul: number,
 }
 
 export interface ZoldorfProductData {

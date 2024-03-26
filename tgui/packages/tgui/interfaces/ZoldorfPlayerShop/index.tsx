@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from "../../backend";
-import { Box, Button, Flex, Stack, Table } from "../../components";
+import { Box, Button, Flex, Section, Stack, Table } from "../../components";
 import { Window } from "../../layouts";
 import { ZoldorfPlayerShopData, ZoldorfProductListProps } from "./type";
 
@@ -22,53 +22,60 @@ export const ZoldorfPlayerShop = (_, context) => {
       <Window.Content>
         <Stack vertical fill minHeight="1%" maxHeight="100%">
           <Stack.Item grow minHeight="1%" maxHeight="100%">
-            <Stack vertical>
-              {
-                soul_products.map(product => {
-                  return (
-                    <ZoldorfProductList {...product} key={product.name}>
-                      <Button
-                        color="red"
-                        onClick={() => act('soul_purchase', { "item": product.name })}
-                      >{("" + product.soul_percentage + "%")}
-                      </Button>
-                    </ZoldorfProductList>
-                  );
-                })
-              }
-            </Stack>
-            <Stack vertical>
-              {
-                credit_products.map(product => {
-                  return (
-                    <ZoldorfProductList {...product} key={product.name}>
-                      <Button
-                        color="green"
-                        disabled={product.price > credits}
-                        onClick={() => act('credit_purchase', { "item": product.name })}
-                      >{("" + product.price + "⪽")}
-                      </Button>
-                    </ZoldorfProductList>
-                  );
-                })
-              }
-            </Stack>
+            <Section fill scrollable height="100%">
+              <Stack vertical>
+                {
+                  soul_products.map(product => {
+                    return (
+                      <ZoldorfProductList {...product} key={product.name}>
+                        <Button
+                          color="red"
+                          disabled={product.soul_percentage > data.user_soul}
+                          onClick={() => act('soul_purchase', { "item": product.name })}
+                          style={{ "width": "50px", "text-align": "center", "padding": "0px" }}
+                          content={("" + product.soul_percentage + "%")}
+                        />
+                      </ZoldorfProductList>
+                    );
+                  })
+                }
+              </Stack>
+              <Stack vertical>
+                {
+                  credit_products.map(product => {
+                    return (
+                      <ZoldorfProductList {...product} key={product.name}>
+                        <Button
+                          color="green"
+                          disabled={product.price > credits}
+                          content={("" + product.price + "⪽")}
+                          onClick={() => act('credit_purchase', { "item": product.name })}
+                          style={{ "width": "50px", "text-align": "center", "padding": "0px" }}
+                        />
+                      </ZoldorfProductList>
+                    );
+                  })
+                }
+              </Stack>
+            </Section>
           </Stack.Item>
-          <Stack.Item>
-            <Table>
-              <Table.Row>
-                <Table.Cell bold direction="row">
-                  {("Cash: " + credits + "⪽")}
-                  <Button
-                    icon="eject"
-                    ml="1%"
-                    content={"eject"}
-                    onClick={() => act('returncash')}
-                  />
-                </Table.Cell>
-              </Table.Row>
-            </Table>
-          </Stack.Item>
+          { credits !== 0 && (
+            <Stack.Item>
+              <Table>
+                <Table.Row>
+                  <Table.Cell bold direction="row">
+                    {("Cash: " + credits + "⪽")}
+                    <Button
+                      icon="eject"
+                      ml="1%"
+                      content={"eject"}
+                      onClick={() => act('returncash')}
+                    />
+                  </Table.Cell>
+                </Table.Row>
+              </Table>
+            </Stack.Item>
+          )}
         </Stack>
       </Window.Content>
     </Window>
@@ -109,7 +116,11 @@ const ZoldorfProductList = (props: ZoldorfProductListProps) => {
           <Box inline>{name}</Box>
         </Box>
       </Flex.Item>
-      <Flex.Item>
+      <Flex.Item bold direction="row" style={{ "margin-left": "5px",
+        "display": "flex",
+        "justify-content": "center",
+        "flex-direction": "column",
+      }}>
         {children}
       </Flex.Item>
     </Flex>

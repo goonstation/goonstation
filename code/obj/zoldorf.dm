@@ -47,6 +47,8 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
+		if(.)
+			return
 		switch(action)
 			if("returncash")
 				if(src.credits <= 0)
@@ -54,8 +56,7 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 				var/obj/item/moneyreturn = new /obj/item/currency/spacecash(get_turf(src),src.credits)
 				src.credits = 0
 				ui.user.put_in_hand_or_drop(moneyreturn)
-				ui.send_update()
-				return
+				return TRUE
 			if("soul_purchase")
 				var/item_name = params["item"]
 				if (!item_name)
@@ -79,7 +80,7 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 					purchasing.stock -= 1
 					src.partialsouls += purchasing.soul_percentage
 					src.updatejar()
-
+				return TRUE
 			if("credit_purchase")
 				var/item_name = params["item"]
 				if (!item_name)
@@ -98,21 +99,19 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 				src.credits -= purchasing.price
 				purchasing.stock -= 1
 				purchasing.on_bought(ui.user)
-
+				return TRUE
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ZoldorfPlayerShop", src.name)
 			ui.open()
 
-	ui_static_data(mob/user)
-		. = ..()
-
 
 	ui_data(mob/user)
 		. = ..()
 
 		.["credits"] = src.credits
+		.["user_soul"] = user.mind?.soul ? user.mind.soul : 0
 
 		var/list/soul_products = list()
 		for(var/datum/zoldorfitem/soul/product as anything in src.soul_items)
