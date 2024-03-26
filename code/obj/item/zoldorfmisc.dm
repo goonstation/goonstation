@@ -28,9 +28,6 @@
 	item_state = "scroll"
 	var/signing_state = UNSIGNED
 	var/signer
-	// New()
-	// 	..()
-	// 	src.signing_state =
 
 	attack_self(mob/user as mob)
 		if(src.icon_state == "scrollclosed")
