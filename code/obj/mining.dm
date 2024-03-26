@@ -1651,8 +1651,9 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	var/powered_force = 13
 	VAR_PROTECTED/powered_dig_strength = 2
 	VAR_PROTECTED/powered_weakener = FALSE //does this become able to weaken asteroids when it's on?
-	VAR_PROTECTED/power_usage = 10 //power units expended per hit while on
+	VAR_PROTECTED/power_usage = 2 //power units expended per hit while on
 	VAR_PROTECTED/robot_power_usage = 50 //power units expended when drawing from a robot's internal power cell, which tends to be 150x bigger
+	var/violence_power_multiplier = 5 //multiply the cost by this if the thing we're hitting isnt a turf
 	var/image/powered_overlay = null //the glowy bits for when its on
 	var/datum/item_special/unpowered_item_special = /datum/item_special/simple
 	var/datum/item_special/powered_item_special = /datum/item_special/simple
@@ -1692,14 +1693,17 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			. += "The [src] is turned [src.is_on ? "on" : "off"]. There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
 
-	attack_self(var/mob/user as mob)
+	attack_self(mob/user)
 		..()
 		src.mode_toggle(user)
 
-	afterattack(target as mob, mob/user as mob)
+	afterattack(atom/target, mob/user)
 		..()
-		if (src.is_on)
-			src.process_charges(src.get_power_usage())
+		if (src.is_on) //is the thing on? (or for the hedron beam, is it in mining mods)
+			if(isturf(target))
+				src.process_charges(src.get_power_usage(), user)
+			else
+				src.process_charges(src.get_power_usage() * src.violence_power_multiplier, user)
 
 	proc/process_charges(var/powerCost, var/mob/user = null)
 		//Returns FALSE if we failed to use power, otherwise returns TRUE
@@ -1729,7 +1733,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		return TRUE
 
 	proc/mode_toggle(var/mob/user = null)
-		if (src.process_charges(0))
+		if (src.process_charges(0, user))
 			if(GET_COOLDOWN(src, "depowered"))
 				boutput(user, SPAN_ALERT("[src] was recently power cycled and is still cooling down!"))
 				return
@@ -1783,7 +1787,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	powered_force = 14
 	dig_strength = 2
 	powered_dig_strength = 3
-	power_usage = 10
+	power_usage = 2
 	robot_power_usage = 50
 	default_cell = /obj/item/ammo/power_cell
 	powered_overlay = null
@@ -1804,7 +1808,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	powered_force = 14
 	dig_strength = 2
 	powered_dig_strength = 3
-	power_usage = 6
+	power_usage = 1.2
 	robot_power_usage = 30
 	default_cell = /obj/item/ammo/power_cell
 
@@ -1825,7 +1829,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	dig_strength = 2
 	powered_dig_strength = 3
 	powered_weakener = TRUE
-	power_usage = 15
+	power_usage = 3
 	robot_power_usage = 75
 	default_cell = /obj/item/ammo/power_cell
 	powered_item_special = /datum/item_special/slam
@@ -1846,7 +1850,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	powered_force = 12
 	dig_strength = 0
 	powered_dig_strength = 2
-	power_usage = 10
+	power_usage = 2
 	robot_power_usage = 50
 	default_cell = /obj/item/ammo/power_cell
 	powered_item_special = /datum/item_special/swipe
@@ -1855,10 +1859,11 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		powered_overlay = image('icons/obj/sealab_power.dmi', "ps-glow")
 		..()
 
-TYPEINFO(/obj/item/mining_tool/hedron_beam)
+TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 	mats = list("MET-2"=15, "CON-1"=8, "claretine"=10, "koshmarite"=2 )
 
 /obj/item/mining_tool/powered/hedron_beam
+	//Being "On" (ie src.is_on() == TRUE) means it's in mining mode)
 	name = "\improper Hedron beam device"
 	desc = "A prototype multifunctional industrial tool capable of rapidly switching between welding and mining modes."
 	icon_state = "hedron-W"
@@ -1871,13 +1876,13 @@ TYPEINFO(/obj/item/mining_tool/hedron_beam)
 	force = 10
 	dig_strength = 0
 	powered_dig_strength = 3
-	power_usage = 10
+	power_usage = 2
 	robot_power_usage = 50
 	default_cell = /obj/item/ammo/power_cell
 
 	examine(mob/user)
 		. = ..()
-		. += "<br>Currently in [src.is_on ? "welding mode" : "mining mode"]."
+		. += "<br>Currently in [src.is_on ? "mining mode" : "welding mode"]."
 
 	power_up(var/mob/user)
 		src.set_icon_state("hedron-M")
@@ -1891,16 +1896,16 @@ TYPEINFO(/obj/item/mining_tool/hedron_beam)
 
 	proc/try_weld(mob/user, var/fuel_amt = 2, var/use_amt = -1, var/noisy=TRUE, var/burn_eyes=FALSE)
 	//All welding tools just copy and paste this proc? Horrible, but out of scope so it can be some other handsome coder's problem.
-		if (!src.is_on) //mining mode needs to be off
+		if (!src.is_on) //are we in welding mode?
 			if(use_amt == -1)
 				use_amt = fuel_amt
-			if (!src.process_charges(use_amt * 5)) //no "fuel", no weld
+			if (!src.process_charges(use_amt * src.violence_power_multiplier, user))
 				boutput(user, SPAN_NOTICE("Cannot weld - cell insufficiently charged."))
-				return FALSE
+				return FALSE //not enough power
 			if(noisy)
 				playsound(user.loc, list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')[noisy], 35, 1)
-			return TRUE //welding, has "fuel"
-		//in mining mode? no welding 4 u
+			return TRUE //welding checks passed
+		//not in welding mode, dont weld
 		boutput(user, SPAN_NOTICE("[src] is in mining mode and can't currently weld."))
 		return FALSE
 

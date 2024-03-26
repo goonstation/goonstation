@@ -225,9 +225,6 @@
 			if(!ON_COOLDOWN(user, "mine_a_doodad", 1.1 SECONDS))
 				var/obj/item/mining_tool/mining_tool = W
 				var/digstr = mining_tool.get_dig_strength()
-				if (istype(mining_tool, /obj/item/mining_tool/powered))
-					var/obj/item/mining_tool/powered/powered_mining_tool
-					powered_mining_tool.process_charges(powered_mining_tool.get_power_usage())
 				playsound(user.loc, mining_tool.get_mining_sound(), 50, 1)
 				src.dig_hp -= digstr
 				if(src.dig_hp <= 0)
