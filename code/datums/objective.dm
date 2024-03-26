@@ -1550,13 +1550,21 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 
 /datum/objective_set/changeling
 	objective_list = list(/datum/objective/specialist/absorb)
-	escape_choices = list(/datum/objective/escape,
-	/datum/objective/escape/hijack_group/changeling)
+	escape_choices = list(
+		/datum/objective/escape,
+#ifndef RP_MODE
+		/datum/objective/escape/hijack_group/changeling
+#endif
+	)
 
 /datum/objective_set/vampire
 	objective_list = list(/datum/objective/specialist/drinkblood)
-	escape_choices = list(/datum/objective/escape,
-	/datum/objective/escape/hijack_group/vampire)
+	escape_choices = list(
+		/datum/objective/escape,
+#ifndef RP_MODE
+		/datum/objective/escape/hijack_group/vampire
+#endif
+	)
 
 /datum/objective_set/grinch
 	objective_list = list(/datum/objective/specialist/ruin_xmas)
