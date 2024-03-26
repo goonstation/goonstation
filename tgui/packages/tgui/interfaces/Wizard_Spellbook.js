@@ -114,7 +114,7 @@ const Spell = (props, context) => {
     <Stack.Item>
       <Section mt={0.5} mb={-1.5}>
         {(vr === 1) && (spell_contents[3] === 0) && (
-          <Dimmer>
+          <Dimmer mb={3} mt={-2}>
             <Box fontSize={1.5} backgroundColor={"#384e68"} p={2}>
               Spell unavailable in VR
             </Box>
