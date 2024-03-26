@@ -381,7 +381,6 @@ var/list/headset_channel_lookup
 			R.hear_radio(M, messages, lang_id)
 
 	var/list/heard_flock = list() // heard by flockdrones/flockmind
-	var/datum/game_mode/conspiracy/N = ticker.mode
 	// Don't let them monitor Syndie headsets. You can get the radio_brain bioeffect at the start of the round, basically.
 	var/protected = src.protected_radio || !isnull(src.traitorradio) || (display_freq in protected_frequencies)
 	for (var/mob/living/L in radio_brains)
