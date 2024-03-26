@@ -1148,6 +1148,12 @@ datum
 			reagent_state = LIQUID
 			taste = "fruity"
 
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if(method == INGEST && isliving(M))
+					M.setStatus("temp_accent", 30 SECONDS)
+
+
 		fooddrink/alcoholic/beach
 			name = "Bliss on the Beach"
 			id = "beach"
