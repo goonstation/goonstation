@@ -63,7 +63,7 @@
 /area/prefab/space_casino)
 "fz" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/machinery/light/incandescent{
 	dir = 1
 	},

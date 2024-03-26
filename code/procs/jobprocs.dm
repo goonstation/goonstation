@@ -106,6 +106,8 @@ var/global/totally_random_jobs = FALSE
 
 
 	for(var/datum/job/JOB in job_controls.staple_jobs)
+		if (JOB.variable_limit)
+			JOB.recalculate_limit(length(unassigned))
 		// If it's hi-pri, add it to that list. Simple enough
 		if (JOB.high_priority_job)
 			high_priority_jobs.Add(JOB)
@@ -423,7 +425,6 @@ var/global/totally_random_jobs = FALSE
 
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
 /mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn)
-	SHOULD_NOT_SLEEP(TRUE)
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB)
 		boutput(src, SPAN_ALERT("<b>Something went wrong setting up your rank and equipment! Report this to a coder.</b>"))
@@ -600,13 +601,13 @@ var/global/totally_random_jobs = FALSE
 /// Equip items from sensory traits
 /mob/living/carbon/human/proc/equip_sensory_items()
 	if (src.traitHolder.hasTrait("blind"))
-		src.drop_from_slot(src.glasses)
+		src.stow_in_available(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("shortsighted"))
-		src.drop_from_slot(src.glasses)
+		src.stow_in_available(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("deaf"))
-		src.drop_from_slot(src.ears)
+		src.stow_in_available(src.ears)
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), SLOT_EARS)
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
@@ -801,6 +802,9 @@ var/global/totally_random_jobs = FALSE
 		PDA.owner = src.real_name
 		PDA.ownerAssignment = JOB.name
 		PDA.name = "PDA-[src.real_name]"
+
+		if(src.mind)
+			src.mind.originalPDA = PDA
 
 	boutput(src, SPAN_NOTICE("Your pin to your ID is: [C.pin]"))
 	if (src.mind)

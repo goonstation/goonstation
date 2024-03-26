@@ -399,7 +399,8 @@
 	set name = "Blueprint Create"
 	set desc = "Allows creation of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/picked = browse_abcu_blueprints(usr, "Admin Share Blueprint", "Choose a blueprint to print and share!", TRUE)
 	if (!picked) return
 	var/obj/printed = new /obj/item/abcu_blueprint_reference(usr, picked, usr)
@@ -410,7 +411,8 @@
 	set name = "Blueprint Delete"
 	set desc = "Allows deletion of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/deleted = delete_abcu_blueprint(usr, TRUE)
 	if (!deleted) return
 	logTheThing(LOG_ADMIN, usr, "[usr] deleted blueprint [deleted["file"]], owned by [deleted["ckey"]].")
@@ -419,7 +421,8 @@
 	set name = "Blueprint Dump"
 	set desc = "Dumps readable HTML blueprint, of any user, to your client folder."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/picked = browse_abcu_blueprints(usr, "Admin Dump Blueprint", "Choose a blueprint to export.", TRUE)
 	if (!picked) return
 
@@ -541,7 +544,7 @@
 	/obj/machinery/portable_atmospherics, \
 	/obj/machinery/ai_status_display, \
 	/obj/securearea, \
-	/obj/submachine/mixer, \
+	/obj/machinery/mixer, \
 	/obj/submachine/foodprocessor, \
 	\
 )
@@ -992,6 +995,7 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 		return
 
 	dropped(mob/user as mob)
+		. = ..()
 		removeOverlays()
 		selecting = 0
 		qdel(corner1img)

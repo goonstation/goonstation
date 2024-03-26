@@ -125,37 +125,37 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("adminhelp_banner", usr.client.key)
+					C.player.cloudSaves.putData("adminhelp_banner", usr.client.key)
 					src.show_chatbans(C)
 		if ("ah_unmute")//guHGUHGUGHGUHG
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("adminhelp_banner", "")
+					C.player.cloudSaves.putData("adminhelp_banner", "")
 					src.show_chatbans(C)
 		if ("mh_mute")//AHDUASHDUHWUDHWDUHWDUWDH
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("mentorhelp_banner", usr.client.key)
+					C.player.cloudSaves.putData("mentorhelp_banner", usr.client.key)
 					src.show_chatbans(C)
 		if ("mh_unmute")//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("mentorhelp_banner", "")
+					C.player.cloudSaves.putData("mentorhelp_banner", "")
 					src.show_chatbans(C)
 		if ("pr_mute")
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("prayer_banner", usr.client.key)
+					C.player.cloudSaves.putData("prayer_banner", usr.client.key)
 					src.show_chatbans(C)
 		if ("pr_unmute")
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("prayer_banner", "")
+					C.player.cloudSaves.putData("prayer_banner", "")
 					src.show_chatbans(C)
 
 		if ("load_admin_prefs")
@@ -516,36 +516,11 @@ var/global/noir = 0
 		/////////////////////////////////////ban stuff
 		if ("addban") //Add ban
 			var/mob/M = (href_list["target"] ? locate(href_list["target"]) : null)
-			usr.client.addBanDialog(M)
+			usr.client.addBanTemp(M)
 
 		if ("sharkban") //Add ban
 			var/mob/M = (href_list["target"] ? locate(href_list["target"]) : null)
 			usr.client.sharkban(M)
-
-		if("unbane") //Edit ban
-			if (src.level >= LEVEL_SA)
-				var/id = html_decode(href_list["id"])
-				var/ckey = html_decode(href_list["target"])
-				var/compID = html_decode(href_list["compID"])
-				var/ip = html_decode(href_list["ip"])
-				var/reason = html_decode(href_list["reason"])
-				var/timestamp = html_decode(href_list["timestamp"])
-
-				usr.client.editBanDialog(id, ckey, compID, ip, reason, timestamp)
-			else
-				tgui_alert(usr,"You need to be at least a Secondary Administrator to edit bans.")
-
-		if("unbanf") //Delete ban
-			if (src.level >= LEVEL_SA)
-				var/id = html_decode(href_list["id"])
-				var/ckey = html_decode(href_list["target"])
-				var/compID = html_decode(href_list["compID"])
-				var/ip = html_decode(href_list["ip"])
-				var/akey = usr.client.ckey
-
-				usr.client.deleteBanDialog(id, ckey, compID, ip, akey)
-			else
-				tgui_alert(usr,"You need to be at least a Secondary Administrator to remove bans.")
 		/////////////////////////////////////end ban stuff
 
 		if("jobbanpanel")
@@ -564,7 +539,7 @@ var/global/noir = 0
 			else //It's a key. We need to cache it's ban history to not make 300 requests to the API.
 				target = M
 				action = "jobban_offline"
-				M = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+				M = jobban_get_for_player(M)
 			if (!M)
 				return
 
@@ -700,7 +675,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_SA)
 				var/M = href_list["target"]
 				var/job = href_list["type"]
-				var/list/cache = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+				var/list/cache = jobban_get_for_player(M)
 				if (!M) return
 				if (jobban_isbanned(cache, job))
 					if(cache.Find("Everything Except Assistant") && job != "Everything Except Assistant")
@@ -2534,13 +2509,23 @@ var/global/noir = 0
 					// FUN SECRETS CODE
 					if ("randomguns")
 						if (src.level >= LEVEL_PA)
-							if (tgui_alert(usr,"Do you want to give everyone a gun?", "Confirmation", list("Yes", "No")) != "Yes")
-								return
-							for (var/mob/living/L in mobs)
-								new /obj/random_item_spawner/kineticgun(get_turf(L))
-							message_admins("[key_name(usr)] gave everyone a random firearm.")
-							logTheThing(LOG_ADMIN, usr, "gave everyone a random firearm.")
-							logTheThing(LOG_DIARY, usr, "gave everyone a random firearm.", "admin")
+							switch(tgui_alert(usr, "What kind of guns do you want to give everyone?", "Guns2Give", list("Safe-ish Guns", "ANY GUN", "Cancel")))
+								if("Cancel")
+									return
+								if("Safe-ish Guns")
+									message_admins("[key_name(usr)] gave everyone a random safe firearm.")
+									logTheThing(LOG_ADMIN, usr, "gave everyone a random safe firearm.")
+									logTheThing(LOG_DIARY, usr, "gave everyone a random safe firearm.", "admin")
+									for (var/mob/living/L in mobs)
+										new /obj/random_item_spawner/kineticgun/safer/one(get_turf(L))
+								if("ANY GUN")
+									message_admins("[key_name(usr)] gave everyone a completely random firearm.")
+									logTheThing(LOG_ADMIN, usr, "gave everyone a completely random firearm.")
+									logTheThing(LOG_DIARY, usr, "gave everyone a completely random firearm.", "admin")
+									for (var/mob/living/L in mobs)
+										new /obj/random_item_spawner/kineticgun/fullrandom(get_turf(L))
+
+
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
@@ -3303,7 +3288,10 @@ var/global/noir = 0
 						dat += "</table>"
 						usr.Browse(dat, "window=manifest;size=440x410")
 					if("jobcaps")
-						job_controls.job_config()
+						if (isnull(src.job_manager))
+							src.job_manager = new
+
+						src.job_manager.ui_interact(src.owner.mob)
 					if("respawn_panel")
 						usr.client.cmd_custom_spawn_event()
 					if("randomevents")
@@ -3525,11 +3513,11 @@ var/global/noir = 0
 
 			usr.client.cmd_view_runtimes()
 
-		if ("viewantaghistory")
-			if (src.level < LEVEL_SA)
-				return tgui_alert(usr,"You must be at least a Secondary Admin to view antag history.")
+		// if ("viewantaghistory")
+		// 	if (src.level < LEVEL_SA)
+		// 		return tgui_alert(usr,"You must be at least a Secondary Admin to view antag history.")
 
-			usr.client.cmd_antag_history(href_list["targetckey"])
+		// 	usr.client.cmd_antag_history(href_list["targetckey"])
 
 		if ("show_player_stats")
 			if (src.level < LEVEL_SA)
@@ -3872,6 +3860,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Restart"
 	set desc= "Restarts the world"
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")
@@ -3887,7 +3877,7 @@ var/global/noir = 0
 		ircmsg["msg"] = "manually restarted the server."
 		ircbot.export_async("admin", ircmsg)
 
-		round_end_data(2) //Wire: export_async round end packet (manual restart)
+		roundManagement.recordEnd(crashed = TRUE)
 
 		sleep(3 SECONDS)
 		Reboot_server()
@@ -3896,6 +3886,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Announce"
 	set desc="Announce your desires to the world"
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
 	if (message)
 		if(usr.client.holder.rank != "Coder" && usr.client.holder.rank != "Host")
@@ -3908,6 +3900,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(!ticker)
 		tgui_alert(usr,"Unable to start the game as it is not set up.")
 		return
@@ -3926,7 +3920,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc="Delay the game start"
 	set name="Delay Round Start"
-
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (current_state > GAME_STATE_PREGAME)
 		return tgui_alert(usr,"Too late... The game has already started!")
 	game_start_delayed = !(game_start_delayed)
@@ -3946,7 +3941,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc="Delay the server restart"
 	set name="Delay Round End"
-
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	// If the game end is delayed AT ALL, confirm removing the delay
 	// so that mutiple admins don't end up cancelling their own delays
 	if (game_end_delayed)
@@ -4204,26 +4200,23 @@ var/global/noir = 0
 		return
 
 /datum/admins/proc/show_chatbans(var/client/C)//do not use this as an example of how to write DM please.
-	if( !C.cloud_available() )
-		tgui_alert( "Failed to communicate to Goonhub." )
-		return
 	var/built = {"<title>Chat Bans (todo: prettify)</title>"}
-	if(C.cloud_get( "adminhelp_banner" ))
-		built += "<a href='?src=\ref[src];target=\ref[C];action=ah_unmute' class='alert'>Adminhelp Mute</a> (Last by [C.cloud_get( "adminhelp_banner" )])<br/>"
+	if(C.player.cloudSaves.getData( "adminhelp_banner" ))
+		built += "<a href='?src=\ref[src];target=\ref[C];action=ah_unmute' class='alert'>Adminhelp Mute</a> (Last by [C.player.cloudSaves.getData( "adminhelp_banner" )])<br/>"
 		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from adminhelping.")
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=ah_mute'>Adminhelp Mute</a><br/>"
 		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from adminhelping.")
 
-	if(C.cloud_get( "mentorhelp_banner" ))
-		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_unmute' class='alert'>Mentorhelp Mute</a> (Last by [C.cloud_get( "mentorhelp_banner" )])<br/>"
+	if(C.player.cloudSaves.getData( "mentorhelp_banner" ))
+		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_unmute' class='alert'>Mentorhelp Mute</a> (Last by [C.player.cloudSaves.getData( "mentorhelp_banner" )])<br/>"
 		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from mentorhelping.")
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_mute'>Mentorhelp Mute</a><br/>"
 		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from mentorhelping.")
 
-	if(C.cloud_get( "prayer_banner" ))
-		built += "<a href='?src=\ref[src];target=\ref[C];action=pr_unmute' class='alert'>Prayer Mute</a> (Last by [C.cloud_get( "prayer_banner" )])<br/>"
+	if(C.player.cloudSaves.getData( "prayer_banner" ))
+		built += "<a href='?src=\ref[src];target=\ref[C];action=pr_unmute' class='alert'>Prayer Mute</a> (Last by [C.player.cloudSaves.getData( "prayer_banner" )])<br/>"
 		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from praying.")
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=pr_mute'>Prayer Mute</a><br/>"
@@ -4237,6 +4230,7 @@ var/global/noir = 0
 	set desc = "Select a mob to manage its bioeffects."
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (isnull(holder.bioeffectmanager))
 		holder.bioeffectmanager = new
@@ -4249,6 +4243,7 @@ var/global/noir = 0
 	set desc = "Select a mob to manage its abilities."
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (isnull(holder.abilitymanager))
 		holder.abilitymanager = new
@@ -4261,7 +4256,7 @@ var/global/noir = 0
 	set desc = "Select a mob to manage its traits."
 	set popup_menu = 0
 	ADMIN_ONLY
-
+	SHOW_VERB_DESC
 	var/list/dat = list()
 	dat += {"
 		<html>
@@ -4344,6 +4339,7 @@ var/global/noir = 0
 	set desc = "Select a mob to manage its mind's objectives."
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/list/dat = list()
 	dat += {"
@@ -4420,6 +4416,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "Respawn a mob"
 	set popup_menu = 0
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (!M) return
 
 	if (!forced && tgui_alert(src, "Respawn [M]?", "Confirmation", list("Yes", "No")) != "Yes")
@@ -4448,7 +4446,8 @@ var/global/noir = 0
 	set name = "Respawn Self"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc = "Respawn yourself"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	logTheThing(LOG_ADMIN, src, "respawned themselves.")
 	logTheThing(LOG_DIARY, src, "respawned themselves.", "admin")
 	message_admins("[key_name(src)] respawned themselves.")

@@ -17,9 +17,6 @@
 
 	var/list/escape_objectives = list(
 		/datum/objective/escape,
-#ifndef RP_MODE
-		/datum/objective/escape/hijack,
-#endif
 		/datum/objective/escape/survive,
 		/datum/objective/escape/kamikaze
 	)

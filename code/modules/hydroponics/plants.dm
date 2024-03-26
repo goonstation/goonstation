@@ -204,6 +204,12 @@ ABSTRACT_TYPE(/datum/plant)
 				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(5))
 					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
+			if ("omega_mutagen")
+				HYPmutateDNA(DNA,3)
+				HYPnewcommutcheck(src,DNA,6)
+				HYPnewmutationcheck(src,DNA,null,10,S)
+				if (prob(25))
+					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
 			if ("ammonia")
 				damage_amt = rand(10,20)
 				DNA.growtime += rand(5,10)
@@ -233,6 +239,11 @@ ABSTRACT_TYPE(/datum/plant)
 					DNA.potency++
 				if (DNA.endurance < 0)
 					DNA.endurance++
+		for (var/datum/plantmutation/mutation in src.mutations)
+			if (reagent in mutation.infusion_reagents)
+				if (HYPmutationcheck_full(DNA, mutation) && prob(mutation.infusion_chance))
+					DNA.mutation = mutation
+					break
 
 		if (damage_amt)
 			if (prob(damage_prob))

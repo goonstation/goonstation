@@ -62,7 +62,6 @@
 		real_name = name
 		SPAWN(0)
 			ADMIN_BEES_ONLY
-			//statlog_bees(src)
 			src.UpdateIcon()
 
 			if (!isdead(src))
@@ -586,6 +585,7 @@
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, SPAN_ALERT("That is too far away to teleport away."))
 			return 1
+		logTheThing(LOG_COMBAT, src.holder.owner, "begins casting teleport stare on [constructTarget(target)] at [log_loc(src.holder.owner)]")
 		holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner]</b> stares at [MT]!"))
 		if(do_buzz)
 			playsound(holder.owner, 'sound/voice/animal/buzz.ogg', 100, 1)
@@ -597,8 +597,9 @@
 				MT.emote("scream")
 				MT.setStatusMin("paralysis", 20 SECONDS)
 				MT.take_brain_damage(10)
-
-				do_teleport(MT, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)
+				var/turf/turf = locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1)
+				logTheThing(LOG_COMBAT, src.holder.owner, "stuns and teleports [constructTarget(target)] to [log_loc(turf)] using teleport stare")
+				do_teleport(MT, turf, 0)
 
 
 /datum/targetable/critter/bee_puke_honey

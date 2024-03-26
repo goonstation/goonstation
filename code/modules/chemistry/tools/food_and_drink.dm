@@ -382,28 +382,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (doseed)
 					var/datum/plant/stored = P.planttype
 					if (istype(stored) && !stored.isgrass)
-						var/obj/item/seed/S
-						if (stored.unique_seed)
-							S = new stored.unique_seed
-							S.set_loc(consumer.loc)
-						else
-							S = new /obj/item/seed
-							S.set_loc(consumer.loc)
-							S.removecolor()
-
-						var/datum/plantgenes/DNA = P.plantgenes
-						var/datum/plantgenes/PDNA = S.plantgenes
-						if (!stored.hybrid && !stored.unique_seed)
-							S.generic_seed_setup(stored, TRUE)
-						HYPpassplantgenes(DNA,PDNA)
-						if (stored.hybrid)
-							var/plantType = stored.type
-							var/datum/plant/hybrid = new plantType(S)
-							for (var/V in stored.vars)
-								if (issaved(stored.vars[V]) && V != "holder")
-									hybrid.vars[V] = stored.vars[V]
-							S.planttype = hybrid
-							S.plant_seed_color(stored.seedcolor)
+						HYPgenerateseedcopy(SRCDNA, stored, P.generation, consumer.loc)
 						consumer.visible_message(SPAN_NOTICE("<b>[consumer]</b> spits out a seed."),\
 						SPAN_NOTICE("You spit out a seed."))
 			if(src.dropped_item)
@@ -605,6 +584,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (soda_can.is_sealed && (soda_can.reagents.has_reagent("cola", 5) || soda_can.reagents.has_reagent("tonic", 5) || soda_can.reagents.has_reagent("sodawater", 5)))
 					soda_can.shaken = TRUE
 					return
+			if(src.is_sealed)
+				return
 			if(user.mind.assigned_role == "Bartender")
 				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
 				if(!ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
@@ -705,7 +686,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	proc/take_a_drink(var/mob/consumer, var/mob/feeder)
 		var/tasteMessage = SPAN_NOTICE("[src.reagents.get_taste_string(consumer)]")
 		if (consumer == feeder)
-			consumer.visible_message(SPAN_NOTICE("[consumer] takes a sip from [src]."),"[SPAN_NOTICE("You take a sip from [src].")]\n[tasteMessage]", group = "drinkMessages")
+			consumer.visible_message(SPAN_NOTICE("[consumer] takes a sip from [src]."),"[SPAN_NOTICE("You take a sip from [src].")]\n[tasteMessage]", group = "[consumer]_drink_messages")
 		else
 			consumer.visible_message(SPAN_ALERT("[feeder] makes [consumer] drink from the [src]."),
 			"[SPAN_ALERT("[feeder] makes you drink from the [src].")]\n[tasteMessage]",
@@ -1660,18 +1641,22 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 				src.amount_per_transfer_from_this = 15
 				src.gulp_size = 15
 				src.initial_volume = 15
+				src.reagents.maximum_volume = 15
 			if ("wine")
 				src.name = "wine glass"
 				src.icon_state = "glass-wine"
 				src.initial_volume = 30
+				src.reagents.maximum_volume = 30
 			if ("cocktail")
 				src.name = "cocktail glass"
 				src.icon_state = "glass-cocktail"
 				src.initial_volume = 20
+				src.reagents.maximum_volume = 20
 			if ("flute")
 				src.name = "champagne flute"
 				src.icon_state = "glass-flute"
 				src.initial_volume = 20
+				src.reagents.maximum_volume = 20
 
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled
@@ -1749,6 +1734,14 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 					 "mint_tea", "tomcollins", "sangria", "peachschnapps", "mintjulep",
 					 "mojito", "cremedementhe", "grasshopper", "freeze", "limeade", "juice_peach",
 					 "juice_banana")
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/icewater
+	New()
+		..()
+		SPAWN(0)
+			if (src.reagents)
+				src.reagents.add_reagent("ice", 15, null, T0C)
+				src.reagents.add_reagent("water", 35, null, T0C)
 
 /obj/item/reagent_containers/food/drinks/duo
 	name = "red duo cup"

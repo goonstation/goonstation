@@ -317,6 +317,14 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	furniture_type = /obj/table/endtable_gothic
 	furniture_name = "gothic endtable"
 
+/obj/item/furniture_parts/endtable_honey
+	name = "block of solidified honey parts"
+	desc = "Not sure how you accomplished this considering that it was a single solid block of crystallized honey, but sure."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtablehoney-parts"
+	furniture_type = /obj/table/endtable_honey
+	furniture_name = "block of solidified honey"
+
 /obj/item/furniture_parts/podium_wood
 	name = "wooden podium parts"
 	desc = "A collection of parts that can be used to make a wooden podium."
@@ -437,6 +445,10 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 /obj/item/furniture_parts/bench/yellow
 	icon = 'icons/obj/furniture/bench_yellow.dmi'
 	furniture_type = /obj/stool/bench/yellow/auto
+
+/obj/item/furniture_parts/bench/purple
+	icon = 'icons/obj/furniture/bench_purple.dmi'
+	furniture_type = /obj/stool/bench/purple/auto
 
 /obj/item/furniture_parts/bench/wooden
 	name = "wooden bench parts"

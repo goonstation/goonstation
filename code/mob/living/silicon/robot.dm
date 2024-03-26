@@ -1800,13 +1800,6 @@
 				. += ROBOT_MISSING_ARM_MOVEMENT_ADJUST
 
 
-		if (total_weight > 0)
-			if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/left/treads) && istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/right/treads))
-				. += total_weight / 3
-			else
-				. += total_weight
-
-
 	hotkey(name)
 		switch (name)
 			if ("help")
@@ -2240,6 +2233,19 @@
 		for (var/number in laws)
 			src.say("[number]. [laws[number]]")
 			sleep(1 SECOND)
+
+	verb/robot_set_fake_laws()
+		set category = "Robot Commands"
+		set name = "Set Fake Laws"
+		if (src.shell)
+			src.mainframe.set_fake_laws()
+		else
+			src.set_fake_laws()
+
+	verb/ai_state_fake_laws()
+		set category = "Robot Commands"
+		set name = "State Fake Laws"
+		src.state_fake_laws() //already handles being a shell
 
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"
@@ -3335,6 +3341,12 @@
 		if (!src.part_leg_r) src.part_leg_r = new/obj/item/parts/robot_parts/leg/right/light(src)
 		..(loc, frame, starter, syndie, frame_emagged)
 
+	latejoin
+		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+			if(!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/light(src)
+			if(!src.part_head.brain) src.part_head.brain = new/obj/item/organ/brain/latejoin(src.part_head)
+			..(loc, frame, starter, syndie, frame_emagged)
+
 /mob/living/silicon/robot/spawnable/standard
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
@@ -3359,6 +3371,12 @@
 			..(loc, frame, starter, syndie, frame_emagged)
 			src.metalman_skin = 1
 			src.update_appearance()
+
+	latejoin
+		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+			if(!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/standard(src)
+			if(!src.part_head.brain) src.part_head.brain = new/obj/item/organ/brain/latejoin(src.part_head)
+			..(loc, frame, starter, syndie, frame_emagged)
 
 
 /mob/living/silicon/robot/spawnable/standard_thruster
@@ -3395,6 +3413,12 @@
 			src.shell = 1
 			..(loc, frame, starter, syndie, frame_emagged)
 
+	latejoin
+		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+			if(!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/sturdy(src)
+			if(!src.part_head.brain) src.part_head.brain = new/obj/item/organ/brain/latejoin(src.part_head)
+			..(loc, frame, starter, syndie, frame_emagged)
+
 /mob/living/silicon/robot/spawnable/heavy
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
@@ -3412,6 +3436,12 @@
 	shell
 		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
 			src.shell = 1
+			..(loc, frame, starter, syndie, frame_emagged)
+
+	latejoin
+		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+			if(!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/heavy(src)
+			if(!src.part_head.brain) src.part_head.brain = new/obj/item/organ/brain/latejoin(src.part_head)
 			..(loc, frame, starter, syndie, frame_emagged)
 
 /mob/living/silicon/robot/spawnable/screenhead

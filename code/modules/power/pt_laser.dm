@@ -56,6 +56,8 @@
 
 		terminal.master = src
 
+		AddComponent(/datum/component/mechanics_holder)
+
 		UpdateIcon()
 
 /obj/machinery/power/pt_laser/disposing()
@@ -147,6 +149,7 @@
 
 	if(online) // if it's switched on
 		if(!firing) //not firing
+
 			if(charge >= adj_output && (adj_output >= PTLMINOUTPUT)) //have power to fire
 				start_firing() //creates all the laser objects then activates the right ones
 				dont_update = 1 //so the firing animation runs
@@ -166,6 +169,8 @@
 			if(length(blocking_objects) > 0)
 				melt_blocking_objects()
 			power_sold(adj_output)
+
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "[output * firing]") //sends 0 if not firing else give theoretical output
 
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
@@ -199,11 +204,8 @@
 	generated_moolah += undistributed_earnings
 	undistributed_earnings = 0
 
-	// the double chief engineer seems to be intentional however silly it may seem
-	var/list/accounts = \
-		data_core.bank.find_records("job", "Chief Engineer") + \
-		data_core.bank.find_records("job", "Chief Engineer") + \
-		data_core.bank.find_records("job", "Engineer")
+	// CE gets double the payout share from the PTL
+	var/list/accounts = FindBankAccountsByJobs(list("Chief Engineer", "Chief Engineer", "Engineer"))
 
 	if(!length(accounts)) // no engineering staff but someone still started the PTL
 		wagesystem.station_budget += generated_moolah

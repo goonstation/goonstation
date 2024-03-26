@@ -25,6 +25,9 @@
 	var/tmp/roundstart_dir
 	/// if this turf is immune to explosion (explosion immune turfs immediately return on ex_act())
 	var/explosion_immune = FALSE
+	///Things that are hidden "in" this turf that are revealed when it is pried up.
+	///Kept in a hidden object on the turf so that `get_turf` works as normal. Yes this is crime, fight me I have a possum.
+	var/obj/effects/hidden_contents_holder/hidden_contents = null
 
 	New()
 		..()
@@ -1584,8 +1587,31 @@ TYPEINFO(/turf/simulated/floor/stone)
 
 /////////////////////////////////////////
 
+/* Misc Adventure tilesets - Walp */
+
+TYPEINFO(/turf/simulated/floor/honeyblocks)
+	mat_appearances_to_ignore = list("steel","synthrubber")
+
+DEFINE_FLOORS(honeyblocks,
+	name = "crystallized honey";\
+	desc = "Probably not edible.";\
+	icon = 'icons/turf/adventure_walpvrgis.dmi';\
+	icon_state = "honeyblock";\
+	mat_changename = 0;\
+	mat_changedesc = 0;\
+	step_material = "step_plating";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(honeyblocks/border,
+	icon_state = "honeyblock_border")
+
+DEFINE_FLOORS(honeyblocks/corner,
+	icon_state = "honeyblock_corner")
+
+/////////////////////////////////////////
 
 /* Outdoors tilesets - Walp */
+
 TYPEINFO(/turf/simulated/floor/grasslush)
 	mat_appearances_to_ignore = list("steel","synthrubber")
 TYPEINFO(/turf/simulated/floor/grasslush/airless)
@@ -1897,6 +1923,16 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	to_plating()
 	playsound(src, 'sound/items/Crowbar.ogg', 80, TRUE)
 
+/turf/simulated/floor/levelupdate()
+	..()
+	if (!src.intact && src.hidden_contents)
+		for(var/atom/movable/AM as anything in src.hidden_contents)
+			AM.set_loc(src)
+			SEND_SIGNAL(AM, COMSIG_MOVABLE_FLOOR_REVEALED, src)
+		qdel(src.hidden_contents) //it's an obj, see the definition for crime justification
+		src.hidden_contents = null
+
+
 /turf/simulated/floor/attackby(obj/item/C, mob/user, params)
 
 	if (!C || !user)
@@ -1932,17 +1968,19 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 	if(istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
+		var/do_hide = TRUE
 		if(intact)
 			var/obj/P = user.find_tool_in_hand(TOOL_PRYING)
 			if (!P)
 				return
 			// Call ourselves w/ the tool, then continue
 			src.Attackby(P, user)
+			do_hide = FALSE //don't stuff things under the floor if we're just swapping/replacing a broken tile
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
 			if(T.amount >= 1)
-				restore_tile()
+				restore_tile(do_hide)
 				src.default_material = src.material
 
 				// if we have a special icon state and it doesn't have a material variant
@@ -2108,6 +2146,11 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	ReplaceWithFloor()
 	src.to_plating()
 
+/turf/simulated/floor/proc/hide_inside(atom/movable/AM)
+	if (!src.hidden_contents)
+		src.hidden_contents = new(src)
+	AM.set_loc(src.hidden_contents)
+
 /turf/simulated/floor/MouseDrop_T(atom/A, mob/user as mob)
 	..(A,user)
 	if(istype(A,/turf/simulated/floor))
@@ -2118,6 +2161,38 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				var/obj/item/cable_coil/C = I
 				if(BOUNDS_DIST(user,F) == 0 && BOUNDS_DIST(user,src) == 0)
 					C.move_callback(user, F, 0, src)
+
+/turf/simulated/floor/ReplaceWith(what, keep_old_material, handle_air, handle_dir, force)
+	var/obj/effects/hidden_contents_holder/old_hidden_contents = src.hidden_contents //we have to do this because src will be the new turf after the replace due to byond
+	var/turf/simulated/floor/newfloor = ..()
+	if (istype(newfloor))
+		newfloor.hidden_contents = old_hidden_contents
+	else
+		qdel(old_hidden_contents)
+	return newfloor
+
+/turf/simulated/floor/restore_tile(do_hide = TRUE)
+	..()
+	if (!do_hide)
+		return
+	for (var/obj/item/item in src.contents)
+		if (item.w_class <= W_CLASS_TINY && !item.anchored) //I wonder if this will cause problems
+			src.hide_inside(item)
+
+///CRIME
+/obj/effects/hidden_contents_holder
+	name = ""
+	desc = ""
+	icon = null
+	anchored = ANCHORED_ALWAYS
+	invisibility = INVIS_ALWAYS
+	alpha = 0
+
+	set_loc(newloc)
+		if (!isnull(newloc))
+			return
+		. = ..()
+
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
 DEFINE_FLOORS_SIMMED_UNSIMMED(racing,
@@ -2406,17 +2481,18 @@ TYPEINFO(/turf/simulated/floor/auto)
 			T.UpdateIcon()
 
 	proc/edge_overlays()
-		for (var/turf/T in orange(src,1))
-			if (istype(T, /turf/simulated/floor/auto))
-				var/turf/simulated/floor/auto/TA = T
-				if (TA.edge_priority_level >= src.edge_priority_level)
-					continue
-			var/direction = get_dir(T,src)
-			var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
-			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
-			edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
-			edge_overlay.plane = PLANE_FLOOR
-			T.UpdateOverlays(edge_overlay, "edge_[direction]")
+		if(src.icon_state_edge)
+			for (var/turf/T in orange(src,1))
+				if (istype(T, /turf/simulated/floor/auto))
+					var/turf/simulated/floor/auto/TA = T
+					if (TA.edge_priority_level >= src.edge_priority_level)
+						continue
+				var/direction = get_dir(T,src)
+				var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
+				edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+				edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
+				edge_overlay.plane = PLANE_FLOOR
+				T.UpdateOverlays(edge_overlay, "edge_[direction]")
 
 /turf/simulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"

@@ -456,6 +456,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/critter/killertomato = 0.5,
 			/mob/living/critter/small_animal/cat/synth = 1,
 			/mob/living/critter/plant/maneater = 0.3,
+			/obj/item/plant/tumbling_creeper = 3,
 		),
 		"maint" = list(
 			/obj/decal/cleanable/rust = 10,
@@ -528,6 +529,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/paper = 2,
 			/obj/item/clothing/suit/cardboard_box/ai = 1,
 			/obj/item/disk/data/floppy/manudrive/ai = 1,
+			/obj/item/aiModule/ability_expansion/doctor_vision = 1,
+			/obj/item/aiModule/ability_expansion/proto_teleman = 0.5
 		),
 		"bridge" = list(
 			/obj/item/reagent_containers/food/drinks/drinkingglass/flute = 10,
