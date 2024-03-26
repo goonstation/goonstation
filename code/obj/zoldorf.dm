@@ -460,6 +460,7 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 			user.u_equip(creds)
 			creds.dropped(user)
 			qdel(creds)
+			tgui_process.update_uis(src)
 
 		else if(istype(I, /obj/item/zolscroll)) //handling handing of contracts to begin the usurping process
 			var/obj/item/zolscroll/scroll = I
