@@ -602,7 +602,6 @@
 					var/test_one = data_core.security.find_record("name", R["name"])
 					if(istype(test_one, /datum/db_record))
 						haystack = jointext(list(haystack, ckey(test_one["criminal"])), " ")
-					src.print_text(haystack)
 					if(findtext(haystack, searchText))
 						results += R
 
