@@ -3167,7 +3167,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		return 0
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if (level == OVERFLOOR || GET_COOLDOWN(src, SEND_COOLDOWN_ID) || !instrument || (anti_stack && ON_COOLDOWN(get_turf(src), "instrument_anti_stacking", delay))) return
+		if (level == OVERFLOOR || GET_COOLDOWN(src, SEND_COOLDOWN_ID) || !instrument || (anti_stack && ON_COOLDOWN((get_turf(src)), "instrument_anti_stacking", delay))) return
 		LIGHT_UP_HOUSING
 		var/signum = text2num_safe(input.signal)
 		var/index = round(signum)
