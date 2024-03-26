@@ -22,8 +22,8 @@ const CrewAccountLine = (props: CrewAccountLineProps, context) => {
     <>
       <Table.Cell className="crewAccountCell" bold>{props.account.name}</Table.Cell>
       <Table.Cell className="crewAccountCell">{props.account.job}</Table.Cell>
+      <Table.Cell className="crewAccountCell"><Button title={"Edit Salary"} onClick={() => act("edit_wage", { "id": props.account.id })} icon="pen" /></Table.Cell>
       <Table.Cell className="crewAccountCell">{props.account.wage.toLocaleString()}{CREDIT_SIGN}</Table.Cell>
-      <Table.Cell className="crewAccountCell"><Button onClick={() => act("edit_wage", { "id": props.account.id })} icon="pen" /></Table.Cell>
       <Table.Cell className="crewAccountCell">{props.account.balance.toLocaleString()}{CREDIT_SIGN}</Table.Cell>
       <Table.Cell className="crewAccountCell"><TransferButton frozen={props.account.frozen} id={props.account.id} type={"crew"} /></Table.Cell>
     </>
@@ -77,6 +77,7 @@ const CrewAccountsTableHeader = (props: CrewAccountsTableHeaderProps, context) =
           Job
         </Header>
       </Table.Cell>
+      <Table.Cell />
       <Table.Cell bold>
         <Header
           sortDirection={
@@ -88,7 +89,6 @@ const CrewAccountsTableHeader = (props: CrewAccountsTableHeaderProps, context) =
           Salary
         </Header>
       </Table.Cell>
-      <Table.Cell />
       <Table.Cell bold>
         <Header
           sortDirection={
