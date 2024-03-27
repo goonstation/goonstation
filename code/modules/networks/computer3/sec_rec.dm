@@ -587,9 +587,9 @@
 				var/list/datum/db_record/results = list()
 				for(var/datum/db_record/R as anything in data_core.general.records)
 					var/haystack = jointext(list(ckey(R["name"]), ckey(R["dna"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
-					var/test_one = data_core.security.find_record("name", R["name"])
-					if(istype(test_one, /datum/db_record))
-						haystack = jointext(list(haystack, ckey(test_one["criminal"])), " ")
+					var/haystack_secure_addition = data_core.security.find_record("name", R["name"])
+					if(istype(haystack_secure_addition, /datum/db_record))
+						haystack = jointext(list(haystack, ckey(haystack_secure_addition["criminal"])), " ")
 					if(findtext(haystack, searchText))
 						results += R
 
