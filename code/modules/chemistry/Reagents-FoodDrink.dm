@@ -724,6 +724,7 @@ datum
 			fluid_g = 64
 			fluid_b = 27
 			alch_strength = 0.25
+			volatility = 1 //funny
 
 		fooddrink/alcoholic/cocktail_suicider
 			name = "Suicider"
