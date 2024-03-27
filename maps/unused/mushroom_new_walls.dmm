@@ -4915,10 +4915,10 @@
 /turf/simulated/floor/plating,
 /area/station/storage/autolathe)
 "ayH" = (
-/obj/storage/closet,
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
+/obj/machinery/vending/medical_public,
 /turf/simulated/floor,
 /area/station/storage/autolathe)
 "ayI" = (
@@ -19674,7 +19674,7 @@
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "gnn" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/capsule,
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/west)
 "gnB" = (
@@ -34441,10 +34441,10 @@
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "tDL" = (
-/obj/item/rods,
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
+/obj/machinery/vending/medical_public,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "tDM" = (
@@ -85796,7 +85796,7 @@ iOe
 cLb
 oPe
 bda
-bbN
+bdc
 bbN
 ulp
 bfW
