@@ -17854,6 +17854,7 @@
 	dir = 4
 	},
 /obj/landmark/gps_waypoint,
+/obj/cable,
 /turf/simulated/floor/purple/side,
 /area/station/science/hall)
 "eCr" = (
@@ -30207,6 +30208,12 @@
 /area/station/security/brig)
 "qyy" = (
 /obj/machinery/firealarm/north,
+/obj/table/auto,
+/obj/machinery/networked/storage/scanner,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/purple/corner{
 	dir = 1
 	},
@@ -31914,6 +31921,9 @@
 /obj/table/wood/auto,
 /obj/item/paper_bin{
 	pixel_x = -5
+	},
+/obj/item/paper_bin/artifact_paper{
+	pixel_x = 7
 	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/artifact)
@@ -33763,6 +33773,17 @@
 	},
 /turf/simulated/floor/blue/side,
 /area/station/hallway/primary/central)
+"tmm" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purple/corner{
+	dir = 1
+	},
+/area/station/science/hall)
 "tmG" = (
 /obj/machinery/door/window/westleft,
 /obj/cable{
@@ -94546,7 +94567,7 @@ mYl
 mjl
 mjl
 qyy
-rzT
+tmm
 eCd
 qLi
 qLi
