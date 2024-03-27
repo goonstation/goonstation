@@ -802,10 +802,11 @@ proc/broadcast_to_all_gangs(var/message)
 		"rhino beetle helm" = /obj/item/clothing/head/rhinobeetle)
 
 	/// spawn loot and message a specific mind about it
-	proc/target_loot_spawn(var/datum/mind/civvie)
-		var/message = lootbag_spawn()
+	proc/target_loot_spawn(var/datum/mind/civvie, var/datum/gang/ownerGang)
+		var/message = lootbag_spawn(civvie, ownerGang)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
+		newsignal.encryption = "GDFTHR+\ref[civvie.originalPDA]"
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "Unknown Sender"
 		newsignal.data["message"] = "[message]"
@@ -839,7 +840,7 @@ proc/broadcast_to_all_gangs(var/message)
 			potential_drop_zones += areas[area]
 
 	/// hide a loot bag somewhere, return a probably-somewhat-believable PDA message explaining its' location
-	proc/lootbag_spawn()
+	proc/lootbag_spawn(var/datum/mind/civvie, var/datum/gang/ownerGang)
 		if (!potential_drop_zones)
 			find_potential_drop_zones()
 		var/area/loot_zone = pick(potential_drop_zones)
@@ -870,32 +871,32 @@ proc/broadcast_to_all_gangs(var/message)
 					turfList.Add(T)
 				else
 					uncoveredTurfList.Add(T)
-
+		var/obj/item/gang_loot/loot
 		if(length(bushList))
+			loot = new/obj/item/gang_loot/guns_and_gear
 			var/obj/shrub/target = pick(bushList)
 			target.override_default_behaviour = 1
-			target.additional_items.Add(/obj/item/gang_loot/guns_and_gear)
-			target.max_uses = 1
+			target.additional_items.Add(loot)
 			target.spawn_chance = 75
 			target.last_use = 0
-
 			message += " we left some goods in a bush [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]."
 			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a shrub: [target] at [target.x],[target.y]")
-
 		else if(length(crateList) && prob(80))
 			var/obj/storage/target = pick(crateList)
-			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
+			loot = new/obj/item/gang_loot/guns_and_gear(target.contents)
+			target.contents.Add(loot)
 			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
 			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a crate: [target] at [target.x],[target.y]")
 
 		else if(length(disposalList) && prob(85))
 			var/obj/machinery/disposal/target = pick(disposalList)
-			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
+			loot = new/obj/item/gang_loot/guns_and_gear(target.contents)
+			target.contents.Add(loot)
 			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
 			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a chute: [target] at [target.x],[target.y]")
 		else if(length(tableList) && prob(65))
-			var/turf/simulated/floor/target = pick(tableList)
-			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
+			var/turf/target = get_turf(pick(tableList))
+			loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
 			loot.layer = OVERFLOOR
 			//nudge this into position, for sneakiness
@@ -909,22 +910,25 @@ proc/broadcast_to_all_gangs(var/message)
 			message += " we hid a bag in \the [loot_zone], under a table. "
 			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [src.gang_name], under a table: [target] at [target.x],[target.y]")
 		else if(length(turfList))
-			var/turf/simulated/floor/target = pick(turfList)
-			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
-			target.contents.Add(loot)
+			var/turf/target = pick(turfList)
+			loot = new/obj/item/gang_loot/guns_and_gear(target)
+			loot.level = UNDERFLOOR
 			loot.hide(target.intact)
 			message += " we had to hide a bag in \the [loot_zone], under the floor tiles. "
 			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [src.gang_name], under the floor at [loot.x],[loot.y]")
 		else
 			var/turf/simulated/floor/target = pick(uncoveredTurfList)
-			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
+			loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
 			loot.hide(target.intact)
 			message += " we had to hide a bag in \the [loot_zone]. "
 			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [src.gang_name], on the floor at [loot.x],[loot.y].")
 
-		message += " there are folks aboard who will probably come looking. "
+		loot.informant = civvie.current.real_name
 
+		loot.owning_gang = ownerGang
+
+		message += " there are folks aboard who will probably come looking. "
 		if (prob(40))
 			message += pick(gangEndings)
 
@@ -2375,7 +2379,7 @@ proc/broadcast_to_all_gangs(var/message)
 	on_purchase(var/obj/ganglocker/locker, var/mob/user )
 		var/datum/gang/ourGang = locker.gang
 		var/datum/mind/target = ourGang.get_random_civvie()
-		ourGang.target_loot_spawn(target)
+		ourGang.target_loot_spawn(target, ourGang)
 		ourGang.broadcast_to_gang("An extra tip off has been purchased; "+ target.current.real_name + " recieved the location on their PDA.")
 		return TRUE //don't spawn anything
 
