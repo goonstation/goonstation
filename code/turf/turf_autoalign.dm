@@ -477,6 +477,7 @@ TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 	icon_state = "mapwall$$wood"
 #endif
 	default_material = "wood"
+	uses_default_material_appearance = TRUE
 
 TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 	connect_overlay = 0

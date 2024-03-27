@@ -239,6 +239,11 @@ ABSTRACT_TYPE(/datum/plant)
 					DNA.potency++
 				if (DNA.endurance < 0)
 					DNA.endurance++
+		for (var/datum/plantmutation/mutation in src.mutations)
+			if (reagent in mutation.infusion_reagents)
+				if (HYPmutationcheck_full(DNA, mutation) && prob(mutation.infusion_chance))
+					DNA.mutation = mutation
+					break
 
 		if (damage_amt)
 			if (prob(damage_prob))

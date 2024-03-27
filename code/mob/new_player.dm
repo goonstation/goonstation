@@ -391,6 +391,14 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 				starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(round(world.maxx / 2), round(world.maxy / 2), 1))
 				character.set_loc(starting_loc)
 
+			var/player_count = 0
+			for (var/client/client in clients)
+				if (!istype(client.mob.loc, /obj/cryotron) && !istype(client.mob, /mob/new_player)) //don't count cryoed or lobby players
+					player_count++
+			for(var/datum/job/staple_job in job_controls.staple_jobs) //we'll just assume only staple jobs have variable limits for now
+				if (staple_job.variable_limit)
+					staple_job.recalculate_limit(player_count)
+
 			if (isliving(character))
 				var/mob/living/LC = character
 				if(!istype(JOB,/datum/job/battler) && !istype(JOB, /datum/job/football))
@@ -956,6 +964,7 @@ a.latejoin-card:hover {
 	say(message)
 		if(dd_hasprefix(message, "*"))
 			return
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 		src.ooc(message)
 
 #ifdef TWITCH_BOT_ALLOWED

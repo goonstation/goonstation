@@ -3102,6 +3102,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	var/delay = 10
 	var/sounds = null
 	var/volume = 50
+	var/anti_stack = TRUE
 
 	get_desc()
 		. += "<br>[SPAN_NOTICE("Current Instrument: [instrument ? "[instrument]" : "None"]")]"
@@ -3123,6 +3124,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		return 0
 
 	attackby(obj/item/W, mob/user)
+		var/allow_polyphony = FALSE
 		if (..(W, user)) return 1
 		else if (instrument) // Already got one, chief!
 			boutput(user, "There is already \a [instrument] inside the [src].")
@@ -3133,6 +3135,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			sounds = I.sounds_instrument
 			volume = I.volume
 			delay = I.note_time
+			if(I.note_time < 1 SECOND)
+				allow_polyphony = TRUE
 		else if (istype(W, /obj/item/clothing/head/butt))
 			instrument = W
 			sounds = 'sound/voice/farts/poo2.ogg'
@@ -3158,11 +3162,12 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			user.drop_item()
 			instrument.set_loc(src)
 			tooltip_rebuild = 1
+			anti_stack = !allow_polyphony
 			return 1
 		return 0
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if (level == OVERFLOOR || GET_COOLDOWN(src, SEND_COOLDOWN_ID) || !instrument) return
+		if (level == OVERFLOOR || GET_COOLDOWN(src, SEND_COOLDOWN_ID) || !instrument || (anti_stack && ON_COOLDOWN((get_turf(src)), "instrument_anti_stacking", delay))) return
 		LIGHT_UP_HOUSING
 		var/signum = text2num_safe(input.signal)
 		var/index = round(signum)
@@ -4071,9 +4076,9 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (ON_COOLDOWN(src, "movement_delay", move_lag))
 			return
 		var/direction = text2num_safe(input.signal)
-		if (!direction)
+		if (!isnum_safe(direction))
 			direction = dirname_to_dir(input.signal)
-		if (!(direction in alldirs))
+		if (!(direction in alldirs) && direction != 0)
 			return
 		var/obj/item/storage/S = src.stored?.linked_item
 		if (!walk_check(S))
