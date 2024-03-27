@@ -11891,6 +11891,9 @@
 /obj/cable{
 	icon_state = "5-6"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -12118,6 +12121,9 @@
 	},
 /area/station/medical/robotics)
 "biI" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -32939,6 +32945,10 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "sCu" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
