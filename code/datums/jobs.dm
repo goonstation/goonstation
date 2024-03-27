@@ -27,6 +27,8 @@
 	var/needs_college = 0
 	var/assigned = 0
 	var/high_priority_job = FALSE
+	///Fill up to this limit, then drop this job out of high priotity
+	var/high_priority_limit = INFINITY
 	var/low_priority_job = FALSE
 	var/cant_allocate_unwanted = FALSE //! Job cannot be set to "unwanted" in player preferences.
 	var/receives_miranda = FALSE
@@ -526,6 +528,8 @@ ABSTRACT_TYPE(/datum/job/security)
 	limit = 5
 	lower_limit = 3
 	variable_limit = TRUE
+	high_priority_job = TRUE
+	high_priority_limit = 2 //always try to make sure there's at least a couple of secoffs
 	wages = PAY_TRADESMAN
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
