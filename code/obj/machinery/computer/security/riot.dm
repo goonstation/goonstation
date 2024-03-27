@@ -3,7 +3,7 @@
 	icon_state = "drawbr"
 	density = 0
 	glow_in_dark_screen = TRUE
-	var/auth_need = 3
+	var/auth_need = 1
 	var/list/authorized
 	var/list/authorized_registered = null
 	var/net_id = null
@@ -152,12 +152,15 @@
 	proc/unauthorize()
 		if(src.authed)
 
-			logTheThing(LOG_STATION, usr, "unauthorized armory access")
+			logTheThing(LOG_STATION, usr, "revoked armory access")
 			command_announcement("<br><b>[SPAN_ALERT("Armory weapons access has been revoked from all security personnel. All crew are advised to hand in riot gear to the Head of Security.")]</b>", "Security Level Decreased", "sound/misc/announcement_1.ogg")
 			authed = 0
 			src.ClearSpecificOverlays("screen_image")
 			icon_state = "drawbr"
 			src.UpdateIcon()
+
+			src.authorized = null
+			src.authorized_registered = null
 
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_ARMORY_UNAUTH)
 
@@ -176,12 +179,20 @@
 				LAGCHECK(LAG_REALTIME)
 
 	proc/print_auth_needed(var/mob/author)
-		if (author)
-			for (var/mob/O in hearers(src, null))
-				O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[author] request accepted. [src.auth_need - src.authorized.len] authorizations needed until Armory is opened.\"")), 2)
+		if(!authed)
+			if (author)
+				for (var/mob/O in hearers(src, null))
+					O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[author] request accepted. [src.auth_need - src.authorized.len] authorizations needed until Armory is opened.\"")), 2)
+			else
+				for (var/mob/O in hearers(src, null))
+					O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[src.auth_need - src.authorized.len] authorizations needed until Armory is opened.\"")), 2)
 		else
-			for (var/mob/O in hearers(src, null))
-				O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[src.auth_need - src.authorized.len] authorizations needed until Armory is opened.\"")), 2)
+			if (author)
+				for (var/mob/O in hearers(src, null))
+					O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[author] request accepted. [src.auth_need - src.authorized.len] deauthorizations needed until Armory is closed.\"")), 2)
+			else
+				for (var/mob/O in hearers(src, null))
+					O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[src.auth_need - src.authorized.len] deauthorizations needed until Armory is closed.\"")), 2)
 
 
 /obj/machinery/computer/riotgear/attack_hand(mob/user)
@@ -220,70 +231,94 @@
 		boutput(user, "The access level of [W] is not high enough.")
 		return
 
-	if(authed && (!(access_maxsec in W:access)))
-		boutput(user, "Armory has already been authorized!")
-		return
-
-	if(authed && (access_maxsec in W:access))
-		var/choice = tgui_alert(user, "Would you like to unauthorize security's access to riot gear?", "Armory Unauthorization", list("Unauthorize", "No"))
-		if(BOUNDS_DIST(user, src) > 0) return
+//------------------DEAUTHORIZE------------------//
+	if(src.authed)
+		if(!src.authorized)
+			src.authorized = list()
+			src.authorized_registered = list()
+		var/deauthchoice = tgui_alert(user, "Would you like to revoke access to riot gear? [src.auth_need - length(src.authorized)] deauthorization\s are still needed.", "Armory Deauth", list("Revoke", "Repeal"))
+		if(BOUNDS_DIST(user, src) > 0 || !src.authed)
+			return
 		src.add_fingerprint(user)
-		if (choice == "Unauthorize")
-			if(GET_COOLDOWN(src, "unauth"))
-				boutput(user, SPAN_ALERT(" The armory computer cannot take your commands at the moment! Wait [GET_COOLDOWN(src, "unauth")/10] seconds!"))
-				playsound( src.loc, 'sound/machines/airlock_deny.ogg', 10, 0 )
-				return
-			if(!ON_COOLDOWN(src, "unauth", 5 MINUTES))
-				unauthorize()
-				playsound(src.loc, 'sound/machines/chime.ogg', 10, 1)
-				boutput(user,SPAN_NOTICE(" The armory's equipments have returned to having their default access!"))
-		return
-
-	if (!src.authorized)
-		src.authorized = list()
-		src.authorized_registered = list()
-
-	var/choice = tgui_alert(user, "Would you like to authorize access to riot gear? [src.auth_need - length(src.authorized)] authorization\s are still needed.", "Armory Auth", list("Authorize", "Repeal"))
-	if(BOUNDS_DIST(user, src) > 0 || src.authed)
-		return
-	src.add_fingerprint(user)
-	if (!choice)
-		return
-	switch(choice)
-		if("Authorize")
-			if (user in src.authorized)
-				boutput(user, "You have already authorized! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
-				return
-			if (W:registered in src.authorized_registered)
-				boutput(user, "This ID has already issued an authorization! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
-				return
-			if (access_maxsec in W:access)
-				authorize()
-				return
-
-			if (ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if (H.bioHolder.Uid in src.authorized)
-					boutput(user, "You have already authorized - fingerprints on file! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
+		if (!deauthchoice)
+			return
+		switch(deauthchoice)
+			if("Revoke")
+				if (user in src.authorized)
+					boutput(user, "You have already deauthorized! [src.auth_need - src.authorized.len] unauthorizations from others are still needed.")
 					return
-				src.authorized += H.bioHolder.Uid
-			else
-				src.authorized += user //authorize by USER, not by registered ID. prevent the captain from printing out 3 unique ID cards and getting in by themselves.
-			src.authorized_registered += W:registered
-
-			if (length(src.authorized) < auth_need)
-				logTheThing(LOG_STATION, user, "added an approval for armory access using [W]. [length(src.authorized)] total approvals.")
+				if (W:registered in src.authorized_registered)
+					boutput(user, "This ID has already issued an deauthorization! [src.auth_need - src.authorized.len] deauthorizations from others are still needed.")
+					return
+				if (access_maxsec in W:access)
+					unauthorize()
+					return
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if (H.bioHolder.Uid in src.authorized)
+						boutput(user, "You have already deauthorized - fingerprints on file! [src.auth_need - src.authorized.len] deauthorizations from others are still needed.")
+						return
+					src.authorized += H.bioHolder.Uid
+				else
+					src.authorized += user
+				src.authorized_registered += W:registered
+				if (length(src.authorized) < auth_need)
+					logTheThing(LOG_STATION, user, "added an approval for revoking armory access using [W]. [length(src.authorized)] total approvals.")
+					print_auth_needed(user)
+				else
+					unauthorize()
+			if("Repeal")
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					src.authorized -= H.bioHolder.Uid
+				else
+					src.authorized -= user
+				src.authorized_registered -= W:registered
+				logTheThing(LOG_STATION, user, "removed an approval for revoking armory access using [W]. [length(src.authorized)] total approvals.")
 				print_auth_needed(user)
-			else
-				authorize()
 
-		if("Repeal")
-
-			if (ishuman(user))
-				var/mob/living/carbon/human/H = user
-				src.authorized -= H.bioHolder.Uid
-			else
-				src.authorized -= user
-			src.authorized_registered -= W:registered
-			logTheThing(LOG_STATION, user, "removed an approval for armory access using [W]. [length(src.authorized)] total approvals.")
-			print_auth_needed(user)
+//------------------AUTHORIZE------------------//
+	if(!src.authed)
+		if (!src.authorized)
+			src.authorized = list()
+			src.authorized_registered = list()
+		var/authchoice = tgui_alert(user, "Would you like to authorize access to riot gear? [src.auth_need - length(src.authorized)] authorization\s are still needed.", "Armory Auth", list("Authorize", "Repeal"))
+		if(BOUNDS_DIST(user, src) > 0 || src.authed)
+			return
+		src.add_fingerprint(user)
+		if (!authchoice)
+			return
+		switch(authchoice)
+			if("Authorize")
+				if (user in src.authorized)
+					boutput(user, "You have already authorized! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
+					return
+				if (W:registered in src.authorized_registered)
+					boutput(user, "This ID has already issued an authorization! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
+					return
+				if (access_maxsec in W:access)
+					authorize()
+					return
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if (H.bioHolder.Uid in src.authorized)
+						boutput(user, "You have already authorized - fingerprints on file! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
+						return
+					src.authorized += H.bioHolder.Uid
+				else
+					src.authorized += user //authorize by USER, not by registered ID. prevent the captain from printing out 3 unique ID cards and getting in by themselves.
+				src.authorized_registered += W:registered
+				if (length(src.authorized) < auth_need)
+					logTheThing(LOG_STATION, user, "added an approval for armory access using [W]. [length(src.authorized)] total approvals.")
+					print_auth_needed(user)
+				else
+					authorize()
+			if("Repeal")
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					src.authorized -= H.bioHolder.Uid
+				else
+					src.authorized -= user
+				src.authorized_registered -= W:registered
+				logTheThing(LOG_STATION, user, "removed an approval for armory access using [W]. [length(src.authorized)] total approvals.")
+				print_auth_needed(user)
