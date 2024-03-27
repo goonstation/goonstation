@@ -1013,7 +1013,7 @@
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
 			return
-
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 		if (dd_hasprefix(message, ";"))
 			message = trim(copytext(message, 2, MAX_MESSAGE_LEN))
 			return src.say_dead(message)
