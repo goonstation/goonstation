@@ -395,6 +395,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	var/minimum_gunbots = 1
 	var/building = FALSE
 	var/progress = 0
+	var/max_progress = 20
 
 	New()
 		src.AddComponent(/datum/component/obj_projectile_damage)
@@ -409,7 +410,19 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	update_icon()
 		if(src.status & BROKEN)
 			src.icon_state = "gunbot_fab-broken"
-			src.ClearSpecificOverlays("arms", "light")
+			src.ClearSpecificOverlays("arms", "light", "build")
+		else if(progress)
+			var/image/build = SafeGetOverlayImage("build", 'icons/mob/critter/robotic/gunbot.dmi', "bot-build-[clamp(round(src.progress/(src.max_progress/5)),1,4)]")
+			src.UpdateOverlays(build, "build")
+
+			var/image/arms = SafeGetOverlayImage("arms", 'icons/obj/manufacturer.dmi', "gunbot_fab-arms-m")
+			src.UpdateOverlays(arms, "arms")
+
+		if(!building)
+			var/image/arms = SafeGetOverlayImage("arms", 'icons/obj/manufacturer.dmi', "gunbot_fab-arms")
+			src.UpdateOverlays(arms, "arms")
+
+			src.ClearSpecificOverlays("build")
 
 	attackby(var/obj/item/I, var/mob/user)
 		src.add_fingerprint(user)
@@ -418,7 +431,6 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		hit_twitch(src)
 		..()
-
 
 	onDestroy()
 		src.status |= BROKEN
@@ -444,8 +456,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 		if(src.building)
 			src.progress++
-
-			if(src.progress > 10)
+			if(src.progress > src.max_progress)
 				var/path = weighted_pick(list(/mob/living/critter/robotic/gunbot=50,
 											  /mob/living/critter/robotic/gunbot/minigun=5,
 											  /mob/living/critter/robotic/gunbot/flame=5,
@@ -458,6 +469,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 				progress = 0
 				building = FALSE
+			src.UpdateIcon()
 
 		else
 			var/area/A = get_area(src)
