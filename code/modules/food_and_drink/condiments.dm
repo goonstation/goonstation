@@ -206,7 +206,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 							SPAN_ALERT("You [myVerb] some salt into [user == H ? "your" : "[H]'s"] eyes![user == H ? " <B>FUCK THAT STINGS!</B>" : null]"))
 						random_brute_damage(user, 1)
 						H.change_eye_blurry(rand(10, 16))
-						H.take_eye_damage(rand(6, 8))
+						H.take_eye_damage(rand(12, 16))
 						src.shakes ++
 						return
 					if ("pepper")
