@@ -179,8 +179,6 @@
 	var/informant
 	///The civilian who has this in their hands, if the trap is active.
 	var/mob/living/idiot = null
-	///How many times the alarm SFX can play
-	var/bloops_left = 5
 	level = UNDERFLOOR
 
 	New()
@@ -212,7 +210,7 @@
 		..()
 		if (src.layer == UNDERFLOOR)
 			src.layer == OVERFLOOR
-		if (!user.get_gang() && !open && trapped)
+		if (!user.get_gang() && !open && trapped && owning_gang)
 			if (isliving(user))
 				var/mob/living/H = user
 				idiot = user
@@ -222,9 +220,8 @@
 				cant_drop = TRUE
 				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 				boutput(user, SPAN_ALERT("As you pick up \the [src.name], a series of hooks emerge from the handle, lodging in your hand!"))
-				boutput(user, SPAN_ALERT("... you hear an alarm beeping inside, too!"))
 				src.owning_gang.broadcast_to_gang("The bag [src.informant] knew about has just been stolen! Looks like it was in \the [get_area(src.loc)]")
-				ON_COOLDOWN(src,"bleed_msg", 30 SECONDS) //set a 30 second timer
+				ON_COOLDOWN(src,"bleed_msg", 30 SECONDS) //set a 30 second timer for bleeding
 				idiot.setStatus("gang_trap", duration = INFINITE_STATUS)
 				H.emote("scream")
 				H.bleeding = max(1,H.bleeding)
@@ -232,10 +229,10 @@
 					bleed_process()
 	proc/unhook()
 		if (idiot)
-			if (istype(idiot.l_hand, /obj/item/gang_loot) && istype(idiot.r_hand, /obj/item/gang_loot)) //this is REALLY stretching it bub
-				var/obj/item/gang_loot/left_loot = idiot.l_hand
+			if (istype(idiot.l_hand, /obj/item/gang_loot) && istype(idiot.r_hand, /obj/item/gang_loot)) //this is REALLY stretching it, bub.
+				var/obj/item/gang_loot/left_loot = idiot.l_hand //like, if you hit this use case, you're something else. stealing TWO bags at once.
 				var/obj/item/gang_loot/right_loot = idiot.r_hand
-				if (!(left_loot.idiot && right_loot.idiot)) // if only one trapped bag exists, this is untrapping the last one
+				if (!(left_loot.idiot && right_loot.idiot)) // if only one trapped bag exists, it means we're untrapping the last one
 					idiot.delStatus("gang_trap")
 			else
 				idiot.delStatus("gang_trap")
@@ -257,13 +254,11 @@
 
 	proc/bleed_process()
 		while(cant_drop)
-			if (bloops_left > 0)
-				bloops_left--
-				playsound(idiot.loc, 'sound/machines/bweep.ogg', 20, FALSE)
 			if (!ON_COOLDOWN(src,"bleed_msg", 30 SECONDS))
 				boutput(idiot, SPAN_ALERT("The hooks in the bag are digging into your hands! You should pluck it out..."))
+			bleed(idiot, 1, 1)//technically doubling bleed. but it looks nice as the loops dont sync perfectly.
 			idiot.bleeding = max(1,idiot.bleeding)
-			sleep(4 SECONDS)
+			sleep(2 SECONDS)
 
 	/// Uses the boolean 'intact' value of the floor it's beneath to hide, if applicable
 	hide(var/floor_intact)
