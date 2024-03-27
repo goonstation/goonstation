@@ -15896,16 +15896,16 @@
 /obj/machinery/optable,
 /obj/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
-/obj/item/robodefibrillator,
+/obj/machinery/defib_mount,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "cCv" = (
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "cDp" = (
 /obj/securearea{
 	desc = "A warning sign telling of the dangers of gravitational singularities.  Apparently they are dangerous.";
@@ -15985,7 +15985,7 @@
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "cGx" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -17170,7 +17170,7 @@
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "dQu" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/cafeteria)
@@ -17235,7 +17235,7 @@
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "dUE" = (
 /obj/lattice{
 	dir = 2;
@@ -18269,23 +18269,23 @@
 /area/station/maintenance/west)
 "eTY" = (
 /obj/machinery/optable,
-/obj/item/robodefibrillator,
 /obj/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
+/obj/machinery/defib_mount,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "eUg" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "eUi" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -18293,7 +18293,7 @@
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "eUu" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -19230,7 +19230,7 @@
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "fRa" = (
 /obj/item/cable_coil/cut,
 /obj/storage/crate,
@@ -19263,7 +19263,7 @@
 "fSC" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "fSD" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -19300,7 +19300,7 @@
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "fVa" = (
 /obj/lattice{
 	dir = 5;
@@ -20335,7 +20335,7 @@
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "hbg" = (
 /obj/landmark/pest,
 /turf/simulated/floor/plating,
@@ -20447,7 +20447,7 @@
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "hft" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -23757,7 +23757,7 @@
 /obj/mapping_helper/access/medical,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/bluewhite,
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "kFH" = (
 /obj/lattice{
 	dir = 9;
@@ -37078,6 +37078,9 @@
 "vWl" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/head)
+"vWA" = (
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "vWL" = (
 /obj/machinery/drainage,
 /obj/machinery/light/incandescent{
@@ -95917,7 +95920,7 @@ btn
 bwb
 nPX
 cCv
-dRA
+vWA
 eUg
 fSC
 kFx
