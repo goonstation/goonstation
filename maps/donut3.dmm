@@ -16937,7 +16937,8 @@
 	desc = "'Personnel who enter through this unit will not be able to escape without destruction of Nanotrasen property. Proceed with extreme caution!'";
 	icon_state = "securearea";
 	layer = 2.9;
-	name = "WARNING - ONE-WAY ENTRY"
+	name = "WARNING - ONE-WAY ENTRY";
+	plane = -101
 	},
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
@@ -17200,7 +17201,8 @@
 	desc = "'Personnel who enter through this unit will not be able to escape without destruction of Nanotrasen property. Proceed with extreme caution!'";
 	icon_state = "securearea";
 	layer = 2.9;
-	name = "WARNING - ONE-WAY ENTRY"
+	name = "WARNING - ONE-WAY ENTRY";
+	plane = -101
 	},
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)

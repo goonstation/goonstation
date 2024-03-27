@@ -108,6 +108,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
+			src.onSlice()
 			for (var/i in 1 to src.slice_amount)
 				var/atom/slice_result = new src.slice_product(T)
 				if(istype(slice_result, /obj/item/reagent_containers/food))
@@ -116,6 +117,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			qdel (src)
 		else
 			..()
+
+	proc/onSlice() //special slice behaviour
+		return
 
 	//This proc handles all the actions being done to the produce. use this proc to work with your slices after they were created (looking at all these slice code at plant produce...)
 	proc/process_sliced_products(var/obj/item/reagent_containers/food/slice, var/amount_to_transfer)

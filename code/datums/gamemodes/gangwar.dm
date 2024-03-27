@@ -548,6 +548,7 @@ proc/broadcast_to_all_gangs(var/message)
 		while(src.gang_frequency in src.used_frequencies)
 			src.gang_frequency = rand(1360, 1420)
 		src.used_frequencies += src.gang_frequency
+		protected_frequencies += gang_frequency
 
 		src.announcer_source = new /datum/generic_radio_source()
 		src.announcer_source.set_name("The [pick("Kingpin","Cabal","Council","Boss")]")
@@ -1226,6 +1227,9 @@ proc/broadcast_to_all_gangs(var/message)
 
 		user.Browse(page, "window=gang_locker;size=650x630")
 		//onclose(user, "gang_locker")
+
+	ex_act()
+		return //no!
 
 	proc/set_gang(datum/gang/gang)
 		src.name = "[gang.gang_name] Locker"

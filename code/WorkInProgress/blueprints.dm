@@ -395,7 +395,7 @@
 	var/posy = 0
 	var/icon = ""
 
-/verb/adminCreateBlueprint()
+/client/proc/adminCreateBlueprint()
 	set name = "Blueprint Create"
 	set desc = "Allows creation of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -407,7 +407,7 @@
 	usr.put_in_hand_or_drop(printed)
 	boutput(usr, SPAN_NOTICE("Spawned the blueprint '[picked["file"]]'."))
 
-/verb/adminDeleteBlueprint()
+/client/proc/adminDeleteBlueprint()
 	set name = "Blueprint Delete"
 	set desc = "Allows deletion of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
