@@ -568,6 +568,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		name = "Security Assistant"
 		limit = 3
 		lower_limit = 2
+		high_priority_job = FALSE //nope
 		cant_spawn_as_con = TRUE
 		wages = PAY_UNTRAINED
 		receives_implant = /obj/item/implant/health/security
