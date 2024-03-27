@@ -1,5 +1,9 @@
 
 (t)wed mar 27 24
+(u)Avanth
+(p)18326
+(e)💅|C-QoL
+(+)Modified secmate to allow the search function to search by criminal status in addition to what it searched by previously.
 (u)444explorer
 (p)18332
 (e)🆕💊📦|C-Feature, A-Medical, A-Game-Objects
