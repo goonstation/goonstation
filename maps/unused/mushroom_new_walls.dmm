@@ -12115,7 +12115,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "biE" = (
-/obj/landmark/start/job/roboticist,
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
 	},
@@ -14844,9 +14845,9 @@
 /turf/simulated/floor/circuit/red,
 /area/station/turret_protected/ai)
 "bHf" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk{
-	dir = 8
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
@@ -20702,6 +20703,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"hqF" = (
+/obj/landmark/start/job/roboticist,
+/turf/simulated/floor/blueblack/corner,
+/area/station/medical/robotics)
 "hqX" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -93485,7 +93490,7 @@ ejt
 dVr
 bgj
 bhy
-bhy
+hqF
 bjv
 bnK
 ben
