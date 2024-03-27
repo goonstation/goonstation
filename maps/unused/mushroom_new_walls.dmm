@@ -35028,6 +35028,12 @@
 /obj/machinery/r_door_control/podbay/qm,
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/qm)
+"ufd" = (
+/obj/cable{
+	icon_state = "0-9"
+	},
+/turf/space,
+/area/space)
 "ufk" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -35231,8 +35237,8 @@
 	},
 /obj/disposalpipe/segment/morgue,
 /obj/machinery/door/airlock/pyro/maintenance,
-/obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "unu" = (
@@ -35527,8 +35533,8 @@
 "uyO" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/maintenance,
-/obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "uyS" = (
@@ -99690,7 +99696,7 @@ kSG
 kSG
 hcV
 aaa
-aaa
+ufd
 aaa
 aaa
 aaa
