@@ -13934,6 +13934,9 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -14209,6 +14212,9 @@
 /obj/window_blinds/cog2/left{
 	id = "MD"
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "bsr" = (
@@ -14219,9 +14225,7 @@
 /obj/window_blinds/cog2/right{
 	id = "MD"
 	},
-/obj/cable{
-	icon_state = "0-2"
-	},
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "bst" = (
@@ -14373,6 +14377,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/head)
 "btn" = (
@@ -14380,9 +14387,6 @@
 	dir = 4
 	},
 /obj/critter/bat/doctor,
-/obj/cable{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/medical/head)
 "btp" = (
@@ -14394,7 +14398,7 @@
 	pixel_y = 0
 	},
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/head)
@@ -30239,9 +30243,6 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/medical/head)
 "qrJ" = (
@@ -31155,17 +31156,6 @@
 	tag = "icon-grass1"
 	},
 /area/station/crew_quarters/pool)
-"qZd" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/medical/head)
 "qZj" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/binary/valve,
@@ -32411,7 +32401,6 @@
 /turf/simulated/floor/red/side,
 /area/station/security/processing)
 "rVS" = (
-/obj/cable,
 /obj/machinery/door/airlock/pyro/command{
 	name = "Medical Director's Office";
 	dir = 4
@@ -32420,6 +32409,9 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/head)
@@ -95171,7 +95163,7 @@ bnS
 wbm
 clQ
 cXz
-qZd
+vWl
 rVS
 daC
 vWl
