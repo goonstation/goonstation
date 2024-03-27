@@ -173,8 +173,14 @@
 	var/hidden = TRUE
 	var/open = FALSE
 	var/trapped = TRUE
+	///The gang who should own this duffel bag
+	var/datum/gang/owning_gang
+	///The name of the informant who knows about this bag
+	var/informant
 	///The civilian who has this in their hands, if the trap is active.
-	var/mob/idiot = null
+	var/mob/living/idiot = null
+	///How many times the alarm SFX can play
+	var/bloops_left = 5
 	level = UNDERFLOOR
 
 	New()
@@ -203,38 +209,65 @@
 			..()
 
 	pickup(mob/user)
-		if (!user.get_gang() && trapped)
+		..()
+		if (src.layer == UNDERFLOOR)
+			src.layer == OVERFLOOR
+		if (!user.get_gang() && !open && trapped)
 			if (isliving(user))
-				trapped = FALSE
-				cant_self_remove = TRUE
-				cant_drop = TRUE
-				boutput(user, SPAN_ALERT("As you pick up \the [src.name], a series of hooks emerge from the handle, lodging in your hand!"))
 				var/mob/living/H = user
 				idiot = user
+				trapped = FALSE
+				icon_state = "gang_dufflebag_trap"
+				cant_self_remove = TRUE
+				cant_drop = TRUE
+				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+				boutput(user, SPAN_ALERT("As you pick up \the [src.name], a series of hooks emerge from the handle, lodging in your hand!"))
+				boutput(user, SPAN_ALERT("... you hear an alarm beeping inside, too!"))
+				src.owning_gang.broadcast_to_gang("The bag [src.informant] knew about has just been stolen! Looks like it was in \the [get_area(src.loc)]")
+				ON_COOLDOWN(src,"bleed_msg", 30 SECONDS) //set a 30 second timer
+				idiot.setStatus("gang_trap", duration = INFINITE_STATUS)
 				H.emote("scream")
-				H.bleeding = min(H.bleeding +2 , 2)
-				SPAWN(0)
+				H.bleeding = max(1,H.bleeding)
+				SPAWN(1 SECOND)
 					bleed_process()
-	dropped()
+	proc/unhook()
 		if (idiot)
+			if (istype(idiot.l_hand, /obj/item/gang_loot) && istype(idiot.r_hand, /obj/item/gang_loot)) //this is REALLY stretching it bub
+				var/obj/item/gang_loot/left_loot = idiot.l_hand
+				var/obj/item/gang_loot/right_loot = idiot.r_hand
+				if (!(left_loot.idiot && right_loot.idiot)) // if only one trapped bag exists, this is untrapping the last one
+					idiot.delStatus("gang_trap")
+			else
+				idiot.delStatus("gang_trap")
+			icon_state = "gang_dufflebag"
 			cant_self_remove = FALSE
 			cant_drop = FALSE
 			idiot = null
+	dropped()
+		unhook()
+		..()
+	proc/attempt_unhook(mob/user)
+		if (user == idiot)
+			actions.start(new /datum/action/bar/icon/unhook_gangbag(user, src),user)
+	attack_hand(mob/user)
+		if (user == idiot)
+			attempt_unhook(user)
+		else
+			..()
 
 	proc/bleed_process()
 		while(cant_drop)
-			H.bleeding = min(H.bleeding +2 , 2)
+			if (bloops_left > 0)
+				bloops_left--
+				playsound(idiot.loc, 'sound/machines/bweep.ogg', 20, FALSE)
+			if (!ON_COOLDOWN(src,"bleed_msg", 30 SECONDS))
+				boutput(idiot, SPAN_ALERT("The hooks in the bag are digging into your hands! You should pluck it out..."))
+			idiot.bleeding = max(1,idiot.bleeding)
 			sleep(4 SECONDS)
 
 	/// Uses the boolean 'intact' value of the floor it's beneath to hide, if applicable
 	hide(var/floor_intact)
 		invisibility = floor_intact ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
-		if (!invisibility == INVIS_NONE)
-			hidden = FALSE
-			level = OVERFLOOR
-		else
-			hidden = TRUE
-			level = UNDERFLOOR
 		UpdateIcon()
 
 
@@ -242,10 +275,14 @@
 		if (!istype(user, /mob/living/carbon/human))
 			return
 		if (!open)
+			if (idiot && idiot == user)
+				attempt_unhook(user)
+				return
 			var/datum/gang/gang = user.get_gang()
 			if (!gang)
 				boutput(user, "You don't want to get in trouble with whoever owns this! It's FULL of illegal stuff.")
 				return
+			unhook() // just in case
 			for (var/obj/object as anything in src.contents)
 				object.set_loc(user.loc)
 			playsound(src.loc, 'sound/misc/zipper.ogg', 100, TRUE)

@@ -1382,6 +1382,16 @@
 		getTooltip()
 			. = "Your vitals have dropped from the shame you feel hiding your true colors inside enemy territory."
 
+	gangtrapped
+		id = "gangtrapped"
+		name = "Punctured"
+		desc = "You've grabbed something that wasn't yours, and it's lodged in your hand! Use it in hand to start plucking it free."
+		icon_state = "gangtrap"
+		unique = 1
+		duration = INFINITE_STATUS
+		maxDuration = null
+		effect_quality = STATUS_QUALITY_NEGATIVE
+
 	janktank
 		id = "janktank"
 		name = "janktank"
