@@ -473,6 +473,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Loose Long Braid Over Shoulder"
 				id = "looselongbraidshoulder"
 				gender = FEMININE
+			long_boxbraids
+				name = "Long Box Braids"
+				id = "long_boxbraids"
+				gender = FEMININE
 			longsidepart_s
 				name = "Long Flip"
 				id = "longsidepart_s"
@@ -645,6 +649,9 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Pompom Pigtails"
 				id = "pompompigtail"
 				gender = FEMININE
+			bubblebraid_pigtails
+				name = "Bubble Braid Pigtails"
+				id = "bubblebraid_pigtails"
 			ponytail
 				name = "Ponytail"
 				id = "ponytail"
