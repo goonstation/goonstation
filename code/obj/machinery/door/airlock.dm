@@ -37,8 +37,8 @@ var/global/list/cycling_airlocks = list()
 	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = 0
 
-	var/cycle_id = ""	//! Which airlocks this door is connected too.
-	var/cycle_enter_id = ""	//! An ID for double doors sharing a direction in a cycling airlock system.
+	var/junction_id = ""	//! Which airlocks this door is connected too.
+	var/entrance_id = ""	//! An ID for double doors sharing a direction in a cycling airlock system.
 
 	var/list/signalers[10]
 	var/lockdownbyai = 0
@@ -60,7 +60,7 @@ var/global/list/cycling_airlocks = list()
 
 	autoclose = TRUE
 	power_usage = 50
-	operation_time = 6
+	operation_time = 6 DECI SECONDS
 	brainloss_stumble = TRUE
 
 	get_desc()
@@ -844,13 +844,19 @@ var/global/list/cycling_airlocks = list()
 
 	return
 
+/// removes the airlock in question from the global list.
+/obj/machinery/door/airlock/proc/attempt_cycle_unlink()
+	cycling_airlocks[src.junction_id] -= src
+	if (!cycling_airlocks[src.junction_id])	// if the junction list is now empty, remove it from the global list
+		cycling_airlocks -= cycling_airlocks[src.junction_id]
+
 /// adds the airlock in question to the global list.
 /obj/machinery/door/airlock/proc/attempt_cycle_link()
-	if (src.cycle_id)
-		if(!cycling_airlocks[src.cycle_id])	// add a list to the list of lists
-			cycling_airlocks[src.cycle_id] = list()
-		if (!(src in cycling_airlocks[src.cycle_id]))
-			cycling_airlocks[src.cycle_id] += src
+	if (src.junction_id)
+		if(!cycling_airlocks[src.junction_id])	// add a list to the list of lists
+			cycling_airlocks[src.junction_id] = list()
+		if (!(src in cycling_airlocks[src.junction_id]))
+			cycling_airlocks[src.junction_id] += src
 
 /obj/machinery/door/airlock/open()
 	if (!src.density || src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
@@ -862,12 +868,19 @@ var/global/list/cycling_airlocks = list()
 
 	playsound(src.loc, src.sound_airlock, 25, 1)
 
-	if (src.cycle_id)
-		for (var/obj/machinery/door/airlock/D in cycling_airlocks[src.cycle_id])
+	if (src.junction_id)
+		for (var/obj/machinery/door/airlock/D in cycling_airlocks[src.junction_id])
 			// if they share entry id, don't close, e.g. double doors facing space.
-			if (src.cycle_enter_id && src.cycle_enter_id == D.cycle_enter_id)
+			if (src.entrance_id && src.entrance_id == D.entrance_id)
 				continue
 			D.close()
+		// we make the illusion of a close packet, not an actual one.
+		var/datum/signal/doorsignal = get_free_signal()
+		doorsignal.source = src
+		doorsignal.data["command"]	= "close_linked"
+		doorsignal.data["access_code"]	= "linked_airlock_override"	// it's not actually sending the access code, because it could just keep sniffed.
+		doorsignal.data["sender"]	= src.net_id
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, doorsignal, src.radiorange)
 
 /obj/machinery/door/airlock/close()
 	//split into two sets of checks so failures to close due to lacking power will cause linked shields to deactivate
@@ -972,6 +985,15 @@ TYPEINFO(/obj/machinery/door/airlock)
 					if ("secure_open")
 						reply.data["description"] = "Opens the airlock and drops the bolts, securing it open. Requires access code"
 						reply.data["args"] = "access_code"
+					if ("change_junction_id")
+						reply.data["description"] = "Changes the ID of what junction the airlock is in. All linked airlocks should share the same ID. Requires access code and message."
+						reply.data["args"] = "access_code,message"
+					if ("change_entrance_id")
+						reply.data["description"] = "Changes the ID of what entrance to the junction the airlock is in. Sets of double doors or doors opening into the same space should share the same ID. Requires access code and message."
+						reply.data["args"] = "access_code,message"
+					if ("close_linked")
+						reply.data["description"] = "Closes all airlocks with matching junction_id and non matching entrance_id. Cannot be spoofed."
+						reply.data["args"] = "not applicable"
 					else
 						reply.data["description"] = "ERROR: UNKNOWN TOPIC"
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, radiorange)
@@ -1052,12 +1074,26 @@ TYPEINFO(/obj/machinery/door/airlock)
 					sleep(src.operation_time)
 					src.send_status(,senderid)
 
+			if ("change_junction_id")
+				SPAWN(0)
+					if (signal.data["message"])
+						src.attempt_cycle_unlink()
+						src.junction_id = signal.data["message"]
+						src.attempt_cycle_link()
+					src.send_status(,senderid)
+
+			if ("change_entrance_id")
+				SPAWN(0)
+					if (signal.data["message"])
+						src.entrance_id = signal.data["message"]
+					src.send_status(,senderid)
+
 	proc/send_status(userid,target)
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
 		if (id_tag)
-			signal.data["tag"] = id_tag
-		signal.data["sender"] = net_id
+			signal.data["tag"] = src.id_tag
+		signal.data["sender"] = src.net_id
 		signal.data["timestamp"] = "[air_master.current_cycle]"
 		signal.data["address_tag"] = "airlock_listener" // prevents other doors from receiving this packet unnecessarily
 
@@ -1065,8 +1101,10 @@ TYPEINFO(/obj/machinery/door/airlock)
 			signal.data["user_id"] = "[userid]"
 		if (target)
 			signal.data["address_1"] = target
-		signal.data["door_status"] = density?("closed"):("open")
-		signal.data["lock_status"] = locked?("locked"):("unlocked")
+		signal.data["door_status"] = src.density ? ("closed") : ("open")
+		signal.data["lock_status"] = src.locked ? ("locked") : ("unlocked")
+		signal.data["junction_id"] = src.junction_id ? (src.junction_id) : ("null")
+		signal.data["entrance_id"] = src.entrance_id ? (src.entrance_id) : ("null")
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, radiorange)
 
@@ -1089,9 +1127,9 @@ TYPEINFO(/obj/machinery/door/airlock)
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, radiorange)
 
-	open(surpress_send)
+	open(suppress_send)
 		. = ..()
-		if(!surpress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
+		if(!suppress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
 			var/user_name = "???"
 			if (issilicon(usr))
 				user_name = "AI"
@@ -1107,9 +1145,9 @@ TYPEINFO(/obj/machinery/door/airlock)
 			send_status(user_name)
 			src.last_update_time = ticker.round_elapsed_ticks
 
-	close(surpress_send, is_auto = 0)
+	close(suppress_send, is_auto = 0)
 		. = ..()
-		if(!surpress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
+		if(!suppress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
 			var/user_name = "???"
 			if (issilicon(usr))
 				user_name = "AI"
