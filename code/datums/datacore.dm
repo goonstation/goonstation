@@ -70,15 +70,16 @@
 
 	M["bioHolder.bloodType"] = "[H.bioHolder.bloodType]"
 	M["mi_dis"] = "None"
-	M["mi_dis_d"] = "No minor disabilities have been declared."
+	M["mi_dis_d"] = MEDREC_DISABILITY_MINOR_DEFAULT
 	M["ma_dis"] = "None"
-	M["ma_dis_d"] = "No major disabilities have been diagnosed."
+	M["ma_dis_d"] = MEDREC_DISABILITY_MAJOR_DEFAULT
 	M["alg"] = "None"
-	M["alg_d"] = "No allergies have been detected in this patient."
+	M["alg_d"] = MEDREC_ALLERGY_DEFAULT
 	M["cdi"] = "None"
-	M["cdi_d"] = "No diseases have been diagnosed at the moment."
-
-	M["h_imp"] = "No health implant detected."
+	M["cdi_d"] = MEDREC_DISEASE_DEFAULT
+	M["cl_def"] = MEDREC_CLONE_DEFECT_DEFAULT
+	M["cl_def_d"] = "None"
+	M["h_imp"] = MEDREC_NO_IMPLANT
 
 	if(!length(med_note))
 		M["notes"] = "No notes."
