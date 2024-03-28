@@ -677,6 +677,9 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Pigtails"
 				id = "pig"
 				gender = FEMININE
+			pig_half
+				name = "Pigtails: Split"
+				id = "pig_half"
 			pompompigtail
 				name = "Pompom Pigtails"
 				id = "pompompigtail"
