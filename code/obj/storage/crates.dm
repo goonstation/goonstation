@@ -168,12 +168,6 @@
 	icon_closed = "biohazardcrate"
 	weld_image_offset_Y = -2
 
-	cdc
-		name = "CDC pathogen sample crate"
-		desc = "A crate for sending pathogen or blood samples to the CDC for analysis."
-		spawn_contents = list(/obj/item/reagent_containers/syringe,
-		/obj/item/paper/cdc_pamphlet)
-
 /obj/storage/crate/freezer/milk
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 10, \
 	/obj/item/gun/russianrevolver)
