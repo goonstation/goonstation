@@ -17,7 +17,7 @@
 	var/mob/living/intangible/wraith/master = null
 	var/deathsound = "sound/impact_sounds/plate_break.ogg"
 
-	faction = FACTION_WRAITH
+	faction = list(FACTION_WRAITH)
 
 	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)

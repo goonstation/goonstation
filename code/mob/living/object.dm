@@ -24,7 +24,7 @@
 	can_bleed = FALSE
 	var/name_prefix = "living "
 
-	faction = FACTION_WRAITH
+	faction = list(FACTION_WRAITH)
 
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
 		..(loc)

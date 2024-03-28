@@ -3,7 +3,7 @@
 	display_name = "wizard"
 	antagonist_icon = "wizard"
 	success_medal = "You're no Elminster!"
-	faction = FACTION_WIZARD
+	faction = list(FACTION_WIZARD)
 	uses_pref_name = FALSE
 
 	/// The ability holder of this wizard, containing their respective abilities.

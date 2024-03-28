@@ -553,7 +553,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		var/can_user_recognize = !extremely_convincing && \
 			( \
 				user?.mind?.get_antagonist(ROLE_NUKEOP) || user?.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER) || \
-				dist <= src.recognizable_range || user?.faction == FACTION_SYNDICATE \
+				dist <= src.recognizable_range || (FACTION_SYNDICATE in user?.faction) \
 			)
 		if(isnull(src.our_bomb?.deref()) || can_user_recognize)
 			. = "<br>An extremely powerful balloon capable of deceiving the whole station."

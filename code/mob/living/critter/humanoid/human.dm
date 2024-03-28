@@ -91,7 +91,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/syndicate)
 	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/syndicate/old
 	human_to_copy = /mob/living/carbon/human/normal/syndicate_old
 
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 
 	post_setup()
 		src.name = "[syndicate_name()] Operative"

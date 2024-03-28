@@ -26,7 +26,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 	ai_retaliates = FALSE
 	ai_type = /datum/aiHolder/ranged
-	faction = FACTION_DERELICT
+	faction = list(FACTION_DERELICT)
 	is_npc = TRUE
 
 	var/speak_lines = TRUE
@@ -221,7 +221,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	speak_lines = FALSE
 
 	is_npc = FALSE
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 
 	setup_hands()
 		..()

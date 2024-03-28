@@ -24,7 +24,7 @@
 	canbegrabbed = FALSE
 	throws_can_hit_me = FALSE
 	reagent_capacity = 0
-	faction = FACTION_DERELICT
+	faction = list(FACTION_DERELICT)
 	blood_id = null
 	can_bleed = FALSE
 	metabolizes = FALSE

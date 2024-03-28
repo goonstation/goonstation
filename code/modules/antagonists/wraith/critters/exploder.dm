@@ -19,7 +19,7 @@
 	health_burn_vuln = 1.5
 	is_npc = TRUE
 
-	faction = FACTION_WRAITH
+	faction = list(FACTION_WRAITH)
 
 	use_stamina = FALSE
 

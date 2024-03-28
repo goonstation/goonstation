@@ -6,7 +6,7 @@
 	var/datum/plantgenes/plantgenes = null //! saves the plantgenes of the critter. Important for seed creation as well as scaling with plant attributes
 	var/generation = 0 //! For genetics tracking.
 	var/list/growers = null //! This contains people who contributed to the plant. For AI purposes
-	faction = FACTION_BOTANY
+	faction = list(FACTION_BOTANY)
 
 /mob/living/critter/plant/valid_target(var/mob/living/potential_target)
 	if (potential_target in src.growers) return FALSE

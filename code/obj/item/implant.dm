@@ -720,7 +720,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	on_remove(var/mob/M)
 		..()
 		if (istype(M))
-			M.faction &= ~FACTION_BOTANY
+			M.faction -= FACTION_BOTANY
 
 	do_effect(power)
 		// enjoy your wasps

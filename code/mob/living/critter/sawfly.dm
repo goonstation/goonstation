@@ -38,7 +38,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	pet_text = "cuddles"
 	hand_count = 1 //stabby hands
 
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 
 	New()
 		..()

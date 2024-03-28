@@ -5,7 +5,7 @@
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
 	keep_equipment_on_death = TRUE
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 
 	is_compatible_with(datum/mind/mind)
 		return isrobot(mind.current)

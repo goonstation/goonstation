@@ -23,7 +23,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	health_brute = 10
 	health_burn = 10
 
-	faction = FACTION_NEUTRAL
+	faction = list(FACTION_NEUTRAL)
 	flags = TABLEPASS
 	fits_under_table = 1
 	base_move_delay = 1.5

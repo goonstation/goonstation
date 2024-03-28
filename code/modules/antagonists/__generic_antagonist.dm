@@ -31,7 +31,7 @@
 	id = ROLE_SYNDICATE_AGENT
 	antagonist_icon = "syndicate"
 	grouped_name = "Syndicate Agents"
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 
 	New(datum/mind/new_owner)
 		src.owner = new_owner
