@@ -435,8 +435,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Mining Equipment"
 	desc = "x1 Powered Pickaxe, x1 Power Hammer, x1 Optical Meson Scanner, x1 Geological Scanner, x2 Mining Satchel, x3 Mining Explosives"
 	category = "Engineering Department"
-	contains = list(/obj/item/mining_tool/power_pick,
-					/obj/item/mining_tool/powerhammer,
+	contains = list(/obj/item/mining_tool/powered/pickaxe,
+					/obj/item/mining_tool/powered/hammer,
 					/obj/item/clothing/glasses/toggleable/meson,
 					/obj/item/oreprospector,
 					/obj/item/satchel/mining = 2,

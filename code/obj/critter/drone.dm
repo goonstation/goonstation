@@ -706,7 +706,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 				if(dying)
 					return
-				new /obj/item/mining_tool/power_pick(get_turf(src))
+				new /obj/item/mining_tool/powered/pickaxe(get_turf(src))
 				..()
 
 	gunshark

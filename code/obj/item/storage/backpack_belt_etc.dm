@@ -765,7 +765,7 @@
 	check_wclass = 1
 
 /obj/item/storage/belt/mining/prepared
-	spawn_contents = list(/obj/item/mining_tool/power_pick,
+	spawn_contents = list(/obj/item/mining_tool/powered/pickaxe,
 		/obj/item/ore_scoop/prepared,
 		/obj/item/satchel/mining,
 		/obj/item/device/geiger,
