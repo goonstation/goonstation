@@ -1983,13 +1983,13 @@
 		/obj/item/reagent_containers/food/snacks/plant/peas/ammonia,
 		/obj/item/reagent_containers/food/snacks/plant/potato,
 		/obj/item/reagent_containers/food/snacks/plant/pumpkin,
-		/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte,
+		/obj/item/reagent_containers/food/snacks/plant/pumpkin/pumpkinlatte,
 		/obj/item/reagent_containers/food/snacks/plant/garlic,
 		/obj/item/reagent_containers/food/snacks/plant/eggplant,
 		/obj/item/reagent_containers/food/snacks/plant/turmeric,
 		/obj/item/reagent_containers/food/snacks/plant/mustard,
 		/obj/item/reagent_containers/food/snacks/plant/bamboo,
-		/obj/item/reagent_containers/food/snacks/plant/soylent
+		/obj/item/reagent_containers/food/snacks/plant/soy/soylent
 	)
 
 	New()
@@ -2007,7 +2007,7 @@
 		// Exclude toxic / dangerous / fruits or subtypes
 		items2spawn -= list(/obj/item/reagent_containers/food/snacks/plant/pear/sickly,
 			/obj/item/reagent_containers/food/snacks/plant/pumpkin/summon,
-			/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte,
+			/obj/item/reagent_containers/food/snacks/plant/pumpkin/pumpkinlatte,
 			/obj/item/reagent_containers/food/snacks/plant/slurryfruit,
 			/obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega,
 			/obj/item/reagent_containers/food/snacks/plant/purplegoop,

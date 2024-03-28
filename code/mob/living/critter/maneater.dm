@@ -1,5 +1,5 @@
 /proc/vegetablegibs(turf/T, list/ejectables, bdna, btype)
-	var/list/vegetables = list(/obj/item/reagent_containers/food/snacks/plant/soylent, \
+	var/list/vegetables = list(/obj/item/reagent_containers/food/snacks/plant/soy/soylent, \
 		                       /obj/item/reagent_containers/food/snacks/plant/lettuce, \
 		                       /obj/item/reagent_containers/food/snacks/plant/cucumber, \
 		                       /obj/item/reagent_containers/food/snacks/plant/carrot, \
