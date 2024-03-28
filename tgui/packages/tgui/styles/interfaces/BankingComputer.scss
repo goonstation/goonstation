@@ -1,0 +1,33 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author mloccy (https://github.com/mloccy)
+ * @license MIT
+ */
+
+@use '../colors.scss';
+@use '../base.scss';
+
+.headerRow {
+  font-size: larger;
+}
+
+.budgetButtonCell {
+  padding-top: 5px;
+  float: right;
+}
+
+.budgetStatusCell {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  vertical-align: middle;
+}
+
+.budgetSummery {
+  font-size: larger;
+}
+
+.crewAccountCell {
+  padding-top: 5px;
+  // padding-bottom: 5px;
+}
