@@ -250,3 +250,30 @@
 
 /obj/mapping_helper/mob_spawn/corpse/critter/owl
 	spawn_type = /mob/living/critter/small_animal/bird/owl
+
+
+/obj/mapping_helper/mob_spawn/critter/random
+	name = "Random Spawn"
+	icon_state = "random-critter-base"
+
+
+/obj/mapping_helper/mob_spawn/critter/random/gunbot
+	name = "Random Gunbot Spawn"
+	icon_state = "random-gunbot"
+	var/list/spawns = list(/mob/living/critter/robotic/gunbot=50,
+							/mob/living/critter/robotic/gunbot/chainsaw=5,
+							/mob/living/critter/robotic/gunbot/light=25
+						)
+
+	initialize()
+		src.spawn_type = weighted_pick(spawns)
+		..()
+
+/obj/mapping_helper/mob_spawn/critter/random/gunbot/danger
+	spawns = list(/mob/living/critter/robotic/gunbot=50,
+				/mob/living/critter/robotic/gunbot/minigun=5,
+				/mob/living/critter/robotic/gunbot/flame=5,
+				/mob/living/critter/robotic/gunbot/striker=10,
+				/mob/living/critter/robotic/gunbot/cannon=2,
+				/mob/living/critter/robotic/gunbot/mrl=1
+				)

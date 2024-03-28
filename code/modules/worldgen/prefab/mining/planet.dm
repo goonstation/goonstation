@@ -225,6 +225,20 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabSizeX = 6
 		prefabSizeY = 6
 
+	random_ship2
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_random_ship2.dmm"
+		prefabSizeX = 8
+		prefabSizeY = 8
+
+	random_ship3
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_random_ship3.dmm"
+		prefabSizeX = 7
+		prefabSizeY = 7
+
 	random_crap1
 		maxNum = 1
 		probability = 20
@@ -238,6 +252,20 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_random_crap2.dmm"
 		prefabSizeX = 11
 		prefabSizeY = 7
+
+	random_crap3
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_random_crap3.dmm"
+		prefabSizeX = 6
+		prefabSizeY = 3
+
+	crashedpod_gunbot
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_lostpod_gunbot.dmm"
+		prefabSizeX = 3
+		prefabSizeY = 3
 
 	gold_cache_defended
 		maxNum = 1
