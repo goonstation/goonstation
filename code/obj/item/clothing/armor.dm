@@ -499,7 +499,7 @@ TYPEINFO(/obj/item/clothing/suit/armor/NT_alt)
 
 /obj/item/clothing/suit/armor/vest/gang
 	name = "Light Armor Vest"
-	desc = "A stab & bullet-resistant vest, light enough to slip under a jumpsuit."
+	desc = "A minimalist plate carrier strapped to your torso. Provides as much protection as you can get without cramping your style."
 	icon = 'icons/obj/items/gang.dmi'
 	icon_state = "lightvest"
 	item_state = "lightvest"
@@ -510,4 +510,8 @@ TYPEINFO(/obj/item/clothing/suit/armor/NT_alt)
 		..()
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 0.5)
+	attackby(obj/item/W, mob/user)
+		return
 
+	attack_self(mob/user)
+		return
