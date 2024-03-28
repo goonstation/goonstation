@@ -1044,5 +1044,34 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.ai.target = M
 		src.ai.enable()
 
+/mob/living/carbon/human/npc/luna
+	name = "Lavvar Tu're"
+	real_name = "Lavvar Tu're"
+	gender = MALE
+	uses_mobai = TRUE
+
+	var/talk_prob = 1
+	var/talk_cooldown = 60 SECONDS
+
+/mob/living/carbon/human/npc/luna/New()
+	. = ..()
+	SPAWN(0)
+		randomize_look(src, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/floppy, SLOT_SHOES)
+
+/mob/living/carbon/human/npc/luna/Life(datum/controller/process/mobs/parent)
+	if (..(parent))
+		return 1
+
+	var/area/area = get_area(src)
+	if(prob(src.talk_prob) && can_act(src) && area?.active && !ON_COOLDOWN(src, "gossip", src.talk_cooldown))
+		src.gossip()
+
+/mob/living/carbon/human/npc/luna/proc/gossip()
+	switch(rand(1,2))
+		if(1) // Celebrity gossip
+			src.say("[LUNA_PICK("starters")] [LUNA_PICK("celebrities")] [LUNA_PICK("qualifier")] [LUNA_PICK("celebactions")] in [LUNA_PICK("places")] because [LUNA_PICK("celebreasons")].")
+		if(2) // Company gossip
+			src.say("[LUNA_PICK("starters")] [LUNA_PICK("companies")] [LUNA_PICK("qualifier")] [LUNA_PICK("corpoactions")] [LUNA_PICK("places")] to [LUNA_PICK("corporeasons")].")
 
 #undef BILL_PICK
