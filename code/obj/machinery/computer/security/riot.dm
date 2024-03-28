@@ -1,3 +1,5 @@
+#define ARMORY_AUTH_DISK_COOLDOWN 3 SECONDS
+
 /obj/machinery/computer/riotgear
 	name = "Armory Authorization"
 	icon_state = "drawbr"
@@ -197,6 +199,19 @@
 	if (!user)
 		return
 
+	if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
+		if (ON_COOLDOWN(global, "armory_authdisk", ARMORY_AUTH_DISK_COOLDOWN))
+			boutput(user, SPAN_NOTICE("Armory authorization override is still [pick("loading", "processing", "readying")]!"), "armory_authdisk_cooldown")
+			return // prevent someone from turbo-spamming announcements
+		playsound(src, 'sound/machines/pc_process.ogg', 50, TRUE)
+		src.visible_message(SPAN_ALERT("<B>[user] uses the [W] to issue an emergency override!</B>"))
+		logTheThing(LOG_STATION, user, "used [W] to override armory authorization status.")
+		if (src.authed)
+			src.unauthorize()
+		else
+			src.authorize()
+		return
+
 	var/obj/item/card/id/id_card = get_id_card(W)
 
 	if (!istype(id_card, /obj/item/card/id))
@@ -287,3 +302,5 @@
 			src.authorized_registered -= W:registered
 			logTheThing(LOG_STATION, user, "removed an approval for armory access using [W]. [length(src.authorized)] total approvals.")
 			print_auth_needed(user)
+
+#undef ARMORY_AUTH_DISK_COOLDOWN
