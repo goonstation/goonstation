@@ -2112,10 +2112,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	contraband = 7
 	ammo_cats = list(AMMO_FOUR_BORE)
 	spread_angle = 2
-	shoot_delay = 1 SECOND
+	shoot_delay = 0.8 SECONDS
 	max_ammo_capacity = 2
 	default_magazine = /obj/item/ammo/bullets/four_bore/stun/two
 	fire_animation = FALSE
+	recoil_strength = 20
 
 	New()
 		ammo = new default_magazine
