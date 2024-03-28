@@ -171,6 +171,13 @@
 		..()
 		JobEquipSpawned("Inspector")
 
+/mob/living/carbon/human/normal/gang_respawn
+	New(var/gender) //force IDs and stuff to spawn for the correct gender
+		src.gender = gender
+		..()
+		JobEquipSpawned("Gang Respawn")
+
+
 /mob/living/carbon/human/normal/rescue
 	New()
 		..()

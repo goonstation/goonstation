@@ -18709,6 +18709,22 @@
 	},
 /obj/rack,
 /obj/item/gun/implanter,
+/obj/item/gun/kinetic/riot40mm{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/gun/kinetic/riot40mm{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/ammo/bullets/smoke{
+	pixel_x = 6;
+	pixel_y = -9
+	},
+/obj/item/ammo/bullets/smoke{
+	pixel_x = 8;
+	pixel_y = -7
+	},
 /obj/item/chem_grenade/pepper{
 	pixel_x = -7;
 	pixel_y = -6
