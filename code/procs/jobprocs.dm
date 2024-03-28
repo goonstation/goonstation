@@ -62,6 +62,15 @@ var/global/totally_random_jobs = FALSE
 
 	return candidates
 
+#define ASSIGN_STAFF_LISTS(JOB, player) if (istype(JOB, /datum/job/engineering/engineer))\
+	{engineering_staff += player}\
+else if (istype(JOB, /datum/job/research/scientist))\
+	{research_staff += player}\
+else if (istype(JOB, /datum/job/research/medical_doctor))\
+	{medical_staff += player}\
+else if (istype(JOB, /datum/job/security/security_officer))\
+	{security_officers += player}
+
 /proc/DivideOccupations()
 	set background = 1
 
@@ -148,6 +157,7 @@ var/global/totally_random_jobs = FALSE
 				if(!candidate.client) continue
 				if (JOB.assigned >= JOB.limit || JOB.assigned >= JOB.high_priority_limit || !length(unassigned)) break
 				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv1")
+				ASSIGN_STAFF_LISTS(JOB, candidate)
 				candidate.mind.assigned_role = JOB.name
 				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 				unassigned -= candidate
@@ -156,6 +166,7 @@ var/global/totally_random_jobs = FALSE
 				if(!candidate.client) continue
 				if (JOB.assigned >= JOB.limit || JOB.assigned >= JOB.high_priority_limit || !length(unassigned)) break
 				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv2")
+				ASSIGN_STAFF_LISTS(JOB, candidate)
 				candidate.mind.assigned_role = JOB.name
 				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 				unassigned -= candidate
@@ -164,6 +175,7 @@ var/global/totally_random_jobs = FALSE
 				if(!candidate.client) continue
 				if (JOB.assigned >= JOB.limit || JOB.assigned >= JOB.high_priority_limit || !length(unassigned)) break
 				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv3")
+				ASSIGN_STAFF_LISTS(JOB, candidate)
 				candidate.mind.assigned_role = JOB.name
 				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 				unassigned -= candidate
@@ -211,14 +223,7 @@ var/global/totally_random_jobs = FALSE
 		// If there's an open job slot for it, give the player the job and remove them from
 		// the list of unassigned players, hey presto everyone's happy (except clarks probly)
 		if (JOB.limit < 0 || !(JOB.assigned >= JOB.limit))
-			if (istype(JOB, /datum/job/engineering/engineer))
-				engineering_staff += player
-			else if (istype(JOB, /datum/job/research/scientist))
-				research_staff += player
-			else if (istype(JOB, /datum/job/research/medical_doctor))
-				medical_staff += player
-			else if (istype(JOB, /datum/job/security/security_officer))
-				security_officers += player
+			ASSIGN_STAFF_LISTS(JOB, player)
 
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [player] took [JOB.name] from favorite selector")
 			player.mind.assigned_role = JOB.name
@@ -241,15 +246,7 @@ var/global/totally_random_jobs = FALSE
 		for(var/mob/new_player/candidate in pick2)
 			if (JOB.assigned >= JOB.limit || !length(unassigned))
 				break
-
-			if (istype(JOB, /datum/job/engineering/engineer))
-				engineering_staff += candidate
-			else if (istype(JOB, /datum/job/research/scientist))
-				research_staff += candidate
-			else if (istype(JOB, /datum/job/research/medical_doctor))
-				medical_staff += candidate
-			else if (istype(JOB, /datum/job/security/security_officer))
-				security_officers += candidate
+			ASSIGN_STAFF_LISTS(JOB, candidate)
 
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 2 Job Picker")
 			candidate.mind.assigned_role = JOB.name
@@ -272,15 +269,7 @@ var/global/totally_random_jobs = FALSE
 		for(var/mob/new_player/candidate in pick3)
 			if (JOB.assigned >= JOB.limit || !length(unassigned))
 				break
-
-			if (istype(JOB, /datum/job/engineering/engineer))
-				engineering_staff += candidate
-			else if (istype(JOB, /datum/job/research/scientist))
-				research_staff += candidate
-			else if (istype(JOB, /datum/job/research/medical_doctor))
-				medical_staff += candidate
-			else if (istype(JOB, /datum/job/security/security_officer))
-				security_officers += candidate
+			ASSIGN_STAFF_LISTS(JOB, candidate)
 
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 3 Job Picker")
 			candidate.mind.assigned_role = JOB.name
