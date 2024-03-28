@@ -129,6 +129,24 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	item_state = "glasses"
 	desc = "Corrective lenses, perfect for the near-sighted."
 	correct_bad_vision = 1
+	attack_self(mob/user)
+		. = ..()
+		user.show_text("You change the glasses' style.")
+		if(src.icon_state == "glasses")
+			src.icon_state = "circleglasses"
+			src.item_state = "circleglasses"
+			src.desc = "Corrective lenses, perfect for the near-sighted. Oddly reflective- they either make you look super cool or like a dork."
+		else
+			src.icon_state = "glasses"
+			src.item_state = "glasses"
+			src.desc = "Corrective lenses, perfect for the near-sighted."
+
+/obj/item/clothing/glasses/solid
+	name = "reflective glasses"
+	icon_state = "circleglasses"
+	item_state = "circleglasses"
+	desc = "Corrective lenses, perfect for the near-sighted. They reflect light to an odd degree- they either make you look super cool, or just like a dork."
+	correct_bad_vision = 1
 
 /obj/item/clothing/glasses/regular/ecto
 	name = "peculiar spectacles"
