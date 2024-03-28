@@ -1,4 +1,36 @@
 
+(t)thu mar 28 24
+(u)TDHooligan
+(p)18310
+(e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
+(*)Gang firearms have been tweaked. Please feedback in the discord or forum.
+(+)Lo-Point now has a sensible firerate & has 2 fewer rounds.
+(+)Burst laser does 3 more damage/laser.
+(+)Webley Revolver now does stamina damage & has a weaker AP effect.
+(+)Striker-7 does stamina damage, damage now falls off later, but a lot faster.
+(+)The SMGs remain unchanged (They already have a lot of raw damage)
+(t)wed mar 27 24
+(u)Avanth
+(p)18326
+(e)💅|C-QoL
+(+)Modified secmate to allow the search function to search by criminal status in addition to what it searched by previously.
+(u)444explorer
+(p)18332
+(e)🆕💊📦|C-Feature, A-Medical, A-Game-Objects
+(+)Shaking salt in someones eyes hurts their eyes badly! Ouch!
+(t)tue mar 26 24
+(u)TDHooligan
+(p)18315
+(e)💅📄|C-QoL, A-UI
+(*)Firearm recoil now resets faster; please feedback in the discord.
+(*)It can also be toggled off via the 'Effects' menu.
+(u)JORJ949
+(p)18311
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Added a Nuclear Preparations closet to the Cairngorm.
+(u)LeahTheTech
+(+)The Cosmopolitan drink now gives you a taste of a random accent with every sip.
+(+)Diesel can now be used to fuel combustion generators. There is nothing strange about this.
 (t)mon mar 25 24
 (u)TDHooligan
 (p)18161
