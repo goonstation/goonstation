@@ -5,8 +5,6 @@
 
 /datum/action/bar/icon/callback/signingBar
 
-	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags, call_proc_on)
-		. = ..(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags, call_proc_on)
 	onInterrupt(flag)
 		. = ..(flag)
 		var/obj/item/zolscroll/scroll = src.target
