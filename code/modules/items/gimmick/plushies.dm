@@ -46,6 +46,8 @@ TYPEINFO(/obj/submachine/claw_machine)
 		return
 
 /obj/submachine/claw_machine/attack_ai(mob/user)
+	if (isAIeye(user))
+		return
 	src.attack_hand(user)
 
 /obj/submachine/claw_machine/get_desc(dist)
