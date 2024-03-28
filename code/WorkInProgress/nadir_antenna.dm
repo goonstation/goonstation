@@ -780,10 +780,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 					thing2send.set_loc(src)
 					SPAWN(1 SECOND)
 
-						if (istype(thing2send, /obj/storage/crate/biohazard/cdc))
-							QM_CDC.receive_pathogen_samples(thing2send)
-
-						else if(istype(thing2send,/obj/storage/crate) || istype(thing2send,/obj/storage/secure/crate))
+						if(istype(thing2send,/obj/storage/crate) || istype(thing2send,/obj/storage/secure/crate))
 							var/sold_to_trader = FALSE
 							for (var/datum/trader/T in shippingmarket.active_traders)
 								if (T.crate_tag == thing2send.delivery_destination)
