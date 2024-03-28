@@ -1808,7 +1808,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	powered_force = 14
 	dig_strength = 2
 	powered_dig_strength = 3
-	power_usage = 1.2
+	power_usage = 1
 	robot_power_usage = 30
 	default_cell = /obj/item/ammo/power_cell
 
