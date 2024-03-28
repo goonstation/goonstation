@@ -1,4 +1,14 @@
 
+(t)thu mar 28 24
+(u)TDHooligan
+(p)18310
+(e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
+(*)Gang firearms have been tweaked. Please feedback in the discord or forum.
+(+)Lo-Point now has a sensible firerate & has 2 fewer rounds.
+(+)Burst laser does 3 more damage/laser.
+(+)Webley Revolver now does stamina damage & has a weaker AP effect.
+(+)Striker-7 does stamina damage, damage now falls off later, but a lot faster.
+(+)The SMGs remain unchanged (They already have a lot of raw damage)
 (t)wed mar 27 24
 (u)Avanth
 (p)18326
