@@ -298,6 +298,9 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		HH.limb_name = "9mm Anti-Personnel Arm"
 
 
+TYPEINFO(/mob/living/critter/robotic/gunbot/mrl)
+	mats = list("MET-2" = 16, "CON-2" = 12, "DEN-2" = 6, "POW-1"=4)
+
 /mob/living/critter/robotic/gunbot/mrl
 	icon_state = "gunbot-base"
 	setup_hands()
@@ -310,6 +313,9 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		HH.limb_name = "Fomalhaut MRL Arm"
 
 		src.UpdateOverlays(image(src.icon,"gunbot-mrl"), "guns")
+
+TYPEINFO(/mob/living/critter/robotic/gunbot/flame)
+	mats = list("MET-2" = 12, "CON-2" = 12, "DEN-1" = 6, "POW-2"=4)
 
 /mob/living/critter/robotic/gunbot/flame
 	icon_state = "gunbot-base"
@@ -324,6 +330,8 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 		src.UpdateOverlays(image(src.icon, "gunbot-flamethrower"), "guns")
 
+TYPEINFO(/mob/living/critter/robotic/gunbot/cannon)
+	mats = list("MET-3" = 12, "CON-2" = 12, "DEN-1" = 6, "POW-1"=4)
 /mob/living/critter/robotic/gunbot/cannon
 	icon_state = "gunbot-base"
 	setup_hands()
@@ -350,6 +358,8 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 		src.UpdateOverlays(image(src.icon, "gunbot-striker"), "guns")
 
+TYPEINFO(/mob/living/critter/robotic/gunbot/minigun)
+	mats = list("MET-2" = 18, "CON-2" = 12, "DEN-1" = 6, "POW-1"=4)
 /mob/living/critter/robotic/gunbot/minigun
 	icon_state = "gunbot-base"
 	setup_hands()
@@ -364,6 +374,8 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 		src.UpdateOverlays(image(src.icon, "gunbot-heavy"), "guns")
 
+TYPEINFO(/mob/living/critter/robotic/gunbot/chainsaw)
+	mats = list("MET-3" = 12, "CON-2" = 12, "DEN-1" = 6, "POW-1"=4)
 /mob/living/critter/robotic/gunbot/chainsaw
 	icon_state = "gunbot-base"
 	setup_hands()
