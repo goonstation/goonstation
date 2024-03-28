@@ -5,9 +5,9 @@
  */
 
 import { storage } from 'common/storage';
-import { loadSettings, updateSettings } from '../settings/actions';
+import { addHighlightSetting, loadSettings, removeHighlightSetting, updateHighlightSetting, updateSettings } from '../settings/actions';
 import { selectSettings } from '../settings/selectors';
-import { addChatPage, changeChatPage, changeScrollTracking, loadChat, rebuildChat, removeChatPage, saveChatToDisk, toggleAcceptedType, updateMessageCount } from './actions';
+import { addChatPage, changeChatPage, changeScrollTracking, clearChat, loadChat, rebuildChat, removeChatPage, saveChatToDisk, toggleAcceptedType, updateMessageCount } from './actions';
 import { MAX_PERSISTED_MESSAGES, MESSAGE_SAVE_INTERVAL } from './constants';
 import { createMessage, serializeMessage } from './model';
 import { chatRenderer } from './renderer';
@@ -20,14 +20,14 @@ const saveChatToStorage = async store => {
   const messages = chatRenderer.messages
     .slice(fromIndex)
     .map(message => serializeMessage(message));
-  storage.set('chat-state', state);
-  storage.set('chat-messages', messages);
+  storage.set('goon-chat-state', state);
+  storage.set('goon-chat-messages', messages);
 };
 
 const loadChatFromStorage = async store => {
   const [state, messages] = await Promise.all([
-    storage.get('chat-state'),
-    storage.get('chat-messages'),
+    storage.get('goon-chat-state'),
+    storage.get('goon-chat-messages'),
   ]);
   // Discard incompatible versions
   if (state && state.version <= 4) {
@@ -96,12 +96,24 @@ export const chatMiddleware = store => {
       chatRenderer.rebuildChat();
       return next(action);
     }
-    if (type === updateSettings.type || type === loadSettings.type) {
+    if (type === updateSettings.type
+      || type === loadSettings.type
+      || type === addHighlightSetting.type
+      || type === removeHighlightSetting.type
+      || type === updateHighlightSetting.type
+    ) {
       next(action);
       const settings = selectSettings(store.getState());
       chatRenderer.setHighlight(
-        settings.highlightText,
-        settings.highlightColor);
+        settings.highlightSettings,
+        settings.highlightSettingById
+      );
+      chatRenderer.setZebraHighlight(
+        settings.oddHighlight
+      );
+      chatRenderer.setPruning(
+        settings.messagePruning
+      );
       return;
     }
     if (type === 'roundrestart') {
@@ -111,6 +123,10 @@ export const chatMiddleware = store => {
     }
     if (type === saveChatToDisk.type) {
       chatRenderer.saveToDisk();
+      return;
+    }
+    if (type === clearChat.type) {
+      chatRenderer.clearChat();
       return;
     }
     return next(action);

@@ -8,7 +8,7 @@ import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
 import { createLogger } from 'tgui/logging';
 import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, IMAGE_RETRY_DELAY, IMAGE_RETRY_LIMIT, IMAGE_RETRY_MESSAGE_AGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPE_INTERNAL, MESSAGE_TYPE_UNKNOWN, MESSAGE_TYPES } from './constants';
-import { canPageAcceptType, createMessage, isSameMessage } from './model';
+import { canPageAcceptType, createMessage, isSameGroup, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
 
 const logger = createLogger('chatRenderer');
@@ -32,10 +32,36 @@ const findNearestScrollableParent = startingNode => {
   return window;
 };
 
+const getWhiteOrBlack = (color) => {
+  // adapted from https://stackoverflow.com/a/35970186
+  // should be in form "#FFFFFF" or "#FFF"
+  let hex = color.slice(1);
+  if (hex.length === 3) {
+    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+  }
+  const red = parseInt(hex.slice(0, 2), 16);
+  const green = parseInt(hex.slice(2, 4), 16);
+  const blue = parseInt(hex.slice(4, 6), 16);
+  const colors = [red / 255, green / 255, blue / 255];
+  const c = colors.map((col) => {
+    if (col <= 0.03928) {
+      return col / 12.92;
+    }
+    return Math.pow((col + 0.055) / 1.055, 2.4);
+  });
+  const L = (0.2126 * c[0]) + (0.7152 * c[1]) + (0.0722 * c[2]);
+  if (L > 0.179) {
+    return '#000000';
+  }
+  return '#FFFFFF';
+};
+
 const createHighlightNode = (text, color) => {
   const node = document.createElement('span');
-  node.className = 'Chat__highlight';
-  node.setAttribute('style', 'background-color:' + color);
+  if (!color) {
+    color = '#ffdd44';
+  }
+  node.setAttribute('style', `background-color:${color};color:${getWhiteOrBlack(color)}`);
   node.textContent = text;
   return node;
 };
@@ -66,6 +92,21 @@ const handleImageError = e => {
     node.src = src + '#' + attempts;
     node.setAttribute('data-reload-n', attempts + 1);
   }, IMAGE_RETRY_DELAY);
+};
+
+const openContextMenu = node => {
+  const target = node.querySelector('.name[data-ctx]');
+  const flags = node.querySelector('.adminHearing[data-ctx]');
+  if (target && flags) {
+    chatRenderer.events.emit('contextShow', true);
+    chatRenderer.events.emit('contextAct',
+      flags.getAttribute('data-ctx'),
+      target.getAttribute('data-ctx'),
+      target.textContent,
+    );
+    return true;
+  }
+  return false;
 };
 
 /**
@@ -101,6 +142,9 @@ class ChatRenderer {
     this.queue = [];
     this.messages = [];
     this.visibleMessages = [];
+    this.msgOdd = false;
+    this.oddHighlight = false;
+    this.messagePruning = true;
     this.page = null;
     this.events = new EventEmitter();
     // Scroll handler
@@ -170,30 +214,115 @@ class ChatRenderer {
     }
   }
 
-  setHighlight(text, color) {
-    if (!text || !color) {
-      this.highlightRegex = null;
-      this.highlightColor = null;
+  clearChat() {
+    const messages = this.visibleMessages;
+    this.visibleMessages = [];
+    for (let i = 0; i < messages.length; i++) {
+      const message = messages[i];
+      this.rootNode.removeChild(message.node);
+      // Mark this message as pruned
+      message.node = 'pruned';
+    }
+    // Remove pruned messages from the message array
+    this.messages = this.messages.filter(message => (
+      message.node !== 'pruned'
+    ));
+    this.msgOdd = false;
+    logger.log(`Cleared chat`);
+  }
+
+  setHighlight(highlightSettings, highlightSettingById) {
+    this.highlightParsers = null;
+    if (!highlightSettings) {
       return;
     }
-    const allowedRegex = /^[a-z0-9_\-\s]+$/ig;
-    const lines = String(text)
-      .split(',')
-      .map(str => str.trim())
-      .filter(str => (
-        // Must be longer than one character
-        str && str.length > 1
-        // Must be alphanumeric (with some punctuation)
-        && allowedRegex.test(str)
-      ));
-    // Nothing to match, reset highlighting
-    if (lines.length === 0) {
-      this.highlightRegex = null;
-      this.highlightColor = null;
-      return;
-    }
-    this.highlightRegex = new RegExp('(' + lines.join('|') + ')', 'gi');
-    this.highlightColor = color;
+    highlightSettings.map((id) => {
+      const setting = highlightSettingById[id];
+      const text = setting.highlightText;
+      const highlightColor = setting.highlightColor;
+      const highlightWholeMessage = setting.highlightWholeMessage;
+      const matchWord = setting.matchWord;
+      const matchCase = setting.matchCase;
+      const allowedRegex = /^[a-z0-9_\-$/^[\s\]\\]+$/gi;
+      const regexEscapeCharacters = /[!#$%^&*)(+=.<>{}[\]:;'"|~`_\-\\/]/g;
+      const lines = String(text)
+        .split(',')
+        .map((str) => str.trim())
+        .filter(
+          (str) =>
+            // Must be longer than one character
+            str
+            && str.length > 1
+            // Must be alphanumeric (with some punctuation)
+            && allowedRegex.test(str)
+            // Reset lastIndex so it does not mess up the next word
+            && ((allowedRegex.lastIndex = 0) || true)
+        );
+      let highlightWords;
+      let highlightRegex;
+      // Nothing to match, reset highlighting
+      if (lines.length === 0) {
+        return;
+      }
+      let regexExpressions = [];
+      // Organize each highlight entry into regex expressions and words
+      for (let line of lines) {
+        // Regex expression syntax is /[exp]/
+        if (line.charAt(0) === '/' && line.charAt(line.length - 1) === '/') {
+          const expr = line.substring(1, line.length - 1);
+          // Check if this is more than one character
+          if (/^(\[.*\]|\\.|.)$/.test(expr)) {
+            continue;
+          }
+          regexExpressions.push(expr);
+        } else {
+          // Lazy init
+          if (!highlightWords) {
+            highlightWords = [];
+          }
+          // We're not going to let regex characters fuck up our RegEx operation.
+          line = line.replace(regexEscapeCharacters, '\\$&');
+
+          highlightWords.push(line);
+        }
+      }
+      const regexStr = regexExpressions.join('|');
+      const flags = 'g' + (matchCase ? '' : 'i');
+      // We wrap this in a try-catch to ensure that broken regex doesn't break
+      // the entire chat.
+      try {
+        // setting regex overrides matchword
+        if (regexStr) {
+          highlightRegex = new RegExp('(' + regexStr + ')', flags);
+        } else {
+          const pattern = `${matchWord ? '\\b' : ''}(${highlightWords.join(
+            '|'
+          )})${matchWord ? '\\b' : ''}`;
+          highlightRegex = new RegExp(pattern, flags);
+        }
+      } catch {
+        // We just reset it if it's invalid.
+        highlightRegex = null;
+      }
+      // Lazy init
+      if (!this.highlightParsers) {
+        this.highlightParsers = [];
+      }
+      this.highlightParsers.push({
+        highlightWords,
+        highlightRegex,
+        highlightColor,
+        highlightWholeMessage,
+      });
+    });
+  }
+
+  setZebraHighlight(value) {
+    this.oddHighlight = value;
+  }
+
+  setPruning(value) {
+    this.messagePruning = value;
   }
 
   scrollToBottom() {
@@ -239,15 +368,55 @@ class ChatRenderer {
         // Is not an internal message
         !message.type.startsWith(MESSAGE_TYPE_INTERNAL)
         // Text payload must fully match
-        && isSameMessage(message, predicate)
+        && (isSameMessage(message, predicate)
+        // GOON ADD Or group must fully match
+        || isSameGroup(message, predicate))
         // Must land within the specified time window
         && now < message.createdAt + COMBINE_MAX_TIME_WINDOW
       );
       if (matches) {
+        // If not the same message update old message with new message
+        // New message needs highlights checked again
+        if (!isSameMessage(message, predicate)) {
+          if (predicate.html) {
+            message.node.innerHTML = predicate.html;
+          }
+          if (predicate.text) {
+            message.node.textContent = predicate.text;
+          }
+          this.handleHighlights(message.node);
+        }
         return message;
       }
     }
     return null;
+  }
+
+  handleHighlights(node) {
+    if (this.highlightParsers) {
+      this.highlightParsers.map((parser) => {
+        const highlighted = highlightNode(
+          node,
+          parser.highlightRegex,
+          parser.highlightWords,
+          (text) => createHighlightNode(text, parser.highlightColor)
+        );
+        if (highlighted && parser.highlightWholeMessage) {
+          node.className += ' ChatMessage--highlighted';
+        }
+      });
+    }
+  }
+
+  sendMessage(html, text) {
+    if (!(html || text)) {
+      return;
+    }
+    const message = {
+      html: html,
+      text: text,
+    };
+    chatRenderer.processBatch([message]);
   }
 
   processBatch(batch, options = {}) {
@@ -270,12 +439,16 @@ class ChatRenderer {
     const fragment = document.createDocumentFragment();
     const countByType = {};
     let node;
+    let forceScroll;
     for (let payload of batch) {
       const message = createMessage(payload);
       // Combine messages
       const combinable = this.getCombinableMessage(message);
       if (combinable) {
         combinable.times = (combinable.times || 1) + 1;
+        if (combinable.times < 20) {
+          combinable.node.style.fontSize = `${1 + (combinable.times * 0.04)}em`;
+        }
         updateMessageBadge(combinable);
         continue;
       }
@@ -302,15 +475,15 @@ class ChatRenderer {
           logger.error('Error: message is missing text payload', message);
         }
         // Highlight text
-        if (!message.avoidHighlighting && this.highlightRegex) {
-          const highlighted = highlightNode(node,
-            this.highlightRegex,
-            text => (
-              createHighlightNode(text, this.highlightColor)
-            ));
-          if (highlighted) {
-            node.className += ' ChatMessage--highlighted';
-          }
+        this.handleHighlights(node);
+        // Highlight odd messages
+        if (this.msgOdd && this.oddHighlight) {
+          node.className += ' odd-highlight';
+        }
+        this.msgOdd = !this.msgOdd;
+        // Set forceScroll
+        if (message.forceScroll) {
+          forceScroll = message.forceScroll;
         }
         // Linkify text
         const linkifyNodes = node.querySelectorAll('.linkify');
@@ -326,6 +499,12 @@ class ChatRenderer {
           }
         }
       }
+      // Register right click for context menu
+      node.oncontextmenu = (e) => {
+        if (openContextMenu(node)) {
+          e.preventDefault();
+        }
+      };
       // Store the node in the message
       message.node = node;
       // Query all possible selectors to find out the message type
@@ -358,7 +537,7 @@ class ChatRenderer {
       else {
         this.rootNode.appendChild(fragment);
       }
-      if (this.scrollTracking) {
+      if (this.scrollTracking || forceScroll) {
         setImmediate(() => this.scrollToBottom());
       }
     }
@@ -370,6 +549,9 @@ class ChatRenderer {
 
   pruneMessages() {
     if (!this.isReady()) {
+      return;
+    }
+    if (!this.messagePruning) {
       return;
     }
     // Delay pruning because user is currently interacting
@@ -425,6 +607,7 @@ class ChatRenderer {
     this.rootNode.textContent = '';
     this.messages = [];
     this.visibleMessages = [];
+    this.msgOdd = false;
     // Repopulate the chat log
     this.processBatch(messages, {
       notifyListeners: false,
@@ -443,7 +626,9 @@ class ChatRenderer {
       const cssRules = styleSheets[i].cssRules;
       for (let i = 0; i < cssRules.length; i++) {
         const rule = cssRules[i];
-        cssText += rule.cssText + '\n';
+        if (rule && typeof rule.cssText === 'string') {
+          cssText += rule.cssText + '\n';
+        }
       }
     }
     cssText += 'body, html { background-color: #141414 }\n';

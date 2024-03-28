@@ -51,12 +51,14 @@
   ));
   @include meta.load-css('~tgui/styles/components/NumberInput.scss');
   @include meta.load-css('~tgui/styles/components/Knob.scss');
+  @include meta.load-css('~tgui/styles/components/TextArea.scss');
   @include meta.load-css('~tgui/styles/components/Slider.scss');
   @include meta.load-css('~tgui/styles/components/ProgressBar.scss');
 
   // Components specific to tgui-panel
   @include meta.load-css('../components/Chat.scss', $with: (
-    'text-color': #000000,
+    'color-text': #000000,
+    'color-bg-chat': #ffffff,
   ));
 
   // Layouts

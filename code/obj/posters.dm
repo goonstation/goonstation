@@ -253,16 +253,16 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			src.pixel_x = rand(-8,8)
 
 	examine(mob/user)
+		..()
 		if (src.popup_win)
 			src.show_popup_win(user)
-			return list()
-		else
-			return ..()
 
 	proc/show_popup_win(var/client/C)
 		return
+
 	ex_act(var/severity)
 		qdel(src)
+
 	attack_hand(mob/user)
 		if (!src.anchored)
 			return ..()

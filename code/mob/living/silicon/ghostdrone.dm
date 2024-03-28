@@ -964,7 +964,7 @@
 
 		var/nohear = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]")
 
-		for (var/client/C)
+		for (var/client/C as anything in global.clients)
 			if (!C.mob) continue
 			if (istype(C.mob, /mob/new_player))
 				continue
@@ -974,7 +974,7 @@
 				var/thisR = rendered
 				if (isghostdrone(M) || M.client.holder)
 					if ((istype(M, /mob/dead/observer)||M.client.holder)&& src.mind)
-						thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
+						thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[rendered]</span>"
 				else
 					thisR = nohear
 
@@ -999,7 +999,7 @@
 			var/thisR = rendered
 			if (isghostdrone(M) || M.client.holder)
 				if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-					thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
+					thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[rendered]</span>"
 				M.show_message(thisR, 2)
 			else if (M in hearers(src))
 				thisR = nohear

@@ -204,7 +204,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 							continue
 						if (O.client.ignore_sound_flags & (SOUND_VOX | SOUND_ALL))
 							continue
-						ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
+						O.client.play_dectalk(audio["audio"], show_chat_message = FALSE, hide_widget = TRUE)
 
 /obj/machinery/bot/examine()
 	. = ..()

@@ -26,14 +26,14 @@ export const ChatPageSettings = (props, context) => {
             }))} />
         </Stack.Item>
         <Stack.Item>
-          <Button
+          <Button.Confirm
             icon="times"
+            confirmContent="Confirm?"
+            content="Remove"
             color="red"
             onClick={() => dispatch(removeChatPage({
               pageId: page.id,
-            }))}>
-            Remove
-          </Button>
+            }))} />
         </Stack.Item>
       </Stack>
       <Divider />
@@ -43,6 +43,8 @@ export const ChatPageSettings = (props, context) => {
           .map(typeDef => (
             <Button.Checkbox
               key={typeDef.type}
+              tooltip={typeDef.description}
+              tooltipPosition="bottom"
               checked={page.acceptedTypes[typeDef.type]}
               onClick={() => dispatch(toggleAcceptedType({
                 pageId: page.id,

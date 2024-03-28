@@ -187,7 +187,7 @@
 /mob/proc/try_render_chat_to_admin(client/C, message)
 	if (C.holder && C.deadchat && !C.player_mode)
 		if (src.mind)
-			message = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[message]</span>"
+			message = "<span class='adminHearing' data-ctx='[C.set_context_flags()]'>[message]</span>"
 		boutput(C, message)
 		return 1
 
@@ -682,7 +682,7 @@
 			</div>
 			"} + rendered
 		if (C.holder)
-			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
+			rendered = "<span class='adminHearing' data-ctx='[C.set_context_flags()]'>[rendered]</span>"
 
 		boutput(C, rendered)
 
@@ -774,8 +774,8 @@
 		if (C.preferences && !C.preferences.listen_ooc)
 			continue
 
-		var looc_class = ""
-		var display_name = src.key
+		var/looc_class = "looc"
+		var/display_name = src.key
 		var/looc_icon = ""
 
 		if (src.client.stealth || src.client.alt_key)
@@ -795,7 +795,8 @@
 			looc_class = "newbeelooc"
 			looc_icon = "Newbee"
 
-		var/rendered = "<span class='looc [looc_class]'>[SPAN_PREFIX("LOOC:")] <span class='name' data-ctx='\ref[src.mind]'>[display_name]:</span> [SPAN_MESSAGE("[msg]")]</span>"
+		var/rendered = "<span class='[looc_class]'>[SPAN_PREFIX("LOOC:")] <span class='name' data-ctx='\ref[src.mind]'>[display_name]:</span> [SPAN_MESSAGE("[msg]")]</span>"
+
 		if (looc_icon)
 			rendered = {"
 			<div class='tooltip'>
@@ -804,7 +805,7 @@
 			</div>
 			"} + rendered
 		if (C.holder)
-			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
+			rendered = "<span class='adminHearing' data-ctx='[C.set_context_flags()]'>[rendered]</span>"
 
 		boutput(C, rendered)
 		var/mob/M = C.mob
@@ -988,7 +989,7 @@
 					if(!just_maptext)
 						if (M.client?.holder && !M.client.player_mode)
 							if (M.mind)
-								msg = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[msg]</span>"
+								msg = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[msg]</span>"
 							boutput(M, msg, group)
 						else
 							boutput(M, msg, group)
@@ -1143,11 +1144,12 @@
 		if (flock && !flock.flockmind?.tutorial && flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST / 4 && prob(90))
 			siliconrendered = "<span class='[class]'>[SPAN_BOLD("\[?????\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[radioGarbleText(name, FLOCK_RADIO_GARBLE_CHANCE)]</span> [SPAN_MESSAGE("[radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)]")]</span>"
 
-	for (var/client/CC)
-		if (!CC.mob) continue
-		if(istype(CC.mob, /mob/new_player))
+	for (var/client/C as anything in global.clients)
+		if (!C.mob)
 			continue
-		var/mob/M = CC.mob
+		if(istype(C.mob, /mob/new_player))
+			continue
+		var/mob/M = C.mob
 
 		var/thisR = ""
 
@@ -1157,15 +1159,15 @@
 			if(!tobserver.is_respawnable)
 				continue
 
-		if((isflockmob(M)) || (M.client.holder && !M.client.player_mode) || is_dead_observer)
+		if((isflockmob(M)) || (C.holder && !C.player_mode) || is_dead_observer)
 			thisR = rendered
 		if((M.robot_talk_understand || istype(M, /mob/living/intangible/aieye)) && (!involuntary && mob_speaking || prob(30)))
 			thisR = siliconrendered
 		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(mob_speaking, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
 			thisR = flockmindRendered
-		if ((istype(M, /mob/dead/observer)||M.client.holder) && mob_speaking?.mind)
+		if ((istype(M, /mob/dead/observer) || C.holder) && mob_speaking?.mind)
 			thisR = rendered
-			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
+			thisR = "<span class='adminHearing' data-ctx='[C.set_context_flags()]'>[thisR]</span>"
 
-		if(thisR != "")
-			boutput(M, thisR)
+		if (thisR)
+			boutput(C, thisR)

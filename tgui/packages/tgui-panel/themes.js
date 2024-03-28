@@ -5,10 +5,17 @@
  */
 
 export const THEMES = ['light', 'dark'];
+import { sendMessage } from 'tgui/backend';
 
-const COLOR_DARK_BG = '#202020';
+const COLOR_DARK_BG = '#28292c';
 const COLOR_DARK_BG_DARKER = '#171717';
-const COLOR_DARK_TEXT = '#a4bad6';
+const COLOR_DARK_TEXT = '#d3d4d5';
+const COLOR_DARK_COMMAND = '#28294c';
+
+const COLOR_LIGHT_BG = '#FFFFFF';
+const COLOR_LIGHT_BG_DARKER = '#f0f0f0';
+const COLOR_LIGHT_TEXT = '#000000';
+const COLOR_LIGHT_COMMAND = '#d3b5b5';
 
 /**
  * Darkmode preference, originally by Kmc2000.
@@ -21,104 +28,99 @@ const COLOR_DARK_TEXT = '#a4bad6';
  * It's painful but it works, and is the way Lummox suggested.
  */
 export const setClientTheme = name => {
-  if (name === 'light') {
+  const theme = name;
+  sendMessage({
+    type: 'setTheme',
+    payload: { theme },
+  });
+  if (theme === 'light') {
     return Byond.winset({
       // Main windows
-      'infowindow.background-color': 'none',
-      'infowindow.text-color': '#000000',
-      'info.background-color': 'none',
-      'info.text-color': '#000000',
-      'browseroutput.background-color': 'none',
-      'browseroutput.text-color': '#000000',
-      'outputwindow.background-color': 'none',
-      'outputwindow.text-color': '#000000',
-      'mainwindow.background-color': 'none',
-      'split.background-color': 'none',
+      'rpane.background-color': COLOR_LIGHT_BG,
+      'rpane.text-color': COLOR_LIGHT_BG,
+      'rpanewindow.background-color': COLOR_LIGHT_BG,
+      'rpanewindow.text-color': COLOR_LIGHT_TEXT,
+      'info.background-color': COLOR_LIGHT_BG,
+      'info.text-color': COLOR_LIGHT_TEXT,
+      'infowindow.background-color': COLOR_LIGHT_BG,
+      'infowindow.text-color': COLOR_LIGHT_TEXT,
+      'info.tab-background-color': COLOR_LIGHT_BG_DARKER,
+      'info.tab-text-color': COLOR_LIGHT_TEXT,
+      'mainwindow.background-color': COLOR_LIGHT_BG,
+      'mainwindow.text-color': COLOR_LIGHT_TEXT,
+      'mainwindow.hovertooltip.background-color': COLOR_LIGHT_BG,
+      'mainwindow.hovertooltip.text-color': COLOR_LIGHT_TEXT,
+      'mainvsplit.background-color': COLOR_LIGHT_BG,
+      'falsepadding.background-color': COLOR_LIGHT_COMMAND,
       // Buttons
-      'changelog.background-color': 'none',
-      'changelog.text-color': '#000000',
-      'rules.background-color': 'none',
-      'rules.text-color': '#000000',
-      'wiki.background-color': 'none',
-      'wiki.text-color': '#000000',
-      'forum.background-color': 'none',
-      'forum.text-color': '#000000',
-      'github.background-color': 'none',
-      'github.text-color': '#000000',
-      'report-issue.background-color': 'none',
-      'report-issue.text-color': '#000000',
-      // Status and verb tabs
-      'output.background-color': 'none',
-      'output.text-color': '#000000',
-      'statwindow.background-color': 'none',
-      'statwindow.text-color': '#000000',
-      'stat.background-color': '#FFFFFF',
-      'stat.tab-background-color': 'none',
-      'stat.text-color': '#000000',
-      'stat.tab-text-color': '#000000',
-      'stat.prefix-color': '#000000',
-      'stat.suffix-color': '#000000',
+      'infob.background-color': COLOR_LIGHT_BG,
+      'infob.text-color': COLOR_LIGHT_TEXT,
+      'browseb.background-color': COLOR_LIGHT_BG,
+      'browseb.text-color': COLOR_LIGHT_TEXT,
+      'wikib.background-color': COLOR_LIGHT_BG,
+      'wikib.text-color': COLOR_LIGHT_TEXT,
+      'forumb.background-color': COLOR_LIGHT_BG,
+      'forumb.text-color': COLOR_LIGHT_TEXT,
+      'githubb.background-color': COLOR_LIGHT_BG,
+      'githubb.text-color': COLOR_LIGHT_TEXT,
+      'bugreportb.background-color': COLOR_LIGHT_BG,
+      'bugreportb.text-color': COLOR_LIGHT_TEXT,
+      'mapb.background-color': COLOR_LIGHT_BG,
+      'mapb.text-color': COLOR_LIGHT_TEXT,
+      'textb.background-color': COLOR_LIGHT_BG,
+      'textb.text-color': COLOR_LIGHT_TEXT,
+      'menub.background-color': COLOR_LIGHT_BG,
+      'menub.text-color': COLOR_LIGHT_TEXT,
       // Say, OOC, me Buttons etc.
-      'saybutton.background-color': 'none',
-      'saybutton.text-color': '#000000',
-      'oocbutton.background-color': 'none',
-      'oocbutton.text-color': '#000000',
-      'mebutton.background-color': 'none',
-      'mebutton.text-color': '#000000',
-      'asset_cache_browser.background-color': 'none',
-      'asset_cache_browser.text-color': '#000000',
-      'tooltip.background-color': 'none',
-      'tooltip.text-color': '#000000',
+      'saybutton.background-color': COLOR_LIGHT_COMMAND,
+      'saybutton.text-color': COLOR_LIGHT_TEXT,
+      'input.background-color': COLOR_LIGHT_COMMAND,
+      'input.text-color': COLOR_LIGHT_TEXT,
     });
   }
-  if (name === 'dark') {
+  if (theme === 'dark') {
     Byond.winset({
       // Main windows
-      'infowindow.background-color': COLOR_DARK_BG,
-      'infowindow.text-color': COLOR_DARK_TEXT,
+      'rpane.background-color': COLOR_DARK_BG,
+      'rpane.text-color': COLOR_DARK_TEXT,
+      'rpanewindow.background-color': COLOR_DARK_BG,
+      'rpanewindow.text-color': COLOR_DARK_TEXT,
       'info.background-color': COLOR_DARK_BG,
       'info.text-color': COLOR_DARK_TEXT,
-      'browseroutput.background-color': COLOR_DARK_BG,
-      'browseroutput.text-color': COLOR_DARK_TEXT,
-      'outputwindow.background-color': COLOR_DARK_BG,
-      'outputwindow.text-color': COLOR_DARK_TEXT,
+      'infowindow.background-color': COLOR_DARK_BG,
+      'infowindow.text-color': COLOR_DARK_TEXT,
+      'info.tab-background-color': COLOR_DARK_BG_DARKER,
+      'info.tab-text-color': COLOR_DARK_TEXT,
       'mainwindow.background-color': COLOR_DARK_BG,
-      'split.background-color': COLOR_DARK_BG,
+      'mainwindow.text-color': COLOR_DARK_TEXT,
+      'mainwindow.hovertooltip.background-color': COLOR_DARK_BG,
+      'mainwindow.hovertooltip.text-color': COLOR_DARK_TEXT,
+      'mainvsplit.background-color': COLOR_DARK_BG,
+      'falsepadding.background-color': COLOR_DARK_COMMAND,
       // Buttons
-      'changelog.background-color': '#494949',
-      'changelog.text-color': COLOR_DARK_TEXT,
-      'rules.background-color': '#494949',
-      'rules.text-color': COLOR_DARK_TEXT,
-      'wiki.background-color': '#494949',
-      'wiki.text-color': COLOR_DARK_TEXT,
-      'forum.background-color': '#494949',
-      'forum.text-color': COLOR_DARK_TEXT,
-      'github.background-color': '#3a3a3a',
-      'github.text-color': COLOR_DARK_TEXT,
-      'report-issue.background-color': '#492020',
-      'report-issue.text-color': COLOR_DARK_TEXT,
-      // Status and verb tabs
-      'output.background-color': COLOR_DARK_BG_DARKER,
-      'output.text-color': COLOR_DARK_TEXT,
-      'statwindow.background-color': COLOR_DARK_BG_DARKER,
-      'statwindow.text-color': COLOR_DARK_TEXT,
-      'stat.background-color': COLOR_DARK_BG_DARKER,
-      'stat.tab-background-color': COLOR_DARK_BG,
-      'stat.text-color': COLOR_DARK_TEXT,
-      'stat.tab-text-color': COLOR_DARK_TEXT,
-      'stat.prefix-color': COLOR_DARK_TEXT,
-      'stat.suffix-color': COLOR_DARK_TEXT,
+      'infob.background-color': COLOR_DARK_BG,
+      'infob.text-color': COLOR_DARK_TEXT,
+      'browseb.background-color': COLOR_DARK_BG,
+      'browseb.text-color': COLOR_DARK_TEXT,
+      'wikib.background-color': COLOR_DARK_BG,
+      'wikib.text-color': COLOR_DARK_TEXT,
+      'forumb.background-color': COLOR_DARK_BG,
+      'forumb.text-color': COLOR_DARK_TEXT,
+      'githubb.background-color': COLOR_DARK_BG,
+      'githubb.text-color': COLOR_DARK_TEXT,
+      'bugreportb.background-color': COLOR_DARK_BG,
+      'bugreportb.text-color': COLOR_DARK_TEXT,
+      'mapb.background-color': COLOR_DARK_BG,
+      'mapb.text-color': COLOR_DARK_TEXT,
+      'textb.background-color': COLOR_DARK_BG,
+      'textb.text-color': COLOR_DARK_TEXT,
+      'menub.background-color': COLOR_DARK_BG,
+      'menub.text-color': COLOR_DARK_TEXT,
       // Say, OOC, me Buttons etc.
-      'saybutton.background-color': COLOR_DARK_BG,
+      'saybutton.background-color': COLOR_DARK_COMMAND,
       'saybutton.text-color': COLOR_DARK_TEXT,
-      'oocbutton.background-color': COLOR_DARK_BG,
-      'oocbutton.text-color': COLOR_DARK_TEXT,
-      'mebutton.background-color': COLOR_DARK_BG,
-      'mebutton.text-color': COLOR_DARK_TEXT,
-      'asset_cache_browser.background-color': COLOR_DARK_BG,
-      'asset_cache_browser.text-color': COLOR_DARK_TEXT,
-      'tooltip.background-color': COLOR_DARK_BG,
-      'tooltip.text-color': COLOR_DARK_TEXT,
+      'input.background-color': COLOR_DARK_COMMAND,
+      'input.text-color': COLOR_DARK_TEXT,
     });
   }
 };

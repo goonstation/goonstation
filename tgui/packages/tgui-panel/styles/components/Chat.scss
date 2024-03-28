@@ -8,25 +8,334 @@
 @use '~tgui/styles/base.scss';
 @use '~tgui/styles/colors.scss';
 
-$text-color: #abc6ec !default;
+$color-text: #dfdfcf !default;
 $color-bg-section: base.$color-bg-section !default;
+$color-bg: base.$color-bg !default;
+
+$color-bg-chat: #23272a !default;
+$color-bg-odd: color.adjust($color-bg-chat, $lightness: 5%);
+
+
+/*****************************************
+*
+*
+* CHAT MESSAGE STYLES
+*
+*
+******************************************/
+
+// THIS SECTION IS ONLY FOR STYLING NOT INCLUDING COLOUR FOR THE DARK AND LIGHT THEMES
+// ANYTHING FOR COLOUR SHOULD GO IN THOSE SCSS FILES
+
+/*****************************************
+*
+* GLOBAL STYLES
+*
+******************************************/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #6464ff;;
+  font-family: Georgia, Verdana, sans-serif;
+  margin: 0.2em;
+}
+
+img {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  line-height: 1;
+}
+
+img.icon {
+  width: 16px;
+  height: 16px;
+}
+
+img.emoji {
+  height: 1em;
+  width: 1em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.1em;
+}
+
+a.popt {
+  text-decoration: none;
+}
+
+wbr:after {
+  content:"";
+  display: block;
+}
+
+/*****************************************
+*
+* OUTPUT NOT RELATED TO ACTUAL MESSAGES
+*
+******************************************/
+
+/* TOOLTIPS */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  text-align: center;
+  padding: 5px 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  white-space: nowrap;
+
+  &::after {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+  }
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+/* POPUPS */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}
+
+.popup .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-decoration: none;
+  z-index: 2;
+  padding: 0 10px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.popup .head {
+  padding: 0 10px;
+  height: 30px;
+  line-height: 30px;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.popup input {
+  background: #3d3d3d;
+  margin: 0;
+  padding: 5px;
+  outline: none;
+}
+
+.popup input[type=submit] {
+  padding: 5px 10px;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.popup input[type=submit]:hover,
+.popup input[type=submit]:focus,
+.popup input[type=submit]:active {
+  cursor: pointer;
+}
+
+.icon-stack {
+  height: 1em;
+  line-height: 1em;
+  width: 1em;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+/*****************************************
+*
+* OUTPUT ACTUALLY RELATED TO MESSAGES
+*
+******************************************/
+
+/* MOTD */
+
+.motd {
+  font-family: Verdana, sans-serif;
+  white-space: normal;
+}
+
+.motd h1,
+.motd h2,
+.motd h3,
+.motd h4,
+.motd h5,
+.motd h6 {
+  padding: 0 0.5em;
+}
+
+.motd div {
+  margin: 0 0.5em;
+}
+
+/* ADD HERE FOR BOLD */
+
+.bold,
+.harm,
+.grab,
+.disarm,
+.help,
+.name,
+.prefix,
+.ooc,
+.looc,
+.adminooc,
+.adminlooc,
+.gfartlooc,
+.mentorooc,
+.mentorlooc,
+.admin,
+.adminLog,
+.coderLog,
+.attackLog,
+.gfartadmin,
+.medal,
+.roboticsay,
+.internal.boldnshit {
+  font-weight: bold;
+}
+
+/* ADD HERE FOR ITALIC */
+
+.italic,
+.ghostdronesay.broadcast,
+.flocksay.ping {
+  font-style: italic;
+}
+
+/* === OUTPUT STYLES === */
+
+.bigPM {
+  font-size: 1.2em;
+}
+
+.monospace {
+  font-family: monospace;
+}
+
+.blobalert {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.helpmsg {
+  padding: 0.2em 0.5em;
+  margin: 0.1em 0;
+  display: block;
+  white-space: normal;
+}
+
+/* ADMIN */
+
+.admin,
+.adminLog,
+.coderLog,
+.attackLog {
+
+  & .prefix {
+    float: left;
+    font-size: 0.49em;
+    text-align: center;
+  }
+}
+
+/* SPEECH */
+
+.martianimperial {
+  font-size: 110%;
+}
+
+.flocksay.sentient.flockmind {
+  font-size: 120%;
+}
+
+.flocknpc {
+  font-size: 80%;
+}
+
+.roboticsay {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.roboticsay .name {
+  text-decoration: underline;
+}
+
+/* HELPER CLASSES */
+
+.text-normal {
+  font-weight: normal;
+  font-style: normal;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.who-list {
+  padding: 5px 0;
+}
+
+.who-list b {
+  display: block;
+}
+
+.who-list span,
+.who-list a {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+/*****************************************
+*
+*
+* CHAT TGUI STYLES
+*
+*
+******************************************/
 
 .Chat {
-  color: $text-color;
+  color: $color-text;
+}
+
+.Chat__background {
+  background: $color-bg-chat;
 }
 
 .Chat__badge {
   display: inline-block;
   min-width: 0.5em;
-  font-size: 0.7em;
+  font-size: 0.8em;
   padding: 0.2em 0.3em;
+  margin-left: 0.2em;
   line-height: 1;
-  color: white;
+  color: $color-text;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
-  background-color: crimson;
-  border-radius: 10px;
   transition: font-size 200ms ease-out;
 
   &:before {
@@ -45,6 +354,45 @@ $color-bg-section: base.$color-bg-section !default;
   bottom: 1em;
 }
 
+.Chat__contextMenu {
+  position: fixed;
+  background-color: base.$color-bg;
+  padding: 0.1em 0.2em;
+  width: 30%;
+  border-radius: 2px;
+  left: 2em;
+  bottom: 1em;
+  text-align: center;
+}
+
+.Chat__contextMenu--title {
+  display: block;
+  font-weight: bold;
+  text-decoration: underline;
+  background-color: $color-bg-section;
+  border-radius: 3px;
+  padding: 0.5em 0.1em;
+  margin-bottom: 0.3em;
+}
+
+.Chat__contextMenu--item {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 0.1em 0;
+  border-radius: 3px;
+}
+
+.Chat__contextMenu--exit {
+  background-color: crimson;
+  color: white;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #E43457;
+  }
+}
+
 .Chat__reconnected {
   font-size: 0.85em;
   text-align: center;
@@ -56,7 +404,7 @@ $color-bg-section: base.$color-bg-section !default;
     border-radius: 1em;
     padding: 0 0.7em;
     color: colors.$red;
-    background-color: $color-bg-section;
+    background-color: $color-bg-chat;
   }
 
   &:after {
@@ -65,10 +413,6 @@ $color-bg-section: base.$color-bg-section !default;
     margin-top: -0.75em;
     border-bottom: (math.div(1em, 6)) solid colors.$red;
   }
-}
-
-.Chat__highlight {
-  color: #000;
 }
 
 .Chat__highlight--restricted {

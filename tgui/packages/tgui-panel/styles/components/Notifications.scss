@@ -5,7 +5,7 @@
 
 .Notifications {
   position: absolute;
-  bottom: 1em;
+  top: 1em;
   left: 1em;
   right: 2em;
 }
@@ -14,7 +14,7 @@
   color: #fff;
   background-color: crimson;
   padding: 0.5em;
-  margin: 1em 0;
+  margin: 0.8em 0;
 
   &:first-child {
     margin-top: 0;
