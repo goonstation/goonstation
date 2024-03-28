@@ -2046,6 +2046,7 @@ var/global/list/soundCache = list(
  	"sound/weapons/flash.ogg" = 'sound/weapons/flash.ogg',\
  	"sound/weapons/flashbang.ogg" = 'sound/weapons/flashbang.ogg',\
  	"sound/weapons/flintlock.ogg" = 'sound/weapons/flintlock.ogg',\
+ 	"sound/weapons/fourboreshot.ogg" = 'sound/weapons/fourboreshot.ogg',\
  	"sound/weapons/gauss40mm.ogg" = 'sound/weapons/gauss40mm.ogg',\
  	"sound/weapons/grenade.ogg" = 'sound/weapons/grenade.ogg',\
  	"sound/weapons/gun_cocked_colt45.ogg" = 'sound/weapons/gun_cocked_colt45.ogg',\
