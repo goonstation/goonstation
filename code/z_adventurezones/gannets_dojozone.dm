@@ -361,14 +361,14 @@ Contents:
 */
 
 /obj/decal/fakeobjects/kanji_1
-	plane = PLANE_FLOOR
+	plane = PLANE_JUSTABOVEFLOOR
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_1"
 	anchored = ANCHORED_ALWAYS
 
 /obj/decal/fakeobjects/kanji_2
-	plane = PLANE_FLOOR
+	plane = PLANE_JUSTABOVEFLOOR
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_2"

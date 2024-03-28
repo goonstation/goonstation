@@ -40,8 +40,8 @@
 		return
 
 	// Calculate the number of tiles the client's eye has moved, in pixels.
-	var/x_pixel_change = round((previous_turf.x - current_turf.x) * world.icon_size, 1)
-	var/y_pixel_change = round((previous_turf.y - current_turf.y) * world.icon_size, 1)
+	var/x_pixel_change = round(((previous_turf.x - current_turf.x) * 16) + ((previous_turf.y - current_turf.y) * 16), 1) //gah! isometric!
+	var/y_pixel_change = round(((current_turf.x - previous_turf.x) * 8) + ((previous_turf.y - current_turf.y) * 8), 1)
 
 	src.previous_turf = current_turf
 

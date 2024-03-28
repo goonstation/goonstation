@@ -98,8 +98,7 @@
 	mouse_opacity = 0
 	anchored = ANCHORED_ALWAYS
 	flags = UNCRUSHABLE
-	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	plane = PLANE_ABOVE_LIGHTING
+	layer = FLY_LAYER
 
 	icon = 'icons/effects/fire.dmi' //Icon for fire on turfs, also helps for nurturing small fires until they are full tile
 	icon_state = "1"

@@ -171,6 +171,22 @@
 
 	var/default_mutantrace = /datum/mutantrace/human
 
+
+	//really dont like this but kinda prefer being able to click stuff under turfs
+	var/hideturfs = TRUE
+
+	var/turf/SWTurf = null
+	var/turf/STurf = null
+	var/turf/SETurf = null
+	var/turf/ETurf = null
+	var/turf/NETurf = null
+
+	var/SWAlpha = 255
+	var/SAlpha = 255
+	var/SEAlpha = 255
+	var/EAlpha = 255
+	var/NEAlpha = 255
+
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	. = ..()
 
@@ -558,6 +574,10 @@
 
 	src.juggle_dummy = null
 
+
+	src.hideturfs = FALSE
+	src.calc_hidden_turfs()
+
 	..()
 
 	//blah, this might not be effective for ref clearing but ghost observers inside me NEED this list to be populated in base mob/disposing
@@ -751,6 +771,22 @@
 	drop_item()
 	src.set_clothing_icon_dirty()
 	src.hand = h
+
+	src.SWTurf?.alpha = src.SWAlpha
+	src.STurf?.alpha = src.SAlpha
+	src.SETurf?.alpha = src.SEAlpha
+	src.ETurf?.alpha = src.EAlpha
+	src.NETurf?.alpha = src.NEAlpha
+	src.SWTurf?.mouse_opacity = 1
+	src.STurf?.mouse_opacity = 1
+	src.SETurf?.mouse_opacity = 1
+	src.ETurf?.mouse_opacity = 1
+	src.NETurf?.mouse_opacity = 1
+	src.SWTurf = null
+	src.STurf = null
+	src.SETurf = null
+	src.ETurf = null
+	src.NETurf = null
 
 	if (istype(src.wear_suit, /obj/item/clothing/suit/armor/suicide_bomb))
 		var/obj/item/clothing/suit/armor/suicide_bomb/A = src.wear_suit
@@ -1381,6 +1417,9 @@
 	..()
 	if (!ai_active && is_npc)
 		ai_set_active(1)
+
+	src.hideturfs = FALSE //dont want stuck walls
+	src.calc_hidden_turfs()
 
 /mob/living/carbon/human/get_heard_name(just_name_itself=FALSE)
 	var/alt_name = ""
@@ -3351,9 +3390,58 @@
 				S.layer = initial(S.layer)
 				if (prob(20)) boutput(src, "You run right the fuck out of your shoes. [SPAN_ALERT("Shit!")]")
 
+	src.calc_hidden_turfs()
+
 	..()
 #undef can_step_sfx
 
+
+/mob/living/carbon/human/proc/calc_hidden_turfs() //turf hider ew ew ew
+	//gotta clean up our previous shit regardless
+	src.SWTurf?.alpha = src.SWAlpha
+	src.STurf?.alpha = src.SAlpha
+	src.SETurf?.alpha = src.SEAlpha
+	src.ETurf?.alpha = src.EAlpha
+	src.NETurf?.alpha = src.NEAlpha
+	src.SWTurf?.mouse_opacity = 1
+	src.STurf?.mouse_opacity = 1
+	src.SETurf?.mouse_opacity = 1
+	src.ETurf?.mouse_opacity = 1
+	src.NETurf?.mouse_opacity = 1
+	src.SWTurf = null
+	src.STurf = null
+	src.SETurf = null
+	src.ETurf = null
+	src.NETurf = null
+
+	if(src.client && src.hideturfs) //so like, we dont hide anything if we cant or dont wanna do it
+		var/turf/temp1 = get_step(src, SOUTHWEST)
+		var/turf/temp2 = get_step(src, SOUTH)
+		var/turf/temp3 = get_step(src, SOUTHEAST)
+		var/turf/temp4 = get_step(src, EAST)
+		var/turf/temp5 = get_step(src, NORTHEAST)
+
+		src.SWTurf = (istype(temp1, /turf/simulated/wall) || istype(temp1, /turf/unsimulated/wall)) ? temp1 : null
+		src.STurf = (istype(temp2, /turf/simulated/wall) || istype(temp1, /turf/unsimulated/wall)) ? temp2 : null
+		src.SETurf = (istype(temp3, /turf/simulated/wall) || istype(temp2, /turf/unsimulated/wall)) ? temp3 : null
+		src.ETurf = (istype(temp4, /turf/simulated/wall) || istype(temp3, /turf/unsimulated/wall)) ? temp4 : null
+		src.NETurf = (istype(temp5, /turf/simulated/wall) || istype(temp1, /turf/unsimulated/wall)) ? temp5 : null
+
+		src.SWAlpha = src.SWTurf?.alpha
+		src.SAlpha = src.STurf?.alpha
+		src.SEAlpha = src.SETurf?.alpha
+		src.EAlpha = src.ETurf?.alpha
+		src.NEAlpha = src.NETurf?.alpha
+		src.SWTurf?.alpha = 96 // arbritrary value that looks good enough
+		src.STurf?.alpha = 96
+		src.SETurf?.alpha = 96
+		src.ETurf?.alpha = 96
+		src.NETurf?.alpha = 96
+		src.SWTurf?.mouse_opacity = 0
+		src.STurf?.mouse_opacity = 0
+		src.SETurf?.mouse_opacity = 0
+		src.ETurf?.mouse_opacity = 0
+		src.NETurf?.mouse_opacity = 0
 
 /mob/living/carbon/human/set_loc(var/newloc as turf|mob|obj in world)
 	if (abilityHolder)

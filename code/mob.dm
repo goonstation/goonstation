@@ -1481,6 +1481,15 @@
 
 	global.ticker.get_credits().ui_interact(src)
 
+/mob/living/carbon/human/verb/toggle_turf_vision()
+	set name = "Toggle Wall Hiding"
+	set desc = "Toggle making walls translucent"
+	set category = "Commands"
+	set src = usr
+
+	src.hideturfs = !src.hideturfs
+	src.calc_hidden_turfs()
+
 /mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
 		return !projCanHit(mover:proj_data)

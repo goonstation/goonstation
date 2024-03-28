@@ -154,8 +154,8 @@
 		src.wear_id.wear_image.icon_state = wear_state
 
 		if (!no_offset)
-			src.wear_id.wear_image.pixel_x = 0
-			src.wear_id.wear_image.pixel_y = head_offset
+			src.wear_id.wear_image.pixel_w = 0
+			src.wear_id.wear_image.pixel_z = head_offset
 
 		src.wear_id.wear_image.layer = src.wear_id.wear_layer
 		src.wear_id.wear_image.color = src.wear_id.color
@@ -179,8 +179,8 @@
 			if ("left_[icon_local]" in src.mutantrace?.clothing_icon_states?["hands"]) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
 				src.gloves.wear_image.icon = src.mutantrace.clothing_icons["hands"]
 				no_offset = TRUE
-				src.gloves.wear_image.pixel_x = initial(src.gloves.wear_image.pixel_x)
-				src.gloves.wear_image.pixel_y = initial(src.gloves.wear_image.pixel_y)
+				src.gloves.wear_image.pixel_w = initial(src.gloves.wear_image.pixel_w)
+				src.gloves.wear_image.pixel_z = initial(src.gloves.wear_image.pixel_z)
 			else
 				src.gloves.wear_image.icon = src.gloves.wear_image_icon
 			src.gloves.wear_image.icon_state = "left_[icon_local]"
@@ -196,8 +196,8 @@
 			if ("right_[icon_local]" in src.mutantrace?.clothing_icon_states?["hands"]) //above but right glove
 				src.gloves.wear_image.icon = src.mutantrace.clothing_icons["hands"]
 				no_offset = TRUE
-				src.gloves.wear_image.pixel_x = initial(src.gloves.wear_image.pixel_x)
-				src.gloves.wear_image.pixel_y = initial(src.gloves.wear_image.pixel_y)
+				src.gloves.wear_image.pixel_w = initial(src.gloves.wear_image.pixel_w)
+				src.gloves.wear_image.pixel_z = initial(src.gloves.wear_image.pixel_z)
 			else
 				src.gloves.wear_image.icon = src.gloves.wear_image_icon
 			src.gloves.wear_image.icon_state = "right_[icon_local]"
@@ -208,8 +208,8 @@
 			src.UpdateOverlays(null, "wear_gloves_r")
 
 		if (!no_offset)
-			src.gloves.wear_image.pixel_x = 0
-			src.gloves.wear_image.pixel_y = hand_offset
+			src.gloves.wear_image.pixel_w = 0
+			src.gloves.wear_image.pixel_z = hand_offset
 
 	else
 		src.UpdateOverlays(null, "wear_gloves_l")
@@ -316,14 +316,14 @@
 		if (wear_state in src.mutantrace?.clothing_icon_states?["back"]) //checks if they are a mutantrace with special back sprites and then replaces them if they do
 			src.back.wear_image.icon = src.mutantrace.clothing_icons["back"]
 			no_offset = TRUE
-			src.back.wear_image.pixel_x = initial(src.back.wear_image.pixel_x)
-			src.back.wear_image.pixel_y = initial(src.back.wear_image.pixel_y)
+			src.back.wear_image.pixel_w = initial(src.back.wear_image.pixel_w)
+			src.back.wear_image.pixel_z = initial(src.back.wear_image.pixel_z)
 		else
 			src.back.wear_image.icon = src.back.wear_image_icon
 		src.back.wear_image.icon_state = wear_state
 		if (!no_offset)
-			src.back.wear_image.pixel_x = 0
-			src.back.wear_image.pixel_y = body_offset
+			src.back.wear_image.pixel_w = 0
+			src.back.wear_image.pixel_z = body_offset
 		src.back.wear_image.layer = src.back.wear_layer
 		if(src.back.wear_image.layer == MOB_CLOTHING_LAYER) // if default let's assume you actually want this on back
 			src.back.wear_image.layer = MOB_BACK_LAYER
@@ -351,15 +351,15 @@
 		if (wear_state in src.mutantrace?.clothing_icon_states?["eyes"]) //checks for special glasses sprites for mutantraces and replaces the sprite with it if there is one.
 			src.glasses.wear_image.icon = src.mutantrace.clothing_icons["eyes"]
 			no_offset = TRUE
-			src.glasses.wear_image.pixel_x = initial(src.glasses.wear_image.pixel_x)
-			src.glasses.wear_image.pixel_y = initial(src.glasses.wear_image.pixel_y)
+			src.glasses.wear_image.pixel_w = initial(src.glasses.wear_image.pixel_w)
+			src.glasses.wear_image.pixel_z = initial(src.glasses.wear_image.pixel_z)
 		else
 			src.glasses.wear_image.icon = src.glasses.wear_image_icon
 		src.glasses.wear_image.icon_state = wear_state
 		src.glasses.wear_image.layer = src.glasses.wear_layer
 		if (!no_offset)
-			src.glasses.wear_image.pixel_x = 0
-			src.glasses.wear_image.pixel_y = head_offset
+			src.glasses.wear_image.pixel_w = 0
+			src.glasses.wear_image.pixel_z = head_offset
 		src.glasses.wear_image.color = src.glasses.color
 		src.glasses.wear_image.alpha = src.glasses.alpha
 		src.glasses.update_wear_image(src, src.glasses.wear_image.icon != src.glasses.wear_image_icon)
@@ -382,15 +382,15 @@
 		if (wear_state in src.mutantrace?.clothing_icon_states?["ears"]) //checks if they are a mutantrace with special earwear sprites and then replaces them if they do
 			src.ears.wear_image.icon = src.mutantrace.clothing_icons["ears"]
 			no_offset = TRUE
-			src.ears.wear_image.pixel_x = initial(src.ears.wear_image.pixel_x)
-			src.ears.wear_image.pixel_y = initial(src.ears.wear_image.pixel_y)
+			src.ears.wear_image.pixel_w = initial(src.ears.wear_image.pixel_w)
+			src.ears.wear_image.pixel_z = initial(src.ears.wear_image.pixel_z)
 		else
 			src.ears.wear_image.icon = src.ears.wear_image_icon
 		src.ears.wear_image.icon_state = wear_state
 		src.ears.wear_image.layer = src.ears.wear_layer
 		if (!no_offset)
-			src.ears.wear_image.pixel_x = 0
-			src.ears.wear_image.pixel_y = head_offset
+			src.ears.wear_image.pixel_w = 0
+			src.ears.wear_image.pixel_z = head_offset
 		src.ears.wear_image.color = src.ears.color
 		src.ears.wear_image.alpha = src.ears.alpha
 		src.ears.wear_image.filters = src.ears.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.ears)
@@ -414,15 +414,15 @@
 		if (wear_state in src.mutantrace?.clothing_icon_states?["mask"])
 			src.wear_mask.wear_image.icon = src.mutantrace.clothing_icons["mask"]
 			no_offset = TRUE
-			src.wear_mask.wear_image.pixel_x = initial(src.wear_mask.wear_image.pixel_x)
-			src.wear_mask.wear_image.pixel_y = initial(src.wear_mask.wear_image.pixel_y)
+			src.wear_mask.wear_image.pixel_w = initial(src.wear_mask.wear_image.pixel_w)
+			src.wear_mask.wear_image.pixel_z = initial(src.wear_mask.wear_image.pixel_z)
 		else
 			src.wear_mask.wear_image.icon = src.wear_mask.wear_image_icon
 		src.wear_mask.wear_image.icon_state = wear_state
 
 		if (!no_offset)
-			src.wear_mask.wear_image.pixel_x = 0
-			src.wear_mask.wear_image.pixel_y = head_offset
+			src.wear_mask.wear_image.pixel_w = 0
+			src.wear_mask.wear_image.pixel_z = head_offset
 		src.wear_mask.wear_image.layer = src.wear_mask.wear_layer
 		src.wear_mask.wear_image.color = src.wear_mask.color
 		src.wear_mask.wear_image.alpha = src.wear_mask.alpha
@@ -448,16 +448,16 @@
 		if (wear_state in src.mutantrace?.clothing_icon_states?["head"])
 			src.head.wear_image.icon = src.mutantrace.clothing_icons["head"]
 			no_offset = TRUE
-			src.head.wear_image.pixel_x = initial(src.head.wear_image.pixel_x)
-			src.head.wear_image.pixel_y = initial(src.head.wear_image.pixel_y)
+			src.head.wear_image.pixel_w = initial(src.head.wear_image.pixel_w)
+			src.head.wear_image.pixel_z = initial(src.head.wear_image.pixel_z)
 		else
 			src.head.wear_image.icon = src.head.wear_image_icon
 		src.head.wear_image.icon_state = wear_state
 
 		src.head.wear_image.layer = src.head.wear_layer
 		if (!no_offset)
-			src.head.wear_image.pixel_x = 0
-			src.head.wear_image.pixel_y = head_offset
+			src.head.wear_image.pixel_w = 0
+			src.head.wear_image.pixel_z = head_offset
 		src.head.wear_image.color = src.head.color
 		src.head.wear_image.alpha = src.head.alpha
 		src.head.update_wear_image(src, src.head.wear_image.icon != src.head.wear_image_icon)
@@ -481,14 +481,14 @@
 		if (wear_state in src.mutantrace?.clothing_icon_states?["belt"]) //checks if they are a mutantrace with special belt sprites and then replaces them if they do
 			src.belt.wear_image.icon = src.mutantrace.clothing_icons["belt"]
 			no_offset = TRUE
-			src.belt.wear_image.pixel_x = initial(src.belt.wear_image.pixel_x)
-			src.belt.wear_image.pixel_y = initial(src.belt.wear_image.pixel_y)
+			src.belt.wear_image.pixel_w = initial(src.belt.wear_image.pixel_w)
+			src.belt.wear_image.pixel_z = initial(src.belt.wear_image.pixel_z)
 		else
 			src.belt.wear_image.icon = src.belt.wear_image_icon
 		src.belt.wear_image.icon_state = wear_state
 		if (!no_offset)
-			src.belt.wear_image.pixel_x = 0
-			src.belt.wear_image.pixel_y = body_offset
+			src.belt.wear_image.pixel_w = 0
+			src.belt.wear_image.pixel_z = body_offset
 		src.belt.wear_image.layer = src.belt.wear_layer
 		if(src.belt.wear_image.layer == MOB_CLOTHING_LAYER) // if default let's assume you actually want this on back
 			src.belt.wear_image.layer = MOB_BELT_LAYER
@@ -510,7 +510,7 @@
 	if (src.hasStatus("handcuffed"))
 		src.remove_pulling()
 		var/image/handcuff_img = SafeGetOverlayImage("handcuffs", 'icons/mob/mob.dmi', "handcuff1", MOB_HANDCUFF_LAYER)
-		handcuff_img.pixel_y = hand_offset
+		handcuff_img.pixel_z = hand_offset
 		src.UpdateOverlays(handcuff_img, "handcuffs")
 	else
 		src.UpdateOverlays(null, "handcuffs")
@@ -590,7 +590,7 @@
 
 		src.image_eyes_L = my_head.head_image_eyes_L
 		if (src.image_eyes_L && src.image_eyes_L.icon_state != "none"&& src.organHolder?.left_eye)
-			src.image_eyes_L.pixel_y = AHH.e_offset_y
+			src.image_eyes_L.pixel_z = AHH.e_offset_y
 			src.image_eyes_L.color = src.organHolder.left_eye.iris_color
 			UpdateOverlays(image_eyes_L, "eyes_L", 1, 1)
 		else
@@ -598,7 +598,7 @@
 
 		src.image_eyes_R = my_head.head_image_eyes_R
 		if (src.image_eyes_R && src.image_eyes_R.icon_state != "none" && src.organHolder?.right_eye)
-			src.image_eyes_R.pixel_y = AHH.e_offset_y
+			src.image_eyes_R.pixel_z = AHH.e_offset_y
 			src.image_eyes_R.color = src.organHolder.right_eye.iris_color
 			UpdateOverlays(image_eyes_R, "eyes_R", 1, 1)
 		else
@@ -607,18 +607,18 @@
 		//Previously we shoved all the hair images into the overlays of two images (one for normal hair and one for special) 'cause of identical vars
 		//But now we need hairstyle-specific layering so RIP to that approach and time to do things manually
 		src.image_cust_one = my_head.head_image_cust_one
-		src.image_cust_one?.pixel_y = y_to_offset
+		src.image_cust_one?.pixel_z = y_to_offset
 		src.image_cust_two = my_head.head_image_cust_two
-		src.image_cust_two?.pixel_y = y_to_offset
+		src.image_cust_two?.pixel_z = y_to_offset
 		src.image_cust_three = my_head.head_image_cust_three
-		src.image_cust_three?.pixel_y = y_to_offset
+		src.image_cust_three?.pixel_z = y_to_offset
 
 		src.image_special_one = my_head.head_image_special_one
-		src.image_special_one?.pixel_y = y_to_offset
+		src.image_special_one?.pixel_z = y_to_offset
 		src.image_special_two = my_head.head_image_special_two
-		src.image_special_two?.pixel_y = y_to_offset
+		src.image_special_two?.pixel_z = y_to_offset
 		src.image_special_three = my_head.head_image_special_three
-		src.image_special_three?.pixel_y = y_to_offset
+		src.image_special_three?.pixel_z = y_to_offset
 
 		if(!seal_hair)
 			if (AHH.mob_appearance_flags & HAS_HUMAN_HAIR || src.hair_override)
@@ -746,8 +746,8 @@
 						I.inhand_image.color = I.color
 					else if (I.inhand_color)
 						I.inhand_image.color = I.inhand_color
-					I.inhand_image.pixel_x = 0
-					I.inhand_image.pixel_y = hand_offset
+					I.inhand_image.pixel_w = 0
+					I.inhand_image.pixel_z = hand_offset
 					i_r_hand = null
 					i_l_hand = I.inhand_image
 
@@ -762,8 +762,8 @@
 						I.inhand_image.color = I.color
 					else if (I.inhand_color)
 						I.inhand_image.color = I.inhand_color
-					I.inhand_image.pixel_x = 0
-					I.inhand_image.pixel_y = hand_offset
+					I.inhand_image.pixel_w = 0
+					I.inhand_image.pixel_z = hand_offset
 					i_r_hand = I.inhand_image
 
 
@@ -777,8 +777,8 @@
 						I.inhand_image.color = I.color
 					else if (I.inhand_color)
 						I.inhand_image.color = I.inhand_color
-					I.inhand_image.pixel_x = 0
-					I.inhand_image.pixel_y = hand_offset
+					I.inhand_image.pixel_w = 0
+					I.inhand_image.pixel_z = hand_offset
 					i_l_hand = I.inhand_image
 
 
@@ -906,7 +906,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 				if (src.organHolder?.head && !(AHOLD.mob_appearance_flags & HAS_NO_HEAD))
 					var/obj/item/organ/head/our_head = src.organHolder.head
 					human_head_image = our_head.head_image // head data is stored in the head
-					human_head_image?.pixel_y = head_offset // head position is stored in the body
+					human_head_image?.pixel_z = head_offset // head position is stored in the body
 					src.body_standing.overlays += human_head_image
 
 				if (src.organHolder?.tail)
@@ -919,7 +919,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 				if (src.organHolder?.head && !(AHOLD.mob_appearance_flags & HAS_NO_HEAD))
 					// we dont care about the head image for rotting
 					human_head_image = image(file,src,"head_decomp[src.decomp_stage]", MOB_LIMB_LAYER)
-					human_head_image?.pixel_y = head_offset
+					human_head_image?.pixel_z = head_offset
 					src.body_standing.overlays += human_head_image
 
 				if (ismonkey(src))
@@ -952,7 +952,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 							limb_skin_tone = limb.skin_tone	// So the limb's hand/foot gets the color too, when/if we get there
 						if(limb_pic)
 							limb_pic.color = limb_skin_tone
-							limb_pic.pixel_y = armleg_offset
+							limb_pic.pixel_z = armleg_offset
 							src.body_standing.overlays += limb_pic
 
 						var/hand_icon_s = limb.getHandIconState(src.decomp_stage)
@@ -968,7 +968,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 										var/oldlayer = human_decomp_image.layer // ugh
 										human_decomp_image.layer = MOB_HAND_LAYER1
 										human_decomp_image.icon_state = hand_icon_s
-										human_decomp_image.pixel_y = armleg_offset
+										human_decomp_image.pixel_z = armleg_offset
 										src.hands_standing.layer = MOB_HAND_LAYER1
 										src.hands_standing.overlays += human_decomp_image
 										if(limb.handfoot_overlay_1)
@@ -976,14 +976,14 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 											human_decomp_image.icon_state = limb.handfoot_overlay_1?.icon_state
 											human_decomp_image.color = limb.handfoot_overlay_1?.color
 											human_decomp_image.layer = MOB_BODYDETAIL_LAYER2
-											human_decomp_image.pixel_y = armleg_offset
+											human_decomp_image.pixel_z = armleg_offset
 											src.body_standing.overlays += human_decomp_image
 										human_decomp_image.layer = oldlayer
 									else
 										var/oldlayer = human_untoned_decomp_image.layer // ugh
 										human_untoned_decomp_image.layer = MOB_HAND_LAYER1
 										human_untoned_decomp_image.icon_state = hand_icon_s
-										human_untoned_decomp_image.pixel_y = armleg_offset
+										human_untoned_decomp_image.pixel_z = armleg_offset
 										src.hands_standing.layer = MOB_HAND_LAYER1
 										src.hands_standing.overlays += human_untoned_decomp_image
 										if(limb.handfoot_overlay_1)
@@ -991,13 +991,13 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 											human_untoned_decomp_image.icon_state = limb.handfoot_overlay_1?.icon_state
 											human_untoned_decomp_image.color = limb.handfoot_overlay_1?.color
 											human_untoned_decomp_image.layer = MOB_BODYDETAIL_LAYER2
-											human_untoned_decomp_image.pixel_y = armleg_offset
+											human_untoned_decomp_image.pixel_z = armleg_offset
 											src.body_standing.overlays += human_untoned_decomp_image
 										human_untoned_decomp_image.layer = oldlayer
 								else
 									var/image/I = hand_icon_s
 									I.layer = MOB_HAND_LAYER1
-									I.pixel_y = armleg_offset
+									I.pixel_z = armleg_offset
 									if (limb.skintoned)
 										I.color = human_decomp_image.color
 									src.hands_standing.layer = MOB_HAND_LAYER1
@@ -1005,7 +1005,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
 										I.layer = MOB_BODYDETAIL_LAYER2
-										I.pixel_y = armleg_offset
+										I.pixel_z = armleg_offset
 										if (limb.skintoned)
 											I.color = human_decomp_image.color
 										src.body_standing.overlays += I
@@ -1014,7 +1014,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 								if (istext(part_icon_s))
 									if (limb.skintoned)
 										human_decomp_image.icon_state = part_icon_s
-										human_decomp_image.pixel_y = armleg_offset
+										human_decomp_image.pixel_z = armleg_offset
 										var/oldlayer
 										if (sleeveless && (limb.slot == "l_arm" || limb.slot == "r_arm"))
 											oldlayer = human_decomp_image.layer // ugh
@@ -1025,7 +1025,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 											human_untoned_decomp_image.icon_state = limb.handfoot_overlay_1?.icon_state
 											human_untoned_decomp_image.color = limb.handfoot_overlay_1?.color
 											human_untoned_decomp_image.layer = MOB_BODYDETAIL_LAYER2
-											human_untoned_decomp_image.pixel_y = armleg_offset
+											human_untoned_decomp_image.pixel_z = armleg_offset
 											src.body_standing.overlays += human_untoned_decomp_image
 										if (oldlayer)
 											human_untoned_decomp_image.layer = oldlayer
@@ -1041,7 +1041,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 											human_untoned_decomp_image.icon_state = limb.handfoot_overlay_1?.icon_state
 											human_untoned_decomp_image.color = limb.handfoot_overlay_1?.color
 											human_untoned_decomp_image.layer = MOB_BODYDETAIL_LAYER2
-											human_untoned_decomp_image.pixel_y = armleg_offset
+											human_untoned_decomp_image.pixel_z = armleg_offset
 											src.body_standing.overlays += human_untoned_decomp_image
 										if (oldlayer)
 											human_untoned_decomp_image.layer = oldlayer
@@ -1054,7 +1054,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
 										I.layer = MOB_BODYDETAIL_LAYER2
-										I.pixel_y = armleg_offset
+										I.pixel_z = armleg_offset
 										if (limb.skintoned)
 											I.color = human_decomp_image.color
 										src.body_standing.overlays += I
@@ -1067,7 +1067,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 									human_image.icon = handlimb_icon
 									human_image.icon_state = hand_icon_s
 									human_image.color = limb_skin_tone
-									human_image.pixel_y = armleg_offset
+									human_image.pixel_z = armleg_offset
 									src.hands_standing.layer = MOB_HAND_LAYER1
 									src.hands_standing.overlays += human_image
 									if(limb.handfoot_overlay_1)
@@ -1085,13 +1085,13 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 										I.icon = handlimb_icon
 										I.icon_state = hand_icon_s
 									I.color = limb_skin_tone
-									I.pixel_y = armleg_offset
+									I.pixel_z = armleg_offset
 									src.hands_standing.layer = MOB_HAND_LAYER1
 									src.hands_standing.overlays += I
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
 										I.layer = MOB_BODYDETAIL_LAYER2
-										I.pixel_y = armleg_offset
+										I.pixel_z = armleg_offset
 										if (limb.skintoned)
 											I.color = human_decomp_image.color
 										src.body_standing.overlays += I
@@ -1101,7 +1101,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 									human_image.icon = limb.partIcon
 									human_image.icon_state = part_icon_s
 									human_image.color = limb_skin_tone
-									human_image.pixel_y = armleg_offset
+									human_image.pixel_z = armleg_offset
 									var/oldlayer = human_image.layer
 									human_image.layer = MOB_LIMB_LAYER
 									src.body_standing.overlays += human_image
@@ -1116,7 +1116,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 									var/image/I = part_icon_s
 									I.layer = MOB_HAND_LAYER1
 									I.color = limb_skin_tone
-									I.pixel_y = armleg_offset
+									I.pixel_z = armleg_offset
 									src.body_standing.overlays += I
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
@@ -1129,12 +1129,12 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 							var/decomp = "_decomp[src.decomp_stage]"
 							human_decomp_image.icon = file
 							human_decomp_image.icon_state = "[stump][decomp]"
-							human_decomp_image.pixel_y = armleg_offset
+							human_decomp_image.pixel_z = armleg_offset
 							src.body_standing.overlays += human_decomp_image
 						else
 							human_image.icon = file
 							human_image.icon_state = "[stump]"
-							human_image.pixel_y = armleg_offset
+							human_image.pixel_z = armleg_offset
 							var/old_skintone = human_image.color
 							if(AHOLD.mob_appearance_flags & TORSO_HAS_SKINTONE && (stump == "stump_arm_right" || stump == "stump_arm_left")) // Arm stumps look odd if the torso is skintoned, but they arent
 								human_image.color = AHOLD.s_tone	// Apply their normal skin-tone to the stumps if their torso is supposed to be skin-toned
@@ -1142,51 +1142,51 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 							human_image.color = old_skintone
 
 			human_image.color = "#fff"
-			human_image.pixel_y = 0
+			human_image.pixel_z = 0
 
 			if (src.organHolder?.heart)
 				if (src.organHolder.heart.robotic)
 					heart_image.icon_state = "roboheart"
-					heart_image.pixel_y = body_offset
+					heart_image.pixel_z = body_offset
 					src.body_standing.overlays += heart_image
 
 				if (src.organHolder.heart.emagged)
 					heart_emagged_image.layer = FLOAT_LAYER
-					heart_emagged_image.pixel_y = body_offset
+					heart_emagged_image.pixel_z = body_offset
 					heart_emagged_image.icon_state = "roboheart_emagged"
 					src.body_standing.overlays += heart_emagged_image
 
 				if (src.organHolder.heart.synthetic)
 					heart_image.icon_state = "synthheart"
-					heart_image.pixel_y = body_offset
+					heart_image.pixel_z = body_offset
 					src.body_standing.overlays += heart_image
 
 				if (!isnull(src.organHolder.heart.body_image))
 					heart_image.icon_state = src.organHolder.heart.body_image
-					heart_image.pixel_y = body_offset
+					heart_image.pixel_z = body_offset
 					src.body_standing.overlays += heart_image
 
 			if (src.decomp_stage < DECOMP_STAGE_HIGHLY_DECAYED && ((AHOLD.underwear && AHOLD.mob_appearance_flags & WEARS_UNDERPANTS) || src.underpants_override)) // no more bikini werewolves
 				undies_image.icon_state = underwear_styles[AHOLD.underwear]
 				undies_image.color = AHOLD.u_color
-				undies_image.pixel_y = body_offset
+				undies_image.pixel_z = body_offset
 				src.body_standing.overlays += undies_image
 
 			if (length(src.bandaged) > 0)
 				for (var/part in src.bandaged)
 					bandage_image.icon_state = "bandage-[part]"
-					bandage_image.pixel_y = body_offset
+					bandage_image.pixel_z = body_offset
 					src.body_standing.overlays += bandage_image
 
 			if (src.spiders)
 				spider_image.icon_state = "spiders"
-				spider_image.pixel_y = body_offset
+				spider_image.pixel_z = body_offset
 				src.body_standing.overlays += spider_image
 
 			if (src.makeup && src.makeup_color)
 				makeup_image.icon_state = "lipstick[src.makeup]" // 1 if normal, 2 if you kinda jacked up your application
 				makeup_image.color = src.makeup_color
-				makeup_image.pixel_y = eye_offset
+				makeup_image.pixel_z = eye_offset
 				src.body_standing.overlays += makeup_image
 
 	if (src.bioHolder)

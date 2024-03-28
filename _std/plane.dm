@@ -1,11 +1,13 @@
 #define PLANE_DISTORTION -130 //used as a render source for distortion filter for world, does not render directly
 #define PLANE_SPACE -120
-#define PLANE_PARALLAX -119
+#define PLANE_BETWEENSPACE -119
+#define PLANE_PARALLAX -118
 #define PLANE_UNDERFLOOR -115
 #define PLANE_FLOOR -110
+#define PLANE_JUSTABOVEFLOOR -109
 #define PLANE_WALL -105
-#define PLANE_NOSHADOW_BELOW -102
-#define PLANE_DEFAULT -101
+#define PLANE_NOSHADOW_BELOW -106
+#define PLANE_DEFAULT -105
 #define PLANE_DEFAULT_NOWARP -100 //for objects which should not be affected by gravitational lensing
 #define PLANE_NOSHADOW_ABOVE -99
 #define PLANE_NOSHADOW_ABOVE_NOWARP -98

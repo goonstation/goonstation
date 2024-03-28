@@ -1210,6 +1210,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		src.ore_overlays()
 
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
+		return
+		/* dont work in isometric very well so just killing
 		var/image/top_overlay = mutable_appearance('icons/turf/walls/asteroid.dmi',"top[src.topnumber]")
 		var/icon/cached = topoverlaycache["mask2[src.icon_state]"]
 		if(!cached)
@@ -1218,6 +1220,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		top_overlay.filters += filter(type="alpha", icon=cached)
 		top_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER
 		UpdateOverlays(top_overlay, "ast_top_rock")
+		*/
 
 	proc/ore_overlays()
 		if(src.ore) // make sure ores dont turn invisible

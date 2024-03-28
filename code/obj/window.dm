@@ -92,9 +92,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	proc/set_layer_from_settings()
 		if (!map_settings)
 			return
-		if (src.dir == NORTH && map_settings.window_layer_north)
+		if ((src.dir == NORTH || src.dir == WEST) && map_settings.window_layer_north)
 			src.layer = map_settings.window_layer_north
-		else if (src.dir == SOUTH && map_settings.window_layer_south)
+		else if ((src.dir == SOUTH || src.dir == EAST) && map_settings.window_layer_south)
 			src.layer = map_settings.window_layer_south
 		else if ((src.dir in ordinal) && map_settings.window_layer_full)
 			src.layer = map_settings.window_layer_full
@@ -126,6 +126,11 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			src.material_amt = 0.1
 		else
 			src.material_amt = 0.2
+		switch(new_dir)
+			if(WEST, NORTH)
+				src.layer = map_settings.window_layer_north
+			if(SOUTH, EAST)
+				src.layer = map_settings.window_layer_south
 
 	onMaterialChanged()
 		..()
@@ -764,37 +769,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 	var/mod = "W-"
 	var/connectdir
-	var/static/list/connects_to = typecacheof(list(
-		/obj/machinery/door,
-		/obj/window,
-		/turf/simulated/wall/auto/supernorn,
-		/turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/unsimulated/wall/auto/reinforced/supernorn,
-
-		/turf/simulated/shuttle/wall,
-		/turf/unsimulated/wall,
-		/turf/simulated/wall/auto/shuttle,
-		/obj/indestructible/shuttle_corner,
-
-		/turf/simulated/wall/auto/reinforced/supernorn/yellow,
-		/turf/simulated/wall/auto/reinforced/supernorn/blackred,
-		/turf/simulated/wall/auto/reinforced/supernorn/orange,
-		/turf/simulated/wall/auto/reinforced/paper,
-		/turf/simulated/wall/auto/jen,
-		/turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/auto/supernorn/wood,
-		/turf/unsimulated/wall/auto/supernorn/wood,
-
-		/turf/unsimulated/wall/auto/lead/blue,
-		/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-		/turf/simulated/wall/auto/reinforced/old,
-		/turf/unsimulated/wall/auto/adventure/old,
-		/turf/unsimulated/wall/auto/adventure/mars/interior,
-		/turf/unsimulated/wall/auto/adventure/shuttle,
-		/turf/simulated/wall/auto/marsoutpost,
-		/turf/simulated/wall/false_wall,
-		/turf/simulated/wall/auto/feather,
-	))
+	var/static/list/connects_to = typecacheof(list(/obj/window))
 
 	/// Gotta be a typecache list
 	var/static/list/connects_to_exceptions = typecacheof(list(

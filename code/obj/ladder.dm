@@ -193,7 +193,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	// if we're not the top ladder, animate up instead of down
 	var/climbdir = src.icon_state == "ladder" ? 1 : -1
 
-	animate(proxy, pixel_y = -32*climbdir, time = 1 SECOND)
+	animate(proxy, pixel_z = -32*climbdir, time = 1 SECOND)
 	if (src.icon_state == "ladder")
 		animate(proxy.get_filter("ladder_climbmask"), y = 32, time = 1 SECOND, flags = ANIMATION_PARALLEL)
 
