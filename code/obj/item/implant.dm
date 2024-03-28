@@ -876,7 +876,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	bullet_9mm
 		name = "9mm round"
 		desc = "An extremely common bullet fired by a myriad of different cartridges."
-
+	bullet_455
+		name = ".455 round"
+		desc = "A powerful, old-timey revolver bullet, likely of criminal origin."
 	ninemmplastic
 		name = "9mm Plastic round"
 		icon_state = "bulletplastic"
@@ -914,6 +916,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		New()
 			..()
 			implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "buckshot_wound-[rand(0, 1)]", layer = MOB_EFFECT_LAYER)
+		bird
+			name = "birdshot"
+			desc = "A large collection of birdshot rounds, a less-lethal load for shotguns."
+
 	staple
 		name = "staple"
 		icon_state = "staple"
@@ -1041,6 +1047,42 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				desc = "An empty syringe round, of the type that is fired from a syringe gun. It has a barbed tip. Nasty!"
 				icon_state = "syringeproj_barbed"
 				barbed = TRUE
+
+		janktanktwo
+			name = "spent JankTank II"
+			pull_out_name = "syringe"
+			desc = "A large syringe ripped straight out of some poor, presumably dead gang member!"
+			icon = 'icons/obj/syringe.dmi'
+			icon_state = "dna_scrambler_2"
+			var/obj/item/tool/janktanktwo/syringe
+			var/full = TRUE
+
+			New()
+				..()
+				implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "syringe_stick_1", layer = MOB_EFFECT_LAYER)
+			implanted(mob/M, mob/I)
+				..()
+				if (!full)
+					return
+				SPAWN(JANKTANK2_PAUSE_TIME - 0.5 SECONDS)
+					playsound(M.loc, 'sound/items/hypo.ogg', 50, 0)
+
+				SPAWN(JANKTANK2_PAUSE_TIME)
+					if (!ishuman(M))
+						return
+					full = FALSE
+					icon_state = "dna_scrambler_3"
+					desc = "A large, empty syringe. Whatever awfulness it contained is probably in somebody's heart. Eugh."
+					if (!src.owner)
+						src.visible_message("<span class='alert'>[src] sprays its' volatile contents everywhere, [prob(10) ? "it smells like bacon? <b><i>WHY?!?</i></b>" : "gross!"]</span>")
+						return
+
+					syringe.do_heal(src.owner)
+			proc/set_owner(obj/item/tool/janktanktwo/injector)
+				src.syringe = injector
+
+
+
 
 	blowdart
 		name = "blowdart"
@@ -1972,6 +2014,7 @@ TYPEINFO(/obj/item/gun/implanter)
 	icon_state = "implant"
 	contraband = 1
 	var/obj/item/implant/my_implant = null
+	recoil_strength = 1
 
 	New()
 		set_current_projectile(new/datum/projectile/implanter)

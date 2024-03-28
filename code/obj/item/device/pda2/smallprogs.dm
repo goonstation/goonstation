@@ -1035,12 +1035,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 								dat += "[T.text]<br>"
 
 				if(2) //requested fines
-					var/can_approve = 0
 
 					var/PDAowner = src.master.owner
 					var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
-
-					if(PDAownerjob in list("Head of Security","Head of Personnel","Captain")) can_approve = 1
 
 					dat += "<br><br><a href='byond://?src=\ref[src];back=1'>Back</a>"
 
@@ -1049,7 +1046,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					for (var/datum/fine/F in data_core.fines)
 						if(!F.approver)
 							dat += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>Requested by: [F.issuer] - [F.issuer_job]"
-							if(can_approve) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
+							if((PDAownerjob in JOBS_CAN_TICKET_BIG) || ((PDAownerjob in JOBS_CAN_TICKET_SMALL) && F.amount <= MAX_FINE_NO_APPROVAL)) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
 							dat += "<br><br>"
 
 				if(3) //unpaid fines
@@ -1134,9 +1131,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			var/ticket_reason = input(usr, "Fine reason:",src.name) as text
 			if(!ticket_reason) return
 			ticket_reason = copytext(strip_html(ticket_reason), 1, MAX_MESSAGE_LEN)
-			var/fine_amount = input(usr, "Fine amount (1-1000):",src.name, 0) as num
+			var/fine_amount = input(usr, "Fine amount (1-10000):",src.name, 0) as num
 			if(!isnum_safe(fine_amount)) return
-			fine_amount = min(fine_amount,1000)
+			fine_amount = min(fine_amount,10000)
 			fine_amount = max(fine_amount,1)
 
 			var/datum/fine/F = new /datum/fine()
@@ -1149,8 +1146,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			F.issuer_byond_key = usr.key
 			data_core.fines += F
 
-			logTheThing(LOG_ADMIN, usr, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
-			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
+			logTheThing(LOG_ADMIN, usr, "requested a fine using [PDAowner]([PDAownerjob])'s PDA. It is a [fine_amount] credit fine on <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			if((fine_amount <= MAX_FINE_NO_APPROVAL && (PDAownerjob in JOBS_CAN_TICKET_SMALL)) || (PDAownerjob in JOBS_CAN_TICKET_BIG))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
 				playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 				SPAWN(3 SECONDS)
@@ -1160,8 +1157,11 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					p.name = "Official Fine Notification - [ticket_target]"
 					p.info = ticket_text
 					p.icon_state = "paper_caution"
+
+			else if(fine_amount <= MAX_FINE_NO_APPROVAL)
+				message = "Fine request created, awaiting approval from the [english_list(JOBS_CAN_TICKET_SMALL, "nobody", " or ")]."
 			else
-				message = "Fine request created, awaiting approval from the Captain, Head of Security or Head of Personnel."
+				message = "Fine request created, awaiting approval from the [english_list(JOBS_CAN_TICKET_BIG, "nobody", " or ")]."
 
 		else if(href_list["approve"])
 			var/PDAowner = src.master.owner

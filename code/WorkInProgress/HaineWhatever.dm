@@ -1214,6 +1214,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	var/possible_bling_uncommon = list(/obj/item/currency/spacecash/hundred,/obj/item/coin)
 	var/possible_bling_rare = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/gold)
 	default_material = "gold"
+	recoil_strength = 4
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!istype(target, /turf) || !istype(start, /turf))

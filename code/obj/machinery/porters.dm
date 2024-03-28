@@ -517,7 +517,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		if (!src.owner || !src.victim || QDELETED(G) || brig?.occupant)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
+		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0) || !isturf(src.victim.loc) || !isturf(src.owner.loc))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.brig.visible_message(SPAN_ALERT("[owner] shoves [victim] into [src.brig]!"))
