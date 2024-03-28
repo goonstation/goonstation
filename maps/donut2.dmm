@@ -8229,6 +8229,9 @@
 /area/station/maintenance/inner/central)
 "aQK" = (
 /obj/decal/boxingrope,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aQM" = (
@@ -13464,7 +13467,6 @@
 /area/station/maintenance/east)
 "buh" = (
 /obj/reagent_dispensers/fueltank,
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
 "buj" = (
@@ -18786,6 +18788,10 @@
 "drp" = (
 /obj/decal/boxingropeenter{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -24687,6 +24693,10 @@
 "hoK" = (
 /turf/simulated/floor/green/side,
 /area/station/hallway/primary/west)
+"hoP" = (
+/obj/machinery/manufacturer/hangar,
+/turf/simulated/floor/red,
+/area/station/hangar/sec)
 "hpu" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -25384,6 +25394,10 @@
 /obj/decal/boxingrope{
 	dir = 8
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "hMP" = (
@@ -25946,6 +25960,10 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent,
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "igI" = (
@@ -28890,6 +28908,8 @@
 /obj/item/crowbar,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/device/multitool,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
 "kcB" = (
@@ -31092,6 +31112,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
+"lwA" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "lwG" = (
 /obj/stool/chair{
 	dir = 8
@@ -31811,6 +31838,10 @@
 "lQh" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 10
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -33067,6 +33098,10 @@
 "mIj" = (
 /obj/decal/boxingrope{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -34402,16 +34437,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "nvT" = (
-/obj/storage/secure/closet/civilian/chaplain,
-/obj/item/device/light/zippo,
-/obj/item/clothing/head/helmet/greek,
-/obj/item/clothing/suit/greek,
-/obj/item/clothing/under/gimmick/toga,
-/obj/item/clothing/head/laurels,
-/obj/item/clothing/head/laurels/gold,
-/obj/decal/poster/wallsign/poster_sol{
-	pixel_y = 31
-	},
+/obj/machinery/vending/chapel,
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/office)
 "nwC" = (
@@ -37419,6 +37445,19 @@
 "piD" = (
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
+"piF" = (
+/obj/storage/crate{
+	name = "Special Syllogí";
+	desc = "Ένα μεγάλο μεταλλικό κουτί στο οποίο μπορείτε να βάλετε πράγματα. Ποιος ξέρει, μπορεί να έχει ήδη πράγματα μέσα του."
+	},
+/obj/item/clothing/under/gimmick/toga,
+/obj/item/clothing/suit/greek,
+/obj/item/clothing/head/helmet/greek,
+/obj/item/clothing/head/laurels/gold,
+/obj/item/device/light/zippo,
+/obj/item/clothing/head/laurels,
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/office)
 "piG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39123,6 +39162,10 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "qjS" = (
@@ -39759,6 +39802,10 @@
 /obj/stool,
 /obj/landmark/start/job/assistant,
 /obj/landmark/pest,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "qCm" = (
@@ -40157,6 +40204,10 @@
 /obj/item/gun/implanter{
 	pixel_x = 7;
 	pixel_y = -7
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -7;
+	pixel_y = -6
 	},
 /turf/simulated/floor,
 /area/station/security/equipment)
@@ -41192,7 +41243,7 @@
 	},
 /area/station/engine/inner)
 "rBB" = (
-/obj/item/device/multitool,
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
 "rBH" = (
@@ -49119,6 +49170,10 @@
 	dir = 4
 	},
 /obj/landmark/start/job/assistant,
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "wDG" = (
@@ -88537,7 +88592,7 @@ aJC
 bDz
 aNr
 rvW
-aPt
+lwA
 aPt
 aPt
 aQK
@@ -88839,7 +88894,7 @@ aJC
 qNj
 aNr
 mVd
-aPt
+lwA
 aPt
 aPt
 aQK
@@ -89141,7 +89196,7 @@ aJC
 cwg
 aNr
 qwR
-aPt
+lwA
 aPt
 aPt
 aQK
@@ -93052,7 +93107,7 @@ wNr
 pCJ
 avj
 nvT
-axt
+piF
 hRa
 avj
 cay
@@ -94627,7 +94682,7 @@ bns
 buh
 bvm
 sqd
-bvm
+rBB
 bxq
 apU
 aaa
@@ -94929,7 +94984,7 @@ bns
 cQm
 bvm
 sqd
-rBB
+hoP
 bxq
 apU
 aaa
