@@ -283,13 +283,21 @@ TYPEINFO(/obj/item/device/pda_module)
 		if (J.host)
 			J.toggle_scan()
 
+ABSTRACT_TYPE(/obj/item/device/pda_module/alert)
 /obj/item/device/pda_module/alert
-	name = "security alert module"
-	desc = "A PDA module that lets you quickly send PDA alerts to the security department."
+	name = "alert PDA module"
+	desc = "A PDA module that allows you alert a specific department."
 	icon_state = "pdamod_alert"
 	setup_use_menu_badge = 1
-	abilities = list(/obj/ability_button/pda_security_alert)
-	var/list/mailgroups = list(MGD_SECURITY)
+	var/dept_name = ""
+	var/role_name = ""
+	var/alert_color = ""
+	var/button_color = ""
+	var/list/mailgroups = list()
+
+	New()
+		. = ..()
+		src.desc = "A PDA module that lets you call for [src.dept_name] backup at the push of a button."
 
 	return_menu_badge()
 		var/text = "<a href='byond://?src=\ref[src];toggle=1'>Send Alert</a>"
@@ -316,25 +324,79 @@ TYPEINFO(/obj/item/device/pda_module)
 		signal.data["sender_name"] = src.host.owner
 		signal.data["group"] = mailgroups + MGA_CRISIS
 		var/area/A = get_area(src.host)
-		signal.data["message"]  = SPAN_ALERT("<b>***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!</b>")
+		signal.data["message"]  = SPAN_ALERT("<b>***[uppertext(dept_name)] BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!</b>")
 		src.host.post_signal(signal)
 
 		if(isliving(user))
-			playsound(src, 'sound/items/security_alert.ogg', 60)
+			playsound(src, "sound\\items\\[dept_name]_alert.ogg", 60)
 			var/map_text = null
-			map_text = make_chat_maptext(user, "Emergency alert sent. Please assist this officer.", "color: #D30000; font-size: 6px;", alpha = 215)
+			map_text = make_chat_maptext(user, "Emergency alert sent. Please assist this [src.role_name].", "color: [src.alert_color]; font-size: 6px;", alpha = 215)
 			for (var/mob/O in hearers(user))
 				O.show_message(assoc_maptext = map_text, just_maptext = TRUE)
-			user.visible_message(SPAN_ALERT("[user] presses a red button on the side of their [src.host]."),
+			user.visible_message(SPAN_ALERT("[user] presses a [src.button_color] button on the side of their [src.host]."),
 			SPAN_NOTICE("You press the \"Alert\" button on the side of your [src.host]."),
-			SPAN_ALERT("You see [user] press a button on the side of their [src.host]."))
+			SPAN_ALERT("You hear [user] press a button on the side of their [src.host]."))
 
+/obj/item/device/pda_module/alert/security
+	name = "security alert PDA module"
+	icon_state = "pdamod_alert_sec"
+	abilities = list(/obj/ability_button/pda_alert/security)
+	dept_name = "security"
+	role_name = "officer"
+	button_color = "red"
+	alert_color = "#a30000"
+	mailgroups = list(MGD_SECURITY)
 
-/obj/ability_button/pda_security_alert
-	name = "Send Security Alert"
+/obj/item/device/pda_module/alert/medical
+	name = "medical alert PDA module"
+	icon_state = "pdamod_alert_med"
+	abilities = list(/obj/ability_button/pda_alert/medical)
+	dept_name = "medical"
+	role_name = "doctor"
+	button_color = "blue"
+	alert_color = "#337296"
+	mailgroups = list(MGD_MEDBAY)
+
+/obj/item/device/pda_module/alert/engineering
+	name = "engineering alert PDA module"
+	icon_state = "pdamod_alert_eng"
+	abilities = list(/obj/ability_button/pda_alert/engineering)
+	dept_name = "engineering"
+	role_name = "engineer"
+	button_color = "orange"
+	alert_color = "#a8732b"
+	mailgroups = list(MGO_ENGINEER)
+
+/obj/item/device/pda_module/alert/janitor
+	name = "janitor alert PDA module"
+	icon_state = "pdamod_alert_jan"
+	abilities = list(/obj/ability_button/pda_alert/janitor)
+	dept_name = "janitor"
+	role_name = "janitor"
+	button_color = "purple"
+	alert_color = "#993399"
+	mailgroups = list(MGO_JANITOR)
+
+ABSTRACT_TYPE(/obj/ability_button/pda_alert)
+/obj/ability_button/pda_alert
+	name = "Send Alert"
 	icon_state = "alert"
 
 	execute_ability()
-		var/obj/item/device/pda_module/alert/J = the_item
-		if (J.host)
-			J.send_alert(src.the_mob)
+		var/obj/item/device/pda_module/alert/alert_module = the_item
+		if(!alert_module.host)
+			return
+		alert_module.send_alert(src.the_mob)
+		. = ..()
+
+/obj/ability_button/pda_alert/security
+	name = "Send Security Alert"
+
+/obj/ability_button/pda_alert/medical
+	name = "Send Medical Alert"
+
+/obj/ability_button/pda_alert/engineering
+	name = "Send Engineering Alert"
+
+/obj/ability_button/pda_alert/janitor
+	name = "Send Janitor Alert"
