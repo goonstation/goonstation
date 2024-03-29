@@ -2723,3 +2723,31 @@
 			UnregisterSignal(M.mind, COMSIG_MIND_DETACH_FROM_MOB)
 		if (M.client)
 			animate_fade_from_grayscale(M.client, 5 SECONDS)
+
+/datum/statusEffect/oneMsgAccent
+	id = "temp_accent"
+	name = "Temporary Accent"
+	visible = FALSE
+	var/datum/bioEffect/added_accent = null
+
+	onAdd(optional)
+		..()
+		var/mob/living/M = src.owner
+		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(remove_self))
+		if (!istype(M) || !M.bioHolder)
+			src.remove_self()
+			return
+		var/datum/bioEffect/accent = random_accent()
+		var/emergency_loop_stop = 0
+		while (M.bioHolder.HasEffect(accent.id) && emergency_loop_stop < 10)
+			accent = random_accent()
+			emergency_loop_stop++
+
+		src.added_accent = M.bioHolder.AddEffect(accent.id, do_stability = FALSE, magical = TRUE)
+
+	onRemove()
+		..()
+		if (src.added_accent)
+			var/mob/living/M = src.owner
+			M.bioHolder.RemoveEffectInstance(src.added_accent)
+		UnregisterSignal(src.owner, COMSIG_MOB_SAY)
