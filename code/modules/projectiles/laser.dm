@@ -56,6 +56,13 @@ toxic - poisons
 			var/turf/T = P.loc
 			T.hotspot_expose(power*20, 5)
 
+/datum/projectile/laser/custom
+	//set your own damage and battery cost. used by the captaingun
+	New(var/damage = 45, var/cost = 31.25)
+		src.damage = damage
+		src.cost = cost
+		. = ..()
+
 /datum/projectile/laser/quad
 	name = "4 lasers"
 	icon_state = "laser"

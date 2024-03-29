@@ -215,25 +215,113 @@ TYPEINFO(/obj/item/gun/energy)
 
 
 ////////////////////////////////////// Antique laser gun
-// Part of a mini-quest thing (see displaycase.dm). Typically, the gun's properties (cell, projectile)
-// won't be the default ones specified here, it's here to make it admin-spawnable (Convair880).
+
+//Maximum alpha a lens can be to fall into one of the damage tiers
+#define CAPTAINGUN_T1_LENS_ALPHA_THRESHOLD 180 //glass, molitz, some other stuff
+#define CAPTAINGUN_T2_LENS_ALPHA_THRESHOLD 130 //telecrystal, ectofiber, ice
+#define CAPTAINGUN_T3_LENS_ALPHA_THRESHOLD 80 //starstone, rarely miraclium
+
+//Coil efficacy is scored as electrical conductivity + 2 if the material is an energy source
+//Minimum efficacy a coil can be to fall into one of the charge usage tiers
+#define CAPTAINGUN_T1_COIL_EFFICACY_THRESHOLD 6 //copper, pharosium, gold, etc.
+#define CAPTAINGUN_T2_COIL_EFFICACY_THRESHOLD 8 //claretine, electrum, cerenkite, etc.
+#define CAPTAINGUN_T3_COIL_EFFICACY_THRESHOLD 10 //custom alloy (figure it out, nerd)
+
+//Damage dealt by different tiers of lens used
+#define CAPTAINGUN_T1_DAMAGE 30 // 2/3x
+#define CAPTAINGUN_T2_DAMAGE 45 //normal laser damage
+#define CAPTAINGUN_T3_DAMAGE 60 // 4/3x
+
+//Charge consumed when shooting by different tiers of coils used
+#define CAPTAINGUN_T1_COST 41.66 // 250 / 41.66 = 6 shots
+#define CAPTAINGUN_T2_COST 31.25 //normal laser cost 250 / 32.25 = 8 shots
+#define CAPTAINGUN_T3_COST 25 // 250 / 25 = 10 shots
+
+TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
+	mats = null //dont let people copy their perfect gamer gun for a handful of copper and glass
 /obj/item/gun/energy/laser_gun/antique
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>screwdriver</b> to open or close its maintenance panel."})
 	name = "antique laser gun"
 	icon_state = "caplaser"
 	item_state = "capgun"
-	desc = "It's a kit model of the Mod.00 'Lunaport Legend' laser gun from Super! Protector Friend. With realistic sound fx and exciting LED display! This one has been hazardously upgraded."
+	desc = "A showpiece laser pistol. "
 	muzzle_flash = "muzzle_flash_laser"
 	cell_type = null
 	uses_charge_overlay = TRUE
 	charge_icon_state = "caplaser"
+	var/panelOpen = FALSE //open it with a screwdriver to modify it
+	var/obj/item/lens/myLens = null
+	var/obj/item/coil/small/myCoil = null
+	var/customProjectileDamage = CAPTAINGUN_T1_DAMAGE
+	var/customProjectileCost = CAPTAINGUN_T1_COST
 
 	New()
-		if (!src.current_projectile)
-			src.set_current_projectile(new /datum/projectile/laser/glitter)
-		if (isnull(src.projectiles))
-			src.projectiles = list(src.current_projectile)
-		..()
-		src.UpdateIcon()
+		src.set_current_projectile(new /datum/projectile/laser/custom(src.customProjectileDamage, src.customProjectileCost))
+		src.projectiles = list(src.current_projectile)
+		. = ..()
+
+	examine()
+		. = ..()
+		if(src.evaluate_quality())
+			. += "It has had some parts replaced and is now a functional weapon. "
+		else
+			. += "While currently non-functional, it could be repaired to working order with some replacement parts. "
+		if(src.panelOpen)
+			. += "Its maintenance panel is open. "
+			if(src.myLens)
+				. += "It contains a [src.myLens]. "
+			else
+				. += "It is missing a lens. "
+			if(src.myCoil)
+				. += "It contains a [src.myCoil]. "
+			else
+				. += "It is missing a small coil. "
+
+	attackby(obj/item/object, mob/user)
+		. = ..()
+		switch(object)
+			if(isscrewingtool(object))
+				playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
+				user.show_text(SPAN_NOTICE("You [src.panelOpen ? "close" : "open"] the maintenance panel."))
+				src.panelOpen = !src.panelOpen
+				if(!src.panelOpen && src.evaluate_quality())
+					if(src.customProjectileDamage == CAPTAINGUN_T3_DAMAGE && src.customProjectileCost == CAPTAINGUN_T3_COST)
+						user.unlock_medal("Tinkerer", 1)
+
+
+	canshoot(mob/user)
+		if(!src.evaluate_quality() || src.panelOpen)
+			return FALSE
+		//change the projectile here because this is checked by both gun.shoot_point_blank(), gun.shoot(), and gun.suicide()
+		//which duplicate a horrifying amount of code
+		src.set_current_projectile(new /datum/projectile/laser/custom(src.customProjectileDamage, src.customProjectileCost)
+		. = ..()
+
+	proc/evaluate_quality()
+		. = TRUE
+		if(!src.myLens || !src.myCoil)
+			//missing parts
+			return FALSE
+		if(src.myLens.material.getAlpha() > CAPTAINGUN_T1_LENS_ALPHA_THRESHOLD)
+			//your lens isnt see-through, stupid
+			return FALSE
+		if(src.myCoil.material.getProperty("electrical") + ((src.myCoil.material.getMaterialFlags() & MATERIAL_ENERGY) ? 2 : 0) < CAPTAINGUN_T1_LENS_ALPHA_THRESHOLD)
+			//coil not powerful enough
+			return FALSE
+		switch(src.myLens.material.getAlpha())
+			if(-INFINITY to CAPTAINGUN_T3_LENS_ALPHA_THRESHOLD)
+				src.customProjectileDamage = CAPTAINGUN_T3_DAMAGE
+			if(CAPTAINGUN_T3_LENS_ALPHA_THRESHOLD to CAPTAINGUN_T2_LENS_ALPHA_THRESHOLD)
+				src.customProjectileDamage = CAPTAINGUN_T2_DAMAGE
+			if(CAPTAINGUN_T2_LENS_ALPHA_THRESHOLD to CAPTAINGUN_T1_LENS_ALPHA_THRESHOLD)
+				src.customProjectileDamage = CAPTAINGUN_T1_DAMAGE
+		switch(src.myCoil.material.getProperty("electrical") + ((src.myCoil.material.getMaterialFlags() & MATERIAL_ENERGY) ? 2 : 0))
+			if(CAPTAINGUN_T1_COIL_EFFICACY_THRESHOLD to CAPTAINGUN_T2_COIL_EFFICACY_THRESHOLD)
+				src.customProjectileCost = CAPTAINGUN_T1_COST
+			if(CAPTAINGUN_T2_COIL_EFFICACY_THRESHOLD to CAPTAINGUN_T3_COIL_EFFICACY_THRESHOLD)
+				src.customProjectileCost = CAPTAINGUN_T2_COST
+			if(CAPTAINGUN_T3_COIL_EFFICACY_THRESHOLD to INFINITY)
+				src.customProjectileCost = CAPTAINGUN_T3_COST
 
 //////////////////////////////////////// Phaser
 /obj/item/gun/energy/phaser_gun
