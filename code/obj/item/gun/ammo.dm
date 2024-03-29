@@ -1435,6 +1435,17 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 /obj/item/ammo/power_cell/empty
 	charge = 0
 
+/obj/item/ammo/power_cell/fake
+	//in the captain's antique gun by default - no free cell
+	name = "Power Cell - Model"
+	desc = "A non-functional model of a power cell"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 1000
+	g_amt = 2000
+	charge = 0
+	max_charge = 0
+
 /obj/item/ammo/power_cell/med_minus_power
 	name = "Power Cell - 150"
 	desc = "A power cell that holds a max of 150PU"

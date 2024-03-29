@@ -244,9 +244,9 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 	name = "antique laser gun"
 	icon_state = "caplaser"
 	item_state = "capgun"
-	desc = "A showpiece laser pistol. "
+	desc = "A showpiece model of the original Hafgan M-Zero laser pistol. "
 	muzzle_flash = "muzzle_flash_laser"
-	cell_type = null
+	cell_type = /obj/item/ammo/power_cell/fake
 	uses_charge_overlay = TRUE
 	charge_icon_state = "caplaser"
 	var/panelOpen = FALSE //open it with a screwdriver to modify it
@@ -265,7 +265,7 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 		if(src.evaluate_quality())
 			. += "It has had some parts replaced and is now a functional weapon. "
 		else
-			. += "While currently non-functional, it could be repaired to working order with some replacement parts. "
+			. += "While currently non-functional, it could be brought to working order with some replacement parts. "
 		if(src.panelOpen)
 			. += "Its maintenance panel is open. "
 			if(src.myLens)
@@ -279,17 +279,34 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 
 	attackby(obj/item/object, mob/user)
 		. = ..()
-		switch(object)
-			if(isscrewingtool(object))
-				playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
-				user.show_text(SPAN_NOTICE("You [src.panelOpen ? "close" : "open"] the maintenance panel."))
-				src.panelOpen = !src.panelOpen
-				if(!src.panelOpen && src.evaluate_quality())
-					if(src.customProjectileDamage == CAPTAINGUN_T3_DAMAGE && src.customProjectileCost == CAPTAINGUN_T3_COST)
-						user.unlock_medal("Tinkerer", 1)
+		if(isscrewingtool(object))
+			user.show_text(SPAN_NOTICE("You [src.panelOpen ? "close" : "open"] the maintenance panel."))
+			playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
+			src.panelOpen = !src.panelOpen
+			if(!src.panelOpen && src.evaluate_quality())
+				if(src.customProjectileDamage == CAPTAINGUN_T3_DAMAGE && src.customProjectileCost == CAPTAINGUN_T3_COST)
+					user.unlock_medal("Tinkerer", 1)
+		if(istype(object, var/obj/item/coil/small))
+			if(src.panelOpen)
+				user.show_text(SPAN_NOTICE("You insert the [object] into the [src]."))
+				playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
+				user.put_in_hand_or_eject(src.myCoil)
+				object.set_loc(src)
+				src.myCoil = object
+			else
+			user.show_text(SPAN_NOTICE("The [src]'s maintenance panel is closed."))
+		if(istype(object, var/obj/item/lens))
+			if(src.panelOpen)
+				user.show_text(SPAN_NOTICE("You insert the [object] into the [src]."))
+				playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
+				user.put_in_hand_or_eject(src.myLens)
+				object.set_loc(src)
+				src.myLens = object
+			else
+			user.show_text(SPAN_NOTICE("The [src]'s maintenance panel is closed."))
 
 	canshoot(mob/user)
-		if(!src.evaluate_quality() || src.panelOpen)
+		if(!src.evaluate_quality())
 			return FALSE
 		//change the projectile here because this is checked by both gun.shoot_point_blank(), gun.shoot(), and gun.suicide()
 		//which duplicate a horrifying amount of code
