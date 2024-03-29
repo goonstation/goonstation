@@ -177,6 +177,7 @@
 	icon_state = "gang_dufflebag"
 	item_state = "bowling"
 	p_class = 4 //marginally easier than dragging a whole locker with this in
+	throw_range = 4
 	always_slow_pull = TRUE
 	var/hidden = TRUE
 	var/open = FALSE
