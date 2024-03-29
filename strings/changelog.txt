@@ -1,5 +1,9 @@
 
 (t)thu mar 28 24
+(u)glowbold
+(p)18336
+(e)⛔💡|C-Removal, A-Station-Systems
+(+)NanoTrasen no longer has a direct line of contact with the CDC.
 (u)TDHooligan
 (p)18310
 (e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
