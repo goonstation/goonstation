@@ -1446,7 +1446,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	m_amt = 1000
 	g_amt = 2000
 	charge = 0
-	max_charge = INFINITESIMAL
+	max_charge = 0
 
 /obj/item/ammo/power_cell/med_minus_power
 	name = "Power Cell - 150"
