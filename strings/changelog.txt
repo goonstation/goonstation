@@ -1,5 +1,9 @@
 
 (t)fri mar 29 24
+(u)glowbold
+(p)18226
+(e)💅💊💡|C-QoL, A-Medical, A-Station-Systems
+(*)Medical records now list relevant traits as major/minor disabilities instead of a full list.
 (u)IPingu
 (p)18200
 (e)⚖|C-Balance
