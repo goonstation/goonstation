@@ -177,10 +177,10 @@
 							<br><br>Details: [src.active_medical["ma_dis_d"]]
 							<br><br><br>Allergies: [src.active_medical["alg"]]
 							<br><br>Details: [src.active_medical["alg_d"]]
-							<br><br><br>Current Diseases: [src.active_medical["cdi"]] (per disease info placed in log/comment section)
-							<br>Details: [src.active_medical["cdi_d"]]<br><br><br>
-							<br>Cloner Defects: [src.active_medical["cl_def"]]<br>
-							<br>Details: [src.active_medical["cl_def_d"]]<br><br><br>
+							<br><br><br>Current Diseases: [src.active_medical["cdi"]]
+							<br><br>Details: [src.active_medical["cdi_d"]]
+							<br><br><br>Cloner Defects: [src.active_medical["cl_def"]]
+							<br><br>Details: [src.active_medical["cl_def_d"]]
 							Important Notes:<br>
 							<br>&emsp;[src.active_medical["notes"]]<br>"}
 
