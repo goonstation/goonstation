@@ -53,6 +53,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 	var/realx = 0
 	var/realy = 0
 	var/realz = 0
+	var/obj/item/disk/data/floppy/diskette = null
 	var/tmp/session = null
 	var/obj/perm_portal/start_portal
 	var/obj/perm_portal/end_portal
@@ -117,6 +118,18 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		user.Browse(dat,"window=telepad;size=245x302")
 		onclose(user,"telepad")
 		return
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/disk/data/floppy))
+			if (!src.diskette)
+				user.drop_item()
+				W.set_loc(src)
+				src.diskette = W
+				boutput(user, "You insert [W].")
+				src.updateUsrDialog()
+				return
+		else
+			. = ..()
 
 	Topic(href, href_list)
 		if(..())
@@ -367,6 +380,27 @@ TYPEINFO(/obj/machinery/networked/telepad)
 
 							recharging = 0
 
+					if ("lrt")
+						var/tmp_place = replacetext(data["place"], "_", " ")
+						if(!(tmp_place in special_places))
+							message_host("command=nack&cause=badplace")
+							return
+
+						switch(data["action"])
+							if("send")
+								if(src.lrtsend(tmp_place))
+									message_host("command=ack")
+								else
+									message_host("command=nack&cause=recharge")
+							if("receive")
+								if(src.lrtreceive(tmp_place))
+									message_host("command=ack")
+								else
+									message_host("command=nack&cause=recharge")
+							else
+								message_host("command=nack&cause=badcmd")
+								return
+
 					if ("scan")
 						var/turf/scanTurf = doturfcheck(1)
 						if(!scanTurf)
@@ -468,6 +502,56 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			realturf |= (xisbad * 1) | (yisbad * 2) | (zisbad * 4)
 
 		return realturf
+
+	proc/lrtsend(var/place)
+		if (!ON_COOLDOWN(src, "busy", 5 SECOND))
+			if (place && (place in special_places))
+				var/turf/target = null
+				for(var/turf/T in landmarks[LANDMARK_LRT])
+					var/name = landmarks[LANDMARK_LRT][T]
+					if(name == place)
+						target = T
+						break
+				if (!target) //we didnt find a turf to send to
+					return 0
+				flick("[src.icon_state]-act", src)
+				playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
+				use_power(1500)
+				for(var/atom/movable/M in src.loc)
+					if(M.anchored)
+						continue
+					animate_teleport(M)
+					if(ismob(M))
+						var/mob/O = M
+						O.changeStatus("stunned", 2 SECONDS)
+					SPAWN(6 DECI SECONDS) do_teleport(M,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
+				return 1
+			return 0
+
+	proc/lrtreceive(var/place)
+		if (!ON_COOLDOWN(src, "busy", 5 SECOND))
+			if (place && (place in special_places))
+				var/turf/target = null
+				for(var/turf/T in landmarks[LANDMARK_LRT])
+					var/name = landmarks[LANDMARK_LRT][T]
+					if(name == place)
+						target = T
+						break
+				if (!target) //we didnt find a turf to send to
+					return 0
+				flick("[src.icon_state]-act", src)
+				playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
+				use_power(1500)
+				for(var/atom/movable/M in target)
+					if(M.anchored)
+						continue
+					animate_teleport(M)
+					if(ismob(M))
+						var/mob/O = M
+						O.changeStatus("stunned", 2 SECONDS)
+					SPAWN(6 DECI SECONDS) do_teleport(M,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
+				return 1
+			return 0
 
 	proc/send(var/turf/target)
 		if (!target)
@@ -800,7 +884,6 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				new summon(src.loc)
 				return
 
-
 TYPEINFO(/obj/machinery/networked/teleconsole)
 	mats = 14
 
@@ -984,8 +1067,17 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			"isPanelOpen" = panel_open,
 			"padNum" = padNum,
 			"maxBookmarks" = max_bookmarks,
-			"bookmarks" = list()
+			"bookmarks" = list(),
+			"destinations" = list(),
 		)
+
+		if (length(special_places))
+			.["destinations"] = list()
+
+			for(var/A in special_places)
+				.["destinations"] += list(list(
+					"ref" = ref(A),
+					"name" = "[A]"))
 
 		if (length(bookmarks) > 0)
 			.["bookmarks"] = list()
@@ -1016,6 +1108,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				ztarget = clamp(text2num(params["value"]), 0, 14)
 				coord_update_flag = TRUE
 				. = TRUE
+
 			if ("send")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				if (!host_id)
@@ -1122,10 +1215,27 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 						old_host_id = old
 				. = TRUE
 
-
 			if ("setpad")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				src.padNum = (src.padNum & 3) + 1
+				. = TRUE
+
+			if("lrt_send")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (!host_id)
+					boutput(usr, SPAN_ALERT("Error: No host connection!"))
+					return
+
+				message_host("command=teleman&args=-p [padNum] lrt send place=[replacetext(params["name"], " ", "_")]")
+				. = TRUE
+
+			if("lrt_receive")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (!host_id)
+					boutput(usr, SPAN_ALERT("Error: No host connection!"))
+					return
+
+				message_host("command=teleman&args=-p [padNum] lrt receive place=[replacetext(params["name"], " ", "_")]")
 				. = TRUE
 
 	proc/message_host(var/message, var/datum/computer/file/file)
@@ -1139,4 +1249,5 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			src.post_file(src.host_id,"data",message, file)
 		else
 			src.post_status(src.host_id,"command","term_message","data",message)
+
 

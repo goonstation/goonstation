@@ -6,8 +6,8 @@
  * @license ISC
  */
 
-import { useBackend } from '../../backend';
-import { Button, Icon, Section } from '../../components';
+import { useBackend, useSharedState } from '../../backend';
+import { Button, Icon, LabeledList, Section, Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { BookmarksSection } from './BookmarksSection';
 import { ConnectionSection } from './ConnectionSection';
@@ -15,9 +15,16 @@ import { CoordinatesSection } from './CoordinatesSection';
 import type { TeleConsoleData } from './types';
 import { formatReadout } from './util';
 
+const Tab = {
+  Local: 'local',
+  LongRange: 'lrt',
+};
+
 export const TeleConsole = (_props, context) => {
   const { act, data } = useBackend<TeleConsoleData>(context);
-  const { xTarget, yTarget, zTarget, hostId, bookmarks, readout, isPanelOpen, padNum, maxBookmarks } = data;
+  const [tab, setTab] = useSharedState(context, 'tab', Tab.Local);
+  const { xTarget, yTarget, zTarget, hostId, bookmarks,
+    readout, isPanelOpen, padNum, maxBookmarks, destinations } = data;
   const isConnectedToHost = !!hostId;
 
   const handleAddBookmark = (name: string) => act('addbookmark', { value: name });
@@ -30,39 +37,108 @@ export const TeleConsole = (_props, context) => {
   return (
     <Window theme="ntos" width={400} height={515}>
       <Window.Content textAlign="center">
-        <CoordinatesSection />
-        <Section>
-          <Button icon="sign-out-alt" onClick={() => act('send')} disabled={!isConnectedToHost}>
-            Send
-          </Button>
-          <Button icon="sign-in-alt" onClick={() => act('receive')} disabled={!isConnectedToHost}>
-            Receive
-          </Button>
-          <Button onClick={() => act('portal')} disabled={!isConnectedToHost}>
-            <Icon name="ring" rotation={90} />
-            Toggle Portal
-          </Button>
-          <Button icon="magnifying-glass" onClick={() => act('scan')} disabled={!isConnectedToHost}>
-            Scan
-          </Button>
-        </Section>
-        {readout && <Section>{formatReadout(readout)}</Section>}
-        <BookmarksSection
-          bookmarks={bookmarks}
-          maxBookmarks={maxBookmarks}
-          onAddBookmark={handleAddBookmark}
-          onDeleteBookmark={handleDeleteBookmark}
-          onRestoreBookmark={handleRestoreBookmark}
-          targetCoords={[xTarget, yTarget, zTarget]}
-        />
-        <ConnectionSection
-          isConnected={isConnectedToHost}
-          isPanelOpen={!!isPanelOpen}
-          onCyclePad={handleCyclePad}
-          onReset={handleResetConnect}
-          onRetry={handleRetryConnect}
-          padNum={padNum}
-        />
+        <Stack vertical fill>
+          <Stack.Item>
+            <Tabs>
+              <Tabs.Tab
+                icon="box"
+                selected={tab === Tab.Local}
+                onClick={() => setTab(Tab.Local)}
+              >
+                Local
+              </Tabs.Tab>
+              <Tabs.Tab
+                icon="wrench"
+                selected={tab === Tab.LongRange}
+                onClick={() => setTab(Tab.LongRange)}
+              >
+                Long Range
+              </Tabs.Tab>
+            </Tabs>
+          </Stack.Item>
+
+          {(tab===Tab.Local) && (
+            <Stack.Item>
+              <Section>
+                <CoordinatesSection />
+                <Section>
+                  <Button icon="sign-out-alt" onClick={() => act('send')} disabled={!isConnectedToHost}>
+                    Send
+                  </Button>
+                  <Button icon="sign-in-alt" onClick={() => act('receive')} disabled={!isConnectedToHost}>
+                    Receive
+                  </Button>
+                  <Button onClick={() => act('portal')} disabled={!isConnectedToHost}>
+                    <Icon name="ring" rotation={90} />
+                    Toggle Portal
+                  </Button>
+                  <Button icon="magnifying-glass" onClick={() => act('scan')} disabled={!isConnectedToHost}>
+                    Scan
+                  </Button>
+                </Section>
+                {readout && <Section>{formatReadout(readout)}</Section>}
+                <BookmarksSection
+                  bookmarks={bookmarks}
+                  maxBookmarks={maxBookmarks}
+                  onAddBookmark={handleAddBookmark}
+                  onDeleteBookmark={handleDeleteBookmark}
+                  onRestoreBookmark={handleRestoreBookmark}
+                  targetCoords={[xTarget, yTarget, zTarget]}
+                />
+                <ConnectionSection
+                  isConnected={isConnectedToHost}
+                  isPanelOpen={!!isPanelOpen}
+                  onCyclePad={handleCyclePad}
+                  onReset={handleResetConnect}
+                  onRetry={handleRetryConnect}
+                  padNum={padNum}
+                />
+              </Section>
+            </Stack.Item>
+          )}
+          {(tab===Tab.LongRange) && (
+            <Stack.Item>
+              <Section>
+                <Section title="Destinations">
+                  <LabeledList>
+                    {destinations.length ? destinations.map((d) => (
+                      <div key={d["name"]}>
+                        <LabeledList.Item
+                          label={d["name"]}>
+                          <Button
+                            icon="sign-out-alt"
+                            onClick={() => act("lrt_send", { name: d["name"] })}
+                          >
+                            Send
+                          </Button>
+                          <Button
+                            icon="sign-in-alt"
+                            onClick={() => act("lrt_receive", { name: d["name"] })}
+                          >
+                            Receive
+                          </Button>
+                        </LabeledList.Item>
+                      </div>
+                    )) : (
+                      <LabeledList.Item>
+                        No destinations are currently available.
+                      </LabeledList.Item>
+                    )}
+                  </LabeledList>
+                </Section>
+                {readout && <Section>{formatReadout(readout)}</Section>}
+                <ConnectionSection
+                  isConnected={isConnectedToHost}
+                  isPanelOpen={!!isPanelOpen}
+                  onCyclePad={handleCyclePad}
+                  onReset={handleResetConnect}
+                  onRetry={handleRetryConnect}
+                  padNum={padNum}
+                />
+              </Section>
+            </Stack.Item>
+          )}
+        </Stack>
       </Window.Content>
     </Window>
   );

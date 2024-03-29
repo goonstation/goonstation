@@ -18,6 +18,12 @@ export interface TeleConsoleData {
   padNum: number;
   maxBookmarks: number;
   bookmarks: BookmarkData[];
+  destinations: LongRangeData[];
+}
+
+export interface LongRangeData {
+  ref: string;
+  name: string;
 }
 
 export interface BookmarkData {

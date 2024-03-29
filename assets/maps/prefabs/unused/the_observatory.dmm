@@ -1,0 +1,1312 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bo" = (
+/obj/decal/fakeobjects/teleport_pad{
+	name = "prototype receiver pad"
+	},
+/obj/item/casing/medium{
+	dir = 9;
+	rand_pos = 1
+	},
+/obj/item/casing/medium{
+	dir = 6;
+	rand_pos = 1
+	},
+/obj/item/casing/medium{
+	dir = 5;
+	rand_pos = 1
+	},
+/obj/item/casing/medium{
+	dir = 4;
+	rand_pos = 1
+	},
+/turf/unsimulated/floor/caution,
+/area/space)
+"bK" = (
+/turf/unsimulated/floor/caution/north,
+/area/space)
+"bW" = (
+/obj/grille/catwalk{
+	dir = 6
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
+"cG" = (
+/turf/unsimulated/floor/blackwhite{
+	dir = 1
+	},
+/area/space)
+"dr" = (
+/obj/grille/catwalk{
+	dir = 10
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
+"ew" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"ex" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/noodlecup{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/white/grime,
+/area/space)
+"ey" = (
+/turf/unsimulated/floor/blackwhite{
+	dir = 6
+	},
+/area/space)
+"fa" = (
+/turf/unsimulated/floor/caution/corner/nw,
+/area/space)
+"fI" = (
+/obj/stool/chair/dining/wood,
+/turf/simulated/floor/white/grime,
+/area/space)
+"gT" = (
+/obj/machinery/power/solar/east{
+	id = "derelict_ai_sat"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/space)
+"hO" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/space)
+"iu" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4
+	},
+/turf/simulated/floor/white/grime,
+/area/space)
+"iI" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/space,
+/area/space)
+"kg" = (
+/obj/machinery/door/airlock/pyro/classic{
+	name = "Bathroom"
+	},
+/turf/simulated/floor/grime,
+/area/space)
+"kh" = (
+/turf/unsimulated/floor/blackwhite{
+	dir = 8
+	},
+/area/space)
+"kv" = (
+/obj/machinery/light/emergencyflashing{
+	dir = 1
+	},
+/turf/unsimulated/floor/blackwhite/whitegrime/other,
+/area/space)
+"lu" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
+"lv" = (
+/obj/table/auto,
+/turf/unsimulated/floor/blackwhite/whitegrime,
+/area/space)
+"lI" = (
+/obj/machinery/communications_dish,
+/obj/lattice,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/space,
+/area/space)
+"nc" = (
+/obj/table/auto,
+/turf/unsimulated/floor/blackwhite/whitegrime/other,
+/area/space)
+"ne" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/white/grime,
+/area/space)
+"pk" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/space)
+"sf" = (
+/obj/machinery/power/solar/east{
+	id = "derelict_ai_sat"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/space)
+"sk" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
+"tX" = (
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/space)
+"uh" = (
+/obj/machinery/bathtub{
+	anchored = 1;
+	dir = 4
+	},
+/obj/machinery/shower{
+	dir = 8;
+	pixel_y = 6
+	},
+/obj/item/mop,
+/turf/simulated/floor/white/grime,
+/area/space)
+"uv" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/space,
+/area/space)
+"uD" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/space)
+"vk" = (
+/turf/unsimulated/floor/blackwhite{
+	dir = 10
+	},
+/area/space)
+"wF" = (
+/obj/machinery/door/airlock/pyro/classic{
+	name = "Bathroom"
+	},
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 1;
+	name = "Crew Quarters";
+	tag = null
+	},
+/turf/simulated/floor/grime,
+/area/space)
+"xz" = (
+/obj/item/storage/wall/random,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/obj/decal/cleanable/cobweb2,
+/turf/unsimulated/floor/blackwhite/whitegrime/other,
+/area/space)
+"yg" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"yC" = (
+/obj/item/circuitboard/telescope,
+/obj/table/auto/desk,
+/obj/item/scrap,
+/obj/item/raw_material/shard/glass{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/blackwhite/whitegrime/other,
+/area/space)
+"Bh" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/space)
+"Bv" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "The power cord seems to have been completely ripped off.";
+	icon = 'icons/obj/computer_frame_desk.dmi';
+	icon_state = "1";
+	name = "broken computer";
+	pixel_y = 8
+	},
+/obj/table/auto/desk,
+/obj/decoration/bullethole,
+/turf/unsimulated/floor/blackwhite/whitegrime/other,
+/area/space)
+"Cu" = (
+/turf/space,
+/area/space)
+"DQ" = (
+/obj/item/storage/toilet/random{
+	dir = 8;
+	tag = "icon-toilet (WEST)"
+	},
+/mob/living/critter/small_animal/cockroach,
+/turf/simulated/floor/white/grime,
+/area/space)
+"Eo" = (
+/obj/drink_rack/mug{
+	amount_on_rack = 3;
+	icon_state = "mugrack3";
+	pixel_y = 31
+	},
+/obj/table/auto,
+/obj/machinery/coffeemaker/research,
+/turf/simulated/floor/white/grime,
+/area/space)
+"Fq" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/space)
+"Fw" = (
+/obj/machinery/door/airlock/pyro/classic{
+	name = "Kitchen Door"
+	},
+/turf/simulated/floor/grime,
+/area/space)
+"FT" = (
+/obj/stool/chair/office/blue{
+	dir = 4;
+	tag = "icon-office_chair_blue (EAST)"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "drip2b"
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/blackwhite/whitegrime/other,
+/area/space)
+"Gl" = (
+/obj/overlay{
+	density = 1;
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "airlock_closed";
+	name = "broken airlock"
+	},
+/turf/unsimulated/wall/auto/adventure/fake_window,
+/area/space)
+"Ha" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/white/grime,
+/area/space)
+"Hs" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/space,
+/area/space)
+"Ik" = (
+/turf/unsimulated/floor/blackwhite/whitegrime,
+/area/space)
+"La" = (
+/turf/unsimulated/floor/blackwhite{
+	dir = 5
+	},
+/area/space)
+"Le" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/space,
+/area/space)
+"Lf" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/space,
+/area/space)
+"Lx" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/space,
+/area/space)
+"LK" = (
+/turf/simulated/floor/white/grime,
+/area/space)
+"Mr" = (
+/obj/decal/fakeobjects/vacuumtape{
+	desc = "A large switchboard of some kind.";
+	icon_state = "gannets_machine10";
+	name = "automated bank switch"
+	},
+/turf/unsimulated/floor/blackwhite/whitegrime,
+/area/space)
+"Mu" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/power/tracker{
+	id = "owl"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/space,
+/area/space)
+"My" = (
+/obj/storage/secure/closet/fridge{
+	desc = "A staff fridge. This one is filthy.";
+	name = "gross refrigerator"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/spaghetti,
+/obj/item/reagent_containers/food/snacks/yuck,
+/obj/item/reagent_containers/food/drinks/cola,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/turf/simulated/floor/white/grime,
+/area/space)
+"Nr" = (
+/turf/unsimulated/floor/blackwhite{
+	dir = 9
+	},
+/area/space)
+"OG" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/space,
+/area/space)
+"PQ" = (
+/obj/computerframe{
+	anchored = 1;
+	desc = "It is highly unlikely that this still works.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	name = "smashed computer"
+	},
+/turf/unsimulated/floor/blackwhite/whitegrime,
+/area/space)
+"Qq" = (
+/turf/unsimulated/floor/blackwhite{
+	dir = 4
+	},
+/area/space)
+"Re" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"RX" = (
+/turf/unsimulated/floor/blackwhite/whitegrime/other,
+/area/space)
+"TM" = (
+/obj/dialogueobj/engineerscorpse,
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid1"
+	},
+/obj/item/device/audio_log{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/blackwhite/whitegrime,
+/area/space)
+"Uo" = (
+/turf/unsimulated/floor/caution/west,
+/area/space)
+"Uy" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"Vc" = (
+/obj/decal/fakeobjects/vacuumtape{
+	desc = "This is probably the storage for said archives. Probably. Maybe it's just a bunch of tapes. Shame Bradbury II's data tapes are way too big for this thing."
+	},
+/obj/decoration/bullethole{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/blackwhite/whitegrime,
+/area/space)
+"Vy" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
+"VE" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/turf/simulated/floor/white/grime,
+/area/space)
+"VY" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"Wn" = (
+/turf/unsimulated/wall/auto/adventure/fake_window,
+/area/space)
+"Wz" = (
+/turf/unsimulated/floor/blackwhite,
+/area/space)
+"WF" = (
+/obj/table/auto,
+/obj/machinery/microwave,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/white/grime,
+/area/space)
+"Xa" = (
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 15
+	},
+/obj/decal/cleanable/water,
+/turf/simulated/floor/white/grime,
+/area/space)
+"Yo" = (
+/obj/grille/catwalk,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
+"YB" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/power/tracker{
+	id = "owl"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/space,
+/area/space)
+
+(1,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+yg
+Cu
+Cu
+Cu
+YB
+Cu
+Cu
+Cu
+yg
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(2,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+sf
+sf
+sf
+sf
+sf
+sf
+Cu
+uv
+Cu
+sf
+sf
+sf
+sf
+sf
+sf
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(3,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+dr
+Yo
+Yo
+Yo
+Yo
+Yo
+sk
+lu
+sk
+Yo
+Yo
+Yo
+Yo
+Yo
+bW
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(4,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+gT
+gT
+gT
+gT
+gT
+gT
+Cu
+Fq
+Cu
+gT
+gT
+gT
+gT
+gT
+gT
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(5,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Uy
+Cu
+Cu
+Cu
+Fq
+Cu
+Cu
+Cu
+Uy
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(6,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+tX
+Wn
+Wn
+Wn
+tX
+tX
+Gl
+tX
+tX
+Wn
+Wn
+Wn
+tX
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(7,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+tX
+Nr
+kh
+kh
+kh
+kh
+kh
+kh
+kh
+kh
+kh
+vk
+tX
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(8,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+tX
+cG
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Wz
+tX
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(9,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+tX
+cG
+Ik
+Ik
+Ik
+Ik
+kg
+ne
+Ha
+uh
+Vy
+Wz
+tX
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(10,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+tX
+cG
+Vy
+kv
+RX
+RX
+Vy
+Xa
+DQ
+LK
+Vy
+Wz
+tX
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(11,1,1) = {"
+Cu
+Cu
+pk
+Cu
+Cu
+Cu
+ew
+tX
+cG
+Wn
+Vc
+Ik
+Ik
+Vy
+Vy
+Vy
+Vy
+Vy
+Wz
+tX
+Re
+Cu
+Cu
+Cu
+pk
+Cu
+"}
+(12,1,1) = {"
+Cu
+hO
+Hs
+iI
+iI
+iI
+Lf
+Wn
+cG
+Wn
+Bv
+FT
+RX
+RX
+nc
+Vy
+RX
+wF
+Wz
+Wn
+Lf
+iI
+iI
+iI
+Lx
+Bh
+"}
+(13,1,1) = {"
+Cu
+Cu
+lI
+Cu
+Cu
+Cu
+ew
+Wn
+cG
+Wn
+PQ
+TM
+Ik
+Ik
+lv
+Vy
+xz
+Vy
+Wz
+Wn
+Re
+Cu
+Cu
+Cu
+lI
+Cu
+"}
+(14,1,1) = {"
+Cu
+hO
+Le
+iI
+iI
+iI
+Lf
+Wn
+cG
+Wn
+yC
+RX
+RX
+Vy
+Vy
+Vy
+Vy
+Vy
+Wz
+Wn
+Lf
+iI
+iI
+iI
+OG
+Bh
+"}
+(15,1,1) = {"
+Cu
+Cu
+uD
+Cu
+Cu
+Cu
+ew
+tX
+cG
+Wn
+Mr
+Ik
+Ik
+Vy
+My
+iu
+LK
+Fw
+Wz
+tX
+Re
+Cu
+Cu
+Cu
+uD
+Cu
+"}
+(16,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+tX
+cG
+Vy
+kv
+fa
+Uo
+Vy
+WF
+Ha
+VE
+Vy
+Wz
+tX
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(17,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+tX
+cG
+Ik
+Ik
+bK
+bo
+Vy
+Eo
+fI
+ex
+Vy
+Wz
+tX
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(18,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+tX
+cG
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Wz
+tX
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(19,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+tX
+La
+Qq
+Qq
+Qq
+Qq
+Qq
+Qq
+Qq
+Qq
+Qq
+ey
+tX
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(20,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+tX
+Wn
+Wn
+Wn
+tX
+tX
+Gl
+tX
+tX
+Wn
+Wn
+Wn
+tX
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(21,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Uy
+Cu
+Cu
+Cu
+Fq
+Cu
+Cu
+Cu
+Uy
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(22,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+sf
+sf
+sf
+sf
+sf
+sf
+Cu
+Fq
+Cu
+sf
+sf
+sf
+sf
+sf
+sf
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(23,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+dr
+Yo
+Yo
+Yo
+Yo
+Yo
+sk
+lu
+sk
+Yo
+Yo
+Yo
+Yo
+Yo
+bW
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(24,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+gT
+gT
+gT
+gT
+gT
+gT
+Cu
+uv
+Cu
+gT
+gT
+gT
+gT
+gT
+gT
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(25,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+VY
+Cu
+Cu
+Cu
+Mu
+Cu
+Cu
+Cu
+VY
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
+(26,1,1) = {"
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+Cu
+"}
