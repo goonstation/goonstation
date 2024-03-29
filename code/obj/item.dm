@@ -319,7 +319,7 @@ ABSTRACT_TYPE(/obj/item)
 		src.health = get_initial_item_health(src.type)
 
 	..()
-	if (src.contraband > 0)
+	if (src.contraband != 0)
 		if (istype(src, /obj/item/gun))
 			AddComponent(/datum/component/contraband, 0, src.contraband)
 		else

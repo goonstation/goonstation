@@ -1132,6 +1132,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	item_state = "nanotrasen_top"
 	interesting = "You notice blue paint peeling off the hat, revealing red fabric."
 	c_flags = SPACEWEAR
+	contraband = -2 //we trust our employees, right?
 	is_syndicate = TRUE
 	cant_self_remove = TRUE
 	item_function_flags = IMMUNE_TO_ACID
@@ -1188,6 +1189,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "Reserved for Nanotrasen's finest."
 	icon_state = "nanotrasen_top_biggest"
 	item_state = "nanotrasen_top_biggest"
+	contraband = -100
 
 /obj/item/clothing/head/witchfinder
 	name = "witchfinder general's hat"

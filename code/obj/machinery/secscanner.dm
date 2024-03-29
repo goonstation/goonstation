@@ -249,10 +249,6 @@ TYPEINFO(/obj/machinery/secscanner)
 		if(istype(perp_id, /obj/item/card/id/syndicate))
 			threatcount -= 2
 
-		//Nanotrasen Hat lowers thy threatlevel, we trust our employees, right?
-		if(istype(perp.head, /obj/item/clothing/head/bighat/nanotrasen))
-			threatcount -= 2
-
 		// we have grounds to make an arrest, don't bother with further analysis
 		if(threatcount >= 4)
 			return threatcount
