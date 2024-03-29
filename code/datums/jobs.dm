@@ -950,7 +950,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_poc1 = list(/obj/item/cloth/towel/bar)
 	slot_poc2 = list(/obj/item/reagent_containers/food/drinks/cocktailshaker)
-	items_in_backpack = list(/obj/item/gun/kinetic/sawnoff, /obj/item/ammo/bullets/abg, /obj/item/paper/book/from_file/pocketguide/bartending,/obj/item/shaker_stones)
+	items_in_backpack = list(/obj/item/gun/kinetic/sawnoff, /obj/item/ammo/bullets/abg, /obj/item/paper/book/from_file/pocketguide/bartending)
 	wiki_link = "https://wiki.ss13.co/Bartender"
 
 	New()

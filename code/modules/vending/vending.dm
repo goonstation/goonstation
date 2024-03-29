@@ -2774,7 +2774,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/fruit_wedges, 1)
 		product_list += new/datum/data/vending_product(/obj/item/shaker/salt, 1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cocktailshaker, 1)
-		product_list += new/datum/data/vending_product(/obj/item/shaker_stones, 1)
+		product_list += new/datum/data/vending_product(/obj/item/shaker_stones, 2)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)
