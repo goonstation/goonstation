@@ -2042,19 +2042,43 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	can_recycle = 0
 	can_chug = 0
 
+	var/obj/item/shaker_stones/shakerstones
+
 	New()
 		..()
 		src.reagents.inert = 1
 
+	attackby(obj/item/thing, mob/user)
+		if (istype(thing, /obj/item/shaker_stones))
+			var/obj/item/shaker_stones/stones = thing
+			if (shakerstones)
+				boutput(user, SPAN_ALERT("This shaker already has thermal stones!"))
+				return
+			else
+				user.drop_item(thing)
+				stones.set_loc(src)
+				boutput(user, SPAN_NOTICE("You place the cubes inside \the [src.name]."))
+				shakerstones = thing
+				return
+		..()
 	attack_self(mob/user)
 		if (src.reagents.total_volume > 0)
 			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].", group="shaker_shake")
 			playsound(src, 'sound/items/CocktailShake.ogg', 25, TRUE, -6)
 			sleep (0.3 SECONDS)
 			src.reagents.inert = 0
+			if (shakerstones)
+				switch (shakerstones.mode)
+					if ("heat")
+						src.reagents.temperature_reagents(T20C+70, 120, 10000, 5, 0)
+					if ("cool")
+						src.reagents.temperature_reagents(T0C-5, 120, 10000, 5, 0)
+					if ("normalise")
+						src.reagents.temperature_reagents(T20C, 120, 10000, 5, 0)
 			src.reagents.physical_shock(rand(5, 20))
 			src.reagents.handle_reactions()
 			src.reagents.inert = 1
+			update_icon()
 			if ((user.mind.assigned_role == "Bartender") && !ON_COOLDOWN(user, "bartender shaker xp", 180 SECONDS))
 				JOB_XP(user, "Bartender", 2)
 			if (user.mind && user.mind.objectives)
@@ -2064,12 +2088,72 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 							O.completed |= 1 << i-1
 		else
 			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
+	attack_hand(mob/user)
+		if ((user.l_hand == src || user.r_hand == src)  && shakerstones)
+			shakerstones.loc = get_turf(src.loc)
+			user.put_in_hand_or_drop(shakerstones)
+			shakerstones = null
+			boutput(user, SPAN_NOTICE("You remove the thermal cubes from \the [src.name]."))
+			return
+		..()
+
+	on_reagent_change()
+		..()
+		src.UpdateIcon()
+
+	update_icon()
+		..()
+		if (src.reagents.total_volume == 0)
+			icon_state = initial(icon_state)
+			return
+		if (src.reagents.total_temperature >= (T0C+97))
+			icon_state = initial(icon_state)+"_hot"
+		else if (src.reagents.total_temperature > (T0C+30)) //beer can be our barometer here
+			icon_state = initial(icon_state)+"_warm"
+		else if (src.reagents.total_temperature <= (T0C-23))
+			icon_state = initial(icon_state)+"_freeze"
+		else if (src.reagents.total_temperature <= (T0C+7))
+			icon_state = initial(icon_state)+"_cool"
+		else
+			icon_state = initial(icon_state)
 
 /obj/item/reagent_containers/food/drinks/cocktailshaker/golden
 	name = "golden cocktail shaker"
 	desc = "A golden plated tumbler with a top, used to mix cocktails. Can hold up to 120 units. So rich! So opulent! So... tacky."
 	icon_state = "golden_cocktailshaker"
 
+/obj/item/shaker_stones
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "cubes_blue"
+	name = "thermal shaker stones"
+	desc = "A testament to space-bartending. These metal 'stones' can be placed in a cocktail shaker to heat or cool beverages when shaken."
+	w_class = W_CLASS_TINY
+	var/mode = "cool"
+	attack_self(mob/user)
+		if (mode == "cool")
+			mode = "heat"
+			icon_state = "cubes_red"
+		else if (mode == "heat")
+			mode = "normalise"
+			icon_state = "cubes_white"
+		else if (mode == "normalise")
+			mode = "cool"
+			icon_state = "cubes_blue"
+		boutput(user, SPAN_NOTICE("You set the cubes to [mode] beverages."))
+
+	attackby(obj/item/thing, mob/user)
+		if (istype(thing, /obj/item/reagent_containers/food/drinks/cocktailshaker))
+			var/obj/item/reagent_containers/food/drinks/cocktailshaker/shaker = thing
+			if (shaker.shakerstones)
+				boutput(user, SPAN_ALERT("This shaker already has thermal stones!"))
+				return
+			else
+				user.drop_item(src)
+				src.set_loc(shaker)
+				shaker.shakerstones = src
+				boutput(user, SPAN_NOTICE("You place the cubes inside \the [src.name]."))
+				return
+		..()
 /obj/item/reagent_containers/food/drinks/creamer
 	name = "coffee creamer"
 	desc = "A bottle of dairy-based coffee creamer. It's been left out at room temperature for a bit too long, don't you think?"
