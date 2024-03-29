@@ -204,11 +204,8 @@
 	generated_moolah += undistributed_earnings
 	undistributed_earnings = 0
 
-	// the double chief engineer seems to be intentional however silly it may seem
-	var/list/accounts = \
-		data_core.bank.find_records("job", "Chief Engineer") + \
-		data_core.bank.find_records("job", "Chief Engineer") + \
-		data_core.bank.find_records("job", "Engineer")
+	// CE gets double the payout share from the PTL
+	var/list/accounts = FindBankAccountsByJobs(list("Chief Engineer", "Chief Engineer", "Engineer"))
 
 	if(!length(accounts)) // no engineering staff but someone still started the PTL
 		wagesystem.station_budget += generated_moolah

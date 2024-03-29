@@ -28,10 +28,9 @@
 #define FIELDNUM_ALGDET 16
 #define FIELDNUM_DISEASE 17
 #define FIELDNUM_DISDET 18
-#define FIELDNUM_TRAITS 19
-#define FIELDNUM_CLDEF 20
-#define FIELDNUM_CLDET 21
-#define FIELDNUM_NOTES  22
+#define FIELDNUM_CLDEF 19
+#define FIELDNUM_CLDET 20
+#define FIELDNUM_NOTES  21
 
 #define FIELDNUM_DELETE "d"
 #define FIELDNUM_NEWREC 99
@@ -180,7 +179,6 @@
 							<br><br>Details: [src.active_medical["alg_d"]]
 							<br><br><br>Current Diseases: [src.active_medical["cdi"]] (per disease info placed in log/comment section)
 							<br>Details: [src.active_medical["cdi_d"]]<br><br><br>
-							<br>Traits: [src.active_medical["traits"]]<br><br><br>
 							<br>Cloner Defects: [src.active_medical["cl_def"]]<br>
 							<br>Details: [src.active_medical["cl_def_d"]]<br><br><br>
 							Important Notes:<br>
@@ -248,8 +246,6 @@
 						R["cl_def_d"] = MEDREC_CLONE_DEFECT_DEFAULT
 						R["notes"] = "No notes."
 						R["h_imp"] = MEDREC_NO_IMPLANT
-
-						R["traits"] = "No known traits."
 						data_core.medical.add_record(R)
 						src.active_medical = R
 
@@ -482,18 +478,6 @@
 
 						if (ckey(inputText))
 							src.active_medical["cl_def_d"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
-						else
-							return
-
-
-					if (FIELDNUM_TRAITS)
-						if (!src.active_medical)
-							src.print_text("No medical record loaded!")
-							src.menu = MENU_IN_RECORD
-							return
-
-						if (ckey(inputText))
-							src.active_medical["traits"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
 						else
 							return
 
@@ -773,7 +757,6 @@
 				<br>\[[FIELDNUM_ALGDET]]Details: [src.active_medical["alg_d"]]
 				<br>\[[FIELDNUM_DISEASE]]<br>Current Diseases: [src.active_medical["cdi"]] (per disease info placed in log/comment section)
 				<br>\[[FIELDNUM_DISDET]]Details: [src.active_medical["cdi_d"]]
-				<br>\[[FIELDNUM_TRAITS]]Traits: [src.active_medical["traits"]]
 				<br>\[[FIELDNUM_CLDEF]]<br>Cloner Defects: [src.active_medical["cl_def"]]
 				<br>\[[FIELDNUM_CLDET]]Details: [src.active_medical["cl_def_d"]]
 				<br>\[[FIELDNUM_NOTES]]Important Notes:
@@ -836,7 +819,6 @@
 #undef FIELDNUM_ALGDET
 #undef FIELDNUM_DISEASE
 #undef FIELDNUM_DISDET
-#undef FIELDNUM_TRAITS
 #undef FIELDNUM_NOTES
 
 #undef FIELDNUM_DELETE
