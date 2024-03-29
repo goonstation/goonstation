@@ -404,7 +404,7 @@ proc/broadcast_to_all_gangs(var/message)
 	/// Strings used to build PDA messages sent to civilians.
 	var/static/gangGreetings[] = list("yo", "hey","hiya","oi", "psst", "pssst" )
 	var/static/gangIntermediates[] = list("don't ask how I got your number.","heads up.", "help us out.")
-	var/static/gangEndings[] = list("best of luck.", "maybe help them, yeah?", "stay in line and you'll probably live.", "don't think of stealing it.")
+	var/static/gangEndings[] = list("help them, or they might break yer' knees.", "stay in line and you'll probably live.", "don't fuck this up, or you're next.", "don't fuck this up.")
 
 	proc/living_member_count()
 		var/result = 0
@@ -931,9 +931,8 @@ proc/broadcast_to_all_gangs(var/message)
 		loot.owning_gang = ownerGang
 		loot.start_area = get_area(loot.loc)
 
-		message += " there are folks aboard who will probably come looking. "
-		if (prob(40))
-			message += pick(gangEndings)
+		message += " don't try to take it for yourself, you hear? we've got folk aboard who will come by and ask you for this information. "
+		message += pick(gangEndings)
 
 		return message
 
