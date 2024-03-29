@@ -113,10 +113,10 @@
 					minorDisabilities.Add(T.disability_name)
 					minorDisabilityDesc.Add(T.disability_desc)
 
-	if(minorDisabilities.len)
+	if(length(minorDisabilities))
 		M["mi_dis"] = jointext(minorDisabilities, ", ")
 		M["mi_dis_d"] = jointext(minorDisabilityDesc, ". ")
-	if(majorDisabilities.len)
+	if(length(majorDisabilities))
 		M["ma_dis"] = jointext(majorDisabilities, ", ")
 		M["ma_dis_d"] = jointext(majorDisabilityDesc, ". ")
 
