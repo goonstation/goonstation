@@ -1125,6 +1125,71 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		else
 			return 0
 
+/obj/item/clothing/head/bighat/nanotrasen
+	name = "nanotrasen hat"
+	desc = "You must really love your job!"
+	icon_state = "nanotrasen_top"
+	item_state = "nanotrasen_top"
+	interesting = "You notice blue paint peeling off the hat, revealing red fabric."
+	c_flags = SPACEWEAR
+	contraband = -10 //very legal hat
+	is_syndicate = TRUE
+	cant_self_remove = TRUE
+	item_function_flags = IMMUNE_TO_ACID
+	var/datum/component/loctargeting/sm_light/light_c
+	var/processing = FALSE
+
+	process()
+		var/mob/living/host = src.loc
+		if (!istype(host))
+			processing_items.Remove(src)
+			processing = FALSE
+			return
+		if(prob(20) && !istype(src.loc, /obj/cryotron))
+			var/turf/T = get_turf(src)
+			T?.fluid_react_single("lavender_essence", 5, airborne = TRUE)
+
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 6)
+
+	New()
+		..()
+		light_c = src.AddComponent(/datum/component/loctargeting/sm_light, 57, 92, 198, 240)
+		light_c.update(TRUE)
+
+	unequipped(mob/user)
+		..()
+		logTheThing(LOG_COMBAT, user, "unequipped [src] at [log_loc(src)].")
+		processing_items.Remove(src)
+		processing = FALSE
+		return
+
+	equipped(var/mob/user, var/slot)
+		..()
+		logTheThing(LOG_COMBAT, user, "equipped [src] at [log_loc(src)].")
+		if (!src.processing)
+			src.processing++
+			processing_items |= src
+		boutput(user, SPAN_NOTICE("You gain the sudden urge to file paperwork and whatnot."))
+		SPAWN(1 SECOND)
+			playsound(src.loc, 'sound/vox/back.ogg', 100, 1)
+			sleep(1 SECOND)
+			playsound(src.loc, 'sound/vox/to.ogg', 100, 1)
+			sleep(1.2 SECOND)
+			playsound(src.loc, 'sound/vox/work.ogg', 100, 1)
+
+	custom_suicide = TRUE
+	suicide_in_hand = FALSE
+	suicide(var/mob/user as mob)
+		boutput(user, SPAN_NOTICE("Your shift is not over yet!"))
+
+/obj/item/clothing/head/bighat/nanotrasen/biggest
+	name = "very nanotrasen hat"
+	desc = "Reserved for Nanotrasen's best of the best."
+	icon_state = "nanotrasen_top_biggest"
+	item_state = "nanotrasen_top_biggest"
+
 /obj/item/clothing/head/witchfinder
 	name = "witchfinder general's hat"
 	desc = "To hide most of your emotionless facial features."

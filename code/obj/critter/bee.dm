@@ -48,7 +48,8 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	"butt-nc","butt-plant","butt-cyber","purplebutt","santa","yellow","blue","red","green","black","white",
 	"psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","viking","dolan",
 	"camhat","redcamhat","mailcap","paper","policehelm","bikercap","apprentice","chavcap","flatcap","ntberet",
-	"captain-fancy","rank-fancy","mime_beret","mime_bowler","buckethat", "syndicate_top", "syndicate_top_biggest", "lesbeean")
+	"captain-fancy","rank-fancy","mime_beret","mime_bowler","buckethat", "syndicate_top", "syndicate_top_biggest",
+	"nanotrasen_top", "nanotrasen_top_biggest", "lesbeean")
 
 	var/sleep_y_offset = 5 // this amount removed from the hat's pixel_y on sleep or death
 	var/hat_y_offset = 0
@@ -495,8 +496,8 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		src.hat = ourHat
 
 		// TIME. FOR. CRIME.
-		if (istype(src.hat, /obj/item/clothing/head/bighat/syndicate))
-			var/obj/item/clothing/head/bighat/syndicate/beeBigHat = src.hat
+		if (istype(src.hat, /obj/item/clothing/head/bighat))
+			var/obj/item/clothing/head/bighat/beeBigHat = src.hat
 			var/icon/workingIcon = new /icon(beeBigHat.wear_image_icon, beeBigHat.icon_state, SOUTH)
 
 			workingIcon.Shift(SOUTH, 5)
@@ -520,9 +521,12 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 				sleep(1 SECOND)
 				playsound(src.loc, 'sound/vox/great.ogg', 100, 1)
 				sleep(1 SECOND)
-				playsound(src.loc, 'sound/vox/at.ogg', 100, 1)
-				sleep(1 SECOND)
-				playsound(src.loc, 'sound/vox/crime.ogg', 100, 1)
+				if (istype(src.hat, /obj/item/clothing/head/bighat/nanotrasen))
+					playsound(src.loc, 'sound/vox/friend.ogg', 100, 1)
+				if (istype(src.hat, /obj/item/clothing/head/bighat/syndicate))
+					playsound(src.loc, 'sound/vox/at.ogg', 100, 1)
+					sleep(1 SECOND)
+					playsound(src.loc, 'sound/vox/crime.ogg', 100, 1)
 
 			return
 
@@ -835,7 +839,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		/obj/item/clothing/head/apprentice,
 		/obj/item/clothing/head/wizard,
 		/obj/item/clothing/head/wizard/red,
-		/obj/item/clothing/head/bighat/syndicate,
+		/obj/item/clothing/head/bighat/nanotrasen, //replaced Syndi hat with nanotrasen version, feel free to add it back
 		/obj/item/clothing/head/helmet/viking,
 		/obj/item/clothing/head/void_crown
 	)
