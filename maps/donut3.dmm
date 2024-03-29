@@ -21670,7 +21670,7 @@
 /area/station/maintenance/inner/north)
 "gwP" = (
 /obj/displaycase{
-	displayed = /obj/item/captaingun
+	displayed = /obj/item/gun/energy/laser_gun/antique
 	},
 /obj/machinery/light/incandescent/greenish{
 	dir = 1

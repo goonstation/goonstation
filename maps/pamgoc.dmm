@@ -56004,7 +56004,7 @@
 /area/station/crew_quarters/locker)
 "fdV" = (
 /obj/displaycase{
-	displayed = /obj/item/captaingun
+	displayed = /obj/item/gun/energy/laser_gun/antique
 	},
 /obj/window/reinforced{
 	dir = 2

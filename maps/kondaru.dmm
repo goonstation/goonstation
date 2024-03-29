@@ -6547,7 +6547,7 @@
 "aym" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = /obj/item/captaingun;
+	displayed = /obj/item/gun/energy/laser_gun/antique;
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/arcade,

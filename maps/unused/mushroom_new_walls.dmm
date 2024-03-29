@@ -14590,7 +14590,7 @@
 	icon_state = "4-8"
 	},
 /obj/displaycase{
-	displayed = /obj/item/captaingun
+	displayed = /obj/item/gun/energy/laser_gun/antique
 	},
 /turf/simulated/floor/blueblack,
 /area/station/crew_quarters/captain)

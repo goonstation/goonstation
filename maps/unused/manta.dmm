@@ -35729,7 +35729,7 @@
 /area/station/engine/engineering/ce)
 "isu" = (
 /obj/displaycase{
-	displayed = /obj/item/captaingun;
+	displayed = /obj/item/gun/energy/laser_gun/antique;
 	pixel_y = 8
 	},
 /obj/table/wood/auto,

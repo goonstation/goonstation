@@ -20046,7 +20046,7 @@
 /area/station/engine/core)
 "wlm" = (
 /obj/displaycase{
-	displayed = /obj/item/captaingun
+	displayed = /obj/item/gun/energy/laser_gun/antique
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)

@@ -30041,7 +30041,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new/obj/item/captaingun();
+	displayed = new/obj/item/gun/energy/laser_gun/antique();
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/arcade,

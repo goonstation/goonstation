@@ -49255,7 +49255,7 @@
 "hpM" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = /obj/item/captaingun
+	displayed = /obj/item/gun/energy/laser_gun/antique
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/bridge/captain)
