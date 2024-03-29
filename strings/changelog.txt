@@ -1,4 +1,9 @@
 
+(t)fri mar 29 24
+(u)IPingu
+(p)18200
+(e)⚖|C-Balance
+(+)Lowers the bathroom robot's buying prices.
 (t)thu mar 28 24
 (u)glowbold
 (p)18336
