@@ -288,13 +288,12 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 					if(src.customProjectileDamage == CAPTAINGUN_T3_DAMAGE && src.customProjectileCost == CAPTAINGUN_T3_COST)
 						user.unlock_medal("Tinkerer", 1)
 
-
 	canshoot(mob/user)
 		if(!src.evaluate_quality() || src.panelOpen)
 			return FALSE
 		//change the projectile here because this is checked by both gun.shoot_point_blank(), gun.shoot(), and gun.suicide()
 		//which duplicate a horrifying amount of code
-		src.set_current_projectile(new /datum/projectile/laser/custom(src.customProjectileDamage, src.customProjectileCost)
+		src.set_current_projectile(new /datum/projectile/laser/custom(src.customProjectileDamage, src.customProjectileCost))
 		. = ..()
 
 	proc/evaluate_quality()
