@@ -609,6 +609,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	wages = PAY_TRADESMAN
 	receives_badge = TRUE
 	cant_spawn_as_rev = TRUE
+	can_join_gangs = FALSE
 	allow_antag_fallthrough = FALSE
 	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/storage/belt/security/shoulder_holster)
@@ -3054,6 +3055,31 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	name = "Football Player"
 	limit = -1
 	wiki_link = "https://wiki.ss13.co/Game_Modes#Football"
+
+
+/datum/job/special/gang_respawn
+	name = "Gang Respawn"
+	limit = 0
+	wages = 0
+	slot_card = /obj/item/card/id/civilian
+	slot_jump = list(/obj/item/clothing/under/rank/assistant)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	announce_on_join = FALSE
+	add_to_manifest = FALSE
+
+	New()
+		..()
+		src.access = get_access("Staff Assistant")
+		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		var/obj/item/card/id/C = M.get_slot(SLOT_WEAR_ID)
+		C.assignment = "Staff Assistant"
+		C.name = "[C.registered]'s ID Card ([C.assignment])"
+
+
 
 /*---------------------------------------------------------------*/
 

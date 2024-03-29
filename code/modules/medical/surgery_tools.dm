@@ -618,6 +618,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	anchored = ANCHORED
 	density = 0
 	status = REQ_PHYSICAL_ACCESS
+	/// defibrillator, when out of mount
 	var/obj/item/robodefibrillator/mounted/defib = null
 
 	New()
@@ -667,18 +668,18 @@ TYPEINFO(/obj/machinery/defib_mount)
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (W == src.defib)
-			put_back_defib(user)
+			src.put_back_defib()
 
+	/// Check to see if the defib is too far away from the mount.
 	proc/handle_move()
 		if (src.defib && src.defib.loc != src)
 			if (BOUNDS_DIST(src.defib, src) > 0)
-				put_back_defib()
+				src.put_back_defib()
 
+	/// Put the defib back in the mount, by force if necessary.
 	proc/put_back_defib()
 		if (src.defib)
-			if (isliving(src.defib.loc))
-				var/mob/living/L = src.defib.loc
-				L.drop_item(defib) // drop it before moving it back, otherwise its prob on floor
+			src.defib.force_drop(sever=TRUE)
 			src.defib.set_loc(src)
 			src.defib.parent = null
 

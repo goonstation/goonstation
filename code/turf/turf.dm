@@ -38,6 +38,8 @@
 	var/tmp/blocked_dirs = 0
 	/// this turf is allowing unrestricted hotbox reactions
 	var/tmp/allow_unrestricted_hotbox = FALSE
+	/// an associative list of gangs to gang claims, representing who has a claim to, or other ownership on this tile
+	var/list/datum/gangtileclaim/controlling_gangs
 	var/wet = 0
 	throw_unlimited = FALSE //throws cannot stop on this tile if true (also makes space drift)
 

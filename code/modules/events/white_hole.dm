@@ -301,10 +301,10 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/mob/living/carbon/human/normal/miner = 0.1,
 			/obj/item/raw_material/scrap_metal = 4,
 			/obj/machinery/portable_reclaimer = 1,
-			/obj/item/mining_tool/drill = 0.5,
-			/obj/item/mining_tool/power_pick = 0.5,
-			/obj/item/mining_tool/power_shovel = 0.5,
-			/obj/item/mining_tool/powerhammer = 0.5,
+			/obj/item/mining_tool/powered/drill = 0.5,
+			/obj/item/mining_tool/powered/pickaxe = 0.5,
+			/obj/item/mining_tool/powered/shovel = 0.5,
+			/obj/item/mining_tool/powered/hammer = 0.5,
 
 			/obj/critter/gunbot/drone = 0.5,
 			/obj/critter/gunbot/drone/heavydrone = 0.1,
@@ -529,6 +529,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/paper = 2,
 			/obj/item/clothing/suit/cardboard_box/ai = 1,
 			/obj/item/disk/data/floppy/manudrive/ai = 1,
+			/obj/item/aiModule/ability_expansion/doctor_vision = 1,
+			/obj/item/aiModule/ability_expansion/proto_teleman = 0.5
 		),
 		"bridge" = list(
 			/obj/item/reagent_containers/food/drinks/drinkingglass/flute = 10,

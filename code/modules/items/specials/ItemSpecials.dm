@@ -773,9 +773,9 @@
 
 	afterUse(var/mob/person)
 		..()
-		if (istype(master,/obj/item/mining_tool))
-			var/obj/item/mining_tool/M = master
-			if (M.status)
+		if (istype(master, /obj/item/mining_tool/powered))
+			var/obj/item/mining_tool/powered/M = master
+			if (M.is_on)
 				M.process_charges(30)
 
 	pixelaction(atom/target, params, mob/user, reach)
