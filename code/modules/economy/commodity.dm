@@ -431,7 +431,7 @@
 /datum/commodity/drugs/poppies
 	comname = "Poppies"
 	comtype = /obj/item/plant/herb/poppy
-	price = PAY_DOCTORATE/2
+	price = PAY_UNTRAINED
 
 /datum/commodity/drugs/shrooms
 	comname = "Psilocybin"
@@ -1997,7 +1997,7 @@
 	desc = "In respect of those lost during the colonization of the frontier, we are now offering poppies."
 	comtype = /obj/item/plant/herb/poppy
 	onmarket = 0
-	price = PAY_DOCTORATE/2
+	price = PAY_UNTRAINED
 
 /datum/commodity/owlpaint
 	comtype = /obj/item/pod/paintjob/owl
