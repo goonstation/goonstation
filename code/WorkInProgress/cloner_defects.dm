@@ -515,6 +515,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	if(!length(defect_holder.active_cloner_defects))
 		medrec["cl_def"] = "None"
 		medrec["cl_def_d"] = MEDREC_CLONE_DEFECT_DEFAULT
+		return
 
 	var/list/defect_names = list()
 	var/list/defect_descs = list()
