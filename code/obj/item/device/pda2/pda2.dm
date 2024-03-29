@@ -177,6 +177,7 @@
 		icon_state = "pda-md"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
+		setup_default_module = /obj/item/device/pda_module/alert/medical
 		setup_drive_size = 32
 		mailgroups = list(MGD_MEDRESEACH,MGD_MEDBAY,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
@@ -298,7 +299,7 @@
 	chiefengineer
 		icon_state = "pda-ce"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
-		setup_default_module = /obj/item/device/pda_module/tray
+		setup_default_module = /obj/item/device/pda_module/alert/engineering
 		mailgroups = list(MGO_ENGINEER,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
 
