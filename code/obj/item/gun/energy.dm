@@ -82,7 +82,9 @@ TYPEINFO(/obj/item/gun/energy)
 			if (!src.charge_image)
 				src.charge_image = image(src.icon)
 				src.charge_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			var/ratio = 0
+			if(ret["max_charge"]) //protect against div by zero
+				min(1, ret["charge"] / ret["max_charge"])
 			ratio = round(ratio, 0.25) * 100
 			src.charge_image.icon_state = "[src.charge_icon_state][ratio]"
 			src.UpdateOverlays(src.charge_image, "charge")
@@ -294,7 +296,7 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 				object.set_loc(src)
 				src.myCoil = object
 			else
-			user.show_text(SPAN_NOTICE("The [src]'s maintenance panel is closed."))
+				user.show_text(SPAN_NOTICE("The [src]'s maintenance panel is closed."))
 		if(istype(object, /obj/item/lens))
 			if(src.panelOpen)
 				user.show_text(SPAN_NOTICE("You insert the [object] into the [src]."))
@@ -303,7 +305,7 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 				object.set_loc(src)
 				src.myLens = object
 			else
-			user.show_text(SPAN_NOTICE("The [src]'s maintenance panel is closed."))
+				user.show_text(SPAN_NOTICE("The [src]'s maintenance panel is closed."))
 
 	canshoot(mob/user)
 		if(!src.evaluate_quality())

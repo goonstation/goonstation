@@ -1401,7 +1401,9 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		overlays = null
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"]) * 100
+			var/ratio = 0
+			if(ret["max_charge"]) //protect against div by zero
+				ratio = min(1, ret["charge"] / ret["max_charge"]) * 100
 			ratio = round(ratio, 20)
 			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
 			switch(ratio)
@@ -1444,7 +1446,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	m_amt = 1000
 	g_amt = 2000
 	charge = 0
-	max_charge = 0
+	max_charge = INFINITESIMAL
 
 /obj/item/ammo/power_cell/med_minus_power
 	name = "Power Cell - 150"
