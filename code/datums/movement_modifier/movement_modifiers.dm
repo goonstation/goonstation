@@ -53,6 +53,9 @@
 /datum/movement_modifier/death_march
 	additive_slowdown = -0.4
 
+/datum/movement_modifier/gang_trapped
+	additive_slowdown = 2
+
 /datum/movement_modifier/janktank
 	health_deficiency_adjustment = -50
 

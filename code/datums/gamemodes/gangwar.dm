@@ -879,6 +879,7 @@ proc/broadcast_to_all_gangs(var/message)
 			target.additional_items.Add(loot)
 			target.spawn_chance = 75
 			target.last_use = 0
+			target.max_uses += 1
 			message += " we left some goods in a bush [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]."
 			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a shrub: [target] at [target.x],[target.y]")
 		else if(length(crateList) && prob(80))
@@ -927,6 +928,7 @@ proc/broadcast_to_all_gangs(var/message)
 		loot.informant = civvie.current.real_name
 
 		loot.owning_gang = ownerGang
+		loot.start_area = get_area(loot.loc)
 
 		message += " there are folks aboard who will probably come looking. "
 		if (prob(40))

@@ -1391,6 +1391,7 @@
 		duration = INFINITE_STATUS
 		maxDuration = null
 		effect_quality = STATUS_QUALITY_NEGATIVE
+		movement_modifier = /datum/movement_modifier/gang_trapped
 
 	janktank
 		id = "janktank"

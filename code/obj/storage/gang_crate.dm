@@ -22,10 +22,15 @@
 	var/image/light = null
 	var/datum/loot_generator/lootMaster
 
+
+	proc/initialize_loot_master(x,y)
+		src.vis_controller = new()
+		vis_controller.initialize(src)
+		lootMaster =  new /datum/loot_generator(x,y)
 	// Default gang crate
 	guns_and_gear
 		New()
-			lootMaster =  new /datum/loot_generator(4,4)
+			initialize_loot_master(4,4)
 			// 3 guns, ammo, 3 bits of gear
 			lootMaster.add_random_loot(src, GANG_CRATE_GUN, 3)
 			lootMaster.add_random_loot(src, GANG_CRATE_AMMO_LIMITED, 3)
@@ -40,8 +45,7 @@
 		anchored = UNANCHORED
 		locked = FALSE
 		New()
-			..()
-			lootMaster =  new /datum/loot_generator(4,4)
+			initialize_loot_master(4,4)
 			src.open()
 			// 3 guns, ammo, 3 bits of gear
 			for (var/i=1 to 3)
@@ -55,9 +59,10 @@
 				sleep(1 SECOND)
 			// fill the rest with whatever
 			lootMaster.fill_remaining(src, GIMMICK)
+			..()
 	shotguns
 		New()
-			lootMaster =  new /datum/loot_generator(4,3)
+			initialize_loot_master(4,4)
 			lootMaster.place_loot_instance(src, 1,3, new /obj/randomloot_spawner/long/striker, FALSE)
 			lootMaster.place_loot_instance(src, 1,2, new /obj/randomloot_spawner/long/striker, FALSE)
 			lootMaster.fill_remaining(src, GANG_CRATE_AMMO, 3)
@@ -75,17 +80,17 @@
 			locked = FALSE
 	only_guns
 		New()
-			lootMaster =  new /datum/loot_generator(4,3)
+			initialize_loot_master(4,4)
 			lootMaster.fill_remaining(src, GANG_CRATE_GUN)
 			..()
 	only_gear
 		New()
-			lootMaster =  new /datum/loot_generator(4,3)
+			initialize_loot_master(4,4)
 			lootMaster.fill_remaining(src, GANG_CRATE_GEAR)
 			..()
 	gear_and_gimmicks
 		New()
-			lootMaster =  new /datum/loot_generator(4,3)
+			initialize_loot_master(4,4)
 			lootMaster.add_random_loot(src, GANG_CRATE_GEAR, 2)
 			lootMaster.fill_remaining(src, GIMMICK)
 			..()
@@ -168,18 +173,38 @@
 	icon = 'icons/obj/items/storage.dmi'
 	name = "suspicious looking duffle bag"
 	desc = "A greasy, black duffle bag, this isn't station issue, you should probably leave it alone..."
+	object_flags = TRACK_STORAGE_MOVEMENT
 	icon_state = "gang_dufflebag"
 	item_state = "bowling"
+	p_class = 4 //marginally easier than dragging a whole locker with this in
+	always_slow_pull = TRUE
 	var/hidden = TRUE
 	var/open = FALSE
+	///Whether this bag's trap is active
 	var/trapped = TRUE
+	///Whether this bag is tracking its' location
+	var/tracking = TRUE
+	///Whether this bag is unopened. If TRUE, it will grant points when opened.
+	var/sealed = TRUE
 	///The gang who should own this duffel bag
 	var/datum/gang/owning_gang
 	///The name of the informant who knows about this bag
 	var/informant
 	///The civilian who has this in their hands, if the trap is active.
 	var/mob/living/idiot = null
+	///The area this bag spawned in.
+	var/area/start_area
+
+	///Items that haven't been removed from the bag. These will travel with it.
+	var/datum/vis_storage_controller/vis_controller = new()
+	var/datum/loot_generator/lootMaster
 	level = UNDERFLOOR
+
+
+	proc/initialize_loot_master(x,y)
+		src.vis_controller = new()
+		vis_controller.initialize(src)
+		lootMaster =  new /datum/loot_generator(x,y)
 
 	New()
 		src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job=null, message_admins_too=FALSE)
@@ -187,46 +212,72 @@
 	only_gimmicks
 		New()
 
-			var/datum/loot_generator/lootMaster =  new /datum/loot_generator(3,2)
+			initialize_loot_master(3,2)
 			lootMaster.fill_remaining(src, GIMMICK)
 			..()
 	gear_and_gimmicks
 		New()
-			var/datum/loot_generator/lootMaster =  new /datum/loot_generator(3,2)
+			initialize_loot_master(3,2)
 			lootMaster.add_random_loot(src, GANG_CRATE_GEAR, 2)
 			lootMaster.fill_remaining(src, GIMMICK)
 			..()
 
 	guns_and_gear
 		New()
-			var/datum/loot_generator/lootMaster =  new /datum/loot_generator(3,2)
+			initialize_loot_master(3,2)
 			lootMaster.add_random_loot(src, GANG_CRATE_GUN, 1)
 			lootMaster.add_random_loot(src, GANG_CRATE_AMMO, 1)
 			lootMaster.add_random_loot(src, GANG_CRATE_GEAR, 2)
 			lootMaster.fill_remaining(src, GIMMICK)
 			..()
+	OnMove()
+		if (tracking)
+			var/area/current_area = get_area(src)
+			if (current_area != start_area)
+				tracking = FALSE
+				src.owning_gang.broadcast_to_gang("The bag [src.informant] knew about is being moved! Looks like it's been moved to \the [current_area.name]")
 
 	pickup(mob/user)
+		if (open)
+			close()
 		..()
 		if (src.layer == UNDERFLOOR)
-			src.layer == OVERFLOOR
-		if (!user.get_gang() && !open && trapped && owning_gang)
+			src.layer = OVERFLOOR
+		var/datum/gang = user.get_gang()
+		if (gang && (trapped || tracking))
+			trapped = FALSE //if one gang member gets their mitts on it, this has done its job
+			tracking = FALSE
+			boutput(user, SPAN_ALERT("You disarm the trap in the [src]'s handle. It's now safe to carry."))
+		if (!gang && !open && trapped && owning_gang)
 			if (isliving(user))
 				var/mob/living/H = user
 				idiot = user
 				trapped = FALSE
+				tracking = FALSE
 				icon_state = "gang_dufflebag_trap"
 				cant_self_remove = TRUE
 				cant_drop = TRUE
+				var/area/area = get_area(src)
 				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
-				boutput(user, SPAN_ALERT("As you pick up \the [src.name], a series of hooks emerge from the handle, lodging in your hand!"))
-				src.owning_gang.broadcast_to_gang("The bag [src.informant] knew about has just been stolen! Looks like it was in \the [get_area(src.loc)]")
-				ON_COOLDOWN(src,"bleed_msg", 30 SECONDS) //set a 30 second timer for bleeding
+				boutput(user, SPAN_ALERT("As you pick up \the [src.name], a series of barbs emerge from the handle, lodging in your hand!"))
+				src.owning_gang.broadcast_to_gang("The bag [src.informant] knew about has just been stolen! Looks like it was in \the [area.name]")
+				ON_COOLDOWN(src,"bleed_msg", 30 SECONDS) //set a 30 second timer to remind players to remove this
 				idiot.setStatus("gang_trap", duration = INFINITE_STATUS)
 				H.emote("scream")
 				H.bleeding = max(1,H.bleeding)
 				SPAWN(1 SECOND)
 					bleed_process()
+	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target){
+		var/datum/gang/userGang = source.get_gang()
+		if (cant_drop && idiot && userGang )
+			source.visible_message("[source] rips the [src] right off [target]! Ouch!","You rip the duffle bag from [target]'s hand.")
+			idiot.emote("scream")
+			playsound(idiot.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+			blood_slash(idiot, 2)
+			unhook()
+			return TRUE
+		..()
+	}
 	proc/unhook()
 		if (idiot)
 			if (istype(idiot.l_hand, /obj/item/gang_loot) && istype(idiot.r_hand, /obj/item/gang_loot)) //this is REALLY stretching it, bub.
@@ -243,9 +294,11 @@
 	dropped()
 		unhook()
 		..()
+
 	proc/attempt_unhook(mob/user)
 		if (user == idiot)
 			actions.start(new /datum/action/bar/icon/unhook_gangbag(user, src),user)
+
 	attack_hand(mob/user)
 		if (user == idiot)
 			attempt_unhook(user)
@@ -265,6 +318,16 @@
 		invisibility = floor_intact ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
 		UpdateIcon()
 
+	proc/open(mob/user)
+		open = TRUE
+		user.drop_item(src)
+		vis_controller.show()
+
+	proc/close()
+		open = FALSE
+		icon_state = "gang_dufflebag"
+		vis_controller.hide()
+
 
 	attack_self(mob/user)
 		if (!istype(user, /mob/living/carbon/human))
@@ -278,14 +341,13 @@
 				boutput(user, "You don't want to get in trouble with whoever owns this! It's FULL of illegal stuff.")
 				return
 			unhook() // just in case
-			for (var/obj/object as anything in src.contents)
-				object.set_loc(user.loc)
 			playsound(src.loc, 'sound/misc/zipper.ogg', 100, TRUE)
 			boutput(user, "You unzip the duffel bag and its' contents spill out!")
-			gang.add_points(GANG_LOOT_SCORE,user, showText = TRUE)
-			gang.score_event += GANG_CRATE_SCORE
-			user.drop_item(src)
-			open = TRUE
+			if (sealed)
+				sealed = FALSE
+				gang.add_points(GANG_LOOT_SCORE,user, showText = TRUE)
+				gang.score_event += GANG_CRATE_SCORE
+			open(user)
 			icon_state = "gang_dufflebag_open"
 			UpdateIcon()
 		else
@@ -672,8 +734,11 @@ ABSTRACT_TYPE(/obj/randomloot_spawner)
 		if (istype(loc, /obj/storage/crate))
 			var/obj/storage/container = loc
 			lootObject = new path(container)
-			container.vis_items.Add(lootObject)
-			lootObject.AddComponent(/datum/component/storage_viscontents, container = container)
+			container.vis_controller.add_item(lootObject)
+		else if (istype(loc, /obj/item/gang_loot))
+			var/obj/item/gang_loot/loot = loc
+			lootObject = new path(loot)
+			loot.vis_controller.add_item(lootObject)
 		else
 			lootObject = new path(loc)
 		lootObject.transform = lootObject.transform.Scale(scale_x,scale_y)
