@@ -1788,6 +1788,11 @@
 							// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
 							if (locate(/mob) in A.contents)
 								. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
+							else if (locate(/obj/item/gang_loot) in A.contents)
+								. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)//jeez, that's a lot of stuff you're carrying.
+						else
+							. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
+
 			. = lerp(1, . , pushpull_multiplier)
 
 
