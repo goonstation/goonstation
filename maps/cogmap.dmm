@@ -6362,7 +6362,7 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "ayh" = (
-/obj/stool/chair,
+/obj/stool/chair/red,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "ayj" = (
@@ -7765,7 +7765,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 4
 	},
 /obj/cable{
@@ -17639,7 +17639,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/disposal)
 "bgl" = (
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -41752,7 +41752,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/engine)
 "fkj" = (
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 8
 	},
 /obj/landmark/start/job/security_officer,
@@ -50208,7 +50208,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/stool/chair,
+/obj/stool/chair/red,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -51526,7 +51526,7 @@
 	},
 /area/station/medical/medbay)
 "niM" = (
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 4
 	},
 /obj/landmark/start/job/security_officer,
@@ -54916,7 +54916,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "pQO" = (
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 4
 	},
 /obj/landmark/start/job/security_officer,
@@ -60916,7 +60916,6 @@
 /obj/disposalpipe/segment/mail,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_control,
-/obj/machinery/power/data_terminal,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
@@ -61021,7 +61020,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/disposal)
 "usN" = (
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 4
 	},
 /obj/landmark/start/job/security_officer,
@@ -61200,7 +61199,7 @@
 	},
 /area/station/crew_quarters/info)
 "uzM" = (
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 4
 	},
 /obj/landmark/start/job/security_officer,
@@ -61514,7 +61513,7 @@
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
 "uKh" = (
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 8
 	},
 /obj/cable{
@@ -64746,7 +64745,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/stool/chair,
+/obj/stool/chair/red,
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/black,
 /area/station/security/main)
