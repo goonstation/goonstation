@@ -716,10 +716,11 @@ toxic - poisons
 	hit_ground_chance = 66
 	implanted = null
 	damage = 18
+	stun = 6
 	hit_type = DAMAGE_CUT //birdshot mutilates your skin more, but doesnt hurt organs like shotties
-	dissipation_rate = 2
+	dissipation_rate = 4 //spread handles most of this
 	shot_sound = 'sound/weapons/birdshot.ogg'
-	dissipation_delay = 3
+	dissipation_delay = 6
 	casing = /obj/item/casing/shotgun/red
 	on_launch(obj/projectile/O)
 		icon_state = "birdshot[rand(1,3)]"
@@ -1962,8 +1963,9 @@ datum/projectile/bullet/autocannon
 /datum/projectile/bullet/webley
 	name = "bullet"
 	damage = 45
-	damage_type = D_KINETIC
-	hit_type = DAMAGE_CUT
+	stun = 7
+	damage_type = D_PIERCING
+	armor_ignored = 0.5 //just enough to get past gang vests in 3 shots
 	implanted = /obj/item/implant/projectile/bullet_455
 	impact_image_state = "bullethole-small"
 	casing = /obj/item/casing/medium
