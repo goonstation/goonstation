@@ -31,7 +31,7 @@
 			return
 		var/message_mode = ""
 		var/prefix = copytext(message, 1, 2)
-
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 		switch(prefix)
 			if("*")
 				return src.emote(copytext(message, 2), 1)

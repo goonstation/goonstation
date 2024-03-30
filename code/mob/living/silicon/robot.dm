@@ -834,7 +834,7 @@
 					damage -= damage_reduced_by
 					playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
 			if (damage <= 0)
-				boutput(usr, SPAN_NOTICE("Your shield completely blocks the attack!"))
+				boutput(src, SPAN_NOTICE("Your shield completely blocks the attack!"))
 				return 1
 			boutput(src, SPAN_ALERT("The blob attacks you!"))
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
@@ -2932,7 +2932,7 @@
 				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
 				continue
 		if (burn == 0 && brute == 0)
-			boutput(usr, SPAN_NOTICE("Your shield completely blocks the attack!"))
+			boutput(src, SPAN_NOTICE("Your shield completely blocks the attack!"))
 			return 0
 		if (zone == "All")
 			var/list/zones = get_valid_target_zones()
