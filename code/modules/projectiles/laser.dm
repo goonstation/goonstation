@@ -54,7 +54,7 @@ toxic - poisons
 	tick(var/obj/projectile/P)
 		if (istype(P.loc, /turf) && !(locate(/obj/blob/reflective) in get_turf(P.loc))) //eh, works for me:tm:
 			var/turf/T = P.loc
-			T.hotspot_expose(power*20, 5)
+			T.hotspot_expose(FROM_CELSIUS(power*20), 5)
 
 /datum/projectile/laser/custom
 	//set your own damage and battery cost. used by the captaingun

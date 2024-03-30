@@ -1213,6 +1213,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 1)
 		setProperty("hard", 2)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/ice_temp())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/slippery_entered())
 

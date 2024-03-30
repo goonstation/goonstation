@@ -559,6 +559,16 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				qdel(I)
 		return
 
+/datum/materialProc/ice_temp
+	execute(var/atom/owner, var/temp)
+		if(!prob(temp - T0C)) return //percentage chance to melt for every degree above freezing
+		if(ON_COOLDOWN(owner, "ice_temp", 10 SECONDS))
+			return
+		var/turf/tloc = get_turf(owner)
+		tloc.visible_message(SPAN_ALERT("[owner] melts due to heat!"))
+		qdel(owner)
+		return
+
 /datum/materialProc/soulsteel_entered
 	execute(var/obj/item/owner, var/atom/movable/entering)
 		if (!isobj(owner) || owner.anchored >= ANCHORED_ALWAYS) return

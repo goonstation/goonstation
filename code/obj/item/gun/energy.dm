@@ -84,7 +84,7 @@ TYPEINFO(/obj/item/gun/energy)
 				src.charge_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
 			var/ratio = 0
 			if(ret["max_charge"]) //protect against div by zero
-				min(1, ret["charge"] / ret["max_charge"])
+				ratio = min(1, ret["charge"] / ret["max_charge"])
 			ratio = round(ratio, 0.25) * 100
 			src.charge_image.icon_state = "[src.charge_icon_state][ratio]"
 			src.UpdateOverlays(src.charge_image, "charge")
@@ -216,28 +216,40 @@ TYPEINFO(/obj/item/gun/energy)
 			projectiles += current_projectile
 
 
-////////////////////////////////////// Antique laser gun
+//Antique laser gun
 
 //Maximum alpha a lens can be to fall into one of the damage tiers
-#define CAPTAINGUN_T1_LENS_ALPHA_THRESHOLD 180 //glass, molitz, some other stuff
-#define CAPTAINGUN_T2_LENS_ALPHA_THRESHOLD 130 //telecrystal, ectofiber, ice
-#define CAPTAINGUN_T3_LENS_ALPHA_THRESHOLD 80 //starstone, rarely miraclium
+/// 180. glass, molitz, some other stuff
+#define CAPTAINGUN_T1_LENS_ALPHA_THRESHOLD 180
+/// 130. telecrystal, ectofiber, ice
+#define CAPTAINGUN_T2_LENS_ALPHA_THRESHOLD 130
+/// 80. starstone, rarely miraclium
+#define CAPTAINGUN_T3_LENS_ALPHA_THRESHOLD 80
 
 //Coil efficacy is scored as electrical conductivity + 2 if the material is an energy source
 //Minimum efficacy a coil can be to fall into one of the charge usage tiers
-#define CAPTAINGUN_T1_COIL_EFFICACY_THRESHOLD 6 //copper, pharosium, gold, etc.
-#define CAPTAINGUN_T2_COIL_EFFICACY_THRESHOLD 8 //claretine, electrum, cerenkite, etc.
-#define CAPTAINGUN_T3_COIL_EFFICACY_THRESHOLD 10 //custom alloy (figure it out, nerd)
+/// 6. copper, pharosium, gold, etc.
+#define CAPTAINGUN_T1_COIL_EFFICACY_THRESHOLD 6
+/// 8. claretine, electrum, cerenkite, etc.
+#define CAPTAINGUN_T2_COIL_EFFICACY_THRESHOLD 8
+/// 10. custom alloy (figure it out, nerd)
+#define CAPTAINGUN_T3_COIL_EFFICACY_THRESHOLD 10
 
 //Damage dealt by different tiers of lens used
-#define CAPTAINGUN_T1_DAMAGE 30 // 2/3x
-#define CAPTAINGUN_T2_DAMAGE 45 //normal laser damage
-#define CAPTAINGUN_T3_DAMAGE 60 // 4/3x
+/// 30. 2/3x normal laser damage
+#define CAPTAINGUN_T1_DAMAGE 30
+/// 45. normal laser damage
+#define CAPTAINGUN_T2_DAMAGE 45
+/// 60. 4/3x normal laser damage
+#define CAPTAINGUN_T3_DAMAGE 60
 
 //Charge consumed when shooting by different tiers of coils used
-#define CAPTAINGUN_T1_COST 41.66 // 250 / 41.66 = 6 shots
-#define CAPTAINGUN_T2_COST 31.25 //normal laser cost 250 / 32.25 = 8 shots
-#define CAPTAINGUN_T3_COST 25 // 250 / 25 = 10 shots
+///41.66.  250 / 41.66 = 6 shots
+#define CAPTAINGUN_T1_COST 41.66
+///31.25.  250 / 32.25 = 8 shots
+#define CAPTAINGUN_T2_COST 31.25
+///25.  250 / 25 = 10 shots
+#define CAPTAINGUN_T3_COST 25
 
 TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 	mats = null //dont let people copy their perfect gamer gun for a handful of copper and glass
@@ -258,9 +270,9 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 	var/customProjectileCost = CAPTAINGUN_T1_COST
 
 	New()
-		src.set_current_projectile(new /datum/projectile/laser/custom(src.customProjectileDamage, src.customProjectileCost))
-		src.projectiles = list(src.current_projectile)
 		. = ..()
+		src.set_current_projectile(null)
+		src.projectiles = null
 
 	examine()
 		. = ..()
@@ -294,6 +306,7 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 				playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
 				user.put_in_hand_or_eject(src.myCoil)
 				object.set_loc(src)
+				user.u_equip(object)
 				src.myCoil = object
 			else
 				user.show_text(SPAN_NOTICE("The [src]'s maintenance panel is closed."))
@@ -303,6 +316,7 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 				playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
 				user.put_in_hand_or_eject(src.myLens)
 				object.set_loc(src)
+				user.u_equip(object)
 				src.myLens = object
 			else
 				user.show_text(SPAN_NOTICE("The [src]'s maintenance panel is closed."))
@@ -315,15 +329,44 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 		src.set_current_projectile(new /datum/projectile/laser/custom(src.customProjectileDamage, src.customProjectileCost))
 		. = ..()
 
+	//case-in-point, couldnt avoid it here because I needed it to happen after the shot
+	//and because canshoot() is sometimes checked when we arent actually firing a shot and we dont want to blow up randomly
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target)
+		. = ..()
+		if(.)
+			//exactly enough that an erebite component will have a chance to explode from a normal damage laser
+			//and guaranteed to explode from a high damage laser
+			//also melts ice so it isnt viable for as a normal damage lens material because thats too easy
+			src.myLens.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
+			src.myCoil.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
+
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		. = ..()
+		if(.)
+			//exactly enough that an erebite component will have a chance to explode from a normal damage laser
+			//and guaranteed to explode from a high damage laser
+			//also melts ice so it isnt viable for as a normal damage lens material because thats too easy
+			src.myLens.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
+			src.myCoil.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
+
+	suicide(mob/living/carbon/human/user)
+		. = ..()
+		if(.)
+			//exactly enough that an erebite component will have a chance to explode from a normal damage laser
+			//and guaranteed to explode from a high damage laser
+			//also melts ice so it isnt viable for as a normal damage lens material because thats too easy
+			src.myLens.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
+			src.myCoil.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
+
 	proc/evaluate_quality()
 		. = TRUE
-		if(!src.myLens || !src.myCoil)
+		if(!src.myLens || !src.myLens.material || !src.myCoil || !src.myCoil.material)
 			//missing parts
 			return FALSE
 		if(src.myLens.material.getAlpha() > CAPTAINGUN_T1_LENS_ALPHA_THRESHOLD)
 			//your lens isnt see-through, stupid
 			return FALSE
-		if(src.myCoil.material.getProperty("electrical") + ((src.myCoil.material.getMaterialFlags() & MATERIAL_ENERGY) ? 2 : 0) < CAPTAINGUN_T1_LENS_ALPHA_THRESHOLD)
+		if(src.myCoil.material.getProperty("electrical") + ((src.myCoil.material.getMaterialFlags() & MATERIAL_ENERGY) ? 2 : 0) < CAPTAINGUN_T1_COIL_EFFICACY_THRESHOLD)
 			//coil not powerful enough
 			return FALSE
 		switch(src.myLens.material.getAlpha())
@@ -334,12 +377,12 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 			if(CAPTAINGUN_T2_LENS_ALPHA_THRESHOLD to CAPTAINGUN_T1_LENS_ALPHA_THRESHOLD)
 				src.customProjectileDamage = CAPTAINGUN_T1_DAMAGE
 		switch(src.myCoil.material.getProperty("electrical") + ((src.myCoil.material.getMaterialFlags() & MATERIAL_ENERGY) ? 2 : 0))
-			if(CAPTAINGUN_T1_COIL_EFFICACY_THRESHOLD to CAPTAINGUN_T2_COIL_EFFICACY_THRESHOLD)
-				src.customProjectileCost = CAPTAINGUN_T1_COST
-			if(CAPTAINGUN_T2_COIL_EFFICACY_THRESHOLD to CAPTAINGUN_T3_COIL_EFFICACY_THRESHOLD)
-				src.customProjectileCost = CAPTAINGUN_T2_COST
 			if(CAPTAINGUN_T3_COIL_EFFICACY_THRESHOLD to INFINITY)
 				src.customProjectileCost = CAPTAINGUN_T3_COST
+			if(CAPTAINGUN_T2_COIL_EFFICACY_THRESHOLD to CAPTAINGUN_T3_COIL_EFFICACY_THRESHOLD)
+				src.customProjectileCost = CAPTAINGUN_T2_COST
+			if(CAPTAINGUN_T1_COIL_EFFICACY_THRESHOLD to CAPTAINGUN_T2_COIL_EFFICACY_THRESHOLD)
+				src.customProjectileCost = CAPTAINGUN_T1_COST
 
 //////////////////////////////////////// Phaser
 /obj/item/gun/energy/phaser_gun
