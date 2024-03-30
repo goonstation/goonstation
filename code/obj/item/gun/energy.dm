@@ -339,6 +339,10 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 			//also melts ice so it isnt viable for as a normal damage lens material because thats too easy
 			src.myLens.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
 			src.myCoil.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
+			if(src.panelOpen)
+				//close it dummy
+				user.visible_message(SPAN_ALERT("Residual heat burns you through the open maintenance panel!"))
+				user.TakeDamage("All", 0, 25, 0, DAMAGE_BURN)
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
 		. = ..()
@@ -348,6 +352,10 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 			//also melts ice so it isnt viable for as a normal damage lens material because thats too easy
 			src.myLens.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
 			src.myCoil.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
+			if(src.panelOpen)
+				//close it dummy
+				user.visible_message(SPAN_ALERT("Residual heat burns you through the open maintenance panel!"))
+				user.TakeDamage("All", 0, 25, 0, DAMAGE_BURN)
 
 	suicide(mob/living/carbon/human/user)
 		. = ..()
@@ -357,6 +365,10 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 			//also melts ice so it isnt viable for as a normal damage lens material because thats too easy
 			src.myLens.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
 			src.myCoil.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
+			if(src.panelOpen)
+				//close it dummy
+				user.visible_message(SPAN_ALERT("Residual heat burns you through the open maintenance panel!"))
+				user.TakeDamage("All", 0, 25, 0, DAMAGE_BURN)
 
 	proc/evaluate_quality()
 		. = TRUE
