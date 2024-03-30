@@ -254,7 +254,7 @@
 		return TRUE
 
 /datum/action/bar/icon/digbotdig/drill
-	icon_state = "lasdrill"
+	icon_state = "lasdrill-old"
 
 
 //////////////////////////////////////
