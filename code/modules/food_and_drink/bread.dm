@@ -6,11 +6,14 @@
 	icon_state = "breadloaf"
 	bites_left = 1
 	heal_amt = 1
+	fill_amt = 6
 	food_color = "#FFFFCC"
 	real_name = "bread"
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
-	var/slicetype = /obj/item/reagent_containers/food/snacks/breadslice
+	sliceable = TRUE
+	slice_amount = 6
+	slice_product = /obj/item/reagent_containers/food/snacks/breadslice
 	initial_volume = 30
 	initial_reagents = "bread"
 	food_effects = list("food_hp_up")
@@ -28,14 +31,17 @@
 		src.UnregisterSignal(src,COMSIG_MOVABLE_TELEPORTED)
 		..()
 
-	attack(mob/M, mob/user, def_zone)
-		if (user == M)
-			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
+			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
 
 	/// rolls to turn the bread loaf into a mimic once the requirement is reached
 	proc/mutate()
@@ -44,82 +50,71 @@
 			if (prob(0.01))
 				src.become_mimic()
 
-	attackby(obj/item/W, mob/user)
-		if (iscuttingtool(W) || issawingtool(W))
-			if(user.bioHolder.HasEffect("clumsy") && prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W].</span>")
-				user.change_eye_blurry(5)
-				user.changeStatus("weakened", 3 SECONDS)
-				JOB_XP(user, "Clown", 2)
-				return
-
-			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			var/makeslices = 6
-			while (makeslices > 0)
-				new slicetype (T)
-				makeslices -= 1
-			qdel (src)
-		else ..()
-
 /obj/item/reagent_containers/food/snacks/breadloaf/honeywheat
 	name = "loaf of honey-wheat bread"
 	desc = "A bread made with honey. Right there in the name, first thing, top billing."
 	icon_state = "honeyloaf"
 	real_name = "honey-wheat bread"
-	slicetype = /obj/item/reagent_containers/food/snacks/breadslice/honeywheat
+	initial_reagents = list("bread"=30,"honey"=30)
+
+	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/honeywheat
 
 /obj/item/reagent_containers/food/snacks/breadloaf/banana
 	name = "loaf of banana bread"
 	desc = "A bread commonly found near clowns."
 	icon_state = "bananabread"
 	real_name = "banana bread"
-	slicetype = /obj/item/reagent_containers/food/snacks/breadslice/banana
+	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/banana
 
 /obj/item/reagent_containers/food/snacks/breadloaf/brain
 	name = "loaf of brain bread"
 	desc = "A pretty smart way to eat."
 	icon_state = "brainbread"
 	real_name = "brain bread"
-	slicetype = /obj/item/reagent_containers/food/snacks/breadslice/brain
+	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/brain
 
 /obj/item/reagent_containers/food/snacks/breadloaf/pumpkin
 	name = "loaf of pumpkin bread"
 	desc = "A very seasonal quickbread!  It tastes like Fall."
 	icon_state = "pumpkinbread"
 	real_name = "pumpkin bread"
-	slicetype = /obj/item/reagent_containers/food/snacks/breadslice/pumpkin
+	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/pumpkin
 
 /obj/item/reagent_containers/food/snacks/breadloaf/elvis
 	name = "loaf of elvis bread"
 	desc = "Fattening and delicious, despite the hair.  It tastes like the soul of rock and roll."
 	icon_state = "elvisbread"
 	real_name ="elvis bread"
-	slicetype = /obj/item/reagent_containers/food/snacks/breadslice/elvis
+	initial_reagents = list("bread"=30,"essenceofelvis"=30)
+	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/elvis
 
 /obj/item/reagent_containers/food/snacks/breadloaf/spooky
 	name = "loaf of dread"
 	desc = "The bread of the damned."
 	icon_state = "dreadloaf"
 	real_name = "dread"
-	slicetype = /obj/item/reagent_containers/food/snacks/breadslice/spooky
+	initial_reagents = list("bread"=30,"ectoplasm"=60)
+	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/spooky
 
 /obj/item/reagent_containers/food/snacks/breadloaf/corn
 	name = "southern-style cornbread"
 	desc = "A maize-based quickbread.  This variety, popular in the Southern United States, is not particularly sweet."
 	icon_state= "cornbread"
 	real_name = "cornbread"
-	slicetype = /obj/item/reagent_containers/food/snacks/breadslice/corn
+	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/corn
+
 
 	sweet
 		name = "northern-style cornbread"
 		desc = "A chunk of sweet maize-based quickbread."
-		slicetype = /obj/item/reagent_containers/food/snacks/breadslice/corn/sweet
+		initial_reagents = list("bread"=30,"cornsyrup"=30)
+		slice_product = /obj/item/reagent_containers/food/snacks/breadslice/corn/sweet
 
 		honey
 			name = "honey cornbread"
 			desc = "A chunk of honey-sweetened maize-based quickbread."
-			slicetype = /obj/item/reagent_containers/food/snacks/breadslice/corn/sweet/honey
+			initial_reagents = list("bread"=30,"cornsyrup"=30,"honey"=60)
+			slice_product = /obj/item/reagent_containers/food/snacks/breadslice/corn/sweet/honey
 
 /obj/item/reagent_containers/food/snacks/breadslice
 	name = "slice of bread"
@@ -397,7 +392,7 @@
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W) || issawingtool(W))
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W].</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W]."))
 				user.change_eye_blurry(5)
 				user.changeStatus("weakened", 3 SECONDS)
 				JOB_XP(user, "Clown", 2)
@@ -416,7 +411,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] attempts to beat [him_or_her(user)]self to death with the baguette, oui oui, but fails! Hon hon hon!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] attempts to beat [him_or_her(user)]self to death with the baguette, oui oui, but fails! Hon hon hon!</b>"))
 		user.suiciding = 0
 		return 1
 

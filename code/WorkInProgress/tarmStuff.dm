@@ -1,65 +1,4 @@
 //GUNS GUNS GUNS
-/obj/item/gun/energy/cannon
-	name = "Vexillifer IV"
-	desc = "It's a cannon? A laser gun? You can't tell."
-	icon = 'icons/obj/large/64x32.dmi'
-	icon_state = "lasercannon"
-	item_state = "vexillifer"
-	wear_state = "vexillifer"
-	var/active_state = "lasercannon"
-	var/collapsed_state = "lasercannon-empty"
-	var/state = TRUE
-	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	force = MELEE_DMG_LARGE
-
-
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
-
-	can_dual_wield = 0
-
-	//color = list(0.110785,0.179801,0.533943,0.0890215,-0.0605533,-1.35334,0.823851,0.958116,1.79703)
-
-	two_handed = 1
-	w_class = W_CLASS_BULKY
-	muzzle_flash = "muzzle_flash_bluezap"
-	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
-	shoot_delay = 0.8 SECONDS
-
-
-	New()
-		set_current_projectile(new/datum/projectile/laser/asslaser)
-		..()
-
-	attack_self(mob/user)
-		. = ..()
-		src.swap_state()
-
-	proc/swap_state()
-		if(state)
-			src.icon_state = collapsed_state
-			w_class = W_CLASS_NORMAL
-		else
-			src.icon_state = active_state
-			w_class = W_CLASS_BULKY
-		state = !state
-
-	canshoot(mob/user)
-		. = ..() && state
-
-	setupProperties()
-		..()
-		setProperty("movespeed", 0.3)
-
-	flashy
-		active_state = "lasercannon-anim"
-		icon_state = "lasercannon-anim"
-
-		shoot(target, start, mob/user, POX, POY, is_dual_wield)
-			if(src.canshoot(user))
-				flick("lasercannon-fire", src)
-			. = ..()
-
 /datum/projectile/energy_bolt/taser_beam
 	cost = 0
 	max_range = PROJ_INFINITE_RANGE
@@ -106,7 +45,7 @@
 	shot_sound = 'sound/weapons/optio.ogg'
 	implanted = null
 	armor_ignored = 0.66
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	shot_volume = 66
 	window_pass = 1
 
@@ -198,7 +137,7 @@
 	casing = /obj/item/casing/cannon
 	damage = 125
 	implanted = /obj/item/implant/projectile/rakshasa
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	goes_through_walls = 1
 	pierces = -1
 
@@ -228,16 +167,14 @@
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
 	desc = "An assault rifle capable of firing single precise bursts. The magazines holders are embossed with \"Anderson Para-Munitions\""
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "g11"
 	item_state = "g11"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	has_empty_state = 1
 	var/shotcount = 0
-	var/last_shot_time = 0
-	uses_multiple_icon_states = 1
 	force = 15
 	contraband = 8
 	ammo_cats = list(AMMO_CASELESS_G11)
@@ -252,11 +189,9 @@
 		ammo = new default_magazine
 		. = ..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
-		spread_angle = max(0, shoot_delay*2+last_shot_time-TIME)*0.4
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		shotcount = 0
-		. = ..(target, start, user, POX+rand(-spread_angle, spread_angle)*16, POY+rand(-spread_angle, spread_angle)*16)
-		last_shot_time = TIME
+		. = ..()
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
 		shotcount = 0
@@ -300,7 +235,7 @@
 	shot_volume = 66
 	dissipation_delay = 10
 	dissipation_rate = 5
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 
 	small
 		shot_sound = 'sound/weapons/9x19NATO.ogg'
@@ -313,7 +248,7 @@
 		on_hit(atom/hit, angle, obj/projectile/O)
 			var/turf/T = get_turf(hit)
 			new/obj/decal/implo(T)
-			playsound(T, 'sound/effects/suck.ogg', 100, 1)
+			playsound(T, 'sound/effects/suck.ogg', 100, TRUE)
 			var/spamcheck = 0
 			for(var/atom/movable/AM in oview(2, T))
 				if(AM.anchored || AM == hit || AM.throwing) continue
@@ -332,7 +267,7 @@
 /obj/item/gun/kinetic/pistol/autoaim
 	name = "\improper Catoblepas pistol"
 	desc = "A semi-smart pistol with moderate aim-correction. The manufacterer markings read \"Anderson Para-Munitions\"."
-	shoot(target, start, mob/user, POX, POY) //checks clicked turf first, so you can choose a target if need be
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null) //checks clicked turf first, so you can choose a target if need be
 		for(var/mob/M in range(2, target))
 			if(M == user || istype(M.get_id(), /obj/item/card/id/syndicate)) continue
 			..(get_turf(M), start, user, POX, POY)
@@ -413,7 +348,7 @@
 	precalculated = 0
 	shot_volume = 100
 	shot_sound = 'sound/weapons/gyrojet.ogg'
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 
 	on_launch(obj/projectile/O)
 		O.internal_speed = projectile_speed
@@ -439,7 +374,9 @@
 	gildable = 1
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/deagle50cal
-
+	recoil_strength = 19
+	recoil_inaccuracy_max = 12
+	icon_recoil_cap = 30
 	New()
 		set_current_projectile(new/datum/projectile/bullet/deagle50cal)
 		ammo = new default_magazine
@@ -475,7 +412,7 @@
 	dissipation_delay = 5
 	dissipation_rate = 5
 	implanted = /obj/item/implant/projectile/bullet_50
-	impact_image_state = "bhole-large"
+	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/deagle
 	shot_sound = 'sound/weapons/deagle.ogg'
 
@@ -488,7 +425,7 @@
 				var/obj/item/organ/head/head = H.drop_organ("head", get_turf(H))
 				if(head)
 					head.throw_at(get_edge_target_turf(head, get_dir(O, H) ? get_dir(O, H) : H.dir),2,1)
-					H.visible_message("<span class='alert'>[H]'s head get's blown right off! Holy shit!</span>", "<span class='alert'>Your head gets blown clean off! Holy shit!</span>")
+					H.visible_message(SPAN_ALERT("[H]'s head get's blown right off! Holy shit!"), SPAN_ALERT("Your head gets blown clean off! Holy shit!"))
 				H.death()
 
 /obj/item/ammo/bullets/pipeshot/chems/saltshot
@@ -505,6 +442,33 @@
 	result = /obj/item/ammo/bullets/pipeshot/chems/saltshot
 	craftname = "salt"
 	reagents_req = list("salt"=5)
+
+/datum/projectile/bullet/antiunion
+	name = "Union buster rocket"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "regrocket"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	damage = 10
+	dissipation_delay = 30
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	impact_image_state = "bullethole-large"
+	implanted = null
+
+	on_hit(atom/hit)
+		new /obj/effects/rendersparks(hit.loc)
+		if(ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(!M.traitHolder.hasTrait("unionized"))
+				boutput(M, SPAN_ALERT("You are struck by a big rocket! Thankfully it was not the exploding kind."))
+				M.do_disorient(stunned = 40)
+			else
+				boutput(M, SPAN_ALERT("You are struck by a union-busting rocket! There goes your union benefits!"))
+				M.traitHolder.removeTrait("unionized")
+				data_core.bank.find_record("name", M.real_name)["wage"] = data_core.bank.find_record("name", M.real_name)["wage"]/1.5
+
 
 //magical crap
 /obj/item/enchantment_scroll
@@ -526,11 +490,11 @@
 			var/msg = text("As [user] slaps the [src] onto the [target], the [target]")
 			var/currentench = I.enchant(incr)
 			var/turf/T = get_turf(target)
-			playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
+			playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE)
 			if(currentench-incr <= 2 || !rand(0, currentench))
-				user.visible_message("<span class='notice'>[msg] glows with a faint light[(currentench >= 3) ? " and vibrates violently!" : "."]</span>")
+				user.visible_message(SPAN_NOTICE("[msg] glows with a faint light[(currentench >= 3) ? " and vibrates violently!" : "."]"))
 			else
-				user.visible_message("<span class='alert'>[msg] shudders violently and turns to dust!</span>")
+				user.visible_message(SPAN_ALERT("[msg] shudders violently and turns to dust!"))
 				qdel(I)
 			qdel(src)
 		else
@@ -666,7 +630,7 @@
 		if(!istype(M) || (M in loved))
 			return
 		M.reagents?.add_reagent("love", 20)
-		boutput(M, "<span class='notice'>You feel loved</span>")
+		boutput(M, SPAN_NOTICE("You feel loved"))
 		loved += M
 
 //misc stuffs
@@ -737,43 +701,3 @@ TYPEINFO(/obj/item/device/geiger)
 			user.u_equip(src)
 			qdel(src)
 		. = ..()
-
-//DIRTY DIRTY PLAYERS
-/obj/submachine/laundry_machine/portable
-	name = "Port-A-Laundry"
-	desc = "Don't ask."
-	anchored = UNANCHORED
-	pixel_y = 6
-	var/homeloc
-
-	New()
-		. = ..()
-		LAZYLISTADD(portable_machinery, src)
-		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
-		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
-		src.homeloc = get_turf(src)
-
-	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
-		..()
-
-/obj/item/remote/porter/port_a_laundry
-	name = "Port-A-Laundry Remote"
-	icon = 'icons/obj/porters.dmi'
-	icon_state = "remote"
-	item_state = "electronic"
-	desc = "A remote that summons a Port-A-Laundry."
-	machinery_name = "Port-a-Laundry"
-
-	get_machinery()
-		if (!src)
-			return
-
-		for (var/obj/submachine/laundry_machine/portable/LP in portable_machinery)
-			var/turf/T = get_turf(LP)
-			if (isrestrictedz(T?.z)) // Don't show stuff in "somewhere", okay.
-				continue
-			if (!(LP in src.machinerylist))
-				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(LP)]"] += LP // Don't remove the #[number] part here.
-		return

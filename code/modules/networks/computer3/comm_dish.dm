@@ -190,7 +190,7 @@ TYPEINFO(/obj/machinery/communications_dish)
 								return
 							src.post_reply("SHUTL_E_RET", target)
 					else
-						//to-do: error reply
+						; //to-do: error reply
 			if("transmit")
 				if(signal.data["acc_code"] != netpass_heads)
 					return

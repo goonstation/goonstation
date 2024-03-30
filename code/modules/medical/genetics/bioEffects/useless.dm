@@ -83,7 +83,7 @@
 			particleMaster.SpawnSystem(new system_path(owner))
 
 	OnRemove()
-		if (!particleMaster.CheckSystemExists(system_path, owner))
+		if (particleMaster.CheckSystemExists(system_path, owner))
 			particleMaster.RemoveSystem(system_path, owner)
 
 /datum/bioEffect/achromia
@@ -220,7 +220,7 @@
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel sweaty."
-	msgLose = "You feel much more hygenic."
+	msgLose = "You feel much more hygienic."
 	var/personalized_stink = null
 
 	New()
@@ -237,26 +237,26 @@
 				if (C == owner)
 					continue
 				if (ispug(C))
-					boutput(C, "<span class='alert'>Wow, [owner] sure [pick("stinks", "smells", "reeks")]!")
+					boutput(C, SPAN_ALERT("Wow, [owner] sure [pick("stinks", "smells", "reeks")]!"))
 				else if (src.personalized_stink)
-					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
+					boutput(C, SPAN_ALERT("[src.personalized_stink]"))
 				else
-					boutput(C, "<span class='alert'>[stinkString()]</span>")
+					boutput(C, SPAN_ALERT("[stinkString()]"))
 
 
-/obj/effect/distort/dwarf
+/obj/effect/rt/dwarf
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "distort-dwarf"
 
 /datum/bioEffect/dwarf
 	name = "Dwarfism"
-	desc = "Greatly reduces the overall size of the subject, resulting in markedly dimished height."
+	desc = "Greatly reduces the overall size of the subject, resulting in markedly diminished height."
 	id = "dwarf"
 	msgGain = "Did everything just get bigger?"
 	msgLose = "You feel tall!"
 	icon_state  = "dwarf"
 	var/filter = null
-	var/obj/effect/distort/dwarf/distort = new
+	var/tmp/obj/effect/rt/dwarf/distort = new
 	var/size = 127
 
 	OnAdd()
@@ -342,7 +342,7 @@
 
 /datum/bioEffect/drunk/pentetic
 	name = "Pentetic Acid Production"
-	desc = "This mutation somehow causes the subject's body to manufacture a potent chellating agent. How exactly it functions is completely unknown."
+	desc = "This mutation somehow causes the subject's body to manufacture a potent chelating agent. How exactly it functions is completely unknown."
 	id = "drunk_pentetic"
 	msgGain = "You feel detoxified."
 	msgLose = "You feel toxic."
@@ -532,3 +532,61 @@
 	New()
 		..()
 		color_hex = "#680000"
+
+/datum/bioEffect/reversedSounds
+	name = "Antitemporal Inner Ear"
+	desc = "Makes your inner ear travel back in time, causing you to hear sounds in reverse."
+	id = "reversed_sounds"
+	probability = 25
+	msgGain = "You start hearing things backwards."
+	msgLose = "You no longer hear things backwards."
+
+	OnAdd()
+		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, -1)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src)
+		..()
+
+/datum/bioEffect/slowSounds
+	name = "Leisurely Inner Ear"
+	desc = "Makes your inner ear chill out a little, meaning you hear things deeper and in slow motion."
+	id = "slow_sounds"
+	probability = 25
+	msgGain = "You hear everything slowed down and deeper."
+	msgLose = "You no longer hear everything slowed down and deeper."
+	effect_group = "soundspeed"
+
+	OnAdd()
+		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 0.5 / power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 0.5 / power)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src)
+		..()
+
+/datum/bioEffect/fastSounds
+	name = "Hurried Inner Ear"
+	desc = "Your inner ear is full of performance enhancing drugs, it processes sounds really quickly and with higher pitch!"
+	id = "fast_sounds"
+	probability = 25
+	msgGain = "You hear everything sped up and higher pitched."
+	msgLose = "You no longer hear everything sped up and higher pitched."
+	effect_group = "soundspeed"
+
+	OnAdd()
+		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 2 * power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 2 * power)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src)
+		..()

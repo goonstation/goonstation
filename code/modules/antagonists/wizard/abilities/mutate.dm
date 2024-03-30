@@ -18,8 +18,8 @@
 			holder.owner.say("BIRUZ BENNAR", FALSE, maptext_style, maptext_colors)
 		..()
 
-		boutput(holder.owner, "<span class='notice'>Your muscles are magically empowered and you feel very athletic!</span>")
-		holder.owner.visible_message("<span class='alert'>[holder.owner] glows with a POWERFUL aura!</span>")
+		boutput(holder.owner, SPAN_NOTICE("Your muscles are magically empowered and you feel very athletic!"))
+		holder.owner.visible_message(SPAN_ALERT("[holder.owner] glows with a POWERFUL aura!"))
 
 		if (!holder.owner.bioHolder.HasEffect("hulk"))
 			holder.owner.bioHolder.AddEffect("hulk", 0, 0, 0, 1)
@@ -29,7 +29,7 @@
 		if (holder.owner.wizard_spellpower(src))
 			SPtime = 300
 		else
-			boutput(holder.owner, "<span class='alert'>Your spell doesn't last as long without a staff to focus it!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your spell doesn't last as long without a staff to focus it!"))
 		SPAWN(SPtime)
 			if (!QDELETED(holder.owner))
 				if (holder.owner.bioHolder.HasEffect("hulk"))

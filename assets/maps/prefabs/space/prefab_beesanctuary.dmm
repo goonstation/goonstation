@@ -43,8 +43,12 @@
 /area/prefab/bee_sanctuary)
 "bo" = (
 /obj/decal/cleanable/cobweb,
-/obj/machinery/atmospherics/pipe/tank/oxygen{
-	volume = 0
+/obj/decal/fakeobjects/pipe{
+	density = 1;
+	desc = "A large vessel containing pressurized gas.";
+	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
+	name = "Pressure Tank (Oxygen)";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/plating,
 /area/prefab/bee_sanctuary)
@@ -52,8 +56,12 @@
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
-/obj/machinery/atmospherics/pipe/tank{
-	volume = 0
+/obj/decal/fakeobjects/pipe{
+	density = 1;
+	desc = "A large vessel containing pressurized gas.";
+	icon = 'icons/obj/atmospherics/tanks/grey_pipe_tank.dmi';
+	name = "Pressure Tank";
+	icon_state = "tank-map"
 	},
 /obj/machinery/light/small{
 	dir = 1;
@@ -71,8 +79,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /turf/unsimulated/floor/black/grime,
@@ -87,12 +95,7 @@
 /turf/unsimulated/floor/purpleblack,
 /area/prefab/bee_sanctuary)
 "eu" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "bee bed"
-	},
+/obj/stool/bee_bed,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 10
@@ -113,7 +116,8 @@
 "eJ" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	tag = "icon-intact (NORTHEAST)"
+	tag = "icon-intact (NORTHEAST)";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/plating,
@@ -135,7 +139,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -191,7 +195,8 @@
 /obj/window/crystal/south,
 /obj/window/crystal/west,
 /obj/decal/fakeobjects/pipe{
-	icon_state = "exposed"
+	icon_state = "exposed";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/void{
 	plane = -110
@@ -230,7 +235,8 @@
 "je" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	tag = "icon-intact-f (NORTHWEST)"
+	tag = "icon-intact-f (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/caution/south,
@@ -243,8 +249,6 @@
 /area/prefab/bee_sanctuary)
 "jn" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/shuttlebay,
@@ -258,15 +262,14 @@
 /area/prefab/bee_sanctuary)
 "jq" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 8
+	dir = 8;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "jw" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/shuttlebay,
@@ -329,8 +332,6 @@
 	pixel_y = -10
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor,
@@ -340,7 +341,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /obj/critter/domestic_bee/zombee,
@@ -379,8 +380,6 @@
 /area/prefab/bee_sanctuary)
 "oo" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/caution/west,
@@ -402,10 +401,12 @@
 /area/noGenerate)
 "oG" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 8
+	dir = 8;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 8
+	dir = 8;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/damaged3,
 /area/prefab/bee_sanctuary)
@@ -459,8 +460,6 @@
 "pT" = (
 /obj/grille/catwalk,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
@@ -489,8 +488,6 @@
 /area/prefab/bee_sanctuary)
 "qC" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -539,8 +536,6 @@
 /area/prefab/bee_sanctuary)
 "sM" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/white,
@@ -588,8 +583,6 @@
 /area/prefab/bee_sanctuary)
 "uV" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/shuttlebay,
@@ -600,7 +593,7 @@
 	desc = "A tank.  For storing water.";
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "River Loop Storage Tank";
-	tag = ""
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/caution/north,
 /area/prefab/bee_sanctuary)
@@ -610,8 +603,12 @@
 /area/prefab/bee_sanctuary)
 "wg" = (
 /obj/decal/cleanable/dirt/dirt5,
-/obj/machinery/atmospherics/pipe/tank/toxins{
-	volume = 0
+/obj/decal/fakeobjects/pipe{
+	density = 1;
+	desc = "A large vessel containing pressurized gas.";
+	icon = 'icons/obj/atmospherics/tanks/orange_pipe_tank.dmi';
+	name = "Pressure Tank (Plasma)";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
@@ -691,8 +688,6 @@
 "yF" = (
 /obj/grille/catwalk,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
@@ -725,13 +720,6 @@
 	dir = 6
 	},
 /area/prefab/bee_sanctuary)
-"zD" = (
-/obj/lattice{
-	dir = 2;
-	icon_state = "lattice-dir"
-	},
-/turf/variableTurf/clear,
-/area/noGenerate)
 "zI" = (
 /obj/decal/cleanable/dirt/dirt4,
 /obj/reagent_dispensers/compostbin,
@@ -749,18 +737,16 @@
 /area/prefab/bee_sanctuary)
 "zN" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/beekeeper{
+/obj/item/clothing/suit/hazard/beekeeper{
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/clothing/suit/bio_suit/beekeeper,
+/obj/item/clothing/suit/hazard/beekeeper,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "Ag" = (
 /obj/grille/catwalk,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
@@ -770,14 +756,13 @@
 /area/noGenerate)
 "Ak" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 8
+	dir = 8;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/damaged5,
 /area/prefab/bee_sanctuary)
 "Au" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor,
@@ -829,8 +814,6 @@
 "BS" = (
 /obj/grille/catwalk,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
@@ -848,20 +831,17 @@
 	pixel_y = 1
 	},
 /obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi'
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map"
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "CL" = (
 /obj/grille/catwalk,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
@@ -876,7 +856,8 @@
 "CU" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	tag = "icon-intact-f (NORTHWEST)"
+	tag = "icon-intact-f (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /obj/computerframe{
 	anchored = 1;
@@ -890,7 +871,7 @@
 "Dn" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /obj/computerframe{
 	anchored = 1;
@@ -911,7 +892,9 @@
 /obj/window/crystal/south,
 /obj/window/crystal/west,
 /obj/critter/domestic_bee/zombee,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "DB" = (
@@ -939,7 +922,9 @@
 /obj/window/crystal/east,
 /obj/window/crystal/west,
 /obj/window/crystal/south,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "DW" = (
@@ -970,8 +955,6 @@
 "EE" = (
 /obj/grille/catwalk,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
@@ -985,7 +968,8 @@
 "EP" = (
 /obj/decal/cleanable/dirt/dirt4,
 /obj/decal/fakeobjects/pipe{
-	dir = 8
+	dir = 8;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
@@ -1015,8 +999,6 @@
 /area/prefab/bee_sanctuary)
 "FW" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/shuttlebay,
@@ -1157,7 +1139,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	tag = "icon-intact (NORTHEAST)"
+	tag = "icon-intact (NORTHEAST)";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/skeleton,
 /obj/machinery/light/small/warm/very{
@@ -1266,7 +1249,8 @@
 /obj/window/crystal/east,
 /obj/window/crystal/west,
 /obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi'
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map"
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
@@ -1322,8 +1306,6 @@
 	name = "Office door"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/white,
@@ -1347,8 +1329,12 @@
 /area/prefab/bee_sanctuary)
 "NE" = (
 /obj/decal/cleanable/cobweb,
-/obj/machinery/atmospherics/pipe/tank/toxins{
-	volume = 0
+/obj/decal/fakeobjects/pipe{
+	density = 1;
+	desc = "A large vessel containing pressurized gas.";
+	icon = 'icons/obj/atmospherics/tanks/orange_pipe_tank.dmi';
+	name = "Pressure Tank (Plasma)";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
@@ -1433,8 +1419,6 @@
 /area/prefab/bee_sanctuary)
 "Qd" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -1488,7 +1472,7 @@
 	desc = "A tank.  For storing water.";
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "River Loop Storage Tank";
-	tag = ""
+	icon_state = "tank-map"
 	},
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/caution/corner/nw,
@@ -1521,7 +1505,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /obj/decal/cleanable/dirt,
@@ -1533,7 +1517,7 @@
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor,
@@ -1657,8 +1641,6 @@
 "Vk" = (
 /obj/grille/catwalk,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
@@ -2786,8 +2768,8 @@ LG
 jq
 xc
 Zz
-zD
-zD
+eL
+eL
 Jo
 Os
 Os

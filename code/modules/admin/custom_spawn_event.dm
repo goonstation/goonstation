@@ -17,6 +17,8 @@
 	var/objective_text = ""
 	///Should antag datums give their default equipment (replaces whatever is currently equipped in those slots)
 	var/equip_antag = TRUE
+	///Include DNR ghosts
+	var/allow_dnr = FALSE
 
 	proc/get_spawn_loc()
 		if (isturf(src.spawn_loc))
@@ -67,7 +69,13 @@
 		if (src.ask_permission)
 			message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
-		var/list/datum/mind/candidates = dead_player_list(TRUE, src.ghost_confirmation_delay, text_messages, allow_dead_antags = TRUE, require_client = TRUE, do_popup = src.ask_permission)
+		var/list/datum/mind/candidates = dead_player_list(TRUE, src.ghost_confirmation_delay, text_messages,
+			allow_dead_antags = TRUE,
+			require_client = TRUE,
+			do_popup = src.ask_permission,
+			for_antag = !!src.antag_role,
+			allow_dnr = src.allow_dnr
+		)
 
 		if (!length(candidates))
 			message_admins("No ghosts responded to spawn event: [src.get_mob_name()]")
@@ -99,6 +107,8 @@
 			if (src.antag_role == "generic_antagonist")
 				mind.add_generic_antagonist("generic_antagonist", new_mob.real_name, do_equip = src.equip_antag, do_objectives = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
 			else if (src.antag_role)
+				if (mind.get_antagonist(src.antag_role))
+					mind.remove_antagonist(src.antag_role, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
 				mind.add_antagonist(src.antag_role, do_relocate = FALSE, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN, do_equip = src.equip_antag, respect_mutual_exclusives = FALSE)
 			else
 				mind.wipe_antagonists()
@@ -113,7 +123,9 @@
 
 /datum/spawn_event_editor
 	var/datum/spawn_event/spawn_event = new()
-
+	///Set to true whenever player eligibility parameters change so we're not iterating global.minds every TGUI tick
+	var/refresh_player_count = TRUE
+	var/eligible_player_count = -1
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
@@ -124,6 +136,8 @@
 		var/spawn_type = ""
 		if (ismob(src.spawn_event.thing_to_spawn))
 			spawn_type = "mob_ref"
+		else if (src.spawn_event.thing_to_spawn == /mob/living/carbon/human/normal) //special case for a useful shortcut
+			spawn_type = "random_human"
 		else if (ispath(src.spawn_event.thing_to_spawn, /mob))
 			spawn_type = "mob_type"
 		else if (istext(src.spawn_event.thing_to_spawn))
@@ -140,6 +154,10 @@
 		//we want to display a warning if someone tries to apply an antag role to a non-human mob
 		var/potentially_incompatible = is_a_mob && !is_a_human && src.spawn_event.antag_role
 
+		if (src.refresh_player_count)
+			src.eligible_player_count = length(eligible_dead_player_list(TRUE, TRUE, !!src.spawn_event.antag_role, src.spawn_event.allow_dnr))
+			src.refresh_player_count = FALSE
+
 		return list(
 			"thing_to_spawn" = (ispath(src.spawn_event.thing_to_spawn) || istext(src.spawn_event.thing_to_spawn)) ? src.spawn_event.thing_to_spawn : "\ref[src.spawn_event.thing_to_spawn]",
 			"thing_name" = src.spawn_event.get_mob_name(),
@@ -154,6 +172,8 @@
 			"incompatible_antag" = potentially_incompatible,
 			"equip_antag" = src.spawn_event.equip_antag,
 			"ask_permission" = src.spawn_event.ask_permission,
+			"allow_dnr" = src.spawn_event.allow_dnr,
+			"eligible_player_count" = src.eligible_player_count,
 		)
 
 	ui_static_data(mob/user)
@@ -179,6 +199,8 @@
 				for (var/datum/job/job in (job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs))
 					job_names |= job.name
 				src.spawn_event.thing_to_spawn = tgui_input_list(ui.user, "Select job type", "Select type", job_names) || src.spawn_event.thing_to_spawn
+			if ("set_random_human")
+				src.spawn_event.thing_to_spawn = /mob/living/carbon/human/normal
 			if ("select_turf")
 				src.spawn_event.spawn_loc = get_turf(pick_ref(ui.user))
 			if ("select_landmark")
@@ -194,8 +216,10 @@
 				for (var/datum/antagonist/antag as anything in concrete_typesof(/datum/antagonist))
 					antag_ids |= initial(antag.id)
 				src.spawn_event.antag_role = tgui_input_list(ui.user, "Select antagonist role", "Select role", antag_ids)
+				src.refresh_player_count = TRUE //need to include or exclude antag banned players
 			if ("clear_antag")
 				src.spawn_event.antag_role = null
+				src.refresh_player_count = TRUE
 			if ("set_equip")
 				src.spawn_event.equip_antag = params["equip_antag"]
 			if ("set_spawn_directly")
@@ -204,11 +228,16 @@
 				src.spawn_event.objective_text = params["objective_text"]
 			if ("set_ask_permission")
 				src.spawn_event.ask_permission = params["ask_permission"]
+			if ("set_allow_dnr")
+				src.refresh_player_count = TRUE
+				src.spawn_event.allow_dnr = params["allow_dnr"]
 			if ("spawn") //no accidental double clicks
 				if (!ON_COOLDOWN(ui.user, "custom_spawn_event", 1 SECOND))
-					message_admins("[key_name(ui.user)] initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()]")
-					logTheThing(LOG_ADMIN, ui.user, "initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()]")
+					message_admins("[key_name(ui.user)] initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()] [src.spawn_event.antag_role]")
+					logTheThing(LOG_ADMIN, ui.user, "initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()] [src.spawn_event.antag_role]")
 					src.spawn_event.do_spawn()
+			if ("refresh_player_count")
+				src.refresh_player_count = TRUE
 		return TRUE
 
 /client/proc/cmd_custom_spawn_event()
@@ -216,6 +245,7 @@
 	set name = "Custom Ghost Spawn"
 	set desc = "Set up a custom player spawn event."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/datum/spawn_event_editor/E = new /datum/spawn_event_editor(src.mob)
 	E.ui_interact(mob)

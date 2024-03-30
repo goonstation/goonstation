@@ -94,7 +94,7 @@
 /obj/item/shipcomponent/mainweapon/mining
 	name = "Plasma Cutter System"
 	desc = "A high-temperature rock cutter for pods. Use with extreme caution."
-	power_used = 130
+	power_used = 80
 	weapon_score = 0.7
 	current_projectile = new/datum/projectile/laser/mining
 	appearanceString = "pod_weapon_cutter_on"
@@ -104,7 +104,7 @@
 /obj/item/shipcomponent/mainweapon/bad_mining
 	name = "Mining Phaser System"
 	desc = "A weak, short-range phaser that can cut through solid rock. Weak damage, but more effective against critters."
-	power_used = 1
+	power_used = 10
 	current_projectile = new/datum/projectile/laser/light/mining
 	appearanceString = "pod_weapon_ltlaser"
 	firerate = 7
@@ -141,7 +141,7 @@
 
 /obj/item/shipcomponent/mainweapon/laser
 	name = "Mk.2 Scout Laser"
-	desc = "An upgraded variant of the stock MK 1.5 phaser. Due to the concentration of energy, a higher quality engine might be neccesary."
+	desc = "An upgraded variant of the stock MK 1.5 phaser. Due to the concentration of energy, a higher quality engine might be necessary."
 	weapon_score = 0.4
 	appearanceString = "pod_weapon_laser"
 	power_used = 100
@@ -164,6 +164,7 @@
 	name = "Svet-Oruzhiye Mk.4"
 	weapon_score = 0.6
 	current_projectile = new/datum/projectile/laser/glitter
+	power_used = 75
 	firerate = 5
 	icon_state = "strelka"
 	muzzle_flash = "muzzle_flash_laser"
@@ -189,6 +190,7 @@
 	name = "SPE-12 Ballistic System"
 	desc = "A one of it's kind kinetic podweapon, designed to fire shotgun rounds similar to those in a SPES-12."
 	weapon_score = 1.25
+	power_used = 30
 	current_projectile = new/datum/projectile/bullet/a12/weak
 	appearanceString = "pod_weapon_gun_off"
 	firerate = 10
@@ -198,7 +200,7 @@
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"
 	weapon_score = 1.25
-	power_used = 350
+	power_used = 300
 	firerate = 35
 	appearanceString = "pod_weapon_emitter"
 	current_projectile = new/datum/projectile/laser/asslaser
@@ -207,8 +209,8 @@
 
 /obj/item/shipcomponent/mainweapon/rockdrills
 	name = "Rock Drilling Rig"
-	desc = "A strudy drill designed for chewing up asteroids like nobodies business."
-	power_used = 100
+	desc = "A sturdy drill designed for chewing up asteroids like nobodies business."
+	power_used = 90
 	weapon_score = 1
 	current_projectile = new/datum/projectile/laser/drill
 	appearanceString = "pod_weapon_drills"
@@ -326,7 +328,7 @@
 					step_towards(D, get_step(D, D.dir))
 					var/location = get_turf(D)
 					for(var/mob/M in AIviewers(5, location))
-						boutput(M, "<span class='alert'>[ship] spews out a metalic foam!</span>")
+						boutput(M, SPAN_ALERT("[ship] spews out a metallic foam!"))
 					var/list/bandaidfix = list("iron" = 3, "fluorosurfactant" = 1, "acid" = 1)
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(5, location, bandaidfix, 1) // Aborts if reagent list is null (even for metal foam), but I'm not gonna touch foam_spread.dm (Convair880).
@@ -390,7 +392,7 @@
 		if(ON_COOLDOWN(src, "fire", firerate))
 			return
 		if(!core_inserted)
-			boutput(ship.pilot, "<span class='alert'><B>The weapon requires a unique power source to function!</B></span>")
+			boutput(ship.pilot, SPAN_ALERT("<B>The weapon requires a unique power source to function!</B>"))
 			return
 		playsound(src.loc, 'sound/weapons/heavyioncharge.ogg', 75, 1)
 		logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] from [log_loc(ship)].")
@@ -464,7 +466,7 @@
 			core_inserted = FALSE
 			set_icon_state("SPS_empty")
 			user.put_in_hand_or_drop(new /obj/item/sword_core)
-			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Purge System!</span>", 1)
+			user.show_message(SPAN_NOTICE("You remove the SWORD core from the Syndicate Purge System!"), 1)
 			desc = "After a delay, fires a destructive beam capable of penetrating walls. The core is missing."
 			tooltip_rebuild = 1
 			return
@@ -472,7 +474,7 @@
 			core_inserted = TRUE
 			qdel(W)
 			set_icon_state("SPS")
-			user.show_message("<span class='notice'>You insert the SWORD core into the Syndicate Purge System!</span>", 1)
+			user.show_message(SPAN_NOTICE("You insert the SWORD core into the Syndicate Purge System!"), 1)
 			desc = "After a delay, fires a destructive beam capable of penetrating walls. The core is installed."
 			tooltip_rebuild = 1
 			return

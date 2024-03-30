@@ -81,6 +81,22 @@
 		return
 
 	/**
+		 *  Called by some foods, use inside onUpdate(timePassed)
+		 *
+		 * 	Required: sweatReagent - the chemical you're sweating
+		 *  targetTurf should be left default
+		 */
+	proc/dropSweat(var/sweatReagent, var/sweatAmount = 5, var/sweatChance = 5, var/turf/targetTurf = get_turf(owner))
+		var/datum/reagents/tempHolder = new
+		if (prob(sweatChance))
+			tempHolder.add_reagent(sweatReagent, sweatAmount)
+			targetTurf.fluid_react_single(sweatReagent,sweatAmount)
+			tempHolder.reaction(targetTurf, TOUCH)
+		return
+
+
+
+	/**
 		* Called when the status is changed using setStatus. Called after duration is updated etc.
 		*
 		* optional {optional} - arg from setStatus (passed in)
@@ -119,6 +135,9 @@
 	proc/move_trigger(mob/user, ev)
 		. = 0
 
+	proc/remove_self()
+		src.owner.delStatus(src)
+
 	disposing()
 		if (owner?.statusEffects)
 			owner.statusEffects -= src
@@ -141,6 +160,26 @@
 			..()
 			var/mob/M = owner
 			SEND_SIGNAL(M, COMSIG_MOB_SHOCKED_DEFIB)
+
+	dialysis
+		id = "dialysis"
+		name = "Dialysis"
+		desc = "Your blood is being filtered by a dyalysis machine."
+		icon_state = "dialysis"
+		unique = FALSE
+		effect_quality = STATUS_QUALITY_POSITIVE
+		var/obj/machinery/dialysis/dialysis_machine = null
+
+		getTooltip()
+			. = "A dialysis machine is filtering your blood, removing toxins and treating the symptoms of liver and kidney failure."
+
+		onAdd(obj/machinery/dialysis/optional)
+			..()
+			src.dialysis_machine = optional
+
+		onCheck(optional)
+			return src.dialysis_machine == optional
+
 	staminaregen
 		id = "staminaregen"
 		name = ""
@@ -373,7 +412,7 @@
 				C.dropped(M)
 				M.u_equip(C)
 			if (!isnull(src.message))
-				owner.visible_message("<span class='alert'>\The [owner][message]</span>")
+				owner.visible_message(SPAN_ALERT("\The [owner][message]"))
 			if (ismob(owner))
 				var/mob/fucko = owner
 				fucko.ghostize()
@@ -541,15 +580,15 @@
 
 			if(stage > 0 && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 				if(ishuman(M) && !ON_COOLDOWN(M,"radiation_mutation_check", 3 SECONDS) && prob(((stage - 1) - M.traitHolder?.hasTrait("stablegenes"))**2))
-					boutput(M, "<span class='alert'>You mutate!</span>")
+					boutput(M, SPAN_ALERT("You mutate!"))
 					M.bioHolder.RandomEffect("either")
 				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECONDS) && prob((stage-1)**2))
 					M.changeStatus("weakened", 3 SECONDS)
-					boutput(M, "<span class='alert'>You feel weak.</span>")
+					boutput(M, SPAN_ALERT("You feel weak."))
 					M.emote("collapse")
 				if(!ON_COOLDOWN(M, "radiation_vomit_check", 5 SECONDS) && prob(stage**2))
 					M.changeStatus("weakened", 3 SECONDS)
-					boutput(M, "<span class='alert'>You feel sick.</span>")
+					boutput(M, SPAN_ALERT("You feel sick."))
 					M.vomit()
 
 			return ..(timePassed)
@@ -937,7 +976,7 @@
 			counter += timePassed
 			if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
 				counter -= count
-				playsound(owner, sound, 17, 1, 0.4, 1.6)
+				playsound(owner, sound, 17, TRUE, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
 
@@ -959,7 +998,7 @@
 			counter += timePassed
 			if (counter >= count && owner)
 				counter -= count
-				playsound(owner, sound, 17, 1, 0.4, 1.6)
+				playsound(owner, sound, 17, TRUE, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
 		onAdd()
@@ -1210,7 +1249,7 @@
 
 				ON_COOLDOWN(owner, "lying_bullet_dodge_cheese", 0.2 SECONDS)
 				if (L.getStatusDuration("burning"))
-					if (!actions.hasAction(L, "fire_roll"))
+					if (!actions.hasAction(L, /datum/action/fire_roll))
 						L.last_resist = world.time + 25
 						actions.start(new/datum/action/fire_roll(), L)
 					else
@@ -1241,9 +1280,8 @@
 		maxDuration = null
 		effect_quality = STATUS_QUALITY_POSITIVE
 		var/const/max_health = 30
-		var/const/max_stam = 60
+		var/const/max_stam = 40
 		var/const/regen_stam = 5
-		var/const/max_dist = 50
 		var/mob/living/carbon/human/H
 		var/datum/gang/gang
 		var/on_turf = 0
@@ -1254,6 +1292,7 @@
 				H = owner
 			else
 				owner.delStatus("ganger")
+				return
 			H.max_health += max_health
 			health_update_queue |= H
 			H.add_stam_mod_max("ganger_max", max_stam)
@@ -1272,37 +1311,76 @@
 			gang = null
 
 		onUpdate(timePassed)
-			var/area/cur_area = get_area(H)
-			if (cur_area?.gang_owners == gang && prob(50))
-				on_turf = 1
+			var/mob/living/carbon/human/H
+			if(!ishuman(owner))
+				return
+			H = owner
+			if(ON_COOLDOWN(H, "ganger_heal", 1 SECOND))
+				H.HealDamage("All", 0.2, 0.2, 0)
+				if (GET_DIST(owner,gang.locker) < 4) //give a boost to folks camping round their locker
+					H.HealDamage("All", 0.5, 0.5, 0.5)
+					icon_state = "ganger_heal"
+				else
+					icon_state = "ganger"
 
-				//get distance divided by max distance and invert it. Result will be between 0 and 1
-				var/buff_mult = round(1-(min(GET_DIST(owner,gang.locker), max_dist) / max_dist), 0.1)
-				if (buff_mult <=0)
-					buff_mult = 0.1
+				if (H.bleeding && prob(20))
+					repair_bleeding_damage(H, 5, 1)
 
-				var/mob/living/carbon/human/H
-				if(ishuman(owner))
-					H = owner
-					H.HealDamage("All", 10*buff_mult, 0, 0)
-					if (H.bleeding && prob(100*buff_mult))
-						repair_bleeding_damage(H, 5, 1)
 
-					var/list/statusList = H.getStatusList()
+			var/list/statusList = H.getStatusList()
 
-					if(statusList["paralysis"])
-						H.changeStatus("paralysis", -3*buff_mult)
-					if(statusList["stunned"])
-						H.changeStatus("stunned", -3*buff_mult)
-					if(statusList["weakened"])
-						H.changeStatus("weakened", -3*buff_mult)
-			else
-				on_turf = 0
-
-			return
+			if(statusList["paralysis"])
+				H.changeStatus("paralysis", -1)
+			if(statusList["stunned"])
+				H.changeStatus("stunned", -1)
+			if(statusList["weakened"])
+				H.changeStatus("weakened", -1)
 
 		getTooltip()
-			. = "Your max health, max stamina, and stamina regen have been increased because of the pride you feel while wearing your uniform. [on_turf?"You are on home turf and receiving healing and stun reduction buffs when nearer your locker.":""]"
+			if (GET_DIST(owner,gang.locker) < 4)
+				. = "You're healing quickly, proudly wearing your uniform next to your locker."
+			else
+				. = "Your endurance and recovery are improved because of the pride you feel while wearing your uniform in your territory."
+
+	ganger_debuff
+		id = "ganger_debuff"
+		name = "Gang Member"
+		desc = "You're hiding your gang uniform in enemy territory. Shameful!"
+		icon_state = "ganger"
+		unique = TRUE
+		duration = INFINITE_STATUS
+		maxDuration = null
+		effect_quality = STATUS_QUALITY_NEGATIVE
+		var/const/max_stam = -20
+		var/const/regen_stam = -2
+		var/mob/living/carbon/human/H
+		var/datum/gang/gang
+		var/on_turf = 0
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+			else
+				owner.delStatus("ganger_debuff")
+				return
+			H.add_stam_mod_max("ganger_debuff_max", max_stam)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "ganger_debuff_regen", regen_stam)
+			gang = H.get_gang()
+
+		onRemove()
+			. = ..()
+			H?.remove_stam_mod_max("ganger_debuff_max")
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "ganger_debuff_regen")
+			gang = null
+			H = null
+			gang = null
+		onUpdate(timePassed)
+			if (prob(5))
+				H?.emote(pick("shiver","flinch","twitch"))
+
+		getTooltip()
+			. = "Your vitals have dropped from the shame you feel hiding your true colors inside enemy territory."
 
 	janktank
 		id = "janktank"
@@ -1344,8 +1422,7 @@
 					H.HealDamage("All", 1, 1, 1)
 					if (H.bleeding)
 						repair_bleeding_damage(H, 10, 1)
-				if (prob(10))
-					H.make_jittery(2)
+				H.make_jittery(1)
 
 				if (H.misstep_chance)
 					H.change_misstep_chance(-5)
@@ -1516,7 +1593,7 @@
 			src.efficiency = optional
 			..()
 			if(H)
-				H.show_message("<span class='alert'>You feel your body deteriorating as you breathe on.</span>")
+				H.show_message(SPAN_ALERT("You feel your body deteriorating as you breathe on."))
 
 		onUpdate(timePassed)
 			var/oxy_damage = min(20, H.get_oxygen_deprivation())
@@ -1569,7 +1646,7 @@
 		if (prob(5) && !H.reagents?.has_reagent("promethazine"))
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
-			H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
+			H.visible_message(SPAN_ALERT("[H] [damage > 3 ? "vomits" : "coughs up"] blood!"), SPAN_ALERT("You [damage > 3 ? "vomit" : "cough up"] blood!"))
 			playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)
@@ -1722,7 +1799,7 @@
 		if(weighted_average > 4)
 			weighted_average = 0
 		if(probmult(puke_prob))
-			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
 			L.vomit(0, null, vomit_message)
 		return ..(timePassed)
 
@@ -1784,11 +1861,11 @@
 
 		if (states[1] || states[2])
 			if (states[1])
-				P.create_overlay(states[1], "#ff8820", direct, 'icons/effects/blood.dmi')
+				P.create_overlay(states[1], "#ff8820", direct, 'icons/obj/decals/blood/blood.dmi')
 			if (states[2])
-				P.create_overlay(states[2], "#ff8820", direct, 'icons/effects/blood.dmi')
+				P.create_overlay(states[2], "#ff8820", direct, 'icons/obj/decals/blood/blood.dmi')
 		else
-			P.create_overlay("smear2", "#ff8820", direct, 'icons/effects/blood.dmi')
+			P.create_overlay("smear2", "#ff8820", direct, 'icons/obj/decals/blood/blood.dmi')
 
 /datum/statusEffect/magnetized
 	id = "magnetized"
@@ -1873,7 +1950,7 @@
 
 	onRemove()
 		..()
-		if (!ishuman(owner))
+		if (!ishuman(owner) || QDELETED(owner))
 			return
 		//They already have the body part, don't give em a new one.
 		if (check_target_part())
@@ -1907,10 +1984,10 @@
 		switch(limb_or_organ)
 			if ("limb")
 				H.limbs.replace_with(regrow_target_id, regrow_target_path, show_message = 0)
-				H.visible_message("<span class='alert'>[H]'s [regrow_target_name] seems to regrow before your eyes!</span>", "<span class='notice'>We finish growing a new <b>[regrow_target_name]</b>!</span>")
+				H.visible_message(SPAN_ALERT("[H]'s [regrow_target_name] seems to regrow before your eyes!"), SPAN_NOTICE("We finish growing a new <b>[regrow_target_name]</b>!"))
 			if ("organ")
 				H.organHolder.receive_organ(new regrow_target_path(H), regrow_target_id)
-				H.visible_message("<span class='alert'>[H]'s [regrow_target_name] seems to regrow before your eyes!</span>", "<span class='notice'>We finish growing a new <b>[regrow_target_name]</b>!</span>")
+				H.visible_message(SPAN_ALERT("[H]'s [regrow_target_name] seems to regrow before your eyes!"), SPAN_NOTICE("We finish growing a new <b>[regrow_target_name]</b>!"))
 
 /datum/statusEffect/changeling_regrow/limb
 	limb_or_organ = "limb"
@@ -2004,7 +2081,7 @@
 			if(isdead(H))
 				H.set_mutantrace(/datum/mutantrace/zombie/can_infect)
 				if (H.ghost?.mind && !(H.mind && H.mind.get_player()?.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
-					H.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
+					H.ghost.show_text(SPAN_ALERT("<B>You feel yourself being dragged out of the afterlife!</B>"))
 					H.ghost.mind.transfer_to(H)
 				H.delStatus(id)
 
@@ -2099,14 +2176,14 @@
 		if(prob(2))
 			L.change_eye_blurry(rand(5,10))
 		if(prob(puke_prob))
-			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
 			L.vomit(0, null, vomit_message)
 
 	//firstly: sorry
 	//secondly: second arg is a proportional scale. 1 is standard, 5 is every port-a-puke tick, 10 is mass emesis.
 	proc/reduce_duration_on_vomit(var/mob/M, var/vomit_power)
 		owner.changeStatus("poisoned", -20 SECONDS * vomit_power)
-		boutput(owner, "<span class='notice'>Your stomach feels a lot better.</span>")
+		boutput(owner, SPAN_NOTICE("Your stomach feels a lot better."))
 
 ///APC status that locks lighting circuit offline
 /datum/statusEffect/lights_out
@@ -2241,7 +2318,7 @@
 		. = ..()
 		owner.add_simple_light("gnesis_glow", rgb2num("#26ffe6a2"))
 		owner.simple_light.alpha = 0
-		owner.visible_message("<span class='alert'>[owner] is enveloped in a shimmering teal glow.</span>", "<span class='alert'>You are enveloped in a shimmering teal glow.</span>")
+		owner.visible_message(SPAN_ALERT("[owner] is enveloped in a shimmering teal glow."), SPAN_ALERT("You are enveloped in a shimmering teal glow."))
 		animate(owner.simple_light, time = src.duration/2, alpha = 255)
 		animate(time = src.duration/2, alpha = 0)
 
@@ -2273,7 +2350,7 @@
 		M.mind?.add_subordinate_antagonist(ROLE_MINDHACK, master = hacker.mind)
 
 		if (custom_orders)
-			boutput(M, "<h2><span class='alert'>[hacker.real_name]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!</span></h2>")
+			boutput(M, SPAN_ALERT("<h2>[hacker.real_name]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!</h2>"))
 
 	onRemove()
 		..()
@@ -2337,6 +2414,7 @@
 			C.setProperty("coldprot", C.getProperty("coldprot") - LAUNDERED_COLDPROT_AMOUNT)
 			if (C.stains)
 				C.stains -= LAUNDERED_STAIN_TEXT
+				C.UpdateName()
 
 #undef LAUNDERED_COLDPROT_AMOUNT
 #undef LAUNDERED_STAIN_TEXT
@@ -2345,7 +2423,7 @@
 	id = "quick_charged"
 	name = "Quick charged"
 	icon_state = "stam-"
-	maxDuration = 0 MINUTES
+	maxDuration = null
 
 	getTooltip()
 		. = "The recharge upgrade has quickly charged you, this now prevents you from using another one again until it's safe for your battery to quick charge again."
@@ -2364,6 +2442,58 @@
 			for (var/obj/item/roboupgrade/R in robot.contents)
 				if (R.activated) R.upgrade_deactivate(robot)
 		. = ..()
+
+/datum/statusEffect/oiled
+	id = "oiled"
+	name = "Oiled"
+	icon_state = "oil"
+	maxDuration = 6 MINUTES
+	movement_modifier = /datum/movement_modifier/robot_oil
+
+	getTooltip()
+		. = "You have been oiled, your movement delay and passive power consumption have been reduced by 15%, and you feel more ready to resist anything that may stun you in your tracks."
+
+	onAdd(optional=null)
+		..()
+		var/mob/M = owner
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "robot_oil", 25)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "robot_oil", 25)
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "robot_oil")
+		REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "robot_oil")
+
+/datum/statusEffect/oiled/fresh
+	id = "freshly_oiled"
+	name = "Freshly oiled"
+	icon_state = "fresh_oil"
+	maxDuration = 15 SECONDS
+	movement_modifier = /datum/movement_modifier/robot_oil/fresh
+	/// Duration of the oiled status effect a person has before more oil is applied.
+	var/oiledDuration = 0
+	/// How long have we had the status effect for
+	var/tickspassed = 0
+
+	getTooltip()
+		. = "You have recently been oiled, your movement delay and passive power consumption have been reduced by 50%, and you feel more ready to resist anything that may stun you in your tracks."
+
+	onAdd(optional=null)
+		..()
+		var/mob/M = owner
+		if(M.hasStatus("oiled"))
+			oiledDuration = M.getStatusDuration("oiled")
+			M.delStatus("oiled")
+
+	onUpdate(timePassed) // I gotta do it this way trust me on this
+		. = ..()
+		tickspassed += timePassed
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		M.changeStatus("oiled", (min(tickspassed, maxDuration) * 24 + oiledDuration)) //  freshly oiled decays into oiled status with 12 times the duration that the status effect has peaked at.
 
 /datum/statusEffect/criticalcondition
 	id = "critical_condition"
@@ -2430,13 +2560,183 @@
 	name = "Spatial Protection"
 	desc = "You are being protected from wormholes, radiation storms, and magnetic biofields."
 	icon_state = "blocking" //This gives the general idea that they are being protected, but could use a better icon
-	maxDuration = 4 SECONDS
+	maxDuration = 7 SECONDS
 	effect_quality = STATUS_QUALITY_POSITIVE
 
 	onAdd(optional=null)
-		owner.add_filter("protection", 1, outline_filter(color="#e6ec21"))
+		owner.add_filter("protection", 1, outline_filter(color="#e5ec21c2"))
 		..()
 
 	onRemove()
 		owner.remove_filter("protection")
 		..()
+
+/datum/statusEffect/devera //Status effect for the devera hygiene protection
+	id = "devera_field"
+	name = "Devera Field"
+	desc = "You are being protected from grime gathering on you."
+	icon_state = "fragrant"
+	maxDuration = 4 SECONDS
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+// martian bag of holding artifact effect
+/datum/statusEffect/martian_boh
+	id = "martian_boh_morph"
+	name = "Morphing"
+	duration = INFINITE_STATUS
+	effect_quality = STATUS_QUALITY_NEUTRAL
+	var/passed = 0 SECONDS
+	var/period
+	var/message_given = FALSE
+
+	New()
+		src.period = rand(60, 180) SECONDS
+		..()
+
+	onUpdate(timePassed)
+		src.passed += timePassed / 10 SECONDS
+
+		if (src.passed < src.period * 0.75)
+			return
+
+		if (!src.message_given)
+			src.owner.loc.visible_message(SPAN_ALERT("[src.owner] begins to change shape!"))
+			src.message_given = TRUE
+		else if (src.passed >= src.period)
+			var/obj/item/artifact/bag_of_holding/boh = src.owner
+			src.owner.loc.visible_message(SPAN_ALERT("[src.owner] completely changes!"))
+			playsound(src.owner.loc, pick("sound/machines/ArtifactMar[pick(1, 2)].ogg"), 75, TRUE)
+			boh.martian_change_shape()
+			src.passed = 0
+			src.period = rand(60, 180) SECONDS
+			src.message_given = FALSE
+
+/datum/statusEffect/loose_brain
+	id = "loose_brain"
+	name = "Loose Brain"
+	desc = "You get the feeling that flipping with your brain exposed might not be a good idea..."
+	icon_state = "brain"
+	maxDuration = 2 MINUTES // I made this long so you can do gags where you fling your brain at someone
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+/datum/statusEffect/smellingsalts //Status effect from inhaling smelling salts
+	id = "smelling_salts"
+	name = "Perked up"
+	desc = "Smelling salts have knocked you back into being awake!"
+	icon_state = "smelling_salts"
+	maxDuration = 6 MINUTES
+	effect_quality = STATUS_QUALITY_POSITIVE
+	var/max_health_bonus = 30
+	var/benefit_duration = 60 SECONDS // how long the positives apply
+	var/current_bonus = 0
+
+	getTooltip()
+		if (duration > 5 MINUTES)
+			return "Smelling salts have knocked you back into being awake!"
+		else
+			return "Your sinuses are burning! Smelling salts can't perk you up."
+
+	onUpdate(optional=null)
+		var/bonus_remaining = max(0,1+(duration-maxDuration)/benefit_duration)
+		affectHealth(round(max_health_bonus  * bonus_remaining))
+		if(bonus_remaining == 0)
+			icon_state = "smelling_salts_low"
+		else
+			icon_state = "smelling_salts"
+		return
+
+	preCheck(atom/A)
+		. = ..()
+		if (!ismob(A))
+			. = FALSE
+
+	proc/affectHealth(var/newBonus)
+		if (current_bonus != newBonus)
+			var/change = newBonus - current_bonus
+			var/mob/M = owner
+			M.max_health += change
+			current_bonus = newBonus
+			health_update_queue |= M
+
+/datum/statusEffect/wiz_polymorph
+	id = "wiz_polymorph"
+	name = "Polymorphed"
+	desc = "You've been polymorphed by a wizard! It will take a few minutes for the spell to wear off."
+	icon_state = "polymorph"
+	unique = TRUE
+	var/mob/living/carbon/human/original
+
+	onAdd(mob/living/carbon/human/H)
+		. = ..()
+		original = H
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		if (ismobcritter(M) && isalive(M))
+			original.set_loc(M.loc)
+			original.hibernating = FALSE
+			M.mind?.transfer_to(original)
+			qdel(M)
+		else
+			qdel(original)
+
+		src.original = null
+
+/datum/statusEffect/conspiracy_convert
+	id = "conspiracy_convert"
+	name = "Recent Conversion"
+	desc = "You have recently converted another to your side, you will be able to convert again soon."
+	icon_state = "possess"
+	maxDuration = 30 MINUTES
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+/datum/statusEffect/noir
+	id = "noir"
+	name = "Noir"
+	maxDuration = 2 MINUTES
+	visible = FALSE
+
+	onAdd(optional)
+		..()
+		var/mob/M = src.owner
+		if (M.client)
+			animate_fade_grayscale(M.client, 5 SECONDS)
+		if (M.mind)
+			RegisterSignal(M.mind, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(remove_self)) //we're editing the client directly so we should be Cautious
+
+	onRemove()
+		..()
+		var/mob/M = src.owner
+		if (M.mind)
+			UnregisterSignal(M.mind, COMSIG_MIND_DETACH_FROM_MOB)
+		if (M.client)
+			animate_fade_from_grayscale(M.client, 5 SECONDS)
+
+/datum/statusEffect/oneMsgAccent
+	id = "temp_accent"
+	name = "Temporary Accent"
+	visible = FALSE
+	var/datum/bioEffect/added_accent = null
+
+	onAdd(optional)
+		..()
+		var/mob/living/M = src.owner
+		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(remove_self))
+		if (!istype(M) || !M.bioHolder)
+			src.remove_self()
+			return
+		var/datum/bioEffect/accent = random_accent()
+		var/emergency_loop_stop = 0
+		while (M.bioHolder.HasEffect(accent.id) && emergency_loop_stop < 10)
+			accent = random_accent()
+			emergency_loop_stop++
+
+		src.added_accent = M.bioHolder.AddEffect(accent.id, do_stability = FALSE, magical = TRUE)
+
+	onRemove()
+		..()
+		if (src.added_accent)
+			var/mob/living/M = src.owner
+			M.bioHolder.RemoveEffectInstance(src.added_accent)
+		UnregisterSignal(src.owner, COMSIG_MOB_SAY)

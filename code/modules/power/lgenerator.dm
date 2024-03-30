@@ -49,7 +49,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 		if (src.check_tank(W) == 0)
 			user.show_text("The tank doesn't contain any plasma.", "red")
 			return
-		src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
+		src.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."))
 		user.u_equip(W)
 		W.set_loc(src)
 		src.internalTank = W
@@ -60,7 +60,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 		if (src.internalCell)
 			user.show_text("There appears to be a power cell inserted already.", "red")
 			return
-		src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
+		src.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."))
 		user.u_equip(W)
 		W.set_loc(src)
 		src.internalCell = W
@@ -112,7 +112,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 /obj/machinery/power/lgenerator/proc/eject_tank(var/mob/user as mob)
 	if(internalTank)
 		internalTank.set_loc(loc)
-		user.put_in_hand_or_eject(internalTank) // try to eject it into the users hand, if we can
+		user?.put_in_hand_or_eject(internalTank) // try to eject it into the users hand, if we can
 		internalTank = null
 		src.UpdateIcon()
 	return
@@ -140,14 +140,14 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 
 	if (src.active)
 		if (!src.anchored)
-			src.visible_message("<span class='alert'>[src]'s retention bolts fail, triggering an emergency shutdown!</span>")
+			src.visible_message(SPAN_ALERT("[src]'s retention bolts fail, triggering an emergency shutdown!"))
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 			src.active = FALSE
 			src.UpdateIcon()
 			return
 
 		if (!istype(src.loc, /turf/simulated/floor/))
-			src.visible_message("<span class='alert'>[src]'s retention bolts fail, triggering an emergency shutdown!</span>")
+			src.visible_message(SPAN_ALERT("[src]'s retention bolts fail, triggering an emergency shutdown!"))
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 			src.anchored = UNANCHORED // It might have happened, I guess?
 			src.active = FALSE
@@ -155,15 +155,17 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 			return
 
 		if (src.check_tank(src.internalTank) == 0)
-			src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down! [src.internalTank] is ejected!</span>")
+			src.visible_message(SPAN_ALERT("[src] runs out of fuel and shuts down! [src.internalTank] is ejected!"))
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 			src.eject_tank(null)
+			src.active = FALSE
+			src.UpdateIcon()
 			return
 
 		switch (src.chargeAPC)
 			if (TRUE)
 				if (!src.our_APC)
-					src.visible_message("<span class='alert'>[src] doesn't detect a local APC and shuts down!</span>")
+					src.visible_message(SPAN_ALERT("[src] doesn't detect a local APC and shuts down!"))
 					playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 					src.active = FALSE
 					src.our_APC = null
@@ -171,7 +173,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 					return
 				if (src.last_APC_check && world.time > src.last_APC_check + 50)
 					if (src.APC_check() != 1)
-						src.visible_message("<span class='alert'>[src] can't charge the local APC and shuts down!</span>")
+						src.visible_message(SPAN_ALERT("[src] can't charge the local APC and shuts down!"))
 						playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 						src.active = FALSE
 						src.our_APC = null
@@ -194,7 +196,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 
 			if (FALSE)
 				if (!src.internalCell)
-					src.visible_message("<span class='alert'>[src] doesn't have a cell to charge and shuts down!</span>")
+					src.visible_message(SPAN_ALERT("[src] doesn't have a cell to charge and shuts down!"))
 					playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 					src.active = FALSE
 					src.internalCell = null
@@ -206,7 +208,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 				if (src.internalCell.charge > src.internalCell.maxcharge)
 					src.internalCell.charge = src.internalCell.maxcharge
 				if (src.internalCell.charge == src.internalCell.maxcharge)
-					src.visible_message("<span class='alert'>[src.internalCell] is fully charged. [src] ejects the cell and shuts down!</span>")
+					src.visible_message(SPAN_ALERT("[src.internalCell] is fully charged. [src] ejects the cell and shuts down!"))
 					playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 					src.eject_cell(null)
 					return
@@ -283,7 +285,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 				else
 					src.anchored = ANCHORED
 					src.UpdateIcon()
-				src.visible_message("<span class='alert'>[ui.user] [src.anchored ? "bolts" : "unbolts"] [src] [src.anchored ? "to" : "from"] the floor.</span>")
+				src.visible_message(SPAN_ALERT("[ui.user] [src.anchored ? "bolts" : "unbolts"] [src] [src.anchored ? "to" : "from"] the floor."))
 				. = TRUE
 			else
 				ui.user.show_text("Turn the generator off first!", "red")
@@ -311,7 +313,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 							ui.user.show_text("There's no cell to charge.", "red")
 							return
 			src.active = !src.active
-			src.visible_message("<span class='notice'>[ui.user] [src.active ? "activates" : "deactivates"] the [src].</span>")
+			src.visible_message(SPAN_NOTICE("[ui.user] [src.active ? "activates" : "deactivates"] the [src]."))
 			. = TRUE
 
 		if("swap-target")
@@ -323,7 +325,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 				ui.user.show_text("Turn the generator off first!", "red")
 				return
 			if (src.internalTank)
-				src.visible_message("<span class='alert'>[ui.user] ejects [src.internalTank] from the [src]!</span>")
+				src.visible_message(SPAN_ALERT("[ui.user] ejects [src.internalTank] from the [src]!"))
 				src.eject_tank(ui.user)
 				. = TRUE
 			else
@@ -334,7 +336,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 				ui.user.show_text("Turn the generator off first!", "red")
 				return
 			if (src.internalCell)
-				src.visible_message("<span class='alert'>[ui.user] ejects [src.internalCell] from the [src]!</span>")
+				src.visible_message(SPAN_ALERT("[ui.user] ejects [src.internalCell] from the [src]!"))
 				src.eject_cell(ui.user)
 				. = TRUE
 			else

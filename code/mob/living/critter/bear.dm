@@ -2,6 +2,7 @@
 	name = "space bear"
 	real_name = "space bear"
 	desc = "WOORGHHH"
+	icon = 'icons/mob/critter/humanoid/bear.dmi'
 	icon_state = "abear"
 	icon_state_dead = "abear-dead"
 	custom_gib_handler = /proc/gibs
@@ -41,13 +42,13 @@
 			if (user.zone_sel.selecting == "l_arm")
 				HH = hands[1]
 				if (!HH.limb)
-					boutput(user, ("<span class='alert'><B> [src] has no left arm! </B></span>"))
+					boutput(user, (SPAN_ALERT("<B> [src] has no left arm! </B>")))
 					return
 				actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "left"), user)
 			else if (user.zone_sel.selecting == "r_arm")
 				HH = hands[2]
 				if (!HH.limb)
-					boutput(user, ("<span class='alert'><B> [src] has no right arm! </B></span>"))
+					boutput(user, (SPAN_ALERT("<B> [src] has no right arm! </B>")))
 					return
 				actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "right"), user)
 			else return ..()
@@ -56,8 +57,8 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/MEraaargh.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b><span class='alert'>[src] roars!</span></b>"
+					playsound(src, 'sound/voice/MEraaargh.ogg', 70, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					return SPAN_ALERT("<b>[src] roars!</b>")
 		return null
 
 	specific_emote_type(var/act)
@@ -108,7 +109,7 @@
 
 	critter_basic_attack(mob/target)
 		if(!ON_COOLDOWN(src, "bear_scream", 3 SECONDS))
-			src.visible_message("<b><span class='alert'>[src] roars!</span></b>")
+			src.visible_message(SPAN_ALERT("<b>[src] roars!</b>"))
 			if(istype(src, /mob/living/critter/bear/care))
 				playsound(src.loc, 'sound/voice/babynoise.ogg', 40, 0)
 			else

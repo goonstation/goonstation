@@ -166,3 +166,35 @@ datum/job_controller/proc/savefile_get_job_name(client/user, var/profileNum = 1)
 		return 0
 
 	return job_name
+
+datum/job_controller/proc/savefile_get_job_names(client/user)
+
+	if (!savefile_path_exists(user.ckey))
+		return null
+
+	var/path = savefile_path(user.ckey)
+
+	var/savefile/F = new /savefile(path, -1)
+
+	var/list/job_names = list()
+	for(var/i in 1 to CUSTOMJOB_SAVEFILE_PROFILES_MAX)
+		var/job_name = null
+		F["[i]_job_name"] >> job_name
+		job_names += job_name
+
+	return job_names
+
+
+datum/job_controller/proc/savefile_fix(client/user)
+	if (!savefile_path_exists(user.ckey))
+		return
+	var/savefile/F = new /savefile(src.savefile_path(user.ckey), -1)
+	for(var/i in 1 to CUSTOMJOB_SAVEFILE_PROFILES_MAX)
+		var/spawn_loc
+		F["[i]_special_spawn_location"] >> spawn_loc
+		if(istype(spawn_loc, /datum))
+			F["[i]_special_spawn_location"] << null
+			var/job_name = null
+			F["[i]_job_name"] >> job_name
+			message_admins("Fixing savefile for [user.ckey] - [job_name].")
+	F.Flush()

@@ -336,8 +336,12 @@ Obsidian Crown
 
 		hear_voidSpeak("Hello, friend.")
 		hear_voidSpeak("Your world is so dangerous! Let me help you.")
-		if (user)
-			user.speech_void = 1
+
+		user.bioHolder?.AddEffect("accent_void")
+
+	unequipped(mob/user) //idk if this can even happen but :iiam:
+		user.bioHolder?.RemoveEffect("accent_void")
+		. = ..()
 
 	process()
 		var/mob/living/host = src.loc
@@ -384,7 +388,7 @@ Obsidian Crown
 					if(!T.can_crossed_by(host))
 						continue
 					randomturfs.Add(T)
-				boutput(host, "<span class='combat'>[that_jerk] is warped away!</span>")
+				boutput(host, SPAN_COMBAT("[that_jerk] is warped away!"))
 				playsound(host.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 				that_jerk.set_loc(pick(randomturfs))
 
@@ -429,8 +433,8 @@ Obsidian Crown
 						randomturfs.Add(T)
 
 				if(length(randomturfs))
-					boutput(M, "<span class='notice'>You are caught in a magical warp field!</span>")
-					M.visible_message("<span class='combat'>[M] is warped away!</span>")
+					boutput(M, SPAN_NOTICE("You are caught in a magical warp field!"))
+					M.visible_message(SPAN_COMBAT("[M] is warped away!"))
 					playsound(M.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 					M.set_loc(pick(randomturfs))
 					logTheThing(LOG_COMBAT, M, "is warped away by [constructTarget(host,"combat")]'s obsidian crown to [log_loc(M)].")
@@ -513,7 +517,7 @@ Obsidian Crown
 			N.flash(3 SECONDS)
 			if(N.client)
 				shake_camera(N, 6, 32)
-				N.show_message("<span class='combat'><b>A blinding light envelops [host]!</b></span>")
+				N.show_message(SPAN_COMBAT("<b>A blinding light envelops [host]!</b>"))
 
 		playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 

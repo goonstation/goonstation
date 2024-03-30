@@ -27,7 +27,7 @@ TYPEINFO(/datum/component/explode_on_touch)
 	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(do_the_boom))
 
 /datum/component/explode_on_touch/proc/do_the_boom(atom/movable/thing, mob/user)
-	boutput(user, "<span class='alert'>\The [thing] explodes.</span>")
+	boutput(user, SPAN_ALERT("\The [thing] explodes."))
 	var/turf/T = get_turf(thing)
 	if(!delete_self) // let's save ourselves from the boom
 		thing.set_loc(null)

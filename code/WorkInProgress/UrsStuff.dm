@@ -51,6 +51,9 @@
 
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled
 
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep
+	var/secret_thing = 0
+
 /mob/living/critter/robotic/bot/engibot
 
 /obj/overlay/simple_light/disco_lighting
@@ -60,6 +63,17 @@
 #ifdef IN_MAP_EDITOR
 	icon_state = "simp"
 #endif
+
+/obj/machinery/light/small/floor/centcom_nightlight
+	name = "night light"
+	desc = "A light that gets brighter at night."
+	light_type = /obj/item/light/bulb/neutral
+	New()
+		var/list/light_outside = rgb2num(CENTCOM_LIGHT,COLORSPACE_HSL)
+		brightness = (1 - (light_outside[3]/255))*1.3
+		. = ..()
+
+
 
 /obj/overlay/simple_light/disco_lighting/rainbow
 	New()

@@ -33,7 +33,7 @@ Fibre wire
 			var/obj/machinery/bot/skullbot/B = new /obj/machinery/bot/skullbot
 			B.icon = icon('icons/obj/bots/aibots.dmi', "skullbot-ominous")
 			B.name = "ominous skullbot"
-			boutput(user, "<span class='notice'>You add [W] to [src]. That's neat.</span>")
+			boutput(user, SPAN_NOTICE("You add [W] to [src]. That's neat."))
 			B.set_loc(get_turf(user))
 			qdel(W)
 			qdel(src)
@@ -158,9 +158,9 @@ proc/Create_Tommyname()
 			O.dropped(src)
 			O.layer = initial(O.layer)
 
-	src.equip_new_if_possible(/obj/item/clothing/shoes/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_shoes)
-	src.equip_new_if_possible(/obj/item/clothing/under/suit {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_w_uniform)
-	src.equip_new_if_possible(/obj/item/football, slot_in_backpack)
+	src.equip_new_if_possible(/obj/item/clothing/shoes/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_SHOES)
+	src.equip_new_if_possible(/obj/item/clothing/under/suit/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_W_UNIFORM)
+	src.equip_new_if_possible(/obj/item/football, SLOT_IN_BACKPACK)
 
 	src.sound_scream = 'sound/voice/tommy_you-are-tearing-me-apart-lisauh.ogg'
 	src.sound_fingersnap = 'sound/voice/tommy_did-not-hit-hehr.ogg'
@@ -210,7 +210,7 @@ proc/Create_Tommyname()
 
 /obj/item/gun/energy/tommy_gun
 	name = "Tommy Gun"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "tommygun"
 	m_amt = 4000
 	rechargeable = 1
@@ -223,9 +223,9 @@ proc/Create_Tommyname()
 		projectiles = list(new/datum/projectile/tommy)
 		..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		for(var/mob/O in AIviewers(user, null))
-			O.show_message("<span class='alert'><B>[user] fires the [src] at [target]!</B></span>", 1, "<span class='alert'>You hear a loud crackling noise.</span>", 2)
+			O.show_message(SPAN_ALERT("<B>[user] fires the [src] at [target]!</B>"), 1, SPAN_ALERT("You hear a loud crackling noise."), 2)
 		sleep(0.1 SECONDS)
 		return ..(target, start, user)
 
@@ -372,7 +372,7 @@ proc/Create_Tommyname()
 					var/starty = 1
 					var/mob/badmantarget = M
 					boutput(badmantarget, "<span style=\"color:black\"> <B> You hear a voice in your head, 'You're not supposed to be here'. </B>")
-					playsound(badmantarget, 'sound/misc/american_patriot.ogg', 50, 1, -1)
+					playsound(badmantarget, 'sound/misc/american_patriot.ogg', 50, TRUE, -1)
 					sleep(10 SECONDS)
 					startx = badmantarget.x - rand(-11, 11)
 					starty = badmantarget.y - rand(-11, 11)
@@ -395,7 +395,7 @@ proc/Create_Tommyname()
 				var/obj/item/clothing/head/wig/W = H.create_wig()
 				H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 				H.drop_from_slot(H.head)
-				H.force_equip(W, H.slot_head)
+				H.force_equip(W, SLOT_HEAD)
 				H.update_colorful_parts()
 
 /obj/item/gun/energy/dtrumpet
@@ -771,7 +771,7 @@ proc/Create_Tommyname()
 			O.set_loc(T)
 			animate_slide(O, 0, 0, animtime, LINEAR_EASING)
 
-	playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, 1)
+	playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, TRUE)
 	sleep(animtime)
 	if(turf_type)
 		DEBUG_MESSAGE("Creating [turf_type] at [log_loc(T)]")
@@ -862,6 +862,10 @@ proc/Create_Tommyname()
 	// Are we ready to do something mean here?
 	var/wire_readied = 0
 
+	HELP_MESSAGE_OVERRIDE({"Use the garrot wire in hand to hold it with two hands, then place yourself behind your target.
+							Click them with the wire to attempt to grab them.
+							While a target is being strangled, use the wire in hand to inflict more damage and bleed in addition to the suffocation."})
+
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROPE)
@@ -929,11 +933,11 @@ proc/Create_Tommyname()
 		return FALSE
 
 	if(!wire_readied)
-		assailant.show_message("<span class='combat'>You have to have a firm grip of the wire before you can strangle [target]!</span>")
+		assailant.show_message(SPAN_COMBAT("You have to have a firm grip of the wire before you can strangle [target]!"))
 		return FALSE
 
 	if(chokehold)
-		assailant.show_message("<span class='combat'>You're too busy strangling [chokehold.affecting] to strangle someone else!</span>")
+		assailant.show_message(SPAN_COMBAT("You're too busy strangling [chokehold.affecting] to strangle someone else!"))
 		return FALSE
 
 	// TODO: check that target has their back turned
@@ -942,7 +946,7 @@ proc/Create_Tommyname()
 		actions.start(new/datum/action/bar/private/icon/garrote_target(target, src), assailant)
 		return TRUE
 	else
-		assailant.show_message("<span class='combat'>You have to be behind your target or they'll see you coming!</span>")
+		assailant.show_message(SPAN_COMBAT("You have to be behind your target or they'll see you coming!"))
 
 // Actually apply the grab (called via action bar)
 /obj/item/garrote/try_grab(var/mob/living/target, var/mob/living/assailant)
@@ -997,7 +1001,7 @@ proc/Create_Tommyname()
 	else
 		src.try_upgrade_grab()
 
-/obj/item/garrote/attack(mob/target, mob/user, def_zone, is_special = 0)
+/obj/item/garrote/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (target && target == src.chokehold?.affecting)
 		src.try_upgrade_grab()
 	else
@@ -1007,7 +1011,6 @@ proc/Create_Tommyname()
 /datum/action/bar/private/icon/garrote_target
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED
-	id = "garrote_target"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "neck_over"
 	var/mob/living/target

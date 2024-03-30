@@ -11,7 +11,7 @@
 		if (!spell.holder)
 			return
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
+			boutput(owner.holder.owner, SPAN_ALERT("You can't use this ability here."))
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -31,7 +31,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Grinch"
-	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
+	notEnoughPointsMessage = SPAN_ALERT("You aren't strong enough to use this ability.")
 
 /////////////////////////////////////////////// Grinch spell parent ////////////////////////////
 
@@ -107,19 +107,19 @@
 			return 0
 
 		if (!(ishuman(M) || ismobcritter(M)))
-			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
+			boutput(M, SPAN_ALERT("You cannot use any powers in your current form."))
 			return 0
 
 		if (M.transforming)
-			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
+			boutput(M, SPAN_ALERT("You can't use any powers right now."))
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
 			return 0
 
 		return 1

@@ -147,10 +147,10 @@
 /obj/machinery/Topic(href, href_list)
 	..()
 	if(status & (NOPOWER|BROKEN))
-		//boutput(usr, "<span class='alert'>That machine is not powered!</span>")
+		//boutput(usr, SPAN_ALERT("That machine is not powered!"))
 		return 1
 	if(usr.restrained() || usr.lying || usr.stat)
-		//boutput(usr, "<span class='alert'>You are unable to do that currently!</span>")
+		//boutput(usr, SPAN_ALERT("You are unable to do that currently!"))
 		return 1
 	if(!hasvar(src,"portable") || !src:portable)
 		if ((!in_interact_range(src, usr) || !istype(src.loc, /turf)) && !issilicon(usr) && !isAI(usr))
@@ -158,11 +158,11 @@
 				message_coders("[type]/Topic(): no usr in Topic - [name] at [showCoords(x, y, z)].")
 			else if ((x in list(usr.x - 1, usr.x, usr.x + 1)) && (y in list(usr.y - 1, usr.y, usr.y + 1)) && z == usr.z && isturf(loc))
 				message_coders("[type]/Topic(): is in range of usr, but in_range failed - [name] at [showCoords(x, y, z) ]")
-			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
+			//boutput(usr, SPAN_ALERT("You must be near the machine to do this!"))
 			return 1
 	else
 		if ((!in_interact_range(src.loc, usr) || !istype(src.loc.loc, /turf)) && !issilicon(usr) && !isAI(usr))
-			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
+			//boutput(usr, SPAN_ALERT("You must be near the machine to do this!"))
 			return 1
 	src.add_fingerprint(usr)
 	return 0
@@ -182,7 +182,7 @@
 	if (user)
 		if (ishuman(user))
 			if(user.get_brain_damage() >= 60 || prob(user.get_brain_damage()))
-				boutput(user, "<span class='alert'>You are too dazed to use [src] properly.</span>")
+				boutput(user, SPAN_ALERT("You are too dazed to use [src] properly."))
 				return 1
 
 		src.add_fingerprint(user)
@@ -222,8 +222,6 @@
 			if (prob(25))
 				qdel(src)
 				return
-		else
-	return
 
 /obj/machinery/blob_act(var/power)
 	// Called when attacked by a blob
@@ -395,6 +393,8 @@
 	if(A1 != A2)
 		if(A1) A1.machines -= src
 		if(A2) A2.machines += src
+		// call power_change on machine so it can check if the new area is powered and update it's status flag appropriately
+		src.power_change()
 
 /obj/machinery/Move(atom/target)
 	var/area/A1 = get_area(src)
@@ -403,6 +403,7 @@
 	if(A1 && A2 && A1 != A2)
 		A1.machines -= src
 		A2.machines += src
+		src.power_change()
 
 /datum/action/bar/icon/rotate_machinery
 	duration = 3 SECONDS
@@ -431,7 +432,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		src.machine.visible_message("<span class='alert'><b>[owner]</b> begins to rotate [src.machine]</span>", 1)
+		src.machine.visible_message(SPAN_ALERT("<b>[owner]</b> begins to rotate [src.machine]"))
 
 	onEnd()
 		..()

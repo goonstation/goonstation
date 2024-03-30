@@ -30,7 +30,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "hc" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -67,7 +67,6 @@
 /area/station/engine/inner)
 "lh" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/engine/caution/south,
@@ -86,7 +85,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "mP" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -98,7 +97,6 @@
 "nx" = (
 /obj/machinery/atmospherics/binary/passive_gate{
 	dir = 8;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine/caution/west,
@@ -149,31 +147,27 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
 "tS" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-4"
 	},
-/obj/cable/brown,
+/obj/cable/orange,
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "uc" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "up" = (
-/obj/cable/brown{
-	icon_state = "1-2"
-	},
-/obj/cable/black,
-/obj/cable/brown{
-	icon_state = "0-2"
-	},
 /obj/machinery/light/small/floor/warm,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
 	dir = 4
+	},
+/obj/cable/orange{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/inner)
@@ -259,7 +253,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 8
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -313,10 +307,10 @@
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
 "PB" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/engine,
@@ -324,7 +318,6 @@
 "PX" = (
 /obj/machinery/atmospherics/binary/passive_gate{
 	dir = 4;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine/caution/east,
@@ -336,7 +329,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "TB" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
@@ -356,7 +349,7 @@
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/inner)
 "Wj" = (
-/obj/cable/brown,
+/obj/cable/orange,
 /obj/machinery/atmospherics/binary/reactor_turbine,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)

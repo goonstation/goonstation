@@ -1,10 +1,11 @@
 /datum/hud/shell
-	var/atom/movable/screen/hud
-		tool1
-		tool2
-		tool3
-		charge
-		eyecam
+	var/atom/movable/screen/hud/tool1
+	var/atom/movable/screen/hud/tool2
+	var/atom/movable/screen/hud/tool3
+	var/atom/movable/screen/hud/charge
+	var/atom/movable/screen/hud/eyecam
+
+	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
 
 	var/list/last_tools = list()
 	var/list/atom/movable/screen/hud/tool_selector_bg = list()
@@ -36,6 +37,24 @@
 		update_active_tool()
 		update_tools()
 		update_tool_selector()
+
+	disposing()
+		qdel(src.tool1)
+		src.tool1 = null
+		qdel(src.tool2)
+		src.tool2 = null
+		qdel(src.tool3)
+		src.tool3 = null
+		qdel(src.charge)
+		src.charge = null
+		qdel(src.eyecam)
+		src.eyecam = null
+		src.last_tools = null
+		qdel(src.tool_selector_bg)
+		src.tool_selector_bg = null
+		src.tool_selector_tools = null
+		src.master = null
+		. = ..()
 
 	clear_master()
 		master = null
@@ -150,3 +169,45 @@
 					remove_screen(H)
 				for (var/obj/item/tool in tool_selector_tools)
 					remove_object(tool)
+
+	proc/update_status_effects()
+		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
+			remove_screen(statusUiElements[S])
+			if(!master || !master.statusEffects || !(S in master.statusEffects))
+				qdel(statusUiElements[S])
+				src.statusUiElements.Remove(S)
+				qdel(S)
+
+		var/spacing = 0.6
+		var/pos_x = spacing - 0.2
+
+		if(master?.statusEffects)
+			for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
+				if(!S.visible) continue
+				if((S in statusUiElements) && statusUiElements[S])
+					var/atom/movable/screen/statusEffect/U = statusUiElements[S]
+					U.icon = 'icons/mob/hud_robot.dmi'
+					U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-0.7"
+					U.update_value()
+					add_screen(U)
+					pos_x -= spacing
+				else
+					if(S.visible)
+						var/atom/movable/screen/statusEffect/U = new /atom/movable/screen/statusEffect
+						U.init(master,S)
+						U.icon = 'icons/mob/hud_robot.dmi'
+						statusUiElements.Add(S)
+						statusUiElements[S] = U
+						U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-0.7"
+						U.update_value()
+						add_screen(U)
+						pos_x -= spacing
+						animate_buff_in(U)
+		return
+
+/mob/living/silicon/hivebot
+	updateStatusUi()
+		if(src.hud && istype(src.hud, /datum/hud/shell))
+			var/datum/hud/shell/H = src.hud
+			H.update_status_effects()
+		return

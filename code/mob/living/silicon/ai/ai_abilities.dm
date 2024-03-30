@@ -53,7 +53,7 @@
 			var/obj/item/aiModule/ability_expansion/expansion = get_law_module()
 			if(expansion)
 				if (expansion.last_use > world.time)
-					boutput(holder.owner, "<span class='alert'>The source module is on cooldown for [round((expansion.last_use - world.time) / 10)] seconds.</span>")
+					boutput(holder.owner, SPAN_ALERT("The source module is on cooldown for [round((expansion.last_use - world.time) / 10)] seconds."))
 					return FALSE
 
 	doCooldown()
@@ -93,7 +93,7 @@
 			return 1
 
 		if(!ispath(reagent_capsule))
-			boutput(holder.owner, "<span class='alert'>Something appears to be wrong with the chem module... Call 1-800-CODER.</span>")
+			boutput(holder.owner, SPAN_ALERT("Something appears to be wrong with the chem module... Call 1-800-CODER."))
 			return 1
 
 		var/turf/T = get_turf(target)
@@ -113,7 +113,7 @@
 				D.icon_state = "chempuff"
 				D.layer = EFFECTS_LAYER_BASE
 
-				playsound(cam, 'sound/machines/mixer.ogg', 50, 1)
+				playsound(cam, 'sound/machines/mixer.ogg', 50, TRUE)
 
 				logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] fires [src.name], creating metal foam at [log_loc(T)].")
 
@@ -122,12 +122,12 @@
 
 				SPAWN(1 SECOND)
 					step_towards(D, get_step(D, D.dir))
-					cam.visible_message("<span class='alert'>[cam] spews out a metalic foam!</span>")
+					cam.visible_message(SPAN_ALERT("[cam] spews out a metalic foam!"))
 					sleep(1 SECOND)
 					D.dispose()
 				return
 
-		boutput(holder.owner, "<span class='alert'>Unable to calculate valid shot from available camera.</span>")
+		boutput(holder.owner, SPAN_ALERT("Unable to calculate valid shot from available camera."))
 		return 1
 
 /datum/targetable/ai/module/chems/metal_foam
@@ -202,7 +202,7 @@
 				animate(cam.get_filter("charge_outline"), size=0.5, time=charge_time)
 				SPAWN(charge_time)
 					logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] fires a camera projectile [src.name], targeting [key_name(target)] [log_loc(target)].")
-					shoot_projectile_ST(cam, P, target)
+					shoot_projectile_ST_pixel_spread(cam, P, target)
 					if(P.cost > 1)
 						if (issilicon(cam))
 							var/mob/living/silicon/S = cam
@@ -216,9 +216,9 @@
 				camera_on_cd = TRUE
 
 		if(camera_on_cd)
-			boutput(holder.owner, "<span class='alert'>Available camera is still cooling down...</span>")
+			boutput(holder.owner, SPAN_ALERT("Available camera is still cooling down..."))
 		else
-			boutput(holder.owner, "<span class='alert'>Unable to calculate valid shot from available camera.</span>")
+			boutput(holder.owner, SPAN_ALERT("Unable to calculate valid shot from available camera."))
 		return 1
 
 
@@ -243,10 +243,10 @@
 		. = ..()
 		if(.)
 			if(!get_first_teleporter())
-				boutput(holder.owner, "<span class='alert'>No valid telepad found on data network.</span>")
+				boutput(holder.owner, SPAN_ALERT("No valid telepad found on data network."))
 				return FALSE
 			else  if(target.z != Z_LEVEL_STATION)
-				boutput(holder.owner, "<span class='alert'>Module only calibrated for nearby station travel.</span>")
+				boutput(holder.owner, SPAN_ALERT("Module only calibrated for nearby station travel."))
 				return FALSE
 
 	doCooldown()
@@ -254,7 +254,7 @@
 		var/cd_penalty_chance = clamp(src.cooldown * 2 - (since_last_cast), 0, 10)
 		..()
 		if(prob(cd_penalty_chance))
-			boutput(holder.owner, "<span class='alert'>Expansion module registers an error that must be adjusted for.</span>")
+			boutput(holder.owner, SPAN_ALERT("Expansion module registers an error that must be adjusted for."))
 			src.last_cast += src.cooldown
 
 	proc/get_first_teleporter()
@@ -286,27 +286,27 @@
 			var/turf/T = get_turf(target)
 
 			if (istype(T, /turf/space) )
-				boutput(holder.owner, "<span class='alert'>Module inhibits teleportation into space.</span>")
+				boutput(holder.owner, SPAN_ALERT("Module inhibits teleportation into space."))
 				return 1
 			else if (!checkTurfPassable(T))
-				boutput(holder.owner, "<span class='alert'>Module inhibits teleportation solid or poorly accessable areas.</span>")
+				boutput(holder.owner, SPAN_ALERT("Module inhibits teleportation solid or poorly accessable areas."))
 				return 1
 
 			var/datum/gas_mixture/environment = T.return_air()
 			var/env_pressure = MIXTURE_PRESSURE(environment)
 			if(env_pressure <= 0.15*ONE_ATMOSPHERE)
-				boutput(holder.owner, "<span class='alert'>Module inhibits teleportation areas with insufficient atmosphere.</span>")
+				boutput(holder.owner, SPAN_ALERT("Module inhibits teleportation areas with insufficient atmosphere."))
 				return
 
 			var/obj/machinery/networked/telepad/telepad = get_first_teleporter()
 			if(is_teleportation_allowed(T))
 				if(prob(15))
 					if(prob(10))
-						boutput(holder.owner, "<span class='alert'>Recalculating...</span>")
-					sleep(rand(0.5 SECONDS, 2.5 SECONDS))
+						boutput(holder.owner, SPAN_ALERT("Recalculating..."))
+					sleep(randfloat(0.5 SECONDS, 2.5 SECONDS))
 				telepad.send(T)
 			else
-				boutput(holder.owner, "<span class='alert'>Interference inhibits teleportation.</span>")
+				boutput(holder.owner, SPAN_ALERT("Interference inhibits teleportation."))
 
 	receive
 		name = "Telepad: Receive"
@@ -321,11 +321,11 @@
 			if(is_teleportation_allowed(T))
 				if(prob(85))
 					if(prob(10))
-						boutput(holder.owner, "<span class='alert'>Recalculating...</span>")
-					sleep(rand(0.5 SECONDS, 2.5 SECONDS))
+						boutput(holder.owner, SPAN_ALERT("Recalculating..."))
+					sleep(randfloat(0.5 SECONDS, 2.5 SECONDS))
 				telepad.receive(T)
 			else
-				boutput(holder.owner, "<span class='alert'>Interference inhibits teleportation.</span>")
+				boutput(holder.owner, SPAN_ALERT("Interference inhibits teleportation."))
 
 /datum/targetable/ai/module/nanite_repair
 	name = "Nanite Repair"
@@ -341,14 +341,14 @@
 
 		if(issilicon(target))
 			var/mob/living/silicon/S = target
-			var/nanite_overlay = S.SafeGetOverlayImage("nanite_heal",'icons/misc/critter.dmi', "nanites")
+			var/nanite_overlay = S.SafeGetOverlayImage("nanite_heal",'icons/mob/critter/robotic/nanites.dmi', "nanites")
 			S.UpdateOverlays(nanite_overlay, "nanite_heal")
 			SPAWN(3 SECONDS)
 				S.HealDamage("All", 6, 6)
 				S.UpdateOverlays(null,"nanite_heal")
 		else if(istype_exact(target,/obj/machinery/camera)) // sweet you got eyes on that camera
 			var/obj/machinery/camera/C
-			var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/misc/critter.dmi', "nanites")
+			var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/mob/critter/robotic/nanites.dmi', "nanites")
 			C.UpdateOverlays(nanite_overlay, "nanite_heal")
 			C.set_camera_status(TRUE)
 			C.icon_state = "camera"
@@ -358,7 +358,7 @@
 				C.UpdateOverlays(null, "nanite_heal")
 
 		else
-			boutput(holder.owner, "<span class='alert'>[target] is not a silicon entity.</span>")
+			boutput(holder.owner, SPAN_ALERT("[target] is not a silicon entity."))
 			return 1
 
 /datum/targetable/ai/module/camera_repair
@@ -375,12 +375,12 @@
 			if(!C.camera_status && istype_exact(C,/obj/machinery/camera))
 				cameras_to_repair |= C
 
-		boutput(holder.owner, "<span class='alert'>Initiating repair routine...</span>")
+		boutput(holder.owner, SPAN_ALERT("Initiating repair routine..."))
 		if(length(cameras_to_repair))
 			SPAWN(rand(10 SECONDS, 20 SECONDS))
 				var/repaired = 0
 				for(C in cameras_to_repair)
-					var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/misc/critter.dmi', "nanites")
+					var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/mob/critter/robotic/nanites.dmi', "nanites")
 					C.UpdateOverlays(nanite_overlay, "nanite_heal")
 					C.set_camera_status(TRUE)
 					C.icon_state = "camera"
@@ -396,7 +396,7 @@
 
 		else
 			SPAWN(rand(15 SECONDS, 35 SECONDS))
-				boutput(holder.owner, "<span class='alert'>No damaged cameras detected.</span>")
+				boutput(holder.owner, SPAN_ALERT("No damaged cameras detected."))
 
 /datum/targetable/ai/module/sec_huds
 	name = "Security Lookup Scan"
@@ -502,7 +502,7 @@
 
 		if(C)
 			logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] activates AI [src.name], targeting [log_loc(target)].")
-			playsound(C, 'sound/weapons/flash.ogg', 100, 1)
+			playsound(C, 'sound/weapons/flash.ogg', 100, TRUE)
 			C.visible_message("[C] emits a sudden flash.")
 			for (var/atom/A in oviewers((flash_range), get_turf(C)))
 				var/mob/living/M

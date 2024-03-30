@@ -17,6 +17,7 @@
 	var/expand = 1
 	animate_movement = 0
 	var/metal = 0
+	var/lube = 0 //! 1 = normal lube, 2 = harmlube
 	var/foam_id = null
 	var/repeated_applications = 0 //bandaid for foam being abuseable by spamming chem group... diminishing returns. only works if the repeated application is on the same tile (chem dispensers!!)
 
@@ -35,15 +36,16 @@
 		I.Blend(src.foamcolor, ICON_ADD)
 		src.overlays += I
 
-/obj/effects/foam/proc/set_up(loc, var/ismetal)
+/obj/effects/foam/proc/set_up(loc, var/ismetal, var/islube)
 	src.set_loc(loc)
 	expand = 1
 	if(!ismetal && reagents)
 		reagents.inert = 1 //Wait for it...
 
 	metal = ismetal
+	src.lube = islube
 	//NOW WHO THOUGH IT WOULD BE A GOOD IDEA TO PLAY THIS ON EVERY FOAM OBJ
-	//playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
+	//playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 
 	UpdateIcon()
 	if(metal)
@@ -126,7 +128,7 @@
 				if(no_merge) continue
 
 			F = new /obj/effects/foam
-			F.set_up(T, metal)
+			F.set_up(T, src.metal, src.lube)
 			F.amount = amount
 			F.foam_id = src.foam_id //Just keep track of us being from the same source
 			if(!metal && src.reagents)
@@ -162,12 +164,30 @@
 
 	if (ishuman(AM))
 		var/mob/living/carbon/human/M = AM
+		if (src.lube) //lubefoam goes wheeeeeee!
+			if(!M.throwing && !M.lying)
+				M.remove_pulling()
+				playsound(src, 'sound/misc/slip.ogg', 50, TRUE, -3)
+				boutput(M, SPAN_NOTICE("You slipped on the foam!"))
+				var/atom/target = get_edge_target_turf(M, M.dir)
+				switch (src.lube)
+					if (1) //lube
+						M.throw_at(target, 12, 1, throw_type = THROW_SLIP)
+					if (2) //harmlube
+						M.changeStatus("weakened", 3.5 SECONDS)
+						M.throw_at(target, 30, 1, throw_type = THROW_SLIP)
+						random_brute_damage(M, 10)
+			if(M.throwing)
+				//like with normal foam, each tile the person passes while on their wild ride, they get splashed by the foam
+				logTheThing(LOG_CHEMISTRY, M, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
+				src.reagents.reaction(M, TOUCH, 5)
 
-		if (M.slip())
-			logTheThing(LOG_CHEMISTRY, M, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
-			reagents.reaction(M, TOUCH, 5)
+		else
+			if (M.slip())
+				logTheThing(LOG_CHEMISTRY, M, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
+				reagents.reaction(M, TOUCH, 5)
 
-			M.show_text("You slip on the foam!", "red")
+				M.show_text("You slip on the foam!", "red")
 
 
 /obj/effects/foam/gas_cross(turf/target)

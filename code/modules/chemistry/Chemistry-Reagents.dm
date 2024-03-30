@@ -62,6 +62,8 @@ datum
 		var/threshold = null
 		/// Has this chem been in the person's bloodstream for at least one cycle?
 		var/initial_metabolized = FALSE
+		///Is it banned from various fluid types, see _std/defines/reagents.dm
+		var/fluid_flags = 0
 
 		New()
 			..()
@@ -158,11 +160,25 @@ datum
 						if(M.reagents)
 							M.reagents.add_reagent(self.id,volume*touch_modifier,self.data)
 							did_not_react = 0
-					if (ishuman(M) && hygiene_value && method == TOUCH)
+					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
+						if (H.mutantrace.aquaphobic && istype(src, /datum/reagent/water))
+							animate_shake(H)
+							if (prob(50))
+								H.emote("scream")
+							else
+								boutput(H, "<span class='alert'><b>The water! It[pick(" burns"," hurts","'s so terrible","'s ruining your skin"," is your true mortal enemy!")]!</b></span>", group = "aquaphobia")
+							if (!ON_COOLDOWN(H, "bingus_damage", 3 SECONDS))
+								random_burn_damage(H, clamp(0.3 * volume, 4, 20))
 						if (H.sims)
 							if ((hygiene_value > 0 && !(H.wear_suit || H.w_uniform)) || hygiene_value < 0)
-								H.sims.affectMotive("Hygiene", volume * hygiene_value)
+								var/hygiene_restore = hygiene_value
+								if (H.mutantrace.aquaphobic)
+									if (istype(src, /datum/reagent/oil))
+										hygiene_restore = 3
+									else if (istype(src, /datum/reagent/water))
+										hygiene_restore = -3
+								H.sims.affectMotive("Hygiene", volume * hygiene_restore)
 
 				if(INGEST)
 					var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
@@ -170,7 +186,7 @@ datum
 						M.make_jittery(-5)
 						AD.last_reagent_dose = world.timeofday
 						if (AD.stage != 1)
-							boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
+							boutput(M, SPAN_NOTICE("<b>You feel slightly better, but for how long?</b>"))
 							AD.stage = 1
 
 			M.material_trigger_on_chems(src, volume)
@@ -198,7 +214,7 @@ datum
 				var/mob/living/carbon/human/H = M
 				if (H.traitHolder.hasTrait("slowmetabolism")) //fuck
 					deplRate /= 2
-				if (H.organHolder)
+				if (H.organHolder && !ischangeling(H))
 					if (!H.organHolder.liver || H.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
 						deplRate /= 2
 					if (H.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
@@ -221,7 +237,7 @@ datum
 				var/mob/living/carbon/human/H = M
 				if (H.traitHolder.hasTrait("slowmetabolism"))
 					deplRate /= 2
-				if (H.organHolder)
+				if (H.organHolder && !ischangeling(H))
 					if (!H.organHolder.liver || H.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
 						deplRate /= 2
 					if (H.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
@@ -313,7 +329,7 @@ datum
 			var/current_tally = holder.addiction_tally[src.id]
 			//DEBUG_MESSAGE("current_tally [current_tally], min [addiction_min]")
 			if (addiction_min < current_tally && isliving(M) && prob(addProb) && prob(addiction_prob2))
-				boutput(M, "<span class='alert'><b>You suddenly feel invigorated and guilty...</b></span>")
+				boutput(M, SPAN_ALERT("<b>You suddenly feel invigorated and guilty...</b>"))
 				AD = new
 				AD.associated_reagent = src.name
 				AD.last_reagent_dose = world.timeofday
@@ -383,7 +399,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 5)
 					if(!locate(/turf/unsimulated/floor/void) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						new /turf/unsimulated/floor/void(T)
 
 		//	When finished, exposure to or consumption of this drug should basically duplicate the

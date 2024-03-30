@@ -118,7 +118,7 @@
 			<td><a href="javascript:goBYOND('action=field;field=id');">[src.active_record_general["id"]]</a></td>
 		</tr>
 		<tr>
-			<th>Gender</th>
+			<th>Body Type</th>
 			<td><a href="javascript:goBYOND('action=field;field=sex');">[src.active_record_general["sex"]]</a></td>
 		</tr>
 		<tr>
@@ -668,7 +668,7 @@
 			if ("new_general_record")
 				var/datum/db_record/G = new /datum/db_record()
 				G["name"] = "New Record"
-				G["id"] = num2hex(rand(1, 1.6777215E7), 6)
+				G["id"] = num2hex(rand(1, 0xffffff), 6)
 				G["rank"] = "Unassigned"
 				G["sex"] = "Unknown"
 				G["pronouns"] = "Unknown"

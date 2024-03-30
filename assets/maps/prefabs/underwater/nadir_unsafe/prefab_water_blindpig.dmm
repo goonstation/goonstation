@@ -5,13 +5,6 @@
 "ab" = (
 /turf/variableTurf/clear,
 /area/space)
-"ac" = (
-/obj/stool/chair/wooden{
-	icon_state = "chair_wooden";
-	dir = 4
-	},
-/turf/simulated/floor/carpet/purple/fancy/edge/nw,
-/area/prefab/blind_pig)
 "ad" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/rum_spaced{
@@ -23,12 +16,6 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
-/area/prefab/blind_pig)
-"ae" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/prefab/blind_pig)
 "af" = (
 /obj/machinery/light/incandescent/warm/very,
@@ -53,23 +40,10 @@
 /obj/machinery/espresso_machine,
 /turf/simulated/floor/wood,
 /area/prefab/blind_pig)
-"aj" = (
-/obj/stool/chair/wooden{
-	icon_state = "chair_wooden";
-	dir = 4
-	},
-/turf/simulated/floor/carpet/purple/fancy/edge/sw,
-/area/prefab/blind_pig)
 "ak" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/card_group/plain,
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
-/area/prefab/blind_pig)
-"al" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/purple/fancy/edge/se,
 /area/prefab/blind_pig)
 "am" = (
 /turf/simulated/floor/wood,
@@ -105,14 +79,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/prefab/blind_pig)
-"at" = (
-/obj/stool/chair/wooden{
-	icon_state = "chair_wooden";
-	dir = 4
-	},
-/obj/machinery/light/incandescent/warm/very,
-/turf/simulated/floor/wood,
-/area/prefab/blind_pig)
 "au" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
@@ -122,12 +88,6 @@
 	pixel_x = -6
 	},
 /obj/item/reagent_containers/food/drinks/bottle/champagne,
-/turf/simulated/floor/wood,
-/area/prefab/blind_pig)
-"av" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
 /turf/simulated/floor/wood,
 /area/prefab/blind_pig)
 "aw" = (
@@ -160,20 +120,7 @@
 "aD" = (
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/prefab/blind_pig)
-"aE" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
-/obj/machinery/light/incandescent/warm/very,
-/turf/simulated/floor/wood,
-/area/prefab/blind_pig)
 "aF" = (
-/turf/simulated/floor/black,
-/area/prefab/blind_pig)
-"aG" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/suit,
-/obj/item/clothing/under/shirt_pants,
 /turf/simulated/floor/black,
 /area/prefab/blind_pig)
 "aH" = (
@@ -195,10 +142,6 @@
 /area/prefab/blind_pig)
 "aK" = (
 /turf/simulated/floor/carpet/red/fancy/innercorner/se,
-/area/prefab/blind_pig)
-"aL" = (
-/obj/stool/chair/wooden,
-/turf/simulated/floor/carpet/red/fancy/innercorner/sw,
 /area/prefab/blind_pig)
 "aM" = (
 /turf/simulated/floor/carpet/red/fancy/innercorner/sw,
@@ -278,12 +221,6 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled,
 /turf/simulated/floor/wood,
 /area/prefab/blind_pig)
-"ba" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
-/turf/simulated/floor/carpet/red/fancy/innercorner/se,
-/area/prefab/blind_pig)
 "bb" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
@@ -311,13 +248,6 @@
 "bf" = (
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/prefab/blind_pig)
-"bg" = (
-/obj/stool/chair/wooden{
-	icon_state = "chair_wooden";
-	dir = 4
-	},
-/turf/simulated/floor/carpet/red/fancy/edge/south,
-/area/prefab/blind_pig)
 "bh" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
@@ -326,18 +256,6 @@
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass,
 /turf/simulated/floor/carpet/red/fancy/edge/south,
-/area/prefab/blind_pig)
-"bi" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/red/fancy/edge/south,
-/area/prefab/blind_pig)
-"bj" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
-/turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/prefab/blind_pig)
 "bk" = (
 /obj/shrub{
@@ -356,13 +274,6 @@
 	},
 /turf/simulated/floor/black,
 /area/prefab/blind_pig)
-"bm" = (
-/obj/stool/chair/wooden{
-	icon_state = "chair_wooden";
-	dir = 4
-	},
-/turf/simulated/floor/wood,
-/area/prefab/blind_pig)
 "bn" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled{
@@ -371,13 +282,6 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
 	pixel_x = -6
 	},
-/turf/simulated/floor/wood,
-/area/prefab/blind_pig)
-"bo" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/machinery/light/incandescent/warm/very,
 /turf/simulated/floor/wood,
 /area/prefab/blind_pig)
 "bp" = (
@@ -441,13 +345,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/prefab/blind_pig)
-"by" = (
-/obj/stool/chair/wooden{
-	icon_state = "chair_wooden";
-	dir = 4
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/prefab/blind_pig)
 "bz" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot{
@@ -483,11 +380,114 @@
 /obj/machinery/light/incandescent/warm/very,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/prefab/blind_pig)
-"bF" = (
-/obj/stool/chair/wooden{
+"bT" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/prefab/blind_pig)
+"kx" = (
+/obj/stool/chair/dining/wood{
+	icon_state = "chair_wooden";
+	dir = 4
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/sw,
+/area/prefab/blind_pig)
+"oI" = (
+/obj/stool/chair/dining/wood{
+	icon_state = "chair_wooden";
+	dir = 4
+	},
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"oR" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/prefab/blind_pig)
+"oV" = (
+/obj/stool/chair/dining/wood{
+	icon_state = "chair_wooden";
+	dir = 4
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/nw,
+/area/prefab/blind_pig)
+"rp" = (
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red/fancy/innercorner/se,
+/area/prefab/blind_pig)
+"sE" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"tG" = (
+/obj/stool/chair/dining/wood{
+	icon_state = "chair_wooden";
+	dir = 4
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/prefab/blind_pig)
+"CD" = (
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/se,
+/area/prefab/blind_pig)
+"Hs" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"Io" = (
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"Lu" = (
+/obj/stool/chair/dining/wood,
+/turf/simulated/floor/carpet/red/fancy/innercorner/sw,
+/area/prefab/blind_pig)
+"RE" = (
+/obj/stool/chair/dining/wood{
+	icon_state = "chair_wooden";
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/nw,
+/area/prefab/blind_pig)
+"Vx" = (
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
+/area/prefab/blind_pig)
+"WN" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/suit/black,
+/obj/item/clothing/under/shirt_pants,
+/turf/simulated/floor/black,
+/area/prefab/blind_pig)
+"WP" = (
+/obj/stool/chair/dining/wood{
+	icon_state = "chair_wooden";
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"Yk" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
 /area/prefab/blind_pig)
 
 (1,1,1) = {"
@@ -609,10 +609,10 @@ af
 aa
 as
 af
-av
-av
-av
-av
+sE
+sE
+sE
+sE
 af
 as
 aa
@@ -675,12 +675,12 @@ aa
 aa
 am
 aC
-aL
+Lu
 aR
 aM
 aU
-bg
-bm
+tG
+WP
 aa
 aa
 aa
@@ -691,15 +691,15 @@ ab
 (10,1,1) = {"
 ab
 aa
-ac
-aj
+oV
+kx
 am
 aa
-at
+oI
 aC
 aK
 aS
-ba
+rp
 aQ
 bh
 bn
@@ -719,12 +719,12 @@ af
 aa
 au
 aC
-aL
+Lu
 aT
 aM
 aU
-bi
-bo
+oR
+Hs
 aa
 af
 am
@@ -735,11 +735,11 @@ ab
 (12,1,1) = {"
 ab
 aa
-ae
-al
+bT
+Yk
 am
 aa
-av
+sE
 aC
 aK
 aQ
@@ -749,7 +749,7 @@ bf
 am
 aa
 am
-by
+RE
 bD
 aa
 ab
@@ -765,7 +765,7 @@ am
 aC
 aM
 aU
-aL
+Lu
 bc
 bf
 am
@@ -789,12 +789,12 @@ aN
 aN
 aN
 bd
-bj
+CD
 am
 aa
 am
 bA
-bF
+Vx
 aa
 ab
 "}
@@ -806,7 +806,7 @@ aa
 aa
 aa
 ax
-aE
+Io
 am
 am
 am
@@ -872,7 +872,7 @@ aa
 aa
 aa
 aa
-aG
+WN
 aF
 aF
 aF

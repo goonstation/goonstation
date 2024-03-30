@@ -5,7 +5,7 @@
 
 /// Cloning Manual -- A big ol' manual.
 /obj/item/paper/Cloning
-	name = "'H-87 Cloning Apparatus Manual"
+	name = "H-87 Cloning Apparatus Manual"
 	info = {"<h4>Getting Started</h4>
 	Congratulations, your station has purchased the H-87 industrial cloning device!<br>
 	Using the H-87 is almost as simple as brain surgery! Simply insert the target humanoid into the scanning chamber and select the scan option to create a new profile!<br>
@@ -47,7 +47,7 @@
 
 /obj/item/paper/Internal
 	name = "'Internal Atmosphere Operating Instructions'"
-	info = "Equipment:<BR>\n\t1+ Tank(s) with appropriate atmosphere<BR>\n\t1 Gas Mask w regulator (standard issue)<BR>\n<BR>\nProcedure:<BR>\n\t1. Wear mask<BR>\n\t2. Attach oxygen tank pipe to regulater (automatic))<BR>\n\t3. Set internal!<BR>\n<BR>\nNotes:<BR>\n\tDon't forget to stop internal when tank is low by<BR>\n\tremoving internal!<BR>\n<BR>\n\tDo not use a tank that has a high concentration of toxins.<BR>\n\tThe filters shut down on internal mode!<BR>\n<BR>\n\tWhen exiting a high danger environment it is advised<BR>\n\tthat you exit through a decontamination zone!<BR>\n<BR>\n\tRefill a tank at a oxygen canister by equiping the tank (Double Click)<BR>\n\tthen 'attacking' the canister (Double Click the canister)."
+	info = "Equipment:<BR>\n\t1+ Tank(s) with appropriate atmosphere<BR>\n\t1 Gas Mask w regulator (standard issue)<BR>\n<BR>\nProcedure:<BR>\n\t1. Wear mask<BR>\n\t2. Attach oxygen tank pipe to regulator (automatic))<BR>\n\t3. Set internal!<BR>\n<BR>\nNotes:<BR>\n\tDon't forget to stop internal when tank is low by<BR>\n\tremoving internal!<BR>\n<BR>\n\tDo not use a tank that has a high concentration of toxins.<BR>\n\tThe filters shut down on internal mode!<BR>\n<BR>\n\tWhen exiting a high danger environment it is advised<BR>\n\tthat you exit through a decontamination zone!<BR>\n<BR>\n\tRefill a tank at a oxygen canister by equiping the tank (Double Click)<BR>\n\tthen 'attacking' the canister (Double Click the canister)."
 
 /obj/item/paper/Court
 	name = "'Judgement'"
@@ -472,25 +472,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 	- B <br>
 	"}
 
-/obj/item/paper/cdc_pamphlet
-	name = "So you've contracted a pathogen!"
-	icon_state = "paper"
-	info = {"<center><h2>So you've contracted a pathogen!</h2></center>
-	Hello, dear customer!<hr>
-	Pathogens can be scary! But you can rest easy knowing that your health is in safe hands now that you have contacted the CDC. Simply place a pathogen
-	sample into the biohazard crate and send it back to us and we will have you cured in no time!<hr>
-	<h3>How to send a pathogen sample</h3><hr>
-	<ul style='list-style-type:disc'>
-		<li>1) Fill a reagent container with a blood sample from a person afflicted with the pathogen you are seeking to cure. (For instance, you could use the syringe we sent you!)</li>
-		<li>2) Deposit reagent container into the received biohazard crate and close it.</li>
-		<li>3) Send the biohazard crate back to us.</li>
-		<li>4) As soon as we receive your sample, you can contact us using your Quartermaster's Console to ask us to start analyzing it.</li>
-		<li>5) Once we are done analyzing your sample, we will offer to sell you cures. Buying a pack of multiple cures at a time will be cheaper for you!</li>
-	</ul>
-	We hope that you have found this pamphlet enlightening and we look forward to receiving your sample soon!<hr>
-	Remember, only you can prevent deadly pathogens!
-	"}
-
 /obj/item/paper/shipping_precautions
 	name = "Read this and check the cargo!"
 	icon_state = "paper_caution_bloody"
@@ -514,7 +495,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 /obj/item/paper/dreamy_rhyme
 	name = "Space-Rhymes"
 	icon_state = "thermal_paper"
-	desc = "Scibbled rhymes...and thoughts."
+	desc = "Scribbled rhymes...and thoughts."
 	info = {" Space duck, I do not give a...I do not give anything about luck, shrug, puck, quack
 	<br>
 	<br>
@@ -788,7 +769,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 /obj/item/paper/recipe_coconutcurry
 	name = "creased recipe clipping"
-	desc = "Irreperably creased from years of being folded-up. Luckily, you can still make out the text on it."
+	desc = "Irreparably creased from years of being folded-up. Luckily, you can still make out the text on it."
 	icon_state = "paper_caution_crumple"
 	info = {"
 	<i>In the mood for something spicy yet mild? Have extra coconuts to burn? Asking yourself why you grew so many coconuts in the first place?

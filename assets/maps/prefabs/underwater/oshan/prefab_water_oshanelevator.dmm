@@ -54,7 +54,7 @@
 /turf/simulated/floor/plating,
 /area/shuttle/sea_elevator)
 "l" = (
-/obj/machinery/computer/sea_elevator,
+/obj/machinery/computer/elevator/sea,
 /turf/simulated/floor/plating,
 /area/shuttle/sea_elevator)
 "m" = (
@@ -120,7 +120,7 @@
 "z" = (
 /obj/rack,
 /obj/item/weldingtool,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /turf/simulated/floor/black/grime,
 /area/shuttle/sea_elevator)
 "A" = (

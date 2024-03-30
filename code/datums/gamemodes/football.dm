@@ -221,7 +221,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			footballer.full_heal()
 
 		if (!ishuman(footballer))
-			boutput(M, "<span class='alert'>Something went wrong. dunno what. sorry. football machine broke.</span>")
+			boutput(M, SPAN_ALERT("Something went wrong. dunno what. sorry. football machine broke."))
 			return
 
 		if (is_new)
@@ -236,7 +236,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			footballer.mind.special_role = team
 			football_players[team] += footballer.mind
 
-		footballer.equip_if_possible(new /obj/item/device/radio/headset(footballer), footballer.slot_ears)
+		footballer.equip_if_possible(new /obj/item/device/radio/headset(footballer), SLOT_EARS)
 
 		var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare(footballer) // for whatever reason, this is neccessary
 		I.registered = "[footballer.name]"
@@ -247,25 +247,25 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		I.cant_other_remove = 1
 
 		if (team == "blue")
-			footballer.equip_if_possible(new /obj/item/clothing/suit/armor/football(footballer), footballer.slot_wear_suit)
-			footballer.equip_if_possible(new /obj/item/clothing/head/helmet/football(footballer), footballer.slot_head)
-			footballer.equip_if_possible(new /obj/item/clothing/under/football(footballer), footballer.slot_w_uniform)
+			footballer.equip_if_possible(new /obj/item/clothing/suit/armor/football(footballer), SLOT_WEAR_SUIT)
+			footballer.equip_if_possible(new /obj/item/clothing/head/helmet/football(footballer), SLOT_HEAD)
+			footballer.equip_if_possible(new /obj/item/clothing/under/football(footballer), SLOT_W_UNIFORM)
 			footballer.add_filter("outline", 1, outline_filter(size=0.5, color=rgb(0,0,255)))
 			I.name = "Blue Team"
 			I.assignment = "Blue Team"
 			I.color = "#0000ff"
 		else
-			footballer.equip_if_possible(new /obj/item/clothing/suit/armor/football/red(footballer), footballer.slot_wear_suit)
-			footballer.equip_if_possible(new /obj/item/clothing/head/helmet/football/red(footballer), footballer.slot_head)
-			footballer.equip_if_possible(new /obj/item/clothing/under/football/red(footballer), footballer.slot_w_uniform)
+			footballer.equip_if_possible(new /obj/item/clothing/suit/armor/football/red(footballer), SLOT_WEAR_SUIT)
+			footballer.equip_if_possible(new /obj/item/clothing/head/helmet/football/red(footballer), SLOT_HEAD)
+			footballer.equip_if_possible(new /obj/item/clothing/under/football/red(footballer), SLOT_W_UNIFORM)
 			footballer.add_filter("outline", 1, outline_filter(size=0.5, color=rgb(255,0,0)))
 			I.name = "Red Team"
 			I.assignment = "Red Team"
 			I.color = "#ff0000"
 
-		footballer.equip_if_possible(new /obj/item/clothing/shoes/cleats(footballer), footballer.slot_shoes)
+		footballer.equip_if_possible(new /obj/item/clothing/shoes/cleats(footballer), SLOT_SHOES)
 
-		footballer.equip_if_possible(I, footballer.slot_wear_id)
+		footballer.equip_if_possible(I, SLOT_WEAR_ID)
 		//footballer.Equip_Bank_Purchase(footballer.mind.purchased_bank_item)
 		footballer.set_clothing_icon_dirty()
 		footballer.set_loc(pick(football_spawns[team]))

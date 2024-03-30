@@ -302,7 +302,7 @@
 					if (O == src || istype(O, /obj/railway) || !O.density)
 						continue
 					if (O.anchored && !magically_destructive)
-						visible_message("<span class='alert'>[src] bumps against [O].</span>")
+						visible_message(SPAN_ALERT("[src] bumps against [O]."))
 						moving_dir = 0
 						on_end_path()
 						return
@@ -333,7 +333,7 @@
 			var/knock_dir = get_dir(from_t, dest_t)
 			for (var/mob/living/M in dest_t)
 				M.TakeDamageAccountArmor("chest", src.road_rage_force, 0)
-				M.visible_message("<span class='alert'><b>[M] was hit by [src]!</b></span>", "<span class='alert'><b>You were hit by [src]!</b></span>")
+				M.visible_message(SPAN_ALERT("<b>[M] was hit by [src]!</b>"), SPAN_ALERT("<b>You were hit by [src]!</b>"))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 				M.throw_at(get_edge_target_turf(M, knock_dir), 10, 2)
 			for (var/obj/O in dest_t)
@@ -341,10 +341,10 @@
 					continue
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 				if (O.anchored && magically_destructive)
-					visible_message("<span class='alert'><b>[src] crashes into [O].</b></span>")
+					visible_message(SPAN_ALERT("<b>[src] crashes into [O].</b>"))
 					qdel(O)
 				else if (!O.anchored)
-					visible_message("<span class='alert'><b>[O] was hit by [src]!</b></span>")
+					visible_message(SPAN_ALERT("<b>[O] was hit by [src]!</b>"))
 					O.throw_at(get_edge_target_turf(O, knock_dir), 10, 2)
 
 
@@ -383,8 +383,100 @@
 				var/dump_dir = turn(dir, dump_angle)
 				var/turf/T = get_step(loc, dump_dir)
 				for (var/atom/movable/AM in src)
-					visible_message("<span class='notice'><b>[src] dumps out [AM].</b></span>")
+					visible_message(SPAN_NOTICE("<b>[src] dumps out [AM].</b>"))
 					AM.set_loc(T)
 
 		on_end_path()
 			qdel(src)
+
+	lunar_cab
+		icon = 'icons/obj/large/64x48.dmi'
+		icon_state = "cab-engineer"
+
+		name = "lunar tram engine"
+		desc = "The La Caille Model 2006 LunaTram. A staple of lunar transit."
+		plane = -100
+
+	passenger
+		icon = 'icons/obj/large/64x48.dmi'
+		icon_state = "car-passenger-middle"
+		plane = -100
+
+		start
+			icon_state = "car-passenger-start"
+
+		end
+			icon_state = "car-passenger-end"
+
+	flatbed
+		icon = 'icons/obj/large/64x48.dmi'
+		icon_state = "car-platform"
+		plane = -100
+
+		container
+			icon_state = "car-container-green"
+
+			red
+				icon_state = "car-container-red"
+				name = "Hafgan container"
+
+			blue
+				icon_state = "car-container-blue"
+
+			tanker
+				icon_state = "car-tanker"
+
+			barrels
+				icon_state = "car-barrels"
+
+			mail
+				icon_state = "car-mailcrates"
+
+			woodcrates
+				icon_state = "car-woodcrates"
+
+			nt
+				icon_state = "car-nt"
+
+			cyborgs
+				icon_state = "car-cyborgs"
+
+			rtgs
+				icon_state = "car-rtgs"
+
+			thruster
+				icon_state = "car-thruster"
+
+			nuclear
+				icon_state = "car-nukes"
+
+			industrial
+				icon_state = "car-industrial"
+
+			crime
+				icon_state = "car-crime"
+
+			military
+				icon_state = "car-military"
+
+			warhead
+				icon_state = "car-warhead"
+
+			firebarrel
+				icon_state = "car-fire"
+
+
+
+/obj/decoration/railyard
+
+	schedule
+		icon = 'icons/obj/large/64x32.dmi'
+		icon_state = "schedule_board"
+
+	signal
+		icon = 'icons/obj/railway.dmi'
+		icon_state = "signal-stop"
+
+		pole
+			icon = 'icons/obj/large/32x64.dmi'
+			icon_state = "signal-pole-stop"

@@ -16,21 +16,21 @@
 
 	attackby(obj/item/weapon, mob/user)
 		if(istype(weapon, /obj/item/pen) && src.icon_state=="scrollopen")
-			user.visible_message("<span class='alert'><b>[user.name] stabs themself with the [weapon] and starts signing the contract in blood!</b></span>","<span class='alert'><b>You stab yourself with the [weapon] and start signing the contract in blood!</b></span>")
-			playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
+			user.visible_message(SPAN_ALERT("<b>[user.name] stabs themself with the [weapon] and starts signing the contract in blood!</b>"),SPAN_ALERT("<b>You stab yourself with the [weapon] and start signing the contract in blood!</b>"))
+			playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
 			take_bleeding_damage(user, null, 10, DAMAGE_STAB)
 			src.icon_state = "signing"
 			if (do_after(user, 4.6 SECONDS))
-				user.visible_message("<span class='alert'><b>[user.name] finishes signing the contract in blood!</b></span>","<span class='alert'><b>You finish signing the contract in blood!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user.name] finishes signing the contract in blood!</b>"),SPAN_ALERT("<b>You finish signing the contract in blood!</b>"))
 				src.signer = user.real_name
 				src.name = "[user.real_name]'s signed demonic contract"
 				src.icon_state = "signed"
 			else
 				src.icon_state = "scrollopen"
 
-	attack(mob/user, mob/target)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if((user == target)&&(src.icon_state == "scrollclosed"))
-			user.visible_message("<span class='alert'><b>[user.name] bites into the [src]. They didn't seem to enjoy it.</b></span>","<span class='alert'><b>Blegh! This doesn't taste like a burrito!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user.name] bites into the [src]. They didn't seem to enjoy it.</b>"),SPAN_ALERT("<b>Blegh! This doesn't taste like a burrito!</b>"))
 
 //fortunes from player zoldorfs
 /obj/item/paper/thermal/playerfortune
@@ -49,14 +49,14 @@
 				if(!(usr in pz.brandlist))
 					pz.brandlist.Add(user)
 					src.icon_state = ("fortunepaper")
-					user.visible_message("<span class='success'><b>[user.name]'s skin seems to glow faintly.</b></span>","<span class='success'><b>You feel an otherworldly presence coursing through you!</b></span>")
-					. += "<span class='success'><b>Tip:</b> This will allow the zoldorf player to observe you like a ghost, if you wish to remain unseen, splashing yourself with holy water will clear the brand.</span>"
+					user.visible_message(SPAN_SUCCESS("<b>[user.name]'s skin seems to glow faintly.</b>"),SPAN_SUCCESS("<b>You feel an otherworldly presence coursing through you!</b>"))
+					. += SPAN_SUCCESS("<b>Tip:</b> This will allow the zoldorf player to observe you like a ghost, if you wish to remain unseen, splashing yourself with holy water will clear the brand.")
 					if(the_zoldorf.len)
-						boutput(the_zoldorf[1],"<span class='notice'><b>[user.name] has been branded!</b> You may now observe them via Astral Projection.</span>")
+						boutput(the_zoldorf[1],SPAN_NOTICE("<b>[user.name] has been branded!</b> You may now observe [him_or_her(user)] via Astral Projection."))
 					src.branded = 0
 
 			else if (istype(src.referencedorf,/obj/machinery/playerzoldorf) && (istype(usr,/mob/zoldorf)))
-				. += "<span class='success'><b>This fortune is branded!</b></span>"
+				. += SPAN_SUCCESS("<b>This fortune is branded!</b>")
 
 //Totally Normal Deck of Cards (TM)
 /obj/item/zoldorfdeck //deck of many things code is a bit messy, but the deck stores the card information and player interaction, the card item stores the effects passed to them by the deck
@@ -190,7 +190,7 @@
 		var/reference
 		var/keep
 		var/list/returnlist = list()
-		boutput(user,"<span class='success'><b>You have drawn the [cardname]!</b></span>")
+		boutput(user,SPAN_SUCCESS("<b>You have drawn the [cardname]!</b>"))
 		if(cardname == "Head of Personnel")
 			src.icon_state = "hop"
 			var/yn = tgui_alert(user, "Do you wish to repeat an effect of an already drawn card or cancel your queued draws?", "Choice", list("Repeat", "Cancel"))
@@ -199,7 +199,7 @@
 			if(yn == "Repeat")
 				var/repeat = input(user,"Choose a card!","Choice") as anything in deck.usedcards
 				if(!deck.usedcards.len)
-					boutput(user,"<span class='alert'><b>There are no card effects to be repeated!</b></span>")
+					boutput(user,SPAN_ALERT("<b>There are no card effects to be repeated!</b>"))
 				if(!repeat)
 					repeat = pick(deck.usedcards)
 				else
@@ -219,7 +219,7 @@
 				else
 					user.reagents.add_reagent("cryostylane", 50)
 			if("Security")
-				boutput(user,"<span class='alert'><b>OH GOD THE DECK SUCKS YOU IN!</b></span>")
+				boutput(user,SPAN_ALERT("<b>OH GOD THE DECK SUCKS YOU IN!</b>"))
 				deck.inuse = 0
 				user.u_equip(deck)
 				deck.set_loc(get_turf(user))
@@ -237,7 +237,7 @@
 				qdel(src)
 			if("Robusted")
 				user.TakeDamage("head",user.max_health)
-				boutput(user,"<span class='alert'><b>You are forced to draw again!</b></span>")
+				boutput(user,SPAN_ALERT("<b>You are forced to draw again!</b>"))
 				redraw = 1
 				reference = src
 			if("Quartermaster")
@@ -253,18 +253,18 @@
 					if(istype(user,/mob/living/carbon/human))
 						var/mob/living/carbon/human/h = user
 						h.can_juggle = 1
-						boutput(user,"<span class='success'>You feel the clown energy surround you. You now know how to juggle!</span>")
+						boutput(user,SPAN_SUCCESS("You feel the clown energy surround you. You now know how to juggle!"))
 					else
-						boutput(user,"<span class='success'>Hmmm...Your body doesn't seem suited for juggling. Here's a bike horn instead.</span>")
+						boutput(user,SPAN_SUCCESS("Hmmm...Your body doesn't seem suited for juggling. Here's a bike horn instead."))
 						user.put_in_hand_or_drop(new /obj/item/instrument/bikehorn)
 				else if(input == "Immunity")
-					boutput(user,"<span class='success'>You will never slip again!</span>")
+					boutput(user,SPAN_SUCCESS("You will never slip again!"))
 					user.put_in_hand_or_drop (new /obj/item/clothing/shoes/sandal/magic)
 				input = tgui_alert(user, "Do you wish to draw two more cards?", "Choice", list("Yes", "No"))
 				if(!input)
 					input = "No"
 				if (input == "Yes")
-					boutput(user,"<span class='alert'><b>You draw twice more!</b></span>")
+					boutput(user,SPAN_ALERT("<b>You draw twice more!</b>"))
 					redraw = 2
 					reference = src
 			if("Armory")
@@ -286,7 +286,7 @@
 				if(thing2.item != null)
 					user.put_in_hand_or_drop(new thing2.item)
 				else
-					boutput(user,"<span class='alert'>Hmmm...The card seems to have shorted out.</span>")
+					boutput(user,SPAN_ALERT("Hmmm...The card seems to have shorted out."))
 				qdel(thing2)
 			if("Roboticist")
 				user.contract_disease(/datum/ailment/disease/robotic_transformation,null,null,1)
@@ -327,9 +327,9 @@
 			if("Wizard")
 				if(deck.cards)
 					deck.nextcard = pick(deck.cards)
-					boutput(user,"<span class='success'>You divine that the next card will be the [deck.nextcard]!</span>")
+					boutput(user,SPAN_SUCCESS("You divine that the next card will be the [deck.nextcard]!"))
 				else
-					boutput(user,"<span class='success'>You divine that there are no cards left in the deck! Wow!</span>")
+					boutput(user,SPAN_SUCCESS("You divine that there are no cards left in the deck! Wow!"))
 			if("Rajaijah")
 				user.take_brain_damage(50)
 				var/mob/living/carbon/human/H = user
@@ -368,7 +368,7 @@
 	item_state = "scroll"
 	burn_point = 220
 	burn_output = 9
-	burn_possible = 1
+	burn_possible = TRUE
 	var/scrolltype
 	var/hat
 	var/obj/item/hatstorage
@@ -407,7 +407,7 @@
 				src.used = 1
 				user.u_equip(src)
 				src.set_loc(user) //while spell effects resolve, i temporarily stick them inside the player and delete them later in case of lag or need for the item to stick around longer (i.e. hat trick)
-				user.visible_message("<span class='alert'><b>[user.name] opens a portal to hell! Oh GOD! SOMETHING IS COMING! ITS! a securitron?</b></span>","<span class='alert'><b>The scroll burns in your hands and a portal to the depths of insanity manifests itself. A Lesser Demon is brought forth from hell.</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user.name] opens a portal to hell! Oh GOD! SOMETHING IS COMING! ITS! a securitron?</b>"),SPAN_ALERT("<b>The scroll burns in your hands and a portal to the depths of insanity manifests itself. A Lesser Demon is brought forth from hell.</b>"))
 				var/obj/machinery/bot/secbot/bot = new /obj/machinery/bot/secbot
 				bot.name = "Lesser Demon"
 				bot.desc = "If they weren't demonic enough already..."
@@ -420,10 +420,10 @@
 				user.u_equip(src)
 				src.set_loc(user)
 				if(!isturf(user.loc))
-					boutput(user,"<span class='alert'>You cannot cast this spell here!</span>")
+					boutput(user,SPAN_ALERT("You cannot cast this spell here!"))
 					return
 				if(isrestrictedz(user.z))
-					boutput(user, "<span class='alert'>You are suddenly zapped apart!</span>")
+					boutput(user, SPAN_ALERT("You are suddenly zapped apart!"))
 					logTheThing(LOG_COMBAT, user, "was gibbed for trying to use Zoldorf's presto scroll at [log_loc(user)].")
 					user.gib()
 
@@ -433,11 +433,11 @@
 						continue
 					randomturfs.Add(T)
 				if(length(randomturfs) > 0)
-					boutput(user, "<span class='alert'>You are suddenly zapped away elsewhere!</span>")
+					boutput(user, SPAN_ALERT("You are suddenly zapped away elsewhere!"))
 					user.set_loc(pick(randomturfs))
 					elecflash(user)
 			if("hat")
-				boutput(user,"<span class='success'>You must strike a tiny-normal item with the scroll!</span>")
+				boutput(user,SPAN_SUCCESS("You must strike a tiny-normal item with the scroll!"))
 
 	afterattack(atom/target as obj, mob/user as mob)
 		if(src.hat && istype(target,/obj/item) && (!istype(target,/obj/item/device/radio/intercom)) && (!src.used))
@@ -450,7 +450,7 @@
 				src.hatstorage = titem
 				titem.set_loc(src)
 				src.hatuser = user
-				user.visible_message("<span class='alert'><b>The [target.name] disappears! Wow!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>The [target.name] disappears! Wow!</b>"))
 				user.u_equip(src)
 				src.set_loc(user)
 				sleep(10 SECONDS)
@@ -459,34 +459,34 @@
 				if(istype(user, /mob/living/carbon/human))
 					var/mob/living/carbon/human/h = user
 					if(h.head)
-						src.hatuser.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Magic!</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat!</b></span>")
+						src.hatuser.visible_message(SPAN_ALERT("<b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Magic!</b>"),SPAN_ALERT("<b>The [src.hatstorage] tumbles out of your hat!</b>"))
 					else
-						src.hatuser.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Wait...Where did they get the hat?</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat! Wait...Where did you get the hat?</b></span>")
-					h.equip_if_possible(new /obj/item/clothing/head/that(h), h.slot_head)
+						src.hatuser.visible_message(SPAN_ALERT("<b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Wait...Where did they get the hat?</b>"),SPAN_ALERT("<b>The [src.hatstorage] tumbles out of your hat! Wait...Where did you get the hat?</b>"))
+					h.equip_if_possible(new /obj/item/clothing/head/that(h), SLOT_HEAD)
 
 				else
 					user.put_in_hand_or_drop(new /obj/item/clothing/head/that)
-					user.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Wait...Where did they get the hat?</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat! Wait...Where did you get the hat?</b></span>")
+					user.visible_message(SPAN_ALERT("<b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Wait...Where did they get the hat?</b>"),SPAN_ALERT("<b>The [src.hatstorage] tumbles out of your hat! Wait...Where did you get the hat?</b>"))
 				src.hatstorage.set_loc(get_turf(hatuser))
 
 				src.hatuser = null
 				src.hat = null
 				src.hatstorage = null
 			else
-				boutput(user,"<span class='alert'>This item is too big!</span>")
+				boutput(user,SPAN_ALERT("This item is too big!"))
 
 	disposing()
 		if(src.hat && src.hatstorage && src.hatuser)
 			if(istype(src.hatuser, /mob/living/carbon/human))
 				var/mob/living/carbon/human/h = src.hatuser
 				if(h.head)
-					src.hatuser.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Magic!</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat!</b></span>")
+					src.hatuser.visible_message(SPAN_ALERT("<b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Magic!</b>"),SPAN_ALERT("<b>The [src.hatstorage] tumbles out of your hat!</b>"))
 				else
-					src.hatuser.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Wait...Where did they get the hat?</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat! Wait...Where did you get the hat?</b></span>")
-				h.equip_if_possible(new /obj/item/clothing/head/that, h.slot_head)
+					src.hatuser.visible_message(SPAN_ALERT("<b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Wait...Where did they get the hat?</b>"),SPAN_ALERT("<b>The [src.hatstorage] tumbles out of your hat! Wait...Where did you get the hat?</b>"))
+				h.equip_if_possible(new /obj/item/clothing/head/that, SLOT_HEAD)
 			else
 				src.hatuser.put_in_hand_or_drop(new /obj/item/clothing/head/that)
-				src.hatuser.visible_message("<span class='alert'><b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Wait...Where did they get the hat?</b></span>","<span class='alert'><b>The [src.hatstorage] tumbles out of your hat! Wait...Where did you get the hat?</b></span>")
+				src.hatuser.visible_message(SPAN_ALERT("<b>The [src.hatstorage] tumbles out of [src.hatuser.name]'s hat! Wait...Where did they get the hat?</b>"),SPAN_ALERT("<b>The [src.hatstorage] tumbles out of your hat! Wait...Where did you get the hat?</b>"))
 			src.hatstorage.set_loc(get_turf(src.hatuser))
 		..()
 

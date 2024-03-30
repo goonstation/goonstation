@@ -273,12 +273,12 @@
 	pixel_y = -8
 	},
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black,
 /obj/decal/cleanable/wardrobe_scuff_marks,
-/obj/item/clothing/under/suit{
+/obj/item/clothing/under/suit/black{
 	pixel_x = 5
 	},
-/obj/item/clothing/under/suit{
+/obj/item/clothing/under/suit/black{
 	pixel_x = 2
 	},
 /obj/item/clothing/shoes/dress_shoes{
@@ -688,7 +688,8 @@
 "yH" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of the area's air supply system.";
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/plating,
@@ -728,7 +729,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/safehouse)
 "Dc" = (
-/obj/machinery/atmospherics/pipe/tank/air{
+/obj/machinery/atmospherics/unary/tank/air{
 	volume = 0
 	},
 /obj/machinery/light/incandescent/broken{
@@ -739,7 +740,6 @@
 "Dl" = (
 /obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
@@ -765,8 +765,6 @@
 /area/prefab/safehouse)
 "Du" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
@@ -799,7 +797,8 @@
 /area/prefab/safehouse)
 "GD" = (
 /obj/decal/fakeobjects/pipe{
-	desc = "Part of the area's air supply system."
+	desc = "Part of the area's air supply system.";
+	color = "b4b4b4"
 	},
 /obj/item/device/analyzer/atmospheric/upgraded,
 /turf/simulated/floor/plating,

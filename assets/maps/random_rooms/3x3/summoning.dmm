@@ -2,8 +2,6 @@
 "a" = (
 /obj/cable/hotpink,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
@@ -39,16 +37,12 @@
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/space)
 "z" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "4-10"
 	},
 /obj/cable/yellow{
@@ -62,8 +56,6 @@
 /area/space)
 "L" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "4-9"
 	},
 /obj/cable/yellow{
@@ -77,8 +69,6 @@
 /area/space)
 "N" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "6-8"
 	},
 /obj/cable/yellow{

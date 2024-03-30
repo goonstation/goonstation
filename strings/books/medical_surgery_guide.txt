@@ -48,7 +48,7 @@
 			<li><b>Circular Saw</b> - Used for sawing.
 			<li><b>Enucleation Spoon</b>  - Used for melon-balling eyes out of a patient's head.
 			<li><b>Garden Snips</b> - Used for snipping.
-			<li><b>Hemostat</b> - Used for clamping down bleeders. Hold this in your off hand to make most surgery cause less bleeding.
+			<li><b>Hemostat</b> - Used for clamping down bleeders. Hold this in your off hand to make most surgery cause less bleeding. Clamp them on an opened up patient or they'll bleed all over the place and you'll have to deal with the janitor.
 			<br>
 			<li><b>Health Analyzer Organ Upgrade</b> - Until now, it was only possible for health analyzers to crudely detect brain damage in a subject. With this upgrade, health analyzers will be able to crudely detect the health of ANY organ!
 			<li>The last tool, if it can be called such, is the operating table or bed. For some reason that continues to baffle medical science, the type of surface that the patient is placed on in surgery is important for being able to perform surgery. Operating tables are the gold standard for surgery, next comes regular beds, these work just as well. Finally you can perform surgery on any old table, provided the patient is knocked out, stunned, or otherwise sufficiently anesthetized/drunk.
@@ -57,36 +57,17 @@
 		<h3>Doing Surgery</h3>
 		<div id ="surgery">
 		<p>Everybody knows how to perform brain surgery, the basest form of surgery that even a staff assistant manage, so I won't bore you with how to perform it here. Instead here are some revolutionary new surgery practices <i>invented</i> by me to get at all those tantalizing organs inside of your fellow spaceman:</p>
-		<br>
-		<ul>
-			<li>Scalpel =		cut
-			<li>Circular Saw = 	saw
-			<li>Garden Snips = 	snips
-		</ul>
-		<br>
-		<ul>
-			<li>lungs = 		snip -> saw -> snip<sup>1</sup>
-			<li>appendix = 		snip -> snip -> snip
-			<li>liver = 		snip -> snip -> cut
-			<li>stomach = 		snip -> cut -> snip
-			<li>intestines = 	snip -> cut -> cut
-			<li>pancreas = 		cut -> snip -> snip
-			<li>spleen = 		cut -> snip -> cut
-			<li>kidneys = 		cut -> cut -> snip*
-			<li>heart = 		cut -> saw -> cut -> saw<sup>2</sup>
-		</ul>
-		<br>
-		<sup>1</sup> Use Right/Left hands for removing R/L organ on this step<br>
-		<sup>2</sup> Use "HELP" intent for the whole surgery. <b>ABSOLUTELY DO NOT USE "HARM" INTENT!</b>
-		<p>After each successful organ removal or replacement, the surgeon must close up so they can take the correct pathway to the next organ they want to locate. The simplest way to do so would be to suture the chest closed with regular a old medical suture.</p>
-		<br>
+		<p>To get access to someone's meaty chest bits, you'll want to cut them up with a knife, then snip them up with some scissors. If you did it correctly, you'll be able to sneak a peak into their chest cavity. If you didn't, the patient is probably dead. In the case they aren't, start over. Also, if you are on "DISARM" intent you'll always muck it up.</p>
+		<p>Once you have access to someone's surgery regions, pick one and focus on it. Your years of medical experience (or sheer dumb luck) will tell you what tools you'll need to open up that region. Once you did it all proper and used each tool on the right spots, you can get access to the goodies inside that specific region.</p>
+		<p>Removing an organ is much the same. Pick an organ, cut it up then remove it.</p>
+		<p>There is also a second way to remove an organ, using my patented "Just rip the fucker out" method. Select the organ while not holding anything and you'll get a good grab on it and start pulling. Pretty useful if you lost your scalpel midway through the surgery or feel like using a more hands-on approach. The patient, organ and your supervisor won't like it too much but if you scream loud enough while pulling you won't hear them complain.</p>
+		<p>You may also, for whatever reason, decide to put an item into someone's chest for science. To do so, make sure they are opened up then simply click and drag the item into the patient. If you do it while holding a suture, or click them after while you have a suture on "GRAB" intent, you'll secure the item inside. If you don't, the item will be farted out whenever the patient flatulates. Which happens extremely frequently.</p>
+		<p>If you desire to remove someone's tail, use a knife, then a saw, then a knife again and do it all on "GRAB" intent. You might realise this could remove the patient's butt but no matter how strong the urge you MUST resist it. Doing so is a cruel and inhumane practice and should only be reserved for the worst of the worst. Like that coworker that keeps stealing your GODDAMN LUNCH.</p>
 		<p>As an afterthought, for the sake of completeness I <b>will</b> bother bore you with how to do some of the "lesser" surgeries, here are the steps for most other common surgical procedures:</p>
 		<ul>
 			<li>brain = cut -> saw -> cut -> saw - Target HEAD on "HELP" intent (*note - Performing this surgery on "HARM" intent can decapitate the head).
 			<li>eyes = L/R spoon -> L/R cut -> L/R spoon - 	in order to remove a specific eye, you must only hold a tool in the corresponding hand R/L.
 			<li>limbs = cut -> saw -> cut 	while targeting the appropriate limb. Replacing a limb only requires you to target the correct limb, and then staple it firmly to the stump.
-			<li>tail = saw -> cut -> saw	while targetting the chest. I don't even know why they taught me this in medschool.
-			<li>butt = I do not know how to remove butts, and if I did I wouldn't spread that knowledge for it is a cruel and inhumane practice to remove a butt from anyone.
 		</ul>
 		</div>
 		<h3>Organ Functions</h3>
@@ -154,7 +135,7 @@
 		<h3>Organ Damage Treatment</h3>
 		<div id ="treatment">
 		<p>Presently there are only a few known ways to treat organ damage, provided they are not damaged too extensively. This "chapter" will discuss the most common ways.</p>
-		<p>It is probably helpful to seperate organs into 3 different groups in order to more quickly and easily treat them.<br>
+		<p>It is probably helpful to separate organs into 3 different groups in order to more quickly and easily treat them.<br>
 		The reason for each grouping should be completely obvious to anyone who cares to think about it so I will not explain the logic behind each grouping.</p>
 
 		<p><b>Group I: Lungs and Spleen</b></p>
@@ -176,7 +157,7 @@
 		<br>
 		<p>It's been theorized that gene therapies are also capable to healing internal organs over time. Though I have not collected any solid data on this to date.</p>
 		</div>
-		<h4>Additonal documentation is available at:</h4>
+		<h4>Additional documentation is available at:</h4>
 		<ul>><li><a href="https://wiki.ss13.co/Doctoring" target="Goonstation Wiki: Doctoring">https://wiki.ss13.co/Doctoring</a></li></ul>
 <h5>by Trent Durinste<br>2053 C.E.</h5>
 </div>

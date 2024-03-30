@@ -10,8 +10,7 @@ var/list/dangerousVerbs = list(\
 
 //No banning for you
 /client/proc/warn,\
-/client/proc/openBanPanel,\
-/client/proc/cmd_admin_addban,\
+/client/proc/ban_panel,\
 /client/proc/banooc,\
 /client/proc/sharkban,\
 
@@ -63,7 +62,6 @@ var/list/dangerousVerbs = list(\
 
 //Toggles (these are ones that could be very confusing to accidentally toggle for a drunk person)
 /client/proc/toggle_toggles,\
-/client/proc/toggle_popup_verbs,\
 /client/proc/toggle_server_toggles_tab,\
 /datum/admins/proc/toggleenter,\
 /datum/admins/proc/toggle_blood_system,\
@@ -85,6 +83,7 @@ var/list/dangerousVerbs = list(\
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert("Enable drunk mode for yourself?", "Confirmation", "Yes", "No") == "Yes")
 		var/not_drunk_but_high = (alert("Are you boozin' or weedin'", "drugs", "Drunk", "High") == "High")
@@ -102,6 +101,7 @@ var/list/dangerousVerbs = list(\
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	//Puzzle goes here
 	var/message = "Hello! You are drunk! Think you're not? Solve this simple puzzle then.\n\n"
@@ -136,6 +136,7 @@ var/list/dangerousVerbs = list(\
 	if (!C) return
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	//Apparently if the onlineAdmins list contains only one entry, it just picks it by default without giving any input
 	if (src == C)
@@ -219,4 +220,4 @@ var/list/dangerousVerbs = list(\
 			)
 			command_alert("[C.key] [pick(announce)].", "Weedmin detected")
 
-		boutput(C, "<span class='alert'><b><big>You are now in drunk-mode!</big></b><br>You will have reduced powers so you can't fuck shit up so much.<br>Use \"Disable Drunk Mode\" to disable this.</span>")
+		boutput(C, SPAN_ALERT("<b><big>You are now in drunk-mode!</big></b><br>You will have reduced powers so you can't fuck shit up so much.<br>Use \"Disable Drunk Mode\" to disable this."))

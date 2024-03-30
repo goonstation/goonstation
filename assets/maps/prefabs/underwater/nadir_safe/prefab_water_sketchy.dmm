@@ -25,15 +25,7 @@
 /turf/simulated/floor/damaged2,
 /area/prefab/sea_sketch)
 "ag" = (
-/obj/npc/trader/robot{
-	desc = "The robot equivelant of that guy back on Earth who tried to sell you stolen military gear and drugs in the bathroom of an old greasy spoon.";
-	greeting = "I got what you need.";
-	illegal = 1;
-	name = "Sketchy D-5";
-	picture = "loungebuddy.png";
-	productset = 1;
-	trader_area = "/area/prefab/sea_sketch"
-	},
+/obj/npc/trader/robot/robuddy/drugs,
 /turf/simulated/floor/grime,
 /area/prefab/sea_sketch)
 "ah" = (

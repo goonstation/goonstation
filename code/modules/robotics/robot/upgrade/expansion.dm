@@ -9,6 +9,6 @@
 	if (!user || src.qdeled)
 		return
 	user.max_upgrades++
-	boutput(user, "<span class='notice'>You can now hold up to [user.max_upgrades] upgrades!</span>")
+	boutput(user, SPAN_NOTICE("You can now hold up to [user.max_upgrades] upgrades!"))
 	user.upgrades.Remove(src)
 	qdel(src)

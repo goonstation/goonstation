@@ -313,11 +313,7 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/clown_nest)
 "II" = (
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "JG" = (
@@ -407,11 +403,7 @@
 /area/prefab/clown_nest)
 "Vz" = (
 /obj/decal/cleanable/vomit/spiders,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing"
-	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /obj/item/reagent_containers/food/drinks/milk/clownspider{
 	pixel_x = 4;
 	pixel_y = 4
@@ -449,12 +441,12 @@
 /turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "Zh" = (
-/obj/decal/fakeobjects{
+/obj/decal/fakeobjects/pipe{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "crusty vent"
 	},
 /turf/simulated/floor/airless/plating,

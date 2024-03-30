@@ -155,27 +155,27 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hairclips)
 		path = /obj/item/clothing/head/barrette/butterflyorg
 
 	barrette_blue
-		name = "Blue Hairclips"
+		name = "Blue Barrettes"
 		path = /obj/item/clothing/head/barrette/blue
 
 	barrette_green
-		name = "Green Hairclips"
+		name = "Green Barrettes"
 		path = /obj/item/clothing/head/barrette/green
 
 	barrette_pink
-		name = "Pink Hairclips"
+		name = "Pink Barrettes"
 		path = /obj/item/clothing/head/barrette/pink
 
 	barrette_gold
-		name = "Gold Hairclips"
+		name = "Gold Barrettes"
 		path = /obj/item/clothing/head/barrette/gold
 
 	barrette_black
-		name = "Black Hairclips"
+		name = "Black Barrettes"
 		path = /obj/item/clothing/head/barrette/black
 
 	barrette_silver
-		name = "Silver Hairclips"
+		name = "Silver Barrettes"
 		path = /obj/item/clothing/head/barrette/silver
 
 //Casual
@@ -625,6 +625,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/outerwear)
 /datum/clothingbooth_item/outerwear/jacketsjacket
 	name = "Baseball Jacket"
 	path = /obj/item/clothing/suit/jacketsjacket
+
+/datum/clothingbooth_item/outerwear/hitman
+	name = "Black Jacket"
+	path = /obj/item/clothing/suit/hitman
 
 /datum/clothingbooth_item/outerwear/tuxedojacket
 	name = "Tuxedo Jacket"
@@ -1131,6 +1135,92 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	slot = SLOT_WEAR_SUIT
 	cost = PAY_TRADESMAN/2
 
+#ifdef HALLOWEEN
+/datum/clothingbooth_item/costume/giraffehat
+	name = "Giraffe Hat"
+	path = /obj/item/clothing/head/giraffehat
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/costume/axehat
+	name = "Axe Headband"
+	path = /obj/item/clothing/head/axehat
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/costume/rhinobeetlehat
+	name = "Rhino Beetle Helm"
+	path = /obj/item/clothing/head/rhinobeetle
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/costume/stagbeetlehat
+	name = "Stag Beetle Helm"
+	path = /obj/item/clothing/head/stagbeetle
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/costume/elephanthat_pink
+	name = "Elephant Hat (Pink)"
+	path = /obj/item/clothing/head/elephanthat/pink
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/costume/elephanthat_gold
+	name = "Elephant Hat (Gold)"
+	path = /obj/item/clothing/head/elephanthat/gold
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/costume/elephanthat_green
+	name = "Elephant Hat (Green)"
+	path = /obj/item/clothing/head/elephanthat/green
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/costume/elephanthat_blue
+	name = "Elephant Hat (Blue)"
+	path = /obj/item/clothing/head/elephanthat/blue
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/costume/mushroomcap_red
+	name = "Red Mushroom Cap"
+	path = /obj/item/clothing/head/mushroomcap/red
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/costume/mushroomcap_shiitake
+	name = "Shiitake Mushroom Cap"
+	path = /obj/item/clothing/head/mushroomcap/shiitake
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/costume/mushroomcap_indigo
+	name = "Indigo Mushroom Cap"
+	path = /obj/item/clothing/head/mushroomcap/indigo
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/costume/mushroomcap_inky
+	name = "Inky Mushroom Cap"
+	path = /obj/item/clothing/head/mushroomcap/inky
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN
+
+/datum/clothingbooth_item/costume/minotaurmask
+	name = "Minotaur Mask"
+	path = /obj/item/clothing/head/minotaurmask
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN
+
+/datum/clothingbooth_item/costume/tengumask
+	name = "Tengu Mask"
+	path = /obj/item/clothing/mask/tengu
+	slot = SLOT_WEAR_MASK
+	cost = PAY_TRADESMAN/2
+
+#endif
 //Western
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/western)
@@ -1223,4 +1313,37 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western/westboot)
 		name = "Brown Cowboy Boots"
 		path = /obj/item/clothing/shoes/westboot/brown
 
+#ifdef SEASON_AUTUMN
 
+ABSTRACT_TYPE(/datum/clothingbooth_item/autumn_jacket)
+/datum/clothingbooth_item/autumn_jacket
+	name = "autumn coat"
+	slot = SLOT_W_UNIFORM
+	category = "Autumn"
+	cost = PAY_UNTRAINED
+
+	cape
+		name = "Autumn Cape"
+		path = /obj/item/clothing/suit/autumn_cape
+
+	jacket
+		name = "Autumn Jacket"
+		path = /obj/item/clothing/suit/jacket/autumn_jacket
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/autumn_hat)
+
+/datum/clothingbooth_item/autumn_hat
+	name = "autumn hat"
+	slot = SLOT_HEAD
+	category = "Autumn"
+	cost = PAY_UNTRAINED
+
+	leaf_wreath
+		name = "leaf wreath"
+		path = /obj/item/clothing/head/leaf_wreath
+
+	autumn_tree
+		name = "autumn tree"
+		path = /obj/item/clothing/head/autumn_tree
+
+#endif

@@ -150,7 +150,7 @@ export const ScannerTab = (props, context) => {
                 </LabeledList>
               </Flex.Item>
               {human && showPreview && (
-                <Flex.Item grow={0} shrink={0}>
+                <Flex.Item shrink={0}>
                   <ByondUi
                     params={{
                       id: preview,

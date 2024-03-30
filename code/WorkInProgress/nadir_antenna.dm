@@ -282,7 +282,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 			message_admins("[key_name(intcap.rigger)]'s rigged cell damaged the transception array at [log_loc(src)].")
 			logTheThing(LOG_COMBAT, intcap.rigger, "'s rigged cell damaged the transception array at [log_loc(src)].")
 
-		src.visible_message("<span class='alert'><b>[src]'s internal capacitor compartment explodes!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src]'s internal capacitor compartment explodes!</b>"))
 
 		for(var/client/C in clients)
 			playsound(C.mob, 'sound/effects/explosionfar.ogg', 35, 0)
@@ -300,8 +300,8 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 
 /obj/machinery/communications_dish/transception/attack_hand(mob/user)
 	if(src.intcap && intcap_door_open)
-		boutput(user, "<span class='notice'>You remove \the [intcap] from the cabinet's cell compartment.</span>")
-		playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+		boutput(user, SPAN_NOTICE("You remove \the [intcap] from the cabinet's cell compartment."))
+		playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 		user.put_in_hand_or_drop(src.intcap)
 		src.intcap = null
@@ -403,7 +403,6 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 /datum/action/bar/icon/array_repair_weld
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "array_repair_weld"
 	icon = 'icons/obj/items/tools/weldingtool.dmi'
 	icon_state = "weldingtool-on"
 	var/mob/living/user
@@ -781,10 +780,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 					thing2send.set_loc(src)
 					SPAWN(1 SECOND)
 
-						if (istype(thing2send, /obj/storage/crate/biohazard/cdc))
-							QM_CDC.receive_pathogen_samples(thing2send)
-
-						else if(istype(thing2send,/obj/storage/crate) || istype(thing2send,/obj/storage/secure/crate))
+						if(istype(thing2send,/obj/storage/crate) || istype(thing2send,/obj/storage/secure/crate))
 							var/sold_to_trader = FALSE
 							for (var/datum/trader/T in shippingmarket.active_traders)
 								if (T.crate_tag == thing2send.delivery_destination)
@@ -835,7 +831,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 					else
 						shippingmarket.pending_crates.Add(thing2get)
 					playsound(src.loc, 'sound/machines/pod_alarm.ogg', 30, 0)
-					src.visible_message("<span class='alert'><B>[src]</B> emits an [tele_obstructed ? "obstruction" : "array status"] warning.</span>")
+					src.visible_message(SPAN_ALERT("<B>[src]</B> emits an [tele_obstructed ? "obstruction" : "array status"] warning."))
 				src.is_transceiving = FALSE
 
 
@@ -849,22 +845,22 @@ TYPEINFO(/obj/machinery/transception_pad)
 				if(M.limbs.l_arm)
 					limb_ripped = TRUE
 					M.limbs.l_arm.delete()
-					M.visible_message("<span class='alert'><B>[M]</B>'s arm [dethflavor]!</span>")
+					M.visible_message(SPAN_ALERT("<B>[M]</B>'s arm [dethflavor]!"))
 			if(2)
 				if(M.limbs.r_arm)
 					limb_ripped = TRUE
 					M.limbs.r_arm.delete()
-					M.visible_message("<span class='alert'><B>[M]</B>'s arm [dethflavor]!</span>")
+					M.visible_message(SPAN_ALERT("<B>[M]</B>'s arm [dethflavor]!"))
 			if(3)
 				if(M.limbs.l_leg)
 					limb_ripped = TRUE
 					M.limbs.l_leg.delete()
-					M.visible_message("<span class='alert'><B>[M]</B>'s leg [dethflavor]!</span>")
+					M.visible_message(SPAN_ALERT("<B>[M]</B>'s leg [dethflavor]!"))
 			if(4)
 				if(M.limbs.r_leg)
 					limb_ripped = TRUE
 					M.limbs.r_leg.delete()
-					M.visible_message("<span class='alert'><B>[M]</B>'s leg [dethflavor]!</span>")
+					M.visible_message(SPAN_ALERT("<B>[M]</B>'s leg [dethflavor]!"))
 
 		if(limb_ripped)
 			playsound(M.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
@@ -880,7 +876,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 		var/mob/M = locate() in src.contents
 		if(M)
 			src.is_transceiving = TRUE
-			src.visible_message("<span class='alert'><B>[src]</B> emits a buffer error alert!</span>")
+			src.visible_message(SPAN_ALERT("<B>[src]</B> emits a buffer error alert!"))
 			playsound(src.loc, 'sound/machines/pod_alarm.ogg', 30, 0)
 			flick("neopad_activate",src)
 			SPAWN(0.4 SECONDS)
@@ -992,7 +988,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 
 /obj/machinery/computer/transception/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))
-		boutput(user, "<span class='alert'>Access Denied.</span>")
+		boutput(user, SPAN_ALERT("Access Denied."))
 		return
 
 	if(..())

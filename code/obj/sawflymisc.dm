@@ -31,6 +31,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	contraband = 2
 	overlays = null
 	armed = FALSE
+	HELP_MESSAGE_OVERRIDE({"Use the sawfly in hand or use the remote to deploy it. Use the remote or click on the sawfly on <span class='help'>help</span> or <span class='grab'>grab</span> intent to deactivate it."})
 
 	//used in dictating behavior when deployed from grenade
 	var/mob/living/critter/robotic/sawfly/heldfly = null
@@ -38,7 +39,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	attack_self(mob/user)
 		var/area/A = get_area(src)
 		if (A.sanctuary == TRUE && !istype(A, /area/syndicate_station/battlecruiser)) // salvager vessel, vr, THE SHAMECUBE, but not the battlecruiser
-			boutput(user, "<span class='notice'>You can't prime [src] here!</span>")
+			boutput(user, SPAN_NOTICE("You can't prime [src] here!"))
 			return
 		..()
 
@@ -96,41 +97,44 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 /obj/item/remote/sawflyremote
 	name = "Sawfly remote"
 	desc = "A small device that can be used to fold or deploy sawflies in range."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "sawfly_remote"
+
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS
 	object_flags = NO_GHOSTCRITTER
-	icon = 'icons/obj/items/device.dmi'
-	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
-	icon_state = "sawflycontr"
 
-	attack_self(mob/user as mob)
+	HELP_MESSAGE_OVERRIDE({"Use the remote in hand to activate/deactivate any sawflies within a 5 tile radius."})
+
+	attack_self(mob/user)
+		if (ON_COOLDOWN(src, "button_pushy", 1.5 SECONDS))
+			return
+		flick("sawfly_remote-pressed", src)
 		for (var/mob/living/critter/robotic/sawfly/S in range(get_turf(src), 5)) // folds active sawflies
 			SPAWN(0.1 SECONDS)
 				S.foldself()
-
-		for(var/obj/item/old_grenade/S in range(get_turf(src), 4)) // unfolds passive sawflies
+		for (var/obj/item/old_grenade/S in range(get_turf(src), 5)) // unfolds passive sawflies
 			var/area/A = get_area(S)
 			if (A.sanctuary == TRUE && !istype(A, /area/syndicate_station/battlecruiser)) // salvager vessel, vr, THE SHAMECUBE, but not the battlecruiser
 				continue
-			if (S.issawfly == TRUE) //check if we're allowed to prime the grenade
-				if (istype(S, /obj/item/old_grenade/sawfly))
-					S.visible_message("<span class='alert'>[S] suddenly springs open as its engine purrs to a start!</span>")
-					S.icon_state = "sawflyunfolding"
-					SPAWN(S.det_time)
-						if(S)
-							S.detonate()
-
-				if (istype(S, /obj/item/old_grenade/spawner/sawflycluster))
-					S.visible_message("<span class='alert'>The [S] suddenly begins beeping as it is primed!</span>")
-					if (S.icon_state=="clusterflyA")
-						S.icon_state = "clusterflyA1"
-					else
-						S.icon_state = "clusterflyB1"
-					SPAWN(S.det_time)
-						if(S)
-							S.detonate()
-			else
+			if (!S.issawfly) //check if we're allowed to prime the grenade
 				continue
+			if (istype(S, /obj/item/old_grenade/sawfly) && !S.armed)
+				S.visible_message(SPAN_ALERT("[S] suddenly springs open as its engine purrs to a start!"))
+				S.icon_state = "sawflyunfolding"
+				S.armed = TRUE
+				SPAWN(S.det_time)
+					S?.detonate()
+
+			if (istype(S, /obj/item/old_grenade/spawner/sawflycluster) && !S.armed)
+				S.visible_message(SPAN_ALERT("The [S] suddenly begins beeping as it is primed!"))
+				if (S.icon_state=="clusterflyA")
+					S.icon_state = "clusterflyA1"
+				else
+					S.icon_state = "clusterflyB1"
+				S.armed = TRUE
+				SPAWN(S.det_time)
+					S?.detonate()
 
 // ---------------limb---------------
 /datum/limb/sawfly_blades
@@ -141,7 +145,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 			if(issawflybuddy(target))
 				return
 			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "carves", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [target]!</b>")
-			playsound(user, 'sound/machines/chainsaw_green.ogg', 50, 1)
+			playsound(user, 'sound/machines/chainsaw_green.ogg', 50, TRUE)
 			if(prob(3))
 				user.communalbeep()
 			take_bleeding_damage(target, null, 10, DAMAGE_STAB)

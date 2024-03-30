@@ -67,6 +67,7 @@ var/global/datum/voxdbg/VoxDebug = new
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug VOX"
 	set desc = "Fuck me."
+	SHOW_VERB_DESC
 
 	VoxDebug.voxtokens = voxtokens
 	VoxDebug.voxsounds_flag_sorted = voxsounds_flag_sorted
@@ -79,10 +80,8 @@ var/global/datum/voxdbg/VoxDebug = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Intercom Help"
 	set desc = "WOOP WOOP ASS DAY"
-
-	if(!isadmin(src))
-		boutput(src, "Only administrators may use this command.")
-		return
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	vox_help(usr)
 
@@ -136,9 +135,8 @@ proc/vox_help(var/mob/user)
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Intercom Announcement"
 	set desc = "ABOUT THAT BEER I OWED YA, GORDON"
-	if(!isadmin(src))
-		boutput(src, "Only administrators may use this command.")
-		return
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	vox_reinit_check()
 
@@ -156,11 +154,8 @@ proc/vox_help(var/mob/user)
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Intercom Announcement (Pitch Shifted)"
 	set desc = "ABOUT that BEER I owed YA, NODROG"
-	if(!isadmin(src))
-		boutput(src, "Only administrators may use this command.")
-		return
-
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	vox_reinit_check()
 
@@ -198,7 +193,7 @@ proc/vox_play(var/input, var/user, var/pitch = 1)
 	if(missingwords.len)
 		boutput(user, "<b>Input: </b>")
 		boutput(user, "[input]")
-		boutput(user, "<b><span class='alert'>Missing VOX words: </span></b>")
+		boutput(user, SPAN_ALERT("<b>Missing VOX words: </b>"))
 		for(var/word in missingwords)
 			boutput(user, "[word]")
 		var/play = alert("Words missing. Play anyway?","Vox Announcement","Yes","No")

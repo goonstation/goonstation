@@ -282,6 +282,13 @@ menu "menu"
 		is-checked = true
 		can-check = true
 		saved-params = "is-checked"
+	elem "toggle_camera_recoil"
+		name = "&Camera Recoil"
+		command = "toggle-camera-recoil"
+		category = "&Effects"
+		is-checked = true
+		can-check = true
+		saved-params = "is-checked"
 	elem
 		name = "&Interface"
 		command = ""
@@ -684,6 +691,19 @@ window "joinmenu"
 		saved-params = "is-checked"
 		text = ""
 		image = 'icons\\ui\\declare-ready.png'
+		command = ".ready"
+	elem "button_joingame"
+		type = BUTTON
+		pos = 18,80
+		size = 200x40
+		anchor1 = none
+		anchor2 = none
+		font-family = "Verdana"
+		font-size = 10
+		font-style = "bold"
+		saved-params = "is-checked"
+		text = ""
+		image = 'icons\\ui\\join-game.png'
 		command = ".ready"
 	elem "button_charsetup"
 		type = BUTTON

@@ -17,8 +17,6 @@
 			break_index = current_index
 		if(break_index) // chain broken
 			src.UnregisterSignal(AM, COMSIG_MOVABLE_SET_LOC)
-			if (src.track_movable_moved)
-				src.UnregisterSignal(AM, COMSIG_MOVABLE_MOVED)
 		if(!break_index)
 			loc_crawl = loc_crawl.loc
 		current_index++
@@ -30,25 +28,28 @@
 	while(ismovable(loc_crawl))
 		loc_chain += loc_crawl
 		src.RegisterSignal(loc_crawl, COMSIG_MOVABLE_SET_LOC, PROC_REF(on_loc_change))
-		if (src.track_movable_moved)
-			src.RegisterSignal(loc_crawl, COMSIG_MOVABLE_MOVED, PROC_REF(on_turf_change))
 		loc_crawl = loc_crawl.loc
 
 	var/atom/movable/new_outermost = src.get_outermost_movable()
 
 	if(old_outermost != new_outermost)
 		SEND_COMPLEX_SIGNAL(src, XSIG_OUTERMOST_MOVABLE_CHANGED, old_outermost, new_outermost)
+		if (src.track_movable_moved)
+			src.UnregisterSignal(old_outermost, COMSIG_MOVABLE_MOVED)
+			src.RegisterSignal(new_outermost, COMSIG_MOVABLE_MOVED, PROC_REF(on_turf_change))
 
 	src.on_turf_change(thing, previous_loc)
 
 /datum/component/complexsignal/outermost_movable/proc/on_turf_change(atom/movable/thing, atom/previous_loc)
+	var/atom/movable/outermost_movable = src.get_outermost_movable()
+
 	var/turf/old_turf = get_turf(previous_loc)
-	var/turf/new_turf = get_turf(parent)
+	var/turf/new_turf = get_turf(outermost_movable)
 	if (old_turf != new_turf)
 		SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_TURF_CHANGED, old_turf, new_turf)
 
 		var/turf/old_area = get_area(previous_loc)
-		var/area/new_area = get_area(parent)
+		var/area/new_area = get_area(outermost_movable)
 		if (old_area != new_area)
 			SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_AREA_CHANGED, old_area, new_area)
 

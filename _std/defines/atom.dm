@@ -3,9 +3,6 @@
 /// Is this an atom? idk ask mr. molecule man
 #define isatom(A) (isloc(A))
 
-/// Is this an atom that can move!!?
-#define isatommovable(A) (istype(A, /atom/movable))
-
 /// built-in isobj returns true for /atom/movable
 #define isobj(A) (istype(A, /obj))
 
@@ -66,6 +63,8 @@
 /// overrides the click drag mousedrop pickup QOL kinda stuff
 #define NO_MOUSEDROP_QOL			(1 << 10)
 #define MOVE_NOCLIP 				(1 << 11)
+/// Atom won't get warped to z5 via floor holes on underwater maps
+#define IMMUNE_TRENCH_WARP			(1 << 12)
 
 
 //THROW flags (what kind of throw, we can have ddifferent kinds of throws ok)

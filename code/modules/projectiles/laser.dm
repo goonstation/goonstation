@@ -138,31 +138,31 @@ toxic - poisons
 	sname = "phaser bolt"
 	dissipation_delay = 5
 	shot_sound = 'sound/weapons/laserlight.ogg'
-	color_red = 0
-	color_green = 1
+	color_red = 1
+	color_green = 0.2
 	color_blue = 0.2
 
 	tiny
 		name = "micro phaser bolt"
-		icon_state = "bolt"
+		icon_state = "phaser_light"
 		sname = "micro phaser bolt"
 		damage = 10
 		cost = 10
 		shot_sound = 'sound/weapons/energy/phaser_tiny.ogg'
-		color_red = 0
-		color_green = 1
+		color_red = 1
+		color_green = 0.2
 		color_blue = 0.2
 
 	huge // yes laser/light/huge is pretty dumb
 		name = "macro phaser blast"
-		icon_state = "crescent"
+		icon_state = "phaser_heavy"
 		sname = "macro phaser blast"
 		damage = 50
 		cost = 62.5
 		shot_sound = 'sound/weapons/energy/phaser_huge.ogg'
-		color_red = 0
-		color_green = 0.1
-		color_blue = 0.4
+		color_red = 1
+		color_green = 0.2
+		color_blue = 0.2
 
 		on_hit(atom/hit, dir, obj/projectile/P)
 			hit.ex_act(3, src, 1.5)
@@ -330,7 +330,6 @@ toxic - poisons
 // These are for custom antique laser guns repaired with high-quality components.
 // See displaycase.dm for details (Convair880).
 /datum/projectile/laser/old
-	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "proj_thermal"
 	name = "pulse laser"
 	sname = "pulse laser"
@@ -344,7 +343,6 @@ toxic - poisons
 	color_blue = 0
 
 /datum/projectile/laser/old_burst
-	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "proj_sing"
 	name = "burst laser"
 	sname = "burst laser"
@@ -377,32 +375,65 @@ toxic - poisons
 
 
 /datum/projectile/laser/blaster
-	icon_state = "modproj"
+	icon_state = "bolt"
 	name = "blaster bolt"
 	sname = "blaster"
 	shot_sound = 'sound/weapons/laser_a.ogg'
 	dissipation_delay = 6
 	dissipation_rate = 5
-	cost = 25
+	cost = 20
 	damage = 33
-	color_red = 0
-	color_green = 1
-	color_blue = 0.1
+	color_icon = "#3d9cff"
+	color_red = 0.2
+	color_green = 0.5
+	color_blue = 1
+	brightness = 1.2
 	shot_number = 1
 
+	on_launch(var/obj/projectile/P)
+		. = ..()
+		P.AddComponent(/datum/component/radioactive, 33, FALSE, FALSE, 2)
+
+	/*tick(var/obj/projectile/P)
+		var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
+		I.set_loc(get_turf(P))
+		I.set_dir(P.dir)
+		flick("ion_fade", I)
+		I.icon_state = "blank"
+		I.pixel_x = P.pixel_x
+		I.pixel_y = P.pixel_y
+		SPAWN( 20 )
+			if (I && !I.disposed) qdel(I)*/
+
+
 	burst
-		damage = 25
-		cost = 50
-		shot_number = 4
-		icon_state = "modproj2"
+		damage = 15
+		cost = 30
+		shot_number = 3
+		icon_state = "bolt_burst"
 		shot_sound = 'sound/weapons/laser_c.ogg'
+		fullauto_valid = 1
 
 	blast
 		shot_sound = 'sound/weapons/laser_e.ogg'
-		damage = 66
+		damage = 30
 		cost = 100
-		icon_state = "crescent"
+		icon_state = "crescent_white"
 		shot_number = 1
+
+	cannon
+		shot_sound = 'sound/weapons/energy/howitzer_shot.ogg'
+		damage = 100
+		cost = 200
+		icon_state = "crescent"
+
+	carbine
+		shot_sound = 'sound/weapons/laser_b.ogg'
+		icon_state = "bolt_long"
+		dissipation_delay = 12
+		dissipation_rate = 5
+		projectile_speed = 56
+
 
 /datum/projectile/laser/blaster/pod_pilot
 	cost = 20
@@ -430,6 +461,7 @@ toxic - poisons
 			mult = 0.5
 		return ..(P, A) * mult
 
+
 /datum/projectile/laser/blaster/pod_pilot/blue_NT
 	name = "blue blaster bolt"
 	color_icon = "#3d9cff"
@@ -454,6 +486,47 @@ toxic - poisons
 		turret = 1
 		damage = 15
 
+/datum/projectile/laser/blaster/pod_pilot/blue_NT/smg
+	name = "blue blaster bolt"
+	color_icon = "#3d9cff"
+	color_red = 0.05
+	color_green = 0.28
+	color_blue = 0.51
+	cost = 10
+	damage = 12.5
+	fullauto_valid = 1
+	icon_state = "bolt_burst"
+	shot_sound = 'sound/weapons/laser_c.ogg'
+
+/datum/projectile/laser/blaster/pod_pilot/red_SY/smg
+	name = "red blaster bolt"
+	color_icon = "#ff4043"
+	color_red = 0.51
+	color_green = 0.05
+	color_blue = 0.28
+	cost = 10
+	damage = 12.5
+	fullauto_valid = 1
+	icon_state = "bolt_burst"
+	shot_sound = 'sound/weapons/laser_c.ogg'
+
+/datum/projectile/laser/blaster/pod_pilot/blue_NT/shotgun
+	name = "blue blaster bolt"
+	color_icon = "#3d9cff"
+	color_red = 0.05
+	color_green = 0.28
+	color_blue = 0.51
+	cost = 10
+	damage = 15
+
+/datum/projectile/laser/blaster/pod_pilot/red_SY/shotgun
+	name = "red blaster bolt"
+	color_icon = "#ff4043"
+	color_red = 0.51
+	color_green = 0.05
+	color_blue = 0.28
+	cost = 10
+	damage = 15
 
 // cogwerks- mining laser, first attempt
 
@@ -621,3 +694,45 @@ toxic - poisons
 			hit.delStatus("cornicened2")
 		else
 			hit.setStatus("cornicened")
+
+/datum/projectile/laser/ntso_cannon
+	name = "heavy assault laser"
+	icon_state = "u_laser"
+	damage = 80
+	cost = 65
+	dissipation_delay = 10
+	brightness = 0
+	sname = "heavy laser"
+	shot_sound = 'sound/weapons/Laser.ogg'
+	color_red = 0
+	color_green = 0
+	color_blue = 1
+
+	on_hit(atom/hit, dir, obj/projectile/P)
+		fireflash(get_turf(hit), 0)
+		hit.ex_act(2)
+		P.die() //explicitly kill projectile - not a mining laser
+
+/datum/projectile/laser/makeshift
+	cost = 1250
+	shot_sound = 'sound/weapons/laserlight.ogg'
+	icon_state = "laser_tiny"
+	damage = 20
+	/// lower bounds of heat added to the makeshift laser rifle this was fired from
+	var/heat_low = 10
+	/// higher bounds of heat added to the makeshift laser rifle this was fired from
+	var/heat_high = 12
+/datum/projectile/laser/lasergat
+	cost = 5
+	shot_sound = 'sound/weapons/laser_a.ogg'
+	icon_state = "lasergat_laser"
+	shot_volume = 50
+	name = "single"
+	sname = "single"
+	damage = 14
+
+/datum/projectile/laser/lasergat/burst
+	name = "burst laser"
+	sname = "burst laser"
+	cost = 15
+	shot_number = 3

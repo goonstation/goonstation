@@ -11,15 +11,9 @@
 		/obj/item/material_piece/molitz
 	)
 	available = list(
+		/datum/manufacture/pod/preassembeled_parts,
+		/datum/manufacture/putt/preassembeled_parts,
 		/datum/manufacture/pod_wars/lock,
-		/datum/manufacture/putt/engine,
-		/datum/manufacture/putt/boards,
-		/datum/manufacture/putt/control,
-		/datum/manufacture/putt/parts,
-		/datum/manufacture/pod/boards,
-		/datum/manufacture/pod/control,
-		/datum/manufacture/pod/parts,
-		/datum/manufacture/pod/engine,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
@@ -56,7 +50,7 @@
 
 	attack_hand(var/mob/user)
 		if (get_pod_wars_team_num(user) != src.team_num)
-			boutput(user, "<span class='alert'>This machine's design makes no sense to you, you can't figure out how to use it!</span>")
+			boutput(user, SPAN_ALERT("This machine's design makes no sense to you, you can't figure out how to use it!"))
 			return
 
 		..()
@@ -65,15 +59,9 @@
 	name = "\improper NanoTrasen ship component fabricator"
 	team_num = TEAM_NANOTRASEN
 	available = list(
+		/datum/manufacture/pod/preassembeled_parts,
+		/datum/manufacture/putt/preassembeled_parts,
 		/datum/manufacture/pod_wars/lock,
-		/datum/manufacture/putt/engine,
-		/datum/manufacture/putt/boards,
-		/datum/manufacture/putt/control,
-		/datum/manufacture/putt/parts,
-		/datum/manufacture/pod/boards,
-		/datum/manufacture/pod/control,
-		/datum/manufacture/pod/parts,
-		/datum/manufacture/pod/engine,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
@@ -100,15 +88,9 @@
 	name = "\improper Syndicate ship component fabricator"
 	team_num = TEAM_SYNDICATE
 	available = list(
+		/datum/manufacture/pod/preassembeled_parts,
+		/datum/manufacture/putt/preassembeled_parts,
 		/datum/manufacture/pod_wars/lock,
-		/datum/manufacture/putt/engine,
-		/datum/manufacture/putt/boards,
-		/datum/manufacture/putt/control,
-		/datum/manufacture/putt/parts,
-		/datum/manufacture/pod/boards,
-		/datum/manufacture/pod/control,
-		/datum/manufacture/pod/parts,
-		/datum/manufacture/pod/engine,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,

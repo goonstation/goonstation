@@ -137,55 +137,55 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 		tgui_process.update_uis(src)
 		return 1
 
-	attack(mob/M, mob/user, def_zone)
-		if (issilicon(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (issilicon(target))
 			user.show_text("[src] cannot be used on silicon lifeforms!", "red")
 			return
 
-		if (!isliving(M))
+		if (!isliving(target))
 			user.show_text("[src] can only be used on the living!", "red")
 			return
 
 		if (!reagents.total_volume)
 			user.show_text("[src] is empty.", "red")
 			return
-		if(check_target_immunity(M))
-			user.show_text("<span class='alert'>You can't seem to inject [M]!</span>")
+		if(check_target_immunity(target))
+			user.show_text(SPAN_ALERT("You can't seem to inject [target]!"))
 			return
 		var/amt_prop = inj_amount == -1 ? src.reagents.total_volume : inj_amount
-		user.visible_message("<span class='notice'><B>[user] injects [M] with [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()].</B></span>",\
-		"<span class='notice'>You inject [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()]. [src] now contains [max(0,(src.reagents.total_volume-amt_prop))] units.</span>")
-		logTheThing(user == M ? LOG_CHEMISTRY : LOG_COMBAT, user, "uses a hypospray [log_reagents(src)] to inject [constructTarget(M,"combat")] at [log_loc(user)].")
+		user.visible_message(SPAN_NOTICE("<B>[user] injects [target] with [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()].</B>"),\
+		SPAN_NOTICE("You inject [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()]. [src] now contains [max(0,(src.reagents.total_volume-amt_prop))] units."))
+		logTheThing(user == target ? LOG_CHEMISTRY : LOG_COMBAT, user, "uses a hypospray [log_reagents(src)] to inject [constructTarget(target,"combat")] at [log_loc(user)].")
 
-		src.reagents.trans_to(M, amt_prop)
+		src.reagents.trans_to(target, amt_prop)
 
-		if (src.safe && M.health < 90)
+		if (src.safe && target.health < 90)
 			JOB_XP(user, "Medical Doctor", 1)
 
-		playsound(M, src.sound_inject, 80, 0)
+		playsound(target, src.sound_inject, 80, 0)
 
 		UpdateIcon()
 
 	afterattack(obj/target, mob/user, flag)
 		if(is_reagent_dispenser(target) && target.reagents)
 			if (!target.reagents.total_volume)
-				boutput(user, "<span class='alert'>[target] is already empty.</span>")
+				boutput(user, SPAN_ALERT("[target] is already empty."))
 				return
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 			target.reagents.trans_to(src, src.reagents.maximum_volume)
 			return
 
-		if (isobj(target) && target.is_open_container() && target.reagents)
+		if (isobj(target) && target.is_open_container(TRUE) && target.reagents)
 			if (!src.reagents || !src.reagents.total_volume)
-				boutput(user, "<span class='alert'>[src] is already empty.</span>")
+				boutput(user, SPAN_ALERT("[src] is already empty."))
 				return
 
 			if (target.reagents.is_full())
-				boutput(user, "<span class='alert'>[target] is full!</span>")
+				boutput(user, SPAN_ALERT("[target] is full!"))
 				return
 
 			logTheThing(LOG_CHEMISTRY, user, "dumps the contents of [src] [log_reagents(src)] into [target] at [log_loc(user)].")
-			boutput(user, "<span class='notice'>You dump the contents of [src] into [target].</span>")
+			boutput(user, SPAN_NOTICE("You dump the contents of [src] into [target]."))
 			src.reagents.trans_to(target, src.reagents.total_volume)
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)

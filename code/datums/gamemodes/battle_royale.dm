@@ -51,7 +51,7 @@ var/global/area/current_battle_spawn = null
 				player.mind.special_role = ROLE_BATTLER
 				living_battlers.Add(player.mind)
 
-	boutput(world, "<span class='notice'><h2>Preparing the [station_or_ship()]. Please be patient!</h2></span>")
+	boutput(world, SPAN_NOTICE("<h2>Preparing the [station_or_ship()]. Please be patient!</h2>"))
 	generate_void()
 	map_settings.space_turf_replacement = /turf/simulated/floor/void
 
@@ -126,7 +126,7 @@ var/global/area/current_battle_spawn = null
 				qdel(machine)
 			if (/obj/machinery/networked/telepad)
 				qdel(machine)
-			if (/obj/machinery/atmospherics/pipe/tank/sleeping_agent)
+			if (/obj/machinery/atmospherics/unary/tank/sleeping_agent)
 				qdel(machine)
 			if (/obj/machinery/portable_atmospherics/canister/sleeping_agent)
 				qdel(machine)
@@ -203,7 +203,7 @@ var/global/area/current_battle_spawn = null
 		H.AddComponent(/datum/component/battleroyale_death)
 	SPAWN(MAX_TIME_ON_SHUTTLE)
 		if(istype(get_area(player.current),/area/shuttle/battle) || istype(get_area(player.current),/area/shuttle_transit_space/west) )
-			boutput(player.current,"<span class='alert'>You are thrown out of the shuttle for taking too long!</span>")
+			boutput(player.current,SPAN_ALERT("You are thrown out of the shuttle for taking too long!"))
 			var/list/found_areas = get_area_turfs(current_battle_spawn,1)
 			if (isnull(found_areas))
 				player.current.set_loc(pick(get_area_turfs(/area/station/maintenance/,1)))
@@ -257,7 +257,7 @@ var/global/area/current_battle_spawn = null
 		for(var/client/C)
 			if (C.mob)
 				if(istype(get_area(C.mob),/area/shuttle/battle))
-					boutput(C.mob, "<span class='notice'>The battle shuttle is now flying over [current_battle_spawn_name]!</span>")
+					boutput(C.mob, SPAN_NOTICE("The battle shuttle is now flying over [current_battle_spawn_name]!"))
 
 	// Check for players outside Z1
 	damage_tick++
@@ -276,7 +276,7 @@ var/global/area/current_battle_spawn = null
 								safe_area = TRUE
 								break
 						if (!safe_area)
-							boutput(H, "<span class='alert'>You were outside the [station_or_ship()] during a Battle Royale!</span>")
+							boutput(H, SPAN_ALERT("You were outside the [station_or_ship()] during a Battle Royale!"))
 							H.gib()
 
 	// Is it time for a storm?
@@ -370,8 +370,8 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/EOD)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/hoscape)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/heavy)
-	armor_supplies.Add(/obj/item/clothing/suit/armor/centcomm)
-	armor_supplies.Add(/obj/item/clothing/suit/armor/centcommcoat)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/captain/centcomm)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/capcoat/centcomm)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/captain)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/batman)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/football)
@@ -444,7 +444,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	if (!ishuman(battler))
 		return
 
-	battler.equip_if_possible(new /obj/item/device/radio/headset(battler), battler.slot_ears)
+	battler.equip_if_possible(new /obj/item/device/radio/headset(battler), SLOT_EARS)
 
 	// Battle royale crewmembers are rainbow flavored
 	var/obj/item/clothing/under/jumpsuit = null
@@ -477,7 +477,6 @@ proc/equip_battler(mob/living/carbon/human/battler)
 		/obj/item/clothing/under/gimmick/dolan,
 		/obj/item/clothing/under/gimmick/jetson,
 		/obj/item/clothing/under/gimmick/princess,
-		/obj/item/clothing/under/gimmick/chaps,
 		/obj/item/clothing/under/gimmick/vault13,
 		/obj/item/clothing/under/gimmick/murph,
 		/obj/item/clothing/under/gimmick/sealab,
@@ -532,40 +531,24 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	hat.setProperty("meleeprot_head", 3)
 	hat.setProperty("coldprot", 5)
 	hat.setProperty("heatprot", 5)
-	battler.equip_if_possible(jumpsuit, battler.slot_w_uniform)
-	battler.equip_if_possible(hat, battler.slot_head)
-	battler.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(battler), battler.slot_shoes)
+	battler.equip_if_possible(jumpsuit, SLOT_W_UNIFORM)
+	battler.equip_if_possible(hat, SLOT_HEAD)
+	battler.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(battler), SLOT_SHOES)
 	var/obj/item/clothing/head/vest = new /obj/item/clothing/suit/armor/vest/light
 	vest.delProperty("heatprot")
 	vest.delProperty("coldprot")
-	battler.equip_if_possible(vest, battler.slot_wear_suit)
-	battler.equip_if_possible(new /obj/item/storage/backpack/empty(battler), battler.slot_back)
-	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donut/custom/robusted(battler), battler.slot_l_store)
-	battler.equip_if_possible(new /obj/item/reagent_containers/mender/both/mini(battler), battler.slot_r_store)
+	battler.equip_if_possible(vest, SLOT_WEAR_SUIT)
+	battler.equip_if_possible(new /obj/item/storage/backpack/empty(battler), SLOT_BACK)
+	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donut/custom/robusted(battler), SLOT_L_STORE)
+	battler.equip_if_possible(new /obj/item/reagent_containers/mender/both/mini(battler), SLOT_R_STORE)
 
 	var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare // for whatever reason, this is neccessary
 	I.registered = "[battler.name]"
 	I.assignment = "Battler"
 	I.access |= access_maxsec
-	battler.equip_if_possible(I, battler.slot_wear_id)
+	battler.equip_if_possible(I, SLOT_WEAR_ID)
 	//battler.Equip_Bank_Purchase(battler.mind.purchased_bank_item)
 	battler.set_clothing_icon_dirty()
-
-//returns a list of all areas on a station
-// Maybe nuclear could use this in the future???
-proc/get_accessible_station_areas()
-	if(global.station_areas && global.area_list_is_up_to_date) // In case someone makes a new area
-		return global.station_areas
-	// All areas
-	var/list/L = list()
-	for_by_tcl(AR, /area/station)
-		for(var/turf/T in AR)
-			if(!isfloor(T) && is_blocked_turf(T) && istype(T,/area/sim/test_area) && T.z == 1)
-				continue
-			L[AR.name] = AR
-	global.area_list_is_up_to_date = 1
-	global.station_areas = L
-	return L
 
 #undef STORM_REGULAR
 #undef STORM_FINAL

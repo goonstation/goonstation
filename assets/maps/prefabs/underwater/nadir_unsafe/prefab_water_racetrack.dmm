@@ -288,11 +288,6 @@
 /obj/item/shipcomponent/secondary_system/lock,
 /turf/simulated/floor/black,
 /area/prefab/raceway)
-"aP" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/mapping_helper/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/plating/random,
-/area/prefab/raceway)
 "aQ" = (
 /obj/shrub{
 	icon_state = "shrub";
@@ -712,10 +707,10 @@ ac
 ac
 ac
 ac
-aP
-aP
 ac
-aP
+ac
+ac
+ac
 ac
 ac
 ac

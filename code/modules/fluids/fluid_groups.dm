@@ -53,18 +53,18 @@
 				my_group.drain(remove_source, fluids_to_remove, remove_reagent = 0)
 
 	get_reagents_fullness()
-		.= "empty"
+		. = null
 		if (my_group)
-			if(my_group.last_depth_level == 1)
-				.= "very shallow"
+			if (my_group.last_depth_level == 1)
+				. = "very shallow"
 			else if (my_group.last_depth_level == 2)
-				.= "at knee height"
-			if(my_group.last_depth_level == 3)
-				.= "at chest height"
-			if(my_group.last_depth_level == 4)
-				.= "very deep"
+				. = "knee height"
+			else if (my_group.last_depth_level == 3)
+				. = "chest height"
+			else if (my_group.last_depth_level == 4)
+				. = "very deep"
 
-	temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001, loud = 0)
+	temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001, loud = 0, cannot_be_cooled = FALSE)
 		..()
 		src.update_total()
 
@@ -72,6 +72,15 @@
 		for (var/i = 0, i < length(my_group.members) / 20, i++)
 			playsound(pick(my_group.members), mix_sound, 80, 1)
 			if (i > 8) break
+
+	get_state_description()
+		if (istype(src.my_group, /datum/fluid_group/airborne))
+			. = "vapor"
+		else
+			. = "fluid"
+
+	is_airborne()
+		return istype(src.my_group, /datum/fluid_group/airborne)
 
 //We use datum/controller/process/fluid_group to do evaporation
 
@@ -107,7 +116,6 @@
 	var/obj/fluid/last_reacted = 0
 
 	var/datum/color/average_color = 0
-	var/master_reagent_name = 0
 	var/master_reagent_id = 0
 
 	var/can_update = 1 //flag is set to 0 temporarily when doing a split operation
@@ -499,7 +507,6 @@
 		var/targetalpha = max(25, (src.average_color.a / 255) * src.max_alpha)
 		var/targetcolor = rgb(src.average_color.r, src.average_color.g, src.average_color.b)
 
-		src.master_reagent_name = src.reagents?.get_master_reagent_name()
 		src.master_reagent_id = src.reagents?.get_master_reagent_id()
 
 		var/master_opacity = !src.drains_floor && src.reagents?.get_master_reagent_gas_opaque()
@@ -552,8 +559,6 @@
 			//Same shit here with UpdateIcon
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-			fluid_ma.name = src.master_reagent_name //maybe obscure later?
-
 			F.finalalpha = targetalpha
 			F.finalcolor = targetcolor
 
@@ -588,6 +593,7 @@
 			fluid_ma.opacity = master_opacity
 			fluid_ma.overlays = F.overlays // gross, needed because of perspective overlays
 			F.appearance = fluid_ma
+			F.name = initial(F.name) // i don't know what the fuck is going on with the appearances here
 
 		if(src.disposed)
 			return 1
@@ -731,7 +737,7 @@
 		var/adjacent_amt = -1
 		for( var/dir in cardinal )
 			T = get_step( removed_loc, dir )
-			if (T.active_liquid && T.active_liquid.group == src)
+			if (T && T.active_liquid && T.active_liquid.group == src)
 				T.active_liquid.temp_removal_key = removal_key
 				adjacent_amt++
 				split_liq = T.active_liquid

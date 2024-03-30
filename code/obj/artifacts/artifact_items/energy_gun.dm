@@ -57,7 +57,7 @@
 		src.Artifact_emp_act()
 		..()
 
-	shoot(var/target,var/start,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/energygun/A = src.artifact
@@ -77,10 +77,10 @@
 
 		if(prob(20))
 			src.ArtifactDevelopFault(100)
-			user.visible_message("<span class='alert'>[src] emits \a [pick("ominous", "portentous", "sinister")] sound.</span>")
+			user.visible_message(SPAN_ALERT("[src] emits \a [pick("ominous", "portentous", "sinister")] sound."))
 		else if(prob(20))
 			src.ArtifactTakeDamage(20)
-			user.visible_message("<span class='alert'>[src] emits a terrible cracking noise.</span>")
+			user.visible_message(SPAN_ALERT("[src] emits a terrible cracking noise."))
 
 		return
 

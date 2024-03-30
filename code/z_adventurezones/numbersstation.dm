@@ -5,6 +5,7 @@ var/global/shut_up_about_the_fucking_numbers_station = 1
 	set desc = "I DON'T CARE WHEN SPACE NUMBERS STATION LINCOLNSHIRE IS BROADCASTING SO SHUT UP ABOUT IT"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	shut_up_about_the_fucking_numbers_station = !(shut_up_about_the_fucking_numbers_station)
 	logTheThing(LOG_ADMIN, usr, "toggled numbers station alerts [shut_up_about_the_fucking_numbers_station ? "off" : "on"].")
@@ -255,7 +256,12 @@ Nanotrasen, Inc.<br>
 			next_play = play_interval
 		next_warning = next_play - 300
 		SPAWN(20 SECONDS)
-			apiHandler.queryAPI("numbers/get")
+			try
+				var/datum/apiRoute/numbersstation/get/getNumbers = new
+				var/datum/apiModel/NumbersStationPasswordResource/numbersStationPassword = apiHandler.queryAPI(getNumbers)
+				lincolnshire_numbers(numbersStationPassword.numbers)
+			catch
+				// pass
 
 	proc/gather_listeners()
 		listeners = list()
@@ -264,7 +270,7 @@ Nanotrasen, Inc.<br>
 			for (var/obj/item/device/radio/Hs in H)
 				if (Hs.frequency == frequency)
 					listeners += H
-					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs.name].</span>")
+					boutput(H, SPAN_NOTICE("A peculiar noise intrudes upon the radio frequency of your [Hs.name]."))
 				break
 		for (var/mob/living/silicon/robot/R in mobs)
 			LAGCHECK(LAG_LOW)
@@ -272,7 +278,7 @@ Nanotrasen, Inc.<br>
 				var/obj/item/device/radio/Hs = R.radio
 				if (Hs.frequency == frequency)
 					listeners += R
-					boutput(R, "<span class='notice'>A peculiar noise intrudes upon your radio frequency.</span>")
+					boutput(R, SPAN_NOTICE("A peculiar noise intrudes upon your radio frequency."))
 
 	proc/play_all_numbers()
 		var/batch = 0
@@ -312,7 +318,7 @@ Nanotrasen, Inc.<br>
 	proc/broadcast_sound(var/soundfile)
 		for (var/mob/M in listeners)
 			if (M.client)
-				M << sound(soundfile, volume = 100, channel = sound_channel, wait = 1)
+				M.playsound_local_not_inworld(soundfile, vol=50, wait=TRUE)
 
 	proc/get_tens(var/n)
 		if (n >= 20)
@@ -410,21 +416,18 @@ var/global/datum/numbers_station/lincolnshire = new
 	lincolnshire.next_play = 0
 	lincolnshire.process()
 
-/proc/lincolnshire_numbers(data)
-	if (islist(data))
-		logTheThing(LOG_DEBUG, null, "<b>Numbers station</b>: numbers: [data["numbers"]]")
-		var/TP = data["numbers"]
-		if (TP == null)
-			return 1
-		var/list/nums = splittext(TP, " ")
-		if (length(nums) < 21)
-			logTheThing(LOG_DEBUG, null, "<b>Numbers station</b> got too few numbers.")
-			return 2
-		for (var/i = 1, i <= 21, i++)
-			lincolnshire.numbers[i] = text2num(nums[i])
-		logTheThing(LOG_DEBUG, null, "<b>Numbers station</b> woo success")
-		return 0
-	return 3
+/proc/lincolnshire_numbers(numbers)
+	logTheThing(LOG_DEBUG, null, "<b>Numbers station</b>: numbers: [numbers]")
+	if (numbers == null)
+		return FALSE
+	var/list/nums = splittext(numbers, " ")
+	if (length(nums) < 21)
+		logTheThing(LOG_DEBUG, null, "<b>Numbers station</b> got too few numbers.")
+		return FALSE
+	for (var/i = 1, i <= 21, i++)
+		lincolnshire.numbers[i] = text2num(nums[i])
+	logTheThing(LOG_DEBUG, null, "<b>Numbers station</b> woo success")
+	return TRUE
 
 
 // This particular edition of the handbook is used as the cipher for the numbers station.

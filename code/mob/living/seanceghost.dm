@@ -1,6 +1,6 @@
 // TODO make this mob/living/intangible. the fuck is it doing here?
 /mob/living/intangible/seanceghost
-	name = "Seance Ghost"
+	name = "seance ghost"
 	desc = "Ominous hooded figure!"
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "seanceghost"
@@ -61,7 +61,7 @@
 	Move(NewLoc, direct) //just a copy paste from ghost move
 		if(!canmove) return
 
-		if (NewLoc && isrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
+		if (!can_ghost_be_here(src, NewLoc))
 			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (OS)
 				src.set_loc(OS)
@@ -106,6 +106,7 @@
 			return src.emote(copytext(message, 2),1)
 
 		logTheThing(LOG_DIARY, src, "[src.name] - [src.real_name]: [message]", "say")
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
@@ -202,7 +203,7 @@
 	return null
 
 /obj/item/paper/soulsell101
-	name = "Selling Your Soul 101"
+	name = "\improper Selling Your Soul 101"
 	desc = "informational pamphlet about selling your soul"
 	icon_state = "paper"
 

@@ -59,7 +59,7 @@
 							P.mob_shooter = holder.owner
 							sleep(0.1 SECONDS)
 					else
-						var/obj/projectile/P = initialize_projectile_ST(holder.owner, ps_proj, target )
+						var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, ps_proj, target )
 						if (P)
 							P.mob_shooter = holder.owner
 							var/angle = (rand(spread * -1000, spread * 1000))/1000
@@ -75,7 +75,7 @@
 							P.mob_shooter = holder.owner
 							sleep(0.1 SECONDS)
 					else
-						var/obj/projectile/P = initialize_projectile_ST(holder.owner, pick(proj_types), target )
+						var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, pick(proj_types), target )
 						if (P)
 							P.mob_shooter = holder.owner
 							var/angle = (rand(spread * -1000, spread * 1000))/1000
@@ -83,7 +83,7 @@
 							P.launch()
 							sleep(0.1 SECONDS)
 		else
-			boutput(holder.owner, "<span class='alert'>Your spell doesn't work without a staff to refract the light!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your spell doesn't work without a staff to refract the light!"))
 			return 1
 
 /datum/targetable/spell/prismatic_spray/admin

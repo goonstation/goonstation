@@ -30,7 +30,7 @@ TYPEINFO(/datum/component/gear_corrosion)
 	src.initial_spacewear = object.c_flags & SPACEWEAR
 	if(istype(object.loc, /mob/living))
 		var/mob/living/to_notify = object.loc
-		boutput(to_notify,"<span class='alert'>Your [object.name] begins deteriorating in contact with the acid.</span>")
+		boutput(to_notify,SPAN_ALERT("Your [object.name] begins deteriorating in contact with the acid."))
 		show_pip()
 
 /datum/component/gear_corrosion/UnregisterFromParent()

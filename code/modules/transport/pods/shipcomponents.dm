@@ -34,14 +34,15 @@
 	else
 		activate()
 
-//What the component does when activated
+///What the component does when activated
+///Returns 1 if successful
 /obj/item/shipcomponent/proc/activate()
 	if(src.active == 1 || !ship)//NYI find out why ship is null
-		return
+		return FALSE
 	if(ship.powercapacity < (ship.powercurrent + power_used))
 		for(var/mob/M in ship)
 			boutput(M, "[ship.ship_message("Not enough power to activate [src]!")]")
-			return
+			return FALSE
 	else
 		ship.powercurrent += power_used
 
@@ -51,7 +52,7 @@
 		mob_activate(M)
 	if (src.ship.myhud)
 		src.ship.myhud.update_states()
-	return
+	return TRUE
 
 ///Component does this constantly
 /obj/item/shipcomponent/proc/run_component()

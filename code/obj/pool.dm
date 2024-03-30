@@ -16,7 +16,7 @@
 	name = "pool ladder"
 	anchored = ANCHORED
 	density = 0
-	dir = 8
+	dir = WEST
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "ladder"
 
@@ -49,7 +49,7 @@
 
 	attack_hand(mob/user)
 		if(in_use)
-			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
+			boutput(user, SPAN_ALERT("Its already in use - wait a bit."))
 			return
 		else
 			in_use = 1
@@ -73,23 +73,23 @@
 			user.pixel_x = -9
 			sleep(0.3 SECONDS)
 			user.pixel_x = -12
-			playsound(user, 'sound/effects/spring.ogg', 60, 1)
+			playsound(user, 'sound/effects/spring.ogg', 60, TRUE)
 			sleep(0.3 SECONDS)
 			user.pixel_y = 25
 			sleep(0.5 SECONDS)
 			user.pixel_y = 15
-			playsound(user, 'sound/effects/spring.ogg', 60, 1)
+			playsound(user, 'sound/effects/spring.ogg', 60, TRUE)
 			sleep(0.5 SECONDS)
 			user.pixel_y = 25
 			user.start_chair_flip_targeting(extrarange = 2)
 			sleep(0.5 SECONDS)
 			user.pixel_y = 15
-			playsound(user, 'sound/effects/spring.ogg', 60, 1)
+			playsound(user, 'sound/effects/spring.ogg', 60, TRUE)
 			sleep(0.5 SECONDS)
 			user.pixel_y = 25
-			playsound(user, 'sound/effects/brrp.ogg', 15, 1)
+			playsound(user, 'sound/effects/brrp.ogg', 15, TRUE)
 			sleep(0.2 SECONDS)
-			if(range == 1) boutput(user, "<span class='alert'>You slip...</span>")
+			if(range == 1) boutput(user, SPAN_ALERT("You slip..."))
 			user.layer = MOB_LAYER
 			user.buckled = null
 			if (user.targeting_ability == user.chair_flip_ability) //we havent chair flipped, just do normal jump
@@ -97,14 +97,14 @@
 				user:changeStatus("weakened", 2 SECONDS)
 			user.end_chair_flip_targeting()
 			if(suiciding || deadly)
-				src.visible_message("<span class='alert'><b>[user.name] dives headfirst at the [target.name]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[user.name] dives headfirst at the [target.name]!</b>"))
 				SPAWN(0.3 SECONDS) //give them time to land
 					if (user)
 						user.TakeDamage("head", 200, 0)
 						playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			user.pixel_y = 0
 			user.pixel_x = 0
-			playsound(user, 'sound/impact_sounds/Liquid_Hit_Big_1.ogg', 60, 1)
+			playsound(user, 'sound/impact_sounds/Liquid_Hit_Big_1.ogg', 60, TRUE)
 			in_use = 0
 			suiciding = 0
 			user.transforming = 0

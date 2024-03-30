@@ -4,6 +4,8 @@
 	var/tmp/fingerprintslast = null
 	var/tmp/blood_DNA = null
 	var/tmp/blood_type = null
+	// only exists because human overlays are a headache, preserves color from add_blood
+	var/tmp/forensics_blood_color = null
 	//var/list/forensic_info = null
 	var/list/forensic_trace = null // list(fprint, bDNA, btype) - can't get rid of this so easy!
 
@@ -74,86 +76,86 @@
 
 // WHAT THE ACTUAL FUCK IS THIS SHIT
 // WHO THE FUCK WROTE THIS
+// maybe better now
 /atom/proc/add_blood(atom/source, var/amount = 5)
-	if (!(src.flags & FPRINT))
-		return
-	var/mob/living/L = source
-	if (istype(L) && !L.can_bleed)
-		return
 	var/b_uid = "--unidentified substance--"
 	var/b_type = "--unidentified substance--"
-	var/blood_color = DEFAULT_BLOOD_COLOR
-	if(istype(source, /obj/fluid))
+	var/blood_color = "#FFFFFF"
+	// Null is white so using the default color of red causes issues in cases of white blood
+
+	if (QDELETED(src) || QDELETED(source)) // Be safe
+		return
+
+	if (istype(source, /obj/fluid))
 		var/obj/fluid/F = source
-		blood_color = F.group.reagents.get_master_color()
+		blood_color = F.group.average_color.to_rgb()
 		var/datum/reagent/blood/blood_reagent = F.group.reagents.reagent_list["blood"]
-		if(!blood_reagent)
+		if (!blood_reagent)
 			blood_reagent = F.group.reagents.reagent_list["bloodc"]
 		var/datum/bioHolder/bioholder = blood_reagent?.data
-		if(istype(bioholder))
+		if (istype(bioholder))
 			b_uid = bioholder.Uid
 			b_type = bioholder.bloodType
-	else if (istype(L) && L.bioHolder)
-		b_uid = L.bioHolder.Uid
-		b_type = L.bioHolder.bloodType
-		var/datum/reagent/R = reagents_cache[L.blood_id]
-		blood_color = rgb(R.fluid_r, R.fluid_g, R.fluid_b)
-		if(L?.blood_id == "blood" && L.bioHolder.bloodColor)
+	else if (istype(source, /mob/living))
+		var/mob/living/L = source
+		if (!L.can_bleed)
+			return
+		b_uid = L.bioHolder?.Uid
+		b_type = L.bioHolder?.bloodType
+		if (L.bioHolder?.bloodColor)
 			blood_color = L.bioHolder.bloodColor
+		else if (L.blood_id)
+			var/datum/reagent/R = reagents_cache[L.blood_id]
+			blood_color = rgb(R.fluid_r, R.fluid_g, R.fluid_b)
+		else
+			blood_color = L.blood_color
 	else
 		if (source.blood_DNA)
 			b_uid = source.blood_DNA
 		if (source.blood_type)
 			b_type = source.blood_type
-	if(istype(source, /obj/decal/cleanable))
-		if(!isnull(source.color))
-			blood_color = source.color
-	if (!( src.blood_DNA ))
-		if (isitem(src))
-			var/obj/item/I = src
-			#ifdef OLD_BLOOD_OVERLAY
-			var/icon/new_icon
-			if (I.uses_multiple_icon_states)
-				new_icon = new /icon(I.icon)
-			else
-				new_icon = new /icon(I.icon, I.icon_state)
-			new_icon.Blend(new /icon('icons/effects/blood.dmi', "thisisfuckingstupid"), ICON_ADD)
-			new_icon.Blend(blood_color, ICON_MULTIPLY)
-			new_icon.Blend(new /icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY)
-			if (I.uses_multiple_icon_states)
-				new_icon.Blend(new /icon(I.icon), ICON_UNDERLAY)
-			else
-				new_icon.Blend(new /icon(I.icon, I.icon_state), ICON_UNDERLAY)
-			I.icon = new_icon
-			#else
-			I.appearance_flags |= KEEP_TOGETHER
-			var/image/blood_overlay = image('icons/effects/blood.dmi', "itemblood")
-			blood_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR
-			blood_overlay.color = blood_color
-			blood_overlay.alpha = min(blood_overlay.alpha, 200)
-			blood_overlay.blend_mode = BLEND_INSET_OVERLAY
-			src.UpdateOverlays(blood_overlay, "blood_splatter")
-			#endif
-			I.blood_DNA = b_uid
-			I.blood_type = b_type
-			if (istype(I, /obj/item/clothing))
-				var/obj/item/clothing/C = src
-				C.add_stain("blood-stained")
-		else if (istype(src, /turf/simulated))
-			if(istype(L))
-				bleed(L, amount, 5, rand(1,3), src)
-		else if (ishuman(src)) // this will add the blood to their hands or something?
-			src.blood_DNA = b_uid
-			src.blood_type = b_type
-		else
-			return
-	else
+
+	if (istype(source, /obj/decal/cleanable))
+		var/obj/decal/cleanable/C = source
+		if (C.color)
+			blood_color = C.color
+		else if (C.sample_reagent) // Gibs have no color but do have reagents
+			var/datum/reagent/R = reagents_cache[C.sample_reagent]
+			blood_color = rgb(R.fluid_r, R.fluid_g, R.fluid_b)
+
+	if (src.blood_DNA)
 		var/list/blood_list = params2list(src.blood_DNA)
 		blood_list -= b_uid
-		if(length(blood_list) >= 6)
+		if (length(blood_list) >= 6)
 			blood_list = blood_list.Copy(blood_list.len - 5, 0)
 		blood_list += b_uid
 		src.blood_DNA = list2params(blood_list)
+		return
+
+	if (isitem(src))
+		var/obj/item/I = src
+		var/image/blood_overlay = image('icons/obj/decals/blood/blood.dmi', "itemblood")
+		blood_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR
+		blood_overlay.color = blood_color
+		blood_overlay.alpha = min(blood_overlay.alpha, 200)
+		blood_overlay.blend_mode = BLEND_INSET_OVERLAY
+		I.appearance_flags |= KEEP_TOGETHER
+		I.UpdateOverlays(blood_overlay, "blood_splatter")
+		I.blood_DNA = b_uid
+		I.blood_type = b_type
+		I.forensics_blood_color = blood_color
+		if (istype(I, /obj/item/clothing))
+			var/obj/item/clothing/C = src
+			C.add_stain("blood-stained")
+	else if (istype(src, /turf/simulated))
+		if (istype(source, /mob/living))
+			var/mob/living/L = source
+			bleed(L, amount, 5, rand(1,3), src)
+	else if (ishuman(src)) // this will add the blood to their hands or something?
+		var/mob/living/carbon/human/H = src
+		H.blood_DNA = b_uid
+		H.blood_type = b_type
+		H.forensics_blood_color = blood_color
 
 // Was clean_blood. Reworked the proc to take care of other forensic evidence as well (Convair880).
 /atom/proc/clean_forensic()
@@ -167,20 +169,17 @@
 			var/obj/O = src
 			if (O.tracked_blood)
 				O.tracked_blood = null
-		if (isitem(src) && (src.fingerprints || src.blood_DNA || src.blood_type))
+		if (isitem(src) && (src.fingerprints || src.blood_DNA || src.blood_type || src.forensics_blood_color))
 			src.add_forensic_trace("fprints", src.fingerprints)
 			src.fingerprints = null
 			src.add_forensic_trace("btype", src.blood_type)
 			src.blood_type = null
+			src.forensics_blood_color = null
 			if (src.blood_DNA)
 				src.add_forensic_trace("bDNA", src.blood_DNA)
 				var/obj/item/CI = src
 				CI.blood_DNA = null
-				#ifdef OLD_BLOOD_OVERLAY
-				CI.icon = initial(icon)
-				#else
 				CI.UpdateOverlays(null, "blood_splatter")
-				#endif
 		if (istype(src, /obj/item/clothing))
 			var/obj/item/clothing/C = src
 			C.clean_stains()
@@ -207,19 +206,16 @@
 			var/mob/living/carbon/human/M = src
 			var/list/gear_to_clean = list(M.r_hand, M.l_hand, M.head, M.wear_mask, M.w_uniform, M.wear_suit, M.belt, M.gloves, M.glasses, M.shoes, M.wear_id, M.back)
 			for (var/obj/item/check in gear_to_clean)
-				if (check.fingerprints || check.blood_DNA || check.blood_type)
+				if (check.fingerprints || check.blood_DNA || check.blood_type || check.forensics_blood_color)
 					check.add_forensic_trace("fprints", check.fingerprints)
 					check.fingerprints = null
 					check.add_forensic_trace("btype", check.blood_type)
 					check.blood_type = null
+					check.forensics_blood_color = null
 					if (check.blood_DNA)
 						check.add_forensic_trace("bDNA", check.blood_DNA)
 						check.blood_DNA = null
-						#ifdef OLD_BLOOD_OVERLAY
-						check.icon = initial(check.icon)
-						#else
 						check.UpdateOverlays(null, "blood_splatter")
-						#endif
 				if (istype(check, /obj/item/clothing))
 					var/obj/item/clothing/C = check
 					C.clean_stains()
@@ -229,6 +225,7 @@
 				M.blood_DNA = null
 				M.add_forensic_trace("btype", M.blood_type)
 				M.blood_type = null
+				M.forensics_blood_color = null
 
 			M.add_forensic_trace("fprints", M.fingerprints)
 			M.fingerprints = null // Foreign fingerprints on the mob.
@@ -254,8 +251,10 @@
 			L.blood_DNA = null
 			L.add_forensic_trace("btype", L.blood_type)
 			L.blood_type = null
+			L.forensics_blood_color = null
 			L.tracked_blood = null
 			L.set_clothing_icon_dirty()
+	SEND_SIGNAL(src, COMSIG_ATOM_CLEANED)
 
 /atom/movable/proc/track_blood()
 	return
@@ -310,10 +309,10 @@
 	if (!B)
 		if (T.active_liquid)
 			return
-		B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
+		B = make_cleanable(/obj/decal/cleanable/blood/dynamic/tracks, get_turf(src))
 		if(isnull(src.tracked_blood))
 			return
-		B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"],0)
+		B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"], 0)
 
 	var/list/states = src.get_step_image_states()
 

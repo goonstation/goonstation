@@ -10,6 +10,7 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 	var/datum/flock/my_flock = null
 	var/unlocked = FALSE
 	var/friendly_name
+	var/tealprint_purchase_name
 
 	New(var/datum/flock/F)
 		..()
@@ -23,6 +24,7 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 		if(!friendly_name)
 			stack_trace("[src.type] has invalid structType [sT]")
 			return
+		tealprint_purchase_name = "[initial(sT.flock_id)] ([initial(sT.online_compute_cost)])"
 
 	proc/process()
 		if(src.check_unlocked())
@@ -35,44 +37,33 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 
 	///Returns true when unlock condition is met, false when it isn't.
 	proc/check_unlocked()
-		return src.my_flock.hasAchieved(FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES)
+		return TRUE
 
 /datum/unlockable_flock_structure/relay
 	structType = /obj/flock_structure/relay
 
 	check_unlocked()
 		var/relay_built = src.my_flock.relay_in_progress || src.my_flock.relay_finished
-		return ..() || (src.my_flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST && !relay_built && !src.my_flock.flockmind.tutorial)
+		return src.my_flock.hasAchieved(FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES) || \
+			(src.my_flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST && !relay_built && !src.my_flock.flockmind?.tutorial)
 
 /datum/unlockable_flock_structure/collector
 	structType = /obj/flock_structure/collector
 
-	check_unlocked()
-		return TRUE
-
 /datum/unlockable_flock_structure/sentinel
 	structType = /obj/flock_structure/sentinel
-
-	check_unlocked()
-		return TRUE
 
 /datum/unlockable_flock_structure/compute
 	structType = /obj/flock_structure/compute
 
+	check_unlocked()
+		return src.my_flock.hasAchieved(FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES)
+
 /datum/unlockable_flock_structure/gnesisturret
 	structType = /obj/flock_structure/gnesisturret
-
-	check_unlocked()
-		return ..() || src.my_flock.hasAchieved(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
 
 /datum/unlockable_flock_structure/sapper
 	structType = /obj/flock_structure/sapper
 
-	check_unlocked()
-		return ..() || src.my_flock.total_compute() >= 150
-
 /datum/unlockable_flock_structure/interceptor
 	structType = /obj/flock_structure/interceptor
-
-	check_unlocked()
-		return ..() || src.my_flock.hasAchieved(FLOCK_ACHIEVEMENT_BULLETS_HIT)

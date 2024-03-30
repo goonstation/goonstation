@@ -72,7 +72,6 @@ proc/get_all_gangs()
 		"Security Officer",
 		"Security Assistant",
 		"Vice Officer",
-		"Part-time Vice Officer",
 		"Detective",
 		"AI",
 		"Cyborg")

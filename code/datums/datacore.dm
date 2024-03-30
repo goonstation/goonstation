@@ -29,7 +29,7 @@
 		if (length(namecheck) >= 2)
 			namecheck.Insert(2, H.client.preferences.name_middle)
 			G["full_name"] = jointext(namecheck, " ")
-	G["id"] = "[add_zero(num2hex(rand(1, 1.6777215E7), 0), 6)]"
+	G["id"] = "[add_zero(num2hex(rand(1, 0xffffff), 0), 6)]"
 	M["name"] = G["name"]
 	M["id"] = G["id"]
 	S["name"] = G["name"]
@@ -87,12 +87,15 @@
 
 	M["dnasample"] = create_new_dna_sample_file(H)
 
-	var/traitStr = ""
+	var/list/minorDisabilities = list()
+	var/list/minorDisabilityDesc = list()
+	var/list/majorDisabilities = list()
+	var/list/majorDisabilityDesc = list()
+
 	if(H.traitHolder)
 		for(var/id in H.traitHolder.traits)
 			var/datum/trait/T = H.traitHolder.traits[id]
-			if(length(traitStr)) traitStr += " | [T.name]"
-			else traitStr = T.name
+
 			if (istype(T, /datum/trait/random_allergy))
 				var/datum/trait/random_allergy/AT = T
 				if (M["alg"] == "None") //is it in its default state?
@@ -100,8 +103,22 @@
 					M["alg_d"] = "Allergy information imported from CentCom database."
 				else
 					M["alg"] += ", [reagent_id_to_name(AT.allergen)]"
+				continue
 
-	M["traits"] = traitStr
+			switch(T.disability_type)
+				if (TRAIT_DISABILITY_MAJOR)
+					majorDisabilities.Add(T.disability_name)
+					majorDisabilityDesc.Add(T.disability_desc)
+				if (TRAIT_DISABILITY_MINOR)
+					minorDisabilities.Add(T.disability_name)
+					minorDisabilityDesc.Add(T.disability_desc)
+
+	if(length(minorDisabilities))
+		M["mi_dis"] = jointext(minorDisabilities, ", ")
+		M["mi_dis_d"] = jointext(minorDisabilityDesc, ". ")
+	if(length(majorDisabilities))
+		M["ma_dis"] = jointext(majorDisabilities, ", ")
+		M["ma_dis_d"] = jointext(majorDisabilityDesc, ". ")
 
 	if(!length(sec_note))
 		S["notes"] = "No notes."
@@ -187,9 +204,9 @@
 		else
 			S["notes"] += " [randomNote]"
 
-		boutput(H, "<span class='notice'>You are currently on the run because you've committed the following crimes:</span>")
-		boutput(H, "<span class='notice'>- [S["mi_crim"]]</span>")
-		boutput(H, "<span class='notice'>- [S["ma_crim"]]</span>")
+		boutput(H, SPAN_NOTICE("You are currently on the run because you've committed the following crimes:"))
+		boutput(H, SPAN_NOTICE("- [S["mi_crim"]]"))
+		boutput(H, SPAN_NOTICE("- [S["ma_crim"]]"))
 
 		H.mind.store_memory("You've committed the following crimes before arriving on the station:")
 		H.mind.store_memory("- [S["mi_crim"]]")
@@ -397,7 +414,9 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			statlog_ticket(src, usr)
+			var/datum/eventRecord/Ticket/ticketEvent = new()
+			ticketEvent.buildAndSend(src, usr)
+
 
 /datum/fine
 	var/ID = null
@@ -422,32 +441,44 @@
 		SPAWN(1 SECOND)
 			bank_record = data_core.bank.find_record("name", target)
 			if(!bank_record) qdel(src)
-			statlog_fine(src, usr)
+			var/datum/eventRecord/Fine/fineEvent = new()
+			fineEvent.buildAndSend(src, usr)
 
 /datum/fine/proc/approve(var/approved_by,var/their_job)
 	if(approver || paid) return
-	if(!(their_job in list("Captain","Head of Security","Head of Personnel"))) return
+	if (amount > MAX_FINE_NO_APPROVAL && !(JOBS_CAN_TICKET_BIG)) return
+	if (!(their_job in JOBS_CAN_TICKET_SMALL)) return
 
 	approver = approved_by
 	approver_job = their_job
 	approver_byond_key = get_byond_key(approver)
+	logTheThing(LOG_ADMIN, usr, "approved a fine using [approver]([their_job])'s PDA. It is a [amount] credit fine on <b>[target]</b> with the reason: [reason].")
+
+	if (bank_record["pda_net_id"])
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"=bank_record["pda_net_id"], "command"="text_message", "sender_name"="FINE-MAILBOT", "sender"="00000000", "message"="Notification: You have been fined [amount] credits by [issuer] for [reason].")
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 	if(bank_record["current_money"] >= amount)
 		bank_record["current_money"] -= amount
+		wagesystem.station_budget += amount
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
+		wagesystem.station_budget += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 
 /datum/fine/proc/process_payment()
 	if(bank_record["current_money"] >= (amount-paid_amount))
 		bank_record["current_money"] -= (amount-paid_amount)
+		wagesystem.station_budget += (amount-paid_amount)
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
+		wagesystem.station_budget += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 

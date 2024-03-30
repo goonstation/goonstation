@@ -23,9 +23,11 @@ export const getTemperatureColor = (temperature, veryHighTemperature=1000) => {
   const { cold, neutral, hot, veryhot } = TemperatureColors;
 
   if (temperature < highTemperature) {
-    return Color.lookup((temperature - neutralTemperature) / (deviation * 2) + 0.5, [cold, neutral, hot]);
+    return Color.lookup(
+      (temperature - neutralTemperature) / (deviation * 2) + 0.5, [cold, neutral, hot]).toString();
   }
-  return Color.lookup((temperature - highTemperature) / (veryHighTemperature - highTemperature), [hot, veryhot]);
+  return Color.lookup(
+    (temperature - highTemperature) / (veryHighTemperature - highTemperature), [hot, veryhot]).toString();
 };
 
 export const getTemperatureIcon = (temperature) => {

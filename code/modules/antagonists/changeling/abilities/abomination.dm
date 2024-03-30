@@ -15,6 +15,7 @@
 			return 1
 
 		var/mob/living/carbon/human/H = holder.owner
+		var/datum/abilityHolder/changeling/C = H.get_ability_holder(/datum/abilityHolder/changeling)
 		if (isabomination(H))
 			if (tgui_alert(H,"Are we sure?","Exit Horror Form?",list("Yes","No")) != "Yes")
 				return 1
@@ -24,7 +25,7 @@
 			return 1
 		else
 			if (holder.points < 15)
-				boutput(holder.owner, "<span class='alert'>We're not strong enough to maintain the form.</span>")
+				boutput(holder.owner, SPAN_ALERT("We're not strong enough to maintain the form."))
 				return 1
 			if (tgui_alert(H,"Are we sure?","Enter Horror Form?",list("Yes","No")) != "Yes")
 				return 1
@@ -36,6 +37,8 @@
 			H.update_body()
 			H.update_clothing()
 			H.abilityHolder.transferOwnership(H)
+			C.in_fakedeath = 0
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_CANTMOVE, "regen_stasis")
 
 			H.delStatus("paralysis")
 			H.delStatus("stunned")
@@ -52,14 +55,13 @@
 /mob/proc/revert_from_horror_form()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		qdel(H.mutantrace)
 		H.set_mutantrace(null)
 		var/datum/abilityHolder/changeling/C = H.get_ability_holder(/datum/abilityHolder/changeling)
 		if(!C || C.points < 15)
-			boutput(H, "<span class='alert'>You weren't strong enough to change back safely and blacked out!</span>")
+			boutput(H, SPAN_ALERT("You weren't strong enough to change back safely and blacked out!"))
 			H.changeStatus("paralysis", 10 SECONDS)
 		else
-			boutput(H, "<span class='alert'>You revert back to your original form. It leaves you weak.</span>")
+			boutput(H, SPAN_ALERT("You revert back to your original form. It leaves you weak."))
 			H.changeStatus("weakened", 5 SECONDS)
 		if (C)
 			C.points = max(C.points - 15, 0)
@@ -88,7 +90,7 @@
 	cast(atom/target)
 		if (..())
 			return 1
-		holder.owner.visible_message("<span class='alert'><B>[holder.owner] screeches loudly! The very noise fills you with dread!</B></span>")
+		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] screeches loudly! The very noise fills you with dread!</B>"))
 		logTheThing(LOG_COMBAT, holder.owner, "screeches as a changeling in horror form [log_loc(holder.owner)].")
 		playsound(holder.owner.loc, 'sound/voice/creepyshriek.ogg', 80, 1) // cogwerks - using ISN's scary goddamn shriek here
 

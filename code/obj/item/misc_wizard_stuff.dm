@@ -23,10 +23,10 @@
 	var/dat = ""
 	if (!iswizard(user))
 		src.remove_dialog(user)
-		boutput(user, "<span class='alert'><b>The text is illegible!</b></span>")
+		boutput(user, SPAN_ALERT("<b>The text is illegible!</b>"))
 		return
 	if (!src.uses)
-		boutput(user, "<span class='notice'><b>The depleted scroll vanishes in a puff of smoke!</b></span>")
+		boutput(user, SPAN_NOTICE("<b>The depleted scroll vanishes in a puff of smoke!</b>"))
 		src.remove_dialog(user)
 		user.Browse(null,"window=scroll")
 		qdel(src)
@@ -90,13 +90,13 @@
 
 		switch (severity)
 			if (0)
-				affected_mob.visible_message("<span class='alert'>[affected_mob] is knocked off-balance by the curse upon [src]!</span>")
+				affected_mob.visible_message(SPAN_ALERT("[affected_mob] is knocked off-balance by the curse upon [src]!"))
 				affected_mob.do_disorient(30, weakened = 1 SECOND, stunned = 0, disorient = 1 SECOND, remove_stamina_below_zero = 0)
 				affected_mob.stuttering += 2
 				affected_mob.take_brain_damage(2)
 
 			if (1)
-				affected_mob.visible_message("<span class='alert'>[affected_mob]'s consciousness is overwhelmed by the curse upon [src]!</span>")
+				affected_mob.visible_message(SPAN_ALERT("[affected_mob]'s consciousness is overwhelmed by the curse upon [src]!"))
 				affected_mob.show_text("Horrible visions of depravity and terror flood your mind!", "red")
 				if (prob(50))
 					affected_mob.emote("scream")
@@ -107,8 +107,8 @@
 
 			else
 				elecflash(affected_mob)
-				affected_mob.visible_message("<span class='alert'>The curse upon [src] rebukes [affected_mob]!</span>")
-				boutput(affected_mob, "<span class='alert'>Horrible visions of depravity and terror flood your mind!</span>")
+				affected_mob.visible_message(SPAN_ALERT("The curse upon [src] rebukes [affected_mob]!"))
+				boutput(affected_mob, SPAN_ALERT("Horrible visions of depravity and terror flood your mind!"))
 				affected_mob.emote("scream")
 				affected_mob.changeStatus("paralysis", 8 SECONDS)
 				affected_mob.changeStatus("stunned", 10 SECONDS)
@@ -122,7 +122,7 @@
 		if (!src || !istype(src) || !M || !istype(M))
 			return
 
-		src.visible_message("<span class='alert'><b>The [src.name] is suddenly warped away!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>The [src.name] is suddenly warped away!</b>"))
 		elecflash(src)
 
 		if (ismob(src.loc))
@@ -172,7 +172,7 @@
 		if (user.mind)
 			if (iswizard(user) || check_target_immunity(user))
 				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
-					boutput(user, "<span class='alert'>The [src.name] is magically attuned to another wizard! You can use it, but the staff will refuse your attempts to control or summon it.</span>")
+					boutput(user, SPAN_ALERT("The [src.name] is magically attuned to another wizard! You can use it, but the staff will refuse your attempts to control or summon it."))
 				..()
 				return
 			else
@@ -180,18 +180,18 @@
 				return
 		else ..()
 
-	attack(mob/M, mob/user)
-		if (iswizard(user) && !iswizard(M) && !isdead(M) && !check_target_immunity(M))
-			if (M?.traitHolder?.hasTrait("training_chaplain"))
-				M.visible_message("<spab class='alert'>A divine light shields [M] from harm!</span>")
-				playsound(M, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
-				JOB_XP(M, "Chaplain", 2)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (iswizard(user) && !iswizard(target) && !isdead(target) && !check_target_immunity(target))
+			if (target?.traitHolder?.hasTrait("training_chaplain"))
+				target.visible_message("<spab class='alert'>A divine light shields [target] from harm!</span>")
+				playsound(target, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
+				JOB_XP(target, "Chaplain", 2)
 				return
 
-			if (M.get_brain_damage() >= 30 && prob(20))
-				src.do_brainmelt(M, 1)
+			if (target.get_brain_damage() >= 30 && prob(20))
+				src.do_brainmelt(target, 1)
 			else if (prob(35))
-				src.do_brainmelt(M, 0)
+				src.do_brainmelt(target, 0)
 		..()
 		return
 
@@ -238,18 +238,18 @@
 			return
 		var/area/A = get_area(target)
 		if (istype(A, /area/station/chapel))
-			boutput(user, "<span class='alert'>You cannot summon lightning on holy ground!</span>") //phrasing works if either target or mob are in chapel heh
+			boutput(user, SPAN_ALERT("You cannot summon lightning on holy ground!")) //phrasing works if either target or mob are in chapel heh
 			return
 		if (A?.sanctuary || istype(A, /area/wizard_station))
-			boutput(user, "<span class='alert'>You cannot summon lightning in this place!</span>")
+			boutput(user, SPAN_ALERT("You cannot summon lightning in this place!"))
 			return
 		if (thunder_charges <= 0)
-			boutput(user, "<span class='alert'>[name] is out of charges! Magically recall it to restore it's power.</span>")
+			boutput(user, SPAN_ALERT("[name] is out of charges! Magically recall it to restore it's power."))
 			return
 		thunder_charges -= 1
 		var/turf/T = get_turf(target)
 		var/obj/lightning_target/lightning = new/obj/lightning_target(T)
-		playsound(T, 'sound/effects/electric_shock_short.ogg', 70, 1)
+		playsound(T, 'sound/effects/electric_shock_short.ogg', 70, TRUE)
 		lightning.caster = user
 		UpdateIcon()
 		flick("[icon_state]_fire", src)
@@ -259,7 +259,7 @@
 		if (user.mind)
 			if (iswizard(user) || check_target_immunity(user))
 				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
-					boutput(user, "<span class='alert'>The [src.name] is magically attuned to another wizard! You can use it, but may not summon it magically.</span>")
+					boutput(user, SPAN_ALERT("The [src.name] is magically attuned to another wizard! You can use it, but may not summon it magically."))
 				..()
 				return
 			else
@@ -301,7 +301,7 @@
 		flick("[icon_state]_fire", src)
 
 	proc/zap_person(var/mob/target) //purposefully doesn't do any damage, here to offer non-chat feedback when trying to pick up
-		boutput(target, "<span class='alert'>Static electricity arcs from [name] to your hand when you try and touch it!</span>")
+		boutput(target, SPAN_ALERT("Static electricity arcs from [name] to your hand when you try and touch it!"))
 		playsound(target.loc, 'sound/effects/sparks4.ogg', 70, 1)
 		if (target.bioHolder?.HasEffect("resist_electric"))
 			return
@@ -364,6 +364,6 @@
 		var/percentage
 		percentage = (corrupt / count) * 100
 		if (corrupt >= 2100)
-			. += "<br><span class='success'><b>The Corruption</b> is at [percentage]%!</span>"
+			. += "<br>[SPAN_SUCCESS("<b>The Corruption</b> is at [percentage]%!")]"
 		else
-			. += "<br><span class='alert'><b>The Corruption</b> is at [percentage]%!</span>"*/
+			. += "<br>[SPAN_ALERT("<b>The Corruption</b> is at [percentage]%!")]"*/

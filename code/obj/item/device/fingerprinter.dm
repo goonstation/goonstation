@@ -13,6 +13,9 @@
 	/// List of prints currently scanned into the device. Each print maps to the name of the owner.
 	var/list/current_prints
 	var/mode = FINGERPRINT_READ
+	HELP_MESSAGE_OVERRIDE({"Toggle modes by using the fingerprinter in hand.
+							While on <b>"Read"</b> mode, use the tool on someone or something that has prints on it to add all the prints to the tool's print database.
+							While on <b>"Plant"</b> mode, use the tool on anything to add any prints from the database on it."})
 
 	New()
 		. = ..()
@@ -25,11 +28,16 @@
 		. = ..()
 		src.toggle_mode(user)
 
+	mouse_drop(atom/over_object)
+		. = ..()
+		if (can_act(usr) && (src in usr.equipped_list()) && BOUNDS_DIST(usr, over_object) <= 0)
+			over_object.storage?.storage_item_attack_by(src, usr)
+
 	proc/update_text()
 		if (src.mode == FINGERPRINT_READ)
 			src.inventory_counter.update_text("<span style='color:#00ff00;font-size:0.7em;-dm-text-outline: 1px #000000'>READ</span>")
 		else
-			src.inventory_counter.update_text("<span style='color:#ff0000;font-size:0.7em;-dm-text-outline: 1px #000000'>PLANT</span>")
+			src.inventory_counter.update_text("<span stywle='color:#ff0000;font-size:0.7em;-dm-text-outline: 1px #000000'>PLANT</span>")
 
 	proc/pre_attackby(obj/item/source, atom/target, mob/user)
 		if (src.mode == FINGERPRINT_READ)
@@ -47,10 +55,10 @@
 
 	proc/plant_print(mob/user, atom/target)
 		if (!(target.flags & FPRINT))
-			boutput(user, "<span class='alert'>You can't plant a fingerprint onto that.</span>")
+			boutput(user, SPAN_ALERT("You can't plant a fingerprint onto that."))
 			return
 		if (!length(current_prints))
-			boutput(user, "<span class='alert'>You don't have any fingerprints saved! Set [src] to the <span class='success'>READ</span> mode and scan some things!")
+			boutput(user, SPAN_ALERT("You don't have any fingerprints saved! Set [src] to the [SPAN_ALERT("READ")] mode and scan some things!"))
 			return
 
 		// List mapping readable options to literal prints
@@ -71,10 +79,10 @@
 	proc/read_prints(mob/user, atom/target)
 		// Yes, this currently lets you get the name of people through glove IDs. It's a traitor item so I think it's fine. Gnarly if sec finds one though.
 		if (!(target.flags & FPRINT))
-			boutput(user, "<span class='alert'>That doesn't look like something you can read prints off of.</span>")
+			boutput(user, SPAN_ALERT("That doesn't look like something you can read prints off of."))
 			return
 		if (!target.fingerprints && !ishuman(target))
-			boutput(user, "<span class='alert'>There's no fingerprints to read off of that.</span>")
+			boutput(user, SPAN_ALERT("There's no fingerprints to read off of that."))
 			return
 
 		// This is gross and theoretically slow but we index full-prints by time, and the fingerprints list will only have 6 entries at max so
@@ -92,9 +100,9 @@
 					src.current_prints[print] = "???"
 
 		if (found_new_print)
-			boutput(user, "<span class='success'>You read the prints on [target] into [src].</span>")
+			boutput(user, SPAN_SUCCESS("You read the prints on [target] into [src]."))
 		else
-			boutput(user, "<span class='alert'>You've already scanned all the prints on [target].</span>")
+			boutput(user, SPAN_ALERT("You've already scanned all the prints on [target]."))
 
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
@@ -102,7 +110,7 @@
 				src.current_prints[H.gloves.distort_prints(H.bioHolder.fingerprints, TRUE)] = H.real_name // yes this sees through disguises. traitor item!!!! i wring my hands self-absolvingly
 			else
 				src.current_prints[H.bioHolder.fingerprints] = H.real_name
-			boutput(user, "<span class='success'>You read [H.gloves ? "the prints of [H]'s gloves" : "[H]'s prints"] into [src].</span>")
+			boutput(user, SPAN_SUCCESS("You read [H.gloves ? "the prints of [H]'s gloves" : "[H]'s prints"] into [src]."))
 
 #undef FINGERPRINT_PLANT
 #undef FINGERPRINT_READ

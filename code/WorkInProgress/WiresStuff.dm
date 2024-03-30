@@ -5,8 +5,11 @@
 	set hidden = 1
 	ADMIN_ONLY
 
-	//mapWorldNew(src)
-	//boop2
+	for (var/mob/M as anything in mobs)
+		if (M.mind)
+			var/playerId = M.mind.get_player().id
+			if (!playerId)
+				boutput(src, "[M.mind.ckey] has no player ID")
 
 
 /proc/mapWorldNew(client/C)
@@ -39,14 +42,14 @@
 	var/startY = startT.y
 	var/startZ = startT.z
 
-	out(C, "===========================<br>Starting")
+	boutput(C, "===========================<br>Starting")
 
 	// loop through all tiles in area
 	for (var/thisX = startX, thisX < (startX + areaW), thisX++)
 		var/currentX = (thisX - startX) + 1
 		for (var/thisY = startY, thisY < (startY + areaH), thisY++)
 			var/currentY = (thisY - startY) + 1
-			out(C, "Processing tile: [thisX], [thisY]. CurrentX: [currentX]. CurrentY: [currentY]")
+			boutput(C, "Processing tile: [thisX], [thisY]. CurrentX: [currentX]. CurrentY: [currentY]")
 
 			// get the turf on the loc
 			var/turf/T = locate(thisX, thisY, startZ)
@@ -82,7 +85,7 @@
 			// blend the composite turf icon into the canvas
 			var/offsetX = ((currentX * iconWidth) - iconWidth) + 1
 			var/offsetY = ((currentY * iconHeight) - iconHeight) + 1
-			//out(C, "-- Blending into canvas at [offsetX], [offsetY]")
+			//boutput(C, "-- Blending into canvas at [offsetX], [offsetY]")
 			canvas.Blend(turfIcon, ICON_OVERLAY, offsetX, offsetY)
 
 	// create a new icon and insert the generated canvas, so that BYOND doesn't generate different directions
@@ -93,11 +96,11 @@
 	// save constructed image to local disk
 	var/dest = "data/test.png"
 	if (fcopy(finalCanvas, dest))
-		out(C, "Done. Canvas saved to [dest]")
+		boutput(C, "Done. Canvas saved to [dest]")
 	else
-		out(C, "ERROR saving canvas to [dest]")
+		boutput(C, "ERROR saving canvas to [dest]")
 
-	out(C, "===========================")
+	boutput(C, "===========================")
 
 
 //Silly little thing that the bans panel calls on refresh
@@ -129,6 +132,7 @@ var/global/deathConfettiActive = 0
 	set name = "Toggle Death Confetti"
 	set desc = "Toggles the fun confetti effect and sound whenever a mob dies"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	deathConfettiActive = !deathConfettiActive
 
@@ -219,6 +223,7 @@ var/global/deathConfettiActive = 0
 	set desc = "A hard reboot is when the game instance outright ends, and the backend server reinitialises it"
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/hardRebootFileExists = fexists(hardRebootFilePath)
 	var/logMessage = ""

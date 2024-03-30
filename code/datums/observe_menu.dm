@@ -18,9 +18,34 @@
 	. = ..()
 	var/mob/dead/observer/user = ui.user
 	if(istype(user) && params["targetref"])
-		user.insert_observer(locate(params["targetref"]))
-		ui.close()
+		var/atom/target = locate(params["targetref"])
+		if(is_valid_observable(target))
+			user.insert_observer(target)
+			ui.close()
 
+/datum/observe_menu/proc/is_valid_observable(atom/observable, list/atom/all_observables=null)
+	if(isnull(all_observables))
+		all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]
+	if(!(observable in all_observables))
+		return FALSE
+
+	if(isnull(observable.loc))
+		return FALSE
+
+	if(ismob(observable))
+		var/mob/M = observable
+		// admins aren't observable unless they're in player mode
+		if (M.client?.holder && !M.client.player_mode)
+			return FALSE
+		// remove any secret mobs that someone is controlling
+		if (M.unobservable)
+			return FALSE
+
+		var/is_npc = M.client == null && M.ghost == null
+		if(is_npc && !(M.z == Z_LEVEL_STATION || M.z == Z_LEVEL_DEBRIS || M.z == Z_LEVEL_MINING))
+			return FALSE //don't display azone NPCs outside of station, debris, and mining z levels
+
+	return TRUE
 
 /datum/observe_menu/ui_static_data(mob/user)
 	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]
@@ -30,8 +55,12 @@
 	var/list/namecounts = list()
 
 	for(var/atom/observable in all_observables)
+		if(!is_valid_observable(observable, all_observables))
+			continue
 		var/list/obs_data = list()
-		obs_data["name"] = observable.name
+		var/mob/observable_mob = observable
+		ENSURE_TYPE(observable_mob)
+		obs_data["name"] = observable_mob ? observable_mob.real_name : observable.name
 		obs_data["ref"] = "\ref[observable]"
 		obs_data["real_name"] = obs_data["name"]
 		obs_data["dead"] = FALSE
@@ -45,13 +74,6 @@
 
 		if(ismob(observable))
 			var/mob/M = observable
-			// admins aren't observable unless they're in player mode
-			if (M.client?.holder && !M.client.player_mode)
-				continue
-			// remove any secret mobs that someone is controlling
-			if (M.unobservable)
-				continue
-
 			obs_data["real_name"] = M.real_name
 			if(isAIeye(M))
 				obs_data["name"] += "'s eye"
@@ -59,8 +81,6 @@
 			obs_data["dead"] = isdead(M)
 			obs_data["job"] = M.job
 			obs_data["npc"] = (M.client == null && M.ghost == null) //dead players have no client, but should have a ghost
-			if(obs_data["npc"] && !(M.z == Z_LEVEL_STATION || M.z == Z_LEVEL_DEBRIS || M.z == Z_LEVEL_MINING))
-				continue //don't display azone NPCs outside of station, debris, and mining z levels
 			obs_data["player"] = (M.client != null || M.ghost != null) //okay, I know this is just !npc, but it won't ever get set for objects, so it's needed
 			if(DNRSet)
 				for(var/datum/antagonist/antagdatum in M.mind?.antagonists)

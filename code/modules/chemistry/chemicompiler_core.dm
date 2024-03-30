@@ -51,6 +51,7 @@
 	var/heading = "don't touch!!!"
 	var/minStored = 1
 	var/maxStored = 6
+	var/list/utilReservoir = list(11, 12, 13)
 
 /datum/chemicompiler_core/New(datum/holder)
 	..()
@@ -120,7 +121,6 @@
 		if("reportError")
 			var/errorMessage = href_list["message"]
 			CRASH("Error reported from chemicompiler frontend: [errorMessage]")
-		else
 
 /*	attack_self(mob/user as mob)
 		panel()*/
@@ -137,7 +137,7 @@
 	if(!istype(src.holder))
 		qdel(src)
 		return
-	message = "<span class='alert'>[message]</span>"
+	message = SPAN_ALERT("[message]")
 	if(messageCallback)
 		return call(src.holder, messageCallback)(message)
 
@@ -232,7 +232,7 @@
 	windowCall("setUIState", json)
 
 /datum/chemicompiler_core/proc/parseCBF(string, button)
-	var/list/tokens = list(">", "<", "+", "-", ".",",", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@","#")
+	var/list/tokens = list(">", "<", "+", "-", ".",",", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@", "#", "*")
 	var/l = length(string)
 	var/list/inst = new
 	var/token
@@ -369,7 +369,8 @@
 				if("#") //move individual reagent from container
 					loopUsed = tx > 10 ? 45 : 30 //output is more expensive
 					isolateReagent(sx, tx, ax, data[dp+1])
-				else
+				if("*")
+					loopUsed = 30	//explicit NOP
 
 			if(length(data) < dp + 1)
 				data.len = dp + 1
@@ -393,7 +394,7 @@
 	if(source < minReservoir || source > maxReservoir)
 		throwError(CC_ERROR_INVALID_SX) // Invalid source id.
 		return
-	if(target < minReservoir || target > maxReservoir + 3)
+	if((target < minReservoir || target > maxReservoir) && !(target in utilReservoir))
 		throwError(CC_ERROR_INVALID_TX) // Invalid target id.
 		return
 	if(!reservoirCheck(source))
@@ -409,7 +410,7 @@
 	if(source < minReservoir || source > maxReservoir)
 		throwError(CC_ERROR_INVALID_SX) // Invalid source id.
 		return
-	if(target < minReservoir || target > maxReservoir + 3)
+	if((target < minReservoir || target > maxReservoir) && !(target in utilReservoir))
 		throwError(CC_ERROR_INVALID_TX) // Invalid target id.
 		return
 	if(!reservoirCheck(source))
@@ -552,7 +553,7 @@
 	row.addChildElement(butt_abort)
 
 	var/datum/tag/cssinclude/bootstrap = new
-	bootstrap.setHref(resource("css/bootstrap.min.css"))
+	bootstrap.setHref(resource("vendor/css/bootstrap.min.css"))
 	htmlTag.addToHead(bootstrap)
 
 	var/datum/tag/cssinclude/chemicss = new
@@ -560,27 +561,24 @@
 	htmlTag.addToHead(chemicss)
 
 	var/datum/tag/scriptinclude/json2 = new
-	json2.setSrc(resource("js/json2.min.js"))
+	json2.setSrc(resource("vendor/js/json2.min.js"))
 	htmlTag.addToHead(json2)
 
 	var/datum/tag/scriptinclude/jquery = new
-	jquery.setSrc(resource("js/jquery.min.js"))
+	jquery.setSrc(resource("vendor/js/jquery.min.js"))
 	htmlTag.addToHead(jquery)
 
 	var/datum/tag/scriptinclude/jqueryMigrate = new
-	jqueryMigrate.setSrc(resource("js/jquery.migrate.js"))
+	jqueryMigrate.setSrc(resource("vendor/js/jquery.migrate.js"))
 	htmlTag.addToHead(jqueryMigrate)
 
 	var/datum/tag/scriptinclude/bootstrapJs = new
-	bootstrapJs.setSrc(resource("js/bootstrap.min.js"))
+	bootstrapJs.setSrc(resource("vendor/js/bootstrap.min.js"))
 	htmlTag.addToBody(bootstrapJs)
 
 	var/datum/tag/scriptinclude/chemicompilerJs = new
 	chemicompilerJs.setSrc(resource("js/chemicompiler.js"))
 	htmlTag.addToBody(chemicompilerJs)
-
-	//var/datum/tag/firebug/fb = new
-	//htmlTag.addToBody(fb)
 
 	html = htmlTag.toHtml()
 
@@ -693,7 +691,6 @@
 			beepCode(1)
 		if(CC_NOTIFICATION_SAVED)
 			beepCode(2)
-		else
 
 /datum/chemicompiler_executor/proc/on_process()
 	if ( !src.core )
@@ -708,9 +705,13 @@
 		qdel(src)
 		return
 	if(istype(reservoirs[resId], /obj/item/reagent_containers/glass))
+		var/obj/item/reagent_containers/glass/beaker = reservoirs[resId]
+		if (QDELETED(beaker))
+			reservoirs[resId] = null
+			return
 		// Taking a res out
 		if(!usr.equipped())
-			boutput(usr, "<span class='notice'>You remove the [reservoirs[resId]] from the [src.holder].</span>")
+			boutput(usr, SPAN_NOTICE("You remove the [reservoirs[resId]] from the [src.holder]."))
 			usr.put_in_hand_or_drop(reservoirs[resId])
 			reservoirs[resId] = null
 		else
@@ -722,10 +723,10 @@
 		var/obj/item/I = usr.equipped()
 		if(istype(I, /obj/item/reagent_containers/glass))
 			if(I.cant_drop)
-				boutput(usr, "<span class='alert'>You cannot place the [I] into the [src.holder]!</span>")
+				boutput(usr, SPAN_ALERT("You cannot place the [I] into the [src.holder]!"))
 				return
 			//putting a reagent container in
-			boutput(usr, "<span class='notice'>You place the [I] into the [src.holder].</span>")
+			boutput(usr, SPAN_NOTICE("You place the [I] into the [src.holder]."))
 			usr.drop_item()
 			I.set_loc(holder)
 			reservoirs[resId] = I
@@ -759,7 +760,7 @@
 	if(!istype(holder))
 		qdel(src)
 		return
-	message = "<span class='alert'>[message]</span>"
+	message = SPAN_ALERT("[message]")
 	if(istype(holder:loc, /mob))
 		boutput(holder:loc, message)
 	else

@@ -98,13 +98,13 @@
 	name = "box of trash bags"
 	desc = "Conveniently, once this box runs out of trash bags, you can throw it away in one of your new trash bags!!"
 	icon_state = "trashybs" // a dumb name for a bad sprite, rip
-	spawn_contents = list(/obj/item/clothing/under/trash_bag = 7)
+	spawn_contents = list(/obj/item/trash_bag = 7)
 
 /obj/item/storage/box/biohazard_bags
 	name = "box of hazardous waste bags"
 	desc = "Conveniently, once this box runs out of hazardous waste bags, you can throw it away in one of your new hazardous waste bags!! (Please be sure to bleed on it first, though, otherwise it's a bit of a waste of a bag.)"
 	icon_state = "biohazard"
-	spawn_contents = list(/obj/item/clothing/under/trash_bag/biohazard = 7)
+	spawn_contents = list(/obj/item/trash_bag/biohazard = 7)
 
 /obj/item/storage/box/holywaterkit
 	name = "do-it-yourself holy water kit"

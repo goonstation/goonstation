@@ -31,7 +31,7 @@
 			return
 		var/message_mode = ""
 		var/prefix = copytext(message, 1, 2)
-
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 		switch(prefix)
 			if("*")
 				return src.emote(copytext(message, 2), 1)
@@ -70,7 +70,7 @@
 		if(quiet)
 			message = "<I>[message]</I>"
 
-		var/rendered = "<span class='game say'>[src.get_heard_name()] <span class='message'>[say_quote(message)]</span></span>"
+		var/rendered = SPAN_SAY("[src.get_heard_name()] [SPAN_MESSAGE("[say_quote(message)]")]")
 
 		for(var/mob/M in listening)
 			M.heard_say(src)
@@ -99,7 +99,7 @@
 								M.show_message(thisR, 2)
 						else
 							if (M in range(M.client.view, src)) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
-								M.show_message("<span class='bold'>[thisR]</span>", 2) //awwwww yeeeeeah lookat dat bold
+								M.show_message(SPAN_BOLD("[thisR]"), 2) //awwwww yeeeeeah lookat dat bold
 							else
 								M.show_message(thisR, 2)
 					else

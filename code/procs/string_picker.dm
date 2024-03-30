@@ -87,7 +87,7 @@ var/global/list/smart_string_pickers = list()
 			if(additional_defs && (thing in additional_defs))
 				thing = additional_defs[thing]
 				if(istext(thing))
-					//
+					; // nothing to do
 				else if(isnum(thing))
 					thing = "[thing]"
 				else if(isatom(thing))

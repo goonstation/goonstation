@@ -92,7 +92,7 @@
 		switch(rand(1,16))
 			if (1)
 				src.name += "Crunchy Kidney Stone Lemonade flavor"
-				src.initial_reagents["urine"] = 10
+				src.initial_reagents["ammonia"] = 10
 			if (2)
 				src.name += "Radical Roadkill Rampage flavor"
 				src.initial_reagents["bloodc"] = 10 // heh
@@ -138,7 +138,7 @@
 			if (15)
 				src.name += "Hearty Hellburn Brew flavor" //by Eagletanker
 				src.initial_reagents += (list("oxygen"=18, "plasma"=8, "ghostchilijuice"=1, "carbon"=3))
-				src.desc = "9/10 Engineers prefered Grones Hearty Hellburn, find out why yourself!"
+				src.desc = "9/10 Engineers preferred Grones Hearty Hellburn, find out why yourself!"
 				src.label = "engine"
 			if (16)
 				src.name += "Citrus Circus Catastrophe flavor" //by Coolvape
@@ -209,7 +209,7 @@
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/yerba))
 			src.icon_state = "mate"
 			yerba_left = 100
-			boutput(user, "<span class='notice'>You add [W] to [src]!</span>")
+			boutput(user, SPAN_NOTICE("You add [W] to [src]!"))
 			qdel (W)
 		else ..()
 
@@ -217,7 +217,7 @@
 	name = "tea"
 	desc = "A fine cup of tea.  Possibly Earl Grey.  Temperature undetermined."
 	icon_state = "tea0"
-	item_state = "coffee"
+	item_state = "tea"
 	initial_volume = 50
 	initial_reagents = "tea"
 
@@ -323,9 +323,9 @@
 		..()
 		setup_soda()
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (is_sealed)
-			boutput(user, "<span class='alert'>You can't drink out of a sealed can!</span>") //idiot
+			boutput(user, SPAN_ALERT("You can't drink out of a sealed can!")) //idiot
 			return
 		..()
 
@@ -333,6 +333,7 @@
 		var/drop_this_shit = 0 //i promise this is useful
 		if (src.is_sealed)
 			is_sealed = 0
+			src.set_open_container(TRUE)
 			can_chug = 1
 			splash_all_contents = TRUE
 			incompatible_with_chem_dispensers = FALSE
@@ -342,7 +343,7 @@
 				src.reagents.reaction(user)
 				src.reagents.clear_reagents()
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-				user.visible_message("<span class='notice'>[user] pops the tab on \the [src] and is sprayed with the contents!</span>", "<span class='notice'>You pop \the [src] open and are immediatly sprayed with it's contents. [pick("FUCK", "DAMMIT", "SHIT")]!</span>")
+				user.visible_message(SPAN_NOTICE("[user] pops the tab on \the [src] and is sprayed with the contents!"), SPAN_NOTICE("You pop \the [src] open and are immediatly sprayed with it's contents. [pick("FUCK", "DAMMIT", "SHIT")]!"))
 			else
 				user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			return
@@ -487,11 +488,11 @@
 	icon_state = "milk"
 	heal_amt = 1
 	initial_volume = 50
-	initial_reagents = list("milk"=25,"toxin"=25)
+	initial_reagents = list("yoghurt"=25,"yuck"=25)
 
 /obj/item/reagent_containers/food/drinks/milk/clownspider
 	name = "Honkey Gibbersons - Clownspider Milk"
-	desc = "A bottle of really - really colorful milk? The smell is sweet and looking at this envokes the same thrill as wanting to drink paint!"
+	desc = "A bottle of really - really colorful milk? The smell is sweet and looking at this evokes the same thrill as wanting to drink paint!"
 	icon_state = "milk"
 	heal_amt = 1
 	initial_volume = 50
@@ -527,7 +528,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 		reagents.add_reagent("VHFCS", 5)
 		reagents.add_reagent(pick("methamphetamine", "crank", "space_drugs", "catdrugs", "coffee"), 5)
 		for(var/i=0; i<3; i++)
-			reagents.add_reagent(pick("beff","ketchup","eggnog","yuck","chocolate","vanilla","cleaner","capsaicin","toxic_slurry","luminol","urine","nicotine","weedkiller","venom","jenkem","ectoplasm"), 5)
+			reagents.add_reagent(pick("beff","ketchup","eggnog","yuck","chocolate","vanilla","cleaner","capsaicin","toxic_slurry","luminol","nicotine","weedkiller","venom","ectoplasm"), 5)
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/contest
 	name = "Grones Soda Call 1-800-IMCODER flavour"
@@ -555,4 +556,4 @@ obj/item/reagent_containers/food/drinks/covfefe
 		"vanilla"=1, "harlow"=1, "espressomartini"=1, "ectocooler"=1, "bread"=1, "sarsaparilla"=1, "eggnog"=1,
 		"chocolate"=1, "guacamole"=1, "salt"=1, "gravy"=1, "mashedpotatoes"=1, "msg"=1, "mugwort"=1, "juice_cran"=1,
 		"juice_blueberry"=1, "juice_grapefruit"=1, "juice_pickle"=1, "worcestershire_sauce"=1, "fakecheese"=1,
-		"capsaicin"=1, "urine"=1, "paper"=1, "chalk"=1)) //pain; a little of everything
+		"capsaicin"=1, "paper"=1, "chalk"=1)) //pain; a little of everything

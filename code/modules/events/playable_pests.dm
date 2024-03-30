@@ -12,7 +12,6 @@
 	list(/mob/living/critter/small_animal/fly/weak, /mob/living/critter/small_animal/mosquito/weak,),\
 	list(/mob/living/critter/small_animal/cat/weak,),\
 	list(/mob/living/critter/small_animal/dog/pug/weak,/mob/living/critter/small_animal/dog/corgi/weak,/mob/living/critter/small_animal/dog/shiba/weak),\
-	list(/mob/living/critter/changeling/eyespider,/mob/living/critter/changeling/buttcrab),\
 	list(/mob/living/critter/small_animal/frog/weak),\
 	list(/mob/living/critter/small_animal/cockroach/robo/weak),\
 	list(/mob/living/critter/robotic/bot/cleanbot, /mob/living/critter/robotic/bot/firebot),)
@@ -79,7 +78,7 @@
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 0)
+		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 0, for_antag = FALSE)
 
 
 		if (candidates.len)

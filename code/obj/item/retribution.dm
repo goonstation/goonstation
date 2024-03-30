@@ -19,7 +19,6 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 	desc = "An unfinished melee weapon, the blueprints for which have been plundered from a raid on a now-destroyed Syndicate base. Requires a unique power source to function."
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
 	icon_state = "SDS_empty"
-	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/misc/retribution/SWORD_loot.dmi'
 	item_state = "SDS_empty_inhands"
 	hit_type = DAMAGE_BLUNT
@@ -73,7 +72,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 			stamina_cost = inactive_stamina_cost
 			w_class = W_CLASS_SMALL
 
-			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Destruction System!</span>", 1)
+			user.show_message(SPAN_NOTICE("You remove the SWORD core from the Syndicate Destruction System!"), 1)
 			desc = "After a delay, scans nearby tiles, damaging walls and enemies. The core is missing."
 			tooltip_rebuild = 1
 			return
@@ -92,7 +91,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 			stamina_cost = active_stamina_cost
 			w_class = W_CLASS_HUGE
 
-			user.show_message("<span class='notice'>You insert the SWORD core into the Syndicate Destruction System!</span>", 1)
+			user.show_message(SPAN_NOTICE("You insert the SWORD core into the Syndicate Destruction System!"), 1)
 			desc = "After a delay, scans nearby tiles, damaging walls and enemies. The core is installed."
 			tooltip_rebuild = 1
 			return
@@ -101,12 +100,12 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 		src.add_fingerprint(user)
 
 		if(!core_inserted)
-			boutput(user, "<span class='alert'><B>The system requires a unique power source to function!</B></span>")
+			boutput(user, SPAN_ALERT("<B>The system requires a unique power source to function!</B>"))
 			return
 		else if(cooldown > world.time)
-			boutput(user, "<span class='alert'><B>The system is still recharging!</B></span>")
+			boutput(user, SPAN_ALERT("<B>The system is still recharging!</B>"))
 			return
-		boutput(user, "<span class='alert'><B>Scan initiated.</B></span>")
+		boutput(user, SPAN_ALERT("<B>Scan initiated.</B>"))
 		icon = 'icons/misc/retribution/48x32.dmi'
 		src.icon_state = "SDS_activated"
 		cooldown = 5 SECONDS + world.time
@@ -167,7 +166,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 			T = T.ReplaceWith(/turf/simulated/floor/plating/random)
 		if(create_scan_decal)
 			leavescan(T, 1)
-			playsound(T, 'sound/effects/smoke_tile_spread.ogg', 50, 1)
+			playsound(T, 'sound/effects/smoke_tile_spread.ogg', 50, TRUE)
 		return
 
 /obj/decal/syndicate_destruction_scan_center

@@ -13,6 +13,8 @@ ABSTRACT_TYPE(/mob/living/critter/human)
 	desc = "You shouldn't see me!"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "m-none"
+	custom_gib_handler = /proc/gibs
+	burning_suffix = "humanoid"
 	health_brute = 50
 	health_brute_vuln = 1
 	health_burn = 50
@@ -26,6 +28,8 @@ ABSTRACT_TYPE(/mob/living/critter/human)
 	var/corpse_spawner = null //Ex. var/corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/random
 	/// Path of a human to copy appearance from should be a type of /mob/living/carbon/human.
 	var/human_to_copy = null //Ex. var/human_to_copy = /mob/living/carbon/human/normal/assistant
+	// A stored appearance which is set when stealing and applied to the corpse so the mobs look the same.
+	var/datum/bioHolder/stored_appearance = null
 
 	New()
 		..()
@@ -43,6 +47,8 @@ ABSTRACT_TYPE(/mob/living/critter/human)
 		..()
 		if (src.corpse_spawner)
 			var/obj/mapping_helper/mob_spawn/corpse/human/body = new src.corpse_spawner(get_turf(src))
+			body.appearance_override = src.stored_appearance
+			src.stored_appearance = null
 			body.decomp_stage = DECOMP_STAGE_NO_ROT
 			body.max_organs_removed = 0
 			src.ghostize()
@@ -51,10 +57,10 @@ ABSTRACT_TYPE(/mob/living/critter/human)
 			src.gib()
 
 	disposing()
-		..()
 		src.appearance = null
 		src.overlay_refs.len = 0
 		src.overlay_refs = null
+		..()
 
 	proc/steal_appearance(var/mob/living/carbon/human/H)
 		if (isnull(H))
@@ -64,8 +70,10 @@ ABSTRACT_TYPE(/mob/living/critter/human)
 			qdel(target.l_hand)
 		if (target.r_hand)
 			qdel(target.r_hand)
-		src.appearance = target
+		src.appearance = target.appearance
 		src.overlay_refs = target.overlay_refs?.Copy()
+		src.stored_appearance = new
+		src.stored_appearance.CopyOther(target.bioHolder, copyAppearance = 1, copyPool = 0, copyEffectBlocks = 0, copyActiveEffects = 0)
 		qdel(target)
 
 	proc/post_setup()
@@ -75,8 +83,8 @@ ABSTRACT_TYPE(/mob/living/critter/human)
 
 ABSTRACT_TYPE(/mob/living/critter/human/syndicate)
 /mob/living/critter/human/syndicate
-	name = "Syndicate Operative"
-	real_name = "Syndicate Operative"
+	name = "\improper Syndicate Operative"
+	real_name = "\improper Syndicate Operative"
 	desc = "A Syndicate Operative, oh dear."
 	health_brute = 25
 	health_burn = 25

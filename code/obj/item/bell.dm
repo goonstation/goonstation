@@ -16,8 +16,8 @@
 		return ..()
 	if (ON_COOLDOWN(src, "service_bell", 1.5 SECONDS))
 		return
-	src.visible_message("<span class='notice'><b>[user]</b> rings \the [src]!</span>")
-	playsound(src, 'sound/effects/bell_ring.ogg', 30, 0)
+	src.visible_message(SPAN_NOTICE("<b>[user]</b> rings \the [src]!"))
+	playsound(src, 'sound/effects/bell_ring.ogg', 30, FALSE)
 	if(sends_signal_to_hop_watch)
 		for_by_tcl(watch, /obj/item/pocketwatch)
 			watch.the_bell_has_been_rung()

@@ -29,14 +29,14 @@ Right Mouse Button                     = Select area to copy with two clicks<br>
 			A = null
 			copying = 0
 			clipboard.len = 0
-			boutput(usr, "<span class='alert'>Reset.</span>")
+			boutput(usr, SPAN_ALERT("Reset."))
 			update_button_text("Clipboard empty.")
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!clipboard.len)
 			return
 		if (copying)
-			boutput(usr, "<span class='alert'>Copying, please wait.</span>")
+			boutput(usr, SPAN_ALERT("Copying, please wait."))
 			return
 		var/turf/T = get_turf(object)
 		var/tx = T.x
@@ -57,17 +57,19 @@ Right Mouse Button                     = Select area to copy with two clicks<br>
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		if (copying)
-			boutput(usr, "<span class='alert'>Copying, please wait.</span>")
+			boutput(usr, SPAN_ALERT("Copying, please wait."))
 			return
 		if (!A)
 			A = get_turf(object)
-			boutput(usr, "<span class='notice'>Corner 1 set.</span>")
+			boutput(usr, SPAN_NOTICE("Corner 1 set."))
 			update_button_text("Corner 1 set.")
 		else
 			var/turf/B = get_turf(object)
 			if (A.z != B.z)
-				boutput(usr, "<span class='alert'>Corners must be on the same Z-level!</span>")
+				boutput(usr, SPAN_ALERT("Corners must be on the same Z-level!"))
 				return
+			var/total_area = abs(A.x - B.x) * abs(A.y - B.y)
+			logTheThing(LOG_ADMIN, usr, "used buildmode wide area clipboard between [log_loc(A)] and [log_loc(B)]. Total area [total_area] turfs.")
 			update_button_text("Copying...")
 			copying = 1
 			clipboard.len = 0
@@ -92,7 +94,7 @@ Right Mouse Button                     = Select area to copy with two clicks<br>
 					if (workgroup > 8)
 						workgroup = 0
 						sleep(0.1 SECONDS)
-				boutput(usr, "<span class='notice'>Copying complete!</span>")
+				boutput(usr, SPAN_NOTICE("Copying complete!"))
 				update_button_text("Ready to paste.")
 				copying = 0
 				A = null

@@ -7,6 +7,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Stop Atom Verbs"
 	set desc = "For when someone's used an atom verb and you've found yourself yelling \"Oh god the server is dying STOP SPINNING THINGS AAAAA STOP PLEASE I BEG YOU\""
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (!atom_emergency_stop)
 		atom_emergency_stop = 1
@@ -17,7 +18,7 @@ var/global/atom_emergency_stop = 0
 			atom_emergency_stop = 0
 			message_admins("The emergency stop for atom verbs has turned off again.")
 	else
-		boutput(usr, "<span class='alert'>The emergency stop for atom verbs is already on!</span>")
+		boutput(usr, SPAN_ALERT("The emergency stop for atom verbs is already on!"))
 		return
 
 /* ----------------- Transmute ------------------ */
@@ -28,6 +29,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Transmute Type"
 	set desc = "Transmute all things under the path you specify."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to transmute everything of a type?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -46,7 +48,7 @@ var/global/atom_emergency_stop = 0
 			return
 
 		if (!material_cache.len)
-			boutput(usr, "<span class='alert'>Error detected in material cache, attempting rebuild. Please try again.</span>")
+			boutput(usr, SPAN_ALERT("Error detected in material cache, attempting rebuild. Please try again."))
 			buildMaterialCache()
 			return
 		var/mat = input(usr,"Select Material:","Material",null) in material_cache
@@ -90,6 +92,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Emag All"
 	set desc = "Emags every atom. Every single one."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to emag every fucking atom?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -134,6 +137,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Emag Type"
 	set desc = "Emag all things under the path you specify."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to emag everything of a type?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -198,7 +202,7 @@ var/global/atom_emergency_stop = 0
 		logTheThing(LOG_DIARY, usr, "emagged [target] via Emag Target ([log_loc(target)] in [target.loc])", "admin")
 		message_admins("[key_name(usr)] emagged [target] via Emag Target ([log_loc(target)] in [target.loc])")
 	else
-		boutput(usr, "<span class='alert'>Could not emag [target]!</span>")
+		boutput(usr, SPAN_ALERT("Could not emag [target]!"))
 	return
 
 /* -------------------- Scale -------------------- */
@@ -209,6 +213,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Scale All"
 	set desc = "Scales every atom. Every single one."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to scale every fucking atom?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -259,6 +264,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Scale Type"
 	set desc = "Scales all things under the path you specify."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to scale everything of a type?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -344,6 +350,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Rotate All Atoms"
 	set desc = "Rotates every atom. Every single one."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to rotate every fucking atom?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -391,6 +398,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Rotate Type"
 	set desc = "Rotates all things under the path you specify."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to rotate everything of a type?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -470,6 +478,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Spin All"
 	set desc = "Spins every atom. Every single one."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to spin every fucking atom?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -528,6 +537,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Spin Type"
 	set desc = "Spins all things under the path you specify."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to spin everything of a type?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -629,6 +639,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Get All"
 	set desc = "Gets every object and mob. Every single one. Oh god no."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to get fucking object and mob and bring it to your tile?", "YOU WILL REGRET THIS", "Yes", "No") == "Yes")
 
@@ -678,6 +689,7 @@ var/global/atom_emergency_stop = 0
 	set name = "Get Type"
 	set desc = "Get all things under the path you specify. Don't give this /turf or /area stuff, it's not going to work."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (alert(src, "Are you sure you want to teleport everything of a type to your tile?", "Confirmation", "Yes", "No") == "Yes")
 
@@ -727,3 +739,247 @@ var/global/atom_emergency_stop = 0
 		return
 
 // cmd_get_target() isn't needed since we already have get_mobject()
+
+
+
+
+/client/proc/cmd_addComponentType()
+	set name = "Add Component Type"
+	set desc = "Adds a component to all atoms of a type."
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	var/pathpart = input("Part of component path.", "Part of component path.", "") as null|text
+	if(!pathpart)
+		pathpart = "/"
+	var/comptype = get_one_match(pathpart, /datum/component)
+	if(!comptype)
+		return
+
+	var/typeinfo/datum/component/TI = get_type_typeinfo(comptype)
+
+	var/list/listargs = src.get_proccall_arglist(TI.initialization_args)
+
+	var/typ_part = input("Enter path of the things you want to add [comptype] to", "Enter Path", "") as null|text
+	if (!typ_part)
+		return
+	var/typ = get_one_match(typ_part, /atom/movable, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
+	if (!typ)
+		return
+
+	if (alert(src, "Are you sure you want to add [comptype] to all atoms of type [typ]?", "Confirmation", "Yes", "No") == "No")
+		return
+
+	var/amount = input(usr, "amount of things to do between each pause", "Amount to Get", 500) as null|num
+	if (!amount)
+		return
+
+	logTheThing(LOG_ADMIN, usr, "started adding [comptype] to all atoms of type [typ].")
+	logTheThing(LOG_DIARY, usr, "started adding [comptype] to all atoms of type [typ].", "admin")
+	message_admins("[key_name(usr)] started adding [comptype] to all atoms of type [typ].")
+
+	var/done = 0
+	var/done_total = 0
+
+	for (var/atom/movable/A as anything in find_all_by_type(typ))
+		LAGCHECK(LAG_LOW)
+		if (atom_emergency_stop)
+			logTheThing(LOG_ADMIN, usr, "add-component command terminated due to an emergency stop.")
+			logTheThing(LOG_DIARY, usr, "add-component command terminated due to an emergency stop.", "admin")
+			message_admins("[key_name(usr)]'s add-component command terminated due to an emergency stop!")
+			break
+		else
+			A._AddComponent(list(comptype) + listargs)
+			done ++
+			done_total ++
+			if (done >= amount)
+				done = 0
+				sleep(0.1 SECONDS)
+
+	logTheThing(LOG_ADMIN, usr, "finished adding [comptype] to all [done_total] atoms of type [typ].")
+	logTheThing(LOG_DIARY, usr, "finished adding [comptype] to all [done_total] atoms of type [typ].", "admin")
+	message_admins("[key_name(usr)] finished adding [comptype] to all [done_total] atoms of type [typ].")
+
+
+
+/client/proc/cmd_removeComponentType()
+	set name = "Remove Component Type"
+	set desc = "Removes a component from all atoms of a type."
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	var/pathpart = input("Part of component path.", "Part of component path.", "") as null|text
+	if(!pathpart)
+		pathpart = "/"
+	var/comptype = get_one_match(pathpart, /datum/component)
+	if(!comptype)
+		return
+
+	var/typ_part = input("Enter path of the things you want to remove [comptype] from", "Enter Path", "") as null|text
+	if (!typ_part)
+		return
+	var/typ = get_one_match(typ_part, /atom/movable, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
+	if (!typ)
+		return
+
+	if (alert(src, "Are you sure you want to remove [comptype] from all atoms of type [typ]?", "Confirmation", "Yes", "No") == "No")
+		return
+
+	var/amount = input(usr, "amount of things to do between each pause", "Amount to Get", 500) as null|num
+	if (!amount)
+		return
+
+	logTheThing(LOG_ADMIN, usr, "started removing [comptype] from all atoms of type [typ].")
+	logTheThing(LOG_DIARY, usr, "started removing [comptype] from all atoms of type [typ].", "admin")
+	message_admins("[key_name(usr)] started removing [comptype] from all atoms of type [typ].")
+
+	var/done = 0
+	var/done_total = 0
+
+	for (var/atom/movable/A as anything in find_all_by_type(typ))
+		LAGCHECK(LAG_LOW)
+		if (atom_emergency_stop)
+			logTheThing(LOG_ADMIN, usr, "remove-component command terminated due to an emergency stop.")
+			logTheThing(LOG_DIARY, usr, "remove-component command terminated due to an emergency stop.", "admin")
+			message_admins("[key_name(usr)]'s remove-component command terminated due to an emergency stop!")
+			break
+		else
+			var/datum/component/comp = A.GetComponent(comptype)
+			comp?.RemoveComponent()
+			done ++
+			done_total ++
+			if (done >= amount)
+				done = 0
+				sleep(0.1 SECONDS)
+
+	logTheThing(LOG_ADMIN, usr, "finished removing [comptype] from all [done_total] atoms of type [typ].")
+	logTheThing(LOG_DIARY, usr, "finished removing [comptype] from all [done_total] atoms of type [typ].", "admin")
+	message_admins("[key_name(usr)] finished removing [comptype] from all [done_total] atoms of type [typ].")
+
+
+/client/proc/cmd_replace_type(typ_part = null as text|null, repl_typ_part = null as text|null)
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
+	set popup_menu = 0
+	set name = "Replace Type"
+	set desc = "Replace all things of one type with another."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if(isnull(typ_part))
+		typ_part = input("Enter path of the things you want to replace", "Enter path", "") as null|text
+		if (!typ_part)
+			return
+	var/typ = get_one_match(typ_part, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
+	if (!typ)
+		return
+
+	if(isnull(repl_typ_part))
+		repl_typ_part = input("Enter path of the things you want to replace [typ] WITH", "Enter replacement path", "") as null|text
+		if (!repl_typ_part)
+			return
+	var/replacement_typ = get_one_match(repl_typ_part, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
+	if (!replacement_typ)
+		return
+
+	var/amount_to_replace = input(usr, "amount of things to replace between each pause", "Amount to Replace", 500) as null|num
+	if (!amount_to_replace)
+		return
+	var/sleep_time = input(usr, "amount of time to wait between each batch of stuff (in 10ths of seconds)", "Sleep Time", 2) as null|num
+	if (!sleep_time)
+		return
+
+	logTheThing(LOG_ADMIN, usr, "replaced all of [typ] with [replacement_typ] (details: [amount_to_replace] things/batch, [sleep_time] sleep time)")
+	logTheThing(LOG_DIARY, usr, "replaced all of [typ] into [replacement_typ] (details: [amount_to_replace] things/batch, [sleep_time] sleep time)", "admin")
+	message_admins("[key_name(usr)] began replacing all of [typ] with [replacement_typ]")
+
+	var/replace_count = 0
+	var/replace_total = 0
+
+	var/list/atom/to_replace
+
+	if(ispath(typ, /area))
+		to_replace = list()
+		for(var/turf/T in world)
+			if(istype(T.loc, typ))
+				to_replace += T
+	else
+		to_replace = find_all_by_type(typ)
+
+	for (var/atom/A as anything in to_replace)
+		LAGCHECK(LAG_LOW)
+		if (atom_emergency_stop)
+			logTheThing(LOG_ADMIN, usr, "type replacement command terminated due to an emergency stop.")
+			logTheThing(LOG_DIARY, usr, "type replacement command terminated due to an emergency stop.", "admin")
+			message_admins("[key_name(usr)]'s type replacement command terminated due to an emergency stop!")
+			break
+
+		if(QDELETED(A))
+			continue
+
+		if(ispath(replacement_typ, /mob/living/critter/mimic) && isobj(A))
+			var/mob/living/critter/mimic/replacer = new replacement_typ(get_turf(A))
+			replacer.disguise_as(A)
+			qdel(A)
+			replace_count ++
+			replace_total ++
+			if (replace_count >= amount_to_replace)
+				replace_count = 0
+				sleep(sleep_time)
+			continue
+
+		var/atom/loc = ismovable(A) ? A.loc : A
+		var/obj/item/itemA = A
+		ENSURE_TYPE(itemA)
+		var/slot = itemA?.equipped_in_slot
+		var/atom/newatom
+		if(ismob(A)) // if we are replacing a mob we need old and new to exist at the same time to transfer minds if any
+			var/mob/oldmob = A
+			if(ispath(replacement_typ, /turf))
+				var/turf/old_turf = get_turf(loc)
+				if(old_turf)
+					newatom = old_turf.ReplaceWith(replacement_typ)
+				else
+					continue
+			else
+				newatom = new replacement_typ(loc)
+			var/mob/newmob
+			if(ismob(newatom))
+				newmob = newatom
+			else if(isobj(newatom)) // we are trying to replace mobs with non-mobs, to save this situation a bit we turn the obj into a living obj
+				newmob = new /mob/living/object(newatom.loc, newatom, null)
+
+			if(istype(newmob))
+				if(oldmob.mind)
+					oldmob.mind.transfer_to(newmob)
+			else // we failed to convert newatom to a mob (did someone replace mobs with walls?), turn the client into a ghost instead of kicking them
+				oldmob.ghostize()
+			qdel(oldmob)
+		else // otherwise we prefer deleting first as the location might not like the old and the new thing existing at the same time idk
+			if(ismovable(A))
+				qdel(A)
+			if(ispath(replacement_typ, /turf))
+				var/turf/old_turf = get_turf(loc)
+				if(old_turf)
+					newatom = old_turf.ReplaceWith(replacement_typ)
+				else
+					continue
+			else
+				newatom = new replacement_typ(loc)
+		if(ishuman(loc) && slot)
+			var/mob/living/carbon/human/H = loc
+			H.force_equip(newatom, slot)
+		if(loc?.storage)
+			loc.storage.add_contents(newatom, visible=FALSE)
+		// TODO: limbs, organs; or just write the damn slots system
+
+		replace_count ++
+		replace_total ++
+		if (replace_count >= amount_to_replace)
+			replace_count = 0
+			sleep(sleep_time)
+
+	logTheThing(LOG_ADMIN, usr, "replaced [replace_total] of [typ] with [replacement_typ].")
+	logTheThing(LOG_DIARY, usr, "replaced [replace_total] of [typ] with [replacement_typ].", "admin")
+	message_admins("[key_name(usr)] replaced [replace_total] of [typ] with [replacement_typ].")

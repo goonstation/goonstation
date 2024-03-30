@@ -23,7 +23,7 @@
 	Crossed(atom/movable/A)
 		..()
 		if(istype(A,/obj/racing_clowncar))
-			playsound(A, 'sound/mksounds/boost.ogg', 30, 0)
+			playsound(A, 'sound/mksounds/boost.ogg', 30, FALSE)
 			step(A,src.dir)
 
 			var/obj/racing_clowncar/R = A
@@ -38,7 +38,8 @@
 
 /obj/racing_powerup_spawner
 	name = "PowerUpSpawner"
-	icon = 'icons/Testing/atmos_testing.dmi'
+	icon = 'icons/map-editing/mapping_helpers.dmi'
+	icon_state = "spawner"
 	anchored = ANCHORED
 	density = 0
 	opacity = 0
@@ -80,7 +81,7 @@
 		src.set_dir(spawndir)
 		source_car = sourcecar
 		SPAWN(7.5 SECONDS)
-			playsound(src, 'sound/mksounds/itemdestroy.ogg', 45, 0)
+			playsound(src, 'sound/mksounds/itemdestroy.ogg', 45, FALSE)
 			qdel(src)
 		move_process()
 
@@ -88,7 +89,7 @@
 		if(istype(A,/obj/racing_clowncar) && A != source_car)
 			var/obj/racing_clowncar/R = A
 			R.spin(20)
-			playsound(A, 'sound/mksounds/gothit.ogg', 45, 0)
+			playsound(A, 'sound/mksounds/gothit.ogg', 45, FALSE)
 			qdel(src)
 
 	proc/move_process()
@@ -112,7 +113,7 @@
 		src.set_dir(spawndir)
 		source_car = sourcecar
 		SPAWN(7.5 SECONDS)
-			playsound(src, 'sound/mksounds/itemdestroy.ogg', 45, 0)
+			playsound(src, 'sound/mksounds/itemdestroy.ogg', 45, FALSE)
 			qdel(src)
 		move_process()
 
@@ -120,7 +121,7 @@
 		if(istype(A,/obj/racing_clowncar) && A != source_car)
 			var/obj/racing_clowncar/R = A
 			R.spin(15)
-			playsound(A, 'sound/mksounds/gothit.ogg', 45, 0)
+			playsound(A, 'sound/mksounds/gothit.ogg', 45, FALSE)
 			qdel(src)
 
 	proc/move_process()
@@ -171,7 +172,7 @@
 		if(istype(A,/obj/racing_clowncar))
 			var/obj/racing_clowncar/R = A
 			R.spin(20)
-			playsound(src, 'sound/mksounds/itemdestroy.ogg', 45, 0)
+			playsound(src, 'sound/mksounds/itemdestroy.ogg', 45, FALSE)
 			if(delete)	qdel(src)
 
 
@@ -230,7 +231,7 @@
 		var/turf/T = get_turf(src.loc)
 		new/obj/racing_trap_banana/(T)
 
-		playsound(T, 'sound/mksounds/itemdrop.ogg', 45, 0)
+		playsound(T, 'sound/mksounds/itemdrop.ogg', 45, FALSE)
 
 		qdel(src)
 
@@ -260,7 +261,7 @@
 
 		new/obj/racing_butt(trg, C.dir, C)
 
-		playsound(C, 'sound/mksounds/throw.ogg', 33, 0)
+		playsound(C, 'sound/mksounds/throw.ogg', 33, FALSE)
 
 		qdel(src)
 
@@ -290,7 +291,7 @@
 
 		new/obj/super_racing_butt(trg, C.dir, C)
 
-		playsound(C, 'sound/mksounds/throw.ogg', 33, 0)
+		playsound(C, 'sound/mksounds/throw.ogg', 33, FALSE)
 
 		qdel(src)
 
@@ -313,7 +314,7 @@
 
 		var/obj/racing_clowncar/R = source.loc
 
-		playsound(R, 'sound/mksounds/boost.ogg', 33, 0)
+		playsound(R, 'sound/mksounds/boost.ogg', 33, FALSE)
 
 		R.boost()
 		qdel(source)
@@ -336,7 +337,7 @@
 
 		var/obj/racing_clowncar/R = source.loc
 
-		playsound(R, 'sound/mksounds/invin10sec.ogg',33, 0,0) // 33
+		playsound(R, 'sound/mksounds/invin10sec.ogg',33, FALSE,0) // 33
 
 		R.super = 1
 		R.boost()
@@ -370,7 +371,7 @@
 		var/list/powerups = childrentypesof(/obj/powerup/)
 		if(!powerups.len) return
 
-		playsound(src, 'sound/mksounds/gotitem.ogg', 33, 0)
+		playsound(src, 'sound/mksounds/gotitem.ogg', 33, FALSE)
 
 		for(var/obj/powerup/OLD in src)
 			qdel(OLD)
@@ -389,7 +390,7 @@
 		if(!ishuman(usr)) return
 
 		if(driver)
-			boutput(usr, "<span class='alert'>Car already occupied by [driver.name].</span>")
+			boutput(usr, SPAN_ALERT("Car already occupied by [driver.name]."))
 			return
 
 		var/mob/M = usr
@@ -427,7 +428,7 @@
 		var/image/out_of_control = image('icons/misc/racing.dmi',"broken")
 		src.overlays += out_of_control
 
-		playsound(src, 'sound/mksounds/cpuspin.ogg', 33, 0)
+		playsound(src, 'sound/mksounds/cpuspin.ogg', 33, FALSE)
 
 		SPAWN(magnitude+1)
 			cant_control = 0
@@ -467,7 +468,7 @@
 
 	proc/stop()
 		driving = 0
-		playsound(src, 'sound/mksounds/skidd.ogg', 25, 0)
+		playsound(src, 'sound/mksounds/skidd.ogg', 25, FALSE)
 		walk(src, 0)
 
 	relaymove(mob/user, direction)
@@ -519,7 +520,7 @@
 		if(!ishuman(usr)) return
 
 		if(driver)
-			boutput(usr, "<span class='alert'>Car already occupied by [driver.name].</span>")
+			boutput(usr, SPAN_ALERT("Car already occupied by [driver.name]."))
 			return
 
 		var/mob/M = usr

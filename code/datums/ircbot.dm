@@ -20,34 +20,41 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 					src.load()
 
 	proc
-		//Load the config variables necessary for connections
+		/// Load the config variables necessary for connections
+		/// Successful load indicated by a TRUE return
 		load()
-			if (config)
-				src.interface = config.irclog_url
-				src.loaded = 1
+			. = FALSE
+			if (loadTries >= 5)
+				logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts")
+				logTheThing(LOG_DIARY, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts", "debug")
+				return FALSE
+			src.loadTries++
 
-				if (src.queue && length(src.queue) > 0)
-					if (src.debugging)
-						src.logDebug("Load success, flushing queue: [json_encode(src.queue)]")
-					for (var/x = 1, x <= src.queue.len, x++) //Flush queue
-						src.export(src.queue[x]["iface"], src.queue[x]["args"])
+			if (isnull(config)) // Is there a config?
+				return FALSE
 
-				src.queue = null
-				return 1
-			else
-				loadTries++
-				if (loadTries >= 5)
-					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts")
-					logTheThing(LOG_DIARY, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts", "debug")
-				return 0
+			src.interface = config.irclog_url
 
+			if (isnull(src.interface)) // Was there no actual URL set?
+				return FALSE
 
-		//Shortcut proc for event-type exports
+			src.loaded = 1
+			if (src.queue && length(src.queue) > 0)
+				if (src.debugging)
+					src.logDebug("Load success, flushing queue: [json_encode(src.queue)]")
+				for (var/i in 1 to length(src.queue)) // Flush queue
+					src.export(src.queue[i]["iface"], src.queue[i]["args"])
+			src.queue = null
+			return TRUE
+
+		/// Shortcut proc for event-type exports
 		event(type, data)
 			set waitfor = FALSE // events async by default because who cares about the result really, we are just notifying the bot about something
-			if (!type) return 0
+			if (!type)
+				return 0
 			var/list/eventArgs = list("type" = type)
-			if (data) eventArgs |= data
+			if (data)
+				eventArgs |= data
 			return src.export("event", eventArgs)
 
 		apikey_scrub(text)
@@ -63,7 +70,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 			set waitfor = FALSE
 			export(iface, args)
 
-		//Send a message to an irc bot! Yay!
+		/// Send a message to an irc bot! Yay!
 		export(iface, args)
 			if (src.debugging)
 				src.logDebug("Export called with <b>iface:</b> [iface]. <b>args:</b> [text_args(args)]. <b>src.interface:</b> [src.interface]. <b>src.loaded:</b> [src.loaded]")
@@ -124,7 +131,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				return contentJson
 
 
-		//Format the response to an irc request juuuuust right
+		/// Format the response to an irc request juuuuust right
 		response(args)
 			if (src.debugging)
 				src.logDebug("Response called with args: [text_args(args)]")
@@ -144,7 +151,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 		toggleDebug(client/C)
 			if (!C) return 0
 			src.debugging = !src.debugging
-			out(C, "IRCBot Debugging [(src.debugging ? "Enabled" : "Disabled")]")
+			boutput(C, "IRCBot Debugging [(src.debugging ? "Enabled" : "Disabled")]")
 			if (src.debugging)
 				var/log = "Debugging Enabled. Datum variables are: "
 				for (var/x = 1, x <= src.vars.len, x++)
@@ -172,6 +179,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	ircbot.toggleDebug(src)
 	return 1

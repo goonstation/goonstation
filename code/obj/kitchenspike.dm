@@ -24,30 +24,28 @@ TYPEINFO(/obj/kitchenspike)
 /obj/kitchenspike/proc/spike(mob/user, mob/victim)
 	. = FALSE
 	if(!ismonkey(victim))
-		boutput(user, "<span class='alert'>[victim] is too big for the spike, try something smaller!</span>")
+		boutput(user, SPAN_ALERT("[victim] is too big for the spike, try something smaller!"))
 		return
 	if((!isnpcmonkey(victim) || victim.client) && !isdead(victim))
-		boutput(user, "<span class='alert'>[victim] looks sentient and is struggling too much!</span>")
+		boutput(user, SPAN_ALERT("[victim] looks sentient and is struggling too much!"))
 		return
 	if(!src.occupied)
 		src.occupied = TRUE
 		src.UpdateIcon()
 		src.meat = 5
 		if (user)
-			src.visible_message("<span class='alert'>[user] forces [victim] onto the spike, killing [him_or_her(victim)] instantly!</span>")
+			src.visible_message(SPAN_ALERT("[user] forces [victim] onto the spike, killing [him_or_her(victim)] instantly!"))
 		else
-			src.visible_message("<span class='alert'>[victim] is impaled on the spikes, instantly killing [him_or_her(victim)]!")
+			src.visible_message(SPAN_ALERT("[victim] is impaled on the spikes, instantly killing [him_or_her(victim)]!"))
 		victim.unequip_all()
 		qdel(victim)
 		JOB_XP(user, "Chef", 2)
 		return TRUE
 	else
-		boutput(user, "<span class='alert'>The spike already has a monkey on it, finish collecting their meat first!</span>")
-		return
+		boutput(user, SPAN_ALERT("The spike already has a monkey on it, finish collecting their meat first!"))
 
 /obj/kitchenspike/attack_hand(mob/user)
-	if(..())
-		return
+	. = ..()
 	if(src.occupied)
 		if(src.meat > 1)
 			src.meat--

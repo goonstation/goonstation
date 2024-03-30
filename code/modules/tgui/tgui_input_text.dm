@@ -18,8 +18,9 @@
  * * max_length - Specifies a max length for input.
  * * multiline -  Bool that determines if the input box is much larger. Good for large messages, laws, etc.
  * * timeout - The timeout of the textbox, after which the modal will close and qdel itself. Set to zero for no timeout.
+ * * theme - The TGUI theme used for the window.
  */
-/proc/tgui_input_text(mob/user, message = null, title = "Text Input", default = null, max_length = null, multiline = FALSE, timeout = 0, allowEmpty = FALSE)
+/proc/tgui_input_text(mob/user, message = null, title = "Text Input", default = null, max_length = null, multiline = FALSE, timeout = 0, allowEmpty = FALSE, theme = null)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -30,7 +31,7 @@
 			return
 	if (!user.client) // No NPCs or they hang Mob AI process
 		return
-	var/datum/tgui_input_text/textbox = new(user, message, title, default, max_length, multiline, timeout, allowEmpty)
+	var/datum/tgui_input_text/textbox = new(user, message, title, default, max_length, multiline, timeout, allowEmpty, theme)
 	textbox.ui_interact(user)
 	textbox.wait()
 	if (textbox)
@@ -50,8 +51,9 @@
  * * multiline -  Bool that determines if the input box is much larger. Good for large messages, laws, etc.
  * * callback - The callback to be invoked when a choice is made.
  * * timeout - The timeout of the textbox, after which the modal will close and qdel itself. Disabled by default, can be set to seconds otherwise.
+ * * theme - The TGUI theme used for the window.
  */
-/proc/tgui_input_text_async(mob/user, message = null, title = "Text Input", default = null, max_length = null, multiline = FALSE, datum/callback/callback, timeout = 0, allowEmpty = FALSE)
+/proc/tgui_input_text_async(mob/user, message = null, title = "Text Input", default = null, max_length = null, multiline = FALSE, datum/callback/callback, timeout = 0, allowEmpty = FALSE, theme = null)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -64,7 +66,7 @@
 		return
 	if (max_length && length(message) > max_length)
 		CRASH("TGUI input text window opened with a message greater than the max length.")
-	var/datum/tgui_input_text/async/textbox = new(user, message, title, default, max_length, multiline, callback, timeout, allowEmpty)
+	var/datum/tgui_input_text/async/textbox = new(user, message, title, default, max_length, multiline, callback, timeout, allowEmpty, theme)
 	textbox.ui_interact(user)
 
 /**
@@ -96,9 +98,11 @@
 	var/title
 	/// Makes the text box allow an empty string to be submitted
 	var/allowEmpty
+	/// The TGUI theme used for the window
+	var/theme
 
 
-/datum/tgui_input_text/New(mob/user, message, title, default, max_length, multiline, timeout, allowEmpty)
+/datum/tgui_input_text/New(mob/user, message, title, default, max_length, multiline, timeout, allowEmpty, theme)
 	src.user = user
 	src.default = default
 	src.max_length = max_length
@@ -106,6 +110,7 @@
 	src.multiline = multiline
 	src.title = title
 	src.allowEmpty = allowEmpty
+	src.theme = theme
 	if (timeout)
 		src.timeout = timeout
 		start_time = world.time
@@ -146,6 +151,7 @@
 		"placeholder" = default, /// You cannot use default as a const
 		"title" = title,
 		"allowEmpty" = allowEmpty,
+		"theme" = theme,
 	)
 
 /datum/tgui_input_text/ui_data(mob/user)
@@ -182,8 +188,8 @@
 	/// The callback to be invoked by the tgui_input_text upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_input_text/async/New(mob/user, message, title, default, max_length, multiline, callback, timeout)
-	..(user, message, title, default, max_length, multiline, timeout)
+/datum/tgui_input_text/async/New(mob/user, message, title, default, max_length, multiline, callback, timeout, theme)
+	..(user, message, title, default, max_length, multiline, timeout, theme)
 	src.callback = callback
 
 /datum/tgui_input_text/async/disposing(force, ...)

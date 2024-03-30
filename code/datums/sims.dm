@@ -171,21 +171,21 @@
 
 		onIncrease()
 			if (value > debuff_threshold && debuffed)
-				showOwner("<span class='notice'>You feel considerably less [debuff]!</span>")
+				showOwner(SPAN_NOTICE("You feel considerably less [debuff]!"))
 				holder.owner.delStatus(debuff)
 				debuffed = FALSE
 
 		onDecrease()
 			if (value < debuff_threshold && !debuffed)
-				showOwner("<span class='alert'>You feel considerably [debuff]!</span>")
+				showOwner(SPAN_ALERT("You feel considerably [debuff]!"))
 				holder.owner.setStatus(debuff, duration = null)
 				debuffed = TRUE
 
 		getWarningMessage()
 			if (value < 25)
-				return pick("<span class='alert'>You are [pick("utterly", "absolutely", "positively", "completely", "extremely", "perfectly")] [pick("starving", "unfed", "ravenous", "famished")]!</span>", "<span class='alert'>You feel like you could [pick("die of [pick("hunger", "starvation")] any moment now", "eat a [pick("donkey", "horse", "whale", "moon", "planet", "star", "galaxy", "universe", "multiverse")]")]!</span>")
+				return pick(SPAN_ALERT("You are [pick("utterly", "absolutely", "positively", "completely", "extremely", "perfectly")] [pick("starving", "unfed", "ravenous", "famished")]!"), SPAN_ALERT("You feel like you could [pick("die of [pick("hunger", "starvation")] any moment now", "eat a [pick("donkey", "horse", "whale", "moon", "planet", "star", "galaxy", "universe", "multiverse")]")]!"))
 			else if (value < 50)
-				return "<span class='alert'>You feel [pick("hungry", "peckish", "ravenous", "undernourished", "famished", "esurient")]!</span>"
+				return SPAN_ALERT("You feel [pick("hungry", "peckish", "ravenous", "undernourished", "famished", "esurient")]!")
 			else
 				return null
 
@@ -198,9 +198,9 @@
 
 			getWarningMessage()
 				if (value < 25)
-					return pick("<span class='alert'>You are [pick("utterly", "absolutely", "positively", "completely", "extremely", "perfectly")] dry!</span>", "<span class='alert'>You feel [pick("like you could die of thirst any moment now", "as dry as [pick("sand", "the moon", "solid carbon dioxide", "bones")]")]!</span>")
+					return pick(SPAN_ALERT("You are [pick("utterly", "absolutely", "positively", "completely", "extremely", "perfectly")] dry!"), SPAN_ALERT("You feel [pick("like you could die of thirst any moment now", "as dry as [pick("sand", "the moon", "solid carbon dioxide", "bones")]")]!"))
 				else if (value < 50)
-					return "<span class='alert'>You feel [pick("thirsty", "dry")]!</span>"
+					return SPAN_ALERT("You feel [pick("thirsty", "dry")]!")
 				else
 					return null
 
@@ -231,9 +231,9 @@
 
 		getWarningMessage()
 			if (value < 25)
-				return "<span class='alert'>You really feel like talking to someone, or you might [pick("go crazy", "go insane", "go nuts", "become unhinged", "become a lunatic", "become totally gaga", "go loco", "go bonkers", "go stark mad", "go mad")]!</span>"
+				return SPAN_ALERT("You really feel like talking to someone, or you might [pick("go crazy", "go insane", "go nuts", "become unhinged", "become a lunatic", "become totally gaga", "go loco", "go bonkers", "go stark mad", "go mad")]!")
 			else if (value < 50)
-				return "<span class='alert'>You feel [pick("rather ", "quite ", "moderately ", "kind of ", "pretty ", null)]socially deprived!</span>"
+				return SPAN_ALERT("You feel [pick("rather ", "quite ", "moderately ", "kind of ", "pretty ", null)]socially deprived!")
 			else
 				return null
 
@@ -258,9 +258,8 @@
 					protection--
 					return 0
 				// Devera-class interdictor: prevent passive hygiene decrease within the field
-				for_by_tcl(IX, /obj/machinery/interdictor)
-					if (IX.expend_interdict(1,src,TRUE,ITDR_DEVERA))
-						return 0
+				if (holder.owner.hasStatus("devera_field"))
+					return 0
 				return 1
 
 		onIncrease()
@@ -278,12 +277,12 @@
 					if (H != holder.owner && prob(30 - value) * 2)
 						//H.stunned = max(holder.owner.stunned, 1) <- Let's not punish others for our poor choices in life - unrealistic but more fun
 						H.vomit()
-						H.visible_message("<span class='alert'>[H] throws up all over \himself. Gross!</span>")
-						boutput(H, "<span class='alert'>You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by [holder.owner]'s [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!</span>")
+						H.visible_message(SPAN_ALERT("[H] throws up all over \himself. Gross!"))
+						boutput(H, SPAN_ALERT("You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by [holder.owner]'s [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!"))
 				holder.owner.changeStatus("stunned", 1 SECOND)
-				holder.owner.visible_message("<span class='alert'>[holder.owner] throws up all over \himself. Gross!</span>")
+				holder.owner.visible_message(SPAN_ALERT("[holder.owner] throws up all over \himself. Gross!"))
 				holder.owner.vomit()
-				showOwner("<span class='alert'>You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by your own [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!</span>")
+				showOwner(SPAN_ALERT("You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by your own [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!"))
 			*/
 			#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
 			if (value < 5 && prob(1) && prob(25))
@@ -291,50 +290,16 @@
 				P.create_weak()
 				P.spread = 0
 				holder.owner.infected(P)
-				showOwner("<span class='alert'>You feel really sick.</span>") // in a bad way
+				showOwner(SPAN_ALERT("You feel really sick.")) // in a bad way
 			#endif
 
 		getWarningMessage()
 			if (value < 25)
-				return pick("<span class='alert'>You [pick("smell", "stink", "reek")]!</span>", "<span class='alert'>You are [pick("absolutely", "utterly", "completely")] [pick("disgusting", "revolting", "repellent", "sickening", "nauseating", "stomach-churning", "gross")]!</span>", "<span class='alert'><b>Take a [pick("shower", "bath")]!</b></span>")
+				return pick(SPAN_ALERT("You [pick("smell", "stink", "reek")]!"), SPAN_ALERT("You are [pick("absolutely", "utterly", "completely")] [pick("disgusting", "revolting", "repellent", "sickening", "nauseating", "stomach-churning", "gross")]!"), SPAN_ALERT("<b>Take a [pick("shower", "bath")]!</b>"))
 			else if (value < 50)
-				return "<span class='alert'>You feel [pick("smelly", "stinky", "unclean", "filthy", "dirty", "a bit disgusting", "grimy", "mucky", "foul", "unwashed", "begrimed", "tainted")]!</span>"
+				return SPAN_ALERT("You feel [pick("smelly", "stinky", "unclean", "filthy", "dirty", "a bit disgusting", "grimy", "mucky", "foul", "unwashed", "begrimed", "tainted")]!")
 			else
 				return null
-
-	bladder
-		name = "Bladder"
-		icon_state = "bladder"
-		desc = "You can raise your bladder by releasing your urges in the toilet. Be sure to stand above a toilet and type '*pee'."
-		depletion_rate = 0.067 //53
-		gain_rate = 1
-
-		getWarningMessage()
-			var/list/urination = list("urinate", "piss", "pee", "answer the call of nature", "wee-wee", "spend a penny", "have a leak", "take a leak", "relieve yourself", "have a Jimmy", "have a whizz", "have a piddle", "pass water", "empty the tank", "flush the buffers", "lower the water level", "pay the water bill", "park your breakfast", "make your bladder gladder", "release the pressure", "put out the fire", "visit the urination station", "drain the tank")
-			var/to_urinate = pick(urination)
-			if (value < 25)
-				return "<span class='alert'>You feel like you could [pick("wet", "piss", "pee", "urinate into", "leak into")] your pants any minute now!</span>"
-			else if (value < 50)
-				return "<span class='alert'>You feel a [pick("serious", "pressing", "critical", "dire", "burning")] [pick("inclination", "desire", "need", "call", "urge", "motivation")] to [to_urinate]!</span>"
-			else
-				return null
-
-		onDeplete()
-			showOwner("<span class='alert'><b>You piss all over yourself!</b></span>")
-			modifyValue(100)
-			holder.affectMotive("Hygiene", -100)
-			holder.owner.changeStatus("stunned", 2 SECONDS)
-			if (ishuman(holder.owner))
-				var/mob/living/carbon/human/H = holder.owner
-				if (H.w_uniform)
-					var/obj/item/clothing/U = H.w_uniform
-					U.add_stain("piss-soaked")
-					//U.name = "piss-soaked [initial(U.name)]"
-				else if (H.wear_suit)
-					var/obj/item/clothing/U = H.wear_suit
-					U.add_stain("piss-soaked")
-					//U.name = "piss-soaked [initial(U.name)]"
-			make_cleanable(/obj/decal/cleanable/urine,holder.owner.loc)
 
 	comfort
 		name = "comfort"
@@ -354,9 +319,9 @@
 
 		getWarningMessage()
 			if (value < 25)
-				return "<span class='alert'>You really [pick("need", "require", "feel the need for", "are in need of")] the [pick("hug", "feeling", "embrace", "comfort")] of a soft [pick("sofa", "bed", "chair", "pillow")]!</span>"
+				return SPAN_ALERT("You really [pick("need", "require", "feel the need for", "are in need of")] the [pick("hug", "feeling", "embrace", "comfort")] of a soft [pick("sofa", "bed", "chair", "pillow")]!")
 			else if (value < 50)
-				return "<span class='alert'>You feel like [pick("sitting down", "lying down", "you need a bit of comfort")]!</span>"
+				return SPAN_ALERT("You feel like [pick("sitting down", "lying down", "you need a bit of comfort")]!")
 			else
 				return null
 
@@ -385,15 +350,15 @@
 
 		getWarningMessage()
 			if (value < 25)
-				return "<span class='alert'>You are [pick("<b>so</b>", "so very", "painfully", "extremely", "excruciatingly", "rather uncomfortably")] bored![prob(25)? " You'd rather die!" : null]</span>"
+				return SPAN_ALERT("You are [pick("<b>so</b>", "so very", "painfully", "extremely", "excruciatingly", "rather uncomfortably")] bored![prob(25)? " You'd rather die!" : null]")
 			else if (value < 50)
-				return "<span class='alert'>You're [pick("quite", "rather", "super", "really", "pretty", "moderately", "very")] bored!</span>"
+				return SPAN_ALERT("You're [pick("quite", "rather", "super", "really", "pretty", "moderately", "very")] bored!")
 			else
 				return null
 
 		onDeplete()
 			if (prob(10))
-				showOwner("<span class='alert'><b>You can't take being so bored anymore!</b></span>")
+				showOwner(SPAN_ALERT("<b>You can't take being so bored anymore!</b>"))
 				if (ishuman(holder.owner))
 					var/mob/living/carbon/human/H = holder.owner
 					H.death()
@@ -415,9 +380,9 @@
 		getWarningMessage()
 			var/a_mess = pick("mess", "clusterfuck", "disorder", "disarray", "clutter", "landfill", "dump")
 			if (value < 25)
-				return "<span class='alert'>This place is a [pick("fucking", "complete", "total", "downright", "consummate", "veritable", "proper")] [a_mess].</span>"
+				return SPAN_ALERT("This place is a [pick("fucking", "complete", "total", "downright", "consummate", "veritable", "proper")] [a_mess].")
 			else if (value < 50)
-				return "<span class='alert'>This place is a [a_mess]!</span>"
+				return SPAN_ALERT("This place is a [a_mess]!")
 			else
 				return null
 
@@ -458,7 +423,7 @@
 			if (forced_sleep)
 				if (value < 25)
 					if (!L.hasStatus("resting"))
-						showOwner("<span class='alert'>You overworked yourself and cannot wake up until you are minimally rested!</span>")
+						showOwner(SPAN_ALERT("You overworked yourself and cannot wake up until you are minimally rested!"))
 						L.setStatus("resting", INFINITE_STATUS)
 					L.sleeping += 1
 				else
@@ -473,15 +438,15 @@
 				modifyValue(sm)
 
 		onDeplete()
-			showOwner("<span class='alert'><b>You cannot stay awake anymore!</b></span>")
+			showOwner(SPAN_ALERT("<b>You cannot stay awake anymore!</b>"))
 			forced_sleep = 1
 			modifyValue(5)
 
 		getWarningMessage()
 			if (value < 25)
-				return "<span class='alert'>You're [pick("extremely", "seriously", "incredibly", "tremendously", "overwhelmingly")] [pick("tired", "exhausted", "weary", "fatigued", "drowsy", "spent", "drained", "jaded")].</span>"
+				return SPAN_ALERT("You're [pick("extremely", "seriously", "incredibly", "tremendously", "overwhelmingly")] [pick("tired", "exhausted", "weary", "fatigued", "drowsy", "spent", "drained", "jaded")].")
 			else if (value < 50)
-				return "<span class='alert'>You feel [pick("rather", "quite", "very", "pretty", "really")] [pick("tired", "sleepy", "drowsy")]!</span>"
+				return SPAN_ALERT("You feel [pick("rather", "quite", "very", "pretty", "really")] [pick("tired", "sleepy", "drowsy")]!")
 			else
 				return null
 
@@ -637,7 +602,6 @@ var/global/datum/simsControl/simsController = new()
 			addMotive(/datum/simsMotive/hunger/thirst)
 			addMotive(/datum/simsMotive/social)
 			addMotive(/datum/simsMotive/hygiene)
-			addMotive(/datum/simsMotive/bladder)
 			addMotive(/datum/simsMotive/comfort)
 			addMotive(/datum/simsMotive/fun)
 			addMotive(/datum/simsMotive/energy)

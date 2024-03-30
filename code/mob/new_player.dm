@@ -11,6 +11,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 	var/pregameBrowserLoaded = FALSE
 	var/antag_fallthrough = FALSE
 
+	var/my_own_roundstart_tip = null //! by default everyone sees the get_global_tip() tip, but if they press the button to refresh they get their own
+
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = FALSE
 #endif
@@ -25,6 +27,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 	New()
 		. = ..()
+		START_TRACKING
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 		ready = TRUE
@@ -35,6 +38,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 		return
 
 	disposing()
+		STOP_TRACKING
 		mobs.Remove(src)
 		if (mind)
 			if (mind.current == src)
@@ -78,7 +82,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 					src.spawning = 1
 
 					close_spawn_windows()
-					boutput(src, "<span class='notice'>Now teleporting.</span>")
+					boutput(src, SPAN_NOTICE("Now teleporting."))
 					var/ASLoc = pick_landmark(LANDMARK_OBSERVER)
 					if (ASLoc)
 						observer.set_loc(ASLoc)
@@ -137,7 +141,12 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			winset(src, "joinmenu.button_charsetup", "is-disabled=false")
 		// drsingh i put the extra ifs here. i think its dumb but there's a bad client error here so maybe it's somehow going away in winset because byond is shitty
 		if(client)
-			winset(src, "joinmenu.button_ready", "is-disabled=false;is-visible=true")
+			if(ticker && current_state >= GAME_STATE_PLAYING)
+				winset(src, "joinmenu.button_joingame", "is-disabled=false;is-visible=true")
+				winset(src, "joinmenu.button_ready", "is-disabled=true;is-visible=false")
+			else
+				winset(src, "joinmenu.button_ready", "is-disabled=false;is-visible=true")
+				winset(src, "joinmenu.button_joingame", "is-disabled=true;is-visible=false")
 		if(client)
 			winset(src, "joinmenu.button_cancel", "is-disabled=true;is-visible=false")
 		if(client)
@@ -186,14 +195,47 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 				return
 
 			if (!enter_allowed)
-				boutput(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+				boutput(usr, SPAN_NOTICE("There is an administrative lock on entering the game!"))
 				return
 
+			var/datum/job/JOB = null
+			var/mob/living/silicon/S = null
+
 			if (ticker?.mode)
-				var/mob/living/silicon/S = locate(href_list["SelectedJob"]) in mobs
+				S = locate(href_list["SelectedJob"]) in mobs
+				if(S)
+					if(istype(S, /mob/living/silicon/robot))
+						JOB = get_singleton(/datum/job/civilian/cyborg)
+					else if(istype(S, /mob/living/silicon/ai))
+						JOB = get_singleton(/datum/job/civilian/AI)
+				else if (istype(ticker.mode, /datum/game_mode/construction))
+					var/datum/game_mode/construction/C = ticker.mode
+					JOB = locate(href_list["SelectedJob"]) in C.enabled_jobs
+				else
+					var/list/alljobs = job_controls.staple_jobs | job_controls.special_jobs
+					JOB = locate(href_list["SelectedJob"]) in alljobs
+
+				if(!istype(JOB))
+					stack_trace("Unknown job: [JOB] [href_list["SelectedJob"]]")
+
+				if(href_list["latejoin"] == "prompt")
+					var/wiki_link = JOB.wiki_link
+					var/who_we_joining_as = JOB.name
+					if(S)
+						who_we_joining_as += " " + S.name
+					var/list/alert_buttons = wiki_link ? list("Join", "Cancel", "Wiki") : list("Join", "Cancel")
+					var/alert_response = tgui_alert(usr, "Join as [who_we_joining_as]?", "Join as [who_we_joining_as]?", alert_buttons)
+					if(alert_response == "Cancel" || isnull(alert_response))
+						return
+					else if(alert_response == "Wiki")
+						usr << link(wiki_link)
+						return
+				else if(href_list["latejoin"] != "join")
+					stack_trace("Unknown latejoin link: [href_list["latejoin"]]")
+
 				if (S)
 					if(jobban_isbanned(src, "Cyborg"))
-						boutput(usr, "<span class='notice'>Sorry, you are banned from playing silicons.</span>")
+						boutput(usr, SPAN_NOTICE("Sorry, you are banned from playing silicons."))
 						close_spawn_windows()
 						return
 					var/obj/item/organ/brain/latejoin/latejoin = IsSiliconAvailableForLateJoin(S)
@@ -208,21 +250,19 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 						if (S.emagged)
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an emagged cyborg.")
 							S.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
+						else if (S.syndicate)
+							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
+							S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
+						S.Equip_Bank_Purchase(S.mind?.purchased_bank_item)
+						S.apply_roundstart_events()
 						SPAWN(1 DECI SECOND)
 							S.bioHolder?.mobAppearance?.pronouns = S.client.preferences.AH.pronouns
 							S.choose_name()
 							qdel(src)
 					else
 						close_spawn_windows()
-						boutput(usr, "<span class='notice'>Sorry, that Silicon has already been taken control of.</span>")
-
-				else if (istype(ticker.mode, /datum/game_mode/construction))
-					var/datum/game_mode/construction/C = ticker.mode
-					var/datum/job/JOB = locate(href_list["SelectedJob"]) in C.enabled_jobs
-					AttemptLateSpawn(JOB)
+						boutput(usr, SPAN_NOTICE("Sorry, that Silicon has already been taken control of."))
 				else
-					var/list/alljobs = job_controls.staple_jobs | job_controls.special_jobs
-					var/datum/job/JOB = locate(href_list["SelectedJob"]) in alljobs
 					AttemptLateSpawn(JOB)
 
 		if(href_list["preferences"])
@@ -252,7 +292,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			var/round_num = src.client.player.get_rounds_participated()
 			if (!isnull(round_num) && round_num < JOB.rounds_needed_to_play) //they havent played enough rounds!
 				return 0
-		if (JOB.limit < 0 || countJob(JOB.name) < JOB.limit)
+		if (JOB.limit < 0 || JOB.assigned < JOB.limit)
 			return 1
 		return 0
 
@@ -276,8 +316,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 	proc/AttemptLateSpawn(var/datum/job/JOB, force=0)
 		if (!JOB)
 			return
-		if (src.is_respawned_player && (src.client.preferences.real_name in src.client.player.joined_names))
-			tgui_alert(src, "Please pick a different character to respawn as, you've already joined this round as [src.client.preferences.real_name].")
+		if (src.is_respawned_player && (src.client.preferences.real_name in src.client.player.joined_names) && !src.client.preferences.be_random_name)
+			tgui_alert(src, "Please pick a different character to respawn as, you've already joined this round as [src.client.preferences.real_name]. You can select \"random appearance\" in character setup if you don't want to make a new character.")
 			return
 		global.latespawning.lock()
 
@@ -286,7 +326,10 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			if (isnull(character))
 				global.latespawning.unlock()
 				return
-
+			JOB.assigned++
+			if (JOB.counts_as)
+				var/datum/job/other = find_job_in_controller_by_string(JOB.counts_as)
+				other.assigned++
 			// Stop adding non game mode logic BEFORE game modes!
 			if(istype(ticker.mode, /datum/game_mode/football))
 				var/datum/game_mode/football/F = ticker.mode
@@ -348,10 +391,20 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 				starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(round(world.maxx / 2), round(world.maxy / 2), 1))
 				character.set_loc(starting_loc)
 
+			var/player_count = 0
+			for (var/client/client in clients)
+				if (!istype(client.mob.loc, /obj/cryotron) && !istype(client.mob, /mob/new_player)) //don't count cryoed or lobby players
+					player_count++
+			for(var/datum/job/staple_job in job_controls.staple_jobs) //we'll just assume only staple jobs have variable limits for now
+				if (staple_job.variable_limit)
+					staple_job.recalculate_limit(player_count)
+
 			if (isliving(character))
 				var/mob/living/LC = character
 				if(!istype(JOB,/datum/job/battler) && !istype(JOB, /datum/job/football))
 					LC.Equip_Rank(JOB.name, joined_late=1)
+
+			spawn_rules_controller.apply_to(character)
 
 #ifdef CREW_OBJECTIVES
 			if (ticker && character.mind)
@@ -372,10 +425,13 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 				logTheThing(LOG_DEBUG, character, "<b>Late join:</b> assigned job: [JOB.name]")
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
 				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
-					participationRecorder.record(character.mind.ckey)
+					var/datum/player/P = character.mind.get_player()
+					participationRecorder.record(P)
 
 			// Apply any roundstart mutators to late join if applicable
-			roundstart_events(character)
+			var/mob/living/LM = character
+			if(istype(LM))
+				LM.apply_roundstart_events()
 
 			//picky eater trait handling
 			if (ishuman(character) && character.traitHolder?.hasTrait("picky_eater"))
@@ -394,81 +450,78 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 		return
 
-	proc/roundstart_events(mob/living/player)
-		for(var/datum/random_event/start/until_playing/RE in random_events.delayed_start)
-			if(RE.include_latejoin && RE.is_crew_affected(player))
-				RE.apply_to_player(player)
-
 	proc/LateJoinLink(var/datum/job/J)
 		// This is pretty ugly but: whatever! I don't care.
 		// It likely needs some tweaking but everything does.
-		if (!J.no_late_join)
-			var/limit = J.limit
-			if (!IsJobAvailable(J))
-				// Show unavailable jobs, but no joining them
-				limit = 0
+		if (J.no_late_join)
+			return
+		var/limit = J.limit
+		if (!IsJobAvailable(J))
+			// Show unavailable jobs, but no joining them
+			limit = 0
 
-			var/c = countJob(J.name) 	// gross
-			if (limit == 0 && c == 0)
-				// 0 slots, nobody in it, don't show it
-				return
+		var/c = J.assigned
+		if (limit == 0 && c == 0)
+			// 0 slots, nobody in it, don't show it
+			return
 
-			//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
-			if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
-				c = max(c, limit)
+		//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
+		if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
+			c = max(c, limit)
 
-			// probalby could be a define but dont give a shite
-			var/maxslots = 5
-			var/list/slots = list()
-			var/shown = clamp(c, (limit == -1 ? maxslots : limit), maxslots)
-			// if there's still an open space, show a final join link
-			if (limit == -1 || (limit > maxslots && c < limit))
-				slots += {"<a href='byond://?src=\ref[src];
-				SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];
-				' title='Join the round as [J.name].'>&#x2713;
-				&#xFE0E;
-				</a>"}
-			// show slots up to the limit
-			// extra people beyond the limit will be shown as a [+X] card, supposedly
-			for (var/i = shown, i > 0, i--)
-				// can you believe all these slot appendages were in one line before using nested ternaries? awful.
-				if (i <= c)
-					if (i == 1 && c > shown)
-						slots += {"
-						<div
-						class='latejoin-card latejoin-full'
-						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
-						title='Slot filled.'
-						>+[c - maxslots]
-						</div>
-						"}
-					else
-						slots += {"
-						<div
-						class='latejoin-card latejoin-full'
-						style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
-						title='Slot filled.'
-						>&times;
-						</div>
-						"}
+		var/hover_text = J.short_description || "Join the round as [J.name]."
+
+		// probalby could be a define but dont give a shite
+		var/maxslots = 5
+		var/list/slots = list()
+		var/shown = clamp(c, (limit == -1 ? maxslots : limit), maxslots)
+		// if there's still an open space, show a final join link
+		if (limit == -1 || (limit > maxslots && c < limit))
+			slots += {"<a href='byond://?src=\ref[src];
+			SelectedJob=\ref[J];latejoin=join' class='latejoin-card' style='border-color: [J.linkcolor];
+			' title='[hover_text]'>&#x2713;
+			&#xFE0E;
+			</a>"}
+		// show slots up to the limit
+		// extra people beyond the limit will be shown as a [+X] card, supposedly
+		for (var/i = shown, i > 0, i--)
+			// can you believe all these slot appendages were in one line before using nested ternaries? awful.
+			if (i <= c)
+				if (i == 1 && c > shown)
+					slots += {"
+					<div
+					class='latejoin-card latejoin-full'
+					style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
+					title='Slot filled.'
+					>+[c - maxslots]
+					</div>
+					"}
 				else
 					slots += {"
-					<a
-					href='byond://?src=\ref[src];SelectedJob=\ref[J]'
-					class='latejoin-card' style='border-color: [J.linkcolor];'
-					title='Join the round as [J.name].'
-					>&#x2713;&#xFE0E;
-					</a>
+					<div
+					class='latejoin-card latejoin-full'
+					style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
+					title='Slot filled.'
+					>&times;
+					</div>
 					"}
-			return {"
-				<tr><td class='latejoin-link'>
-					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' style='color: [J.linkcolor];' title='Join the round as [J.name].'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
-					</td>
-					<td class='latejoin-cards'>[jointext(slots, " ")]</td>
-				</tr>
+			else
+				slots += {"
+				<a
+				href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=join'
+				class='latejoin-card' style='border-color: [J.linkcolor];'
+				title='[hover_text]'
+				>&#x2713;&#xFE0E;
+				</a>
 				"}
-
-		return
+		return {"
+			<tr>
+				<td class='latejoin-link[J.is_highlighted() ? " highlighted" : ""]'>
+					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' style='color: [J.linkcolor];' title='[hover_text]'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
+				</td>
+				<td class='latejoin-cards'>[jointext(slots, " ")]</td>
+			</tr>
+			"}
 
 	proc/LateChoices()
 		// shut up
@@ -548,6 +601,10 @@ a.latejoin-card:hover {
 	vertical-align: top;
 	margin: 0 1em;
 }
+.highlighted {
+	border: 4px solid #FFE251;
+	border-radius: 3px;
+}
 </style>
 <h2 style='text-align: center; margin: 0 0 0.3em 0; font-size: 150%;'>You are joining a round in progress.</h2>
 <h3 style='text-align: center; margin: 0 0 0.5em 0; font-size: 120%;'>Please choose from one of the remaining open positions.</h3>
@@ -584,7 +641,13 @@ a.latejoin-card:hover {
 			// not showing if it's an ai or cyborg is the worst fuckin shit so: FIXED
 			for(var/mob/living/silicon/S in mobs)
 				if (IsSiliconAvailableForLateJoin(S))
-					dat += {"<tr><td colspan='2' class='latejoin-link'><a href='byond://?src=\ref[src];SelectedJob=\ref[S]' style='color: #c4c4c4; text-align: center;'>[S.name] ([istype(S, /mob/living/silicon/ai) ? "AI" : "Cyborg"])</a></td></tr>"}
+					var/sili_type = istype(S, /mob/living/silicon/ai) ? "AI" : "Cyborg"
+					var/hover_text = "Join as [sili_type]."
+					if(istype(S, /mob/living/silicon/robot))
+						hover_text = get_singleton(/datum/job/civilian/cyborg).short_description
+					else if(istype(S, /mob/living/silicon/ai))
+						hover_text = get_singleton(/datum/job/civilian/AI).short_description
+					dat += {"<tr><td colspan='2' class='latejoin-link'><a href='byond://?src=\ref[src];SelectedJob=\ref[S];latejoin=prompt' style='color: #c4c4c4; text-align: center;' title='[hover_text]'>[S.name] ([sili_type])</a></td></tr>"}
 
 			// is this ever actually off? ?????
 			if (job_controls.allow_special_jobs)
@@ -626,8 +689,9 @@ a.latejoin-card:hover {
 				C.enabled_jobs += D
 			for (var/datum/job/J in C.enabled_jobs)
 				if (IsJobAvailable(J) && !J.no_late_join)
+					var/hover_text = J.short_description || "Join the round as [J.name]."
 					dat += "<tr><td style='width:100%'>"
-					dat += {"<a href='byond://?src=\ref[src];SelectedJob=\ref[J]'><font color=[J.linkcolor]>[J.name]</font></a> ([countJob(J.name)][J.limit == -1 ? "" : "/[J.limit]"])<br>"}
+					dat += {"<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' title='[hover_text]'><font color=[J.linkcolor]>[J.name]</font></a> ([J.assigned][J.limit == -1 ? "" : "/[J.limit]"])<br>"}
 					dat += "</td></tr>"
 		dat += "</table></div>"
 
@@ -644,6 +708,7 @@ a.latejoin-card:hover {
 
 		src.spawning = 1
 
+		var/turf/spawn_turf = null
 		if(!(LANDMARK_LATEJOIN in landmarks))
 			// the middle of the map is GeNeRaLlY part of the actual station. moreso than 1,1,1 at least
 			var/midx = round(world.maxx / 2)
@@ -651,9 +716,9 @@ a.latejoin-card:hover {
 			var/msg = "No latejoin landmarks placed, dumping [src] to ([midx], [midy], 1)"
 			message_admins(msg)
 			stack_trace(msg)
-			src.set_loc(locate(midx,midy,1))
+			spawn_turf = locate(midx,midy,1)
 		else
-			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
+			spawn_turf = pick_landmark(LANDMARK_LATEJOIN)
 
 		if(force_random_names)
 			src.client.preferences.be_random_name = 1
@@ -662,12 +727,14 @@ a.latejoin-card:hover {
 
 		var/mob/new_character = null
 		if (J)
-			new_character = new J.mob_type(src.loc, client.preferences.AH, client.preferences)
+			new_character = new J.mob_type(spawn_turf, client.preferences.AH, client.preferences)
 		else
-			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH, client.preferences) // fallback
-		new_character.dir = pick(NORTH, EAST, SOUTH, WEST)
-
-		src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
+			new_character = new /mob/living/carbon/human(spawn_turf, client.preferences.AH, client.preferences) // fallback
+		new_character.set_dir(pick(NORTH, EAST, SOUTH, WEST))
+		if (!J || J.uses_character_profile)//borg joins don't lock out your character profile
+			src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
+		else //don't use flavor text if we're not using the profile
+			new_character.bioHolder.mobAppearance.flavor_text = null
 
 		close_spawn_windows()
 
@@ -716,13 +783,14 @@ a.latejoin-card:hover {
 							makebad(new_character, bad_type)
 							new_character.mind.late_special_role = TRUE
 							logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
-							antagWeighter.record(role = bad_type, ckey = new_character.ckey, latejoin = 1)
+							antagWeighter.record(role = bad_type, P = new_character.mind.get_player(), latejoin = 1)
 
 
 
 
 		if(new_character?.client)
-			new_character.client.loadResources()
+			SPAWN(0)
+				new_character.client.loadResources()
 
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
 		new_character.temporary_suicide_alert(1500) //Messages admins if this new character commits suicide within 2 1/2 minutes. probably a bit much but whatever
@@ -769,7 +837,7 @@ a.latejoin-card:hover {
 		set name = ".ready_antag"
 
 		if(!tgui_process)
-			boutput(src, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
+			boutput(src, SPAN_ALERT("Stuff is still setting up, wait a moment before readying up."))
 			return
 
 		if (src.client.has_login_notice_pending(TRUE))
@@ -790,7 +858,7 @@ a.latejoin-card:hover {
 		set name = ".ready"
 
 		if(!tgui_process)
-			boutput(src, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
+			boutput(src, SPAN_ALERT("Stuff is still setting up, wait a moment before readying up."))
 			return
 
 		if (src.client.has_login_notice_pending(TRUE))
@@ -798,14 +866,14 @@ a.latejoin-card:hover {
 
 		if (ticker)
 			if(current_state == GAME_STATE_SETTING_UP || (current_state <= GAME_STATE_PREGAME && ticker.pregame_timeleft <= 1))
-				boutput(usr, "<span class='alert'>The round is currently being set up. Please wait.</span>")
+				boutput(usr, SPAN_ALERT("The round is currently being set up. Please wait."))
 				return
 
 			if (ticker.mode)
 				if (istype(ticker.mode, /datum/game_mode/construction))
 					var/datum/game_mode/construction/C = ticker.mode
 					if (C.in_setup)
-						boutput(usr, "<span class='alert'>The round is currently being set up. Please wait.</span>")
+						boutput(usr, SPAN_ALERT("The round is currently being set up. Please wait."))
 						return
 
 		if(!ticker || current_state <= GAME_STATE_PREGAME)
@@ -832,13 +900,13 @@ a.latejoin-card:hover {
 
 		if (ticker)
 			if(ticker.pregame_timeleft <= 3 && !isadmin(usr))
-				boutput(usr, "<span class='alert'>It is too close to roundstart for you to unready. Please wait until setup finishes.</span>")
+				boutput(usr, SPAN_ALERT("It is too close to roundstart for you to unready. Please wait until setup finishes."))
 				return
 			if (ticker.mode)
 				if (istype(ticker.mode, /datum/game_mode/construction))
 					var/datum/game_mode/construction/C = ticker.mode
 					if (C.in_setup)
-						boutput(usr, "<span class='alert'>You are already spawning, and cannot unready. Please wait until setup finishes.</span>")
+						boutput(usr, SPAN_ALERT("You are already spawning, and cannot unready. Please wait until setup finishes."))
 						return
 
 		if(ready)
@@ -867,11 +935,11 @@ a.latejoin-card:hover {
 			src.spawning = 1
 
 			close_spawn_windows()
-			boutput(src, "<span class='notice'>Now teleporting.</span>")
+			boutput(src, SPAN_NOTICE("Now teleporting."))
+			logTheThing(LOG_DEBUG, src, "observes.")
 			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (ASLoc)
 				observer.set_loc(ASLoc)
-			observer.apply_looks_of(client)
 
 			observer.observe_round = 1
 			if(client.preferences && client.preferences.be_random_name) //Wire: fix for Cannot read null.be_random_name (preferences &&)
@@ -880,6 +948,7 @@ a.latejoin-card:hover {
 			observer.bioHolder.mobAppearance.CopyOther(client.preferences.AH)
 			observer.gender = observer.bioHolder.mobAppearance.gender
 			observer.UpdateName()
+			observer.apply_looks_of(client)
 
 			if(!src.mind) src.mind = new(src)
 			ticker.minds |= src.mind
@@ -895,6 +964,7 @@ a.latejoin-card:hover {
 	say(message)
 		if(dd_hasprefix(message, "*"))
 			return
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 		src.ooc(message)
 
 #ifdef TWITCH_BOT_ALLOWED

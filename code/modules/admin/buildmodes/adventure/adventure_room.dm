@@ -18,7 +18,7 @@
 		else
 			var/turf/B = get_turf(object)
 			if (A.z != B.z)
-				boutput(usr, "<span class='alert'>The two corners must be on the same Z!</span>")
+				boutput(usr, SPAN_ALERT("The two corners must be on the same Z!"))
 				return
 
 			var/tz = A.z
@@ -212,4 +212,4 @@
 		var/wallname = "[kind] wall"
 		floortype = turfs[turfname]
 		walltype = turfs[wallname]
-		boutput(usr, "<span class='notice'>Now building [kind] rooms in wide area spawn mode.</span>")
+		boutput(usr, SPAN_NOTICE("Now building [kind] rooms in wide area spawn mode."))

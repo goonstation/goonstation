@@ -118,7 +118,7 @@ It's also faster (~6%), for internal bytecode reasons (which don't really matter
 
 ## Abstract types and typesof
 
-Some types exist just as a parent and should never be created in-game (e.g. `/obj/item`). Mark those using the `ABSTRACT_TYPE(type)` macro. You can check if a type is abstract using the `IS_ABSTRACT(type)` macro.
+Some types exist just as a parent and should never be created in-game (e.g. `/obj/item`). Mark those using the `ABSTRACT_TYPE(/type)` macro. You can check if a type is abstract using the `IS_ABSTRACT(/type)` macro.
 
 To get a list of all concrete (non-abstract) subtypes of a type you should use `concrete_typesof(type)`, the result is cached so no need to store it yourself. (As a consequence please `.Copy` the list if you want to make changes to it locally.) Proper usage of `ABSTRACT_TYPE` + `concrete_typesof` is preferred to using `typesof` and `childrentypesof` *usually* though exceptions apply.
 
@@ -453,7 +453,7 @@ make sure it isn't being used as a verb somewhere else.
 # Useful Things
 
 ## VSCode Debugger
-//TODO
+You can check out a guide on using the debugger in the guide located in the [Developer Guide](https://hackmd.io/@goonstation/dev#How-to-use-the-VS-Code-Debugger).
 
 ## Debugging Overlays
 
@@ -488,7 +488,7 @@ If you're on Linux you need to compile both yourself manually, obviously.
 You can spawn in a target dummy (`/mob/living/carbon/human/tdummy`) to more easily test things that do damage - they have the ass day health percent and damage popups visible even if your build isn't set to ass day.
 
 ## Signals and Components
-ninjanomnom from TG has written up a [useful primer](https://tgstation13.org/phpBB/viewtopic.php?f=5&t=22674) on signals and components. Most of the stuff there applies, although elements do not exist in this codebase.
+ninjanomnom from TG has written up a [useful primer](https://hackmd.io/@tgstation/SignalsComponentsElements) on signals and components. Most of the stuff there applies, although elements do not exist in this codebase.
 
 ## Generic Action bar
 Hate coding action bars? Making a new definition for an action bar datum just so you have visual feedback for your construction feel gross? Well fear not! You can now use the SETUP_GENERIC_ACTIONBAR() macro!

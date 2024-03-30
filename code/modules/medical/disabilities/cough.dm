@@ -1,7 +1,8 @@
 /datum/ailment/disability/cough
 	name = "Chronic Cough"
 	max_stages = 1
-	cure = "styptic_powder"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Styptic powder "
 	reagentcure = list("styptic_powder")
 	recureprob = 10
 	affected_species = list("Human")
@@ -14,4 +15,4 @@
 		M.emote("cough")
 	if (probmult(2))
 		M.changeStatus("stunned", 5 SECONDS)
-		M.visible_message("<span class='alert'><B>[M.name]</B> suffers a coughing fit</span>")
+		M.visible_message(SPAN_ALERT("<B>[M.name]</B> suffers a coughing fit"))

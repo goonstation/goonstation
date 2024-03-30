@@ -53,7 +53,7 @@
 			if(drop_type)
 				var/obj/item/drop = new drop_type
 				drop.set_loc(src.loc)
-			src.visible_message("<span class='alert'>[user] cuts down [src].</span>")
+			src.visible_message(SPAN_ALERT("[user] cuts down [src]."))
 			qdel(src)
 		..()
 
@@ -223,16 +223,12 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/mining_tool))
 			if(!ON_COOLDOWN(user, "mine_a_doodad", 1.1 SECONDS))
-				var/obj/item/mining_tool/T = W
-				var/digstr = T.dig_strength
-				if (T.status)
-					T.process_charges(T.digcost)
-					playsound(user.loc, T.hitsound_charged, 50, 1)
-				else
-					playsound(user.loc, T.hitsound_uncharged, 50, 1)
+				var/obj/item/mining_tool/mining_tool = W
+				var/digstr = mining_tool.get_dig_strength()
+				playsound(user.loc, mining_tool.get_mining_sound(), 50, 1)
 				src.dig_hp -= digstr
 				if(src.dig_hp <= 0)
-					src.visible_message("<span class='alert'>[src] breaks apart.</span>")
+					src.visible_message(SPAN_ALERT("[src] breaks apart."))
 					break_apart()
 			else
 				return
@@ -297,8 +293,11 @@
 	name = "trench wall"
 	icon_state = "trench-top"
 	fullbright = 0
+	occlude_foreground_parallax_layers = TRUE
+	fulltile_foreground_parallax_occlusion_overlay = TRUE
 
 /turf/unsimulated/wall/trench/side
 	name = "trench wall"
 	icon_state = "trench-side"
 	fullbright = 0
+	occlude_foreground_parallax_layers = FALSE

@@ -2,7 +2,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun
 	name = "gun"
-	icon = 'icons/obj/items/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = ONBELT
@@ -23,15 +22,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	pickup_sfx = 'sound/items/pickup_gun.ogg'
 	inventory_counter_enabled = 1
 
-	var/continuous = 0 //If 1, fire pixel based while button is held.
-	var/c_interval = 3 //Interval between shots while button is held.
-	var/c_windup = 0 //Time before we start firing while button is held - think minigun.
-	var/c_windup_sound = null //Sound to play during windup. TBI
-
-	var/c_firing = 0
-	var/c_mouse_down = 0
-	var/datum/gunTarget/c_target = null
-
 	var/suppress_fire_msg = 0
 
 	var/spread_angle = 0
@@ -47,12 +37,58 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/forensic_ID = null
 	var/add_residue = 0 // Does this gun add gunshot residue when fired (Convair880)?
 
-	var/charge_up = 0 //Does this gun have a charge up time and how long is it? 0 = normal instant shots.
 	var/shoot_delay = 4
 
 	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
 
 	var/fire_animation = FALSE //Used for guns that have animations when firing
+	var/safe_spin = FALSE //! Can this gun be *spin emoted without a chance to shoot yourself?
+
+
+
+	var/recoil = 0 //! current cumulative recoil value, for inaccuracy. leave at 0
+	var/recoil_last_shot //! last time this was fired, for recoil purposes
+	var/current_anim_recoil = 0 //! current icon rotation, used to make sure the icon resets properly
+	var/recoil_stacks = 0 //! current number of shots fired before recoil_reset elapsed.
+
+	// RECOIL SETUP
+	var/recoil_enabled = TRUE
+
+	// RECOIL STRENGTH
+	// Basic recoil strength, this is how hard the weapon kicks by default
+	// recoil_strength is added to recoil every shot, and kicks the camera similarly.
+	var/recoil_strength = 10 //! How strong this gun's base recoil impulse is.
+	var/recoil_max = 50		//! What's the max cumulative recoil this gun can hit?
+	var/recoil_inaccuracy_max = 0 //! at recoil_max, the weapon has this much additional spread
+
+	// Recoil-induced icon tilting. Good for smaller guns. 64x32 icons might look a bit silly with high values.
+	// If your gun uses recoil, it's *strongly* recommended to keep this enabled.
+	var/icon_recoil_enabled = TRUE //! Should this gun's icon tilt?
+	var/icon_recoil_cap = 10 //! At maximum recoil, what angle should the icon state be at?
+
+	// Recoil strength stacking, increases recoil strength as you shoot more
+	// Good for making spray & pray kick harder, so just use it on automatic weapons.
+	var/recoil_stacking_enabled = FALSE			//! Should this gun gain more recoil strength as it shoots?
+	var/recoil_stacking_safe_stacks = 3 //! Ignore this many shots before stacking up (if you want 3-shot bursts not to be penalsied)
+	var/recoil_stacking_amount = 1 		//! How much should recoil_strength go up by, every shot
+	var/recoil_stacking_max_stacks = 3 	//! How many times can recoil-stacking_amount apply?
+
+	// RECOIL RESET
+	// The following values should be pretty sane for most cases
+	// If you really must have 'gun that takes a long time to reset', kick recoil_reset_mult closer to 1
+	var/recoil_reset = 6 DECI SECONDS //! how long it takes for recoil to start resetting (6 deci seconds feels nice)
+	var/recoil_reset_mult = 0.75 //! multiplier to apply to recoil every .1 seconds (affects high recoil recovery)
+	var/recoil_reset_add = 0.2 //! additive reduction to accumulated recoil (affects low recoil recovery better than mult)
+
+	// CAMERA KNOCKING
+	// Whenever the gun shoots, it will punt the users' camera back at (recoil_strength + recoil_stacks*recoil_stacking_amount)* pixels per decisecond.
+	var/camera_recoil_enabled = TRUE //! Should this gun kickback the camera when fired?
+	var/camera_recoil_multiplier = 1 //! Multiply the recoil value by this for camera movement
+	var/camera_recoil_sway = TRUE //! If enabled, camera recoil rattles perpendicular to the aim direction too (recommended)
+	var/camera_recoil_sway_multiplier = 2 // Multiply the recoil value by this for camera variance (probably fine at 2)
+	var/camera_recoil_sway_min = 0 //! Minimum recoil variance
+	var/camera_recoil_sway_max = 20 //! Maximum recoil variance
+
 
 	buildTooltipContent()
 		. = ..()
@@ -61,53 +97,26 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		lastTooltipContent = .
 
 	New()
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
 		SPAWN(2 SECONDS)
 			src.forensic_ID = src.CreateID()
 			forensic_IDs.Add(src.forensic_ID)
 		return ..()
 
-/datum/gunTarget
-	var/params = null
-	var/target = null
-	var/user = 0
-
-/obj/item/gun/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
-	if(!continuous) return
-	if(c_target == null) c_target = new()
-	c_target.params = params2list(params)
-	c_target.target = over_object
-	c_target.user = usr
-
-/obj/item/gun/onMouseDown(atom/object,location,control,params) //This doesnt work with reach, will pistolwhip once. FIX.
-	if(!continuous) return
-	if(object == src || (!isturf(object.loc) && !isturf(object))) return
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		if(H.in_throw_mode) return
-	c_mouse_down = 1
-	SPAWN(c_windup)
-		if(!c_firing && c_mouse_down)
-			continuousFire(object, params, usr)
-
-/obj/item/gun/onMouseUp(object,location,control,params)
-	c_mouse_down = 0
-
-/obj/item/gun/proc/continuousFire(atom/target, params, mob/user)
-	if(!continuous) return
-	if(c_target == null) c_target = new()
-	c_target.params = params2list(params)
-	c_target.target = target
-	c_target.user = user
-
-	if(!c_firing)
-		c_firing = 1
-		SPAWN(0)
-			while(src?.c_mouse_down)
-				pixelaction(src.c_target.target, src.c_target.params, src.c_target.user, 0, 1)
-				suppress_fire_msg = 1
-				sleep(src.c_interval)
-			src.c_firing = 0
-			suppress_fire_msg = 0
+	// equip handling for weapons that fit on your back
+	try_specific_equip(mob/user)
+		. = ..()
+		if (!(src.c_flags & ONBACK))
+			return
+		if (!user.back?.storage)
+			return
+		if (!user.s_active)
+			return
+		if (user.s_active.master != user.back.storage)
+			return
+		if (user.back.storage.check_can_hold(src) == STORAGE_CAN_HOLD)
+			user.back.Attackby(src, user)
+			return TRUE
 
 /obj/item/gun/proc/CreateID() //Creates a new tracking id for the gun and returns it.
 	. = ""
@@ -139,13 +148,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /*
 /obj/item/gun/proc/emag(obj/item/A as obj, mob/user as mob)
 	if(istype(A, /obj/item/card/emag))
-		boutput(user, "<span class='alert'>No lock to break!</span>")
+		boutput(user, SPAN_ALERT("No lock to break!"))
 		return 1
 	return 0
 */
 /obj/item/gun/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (user)
-		boutput(user, "<span class='alert'>No lock to break!</span>")
+		boutput(user, SPAN_ALERT("No lock to break!"))
 	return 0
 
 /obj/item/gun/attack_self(mob/user as mob)
@@ -153,67 +162,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if(src.projectiles && length(src.projectiles) > 1)
 		src.current_projectile_num = ((src.current_projectile_num) % src.projectiles.len) + 1
 		src.set_current_projectile(src.projectiles[src.current_projectile_num])
-		boutput(user, "<span class='notice'>You set the output to [src.current_projectile.sname].</span>")
+		boutput(user, SPAN_NOTICE("You set the output to [src.current_projectile.sname]."))
 	return
-
-/datum/action/bar/icon/guncharge
-	duration = 150
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "guncharge"
-	icon = 'icons/obj/items/tools/screwdriver.dmi'
-	icon_state = "screwdriver"
-	var/obj/item/gun/ownerGun
-	var/pox
-	var/poy
-	var/user_turf
-	var/target_turf
-
-	New(_gun, _pox, _poy, _uturf, _tturf, _time, _icon, _icon_state)
-		ownerGun = _gun
-		pox = _pox
-		poy = _poy
-		user_turf = _uturf
-		target_turf = _tturf
-		icon = _icon
-		icon_state = _icon_state
-		duration = _time
-		..()
-
-	onEnd()
-		..()
-		ownerGun.shoot(target_turf, user_turf, owner, pox, poy)
-
-/datum/action/bar/icon/guncharge_pointblank
-	duration = 150
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "guncharge"
-	icon = 'icons/obj/items/tools/screwdriver.dmi'
-	icon_state = "screwdriver"
-	var/obj/item/gun/ownerGun
-	var/atom/target
-	var/mob/user
-	var/second_shot
-
-	New(_gun, _target, _user, _second_shot, _time, _icon, _icon_state)
-		ownerGun = _gun
-		target = _target
-		user = _user
-		second_shot = _second_shot
-		icon = _icon
-		icon_state = _icon_state
-		duration = _time
-		..()
-
-	onEnd()
-		..()
-		ownerGun.shoot_point_blank(target, user, second_shot, TRUE)
 
 /obj/item/gun/pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
 	if (reach)
 		return 0
 	if (!isturf(user.loc))
-		return 0
-	if(continuous && !continuousFire)
 		return 0
 
 	var/pox = text2num(params["icon-x"]) - 16 + target.pixel_x
@@ -223,7 +178,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	//if they're holding a gun in each hand... why not shoot both!
 	var/is_dual_wield = 0
-	if (can_dual_wield && (!charge_up))
+	if (can_dual_wield)
 		if(ishuman(user))
 			var/obj/item/gun/G
 			if(user.hand && istype(user.r_hand, /obj/item/gun))
@@ -236,7 +191,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				if(!ON_COOLDOWN(G, "shoot_delay", G.shoot_delay))
 					SPAWN(0.2 SECONDS)
 						if(!(G in user.equipped_list())) return
-						G.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
+						G.Shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield, target)
 
 		else if(ismobcritter(user))
 			var/mob/living/critter/M = user
@@ -251,52 +206,49 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 					if(!ON_COOLDOWN(gun, "shoot_delay", gun.shoot_delay))
 						sleep(0.2 SECONDS)
 						if(!(gun in user.equipped_list())) return
-						gun.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
+						gun.Shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield, target)
 
 	if(!ON_COOLDOWN(src, "shoot_delay", src.shoot_delay))
-		if(charge_up && !can_dual_wield && canshoot(user))
-			actions.start(new/datum/action/bar/icon/guncharge(src, pox, poy, user_turf, target_turf, charge_up, icon, icon_state), user)
-		else
-			shoot(target_turf, user_turf, user, pox, poy, is_dual_wield)
+		Shoot(target_turf, user_turf, user, pox, poy, is_dual_wield, target)
 
 
 	return 1
 
-/obj/item/gun/attack(mob/M, mob/user)
-	if (!M || !ismob(M)) //Wire note: Fix for Cannot modify null.lastattacker
+/obj/item/gun/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	if (!target || !ismob(target)) //Wire note: Fix for Cannot modify null.lastattacker
 		return ..()
 
-	user.lastattacked = M
-	M.lastattacker = user
-	M.lastattackertime = world.time
+	user.lastattacked = target
+	target.lastattacker = user
+	target.lastattackertime = world.time
 
-	if(user.a_intent != INTENT_HELP && isliving(M))
+	if(user.a_intent != INTENT_HELP && isliving(target))
 		if (user.a_intent == INTENT_GRAB)
 			var/datum/limb/current_limb = user.equipped_limb()
 			if (current_limb.can_gun_grab)
-				attack_particle(user,M)
+				attack_particle(user,target)
 				return ..()
-		src.shoot_point_blank(M, user)
+		src.ShootPointBlank(target, user)
 	else
 		..()
-		attack_particle(user,M)
+		attack_particle(user,target)
 
 #ifdef DATALOGGER
 		game_stats.Increment("violence")
 #endif
 		return
 
-/obj/item/gun/proc/shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0, var/skip_charge_up = FALSE)
+/obj/item/gun/proc/ShootPointBlank(atom/target, var/mob/user as mob, var/second_shot = 0)
+	if(!SEND_SIGNAL(src, COMSIG_GUN_TRY_POINTBLANK, target, user, second_shot))
+		src.shoot_point_blank(target, user, second_shot)
+
+/obj/item/gun/proc/shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0)
 	if (!target || !user)
 		return FALSE
 
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
 		return FALSE
-
-	if (charge_up && !skip_charge_up && !can_dual_wield && canshoot(user))
-		actions.start(new/datum/action/bar/icon/guncharge_pointblank(src, target, user, second_shot, charge_up, icon, icon_state), user)
-		return
 
 	var/is_dual_wield = 0
 	var/obj/item/gun/second_gun
@@ -312,9 +264,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				SPAWN(0.2 SECONDS)
 					if(user.r_hand != second_gun) return
 					if (BOUNDS_DIST(user, target) == 0)
-						second_gun.shoot_point_blank(target,user,second_shot = 1)
+						second_gun.ShootPointBlank(target,user,second_shot = 1)
 					else
-						second_gun.shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield)
+						second_gun.shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield, target)
 			else if(!user.hand && istype(user.l_hand, /obj/item/gun) && user.l_hand:can_dual_wield)
 				second_gun = user.l_hand
 				var/target_turf = get_turf(target)
@@ -322,9 +274,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				SPAWN(0.2 SECONDS)
 					if(user.l_hand != second_gun) return
 					if (BOUNDS_DIST(user, target) == 0)
-						second_gun.shoot_point_blank(target,user,second_shot = 1)
+						second_gun.ShootPointBlank(target,user,second_shot = 1)
 					else
-						second_gun.shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield)
+						second_gun.shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield, target)
 
 
 	if (src.artifact && istype(src.artifact, /datum/artifact))
@@ -334,8 +286,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if (!canshoot(user))
 		if (!silenced)
-			target.visible_message("<span class='alert'><B>[user] tries to shoot [user == target ? "[him_or_her(user)]self" : target] with [src] point-blank, but it was empty!</B></span>")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+			target.visible_message(SPAN_ALERT("<B>[user] tries to shoot [user == target ? "[him_or_her(user)]self" : target] with [src] point-blank, but it was empty!</B>"))
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 		else
 			user.show_text("*click* *click*", "red")
 		return FALSE
@@ -347,9 +299,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!src.silenced)
 		for (var/mob/O in AIviewers(target, null))
 			if (O.client)
-				O.show_message("<span class='alert'><B>[user] shoots [user == target ? "[him_or_her(user)]self" : target] point-blank with [src]!</B></span>")
+				O.show_message(SPAN_ALERT("<B>[user] shoots [user == target ? "[him_or_her(user)]self" : target] point-blank with [src]!</B>"))
 	else
-		boutput(user, "<span class='alert'>You silently shoot [user == target ? "yourself" : target] point-blank with [src]!</span>")
+		boutput(user, SPAN_ALERT("You silently shoot [user == target ? "yourself" : target] point-blank with [src]!"))
 
 	if (!process_ammo(user))
 		return FALSE
@@ -378,6 +330,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		spread += 5 * how_drunk
 	spread = max(spread, spread_angle)
 
+	spread += (recoil/recoil_max) * recoil_inaccuracy_max
+
 	for (var/i = 0; i < current_projectile.shot_number; i++)
 		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, target, 0, 0, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
 		if (!P)
@@ -403,14 +357,17 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	src.add_fingerprint(user)
-	if(continuous) return
 	if (flag)
 		return
 
 /obj/item/gun/proc/alter_projectile(var/obj/projectile/P)
 	return
 
-/obj/item/gun/proc/shoot(var/target,var/start,var/mob/user,var/POX,var/POY,var/is_dual_wield)
+/obj/item/gun/proc/Shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+	if(!SEND_SIGNAL(src, COMSIG_GUN_TRY_SHOOT, target, start, user, POX, POY, is_dual_wield, called_target))
+		src.shoot(target, start, user, POX, POY, is_dual_wield, called_target)
+
+/obj/item/gun/proc/shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
 		return FALSE
@@ -418,14 +375,17 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (ismob(user))
 			user.show_text("*click* *click*", "red") // No more attack messages for empty guns (Convair880).
 			if (!silenced)
-				playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 		return FALSE
 	if (!process_ammo(user))
 		return FALSE
-	if (!isturf(target) || !isturf(start))
+	if (!isturf(start))
 		return FALSE
 	if (!istype(src.current_projectile,/datum/projectile/))
 		return FALSE
+
+	if(!isturf(target))
+		target = get_turf(target)
 
 	if (src.muzzle_flash)
 		if (isturf(user.loc))
@@ -457,22 +417,26 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		spread += 5 * how_drunk
 	spread = max(spread, spread_angle)
 
-	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
+	spread += (recoil/recoil_max) * recoil_inaccuracy_max
+
+	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), called_target = called_target)
 	if (P)
 		P.forensic_ID = src.forensic_ID
 
 	if(user && !suppress_fire_msg)
 		if(!src.silenced)
 			for(var/mob/O in AIviewers(user, null))
-				O.show_message("<span class='alert'><B>[user] fires [src] at [target]!</B></span>", 1, "<span class='alert'>You hear a gunshot</span>", 2)
+				O.show_message(SPAN_ALERT("<B>[user] fires [src] at [target]!</B>"), 1, SPAN_ALERT("You hear a gunshot"), 2)
 		else
 			if (ismob(user)) // Fix for: undefined proc or verb /obj/item/mechanics/gunholder/show text().
-				user.show_text("<span class='alert'>You silently fire the [src] at [target]!</span>") // Some user feedback for silenced guns would be nice (Convair880).
+				user.show_text(SPAN_ALERT("You silently fire the [src] at [target]!")) // Some user feedback for silenced guns would be nice (Convair880).
 
 		var/turf/T = target
 		src.log_shoot(user, T, P)
 
 	SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
+
+	handle_recoil(user, start, target, POX, POY)
 
 	if (ismob(user))
 		var/mob/M = user
@@ -496,9 +460,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return ..()
 
 /obj/item/gun/proc/process_ammo(var/mob/user)
-	boutput(user, "<span class='alert'>*click* *click*</span>")
+	boutput(user, SPAN_ALERT("*click* *click*"))
 	if (!src.silenced)
-		playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+		playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 	return 0
 
 // Could be useful in certain situations (Convair880).
@@ -523,21 +487,21 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!src.canshoot(user))
 		return 0
 
-	user.visible_message("<span class='alert'><b>[user] places [src] against [his_or_her(user)] head!</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] places [src] against [his_or_her(user)] head!</b>"))
 	var/dmg = user.get_brute_damage() + user.get_burn_damage()
-	src.shoot_point_blank(user, user)
+	src.ShootPointBlank(user, user)
 	var/new_dmg = user.get_brute_damage() + user.get_burn_damage()
 	if (new_dmg >= (dmg + 20)) // it did some appreciable amount of damage
 		user.TakeDamage("head", 500, 0)
 	else if (new_dmg < (dmg + 20))
-		user.visible_message("<span class='alert'>[user] hangs their head in shame because they chose such a weak gun.</span>")
+		user.visible_message(SPAN_ALERT("[user] hangs their head in shame because they chose such a weak gun."))
 	return 1
 
 /obj/item/gun/on_spin_emote(var/mob/living/carbon/human/user as mob)
 	. = ..(user)
-	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
-		user.visible_message("<span class='alert'><b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b></span>")
-		src.shoot_point_blank(user, user)
+	if (((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5)) && !safe_spin)
+		user.visible_message(SPAN_ALERT("<b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b>"))
+		src.ShootPointBlank(user, user)
 		JOB_XP(user, "Clown", 3)
 
 
@@ -545,3 +509,70 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/set_current_projectile(datum/projectile/newProj)
 	src.current_projectile = newProj
 	SEND_SIGNAL(src, COMSIG_GUN_PROJECTILE_CHANGED, newProj)
+
+/obj/item/gun/proc/do_camera_recoil(mob/user, turf/start, turf/target, POX, POY)
+	// calculate the mob's position relative to the target location
+	// this is backwards so that the output angle is the angle we knock the camera back
+	var/x_diff = (start.x - target.x) * world.icon_size - POX
+	var/y_diff = (start.y - target.y) * world.icon_size - POY
+
+	var/dir = arctan(x_diff, y_diff)
+	var/total_strength = src.recoil_strength
+	if (recoil_stacking_enabled)
+		total_strength += clamp(round(recoil_stacks) - recoil_stacking_safe_stacks,0,recoil_stacking_max_stacks) * recoil_stacking_amount
+	var/variance = clamp(total_strength * camera_recoil_sway_multiplier, camera_recoil_sway_min, camera_recoil_sway_max)
+
+	recoil_camera(user, dir, total_strength * camera_recoil_multiplier, variance)
+
+
+/obj/item/gun/proc/do_icon_recoil()
+	if (!icon_recoil_enabled)
+		return
+	while(src.recoil > 0)
+		var/timediff = TIME - recoil_last_shot
+		if (timediff >= recoil_reset)
+			recoil *= recoil_reset_mult
+			recoil -= recoil_reset_add // small linear part to aid with low values
+			recoil = clamp(recoil,0, recoil_max)
+			recoil_stacks = clamp(round(recoil_stacks) - 0.25, 0, recoil_stacking_max_stacks)
+
+		var/base_icon_recoil = round((recoil/recoil_max)*icon_recoil_cap)
+		var/matrix/M = src.transform
+		var/jitter = base_icon_recoil/5
+		var/jittervalue = rand(-jitter, jitter)
+		if (src.recoil < current_anim_recoil || timediff > 0.2 DECI SECONDS) // stop the gun jerking up after you stop shooting
+			jittervalue = 0
+		var/target_recoil = base_icon_recoil + jittervalue
+
+		var/recoil_diff = (current_anim_recoil - target_recoil)
+		current_anim_recoil = target_recoil
+		animate(src, transform = matrix(M, recoil_diff, MATRIX_ROTATE | MATRIX_MODIFY), 0.1)
+		sleep(0.1 SECONDS)
+	recoil_stacks = 0
+
+/obj/item/gun/proc/handle_recoil(mob/user, turf/start, turf/target, POX, POY, first_shot = TRUE)
+	if (!recoil_enabled)
+		return
+	var/start_recoil = FALSE
+	if (recoil == 0)
+		start_recoil = TRUE // if recoil is 0, make sure do_recoil starts
+
+	// Add recoil
+	var/stacked_recoil = 0
+	if (recoil_stacking_enabled)
+		recoil_stacks += 1
+		stacked_recoil = clamp(round(recoil_stacks) - recoil_stacking_safe_stacks,0,recoil_stacking_max_stacks) * recoil_stacking_amount
+
+	recoil += (recoil_strength + stacked_recoil)
+	recoil = clamp(recoil, 0, recoil_max)
+	recoil_last_shot = TIME
+	if (camera_recoil_enabled)
+		do_camera_recoil(user, start,target,POX,POY)
+
+	if (first_shot && src.current_projectile.shot_number > 1 && src.current_projectile.shot_delay > 0)
+		for (var/i=1 to src.current_projectile.shot_number-1)
+			SPAWN(i*src.current_projectile.shot_delay)
+				handle_recoil(user,start,target,POX,POY, FALSE)
+	if (start_recoil && icon_recoil_enabled)
+		SPAWN(0)
+			do_icon_recoil()

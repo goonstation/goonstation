@@ -30,11 +30,11 @@ chui/theme
 		generated += "<script>document.addEventListener('keydown', function(ev){ if(ev.key === 'w' && ev.ctrlKey){ document.location = 'byond://winset?command=.chui-close [params["data"]["ref"]]'; } });</script>"
 		if( params["js"] )
 			//Common to all themes
-			generated += "<script src='[resource("js/jquery.min.js")]'></script>"
-			generated += "<script src='[resource("js/jquery.nanoscroller.min.js")]'></script>"
+			generated += "<script src='[resource("vendor/js/jquery.min.js")]'></script>"
+			generated += "<script src='[resource("vendor/js/jquery.nanoscroller.min.js")]'></script>"
 			generated += "<script src='[resource("js/chui/chui.js")]'></script>"
 			generated += "<script src='[resource("js/errorHandler.js")]'></script>"
-			generated += "<script src='[resource("js/jquery.debounce-1.0.5.js")]'></script>"
+			generated += "<script src='[resource("vendor/js/jquery.debounce-1.0.5.js")]'></script>"
 			generated += "\n"
 
 			//Theme specific
@@ -42,7 +42,7 @@ chui/theme
 				generated += "<script src='[resource(key)]'></script>"
 
 		if( params["css"] )
-			generated += "<link rel='stylesheet' type='text/css' href='[resource("css/font-awesome.css")]'>"
+			generated += "<link rel='stylesheet' type='text/css' href='[resource("vendor/css/font-awesome.css")]'>"
 
 			for( var/key in params["css"] )
 				generated += "<link rel='stylesheet' type='text/css' href='[resource(key)]'>"
@@ -136,7 +136,7 @@ chui/theme/flock
 
 	generateHeader(var/list/params)
 		params["css"] += list("css/chui/flockdrone.css")
-		params["js"] += list("js/howler.core.min.js", "js/flockmind.js")
+		params["js"] += list("vendor/js/howler.core.min.js", "js/flockmind.js")
 
 		return ..(params)
 

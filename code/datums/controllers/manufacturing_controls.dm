@@ -53,15 +53,16 @@ var/datum/manufacturing_controller/manuf_controls
 	logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> Schematic with name \"[schematic_name]\" not found")
 	return null
 
-/proc/get_schematic_from_path_in_custom(var/schematic_path)
+/proc/get_schematic_from_path_in_custom(var/schematic_path, silent = FALSE) //silent because we use this to check to see if we need to *add* a schematic to custom. Kinda dumb to yell about it in the logs as well
 	if (!ispath(schematic_path))
 		logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> Attempt to find schematic with null path")
 		return null
-	if (!length(manuf_controls.custom_schematics))
+	if (!length(manuf_controls.custom_schematics) && !silent)
 		logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> Cant find schematic due to empty schematic list")
 		return null
 	for (var/datum/manufacture/mechanics/M in manuf_controls.custom_schematics)
 		if (schematic_path == M.frame_path)
 			return M
-	logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> Schematic \"[schematic_path]\" not found")
+	if(!silent)
+		logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> Schematic \"[schematic_path]\" not found")
 	return null

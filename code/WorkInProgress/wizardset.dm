@@ -307,10 +307,10 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 
 	New()
 		..()
-		dummies += new /obj/border_dummy { dir = 1; }(src.loc)
-		dummies += new /obj/border_dummy { dir = 2; }(src.loc)
-		dummies += new /obj/border_dummy { dir = 4; }(src.loc)
-		dummies += new /obj/border_dummy { dir = 8; }(src.loc)
+		dummies += new /obj/border_dummy { dir = NORTH; }(src.loc)
+		dummies += new /obj/border_dummy { dir = SOUTH; }(src.loc)
+		dummies += new /obj/border_dummy { dir = EAST; }(src.loc)
+		dummies += new /obj/border_dummy { dir = WEST; }(src.loc)
 		for (var/obj/item/O in get_turf(src))
 			O.pixel_y = 2
 			O.pixel_x = 0
@@ -469,7 +469,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 				overlays += O.icon_pedestal
 				name = "[O.pedestal_name] pedestal"
 			else
-				boutput(user, "<span class='alert'>This pedestal already holds an orb!</span>")
+				boutput(user, SPAN_ALERT("This pedestal already holds an orb!"))
 
 	proc/destroyOrb()
 		if (O)
@@ -554,17 +554,17 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (!reagent)
-			boutput(user, "<span class='alert'>The potion flask is empty.</span>")
+			boutput(user, SPAN_ALERT("The potion flask is empty."))
 		if (user == target)
-			user.visible_message("<span class='notice'>[user] uncorks the potion and pours it down [his_or_her(user)] throat.</span>")
+			user.visible_message(SPAN_NOTICE("[user] uncorks the potion and pours it down [his_or_her(user)] throat."))
 			logTheThing(LOG_COMBAT, user, "drinks [src] ([potion_name] -- [reagent])")
 			drink(user)
 		else if (ishuman(target))
-			user.visible_message("<span class='alert'>[user] attempts to force [target] to drink [src].</span>")
+			user.visible_message(SPAN_ALERT("[user] attempts to force [target] to drink [src]."))
 			logTheThing(LOG_COMBAT, user, "tries to force [constructTarget(target,"combat")] to drink [src] ([potion_name] -- [reagent]).")
 			if (do_after(user, 3 SECONDS))
 				if (reagent)
-					user.visible_message("<span class='alert'>[user] forces [target] to drink [src].</span>")
+					user.visible_message(SPAN_ALERT("[user] forces [target] to drink [src]."))
 					logTheThing(LOG_COMBAT, user, "forces [constructTarget(target,"combat")] to drink [src] ([potion_name] -- [reagent]).")
 					drink(target)
 
@@ -710,7 +710,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 			pixel_x = 0
 			pixel_y = 0
 			if (!(dir in cardinal))
-				src.set_dir(2)
+				src.set_dir(SOUTH)
 			switch (dir)
 				if (1)
 					pixel_y = -32
@@ -724,14 +724,14 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/wizard_crystal))
 			if (!src.crystal)
-				boutput(user, "<span class='notice'>You place the crystal into the socket.</span>")
+				boutput(user, SPAN_NOTICE("You place the crystal into the socket."))
 				crystal = W
 				user.u_equip(W)
 				W.set_loc(src)
 				user.client.screen -= W
 				apply_crystal()
 			else
-				boutput(user, "<span class='alert'>There already is a crystal inserted into this.</span>")
+				boutput(user, SPAN_ALERT("There already is a crystal inserted into this."))
 
 	proc/apply_crystal()
 		if (!crystal)
@@ -802,7 +802,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 	examine(mob/user)
 		. = ..()
 		if (!written)
-			. += "<span class='alert'>You cannot decipher the runes written in the book.</span>"
+			. += SPAN_ALERT("You cannot decipher the runes written in the book.")
 		else
 			user.Browse(written, "window=tome;size=200x400")
 
@@ -843,8 +843,8 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 
 	proc/update_dir(var/D)
 		src.set_dir(D)
-		if (!(dir & 2))
-			src.set_dir(2)
+		if (!(dir & SOUTH))
+			src.set_dir(SOUTH)
 		pixel_y = 28
 		effect_overlay.set_dir(dir)
 

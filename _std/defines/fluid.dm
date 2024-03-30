@@ -3,3 +3,6 @@
 #define FLUIDPIPE_SOURCE 2
 #define FLUIDPIPE_SINK 3
 #define DEFAULT_FLUID_CAPACITY 100
+
+// Fluid clicking
+#define CHECK_LIQUID_CLICK(thing) (thing.level <= UNDERFLOOR || HAS_ATOM_PROPERTY(thing, PROP_ATOM_DO_LIQUID_CLICKS))

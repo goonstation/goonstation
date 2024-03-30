@@ -6,9 +6,9 @@
 	 //Input needed here
 
 	antag_token_support = TRUE
-	latejoin_antag_roles = list(ROLE_TRAITOR = 2, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1,  ROLE_WRESTLER = 1, ROLE_ARCFIEND = 1, ROLE_WIZARD = 0.5, ROLE_WEREWOLF = 0.5)
+	latejoin_antag_roles = list(ROLE_TRAITOR = 2, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1,  ROLE_WRESTLER = 1, ROLE_ARCFIEND = 1, ROLE_WIZARD = 0.5)
 	// wizards are special cased in the parent to have a 10% chance to spawn for some fucking reason. It's not even a var it's just 10% always
-	traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_SPY_THIEF = 0.5, ROLE_ARCFIEND = 1, ROLE_TRAITOR = 1, ROLE_WEREWOLF = 0.5)
+	traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_SPY_THIEF = 0.5, ROLE_ARCFIEND = 1, ROLE_TRAITOR = 1)
 
 	major_threats = list(ROLE_WRAITH = 1)
 

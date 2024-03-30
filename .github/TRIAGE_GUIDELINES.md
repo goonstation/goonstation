@@ -4,10 +4,10 @@ Here's just the basic conduct we require.
 3. Offer constructive criticism where appropriate.
 
 Guidelines:
-1. You must enable 2 factor authentication on your github account and have a unique password.
+1. You must have a unique password on your account.
 2. Only close a PR if it violates Goonstation rules, or GitHub policies/terms of service.
 3. Do not apply labels that effect automation GitHub actions without consulting with a developer: (Certified Organic, Feedback Requested)
-4. Set your Organization Member visibility to private. [Instructions here](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-user-account/managing-your-membership-in-organizations/publicizing-or-hiding-organization-membership) 
+4. Ensure your Organization Member visibility is private. [Instructions here](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-user-account/managing-your-membership-in-organizations/publicizing-or-hiding-organization-membership) 
 5. Do not create milestones without consulting with a dev.
 
 Relevant info:

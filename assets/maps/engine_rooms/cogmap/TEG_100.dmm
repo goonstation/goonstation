@@ -11,7 +11,7 @@
 /obj/item/extinguisher,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/decal/stripe_delivery,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
@@ -22,12 +22,10 @@
 	frequency = 1448;
 	name = "Toxins Lab Intercom"
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/engine,
@@ -40,7 +38,7 @@
 /obj/machinery/meter{
 	pixel_y = 1
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -69,7 +67,6 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
@@ -95,7 +92,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
@@ -110,13 +106,12 @@
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "eZ" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/storage/crate/furnacefuel,
@@ -134,7 +129,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-4"
 	},
 /obj/landmark/start{
@@ -174,13 +169,9 @@
 /area/station/engine/core)
 "ir" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/engine,
@@ -213,8 +204,6 @@
 	},
 /obj/machinery/power/furnace/thermo,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
@@ -245,13 +234,9 @@
 /area/station/engine/core)
 "nW" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/engine,
@@ -264,17 +249,13 @@
 	tag = "Hot Loop Outlet Meter"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "pa" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -293,8 +274,6 @@
 	icon_state = "2-8"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
@@ -304,7 +283,7 @@
 	dir = 8;
 	level = 2
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -327,7 +306,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "sq" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
@@ -338,8 +317,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "sZ" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -363,13 +341,9 @@
 	dir = 9
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/engine,
@@ -402,10 +376,10 @@
 /obj/machinery/power/generatorTemp,
 /obj/item/paper/engine,
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-2"
 	},
-/obj/cable/brown,
+/obj/cable/orange,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -436,13 +410,9 @@
 /area/station/engine/core)
 "yD" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/engine,
@@ -457,7 +427,7 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/decal/stripe_delivery,
@@ -473,7 +443,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "zx" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/item/device/radio/intercom/engineering{
@@ -486,8 +456,6 @@
 /area/station/engine/core)
 "zQ" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small/floor/warm,
@@ -517,8 +485,6 @@
 	pixel_y = 21
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
@@ -601,23 +567,19 @@
 	name = "cold loop inlet valve"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "JD" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "Kh" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -650,19 +612,9 @@
 	tag = "Cold Loop Outlet Meter"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/cable/brown{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"NG" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
@@ -671,7 +623,7 @@
 /obj/machinery/atmospherics/binary/valve{
 	name = "outlet purge valve"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
@@ -692,14 +644,12 @@
 	dir = 8
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "Sf" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -717,8 +667,6 @@
 	dir = 10
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
@@ -812,10 +760,10 @@ rB
 (4,1,1) = {"
 EC
 eN
-NG
-NG
+Bm
+Bm
 zQ
-NG
+Bm
 nW
 uc
 iO
@@ -864,10 +812,10 @@ OQ
 (8,1,1) = {"
 EC
 Jl
-NG
-NG
+Bm
+Bm
 zQ
-NG
+Bm
 yD
 ez
 hU

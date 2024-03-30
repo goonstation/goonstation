@@ -39,7 +39,7 @@
 		if (src.triggering_device:state)
 			//boutput(world, "sending signal")
 			receive_signal()
-		else
+		//else
 			//boutput(world, "not active")
 	..()
 
@@ -58,6 +58,7 @@
 		prox_check()
 
 /obj/item/assembly/chem_bomb/dropped()
+	. = ..()
 	if (!istype(src.triggering_device, /obj/item/device/prox_sensor))
 		return
 	SPAWN( 0 )

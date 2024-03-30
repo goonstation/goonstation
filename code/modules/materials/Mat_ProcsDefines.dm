@@ -1,5 +1,5 @@
 
-var/global/list/material_cache = buildMaterialCache()
+var/global/list/material_cache
 
 /atom/var/datum/material/material = null
 /atom/var/material_amt = 1
@@ -85,6 +85,9 @@ var/global/list/material_cache = buildMaterialCache()
 	if(mat1?.countTriggers(TRIGGERS_ON_ENTERED))
 		mat1.RegisterSignal(src, COMSIG_ATOM_CROSSED, /datum/material/proc/triggerOnEntered)
 
+	if(mat1.getID() == default_material && !src.uses_default_material_name)
+		setname = FALSE
+
 	if (src.mat_changename && setname)
 		src.remove_prefixes(99)
 		src.remove_suffixes(99)
@@ -137,7 +140,9 @@ var/global/list/material_cache = buildMaterialCache()
 	src.alpha = initial(src.alpha) // these two are technically not ideal but better than nothing I guess
 	src.color = initial(src.color)
 	var/base_icon_state = materialless_icon_state()
-	if (isnull(mat1) || (mat1.getID() in src.get_typeinfo().mat_appearances_to_ignore))
+
+	if (isnull(mat1) || (mat1.getID() in src.get_typeinfo().mat_appearances_to_ignore) || \
+			mat1.getID() == default_material && !src.uses_default_material_appearance)
 		src.icon_state = base_icon_state
 		src.setTexture(null, key="material")
 		return
@@ -175,7 +180,7 @@ var/global/list/material_cache = buildMaterialCache()
 		icon = src.icon
 	if(isnull(global.valid_icon_states[icon]))
 		global.valid_icon_states[icon] = list()
-		for(var/icon_state in icon_states(src.icon))
+		for(var/icon_state in icon_states(icon))
 			global.valid_icon_states[icon][icon_state] = 1
 	return state in global.valid_icon_states[icon]
 
@@ -187,7 +192,7 @@ var/global/list/material_cache = buildMaterialCache()
 	if (MAT.getMaterialFlags() & MATERIAL_CRYSTAL)
 		return /obj/item/material_piece/block
 	if (MAT.getMaterialFlags() & MATERIAL_METAL)
-		return /obj/item/material_piece
+		return /obj/item/material_piece/metal
 	if (MAT.getMaterialFlags() & MATERIAL_ORGANIC)
 		return /obj/item/material_piece/wad
 	if (MAT.getMaterialFlags() & MATERIAL_CLOTH)
@@ -417,6 +422,12 @@ var/global/list/material_cache = buildMaterialCache()
 	for(var/datum/material_recipe/R in materialRecipes)
 		if(R.validate(M)) return R
 	return null
+
+/proc/findRecipeName(var/obj/item/One,var/obj/item/Two)
+	var/tempmerge = getFusedMaterial(One.material, Two.material)
+	for(var/datum/material_recipe/R in materialRecipes)
+		if(R.validate(tempmerge)) return R
+	return getInterpolatedName(One.material.getName(), Two.material.getName(), 0.5)
 
 /**
 	* Searches the parent materials of the given material, up to a given generation, for an id.

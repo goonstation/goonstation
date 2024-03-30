@@ -8,7 +8,7 @@
 	icon_state = "ptl"
 	density = 1
 	anchored = ANCHORED_ALWAYS
-	dir = 4
+	dir = EAST
 	bound_height = 96
 	bound_width = 96
 	var/output = 0		//power output of the beam
@@ -56,6 +56,8 @@
 
 		terminal.master = src
 
+		AddComponent(/datum/component/mechanics_holder)
+
 		UpdateIcon()
 
 /obj/machinery/power/pt_laser/disposing()
@@ -76,8 +78,23 @@
 	src.emagged = TRUE
 	if (user)
 		src.add_fingerprint(user)
-		src.visible_message("<span class='alert'>[src.name] looks a little wonky, as [user] has messed with the polarity using an electromagnetic card!</span>")
-	return 1
+		playsound(src.loc, 'sound/machines/bweep.ogg', 10, TRUE)
+		src.audible_message(SPAN_ALERT("The [src.name] chirps 'OUTPUT CONTROLS UNLOCKED: INVERSE POLARITY ENABLED' \
+		from some unseen speaker, then goes quiet."))
+	return TRUE
+
+/obj/machinery/power/pt_laser/demag(var/mob/user)
+	if (!src.emagged)
+		return FALSE
+
+	if (user)
+		user.show_text("You reset the [src.name]'s power output protocols.", "blue")
+
+	if (src.output_number < 0 || src.output < 0) //Checking both is redundant, but just in case
+		src.output_number = 0
+		src.output = 0
+	src.emagged = FALSE
+	return TRUE
 
 /obj/machinery/power/pt_laser/update_icon(var/started_firing = 0)
 	overlays = null
@@ -132,6 +149,7 @@
 
 	if(online) // if it's switched on
 		if(!firing) //not firing
+
 			if(charge >= adj_output && (adj_output >= PTLMINOUTPUT)) //have power to fire
 				start_firing() //creates all the laser objects then activates the right ones
 				dont_update = 1 //so the firing animation runs
@@ -151,6 +169,8 @@
 			if(length(blocking_objects) > 0)
 				melt_blocking_objects()
 			power_sold(adj_output)
+
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "[output * firing]") //sends 0 if not firing else give theoretical output
 
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
@@ -184,11 +204,8 @@
 	generated_moolah += undistributed_earnings
 	undistributed_earnings = 0
 
-	// the double chief engineer seems to be intentional however silly it may seem
-	var/list/accounts = \
-		data_core.bank.find_records("job", "Chief Engineer") + \
-		data_core.bank.find_records("job", "Chief Engineer") + \
-		data_core.bank.find_records("job", "Engineer")
+	// CE gets double the payout share from the PTL
+	var/list/accounts = FindBankAccountsByJobs(list("Chief Engineer", "Chief Engineer", "Engineer"))
 
 	if(!length(accounts)) // no engineering staff but someone still started the PTL
 		wagesystem.station_budget += generated_moolah
@@ -277,7 +294,12 @@
 
 /obj/machinery/power/pt_laser/proc/melt_blocking_objects()
 	for (var/obj/O in blocking_objects)
-		if (istype(O, /obj/machinery/door/poddoor) || istype(O, /obj/laser_sink) || istype(O, /obj/machinery/vehicle) || istype(O, /obj/machinery/bot/mulebot) || isrestrictedz(O.z))
+		if (istype(O, /obj/machinery/door/poddoor) || \
+				istype(O, /obj/laser_sink) || \
+				istype(O, /obj/machinery/vehicle) || \
+				istype(O, /obj/machinery/bot/mulebot) || \
+				istype(O, /obj/machinery/the_singularity) || /* could be interesting to add some interaction here, maybe when singulo behviours are abstracted away in #16731*/ \
+				isrestrictedz(O.z))
 			continue
 		else if (prob((abs(output)*PTLEFFICIENCY)/5e5))
 			O.visible_message("<b>[O.name] is melted away by the [src]!</b>")
@@ -362,10 +384,7 @@
 		//Output controls
 		if("toggleOutput")
 			src.online = !src.online
-			if(online)
-				src.start_firing()
-			else
-				src.stop_firing()
+			src.process(1)
 			. = TRUE
 		if("setOutput")
 			. = TRUE
@@ -440,7 +459,7 @@
 		else if (istype(newL.glasses, /obj/item/clothing/glasses/sunglasses) || newL.eye_istype(/obj/item/organ/eye/cyber/sunglass))
 			safety = 2
 
-		boutput(L, "<span class='alert'>Your eyes are burned by the laser!</span>")
+		boutput(L, SPAN_ALERT("Your eyes are burned by the laser!"))
 		L.take_eye_damage(power/(safety*1e5)) //this will damage them a shitload at the sorts of power the laser will reach, as it should.
 		L.change_eye_blurry(rand(power / (safety * 2e5)), 50) //don't stare into 100MW lasers, kids
 
@@ -520,8 +539,8 @@ TYPEINFO(/obj/laser_sink/mirror)
 
 /obj/laser_sink/mirror/attackby(obj/item/I, mob/user)
 	if (isscrewingtool(I))
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
+		user.visible_message(SPAN_NOTICE("[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor."))
 		src.anchored = !src.anchored
 	else
 		..()
@@ -591,13 +610,13 @@ TYPEINFO(/obj/laser_sink/splitter)
 //todo: componentize anchoring behaviour
 /obj/laser_sink/splitter/attackby(obj/item/I, mob/user)
 	if (isscrewingtool(I))
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
+		user.visible_message(SPAN_NOTICE("[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor."))
 		src.anchored = !src.anchored
 	else if (ispryingtool(I))
 		if (ON_COOLDOWN(src, "rotate", 0.3 SECONDS))
 			return
-		playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', 50, TRUE)
 		src.dir = turn(src.dir, 90)
 	else
 		..()
@@ -650,7 +669,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/linked_laser
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ptl_beam"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	luminosity = 1
 	mouse_opacity = 0
@@ -836,7 +855,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/linked_laser/ptl/try_propagate()
 	. = ..()
 	var/turf/T = get_next_turf()
-	if (!T) //edge of z_level
+	if (!T || istype(T, /turf/unsimulated/wall/trench)) //edge of z_level or oshan trench
 		var/obj/laser_sink/ptl_seller/seller = get_singleton(/obj/laser_sink/ptl_seller)
 		if (seller.incident(src))
 			src.sink = seller

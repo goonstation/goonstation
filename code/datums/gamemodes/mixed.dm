@@ -40,7 +40,7 @@
 	if (num_players < werewolf_players_req || !has_werewolves)
 		traitor_types[ROLE_WEREWOLF] = 0;
 
-	var/i = rand(25)
+	var/i = rand(15)
 	var/num_enemies = 1
 
 	if(traitor_scaling)

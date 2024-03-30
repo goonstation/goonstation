@@ -15,6 +15,7 @@
 	var/obj/item/circuitboard/circuit = null
 	var/obj/item/cable_coil/my_cable = null
 	material_amt = 0.5
+	HELP_MESSAGE_OVERRIDE("")
 
 	blob_act(var/power)
 		qdel(src)
@@ -172,6 +173,10 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "Circuit board (Announcement Computer)"
 	computertype = "/obj/machinery/computer/announcement"
 
+/obj/item/circuitboard/siphon_control
+	name = "Circuit board (Siphon Control)"
+	computertype = /obj/machinery/computer/siphon_control
+
 /obj/computerframe/meteorhit(obj/O as obj)
 	qdel(src)
 
@@ -222,19 +227,19 @@ TYPEINFO(/obj/item/circuitboard)
 				actions.start(action_bar, user)
 			if (istype(P, /obj/item/circuitboard) && !circuit)
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
+				boutput(user, SPAN_NOTICE("You place the circuit board inside the frame."))
 				src.icon_state = "1"
 				src.circuit = P
 				user.drop_item()
 				P.set_loc(src)
 			if (isscrewingtool(P) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You screw the circuit board into place.</span>")
+				boutput(user, SPAN_NOTICE("You screw the circuit board into place."))
 				src.state = STATE_HAS_BOARD
 				src.icon_state = "2"
 			if (ispryingtool(P) && circuit)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You remove the circuit board.</span>")
+				boutput(user, SPAN_NOTICE("You remove the circuit board."))
 				src.state = STATE_ANCHORED
 				src.icon_state = "0"
 				circuit.set_loc(src.loc)
@@ -242,7 +247,7 @@ TYPEINFO(/obj/item/circuitboard)
 		if (STATE_HAS_BOARD)
 			if (isscrewingtool(P) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You unfasten the circuit board.</span>")
+				boutput(user, SPAN_NOTICE("You unfasten the circuit board."))
 				src.state = STATE_ANCHORED
 				src.icon_state = "1"
 			if (istype(P, /obj/item/cable_coil))
@@ -250,12 +255,12 @@ TYPEINFO(/obj/item/circuitboard)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					actions.start(action_bar, user)
 				else
-					boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the computer.</span>")
+					boutput(user, SPAN_ALERT("You need at least five pieces of cable to wire the computer."))
 
 		if (STATE_HAS_CABLES)
 			if (issnippingtool(P))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You remove the cables.</span>")
+				boutput(user, SPAN_NOTICE("You remove the cables."))
 				src.state = STATE_HAS_BOARD
 				src.icon_state = "2"
 				//my_cable.set_loc(src.loc) // Haine: fix for Cannot execute null.set loc()
@@ -270,20 +275,20 @@ TYPEINFO(/obj/item/circuitboard)
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						actions.start(action_bar, user)
 					else
-						boutput(user, "<span class='alert'>You need at least two sheets of glass to install the screen.</span>")
+						boutput(user, SPAN_ALERT("You need at least two sheets of glass to install the screen."))
 				else
-					boutput(user, "<span class='alert'>This is the wrong kind of material. You'll need a type of glass or crystal.</span>")
+					boutput(user, SPAN_ALERT("This is the wrong kind of material. You'll need a type of glass or crystal."))
 		if (STATE_HAS_GLASS)
 			if (ispryingtool(P))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You remove the glass panel.</span>")
+				boutput(user, SPAN_NOTICE("You remove the glass panel."))
 				src.state = STATE_HAS_CABLES
 				src.icon_state = "3"
 				var/obj/item/sheet/glass/A = new /obj/item/sheet/glass( src.loc )
 				A.amount = 2
 			if (isscrewingtool(P))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				boutput(user, "<span class='notice'>You connect the monitor.</span>")
+				boutput(user, SPAN_NOTICE("You connect the monitor."))
 				var/obj/machinery/computer/B = new src.circuit.computertype ( src.loc )
 				B.set_dir(src.dir)
 				if (circuit.id)
@@ -299,11 +304,11 @@ TYPEINFO(/obj/item/circuitboard)
 	switch(state)
 		if(STATE_UNANCHORED)
 			if(user.equipped(P) && iswrenchingtool(P))
-				boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
+				boutput(user, SPAN_NOTICE("You wrench the frame into place."))
 				src.anchored = ANCHORED
 				src.state = STATE_ANCHORED
 			if(user.equipped(P) && isweldingtool(P))
-				boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
+				boutput(user, SPAN_NOTICE("You deconstruct the frame."))
 				var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
 				A.amount = 5
 				if (src.material)
@@ -314,18 +319,18 @@ TYPEINFO(/obj/item/circuitboard)
 				qdel(src)
 		if(STATE_ANCHORED)
 			if(user.equipped(P) && iswrenchingtool(P))
-				boutput(user, "<span class='notice'>You unfasten the frame.</span>")
+				boutput(user, SPAN_NOTICE("You unfasten the frame."))
 				src.anchored = UNANCHORED
 				src.state = STATE_UNANCHORED
 		if(STATE_HAS_BOARD)
 			if(user.equipped(P) && istype(P, /obj/item/cable_coil))
-				boutput(user, "<span class='notice'>You add cables to the frame.</span>")
+				boutput(user, SPAN_NOTICE("You add cables to the frame."))
 				P.change_stack_amount(-5)
 				src.state = STATE_HAS_CABLES
 				src.icon_state = "3"
 		if(STATE_HAS_CABLES)
 			if(user.equipped(P) && istype(P, /obj/item/sheet))
-				boutput(user, "<span class='notice'>You put in the glass panel.</span>")
+				boutput(user, SPAN_NOTICE("You put in the glass panel."))
 				P.change_stack_amount(-2)
 				src.state = STATE_HAS_GLASS
 				src.icon_state = "4"

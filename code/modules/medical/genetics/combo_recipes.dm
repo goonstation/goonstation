@@ -333,3 +333,7 @@
 /datum/geneticsrecipe/skeleton_three
 	required_effects = list("xray","dead_scan")
 	result = /datum/bioEffect/mutantrace/skeleton
+
+/datum/geneticsrecipe/reversed_sounds
+	required_effects = list("slow_sounds","fast_sounds")
+	result = /datum/bioEffect/reversedSounds

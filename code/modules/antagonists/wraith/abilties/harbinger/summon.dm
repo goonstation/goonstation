@@ -15,11 +15,11 @@
 
 		var/turf/T = get_turf(holder.owner)
 		if (!T || !istype(T,/turf/simulated/floor))
-			boutput(holder.owner, "<span class='notice'>You cannot use this here!</span>")
+			boutput(holder.owner, SPAN_NOTICE("You cannot use this here!"))
 			return TRUE
 		for (var/obj/O in T)
 			if (O.density)
-				boutput(holder.owner, "<span class='notice'>There is something in the way!</span>")
+				boutput(holder.owner, SPAN_NOTICE("There is something in the way!"))
 				return TRUE
 		boutput(holder.owner, "You begin to channel power to call a spirit to this realm!")
 		src.doCooldown()

@@ -53,7 +53,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		else if (I.force > 0)
 			user.lastattacked = src
 			if (src.reinforced)
-				boutput(user, "<span class='alert'>[src] is too reinforced to bash into!</span>")
+				boutput(user, SPAN_ALERT("[src] is too reinforced to bash into!"))
 				attack_particle(user,src)
 				playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 40, 1) //quiet, no hit twitch
 			else
@@ -64,7 +64,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 					damage_text = " It's not very effective."
 				else
 					damage = I.force
-				user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]! [damage_text]</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> hits [src] with [I]! [damage_text]"))
 				attack_particle(user,src)
 				hit_twitch(src)
 				take_damage(clamp(damage, 1, 20), user, I, null)
@@ -247,7 +247,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/suit/armor/hoscape,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
-	/obj/item/clothing/head/helmet/hardhat/security,
+	/obj/item/clothing/head/helmet/hardhat/security/hos,
 	/obj/item/clothing/glasses/sunglasses/sechud,
 	/obj/item/gun/energy/egun/head_of_security,
 	/obj/item/device/radio/headset/security,
@@ -328,7 +328,6 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	name = "\improper Chief Engineer's locker"
 	req_access = list(access_engineering_chief)
 	spawn_contents = list(
-		/obj/item/storage/belt/utility/prepared/ceshielded,
 		/obj/item/disk/data/floppy/manudrive/law_rack,
 		/obj/item/storage/box/clothing/chief_engineer,
 		/obj/item/device/radio/headset/command/ce,
@@ -336,9 +335,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/device/flash,
 		/obj/item/clothing/shoes/magnetic,
 		/obj/item/clothing/gloves/yellow,
-		/obj/item/clothing/suit/fire/heavy, //now theres at least one on every map
+		/obj/item/clothing/suit/hazard/fire/heavy, //now theres at least one on every map
 		/obj/item/clothing/head/helmet/firefighter,
-		/obj/item/clothing/suit/rad, //mostly relevant for singulo and nuke maps
+		/obj/item/clothing/suit/hazard/rad, //mostly relevant for singulo and nuke maps
 		/obj/item/clothing/head/rad_hood,
 		/obj/item/storage/toolbox/mechanical/yellow_tools,
 		/obj/item/storage/box/misctools,
@@ -354,7 +353,27 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/clothing/suit/space/light/engineer,
 		/obj/item/clothing/head/helmet/space/light/engineer,
 	#endif
+	)
 
+/obj/storage/secure/closet/command/chief_engineer/puzzle
+	locked = FALSE
+	spawn_contents = list(
+		/obj/item/storage/belt/utility/prepared/ceshielded, //instead of the law rack disk
+		/obj/item/storage/box/clothing/chief_engineer,
+		/obj/item/device/radio/headset/command/ce,
+		/obj/item/stamp/ce,
+		/obj/item/device/flash,
+		/obj/item/clothing/shoes/magnetic,
+		/obj/item/clothing/gloves/yellow,
+		/obj/item/clothing/suit/hazard/fire/heavy,
+		/obj/item/clothing/head/helmet/firefighter,
+		/obj/item/clothing/suit/hazard/rad,
+		/obj/item/clothing/head/rad_hood,
+		/obj/item/storage/toolbox/mechanical/yellow_tools,
+		/obj/item/storage/box/misctools,
+		/obj/item/extinguisher,
+		/obj/item/clothing/suit/space/light/engineer,
+		/obj/item/clothing/head/helmet/space/light/engineer,
 	)
 
 /* ==================== */
@@ -536,7 +555,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			src.id = DT.id
 			src.our_timer = DT
 			src.name = "\improper Automatic Locker ([src.id])"
-			usr.visible_message("<span class='notice'><b>[usr.name]</b> links [src.name] to a brig timer.</span>", "<span class='notice'>Brig timer linked: [src.id].</span>")
+			usr.visible_message(SPAN_NOTICE("<b>[usr.name]</b> links [src.name] to a brig timer."), SPAN_NOTICE("Brig timer linked: [src.id]."))
 		return
 
 /* =================== */
@@ -720,6 +739,10 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			var/obj/item/reagent_containers/glass/bottle/acid/B6 = new(src)
 			B6.pixel_y = -5
 			B6.pixel_x = 4
+
+			var/obj/item/reagent_containers/food/drinks/fueltank/B7 = new(src)
+			B7.pixel_y = 0
+			B7.pixel_x = 0
 			return 1
 
 /* ======================= */
@@ -752,7 +775,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/accessgun/lite,
 	/obj/item/clothing/gloves/yellow,
 	/obj/item/electronics/scanner,
-	/obj/item/clothing/glasses/meson,
+	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/electronics/soldering,
 	/obj/item/deconstructor,
 	/obj/item/electronics/frame/mech_cabinet=2,
@@ -762,10 +785,11 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet/engineering/atmos
 	name = "\improper Atmospheric Technician's locker"
 	req_access = list(access_engineering_atmos)
-	spawn_contents = list(/obj/item/clothing/suit/fire,
+	spawn_contents = list(/obj/item/clothing/suit/hazard/fire,
 	/obj/item/clothing/head/helmet/firefighter,
 	/obj/item/device/analyzer/atmospheric/upgraded,
-	/obj/item/clothing/glasses/meson,
+	/obj/item/clothing/glasses/toggleable/atmos,
+	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/storage/toolbox/mechanical,
 	/obj/item/extinguisher,
 	/obj/item/chem_grenade/firefighting,
@@ -780,7 +804,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 #endif
 	/obj/item/engivac,
 	/obj/item/old_grenade/oxygen,
-	/obj/item/clothing/glasses/meson,
+	/obj/item/clothing/glasses/toggleable/meson,
+	/obj/item/clothing/glasses/toggleable/atmos,
 	/obj/item/pen/infrared,
 	/obj/item/lamp_manufacturer/organic,
 	/obj/item/device/light/floodlight/with_cell,
@@ -796,8 +821,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/satchel/mining = 2,
 	/obj/item/oreprospector,
 	/obj/item/ore_scoop,
-	/obj/item/mining_tool/power_pick,
-	/obj/item/clothing/glasses/meson,
+	/obj/item/mining_tool/powered/pickaxe,
+	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/storage/belt/mining,
 	/obj/item/device/geiger,
 	/obj/item/device/appraisal)
@@ -806,6 +831,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	name = "\improper Quartermaster's locker"
 	req_access = list(access_cargo)
 	spawn_contents = list(/obj/item/storage/box/clothing/qm,
+	/obj/item/storage/box/clothing/mail,
 	/obj/item/pen/fancy,
 	/obj/item/paper_bin,
 	/obj/item/clipboard,
@@ -857,7 +883,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/satchel/hydro,\
 	/obj/item/reagent_containers/glass/wateringcan,\
 	/obj/item/sponge,\
-	/obj/item/kitchen/food_box/egg_box/rancher)
+	/obj/item/kitchen/food_box/egg_box/rancher,
+	/obj/item/storage/box/knitting)
 
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"
@@ -895,7 +922,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/under/misc/chaplain/nun,\
 	/obj/item/clothing/head/nunhood,\
 	/obj/item/clothing/suit/flockcultist,\
-	/obj/item/storage/box/holywaterkit)
+	/obj/item/storage/box/holywaterkit,
+	/obj/item/swingsignfolded)
 
 /* =================== */
 /* ----- Fridges ----- */

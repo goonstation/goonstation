@@ -2,7 +2,8 @@
 	name = "Frog Flu"
 	max_stages = 4
 	spread = "Non-Contagious"
-	cure = "Robustissin, Robust Coffee, getting robusted"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Robustissin, Robust Coffee, getting robusted"
 	associated_reagent = "sheltestgrog"
 	reagentcure = list("cold_medicine", "coffee")
 	affected_species = list("Human")
@@ -15,7 +16,7 @@
 		affected_mob.cure_disease(D)
 		return
 	if(affected_mob.health <= 15 && probmult(33))
-		boutput(affected_mob, "<span class='alert'>You feel the frog essence leaving your battered body.</span>")
+		boutput(affected_mob, SPAN_ALERT("You feel the frog essence leaving your battered body."))
 		affected_mob.cure_disease(D)
 		return
 	switch(D.stage)
@@ -28,12 +29,12 @@
 			if(probmult(3))
 				affected_mob.say("ribbit")
 			if(probmult(2))
-				boutput(affected_mob, "<span class='alert'>You start turning green.</span>")
+				boutput(affected_mob, SPAN_ALERT("You start turning green."))
 			if(probmult(2))
-				boutput(affected_mob, "<span class='alert'>You feel your body contort.</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel your body contort."))
 		if(4)
-			boutput(affected_mob, "<span class='alert'>You feel your physical form condensing into something small and green... What?</span>")
-			affected_mob.visible_message("<span class='alert'><b>[affected_mob] transforms!</b></span>")
+			boutput(affected_mob, SPAN_ALERT("You feel your physical form condensing into something small and green... What?"))
+			affected_mob.visible_message(SPAN_ALERT("<b>[affected_mob] transforms!</b>"))
 			affected_mob.unequip_all()
 			logTheThing(LOG_COMBAT, affected_mob, "is transformed into a critter frog by the [name] reagent at [log_loc(affected_mob)].")
 			var/mob/living/critter/C = affected_mob.make_critter(/mob/living/critter/small_animal/frog, affected_mob)

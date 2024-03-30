@@ -26,5 +26,5 @@
 			var/pth = pick(spawn_ammo)
 			new pth(spawn_turf)
 		if (prob(60))
-			new /obj/item/plank/anti_zombie(spawn_turf)
+			new /obj/item/sheet/wood/zwood(spawn_turf)
 

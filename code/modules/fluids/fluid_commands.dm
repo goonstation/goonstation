@@ -6,6 +6,7 @@ client/proc/enable_waterflow(var/enabled as num)
 	set desc = "0 to disable, 1 to enable"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	waterflow_enabled = !!enabled
 
 client/proc/delete_fluids()
@@ -13,6 +14,7 @@ client/proc/delete_fluids()
 	set desc = "Probably safe to run. Probably."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/exenabled = waterflow_enabled
 	enable_waterflow(0)
@@ -45,6 +47,7 @@ client/proc/special_fullbright()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	message_admins("[key_name(src)] is making all Z1 Sea Lights static...")
 	SPAWN(0)
@@ -102,6 +105,7 @@ client/proc/replace_space_exclusive()
 	set desc = "This is the safer one."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
@@ -176,7 +180,9 @@ client/proc/replace_space_exclusive()
 			LAGCHECK(LAG_REALTIME)
 #endif
 
-		remove_all_parallax_layers()
+		REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
+		REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_DEBRIS)
+		REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_MINING)
 		message_admins("Finished space replace!")
 		map_currently_underwater = 1
 
@@ -195,6 +201,7 @@ client/proc/dereplace_space()
 	set desc = "uh oh."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/answer = alert("Replace Z1 only?",,"Yes","No")
 
@@ -210,13 +217,15 @@ client/proc/dereplace_space()
 					var/turf/orig = locate(F.x, F.y, F.z)
 					orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
-			restore_parallax_layers_to_default(Z_LEVEL_STATION)
+			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
 		else
 			for(var/turf/space/fluid/F in world)
 				var/turf/orig = locate(F.x, F.y, F.z)
 				orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
-			restore_parallax_layers_to_default()
+			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
+			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_DEBRIS)
+			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_MINING)
 
 		message_admins("Finished space dereplace!")
 		map_currently_underwater = 0

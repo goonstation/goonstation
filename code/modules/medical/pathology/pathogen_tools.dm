@@ -28,7 +28,7 @@
 			else if (reagents.has_reagent("bloodc"))
 				blood = reagents.get_reagent("bloodc")
 			if (blood == null)
-				boutput(usr, "<span class='alert'>Blood slides are not working. This is an error message, please page 1-800-555-MARQUESAS.</span>")
+				boutput(usr, SPAN_ALERT("Blood slides are not working. This is an error message, please page 1-800-555-MARQUESAS."))
 				return
 		else
 			desc = "This blood slide is contaminated and useless."
@@ -59,23 +59,23 @@
 	examine()
 		if (src.dirty || src.dirty_reason)
 			. = ..()
-			. += "<span class='alert'>The petri dish appears to be incapable of growing any pathogen, and must be cleaned.</span><br/>"
+			. += "[SPAN_ALERT("The petri dish appears to be incapable of growing any pathogen, and must be cleaned.")]<br/>"
 			return
 
 		. = list("This is [src]<br/>")
 		if (src.reagents.reagent_list["pathogen"])
 			var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
-			. += "<span class='notice'>It contains [P.volume] unit\s of harvestable pathogen.</span><br/>"
+			. += "[SPAN_NOTICE("It contains [P.volume] unit\s of harvestable pathogen.")]<br/>"
 		if (src.medium)
-			. += "<span class='notice'>The petri dish is coated with [src.medium.name].</span><br/>"
+			. += "[SPAN_NOTICE("The petri dish is coated with [src.medium.name].")]<br/>"
 		. += "Nutrients in the dish:<br/>"
 		var/count = 0
 		for (var/N in nutrition)
 			if (nutrition[N])
-				. += "<span class='notice'>[nutrition[N]] unit\s of [N]</span><br/>"
+				. += "[SPAN_NOTICE("[nutrition[N]] unit\s of [N]")]<br/>"
 				count++
 		if (!count)
-			. += "<span class='notice'>None.</span><br/>"
+			. += "[SPAN_NOTICE("None.")]<br/>"
 
 	afterattack(obj/target, mob/user , flag)
 		if (istype(target, /obj/machinery/microscope))
@@ -250,17 +250,13 @@
 /obj/item/reagent_containers/glass/vial
 	name = "vial"
 	desc = "A vial. Can hold up to 5 units."
-	icon = 'icons/obj/pathology.dmi'
-	icon_state = "vial0"
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "phial"
 	item_state = "vial"
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
-
-	on_reagent_change()
-		..()
-		if (reagents.total_volume < 0.05)
-			icon_state = "vial0"
-		else
-			icon_state = "vial1"
+	accepts_lid = TRUE
+	fluid_overlay_states = 5
+	container_style = "phial"
 
 	New()
 		var/datum/reagents/R = new /datum/reagents(5)
@@ -280,9 +276,6 @@
 /obj/item/reagent_containers/glass/vial/prepared
 	name = "Totally Safe(tm) pathogen sample"
 	desc = "A vial. Can hold up to 5 units."
-	icon = 'icons/obj/pathology.dmi'
-	icon_state = "vial0"
-	item_state = "vial"
 	var/datum/microbody/FM = null
 
 	New()
@@ -303,6 +296,8 @@
 			RE.add_reagent("water", 5)
 			#endif
 
+			src.UpdateIcon()
+
 /obj/item/reagent_containers/glass/vial/prepared/virus
 	FM = /datum/microbody/virus
 
@@ -319,8 +314,6 @@
 	name = "Beaker of Parasitic Medium"
 	desc = "A mix of blood and flesh; fertile ground for some microbes."
 
-	icon_state = "beaker"
-
 	New()
 		..()
 		src.reagents.add_reagent("parasiticmedium", 50)
@@ -328,8 +321,6 @@
 /obj/item/reagent_containers/glass/beaker/egg
 	name = "Beaker of Eggs"
 	desc = "Eggs; fertile ground for some microbes."
-
-	icon_state = "beaker"
 
 	New()
 		..()
@@ -339,8 +330,6 @@
 	name = "Beaker of Stable Mutagen"
 	desc = "Stable Mutagen; fertile ground for some microbes."
 
-	icon_state = "beaker"
-
 	New()
 		..()
 		src.reagents.add_reagent("dna_mutagen", 50)
@@ -348,8 +337,6 @@
 /obj/item/reagent_containers/glass/beaker/bacterial
 	name = "Beaker of Bacterial Growth Medium"
 	desc = "Bacterial Growth Medium; fertile ground for some microbes."
-
-	icon_state = "beaker"
 
 	New()
 		..()
@@ -359,8 +346,6 @@
 	name = "Beaker of Fungal Growth Medium"
 	desc = "Fungal Growth Medium; fertile ground for some microbes."
 
-	icon_state = "beaker"
-
 	New()
 		..()
 		src.reagents.add_reagent("fungalmedium", 50)
@@ -368,8 +353,6 @@
 /obj/item/reagent_containers/glass/beaker/antiviral
 	name = "Beaker of Antiviral Agent"
 	desc = "A beaker of a weak anti-viral agent."
-
-	icon_state = "beaker"
 
 	New()
 		..()
@@ -379,8 +362,6 @@
 	name = "Beaker of Biocides"
 	desc = "A beaker of biocides. The label says 'do not feed to worms or mushrooms'. Curious."
 
-	icon_state = "beaker"
-
 	New()
 		..()
 		src.reagents.add_reagent("biocide", 50)
@@ -389,8 +370,6 @@
 	name = "Beaker of Spaceacillin"
 	desc = "It's penicillin in space."
 
-	icon_state = "beaker"
-
 	New()
 		..()
 		src.reagents.add_reagent("spaceacillin", 50)
@@ -398,8 +377,6 @@
 /obj/item/reagent_containers/glass/beaker/inhibitor
 	name = "Beaker of Inhibition Agent"
 	desc = "It's green, that's for sure."
-
-	icon_state = "beaker"
 
 	New()
 		..()
@@ -448,30 +425,30 @@
 		src.pathogen = null
 		used = 1
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (used)
-			boutput(user, "<span class='alert'>The [src.name] is empty.</span>")
+			boutput(user, SPAN_ALERT("The [src.name] is empty."))
 			return
-		if (ishuman(M))
-			if (M != user)
-				for (var/mob/V in viewers(M))
-					boutput(V, "<span class='alert'><b>[user] is trying to inject [M] with the [src.name]!</b></span>")
-				var/ML = M.loc
+		if (ishuman(target))
+			if (target != user)
+				for (var/mob/V in viewers(target))
+					boutput(V, SPAN_ALERT("<b>[user] is trying to inject [target] with the [src.name]!</b>"))
+				var/ML = target.loc
 				var/UL = user.loc
 				SPAWN(3 SECONDS)
 					if (used)
 						return
-					if (user.equipped() == src && M.loc == ML && user.loc == UL)
+					if (user.equipped() == src && target.loc == ML && user.loc == UL)
 						used = 1
-						for (var/mob/V in viewers(M))
-							boutput(V, "<span class='alert'><b>[user] is injects [M] with the [src.name]!</b></span>")
+						for (var/mob/V in viewers(target))
+							boutput(V, SPAN_ALERT("<b>[user] is injects [target] with the [src.name]!</b>"))
 						src.name = "empty [src.name]"
 						icon_state = "serum0"
-						inject(M, user)
+						inject(target, user)
 			else
 				used = 1
-				for (var/mob/V in viewers(M))
-					boutput(V, "<span class='alert'><b>[user] injects [M] with the [src.name]!</b></span>")
+				for (var/mob/V in viewers(target))
+					boutput(V, SPAN_ALERT("<b>[user] injects [target] with the [src.name]!</b>"))
 				icon_state = "serum0"
 				src.name = "empty [src.name]"
 				inject(user, user)

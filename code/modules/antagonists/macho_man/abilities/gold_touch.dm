@@ -17,7 +17,7 @@
 					holder.owner.transforming = 1
 					holder.owner.set_dir(get_dir(holder.owner, H))
 					H.set_dir(get_dir(H, holder.owner))
-					holder.owner.visible_message("<span class='alert'><B>[holder.owner] picks up [H] by the throat!</B></span>")
+					holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] picks up [H] by the throat!</B>"))
 					playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
 					var/dir_offset = get_dir(holder.owner, H)
 					switch(dir_offset)
@@ -40,13 +40,13 @@
 					holder.owner.bioHolder.AddEffect("fire_resist")
 					holder.owner.transforming = 1
 					playsound(holder.owner.loc, 'sound/voice/chanting.ogg', 75, 0, 0, holder.owner.get_age_pitch())
-					holder.owner.visible_message("<span class='alert'>[holder.owner] begins radiating with dark energy!</span>")
+					holder.owner.visible_message(SPAN_ALERT("[holder.owner] begins radiating with dark energy!"))
 					sleep(4 SECONDS)
 					for (var/mob/N in viewers(holder.owner, null))
 						N.flash(3 SECONDS)
 						if (N.client)
 							shake_camera(N, 6, 16)
-							N.show_message(text("<span class='alert'><b>A blinding light envelops [holder.owner]!</b></span>"), 1)
+							N.show_message(SPAN_ALERT("<b>A blinding light envelops [holder.owner]!</b>"), 1)
 
 					playsound(holder.owner.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 					qdel(G)

@@ -283,12 +283,12 @@
 			..()
 			build_overlay()
 
-		attack(mob/M, mob/user)
+		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 			if (src.open)
 				src.add_fingerprint(user)
 				var/obj/item/I = src.take_from()
 				if (I)
-					if (!I.attack(M, user))
+					if (!I.attack(target, user))
 						src.item_amount++ // You didn't stick it on someone so it's still in the box
 					return
 			..()
@@ -381,7 +381,7 @@
 		else if (!src.open)
 			src.open = 1
 		else
-			boutput(user, "<span class='alert'>[src] is already open!</span>")
+			boutput(user, SPAN_ALERT("[src] is already open!"))
 		src.UpdateIcon()
 		return
 
@@ -403,7 +403,7 @@
 				src.UpdateIcon()
 				return
 			else
-				boutput(user, "<span class='alert'>[src] is empty!</span>")
+				boutput(user, SPAN_ALERT("[src] is empty!"))
 				return ..()
 		else
 			return ..()
@@ -412,10 +412,10 @@
 		..()
 		if (usr?.is_in_hands(src))
 			if (!src.open)
-				boutput(usr, "<span class='alert'>[src] isn't open, you goof!</span>")
+				boutput(usr, SPAN_ALERT("[src] isn't open, you goof!"))
 				return
 			if (!src.item_amount)
-				boutput(usr, "<span class='alert'>[src] is empty!</span>")
+				boutput(usr, SPAN_ALERT("[src] is empty!"))
 				return
 			var/turf/T = over_object
 			if (istype(T, /obj/table))
@@ -427,7 +427,7 @@
 					if (O.density && !istype(O, /obj/table) && !istype(O, /obj/rack))
 						return
 				if (!T.density)
-					usr.visible_message("<span class='alert'>[usr] dumps a bunch of patches from [src] onto [T]!</span>")
+					usr.visible_message(SPAN_ALERT("[usr] dumps a bunch of patches from [src] onto [T]!"))
 					for (var/i = rand(3,8), i>0, i--)
 						var/obj/item/I = src.take_from()
 						if (!I)
@@ -438,16 +438,16 @@
 		if (user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 		if (!in_interact_range(user, src) || !in_interact_range(user, O))
-			boutput(user, "<span class='alert'>That's too far away!</span>")
+			boutput(user, SPAN_ALERT("That's too far away!"))
 			return
 		if (!istype(O, src.contained_item))
-			boutput(user, "<span class='alert'>[O] doesn't fit in [src]!</span>")
+			boutput(user, SPAN_ALERT("[O] doesn't fit in [src]!"))
 			return
 		if (!src.open)
-			boutput(user, "<span class='alert'>[src] isn't open, you goof!</span>")
+			boutput(user, SPAN_ALERT("[src] isn't open, you goof!"))
 			return
 
-		user.visible_message("<span class='notice'>[user] begins quickly filling [src]!</span>")
+		user.visible_message(SPAN_NOTICE("[user] begins quickly filling [src]!"))
 		var/staystill = user.loc
 		for (var/obj/item/thing in view(1,user))
 			if (src.item_amount >= src.max_item_amount && !(src.max_item_amount == -1))
@@ -462,7 +462,7 @@
 			sleep(0.2 SECONDS)
 			if (user.loc != staystill)
 				break
-		boutput(user, "<span class='notice'>You finish filling [src]!</span>")
+		boutput(user, SPAN_NOTICE("You finish filling [src]!"))
 
 
 	proc/set_contained_items()
@@ -492,16 +492,16 @@
 			user = usr
 		if (islist(src.contained_item) && !(I.type in src.contained_item))
 			if (user && show_messages)
-				boutput(user, "<span class='alert'>[I] doesn't fit in [src]!</span>")
+				boutput(user, SPAN_ALERT("[I] doesn't fit in [src]!"))
 			return 0
 		if (!istype(I, src.contained_item))
 			if (user && show_messages)
-				boutput(user, "<span class='alert'>[I] doesn't fit in [src]!</span>")
+				boutput(user, SPAN_ALERT("[I] doesn't fit in [src]!"))
 			return 0
 		if (src.reusable && (!(src.item_amount >= src.max_item_amount) || src.max_item_amount == -1))
 			if (!src.open)
 				if (user && show_messages)
-					boutput(user, "<span class='alert'>[src] isn't open, you goof!</span>")
+					boutput(user, SPAN_ALERT("[src] isn't open, you goof!"))
 				return 0
 			if (src.item_amount != -1)
 				src.item_amount ++
@@ -514,7 +514,7 @@
 			return 1
 		else
 			if (user && show_messages)
-				boutput(user, "<span class='alert'>You can't seem to make [I] fit into [src].</span>")
+				boutput(user, SPAN_ALERT("You can't seem to make [I] fit into [src]."))
 			return 0
 
 	update_icon()

@@ -22,6 +22,8 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	var/emagged = FALSE
 	var/open = FALSE
 	var/hackable = FALSE
+	/// Can we do the mastermind game to try to crack this safe?
+	var/crackable = TRUE
 	var/disabled = FALSE
 	w_class = W_CLASS_NORMAL
 	burn_possible = FALSE
@@ -69,22 +71,22 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 			sleep(0.6 SECONDS)
 			src.open = !src.open
 			tooltip_rebuild = TRUE
-			boutput(user, "<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")
+			boutput(user, SPAN_NOTICE("You [src.open ? "open" : "close"] the service panel."))
 			return
 
 		if (ispulsingtool(W) && (src.open) && (!src.locked) && (!src.l_hacking))
-			boutput(user, "<span class='alert'>Now attempting to reset internal memory, please hold.</span>")
+			boutput(user, SPAN_ALERT("Now attempting to reset internal memory, please hold."))
 			src.l_hacking = TRUE
 			SPAWN(10 SECONDS)
 				if (prob(40))
 					src.l_setshort = TRUE
 					src.configure_mode = TRUE
-					boutput(user, "<span class='alert'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>")
+					boutput(user, SPAN_ALERT("Internal memory reset.  Please give it a few seconds to reinitialize."))
 					sleep(8 SECONDS)
 					src.l_setshort = FALSE
 					src.l_hacking = FALSE
 				else
-					boutput(user, "<span class='alert'>Unable to reset internal memory.</span>")
+					boutput(user, SPAN_ALERT("Unable to reset internal memory."))
 					src.l_hacking = FALSE
 			return
 
@@ -95,19 +97,23 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 
 /obj/item/storage/secure/attack_hand(mob/user)
 	if (src.loc == user && src.locked)
-		boutput(user, "<span class='alert'>[src] is locked and cannot be opened!</span>")
+		boutput(user, SPAN_ALERT("[src] is locked and cannot be opened!"))
 		return
 	return ..()
 
 /obj/item/storage/secure/mouse_drop(atom/over_object, src_location, over_location)
 	if ((usr.is_in_hands(src) || over_object == usr) && src.locked)
-		boutput(usr, "<span class='alert'>[src] is locked and cannot be opened!</span>")
+		boutput(usr, SPAN_ALERT("[src] is locked and cannot be opened!"))
 		return
 	return ..()
 
 /obj/item/storage/secure/attack_self(mob/user as mob)
 	src.add_dialog(user)
 	add_fingerprint(user)
+	return ui_interact(user)
+
+/obj/item/storage/secure/attack_ai(mob/user)
+	src.add_dialog(user)
 	return ui_interact(user)
 
 /obj/item/storage/secure/ui_interact(mob/user, datum/tgui/ui)
@@ -235,17 +241,17 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 		src.guess = ""
 		src.locked = !src.locked
 		src.overlays = src.locked ? null : list(image('icons/obj/items/storage.dmi', icon_open))
-		boutput(user, "<span class='alert'>[src]'s lock mechanism clicks [src.locked ? "locked" : "unlocked"].</span>")
+		boutput(user, SPAN_ALERT("[src]'s lock mechanism clicks [src.locked ? "locked" : "unlocked"]."))
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 		if (!src.locked)
 			logTheThing(LOG_STATION, src, "at [log_loc(src)] has been unlocked by [key_name(user)] after [src.number_of_guesses[user.key] || "0"] incorrect guesses. Contents: [src.contents.Join(", ")]")
 		src.number_of_guesses = list()
 	else
 		src.number_of_guesses[user.key]++
-		if (length(guess) == src.code_len)
+		if (length(guess) == src.code_len && src.crackable)
 			var/desctext = src.gen_hint(guess)
 			if (desctext)
-				boutput(user, "<span class='alert'>[src]'s lock panel emits [desctext].</span>")
+				boutput(user, SPAN_ALERT("[src]'s lock panel emits [desctext]."))
 				playsound(src.loc, 'sound/machines/twobeep.ogg', 55, 1)
 
 		src.pad_msg = KEYPAD_ERR
@@ -373,6 +379,8 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/gun/energy/egun_jr,\
 				/obj/item/gun/energy/laser_gun,\
 				/obj/item/device/key/random,\
+				/obj/item/storage/firstaid/old,\
+				/obj/item/storage/firstaid/crit,\
 				/obj/item/paper/IOU)
 
 				for (var/i=rand(1,src.storage.slots), i>0, i--)

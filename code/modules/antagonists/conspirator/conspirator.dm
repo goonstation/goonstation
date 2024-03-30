@@ -39,11 +39,11 @@
 		else
 			src.headset = new /obj/item/device/radio/headset(H)
 			if (!H.r_store)
-				H.equip_if_possible(src.headset, H.slot_r_store)
+				H.equip_if_possible(src.headset, SLOT_R_STORE)
 			else if (!H.l_store)
-				H.equip_if_possible(src.headset, H.slot_l_store)
+				H.equip_if_possible(src.headset, SLOT_L_STORE)
 			else if (H.back?.storage && !H.back.storage.is_full())
-				H.equip_if_possible(src.headset, H.slot_in_backpack)
+				H.equip_if_possible(src.headset, SLOT_IN_BACKPACK)
 			else
 				H.put_in_hand_or_drop(src.headset)
 

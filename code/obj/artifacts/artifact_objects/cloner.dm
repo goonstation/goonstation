@@ -48,7 +48,7 @@
 			var/mob/living/carbon/human/H = user
 			// fluff
 			if(swapSouls)
-				boutput(user, "<span class='alert'>You feel your soul being sucked out of your body by [O]!</span>")
+				boutput(user, SPAN_ALERT("You feel your soul being sucked out of your body by [O]!"))
 			H.add_filter("cloner_art_outline", 0, outline_filter(size=0.5, color=rgb(255,0,0), flags=OUTLINE_SHARP))
 			SPAWN(0.7 SECONDS)
 				H.remove_filter("cloner_art_outline")
@@ -71,9 +71,7 @@
 					H.traitHolder.copy_to(clone.traitHolder)
 				clone.real_name = user.real_name
 				clone.UpdateName()
-
-			if(clone.client) // gross hack for resetting tg layout bleh bluh copied from cloner code
-				clone.client.set_layout(clone.client.tg_layout)
+				spawn_rules_controller.apply_to(clone)
 
 			if(swapSouls && H.mind)
 				H.mind.transfer_to(clone)
@@ -109,9 +107,10 @@
 					if(H)
 						H.ai_aggressive = 1
 						H.ai_calm_down = 0
+					sleep(randfloat(3 SECOND, 20 SECONDS))
 					while (!isdead(H) && isnull(H.client))
-						sleep(randfloat(3 SECOND, 20 SECONDS))
 						H.say(phrase_log.random_phrase("say"))
+						sleep(randfloat(3 SECOND, 20 SECONDS))
 			else
 				// make clone evil
 				clone.attack_alert = 0
@@ -133,9 +132,9 @@
 			return
 		if (clone?.loc == O)
 			clone.set_loc(get_turf(O))
-			O.visible_message("<span class='alert'><b>[O]</b> releases [clone.name] and shuts down!</span>")
+			O.visible_message(SPAN_ALERT("<b>[O]</b> releases [clone.name] and shuts down!"))
 		else
-			O.visible_message("<span class='alert'><b>[O]</b> shuts down strangely!</span>")
+			O.visible_message(SPAN_ALERT("<b>[O]</b> shuts down strangely!"))
 		for(var/atom/movable/I in (O.contents-O.vis_contents))
 			I.set_loc(get_turf(O))
 		clone = null

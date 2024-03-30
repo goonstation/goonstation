@@ -1,45 +1,8 @@
-/atom/movable/screen/ability/topBar/changeling
-	clicked(params)
-		var/datum/targetable/changeling/spell = owner
-		var/datum/abilityHolder/holder = owner.holder
-
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-
-		if(params["shift"] && params["ctrl"])
-			if(owner.waiting_for_hotkey)
-				holder.cancel_action_binding()
-				return
-			else
-				owner.waiting_for_hotkey = 1
-				src.UpdateIcon()
-				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
-				return
-
-		if (!isturf(owner.holder.owner.loc) && !spell.can_use_in_container)
-			boutput(owner.holder.owner, "<span class='alert'>Using that in here will do just about no good for you.</span>")
-			return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr.targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (world.time < spell.last_cast)
-				return
-			owner.holder.owner.targeting_ability = owner
-			owner.holder.owner.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-		return
-
 /datum/abilityHolder/changeling
 	usesPoints = 1
 	regenRate = 0
 	tabName = "Changeling"
-	notEnoughPointsMessage = "<span class='alert'>We are not strong enough to do this.</span>"
+	notEnoughPointsMessage = SPAN_ALERT("We are not strong enough to do this.")
 	var/list/absorbed_dna = list()
 	var/in_fakedeath = 0
 	var/absorbtions = 0
@@ -60,7 +23,7 @@
 	proc/addDna(var/mob/living/carbon/human/M, var/headspider_override = 0)
 		var/datum/abilityHolder/changeling/O = M.get_ability_holder(/datum/abilityHolder/changeling)
 		if (O)
-			boutput(owner, "<span class='notice'>[M] was a changeling! We have absorbed their entire genetic structure!</span>")
+			boutput(owner, SPAN_NOTICE("[M] was a changeling! We have absorbed [his_or_her(M)] entire genetic structure!"))
 			logTheThing(LOG_COMBAT, owner, "absorbs [constructTarget(M,"combat")] as a changeling [log_loc(owner)].")
 
 			if (headspider_override != 1) // Headspiders shouldn't be free.
@@ -104,7 +67,7 @@
 			mind_to_be_transferred = M.client.mob.mind
 		else if (M.ghost && (M.ghost.mind || M.ghost.client) && !M.ghost.mind.get_player().dnr)
 			var/mob/dead/ghost = M.ghost
-			ghost.show_text("<span class='red'>You feel yourself torn away from the afterlife and into another consciousness!</span>")
+			ghost.show_text(SPAN_ALERT("You feel yourself torn away from the afterlife and into another consciousness!"))
 			if(ghost.mind)
 				mind_to_be_transferred = ghost.mind
 			else if (ghost.client)
@@ -141,7 +104,7 @@
 			boutput(src.owner,"<h2><span class='combat bold'>[master] has retaken control of the flesh!</span></h2>")
 			src.owner.mind.transfer_to(temp_controller)
 			temp_controller = null
-			boutput(master, "<span class='notice'>We retake control of our form!</span>")
+			boutput(master, SPAN_NOTICE("We retake control of our form!"))
 			changeling_master_mind.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 			changeling_master_mind.transfer_to(owner)
 			master = null
@@ -186,34 +149,6 @@
 	var/can_use_in_container = 0
 	preferred_holder_type = /datum/abilityHolder/changeling
 
-	New()
-		var/atom/movable/screen/ability/topBar/changeling/B = new /atom/movable/screen/ability/topBar/changeling(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		B.name = src.name
-		B.desc = src.desc
-		src.object = B
-
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/changeling()
-			object.icon = src.icon
-			object.owner = src
-		if (src.last_cast > world.time)
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
-			object.icon_state = src.icon_state + "_cd"
-		else
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt]"
-			object.icon_state = src.icon_state
-
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
 		var/datum/abilityHolder/changeling/H = holder
@@ -223,8 +158,11 @@
 
 	castcheck()
 		if (incapacitationCheck())
-			boutput(holder.owner, "<span class='alert'>We cannot use our abilities while incapacitated.</span>")
+			boutput(holder.owner, SPAN_ALERT("We cannot use our abilities while incapacitated."))
 			return 0
+		if (!isturf(src.holder.owner.loc) && !src.can_use_in_container)
+			boutput(src.holder.owner, SPAN_ALERT("You can't use this ability here."))
+			return FALSE
 		if (!human_only && !abomination_only)
 			return 1
 		var/mob/living/carbon/human/H = holder.owner

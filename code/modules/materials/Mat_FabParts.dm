@@ -196,6 +196,13 @@
 		if(!I.material || (I.material.getID() != "starstone")) return 0
 		return ..()
 
+/datum/matfab_part/glowstick
+	name = "Glowsticks"
+	checkMatch(var/obj/item/I)
+		if(!istype(I, /obj/item/device/light/glowstick)) return 0
+		return ..()
+
+
 //////////////////////////////////////////////BASE CLASS BELOW
 
 /// Base material fabrication part

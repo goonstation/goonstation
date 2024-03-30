@@ -82,7 +82,7 @@ TYPEINFO(/datum/component/afterimage)
 /obj/afterimage
 	mouse_opacity = FALSE
 	plane = PLANE_NOSHADOW_BELOW
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/correct_alpha = 120
 	var/appearance_ref = null
 	var/active = FALSE

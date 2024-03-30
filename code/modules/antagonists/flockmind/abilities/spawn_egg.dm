@@ -15,35 +15,39 @@
 
 	if (!isadmin(F))
 		if (istype(T, /turf/space/) || istype(T.loc, /area/station/solar) || istype(T.loc, /area/station/mining/magnet))
-			boutput(F, "<span class='alert'>Space and exposed areas are unsuitable for rift placement!</span>")
+			boutput(F, SPAN_ALERT("Space and exposed areas are unsuitable for rift placement!"))
 			return TRUE
 
 		if(IS_ARRIVALS(T.loc))
-			boutput(F, "<spawn class='alert'>Your rift can't be placed inside arrivals!</span>")
+			boutput(F, SPAN_ALERT("Your rift can't be placed inside arrivals!"))
 			return TRUE
 
 		if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/tutorial/flock))
-			boutput(F, "<spawn class='alert'>Your rift needs to be placed on the [station_or_ship()]!</span>")
+			boutput(F, SPAN_ALERT("Your rift needs to be placed on the [station_or_ship()]!"))
 			return TRUE
 
 		if (istype(T, /turf/unsimulated/))
-			boutput(F, "<span class='alert'>This kind of tile cannot support rift placement.</span>")
+			boutput(F, SPAN_ALERT("This kind of tile cannot support rift placement."))
 			return TRUE
 
 		if (T.density)
-			boutput(F, "<span class='alert'>Your rift cannot be placed inside a wall!</span>")
+			boutput(F, SPAN_ALERT("Your rift cannot be placed inside a wall!"))
+			return TRUE
+
+		if (ismap("DONUT3") && (istype(T.loc, /area/station/medical/asylum) || istype(T.loc, /area/station/crew_quarters/clown)))
+			boutput(F, SPAN_ALERT("Your rift needs to be placed on the [station_or_ship()]!"))
 			return TRUE
 
 		for (var/atom/O in T.contents)
 			if (O.density)
-				boutput(F, "<span class='alert'>That tile is blocked by [O].</span>")
+				boutput(F, SPAN_ALERT("That tile is blocked by [O]."))
 				return TRUE
 
 	if (!src.tutorial_check(FLOCK_ACTION_RIFT_SPAWN, T))
 		return TRUE
 
 	if (F)
-		if (tgui_alert(F,"Would you like to spawn a rift?","Spawn Rift?",list("Yes","No")) != "Yes")
+		if (tgui_alert(F,"Would you like to spawn a rift?","Spawn Rift?",list("Yes","No"), theme = "flock") != "Yes")
 			return TRUE
 
 	logTheThing(LOG_GAMEMODE, holder.get_controlling_mob(), "spawns a rift at [log_loc(src.holder.owner)].")

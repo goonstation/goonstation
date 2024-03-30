@@ -1,2 +1,2 @@
-INCLUDE_MAP("../devtest.dmm")
+INCLUDE_MAP("../utilities/devtest.dmm")
 #define MAP_MODE "testing"

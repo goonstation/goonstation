@@ -45,6 +45,8 @@
 	thermal_conductivity = 0.05
 	heat_capacity = 0
 	turf_flags = MOB_STEP
+	can_burn = FALSE
+	can_break = FALSE
 
 	hitby()
 		. = ..()
@@ -79,6 +81,8 @@
 	icon_state = "floor"
 	icon = 'icons/turf/shuttle.dmi'
 	turf_flags = MOB_STEP
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/unsimulated/floor/shuttle/yellow
 	icon_state = "floor2"
@@ -114,7 +118,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 /turf/simulated/wall/auto/shuttle
 	name = "shuttle wall"
 	desc = "A shuttle wall. Pretty reinforced."
-	icon = 'icons/turf/walls_shuttle.dmi'
+	icon = 'icons/turf/walls/shuttle/blue.dmi'
 #ifdef PERSPECTIVE_EDITOR_WALL
 	icon_state = "perspective-mapwall"
 #else
@@ -199,10 +203,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	plane = PLANE_WALL
 	name = "shuttle wall"
 	desc = "A shuttle wall. Pretty reinforced. This appears to be a corner."
-	icon = 'icons/turf/walls_shuttle.dmi'
+	icon = 'icons/turf/walls/shuttle/corner.dmi'
 	icon_state = "corner"
 	density = 1
 	opacity = 0
+	gas_impermeable = TRUE
 	layer = EFFECTS_LAYER_BASE - 1
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 

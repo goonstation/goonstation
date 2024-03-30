@@ -10,18 +10,18 @@ Ctrl + Right Click on Buildmode Button - Set time for people to pull the glued t
 **************************************************************"}
 	icon_state = "glue"
 	var/stick_timer = -1 //seconds
-	var/remove_timer = 5 //seconds
+	var/remove_timer = -1 //seconds
 	var/list/atom/movable/to_glue = list() //heh. to-glue list. heh
 
 	click_mode_right(ctrl, alt, shift)
 		if (ctrl)
-			src.remove_timer = input("How long should it take to remove the glued object, in seconds?", "Removal Time", src.remove_timer) as num
+			src.remove_timer = input("How long should it take to remove the glued object, in seconds? (-1 for infinity)", "Removal Time", src.remove_timer) as num
 		else
-			src.stick_timer = input("How long before the glued object falls off, in seconds?", "Attachment Duration", src.stick_timer) as num
+			src.stick_timer = input("How long before the glued object falls off, in seconds? (-1 for infinity)", "Attachment Duration", src.stick_timer) as num
 
 	click_left(atom/object, ctrl, alt, shift)
 		if (!length(to_glue))
-			boutput(usr, "<span class='alert'>Nothing to glue!</span>")
+			boutput(usr, SPAN_ALERT("Nothing to glue!"))
 		// bypass the entire glue_ready component, straight to glueing together
 		for (var/atom/movable/thing in to_glue)
 			var/datum/component/comp_maybe = thing.GetComponent(/datum/component/glued)
@@ -35,7 +35,7 @@ Ctrl + Right Click on Buildmode Button - Set time for people to pull the glued t
 		if (!istype(object))
 			return
 		if (object in to_glue)
-			boutput(usr, "<span class='alert'>That's already in the to-glue list! You can't glue something twice!")
+			boutput(usr, SPAN_ALERT("That's already in the to-glue list! You can't glue something twice!"))
 			return
 		if (!ctrl) // we just want the one thing, clear everything else
 			if (length(to_glue) > 5) // ok maybe we fucked up

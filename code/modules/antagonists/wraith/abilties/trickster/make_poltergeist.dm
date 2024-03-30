@@ -15,8 +15,8 @@
 			return 1
 #ifdef RP_MODE
 		var/mob/living/intangible/wraith/wraith = holder.owner
-		if (istype(wraith) && length(wraith.poltergeists) >= 3)
-			boutput(wraith, "<span class='alert'>This world is already loud with the voices of your children. No more ghosts will come for now.</span>")
+		if (istype(wraith) && length(wraith.poltergeists) >= 2)
+			boutput(wraith, SPAN_ALERT("This world is already loud with the voices of your children. No more ghosts will come for now."))
 			return 1
 #endif
 		var/turf/T = get_turf(holder.owner)
@@ -26,7 +26,7 @@
 			make_poltergeist(holder.owner, T)
 			return 0
 		else
-			boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't cast this spell on your current tile!"))
 			return 1
 
 	proc/make_poltergeist(var/mob/living/intangible/wraith/W, var/turf/T, var/tries = 0)

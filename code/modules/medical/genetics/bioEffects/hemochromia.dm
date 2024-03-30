@@ -89,21 +89,38 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	var/blood_color_R
 	var/blood_color_G
 	var/blood_color_B
+	var/blood_color_original = null
+
+	OnAdd()
+		..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			src.blood_color_original = H.bioHolder?.bloodColor // We prioritise bioHolder here since coloring blood later does
+			if (isnull(src.blood_color_original))
+				src.blood_color_original = H.blood_color
 
 	OnLife(var/mult)
-		if(..()) return
-		if(ishuman(owner))
+		if (..())
+			return
+		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if(H.blood_volume < 500 && H.blood_volume > 0)
 				H.blood_volume += 2*mult
-			if(prob(12))
+			if (prob(12))
 				H.blood_color = rgb(blood_color_R, blood_color_G, blood_color_B)
+				H.bioHolder?.bloodColor = rgb(blood_color_R, blood_color_G, blood_color_B)
 
 	OnRemove()
 		..()
-		if(ishuman(owner))
+		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			H.blood_color = DEFAULT_BLOOD_COLOR
+			if (H.mutantrace?.blood_color)
+				H.blood_color = H.mutantrace.blood_color
+				H.bioHolder?.bloodColor = H.mutantrace.blood_color
+			else
+				H.blood_color = src.blood_color_original
+				H.bioHolder?.bloodColor = src.blood_color_original
+			src.blood_color_original = null
 
 /datum/bioEffect/hemochromia/rust
 	name = "Hemochromia Type-R"
@@ -114,10 +131,10 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	icon_state  = "hemochromia_rust"
 
 	OnAdd()
-		..()
 		blood_color_R = rand(46, 254)
 		blood_color_G = rand(0, 0)
 		blood_color_B = rand(0, 2)
+		..()
 
 /datum/bioEffect/hemochromia/bronze
 	name = "Hemochromia Type-B"
@@ -128,10 +145,10 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	icon_state  = "hemochromia_bronze"
 
 	OnAdd()
-		..()
 		blood_color_R = rand(68, 255)
 		blood_color_G = rand(10, 122)
 		blood_color_B = rand(0, 1)
+		..()
 
 /datum/bioEffect/hemochromia/gold
 	name = "Hemochromia Type-G"
@@ -142,10 +159,10 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	icon_state  = "hemochromia_gold"
 
 	OnAdd()
-		..()
 		blood_color_R = rand(101, 244)
 		blood_color_G = rand(84, 218)
 		blood_color_B = rand(4, 20)
+		..()
 
 /datum/bioEffect/hemochromia/lime
 	name = "Hemochromia Type-L"
@@ -156,10 +173,10 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	icon_state  = "hemochromia_lime"
 
 	OnAdd()
-		..()
 		blood_color_R = rand(105, 135)
 		blood_color_G = rand(153, 199)
 		blood_color_B = rand(0, 0)
+		..()
 
 /datum/bioEffect/hemochromia/olive
 	name = "Hemochromia Type-O"
@@ -170,10 +187,10 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	icon_state  = "hemochromia_olive"
 
 	OnAdd()
-		..()
 		blood_color_R = rand(25, 112)
 		blood_color_G = rand(35, 147)
 		blood_color_B = rand(0, 5)
+		..()
 
 /datum/bioEffect/hemochromia/jade
 	name = "Hemochromia Type-J"
@@ -184,10 +201,10 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	icon_state  = "hemochromia_jade"
 
 	OnAdd()
-		..()
 		blood_color_R = rand(0, 1)
 		blood_color_G = rand(56, 216)
 		blood_color_B = rand(24, 105)
+		..()
 
 /datum/bioEffect/hemochromia/teal
 	name = "Hemochromia Type-T"
@@ -198,10 +215,10 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	icon_state  = "hemochromia_teal"
 
 	OnAdd()
-		..()
 		blood_color_R = rand(0, 0)
 		blood_color_G = rand(82, 205)
 		blood_color_B = rand(80, 200)
+		..()
 
 /datum/bioEffect/hemochromia/cobalt
 	name = "Hemochromia Type-C"
@@ -212,10 +229,10 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	icon_state  = "hemochromia_cobalt"
 
 	OnAdd()
-		..()
 		blood_color_R = rand(0, 29)
 		blood_color_G = rand(24, 104)
 		blood_color_B = rand(78, 255)
+		..()
 
 /datum/bioEffect/hemochromia/indigo
 	name = "Hemochromia Type-I"
@@ -226,24 +243,24 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	icon_state  = "hemochromia_indigo"
 
 	OnAdd()
-		..()
 		blood_color_R = rand(14, 84)
 		blood_color_G = rand(3, 25)
 		blood_color_B = rand(69, 255)
+		..()
 
 /datum/bioEffect/hemochromia/purple
 	name = "Hemochromia Type-P"
-	desc = "Causes the subject's blood cells to take on a lavander coloration. Also slightly increases blood viscosity."
+	desc = "Causes the subject's blood cells to take on a lavender coloration. Also slightly increases blood viscosity."
 	id = "hemochromia_purple"
 	lockProb = 45
 	lockedChars = list("T","C")
 	icon_state  = "hemochromia_purple"
 
 	OnAdd()
-		..()
 		blood_color_R = rand(57, 136)
 		blood_color_G = rand(1, 61)
 		blood_color_B = rand(92, 214)
+		..()
 
 /datum/bioEffect/hemochromia/violet
 	name = "Hemochromia Type-V"
@@ -254,10 +271,10 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	icon_state  = "hemochromia_violet"
 
 	OnAdd()
-		..()
 		blood_color_R = rand(93, 208)
 		blood_color_G = rand(0, 26)
 		blood_color_B = rand(91, 206)
+		..()
 
 /datum/bioEffect/hemochromia/fuschia
 	name = "Hemochromia Type-F"
@@ -268,7 +285,7 @@ ABSTRACT_TYPE(/datum/bioEffect/hemochromia)
 	icon_state  = "hemochromia_fuschia"
 
 	OnAdd()
-		..()
 		blood_color_R = rand(91, 238)
 		blood_color_G = rand(1, 15)
 		blood_color_B = rand(52, 124)
+		..()

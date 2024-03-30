@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Button, Flex, Section, Box, NoticeBox, Tooltip } from '../components';
+import { Box, Button, Flex, NoticeBox, Section, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 export const DrinksList = (props, context) => {

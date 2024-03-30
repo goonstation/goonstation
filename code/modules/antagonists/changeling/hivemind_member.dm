@@ -18,7 +18,7 @@
 			current_mob.ghost = null
 		else if (istype(current_mob, /mob/dead))
 			var/mob/dead/dead_mob = current_mob
-			dead_mob.corpse.ghost = null
+			dead_mob.corpse?.ghost = null
 			dead_mob.corpse = null
 			hivemind_observer.corpse = null
 		else if (istype(current_mob, /mob/living/critter/changeling))

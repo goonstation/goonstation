@@ -13,24 +13,19 @@ ADMIN_INTERACT_PROCS(/obj/item/robot_module, proc/admin_add_tool, proc/admin_rem
 	var/list/tools = list()
 	var/mod_hudicon = "unknown"
 	var/cosmetic_mods = null
-	var/include_common_tools = TRUE
-	var/included_tools = null
+	var/included_tools = /datum/robot/module_tool_creator/recursive/module/common
 	var/included_cosmetic = null
 	var/radio_type = null
-	var/obj/item/device/radio/radio = null
+	var/obj/item/device/radio/headset/radio = null
 	var/list/mailgroups = list(MGO_SILICON, MGD_PARTY)
 	var/list/alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH)
 
 /obj/item/robot_module/New()
 	..()
-	// add contents
-	if (src.include_common_tools)
-		src.add_contents(/datum/robot/module_tool_creator/recursive/module/common)
 	src.add_contents(src.included_tools)
 	// no need to keep the definition past initializing
 	src.included_tools = null
 
-	// add cosmetics
 	if (ispath(src.included_cosmetic, /datum/robot_cosmetic))
 		src.cosmetic_mods = new included_cosmetic(src)
 
@@ -44,7 +39,7 @@ ADMIN_INTERACT_PROCS(/obj/item/robot_module, proc/admin_add_tool, proc/admin_rem
 	if (istype(adding_contents, /obj/item))
 		// handle adding single instance of tool
 		var/obj/item/I = adding_contents
-		I.cant_drop = 1
+		I.cant_drop = TRUE
 		I.set_loc(src)
 		src.tools += I
 		return I

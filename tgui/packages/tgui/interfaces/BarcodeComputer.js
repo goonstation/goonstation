@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Button, NumberInput, Section, Box, Stack } from '../components';
+import { Box, Button, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const BarcodeComputerSection = (props, context) => {

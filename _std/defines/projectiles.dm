@@ -83,6 +83,7 @@
 #define AMMO_FLECHETTE "flechette"
 #define AMMO_BLOWDART "blowdart"
 #define AMMO_STAPLE "staple"
+#define AMMO_WEBLEY "webley"
 
 #define AMMO_DART_ALL AMMO_FOAMDART,AMMO_BLOWDART
 

@@ -13,7 +13,7 @@
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if (H.traitHolder.hasTrait("training_chaplain"))
-				boutput(holder.owner, "<span class='notice'>Despite your best efforts, that creature seems totally unnaffected by your horrific visions.</span>")
+				boutput(holder.owner, SPAN_NOTICE("Despite your best efforts, that creature seems totally unaffected by your horrific visions."))
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			H.setStatus("terror", 45 SECONDS)
 			boutput(holder.owner, "We terrorize [H]")

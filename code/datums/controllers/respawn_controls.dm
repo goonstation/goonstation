@@ -170,7 +170,7 @@ var/datum/respawn_controls/respawn_controller
 
 			boutput(the_client.mob, "<h2>You are now eligible for a <a href='byond://winset?command=Respawn-As-New-Character'>respawn (click here)</a>!</h1>")
 			if(master.rp_alert)
-				boutput(the_client.mob, "<span class='alert'>Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B></span>")
+				boutput(the_client.mob, SPAN_ALERT("Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B>"))
 
 			the_client.verbs |= /client/proc/respawn_via_controller
 			client_processed = 1
@@ -195,13 +195,12 @@ var/datum/respawn_controls/respawn_controller
 		M.adminspawned = 1
 		M.is_respawned_player = 1
 		M.key = the_client.key
-		M.Login()
 		M.client.player.dnr = FALSE //reset DNR in case we cryoed to get here
 		M.client.player.claimed_rewards = list() // reset claimed medal rewards
 		M.mind.purchased_bank_item = null
 		if(master.rp_alert)
 			M.client?.preferences.ShowChoices(M)
-			boutput(M, "<span class='alert'>Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B></span>")
+			boutput(M, SPAN_ALERT("Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B>"))
 		master.unsubscribeRespawnee(src.ckey)
 
 /client/proc/respawn_via_controller()
@@ -211,6 +210,7 @@ var/datum/respawn_controls/respawn_controller
 	respawn_controller.doRespawn(src.ckey)
 
 /atom/movable/screen/respawn_timer
+	name = "Respawn Timer"
 	screen_loc = "CENTER, NORTH"
 	maptext_width = 32 * 5
 	maptext_x = -32 * 2

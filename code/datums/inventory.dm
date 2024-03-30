@@ -8,6 +8,10 @@
 	..()
 	human = H
 
+/datum/humanInventory/disposing()
+	src.human = null
+	..()
+
 /datum/humanInventory/ui_state(mob/user)
 	return tgui_physical_state
 
@@ -61,35 +65,35 @@
 			var/id
 			switch(params["id"])
 				if ("slot_head")
-					id = src.human.slot_head
+					id = SLOT_HEAD
 				if ("slot_wear_mask")
-					id = src.human.slot_wear_mask
+					id = SLOT_WEAR_MASK
 				if ("slot_glasses")
-					id = src.human.slot_glasses
+					id = SLOT_GLASSES
 				if ("slot_ears")
-					id = src.human.slot_ears
+					id = SLOT_EARS
 				if ("slot_l_hand")
-					id = src.human.slot_l_hand
+					id = SLOT_L_HAND
 				if ("slot_r_hand")
-					id = src.human.slot_r_hand
+					id = SLOT_R_HAND
 				if ("slot_gloves")
-					id = src.human.slot_gloves
+					id = SLOT_GLOVES
 				if ("slot_shoes")
-					id = src.human.slot_shoes
+					id = SLOT_SHOES
 				if ("slot_belt")
-					id = src.human.slot_belt
+					id = SLOT_BELT
 				if ("slot_w_uniform")
-					id = src.human.slot_w_uniform
+					id = SLOT_W_UNIFORM
 				if ("slot_wear_suit")
-					id = src.human.slot_wear_suit
+					id = SLOT_WEAR_SUIT
 				if ("slot_back")
-					id = src.human.slot_back
+					id = SLOT_BACK
 				if ("slot_wear_id")
-					id = src.human.slot_wear_id
+					id = SLOT_WEAR_ID
 				if ("slot_l_store")
-					id = src.human.slot_l_store
+					id = SLOT_L_STORE
 				if ("slot_r_store")
-					id = src.human.slot_r_store
+					id = SLOT_R_STORE
 
 			if (id)
 				actions.start(new/datum/action/bar/icon/otherItem(
@@ -98,7 +102,7 @@
 					usr.equipped(),
 					id,
 					0,
-					id == src.human.slot_l_store || id == src.human.slot_r_store
+					id == SLOT_L_STORE || id == SLOT_R_STORE
 				), usr)
 			return
 

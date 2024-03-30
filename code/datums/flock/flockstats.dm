@@ -132,12 +132,12 @@ proc/save_flock_stats()
 			if(isnull(stat_string))
 				break
 			src.stat_store += new /datum/flockstats(stat_string)
-		src.info = {"<center><b>Flock Stats<b></center><br>
+		src.info = {"<center><b>Flock Stats</b></center><br>
 					The Flock has been sighted [players] times, with [builders] building the Relay, and [winners] transmitting the Signal!<br>
 					Statistics for the last [length(stat_store)] Flocks:<br>
 					<ol>\n"}
 		for(var/datum/flockstats/stat in src.stat_store)
-			src.info += {"<li><b>[stat.flockname][stat.won ? " - RETRANSMITTED" :""]<b>
+			src.info += {"<li><b>[stat.flockname][stat.won ? " - RETRANSMITTED" :""]</b>
 							<ul>
 								<li>Built the Relay: [stat.built_relay ? "Yes": "No"]</li>
 								<li>Drones made: [stat.drones_made]</li>

@@ -19,7 +19,7 @@ ABSTRACT_TYPE(/datum/plant)
 	var/plant_icon = null    // If you need a new DMI for whatever reason. why not!
 	var/override_icon_state = null   // If you need the icon to be different to the name
 	var/crop = null // What crop does this plant produce?
-	var/force_seed_on_harvest = 0 // an override so plants like synthmeat can give seeds
+	var/force_seed_on_harvest = 0 //! an override on 1 so plants like synthmeat can give seeds. an override on -1 so plants like creeper don't give seeds at all.
 	var/starthealth = 0 // What health does this plant start at?
 	var/growtime = 0 // How much faster this plant matures
 	var/harvtime = 0 // How much faster this plant produces harvests after maturing
@@ -40,6 +40,7 @@ ABSTRACT_TYPE(/datum/plant)
 
 	var/special_proc = 0 // Does this plant do something special when it's in the pot?
 	var/attacked_proc = 0 // Does this plant react if you try to attack it?
+	var/proximity_proc = 0 // Does this plant react to things moving around it?
 	var/harvested_proc = 0 // Take a guess
 
 	/// Don't rename the crop after the plant.
@@ -182,11 +183,12 @@ ABSTRACT_TYPE(/datum/plant)
 					damage_amt = rand(15,30)
 			if ("blood","bloodc")
 				if (src.growthmode == "carnivore")
-					DNA.growtime += rand(5,10)
-					DNA.harvtime += rand(5,10)
-					DNA.endurance += rand(10,30)
+					DNA.growtime += rand(4,6)
+					DNA.harvtime += rand(4,6)
+					DNA.endurance += rand(4,8)
 			if ("radium","uranium")
-				damage_amt = rand(5,15)
+				if(!HYPCheckCommut(DNA,/datum/plant_gene_strain/immunity_radiation))
+					damage_amt = rand(5,15) // Seeds without radiation immunity take extra damage when infusing
 				HYPmutateDNA(DNA,1)
 				HYPnewcommutcheck(src,DNA, 2)
 				HYPnewmutationcheck(src,DNA,null,1,S)
@@ -201,6 +203,12 @@ ABSTRACT_TYPE(/datum/plant)
 				HYPnewcommutcheck(src,DNA, 3)
 				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(5))
+					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
+			if ("omega_mutagen")
+				HYPmutateDNA(DNA,3)
+				HYPnewcommutcheck(src,DNA,6)
+				HYPnewmutationcheck(src,DNA,null,10,S)
+				if (prob(25))
 					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
 			if ("ammonia")
 				damage_amt = rand(10,20)
@@ -231,10 +239,18 @@ ABSTRACT_TYPE(/datum/plant)
 					DNA.potency++
 				if (DNA.endurance < 0)
 					DNA.endurance++
+		for (var/datum/plantmutation/mutation in src.mutations)
+			if (reagent in mutation.infusion_reagents)
+				if (HYPmutationcheck_full(DNA, mutation) && prob(mutation.infusion_chance))
+					DNA.mutation = mutation
+					break
 
 		if (damage_amt)
 			if (prob(damage_prob))
 				S.seeddamage += damage_amt
+
+	proc/ProximityProc(var/obj/machinery/plantpot/POT,var/mob/user) // Simple proximity proc for stuff like nettles
+		return
 
 /datum/plantgenes
 	var/growtime = 0 // These vars are pretty much bonuses/penalties applied on top of the
@@ -290,7 +306,6 @@ ABSTRACT_TYPE(/datum/plant)
 		return output_real
 
 /datum/action/bar/icon/harvest_plant  //In the words of my forebears, "I really don't know a good spot to put this, so im putting it here, fuck you." Adds a channeled action to harvesting flagged plants.
-	id = "harvest_plant"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 50
 	icon = 'icons/mob/screen1.dmi'

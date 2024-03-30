@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../../backend';
-import { Flex, Box, Section } from '../../components';
+import { Box, Flex, Section } from '../../components';
 import { Window } from '../../layouts';
 import { ChemChuteData } from './type';
 

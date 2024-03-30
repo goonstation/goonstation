@@ -15,30 +15,30 @@
 			src.gender = "male"
 			src.real_name = "Batman"
 
-			src.equip_new_if_possible(/obj/item/storage/backpack/, slot_back)
-			src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/misc/lawyer, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/suit/armor/batman, slot_wear_suit)
-			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses/sechud, slot_glasses)
-			src.equip_new_if_possible(/obj/item/clothing/gloves/yellow, slot_gloves)
-			src.equip_new_if_possible(/obj/item/clothing/head/helmet/batman, slot_head)
-			src.equip_new_if_possible(/obj/item/clothing/mask/batman, slot_wear_mask)
-			src.equip_new_if_possible(/obj/item/storage/belt/security, slot_belt)
-			src.equip_new_if_possible(/obj/item/device/radio/headset/command, slot_ears)
-			src.equip_new_if_possible(/obj/item/card/id/syndicate, slot_wear_id)
-			src.equip_new_if_possible(/obj/item/handcuffs/tape_roll, slot_l_store)
-			src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, slot_r_store)
+			src.equip_new_if_possible(/obj/item/storage/backpack/, SLOT_BACK)
+			src.equip_new_if_possible(/obj/item/clothing/shoes/swat, SLOT_SHOES)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/lawyer, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/suit/armor/batman, SLOT_WEAR_SUIT)
+			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses/sechud, SLOT_GLASSES)
+			src.equip_new_if_possible(/obj/item/clothing/gloves/yellow, SLOT_GLOVES)
+			src.equip_new_if_possible(/obj/item/clothing/head/helmet/batman, SLOT_HEAD)
+			src.equip_new_if_possible(/obj/item/clothing/mask/batman, SLOT_WEAR_MASK)
+			src.equip_new_if_possible(/obj/item/storage/belt/security, SLOT_BELT)
+			src.equip_new_if_possible(/obj/item/device/radio/headset/command, SLOT_EARS)
+			src.equip_new_if_possible(/obj/item/card/id/syndicate, SLOT_WEAR_ID)
+			src.equip_new_if_possible(/obj/item/handcuffs/tape_roll, SLOT_L_STORE)
+			src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, SLOT_R_STORE)
 
-			src.equip_new_if_possible(/obj/item/storage/box/tactical_kit, slot_in_backpack)
-			src.equip_new_if_possible(/obj/item/storage/medical_pouch, slot_in_backpack)
-			src.equip_new_if_possible(/obj/item/storage/belt/syndicate_medic_belt, slot_in_backpack)
-			src.equip_new_if_possible(/obj/item/breaching_charge/thermite, slot_in_backpack)
-			src.equip_new_if_possible(/obj/item/breaching_charge/thermite, slot_in_backpack)
-			src.equip_new_if_possible(/obj/item/storage/box/flashbang_kit, slot_in_backpack)
+			src.equip_new_if_possible(/obj/item/storage/box/tactical_kit, SLOT_IN_BACKPACK)
+			src.equip_new_if_possible(/obj/item/storage/medical_pouch, SLOT_IN_BACKPACK)
+			src.equip_new_if_possible(/obj/item/storage/belt/syndicate_medic_belt, SLOT_IN_BACKPACK)
+			src.equip_new_if_possible(/obj/item/breaching_charge/thermite, SLOT_IN_BACKPACK)
+			src.equip_new_if_possible(/obj/item/breaching_charge/thermite, SLOT_IN_BACKPACK)
+			src.equip_new_if_possible(/obj/item/storage/box/flashbang_kit, SLOT_IN_BACKPACK)
 
-			src.equip_new_if_possible(/obj/item/tool/omnitool, slot_in_belt)
-			src.equip_new_if_possible(/obj/item/clothing/glasses/thermal, slot_in_belt)
-			src.equip_new_if_possible(/obj/item/gun/energy/pickpocket, slot_in_belt)
+			src.equip_new_if_possible(/obj/item/tool/omnitool, SLOT_IN_BELT)
+			src.equip_new_if_possible(/obj/item/clothing/glasses/thermal, SLOT_IN_BELT)
+			src.equip_new_if_possible(/obj/item/gun/energy/pickpocket, SLOT_IN_BELT)
 
 			src.verbs += /mob/proc/batsmoke
 			src.verbs += /mob/proc/batarang
@@ -87,8 +87,8 @@
 	set category = "Batman"
 	set name = "Batsmoke \[Support]"
 
-	playsound(usr, 'sound/weapons/launcher.ogg', 70, 0, 0)
-	usr.visible_message("<span class='alert'>[usr] drops a smoke bomb!</span>", "<span class='alert'>You drop a smoke bomb!</span>")
+	playsound(usr, 'sound/weapons/launcher.ogg', 70, FALSE, 0)
+	usr.visible_message(SPAN_ALERT("[usr] drops a smoke bomb!"), SPAN_ALERT("You drop a smoke bomb!"))
 
 	var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
 	smoke.set_up(10, 0, usr.loc)
@@ -97,7 +97,7 @@
 /mob/proc/batarang(mob/T as mob in oview())
 	set category = "Batman"
 	set name = "Batarang \[Combat]"
-	usr.visible_message("<span class='alert'>[usr] tosses a batarang at [T]!</span>", "<span class='alert'>You toss a batarang at [T]!</span>")
+	usr.visible_message(SPAN_ALERT("[usr] tosses a batarang at [T]!"), SPAN_ALERT("You toss a batarang at [T]!"))
 	playsound(usr, pick('sound/effects/sword_unsheath1.ogg','sound/effects/sword_unsheath2.ogg'), 70, 0, 0)
 	var/obj/overlay/A = new /obj/overlay( usr.loc )
 	A.icon_state = "batarang"
@@ -109,13 +109,13 @@
 	for(i=0, i<100, i++)
 		step_to(A,T,0)
 		if (GET_DIST(A,T) < 1)
-			playsound(T, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 70, 0, 0)
+			playsound(T, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 70, FALSE, 0)
 			random_brute_damage(T, 7)
 			take_bleeding_damage(T, usr, 5, DAMAGE_STAB, 0)
 			bleed(T, 3, 1)
 			T.changeStatus("weakened", 7 SECONDS)
 			T.changeStatus("stunned", 7 SECONDS)
-			T.visible_message("<span class='alert'>[T] was struck by the batarang!</span>", "<span class='alert'>You were struck by a batarang!</span>")
+			T.visible_message(SPAN_ALERT("[T] was struck by the batarang!"), SPAN_ALERT("You were struck by a batarang!"))
 			qdel(A)
 		sleep(0.2 SECONDS)
 	qdel(A)
@@ -128,7 +128,7 @@
 
 	if(T)
 		var/turf/tturf = get_edge_target_turf(usr, get_dir(T, get_step_away(T, usr)))
-		usr.visible_message("<span class='alert'><B>[usr] powerfully kicks [T]!</B></span>", "<span class='alert'><B>You kick [T]!</B></span>")
+		usr.visible_message(SPAN_ALERT("<B>[usr] powerfully kicks [T]!</B>"), SPAN_ALERT("<B>You kick [T]!</B>"))
 		usr.emote("flip")
 		playsound(usr.loc, "swing_hit", 40, 1)
 		batman_pow(T.loc)
@@ -145,7 +145,7 @@
 
 	if(usr.hasStatus("weakened") || usr.hasStatus("stunned"))
 		playsound(usr.loc, 'sound/effects/flip.ogg', 50, 1)
-		usr.visible_message("<span class='alert'><B>[usr] suddenly recovers!</B></span>", "<span class='alert'><B>You suddenly recover!</B></span>")
+		usr.visible_message(SPAN_ALERT("<B>[usr] suddenly recovers!</B>"), SPAN_ALERT("<B>You suddenly recover!</B>"))
 		usr.delStatus("weakened")
 		usr.delStatus("stunned")
 		usr.emote("flip")
@@ -169,9 +169,9 @@
 	set desc = "Attack, but Batman-like ok"
 
 	if(usr.stat)
-		boutput(usr, "<span class='alert'>Not when you're incapped!</span>")
+		boutput(usr, SPAN_ALERT("Not when you're incapped!"))
 		return
-	usr.visible_message("<span class='alert'><B>[usr] bat-punches [T]!</B></span>", "<span class='alert'><B>You bat-punch [T]!</B></span>")
+	usr.visible_message(SPAN_ALERT("<B>[usr] bat-punches [T]!</B>"), SPAN_ALERT("<B>You bat-punch [T]!</B>"))
 	playsound(usr.loc, "swing_hit", 40, 1)
 	batman_pow(T.loc)
 	var/zone = "chest"
@@ -194,40 +194,40 @@
 
 
 	if(usr.stat)
-		boutput(usr, "<span class='alert'>Not when you're incapped!</span>")
+		boutput(usr, SPAN_ALERT("Not when you're incapped!"))
 		return
 	SPAWN(0)
 		T.setStatus("stunned", 10 SECONDS)
-		usr.visible_message("<span class='alert'><B>[usr] leaps into the air, shocking [T]!</B></span>", "<span class='alert'><B>You leap into the air, shocking [T]!</B></span>")
+		usr.visible_message(SPAN_ALERT("<B>[usr] leaps into the air, shocking [T]!</B>"), SPAN_ALERT("<B>You leap into the air, shocking [T]!</B>"))
 		for(var/i = 0, i < 5, i++)
 			usr.pixel_y += 4
 			sleep(0.1 SECONDS)
-		usr.visible_message("<span class='alert'><B>[usr] begins kicking [T] in the face rapidly!</B></span>", "<span class='alert'><B>You begin kicking [T] in the face rapidly!</B></span>")
+		usr.visible_message(SPAN_ALERT("<B>[usr] begins kicking [T] in the face rapidly!</B>"), SPAN_ALERT("<B>You begin kicking [T] in the face rapidly!</B>"))
 		for(var/i = 0, i < 5, i++)
 			usr.pixel_y -= 4
 			usr.set_dir(NORTH)
 			T.TakeDamage("head", 1, 0)
-			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
+			usr.visible_message(SPAN_ALERT("<B>[usr] kicks [T] in the face!</B>"), SPAN_ALERT("<B>You kick [T] in the face!</B>"))
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 			sleep(0.1 SECONDS)
 			usr.set_dir(EAST)
 			T.TakeDamage("head", 1, 0)
-			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
+			usr.visible_message(SPAN_ALERT("<B>[usr] kicks [T] in the face!</B>"), SPAN_ALERT("<B>You kick [T] in the face!</B>"))
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 			sleep(0.1 SECONDS)
 			usr.set_dir(SOUTH)
 			T.TakeDamage("head", 1, 0)
-			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
+			usr.visible_message(SPAN_ALERT("<B>[usr] kicks [T] in the face!</B>"), SPAN_ALERT("<B>You kick [T] in the face!</B>"))
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 			sleep(0.1 SECONDS)
 			usr.set_dir(WEST)
 			T.TakeDamage("head", 1, 0)
-			usr.visible_message("<span class='alert'><B>[usr] kicks [T] in the face!</B></span>", "<span class='alert'><B>You kick [T] in the face!</B></span>")
+			usr.visible_message(SPAN_ALERT("<B>[usr] kicks [T] in the face!</B>"), SPAN_ALERT("<B>You kick [T] in the face!</B>"))
 			playsound(T.loc, "swing_hit", 25, 1, -1)
 		usr.set_dir(get_dir(usr, T))
-		usr.visible_message("<span class='alert'><B>[usr] stares deeply at [T]!</B></span>", "<span class='alert'><B>You stares deeply at [T]!</B></span>")
+		usr.visible_message(SPAN_ALERT("<B>[usr] stares deeply at [T]!</B>"), SPAN_ALERT("<B>You stares deeply at [T]!</B>"))
 		sleep(0.8 SECONDS)
-		usr.visible_message("<span class='alert'><B>[usr] unleashes a tremendous kick to the jaw towards [T]!</B></span>", "<span class='alert'><B>You unleash a tremendous kick to the jaw towards [T]!</B></span>")
+		usr.visible_message(SPAN_ALERT("<B>[usr] unleashes a tremendous kick to the jaw towards [T]!</B>"), SPAN_ALERT("<B>You unleash a tremendous kick to the jaw towards [T]!</B>"))
 		playsound(T.loc, "swing_hit", 25, 1, -1)
 		batman_pow(T.loc)
 		//flick("e_flash", T.flash)
@@ -251,7 +251,7 @@
 			usr.pixel_y -= 8
 			sleep(0.1 SECONDS)
 		usr.pixel_y = 0
-		usr.visible_message("<span class='alert'><B>[usr] elbow drops [T] into oblivion!</B></span>", "<span class='alert'><B>You elbow drop [T] into oblivion!</B></span>")
+		usr.visible_message(SPAN_ALERT("<B>[usr] elbow drops [T] into oblivion!</B>"), SPAN_ALERT("<B>You elbow drop [T] into oblivion!</B>"))
 		batman_pow(T.loc)
 		playsound(T.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 		random_brute_damage(T, 20)
@@ -266,13 +266,13 @@
 	set desc = "Grab someone and spin them around until they explode"
 
 	SPAWN(0)
-		usr.visible_message("<span class='alert'><B>[usr] grabs [T] tightly!</B></span>", "<span class='alert'><B>You grab [T] tightly!</B></span>")
+		usr.visible_message(SPAN_ALERT("<B>[usr] grabs [T] tightly!</B>"), SPAN_ALERT("<B>You grab [T] tightly!</B>"))
 		T.u_equip(l_hand)
 		T.u_equip(r_hand)
 		T.setStatus("stunned", T.getStatusDuration("stunned") + 15 SECONDS)
 		T.force_laydown_standup()
 		sleep(1 SECOND)
-		usr.visible_message("<span class='alert'><B>[usr] starts spinning [T] around!</B></span>", "<span class='alert'><B>You start spinning [T] around!</B></span>")
+		usr.visible_message(SPAN_ALERT("<B>[usr] starts spinning [T] around!</B>"), SPAN_ALERT("<B>You start spinning [T] around!</B>"))
 		playsound(usr.loc, 'sound/effects/bionic_sound.ogg', 50)
 		for(var/i = 0, i < 2, i++)
 			T.set_dir(NORTH)
@@ -292,7 +292,7 @@
 			sleep(0.2 SECONDS)
 			T.set_dir(WEST)
 			sleep(0.2 SECONDS)
-		boutput(T, "<span class='alert'>YOU'RE GOING TOO FAST!!!</span>")
+		boutput(T, SPAN_ALERT("YOU'RE GOING TOO FAST!!!"))
 		for(var/i = 0, i < 10, i++)
 			T.set_dir(NORTH)
 			sleep(0.1 SECONDS)
@@ -303,7 +303,7 @@
 			T.set_dir(WEST)
 			sleep(0.1 SECONDS)
 		playsound(usr.loc, 'sound/weapons/rocket.ogg', 50)
-		usr.visible_message("<span class='alert'><B>[src] flings [T] with all of his might!</B></span>")
+		usr.visible_message(SPAN_ALERT("<B>[src] flings [T] with all of his might!</B>"))
 		T.force_laydown_standup()
 		var/target_dir = get_dir(usr, T)
 		sleep(0)
@@ -316,7 +316,7 @@
 			T.losebreath += 10
 			T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
 			T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
-			T.visible_message("<span class='alert'><B>[T] lands very violently with a bone-crunching sound!</B></span>", "<span class='alert'><B>You land violently with a lot of pain!</B></span>")
+			T.visible_message(SPAN_ALERT("<B>[T] lands very violently with a bone-crunching sound!</B>"), SPAN_ALERT("<B>You land violently with a lot of pain!</B>"))
 
 
 /mob/proc/batdropkick(mob/T as mob in oview())
@@ -324,19 +324,19 @@
 	set name = "Drop Kick \[Disabler]"
 	set desc = "Fall to the ground, leap up and knock a dude out"
 
-	usr.visible_message("<span class='alert'><B>[usr] drops to the ground, preparing for a jump</B>!</span>", "<span class='alert'><B>You drop to the ground, preparing for a jump</B>!</span>")
+	usr.visible_message(SPAN_ALERT("<B>[usr] drops to the ground, preparing for a jump</B>!"), SPAN_ALERT("<B>You drop to the ground, preparing for a jump</B>!"))
 	playsound(usr.loc, 'sound/effects/bionic_sound.ogg', 50)
 	usr.setStatus("weakened", 8 SECONDS)
 	usr.force_laydown_standup()
 	sleep(1.5 SECONDS)
-	usr.visible_message("<span class='alert'><B>[usr] launches towards [T]</B>!</span>", "<span class='alert'><B>You launch towards [T]</B>!</span>")
+	usr.visible_message(SPAN_ALERT("<B>[usr] launches towards [T]</B>!"), SPAN_ALERT("<B>You launch towards [T]</B>!"))
 	for(var/i=0, i<100, i++)
 		step_to(usr,T,0)
 		if (BOUNDS_DIST(usr, T) == 0)
 			batman_pow(T.loc)
 			T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
 			T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
-			usr.visible_message("<span class='alert'><B>[usr] flies at [T], slamming [him_or_her(usr)] in the head</B>!</span>", "<span class='alert'><B>You fly at [T], slamming [him_or_her(T)] in the head</B>!</span>")
+			usr.visible_message(SPAN_ALERT("<B>[usr] flies at [T], slamming [him_or_her(usr)] in the head</B>!"), SPAN_ALERT("<B>You fly at [T], slamming [him_or_her(T)] in the head</B>!"))
 			playsound(T.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 			random_brute_damage(T, 25)
 			usr.delStatus("weakened")
@@ -370,7 +370,7 @@ obj/item/batarang
 			H.changeStatus("weakened", 1 SECONDS)
 			H.force_laydown_standup()
 			take_bleeding_damage(H, null, 10)
-			playsound(src, hitsound, 60, 1)
+			playsound(src, hitsound, 60, TRUE)
 
 		else
 			return

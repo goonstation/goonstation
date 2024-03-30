@@ -1,5 +1,4 @@
 #ifndef UNDERWATER_MAP
-#ifndef HALLOWEEN
 /datum/random_event/major/pretty_space
 	name = "Space Colors"
 	customization_available = 1
@@ -26,12 +25,8 @@
 			duration = 30 SECONDS + rand() * 3 MINUTES
 
 		command_alert("Navigational radar indicates that the [station_or_ship()] will shortly begin drifting through a molecular cloud. This poses no danger to structural integrity or personnel, so enjoy the view.", "Navigational Update", alert_origin = ALERT_WEATHER)
-		for (var/client/client in clients)
-			client.parallax_controller?.recolour_parallax_layers(color, 10 SECONDS)
-			LAGCHECK(LAG_HIGH)
+		RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_STATION, color, 10 SECONDS)
+
 		SPAWN(duration)
-			for (var/client/client in clients)
-				client.parallax_controller?.recolour_parallax_layers(list(), 10 SECONDS)
-				LAGCHECK(LAG_HIGH)
-#endif
+			RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_STATION, list(), 10 SECONDS)
 #endif

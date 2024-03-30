@@ -20,6 +20,25 @@
 		//var/turf/T = get_turf(target)
 		if (A.activated)
 			if (A.can_teleport_here(U,user))
+				if(ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if(H.shoes?.magnetic && istype(H.shoes, /obj/item/clothing/shoes/magnetic))
+						var/obj/item/clothing/shoes/magnetic/stay_behind = H.shoes
+
+						boutput(user, SPAN_ALERT("<b>The magnetic attractor on [stay_behind] overloads!</b>"))
+						playsound(H, pick('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg'), 30)
+						H.u_equip(stay_behind)
+						stay_behind.set_loc(H.loc)
+						stay_behind.dropped(H)
+						stay_behind.layer = initial(stay_behind.layer)
+
+						H.sever_limb("l_leg")
+						H.sever_limb("r_leg")
+						random_brute_damage(H, rand(15, 45))
+						take_bleeding_damage(H, null, 10, DAMAGE_CRUSH)
+
+						SPAWN(3 SECONDS) // womp womp
+							stay_behind.deactivate()
 				A.effect_click_tile(src,user,U)
 			else
 				boutput(user, "<b>[src]</b> [A.error_phrase]")
@@ -68,7 +87,7 @@
 		user.set_loc(T)
 
 		var/turf/start_loc = get_turf(user)
-		playsound(start_loc, wand_sound, 50, 1, -1)
+		playsound(start_loc, wand_sound, 50, TRUE, -1)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(T,particle_sprite,particle_color))
 		O.ArtifactFaultUsed(user)
 		return

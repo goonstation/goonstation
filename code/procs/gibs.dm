@@ -6,7 +6,7 @@
 		location = usr
 	if(!location?.z) // we care not for null gibs
 		return
-	playsound(location, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+	playsound(location, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, TRUE)
 
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
@@ -83,7 +83,7 @@
 	if(!location)
 		return
 
-	playsound(location, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
+	playsound(location, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, TRUE)
 	make_cleanable(/obj/decal/cleanable/oil, location)
 
 	// RUH ROH
@@ -252,7 +252,7 @@
 	if(!location) return
 	// WHO LIKES COPY PASTED CODE? I DO I LOVE IT DELICIOUS YUM YUM
 	var/obj/decal/cleanable/ash/gib = null
-	playsound(location, 'sound/effects/mag_fireballlaunch.ogg', 50, 1, pitch = 0.5)
+	playsound(location, 'sound/effects/mag_fireballlaunch.ogg', 50, TRUE, pitch = 0.5)
 	// RANDOM
 	gib = make_cleanable(/obj/decal/cleanable/ash, location)
 	gib.streak_cleanable()
