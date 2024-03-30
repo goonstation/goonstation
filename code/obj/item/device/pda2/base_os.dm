@@ -560,20 +560,12 @@
 						if (href_list["norefresh"])
 							src.master.add_fingerprint(usr)
 							return
+
 					if("ack")
 						if(src.message_last + 20 > world.time) //Message sending delay
 							return
-
-						// group gets response message even if caller's PDA is destroyed or prankin'
-						var/message = "ACK: Responding"
-						src.pda_message(href_list["alert_group"], href_list["alert_group"], message, TRUE)
+						src.CrisisRespond(href_list["alert_group"], href_list["alert_caller"], href_list["addressee"])
 						src.master.add_fingerprint(usr)
-
-						var/caller_id = href_list["alert_caller"]
-						if(!(caller_id in src.detected_pdas))
-							return
-						var/caller_name = detected_pdas[caller_id]
-						src.pda_message(caller_id, caller_name, message, FALSE)
 						return
 
 					if("rename")
@@ -894,7 +886,7 @@
 						if (islist(groupAddress))
 							if (MGA_CRISIS in groupAddress)
 								// first other group only sorry
-								displayMessage += " [uppertext((groupAddress[1]))] PAGE \[<a href='byond://?src=\ref[src];input=ack;alert_group=[groupAddress[1]];alert_responder=[src.master.owner];alert_caller=[signal.data["sender"]]'>ACK</a>\]"
+								displayMessage += " [uppertext((groupAddress[1]))] CRISIS \[<a href='byond://?src=\ref[src];input=ack;alert_group=[groupAddress[1]];alert_responder=[src.master.owner];alert_caller=[signal.data["sender"]]'>ACK</a>\]" // TODO: if the address
 							else
 								displayMessage += " to [jointext(groupAddress,", ")]"
 						else
@@ -1186,6 +1178,35 @@
 				return
 			if(!(sender in src.all_callers))
 				src.all_callers[address] = sender
+
+		/// Handles generating a response to crisis alerts
+		proc/CrisisRespond(group_id, caller_id)
+			var/message = "ACK: Responding to crisis alert!"
+
+ 			// always send group alert
+			var/datum/signal/group_signal = get_free_signal()
+			group_signal.data["command"] = "text_message"
+			group_signal.data["message"] = message
+			group_signal.data["sender_name"] = src.master.owner
+			group_signal.data["sender_assignment"] = src.master.ownerAssignment
+			group_signal.data["group"] = group_id
+			src.post_signal(group_signal)
+
+			var/caller_name = "!UNKNOWN!"
+			if((caller_id in src.detected_pdas))
+				caller_name = detected_pdas[caller_id]
+
+				var/datum/signal/caller_signal = get_free_signal()
+				caller_signal.data["command"] = "text_message"
+				caller_signal.data["message"] = message
+				caller_signal.data["sender_name"] = src.master.owner
+				caller_signal.data["sender_assignment"] = src.master.ownerAssignment
+				caller_signal.data["address_1"] = caller_id
+				src.post_signal(caller_signal)
+
+			src.message_last = world.time
+			src.master.display_message("<b>To [group_id], [caller_name]:</b> [message]")
+			src.message_note += "<i><b>&rarr; To [group_id], [caller_name]:</b></i><br>[message]<br>"
 
 #undef RECENT_CALL_COOLDOWN
 #undef MODE_MAINMENU
