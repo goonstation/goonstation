@@ -257,13 +257,13 @@
 			color_overlay = null
 			if(law_circuits[i])
 				circuit_image = image(src.icon, "aimod")
-				circuit_image.pixel_x = 0
-				circuit_image.pixel_y = -36 + i*4
+				circuit_image.pixel_w = 0
+				circuit_image.pixel_z = -36 + i*4
 				circuit_image.color = law_circuits[i].color
 				color_overlay = image(src.icon, "aimod_over")
 				color_overlay.color = law_circuits[i].highlight_color
-				color_overlay.pixel_x = 0
-				color_overlay.pixel_y = -36 + i*4
+				color_overlay.pixel_w = 0
+				color_overlay.pixel_z = -36 + i*4
 			src.UpdateOverlays(circuit_image,"module_slot_[i]")
 			src.UpdateOverlays(color_overlay,"module_slot_[i]_overlay")
 
