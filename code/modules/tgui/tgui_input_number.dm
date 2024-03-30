@@ -61,8 +61,10 @@
  * * timeout - The timeout of the numbox, after which the modal will close and qdel itself. Disabled by default, can be set to seconds otherwise.
  * * round_input - If the number in the numbox should be rounded to the nearest integer.
  * * theme - The TGUI theme used for the window.
+ * * auto_focus - Specifies if the input should take focus as the active window
+ * * auto_select - Specifies if the existing field value should be automatically selected on window open, implies auto_focus = TRUE
  */
-/proc/tgui_input_number_async(mob/user, message, title = "Number Input", default, max_value = null, min_value = null, datum/callback/callback, timeout = 60 SECONDS, round_input = TRUE, theme = null, autofocus = TRUE)
+/proc/tgui_input_number_async(mob/user, message, title = "Number Input", default, max_value = null, min_value = null, datum/callback/callback, timeout = 60 SECONDS, round_input = TRUE, theme = null, auto_focus = TRUE, auto_select = TRUE)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -126,7 +128,7 @@
 	src.round_input = round_input
 	src.title = title
 	src.theme = theme
-	src.auto_focus = autofocus
+	src.auto_focus = auto_focus
 	src.auto_select = auto_select
 	if (timeout)
 		src.timeout = timeout
