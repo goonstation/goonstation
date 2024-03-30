@@ -60916,7 +60916,6 @@
 /obj/disposalpipe/segment/mail,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_control,
-/obj/machinery/power/data_terminal,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
