@@ -1738,7 +1738,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("MET-1","MET-2","CON-1","ALL")
 	item_amounts = list(15,5,10,5)
 	item_outputs = list(/obj/machinery/bot/mining)
-	time = 0 SECONDS
+	time = 10 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -2050,7 +2050,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Powered Pick"
 	item_paths = list("MET-2","CON-1")
 	item_amounts = list(2,5)
-	item_outputs = list(/obj/item/mining_tool/power_pick)
+	item_outputs = list(/obj/item/mining_tool/powered/pickaxe)
 	time = 10 SECONDS
 	create = 1
 	category = "Tool"
@@ -2075,18 +2075,18 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/powerhammer
 	name = "Power Hammer"
-	item_paths = list("DEN-1","CON-1")
-	item_amounts = list(1,8)
-	item_outputs = list(/obj/item/mining_tool/powerhammer)
+	item_paths = list("MET-2","MET-3","CON-1")
+	item_amounts = list(15,7,10)
+	item_outputs = list(/obj/item/mining_tool/powered/hammer)
 	time = 70 SECONDS
 	create = 1
 	category = "Tool"
 
 /datum/manufacture/drill
 	name = "Laser Drill"
-	item_paths = list("MET-2","MET-3","CON-2")
-	item_amounts = list(15,7,10)
-	item_outputs = list(/obj/item/mining_tool/drill)
+	item_paths = list("MET-2","CON-2")
+	item_amounts = list(15,10)
+	item_outputs = list(/obj/item/mining_tool/powered/drill)
 	time = 90 SECONDS
 	create = 1
 	category = "Tool"

@@ -1,3 +1,6 @@
+(t)thu mar 21 24
+(u)Sord
+(+)"Give everyone a random firearm" button now allows you to choose either a safe-ish pick or fullrandom
 (t)mon mar 13 24
 (u)Sovexe
 (*)The Job Manager has been remade in TGUI

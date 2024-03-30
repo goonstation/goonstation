@@ -81,8 +81,6 @@ export interface HeadsData {
 
 export interface GangLockerData {
   gangLocker: string;
-  maxHealth: number;
-  health: number;
   area: string;
   coordinates: string;
 }

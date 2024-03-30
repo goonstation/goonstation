@@ -395,10 +395,12 @@
 
 		name = "lunar tram engine"
 		desc = "The La Caille Model 2006 LunaTram. A staple of lunar transit."
+		plane = -100
 
 	passenger
 		icon = 'icons/obj/large/64x48.dmi'
 		icon_state = "car-passenger-middle"
+		plane = -100
 
 		start
 			icon_state = "car-passenger-start"
@@ -409,12 +411,14 @@
 	flatbed
 		icon = 'icons/obj/large/64x48.dmi'
 		icon_state = "car-platform"
+		plane = -100
 
 		container
 			icon_state = "car-container-green"
 
 			red
 				icon_state = "car-container-red"
+				name = "Hafgan container"
 
 			blue
 				icon_state = "car-container-blue"
@@ -463,3 +467,16 @@
 
 
 
+/obj/decoration/railyard
+
+	schedule
+		icon = 'icons/obj/large/64x32.dmi'
+		icon_state = "schedule_board"
+
+	signal
+		icon = 'icons/obj/railway.dmi'
+		icon_state = "signal-stop"
+
+		pole
+			icon = 'icons/obj/large/32x64.dmi'
+			icon_state = "signal-pole-stop"

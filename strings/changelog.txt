@@ -1,4 +1,132 @@
 
+(t)fri mar 29 24
+(u)glowbold
+(p)18226
+(e)💅💊💡|C-QoL, A-Medical, A-Station-Systems
+(*)Medical records now list relevant traits as major/minor disabilities instead of a full list.
+(u)IPingu
+(p)18200
+(e)⚖|C-Balance
+(+)Lowers the bathroom robot's buying prices.
+(t)thu mar 28 24
+(u)glowbold
+(p)18336
+(e)⛔💡|C-Removal, A-Station-Systems
+(+)NanoTrasen no longer has a direct line of contact with the CDC.
+(u)TDHooligan
+(p)18310
+(e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
+(*)Gang firearms have been tweaked. Please feedback in the discord or forum.
+(+)Lo-Point now has a sensible firerate & has 2 fewer rounds.
+(+)Burst laser does 3 more damage/laser.
+(+)Webley Revolver now does stamina damage & has a weaker AP effect.
+(+)Striker-7 does stamina damage, damage now falls off later, but a lot faster.
+(+)The SMGs remain unchanged (They already have a lot of raw damage)
+(t)wed mar 27 24
+(u)Avanth
+(p)18326
+(e)💅|C-QoL
+(+)Modified secmate to allow the search function to search by criminal status in addition to what it searched by previously.
+(u)444explorer
+(p)18332
+(e)🆕💊📦|C-Feature, A-Medical, A-Game-Objects
+(+)Shaking salt in someones eyes hurts their eyes badly! Ouch!
+(t)tue mar 26 24
+(u)TDHooligan
+(p)18315
+(e)💅📄|C-QoL, A-UI
+(*)Firearm recoil now resets faster; please feedback in the discord.
+(*)It can also be toggled off via the 'Effects' menu.
+(u)JORJ949
+(p)18311
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Added a Nuclear Preparations closet to the Cairngorm.
+(u)LeahTheTech
+(+)The Cosmopolitan drink now gives you a taste of a random accent with every sip.
+(+)Diesel can now be used to fuel combustion generators. There is nothing strange about this.
+(t)mon mar 25 24
+(u)TDHooligan
+(p)18161
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Firearms now have recoil; As a result, big kinetic guns could get hard to control if you apply too much dakka!
+(u)LeahTheTech
+(+)Gang duffle bags no longer fit in backpacks.
+(+)Gang lockers are now properly explosion immune.
+(+)Gang crates spawn a bit earlier on classic now.
+(t)sun mar 24 24
+(u)LeahTheTech
+(+)The Old Fashioned drink now gives you temporary "old fashioned" vision.
+(u)JORJ949
+(p)18288
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Clarion AI turrets no longer try to shoot through the wall at bridge.
+(u)JORJ949
+(p)18287
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added a camera to the top right of Inner Engineering on Cog1. AIs rejoice.
+(t)fri mar 22 24
+(u)JORJ949
+(p)18263
+(e)🆕🤖|C-Feature, A-Silicons
+(*)Added Disguised law module to head of staff traitor uplinks.
+(u)TDHooligan
+(p)18236
+(e)🎨❗|C-Sprites, E-FUCK
+(*)Gangs has been reworked! Read below for deets. Send feedback in the discord thread or forum.
+(*)Gang member point pools are separate now. Huzzah!
+(*)Gang lockers can no longer be broken.
+(*)Gang leaders can buy the new 'Janktank II' to revive fellow gang members
+(*)You can now launder thousands of credits at once.
+(*)Tagging has been reworked, read below for details.
+(*)New gang loot bags & crates are hidden throughout the shift. Watch your radios, gang!
+(+)Territory is now a circle around tags, and tags now provide points based on how many people they see pass by.
+(+)You can only tag near your existing territory, starting where your locker is placed
+(+)You should look to expand to populated areas, as quickly as possible!
+(+)Your uniform also grants buffs if you're in your territory, and regen if you're by your locker.
+(+)---
+(+)Every point earned also grants the gang 1 point of 'Street Cred'
+(+)Street cred can be spent by leaders to hire new gang members, or buy revival syringes for their gang.
+(+)---
+(+)Check your gang radio for new events:
+(+)A few times a shift, loot bags are randomly hidden. Interrogate civilians, or their PDAs, to find where they are!
+(+)Twice per shift, a large weapons cache will spawn, locked in place. fight to drag it back to your locker!
+(+)---
+(+)Sprites by Mora, Guv, JOEL, Blackrep, what, Moriarty, Rubi, Shmiggy and Cogwerks. thank you so much :)
+(t)thu mar 21 24
+(u)glowbold
+(p)18192
+(e)🪲⚖📦💡|C-Bug, C-Balance, A-Game-Objects, A-Station-Systems
+(*)Deconstructed cameras now show as "Deactivated" instead of disappearing from the camera list.
+(u)Sord
+(+)Canister bombs priming announcement now also plays an alarm. Scary.
+(u)JORJ949
+(p)18262
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Added riot launchers to Atlas security.
+(t)mon mar 18 24
+(u)Sord
+(+)Added a new, rare, handheld artifact: the healing wand! This artifact will heal your target, and rarely even yourself!
+(t)sun mar 17 24
+(u)LeahTheTech
+(+)Repairing or replacing one floor tile with another will no longer hide items on that tile under it.
+(+)Standardized maps so every security department now has one riot control grenade outside of the armoury. For riots.
+(p)18222
+(e)⚖🔄🧛|C-Balance, C-Rework, A-Gamemodes
+(*)Reworked a lot of stealing and assassinate objectives to be more realistically completable.
+(t)sat mar 16 24
+(u)Chatauscours
+(p)18171
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)Security officers and Inspectors can now isssue fines for up to 500 credits without further approval.
+(+)You will now be alerted by PDA when you recieve a fine.
+(t)fri mar 15 24
+(u)LeahTheTech
+(+)The salbutamol/salicylic acid recipe no longer begins reacting until it receives stimulus (ie either heat or physical shock)
+(t)thu mar 14 24
+(u)crunchwarp
+(p)18034
+(e)🗺|A-Mapping
+(*)The Clarion ranch has emerged from its chrysalis at last, transformed...!
 (t)wed mar 13 24
 (u)DecidedlyUnethical, MylieDaniels
 (p)18170

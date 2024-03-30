@@ -29,6 +29,9 @@ datum/mind
 	/// A list of every antagonist datum subordinate to this mind.
 	var/list/datum/antagonist/subordinate/subordinate_antagonists = list()
 
+	//Gang variables
+	var/obj/item/device/pda2/originalPDA //! The PDA that this crewmember started with - for gang PDA messages
+
 	// This used for dead/released/etc mindhacks and rogue robots we still want them to show up
 	// in the game over stats. It's a list because former mindhacks could also end up as an emagged
 	// cyborg or something. Use strings here, just like special_role (Convair880).
