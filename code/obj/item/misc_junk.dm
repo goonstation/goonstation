@@ -1,7 +1,7 @@
 // The misc crap that used to clutter up item.dm and didn't fit elsewhere.
 
 /obj/item/lens
-	name = "Lens"
+	name = "lens"
 	desc = "A lens of some sort. Not super useful on its own."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "lens"
@@ -11,6 +11,7 @@
 	w_class = W_CLASS_TINY
 
 /obj/item/coil
+	name = "coil"
 	desc = "A coil. Not really useful without additional components."
 	icon = 'icons/obj/items/items.dmi'
 	amount = 1

@@ -258,7 +258,7 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 	name = "antique laser gun"
 	icon_state = "caplaser"
 	item_state = "capgun"
-	desc = "A showpiece model of the original Hafgan M-Zero laser pistol. "
+	desc = "A showpiece model of the original Hafgan Mod.00 prototype laser pistol. "
 	muzzle_flash = "muzzle_flash_laser"
 	cell_type = /obj/item/ammo/power_cell/fake
 	uses_charge_overlay = TRUE
