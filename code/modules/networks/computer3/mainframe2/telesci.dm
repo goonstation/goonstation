@@ -53,7 +53,6 @@ TYPEINFO(/obj/machinery/networked/telepad)
 	var/realx = 0
 	var/realy = 0
 	var/realz = 0
-	var/obj/item/disk/data/floppy/diskette = null
 	var/tmp/session = null
 	var/obj/perm_portal/start_portal
 	var/obj/perm_portal/end_portal
@@ -118,18 +117,6 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		user.Browse(dat,"window=telepad;size=245x302")
 		onclose(user,"telepad")
 		return
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/disk/data/floppy))
-			if (!src.diskette)
-				user.drop_item()
-				W.set_loc(src)
-				src.diskette = W
-				boutput(user, "You insert [W].")
-				src.updateUsrDialog()
-				return
-		else
-			. = ..()
 
 	Topic(href, href_list)
 		if(..())
@@ -907,6 +894,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 
 	var/readout = ""
 	var/datum/computer/file/record/user_data
+	var/obj/item/disk/data/floppy/diskette = null
 	var/padNum = 1
 
 	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL | DECON_WIRECUTTERS | DECON_WRENCH | DECON_DESTRUCT
@@ -1026,7 +1014,14 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			src.panel_open = !src.panel_open
 			boutput(user, "You [src.panel_open ? "unscrew" : "secure"] the cover.")
 			return
-
+		else if (istype(W, /obj/item/disk/data/floppy))
+			if (!src.diskette)
+				user.drop_item()
+				W.set_loc(src)
+				src.diskette = W
+				boutput(user, "You insert [W].")
+				src.updateUsrDialog()
+				return
 		else
 			return ..()
 
@@ -1069,6 +1064,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			"maxBookmarks" = max_bookmarks,
 			"bookmarks" = list(),
 			"destinations" = list(),
+			"disk" = !isnull(src.diskette),
 		)
 
 		if (length(special_places))
@@ -1220,7 +1216,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				src.padNum = (src.padNum & 3) + 1
 				. = TRUE
 
-			if("lrt_send")
+			if ("lrt_send")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				if (!host_id)
 					boutput(usr, SPAN_ALERT("Error: No host connection!"))
@@ -1229,7 +1225,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				message_host("command=teleman&args=-p [padNum] lrt send place=[replacetext(params["name"], " ", "_")]")
 				. = TRUE
 
-			if("lrt_receive")
+			if ("lrt_receive")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				if (!host_id)
 					boutput(usr, SPAN_ALERT("Error: No host connection!"))
@@ -1237,6 +1233,43 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 
 				message_host("command=teleman&args=-p [padNum] lrt receive place=[replacetext(params["name"], " ", "_")]")
 				. = TRUE
+
+			if ("eject_disk")
+				if (!isnull(src.diskette))
+					playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+					src.diskette.set_loc(src.loc)
+					usr.put_in_hand_or_eject(src.diskette)
+					src.diskette = null
+					. = TRUE
+
+			if ("scan_disk")
+				if (!isnull(src.diskette))
+					playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+					var/file_found
+					var/file_added
+					for(var/datum/computer/file/lrt_data/galactic_position in src.diskette.root.contents)
+						if(!special_places.Find(galactic_position.place_name))
+							var/target
+							for(var/turf/T in landmarks[LANDMARK_LRT])
+								var/name = landmarks[LANDMARK_LRT][T]
+								if(name == galactic_position.place_name)
+									target = T
+									break
+							if (!target) //we didnt find a turf to send to
+								src.readout = "Invalid Galactic Coordinates"
+								return
+							else
+								special_places.Add(galactic_position.place_name)
+							file_added = TRUE
+						file_found = TRUE
+
+					if(file_added)
+						src.readout = "Galactic Coordinates Saved"
+					else if(file_found)
+						src.readout = "No new data"
+					else
+						src.readout = "Galactic Coordinates not found"
+					. = TRUE
 
 	proc/message_host(var/message, var/datum/computer/file/file)
 		if (!src.host_id || !message)

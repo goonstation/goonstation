@@ -24,7 +24,7 @@ export const TeleConsole = (_props, context) => {
   const { act, data } = useBackend<TeleConsoleData>(context);
   const [tab, setTab] = useSharedState(context, 'tab', Tab.Local);
   const { xTarget, yTarget, zTarget, hostId, bookmarks,
-    readout, isPanelOpen, padNum, maxBookmarks, destinations } = data;
+    readout, isPanelOpen, padNum, maxBookmarks, disk, destinations } = data;
   const isConnectedToHost = !!hostId;
 
   const handleAddBookmark = (name: string) => act('addbookmark', { value: name });
@@ -136,6 +136,27 @@ export const TeleConsole = (_props, context) => {
                   padNum={padNum}
                 />
               </Section>
+              {(!!disk) && (
+                <Section
+                  title="Disk Controls"
+                  buttons={
+                    <>
+                      <Button
+                        icon="upload"
+                        color={"blue"}
+                        onClick={() => act("scan_disk")}>
+                        Read from Disk
+                      </Button>
+                      <Button
+                        icon="eject"
+                        color={"bad"}
+                        onClick={() => act("eject_disk")}>
+                        Eject Disk
+                      </Button>
+                    </>
+                  }
+                />
+              )}
             </Stack.Item>
           )}
         </Stack>

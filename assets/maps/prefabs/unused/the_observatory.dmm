@@ -159,6 +159,9 @@
 	},
 /area/space)
 "lv" = (
+/obj/item/disk/data/floppy/lrt/meat_derelict,
+/obj/item/disk/data/floppy/lrt/ainley,
+/obj/decal/cleanable/desk_clutter,
 /obj/table/auto,
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/space)
@@ -175,6 +178,11 @@
 /area/space)
 "nc" = (
 /obj/table/auto,
+/obj/item/disk/data/floppy/lrt/luna_museum,
+/obj/item/disk/data/floppy/lrt/biodome,
+/obj/item/disk/data/floppy/lrt/icemoon,
+/obj/item/disk/data/floppy/lrt/lavamoon,
+/obj/item/disk/data/floppy/lrt/mars_outpost,
 /turf/unsimulated/floor/blackwhite/whitegrime/other,
 /area/space)
 "ne" = (
@@ -263,6 +271,10 @@
 /area/space)
 "xz" = (
 /obj/item/storage/wall/random,
+/obj/item/disk/data/floppy/lrt/solarium{
+	pixel_x = -4;
+	pixel_y = -10
+	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
 /obj/decal/cleanable/cobweb2,

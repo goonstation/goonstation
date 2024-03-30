@@ -503,6 +503,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/lrt/mars_outpost
 	name = "Mars"
 
+/obj/landmark/lrt/io
+	name = "Io"
+
 /obj/landmark/lrt/luna_museum
 	name = "Luna"
 
