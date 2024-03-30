@@ -22,7 +22,8 @@ import { Window } from '../layouts';
    round_input: boolean;
    title: string;
    theme: string;
-   autofocus: boolean;
+   autoFocus: boolean;
+   autoSelect: boolean;
  };
 
 export const NumberInputModal = (_, context) => {
@@ -73,7 +74,7 @@ export const NumberInputModal = (_, context) => {
 /** Gets the user input and invalidates if there's a constraint. */
 const InputArea = (props, context) => {
   const { data } = useBackend<NumberInputData>(context);
-  const { autofocus, min_value, max_value, init_value } = data;
+  const { min_value, max_value, init_value, autoFocus, autoSelect } = data;
   const { input, onClick, onChange } = props;
 
   return (
@@ -87,8 +88,8 @@ const InputArea = (props, context) => {
       </Stack.Item>
       <Stack.Item grow>
         <NumberInput
-          autofocus={autofocus}
-          autoSelect
+          autoFocus={autoFocus}
+          autoSelect={autoSelect}
           fluid
           minValue={min_value}
           maxValue={max_value}
