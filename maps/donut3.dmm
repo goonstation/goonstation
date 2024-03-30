@@ -1665,7 +1665,7 @@
 /area/station/crew_quarters/catering)
 "avH" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "avR" = (
 /obj/machinery/computer/security{
@@ -7515,7 +7515,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "cfs" = (
 /obj/machinery/light/emergency{
@@ -14300,7 +14300,7 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "eiw" = (
 /obj/machinery/chem_master{
@@ -23596,7 +23596,7 @@
 /obj/machinery/bathtub{
 	dir = 8
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "haS" = (
 /obj/cable{
@@ -32965,7 +32965,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 4
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "jXn" = (
 /obj/table/auto,
@@ -37265,7 +37265,7 @@
 /obj/decoration/toiletholder{
 	pixel_y = 33
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "lqn" = (
 /obj/railing/red{
@@ -41823,7 +41823,7 @@
 	layer = 3;
 	pixel_y = 8
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "mFT" = (
 /obj/stool/chair/comfy/yellow{
@@ -60542,7 +60542,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "srM" = (
 /obj/storage/secure/closet/command/medical_director,
@@ -68419,7 +68419,7 @@
 	pixel_x = -4
 	},
 /obj/machinery/drainage,
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "uND" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
