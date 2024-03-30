@@ -3,16 +3,72 @@
 #define SIGNING 2
 #define SIGNED 3
 
-/datum/action/bar/icon/callback/signingBar
+/datum/action/bar/icon/signing_burrito
+
+	var/obj/item/zolscroll/burrito = null
+	var/mob/signer = null
+	var/obj/item/pen/pen
+
+	New(obj/item/zolscroll/B, mob/M, var/dur, var/obj/item/pen/P)
+		..()
+		if (istype(B) && istype(M) && istype(P))
+			src.burrito = B
+			src.signer = M
+			src.duration = dur
+			src.icon = src.burrito.icon
+			src.icon_state = src.burrito.icon_state
+			src.pen = P
 
 	onInterrupt(flag)
 		. = ..(flag)
-		var/obj/item/zolscroll/scroll = src.target
 
-		if (istype(scroll))
-			scroll.icon_state = "scrollopen"
-			scroll.signing_state = UNSIGNED
-			scroll.UpdateIcon()
+		if (istype(src.burrito))
+			src.burrito.icon_state = "scrollopen"
+			src.burrito.signing_state = UNSIGNED
+			src.burrito.UpdateIcon()
+
+	onStart()
+		..()
+
+		if (src.burrito == null || src.signer == null || src.pen == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		src.signer.visible_message(
+			SPAN_ALERT("<b>[src.signer.name] stabs [himself_or_herself(src.signer)] with the [src.pen] and starts signing the contract in blood!</b>"),
+			SPAN_ALERT("<b>You stab yourself with the [src.pen] and start signing the contract in blood!</b>"))
+		src.burrito.signing_state = SIGNING
+		playsound(src.signer, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
+		take_bleeding_damage(src.signer, null, 10, DAMAGE_STAB)
+		src.burrito.icon_state = "signing"
+		src.burrito.UpdateIcon()
+
+	onUpdate()
+		..()
+
+		if (src.burrito == null || src.signer == null || src.pen == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (BOUNDS_DIST(src.owner, src.burrito) > 0)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (BOUNDS_DIST(src.owner, src.pen) > 0)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (src.signer.equipped() != src.pen)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+	onEnd()
+		..()
+		src.burrito.signer = src.signer.real_name
+		src.burrito.name = "[src.signer.real_name]'s signed demonic contract"
+		src.burrito.icon_state = "signed"
+		src.burrito.UpdateIcon()
+		src.burrito.signing_state = SIGNED
+
 
 /// Scroll used to take on zoldorf's curse
 /// The contract people sign to become zoldorf.
@@ -36,32 +92,8 @@
 	attackby(obj/item/weapon, mob/user)
 		if (!istype(weapon, /obj/item/pen) || src.signing_state != UNSIGNED)
 			return
-		user.visible_message(
-			SPAN_ALERT("<b>[user.name] stabs [himself_or_herself(user)] with the [weapon] and starts signing the contract in blood!</b>"),
-			SPAN_ALERT("<b>You stab yourself with the [weapon] and start signing the contract in blood!</b>"))
-		src.signing_state = SIGNING
-		playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
-		take_bleeding_damage(user, null, 10, DAMAGE_STAB)
-		src.icon_state = "signing"
-		var/actionBar = new /datum/action/bar/icon/callback/signingBar(
-			user,
-			src,
-			SIGNING_DURATION,
-			PROC_REF(complete_signing),
-			list(user),
-			src.icon,
-			src.icon_state,
-			"<b>[user.name] finishes signing the contract in blood!</b>",
-			(INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE))
-		src.UpdateIcon()
+		var/actionBar = new /datum/action/bar/icon/signing_burrito(src, user, SIGNING_DURATION, weapon)
 		actions.start(actionBar, user)
-
-	proc/complete_signing(mob/user)
-		src.signer = user.real_name
-		src.name = "[user.real_name]'s signed demonic contract"
-		src.icon_state = "signed"
-		src.UpdateIcon()
-		src.signing_state = SIGNED
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if((user == target)&&(src.icon_state == "scrollclosed"))
@@ -93,7 +125,7 @@
 			else if (istype(src.referencedorf,/obj/machinery/playerzoldorf) && (istype(usr,/mob/zoldorf)))
 				. += SPAN_SUCCESS("<b>This fortune is branded!</b>")
 
-//Totally Normal Deck of Cards (TM)
+/// Totally Normal Deck of Cards (TM)
 /obj/item/zoldorfdeck //deck of many things code is a bit messy, but the deck stores the card information and player interaction, the card item stores the effects passed to them by the deck
 	name = "Deck of Cards"
 	desc = "Wow. These look creepy..."
