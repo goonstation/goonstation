@@ -524,6 +524,9 @@ var/global
 		/obj/item/reagent_containers/food/snacks/ice_cream/random,
 		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom)
 
+	///radio frequencies unable to be picked up by (empowered) radio_brain
+	list/protected_frequencies = list(R_FREQ_SYNDICATE)
+
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])
 		addGlobalImage(I, "[key]-renderSourceImage")
