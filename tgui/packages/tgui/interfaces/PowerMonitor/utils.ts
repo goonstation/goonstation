@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author mloccy (https://github.com/mloccy)
+ * @license MIT
+ */
+
 import { sortTypedArrayByIndex } from "../common/comparators";
 import { SortDirection } from "../common/sorting/type";
 import { ApcTableHeaderColumns, PowerMonitorColumnUnion, SingleSortState, SmesTableHeaderColumns } from "./type";

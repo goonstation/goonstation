@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author mloccy (https://github.com/mloccy)
+ * @license MIT
+ */
+
 const numericCompare = (a: number, b: number): number => {
 
   if (a === b) {
