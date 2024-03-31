@@ -1457,6 +1457,18 @@ TYPEINFO(/obj/machinery/power/collector_array)
 			UpdateIcon()
 		..()
 
+/obj/machinery/power/collector_array/MouseDrop_T(obj/item/W, mob/user) // For the armless and the harmless.
+	if (!istype(W, /obj/item/tank)) // Tanks only, please.
+		return
+	if (!in_interact_range(src, user)  || BOUNDS_DIST(W, user) > 0 || !can_act(user)) // No attaching tanks from across the world.
+		return
+	// No ghosts or AI eye or wraiths or blobs or flockminds shall be engineers. This is for the physical and the living.
+	if (iswraith(user) || isintangible(user) || is_incapacitated(user)|| isghostdrone(user) || isAI(user))
+		boutput(user, SPAN_ALERT("[src] refuses to interface with you!"))
+		return
+	else
+		src.Attackby(W, user)
+
 /obj/machinery/power/collector_array/attack_hand(mob/user)
 	if(src.active==1)
 		src.active = 0
