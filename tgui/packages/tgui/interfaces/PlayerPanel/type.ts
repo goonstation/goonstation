@@ -6,7 +6,7 @@
  */
 
 import { InfernoNode } from 'inferno';
-import { SortDirection } from '../common/sorting/constant';
+import { SortDirection } from '../common/sorting/type';
 
 export interface Column<Row extends object, Value> {
   field?: keyof Row,

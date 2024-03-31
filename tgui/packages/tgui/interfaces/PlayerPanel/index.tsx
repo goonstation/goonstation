@@ -10,7 +10,7 @@ import { useBackend, useLocalState } from '../../backend';
 import { Button, Input, Table } from '../../components';
 import { Window } from '../../layouts';
 import { Header } from '../common/sorting/Header';
-import { SortDirection } from '../common/sorting/constant';
+import { SortDirection } from '../common/sorting/type';
 import { CellTemplateConfig, CellValueSelectorConfig, Column, PlayerData, PlayerPanelData, SortConfig } from './type';
 import { Action } from './constant';
 

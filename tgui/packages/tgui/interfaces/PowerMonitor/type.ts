@@ -6,7 +6,7 @@
  */
 
 import { BooleanLike } from '../../../common/react';
-import { SortDirection } from '../common/sorting/constant';
+import { SortDirection } from '../common/sorting/type';
 
 export enum PowerMonitorType {
   Apc = 'apc',
@@ -79,9 +79,9 @@ export enum ApcTableHeaderColumns {
   CellState = 6
 }
 
-export type ApcTableHeaderColumnSortState = {
+export interface SingleSortState<T> {
   dir: SortDirection,
-  field: ApcTableHeaderColumns
+  field: T
 }
 
 export enum SmesTableHeaderColumns {
@@ -94,19 +94,8 @@ export enum SmesTableHeaderColumns {
   Load = 6
 }
 
-export type SmesTableHeaderColumnSortState = {
-  dir: SortDirection,
-  field: SmesTableHeaderColumns
+export type PowerMonitorColumnUnion = (ApcTableHeaderColumns | SmesTableHeaderColumns);
+export interface PowerMonitorHeaderTableHeaderProps<ColumnType> {
+  setSortBy: (field: ColumnType) => void;
+  sortState: SingleSortState<PowerMonitorColumnUnion>;
 }
-
-export const numericCompare = (a: number, b: number): number => {
-
-  if (a === b) {
-    return 0;
-  } else if (a > b) {
-    return 1;
-  } else {
-    return -1;
-  }
-
-};

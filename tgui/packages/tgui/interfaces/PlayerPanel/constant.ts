@@ -1,8 +1,7 @@
 /**
  * @file
- * @copyright 2024
+ * @copyright 2021
  * @author Sovexe (https://github.com/Sovexe)
- * @author mloccy (https://github.com/mloccy)
  * @license ISC
  */
 

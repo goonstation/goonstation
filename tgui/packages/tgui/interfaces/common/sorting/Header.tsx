@@ -7,7 +7,7 @@
 
 import { InfernoNode } from 'inferno';
 import { Icon, Stack } from '../../../components';
-import { SortDirection } from './constant';
+import { SortDirection } from './type';
 
 interface HeaderProps {
   children: InfernoNode,
