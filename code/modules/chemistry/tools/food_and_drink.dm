@@ -1546,10 +1546,10 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			if (src.reagents.total_volume)
 				logTheThing(LOG_CHEMISTRY, H, "is forced to drink from [src] [log_reagents(src)] at [log_loc(H)] thrown by [constructTarget(thr.thrown_by, "combat")].")
 				src.reagents.reaction(H, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(reagents.total_volume/2, (H.reagents?.maximum_volume - H.reagents?.total_volume))))
-				SPAWN(0.5 SECONDS)
-					if (src?.reagents && H?.reagents)
-						src.reagents.trans_to(H, reagents.total_volume/2)
+				if (src?.reagents && H?.reagents)
+					src.reagents.trans_to(H, reagents.total_volume/2)
 		. = ..()
+
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf
 	name = "old fashioned glass"
