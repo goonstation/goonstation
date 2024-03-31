@@ -705,7 +705,7 @@ proc/broadcast_to_all_gangs(var/message)
 		if(istype(M.head, src.headwear) || istype(M.wear_mask, src.headwear))
 			count++
 
-		if (M.wear_suit && !istype(M.wear_suit, /obj/item/clothing/suit/armor/vest/gang))
+		if (M.wear_suit && !istype(M.wear_suit, /obj/item/clothing/suit/armor/gang))
 			count--
 		return count
 
@@ -2187,7 +2187,7 @@ proc/broadcast_to_all_gangs(var/message)
 	desc = "Grants you protection without cramping your style!"
 	class2 = "clothing"
 	price = 7500
-	item_path = /obj/item/clothing/suit/armor/vest/gang
+	item_path = /obj/item/clothing/suit/armor/gang
 
 /datum/gang_item/street/lead_pipe
 	name = "Lead Pipe"
