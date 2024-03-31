@@ -859,6 +859,11 @@ Code:
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = src.master.owner
 		signal.data["group"] = list(mailgroup, MGA_CRISIS)
+		// prevent message spam for same-department alert ACKs
+		if (mailgroup in src.master.mailgroups)
+			signal.data["noreply"] = TRUE
+		else
+			signal.data["noreply"] = FALSE
 		var/area/an_area = get_area(src.master)
 
 		if (isAIeye(usr))
