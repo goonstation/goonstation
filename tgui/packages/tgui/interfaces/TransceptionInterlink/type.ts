@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author glowbold (https://github.com/pgmzeta)
+ * @license MIT
+ */
+
 export interface TransceptionInterlinkData {
   pads: PadData[],
   crate_count: number
