@@ -264,15 +264,15 @@
 				SPAWN(1 SECOND)
 					bleed_process()
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target){
-		var/datum/gang/userGang = source.get_gang()
-		if (cant_drop && idiot && userGang )
-			source.visible_message("[source] rips the [src] right off [target]! Ouch!","You rip the duffle bag from [target]'s hand.")
-			idiot.emote("scream")
-			playsound(idiot.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
-			blood_slash(idiot, 2)
-			unhook()
-			return TRUE
-		..()
+		if (!cant_drop || !idiot || !source.get_gang())
+			return ..()
+
+		source.visible_message("[source] rips the [src] right off [target]! Ouch!","You rip the duffle bag from [target]'s hand.")
+		idiot.emote("scream")
+		playsound(idiot.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+		blood_slash(idiot, 2)
+		unhook()
+		return TRUE
 	}
 	proc/toggle_tracking(is_tracking)
 		if (src.tracking == is_tracking)
