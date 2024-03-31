@@ -17,6 +17,6 @@
 		for (var/obj/O in vis_items)
 			parent.vis_contents += O
 
-	proc/remove(var/obj/O)
+	proc/remove(obj/O)
 		parent.vis_contents -= O
 		vis_items -= O
