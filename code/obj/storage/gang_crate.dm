@@ -173,7 +173,6 @@
 	icon = 'icons/obj/items/storage.dmi'
 	name = "suspicious looking duffle bag"
 	desc = "A greasy, black duffle bag, this isn't station issue, you should probably leave it alone..."
-	object_flags = TRACK_STORAGE_MOVEMENT
 	icon_state = "gang_dufflebag"
 	item_state = "bowling"
 	p_class = 4 //marginally easier than dragging a whole locker with this in
@@ -207,6 +206,7 @@
 		src.vis_controller = new()
 		vis_controller.initialize(src)
 		lootMaster =  new /datum/loot_generator(x,y)
+		RegisterSignal(src, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(alert_gang))
 
 	New()
 		src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job=null, message_admins_too=FALSE)
@@ -232,12 +232,6 @@
 			lootMaster.add_random_loot(src, GANG_CRATE_GEAR, 2)
 			lootMaster.fill_remaining(src, GIMMICK)
 			..()
-	OnMove()
-		if (tracking)
-			var/area/current_area = get_area(src)
-			if (current_area != start_area)
-				tracking = FALSE
-				src.owning_gang.broadcast_to_gang("The bag [src.informant] knew about is being moved! Looks like it's been moved to \the [current_area.name]")
 
 	pickup(mob/user)
 		if (open)
@@ -248,14 +242,14 @@
 		var/datum/gang = user.get_gang()
 		if (gang && (trapped || tracking))
 			trapped = FALSE //if one gang member gets their mitts on it, this has done its job
-			tracking = FALSE
+			toggle_tracking(FALSE)
 			boutput(user, SPAN_ALERT("You disarm the trap in the [src]'s handle. It's now safe to carry."))
 		if (!gang && !open && trapped && owning_gang)
 			if (isliving(user))
 				var/mob/living/H = user
 				idiot = user
 				trapped = FALSE
-				tracking = FALSE
+				toggle_tracking(FALSE)
 				icon_state = "gang_dufflebag_trap"
 				cant_self_remove = TRUE
 				cant_drop = TRUE
@@ -280,6 +274,21 @@
 			return TRUE
 		..()
 	}
+	proc/toggle_tracking(is_tracking)
+		if (src.tracking == is_tracking)
+			return
+
+		src.tracking = is_tracking
+
+		if (src.tracking)
+			RegisterSignal(src, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(alert_gang))
+		else
+			UnregisterSignal(src, XSIG_MOVABLE_AREA_CHANGED)
+
+	proc/alert_gang(datum/component/component, area/old_area, area/new_area)
+		src.owning_gang.broadcast_to_gang("The bag [src.informant] knew about is being moved! Looks like it's been moved to \the [new_area.name]")
+		toggle_tracking(FALSE)
+
 	proc/unhook()
 		if (idiot)
 			if (istype(idiot.l_hand, /obj/item/gang_loot) && istype(idiot.r_hand, /obj/item/gang_loot)) //this is REALLY stretching it, bub.

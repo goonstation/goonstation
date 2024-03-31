@@ -11,8 +11,6 @@
 #define HAS_DIRECTIONAL_BLOCKING (1<<3)
 /// prevents ghost critter interaction. On obj so it can cover machinery, items etc...
 #define NO_GHOSTCRITTER (1<<4)
-/// Item treats locker movement as being moved itself (calls OnMove())
-#define TRACK_STORAGE_MOVEMENT		(1<<5)
 
 /// At which alpha do opague objects become see-through?
 #define MATERIAL_ALPHA_OPACITY 190
