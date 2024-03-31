@@ -5,22 +5,39 @@
  * @license MIT
  */
 
+import { Fragment } from 'inferno';
 import { useBackend } from '../../backend';
-import { Box, Button, Section, Stack } from '../../components';
+import { Box, Button, LabeledList, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { TransceptionInterlinkData } from './type';
+
+
+const PadStatusToColor = (status: string) => {
+  switch (status) {
+    case "OK":
+      return "good";
+    case "ARRAY_POWER_LOW":
+      return "average";
+    case "ERR_ARRAY":
+    case "ERR_WIRE":
+    case "ERR_OTHER":
+      return "bad";
+    default:
+      return "white";
+  }
+};
 
 export const TransceptionInterlink = (_props, context) => {
   const { data, act } = useBackend<TransceptionInterlinkData>(context);
   const { pads, crate_count } = data;
   return (
-    <Window title="Transception Interlink" height="340" width="400">
+    <Window title="Transception Interlink" height="252" width="475">
       <Window.Content>
-        <Stack vertical fill>
+        <Stack vertical>
           <Stack.Item>
             <Section>
-              <Stack>
-                <Stack.Item width="100%" fontSize="1.2em">
+              <Stack justify="space-between">
+                <Stack.Item fontSize="1.2em">
                   {
                     crate_count !== 0 && `Pending Crates: ${crate_count}`
                   }
@@ -31,26 +48,40 @@ export const TransceptionInterlink = (_props, context) => {
                 <Stack.Item>
                   <Button icon="refresh" content="Link Transception Pads" onClick={() => act('ping')} />
                 </Stack.Item>
-
               </Stack>
             </Section>
           </Stack.Item>
-          <Stack.Item textAlign="center">
+          <Stack.Item>
             {
               pads.length === 0 && <Section title="No Transception Pads Found"><Box>NO DEVICES DETECTED <br />Link pads to continue</Box></Section>
             }
             {
-              pads.length !== 0 && pads.map(pad => (
-                <Section key={pad.target_id} title={`${pad.location} ${pad.identifier}`}>
-                  <Stack>
-                    <Stack.Item grow>
-                      <Button icon="arrow-up" content="Send" onClick={() => act('send', { device_index: pad.device_index })} />
-                      <Button icon="arrow-down" content="Receive" onClick={() => act('receive', { device_index: pad.device_index })} />
-                    </Stack.Item>
-                    <Stack.Item width="35%" textAlign="left">STATUS: {pad.array_link}</Stack.Item>
-                  </Stack>
+              pads.length !== 0 && (
+                <Section title="Transception Pads">
+                  <LabeledList>
+                    {
+                      pads.map(pad => {
+                        return (
+                          <LabeledList.Item
+                            key={pad.device_index}
+                            label={`${pad.location} ${pad.identifier}`}
+                            color={`${PadStatusToColor(pad.array_link)}`}
+                            labelWrap
+                            buttons={(
+                              <Fragment>
+                                <Button icon="arrow-up" content="Send" onClick={() => act('send', { device_index: pad.device_index })} />
+                                <Button icon="arrow-down" content="Receive" onClick={() => act('receive', { device_index: pad.device_index })} />
+                              </Fragment>
+                            )}
+                          >
+                            {pad.array_link}
+                          </LabeledList.Item>
+                        );
+                      })
+                    }
+                  </LabeledList>
                 </Section>
-              ))
+              )
             }
           </Stack.Item>
         </Stack>
