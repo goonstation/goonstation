@@ -143,7 +143,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 		if(src.failsafe_inquiry())
 			return TRANSCEIVE_POWERWARN
 		var/datum/powernet/powernet = src.get_direct_powernet()
-		var/netnum = powernet.number
+		var/netnum = powernet?.number
 		if(netnum != pad_netnum)
 			return TRANSCEIVE_NOWIRE
 		return TRANSCEIVE_OK
