@@ -842,7 +842,7 @@ proc/broadcast_to_all_gangs(var/message)
 			potential_drop_zones += areas[area]
 
 	/// hide a loot bag somewhere, return a probably-somewhat-believable PDA message explaining its' location
-	proc/lootbag_spawn(var/datum/mind/civvie, var/datum/gang/ownerGang)
+	proc/lootbag_spawn(datum/mind/civvie, datum/gang/ownerGang)
 		if (!potential_drop_zones)
 			find_potential_drop_zones()
 		var/area/loot_zone = pick(potential_drop_zones)
