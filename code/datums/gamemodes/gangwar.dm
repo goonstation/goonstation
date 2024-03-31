@@ -804,7 +804,7 @@ proc/broadcast_to_all_gangs(var/message)
 		"rhino beetle helm" = /obj/item/clothing/head/rhinobeetle)
 
 	/// spawn loot and message a specific mind about it
-	proc/target_loot_spawn(var/datum/mind/civvie, var/datum/gang/ownerGang)
+	proc/target_loot_spawn(datum/mind/civvie, datum/gang/ownerGang)
 		var/message = lootbag_spawn(civvie, ownerGang)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
