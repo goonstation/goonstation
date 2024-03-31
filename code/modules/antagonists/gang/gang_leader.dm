@@ -28,9 +28,11 @@
 
 		. = ..()
 
+	handle_cryo()
+		src.gang.handle_leader_temp_cryo()
+
 	handle_perma_cryo()
-		src.gang.handle_leader_cryo()
-		remove_self()
+		src.gang.handle_leader_perma_cryo()
 
 
 	is_compatible_with(datum/mind/mind)
@@ -90,9 +92,14 @@
 		imgroup.remove_mind(src.owner)
 
 	transfer_to(datum/mind/target, take_gear, source, silent = FALSE)
+		var/datum/abilityHolder/gang/ability_source = src.owner.current.get_ability_holder(/datum/abilityHolder/gang)
+		var/datum/mind/old_owner = owner
 		..()
 		gang.leader = target
-
+		var/datum/abilityHolder/gang/ability_target = target.current.get_ability_holder(/datum/abilityHolder/gang)
+		target.current.remove_ability_holder(ability_target)
+		target.current.add_existing_ability_holder(ability_source)
+		old_owner.current.remove_ability_holder(/datum/abilityHolder/gang)
 
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/gang, src)

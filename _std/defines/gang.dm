@@ -1,7 +1,7 @@
 #define GANG_MAX_MEMBERS 4
 
 /// How long the leader must cryo before gang members can take their role
-#define GANG_CRYO_LOCKOUT 15 MINUTES
+#define GANG_CRYO_LOCKOUT 7.5 MINUTES
 
 // -------------------------
 // GANG ECONOMY
