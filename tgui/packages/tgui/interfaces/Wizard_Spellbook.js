@@ -123,25 +123,19 @@ const Spell = (props, context) => {
         <Section
           title={
             <Flex justify={"space-between"} align={"end"}>
-              <Flex.Item>
-                <Flex>
-                  <Flex.Item>
-                    {!!spell_contents[4] && (
-                      <Image
-                        pixelated
-                        mt={-2}
-                        height="38px"
-                        width="38px"
-                        src={`data:image/png;base64,${spell_contents[4]}`}
-                      />
-                    )}
-                  </Flex.Item>
-                  <Flex.Item align={"end"}>
-                    <Box fontSize={1.25} ml={1} mt={1}>
-                      {spell}
-                    </Box>
-                  </Flex.Item>
-                </Flex>
+              {!!spell_contents[4] && (
+                <Flex.Item>
+                  <Image
+                    pixelated
+                    mt={-2}
+                    height="38px"
+                    width="38px"
+                    src={`data:image/png;base64,${spell_contents[4]}`}
+                  />
+                </Flex.Item>
+              )}
+              <Flex.Item grow fontSize={1.25} ml={1} mt={1}>
+                {spell}
               </Flex.Item>
               <Flex.Item>
                 <Button // Putting this into buttons={}, breaks it, somehow.
