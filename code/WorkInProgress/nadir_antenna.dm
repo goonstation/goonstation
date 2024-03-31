@@ -999,7 +999,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 /obj/machinery/computer/transception/ui_data(mob/user)
 	. = ..()
 	var/list/pads_data = list()
-	for (var/device_index in src.known_pads)
+	for (var/device_index as anything in src.known_pads)
 		pads_data += list(list(
 			"device_index" = device_index,
 			"identifier" = known_pads[device_index]["Identifier"],
@@ -1012,6 +1012,8 @@ TYPEINFO(/obj/machinery/transception_pad)
 
 /obj/machinery/computer/transception/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	if (.)
+		return
 	switch(action)
 		if ("ping")
 			src.try_pad_ping()
