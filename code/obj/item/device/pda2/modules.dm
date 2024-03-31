@@ -391,12 +391,16 @@ ABSTRACT_TYPE(/obj/ability_button/pda_alert)
 
 /obj/ability_button/pda_alert/security
 	name = "Send Security Alert"
+	icon_state = "alert_sec"
 
 /obj/ability_button/pda_alert/medical
 	name = "Send Medical Alert"
+	icon_state = "alert_med"
 
 /obj/ability_button/pda_alert/engineering
 	name = "Send Engineering Alert"
+	icon_state = "alert_eng"
 
 /obj/ability_button/pda_alert/janitor
 	name = "Send Janitor Alert"
+	icon_state = "alert_jan"
