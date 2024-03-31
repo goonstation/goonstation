@@ -23,8 +23,8 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 	var/omen
 	var/occupied
 
-	var/list/soul_items = list()
-	var/list/credit_items = list()
+	var/list/datum/zoldorfitem/soul/soul_items = list()
+	var/list/datum/zoldorfitem/credit/credit_items = list()
 
 	var/initialsoul = 0 //interface and ability holder interaction
 	var/storedsouls = 0
@@ -100,12 +100,12 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 				purchasing.stock -= 1
 				purchasing.on_bought(ui.user)
 				return TRUE
+
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ZoldorfPlayerShop", src.name)
 			ui.open()
-
 
 	ui_data(mob/user)
 		. = ..()
