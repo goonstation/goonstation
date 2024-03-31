@@ -36,7 +36,7 @@ const selectComparator = (type: string): ((a:unknown, b:unknown) => (number)) =>
 
 
 type RecordKey = (string | number | symbol)
-const RecordTypes = ['string', 'number', 'symbol'] as const;
+const RecordTypes = ['string', 'number', 'symbol'];
 
 export const sortTypedArrayByIndex = <V extends Array<unknown>, Lk extends RecordKey = never, Lv = never>(
   objs: V[],
@@ -51,7 +51,7 @@ export const sortTypedArrayByIndex = <V extends Array<unknown>, Lk extends Recor
     throw new Error("invalid index passed");
   }
 
-  if (lut && !(typeof objs[0][index] in RecordTypes)) {
+  if (lut && !RecordTypes.includes(typeof objs[0][index])) {
     throw new Error(`passed in indexed array and LUT with field that cannot index records: ${typeof objs[0][index]}`);
   }
 

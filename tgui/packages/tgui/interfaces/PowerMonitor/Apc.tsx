@@ -10,7 +10,7 @@ import { Box, Chart, LabeledList, Stack, Table, Tooltip } from '../../components
 import { formatPower } from '../../format';
 import { Header } from '../common/sorting/Header';
 import { ApcTableHeaderColumns, PowerMonitorApcData, PowerMonitorApcItemData, PowerMonitorHeaderTableHeaderProps, SingleSortState } from './type';
-import { SortPowerMonitorData } from './utils';
+import { sortPowerMonitorData } from './utils';
 
 const apcState = {
   [0]: 'Off',
@@ -155,7 +155,7 @@ const PowerMonitorApcTableRows = (props: PowerMonitorApcTableRowsProps, context)
 
   return (
     <>
-      {SortPowerMonitorData(data.apcs, data.apcNames, sortState).map((apc) => (
+      {sortPowerMonitorData(data.apcs, data.apcNames, sortState).map((apc) => (
         <PowerMonitorApcTableRow key={apc[0]} apc={apc} search={search} />
       ))}
     </>

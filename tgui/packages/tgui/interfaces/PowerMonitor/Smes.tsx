@@ -10,7 +10,7 @@ import { Chart, LabeledList, Stack, Table } from '../../components';
 import { formatPower } from '../../format';
 import { Header } from '../common/sorting/Header';
 import { PowerMonitorHeaderTableHeaderProps, PowerMonitorSmesData, PowerMonitorSmesItemData, SingleSortState, SmesTableHeaderColumns } from './type';
-import { SortPowerMonitorData } from './utils';
+import { sortPowerMonitorData } from './utils';
 
 export const PowerMonitorSmesGlobal = (_props, context) => {
   const { data } = useBackend<PowerMonitorSmesData>(context);
@@ -124,7 +124,7 @@ const PowerMonitorSmesTableRows = (props: PowerMonitorSmesTableRowsProps, contex
 
   return (
     <>
-      {SortPowerMonitorData(data.units, data.unitNames, props.sortState).map((unit) => (
+      {sortPowerMonitorData(data.units, data.unitNames, props.sortState).map((unit) => (
         <PowerMonitorSmesTableRow key={unit[0]} unit={unit} search={search} />
       ))}
     </>

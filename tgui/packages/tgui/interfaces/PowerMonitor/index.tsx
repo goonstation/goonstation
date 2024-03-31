@@ -11,7 +11,7 @@ import { Window } from '../../layouts';
 import { ApcPowerMonitor, PowerMonitorApcGlobal } from './Apc';
 import { PowerMonitorSmesGlobal, SmesPowerMonitor } from './Smes';
 import { ApcTableHeaderColumns, isDataForApc, isDataForSmes, PowerMonitorData, SingleSortState, SmesTableHeaderColumns } from './type';
-import { OnSetSortState } from './utils';
+import { onSetSortState } from './utils';
 
 export const PowerMonitor = (_props, context) => {
   const { data } = useBackend<PowerMonitorData>(context);
@@ -47,12 +47,12 @@ export const PowerMonitor = (_props, context) => {
                 && <ApcPowerMonitor
                   search={search}
                   sortState={apcSortState}
-                  setSortBy={(field) => OnSetSortState(field, apcSortState, apcSetSortBy)} /> }
+                  setSortBy={(field) => onSetSortState(field, apcSortState, apcSetSortBy)} /> }
                 {isDataForSmes(data)
                 && <SmesPowerMonitor
                   search={search}
                   sortState={smesSortState}
-                  setSortBy={(field) => OnSetSortState(field, smesSortState, smesSetSortBy)} />}
+                  setSortBy={(field) => onSetSortState(field, smesSortState, smesSetSortBy)} />}
               </Table>
             </Section>
           </Stack.Item>

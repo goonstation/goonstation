@@ -9,7 +9,7 @@ import { sortTypedArrayByIndex } from "../common/comparators";
 import { SortDirection } from "../common/sorting/type";
 import { ApcTableHeaderColumns, PowerMonitorColumnUnion, SingleSortState, SmesTableHeaderColumns } from "./type";
 
-export const SortPowerMonitorData
+export const sortPowerMonitorData
   = <MonitorType extends Array<unknown>, FieldType extends PowerMonitorColumnUnion>(data: MonitorType[],
     names: Record<string, string>,
     sortState: SingleSortState<FieldType>): MonitorType[] => {
@@ -34,7 +34,7 @@ export const SortPowerMonitorData
     return data;
   };
 
-export const OnSetSortState = <FieldType>(
+export const onSetSortState = <FieldType>(
   field: FieldType,
   current: SingleSortState<FieldType>,
   setFunc: (nextState: SingleSortState<FieldType>) => void) => {
