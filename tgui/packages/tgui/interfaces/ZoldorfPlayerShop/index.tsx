@@ -31,7 +31,6 @@ export const ZoldorfPlayerShop = (_, context) => {
                           onClick={() => act('soul_purchase', { "item": product.name })}
                           style={{
                             "width": "50px",
-                            "text-align": "center",
                           }}
 
                         />
@@ -39,8 +38,6 @@ export const ZoldorfPlayerShop = (_, context) => {
                     );
                   })
                 }
-              </Stack>
-              <Stack vertical>
                 {
                   credit_products.map(product => {
                     return (
@@ -50,10 +47,7 @@ export const ZoldorfPlayerShop = (_, context) => {
                           content={`${product.price}⪽`}
                           disabled={product.price > credits}
                           onClick={() => act('credit_purchase', { "item": product.name })}
-                          style={{
-                            "width": "50px",
-                            "text-align": "center",
-                          }}
+                          width="50px"
                         />
                       </ZoldorfProductList>
                     );
@@ -90,6 +84,7 @@ const ZoldorfProductList = (props: ZoldorfProductListProps) => {
   return (
     <Flex
       style={{
+        "align-items": "center",
         "border-bottom": "1px #555 solid",
       }}
     >
@@ -97,22 +92,15 @@ const ZoldorfProductList = (props: ZoldorfProductListProps) => {
         {img && (
           <Box
             style={{
-              "overflow": "show", // squeeze item sprites into total line height
-              "position": "relative",
-              "height": "24px", // 32px sprite - 24px height = 8px total margin
-              "top": "-4px", // 8px margin / 2 = 4px top offset
+              "position": "relative", // condense total line-height
+              "height": "24px", // 24px height - 32px sprite = -8px margin
+              "top": "-4px", // -8px margin / 2 = -4px top offset
             }}
           >
             <img src={`data:image/png;base64,${img}`} />
           </Box>)}
       </Flex.Item>
-      <Flex.Item
-        grow
-        style={{
-          "display": "flex",
-          "justify-content": "center",
-          "flex-direction": "column",
-        }}>
+      <Flex.Item grow>
         <Box>
           <Box inline italic>
             {!infinite && `${stock} x`}&nbsp;
@@ -120,15 +108,7 @@ const ZoldorfProductList = (props: ZoldorfProductListProps) => {
           <Box inline>{name}</Box>
         </Box>
       </Flex.Item>
-      <Flex.Item
-        bold
-        style={{
-          "margin-left": "5px",
-          "display": "flex",
-          "justify-content": "center",
-          "flex-direction": "column",
-        }}
-      >
+      <Flex.Item bold style={{ "text-align": "center" }}>
         {children}
       </Flex.Item>
     </Flex>
