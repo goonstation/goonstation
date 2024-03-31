@@ -373,6 +373,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 							message_host("command=nack&cause=badplace")
 							return
 
+						src.icon_state = "pad1"
 						switch(data["action"])
 							if("send")
 								if(src.lrtsend(tmp_place))
@@ -386,7 +387,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 									message_host("command=nack&cause=recharge")
 							else
 								message_host("command=nack&cause=badcmd")
-								return
+						src.icon_state = "pad0"
 
 					if ("scan")
 						var/turf/scanTurf = doturfcheck(1)
@@ -501,9 +502,14 @@ TYPEINFO(/obj/machinery/networked/telepad)
 						break
 				if (!target) //we didnt find a turf to send to
 					return 0
-				flick("[src.icon_state]-act", src)
-				playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
+				leaveresidual(target)
+				sleep(0.5 SECONDS)
+
+				showswirl_out(src.loc)
+				leaveresidual(src.loc)
+				showswirl(target)
 				use_power(1500)
+
 				for(var/atom/movable/M in src.loc)
 					if(M.anchored)
 						continue
@@ -526,8 +532,12 @@ TYPEINFO(/obj/machinery/networked/telepad)
 						break
 				if (!target) //we didnt find a turf to send to
 					return 0
-				flick("[src.icon_state]-act", src)
-				playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
+				leaveresidual(target)
+				sleep(1.0 SECONDS)
+
+				showswirl(src.loc)
+				leaveresidual(src.loc)
+				showswirl_out(target)
 				use_power(1500)
 				for(var/atom/movable/M in target)
 					if(M.anchored)
@@ -560,7 +570,6 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				logTheThing(LOG_STATION, usr, "sent [log_object(which)] from [log_loc(which)] to [log_loc(target)] with a telepad")
 			// teleblock checks should already be done
 			do_teleport(which,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
-
 
 		showswirl_out(src.loc)
 		leaveresidual(src.loc)

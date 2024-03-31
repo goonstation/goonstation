@@ -108,6 +108,9 @@
 /obj/item/disk/data/floppy/lrt
 	name = "galactic coordinate disk - 'Blank'"
 	title = "Teleconsole"
+	icon_state = "datadisktele0"
+	random_color = FALSE
+
 	var/target_name
 
 	New()
@@ -122,6 +125,7 @@
 
 	solarium
 		name = "galactic coordinate disk - 'Sol'"
+		icon_state = "datadisktele1"
 		target_name = "Sol"
 
 	biodome

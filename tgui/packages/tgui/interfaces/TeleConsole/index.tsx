@@ -139,23 +139,23 @@ export const TeleConsole = (_props, context) => {
               {(!!disk) && (
                 <Section
                   title="Disk Controls"
-                  buttons={
-                    <>
-                      <Button
-                        icon="upload"
-                        color={"blue"}
-                        onClick={() => act("scan_disk")}>
-                        Read from Disk
-                      </Button>
-                      <Button
-                        icon="eject"
-                        color={"bad"}
-                        onClick={() => act("eject_disk")}>
-                        Eject Disk
-                      </Button>
-                    </>
-                  }
-                />
+                >
+
+                  <Button
+                    icon="upload"
+                    color={"blue"}
+                    onClick={() => act("scan_disk")}>
+                    Read from Disk
+                  </Button>
+                  <Button
+                    icon="eject"
+                    color={"bad"}
+                    onClick={() => act("eject_disk")}>
+                    Eject Disk
+                  </Button>
+
+                </Section>
+
               )}
             </Stack.Item>
           )}
