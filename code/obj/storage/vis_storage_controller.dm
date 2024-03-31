@@ -5,7 +5,7 @@
 
 	proc/initialize(new_parent)
 		parent = new_parent
-	proc/add_item(var/obj/O)
+	proc/add_item(obj/O)
 		vis_items += O
 		O.AddComponent(/datum/component/storage_viscontents, container = src)
 
