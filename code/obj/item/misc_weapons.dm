@@ -483,8 +483,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	off_w_class = W_CLASS_NORMAL
 	active_force = 18
 	inactive_force = 8
-	active_stamina_dmg = 65
-	inactive_stamina_dmg = 30
+	active_stamina_dmg = 25
+	inactive_stamina_dmg = 10
 	hit_type = DAMAGE_BLUNT
 
 	can_reflect()
@@ -495,18 +495,13 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		. += "It is set to [src.active ? "on" : "off"]."
 
 /obj/item/sword/discount/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	//hhaaaaxxxxxxxx. overriding the disorient for my own effect
-	if (active)
-		hit_type = DAMAGE_BURN
-	else
-		hit_type = DAMAGE_BLUNT
 
 	//returns TRUE if parried. So stop here
 	if (..())
 		return
 
 	if (active)
-		target.do_disorient(0, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
+		target.do_disorient(0, weakened = 0, stunned = 0, disorient = 1, remove_stamina_below_zero = 0)
 
 ///////////////////////////////////////////////// Dagger /////////////////////////////////////////////////
 
