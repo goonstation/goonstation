@@ -2035,19 +2035,27 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 
 /obj/item/reagent_containers/food/drinks/cocktailshaker
 	name = "cocktail shaker"
-	desc = "A stainless steel tumbler with a top, used to mix cocktails. Can hold up to 120 units."
+	desc = "A stainless steel tumbler with a top and a slot for thermal stones, used to mix cocktails. Can hold up to 120 units. "
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "cocktailshaker"
 	initial_volume = 120
 	can_recycle = 0
 	can_chug = 0
-
+	var/image/stonewindow = null
 	var/obj/item/shaker_stones/shakerstones
 
 	New()
 		..()
 		src.reagents.inert = 1
+		src.stonewindow = image('icons/obj/foodNdrink/bottle.dmi',"cocktailoverlay_off")
+		UpdateIcon()
 
+	get_desc()
+		if (!shakerstones)
+			. = " There are no thermal stones loaded."
+		else
+			. = " The thermal stones are set to [shakerstones.mode]."
+		..()
 	attackby(obj/item/thing, mob/user)
 		if (istype(thing, /obj/item/shaker_stones))
 			var/obj/item/shaker_stones/stones = thing
@@ -2059,6 +2067,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 				stones.set_loc(src)
 				boutput(user, SPAN_NOTICE("You place the cubes inside \the [src.name]."))
 				shakerstones = thing
+				UpdateIcon()
 				return
 		..()
 	attack_self(mob/user)
@@ -2094,6 +2103,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			user.put_in_hand_or_drop(shakerstones)
 			shakerstones = null
 			boutput(user, SPAN_NOTICE("You remove the thermal cubes from \the [src.name]."))
+			UpdateIcon()
 			return
 		..()
 
@@ -2105,8 +2115,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		..()
 		if (src.reagents.total_volume == 0)
 			icon_state = initial(icon_state)
-			return
-		if (src.reagents.total_temperature >= (T0C+97))
+		else if (src.reagents.total_temperature >= (T0C+97))
 			icon_state = initial(icon_state)+"_hot"
 		else if (src.reagents.total_temperature > (T0C+30)) //beer can be our barometer here
 			icon_state = initial(icon_state)+"_warm"
@@ -2117,18 +2126,26 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		else
 			icon_state = initial(icon_state)
 
+		if (!shakerstones)
+			src.stonewindow = image('icons/obj/foodNdrink/bottle.dmi',"cocktailoverlay_off")
+		else
+			src.stonewindow = image('icons/obj/foodNdrink/bottle.dmi',"cocktailoverlay_[shakerstones.mode]")
+		src.UpdateOverlays(src.stonewindow, "stonewindow")
+
 /obj/item/reagent_containers/food/drinks/cocktailshaker/golden
 	name = "golden cocktail shaker"
-	desc = "A golden plated tumbler with a top, used to mix cocktails. Can hold up to 120 units. So rich! So opulent! So... tacky."
+	desc = "A golden plated tumbler with a top and a slot for thermal stones, used to mix cocktails. Can hold up to 120 units. So rich! So opulent! So... tacky."
 	icon_state = "golden_cocktailshaker"
 
 /obj/item/shaker_stones
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "cubes_blue"
 	name = "thermal shaker stones"
-	desc = "A testament to space-bartending. These metal 'stones' can be placed in a cocktail shaker to heat or cool beverages when shaken."
+	desc = "A testament to space-engineering. These metal 'stones' can be placed in a cocktail shaker to heat or cool beverages when shaken."
 	w_class = W_CLASS_TINY
 	var/mode = "cool"
+	get_desc()
+		. = " They are set to '[mode]'."
 	attack_self(mob/user)
 		if (mode == "cool")
 			mode = "heat"
@@ -2152,6 +2169,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 				src.set_loc(shaker)
 				shaker.shakerstones = src
 				boutput(user, SPAN_NOTICE("You place the cubes inside \the [src.name]."))
+				shaker.UpdateIcon()
 				return
 		..()
 /obj/item/reagent_containers/food/drinks/creamer
