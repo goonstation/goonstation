@@ -1017,6 +1017,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 	switch(action)
 		if ("ping")
 			src.try_pad_ping()
+			return // list is cleared and rebuilt from packets, don't update
 		if ("receive")
 			var/target_pad_id = params["device_index"]
 			if(!target_pad_id)
@@ -1031,10 +1032,12 @@ TYPEINFO(/obj/machinery/transception_pad)
 			var/target_crate = shippingmarket.pending_crates.Find(wanted_thing)
 			if(target_crate)
 				src.build_command(src.known_pads[target_pad_id]["INT_TARGETID"], target_crate)
+			. = TRUE
 		if ("send")
 			var/target_pad_id = params["device_index"]
 			if (target_pad_id && src.known_pads[target_pad_id])
 				src.build_command(src.known_pads[target_pad_id]["INT_TARGETID"])
+				. = TRUE
 
 /obj/machinery/computer/transception/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))
