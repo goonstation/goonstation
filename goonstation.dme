@@ -1144,6 +1144,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\events\minor\artifact.dm"
 #include "code\modules\events\minor\buddy_time.dm"
 #include "code\modules\events\minor\gimmick_flood.dm"
+#include "code\modules\events\minor\lost_and_found.dm"
 #include "code\modules\events\minor\pests.dm"
 #include "code\modules\events\minor\special_order.dm"
 #include "code\modules\events\minor\trader.dm"
