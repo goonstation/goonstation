@@ -396,12 +396,15 @@
 
 /turf/simulated/floor/blackwhite
 	icon_state = "darkwhite"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/blackwhite/corner
 	icon_state = "darkwhitecorner"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/blackwhite/side
 	icon_state = "whiteblack"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/blackwhite/whitegrime
 	icon_state = "floorgrime_bw1"
@@ -891,6 +894,7 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 
 /turf/simulated/floor/glassblock/large
 	icon_state = "glass_large"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/glassblock/transparent
 	icon_state = "glasstr_cyan"
@@ -924,15 +928,19 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 
 /turf/simulated/floor/glassblock/transparent/indigo
 	icon_state = "glasstr_indigo"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/glassblock/transparent/red
 	icon_state = "glasstr_red"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/glassblock/transparent/grey
 	icon_state = "glasstr_grey"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/glassblock/transparent/purple
 	icon_state = "glasstr_purple"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /////////////////////////////////////////
 
@@ -1198,6 +1206,7 @@ TYPEINFO(/turf/simulated/floor/wood)
 
 /turf/simulated/floor/stairs/wide/green
 	icon_state = "Stairs_wide_green"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/stairs/wide/green/other
 	icon_state = "Stairs_wide_green_other"
@@ -1211,6 +1220,7 @@ TYPEINFO(/turf/simulated/floor/wood)
 
 /turf/simulated/floor/stairs/medical/wide
 	icon_state = "medstairs_wide"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/stairs/medical/wide/other
 	icon_state = "medstairs2_wide"
@@ -1221,6 +1231,7 @@ TYPEINFO(/turf/simulated/floor/wood)
 
 /turf/simulated/floor/stairs/quilty
 	icon_state = "quiltystair"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/stairs/quilty/wide
 	icon_state = "quiltystair2"
@@ -1231,6 +1242,7 @@ TYPEINFO(/turf/simulated/floor/stairs/wood)
 /turf/simulated/floor/stairs/wood
 	default_material = "wood"
 	icon_state = "wood_stairs"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/stairs/wood/wide
 	default_material = "wood"
@@ -1242,6 +1254,7 @@ TYPEINFO(/turf/simulated/floor/stairs/wood2)
 /turf/simulated/floor/stairs/wood2
 	default_material = "wood"
 	icon_state = "wood2_stairs"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/stairs/wood2/wide
 	default_material = "wood"
@@ -1256,6 +1269,7 @@ TYPEINFO(/turf/simulated/floor/stairs/wood3)
 /turf/simulated/floor/stairs/wood3
 	default_material = "wood"
 	icon_state = "wood3_stairs"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/stairs/wood3/wide
 	default_material = "wood"
@@ -1264,6 +1278,7 @@ TYPEINFO(/turf/simulated/floor/stairs/wood3)
 
 /turf/simulated/floor/stairs/dark
 	icon_state = "dark_stairs"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/stairs/dark/wide
 	icon_state = "dark_stairs2"
@@ -1384,11 +1399,13 @@ DEFINE_FLOORS(snowrough/border,
 	icon_state = "diamondtile"
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/unsimulated/floor/industrial
 	icon_state = "diamondtile"
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /////////////////////////////////////////
 
