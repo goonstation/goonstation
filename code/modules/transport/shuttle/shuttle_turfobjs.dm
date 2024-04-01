@@ -185,6 +185,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	pixel_y = -64
 	opacity = 0
 	plane = PLANE_DEFAULT
+	transform = matrix(0.5,0.5,-24,-0.25,0.25,-48)
 
 /turf/simulated/shuttle/wall/cockpit/window
 	name = "shuttle wall"
