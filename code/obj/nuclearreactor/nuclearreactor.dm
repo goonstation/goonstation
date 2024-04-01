@@ -24,6 +24,7 @@
 	dir = EAST
 	custom_suicide = TRUE
 	pixel_point = TRUE
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-32)
 	machine_registry_idx = MACHINES_FISSION
 	/// 2D grid of reactor components, or null where there are no components. Size is REACTOR_GRID_WIDTH x REACTOR_GRID_HEIGHT
 	var/list/obj/item/reactor_component/component_grid[REACTOR_GRID_WIDTH][REACTOR_GRID_HEIGHT]
