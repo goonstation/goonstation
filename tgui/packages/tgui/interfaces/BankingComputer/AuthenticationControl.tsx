@@ -21,7 +21,7 @@ export const AuthenticationControl = (props, context) => {
             {data.cardInserted ? data.cardName : "Insert Card"}
           </Button>
         </Stack.Item>
-        <Stack.Item textColor={(!data.authenticated && data.cardInserted) ? "red" : ""}>
+        <Stack.Item textColor={(!data.authenticated && data.cardInserted) ? "bad" : ""}>
           {(!data.authenticated && data.cardInserted) ? "Not authorized to use console" : ""}
         </Stack.Item>
       </Stack>

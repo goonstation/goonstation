@@ -52,7 +52,7 @@ const colorButton = (isTransferring: boolean, transferInfo: Transfer, myType: st
   if (isSelf && isTransferring) {
     return "grey";
   } else if (!isSelf && isTransferring) {
-    return "red";
+    return "bad";
   } else {
     return "blue";
   }

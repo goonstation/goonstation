@@ -6,7 +6,6 @@
 */
 
 import { SortDirection } from "../PlayerPanel/constant";
-export const CREDIT_SIGN = "⪽";
 
 export enum TabState {
   BudgetStatus,

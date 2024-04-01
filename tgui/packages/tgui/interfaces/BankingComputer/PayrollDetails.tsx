@@ -7,7 +7,8 @@
 
 import { useBackend } from "../../backend";
 import { Button, Divider, Section, Stack } from "../../components";
-import { CREDIT_SIGN, PayrollData } from "./type";
+import { CREDIT_SIGN } from "../common/strings";
+import { PayrollData } from "./type";
 
 interface PayrollDetailsProps {
   data: PayrollData,
@@ -36,7 +37,7 @@ export const PayrollDetails = (props: PayrollDetailsProps, context) => {
         <Stack.Item>
           <Stack align="flex-end" justify="space-between">
             <Stack.Item bold>Surplus</Stack.Item>
-            <Stack.Item color={props.data.surplus < 0 ? "red" : ""}>{props.data.surplus.toLocaleString()}{CREDIT_SIGN}</Stack.Item>
+            <Stack.Item color={props.data.surplus < 0 ? "bad" : ""}>{props.data.surplus.toLocaleString()}{CREDIT_SIGN}</Stack.Item>
           </Stack>
         </Stack.Item>
         <Divider />
@@ -52,7 +53,7 @@ export const PayrollDetails = (props: PayrollDetailsProps, context) => {
             <Stack.Item bold>
               Payroll Status:
             </Stack.Item>
-            <Stack.Item color={props.payrollActive ? "green" : "red"}>
+            <Stack.Item color={props.payrollActive ? "good" : "bad"}>
               {props.payrollActive ? "Active" : "Suspended"}
             </Stack.Item>
           </Stack>
@@ -60,7 +61,7 @@ export const PayrollDetails = (props: PayrollDetailsProps, context) => {
         <Stack.Item>
           <Button
             icon={props.payrollActive ? "xmark" : "check"}
-            color={props.payrollActive ? "red" : "green"}
+            color={props.payrollActive ? "bad" : "good"}
             onClick={() => act("togglePayroll")}>
             {props.payrollActive ? "Suspend Payroll" : "Resume Payroll"}
           </Button>

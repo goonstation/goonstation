@@ -6,8 +6,9 @@
  */
 
 import { Table } from "../../components";
+import { CREDIT_SIGN } from "../common/strings";
 import { TransferButton } from "./TransferButton";
-import { Budget, CREDIT_SIGN } from "./type";
+import { Budget } from "./type";
 
 interface BudgetProps {
   rowClassName?: string,

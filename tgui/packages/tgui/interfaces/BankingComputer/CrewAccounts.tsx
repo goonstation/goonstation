@@ -7,10 +7,11 @@
 
 import { useBackend, useLocalState } from "../../backend";
 import { Button, Divider, Dropdown, Input, Section, Stack, Table } from "../../components";
+import { CREDIT_SIGN } from "../common/strings";
 import { SortDirection } from "../PlayerPanel/constant";
 import { Header } from "../PlayerPanel/Header";
 import { TransferButton } from "./TransferButton";
-import { ColumnSortField, CREDIT_SIGN, CrewAccount, CrewColumnSortConfig, SearchFilter } from "./type";
+import { ColumnSortField, CrewAccount, CrewColumnSortConfig, SearchFilter } from "./type";
 
 interface CrewAccountLineProps {
   account: CrewAccount
@@ -22,8 +23,11 @@ const CrewAccountLine = (props: CrewAccountLineProps, context) => {
     <>
       <Table.Cell className="crewAccountCell" bold>{props.account.name}</Table.Cell>
       <Table.Cell className="crewAccountCell">{props.account.job}</Table.Cell>
-      <Table.Cell className="crewAccountCell"><Button title={"Edit Salary"} onClick={() => act("edit_wage", { "id": props.account.id })} icon="pen" /></Table.Cell>
-      <Table.Cell className="crewAccountCell">{props.account.wage.toLocaleString()}{CREDIT_SIGN}</Table.Cell>
+      <Table.Cell className="crewAccountCell">
+        <Button title={"Edit Salary"} onClick={() => act("edit_wage", { "id": props.account.id })} icon="pen">
+          {props.account.wage.toLocaleString()}{CREDIT_SIGN}
+        </Button>
+      </Table.Cell>
       <Table.Cell className="crewAccountCell">{props.account.balance.toLocaleString()}{CREDIT_SIGN}</Table.Cell>
       <Table.Cell className="crewAccountCell"><TransferButton frozen={props.account.frozen} id={props.account.id} type={"crew"} /></Table.Cell>
     </>
@@ -38,18 +42,16 @@ interface CrewAccountsTableHeaderProps {
 const CrewAccountsTableHeader = (props: CrewAccountsTableHeaderProps, context) => {
   const setColumnConfig = (field: ColumnSortField) => {
     if (props.currentColumnConfig === null) {
-      let config = { "field": field, dir: SortDirection.Asc };
-      props.onSortClick(config);
+      props.onSortClick({ "field": field, dir: SortDirection.Asc });
     } else {
-      let config = props.currentColumnConfig;
-      if (config.dir === SortDirection.Asc) {
-        config.dir = SortDirection.Desc;
+      let dir = props.currentColumnConfig.dir;
+      if (dir === SortDirection.Asc) {
+        dir = SortDirection.Desc;
       } else {
-        config.dir = SortDirection.Asc;
+        dir = SortDirection.Asc;
       }
 
-      config.field = field;
-      props.onSortClick(config);
+      props.onSortClick({ dir: dir, field: field });
     }
 
   };
@@ -77,7 +79,6 @@ const CrewAccountsTableHeader = (props: CrewAccountsTableHeaderProps, context) =
           Job
         </Header>
       </Table.Cell>
-      <Table.Cell />
       <Table.Cell bold>
         <Header
           sortDirection={
@@ -141,7 +142,7 @@ export const CrewAccounts = (props: CrewAccountsProps, context) => {
     setSort(config);
   };
 
-  const numCompare = (a: number, b: number) => {
+  const numericCompare = (a: number, b: number) => {
     if (a === b) {
       return 0;
     } else if (a > b) {
@@ -161,10 +162,10 @@ export const CrewAccounts = (props: CrewAccountsProps, context) => {
         return a.job.localeCompare(b.job);
 
       case ColumnSortField.Balance:
-        return numCompare(a.balance, b.balance);
+        return numericCompare(a.balance, b.balance);
 
       case ColumnSortField.Salary:
-        return numCompare(a.wage, b.wage);
+        return numericCompare(a.wage, b.wage);
     }
 
   };
