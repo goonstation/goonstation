@@ -1384,11 +1384,13 @@ DEFINE_FLOORS(snowrough/border,
 	icon_state = "diamondtile"
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/unsimulated/floor/industrial
 	icon_state = "diamondtile"
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /////////////////////////////////////////
 
