@@ -486,11 +486,13 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	active_stamina_dmg = 65
 	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
+	var/royale_mode = TRUE
 	gang
 		active_force = 22 // a bit more lethal. as a treat.
 		inactive_force = 8
 		active_stamina_dmg = 25
 		inactive_stamina_dmg = 10
+		royale_mode = FALSE
 
 	can_reflect()
 		return FALSE
@@ -501,12 +503,21 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 /obj/item/sword/discount/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 
+	if (royale_mode)
+		if (active)
+			hit_type = DAMAGE_BURN
+		else
+			hit_type = DAMAGE_BLUNT
+
 	//returns TRUE if parried. So stop here
 	if (..())
 		return
 
 	if (active)
-		target.do_disorient(0, weakened = 0, stunned = 0, disorient = 1, remove_stamina_below_zero = 0)
+		if (royale_mode)
+			target.do_disorient(0, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
+		else
+			target.do_disorient(0, weakened = 0, stunned = 0, disorient = 1, remove_stamina_below_zero = 0)
 
 ///////////////////////////////////////////////// Dagger /////////////////////////////////////////////////
 
