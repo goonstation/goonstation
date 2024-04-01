@@ -418,7 +418,7 @@ proc/broadcast_to_all_gangs(var/message)
 		if (!src.locker)
 			choose_new_leader()
 		else
-			broadcast_to_gang("Your leader has entered temporary cryogenic storage. You can claim leadership at your locker in 7.5 minutes.")
+			broadcast_to_gang("Your leader has entered temporary cryogenic storage. You can claim leadership at your locker in [GANG_CRYO_LOCKOUT/(1 MINUTE)] minutes.")
 
 	/// handle the gang leader entering cryo permanently
 	proc/handle_leader_perma_cryo()
@@ -436,8 +436,8 @@ proc/broadcast_to_all_gangs(var/message)
 				if (!candidate.hibernating)
 					smelly_unfortunate = member
 		if (!smelly_unfortunate)
-			logTheThing(LOG_ADMIN, smelly_unfortunate.ckey, "The leader of [gang_name] cryo'd with no living members to take the role.")
-			message_admins("The leader of [gang_name] cryo'd with no living members to take the role.")
+			logTheThing(LOG_ADMIN, leader.ckey, "The leader of [gang_name] cryo'd with no living members to take the role.")
+			message_admins("The leader of [gang_name], [leader.ckey] cryo'd with no living members to take the role.")
 			return
 
 		var/datum/mind/bad_leader = leader
