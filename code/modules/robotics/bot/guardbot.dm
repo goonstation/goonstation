@@ -1787,14 +1787,20 @@
 			costume_overlay = src.costume_icon
 
 			if (src.hat)
-				hat_overlay = image(src.hat.wear_image_icon, "[src.hat.icon_state]", layer = 9.5, dir = SOUTH, pixel_x = src.hat_x_offset, pixel_y = src.hat_y_offset)
+				hat_overlay = image(src.hat.wear_image_icon, "[src.hat.icon_state]", layer = 9.5, dir = SOUTH)
+				hat_overlay.pixel_w = src.hat_x_offset
+				hat_overlay.pixel_z = src.hat_y_offset
 
 
 		if (src.budgun)
-			gun_overlay = image(src.budgun.icon, "[src.budgun.icon_state]", layer = 10, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
+			gun_overlay = image(src.budgun.icon, "[src.budgun.icon_state]", layer = 10)
+			gun_overlay.pixel_w = src.gun_x_offset
+			gun_overlay.pixel_z = src.gun_y_offset
 
 			if (istype(src.budgun, /obj/item/gun/energy/lawbringer))
-				var/image/lawbringer_lights = image('icons/obj/items/guns/energy.dmi', "lawbringer-d100", 11, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
+				var/image/lawbringer_lights = image('icons/obj/items/guns/energy.dmi', "lawbringer-d100", 11)
+				lawbringer_lights.pixel_w = src.gun_x_offset
+				lawbringer_lights.pixel_z = src.gun_y_offset
 				switch(lawbringer_state)
 					if ("clown")
 						lawbringer_lights.color = "#FFC0CB"
