@@ -130,6 +130,8 @@
 	light_g = 0.3
 	light_b = 0.3
 
+	transform = matrix(0.5,0.5,0,-0.25,0.25,0) // looks perfect
+
 	New()
 		. = ..()
 		START_TRACKING
