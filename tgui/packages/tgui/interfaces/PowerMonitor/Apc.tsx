@@ -227,7 +227,9 @@ export const ApcPowerMonitor = (props: ApcPowerMonitorProps) => {
   const { setSortBy, sortState, search } = props;
   return (
     <>
-      <PowerMonitorApcTableHeader sortState={sortState} setSortBy={setSortBy} />
+      <Table.Row header>
+        <PowerMonitorApcTableHeader sortState={sortState} setSortBy={setSortBy} />
+      </Table.Row>
       <PowerMonitorApcTableRows search={search} sortState={sortState} />
     </>
   );

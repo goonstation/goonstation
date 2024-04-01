@@ -170,7 +170,9 @@ export const SmesPowerMonitor = (props: SmesPowerMonitorProps) => {
   const { setSortBy, sortState, search } = props;
   return (
     <>
-      <PowerMonitorSmesTableHeader sortState={sortState} setSortBy={setSortBy} />
+      <Table.Row header>
+        <PowerMonitorSmesTableHeader sortState={sortState} setSortBy={setSortBy} />
+      </Table.Row>
       <PowerMonitorSmesTableRows search={search} sortState={sortState} />
     </>
   );
