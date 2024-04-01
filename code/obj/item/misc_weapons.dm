@@ -600,7 +600,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
 	gang
 		name = "familiar fighting knife"
-		force = 15
+		force = 21
 		throwforce = 20
 		desc = "A light but robust combat knife that allows you to move faster in fights. It looks really familiar..."
 		icon_state = "combat_knife_gang"
@@ -700,7 +700,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 			H.do_disorient(stamina_damage = 30, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
-		random_brute_damage(M, 11)//embedding cares not for your armour
+		random_brute_damage(M, 18)//embedding cares not for your armour
 		take_bleeding_damage(M, null, 3, DAMAGE_CUT)
 
 /obj/item/nunchucks
