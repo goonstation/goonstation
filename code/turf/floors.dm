@@ -396,12 +396,15 @@
 
 /turf/simulated/floor/blackwhite
 	icon_state = "darkwhite"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/blackwhite/corner
 	icon_state = "darkwhitecorner"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/blackwhite/side
 	icon_state = "whiteblack"
+	transform = matrix(0.5,0.5,0,-0.25,0.25,-8)
 
 /turf/simulated/floor/blackwhite/whitegrime
 	icon_state = "floorgrime_bw1"
