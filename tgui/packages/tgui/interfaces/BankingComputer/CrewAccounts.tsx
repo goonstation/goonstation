@@ -14,7 +14,8 @@ import { TransferButton } from "./TransferButton";
 import { ColumnSortField, CrewAccount, CrewColumnSortConfig, SearchFilter } from "./type";
 
 interface CrewAccountLineProps {
-  account: CrewAccount
+  account: CrewAccount,
+  isSiliconUser: boolean
 }
 
 const CrewAccountLine = (props: CrewAccountLineProps, context) => {
@@ -24,7 +25,7 @@ const CrewAccountLine = (props: CrewAccountLineProps, context) => {
       <Table.Cell className="crewAccountCell" bold>{props.account.name}</Table.Cell>
       <Table.Cell className="crewAccountCell">{props.account.job}</Table.Cell>
       <Table.Cell className="crewAccountCell">
-        <Button title={"Edit Salary"} onClick={() => act("edit_wage", { "id": props.account.id })} icon="pen">
+        <Button title={"Edit Salary"} onClick={() => act("edit_wage", { "id": props.account.id, "isSiliconUser": props.isSiliconUser })} icon="pen">
           {props.account.wage.toLocaleString()}{CREDIT_SIGN}
         </Button>
       </Table.Cell>
@@ -108,7 +109,8 @@ const CrewAccountsTableHeader = (props: CrewAccountsTableHeaderProps, context) =
 interface CrewAccountsTableProps {
   accounts: CrewAccount[],
   onSortClick: (config: CrewColumnSortConfig) => any,
-  currentColumnConfig: CrewColumnSortConfig
+  currentColumnConfig: CrewColumnSortConfig,
+  isSiliconUser: boolean
 }
 const CrewAccountsTable = (props: CrewAccountsTableProps) => {
   if (props.accounts.length > 0) {
@@ -118,7 +120,7 @@ const CrewAccountsTable = (props: CrewAccountsTableProps) => {
         {
           props.accounts.map(account => (
             <Table.Row className="crewAccountRow" key={account.name}>
-              <CrewAccountLine account={account} />
+              <CrewAccountLine account={account} isSiliconUser={props.isSiliconUser} />
             </Table.Row>))
         }
       </Table>
@@ -130,16 +132,17 @@ const CrewAccountsTable = (props: CrewAccountsTableProps) => {
 
 interface CrewAccountsProps {
   accounts: CrewAccount[],
+  isSiliconUser: boolean
 }
 
 export const CrewAccounts = (props: CrewAccountsProps, context) => {
   const [searchText, setSearchText] = useLocalState(context, "crewAccountSearchText", "");
   const [searchFilter, setSearchFilter] = useLocalState(context, "crewAccountSearchFilter", SearchFilter.Name);
-  const [sort, setSort] = useLocalState<CrewColumnSortConfig>(context, 'crewColumnSort', null);
+  const [sortConfig, setSortConfig] = useLocalState<CrewColumnSortConfig>(context, 'crewColumnSort', null);
 
   const filterOptions = Object.keys(SearchFilter);
   const onSortClick = (config: CrewColumnSortConfig) => {
-    setSort(config);
+    setSortConfig(config);
   };
 
   const numericCompare = (a: number, b: number) => {
@@ -170,32 +173,36 @@ export const CrewAccounts = (props: CrewAccountsProps, context) => {
 
   };
 
-  const searchAndSortCrewAccounts = (filter: string, text: string, sortConfig: CrewColumnSortConfig) => {
+  const searchAndSortCrewAccounts = (
+    accounts: CrewAccount[],
+    filter: string,
+    text: string,
+    sortConfig: CrewColumnSortConfig) => {
 
-    let accounts = props.accounts;
+    let accountsToSort = accounts;
     if (sortConfig) {
-      accounts.sort((a, b) => compareByField(a, b, sortConfig));
+      accountsToSort = [...accounts].sort((a, b) => compareByField(a, b, sortConfig));
 
       if (sortConfig.dir === SortDirection.Asc) {
-        accounts.reverse();
+        accountsToSort.reverse();
       }
     }
 
     if (!filter) {
-      return accounts;
+      return accountsToSort;
     }
 
     switch (filter) {
       case SearchFilter.Name:
       case "Name":
-        return accounts.filter(account => account.name.toLocaleLowerCase().includes(text.toLocaleLowerCase()));
+        return accountsToSort.filter(account => account.name.toLocaleLowerCase().includes(text.toLocaleLowerCase()));
 
       case SearchFilter.Job:
       case "Job":
-        return accounts.filter(account => account.job.toLocaleLowerCase().includes(text.toLocaleLowerCase()));
+        return accountsToSort.filter(account => account.job.toLocaleLowerCase().includes(text.toLocaleLowerCase()));
     }
-
   };
+
   const handleSearchTextChange = (_e, value: string) => setSearchText(value);
   return (
     <Section title="Crew Acccounts">
@@ -217,9 +224,10 @@ export const CrewAccounts = (props: CrewAccountsProps, context) => {
       </Stack>
       <Divider />
       <CrewAccountsTable
-        currentColumnConfig={sort}
+        currentColumnConfig={sortConfig}
         onSortClick={onSortClick}
-        accounts={searchAndSortCrewAccounts(searchFilter, searchText, sort)} />
+        accounts={searchAndSortCrewAccounts(props.accounts, searchFilter, searchText, sortConfig)}
+        isSiliconUser={props.isSiliconUser} />
     </Section>
   );
 };

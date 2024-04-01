@@ -69,4 +69,5 @@ export interface BankComputerStatus {
   authenticated: boolean,
   cardInserted: boolean,
   cardName: string,
+  isSiliconUser: boolean,
 }

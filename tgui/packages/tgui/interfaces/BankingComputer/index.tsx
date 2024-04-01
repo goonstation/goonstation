@@ -24,7 +24,7 @@ export const BankingComputer = (_props, context) => {
       height={380}
       title={"Banking Records"}>
       <Window.Content scrollable>
-        <AuthenticationControl />
+        {!data.isSiliconUser && <AuthenticationControl />}
         <Tabs>
           <Tabs.Tab onClick={() => setSelectedTab(TabState.BudgetStatus)} selected={selectedTab === TabState.BudgetStatus} title="Budget Status">
             Budgets
@@ -48,7 +48,7 @@ export const BankingComputer = (_props, context) => {
           : ""}
         {selectedTab === TabState.CrewAccounts
           ? data.authenticated
-            ? <CrewAccounts accounts={data.accounts} />
+            ? <CrewAccounts accounts={data.accounts} isSiliconUser={data.isSiliconUser} />
             : <Section>Please authenticate to modify crew accounts.</Section>
           : ""}
       </Window.Content>

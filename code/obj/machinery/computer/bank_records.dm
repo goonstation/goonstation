@@ -99,9 +99,10 @@
 
 			if ("edit_wage")
 				var/id = params["id"]
+				var/isSiliconUser = text2num_safe(params["isSiliconUser"])
 
 				var/record = data_core.bank.find_record("id", id)
-				if (record && src.authenticated)
+				if (record && (src.authenticated || (isSiliconUser != null && isSiliconUser == TRUE)))
 					var/newWage = tgui_input_number(usr, "Choose new wage", "Modify Wage", 0, MAX_WAGES, 0)
 					if (newWage != null)
 						logTheThing(LOG_STATION, usr, "sets <b>[record["name"]]</b>'s wage to [newWage][CREDIT_SIGN].")
@@ -110,6 +111,9 @@
 
 		if (doKeyboardSound)
 			playsound(src.loc, "keyboard", 50, 1, -15)
+
+	proc/is_borg_or_ai(mob/user)
+		return isAI(user) || isrobot(user)
 
 	proc/handle_transfer(params)
 		. = FALSE
@@ -266,12 +270,14 @@
 
 	ui_data(mob/user)
 		var/list/data = new()
-		data["authenticated"] = src.authenticated
+		var/isSiliconUser = src.is_borg_or_ai(user)
+		data["authenticated"] = src.authenticated || isSiliconUser
 		data["cardInserted"] = src.card != null
 		data["cardName"] = src.card?.name
 		data["budgets"] = gather_budget_info()
+		data["isSiliconUser"] = isSiliconUser
 
-		if (src.authenticated)
+		if (src.authenticated || isSiliconUser)
 			var/payrollSum = 0
 			var/list/accounts = new()
 			for(var/datum/db_record/record in data_core.bank.records)
