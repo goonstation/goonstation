@@ -7,6 +7,7 @@
 
 	is_event_available(ignore_time_lock = 0)
 		. = ..()
+		src.criminal_items = list()
 		if (.)
 			for_by_tcl(H, /mob/living/carbon/human)
 				if (isdead(H)) continue
