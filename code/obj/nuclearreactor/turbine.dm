@@ -20,6 +20,7 @@
 	dir = EAST
 	custom_suicide = TRUE
 	machine_registry_idx = MACHINES_FISSION
+	transform = matrix(0.5,0.5,16,-0.25,0.25,-48)
 	/// Reference to the power terminal we use to dump power onto the net
 	var/obj/machinery/power/terminal/terminal = null
 	/// ID of this object on the pnet
