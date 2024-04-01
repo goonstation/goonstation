@@ -10,11 +10,11 @@
 		O.AddComponent(/datum/component/storage_viscontents, container = src)
 
 	proc/hide()
-		for (var/obj/O in vis_items)
+		for (var/obj/O as anything in vis_items)
 			parent.vis_contents -= O
 
 	proc/show()
-		for (var/obj/O in vis_items)
+		for (var/obj/O as anything in vis_items)
 			parent.vis_contents += O
 
 	proc/remove(obj/O)

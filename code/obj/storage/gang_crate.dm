@@ -184,7 +184,8 @@
 	///Whether this bag's trap is active
 	var/trapped = TRUE
 	///Whether this bag is tracking its' location
-	var/tracking = TRUE
+	var/tracking = FALSE
+	var/initial_tracking = TRUE
 	///Whether this bag is unopened. If TRUE, it will grant points when opened.
 	var/sealed = TRUE
 	///The gang who should own this duffel bag
@@ -206,7 +207,7 @@
 		src.vis_controller = new()
 		vis_controller.initialize(src)
 		lootMaster =  new /datum/loot_generator(x,y)
-		RegisterSignal(src, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(alert_gang))
+		toggle_tracking(initial_tracking)
 
 	New()
 		src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job=null, message_admins_too=FALSE)
@@ -244,26 +245,26 @@
 			trapped = FALSE //if one gang member gets their mitts on it, this has done its job
 			toggle_tracking(FALSE)
 			boutput(user, SPAN_ALERT("You disarm the trap in the [src]'s handle. It's now safe to carry."))
-		if (!gang && !open && trapped && owning_gang)
-			if (isliving(user))
-				var/mob/living/H = user
-				idiot = user
-				trapped = FALSE
-				toggle_tracking(FALSE)
-				icon_state = "gang_dufflebag_trap"
-				cant_self_remove = TRUE
-				cant_drop = TRUE
-				var/area/area = get_area(src)
-				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
-				boutput(user, SPAN_ALERT("As you pick up \the [src.name], a series of barbs emerge from the handle, lodging in your hand!"))
-				src.owning_gang.broadcast_to_gang("The bag [src.informant] knew about has just been stolen! Looks like it was in \the [area.name]")
-				ON_COOLDOWN(src,"bleed_msg", 30 SECONDS) //set a 30 second timer to remind players to remove this
-				idiot.setStatus("gang_trap", duration = INFINITE_STATUS)
-				H.emote("scream")
-				H.bleeding = max(1,H.bleeding)
-				SPAWN(1 SECOND)
-					bleed_process()
-	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target){
+		if (!gang && !open && trapped && owning_gang && isliving(user))
+			var/mob/living/H = user
+			idiot = user
+			trapped = FALSE
+			toggle_tracking(FALSE)
+			icon_state = "gang_dufflebag_trap"
+			cant_self_remove = TRUE
+			cant_drop = TRUE
+			var/area/area = get_area(src)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+			boutput(user, SPAN_ALERT("As you pick up \the [src.name], a series of barbs emerge from the handle, lodging in your hand!"))
+			src.owning_gang.broadcast_to_gang("The bag [src.informant] knew about has just been stolen! Looks like it was in \the [area.name]")
+			ON_COOLDOWN(src,"bleed_msg", 30 SECONDS) //set a 30 second timer to remind players to remove this
+			idiot.setStatus("gang_trap", duration = INFINITE_STATUS)
+			H.emote("scream")
+			H.bleeding = max(1,H.bleeding)
+			SPAWN(1 SECOND)
+				bleed_process()
+
+	handle_other_remove(mob/source, mob/living/carbon/human/target)
 		if (!cant_drop || !idiot || !source.get_gang())
 			return ..()
 
@@ -273,7 +274,7 @@
 		blood_slash(idiot, 2)
 		unhook()
 		return TRUE
-	}
+
 	proc/toggle_tracking(is_tracking)
 		if (src.tracking == is_tracking)
 			return
@@ -290,18 +291,20 @@
 		toggle_tracking(FALSE)
 
 	proc/unhook()
-		if (idiot)
-			if (istype(idiot.l_hand, /obj/item/gang_loot) && istype(idiot.r_hand, /obj/item/gang_loot)) //this is REALLY stretching it, bub.
-				var/obj/item/gang_loot/left_loot = idiot.l_hand //like, if you hit this use case, you're something else. stealing TWO bags at once.
-				var/obj/item/gang_loot/right_loot = idiot.r_hand
-				if (!(left_loot.idiot && right_loot.idiot)) // if only one trapped bag exists, it means we're untrapping the last one
-					idiot.delStatus("gang_trap")
-			else
+		if (!idiot)
+			return
+		if (istype(idiot.l_hand, /obj/item/gang_loot) && istype(idiot.r_hand, /obj/item/gang_loot)) //this is REALLY stretching it, bub.
+			var/obj/item/gang_loot/left_loot = idiot.l_hand //like, if you hit this use case, you're something else. stealing TWO bags at once.
+			var/obj/item/gang_loot/right_loot = idiot.r_hand
+			if (!(left_loot.idiot && right_loot.idiot)) // if only one trapped bag exists, it means we're untrapping the last one
 				idiot.delStatus("gang_trap")
-			icon_state = "gang_dufflebag"
-			cant_self_remove = FALSE
-			cant_drop = FALSE
-			idiot = null
+		else
+			idiot.delStatus("gang_trap")
+		icon_state = "gang_dufflebag"
+		cant_self_remove = FALSE
+		cant_drop = FALSE
+		idiot = null
+
 	dropped()
 		unhook()
 		..()
