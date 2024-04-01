@@ -413,15 +413,15 @@ var/global/totally_random_jobs = FALSE
 	else if (length(JOB.slot_rhan))
 		H.equip_new_if_possible(JOB.slot_rhan[1], SLOT_R_HAND)
 
-	#ifdef APRIL_FOOLS
-	H.back?.setMaterial(getMaterial("jean"))
-	H.gloves?.setMaterial(getMaterial("jean"))
-	H.wear_suit?.setMaterial(getMaterial("jean"))
-	H.wear_mask?.setMaterial(getMaterial("jean"))
-	H.w_uniform?.setMaterial(getMaterial("jean"))
-	H.shoes?.setMaterial(getMaterial("jean"))
-	H.head?.setMaterial(getMaterial("jean"))
-	#endif
+	//#ifdef APRIL_FOOLS
+	//H.back?.setMaterial(getMaterial("jean"))
+	//H.gloves?.setMaterial(getMaterial("jean"))
+	//H.wear_suit?.setMaterial(getMaterial("jean"))
+	//H.wear_mask?.setMaterial(getMaterial("jean"))
+	//H.w_uniform?.setMaterial(getMaterial("jean"))
+	//H.shoes?.setMaterial(getMaterial("jean"))
+	//H.head?.setMaterial(getMaterial("jean"))
+	//#endif
 
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
 /mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn)
