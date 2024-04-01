@@ -6449,7 +6449,7 @@
 	},
 /obj/item/clothing/glasses/thermal,
 /obj/item/gun/energy/pulse_rifle,
-/obj/item/gun/kinetic/riotgun,
+/obj/item/gun/kinetic/pumpweapon/riotgun,
 /obj/item/clothing/suit/armor/heavy,
 /obj/item/clothing/suit/armor/EOD,
 /obj/item/clothing/head/helmet/EOD,

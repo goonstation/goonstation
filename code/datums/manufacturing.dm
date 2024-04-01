@@ -3392,7 +3392,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	name = "Riot Shotgun"
 	item_paths = list("MET-1")
 	item_amounts = list(20)
-	item_outputs = list(/obj/item/gun/kinetic/riotgun)
+	item_outputs = list(/obj/item/gun/kinetic/pumpweapon/riotgun)
 	time = 20 SECONDS
 	create = 1
 	category = "Weapon"

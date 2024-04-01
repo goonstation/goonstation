@@ -1208,8 +1208,8 @@
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up
-			if(istype(budgun, /obj/item/gun/kinetic/riotgun))
-				var/obj/item/gun/kinetic/riotgun/RG = budgun
+			if(istype(budgun, /obj/item/gun/kinetic/pumpweapon/riotgun))
+				var/obj/item/gun/kinetic/pumpweapon/riotgun/RG = budgun
 				RG.rack(src)
 		ON_COOLDOWN(src, "buddy_refire_delay", src.gunfire_cooldown)
 		return 1

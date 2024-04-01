@@ -766,7 +766,7 @@ TYPEINFO(/obj/submachine/blackjack)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/bartender, SLOT_W_UNIFORM)
 			src.equip_new_if_possible(/obj/item/clothing/suit/wcoat, SLOT_WEAR_SUIT)
 			src.equip_if_possible(new /obj/item/clothing/glasses/thermal/orange, SLOT_GLASSES)
-			src.equip_new_if_possible(/obj/item/gun/kinetic/riotgun, SLOT_IN_BACKPACK)
+			src.equip_new_if_possible(/obj/item/gun/kinetic/pumpweapon/riotgun, SLOT_IN_BACKPACK)
 			src.equip_new_if_possible(/obj/item/storage/box/glassbox, SLOT_IN_BACKPACK)
 			for (var/obj/item/reagent_containers/food/drinks/drinkingglass/glass in src)
 				src.glassware += glass

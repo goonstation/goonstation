@@ -290,7 +290,7 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 
 	riot_shotguns
 		text = "riot shotguns"
-		path = /obj/item/gun/kinetic/riotgun
+		path = /obj/item/gun/kinetic/pumpweapon/riotgun
 		amt_high = 3
 	cards
 		text = "ID cards"

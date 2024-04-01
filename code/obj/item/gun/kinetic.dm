@@ -1762,13 +1762,103 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			ammo = new/obj/item/ammo/bullets/a12/weak
 			set_current_projectile(new/datum/projectile/bullet/a12/weak)
 
-/obj/item/gun/kinetic/riotgun
+
+/obj/item/gun/kinetic/pumpweapon
+	/// Whether this shotgun needs an action to pump both directions
+	var/is_heavy = FALSE
+	/// Whether this shotgun's action is open (pump is pulled backwards)
+	var/pump_back = FALSE
+	/// Whether this shotgun is ready to fire (if the slide is not racked)
+	var/hammer_ready = FALSE
+	var/base_icon_state = ""
+	/// The path to the sound played when the shotgun is pumped, or if is_heavy, pulled back
+	var/pumpsound = 'sound/weapons/shotgunpump.ogg'
+	/// The path to the sound played when the shotgun is pushed forwards, if is_heavy
+	var/pushsound = FALSE
+	/// The delay between racking this gun
+	var/rack_delay = 0
+
+	canshoot(mob/user)
+		return(..() && hammer_ready && !src.pump_back)
+
+	attack_self(mob/user as mob)
+		..()
+		src.rack(user)
+
+
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if(ammo.amount_left > 0 && (pump_back || !hammer_ready))
+			boutput(user, SPAN_NOTICE("You need to rack the slide before you can fire!"))
+		..()
+		src.hammer_ready = FALSE
+		src.UpdateIcon()
+
+
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		if(ammo.amount_left > 0 && (!pump_back || hammer_ready))
+			boutput(user, SPAN_NOTICE("You need to rack the slide before you can fire!"))
+			return
+		..()
+		src.hammer_ready = FALSE
+		src.UpdateIcon()
+
+
+	update_icon()
+		. = ..()
+		src.icon_state = base_icon_state + (gilded ? "-golden" : "") + ((!pump_back || !has_empty_state) ? "" : "-empty" )
+
+
+
+	proc/rack(var/atom/movable/user)
+		var/mob/mob_user = null
+		if(ismob(user))
+			mob_user = user
+		if (ON_COOLDOWN(src,"rack_delay",rack_delay))
+			return
+		if (!src.hammer_ready || src.pump_back) //Are we racked?
+			if (src.ammo.amount_left == 0)
+				if (!pump_back)
+					playsound(user.loc, pumpsound, 50, 1)
+					ejectcasings()
+				src.pump_back = TRUE
+				src.hammer_ready = TRUE
+				boutput(mob_user, "<span class ='notice'>You are out of shells!</span>")
+				UpdateIcon()
+			else
+				if (is_heavy)
+					if (pump_back)
+						src.pump_back = FALSE
+						src.hammer_ready = TRUE
+						src.icon_state = base_icon_state+"[src.gilded ? "-golden" : ""]" // having UpdateIcon() here breaks
+						playsound(user.loc, pushsound, 50, 1)
+					else
+						ejectcasings()
+						src.pump_back = TRUE
+						src.hammer_ready = TRUE
+						src.icon_state = base_icon_state+"[src.gilded ? "-golden-empty" : "-empty"]" // having UpdateIcon() here breaks
+						playsound(user.loc, pumpsound, 50, 1)
+				else
+					src.hammer_ready = TRUE
+					src.pump_back = FALSE
+					playsound(user.loc, pumpsound, 50, 1)
+
+					ejectcasings()
+					if (src.icon_state == base_icon_state+"[src.gilded ? "-golden" : ""]") //"animated" racking
+						src.icon_state = base_icon_state+"[src.gilded ? "-golden-empty" : "-empty"]" // having UpdateIcon() here breaks
+						animate(src, time = 0.2 SECONDS)
+						animate(icon_state = base_icon_state+"[gilded ? "-golden" : ""]")
+					else
+						UpdateIcon() // Slide already open? Just close the slide
+				boutput(mob_user, SPAN_NOTICE("You rack the slide of the shotgun!"))
+
+/obj/item/gun/kinetic/pumpweapon/riotgun
 	name = "riot shotgun"
 	desc = "A police-issue shotgun meant for suppressing riots."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "shotty"
 	item_state = "shotty"
 	wear_state = "shotty" // prevent empty state from breaking the worn image
+	base_icon_state = "shotty"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
@@ -1776,16 +1866,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	contraband = 5
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 8
-	auto_eject = 0
-	can_dual_wield = 0
-	two_handed = 1
-	has_empty_state = 1
-	gildable = 1
+	auto_eject = FALSE
+	can_dual_wield = FALSE
+	two_handed = TRUE
+	has_empty_state = TRUE
+	gildable = TRUE
 	default_magazine = /obj/item/ammo/bullets/abg
-	var/racked_slide = FALSE
 	recoil_strength = 14
 	recoil_max = 60
-
 
 
 	New()
@@ -1793,57 +1881,40 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()
 
-	update_icon()
-		. = ..()
-		src.icon_state = "shotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
+/obj/item/gun/kinetic/pumpweapon/ks23
+	name = "Kuvalda Carbine"
+	desc = "A *huge* 4-gauge shotgun built with a repurposed 23mm cannon barrel. It's debatable if there's a moral justification for using this against humans."
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
+	icon_state = "ks23"
+	item_state = "ks23"
+	wear_state = "ks23" // prevent empty state from breaking the worn image
+	base_icon_state = "ks23"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = ONBACK
+	force = MELEE_DMG_RIFLE
+	contraband = 6
+	is_heavy = TRUE
+	ammo_cats = list(AMMO_KUVALDA)
+	max_ammo_capacity = 4
+	auto_eject = FALSE
+	can_dual_wield = FALSE
+	two_handed = TRUE
+	has_empty_state = TRUE
+	gildable = TRUE
+	default_magazine = /obj/item/ammo/bullets/kuvalda/buck
+	recoil_strength = 18
+	recoil_max = 60
+	max_move_amount = 1
+	rack_delay = 4
+	pumpsound = 'sound/weapons/kuvalda_pull2.ogg'
+	pushsound = 'sound/weapons/kuvalda_push2.ogg'
 
-	canshoot(mob/user)
-		return(..() && src.racked_slide)
-
-	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
-		if(ammo.amount_left > 0 && !racked_slide)
-			boutput(user, SPAN_NOTICE("You need to rack the slide before you can fire!"))
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/kuvalda_shrapnel)
 		..()
-		src.racked_slide = FALSE
-		src.casings_to_eject = src.ammo.amount_left ? 1 : 0
-		src.UpdateIcon()
 
-	shoot_point_blank(atom/target, mob/user, second_shot)
-		if(ammo.amount_left > 0 && !racked_slide)
-			boutput(user, SPAN_NOTICE("You need to rack the slide before you can fire!"))
-			return
-		..()
-		src.racked_slide = FALSE
-		src.casings_to_eject = src.ammo.amount_left ? 1 : 0
-		src.UpdateIcon()
-
-	attack_self(mob/user as mob)
-		..()
-		src.rack(user)
-
-	proc/rack(var/atom/movable/user)
-		var/mob/mob_user = null
-		if(ismob(user))
-			mob_user = user
-		if (!src.racked_slide) //Are we racked?
-			if (src.ammo.amount_left == 0)
-				boutput(mob_user, "<span class ='notice'>You are out of shells!</span>")
-				UpdateIcon()
-			else
-				src.racked_slide = TRUE
-				if (src.icon_state == "shotty[src.gilded ? "-golden" : ""]") //"animated" racking
-					src.icon_state = "shotty[src.gilded ? "-golden-empty" : "-empty"]" // having UpdateIcon() here breaks
-					animate(src, time = 0.2 SECONDS)
-					animate(icon_state = "shotty[gilded ? "-golden" : ""]")
-				else
-					UpdateIcon() // Slide already open? Just close the slide
-				boutput(mob_user, SPAN_NOTICE("You rack the slide of the shotgun!"))
-				playsound(user.loc, 'sound/weapons/shotgunpump.ogg', 50, 1)
-				src.casings_to_eject = 0
-				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
-					var/turf/T = get_turf(src)
-					if (T && src.current_projectile.casing) // Eject shells on rack instead of on shoot()
-						new src.current_projectile.casing(T, src.forensic_ID)
 
 /obj/item/gun/kinetic/single_action/mts_255
 	name = "\improper MTs-255 Revolver Shotgun"

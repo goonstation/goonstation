@@ -7436,7 +7436,7 @@
 "iQU" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/green,
-/obj/item/gun/kinetic/riotgun,
+/obj/item/gun/kinetic/pumpweapon/riotgun,
 /obj/decal/fakeobjects/skeleton/decomposed_corpse{
 	pixel_x = 1;
 	pixel_y = -3

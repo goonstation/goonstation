@@ -970,7 +970,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong)
 	riotgun
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/riotgun,off_x=-8,off_y=0)
+			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/riotgun,off_x=-8,off_y=0)
 			I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 	m16
