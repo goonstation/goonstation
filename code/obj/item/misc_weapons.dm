@@ -583,7 +583,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throwforce = 20
 	stamina_cost = 5
 	c_flags = EQUIPPED_WHILE_HELD
-
 	setupProperties()
 		..()
 		setProperty("movespeed", -0.5)
@@ -595,16 +594,26 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "ninjaknife"
 	force = 8
-	throwforce = 11
+	throwforce = 18
 	throw_range = 10
 	flags = FPRINT | TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
+	gang
+		c_flags = EQUIPPED_WHILE_HELD
+		throwforce = 21
+		desc = "A light but robust combat knife that allows you to move faster in fights. It looks really familiar..."
+		icon_state = "combat_knife_gang"
+		inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+		item_state = "knife"
+		setupProperties()
+			..()
+			setProperty("movespeed", -0.5)
 
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
-			C.do_disorient(stamina_damage = 60, weakened = 0, stunned = 0, disorient = 40, remove_stamina_below_zero = 1)
+			C.do_disorient(stamina_damage = 40, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
 			C.emote("twitch_v")
 			A:lastattacker = usr
 			A:lastattackertime = world.time
@@ -689,7 +698,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			src.implanted(M)
 			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
-			H.changeStatus("weakened", 2 SECONDS)
+			M.do_disorient(stamina_damage = 30, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
 		random_brute_damage(M, 11)//embedding cares not for your armour
 		take_bleeding_damage(M, null, 3, DAMAGE_CUT)
 
@@ -711,6 +720,11 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	stamina_cost = 20
 	stamina_crit_chance = 60
 	// pickup_sfx = 'sound/items/blade_pull.ogg'
+	gang
+		force = 12
+		throwforce = 6
+		stamina_damage = 40
+		stamina_crit_chance = 20
 
 	New()
 		..()
