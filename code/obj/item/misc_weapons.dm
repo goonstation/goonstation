@@ -487,7 +487,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
 	gang
-		active_force = 18
+		active_force = 22 // a bit more lethal. as a treat.
 		inactive_force = 8
 		active_stamina_dmg = 25
 		inactive_stamina_dmg = 10
@@ -599,8 +599,9 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	flags = FPRINT | TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
 	gang
-		c_flags = EQUIPPED_WHILE_HELD
-		throwforce = 21
+		name = "familiar fighting knife"
+		force = 15
+		throwforce = 20
 		desc = "A light but robust combat knife that allows you to move faster in fights. It looks really familiar..."
 		icon_state = "combat_knife_gang"
 		inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
@@ -698,7 +699,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			src.implanted(M)
 			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
-			M.do_disorient(stamina_damage = 30, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
+			H.do_disorient(stamina_damage = 30, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
 		random_brute_damage(M, 11)//embedding cares not for your armour
 		take_bleeding_damage(M, null, 3, DAMAGE_CUT)
 

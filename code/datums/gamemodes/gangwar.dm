@@ -2194,7 +2194,7 @@ proc/broadcast_to_all_gangs(var/message)
 	desc = "A pair of nunchucks, trading some raw lethality for pain compliance."
 	class2 = "weapon"
 	price = 1200
-	item_path = /obj/item/nunchucks
+	item_path = /obj/item/nunchucks/gang
 /datum/gang_item/street/switchblade
 	name = "Switchblade"
 	desc = "A stylish knife you can hide in your clothes. Special attacks are exceptional at causing heavy bleeding."
