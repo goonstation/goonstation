@@ -30,7 +30,7 @@
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
 			return
-
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 		. = src.say_hive(message, hivemind_owner)
 
 	stop_observing()
