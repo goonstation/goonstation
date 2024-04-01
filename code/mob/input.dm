@@ -43,12 +43,16 @@
 		var/move_y = 0
 		if (keys & KEY_FORWARD)
 			move_y += 1
+			move_x -= 1
 		if (keys & KEY_BACKWARD)
 			move_y -= 1
+			move_x += 1
 		if (keys & KEY_RIGHT)
 			move_x += 1
+			move_y += (move_y <= 0) ? 1 : 0
 		if (keys & KEY_LEFT)
 			move_x -= 1
+			move_y -= (move_y >= 0) ? 1 : 0
 		if (move_x || move_y)
 			if(!src.move_dir && src.canmove && src.restrained())
 				if (src.pulled_by || length(src.grabbed_by))
