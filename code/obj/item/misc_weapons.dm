@@ -483,9 +483,14 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	off_w_class = W_CLASS_NORMAL
 	active_force = 18
 	inactive_force = 8
-	active_stamina_dmg = 25
-	inactive_stamina_dmg = 10
+	active_stamina_dmg = 65
+	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
+	gang
+		active_force = 18
+		inactive_force = 8
+		active_stamina_dmg = 25
+		inactive_stamina_dmg = 10
 
 	can_reflect()
 		return FALSE
