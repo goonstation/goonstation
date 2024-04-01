@@ -50837,7 +50837,7 @@
 	icon_state = "blue"
 	})
 "dBf" = (
-/obj/item/gun/kinetic/riotgun{
+/obj/item/gun/kinetic/pumpweapon/riotgun{
 	desc = "A police-issue shotgun meant fo- dear god why does it smell like it was lubricated with hotdog water?";
 	pixel_x = -6;
 	pixel_y = 24
@@ -73776,7 +73776,7 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/item/gun/kinetic/riotgun,
+/obj/item/gun/kinetic/pumpweapon/riotgun,
 /obj/decal/cleanable/blood/gibs,
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
