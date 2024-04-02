@@ -739,6 +739,58 @@ toxic - poisons
 		..()
 
 
+/datum/projectile/bullet/kuvalda_shrapnel //kuvalda shot
+	icon_state = "4gauge"
+	hit_ground_chance = 66
+	implanted = null
+	damage = 26
+	stun = 6
+	hit_type = DAMAGE_STAB
+	dissipation_rate = 4 //spread handles most of this
+	shot_sound = 'sound/weapons/kuvalda.ogg'
+	dissipation_delay = 6
+	casing = /obj/item/casing/shotgun/gray
+	var/image/blood_image
+	var/list/bleeding = list() // which bullets are bleeding
+	var/list/mob/living/unfortunates = list() // who was last hit, by each bullet
+	var/list/turf/last_projectile_locs = list() //ugly fix for 1:many data:projectile pairing
+	var/turf/last_turf
+	on_launch(obj/projectile/O)
+		O.AddComponent(/datum/component/gaseous_projectile)
+		icon_state = "4gauge[rand(1,3)]"
+		impact_image_state = "bullethole[rand(1,3)]"
+		blood_image = image('icons/obj/projectiles.dmi', icon_state+"-blood")
+		blood_image.alpha = 0
+		O.UpdateOverlays(blood_image, "blood_image")
+		flick("4gauge1",O)
+		. = ..()
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (isliving(hit))
+			var/mob/living/M = hit
+			take_bleeding_damage(M, proj.shooter, 2, DAMAGE_CUT, 1)
+			bleeding[proj] = TRUE
+			last_projectile_locs[proj] = get_turf(proj)
+			unfortunates[proj] = M
+			proj.icon_state  = icon_state+"-bloodloop"
+			blood_image.color = M.blood_color
+			blood_image.alpha = 255
+			proj.color = M.blood_color
+			proj.UpdateOverlays(blood_image, "blood_image")
+		..()
+	on_end(var/obj/projectile/O)
+		if (bleeding[O])
+			bleed(unfortunates[O],10,4,get_turf(O))
+			playsound(O.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+		..()
+	tick(var/obj/projectile/O)
+		if (!bleeding[O] || last_projectile_locs[O] == get_turf(O))
+			..()
+			return
+		if (bleeding[O])
+			last_projectile_locs[O] = get_turf(O)
+			bleed(unfortunates[O],0,1,last_projectile_locs[O])
+		..()
+
 
 /datum/projectile/bullet/flak_chunk
 	name = "flak chunk"

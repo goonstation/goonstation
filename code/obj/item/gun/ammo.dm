@@ -37,6 +37,7 @@
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
 	// 0.787 - 20mm cannon round
+	// 1.05  - 4 gauge
 	// 1.57 - 40mm grenade shell
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 
@@ -961,6 +962,23 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_type = new/datum/projectile/bullet/rod
 	ammo_cat = AMMO_COILGUN
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+
+//1.05
+
+/obj/item/ammo/bullets/kuvalda/buck
+	sname = "Shrapnel-10"
+	name = "Shrapnel-10"
+	desc = "A small handful of oversized shotshells, for a VERY big gun."
+	ammo_type = new/datum/projectile/special/spreader/uniform_burst/kuvalda_shrapnel
+	icon_state = "shrapnel"
+	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_KUVALDA
+	icon_dynamic = TRUE
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/gunload_click.ogg'
+
 
 //1.57
 /obj/item/ammo/bullets/autocannon

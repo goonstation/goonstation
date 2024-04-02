@@ -1791,6 +1791,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			boutput(user, SPAN_NOTICE("You need to rack the slide before you can fire!"))
 		..()
 		src.hammer_ready = FALSE
+		if (!is_heavy)
+			src.pump_back = TRUE //lighter guns get this half-done for you
 		src.UpdateIcon()
 
 
@@ -1844,8 +1846,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 					ejectcasings()
 					if (src.icon_state == base_icon_state+"[src.gilded ? "-golden" : ""]") //"animated" racking
-						src.icon_state = base_icon_state+"[src.gilded ? "-golden-empty" : "-empty"]" // having UpdateIcon() here breaks
-						animate(src, time = 0.2 SECONDS)
 						animate(icon_state = base_icon_state+"[gilded ? "-golden" : ""]")
 					else
 						UpdateIcon() // Slide already open? Just close the slide
@@ -1902,9 +1902,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	two_handed = TRUE
 	has_empty_state = TRUE
 	gildable = TRUE
+	recoil_reset = 15 DECI SECONDS
 	default_magazine = /obj/item/ammo/bullets/kuvalda/buck
 	recoil_strength = 18
-	recoil_max = 60
+	recoil_max = 40
 	max_move_amount = 1
 	rack_delay = 4
 	pumpsound = 'sound/weapons/kuvalda_pull2.ogg'
