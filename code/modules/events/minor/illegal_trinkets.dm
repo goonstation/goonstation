@@ -1,7 +1,7 @@
 /datum/random_event/minor/illegal_trinkets
 	name = "Illegal Trinkets"
 	centcom_headline = "Security Review Notice"
-	centcom_message = "The NanoTrasen Logistics Screening Team has confirmed the possibility of stolen, smuggled, or counterfit items aboard."
+	centcom_message = "The NanoTrasen Logistics Screening Team has confirmed the possibility of stolen, smuggled, or counterfeit items aboard."
 	weight = 10
 	var/list/obj/item/criminal_items = list()
 
