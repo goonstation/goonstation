@@ -14923,6 +14923,7 @@
 /area/station/solar/aisat)
 "bKe" = (
 /obj/disposalpipe/junction/right/west,
+/obj/machinery/bot/secbot/autopatrol,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bKg" = (
@@ -19128,6 +19129,9 @@
 	name = "Station Intercom (Medical)"
 	},
 /obj/stool/bench/blue/auto,
+/obj/machinery/bot/secbot{
+	name = "Doctor Batonsly"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "fHn" = (
@@ -21870,6 +21874,14 @@
 "iyq" = (
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
+"iyQ" = (
+/obj/stool/bench/red/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/bot/secbot,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "izu" = (
 /turf/simulated/floor/stairs/wide/middle{
 	dir = 4
@@ -34818,6 +34830,13 @@
 /obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"tUS" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/bot/secbot/autopatrol,
+/turf/simulated/floor,
+/area/station/crew_quarters/market)
 "tVe" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -35506,6 +35525,7 @@
 /obj/item/storage/toolbox/electrical,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/multitool,
+/obj/item/electronics/soldering,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "uxA" = (
@@ -80626,7 +80646,7 @@ anY
 anY
 xTD
 anY
-aiK
+tUS
 anY
 anY
 auW
@@ -87553,7 +87573,7 @@ moy
 fgx
 abS
 adh
-acG
+iyQ
 fEr
 aaa
 aaa
