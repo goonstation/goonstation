@@ -743,7 +743,7 @@ toxic - poisons
 	icon_state = "4gauge"
 	hit_ground_chance = 66
 	implanted = null
-	damage = 26
+	damage = 43
 	stun = 6
 	hit_type = DAMAGE_STAB
 	dissipation_rate = 4 //spread handles most of this
@@ -762,7 +762,7 @@ toxic - poisons
 		blood_image = image('icons/obj/projectiles.dmi', icon_state+"-blood")
 		blood_image.alpha = 0
 		O.UpdateOverlays(blood_image, "blood_image")
-		flick("4gauge1",O)
+		flick(icon_state,O) // this is a bit hacky - guarantees the full spread animation will play before swapping to bloodloop
 		. = ..()
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (isliving(hit))
@@ -772,11 +772,18 @@ toxic - poisons
 			last_projectile_locs[proj] = get_turf(proj)
 			unfortunates[proj] = M
 			proj.icon_state  = icon_state+"-bloodloop"
-			blood_image.color = M.blood_color
-			blood_image.alpha = 255
+			blood_image?.color = M.blood_color
+			blood_image?.alpha = 255
 			proj.color = M.blood_color
 			proj.UpdateOverlays(blood_image, "blood_image")
 		..()
+	get_power(obj/projectile/P, atom/A)
+		. = ..()
+		if (isliving(A))
+			if (ON_COOLDOWN(A,"kuvalda_multihit", 2 DECI SECONDS)) // er, cant blow more holes in existing ones?
+				. *= 0.5
+
+
 	on_end(var/obj/projectile/O)
 		if (bleeding[O])
 			bleed(unfortunates[O],10,4,get_turf(O))

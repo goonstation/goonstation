@@ -1764,7 +1764,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 
 /obj/item/gun/kinetic/pumpweapon
-	/// Whether this shotgun needs an action to pump both directions
+	/// Whether this shotgun needs an action to pump in each direction
 	var/is_heavy = FALSE
 	/// Whether this shotgun's action is open (pump is pulled backwards)
 	var/pump_back = FALSE
@@ -1797,11 +1797,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
-		if(ammo.amount_left > 0 && (!pump_back || hammer_ready))
+		if(ammo.amount_left > 0 && (pump_back || !hammer_ready))
 			boutput(user, SPAN_NOTICE("You need to rack the slide before you can fire!"))
 			return
 		..()
 		src.hammer_ready = FALSE
+		if (!is_heavy)
+			src.pump_back = TRUE //lighter guns get this half-done for you
 		src.UpdateIcon()
 
 
