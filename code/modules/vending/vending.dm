@@ -3377,6 +3377,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/goggles/purple, 2)
 		product_list += new/datum/data/vending_product(/obj/item/device/radio/headset/research, 2, cost=PAY_DOCTORATE/2)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2/toxins, 5, cost=PAY_DOCTORATE/2)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda_module/alert/science, 2)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/research, 3)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/research, 3)
 

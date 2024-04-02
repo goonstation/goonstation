@@ -279,7 +279,7 @@ datum
 				'sound/misc/talk/radio2.ogg',
 				'sound/misc/talk/radio_ai.ogg',
 				'sound/weapons/laser_f.ogg',
-				'sound/items/security_alert.ogg', //hehehehe
+				'sound/machines/phones/alerts/security.ogg', //hehehehe
 				new /datum/hallucinated_sound('sound/machines/click.ogg', min_count = 1, max_count = 4, delay = 0.4 SECONDS), //silenced pistol sound
 				new /datum/hallucinated_sound('sound/effects/glare.ogg', pitch = 0.8), //vamp glare is pitched down for... reasons
 				'sound/effects/poff.ogg',

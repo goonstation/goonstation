@@ -170,6 +170,7 @@
 		icon_state = "pda-rd"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/research_director
+		setup_default_module = /obj/item/device/pda_module/alert/science
 		setup_drive_size = 32
 		mailgroups = list(MGD_SCIENCE,MGD_COMMAND,MGD_PARTY)
 

@@ -798,6 +798,7 @@ Code:
 				<a href='?src=\ref[src];alert=2'>Engineering Alert</a><br>
 				<a href='?src=\ref[src];alert=3'>Security Alert</a><br>
 				<a href='?src=\ref[src];alert=4'>Janitor Alert</a>
+				<a href='?src=\ref[src];alert=5'>Science Alert</a>
 				"}
 
 		else
@@ -836,22 +837,27 @@ Code:
 				mailgroup = MGD_MEDBAY
 				alert_color = "#337296"
 				alert_title = "Medical"
-				alert_sound = 'sound/items/medical_alert.ogg'
+				alert_sound = 'sound/machines/phones/alerts/medical.ogg'
 			if (2)
 				mailgroup = MGO_ENGINEER
 				alert_color = "#a8732b"
 				alert_title = "Engineering"
-				alert_sound = 'sound/items/engineering_alert.ogg'
+				alert_sound = 'sound/machines/phones/alerts/engineer.ogg'
 			if (3)
 				mailgroup = MGD_SECURITY
 				alert_color = "#a30000"
 				alert_title = "Security"
-				alert_sound = 'sound/items/security_alert.ogg'
-			if (4 to INFINITY)
+				alert_sound = 'sound/machines/phones/alerts/security.ogg'
+			if (4)
 				mailgroup = MGO_JANITOR
 				alert_color = "#993399"
 				alert_title = "Janitor"
-				alert_sound = 'sound/items/janitor_alert.ogg'
+				alert_sound = 'sound/machines/phones/alerts/janitor.ogg'
+			if (5 to INFINITY)
+				mailgroup = MGD_SCIENCE
+				alert_color = "#a97da9"
+				alert_title = "Science"
+				alert_sound = 'sound/machines/phones/alerts/science.ogg'
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.master

@@ -293,6 +293,7 @@ ABSTRACT_TYPE(/obj/item/device/pda_module/alert)
 	var/role_name = ""
 	var/alert_color = ""
 	var/button_color = ""
+	var/alert_sound = null
 	var/list/mailgroups = list()
 
 	New()
@@ -328,7 +329,8 @@ ABSTRACT_TYPE(/obj/item/device/pda_module/alert)
 		src.host.post_signal(signal)
 
 		if(isliving(user))
-			playsound(src, "sound\\items\\[dept_name]_alert.ogg", 60)
+			if(src.alert_sound)
+				playsound(src, src.alert_sound, 60)
 			var/map_text = null
 			map_text = make_chat_maptext(user, "Emergency alert sent. Please assist this [src.role_name].", "color: [src.alert_color]; font-size: 6px;", alpha = 215)
 			for (var/mob/O in hearers(user))
@@ -345,6 +347,7 @@ ABSTRACT_TYPE(/obj/item/device/pda_module/alert)
 	role_name = "officer"
 	button_color = "red"
 	alert_color = "#a30000"
+	alert_sound = 'sound/machines/phones/alerts/security.ogg'
 	mailgroups = list(MGD_SECURITY)
 
 /obj/item/device/pda_module/alert/medical
@@ -355,6 +358,7 @@ ABSTRACT_TYPE(/obj/item/device/pda_module/alert)
 	role_name = "doctor"
 	button_color = "blue"
 	alert_color = "#337296"
+	alert_sound = 'sound/machines/phones/alerts/medical.ogg'
 	mailgroups = list(MGD_MEDBAY)
 
 /obj/item/device/pda_module/alert/engineering
@@ -365,17 +369,30 @@ ABSTRACT_TYPE(/obj/item/device/pda_module/alert)
 	role_name = "engineer"
 	button_color = "orange"
 	alert_color = "#a8732b"
+	alert_sound = 'sound/machines/phones/alerts/engineer.ogg'
 	mailgroups = list(MGO_ENGINEER)
 
 /obj/item/device/pda_module/alert/janitor
 	name = "janitor alert PDA module"
 	icon_state = "pdamod_alert_jan"
 	abilities = list(/obj/ability_button/pda_alert/janitor)
-	dept_name = "janitor"
+	dept_name = "janitorial"
 	role_name = "janitor"
 	button_color = "purple"
 	alert_color = "#993399"
+	alert_sound = 'sound/machines/phones/alerts/janitor.ogg'
 	mailgroups = list(MGO_JANITOR)
+
+/obj/item/device/pda_module/alert/science
+	name = "science alert PDA module"
+	icon_state = "pdamod_alert_sci"
+	abilities = list(/obj/ability_button/pda_alert/science)
+	dept_name = "research"
+	role_name = "scientist"
+	button_color = "lavender"
+	alert_color = "#a97da9"
+	alert_sound = 'sound/machines/phones/alerts/science.ogg'
+	mailgroups = list(MGD_SCIENCE)
 
 ABSTRACT_TYPE(/obj/ability_button/pda_alert)
 /obj/ability_button/pda_alert
@@ -404,3 +421,7 @@ ABSTRACT_TYPE(/obj/ability_button/pda_alert)
 /obj/ability_button/pda_alert/janitor
 	name = "Send Janitor Alert"
 	icon_state = "alert_jan"
+
+/obj/ability_button/pda_alert/science
+	name = "Send Science Alert"
+	icon_state = "alert_sci"
