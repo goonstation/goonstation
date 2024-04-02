@@ -137,11 +137,11 @@
 			[SPAN_NOTICE("You can't move when being watched. As a plush, you have the following abilities:")]
 			<br>[SPAN_NOTICE("Plushie Talk allows you to communicate.")]
 			<br>[SPAN_NOTICE("Override Sensors lets you temporarily move a few steps, even if being watched.")]
-			<br>[SPAN_NOTICE("Teleport lets you teleport when you're not being watched.")]
-			<br>[SPAN_NOTICE("Disappear lets you teleport away and hide in a random station container.")]
+			<br>[SPAN_NOTICE("Teleport lets you jump to the targeted location, when you're not being watched.")]
+			<br>[SPAN_NOTICE("Disappear teleports you to a random station container.")]
 			<br>[SPAN_NOTICE("Vengeful Retreat will stun your recent attacker and teleport you away.")]
-			<br>[SPAN_NOTICE("Toggle Glowing Eyes a lets you toggle your eyes glowing at will.")]
-			<br>[SPAN_NOTICE("Set Glowing Eyes Color ability lets you set your eyes' glowing color.")]
+			<br>[SPAN_NOTICE("Toggle Glowing Eyes will toggle your eyes glowing at will.")]
+			<br>[SPAN_NOTICE("Set Glowing Eyes Color lets you set your eyes' glowing color.")]
 			<br>[SPAN_NOTICE("Access special emotes through *scream, *dance and *snap.")]"})
 
 	proc/plushie_speech(var/text_to_say)
