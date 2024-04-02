@@ -30977,6 +30977,9 @@
 	id = "deliverydoor";
 	name = "Delivery Door"
 	},
+/obj/machinery/door/airlock/pyro/glass/botany,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/hydro,
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
 "qSG" = (
