@@ -19,7 +19,6 @@ var/list/admin_verbs = list(
 		/client/proc/game_panel_but_called_secrets,
 		/client/proc/player_panel,
 		/client/proc/cmd_admin_view_playernotes,
-		/client/proc/toggle_pray,
 		/client/proc/cmd_whois,
 		/client/proc/cmd_whodead,
 
