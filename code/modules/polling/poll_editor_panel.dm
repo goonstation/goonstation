@@ -74,11 +74,11 @@
 		if ("never")
 			return null
 		if ("minutes")
-			return toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), minutes = value))
+			return toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), minutes = text2num(value)))
 		if ("hours")
-			return toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), hours = value))
+			return toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), hours = text2num(value)))
 		if ("days")
-			return toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), days = value))
+			return toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), days = text2num(value)))
 		if ("timestamp")
 			if (validateIso8601(value))
 				return value
