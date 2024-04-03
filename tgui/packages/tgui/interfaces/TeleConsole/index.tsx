@@ -7,7 +7,7 @@
  */
 
 import { useBackend, useSharedState } from '../../backend';
-import { Button, Icon, LabeledList, Section, Stack, Tabs } from '../../components';
+import { Box, Button, Icon, LabeledList, Section, Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { BookmarksSection } from './BookmarksSection';
 import { ConnectionSection } from './ConnectionSection';
@@ -35,7 +35,7 @@ export const TeleConsole = (_props, context) => {
   const handleCyclePad = () => act('setpad');
 
   return (
-    <Window theme="ntos" width={400} height={515}>
+    <Window theme="ntos" width={410} height={515}>
       <Window.Content textAlign="center">
         <Stack vertical fill>
           <Stack.Item>
@@ -105,18 +105,26 @@ export const TeleConsole = (_props, context) => {
                       <div key={d["name"]}>
                         <LabeledList.Item
                           label={d["name"]}>
-                          <Button
-                            icon="sign-out-alt"
-                            onClick={() => act("lrt_send", { name: d["name"] })}
-                          >
-                            Send
-                          </Button>
-                          <Button
-                            icon="sign-in-alt"
-                            onClick={() => act("lrt_receive", { name: d["name"] })}
-                          >
-                            Receive
-                          </Button>
+                          <Box textAlign="right">
+                            <Button
+                              icon="sign-out-alt"
+                              onClick={() => act("lrt_send", { name: d["name"] })}
+                              disabled={!isConnectedToHost}
+                            >
+                              Send
+                            </Button>
+                            <Button
+                              icon="sign-in-alt"
+                              onClick={() => act("lrt_receive", { name: d["name"] })}
+                              disabled={!isConnectedToHost}
+                            >
+                              Receive
+                            </Button>
+                            <Button onClick={() => act('lrt_portal', { name: d["name"] })} disabled={!isConnectedToHost}>
+                              <Icon name="ring" rotation={90} />
+                              Toggle Portal
+                            </Button>
+                          </Box>
                         </LabeledList.Item>
                       </div>
                     )) : (

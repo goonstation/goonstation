@@ -385,6 +385,22 @@ TYPEINFO(/obj/machinery/networked/telepad)
 									message_host("command=ack")
 								else
 									message_host("command=nack&cause=recharge")
+							if("portal")
+								if (src.start_portal || src.end_portal)
+									if (start_portal)
+										qdel(start_portal)
+										start_portal = null
+									if (end_portal)
+										qdel(end_portal)
+										end_portal = null
+
+									message_host("command=ack")
+									return
+
+								if(src.lrtportal(tmp_place))
+									message_host("command=ack")
+								else
+									message_host("command=nack&cause=recharge")
 							else
 								message_host("command=nack&cause=badcmd")
 						src.icon_state = "pad0"
@@ -505,7 +521,8 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				leaveresidual(target)
 				sleep(0.5 SECONDS)
 
-				showswirl_out(src.loc)
+				showswirl_out(src.loc, FALSE)
+				playsound(src.loc, 'sound/machines/lrteleport.ogg', 60, TRUE)
 				leaveresidual(src.loc)
 				showswirl(target)
 				use_power(1500)
@@ -517,7 +534,12 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					if(ismob(M))
 						var/mob/O = M
 						O.changeStatus("stunned", 2 SECONDS)
-					SPAWN(6 DECI SECONDS) do_teleport(M,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
+					SPAWN(6 DECI SECONDS)
+						if(ismob(M))
+							logTheThing(LOG_STATION, usr, "sent [constructTarget(M,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
+						else
+							logTheThing(LOG_STATION, usr, "sent [log_object(M)] from [log_loc(M)] to [log_loc(target)] with a telepad")
+						do_teleport(M,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				return 1
 			return 0
 
@@ -535,7 +557,8 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				leaveresidual(target)
 				sleep(1.0 SECONDS)
 
-				showswirl(src.loc)
+				showswirl(src.loc, FALSE)
+				playsound(src.loc, 'sound/machines/lrteleport.ogg', 60, TRUE)
 				leaveresidual(src.loc)
 				showswirl_out(target)
 				use_power(1500)
@@ -546,9 +569,54 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					if(ismob(M))
 						var/mob/O = M
 						O.changeStatus("stunned", 2 SECONDS)
-					SPAWN(6 DECI SECONDS) do_teleport(M,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
+					SPAWN(6 DECI SECONDS)
+						if(ismob(M))
+							logTheThing(LOG_STATION, usr, "received [constructTarget(M,"station")] from [log_loc(M)] to [log_loc(src)] with a telepad")
+						else
+							logTheThing(LOG_STATION, usr, "received [log_object(M)] from [log_loc(M)] to [log_loc(src)] with a telepad")
+						do_teleport(M,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				return 1
 			return 0
+
+	proc/lrtportal(var/place)
+		if (!ON_COOLDOWN(src, "busy", 5 SECOND))
+			if (place && (place in special_places))
+				var/turf/target = null
+				for(var/turf/T in landmarks[LANDMARK_LRT])
+					var/name = landmarks[LANDMARK_LRT][T]
+					if(name == place)
+						target = T
+						break
+				if (!target) //we didnt find a turf to send to
+					return 0
+
+				var/list/send = list()
+				var/list/receive = list()
+				for(var/atom/movable/O as obj|mob in src.loc)
+					if(O.anchored) continue
+					send.Add(O)
+				for(var/atom/movable/O as obj|mob in target)
+					if(O.anchored) continue
+					receive.Add(O)
+				for(var/atom/movable/O in send)
+					do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
+					if(ismob(O))
+						logTheThing(LOG_STATION, usr, "sent [constructTarget(O,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
+
+				for(var/atom/movable/O in receive)
+					if(ismob(O))
+						logTheThing(LOG_STATION, usr, "received [constructTarget(O,"station")] from [log_loc(O)] to [log_loc(src)] with a telepad")
+					do_teleport(O,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
+
+				showswirl(src.loc, FALSE)
+				playsound(src.loc, 'sound/machines/lrteleport.ogg', 60, TRUE)
+				showswirl(target)
+				use_power(400000)
+				start_portal = makeportal(src.loc, target)
+				if (start_portal)
+					end_portal = makeportal(target, src.loc)
+					logTheThing(LOG_STATION, usr, "created a portal to [log_loc(target)] at [log_loc(src.loc)] with a telepad")
+				return 1
 
 	proc/send(var/turf/target)
 		if (!target)
@@ -1223,6 +1291,15 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			if ("setpad")
 				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				src.padNum = (src.padNum & 3) + 1
+				. = TRUE
+
+			if ("lrt_portal")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (!host_id)
+					boutput(usr, SPAN_ALERT("Error: No host connection!"))
+					return
+
+				message_host("command=teleman&args=-p [padNum] lrt portal place=[replacetext(params["name"], " ", "_")]")
 				. = TRUE
 
 			if ("lrt_send")
