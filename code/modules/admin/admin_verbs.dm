@@ -429,7 +429,6 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_modify_market_variables,
 		/client/proc/debug_pools,
 		/client/proc/debug_global_variable,
-		/client/proc/get_admin_state,
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
 		/datum/admins/proc/adsound,
@@ -733,17 +732,6 @@ var/list/special_pa_observing_verbs = list(
 		boutput(src, SPAN_NOTICE("You are now playing"))
 	else
 		boutput(src, SPAN_NOTICE("You are already playing!"))
-
-/client/proc/get_admin_state()
-	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	for(var/client/C)
-		if(C.holder)
-			if(C.holder.state == 1)
-				boutput(src, "[C.key] is playing - [C.holder.state]")
-			else if(C.holder.state == 2)
-				boutput(src, "[C.key] is observing - [C.holder.state]")
-			else
-				boutput(src, "[C.key] is undefined - [C.holder.state]")
 
 //admin client procs ported over from mob.dm
 
