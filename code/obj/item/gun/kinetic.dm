@@ -3133,3 +3133,164 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 		UpdateIcon()
 
+// Kickass custom rifle for nukie commanders, needs to have barrels stuck onto it to work. Uplink will have barrel options, choose 3 out of however many
+/* TODO
+   - Sprites
+   - Fix barrel switch
+   - Debug
+   - fix ammo types lool
+   - ???
+   - Win
+*/
+/obj/item/gun/kinetic/commander_rifle
+	name = "\improper H14-C Scout Rifle Custom"
+	desc = "A highly versatile and customisable hunting rifle."
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	icon_state = "sniper"
+	item_state = "sniper"
+	force = MELEE_DMG_RIFLE
+	ammo_cats = list(AMMO_RIFLE_COMM)
+	max_ammo_capacity = 14
+	auto_eject = 1
+	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	slowdown = 0
+	slowdown_time = 0
+
+	can_dual_wield = FALSE
+	two_handed = FALSE
+	w_class = W_CLASS_NORMAL
+
+	default_magazine = /obj/item/ammo/bullets/commander_rifle
+	ammobag_magazines = list(/obj/item/ammo/bullets/commander_rifle)
+	ammobag_restock_cost = 3
+	ammobag_spec_required = TRUE
+	recoil_strength = 20
+	recoil_inaccuracy_max = 0
+
+	var/barrels = 0
+
+	HELP_MESSAGE_OVERRIDE({"This needs barrels attached to it to function! The Nuclear Commander Uplink will have barrel options for you to use."})
+
+	get_desc(dist, mob/user)
+		if(user.mind.special_role == "nukeop_commander")
+			. += "It's <i>your</i> old rifle from before you got promoted. Lovingly modified and kitted out to support anything you'll need."
+			. += SPAN_ALERT(" <b>Perfect.</b>")
+		else
+			. += "It's been <i>surprisingly</i> decently modified to fit extra barrels and lighting indicators. Yeesh."
+
+	canshoot(mob/user)
+		if(barrels == 0)
+			boutput(user,SPAN_ALERT("[src] needs a barrel to shoot! Duh."))
+			return FALSE
+		else
+			return TRUE
+
+	New(var/mob/M)
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/commander_rifle)
+		SPAWN(0.5 SECONDS)
+		assign_name(M)
+		..()
+
+	attackby(obj/item/b, mob/user)
+		if (istype(b, /obj/item/commander_barrel))
+			var/obj/item/commander_barrel/new_barrel = b
+			src.try_add_barrel(user, new_barrel)
+			return
+		..()
+
+	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		if (istype(target, /obj/item/commander_barrel))
+			var/obj/item/commander_barrel/new_barrel = target
+			src.try_add_barrel(user, new_barrel)
+			return
+		..()
+
+	/* no cool light up indicators to leverage/barrels to swap, sprites needed?
+	attack_self(mob/user as mob)
+		..()
+		UpdateIcon()
+		M.update_inhands()
+
+	update_icon()
+		if (current_projectile.type == /datum/projectile/laser)
+			charge_icon_state = "energykill"
+			muzzle_flash = "muzzle_flash_laser"
+			item_state = "egun-kill"
+		else if (current_projectile.type == /datum/projectile/energy_bolt)
+			charge_icon_state = "energystun"
+			muzzle_flash = "muzzle_flash_elec"
+			item_state = "egun"
+		..()*/
+
+	proc/assign_name(var/mob/M) //stolen from lawbringer
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if (H.bioHolder)
+				src.name = "[H.real_name]'s H14-C Scout Rifle Custom"
+				tooltip_rebuild = 1
+
+	proc/try_add_barrel(var/mob/user, var/obj/item/commander_barrel/new_barrel)
+		if(barrels == 3)
+			boutput(user, SPAN_ALERT("The gun already has 3 barrels! No more will fit!"))
+			return
+		set_barrel_stats(new_barrel)
+		qdel(new_barrel)
+
+	proc/set_barrel_stats(var/obj/item/commander_barrel/barrel)
+		src.projectiles += list(barrel.projectile)
+		barrels++
+		set_current_projectile(barrel.projectile)
+
+/obj/item/commander_barrel
+	name = "\improper H14-C Barrel"
+	desc = "An odd barrel for the H14 line of Scout Rifles, this one seems to... hey! you shouldn't see this!"
+	icon = 'icons/obj/electronics.dmi' // TODO - cool sprites for barrels?
+	icon_state = "dbox"
+	var/projectile = new/datum/projectile/bullet/commander_rifle
+	var/projname = "Dummy"
+
+	standard
+		name = "\improper H14 Standard-issue barrel"
+		desc = "A standard barrel for the H14 line of scout rifles. No, really! This one just is plain and standard-issue."
+		projectile = new/datum/projectile/bullet/commander_rifle/standard
+
+	penetrator
+		name = "\improper H14-C Penetrator barrel"
+		desc = "A violent custom barrel for the H14 line of scout rifles, this one seems to leverage the bullets ability to be programmed to make them pierce ammo and walls."
+		projectile = new/datum/projectile/bullet/commander_rifle/penetrator
+
+	heavy
+		name = "\improper H14-C Heavy-duty barrel"
+		desc = "A very heavy custom barrel for the H14 line of scout rifles, this one seems to be not only very heavy, but seems to shoot twice the rounds for one big high powered shot."
+		projectile = new/datum/projectile/bullet/commander_rifle/heavy
+
+	ricochet
+		name = "\improper H14-C Ricochet barrel"
+		desc = "A high-tech cusotm barrel for the H14 line of scout rifles, this one seems to take full control over the smart bullets loaded and ensure they bounce, gaining energy each time."
+		projectile = new/datum/projectile/bullet/commander_rifle/ricochet
+
+	incendiary
+		name = "\improper H14-C Incidenary barrel"
+		desc = "A fiesty barrel for the H14 line of scout rifles, this one seems to overheat the rounds to burn up whatever unlucky soul gets shot."
+		projectile = new/datum/projectile/bullet/commander_rifle/incendiary
+
+	anticlown
+		name = "\improper H14-Clown barrel"
+		desc = "A masterfully crafted barrel for the H14 line of anti-humour rifles, this one seems to react violently in contact of banana peels and honking."
+		projectile = new/datum/projectile/bullet/commander_rifle/anticlown
+
+	acid
+		name = "\improper H14-C Acid barrel"
+		desc = "An inspired barrel for the H14 line of scout rifles, after the Commander battled on Magus, they made sure to have the rounds tipped in acid to remove any masks or helmets."
+		projectile = new/datum/projectile/bullet/commander_rifle/acid
+
+	doorbreach
+		name = "\improper H14-C Masterkey barrel"
+		desc = "A tactical barrel for the H14 line of scout rifles, this one is designed to rip through doors and open them up."
+		projectile = new/datum/projectile/bullet/commander_rifle/doorbreach
+
+	mist
+		name = "\improper H14-C Mist barrel"
+		desc = "A shady barrel for the H14 line of scout rifles, this one bursts into a hard to see through, yet breathable fog."
+		projectile = new/datum/projectile/bullet/grenade_shell/mist

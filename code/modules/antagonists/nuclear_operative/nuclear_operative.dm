@@ -51,6 +51,7 @@
 			H.equip_if_possible(new /obj/item/device/radio/headset/syndicate/leader(H), SLOT_EARS)
 			H.equip_if_possible(new /obj/item/swords_sheaths/nukeop(H), SLOT_BELT)
 			H.equip_if_possible(new /obj/item/device/nukeop_commander_uplink(H), SLOT_L_HAND)
+			H.equip_if_possible(new /obj/item/gun/kinetic/commander_rifle(H), SLOT_R_HAND)
 		else
 			H.equip_if_possible(new /obj/item/device/radio/headset/syndicate(H), SLOT_EARS)
 

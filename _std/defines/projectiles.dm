@@ -54,6 +54,7 @@
 #define AMMO_TRANQ_308 "tranq_308"
 #define AMMO_TRANQ_ALL AMMO_TRANQ_9MM, AMMO_TRANQ_308
 
+#define AMMO_RIFLE_COMM "rifle_commander"
 
 #define AMMO_RIFLE_308 "rifle_308"
 #define AMMO_AUTO_308 "auto_308"
