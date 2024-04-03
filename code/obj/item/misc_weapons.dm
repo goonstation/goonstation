@@ -882,6 +882,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 	New()
 		..()
+		src.setItemSpecial(/datum/item_special/rangestab)
 		if(istype(src.loc, /mob/living))
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)

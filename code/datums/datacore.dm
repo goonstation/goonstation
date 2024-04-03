@@ -70,15 +70,16 @@
 
 	M["bioHolder.bloodType"] = "[H.bioHolder.bloodType]"
 	M["mi_dis"] = "None"
-	M["mi_dis_d"] = "No minor disabilities have been declared."
+	M["mi_dis_d"] = MEDREC_DISABILITY_MINOR_DEFAULT
 	M["ma_dis"] = "None"
-	M["ma_dis_d"] = "No major disabilities have been diagnosed."
+	M["ma_dis_d"] = MEDREC_DISABILITY_MAJOR_DEFAULT
 	M["alg"] = "None"
-	M["alg_d"] = "No allergies have been detected in this patient."
+	M["alg_d"] = MEDREC_ALLERGY_DEFAULT
 	M["cdi"] = "None"
-	M["cdi_d"] = "No diseases have been diagnosed at the moment."
-
-	M["h_imp"] = "No health implant detected."
+	M["cdi_d"] = MEDREC_DISEASE_DEFAULT
+	M["cl_def"] = MEDREC_CLONE_DEFECT_DEFAULT
+	M["cl_def_d"] = "None"
+	M["h_imp"] = MEDREC_NO_IMPLANT
 
 	if(!length(med_note))
 		M["notes"] = "No notes."
@@ -87,12 +88,15 @@
 
 	M["dnasample"] = create_new_dna_sample_file(H)
 
-	var/traitStr = ""
+	var/list/minorDisabilities = list()
+	var/list/minorDisabilityDesc = list()
+	var/list/majorDisabilities = list()
+	var/list/majorDisabilityDesc = list()
+
 	if(H.traitHolder)
 		for(var/id in H.traitHolder.traits)
 			var/datum/trait/T = H.traitHolder.traits[id]
-			if(length(traitStr)) traitStr += " | [T.name]"
-			else traitStr = T.name
+
 			if (istype(T, /datum/trait/random_allergy))
 				var/datum/trait/random_allergy/AT = T
 				if (M["alg"] == "None") //is it in its default state?
@@ -100,8 +104,22 @@
 					M["alg_d"] = "Allergy information imported from CentCom database."
 				else
 					M["alg"] += ", [reagent_id_to_name(AT.allergen)]"
+				continue
 
-	M["traits"] = traitStr
+			switch(T.disability_type)
+				if (TRAIT_DISABILITY_MAJOR)
+					majorDisabilities.Add(T.disability_name)
+					majorDisabilityDesc.Add(T.disability_desc)
+				if (TRAIT_DISABILITY_MINOR)
+					minorDisabilities.Add(T.disability_name)
+					minorDisabilityDesc.Add(T.disability_desc)
+
+	if(length(minorDisabilities))
+		M["mi_dis"] = jointext(minorDisabilities, ", ")
+		M["mi_dis_d"] = jointext(minorDisabilityDesc, ". ")
+	if(length(majorDisabilities))
+		M["ma_dis"] = jointext(majorDisabilities, ", ")
+		M["ma_dis_d"] = jointext(majorDisabilityDesc, ". ")
 
 	if(!length(sec_note))
 		S["notes"] = "No notes."

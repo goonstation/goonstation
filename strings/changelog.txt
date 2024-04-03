@@ -1,4 +1,37 @@
 
+(t)mon apr 01 24
+(u)glowbold
+(p)18239
+(e)🆕💊💡|C-Feature, A-Medical, A-Station-Systems
+(+)Cloner Defects are now stored in patients' medical records. Make sure to scan with a health or genetic analyzer after cloning to keep the record updated.
+(t)sun mar 31 24
+(u)444explorer
+(p)18368
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Syndicate Shotglasses now properly force people to drink half their reagents when they get hit by them
+(t)fri mar 29 24
+(u)glowbold
+(p)18226
+(e)💅💊💡|C-QoL, A-Medical, A-Station-Systems
+(*)Medical records now list relevant traits as major/minor disabilities instead of a full list.
+(u)IPingu
+(p)18200
+(e)⚖|C-Balance
+(+)Lowers the bathroom robot's buying prices.
+(t)thu mar 28 24
+(u)glowbold
+(p)18336
+(e)⛔💡|C-Removal, A-Station-Systems
+(+)NanoTrasen no longer has a direct line of contact with the CDC.
+(u)TDHooligan
+(p)18310
+(e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
+(*)Gang firearms have been tweaked. Please feedback in the discord or forum.
+(+)Lo-Point now has a sensible firerate & has 2 fewer rounds.
+(+)Burst laser does 3 more damage/laser.
+(+)Webley Revolver now does stamina damage & has a weaker AP effect.
+(+)Striker-7 does stamina damage, damage now falls off later, but a lot faster.
+(+)The SMGs remain unchanged (They already have a lot of raw damage)
 (t)wed mar 27 24
 (u)Avanth
 (p)18326

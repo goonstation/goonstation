@@ -914,9 +914,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_recoil_cap = 15
 	get_desc(dist, mob/user)
 		if (user.get_gang() != null)
-			. += "For when you need MOR' DAKKA. Uses 9mm NATO rounds."
+			. += "For when you need MOR' DAKKA. Uses 9mm Surplus rounds."
 		else
-			. += "Its firemodes are labelled 'DAKKA' and 'MOR'... Uses 9mm NATO rounds."
+			. += "Its firemodes are labelled 'DAKKA' and 'MOR'... Uses 9mm Surplus rounds."
 
 	New()
 		ammo = new default_magazine
@@ -1275,13 +1275,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	name = "Lo-Point"
 	icon_state = "hipoint"
 	item_state = "hipoint"
-	shoot_delay = 1
+	shoot_delay = 4
 	spread_angle = 3
 	throwforce = 14 // literally throw it away
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
 	fire_animation = TRUE
-	max_ammo_capacity = 12
+	max_ammo_capacity = 10
 	auto_eject = TRUE
 	has_empty_state = TRUE
 	gildable = FALSE
