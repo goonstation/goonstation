@@ -1375,7 +1375,7 @@
 
 /datum/commodity/medical/cyanide
 	comname = "Cyanide"
-	comtype = /obj/item/reagent_containers/glass/bottle/cyanide
+	comtype = /obj/item/reagent_containers/pill/toxlite
 	desc = "A rapidly acting and highly dangerous chemical."
 	price = PAY_EMBEZZLED
 
