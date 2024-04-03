@@ -81,7 +81,6 @@ var/list/admin_verbs = list(
 		// LEVEL_SA, secondary administrator
 		/client/proc/stealth,
 		/datum/admins/proc/pixelexplosion,
-		/datum/admins/proc/turn_off_pixelexplosion,
 		/datum/admins/proc/camtest,
 		/client/proc/alt_key,
 		/client/proc/create_portal,
