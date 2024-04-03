@@ -1568,6 +1568,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\parallax\parallax_render_sources\parallax_render_source_parent.dm"
 #include "code\modules\parallax\parallax_render_sources\parallax_render_sources.dm"
 #include "code\modules\polling\poll_ballot.dm"
+#include "code\modules\polling\poll_editor_panel.dm"
 #include "code\modules\polling\poll_manager.dm"
 #include "code\modules\power\apc.dm"
 #include "code\modules\power\cable.dm"
