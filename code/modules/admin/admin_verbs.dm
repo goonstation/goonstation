@@ -205,7 +205,8 @@ var/list/admin_verbs = list(
 
 		/client/proc/vpn_whitelist_add,
 		/client/proc/vpn_whitelist_remove,
-		/client/proc/set_conspiracy_objective
+		/client/proc/set_conspiracy_objective,
+		/client/proc/deelectrify_all_airlocks
 		),
 
 	4 = list(
@@ -2599,3 +2600,16 @@ var/list/fun_images = list()
 			L[P.name] = P.desc
 	var/choice = tgui_input_list(usr, "Select a verb to get the desc of", "command help", L)
 	tgui_alert(usr, "[L[choice]]", "[choice]")
+
+/client/proc/deelectrify_all_airlocks()
+	set name = "Unelectrify All Airlocks"
+	set desc = "Removes all electrification from all airlocks in the game."
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+	for(var/obj/machinery/door/airlock/airlock)
+		airlock.secondsElectrified = 0
+		LAGCHECK(LAG_LOW)
+	message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
+	logTheThing(LOG_ADMIN, usr, "de-electrified all airlocks.")
+	logTheThing(LOG_DIARY, usr, "de-electrified all airlocks.", "admin")

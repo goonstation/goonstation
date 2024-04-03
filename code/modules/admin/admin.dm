@@ -3302,29 +3302,15 @@ var/global/noir = 0
 						dat += "</table>"
 						usr.Browse(dat, "window=manifest;size=440x410")
 					if("jobcaps")
-						if (isnull(src.job_manager))
-							src.job_manager = new
-
-						src.job_manager.ui_interact(src.owner.mob)
+						usr.client.cmd_job_controls()
 					if("respawn_panel")
 						usr.client.cmd_custom_spawn_event()
 					if("randomevents")
 						random_events.event_config()
-					if("pathology")
-						pathogen_controller.cdc_main(src)
 					if("motives")
 						simsController.showControls(usr)
 					if("artifacts")
 						artifact_controls.config()
-					if("ghostnotifier")
-						ghost_notifier.config()
-					if("unelectrify_all")
-						for(var/obj/machinery/door/airlock/D)
-							D.secondsElectrified = 0
-							LAGCHECK(LAG_LOW)
-						message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
-						logTheThing(LOG_ADMIN, usr, "de-electrified all airlocks.")
-						logTheThing(LOG_DIARY, usr, "de-electrified all airlocks.", "admin")
 					if("DNA")
 						var/dat = "<B>Showing DNA from blood.</B><HR>"
 						dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
@@ -3722,10 +3708,7 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=respawn_panel'>Ghost Spawn Panel</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=randomevents'>Random Event Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=artifacts'>Artifact Controls</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=pathology'>CDC</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=motives'>Motive Control</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=ghostnotifier'>Ghost Notification Controls</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=unelectrify_all'>De-electrify all Airlocks</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
