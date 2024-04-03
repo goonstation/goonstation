@@ -1415,7 +1415,7 @@ TYPEINFO(/obj/item/swords/katana)
 	name = "reverse blade katana"
 	desc = "A sword whose blade is on the wrong side. Crafted by a master who grew to hate the death his weapons caused; which was weird since Oppenheimer has him beat by several orders of magnitude. Considered worthless by many, only a true virtuoso can unleash it's potential."
 	hit_type = DAMAGE_BLUNT
-	force = 18
+	force = 20
 	throw_range = 6
 	contraband = 5 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	delimb_prob = 1
