@@ -7,24 +7,28 @@
 
 import { BooleanLike } from 'common/react';
 
-export interface ZoldorfPlayerShopData {
-  soul_products: ZoldorfSoulProductData[];
-  credit_products: ZoldorfCreditProductData[];
-  credits: number;
-  user_soul: number;
-}
-
-export interface ZoldorfProductData {
+export interface ZoldorfCommonProductData {
   name: string;
   stock: number;
   infinite: BooleanLike;
   img: string;
 }
 
-export interface ZoldorfSoulProductData extends ZoldorfProductData {
+export interface ZoldorfSoulProductData extends ZoldorfCommonProductData {
   soul_percentage: number;
 }
 
-export interface ZoldorfCreditProductData extends ZoldorfProductData {
+export interface ZoldorfCreditProductData extends ZoldorfCommonProductData {
   price: number;
+}
+
+export type ZoldorfProductData = ZoldorfSoulProductData | ZoldorfCreditProductData;
+
+export const isSoulProductData = (value: ZoldorfProductData): value is ZoldorfSoulProductData =>
+  'soul_percentage' in value;
+
+export interface ZoldorfPlayerShopData {
+  products: ZoldorfProductData[];
+  credits: number;
+  user_soul: number;
 }

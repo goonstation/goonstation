@@ -40,9 +40,11 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 	New()
 		. = ..()
 		START_TRACKING
-		for(var/product in childrentypesof(/datum/zoldorfitem/soul))
+		src.soul_items = new
+		for (var/product in concrete_typesof(/datum/zoldorfitem/soul))
 			src.soul_items += new product
-		for(var/product in childrentypesof(/datum/zoldorfitem/credit))
+		src.credit_items = new
+		for (var/product in concrete_typesof(/datum/zoldorfitem/credit))
 			src.credit_items += new product
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -113,27 +115,24 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 		.["credits"] = src.credits
 		.["user_soul"] = user.mind?.soul ? user.mind.soul : 0
 
-		var/list/soul_products = list()
+		var/list/products = list()
 		for(var/datum/zoldorfitem/soul/product as anything in src.soul_items)
-			soul_products += list(list(
+			products += list(list(
 				"name" = product.name,
 				"stock" = product.stock,
 				"infinite" = product.infinite,
 				"img" = product.img,
 				"soul_percentage" = product.soul_percentage,
 			))
-		.["soul_products"] = soul_products
-
-		var/list/credit_products = list()
 		for(var/datum/zoldorfitem/credit/product as anything in src.credit_items)
-			credit_products += list(list(
+			products += list(list(
 				"name" = product.name,
 				"stock" = product.stock,
 				"infinite" = product.infinite,
 				"img" = product.img,
 				"price" = product.price,
 			))
-		.["credit_products"] = credit_products
+		.["products"] = products
 
 	/// Check to see if the dispensing user has enough soul to purchase an item
 	proc/soul_cost_check(mob/user, percentage)

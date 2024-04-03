@@ -9,11 +9,12 @@ import { InfernoNode } from 'inferno';
 import { useBackend } from '../../backend';
 import { Box, Button, Flex, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
-import type { ZoldorfPlayerShopData, ZoldorfProductData } from './type';
+import { isSoulProductData } from './type';
+import type { ZoldorfCommonProductData, ZoldorfPlayerShopData } from './type';
 
 export const ZoldorfPlayerShop = (_, context) => {
   const { act, data } = useBackend<ZoldorfPlayerShopData>(context);
-  const { soul_products, credit_products, credits } = data;
+  const { products, credits } = data;
   return (
     <Window width="500" height="600">
       <Window.Content>
@@ -21,32 +22,29 @@ export const ZoldorfPlayerShop = (_, context) => {
           <Stack.Item grow>
             <Section fill scrollable>
               <Stack vertical>
-                {soul_products.map((product) => {
+                {products.map((product) => {
                   return (
-                    <ZoldorfProductList {...product} key={product.name}>
-                      <Button
-                        color="red"
-                        content={`${product.soul_percentage}%`}
-                        disabled={product.soul_percentage > data.user_soul}
-                        onClick={() => act('soul_purchase', { 'item': product.name })}
-                        style={{
-                          'width': '50px',
-                        }}
-                      />
-                    </ZoldorfProductList>
-                  );
-                })}
-                {credit_products.map((product) => {
-                  return (
-                    <ZoldorfProductList {...product} key={product.name}>
-                      <Button
-                        color="green"
-                        content={`${product.price}⪽`}
-                        disabled={product.price > credits}
-                        onClick={() => act('credit_purchase', { 'item': product.name })}
-                        width="50px"
-                      />
-                    </ZoldorfProductList>
+                    <ZoldorfProductListItem {...product} key={product.name}>
+                      {isSoulProductData(product) ? (
+                        <Button
+                          color="red"
+                          content={`${product.soul_percentage}%`}
+                          disabled={product.soul_percentage > data.user_soul}
+                          onClick={() => act('soul_purchase', { 'item': product.name })}
+                          style={{
+                            'width': '50px',
+                          }}
+                        />
+                      ) : (
+                        <Button
+                          color="green"
+                          content={`${product.price}⪽`}
+                          disabled={product.price > credits}
+                          onClick={() => act('credit_purchase', { 'item': product.name })}
+                          width="50px"
+                        />
+                      )}
+                    </ZoldorfProductListItem>
                   );
                 })}
               </Stack>
@@ -64,11 +62,11 @@ export const ZoldorfPlayerShop = (_, context) => {
   );
 };
 
-interface ZoldorfProductListProps extends ZoldorfProductData {
+interface ZoldorfProductListItemProps extends ZoldorfCommonProductData {
   children: InfernoNode;
 }
 
-const ZoldorfProductList = (props: ZoldorfProductListProps) => {
+const ZoldorfProductListItem = (props: ZoldorfProductListItemProps) => {
   const { name, img, stock, infinite, children } = props;
   return (
     <Flex
