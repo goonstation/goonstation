@@ -681,6 +681,9 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			goku
 				name = "Goku"
 				id = "goku"
+			saiyan
+				name = "Saiyan"
+				id = "saiyan"
 			homer
 				name = "Homer"
 				id = "homer"

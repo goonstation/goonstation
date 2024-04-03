@@ -2031,3 +2031,29 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "chaps"
 	item_state = "chaps"
+
+// Goku
+
+/obj/item/clothing/under/gimmick/goku
+	name = "anime hero costume"
+	desc = "Hey! It's me!"
+	icon_state = "goku"
+	item_state = "goku"
+
+/obj/item/clothing/shoes/goku
+	name = "anime hero boots"
+	desc = "A pair of blue boots with a yellow stripe and a red string wrapped around them. Not nearly as heavy as you expected!"
+	icon_state = "goku"
+	item_state = "goku"
+
+/obj/item/clothing/head/wig/spawnable/goku
+	first_id = "goku"
+	first_color = "#1C1C1C"
+	name = "anime hero wig"
+	desc = "With hair like this, you might be able to save the world...! If it was actually part of your head."
+
+/obj/item/clothing/head/wig/spawnable/goku_s
+	first_id = "saiyan"
+	first_color = "#ffd900"
+	name = "super anime hero wig"
+	desc = "The amount of power emanating from this wig! It feels super...! Itchy."
