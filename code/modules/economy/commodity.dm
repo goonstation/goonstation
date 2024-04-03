@@ -1424,7 +1424,7 @@
 	price = PAY_TRADESMAN
 
 /datum/commodity/costume/goku
-	comname = "Anime Hero Costume"
+	comname = "Anime Martial Artist Costume"
 	comtype = /obj/item/storage/box/costume/crap/goku
 	price = PAY_TRADESMAN
 

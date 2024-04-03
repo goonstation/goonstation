@@ -2035,13 +2035,13 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 // Goku
 
 /obj/item/clothing/under/gimmick/goku
-	name = "anime hero costume"
+	name = "anime martial artist costume"
 	desc = "Hey! It's me!"
 	icon_state = "goku"
 	item_state = "goku"
 
 /obj/item/clothing/shoes/goku
-	name = "anime hero boots"
+	name = "anime martial artist boots"
 	desc = "A pair of blue boots with a yellow stripe and a red string wrapped around them. Not nearly as heavy as you expected!"
 	icon_state = "goku"
 	item_state = "goku"
@@ -2049,11 +2049,11 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 /obj/item/clothing/head/wig/spawnable/goku
 	first_id = "goku"
 	first_color = "#1C1C1C"
-	name = "anime hero wig"
+	name = "anime martial artist wig"
 	desc = "With hair like this, you might be able to save the world...! If it was actually part of your head."
 
 /obj/item/clothing/head/wig/spawnable/goku_s
 	first_id = "saiyan"
 	first_color = "#ffd900"
-	name = "super anime hero wig"
+	name = "super anime martial artist wig"
 	desc = "The amount of power emanating from this wig! It feels super...! Itchy."

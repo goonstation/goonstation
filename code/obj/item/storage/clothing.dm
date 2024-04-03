@@ -392,7 +392,7 @@
 		acane.desc = "Totally a cane."
 
 /obj/item/storage/box/costume/crap/goku
-	name = "anime hero costume"
+	name = "anime martial artist costume"
 	spawn_contents = list(
 		/obj/item/clothing/shoes/goku,
 		/obj/item/clothing/under/gimmick/goku
