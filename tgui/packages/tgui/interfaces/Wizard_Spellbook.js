@@ -122,7 +122,7 @@ const Spell = (props, context) => {
         )}
         <Section
           title={
-            <Flex justify={"space-between"} align={"end"}>
+            <Flex justify="space-between" align="end">
               {!!spell_contents[4] && (
                 <Flex.Item>
                   <Image
