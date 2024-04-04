@@ -164,6 +164,8 @@
 				logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 				return 1
 
+		for(var/datum/antagonist/antagonist as anything in mob.mind?.antagonists)
+			antagonist.handle_cryo()
 		stored_mobs += L
 		stored_mobs_volunteered += L
 		stored_crew_names += L.real_name
@@ -199,8 +201,6 @@
 				if ("Yes")
 					if (tgui_alert(user, "Are you absolutely sure you want to enter cryogenic storage?", "Confirmation", list("Yes", "No")) == "Yes")
 						if (mob_can_enter_storage(user)) // check again in case they left the prompt up and moved away/died/whatever
-							for(var/datum/antagonist/antagonist as anything in user.mind?.antagonists)
-								antagonist.handle_cryo()
 							add_person_to_storage(user)
 							user.show_text("<b style=\"font-size: 200%\">Remember, if you want to abandon the round to observe and free up space for someone else, simply use the \"ghost\" command in the Commands tab. (top-right corner)</b>", "blue")
 						return 1
