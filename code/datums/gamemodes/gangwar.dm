@@ -1156,6 +1156,7 @@ proc/broadcast_to_all_gangs(var/message)
 	icon_state = "gang"
 	density = FALSE
 	anchored = ANCHORED
+	object_flags = NO_GHOSTCRITTER
 	/// gang that owns this locker
 	var/datum/gang/gang = null
 	/// the overlay this locker should show, after doing stuff like blinking red for errors
@@ -1219,9 +1220,6 @@ proc/broadcast_to_all_gangs(var/message)
 	attack_hand(var/mob/user)
 		if(!isalive(user))
 			boutput(user, SPAN_ALERT("Not when you're incapacitated."))
-			return
-		if(isghostcritter(user))
-			boutput(user, SPAN_ALERT("You can't understand the concept of gangs."))
 			return
 		if(!isliving(user))
 			boutput(user, SPAN_ALERT("You're too, er, dead."))
