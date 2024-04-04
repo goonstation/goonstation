@@ -74,7 +74,7 @@ const validate = (settings: PollSettings, options: string[]) => {
         return timestampValidation;
       }
     } else if (settings.expiry.expiryValue === '0') {
-      return 'Non-zero expiry time required.';
+      return 'Non-zero expiry time is required.';
     }
   }
   if (!settings.servers) {
