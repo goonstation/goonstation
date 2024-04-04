@@ -278,7 +278,7 @@ export class RestrictedInput extends Component {
 
   render() {
     const { props } = this;
-    const { onChange, onEnter, onInput, onBLur, value, ...boxProps } = props;
+    const { onChange, onEnter, onInput, onBlur, value, ...boxProps } = props;
     const { className, fluid, monospace, ...rest } = boxProps;
     return (
       <Box
