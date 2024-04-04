@@ -3165,7 +3165,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_restock_cost = 3
 	ammobag_spec_required = TRUE
 	recoil_strength = 20
-	recoil_inaccuracy_max = 0
+	recoil_inaccuracy_max = 10
 
 	var/barrels = 0
 
