@@ -16,7 +16,7 @@ jobs:
       - name: Get requirements.txt
         uses: actions/checkout@v2
         with:
-          path: .github/workflows/requirements.txt
+          path: .github/workflows
 
       - name: Set up Python
         uses: actions/setup-python@v5
