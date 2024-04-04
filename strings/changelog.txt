@@ -1,5 +1,9 @@
 
 (t)thu apr 04 24
+(u)CalliopeSoups
+(p)18140
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Hats and wigs now fit snugly onto mechcomp cabinets and frames. This changes the backend for placing hats on things like ghostdrones, report any bugs if found.
 (u)TDHooligan
 (p)18370
 (e)⚖🧛|C-Balance, A-Gamemodes
