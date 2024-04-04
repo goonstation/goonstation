@@ -1608,6 +1608,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 /datum/item_special/katana_dash/reverse
 	staminaCost = 10
+	stamina_damage = 40
 	reversed = 1
 
 	on_hit(var/mob/hit)
