@@ -940,6 +940,7 @@ proc/broadcast_to_all_gangs(var/message)
 	item_state = "spraycan"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
+	object_flags = NO_GHOSTCRITTER
 	var/in_use = FALSE
 	var/empty = FALSE
 
@@ -1155,6 +1156,7 @@ proc/broadcast_to_all_gangs(var/message)
 	icon_state = "gang"
 	density = FALSE
 	anchored = ANCHORED
+	object_flags = NO_GHOSTCRITTER
 	/// gang that owns this locker
 	var/datum/gang/gang = null
 	/// the overlay this locker should show, after doing stuff like blinking red for errors
@@ -1217,9 +1219,12 @@ proc/broadcast_to_all_gangs(var/message)
 		. = ..()
 		. += "The screen displays \"Total Score: [gang.gang_score()]\""
 
-	attack_hand(var/mob/living/carbon/human/user)
+	attack_hand(var/mob/user)
 		if(!isalive(user))
 			boutput(user, SPAN_ALERT("Not when you're incapacitated."))
+			return
+		if(!isliving(user))
+			boutput(user, SPAN_ALERT("You're too, er, dead."))
 			return
 
 		add_fingerprint(user)
@@ -1989,6 +1994,7 @@ proc/broadcast_to_all_gangs(var/message)
 	throwforce = 1
 	force = 1
 	w_class = W_CLASS_TINY
+	object_flags = NO_GHOSTCRITTER
 	HELP_MESSAGE_OVERRIDE({"Hitting a dead, non-rotten gang member's corpse with this item will start a short action bar.\n
 	On completion, if the syringe is not promptly removed from the corpse, it will come back to life, disoriented, at low health."})
 
@@ -2079,6 +2085,7 @@ proc/broadcast_to_all_gangs(var/message)
 	desc = "A highly illegal, disposable device that can fake an AI's 'open' signal to a door a few times."
 	icon = 'icons/obj/items/gang.dmi'
 	icon_state = "quickhack"
+	object_flags = NO_GHOSTCRITTER
 	throwforce = 1
 	force = 1
 	inventory_counter_enabled = 1
