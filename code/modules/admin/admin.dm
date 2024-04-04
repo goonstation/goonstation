@@ -2564,6 +2564,20 @@ var/global/noir = 0
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
+					if ("airlock_safety")
+						if (src.level >= LEVEL_PA)
+							if (tgui_alert(usr, "Disable all station airlocks safeties?", "Cronch?", list("Yes", "Oops misclick")) == "Yes")
+								for (var/obj/machinery/door/airlock/D in by_type[/obj/machinery/door/airlock])
+									if (D.z != 1)
+										break
+									D.safety = 0
+									LAGCHECK(LAG_LOW)
+								message_admins("[key_name(usr)] disabled the safeties on all station airlocks.")
+								logTheThing(LOG_ADMIN, usr, "disabled the safeties on all station airlocks.")
+								logTheThing(LOG_DIARY, usr, "disabled the safeties on all station airlocks.", "admin")
+						else
+							tgui_alert(usr,"You must be at least a Primary Administrator")
+							return
 
 					if ("bioeffect_help")
 						var/be_string = "To add or remove multiple bioeffects enter multiple IDs separated by semicolons.<br><br><b>All Bio Effect IDs</b><hr>"
@@ -3288,29 +3302,15 @@ var/global/noir = 0
 						dat += "</table>"
 						usr.Browse(dat, "window=manifest;size=440x410")
 					if("jobcaps")
-						if (isnull(src.job_manager))
-							src.job_manager = new
-
-						src.job_manager.ui_interact(src.owner.mob)
+						usr.client.cmd_job_controls()
 					if("respawn_panel")
 						usr.client.cmd_custom_spawn_event()
 					if("randomevents")
 						random_events.event_config()
-					if("pathology")
-						pathogen_controller.cdc_main(src)
 					if("motives")
 						simsController.showControls(usr)
 					if("artifacts")
 						artifact_controls.config()
-					if("ghostnotifier")
-						ghost_notifier.config()
-					if("unelectrify_all")
-						for(var/obj/machinery/door/airlock/D)
-							D.secondsElectrified = 0
-							LAGCHECK(LAG_LOW)
-						message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
-						logTheThing(LOG_ADMIN, usr, "de-electrified all airlocks.")
-						logTheThing(LOG_DIARY, usr, "de-electrified all airlocks.", "admin")
 					if("DNA")
 						var/dat = "<B>Showing DNA from blood.</B><HR>"
 						dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
@@ -3708,10 +3708,7 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=respawn_panel'>Ghost Spawn Panel</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=randomevents'>Random Event Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=artifacts'>Artifact Controls</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=pathology'>CDC</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=motives'>Motive Control</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=ghostnotifier'>Ghost Notification Controls</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=unelectrify_all'>De-electrify all Airlocks</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
@@ -3832,6 +3829,7 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsfun;type=randomguns'>Give everyone a random firearm</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=timewarp'>Set up a time warp</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=brick_radios'>Completely disable all radios ever</A><BR>
+					<A href='?src=\ref[src];action=secretsfun;type=airlock_safety'>Disable all airlock's safeties.</A><BR>
 				"}
 	if (src.level >= LEVEL_ADMIN)
 		dat += {"<A href='?src=\ref[src];action=secretsfun;type=sawarms'>Give everyone saws for arms</A><BR>
@@ -4225,7 +4223,7 @@ var/global/noir = 0
 	usr.Browse(built, "window=chatban;size=500x100")
 
 /client/proc/cmd_admin_managebioeffect(var/mob/M in mobs)
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Manage Bioeffects"
 	set desc = "Select a mob to manage its bioeffects."
 	set popup_menu = 0
@@ -4238,7 +4236,7 @@ var/global/noir = 0
 	holder.bioeffectmanager.ui_interact(src.mob)
 
 /client/proc/cmd_admin_manageabils(var/mob/M in mobs)
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Manage Abilities"
 	set desc = "Select a mob to manage its abilities."
 	set popup_menu = 0
@@ -4251,7 +4249,7 @@ var/global/noir = 0
 	holder.abilitymanager.ui_interact(src.mob)
 
 /client/proc/cmd_admin_managetraits(var/mob/M in mobs)
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Manage Traits"
 	set desc = "Select a mob to manage its traits."
 	set popup_menu = 0

@@ -1,4 +1,10 @@
 
+(t)wed apr 03 24
+(t)mon apr 01 24
+(u)glowbold
+(p)18239
+(e)🆕💊💡|C-Feature, A-Medical, A-Station-Systems
+(+)Cloner Defects are now stored in patients' medical records. Make sure to scan with a health or genetic analyzer after cloning to keep the record updated.
 (t)sun mar 31 24
 (u)444explorer
 (p)18368
