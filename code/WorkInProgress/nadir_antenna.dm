@@ -999,13 +999,13 @@ TYPEINFO(/obj/machinery/transception_pad)
 /obj/machinery/computer/transception/ui_data(mob/user)
 	. = ..()
 	var/list/pads_data = list()
-	for (var/device_index as anything in src.known_pads)
+	for (var/device_netid as anything in src.known_pads)
 		pads_data += list(list(
-			"device_index" = device_index,
-			"identifier" = known_pads[device_index]["Identifier"],
-			"target_id" = known_pads[device_index]["INT_TARGETID"],
-			"location" = known_pads[device_index]["Location"],
-			"array_link" = known_pads[device_index]["Array Link"],
+			"device_netid" = device_netid,
+			"identifier" = known_pads[device_netid]["Identifier"],
+			"target_id" = known_pads[device_netid]["INT_TARGETID"],
+			"location" = known_pads[device_netid]["Location"],
+			"array_link" = known_pads[device_netid]["Array Link"],
 		))
 	.["pads"] = pads_data
 	.["crate_count"] = length(shippingmarket.pending_crates)
@@ -1019,7 +1019,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 			src.try_pad_ping()
 			return // list is cleared and rebuilt from packets, don't update
 		if ("receive")
-			var/target_pad_id = params["device_index"]
+			var/target_pad_id = params["device_netid"]
 			if(!target_pad_id)
 				return
 			var/wanted_thing = null
@@ -1034,7 +1034,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 				src.build_command(src.known_pads[target_pad_id]["INT_TARGETID"], target_crate)
 			. = TRUE
 		if ("send")
-			var/target_pad_id = params["device_index"]
+			var/target_pad_id = params["device_netid"]
 			if (target_pad_id && src.known_pads[target_pad_id])
 				src.build_command(src.known_pads[target_pad_id]["INT_TARGETID"])
 				. = TRUE

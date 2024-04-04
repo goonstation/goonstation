@@ -11,7 +11,7 @@ export interface TransceptionInterlinkData {
 }
 
 export interface PadData {
-  device_index: string, // key in the interlink's manifest list
+  device_netid: string, // key in the interlink's manifest list
   identifier: string, // unique text identifier of the pad
   target_id: string, // the pad's network ID (i.e. target pad)
   location: string, // location (area) of the pad
