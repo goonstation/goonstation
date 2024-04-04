@@ -81,7 +81,7 @@ const validate = (settings: PollSettings, options: string[]) => {
     return 'Server setting is required.';
   }
   if (options.length < 2) {
-    return 'At least 2 options required.';
+    return 'At least 2 options are required.';
   }
   return undefined;
 };
