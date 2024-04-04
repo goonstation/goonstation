@@ -101,26 +101,26 @@ export const TeleConsole = (_props, context) => {
               <Section>
                 <Section title="Destinations">
                   <LabeledList>
-                    {destinations.length ? destinations.map((d) => (
-                      <div key={d["name"]}>
+                    {destinations.length ? destinations.map(({ name }) => (
+                      <div key={name}>
                         <LabeledList.Item
-                          label={d["name"]}>
+                          label={name}>
                           <Box textAlign="right">
                             <Button
                               icon="sign-out-alt"
-                              onClick={() => act("lrt_send", { name: d["name"] })}
+                              onClick={() => act("lrt_send", { name: name })}
                               disabled={!isConnectedToHost}
                             >
                               Send
                             </Button>
                             <Button
                               icon="sign-in-alt"
-                              onClick={() => act("lrt_receive", { name: d["name"] })}
+                              onClick={() => act("lrt_receive", { name: name })}
                               disabled={!isConnectedToHost}
                             >
                               Receive
                             </Button>
-                            <Button onClick={() => act('lrt_portal', { name: d["name"] })} disabled={!isConnectedToHost}>
+                            <Button onClick={() => act('lrt_portal', { name: name })} disabled={!isConnectedToHost}>
                               <Icon name="ring" rotation={90} />
                               Toggle Portal
                             </Button>
@@ -148,16 +148,15 @@ export const TeleConsole = (_props, context) => {
                 <Section
                   title="Disk Controls"
                 >
-
                   <Button
                     icon="upload"
-                    color={"blue"}
+                    color="blue"
                     onClick={() => act("scan_disk")}>
                     Read from Disk
                   </Button>
                   <Button
                     icon="eject"
-                    color={"bad"}
+                    color="bad"
                     onClick={() => act("eject_disk")}>
                     Eject Disk
                   </Button>
