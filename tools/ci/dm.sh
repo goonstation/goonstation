@@ -83,8 +83,8 @@ else
 	fi
 fi
 
-mv $dmepath.m.dme.dmb $dmepath.dmb
-mv $dmepath.m.dme.rsc $dmepath.rsc
+mv $dmepath.m.dmb $dmepath.dmb
+mv $dmepath.m.rsc $dmepath.rsc
 
 rm $dmepath.m.dme
 
