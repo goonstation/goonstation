@@ -1,4 +1,31 @@
 
+(t)thu apr 04 24
+(u)NibChocolateeny
+(p)18221
+(e)🆕🌱|C-Feature, A-Hydroponics
+(+)Killer tomatoes contain "Blood" as one of their associated reagents.
+(u)CalliopeSoups
+(p)18140
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Hats and wigs now fit snugly onto mechcomp cabinets and frames. This changes the backend for placing hats on things like ghostdrones, report any bugs if found.
+(u)TDHooligan
+(p)18370
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)One particularly aspirational gang has flooded the whole cannabis market. Gangs can now only get the 10 point bonus for the first 200 leaves.
+(u)TDHooligan
+(p)18369
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(+)Gang weapons no longer stun as hard. They kill harder. So kill each other harder, gangs.
+(t)mon apr 01 24
+(u)glowbold
+(p)18239
+(e)🆕💊💡|C-Feature, A-Medical, A-Station-Systems
+(+)Cloner Defects are now stored in patients' medical records. Make sure to scan with a health or genetic analyzer after cloning to keep the record updated.
+(t)sun mar 31 24
+(u)444explorer
+(p)18368
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Syndicate Shotglasses now properly force people to drink half their reagents when they get hit by them
 (t)fri mar 29 24
 (u)glowbold
 (p)18226

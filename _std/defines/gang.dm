@@ -36,6 +36,8 @@
 
 /// /// Each drug is worth GANG_DRUG_BONUS_MULT * their value until this many units are provided
 #define GANG_DRUG_BONUS_CAP 200
+/// How many weed leaves provide a points bonus
+#define GANG_WEED_LIMIT 200 //gang weed
 /// Each drug then has this much market behind it after GANG_DRUG_BONUS_CAP is used up.
 #define GANG_DRUG_LIMIT 1000
 /// The multiplier for drugs that a gang has handed in less than GANG_DRUG_BONUS_CAP units of

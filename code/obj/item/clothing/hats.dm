@@ -2036,6 +2036,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	name = "mushroom cap"
 	desc = "Makes your lungs feel a little fuzzy."
 	var/additional_desc = ""
+	hat_offset_y = 4
 	icon_state = "mushroom-red"
 	item_state = "mushroom-red"
 

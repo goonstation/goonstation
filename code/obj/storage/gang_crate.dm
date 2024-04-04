@@ -826,7 +826,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/medium)
 	dagger
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/dagger/syndicate/specialist,rot=45,scale_x=0.55,scale_y=0.55)
+			spawn_item(C,I,/obj/item/dagger/throwing_knife/gang,rot=45,scale_x=0.55,scale_y=0.55)
 
 	// GANG_CRATE_GEAR
 	pouch
