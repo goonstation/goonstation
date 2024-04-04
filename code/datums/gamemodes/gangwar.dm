@@ -1200,7 +1200,7 @@ proc/broadcast_to_all_gangs(var/message)
 			new/datum/gang_item/consumable/quickhack,
 			new/datum/gang_item/misc/ratstick,
 			new/datum/gang_item/street/switchblade,
-			new/datum/gang_item/ninja/nunchucks,
+			// new/datum/gang_item/ninja/nunchucks, removed for stunning too many secoffs
 			new/datum/gang_item/ninja/throwing_knife,
 			new/datum/gang_item/ninja/shuriken,
 			new/datum/gang_item/ninja/discount_katana,

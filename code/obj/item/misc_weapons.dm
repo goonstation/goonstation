@@ -486,13 +486,13 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	active_stamina_dmg = 65
 	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
-	var/royale_mode = TRUE
+	var/strong_disorient = TRUE
 	gang
 		active_force = 22 // a bit more lethal. as a treat.
 		inactive_force = 8
 		active_stamina_dmg = 25
 		inactive_stamina_dmg = 10
-		royale_mode = FALSE
+		strong_disorient = FALSE
 
 	can_reflect()
 		return FALSE
@@ -502,19 +502,12 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		. += "It is set to [src.active ? "on" : "off"]."
 
 /obj/item/sword/discount/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-
-	if (royale_mode)
-		if (active)
-			hit_type = DAMAGE_BURN
-		else
-			hit_type = DAMAGE_BLUNT
-
 	//returns TRUE if parried. So stop here
 	if (..())
 		return
 
 	if (active)
-		if (royale_mode)
+		if (strong_disorient)
 			target.do_disorient(0, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
 		else
 			target.do_disorient(0, weakened = 0, stunned = 0, disorient = 1, remove_stamina_below_zero = 0)
@@ -611,8 +604,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
 	gang
 		name = "familiar fighting knife"
-		force = 21
-		throwforce = 20
+		force = 17
+		throwforce = 25
 		desc = "A light but robust combat knife that allows you to move faster in fights. It looks really familiar..."
 		icon_state = "combat_knife_gang"
 		inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
@@ -732,11 +725,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	stamina_cost = 20
 	stamina_crit_chance = 60
 	// pickup_sfx = 'sound/items/blade_pull.ogg'
-	gang
-		force = 12
-		throwforce = 6
-		stamina_damage = 40
-		stamina_crit_chance = 20
 
 	New()
 		..()
