@@ -88,7 +88,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 /obj/machinery/recharge_station/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing))
 		if (!istype(W, /obj/item/clothing/mask) && !istype(W, /obj/item/clothing/head) && !istype(W, /obj/item/clothing/under) && !istype(W, /obj/item/clothing/suit))
-			boutput(user, SPAN_ALERT("This type of is not compatible."))
+			boutput(user, SPAN_ALERT("This type of clothing is not compatible."))
 			return
 		if (user.contents.Find(W))
 			user.drop_item()
