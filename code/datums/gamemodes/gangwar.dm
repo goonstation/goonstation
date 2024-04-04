@@ -1200,7 +1200,7 @@ proc/broadcast_to_all_gangs(var/message)
 			new/datum/gang_item/consumable/quickhack,
 			new/datum/gang_item/misc/ratstick,
 			new/datum/gang_item/street/switchblade,
-			new/datum/gang_item/ninja/nunchucks,
+			// new/datum/gang_item/ninja/nunchucks, removed for stunning too many secoffs
 			new/datum/gang_item/ninja/throwing_knife,
 			new/datum/gang_item/ninja/shuriken,
 			new/datum/gang_item/ninja/discount_katana,
@@ -2274,10 +2274,10 @@ proc/broadcast_to_all_gangs(var/message)
 /////////////////////////////////////////////////////////////////////
 /datum/gang_item/space/discount_csaber
 	name = "Faux C-Saber"
-	desc = "It's not a c-saber, it's something from the discount rack. Some kinda kooky laser stick. It doesn't look very dangerous."
+	desc = "It's not a c-saber, it's something from the discount rack. Some kinda kooky laser stick. It looks pretty dangerous."
 	class2 = "weapon"
 	price = 9000
-	item_path = /obj/item/sword/discount
+	item_path = /obj/item/sword/discount/gang
 /datum/gang_item/space/csaber
 	name = "C-Saber"
 	desc = "It's not a lightsaber."
