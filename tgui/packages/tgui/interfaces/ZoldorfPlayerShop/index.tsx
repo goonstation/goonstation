@@ -7,7 +7,7 @@
 
 import { InfernoNode } from 'inferno';
 import { useBackend } from '../../backend';
-import { Box, Button, Flex, Section, Stack } from '../../components';
+import { Box, Button, Flex, Image, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { isSoulProductData } from './type';
 import type { ZoldorfCommonProductData, ZoldorfPlayerShopData } from './type';
@@ -31,9 +31,8 @@ export const ZoldorfPlayerShop = (_, context) => {
                           content={`${product.soul_percentage}%`}
                           disabled={product.soul_percentage > data.user_soul}
                           onClick={() => act('soul_purchase', { 'item': product.name })}
-                          style={{
-                            'width': '50px',
-                          }}
+                          align="center"
+                          width="50px"
                         />
                       ) : (
                         <Button
@@ -41,6 +40,7 @@ export const ZoldorfPlayerShop = (_, context) => {
                           content={`${product.price}⪽`}
                           disabled={product.price > credits}
                           onClick={() => act('credit_purchase', { 'item': product.name })}
+                          align="center"
                           width="50px"
                         />
                       )}
@@ -69,34 +69,27 @@ interface ZoldorfProductListItemProps extends ZoldorfCommonProductData {
 const ZoldorfProductListItem = (props: ZoldorfProductListItemProps) => {
   const { name, img, stock, infinite, children } = props;
   return (
-    <Flex
-      style={{
-        'align-items': 'center',
-        'border-bottom': '1px #555 solid',
-      }}>
-      <Flex.Item>
-        {img && (
+    <Section height="20px">
+      <Flex align="center">
+        <Flex.Item>
           <Box
-            style={{
-              'position': 'relative', // condense total line-height
-              'height': '24px', // 24px height - 32px sprite = -8px margin
-              'top': '-4px', // -8px margin / 2 = -4px top offset
-            }}>
-            <img src={`data:image/png;base64,${img}`} />
+            position="relative" // don't increase line-height, but keep image size
+            height="20px" // 20 px height - 32 px sprite = -12 px of offset
+            top="-6px" // -12px / 2 = -6px top offset to keep them centered
+          >
+            {img && <Image pixelated src={`data:image/png;base64,${img}`} />}
           </Box>
-        )}
-      </Flex.Item>
-      <Flex.Item grow>
-        <Box>
-          <Box inline italic>
-            {!infinite && `${stock} x`}&nbsp;
-          </Box>
-          <Box inline>{name}</Box>
-        </Box>
-      </Flex.Item>
-      <Flex.Item bold style={{ 'text-align': 'center' }}>
-        {children}
-      </Flex.Item>
-    </Flex>
+        </Flex.Item>
+        <Flex.Item grow>
+          <>
+            <Box inline italic>{!infinite && `${stock} x\xa0`}</Box>
+            <Box inline>{name}</Box>
+          </>
+        </Flex.Item>
+        <Flex.Item bold>
+          {children}
+        </Flex.Item>
+      </Flex>
+    </Section>
   );
 };
