@@ -2036,13 +2036,13 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 
 /obj/item/clothing/under/gimmick/goku
 	name = "anime martial artist costume"
-	desc = "Hey! It's me!"
+	desc = "Sturdy karate gi intended for only the toughest martial artists out there. If only you actually practiced!"
 	icon_state = "goku"
 	item_state = "goku"
 
 /obj/item/clothing/shoes/goku
 	name = "anime martial artist boots"
-	desc = "A pair of blue boots with a yellow stripe and a red string wrapped around them. Not nearly as heavy as you expected!"
+	desc = "A pair of blue boots with a yellow stripe and a red string. They'd help you be swift and agile, if not for the cheap flimsy soles!"
 	icon_state = "goku"
 	item_state = "goku"
 
