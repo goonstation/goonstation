@@ -1,6 +1,10 @@
 
 (t)thu apr 04 24
 (u)TDHooligan
+(p)18370
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)One particularly aspirational gang has flooded the whole cannabis market. Gangs can now only get the 10 point bonus for the first 200 leaves.
+(u)TDHooligan
 (p)18369
 (e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
 (+)Gang weapons no longer stun as hard. They kill harder. So kill each other harder, gangs.
