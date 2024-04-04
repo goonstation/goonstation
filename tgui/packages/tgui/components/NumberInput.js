@@ -1,7 +1,6 @@
 /**
  * @file
  * @copyright 2020 Aleksej Komarov
- * @author Changes Sovexe (https://github.com/Sovexe)
  * @license MIT
  */
 
@@ -10,7 +9,6 @@ import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { AnimatedNumber } from './AnimatedNumber';
 import { Box } from './Box';
-import { toInputValue } from './Input';
 
 const DEFAULT_UPDATE_RATE = 400;
 
@@ -138,24 +136,6 @@ export class NumberInput extends Component {
         catch {}
       }
     };
-  }
-
-  componentDidMount() {
-    const nextValue = this.props.value;
-    const input = this.inputRef.current;
-    if (input) {
-      input.value = toInputValue(nextValue);
-    }
-
-    if (this.props.autoFocus || this.props.autoSelect) {
-      setTimeout(() => {
-        input.focus();
-
-        if (this.props.autoSelect) {
-          input.select();
-        }
-      }, 1);
-    }
   }
 
   render() {
@@ -311,6 +291,4 @@ NumberInput.defaultProps = {
   step: 1,
   stepPixelSize: 1,
   suppressFlicker: 50,
-  autoFocus: false,
-  autoSelect: false,
 };
