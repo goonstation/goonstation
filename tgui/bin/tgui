@@ -120,13 +120,9 @@ task-validate-build() {
 
 ## Installs merge drivers and git hooks
 task-install-git-hooks() {
-  cd "${base_dir}"
-  local git_root
-  local git_base_dir
-  git_root="$(git rev-parse --show-toplevel)"
-  git_base_dir="${base_dir/${git_root}/.}"
+  cd "${root_dir}"
   git config --replace-all merge.tgui-merge-bundle.driver \
-    "${git_base_dir}/tgui/bin/tgui --merge=bundle %P %O %A %B %L"
+    "${root_dir}/tgui/bin/tgui --merge=bundle %P %O %A %B %L"
   echo "tgui: Merge drivers have been successfully installed!"
   exit 0
 }
