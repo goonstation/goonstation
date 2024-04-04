@@ -696,6 +696,7 @@
 	if (!message)
 		return
 
+	..()
 	// Zam note: this is horrible
 	if (forced_desussification)
 		// "Surely this goes somewhere else, right, Zam?"

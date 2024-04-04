@@ -15,7 +15,6 @@
 	var/stealth_hide_fakekey = 0
 	var/alt_key = 0
 	var/flourish = 0
-	var/pray_l = 0
 	var/fakekey = null
 	var/observing = 0
 	var/warned = 0

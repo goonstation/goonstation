@@ -67,7 +67,7 @@
 #define GANG_CRATE_INITIAL_DROP  30 MINUTES //!  when the first gang crate drops on RP
 #define GANG_CRATE_DROP_FREQUENCY 40 MINUTES //! how often gang crates are dropped on RP
 #else
-#define GANG_CRATE_INITIAL_DROP  25 MINUTES //!  when the first gang crate drops on classic
+#define GANG_CRATE_INITIAL_DROP  17 MINUTES //!  when the first gang crate drops on classic
 #define GANG_CRATE_DROP_FREQUENCY 25 MINUTES //! how often gang crates are dropped on classic
 #endif
 

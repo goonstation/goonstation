@@ -61,6 +61,7 @@
 		potentialAntags.Remove(conspirator)
 
 	agent_radiofreq = random_radio_frequency()
+	protected_frequencies += agent_radiofreq
 	for (var/datum/mind/antag in other_antags)
 		antag.special_role = antag_role
 
