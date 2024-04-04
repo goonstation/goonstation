@@ -1,10 +1,10 @@
 TYPEINFO(/datum/component/hattable) // Take a walk through my TWISTED mind.... I'm sorry
 	initialization_args = list(
-		ARG_INFO("death_remove", DATA_INPUT_TEXT, "Remove component and signals on death?", FALSE), // Use this for things that don't revive, or explode on death
-		ARG_INFO("free_hat", DATA_INPUT_TEXT, "Should the parent get a free hat?", FALSE), // For AIs
-		ARG_INFO("default_hat_y", "Y offset to start with", 0),
-		ARG_INFO("default_hat_x", "Y offset to start with", 0),
-		ARG_INFO("scale_amount", "Amount to change the size of the hat by", 0)
+		ARG_INFO("death_remove", DATA_INPUT_BOOL, "Remove component and signals on death?", FALSE), // Use this for things that don't revive, or explode on death
+		ARG_INFO("free_hat", DATA_INPUT_BOOL, "Should the parent get a free hat?", FALSE), // For AIs
+		ARG_INFO("default_hat_y", DATA_INPUT_NUM, "Y offset to start with", 0),
+		ARG_INFO("default_hat_x", DATA_INPUT_NUM, "X offset to start with", 0),
+		ARG_INFO("scale_amount", DATA_INPUT_NUM, "Amount to change the size of the hat by", 0)
 	)
 
 /datum/component/hattable  // Compatible stuff should be given hat_offset x and y vars in their own file
@@ -62,6 +62,7 @@ TYPEINFO(/datum/component/hattable) // Take a walk through my TWISTED mind.... I
 	if (src.death_remove)
 		RegisterSignal(src.parent, COMSIG_MOB_DEATH, PROC_REF(die), override = TRUE)
 	RegisterSignal(src.hat, COMSIG_ITEM_PICKUP, PROC_REF(take_hat_off), override = TRUE)
+	return TRUE
 
 /datum/component/hattable/proc/take_hat_off(mob/target, mob/user)
 	if (!src.hat)
