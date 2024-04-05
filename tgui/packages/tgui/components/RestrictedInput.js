@@ -39,7 +39,7 @@ const softSanitizeNumber = (value, minValue, maxValue, allowFloats) => {
     sanitizedString = maybeMoveMinusSign(sanitizedString);
     sanitizedString = keepOnlyFirstOccurrence('-', sanitizedString);
   } else {
-    sanitizedString = sanitizedString.replaceAll('-', '');
+    sanitizedString = sanitizedString.split('-').join('');
   }
   if (minimum <= 1 && maximum >= 0) {
     return clampGuessedNumber(sanitizedString, minimum, maximum, allowFloats);
@@ -88,7 +88,7 @@ const maybeMoveMinusSign = (string) => {
     retString = '-'.concat(string);
   } else if (minusIdx === 0) {
     if (string.indexOf('-', minusIdx + 1) > 0) {
-      retString = string.replaceAll('-', '');
+      retString = string.split('-').join('');
     }
   }
   return retString;
@@ -121,7 +121,7 @@ const keepOnlyFirstOccurrence = (needle, haystack) => {
   let newHaystack = haystack;
   if (idx !== -1 && idx < len - 1) {
     let trailingString = haystack.slice(idx + 1, len);
-    trailingString = trailingString.replaceAll(needle, '');
+    trailingString = trailingString.split(needle).join('');
     newHaystack = haystack.slice(0, idx + 1).concat(trailingString);
   }
   return newHaystack;
