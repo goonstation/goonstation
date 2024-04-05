@@ -392,8 +392,8 @@
 				try_authenticate()
 			if("access")
 				if(src.authenticated)
-					var/access_type = params["access"]
-					var/access_allowed = params["allowed"]
+					var/access_type = text2num_safe(params["access"])
+					var/access_allowed = text2num_safe(params["allowed"])
 					if(access_type in get_all_accesses())
 						if(!access_allowed)
 							src.modify.access -= access_type
