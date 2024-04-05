@@ -64,13 +64,7 @@
 /turf/simulated/floor/specialroom/chapel,
 /area/dmm_suite/clear_area)
 "Y" = (
-/obj/item/spraybottle{
-	name = "suspicious gardenia";
-	icon = 'icons/obj/clothing/item_hats.dmi';
-	icon_state = "flower_gard";
-	item_state = "flower_gard";
-	desc = "A delicate flower from the Gardenia shrub native to Earth, trimmed for you to wear. These white flowers are known for their strong and sweet floral scent. Wait, do these all have nozzles?"
-	},
+/obj/item/spraybottle/clown_flower,
 /obj/storage/closet/coffin,
 /obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/under/misc/clown/fancy,
