@@ -351,7 +351,7 @@ proc/broadcast_to_all_gangs(var/message)
 	/// The mind of this gang's leader.
 	var/datum/mind/leader = null
 	/// The minds of gang members associated with this gang. Does not include the gang leader.
-	var/list/members = list()
+	var/list/datum/mind/members = list()
 	var/list/tags = list()
 	/// The minds of members of this gang who are currently on cooldown from redeeming their gear from the gang locker.
 	var/list/gear_cooldown = list()
@@ -413,9 +413,44 @@ proc/broadcast_to_all_gangs(var/message)
 				result++
 		return result
 
-	proc/handle_leader_cryo()
-		broadcast_to_gang("Your leader has entered cryogenic storage. You can claim leadership at your locker.")
-		leader_claimable = TRUE
+	/// how to handle the gang leader entering cryo (but not guaranteed to be permanent)
+	proc/handle_leader_temp_cryo()
+		if (!src.locker)
+			choose_new_leader()
+		else
+			broadcast_to_gang("Your leader has entered temporary cryogenic storage. You can claim leadership at your locker in [GANG_CRYO_LOCKOUT/(1 MINUTE)] minutes.")
+
+	/// handle the gang leader entering cryo permanently
+	proc/handle_leader_perma_cryo()
+		if (src.locker)
+			broadcast_to_gang("Your leader has entered permanent cryogenic storage. You can claim leadership at your locker.")
+			leader_claimable = TRUE
+		else
+			choose_new_leader()
+
+	proc/choose_new_leader()
+		var/datum/mind/smelly_unfortunate
+		for (var/datum/mind/member in members)
+			if (isliving(member.current))
+				var/mob/living/carbon/candidate = member.current
+				if (!candidate.hibernating)
+					smelly_unfortunate = member
+		if (!smelly_unfortunate)
+			logTheThing(LOG_ADMIN, leader.ckey, "The leader of [gang_name] cryo'd with no living members to take the role.")
+			message_admins("The leader of [gang_name], [leader.ckey] cryo'd with no living members to take the role.")
+			return
+
+		var/datum/mind/bad_leader = leader
+		var/datum/antagonist/leaderRole = leader.get_antagonist(ROLE_GANG_LEADER)
+		var/datum/antagonist/oldRole = smelly_unfortunate.get_antagonist(ROLE_GANG_MEMBER)
+		smelly_unfortunate.current.remove_ability_holder(/datum/abilityHolder/gang)
+		oldRole.silent = TRUE // so they dont get a spooky 'you are no longer a gang member' popup!
+		smelly_unfortunate.remove_antagonist(ROLE_GANG_MEMBER,ANTAGONIST_REMOVAL_SOURCE_OVERRIDE,FALSE)
+		leaderRole.transfer_to(smelly_unfortunate, FALSE, ANTAGONIST_REMOVAL_SOURCE_EXPIRED)
+		bad_leader.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = smelly_unfortunate)
+		logTheThing(LOG_ADMIN, smelly_unfortunate.ckey, "was given the role of leader for [gang_name], as their leader entered cryo with no locker.")
+		message_admins("[smelly_unfortunate.ckey] has been granted the role of leader for their gang, [gang_name], as their leader entered cryo with no locker.")
+		broadcast_to_gang("As your leader has entered cryogenic storage without a locker, [smelly_unfortunate.current.real_name] is now your new leader.")
 
 	proc/get_dead_memberlist()
 		var/list/result = list()
