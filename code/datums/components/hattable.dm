@@ -33,7 +33,6 @@ TYPEINFO(/datum/component/hattable) // Take a walk through my TWISTED mind.... I
 
 /datum/component/hattable/proc/hat_on_thing(mob/target as mob, obj/item/item as obj, mob/attacker)
 	if (src.hat)
-		item = null
 		return
 
 	var/atom/movable/hatted = src.parent
@@ -46,7 +45,6 @@ TYPEINFO(/datum/component/hattable) // Take a walk through my TWISTED mind.... I
 		ADD_FLAG(src.hat.appearance_flags, KEEP_TOGETHER) // Flags needed for wigs!
 		ADD_FLAG(src.hat.vis_flags, VIS_INHERIT_DIR)
 	else
-		item = null
 		return
 	if (attacker)
 		attacker.drop_item()
@@ -65,7 +63,6 @@ TYPEINFO(/datum/component/hattable) // Take a walk through my TWISTED mind.... I
 		RegisterSignal(src.parent, COMSIG_MOB_DEATH, PROC_REF(die), override = TRUE)
 	RegisterSignal(src.hat, COMSIG_ITEM_PICKUP, PROC_REF(take_hat_off), override = TRUE)
 	UnregisterSignal(src.parent, COMSIG_ATTACKBY)
-	item = null
 	return TRUE
 
 /datum/component/hattable/proc/take_hat_off(mob/target, mob/user)
