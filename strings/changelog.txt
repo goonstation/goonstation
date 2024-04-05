@@ -1,4 +1,10 @@
 
+(t)fri apr 05 24
+(u)LeahTheTech
+(p)18406
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)The ship alert button now closes all bridge and AI shutters and activates all turret controls.
+(+)The ship alert button now has a 5 minute cooldown and can't be revoked for 30 seconds after activating.
 (t)thu apr 04 24
 (u)NibChocolateeny
 (p)18221
