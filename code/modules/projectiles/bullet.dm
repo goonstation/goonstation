@@ -1175,8 +1175,8 @@ toxic - poisons
 	icon_state = "20mm"
 	shot_sound = 'sound/weapons/fourboreshot.ogg'
 	damage = 15
-	stun = 45
-	dissipation_rate = 6
+	stun = 105
+	dissipation_rate = 12
 	dissipation_delay = 10
 	cost = 1
 	projectile_speed = 54
@@ -1198,16 +1198,8 @@ toxic - poisons
 
 		if (hit && ismob(hit))
 			var/mob/M = hit
-			if(ishuman(hit))
-				var/mob/living/carbon/human/H = hit
-				#ifdef USE_STAMINA_DISORIENT
-				H.do_disorient(max(P.power,10), weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
-				#else
-				H.changeStatus("stunned", 4 SECONDS)
-				H.changeStatus("weakened", 3 SECONDS)
-				#endif
 			var/turf/target = get_edge_target_turf(hit, dirflag)
-			M.throw_at(target, max(round(P.power / 20), 0), 3, throw_type = THROW_GUNIMPACT)
+			M.throw_at(target, max(round(P.power / 35), 0), 3, throw_type = THROW_GUNIMPACT)
 		..()
 
 //1.57
