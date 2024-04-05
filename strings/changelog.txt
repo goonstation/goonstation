@@ -1,4 +1,6 @@
-
+(t)fri apr 05 24
+(u)LeahTheTech
+(*)Radiation storms are now less common on the RP servers.
 (t)thu apr 04 24
 (u)NibChocolateeny
 (p)18221
