@@ -38,14 +38,14 @@ TYPEINFO(/datum/component/hattable) // Take a walk through my TWISTED mind.... I
 	var/atom/movable/hatted = src.parent
 	var/offsetBy_y = 0
 	var/offsetBy_x = 0
-	src.hat = item
 
-	if (istype(src.hat, /obj/item/clothing/head/))
+
+	if (istype(item, /obj/item/clothing/head/))
+		src.hat = item
 		ADD_FLAG(src.hat.appearance_flags, KEEP_TOGETHER) // Flags needed for wigs!
 		ADD_FLAG(src.hat.vis_flags, VIS_INHERIT_DIR)
 	else
 		return
-
 	if (attacker)
 		attacker.drop_item()
 
@@ -62,6 +62,7 @@ TYPEINFO(/datum/component/hattable) // Take a walk through my TWISTED mind.... I
 	if (src.death_remove)
 		RegisterSignal(src.parent, COMSIG_MOB_DEATH, PROC_REF(die), override = TRUE)
 	RegisterSignal(src.hat, COMSIG_ITEM_PICKUP, PROC_REF(take_hat_off), override = TRUE)
+	UnregisterSignal(src.parent, COMSIG_ATTACKBY)
 	return TRUE
 
 /datum/component/hattable/proc/take_hat_off(mob/target, mob/user)
@@ -85,6 +86,7 @@ TYPEINFO(/datum/component/hattable) // Take a walk through my TWISTED mind.... I
 		return
 	else
 		UnregisterSignal(src.hat, COMSIG_ITEM_PICKUP)
+		RegisterSignal(src.parent, COMSIG_ATTACKBY, PROC_REF(hat_on_thing), override = TRUE)
 
 	if (istype(user, /mob/living/silicon/ghostdrone))
 		SPAWN(0) // Magtractors use an action bar until they do stuff, and then they'll clone a ghost image of the item that's on the floor. Drop that!
