@@ -512,9 +512,13 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
 	},
-/obj/disposalpipe/segment/produce{
-	dir = 2;
-	icon_state = "pipe-c"
+/obj/disposalpipe/trunk/produce{
+	dir = 8;
+	icon_state = "pipe-t"
+	},
+/obj/disposaloutlet{
+	dir = 8;
+	name = "Produce Chute"
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
@@ -573,7 +577,27 @@
 	name = "autoname  - SS13";
 	pixel_x = 10
 	},
-/obj/disposalpipe/segment/produce,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
+/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
+/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
+/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
+/obj/storage/crate/freezer{
+	name = "Freezer"
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aby" = (
@@ -673,10 +697,6 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
 	},
-/obj/disposalpipe/segment/produce{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "abH" = (
@@ -684,11 +704,20 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/item/instrument/bikehorn/dramatic,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
 	},
-/obj/storage/crate/bloody,
+/obj/storage/cart/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/shaker/mustard{
+	pixel_x = -6
+	},
+/obj/item/shaker/ketchup{
+	pixel_x = 6
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "abI" = (
@@ -701,19 +730,6 @@
 "abJ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northwest)
-"abK" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/disposalpipe/segment/produce{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "abL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -736,10 +752,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
 	level = 2
-	},
-/obj/disposalpipe/segment/produce{
-	dir = 1;
-	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -803,9 +815,6 @@
 /area/station/garden/aviary)
 "abX" = (
 /obj/decal/cleanable/dirt,
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/maintenance/east)
 "abY" = (
@@ -846,29 +855,17 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northeast)
 "acd" = (
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
 /turf/simulated/floor/caution/south,
 /area/station/maintenance/east)
 "ace" = (
 /obj/landmark/pest,
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
 /turf/simulated/floor/caution/south,
 /area/station/maintenance/east)
 "acf" = (
 /obj/decal/cleanable/dirt,
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
 /turf/simulated/floor/caution/south,
 /area/station/maintenance/east)
 "acg" = (
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
 /turf/simulated/floor{
 	icon_state = "corner_east"
 	},
@@ -930,17 +927,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/garden/aviary)
-"acp" = (
-/obj/disposaloutlet{
-	dir = 8;
-	name = "Produce Chute"
-	},
-/obj/disposalpipe/trunk/produce{
-	dir = 8;
-	icon_state = "pipe-t"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "acs" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quartersA{
@@ -6776,26 +6762,6 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
 "aCI" = (
-/obj/storage/crate/freezer{
-	name = "Freezer"
-	},
-/obj/item/reagent_containers/food/fish/bass,
-/obj/item/reagent_containers/food/fish/bass,
-/obj/item/reagent_containers/food/fish/carp,
-/obj/item/reagent_containers/food/fish/carp,
-/obj/item/reagent_containers/food/fish/salmon,
-/obj/item/reagent_containers/food/fish/salmon,
-/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
-/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
-/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
-/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
-/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
-/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
-/obj/item/storage/box/donkpocket_kit,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -7005,7 +6971,6 @@
 	dir = 10;
 	level = 2
 	},
-/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aDK" = (
@@ -7055,13 +7020,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aDT" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/eggnog,
-/obj/item/clothing/head/helmet/space/santahat,
-/obj/item/reagent_containers/food/snacks/yoghurt,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
 	},
+/obj/storage/crate/bloody,
+/obj/item/reagent_containers/food/drinks/eggnog,
+/obj/item/clothing/head/helmet/space/santahat,
+/obj/item/reagent_containers/food/snacks/yoghurt,
+/obj/item/instrument/bikehorn/dramatic,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aDX" = (
@@ -19269,6 +19235,7 @@
 /obj/disposalpipe/trunk/food{
 	dir = 8
 	},
+/obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "dKa" = (
@@ -25938,17 +25905,6 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
 	},
-/obj/storage/cart/hotdog,
-/obj/item/shaker/ketchup{
-	pixel_x = 6
-	},
-/obj/item/shaker/mustard{
-	pixel_x = -6
-	},
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "iNX" = (
@@ -39055,15 +39011,12 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/kitchen,
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
 	name = "Kitchen";
 	req_access = null
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/kitchen,
-/obj/disposalpipe/segment/produce{
-	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
@@ -85451,7 +85404,7 @@ auN
 azS
 tzE
 auN
-abK
+esa
 aDJ
 abN
 esa
@@ -87252,7 +87205,7 @@ awj
 ths
 aSm
 aDP
-acp
+asm
 asm
 nuT
 aHM
