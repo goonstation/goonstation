@@ -1147,7 +1147,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			return
 		if(prob(20) && !istype(src.loc, /obj/cryotron))
 			var/turf/T = get_turf(src)
-			T?.fluid_react_single("lavender_essence", 5, airborne = TRUE)
+			T?.fluid_react_single("lavender_essence", 3.5, airborne = TRUE)
 
 	setupProperties()
 		..()
@@ -1188,7 +1188,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	name = "very nanotrasen hat"
 	desc = "Reserved for Nanotrasen's finest."
 	icon_state = "nanotrasen_top_biggest"
-	item_state = "nanotrasen_top_biggest"
+	item_state = "nanotrasen_top"
 	contraband = -100
 
 /obj/item/clothing/head/witchfinder
