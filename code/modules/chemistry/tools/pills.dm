@@ -159,6 +159,15 @@
 		..()
 		reagents.add_reagent("cyanide", 50)
 
+/obj/item/reagent_containers/pill/toxlite // Small pill for the trader that sells cyanide. So as to not be offgassed instantly.
+	name = "small cyanide pill"
+	desc = "Smaller but still Highly lethal."
+	icon_state = "pill5"
+
+	New()
+		..()
+		reagents.add_reagent("cyanide", 30)
+
 /obj/item/reagent_containers/pill/stox
 	name = "morphine pill"
 	desc = "Used to treat severe pain. Highly addictive."

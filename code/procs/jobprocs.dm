@@ -413,15 +413,15 @@ var/global/totally_random_jobs = FALSE
 	else if (length(JOB.slot_rhan))
 		H.equip_new_if_possible(JOB.slot_rhan[1], SLOT_R_HAND)
 
-	#ifdef APRIL_FOOLS
-	H.back?.setMaterial(getMaterial("jean"))
-	H.gloves?.setMaterial(getMaterial("jean"))
-	H.wear_suit?.setMaterial(getMaterial("jean"))
-	H.wear_mask?.setMaterial(getMaterial("jean"))
-	H.w_uniform?.setMaterial(getMaterial("jean"))
-	H.shoes?.setMaterial(getMaterial("jean"))
-	H.head?.setMaterial(getMaterial("jean"))
-	#endif
+	//#ifdef APRIL_FOOLS
+	//H.back?.setMaterial(getMaterial("jean"))
+	//H.gloves?.setMaterial(getMaterial("jean"))
+	//H.wear_suit?.setMaterial(getMaterial("jean"))
+	//H.wear_mask?.setMaterial(getMaterial("jean"))
+	//H.w_uniform?.setMaterial(getMaterial("jean"))
+	//H.shoes?.setMaterial(getMaterial("jean"))
+	//H.head?.setMaterial(getMaterial("jean"))
+	//#endif
 
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
 /mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn)
@@ -494,14 +494,7 @@ var/global/totally_random_jobs = FALSE
 			H.spawnId(JOB)
 		if (src.traitHolder && src.traitHolder.hasTrait("stowaway"))
 			//Has the stowaway trait - they're hiding in a random locker
-			var/list/obj/storage/SL = list()
-			for_by_tcl(S, /obj/storage)
-				// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post (or the martian ship (on oshan))
-				if(S.z == 1 && !S.open && !istype(S, /obj/storage/secure) && !istype(S, /obj/storage/crate/loot) && !istype(get_area(S), /area/listeningpost) && !istype(get_area(S), /area/evilreaver))
-					var/turf/simulated/T = S.loc
-					//Simple checks done, now do some environment checks to make sure it's survivable
-					if(istype(T) && T.air && T.air.oxygen >= (MOLES_O2STANDARD - 1) && T.air.temperature >= T0C)
-						SL.Add(S)
+			var/list/obj/storage/SL = get_random_station_storage_list(closed=TRUE, breathable=TRUE)
 
 			if(length(SL) > 0)
 				src.set_loc(pick(SL))
