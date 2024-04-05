@@ -34,7 +34,7 @@ TYPEINFO(/datum/component/hattable) // Take a walk through my TWISTED mind.... I
 /datum/component/hattable/proc/hat_on_thing(mob/target as mob, obj/item/item as obj, mob/attacker)
 	if (src.hat)
 		item = null
-		return TRUE
+		return
 
 	var/atom/movable/hatted = src.parent
 	var/offsetBy_y = 0
@@ -47,7 +47,7 @@ TYPEINFO(/datum/component/hattable) // Take a walk through my TWISTED mind.... I
 		ADD_FLAG(src.hat.vis_flags, VIS_INHERIT_DIR)
 	else
 		item = null
-		return TRUE
+		return
 	if (attacker)
 		attacker.drop_item()
 
