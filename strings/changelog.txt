@@ -1,4 +1,62 @@
 
+(t)sat apr 06 24
+(u)glowbold
+(p)18267
+(e)🪲📄📦|C-Bug, A-UI, A-Game-Objects
+(*)Playerdorfs may once again vie for the souls of the living.
+(u)IPingu
+(p)18136
+(e)📄|A-UI
+(+)Adds Icons to spells in the wizard spellbook
+(u)LeahTheTech
+(+)Sleeper agents now have a more reasonably completable number of objectives.
+(p)18329
+(e)⚖🐣|C-Balance, A-Respawning
+(*)Security Officer is now a limited high priority role, meaning the game will attempt to ensure there are a minimum number of them in each shift. Having the role disabled will still prevent you from rolling it.
+(u)TDHooligan
+(p)18382
+(e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
+(+)Gang crates now take 10 seconds to un-anchor. Gang members can see where they'll spawn 5 minutes early.
+(+)Gang crates will no longer unceremoniously swallow and capture people when they spawn.
+(t)fri apr 05 24
+(u)glowbold
+(p)18372
+(e)🆕🌠|C-Feature, A-Events
+(+)NanoTrasen randomly screens trinkets for contraband.
+(u)LeahTheTech
+(p)18406
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)The ship alert button now closes all bridge and AI shutters and activates all turret controls.
+(+)The ship alert button now has a 5 minute cooldown and can't be revoked for 30 seconds after activating.
+(*)Radiation storms are now less common on the RP servers.
+(+)Cocktail shakers can now fit in chemical heaters.
+(t)thu apr 04 24
+(u)NibChocolateeny
+(p)18221
+(e)🆕🌱|C-Feature, A-Hydroponics
+(+)Killer tomatoes contain "Blood" as one of their associated reagents.
+(u)CalliopeSoups
+(p)18140
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Hats and wigs now fit snugly onto mechcomp cabinets and frames. This changes the backend for placing hats on things like ghostdrones, report any bugs if found.
+(u)TDHooligan
+(p)18370
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)One particularly aspirational gang has flooded the whole cannabis market. Gangs can now only get the 10 point bonus for the first 200 leaves.
+(u)TDHooligan
+(p)18369
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(+)Gang weapons no longer stun as hard. They kill harder. So kill each other harder, gangs.
+(t)mon apr 01 24
+(u)glowbold
+(p)18239
+(e)🆕💊💡|C-Feature, A-Medical, A-Station-Systems
+(+)Cloner Defects are now stored in patients' medical records. Make sure to scan with a health or genetic analyzer after cloning to keep the record updated.
+(t)sun mar 31 24
+(u)444explorer
+(p)18368
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Syndicate Shotglasses now properly force people to drink half their reagents when they get hit by them
 (t)fri mar 29 24
 (u)glowbold
 (p)18226

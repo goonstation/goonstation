@@ -961,10 +961,12 @@ var/datum/job_controller/job_controls
 	return null
 
 /client/proc/cmd_job_controls()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Job Controls"
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	if (job_controls == null) boutput(src, "<h3 class='admin'>UH OH! Shit's broken as fuck!</h3>")
-	else src.debug_variables(job_controls)
+	if (isnull(src.holder.job_manager))
+		src.holder.job_manager = new
+
+	src.holder.job_manager.ui_interact(src.mob)
