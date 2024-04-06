@@ -319,7 +319,7 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 				user.u_equip(object)
 				src.myLens = object
 			else
-				user.show_text(SPAN_NOTICE("The [src]'s maintenance panel is closed."))
+				user.show_text(SPAN_NOTICE("[src]'s maintenance panel is closed."))
 
 	canshoot(mob/user)
 		if(!src.evaluate_quality())
