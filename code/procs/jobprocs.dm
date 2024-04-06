@@ -148,7 +148,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		for(var/datum/job/JOB in high_priority_jobs)
 			if (!length(unassigned)) break
 
-			if (JOB.limit > 0 && JOB.assigned >= JOB.limit) continue
+			if (JOB.limit > 0 && JOB.assigned >= JOB.limit)
+				continue
+
+			//single digit pop rounds can be exempt from more than one high priority assignment per role
+			if (length(unassigned) < 10)
+				JOB.high_priority_limit = 1
 
 			// get all possible candidates for it
 			pick1 = FindOccupationCandidates(unassigned,JOB.name,1)
