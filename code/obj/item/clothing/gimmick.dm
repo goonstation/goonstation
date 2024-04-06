@@ -2045,15 +2045,3 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	desc = "A pair of blue boots with a yellow stripe and a red string. They'd help you be swift and agile, if not for the cheap flimsy soles!"
 	icon_state = "goku"
 	item_state = "goku"
-
-/obj/item/clothing/head/wig/spawnable/goku
-	first_id = "goku"
-	first_color = "#1C1C1C"
-	name = "anime martial artist wig"
-	desc = "With hair like this, you might be able to save the world...! If it was actually part of your head."
-
-/obj/item/clothing/head/wig/spawnable/goku_s
-	first_id = "saiyan"
-	first_color = "#ffd900"
-	name = "super anime martial artist wig"
-	desc = "The amount of power emanating from this wig! It feels super...! Itchy."

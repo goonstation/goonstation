@@ -398,15 +398,6 @@
 		/obj/item/clothing/under/gimmick/goku
 	)
 
-	make_my_stuff()
-		..()
-		if (prob(1)) // the legend has it that every one thousand years, a legendary wig is created that is capable of surpassing all other wigs
-			var/obj/item/gokuwig = new /obj/item/clothing/head/wig/spawnable/goku_s(src)
-			src.storage.add_contents(gokuwig)
-		else
-			var/obj/item/gokuwig = new /obj/item/clothing/head/wig/spawnable/goku(src)
-			src.storage.add_contents(gokuwig)
-
 /obj/item/storage/box/costume/light_borg
 	name = "light cyborg costume"
 	spawn_contents = list(/obj/item/clothing/suit/gimmick/light_borg)
