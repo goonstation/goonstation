@@ -103,7 +103,8 @@
 
 // CRATE DROP DEFINES
 #define GANG_CRATE_SCORE 500 //! how many points gang crates grant to each member, when opened
-#define GANG_CRATE_LOCK_TIME 300 SECONDS //! how long gang crates stay locked to the floor, in seconds
+#define GANG_CRATE_DROP_TIME 300 SECONDS //! How long it takes for gang crates to arrive after being announced
+#define GANG_CRATE_LOCK_TIME 10 SECONDS //! How long it takes for gang crates to unlock after arriving
 
 #define GANG_LOOT_SCORE 300 //! how many points gang duffel bags grant to each member when opened
 
