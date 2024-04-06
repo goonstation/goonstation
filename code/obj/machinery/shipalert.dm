@@ -145,12 +145,12 @@ TYPEINFO(/obj/machinery/shipalert)
 		LAGCHECK(LAG_LOW)
 
 /obj/machinery/shipalert/proc/do_lockdown(mob/user)
-	for_by_tcl(shutter, /obj/machinery/door/poddoor/pyro/shutters)
+	for_by_tcl(shutter, /obj/machinery/door/poddoor)
 		if (shutter.density)
 			continue
 		if (shutter.z != Z_LEVEL_STATION)
 			continue
-		if (!istypes(get_area(shutter), list(/area/station/turret_protected/ai, /area/station/bridge, /area/station/ai_monitored/armory)))
+		if (shutter.id != "lockdown" && shutter.id != "ai_core" && shutter.id == "armory")
 			continue
 		shutter.close()
 
