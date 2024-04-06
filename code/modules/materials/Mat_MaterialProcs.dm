@@ -565,7 +565,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(ON_COOLDOWN(owner, "ice_temp", 10 SECONDS))
 			return
 		var/turf/tloc = get_turf(owner)
-		tloc.visible_message(SPAN_ALERT("[owner] melts due to heat!"))
+		tloc.visible_message(SPAN_ALERT("[owner] melts away!"))
 		qdel(owner)
 		return
 
