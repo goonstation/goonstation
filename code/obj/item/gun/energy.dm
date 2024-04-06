@@ -302,24 +302,24 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 					user.unlock_medal("Tinkerer", 1)
 		if(istype(object, /obj/item/coil/small))
 			if(src.panelOpen)
-				user.show_text(SPAN_NOTICE("You insert the [object] into the [src]."))
+				user.show_text(SPAN_NOTICE("You insert [object] into the [src]."))
 				playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
 				user.put_in_hand_or_eject(src.myCoil)
 				object.set_loc(src)
 				user.u_equip(object)
 				src.myCoil = object
 			else
-				user.show_text(SPAN_NOTICE("The [src]'s maintenance panel is closed."))
+				user.show_text(SPAN_NOTICE("[src]'s maintenance panel is closed."))
 		if(istype(object, /obj/item/lens))
 			if(src.panelOpen)
-				user.show_text(SPAN_NOTICE("You insert the [object] into the [src]."))
+				user.show_text(SPAN_NOTICE("You insert [object] into [src]."))
 				playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
 				user.put_in_hand_or_eject(src.myLens)
 				object.set_loc(src)
 				user.u_equip(object)
 				src.myLens = object
 			else
-				user.show_text(SPAN_NOTICE("The [src]'s maintenance panel is closed."))
+				user.show_text(SPAN_NOTICE("[src]'s maintenance panel is closed."))
 
 	canshoot(mob/user)
 		if(!src.evaluate_quality())
