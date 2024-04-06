@@ -1,5 +1,9 @@
 
 (t)sat apr 06 24
+(u)glowbold
+(p)18267
+(e)🪲📄📦|C-Bug, A-UI, A-Game-Objects
+(*)Playerdorfs may once again vie for the souls of the living.
 (u)IPingu
 (p)18136
 (e)📄|A-UI
