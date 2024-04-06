@@ -972,12 +972,14 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	desc = "A small handful of oversized shotshells, for a VERY big gun."
 	ammo_type = new/datum/projectile/special/spreader/uniform_burst/kuvalda_shrapnel
 	icon_state = "shrapnel"
+	icon_short = "shrapnel"
+	icon_empty = ""
 	amount_left = 4
 	max_amount = 4
 	ammo_cat = AMMO_KUVALDA
 	icon_dynamic = TRUE
 	delete_on_reload = TRUE
-	sound_load = 'sound/weapons/gunload_click.ogg'
+	sound_load = 'sound/weapons/kuvaldaload.ogg'
 
 
 //1.57

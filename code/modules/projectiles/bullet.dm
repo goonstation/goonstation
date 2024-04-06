@@ -776,6 +776,14 @@ toxic - poisons
 			blood_image?.alpha = 255
 			proj.color = M.blood_color
 			proj.UpdateOverlays(blood_image, "blood_image")
+			//the poor sod who eats all 3 of these can lose some GORE
+			if (ON_COOLDOWN(hit,"kuvalda_multihit", 2 DECI SECONDS))
+				if (ON_COOLDOWN(hit,"kuvalda_multihit2", 2 DECI SECONDS))
+					var/obj/decal/cleanable/blood/gibs/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(M) )
+					gib.streak_cleanable(dirflag)
+					if (ON_COOLDOWN(hit,"kuvalda_fullhit", 2 DECI SECONDS)) //owie
+						var/turf/target = get_edge_target_turf(M, dirflag)
+						M.throw_at(target, 3, 1, throw_type = THROW_GUNIMPACT)
 		..()
 	get_power(obj/projectile/P, atom/A)
 		. = ..()

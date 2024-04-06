@@ -1899,6 +1899,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	is_heavy = TRUE
 	ammo_cats = list(AMMO_KUVALDA)
 	max_ammo_capacity = 4
+	reload_cooldown = 12 DECI SECONDS
 	auto_eject = FALSE
 	can_dual_wield = FALSE
 	two_handed = TRUE
