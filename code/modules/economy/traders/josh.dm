@@ -114,7 +114,7 @@
 
 /datum/commodity/trader/josh/injectormask
 	comname = "Vape-o-matic"
-	comtype = /obj/item/clothing/mask/gas/injector_mask
+	comtype = /obj/item/clothing/mask/injector_mask
 	price_boundary = list(PAY_EXECUTIVE,PAY_EMBEZZLED)
 	possible_names = list("There's a mask out there that lets you consume the vapor form of chemicals. That would be sick.")
 
