@@ -48,7 +48,7 @@
 		for(var/client/C in clients)
 			if (C.stealth && !C.fakekey) // stealthed admins don't count
 				continue
-			s["player[n]"] = "[(C.stealth || C.alt_key) ? C.fakekey : C.key]"
+			s["player[n]"] = "[ckey((C.stealth || C.alt_key) ? C.fakekey : C.key)]"
 			n++
 		s["players"] = n
 		s["map_name"] = getMapNameFromID(map_setting)
