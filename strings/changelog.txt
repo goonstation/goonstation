@@ -1,4 +1,10 @@
 
+(t)sat apr 06 24
+(u)TDHooligan
+(p)18382
+(e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
+(+)Gang crates now take 10 seconds to un-anchor. Gang members can see where they'll spawn 5 minutes early.
+(+)Gang crates will no longer unceremoniously swallow and capture people when they spawn.
 (t)fri apr 05 24
 (u)glowbold
 (p)18372
