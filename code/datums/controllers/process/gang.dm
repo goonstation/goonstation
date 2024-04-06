@@ -112,7 +112,8 @@
 			return
 		var/turf/location = pick(turfList)
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANG_OBJECTIVES)
-		var/image/objective_image = image('icons/effects/gang_overlays.dmi', location, "cratedrop")
+		var/obj/effects/gang_crate_indicator/indicator = new(location)
+		var/image/objective_image = image('icons/effects/gang_overlays.dmi', indicator, "cratedrop")
 		objective_image.plane = PLANE_WALL
 		objective_image.alpha = 180
 		imgroup.add_image(objective_image)
@@ -126,6 +127,7 @@
 			sleep(30 SECONDS)
 			if(drop_zone != null)
 				imgroup.remove_image(objective_image)
+				qdel(indicator)
 				var/obj/storage/crate/gang_crate/guns_and_gear/crate = new(location)
 				broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] is has arrived! Drag it to your locker.")
 				logTheThing(LOG_GAMEMODE, crate, "The crate in [drop_zone.name] arrives on station. Location: [location.x],[location.y].")
