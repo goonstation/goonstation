@@ -24,8 +24,7 @@
 
 
 	proc/initialize_loot_master(x,y)
-		src.vis_controller = new()
-		vis_controller.initialize(src)
+		src.vis_controller = new(src)
 		lootMaster =  new /datum/loot_generator(x,y)
 	// Default gang crate
 	guns_and_gear
@@ -196,16 +195,16 @@
 	var/mob/living/idiot = null
 	///The area this bag spawned in.
 	var/area/start_area
+	var/processing_tier = PROCESSING_EIGHTH
 
 	///Items that haven't been removed from the bag. These will travel with it.
-	var/datum/vis_storage_controller/vis_controller = new()
+	var/datum/vis_storage_controller/vis_controller
 	var/datum/loot_generator/lootMaster
 	level = UNDERFLOOR
 
 
 	proc/initialize_loot_master(x,y)
-		src.vis_controller = new()
-		vis_controller.initialize(src)
+		src.vis_controller = new(src)
 		lootMaster =  new /datum/loot_generator(x,y)
 		toggle_tracking(initial_tracking)
 
@@ -235,7 +234,7 @@
 			..()
 
 	pickup(mob/user)
-		if (open)
+		if (open && length(vis_controller.vis_items) > 0)
 			close()
 		..()
 		if (src.layer == UNDERFLOOR)
@@ -261,8 +260,7 @@
 			idiot.setStatus("gang_trap", duration = INFINITE_STATUS)
 			H.emote("scream")
 			H.bleeding = max(1,H.bleeding)
-			SPAWN(1 SECOND)
-				bleed_process()
+			processing_items += src
 
 	handle_other_remove(mob/source, mob/living/carbon/human/target)
 		if (!cant_drop || !idiot || !source.get_gang())
@@ -304,6 +302,7 @@
 		cant_self_remove = FALSE
 		cant_drop = FALSE
 		idiot = null
+		processing_items -= src
 
 	dropped()
 		unhook()
@@ -318,14 +317,13 @@
 			attempt_unhook(user)
 		else
 			..()
-
-	proc/bleed_process()
-		while(cant_drop)
+	process()
+		if(cant_drop)
 			if (!ON_COOLDOWN(src,"bleed_msg", 30 SECONDS))
 				boutput(idiot, SPAN_ALERT("The hooks in the bag are digging into your hands! You should pluck it out..."))
-			bleed(idiot, 1, 1)//technically doubling bleed. but it looks nice as the loops dont sync perfectly.
+			bleed(idiot, pick(1,2), 1)//technically doubling bleed. but it looks nice as the loops dont sync perfectly.
 			idiot.bleeding = max(1,idiot.bleeding)
-			sleep(2 SECONDS)
+		..()
 
 	/// Uses the boolean 'intact' value of the floor it's beneath to hide, if applicable
 	hide(var/floor_intact)

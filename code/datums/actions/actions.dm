@@ -1787,8 +1787,8 @@
 	id = "unhook_gangbag"
 	var/obj/item/gang_loot/target
 
-	New(Owner, var/obj/item/gang_loot/new_target)
-		owner = Owner
+	New(new_owner, obj/item/gang_loot/new_target)
+		owner = new_owner
 		target = new_target
 		..()
 	onEnd()
