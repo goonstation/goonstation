@@ -70,7 +70,13 @@ const ZoldorfProductListItem = (props: ZoldorfProductListItemProps) => {
   const { name, img, stock, infinite, children } = props;
   return (
     <Section height="20px">
-      <Flex align="center">
+      <Flex
+        align="center"
+        style={{
+          "border-bottom": "1px solid #555", // match vending machine border
+          "padding-bottom": "2px", // align border between buttons
+        }}
+      >
         <Flex.Item>
           <Box
             position="relative" // don't increase line-height, but keep image size
