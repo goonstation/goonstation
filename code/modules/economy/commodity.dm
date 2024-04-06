@@ -1307,7 +1307,7 @@
 
 /datum/commodity/medical/injectormask
 	comname = "Vapo-Matic"
-	comtype = /obj/item/clothing/mask/gas/injector_mask
+	comtype = /obj/item/clothing/mask/injector_mask
 	desc = "A gas mask that doses the wearer with chemicals loaded from a container."
 	price = PAY_EMBEZZLED
 

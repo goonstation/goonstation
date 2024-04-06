@@ -1,5 +1,9 @@
 
 (t)sat apr 06 24
+(u)IPingu
+(p)18136
+(e)📄|A-UI
+(+)Adds Icons to spells in the wizard spellbook
 (u)LeahTheTech
 (p)18329
 (e)⚖🐣|C-Balance, A-Respawning
