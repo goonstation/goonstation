@@ -1303,7 +1303,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
-	var/vr = 0
+	var/vr = FALSE
 #ifdef BONUS_POINTS
 	uses = 9999
 #endif
@@ -1312,10 +1312,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		..()
 		src.antag_datum = antag
 		if (in_vr)
-			vr = 1
-			uses *= 2
+			src.vr = TRUE
+			src.uses *= 2
 
-		for(var/D in typesof(/datum/SWFuplinkspell))
+		for(var/D as anything in concrete_typesof(/datum/SWFuplinkspell))
 			src.spells += new D(src)
 
 	ui_interact(mob/user, datum/tgui/ui)
@@ -1337,22 +1337,21 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		for(var/datum/SWFuplinkspell/spell as anything in src.spells)
 			var/cooldown_contents = null
 			var/icon/spell_icon = null
-			if (spell.eqtype != "Spell")
-				if (!spellbook_contents[spell.eqtype])
-					// Create category if it doesnt exist
-					spellbook_contents[spell.eqtype] = list()
-				if (spell.assoc_spell && ispath(spell.assoc_spell, /datum/targetable/spell))
-					var/datum/targetable/spell/spell_ability_datum = spell.assoc_spell
-					cooldown_contents = initial(spell_ability_datum.cooldown)
-					spell_icon = icon(initial(spell_ability_datum.icon), initial(spell_ability_datum.icon_state), frame=6)
-				spellbook_contents[spell.eqtype][spell.name] = list(
-					desc = spell.desc,
-					cost = spell.cost,
-					cooldown = cooldown_contents,
-					vr_allowed = spell.vr_allowed,
-					spell_img = icon2base64(spell_icon)
-				)
-
+			if (!spellbook_contents[spell.eqtype])
+				// create category if it doesnt exist
+				spellbook_contents[spell.eqtype] = list()
+			if (spell.assoc_spell && ispath(spell.assoc_spell, /datum/targetable/spell))
+				var/datum/targetable/spell/spell_ability_datum = spell.assoc_spell
+				cooldown_contents = initial(spell_ability_datum.cooldown)
+				spell_icon = icon2base64(icon(initial(spell_ability_datum.icon), initial(spell_ability_datum.icon_state), frame=6))
+			spellbook_contents[spell.eqtype] += list(list(
+				cooldown = cooldown_contents,
+				cost = spell.cost,
+				desc = spell.desc,
+				name = spell.name,
+				spell_img = spell_icon,
+				vr_allowed = spell.vr_allowed,
+			))
 		.["spellbook_contents"] = spellbook_contents
 
 	attack_self(mob/user)
@@ -1376,6 +1375,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					chosen_spell.SWFspell_Purchased(usr,src)
 
 ///////////////////////////////////////// Wizard's spells ///////////////////////////////////////////////////
+ABSTRACT_TYPE(/datum/SWFuplinkspell)
 /datum/SWFuplinkspell
 	var/name = "Spell"
 	var/eqtype = "Spell"
