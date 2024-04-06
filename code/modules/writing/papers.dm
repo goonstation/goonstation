@@ -472,25 +472,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 	- B <br>
 	"}
 
-/obj/item/paper/cdc_pamphlet
-	name = "So you've contracted a pathogen!"
-	icon_state = "paper"
-	info = {"<center><h2>So you've contracted a pathogen!</h2></center>
-	Hello, dear customer!<hr>
-	Pathogens can be scary! But you can rest easy knowing that your health is in safe hands now that you have contacted the CDC. Simply place a pathogen
-	sample into the biohazard crate and send it back to us and we will have you cured in no time!<hr>
-	<h3>How to send a pathogen sample</h3><hr>
-	<ul style='list-style-type:disc'>
-		<li>1) Fill a reagent container with a blood sample from a person afflicted with the pathogen you are seeking to cure. (For instance, you could use the syringe we sent you!)</li>
-		<li>2) Deposit reagent container into the received biohazard crate and close it.</li>
-		<li>3) Send the biohazard crate back to us.</li>
-		<li>4) As soon as we receive your sample, you can contact us using your Quartermaster's Console to ask us to start analyzing it.</li>
-		<li>5) Once we are done analyzing your sample, we will offer to sell you cures. Buying a pack of multiple cures at a time will be cheaper for you!</li>
-	</ul>
-	We hope that you have found this pamphlet enlightening and we look forward to receiving your sample soon!<hr>
-	Remember, only you can prevent deadly pathogens!
-	"}
-
 /obj/item/paper/shipping_precautions
 	name = "Read this and check the cargo!"
 	icon_state = "paper_caution_bloody"

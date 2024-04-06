@@ -254,7 +254,7 @@
 		return TRUE
 
 /datum/action/bar/icon/digbotdig/drill
-	icon_state = "lasdrill"
+	icon_state = "lasdrill-old"
 
 
 //////////////////////////////////////
@@ -322,7 +322,7 @@
 			else
 				boutput(user,  "You already added that part!")
 				return
-		else if (istype(T, /obj/item/mining_tool/drill))
+		else if (istype(T, /obj/item/mining_tool/powered/drill))
 			if (src.build_step == 1)
 				if (user.r_hand == T) user.u_equip(T)
 				else user.u_equip(T)

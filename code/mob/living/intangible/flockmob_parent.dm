@@ -233,7 +233,7 @@
 	if (src.client && src.client.ismuted())
 		boutput(src, "You are currently muted and may not speak.")
 		return
-
+	SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 	if (dd_hasprefix(message, "*"))
 		return src.emote(copytext(message, 2),1)
 
