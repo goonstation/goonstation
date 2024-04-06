@@ -127,7 +127,8 @@
 		src.the_mail.desc += " Or at least, at one point, it did."
 		owner.visible_message(SPAN_ALERT("[owner] disconnects \the [src.the_mail]'s DNA lock!"))
 		logTheThing(LOG_STATION, owner, "commits MAIL FRAUD by cutting open [src]")
-		new /obj/decal/cleanable/mail_fraud(get_turf(src.the_mail), src.the_mail)
+		var/obj/decal/cleanable/mail_fraud/cleanable = new(get_turf(src.the_mail), src.the_mail)
+		cleanable.add_fingerprint(owner)
 		src.the_mail.open(owner, crime = TRUE)
 		playsound(src.the_mail, 'sound/items/Screwdriver2.ogg', 50, 1)
 
