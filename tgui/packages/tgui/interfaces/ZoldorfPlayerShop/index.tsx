@@ -82,7 +82,7 @@ const ZoldorfProductListItem = (props: ZoldorfProductListItemProps) => {
         </Flex.Item>
         <Flex.Item grow>
           <>
-            <Box inline italic>{!infinite && `${stock} x\xa0`}</Box>
+            {!infinite && <Box inline italic>{`${stock} x`}&nbsp;</Box>}
             <Box inline>{name}</Box>
           </>
         </Flex.Item>

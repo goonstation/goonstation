@@ -23,8 +23,8 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 	var/omen
 	var/occupied
 
-	var/list/datum/zoldorfitem/soul/soul_items = list()
-	var/list/datum/zoldorfitem/credit/credit_items = list()
+	var/list/datum/zoldorfitem/soul/soul_items = null
+	var/list/datum/zoldorfitem/credit/credit_items = null
 
 	var/initialsoul = 0 //interface and ability holder interaction
 	var/storedsouls = 0
@@ -40,10 +40,10 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 	New()
 		. = ..()
 		START_TRACKING
-		src.soul_items = new
+		src.soul_items = list()
 		for (var/product in concrete_typesof(/datum/zoldorfitem/soul))
 			src.soul_items += new product
-		src.credit_items = new
+		src.credit_items = list()
 		for (var/product in concrete_typesof(/datum/zoldorfitem/credit))
 			src.credit_items += new product
 
@@ -78,8 +78,10 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 					return
 				var/mob/living/carbon/human/H = ui.user
 				if(H.sell_soul(purchasing.soul_percentage))
+					if(!purchasing.infinite)
+						purchasing.stock -= 1
+						src.update_static_data(ui.user)
 					purchasing.on_bought(H)
-					purchasing.stock -= 1
 					src.partialsouls += purchasing.soul_percentage
 					src.updatejar()
 				return TRUE
@@ -99,7 +101,9 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 					boutput(ui.user, SPAN_ALERT("[src.name] stares blankly into your soul...begging you for more credits..."))
 					return
 				src.credits -= purchasing.price
-				purchasing.stock -= 1
+				if(!purchasing.infinite)
+					purchasing.stock -= 1
+					src.update_static_data(ui.user)
 				purchasing.on_bought(ui.user)
 				return TRUE
 
@@ -107,14 +111,15 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ZoldorfPlayerShop", src.name)
-			ui.open()
+		ui.open()
 
 	ui_data(mob/user)
 		. = ..()
-
 		.["credits"] = src.credits
 		.["user_soul"] = user.mind?.soul ? user.mind.soul : 0
 
+	ui_static_data(mob/user)
+		. = ..()
 		var/list/products = list()
 		for(var/datum/zoldorfitem/soul/product as anything in src.soul_items)
 			products += list(list(
