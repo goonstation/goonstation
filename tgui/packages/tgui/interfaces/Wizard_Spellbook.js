@@ -6,19 +6,7 @@
  */
 
 import { useBackend, useLocalState, useSharedState } from '../backend';
-import {
-  Box,
-  Button,
-  Collapsible,
-  Dimmer,
-  Divider,
-  Flex,
-  Image,
-  Input,
-  LabeledList,
-  Section,
-  Stack,
-} from '../components';
+import { Box, Button, Collapsible, Dimmer, Divider, Image, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const Wizard_Spellbook = (props, context) => {
@@ -35,9 +23,9 @@ export const Wizard_Spellbook = (props, context) => {
     <Window title={'Wizard Spellbook'} fontSize={2} height={600} width={500}>
       <Window.Content>
         <Section title={owner_name + "'s Spellbook "}>
-          <Flex justify={'space-between'}>
-            <Flex.Item>{'Spell slots remaining: ' + spell_slots}</Flex.Item>
-            <Flex.Item>
+          <Stack justify="space-between">
+            <Stack.Item>{'Spell slots remaining: ' + spell_slots}</Stack.Item>
+            <Stack.Item>
               <Input
                 value={searchQuery}
                 placeholder={'Search by spell name'}
@@ -45,8 +33,8 @@ export const Wizard_Spellbook = (props, context) => {
                 autoSelect
                 onInput={(_, value) => setSearchQuery(value)}
               />
-            </Flex.Item>
-          </Flex>
+            </Stack.Item>
+          </Stack>
         </Section>
       </Window.Content>
       <Window.Content mt={12} scrollable>
@@ -119,9 +107,9 @@ const Spell = (props, context) => {
         )}
         <Section
           title={
-            <Flex justify="space-between" align="end">
+            <Stack align="end">
               {!!spell_contents[4] && (
-                <Flex.Item>
+                <Stack.Item>
                   <Image
                     pixelated
                     mt={-2}
@@ -129,14 +117,14 @@ const Spell = (props, context) => {
                     width="32px"
                     src={`data:image/png;base64,${spell_contents[4]}`}
                   />
-                </Flex.Item>
+                </Stack.Item>
               )}
-              <Flex.Item grow fontSize={1.25} ml={1}>
+              <Stack.Item grow fontSize={1.25}>
                 {spell}
-              </Flex.Item>
-              <Flex.Item>
+              </Stack.Item>
+              <Stack.Item>
                 <Button // Putting this into buttons={}, breaks it, somehow.
-                  backgroundColor={'green'}
+                  backgroundColor="good"
                   disabled={spell_slots < spell_contents[1] || purchased}
                   onClick={() => {
                     setPurchased(true);
@@ -144,8 +132,8 @@ const Spell = (props, context) => {
                   }}>
                   {If_Purchased_Text(purchased, spell_contents[1], spell_slots)}
                 </Button>
-              </Flex.Item>
-            </Flex>
+              </Stack.Item>
+            </Stack>
           }>
           <LabeledList>
             {spell_contents[2] !== null && (
