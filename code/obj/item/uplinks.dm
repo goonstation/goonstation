@@ -1321,7 +1321,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
-			ui = new(user, src, "Wizard_Spellbook")
+			ui = new(user, src, "WizardSpellbook")
 			ui.open()
 
 	ui_data(mob/user)
@@ -1334,15 +1334,17 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		.["vr"] = src.vr
 
 		var/list/spellbook_contents = list()
-		for(var/datum/SWFuplinkspell/spell in src.spells)
+		for(var/datum/SWFuplinkspell/spell as anything in src.spells)
 			var/cooldown_contents = null
 			var/icon/spell_icon = null
-			if (spell.eqtype != "Spell") // Disallow spell framework
-				if (!spellbook_contents[spell.eqtype]) spellbook_contents[spell.eqtype] = list() // Create category if it doesnt exist
+			if (spell.eqtype != "Spell")
+				if (!spellbook_contents[spell.eqtype])
+					// Create category if it doesnt exist
+					spellbook_contents[spell.eqtype] = list()
 				if (spell.assoc_spell && ispath(spell.assoc_spell, /datum/targetable/spell))
-					var/datum/targetable/spell/spell_datum = spell.assoc_spell
-					cooldown_contents = initial(spell_datum.cooldown)
-					spell_icon = icon(initial(spell_datum.icon), initial(spell_datum.icon_state), frame=6)
+					var/datum/targetable/spell/spell_ability_datum = spell.assoc_spell
+					cooldown_contents = initial(spell_ability_datum.cooldown)
+					spell_icon = icon(initial(spell_ability_datum.icon), initial(spell_ability_datum.icon_state), frame=6)
 				spellbook_contents[spell.eqtype][spell.name] = list(
 					desc = spell.desc,
 					cost = spell.cost,

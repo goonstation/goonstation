@@ -9,7 +9,7 @@ import { useBackend, useLocalState, useSharedState } from '../backend';
 import { Box, Button, Collapsible, Dimmer, Divider, Image, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const Wizard_Spellbook = (props, context) => {
+export const WizardSpellbook = (props, context) => {
   const { data } = useBackend(context);
   const [searchQuery, setSearchQuery] = useLocalState(context, 'searchQuery', '');
   const { spellbook_contents, spell_slots, owner_name } = data;
