@@ -792,7 +792,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	mob_flags = SPEECH_REVERSE
 	/*
 	say(var/message)
-		message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
+		message = strip_html(trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 		if (!message)
 			return
 		if (dd_hasprefix(message, "*") && !src.stat)

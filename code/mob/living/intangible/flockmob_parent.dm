@@ -238,10 +238,10 @@
 		return src.emote(copytext(message, 2),1)
 
 	if (isdead(src))
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		return src.say_dead(message)
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	logTheThing(LOG_DIARY, src, ": [message]", "say")
 
 	var/prefixAndMessage = separate_radio_prefix_and_message(message)

@@ -23,7 +23,7 @@
 		return FALSE
 	return copytext(text, length(text) - length(end) + 1, length(text) + 1) == end
 
-/proc/trim(text)
+/proc/trimtext(text)
 	return trim_left(trim_right(text))
 
 #define is_uppercase_letter(c) (text2ascii(c, 1) >= 65 && text2ascii(c, 1) <= 90)

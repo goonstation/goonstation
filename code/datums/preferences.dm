@@ -395,7 +395,7 @@ var/list/removed_jobs = list(
 				for (var/c in bad_name_characters)
 					new_profile_name = replacetext(new_profile_name, c, "")
 
-				new_profile_name = trim(new_profile_name)
+				new_profile_name = trimtext(new_profile_name)
 
 				if (new_profile_name)
 					if (length(new_profile_name) >= 26)
@@ -413,7 +413,7 @@ var/list/removed_jobs = list(
 				var/new_name = tgui_input_text(usr, "Please select a first name:", "Character Generation", src.name_first)
 				if (isnull(new_name))
 					return
-				new_name = trim(new_name)
+				new_name = trimtext(new_name)
 				for (var/c in bad_name_characters)
 					new_name = replacetext(new_name, c, "")
 				if (length(new_name) < NAME_CHAR_MIN)
@@ -440,7 +440,7 @@ var/list/removed_jobs = list(
 				var/new_name = tgui_input_text(usr, "Please select a middle name:", "Character Generation", src.name_middle)
 				if (isnull(new_name))
 					return
-				new_name = trim(new_name)
+				new_name = trimtext(new_name)
 				for (var/c in bad_name_characters)
 					new_name = replacetext(new_name, c, "")
 				if (length(new_name) > NAME_CHAR_MAX)
@@ -459,7 +459,7 @@ var/list/removed_jobs = list(
 				var/new_name = tgui_input_text(usr, "Please select a last name:", "Character Generation", src.name_last)
 				if (isnull(new_name))
 					return
-				new_name = trim(new_name)
+				new_name = trimtext(new_name)
 				for (var/c in bad_name_characters)
 					new_name = replacetext(new_name, c, "")
 				if (length(new_name) < NAME_CHAR_MIN)
