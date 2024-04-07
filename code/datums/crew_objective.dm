@@ -71,6 +71,7 @@
 
 ABSTRACT_TYPE(/datum/objective/crew)
 /datum/objective/crew
+	var/XPreward = 50
 
 /datum/objective/crew/custom
 
