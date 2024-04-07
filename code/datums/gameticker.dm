@@ -649,6 +649,7 @@ var/global/current_state = GAME_STATE_INVALID
 			if(CO.check_completion())
 				crewMind.completed_objs++
 				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] [SPAN_SUCCESS("<B>Success</B>")]")
+				JOB_XP(crewMind.current, crewMind.assigned_role, 50)
 				logTheThing(LOG_DIARY, crewMind, "completed objective: [CO.explanation_text]")
 				if (!isnull(CO.medal_name) && !isnull(crewMind.current))
 					crewMind.current.unlock_medal(CO.medal_name, CO.medal_announce)
