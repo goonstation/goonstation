@@ -195,7 +195,6 @@
 	var/mob/living/idiot = null
 	///The area this bag spawned in.
 	var/area/start_area
-	var/processing_tier = PROCESSING_EIGHTH
 
 	///Items that haven't been removed from the bag. These will travel with it.
 	var/datum/vis_storage_controller/vis_controller
