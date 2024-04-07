@@ -91,6 +91,31 @@
 	if(src.stamina_bar?.last_update != TIME) src.stamina_bar?.update_value(src)
 	return
 
+/// Adds 'get up' stamina, from taking beatdown damage.
+/mob/proc/get_revenge_stamina(stamina_damage, brute, burn, damage_type )
+	return
+
+/mob/living/get_revenge_stamina(stamina_damage, brute, burn, damage_type )
+	if(!src.use_stamina) return
+	if(!isnum(stamina_damage)) return
+
+	if (src.hasStatus("weakened") && !src.hasStatus("paralysis") && (brute > 0 || burn >= 5))
+		var/stamina_base = 20
+		var/stamina_from_damage = brute*10 + burn*5
+		var/stamina_regain_limit = 40+(stamina_damage/2) // 50 STA toolboxes leave you at 15 sta
+		var/stamina_regen_max = max(0,stamina_regain_limit-stamina)
+
+		add_stamina(max(0,min(stamina_base + stamina_from_damage, stamina_regen_max))) //adrenaline? pain? stun baton hate?
+		var/stun_duration = src.getStatusDuration("weakened")
+		if (stun_duration > 3 SECONDS) //if we have a big stun, we can kick it down a lot
+			var/stun_reduction = min(stun_duration-3 SECONDS,(brute + burn)*0.6 SECONDS) // let's saaay 1 full stun is 50 health.
+			src.setStatus("weakened", stun_duration-stun_reduction)
+		else if (stun_duration > 0 SECONDS)  // but we also still need a penalty for getting stamcrit which is 5s.
+			src.setStatus("weakened", stun_duration-1 SECOND)
+
+	if(src.stamina_bar?.last_update != TIME) src.stamina_bar?.update_value(src)
+	return
+
 /mob/living/carbon/human/remove_stamina(var/x)
 	..()
 	if (x >= 30 && src.hud && src.hud.stamina_back)

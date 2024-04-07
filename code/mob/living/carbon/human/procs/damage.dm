@@ -350,14 +350,6 @@
 
 	burn = max(0, burn)
 	//tox = max(0, burn)
-	if (src.hasStatus("weakened") && (brute > 0 || burn >= 5))
-		add_stamina(max(0,min(brute*10 + burn*5, 50-stamina))) //adrenaline? pain?
-		var/stun_duration = src.getStatusDuration("weakened")
-		if (stun_duration > 3 SECONDS) // we still need a penalty for getting stamcrit
-			var/stun_reduction = min(stun_duration-3 SECONDS,(brute + burn)*0.6 SECONDS) // let's saaay 1 full stun is 50 health.
-			src.setStatus("weakened", stun_duration-stun_reduction)
-		else if (stun_duration > 0 SECONDS)
-			src.setStatus("weakened", stun_duration-1 SECOND)
 
 	if (brute + burn + tox <= 0) return
 

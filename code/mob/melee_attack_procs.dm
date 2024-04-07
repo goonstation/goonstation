@@ -1009,6 +1009,7 @@
 				else
 					var/prev_stam = target.get_stamina()
 					target.remove_stamina(-stamina_target)
+					target.get_revenge_stamina(stamina_target, (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), damage_type )
 					target.stamina_stun()
 					if(prev_stam > 0 && target.get_stamina() <= 0) //We were just knocked out.
 						target.set_clothing_icon_dirty()
