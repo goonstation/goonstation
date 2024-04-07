@@ -425,8 +425,12 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/machinery/lrteleporter{
-	layer = 3
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Active Particle Phase Matrix"
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0

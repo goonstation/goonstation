@@ -76632,10 +76632,6 @@
 	})
 "xVg" = (
 /obj/machinery/door/airlock/pyro/classic{
-	name = "Bathroom"
-	},
-/obj/machinery/door/airlock/pyro/classic{
-	dir = 1;
 	name = "Crew Quarters";
 	tag = null
 	},

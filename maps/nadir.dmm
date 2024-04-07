@@ -596,8 +596,8 @@
 	pixel_y = 8
 	},
 /obj/item/pinpointer/disk{
-	pixel_y = -3;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = -3
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw_se,
 /area/station/bridge/captain)
@@ -1785,8 +1785,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "disposals";
-	name = "Disposals";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Disposals"
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/outer/ne{
@@ -2535,8 +2535,8 @@
 "bgU" = (
 /obj/table/auto,
 /obj/item/storage/box/glassbox{
-	pixel_y = 10;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 10
 	},
 /obj/item/gun/russianrevolver,
 /obj/machinery/phone/wall{
@@ -2753,12 +2753,12 @@
 	pixel_x = 6
 	},
 /obj/item/paper_bin{
-	pixel_y = 15;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 15
 	},
 /obj/item/pen{
-	pixel_y = 13;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 13
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
@@ -3394,8 +3394,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "escape";
-	name = "Escape";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Escape"
 	},
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/hallway/secondary/exit)
@@ -6477,8 +6477,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "reactorside";
-	name = "Reactor Side";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Reactor Side"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -6992,8 +6992,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "sec";
-	name = "Security";
-	enter_id = "brig"
+	enter_id = "brig";
+	name = "Security"
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig)
@@ -7983,8 +7983,8 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "secinterro1";
-	name = "Security Interrogation 1";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Security Interrogation 1"
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
@@ -9122,8 +9122,8 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "escape";
-	name = "Escape";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Escape"
 	},
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/hallway/secondary/exit)
@@ -9472,30 +9472,30 @@
 /obj/table/reinforced/auto,
 /obj/item/kitchen/utensil/fork{
 	dir = 4;
-	pixel_y = 10;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 10
 	},
 /obj/item/kitchen/utensil/spoon{
 	dir = 4;
-	pixel_y = -6;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = -6
 	},
 /obj/item/plate{
-	pixel_y = 5;
+	grabs_food_on_spawn = 0;
 	pixel_x = -2;
-	grabs_food_on_spawn = 0
+	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/icewater{
 	pixel_x = 11;
 	pixel_y = 4
 	},
 /obj/item/shaker/ketchup{
-	pixel_y = -7;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = -7
 	},
 /obj/item/shaker/mustard{
-	pixel_y = -7;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = -7
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
@@ -10031,8 +10031,8 @@
 	},
 /obj/table/auto,
 /obj/item/storage/box/glassbox{
-	pixel_y = 9;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 9
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
@@ -11168,8 +11168,8 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "sec";
-	name = "Security";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Security"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -12863,8 +12863,8 @@
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "aiupload";
-	name = "AI Upload";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "AI Upload"
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
@@ -18098,16 +18098,16 @@
 	},
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical{
-	pixel_y = 7;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 7
 	},
 /obj/item/aiModule/hologram_expansion/syndicate{
-	pixel_y = -4;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = -4
 	},
 /obj/item/pinpointer/disk{
-	pixel_y = 2;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 2
 	},
 /turf/simulated/floor/engine/caution/north,
 /area/listeningpost/power)
@@ -19523,8 +19523,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "reactormain";
-	name = "Reactor Main";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Reactor Main"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/monitoring{
@@ -19554,8 +19554,8 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "secinterro2";
-	name = "Security Interrogation 2";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Security Interrogation 2"
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -19960,16 +19960,16 @@
 "itD" = (
 /obj/item/storage/firstaid/toxin,
 /obj/item/device/reagentscanner{
-	pixel_y = -2;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = -2
 	},
 /obj/item/reagent_containers/dropper/mechanical{
-	pixel_y = 7;
-	pixel_x = -10
+	pixel_x = -10;
+	pixel_y = 7
 	},
 /obj/item/clothing/glasses/spectro{
-	pixel_y = 11;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = 11
 	},
 /obj/machinery/door_control{
 	id = "nadir_barchem";
@@ -24964,8 +24964,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "reactormain";
-	name = "Reactor Main";
-	enter_id = "inner2"
+	enter_id = "inner2";
+	name = "Reactor Main"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/monitoring{
@@ -25552,8 +25552,8 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "aiupload";
-	name = "AI Upload";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "AI Upload"
 	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/turret_protected/ai_upload)
@@ -26079,18 +26079,18 @@
 /obj/table/reinforced/auto,
 /obj/item/kitchen/utensil/spoon{
 	dir = 8;
-	pixel_y = 11;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 11
 	},
 /obj/item/plate{
-	pixel_y = 5;
+	grabs_food_on_spawn = 0;
 	pixel_x = 3;
-	grabs_food_on_spawn = 0
+	pixel_y = 5
 	},
 /obj/item/kitchen/utensil/fork{
 	dir = 8;
-	pixel_y = -4;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = -4
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/icewater{
 	pixel_x = -11;
@@ -28955,8 +28955,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "aicore";
-	name = "AI Core";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "AI Core"
 	},
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
@@ -31917,8 +31917,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "reactorside";
-	name = "Reactor Side";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Reactor Side"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -32978,8 +32978,8 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "secinterro1";
-	name = "Security Interrogation 1";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Security Interrogation 1"
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -35396,14 +35396,11 @@
 	},
 /area/station/security/equipment)
 "oQc" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix"
-	},
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/tank/air,
+/obj/item/clothing/mask/breath,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -35550,19 +35547,19 @@
 	pixel_y = 32
 	},
 /obj/item/kitchen/utensil/knife{
+	dir = 2;
 	pixel_x = 9;
-	pixel_y = 4;
-	dir = 2
+	pixel_y = 4
 	},
 /obj/item/kitchen/utensil/knife{
+	dir = 2;
 	pixel_x = 9;
-	pixel_y = 4;
-	dir = 2
+	pixel_y = 4
 	},
 /obj/item/kitchen/utensil/knife{
+	dir = 2;
 	pixel_x = 9;
-	pixel_y = 4;
-	dir = 2
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
@@ -36462,8 +36459,8 @@
 /area/station/maintenance/disposal)
 "pol" = (
 /obj/machinery/light_switch/west{
-	pixel_y = 24;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 24
 	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
@@ -36538,8 +36535,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "reactormain";
-	name = "Reactor Main";
-	enter_id = "inner1"
+	enter_id = "inner1";
+	name = "Reactor Main"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/monitoring{
@@ -37616,8 +37613,8 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "escape";
-	name = "Escape";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Escape"
 	},
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/hallway/secondary/exit)
@@ -38541,12 +38538,6 @@
 	dir = 4
 	},
 /area/station/hangar/sec)
-"qjj" = (
-/obj/machinery/lrteleporter,
-/turf/simulated/floor/purpleblack{
-	dir = 1
-	},
-/area/station/science/teleporter)
 "qjx" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/greenblack,
@@ -40019,11 +40010,14 @@
 	name = "Transception Array Control"
 	})
 "qTn" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/tank/air,
-/obj/item/clothing/mask/breath,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Active Particle Phase Matrix"
+	},
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "qTA" = (
@@ -48596,19 +48590,19 @@
 "uIZ" = (
 /obj/item/kitchen/utensil/fork{
 	dir = 4;
-	pixel_y = 12;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 12
 	},
 /obj/table/reinforced/auto,
 /obj/item/kitchen/utensil/spoon{
 	dir = 4;
-	pixel_y = -4;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = -4
 	},
 /obj/item/plate{
-	pixel_y = 7;
+	grabs_food_on_spawn = 0;
 	pixel_x = -2;
-	grabs_food_on_spawn = 0
+	pixel_y = 7
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/icewater{
 	pixel_x = 10;
@@ -49724,8 +49718,8 @@
 "vos" = (
 /obj/table/auto,
 /obj/item/storage/box/cocktail_doodads{
-	pixel_y = 17;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 17
 	},
 /obj/item/storage/box/fruit_wedges{
 	pixel_x = -4;
@@ -50864,8 +50858,8 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "secinterro2";
-	name = "Security Interrogation 2";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Security Interrogation 2"
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
@@ -51299,8 +51293,8 @@
 /obj/disposalpipe/segment/horizontal,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "sec";
-	name = "Security";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Security"
 	},
 /turf/simulated/floor/black,
 /area/station/security/equipment)
@@ -52175,8 +52169,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "reactormain";
-	name = "Reactor Main";
-	enter_id = "centrifuge"
+	enter_id = "centrifuge";
+	name = "Reactor Main"
 	},
 /turf/simulated/floor/black,
 /area/station/engine/monitoring{
@@ -53500,18 +53494,18 @@
 /obj/table/reinforced/auto,
 /obj/item/kitchen/utensil/fork{
 	dir = 8;
-	pixel_y = -3;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = -3
 	},
 /obj/item/kitchen/utensil/spoon{
 	dir = 8;
-	pixel_y = 13;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 13
 	},
 /obj/item/plate{
-	pixel_y = 7;
+	grabs_food_on_spawn = 0;
 	pixel_x = 3;
-	grabs_food_on_spawn = 0
+	pixel_y = 7
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/icewater{
 	pixel_x = -11;
@@ -53635,8 +53629,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "aicore";
-	name = "AI Core";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "AI Core"
 	},
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
@@ -55255,8 +55249,8 @@
 /obj/mapping_helper/access/maint,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "disposals";
-	name = "Disposals";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Disposals"
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/outer/ne{
@@ -98210,7 +98204,7 @@ ilO
 tIi
 qSY
 oWG
-qjj
+iXu
 pmt
 wxQ
 tYc

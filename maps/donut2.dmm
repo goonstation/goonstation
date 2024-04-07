@@ -11701,8 +11701,8 @@
 /obj/mapping_helper/access/engineering_atmos,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "atmos";
-	name = "Atmos";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Atmos"
 	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
@@ -12892,8 +12892,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "bridge";
-	name = "Bridge";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Bridge"
 	},
 /turf/simulated/floor/black/side{
 	dir = 8
@@ -16513,8 +16513,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "aicore";
-	name = "AI Core";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "AI Core"
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
@@ -18533,8 +18533,8 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "innereng";
-	name = "Inner Engineering";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Inner Engineering"
 	},
 /turf/simulated/floor,
 /area/station/engine/inner)
@@ -23581,8 +23581,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "sec";
-	name = "Security";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Security"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -24221,8 +24221,8 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "innereng";
-	name = "Inner Engineering";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Inner Engineering"
 	},
 /turf/simulated/floor,
 /area/station/engine/inner)
@@ -25847,9 +25847,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "idS" = (
-/obj/machinery/lrteleporter,
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Active Particle Phase Matrix"
 	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 1
@@ -26516,8 +26522,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "mining";
-	name = "Mining";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Mining"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/refinery)
@@ -26808,8 +26814,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "mining";
-	name = "Mining";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Mining"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/refinery)
@@ -27585,8 +27591,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "teleporter";
-	name = "Teleporter";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Teleporter"
 	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
@@ -27953,8 +27959,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "bridge";
-	name = "Bridge";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Bridge"
 	},
 /turf/simulated/floor,
 /area/station/bridge)
@@ -29382,8 +29388,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "aiupload";
-	name = "AI Upload";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "AI Upload"
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
@@ -30197,8 +30203,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "sec";
-	name = "Security";
-	enter_id = "brig"
+	enter_id = "brig";
+	name = "Security"
 	},
 /turf/simulated/floor/red/side{
 	dir = 8
@@ -32689,8 +32695,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "aisat";
-	name = "AI Satellite";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "AI Satellite"
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
@@ -33111,8 +33117,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "aisat";
-	name = "AI Satellite";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "AI Satellite"
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
@@ -35348,8 +35354,8 @@
 /obj/mapping_helper/access/mining,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "mining";
-	name = "Mining";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Mining"
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -36642,8 +36648,8 @@
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "innereng";
-	name = "Inner Engineering";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Inner Engineering"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
@@ -37308,8 +37314,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "mining";
-	name = "Mining";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Mining"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/refinery)
@@ -37447,8 +37453,8 @@
 /area/station/security/equipment)
 "piF" = (
 /obj/storage/crate{
-	name = "Special Syllogí";
-	desc = "Ένα μεγάλο μεταλλικό κουτί στο οποίο μπορείτε να βάλετε πράγματα. Ποιος ξέρει, μπορεί να έχει ήδη πράγματα μέσα του."
+	desc = "Ένα μεγάλο μεταλλικό κουτί στο οποίο μπορείτε να βάλετε πράγματα. Ποιος ξέρει, μπορεί να έχει ήδη πράγματα μέσα του.";
+	name = "Special Syllogí"
 	},
 /obj/item/clothing/under/gimmick/toga,
 /obj/item/clothing/suit/greek,
@@ -38252,8 +38258,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "aisat";
-	name = "AI Satellite";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "AI Satellite"
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
@@ -40074,8 +40080,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "bridge";
-	name = "Bridge";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Bridge"
 	},
 /turf/simulated/floor,
 /area/station/bridge)
@@ -41939,8 +41945,8 @@
 /obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "aisat";
-	name = "AI Satellite";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "AI Satellite"
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
@@ -44373,8 +44379,8 @@
 /obj/mapping_helper/access/engineering_atmos,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "atmos";
-	name = "Atmos";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Atmos"
 	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
@@ -45045,8 +45051,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "sec";
-	name = "Security";
-	enter_id = "sec"
+	enter_id = "sec";
+	name = "Security"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -46084,8 +46090,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "bridge";
-	name = "Bridge";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Bridge"
 	},
 /turf/simulated/floor/black/side{
 	dir = 8
@@ -46330,8 +46336,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "innereng";
-	name = "Inner Engineering";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Inner Engineering"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
@@ -47446,8 +47452,8 @@
 /obj/mapping_helper/access/mining,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "mining";
-	name = "Mining";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Mining"
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -48212,8 +48218,8 @@
 /obj/mapping_helper/access/engineering_atmos,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "atmos";
-	name = "Atmos";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Atmos"
 	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
@@ -48553,8 +48559,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "aicore";
-	name = "AI Core";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "AI Core"
 	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai)
@@ -48835,8 +48841,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "teleporter";
-	name = "Teleporter";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Teleporter"
 	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
@@ -49900,8 +49906,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "aiupload";
-	name = "AI Upload";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "AI Upload"
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
@@ -50236,8 +50242,8 @@
 /obj/mapping_helper/access/engineering_atmos,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "atmos";
-	name = "Atmos";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Atmos"
 	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)

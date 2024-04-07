@@ -7,11 +7,13 @@
  */
 
 import { useBackend, useSharedState } from '../../backend';
-import { Box, Button, Icon, LabeledList, Section, Stack, Tabs } from '../../components';
+import { Button, Icon, Section, Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { BookmarksSection } from './BookmarksSection';
 import { ConnectionSection } from './ConnectionSection';
 import { CoordinatesSection } from './CoordinatesSection';
+import { LongRangeSection } from './LongRangeSection';
+import { DiskSection } from './DiskSection';
 import type { TeleConsoleData } from './types';
 import { formatReadout } from './util';
 
@@ -30,9 +32,14 @@ export const TeleConsole = (_props, context) => {
   const handleAddBookmark = (name: string) => act('addbookmark', { value: name });
   const handleDeleteBookmark = (ref: string) => act('deletebookmark', { value: ref });
   const handleRestoreBookmark = (ref: string) => act('restorebookmark', { value: ref });
+  const handleLongRangeSend = (name: string) => act("lrt_send", { name: name });
+  const handleLongRangeReceive = (name: string) => act("lrt_receive", { name: name });
+  const handleLongRangePortal = (name: string) => act('lrt_portal', { name: name });
   const handleResetConnect = () => act('reconnect', { value: 2 });
   const handleRetryConnect = () => act('reconnect', { value: 1 });
   const handleCyclePad = () => act('setpad');
+  const handleScanDisk = () => act("scan_disk");
+  const handleEjectDisk = () => act("eject_disk");
 
   return (
     <Window theme="ntos" width={410} height={515}>
@@ -48,7 +55,7 @@ export const TeleConsole = (_props, context) => {
                 Local
               </Tabs.Tab>
               <Tabs.Tab
-                icon="wrench"
+                icon="globe"
                 selected={tab === Tab.LongRange}
                 onClick={() => setTab(Tab.LongRange)}
               >
@@ -99,41 +106,13 @@ export const TeleConsole = (_props, context) => {
           {(tab===Tab.LongRange) && (
             <Stack.Item>
               <Section>
-                <Section title="Destinations">
-                  <LabeledList>
-                    {destinations.length ? destinations.map(({ name }) => (
-                      <div key={name}>
-                        <LabeledList.Item
-                          label={name}>
-                          <Box textAlign="right">
-                            <Button
-                              icon="sign-out-alt"
-                              onClick={() => act("lrt_send", { name: name })}
-                              disabled={!isConnectedToHost}
-                            >
-                              Send
-                            </Button>
-                            <Button
-                              icon="sign-in-alt"
-                              onClick={() => act("lrt_receive", { name: name })}
-                              disabled={!isConnectedToHost}
-                            >
-                              Receive
-                            </Button>
-                            <Button onClick={() => act('lrt_portal', { name: name })} disabled={!isConnectedToHost}>
-                              <Icon name="ring" rotation={90} />
-                              Toggle Portal
-                            </Button>
-                          </Box>
-                        </LabeledList.Item>
-                      </div>
-                    )) : (
-                      <LabeledList.Item>
-                        No destinations are currently available.
-                      </LabeledList.Item>
-                    )}
-                  </LabeledList>
-                </Section>
+                <LongRangeSection
+                  isConnected={isConnectedToHost}
+                  destinations={destinations}
+                  onSend={handleLongRangeSend}
+                  onReceive={handleLongRangeReceive}
+                  onToggle={handleLongRangePortal}
+                />
                 {readout && <Section>{formatReadout(readout)}</Section>}
                 <ConnectionSection
                   isConnected={isConnectedToHost}
@@ -144,26 +123,11 @@ export const TeleConsole = (_props, context) => {
                   padNum={padNum}
                 />
               </Section>
-              {(!!disk) && (
-                <Section
-                  title="Disk Controls"
-                >
-                  <Button
-                    icon="upload"
-                    color="blue"
-                    onClick={() => act("scan_disk")}>
-                    Read from Disk
-                  </Button>
-                  <Button
-                    icon="eject"
-                    color="bad"
-                    onClick={() => act("eject_disk")}>
-                    Eject Disk
-                  </Button>
-
-                </Section>
-
-              )}
+              <DiskSection
+                isDiskPresent={!!disk}
+                onScanDisk={handleScanDisk}
+                onEjectDisk={handleEjectDisk}
+              />
             </Stack.Item>
           )}
         </Stack>

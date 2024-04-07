@@ -555,7 +555,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				if (!target) //we didnt find a turf to send to
 					return 0
 				leaveresidual(target)
-				sleep(1.0 SECONDS)
+				sleep(0.5 SECONDS)
 
 				showswirl(src.loc, FALSE)
 				playsound(src.loc, 'sound/machines/lrteleport.ogg', 60, TRUE)

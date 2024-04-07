@@ -40025,12 +40025,10 @@
 /area/station/science/construction)
 "cmH" = (
 /obj/machinery/lrteleporter,
-/turf/simulated/floor/circuit/green,
-/area/station/science/teleporter)
-"cmI" = (
-/turf/simulated/floor/stairs{
-	dir = 4
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibdown1"
 	},
+/turf/simulated/floor/circuit/green,
 /area/station/science/teleporter)
 "cmJ" = (
 /turf/simulated/floor,
@@ -40623,7 +40621,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/construction)
 "cos" = (
-/obj/machinery/light,
+/obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/circuit/green,
 /area/station/science/teleporter)
 "cot" = (
@@ -41268,11 +41266,10 @@
 /turf/simulated/floor/plating,
 /area/station/science/construction)
 "cqg" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/poster/wallsign/hazard_caution{
 	desc = "Teleportation may be hazardous to one's health."
 	},
-/turf/simulated/floor/black,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/teleporter)
 "cqh" = (
 /obj/item/device/radio/intercom/science{
@@ -45340,9 +45337,9 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Mining";
 	cycle_id = "mining";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Mining"
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -47454,8 +47451,8 @@
 	mail_tag = "medical director";
 	mailgroup = "command";
 	mailgroup2 = "medbay";
-	pixel_y = 32;
-	name = "mail chute-'Medical Director'"
+	name = "mail chute-'Medical Director'";
+	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/north,
 /area/station/medical/head)
@@ -47504,8 +47501,8 @@
 /obj/table/reinforced/auto,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/black,
@@ -47514,8 +47511,8 @@
 /obj/table/reinforced/auto,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /obj/mapping_helper/access/medical,
 /obj/machinery/phone{
@@ -48041,17 +48038,17 @@
 /area/station/medical/medbay/lobby)
 "cKW" = (
 /obj/health_scanner/floor{
+	dir = 8;
 	find_in_range = 0;
 	id = "lobby_north";
-	dir = 8;
-	pixel_y = 8;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 8
 	},
 /obj/item/bell/hop{
 	anchored = 1;
 	name = "wall mounted service bell";
-	pixel_y = 24;
-	pixel_x = 24
+	pixel_x = 24;
+	pixel_y = 24
 	},
 /obj/machinery/light/incandescent{
 	dir = 1
@@ -48061,14 +48058,14 @@
 "cKX" = (
 /obj/table/reinforced/auto,
 /obj/health_scanner/wall{
+	dir = 4;
 	find_in_range = 0;
 	id = "lobby_north";
-	dir = 4;
 	pixel_x = 5
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
@@ -48507,8 +48504,8 @@
 "cMz" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
@@ -53371,8 +53368,8 @@
 /area/station/medical/medbay)
 "ddR" = (
 /obj/item_dispenser/medical_mask{
-	pixel_y = 0;
-	pixel_x = -24
+	pixel_x = -24;
+	pixel_y = 0
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -53645,8 +53642,8 @@
 	interesting = "This toilet is immaculately clean. Like, suspiciously clean."
 	},
 /obj/decoration/toiletholder{
-	pixel_y = -6;
-	interesting = "An extremely expensive brand of toilet paper made from....real paper? Not even Command can afford to buy this pristine toilet paper."
+	interesting = "An extremely expensive brand of toilet paper made from....real paper? Not even Command can afford to buy this pristine toilet paper.";
+	pixel_y = -6
 	},
 /obj/landmark/start/job/medical_director,
 /turf/simulated/floor/plating,
@@ -57359,8 +57356,8 @@
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "bridge";
-	name = "Bridge";
-	enter_id = "north"
+	enter_id = "north";
+	name = "Bridge"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/customs)
@@ -57589,8 +57586,8 @@
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "security";
-	name = "Security";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Security"
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
@@ -58087,8 +58084,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Emergency Solar Array 2";
-	cycle_id = "solar2"
+	cycle_id = "solar2";
+	name = "Emergency Solar Array 2"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/outer/ne)
@@ -58453,8 +58450,8 @@
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "bridge";
-	name = "Bridge";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Bridge"
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/customs)
@@ -58758,8 +58755,8 @@
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "hydro";
-	name = "Hydroponics";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Hydroponics"
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -59056,8 +59053,8 @@
 /obj/mapping_helper/access/hydro,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "hydro";
-	name = "Hydroponics";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Hydroponics"
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
@@ -59204,9 +59201,9 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Mining";
 	cycle_id = "mining";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Mining"
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -59419,8 +59416,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "North Maintenance";
-	cycle_id = "n_maint"
+	cycle_id = "n_maint";
+	name = "North Maintenance"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -59985,8 +59982,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Emergency Solar Array 2";
-	cycle_id = "solar2"
+	cycle_id = "solar2";
+	name = "Emergency Solar Array 2"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/outer/ne)
@@ -60322,8 +60319,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "aiairbridge";
-	name = "AI Airbridge";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "AI Airbridge"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/info{
@@ -60668,8 +60665,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Central Maintenance";
-	cycle_id = "c_maint"
+	cycle_id = "c_maint";
+	name = "Central Maintenance"
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/central)
@@ -60876,8 +60873,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "West Substation";
-	cycle_id = "westsubstation"
+	cycle_id = "westsubstation";
+	name = "West Substation"
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/west)
@@ -60931,9 +60928,9 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	name = "Central Maintenance";
 	cycle_id = "c_maint3";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Central Maintenance"
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/central)
@@ -61188,8 +61185,8 @@
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "bridge";
-	name = "Bridge";
-	enter_id = "south"
+	enter_id = "south";
+	name = "Bridge"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/customs)
@@ -61578,8 +61575,8 @@
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "bridge";
-	name = "Bridge";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Bridge"
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/customs)
@@ -61782,8 +61779,8 @@
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "security";
-	name = "Security";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Security"
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
@@ -61906,8 +61903,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "South East Maintenance";
-	cycle_id = "se_maint"
+	cycle_id = "se_maint";
+	name = "South East Maintenance"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -62111,9 +62108,9 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Mining";
 	cycle_id = "mining";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Mining"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/mining/magnet)
@@ -62406,8 +62403,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "West Substation";
-	cycle_id = "westsubstation"
+	cycle_id = "westsubstation";
+	name = "West Substation"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/substation/west)
@@ -62739,11 +62736,11 @@
 /area/space)
 "jTZ" = (
 /obj/health_scanner/floor{
+	dir = 8;
 	find_in_range = 0;
 	id = "lobby_south";
-	dir = 8;
-	pixel_y = 8;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 8
 	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
@@ -62978,9 +62975,9 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Mining";
 	cycle_id = "mining";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Mining"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/mining/magnet)
@@ -63069,8 +63066,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "South Solar Maintenance";
-	cycle_id = "southsolar"
+	cycle_id = "southsolar";
+	name = "South Solar Maintenance"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/solar/south)
@@ -63154,9 +63151,9 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Central Maintenance";
 	cycle_id = "c_maint3";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Central Maintenance"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/central)
@@ -64020,8 +64017,8 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /obj/mapping_helper/access/medical,
 /obj/item/kitchen/food_box/lollipop{
@@ -64127,14 +64124,14 @@
 "lmh" = (
 /obj/table/reinforced/auto,
 /obj/health_scanner/wall{
+	dir = 4;
 	find_in_range = 0;
 	id = "lobby_south";
-	dir = 4;
 	pixel_x = 5
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
@@ -64698,8 +64695,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "North East Maintenance";
-	cycle_id = "ne_maint"
+	cycle_id = "ne_maint";
+	name = "North East Maintenance"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/northeast)
@@ -64733,8 +64730,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "North East Maintenance";
-	cycle_id = "ne_maint2"
+	cycle_id = "ne_maint2";
+	name = "North East Maintenance"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -64811,8 +64808,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "South East Maintenance";
-	cycle_id = "se_maint2"
+	cycle_id = "se_maint2";
+	name = "South East Maintenance"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/southeast)
@@ -64935,8 +64932,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Auxillary Storage";
-	cycle_id = "auxstorage"
+	cycle_id = "auxstorage";
+	name = "Auxillary Storage"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/storage/auxillary)
@@ -65010,8 +65007,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Auxillary Storage";
-	cycle_id = "auxstorage"
+	cycle_id = "auxstorage";
+	name = "Auxillary Storage"
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/auxillary)
@@ -65174,8 +65171,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "South East Maintenance";
-	cycle_id = "se_maint2"
+	cycle_id = "se_maint2";
+	name = "South East Maintenance"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -65309,8 +65306,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "South Solar Maintenance";
-	cycle_id = "southsolar"
+	cycle_id = "southsolar";
+	name = "South Solar Maintenance"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/solar/south)
@@ -66347,8 +66344,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "North Maintenance";
-	cycle_id = "n_maint"
+	cycle_id = "n_maint";
+	name = "North Maintenance"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/north)
@@ -66440,8 +66437,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Central Maintenance";
-	cycle_id = "c_maint2"
+	cycle_id = "c_maint2";
+	name = "Central Maintenance"
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/central)
@@ -66547,9 +66544,9 @@
 	dir = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Central Maintenance";
 	cycle_id = "c_maint4";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Central Maintenance"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/central)
@@ -67869,8 +67866,8 @@
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "securityrelease";
-	name = "Security Release Room";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Security Release Room"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -68755,8 +68752,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "North Solar Maintenance";
-	cycle_id = "northsolar"
+	cycle_id = "northsolar";
+	name = "North Solar Maintenance"
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
@@ -68786,8 +68783,8 @@
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "securityrelease";
-	name = "Security Release Room";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Security Release Room"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -68884,8 +68881,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Research Outpost";
-	cycle_id = "sci_outpost"
+	cycle_id = "sci_outpost";
+	name = "Research Outpost"
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -69386,8 +69383,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Research Outpost";
-	cycle_id = "sci_outpost"
+	cycle_id = "sci_outpost";
+	name = "Research Outpost"
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -69744,8 +69741,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Central Maintenance";
-	cycle_id = "c_maint2"
+	cycle_id = "c_maint2";
+	name = "Central Maintenance"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
@@ -69776,8 +69773,8 @@
 /area/station/hallway/secondary/exit)
 "rln" = (
 /obj/item_dispenser/latex_gloves{
-	pixel_y = 0;
-	pixel_x = 24
+	pixel_x = 24;
+	pixel_y = 0
 	},
 /obj/storage/secure/closet/medical/anesthetic,
 /turf/simulated/floor/redwhite{
@@ -69871,8 +69868,8 @@
 /obj/mapping_helper/access/research_foyer,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "research";
-	name = "Research";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Research"
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -70214,9 +70211,9 @@
 	dir = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Central Maintenance";
 	cycle_id = "c_maint3";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Central Maintenance"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/central)
@@ -70348,8 +70345,8 @@
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "security";
-	name = "Security";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Security"
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
@@ -70363,8 +70360,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "North Solar Maintenance";
-	cycle_id = "northsolar"
+	cycle_id = "northsolar";
+	name = "North Solar Maintenance"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/solar/north)
@@ -70847,8 +70844,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "North East Maintenance";
-	cycle_id = "ne_maint"
+	cycle_id = "ne_maint";
+	name = "North East Maintenance"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/northeast)
@@ -71617,8 +71614,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "East Substation";
-	cycle_id = "eastsubstation"
+	cycle_id = "eastsubstation";
+	name = "East Substation"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/substation/east)
@@ -72237,8 +72234,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "South East Maintenance";
-	cycle_id = "se_maint"
+	cycle_id = "se_maint";
+	name = "South East Maintenance"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/southeast)
@@ -72319,8 +72316,8 @@
 /obj/mapping_helper/access/research_foyer,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "research";
-	name = "Research";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Research"
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -72563,8 +72560,8 @@
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "bridge";
-	name = "Bridge";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Bridge"
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/customs)
@@ -72580,8 +72577,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Central Maintenance";
-	cycle_id = "c_maint"
+	cycle_id = "c_maint";
+	name = "Central Maintenance"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
@@ -72710,8 +72707,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "aiairbridge";
-	name = "AI Airbridge";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "AI Airbridge"
 	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
@@ -74057,8 +74054,8 @@
 /obj/decal/stripe_caution,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "hydro";
-	name = "Hydroponics";
-	enter_id = "side"
+	enter_id = "side";
+	name = "Hydroponics"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/catering)
@@ -74161,8 +74158,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "North East Maintenance";
-	cycle_id = "ne_maint2"
+	cycle_id = "ne_maint2";
+	name = "North East Maintenance"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/northeast)
@@ -75288,9 +75285,9 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Central Maintenance";
 	cycle_id = "c_maint4";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Central Maintenance"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/central)
@@ -75345,9 +75342,9 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Central Maintenance";
 	cycle_id = "c_maint4";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Central Maintenance"
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/central)
@@ -75450,9 +75447,9 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "Central Maintenance";
 	cycle_id = "c_maint3";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Central Maintenance"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/central)
@@ -75587,8 +75584,8 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/cycler{
-	name = "East Substation";
-	cycle_id = "eastsubstation"
+	cycle_id = "eastsubstation";
+	name = "East Substation"
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/east)
@@ -105603,7 +105600,7 @@ cjw
 ckV
 ckV
 ckV
-cij
+cjw
 iiH
 ctk
 cuI
@@ -106207,7 +106204,7 @@ cjw
 ckV
 ckV
 ckV
-cij
+cjw
 nzM
 ctl
 cuH
@@ -106506,9 +106503,9 @@ aaa
 che
 cij
 cjw
-chg
-cmI
-chg
+cjw
+cjw
+cjw
 cjw
 crT
 ctm

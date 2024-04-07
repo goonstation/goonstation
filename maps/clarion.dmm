@@ -155,8 +155,8 @@
 "aau" = (
 /obj/disposalpipe/segment,
 /obj/railing/orange/reinforced{
-	icon_state = "railing-reinforced";
-	dir = 1
+	dir = 1;
+	icon_state = "railing-reinforced"
 	},
 /obj/railing/orange/reinforced{
 	dir = 4
@@ -228,8 +228,8 @@
 	},
 /obj/railing/orange/reinforced,
 /obj/railing/orange/reinforced{
-	icon_state = "railing-reinforced";
-	dir = 1
+	dir = 1;
+	icon_state = "railing-reinforced"
 	},
 /obj/stool/chair/green{
 	dir = 8
@@ -301,8 +301,8 @@
 /area/station/garden/aviary)
 "aaM" = (
 /obj/disposalpipe/trunk/produce{
-	icon_state = "pipe-t";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-t"
 	},
 /obj/machinery/floorflusher{
 	desc = "A chute for sending things to the kitchen";
@@ -347,8 +347,8 @@
 	pixel_y = 5
 	},
 /obj/item/kitchen/utensil/knife{
-	icon_state = "knife";
-	dir = 2
+	dir = 2;
+	icon_state = "knife"
 	},
 /obj/item/reagent_containers/syringe,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -11045,12 +11045,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/east)
-"aXa" = (
-/obj/machinery/lrteleporter{
-	layer = 3
-	},
-/turf/simulated/floor/white,
-/area/station/science/teleporter)
 "aXb" = (
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
@@ -18056,8 +18050,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engine";
-	name = "Engine Room";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Engine Room"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -21374,8 +21368,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "arrivals2";
-	name = "Arrivals";
-	enter_id = "main"
+	enter_id = "main";
+	name = "Arrivals"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -22292,8 +22286,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "cargo";
-	name = "Cargo";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Cargo"
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -22531,8 +22525,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "cargo";
-	name = "Cargo";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Cargo"
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -23752,8 +23746,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "arrivals";
-	name = "Arrivals";
-	enter_id = "main"
+	enter_id = "main";
+	name = "Arrivals"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -24138,8 +24132,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "escape";
-	name = "Escape";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Escape"
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
@@ -26547,13 +26541,13 @@
 	},
 /obj/machinery/door/poddoor/blast/single{
 	autoclose = 1;
+	dir = 4;
 	doordir = "noblasts";
 	icon_state = "bdoornoblasts1";
 	id = "disposals_door";
 	layer = 4;
 	name = "Disposals Safety Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
@@ -28282,8 +28276,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "arrivals";
-	name = "Arrivals";
-	enter_id = "main"
+	enter_id = "main";
+	name = "Arrivals"
 	},
 /turf/simulated/floor/caution/misc{
 	dir = 4
@@ -29245,12 +29239,12 @@
 /area/station/engine/substation/east)
 "lbe" = (
 /obj/machinery/door/poddoor/blast/single{
+	dir = 4;
 	doordir = "noblasts";
 	icon_state = "bdoornoblasts1";
 	id = "disposals_vent";
 	layer = 4;
-	name = "Disposals Vent";
-	dir = 4
+	name = "Disposals Vent"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -29314,8 +29308,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "cargo";
-	name = "Cargo";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Cargo"
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/substation/east)
@@ -29737,8 +29731,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "arrivals2";
-	name = "Arrivals";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Arrivals"
 	},
 /turf/simulated/floor/plating,
 /area/station/crewquarters/cryotron)
@@ -32076,8 +32070,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "escape";
-	name = "Escape";
-	enter_id = "main"
+	enter_id = "main";
+	name = "Escape"
 	},
 /turf/simulated/floor/caution/misc{
 	dir = 8
@@ -34686,8 +34680,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engine";
-	name = "Engine Room";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Engine Room"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -36762,8 +36756,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "escape";
-	name = "Escape";
-	enter_id = "main"
+	enter_id = "main";
+	name = "Escape"
 	},
 /turf/simulated/floor/caution/misc{
 	dir = 4
@@ -36827,8 +36821,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "escape2";
-	name = "Escape";
-	enter_id = "main"
+	enter_id = "main";
+	name = "Escape"
 	},
 /turf/simulated/floor/caution/misc{
 	dir = 8
@@ -36935,8 +36929,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "escape2";
-	name = "Escape";
-	enter_id = "main"
+	enter_id = "main";
+	name = "Escape"
 	},
 /turf/simulated/floor/caution/misc{
 	dir = 4
@@ -37853,8 +37847,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "escape2";
-	name = "Escape";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Escape"
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
@@ -38861,8 +38855,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engine";
-	name = "Engine Room";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Engine Room"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -38887,8 +38881,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "cargo";
-	name = "Cargo";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Cargo"
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -40259,8 +40253,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "cargo";
-	name = "Cargo";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Cargo"
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -43026,8 +43020,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "arrivals2";
-	name = "Arrivals";
-	enter_id = "main"
+	enter_id = "main";
+	name = "Arrivals"
 	},
 /turf/simulated/floor/caution/misc{
 	dir = 4
@@ -43701,8 +43695,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "arrivals";
-	name = "Arrivals";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Arrivals"
 	},
 /turf/simulated/floor/plating,
 /area/station/crewquarters/cryotron)
@@ -43930,8 +43924,8 @@
 "wvG" = (
 /obj/table/reinforced/chemistry/auto/clericalsup,
 /obj/machinery/glass_recycler/chemistry{
-	pixel_y = 9;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 9
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 8
@@ -45607,8 +45601,8 @@
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engine";
-	name = "Engine Room";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Engine Room"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -84618,7 +84612,7 @@ aSS
 aVe
 tXm
 aVS
-aXa
+aXb
 aXb
 aZE
 pxJ

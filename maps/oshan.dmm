@@ -281,8 +281,8 @@
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engine";
-	name = "Engineering";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Engineering"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
@@ -333,8 +333,8 @@
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engine";
-	name = "Engineering";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Engineering"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
@@ -8981,11 +8981,6 @@
 "aDr" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
-"aDs" = (
-/obj/machinery/lrteleporter,
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor,
-/area/station/science/teleporter)
 "aDu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -14390,8 +14385,8 @@
 /area/flock_trader)
 "aXM" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 4
 	},
 /obj/computerframe{
 	anchored = 1;
@@ -14458,8 +14453,8 @@
 "aYh" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 4
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/atmospherics)
@@ -14537,15 +14532,15 @@
 /area/station/science/artifact)
 "aYM" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 4
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
 "aYP" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 4
 	},
 /obj/lattice,
 /turf/simulated/floor/martian,
@@ -14558,8 +14553,8 @@
 /area/space)
 "aYV" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 4
 	},
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
@@ -14584,8 +14579,8 @@
 "aZa" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 4
 	},
 /turf/simulated/floor/plating/damaged1,
 /area/evilreaver/atmospherics)
@@ -14975,8 +14970,8 @@
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engine";
-	name = "Engineering";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Engineering"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
@@ -20351,8 +20346,8 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engine";
-	name = "Engineering";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Engineering"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/hangar/engine)
@@ -29915,8 +29910,8 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "diner";
-	name = "Space Diner";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Space Diner"
 	},
 /turf/simulated/floor/plating,
 /area/diner/hallway)
@@ -30993,8 +30988,8 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "sealift";
-	name = "Sea Elevator Room";
-	enter_id = "elevator"
+	enter_id = "elevator";
+	name = "Sea Elevator Room"
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
@@ -31211,8 +31206,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "sealift";
-	name = "Sea Elevator Room";
-	enter_id = "seaside"
+	enter_id = "seaside";
+	name = "Sea Elevator Room"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
@@ -31258,8 +31253,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "diner";
-	name = "Space Diner";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Space Diner"
 	},
 /turf/simulated/floor/plating,
 /area/diner/hallway)
@@ -31688,8 +31683,8 @@
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "innermaint";
-	name = "Central Inner Maintenance";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Central Inner Maintenance"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
@@ -32486,8 +32481,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engine";
-	name = "Engineering";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Engineering"
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
@@ -32904,8 +32899,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "bridge";
-	name = "Bridge";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Bridge"
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -33333,8 +33328,8 @@
 /obj/cable,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "sealift";
-	name = "Sea Elevator Room";
-	enter_id = "elevator"
+	enter_id = "elevator";
+	name = "Sea Elevator Room"
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
@@ -33725,8 +33720,8 @@
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engine";
-	name = "Engineering";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Engineering"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
@@ -36073,8 +36068,8 @@
 /area/station/quartermaster/office)
 "hwr" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 4
 	},
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/atmospherics)
@@ -36744,8 +36739,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "outpost";
-	name = "Research Outpost";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Research Outpost"
 	},
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -37298,8 +37293,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engine";
-	name = "Engineering";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Engineering"
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
@@ -37735,8 +37730,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "sec";
-	name = "Security";
-	enter_id = "sec"
+	enter_id = "sec";
+	name = "Security"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -38522,8 +38517,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "sec";
-	name = "Security";
-	enter_id = "brig"
+	enter_id = "brig";
+	name = "Security"
 	},
 /turf/simulated/floor/red,
 /area/station/security/processing)
@@ -40078,8 +40073,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "sealift";
-	name = "Sea Elevator Room";
-	enter_id = "stationside"
+	enter_id = "stationside";
+	name = "Sea Elevator Room"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
@@ -40416,8 +40411,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engine";
-	name = "Engineering";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Engineering"
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
@@ -40597,8 +40592,8 @@
 	icon_state = "diagonal"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 4
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
@@ -40806,8 +40801,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "bridge";
-	name = "Bridge";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Bridge"
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -42099,8 +42094,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "bridge";
-	name = "Bridge";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Bridge"
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -42371,8 +42366,8 @@
 /obj/machinery/light/small/floor/cool,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "innermaint";
-	name = "Central Inner Maintenance";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Central Inner Maintenance"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
@@ -42666,8 +42661,8 @@
 	icon_state = "diagonal"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 4
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
@@ -42704,8 +42699,8 @@
 /area/station/ranch)
 "rrt" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 4
 	},
 /mob/living/critter/martian/warrior,
 /turf/simulated/floor/martian,
@@ -42832,8 +42827,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "sealift";
-	name = "Sea Elevator Room";
-	enter_id = "stationside"
+	enter_id = "stationside";
+	name = "Sea Elevator Room"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
@@ -43077,8 +43072,8 @@
 /area/station/medical/robotics)
 "shH" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 4
 	},
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/storage/tools)
@@ -43301,8 +43296,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "bridge";
-	name = "Bridge";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Bridge"
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -43477,8 +43472,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "outpost";
-	name = "Research Outpost";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Research Outpost"
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
@@ -43887,8 +43882,8 @@
 /area/station/maintenance/inner/central)
 "tqt" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 4
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -43948,8 +43943,8 @@
 "tuf" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 4
 	},
 /obj/item/furniture_parts/rack,
 /obj/item/wirecutters,
@@ -44879,8 +44874,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "sec";
-	name = "Security";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Security"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -45354,8 +45349,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "outpost";
-	name = "Research Outpost";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Research Outpost"
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/hangar)
@@ -45584,8 +45579,8 @@
 /area/station/quartermaster/office)
 "wrL" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 4
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -46116,8 +46111,8 @@
 /area/station/teleporter)
 "wWv" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 4
 	},
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
@@ -100573,7 +100568,7 @@ azS
 aAZ
 aBR
 aCH
-aDs
+bue
 bue
 aEW
 aFB

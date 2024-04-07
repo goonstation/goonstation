@@ -24090,8 +24090,8 @@
 "bfH" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 8;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 8
 	},
 /turf/space,
 /area/space)
@@ -24458,8 +24458,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 8;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 8
 	},
 /obj/decal/floatingtiles{
 	icon_state = "floattiles4"
@@ -24472,8 +24472,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 8;
-	color = "b4b4b4"
+	color = "b4b4b4";
+	dir = 8
 	},
 /turf/space,
 /area/space)
@@ -24689,10 +24689,6 @@
 	},
 /turf/space,
 /area/space)
-"bhl" = (
-/obj/machinery/lrteleporter,
-/turf/simulated/floor/white,
-/area/station/science/teleporter)
 "bhm" = (
 /obj/machinery/abcu,
 /turf/simulated/floor/blue,
@@ -122740,7 +122736,7 @@ cCO
 cCO
 bgN
 cAK
-bhl
+cyg
 cyg
 cyg
 atz
