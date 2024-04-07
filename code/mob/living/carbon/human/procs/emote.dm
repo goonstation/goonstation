@@ -1480,7 +1480,7 @@
 						if (src.bioHolder.HasEffect("chime_snaps"))
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
-						if (prob(5) && !istype(src.gloves, /obj/item/clothing/gloves/bladed))
+						if (prob(5) && src.mind.karma < 0 && !istype(src.gloves, /obj/item/clothing/gloves/bladed))
 							message = SPAN_ALERT("<B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!")
 							/*
 							if (src.bioHolder)
