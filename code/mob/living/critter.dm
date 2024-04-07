@@ -1477,6 +1477,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			var/obj/item/W = src.equipped()
 			if (W)
 				src.click(W, list())
+			else
+				var/datum/handHolder/HH = src.get_active_hand()
+				if(HH?.limb)
+					HH.limb.attack_self(src)
 		if ("togglethrow")
 			src.toggle_throw_mode()
 		if ("walk")

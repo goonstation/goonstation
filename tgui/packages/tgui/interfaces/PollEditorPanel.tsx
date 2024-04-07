@@ -74,14 +74,14 @@ const validate = (settings: PollSettings, options: string[]) => {
         return timestampValidation;
       }
     } else if (settings.expiry.expiryValue === '0') {
-      return 'Non-zero expiry time required.';
+      return 'Non-zero expiry time is required.';
     }
   }
   if (!settings.servers) {
     return 'Server setting is required.';
   }
   if (options.length < 2) {
-    return 'At least 2 options required.';
+    return 'At least 2 options are required.';
   }
   return undefined;
 };
