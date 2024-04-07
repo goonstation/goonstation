@@ -58,9 +58,11 @@ toxic - poisons
 
 /datum/projectile/laser/custom
 	//set your own damage and battery cost. used by the captaingun
-	New(var/damage = 45, var/cost = 31.25)
+	New(var/damage = 45, var/cost = 31.25, var/icon_state = "laser", var/shot_sound = 'sound/weapons/Laser.ogg')
 		src.damage = damage
 		src.cost = cost
+		src.icon_state = icon_state
+		src.shot_sound = shot_sound
 		. = ..()
 
 /datum/projectile/laser/quad

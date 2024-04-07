@@ -238,10 +238,13 @@ TYPEINFO(/obj/item/gun/energy)
 //Damage dealt by different tiers of lens used
 /// 30. 2/3x normal laser damage
 #define CAPTAINGUN_T1_DAMAGE 30
+#define CAPTAINGUN_T1_DAMAGE_PROJECTILE_ICON_STATE "lasergat_laser"
 /// 45. normal laser damage
 #define CAPTAINGUN_T2_DAMAGE 45
+#define CAPTAINGUN_T2_DAMAGE_PROJECTILE_ICON_STATE "laser"
 /// 60. 4/3x normal laser damage
 #define CAPTAINGUN_T3_DAMAGE 60
+#define CAPTAINGUN_T3_DAMAGE_PROJECTILE_ICON_STATE "alastor"
 
 //Charge consumed when shooting by different tiers of coils used
 ///41.66.  250 / 41.66 = 6 shots
@@ -268,6 +271,7 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 	var/obj/item/coil/small/myCoil = null
 	var/customProjectileDamage = CAPTAINGUN_T1_DAMAGE
 	var/customProjectileCost = CAPTAINGUN_T1_COST
+	var/customProjectileIconState = CAPTAINGUN_T1_DAMAGE_PROJECTILE_ICON_STATE
 
 	New()
 		. = ..()
@@ -283,11 +287,11 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 		if(src.panelOpen)
 			. += "Its maintenance panel is open. "
 			if(src.myLens)
-				. += "It contains a [src.myLens]. "
+				. += "It contains [src.myLens]. "
 			else
 				. += "It is missing a lens. "
 			if(src.myCoil)
-				. += "It contains a [src.myCoil]. "
+				. += "It contains [src.myCoil]. "
 			else
 				. += "It is missing a small coil. "
 
@@ -304,9 +308,9 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 			if(src.panelOpen)
 				user.show_text(SPAN_NOTICE("You insert [object] into the [src]."))
 				playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
-				user.put_in_hand_or_eject(src.myCoil)
 				object.set_loc(src)
 				user.u_equip(object)
+				user.put_in_hand_or_eject(src.myCoil)
 				src.myCoil = object
 			else
 				user.show_text(SPAN_NOTICE("[src]'s maintenance panel is closed."))
@@ -314,65 +318,37 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 			if(src.panelOpen)
 				user.show_text(SPAN_NOTICE("You insert [object] into [src]."))
 				playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
-				user.put_in_hand_or_eject(src.myLens)
 				object.set_loc(src)
 				user.u_equip(object)
+				user.put_in_hand_or_eject(src.myLens)
 				src.myLens = object
 			else
 				user.show_text(SPAN_NOTICE("[src]'s maintenance panel is closed."))
 
 	canshoot(mob/user)
 		if(!src.evaluate_quality())
+			//parts are missing or not powerful enough to shoot
 			return FALSE
-		//change the projectile here because this is checked by both gun.shoot_point_blank(), gun.shoot(), and gun.suicide()
-		//which duplicate a horrifying amount of code
-		src.set_current_projectile(new /datum/projectile/laser/custom(src.customProjectileDamage, src.customProjectileCost))
 		. = ..()
 
-	//case-in-point, couldnt avoid it here because I needed it to happen after the shot
-	//and because canshoot() is sometimes checked when we arent actually firing a shot and we dont want to blow up randomly
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target)
 		. = ..()
 		if(.)
-			//exactly enough that an erebite component will have a chance to explode from a normal damage laser
-			//and guaranteed to explode from a high damage laser
-			//also melts ice so it isnt viable for as a normal damage lens material because thats too easy
-			src.myLens.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
-			src.myCoil.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
-			if(src.panelOpen)
-				//close it dummy
-				user.visible_message(SPAN_ALERT("Residual heat burns you through the open maintenance panel!"))
-				user.TakeDamage("All", 0, 25, 0, DAMAGE_BURN)
+			src.postFire(user)
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
 		. = ..()
 		if(.)
-			//exactly enough that an erebite component will have a chance to explode from a normal damage laser
-			//and guaranteed to explode from a high damage laser
-			//also melts ice so it isnt viable for as a normal damage lens material because thats too easy
-			src.myLens.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
-			src.myCoil.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
-			if(src.panelOpen)
-				//close it dummy
-				user.visible_message(SPAN_ALERT("Residual heat burns you through the open maintenance panel!"))
-				user.TakeDamage("All", 0, 25, 0, DAMAGE_BURN)
+			src.postFire(user)
 
 	suicide(mob/living/carbon/human/user)
 		. = ..()
 		if(.)
-			//exactly enough that an erebite component will have a chance to explode from a normal damage laser
-			//and guaranteed to explode from a high damage laser
-			//also melts ice so it isnt viable for as a normal damage lens material because thats too easy
-			src.myLens.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
-			src.myCoil.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
-			if(src.panelOpen)
-				//close it dummy
-				user.visible_message(SPAN_ALERT("Residual heat burns you through the open maintenance panel!"))
-				user.TakeDamage("All", 0, 25, 0, DAMAGE_BURN)
+			src.postFire(user)
 
 	proc/evaluate_quality()
 		. = TRUE
-		if(!src.myLens || !src.myLens.material || !src.myCoil || !src.myCoil.material)
+		if((!src.myLens && !src.myLens.material) || (!src.myCoil && !src.myCoil.material))
 			//missing parts
 			return FALSE
 		if(src.myLens.material.getAlpha() > CAPTAINGUN_T1_LENS_ALPHA_THRESHOLD)
@@ -384,10 +360,13 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 		switch(src.myLens.material.getAlpha())
 			if(-INFINITY to CAPTAINGUN_T3_LENS_ALPHA_THRESHOLD)
 				src.customProjectileDamage = CAPTAINGUN_T3_DAMAGE
+				src.customProjectileIconState = CAPTAINGUN_T3_DAMAGE_PROJECTILE_ICON_STATE
 			if(CAPTAINGUN_T3_LENS_ALPHA_THRESHOLD to CAPTAINGUN_T2_LENS_ALPHA_THRESHOLD)
 				src.customProjectileDamage = CAPTAINGUN_T2_DAMAGE
+				src.customProjectileIconState = CAPTAINGUN_T2_DAMAGE_PROJECTILE_ICON_STATE
 			if(CAPTAINGUN_T2_LENS_ALPHA_THRESHOLD to CAPTAINGUN_T1_LENS_ALPHA_THRESHOLD)
 				src.customProjectileDamage = CAPTAINGUN_T1_DAMAGE
+				src.customProjectileIconState = CAPTAINGUN_T1_DAMAGE_PROJECTILE_ICON_STATE
 		switch(src.myCoil.material.getProperty("electrical") + ((src.myCoil.material.getMaterialFlags() & MATERIAL_ENERGY) ? 2 : 0))
 			if(CAPTAINGUN_T3_COIL_EFFICACY_THRESHOLD to INFINITY)
 				src.customProjectileCost = CAPTAINGUN_T3_COST
@@ -395,6 +374,36 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 				src.customProjectileCost = CAPTAINGUN_T2_COST
 			if(CAPTAINGUN_T1_COIL_EFFICACY_THRESHOLD to CAPTAINGUN_T2_COIL_EFFICACY_THRESHOLD)
 				src.customProjectileCost = CAPTAINGUN_T1_COST
+		//rebuild the projectile with the stats we just calculated
+		src.set_current_projectile(new /datum/projectile/laser/custom(src.customProjectileDamage, src.customProjectileCost, src.customProjectileIconState))
+
+	proc/postFire(mob/user)
+		//exactly enough that an erebite component will have a chance to explode from a normal damage laser
+		//and guaranteed to explode from a high damage laser
+		//also melts ice so it isnt viable as a T2 damage lens material because thats too easy
+		src.myLens.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
+		src.myCoil.material_trigger_on_temp(FROM_CELSIUS(src.current_projectile.power * 20))
+		if(src.panelOpen)
+			//close it dummy
+			user.visible_message(SPAN_ALERT("Residual heat burns you through the open maintenance panel!"))
+			user.changeStatus("burning", 1 SECOND)
+			user.TakeDamage("All", 0, 25, 0, DAMAGE_BURN)
+
+#undef CAPTAINGUN_T1_LENS_ALPHA_THRESHOLD
+#undef CAPTAINGUN_T2_LENS_ALPHA_THRESHOLD
+#undef CAPTAINGUN_T3_LENS_ALPHA_THRESHOLD
+#undef CAPTAINGUN_T1_COIL_EFFICACY_THRESHOLD
+#undef CAPTAINGUN_T2_COIL_EFFICACY_THRESHOLD
+#undef CAPTAINGUN_T3_COIL_EFFICACY_THRESHOLD
+#undef CAPTAINGUN_T1_DAMAGE
+#undef CAPTAINGUN_T2_DAMAGE
+#undef CAPTAINGUN_T3_DAMAGE
+#undef CAPTAINGUN_T1_DAMAGE_PROJECTILE_ICON_STATE
+#undef CAPTAINGUN_T2_DAMAGE_PROJECTILE_ICON_STATE
+#undef CAPTAINGUN_T3_DAMAGE_PROJECTILE_ICON_STATE
+#undef CAPTAINGUN_T1_COST
+#undef CAPTAINGUN_T2_COST
+#undef CAPTAINGUN_T3_COST
 
 //////////////////////////////////////// Phaser
 /obj/item/gun/energy/phaser_gun
