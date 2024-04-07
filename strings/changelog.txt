@@ -1,4 +1,6 @@
-
+(t)sun apr 07 24
+(u)LeahTheTech
+(+)The vortexes event now spawns less vortices.
 (t)sat apr 06 24
 (u)glowbold
 (p)18267
