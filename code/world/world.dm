@@ -69,7 +69,7 @@
 		var/map_name = istext(map_settings.display_name) ? "[map_settings.display_name]" : "[getMapNameFromID(map_setting)]"
 		//var/map_link_str = map_settings.goonhub_map ? "<a href=\"[map_settings.goonhub_map]\">[map_name]</a>" : "[map_name]"
 		statsus += "Map: <b>[map_name]</b>"
-		if(mapSwitcher.next)
+		if(mapSwitcher?.next)
 			statsus += " | Next: <b>[mapSwitcher.next]</b><br>"
 		else
 			statsus += "<br>"

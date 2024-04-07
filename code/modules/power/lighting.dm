@@ -500,10 +500,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	desc = "A small light used to guide pods into hangars."
 	icon_state = "runway10"
 	base_state = "runway1"
-	fitting = "bulb"
+	fitting = "floor"
 	brightness = 0.5
-	light_type = /obj/item/light/bulb
-	allowed_type = /obj/item/light/bulb
+	light_type = /obj/item/light/bulb/runway
+	allowed_type = /obj/item/light/bulb/runway
 	plane = PLANE_NOSHADOW_BELOW
 	on = 1
 	wallmounted = 0
@@ -1609,6 +1609,9 @@ TYPEINFO(/obj/item/light)
 			color_r = 0.99
 			color_g = 0.81
 			color_b = 0.99
+
+	runway
+		burnprob = 0
 
 /obj/item/light/big_bulb
 	name = "beacon bulb"

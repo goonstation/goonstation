@@ -25,6 +25,17 @@ jobs:
       - name: Setup Rust
         uses: hecrj/setup-rust-action@v2.0.0
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          cache: "yarn"
+          cache-dependency-path: ./tgui/yarn.lock
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+
       - name: Install Dependencies
         run: |
           pip3 install setuptools
@@ -35,7 +46,7 @@ jobs:
 
       - name: Check TGUI
         run: |
-          tools/ci/build_tgui.sh
+          tgui/bin/tgui --ci
 
       - name: Misc Checks
         run: |
@@ -63,10 +74,6 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      # - name: Setup dotnet
-      #   uses: actions/setup-dotnet@v4
-      #   with:
-      #     dotnet-version: "8.0"
       - run: touch +secret/__secret.dme
       - uses: robinraju/release-downloader@v1.9
         with:
@@ -152,6 +159,17 @@ jobs:
       - name: Setup Rust
         uses: hecrj/setup-rust-action@v2.0.0
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          cache: "yarn"
+          cache-dependency-path: ./tgui/yarn.lock
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+
       - name: Install Dependencies
         run: |
           pip3 install setuptools
@@ -163,7 +181,7 @@ jobs:
       - name: Misc Checks
         run: |
           tools/ci/check_filedirs.sh goonstation.dme
-          tools/ci/build_tgui.sh
+          tgui/bin/tgui --ci
           tools/ci/check_grep_secret.sh
           tools/bootstrap/python tools/ci/validate_dme.py <goonstation.dme
           tools/bootstrap/python -m dmi.test
@@ -176,4 +194,4 @@ jobs:
 
       - name: Compile
         run: |
-          tools/ci/dm.sh -DCIBUILD -DTRAVIS_SUB goonstation.dme
+          tools/ci/dm.sh -DCIBUILD goonstation.dme
