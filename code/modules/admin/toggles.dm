@@ -654,21 +654,6 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_DIARY, usr, "toggled respawn to [abandon_allowed ? "On" : "Off"].", "admin")
 	world.update_status()
 
-/client/proc/toggle_pray()
-	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set desc="Toggle Your Pray"
-	set name="Toggle Local Pray"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	NOT_IF_TOGGLES_ARE_OFF
-	if(pray_l == 0)
-		pray_l = 1
-		boutput(usr, "Pray turned on")
-	else
-		pray_l = 0
-		boutput(usr, "Pray turned off")
-	message_admins("[key_name(usr)] toggled its Pray to [pray_l].")
-
 /client/proc/toggle_flourish()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc="Toggles Your Flourish Mode"
