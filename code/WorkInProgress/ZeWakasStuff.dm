@@ -11,6 +11,19 @@
 	particle abuse
 */
 
+/*
+515 stuff
+
+world.Tick
+client.RenderIcon
+pragmas?
+noise_hash()
+get_steps_to
+refcount
+list.removeall
+*/
+
+
 // playsound\(([^,]*), "(sound/[^\[]+)"
 // playsound($1, '$2'
 // Greek Adventurezone Thingy
