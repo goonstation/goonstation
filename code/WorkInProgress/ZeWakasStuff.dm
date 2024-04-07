@@ -21,6 +21,11 @@ noise_hash()
 get_steps_to
 refcount
 list.removeall
+animation delay?
+sound pitch, offset, sound end
+basic sound end example sound.params
+sound time adjustment, SOUND_UPDATE offset var, query with query
+atoms can be rendered by reference in browser
 */
 
 
