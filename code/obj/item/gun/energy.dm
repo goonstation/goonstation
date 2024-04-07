@@ -348,7 +348,7 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 
 	proc/evaluate_quality()
 		. = TRUE
-		if((!src.myLens && !src.myLens.material) || (!src.myCoil && !src.myCoil.material))
+		if(!src.myLens || !src.myLens.material || !src.myCoil || !src.myCoil.material)
 			//missing parts
 			return FALSE
 		if(src.myLens.material.getAlpha() > CAPTAINGUN_T1_LENS_ALPHA_THRESHOLD)
