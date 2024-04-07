@@ -347,7 +347,6 @@
 		//tox = 0
 
 	brute = max(0, brute)
-
 	burn = max(0, burn)
 	//tox = max(0, burn)
 
