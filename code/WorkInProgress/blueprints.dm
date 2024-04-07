@@ -67,7 +67,7 @@
 			. += "<br>[SPAN_NOTICE("Someone has uploaded a blueprint named '[current_bp.room_name]'.")]"
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
+		if (!W.cant_drop && (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece)))
 			boutput(user, SPAN_NOTICE("You insert the material into the machine."))
 			user.drop_item()
 			W.set_loc(src)
@@ -78,7 +78,7 @@
 		if (!in_interact_range(src, user)  || BOUNDS_DIST(W, user) > 0 || !can_act(user))
 			return
 		else
-			if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
+			if (!W.cant_drop && (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece)))
 				boutput(user, SPAN_NOTICE("You insert [W] into the machine."))
 				W.set_loc(src)
 				return

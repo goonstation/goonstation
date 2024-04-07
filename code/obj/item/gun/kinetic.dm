@@ -790,7 +790,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/tranq_darts
 	fire_animation = TRUE
-	recoil_strength = 10
+	recoil_strength = 4
 
 	New()
 		ammo = new default_magazine
@@ -914,9 +914,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_recoil_cap = 15
 	get_desc(dist, mob/user)
 		if (user.get_gang() != null)
-			. += "For when you need MOR' DAKKA. Uses 9mm NATO rounds."
+			. += "For when you need MOR' DAKKA. Uses 9mm Surplus rounds."
 		else
-			. += "Its firemodes are labelled 'DAKKA' and 'MOR'... Uses 9mm NATO rounds."
+			. += "Its firemodes are labelled 'DAKKA' and 'MOR'... Uses 9mm Surplus rounds."
 
 	New()
 		ammo = new default_magazine
@@ -1275,13 +1275,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	name = "Lo-Point"
 	icon_state = "hipoint"
 	item_state = "hipoint"
-	shoot_delay = 1
+	shoot_delay = 4
 	spread_angle = 3
 	throwforce = 14 // literally throw it away
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
 	fire_animation = TRUE
-	max_ammo_capacity = 12
+	max_ammo_capacity = 10
 	auto_eject = TRUE
 	has_empty_state = TRUE
 	gildable = FALSE
@@ -1446,7 +1446,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	var/pulled = FALSE
 	add_residue = FALSE
-	recoil_strength = 4
+	recoil_enabled = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -1499,7 +1499,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	inventory_counter_enabled = FALSE
 	allowReverseReload = FALSE
 	var/power_requirement = 100 //! The amount of power deducted from a borg's cell when they fire this.
-	recoil_strength = 4
 
 	New()
 		. = ..()
@@ -1547,7 +1546,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	add_residue = FALSE
-	recoil_strength = 6
+	recoil_enabled = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -1572,7 +1571,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	add_residue = FALSE
-	recoil_strength = 7
+	recoil_strength = 3
 
 	New()
 		ammo = new default_magazine
