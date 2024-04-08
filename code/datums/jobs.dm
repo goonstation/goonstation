@@ -3,6 +3,8 @@
 	var/list/alias_names = null
 	var/initial_name = null
 	var/linkcolor = "#0FF"
+
+	/// Job starting wages
 	var/wages = 0
 	var/limit = -1
 	/// job category flag for use with loops rather than a needing a bunch of type checks
@@ -27,7 +29,10 @@
 	var/needs_college = 0
 	var/assigned = 0
 	var/high_priority_job = FALSE
+	///Fill up to this limit, then drop this job out of high priotity
+	var/high_priority_limit = INFINITY
 	var/low_priority_job = FALSE
+	var/order_priority = 1 //! What order jobs are filled in within their priority tier, lower number = higher priority
 	var/cant_allocate_unwanted = FALSE //! Job cannot be set to "unwanted" in player preferences.
 	var/receives_miranda = FALSE
 	var/receives_implant = null //! Object path to the implant type given on spawn.
@@ -526,6 +531,9 @@ ABSTRACT_TYPE(/datum/job/security)
 	limit = 5
 	lower_limit = 3
 	variable_limit = TRUE
+	high_priority_job = TRUE
+	high_priority_limit = 2 //always try to make sure there's at least a couple of secoffs
+	order_priority = 2 //fill secoffs after captain and AI
 	wages = PAY_TRADESMAN
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
@@ -564,6 +572,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		name = "Security Assistant"
 		limit = 3
 		lower_limit = 2
+		high_priority_job = FALSE //nope
 		cant_spawn_as_con = TRUE
 		wages = PAY_UNTRAINED
 		receives_implant = /obj/item/implant/health/security
@@ -696,7 +705,7 @@ ABSTRACT_TYPE(/datum/job/research)
 /datum/job/research/roboticist
 	name = "Roboticist"
 	limit = 3
-	wages = 200
+	wages = PAY_DOCTORATE
 	slot_back = list(/obj/item/storage/backpack/robotics)
 	slot_belt = list(/obj/item/storage/belt/roboticist/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/roboticist)

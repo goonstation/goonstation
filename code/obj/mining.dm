@@ -1856,7 +1856,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	powered_item_special = /datum/item_special/swipe
 
 	New()
-		powered_overlay = image('icons/obj/sealab_power.dmi', "ps-glow")
+		powered_overlay = image('icons/obj/items/mining.dmi', "ps-glow")
 		..()
 
 TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
