@@ -1667,10 +1667,9 @@ proc/broadcast_to_all_gangs(var/message)
 
 				return
 
-			if(istype(item, /obj/item/gun/kinetic/slamgun))
-				boutput(user, SPAN_ALERT("<b>This shoddy firearm is worth a lot less</b>"))
-				gang.score_gun += round(100)
-				gang.add_points(round(100),user, showText = TRUE)
+			if(istype(item, /obj/item/gun/kinetic/slamgun) || istype(item, /obj/item/gun/kinetic/zipgun))
+				boutput(user, SPAN_ALERT("<b>This shoddy firearm isn't worth selling.</b>"))
+				return
 			else
 				gang.score_gun += round(300)
 				gang.add_points(round(300),user, showText = TRUE)

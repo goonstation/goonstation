@@ -1,4 +1,16 @@
 
+(t)sun apr 07 24
+(u)TDHooligan
+(p)18429
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Gangs can no longer sell slamguns/zip guns. Go do some *REAL* crime instead of welding pipes together.
+(u)LeahTheTech
+(p)18425
+(e)🆕🎨|C-Feature, C-Sprites
+(*)Cutting open mail with a knife now leaves behind the torn package as evidence.
+(u)LeahTheTech
+(+)Stun batons now turn themselves off when they no longer have enough charge to stun. Now if they look on then you know they can stun.
+(+)The vortexes event now spawns less vortices.
 (t)sat apr 06 24
 (u)glowbold
 (p)18267
