@@ -6,7 +6,7 @@
  */
 
 import { BooleanLike } from '../../../common/react';
-import { SortDirection } from '../common/sorting/type';
+import { numericCompare, stringCompare } from '../common/sorting';
 
 export enum PowerMonitorType {
   Apc = 'apc',
@@ -65,37 +65,79 @@ export interface PowerMonitorSmesStaticItemData {
   name: string;
 }
 
-export const isDataForApc = (data: PowerMonitorData): data is PowerMonitorApcData => data.type === PowerMonitorType.Apc;
-export const isDataForSmes = (data: PowerMonitorData): data is PowerMonitorSmesData =>
-  data.type === PowerMonitorType.Smes;
+export const apcHeaderConfig = [{
+  children: "Area",
+  sortable: true,
+  searchable: true,
+  compareFunc: (a, b) => stringCompare(a as string, b as string),
+  toString: (str) => str as string,
+}, {
+  children: "Eqp.",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Lgt.",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Env.",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Load",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Cell Charge",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Cell State",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}];
 
-export enum ApcTableHeaderColumns {
-  Area = 0,
-  Equipment = 1,
-  Lighting = 2,
-  Environment = 3,
-  Load = 4,
-  CellCharge = 5,
-  CellState = 6
-}
 
-export interface SingleSortState<T> {
-  dir: SortDirection,
-  field: T
-}
-
-export enum SmesTableHeaderColumns {
-  Area = 0,
-  StoredPower = 1,
-  Charging = 2,
-  Input = 3,
-  Output = 4,
-  Active = 5,
-  Load = 6
-}
-
-export type PowerMonitorColumnUnion = (ApcTableHeaderColumns | SmesTableHeaderColumns);
-export interface PowerMonitorHeaderTableHeaderProps<ColumnType> {
-  setSortBy: (field: ColumnType) => void;
-  sortState: SingleSortState<PowerMonitorColumnUnion>;
-}
+export const smesHeaderConfig = [{
+  children: "Area",
+  sortable: true,
+  searchable: true,
+  compareFunc: (a, b) => stringCompare(a as string, b as string),
+  toString: (str) => str as string,
+}, {
+  children: "Stored Power#",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Charging",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Input",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Output",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Active",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Load",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}];

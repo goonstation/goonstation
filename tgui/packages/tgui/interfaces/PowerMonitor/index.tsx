@@ -6,18 +6,23 @@
  */
 
 import { useBackend, useSharedState } from '../../backend';
-import { Input, LabeledList, Section, Stack, Table } from '../../components';
+import { Input, LabeledList, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
-import { ApcPowerMonitor, PowerMonitorApcGlobal } from './Apc';
-import { PowerMonitorSmesGlobal, SmesPowerMonitor } from './Smes';
-import { ApcTableHeaderColumns, isDataForApc, isDataForSmes, PowerMonitorData, SingleSortState, SmesTableHeaderColumns } from './type';
-import { onSetSortState } from './utils';
+import { SortableTable } from '../common/sorting';
+
+import { getRowDataForApcs, PowerMonitorApcGlobal } from './Apc';
+import { getRowDataForSmes, PowerMonitorSmesGlobal } from './Smes';
+import { apcHeaderConfig, PowerMonitorApcData, PowerMonitorData, PowerMonitorSmesData, PowerMonitorType, smesHeaderConfig } from './type';
+const isDataForApc = (data: PowerMonitorData):
+  data is PowerMonitorApcData =>
+  data.type === PowerMonitorType.Apc;
+const isDataForSmes = (data: PowerMonitorData):
+  data is PowerMonitorSmesData =>
+  data.type === PowerMonitorType.Smes;
 
 export const PowerMonitor = (_props, context) => {
   const { data } = useBackend<PowerMonitorData>(context);
   const [search, setSearch] = useSharedState(context, 'search', '');
-  const [apcSortState, apcSetSortBy] = useSharedState<SingleSortState<ApcTableHeaderColumns>>(context, 'apcSortBy', null);
-  const [smesSortState, smesSetSortBy] = useSharedState<SingleSortState<SmesTableHeaderColumns>>(context, 'smesSortBy', null);
 
   return (
     <Window width={700} height={700} theme="retro-dark">
@@ -42,18 +47,21 @@ export const PowerMonitor = (_props, context) => {
 
           <Stack.Item grow={1}>
             <Section fill scrollable>
-              <Table>
-                {isDataForApc(data)
-                && <ApcPowerMonitor
-                  search={search}
-                  sortState={apcSortState}
-                  setSortBy={(field) => onSetSortState(field, apcSortState, apcSetSortBy)} /> }
-                {isDataForSmes(data)
-                && <SmesPowerMonitor
-                  search={search}
-                  sortState={smesSortState}
-                  setSortBy={(field) => onSetSortState(field, smesSortState, smesSetSortBy)} />}
-              </Table>
+              {isDataForApc(data)
+                && <SortableTable
+                  name="apcPowerMonitor"
+                  useLocalState={false}
+                  headerConfig={apcHeaderConfig}
+                  rowData={getRowDataForApcs(data.apcs, data.apcNames)}
+                  searchState={{ text: search, index: 0 }} />}
+
+              {isDataForSmes(data)
+                && <SortableTable
+                  name="smesPowerMonitor"
+                  useLocalState={false}
+                  headerConfig={smesHeaderConfig}
+                  rowData={getRowDataForSmes(data.units, data.unitNames)}
+                  searchState={{ text: search, index: 0 }} />}
             </Section>
           </Stack.Item>
         </Stack>

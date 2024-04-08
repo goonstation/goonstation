@@ -6,11 +6,11 @@
  */
 
 import { useBackend } from '../../backend';
-import { Chart, LabeledList, Stack, Table } from '../../components';
+import { Chart, LabeledList, Stack } from '../../components';
 import { formatPower } from '../../format';
-import { Header } from '../common/sorting/Header';
-import { PowerMonitorHeaderTableHeaderProps, PowerMonitorSmesData, PowerMonitorSmesItemData, SingleSortState, SmesTableHeaderColumns } from './type';
-import { sortPowerMonitorData } from './utils';
+import { SortableTableRowProps } from '../common/sorting';
+
+import { PowerMonitorSmesData, PowerMonitorSmesItemData } from './type';
 
 export const PowerMonitorSmesGlobal = (_props, context) => {
   const { data } = useBackend<PowerMonitorSmesData>(context);
@@ -56,124 +56,44 @@ export const PowerMonitorSmesGlobal = (_props, context) => {
     </Stack>
   );
 };
-const PowerMonitorSmesTableHeader = (props: PowerMonitorHeaderTableHeaderProps<SmesTableHeaderColumns>) => {
-  return (
-    <>
-      <Table.Cell header>
-        <Header
-          sortDirection={props.sortState?.field === SmesTableHeaderColumns.Area ? props.sortState.dir : null}
-          onSortClick={() => props.setSortBy(SmesTableHeaderColumns.Area)} >
-          Area
-        </Header>
-      </Table.Cell>
-      <Table.Cell header>
-        <Header
-          sortDirection={props.sortState?.field === SmesTableHeaderColumns.StoredPower ? props.sortState.dir : null}
-          onSortClick={() => props.setSortBy(SmesTableHeaderColumns.StoredPower)}>
-          Stored Power#
-        </Header>
-      </Table.Cell>
-      <Table.Cell header>
-        <Header
-          sortDirection={props.sortState?.field === SmesTableHeaderColumns.Charging ? props.sortState.dir : null}
-          onSortClick={() => props.setSortBy(SmesTableHeaderColumns.Charging)} >
-          Charging
-        </Header>
-      </Table.Cell>
-      <Table.Cell header>
-        <Header
-          sortDirection={props.sortState?.field === SmesTableHeaderColumns.Input ? props.sortState.dir : null}
-          onSortClick={() => props.setSortBy(SmesTableHeaderColumns.Input)}>
-          Input
-        </Header>
-      </Table.Cell>
-      <Table.Cell header>
-        <Header
-          sortDirection={props.sortState?.field === SmesTableHeaderColumns.Output ? props.sortState.dir : null}
-          onSortClick={() => props.setSortBy(SmesTableHeaderColumns.Output)}>
-          Output
-        </Header>
-      </Table.Cell>
-      <Table.Cell header>
-        <Header
-          sortDirection={props.sortState?.field === SmesTableHeaderColumns.Active ? props.sortState.dir : null}
-          onSortClick={() => props.setSortBy(SmesTableHeaderColumns.Active)}>
-          Active
-        </Header>
-      </Table.Cell>
-      <Table.Cell header>
-        <Header
-          sortDirection={props.sortState?.field === SmesTableHeaderColumns.Load ? props.sortState.dir : null}
-          onSortClick={() => props.setSortBy(SmesTableHeaderColumns.Load)} >
-          Load
-        </Header>
-      </Table.Cell>
-    </>
-  );
-};
 
-type PowerMonitorSmesTableRowsProps = {
-  search: string;
-  sortState: SingleSortState<SmesTableHeaderColumns>;
-};
+export const getRowDataForSmes = (
+  data: PowerMonitorSmesItemData[],
+  lut: Record<string, string>): SortableTableRowProps[] => {
 
-const PowerMonitorSmesTableRows = (props: PowerMonitorSmesTableRowsProps, context) => {
-  const { search } = props;
-  const { data } = useBackend<PowerMonitorSmesData>(context);
+  let array = Array<SortableTableRowProps>();
+  for (let idx = 0; idx < data.length; idx++) {
+    const unit = data[idx];
+    const [ref, stored, charging, input, output, online, load] = unit;
+    const name = lut[ref];
+    array.push({
+      cells: [{
+        data: name,
+        children: name,
+      }, {
+        data: stored,
+        children: `${stored}%`,
+      }, {
 
+        data: charging,
+        children: charging ? 'Yes' : 'No',
+        color: charging ? 'good' : 'bad',
+      }, {
+        data: input,
+        children: formatPower(input),
+      }, {
+        data: load,
+        children: formatPower(output),
 
-  return (
-    <>
-      {sortPowerMonitorData(data.units, data.unitNames, props.sortState).map((unit) => (
-        <PowerMonitorSmesTableRow key={unit[0]} unit={unit} search={search} />
-      ))}
-    </>
-  );
-};
-
-type PowerMonitorSmesTableRowProps = {
-  unit: PowerMonitorSmesItemData;
-  search: string;
-};
-
-const PowerMonitorSmesTableRow = (props: PowerMonitorSmesTableRowProps, context) => {
-  const { unit, search } = props;
-  // Indexed array to lower data transfer between byond and the window.
-  const [ref, stored, charging, input, output, online, load] = unit;
-  const { data } = useBackend<PowerMonitorSmesData>(context);
-  const name = data.unitNames[ref] ?? 'N/A';
-
-  if (search && !name.toLowerCase().includes(search.toLowerCase())) {
-    return null;
+      }, {
+        data: online,
+        color: online ? 'good' : 'bad',
+        children: online ? 'Yes' : 'No',
+      }, {
+        data: load,
+        children: load ? formatPower(load) : 'N/A',
+      }],
+    });
   }
-
-  return (
-    <Table.Row>
-      <Table.Cell>{name}</Table.Cell>
-      <Table.Cell>{stored}%</Table.Cell>
-      <Table.Cell color={charging ? 'good' : 'bad'}>{charging ? 'Yes' : 'No'}</Table.Cell>
-      <Table.Cell>{formatPower(input)}</Table.Cell>
-      <Table.Cell>{formatPower(output)}</Table.Cell>
-      <Table.Cell color={online ? 'good' : 'bad'}>{online ? 'Yes' : 'No'}</Table.Cell>
-      <Table.Cell>{load ? formatPower(load) : 'N/A'}</Table.Cell>
-    </Table.Row>
-  );
-};
-
-
-interface SmesPowerMonitorProps {
-  setSortBy: (field: SmesTableHeaderColumns) => void;
-  sortState: SingleSortState<SmesTableHeaderColumns>,
-  search: string,
-}
-export const SmesPowerMonitor = (props: SmesPowerMonitorProps) => {
-  const { setSortBy, sortState, search } = props;
-  return (
-    <>
-      <Table.Row header>
-        <PowerMonitorSmesTableHeader sortState={sortState} setSortBy={setSortBy} />
-      </Table.Row>
-      <PowerMonitorSmesTableRows search={search} sortState={sortState} />
-    </>
-  );
+  return array;
 };
