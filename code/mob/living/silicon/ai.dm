@@ -86,6 +86,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	density = 1
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
+	var/default_hat_y = 14
 	var/datum/hud/silicon/ai/hud
 	var/last_notice = 0//attack notices
 	var/network = "SS13"
@@ -108,6 +109,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/termMute = FALSE
 	var/canvox = 1
 	var/can_announce = 1
+	var/bought_hat = FALSE
 	var/last_announcement = -INFINITY
 	var/announcement_cooldown = 1200
 	var/dismantle_stage = 0
@@ -194,7 +196,6 @@ or don't if it uses a custom topopen overlay
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 
 	req_access = list(access_heads)
-	var/obj/item/clothing/head/hat = null
 
 	var/fire_res_on_core = 0
 
@@ -209,26 +210,6 @@ or don't if it uses a custom topopen overlay
 	var/deployed_to_eyecam = 0
 	var/datum/ai_hologram_data/holoHolder = new
 	var/list/hologramContextActions
-
-	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
-		if( src.hat )
-			src.hat.wear_image.pixel_y = 0
-			src.UpdateOverlays(null, "hat")
-			if (user)
-				user.put_in_hand_or_drop(src.hat)
-			else
-				src.hat.set_loc(src.loc)
-			src.hat = null
-		// src.hat.wear_image.pixel_y = 10
-		// src.UpdateOverlays(src.hat.wear_image, "hat")
-		var/image/hat_image = SafeGetOverlayImage(hat.icon_state, hat.icon, hat.icon_state, src.layer+0.3)
-		hat_image.pixel_y = 12
-		if (istype(hat, /obj/item/clothing/head/bighat))
-			hat_image.pixel_y = 20
-
-		src.UpdateOverlays(hat_image, "hat")
-		src.hat = hat
-		hat.set_loc(src)
 
 /mob/living/silicon/ai/proc/give_feet()
 	animate(src, pixel_y = 14, time = 5, easing = SINE_EASING)
@@ -293,7 +274,11 @@ or don't if it uses a custom topopen overlay
 
 	ai_station_map = new /obj/minimap/ai
 	AddComponent(/datum/component/minimap_marker, MAP_AI | MAP_SYNDICATE, "ai")
-
+	SPAWN(0)
+		if (bought_hat || prob(5))
+			AddComponent(/datum/component/hattable, TRUE, TRUE, default_hat_y)
+		else
+			AddComponent(/datum/component/hattable, TRUE, FALSE, default_hat_y)
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
 	light.set_brightness(0.6)
@@ -340,9 +325,7 @@ or don't if it uses a custom topopen overlay
 		var/datum/contextAction/ai_hologram/action = new actionType(src)
 		hologramContextActions += action
 
-	if(prob(5))
-		var/hat_type = pick(childrentypesof(/obj/item/clothing/head))
-		src.set_hat(new hat_type)
+
 
 
 	SPAWN(0)
@@ -595,11 +578,6 @@ or don't if it uses a custom topopen overlay
 			user.visible_message(SPAN_ALERT("<b>[user.name]</b> uploads a moustache to [src.name]!"))
 		else if (src.dismantle_stage == 4 || isdead(src))
 			boutput(user, SPAN_ALERT("Using this on a deactivated AI would be silly."))
-	else if( istype(W,/obj/item/clothing/head))
-		user.drop_item()
-		src.set_hat(W, user)
-		user.visible_message( SPAN_NOTICE("[user] places the [W] on the [src]!") )
-		src.show_message( SPAN_NOTICE("[user] places the [W] on you!") )
 		if(istype(W, /obj/item/clothing/head/butt))
 			var/obj/item/clothing/head/butt/butt = W
 			if(butt.donor == user)
@@ -1010,8 +988,6 @@ or don't if it uses a custom topopen overlay
 		return list()
 
 	. = list("[SPAN_NOTICE("This is [bicon(src)] <B>[src.name]</B>!")] [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
-	if (src.hat)
-		. += SPAN_NOTICE("[src.name] is wearing the [bicon(src.hat)] [src.hat.name].")
 
 	if (isdead(src))
 		. += SPAN_ALERT("[src.name] is nonfunctional...")
