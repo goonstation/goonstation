@@ -1,4 +1,9 @@
 
+(t)mon apr 08 24
+(u)MetaReferencer
+(p)18373
+(e)🆕🔨🤖|C-Feature, A-Player-Actions, A-Silicons
+(+)Borgs can click-drag themselves onto weight machines (for no benefit).
 (t)sun apr 07 24
 (u)TDHooligan
 (p)18429
