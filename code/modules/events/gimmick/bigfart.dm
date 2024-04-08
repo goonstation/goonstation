@@ -30,7 +30,8 @@
 			var/pickuptext = pick("picked up", "detected", "found", "sighted", "reported", 20; "drunkenly spotted")
 			var/anomlytext = pick("strange anomaly", "wave of cosmic energy", "spectral emission", 20; "shuttle of phantom George Melons clones")
 			var/ohshittext = pick("en route for collision with", "rapidly approaching", "heading towards", 20; "about to seriously fuck up")
-			command_alert("Our [sensortext] have [pickuptext] \a [anomlytext] [ohshittext] the station. Duck and Cover immediately.", "Anomaly Alert", alert_origin = ALERT_ANOMALY)
+			playsound_global(world, 'sound/machines/disaster_alert.ogg', 60)
+			command_alert("Our [sensortext] have [pickuptext] \a [anomlytext] [ohshittext] the station. Duck and cover immediately and be aware it may strike multiple times.", "Anomaly Alert", alert_origin = ALERT_ANOMALY)
 		var/loops = rand(20, 100)
 		var/freebie = 1
 		for (var/i=0, i<loops, i++)

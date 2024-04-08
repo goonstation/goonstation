@@ -9,6 +9,7 @@
 	)
 #ifdef RP_MODE
 	required_elapsed_round_time = 40 MINUTES
+	weight = 50 //less events to choose from on RP and radstorms get annoying when there's 3 per shift
 #else
 	required_elapsed_round_time = 26.6 MINUTES
 #endif

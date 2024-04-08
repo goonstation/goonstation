@@ -351,7 +351,7 @@ proc/broadcast_to_all_gangs(var/message)
 	/// The mind of this gang's leader.
 	var/datum/mind/leader = null
 	/// The minds of gang members associated with this gang. Does not include the gang leader.
-	var/list/members = list()
+	var/list/datum/mind/members = list()
 	var/list/tags = list()
 	/// The minds of members of this gang who are currently on cooldown from redeeming their gear from the gang locker.
 	var/list/gear_cooldown = list()
@@ -413,9 +413,44 @@ proc/broadcast_to_all_gangs(var/message)
 				result++
 		return result
 
-	proc/handle_leader_cryo()
-		broadcast_to_gang("Your leader has entered cryogenic storage. You can claim leadership at your locker.")
-		leader_claimable = TRUE
+	/// how to handle the gang leader entering cryo (but not guaranteed to be permanent)
+	proc/handle_leader_temp_cryo()
+		if (!src.locker)
+			choose_new_leader()
+		else
+			broadcast_to_gang("Your leader has entered temporary cryogenic storage. You can claim leadership at your locker in [GANG_CRYO_LOCKOUT/(1 MINUTE)] minutes.")
+
+	/// handle the gang leader entering cryo permanently
+	proc/handle_leader_perma_cryo()
+		if (src.locker)
+			broadcast_to_gang("Your leader has entered permanent cryogenic storage. You can claim leadership at your locker.")
+			leader_claimable = TRUE
+		else
+			choose_new_leader()
+
+	proc/choose_new_leader()
+		var/datum/mind/smelly_unfortunate
+		for (var/datum/mind/member in members)
+			if (isliving(member.current))
+				var/mob/living/carbon/candidate = member.current
+				if (!candidate.hibernating)
+					smelly_unfortunate = member
+		if (!smelly_unfortunate)
+			logTheThing(LOG_ADMIN, leader.ckey, "The leader of [gang_name] cryo'd with no living members to take the role.")
+			message_admins("The leader of [gang_name], [leader.ckey] cryo'd with no living members to take the role.")
+			return
+
+		var/datum/mind/bad_leader = leader
+		var/datum/antagonist/leaderRole = leader.get_antagonist(ROLE_GANG_LEADER)
+		var/datum/antagonist/oldRole = smelly_unfortunate.get_antagonist(ROLE_GANG_MEMBER)
+		smelly_unfortunate.current.remove_ability_holder(/datum/abilityHolder/gang)
+		oldRole.silent = TRUE // so they dont get a spooky 'you are no longer a gang member' popup!
+		smelly_unfortunate.remove_antagonist(ROLE_GANG_MEMBER,ANTAGONIST_REMOVAL_SOURCE_OVERRIDE,FALSE)
+		leaderRole.transfer_to(smelly_unfortunate, FALSE, ANTAGONIST_REMOVAL_SOURCE_EXPIRED)
+		bad_leader.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = smelly_unfortunate)
+		logTheThing(LOG_ADMIN, smelly_unfortunate.ckey, "was given the role of leader for [gang_name], as their leader entered cryo with no locker.")
+		message_admins("[smelly_unfortunate.ckey] has been granted the role of leader for their gang, [gang_name], as their leader entered cryo with no locker.")
+		broadcast_to_gang("As your leader has entered cryogenic storage without a locker, [smelly_unfortunate.current.real_name] is now your new leader.")
 
 	proc/get_dead_memberlist()
 		var/list/result = list()
@@ -821,6 +856,8 @@ proc/broadcast_to_all_gangs(var/message)
 		for (var/datum/mind/M as anything in ticker.minds)
 			if (M.get_antagonist(ROLE_GANG_LEADER) || M.get_antagonist(ROLE_GANG_MEMBER) || !(M.originalPDA) || ishuman(M) || (M.assigned_role in security_jobs))
 				continue
+			if (isnull(M.current.loc)) //deleted or an admin who has removeself'd
+				continue
 			if (!(M in deferred_minds))
 				mindList.Add(M)
 		if (length(mindList) == 0 && !deferred_minds) //no valid minds among ALL minds, it's likely we're testing/solo. so just pick anything.
@@ -940,6 +977,7 @@ proc/broadcast_to_all_gangs(var/message)
 	item_state = "spraycan"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
+	object_flags = NO_GHOSTCRITTER
 	var/in_use = FALSE
 	var/empty = FALSE
 
@@ -1155,6 +1193,7 @@ proc/broadcast_to_all_gangs(var/message)
 	icon_state = "gang"
 	density = FALSE
 	anchored = ANCHORED
+	object_flags = NO_GHOSTCRITTER
 	/// gang that owns this locker
 	var/datum/gang/gang = null
 	/// the overlay this locker should show, after doing stuff like blinking red for errors
@@ -1186,6 +1225,8 @@ proc/broadcast_to_all_gangs(var/message)
 	var/list/tracked_drugs_list = list()
 	/// Tracks how many points' worth of drugs have been inserted, after the GANG_DRUG_BONUS_CAP
 	var/untracked_drugs_score = 0
+	/// How many leaves of weed have been given in
+	var/gang_weed = 0
 
 	New()
 		START_TRACKING
@@ -1200,7 +1241,7 @@ proc/broadcast_to_all_gangs(var/message)
 			new/datum/gang_item/consumable/quickhack,
 			new/datum/gang_item/misc/ratstick,
 			new/datum/gang_item/street/switchblade,
-			new/datum/gang_item/ninja/nunchucks,
+			// new/datum/gang_item/ninja/nunchucks, removed for stunning too many secoffs
 			new/datum/gang_item/ninja/throwing_knife,
 			new/datum/gang_item/ninja/shuriken,
 			new/datum/gang_item/ninja/discount_katana,
@@ -1215,9 +1256,12 @@ proc/broadcast_to_all_gangs(var/message)
 		. = ..()
 		. += "The screen displays \"Total Score: [gang.gang_score()]\""
 
-	attack_hand(var/mob/living/carbon/human/user)
+	attack_hand(var/mob/user)
 		if(!isalive(user))
 			boutput(user, SPAN_ALERT("Not when you're incapacitated."))
+			return
+		if(!isliving(user))
+			boutput(user, SPAN_ALERT("You're too, er, dead."))
 			return
 
 		add_fingerprint(user)
@@ -1623,10 +1667,9 @@ proc/broadcast_to_all_gangs(var/message)
 
 				return
 
-			if(istype(item, /obj/item/gun/kinetic/slamgun))
-				boutput(user, SPAN_ALERT("<b>This shoddy firearm is worth a lot less</b>"))
-				gang.score_gun += round(100)
-				gang.add_points(round(100),user, showText = TRUE)
+			if(istype(item, /obj/item/gun/kinetic/slamgun) || istype(item, /obj/item/gun/kinetic/zipgun))
+				boutput(user, SPAN_ALERT("<b>This shoddy firearm isn't worth selling.</b>"))
+				return
 			else
 				gang.score_gun += round(300)
 				gang.add_points(round(300),user, showText = TRUE)
@@ -1731,7 +1774,9 @@ proc/broadcast_to_all_gangs(var/message)
 		score += do_drug_score(O,"catdrugs", GANG_DRUG_SCORE_CATDRUGS)
 		score += do_drug_score(O,"methamphetamine", GANG_DRUG_SCORE_METH)
 		//uncapped because weed is cool
-		if(istype(O, /obj/item/plant/herb/cannabis))
+		//now capped because weed was too cool
+		if(istype(O, /obj/item/plant/herb/cannabis) && gang_weed < GANG_WEED_LIMIT)
+			gang_weed++
 			score += 10
 		return round(score)
 
@@ -1754,9 +1799,7 @@ proc/broadcast_to_all_gangs(var/message)
 		message_admins("[user.key] has claimed the role of leader for their gang, [src.gang.gang_name].")
 
 	proc/print_drug_prices(var/mob/living/carbon/human/user)
-		var/multiplier = 3/((untracked_drugs_score/1000)+1)
-		var/text = {"Given the current market saturation, drugs are worth [round(multiplier,0.1)]x<br>
-		The going prices for drugs are as follows:<br>
+		var/text = {"The going prices for drugs are as follows:<br>
 		[drug_hotness("bathsalts") ? "*HIGH DEMAND: [drug_hotness("bathsalts")]u* - " : ""] 1u of bathsalts = [get_drug_score("bathsalts", GANG_DRUG_SCORE_BATHSALTS)]<br>
 		[drug_hotness("morphine") ? "*HIGH DEMAND: [drug_hotness("morphine")]u* - " : ""]1u of morphine = [get_drug_score("morphine", GANG_DRUG_SCORE_MORPHINE)]<br>
 		[drug_hotness("crank") ? "*HIGH DEMAND: [drug_hotness("crank")]u* - " : ""]1u of crank = [get_drug_score("crank", GANG_DRUG_SCORE_CRANK)] <br>
@@ -1767,7 +1810,8 @@ proc/broadcast_to_all_gangs(var/message)
 		[drug_hotness("psilocybin") ? "*HIGH DEMAND: [drug_hotness("psilocybin")]u* - " : ""]1u of psilocybin = [get_drug_score("psilocybin", GANG_DRUG_SCORE_PSILOCYBIN)] <br>
 		[drug_hotness("krokodil") ? "*HIGH DEMAND: [drug_hotness("krokodil")]u* - " : ""]1u of krokodil = [get_drug_score("krokodil", GANG_DRUG_SCORE_KROKODIL)] <br>
 		[drug_hotness("catdrugs") ? "*HIGH DEMAND: [drug_hotness("catdrugs")]u* - " : ""]1u of cat drugs = [get_drug_score("catdrugs", GANG_DRUG_SCORE_CATDRUGS)] <br>
-		[drug_hotness("methamphetamine") ? "*HIGH DEMAND: [drug_hotness("methamphetamine")]u* - " : ""]1u of methamphetamine = [get_drug_score("methamphetamine", GANG_DRUG_SCORE_METH)] <br>"}
+		[drug_hotness("methamphetamine") ? "*HIGH DEMAND: [drug_hotness("methamphetamine")]u* - " : ""]1u of methamphetamine = [get_drug_score("methamphetamine", GANG_DRUG_SCORE_METH)] <br>
+		There is additional demand for [GANG_WEED_LIMIT-gang_weed] leaves of cannabis, for 10 points each."}
 		boutput(user, SPAN_ALERT(text))
 
 
@@ -1986,6 +2030,7 @@ proc/broadcast_to_all_gangs(var/message)
 	throwforce = 1
 	force = 1
 	w_class = W_CLASS_TINY
+	object_flags = NO_GHOSTCRITTER
 	HELP_MESSAGE_OVERRIDE({"Hitting a dead, non-rotten gang member's corpse with this item will start a short action bar.\n
 	On completion, if the syringe is not promptly removed from the corpse, it will come back to life, disoriented, at low health."})
 
@@ -2076,6 +2121,7 @@ proc/broadcast_to_all_gangs(var/message)
 	desc = "A highly illegal, disposable device that can fake an AI's 'open' signal to a door a few times."
 	icon = 'icons/obj/items/gang.dmi'
 	icon_state = "quickhack"
+	object_flags = NO_GHOSTCRITTER
 	throwforce = 1
 	force = 1
 	inventory_counter_enabled = 1
@@ -2274,10 +2320,10 @@ proc/broadcast_to_all_gangs(var/message)
 /////////////////////////////////////////////////////////////////////
 /datum/gang_item/space/discount_csaber
 	name = "Faux C-Saber"
-	desc = "It's not a c-saber, it's something from the discount rack. Some kinda kooky laser stick. It doesn't look very dangerous."
+	desc = "It's not a c-saber, it's something from the discount rack. Some kinda kooky laser stick. It looks pretty dangerous."
 	class2 = "weapon"
 	price = 9000
-	item_path = /obj/item/sword/discount
+	item_path = /obj/item/sword/discount/gang
 /datum/gang_item/space/csaber
 	name = "C-Saber"
 	desc = "It's not a lightsaber."
