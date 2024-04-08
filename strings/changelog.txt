@@ -1,4 +1,7 @@
 
+(t)mon apr 08 24
+(u)tarmunora
+(+)For parity with constructed cyborgs, wraith decay power no longer emags cyborg frames.
 (t)sat apr 06 24
 (u)IPingu
 (p)18136
