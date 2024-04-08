@@ -575,11 +575,6 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		boutput(src, SPAN_ALERT("You aren't even an admin, how did you get here?!"))
 		return
 
-	// has the game started?
-	if(!ticker || !ticker.mode)
-		boutput(src, SPAN_ALERT("The game hasn't started yet, silly!"))
-		return
-
 	if (tgui_alert(src, "Are you sure you want to respawn as an admin mouse?", "Respawn as Animal", list("Yes", "No")) != "Yes")
 		return
 
