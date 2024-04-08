@@ -8,7 +8,7 @@
 import { BooleanLike } from "common/react";
 import { Fragment } from "inferno";
 import { useLocalState, useSharedState } from "../../../../backend";
-import { Table } from "../../../../components";
+import { Table, Tooltip } from "../../../../components";
 import { Header } from "../Header";
 import { SearchState, SortableTableHeaderConfig, SortableTableRowProps, SortState } from "./type";
 import { onSortClick, sortAndFilterRows } from "./utils";
@@ -22,23 +22,40 @@ interface SortableTableHeaderRowProps {
 
 const SortableTableHeaderRow = (props: SortableTableHeaderRowProps) => {
   const { config, sortState, setSortBy } = props;
+
   return (
     <Table.Row header>
       {config.map((config, index: number) => {
-        return (
-          <Table.Cell header key={index}>
-            <Header
-              sortDirection={
-                sortState === null
-                  ? null
-                  : index === sortState.index
-                    ? sortState.dir
-                    : null
-              }
-              onSortClick={() => setSortBy(index)}>
-              {config.children}
-            </Header>
-          </Table.Cell>);
+        const { children, toolTipContent } = config;
+
+        const sortDirection = !sortState
+          ? null
+          : index === sortState.index
+            ? sortState.dir
+            : null;
+        const sortByIndex = () => setSortBy(index);
+        if (toolTipContent) {
+          return (
+            <Tooltip content={toolTipContent}>
+              <Table.Cell header key={index}>
+                <Header
+                  sortDirection={sortDirection}
+                  onSortClick={sortByIndex}>
+                  {children}
+                </Header>
+              </Table.Cell>
+            </Tooltip>);
+        } else {
+
+          return (
+            <Table.Cell header key={index}>
+              <Header
+                sortDirection={sortDirection}
+                onSortClick={sortByIndex}>
+                {children}
+              </Header>
+            </Table.Cell>);
+        }
       })}
     </Table.Row>
   );

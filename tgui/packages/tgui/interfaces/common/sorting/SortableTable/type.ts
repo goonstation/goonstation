@@ -11,6 +11,7 @@ import { SortDirection } from "../type";
 
 /** Configuration for Sortable Table header row and callback functions */
 export interface SortableTableHeaderConfig {
+
   /** Presentation of header cell for this field */
   children: InfernoNode,
 
@@ -20,11 +21,15 @@ export interface SortableTableHeaderConfig {
   /** Is this field searchable */
   searchable: BooleanLike,
 
+  /** Optional tooltip string. */
+  toolTipContent?: string,
+
   /** Callback function to sort on type specific to data given */
   compareFunc?: (a: unknown, b: unknown) => number,
 
   /** Conversion from your data to string to allow searching */
-  toString?: (data: unknown) => string
+  toString?: (data: unknown) => string,
+
 }
 
 export type SortState = {

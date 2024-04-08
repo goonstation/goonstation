@@ -6,7 +6,6 @@
  */
 
 import { BooleanLike } from '../../../common/react';
-import { numericCompare, stringCompare } from '../common/sorting';
 
 export enum PowerMonitorType {
   Apc = 'apc',
@@ -64,80 +63,3 @@ export type PowerMonitorSmesItemData = [
 export interface PowerMonitorSmesStaticItemData {
   name: string;
 }
-
-export const apcHeaderConfig = [{
-  children: "Area",
-  sortable: true,
-  searchable: true,
-  compareFunc: (a, b) => stringCompare(a as string, b as string),
-  toString: (str) => str as string,
-}, {
-  children: "Eqp.",
-  sortable: true,
-  searchable: false,
-  compareFunc: numericCompare,
-}, {
-  children: "Lgt.",
-  sortable: true,
-  searchable: false,
-  compareFunc: numericCompare,
-}, {
-  children: "Env.",
-  sortable: true,
-  searchable: false,
-  compareFunc: numericCompare,
-}, {
-  children: "Load",
-  sortable: true,
-  searchable: false,
-  compareFunc: numericCompare,
-}, {
-  children: "Cell Charge",
-  sortable: true,
-  searchable: false,
-  compareFunc: numericCompare,
-}, {
-  children: "Cell State",
-  sortable: true,
-  searchable: false,
-  compareFunc: numericCompare,
-}];
-
-
-export const smesHeaderConfig = [{
-  children: "Area",
-  sortable: true,
-  searchable: true,
-  compareFunc: (a, b) => stringCompare(a as string, b as string),
-  toString: (str) => str as string,
-}, {
-  children: "Stored Power#",
-  sortable: true,
-  searchable: false,
-  compareFunc: numericCompare,
-}, {
-  children: "Charging",
-  sortable: true,
-  searchable: false,
-  compareFunc: numericCompare,
-}, {
-  children: "Input",
-  sortable: true,
-  searchable: false,
-  compareFunc: numericCompare,
-}, {
-  children: "Output",
-  sortable: true,
-  searchable: false,
-  compareFunc: numericCompare,
-}, {
-  children: "Active",
-  sortable: true,
-  searchable: false,
-  compareFunc: numericCompare,
-}, {
-  children: "Load",
-  sortable: true,
-  searchable: false,
-  compareFunc: numericCompare,
-}];

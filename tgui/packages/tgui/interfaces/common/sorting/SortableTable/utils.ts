@@ -45,7 +45,7 @@ export const sortAndFilterRows = (
     return rowConfig;
   }
 
-  if (sortState !== null && header.sortable) {
+  if (sortState && header.sortable) {
     const sortFunc = header.compareFunc;
     sorted = [...rowConfig].sort((rowA, rowB) => {
 

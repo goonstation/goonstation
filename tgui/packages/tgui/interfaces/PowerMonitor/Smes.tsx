@@ -8,9 +8,47 @@
 import { useBackend } from '../../backend';
 import { Chart, LabeledList, Stack } from '../../components';
 import { formatPower } from '../../format';
-import { SortableTableRowProps } from '../common/sorting';
+import { numericCompare, SortableTableRowProps, stringCompare } from '../common/sorting';
 
 import { PowerMonitorSmesData, PowerMonitorSmesItemData } from './type';
+
+export const smesHeaderConfig = [{
+  children: "Area",
+  sortable: true,
+  searchable: true,
+  compareFunc: (a, b) => stringCompare(a as string, b as string),
+  toString: (str) => str as string,
+}, {
+  children: "Stored Power#",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Charging",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Input",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Output",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Active",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Load",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}];
 
 export const PowerMonitorSmesGlobal = (_props, context) => {
   const { data } = useBackend<PowerMonitorSmesData>(context);

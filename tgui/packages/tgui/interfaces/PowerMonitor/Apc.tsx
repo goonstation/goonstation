@@ -8,8 +8,50 @@
 import { useBackend } from '../../backend';
 import { Box, Chart, LabeledList, Stack, Table } from '../../components';
 import { formatPower } from '../../format';
-import { SortableTableRowProps } from '../common/sorting';
+import { numericCompare, SortableTableRowProps, stringCompare } from '../common/sorting';
+import { SortableTableHeaderConfig } from '../common/sorting/SortableTable/type';
 import { PowerMonitorApcData, PowerMonitorApcItemData } from './type';
+
+export const apcHeaderConfig: SortableTableHeaderConfig[] = [{
+  children: "Area",
+  sortable: true,
+  searchable: true,
+  compareFunc: (a, b) => stringCompare(a as string, b as string),
+  toString: (str) => str as string,
+}, {
+  children: "Eqp.",
+  sortable: true,
+  searchable: false,
+  toolTipContent: "Equipment",
+  compareFunc: numericCompare,
+}, {
+  children: "Lgt.",
+  sortable: true,
+  searchable: false,
+  toolTipContent: "Light",
+  compareFunc: numericCompare,
+}, {
+  children: "Env.",
+  sortable: true,
+  searchable: false,
+  toolTipContent: "Environemnt",
+  compareFunc: numericCompare,
+}, {
+  children: "Load",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Cell Charge",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}, {
+  children: "Cell State",
+  sortable: true,
+  searchable: false,
+  compareFunc: numericCompare,
+}];
 
 const apcState = {
   [0]: 'Off',

@@ -10,9 +10,10 @@ import { Input, LabeledList, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { SortableTable } from '../common/sorting';
 
-import { getRowDataForApcs, PowerMonitorApcGlobal } from './Apc';
-import { getRowDataForSmes, PowerMonitorSmesGlobal } from './Smes';
-import { apcHeaderConfig, PowerMonitorApcData, PowerMonitorData, PowerMonitorSmesData, PowerMonitorType, smesHeaderConfig } from './type';
+import { apcHeaderConfig, getRowDataForApcs, PowerMonitorApcGlobal } from './Apc';
+import { getRowDataForSmes, PowerMonitorSmesGlobal, smesHeaderConfig } from './Smes';
+import { PowerMonitorApcData, PowerMonitorData, PowerMonitorSmesData, PowerMonitorType } from './type';
+
 const isDataForApc = (data: PowerMonitorData):
   data is PowerMonitorApcData =>
   data.type === PowerMonitorType.Apc;
