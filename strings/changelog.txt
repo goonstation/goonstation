@@ -1,5 +1,9 @@
 
 (t)mon apr 08 24
+(u)Amylizzle
+(p)18442
+(e)🪲💨|C-Bug, A-Atmospherics
+(+)CO2 will now heat up much less from neutrons.
 (u)tarmunora
 (+)For parity with constructed cyborgs, wraith decay power no longer emags cyborg frames.
 (u)MetaReferencer
