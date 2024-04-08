@@ -333,14 +333,14 @@
 		"duration" = duration
 	)
 
-/client/proc/addBanTemp()
+/client/proc/addBanTemp(mob/target)
 	set name = "Add Ban"
 	set desc = "Add a ban"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	var/list/data = src.addBanTempDialog()
+	var/list/data = src.addBanTempDialog(target)
 	if (!data) return
 
 	try

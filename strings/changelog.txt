@@ -2,12 +2,33 @@
 (t)mon apr 08 24
 (u)tarmunora
 (+)For parity with constructed cyborgs, wraith decay power no longer emags cyborg frames.
+(u)MetaReferencer
+(p)18373
+(e)🆕🔨🤖|C-Feature, A-Player-Actions, A-Silicons
+(+)Borgs can click-drag themselves onto weight machines (for no benefit).
+(t)sun apr 07 24
+(u)TDHooligan
+(p)18429
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Gangs can no longer sell slamguns/zip guns. Go do some *REAL* crime instead of welding pipes together.
+(u)LeahTheTech
+(p)18425
+(e)🆕🎨|C-Feature, C-Sprites
+(*)Cutting open mail with a knife now leaves behind the torn package as evidence.
+(u)LeahTheTech
+(+)Stun batons now turn themselves off when they no longer have enough charge to stun. Now if they look on then you know they can stun.
+(+)The vortexes event now spawns less vortices.
 (t)sat apr 06 24
+(u)glowbold
+(p)18267
+(e)🪲📄📦|C-Bug, A-UI, A-Game-Objects
+(*)Playerdorfs may once again vie for the souls of the living.
 (u)IPingu
 (p)18136
 (e)📄|A-UI
 (+)Adds Icons to spells in the wizard spellbook
 (u)LeahTheTech
+(+)Sleeper agents now have a more reasonably completable number of objectives.
 (p)18329
 (e)⚖🐣|C-Balance, A-Respawning
 (*)Security Officer is now a limited high priority role, meaning the game will attempt to ensure there are a minimum number of them in each shift. Having the role disabled will still prevent you from rolling it.
