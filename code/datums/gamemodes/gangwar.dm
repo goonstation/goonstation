@@ -187,6 +187,8 @@
 
 
 /datum/game_mode/gang/declare_completion()
+	for (var/datum/gang/gang in src.gangs)
+		logTheThing(LOG_GAMEMODE, src, "Gang [gang.gang_name] ended the round with [gang.gang_score()] total score.")
 	if (!check_winner())
 		boutput(world, "<h2><b>The round was a draw!</b></h2>")
 
