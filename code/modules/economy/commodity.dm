@@ -431,32 +431,32 @@
 /datum/commodity/drugs/poppies
 	comname = "Poppies"
 	comtype = /obj/item/plant/herb/poppy
-	price = PAY_DOCTORATE/2
+	price = PAY_UNTRAINED
 
 /datum/commodity/drugs/shrooms
 	comname = "Psilocybin"
 	comtype = /obj/item/reagent_containers/food/snacks/mushroom/psilocybin
-	price = PAY_DOCTORATE
+	price = PAY_UNTRAINED
 
 /datum/commodity/drugs/cannabis
 	comname = "Cannabis"
 	comtype = /obj/item/plant/herb/cannabis
-	price = PAY_UNTRAINED
+	price = PAY_UNTRAINED/2
 
 /datum/commodity/drugs/cannabis_mega
 	comname = "Rainbow Cannabis"
 	comtype = /obj/item/plant/herb/cannabis/mega
-	price = PAY_DOCTORATE
+	price = PAY_UNTRAINED
 
 /datum/commodity/drugs/cannabis_white
 	comname = "White Cannabis"
 	comtype = /obj/item/plant/herb/cannabis/white
-	price = PAY_DOCTORATE
+	price = PAY_UNTRAINED
 
 /datum/commodity/drugs/cannabis_omega
 	comname = "Omega Cannabis"
 	comtype = /obj/item/plant/herb/cannabis/omega
-	price = PAY_EMBEZZLED
+	price = PAY_TRADESMAN
 
 ///// things you can buy from the traders
 
@@ -1307,7 +1307,7 @@
 
 /datum/commodity/medical/injectormask
 	comname = "Vapo-Matic"
-	comtype = /obj/item/clothing/mask/gas/injector_mask
+	comtype = /obj/item/clothing/mask/injector_mask
 	desc = "A gas mask that doses the wearer with chemicals loaded from a container."
 	price = PAY_EMBEZZLED
 
@@ -1375,7 +1375,7 @@
 
 /datum/commodity/medical/cyanide
 	comname = "Cyanide"
-	comtype = /obj/item/reagent_containers/glass/bottle/cyanide
+	comtype = /obj/item/reagent_containers/pill/toxlite
 	desc = "A rapidly acting and highly dangerous chemical."
 	price = PAY_EMBEZZLED
 
@@ -1997,7 +1997,7 @@
 	desc = "In respect of those lost during the colonization of the frontier, we are now offering poppies."
 	comtype = /obj/item/plant/herb/poppy
 	onmarket = 0
-	price = PAY_DOCTORATE/2
+	price = PAY_UNTRAINED
 
 /datum/commodity/owlpaint
 	comtype = /obj/item/pod/paintjob/owl

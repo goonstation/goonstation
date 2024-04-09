@@ -1754,7 +1754,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "agT" = (
-/obj/storage/secure/closet/security/armory/looted,
+/obj/storage/secure/crate/gear/armory/equipment/looted,
 /turf/unsimulated/floor{
 	icon_state = "robar"
 	},
@@ -65249,6 +65249,14 @@
 	},
 /turf/space,
 /area/syndicate_station_space)
+"ncT" = (
+/obj/landmark{
+	name = "Nuclear-Closet"
+	},
+/turf/unsimulated/floor/redblack{
+	dir = 4
+	},
+/area/syndicate_station/battlecruiser)
 "ndE" = (
 /obj/lattice{
 	dir = 6;
@@ -108538,7 +108546,7 @@ fgY
 lzl
 cwk
 dhN
-dhN
+ncT
 dhN
 cwn
 lzl

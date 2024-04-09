@@ -207,6 +207,7 @@ TYPEINFO(/obj/machinery/coffeemaker)
 	var/image/fluid_image
 
 	var/emagged = FALSE
+	var/reagent_id = "coffee_fresh"
 
 	New()
 		..()
@@ -222,7 +223,7 @@ TYPEINFO(/obj/machinery/coffeemaker)
 				boutput(user, SPAN_NOTICE("You force the machine to brew something else..."))
 
 			src.desc = " It's top of the line NanoTrasen tea technology! Featuring 100% Organic Locally-Grown green leaves!"
-			src.emagged = TRUE
+			src.reagent_id = "tea"
 			return TRUE
 		else
 			if (user)
@@ -253,7 +254,7 @@ TYPEINFO(/obj/machinery/coffeemaker)
 					switch (choice)
 						if ("Brew coffee","Brew tea")
 							for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
-								C.reagents.add_reagent(src.emagged ? "tea" : "coffee_fresh",100)
+								C.reagents.add_reagent(src.reagent_id,100)
 								playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 								use_power(10)
 						if ("Remove carafe")

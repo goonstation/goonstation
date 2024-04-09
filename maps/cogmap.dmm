@@ -3846,32 +3846,10 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/lobby)
 "aoK" = (
-/obj/rack,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/item/tank/air{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/clothing/suit/space/emerg{
-	pixel_x = 6
-	},
-/obj/item/crowbar{
-	pixel_x = 3;
-	pixel_y = -1
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = 5;
-	pixel_y = 1
-	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/storage/closet/welding_supply,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "aoN" = (
@@ -4832,6 +4810,9 @@
 	pixel_x = 10;
 	pixel_y = -2
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "asW" = (
@@ -5174,16 +5155,24 @@
 	},
 /area/station/hydroponics/bay)
 "aue" = (
-/obj/reagent_dispensers/fueltank,
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24
 	},
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/table/auto,
+/obj/item/crowbar{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/obj/item/hand_labeler{
+	pixel_x = 4
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
@@ -5502,21 +5491,10 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "avo" = (
-/obj/table/auto,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -4;
-	pixel_y = 7
-	},
-/obj/item/crowbar{
-	pixel_x = 1;
-	pixel_y = 6
-	},
-/obj/item/hand_labeler{
-	pixel_x = 4
-	},
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "avp" = (
@@ -5721,6 +5699,14 @@
 /obj/decal/boxingropeenter{
 	dir = 8
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "avU" = (
@@ -5730,6 +5716,10 @@
 /obj/stool,
 /obj/decal/boxingrope{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -6154,6 +6144,10 @@
 	density = 0;
 	dir = 8
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "axo" = (
@@ -6162,6 +6156,10 @@
 	},
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -6364,7 +6362,7 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "ayh" = (
-/obj/stool/chair,
+/obj/stool/chair/red,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "ayj" = (
@@ -6510,11 +6508,19 @@
 	density = 0;
 	dir = 8
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "ayJ" = (
 /obj/decal/boxingrope{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -7064,20 +7070,34 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 10
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aAm" = (
 /obj/decal/boxingrope,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aAn" = (
 /obj/decal/boxingrope,
 /obj/machinery/light,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aAo" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -7745,7 +7765,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 4
 	},
 /obj/cable{
@@ -17619,7 +17639,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/disposal)
 "bgl" = (
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -41732,7 +41752,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/engine)
 "fkj" = (
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 8
 	},
 /obj/landmark/start/job/security_officer,
@@ -41901,6 +41921,13 @@
 "fpq" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
@@ -42112,6 +42139,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
+"fxi" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "fxp" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -47716,7 +47750,7 @@
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "jYE" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -50174,7 +50208,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/stool/chair,
+/obj/stool/chair/red,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -51492,7 +51526,7 @@
 	},
 /area/station/medical/medbay)
 "niM" = (
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 4
 	},
 /obj/landmark/start/job/security_officer,
@@ -53307,8 +53341,6 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -53319,6 +53351,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big{
 	dir = 8
 	},
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "oCM" = (
@@ -54883,7 +54916,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "pQO" = (
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 4
 	},
 /obj/landmark/start/job/security_officer,
@@ -60883,7 +60916,6 @@
 /obj/disposalpipe/segment/mail,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_control,
-/obj/machinery/power/data_terminal,
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
@@ -60988,7 +61020,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/disposal)
 "usN" = (
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 4
 	},
 /obj/landmark/start/job/security_officer,
@@ -61167,7 +61199,7 @@
 	},
 /area/station/crew_quarters/info)
 "uzM" = (
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 4
 	},
 /obj/landmark/start/job/security_officer,
@@ -61481,7 +61513,7 @@
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
 "uKh" = (
-/obj/stool/chair{
+/obj/stool/chair/red{
 	dir = 8
 	},
 /obj/cable{
@@ -64019,7 +64051,6 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
 "wJN" = (
-/obj/storage/closet/welding_supply,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -64027,6 +64058,10 @@
 	dir = 10
 	},
 /obj/machinery/door_control/podbay/security/new_walls/east,
+/obj/machinery/manufacturer/hangar,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "wKl" = (
@@ -64710,7 +64745,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/stool/chair,
+/obj/stool/chair/red,
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -111026,7 +111061,7 @@ aqK
 akT
 atr
 auI
-avU
+fxi
 avU
 avU
 aAm
@@ -111328,7 +111363,7 @@ aqI
 akT
 ats
 auI
-avU
+fxi
 aoa
 ulX
 aAn
@@ -111630,7 +111665,7 @@ akT
 akT
 att
 auI
-avU
+fxi
 avU
 avU
 aAm

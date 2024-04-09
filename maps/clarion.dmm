@@ -7817,6 +7817,14 @@
 /obj/decal/boxingropeenter{
 	dir = 8
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aGk" = (
@@ -7827,6 +7835,10 @@
 	dir = 4
 	},
 /obj/stool,
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aGm" = (
@@ -8083,6 +8095,9 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/decal/stage_edge{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aHq" = (
@@ -8090,11 +8105,19 @@
 	density = 0;
 	dir = 8
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aHr" = (
 /obj/decal/boxingrope{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -8225,6 +8248,9 @@
 /area/station/crew_quarters/fitness)
 "aIq" = (
 /obj/disposalpipe/segment,
+/obj/decal/stage_edge{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aIr" = (
@@ -8233,6 +8259,10 @@
 	dir = 8
 	},
 /obj/stool,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aIs" = (
@@ -8543,6 +8573,9 @@
 /area/station/crew_quarters/fitness)
 "aJE" = (
 /obj/decal/boxingrope,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aJF" = (
@@ -12755,6 +12788,10 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 10
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "bhj" = (
@@ -13107,6 +13144,10 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "bkv" = (
@@ -13240,7 +13281,7 @@
 	pixel_y = 16
 	},
 /turf/simulated/floor/black,
-/area/station/teleporter)
+/area/station/hallway/primary/east)
 "blz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13402,7 +13443,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/black,
-/area/station/teleporter)
+/area/station/hallway/primary/east)
 "bmR" = (
 /obj/stool/chair/office/purple{
 	dir = 4
@@ -18581,6 +18622,11 @@
 /obj/landmark/pest,
 /turf/simulated/floor,
 /area/station/science/artifact)
+"cIJ" = (
+/turf/simulated/floor/stairs{
+	dir = 4
+	},
+/area/station/crew_quarters/fitness)
 "cJB" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -30368,6 +30414,13 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"lTl" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "lTq" = (
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating,
@@ -34609,7 +34662,7 @@
 /area/station/engine/core/nuclear)
 "pop" = (
 /obj/disposalpipe/segment/food,
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/machinery/recharger/wall{
 	dir = 8;
 	pixel_x = -19
@@ -43404,13 +43457,14 @@
 /obj/mapping_helper/access/ai_upload,
 /obj/machinery/turretid{
 	pixel_x = 24;
-	req_access_txt = null
+	req_access_txt = null;
+	turretArea = /area/station/turret_protected/ai
 	},
 /obj/cable{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/ai)
+/area/station/bridge)
 "vZO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -43816,7 +43870,7 @@
 /obj/stool/chair,
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/black,
-/area/station/teleporter)
+/area/station/hallway/primary/east)
 "wtk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -46093,6 +46147,8 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/taser,
+/obj/item/shipcomponent/mainweapon/taser,
+/obj/item/shipcomponent/secondary_system/tractor_beam,
 /obj/item/shipcomponent/secondary_system/tractor_beam,
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -75811,7 +75867,7 @@ azu
 aDh
 azu
 azu
-azu
+cIJ
 aHp
 aIq
 aIq
@@ -76325,7 +76381,7 @@ aCi
 aDj
 bka
 aFw
-aGk
+lTl
 aGk
 aGk
 aJE
@@ -76582,7 +76638,7 @@ aCj
 aDj
 hHP
 aFw
-aGk
+lTl
 aSf
 aGk
 aJE
@@ -76839,7 +76895,7 @@ aCk
 aDj
 aEs
 aFw
-aGk
+lTl
 aGk
 aGk
 aJE

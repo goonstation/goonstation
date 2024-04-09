@@ -418,20 +418,6 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/storage/box/luminol_grenade_kit,
 	/obj/item/clipboard)
 
-/obj/storage/secure/closet/security/armory
-	name = "\improper Special Equipment locker"
-	reinforced = TRUE
-	req_access = list(access_maxsec)
-	spawn_contents = list(/obj/item/requisition_token/security = 2,
-	/obj/item/requisition_token/security/assistant = 2,
-	/obj/item/turret_deployer/riot = 2)
-
-/obj/storage/secure/closet/security/armory/looted
-	spawn_contents = list()
-	locked = 0
-	open = 1
-	emagged = 1
-
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items safe"
 	desc = "A card-locked safe for storage of contraband. Unfortunately it was made by the lowest bidder."
@@ -821,7 +807,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/satchel/mining = 2,
 	/obj/item/oreprospector,
 	/obj/item/ore_scoop,
-	/obj/item/mining_tool/power_pick,
+	/obj/item/mining_tool/powered/pickaxe,
 	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/storage/belt/mining,
 	/obj/item/device/geiger,

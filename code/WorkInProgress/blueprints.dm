@@ -67,7 +67,7 @@
 			. += "<br>[SPAN_NOTICE("Someone has uploaded a blueprint named '[current_bp.room_name]'.")]"
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
+		if (!W.cant_drop && (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece)))
 			boutput(user, SPAN_NOTICE("You insert the material into the machine."))
 			user.drop_item()
 			W.set_loc(src)
@@ -78,7 +78,7 @@
 		if (!in_interact_range(src, user)  || BOUNDS_DIST(W, user) > 0 || !can_act(user))
 			return
 		else
-			if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
+			if (!W.cant_drop && (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece)))
 				boutput(user, SPAN_NOTICE("You insert [W] into the machine."))
 				W.set_loc(src)
 				return
@@ -395,22 +395,24 @@
 	var/posy = 0
 	var/icon = ""
 
-/verb/adminCreateBlueprint()
+/client/proc/adminCreateBlueprint()
 	set name = "Blueprint Create"
 	set desc = "Allows creation of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/picked = browse_abcu_blueprints(usr, "Admin Share Blueprint", "Choose a blueprint to print and share!", TRUE)
 	if (!picked) return
 	var/obj/printed = new /obj/item/abcu_blueprint_reference(usr, picked, usr)
 	usr.put_in_hand_or_drop(printed)
 	boutput(usr, SPAN_NOTICE("Spawned the blueprint '[picked["file"]]'."))
 
-/verb/adminDeleteBlueprint()
+/client/proc/adminDeleteBlueprint()
 	set name = "Blueprint Delete"
 	set desc = "Allows deletion of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/deleted = delete_abcu_blueprint(usr, TRUE)
 	if (!deleted) return
 	logTheThing(LOG_ADMIN, usr, "[usr] deleted blueprint [deleted["file"]], owned by [deleted["ckey"]].")
@@ -419,7 +421,8 @@
 	set name = "Blueprint Dump"
 	set desc = "Dumps readable HTML blueprint, of any user, to your client folder."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/picked = browse_abcu_blueprints(usr, "Admin Dump Blueprint", "Choose a blueprint to export.", TRUE)
 	if (!picked) return
 
