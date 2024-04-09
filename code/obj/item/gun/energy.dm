@@ -254,6 +254,14 @@ TYPEINFO(/obj/item/gun/energy)
 ///25.  250 / 25 = 10 shots
 #define CAPTAINGUN_T3_COST 25
 
+//Damage multipliers for bonus projectiles
+///0.2
+#define CAPTAINGUN_T1_RECYCLER_MULTIPLIER 0.2
+///0.4
+#define CAPTAINGUN_T2_RECYCLER_MULTIPLIER 0.3
+///0.6
+#define CAPTAINGUN_T3_RECYCLER_MULTIPLIER 0.4
+
 TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 	mats = null //dont let people copy their perfect gamer gun for a handful of copper and glass
 /obj/item/gun/energy/laser_gun/antique
@@ -374,6 +382,7 @@ TYPEINFO(/obj/item/gun/energy/laser_gun/antique)
 				src.customProjectileCost = CAPTAINGUN_T2_COST
 			if(CAPTAINGUN_T1_COIL_EFFICACY_THRESHOLD to CAPTAINGUN_T2_COIL_EFFICACY_THRESHOLD)
 				src.customProjectileCost = CAPTAINGUN_T1_COST
+
 		//rebuild the projectile with the stats we just calculated
 		src.set_current_projectile(new /datum/projectile/laser/custom(src.customProjectileDamage, src.customProjectileCost, src.customProjectileIconState))
 

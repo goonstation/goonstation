@@ -1,5 +1,12 @@
 // The misc crap that used to clutter up item.dm and didn't fit elsewhere.
 
+/obj/item/laserlens
+	name = "laser collimating lens"
+	desc = "A lens for aligning the beam of a laser to minimize dispersion."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "lens"
+	w_class = W_CLASS_TINY
+
 /obj/item/lens
 	name = "lens"
 	desc = "A lens of some sort. Not super useful on its own."
