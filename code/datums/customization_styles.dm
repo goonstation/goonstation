@@ -199,6 +199,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			flick_half
 				name = "Flick: Split"
 				id = "flick_half"
+				random_allowed = FALSE
 			floof
 				name = "Floof"
 				id = "floof"
@@ -295,18 +296,21 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			combedfrontbangs
 				name = "Bangs: Combed Front"
 				id = "combedfrontbangs"
+				random_allowed = FALSE
 			combedfrontshort
 				name = "Combed Front Short"
 				id = "combedfrontshort"
 			combedfrontshortbangs
 				name = "Bangs: Combed Front Short"
 				id = "combedfrontshortbangs"
+				random_allowed = FALSE
 			longfront
 				name = "Long Front"
 				id = "longfront"
 			longfrontbangs
 				name = "Bangs: Long Front"
 				id = "longfrontbangs"
+				random_allowed = FALSE
 			salty
 				name = "Salty"
 				id = "salty"
@@ -343,12 +347,14 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			spoonbangs
 				name = "Bangs: Spoon"
 				id = "spoonbangs"
+				random_allowed = FALSE
 			messy_waves
 				name = "Messy Waves"
 				id = "messy_waves"
 			messy_waves_half
 				name = "Messy Waves: Split"
 				id = "messy_waves_half"
+				random_allowed = FALSE
 			blunt_bob
 				name = "Blunt Bob"
 				id = "blunt_bob"
@@ -505,6 +511,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			longwaves_half
 				name = "Waves: Split"
 				id = "longwaves_half"
+				random_allowed = FALSE
 			pulledb
 				name = "Pulled Back"
 				id = "pulledb"
@@ -546,6 +553,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			smoothwave_half
 				name = "Smooth Waves: Split"
 				id = "smoothwave_half"
+				random_allowed = FALSE
 			mermaid
 				name = "Mermaid"
 				id = "mermaid"
@@ -575,6 +583,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			violet_half
 				name = "Violet: Split"
 				id = "violet_half"
+				random_allowed = FALSE
 			willow
 				name = "Willow"
 				id = "willow"
@@ -633,12 +642,14 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			longtwintail_half
 				name = "Long Twin Tails: Split"
 				id = "longtwintail_half"
+				random_allowed = FALSE
 			glamponytail
 				name = "Glam Ponytail"
 				id = "glamponytail"
 			glamponytail_half
 				name = "Glam Ponytail: Split"
 				id = "glamponytail_half"
+				random_allowed = FALSE
 			rockponytail
 				name = "Rock Ponytail"
 				id = "rockponytail"
@@ -649,6 +660,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			rockponytail_half
 				name = "Rock Ponytail: Split"
 				id = "rockponytail_half"
+				random_allowed = FALSE
 			spikyponytail
 				name = "Spiky Ponytail"
 				id = "spikyponytail"
@@ -680,6 +692,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			pig_half
 				name = "Pigtails: Split"
 				id = "pig_half"
+				random_allowed = FALSE
 			pompompigtail
 				name = "Pompom Pigtails"
 				id = "pompompigtail"
@@ -703,6 +716,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			wavy_tail_half
 				name = "Wavy Ponytail: Split"
 				id = "wavy_tail_half"
+				random_allowed = FALSE
 
 		gimmick
 			afroHA
