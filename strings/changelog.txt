@@ -1,5 +1,7 @@
 
 (t)tue apr 09 24
+(u)LeahTheTech
+(*)Smashing people into walls and windows now does more stamina damage and disorients for longer.
 (u)Retrino
 (p)18328
 (e)🎨|C-Sprites
