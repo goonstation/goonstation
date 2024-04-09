@@ -128,7 +128,7 @@
 		. = ..()
 		if (.)
 			return
-		if (!user.find_type_in_hand(/obj/item/pen))
+		if (!usr.find_type_in_hand(/obj/item/pen))
 			boutput(usr, "You can't write without a pen!")
 			return FALSE
 
