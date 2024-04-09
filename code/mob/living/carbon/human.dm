@@ -1142,7 +1142,6 @@
 				var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
 				if (thing)
 					usr = src
-					boutput(usr, SPAN_NOTICE("You offer [thing] to [target]."))
 					var/mob/living/living_target = target
 					living_target.give_item()
 					return

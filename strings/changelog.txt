@@ -1,4 +1,15 @@
 
+(t)mon apr 08 24
+(u)Amylizzle
+(p)18442
+(e)🪲💨|C-Bug, A-Atmospherics
+(+)CO2 will now heat up much less from neutrons.
+(u)tarmunora
+(+)For parity with constructed cyborgs, wraith decay power no longer emags cyborg frames.
+(u)MetaReferencer
+(p)18373
+(e)🆕🔨🤖|C-Feature, A-Player-Actions, A-Silicons
+(+)Borgs can click-drag themselves onto weight machines (for no benefit).
 (t)sun apr 07 24
 (u)TDHooligan
 (p)18429

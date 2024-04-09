@@ -281,6 +281,8 @@ TYPEINFO(/obj/item/card/emag)
 		all_accesses -= new_access
 		if (istype(src, /obj/item/card/id/syndicate)) // Nuke ops unable to exit their station (Convair880).
 			src.access += access_syndicate_shuttle
+		if (istype(src, /obj/item/card/id/syndicate/commander)) // Commander unable to play their cool tunes
+			src.access += access_syndicate_commander
 		DEBUG_MESSAGE("[get_access_desc(new_access)] added to [src]")
 	user?.show_text("You run [E] over [src], scrambling its access.", "red")
 	logTheThing(LOG_STATION, user || usr, "emagged [src], scrambling its access and granting random access at [log_loc(user || usr)].")

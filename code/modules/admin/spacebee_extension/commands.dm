@@ -105,7 +105,7 @@
 				var/lData = json_decode(playerNote.legacy_data)
 				if(islist(lData) && lData["oldserver"])
 					id = lData["oldserver"]
-			header = "**\[[id]\] [playerNote.game_admin.name]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
+			header = "**\[[id]\] [playerNote.game_admin?.name || "UNKNOWN"]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
 			len += length(header) + length(playerNote.note)
 			if(len >= 4000)
 				message = jointext(message, "\n")

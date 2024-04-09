@@ -47750,7 +47750,7 @@
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "jYE" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
