@@ -4,7 +4,21 @@
 	name = "laser collimating lens"
 	desc = "A lens for aligning the beam of a laser to minimize dispersion."
 	icon = 'icons/obj/items/items.dmi'
-	icon_state = "lens"
+	icon_state = "laserlens"
+	w_class = W_CLASS_TINY
+
+/obj/item/laserresonator
+	name = "laser resonator"
+	desc = "A photonic resonation chamber that turns electricity into a high-power laser."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "lasergenerator"
+	w_class = W_CLASS_TINY
+
+/obj/item/laserrecycler
+	name = "thermoelectric recycling module"
+	desc = "A thermoelectric plate that converts the residual heat of a laser into a secondary beam."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "laserrecycler"
 	w_class = W_CLASS_TINY
 
 /obj/item/lens
