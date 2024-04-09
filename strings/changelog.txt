@@ -1,4 +1,9 @@
 
+(t)tue apr 09 24
+(u)Retrino
+(p)18328
+(e)🎨|C-Sprites
+(+)Adds a few more bang styles, and a new split option for certain hairstyles. Base hairs by Walp, Thrush n me 👍
 (t)mon apr 08 24
 (u)Amylizzle
 (p)18442
