@@ -237,15 +237,15 @@
 	if(H.traitHolder.hasTrait("unionized"))
 		wageMult = 1.5
 
-	if(wagesystem.jobs[H.job])
-		B["wage"] = round(wagesystem.jobs[H.job] * wageMult)
-	// Otherwise give them a default wage
+	var/datum/job/J
+	if (H.job != null && istext(H.job))
+		J = find_job_in_controller_by_string(H.job)
 	else
-		var/datum/job/J = find_job_in_controller_by_string(G["rank"])
-		if (J?.wages)
-			B["wage"] = round(J.wages * wageMult)
-		else
-			B["wage"] = 0
+		J = find_job_in_controller_by_string(H.mind.assigned_role)
+	if (J?.wages)
+		B["wage"] = round(J.wages * wageMult)
+	else
+		B["wage"] = 0
 
 	src.general.add_record(G)
 	src.medical.add_record(M)

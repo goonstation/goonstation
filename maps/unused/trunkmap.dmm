@@ -28594,7 +28594,7 @@
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "mzR" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "mBg" = (

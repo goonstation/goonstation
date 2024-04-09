@@ -36685,7 +36685,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "xuE" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "xuF" = (

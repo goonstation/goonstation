@@ -53241,7 +53241,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "qez" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/machinery/light/incandescent/warm/very{
 	dir = 8
 	},

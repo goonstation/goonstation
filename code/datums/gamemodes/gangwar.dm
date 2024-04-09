@@ -187,6 +187,8 @@
 
 
 /datum/game_mode/gang/declare_completion()
+	for (var/datum/gang/gang in src.gangs)
+		logTheThing(LOG_GAMEMODE, src, "Gang [gang.gang_name] ended the round with [gang.gang_score()] total score.")
 	if (!check_winner())
 		boutput(world, "<h2><b>The round was a draw!</b></h2>")
 
@@ -1667,10 +1669,9 @@ proc/broadcast_to_all_gangs(var/message)
 
 				return
 
-			if(istype(item, /obj/item/gun/kinetic/slamgun))
-				boutput(user, SPAN_ALERT("<b>This shoddy firearm is worth a lot less</b>"))
-				gang.score_gun += round(100)
-				gang.add_points(round(100),user, showText = TRUE)
+			if(istype(item, /obj/item/gun/kinetic/slamgun) || istype(item, /obj/item/gun/kinetic/zipgun))
+				boutput(user, SPAN_ALERT("<b>This shoddy firearm isn't worth selling.</b>"))
+				return
 			else
 				gang.score_gun += round(300)
 				gang.add_points(round(300),user, showText = TRUE)

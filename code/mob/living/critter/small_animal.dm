@@ -3685,6 +3685,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			else // silly basic "rare" varieties of things that should probably just be fancy paintjobs or plastics, but whoever made these things are idiots and just made them out of the actual stuff.  I guess.
 				var/list/material_varieties = list("steel", "glass", "silver", "quartz", "rosequartz", "plasmaglass", "onyx", "jasper", "malachite", "lapislazuli")
 				src.setMaterial(getMaterial(pick(material_varieties)))
+		// true when making the mob to not make the respawn timer reset...false here to allow for crime
+		ghost_spawned = FALSE
 
 	death(var/gibbed)
 		. = ..()
@@ -3832,7 +3834,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		M.setStatus(src.status_name, duration = null)
 
 	hand_attack(atom/target, params, location, control, origParams)
-		if(istype(target, /mob/living) && target != src)
+		if(istype(target, /mob/living) && target != src && !is_admin)
 			boutput(src, "<span class='game' class='mhelp'>You poke [target] in a way that clearly indicates you want to help [him_or_her(target)].</span>")
 			boutput(target, "<span class='game' class='mhelp'>\The [src] seems willing to help you. Click on [him_or_her(src)] with an empty hand if you want to accept the offer.</span>")
 			src.last_poked = target
@@ -3942,7 +3944,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.limb_name = "claws"
 
 	hand_attack(atom/target, params, location, control, origParams)
-		if(istype(target, /mob/living))
+		if(istype(target, /mob/living) && src.a_intent == INTENT_HELP)
 			var/mob/living/M = target
 			src.into_pocket(M, 0)
 		else

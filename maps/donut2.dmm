@@ -18645,7 +18645,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/storage/secure/closet/security/armory{
+/obj/storage/secure/crate/gear/armory/equipment{
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/redblack{

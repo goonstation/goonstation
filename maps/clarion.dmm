@@ -34662,7 +34662,7 @@
 /area/station/engine/core/nuclear)
 "pop" = (
 /obj/disposalpipe/segment/food,
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/machinery/recharger/wall{
 	dir = 8;
 	pixel_x = -19
