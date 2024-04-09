@@ -128,7 +128,7 @@
 		. = ..()
 		if (.)
 			return
-		if (!params["hasPen"])
+		if (!user.find_type_in_hand(/obj/item/pen))
 			boutput(usr, "You can't write without a pen!")
 			return FALSE
 
@@ -168,7 +168,6 @@
 			src.checkArtifactVars(O)
 
 	ui_data(mob/user)
-		var/obj/item/pen/P = user.find_type_in_hand(/obj/item/pen)
 		. = list(
 			"artifactName" = artifactName,
 			"artifactOrigin" = artifactOrigin,
@@ -176,7 +175,6 @@
 			"artifactTriggers" = artifactTriggers,
 			"artifactFaults" = artifactFaults,
 			"artifactDetails" = artifactDetails,
-			"hasPen" = P,
 			"crossed" = crossed
 		)
 
