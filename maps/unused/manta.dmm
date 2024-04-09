@@ -14898,7 +14898,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/item/gun/kinetic/dart_rifle,
 /obj/item/ammo/bullets/tranq_darts,
 /obj/item/ammo/bullets/tranq_darts,

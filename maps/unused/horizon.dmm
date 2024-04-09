@@ -30603,7 +30603,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
 	dir = 9
 	},
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/item/gun/energy/taser_gun,
 /obj/item/gun/energy/taser_gun{
 	pixel_y = 7

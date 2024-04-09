@@ -63100,7 +63100,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/security/hos)
 "qAx" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/cable{
 	icon_state = "0-8"
 	},
