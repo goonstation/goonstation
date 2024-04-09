@@ -26,7 +26,8 @@ const SortableTableHeaderRow = (props: SortableTableHeaderRowProps) => {
   return (
     <Table.Row header>
       {config.map((config, index: number) => {
-        const { children, toolTipContent } = config;
+        const { children, sortable, toolTipContent } = config;
+        const needsHeader = sortable === undefined ? true : sortable;
 
         const sortDirection = !sortState
           ? null
@@ -34,27 +35,40 @@ const SortableTableHeaderRow = (props: SortableTableHeaderRowProps) => {
             ? sortState.dir
             : null;
         const sortByIndex = () => setSortBy(index);
+
+
         if (toolTipContent) {
-          return (
-            <Tooltip content={toolTipContent}>
-              <Table.Cell header key={index}>
-                <Header
-                  sortDirection={sortDirection}
-                  onSortClick={sortByIndex}>
+          if (needsHeader) {
+
+            return (
+              <Tooltip content={toolTipContent}>
+                <Table.Cell header key={index}>
+                  <Header sortDirection={sortDirection} onSortClick={sortByIndex}>{children}</Header>
+                </Table.Cell>
+              </Tooltip>);
+          }
+          else {
+            return (
+              <Tooltip content={toolTipContent}>
+                <Table.Cell header key={index}>
                   {children}
-                </Header>
-              </Table.Cell>
-            </Tooltip>);
+                </Table.Cell>
+              </Tooltip>);
+          }
         } else {
 
-          return (
-            <Table.Cell header key={index}>
-              <Header
-                sortDirection={sortDirection}
-                onSortClick={sortByIndex}>
+          if (needsHeader) {
+            return (
+              <Table.Cell header key={index}>
+                <Header sortDirection={sortDirection} onSortClick={sortByIndex}>{children}</Header>
+              </Table.Cell>);
+          } else {
+            return (
+              <Table.Cell header key={index}>
                 {children}
-              </Header>
-            </Table.Cell>);
+              </Table.Cell>);
+
+          }
         }
       })}
     </Table.Row>
