@@ -145,8 +145,8 @@
 					artifactOrigin = params["newOrigin"]
 			if("type")
 				if (artifactType == params["newType"])
+					removeTypeLabel()
 					artifactType = ""
-					src.updateTypeLabel("")
 					crossed += params["newType"]
 				else
 					crossed -= params["newType"]
