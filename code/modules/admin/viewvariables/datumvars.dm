@@ -141,6 +141,8 @@
 		#endif
 	if(D == "GLOB")
 		title = "Global Variables"
+	else if (D == world)
+		title = "World Variables"
 	else
 		title = "[D][src.holder.level >= LEVEL_ADMIN ? " (\ref[D])" : ""] = [D.type]"
 
