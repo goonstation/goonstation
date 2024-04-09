@@ -1,6 +1,10 @@
 
 (t)tue apr 09 24
 (u)LeahTheTech
+(p)18450
+(e)🆕🔊|C-Feature, C-Sound
+(*)Pod component switches now have a satisfyingly clunky switch sound.
+(u)LeahTheTech
 (*)Smashing people into walls and windows now does more stamina damage and disorients for longer.
 (u)Retrino
 (p)18328
