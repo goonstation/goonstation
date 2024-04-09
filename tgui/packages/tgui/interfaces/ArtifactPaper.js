@@ -22,6 +22,7 @@ export const ArtifactPaper = (props, context) => {
     allArtifactTypes,
     allArtifactTriggers,
     hasPen,
+    crossed,
   } = data;
 
   return (
@@ -43,7 +44,7 @@ export const ArtifactPaper = (props, context) => {
                 <Button.Checkbox
                   checked={artifactOrigin === x}
                 />
-                <a>{x}</a>
+                <a>{crossed.includes(x) ? <s>{x}</s> : x}</a>
               </Flex.Item>
             ))}
           </Flex>
@@ -55,7 +56,7 @@ export const ArtifactPaper = (props, context) => {
                 <Button.Checkbox
                   checked={artifactType === x[0]}
                 />
-                <a>{x[0]}</a>
+                <a>{crossed.includes(x[0]) ? <s>{x[0]}</s> : x[0]}</a>
               </Flex.Item>
             ))}
           </Flex>
@@ -67,7 +68,7 @@ export const ArtifactPaper = (props, context) => {
                 <Button.Checkbox
                   checked={artifactTriggers === x}
                 />
-                <a>{x}</a>
+                <a>{crossed.includes(x) ? <s>{x}</s> : x}</a>
               </Flex.Item>
             ))}
           </Flex>

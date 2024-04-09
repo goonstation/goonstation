@@ -12,6 +12,7 @@
 	var/artifactDetails = ""
 	var/lastAnalysis = 0
 	var/lastAnalysisErrors = ""
+	var/list/crossed = new()
 
 	proc/checkArtifactVars(obj/O)
 		if(!O.artifact)
@@ -136,12 +137,28 @@
 			O = src.loc
 		switch(action)
 			if("origin")
-				artifactOrigin = params["newOrigin"]
+				if (artifactOrigin == params["newOrigin"])
+					artifactOrigin = ""
+					crossed += params["newOrigin"]
+				else
+					crossed -= params["newOrigin"]
+					artifactOrigin = params["newOrigin"]
 			if("type")
-				src.updateTypeLabel(params["newType"])
-				artifactType = params["newType"]
+				if (artifactType == params["newType"])
+					artifactType = ""
+					src.updateTypeLabel("")
+					crossed += params["newType"]
+				else
+					crossed -= params["newType"]
+					src.updateTypeLabel(params["newType"])
+					artifactType = params["newType"]
 			if("trigger")
-				artifactTriggers = params["newTriggers"]
+				if (artifactTriggers == params["newTriggers"])
+					artifactTriggers = ""
+					crossed += params["newTriggers"]
+				else
+					crossed -= params["newTriggers"]
+					artifactTriggers = params["newTriggers"]
 			if("fault")
 				artifactFaults = params["newFaults"]
 			if("detail")
@@ -159,7 +176,8 @@
 			"artifactTriggers" = artifactTriggers,
 			"artifactFaults" = artifactFaults,
 			"artifactDetails" = artifactDetails,
-			"hasPen" = P
+			"hasPen" = P,
+			"crossed" = crossed
 		)
 
 	remove_from_attached(do_loc = TRUE)
