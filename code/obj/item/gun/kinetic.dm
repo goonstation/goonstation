@@ -1778,6 +1778,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	/// The delay between racking this gun
 	var/rack_delay = 0
 
+
+	New()
+		if (!is_heavy)
+			pump_back = TRUE
+			hammer_ready = TRUE
+		..()
+
 	canshoot(mob/user)
 		return(..() && hammer_ready && !src.pump_back)
 
@@ -1793,6 +1800,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		src.hammer_ready = FALSE
 		if (!is_heavy)
 			src.pump_back = TRUE //lighter guns get this half-done for you
+		else
+			ON_COOLDOWN(src,"rack_delay",rack_delay)
 		src.UpdateIcon()
 
 
@@ -1804,6 +1813,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		src.hammer_ready = FALSE
 		if (!is_heavy)
 			src.pump_back = TRUE //lighter guns get this half-done for you
+		else
+			ON_COOLDOWN(src,"rack_delay",rack_delay)
 		src.UpdateIcon()
 
 
@@ -1910,9 +1921,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	recoil_strength = 18
 	recoil_max = 40
 	max_move_amount = 1
-	rack_delay = 4
+	rack_delay = 6
 	pumpsound = 'sound/weapons/kuvalda_pull2.ogg'
 	pushsound = 'sound/weapons/kuvalda_push2.ogg'
+	empty
+		default_magazine = /obj/item/ammo/bullets/kuvalda/slug/empty
 
 	New()
 		ammo = new default_magazine

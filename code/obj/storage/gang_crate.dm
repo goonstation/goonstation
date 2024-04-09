@@ -58,8 +58,8 @@
 	shotguns
 		New()
 			lootMaster =  new /datum/loot_generator(4,3)
+			lootMaster.place_loot_instance(src, 1,1, new /obj/randomloot_spawner/xlong_tall/ks23, FALSE)
 			lootMaster.place_loot_instance(src, 1,3, new /obj/randomloot_spawner/long/striker, FALSE)
-			lootMaster.place_loot_instance(src, 1,2, new /obj/randomloot_spawner/long/striker, FALSE)
 			lootMaster.fill_remaining(src, GANG_CRATE_AMMO, 3)
 			..()
 		unlocked
@@ -1231,6 +1231,12 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			spawn_item(C,I,/obj/item/gun/kinetic/american180,off_x=-8,scale_x=0.8,scale_y=0.8)
+	ks23
+		tier = GANG_CRATE_GUN
+		spawn_loot(var/C,var/datum/loot_spawner_info/I)
+			spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/ks23/empty,off_x=-8,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda/slug,off_x=-7,off_y=-4,scale_x=0.5,scale_y=0.5)
+			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda/buck,off_x=7,off_y=-4,scale_x=0.5,scale_y=0.5)
 
 	// GANG_CRATE_GEAR
 
