@@ -2244,4 +2244,4 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	icon_state = "rabbithat"
 	item_state = "rabbithat"
-	seal_hair = 1
+	seal_hair = TRUE
