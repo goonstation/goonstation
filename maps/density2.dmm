@@ -3672,7 +3672,7 @@
 	},
 /area/station/solar/aisat)
 "xP" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/marble/black,
 /area/station/bridge)
 "xU" = (

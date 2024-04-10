@@ -148,7 +148,7 @@ toxic - poisons
 		hit_type = DAMAGE_STAB
 		armor_ignored = 0.66
 	remington
-		damage = 31
+		damage = 34
 
 /datum/projectile/bullet/assault_rifle/burst
 	sname = "burst fire"
@@ -161,7 +161,7 @@ toxic - poisons
 		hit_type = DAMAGE_STAB
 		armor_ignored = 0.66
 	remington
-		damage = 24
+		damage = 26
 
 //0.308
 /datum/projectile/bullet/minigun
@@ -364,6 +364,7 @@ toxic - poisons
 		damage = 20
 		cost = 3
 		shot_number = 3
+
 		auto
 			fullauto_valid = 1
 			cost = 1
@@ -715,10 +716,11 @@ toxic - poisons
 	hit_ground_chance = 66
 	implanted = null
 	damage = 18
+	stun = 6
 	hit_type = DAMAGE_CUT //birdshot mutilates your skin more, but doesnt hurt organs like shotties
-	dissipation_rate = 2
+	dissipation_rate = 4 //spread handles most of this
 	shot_sound = 'sound/weapons/birdshot.ogg'
-	dissipation_delay = 3
+	dissipation_delay = 6
 	casing = /obj/item/casing/shotgun/red
 	on_launch(obj/projectile/O)
 		icon_state = "birdshot[rand(1,3)]"
@@ -1012,7 +1014,7 @@ toxic - poisons
 	name = "cannon round"
 	brightness = 0.7
 	window_pass = 0
-	icon_state = "20mmAPHE"
+	icon_state = "20mm"
 	damage_type = D_PIERCING
 	armor_ignored = 0.66
 	hit_type = DAMAGE_CUT
@@ -1028,8 +1030,6 @@ toxic - poisons
 	casing = /obj/item/casing/cannon
 	pierces = 4
 	shot_sound_extrarange = 1
-
-
 
 	on_launch(obj/projectile/proj)
 		proj.AddComponent(/datum/component/sniper_wallpierce, 4) //pierces 4 walls/lockers/doors/etc. Does not function on restricted Z, rwalls and blast doors use 2 pierces
@@ -1066,8 +1066,6 @@ toxic - poisons
 						targetorgan = pick("left_lung", "heart", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 						H.organHolder.damage_organ(proj.power/H.get_ranged_protection(), 0, 0,  targetorgan)
 				M.ex_act(impact)
-
-
 
 			if(hit && isobj(hit))
 				var/obj/O = hit
@@ -1961,8 +1959,9 @@ datum/projectile/bullet/autocannon
 /datum/projectile/bullet/webley
 	name = "bullet"
 	damage = 45
-	damage_type = D_KINETIC
-	hit_type = DAMAGE_CUT
+	stun = 7
+	damage_type = D_PIERCING
+	armor_ignored = 0.5 //just enough to get past gang vests in 3 shots
 	implanted = /obj/item/implant/projectile/bullet_455
 	impact_image_state = "bullethole-small"
 	casing = /obj/item/casing/medium

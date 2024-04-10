@@ -810,10 +810,7 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["ChangeName"])
-			if (src.job_creator.change_name_on_spawn == 0)
-				src.job_creator.change_name_on_spawn = 1
-			else
-				src.job_creator.change_name_on_spawn = 0
+			src.job_creator.change_name_on_spawn = !src.job_creator.change_name_on_spawn
 			src.job_creator()
 
 		if(href_list["SetSpawnLoc"])
@@ -848,7 +845,6 @@ var/datum/job_controller/job_controls
 					src.hidden_jobs += JOB
 				else
 					src.special_jobs += JOB
-				wagesystem.jobs[JOB.name] = src.job_creator.wages
 
 				JOB.name = src.job_creator.name
 				JOB.wages = src.job_creator.wages
@@ -964,8 +960,12 @@ var/datum/job_controller/job_controls
 	return null
 
 /client/proc/cmd_job_controls()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Job Controls"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
-	if (job_controls == null) boutput(src, "<h3 class='admin'>UH OH! Shit's broken as fuck!</h3>")
-	else src.debug_variables(job_controls)
+	if (isnull(src.holder.job_manager))
+		src.holder.job_manager = new
+
+	src.holder.job_manager.ui_interact(src.mob)

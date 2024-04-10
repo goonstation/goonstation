@@ -130,7 +130,7 @@
 		if (!t)
 			continue
 
-		t = trim(t)
+		t = trimtext(t)
 		if (length(t) == 0)
 			continue
 		else if (copytext(t, 1, 2) == "#")
@@ -214,7 +214,7 @@
 				config.server_key = text2num(value)
 
 			if ("serverid")
-				config.server_id = trim(value)
+				config.server_id = trimtext(value)
 
 			if ("servername")
 				config.server_name = value
@@ -266,59 +266,59 @@
 				config.sql_enabled = 1
 
 			if ("mysql_hostname")
-				config.sql_hostname = trim(value)
+				config.sql_hostname = trimtext(value)
 
 			if ("mysql_port")
 				config.sql_port = text2num(value)
 
 			if ("mysql_username")
-				config.sql_username = trim(value)
+				config.sql_username = trimtext(value)
 
 			if ("mysql_password")
-				config.sql_password = trim(value)
+				config.sql_password = trimtext(value)
 
 			if ("mysql_database")
-				config.sql_database = trim(value)
+				config.sql_database = trimtext(value)
 
 			if ("server_specific_configs")
 				config.server_specific_configs = 1
 
 			if ("irclog_url")
-				config.irclog_url = trim(value)
+				config.irclog_url = trimtext(value)
 			if ("ircbot_api")
-				config.ircbot_api = trim(value)
+				config.ircbot_api = trimtext(value)
 			if ("ircbot_ip")
-				config.ircbot_ip = trim(value)
+				config.ircbot_ip = trimtext(value)
 
 			if ("ticklag")
 				world.tick_lag = text2num(value)
 
 			if ("goonhub_api_endpoint")
-				config.goonhub_api_endpoint = trim(value)
+				config.goonhub_api_endpoint = trimtext(value)
 			if ("goonhub_api_ip")
-				config.goonhub_api_ip = trim(value)
+				config.goonhub_api_ip = trimtext(value)
 			if ("goonhub_api_token")
-				config.goonhub_api_token = trim(value)
+				config.goonhub_api_token = trimtext(value)
 
 			if ("goonhub_events_endpoint")
-				config.goonhub_events_endpoint = trim(value)
+				config.goonhub_events_endpoint = trimtext(value)
 			if ("goonhub_events_port")
-				config.goonhub_events_port = trim(value)
+				config.goonhub_events_port = trimtext(value)
 			if ("goonhub_events_channel")
-				config.goonhub_events_channel = trim(value)
+				config.goonhub_events_channel = trimtext(value)
 			if ("goonhub_events_password")
-				config.goonhub_events_password = trim(value)
+				config.goonhub_events_password = trimtext(value)
 
 			if ("update_check_enabled")
 				config.update_check_enabled = 1
 			if ("dmb_filename")
-				config.dmb_filename = trim(value)
+				config.dmb_filename = trimtext(value)
 			if ("env")
-				config.env = trim(value)
+				config.env = trimtext(value)
 			if ("cdn")
-				config.cdn = trim(value)
+				config.cdn = trimtext(value)
 			if ("rsc")
-				config.rsc = trim(value)
+				config.rsc = trimtext(value)
 			if ("disable_resource_cache")
 				config.disableResourceCache = 1
 
@@ -343,10 +343,10 @@
 				config.baseWhitelistEnabled = TRUE
 
 			if ("whitelist_path")
-				config.whitelist_path = trim(value)
+				config.whitelist_path = trimtext(value)
 
 			if ("server_buddy_id")
-				config.server_buddy_id = trim(value)
+				config.server_buddy_id = trimtext(value)
 
 			else
 				logDiary("Unknown setting in configuration: '[name]'")

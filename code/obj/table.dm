@@ -420,7 +420,7 @@ TYPEINFO_NEW(/obj/table)
 			return
 		if(!(ownerMob.flags & TABLEPASS))
 			ownerMob.flags |= TABLEPASS
-			thr.end_throw_callback = PROC_REF(unset_tablepass_callback)
+			thr.end_throw_callback = CALLBACK(src, PROC_REF(unset_tablepass_callback))
 		for(var/O in AIviewers(ownerMob))
 			var/mob/M = O //inherently typed list
 			var/the_text = "[ownerMob] jumps over [the_railing]."
@@ -641,6 +641,13 @@ TYPEINFO_NEW(/obj/table/nanotrasen)
 	icon = 'icons/obj/furniture/single_tables.dmi'
 	icon_state = "endtable-gothic"
 	parts_type = /obj/item/furniture_parts/endtable_gothic
+
+/obj/table/endtable_honey
+	name = "block of solidified honey"
+	desc = "Preferred work surface of Space Bees."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtablehoney"
+	parts_type = /obj/item/furniture_parts/endtable_honey
 
 /obj/table/podium_wood
 	name = "wooden podium"

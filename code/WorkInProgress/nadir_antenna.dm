@@ -143,7 +143,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 		if(src.failsafe_inquiry())
 			return TRANSCEIVE_POWERWARN
 		var/datum/powernet/powernet = src.get_direct_powernet()
-		var/netnum = powernet.number
+		var/netnum = powernet?.number
 		if(netnum != pad_netnum)
 			return TRANSCEIVE_NOWIRE
 		return TRANSCEIVE_OK
@@ -780,10 +780,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 					thing2send.set_loc(src)
 					SPAWN(1 SECOND)
 
-						if (istype(thing2send, /obj/storage/crate/biohazard/cdc))
-							QM_CDC.receive_pathogen_samples(thing2send)
-
-						else if(istype(thing2send,/obj/storage/crate) || istype(thing2send,/obj/storage/secure/crate))
+						if(istype(thing2send,/obj/storage/crate) || istype(thing2send,/obj/storage/secure/crate))
 							var/sold_to_trader = FALSE
 							for (var/datum/trader/T in shippingmarket.active_traders)
 								if (T.crate_tag == thing2send.delivery_destination)
@@ -989,6 +986,56 @@ TYPEINFO(/obj/machinery/transception_pad)
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, INTERLINK_RANGE, freq)
 
+/obj/machinery/computer/transception/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "TransceptionInterlink")
+	ui.open()
+
+/obj/machinery/computer/transception/ui_data(mob/user)
+	. = ..()
+	var/list/pads_data = list()
+	for (var/device_netid as anything in src.known_pads)
+		pads_data += list(list(
+			"device_netid" = device_netid,
+			"identifier" = known_pads[device_netid]["Identifier"],
+			"target_id" = known_pads[device_netid]["INT_TARGETID"],
+			"location" = known_pads[device_netid]["Location"],
+			"array_link" = known_pads[device_netid]["Array Link"],
+		))
+	.["pads"] = pads_data
+	.["crate_count"] = length(shippingmarket.pending_crates)
+
+/obj/machinery/computer/transception/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (.)
+		return
+	switch(action)
+		if ("ping")
+			src.try_pad_ping()
+			return // list is cleared and rebuilt from packets, don't update
+		if ("receive")
+			var/target_pad_id = params["device_netid"]
+			if(!target_pad_id)
+				return
+			var/wanted_thing = null
+			if(length(shippingmarket.pending_crates) == 1)
+				wanted_thing = shippingmarket.pending_crates[1]
+			else
+				wanted_thing = tgui_input_list(ui.user, "Select cargo to receive", "Queued Cargo", shippingmarket.pending_crates)
+			if(!wanted_thing)
+				return
+			var/target_crate = shippingmarket.pending_crates.Find(wanted_thing)
+			if(target_crate)
+				src.build_command(src.known_pads[target_pad_id]["INT_TARGETID"], target_crate)
+			. = TRUE
+		if ("send")
+			var/target_pad_id = params["device_netid"]
+			if (target_pad_id && src.known_pads[target_pad_id])
+				src.build_command(src.known_pads[target_pad_id]["INT_TARGETID"])
+				. = TRUE
+
 /obj/machinery/computer/transception/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))
 		boutput(user, SPAN_ALERT("Access Denied."))
@@ -997,122 +1044,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 	if(..())
 		return
 
-	src.add_dialog(user)
-	var/HTML
-
-	var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? {"
-		<style type='text/css'>
-			body {
-				font-family: Verdana, sans-serif;
-				background: #222228;
-				color: #ddd;
-				text-align: center;
-				}
-			strong {
-				color: #fff;
-				}
-			a {
-				color: #6ce;
-				text-decoration: none;
-				}
-			a:hover, a:active {
-				color: #cff;
-				}
-			img, a img {
-				border: 0;
-				}
-		</style>
-	"} : {"
-	<style type='text/css'>
-		/* when chui is on apparently do nothing, cargo cult moment */
-	</style>
-	"}
-
-	HTML += {"
-	[header_thing_chui_toggle]
-	<title>Transception Interlink</title>
-	<style type="text/css">
-		h1, h2, h3, h4, h5, h6 {
-			margin: 0.2em 0;
-			background: #111520;
-			text-align: center;
-			padding: 0.2em;
-			border-top: 1px solid #456;
-			border-bottom: 1px solid #456;
-		}
-
-		h2 { font-size: 130%; }
-		h3 { font-size: 110%; margin-top: 1em; }
-	</style>"}
-
-	var/pending_crate_ct = length(shippingmarket.pending_crates)
-	HTML += "PENDING CARGO ITEMS: [pending_crate_ct]<br>"
-
-	src.build_formatted_list()
-	if (src.formatted_list)
-		HTML += src.formatted_list
-
-	user.Browse(HTML, "window=transception_\ref[src];title=Transception Interlink;size=350x550;")
-	onclose(user, "transception_\ref[src]")
-
-/obj/machinery/computer/transception/proc/build_formatted_list()
-	if(src.list_is_updated) return
-	var/rollingtext = "<h2>Connected Pads <A href='[topicLink("ping")]'>(Ping)</A></h2>" //ongoing contents chunk, begun with head bit
-
-	if(!length(src.known_pads))
-		rollingtext += "NO DEVICES DETECTED<br>"
-		rollingtext += "Please Use Refresh Ping,<br>"
-		rollingtext += "Then Wait For Reply"
-	else
-		rollingtext += "Receive command will pick from<br>"
-		rollingtext += "pending cargo, or immediately import<br>"
-		rollingtext += "if pending cargo is label-identical.<br><br>"
-
-	for (var/device_index in src.known_pads)
-		var/minitext = ""
-		var/list/manifest = known_pads[device_index]
-		for(var/field in manifest)
-			if(field != "INT_TARGETID")
-				minitext += "<strong>[field]</strong> &middot; [tidy_net_data(manifest[field])]<br>"
-		rollingtext += minitext
-		rollingtext += "<A href='[topicLink("send","\ref[device_index]")]'>Send</A> | "
-		rollingtext += "<A href='[topicLink("receive","\ref[device_index]")]'>Receive</A><br><br>"
-
-	src.formatted_list = rollingtext
-	src.list_is_updated = TRUE
-
-//aa ee oo
-/obj/machinery/computer/transception/proc/topicLink(action, subaction, var/list/extra)
-	return "?src=\ref[src]&action=[action][subaction ? "&subaction=[subaction]" : ""]&[extra && islist(extra) ? list2params(extra) : ""]"
-
-/obj/machinery/computer/transception/Topic(href, href_list)
-	if(..())
-		return
-
-	var/subaction = (href_list["subaction"] ? href_list["subaction"] : null)
-
-	switch (href_list["action"])
-		if ("ping")
-			src.try_pad_ping()
-
-		if ("receive")
-			var/manifest_identifier = locate(subaction) in src.known_pads
-			if(manifest_identifier && known_pads[manifest_identifier])
-				var/list/manifest = known_pads[manifest_identifier]
-				if(manifest["Identifier"])
-					var/wanted_thing = input(usr,"! WORK IN PROGRESS !","Select Cargo",null) in shippingmarket.pending_crates
-					var/thingpos = shippingmarket.pending_crates.Find(wanted_thing)
-					if(thingpos)
-						src.build_command(manifest["INT_TARGETID"],thingpos)
-
-		if ("send")
-			var/manifest_identifier = locate(subaction) in src.known_pads
-			if(manifest_identifier && known_pads[manifest_identifier])
-				var/list/manifest = known_pads[manifest_identifier]
-				if(manifest["Identifier"])
-					src.build_command(manifest["INT_TARGETID"])
-
-	src.add_fingerprint(usr)
+	src.ui_interact(user)
 
 #undef INTERLINK_RANGE
 

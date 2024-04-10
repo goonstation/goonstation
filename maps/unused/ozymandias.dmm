@@ -63100,7 +63100,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/security/hos)
 "qAx" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -71850,7 +71850,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /obj/item/satchel/mining,
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/construction{
@@ -85354,7 +85354,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /obj/item/satchel/mining,
 /obj/machinery/light/small{
 	dir = 8;

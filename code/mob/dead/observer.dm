@@ -281,6 +281,8 @@
 			var/confirm = tgui_alert(src, "Are you sure you want to ghost? You won't be able to exit cryogenic storage, DNR status will be set, and you will be an observer the rest of the round.", "Observe?", list("Yes", "No"))
 			if(confirm == "Yes")
 				respawn_controller.subscribeNewRespawnee(src.ckey)
+				for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
+					antagonist.handle_perma_cryo()
 				src.mind?.get_player()?.dnr = TRUE
 				if (istype(src.loc, /obj/cryotron))
 					var/datum/job/job = find_job_in_controller_by_string(src.job, soft=TRUE)

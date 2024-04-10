@@ -119,7 +119,7 @@
 		if (!ishuman(user))
 			return
 		var/message = input("What should [src] say?")
-		message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
 		if (!message || BOUNDS_DIST(src, user) > 0)
 			return
 		logTheThing(LOG_SAY, user, "makes [src] say,  \"[message]\"")

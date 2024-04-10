@@ -263,6 +263,7 @@
 		if (src.mainframe)
 			src.mainframe.say(message)
 		else
+			SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 			visible_message("[html_encode("[src]")] says, <b>[html_encode("[message]")]</b>")
 
 	say_radio()

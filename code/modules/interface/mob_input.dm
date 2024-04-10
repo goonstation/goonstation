@@ -124,7 +124,7 @@
 		if (.)
 			additional_help_messages = list(.)	+ additional_help_messages
 		. = jointext(additional_help_messages, "\n")
-	. = replacetext(trim(.), "\n", "<br>")
+	. = replacetext(trimtext(.), "\n", "<br>")
 
 /mob/proc/help_examine(atom/target)
 	var/help = get_final_help_examine(target)

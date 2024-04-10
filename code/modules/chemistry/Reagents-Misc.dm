@@ -806,7 +806,7 @@ datum
 			reaction_turf(var/turf/target, var/volume)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
-					simulated_target.wetify(2, 60, 60 SECONDS)
+					simulated_target.wetify(2, 60 SECONDS)
 
 		superlube
 			name = "organic superlubricant"
@@ -3183,6 +3183,7 @@ datum
 			value = 2
 			var/list/pathogens = list()
 			var/pathogens_processed = 0
+			var/congealed = FALSE //! if this blood came from a pill, stops vampires getting points from it
 			hygiene_value = -2
 			hunger_value = 0.068
 			viscosity = 0.4
@@ -3228,6 +3229,9 @@ datum
 								/*if (M.bioHolder && (src.blood_DNA == M.bioHolder.Uid))
 									M.show_text("Injecting your own blood? Who are you kidding?", "red")
 									return*/
+								if (src.congealed)
+									boutput(M, SPAN_ALERT("EUGH! This blood is totally congealed and worthless."))
+									return 1
 								if (prob(33))
 									boutput(M, SPAN_ALERT("Fresh blood would be better..."))
 								var/bloodget = volume_passed / 3
@@ -3268,6 +3272,9 @@ datum
 						DNA.endurance++
 
 			on_transfer(var/datum/reagents/source, var/datum/reagents/target, var/trans_amt)
+				if (istype(target.my_atom, /obj/item/reagent_containers/pill))
+					var/datum/reagent/blood/blood = target.get_reagent("blood")
+					blood.congealed = TRUE
 				var/list/source_pathogens = source.aggregate_pathogens()
 				var/list/target_pathogens = target.aggregate_pathogens()
 				var/target_changed = 0
@@ -3283,7 +3290,6 @@ datum
 							if (!istype(B))
 								continue
 							B.pathogens = target_pathogens
-				return
 
 		blood/bloodc
 			id = "bloodc"
