@@ -1,4 +1,6 @@
-
+(t)wed apr 10 24
+(u)LeahTheTech
+(+)Vampiric thralls can now stray 20 tiles from their vampire, up from 15.
 (t)tue apr 09 24
 (u)ZeWaka
 (e)🪲⚖🔄|C-Bug, C-Balance, C-Rework
