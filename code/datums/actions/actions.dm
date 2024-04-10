@@ -274,6 +274,11 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		if (!isturf(owner.loc))
+			boutput(owner, SPAN_ALERT("You don't think you can build \the [obj_name] from in here..."))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
@@ -1772,3 +1777,85 @@
 			target.anchored = UNANCHORED
 		else
 			target.anchored = ANCHORED
+
+
+/datum/action/bar/icon/doorhack
+	duration = 3 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	icon = 'icons/obj/items/gang.dmi'
+	icon_state = "quickhack_fire"
+	id = "quickhacking"
+	var/maximum_range = 1
+	var/obj/machinery/door/airlock/target
+	var/obj/item/tool/quickhack/hack_tool
+
+	New(Owner, Target, Hack)
+		owner = Owner
+		target = Target
+		hack_tool = Hack
+		..()
+
+	onUpdate()
+		..()
+		if(!IN_RANGE(src.owner, target, maximum_range) || target == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (target && !IN_RANGE(src.owner, target, maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+		boutput(src.owner, "<span class='alert'>You press the [src.hack_tool.name] against the [src.target.name]...</span>")
+		..()
+
+	onEnd()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(owner, target, maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+		else
+			hack_tool.force_open(owner, target)
+
+
+
+/datum/action/bar/icon/janktanktwo
+	duration = JANKTANK2_CHANNEL_TIME
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	icon = 'icons/obj/items/gang.dmi'
+	icon_state = "janktank_2_inj"
+	id = "janktanktwo"
+	var/mob/living/carbon/human/target
+	var/obj/item/tool/janktanktwo/injector
+
+	New(Owner, Target, Injector)
+		owner = Owner
+		target = Target
+		injector = Injector
+		..()
+
+	onStart()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (target && !IN_RANGE(src.owner, target, 1))
+			interrupt(INTERRUPT_ALWAYS)
+		boutput(src.owner, "<span class='alert'>You prepare the [injector.name], aiming right for [target]'s heart!</span>")
+		..()
+
+	onUpdate()
+		..()
+		if(!IN_RANGE(src.owner, target, 1) || target == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(owner, target, 1))
+			interrupt(INTERRUPT_ALWAYS)
+		else
+			playsound(target.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 0)
+			injector.inject(owner, target)
+

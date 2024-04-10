@@ -652,6 +652,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				return
 		else if(istype(W,/obj/item/device/calibrator))
 			var/scalex = input(user,"Accepts values 0 through [src.max_intensity]","Adjust Intensity","1") as num
+			if(BOUNDS_DIST(src, user) > 1)
+				boutput(user, SPAN_NOTICE("You are too far away from [src] to calibrate it!"))
+				return
 			scalex = clamp(scalex,0,src.max_intensity)
 			src.intensity = scalex
 			src.update_fx()

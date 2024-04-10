@@ -231,6 +231,8 @@
 	#define COMSIG_MOB_POINT "mob_point"
 	/// Sent when the mob starts sprinting, return TRUE to prevent other sprint code from running
 	#define COMSIG_MOB_SPRINT "mob_sprint"
+	/// Sent when the mob says something (message)
+	#define COMSIG_MOB_SAY "mob_say"
 
 	// ---- cloaking device signal ----
 

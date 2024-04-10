@@ -312,7 +312,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 					return
 
 				var/flavor = params["flavor"]
-				var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
+				var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new(src)
 				if(flavor == "beaker")
 					if(!beaker.reagents.total_volume)
 						boutput(usr, SPAN_ALERT("The beaker is empty!"))

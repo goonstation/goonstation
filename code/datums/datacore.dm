@@ -400,6 +400,7 @@
 			var/datum/eventRecord/Ticket/ticketEvent = new()
 			ticketEvent.buildAndSend(src, usr)
 
+
 /datum/fine
 	var/ID = null
 	var/name = "fine"
@@ -428,28 +429,39 @@
 
 /datum/fine/proc/approve(var/approved_by,var/their_job)
 	if(approver || paid) return
-	if(!(their_job in list("Captain","Head of Security","Head of Personnel"))) return
+	if (amount > MAX_FINE_NO_APPROVAL && !(JOBS_CAN_TICKET_BIG)) return
+	if (!(their_job in JOBS_CAN_TICKET_SMALL)) return
 
 	approver = approved_by
 	approver_job = their_job
 	approver_byond_key = get_byond_key(approver)
+	logTheThing(LOG_ADMIN, usr, "approved a fine using [approver]([their_job])'s PDA. It is a [amount] credit fine on <b>[target]</b> with the reason: [reason].")
+
+	if (bank_record["pda_net_id"])
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"=bank_record["pda_net_id"], "command"="text_message", "sender_name"="FINE-MAILBOT", "sender"="00000000", "message"="Notification: You have been fined [amount] credits by [issuer] for [reason].")
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 	if(bank_record["current_money"] >= amount)
 		bank_record["current_money"] -= amount
+		wagesystem.station_budget += amount
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
+		wagesystem.station_budget += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 
 /datum/fine/proc/process_payment()
 	if(bank_record["current_money"] >= (amount-paid_amount))
 		bank_record["current_money"] -= (amount-paid_amount)
+		wagesystem.station_budget += (amount-paid_amount)
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
+		wagesystem.station_budget += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 
