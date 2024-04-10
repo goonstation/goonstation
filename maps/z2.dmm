@@ -59148,7 +59148,8 @@
 	desc = "A double black security door. Looks pretty tough. I wouldn't take this door on in a fight.";
 	icon = 'icons/obj/doors/destiny.dmi';
 	icon_state = "fmorg_closed";
-	name = "airlock"
+	name = "airlock";
+	dir = 4
 	},
 /area/sim/gunsim/lobby)
 "gJy" = (
