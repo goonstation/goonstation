@@ -11028,10 +11028,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
-"aJX" = (
-/obj/rack/organized/techstorage_eng,
-/turf/simulated/floor/plating/random,
-/area/station/storage/tech)
 "aJY" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
@@ -11085,10 +11081,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/light_switch/auto,
-/turf/simulated/floor/plating/random,
-/area/station/storage/tech)
-"aKp" = (
-/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aKr" = (
@@ -23382,14 +23374,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"bFx" = (
-/obj/storage/crate/bloody{
-	welded = 1
-	},
-/obj/item/mining_tool/powerhammer,
-/obj/item/shipcomponent/mainweapon/mining,
-/turf/space/fluid,
-/area/space)
 "bFy" = (
 /obj/machinery/dispenser{
 	pltanks = 0
@@ -27809,7 +27793,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bUY" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/machinery/light/incandescent/harsh/very,
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -30602,9 +30586,9 @@
 	dir = 6
 	},
 /obj/rack,
-/obj/item/mining_tool/power_shovel,
-/obj/item/mining_tool/power_shovel,
-/obj/item/mining_tool/power_shovel,
+/obj/item/mining_tool/powered/shovel,
+/obj/item/mining_tool/powered/shovel,
+/obj/item/mining_tool/powered/shovel,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "ceN" = (
@@ -38263,6 +38247,10 @@
 /obj/item/raw_material/pharosium,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
+"kWm" = (
+/obj/rack/organized/techstorage_med,
+/turf/simulated/floor/plating/random,
+/area/station/storage/tech)
 "kXn" = (
 /obj/critter/gunbot/drone,
 /turf/simulated/floor/red,
@@ -38772,6 +38760,11 @@
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
+"lHY" = (
+/obj/item/mining_tool/powered/drill,
+/obj/item/clothing/suit/space/engineer,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/sunken_asteroid)
 "lIc" = (
 /obj/decal/cleanable/dirt,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
@@ -39468,12 +39461,6 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged1,
 /area/evilreaver/atmospherics)
-"mGS" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/mining_tool/powerhammer,
-/mob/living/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/sunken_asteroid)
 "mHe" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -44393,11 +44380,6 @@
 /obj/rack,
 /turf/simulated/floor/damaged2,
 /area/derelict_diner)
-"unC" = (
-/obj/item/mining_tool/drill,
-/obj/item/clothing/suit/space/engineer,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/sunken_asteroid)
 "unW" = (
 /obj/stool/chair/dining/wood{
 	dir = 4
@@ -44601,6 +44583,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"uIq" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/mining_tool/powered/hammer,
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/sunken_asteroid)
 "uIr" = (
 /obj/item/cable_coil/cut,
 /turf/simulated/floor/plating/damaged3,
@@ -46044,6 +46032,14 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor,
 /area/station/medical/medbay/pharmacy)
+"wSD" = (
+/obj/storage/crate/bloody{
+	welded = 1
+	},
+/obj/item/mining_tool/powered/hammer,
+/obj/item/shipcomponent/mainweapon/mining,
+/turf/space/fluid,
+/area/space)
 "wSI" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -46199,6 +46195,10 @@
 /obj/tree,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
+"xcK" = (
+/obj/rack/organized/techstorage_eng,
+/turf/simulated/floor/plating/random,
+/area/station/storage/tech)
 "xda" = (
 /obj/storage/crate,
 /obj/item/storage/box/mousetraps,
@@ -56506,7 +56506,7 @@ rSv
 rSv
 rSv
 jao
-mGS
+uIq
 jao
 rSv
 rSv
@@ -58627,7 +58627,7 @@ jao
 jao
 jao
 rJJ
-unC
+lHY
 lRj
 hbS
 rSv
@@ -102095,8 +102095,8 @@ aIm
 aIL
 aJb
 aJD
-aJX
-aKp
+xcK
+kWm
 chB
 aLt
 aDr
@@ -112506,7 +112506,7 @@ aqn
 aqn
 aqn
 aad
-bFx
+wSD
 aqn
 aqn
 aqn

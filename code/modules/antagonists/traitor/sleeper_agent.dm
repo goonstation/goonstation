@@ -27,7 +27,7 @@
 		eligible_objectives += /datum/objective/regular/killstirstir
 	var/list/objectives = list()
 	var/datum/objective/new_objective = null
-	for (var/i in 0 to rand(1, 3))
+	for (var/i in 1 to rand(1, 2))
 		new_objective = pick(eligible_objectives)
 		objectives += new new_objective(null, owner, src)
 	var/datum/objective/escape/E = pick(escape_objectives)
