@@ -19,7 +19,6 @@ var/list/admin_verbs = list(
 		/client/proc/game_panel_but_called_secrets,
 		/client/proc/player_panel,
 		/client/proc/cmd_admin_view_playernotes,
-		/client/proc/toggle_pray,
 		/client/proc/cmd_whois,
 		/client/proc/cmd_whodead,
 
@@ -36,7 +35,6 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_prison_unprison,
 		/client/proc/cmd_admin_playermode,
 		/client/proc/cmd_create_viewport,
-		/client/proc/cmd_create_viewport_silent,
 		/client/proc/cmd_create_viewport_following,
 
 		/datum/admins/proc/announce,
@@ -83,7 +81,6 @@ var/list/admin_verbs = list(
 		// LEVEL_SA, secondary administrator
 		/client/proc/stealth,
 		/datum/admins/proc/pixelexplosion,
-		/datum/admins/proc/turn_off_pixelexplosion,
 		/datum/admins/proc/camtest,
 		/client/proc/alt_key,
 		/client/proc/create_portal,
@@ -208,7 +205,8 @@ var/list/admin_verbs = list(
 
 		/client/proc/vpn_whitelist_add,
 		/client/proc/vpn_whitelist_remove,
-		/client/proc/set_conspiracy_objective
+		/client/proc/set_conspiracy_objective,
+		/client/proc/deelectrify_all_airlocks
 		),
 
 	4 = list(
@@ -285,8 +283,6 @@ var/list/admin_verbs = list(
 		///client/proc/addpathogens,
 		/client/proc/respawn_as_self,
 		/client/proc/respawn_list_players,
-		/client/proc/cmd_give_pet,
-		/client/proc/cmd_give_pets,
 		/client/proc/cmd_give_player_pets,
 		/client/proc/cmd_customgrenade,
 		/client/proc/cmd_admin_gib,
@@ -433,7 +429,6 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_modify_market_variables,
 		/client/proc/debug_pools,
 		/client/proc/debug_global_variable,
-		/client/proc/get_admin_state,
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
 		/datum/admins/proc/adsound,
@@ -737,17 +732,6 @@ var/list/special_pa_observing_verbs = list(
 		boutput(src, SPAN_NOTICE("You are now playing"))
 	else
 		boutput(src, SPAN_NOTICE("You are already playing!"))
-
-/client/proc/get_admin_state()
-	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	for(var/client/C)
-		if(C.holder)
-			if(C.holder.state == 1)
-				boutput(src, "[C.key] is playing - [C.holder.state]")
-			else if(C.holder.state == 2)
-				boutput(src, "[C.key] is observing - [C.holder.state]")
-			else
-				boutput(src, "[C.key] is undefined - [C.holder.state]")
 
 //admin client procs ported over from mob.dm
 
@@ -1631,71 +1615,6 @@ var/list/fun_images = list()
 		alert(src, "An external server error has occurred. Please report this.")
 		return 0
 
-/client/proc/cmd_give_pet(var/mob/M as mob in world)
-	set popup_menu = 0
-	set name = "Give Pet"
-	set desc = "Assigns someone a pet!  Woo!"
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	if (!M)
-		M = tgui_input_list(src.mob, "Choose a target.", "Selection", mobs)
-		if (!M)
-			return
-	var/pet_input = input("Enter path of the thing you want to give as a pet or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
-	if (!pet_input)
-		return
-	var/pet_path = get_one_match(pet_input, /obj)
-	if (!pet_path)
-		return
-
-	var/obj/Pet = new pet_path(get_turf(M))
-	Pet.name = "[M]'s pet [Pet.name]"
-
-	//Pets should probably not attack their owner
-	if (istype(Pet, /obj/critter))
-		var/obj/critter/CritterPet = Pet
-		CritterPet.atkcarbon = 0
-		CritterPet.atksilicon = 0
-
-	logTheThing(LOG_ADMIN, usr ? usr : src, M, "gave [constructTarget(M,"admin")] a pet [pet_path]!")
-	logTheThing(LOG_DIARY, usr ? usr : src, M, "gave [constructTarget(M,"diary")] a pet [pet_path]!", "admin")
-	message_admins("[key_name(usr ? usr : src)] gave [M] a pet [pet_path]!")
-
-/client/proc/cmd_give_pets(pet_input=null as text)
-	set popup_menu = 0
-	set name = "Give Pets"
-	set desc = "Assigns everyone a pet! Enter part of the path of the thing you want to give."
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	if(isnull(pet_input))
-		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
-	if (!pet_input)
-		return
-	var/pet_path = get_one_match(pet_input, /obj)
-	if (!pet_path)
-		return
-
-	for (var/mob/living/L in mobs)
-		var/obj/Pet = new pet_path(get_turf(L))
-		Pet.name = "[L]'s pet [Pet.name]"
-
-		//Pets should probably not attack their owner
-		if (istype(Pet, /obj/critter))
-
-			var/obj/critter/CritterPet = Pet
-			CritterPet.atkcarbon = 0
-			CritterPet.atksilicon = 0
-
-		LAGCHECK(LAG_LOW)
-
-	logTheThing(LOG_ADMIN, usr ? usr : src, null, "gave everyone a pet [pet_path]!")
-	logTheThing(LOG_DIARY, usr ? usr : src, null, "gave everyone a pet [pet_path]!", "admin")
-	message_admins("[key_name(usr ? usr : src)] gave everyone a pet [pet_path]!")
-
 /client/proc/cmd_give_player_pets(pet_input=null as text)
 	set popup_menu = 0
 	set name = "Give Player Pets"
@@ -2123,7 +2042,7 @@ var/list/fun_images = list()
 
 /client/proc/implant_all()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Implant All"
+	set name = "Microbomb All"
 	set desc = "Gives everyone a microbomb. You cannot undo this!!"
 
 	ADMIN_ONLY
@@ -2681,3 +2600,16 @@ var/list/fun_images = list()
 			L[P.name] = P.desc
 	var/choice = tgui_input_list(usr, "Select a verb to get the desc of", "command help", L)
 	tgui_alert(usr, "[L[choice]]", "[choice]")
+
+/client/proc/deelectrify_all_airlocks()
+	set name = "Unelectrify All Airlocks"
+	set desc = "Removes all electrification from all airlocks in the game."
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+	for(var/obj/machinery/door/airlock/airlock)
+		airlock.secondsElectrified = 0
+		LAGCHECK(LAG_LOW)
+	message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
+	logTheThing(LOG_ADMIN, usr, "de-electrified all airlocks.")
+	logTheThing(LOG_DIARY, usr, "de-electrified all airlocks.", "admin")

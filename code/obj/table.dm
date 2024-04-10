@@ -1191,6 +1191,7 @@ TYPEINFO(/obj/table/glass)
 			src.UpdateOverlays(null, "SEcorner")
 			src.UpdateOverlays(null, "NEcorner")
 			src.UpdateOverlays(null, "NWcorner")
+			src.set_density(0)
 			return
 
 		// check it out a new piece of hacky nonsense

@@ -26,6 +26,9 @@ var/global/blame_for_runtimes = FALSE
 		"invalid" = invalid
 	)
 
+	var/datum/eventRecord/Error/errorEvent = new()
+	errorEvent.buildAndSend(E, usr)
+
 	//Output formatted runtime to the usual error.log
 #ifndef CI_RUNTIME_CHECKING
 	if (invalid)
