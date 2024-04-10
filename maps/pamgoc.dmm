@@ -57326,7 +57326,7 @@
 /turf/simulated/floor/plating,
 /area/station/ranch)
 "hCK" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},

@@ -27793,7 +27793,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bUY" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/machinery/light/incandescent/harsh/very,
 /turf/simulated/floor/redblack{
 	dir = 4

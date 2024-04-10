@@ -148,9 +148,9 @@ TYPEINFO(/obj/item/baton)
 			if (user && ismob(user))
 				var/list/ret = list()
 				if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-					if (ret["charge"] > 0)
+					if (ret["charge"] > src.cost_normal)
 						user.show_text("The [src.name] now has [ret["charge"]]/[ret["max_charge"]] PUs remaining.", "blue")
-					else if (ret["charge"] <= 0)
+					else
 						user.show_text("The [src.name] is now out of charge!", "red")
 						src.is_active = FALSE
 						if (istype(src, /obj/item/baton/ntso)) //since ntso batons have some extra stuff, we need to set their state var to the correct value to make this work
@@ -159,11 +159,11 @@ TYPEINFO(/obj/item/baton)
 		else if (amount > 0)
 			SEND_SIGNAL(src, COMSIG_CELL_CHARGE, src.cost_normal * amount)
 
-		src.UpdateIcon()
+		SPAWN(0) //update the icon after the attack so the little visual doesn't show the off state if it runs out of charge
+			src.UpdateIcon()
 
-		if(istype(user)) // user can be a Securitron sometims, scream
-			user.update_inhands()
-		return
+			if(istype(user)) // user can be a Securitron sometims, scream
+				user.update_inhands()
 
 	proc/do_stun(var/mob/user, var/mob/victim, var/type = "", var/stun_who = 2)
 		if (!src || !istype(src) || type == "")
