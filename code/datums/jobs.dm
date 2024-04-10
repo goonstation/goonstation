@@ -1413,22 +1413,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Technical Assistant")
 		return
 
-/datum/job/special/civ_assistant
-	name = "Civilian Assistant"
-	linkcolor = "#00CC00"
-	limit = 2
-	wages = PAY_UNTRAINED
-	low_priority_job = TRUE
-	slot_jump = list(/obj/item/clothing/under/color/green)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	//wiki_link = "https://wiki.ss13.co/Civilian_Assistant"
-
-	New()
-		..()
-		src.access = get_access("Civilian Assistant")
-		return
-
 /datum/job/special/space_cowboy
 	name = "Space Cowboy"
 	linkcolor = "#FF99FF"
