@@ -1069,7 +1069,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	map_can_autooverride = FALSE
 	slot_jump = list(/obj/item/clothing/under/rank/assistant)
 	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_ears = list(/obj/item/device/radio/headset)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	wiki_link = "https://wiki.ss13.co/Staff_Assistant"
 
 	New()
@@ -1246,7 +1246,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_lhan = list(/obj/item/storage/briefcase)
-	slot_ears = list(/obj/item/device/radio/headset)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	wiki_link = "https://wiki.ss13.co/Lawyer"
 
 	New()
