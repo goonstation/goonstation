@@ -724,6 +724,7 @@ datum
 			fluid_g = 64
 			fluid_b = 27
 			alch_strength = 0.25
+			volatility = 1 //funny
 
 		fooddrink/alcoholic/cocktail_suicider
 			name = "Suicider"
@@ -1148,6 +1149,12 @@ datum
 			reagent_state = LIQUID
 			taste = "fruity"
 
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if(method == INGEST && isliving(M))
+					M.setStatus("temp_accent", 30 SECONDS)
+
+
 		fooddrink/alcoholic/beach
 			name = "Bliss on the Beach"
 			id = "beach"
@@ -1379,6 +1386,14 @@ datum
 			alch_strength = 0.3
 			description = "The favorite drink of unfaithful, alcoholic executives in really nice suits."
 			reagent_state = LIQUID
+
+			reaction_mob(mob/M, method=TOUCH, volume_passed)
+				. = ..()
+				if(!volume_passed)
+					return
+				if(method == INGEST)
+					//use a status to make it a little more robust with regard to not getting stuck in noir vision hopefully?
+					M.changeStatus("noir", 5 SECONDS * volume_passed)
 
 		fooddrink/alcoholic/planter
 			name = "Planter's Punch"

@@ -156,6 +156,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			src.UpdateIcon()
 
 		else if (src.cycle == WASH && prob(40)) // play a washery sound
+			H?.delStatus("burning")
 			playsound(src, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 80, TRUE)
 			src.shake()
 		else if (src.cycle == DRY && prob(20)) // play a dryery sound

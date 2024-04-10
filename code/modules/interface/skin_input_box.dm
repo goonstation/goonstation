@@ -68,7 +68,7 @@
 	var/font_size = 7
 
 	//The values used here were sampled from BYOND in practice, I couldn't find a formula that would describe them
-	if (byond_build < 515)
+	if (byond_version < 515)
 		switch(titlebarHeight)
 			if(30 to 37)
 				scaling = 1.25

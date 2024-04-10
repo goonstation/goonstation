@@ -612,11 +612,11 @@
 	if (!target_damage_multiplier)
 		msgs.played_sound = pick(sounds_punch)
 		msgs.visible_message_self(SPAN_COMBAT("<b>[src] [src.punchMessage] [target], but it does absolutely nothing!</B>"))
-		return
+		return msgs
 	if (!self_damage_multiplier)
 		msgs.played_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
 		msgs.visible_message_self(SPAN_COMBAT("<b>[src] hits [target] with a ridiculously feeble attack!</B>"))
-		return
+		return msgs
 
 	msgs.played_sound = "punch"
 	var/do_punch = FALSE
@@ -1015,7 +1015,7 @@
 						target.lastgasp()
 
 			if (stamina_crit)
-				target.handle_stamina_crit(stamina_target)
+				target.handle_stamina_crit()
 
 			if (src.disarm != 1)
 				owner.attack_finished(target)

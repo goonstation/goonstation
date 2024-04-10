@@ -818,7 +818,8 @@ Returns:
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Test Cinematic camera"
 	set desc="Test Cinematic camera"
-
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/mob/M = usr
 	var/datum/targetable/cincam/R = new()
 	M.targeting_ability = R
@@ -1633,12 +1634,24 @@ Returns:
 					argcopy[r] = X
 			call(procpath)(arglist(argcopy))
 
-/datum/admins/proc/pixelexplosion(mode="explode" in list("explode", "pixelate"))
+/datum/admins/proc/pixelexplosion()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Pixel explosion mode"
-	set desc = "Enter pixel explosion mode."
-	alert("Clicking on things will now explode them into pixels!")
-	pixelmagic(mode == "explode")
+	set desc = "Makes everything you click on explode into pixels."
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
+	if (istype(usr.targeting_ability, /datum/targetable/pixelpicker))
+		var/datum/targetable/pixelpicker/pixel_picker = usr.targeting_ability
+		usr.targeting_ability = null
+		qdel(pixel_picker)
+		usr.update_cursor()
+		boutput(usr, "Pixel explosion mode toggled off.")
+	else
+		var/mode = alert(usr, "Explode or pixelate?", "", "Explode", "Pixelate", "Cancel")
+		if (!mode || mode == "Cancel")
+			return
+		pixelmagic(mode == "Explode")
+		boutput(usr, "Clicking things will now [mode == "Explode" ? "explode them into pixels" : "turn them into individual pixel items"]")
 
 /datum/targetable/pixelpicker
 	target_anything = 1
@@ -1669,11 +1682,15 @@ Returns:
 	M.targeting_ability = R
 	M.update_cursor()
 
-/proc/dothepixelthing(var/atom/A, pixel_type=/obj/apixel, explode=TRUE)
+/proc/dothepixelthing(var/atom/movable/A, pixel_type=/obj/apixel, explode=TRUE)
 	if (isturf(A)) //deleting turfs is bad!
 		return
 
 	if(istype(A, /obj/item/apixel) || istype(A, /obj/apixel))
+		return
+
+	//large objects + pixel explosion effects = world ending amounts of lag
+	if (A.bound_width > 32 || A.bound_height > 32)
 		return
 
 	if (ismob(A)) //deleting mobs crashes them - lets transfer their client to a ghost first
@@ -1742,19 +1759,6 @@ Returns:
 	dropped(mob/user)
 		. = ..()
 		src.icon = initial(icon)
-
-
-/datum/admins/proc/turn_off_pixelexplosion()
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Turn off pixel explosion mode"
-	set desc = "Turns off pixel explosion mode."
-
-	var/mob/M = usr
-	if (istype(M.targeting_ability, /datum/targetable/pixelpicker))
-		var/datum/targetable/pixelpicker/pixel_picker = M.targeting_ability
-		M.targeting_ability = null
-		qdel(pixel_picker)
-		M.update_cursor()
 
 /obj/item/craftedmelee/spear
 	name = "spear"
@@ -2794,6 +2798,7 @@ Returns:
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/mob/M = src.mob
 	if (istype(M))

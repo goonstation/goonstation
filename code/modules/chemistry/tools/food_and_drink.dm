@@ -108,6 +108,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
+			src.onSlice()
 			for (var/i in 1 to src.slice_amount)
 				var/atom/slice_result = new src.slice_product(T)
 				if(istype(slice_result, /obj/item/reagent_containers/food))
@@ -116,6 +117,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			qdel (src)
 		else
 			..()
+
+	proc/onSlice() //special slice behaviour
+		return
 
 	//This proc handles all the actions being done to the produce. use this proc to work with your slices after they were created (looking at all these slice code at plant produce...)
 	proc/process_sliced_products(var/obj/item/reagent_containers/food/slice, var/amount_to_transfer)
@@ -686,7 +690,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	proc/take_a_drink(var/mob/consumer, var/mob/feeder)
 		var/tasteMessage = SPAN_NOTICE("[src.reagents.get_taste_string(consumer)]")
 		if (consumer == feeder)
-			consumer.visible_message(SPAN_NOTICE("[consumer] takes a sip from [src]."),"[SPAN_NOTICE("You take a sip from [src].")]\n[tasteMessage]", group = "drinkMessages")
+			consumer.visible_message(SPAN_NOTICE("[consumer] takes a sip from [src]."),"[SPAN_NOTICE("You take a sip from [src].")]\n[tasteMessage]", group = "[consumer]_drink_messages")
 		else
 			consumer.visible_message(SPAN_ALERT("[feeder] makes [consumer] drink from the [src]."),
 			"[SPAN_ALERT("[feeder] makes you drink from the [src].")]\n[tasteMessage]",
@@ -1542,10 +1546,10 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			if (src.reagents.total_volume)
 				logTheThing(LOG_CHEMISTRY, H, "is forced to drink from [src] [log_reagents(src)] at [log_loc(H)] thrown by [constructTarget(thr.thrown_by, "combat")].")
 				src.reagents.reaction(H, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(reagents.total_volume/2, (H.reagents?.maximum_volume - H.reagents?.total_volume))))
-				SPAWN(0.5 SECONDS)
-					if (src?.reagents && H?.reagents)
-						src.reagents.trans_to(H, reagents.total_volume/2)
+				if (src?.reagents && H?.reagents)
+					src.reagents.trans_to(H, reagents.total_volume/2)
 		. = ..()
+
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf
 	name = "old fashioned glass"

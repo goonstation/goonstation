@@ -5030,7 +5030,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -16356,7 +16356,7 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/t_scanner,
 /obj/item/wrench,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},

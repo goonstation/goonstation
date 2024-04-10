@@ -873,12 +873,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 							account["current_money"] -= total
 							storage.eject_ores(ore, get_output_location(), quantity, transmit=1, user=usr)
 
-							 // This next bit is stolen from PTL Code
-							var/list/accounts = \
-								data_core.bank.find_records("job", "Chief Engineer") + \
-								data_core.bank.find_records("job", "Chief Engineer") + \
-								data_core.bank.find_records("job", "Miner")
-
+							 // Chief gets a bigger cut
+							var/list/accounts = FindBankAccountsByJobs(list("Chief Engineer", "Chief Engineer", "Miner"))
 
 							var/datum/signal/minerSignal = get_free_signal()
 							minerSignal.source = src
