@@ -12,8 +12,8 @@
 	speaker_range = 0
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
 	flags = FPRINT | TABLEPASS | CONDUCT
-	icon_override = "civ"
-	icon_tooltip = "Civilian"
+	icon_override = "msc"
+	icon_tooltip = "Miscellaneous"
 	wear_layer = MOB_EARS_LAYER
 	duration_remove = 1.5 SECONDS
 	duration_put = 1.5 SECONDS
@@ -341,6 +341,7 @@
 	name = "civilian headset"
 	desc = "These headsets are used by the civilian staff, who are employed to keep the station clean, fed, and productive. As if."
 	icon_state = "civ headset"
+	icon_override = "civ"
 	secure_frequencies = list("c" = R_FREQ_CIVILIAN)
 	secure_classes = list(
 		"c" = RADIOCL_CIVILIAN,
