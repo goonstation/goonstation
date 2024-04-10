@@ -3312,6 +3312,10 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/conveyor/EW{
+	id = "diningbar";
+	name = "dish conveyor"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "alk" = (
@@ -3319,6 +3323,10 @@
 /obj/item/decoration/ashtray{
 	pixel_x = -6;
 	pixel_y = 4
+	},
+/obj/machinery/conveyor/EW{
+	id = "diningbar";
+	name = "dish conveyor"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
@@ -15937,6 +15945,15 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
+"bWb" = (
+/obj/machinery/conveyor_switch{
+	id = "diningbar";
+	name = "dish conveyor switch";
+	pixel_y = -4;
+	pixel_x = 14
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/cafeteria)
 "bZQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16100,11 +16117,6 @@
 /area/station/quartermaster/office)
 "cyw" = (
 /obj/table/reinforced/auto,
-/obj/machinery/mixer{
-	pixel_y = 4;
-	pixel_x = 4;
-	name = "KitchenHelper #4"
-	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "cBZ" = (
@@ -16522,7 +16534,6 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "eFp" = (
-/obj/item/device/radio/beacon,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
@@ -18156,6 +18167,10 @@
 	dir = 8
 	},
 /area/station/mining/refinery)
+"mNd" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/cafeteria)
 "mRp" = (
 /obj/machinery/door_control{
 	id = "ai_core";
@@ -18912,6 +18927,14 @@
 /obj/landmark/start/job/security_assistant,
 /turf/simulated/floor,
 /area/station/security/main)
+"pUJ" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/conveyor/EW{
+	id = "diningbar";
+	name = "dish conveyor"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/cafeteria)
 "pUV" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -20153,6 +20176,10 @@
 /obj/machinery/alarm{
 	pixel_y = 25
 	},
+/obj/machinery/conveyor/EW{
+	id = "diningbar";
+	name = "dish conveyor"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "vUm" = (
@@ -20305,11 +20332,6 @@
 /area/station/storage/tech)
 "wLy" = (
 /obj/table/auto,
-/obj/machinery/mixer{
-	pixel_y = 4;
-	pixel_x = -4;
-	name = "KitchenHelper #1"
-	},
 /obj/machinery/door_control{
 	id = "kitchen_shutter";
 	name = "Kitchen Shutter Control";
@@ -20322,6 +20344,10 @@
 /obj/machinery/phone/wall{
 	pixel_x = -24;
 	pixel_y = 11
+	},
+/obj/machinery/glass_recycler/bar{
+	pixel_y = 9;
+	pixel_x = -1
 	},
 /turf/simulated/floor/auto/grass,
 /area/station/crew_quarters/kitchen)
@@ -69083,9 +69109,9 @@ rvp
 bKg
 oQT
 aiL
+bWb
 hLa
-hLa
-hLa
+mNd
 aYt
 aol
 atp
@@ -70291,7 +70317,7 @@ ahF
 cXf
 tZl
 aks
-kxS
+pUJ
 yeI
 nMn
 gaP
@@ -70593,7 +70619,7 @@ aiF
 sNj
 uSg
 aks
-kxS
+pUJ
 uth
 gaP
 wLS
