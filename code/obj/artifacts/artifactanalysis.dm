@@ -12,7 +12,7 @@
 	var/artifactDetails = ""
 	var/lastAnalysis = 0
 	var/lastAnalysisErrors = ""
-	var/list/crossed = new()
+	var/list/crossed = list()
 
 	proc/checkArtifactVars(obj/O)
 		if(!O.artifact)
