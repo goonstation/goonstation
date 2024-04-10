@@ -129,7 +129,7 @@
 				imgroup.remove_image(objective_image)
 				qdel(indicator)
 				var/obj/storage/crate/gang_crate/guns_and_gear/crate = new(location)
-				broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] is has arrived! Drag it to your locker.")
+				broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] has arrived! Drag it to your locker.")
 				logTheThing(LOG_GAMEMODE, crate, "The crate in [drop_zone.name] arrives on station. Location: [location.x],[location.y].")
 
 /datum/controller/process/gang_duffle_drop
