@@ -1,5 +1,8 @@
 
 (t)tue apr 09 24
+(u)ZeWaka
+(e)🪲⚖🔄|C-Bug, C-Balance, C-Rework
+(*)Space is now properly irradiated during radstorm blowouts.
 (u)LeahTheTech
 (p)18450
 (e)🆕🔊|C-Feature, C-Sound
