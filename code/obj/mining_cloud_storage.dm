@@ -37,8 +37,6 @@
 		STOP_TRACKING
 
 	mouse_drop(over_object, src_location, over_location)
-		if (src.status & BROKEN)
-			return
 
 		if(!isliving(usr) || isintangible(usr))
 			boutput(usr, SPAN_ALERT("Only tangible, living mobs are able to set the output target for [src]."))
@@ -50,6 +48,10 @@
 
 		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, SPAN_ALERT("You are too far away from the target!"))
+			return
+
+		if (src.is_broken())
+			boutput(usr, SPAN_ALERT("Cannot set output target as [src] seems broken and inoperable!"))
 			return
 
 		if (istype(over_object,/obj/storage/crate/))
@@ -95,6 +97,10 @@
 
 		if(BOUNDS_DIST(dropped, user) > 0)
 			boutput(user, SPAN_ALERT("You are too far away!"))
+			return
+
+		if (src.is_broken())
+			boutput(user, SPAN_ALERT("The quick-load system will not work since the [src] seems broken and inoperable!"))
 			return
 
 		if(!src.accept_loading(user, TRUE))
@@ -169,18 +175,31 @@
 		boutput(user, SPAN_NOTICE("You finish stuffing [O] into [src]!"))
 		return
 
+	proc/write_message_broken(mob/user)
+		boutput(user, SPAN_ALERT("Cannot deposit ores into [src] since it seems to be broken and inoperable!"))
+
 	attackby(obj/item/W, mob/user)
-		if (src.status & BROKEN)
-			return
+		var/broken = src.is_broken()
 
 		if (istype(W, /obj/item/ore_scoop))
+			if (broken)
+				src.write_message_broken(user)
+				return
+
 			var/obj/item/ore_scoop/scoop = W
 			if (!scoop?.satchel)
 				boutput(user, SPAN_ALERT("No ore satchel to unload from [W]."))
 				return
 			W = scoop.satchel
 
-		if (istype(W, /obj/item/raw_material/) && src.accept_loading(user))
+		if (istype(W, /obj/item/raw_material/))
+			if (broken)
+				src.write_message_broken(user)
+				return
+
+			if (!src.accept_loading(user))
+				return
+
 			var/obj/item/raw_material/R = W
 			if(R.material?.getName() != R.initial_material_name)
 				boutput(user, SPAN_ALERT("[src] rejects the anomalous ore."))
@@ -188,6 +207,10 @@
 			user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
 			src.load_item(W,user)
 		else if (istype(W, /obj/item/satchel/mining))
+			if (broken)
+				src.write_message_broken(user)
+				return
+
 			var/obj/item/satchel/mining/satchel = W
 			user.visible_message(SPAN_NOTICE("[user] starts dumping [satchel] into [src]."), SPAN_NOTICE("You start dumping [satchel] into [src]."))
 			var/amtload = 0
@@ -203,7 +226,7 @@
 				boutput(user, SPAN_NOTICE("[amtload] materials loaded from [satchel]!"))
 			else
 				boutput(user, SPAN_ALERT("[satchel] is empty!"))
-		else
+		else if (!broken)
 			if (W.hitsound)
 				playsound(src.loc, W.hitsound, 50, 1)
 			if (W.force)
@@ -219,14 +242,12 @@
 			..()
 
 	proc/check_health()
-		if(!src.health && !(status & BROKEN))
+		if(!src.health && !(src.is_broken()))
 			src.status |= BROKEN
 			src.visible_message(SPAN_ALERT("[src] breaks!"))
 			src.icon_state = "ore_storage_unit-broken"
 			robogibs(src.loc)
 			playsound(src.loc, src.sound_destroyed, 50, 2)
-
-
 
 	proc/load_item(var/obj/item/raw_material/R,var/mob/living/user)
 		if (!R)
@@ -242,7 +263,7 @@
 	proc/accept_loading(var/mob/user,var/allow_silicon = FALSE)
 		if (!user)
 			return 0
-		if (src.status & BROKEN || src.status & NOPOWER)
+		if (src.is_disabled())
 			return 0
 		if (!istype(user, /mob/living/))
 			return 0
@@ -355,12 +376,12 @@
 	get_desc(dist, mob/user)
 		. = ..()
 
-		if (src.status & BROKEN)
-			. += "It looks broken and inoperable."
-
+		if (src.is_broken())
+			. += SPAN_ALERT("It looks broken and inoperable.")
 
 	ui_interact(mob/user, datum/tgui/ui)
-		if (src.status & BROKEN)
+		if (src.is_broken())
+			boutput(user, SPAN_ALERT("The [src] seems to be broken and inoperable!"))
 			return
 
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -391,6 +412,7 @@
 		. = ..()
 		if(.)
 			return
+
 		switch(action)
 			if("dispense-ore")
 				eject_ores(params["ore"], null, params["take"])

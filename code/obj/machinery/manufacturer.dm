@@ -563,7 +563,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		dat+= src.temp
 		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
-			if(S.status & BROKEN)
+			if(S.is_disabled())
 				continue
 			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
 			var/list/ores = S.ores
