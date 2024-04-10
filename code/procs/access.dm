@@ -353,6 +353,8 @@
 			return list(access_maint_tunnels, access_tech_storage)
 		if("Mail Courier")
 			return list(access_maint_tunnels, access_mail, access_heads, access_cargo, access_hangar)
+		if("Civilian Assistant")
+			return list(access_maint_tunnels, access_hydro, access_ranch, access_kitchen, access_bar, access_janitor)
 
 		//////////////////////////// Other or gimmick
 		if("VIP")
