@@ -406,7 +406,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			gain += A.material.getProperty("n_radioactive") * 6 * A.material_amt
 			if(isitem(A))
 				var/obj/item/I = A
-				gain *= I.amount
+				gain *= min(I.amount, INFINITY)
 
 		if (A.reagents)
 			gain += min(A.reagents.total_volume/4, 50)
@@ -804,7 +804,7 @@ TYPEINFO(/obj/machinery/field_generator)
 				return
 			var/positions = src.get_welding_positions()
 			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action, \
-						list(user), "[user] finishes using their [W.name] on the field generator.", positions[1], positions[2]),user)
+						list(user), "[user] finishes using [his_or_her(user)] [W.name] on the field generator.", positions[1], positions[2]),user)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the field generator to the floor.")
 			return
@@ -1257,7 +1257,7 @@ TYPEINFO(/obj/machinery/emitter)
 				return
 			var/positions = src.get_welding_positions()
 			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action, \
-						list(user), "[user] finishes using their [W.name] on the emitter.", positions[1], positions[2]),user)
+						list(user), "[user] finishes using [his_or_her(user)] [W.name] on the emitter.", positions[1], positions[2]),user)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the emitter to the floor.")
 			return
@@ -1739,6 +1739,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 TYPEINFO(/obj/machinery/the_singularitybomb)
 	mats = 14
 
+ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 /obj/machinery/the_singularitybomb
 	name = "\improper Singularity Bomb"
 	desc = "A WMD that creates a singularity."
@@ -1836,27 +1837,12 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 				switch(href_list["spec"])
 					if("prime")
 						if(!timing)
-							src.timing = 1
-							processing_items |= src
-							src.icon_state = "portgen2"
-
-							// And here (Convair880).
-							logTheThing(LOG_BOMBING, usr, "activated [src.name] ([src.time] seconds) at [log_loc(src)].")
-							message_admins("[key_name(usr)] activated [src.name] ([src.time] seconds) at [log_loc(src)].")
-							if (ismob(usr))
-								src.activator = usr
-
+							src.prime()
 						else
 							boutput(usr, SPAN_ALERT("\The [src] is already primed!"))
 					if("abort")
 						if(timing)
-							src.timing = 0
-							src.icon_state = "portgen1"
-
-							// And here (Convair880).
-							logTheThing(LOG_BOMBING, usr, "deactivated [src.name][src.activator ? " (primed by [constructTarget(src.activator,"bombing")]" : ""] at [log_loc(src)].")
-							message_admins("[key_name(usr)] deactivated [src.name][src.activator ? " (primed by [key_name(src.activator)])" : ""] at [log_loc(src)].")
-
+							src.abort()
 						else
 							boutput(usr, SPAN_ALERT("\The [src] is already deactivated!"))
 			if("timer")
@@ -1894,6 +1880,23 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 		usr.Browse(null, "window=timer")
 		return
 	return
+
+/obj/machinery/the_singularitybomb/proc/prime()
+	src.timing = 1
+	processing_items |= src
+	src.icon_state = "portgen2"
+	logTheThing(LOG_BOMBING, usr, "activated [src.name] ([src.time] seconds) at [log_loc(src)].")
+	message_admins("[key_name(usr)] activated [src.name] ([src.time] seconds) at [log_loc(src)].")
+	if (ismob(usr))
+		src.activator = usr
+
+/obj/machinery/the_singularitybomb/proc/abort()
+	src.timing = 0
+	src.icon_state = "portgen1"
+
+	// And here (Convair880).
+	logTheThing(LOG_BOMBING, usr, "deactivated [src.name][src.activator ? " (primed by [constructTarget(src.activator,"bombing")]" : ""] at [log_loc(src)].")
+	message_admins("[key_name(usr)] deactivated [src.name][src.activator ? " (primed by [key_name(src.activator)])" : ""] at [log_loc(src)].")
 
 /obj/machinery/the_singularitybomb/attack_ai(mob/user as mob)
 	return

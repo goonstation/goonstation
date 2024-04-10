@@ -579,7 +579,7 @@
 /obj/item/fuel_pellet/cerenkite,
 /obj/item/fuel_pellet/cerenkite,
 /obj/item/clothing/head/rad_hood,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
@@ -666,7 +666,7 @@
 "Co" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel/fullstack,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -1156,10 +1156,10 @@
 /obj/table/reinforced/auto,
 /obj/item/oreprospector,
 /obj/item/oreprospector,
-/obj/item/mining_tool/power_pick{
+/obj/item/mining_tool/powered/pickaxe{
 	pixel_x = 7
 	},
-/obj/item/mining_tool/power_pick{
+/obj/item/mining_tool/powered/pickaxe{
 	pixel_x = 7
 	},
 /turf/simulated/floor/shuttle,

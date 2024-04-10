@@ -353,7 +353,6 @@
 					<div class='r'>
 						<a href='[playeropt_link(M, "giveantagtoken")]'>Antag Tokens</a> &bull;
 						<a href='[playeropt_link(M, "setspacebux")]'>Spacebux</a> &bull;
-						<a href='[playeropt_link(M, "viewantaghistory")]'>Antag History</a> &bull;
 						<a href='[playeropt_link(M, "chatbans")]'>Chat Bans</a> &bull;
 						<a href='[playeropt_link(M, "flavortext")]'>Flavor text</a>
 					</div>

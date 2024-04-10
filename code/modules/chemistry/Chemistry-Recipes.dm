@@ -902,7 +902,7 @@
 		result = "catamount"
 		required_reagents = list("juice_orange" = 1, "grenadine" = 1, "ginger_ale" = 4, "ice" = 2)
 		result_amount = 8
-		mix_sound = 'sound/misc/drinkfizz.ogg'
+		mix_sound = 'sound/voice/animal/cat.ogg'
 		drinkrecipe = TRUE
 
 	pine_ginger
@@ -2861,7 +2861,7 @@
 		name = "Cyclopentanol"
 		id = "cyclopentanol"
 		result = "cyclopentanol"
-		min_temperature = T0C + 275
+		min_temperature = T0C + 50
 		required_reagents = list("acetic_acid" = 1, "ether" = 1, "barium" = 1, "hydrogen" = 1, "oxygen" = 1)
 		result_amount = 3
 		mix_phrase = "The mixture fizzles into a colorless liquid."
@@ -3078,7 +3078,7 @@
 	salbutamol_salicylic_acid // makes either based on input, not both at once though
 		name = "Salbutamol Salicylic Acid"
 		id = "salbutamol_salicylic_acid"
-		required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1)
+		required_reagents = list("sodium" = 0, "phenol" = 0, "carbon" = 0, "oxygen" = 0)
 		result = null //this changes in on_reaction
 		//technically it's either or, but for the purposes of the request console this makes both
 		eventual_result = list("salbutamol", "salicylic_acid")
@@ -3087,7 +3087,7 @@
 		reaction_speed = 4
 		temperature_change = 0 //this also changes
 		stateful = TRUE
-		mix_phrase = "The solution twirls mixes together idley."
+		mix_phrase = "The solution twirls and mixes together idley."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		reaction_icon_state = list("reaction_puff-1", "reaction_puff-2")
 		reaction_icon_color = "#ffffff"
@@ -3156,6 +3156,10 @@
 					playsound(get_turf(holder.my_atom), 'sound/effects/bubbles_short.ogg', 50, 1)
 					result = "salicylic_acid"
 					temperature_change = -3
+
+			if (result) //manually remove reagents only if we're actually reacting
+				for (var/reagent_id in src.required_reagents)
+					holder.remove_reagent(reagent_id, 1)
 
 		physical_shock(var/force, var/datum/reagents/holder)
 			if(force > 3)
@@ -3577,10 +3581,12 @@
 				reaction_loc.visible_message(SPAN_ALERT("[bicon(my_atom)] The mixture turns into pure energy which promptly flows into the alchemy circle."))
 				var/gathered = 0
 				for(var/mob/living/M in view(5,reaction_loc))
-					boutput(M, SPAN_ALERT("You feel a wracking pain as some of your life is ripped out."))
-					gathered += M.max_health - round(M.max_health / 2)
-					//M.max_health = round(M.max_health / 2)
-					M.setStatus("maxhealth-", null, -round(M.max_health / 2))
+					boutput(M, SPAN_ALERT("You feel a wracking pain as some of your life is ripped out.")) //Anima ravages the soul, but doesn't actually remove any part of it, so it's still saleable to Zoldorf
+					gathered += round(M.max_health / 2)
+					var/datum/statusEffect/maxhealth/decreased/current_status = M.hasStatus("maxhealth-")
+					var/old_maxhealth_decrease = current_status ? current_status.change : 0
+					M.setStatus("maxhealth-", null, old_maxhealth_decrease - round(M.max_health / 2))
+
 					health_update_queue |= M
 					if(hascall(M,"add_stam_mod_max"))
 						M:add_stam_mod_max("anima_drain", -25)
@@ -4166,6 +4172,7 @@
 		id = "LSD"
 		result = "LSD"
 		required_reagents = list("diethylamine" = 1, "space_fungus" = 1)
+		min_temperature = T0C + 70
 		result_amount = 3
 		mix_phrase = "The mixture turns a rather unassuming color and settles."
 
@@ -4173,7 +4180,7 @@
 		name = "Bath Salts"
 		id= "bathsalts"
 		result = "bathsalts"
-		required_reagents = list("msg" = 1, "yuck" = 1, "denatured_enzyme" = 1, "saltpetre" = 1, "cleaner" = 1, "mercury" = 1, "mugwort" = 1)
+		required_reagents = list("msg" = 1, "yuck" = 1, "denatured_enzyme" = 1, "saltpetre" = 1, "cleaner" = 1, "mercury" = 1, "ghostchilijuice" = 1)
 		min_temperature = T0C + 100
 		result_amount = 6
 		mix_phrase = "Tiny cubic crystals precipitate out of the mixture. Huh."

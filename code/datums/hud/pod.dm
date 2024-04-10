@@ -262,6 +262,10 @@
 			if (!lights.overlays.len)
 				lights.overlays += missing
 
+	proc/switch_sound()
+		for (var/mob/M in src.master)
+			M.playsound_local(src.master, 'sound/machines/pod_switch.ogg', 60, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
+
 	relay_click(id, mob/user, list/params)
 		if (user.loc != master)
 			boutput(user, SPAN_ALERT("You're not in the pod doofus. (Call 1-800-CODER.)"))
@@ -285,12 +289,15 @@
 						boutput(user, SPAN_ALERT("Only the pilot may do that!"))
 						return
 					master.engine.toggle()
+					src.switch_sound()
 			if ("life_support")
 				if (master.life_support)
 					master.life_support.toggle()
+					src.switch_sound()
 			if ("comms")
 				if (master.com_system)
 					master.com_system.toggle()
+					src.switch_sound()
 					update_systems()
 			if ("comms_system")
 				if(master.com_system)
@@ -303,12 +310,15 @@
 			if ("weapon")
 				if (master.m_w_system)
 					master.m_w_system.toggle()
+					src.switch_sound()
 			if ("secondary")
 				if (master.sec_system)
 					master.sec_system.toggle()
+					src.switch_sound()
 			if ("sensors")
 				if (master.sensors)
 					master.sensors.toggle()
+					src.switch_sound()
 			if ("sensors_use")
 				if (master.sensors && master.sensors.active)
 					master.sensors.opencomputer(user)
@@ -358,8 +368,10 @@
 			if ("lights")
 				if (master.lights)
 					master.lights.toggle()
+					src.switch_sound()
 			if ("rcs")
 				master.rcs = !master.rcs
+				src.switch_sound()
 
 
 		update_states()

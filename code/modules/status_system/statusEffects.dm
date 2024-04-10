@@ -135,6 +135,9 @@
 	proc/move_trigger(mob/user, ev)
 		. = 0
 
+	proc/remove_self()
+		src.owner.delStatus(src)
+
 	disposing()
 		if (owner?.statusEffects)
 			owner.statusEffects -= src
@@ -1277,9 +1280,8 @@
 		maxDuration = null
 		effect_quality = STATUS_QUALITY_POSITIVE
 		var/const/max_health = 30
-		var/const/max_stam = 60
+		var/const/max_stam = 40
 		var/const/regen_stam = 5
-		var/const/max_dist = 50
 		var/mob/living/carbon/human/H
 		var/datum/gang/gang
 		var/on_turf = 0
@@ -1290,6 +1292,7 @@
 				H = owner
 			else
 				owner.delStatus("ganger")
+				return
 			H.max_health += max_health
 			health_update_queue |= H
 			H.add_stam_mod_max("ganger_max", max_stam)
@@ -1308,37 +1311,76 @@
 			gang = null
 
 		onUpdate(timePassed)
-			var/area/cur_area = get_area(H)
-			if (cur_area?.gang_owners == gang && prob(50))
-				on_turf = 1
+			var/mob/living/carbon/human/H
+			if(!ishuman(owner))
+				return
+			H = owner
+			if(ON_COOLDOWN(H, "ganger_heal", 1 SECOND))
+				H.HealDamage("All", 0.2, 0.2, 0)
+				if (GET_DIST(owner,gang.locker) < 4) //give a boost to folks camping round their locker
+					H.HealDamage("All", 0.5, 0.5, 0.5)
+					icon_state = "ganger_heal"
+				else
+					icon_state = "ganger"
 
-				//get distance divided by max distance and invert it. Result will be between 0 and 1
-				var/buff_mult = round(1-(min(GET_DIST(owner,gang.locker), max_dist) / max_dist), 0.1)
-				if (buff_mult <=0)
-					buff_mult = 0.1
+				if (H.bleeding && prob(20))
+					repair_bleeding_damage(H, 5, 1)
 
-				var/mob/living/carbon/human/H
-				if(ishuman(owner))
-					H = owner
-					H.HealDamage("All", 10*buff_mult, 0, 0)
-					if (H.bleeding && prob(100*buff_mult))
-						repair_bleeding_damage(H, 5, 1)
 
-					var/list/statusList = H.getStatusList()
+			var/list/statusList = H.getStatusList()
 
-					if(statusList["paralysis"])
-						H.changeStatus("paralysis", -3*buff_mult)
-					if(statusList["stunned"])
-						H.changeStatus("stunned", -3*buff_mult)
-					if(statusList["weakened"])
-						H.changeStatus("weakened", -3*buff_mult)
-			else
-				on_turf = 0
-
-			return
+			if(statusList["paralysis"])
+				H.changeStatus("paralysis", -1)
+			if(statusList["stunned"])
+				H.changeStatus("stunned", -1)
+			if(statusList["weakened"])
+				H.changeStatus("weakened", -1)
 
 		getTooltip()
-			. = "Your max health, max stamina, and stamina regen have been increased because of the pride you feel while wearing your uniform. [on_turf?"You are on home turf and receiving healing and stun reduction buffs when nearer your locker.":""]"
+			if (GET_DIST(owner,gang.locker) < 4)
+				. = "You're healing quickly, proudly wearing your uniform next to your locker."
+			else
+				. = "Your endurance and recovery are improved because of the pride you feel while wearing your uniform in your territory."
+
+	ganger_debuff
+		id = "ganger_debuff"
+		name = "Gang Member"
+		desc = "You're hiding your gang uniform in enemy territory. Shameful!"
+		icon_state = "ganger"
+		unique = TRUE
+		duration = INFINITE_STATUS
+		maxDuration = null
+		effect_quality = STATUS_QUALITY_NEGATIVE
+		var/const/max_stam = -20
+		var/const/regen_stam = -2
+		var/mob/living/carbon/human/H
+		var/datum/gang/gang
+		var/on_turf = 0
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+			else
+				owner.delStatus("ganger_debuff")
+				return
+			H.add_stam_mod_max("ganger_debuff_max", max_stam)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "ganger_debuff_regen", regen_stam)
+			gang = H.get_gang()
+
+		onRemove()
+			. = ..()
+			H?.remove_stam_mod_max("ganger_debuff_max")
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "ganger_debuff_regen")
+			gang = null
+			H = null
+			gang = null
+		onUpdate(timePassed)
+			if (prob(5))
+				H?.emote(pick("shiver","flinch","twitch"))
+
+		getTooltip()
+			. = "Your vitals have dropped from the shame you feel hiding your true colors inside enemy territory."
 
 	janktank
 		id = "janktank"
@@ -2372,6 +2414,7 @@
 			C.setProperty("coldprot", C.getProperty("coldprot") - LAUNDERED_COLDPROT_AMOUNT)
 			if (C.stains)
 				C.stains -= LAUNDERED_STAIN_TEXT
+				C.UpdateName()
 
 #undef LAUNDERED_COLDPROT_AMOUNT
 #undef LAUNDERED_STAIN_TEXT
@@ -2399,6 +2442,58 @@
 			for (var/obj/item/roboupgrade/R in robot.contents)
 				if (R.activated) R.upgrade_deactivate(robot)
 		. = ..()
+
+/datum/statusEffect/oiled
+	id = "oiled"
+	name = "Oiled"
+	icon_state = "oil"
+	maxDuration = 6 MINUTES
+	movement_modifier = /datum/movement_modifier/robot_oil
+
+	getTooltip()
+		. = "You have been oiled, your movement delay and passive power consumption have been reduced by 15%, and you feel more ready to resist anything that may stun you in your tracks."
+
+	onAdd(optional=null)
+		..()
+		var/mob/M = owner
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "robot_oil", 25)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "robot_oil", 25)
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "robot_oil")
+		REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "robot_oil")
+
+/datum/statusEffect/oiled/fresh
+	id = "freshly_oiled"
+	name = "Freshly oiled"
+	icon_state = "fresh_oil"
+	maxDuration = 15 SECONDS
+	movement_modifier = /datum/movement_modifier/robot_oil/fresh
+	/// Duration of the oiled status effect a person has before more oil is applied.
+	var/oiledDuration = 0
+	/// How long have we had the status effect for
+	var/tickspassed = 0
+
+	getTooltip()
+		. = "You have recently been oiled, your movement delay and passive power consumption have been reduced by 50%, and you feel more ready to resist anything that may stun you in your tracks."
+
+	onAdd(optional=null)
+		..()
+		var/mob/M = owner
+		if(M.hasStatus("oiled"))
+			oiledDuration = M.getStatusDuration("oiled")
+			M.delStatus("oiled")
+
+	onUpdate(timePassed) // I gotta do it this way trust me on this
+		. = ..()
+		tickspassed += timePassed
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		M.changeStatus("oiled", (min(tickspassed, maxDuration) * 24 + oiledDuration)) //  freshly oiled decays into oiled status with 12 times the duration that the status effect has peaked at.
 
 /datum/statusEffect/criticalcondition
 	id = "critical_condition"
@@ -2562,3 +2657,86 @@
 			M.max_health += change
 			current_bonus = newBonus
 			health_update_queue |= M
+
+/datum/statusEffect/wiz_polymorph
+	id = "wiz_polymorph"
+	name = "Polymorphed"
+	desc = "You've been polymorphed by a wizard! It will take a few minutes for the spell to wear off."
+	icon_state = "polymorph"
+	unique = TRUE
+	var/mob/living/carbon/human/original
+
+	onAdd(mob/living/carbon/human/H)
+		. = ..()
+		original = H
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		if (ismobcritter(M) && isalive(M))
+			original.set_loc(M.loc)
+			original.hibernating = FALSE
+			M.mind?.transfer_to(original)
+			qdel(M)
+		else
+			qdel(original)
+
+		src.original = null
+
+/datum/statusEffect/conspiracy_convert
+	id = "conspiracy_convert"
+	name = "Recent Conversion"
+	desc = "You have recently converted another to your side, you will be able to convert again soon."
+	icon_state = "possess"
+	maxDuration = 30 MINUTES
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+/datum/statusEffect/noir
+	id = "noir"
+	name = "Noir"
+	maxDuration = 2 MINUTES
+	visible = FALSE
+
+	onAdd(optional)
+		..()
+		var/mob/M = src.owner
+		if (M.client)
+			animate_fade_grayscale(M.client, 5 SECONDS)
+		if (M.mind)
+			RegisterSignal(M.mind, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(remove_self)) //we're editing the client directly so we should be Cautious
+
+	onRemove()
+		..()
+		var/mob/M = src.owner
+		if (M.mind)
+			UnregisterSignal(M.mind, COMSIG_MIND_DETACH_FROM_MOB)
+		if (M.client)
+			animate_fade_from_grayscale(M.client, 5 SECONDS)
+
+/datum/statusEffect/oneMsgAccent
+	id = "temp_accent"
+	name = "Temporary Accent"
+	visible = FALSE
+	var/datum/bioEffect/added_accent = null
+
+	onAdd(optional)
+		..()
+		var/mob/living/M = src.owner
+		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(remove_self))
+		if (!istype(M) || !M.bioHolder)
+			src.remove_self()
+			return
+		var/datum/bioEffect/accent = random_accent()
+		var/emergency_loop_stop = 0
+		while (M.bioHolder.HasEffect(accent.id) && emergency_loop_stop < 10)
+			accent = random_accent()
+			emergency_loop_stop++
+
+		src.added_accent = M.bioHolder.AddEffect(accent.id, do_stability = FALSE, magical = TRUE)
+
+	onRemove()
+		..()
+		if (src.added_accent)
+			var/mob/living/M = src.owner
+			M.bioHolder.RemoveEffectInstance(src.added_accent)
+		UnregisterSignal(src.owner, COMSIG_MOB_SAY)

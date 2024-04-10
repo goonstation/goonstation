@@ -3,6 +3,7 @@ var/list/removed_jobs = list(
 	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
 	"Barman" = "Bartender",
 	"Mechanic" = "Engineer",
+	"Mailman" = "Mail Courier"
 )
 
 /datum/preferences
@@ -177,14 +178,9 @@ var/list/removed_jobs = list(
 				"name" = src.savefile_get_profile_name(client, i),
 			)
 
-		var/list/cloud_saves = null
-
-		if (!client.cloud_available())
-			client.player.cloud_fetch()
-		if (client.cloud_available())
-			cloud_saves = list()
-			for (var/name in client.player.cloudsaves)
-				cloud_saves += name
+		var/list/cloud_saves = list()
+		for (var/name in client.player.cloudSaves.saves)
+			cloud_saves += name
 
 		sanitize_null_values()
 
@@ -355,9 +351,7 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("cloud-new")
-				if (!client.cloud_available())
-					return
-				if(length(client.player.cloudsaves) >= SAVEFILE_CLOUD_PROFILES_MAX)
+				if(length(client.player.cloudSaves.saves) >= SAVEFILE_CLOUD_PROFILES_MAX)
 					tgui_alert(usr, "You have hit your cloud save limit. Please write over an existing save.", "Max saves")
 				else
 					var/new_name = tgui_input_text(usr, "What would you like to name the save?", "Save Name")
@@ -371,8 +365,6 @@ var/list/removed_jobs = list(
 							boutput( usr, SPAN_NOTICE("Savefile saved!") )
 
 			if ("cloud-save")
-				if (!client.cloud_available())
-					return
 				var/ret = src.cloudsave_save(client, params["name"])
 				if(istext(ret))
 					boutput(usr, SPAN_ALERT("Failed to save savefile: [ret]"))
@@ -381,8 +373,6 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("cloud-load")
-				if (!client.cloud_available())
-					return
 				var/ret = src.cloudsave_load(client, params["name"])
 				if( istext(ret))
 					boutput(usr, SPAN_ALERT("Failed to load savefile: [ret]"))
@@ -392,8 +382,6 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("cloud-delete")
-				if (!client.cloud_available())
-					return
 				var/ret = src.cloudsave_delete(client, params["name"])
 				if(istext(ret))
 					boutput(usr, SPAN_ALERT("Failed to delete savefile: [ret]"))
@@ -2090,10 +2078,10 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/type_first
 	if (AH.gender == MALE)
 		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE, for_random=TRUE))
 			AH.customization_first = new type_first
 		else // otherwise just use one standard to the current gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE, for_random=TRUE))
 			AH.customization_first = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
@@ -2104,10 +2092,10 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 
 	else // if FEMALE
 		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE, for_random=TRUE))
 			AH.customization_first = new type_first
 		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE, for_random=TRUE))
 			AH.customization_first = new type_first
 
 	if (!has_second)

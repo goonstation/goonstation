@@ -987,8 +987,8 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 			if (in_centcom(G)) return 1
 		return 0
 
-/datum/objective/crew/staffassistant/mailman
-	explanation_text = "Escape on the shuttle alive wearing at least one piece of mailman clothing."
+/datum/objective/crew/staffassistant/mailcourier
+	explanation_text = "Escape on the shuttle alive wearing at least one piece of mail courier clothing."
 	medal_name = "The mail always goes through"
 	check_completion()
 		if(owner.current && ishuman(owner.current))
@@ -1032,8 +1032,8 @@ ABSTRACT_TYPE(/datum/objective/crew/technicalassistant)
 			var/mob/living/carbon/human/H = owner.current
 			if(in_centcom(H) && H.head && H.head.name == "[H.real_name]'s butt") return 1
 		return 0
-/datum/objective/crew/technicalassistant/mailman
-	explanation_text = "Escape on the shuttle alive wearing at least one piece of mailman clothing."
+/datum/objective/crew/technicalassistant/mailcourier
+	explanation_text = "Escape on the shuttle alive wearing at least one piece of mail courier clothing."
 	medal_name = "The mail always goes through"
 	check_completion()
 		if(owner.current && ishuman(owner.current))

@@ -1687,17 +1687,9 @@ ABSTRACT_TYPE(/area/sim)
 	name = "Vspace area 1"
 	icon_state = "simA1"
 
-/area/sim/a1entry
-	name = "Vspace area 1 Entry"
-	icon_state = "simA1E"
-
 /area/sim/area2
 	name = "Vspace area 2"
 	icon_state = "simA2"
-
-/area/sim/a2entry
-	name = "Vspace area 2 Entry"
-	icon_state = "simA2E"
 
 /area/sim/bball
 	name = "B-Ball Court"
@@ -2899,6 +2891,11 @@ ABSTRACT_TYPE(/area/station/medical)
 	name = "Medbay Operating Theater"
 	icon_state = "medbay_surgery"
 
+/area/station/medical/medbay/reception
+	name = "Medbay Reception"
+	icon_state = "medbooth"
+	sound_environment = 3
+
 /area/station/medical/medbay/surgery/storage
 	name = "Medical Storage"
 	icon_state = "blue"
@@ -2939,13 +2936,13 @@ ABSTRACT_TYPE(/area/station/medical)
 	name = "Morgue"
 	icon_state = "morgue"
 	sound_environment = 3
-	station_map_colour = MAPC_MEDICAL
+	station_map_colour = MAPC_MORGUE
 
 /area/station/medical/crematorium
 	name = "Crematorium"
 	icon_state = "morgue"
 	sound_environment = 3
-	station_map_colour = MAPC_MEDICAL
+	station_map_colour = MAPC_MORGUE
 
 /area/station/medical/medbooth
 	name = "Medical Booth"
@@ -3188,14 +3185,20 @@ ABSTRACT_TYPE(/area/station/solar)
 	name = "West Solar Array"
 	icon_state = "panelsW"
 
+TYPEINFO(/area/station/solar/small_backup1)
+	valid_bounty_area = FALSE
 /area/station/solar/small_backup1
 	name = "Emergency Solar Array 1"
 	icon_state = "yellow"
 
+TYPEINFO(/area/station/solar/small_backup2)
+	valid_bounty_area = FALSE
 /area/station/solar/small_backup2
 	name = "Emergency Solar Array 2"
 	icon_state = "yellow"
 
+TYPEINFO(/area/station/solar/small_backup3)
+	valid_bounty_area = FALSE
 /area/station/solar/small_backup3
 	name = "Emergency Solar Array 3"
 	icon_state = "yellow"

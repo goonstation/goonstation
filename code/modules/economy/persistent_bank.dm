@@ -175,7 +175,7 @@
 		if (purchase.Create(src))
 			boutput( src, SPAN_NOTICE("<b>[purchase.name] equipped successfully.</b>") )
 		else
-			boutput( src, SPAN_NOTICE("<b>[purchase.name] is not available for the job you rolled. It will not be billed.</b>") )
+			boutput( src, SPAN_NOTICE("<b>[purchase.name] is not available for the job you rolled. It will be refunded.</b>") )
 			src.client.add_to_bank(purchase.cost)
 			src.client.set_last_purchase(null)
 			return

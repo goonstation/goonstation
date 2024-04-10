@@ -99,7 +99,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	proc/set_reagent_temp(var/new_temp = T0C, var/react = 0)
 		src.last_temp = total_temperature
-		src.total_temperature = new_temp
+		src.total_temperature = max(new_temp, 0)
 		if (react)
 			temperature_react()
 			handle_reactions()
@@ -714,6 +714,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 								turf_reaction_success = 1
 								.+= current_id
 						if(isobj(A))
+
+							if (istype(A, /obj/overlay))
+								continue
 							// use current_reagent.reaction_obj for stuff that affects all objects
 							// and reagent_act for stuff that affects specific objects
 							if (!current_reagent.reaction_obj(A, current_reagent.volume*volume_fraction))
@@ -849,7 +852,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if (!donotupdate)
 			reagents_changed(1)
 
-		if((added_new || check_reactions) && !current_reagent.disposed)
+		if((added_new || check_reactions) && !QDELETED(current_reagent))
 			append_possible_reactions(current_reagent.id) //Experimental reaction possibilities
 			if (!donotreact)
 				src.handle_reactions()

@@ -21,7 +21,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 			var/mob/M = hit_atom
 			var/mob/thrower = thr.thrown_by
 			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
-			if (thrower.mind?.assigned_role == "Clown" && ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain") && !M.GetOverlayImage("face_pie"))
+			if (thrower?.mind?.assigned_role == "Clown" && ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain") && !M.GetOverlayImage("face_pie"))
 				var/mob/living/carbon/human/H = M
 				var/image/face_pie = image('icons/obj/foodNdrink/food_dessert.dmi', "face_pie")
 				src.visible_message(SPAN_NOTICE("[src] splats right in [H]'s face and remains stuck there!"))

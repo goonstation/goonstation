@@ -806,7 +806,7 @@ datum
 			reaction_turf(var/turf/target, var/volume)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
-					simulated_target.wetify(2, 60, 60 SECONDS)
+					simulated_target.wetify(2, 60 SECONDS)
 
 		superlube
 			name = "organic superlubricant"
@@ -1307,9 +1307,12 @@ datum
 					if (method == TOUCH)
 						if (isrobot(M))
 							var/mob/living/silicon/robot/R = M
-							R.add_oil(volume * 2)
+							R.changeStatus("freshly_oiled", (volume * 5)) // You need at least 30u to get max duration
 							boutput(R, SPAN_NOTICE("Your joints and servos begin to run more smoothly."))
-						else boutput(M, SPAN_ALERT("You feel greasy and gross."))
+						else if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (!H.mutantrace.aquaphobic)
+								boutput(M, "<span class='alert'>You feel greasy and gross.</span>")
 
 				return
 
@@ -2635,12 +2638,14 @@ datum
 				if(M)
 					boutput(M, SPAN_ALERT("You feel yourself fading away."))
 					M.alpha = 0
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, src.id)
 					if(effect_length > 75)
 						M.take_brain_damage(10) // there!
 					SPAWN(effect_length * 10)
 						if(M.alpha != 255)
 							boutput(M, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
 							M.alpha = 255
+							REMOVE_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, src.id)
 
 			do_overdose(var/severity, var/mob/living/M, var/mult = 1)
 				var/effect = ..(severity, M)
@@ -3211,6 +3216,7 @@ datum
 			value = 2
 			var/list/pathogens = list()
 			var/pathogens_processed = 0
+			var/congealed = FALSE //! if this blood came from a pill, stops vampires getting points from it
 			hygiene_value = -2
 			hunger_value = 0.068
 			viscosity = 0.4
@@ -3243,11 +3249,10 @@ datum
 				if (!ishuman(M)) return
 				if (method == INGEST)
 					if (M.mind)
-						var/mob/living/carbon/human/H = M
-						if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
-							var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
+						var/datum/abilityHolder/vampiric_thrall/thrallHolder = M.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+						if (thrallHolder)
 							var/bloodget = volume_passed / 4
-							V.blood_points += bloodget
+							thrallHolder.points += bloodget
 							holder.del_reagent(src.id)
 
 						if (isvampire(M))
@@ -3257,6 +3262,9 @@ datum
 								/*if (M.bioHolder && (src.blood_DNA == M.bioHolder.Uid))
 									M.show_text("Injecting your own blood? Who are you kidding?", "red")
 									return*/
+								if (src.congealed)
+									boutput(M, SPAN_ALERT("EUGH! This blood is totally congealed and worthless."))
+									return 1
 								if (prob(33))
 									boutput(M, SPAN_ALERT("Fresh blood would be better..."))
 								var/bloodget = volume_passed / 3
@@ -3297,6 +3305,9 @@ datum
 						DNA.endurance++
 
 			on_transfer(var/datum/reagents/source, var/datum/reagents/target, var/trans_amt)
+				if (istype(target.my_atom, /obj/item/reagent_containers/pill))
+					var/datum/reagent/blood/blood = target.get_reagent("blood")
+					blood.congealed = TRUE
 				var/list/source_pathogens = source.aggregate_pathogens()
 				var/list/target_pathogens = target.aggregate_pathogens()
 				var/target_changed = 0
@@ -3312,7 +3323,6 @@ datum
 							if (!istype(B))
 								continue
 							B.pathogens = target_pathogens
-				return
 
 		blood/bloodc
 			id = "bloodc"
@@ -4217,6 +4227,96 @@ datum
 			proc/analyzed(source, mob/user)
 				if (!issilicon(user) && !isAI(user) && !isintangible(user) && !isobserver(user)) //there's probably other things we should exclude here
 					src.holder.trans_to(user, max(1, src.volume))
+
+#define MIN_JEANS_FOR_CONVERSION 5
+		/// Jeans reagent turns turfs and objects into jeans
+		/// and on touch on humans will convert their clothes into jeans material
+		jeans
+			name = "liquid jeans"
+			id = "jeans"
+			fluid_r = 39
+			fluid_g = 78
+			fluid_b = 133
+			taste = "like a good quality all wear garment"
+			reagent_state = LIQUID
+
+
+
+			New()
+				. = ..()
+
+			reaction_turf(var/turf/T, var/volume)
+				. = ..()
+				if (volume < MIN_JEANS_FOR_CONVERSION)
+					return
+
+				if (!T)
+					return
+
+				T.setMaterial(getMaterial("jean"))
+
+			reaction_obj(var/obj/O, var/volume)
+				. = ..()
+				if (volume < MIN_JEANS_FOR_CONVERSION)
+					return
+
+				if (!O)
+					return
+
+				O.setMaterial(getMaterial("jean"))
+
+			var/list/jean_affected_slots = list(
+				SLOT_BACK,
+				SLOT_WEAR_MASK,
+				SLOT_BELT,
+				SLOT_WEAR_ID,
+				SLOT_EARS,
+				SLOT_GLASSES,
+				SLOT_GLOVES,
+				SLOT_HEAD,
+				SLOT_SHOES,
+				SLOT_WEAR_SUIT,
+				SLOT_W_UNIFORM)
+
+			proc/handle_mob_touch(mob/living/M, volume)
+				if (!ishuman(M))
+					return
+
+				if (volume < MIN_JEANS_FOR_CONVERSION)
+					return
+
+				var/mob/living/carbon/human/human = M
+				var/update_required = FALSE
+				for (var/slot in jean_affected_slots)
+					var/obj/item/I = human.get_slot(slot)
+
+					if (!I)
+						continue
+
+					if (I.material?.isSameMaterial(getMaterial("jean")))
+						continue
+
+					volume = max(0, volume - MIN_JEANS_FOR_CONVERSION)
+					if (volume == 0)
+						break
+
+					I.setMaterial(getMaterial("jean"))
+					update_required = TRUE
+
+				if (update_required)
+					human.update_clothing()
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (!M || volume <= 0)
+					return
+
+				if (method != TOUCH)
+					return
+
+				handle_mob_touch(M, volume)
+
+#undef MIN_JEANS_FOR_CONVERSION
 
 /obj/badman/ //I really don't know a good spot to put this guy so im putting him here, fuck you.
 	name = "Senator Death Badman"

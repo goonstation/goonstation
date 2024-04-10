@@ -27,6 +27,7 @@
 		icon_state = "sword1-[bladecolor]"
 		item_state = "sword1-[bladecolor]"
 		src.setItemSpecial(/datum/item_special/swipe)
+		AddComponent(/datum/component/itemblock/reflect/toyswordblock, TRUE, PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	attack(target, mob/user)
@@ -37,6 +38,10 @@
 				playsound(U, pick(src.sound_attackM1, src.sound_attackM2), 100, 0, 0, U.get_age_pitch())
 			else
 				playsound(U, pick(src.sound_attackF1, src.sound_attackF2), 100, 0, 0, U.get_age_pitch())
+
+
+/obj/item/toy/sword/proc/get_reflect_color()
+	return src.bladecolor
 
 /obj/item/toy/judge_gavel
 	name = "judge's gavel"

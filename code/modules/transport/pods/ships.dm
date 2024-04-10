@@ -188,11 +188,12 @@ obj/machinery/vehicle/miniputt/pilot
 	armor_score_multiplier = 0.7
 	speed = 0.8
 	acid_damage_multiplier = 0
+	faction = FACTION_SYNDICATE
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
 		src.components += src.lock
@@ -966,6 +967,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	maxhealth = 500
 	speed = 0.9
 	acid_damage_multiplier = 0
+	faction = FACTION_SYNDICATE
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	/*prearmed
@@ -977,8 +979,8 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 			return*/
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		myhud.update_systems()
 		myhud.update_states()
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)

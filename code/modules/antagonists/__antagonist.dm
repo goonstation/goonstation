@@ -78,6 +78,22 @@ ABSTRACT_TYPE(/datum/antagonist)
 		RegisterSignal(src.owner, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(mind_detach))
 		src.owner.antagonists.Add(src)
 
+	proc/transfer_to(datum/mind/target, take_gear, source, silent = FALSE)
+		remove_self(take_gear, source)
+		owner.former_antagonist_roles.Add(owner.special_role)
+
+		owner.special_role = null // this isn't ideal, since the system should support multiple antagonists. once special_role is worked around, this won't be an issue
+		UnregisterSignal(src.owner, COMSIG_MIND_ATTACH_TO_MOB)
+		UnregisterSignal(src.owner, COMSIG_MIND_DETACH_FROM_MOB)
+
+		src.owner = target
+		src.owner.special_role = id
+		src.setup_antagonist(FALSE, FALSE, FALSE, silent, source, FALSE)
+		src.owner.antagonists.Add(src)
+		RegisterSignal(src.owner, COMSIG_MIND_ATTACH_TO_MOB, PROC_REF(mind_attach))
+		RegisterSignal(src.owner, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(mind_detach))
+
+
 	disposing()
 		if (owner && !src.pseudo)
 			LAZYLISTREMOVE(antagonists["[src.id]"], src)
@@ -206,6 +222,13 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// Generate objectives for the antagonist and assign them to the mind.
 	proc/assign_objectives()
+		return
+
+	/// Handle this antagonist entering cryogenic storage, possibly temporarily.
+	proc/handle_cryo()
+		return
+	/// Handle this antagonist entering cryogenic storage permanently
+	proc/handle_perma_cryo()
 		return
 
 	/// Remove objectives from the antagonist and the mind.

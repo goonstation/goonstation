@@ -231,8 +231,8 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		item_function_flags = IMMUNE_TO_ACID
 
 		New()
-			..()
 			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
 
 		disposing()
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -787,4 +787,21 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	desc = "Traditionally thought to repel evil spirits, thanks to the tengu's alarming face. Maybe it works on staffies, too."
 	item_state = "tengu"
 	icon_state = "tengu"
+	see_face = FALSE
+
+// New chaplain stuff
+
+/obj/item/clothing/mask/greencultmask
+	name = "lost horror veil"
+	desc = "A dark green shroud with loose fabric tendrils at the end of the face You feel dizzy and lost just gazing into the visage."
+	item_state = "greencultmask"
+	icon_state = "greencultmask"
+	wear_layer = MOB_OVER_TOP_LAYER
+	see_face = FALSE
+/obj/item/clothing/mask/burnedcultmask
+	name = "incendiary mask"
+	desc = "A face mask designed to look like a burning candle's flame. It smells of smoke when worn."
+	item_state = "burnedcultmask"
+	icon_state = "burnedcultmask"
+	wear_layer = MOB_OVER_TOP_LAYER
 	see_face = FALSE

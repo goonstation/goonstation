@@ -143,15 +143,6 @@
 	src.harm_special.onAdd()
 	return src.harm_special
 
-
-//This needs to happen in process_move(), not Move() so we can change the delay modifier before it is put to use
-/mob/living/process_move(keys)
-	if (apply_movement_delay_until != -1)
-		if (apply_movement_delay_until >= world.time)
-			//Don't pick a delay modifier that will exceed the bounds of our delay apply window
-			movement_delay_modifier = min(movement_delay_modifier, (apply_movement_delay_until - world.time))
-	return ..(keys)
-
 /datum/item_special/dummy //These don't do anything and are simply used for the tooltip. Used when the special is implemented in another way. Hacky and ugly.
 	getDesc()
 		return desc	+ "<br>"
@@ -210,6 +201,10 @@
 	proc/pixelaction(atom/target, params, mob/user, reach)
 		return
 
+	proc/onHit(mob/target, damage, mob/user, datum/attackResults/msgs)
+		return
+
+
 	//move to define probably?
 	proc/isTarget(var/atom/A, var/mob/user = null)
 		if (istype(A, /obj/itemspecialeffect))
@@ -266,10 +261,8 @@
 		if(moveDelayDuration && moveDelay)
 			SPAWN(0)
 				person.movement_delay_modifier += moveDelay
-				person.apply_movement_delay_until = world.time + moveDelayDuration //handle move() started mid-delay
 				sleep(moveDelayDuration)
-				person.movement_delay_modifier = 0
-				person.apply_movement_delay_until = -1
+				person?.movement_delay_modifier -= moveDelay
 		last_use = world.time
 
 	//Should be called after everything is done and all attacks are finished. Make sure you call this when appropriate in your mouse procs etc.
@@ -279,6 +272,10 @@
 			SEND_SIGNAL(master, COMSIG_ITEM_SPECIAL_POST, person)
 		if(restrainDuration)
 			person.restrain_time = TIME + restrainDuration
+
+	//For using the result of the attack to determine fancy behavior
+	proc/modify_attack_result(var/mob/user, var/mob/target, var/datum/attackResults/msgs)
+		return msgs
 
 /datum/item_special/rush
 	cooldown = 100
@@ -425,6 +422,8 @@
 	moveDelay = 0//5
 	moveDelayDuration = 0//4
 	damageMult = 1
+	var/directional = FALSE
+	var/obj/itemspecialeffect/specialEffect = /obj/itemspecialeffect/simple
 
 	image = "simple"
 	name = "Attack"
@@ -443,16 +442,18 @@
 			var/direction = get_dir_pixel(user, target, params)
 			var/turf/turf = get_step(master, direction)
 
-			var/obj/itemspecialeffect/simple/S = new /obj/itemspecialeffect/simple
+			var/obj/itemspecialeffect/simple/S = new specialEffect
 			if(src.animation_color)
 				S.color = src.animation_color
+			if(directional)
+				S.set_dir(direction)
 			S.setup(turf)
 
-			var/hit = 0
+			var/hit = FALSE
 			for(var/atom/A in turf)
 				if(isTarget(A))
 					A.Attackby(master, user, params, 1)
-					hit = 1
+					hit = TRUE
 					break
 
 			afterUse(user)
@@ -474,6 +475,29 @@
 		moveDelay = 5
 		moveDelayDuration = 5
 		animation_color = "#a3774d"
+
+/datum/item_special/simple/bloodystab
+	cooldown = 0
+	staminaCost = 5
+	moveDelay = 5
+	moveDelayDuration = 5
+
+	image = "stab"
+	name = "Stab"
+	desc = "Aim for the throat for bloody crits."
+	directional = TRUE
+	specialEffect = /obj/itemspecialeffect/dagger
+
+	var/stab_color = "#FFFFFF"
+
+	modify_attack_result(mob/user, mob/target, datum/attackResults/msgs) //bleed on crit!
+		if (msgs.damage > 0 && msgs.stamina_crit)
+			msgs.bleed_always = TRUE
+			// bleed people wearing armor less
+			msgs.bleed_bonus = 10 + round(20 * clamp(msgs.damage / master.force, 0, 1))
+			msgs.played_sound= 'sound/impact_sounds/Flesh_Stab_1.ogg'
+			blood_slash(target,1,null, turn(user.dir,180), 3)
+		return msgs
 
 /datum/item_special/rangestab
 	cooldown = 0 //10
@@ -749,9 +773,9 @@
 
 	afterUse(var/mob/person)
 		..()
-		if (istype(master,/obj/item/mining_tool))
-			var/obj/item/mining_tool/M = master
-			if (M.status)
+		if (istype(master, /obj/item/mining_tool/powered))
+			var/obj/item/mining_tool/powered/M = master
+			if (M.is_on)
 				M.process_charges(30)
 
 	pixelaction(atom/target, params, mob/user, reach)
@@ -1584,6 +1608,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 /datum/item_special/katana_dash/reverse
 	staminaCost = 10
+	stamina_damage = 40
 	reversed = 1
 
 	on_hit(var/mob/hit)
@@ -1910,6 +1935,12 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_x = -32
 		pixel_y = -32
 		can_clash = 1
+
+	dagger
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "dagger"
+		pixel_x = -32
+		pixel_y = -32
 
 	bluefade
 		icon = 'icons/effects/effects.dmi'

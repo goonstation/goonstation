@@ -61,7 +61,7 @@
 				locstr = "RCL"
 			else
 				locstr = "ETA"
-			statsus += " | Shuttle: [locstr] [(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]<br>"
+			statsus += " | Shuttle: <b>[locstr] [(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</b><br>"
 	else
 		statsus += "<br>"
 
@@ -69,7 +69,7 @@
 		var/map_name = istext(map_settings.display_name) ? "[map_settings.display_name]" : "[getMapNameFromID(map_setting)]"
 		//var/map_link_str = map_settings.goonhub_map ? "<a href=\"[map_settings.goonhub_map]\">[map_name]</a>" : "[map_name]"
 		statsus += "Map: <b>[map_name]</b>"
-		if(mapSwitcher.next)
+		if(mapSwitcher?.next)
 			statsus += " | Next: <b>[mapSwitcher.next]</b><br>"
 		else
 			statsus += "<br>"

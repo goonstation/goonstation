@@ -300,7 +300,7 @@ mob/verb/checkrewards()
 		if (istype(O, sacrifice_path))
 			var/obj/item/gun/energy/E = O
 			var/list/ret = list()
-			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			if(SEND_SIGNAL(E, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 				charge = ret["charge"]
 				max_charge = ret["max_charge"]
 			C.mob.remove_item(E)

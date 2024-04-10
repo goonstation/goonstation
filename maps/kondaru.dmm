@@ -172,7 +172,7 @@
 /area/space)
 "aaB" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/airless,
@@ -365,6 +365,10 @@
 	dir = 4;
 	name = "Owl Zone Access"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "owlrey";
+	name = "Owlrey"
+	},
 /turf/simulated/floor/grey,
 /area/station/garden/owlery)
 "abt" = (
@@ -386,6 +390,10 @@
 "abw" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Owl Zone Access"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "owlrey";
+	name = "Owlrey"
 	},
 /turf/simulated/floor/caution/north,
 /area/station/garden/owlery)
@@ -1002,6 +1010,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "routing2";
+	name = "Routing Cabinet"
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/eva{
 	name = "Router Cabinet"
@@ -1087,6 +1099,10 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "routing2";
+	name = "Routing Cabinet"
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/eva{
 	name = "Router Cabinet"
@@ -1130,6 +1146,11 @@
 "aeb" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "podbay";
+	name = "Pod Bay";
+	enter_id = "inner"
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
@@ -1308,6 +1329,11 @@
 /area/station/maintenance/northwest)
 "aeN" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "podbay";
+	name = "Pod Bay";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "aeO" = (
@@ -1354,6 +1380,10 @@
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "northmaint2";
+	name = "North Maintenance"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -1538,19 +1568,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
-"afO" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
 "afP" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
@@ -1727,16 +1744,6 @@
 /area/station/crew_quarters/clown{
 	name = "Clowntainment"
 	})
-"agu" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "agw" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -1809,6 +1816,10 @@
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "northmaint2";
+	name = "North Maintenance"
 	},
 /turf/simulated/floor/grey,
 /area/station/maintenance/north)
@@ -2864,7 +2875,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "akh" = (
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "akj" = (
@@ -3134,13 +3145,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aln" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10
 	},
@@ -5609,6 +5613,11 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "miningshuttle";
+	name = "Mining Shuttle";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
@@ -5776,10 +5785,16 @@
 /area/station/hallway/primary/north)
 "avl" = (
 /obj/decal/boxingropeenter,
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "avm" = (
 /obj/decal/boxingrope,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "avo" = (
@@ -5809,6 +5824,11 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "miningshuttle";
+	name = "Mining Shuttle";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/grey/side,
 /area/station/maintenance/northwest)
 "avw" = (
@@ -5827,15 +5847,6 @@
 "avy" = (
 /obj/cable{
 	icon_state = "1-6"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
-"avz" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
@@ -6062,6 +6073,7 @@
 /obj/table/reinforced/auto,
 /obj/item/wrestlingbell,
 /obj/item/device/microphone,
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "awA" = (
@@ -6556,17 +6568,6 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/arcade/dungeon)
-"ayF" = (
-/obj/disposalpipe/segment/vertical,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "ayH" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/carpet/grime,
@@ -6756,6 +6757,10 @@
 /obj/decal/boxingrope{
 	dir = 8
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "azC" = (
@@ -6768,7 +6773,7 @@
 /area/station/maintenance/disposal)
 "azG" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/glasses/macho,
 /obj/item/device/light/glowstick,
@@ -7073,11 +7078,13 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aAB" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/brute,
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aAC" = (
@@ -7277,6 +7284,10 @@
 "aBw" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -7736,6 +7747,10 @@
 "aDp" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 10
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -8301,6 +8316,10 @@
 /obj/decal/boxingrope{
 	dir = 8
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aFH" = (
@@ -8328,6 +8347,10 @@
 /area/station/maintenance/east)
 "aFO" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "eastmaint";
+	name = "East Maintenance"
+	},
 /turf/simulated/floor/grey,
 /area/station/maintenance/east)
 "aFQ" = (
@@ -8628,17 +8651,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
-"aGY" = (
-/obj/disposalpipe/segment/vertical,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "aGZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -8888,12 +8900,6 @@
 "aIb" = (
 /obj/machinery/light/small,
 /obj/disposalpipe/segment/horizontal,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aIc" = (
@@ -9141,6 +9147,7 @@
 	},
 /area/station/hallway/primary/north)
 "aIO" = (
+/obj/decal/boxingropeenter,
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
@@ -9299,6 +9306,9 @@
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aJE" = (
@@ -9609,15 +9619,6 @@
 /obj/stool/chair/pool,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
-"aLe" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "aLf" = (
 /obj/fitness/speedbag/wizard,
 /turf/simulated/floor/wood,
@@ -10132,6 +10133,10 @@
 /obj/decal/boxingrope{
 	dir = 4
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aOo" = (
@@ -10568,6 +10573,9 @@
 	},
 /obj/landmark/start/job/assistant,
 /obj/machinery/light/small/floor,
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aQc" = (
@@ -11208,6 +11216,10 @@
 /obj/decal/boxingrope{
 	dir = 4
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aSr" = (
@@ -11341,13 +11353,6 @@
 	name = "Genetic Research"
 	})
 "aSM" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
 /obj/disposalpipe/segment/vertical,
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
@@ -12666,12 +12671,8 @@
 /area/station/crewquarters/cryotron)
 "aYd" = (
 /obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
 /obj/item/device/t_scanner,
 /obj/item/device/t_scanner,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
 /obj/item/device/radio/intercom/engineering{
 	dir = 4
 	},
@@ -12863,6 +12864,7 @@
 	dir = 1;
 	name = "camera - boxing"
 	},
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aYZ" = (
@@ -13476,6 +13478,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "routing";
+	name = "Routing Depot";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "bcf" = (
@@ -13978,6 +13985,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "routing";
+	name = "Routing Depot";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/routing/depot)
 "ben" = (
@@ -14380,20 +14392,6 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/caution/north,
 /area/station/maintenance/north)
-"bgv" = (
-/obj/disposalpipe/segment/vertical,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 5;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
 "bgw" = (
 /turf/simulated/floor/carpet/red/fancy/narrow/nw,
 /area/station/maintenance/inner/east)
@@ -14413,20 +14411,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/quarters_north)
-"bgE" = (
-/obj/disposalpipe/segment/vertical,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/east)
 "bgF" = (
 /obj/machinery/bot/guardbot/safety,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -14820,7 +14804,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "bil" = (
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -15015,7 +14999,7 @@
 /area/station/mining/refinery)
 "biN" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing{
 	pixel_x = -14
 	},
@@ -15148,23 +15132,16 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "eastmaint";
+	name = "East Maintenance"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bjC" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
-"bjE" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "bjF" = (
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/maintenance/inner/east)
@@ -17714,6 +17691,10 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "westmaint";
+	name = "West Maintenance"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bus" = (
@@ -18686,13 +18667,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "byM" = (
@@ -18961,18 +18935,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"bzU" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "bzW" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -21627,20 +21589,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"bJz" = (
-/obj/disposalpipe/segment/transport,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
 "bJD" = (
 /obj/shrub{
 	dir = 1
@@ -21661,6 +21609,11 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "escapebay";
+	name = "Escape Pod Bay";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/hangar/escape)
 "bJH" = (
@@ -21921,7 +21874,7 @@
 	},
 /area/station/science/lobby)
 "bKw" = (
-/obj/stool/bench/auto,
+/obj/stool/bench/purple/auto,
 /turf/simulated/floor/purple/side,
 /area/station/hallway/secondary/south)
 "bKx" = (
@@ -24681,19 +24634,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/hos)
-"bUF" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/east)
 "bUG" = (
 /obj/machinery/shower{
 	dir = 1;
@@ -24855,19 +24795,6 @@
 "bVg" = (
 /obj/cable{
 	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
-"bVh" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -25232,6 +25159,10 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "westinnermaint";
+	name = "West Inner Maintenance"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
 "bXG" = (
@@ -25460,17 +25391,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/south)
-"bYN" = (
-/obj/disposalpipe/segment/brig{
-	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
 "bYO" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -25649,17 +25569,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"bZG" = (
-/obj/decal/cleanable/dirt,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "bZH" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
@@ -25708,20 +25617,6 @@
 /obj/machinery/vehicle/pod_smooth/light,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
-"cag" = (
-/obj/disposalpipe/segment/vertical,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "cah" = (
 /obj/machinery/door/poddoor/pyro{
 	id = "kd_eng";
@@ -25866,17 +25761,6 @@
 	dir = 8
 	},
 /area/station/routing/security)
-"caT" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
 "cba" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ai_monitored/armory)
@@ -26628,6 +26512,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "escapebay";
+	name = "Escape Pod Bay";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/hangar/escape)
 "cdD" = (
@@ -27079,6 +26968,13 @@
 "cfu" = (
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/quarters_south)
+"cfv" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "cfw" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/carpet/green/fancy/edge/south,
@@ -27206,6 +27102,10 @@
 /area/station/crew_quarters/market)
 "cfS" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "merchanta";
+	name = "Merchant Shuttle Dock"
+	},
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/market)
 "cfT" = (
@@ -28910,10 +28810,10 @@
 /turf/simulated/floor/carpet/purple/standard/edge/south,
 /area/research_outpost/indigo_rye)
 "clD" = (
-/obj/stool/chair,
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/stool/chair/purple,
 /turf/simulated/floor/carpet/purple/standard/edge/south,
 /area/research_outpost/indigo_rye)
 "clE" = (
@@ -29211,7 +29111,7 @@
 "cmC" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small,
-/obj/item/pinpointer,
+/obj/item/pinpointer/disk,
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain,
 /turf/simulated/floor/black,
@@ -29241,16 +29141,6 @@
 /area/listeningpost)
 "cmG" = (
 /turf/simulated/floor/stairs,
-/area/listeningpost)
-"cmH" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/t_scanner,
-/obj/item/wrench,
-/obj/item/mining_tool/power_pick,
-/turf/simulated/floor/caution/east{
-	dir = 8
-	},
 /area/listeningpost)
 "cmI" = (
 /obj/machinery/light/small{
@@ -30694,6 +30584,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineairbridge2";
+	name = "Engineering Airbridge 2";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/redblack,
 /area/station/engine/hotloop)
 "cFJ" = (
@@ -30851,6 +30746,11 @@
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/atmospherics/pipe/simple,
 /obj/mapping_helper/access/security,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "cKV" = (
@@ -30885,6 +30785,11 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "southwestinnermaint";
+	name = "Southwest Inner Maintenance";
+	enter_id = "inner"
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/mining/refinery)
@@ -30932,6 +30837,20 @@
 	dir = 1
 	},
 /area/station/hallway/primary/west)
+"cNE" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "northmaint";
+	name = "North Maintenance"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "cNM" = (
 /obj/stool/chair,
 /turf/simulated/floor/neutral/side{
@@ -31007,6 +30926,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "hopdesk";
+	name = "HOP Desk";
+	enter_id = "hop"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/hos)
 "cPy" = (
@@ -31217,7 +31141,7 @@
 /area/station/crew_quarters/kitchen)
 "cXC" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -32459,6 +32383,11 @@
 	name = "AI Upload"
 	},
 /obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "dPf" = (
@@ -32848,6 +32777,11 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "dZr" = (
@@ -33005,17 +32939,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"egj" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "egr" = (
 /turf/simulated/floor/white/grime,
 /area/station/hangar/science)
@@ -33161,6 +33084,11 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering Bay";
+	enter_id = "inner"
 	},
 /turf/simulated/floor/grey,
 /area/station/hangar/engine)
@@ -33362,8 +33290,8 @@
 /area/station/crew_quarters/quarters_east)
 "eul" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
@@ -33500,6 +33428,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"ewU" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "exl" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -33727,6 +33662,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/engineering_storage,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering Bay";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/grey,
 /area/station/hangar/engine)
 "eEn" = (
@@ -33846,6 +33786,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering Bay";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/grey,
 /area/station/engine/storage)
 "eGX" = (
@@ -33945,18 +33890,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/quarters_south)
-"eLc" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/east)
 "eLr" = (
 /obj/machinery/light/small,
 /obj/machinery/computer/riotgear{
@@ -34068,6 +34001,10 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/engineering_power,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "westsolars";
+	name = "West Solars"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "ePl" = (
@@ -34301,9 +34238,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
+"eYx" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/device/t_scanner,
+/obj/item/wrench,
+/obj/item/mining_tool/powered/pickaxe,
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/listeningpost)
 "eYE" = (
 /obj/rack,
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = -3
 	},
 /obj/item/clothing/mask/gas/emergency,
@@ -34570,6 +34517,13 @@
 /area/station/maintenance/inner/west)
 "fjh" = (
 /turf/simulated/floor/specialroom/gym/alt,
+/area/station/crew_quarters/fitness)
+"fjv" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "fjF" = (
 /obj/table/auto,
@@ -34972,6 +34926,11 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "routing";
+	name = "Routing Depot";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "fzb" = (
@@ -35723,6 +35682,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "miningshuttle";
+	name = "Mining Shuttle";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
@@ -35792,6 +35756,14 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/bridge)
+"gfC" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "merchantb";
+	name = "Merchant Shuttle Dock"
+	},
+/turf/simulated/floor/neutral,
+/area/station/crew_quarters/market)
 "gfE" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -36757,7 +36729,7 @@
 /area/station/security/secwing)
 "gOK" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -37313,6 +37285,10 @@
 "hed" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/cargo,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "cargobay";
+	name = "Cargo Bay"
+	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/cargobay)
 "heQ" = (
@@ -37855,14 +37831,14 @@
 /area/station/security/main)
 "hBS" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /obj/item/clothing/head/helmet/welding,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /obj/item/clothing/head/helmet/welding,
 /turf/simulated/floor/yellow/side{
 	dir = 5
@@ -38031,6 +38007,14 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
+"hMD" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/rack/organized/techstorage_eng,
+/turf/simulated/floor/grey/blackgrime/other,
+/area/station/storage/tech)
 "hNV" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Shower Room"
@@ -38506,7 +38490,7 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "inn" = (
 /obj/machinery/conveyor/SN{
@@ -38948,10 +38932,18 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/engineering_power,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "eastsolars";
+	name = "East Solars"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "iEB" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "southmaint";
+	name = "South Maintenance"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "iEQ" = (
@@ -39937,6 +39929,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "miningshuttle";
+	name = "Mining Shuttle";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/grey/side,
 /area/station/maintenance/northwest)
 "jmu" = (
@@ -39950,7 +39947,7 @@
 /area/station/crew_quarters/kitchen)
 "jmE" = (
 /obj/storage/secure/closet/engineering/electrical,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/monitoring)
@@ -40130,6 +40127,11 @@
 	name = "Courtroom"
 	},
 /obj/mapping_helper/access/brig,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "hopdesk";
+	name = "HOP Desk";
+	enter_id = "sec"
+	},
 /turf/simulated/floor,
 /area/station/security/secwing)
 "jrg" = (
@@ -41296,6 +41298,10 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "westinnermaint";
+	name = "West Inner Maintenance"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
 "koE" = (
@@ -41784,6 +41790,10 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "westsolars";
+	name = "West Solars"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "kHZ" = (
@@ -42182,6 +42192,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineairbridge1";
+	name = "Engineering Airbridge 1";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/engine/gas)
 "kUu" = (
@@ -42427,6 +42442,10 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "merchanta";
+	name = "Merchant Shuttle Dock"
+	},
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/market)
 "lhD" = (
@@ -42633,6 +42652,11 @@
 	dir = 4;
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineairbridge1";
+	name = "Engineering Airbridge 1";
+	enter_id = "inner"
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/engine/hotloop)
@@ -43218,6 +43242,16 @@
 	dir = 10
 	},
 /area/station/engine/monitoring)
+"lGP" = (
+/obj/decal/boxingrope{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "lGU" = (
 /obj/disposalpipe/segment/brig{
 	dir = 2;
@@ -43523,6 +43557,19 @@
 	},
 /turf/simulated/floor,
 /area/station/security/secwing)
+"lPV" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "merchantb";
+	name = "Merchant Shuttle Dock"
+	},
+/turf/simulated/floor/neutral,
+/area/station/crew_quarters/market)
 "lQz" = (
 /obj/machinery/light{
 	dir = 1;
@@ -43775,6 +43822,11 @@
 	dir = 1
 	},
 /obj/mapping_helper/access/brig,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "hopdesk";
+	name = "HOP Desk";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "mep" = (
@@ -44160,7 +44212,7 @@
 /area/space)
 "mwo" = (
 /obj/rack,
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = -3
 	},
 /obj/item/clothing/mask/gas/emergency,
@@ -44227,21 +44279,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/mining/magnet)
-"myd" = (
-/obj/rack,
-/obj/item/circuitboard/teleporter,
-/obj/item/circuitboard/card,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/item/circuitboard/barcode_qm,
-/obj/item/circuitboard/barcode,
-/obj/item/circuitboard/qmsupply,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/grey/blackgrime/other,
-/area/station/storage/tech)
 "mzu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -44267,6 +44304,10 @@
 "mAq" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "eastinnermaint";
+	name = "East Inner Maintenance"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
@@ -44973,12 +45014,6 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "ncT" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
@@ -45194,6 +45229,10 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "mining";
+	name = "Mining"
 	},
 /turf/simulated/floor/grey,
 /area/station/mining/magnet)
@@ -45767,17 +45806,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/secwing)
-"nLA" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "nLL" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/interrogation)
@@ -46308,6 +46336,11 @@
 /obj/machinery/door/airlock/pyro/external{
 	name = "Auxiliary Docking Point"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "escape";
+	name = "Escape";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hallway/secondary/exit)
 "oeU" = (
@@ -46520,23 +46553,6 @@
 	},
 /turf/simulated/floor/carpet/red/standard/edge/east,
 /area/station/crew_quarters/radio/news_office)
-"omM" = (
-/obj/disposalpipe/segment/vertical,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/sw)
 "onu" = (
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/showers)
@@ -46690,25 +46706,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/west)
-"osJ" = (
-/obj/rack,
-/obj/item/circuitboard/powermonitor,
-/obj/item/circuitboard/powermonitor_smes,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/machinery/light_switch/east,
-/obj/item/circuitboard/genetics,
-/obj/item/circuitboard/bank_data,
-/obj/item/circuitboard/arcade,
-/obj/item/circuitboard/qmorder,
-/obj/item/circuitboard/telescope,
-/turf/simulated/floor/grey/blackgrime/other,
-/area/station/storage/tech)
 "osY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/inner/east)
@@ -46771,12 +46768,6 @@
 "ouF" = (
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
 	},
 /obj/machinery/light/small{
 	dir = 1;
@@ -47454,6 +47445,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "eva";
+	name = "EVA Storage";
+	enter_id = "inner"
+	},
 /turf/simulated/floor,
 /area/station/storage/eva)
 "oYA" = (
@@ -47791,6 +47787,10 @@
 	dir = 4;
 	pixel_x = -32
 	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -7;
+	pixel_y = -6
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -48008,6 +48008,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "southwestinnermaint";
+	name = "Southwest Inner Maintenance";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
 "pst" = (
@@ -48090,6 +48095,10 @@
 /obj/grille/catwalk,
 /obj/disposalpipe/segment/transport{
 	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "westmaint";
+	name = "West Maintenance"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -48335,7 +48344,7 @@
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "pGO" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -48922,6 +48931,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/mining,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "mining";
+	name = "Mining"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/mining/magnet)
 "qcA" = (
@@ -49023,6 +49036,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "research";
+	name = "Research";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "qfh" = (
@@ -49243,7 +49261,7 @@
 /area/station/maintenance/southeast)
 "qpa" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -49378,7 +49396,7 @@
 /area/station/science/artifact)
 "qsS" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -49422,6 +49440,11 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
+"qtY" = (
+/obj/surgery_tray,
+/obj/item/storage/box/popsicle_sticks,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "qub" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/glass/reinforced{
@@ -49571,6 +49594,11 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "escape";
+	name = "Escape";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/hallway/secondary/exit)
@@ -49937,6 +49965,10 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable/yellow{
 	icon_state = "1-2"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "eastsolars";
+	name = "East Solars"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
@@ -50402,6 +50434,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineairbridge2";
+	name = "Engineering Airbridge 2";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -50633,6 +50670,16 @@
 	dir = 8
 	},
 /area/station/science/testchamber)
+"rrN" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/obj/decal/stage_edge{
+	dir = 9
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "rrU" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -51513,8 +51560,25 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "eva";
+	name = "EVA Storage";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"sbL" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/machinery/light_switch/east,
+/obj/rack/organized/techstorage_med,
+/turf/simulated/floor/grey/blackgrime/other,
+/area/station/storage/tech)
 "sbP" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -51739,7 +51803,7 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "sml" = (
 /obj/table/reinforced/bar/auto,
@@ -51793,6 +51857,10 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
+"spC" = (
+/obj/decal/boxingrope,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "spY" = (
 /obj/stool/chair/dining/wood{
 	dir = 8
@@ -52224,6 +52292,10 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "eastinnermaint";
+	name = "East Inner Maintenance"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "sFU" = (
@@ -52234,6 +52306,10 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Inner Engineering"
 	},
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/core)
@@ -53092,16 +53168,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"tls" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/east)
 "tlD" = (
 /obj/machinery/light{
 	dir = 4;
@@ -54861,6 +54927,10 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "southmaint";
+	name = "South Maintenance"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "uDK" = (
@@ -54939,6 +55009,10 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/engineering_engine,
 /obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Inner Engineering"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "uGb" = (
@@ -56673,6 +56747,11 @@
 	req_access = null
 	},
 /obj/mapping_helper/access/research_foyer,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "research";
+	name = "Research";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "vZg" = (
@@ -56928,6 +57007,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "podbay";
+	name = "Pod Bay";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "wmg" = (
@@ -56980,6 +57064,11 @@
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "eva";
+	name = "EVA Storage";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
@@ -57283,6 +57372,11 @@
 	dir = 4;
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "escapebay";
+	name = "Escape Pod Bay";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/hangar/escape)
@@ -58312,17 +58406,6 @@
 /obj/machinery/phone,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"xjk" = (
-/obj/disposalpipe/segment/vertical,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/east)
 "xjm" = (
 /obj/table/reinforced/auto,
 /obj/item/device/camera_viewer/telesci,
@@ -58409,8 +58492,8 @@
 /area/station/engine/gas)
 "xop" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
 /obj/machinery/light_switch/east,
@@ -58521,6 +58604,11 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "southwestinnermaint";
+	name = "Southwest Inner Maintenance";
+	enter_id = "inner"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
@@ -58744,13 +58832,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "xBa" = (
@@ -58869,6 +58950,11 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -59565,15 +59651,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
-"xXM" = (
-/obj/disposalpipe/segment/horizontal,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "xYi" = (
 /obj/machinery/disposal/transport{
 	desc = "A pneumatic delivery chute for transporting people from one section of maintenance to another.";
@@ -92953,7 +93030,7 @@ aRu
 aRu
 aRu
 aRu
-cag
+aRu
 eyB
 aRu
 aRu
@@ -93548,7 +93625,7 @@ xvW
 aBE
 aBE
 nqT
-bjE
+aBE
 aBE
 aBE
 aKe
@@ -93897,7 +93974,7 @@ lWV
 bUP
 hbg
 bQU
-bzU
+bzR
 bYG
 bZA
 cao
@@ -95085,7 +95162,7 @@ gII
 boV
 qmL
 byP
-bzU
+bzR
 bAU
 qcN
 nVn
@@ -96833,7 +96910,7 @@ afI
 ahn
 afI
 ajm
-egj
+liJ
 afI
 liJ
 ait
@@ -97825,7 +97902,7 @@ cnL
 bLL
 bzR
 bYJ
-bZG
+bAP
 cav
 ewp
 ccr
@@ -98339,7 +98416,7 @@ aci
 aaa
 aaa
 aeK
-avz
+afI
 aho
 ait
 ajq
@@ -100755,7 +100832,7 @@ adC
 aec
 aeN
 afI
-agu
+afI
 uDq
 aeK
 aju
@@ -101420,7 +101497,7 @@ xrc
 uIb
 hhf
 hhf
-omM
+sIi
 hhf
 hhf
 kTI
@@ -101456,9 +101533,9 @@ ccw
 cdo
 ceh
 cfc
-cfS
+gfC
 cgF
-lgW
+lPV
 cqM
 cqM
 cqM
@@ -101750,7 +101827,7 @@ bVc
 bRf
 bXe
 bVg
-bYN
+bWr
 bZJ
 caE
 cbC
@@ -102964,7 +103041,7 @@ bUb
 vZI
 uhe
 bUb
-caT
+vZI
 cfh
 bSL
 acO
@@ -104076,7 +104153,7 @@ ado
 acC
 acj
 aeP
-afO
+aeg
 aeg
 aeg
 aeg
@@ -104162,7 +104239,7 @@ bPT
 nSE
 bSN
 bXi
-bVh
+bVg
 bWr
 nel
 bix
@@ -107095,7 +107172,7 @@ acX
 fKp
 aca
 ael
-aeU
+cNE
 ael
 agG
 tOx
@@ -107699,7 +107776,7 @@ aaa
 aaO
 adp
 adp
-aeU
+cNE
 adp
 agG
 ahI
@@ -108079,7 +108156,7 @@ bEt
 bFD
 mmk
 bHZ
-bJz
+bHZ
 bHZ
 bHZ
 bHZ
@@ -113137,7 +113214,7 @@ aaa
 adp
 agK
 ajS
-bgv
+ajS
 ahT
 gih
 ajR
@@ -113785,7 +113862,7 @@ sdD
 gmu
 xjC
 fFZ
-xjk
+fFZ
 aYL
 aZM
 ieG
@@ -114386,7 +114463,7 @@ iJB
 aSa
 onX
 mEy
-tls
+xXd
 coV
 cXC
 nbR
@@ -114398,7 +114475,7 @@ nbR
 sxr
 mLt
 pfT
-rck
+qtY
 rck
 ezJ
 wCK
@@ -115289,8 +115366,8 @@ mEy
 rQU
 blp
 aQT
-myd
-osJ
+hMD
+sbL
 mEy
 aUz
 vUi
@@ -116190,7 +116267,7 @@ ieG
 bCQ
 eEn
 eEn
-bUF
+eEn
 eEn
 ebk
 eEn
@@ -116481,7 +116558,7 @@ aTd
 aAr
 fXg
 aMP
-bgE
+aMP
 aMP
 aMP
 aMP
@@ -117395,7 +117472,7 @@ aad
 aad
 aaf
 ieG
-eLc
+tIm
 xXd
 rSc
 aTe
@@ -120702,9 +120779,9 @@ aqp
 uQv
 fdN
 xix
+atr
 aIO
-avl
-aHF
+cfv
 aHF
 aHF
 avm
@@ -121005,8 +121082,8 @@ aun
 hqk
 azn
 atr
-avm
-aHF
+spC
+ewU
 aHF
 aHF
 avm
@@ -121307,8 +121384,8 @@ ajf
 fdN
 vSu
 atr
-avm
-aHF
+spC
+ewU
 aHF
 aHF
 avl
@@ -121610,7 +121687,7 @@ aEs
 aAa
 atr
 smb
-aOn
+lGP
 aOn
 aSp
 aBw
@@ -121911,12 +121988,12 @@ ajd
 ajd
 aty
 atr
-aJD
+fjv
 aJD
 aQa
 aJD
 aJD
-aJD
+rrN
 atr
 aNm
 kaJ
@@ -122804,7 +122881,7 @@ afQ
 ahJ
 ajP
 ajL
-xXM
+aij
 ajd
 ajd
 ajd
@@ -124644,7 +124721,7 @@ bpw
 bpw
 bvK
 rtZ
-aLe
+aHa
 bOX
 bXL
 btO
@@ -124664,7 +124741,7 @@ bbw
 bpR
 eul
 paR
-nLA
+bUJ
 pmR
 oQa
 qRn
@@ -124699,7 +124776,7 @@ grA
 nkD
 bHl
 bfO
-mOu
+bDX
 bPs
 dsx
 dsx
@@ -124926,7 +125003,7 @@ avu
 avu
 ayl
 avu
-ayF
+avu
 rjI
 avu
 avu
@@ -124942,7 +125019,7 @@ btO
 btO
 aEN
 btO
-aGY
+btO
 brS
 hcp
 btO
@@ -140775,7 +140852,7 @@ cmc
 ckU
 cmt
 ckU
-cmH
+eYx
 cmR
 cmV
 ckU

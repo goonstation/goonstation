@@ -21,9 +21,12 @@
 	var/tmp/list/known_printers = list()
 	var/tmp/printer_status = "???"
 
-	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
+	// No special permissions required, but authentication is required to use print server
+	req_access = list(access_fuck_all)
 
 	initialize()
+		if (..())
+			return TRUE
 		src.print_text("WizWrite V3.0")
 		src.connected = 0
 		src.mode = 0
@@ -379,15 +382,14 @@
 			signal.data["address_1"] = address
 			signal.data["command"] = "term_connect"
 			signal.data["device"] = "SRV_TERMINAL"
-			var/datum/computer/file/user_data/user_data = get_user_data()
 			var/datum/computer/file/record/udat = null
-			if (istype(user_data))
+			if (istype(src.account))
 				udat = new
 
-				var/userid = format_username(user_data.registered)
+				var/userid = format_username(src.account.registered)
 
 				udat.fields["userid"] = userid
-				udat.fields["access"] = list2params(user_data.access)
+				udat.fields["access"] = list2params(src.account.access)
 				if (!udat.fields["access"] || !udat.fields["userid"])
 //					qdel(udat)
 					udat.dispose()
@@ -477,17 +479,6 @@
 			signal.data["title"] = print_title
 			src.peripheral_command("print",signal, "\ref[printcard]")
 			return 0
-
-		get_user_data()
-			var/datum/computer/folder/accdir = src.holder.root
-			if(src.master.host_program) //Check where the OS is, preferably.
-				accdir = src.master.host_program.holder.root
-
-			var/datum/computer/file/user_data/target = parse_file_directory(setup_acc_filepath, accdir)
-			if(target && istype(target))
-				return target
-
-			return null
 
 		get_config_menu()
 			if (src.connected && src.server_netid)

@@ -573,7 +573,7 @@
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	implanted = null
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	icon_state = "arrow"
 
 	on_hit(var/atom/A, angle, var/obj/projectile/P)
@@ -602,6 +602,7 @@
 	move_triggered = 1
 	var/spread_base = 40
 	var/max_draw = 3
+	recoil_enabled = FALSE
 
 	New()
 		set_current_projectile(new/datum/projectile/arrow)
@@ -758,6 +759,8 @@
 			if (aim)
 				spread_angle = (1 - aim.progress/max_draw) * spread_base
 				aim.state = ACTIONSTATE_FINISH
+			if (!aim.progress)
+				return
 			..()
 
 	alter_projectile(obj/projectile/P)

@@ -34,7 +34,8 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 	var/default_layer = MOB_HAIR_LAYER1 //Under by default, more direct subtypes where that makes sense
 	/// Icon file this hair should be pulled from
 	var/icon = 'icons/mob/human_hair.dmi'
-
+	/// For blacklisting the weird partial hairstyles that just look broken on random characters
+	var/random_allowed = TRUE
 	/// Only used if typeinfo.special_criteria is TRUE
 	proc/check_available(client/C)
 		return TRUE
@@ -54,48 +55,63 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			afro_fade
 				name = "Afro: Faded"
 				id = "afro_fade"
+				random_allowed = FALSE
 			afroHR
 				name = "Afro: Left Half"
 				id = "afroHR"
+				random_allowed = FALSE
 			afroHL
 				name = "Afro: Right Half"
 				id = "afroHL"
+				random_allowed = FALSE
 			afroST
 				name = "Afro: Top"
 				id = "afroST"
+				random_allowed = FALSE
 			afroSM
 				name = "Afro: Middle Band"
 				id = "afroSM"
+				random_allowed = FALSE
 			afroSB
 				name = "Afro: Bottom"
 				id = "afroSB"
+				random_allowed = FALSE
 			afroSL
 				name = "Afro: Left Side"
 				id = "afroSL"
+				random_allowed = FALSE
 			afroSR
 				name = "Afro: Right Side"
 				id = "afroSR"
+				random_allowed = FALSE
 			afroSC
 				name = "Afro: Center Streak"
 				id = "afroSC"
+				random_allowed = FALSE
 			afroCNE
 				name = "Afro: NE Corner"
 				id = "afroCNE"
+				random_allowed = FALSE
 			afroCNW
 				name = "Afro: NW Corner"
 				id = "afroCNW"
+				random_allowed = FALSE
 			afroCSE
 				name = "Afro: SE Corner"
 				id = "afroCSE"
+				random_allowed = FALSE
 			afroCSW
 				name = "Afro: SW Corner"
 				id = "afroCSW"
+				random_allowed = FALSE
 			afroSV
 				name = "Afro: Tall Stripes"
 				id = "afroSV"
+				random_allowed = FALSE
 			afroSH
 				name = "Afro: Long Stripes"
 				id = "afroSH"
+				random_allowed = FALSE
 			balding
 				name = "Balding"
 				id = "balding"
@@ -134,12 +150,15 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			clownT
 				name = "Clown: Top"
 				id = "clownT"
+				random_allowed = FALSE
 			clownM
 				name = "Clown: Middle Band"
 				id = "clownM"
+				random_allowed = FALSE
 			clownB
 				name = "Clown: Bottom"
 				id = "clownB"
+				random_allowed = FALSE
 			combed_s
 				name = "Combed"
 				id = "combed_s"
@@ -177,6 +196,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			flick_fade
 				name = "Flick: Faded"
 				id = "flick_fade"
+			flick_half
+				name = "Flick: Split"
+				id = "flick_half"
+				random_allowed = FALSE
 			floof
 				name = "Floof"
 				id = "floof"
@@ -223,6 +246,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			pompS
 				name = "Pompadour: Greaser Shine"
 				id = "pompS"
+				random_allowed = FALSE
 			scruffy
 				name = "Scruffy"
 				id = "scruffy"
@@ -269,12 +293,24 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			combedfront
 				name = "Combed Front"
 				id = "combedfront"
+			combedfrontbangs
+				name = "Bangs: Combed Front"
+				id = "combedfrontbangs"
+				random_allowed = FALSE
 			combedfrontshort
 				name = "Combed Front Short"
 				id = "combedfrontshort"
+			combedfrontshortbangs
+				name = "Bangs: Combed Front Short"
+				id = "combedfrontshortbangs"
+				random_allowed = FALSE
 			longfront
 				name = "Long Front"
 				id = "longfront"
+			longfrontbangs
+				name = "Bangs: Long Front"
+				id = "longfrontbangs"
+				random_allowed = FALSE
 			salty
 				name = "Salty"
 				id = "salty"
@@ -308,9 +344,17 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			spoon
 				name = "Spoon"
 				id = "spoon"
+			spoonbangs
+				name = "Bangs: Spoon"
+				id = "spoonbangs"
+				random_allowed = FALSE
 			messy_waves
 				name = "Messy Waves"
 				id = "messy_waves"
+			messy_waves_half
+				name = "Messy Waves: Split"
+				id = "messy_waves_half"
+				random_allowed = FALSE
 			blunt_bob
 				name = "Blunt Bob"
 				id = "blunt_bob"
@@ -321,33 +365,43 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			chub2_s
 				name = "Bang: Left"
 				id = "chub2_s"
+				random_allowed = FALSE
 			chub_s
 				name = "Bang: Right"
 				id = "chub_s"
+				random_allowed = FALSE
 			twobangs_long
 				name = "Two Bangs: Long"
 				id = "2bangs_long"
+				random_allowed = FALSE
 			twobangs_short
 				name = "Two Bangs: Short"
 				id = "2bangs_short"
+				random_allowed = FALSE
 			flatbangs
 				name = "Bangs: Flat"
 				id = "flatbangs"
+				random_allowed = FALSE
 			shortflatbangs
 				name = "Bangs: Flat Shorter"
 				id = "shortflatbangs"
+				random_allowed = FALSE
 			longwavebangs
 				name = "Bangs: Long Wavy"
 				id = "longwavebangs"
+				random_allowed = FALSE
 			shortwavebangs
 				name = "Bangs: Short Wavy"
 				id = "shortwavebangs"
+				random_allowed = FALSE
 			sidebangs
 				name = "Bangs: Sides"
 				id = "sidebangs"
+				random_allowed = FALSE
 			mysterybangs
 				name = "Bangs: Mysterious"
 				id = "mysterybangs"
+				random_allowed = FALSE
 			bedhead
 				name = "Bedhead"
 				id = "bedhead"
@@ -377,6 +431,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			dreadsA
 				name = "Dreadlocks: Alternating"
 				id = "dreadsA"
+				random_allowed = FALSE
 			fabio
 				name = "Fabio"
 				id = "fabio"
@@ -453,6 +508,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			longwaves_fade
 				name = "Waves: Faded"
 				id = "longwaves_fade"
+			longwaves_half
+				name = "Waves: Split"
+				id = "longwaves_half"
+				random_allowed = FALSE
 			pulledb
 				name = "Pulled Back"
 				id = "pulledb"
@@ -491,6 +550,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			smoothwave_fade
 				name = "Smooth Waves: Faded"
 				id = "smoothwave_fade"
+			smoothwave_half
+				name = "Smooth Waves: Split"
+				id = "smoothwave_half"
+				random_allowed = FALSE
 			mermaid
 				name = "Mermaid"
 				id = "mermaid"
@@ -517,6 +580,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			violet_fade
 				name = "Violet: Faded"
 				id = "violet_fade"
+			violet_half
+				name = "Violet: Split"
+				id = "violet_half"
+				random_allowed = FALSE
 			willow
 				name = "Willow"
 				id = "willow"
@@ -572,9 +639,17 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Long Twin Tails"
 				id = "longtwintail"
 				gender = FEMININE
+			longtwintail_half
+				name = "Long Twin Tails: Split"
+				id = "longtwintail_half"
+				random_allowed = FALSE
 			glamponytail
 				name = "Glam Ponytail"
 				id = "glamponytail"
+			glamponytail_half
+				name = "Glam Ponytail: Split"
+				id = "glamponytail_half"
+				random_allowed = FALSE
 			rockponytail
 				name = "Rock Ponytail"
 				id = "rockponytail"
@@ -582,6 +657,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			rockponytail_fade
 				name = "Rock Ponytail: Faded"
 				id = "rockponytail_fade"
+			rockponytail_half
+				name = "Rock Ponytail: Split"
+				id = "rockponytail_half"
+				random_allowed = FALSE
 			spikyponytail
 				name = "Spiky Ponytail"
 				id = "spikyponytail"
@@ -610,6 +689,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Pigtails"
 				id = "pig"
 				gender = FEMININE
+			pig_half
+				name = "Pigtails: Split"
+				id = "pig_half"
+				random_allowed = FALSE
 			pompompigtail
 				name = "Pompom Pigtails"
 				id = "pompompigtail"
@@ -630,6 +713,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Wavy Ponytail"
 				id = "wavy_tail"
 				gender = FEMININE
+			wavy_tail_half
+				name = "Wavy Ponytail: Split"
+				id = "wavy_tail_half"
+				random_allowed = FALSE
 
 		gimmick
 			afroHA
@@ -803,11 +890,11 @@ proc/find_style_by_id(var/target_id, client/C, no_gimmick_hair = FALSE)
 	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, no_gimmick_hair))
 		if(initial(styletype.id) == target_id)
 			return new styletype
-	stack_trace("Couldn't find a customization_style with the name \"[target_id]\".")
+	stack_trace("Couldn't find a customization_style with the id \"[target_id]\".")
 	return new /datum/customization_style/none
 
 /// Gets all the customization_styles which are available to a given client. Can be filtered by providing a gender flag or a type
-proc/get_available_custom_style_types(client/C, no_gimmick_hair = FALSE, filter_gender=0, filter_type=null)
+proc/get_available_custom_style_types(client/C, no_gimmick_hair = FALSE, filter_gender=0, filter_type=null, for_random=FALSE)
 	// Defining static vars with no value doesn't overwrite them with null if we call the proc multiple times
 	// Styles with no restriction
 	var/static/list/always_available
@@ -841,17 +928,15 @@ proc/get_available_custom_style_types(client/C, no_gimmick_hair = FALSE, filter_
 			if (instance.check_available(C))
 				available += style
 
-	if (filter_gender)
-		for (var/datum/customization_style/style in available)
-			if (!(initial(style.gender) & filter_gender))
-				available -= style
-
-	if (filter_type)
-		for (var/datum/customization_style/style in available)
-			if (!ispath(style, filter_type))
-				available -= style
+	for (var/datum/customization_style/style as anything in available)
+		if (filter_gender && !(initial(style.gender) & filter_gender))
+			available -= style
+			continue
+		if (filter_type && !ispath(style, filter_type))
+			available -= style
+			continue
+		if (for_random && !(initial(style.random_allowed)))
+			available -= style
+			continue
 
 	return available
-
-
-

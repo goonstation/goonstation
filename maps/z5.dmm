@@ -1448,7 +1448,7 @@
 /area/tech_outpost)
 "sp" = (
 /obj/table/reinforced/auto,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -4148,7 +4148,7 @@
 /area/mining/refinery)
 "JG" = (
 /obj/rack,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "JI" = (

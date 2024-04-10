@@ -771,7 +771,7 @@
 		newDesc += "<div><img src='[resource("images/tooltips/disease.png")]' alt='' class='icon' /><span>Total Resistance (Disease): [master.get_disease_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/chemical.png")]' alt='' class='icon' /><span>Total Resistance (Chemical): [master.get_chem_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/explosion.png")]' alt='' class='icon' /><span>Total Resistance (Explosion): [master.get_explosion_resistance() * 100]%</span></div>"
-		newDesc += "<div><img src='[resource("images/tooltips/bullet.png")]' alt='' class='icon' /><span>Total Ranged Protection: [master.get_ranged_protection()]</span></div>"
+		newDesc += "<div><img src='[resource("images/tooltips/bullet.png")]' alt='' class='icon' /><span>Total Ranged Protection: [master.get_ranged_protection()] ([round(100 - 100/master.get_ranged_protection())]%)</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/melee.png")]' alt='' class='icon' /><span>Total Melee Armor (Body): [master.get_melee_protection("chest")]</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/melee.png")]' alt='' class='icon' /><span>Total Melee Armor (Head): [master.get_melee_protection("head")]</span></div>"
 
@@ -852,14 +852,15 @@
 
 		if (istype(master.loc,/obj/vehicle/)) //so we always see vehicle buttons
 			var/obj/vehicle/V = master.loc
-			for(var/obj/ability_button/B2 in V.ability_buttons)
-				B2.screen_loc = "NORTH-[pos_y],[pos_x]"
-				master.client.screen += B2
-				B2.the_mob = master
-				pos_x++
-				if(pos_x > 15)
-					pos_x = 1
-					pos_y++
+			if (V.rider == src.master) //unless we're a passenger
+				for(var/obj/ability_button/B2 in V.ability_buttons)
+					B2.screen_loc = "NORTH-[pos_y],[pos_x]"
+					master.client.screen += B2
+					B2.the_mob = master
+					pos_x++
+					if(pos_x > 15)
+						pos_x = 1
+						pos_y++
 
 
 	proc/update_sprinting()

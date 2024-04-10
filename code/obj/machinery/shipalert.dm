@@ -22,10 +22,12 @@ TYPEINFO(/obj/machinery/shipalert)
 
 	var/usageState = 0 // 0 = glass cover, hammer. 1 = glass cover, no hammer. 2 = cover smashed
 	var/working = FALSE //processing loops
-	var/cooldownPeriod = 2 MINUTES //2 minutes, change according to player abuse
+	var/cooldownPeriod = 5 MINUTES //5 minutes, change according to player abuse
+	var/deactivateCooldown = 30 SECONDS //no instantly taking it back
 
 	New()
 		..()
+		src.name = "[capitalize(station_or_ship())] Alert Button"
 		UnsubscribeProcess()
 
 /obj/machinery/shipalert/attack_hand(mob/user)
@@ -50,53 +52,69 @@ TYPEINFO(/obj/machinery/shipalert)
 			//activate
 			if (src.working)
 				return
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-			src.toggleActivate(user)
+			if (src.toggleActivate(user))
+				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 
 /obj/machinery/shipalert/attackby(obj/item/W, mob/user)
 	if (user.stat)
 		return
+	switch (src.usageState)
+		if (HAMMER_TAKEN)
+			if (istype(W, /obj/item/tinyhammer))
+				//break glass
+				var/area/T = get_turf(src)
+				T.visible_message(SPAN_ALERT("[src]'s glass housing shatters!"))
+				playsound(T, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
+				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+				G.set_loc(get_turf(user))
+				src.usageState = SMASHED
+				src.icon_state = "shipalert2"
+			else
+				//no effect
+				boutput(user, SPAN_ALERT("\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing."))
+		if (SMASHED)
+			if (istype(W, /obj/item/sheet) && (W.material.getMaterialFlags() & MATERIAL_CRYSTAL) && W.amount >= 2)
+				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(repair_callback), list(user, W), W.icon, W.icon_state, "[user] repairs [src]'s safety glass.", INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
-	if (src.usageState == HAMMER_TAKEN)
-		if (istype(W, /obj/item/tinyhammer))
-			//break glass
-			var/area/T = get_turf(src)
-			T.visible_message(SPAN_ALERT("[src]'s glass housing shatters!"))
-			playsound(T, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
-			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
-			G.set_loc(get_turf(user))
-			src.usageState = SMASHED
-			src.icon_state = "shipalert2"
-		else
-			//no effect
-			boutput(user, SPAN_ALERT("\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing."))
+/obj/machinery/shipalert/proc/repair_callback(mob/user, obj/item/sheet/glass)
+	if (src.usageState != SMASHED)
+		return
+	src.usageState = HAMMER_TAKEN
+	glass.change_stack_amount(-2)
+	src.icon_state = "shipalert1"
 
 /obj/machinery/shipalert/proc/toggleActivate(mob/user)
 	if (!user)
-		return
+		return FALSE
 
 	if (src.working)
 		boutput(user, SPAN_ALERT("The alert coils are currently discharging, please be patient."))
-		return
+		return FALSE
 
 	src.working = TRUE
 
 	if (shipAlertState == SHIP_ALERT_BAD)
-		//centcom alert
-		command_alert("The emergency is over. Return to your regular duties.", "Alert - All Clear", alert_origin = ALERT_STATION)
+		if (GET_COOLDOWN(src, "deactivate_cooldown"))
+			boutput(user, SPAN_ALERT("The alert coils are still in high-power mode, please wait to lift alert."))
+			src.working = FALSE
+			return FALSE
+		else
+			//centcom alert
+			command_alert("The emergency is over. Return to your regular duties.", "Alert - All Clear", alert_origin = ALERT_STATION)
 
-		//toggle off
-		shipAlertState = SHIP_ALERT_GOOD
+			//toggle off
+			shipAlertState = SHIP_ALERT_GOOD
 
-		src.update_lights()
+			src.update_lights()
 
-		ON_COOLDOWN(src, "alert_cooldown", src.cooldownPeriod)
+			ON_COOLDOWN(src, "alert_cooldown", src.cooldownPeriod)
+			. = TRUE
 
 	else
 		if (GET_COOLDOWN(src, "alert_cooldown"))
 			boutput(user, SPAN_ALERT("The alert coils are still priming themselves."))
 			src.working = FALSE
-			return
+			return FALSE
 
 		//alert and siren
 #ifdef MAP_OVERRIDE_MANTA
@@ -104,11 +122,13 @@ TYPEINFO(/obj/machinery/shipalert)
 #else
 		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station. Report to your stations. Prepare for the worst.", "Alert - Condition Red", alert_origin = ALERT_STATION)
 #endif
-		playsound_global(world, soundGeneralQuarters, 100)
+		playsound_global(world, soundGeneralQuarters, 100, pitch = 0.9) //lower pitch = more serious or something idk
 		//toggle on
 		shipAlertState = SHIP_ALERT_BAD
-
+		ON_COOLDOWN(src, "deactivate_cooldown", src.deactivateCooldown)
 		src.update_lights()
+		src.do_lockdown(user)
+		. = TRUE
 
 	//alertWord stuff would go in a dedicated proc for extension
 	var/alertWord = "green"
@@ -116,13 +136,30 @@ TYPEINFO(/obj/machinery/shipalert)
 		alertWord = "red"
 
 	logTheThing(LOG_STATION, user, "toggled the ship alert to \"[alertWord]\"")
-	logTheThing(LOG_DIARY, user, "toggled the ship alert to \"[alertWord]\"", "station")
+	message_admins("[user] toggled the ship alert to \"[alertWord]\"")
 	src.working = FALSE
 
 /obj/machinery/shipalert/proc/update_lights()
 	for(var/obj/machinery/light/emergency/light in by_cat[TR_CAT_STATION_EMERGENCY_LIGHTS])
 		light.power_change()
 		LAGCHECK(LAG_LOW)
+
+/obj/machinery/shipalert/proc/do_lockdown(mob/user)
+	for_by_tcl(shutter, /obj/machinery/door/poddoor)
+		if (shutter.density)
+			continue
+		if (shutter.z != Z_LEVEL_STATION)
+			continue
+		if (shutter.id != "lockdown" && shutter.id != "ai_core" && shutter.id == "armory")
+			continue
+		shutter.close()
+
+	for_by_tcl(turret_control, /obj/machinery/turretid)
+		if (turret_control.lethal)
+			turret_control.toggle_lethal(user)
+		if (!turret_control.enabled)
+			turret_control.toggle_active(user)
+
 
 #undef COMPLETE
 #undef HAMMER_TAKEN

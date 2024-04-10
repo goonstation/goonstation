@@ -1,6 +1,4 @@
 //Unlockable traits? tied to achievements?
-#define TRAIT_STARTING_POINTS 1 //How many "free" points you get
-#define TRAIT_MAX 7			    //How many traits people can select at most.
 
 /proc/getTraitById(var/id)
 	. = traitList[id]
@@ -199,6 +197,9 @@
 	var/isMoveTrait = FALSE // If TRUE, onMove will be called each movement step from the holder's mob
 	var/datum/mutantrace/mutantRace = null //If set, should be in the "species" category.
 	var/afterlife_blacklisted = FALSE // If TRUE, trait will not be added in the Afterlife Bar
+	var/disability_type = TRAIT_DISABILITY_NONE //! Is this a major/minor/not a disability
+	var/disability_name = "" //! Name of the disability for medical records
+	var/disability_desc = "" //! Description of the disability for medical records
 
 	New()
 		ASSERT(src.name)
@@ -237,6 +238,9 @@
 	category = list("body")
 	points = 1
 	afterlife_blacklisted = TRUE
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Deaf"
+	disability_desc = "Permanent hearing loss"
 
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
@@ -254,6 +258,10 @@
 	icon_state = "placeholder"
 	category = list("body")
 	points = 0
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Legless"
+	disability_desc = "Legs have been severed"
+
 // LANGUAGE - Yellow Border
 
 /datum/trait/swedish
@@ -373,6 +381,9 @@
 	category = list("vision")
 	points = 1
 	afterlife_blacklisted = TRUE
+	disability_type = TRAIT_DISABILITY_MINOR
+	disability_name = "Myopic"
+	disability_desc = "Requires glasses for visual acuity"
 
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
@@ -391,6 +402,9 @@
 	category = list("vision")
 	points = 2
 	afterlife_blacklisted = TRUE
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Blind"
+	disability_desc = "Permanent vision loss"
 
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
@@ -538,6 +552,22 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Subject is trained in cultural and psychological matters."
 	id = "training_chaplain"
 
+	var/faith = FAITH_STARTING
+	///multiplier for faith gain only - faith losses ignore this
+	var/faith_mult = 1
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+	onAdd(mob/living/owner)
+		if(owner.traitHolder?.hasTrait("atheist"))
+			src.faith_mult = 0.2
+
 /datum/trait/job/medical
 	name = "Medical Training"
 	desc = "Subject is a proficient surgeon."
@@ -653,12 +683,18 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "hemophilia"
 	points = 1
 	category = list("hemophilia")
+	disability_type = TRAIT_DISABILITY_MINOR
+	disability_name = "Hemophilia"
+	disability_desc = "Prone to blood loss"
 
 /datum/trait/weakorgans
 	name = "Frail Constitution"
 	desc = "Your internal organs (brain included) are extremely vulnerable to damage."
 	id = "weakorgans"
 	points = 2
+	disability_type = TRAIT_DISABILITY_MINOR
+	disability_name = "Organ Sensitivity"
+	disability_desc = "Organs prone to damage"
 
 /datum/trait/slowmetabolism
 	name = "Slow Metabolism"
@@ -836,7 +872,9 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "puritan"
 	points = 2
 	category = list("cloner_stuff")
-
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Clone Instability"
+	disability_desc = "Genetic structure incompatible with cloning"
 
 /datum/trait/survivalist
 	name = "Survivalist"
@@ -923,6 +961,9 @@ ABSTRACT_TYPE(/datum/trait/job)
 	icon_state = "placeholder"
 	points = 1
 	category = list("allergy")
+	disability_type = TRAIT_DISABILITY_MINOR
+	disability_name = "Anaphylactic"
+	disability_desc = "Acute response to allergens"
 
 /datum/trait/allears
 	name="All ears"
@@ -935,6 +976,19 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "In this moment, you are euphoric. You cannot receive faith healing, and prayer makes you feel silly."
 	id = "atheist"
 	points = 0
+
+	onAdd(mob/living/owner)
+		if (istype(owner))
+			owner.remove_lifeprocess(/datum/lifeprocess/faith)
+		var/datum/trait/job/chaplain/chap_trait = owner.traitHolder?.getTrait("training_chaplain")
+		chap_trait?.faith_mult = 0.2
+
+	onRemove(mob/living/owner)
+		if (istype(owner))
+			owner.add_lifeprocess(/datum/lifeprocess/faith)
+		var/datum/trait/job/chaplain/chap_trait = owner.traitHolder?.getTrait("training_chaplain")
+		chap_trait?.faith_mult = 1
+
 
 /datum/trait/lizard
 	name = "Reptilian"

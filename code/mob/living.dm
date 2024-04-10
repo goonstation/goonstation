@@ -196,7 +196,10 @@
 	src.remove_ailments()
 	src.lastgasp(allow_dead = TRUE)
 	if (src.ai) src.ai.disable()
-	if (src.key) statlog_death(src, gibbed)
+	if (src.key)
+		var/datum/eventRecord/Death/deathEvent = new
+		deathEvent.buildAndSend(src, gibbed)
+	#ifndef NO_SHUTTLE_CALLS
 	if (src.client && ticker.round_elapsed_ticks >= 12000 && VALID_MOB(src))
 		var/num_players = 0
 		for(var/client/C)
@@ -211,6 +214,7 @@
 					boutput(world, SPAN_NOTICE("<B>Alert: The emergency shuttle has been called.</B>"))
 					boutput(world, SPAN_NOTICE("- - - <b>Reason:</b> Crew shortages and fatalities."))
 					boutput(world, SPAN_NOTICE("<B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"))
+	#endif
 	#undef VALID_MOB
 
 	// Active if XMAS or manually toggled.
@@ -692,6 +696,7 @@
 	if (!message)
 		return
 
+	..()
 	// Zam note: this is horrible
 	if (forced_desussification)
 		// "Surely this goes somewhere else, right, Zam?"
@@ -961,7 +966,7 @@
 
 	//Blobchat handling
 	if (src.mob_flags & SPEECH_BLOB)
-		message = html_encode(src.say_quote(message))
+		message = src.say_quote(message)
 		var/rendered = "<span class='game blobsay'>"
 		rendered += "[SPAN_PREFIX("BLOB:")] "
 		rendered += "<span class='name text-normal' data-ctx='\ref[src.mind]'>[src.get_heard_name()]</span> "
@@ -1232,7 +1237,7 @@
 			(isintangible(M) && (M in hearers)) || \
 			( \
 				(!isturf(say_location.loc) && (say_location.loc == M.loc || (say_location in M))) && \
-				!(M in heard_a) && \
+				!(M in heard_a) && !(M in heard_b) &&\
 				!istype(M, /mob/dead/target_observer) && \
 				M != src \
 			) \
@@ -1400,10 +1405,13 @@
 		boutput(usr,SPAN_ALERT("You can't give items to yourself!"))
 		return
 
-	SPAWN(0.7 SECONDS) //secret spawn delay, so you can't spam this during combat for a free "stun"
-		if (usr && isliving(usr) && !issilicon(usr) && BOUNDS_DIST(src, usr) == 0)
-			var/mob/living/L = usr
-			L.give_to(src)
+	if(!ON_COOLDOWN(usr, "give_item", 1 SECOND)) // cooldown to stop space&click spam-gives
+		SPAWN(0.7 SECONDS) //secret spawn delay, so you can't use this during combat for a free "stun"
+			if (usr && isliving(usr) && !issilicon(usr) && BOUNDS_DIST(src, usr) == 0)
+				var/mob/living/L = usr
+				L.give_to(src)
+	else
+		boutput(usr, SPAN_ALERT("You just tried handing something off, wait a moment!"))
 
 /mob/living/proc/give_to(var/mob/living/M)
 	if (!M || M == src || !isalive(M))
@@ -1452,7 +1460,7 @@
 		return
 
 	if (thing)
-
+		boutput(src, SPAN_NOTICE("You offer [thing] to [M]."))
 		if (M.client && tgui_alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Accept given [thing]", list("Yes", "No"), timeout = 10 SECONDS, autofocus = FALSE) == "Yes" || M.ai_active)
 			if (!thing || !M || !(BOUNDS_DIST(src, M) == 0) || thing.loc != src || src.restrained())
 				return
@@ -1914,6 +1922,17 @@
 			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
 		return 0
 
+	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_TOYREFLECTPROT) && istype(P.proj_data,/datum/projectile/bullet/foamdart))
+		var/obj/item/equipped = src.equipped()
+		var/obj/projectile/Q = shoot_reflected_bounce(P, src)
+		if (!Q)
+			CRASH("Failed to initialize reflected projectile from original projectile [identify_object(P)] hitting mob [identify_object(src)]")
+		else
+			P.die()
+			src.visible_message("<span class='alert'>[src] reflects [Q.name] with [equipped]!</span>")
+			playsound(src.loc, 'sound/effects/syringeproj.ogg',80, 0.1, 0, 3)
+		return 0
+
 	if (P?.proj_data?.is_magical  && src?.traitHolder?.hasTrait("training_chaplain"))
 		src.visible_message(SPAN_ALERT("A divine light absorbs the magical projectile!"))
 		playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
@@ -2274,8 +2293,13 @@
 
 /// Returns the rate of blood to absorb from the reagent holder per Life()
 /mob/living/proc/get_blood_absorption_rate()
-	return 1 // that's the standard absorption rate
+	return 1 + GET_ATOM_PROPERTY(src, PROP_MOB_BLOOD_ABSORPTION_RATE) // that's the standard absorption rate
 
 /mob/living/was_built_from_frame(mob/user, newly_built)
 	. = ..()
 	src.is_npc = TRUE
+
+/mob/living/proc/apply_roundstart_events()
+	for(var/datum/random_event/start/until_playing/RE in random_events.delayed_start)
+		if(RE.include_latejoin && RE.is_crew_affected(src))
+			RE.apply_to_player(src)

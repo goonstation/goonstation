@@ -25,7 +25,7 @@
 	respect_view_tint_settings = TRUE
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	var/compute = 0
-	var/datum/flock/flock = null
+	var/tmp/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
 
 	var/afk_counter = 0
@@ -233,7 +233,7 @@
 	if (src.client && src.client.ismuted())
 		boutput(src, "You are currently muted and may not speak.")
 		return
-
+	SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 	if (dd_hasprefix(message, "*"))
 		return src.emote(copytext(message, 2),1)
 
