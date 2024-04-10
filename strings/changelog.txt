@@ -1,4 +1,11 @@
 
+(t)wed apr 10 24
+(u)Valtsu0
+(p)18454
+(e)💅📄🔬|C-QoL, A-UI, A-Science
+(+)You can now cross off items in the artifact analysis form by double clicking.
+(u)LeahTheTech
+(+)Vampiric thralls can now stray 20 tiles from their vampire, up from 15.
 (t)tue apr 09 24
 (u)ZeWaka
 (e)🪲⚖🔄|C-Bug, C-Balance, C-Rework
