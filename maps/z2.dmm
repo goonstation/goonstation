@@ -1754,7 +1754,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "agT" = (
-/obj/storage/secure/closet/security/armory/looted,
+/obj/storage/secure/crate/gear/armory/equipment/looted,
 /turf/unsimulated/floor{
 	icon_state = "robar"
 	},

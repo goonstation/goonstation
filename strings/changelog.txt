@@ -1,4 +1,41 @@
 
+(t)tue apr 09 24
+(u)ZeWaka
+(e)🪲⚖🔄|C-Bug, C-Balance, C-Rework
+(*)Space is now properly irradiated during radstorm blowouts.
+(u)LeahTheTech
+(p)18450
+(e)🆕🔊|C-Feature, C-Sound
+(*)Pod component switches now have a satisfyingly clunky switch sound.
+(u)LeahTheTech
+(*)Smashing people into walls and windows now does more stamina damage and disorients for longer.
+(u)Retrino
+(p)18328
+(e)🎨|C-Sprites
+(+)Adds a few more bang styles, and a new split option for certain hairstyles. Base hairs by Walp, Thrush n me 👍
+(t)mon apr 08 24
+(u)Amylizzle
+(p)18442
+(e)🪲💨|C-Bug, A-Atmospherics
+(+)CO2 will now heat up much less from neutrons.
+(u)tarmunora
+(+)For parity with constructed cyborgs, wraith decay power no longer emags cyborg frames.
+(u)MetaReferencer
+(p)18373
+(e)🆕🔨🤖|C-Feature, A-Player-Actions, A-Silicons
+(+)Borgs can click-drag themselves onto weight machines (for no benefit).
+(t)sun apr 07 24
+(u)TDHooligan
+(p)18429
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Gangs can no longer sell slamguns/zip guns. Go do some *REAL* crime instead of welding pipes together.
+(u)LeahTheTech
+(p)18425
+(e)🆕🎨|C-Feature, C-Sprites
+(*)Cutting open mail with a knife now leaves behind the torn package as evidence.
+(u)LeahTheTech
+(+)Stun batons now turn themselves off when they no longer have enough charge to stun. Now if they look on then you know they can stun.
+(+)The vortexes event now spawns less vortices.
 (t)sat apr 06 24
 (u)glowbold
 (p)18267

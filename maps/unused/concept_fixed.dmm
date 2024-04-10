@@ -29508,7 +29508,7 @@
 /turf/simulated/floor,
 /area/station/security/hos)
 "bgy" = (
-/obj/storage/secure/closet/security/armory{
+/obj/storage/secure/crate/gear/armory/equipment{
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/caution/west,
