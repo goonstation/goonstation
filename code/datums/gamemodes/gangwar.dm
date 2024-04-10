@@ -125,7 +125,7 @@
 	for(var/datum/gang/gang in src.gangs)
 		num_people_needed += min(gang.current_max_gang_members, max_member_count) - length(gang.members)
 	if(isnull(candidates))
-		candidates = get_possible_enemies(ROLE_GANG_MEMBER, num_people_needed, allow_carbon=TRUE, filter_proc=PROC_REF(can_join_gangs), force_fill = FALSE)
+		candidates = get_possible_enemies(ROLE_GANG_MEMBER, num_people_needed, allow_carbon=TRUE, filter_proc=GLOBAL_PROC_REF(can_join_gangs), force_fill = FALSE)
 	var/num_people_available = min(num_people_needed, length(candidates))
 	var/people_added_per_gang = round(num_people_available / num_teams)
 	num_people_available = people_added_per_gang * num_teams
@@ -137,7 +137,7 @@
 			candidate.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = gang.leader, silent=TRUE)
 			traitors |= candidate
 
-/datum/game_mode/gang/proc/can_join_gangs(mob/M)
+/proc/can_join_gangs(mob/M) //stupid frickin 515 call syntax making me make this a global grumble grumble
 	var/datum/job/job = find_job_in_controller_by_string(M.mind.assigned_role)
 	. = !job || job.can_join_gangs
 
