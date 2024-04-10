@@ -1,6 +1,7 @@
 var/global/datum/controller/gameticker/ticker
 var/global/current_state = GAME_STATE_INVALID
 
+#define LATEJOIN_FULL_WAGE_GRACE_PERIOD 9 MINUTES
 /datum/controller/gameticker
 	var/hide_mode = TRUE
 	var/datum/game_mode/mode = null
@@ -130,7 +131,7 @@ var/global/current_state = GAME_STATE_INVALID
 			if("action")
 				src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
 			if("intrigue")
-				src.mode = config.pick_mode(pick(prob(300);"traitor", prob(200);"mixed_rp", prob(75);"changeling",prob(75);"vampire", prob(50);"spy_theft", prob(50);"arcfiend", prob(50);"salvager", prob(50);"extended"))
+				src.mode = config.pick_mode(pick(prob(300);"traitor", prob(200);"mixed_rp", prob(75);"changeling",prob(75);"vampire", prob(50);"spy_theft", prob(50);"arcfiend", prob(50);"salvager", prob(50);"extended", prob(50);"gang"))
 			if("pod_wars") src.mode = config.pick_mode("pod_wars")
 			else src.mode = config.pick_mode(master_mode)
 
@@ -489,12 +490,16 @@ var/global/current_state = GAME_STATE_INVALID
 			current_state = GAME_STATE_FINISHED
 
 			// This does a little more than just declare - it handles all end of round processing
-			//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] Starting declare_completion.")
 			try
 				declare_completion()
 			catch(var/exception/e)
 				logTheThing(LOG_DEBUG, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
 				logTheThing(LOG_DIARY, null, "Game Completion Runtime: [e.file]:[e.line] - [e.name] - [e.desc]", "debug")
+
+			// Various round end tracking for Goonhub
+			src.sendEvents()
+			record_player_playtime()
+			roundManagement.recordEnd()
 
 			// In a funny twist of fate there was no actual logging that the round was officially over.
 			var/total_round_time = (TIME - round_start_time) / (1 SECOND)
@@ -558,35 +563,37 @@ var/global/current_state = GAME_STATE_INVALID
 				ticker.round_elapsed_ticks += elapsed
 
 	proc/sendEvents()
-		// Antags and antag objectives
-		for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists())
-			var/datum/mind/M = antagonist_role.owner
-			var/datum/eventRecord/Antag/antagEvent = new()
-			antagEvent.buildAndSend(antagonist_role)
+		try
+			// Antags and antag objectives
+			for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists())
+				var/datum/mind/M = antagonist_role.owner
+				var/datum/eventRecord/Antag/antagEvent = new()
+				antagEvent.buildAndSend(antagonist_role)
 
-			if (M.objectives)
-				for (var/datum/objective/objective in M.objectives)
-	#ifdef CREW_OBJECTIVES
-					if (istype(objective, /datum/objective/crew)) continue
-	#endif
-					var/datum/eventRecord/AntagObjective/antagObjectiveEvent = new()
-					antagObjectiveEvent.buildAndSend(antagonist_role, objective)
+				if (M.objectives)
+					for (var/datum/objective/objective in M.objectives)
+		#ifdef CREW_OBJECTIVES
+						if (istype(objective, /datum/objective/crew)) continue
+		#endif
+						var/datum/eventRecord/AntagObjective/antagObjectiveEvent = new()
+						antagObjectiveEvent.buildAndSend(antagonist_role, objective)
 
-		// AI Laws
-		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
-			var/laws[] = new()
-			if (aiPlayer.law_rack_connection)
-				laws = aiPlayer.law_rack_connection.format_for_irc()
-			for (var/key in laws)
-				var/datum/eventRecord/AILaw/aiLawEvent = new()
-				aiLawEvent.buildAndSend(aiPlayer, key, laws[key])
+			// AI Laws
+			for_by_tcl(aiPlayer, /mob/living/silicon/ai)
+				var/laws[] = new()
+				if (aiPlayer.law_rack_connection)
+					laws = aiPlayer.law_rack_connection.format_for_irc()
+				for (var/key in laws)
+					var/datum/eventRecord/AILaw/aiLawEvent = new()
+					aiLawEvent.buildAndSend(aiPlayer, key, laws[key])
+		catch(var/exception/e)
+			logTheThing(LOG_DEBUG, null, "Gameticker Send Events Runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
+			logTheThing(LOG_DIARY, null, "Gameticker Send Events Runtime: [e.file]:[e.line] - [e.name] - [e.desc]", "debug")
 
 
 /datum/controller/gameticker/proc/declare_completion()
 	//End of round statistic collection for goonhub
 	save_flock_stats()
-	src.sendEvents()
-	roundManagement.recordEnd()
 
 	var/pets_rescued = 0
 	for(var/pet in by_cat[TR_CAT_PETS])
@@ -696,7 +703,8 @@ var/global/current_state = GAME_STATE_INVALID
 	// DO THE PERSISTENT_BANK STUFF
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] processing spacebux updates")
 
-	var/time = world.time
+	// Sample world time to calculate wage loss for latejoiners later
+	var/game_end_time = world.time
 
 	logTheThing(LOG_DEBUG, null, "Revving up the spacebux loop...")
 
@@ -711,8 +719,10 @@ var/global/current_state = GAME_STATE_INVALID
 
 			//get base wage + initial earnings calculation
 			var/job_wage = 100
-			if (player.mind.assigned_role in wagesystem.jobs)
-				job_wage = wagesystem.jobs[player.mind.assigned_role]
+			if (player.mind.assigned_role != null && istext(player.mind.assigned_role))
+				var/datum/job/J = find_job_in_controller_by_string(player.mind.assigned_role)
+				if (istype(J))
+					job_wage = J.wages
 
 			var/job_wage_converted = 100
 			switch(job_wage)
@@ -741,8 +751,9 @@ var/global/current_state = GAME_STATE_INVALID
 				job_wage = PAY_IMPORTANT
 
 			//if part-time, reduce wage
-			if (player.mind.join_time > 5400) //grace period of 9 mins after roundstart to be a full-time employee
-				job_wage = (time - player.mind.join_time) / time * job_wage
+			if (player.mind.join_time > LATEJOIN_FULL_WAGE_GRACE_PERIOD) //grace period of 9 mins after roundstart to be a full-time employee
+				var/lossRatio = ((game_end_time - player.mind.join_time) / game_end_time)
+				job_wage = job_wage * lossRatio
 				bank_earnings.part_time = 1
 
 			var/earnings = final_score/100 * job_wage * 2 //TODO ECNONMY_REBALANCE: remove the *2
@@ -894,26 +905,6 @@ var/global/current_state = GAME_STATE_INVALID
 				SPAWN(0) show_xp_summary(E.key, E)
 	logTheThing(LOG_DEBUG, null, "Did credits")
 
-	var/count = 1
-	var/list/playtimes = list() //associative list with the format list("ckeys\[[player_ckey]]" = playtime_in_seconds)
-	for_by_tcl(P, /datum/player)
-		if (!P.ckey)
-			continue
-		P.log_leave_time() //get our final playtime for the round (wont cause errors with people who already d/ced bc of smart code)
-		if (!P.current_playtime)
-			continue
-		playtimes["[count]"] = list("id" = P.id, "seconds_played" = round((P.current_playtime / (1 SECOND)))) //rounds 1/10th seconds to seconds
-		count++
-
-	try
-		var/datum/apiRoute/players/playtime/addPlaytime = new
-		addPlaytime.buildBody(config.server_id, playtimes)
-		apiHandler.queryAPI(addPlaytime)
-	catch (var/exception/e)
-		var/datum/apiModel/Error/error = e.name
-		logTheThing(LOG_DEBUG, null, "playtime was unable to be logged because of: [error.message]")
-		logTheThing(LOG_DIARY, null, "playtime was unable to be logged because of: [error.message]", "debug")
-
 	if(global.lag_detection_process.automatic_profiling_on)
 		global.lag_detection_process.automatic_profiling(force_stop=TRUE)
 
@@ -924,3 +915,5 @@ var/global/current_state = GAME_STATE_INVALID
 	if (!src.creds)
 		src.creds = new /datum/crewCredits
 	return src.creds
+
+#undef LATEJOIN_FULL_WAGE_GRACE_PERIOD

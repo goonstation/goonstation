@@ -104,6 +104,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	name_prefix = "Suspicious "
 	crop = /obj/critter/killertomato
 	iconmod = "TomatoKiller"
+	assoc_reagents = list("blood")
 	harvest_cap = 3
 	infusion_chance = 50
 	infusion_reagents = list("strange_reagent")
@@ -304,7 +305,6 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/egg
 	assoc_reagents = list("egg")
 	infusion_chance = 80
-	chance = 0
 	infusion_reagents = list("eggnog")
 
 // Wheat Mutations
@@ -321,7 +321,6 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	assoc_reagents = list("iron")
 	crop = /obj/item/plant/wheat/metal
 	infusion_reagents = list("iron")
-	chance = 0
 
 // Rice Mutations
 

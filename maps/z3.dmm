@@ -172,7 +172,7 @@
 /area/radiostation/bridge)
 "aaJ" = (
 /obj/item/reagent_containers/food/snacks/ingredient/honey,
-/turf/unsimulated/floor/setpieces/hivefloor,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "aaK" = (
 /obj/lattice{
@@ -221,7 +221,7 @@
 /area/space)
 "aaT" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/unsimulated/floor/white,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "aaU" = (
 /obj/decal/fakeobjects/pipe{
@@ -233,7 +233,7 @@
 	dir = 4;
 	color = "b4b4b4"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "aaV" = (
 /turf/unsimulated/floor/caution/east{
@@ -244,21 +244,21 @@
 /turf/unsimulated/floor/white,
 /area/space_hive)
 "aaX" = (
-/obj/stool/chair/couch{
+/obj/stool/chair/couch/yellow{
 	dir = 8
 	},
-/turf/unsimulated/floor/setpieces/hivefloor,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "aaY" = (
-/obj/stool/chair/couch,
 /obj/critter/domestic_bee,
-/turf/unsimulated/floor/setpieces/hivefloor,
+/obj/stool/chair/couch/yellow,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "aaZ" = (
-/obj/stool/chair/couch{
+/obj/stool/chair/couch/yellow{
 	dir = 4
 	},
-/turf/unsimulated/floor/setpieces/hivefloor,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "aba" = (
 /obj/decal/fakeobjects{
@@ -268,34 +268,27 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "abb" = (
-/obj/stool/chair/couch{
-	dir = 8;
-	icon_state = "chair_couch-blue";
-	name = "ratty blue couch"
+/obj/stool/chair/couch/yellow{
+	dir = 8
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "abc" = (
-/obj/stool/chair/couch{
-	icon_state = "chair_couch-blue";
-	name = "ratty blue couch"
-	},
+/obj/stool/chair/couch/yellow,
 /turf/unsimulated/floor/plating/scorched,
 /area/space_hive)
 "abd" = (
-/obj/stool/chair/couch{
-	dir = 4;
-	icon_state = "chair_couch-blue";
-	name = "ratty blue couch"
+/obj/stool/chair/couch/yellow{
+	dir = 4
 	},
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "abe" = (
 /obj/grille/steel/broken,
-/turf/unsimulated/floor/setpieces/hivefloor,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "abf" = (
 /turf/simulated/wall/auto/asteroid{
@@ -327,6 +320,10 @@
 /area/space_hive)
 "abl" = (
 /obj/table/wood/auto,
+/obj/item/clothing/head/headband/bee{
+	pixel_y = 4;
+	pixel_x = -8
+	},
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "abn" = (
@@ -335,7 +332,7 @@
 	name = "Television";
 	network = "Zeta"
 	},
-/turf/unsimulated/floor/setpieces/hivefloor,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "abo" = (
 /obj/decal/fakeobjects{
@@ -347,7 +344,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "abp" = (
 /obj/decal/fakeobjects{
@@ -367,7 +364,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "abq" = (
 /obj/decal/fakeobjects{
@@ -378,7 +375,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "abr" = (
 /obj/machinery/computer/security{
@@ -396,12 +393,15 @@
 /obj/item/storage/toilet{
 	dir = 4
 	},
+/obj/decoration/toiletholder{
+	pixel_y = 31
+	},
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "abu" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
-	pixel_x = 2
+	pixel_x = 10
 	},
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
@@ -411,12 +411,19 @@
 /area/space_hive)
 "abw" = (
 /obj/machinery/light{
-	dir = 1
+	dir = 1;
+	pixel_y = 15;
+	tag = "icon-tube1 (NORTH)"
 	},
 /turf/unsimulated/floor/white,
 /area/space_hive)
 "abx" = (
 /obj/table/auto,
+/obj/potted_plant/potted_plant5{
+	dir = 4;
+	pixel_y = 16;
+	pixel_x = 8
+	},
 /turf/unsimulated/floor/white,
 /area/space_hive)
 "aby" = (
@@ -428,11 +435,11 @@
 	icon_state = "vent-map";
 	name = "defunct vent"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "abz" = (
 /obj/machinery/light/small,
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "abA" = (
 /obj/stool/chair/office{
@@ -453,8 +460,10 @@
 /turf/simulated/floor/red,
 /area/radiostation/bridge)
 "abD" = (
-/obj/item/dice,
-/turf/unsimulated/floor/setpieces/hivefloor,
+/obj/item/dice{
+	pixel_x = -6
+	},
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "abE" = (
 /obj/machinery/door/airlock/pyro{
@@ -464,37 +473,67 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "abG" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
 /turf/unsimulated/floor/white/side{
 	dir = 9
 	},
 /area/space_hive)
 "abH" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
 /turf/unsimulated/floor/white/side{
 	dir = 1
 	},
 /area/space_hive)
 "abI" = (
 /obj/table/auto,
-/obj/item/plate,
+/obj/item/plate{
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/honey{
+	desc = "An offering?  A memorial?";
+	name = "old honey";
+	pixel_y = 12;
+	pixel_x = 7;
+	rand_pos = 0
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
 /turf/unsimulated/floor/white/side{
 	dir = 5
 	},
 /area/space_hive)
 "abJ" = (
 /obj/table/auto,
-/obj/item/boardgame/chess,
+/obj/item/boardgame/chess{
+	pixel_y = 9
+	},
 /turf/unsimulated/floor/white,
 /area/space_hive)
 "abK" = (
 /obj/item/scrap,
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "abL" = (
-/obj/critter/domestic_bee,
-/turf/unsimulated/floor/caution/north,
+/obj/machinery/door/unpowered/wood/pyro,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/unsimulated/floor/honeyblocks/corner,
 /area/space_hive)
 "abM" = (
-/turf/unsimulated/floor/caution/north,
+/obj/machinery/door/unpowered/wood/pyro,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/unsimulated/floor/honeyblocks/corner{
+	dir = 4
+	},
 /area/space_hive)
 "abN" = (
 /obj/item/plant/herb/cannabis/spawnable,
@@ -565,6 +604,9 @@
 /turf/unsimulated/floor/white,
 /area/space_hive)
 "abX" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
 /turf/unsimulated/floor/white/side{
 	dir = 8
 	},
@@ -579,6 +621,7 @@
 	name = "egg generator pod"
 	},
 /obj/decal/stripe_caution,
+/obj/map/light/yellow,
 /turf/unsimulated/floor,
 /area/space_hive)
 "aca" = (
@@ -589,6 +632,9 @@
 	},
 /area/space_hive)
 "acb" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
 /turf/unsimulated/floor/white/side{
 	dir = 4
 	},
@@ -610,9 +656,10 @@
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "old0";
-	name = "broken computer"
+	name = "broken computer";
+	pixel_y = 14
 	},
-/turf/unsimulated/floor/white,
+/turf/unsimulated/floor/black,
 /area/space_hive)
 "ace" = (
 /obj/decal/fakeobjects/pipe{
@@ -628,11 +675,12 @@
 	dir = 4;
 	color = "b4b4b4"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "acf" = (
 /obj/stool/bed,
-/turf/unsimulated/floor,
+/obj/item/clothing/suit/bedsheet/yellow,
+/turf/unsimulated/floor/honeyblocks/corner,
 /area/space_hive)
 "acg" = (
 /turf/simulated/floor/red/side{
@@ -699,18 +747,21 @@
 /area/space_hive)
 "acs" = (
 /obj/decal/fakeobjects/lighttube_broken{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
-/turf/unsimulated/floor/white,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "act" = (
 /obj/stool/chair/office{
 	dir = 8
 	},
 /obj/machinery/light{
-	dir = 4
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
 	},
-/turf/unsimulated/floor/white,
+/turf/unsimulated/floor/black,
 /area/space_hive)
 "acu" = (
 /obj/window{
@@ -752,29 +803,34 @@
 /area/space_hive)
 "acx" = (
 /obj/critter/domestic_bee/overbee,
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "acy" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/comfy/yellow{
 	dir = 8
 	},
 /obj/machinery/light/small{
-	dir = 4
+	dir = 4;
+	pixel_x = 12
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border{
+	dir = 8
+	},
 /area/space_hive)
 "acz" = (
 /obj/machinery/light/small{
-	dir = 4
+	dir = 4;
+	pixel_x = 12
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "acA" = (
 /obj/grille/steel,
 /obj/machinery/light/small{
-	dir = 8
+	dir = 8;
+	pixel_x = -12
 	},
-/turf/unsimulated/floor/setpieces/hivefloor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "acB" = (
 /obj/machinery/door/airlock/pyro/command/alt{
@@ -832,7 +888,7 @@
 	icon_state = "valve";
 	name = "rusted valve"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "acJ" = (
 /obj/machinery/vending/snack,
@@ -854,7 +910,10 @@
 /area/space_hive)
 "acN" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10;
+	pixel_y = 13
 	},
 /turf/unsimulated/floor/white,
 /area/space_hive)
@@ -863,28 +922,48 @@
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 8
 	},
-/turf/unsimulated/floor/white,
+/turf/unsimulated/floor/black,
 /area/space_hive)
 "acP" = (
 /obj/item/raw_material/shard/glass,
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "acQ" = (
-/obj/item/plant/herb/cannabis/spawnable,
-/turf/unsimulated/floor,
+/obj/item/plant/herb/cannabis/spawnable{
+	pixel_y = 12;
+	pixel_x = -4
+	},
+/obj/table/endtable_classic,
+/obj/item/reagent_containers/food/snacks/ingredient/honey{
+	pixel_y = 7;
+	pixel_x = 4
+	},
+/turf/unsimulated/floor/honeyblocks/corner{
+	dir = 8
+	},
 /area/space_hive)
 "acT" = (
 /obj/submachine/chef_oven,
-/turf/unsimulated/floor/setpieces/hivefloor,
+/turf/unsimulated/floor/honeyblocks/corner,
 /area/space_hive)
 "acU" = (
 /obj/critter/domestic_bee/chef,
-/turf/unsimulated/floor/setpieces/hivefloor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "acV" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/ingredient/honey,
-/turf/unsimulated/floor/setpieces/hivefloor,
+/obj/item/reagent_containers/food/snacks/ingredient/honey{
+	rand_pos = 0;
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/clothing/head/flower/lavender{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/honeyblocks/corner{
+	dir = 4
+	},
 /area/space_hive)
 "acW" = (
 /obj/machinery/communications_dish,
@@ -969,27 +1048,48 @@
 /turf/space,
 /area/space)
 "adi" = (
+/obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/white/side,
 /area/space_hive)
 "adj" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
 /turf/unsimulated/floor/white/side{
 	dir = 6
 	},
 /area/space_hive)
 "adk" = (
-/turf/unsimulated/floor/caution/south{
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/honeyblocks/corner{
 	dir = 1
 	},
 /area/space_hive)
 "adl" = (
 /obj/submachine/chef_sink,
 /obj/item/kitchen/utensil/spoon,
-/turf/unsimulated/floor/setpieces/hivefloor,
+/turf/unsimulated/floor/honeyblocks/corner{
+	dir = 8
+	},
 /area/space_hive)
 "adm" = (
 /obj/table/auto,
-/obj/item/kitchen/utensil/knife,
-/turf/unsimulated/floor/setpieces/hivefloor,
+/obj/item/kitchen/utensil/knife{
+	dir = 8;
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/snacks/breadslice/corn/sweet/honey{
+	pixel_y = 11;
+	pixel_x = 4;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/honeyblocks/border{
+	dir = 8
+	},
 /area/space_hive)
 "ado" = (
 /obj/machinery/door/unpowered/wood/pyro{
@@ -1068,9 +1168,10 @@
 /area/space)
 "adB" = (
 /obj/machinery/light/small{
-	dir = 1
+	dir = 1;
+	pixel_y = 12
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "adC" = (
 /obj/decal/fakeobjects/pipe{
@@ -1082,7 +1183,7 @@
 	pixel_x = -9;
 	color = "b4b4b4"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "adD" = (
 /obj/decal/fakeobjects/pipe{
@@ -1090,13 +1191,16 @@
 	color = "b4b4b4"
 	},
 /obj/machinery/light/small{
-	dir = 1
+	dir = 1;
+	pixel_y = 12
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "adE" = (
 /obj/grille/steel,
-/turf/unsimulated/floor/setpieces/hivefloor,
+/turf/unsimulated/floor/honeyblocks/corner{
+	dir = 1
+	},
 /area/space_hive)
 "adF" = (
 /obj/lattice{
@@ -1239,21 +1343,25 @@
 /area/radiostation/podbay)
 "aea" = (
 /obj/item/wirecutters,
-/turf/unsimulated/floor/setpieces/hivefloor,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "aeb" = (
 /obj/structure/girder/reinforced,
-/turf/unsimulated/floor/setpieces/hivefloor,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "aec" = (
 /obj/item/crowbar,
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles3"
+	},
 /turf/unsimulated/floor/plating/scorched,
 /area/space_hive)
 "aed" = (
 /turf/unsimulated/floor/plating/scorched,
 /area/space_hive)
 "aee" = (
-/obj/item/scrap,
+/obj/item/raw_material/scrap_metal,
 /turf/unsimulated/floor/plating/scorched,
 /area/space_hive)
 "aef" = (
@@ -1268,15 +1376,17 @@
 	icon_state = "valve";
 	name = "rusted valve"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "aeg" = (
 /obj/critter/domestic_bee,
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "aeh" = (
 /obj/machinery/deep_fryer,
-/turf/unsimulated/floor/setpieces/hivefloor,
+/turf/unsimulated/floor/honeyblocks/border{
+	dir = 1
+	},
 /area/space_hive)
 "aei" = (
 /obj/storage/closet/emergency,
@@ -1361,7 +1471,7 @@
 	pixel_x = -9;
 	color = "b4b4b4"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "aey" = (
 /obj/table/wood/auto,
@@ -1434,15 +1544,18 @@
 /turf/space,
 /area/space)
 "aeJ" = (
-/obj/item/reagent_containers/food/drinks/rum_spaced,
-/turf/unsimulated/floor/setpieces/hivefloor,
+/obj/item/reagent_containers/food/drinks/rum_spaced{
+	pixel_y = 16
+	},
+/obj/table/endtable_honey,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "aeK" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
 	color = "b4b4b4"
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "aeM" = (
 /obj/effects/background_objects/quadriga,
@@ -1535,7 +1648,7 @@
 /obj/machinery/vending/cola/blue{
 	credit = 12
 	},
-/turf/unsimulated/floor/setpieces/hivefloor,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "afb" = (
 /obj/item/clothing/suit/bedsheet{
@@ -1618,12 +1731,18 @@
 /turf/space,
 /area/space)
 "afp" = (
-/obj/item/extinguisher,
+/obj/item/extinguisher{
+	pixel_x = 9
+	},
 /turf/unsimulated/floor/arctic,
 /area/space_hive)
 "afq" = (
-/obj/item/rods/steel,
-/turf/unsimulated/floor/setpieces/hivefloor,
+/obj/item/rods/steel{
+	pixel_y = 6;
+	rand_pos = 0
+	},
+/obj/table/endtable_honey,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "afr" = (
 /obj/item/clothing/suit/bedsheet{
@@ -1735,8 +1854,15 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "agm" = (
-/obj/item/clothing/suit/labcoat/genetics,
-/obj/item/clothing/shoes/white,
+/obj/item/clothing/suit/labcoat/genetics{
+	pixel_y = 12;
+	pixel_x = -3
+	},
+/obj/item/clothing/shoes/white{
+	pixel_y = 1;
+	pixel_x = 3
+	},
+/obj/table/endtable_honey,
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "agn" = (
@@ -1756,6 +1882,7 @@
 	desc = "An offering?  A memorial?";
 	name = "old honey"
 	},
+/obj/map/light/yellowbright,
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "agy" = (
@@ -1801,7 +1928,7 @@
 	desc = "It looks to be made out of beeswax. There's a little stick figure scientist on it. Huhh";
 	icon_state = "tombstone-bee"
 	},
-/turf/unsimulated/floor/setpieces/hivefloor,
+/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "agM" = (
 /obj/item/reagent_containers/food/snacks/ingredient/honey{
@@ -1811,7 +1938,10 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "agN" = (
-/obj/item/clothing/suit/labcoat/genetics,
+/obj/item/clothing/suit/labcoat/genetics{
+	pixel_y = 7
+	},
+/obj/table/endtable_honey,
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "agO" = (
@@ -4774,6 +4904,17 @@
 /obj/item/reagent_containers/food/snacks/burger/moldy,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/buddyfactory)
+"awj" = (
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	pixel_x = -9;
+	color = "b4b4b4"
+	},
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "awo" = (
 /obj/decal/cleanable/dirt,
 /obj/item/cable_coil/cut{
@@ -5433,6 +5574,10 @@
 	dir = 6
 	},
 /area/flock_trader)
+"aEw" = (
+/obj/decoration/decorativeplant/plant6,
+/turf/unsimulated/floor/white,
+/area/space_hive)
 "aEC" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
@@ -6007,6 +6152,10 @@
 /obj/item/storage/firstaid/fire,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedmedicalship)
+"aHt" = (
+/obj/table/endtable_honey,
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "aHu" = (
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
@@ -10007,7 +10156,7 @@
 /area/derelict_ai_sat)
 "aTY" = (
 /obj/decal/fakeobjects/skeleton,
-/obj/item/mining_tool/powerhammer,
+/obj/item/mining_tool/powered/hammer,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
@@ -10137,7 +10286,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUt" = (
-/obj/item/mining_tool/drill,
+/obj/item/mining_tool/powered/drill,
 /obj/item/clothing/suit/space/engineer,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
@@ -15460,6 +15609,10 @@
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
+"byK" = (
+/obj/stool/chair/yellow,
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "bzf" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
@@ -15494,6 +15647,9 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
+"bBG" = (
+/turf/unsimulated/floor/stairs/dark/wide,
+/area/space_hive)
 "bCL" = (
 /obj/map/light/cyan,
 /obj/decal/fakeobjects{
@@ -15514,16 +15670,34 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/grime,
 /area/diner/hallway/docking)
+"bFn" = (
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
+	},
+/turf/unsimulated/floor/setpieces/hivefloor,
+/area/space_hive)
 "bFR" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway)
+"bGi" = (
+/obj/item/scrap,
+/turf/unsimulated/floor/setpieces/hivefloor,
+/area/space_hive)
 "bGx" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
+"bGL" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "rusted hatch"
+	},
+/turf/unsimulated/floor/black,
+/area/space_hive)
 "bHv" = (
 /turf/space,
 /area/shuttle/merchant_shuttle/diner_station)
@@ -15615,6 +15789,11 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
+"bVk" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 6
+	},
+/area/space_hive)
 "bWJ" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/recharge_station,
@@ -15740,6 +15919,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/bee_trader)
+"cjX" = (
+/obj/decoration/decorativeplant/plant7,
+/turf/unsimulated/floor/white,
+/area/space_hive)
 "ckm" = (
 /turf/simulated/shuttle/wall/cockpit{
 	icon_state = "shuttlecock_mining"
@@ -15755,10 +15938,23 @@
 "cpF" = (
 /turf/simulated/floor/carpet/green/standard/edge/west,
 /area/diner/jucer_trader)
+"crB" = (
+/obj/stool/chair/yellow{
+	dir = 4
+	},
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "crC" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
+"crD" = (
+/obj/item/toy/plush/small/bee{
+	pixel_y = 7
+	},
+/obj/table/endtable_honey,
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "csl" = (
 /obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
@@ -15773,6 +15969,9 @@
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
+"ctc" = (
+/turf/unsimulated/floor/black,
+/area/space_hive)
 "cty" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating,
@@ -15902,6 +16101,10 @@
 	icon_state = "red2"
 	},
 /area/diner/dining)
+"cMZ" = (
+/obj/item/tile/steel,
+/turf/unsimulated/floor/setpieces/hivefloor,
+/area/space_hive)
 "cNN" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
@@ -15962,6 +16165,10 @@
 	},
 /turf/space,
 /area/space)
+"cTp" = (
+/obj/item/tile/steel,
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "cUp" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/chips,
@@ -16026,6 +16233,10 @@
 	icon_state = "red2"
 	},
 /area/diner/dining)
+"dcb" = (
+/obj/item/scrap,
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "dce" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -16142,6 +16353,11 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
+"dpL" = (
+/turf/unsimulated/floor/honeyblocks/corner{
+	dir = 8
+	},
+/area/space_hive)
 "dqf" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -16168,6 +16384,10 @@
 /obj/marker/supplymarker,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
+"dtL" = (
+/obj/item/raw_material/scrap_metal,
+/turf/unsimulated/floor/setpieces/hivefloor,
+/area/space_hive)
 "duy" = (
 /turf/simulated/floor/longtile/black,
 /area/space)
@@ -16254,6 +16474,11 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
+"dNR" = (
+/obj/item/tile/steel,
+/obj/map/light/yellowbright,
+/turf/unsimulated/floor/setpieces/hivefloor,
+/area/space_hive)
 "dOh" = (
 /obj/lattice{
 	dir = 6;
@@ -16338,6 +16563,19 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
+"ebv" = (
+/obj/item/clothing/suit/bee,
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
+"ebT" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/honeyblocks/border{
+	dir = 4
+	},
+/area/space_hive)
 "edv" = (
 /turf/simulated/floor/grime,
 /area/diner/motel/chemstorage)
@@ -16711,6 +16949,10 @@
 /mob/living/critter/robotic/repairbot/helldrone,
 /turf/simulated/floor/black,
 /area/helldrone/core)
+"fAh" = (
+/obj/map/light/yellowbright,
+/turf/unsimulated/floor/setpieces/hivefloor,
+/area/space_hive)
 "fAl" = (
 /obj/decal/poster/wallsign/stencil/left/c{
 	pixel_x = -5
@@ -16800,6 +17042,14 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
+"fRd" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/unsimulated/floor/white/side{
+	dir = 10
+	},
+/area/space_hive)
 "fRo" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16950,6 +17200,12 @@
 /obj/item/extinguisher,
 /turf/simulated/floor/scorched2,
 /area/derelict_ai_sat)
+"glp" = (
+/obj/decal/cleanable/machine_debris{
+	pixel_y = 13
+	},
+/turf/unsimulated/floor/plating/scorched,
+/area/space_hive)
 "gmp" = (
 /obj/machinery/light/small,
 /obj/decal/cleanable/dirt,
@@ -16974,6 +17230,21 @@
 "gnt" = (
 /turf/simulated/floor/grime,
 /area/diner/hallway/docking)
+"gnE" = (
+/obj/table/endtable_classic,
+/obj/item/decoration/flower_vase{
+	pixel_y = 22;
+	pixel_x = 6
+	},
+/obj/item/decoration/photoframe/black{
+	pixel_y = 6;
+	pixel_x = -3;
+	desc = "It displays a slightly-weathered photograph featuring the Overbee, Beatrice Ainsley and Baroness Moira de Bonkyll PhD."
+	},
+/turf/unsimulated/floor/honeyblocks/corner{
+	dir = 4
+	},
+/area/space_hive)
 "goI" = (
 /obj/pool/perspective{
 	dir = 9;
@@ -17052,6 +17323,13 @@
 /obj/submachine/chef_sink,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
+"gvz" = (
+/obj/decal/floatingtiles{
+	dir = 8
+	},
+/obj/item/raw_material/scrap_metal,
+/turf/unsimulated/floor/plating/scorched,
+/area/space_hive)
 "gwV" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
@@ -17102,6 +17380,10 @@
 	},
 /turf/space,
 /area/space)
+"gAT" = (
+/obj/table/endtable_honey,
+/turf/unsimulated/floor/setpieces/hivefloor,
+/area/space_hive)
 "gBu" = (
 /obj/item/storage/toilet/random{
 	dir = 8;
@@ -17110,6 +17392,18 @@
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
+"gCo" = (
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
+	},
+/turf/unsimulated/floor/plating/scorched,
+/area/space_hive)
+"gCH" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles2"
+	},
+/turf/unsimulated/floor/plating/scorched,
+/area/space_hive)
 "gEt" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
@@ -17261,6 +17555,12 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor,
 /area/h7/crew)
+"hiz" = (
+/obj/stool/chair/yellow{
+	dir = 1
+	},
+/turf/unsimulated/floor/white,
+/area/space_hive)
 "hiV" = (
 /obj/decal/fakeobjects{
 	density = 1;
@@ -17283,6 +17583,14 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/dining)
+"hkT" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/cereal_box/honey{
+	pixel_y = 10;
+	pixel_x = -2
+	},
+/turf/unsimulated/floor/setpieces/hivefloor,
+/area/space_hive)
 "hkX" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17399,6 +17707,10 @@
 /obj/random_pod_spawner/random_putt_spawner,
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
+"hFn" = (
+/obj/map/light/yellowbright,
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "hGO" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -17605,6 +17917,10 @@
 /obj/effects/background_objects/antistes,
 /turf/space,
 /area/space)
+"iiA" = (
+/obj/table/endtable_honey,
+/turf/unsimulated/floor/honeyblocks/border,
+/area/space_hive)
 "ijr" = (
 /turf/simulated/floor/scorched2,
 /area/diner/kitchen)
@@ -18028,6 +18344,12 @@
 /obj/npc/trader/robot/robuddy/drugs,
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
+"jkD" = (
+/obj/map/light/yellowbright,
+/turf/unsimulated/floor/honeyblocks/border{
+	dir = 5
+	},
+/area/space_hive)
 "jmg" = (
 /turf/unsimulated/floor/specialroom/freezer,
 /area/helldrone)
@@ -18042,6 +18364,17 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/diner/motel/observatory)
+"jnr" = (
+/obj/stool/chair/yellow{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/unsimulated/floor/white/side{
+	dir = 1
+	},
+/area/space_hive)
 "jnT" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/old,
@@ -18150,6 +18483,10 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/diner/dining)
+"jCQ" = (
+/obj/map/light/yellowbright,
+/turf/unsimulated/floor/stairs/dark,
+/area/space_hive)
 "jFV" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
@@ -18223,6 +18560,12 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/helldrone)
+"jPk" = (
+/obj/decal/cleanable/machine_debris{
+	pixel_y = 13
+	},
+/turf/unsimulated/floor,
+/area/space_hive)
 "jQd" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -18668,6 +19011,13 @@
 /obj/item/clothing/shoes/black,
 /turf/simulated/floor,
 /area/helldrone)
+"lln" = (
+/obj/item/clothing/suit/fakebeewings{
+	pixel_y = 11
+	},
+/obj/table/endtable_honey,
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "lma" = (
 /obj/computerframe,
 /turf/simulated/floor/plating,
@@ -19176,6 +19526,12 @@
 	},
 /turf/space,
 /area/diner/jucer_trader)
+"mCH" = (
+/obj/stool/chair/yellow{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/hivefloor,
+/area/space_hive)
 "mEE" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
@@ -19508,6 +19864,13 @@
 	},
 /turf/simulated/floor/black,
 /area/helldrone)
+"nvC" = (
+/obj/decoration/decorativeplant/plant5{
+	pixel_y = 12;
+	pixel_x = 6
+	},
+/turf/unsimulated/floor/black,
+/area/space_hive)
 "nvN" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -19602,6 +19965,12 @@
 	},
 /turf/simulated/floor/caution/west,
 /area/diner/hangar)
+"nJi" = (
+/obj/item/storage/secure/ssafe/loot{
+	pixel_y = 27
+	},
+/turf/unsimulated/floor/setpieces/hivefloor,
+/area/space_hive)
 "nJW" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -19716,6 +20085,10 @@
 	},
 /turf/space,
 /area/timewarp)
+"oez" = (
+/obj/critter/domestic_bee,
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "oeL" = (
 /obj/decal/cleanable/robot_debris/limb,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -19732,6 +20105,12 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/damaged2,
 /area/skeleton_trader)
+"ojY" = (
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
+	},
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "olA" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/scorched,
@@ -20054,6 +20433,12 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/diner/jucer_trader)
+"pik" = (
+/obj/map/light/yellowbright{
+	pixel_x = 17
+	},
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "pio" = (
 /obj/grille/catwalk,
 /turf/space,
@@ -20232,6 +20617,9 @@
 	},
 /turf/simulated/floor/green/checker,
 /area/diner/arcade)
+"pDH" = (
+/turf/unsimulated/floor/stairs/dark,
+/area/space_hive)
 "pDU" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -20639,6 +21027,16 @@
 	},
 /turf/unsimulated/floor,
 /area/timewarp/ship)
+"qMu" = (
+/obj/item/reagent_containers/food/snacks/ingredient/honey{
+	rand_pos = 0;
+	pixel_y = 11
+	},
+/obj/table/endtable_honey,
+/turf/unsimulated/floor/honeyblocks/border{
+	dir = 1
+	},
+/area/space_hive)
 "qNR" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -20847,6 +21245,9 @@
 	icon_state = "wall3_space_end"
 	},
 /area/abandonedship)
+"rpS" = (
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "rsr" = (
 /obj/storage/crate{
 	name = "Cone Crate"
@@ -21002,6 +21403,15 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/space)
+"rOu" = (
+/obj/shrub{
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "rPb" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 8;
@@ -21279,6 +21689,10 @@
 /obj/decal/poster/wallsign/stencil/left/four,
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/motel)
+"sBo" = (
+/obj/item/tile/steel,
+/turf/unsimulated/floor/plating/scorched,
+/area/space_hive)
 "sBz" = (
 /obj/machinery/conveyor/WE{
 	id = "robot_factory";
@@ -21387,6 +21801,10 @@
 	},
 /turf/simulated/floor/longtile/black,
 /area/space)
+"sRO" = (
+/obj/map/light/yellowbright,
+/turf/unsimulated/floor/plating/scorched,
+/area/space_hive)
 "sRW" = (
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/longtile/black,
@@ -21437,6 +21855,12 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/shuttlebay,
 /area/bee_trader)
+"sXq" = (
+/obj/map/light/yellowbright,
+/turf/unsimulated/floor/stairs/dark{
+	dir = 8
+	},
+/area/space_hive)
 "sYg" = (
 /obj/decal/timeplug,
 /turf/space,
@@ -21537,6 +21961,9 @@
 /mob/living/critter/zombie/security,
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
+"teK" = (
+/turf/unsimulated/floor/honeyblocks/border,
+/area/space_hive)
 "tfx" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -21600,6 +22027,15 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/abandonedoutpostthing)
+"tnM" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/honeyblocks/corner{
+	dir = 8
+	},
+/area/space_hive)
 "tob" = (
 /obj/item/caution{
 	desc = "Caution! No trespassing!";
@@ -21884,6 +22320,13 @@
 /obj/item/tank/oxygen,
 /turf/simulated/floor/plating,
 /area/helldrone)
+"ugu" = (
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles3"
+	},
+/turf/unsimulated/floor/plating/scorched,
+/area/space_hive)
 "uhA" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
@@ -22132,6 +22575,22 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
 /area/radiostation/bedroom)
+"uMG" = (
+/obj/table/auto,
+/obj/item/clipboard/with_pen{
+	pixel_y = 11;
+	pixel_x = -4
+	},
+/obj/item/pen/crayon/yellow{
+	pixel_y = -10;
+	pixel_x = 3
+	},
+/obj/item/stamp{
+	pixel_y = 4;
+	pixel_x = 3
+	},
+/turf/unsimulated/floor/black,
+/area/space_hive)
 "uNg" = (
 /obj/item/clothing/head/helmet/space/donk,
 /turf/simulated/floor/white/grime,
@@ -22169,6 +22628,11 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
+"uPJ" = (
+/turf/unsimulated/floor/honeyblocks/border{
+	dir = 1
+	},
+/area/space_hive)
 "uQi" = (
 /obj/decal/cleanable/cobweb,
 /obj/machinery/power/apc/autoname_north/nopoweralert,
@@ -22345,6 +22809,11 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
+"vqg" = (
+/turf/unsimulated/floor/stairs/dark{
+	dir = 1
+	},
+/area/space_hive)
 "vrP" = (
 /obj/grille/catwalk,
 /obj/decal/fakeobjects/cargopad,
@@ -22570,6 +23039,16 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/airless/caution/northsouth,
 /area/space)
+"wba" = (
+/obj/table/endtable_honey,
+/obj/item/toy/plush/small/bee{
+	pixel_y = 10;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/honeyblocks/corner{
+	dir = 1
+	},
+/area/space_hive)
 "wca" = (
 /obj/stool/chair/office{
 	dir = 4
@@ -22731,6 +23210,12 @@
 	},
 /turf/simulated/floor/scorched2,
 /area/diner/hangar)
+"wui" = (
+/obj/map/light/yellowbright,
+/turf/unsimulated/floor/stairs/dark{
+	dir = 1
+	},
+/area/space_hive)
 "wuN" = (
 /obj/decal/cleanable/dirt,
 /obj/shrub{
@@ -22765,6 +23250,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/arcade)
+"wxZ" = (
+/obj/structure/girder/displaced,
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "wzh" = (
 /obj/window/reinforced/east,
 /turf/simulated/floor/shuttle{
@@ -23042,6 +23531,17 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
+"xvp" = (
+/obj/table/endtable_honey,
+/obj/item/decoration/flower_vase{
+	pixel_x = -5
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/setpieces/hivefloor,
+/area/space_hive)
 "xvz" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 4;
@@ -23098,6 +23598,10 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/orangeblack,
 /area/buddyfactory)
+"xIj" = (
+/obj/item/tile/steel,
+/turf/unsimulated/floor,
+/area/space_hive)
 "xKR" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It won't budge.";
@@ -35087,8 +35591,8 @@ aaa
 aaa
 aal
 gaf
-aaq
-aaq
+rpS
+lln
 gaf
 aal
 aeH
@@ -35388,10 +35892,10 @@ aaa
 aaa
 aaa
 gaf
-acL
+wxZ
+fAh
 aaq
-aaq
-aaq
+rpS
 aal
 aaa
 aaa
@@ -35690,10 +36194,10 @@ aaa
 aaa
 aaa
 gaf
+rpS
 aaq
 aaq
-aaq
-aaq
+rpS
 gaf
 aaa
 aaa
@@ -35992,9 +36496,9 @@ aaa
 aaa
 aal
 gaf
-aaq
-aaq
-aaq
+crD
+rpS
+rpS
 gaf
 gaf
 aal
@@ -36295,7 +36799,7 @@ aal
 gaf
 gaf
 gaf
-aaq
+sXq
 gaf
 gaf
 gaf
@@ -36596,14 +37100,14 @@ gaf
 gaf
 gaf
 gaf
+rpS
 aaq
-aaq
-aaq
+rpS
 gaf
 gaf
 gaf
-aaq
-aaq
+acL
+rpS
 gaf
 aal
 aaa
@@ -36893,20 +37397,20 @@ aaa
 aaa
 aal
 gaf
-abl
+hkT
 aaq
 abD
 gaf
-acr
+oez
+rpS
 aaq
-aaq
-aaq
+aHt
 aea
 gaf
+rpS
 aaq
 aaq
-aaq
-aaq
+aHt
 aal
 aaa
 aaa
@@ -37196,19 +37700,19 @@ aaa
 gaf
 abh
 abl
+rpS
+rpS
+jCQ
 aaq
 aaq
+fAh
 aaq
 aaq
+wui
 aaq
 aaq
-aaq
-aaq
-aaq
-aaq
-aaq
-aaq
-aaq
+hFn
+rpS
 gaf
 aal
 aaa
@@ -37496,22 +38000,22 @@ aaa
 aaa
 aaa
 gaf
+rpS
 aaq
-aaq
-aaq
+fAh
 aaq
 gaf
+rpS
+rpS
 aaq
-aaq
-aaq
-aaq
+rpS
 aeb
 gaf
+rpS
 aaq
 aaq
 aaq
-aaq
-aaq
+acL
 aal
 aaa
 aaa
@@ -37799,20 +38303,20 @@ aaa
 aal
 gaf
 abi
-aaq
+rpS
 abs
 gaf
 gaf
 gaf
+aHt
 aaq
-aaq
-aaq
+rpS
 gaf
 gaf
 gaf
+rOu
 aaq
-aaq
-aaq
+bFn
 gaf
 gaf
 aal
@@ -38405,11 +38909,11 @@ gaf
 aaq
 gaf
 abt
+xvp
 gaf
 gaf
-gaf
-aaq
-aaq
+crB
+mCH
 aaf
 aaf
 aaf
@@ -38703,22 +39207,22 @@ aaa
 aaa
 gaf
 gaf
-aaq
-aaq
+rpS
+rpS
 gaf
 abu
 aaq
 gaf
+rOu
+rpS
 aaq
-aaq
-aaq
-aaq
+hFn
 aec
-aed
+glp
 aaf
-aed
+gvz
 abk
-abk
+xIj
 aaf
 aaa
 aaa
@@ -39005,18 +39509,18 @@ aaa
 aaa
 gaf
 gaf
-aaq
+rpS
 gaf
 gaf
 gaf
 abE
 gaf
-aaq
+bGi
 aaq
 aaq
 aaq
 aed
-aev
+rpS
 pKb
 aev
 abk
@@ -39310,15 +39814,15 @@ gaf
 aaq
 aaq
 gaf
-aaq
-aaq
+rpS
+rpS
 gaf
+ojY
+dNR
+rpS
 aaq
-aaq
-aaq
-aaq
-aaq
-aed
+dtL
+gCH
 aaf
 hYd
 aed
@@ -39611,14 +40115,14 @@ gaf
 gaf
 gaf
 aaq
-aaq
-aaq
+pDH
+rpS
 gaf
 gaf
 aaf
 acM
 abk
-abk
+jPk
 gaf
 gaf
 aaf
@@ -40210,7 +40714,7 @@ aaa
 aaa
 gaf
 gaf
-aaq
+rpS
 gaf
 aaf
 aaf
@@ -40227,8 +40731,8 @@ aaf
 gaf
 gaf
 afa
-aaq
-aaq
+rpS
+rpS
 gaf
 gaf
 aaq
@@ -40513,7 +41017,7 @@ aaj
 gaf
 aaq
 aaq
-aaq
+rpS
 aaf
 aaV
 aaV
@@ -40523,15 +41027,15 @@ abG
 abX
 abX
 abX
-abk
-abk
-aed
-aed
+fRd
+cjX
+ugu
+gCo
+cTp
 aaq
 aaq
 aaq
-aaq
-aaq
+rpS
 aaq
 aaq
 gaf
@@ -40813,11 +41317,11 @@ aaa
 aak
 aan
 gaf
-aaq
-aaq
+rpS
+fAh
 aaq
 aaT
-aaW
+rpS
 aaW
 jcK
 aaW
@@ -40825,15 +41329,15 @@ abH
 abY
 abk
 abk
-abk
+adi
 abk
 aed
-aed
+gCH
+hFn
 aaq
 aaq
-aaq
-aaq
-aaq
+fAh
+rpS
 gaf
 gaf
 gaf
@@ -41127,19 +41631,19 @@ abH
 abk
 abk
 abk
-abk
-abk
+adi
+xIj
 aee
 gaf
 aeJ
 aaq
 aaq
 aaq
-aaq
+aHt
 gaf
 agc
-aaq
-aaq
+rpS
+cMZ
 aal
 aaa
 aaa
@@ -41418,29 +41922,29 @@ aan
 aan
 gaf
 gaf
-aaq
+rpS
 gaf
 gaf
-aaW
-aaW
+rpS
+aed
 jcK
 aaW
-abH
+jnr
 aca
 abk
 abY
 adi
-abk
+rpS
 gaf
 gaf
 gaf
-acr
-aaq
+oez
+cTp
 afq
 gaf
 gaf
-aaq
-aaq
+rpS
+fAh
 gaf
 aal
 aal
@@ -41719,11 +42223,11 @@ aaj
 aao
 aal
 gaf
-aaq
+rpS
 aaq
 gaf
 gaf
-aed
+aee
 gaf
 aaf
 abx
@@ -41732,7 +42236,7 @@ acb
 acb
 acb
 adj
-aaW
+aEw
 aaf
 gaf
 gaf
@@ -42020,17 +42524,17 @@ aaa
 aak
 aal
 gaf
+rpS
 aaq
-aaq
-aaq
+rpS
 gaf
 gaf
 aed
-aaq
+rpS
 aaf
 aaf
 abJ
-aaW
+hiz
 aaW
 acN
 aaW
@@ -42044,7 +42548,7 @@ gaf
 gaf
 afb
 gaf
-aaq
+rpS
 gaf
 ahg
 gaf
@@ -42325,17 +42829,17 @@ aaq
 aaq
 gaf
 aaq
-aaq
+rpS
 gaf
 aaX
-aaq
+rpS
 aaf
 aaf
 aaf
 acc
 acc
 aaf
-jcK
+bGL
 aaf
 aaf
 aaf
@@ -42344,11 +42848,11 @@ aaf
 afb
 gaf
 aaq
+rpS
 aaq
 aaq
 aaq
-aaq
-aaq
+rpS
 aaq
 aal
 aaa
@@ -42630,23 +43134,23 @@ gaf
 aaq
 gaf
 aaY
-aaq
+hFn
 abn
 aaf
 aaf
 acd
-abx
+uMG
 acO
-aaW
+ctc
 aaf
 aaf
 aaf
 aaf
+nJi
 aaq
+rpS
 aaq
-aaq
-aaq
-aaq
+fAh
 aaq
 aaq
 gaf
@@ -42925,21 +43429,21 @@ aaa
 aae
 aaf
 gaf
-aaq
+rpS
 aaq
 gaf
 aaq
 aaq
 gaf
 aaZ
-aaq
-aaq
+rpS
+rpS
 aaf
 aaf
-aaW
+nvC
 act
-aaW
-aaW
+ctc
+ctc
 aaf
 aaf
 aaf
@@ -42950,7 +43454,7 @@ afr
 gaf
 aaq
 gaf
-aaq
+rpS
 agK
 gaf
 gaf
@@ -43230,12 +43734,12 @@ gaf
 gaf
 aaq
 aaq
-aaq
+rpS
 gaf
 gaf
 gaf
 aaJ
-aaq
+rpS
 aaf
 aaf
 aaf
@@ -43845,19 +44349,19 @@ abK
 aaU
 acu
 acP
-abk
-aaq
+iiA
+rpS
 aaO
 aaO
 gaf
-aaq
-aaq
-aaq
+wxZ
+byK
+aHt
 gaf
 gaf
 gaf
 agm
-aaq
+rpS
 gaf
 gaf
 aaf
@@ -44133,34 +44637,34 @@ aaf
 aaf
 gaf
 gaf
-aaq
+rpS
 aaq
 gaf
-aaq
-aaq
+rpS
+rpS
 gaf
 aaO
 aaO
 aaO
 aby
-abk
+teK
 aaU
 acv
-abk
-abk
+teK
+teK
 aaq
-aaq
+gAT
 aaO
 aaO
 aaO
-aaq
-aaq
+rpS
+rpS
 aaf
 aaf
 aaq
-aaq
-aaq
-aaq
+rpS
+rpS
+rpS
 gaf
 aal
 aao
@@ -44442,27 +44946,27 @@ gaf
 aaq
 aaO
 aaO
-abk
-abk
-abk
-abk
+aHt
+teK
+rpS
+teK
 aaU
 acw
-abk
-abk
-abk
+teK
+teK
+teK
+rpS
 aaq
-aaq
-aed
+sBo
 aaO
-aaq
-aaq
-aaq
+aHt
+rpS
+rpS
 afC
 aaq
 agn
 agL
-aaq
+rpS
 gaf
 aal
 aao
@@ -44740,12 +45244,12 @@ gaf
 aaq
 aaq
 gaf
-aaq
-aaq
+rpS
+rpS
 aed
-aed
-abk
-abk
+sRO
+rpS
+teK
 abz
 aaO
 aaO
@@ -44753,18 +45257,18 @@ aaO
 aaO
 aaO
 adB
-abk
-abk
+teK
+teK
 aed
-aaq
-aaq
-aaq
-aaq
+bBG
+rpS
+hFn
+rpS
 aaf
-aaq
+rpS
 aaq
 agM
-aaq
+rpS
 gaf
 aaf
 aaf
@@ -45040,31 +45544,31 @@ oBZ
 aal
 gaf
 gaf
+rpS
 aaq
-aaq
-aaq
+rpS
 aaO
 aaO
 aba
 aba
 abo
-abk
+aeg
 aaO
 acf
-abk
+ebT
 acQ
 aaO
-abk
-abk
-abk
-abk
-aaq
-aaq
-aaq
+iiA
+teK
+teK
+teK
+bVk
+rpS
+rpS
 gaf
 gaf
 gaf
-aaq
+rpS
 agN
 gaf
 gaf
@@ -45348,19 +45852,19 @@ aaf
 aaf
 aaO
 abb
-abk
+teK
 abp
 aba
 abL
-abk
-abk
-abk
-adk
-abk
-abk
-abk
+rpS
+pik
+rpS
+tnM
+teK
+teK
+teK
 aed
-aed
+aaO
 aaO
 gaf
 gaf
@@ -45650,13 +46154,13 @@ gaf
 gaf
 aaO
 abc
-abk
+teK
 abq
 aba
 abM
-abk
+rpS
 acx
-abk
+rpS
 adk
 aba
 aba
@@ -45953,21 +46457,21 @@ gaf
 gaf
 abd
 aed
-abk
-abk
+teK
+iiA
 aaO
-abk
+gnE
 acy
-abk
+wba
 aaO
 adC
 aef
 aew
-aew
+awj
 aew
 aaO
 aaO
-aaq
+ebv
 gaf
 aal
 aal
@@ -46253,8 +46757,8 @@ aaF
 aaa
 aal
 gaf
-aaq
-aaq
+gAT
+hFn
 aed
 abz
 aaO
@@ -46263,12 +46767,12 @@ aaO
 aaO
 aaO
 adD
-abk
-abk
-abk
-abK
+teK
+iiA
+teK
+dcb
 aaO
-aaq
+acL
 aaq
 aal
 aal
@@ -46557,20 +47061,20 @@ aaK
 gaf
 abe
 aaq
-aaq
-aaq
-abk
-abk
-abk
+rpS
+rpS
+teK
+teK
+iiA
 ace
 ace
-abk
-abk
-abk
+teK
+teK
+teK
 aeK
 aaO
 aaO
-aaq
+rpS
 aaq
 aal
 aaa
@@ -46858,15 +47362,15 @@ aaa
 aaP
 aal
 gaf
+acL
 aaq
-aaq
-aaq
+rpS
 aed
-abk
-abk
+teK
+teK
 acI
 ace
-abk
+teK
 aeg
 aaO
 aaO
@@ -47161,19 +47665,19 @@ aaa
 aaa
 gaf
 gaf
-aaq
+rpS
 aaO
 abN
-abk
+rpS
 acz
 ace
 ace
-abk
+iiA
 aaO
 aaO
 gaf
 gaf
-aaq
+fAh
 gaf
 aal
 aal
@@ -47462,7 +47966,7 @@ aaa
 aaa
 aaa
 gaf
-aaq
+rpS
 aaq
 aaO
 aaO
@@ -47474,9 +47978,9 @@ aaO
 aaO
 gaf
 gaf
+rpS
 aaq
-aaq
-aaq
+rpS
 aal
 aaa
 aaa
@@ -47766,16 +48270,16 @@ aaa
 gaf
 gaf
 aaq
-aaq
+rpS
 aaO
 gaf
 acA
 acT
 adl
 aaO
-aaJ
+qMu
 gaf
-aaq
+gAT
 aaq
 aaq
 gaf
@@ -48070,15 +48574,15 @@ gaf
 gaf
 aaq
 aaq
+vqg
+teK
+teK
+jkD
+dpL
+uPJ
+pDH
 aaq
-aaq
-aaq
-aaq
-aaq
-aaq
-aaq
-aaq
-aaq
+rpS
 gaf
 gaf
 aal
@@ -48373,10 +48877,10 @@ gaf
 gaf
 abO
 gaf
-aaq
+teK
 acU
-aaq
-aaq
+rpS
+uPJ
 aeh
 gaf
 acr

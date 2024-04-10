@@ -152,6 +152,9 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		src.addAbility(/datum/targetable/ghost_observer/reenter_corpse)
 		src.addAbility(/datum/targetable/ghost_observer/toggle_lighting)
 		src.addAbility(/datum/targetable/ghost_observer/toggle_ghosts)
+		if (istype(ticker.mode, /datum/game_mode/gang))
+			src.addAbility(/datum/targetable/ghost_observer/toggle_gang_overlay)
+
 		// src.addAbility(/datum/targetable/ghost_observer/afterlife_Bar)
 		// src.addAbility(/datum/targetable/ghost_observer/respawn_animal)	//moved to respawn_options menu
 		src.addAbility(/datum/targetable/ghost_observer/respawn_options)
@@ -182,6 +185,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		// src.removeAbility(/datum/targetable/ghost_observer/afterlife_Bar)
 		// src.removeAbility(/datum/targetable/ghost_observer/respawn_animal)
 		src.removeAbility(/datum/targetable/ghost_observer/respawn_options)
+		if (istype(ticker.mode, /datum/game_mode/gang))
+			src.removeAbility(/datum/targetable/ghost_observer/toggle_gang_overlay)
 
 #ifdef HALLOWEEN
 		src.removeAbility(/datum/targetable/ghost_observer/spooktober_hud)
@@ -611,3 +616,40 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		boutput(holder.owner, SPAN_ALERT("You stop being spooky!"))
 
 #endif
+
+/datum/targetable/ghost_observer/toggle_gang_overlay
+	name = "Toggle gang territory overlay"
+	desc = "Toggles the colored gang overlay."
+	icon_state = "gang_overlay"
+	targeted = 0
+	cooldown = 0
+	var/datum/mind/ownerMind
+
+	proc/remove_self(mind)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		if (imgroup.subscribed_minds_with_subcount[mind] > 0)
+			imgroup.remove_mind(mind)
+	cast()
+		if (!holder)
+			return TRUE
+		var/mob/M = holder.owner
+
+		ownerMind = M.mind
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		var/togglingOn = FALSE
+		if (imgroup.subscribed_minds_with_subcount[ownerMind] > 0)
+			imgroup.remove_mind(ownerMind)
+			UnregisterSignal(ownerMind, COMSIG_MIND_DETACH_FROM_MOB)
+		else
+			togglingOn = TRUE
+			imgroup.add_mind(ownerMind)
+			RegisterSignal(ownerMind, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(remove_self))
+
+		boutput(M, "Gang territories turned [togglingOn ? "on" : "off"].")
+		return FALSE
+	disposing()
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		if (imgroup.subscribed_minds_with_subcount[ownerMind] > 0)
+			imgroup.remove_mind(ownerMind)
+		UnregisterSignal(ownerMind, COMSIG_MIND_DETACH_FROM_MOB)
+		..()

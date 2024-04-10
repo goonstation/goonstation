@@ -8,6 +8,10 @@ TYPEINFO(/obj/item/gun/energy)
 	m_amt = 2000
 	g_amt = 1000
 	add_residue = 0 // Does this gun add gunshot residue when fired? Energy guns shouldn't.
+	recoil_inaccuracy_max = 0 //lasers probably dont shudder as you shoot them
+	icon_recoil_enabled = FALSE // same, this is probably better to visualize inaccuracy anyway
+	camera_recoil_enabled = FALSE // no camera recoil on tasers etc please
+
 	var/rechargeable = 1 // Can we put this gun in a recharger? False should be a very rare exception.
 	var/robocharge = 800
 	var/cell_type = /obj/item/ammo/power_cell // Type of cell to spawn by default.
@@ -17,6 +21,7 @@ TYPEINFO(/obj/item/gun/energy)
 	var/can_swap_cell = 1
 	var/uses_charge_overlay = FALSE //! Does this gun use charge overlays on the sprite?
 	var/charge_icon_state
+	var/restrict_cell_type
 	var/image/charge_image = null
 	muzzle_flash = null
 	inventory_counter_enabled = 1
@@ -25,7 +30,7 @@ TYPEINFO(/obj/item/gun/energy)
 		var/cell = null
 		if(cell_type)
 			cell = new cell_type
-		AddComponent(/datum/component/cell_holder, cell, rechargeable, custom_cell_max_capacity, can_swap_cell)
+		AddComponent(/datum/component/cell_holder, cell, rechargeable, custom_cell_max_capacity, can_swap_cell, restrict_cell_type)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		..()
 		UpdateIcon()
@@ -576,6 +581,8 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 	force = 6
 	desc = "I think it stands for Banned For Griefing?"
 	cell_type = /obj/item/ammo/power_cell/high_power
+	recoil_strength = 20
+	camera_recoil_enabled = TRUE
 
 	New()
 		set_current_projectile(new/datum/projectile/bfg)
@@ -840,7 +847,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/burst)
 		projectiles = list(current_projectile)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
 /obj/item/gun/energy/blaster_carbine
@@ -881,6 +888,8 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 	rarity = 5
 	muzzle_flash = "muzzle_flash_bluezap"
+	recoil_strength = 20
+	camera_recoil_enabled = TRUE
 
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/cannon)
@@ -1353,26 +1362,31 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 					set_current_projectile(projectiles["detain"])
 					item_state = "lawg-detain"
 					playsound(M, 'sound/vox/detain.ogg', 50)
+					src.toggle_recoil(FALSE)
 				if ("execute", "exterminate")
 					set_current_projectile(projectiles["execute"])
 					current_projectile.cost = 30
 					item_state = "lawg-execute"
 					playsound(M, 'sound/vox/exterminate.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("smokeshot","fog")
 					set_current_projectile(projectiles["smokeshot"])
 					current_projectile.cost = 50
 					item_state = "lawg-smokeshot"
 					playsound(M, 'sound/vox/smoke.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("knockout", "sleepshot")
 					set_current_projectile(projectiles["knockout"])
 					current_projectile.cost = 60
 					item_state = "lawg-knockout"
 					playsound(M, 'sound/vox/sleep.ogg', 50)
+					src.toggle_recoil(FALSE)
 				if ("hotshot","incendiary")
 					set_current_projectile(projectiles["hotshot"])
 					current_projectile.cost = 60
 					item_state = "lawg-hotshot"
 					playsound(M, 'sound/vox/hot.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("bigshot","highexplosive","he")
 					set_current_projectile(projectiles["bigshot"])
 					current_projectile.cost = 170
@@ -1380,16 +1394,17 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 					playsound(M, 'sound/vox/high.ogg', 50)
 					SPAWN(0.4 SECONDS)
 						playsound(M, 'sound/vox/explosive.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("clownshot","clown")
 					set_current_projectile(projectiles["clownshot"])
 					item_state = "lawg-clownshot"
 					playsound(M, 'sound/vox/clown.ogg', 30)
+					src.toggle_recoil(FALSE)
 				if ("pulse", "push", "throw")
 					set_current_projectile(projectiles["pulse"])
 					item_state = "lawg-pulse"
 					playsound(M, 'sound/vox/push.ogg', 50)
-
-					/datum/projectile/energy_bolt/pulse
+					src.toggle_recoil(FALSE)
 		else		//if you're not the owner and try to change it, then fuck you
 			switch(text)
 				if ("detain","execute","knockout","hotshot","incendiary","bigshot","highexplosive","he","clownshot","clown", "pulse", "punch")
@@ -1419,6 +1434,16 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 					return 0
 				else
 					return 1
+
+	proc/toggle_recoil(on)
+		if(on)
+			recoil_inaccuracy_max = 5
+			icon_recoil_enabled = TRUE
+			camera_recoil_enabled = TRUE
+		else
+			recoil_inaccuracy_max = 0
+			icon_recoil_enabled = FALSE
+			camera_recoil_enabled = FALSE
 
 	//all gun modes use the same base sprite icon "lawbringer0" depending on the current projectile/current mode, we apply a coloured overlay to it.
 	update_icon()
@@ -1609,6 +1634,8 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	two_handed = 1
 	can_dual_wield = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/howitzer
+	camera_recoil_enabled = TRUE
+	recoil_strength = 50
 
 	New()
 		..()
@@ -1721,7 +1748,7 @@ TYPEINFO(/obj/item/gun/energy/cornicen3)
 	New()
 		set_current_projectile(new/datum/projectile/laser/plasma/auto)
 		projectiles = list(current_projectile,new/datum/projectile/laser/plasma/burst)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.5, 1.5, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.5)
 		..()
 
 	update_icon()
@@ -1759,6 +1786,8 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 	var/state = TRUE
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_LARGE
+	camera_recoil_enabled = TRUE
+	recoil_strength = 20
 
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
@@ -1824,7 +1853,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 		set_current_projectile(new/datum/projectile/energy_bolt/smgburst)
 
 		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/smgauto)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
 	update_icon()
@@ -2164,6 +2193,47 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		src.attach_cell(C)
 		var/obj/item/light/tube/T = new /obj/item/light/tube
 		src.attach_light(T)
+
+
+/obj/item/gun/energy/lasergat
+	name = "\improper Hafgan Mod.93R Repeating Laser"
+	rechargeable = 0
+	icon_state = "burst_laser_idle"
+	cell_type = /obj/item/ammo/power_cell/lasergat
+	desc = "Introduced to compete with the Clock line of military sidearms. The Mod. 93R repeating laser masked early laser tech's heat problems with expendable liquid coolant cartridges, whose off-gassing caused unpredictable recoil that made it widely unpopular."
+	item_state = "egun-kill"
+	force = 5
+	add_residue = 1 // this is unique in that it spews energy-gun-gas or something
+	muzzle_flash = "muzzle_flash_elec"
+	uses_charge_overlay = TRUE
+	charge_icon_state = "burst_laser"
+	shoot_delay = 6
+	spread_angle = 6
+	restrict_cell_type = /obj/item/ammo/power_cell/lasergat
+	New()
+		set_current_projectile(new/datum/projectile/laser/lasergat/burst)
+		projectiles = list(current_projectile)
+		..()
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if (canshoot(user))
+			..()
+			flick("burst_laser", src)
+			flick(src.charge_image, src.charge_image)
+			SPAWN(6 DECI SECONDS)
+				playsound(user, 'sound/effects/tinyhiss.ogg', 60, TRUE)
+			return
+		..()
+
+	update_icon()
+		if (!canshoot())
+			src.icon_state = "burst_laser_empty"
+		else
+			src.icon_state = "burst_laser_idle"
+		..()
+	attack_self(var/mob/M)
+		..()
+		UpdateIcon()
+		M.update_inhands()
 
 #undef HEAT_REMOVED_PER_PROCESS
 #undef FIRE_THRESHOLD

@@ -65,6 +65,9 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	var/grab_stuff_on_spawn = TRUE
 
+	///Items that are 'inside' the crate, even when it's open. These will be dragged around with the crate until removed.
+	var/list/vis_items = list()
+
 	New()
 		..()
 		START_TRACKING
@@ -672,6 +675,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		for (var/obj/O in get_turf(src))
 			if (src.is_acceptable_content(O))
 				O.set_loc(src)
+		for (var/obj/O in vis_items)
+			vis_contents -= O
 
 		for (var/mob/M in get_turf(src))
 			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
@@ -758,7 +763,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 		var/newloc = get_turf(src)
 		for (var/obj/O in src)
-			O.set_loc(newloc)
+			if (O in vis_items)
+				src.vis_contents += O
+			else
+				O.set_loc(newloc)
 			if(istype(O,/obj/item/mousetrap))
 				var/obj/item/mousetrap/our_trap = O
 				if(our_trap.armed && user)
