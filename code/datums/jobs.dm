@@ -1413,6 +1413,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Technical Assistant")
 		return
 
+
 /datum/job/special/space_cowboy
 	name = "Space Cowboy"
 	linkcolor = "#FF99FF"
