@@ -61,7 +61,7 @@ var/global/datum/sort_instance/sortInstance = new()
 	var/list/L
 
 	/// The comparator proc-reference
-	var/cmp = /proc/cmp_numeric_asc
+	var/cmp = GLOBAL_PROC_REF(cmp_numeric_asc)
 
 	/// whether we are sorting list keys (0: L[i]) or associated values (1: L[L[i]])
 	var/associative = 0
