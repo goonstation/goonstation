@@ -229,20 +229,20 @@
 					command_jobs = null
 
 		.["standard_jobs"] = list(
-			list(name = "Civilian", color = "blue", jobs = civilian_jobs),
+			list(name = "Civilian", color = "green", jobs = civilian_jobs),
 			list(name = "Supply and Maintenance", color = "yellow", jobs = engineering_jobs),
 			list(name = "Research and Medical", color = "purple", jobs = research_jobs),
 			list(name = "Security", color = "red", jobs = security_jobs),
-			list(name = "Command", color = "green", jobs = command_jobs),
+			list(name = "Command", color = "blue", jobs = command_jobs),
 		)
 
 		.["accesses_by_area"] = list(
-			list(name = "Civilian", color = "blue", accesses = civilian_access),
+			list(name = "Civilian", color = "green", accesses = civilian_access),
 			list(name = "Engineering", color = "yellow", accesses = engineering_access),
 			list(name = "Supply", color = "yellow", accesses = supply_access),
 			list(name = "Science and Medical", color = "purple", accesses = research_access),
 			list(name = "Security", color = "red", accesses = security_access),
-			list(name = "Command", color = "green", accesses = command_access),
+			list(name = "Command", color = "blue", accesses = command_access),
 		)
 
 		.["icons"] = list(
