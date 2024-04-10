@@ -486,6 +486,13 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	active_stamina_dmg = 65
 	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
+	var/strong_disorient = TRUE
+	gang
+		active_force = 22 // a bit more lethal. as a treat.
+		inactive_force = 8
+		active_stamina_dmg = 25
+		inactive_stamina_dmg = 10
+		strong_disorient = FALSE
 
 	can_reflect()
 		return FALSE
@@ -495,18 +502,15 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		. += "It is set to [src.active ? "on" : "off"]."
 
 /obj/item/sword/discount/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	//hhaaaaxxxxxxxx. overriding the disorient for my own effect
-	if (active)
-		hit_type = DAMAGE_BURN
-	else
-		hit_type = DAMAGE_BLUNT
-
 	//returns TRUE if parried. So stop here
 	if (..())
 		return
 
 	if (active)
-		target.do_disorient(0, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
+		if (strong_disorient)
+			target.do_disorient(0, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
+		else
+			target.do_disorient(0, weakened = 0, stunned = 0, disorient = 1, remove_stamina_below_zero = 0)
 
 ///////////////////////////////////////////////// Dagger /////////////////////////////////////////////////
 
@@ -583,7 +587,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throwforce = 20
 	stamina_cost = 5
 	c_flags = EQUIPPED_WHILE_HELD
-
 	setupProperties()
 		..()
 		setProperty("movespeed", -0.5)
@@ -595,16 +598,27 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "ninjaknife"
 	force = 8
-	throwforce = 11
+	throwforce = 18
 	throw_range = 10
 	flags = FPRINT | TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
+	gang
+		name = "familiar fighting knife"
+		force = 17
+		throwforce = 25
+		desc = "A light but robust combat knife that allows you to move faster in fights. It looks really familiar..."
+		icon_state = "combat_knife_gang"
+		inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+		item_state = "knife"
+		setupProperties()
+			..()
+			setProperty("movespeed", -0.5)
 
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
-			C.do_disorient(stamina_damage = 60, weakened = 0, stunned = 0, disorient = 40, remove_stamina_below_zero = 1)
+			C.do_disorient(stamina_damage = 40, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
 			C.emote("twitch_v")
 			A:lastattacker = usr
 			A:lastattackertime = world.time
@@ -689,8 +703,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			src.implanted(M)
 			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
-			H.changeStatus("weakened", 2 SECONDS)
-		random_brute_damage(M, 11)//embedding cares not for your armour
+			H.do_disorient(stamina_damage = 30, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
+		random_brute_damage(M, 18)//embedding cares not for your armour
 		take_bleeding_damage(M, null, 3, DAMAGE_CUT)
 
 /obj/item/nunchucks
@@ -882,6 +896,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 	New()
 		..()
+		src.setItemSpecial(/datum/item_special/rangestab)
 		if(istype(src.loc, /mob/living))
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)
@@ -1389,7 +1404,7 @@ TYPEINFO(/obj/item/swords/katana)
 	name = "reverse blade katana"
 	desc = "A sword whose blade is on the wrong side. Crafted by a master who grew to hate the death his weapons caused; which was weird since Oppenheimer has him beat by several orders of magnitude. Considered worthless by many, only a true virtuoso can unleash it's potential."
 	hit_type = DAMAGE_BLUNT
-	force = 18
+	force = 20
 	throw_range = 6
 	contraband = 5 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	delimb_prob = 1

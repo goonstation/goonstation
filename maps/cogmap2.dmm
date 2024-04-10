@@ -68227,7 +68227,7 @@
 	dir = 1;
 	name = "Riot Control Gas"
 	},
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "pPN" = (

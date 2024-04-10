@@ -1753,7 +1753,7 @@
 	light_type = /obj/item/light/tube/reddish;
 	pixel_y = 21
 	},
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/caution/south,
 /area/station/ai_monitored/armory)
 "afF" = (

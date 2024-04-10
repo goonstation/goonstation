@@ -1665,7 +1665,7 @@
 /area/station/crew_quarters/catering)
 "avH" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "avR" = (
 /obj/machinery/computer/security{
@@ -7515,7 +7515,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "cfs" = (
 /obj/machinery/light/emergency{
@@ -14300,7 +14300,7 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "eiw" = (
 /obj/machinery/chem_master{
@@ -17129,6 +17129,12 @@
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
+"fdp" = (
+/obj/rack/organized/techstorage_eng{
+	order_override = "diagonal"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/storage/tech)
 "fdq" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -23590,7 +23596,7 @@
 /obj/machinery/bathtub{
 	dir = 8
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "haS" = (
 /obj/cable{
@@ -25882,17 +25888,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
-"hLU" = (
-/obj/machinery/recharger/wall/sticky{
-	dir = 1;
-	pixel_y = 32
-	},
-/obj/item/mining_tool/power_pick,
-/obj/table/auto,
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
-/area/listeningpost)
 "hMc" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -26173,12 +26168,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
-"hPQ" = (
-/obj/rack/organized/techstorage_eng{
-	order_override = "diagonal"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/storage/tech)
 "hPR" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -26215,6 +26204,17 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/refinery)
+"hQU" = (
+/obj/machinery/recharger/wall/sticky{
+	dir = 1;
+	pixel_y = 32
+	},
+/obj/item/mining_tool/powered/pickaxe,
+/obj/table/auto,
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/listeningpost)
 "hRi" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -32965,7 +32965,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 4
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "jXn" = (
 /obj/table/auto,
@@ -33810,6 +33810,15 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
+"klO" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/obj/rack/organized/techstorage_med{
+	order_override = "diagonal"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/storage/tech)
 "klS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -37256,7 +37265,7 @@
 /obj/decoration/toiletholder{
 	pixel_y = 33
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "lqn" = (
 /obj/railing/red{
@@ -40965,15 +40974,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
-"msQ" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
-/obj/rack/organized/techstorage_med{
-	order_override = "diagonal"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/storage/tech)
 "msR" = (
 /obj/stool/chair/comfy{
 	dir = 8
@@ -41823,7 +41823,7 @@
 	layer = 3;
 	pixel_y = 8
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "mFT" = (
 /obj/stool/chair/comfy/yellow{
@@ -53241,7 +53241,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "qez" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/machinery/light/incandescent/warm/very{
 	dir = 8
 	},
@@ -60542,7 +60542,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "srM" = (
 /obj/storage/secure/closet/command/medical_director,
@@ -68419,7 +68419,7 @@
 	pixel_x = -4
 	},
 /obj/machinery/drainage,
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "uND" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -132753,7 +132753,7 @@ tuV
 tYp
 tuB
 oFl
-hPQ
+fdp
 whf
 xRb
 cHZ
@@ -133055,7 +133055,7 @@ vCG
 tYp
 tuB
 oFl
-msQ
+klO
 whf
 cHZ
 cHZ
@@ -160279,7 +160279,7 @@ iOW
 iOW
 iOW
 iOW
-hLU
+hQU
 xti
 nQI
 uuX
