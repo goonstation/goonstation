@@ -2097,7 +2097,7 @@ datum
 		viscerite_viscera
 			name = "viscerite viscera"
 			id = "viscerite_viscera"
-			description = "Looking at this makes you feel queasy"
+			description = "Looking at this makes you feel queasy... ugh."
 			reagent_state = LIQUID
 			fluid_r = 200
 			fluid_g = 135
