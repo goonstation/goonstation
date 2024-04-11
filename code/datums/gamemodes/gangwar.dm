@@ -856,7 +856,7 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/get_random_civvie(var/list/deferred_minds)
 		var/mindList[0]
 		for (var/datum/mind/M as anything in ticker.minds)
-			if (M.get_antagonist(ROLE_GANG_LEADER) || M.get_antagonist(ROLE_GANG_MEMBER) || !(M.originalPDA) || ishuman(M) || (M.assigned_role in security_jobs))
+			if (M.get_antagonist(ROLE_GANG_LEADER) || M.get_antagonist(ROLE_GANG_MEMBER) || !(M.originalPDA) || !ishuman(M) || (M.assigned_role in security_jobs))
 				continue
 			if (isnull(M.current.loc)) //deleted or an admin who has removeself'd
 				continue
