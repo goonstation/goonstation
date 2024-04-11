@@ -86,7 +86,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 			var/obj/fluid/airborne/F = my_turf.active_airborne_liquid
 			if (F?.group)
 				F.group.drain(F, inlet_flow / 8, src.buffer)
-				active_power_usage += src.buffer.total_volume * 5 KILO WATTS
+				active_power_usage += src.buffer.reagents.total_volume * 5 KILO WATTS
 				// src.buffer.reagents.remove_any(src.buffer.reagents.total_volume/2)
 				if (src.reagents.total_volume < src.reagents.maximum_volume)
 					src.buffer.transfer_all_reagents(src)
