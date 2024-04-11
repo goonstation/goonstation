@@ -1003,7 +1003,7 @@ proc/ui_describe_reagents(atom/A)
 			src.reagents.add_reagent("martian_flesh", ((volume / chemical_efficiency) * 0.35)) // Large pustules produce half the amount of martian flesh. Apologies for the magic number here, it's avoiding digestion producing net amounts of chems which leads to bugs.
 			src.reagents.add_reagent("synthflesh", ((volume * chemical_efficiency)  * 0.35)) // Large pustules also produce twice the amount of synthflesh
 			if(prob(20 / chemical_efficiency)) // 20% chance of offgassing for medium/small, 10% for large pustules
-				var/datum/reagents/smokeContents = new/datum/reagents/
+				var/datum/reagents/smokeContents = new/datum/reagents()
 				smokeContents.add_reagent("acid", volume / chemical_efficiency)
 				smoke_reaction(smokeContents, 2, get_turf(src), do_sfx = TRUE)
 		src.reagents.remove_reagent(reagent_id, volume)
