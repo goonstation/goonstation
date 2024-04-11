@@ -379,13 +379,13 @@ TYPEINFO_NEW(/obj/table)
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		. = ..()
 		if (ismob(AM))
-			if (AM != thr.user && (BOUNDS_DIST(thr.user, src) <= 0))
+			if (AM != thr.thrown_by && (BOUNDS_DIST(thr.thrown_by, src) <= 0))
 				var/remove_tablepass = HAS_FLAG(AM.flags, TABLEPASS) ? FALSE : TRUE //this sucks and should be a mob property x2 augh
 				AM.flags |= TABLEPASS
 				step(AM, get_dir(AM, src))
 				if (remove_tablepass)
 					REMOVE_FLAG(AM.flags, TABLEPASS)
-				src.harm_slam(thr.user, AM)
+				src.harm_slam(thr.thrown_by, AM)
 
 
 //Replacement for monkies walking through tables: They now parkour over them.
