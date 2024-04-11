@@ -5,7 +5,7 @@ var/datum/job_controller/job_controls
 	var/list/special_jobs = list()
 	var/list/hidden_jobs = list() // not visible to players, for admin stuff, like the respawn panel
 	var/allow_special_jobs = 1 // hopefully this doesn't break anything!!
-	var/datum/job/job_creator = null
+	var/datum/job/created/job_creator = null
 
 	var/loaded_save = 0
 	var/last_client = null
@@ -840,47 +840,11 @@ var/datum/job_controller/job_controls
 				boutput(usr, SPAN_ALERT("<b>A job with this name already exists. It cannot be created.</b>"))
 				return
 			else
-				var/datum/job/created/JOB = new /datum/job/created(src)
+				var/hidden = FALSE
 				if(href_list["Hidden"])
-					src.hidden_jobs += JOB
-				else
-					src.special_jobs += JOB
+					hidden = TRUE
 
-				JOB.name = src.job_creator.name
-				JOB.wages = src.job_creator.wages
-				JOB.limit = src.job_creator.limit
-				JOB.mob_type = src.job_creator.mob_type
-				JOB.slot_head = src.job_creator.slot_head
-				JOB.slot_mask = src.job_creator.slot_mask
-				JOB.slot_ears = src.job_creator.slot_ears
-				JOB.slot_eyes = src.job_creator.slot_eyes
-				JOB.slot_glov = src.job_creator.slot_glov
-				JOB.slot_foot = src.job_creator.slot_foot
-				JOB.slot_card = src.job_creator.slot_card
-				JOB.slot_jump = src.job_creator.slot_jump
-				JOB.slot_suit = src.job_creator.slot_suit
-				JOB.slot_back = src.job_creator.slot_back
-				JOB.slot_belt = src.job_creator.slot_belt
-				JOB.slot_poc1 = src.job_creator.slot_poc1
-				JOB.slot_poc2 = src.job_creator.slot_poc2
-				JOB.slot_lhan = src.job_creator.slot_lhan
-				JOB.slot_rhan = src.job_creator.slot_rhan
-				JOB.access = JOB.access | src.job_creator.access
-				JOB.change_name_on_spawn = src.job_creator.change_name_on_spawn
-				JOB.special_spawn_location = src.job_creator.special_spawn_location
-				JOB.bio_effects = src.job_creator.bio_effects
-				JOB.objective = src.job_creator.objective
-				JOB.announce_on_join = src.job_creator.announce_on_join
-				JOB.radio_announcement = src.job_creator.radio_announcement
-				JOB.add_to_manifest = src.job_creator.add_to_manifest
-				JOB.receives_implant = src.job_creator.receives_implant
-				JOB.items_in_backpack = src.job_creator.items_in_backpack
-				JOB.items_in_belt = src.job_creator.items_in_belt
-				JOB.spawn_id = src.job_creator.spawn_id
-				JOB.starting_mutantrace = src.job_creator.starting_mutantrace
-				message_admins("Admin [key_name(usr)] created special job [JOB.name]")
-				logTheThing(LOG_ADMIN, usr, "created special job [JOB.name]")
-				logTheThing(LOG_DIARY, usr, "created special job [JOB.name]", "admin")
+				src.create_job(hidden)
 
 			src.job_creator()
 
@@ -910,6 +874,51 @@ var/datum/job_controller/job_controls
 				src.load_another_ckey = null
 				alert(usr, "Could not find a savefile with that ckey!.")
 			src.job_creator()
+
+///create job datum from job-creator job datum. todo just add a clone method to jobs?
+/datum/job_controller/proc/create_job(hidden = FALSE)
+	var/datum/job/created/JOB = new /datum/job/created(src)
+	if(hidden)
+		src.hidden_jobs += JOB
+	else
+		src.special_jobs += JOB
+
+	JOB.name = src.job_creator.name
+	JOB.wages = src.job_creator.wages
+	JOB.limit = src.job_creator.limit
+	JOB.mob_type = src.job_creator.mob_type
+	JOB.slot_head = src.job_creator.slot_head
+	JOB.slot_mask = src.job_creator.slot_mask
+	JOB.slot_ears = src.job_creator.slot_ears
+	JOB.slot_eyes = src.job_creator.slot_eyes
+	JOB.slot_glov = src.job_creator.slot_glov
+	JOB.slot_foot = src.job_creator.slot_foot
+	JOB.slot_card = src.job_creator.slot_card
+	JOB.slot_jump = src.job_creator.slot_jump
+	JOB.slot_suit = src.job_creator.slot_suit
+	JOB.slot_back = src.job_creator.slot_back
+	JOB.slot_belt = src.job_creator.slot_belt
+	JOB.slot_poc1 = src.job_creator.slot_poc1
+	JOB.slot_poc2 = src.job_creator.slot_poc2
+	JOB.slot_lhan = src.job_creator.slot_lhan
+	JOB.slot_rhan = src.job_creator.slot_rhan
+	JOB.access = JOB.access | src.job_creator.access
+	JOB.change_name_on_spawn = src.job_creator.change_name_on_spawn
+	JOB.special_spawn_location = src.job_creator.special_spawn_location
+	JOB.bio_effects = src.job_creator.bio_effects
+	JOB.objective = src.job_creator.objective
+	JOB.announce_on_join = src.job_creator.announce_on_join
+	JOB.radio_announcement = src.job_creator.radio_announcement
+	JOB.add_to_manifest = src.job_creator.add_to_manifest
+	JOB.receives_implant = src.job_creator.receives_implant
+	JOB.items_in_backpack = src.job_creator.items_in_backpack
+	JOB.items_in_belt = src.job_creator.items_in_belt
+	JOB.spawn_id = src.job_creator.spawn_id
+	JOB.starting_mutantrace = src.job_creator.starting_mutantrace
+	message_admins("Admin [key_name(usr)] created special job [JOB.name]")
+	logTheThing(LOG_ADMIN, usr, "created special job [JOB.name]")
+	logTheThing(LOG_DIARY, usr, "created special job [JOB.name]", "admin")
+	return JOB
 
 ///Soft supresses crash on failing to find a job
 /proc/find_job_in_controller_by_string(var/string, var/staple_only = 0, var/soft = FALSE, var/case_sensitive = TRUE)
