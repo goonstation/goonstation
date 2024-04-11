@@ -193,8 +193,8 @@
 			if (ishuman(ownerMob))
 				var/mob/living/carbon/human/H = ownerMob
 				if (H.sims)
-					H.sims.affectMotive("Thirst", 20)
-					H.sims.affectMotive("Hunger", 20)
+					H.sims.affectMotive("Thirst", 10)
+					H.sims.affectMotive("Hunger", 10)
 
 	onInterrupt()
 		..()
