@@ -14,7 +14,7 @@
 	sliceable = TRUE
 	slice_amount = 6
 	slice_product = /obj/item/reagent_containers/food/snacks/breadslice
-	initial_volume = 30
+	initial_volume = 60
 	initial_reagents = "bread"
 	food_effects = list("food_hp_up")
 
