@@ -1075,13 +1075,17 @@ var/list/fun_images = list()
 	H.JobEquipSpawned("Staff Assistant", 1)
 	H.update_colorful_parts()
 
-/client/proc/respawn_as_job(var/datum/job/J in (job_controls.staple_jobs|job_controls.special_jobs|job_controls.hidden_jobs))
+/client/proc/respawn_as_job(var/datum/job/J in (job_controls.staple_jobs|job_controls.special_jobs|job_controls.hidden_jobs|job_controls.savefile_get_job_names(src)))
 	set name = "Respawn As Job"
 	set desc = "Respawn yourself as a given job. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
 	SHOW_VERB_DESC
+	if(istext(J))
+		var/idx = job_controls.savefile_get_job_names(src)?.Find(J)
+		if(job_controls.savefile_load(src, idx))
+			J = job_controls.create_job(TRUE)
 
 	respawn_as_self_internal(new_self=TRUE, jobstring = J.name)
 

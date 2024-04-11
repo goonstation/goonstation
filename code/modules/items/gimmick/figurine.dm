@@ -1005,6 +1005,31 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "sallymaccaa"
 		ckey = "avanth"
 
+	rukert
+		name = "\improper Rupert Crimehanson"
+		icon_state = "rupertcrimehanson"
+		ckey = "rukert"
+
+	kirdy2
+		name = "\improper Old Longbert"
+		icon_state = "oldlongbert"
+		ckey = "kirdy2"
+
+	O514
+		name = "\improper Emma Nureni"
+		icon_state = "emmanureni"
+		ckey = "O514"
+
+	sockssq
+		name = "\improper Hot Fudge"
+		icon_state = "hotfudge"
+		ckey = "sockssq"
+
+	torchwick
+		name = "\improper Sam Relius"
+		icon_state = "samrelius"
+		ckey = "torchwick"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
