@@ -191,6 +191,7 @@
 
 /client/New()
 	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
+	logTheThing(LOG_ADMIN, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]")
 	logTheThing(LOG_DIARY, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]", "access")
 
 	login_success = 0
@@ -302,6 +303,7 @@
 
 	if (checkBan)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
+		logTheThing(LOG_ADMIN, null, "Failed Login: [constructTarget(src,"diary")] - Banned")
 		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned", "access")
 		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])"))
 		var/banstring = {"
@@ -524,6 +526,7 @@
 		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
 		src.set_color(normalize_color_to_matrix("#AAAAAA"))
 
+	logTheThing(LOG_ADMIN, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]")
 	logTheThing(LOG_DIARY, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
 
 	if (config.log_access)
