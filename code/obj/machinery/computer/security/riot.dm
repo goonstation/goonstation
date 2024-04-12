@@ -198,15 +198,11 @@
 		return
 
 	if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
-		if(src.authed)
-			src.manual_unauthorize(user)
+		if(!src.authed)
+			boutput(user, "Armory is not currently authorized!")
 			return
-		if (src.auth_need == 2)
-			boutput(user, SPAN_ALERT("The authorization approval count has already been reduced to two."))
-			return
-		var/auth_choice = tgui_alert(user, "Permanantly reduce authorization approval count to two?", "Armory Authentication Alert", list("Yes", "No"))
-		if (auth_choice == "Yes" && in_interact_range(src, user) && equipped_or_holding(W, user))
-			src.auth_need = 2
+
+		src.manual_unauthorize(user)
 		return
 
 	var/obj/item/card/id/id_card = get_id_card(W)
@@ -237,7 +233,7 @@
 		return
 
 	if(authed && (access_maxsec in W:access))
-		src.manual_unauthorize(user)
+			src.manual_unauthorize(user)
 		return
 
 	if (!src.authorized)
