@@ -921,7 +921,7 @@ proc/random_accent()
 		T.update()
 	return modded
 
-/proc/germify(var/string) // pretty much the same thing as scots and tyke, but instead with some common cognates between english and german. The list is significantly smaller
+/proc/germify(var/string) // pretty much the same thing as scots and tyke, but instead with some common cognates between english and german. The list is significantly smaller, as scots and english are mutually intelligible while english and german are not.
 
 	var/list/phrase = list(
 		"excuse me" = "entschuldigung",
@@ -938,7 +938,8 @@ proc/random_accent()
 		"thats too bad" = "schade",
 		"too bad" = "schade",
 		"no problem" = "kein problem"
-	)
+	) //this list is seperate from the text document, as the current accent system does not support multi word phrases. This could use reworking.
+	
 	var/substitute = null
 	for(var/i=1,i <= length(phrase),i++)
 		substitute = phrase[i]
@@ -969,7 +970,7 @@ proc/random_accent()
 				modified_token += P.string
 				i += P.chars_used
 				T.curr_char_pos = T.curr_char_pos + P.chars_used
-				T.update()
+				T.update() //This runs the text through the cognate list first, then runs it through the parser to remain consistent.
 		else
 			var/datum/text_roamer/T = new/datum/text_roamer(original_word)
 			for(var/i = 0, i < length(original_word), i=i)
