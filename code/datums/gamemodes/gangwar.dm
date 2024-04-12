@@ -114,23 +114,12 @@
 	var/datum/job/job = find_job_in_controller_by_string(M.mind.assigned_role)
 	. = !job || job.can_join_gangs
 
-/datum/game_mode/gang/proc/force_shuttle()
-	if (!emergency_shuttle.online)
-		emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
-		emergency_shuttle.incall()
-		command_alert("Centcom is very disappointed in you all for this 'gang' silliness. The shuttle has been called.","Emergency Shuttle Update")
-
 /datum/game_mode/gang/send_intercept()
 	..(src.traitors)
 
 
 /datum/game_mode/gang/process()
 	..()
-#ifndef RP_MODE
-	if (ticker.round_elapsed_ticks >= 55 MINUTES && !shuttle_called)
-		shuttle_called = TRUE
-		force_shuttle()
-#endif //RP_MODE
 	slow_process ++
 	if (slow_process < 5)
 		return
