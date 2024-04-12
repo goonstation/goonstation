@@ -233,10 +233,6 @@
 		return
 
 	if(authed && (access_maxsec in W:access))
-		var/choice = tgui_alert(user, "Would you like to unauthorize security's access to riot gear?", "Armory Unauthorization", list("Unauthorize", "No"))
-		if(BOUNDS_DIST(user, src) > 0) return
-		src.add_fingerprint(user)
-		if (choice == "Unauthorize")
 			src.manual_unauthorize(user)
 		return
 
@@ -291,11 +287,15 @@
 
 /// Handles unauthorization from armory computer interaction
 /obj/machinery/computer/riotgear/proc/manual_unauthorize(mob/user)
-	if(GET_COOLDOWN(src, "unauth"))
-		boutput(user, SPAN_ALERT(" The armory computer cannot take your commands at the moment! Wait [GET_COOLDOWN(src, "unauth")/10] seconds!"))
-		playsound( src.loc, 'sound/machines/airlock_deny.ogg', 10, 0 )
-		return
-	if(!ON_COOLDOWN(src, "unauth", 5 MINUTES))
-		unauthorize()
-		playsound(src.loc, 'sound/machines/chime.ogg', 10, 1)
-		boutput(user,SPAN_NOTICE(" The armory's equipments have returned to having their default access!"))
+	var/choice = tgui_alert(user, "Would you like to unauthorize security's access to riot gear?", "Armory Unauthorization", list("Unauthorize", "No"))
+	if(!in_interact_range(src, user)) return
+	src.add_fingerprint(user)
+	if (choice == "Unauthorize")
+		if(GET_COOLDOWN(src, "unauth"))
+			boutput(user, SPAN_ALERT(" The armory computer cannot take your commands at the moment! Wait [GET_COOLDOWN(src, "unauth")/10] seconds!"))
+			playsound( src.loc, 'sound/machines/airlock_deny.ogg', 10, 0 )
+			return
+		if(!ON_COOLDOWN(src, "unauth", 5 MINUTES))
+			unauthorize()
+			playsound(src.loc, 'sound/machines/chime.ogg', 10, 1)
+			boutput(user,SPAN_NOTICE(" The armory's equipments have returned to having their default access!"))
