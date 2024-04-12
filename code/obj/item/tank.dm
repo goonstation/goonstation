@@ -412,10 +412,18 @@ TYPEINFO(/obj/item/tank/jetpack)
 	item_state = "jetpack_mk2_0"
 	desc = "Suitable for underwater work, this back-mounted DPV lets you glide through the ocean depths with ease."
 	extra_desc = "It comes pre-loaded with oxygen, which is used for internals as well as to power its propulsion system."
+	abilities = list(/obj/ability_button/jetpack2_toggle, /obj/ability_button/tank_valve_toggle)
 
-	New()
-		..()
-		setProperty("negate_fluid_speed_penalty", 0.6)
+	toggle()
+		. = ..()
+		if (src.on)
+			src.setProperty("negate_fluid_speed_penalty", 0.6)
+		else
+			src.delProperty("negate_fluid_speed_penalty")
+		if (ismob(src.loc))
+			var/mob/M = src.loc
+			M.update_equipped_modifiers()
+
 
 /obj/item/tank/jetpack/syndicate
 	name = "jetpack (oxygen)"

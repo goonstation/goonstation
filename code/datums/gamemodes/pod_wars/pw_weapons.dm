@@ -104,7 +104,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	spread_angle = 10
 
 	New()
-		AddComponent(/datum/component/holdertargeting/fullauto, 2, 1.5, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 2)
 		..()
 	nanotrasen
 		muzzle_flash = "muzzle_flash_plaser"

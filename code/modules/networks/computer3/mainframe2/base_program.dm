@@ -635,7 +635,7 @@
 				continue
 
 			else
-				buggyText = trim(copytext(text, searchPosition, findPosition))
+				buggyText = trimtext(copytext(text, searchPosition, findPosition))
 
 		if(buggyText)
 

@@ -873,12 +873,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 							account["current_money"] -= total
 							storage.eject_ores(ore, get_output_location(), quantity, transmit=1, user=usr)
 
-							 // This next bit is stolen from PTL Code
-							var/list/accounts = \
-								data_core.bank.find_records("job", "Chief Engineer") + \
-								data_core.bank.find_records("job", "Chief Engineer") + \
-								data_core.bank.find_records("job", "Miner")
-
+							 // Chief gets a bigger cut
+							var/list/accounts = FindBankAccountsByJobs(list("Chief Engineer", "Chief Engineer", "Miner"))
 
 							var/datum/signal/minerSignal = get_free_signal()
 							minerSignal.source = src
@@ -2609,6 +2605,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/oresatchelL,
 		/datum/manufacture/microjetpack,
 		/datum/manufacture/jetpack,
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/jetpackmkII,
+#endif
 		/datum/manufacture/geoscanner,
 		/datum/manufacture/geigercounter,
 		/datum/manufacture/eyes_meson,
@@ -2616,9 +2615,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/ore_accumulator,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
-#ifdef UNDERWATER_MAP
-		/datum/manufacture/jetpackmkII,
-#endif
 #ifndef UNDERWATER_MAP
 		/datum/manufacture/mining_magnet
 #endif

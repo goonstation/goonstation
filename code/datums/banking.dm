@@ -16,8 +16,6 @@
 	var/payroll_stipend = 0
 	var/total_stipend = 0
 
-	var/list/jobs = new/list()
-
 	var/pay_active = 1
 	var/lottery_active = 0		// inactive until someone actually buys a ticket
 	var/time_between_paydays = 0
@@ -40,32 +38,7 @@
 		time_between_paydays = 5 MINUTES
 		time_between_lotto = 8 MINUTES
 
-		for(var/occupation in occupations)
-
-			// Skip AI
-			if(occupation == "AI" || occupation == "Cyborg")
-				continue
-
-			// If its not already in the list add it
-			if (!(occupation in jobs))
-				// 0.0 is the default wage
-				jobs[occupation] = 0
-
-		for(var/occupation in assistant_occupations)
-			// If its not already in the list add it
-			if (!(occupation in jobs))
-				// 0.0 is the default wage
-				jobs[occupation] = 0
-
-		// Captain isn't in the occupation list
-		jobs["Captain"] = 0
-
-		default_wages()
-
-
-	proc/default_wages()
-
-		station_budget =      0
+		station_budget = 0
 		shipping_budget = PAY_EXECUTIVE*5
 		research_budget = PAY_EXECUTIVE*10
 		total_stipend = station_budget + shipping_budget + research_budget
@@ -73,43 +46,9 @@
 		// This is gonna throw up some crazy errors if it isn't done right!
 		// cogwerks - raising all of the paychecks, oh god
 
-		jobs["Engineer"] = PAY_TRADESMAN
-		jobs["Miner"] = PAY_TRADESMAN
-//		jobs["Atmospheric Technician"] = PAY_TRADESMAN
-		jobs["Security Officer"] = PAY_TRADESMAN
-//		jobs["Vice Officer"] = PAY_TRADESMAN
-		jobs["Detective"] = PAY_TRADESMAN
-		jobs["Geneticist"] = PAY_DOCTORATE
-		jobs["Pathologist"] = PAY_DOCTORATE
-		jobs["Scientist"] = PAY_DOCTORATE
-		jobs["Medical Doctor"] = PAY_DOCTORATE
-		jobs["Medical Director"] = PAY_IMPORTANT
-		jobs["Head of Personnel"] = PAY_IMPORTANT
-		jobs["Head of Security"] = PAY_IMPORTANT
-//		jobs["Head of Security"] = PAY_DUMBCLOWN
-		jobs["Chief Engineer"] = PAY_IMPORTANT
-		jobs["Research Director"] = PAY_IMPORTANT
-		jobs["Chaplain"] = PAY_UNTRAINED
-		jobs["Roboticist"] = PAY_DOCTORATE
-//		jobs["Hangar Mechanic"]= PAY_TRADESMAN
-//		jobs["Elite Security"] = PAY_TRADESMAN
-		jobs["Bartender"] = PAY_UNTRAINED
-		jobs["Chef"] = PAY_UNTRAINED
-		jobs["Janitor"] = PAY_TRADESMAN
-		jobs["Clown"] = PAY_DUMBCLOWN
-//		jobs["Chemist"] = PAY_DOCTORATE
-		jobs["Quartermaster"] = PAY_TRADESMAN
-		jobs["Botanist"] = PAY_TRADESMAN
-		jobs["Rancher"] = PAY_TRADESMAN
-//		jobs["Attorney at Space-Law"] = PAY_DOCTORATE
-		jobs["Staff Assistant"] = PAY_UNTRAINED
-		jobs["Medical Assistant"] = PAY_UNTRAINED
-		jobs["Technical Assistant"] = PAY_UNTRAINED
-		jobs["Security Assistant"] = PAY_UNTRAINED
-		jobs["Captain"] = PAY_EXECUTIVE
-
 		src.time_until_lotto = ( ticker ? ticker.round_elapsed_ticks : 0 ) + time_between_lotto
 		src.time_until_payday = ( ticker ? ticker.round_elapsed_ticks : 0 ) + time_between_paydays
+
 
 	proc/process()
 		if(!ticker)
@@ -197,19 +136,9 @@
 
 		//LAGCHECK(LAG_LOW)
 		command_alert("Lottery round [lotteryRound]. I wish you all the best of luck. For an amazing prize of [lotteryJackpot] credits the lottery numbers are: [dat]. If you have these numbers get to an ATM to claim your prize now!", "Lottery")
+
 		// We're in the next round!
 		lotteryRound += 1
-
-
-/*
-	proc/update_wage(var/mob/living/carbon/C, var/rank)
-
-		if(!jobs.Find(rank))
-			message_admins("Yo dudes [rank] isn't defined as having any wage, this means they won't get paid!! Alert Nannek this is a disaster!!")
-			return
-
-		jobs[rank] = C.wage
-*/
 
 /obj/machinery/computer/ATM
 	name = "\improper ATM"
@@ -819,6 +748,13 @@ proc/FindBankAccountByName(var/nametosearch)
 	RETURN_TYPE(/datum/db_record)
 	if (!nametosearch) return
 	return data_core.bank.find_record("name", nametosearch)
+
+/// Given a list of jobs, return the associated bank account records. Does not de-duplicate bank account records.
+proc/FindBankAccountsByJobs(var/list/job_list)
+	RETURN_TYPE(/list/datum/db_record)
+	. = list()
+	for (var/each_job in job_list)
+		. += data_core.bank.find_records("job", each_job)
 
 #undef STATE_LOGGEDOFF
 #undef STATE_LOGGEDIN

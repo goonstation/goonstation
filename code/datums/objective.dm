@@ -27,6 +27,21 @@ ABSTRACT_TYPE(/datum/objective)
 	proc/set_up()
 		return
 
+	/// Checks if a mind is not considered alive for objectives.
+	/// Being a silicon (cyborg or AI) does not count.
+	proc/is_target_eliminated(datum/mind/M)
+		if (!M?.current)
+			return TRUE
+		if(isdead(M.current))
+			return TRUE
+		if(inafterlife(M.current))
+			return TRUE
+		if(isVRghost(M.current))
+			return TRUE
+		if(!iscarbon(M.current))
+			return TRUE
+		return FALSE
+
 ///////////////////////////////////////////////////
 // Regular objectives active in current gameplay //
 ///////////////////////////////////////////////////
@@ -72,13 +87,8 @@ ABSTRACT_TYPE(/datum/objective)
 		return target
 
 	check_completion()
-		if(target?.current)
-			if(isdead(target.current) || !iscarbon(target.current) || inafterlife(target.current))
-				return 1
-			else
-				return 0
-		else
-			return 1
+		return src.is_target_eliminated(target)
+
 	proc/create_objective_string(datum/mind/target)
 		if(!(target?.current))
 			explanation_text = "Be dastardly as heck!"
@@ -396,10 +406,9 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		if(ticker.mode.traitors.len + length(ticker.mode.Agimmicks) <= 1)
 			return 1 // Because apparently you can get this as a solo traitor aaaaaa
 		for (var/datum/mind/M in ticker.mode.traitors + ticker.mode.Agimmicks)
-			if (!M.current)
+			if(M != src.owner && src.is_target_eliminated(M))
 				continue
-			if (!isdead(M.current) && iscarbon(M.current))
-				return 0
+			return 0
 
 		return 1
 
@@ -767,20 +776,19 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 
 
 /datum/objective/specialist/gang
-	explanation_text = "Kill the leaders of every other gang without being killed yourself."
+	explanation_text = "Become the biggest, baddest gang on the station!"
 
 	check_completion()
-		if (!owner.current || isdead(owner.current))
-			return FALSE
-
-		for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists(ROLE_GANG_LEADER))
+		var/our_score = 0
+		var/highest_score = 0
+		for (var/datum/antagonist/gang_leader/antagonist_role as anything in get_all_antagonists(ROLE_GANG_LEADER))
 			if (antagonist_role.owner == owner)
-				continue
+				our_score = antagonist_role.gang.gang_score()
 
-			if (antagonist_role.owner.current && !isdead(antagonist_role.owner.current))
-				return FALSE
+			else if (antagonist_role.gang)
+				highest_score = max(highest_score, antagonist_role.gang.gang_score())
 
-		return TRUE
+		return (our_score >= highest_score)
 
 /datum/objective/specialist/gang/member
 	explanation_text = "Protect your boss, recruit new members, tag up the station, and beware the other gangs!."
@@ -1104,10 +1112,7 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		if(emergency_shuttle.location<SHUTTLE_LOC_RETURNED)
 			return FALSE
 
-		if(!owner.current || isdead(owner.current))
-			return FALSE
-
-		if(isghostcritter(owner.current))
+		if(src.is_target_eliminated(owner))
 			return FALSE
 
 		return in_centcom(src.owner.current)
@@ -1116,24 +1121,13 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 	explanation_text = "Stay alive until the end of the shift. It doesn't matter whether you're on station or not."
 
 	check_completion()
-		if(!owner.current || isdead(owner.current))
-			return 0
-		if(isghostcritter(owner.current))
-			return 0
-
-		return 1
+		return !src.is_target_eliminated(owner)
 
 /datum/objective/escape/kamikaze
 	explanation_text = "Die a glorious death."
 
 	check_completion()
-		if(isghostdrone(owner.current))
-			return 1
-
-		if(!owner.current || isdead(owner.current) || isVRghost(owner.current) || inafterlifebar(owner.current))
-			return 1
-
-		return 0
+		return src.is_target_eliminated(owner)
 
 /datum/objective/escape/stirstir
 	explanation_text = "Rescue Monsieur Stirstir from the brig and ensure his safety all the way to Centcom."
@@ -1173,9 +1167,9 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		targetname = target.current.real_name
 
 	check_completion()
-		if(target?.current && !isdead(target.current) && ishuman(target.current) && in_centcom(target.current))
-			return 1
-		return 0
+		if(src.is_target_eliminated(target))
+			return FALSE
+		return in_centcom(target.current)
 
 /datum/objective/escape/hijack_group
 	explanation_text = "Hijack the emergency shuttle by escaping alone or with your accomplices. Anyone else who snuck on needs to die before you reach Centcom."
@@ -1193,9 +1187,8 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 
 		for(var/mob/living/player in mobs)
 			if (player.mind && (player.mind != owner) && !(player.mind in accomplices))
-				if (!isdead(player)) //they're not dead
-					if (in_centcom(player) && !isghostcritter(player) && !isghostdrone(player)) //you've already killed them once, ghostcritters don't count
-						return FALSE
+				if (!src.is_target_eliminated(player.mind) && in_centcom(player))
+					return FALSE
 
 		return TRUE
 
@@ -1212,7 +1205,7 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 	explanation_text = "Hijack the emergency shuttle by ensuring only you and your... body parts remain alive by the time it reaches Centcom."
 	check_completion()
 		var/datum/abilityHolder/changeling/lingholder = owner.current?.get_ability_holder(/datum/abilityHolder/changeling)
-		for (var/mob/M in lingholder.hivemind)
+		for (var/mob/M in lingholder?.hivemind)
 			src.accomplices |= M.mind
 		. = ..()
 
@@ -1451,17 +1444,9 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		for (var/datum/mind/M in ticker.mode.traitors)
 			if (owner == M)
 				continue
-			if (!M.current)
-				continue
-			if(isghostcritter(M.current))
-				continue
-			if (isrobot(M.current))
-				continue
-			if (!isdead(M.current))
-				return 0
-
-
-		return 1
+			if (!src.is_target_eliminated(M))
+				return FALSE
+		return TRUE
 
 /////////////////////////////////////////////////////////
 // Battle Royale objective                             //
@@ -1474,17 +1459,9 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		for (var/datum/mind/M in ticker.mode.traitors)
 			if (owner == M)
 				continue
-			if (!M.current)
-				continue
-			if(isghostcritter(M.current))
-				continue
-			if (isrobot(M.current))
-				continue
-			if (!isdead(M.current))
-				return 0
-
-
-		return 1
+			if(!src.is_target_eliminated(M))
+				return FALSE
+		return TRUE
 
 /////////////////////////////////////////////////////////
 // Arcfiend Objectives                                 //
@@ -1551,13 +1528,21 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 
 /datum/objective_set/changeling
 	objective_list = list(/datum/objective/specialist/absorb)
-	escape_choices = list(/datum/objective/escape,
-	/datum/objective/escape/hijack_group/changeling)
+	escape_choices = list(
+		/datum/objective/escape,
+#ifndef RP_MODE
+		/datum/objective/escape/hijack_group/changeling
+#endif
+	)
 
 /datum/objective_set/vampire
 	objective_list = list(/datum/objective/specialist/drinkblood)
-	escape_choices = list(/datum/objective/escape,
-	/datum/objective/escape/hijack_group/vampire)
+	escape_choices = list(
+		/datum/objective/escape,
+#ifndef RP_MODE
+		/datum/objective/escape/hijack_group/vampire
+#endif
+	)
 
 /datum/objective_set/grinch
 	objective_list = list(/datum/objective/specialist/ruin_xmas)

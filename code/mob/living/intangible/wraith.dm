@@ -441,13 +441,13 @@
 
 
 	say(var/message)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		if (!message)
 			return
 
 		if (src.density) //If corporeal speak to the living (garbled)
 			logTheThing(LOG_DIARY, src, "(WRAITH): [message]", "say")
-
+			SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")
 				return

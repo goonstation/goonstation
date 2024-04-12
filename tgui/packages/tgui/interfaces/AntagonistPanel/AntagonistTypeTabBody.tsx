@@ -522,18 +522,6 @@ const GangLockerReadout = (props: TabSectionData, context) => {
       <Divider />
       <LabeledList>
         <LabeledList.Item
-          label="Health"
-          verticalAlign="middle">
-          <ProgressBar
-            minValue={0}
-            maxValue={gangLockerData.maxHealth}
-            value={gangLockerData.health}
-            color="green"
-            backgroundColor="red"
-            mb={1}
-          />
-        </LabeledList.Item>
-        <LabeledList.Item
           label="Location"
           verticalAlign="middle">
           {gangLockerData.area}

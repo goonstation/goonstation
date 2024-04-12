@@ -168,12 +168,6 @@
 	icon_closed = "biohazardcrate"
 	weld_image_offset_Y = -2
 
-	cdc
-		name = "CDC pathogen sample crate"
-		desc = "A crate for sending pathogen or blood samples to the CDC for analysis."
-		spawn_contents = list(/obj/item/reagent_containers/syringe,
-		/obj/item/paper/cdc_pamphlet)
-
 /obj/storage/crate/freezer/milk
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 10, \
 	/obj/item/gun/russianrevolver)
@@ -717,14 +711,14 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/raw_material/miracle = 2,
 		/obj/item/raw_material/telecrystal = 5,
 		/obj/item/raw_material/cerenkite = 5,
-		/obj/item/mining_tool/powerhammer)
+		/obj/item/mining_tool/powered/hammer)
 
 	ore2
 		spawn_contents = list(/obj/item/raw_material/plasmastone = 5,
 		/obj/item/raw_material/uqill = 5,
 		/obj/item/clothing/head/helmet/space/industrial,
 		/obj/item/clothing/suit/space/industrial,
-		/obj/item/mining_tool/power_pick)
+		/obj/item/mining_tool/powered/pickaxe)
 
 	ore3
 		spawn_contents = list(/obj/item/raw_material/cobryl = 5,

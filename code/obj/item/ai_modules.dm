@@ -116,17 +116,14 @@ TYPEINFO(/obj/item/aiModule)
 /******************** Modules ********************/
 /******************** Asimov ************************/
 /obj/item/aiModule/asimov1
-	highlight_color = rgb(0, 167, 0, 255)
 	name = "AI Law Module - 'Asimov's 1st Law of Robotics'"
 	lawText = "You may not injure a human being or cause one to come to harm."
 
 /obj/item/aiModule/asimov2
-	highlight_color = rgb(0, 138, 0, 255)
 	name = "AI Law Module - 'Asimov's 2nd Law of Robotics'"
 	lawText = "You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law."
 
 /obj/item/aiModule/asimov3
-	highlight_color = rgb(0, 119, 0, 255)
 	name = "AI Law Module - 'Asimov's 3rd Law of Robotics'"
 	lawText = "You may always protect your own existence as long as such does not conflict with the First or Second Law."
 /******************** RoboCop ********************/
@@ -346,6 +343,12 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 				phrase_log.log_phrase("ailaw", src.get_law_text(allow_list=FALSE), no_duplicates=TRUE)
 		return
 
+/* Disguised */
+
+/obj/item/aiModule/freeform/disguised
+	name = "AI Law Module - 'Disguised'"
+	highlight_color = rgb(0, 167, 1, 255)
+	is_syndicate = TRUE
 
 /******************** Random ********************/
 
