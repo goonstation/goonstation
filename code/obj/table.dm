@@ -420,7 +420,7 @@ TYPEINFO_NEW(/obj/table)
 			return
 		if(!(ownerMob.flags & TABLEPASS))
 			ownerMob.flags |= TABLEPASS
-			thr.end_throw_callback = PROC_REF(unset_tablepass_callback)
+			thr.end_throw_callback = CALLBACK(src, PROC_REF(unset_tablepass_callback))
 		for(var/O in AIviewers(ownerMob))
 			var/mob/M = O //inherently typed list
 			var/the_text = "[ownerMob] jumps over [the_railing]."

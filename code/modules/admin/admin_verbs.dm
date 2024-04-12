@@ -813,7 +813,7 @@ var/list/special_pa_observing_verbs = list(
 		if (src.owner:stealth && src.owner:alt_key)
 			src.set_alt_key()
 		if (new_key)
-			new_key = trim(new_key)
+			new_key = trimtext(new_key)
 			//stealth_hide_fakekey = (alert("Hide your fake key when using DSAY?", "Extra stealthy","Yes", "No") == "Yes")
 			// I think if people really wanna be Denmark they can just set themselves to be Denmark
 			new_key = strip_html(new_key)
@@ -866,7 +866,7 @@ var/list/special_pa_observing_verbs = list(
 		if (src.owner:alt_key && src.owner:stealth)
 			src.set_stealth_mode()
 		if (new_key)
-			new_key = trim(new_key)
+			new_key = trimtext(new_key)
 			new_key = strip_html(new_key)
 			if (length(new_key) >= 50)
 				new_key = copytext(new_key, 1, 50)

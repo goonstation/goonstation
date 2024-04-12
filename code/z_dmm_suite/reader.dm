@@ -285,10 +285,10 @@ dmm_suite
 						key_value_regex.Find(key_str)
 						key_str = key_value_regex.group[1]
 						val_str = key_value_regex.group[2]
-						var/val = isnull(val_str) ? null : loadAttribute(trim(val_str), strings)
-						.[loadAttribute(trim(key_str), strings)] = val
+						var/val = isnull(val_str) ? null : loadAttribute(trimtext(val_str), strings)
+						.[loadAttribute(trimtext(key_str), strings)] = val
 					else
-						. += loadAttribute(trim(key_str), strings)
+						. += loadAttribute(trimtext(key_str), strings)
 
 
 //-- Preloading ----------------------------------------------------------------

@@ -233,7 +233,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 		return
 
 	if (isdead(src))
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		return src.say_dead(message)
 
 	// wtf?
@@ -243,7 +243,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	if (length(message) >= 2)
 		if (copytext(lowertext(message), 1, 3) == ":s")
 			message = copytext(message, 3)
-			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+			message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			src.robot_talk(message)
 		else
 			return ..(message)
@@ -263,7 +263,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 	logTheThing(LOG_DIARY, src, ": [message]", "say")
 
-	message = trim(html_encode(message))
+	message = trimtext(html_encode(message))
 	message = src.check_singing_prefix(message)
 
 	if (!message)
@@ -669,7 +669,7 @@ var/global/list/module_editors = list()
 	src.fake_laws = list()
 	// cleanse the lines and add them as our laws
 	for(var/raw_law in raw_law_list)
-		var/nice_law = trim(strip_html(raw_law))
+		var/nice_law = trimtext(strip_html(raw_law))
 		// empty lines would probably be an accident and result in awkward pauses that might give the AI away
 		if (!length(nice_law))
 			continue
