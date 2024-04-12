@@ -9,6 +9,8 @@
 	var/net_id = null
 	var/control_frequency = "1461"
 	var/radiorange = 3
+	/// Was the armory authorized via authdisk?
+	var/authdisk_authorized = FALSE
 	desc = "Use this computer to authorize security access to the Armory. You need an ID with security access to do so."
 
 	light_r =1
@@ -113,6 +115,16 @@
 			src.icon_state = "drawbr-alert"
 			src.UpdateIcon()
 
+	get_help_message()
+		if (src.authed)
+			. = "The Head of Security can unauthorize armory access."
+			if(!authdisk_authorized)
+				. += "<br>You can also use the <b>Authentication Disk</b> to revoke access."
+		else
+			. = "Three security personnel, or the Head of Security, can authorize access."
+			if(!authdisk_authorized)
+				. += "<br>You can also use the <b>Authentication Disk</b> to issue an emergency override."
+
 	proc/authorize()
 		if(src.authed)
 			return
@@ -198,11 +210,16 @@
 		return
 
 	if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
-		if(!src.authed)
-			boutput(user, "Armory is not currently authorized!")
+		if(src.authdisk_authorized)
+			boutput(user, SPAN_ALERT("Emergency armory authorizations cannot be cleared or reissued!"))
 			return
-
-		src.manual_unauthorize(user)
+		if(src.authed)
+			src.manual_unauthorize(user)
+			return
+		var/emergency_auth = tgui_alert(user, "This cannot be undone by Authentication Disk!", "Authentication Warning", list("Emergency Authorization", "Cancel"))
+		if(emergency_auth == "Emergency Authorization" && in_interact_range(src, user) && equipped_or_holding(W, user))
+			src.authdisk_authorized = TRUE
+			src.authorize()
 		return
 
 	var/obj/item/card/id/id_card = get_id_card(W)
@@ -233,7 +250,7 @@
 		return
 
 	if(authed && (access_maxsec in W:access))
-			src.manual_unauthorize(user)
+		src.manual_unauthorize(user)
 		return
 
 	if (!src.authorized)
