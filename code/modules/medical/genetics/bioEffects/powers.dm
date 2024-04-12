@@ -1553,7 +1553,7 @@
 			SPAWN(0.7 SECONDS)
 				owner.canmove = 1
 				owner.restrain_time = 0
-				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
+				var/obj/dummy/spell_invis/dimshift/invis_object = new /obj/dummy/spell_invis/dimshift(get_turf(owner), owner, P)
 				invis_object.canmove = 0
 				owner.set_loc(invis_object)
 				P.processing = FALSE
@@ -1570,13 +1570,6 @@
 				qdel(invis_object)
 			P.last_loc = null
 
-			owner.visible_message(SPAN_ALERT("<b>[owner] appears in a burst of blue light!</b>"))
-			playsound(owner.loc, 'sound/effects/ghost2.ogg', 50, 0)
-			SPAWN(0.7 SECONDS)
-				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
-				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
-				P.active = FALSE
-				P.processing = FALSE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2283,7 +2276,7 @@
 					//double power if the ability is empowered (doesn't really do anything, but w/e)
 					var/tmp_force = thrown_limb.throwforce
 					thrown_limb.throwforce = limb_force* (throw_power+1)	//double damage if empowered
-					var/callback = (SL?.stun_mode) ? /datum/targetable/geneticsAbility/shoot_limb/proc/hit_callback : null
+					var/datum/callback/callback = (SL?.stun_mode) ? CALLBACK(src, PROC_REF(hit_callback)) : null
 					thrown_limb.throw_at(target, range, throw_power * (linked_power.power), end_throw_callback=callback)
 					//without snychronizer, you take damage and bleed on usage of the power
 					if (!linked_power.safety)

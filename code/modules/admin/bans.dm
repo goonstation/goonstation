@@ -97,7 +97,7 @@
 
 			del(targetClient)
 		else
-			logTheThing(LOG_DEBUG, "Bans: unable to find client to kick for banned ckey [ckey]")
+			logTheThing(LOG_DEBUG, ckey, "Bans: unable to find client to kick for banned ckey [ckey]")
 
 	/// Check if a ban exists
 	proc/check(ckey, comp_id, ip)
@@ -333,12 +333,14 @@
 		"duration" = duration
 	)
 
-/client/proc/addBanTemp()
+/client/proc/addBanTemp(mob/target)
 	set name = "Add Ban"
 	set desc = "Add a ban"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
-	var/list/data = src.addBanTempDialog()
+	var/list/data = src.addBanTempDialog(target)
 	if (!data) return
 
 	try

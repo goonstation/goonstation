@@ -4102,7 +4102,7 @@
 	},
 /area/station/crew_quarters/quartersA)
 "anF" = (
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /obj/item/storage/toolbox/artistic,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -4892,6 +4892,10 @@
 /obj/item/reagent_containers/syringe,
 /obj/machinery/light/incandescent/cool,
 /obj/item/storage/firstaid/regular,
+/obj/item/chem_grenade/pepper{
+	pixel_x = 11;
+	pixel_y = 3
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aqm" = (
@@ -11024,10 +11028,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
-"aJX" = (
-/obj/rack/organized/techstorage_eng,
-/turf/simulated/floor/plating/random,
-/area/station/storage/tech)
 "aJY" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
@@ -11081,10 +11081,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/light_switch/auto,
-/turf/simulated/floor/plating/random,
-/area/station/storage/tech)
-"aKp" = (
-/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aKr" = (
@@ -19501,6 +19497,10 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent/warm,
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "bsB" = (
@@ -19508,11 +19508,19 @@
 /area/station/crew_quarters/fitness)
 "bsC" = (
 /obj/landmark/halloween,
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "bsD" = (
 /obj/decal/boxingrope{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -19539,6 +19547,9 @@
 /obj/item/clothing/under/shorts/black{
 	pixel_x = -7;
 	pixel_y = -5
+	},
+/obj/decal/stage_edge{
+	dir = 8
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
@@ -19702,6 +19713,10 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "btl" = (
@@ -19730,6 +19745,9 @@
 	},
 /obj/item/shinai_bag,
 /obj/item/storage/box/kendo_box/hakama,
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "btn" = (
@@ -19809,11 +19827,19 @@
 	density = 0;
 	dir = 8
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "btI" = (
 /obj/decal/boxingropeenter{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -19951,6 +19977,9 @@
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
 "bug" = (
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "buh" = (
@@ -20139,6 +20168,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "buK" = (
@@ -22172,6 +22202,10 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 10
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "bBE" = (
@@ -23340,14 +23374,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"bFx" = (
-/obj/storage/crate/bloody{
-	welded = 1
-	},
-/obj/item/mining_tool/powerhammer,
-/obj/item/shipcomponent/mainweapon/mining,
-/turf/space/fluid,
-/area/space)
 "bFy" = (
 /obj/machinery/dispenser{
 	pltanks = 0
@@ -23503,6 +23529,9 @@
 /area/space)
 "bFZ" = (
 /obj/decal/boxingrope,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "bGa" = (
@@ -24815,6 +24844,10 @@
 "bKO" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -27760,7 +27793,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bUY" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/machinery/light/incandescent/harsh/very,
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -30553,9 +30586,9 @@
 	dir = 6
 	},
 /obj/rack,
-/obj/item/mining_tool/power_shovel,
-/obj/item/mining_tool/power_shovel,
-/obj/item/mining_tool/power_shovel,
+/obj/item/mining_tool/powered/shovel,
+/obj/item/mining_tool/powered/shovel,
+/obj/item/mining_tool/powered/shovel,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "ceN" = (
@@ -36182,6 +36215,16 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
+"hKO" = (
+/obj/decal/boxingrope{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "hLj" = (
 /obj/strip_door,
 /obj/machinery/conveyor/EW{
@@ -37349,6 +37392,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"jDV" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "jEl" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -38197,6 +38247,10 @@
 /obj/item/raw_material/pharosium,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
+"kWm" = (
+/obj/rack/organized/techstorage_med,
+/turf/simulated/floor/plating/random,
+/area/station/storage/tech)
 "kXn" = (
 /obj/critter/gunbot/drone,
 /turf/simulated/floor/red,
@@ -38706,6 +38760,11 @@
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
+"lHY" = (
+/obj/item/mining_tool/powered/drill,
+/obj/item/clothing/suit/space/engineer,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/sunken_asteroid)
 "lIc" = (
 /obj/decal/cleanable/dirt,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
@@ -39212,6 +39271,13 @@
 /obj/storage/crate/freezer/milk,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
+"mst" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/stage_edge,
+/turf/simulated/floor/wood/three,
+/area/station/crew_quarters/fitness)
 "mud" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/mapping_helper/firedoor_spawn,
@@ -39395,12 +39461,6 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged1,
 /area/evilreaver/atmospherics)
-"mGS" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/mining_tool/powerhammer,
-/mob/living/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/sunken_asteroid)
 "mHe" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -40915,6 +40975,15 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
+"oLj" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/stage_edge{
+	dir = 9
+	},
+/turf/simulated/floor/wood/three,
+/area/station/crew_quarters/fitness)
 "oLv" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -44311,11 +44380,6 @@
 /obj/rack,
 /turf/simulated/floor/damaged2,
 /area/derelict_diner)
-"unC" = (
-/obj/item/mining_tool/drill,
-/obj/item/clothing/suit/space/engineer,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/sunken_asteroid)
 "unW" = (
 /obj/stool/chair/dining/wood{
 	dir = 4
@@ -44519,6 +44583,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"uIq" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/mining_tool/powered/hammer,
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/sunken_asteroid)
 "uIr" = (
 /obj/item/cable_coil/cut,
 /turf/simulated/floor/plating/damaged3,
@@ -45962,6 +46032,14 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor,
 /area/station/medical/medbay/pharmacy)
+"wSD" = (
+/obj/storage/crate/bloody{
+	welded = 1
+	},
+/obj/item/mining_tool/powered/hammer,
+/obj/item/shipcomponent/mainweapon/mining,
+/turf/space/fluid,
+/area/space)
 "wSI" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -46117,6 +46195,10 @@
 /obj/tree,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
+"xcK" = (
+/obj/rack/organized/techstorage_eng,
+/turf/simulated/floor/plating/random,
+/area/station/storage/tech)
 "xda" = (
 /obj/storage/crate,
 /obj/item/storage/box/mousetraps,
@@ -56424,7 +56506,7 @@ rSv
 rSv
 rSv
 jao
-mGS
+uIq
 jao
 rSv
 rSv
@@ -58545,7 +58627,7 @@ jao
 jao
 jao
 rJJ
-unC
+lHY
 lRj
 hbS
 rSv
@@ -78793,7 +78875,7 @@ bsA
 btj
 btG
 bBC
-bqs
+mst
 buL
 btZ
 bJw
@@ -79091,11 +79173,11 @@ bpE
 bqv
 bqZ
 brS
-bsB
+jDV
 bsB
 bsB
 bFZ
-bqs
+mst
 buL
 btZ
 jqt
@@ -79397,7 +79479,7 @@ bsC
 mRh
 wem
 bFZ
-bqs
+mst
 buL
 bua
 bJA
@@ -79695,7 +79777,7 @@ bpG
 bqv
 bqZ
 brS
-bsB
+jDV
 bsB
 bsB
 bFZ
@@ -79997,11 +80079,11 @@ bpH
 bqv
 bra
 brT
-bsD
+hKO
 bsD
 btI
 bKO
-bqs
+mst
 buL
 btZ
 bJA
@@ -80303,7 +80385,7 @@ bsE
 btl
 btJ
 bug
-bqs
+oLj
 buL
 btZ
 bJA
@@ -102013,8 +102095,8 @@ aIm
 aIL
 aJb
 aJD
-aJX
-aKp
+xcK
+kWm
 chB
 aLt
 aDr
@@ -112424,7 +112506,7 @@ aqn
 aqn
 aqn
 aad
-bFx
+wSD
 aqn
 aqn
 aqn

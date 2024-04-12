@@ -22,6 +22,10 @@ ABSTRACT_TYPE(/obj/item)
 	var/inhand_color = null
 	/// storage datum holding it
 	var/datum/storage/stored = null
+	/// Used for the hattable component
+	var/hat_offset_y = 0
+	/// Used for the hattable component
+	var/hat_offset_x = 0
 
 	/*_______*/
 	/*Burning*/
@@ -673,7 +677,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	if(src.material)
 		P.setMaterial(src.material, mutable = src.material.isMutable())
-
+	for (var/datum/statusEffect/effect as anything in src.statusEffects)
+		P.changeStatus(effect.id, effect.duration)
 	src.change_stack_amount(-toRemove)
 	P.change_stack_amount(toRemove - P.amount)
 	return P
@@ -1154,19 +1159,24 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	return "It is \an [t] item."
 
 /obj/item/attack_hand(mob/user)
-	var/checkloc = src.loc
-	while(checkloc && !istype(checkloc,/turf))
-		if (isliving(checkloc) && checkloc != user)
-			if(src in bible_contents)
-				break
-			else
-				return 0
-		checkloc = checkloc:loc
+	var/obj/item/checkloc = src.loc
+	if (!ismob(src.loc)) // Skip this loop if the FIRST loc is a mob, allowing component/hattable to proc take_hat_off on AIs/ghostdrones
+		while(checkloc && !istype(checkloc,/turf))
+			if(isliving(checkloc) && checkloc != user) // This heinous block is to make sure you're not swiping things from other people's backpacks
+				if(src in bible_contents) // Bibles share their contents globally, so magically taking stuff from them is fine
+					break
+				else
+					return 0
+			checkloc = checkloc.loc // Get the loc of the loc! The loop continues until it's the turf of what you clicked on
 
 	if(!src.can_pickup(user))
 		// unholdable storage items
 		src.storage?.storage_item_attack_hand(user)
 		return 0
+
+	if(src.two_handed && !user.can_hold_two_handed() && user.is_that_in_this(src)) // prevent accidentally donating weapons to your enemies
+		boutput(user, SPAN_ALERT("You don't have the hands to hold this item."))
+		return FALSE
 
 	src.throwing = 0
 
@@ -1431,6 +1441,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 
 	msgs.damage = power
+
+	if (is_special && src.special)
+		msgs = src.special.modify_attack_result(user, target, msgs)
+
 	msgs.flush()
 	src.add_fingerprint(user)
 	#ifdef COMSIG_ITEM_ATTACK_POST
@@ -1586,8 +1600,15 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /obj/item/proc/registered_owner()
 	.= 0
 
+/// Force the item to drop from the mob's hands.
+/// If `sever` is TRUE, items will be severed from item arms
+/obj/item/proc/force_drop(var/mob/possible_mob_holder = 0, sever=TRUE)
+	if(sever && (src.temp_flags & IS_LIMB_ITEM))
+		if (istype(src.loc, /obj/item/parts/human_parts/arm/left/item) || istype(src.loc, /obj/item/parts/human_parts/arm/right/item))
+			var/obj/item/parts/human_parts/arm/item_arm = src.loc
+			item_arm.sever()
+			return
 
-/obj/item/proc/force_drop(var/mob/possible_mob_holder = 0)
 	if (!possible_mob_holder)
 		if (ismob(src.loc))
 			possible_mob_holder = src.loc

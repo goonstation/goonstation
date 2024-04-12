@@ -312,7 +312,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 					return
 
 				var/flavor = params["flavor"]
-				var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
+				var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new(src)
 				if(flavor == "beaker")
 					if(!beaker.reagents.total_volume)
 						boutput(usr, SPAN_ALERT("The beaker is empty!"))
@@ -1280,8 +1280,8 @@ TYPEINFO(/obj/submachine/foodprocessor)
 				if (milk_amount < 10 && yoghurt_amount < 10)
 					continue
 
-				var/cream_output = roundfloor(milk_amount / 10)
-				var/yoghurt_output = roundfloor(yoghurt_amount / 10)
+				var/cream_output = floor(milk_amount / 10)
+				var/yoghurt_output = floor(yoghurt_amount / 10)
 				P.reagents.remove_reagent("milk", cream_output * 10)
 				P.reagents.remove_reagent("yoghurt", yoghurt_output * 10)
 				for (var/i in 1 to cream_output)

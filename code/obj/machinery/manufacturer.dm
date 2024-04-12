@@ -740,6 +740,56 @@ TYPEINFO(/obj/machinery/manufacturer)
 			else
 				if(quantity > 0)
 					src.temp = {"I don't have that many for sale, champ.<BR>"}
+					src.temp = null
+				if (src.scan.registered in FrozenAccounts)
+					boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
+					return
+				var/datum/db_record/account = null
+				account = FindBankAccountByName(src.scan.registered)
+				if (account)
+					var/quantity = 1
+					quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
+					if(!isnum_safe(quantity))
+						return
+
+					if(OCD.amount >= quantity && quantity > 0)
+						var/subtotal = round(price * quantity)
+						var/sum_taxes = round(taxes * quantity)
+						var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
+						var/total = subtotal + sum_taxes + rockbox_fees
+						if(account["current_money"] >= total)
+							account["current_money"] -= total
+							storage.eject_ores(ore, get_output_location(), quantity, transmit=1, user=usr)
+
+							 // Chief gets a bigger cut
+							var/list/accounts = FindBankAccountsByJobs(list("Chief Engineer", "Chief Engineer", "Miner"))
+
+							var/datum/signal/minerSignal = get_free_signal()
+							minerSignal.source = src
+							//any non-divisible amounts go to the shipping budget
+							var/leftovers = 0
+							if(length(accounts))
+								leftovers = subtotal % length(accounts)
+								var/divisible_amount = subtotal - leftovers
+								if(divisible_amount)
+									var/amount_per_account = divisible_amount/length(accounts)
+									for(var/datum/db_record/t as anything in accounts)
+										t["current_money"] += amount_per_account
+									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
+							else
+								leftovers = subtotal
+								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
+							wagesystem.shipping_budget += (leftovers + sum_taxes)
+							SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
+
+							src.temp = {"Enjoy your purchase!<BR>"}
+						else
+							src.temp = {"You don't have enough dosh, bucko.<BR>"}
+					else
+						if(quantity > 0)
+							src.temp = {"I don't have that many for sale, champ.<BR>"}
+						else
+							src.temp = {"Enter some actual valid number, you doofus!<BR>"}
 				else
 					src.temp = {"Enter some actual valid number, you doofus!<BR>"}
 		else
@@ -2239,6 +2289,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/robup_recharge,
 		/datum/manufacture/robup_repairpack,
 		/datum/manufacture/robup_speed,
+		/datum/manufacture/robup_mag,
 		/datum/manufacture/robup_meson,
 		/datum/manufacture/robup_aware,
 		/datum/manufacture/robup_physshield,
@@ -2432,6 +2483,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/oresatchelL,
 		/datum/manufacture/microjetpack,
 		/datum/manufacture/jetpack,
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/jetpackmkII,
+#endif
 		/datum/manufacture/geoscanner,
 		/datum/manufacture/geigercounter,
 		/datum/manufacture/eyes_meson,
@@ -2439,9 +2493,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/ore_accumulator,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
-#ifdef UNDERWATER_MAP
-		/datum/manufacture/jetpackmkII,
-#endif
 #ifndef UNDERWATER_MAP
 		/datum/manufacture/mining_magnet
 #endif

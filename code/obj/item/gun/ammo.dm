@@ -237,7 +237,12 @@
 
 				//DEBUG_MESSAGE("Equalized [K]'s ammo type to [A.type]")
 
-			var/move_amount = min(A.amount_left, K.max_ammo_capacity - K.ammo.amount_left)
+			var/move_amount
+			if (K.max_move_amount <= 0)
+				move_amount = min(A.amount_left, K.max_ammo_capacity - K.ammo.amount_left)
+			else
+				move_amount = min(K.max_move_amount,min(A.amount_left, K.max_ammo_capacity - K.ammo.amount_left))
+
 			A.amount_left -= move_amount
 			K.ammo.amount_left += move_amount
 			K.ammo.ammo_type = A.ammo_type
@@ -259,6 +264,12 @@
 						//DEBUG_MESSAGE("[K]: [A.type] (now empty) was deleted on full reload.")
 						qdel(A) // No duplicating empty magazines, please (Convair880).
 				return AMMO_RELOAD_FULLY // Full reload or ammo left over.
+
+			if ((A.amount_left >= 0) && (move_amount == K.max_move_amount))
+				A.UpdateIcon()
+				K.ammo.UpdateIcon()
+				K.UpdateIcon()
+				return AMMO_RELOAD_CAPPED
 
 	update_icon()
 
@@ -339,6 +350,11 @@
 	ammo_type = new/datum/projectile/bullet/bullet_22
 	ammo_cat = AMMO_PISTOL_22
 
+	american_180
+		ammo_type = new/datum/projectile/bullet/bullet_22/a180
+		amount_left = 177
+		max_amount = 177
+		desc = "177 rounds of .22 unceremoniously crammed into a goofy pancake magazine."
 /obj/item/ammo/bullets/bullet_22/smartgun
 	name = ".22 smartgun magazine"
 	desc = "A fancy, high-tech extended magazine of .22 bullets."
@@ -380,6 +396,12 @@
 		ammo_type = new/datum/projectile/bullet/assault_rifle/armor_piercing
 		icon_state = "stenag_mag-AP"
 
+	remington
+		sname = ".223 Remington JHP"
+		name = ".223 magazine"
+		desc = "An M16 magazine loaded with .223 Remington. Works in a 5.56 NATO firearm, but shoots a much lighter bullet."
+		ammo_type = new/datum/projectile/bullet/assault_rifle/remington
+
 //0.308
 /obj/item/ammo/bullets/minigun
 	sname = "7.62×51mm NATO"
@@ -402,6 +424,11 @@
 	max_amount = 30
 	ammo_cat = AMMO_AUTO_762
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+	draco
+		name = "Draco Magazine"
+		desc = "A curved 30 round magazine, for the Draco Pistol."
+		ammo_type = new/datum/projectile/bullet/draco
 
 /obj/item/ammo/bullets/rifle_3006
 	sname = ".308 AP"
@@ -526,6 +553,11 @@
 		ammo_cat = AMMO_SMG_9MM
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smg
 
+	lopoint
+		name = "9mm Lo-Point magazine"
+		amount_left = 10
+		max_amount = 10
+
 /obj/item/ammo/bullets/nine_mm_NATO
 	sname = "9mm frangible"
 	name = "9mm frangible magazine"
@@ -536,9 +568,32 @@
 	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
 	ammo_cat = AMMO_PISTOL_9MM
 
-/obj/item/ammo/bullets/nine_mm_NATO/boomerang //empty clip for the clock_188/boomerang
-	amount_left = 0
+	boomerang //empty clip for the clock_188/boomerang
+		amount_left = 0
 
+
+/obj/item/ammo/bullets/nine_mm_surplus
+	sname = "9x19mm Soft Point"
+	name = "9mm Soft Point magazine"
+	desc = "A magazine full of 9x19mm ammunition. This particular load has the lead core exposed at the tip for increased expansion."
+	icon_state = "pistol_magazine"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
+	amount_left = 12
+	max_amount = 12
+	ammo_type = new/datum/projectile/bullet/nine_mm_surplus
+	ammo_cat = AMMO_SMG_9MM
+
+	mag_mor
+		icon_state = "uzi"
+		icon_empty = "uzi-empty"
+		name = "9mm MOR magazine"
+		amount_left = 30
+		max_amount = 30
+	mag_grease
+		icon_state = "grease"
+		icon_empty = "grease-empty"
+		name = "9mm Grease Gun magazine"
+		amount_left = 30
+		max_amount = 30
 /obj/item/ammo/bullets/nine_mm_soviet
 	sname = "9x18mm Makarov"
 	name = "9x18mm magazine"
@@ -597,6 +652,13 @@
 	icon_dynamic = 1
 	icon_short = "38"
 	icon_empty = "speedloader_empty"
+
+
+/obj/item/ammo/bullets/a38/mag
+	name = ".38 Hi-Tek magazine"
+	icon_state = "pistol_magazine"
+	amount_left = 10
+	max_amount = 10
 
 //0.38
 /obj/item/ammo/bullets/a38/AP
@@ -727,6 +789,23 @@
 	weak //for nuke ops engineer
 		ammo_type = new/datum/projectile/bullet/a12/weak
 
+
+	bird //for gangs
+		ammo_type = new/datum/projectile/special/spreader/uniform_burst/bird12
+		ammo_cat = AMMO_SHOTGUN_LOW
+		sound_load = 'sound/weapons/gunload_click.ogg'
+		sname = "12ga Birdshot"
+		name = "12ga birdshot ammo box"
+		desc = "A box of birdshot shells. Still capable of murder. Likely by exsanguination."
+
+		seven //for striker
+			amount_left = 7
+			max_amount = 7
+		two //for coachgun
+			amount_left = 2
+			max_amount = 2
+
+
 /obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo
 	sname = "Buckshot"
 	name = "buckshot ammo box"
@@ -774,6 +853,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	amount_left = 5
 	max_amount = 5
 
+/obj/item/ammo/bullets/pipeshot/bone // scrap handmade bone shells
+	sname = "bone load"
+	desc = "This appears to be some bone fragments haphazardly shoved into a few cut open pipe frames - grotesque!"
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/bone
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
@@ -1267,6 +1350,19 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 			new/obj/item/implant/projectile/staple(get_turf(src))
 		qdel(src)
 
+/obj/item/ammo/bullets/webley
+	sname = ".455 Webley"
+	name = ".455 Webley Bullets"
+	desc = "A small speedloader of reproduction .455 Webley ammunition, with a custom armor-penetrating core."
+	icon_state = "455-6"
+	amount_left = 6
+	max_amount = 6
+	ammo_type = new/datum/projectile/bullet/webley
+	ammo_cat = AMMO_WEBLEY
+	icon_dynamic = 1
+	icon_short = "455"
+	icon_empty = "speedloader_empty"
+
 //////////////////////////////////// Power cells for eguns //////////////////////////
 
 /obj/item/ammo/power_cell
@@ -1536,3 +1632,31 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	component_type = /datum/component/power_cell/redirect
 	var/target_type = null
 	var/internal = FALSE
+
+/obj/item/ammo/power_cell/lasergat
+	name = "Mod. 93R Repeating Laser Cell"
+	desc = "This single-use cell has a proprietary port for injecting liquid coolant into a laser firearm."
+	charge = 120
+	max_charge = 120
+	icon_state = "burst_laspistol"
+	rechargable = FALSE
+	New()
+		..()
+		desc = "This single-use cell has a proprietary port for injecting liquid coolant into a laser firearm. It has [src.max_charge]PU."
+
+	update_icon()
+		var/list/ret = list()
+		overlays = null
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"]) * 100
+			ratio = round(ratio, 33)
+			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
+			switch(ratio)
+				if(33)
+					overlays += "burst_laspistol-33"
+				if(66)
+					overlays += "burst_laspistol-66"
+				if(99)
+					overlays += "burst_laspistol-100"
+			return
+

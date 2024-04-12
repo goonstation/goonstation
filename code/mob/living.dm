@@ -199,6 +199,7 @@
 	if (src.key)
 		var/datum/eventRecord/Death/deathEvent = new
 		deathEvent.buildAndSend(src, gibbed)
+	#ifndef NO_SHUTTLE_CALLS
 	if (src.client && ticker.round_elapsed_ticks >= 12000 && VALID_MOB(src))
 		var/num_players = 0
 		for(var/client/C)
@@ -213,6 +214,7 @@
 					boutput(world, SPAN_NOTICE("<B>Alert: The emergency shuttle has been called.</B>"))
 					boutput(world, SPAN_NOTICE("- - - <b>Reason:</b> Crew shortages and fatalities."))
 					boutput(world, SPAN_NOTICE("<B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"))
+	#endif
 	#undef VALID_MOB
 
 	// Active if XMAS or manually toggled.
@@ -684,7 +686,7 @@
 	// shittery that breaks text or worse
 	var/static/regex/shittery_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
 	message = replacetext(message, shittery_regex, "")
-	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
+	message = strip_html(trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	var/client/my_client = src.client
 	if(isAI(src))
@@ -694,6 +696,7 @@
 	if (!message)
 		return
 
+	..()
 	// Zam note: this is horrible
 	if (forced_desussification)
 		// "Surely this goes somewhere else, right, Zam?"
@@ -739,7 +742,7 @@
 
 	if(src.z == 2 && istype(get_area(src),/area/afterlife)) //check zlevel before doing istype
 		if (dd_hasprefix(message, ":d"))
-			message = trim(copytext(message, 3, MAX_MESSAGE_LEN))
+			message = trimtext(copytext(message, 3, MAX_MESSAGE_LEN))
 			return src.say_dead(message)
 
 	// wtf?
@@ -766,7 +769,7 @@
 			H.whisper(message, forced=TRUE)
 			return
 
-	message = trim(message)
+	message = trimtext(message)
 
 	// check for singing prefix before radio prefix
 	message = check_singing_prefix(message)
@@ -839,7 +842,7 @@
 
 	forced_language = get_special_language(secure_headset_mode)
 
-	message = trim(message)
+	message = trimtext(message)
 
 	// check for singing prefix after radio prefix
 	if (!singing)
@@ -1402,10 +1405,13 @@
 		boutput(usr,SPAN_ALERT("You can't give items to yourself!"))
 		return
 
-	SPAWN(0.7 SECONDS) //secret spawn delay, so you can't spam this during combat for a free "stun"
-		if (usr && isliving(usr) && !issilicon(usr) && BOUNDS_DIST(src, usr) == 0)
-			var/mob/living/L = usr
-			L.give_to(src)
+	if(!ON_COOLDOWN(usr, "give_item", 1 SECOND)) // cooldown to stop space&click spam-gives
+		SPAWN(0.7 SECONDS) //secret spawn delay, so you can't use this during combat for a free "stun"
+			if (usr && isliving(usr) && !issilicon(usr) && BOUNDS_DIST(src, usr) == 0)
+				var/mob/living/L = usr
+				L.give_to(src)
+	else
+		boutput(usr, SPAN_ALERT("You just tried handing something off, wait a moment!"))
 
 /mob/living/proc/give_to(var/mob/living/M)
 	if (!M || M == src || !isalive(M))
@@ -1454,7 +1460,7 @@
 		return
 
 	if (thing)
-
+		boutput(src, SPAN_NOTICE("You offer [thing] to [M]."))
 		if (M.client && tgui_alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Accept given [thing]", list("Yes", "No"), timeout = 10 SECONDS, autofocus = FALSE) == "Yes" || M.ai_active)
 			if (!thing || !M || !(BOUNDS_DIST(src, M) == 0) || thing.loc != src || src.restrained())
 				return
@@ -1602,7 +1608,7 @@
 			L.help(src, M)
 
 		if (INTENT_DISARM)
-			if (src.mind && (M.mind?.get_master() == src.mind))
+			if (src.mind && (M.mind?.get_master(ROLE_VAMPTHRALL) == src.mind))
 				boutput(M, SPAN_ALERT("You cannot harm your master!"))
 				return
 
@@ -1624,7 +1630,7 @@
 			message_admin_on_attack(M, "grabs")
 
 		if (INTENT_HARM)
-			if (src.mind && (M.mind?.get_master() == src.mind))
+			if (src.mind && (M.mind?.get_master(ROLE_VAMPTHRALL) == src.mind))
 				boutput(M, SPAN_ALERT("You cannot harm your master!"))
 				return
 

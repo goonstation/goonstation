@@ -738,3 +738,41 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/list/color = rgb2num(owner.material.getColor())
 		light_c = owner.AddComponent(/datum/component/loctargeting/sm_light, color[1], color[2], color[3], 255 * 0.33)
 		light_c.update(1)
+
+/datum/materialProc/radioactive_temp
+	max_generations = -1
+
+	execute(var/atom/owner, var/temp)
+		if(ON_COOLDOWN(owner, "radioactive_material_decay_fallout", 5 SECONDS)) return
+		// Just sanity checks with ordering to not init what we don't need
+		if (temp < 500 KELVIN || !isitem(owner)) return
+		if (!issimulatedturf(owner.loc)) return
+		var/turf/simulated/T = owner.loc
+		if (!T.gas_cross(T)) return
+		var/obj/item/I = owner
+		if (I.amount < 1) return
+		/// Init a property to 1 if it doesn't exist, its real value if it does, and if it does exist, delete it if the value is 0
+		var/radioactive = I.material.getProperty("radioactive")
+		var/n_radioactive = I.material.getProperty("n_radioactive")
+		if (!radioactive && !n_radioactive)
+			I.material.removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/radioactive_temp)
+			return
+		var/datum/gas_mixture/air = T.return_air()
+		if (!air || air.toxins < MINIMUM_REACT_QUANTITY) return
+		if(T.parent?.group_processing)
+			T.parent.suspend_group_processing()
+		/// Mostly bullshit magic because I don't know how radiation works and plasma isn't real, but is how many moles to convert of existing plasma
+		var/moles_to_convert = min(((I.amount * I.material_amt) * (1 + radioactive) * (1 + n_radioactive) * sqrt(temp) / 1000), air.toxins)
+		air.radgas += moles_to_convert
+		air.toxins -= moles_to_convert
+		// Force mutability
+		if (!I.material.isMutable())
+			I.material = I.material.getMutable()
+		if (radioactive)
+			I.material.setProperty("radioactive", radioactive - min(radioactive, moles_to_convert/(10*I.amount)))
+		else
+			I.material.removeProperty("radioactive")
+		if (n_radioactive)
+			I.material.setProperty("n_radioactive", n_radioactive - min(n_radioactive, moles_to_convert/(50*I.amount)))
+		else
+			I.material.removeProperty("n_radioactive")

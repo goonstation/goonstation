@@ -1665,7 +1665,7 @@
 /area/station/crew_quarters/catering)
 "avH" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "avR" = (
 /obj/machinery/computer/security{
@@ -2499,7 +2499,7 @@
 	},
 /area/station/hallway/primary/east)
 "aHe" = (
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
@@ -7515,7 +7515,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "cfs" = (
 /obj/machinery/light/emergency{
@@ -14300,7 +14300,7 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "eiw" = (
 /obj/machinery/chem_master{
@@ -14548,6 +14548,9 @@
 "emk" = (
 /obj/decal/boxingrope,
 /obj/machinery/light/incandescent/netural,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "emt" = (
@@ -16146,6 +16149,10 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/morgue,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "eOq" = (
@@ -16930,7 +16937,8 @@
 	desc = "'Personnel who enter through this unit will not be able to escape without destruction of Nanotrasen property. Proceed with extreme caution!'";
 	icon_state = "securearea";
 	layer = 2.9;
-	name = "WARNING - ONE-WAY ENTRY"
+	name = "WARNING - ONE-WAY ENTRY";
+	plane = -101
 	},
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
@@ -17121,6 +17129,12 @@
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
+"fdp" = (
+/obj/rack/organized/techstorage_eng{
+	order_override = "diagonal"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/storage/tech)
 "fdq" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -17193,7 +17207,8 @@
 	desc = "'Personnel who enter through this unit will not be able to escape without destruction of Nanotrasen property. Proceed with extreme caution!'";
 	icon_state = "securearea";
 	layer = 2.9;
-	name = "WARNING - ONE-WAY ENTRY"
+	name = "WARNING - ONE-WAY ENTRY";
+	plane = -101
 	},
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
@@ -23581,7 +23596,7 @@
 /obj/machinery/bathtub{
 	dir = 8
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "haS" = (
 /obj/cable{
@@ -25873,17 +25888,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
-"hLU" = (
-/obj/machinery/recharger/wall/sticky{
-	dir = 1;
-	pixel_y = 32
-	},
-/obj/item/mining_tool/power_pick,
-/obj/table/auto,
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
-/area/listeningpost)
 "hMc" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -26164,12 +26168,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
-"hPQ" = (
-/obj/rack/organized/techstorage_eng{
-	order_override = "diagonal"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/storage/tech)
 "hPR" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -26206,6 +26204,17 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/refinery)
+"hQU" = (
+/obj/machinery/recharger/wall/sticky{
+	dir = 1;
+	pixel_y = 32
+	},
+/obj/item/mining_tool/powered/pickaxe,
+/obj/table/auto,
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/listeningpost)
 "hRi" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -26944,6 +26953,10 @@
 	dir = 10
 	},
 /obj/disposalpipe/segment/morgue,
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "iew" = (
@@ -29409,6 +29422,10 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "iUS" = (
@@ -29960,6 +29977,9 @@
 	icon_state = "2-8"
 	},
 /obj/disposalpipe/segment,
+/obj/decal/stage_edge{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "jcb" = (
@@ -32945,7 +32965,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 4
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "jXn" = (
 /obj/table/auto,
@@ -33790,6 +33810,15 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
+"klO" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/obj/rack/organized/techstorage_med{
+	order_override = "diagonal"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/storage/tech)
 "klS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -34144,6 +34173,14 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/morgue,
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "krn" = (
@@ -35282,7 +35319,7 @@
 	},
 /area/station/engine/inner)
 "kKy" = (
-/obj/storage/closet/welding_supply,
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -37228,7 +37265,7 @@
 /obj/decoration/toiletholder{
 	pixel_y = 33
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "lqn" = (
 /obj/railing/red{
@@ -40701,6 +40738,7 @@
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
 "mog" = (
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -40936,15 +40974,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
-"msQ" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
-/obj/rack/organized/techstorage_med{
-	order_override = "diagonal"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/storage/tech)
 "msR" = (
 /obj/stool/chair/comfy{
 	dir = 8
@@ -41794,7 +41823,7 @@
 	layer = 3;
 	pixel_y = 8
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "mFT" = (
 /obj/stool/chair/comfy/yellow{
@@ -46916,6 +46945,10 @@
 /obj/decal/boxingrope{
 	dir = 4
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "ome" = (
@@ -48101,7 +48134,7 @@
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai_upload)
 "oCX" = (
-/obj/reagent_dispensers/fueltank,
+/obj/storage/closet/welding_supply,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -50123,6 +50156,10 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/morgue,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "piT" = (
@@ -53204,7 +53241,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "qez" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/machinery/light/incandescent/warm/very{
 	dir = 8
 	},
@@ -56949,6 +56986,10 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "rlB" = (
@@ -59477,6 +59518,9 @@
 /area/station/turret_protected/ai_upload)
 "sbi" = (
 /obj/disposalpipe/junction/middle/south,
+/obj/decal/stage_edge{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "sbn" = (
@@ -60498,7 +60542,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "srM" = (
 /obj/storage/secure/closet/command/medical_director,
@@ -60933,6 +60977,9 @@
 /area/station/engine/inner)
 "syG" = (
 /obj/decal/boxingrope,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "syN" = (
@@ -62823,6 +62870,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "tfm" = (
@@ -63404,6 +63454,13 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"tok" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "tol" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/grasstodirt{
@@ -68362,7 +68419,7 @@
 	pixel_x = -4
 	},
 /obj/machinery/drainage,
-/turf/simulated/floor/specialroom/freezer/white,
+/turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "uND" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -70202,6 +70259,10 @@
 	dir = 4
 	},
 /obj/stool,
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "vpT" = (
@@ -71174,6 +71235,12 @@
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/medical/breakroom)
+"vFq" = (
+/obj/decal/stage_edge{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "vFt" = (
 /obj/decal/tile_edge/line/purple{
 	icon_state = "tile1"
@@ -121739,7 +121806,7 @@ lJa
 pwN
 pwN
 aPl
-pwN
+vFq
 sbi
 jbV
 ask
@@ -122342,7 +122409,7 @@ gwZ
 lJa
 eFg
 ine
-hBW
+tok
 hBW
 vtH
 emk
@@ -122644,7 +122711,7 @@ uYk
 lJa
 eFg
 jCe
-hBW
+tok
 hBW
 vtH
 syG
@@ -122946,7 +123013,7 @@ weI
 lJa
 eFg
 bPa
-hBW
+tok
 hBW
 vtH
 tfk
@@ -132686,7 +132753,7 @@ tuV
 tYp
 tuB
 oFl
-hPQ
+fdp
 whf
 xRb
 cHZ
@@ -132988,7 +133055,7 @@ vCG
 tYp
 tuB
 oFl
-msQ
+klO
 whf
 cHZ
 cHZ
@@ -160212,7 +160279,7 @@ iOW
 iOW
 iOW
 iOW
-hLU
+hQU
 xti
 nQI
 uuX

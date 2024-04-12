@@ -591,9 +591,6 @@ datum/pump_ui/circulator_ui
 /obj/machinery/power/generatorTemp
 	name = "generator"
 	desc = "A high efficiency thermoelectric generator."
-	HELP_MESSAGE_OVERRIDE({"
-		TODO
-		For more information check the "} + EXTERNAL_LINK("https://wiki.ss13.co/Thermoelectric_Generator", "wiki page") + ".")
 	icon_state = "teg"
 	anchored = ANCHORED_ALWAYS
 	density = 1

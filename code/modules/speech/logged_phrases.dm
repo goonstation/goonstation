@@ -103,7 +103,11 @@ var/global/datum/phrase_log/phrase_log = new
 			@"sadge",
 			@"\bmorb(?!id)",
 			@"1984",
-			@"skibidi"
+			@"skibidi",
+			@"gyatt",
+			@"\brizz",
+			@"griddy",
+			@"ohio",
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
 		var/list/ic_sussy_word_list = list(
@@ -259,7 +263,7 @@ var/global/datum/phrase_log/phrase_log = new
 			. = src.random_api_phrase("ai_laws")
 			if(length(.) && !findtext(., src.non_freeform_laws))
 				if(replace_names)
-					. = src.name_regex.Replace(., PROC_REF(random_station_name_replacement_proc))
+					. = src.name_regex.Replace(., /datum/phrase_log/proc/random_station_name_replacement_proc)
 				return
 		return null
 

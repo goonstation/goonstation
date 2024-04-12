@@ -182,20 +182,31 @@
 	if(!istype(src, /obj/machinery/camera/television)) //tv cams were getting messed up
 		src.icon_state = "cameraemp"
 	src.network = null //Not the best way but it will do. I think.
-	camera_status--
+	src.set_camera_status(FALSE)
 
 	SPAWN(90 SECONDS)
-		camera_status++
+		src.set_camera_status(TRUE)
 		src.network = initial(src.network)
 		if(!istype(src, /obj/machinery/camera/television))
 			src.icon_state = initial(src.icon_state)
 
-		update_coverage()
+		src.update_coverage()
 
 	src.disconnect_viewers()
 
 /obj/machinery/camera/blob_act(var/power)
 	return
+
+/obj/machinery/camera/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	src.set_camera_status(FALSE)
+	src.update_coverage()
+	src.disconnect_viewers()
+
+/obj/machinery/camera/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	src.set_camera_status(TRUE)
+	src.update_coverage()
 
 /obj/machinery/camera/proc/set_camera_status(status)
 	src.camera_status = status

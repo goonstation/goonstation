@@ -4777,7 +4777,7 @@
 	name = "Auxiliary Communications dish"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/com_dish/auxdish)
 "azy" = (
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -7280,7 +7280,7 @@
 	tag = "MAIN_DISH_SS13"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/com_dish/comdish)
 "aLF" = (
 /obj/cable/yellow,
 /obj/decal/cleanable/cobweb{
@@ -8229,6 +8229,9 @@
 /area/station/maintenance/inner/central)
 "aQK" = (
 /obj/decal/boxingrope,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aQM" = (
@@ -9344,7 +9347,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/com_dish/comdish)
 "aWB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13464,7 +13467,6 @@
 /area/station/maintenance/east)
 "buh" = (
 /obj/reagent_dispensers/fueltank,
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
 "buj" = (
@@ -15132,6 +15134,12 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
+"bEw" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/com_dish/auxdish)
 "bEy" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -18643,7 +18651,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/storage/secure/closet/security/armory{
+/obj/storage/secure/crate/gear/armory/equipment{
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/redblack{
@@ -18786,6 +18794,10 @@
 "drp" = (
 /obj/decal/boxingropeenter{
 	dir = 4
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -20238,6 +20250,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"emf" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "emu" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -20664,6 +20683,9 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
+"eyc" = (
+/turf/simulated/floor/plating/airless,
+/area/station/com_dish/comdish)
 "eyx" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/blue/checker,
@@ -22477,6 +22499,10 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/office)
+"fMz" = (
+/obj/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/station/com_dish/comdish)
 "fMJ" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -24687,6 +24713,10 @@
 "hoK" = (
 /turf/simulated/floor/green/side,
 /area/station/hallway/primary/west)
+"hoP" = (
+/obj/machinery/manufacturer/hangar,
+/turf/simulated/floor/red,
+/area/station/hangar/sec)
 "hpu" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -25157,6 +25187,9 @@
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "hFf" = (
@@ -25380,6 +25413,10 @@
 "hMH" = (
 /obj/decal/boxingrope{
 	dir = 8
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -25943,6 +25980,10 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent,
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "igI" = (
@@ -26298,6 +26339,13 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"itC" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/com_dish/auxdish)
 "itF" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -27815,6 +27863,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
+"jsK" = (
+/obj/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/station/com_dish/auxdish)
 "jsR" = (
 /obj/machinery/light/incandescent{
 	dir = 4
@@ -28205,6 +28257,12 @@
 	dir = 4
 	},
 /area/station/engine/engineering)
+"jDt" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "jDu" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/cookbook,
@@ -28887,6 +28945,8 @@
 /obj/item/crowbar,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/device/multitool,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
 "kcB" = (
@@ -31089,6 +31149,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
+"lwA" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "lwG" = (
 /obj/stool/chair{
 	dir = 8
@@ -31808,6 +31875,10 @@
 "lQh" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 10
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -33065,6 +33136,10 @@
 /obj/decal/boxingrope{
 	dir = 4
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "mIm" = (
@@ -33493,6 +33568,9 @@
 /obj/item/wrestlingbell,
 /obj/item/device/microphone,
 /obj/machinery/light/small/floor,
+/obj/decal/stage_edge{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "mTA" = (
@@ -34396,16 +34474,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "nvT" = (
-/obj/storage/secure/closet/civilian/chaplain,
-/obj/item/device/light/zippo,
-/obj/item/clothing/head/helmet/greek,
-/obj/item/clothing/suit/greek,
-/obj/item/clothing/under/gimmick/toga,
-/obj/item/clothing/head/laurels,
-/obj/item/clothing/head/laurels/gold,
-/obj/decal/poster/wallsign/poster_sol{
-	pixel_y = 31
-	},
+/obj/machinery/vending/chapel,
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/office)
 "nwC" = (
@@ -35406,6 +35475,7 @@
 	pixel_x = -28;
 	pixel_y = 2
 	},
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "obS" = (
@@ -37412,6 +37482,19 @@
 "piD" = (
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
+"piF" = (
+/obj/storage/crate{
+	name = "Special Syllogí";
+	desc = "Ένα μεγάλο μεταλλικό κουτί στο οποίο μπορείτε να βάλετε πράγματα. Ποιος ξέρει, μπορεί να έχει ήδη πράγματα μέσα του."
+	},
+/obj/item/clothing/under/gimmick/toga,
+/obj/item/clothing/suit/greek,
+/obj/item/clothing/head/helmet/greek,
+/obj/item/clothing/head/laurels/gold,
+/obj/item/device/light/zippo,
+/obj/item/clothing/head/laurels,
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/office)
 "piG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39116,6 +39199,10 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "qjS" = (
@@ -39752,6 +39839,10 @@
 /obj/stool,
 /obj/landmark/start/job/assistant,
 /obj/landmark/pest,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "qCm" = (
@@ -40151,6 +40242,10 @@
 	pixel_x = 7;
 	pixel_y = -7
 	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -7;
+	pixel_y = -6
+	},
 /turf/simulated/floor,
 /area/station/security/equipment)
 "qPX" = (
@@ -40191,6 +40286,12 @@
 /obj/storage/cart,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
+"qRg" = (
+/obj/decal/stage_edge{
+	dir = 9
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "qRG" = (
 /obj/machinery/disposal/mail/small/autoname/hydroponics/north{
 	pixel_y = 23
@@ -41179,7 +41280,7 @@
 	},
 /area/station/engine/inner)
 "rBB" = (
-/obj/item/device/multitool,
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
 "rBH" = (
@@ -49106,6 +49207,10 @@
 	dir = 4
 	},
 /obj/landmark/start/job/assistant,
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "wDG" = (
@@ -49682,6 +49787,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/substation/north)
+"wYT" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/com_dish/auxdish)
 "wZe" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -67061,11 +67172,11 @@ aqI
 aaa
 aaa
 aaa
-anB
-anB
-anB
-anB
-anB
+jsK
+jsK
+jsK
+jsK
+jsK
 aaa
 aaa
 aaa
@@ -67363,11 +67474,11 @@ aqI
 aqI
 aaa
 aaa
-anB
+jsK
 aaa
-adQ
+itC
 aaa
-anB
+jsK
 aaa
 aaa
 aaa
@@ -67665,11 +67776,11 @@ aqI
 aqI
 aqI
 aaa
-anB
-ajz
+jsK
+bEw
 azv
-ajz
-anB
+bEw
+jsK
 aaa
 aaa
 avq
@@ -67967,11 +68078,11 @@ aqI
 aqI
 aqI
 aaa
-anB
+jsK
 aaa
-aWz
+wYT
 aaa
-anB
+jsK
 aaa
 acf
 tyV
@@ -68271,7 +68382,7 @@ aqI
 aaa
 aaa
 aaa
-aWz
+wYT
 aaa
 aaa
 aap
@@ -68573,7 +68684,7 @@ aaa
 aaa
 aaa
 aaa
-aWz
+wYT
 aaa
 aaa
 avq
@@ -68875,7 +68986,7 @@ aaa
 aaa
 aaa
 aaa
-aWz
+wYT
 ajz
 ajz
 avq
@@ -88524,7 +88635,7 @@ aJC
 bDz
 aNr
 rvW
-aPt
+lwA
 aPt
 aPt
 aQK
@@ -88826,7 +88937,7 @@ aJC
 qNj
 aNr
 mVd
-aPt
+lwA
 aPt
 aPt
 aQK
@@ -89128,7 +89239,7 @@ aJC
 cwg
 aNr
 qwR
-aPt
+lwA
 aPt
 aPt
 aQK
@@ -89736,7 +89847,7 @@ hEQ
 pBy
 mTi
 hEQ
-aUn
+qRg
 aUn
 uns
 lum
@@ -93039,7 +93150,7 @@ wNr
 pCJ
 avj
 nvT
-axt
+piF
 hRa
 avj
 cay
@@ -94614,7 +94725,7 @@ bns
 buh
 bvm
 sqd
-bvm
+rBB
 bxq
 apU
 aaa
@@ -94916,7 +95027,7 @@ bns
 cQm
 bvm
 sqd
-rBB
+hoP
 bxq
 apU
 aaa
@@ -97575,15 +97686,15 @@ aaa
 aaa
 aaa
 aaa
-anB
-acK
-acK
-ajz
+fMz
+eyc
+eyc
+jDt
 aWz
-ajz
-acK
-acK
-anB
+jDt
+eyc
+eyc
+fMz
 aaa
 aaa
 aaa
@@ -97877,7 +97988,7 @@ aaa
 aaa
 aaa
 aaa
-anB
+fMz
 aaa
 aaa
 aaa
@@ -97885,7 +97996,7 @@ aWz
 aaa
 aaa
 aaa
-anB
+fMz
 aaa
 aaa
 aaa
@@ -98179,7 +98290,7 @@ aaa
 aaa
 aaa
 aaa
-anB
+fMz
 aaa
 aaa
 aaa
@@ -98187,7 +98298,7 @@ aWz
 aaa
 aaa
 aaa
-anB
+fMz
 aaa
 aaa
 aaa
@@ -98481,15 +98592,15 @@ aaa
 aaa
 aaa
 aaa
-anB
-acK
-ajz
-ajz
+fMz
+eyc
+jDt
+jDt
 aLE
-ajz
-ajz
-acK
-anB
+jDt
+jDt
+eyc
+fMz
 aaa
 aaa
 aaa
@@ -98783,15 +98894,15 @@ aaa
 aaa
 aaa
 aaa
-anB
+fMz
 aaa
 aaa
 aaa
-adQ
+emf
 aaa
 aaa
 aaa
-anB
+fMz
 aaa
 aaa
 aaa
@@ -99085,15 +99196,15 @@ aaa
 aaa
 aaa
 aaa
-anB
+fMz
 aaa
 aaa
 aaa
-adQ
+emf
 aaa
 aaa
 aaa
-anB
+fMz
 aaa
 aaa
 aaa
@@ -99387,15 +99498,15 @@ aaa
 aaa
 aaa
 aaa
-anB
+fMz
 aaa
 aaa
 aaa
-acK
+eyc
 aaa
 aaa
 aaa
-anB
+fMz
 aaa
 aaa
 aaa
@@ -99689,15 +99800,15 @@ aaa
 aaa
 aaa
 aaa
-anB
-anB
-anB
-anB
-anB
-anB
-anB
-anB
-anB
+fMz
+fMz
+fMz
+fMz
+fMz
+fMz
+fMz
+fMz
+fMz
 aaa
 aaa
 aaa

@@ -224,7 +224,7 @@
 					src.print_text("Severe signal interference is preventing contact with the Emergency Shuttle, aborting.")
 					return
 
-				var/call_reason = copytext(trim(strip_html(text)), 1, 140)
+				var/call_reason = copytext(trimtext(strip_html(text)), 1, 140)
 				src.print_text("Transmitting call request...")
 				generate_signal(comm_net_id, "command", "call", "shuttle_id", "emergency", "acc_code", netpass_heads, "reason", call_reason)
 				logTheThing(LOG_ADMIN, usr,  "attempted to call the Emergency Shuttle via COMMaster (reason: [call_reason])")
@@ -232,7 +232,7 @@
 				message_admins(SPAN_INTERNAL("[key_name(usr)] attempted to call the Emergency Shuttle to the station via COMMaster"))
 
 			if(MENU_TRANSMIT_TITLE)
-				src.transmit_title = copytext(trim(strip_html(text)), 1, 140)
+				src.transmit_title = copytext(trimtext(strip_html(text)), 1, 140)
 				if(!src.transmit_title)
 					src.print_text("Transmission cancelled.")
 					menu = MENU_MAIN
@@ -259,7 +259,7 @@
 						src.print_text("<b>Error:</b> Unable to detect comm dish.  Please check network cabling.")
 						return
 
-				var/transmit_message = trim(strip_html(text))
+				var/transmit_message = trimtext(strip_html(text))
 				if(!transmit_message)
 					src.print_text("Transmission cancelled.")
 					return

@@ -35,7 +35,7 @@
 
 	say(message, involuntary = 0)
 		if (hivemind_owner)
-			message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
+			message = trimtext(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
 
 			if (!message)
 				return

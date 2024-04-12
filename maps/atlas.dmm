@@ -1753,7 +1753,7 @@
 	light_type = /obj/item/light/tube/reddish;
 	pixel_y = 21
 	},
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/caution/south,
 /area/station/ai_monitored/armory)
 "afF" = (
@@ -1785,7 +1785,7 @@
 	pixel_x = 5;
 	pixel_y = 28
 	},
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "afK" = (
@@ -18709,6 +18709,26 @@
 	},
 /obj/rack,
 /obj/item/gun/implanter,
+/obj/item/gun/kinetic/riot40mm{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/gun/kinetic/riot40mm{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/ammo/bullets/smoke{
+	pixel_x = 6;
+	pixel_y = -9
+	},
+/obj/item/ammo/bullets/smoke{
+	pixel_x = 8;
+	pixel_y = -7
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -7;
+	pixel_y = -6
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "pLJ" = (

@@ -22,7 +22,8 @@
 
 	var/list/folks_to_spawn = list()
 	var/list/their_jobs = list()
-	var/list/stored_mobs = list() // people who've bowed out of the round
+	var/list/stored_mobs = list() // people who've bowed out of the round, and at what time
+	var/list/stored_mobs_volunteered = list() // if said people bowed out of their own accord
 	var/list/stored_crew_names = list() // stores real_names and only removes names if you leave cryo, not ghost
 	var/tmp/busy = 0
 
@@ -163,12 +164,13 @@
 				logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 				return 1
 
+		for(var/datum/antagonist/antagonist as anything in L.mind?.antagonists)
+			antagonist.handle_cryo()
 		stored_mobs += L
+		stored_mobs_volunteered += L
 		stored_crew_names += L.real_name
-		if (!voluntary) // someone shoved us in here, mark them as not being in here of their own choice (this can only be done with braindead people who have a ckey, so you can't just grief some guy by shoving them in)
-			stored_mobs[L] = "involuntary"
-		else
-			stored_mobs[L] = world.timeofday
+		stored_mobs[L] = TIME
+		stored_mobs_volunteered[L] = voluntary // if someone shoved us in here, mark them as not being in here of their own choice (this can only be done with braindead people who have a ckey, so you can't just grief some guy by shoving them in)
 		L.set_loc(src)
 		L.hibernating = 1
 		if (L.client)
@@ -186,6 +188,9 @@
 		var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)
 		if (!isnull(crew_record))
 			crew_record["p_stat"] = "In Cryogenic Storage"
+		var/datum/job/job = find_job_in_controller_by_string(L.job, soft=TRUE)
+		if (job && !job.unique)
+			job.assigned = max(0, job.assigned - 1)
 		logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 		return 1
 
@@ -211,6 +216,8 @@
 						if (mob_can_enter_storage(user))
 							add_person_to_storage(user)
 							respawn_controller.subscribeNewRespawnee(user.ckey)
+							for(var/datum/antagonist/antagonist as anything in user.mind?.antagonists)
+								antagonist.handle_perma_cryo()
 							user.mind?.get_player()?.dnr = TRUE
 							user.ghostize()
 							var/datum/job/job = find_job_in_controller_by_string(user.job, soft=TRUE)
@@ -276,9 +283,10 @@
 	proc/exit_prompt(var/mob/living/user as mob)
 		if (!user || !stored_mobs.Find(user))
 			return 0
-		var/entered = stored_mobs[user] // this will be the world.timeofday that the mob went into the cryotron, or a text string if they were forced in
-		if (isnum(entered)) // fix for cannot compare 614825 to "involuntary" (sadly there is no fix for spy sassing me about a runtime HE CAUSED, THE BUTT)
-			var/time_of_day = world.timeofday + ((world.timeofday < entered) ? 864000 : 0) //Offset the time of day in case of midnight rollover
+		var/entered = stored_mobs[user] // this will be the TIME that the mob went into the cryotron, or a text string if they were forced in
+		var/voluntary = stored_mobs_volunteered[user]
+		if (voluntary)
+			var/time_of_day = TIME //Offset the time of day in case of midnight rollover
 			if ((entered + CRYOSLEEP_DELAY) > time_of_day) // is the time entered plus 15 minutes greater than the current time? the mob hasn't waited long enough
 				var/time_left = entered + CRYOSLEEP_DELAY - time_of_day
 				if (time_left >= 0)
@@ -298,7 +306,9 @@
 			return 0
 		if (add_person_to_queue(user, null))
 			stored_mobs[user] = null
+			stored_mobs_volunteered[user] = null
 			stored_mobs -= user
+			stored_mobs_volunteered -= user
 			stored_crew_names -= user.real_name
 			var/datum/db_record/crew_record = data_core.general.find_record("id", user.datacore_id)
 			if (!isnull(crew_record))
@@ -318,6 +328,7 @@
 						if (H.glasses?.allow_blind_sight)
 							L.removeOverlayComposition(/datum/overlayComposition/blinded)
 				stored_mobs -= L
+				stored_mobs_volunteered -= L
 				if(!isnull(L.loc)) // loc only goes null when you ghost, probably
 					stored_crew_names -= L.real_name // you shouldn't be removed from the list when you ghost
 					var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)

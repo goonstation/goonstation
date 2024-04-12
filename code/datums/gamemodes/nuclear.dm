@@ -189,6 +189,7 @@ var/global/list/nuke_op_camo_matrix = null
 		possible_syndicates.Remove(syndicate)
 
 	agent_radiofreq = random_radio_frequency()
+	protected_frequencies += agent_radiofreq
 
 	return 1
 

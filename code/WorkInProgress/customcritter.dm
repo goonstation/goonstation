@@ -2108,6 +2108,8 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	set name = "Critter Creator (WIP)"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set hidden = 0
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/datum/critterCreator/CR = critter_creator_controller.getCreator(src.mob)
 	if (CR)

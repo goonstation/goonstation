@@ -834,7 +834,7 @@
 					damage -= damage_reduced_by
 					playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
 			if (damage <= 0)
-				boutput(usr, SPAN_NOTICE("Your shield completely blocks the attack!"))
+				boutput(src, SPAN_NOTICE("Your shield completely blocks the attack!"))
 				return 1
 			boutput(src, SPAN_ALERT("The blob attacks you!"))
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
@@ -1151,20 +1151,22 @@
 		if (isweldingtool(W))
 			if(W:try_weld(user, 1))
 				src.add_fingerprint(user)
-				var/repaired = HealDamage("All", 120, 0)
-				if(repaired || health < max_health)
+				if(health < max_health)
+					HealDamage("All", 120, 0)
 					src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s body."))
-				else boutput(user, SPAN_ALERT("There's no structural damage on [src.name] to mend."))
+				else
+					boutput(user, SPAN_ALERT("There's no structural damage on [src.name] to mend."))
 				src.update_appearance()
 
 		else if (istype(W, /obj/item/cable_coil) && wiresexposed)
 			var/obj/item/cable_coil/coil = W
 			src.add_fingerprint(user)
-			var/repaired = HealDamage("All", 0, 120)
-			if(repaired || health < max_health)
+			if(health < max_health)
 				coil.use(1)
+				HealDamage("All", 0, 120)
 				src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
-			else boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
+			else
+				boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
 			src.update_appearance()
 
 		else if (ispryingtool(W))
@@ -2932,7 +2934,7 @@
 				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
 				continue
 		if (burn == 0 && brute == 0)
-			boutput(usr, SPAN_NOTICE("Your shield completely blocks the attack!"))
+			boutput(src, SPAN_NOTICE("Your shield completely blocks the attack!"))
 			return 0
 		if (zone == "All")
 			var/list/zones = get_valid_target_zones()
@@ -3341,6 +3343,12 @@
 		if (!src.part_leg_r) src.part_leg_r = new/obj/item/parts/robot_parts/leg/right/light(src)
 		..(loc, frame, starter, syndie, frame_emagged)
 
+	latejoin
+		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+			if(!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/light(src)
+			if(!src.part_head.brain) src.part_head.brain = new/obj/item/organ/brain/latejoin(src.part_head)
+			..(loc, frame, starter, syndie, frame_emagged)
+
 /mob/living/silicon/robot/spawnable/standard
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
@@ -3365,6 +3373,12 @@
 			..(loc, frame, starter, syndie, frame_emagged)
 			src.metalman_skin = 1
 			src.update_appearance()
+
+	latejoin
+		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+			if(!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/standard(src)
+			if(!src.part_head.brain) src.part_head.brain = new/obj/item/organ/brain/latejoin(src.part_head)
+			..(loc, frame, starter, syndie, frame_emagged)
 
 
 /mob/living/silicon/robot/spawnable/standard_thruster
@@ -3401,6 +3415,12 @@
 			src.shell = 1
 			..(loc, frame, starter, syndie, frame_emagged)
 
+	latejoin
+		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+			if(!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/sturdy(src)
+			if(!src.part_head.brain) src.part_head.brain = new/obj/item/organ/brain/latejoin(src.part_head)
+			..(loc, frame, starter, syndie, frame_emagged)
+
 /mob/living/silicon/robot/spawnable/heavy
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
@@ -3418,6 +3438,12 @@
 	shell
 		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
 			src.shell = 1
+			..(loc, frame, starter, syndie, frame_emagged)
+
+	latejoin
+		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+			if(!src.part_head) src.part_head = new/obj/item/parts/robot_parts/head/heavy(src)
+			if(!src.part_head.brain) src.part_head.brain = new/obj/item/organ/brain/latejoin(src.part_head)
 			..(loc, frame, starter, syndie, frame_emagged)
 
 /mob/living/silicon/robot/spawnable/screenhead

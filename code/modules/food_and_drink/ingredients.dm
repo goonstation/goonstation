@@ -1099,13 +1099,9 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	slice_amount = 3
 	slice_suffix = "strip"
 
-	heal(var/mob/M)
-		boutput(M, SPAN_ALERT("It's scalding hot! The roof of your mouth burns!"))
-		M.TakeDamage("Head", 0, 5, damage_type = DAMAGE_BURN)
-		..()
-
 	New()
 		..()
+		src.reagents.set_reagent_temp(185 + T0C) //HOT
 		src.flags |= OPENCONTAINER
 
 	on_reagent_change()
@@ -1124,10 +1120,8 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 		src.UpdateOverlays(src.image_tray, "tray")
 		src.UpdateOverlays(src.image_sugar, "meltedsugar-sheet")
 
-	attackby(obj/item/W, mob/user)
-		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
-			new /obj/item/plate/tray(src.loc)
-		..()
+	onSlice()
+		new /obj/item/plate/tray(src.loc)
 
 /obj/item/reagent_containers/food/snacks/ingredient/melted_sugar_strip
 	name = "melted sugar strips"
@@ -1144,10 +1138,9 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	var/circular = FALSE // if the strip has been made circular
 	var/floured = FALSE // if the strip has been covered in flour and is ready to be made into dragon's beard
 
-	heal(var/mob/M)
-		boutput(M, SPAN_ALERT("It's scalding hot! The roof of your mouth burns!"))
-		M.TakeDamage("Head", 0, 5, damage_type = DAMAGE_BURN)
-		..()
+	New()
+		. = ..()
+		src.reagents.set_reagent_temp(185 + T0C)
 
 	on_reagent_change()
 		..()
@@ -1172,11 +1165,12 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 		else if (src.floured)
 			user.visible_message("[user] twists [src], folding it in on itself!", "You twist [src] and fold it back into a ring.")
 			playsound(src.loc, "rustle", 50, 1)
-			var/obj/item/reagent_containers/food/snacks/candy/dragons_beard/A = new /obj/item/reagent_containers/food/snacks/candy/dragons_beard
-			A.reagents.clear_reagents()
-			src.reagents.trans_to(A, 15)
+			var/obj/item/reagent_containers/food/snacks/candy/dragons_beard/beard = new
+			beard.reagents.clear_reagents()
+			src.reagents.trans_to(beard, 15)
+			beard.reagents.set_reagent_temp(20 + T0C) //magically becomes room temperature from folding
 			user.u_equip(src)
-			user.put_in_hand_or_drop(A)
+			user.put_in_hand_or_drop(beard)
 			qdel(src)
 			return
 		src.UpdateIcon()
