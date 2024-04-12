@@ -119,7 +119,7 @@
 		if (src.authed)
 			. = "The Head of Security can unauthorize armory access."
 			if(!authdisk_authorized)
-				. += "<br>You can also use the <b>Authentication Disk</b> to revoke access."
+				. += "<br>You can also use the <b>Authentication Disk</b> to issue an emergency revocation."
 		else
 			. = "Three security personnel, or the Head of Security, can authorize access."
 			if(!authdisk_authorized)
