@@ -214,34 +214,34 @@ export const Manufacturer = (_, context) => {
                 <CardInfo />
               </Stack.Item>
               <Stack.Item>
-                {data.rockboxes.map((rockbox:Rockbox) => (
-                  <Section
-                    textAlign="center"
-                    key={rockbox.byondRef}
-                    title={rockbox.area_name}
-                  >
-                    <LabeledList>
-                      {rockbox.ores.map((ore:Ore) => (
-                        <LabeledList.Item
-                          key={ore.name}
-                          label={ore.name}
-                          buttons={
+                <Section
+                  title="Rockbox™ Containers"
+                  textAlign="center"
+                >
+                  {data.rockboxes.map((rockbox:Rockbox) => (
+                    <Section
+                      key={rockbox.byondRef}
+                      title={rockbox.area_name}
+                    >
+                      <LabeledList>
+                        {rockbox.ores.length !== 0 ? (rockbox.ores.map((ore:Ore) => (
+                          <LabeledList.Item
+                            key={ore.name}
+                            label={ore.name}
+                          >
                             <Button
-                              width={"100%"}
                               textAlign="center"
                               onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
                               icon="add"
                             >
                               {ore.cost}{credit_symbol}
                             </Button>
-                          }
-                        >
-                          {ore.amount}
-                        </LabeledList.Item>
-                      ))}
-                    </LabeledList>
-                  </Section>
-                ))}
+                          </LabeledList.Item>
+                        ))) : "No Ores Loaded."}
+                      </LabeledList>
+                    </Section>
+                  ))}
+                </Section>
               </Stack.Item>
             </Stack>
           </Stack.Item>
