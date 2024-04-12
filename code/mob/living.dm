@@ -1608,7 +1608,7 @@
 			L.help(src, M)
 
 		if (INTENT_DISARM)
-			if (src.mind && (M.mind?.get_master() == src.mind))
+			if (src.mind && (M.mind?.get_master(ROLE_VAMPTHRALL) == src.mind))
 				boutput(M, SPAN_ALERT("You cannot harm your master!"))
 				return
 
@@ -1630,7 +1630,7 @@
 			message_admin_on_attack(M, "grabs")
 
 		if (INTENT_HARM)
-			if (src.mind && (M.mind?.get_master() == src.mind))
+			if (src.mind && (M.mind?.get_master(ROLE_VAMPTHRALL) == src.mind))
 				boutput(M, SPAN_ALERT("You cannot harm your master!"))
 				return
 
