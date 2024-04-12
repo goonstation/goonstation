@@ -202,10 +202,7 @@
 			boutput(user, "Armory is not currently authorized!")
 			return
 
-		playsound(src, 'sound/machines/pc_process.ogg', 50, TRUE)
-		src.visible_message(SPAN_ALERT("<B>[user] uses the [W] to issue a deauthorizaiton override!</B>"))
-		logTheThing(LOG_STATION, user, "used [W] to deauthorize the armory.")
-		src.unauthorize()
+		src.manual_unauthorize(user)
 		return
 
 	var/obj/item/card/id/id_card = get_id_card(W)
@@ -240,14 +237,7 @@
 		if(BOUNDS_DIST(user, src) > 0) return
 		src.add_fingerprint(user)
 		if (choice == "Unauthorize")
-			if(GET_COOLDOWN(src, "unauth"))
-				boutput(user, SPAN_ALERT(" The armory computer cannot take your commands at the moment! Wait [GET_COOLDOWN(src, "unauth")/10] seconds!"))
-				playsound( src.loc, 'sound/machines/airlock_deny.ogg', 10, 0 )
-				return
-			if(!ON_COOLDOWN(src, "unauth", 5 MINUTES))
-				unauthorize()
-				playsound(src.loc, 'sound/machines/chime.ogg', 10, 1)
-				boutput(user,SPAN_NOTICE(" The armory's equipments have returned to having their default access!"))
+			src.manual_unauthorize(user)
 		return
 
 	if (!src.authorized)
@@ -298,3 +288,14 @@
 			src.authorized_registered -= W:registered
 			logTheThing(LOG_STATION, user, "removed an approval for armory access using [W]. [length(src.authorized)] total approvals.")
 			print_auth_needed(user)
+
+/// Handles unauthorization from armory computer interaction
+/obj/machinery/computer/riotgear/proc/manual_unauthorize(mob/user)
+	if(GET_COOLDOWN(src, "unauth"))
+		boutput(user, SPAN_ALERT(" The armory computer cannot take your commands at the moment! Wait [GET_COOLDOWN(src, "unauth")/10] seconds!"))
+		playsound( src.loc, 'sound/machines/airlock_deny.ogg', 10, 0 )
+		return
+	if(!ON_COOLDOWN(src, "unauth", 5 MINUTES))
+		unauthorize()
+		playsound(src.loc, 'sound/machines/chime.ogg', 10, 1)
+		boutput(user,SPAN_NOTICE(" The armory's equipments have returned to having their default access!"))
