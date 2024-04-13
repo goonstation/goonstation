@@ -654,7 +654,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		// in this case m is the consumer and user is the one holding it
-		if (istype(src, /obj/item/reagent_containers/food/drinks/bottle/soda))
+		if (istype(src, /obj/item/reagent_containers/food/drinks/bottle))
 			var/obj/item/reagent_containers/food/drinks/bottle/W = src
 			if (W.broken)
 				return
@@ -1047,7 +1047,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					take_bleeding_damage(user, null, damage)
 			else
 				src.shatter++
-				user.visible_message(SPAN_ALERT("<b>[user]</b> [pick("shanks","stabs","attacks")] [target] with the broken [src]!"))
+				user.visible_message(SPAN_ALERT("<b>[user]</b> [pick("shanks","stabs","attacks")] [target] with the broken [src.name]!"))
 				logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a broken [src] at [log_loc(user)].")
 				playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
 				var/damage = rand(1,10)

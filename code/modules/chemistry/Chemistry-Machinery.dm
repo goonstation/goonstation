@@ -755,7 +755,7 @@ TYPEINFO(/obj/machinery/chem_master)
 
 	proc/manufacture_name(var/param_name)
 		var/name = param_name
-		name = trim(copytext(sanitize(html_encode(name)), 1, CHEMMASTER_ITEMNAME_MAXSIZE))
+		name = trimtext(copytext(sanitize(html_encode(name)), 1, CHEMMASTER_ITEMNAME_MAXSIZE))
 		if(isnull(name) || !length(name) || name == " ")
 			name = null
 			if(src.beaker)

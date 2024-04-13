@@ -29760,9 +29760,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/hos,
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1;
+/obj/deployable_turret/riot/active{
 	dir = 1
 	},
 /turf/simulated/floor/engine{
@@ -48344,7 +48342,7 @@
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "pGO" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},

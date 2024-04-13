@@ -895,9 +895,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "aso" = (
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1;
+/obj/deployable_turret/riot/active{
 	dir = 8
 	},
 /obj/mapping_helper/access/hos,
@@ -36996,7 +36994,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/engine/caution/east,
 /area/station/ai_monitored/armory)
 "pAx" = (
