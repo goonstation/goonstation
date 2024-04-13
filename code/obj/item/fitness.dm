@@ -53,7 +53,7 @@
 
 	MouseDrop_T(var/mob/M, var/mob/user)
 		// Do not attempt to distantly pump iron.
-		if (!can_reach(user, src) || !can_reach(user, M))
+		if (M != user || !can_reach(user, src) || !can_reach(user, M))
 			return
 		src.attack_hand(M)
 
@@ -107,7 +107,7 @@
 
 	MouseDrop_T(var/mob/M, var/mob/user)
 		// Do not attempt to distantly pump iron.
-		if (!can_reach(user, src) || !can_reach(user, M))
+		if (M != user || !can_reach(user, src) || !can_reach(user, M))
 			return
 		src.attack_hand(M)
 
