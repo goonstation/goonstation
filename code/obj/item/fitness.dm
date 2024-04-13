@@ -51,7 +51,7 @@
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
-	MouseDrop_T(var/mob/M, var/mob/user)
+	MouseDrop_T(mob/M, mob/user)
 		// Do not attempt to distantly pump iron.
 		if (M != user || !can_reach(user, src) || !can_reach(user, M))
 			return
@@ -105,7 +105,7 @@
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
-	MouseDrop_T(var/mob/M, var/mob/user)
+	MouseDrop_T(mob/M, mob/user)
 		// Do not attempt to distantly pump iron.
 		if (M != user || !can_reach(user, src) || !can_reach(user, M))
 			return
