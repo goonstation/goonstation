@@ -53,4 +53,14 @@ if grep -P '^ABSTRACT_TYPE\([^/]' */**/*.dm;	then
     st=1
 fi;
 
+if grep -P '^ABSTRACT_TYPE\([^/]' */**/*.dm;	then
+    echo "ERROR: You need to include the slash before the area type name in ABSTRACT_TYPE."
+    st=1
+fi;
+
+if grep -P 'as anything in o?(range|hearers)' */**/*.dm;	then
+    echo "ERROR: Don't include 'as anything' before o?range|hearers, it disables optimizations."
+    st=1
+fi;
+
 exit $st

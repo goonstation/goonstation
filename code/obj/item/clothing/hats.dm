@@ -2118,7 +2118,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 						A_value -= 2
 					else if (T.z == Z_LEVEL_STATION)
 						A_value += 1
-				var/atom_name = trim(stripTextMacros(A.name))
+				var/atom_name = trimtext(stripTextMacros(A.name))
 				if (length(atom_name) <= 2)
 					continue
 				if (findtext(atom_name, " "))

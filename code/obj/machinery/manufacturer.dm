@@ -2605,6 +2605,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/oresatchelL,
 		/datum/manufacture/microjetpack,
 		/datum/manufacture/jetpack,
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/jetpackmkII,
+#endif
 		/datum/manufacture/geoscanner,
 		/datum/manufacture/geigercounter,
 		/datum/manufacture/eyes_meson,
@@ -2612,9 +2615,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/ore_accumulator,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
-#ifdef UNDERWATER_MAP
-		/datum/manufacture/jetpackmkII,
-#endif
 #ifndef UNDERWATER_MAP
 		/datum/manufacture/mining_magnet
 #endif
