@@ -73,7 +73,7 @@ export const SpellItem = (props: SpellItemProps, context) => {
           </Stack.Item>
           <Stack.Item>
             <LabeledList>
-              {cooldown && <LabeledList.Item label="Cooldown">{`${cooldown / 10} seconds`}</LabeledList.Item>}
+              {cooldown && <LabeledList.Item label="Cooldown">{`${cooldown} seconds`}</LabeledList.Item>}
               <LabeledList.Item label="Description">{desc}</LabeledList.Item>
             </LabeledList>
           </Stack.Item>

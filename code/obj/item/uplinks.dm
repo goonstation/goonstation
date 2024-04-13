@@ -1342,7 +1342,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				spellbook_contents[spell.eqtype] = list()
 			if (spell.assoc_spell && ispath(spell.assoc_spell, /datum/targetable/spell))
 				var/datum/targetable/spell/spell_ability_datum = spell.assoc_spell
-				cooldown_contents = initial(spell_ability_datum.cooldown)
+				// convert deciseconds to seconds
+				cooldown_contents = initial(spell_ability_datum.cooldown) / 10
 				spell_icon = icon2base64(icon(initial(spell_ability_datum.icon), initial(spell_ability_datum.icon_state), frame=6))
 			spellbook_contents[spell.eqtype] += list(list(
 				cooldown = cooldown_contents,
