@@ -382,15 +382,27 @@ TYPEINFO(/obj/machinery/phone)
 		..()
 		if(GET_DIST(src, get_holder()) > 0 || !src.parent.linked || !src.parent.linked.handset) // Guess they dropped it? *shrug
 			return
-		var/processed = SPAN_SAY("[SPAN_BOLD("[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]")]\] says, </span> [SPAN_MESSAGE("\"[text[1]]\"")]")
+
 		var/mob/T = src.parent.linked.handset.get_holder()
 		if(T?.client)
-			if(GET_DIST(src.parent.linked.handset,src.parent.linked.handset.get_holder())<1)
-				T.show_message(processed, 2)
-			M.show_message(processed, 2)
+			var/prep_name = "[real_name ? real_name : M.real_name]"
+			if(M.vdisfigured)
+				prep_name = "Unknown"
 
+			var/phone_ident = "\[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]\]</span>"
+			var/said_message = SPAN_SAY("[SPAN_BOLD("[prep_name] [phone_ident]")]  [SPAN_MESSAGE(M.say_quote(text[1]))]")
+
+			// chat feedback to let talker know when they are speaking over the phone
+			M.show_message(said_message, 2)
+
+			if(GET_DIST(src.parent.linked.handset,src.parent.linked.handset.get_holder())<1)
+				if(!T.say_understands(M, lang_id))
+					said_message = SPAN_SAY("[SPAN_BOLD("[M.voice_name] [phone_ident]")] [SPAN_MESSAGE(M.voice_message)]")
+				T.show_message(said_message, 2)
+
+			// intercoms overhear phone conversations
 			for (var/obj/item/device/radio/intercom/I in range(3, T))
-				I.talk_into(M, text, null, M.real_name, lang_id)
+				I.talk_into(M, text, null, prep_name, lang_id)
 
 TYPEINFO(/obj/machinery/phone/wall)
 	mats = 25
