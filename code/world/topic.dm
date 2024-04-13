@@ -936,3 +936,17 @@
 							canvas.load_from_id(canvas.id)
 						response[canvas.id] = icon2base64(canvas.art)
 				return json_encode(response)
+
+			if("ban_added")
+				bansHandler.add(
+					plist["admin_ckey"],
+					plist["server_id"],
+					plist["ckey"],
+					plist["comp_id"],
+					plist["ip"],
+					plist["reason"],
+					text2num(plist["duration"]) * 10,
+					text2num(plist["requires_appeal"]),
+					TRUE
+				)
+				return 1
