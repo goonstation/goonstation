@@ -160,10 +160,16 @@ var/list/datum/bioEffect/mutini_effects = list()
 								  "femalescream3" = 'sound/voice/screams/fescream3.ogg', \
 								  "femalescream4" = 'sound/voice/screams/fescream4.ogg', \
 								  "femalescream5" = 'sound/voice/screams/fescream5.ogg', \
+								  "femalescream6" = 'sound/voice/screams/fescream6.ogg', \
+								  "femalescream7" = 'sound/voice/screams/fescream7.ogg', \
+								  "femalescream8" = 'sound/voice/screams/fescream8.ogg', \
 								  "malescream4" = 'sound/voice/screams/mascream4.ogg', \
 								  "malescream5" = 'sound/voice/screams/mascream5.ogg', \
 								  "malescream6" = 'sound/voice/screams/mascream6.ogg', \
-								  "malescream7" = 'sound/voice/screams/mascream7.ogg' )
+								  "malescream7" = 'sound/voice/screams/mascream7.ogg', \
+								  "malescream8" = 'sound/voice/screams/mascream8.ogg', \
+								  "malescream9" = 'sound/voice/screams/mascream9.ogg', \
+								  "malescream9" = 'sound/voice/screams/mascream10.ogg' )
 
 	var/list/voicetypes = list("One" = "1","Two" = "2","Three" = "3","Four" = "4")
 

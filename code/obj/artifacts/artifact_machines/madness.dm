@@ -43,10 +43,16 @@
 						'sound/voice/screams/fescream3.ogg',
 						'sound/voice/screams/fescream4.ogg',
 						'sound/voice/screams/fescream5.ogg',
+						'sound/voice/screams/fescream6.ogg',
+						'sound/voice/screams/fescream7.ogg',
+						'sound/voice/screams/fescream8.ogg',
 						'sound/voice/screams/mascream4.ogg',
 						'sound/voice/screams/mascream5.ogg',
 						'sound/voice/screams/mascream6.ogg',
-						'sound/voice/screams/mascream7.ogg'
+						'sound/voice/screams/mascream7.ogg',
+						'sound/voice/screams/mascream8.ogg',
+						'sound/voice/screams/mascream9.ogg',
+						'sound/voice/screams/mascream10.ogg'
 					),
 					sound_prob = 40,
 					min_distance = 5
