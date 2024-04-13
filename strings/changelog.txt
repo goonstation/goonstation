@@ -1,5 +1,9 @@
 
 (t)sat apr 13 24
+(u)Chatausours
+(p)18294
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)Captains now recieve a mindshield implant.
 (u)glowbold
 (p)18486
 (e)🆕💡|C-Feature, A-Station-Systems
