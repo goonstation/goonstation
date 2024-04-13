@@ -659,7 +659,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 /datum/trait/softswatter
 	name = "Soft Swatter"
-	desc = "Weaker punches but lower stamina cost."
+	desc = "Weaker punches. Fighting's not your thing."
 	id = "softswatter"
 	category = list("stats")
 	points = 1
