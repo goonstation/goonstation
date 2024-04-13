@@ -1,5 +1,9 @@
 
 (t)sat apr 13 24
+(u)Mordent
+(p)18426
+(e)📄|A-UI
+(+)Wizard Spellbook UX improved updated to make spells easier to find.
 (u)Chatausours
 (p)18294
 (e)⚖🔨|C-Balance, A-Player-Actions
