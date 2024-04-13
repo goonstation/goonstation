@@ -441,6 +441,14 @@
 	points = -2
 	category = list("genetics")
 
+/datum/trait/unstablegenes
+	name = "Unstable Genes"
+	desc = "You are more likely to mutate from radiation or mutagens."
+	id = "unstablegenes"
+	icon_state = "domutateB"
+	points = 1
+	category = list("genetics")
+
 // TRINKETS/ITEMS - Purple Border
 
 /datum/trait/loyalist
@@ -648,6 +656,26 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "bigbruiser"
 	category = list("stats")
 	points = -2
+
+/datum/trait/softswatter
+	name = "Soft Swatter"
+	desc = "Weaker punches but lower stamina cost."
+	id = "softswatter"
+	category = list("stats")
+	points = 1
+
+/datum/trait/slowstrider
+	name = "Slow Strider"
+	desc = "What's the rush? You can't sprint anymore."
+	id = "slowstrider"
+	category = list("stats")
+	points = 2
+	afterlife_blacklisted = TRUE
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_CANTSPRINT, "trait")
 
 //Category: Background.
 
@@ -944,6 +972,13 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Two left feet"
 	desc = "Every now and then you'll stumble in a random direction."
 	id = "leftfeet"
+	points = 1
+	afterlife_blacklisted = TRUE
+
+/datum/trait/trippy
+	name = "Trippy"
+	desc = "You have a tendency to randomly trip while moving."
+	id = "trippy"
 	points = 1
 	afterlife_blacklisted = TRUE
 

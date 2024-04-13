@@ -1184,6 +1184,9 @@
 	if (src.traitHolder.hasTrait("bigbruiser"))
 		msgs.stamina_self -= STAMINA_HTH_COST //Double the cost since this is stacked on top of default
 		. += STAMINA_HTH_DMG * 0.25
+	if (src.traitHolder.hasTrait("softswatter"))
+		msgs.stamina_self += STAMINA_HTH_COST //Half the cost since this is stacked on top of default
+		. -= STAMINA_HTH_DMG * 0.25
 
 /////////////////////////////////////////////////////// Target damage modifiers //////////////////////////////////
 

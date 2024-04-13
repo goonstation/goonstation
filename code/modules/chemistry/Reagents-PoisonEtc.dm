@@ -1558,6 +1558,7 @@ datum
 				M.take_radiation_dose(0.02 SIEVERTS * mult, internal=TRUE)
 				var/mutChance = 4
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 2
+				if (M.traitHolder && M.traitHolder.hasTrait("unstablegenes")) mutChance = 6
 				if (probmult(mutChance) && ishuman(M))
 					M.bioHolder.RandomEffect("bad")
 				..()
@@ -1598,6 +1599,7 @@ datum
 				// DNA buckshot
 				var/mutChance = 15
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 7
+				if (M.traitHolder && M.traitHolder.hasTrait("unstablegenes")) mutChance = 22
 				if (probmult(mutChance) && ishuman(M))
 					M.bioHolder.RandomEffect("bad")
 				if (probmult(3) && ishuman(M))

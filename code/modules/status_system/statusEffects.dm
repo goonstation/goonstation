@@ -579,7 +579,7 @@
 
 
 			if(stage > 0 && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-				if(ishuman(M) && !ON_COOLDOWN(M,"radiation_mutation_check", 3 SECONDS) && prob(((stage - 1) - M.traitHolder?.hasTrait("stablegenes"))**2))
+				if(ishuman(M) && !ON_COOLDOWN(M,"radiation_mutation_check", 3 SECONDS) && prob(((stage - 1) - M.traitHolder?.hasTrait("stablegenes") + M.traitHolder?.hasTrait("unstablegenes"))**2))
 					boutput(M, SPAN_ALERT("You mutate!"))
 					M.bioHolder.RandomEffect("either")
 				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECONDS) && prob((stage-1)**2))
