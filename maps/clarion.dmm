@@ -28917,9 +28917,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1;
+/obj/deployable_turret/riot/active{
 	dir = 1
 	},
 /turf/simulated/floor/redblack,
