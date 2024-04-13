@@ -1,5 +1,9 @@
 
 (t)sat apr 13 24
+(u)glowbold
+(p)18486
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)SecHUD users can see a person's SecHUD Flag regardless of criminal status.
 (u)mloccy
 (p)18208
 (e)🆕📦|C-Feature, A-Game-Objects
