@@ -1,3 +1,4 @@
+#define BLOB_VICTORY_TILE_COUNT 500
 /datum/game_mode/blob
 	name = "Blob"
 	config_tag = "blob"
@@ -28,7 +29,7 @@
 			num_players++
 
 	var/i = rand(10, 15)
-	var/num_blobs = clamp(round((num_players + i) / 25), blobs_minimum, blobs_possible)
+	var/num_blobs = clamp(round((num_players + i) / 20), blobs_minimum, blobs_possible)
 
 	var/list/possible_blobs = get_possible_enemies(ROLE_BLOB, num_blobs)
 
@@ -90,7 +91,7 @@
 			var/mob/living/intangible/blob_overmind/O = M.current
 			blobcount += 1
 			tilecount += O.blobs.len
-	if(tilecount < 500*blobcount)
+	if(tilecount < BLOB_VICTORY_TILE_COUNT*blobcount)
 		return 0
 	return 1
 
@@ -121,5 +122,10 @@
 		if (isblob(M.current))
 			blobs += M.current
 	src.finish_counter = length(blobs)
+	if (src.finish_counter)
+		var/mob/living/intangible/blob_overmind/blob = locate() in blobs
+		blob.go_critical()
 	boutput(world, src.victory_msg())
 	..()
+
+#undef BLOB_VICTORY_TILE_COUNT

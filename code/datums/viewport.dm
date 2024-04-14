@@ -29,10 +29,9 @@
 	var/list/planes = list()
 	var/kind
 
-	New(var/client/viewer, var/kind, title=null)
+	New(var/client/viewer, var/kind, title=null, shares_plane_parents=FALSE)
 		..()
 		src.kind = kind
-
 		src.viewer = viewer
 		viewport_id = "viewport_[max_viewport_id++]"
 		if(isnull(title))
@@ -49,17 +48,24 @@
 		viewer.screen += handler
 		for(var/plane_key in viewer.plane_parents)
 			var/atom/movable/screen/plane_parent/p = viewer.plane_parents[plane_key]
-			var/atom/movable/screen/plane_parent/dupe = new
-			dupe.plane = p.plane
-			dupe.appearance = p.appearance
-			dupe.appearance_flags = p.appearance_flags
-			dupe.mouse_opacity = p.mouse_opacity//0
-			dupe.blend_mode = p.blend_mode
-			dupe.screen_loc = "map_[viewport_id]:1,1"
-			dupe.name = p.name
+			if(!shares_plane_parents)
+				var/atom/movable/screen/plane_parent/dupe = new
+				dupe.plane = p.plane
+				dupe.appearance = p.appearance
+				dupe.appearance_flags = p.appearance_flags
+				dupe.mouse_opacity = p.mouse_opacity//0
+				dupe.blend_mode = p.blend_mode
+				dupe.screen_loc = "map_[viewport_id]:1,1"
+				dupe.name = p.name
 
-			viewer.screen += dupe
-			planes += dupe
+				viewer.screen += dupe
+				planes += dupe
+			else
+				var/atom/movable/screen/plane_parent_proxy = new
+				plane_parent_proxy.vis_contents += p
+				plane_parent_proxy.screen_loc = "map_[viewport_id]:1,1"
+				viewer.screen += plane_parent_proxy
+				planes += plane_parent_proxy
 
 		viewer.viewports += src
 
@@ -158,14 +164,14 @@
 	if(istype(vp) && vp.viewer == src)
 		qdel(vp)
 
-/mob/proc/create_viewport(kind, title=null, size=8)
+/mob/proc/create_viewport(kind, title=null, size=8, share_planes=FALSE)
 	RETURN_TYPE(/datum/viewport)
 	var/list/viewports = client.getViewportsByType(kind)
 	if(length(viewports) >= 5)
 		boutput( src, "<b>You can only have up to 5 active viewports. Close an existing viewport to create another.</b>" )
 		return
 
-	var/datum/viewport/vp = new(src.client, kind, title)
+	var/datum/viewport/vp = new(src.client, kind, title, share_planes)
 	var/turf/ourPos = get_turf(src)
 	var/turf/startPos = null
 	for(var/i = round(size / 2), i >= 0 || !startPos, i--)
@@ -177,54 +183,50 @@
 
 /mob/living/intangible/aieye/verb/ai_eye_create_viewport()
 	set category = "AI Commands"
-	set name = "EXPERIMENTAL: Create Viewport"
-	set desc = "Expand your powers with Nanotransen's Viewportifier!"
+	set name = "Create Viewport"
+	set desc = "Expand your powers with Nanotrasen's Viewportifier!"
 
-	src.create_viewport("AI: Viewport")
+	src.create_viewport(VIEWPORT_ID_AI)
 
 /mob/living/intangible/blob_overmind/verb/blob_create_viewport()
 	set category = "Blob Commands"
-	set name = "EXPERIMENTAL: Create Viewport"
+	set name = "Create Viewport"
 	set desc = "Expand your powers with BlobCorp's Viewportifier!"
 
-	src.create_viewport("Blob: Viewport")
+	src.create_viewport(VIEWPORT_ID_BLOB)
 
 /mob/living/intangible/blob_overmind/death()
-	src.client?.clearViewportsByType("Blob: Viewport")
+	src.client?.clearViewportsByType(VIEWPORT_ID_BLOB)
 	.=..()
 
 /mob/living/silicon/ai/death(gibbed)
-	src.client?.clearViewportsByType("AI: Viewport")
+	src.client?.clearViewportsByType(VIEWPORT_ID_AI)
 	.=..()
 
 
 /client/proc/cmd_create_viewport()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Create Viewport"
+	set desc = "Creates a cute little popout window to let you monitor an area, just like how AIs can."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
-	var/datum/viewport/viewport = src.mob.create_viewport("Admin: Viewport")
+	var/datum/viewport/viewport = src.mob.create_viewport(VIEWPORT_ID_ADMIN, share_planes=TRUE)
 	viewport.handler.listens = TRUE
-
-
-/client/proc/cmd_create_viewport_silent()
-	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set name = "Create Silent Viewport"
-	ADMIN_ONLY
-
-	src.mob.create_viewport("Admin: Viewport - Silent")
 
 
 /client/proc/cmd_create_viewport_following()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Create Viewport Following"
+	set desc = "Creates a viewport that follows a selected atom."
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/atom/target_atom = pick_ref(src.mob)
 	if(!target_atom || isturf(target_atom))
-		boutput(src, "<span class='alert'>No viewport target selected.</span>")
+		boutput(src, SPAN_ALERT("No viewport target selected."))
 		return
 
-	var/datum/viewport/viewport = src.mob.create_viewport("Admin: Viewport", title = "Following: [target_atom.name]", size=9)
+	var/datum/viewport/viewport = src.mob.create_viewport(VIEWPORT_ID_ADMIN, title = "Following: [target_atom.name]", size=9, share_planes=TRUE)
 	viewport.handler.listens = TRUE
 	viewport.start_following(target_atom)

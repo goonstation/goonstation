@@ -68,7 +68,7 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 /obj/item/cloth/towel/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (!..())
 		return
-	user.visible_message("<span class='notice'>[user] wipes [target] down with [src].</span>")
+	user.visible_message(SPAN_NOTICE("[user] wipes [target] down with [src]."))
 	target.clean_forensic()
 	src.reagents.reaction(target, TOUCH, 5)
 	src.reagents.remove_any(5)
@@ -81,9 +81,9 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 /obj/item/cloth/towel/afterattack(atom/target, mob/user as mob)
 	if (istype(target, /obj/item/reagent_containers/food/drinks) || istype(target, /obj/item/reagent_containers/food/drinks/bowl) || istype(target, /obj/item/plate))
 		if (target.reagents?.total_volume || length(target.contents))
-			boutput(user, "<span class='alert'>[target] needs to be emptied first.</span>")
+			boutput(user, SPAN_ALERT("[target] needs to be emptied first."))
 			return
-		user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [target] with [src].</span>")
+		user.visible_message(SPAN_NOTICE("[user] [pick("polishes", "shines", "cleans", "wipes")] [target] with [src]."))
 		playsound(src, 'sound/items/glass_wipe.ogg', 35, TRUE)
 
 /obj/item/cloth/towel/white
@@ -117,9 +117,9 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 		return ..()
 	var/mob/living/carbon/human/H = user
 	if (!H.organHolder?.stomach)
-		user.show_message("<span class='alert'>You can't seem to swallow!</span>")
+		user.show_message(SPAN_ALERT("You can't seem to swallow!"))
 		return
-	user.visible_message("<span class='alert'>[user] rolls [src] into a ball and eats it!</span>")
+	user.visible_message(SPAN_ALERT("[user] rolls [src] into a ball and eats it!"))
 	playsound(user, 'sound/misc/gulp.ogg', 30, TRUE)
 	eat_twitch(user)
 	user.drop_item(src)
@@ -131,11 +131,11 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	if (I.w_class != W_CLASS_TINY || user.mind?.assigned_role != "Clown")
 		return ..()
 	if (!isnull(hidden_pocket))
-		boutput(user, "<span class='alert'>You already have an item stored in the towel!</span>")
+		boutput(user, SPAN_ALERT("You already have an item stored in the towel!"))
 		return
 	animate_storage_rustle(src)
 	playsound(src, "rustle", 50, 1, -5)
-	user.visible_message("<span class='notice'>[user] [pick("surreptitiously", "sneakily", "awkwardly")] stows [I] away in one of [src]'s many hidden pockets.</span>")
+	user.visible_message(SPAN_NOTICE("[user] [pick("surreptitiously", "sneakily", "awkwardly")] stows [I] away in one of [src]'s many hidden pockets."))
 	user.drop_item(I)
 	I.set_loc(src)
 	hidden_pocket = I
@@ -145,7 +145,7 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 		return ..()
 	animate_storage_rustle(src)
 	playsound(src, "rustle", 50, 1, -5)
-	user.visible_message("<span class='notice'>[user] rummages through [src] and retrieves [hidden_pocket] from one of its many hidden pockets!</span>")
+	user.visible_message(SPAN_NOTICE("[user] rummages through [src] and retrieves [hidden_pocket] from one of its many hidden pockets!"))
 	user.put_in_hand_or_drop(hidden_pocket)
 	hidden_pocket = null
 
@@ -179,7 +179,7 @@ ABSTRACT_TYPE(/obj/item/cloth/handkerchief)
 /obj/item/cloth/handkerchief/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (!..())
 		return
-	user.visible_message("<span class='notice'>[user] [pick("dabs at", "blots at", "wipes")] [target == user ? his_or_her(user) : "[target]'s"] face with [src].</span>")
+	user.visible_message(SPAN_NOTICE("[user] [pick("dabs at", "blots at", "wipes")] [target == user ? his_or_her(user) : "[target]'s"] face with [src]."))
 
 /obj/item/cloth/handkerchief/attack_self(mob/user)
 	if (!src.bandana)
@@ -190,7 +190,7 @@ ABSTRACT_TYPE(/obj/item/cloth/handkerchief)
 	src.copy_filters_to(the_bandana)
 	qdel(src)
 	user.put_in_hand_or_drop(the_bandana)
-	boutput(user, "<span class='notice'>You tie \the [src] together to make \a [the_bandana].</span>")
+	boutput(user, SPAN_NOTICE("You tie \the [src] together to make \a [the_bandana]."))
 
 ABSTRACT_TYPE(/obj/item/cloth/handkerchief/colored)
 /obj/item/cloth/handkerchief/colored

@@ -134,7 +134,7 @@ TYPEINFO(/obj/machinery/espresso_machine)
 			return
 
 		if (!isliving(user))
-			boutput(user, "<span class='alert'>How are you planning on drinking coffee as a ghost!?</span>")
+			boutput(user, SPAN_ALERT("How are you planning on drinking coffee as a ghost!?"))
 			return
 
 		if (isAI(user) || !can_reach(user, O) || BOUNDS_DIST(user, src) > 1 || !can_act(user) )
@@ -207,6 +207,7 @@ TYPEINFO(/obj/machinery/coffeemaker)
 	var/image/fluid_image
 
 	var/emagged = FALSE
+	var/reagent_id = "coffee_fresh"
 
 	New()
 		..()
@@ -219,14 +220,14 @@ TYPEINFO(/obj/machinery/coffeemaker)
 
 		if(!src.emagged)
 			if (user)
-				boutput(user, "<span class='notice'>You force the machine to brew something else...</span>")
+				boutput(user, SPAN_NOTICE("You force the machine to brew something else..."))
 
 			src.desc = " It's top of the line NanoTrasen tea technology! Featuring 100% Organic Locally-Grown green leaves!"
-			src.emagged = TRUE
+			src.reagent_id = "tea"
 			return TRUE
 		else
 			if (user)
-				boutput(user, "<span class='alert'>This has already been tampered with.</span>")
+				boutput(user, SPAN_ALERT("This has already been tampered with."))
 			return FALSE
 
 	attackby(var/obj/item/W, var/mob/user)
@@ -253,7 +254,7 @@ TYPEINFO(/obj/machinery/coffeemaker)
 					switch (choice)
 						if ("Brew coffee","Brew tea")
 							for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
-								C.reagents.add_reagent(src.emagged ? "tea" : "coffee_fresh",100)
+								C.reagents.add_reagent(src.reagent_id,100)
 								playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 								use_power(10)
 						if ("Remove carafe")

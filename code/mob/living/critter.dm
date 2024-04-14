@@ -347,11 +347,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 				EH.equip(I)
 				hud.add_object(I, HUD_LAYER+2, EH.screenObj.screen_loc)
 			else
-				boutput(src, "<span class='alert'>You cannot equip [I] in that slot!</span>")
+				boutput(src, SPAN_ALERT("You cannot equip [I] in that slot!"))
 			update_clothing()
 		else if (W)
 			if (!EH.remove())
-				boutput(src, "<span class='alert'>You cannot remove [W] from that slot!</span>")
+				boutput(src, SPAN_ALERT("You cannot remove [W] from that slot!"))
 			update_clothing()
 
 	proc/handcheck()
@@ -371,7 +371,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 						var/obj/item/S = new src.skinresult
 						S.set_loc(src.loc)
 					src.skinresult = null
-					M.visible_message("<span class='alert'>[M] skins [src].</span>","You skin [src].")
+					M.visible_message(SPAN_ALERT("[M] skins [src]."),"You skin [src].")
 					return
 			if (src.butcherable && (issawingtool(I) || iscuttingtool(I)))
 				actions.start(new/datum/action/bar/icon/butcher_living_critter(src,src.butcher_time), M)
@@ -386,19 +386,21 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		else
 			..()
 
-	proc/butcher(var/mob/M, drop_brain = TRUE)
-		var/i = rand(2,4)
-		var/transfer = src.reagents ? src.reagents.total_volume / i : 0
+	/// Creates meat and a brain named after the mob containing reagents. Both can be skipped to allow custom butchering at the mob level
+	proc/butcher(var/mob/M, drop_brain = TRUE, drop_meat = TRUE)
+		if (drop_meat)
+			var/i = rand(2,4)
+			var/transfer = src.reagents ? src.reagents.total_volume / i : 0
 
-		while (i-- > 0)
-			var/obj/item/reagent_containers/food/newmeat = new meat_type
-			newmeat.set_loc(src.loc)
-			src.reagents?.trans_to(newmeat, transfer)
-			if (name_the_meat)
-				newmeat.name = "[src.name] meat"
-				newmeat.real_name = newmeat.name
+			while (i-- > 0)
+				var/obj/item/reagent_containers/food/newmeat = new meat_type
+				newmeat.set_loc(src.loc)
+				src.reagents?.trans_to(newmeat, transfer)
+				if (name_the_meat)
+					newmeat.name = "[src.name] meat"
+					newmeat.real_name = newmeat.name
 
-		if (src.organHolder && drop_brain)
+		if (src.organHolder && src.last_ckey)
 			src.organHolder.drop_organ("brain",src.loc)
 
 		src.ghostize()
@@ -487,7 +489,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			var/throw_dir = get_dir(src, target)
 			if(prob(yeet_chance))
 				src.say("YEET")
-				src.visible_message("<span class='alert'>[src] yeets [I].</span>")
+				src.visible_message(SPAN_ALERT("[src] yeets [I]."))
 				new/obj/effect/supplyexplosion(I.loc)
 
 				playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
@@ -496,7 +498,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					shake_camera(M, 20, 8)
 
 			else
-				src.visible_message("<span class='alert'>[src] throws [I].</span>")
+				src.visible_message(SPAN_ALERT("[src] throws [I]."))
 			if (iscarbon(I))
 				var/mob/living/carbon/C = I
 				logTheThing(LOG_COMBAT, src, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
@@ -534,7 +536,13 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		return 0
 
 	click(atom/target, list/params)
-		if (((src.client && src.client.check_key(KEY_THROW)) || src.in_throw_mode) && src.can_throw)
+		var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
+		if (src.client?.check_key(KEY_THROW) && src.a_intent == "help" && thing && isliving(target) && BOUNDS_DIST(src, target) <= 0)
+			usr = src
+			var/mob/living/living_target = target
+			living_target.give_item()
+			return
+		else if ((src.client?.check_key(KEY_THROW) || src.in_throw_mode) && src.can_throw)
 			src.throw_item(target,params)
 			return
 		return ..()
@@ -750,7 +758,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 				L.attack_hand(target, src)
 				HH.set_cooldown_overlay()
 		else
-			boutput(src, "<span class='alert'>You cannot attack with your [HH.name]!</span>")
+			boutput(src, SPAN_ALERT("You cannot attack with your [HH.name]!"))
 
 	can_strip(mob/M)
 		var/datum/handHolder/HH = get_active_hand()
@@ -761,14 +769,14 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		if (HH.can_hold_items)
 			return 1
 		else
-			boutput(src, "<span class='alert'>You cannot strip other people with your [HH.name].</span>")
+			boutput(src, SPAN_ALERT("You cannot strip other people with your [HH.name]."))
 
 	proc/on_pet(mob/user)
 		if (!user)
 			return 1 // so things can do if (..())
 		var/pmsg = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
-		src.visible_message("<span class='notice'><b>[user] [pmsg] [src]!</b></span>",\
-		"<span class='notice'><b>[user] [pmsg] you!</b></span>")
+		src.visible_message(SPAN_NOTICE("<b>[user] [pmsg] [src]!</b>"),\
+			SPAN_NOTICE("<b>[user] [pmsg] you!</b>"), group="critter_pet")
 		user.add_karma(0.5)
 		return
 
@@ -890,7 +898,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			if (src.death_text)
 				src.tokenized_message(src.death_text, null, "red")
 			else
-				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> dies!"))
 			setdead(src)
 			icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead"
 		empty_hands()
@@ -921,7 +929,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		. = ..()
-		src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
+		src.visible_message(SPAN_ALERT("[src] has been hit by [AM]."))
 		random_brute_damage(src, AM.throwforce, TRUE)
 		if (src.client)
 			logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
@@ -1184,14 +1192,14 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
-					O.show_message("<span class='emote'>[message]</span>", m_type)
+					O.show_message(SPAN_EMOTE("[message]"), m_type)
 			else if (m_type & 2)
 				for (var/mob/O in hearers(src, null))
-					O.show_message("<span class='emote'>[message]</span>", m_type)
+					O.show_message(SPAN_EMOTE("[message]"), m_type)
 			else if (!isturf(src.loc))
 				var/atom/A = src.loc
 				for (var/mob/O in A.contents)
-					O.show_message("<span class='emote'>[message]</span>", m_type)
+					O.show_message(SPAN_EMOTE("[message]"), m_type)
 
 
 	talk_into_equipment(var/mode, var/message, var/param)
@@ -1468,6 +1476,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			var/obj/item/W = src.equipped()
 			if (W)
 				src.click(W, list())
+			else
+				var/datum/handHolder/HH = src.get_active_hand()
+				if(HH?.limb)
+					HH.limb.attack_self(src)
 		if ("togglethrow")
 			src.toggle_throw_mode()
 		if ("walk")
@@ -1475,7 +1487,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 				src.m_intent = "walk"
 			else
 				src.m_intent = "run"
-			out(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
+			boutput(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		else
 			return ..()
@@ -1540,20 +1552,20 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		damage /= 4
 		//src.paralysis += 1
 
-	src.show_message("<span class='alert'>The blob attacks you!</span>")
+	src.show_message(SPAN_ALERT("The blob attacks you!"))
 
 	if (src.spellshield)
-		boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")
+		boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some damage!</b>"))
 
 	if (damage > 4.9)
 		if (prob(50))
 			changeStatus("weakened", 5 SECONDS)
 			for (var/mob/O in viewers(src, null))
-				O.show_message("<span class='alert'><B>The blob has knocked down [src]!</B></span>", 1, "<span class='alert'>You hear someone fall.</span>", 2)
+				O.show_message(SPAN_ALERT("<B>The blob has knocked down [src]!</B>"), 1, SPAN_ALERT("You hear someone fall."), 2)
 		else
 			src.changeStatus("stunned", 5 SECONDS)
 			for (var/mob/O in viewers(src, null))
-				if (O.client)	O.show_message("<span class='alert'><B>The blob has stunned [src]!</B></span>", 1)
+				if (O.client)	O.show_message(SPAN_ALERT("<B>The blob has stunned [src]!</B>"), 1)
 		if (isalive(src))
 			src.lastgasp() // calling lastgasp() here because we just got knocked out
 
@@ -1576,11 +1588,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/proc/admincmd_attack()
 	set name = "Start Attacking"
 	if(isnull(src.ai))
-		boutput(src, "<span class='alert'>This mob has no AI.</span>")
+		boutput(src, SPAN_ALERT("This mob has no AI."))
 		return
 	var/mob/living/target = pick_ref(usr)
 	if(!istype(target))
-		boutput(usr, "<span class='alert'>Invalid target.</span>")
+		boutput(usr, SPAN_ALERT("Invalid target."))
 		return
 	if(!src.ai.enabled)
 		src.ai.enable()
@@ -1592,12 +1604,18 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/proc/admincmd_reset_task()
 	set name = "Reset AI Task"
 	if(isnull(src.ai))
-		boutput(src, "<span class='alert'>This mob has no AI.</span>")
+		boutput(src, SPAN_ALERT("This mob has no AI."))
 		return
 	if(!src.ai.enabled)
 		src.ai.enable()
 	src.ai.interrupt()
 
+/mob/living/critter/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	wake_from_hibernation()
+
+/mob/living/critter/can_hold_two_handed()
+	return TRUE // critters can hold two handed items in one hand
 
 ABSTRACT_TYPE(/mob/living/critter/robotic)
 /// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads

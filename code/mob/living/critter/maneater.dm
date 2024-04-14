@@ -119,7 +119,7 @@
 	// now, we set the arm injection up
 	if (length(origin_plant.assoc_reagents) > 0)
 		var/datum/limb/mouth/maneater/manipulated_limb = src.scaleable_limb
-		manipulated_limb.amount_to_inject = clamp(round(baseline_injection + injection_amount_per_yield * passed_genes?.get_effective_value("cropsize")), 1, maxcap_injection )
+		manipulated_limb.amount_to_inject = clamp(round(baseline_injection + injection_amount_per_yield * HYPchem_scaling(passed_genes?.get_effective_value("cropsize")) * passed_genes?.get_effective_value("cropsize")), 1, maxcap_injection )
 		manipulated_limb.chems_to_inject |= HYPget_assoc_reagents(origin_plant, passed_genes)
 	..()
 	return src
@@ -181,7 +181,7 @@
 	if ((length(.) > 0) && prob(10))
 		if (!ON_COOLDOWN(src, "maneater_snarling", 15 SECONDS))
 			playsound(src.loc, 'sound/voice/maneatersnarl.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-			src.visible_message("<span class='alert'><B>[src]</B> snarls!</span>")
+			src.visible_message(SPAN_ALERT("<B>[src]</B> snarls!"))
 
 /mob/living/critter/plant/maneater/seek_scavenge_target(var/range = 5)
 	. = list()
@@ -296,7 +296,7 @@
 		if ("scream")
 			if (src.emote_check(voluntary, 5 SECONDS))
 				playsound(src.loc, 'sound/voice/maneatersnarl.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				return "<b><span class='alert'>[src] snarls!</span></b>"
+				return SPAN_ALERT("<b>[src] snarls!</b>")
 	return ..()
 
 /mob/living/critter/plant/maneater/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")

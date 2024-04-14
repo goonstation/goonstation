@@ -282,12 +282,18 @@
 	// Determine whether this antagonist is dead or alive, and where they currently are.
 	var/status = "Unknown"
 	if (!isdead(mind.current))
-		if (mind.current.z == Z_LEVEL_STATION)
-			status = "Alive, On Station"
-		else if (istype(get_area(mind.current), /area/centcom) || istype(get_area(mind.current), /area/shuttle/escape) )
-			status = "Alive, At CentComm"
+		// status
+		if(issilicon(mind.current))
+			status = "Silicon, " // you made it, but not really
 		else
-			status = "Alive, Off Station"
+			status = "Alive, "
+		// where
+		if (mind.current.z == Z_LEVEL_STATION)
+			status += "On Station"
+		else if (istype(get_area(mind.current), /area/centcom) || istype(get_area(mind.current), /area/shuttle/escape) )
+			status += "At CentComm"
+		else
+			status += "Off Station"
 
 	else
 		var/mob/corpse
@@ -370,7 +376,7 @@
 	src.score_tab_data[SCORE_TAB_SECTION_ENGINEERING] = list(
 		list(
 			"name" = "Power Generated",
-			"value" = "[engineering_notation(score_tracker.power_generated)]W",
+			"value" = "[engineering_notation(score_tracker.power_generated / 3600)]Wh",
 		),
 		list(
 			"name" = "Station Structural Integrity",

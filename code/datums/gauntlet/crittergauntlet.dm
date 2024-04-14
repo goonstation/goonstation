@@ -62,7 +62,7 @@
 		if (gauntlet_controller.state != 0)
 			return
 		if (ticker.round_elapsed_ticks < 3000)
-			boutput(usr, "<span class='alert'>You may not initiate the Gauntlet before 5 minutes into the round.</span>")
+			boutput(usr, SPAN_ALERT("You may not initiate the Gauntlet before 5 minutes into the round."))
 			return
 		if (alert("Start the Gauntlet? No more players will be given admittance to the staging area!",, "Yes", "No") == "Yes")
 			if (gauntlet_controller.state != 0)
@@ -291,7 +291,8 @@
 				C.add_centcom_report(ALERT_GENERAL, command_report)
 
 			command_alert(command_report, "Critter Gauntlet match finished")
-		statlog_gauntlet(moblist_names, score, current_level)
+		var/datum/eventRecord/GauntletHighScore/gauntletHighScoreEvent = new()
+		gauntletHighScoreEvent.send(moblist_names, score, current_level)
 
 		SPAWN(0)
 			for (var/obj/item/I in staging)
@@ -571,10 +572,10 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		. = ..()
 		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
-	gauntlet
-		name = "The Gauntlet Arena"
-		has_camera = 1
-		cam_network = "Zeta"
+/obj/observable/gauntlet
+	name = "The Gauntlet Arena"
+	has_camera = 1
+	cam_network = "public"
 
 /datum/gauntletDrop
 	var/name = "Drop"
@@ -829,7 +830,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			else
 				for (var/mob/living/M in gauntlet_controller.gauntlet)
 					M.HealDamage("All", 5, 5)
-					//boutput(M, "<span class='notice'>A soothing wave of energy washes over you!</span>")
+					//boutput(M, SPAN_NOTICE("A soothing wave of energy washes over you!"))
 				counter = 10
 
 		tearDown()
@@ -876,7 +877,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 				M.bodytemperature = T0C + 120
 				if (prob(10))
 					if (!M.getStatusDuration("burning"))
-						boutput(M, "<span class='alert'>You spontaneously combust!</span>")
+						boutput(M, SPAN_ALERT("You spontaneously combust!"))
 					M.changeStatus("burning", 7 SECONDS)
 
 		tearDown()
@@ -903,7 +904,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			if (prob(20))
 				for (var/mob/living/M in gauntlet_controller.gauntlet)
 					M.TakeDamage("chest", 1, 0, 0, DAMAGE_CUT)
-					//boutput(M, "<span class='alert'>The void tears at you!</span>")
+					//boutput(M, SPAN_ALERT("The void tears at you!"))
 					// making the zone name a bit more obvious and making its spam chatbox less - ISN
 
 		tearDown()
@@ -1233,21 +1234,18 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		count = 10
 		types = list(/mob/living/critter/small_animal/floateye)
 
-/proc/queryGauntletMatches(data)
-	if (islist(data) && data["data_hub_callback"])
-		logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Invoked (data is [data])")
-		for (var/userkey in data["keys"])
-			logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Got key [userkey].")
-			var/matches = data[userkey]
-			logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Matches for [userkey]: [matches].")
-			var/obj/item/card/id/gauntlet/G = locate("gauntlet-id-[userkey]") in world
-			if (G && istype(G))
-				G.SetMatchCount(text2num(matches))
-			else
-				logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Could not locate ID 'gauntlet-id-[userkey]'.")
-				return 1
+/proc/queryGauntletMatches(key)
+	var/datum/apiModel/PreviousGauntlets/previousGauntlets
+	try
+		var/datum/apiRoute/gauntlet/getprevious/getPreviousGauntlets = new
+		getPreviousGauntlets.queryParams = list("key" = key)
+		previousGauntlets = apiHandler.queryAPI(getPreviousGauntlets)
+	catch
+		return FALSE
 
+	var/obj/item/card/id/gauntlet/G = locate("gauntlet-id-[key]") in world
+	if (G && istype(G))
+		G.SetMatchCount(previousGauntlets.gauntlets_completed)
 	else
-		var/list/query = list()
-		query["key"] = data
-		apiHandler.queryAPI("gauntlet/getPrevious", query)
+		logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Could not locate ID 'gauntlet-id-[key]'.")
+		return FALSE

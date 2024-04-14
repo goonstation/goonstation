@@ -2,6 +2,13 @@
 // can have multiple per area
 // can also operate on non-loc area through "otherarea" var
 
+/// Amount of time before a light switch resets its spam cooldown counter
+#define SWITCH_SPAM_TIMEOUT 15 SECONDS
+/// Number of manual toggles before the light switch begins shocking people
+#define SWITCH_SPAM_START_THRESHOLD 10
+/// Number of manual toggles before light switches start really hurting people
+#define SWITCH_SPAM_MAJOR_THRESHOLD 50
+
 TYPEINFO(/obj/machinery/light_switch)
 	mats = list("MET-1"=10,"CON-1"=15)
 
@@ -20,7 +27,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	var/id = null
 	//	luminosity = 1
 	var/datum/light/light
-
+	var/toggled_count = 0 //! How many times has this been toggled
+	HELP_MESSAGE_OVERRIDE("You can use a <b>screwing tool</b> to tighten the wiring contacts.")
 
 /obj/machinery/light_switch/New()
 	..()
@@ -112,12 +120,25 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 			light.set_color(1, 0.5, 0.5)
 
 /obj/machinery/light_switch/get_desc(dist, mob/user)
-	if(user && !user.stat)
-		return "A light switch. It is [on? "on" : "off"]."
+	. = ..()
+	. += " It is [on? "on" : "off"]."
+	switch(toggled_count)
+		if(SWITCH_SPAM_START_THRESHOLD to SWITCH_SPAM_MAJOR_THRESHOLD)
+			. += " It looks a bit loose."
+		if(SWITCH_SPAM_MAJOR_THRESHOLD to INFINITY)
+			. += " It's practically falling out of the wall."
 
 /obj/machinery/light_switch/attack_hand(mob/user)
+	. = ..()
 	if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
 		toggle_group(user)
+		toggled_count += 1
+		if (toggled_count < SWITCH_SPAM_START_THRESHOLD)
+			return
+		if(ON_COOLDOWN(src, "spam", SWITCH_SPAM_TIMEOUT))
+			user.shock(src, toggled_count)
+			if (toggled_count >= SWITCH_SPAM_MAJOR_THRESHOLD)
+				elecflash(user.loc)
 
 /obj/machinery/light_switch/proc/toggle_group(mob/user=null) //flip *this* switch, update target area, then prompt the group to refresh accordingly
 	on = !on
@@ -145,6 +166,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 /obj/machinery/light_switch/proc/toggle(var/on_signal)
 	src.on = on_signal
 	src.UpdateIcon()
+
+/obj/machinery/light_switch/attackby(obj/item/I, mob/user)
+	if (isscrewingtool(I))
+		if (!(status & NOPOWER) && src.on)
+			user.shock(src, 100)
+		src.toggled_count = 0
+		src.visible_message(SPAN_NOTICE("[user] tightens the contacts on [src]."))
+		return
+	. = ..()
 
 /obj/machinery/light_switch/power_change()
 
@@ -179,3 +209,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 		SPAWN(1 DECI SECOND)
 			src.autoposition()
 		..()
+
+#undef SWITCH_SPAM_TIMEOUT
+#undef SWITCH_SPAM_START_THRESHOLD
+#undef SWITCH_SPAM_MAJOR_THRESHOLD

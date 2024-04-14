@@ -26,6 +26,7 @@
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_GHOST
 		src.see_in_dark = SEE_DARK_FULL
+		src.flags |= UNCRUSHABLE
 
 	proc/addAllAbilities()
 		src.addAbility(/datum/targetable/zoldorfAbility/fortune)
@@ -135,7 +136,7 @@
 		if((target in range(0,src))&&(istype(target,/obj/item/reagent_containers/food/snacks/ectoplasm))&&(src.invisibility > INVIS_NONE))
 			if(src.emoting)
 				return
-			src.visible_message("<span class='notice'><b>[src.name] rolls around in the ectoplasm, making their soul visible!</b></span>")
+			src.visible_message(SPAN_NOTICE("<b>[src.name] rolls around in the ectoplasm, making their soul visible!</b>"))
 			if (prob(50))
 				animate_spin(src, "R", 1, 0)
 			else
@@ -208,12 +209,13 @@
 		return 0
 
 	say(var/message)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		if(free)
 			if (dd_hasprefix(message, "*"))
 				return src.emote(copytext(message, 2),1)
 
 			logTheThing(LOG_DIARY, src, "[src.name] - [src.real_name]: [message]", "say")
+			SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")
@@ -261,7 +263,7 @@
 				src.emoting = 1
 				soulcache = src.icon
 				if(!src.invisibility)
-					src.visible_message("<span class='alert'><b>The ectoplasm falls off! Oh no!</b></span>")
+					src.visible_message(SPAN_ALERT("<b>The ectoplasm falls off! Oh no!</b>"))
 					APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 					src.ClearAllOverlays()
 					var/obj/item/reagent_containers/food/snacks/ectoplasm/e = new /obj/item/reagent_containers/food/snacks/ectoplasm
@@ -300,11 +302,11 @@
 			if(src.homebooth)
 				src.set_loc(homebooth)
 			else
-				src.visible_message("<span class='alert'><b>Poof!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>Poof!</b>"))
 				src.gib(1)
 				return
 		var/obj/machinery/playerzoldorf/pz = src.loc
-		src.visible_message("<span class='alert'><b>Poof!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>Poof!</b>"))
 		src.free()
 		src.set_loc(get_turf(src.loc))
 		pz.remove_simple_light("zoldorf")

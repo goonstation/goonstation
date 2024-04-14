@@ -4,7 +4,6 @@
 	desc = "Coins for the coin god. You shouldn't be seeing this."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "coin"
-	uses_multiple_icon_states = 1
 	opacity = 0
 	density = 0
 	anchored = UNANCHORED
@@ -14,7 +13,7 @@
 	throw_range = 8
 	w_class = W_CLASS_TINY
 	burn_point = 400
-	burn_possible = 2
+	burn_possible = TRUE
 	burn_output = 750
 	amount = 1
 	max_stack = 1000000
@@ -51,18 +50,18 @@
 		src.name = "[src.amount == src.max_stack ? "1000000" : src.amount] [name_prefix(null, 1)][src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span class='notice'>[user] is stacking [display_name]!</span>")
+		user.visible_message(SPAN_NOTICE("[user] is stacking [display_name]!"))
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span class='notice'>You finish stacking [display_name].</span>")
+		boutput(user, SPAN_NOTICE("You finish stacking [display_name]."))
 
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span class='alert'>You need another stack!</span>")
+		boutput(user, SPAN_ALERT("You need another stack!"))
 
 	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/currency) && src.amount < src.max_stack)
 
-			user.visible_message("<span class='notice'>[user] stacks some [display_name].</span>")
+			user.visible_message(SPAN_NOTICE("[user] stacks some [display_name]."))
 			stack_item(I)
 		else
 			..(I, user)
@@ -72,7 +71,7 @@
 			var/amt = round(input("How much [display_name] do you want to take from the stack?") as null|num)
 			if (isnum_safe(amt) && src.loc == user && !user.equipped())
 				if (amt > src.amount || amt < 1)
-					boutput(user, "<span class='alert'>You wish!</span>")
+					boutput(user, SPAN_ALERT("You wish!"))
 					return
 				var/young_money = split_stack(amt)
 				user.put_in_hand_or_drop(young_money)
@@ -99,6 +98,20 @@
 		src.amount = max(1, passed_genes?.get_effective_value("potency") * rand(2,4))
 		src.UpdateStackAppearance()
 		return src
+
+	stack_item(obj/item/I)
+		if (istype(I,/obj/item/currency/spacecash))
+			if (src.hasStatus("freshly_laundered") || I.hasStatus("freshly_laundered"))
+				if (!(src.hasStatus("freshly_laundered") && I.hasStatus("freshly_laundered")))
+					if (ismob(src.loc))
+						boutput(src.loc, "Ew, this other cash is FILTHY. It's ruined the whole stack!")
+					I.delStatus("freshly_laundered")
+					src.delStatus("freshly_laundered")
+		..()
+
+	get_desc()
+		if (src.hasStatus("freshly_laundered"))
+			. += "It feels warm and soft."
 
 	_update_stack_appearance()
 		src.UpdateName()
@@ -147,7 +160,7 @@
 				var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
 				if (isnum_safe(amt))
 					if (amt > src.amount || amt < 1)
-						boutput(user, "<span class='alert'>You wish!</span>")
+						boutput(user, SPAN_ALERT("You wish!"))
 						return
 
 					boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
@@ -191,7 +204,9 @@
 	thousand
 		default_min_amount = 1000
 		default_max_amount = 1000
-
+	twothousandfivehundred
+		default_min_amount = 2500
+		default_max_amount = 2500
 	hundredthousand
 		default_min_amount = 100000
 		default_max_amount = 100000
@@ -300,7 +315,7 @@
 
 	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/currency/spacebux) && src.spent == 0)
-			user.visible_message("<span class='notice'>[user] stacks some spacebux.</span>")
+			user.visible_message(SPAN_NOTICE("[user] stacks some spacebux."))
 			stack_item(I)
 		else
 			..(I, user)
@@ -440,10 +455,41 @@ TYPEINFO(/obj/item/stamped_bullion)
 	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/currency/fishing) && src.amount < src.max_stack)
 
-			user.visible_message("<span class='notice'>[user] stacks some tickets.</span>")
+			user.visible_message(SPAN_NOTICE("[user] stacks some tickets."))
 			stack_item(I)
 		else
 			..(I, user)
+
+	mouse_drop(atom/over_object, src_location, over_location) //src dragged onto over_object
+		if (isobserver(usr))
+			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
+			return
+
+		if(!istype(over_object, /atom/movable/screen/hud))
+			if (BOUNDS_DIST(usr, src) > 0)
+				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
+				return
+			if (BOUNDS_DIST(usr, over_object) > 0)
+				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
+				return
+
+		if (istype(over_object,/obj/item/currency/fishing) && isturf(over_object.loc)) //piece to piece only if on ground
+			var/obj/item/targetObject = over_object
+			if(targetObject.stack_item(src))
+				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
+		else if(isturf(over_object)) //piece to turf. piece loc doesnt matter.
+			if(isturf(src.loc))
+				src.set_loc(over_object)
+			for(var/obj/item/I in view(1,usr))
+				if (!I || I == src)
+					continue
+				if (!src.check_valid_stack(I))
+					continue
+				src.stack_item(I)
+			usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
+		else
+			..()
+
 
 	uncommon
 		name = "uncommon research ticket"

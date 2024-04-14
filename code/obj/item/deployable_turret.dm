@@ -23,7 +23,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 		icon_state = "[src.icon_tag]_deployer"
 
 	get_desc()
-		. = "<br><span class='notice'>It looks [damage_words]</span>"
+		. = "<br>[SPAN_NOTICE("It looks [damage_words]")]"
 
 
 	attack_self(mob/user as mob)
@@ -35,6 +35,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 		src.spawn_turret(user.dir)
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
+		logTheThing(LOG_STATION, user, "deploys the [src] turret at [log_loc(user)].")
 		qdel(src)
 
 	proc/spawn_turret(var/direct)
@@ -63,10 +64,11 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	icon_tag = "st"
 	quick_deploy_fuel = 2
 	associated_turret = /obj/deployable_turret/syndicate
+	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy. Alternatively, throw it at location to auto-deploy it, fully activated, in the direction thrown.")
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -84,6 +86,7 @@ TYPEINFO(/obj/item/turret_deployer/riot)
 	icon_tag = "nt"
 	is_syndicate = 1
 	associated_turret = /obj/deployable_turret/riot
+	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy.")
 
 /obj/item/turret_deployer/outpost
 	name = "Perimeter Turret Deployer"
@@ -129,7 +132,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	var/deconstructable = TRUE
 	var/can_toggle_activation = TRUE // whether you can enable or disable the turret with a screwdriver, used for map setpiece turrets
 
-	New(var/loc, var/direction)
+	New(loc, direction)
 		..()
 		src.set_dir(direction || src.dir) // don't set the dir if we weren't passed one
 		src.set_initial_angle()
@@ -157,7 +160,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 
 	get_desc(dist)
-		. = "<br><span class='notice'>It looks [src.damage_words]. It is [src.anchored ? "secured to" : "unsecured from"] the floor and powered [src.active ? "on" : "off"].</span>"
+		. = "<br>[SPAN_NOTICE("It looks [src.damage_words]. It is [src.anchored ? "secured to" : "unsecured from"] the floor and powered [src.active ? "on" : "off"].")]"
 
 	proc/set_initial_angle()
 		switch(src.dir)
@@ -213,10 +216,11 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(toggle_anchored), null, W.icon, W.icon_state, \
 			  src.anchored ? "[user] unwelds the turret from the floor." : "[user] welds the turret to the floor.", \
 			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+			logTheThing(LOG_STATION, user, "[src.anchored ? "unwelds" : "welds"] the [src] turret [src.anchored ? "from" : "to"] the floor at [log_loc(src)]")
 
 		else if (isweldingtool(W) && (src.active))
 			if (src.health >= max_health)
-				user.show_message("<span class='notice'>The turret is already fully repaired!.</span>")
+				user.show_message(SPAN_NOTICE("The turret is already fully repaired!."))
 				return
 
 			if(!W:try_weld(user, 1))
@@ -226,18 +230,20 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(repair), null, W.icon, W.icon_state, \
 			  "[user] repairs some of the turret's damage.", \
 			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+			logTheThing(LOG_STATION, user, "repairs the [src] turret with a welding tool at [log_loc(user)]")
 
 		else if  (iswrenchingtool(W))
 
 			if(src.anchored)
 
-				user.show_message("<span class='notice'>Click where you want to aim the turret!</span>")
+				user.show_message(SPAN_NOTICE("Click where you want to aim the turret!"))
 				var/datum/targetable/deployable_turret_aim/A = new()
 				user.targeting_ability = A
 				user.update_cursor()
 				A.my_turret = src
 				A.user_turf = get_turf(user)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				logTheThing(LOG_STATION, user, "reorients the [src] turret (at [log_loc(src)]) to face a new direction.")
 
 			else
 				user.show_message("You begin to disassemble the turret.")
@@ -245,17 +251,18 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(spawn_deployer), null, W.icon, W.icon_state, \
 				  "[user] disassembles the turret.", \
 				  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+				logTheThing(LOG_STATION, user, "undeploys the [src] turret at [log_loc(user)].")
 
 		else if (isscrewingtool(W))
 
 			if(src.can_toggle_activation == TRUE)
 
 				if(!src.anchored)
-					user.show_message("<span class='notice'>The turret is too unstable to fire! Secure it to the ground with a welding tool first!</span>")
+					user.show_message(SPAN_NOTICE("The turret is too unstable to fire! Secure it to the ground with a welding tool first!"))
 					return
 
 				if (!src.deconstructable)
-					user.show_message("<span class='alert'>You can't power the turret off! The controls are too secure!</span>")
+					user.show_message(SPAN_ALERT("You can't power the turret off! The controls are too secure!"))
 					return
 
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -263,9 +270,10 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, PROC_REF(toggle_activated), null, W.icon, W.icon_state, \
 			 	 "[user] powers the turret [src.active ? "off" : "on"].", \
 			 	 INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+				logTheThing(LOG_STATION, user, "powers the [src] turret [src.active ? "off" : "on"] at [log_loc(src)].")
 
 			else
-				user.show_message("<span class='alert'>The activation switch is protected! You can't toggle the power!</span>")
+				user.show_message(SPAN_ALERT("The activation switch is protected! You can't toggle the power!"))
 				return
 
 		else
@@ -302,7 +310,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		if(!(src.quick_deploy_fuel > 0))
 			return
 		src.quick_deploy_fuel--
-		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
+		src.visible_message(SPAN_ALERT("[src]'s quick deploy system engages, automatically securing it!"))
 		playsound(src.loc, 'sound/items/Welder2.ogg', 30, 1)
 		set_projectile()
 		src.anchored = ANCHORED
@@ -454,6 +462,19 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		animate(transform = matrix(transform_original, ang/3, MATRIX_ROTATE | MATRIX_MODIFY), time = 10/3, loop = 0) // needs to do in multiple steps because byond takes shortcuts
 		animate(transform = matrix(transform_original, ang/3, MATRIX_ROTATE | MATRIX_MODIFY), time = 10/3, loop = 0) // :argh:
 
+	get_help_message(dist, mob/user)
+		if (!src.deconstructable || !src.can_toggle_activation)
+			return
+		. = {"Activation/maintenance:
+		1. Use a <b>welding tool</b> to secure it.
+		2. Use a <b>screwdriver</b> to turn it on.
+		3. (Optional) Click it with a <b>wrench</b> and then click a location to rotate the turret in that direction.
+		4. (Optional) While it's on, use a <b>welding tool</b> to repair any damage.
+
+		Disassembly:
+		1. Use a <b>screwdriver</b> to turn it off.
+		2. Use a <b>welding tool</b> to unsecure it.
+		3. Use a <b>wrench</b> to disassemble it."}
 
 /obj/deployable_turret/syndicate
 	name = "NAS-T"
@@ -462,7 +483,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	icon_tag = "st"
 	associated_deployer = /obj/item/turret_deployer/syndicate
 
-	New()
+	New(loc, direction)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
@@ -563,11 +584,11 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		if (istype(M))
 
 			if(!iswrenchingtool(M.equipped()))
-				boutput(M, "<span class='alert'>You need to be holding a wrench or similar to modify the turret's facing.</span>")
+				boutput(M, SPAN_ALERT("You need to be holding a wrench or similar to modify the turret's facing."))
 				return
 
 			if (!my_turret.deconstructable)
-				boutput(M, "<span class='alert'>You can't modify this turret's facing- it's bolted in place!</span>")
+				boutput(M, SPAN_ALERT("You can't modify this turret's facing- it's bolted in place!"))
 				return
 
 			if(!(get_turf(usr) == src.user_turf))

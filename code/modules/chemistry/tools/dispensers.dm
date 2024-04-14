@@ -27,7 +27,7 @@
 
 	get_desc(dist, mob/user)
 		if (dist <= 2 && reagents)
-			. += "<br><span class='notice'>[reagents.get_description(user,RC_SCALE)]</span>"
+			. += "<br>[SPAN_NOTICE("[reagents.get_description(user,RC_SCALE)]")]"
 
 	proc/smash()
 		var/turf/T = get_turf(src)
@@ -70,10 +70,15 @@
 			return ..()
 
 		if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
-			boutput(usr, "<span class='alert'>That's too far!</span>")
+			boutput(usr, SPAN_ALERT("That's too far!"))
 			return
 
 		src.transfer_all_reagents(over_object, usr)
+
+	is_open_container(input)
+		if (input)
+			return TRUE
+		return ..()
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -198,6 +203,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
 	capacity = 500
+	_health = 250
+	_max_health = 250
 
 	var/has_tank = 1
 
@@ -241,7 +248,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	get_desc(dist, mob/user)
 		. += "There's [cup_amount] paper cup[s_es(src.cup_amount)] in [src]'s cup dispenser."
 		if (dist <= 2 && reagents)
-			. += "<br><span class='notice'>[reagents.get_description(user,RC_SCALE)]</span>"
+			. += "<br>[SPAN_NOTICE("[reagents.get_description(user,RC_SCALE)]")]"
 
 	attackby(obj/W, mob/user)
 		if (has_tank)
@@ -292,11 +299,17 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 				user.show_text("That was the last cup!", "red")
 				src.UpdateIcon()
 
-	piss
+	bullet_act(obj/projectile/P)
+		src.changeHealth(-P.power * P.proj_data.ks_ratio)
+
+	onDestroy()
+		src.smash()
+
+	drugged
 		New()
 			..()
 			src.create_reagents(4000)
-			reagents.add_reagent("urine",400)
+			reagents.add_reagent("LSD",400)
 			reagents.add_reagent("water",600)
 			src.UpdateIcon()
 		name = "discolored water fountain"
@@ -307,10 +320,10 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		New()
 			..()
 			src.create_reagents(4000)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent("water",600)
 			src.UpdateIcon()
 		name = "discolored water fountain"
@@ -337,7 +350,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			return 0
 		if (!src.reagents.has_reagent("fuel",20))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] drinks deeply from [src]. [capitalize(he_or_she(user))] then pulls out a match from somewhere, strikes it and swallows it!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] drinks deeply from [src]. [capitalize(he_or_she(user))] then pulls out a match from somewhere, strikes it and swallows it!</b>"))
 		src.reagents.remove_any(20)
 		playsound(src.loc, 'sound/items/drink.ogg', 50, 1, -6)
 		user.TakeDamage("chest", 0, 150)
@@ -464,10 +477,10 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 		if (istype(W, /obj/item/reagent_containers/synthflesh_pustule))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
-				boutput(user, "<span class='alert'>[src] is full.</span>")
+				boutput(user, SPAN_ALERT("[src] is full."))
 				return
 
-			boutput(user, "<span class='notice'>You squeeze the [W] into the [src]. Gross.</span>")
+			boutput(user, SPAN_NOTICE("You squeeze the [W] into the [src]. Gross."))
 			playsound(src.loc, pick('sound/effects/splort.ogg'), 100, 1)
 
 			W.reagents.trans_to(src, W.reagents.total_volume)
@@ -499,10 +512,10 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	attack_hand(var/mob/user)
 		if(funnel_active)
 			funnel_active = FALSE
-			boutput(user, "<span class='notice'>You flip the funnel into spout mode on the [src.name].</span>")
+			boutput(user, SPAN_NOTICE("You flip the funnel into spout mode on the [src.name]."))
 		else
 			funnel_active = TRUE
-			boutput(user, "<span class='notice'>You flip the spout into funnel mode on the [src.name].</span>")
+			boutput(user, SPAN_NOTICE("You flip the spout into funnel mode on the [src.name]."))
 		UpdateIcon()
 		..()
 
@@ -510,9 +523,14 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		..()
 		src.UpdateIcon()
 
+	is_open_container(input)
+		if (src.funnel_active && input) //Can pour stuff down the funnel even if the lid is closed
+			return TRUE
+		. = ..()
+
 	shatter_chemically(var/projectiles = FALSE) //needs sound probably definitely for sure
 		for(var/mob/M in AIviewers(src))
-			boutput(M, "<span class='alert'>The <B>[src.name]</B> breaks open!</span>")
+			boutput(M, SPAN_ALERT("The <B>[src.name]</B> breaks open!"))
 		if(projectiles)
 			var/datum/projectile/special/spreader/uniform_burst/circle/circle = new /datum/projectile/special/spreader/uniform_burst/circle/(get_turf(src))
 			circle.shot_sound = null //no grenade sound ty
@@ -581,7 +599,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			return
 		if (!reagents)
 			return
-		. = "<br><span class='notice'>[reagents.get_description(user,RC_FULLNESS)]</span>"
+		. = "<br>[SPAN_NOTICE("[reagents.get_description(user,RC_FULLNESS)]")]"
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -606,7 +624,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		else load = 0
 
 		if(load)
-			boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
+			boutput(user, SPAN_NOTICE("[src] mulches up [W]."))
 			playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 30, 1)
 			user.u_equip(W)
 			W.dropped(user)
@@ -616,25 +634,27 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!isliving(user))
-			boutput(user, "<span class='alert'>Excuse me you are dead, get your gross dead hands off that!</span>")
+			boutput(user, SPAN_ALERT("Excuse me you are dead, get your gross dead hands off that!"))
 			return
 		if (BOUNDS_DIST(user, src) > 0)
-			boutput(user, "<span class='alert'>You need to move closer to [src] to do that.</span>")
+			// You have to be adjacent to the compost bin
+			boutput(user, SPAN_ALERT("You need to move closer to [src] to do that."))
 			return
-		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
-			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
+		if (BOUNDS_DIST(O, user) > 0)
+			// You have to be adjacent to the seeds also
+			boutput(user, SPAN_ALERT("[O] is too far away to load into [src]!"))
 			return
 		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) \
 			|| istype(O, /obj/item/reagent_containers/food/snacks/mushroom/) \
 			|| istype(O, /obj/item/seed/) || istype(O, /obj/item/plant/) \
 			|| istype(O, /obj/item/clothing/head/flower/) \
 			|| istype(O, /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig))
-			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
+			user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing [O] into [src]!"))
 			var/itemtype = O.type
 			var/staystill = user.loc
 			for(var/obj/item/P in view(1,user))
 				if (src.reagents.total_volume >= src.reagents.maximum_volume)
-					boutput(user, "<span class='alert'>[src] is full!</span>")
+					boutput(user, SPAN_ALERT("[src] is full!"))
 					break
 				if (user.loc != staystill) break
 				if (P.type != itemtype) continue
@@ -649,7 +669,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 				src.reagents.add_reagent("poo", amount)
 				qdel( P )
 				sleep(0.3 SECONDS)
-			boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
+			boutput(user, SPAN_NOTICE("You finish stuffing [O] into [src]!"))
 		else ..()
 
 /obj/reagent_dispensers/still
@@ -670,7 +690,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		if(istype(W, /obj/item/reagent_containers/food/snacks/plant))
 			var/obj/item/reagent_containers/food/snacks/plant/P = W
 			var/datum/plantgenes/DNA = P.plantgenes
-			brew_amount = max(DNA?.get_effective_value("potency"), 5) //always produce SOMETHING
+			brew_amount = max(HYPfull_potency_calculation(DNA), 5) //always produce SOMETHING
 
 		if (!brew_result)
 			return FALSE
@@ -685,7 +705,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		else
 			src.reagents.add_reagent(brew_result, brew_amount)
 
-		src.visible_message("<span class='notice'>[src] brews up [W]!</span>")
+		src.visible_message(SPAN_NOTICE("[src] brews up [W]!"))
 		return TRUE
 
 	attackby(obj/item/W, mob/user)
@@ -716,8 +736,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			return
 
 		if (istype(O, /obj/storage/crate/))
-			user.visible_message("<span class='notice'>[user] loads [O]'s contents into [src]!</span>",\
-			"<span class='notice'>You load [O]'s contents into [src]!</span>")
+			user.visible_message(SPAN_NOTICE("[user] loads [O]'s contents into [src]!"),\
+			SPAN_NOTICE("You load [O]'s contents into [src]!"))
 			var/amtload = 0
 			for (var/obj/item/P in O.contents)
 				if (src.reagents.is_full())
@@ -733,8 +753,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			else
 				user.show_text("Nothing was loaded!", "red")
 		else if (istype(O, /obj/item/reagent_containers/food) || istype(O, /obj/item/plant))
-			user.visible_message("<span class='notice'><b>[user]</b> begins quickly stuffing items into [src]!</span>",\
-			"<span class='notice'>You begin quickly stuffing items into [src]!</span>")
+			user.visible_message(SPAN_NOTICE("<b>[user]</b> begins quickly stuffing items into [src]!"),\
+			SPAN_NOTICE("You begin quickly stuffing items into [src]!"))
 			var/staystill = user.loc
 			for (O in view(1,user))
 				if (src.reagents.is_full())
@@ -747,8 +767,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 					qdel(O)
 				else
 					continue
-			user.visible_message("<span class='notice'><b>[user]</b> finishes stuffing items into [src].</span>",\
-			"<span class='notice'>You finish stuffing items into [src].</span>")
+			user.visible_message(SPAN_NOTICE("<b>[user]</b> finishes stuffing items into [src]."),\
+			SPAN_NOTICE("You finish stuffing items into [src]."))
 		else
 			return ..()
 

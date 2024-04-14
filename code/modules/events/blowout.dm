@@ -9,6 +9,7 @@
 	)
 #ifdef RP_MODE
 	required_elapsed_round_time = 40 MINUTES
+	weight = 50 //less events to choose from on RP and radstorms get annoying when there's 3 per shift
 #else
 	required_elapsed_round_time = 26.6 MINUTES
 #endif
@@ -26,6 +27,7 @@
 		command_alert("Extreme levels of radiation detected approaching the [station_or_ship()]. All personnel have [timetoreach].[timetoreachsec] seconds to enter a maintenance tunnel or radiation safezone. Maintenance doors have temporarily had their access requirements removed. This is not a test.", "Anomaly Alert", alert_origin = ALERT_WEATHER)
 
 		SPAWN(0)
+			var/list/obj/machinery/door/airlock/touched_airlocks = list()
 			for_by_tcl(A, /obj/machinery/door/airlock)
 				LAGCHECK(LAG_LOW)
 				if (A.z != Z_LEVEL_STATION)
@@ -33,24 +35,23 @@
 				if (!(istype(A, /obj/machinery/door/airlock/maintenance) || istype(A, /obj/machinery/door/airlock/pyro/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/glass/maintenance)))
 					continue
 				if (access_maint_tunnels in A.req_access)
+					touched_airlocks[A] = A.req_access
 					A.req_access = null
 
 			sleep(actualtime)
 
 			for (var/area/A in world)
-				LAGCHECK(LAG_LOW)
-				var/turf/a_turf = locate(/turf) in A
-				if (a_turf?.z != Z_LEVEL_STATION)
+				if (A.do_not_irradiate || (A.z != Z_LEVEL_STATION))
 					continue
-				if (A.do_not_irradiate)
-					continue
-				else
-					if (!A.irradiated)
-						A.irradiated = TRUE
-						A.UpdateIcon()
-					for (var/turf/T in A)
-						if (rand(0,1000) < 5 && istype(T,/turf/simulated/floor))
-							Artifact_Spawn(T)
+
+				if (!A.irradiated)
+					A.irradiated = TRUE
+					A.UpdateIcon()
+				for (var/turf/T in A)
+					if (rand(0,1000) < 5 && istype(T,/turf/simulated/floor))
+						Artifact_Spawn(T)
+
+				LAGCHECK(LAG_LOW) // let's only check after we've gone through a few areas
 
 			siren.repeat = FALSE
 			siren.channel = 5
@@ -74,14 +75,14 @@
 			blowoutsound.channel = 5
 			blowoutsound.volume  = 20
 			world << blowoutsound
-			boutput(world, "<span class='alert'><B>WARNING</B>: Mass radiation has struck [station_name(1)]. Do not leave safety until all radiation alerts have been cleared.</span>")
+			boutput(world, SPAN_ALERT("<B>WARNING</B>: Mass radiation has struck [station_name(1)]. Do not leave safety until all radiation alerts have been cleared."))
 
 			for (var/mob/M in mobs)
 				SPAWN(0)
 					if (!inafterlife(M) && !isVRghost(M))
 						shake_camera(M, 400, 6)
 
-			sleep(rand(1.5 MINUTES,2 MINUTES)) // drsingh lowered these by popular request.
+			sleep(randfloat(1.5 MINUTES,2 MINUTES)) // drsingh lowered these by popular request.
 			command_alert("Radiation levels lowering [station_or_ship()]wide. ETA 60 seconds until all areas are safe.", "Anomaly Alert", alert_origin = ALERT_WEATHER)
 
 			sleep(rand(25 SECONDS,50 SECONDS)) // drsingh lowered these by popular request
@@ -104,10 +105,5 @@
 
 			sleep(rand(25 SECONDS,50 SECONDS))
 
-			for_by_tcl(A, /obj/machinery/door/airlock)
-				if (A.z != Z_LEVEL_STATION)
-					continue
-				if (!(istype(A, /obj/machinery/door/airlock/maintenance) || istype(A, /obj/machinery/door/airlock/pyro/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/glass/maintenance)))
-					continue
-				if (access_maint_tunnels in initial(A.req_access))
-					A.req_access = list(access_maint_tunnels)
+			for (var/obj/machinery/door/airlock/A as anything in touched_airlocks)
+				A.req_access = touched_airlocks[A]

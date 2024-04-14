@@ -710,7 +710,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			par.pixel_y = rand(-16,16)
 
 			first = turn(first, rand(-360,360))
-			first.Scale(rand(0.25,0.75))
+			first.Scale(randfloat(0.25,0.75))
 
 			animate(par, transform = first, time = 6, pixel_y = par.pixel_y + rand(8,16), alpha = 1, easing = LINEAR_EASING)
 
@@ -1445,7 +1445,8 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 	Run()
 		if (..())
-			SpawnParticle()
+			for(var/i in 1 to rand(1, 5))
+				SpawnParticle()
 			Sleep(1)
 
 /datum/particleSystem/blow_cig_smoke

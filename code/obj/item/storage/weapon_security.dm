@@ -290,7 +290,8 @@
 			src.item_state = W.item_state
 			src.inhand_image = W.inhand_image
 			src.tooltip_rebuild = TRUE
-			boutput(user, "<span class='notice'>The secret storage changes form to look like [W.name]!<br>Use the reset command to change it back.</span>")
+			copy_overlays(W, src)
+			boutput(user, SPAN_NOTICE("The secret storage changes form to look like [W.name]!<br>Use the reset command to change it back."))
 			src.cloaked = 1
 			return
 
@@ -306,8 +307,9 @@
 			src.icon_state = initial(src.icon_state)
 			src.item_state = initial(src.item_state)
 			src.inhand_image = initial(src.inhand_image)
+			src.overlays = initial(src.overlays)
 			src.tooltip_rebuild = TRUE
-			boutput(usr, "<span class='alert'>You reset the [src.name].</span>")
+			boutput(usr, SPAN_ALERT("You reset the [src.name]."))
 			src.cloaked = 0
 			src.add_fingerprint(usr)
 

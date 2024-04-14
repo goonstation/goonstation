@@ -11,10 +11,14 @@
 	var/steps_moved = 0
 	var/failing = 0
 
+	New()
+		. = ..()
+		for(var/datum/contextAction/CA in src.contextActions)
+			if(istype(CA, /datum/contextAction/vehicle/parts))
+				src.contextActions -= CA
+				break
+
 	attackby(obj/item/W, mob/living/user)
-		if (ispryingtool(W))
-			boutput(user, "There's no maintenance panel to open.")
-			return
 		if (isweldingtool(W))
 			boutput(user, "You can't repair this pod.")
 			return
@@ -40,14 +44,14 @@
 	proc/fail()
 		failing = 1
 		pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
-		boutput(pilot, "<span class='alert'>Your emergency pod is falling apart around you!</span>")
+		boutput(pilot, SPAN_ALERT("Your emergency pod is falling apart around you!"))
 		while(src)
 			step(src,src.dir)
 			if(prob(steps_moved * 0.1))
 				make_cleanable( /obj/decal/cleanable/robot_debris/gib ,src.loc)
 			if(prob(steps_moved * 0.05))
 				if(pilot)
-					boutput(pilot, "<span class='alert'>You are ejected from the emergency pod as it disintegrates!</span>")
+					boutput(pilot, SPAN_ALERT("You are ejected from the emergency pod as it disintegrates!"))
 					src.eject(pilot)
 				new /obj/effects/explosion (src.loc)
 				playsound(src.loc, "explosion", 50, 1)
@@ -78,21 +82,21 @@
 
 	attack_hand(var/mob/user)
 		if (active)
-			boutput(user, "<span class='alert'>Manufacture in progress, please wait.</span>")
+			boutput(user, SPAN_ALERT("Manufacture in progress, please wait."))
 			return
 
 		if (!isSetup) initialAlloc()
 
 		outputLoc = get_turf(src.loc)
 		if(outputLoc.density)
-			boutput(user, "<span class='alert'>There's no room to create another [itemName].</span>")
+			boutput(user, SPAN_ALERT("There's no room to create another [itemName]."))
 			return
 
 		blocked = 0
 		for (var/obj/block in outputLoc)
 			if (block.density) blocked = 1
 		if(blocked)
-			boutput(user, "<span class='alert'>There's no room to create another [itemName].</span>")
+			boutput(user, SPAN_ALERT("There's no room to create another [itemName]."))
 			return
 
 		src.visible_message("<b>[user.name]</b> switches on [src].")
@@ -100,21 +104,21 @@
 
 	attack_ai(var/mob/user as mob)
 		if (active)
-			boutput(user, "<span class='alert'>Manufacture in progress, please wait.</span>")
+			boutput(user, SPAN_ALERT("Manufacture in progress, please wait."))
 			return
 
 		if (!isSetup) initialAlloc()
 
 		outputLoc = get_turf(src.loc)
 		if(outputLoc.density)
-			boutput(user, "<span class='alert'>There's no room to create another [itemName].</span>")
+			boutput(user, SPAN_ALERT("There's no room to create another [itemName]."))
 			return
 
 		blocked = 0
 		for (var/obj/block in outputLoc)
 			if (block.density) blocked = 1
 		if(blocked)
-			boutput(user, "<span class='alert'>There's no room to create another [itemName].</span>")
+			boutput(user, SPAN_ALERT("There's no room to create another [itemName]."))
 			return
 
 		src.visible_message("[src] activates itself.")

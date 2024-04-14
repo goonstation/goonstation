@@ -16,8 +16,8 @@
 	if (!GS)
 		return
 	user.visible_message(
-		"<span class='alert'><b>[user]</b> has analyzed [target]'s genetic makeup.</span>",
-		"<span class='alert'>You have analyzed [target]'s genetic makeup.</span>"
+		SPAN_ALERT("<b>[user]</b> has analyzed [target]'s genetic makeup."),
+		SPAN_ALERT("You have analyzed [target]'s genetic makeup.")
 	)
 	// build prescan as we have the parts we need from the genetics scan file above, avoids re-looping, and we know these will be read-only
 	var/datum/genetic_prescan/GP = new
@@ -25,3 +25,5 @@
 	GP.poolDna = GS.dna_pool
 	GP.generate_known_unknown()
 	boutput(user, scan_genetic(target, prescan = GP, visible = 1))
+
+	record_cloner_defects(target)

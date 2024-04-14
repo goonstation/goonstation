@@ -9,7 +9,6 @@ ABSTRACT_TYPE(/obj/item)
 	text = ""
 	pass_unstable = FALSE
 	var/icon_old = null
-	var/uses_multiple_icon_states = 0
 	/// The in-hand icon state
 	var/item_state = null
 	/// icon state used for worn sprites, icon_state used otherwise
@@ -23,12 +22,15 @@ ABSTRACT_TYPE(/obj/item)
 	var/inhand_color = null
 	/// storage datum holding it
 	var/datum/storage/stored = null
+	/// Used for the hattable component
+	var/hat_offset_y = 0
+	/// Used for the hattable component
+	var/hat_offset_x = 0
 
 	/*_______*/
 	/*Burning*/
 	/*‾‾‾‾‾‾‾*/
-	var/burn_possible = 1 //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
-	//MBC : im shit. change burn_possible to '2' if you want it to pool itself instead of qdeling when burned
+	var/burn_possible = TRUE //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
 	var/burning = null
 	/// How long an item takes to burn (or be consumed by other means), based on the weight class if no value is set
 	var/health = null
@@ -444,8 +446,8 @@ ABSTRACT_TYPE(/obj/item)
 		return FALSE
 
 	if (M == user)
-		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
-		"<span class='notice'>You take a bite of [src]!</span>")
+		M.visible_message(SPAN_NOTICE("[M] takes a bite of [src]!"),\
+		SPAN_NOTICE("You take a bite of [src]!"))
 
 		if (src.material && (src.material.getEdible() || edibility_override))
 			src.material.triggerEat(M, src)
@@ -475,9 +477,9 @@ ABSTRACT_TYPE(/obj/item)
 		return TRUE
 
 	else
-		user.tri_message(M, "<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
-			"<span class='alert'>You try to feed [M] [src]!</span>",\
-			"<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
+		user.tri_message(M, SPAN_ALERT("<b>[user]</b> tries to feed [M] [src]!"),\
+			SPAN_ALERT("You try to feed [M] [src]!"),\
+			SPAN_ALERT("<b>[user]</b> tries to feed you [src]!"))
 		logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (!do_mob(user, M))
@@ -485,9 +487,9 @@ ABSTRACT_TYPE(/obj/item)
 		if (BOUNDS_DIST(user, M) > 0)
 			return TRUE
 
-		user.tri_message(M, "<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
-			"<span class='alert'>You feed [M] [src]!</span>",\
-			"<span class='alert'><b>[user]</b> feeds you [src]!</span>")
+		user.tri_message(M, SPAN_ALERT("<b>[user]</b> feeds [M] [src]!"),\
+			SPAN_ALERT("You feed [M] [src]!"),\
+			SPAN_ALERT("<b>[user]</b> feeds you [src]!"))
 		logTheThing(LOG_COMBAT, user, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (src.material && (src.material.getEdible() || edibility_override))
@@ -602,6 +604,17 @@ ABSTRACT_TYPE(/obj/item)
 		qdel(src)
 	return 1
 
+ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
+/obj/item/proc/admin_set_stack_amount()
+	set name = "Set Stack Amount"
+	var/input = tgui_input_number(usr, "Enter a new stack amount", default = src.amount, min_value = 1, max_value = 10000)
+	if(!input)
+		return
+	src.set_stack_amount(input)
+
+/obj/item/proc/set_stack_amount(var/new_amount)
+	return src.change_stack_amount(new_amount - src.amount)
+
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
 	var/imrobot
@@ -633,13 +646,13 @@ ABSTRACT_TYPE(/obj/item)
 	return added
 
 /obj/item/proc/before_stack(atom/movable/O as obj, mob/user as mob)
-	user.visible_message("<span class='notice'>[user] begins quickly stacking [src]!</span>")
+	user.visible_message(SPAN_NOTICE("[user] begins quickly stacking [src]!"))
 
 /obj/item/proc/after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-	boutput(user, "<span class='notice'>You finish stacking [src].</span>")
+	boutput(user, SPAN_NOTICE("You finish stacking [src]."))
 
 /obj/item/proc/failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
-	boutput(user, "<span class='notice'>You can't hold any more [name] than that!</span>")
+	boutput(user, SPAN_NOTICE("You can't hold any more [name] than that!"))
 
 /obj/item/proc/check_valid_stack(atom/movable/O as obj)
 
@@ -659,12 +672,13 @@ ABSTRACT_TYPE(/obj/item)
 	return 1
 
 /obj/item/proc/split_stack(var/toRemove)
-	if(toRemove >= amount || toRemove < 1) return null
+	if(toRemove >= src.amount || toRemove < 1) return null
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
 		P.setMaterial(src.material, mutable = src.material.isMutable())
-
+	for (var/datum/statusEffect/effect as anything in src.statusEffects)
+		P.changeStatus(effect.id, effect.duration)
 	src.change_stack_amount(-toRemove)
 	P.change_stack_amount(toRemove - P.amount)
 	return P
@@ -770,7 +784,7 @@ ABSTRACT_TYPE(/obj/item)
 			//Basically so poltergeists need to be close to an object to send it flying far...
 			if (W.weak_tk && !IN_RANGE(src, W, 2))
 				src.throw_at(over_object, 1, 1)
-				boutput(W, "<span class='alert'>You're too far away to properly manipulate this physical item!</span>")
+				boutput(W, SPAN_ALERT("You're too far away to properly manipulate this physical item!"))
 				logTheThing(LOG_COMBAT, usr, "moves [src] [dir2text(get_dir(usr, over_object))] with wtk.")
 				return
 			src.throw_at(over_object, 7, 1)
@@ -894,9 +908,9 @@ ABSTRACT_TYPE(/obj/item)
 		if (src.burn_possible && src.burn_point <= 1500)
 			src.combust(W)
 		else
-			..(W, user)
+			..()
 	else
-		..(W, user)
+		..()
 
 /obj/item/proc/process()
 	SHOULD_NOT_SLEEP(TRUE)
@@ -944,11 +958,8 @@ ABSTRACT_TYPE(/obj/item)
 
 			src.combust_ended()
 
-			if (src.burn_possible == 2)
-				qdel(src)
-			else
-				src.overlays.len = 0
-				qdel(src)
+			src.overlays.len = 0
+			qdel(src)
 			return
 	else
 		if (burning_last_process != src.burning)
@@ -997,7 +1008,7 @@ ABSTRACT_TYPE(/obj/item)
 	return
 
 /obj/item/proc/equipped(var/mob/user, var/slot)
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 	#ifdef COMSIG_ITEM_EQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	#endif
@@ -1148,16 +1159,24 @@ ABSTRACT_TYPE(/obj/item)
 	return "It is \an [t] item."
 
 /obj/item/attack_hand(mob/user)
-	var/checkloc = src.loc
-	while(checkloc && !istype(checkloc,/turf))
-		if (isliving(checkloc) && checkloc != user)
-			return 0
-		checkloc = checkloc:loc
+	var/obj/item/checkloc = src.loc
+	if (!ismob(src.loc)) // Skip this loop if the FIRST loc is a mob, allowing component/hattable to proc take_hat_off on AIs/ghostdrones
+		while(checkloc && !istype(checkloc,/turf))
+			if(isliving(checkloc) && checkloc != user) // This heinous block is to make sure you're not swiping things from other people's backpacks
+				if(src in bible_contents) // Bibles share their contents globally, so magically taking stuff from them is fine
+					break
+				else
+					return 0
+			checkloc = checkloc.loc // Get the loc of the loc! The loop continues until it's the turf of what you clicked on
 
 	if(!src.can_pickup(user))
 		// unholdable storage items
 		src.storage?.storage_item_attack_hand(user)
 		return 0
+
+	if(src.two_handed && !user.can_hold_two_handed() && user.is_that_in_this(src)) // prevent accidentally donating weapons to your enemies
+		boutput(user, SPAN_ALERT("You don't have the hands to hold this item."))
+		return FALSE
 
 	src.throwing = 0
 
@@ -1180,7 +1199,7 @@ ABSTRACT_TYPE(/obj/item)
 		if (!cant_self_remove || (!cant_drop && (user.l_hand == src || user.r_hand == src)) || in_pocket == 1)
 			user.u_equip(src)
 		else
-			boutput(user, "<span class='alert'>You can't remove this item.</span>")
+			boutput(user, SPAN_ALERT("You can't remove this item."))
 			return 0
 	else
 		//src.pickup(user) //This is called by the later put_in_hand() call
@@ -1194,7 +1213,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/area/MA = get_area(user)
 	var/area/OA = get_area(src)
 	if( OA && MA && OA != MA && OA.blocked )
-		boutput( user, "<span class='alert'>You cannot pick up items from outside a restricted area.</span>" )
+		boutput( user, SPAN_ALERT("You cannot pick up items from outside a restricted area.") )
 		return 0
 
 	var/atom/oldloc = src.loc
@@ -1230,7 +1249,7 @@ ABSTRACT_TYPE(/obj/item)
 		return
 
 	if (user.mind && target.mind && (user.mind.get_master(ROLE_VAMPTHRALL) == target.mind))
-		boutput(user, "<span class='alert'>You cannot harm your master!</span>") //This message was previously sent to the attacking item. YEP.
+		boutput(user, SPAN_ALERT("You cannot harm your master!")) //This message was previously sent to the attacking item. YEP.
 		return
 
 	if(user.traitHolder && !user.traitHolder.hasTrait("glasscannon"))
@@ -1290,7 +1309,7 @@ ABSTRACT_TYPE(/obj/item)
 		msgs.stamina_crit = 1
 		msgs.played_sound = pick(sounds_punch)
 		//moved to item_attack_message
-		//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
+		//msgs.visible_message_target(SPAN_ALERT("<B><I>... and lands a devastating hit!</B></I>"))
 
 	var/power = src.force + src.getProperty("searing")
 
@@ -1412,7 +1431,7 @@ ABSTRACT_TYPE(/obj/item)
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if (H.blood_pressure["total"] > 585)
-			msgs.visible_message_self("<span class='alert'><I>[user] gasps and wheezes from the exertion!</I></span>")
+			msgs.visible_message_self(SPAN_ALERT("<I>[user] gasps and wheezes from the exertion!</I>"))
 			user.losebreath += rand(1,2)
 			msgs.stamina_self -= 10
 
@@ -1422,6 +1441,10 @@ ABSTRACT_TYPE(/obj/item)
 
 
 	msgs.damage = power
+
+	if (is_special && src.special)
+		msgs = src.special.modify_attack_result(user, target, msgs)
+
 	msgs.flush()
 	src.add_fingerprint(user)
 	#ifdef COMSIG_ITEM_ATTACK_POST
@@ -1460,7 +1483,7 @@ ABSTRACT_TYPE(/obj/item)
 	//if (!src.arm_icon) return //ANYTHING GOES!~!
 
 	if (src.object_flags & NO_ARM_ATTACH || src.cant_drop || src.two_handed)
-		boutput(attacher, "<span class='alert'>You try to attach [src] to [attachee]'s stump, but it politely declines!</span>")
+		boutput(attacher, SPAN_ALERT("You try to attach [src] to [attachee]'s stump, but it politely declines!"))
 		return
 
 	var/obj/item/parts/human_parts/arm/new_arm = null
@@ -1485,11 +1508,11 @@ ABSTRACT_TYPE(/obj/item)
 		if (O == (attacher || attachee))
 			continue
 		if (attacher == attachee)
-			O.show_message("<span class='alert'>[attacher] attaches [src] to [his_or_her(attacher)] own stump!</span>", 1)
+			O.show_message(SPAN_ALERT("[attacher] attaches [src] to [his_or_her(attacher)] own stump!"), 1)
 		else
-			O.show_message("<span class='alert'>[attachee] has [src] attached to [his_or_her(attachee)] stump by [attacher].</span>", 1)
+			O.show_message(SPAN_ALERT("[attachee] has [src] attached to [his_or_her(attachee)] stump by [attacher]."), 1)
 
-	attacher.visible_message("<span class='alert'>[attacher] attaches [src] to [attacher == attachee ? his_or_her(attacher) : "[attachee]'s"] stump. It [can_secure ? "looks very secure" : "doesn't look very secure"]!</span>")
+	attacher.visible_message(SPAN_ALERT("[attacher] attaches [src] to [attacher == attachee ? his_or_her(attacher) : "[attachee]'s"] stump. It [can_secure ? "looks very secure" : "doesn't look very secure"]!"))
 	attachee.set_body_icon_dirty()
 	attachee.hud.update_hands()
 
@@ -1577,8 +1600,15 @@ ABSTRACT_TYPE(/obj/item)
 /obj/item/proc/registered_owner()
 	.= 0
 
+/// Force the item to drop from the mob's hands.
+/// If `sever` is TRUE, items will be severed from item arms
+/obj/item/proc/force_drop(var/mob/possible_mob_holder = 0, sever=TRUE)
+	if(sever && (src.temp_flags & IS_LIMB_ITEM))
+		if (istype(src.loc, /obj/item/parts/human_parts/arm/left/item) || istype(src.loc, /obj/item/parts/human_parts/arm/right/item))
+			var/obj/item/parts/human_parts/arm/item_arm = src.loc
+			item_arm.sever()
+			return
 
-/obj/item/proc/force_drop(var/mob/possible_mob_holder = 0)
 	if (!possible_mob_holder)
 		if (ismob(src.loc))
 			possible_mob_holder = src.loc
@@ -1634,6 +1664,7 @@ ABSTRACT_TYPE(/obj/item)
 	logTheThing(LOG_BOMBING, M, "[msg]")
 
 /obj/item/proc/dropped(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
 	SPAWN(0) //need to spawn to know if we've been dropped or thrown instead
 		if ((firesource == FIRESOURCE_OPEN_FLAME) && throwing)
 			RegisterSignal(src, COMSIG_MOVABLE_THROW_END, PROC_REF(log_firesource))
@@ -1690,3 +1721,7 @@ ABSTRACT_TYPE(/obj/item)
 /// attempt unique functionality when item is held in hand and and using the equip hotkey
 /obj/item/proc/try_specific_equip(mob/user)
 	return FALSE
+
+/obj/item/safe_delete()
+	src.force_drop()
+	..()

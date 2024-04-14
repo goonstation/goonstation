@@ -314,7 +314,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "JJ" = (
-/obj/decal/poster/wallsign/lesb_flag,
+/obj/decal/poster/flag/lesb,
 /turf/unsimulated/wall/auto/supernorn/wood,
 /area/prefab/lesbeeans/interior)
 "JR" = (

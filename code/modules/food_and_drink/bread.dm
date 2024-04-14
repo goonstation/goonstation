@@ -33,12 +33,15 @@
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user == target)
-			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
+			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
 
 	/// rolls to turn the bread loaf into a mimic once the requirement is reached
 	proc/mutate()
@@ -52,6 +55,7 @@
 	desc = "A bread made with honey. Right there in the name, first thing, top billing."
 	icon_state = "honeyloaf"
 	real_name = "honey-wheat bread"
+	initial_volume = 60
 	initial_reagents = list("bread"=30,"honey"=30)
 
 	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/honeywheat
@@ -82,6 +86,7 @@
 	desc = "Fattening and delicious, despite the hair.  It tastes like the soul of rock and roll."
 	icon_state = "elvisbread"
 	real_name ="elvis bread"
+	initial_volume = 60
 	initial_reagents = list("bread"=30,"essenceofelvis"=30)
 	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/elvis
 
@@ -90,6 +95,7 @@
 	desc = "The bread of the damned."
 	icon_state = "dreadloaf"
 	real_name = "dread"
+	initial_volume = 90
 	initial_reagents = list("bread"=30,"ectoplasm"=60)
 	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/spooky
 
@@ -104,12 +110,14 @@
 	sweet
 		name = "northern-style cornbread"
 		desc = "A chunk of sweet maize-based quickbread."
+		initial_volume = 60
 		initial_reagents = list("bread"=30,"cornsyrup"=30)
 		slice_product = /obj/item/reagent_containers/food/snacks/breadslice/corn/sweet
 
 		honey
 			name = "honey cornbread"
 			desc = "A chunk of honey-sweetened maize-based quickbread."
+			initial_volume = 120
 			initial_reagents = list("bread"=30,"cornsyrup"=30,"honey"=60)
 			slice_product = /obj/item/reagent_containers/food/snacks/breadslice/corn/sweet/honey
 
@@ -389,7 +397,7 @@
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W) || issawingtool(W))
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W].</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W]."))
 				user.change_eye_blurry(5)
 				user.changeStatus("weakened", 3 SECONDS)
 				JOB_XP(user, "Clown", 2)
@@ -408,7 +416,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] attempts to beat [him_or_her(user)]self to death with the baguette, oui oui, but fails! Hon hon hon!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] attempts to beat [him_or_her(user)]self to death with the baguette, oui oui, but fails! Hon hon hon!</b>"))
 		user.suiciding = 0
 		return 1
 

@@ -18,7 +18,7 @@
 		var/kind = input(usr, "What kind of critter?", "Critter type", "Skeleton") in src.critters
 		critter_vars = list()
 		crittertype = src.critters[kind]
-		boutput(usr, "<span class='notice'>Now placing [kind] critters in single spawn mode.</span>")
+		boutput(usr, SPAN_NOTICE("Now placing [kind] critters in single spawn mode."))
 
 	settings(var/ctrl, var/alt, var/shift)
 		var/target = input(usr, "Which default setting to modify?", "Default setting", "aggressive") in list("aggressive", "atkcarbon", "atksilicon", "health", "opensdoors", "wanderer")

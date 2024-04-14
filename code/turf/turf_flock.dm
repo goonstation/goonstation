@@ -24,7 +24,7 @@ TYPEINFO(/turf/simulated/floor/feather)
 	var/brightness = 0.5
 	var/on = FALSE
 	var/connected = FALSE //used for collector
-	var/datum/flock/flock = null
+	var/tmp/datum/flock/flock = null
 
 
 /turf/simulated/floor/feather/New()
@@ -40,10 +40,10 @@ TYPEINFO(/turf/simulated/floor/feather)
 /turf/simulated/floor/feather/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> [src.flock_id]
-		<br><span class='bold'>System Integrity:</span> [round((src.health/50)*100)]%
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+		[SPAN_BOLD("System Integrity:")] [round((src.health/50)*100)]%<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
 /turf/simulated/floor/feather/attackby(obj/item/C, mob/user, params)
 	// do not call parent, this is not an ordinary floor
@@ -57,17 +57,17 @@ TYPEINFO(/turf/simulated/floor/feather)
 		src.break_tile_to_plating()
 		return
 	if(src.broken)
-		boutput(user, "<span class='hint'>It's already broken, you need to pry it out with a crowbar.</span>")
+		boutput(user, SPAN_HINT("It's already broken, you need to pry it out with a crowbar."))
 		return
 	src.health -= C.force
 	if(src.health <= 0)
-		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C], shattering it!</span>")
+		src.visible_message(SPAN_ALERT("[SPAN_BOLD("[user]")] smacks [src] with [C], shattering it!"))
 		src.name = "weird broken floor"
 		src.desc = "It's broken. You could probably use a crowbar to pull the remnants out."
 		playsound(src, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 25, TRUE)
 		break_tile()
 	else
-		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C]!</span>")
+		src.visible_message(SPAN_ALERT("[SPAN_BOLD("[user]")] smacks [src] with [C]!"))
 		playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 25, TRUE)
 	user.lastattacked = src
 
@@ -218,21 +218,21 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 /turf/simulated/wall/auto/feather/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> [src.flock_id]
-		<br><span class='bold'>System Integrity:</span> [round((src.health/src.max_health)*100)]%
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+		[SPAN_BOLD("System Integrity:")] [round((src.health/src.max_health)*100)]%<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
 /turf/simulated/wall/auto/feather/attack_hand(mob/user)
 	if (user.a_intent == INTENT_HARM)
 		if(src.broken)
-			boutput(user, "<span class='hint'>It's already broken, you need to take the pieces apart with a crowbar.</span>")
+			boutput(user, SPAN_HINT("It's already broken, you need to take the pieces apart with a crowbar."))
 		else
 			src.takeDamage("brute", 1)
 			if (src.broken)
-				user.visible_message("<span class='alert'><b>[user]</b> punches the [initial(src.name)], shattering it!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> punches the [initial(src.name)], shattering it!"))
 			else
-				user.visible_message("<span class='alert'><b>[user]</b> punches [src]! Ouch!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> punches [src]! Ouch!"))
 			user.lastattacked = src
 			attack_particle(user, src)
 
@@ -242,11 +242,11 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 	if (src.health > 0)
 		src.takeDamage("brute", C.force)
 	if(src.health <= 0)
-		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks the [initial(src.name)] with [C], shattering it!</span>")
+		src.visible_message(SPAN_ALERT("[SPAN_BOLD("[user]")] smacks the [initial(src.name)] with [C], shattering it!"))
 		playsound(src, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 1)
 		src.destroy()
 	else
-		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C]!</span>")
+		src.visible_message(SPAN_ALERT("[SPAN_BOLD("[user]")] smacks [src] with [C]!"))
 	user.lastattacked = src
 	attack_particle(user, src)
 
@@ -279,7 +279,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 	var/damage = rand(modifier, 12 + 8 * modifier)
 
 	src.takeDamage("mixed", damage, FALSE)
-	src.visible_message("<span class='alert'>[initial(src.name)] is hit by the blob!/span>")
+	src.visible_message(SPAN_ALERT("[initial(src.name)] is hit by the blob!"))
 
 	if (src.health <= 0)
 		src.destroy()

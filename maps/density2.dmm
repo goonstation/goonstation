@@ -3672,7 +3672,7 @@
 	},
 /area/station/solar/aisat)
 "xP" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/marble/black,
 /area/station/bridge)
 "xU" = (
@@ -5348,6 +5348,9 @@
 	},
 /obj/item/disk/data/cartridge/captain,
 /obj/item/peripheral/network/radio/locked,
+/obj/item/pinpointer/disk{
+	pixel_y = 9
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "IV" = (
@@ -6141,8 +6144,8 @@
 /area/station/crew_quarters/cafeteria)
 "NT" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/storage/belt/medical,
 /obj/item/reagent_containers/hypospray,
@@ -6587,7 +6590,7 @@
 /turf/simulated/floor/marble,
 /area/station/ranch)
 "Rj" = (
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/table/auto,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)

@@ -30,7 +30,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	health = 4
 	burn_point = 330
 	burn_output = 800
-	burn_possible = 2
+	burn_possible = TRUE
 	item_function_flags = COLD_BURN
 	crop_suffix	= " leaf"
 
@@ -39,7 +39,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 			src.make_reagents()
 
 		if (istype(W, /obj/item/currency/spacecash) || istype(W, /obj/item/paper))
-			boutput(user, "<span class='alert'>You roll up [W] into a cigarette.</span>")
+			boutput(user, SPAN_ALERT("You roll up [W] into a cigarette."))
 			var/obj/item/clothing/mask/cigarette/custom/P = new(user.loc)
 			if(istype(W, /obj/item/currency/spacecash))
 				P.icon_state = "cig-[W.icon_state]"
@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 			JOB_XP(user, "Botanist", 1)
 
 		else if (istype(W, /obj/item/bluntwrap))
-			boutput(user, "<span class='alert'>You roll [src] up in [W] and make a fat doink.</span>")
+			boutput(user, SPAN_ALERT("You roll [src] up in [W] and make a fat doink."))
 			var/obj/item/clothing/mask/cigarette/cigarillo/doink = new(user.loc)
 			var/obj/item/bluntwrap/B = W
 			if(B.flavor)
@@ -379,7 +379,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 				return
 		if(ON_COOLDOWN(src, "itch", 1 SECOND))
 			return
-		boutput(user, "<span class='alert'>Your hands itch from touching [src]!</span>")
+		boutput(user, SPAN_ALERT("Your hands itch from touching [src]!"))
 		random_brute_damage(user, 1)
 		H.changeStatus("weakened", 1 SECONDS)
 
@@ -420,7 +420,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		if (iswerewolf(user))
 			user.changeStatus("weakened", 4 SECONDS)
 			user.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
-			boutput(user, "<span class='alert'>You try to pick up [src], but it hurts and you fall over!</span>")
+			boutput(user, SPAN_ALERT("You try to pick up [src], but it hurts and you fall over!"))
 			return
 		else ..()
 	//stolen from glass shard
@@ -431,7 +431,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 			if (!GET_COOLDOWN(M, "aconite_stun"))
 				var/datum/statusEffect/stun_effect = M.changeStatus("weakened", 4 SECONDS)
 				M.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
-				M.visible_message("<span class='alert'>The [M] steps too close to [src] and falls down!</span>")
+				M.visible_message(SPAN_ALERT("The [M] steps too close to [src] and falls down!"))
 				if (stun_effect)
 					stun_duration = stun_effect.duration //makes cooldown last the same as stun because the actual duration of applied effect is lower
 				ON_COOLDOWN(M, "aconite_stun", stun_duration)
@@ -442,7 +442,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		if (iswerewolf(user))
 			user.u_equip(src)
 			user.drop_item()
-			boutput(user, "<span class='alert'>You drop the aconite, you don't think it's a good idea to hold it!</span>")
+			boutput(user, SPAN_ALERT("You drop the aconite, you don't think it's a good idea to hold it!"))
 			return
 		if (iswerewolf(target))
 			target.take_toxin_damage(rand(5,10))
@@ -467,7 +467,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		if (!iswerewolf(user))
 			return ..()
 		else
-			boutput(user, "<span class='alert'>You can't drag that aconite! It burns!</span>")
+			boutput(user, SPAN_ALERT("You can't drag that aconite! It burns!"))
 			user.take_toxin_damage(10)
 			return
 
@@ -531,13 +531,13 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 			return TRUE
 
 	proc/prick(mob/M)
-		boutput(M, "<span class='alert'>You prick yourself on [src]'s thorns trying to pick it up!</span>")
+		boutput(M, SPAN_ALERT("YOWCH! You prick yourself on [src]'s thorns trying to pick it up! Maybe you should've used gloves..."))
 		random_brute_damage(M, 3)
 		take_bleeding_damage(M, null, 3, DAMAGE_STAB)
 
 	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W) && src.thorned)
-			boutput(user, "<span class='notice'>You snip off [src]'s thorns.</span>")
+			boutput(user, SPAN_NOTICE("You snip off [src]'s thorns."))
 			src.thorned = FALSE
 			src.desc += " Its thorns have been snipped off."
 			return
@@ -545,9 +545,9 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 
 	attack(mob/living/carbon/human/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (istype(target) && !(target.head?.c_flags & BLOCKCHOKE) && def_zone == "head")
-			target.tri_message(user, "<span class='alert'>[user] holds [src] to [target]'s nose, letting [him_or_her(target)] take in the fragrance.</span>",
-				"<span class='alert'>[user] holds [src] to your nose, letting you take in the fragrance.</span>",
-				"<span class='alert'>You hold [src] to [target]'s nose, letting [him_or_her(target)] take in the fragrance.</span>"
+			target.tri_message(user, SPAN_ALERT("[user] holds [src] to [target]'s nose, letting [him_or_her(target)] take in the fragrance."),
+				SPAN_ALERT("[user] holds [src] to your nose, letting you take in the fragrance."),
+				SPAN_ALERT("You hold [src] to [target]'s nose, letting [him_or_her(target)] take in the fragrance.")
 			)
 			return TRUE
 		..()
@@ -594,6 +594,58 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 		for(var/mob/living/silicon/M in mobs)
 			possible_names += M
 		return possible_names
+
+/obj/item/plant/flower/sunflower
+	name = "sunflower"
+	desc = "A rather large sunflower.  Legends speak of the tasty seeds."
+	icon_state = "sunflower"
+	var/initial_seed_count = 0 //! how many seeds the flower started with
+	var/current_seed_count = 0 //! how many seeds the flower has left
+
+	attack_self(mob/user)
+		. = ..()
+		disperse_seeds(user,user)
+
+	attackby(var/obj/item/W, mob/user)
+		. = ..()
+		disperse_seeds(src,user)
+
+	afterattack(var/atom/target, var/mob/user)
+		. = ..()
+		disperse_seeds(target,user)
+
+	proc/disperse_seeds(var/atom/target, var/mob/user)
+		var/obj/item/reagent_containers/food/snacks/plant/seeds = locate() in src
+		if(seeds)
+			boutput(user, SPAN_NOTICE("You notice some [seeds] fall out of [src]!"))
+			seeds.set_loc(get_turf(target))
+			// that's the result if you want to keep 50% of the initial chems in the sunflower at the end.
+			// This accomodates partially for chems injected in the sunflower if some seeds are already missing
+			var/chem_amount = src.reagents.total_volume / (current_seed_count + initial_seed_count)
+			seeds.reagents.maximum_volume = max(chem_amount, seeds.reagents.maximum_volume)
+			src.reagents.trans_to(seeds, chem_amount)
+			src.current_seed_count -= 1
+
+
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		. = ..()
+		var/seed_count = 1
+		switch(quality_status)
+			if("jumbo")
+				seed_count += 3
+			if("rotten")
+				seed_count = rand(0,1)
+			if("malformed")
+				seed_count += rand(-1,2)
+		if(seed_count < 0)
+			seed_count = 0
+
+		for(var/seed_num in 1 to seed_count)
+			var/obj/item/reagent_containers/food/snacks/plant/sunflower/P = new(src)
+			P.HYPsetup_DNA(passed_genes, harvested_plantpot, origin_plant, quality_status)
+			P.reagents.clear_reagents() //no chem duping by getting seeds out of sunflowers. We will transfer the chems from the flower onto the seeds in disperse_seeds.
+			src.initial_seed_count += 1
+			src.current_seed_count += 1
 
 /obj/item/plant/herb/hcordata
 	name = "houttuynia cordata"

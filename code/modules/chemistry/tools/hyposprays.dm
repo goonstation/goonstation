@@ -150,11 +150,11 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 			user.show_text("[src] is empty.", "red")
 			return
 		if(check_target_immunity(target))
-			user.show_text("<span class='alert'>You can't seem to inject [target]!</span>")
+			user.show_text(SPAN_ALERT("You can't seem to inject [target]!"))
 			return
 		var/amt_prop = inj_amount == -1 ? src.reagents.total_volume : inj_amount
-		user.visible_message("<span class='notice'><B>[user] injects [target] with [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()].</B></span>",\
-		"<span class='notice'>You inject [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()]. [src] now contains [max(0,(src.reagents.total_volume-amt_prop))] units.</span>")
+		user.visible_message(SPAN_NOTICE("<B>[user] injects [target] with [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()].</B>"),\
+		SPAN_NOTICE("You inject [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()]. [src] now contains [max(0,(src.reagents.total_volume-amt_prop))] units."))
 		logTheThing(user == target ? LOG_CHEMISTRY : LOG_COMBAT, user, "uses a hypospray [log_reagents(src)] to inject [constructTarget(target,"combat")] at [log_loc(user)].")
 
 		src.reagents.trans_to(target, amt_prop)
@@ -169,7 +169,7 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 	afterattack(obj/target, mob/user, flag)
 		if(is_reagent_dispenser(target) && target.reagents)
 			if (!target.reagents.total_volume)
-				boutput(user, "<span class='alert'>[target] is already empty.</span>")
+				boutput(user, SPAN_ALERT("[target] is already empty."))
 				return
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 			target.reagents.trans_to(src, src.reagents.maximum_volume)
@@ -177,15 +177,15 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 
 		if (isobj(target) && target.is_open_container(TRUE) && target.reagents)
 			if (!src.reagents || !src.reagents.total_volume)
-				boutput(user, "<span class='alert'>[src] is already empty.</span>")
+				boutput(user, SPAN_ALERT("[src] is already empty."))
 				return
 
 			if (target.reagents.is_full())
-				boutput(user, "<span class='alert'>[target] is full!</span>")
+				boutput(user, SPAN_ALERT("[target] is full!"))
 				return
 
 			logTheThing(LOG_CHEMISTRY, user, "dumps the contents of [src] [log_reagents(src)] into [target] at [log_loc(user)].")
-			boutput(user, "<span class='notice'>You dump the contents of [src] into [target].</span>")
+			boutput(user, SPAN_NOTICE("You dump the contents of [src] into [target]."))
 			src.reagents.trans_to(target, src.reagents.total_volume)
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)

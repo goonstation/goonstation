@@ -15,7 +15,7 @@
 	attack_self(var/mob/user as mob)
 		positive = !positive
 		icon_state = "robojumper-[positive? "plus": "minus"]"
-		boutput(user, "<span class='alert'>The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
+		boutput(user, SPAN_ALERT("The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"]."))
 
 	afterattack(var/atom/target, mob/user, flag)
 		if(istype(target,/obj/machinery/power/apc))
@@ -28,7 +28,6 @@
 /datum/action/bar/private/icon/robojumper
 	duration = 1 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
-	id = "robojumper"
 	icon = 'icons/mob/hud_robot.dmi'
 	icon_state = "robocable_charge"
 
@@ -90,36 +89,36 @@
 				recipient_cell = S.cell
 
 			if (isnull(donor_cell))
-				boutput(user, "<span class='alert'>You have no cell installed!</span>")
+				boutput(user, SPAN_ALERT("You have no cell installed!"))
 				..()
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			else if (isnull(recipient_cell))
-				boutput(user, "<span class='alert'>[jumper.positive? "[apc] has" : "you have"] no cell installed!</span>")
+				boutput(user, SPAN_ALERT("[jumper.positive? "[apc] has" : "you have"] no cell installed!"))
 				..()
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
 			var/overspill = jumper.charge_amount - recipient_cell.charge
 			if (recipient_cell.charge >= recipient_cell.maxcharge)
-				boutput(user, "<span class='notice'>[jumper.positive ? "[apc]" : "Your cell"] is already fully charged.</span>")
+				boutput(user, SPAN_NOTICE("[jumper.positive ? "[apc]" : "Your cell"] is already fully charged."))
 			else if (donor_cell.charge <= jumper.charge_amount)
-				boutput(user, "<span class='alert'>[jumper.positive ? "You don't" : "[apc] doesn't"] have enough power to transfer!</span>")
+				boutput(user, SPAN_ALERT("[jumper.positive ? "You don't" : "[apc] doesn't"] have enough power to transfer!"))
 			else if (overspill >= jumper.charge_amount)
 				donor_cell.use(overspill)
 				recipient_cell.charge += overspill
 				if (jumper.positive)
-					user.visible_message("<span class='notice'>[user] transfers some of [his_or_her(user)] power to [apc]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
+					user.visible_message(SPAN_NOTICE("[user] transfers some of [his_or_her(user)] power to [apc]!"), SPAN_NOTICE("You transfer [overspill] charge. The APC is now fully charged."))
 				else
-					user.visible_message("<span class='notice'>[user] transfers some of the power from [apc] to [himself_or_herself(user)]!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
+					user.visible_message(SPAN_NOTICE("[user] transfers some of the power from [apc] to [himself_or_herself(user)]!"), SPAN_NOTICE("You transfer [overspill] charge. You are now fully charged."))
 					logTheThing(LOG_STATION, user, "drains [overspill] power from the APC [apc] now [100*apc.cell.charge/apc.cell.maxcharge]% [log_loc(apc)]")
 			else
 				donor_cell.use(jumper.charge_amount)
 				recipient_cell.charge += jumper.charge_amount
 				if (jumper.positive)
-					user.visible_message("<span class='notice'>[user] transfers some of [his_or_her(user)] power to [apc]!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
+					user.visible_message(SPAN_NOTICE("[user] transfers some of [his_or_her(user)] power to [apc]!"), SPAN_NOTICE("You transfer [jumper.charge_amount] charge."))
 				else
-					user.visible_message("<span class='notice'>[user] transfers some of the power from [apc] to [himself_or_herself(user)]!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
+					user.visible_message(SPAN_NOTICE("[user] transfers some of the power from [apc] to [himself_or_herself(user)]!"), SPAN_NOTICE("You transfer [jumper.charge_amount] charge."))
 					logTheThing(LOG_STATION, user, "drains [jumper.charge_amount] power from the APC [apc] now [100*apc.cell.charge/apc.cell.maxcharge]% [log_loc(apc)]")
 				restart = TRUE
 			apc.charging = apc.chargemode
@@ -140,7 +139,6 @@
 /datum/action/bar/private/icon/robojumper_to_silicon
 	duration = 1 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ACT
-	id = "robojumper_to_silicon"
 	icon = 'icons/mob/hud_robot.dmi'
 	icon_state = "robocable_charge"
 
@@ -198,41 +196,41 @@
 				donor_cell = silicon_user.cell
 				recipient_cell = silicon_target.cell
 			else
-				boutput(user, "<span class='alert'>You can't drain power from other cyborgs.</span>")
+				boutput(user, SPAN_ALERT("You can't drain power from other cyborgs."))
 				..()
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
 			if (isnull(donor_cell))
-				boutput(user, "<span class='alert'>You have no cell installed!</span>")
+				boutput(user, SPAN_ALERT("You have no cell installed!"))
 				..()
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			else if (isnull(recipient_cell))
-				boutput(user, "<span class='alert'>[jumper.positive? "[target] has" : "you have"] no cell installed!</span>")
+				boutput(user, SPAN_ALERT("[jumper.positive? "[target] has" : "you have"] no cell installed!"))
 				..()
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
 			var/overspill = jumper.charge_amount - recipient_cell.charge
 			if (recipient_cell.charge >= recipient_cell.maxcharge)
-				boutput(user, "<span class='notice'>[jumper.positive ? "[target]" : "Your cell"] is already fully charged.</span>")
+				boutput(user, SPAN_NOTICE("[jumper.positive ? "[target]" : "Your cell"] is already fully charged."))
 			else if (donor_cell.charge <= jumper.charge_amount)
-				boutput(user, "<span class='alert'>[jumper.positive ? "You don't" : "[target] doesn't"] have enough power to transfer!</span>")
+				boutput(user, SPAN_ALERT("[jumper.positive ? "You don't" : "[target] doesn't"] have enough power to transfer!"))
 			else if (overspill >= jumper.charge_amount)
 				donor_cell.use(overspill)
 				recipient_cell.charge += overspill
 				if (jumper.positive)
 					user.tri_message(target,
 						"[user] transfers some of [his_or_her(user)] power to [target].",
-						"<span class='notice'>You transfer [overspill] charge. [target] is now fully charged.</span>",
-						"<span class='notice'>[user] transfers [overspill] power to you!</span>"
+						SPAN_NOTICE("You transfer [overspill] charge. [target] is now fully charged."),
+						SPAN_NOTICE("[user] transfers [overspill] power to you!")
 					)
 				else
 					user.tri_message(target,
-						"<span class='alert'>[user] siphons some of the power from [target] to [himself_or_herself(user)]!</span>",
-						"<span class='notice'>You siphon [overspill] charge. You are now fully charged.</span>",
-						"<span class='alert'>[user] siphons [overspill] power from you!</span>"
+						SPAN_ALERT("[user] siphons some of the power from [target] to [himself_or_herself(user)]!"),
+						SPAN_NOTICE("You siphon [overspill] charge. You are now fully charged."),
+						SPAN_ALERT("[user] siphons [overspill] power from you!")
 					)
 					logTheThing(LOG_STATION, user, "drains [overspill] power from [target] now [100*silicon_target.cell.charge/silicon_target.cell.maxcharge]% [log_loc(target)]")
 			else
@@ -241,14 +239,14 @@
 				if (jumper.positive)
 					user.tri_message(target,
 						"[user] transfers some of [his_or_her(user)] power to [target].",
-						"<span class='notice'>You transfer [jumper.charge_amount] charge.</span>",
-						"<span class='notice'>[user] transfers [jumper.charge_amount] power to you!</span>"
+						SPAN_NOTICE("You transfer [jumper.charge_amount] charge."),
+						SPAN_NOTICE("[user] transfers [jumper.charge_amount] power to you!")
 					)
 				else
 					user.tri_message(target,
-						"<span class='alert'>[user] siphons some of the power from [target] to [himself_or_herself(user)]!</span>",
-						"<span class='notice'>You siphon [jumper.charge_amount] charge.</span>",
-						"<span class='alert'>[user] siphons [jumper.charge_amount] power from you!</span>"
+						SPAN_ALERT("[user] siphons some of the power from [target] to [himself_or_herself(user)]!"),
+						SPAN_NOTICE("You siphon [jumper.charge_amount] charge."),
+						SPAN_ALERT("[user] siphons [jumper.charge_amount] power from you!")
 					)
 					logTheThing(LOG_STATION, user, "drains [jumper.charge_amount] power from [target] now [100*silicon_target.cell.charge/silicon_target.cell.maxcharge]% [log_loc(silicon_target)]")
 				restart = TRUE
@@ -275,10 +273,10 @@
 	var/capacity = 2
 
 	attack_self(var/mob/user as mob)
-		if (length(src.contents) == 0) boutput(user, "<span class='alert'>You have nothing stored!</span>")
+		if (length(src.contents) == 0) boutput(user, SPAN_ALERT("You have nothing stored!"))
 		else
 			if (user.loc != get_turf(user.loc))
-				boutput(user, "<span class='alert'>You're in too small a space to drop anything!</span>")
+				boutput(user, SPAN_ALERT("You're in too small a space to drop anything!"))
 				return
 			var/selection = tgui_input_list(user, "What do you want to drop?", "Atmospherics Transporter", src.contents)
 			if(!selection) return
@@ -344,7 +342,7 @@
 			if (lamp.removable_bulb == 0)
 				boutput(user, "This fitting isn't user-serviceable.")
 				return
-			boutput(user, "<span class='notice'>Removing fitting...</span>")
+			boutput(user, SPAN_NOTICE("Removing fitting..."))
 			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/remove_light, list(A, user), lamp.icon, lamp.icon_state, null, null)
 
@@ -356,9 +354,9 @@
 		if (istype(A, /turf/simulated/floor))
 			for (var/obj/O in A)
 				if (istype(O, /obj/machinery/light/small/floor))
-					boutput(user, "<span class='alert'>You try to build a floor light fitting, but there's already \a [O] in the way!</span>")
+					boutput(user, SPAN_ALERT("You try to build a floor light fitting, but there's already \a [O] in the way!"))
 					return
-			boutput(user, "<span class='notice'>Installing a floor bulb...</span>")
+			boutput(user, SPAN_NOTICE("Installing a floor bulb..."))
 			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_floor_light, list(A, user), 'icons/obj/lighting.dmi', "floor1", null, null)
 
@@ -373,9 +371,9 @@
 				return
 			for (var/obj/O in B)
 				if (istype(O, /obj/machinery/light) && !istype(O, /obj/machinery/light/small/floor))
-					boutput(user, "<span class='alert'>You try to build a wall light fitting, but there's already \a [O] in the way!</span>")
+					boutput(user, SPAN_ALERT("You try to build a wall light fitting, but there's already \a [O] in the way!"))
 					return
-			boutput(user, "<span class='notice'>Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]...</span>")
+			boutput(user, SPAN_NOTICE("Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]..."))
 			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 			var/obj/machinery/light/dispensed_dummy = dispensing_fitting
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), initial(dispensed_dummy.icon), initial(dispensed_dummy.icon_state), null, null)
@@ -412,8 +410,7 @@
 /obj/item/lamp_manufacturer/proc/add_wall_light(atom/A, turf/T, mob/user)
 	for (var/obj/O in T)
 		if (istype(O, /obj/machinery/light) && !istype(O, /obj/machinery/light/small/floor))
-			boutput(user, "<span class='alert'>You try to build a wall light fitting, but there's already \a [O] in the way!</span>")
-			return
+			boutput(user, SPAN_ALERT("You try to build a wall light fitting, but there's already \a [O] in the way!"))
 	var/obj/machinery/light/newfitting = new dispensing_fitting(T)
 	newfitting.nostick = 0 //regular tube lights don't do autoposition for some reason.
 	newfitting.autoposition(get_dir(T,A))
@@ -425,7 +422,7 @@
 /obj/item/lamp_manufacturer/proc/add_floor_light(turf/T, mob/user)
 	for (var/obj/O in T)
 		if (istype(O, /obj/machinery/light/small/floor))
-			boutput(user, "<span class='alert'>You try to build a floor light fitting, but there's already \a [O] in the way!</span>")
+			boutput(user, SPAN_ALERT("You try to build a floor light fitting, but there's already \a [O] in the way!"))
 			return
 	var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(T)
 	newfitting.Attackby(src, user) //plop in an appropriate colour lamp
@@ -484,10 +481,10 @@
 		var/obj/item/reagent_containers/glass/B = W
 
 		if(!B.reagents.reagent_list.len || B.reagents.total_volume < 1)
-			boutput(user, "<span class='alert'>That beaker is empty! There are no reagents for the [src.name] to process!</span>")
+			boutput(user, SPAN_ALERT("That beaker is empty! There are no reagents for the [src.name] to process!"))
 			return
 		if (working)
-			boutput(user, "<span class='alert'>CheMaster is working, be patient</span>")
+			boutput(user, SPAN_ALERT("CheMaster is working, be patient"))
 			return
 
 		working = 1
@@ -644,7 +641,7 @@
 				var/mob/living/silicon/robot/R = user
 				if (R.cell) R.cell.use(100)
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-			user.visible_message("<span class='notice'>[user] dispenses a [src.vend_this]!</span>", "<span class='notice'>You dispense a [src.vend_this]!</span>")
+			user.visible_message(SPAN_NOTICE("[user] dispenses a [src.vend_this]!"), SPAN_NOTICE("You dispense a [src.vend_this]!"))
 			src.last_use = world.time
 			return
 
@@ -704,7 +701,7 @@ ported and crapped up by: haine
 			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			user.show_text("You transfer [trans] unit\s of the solution to [target].")
 
-		if (reagents.total_volume == reagents.maximum_volume) // See if the juicer is full.
+		if (src.reagents.total_volume >= src.reagents.maximum_volume) // See if the juicer is full.
 			user.show_text("[src] is full!", "red")
 			return
 

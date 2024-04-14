@@ -905,7 +905,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	New()
 		..()
 		material_flags |= MATERIAL_ENERGY
-		setProperty("density", 2)
+		setProperty("density", 7)
 		setProperty("hard", 3)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 8)
@@ -1209,14 +1209,14 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	New()
 		..()
-		setProperty("electrical", 6)
+		setProperty("electrical", 2)
 		setProperty("density", 1)
 		setProperty("hard", 2)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/slippery_entered())
 
-
+ABSTRACT_TYPE(/datum/material/crystal/wizard)
 /datum/material/crystal/wizard
 	quality = 50
 	alpha = 100
@@ -1677,7 +1677,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	proc/replace_first_consonant_cluster(text, replacement)
 		var/original_text = text
 		var/static/regex/regex = regex(@"\b(?:[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ][bcdfghjklmnpqrstvwxyz]?)", "g")
-		. = regex.Replace(text, PROC_REF(jeplacement))
+		. = regex.Replace(text, /datum/material/fabric/jean/proc/jeplacement)
 		. = replacetext(., "'j ", "'s ") // fix Jaff assistant'j jumpsuit
 		if(. == original_text)
 			. = "jean [.]"

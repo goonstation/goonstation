@@ -279,7 +279,7 @@ TYPEINFO(/obj/machinery/secscanner)
 			return
 
 		for (var/mob/O in hearers(src, null))
-			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2)
+			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\"")), 2)
 
 
 /obj/machinery/fakesecscanner

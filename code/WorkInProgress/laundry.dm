@@ -91,11 +91,13 @@ TYPEINFO(/obj/submachine/laundry_machine)
 					clothing.UpdateName()
 				else if (istype(item, /obj/item/currency/spacecash))
 					var/obj/item/currency/spacecash/cash = item
+					cash.changeStatus("freshly_laundered", INFINITE_STATUS)
 					var/list/amounts = random_split(cash.amount, min(rand(3,6), cash.amount - 1))
 					for (var/amount in amounts)
 						if (amount >= cash.amount)
 							break
 						var/obj/item/currency/spacecash/newcash = cash.split_stack(amount)
+						newcash.changeStatus("freshly_laundered", INFINITE_STATUS)
 						newcash.set_loc(src)
 			src.cycle = POST
 			src.cycle_current = 0
@@ -154,6 +156,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			src.UpdateIcon()
 
 		else if (src.cycle == WASH && prob(40)) // play a washery sound
+			H?.delStatus("burning")
 			playsound(src, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 80, TRUE)
 			src.shake()
 		else if (src.cycle == DRY && prob(20)) // play a dryery sound
@@ -195,7 +198,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 				return
 			else if (istype(W, /obj/item/grab)) //If its a person, we're trying to stuff them into the washing machine
 				var/obj/item/grab/G = W
-				user.visible_message("<span class='alert'>[user] starts to put [G.affecting] into the washing machine!</span>")
+				user.visible_message(SPAN_ALERT("[user] starts to put [G.affecting] into the washing machine!"))
 				SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /obj/submachine/laundry_machine/proc/force_into_machine, list(G, user), 'icons/mob/screen1.dmi', "grabbed", null, null) //Sounds about right since it's a lengthy stun afterwards
 	else
 		return ..()
@@ -209,7 +212,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 /obj/submachine/laundry_machine/proc/force_into_machine(obj/item/grab/W as obj, mob/user as mob)
 	if (src.on == 0)
 		if(W?.affecting && (BOUNDS_DIST(user, src) == 0))
-			user.visible_message("<span class='alert'>[user] shoves [W.affecting] into the laundry machine and turns it on!</span>")
+			user.visible_message(SPAN_ALERT("[user] shoves [W.affecting] into the laundry machine and turns it on!"))
 			src.add_fingerprint(user)
 			logTheThing(LOG_COMBAT, user, "forced [constructTarget(W.affecting,"combat")] into a laundry machine at [log_loc(src)].")
 			W.affecting.set_loc(src)
@@ -227,7 +230,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 				L.remove_pulling()
 			qdel(W)
 	else //Prevents stuffing more than one person in at a time
-		user.visible_message("<span class='alert'>[user] tries to shove [W.affecting] into the laundry machine but it was already running.</span>")
+		user.visible_message(SPAN_ALERT("[user] tries to shove [W.affecting] into the laundry machine but it was already running."))
 
 /obj/submachine/laundry_machine/mouse_drop(over_object,src_location,over_location)
 	var/mob/user = usr

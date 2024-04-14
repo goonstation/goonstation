@@ -327,8 +327,8 @@
 	spawn_contents = list(/obj/item/storage/box/starter)
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -564,8 +564,8 @@
 	slots = 7
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -618,20 +618,20 @@
 		var/mob/M = usr
 		if (istype(over_object,/obj/item) || istype(over_object,/mob/)) // covers pretty much all the situations we're trying to prevent; namely transferring storage and opening while on ground
 			if(!can_use())
-				boutput(M, "<span class='alert'>You need to wear [src] for that.</span>")
+				boutput(M, SPAN_ALERT("You need to wear [src] for that."))
 				return
 		return ..()
 
 
 	attack_hand(mob/user)
 		if (src.loc == user && !can_use())
-			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
+			boutput(user, SPAN_ALERT("You need to wear [src] for that."))
 			return
 		return ..()
 
 	attackby(obj/item/W, mob/user)
 		if(!can_use())
-			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
+			boutput(user, SPAN_ALERT("You need to wear [src] for that."))
 			return
 		return ..()
 
@@ -765,7 +765,7 @@
 	check_wclass = 1
 
 /obj/item/storage/belt/mining/prepared
-	spawn_contents = list(/obj/item/mining_tool/power_pick,
+	spawn_contents = list(/obj/item/mining_tool/powered/pickaxe,
 		/obj/item/ore_scoop/prepared,
 		/obj/item/satchel/mining,
 		/obj/item/device/geiger,
@@ -860,7 +860,7 @@
 		spawn_contents = list(/obj/item/gun/energy/cornicen3, /obj/item/old_grenade/energy_frag = 2, /obj/item/old_grenade/energy_concussion = 2, /obj/item/tank/emergency_oxygen/extended, /obj/item/reagent_containers/food/snacks/donkpocket/warm)
 
 	baton
-		spawn_contents = list(/obj/item/baton, /obj/item/barrier, /obj/item/requisition_token/security/utility)
+		spawn_contents = list(/obj/item/baton, /obj/item/ammo/bullets/stunbaton, /obj/item/barrier, /obj/item/requisition_token/security/utility)
 
 	tasersmg
 		spawn_contents = list(/obj/item/gun/energy/tasersmg, /obj/item/baton, /obj/item/barrier)
@@ -987,12 +987,12 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 
 	equipped(var/mob/user)
 		..()
-		if (!user.mind.get_antagonist(ROLE_WRESTLER))
-			user.add_wrestle_powers(src.fake)
+		if (!user.mind?.get_antagonist(ROLE_WRESTLER))
+			user.add_wrestle_powers(src.fake, TRUE)
 
 	unequipped(var/mob/user)
 		..()
-		if (!user.mind.get_antagonist(ROLE_WRESTLER))
+		if (!user.mind?.get_antagonist(ROLE_WRESTLER))
 			user.remove_wrestle_powers(src.fake)
 
 /obj/item/storage/belt/wrestling/fake

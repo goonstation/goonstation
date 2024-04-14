@@ -16,7 +16,7 @@
 			return 0
 		if (!target.melee_attack_test(user))
 			return
-		src.custom_msg = "<b><span class='combat'>[user] bites [target] with [his_or_her(user)] [pick(src.bite_adjectives)] mandibles!</span></b>"
+		src.custom_msg = SPAN_COMBAT("<b>[user] bites [target] with [his_or_her(user)] [pick(src.bite_adjectives)] mandibles!</b>")
 		..()
 
 ///////////////////////////////////////////////
@@ -96,7 +96,7 @@
 			if ("snap","clack","click","clak")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/items/Scissor.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='alert'><b>[src]</b> claks!</span>"
+					return SPAN_ALERT("<b>[src]</b> claks!")
 		return null
 
 	specific_emote_type(var/act)
@@ -204,10 +204,10 @@
 		if (src.tamed && src.ai?.enabled)
 			if (src.seek_ore)
 				src.seek_ore = FALSE
-				src.visible_message("<span class='notice'>[user] pats [src] on the back. It won't seek ores now!</span>")
+				src.visible_message(SPAN_NOTICE("[user] pats [src] on the back. It won't seek ores now!"))
 			else
 				src.seek_ore = TRUE
-				src.visible_message("<span class='notice'>[user] shakes [src] to awaken its hunger!</span>")
+				src.visible_message(SPAN_NOTICE("[user] shakes [src] to awaken its hunger!"))
 
 	attackby(obj/item/I, mob/M)
 		if(istype(I, /obj/item/raw_material) && !isdead(src))

@@ -80,7 +80,7 @@ var/global/datum/debugFileOutput/debugFileOutput = new()
 	try
 		debugFileOutput.clear(fileName)
 	catch (var/exception/e)
-		out(src, "<span style='color: blue;'>[e]</span>")
+		boutput(src, "<span style='color: blue;'>[e]</span>")
 		return
 
 	logTheThing(LOG_ADMIN, src, "deleted the '[fileName]' JS logfile")

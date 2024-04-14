@@ -14,7 +14,7 @@
 		else if(projectile.mob_shooter)
 			if(prob(50))
 				explosion_new(null, T, 2, 1.2, turf_safe = TRUE)
-			boutput(projectile.mob_shooter, "<span class='notice'>Your spell is weakened without a staff to channel it.</span>")
+			boutput(projectile.mob_shooter, SPAN_NOTICE("Your spell is weakened without a staff to channel it."))
 		fireflash(T, 1, checkLos = FALSE)
 
 /datum/projectile/fireball/fire_elemental

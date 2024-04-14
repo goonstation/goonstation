@@ -19,7 +19,7 @@
 		if(!holder)
 			return
 		if(!isdead(target))
-			boutput(holder.owner, "<span class='alert'>That person is still alive! Find a corpse.</span>")
+			boutput(holder.owner, SPAN_ALERT("That person is still alive! Find a corpse."))
 			return TRUE // No cooldown when it fails.
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
 			holder.owner.say("EI NECRIS", FALSE, maptext_style, maptext_colors)
@@ -28,8 +28,8 @@
 		var/mob/living/critter/skeleton/skeleton = new /mob/living/critter/skeleton/(get_turf(target))
 		skeleton.CustomiseSkeleton(target.real_name, ismonkey(target))
 
-		boutput(holder.owner, "<span class='notice'>You saturate [target] with dark magic!</span>")
-		holder.owner.visible_message("<span class='alert'>[holder.owner] rips the skeleton from [target]'s corpse!</span>")
+		boutput(holder.owner, SPAN_NOTICE("You saturate [target] with dark magic!"))
+		holder.owner.visible_message(SPAN_ALERT("[holder.owner] rips the skeleton from [target]'s corpse!"))
 
 		for(var/obj/item/I in target)
 			if(isitem(target))

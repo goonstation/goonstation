@@ -267,7 +267,7 @@
 		onActivate(var/client/C)
 			qdel(C.mob.equipped())
 			C.reputations.set_reputation(id = "nt",amt = 50,absolute = 0)
-			boutput(C.mob, "<span class='success'>Your standing with Nanotrasen has increased by 50!</span>")
+			boutput(C.mob, SPAN_SUCCESS("Your standing with Nanotrasen has increased by 50!"))
 			return
 
 	nt_itemtakedebug
@@ -287,7 +287,7 @@
 		onActivate(var/client/C)
 			qdel(C.mob.equipped())
 			C.reputations.set_reputation(id = "nt",amt = 10000,absolute = 0)
-			boutput(C.mob, "<span class='success'>Your standing with Nanotrasen has increased by 10000!</span>")
+			boutput(C.mob, SPAN_SUCCESS("Your standing with Nanotrasen has increased by 10000!"))
 			return
 
 

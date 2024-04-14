@@ -50,7 +50,7 @@
 		if(istype(target, /obj/item/reagent_containers))
 			var/obj/item/reagent_containers/t = target
 			if(t.current_lid)
-				boutput(user, "<span class='alert'>You cannot transfer liquids with the [target.name] while it has a lid on it!</span>")
+				boutput(user, SPAN_ALERT("You cannot transfer liquids with the [target.name] while it has a lid on it!"))
 				return
 
 		if ((src.customizable_settings_available && src.transfer_mode == TO_SELF) || (!src.customizable_settings_available && !src.reagents.total_volume))
@@ -59,14 +59,14 @@
 			if (t <= 0) return
 
 			if (target.is_open_container() != 1 && !is_reagent_dispenser(target))
-				boutput(user, "<span class='alert'>You cannot directly remove reagents from [target].</span>")
+				boutput(user, SPAN_ALERT("You cannot directly remove reagents from [target]."))
 				return
 			if (!target.reagents.total_volume)
-				boutput(user, "<span class='alert'>[target] is empty.</span>")
+				boutput(user, SPAN_ALERT("[target] is empty."))
 				return
 
 			target.reagents.trans_to(src, t)
-			boutput(user, "<span class='notice'>You fill the dropper with [t] units of the solution.</span>")
+			boutput(user, SPAN_NOTICE("You fill the dropper with [t] units of the solution."))
 			src.UpdateIcon()
 
 		else if ((src.customizable_settings_available && src.transfer_mode == TO_TARGET) || (!src.customizable_settings_available && src.reagents.total_volume))
@@ -74,16 +74,16 @@
 				var/t = min(src.transfer_amount, src.reagents.total_volume) // Can't drop more than you have.
 
 				if (target.reagents.total_volume >= target.reagents.maximum_volume)
-					boutput(user, "<span class='alert'>[target] is full.</span>")
+					boutput(user, SPAN_ALERT("[target] is full."))
 					return
 				if (target.is_open_container(TRUE) != 1 && !ismob(target) && !istype(target, /obj/item/reagent_containers/food)) // You can inject humans and food but you can't remove the shit.
-					boutput(user, "<span class='alert'>You cannot directly fill this object.</span>")
+					boutput(user, SPAN_ALERT("You cannot directly fill this object."))
 					return
 
 				if (ismob(target))
 					if (target != user)
 						for (var/mob/O in AIviewers(world.view, user))
-							O.show_message(text("<span class='alert'><B>[] is trying to drip something onto []!</B></span>", user, target), 1)
+							O.show_message(SPAN_ALERT("<B>[user] is trying to drip something onto [target]!</B>"), 1)
 						src.log_me(user, target, 1)
 
 						if (!do_mob(user, target, 15))
@@ -95,7 +95,7 @@
 							return
 
 					for (var/mob/O in AIviewers(world.view, user))
-						O.show_message(text("<span class='alert'><B>[] drips something onto []!</B></span>", user, target), 1)
+						O.show_message(SPAN_ALERT("<B>[user] drips something onto [target]!</B>"), 1)
 					src.reagents.reaction(target, TOUCH, t) // Modify it so that the reaction only happens with the actual transferred amount.
 
 				src.log_me(user, target)

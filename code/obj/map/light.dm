@@ -48,6 +48,13 @@
 		color_g = 0.45
 		color_r = 0.5
 
+	yellowbright
+		name = "glow - YELLOW BRIGHT"
+		brightness = 5
+		color_b = 0.2
+		color_g = 0.45
+		color_r = 0.5
+
 	void
 		name = "glow - VOID"
 		brightness = 6

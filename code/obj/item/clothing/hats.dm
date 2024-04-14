@@ -166,7 +166,6 @@ proc/filter_trait_hats(var/type)
 	name = "cakehat"
 	desc = "It is a cakehat"
 	icon_state = "cakehat0"
-	uses_multiple_icon_states = 1
 	var/status = 0
 	var/processing = 0
 	c_flags = COVERSEYES
@@ -246,7 +245,7 @@ proc/filter_trait_hats(var/type)
 
 	afterattack(atom/target, mob/user as mob)
 		if (src.on && !ismob(target) && target.reagents)
-			boutput(user, "<span class='notice'>You heat \the [target.name]</span>")
+			boutput(user, SPAN_NOTICE("You heat \the [target.name]"))
 			target.reagents.temperature_reagents(4000,10)
 		return
 
@@ -343,16 +342,16 @@ proc/filter_trait_hats(var/type)
 		cigs = list()
 	examine()
 		. = ..()
-		. += "<span class='notice'>Current activation phrase is <b>\"[phrase]\"</b>.</span>"
+		. += SPAN_NOTICE("Current activation phrase is <b>\"[phrase]\"</b>.")
 		for (var/name in items)
 			var/type = items[name]
 			var/obj/item/I = locate(type) in contents
 			if(I)
-				. += "<br><span class='notice'>[bicon(I)][I] is ready and bound to the word \"[name]\"!</span>"
+				. += "<br>[SPAN_NOTICE("[bicon(I)][I] is ready and bound to the word \"[name]\"!")]"
 			else
 				. += "<br>There is no [name]!"
 		if (cigs.len)
-			. += "<br><span class='notice'>It contains <b>[cigs.len]</b> cigarettes!</span>"
+			. += "<br>[SPAN_NOTICE("It contains <b>[cigs.len]</b> cigarettes!")]"
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id)
 		var/turf/T = get_turf(src)
@@ -368,7 +367,7 @@ proc/filter_trait_hats(var/type)
 				var/obj/item/I = locate(type) in contents
 				if(findtext(gadget, name) && I)
 					M.put_in_hand_or_drop(I)
-					M.visible_message("<span class='alert'><b>[M]</b>'s hat snaps open and pulls out \the [I]!</span>")
+					M.visible_message(SPAN_ALERT("<b>[M]</b>'s hat snaps open and pulls out \the [I]!"))
 					return
 
 			if(findtext(gadget, "cigarette"))
@@ -388,10 +387,10 @@ proc/filter_trait_hats(var/type)
 					else
 						M.put_in_hand_or_drop(W) //Put it in their hand
 
-					M.visible_message("<span class='alert'><b>[M]</b>'s hat snaps open and puts \the [W] in [his_or_her(M)] [boop]!</span>")
+					M.visible_message(SPAN_ALERT("<b>[M]</b>'s hat snaps open and puts \the [W] in [his_or_her(M)] [boop]!"))
 					var/obj/item/device/light/zippo/lighter = (locate(/obj/item/device/light/zippo) in src.contents)
 					if (lighter)
-						W.light(M, "<span class='alert'><b>[M]</b>'s hat proceeds to light \the [W] with \the [lighter], whoa.</span>")
+						W.light(M, SPAN_ALERT("<b>[M]</b>'s hat proceeds to light \the [W] with \the [lighter], whoa."))
 						lighter.firesource_interact()
 			else
 				M.show_text("Requested object missing or nonexistant!", "red")
@@ -429,13 +428,13 @@ proc/filter_trait_hats(var/type)
 				success = 1
 
 		if(success)
-			M.visible_message("<span class='alert'><b>[M]</b> [pick("awkwardly", "comically", "impossibly", "cartoonishly")] stuffs [W] into [src]!</span>")
+			M.visible_message(SPAN_ALERT("<b>[M]</b> [pick("awkwardly", "comically", "impossibly", "cartoonishly")] stuffs [W] into [src]!"))
 			return
 
 		return ..()
 
 	attack_self (mob/user as mob)
-		user.visible_message("<span class='combat'><b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b></span>")
+		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b>"))
 		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src))
 		if (src.inspector == TRUE)
 			S.make_inspector()
@@ -543,8 +542,8 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	item_state = "chefhat" //TODO: unique inhand sprite?
 
 /obj/item/clothing/head/mailcap
-	name = "Mailman's hat"
-	desc = "The hat of a mailman."
+	name = "postmaster's hat"
+	desc = "The hat of a postmaster."
 	icon_state = "mailcap"
 	item_state = "mailcap"
 
@@ -608,7 +607,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		if (get_pod_wars_team_num(user) == team_num)
 			..()
 		else
-			boutput(user, "<span class='alert'>The beret <b>explodes</b> as you reach out to grab it!</span>")
+			boutput(user, SPAN_ALERT("The beret <b>explodes</b> as you reach out to grab it!"))
 			make_fake_explosion(src)
 			user.u_equip(src)
 			src.dropped(user)
@@ -796,7 +795,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	if (istype(W, /obj/item/pen))
 		var/obj/item/pen/P = W
 		if (P.font_color)
-			boutput(user, "<span class='notice'>You scribble on the hat until it's filled in.</span>")
+			boutput(user, SPAN_NOTICE("You scribble on the hat until it's filled in."))
 			if (P.font_color)
 				src.color = P.font_color
 				src.desc = "A colorful paper hat"
@@ -834,7 +833,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	name = "odd hat"
 	desc = "Looking sharp."
 	icon_state = "mime_bowler"
-	uses_multiple_icon_states = 1
 	item_state = "that"
 	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	var/active = 0
@@ -843,7 +841,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	var/turf/throw_source = null
 
 	attack_self (mob/user as mob)
-		user.visible_message("<span class='combat'><b>[user] fiddles with [src]!</b></span>")
+		user.visible_message(SPAN_COMBAT("<b>[user] fiddles with [src]!</b>"))
 		sleep(1 SECOND)
 		src.toggle_active(user)
 		user.update_inhands()
@@ -854,7 +852,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		src.active = !( src.active )
 		if (src.active)
 			if (user)
-				user.visible_message("<span class='combat'><b>Blades extend from the brim of [user]'s hat!</b></span>")
+				user.visible_message(SPAN_COMBAT("<b>Blades extend from the brim of [user]'s hat!</b>"))
 			src.hit_type = DAMAGE_CUT
 			src.hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 			src.force = 10
@@ -862,7 +860,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			src.throw_source = null
 		else
 			if (user)
-				user.visible_message("<span class='notice'><b>[user]'s hat's blades retract.</b></span>")
+				user.visible_message(SPAN_NOTICE("<b>[user]'s hat's blades retract.</b>"))
 			src.hit_type = DAMAGE_BLUNT
 			src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 			src.force = 1
@@ -886,7 +884,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 						var/mob/living/carbon/human/H = M
 						var/obj/item/organ/head/the_head = H.drop_organ("head")
 						if (istype(the_head))
-							H.visible_message("<span class='combat'><b>[H]'s head flies right off [his_or_her(H)] shoulders![prob(33) ? " HOLY SHIT!" : null]</b></span>")
+							H.visible_message(SPAN_COMBAT("<b>[H]'s head flies right off [his_or_her(H)] shoulders![prob(33) ? " HOLY SHIT!" : null]</b>"))
 							var/the_dir = src.last_move ? src.last_move : alldirs//istype(src.throw_source) ? get_dir(src.throw_source, H) : alldirs
 							the_head.streak_object(the_dir, the_head.created_decal)
 							src.throw_source = null
@@ -898,7 +896,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		else if (ishuman(hit_atom))
 			var/mob/living/carbon/human/Q = hit_atom
 			src.toggle_active() // don't show the message when catching because it just kinda spams things up
-			Q.visible_message("<span class='combat'><b>[Q] catches the [src] like a badass.</b></span>")
+			Q.visible_message(SPAN_COMBAT("<b>[Q] catches the [src] like a badass.</b>"))
 			if (Q.equipped())
 				Q.drop_item()
 			Q.put_in_hand_or_drop(src)
@@ -1015,15 +1013,15 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			processing_items.Remove(src)
 			processing = 0
 			return
-		if(prob(20))
+		if(prob(20) && !istype(src.loc, /obj/cryotron))
 			var/turf/T = get_turf(src)
 			T?.fluid_react_single("miasma_s", 5, airborne = 1)
 		if(prob(1))
 			host.real_name = "[prob(10) ? SPACER_PICK("honorifics")+" " : ""][prob(20) ? SPACER_PICK("stuff")+" " : ""][SPACER_PICK("firstnames")+" "][prob(80) ? SPACER_PICK("nicknames")+" " : ""][prob(50)?SPACER_PICK("firstnames") : SPACER_PICK("lastnames")]"
 			host.name = host.real_name
-			boutput(host, "<span class='notice'>You suddenly feel a lot more like, uh, well like [host.real_name]!</span>")
+			boutput(host, SPAN_NOTICE("You suddenly feel a lot more like, uh, well like [host.real_name]!"))
 		if(isdead(host))
-			host.visible_message("<span class='notice'>A fun surprise pops out of [host]!</span>")
+			host.visible_message(SPAN_NOTICE("A fun surprise pops out of [host]!"))
 			new /obj/item/a_gift/festive(get_turf(src))
 			src.unequipped(host)
 			host.gib()
@@ -1056,7 +1054,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		if (!src.processing)
 			src.processing++
 			processing_items |= src
-		boutput(user, "<span class='notice'>You better start running! It's kill or be killed now, buddy!</span>")
+		boutput(user, SPAN_NOTICE("You better start running! It's kill or be killed now, buddy!"))
 		SPAWN(1 SECOND)
 			playsound(src.loc, 'sound/vox/time.ogg', 100, 1)
 			sleep(1 SECOND)
@@ -1078,7 +1076,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !is_incapacitated(H) && !H.restrained())
-				H.visible_message("<span class='alert'><b>[H] is totally and absolutely robusted by the [src.name]!</b></span>")
+				H.visible_message(SPAN_ALERT("<b>[H] is totally and absolutely robusted by the [src.name]!</b>"))
 				var/turf/T = get_turf(H)
 				T.fluid_react_single("blood",1000)
 				H.unequip_all()
@@ -1111,7 +1109,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate) && !is_incapacitated(H) && !H.restrained())
-				H.visible_message("<span class='notice'><b>[H] becomes one with the [src.name]!</b></span>")
+				H.visible_message(SPAN_NOTICE("<b>[H] becomes one with the [src.name]!</b>"))
 				H.gib()
 				explosion_new(src, T, 50) // like a really mean double macro
 
@@ -1187,7 +1185,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 				user.show_text("You don't need to add more wiring to the [src.name].", "red")
 				return
 
-			boutput(user, "<span class='notice'>You attach the wires to the [src.name].</span>")
+			boutput(user, SPAN_NOTICE("You attach the wires to the [src.name]."))
 			src.stunready = 1
 			W:amount--
 			return
@@ -1199,7 +1197,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 				user.show_text("[C] needs more charge before you can do that.", "red")
 				return
 			if (!src.stunready)
-				user.visible_message("<span class='alert'><b>[user]</b> shocks themselves while fumbling around with [C]!</span>", "<span class='alert'>You shock yourself while fumbling around with [C]!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> shocks themselves while fumbling around with [C]!"), SPAN_ALERT("You shock yourself while fumbling around with [C]!"))
 				C.zap(user)
 				return
 
@@ -1214,7 +1212,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			src.item_state = text("[]-stun",src.item_state)
 			C.UpdateIcon()
 			user.update_clothing() // Required to update the worn sprite (Convair880).
-			user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stunhat.</span>", "<span class='notice'>The stunhat now holds [src.uses]/[src.max_uses] charges!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> charges [his_or_her(user)] stunhat."), SPAN_NOTICE("The stunhat now holds [src.uses]/[src.max_uses] charges!"))
 			return
 
 		..()
@@ -1314,7 +1312,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
 	icon_state = "janitorberet"
 	item_state = "janitorberet"
-	uses_multiple_icon_states = 1
 	var/folds = 0
 
 /obj/item/clothing/head/janiberet/attack_self(mob/user as mob)
@@ -1323,13 +1320,13 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		src.name = "Head of Sanitation beret"
 		src.icon_state = "janitorberet"
 		src.item_state = "janitorberet"
-		boutput(user, "<span class='notice'>You fold the hat back into a beret.</span>")
+		boutput(user, SPAN_NOTICE("You fold the hat back into a beret."))
 	else
 		src.folds = 1
 		src.name = "Head of Sanitation hat"
 		src.icon_state = "janitorcap"
 		src.item_state = "janitorcap"
-		boutput(user, "<span class='notice'>You unfold the beret into a hat.</span>")
+		boutput(user, SPAN_NOTICE("You unfold the beret into a hat."))
 	return
 
 /obj/item/clothing/head/pajama_cap
@@ -1353,7 +1350,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 /obj/item/clothing/head/hos_hat
 	name = "HoS Hat"
 	icon_state = "hoscap"
-	uses_multiple_icon_states = 1
 	item_state = "hoscap"
 	c_flags = SPACEWEAR
 	var/folds = 0
@@ -1369,13 +1365,13 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			src.name = "HoS Beret"
 			src.icon_state = "hosberet"
 			src.item_state = "hosberet"
-			boutput(user, "<span class='notice'>You fold the hat into a beret.</span>")
+			boutput(user, SPAN_NOTICE("You fold the hat into a beret."))
 		else
 			src.folds = 0
 			src.name = "HoS Hat"
 			src.icon_state = "hoscap"
 			src.item_state = "hoscap"
-			boutput(user, "<span class='notice'>You unfold the beret back into a hat.</span>")
+			boutput(user, SPAN_NOTICE("You unfold the beret back into a hat."))
 		return
 
 /obj/item/clothing/head/pinwheel_hat
@@ -1780,7 +1776,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 /obj/item/clothing/head/basecap
 	name = "baseball cap"
 	desc = "Wear it normally, or flip it backwards to increase your coolness."
-	uses_multiple_icon_states = 1
 	var/hatflip = FALSE
 	var/hatcolour = "black"
 
@@ -1796,9 +1791,9 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 		if(src.hatflip)
 			src.icon_state = "basecapflip_[hatcolour]"
 			src.item_state = "basecapflip_[hatcolour]"
-			boutput(user, "<span class='notice'>You flip your baseball cap around. Now it's backwards.</span>")
+			boutput(user, SPAN_NOTICE("You flip your baseball cap around. Now it's backwards."))
 		else
-			boutput(user, "<span class='notice'>You flip your baseball cap back into the standard baseball cap position.</span>")
+			boutput(user, SPAN_NOTICE("You flip your baseball cap back into the standard baseball cap position."))
 
 	black
 		hatcolour = "black"
@@ -2041,6 +2036,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	name = "mushroom cap"
 	desc = "Makes your lungs feel a little fuzzy."
 	var/additional_desc = ""
+	hat_offset_y = 4
 	icon_state = "mushroom-red"
 	item_state = "mushroom-red"
 
@@ -2122,7 +2118,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 						A_value -= 2
 					else if (T.z == Z_LEVEL_STATION)
 						A_value += 1
-				var/atom_name = trim(stripTextMacros(A.name))
+				var/atom_name = trimtext(stripTextMacros(A.name))
 				if (length(atom_name) <= 2)
 					continue
 				if (findtext(atom_name, " "))
@@ -2161,13 +2157,13 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 		. = ..()
 		emag_multiplier = 1
 		generate_name()
-		boutput(user, "<span class='notice'>The hat's text changes to read: [name].</span>")
+		boutput(user, SPAN_NOTICE("The hat's text changes to read: [name]."))
 
 	demag(mob/user)
 		. = ..()
 		emag_multiplier = 0
 		generate_name()
-		boutput(user, "<span class='notice'>The hat's text changes to read: [name].</span>")
+		boutput(user, SPAN_NOTICE("The hat's text changes to read: [name]."))
 
 /obj/item/clothing/head/fish_fear_me/emagged
 	emag_multiplier = 1
@@ -2193,6 +2189,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	icon_state = "clown_autumn_hat"
 	item_state = "clown_autumn_hat"
 
+/obj/item/clothing/head/clown_winter_hat
+	name = "winter clown's hat"
+	desc = "A jingly and... cool hat."
+	icon_state = "clown_winter_hat"
+	item_state = "clown_winter_hat"
+
 /obj/item/clothing/head/leaf_wreath
 	name = "leaf wreath"
 	desc = "A carefully made wreath of dried autumn leaves."
@@ -2213,3 +2215,24 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 		var/image/big_tree = image(icon('icons/misc/worlds.dmi', "shrub_autumn", SOUTHWEST))
 		big_tree.pixel_y = 32
 		src.wear_image.overlays += big_tree
+
+/obj/item/clothing/head/weirdohat
+	name = "outlander's mask"
+	desc = "A visor with teal spikes dragging behind the mask, vaguely reminiscent of an extinct alien race."
+	icon_state = "weirdohat"
+	item_state = "weirdohat"
+	seal_hair = 1
+
+/obj/item/clothing/head/lighthat
+	name = "light mitre"
+	desc = "A golden mitre pointing tall, proudly touting the strength of its faith and its light"
+	icon_state = "lighthat"
+	item_state = "lighthat"
+	seal_hair = 1
+
+/obj/item/clothing/head/bushhat
+	name = "druid mask"
+	desc = "Flowers, grass, and other flora completely cover the face of this mask. You can almost hear the roar of earthen creatures calling from inside the shrubbery"
+	icon_state = "bushhat"
+	item_state = "bushhat"
+	seal_hair = 1

@@ -83,10 +83,10 @@
 	if (!source || !target) return
 	if( src.unstaple()) //Try a staple if it worked, yay
 		if (!src.stapled) //That's the last staple!
-			source.visible_message("<span class='alert'><B>[source] rips out the staples from [src]!</B></span>", "<span class='alert'><B>You rip out the staples from [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
+			source.visible_message(SPAN_ALERT("<B>[source] rips out the staples from [src]!</B>"), SPAN_ALERT("<B>You rip out the staples from [src]!</B>"), SPAN_ALERT("You hear a loud ripping noise."))
 			. = 1
 		else //Did you get some of them?
-			source.visible_message("<span class='alert'><B>[source] rips out some of the staples from [src]!</B></span>", "<span class='alert'><B>You rip out some of the staples from [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
+			source.visible_message(SPAN_ALERT("<B>[source] rips out some of the staples from [src]!</B>"), SPAN_ALERT("<B>You rip out some of the staples from [src]!</B>"), SPAN_ALERT("You hear a loud ripping noise."))
 			. = 0
 
 		//Commence owie
@@ -231,8 +231,8 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		item_function_flags = IMMUNE_TO_ACID
 
 		New()
-			..()
 			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
 
 		disposing()
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -344,6 +344,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "clown"
 	item_state = "clown_hat"
 	see_face = FALSE
+	var/base_icon_state = "clown"
 
 	var/spam_flag = 0
 	var/spam_timer = 100
@@ -369,14 +370,14 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 			src.mask_bald = TRUE
 			src.name = "wigless clown mask"
 			src.desc = bald_desc_state
-			src.icon_state = "[src.icon_state]_bald"
+			src.icon_state = "[src.base_icon_state]_bald"
 			src.item_state = "clown_bald"
 			user.show_text("You tuck back the wig on the [src].")
 		else
 			src.mask_bald = FALSE
 			src.name = initial(src.name)
 			src.desc = initial(src.desc)
-			src.icon_state = initial(src.icon_state)
+			src.icon_state = src.base_icon_state
 			src.item_state = "clown_hat"
 			user.show_text("You untuck the wig from the [src].")
 
@@ -385,6 +386,14 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		desc = "A special clown mask made to celebrate Autumn. Orange you glad you have it!!"
 		icon_state = "clown_autumn"
 		item_state = "clown_autumn"
+		base_icon_state = "clown_autumn"
+
+	winter
+		name = "winter clown wig and mask"
+		desc = "A special clown mask made to celebrate Winter. You'd be blue without it!! Like cold things? Blue? Get it?"
+		icon_state = "clown_winter"
+		item_state = "clown_winter"
+		base_icon_state = "clown_winter"
 
 /obj/item/clothing/mask/gas/syndie_clown
 	name = "clown wig and mask"
@@ -392,7 +401,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "clown"
 	item_state = "clown_hat"
 	item_function_flags = IMMUNE_TO_ACID
-	burn_possible = 0
+	burn_possible = FALSE
 	color_r = 1
 	color_g = 1
 	color_b = 1
@@ -409,7 +418,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 				src.cant_other_remove = 1
 				src.cant_self_remove = 0
 			else
-				boutput (user, "<span class='alert'>[src] latches onto your face! It burns!</span>")
+				boutput (user, SPAN_ALERT("[src] latches onto your face! It burns!"))
 				src.victim = H
 				src.cant_other_remove = 0
 				src.cant_self_remove = 1
@@ -431,7 +440,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 			if ( src.victim.health <= 0 )
 				return
 			if (prob(45))
-				boutput (src.victim, "<span class='alert'>[src] burns your face!</span>")
+				boutput (src.victim, SPAN_ALERT("[src] burns your face!"))
 				if (prob(25))
 					src.victim.emote("scream")
 				src.victim.TakeDamage("head",0,3,0,DAMAGE_BURN)
@@ -449,7 +458,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 			var/mob/living/carbon/human/U = user
 			var/mob/living/carbon/human/T = target
 			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src, SLOT_WEAR_MASK) )
-				U.visible_message("<span class='alert'>[src] latches onto [T]'s face!</span>","<span class='alert'>You slap [src] onto [T]'s face!'</span>")
+				U.visible_message(SPAN_ALERT("[src] latches onto [T]'s face!"),SPAN_ALERT("You slap [src] onto [T]'s face!'"))
 				logTheThing(LOG_COMBAT, user, "forces [T] to wear [src] (cursed clown mask) at [log_loc(T)].")
 				U.u_equip(src)
 
@@ -547,18 +556,18 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "A little mask, made of paper. It isn't gunna stay on anyone's face like this, though."
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 3
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
 			if (P.font_color)
-				boutput(user, "<span class='notice'>You scribble on the mask until it's filled in.</span>")
+				boutput(user, SPAN_NOTICE("You scribble on the mask until it's filled in."))
 				if (P.font_color)
 					src.color = P.font_color
 		else if (istype(W,/obj/item/cable_coil/))
-			boutput(user, "<span class='notice'>You attach the cable to the mask. Looks like you can wear it now.</span>")
+			boutput(user, SPAN_NOTICE("You attach the cable to the mask. Looks like you can wear it now."))
 			var/obj/item/cable_coil/C = W
 			C.use(1)
 			var/obj/item/clothing/mask/paper/M = new /obj/item/clothing/mask/paper(src.loc)
@@ -576,13 +585,13 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	see_face = FALSE
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
 			if (P.font_color)
-				boutput(user, "<span class='notice'>You scribble on the mask until it's filled in.</span>")
+				boutput(user, SPAN_NOTICE("You scribble on the mask until it's filled in."))
 				src.color = P.font_color
 
 /obj/item/clothing/mask/melons
@@ -700,7 +709,7 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	src.copy_filters_to(the_handkerchief)
 	qdel(src)
 	user.put_in_hand_or_drop(the_handkerchief)
-	boutput(user, "<span class='notice'>You unfold \the [src] into \a [the_handkerchief].</span>")
+	boutput(user, SPAN_NOTICE("You unfold \the [src] into \a [the_handkerchief]."))
 
 /obj/item/clothing/mask/bandana/white
 	icon_state = "bandana_white"
@@ -778,4 +787,21 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	desc = "Traditionally thought to repel evil spirits, thanks to the tengu's alarming face. Maybe it works on staffies, too."
 	item_state = "tengu"
 	icon_state = "tengu"
+	see_face = FALSE
+
+// New chaplain stuff
+
+/obj/item/clothing/mask/greencultmask
+	name = "lost horror veil"
+	desc = "A dark green shroud with loose fabric tendrils at the end of the face You feel dizzy and lost just gazing into the visage."
+	item_state = "greencultmask"
+	icon_state = "greencultmask"
+	wear_layer = MOB_OVER_TOP_LAYER
+	see_face = FALSE
+/obj/item/clothing/mask/burnedcultmask
+	name = "incendiary mask"
+	desc = "A face mask designed to look like a burning candle's flame. It smells of smoke when worn."
+	item_state = "burnedcultmask"
+	icon_state = "burnedcultmask"
+	wear_layer = MOB_OVER_TOP_LAYER
 	see_face = FALSE

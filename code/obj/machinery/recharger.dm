@@ -43,10 +43,10 @@ TYPEINFO(/obj/machinery/recharger)
 	var/accepted_types = list( /obj/item/gun/energy, \
 								/obj/item/baton, \
 								/obj/item/cargotele, \
-								/obj/item/mining_tool/power_pick, \
-								/obj/item/mining_tool/powerhammer, \
+								/obj/item/mining_tool/powered/pickaxe, \
+								/obj/item/mining_tool/powered/hammer, \
 								/obj/item/ammo/power_cell, \
-								/obj/item/mining_tool/power_shovel
+								/obj/item/mining_tool/powered/shovel
 								)
 
 	var/obj/item/charging = null
@@ -101,7 +101,7 @@ TYPEINFO(/obj/machinery/recharger)
 	var/ret = SEND_SIGNAL(G, COMSIG_CELL_CAN_CHARGE)
 
 	if(ret & CELL_UNCHARGEABLE)
-		boutput(user, "<span class='alert'>[G] is not compatible with \the [src]!</span>")
+		boutput(user, SPAN_ALERT("[G] is not compatible with \the [src]!"))
 	else if(ret & CELL_CHARGEABLE)
 		user.drop_item(G)
 		G.set_loc(src)
@@ -110,7 +110,7 @@ TYPEINFO(/obj/machinery/recharger)
 			charge_status = STATUS_ACTIVE
 			UpdateIcon()
 	else
-		boutput(user, "<span class='alert'>That [G.name] won't fit in \the [src]!</span>")
+		boutput(user, SPAN_ALERT("That [G.name] won't fit in \the [src]!"))
 
 /obj/machinery/recharger/attack_hand(mob/user)
 	src.add_fingerprint(user)
@@ -156,7 +156,7 @@ TYPEINFO(/obj/machinery/recharger)
 	if(charge_status == STATUS_ACTIVE || charge_status == STATUS_COMPLETE)
 		var/list/charge = list();
 		if(SEND_SIGNAL(src.charging, COMSIG_CELL_CHECK_CHARGE, charge) & CELL_RETURNED_LIST)
-			. += "<br> <span class='notice'> \The [charging.name]! Progress: [charge["charge"]]/[charge["max_charge"]]PU </span>"
+			. += "<br> [SPAN_NOTICE(" \The [charging.name]! Progress: [charge["charge"]]/[charge["max_charge"]]PU ")]"
 	else
 		. += "<br>Nothing! </span>"
 	return
@@ -178,7 +178,7 @@ TYPEINFO(/obj/machinery/recharger)
 		else if(ret & CELL_UNCHARGEABLE)
 			// Charge failed - the item does not want to be recharged
 			charge_status = STATUS_ERRORED
-			src.visible_message("<span class='alert'>[src.charging] is not compatible with \the [src].</span>")
+			src.visible_message(SPAN_ALERT("[src.charging] is not compatible with \the [src]."))
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
 			UpdateIcon()
 

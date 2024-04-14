@@ -76,10 +76,10 @@ TYPEINFO(/obj/item/injector_belt)
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/reagent_containers/glass))
 			if (container)
-				boutput(user, "<span class='alert'>There is already a container attached to the belt.</span>")
+				boutput(user, SPAN_ALERT("There is already a container attached to the belt."))
 				return
 			if (W.w_class > W_CLASS_SMALL)
-				boutput(user, "<span class='alert'>[W] is too large to fit in the belt.</span>")
+				boutput(user, SPAN_ALERT("[W] is too large to fit in the belt."))
 				return
 			if (!W.reagents.total_volume)
 				user.show_text("[W] is empty.", "red")
@@ -107,7 +107,7 @@ TYPEINFO(/obj/item/injector_belt)
 				SPAWN(src.min_time) src.can_trigger = 1
 
 				playsound(src, 'sound/items/injectorbelt_active.ogg', 33, FALSE, -5)
-				boutput(src.owner, "<span class='notice'>Your Injector belt activates.</span>")
+				boutput(src.owner, SPAN_NOTICE("Your Injector belt activates."))
 
 				src.container.reagents.reaction(src.owner, INGEST)
 				SPAWN(1.5 SECONDS)
@@ -128,16 +128,17 @@ TYPEINFO(/obj/item/injector_belt)
 
 //////////////////////////////////////
 
-TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
+TYPEINFO(/obj/item/clothing/mask/injector_mask)
 	mats = 10
 
-/obj/item/clothing/mask/gas/injector_mask
+/obj/item/clothing/mask/injector_mask
 	name = "Vapo-Matic"
 	desc = "Automated chemical vaporizer system built into an old industrial respirator. Doesn't look very safe at all!"
 	flags = FPRINT | TABLEPASS  | NOSPLASH
-	c_flags =  COVERSMOUTH | MASKINTERNALS
 	icon_state = "gas_injector"
 	item_state = "gas_injector"
+	c_flags =  COVERSMOUTH | MASKINTERNALS | BLOCKSMOKE
+	w_class = W_CLASS_NORMAL
 
 	var/can_trigger = 1
 	var/mob/owner = null
@@ -196,10 +197,10 @@ TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/reagent_containers/glass))
 			if (container)
-				boutput(user, "<span class='alert'>There is already a container attached to the mask.</span>")
+				boutput(user, SPAN_ALERT("There is already a container attached to the mask."))
 				return
 			if (W.w_class > W_CLASS_SMALL)
-				boutput(user, "<span class='alert'>[W] is too large to fit in the belt.</span>")
+				boutput(user, SPAN_ALERT("[W] is too large to fit in the belt."))
 				return
 			if (!W.reagents.total_volume)
 				user.show_text("[W] is empty.", "red")
@@ -233,7 +234,7 @@ TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
 					SPAWN(0.5 SECONDS)
 						playsound(T, 'sound/machines/hiss.ogg', 40, TRUE, -5)
 
-				boutput(src.owner, "<span class='notice'>Your [src] activates.</span>")
+				boutput(src.owner, SPAN_NOTICE("Your [src] activates."))
 
 				src.container.reagents.reaction(src.owner, INGEST, paramslist = list("inhaled"))
 				SPAWN(1.5 SECONDS)
@@ -494,10 +495,10 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 
 /proc/autoinjector_ui_act(obj/source, action, params, mob/user, var/maximum_volume)
 	var/obj/item/injector_belt/current_belt = null
-	var/obj/item/clothing/mask/gas/injector_mask/current_mask = null
+	var/obj/item/clothing/mask/injector_mask/current_mask = null
 	if (istype(source, /obj/item/injector_belt))
 		current_belt = source
-	else if (istype(source, /obj/item/clothing/mask/gas/injector_mask))
+	else if (istype(source, /obj/item/clothing/mask/injector_mask))
 		current_mask = source
 
 	switch(action)

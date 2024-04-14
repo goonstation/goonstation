@@ -25,7 +25,7 @@
 	var/setup_drive_size = 64
 	var/setup_drive_type = null //Use this path for the hd
 	var/setup_frame_type = /obj/computer3frame //What kind of frame does it spawn while disassembled.  This better be a type of /obj/compute3frame !!
-	var/setup_starting_program = null //This program will start out installed on the drive
+	var/setup_starting_program = null //This program will start out installed on the drive (can be a path or a list of paths)
 	var/setup_starting_os = null //This program will start out installed AND AS ACTIVE PROGRAM
 	var/setup_starting_peripheral1 = null //Please note that the user cannot install more than 3.
 	var/setup_starting_peripheral2 = null //And the os tends to need that third one for the card reader
@@ -100,7 +100,7 @@
 		communications
 			name = "Communications Console"
 			icon_state = "comm"
-			setup_starting_program = /datum/computer/file/terminal_program/communications
+			setup_starting_program = list(/datum/computer/file/terminal_program/communications, /datum/computer/file/terminal_program/job_controls)
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
 			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/status
 			setup_drive_size = 80
@@ -305,13 +305,13 @@
 					src.hd = new /obj/item/disk/data/fixed_disk(src)
 				src.hd.file_amount = src.setup_drive_size
 
-			if(ispath(src.setup_starting_program))
-				var/datum/computer/file/terminal_program/starting = new src.setup_starting_program
+			for (var/program_path in (list() + src.setup_starting_program)) //neat hack to make it work with lists or a single path
+				if(ispath(program_path))
+					var/datum/computer/file/terminal_program/starting = new program_path
 
-				src.hd.file_amount = max(src.hd.file_amount, starting.size)
+					src.hd.file_amount = max(src.hd.file_amount, starting.size)
 
-				starting.transfer_holder(src.hd)
-				//src.processing_programs += src.active_program
+					starting.transfer_holder(src.hd)
 
 			if(ispath(src.setup_starting_os) && src.hd)
 				var/datum/computer/file/terminal_program/os/os = new src.setup_starting_os
@@ -397,7 +397,7 @@
 				if(src.diskette)
 					//Ai/cyborgs cannot press a physical button from a room away.
 					if((issilicon(usr) || isAI(usr)) && BOUNDS_DIST(src, usr) > 0)
-						boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
+						boutput(usr, SPAN_ALERT("You cannot press the ejection button."))
 						return
 					for(var/datum/computer/file/terminal_program/P in src.processing_programs)
 						P.disk_ejected(src.diskette)
@@ -486,9 +486,9 @@
 			update_static_data(usr)
 			return
 		else if(src.diskette)
-			boutput(user, "<span class='alert'>There's already a disk inside!</span>")
+			boutput(user, SPAN_ALERT("There's already a disk inside!"))
 		else if(!src.setup_has_internal_disk)
-			boutput(user, "<span class='alert'>There's no visible peripheral device to insert the disk into!</span>")
+			boutput(user, SPAN_ALERT("There's no visible peripheral device to insert the disk into!"))
 
 	else if (isscrewingtool(W))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -502,7 +502,7 @@
 			return
 
 		if (dv.authid)
-			boutput(user, "<span class='alert'>There is already a card inserted!</span>")
+			boutput(user, SPAN_ALERT("There is already a card inserted!"))
 		else
 			usr.drop_item()
 			W.loc = src
@@ -532,13 +532,13 @@
 	A.created_icon_state = src.base_icon_state
 	A.set_dir(src.dir)
 	if (src.status & BROKEN)
-		boutput(user, "<span class='notice'>The broken glass falls out.</span>")
+		boutput(user, SPAN_NOTICE("The broken glass falls out."))
 		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 		G.set_loc( src.loc )
 		A.state = 3
 		A.icon_state = "3"
 	else
-		boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
+		boutput(user, SPAN_NOTICE("You disconnect the monitor."))
 		A.state = 4
 		A.icon_state = "4"
 
@@ -849,11 +849,12 @@
 	proc/deploy(mob/user as mob)
 		var/turf/T = get_turf(src)
 		if(!T || !luggable)
-			boutput(user, "<span class='alert'>You can't seem to get the latch open!</span>")
+			boutput(user, SPAN_ALERT("You can't seem to get the latch open!"))
 			return
 
 		if (src.loc == user)
 			user.drop_item()
+			user.u_equip(src)
 		src.luggable.set_loc(T)
 		src.luggable.case = src
 		src.luggable.deployed = 1
@@ -888,7 +889,7 @@
 		if(usr.stat)
 			return
 
-		src.visible_message("<span class='alert'>[usr] folds [src] back up!</span>")
+		src.visible_message(SPAN_ALERT("[usr] folds [src] back up!"))
 		src.undeploy()
 		return
 
@@ -914,26 +915,26 @@
 				boutput(user, "You insert [W].")
 				update_static_data(usr)
 			else if(src.diskette)
-				boutput(user, "<span class='alert'>There's already a disk inside!</span>")
+				boutput(user, SPAN_ALERT("There's already a disk inside!"))
 			else if(!src.setup_has_internal_disk)
-				boutput(user, "<span class='alert'>There's no visible peripheral device to insert the disk into!</span>")
+				boutput(user, SPAN_ALERT("There's no visible peripheral device to insert the disk into!"))
 
 		else if (ispryingtool(W))
 			if(!src.cell)
-				boutput(user, "<span class='alert'>There is no energy cell inserted!</span>")
+				boutput(user, SPAN_ALERT("There is no energy cell inserted!"))
 				return
 
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.cell.set_loc(get_turf(src))
 			src.cell = null
-			user.visible_message("<span class='alert'>[user] removes the power cell from [src]!.</span>","<span class='alert'>You remove the power cell from [src]!</span>")
+			user.visible_message(SPAN_ALERT("[user] removes the power cell from [src]!."),SPAN_ALERT("You remove the power cell from [src]!"))
 			src.power_change()
 			update_static_data(usr)
 			return
 
 		else if (istype(W, /obj/item/cell))
 			if(src.cell)
-				boutput(user, "<span class='alert'>There is already an energy cell inserted!</span>")
+				boutput(user, SPAN_ALERT("There is already an energy cell inserted!"))
 
 			else
 				user.drop_item()
@@ -951,7 +952,7 @@
 				return
 
 			if (dv.authid)
-				boutput(user, "<span class='alert'>There is already a card inserted!</span>")
+				boutput(user, SPAN_ALERT("There is already a card inserted!"))
 			else
 				usr.drop_item()
 				W.loc = src

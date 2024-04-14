@@ -22,7 +22,7 @@
 				var/obj/decal/cleanable/blood/B = make_cleanable(/obj/decal/cleanable/blood,splat)
 				B.sample_reagent = "bloodc"
 
-		ow.visible_message(text("<span class='alert'><B>[holder.owner] boils and bursts open violently!</B></span>"))
+		ow.visible_message(SPAN_ALERT("<B>[holder.owner] boils and bursts open violently!</B>"))
 
 		var/dmg = 20
 		//Increase the power of the boilgib if we have collected DNA!
@@ -33,12 +33,12 @@
 			if(iscarbon(M))
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
-					if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit) && istype(H.head, /obj/item/clothing/head/bio_hood))
-						boutput(M, "<span class='notice'>You are sprayed with blood, but your biosuit protects you!</span>")
+					if(istype(H.wear_suit, /obj/item/clothing/suit/hazard/bio_suit) && istype(H.head, /obj/item/clothing/head/bio_hood))
+						boutput(M, SPAN_NOTICE("You are sprayed with blood, but your biosuit protects you!"))
 						continue
 				M.emote("scream")
 				M.TakeDamage("chest", 0, dmg, 0, DAMAGE_BURN)
 				if (M.reagents)
 					M.reagents.add_reagent("bloodc", dmg, null, T0C)
-				boutput(M, "<span class='alert'>You are sprayed with sizzling hot blood!</span>")
+				boutput(M, SPAN_ALERT("You are sprayed with sizzling hot blood!"))
 		ow.gib()

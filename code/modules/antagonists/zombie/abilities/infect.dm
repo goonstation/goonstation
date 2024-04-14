@@ -19,17 +19,17 @@
 		if (isturf(target))
 			target = locate(/mob/living/) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to zombify there.</span>")
+				boutput(holder.owner, SPAN_ALERT("Nothing to zombify there."))
 				return 1
 		if (!ishuman(target))
-			boutput(holder.owner, "<span class='alert'>Invalid target.</span>")
+			boutput(holder.owner, SPAN_ALERT("Invalid target."))
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to zombify.</span>")
+			boutput(holder.owner, SPAN_ALERT("That is too far away to zombify."))
 			return 1
 		var/mob/living/carbon/human/H = target
 		if (istype(H.mutantrace, /datum/mutantrace/zombie))
-			boutput(holder.owner, "<span class='alert'>You can't infect another zombie!</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't infect another zombie!"))
 			return 1
 		actions.start(new/datum/action/bar/icon/infect_ability(target, src), holder.owner)
 		return 0
@@ -37,7 +37,6 @@
 /datum/action/bar/icon/infect_ability
 	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "zombie_infection"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "zomb_over"
 	var/mob/living/target
@@ -61,7 +60,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		zombify.disabled = TRUE
-		owner.visible_message("<span class='alert'><B>[owner] attempts to gnaw into [target]!</B></span>", 1)
+		owner.visible_message(SPAN_ALERT("<B>[owner] attempts to gnaw into [target]!</B>"))
 
 	onEnd()
 		..()
@@ -71,11 +70,11 @@
 		if(isdead(target) || target.health <= -100) //If basically dead, instaconvert.
 			target.set_mutantrace(/datum/mutantrace/zombie/can_infect)
 			if (target.ghost?.mind && !target.mind.get_player()?.dnr) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
-				target.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
+				target.ghost.show_text(SPAN_ALERT("<B>You feel yourself being dragged out of the afterlife!</B>"))
 				target.ghost.mind.transfer_to(target)
 		logTheThing(LOG_COMBAT, ownerMob, "zombifies [constructTarget(target,"combat")].")
 		playsound(ownerMob, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, FALSE)
-		ownerMob.visible_message("<span class='alert'><B>[ownerMob ] successfully infected [target]!</B></span>", 1)
+		ownerMob.visible_message(SPAN_ALERT("<B>[ownerMob ] successfully infected [target]!</B>"))
 		ownerMob.health = ownerMob.max_health
 		target.TakeDamageAccountArmor("head", 30, 0, 0, DAMAGE_CRUSH)
 		target.changeStatus("stunned", 4 SECONDS)

@@ -41,9 +41,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(src.ability_holder)
-		image_group.add_mind_mob_overlay(src.owner, image, FALSE)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image(), FALSE)
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()

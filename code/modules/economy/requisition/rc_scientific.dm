@@ -51,7 +51,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 
 /datum/req_contract/scientific/clonejuice
-	payout = PAY_DOCTORATE*10
+	payout = PAY_DOCTORATE*5
 	weight = 80
 	var/list/namevary = list("Biotechnical Project","Gruesome Undertaking","Any Means Necessary","Protein Purchase","Special Slurry")
 	var/list/desc_wherestudy = list(
@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		"meat_slurry",
 		"bloodc"
 	)
-	feemod = PAY_DOCTORATE/10
+	feemod = PAY_DOCTORATE/30
 
 /datum/req_contract/scientific/spectrometry
 	//name = "Totally Will Not Result In A Resonance Cascade"
@@ -373,10 +373,10 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		if(length(src.rc_entries) == 3) src.item_rewarders += new /datum/rc_itemreward/plant_cartridge
 		src.payout += 8000 * length(src.rc_entries)
 
-		if(prob(70))
+		if(prob(30))
 			src.item_rewarders += new /datum/rc_itemreward/strange_seed
 		else
-			src.item_rewarders += new /datum/rc_itemreward/uv_lamp_frame
+			src.item_rewarders += new /datum/rc_itemreward/tumbleweed
 		..()
 
 /datum/rc_entry/seed/scientific
@@ -419,9 +419,21 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_itemreward/strange_seed
 	name = "strange seed"
 
+	New()
+		..()
+		src.count = rand(1,3)
+
 	build_reward()
-		var/seed = new /obj/item/seed/alien
-		return seed
+		var/list/seed_list = list()
+		for (var/i in 1 to src.count)
+			seed_list += new /obj/item/seed/alien
+		return seed_list
+
+/datum/rc_itemreward/tumbleweed
+	name = "aggressive plant specimen"
+
+	build_reward()
+		return new /obj/item/plant/tumbling_creeper
 
 /datum/rc_itemreward/uv_lamp_frame
 	name = "ultraviolet botanical lamp"
@@ -640,7 +652,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/item/laser_drill
 	name = "handheld laser drill"
-	typepath = /obj/item/mining_tool/drill
+	typepath = /obj/item/mining_tool/powered/drill
 
 /datum/rc_entry/stack/claretine
 	name = "claretine"
@@ -701,9 +713,9 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		count = rand(4,6)
 		switch(name)
 			if("paramedic suit")
-				rewardthing1 = /obj/item/clothing/suit/bio_suit/paramedic
+				rewardthing1 = /obj/item/clothing/suit/hazard/paramedic
 			if("heavy firesuit")
-				rewardthing1 = /obj/item/clothing/suit/fire/heavy
+				rewardthing1 = /obj/item/clothing/suit/hazard/fire/heavy
 			if("light space suit set")
 				rewardthing1 = /obj/item/clothing/suit/space/light
 				rewardthing2 = /obj/item/clothing/head/helmet/space/light
@@ -713,7 +725,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 				rewardthing2 = /obj/item/clothing/head/emerg
 			if("radiation suit set")
 				rewardthing1 = /obj/item/clothing/head/rad_hood
-				rewardthing2 = /obj/item/clothing/suit/rad
+				rewardthing2 = /obj/item/clothing/suit/hazard/rad
 
 	build_reward()
 		var/list/yielder = list()
@@ -737,7 +749,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_itemreward/hedron
 	name = "prototype multifunction tool"
 	build_reward()
-		var/theitem = new /obj/item/mining_tool/hedron_beam
+		var/theitem = new /obj/item/mining_tool/powered/hedron_beam
 		return theitem
 
 /datum/rc_itemreward/beam_devices

@@ -77,8 +77,8 @@
 
 	Entered(mob/living/carbon/M as mob )
 		..()
-		SPAWN(0.8)
-			if(ishuman(M))
+		if(ishuman(M))
+			SPAWN(0.8)
 				var/image/F = image('icons/misc/mars_outpost.dmi', icon_state = "footprint", dir = M.dir)
 				src.overlays += F
 				sleep(20 SECONDS)
@@ -340,14 +340,14 @@
 					src.target = C
 					src.oldtarget_name = C.name
 					if(startup)
-						src.visible_message("<span class='combat'>The <b>[src]</b> suddenly turns on!</span>")
+						src.visible_message(SPAN_COMBAT("The <b>[src]</b> suddenly turns on!"))
 						name = "malfunctioning robot"
 						src.speak("Lev##LLl 7 SEV-s-E infraAAAAAaction @leRT??!")
 						src.visible_message("The <b>[src]</b> points at [C.name]!")
 						playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 						startup = 0
 						wanderer = 1
-					src.visible_message("<span class='alert'>The <b>[src]</b> charges at [C:name]!</span>")
+					src.visible_message(SPAN_ALERT("The <b>[src]</b> charges at [C:name]!"))
 					src.speak(pick("DooN'T Wor##y I'M hERE!!!","LawwSS UpdAA&$.A.!!.!","CANIHELPYO&£%SIR","REsREACH!!!!!","NATAS&$%LIAHLLA ERROR CODE #736"))
 					playsound(src.loc, 'sound/machines/glitch3.ogg', 50, 1)
 					icon_state = "mars_bot"
@@ -357,13 +357,13 @@
 					continue
 
 	ChaseAttack(mob/M)
-		src.visible_message("<span class='combat'>The <B>[src]</B> launches itself towards [M]!</span>")
+		src.visible_message(SPAN_COMBAT("The <B>[src]</B> launches itself towards [M]!"))
 		if (prob(20)) M.changeStatus("stunned", 2 SECONDS)
 		random_brute_damage(M, rand(2,5),1)
 
 	CritterAttack(mob/M)
 		src.attacking = 1
-		src.visible_message("<span class='combat'>The <B>[src]</B> slams itself against [src.target]!</span>")
+		src.visible_message(SPAN_COMBAT("The <B>[src]</B> slams itself against [src.target]!"))
 		random_brute_damage(src.target, rand(7,17), 1)
 		SPAWN(1 SECOND)
 			src.attacking = 0
@@ -376,7 +376,7 @@
 
 	proc/speak(var/message)
 		for(var/mob/O in hearers(src, null))
-			boutput(O, "<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
+			boutput(O, SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\""))
 		return
 
 	attackby(obj/item/W, mob/living/user)
@@ -407,23 +407,23 @@
 	attackby(obj/item/P, mob/user)
 		if (istype(P, /obj/item/mars_roverpart))
 			if ((istype(P, /obj/item/mars_roverpart/wheel))&&(!wheel))
-				boutput(user, "<span class='notice'>You attach the wheel to the rover's chassis.</span>")
+				boutput(user, SPAN_NOTICE("You attach the wheel to the rover's chassis."))
 				overlays += image('icons/misc/worlds.dmi', "rover_puzzle_wheel")
 				wheel = 1
 			if ((istype(P, /obj/item/mars_roverpart/oxy))&&(!oxy))
-				boutput(user, "<span class='notice'>You connect the life support module to the rover.</span>")
+				boutput(user, SPAN_NOTICE("You connect the life support module to the rover."))
 				overlays += image('icons/misc/worlds.dmi', "rover_puzzle_oxy")
 				oxy = 1
 			if ((istype(P, /obj/item/mars_roverpart/glass))&&(!glass))
-				boutput(user, "<span class='notice'>You attach the glass to the rover.</span>")
+				boutput(user, SPAN_NOTICE("You attach the glass to the rover."))
 				overlays += image('icons/misc/worlds.dmi', "rover_puzzle_window")
 				glass = 1
 			if ((istype(P, /obj/item/mars_roverpart/battery))&&(!battery))
-				boutput(user, "<span class='notice'>You wire the battery to the rover.</span>")
+				boutput(user, SPAN_NOTICE("You wire the battery to the rover."))
 				overlays += image('icons/misc/worlds.dmi', "rover_puzzle_cell")
 				battery = 1
 			if ((istype(P, /obj/item/mars_roverpart/motherboard))&&(!motherboard))
-				boutput(user, "<span class='notice'>You wire the motherboard to the rover.</span>")
+				boutput(user, SPAN_NOTICE("You wire the motherboard to the rover."))
 				motherboard = 1
 			playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
 			qdel(P)
@@ -431,7 +431,7 @@
 				var/obj/vehicle/marsrover/R = new /obj/vehicle/marsrover(loc)
 				R.set_dir(WEST)
 				playsound(src.loc, 'sound/machines/rev_engine.ogg', 50, 1)
-				boutput(user, "<span class='notice'>The rover has been completed!</span>")
+				boutput(user, SPAN_NOTICE("The rover has been completed!"))
 				qdel(src)
 
 /obj/item/mars_roverpart
@@ -463,7 +463,7 @@
 		pickup(mob/user)
 			..()
 			if(!pickedup)
-				boutput(user, "<span class='alert'>Uh oh.</span>")
+				boutput(user, SPAN_ALERT("Uh oh."))
 				for(var/obj/critter/marsrobot/M in oview(4,src))
 					M.active = 1
 					M.seek_target()
@@ -499,13 +499,13 @@ TYPEINFO(/obj/vehicle/marsrover)
 	if(crashed)
 		if(crashed == 2)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-		boutput(rider, "<span class='combat'><B>You are flung over the [src]'s handlebars!</B></span>")
+		boutput(rider, SPAN_COMBAT("<B>You are flung over the [src]'s handlebars!</B>"))
 		rider.changeStatus("stunned", 8 SECONDS)
 		rider.changeStatus("weakened", 5 SECONDS)
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
-			C.show_message("<span class='combat'><B>[rider] is flung over the [src]'s handlebars!</B></span>", 1)
+			C.show_message(SPAN_COMBAT("<B>[rider] is flung over the [src]'s handlebars!</B>"), 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
 		rider.buckled = null
@@ -514,7 +514,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 		update()
 		return
 	if(selfdismount)
-		boutput(rider, "<span class='notice'>You dismount from the [src].</span>")
+		boutput(rider, SPAN_NOTICE("You dismount from the [src]."))
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
@@ -535,10 +535,10 @@ TYPEINFO(/obj/vehicle/marsrover)
 
 	if(target == user && !user.stat)	// if drop self, then climbed in
 		msg = "[user.name] climbs onto the [src]."
-		boutput(user, "<span class='notice'>You climb onto the [src].</span>")
+		boutput(user, SPAN_NOTICE("You climb onto the [src]."))
 	else if(target != user && !user.restrained())
 		msg = "[user.name] helps [target.name] onto the [src]!"
-		boutput(user, "<span class='notice'>You help [target.name] onto the [src]!</span>")
+		boutput(user, SPAN_NOTICE("You help [target.name] onto the [src]!"))
 	else
 		return
 
@@ -576,17 +576,17 @@ TYPEINFO(/obj/vehicle/marsrover)
 		if("harm", "disarm")
 			if(prob(60))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-				src.visible_message("<span class='combat'><B>[M] has shoved [rider] off of the [src]!</B></span>")
+				src.visible_message(SPAN_COMBAT("<B>[M] has shoved [rider] off of the [src]!</B>"))
 				rider.changeStatus("weakened", 2 SECONDS)
 				eject_rider()
 			else
 				playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
-				src.visible_message("<span class='combat'><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
+				src.visible_message(SPAN_COMBAT("<B>[M] has attempted to shove [rider] off of the [src]!</B>"))
 	return
 
 /obj/vehicle/marsrover/disposing()
 	if(rider)
-		boutput(rider, "<span class='combat'><B>Your rover is destroyed!</B></span>")
+		boutput(rider, SPAN_COMBAT("<B>Your rover is destroyed!</B>"))
 		eject_rider()
 	..()
 	return
@@ -682,7 +682,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 				processedMessage += pick("%","##A","-","- - -","ERROR")
 
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class='game say'><span class='name'>[src]</span> blares, \"<B>[processedMessage]</B>\"",2)
+			O.show_message(SPAN_SAY("[SPAN_NAME("[src]")] blares, \"<B>[processedMessage]</B>\""), 2)
 
 		return
 
@@ -705,7 +705,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 
 					src.target = C
 					src.oldtarget_name = C.name
-					src.visible_message("<span class='combat'><b>[src]</b> rapidly fires at [src.target]!</span>")
+					src.visible_message(SPAN_COMBAT("<b>[src]</b> rapidly fires at [src.target]!"))
 
 
 					playsound(src.loc, 'sound/weapons/ak47shot.ogg', 50, 1)

@@ -87,13 +87,13 @@
 			return
 
 		if(check_target_immunity(target))
-			user.show_text("<span class='alert'>You can't seem to inject [target]!</span>")
+			user.show_text(SPAN_ALERT("You can't seem to inject [target]!"))
 			return
 
 		var/amt_prop = min(inj_amount, botreagents[currentreagent])
 
-		user.visible_message("<span class='notice'><B>[user] injects [target] with [amt_prop] units of [propername].</B></span>",\
-		"<span class='notice'>You inject [amt_prop] units of [propername]. [src] now contains [botreagents[currentreagent] - amt_prop] units.</span>")
+		user.visible_message(SPAN_NOTICE("<B>[user] injects [target] with [amt_prop] units of [propername].</B>"),\
+		SPAN_NOTICE("You inject [amt_prop] units of [propername]. [src] now contains [botreagents[currentreagent] - amt_prop] units."))
 		logTheThing(LOG_COMBAT, user, "uses a cybernetic hypospray to inject [constructTarget(target,"combat")] with [amt_prop] units of [propername] at [log_loc(user)].")
 
 		target.reagents.add_reagent(currentreagent, amt_prop)

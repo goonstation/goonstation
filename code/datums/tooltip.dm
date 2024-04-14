@@ -66,10 +66,10 @@ Notes:
 
 #ifdef TOOLTIP_DEBUG
 /proc/tooltipDebugOut(who, msg)
-	out(who, "<span style='font-size: 0.85em'>\[[time2text(world.realtime, "hh:mm:ss")]\] <strong>(TOOLTIP DEBUG | DM)</strong> [msg]</span>")
+	boutput(who, "<span style='font-size: 0.85em'>\[[time2text(world.realtime, "hh:mm:ss")]\] <strong>(TOOLTIP DEBUG | DM)</strong> [msg]</span>")
 #endif
 
-var/global/list/atomTooltips = new()
+var/global/list/atomTooltips = list()
 
 /datum/tooltipHolder
 	//Configurable vars
@@ -91,15 +91,15 @@ var/global/list/atomTooltips = new()
 		//For local-testing fallback
 		if (!cdn)
 			var/list/tooltipResources = list(
-				"browserassets/js/jquery.min.js",
-				"browserassets/js/jquery.waitForImages.js",
+				"browserassets/vendor/js/jquery.min.js",
+				"browserassets/vendor/js/jquery.waitForImages.js",
 				"browserassets/js/errorHandler.js",
 				"browserassets/js/animatePopup.js",
 				"browserassets/js/tooltip.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/css/fonts/fontawesome-webfont.woff",
-				"browserassets/css/font-awesome.css",
+				"browserassets/vendor/css/font-awesome.css",
 				"browserassets/css/tooltip.css"
 			)
 			src.owner.loadResourcesFromList(tooltipResources)
@@ -255,7 +255,7 @@ var/global/list/atomTooltips = new()
 	Topic(href, href_list[])
 		switch (href_list["action"])
 			if ("log")
-				out(src.owner, "<span style='font-size: 0.85em'>\[[time2text(world.realtime, "hh:mm:ss")]\] <strong>(TOOLTIP DEBUG | JS)</strong> [href_list["msg"]]</span>")
+				boutput(src.owner, "<span style='font-size: 0.85em'>\[[time2text(world.realtime, "hh:mm:ss")]\] <strong>(TOOLTIP DEBUG | JS)</strong> [href_list["msg"]]</span>")
 			if ("show")
 				src.show2(src.savedOptions)
 			if ("hide")
@@ -454,6 +454,7 @@ var/global/list/atomTooltips = new()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/holderCount = 0
 	var/tooltipCount = 0
@@ -470,7 +471,7 @@ var/global/list/atomTooltips = new()
 		<strong>atomTooltips:</strong> [json_encode(atomTooltips)]<br />
 	----------"}
 
-	out(src, msg)
+	boutput(src, msg)
 
 
 //Mimics the params list given in Click() or MouseEntered()
@@ -563,7 +564,7 @@ var/global/list/atomTooltips = new()
 	del(src.tooltipHolder)
 	src.tooltipHolder = new /datum/tooltipHolder(src)
 
-	out(src, "Reloaded tooltips")
+	boutput(src, "Reloaded tooltips")
 #endif
 
 /* experiments with trigger tracking, probably horribly performance intensive

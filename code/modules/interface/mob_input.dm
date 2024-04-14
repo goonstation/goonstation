@@ -48,7 +48,7 @@
 				return 100
 			actions.interrupt(src, INTERRUPT_ACTION)
 			SPAWN(0)
-				S.handleCast(target)
+				S.handleCast(target, params)
 				if(S)
 					if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
 						if(src)
@@ -124,12 +124,12 @@
 		if (.)
 			additional_help_messages = list(.)	+ additional_help_messages
 		. = jointext(additional_help_messages, "\n")
-	. = replacetext(trim(.), "\n", "<br>")
+	. = replacetext(trimtext(.), "\n", "<br>")
 
 /mob/proc/help_examine(atom/target)
 	var/help = get_final_help_examine(target)
 	if (help)
-		boutput(src, "<span class='helpmsg'>[help]</span>")
+		boutput(src, SPAN_HELPMSG("[help]"))
 		return TRUE
 	return FALSE
 
@@ -205,11 +205,11 @@
 /mob/proc/apply_custom_keybinds(client/C)
 	PROTECTED_PROC(TRUE)
 
-	if(!C || !C.cloud_available())
+	if(!C)
 		//logTheThing(LOG_DEBUG, null, "<B>ZeWaka/Keybinds:</B> Attempted to fetch custom keybinds for [C.ckey] but failed.")
 		return
 
-	var/fetched_keylist = C.cloud_get("custom_keybind_data")
+	var/fetched_keylist = C.player.cloudSaves.getData("custom_keybind_data")
 	if (!isnull(fetched_keylist) && fetched_keylist != "") //The client has a list of custom keybinds.
 		var/datum/keymap/new_map = new /datum/keymap(json_decode(fetched_keylist))
 		C.keymap.overwrite_by_action(new_map)
@@ -225,7 +225,6 @@
 		src.client.applied_keybind_styles = list() //Reset currently applied styles
 		build_keybind_styles(src.client)
 		apply_custom_keybinds(src.client)
-		if (src.use_movement_controller)
-			var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
-			if (controller)
-				controller.modify_keymap(src.client)
+		var/datum/movement_controller/controller = src.override_movement_controller
+		if (controller)
+			controller.modify_keymap(src.client)

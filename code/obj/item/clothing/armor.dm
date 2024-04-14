@@ -26,7 +26,6 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	name = "armor vest"
 	desc = "An armored vest that protects against some damage. Contains carbon fibres."
 	icon_state = "armorvest"
-	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
@@ -71,7 +70,6 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	name = "light armor vest"
 	desc = "A cheap armored vest that gives a little bit of protection."
 	icon_state = "armorvest-old"
-	uses_multiple_icon_states = 0
 	item_state = "armorvest-old"
 
 	setupProperties()
@@ -90,7 +88,6 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	name = "suicide bomb vest"
 	desc = "A makeshift mechanical vest set to trigger a payload when the user dies."
 	icon_state = "bombvest0"
-	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
 	body_parts_covered = TORSO
@@ -116,9 +113,9 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	examine()
 		. = ..()
 		if (src.payload)
-			. += "<span class='alert'>Looks like the payload is a [src.payload].</span>"
+			. += SPAN_ALERT("Looks like the payload is a [src.payload].")
 		else
-			. += "<span class='alert'>There doesn't appear to be a payload attached.</span>"
+			. += SPAN_ALERT("There doesn't appear to be a payload attached.")
 
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
@@ -240,13 +237,13 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 			return
 		if (!isdead(wearer) || (wearer.suiciding && prob(60))) // Don't abuse suiciding.
-			wearer.visible_message("<span class='alert'><b>[wearer]'s suicide bomb vest clicks softly, but nothing happens.</b></span>")
+			wearer.visible_message(SPAN_ALERT("<b>[wearer]'s suicide bomb vest clicks softly, but nothing happens.</b>"))
 			return
 
 		if (!src.payload)
 			src.payload = "*unknown or null*"
 
-		wearer.visible_message("<span class='alert'><b>[wearer]'s suicide bomb vest clicks loudly!</b></span>")
+		wearer.visible_message(SPAN_ALERT("<b>[wearer]'s suicide bomb vest clicks loudly!</b>"))
 		message_admins("[key_name(wearer)]'s suicide bomb vest triggers (Payload: [src.payload]) at [log_loc(wearer)].")
 		logTheThing(LOG_BOMBING, wearer, "'s suicide bomb vest triggers (<b>Payload:</b> [src.payload])[src.payload == "beaker" ? " [log_reagents(src.beaker)]" : ""] at [log_loc(wearer)].")
 
@@ -491,7 +488,6 @@ TYPEINFO(/obj/item/clothing/suit/armor/NT_alt)
 	icon_state = "hos-cape"
 	item_state = "hos-cape"
 	hides_from_examine = 0
-	wear_layer = MOB_GLASSES_LAYER2
 	c_flags = ONBACK
 
 	setupProperties()
@@ -500,3 +496,17 @@ TYPEINFO(/obj/item/clothing/suit/armor/NT_alt)
 		setProperty("rangedprot", 0.7)
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 35)
+
+/obj/item/clothing/suit/armor/gang
+	name = "light armor vest"
+	desc = "A minimalist plate carrier strapped to your torso. Provides as much protection as you can get without cramping your style."
+	icon = 'icons/obj/items/gang.dmi'
+	icon_state = "lightvest"
+	item_state = "lightvest"
+	body_parts_covered = TORSO
+	hides_from_examine = 0
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 5)
+		setProperty("rangedprot", 0.5)

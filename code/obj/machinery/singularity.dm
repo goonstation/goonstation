@@ -61,6 +61,9 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	density = 1
 	var/bhole = 0 // it is time. we can trust people to use the singularity For Good - cirr
 
+	HELP_MESSAGE_OVERRIDE({"Automatically creates a singularity when all surrounding containment fields are active.\
+							Can be anchored/unanchored with a <b>wrench</b>"})
+
 /obj/machinery/the_singularitygen/process()
 	var/max_radius = singularity_containment_check(get_turf(src))
 	if(isnull(max_radius))
@@ -71,7 +74,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 
 	var/turf/T = get_turf(src)
 	if(isrestrictedz(T?.z))
-		src.visible_message("<span class='notice'>[src] refuses to activate in this place. Odd.</span>")
+		src.visible_message(SPAN_NOTICE("[src] refuses to activate in this place. Odd."))
 		qdel(src)
 
 	playsound(T, 'sound/machines/singulo_start.ogg', 90, FALSE, 3, flags=SOUND_IGNORE_SPACE)
@@ -113,6 +116,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	density = 1
 	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	deconstruct_flags = DECON_NONE
+	flags = FPRINT // no fluid submerge images and we also don't need tgui interactability
 
 
 	pixel_x = -16
@@ -135,6 +139,8 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	var/spaget_count = 0
 	var/katamari_mode = FALSE //! If true the sucked-in objects will get stuck to the singularity
 	var/num_absorbed = 0 //! Number of objects absorbed by the singularity
+	var/num_absorbed_players = 0 //! number of players absorbed
+	var/gib_mobs = 0 //! if it should call gib on mobs
 	var/list/obj/succ_cache
 
 
@@ -182,7 +188,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/process()
 	var/turf/T = get_turf(src)
 	if(isrestrictedz(T?.z) && !src.restricted_z_allowed)
-		src.visible_message("<span class='notice'>Something about this place makes [src] wither and implode.</span>")
+		src.visible_message(SPAN_NOTICE("Something about this place makes [src] wither and implode."))
 		qdel(src)
 	eat()
 
@@ -277,7 +283,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
 	if (severity == 1 && prob(power * 5)) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
+		var/turf/T = get_turf(src)
 		qdel(src)
+		new /obj/bhole(T,rand(100,300))
 
 /obj/machinery/the_singularity/Bumped(atom/A)
 	if(istype(A, /obj/dummy))
@@ -355,8 +363,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			//Special halloween-time Unkillable gibspam protection!
 			if (H.unkillable)
 				H.unkillable = 0
+			H.dump_contents_chance = 100 // zamu being funny here for the crunchy gib mode
 			if (H.mind && H.mind.assigned_role)
 				logTheThing(LOG_COMBAT, H, "is spaghettified by \the [src] at [log_loc(src)].")
+				src.num_absorbed_players++
 				switch (H.mind.assigned_role)
 					if ("Clown")
 						// Hilarious.
@@ -380,8 +390,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					else
 						gain = 50
 
-		L.ghostize()
-		qdel(L)
+		if (gib_mobs)
+			// this also ghostize/qdels.
+			L.gib()
+		else
+			L.ghostize()
+			qdel(L)
 
 	else if (isobj(A))
 		//if (istype(A, /obj/item/graviton_grenade))
@@ -392,7 +406,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			gain += A.material.getProperty("n_radioactive") * 6 * A.material_amt
 			if(isitem(A))
 				var/obj/item/I = A
-				gain *= I.amount
+				gain *= min(I.amount, INFINITY)
 
 		if (A.reagents)
 			gain += min(A.reagents.total_volume/4, 50)
@@ -438,7 +452,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/C = I
 		if (!C.on)
-			C.light(user, "<span class='alert'><b>[user]</b> lights [C] on [src]. Holy fucking shit!</span>")
+			C.light(user, SPAN_ALERT("<b>[user]</b> lights [C] on [src]. Holy fucking shit!"))
 		else
 			return ..()
 	else
@@ -493,8 +507,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				M.show_text("You look directly into [src.name], good thing your eyes are protected!", "green")
 				return
 		M.changeStatus("stunned", 7 SECONDS)
-		M.visible_message("<span class='alert'><B>[M] stares blankly at [src]!</B></span>",\
-		"<B>You look directly into [src]!<br><span class='alert'>You feel weak!</span></B>")
+		M.visible_message(SPAN_ALERT("<B>[M] stares blankly at [src]!</B>"),\
+		"<B>You look directly into [src]!<br>[SPAN_ALERT("You feel weak!")]</B>")
 
 /obj/machinery/the_singularity/proc/BHolerip()
 	var/turf/sing_center = src.get_center()
@@ -527,8 +541,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 						var/datum/material/M = getMaterial("steel")
 						S.setMaterial(M)
 					W.ReplaceWithFloor()
-			else
-				T.ReplaceWithFloor()
 	return
 #endif
 
@@ -584,6 +596,10 @@ TYPEINFO(/obj/machinery/field_generator)
 	var/obj/machinery/power/data_terminal/link = null
 	var/active_dirs = 0
 	var/shortestlink = 0
+
+	HELP_MESSAGE_OVERRIDE({"In order to be activated, the Field Generator has to be <b>wrenched</b> and <b>welded</b> down first. Once \
+							secured, a valid ID has to be swiped to unlock the controls. On activation, the generator will connect to \
+							other ones within a cardinal range of 13 tiles."})
 
 	proc/set_active(var/act)
 		if (src.active != act)
@@ -679,7 +695,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		src.power -= 1 * mult
 		if(Varpower == 0)
 			if(src.power <= 0)
-				src.visible_message("<span class='alert'>The [src.name] shuts down due to lack of power!</span>")
+				src.visible_message(SPAN_ALERT("The [src.name] shuts down due to lack of power!"))
 				icon_state = "Field_Gen"
 				src.set_active(0)
 				src.cleanup(NORTH)
@@ -788,7 +804,7 @@ TYPEINFO(/obj/machinery/field_generator)
 				return
 			var/positions = src.get_welding_positions()
 			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action, \
-						list(user), "[user] finishes using their [W.name] on the field generator.", positions[1], positions[2]),user)
+						list(user), "[user] finishes using [his_or_her(user)] [W.name] on the field generator.", positions[1], positions[2]),user)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the field generator to the floor.")
 			return
@@ -797,7 +813,7 @@ TYPEINFO(/obj/machinery/field_generator)
 			return
 
 	if(ispulsingtool(W))
-		boutput(user, "<span class='alert'>The [src.name] is at [src.power]/100 power.</span>")
+		boutput(user, SPAN_ALERT("The [src.name] is at [src.power]/100 power."))
 
 	var/obj/item/card/id/id_card = get_id_card(W)
 	if (istype(id_card))
@@ -805,14 +821,14 @@ TYPEINFO(/obj/machinery/field_generator)
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 		else
-			boutput(user, "<span class='alert'>Access denied.</span>")
+			boutput(user, SPAN_ALERT("Access denied."))
 
 	else
 		src.add_fingerprint(user)
-		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
+		boutput(user, SPAN_ALERT("You hit the [src.name] with your [W.name]!"))
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+			M.show_message(SPAN_ALERT("The [src.name] has been hit with the [W.name] by [user.name]!"))
 
 /obj/machinery/field_generator/proc/get_welding_positions()
 	var/start
@@ -1014,14 +1030,14 @@ TYPEINFO(/obj/machinery/field_generator)
 				healing = shock_damage / 3
 			user.HealDamage("All", shock_damage, shock_damage)
 			user.take_toxin_damage(0 - healing)
-			boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
+			boutput(user, SPAN_NOTICE("You absorb the electrical shock, healing your body!"))
 			return
 		else if (user.bioHolder.HasEffect("resist_electric"))
-			boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
+			boutput(user, SPAN_NOTICE("You feel electricity course through you harmlessly!"))
 			return
 
 	user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, shock_damage)
-	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
+	boutput(user, SPAN_ALERT("<B>You feel a powerful shock course through your body sending you flying!</B>"))
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))
 		var/mob/living/L = user
@@ -1046,7 +1062,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		user.throw_at(target, 200, 4)
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
+			M.show_message(SPAN_ALERT("[user.name] was shocked by the [src.name]!"), 3, SPAN_ALERT("You hear a heavy electrical crack"), 2)
 
 	src.gen_primary.power -= 3
 	src.gen_secondary.power -= 3
@@ -1092,6 +1108,10 @@ TYPEINFO(/obj/machinery/emitter)
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/heavy
+
+	HELP_MESSAGE_OVERRIDE({"The Emitter shoots laser bolts at Containment Field Generators to power them. Has to be \
+							<b>wrenched</b> and <b>welded</b> down before being useable. The control systems must be unlocked \
+							with a valid ID in order to activate the Emitter."})
 
 /obj/machinery/emitter/New()
 	..()
@@ -1192,6 +1212,9 @@ TYPEINFO(/obj/machinery/emitter)
 
 		if (!is_cardinal(src.dir)) // Not cardinal (not power of 2)
 			src.dir &= 12 // Cardinalize
+
+		src.visible_message(SPAN_ALERT("<b>[src]</b> fires a bolt of energy!"))
+
 		shoot_projectile_DIR(src, current_projectile, dir)
 		use_power(current_projectile.power)
 
@@ -1234,7 +1257,7 @@ TYPEINFO(/obj/machinery/emitter)
 				return
 			var/positions = src.get_welding_positions()
 			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action, \
-						list(user), "[user] finishes using their [W.name] on the emitter.", positions[1], positions[2]),user)
+						list(user), "[user] finishes using [his_or_her(user)] [W.name] on the emitter.", positions[1], positions[2]),user)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the emitter to the floor.")
 			return
@@ -1243,21 +1266,21 @@ TYPEINFO(/obj/machinery/emitter)
 			return
 
 	var/obj/item/card/id/id_card = get_id_card(W)
-	if (istype(id_card))
+	if (istype(id_card) && length(src.req_access))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			if (!src.locked)
 				logTheThing(LOG_STATION, user, "unlocked emitter at at [log_loc(src)].")
 		else
-			boutput(user, "<span class='alert'>Access denied.</span>")
+			boutput(user, SPAN_ALERT("Access denied."))
 
 	else
 		src.add_fingerprint(user)
-		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
+		boutput(user, SPAN_ALERT("You hit the [src.name] with your [W.name]!"))
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+			M.show_message(SPAN_ALERT("The [src.name] has been hit with the [W.name] by [user.name]!"))
 
 /obj/machinery/emitter/proc/get_welding_positions()
 	var/start
@@ -1349,6 +1372,22 @@ TYPEINFO(/obj/machinery/emitter)
 
 	return
 
+/obj/machinery/emitter/assault
+	name = "prototype assault emitter"
+	desc = "Shoots a VERY high power laser when active. The ID lock appears to have been messily smashed off."
+	current_projectile = new/datum/projectile/laser/asslaser
+	locked = FALSE
+	fire_delay = 30
+	req_access = list()
+	HELP_MESSAGE_OVERRIDE({"The Emitter shoots assault lasers at <s>Containment Field Generators</s> just about anything! Has to be \
+							<b>wrenched</b> and <b>welded</b> down before being useable."})
+
+	attack_ai(mob/user)
+		return
+
+	receive_signal(datum/signal/signal)
+		return
+
 /////////////////////////////////// Collector array /////////////////////////////////
 
 /obj/item/electronics/frame/collector_array
@@ -1374,6 +1413,8 @@ TYPEINFO(/obj/machinery/power/collector_array)
 	var/obj/item/tank/plasma/P = null
 	var/obj/machinery/power/collector_control/CU = null
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
+	HELP_MESSAGE_OVERRIDE({"Must be cardinally adjacent to a Radiation Collector Controller to function. \
+							It can be bolted or unbolted to the floor with a <b>wrench</b>."})
 
 /obj/machinery/power/collector_array/New()
 	..()
@@ -1434,7 +1475,7 @@ TYPEINFO(/obj/machinery/power/collector_array)
 /obj/machinery/power/collector_array/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		if(src.active)
-			boutput("<span class='alert'>The [src.name] must be turned off first!</span>")
+			boutput(user, SPAN_ALERT("The [src.name] must be turned off first!"))
 		else
 			if (!src.anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -1447,7 +1488,7 @@ TYPEINFO(/obj/machinery/power/collector_array)
 			logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
 	else if(istype(W, /obj/item/tank/plasma))
 		if(src.P)
-			boutput(user, "<span class='alert'>There appears to already be a plasma tank loaded!</span>")
+			boutput(user, SPAN_ALERT("There appears to already be a plasma tank loaded!"))
 			return
 		src.P = W
 		W.set_loc(src)
@@ -1465,10 +1506,10 @@ TYPEINFO(/obj/machinery/power/collector_array)
 		UpdateIcon()
 	else
 		src.add_fingerprint(user)
-		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
+		boutput(user, SPAN_ALERT("You hit the [src.name] with your [W.name]!"))
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+			M.show_message(SPAN_ALERT("The [src.name] has been hit with the [W.name] by [user.name]!"))
 
 ////////////////////////// Collector array controller ////////////////////////////
 
@@ -1507,6 +1548,10 @@ TYPEINFO(/obj/machinery/power/collector_control)
 	var/obj/machinery/power/collector_array/CAW = null
 	var/list/obj/machinery/the_singularity/S = null
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
+
+	HELP_MESSAGE_OVERRIDE({"Transfers the energy from cardinally adjacent Radiation Collector Arrays \
+							to the wire below it as usable electric power. \
+							It can be bolted or unbolted to the floor with a <b>wrench</b>."})
 
 /obj/machinery/power/collector_control/New()
 	..()
@@ -1667,7 +1712,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 /obj/machinery/power/collector_control/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		if(src.active)
-			boutput("<span class='alert'>The [src.name] must be turned off first!</span>")
+			boutput(user, SPAN_ALERT("The [src.name] must be turned off first!"))
 		else
 			if (!src.anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -1679,14 +1724,14 @@ TYPEINFO(/obj/machinery/power/collector_control)
 				src.anchored = UNANCHORED
 			logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
 	else if(istype(W, /obj/item/device/analyzer/atmospheric))
-		boutput(user, "<span class='notice'>The analyzer detects that [lastpower]W are being produced.</span>")
+		boutput(user, SPAN_NOTICE("The analyzer detects that [lastpower]W are being produced."))
 
 	else
 		src.add_fingerprint(user)
-		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
+		boutput(user, SPAN_ALERT("You hit the [src.name] with your [W.name]!"))
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+			M.show_message(SPAN_ALERT("The [src.name] has been hit with the [W.name] by [user.name]!"))
 
 ///////////////////////////////////////// Singularity bomb /////////////////////////////
 
@@ -1694,6 +1739,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 TYPEINFO(/obj/machinery/the_singularitybomb)
 	mats = 14
 
+ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 /obj/machinery/the_singularitybomb
 	name = "\improper Singularity Bomb"
 	desc = "A WMD that creates a singularity."
@@ -1775,10 +1821,10 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 			return
 
 	else
-		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
+		boutput(user, SPAN_ALERT("You hit the [src.name] with your [W.name]!"))
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+			M.show_message(SPAN_ALERT("The [src.name] has been hit with the [W.name] by [user.name]!"))
 
 /obj/machinery/the_singularitybomb/Topic(href, href_list)
 	..()
@@ -1791,36 +1837,21 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 				switch(href_list["spec"])
 					if("prime")
 						if(!timing)
-							src.timing = 1
-							processing_items |= src
-							src.icon_state = "portgen2"
-
-							// And here (Convair880).
-							logTheThing(LOG_BOMBING, usr, "activated [src.name] ([src.time] seconds) at [log_loc(src)].")
-							message_admins("[key_name(usr)] activated [src.name] ([src.time] seconds) at [log_loc(src)].")
-							if (ismob(usr))
-								src.activator = usr
-
+							src.prime()
 						else
-							boutput(usr, "<span class='alert'>\The [src] is already primed!</span>")
+							boutput(usr, SPAN_ALERT("\The [src] is already primed!"))
 					if("abort")
 						if(timing)
-							src.timing = 0
-							src.icon_state = "portgen1"
-
-							// And here (Convair880).
-							logTheThing(LOG_BOMBING, usr, "deactivated [src.name][src.activator ? " (primed by [constructTarget(src.activator,"bombing")]" : ""] at [log_loc(src)].")
-							message_admins("[key_name(usr)] deactivated [src.name][src.activator ? " (primed by [key_name(src.activator)])" : ""] at [log_loc(src)].")
-
+							src.abort()
 						else
-							boutput(usr, "<span class='alert'>\The [src] is already deactivated!</span>")
+							boutput(usr, SPAN_ALERT("\The [src] is already deactivated!"))
 			if("timer")
 				if(!timing)
 					var/tp = text2num_safe(href_list["tp"])
 					src.time += tp
 					src.time = clamp(round(src.time), 30, 600)
 				else
-					boutput(usr, "<span class='alert'>You can't change the time while the timer is engaged!</span>")
+					boutput(usr, SPAN_ALERT("You can't change the time while the timer is engaged!"))
 		/*
 		if (href_list["time"])
 			src.timing = text2num_safe(href_list["time"])
@@ -1849,6 +1880,23 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 		usr.Browse(null, "window=timer")
 		return
 	return
+
+/obj/machinery/the_singularitybomb/proc/prime()
+	src.timing = 1
+	processing_items |= src
+	src.icon_state = "portgen2"
+	logTheThing(LOG_BOMBING, usr, "activated [src.name] ([src.time] seconds) at [log_loc(src)].")
+	message_admins("[key_name(usr)] activated [src.name] ([src.time] seconds) at [log_loc(src)].")
+	if (ismob(usr))
+		src.activator = usr
+
+/obj/machinery/the_singularitybomb/proc/abort()
+	src.timing = 0
+	src.icon_state = "portgen1"
+
+	// And here (Convair880).
+	logTheThing(LOG_BOMBING, usr, "deactivated [src.name][src.activator ? " (primed by [constructTarget(src.activator,"bombing")]" : ""] at [log_loc(src)].")
+	message_admins("[key_name(usr)] deactivated [src.name][src.activator ? " (primed by [key_name(src.activator)])" : ""] at [log_loc(src)].")
 
 /obj/machinery/the_singularitybomb/attack_ai(mob/user as mob)
 	return

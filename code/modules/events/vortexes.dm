@@ -37,6 +37,8 @@
 
 		SPAWN(60 SECONDS)
 			for(var/i in 1 to length(random_floor_turfs))
+				if (prob(40))
+					continue
 				vortexpick = pick(random_floor_turfs)
 				var/obj/vortex/V = new /obj/vortex
 				V.set_loc(vortexpick)
@@ -46,5 +48,5 @@
 					Artifact_Spawn(vortexpick)
 				sleep(rand(1, 15))
 
-		message_admins("<span class='internal'>Spawning some vortexes. Source: [source ? "[source]" : "random"]</span>")
+		message_admins(SPAN_INTERNAL("Spawning some vortexes. Source: [source ? "[source]" : "random"]"))
 		logTheThing(LOG_ADMIN, null, "Spawning some vortexes. Source: [source ? "[source]" : "random"]")

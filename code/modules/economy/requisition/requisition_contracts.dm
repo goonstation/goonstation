@@ -21,17 +21,18 @@
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Requisition Test"
 	set desc = "Generates a specified requisition path and pins it to market."
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/contract_path = input("Specify type path", "Requisition", null, null)
 	if (!contract_path) return
 	if (istext(contract_path))
 		contract_path = text2path(contract_path)
 	if (!ispath(contract_path))
-		boutput(usr, "<span class='alert'>Requisition test failed - no path specified.</span>")
+		boutput(usr, SPAN_ALERT("Requisition test failed - no path specified."))
 		return
 	var/datum/req_contract/new_contract = new contract_path
 	if(!istype(new_contract))
-		boutput(usr, "<span class='alert'>Requisition test failed - invalid type path.</span>")
+		boutput(usr, SPAN_ALERT("Requisition test failed - invalid type path."))
 		return
 	shippingmarket.req_contracts += new_contract
 	new_contract.pinned = TRUE

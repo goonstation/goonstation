@@ -52,7 +52,7 @@
 
 	burn_point = 2500
 	burn_output = 2500
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 10
 
 	New(var/loc, var/obj/object)
@@ -97,19 +97,19 @@
 
 		else if (ispryingtool(W))
 			if(!src.cell)
-				boutput(user, "<span class='alert'>There is no energy cell inserted!</span>")
+				boutput(user, SPAN_ALERT("There is no energy cell inserted!"))
 				return
 
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.cell.set_loc(get_turf(src))
 			src.cell = null
-			user.visible_message("<span class='alert'>[user] removes the power cell from [src]!.</span>","<span class='alert'>You remove the power cell from [src]!</span>")
+			user.visible_message(SPAN_ALERT("[user] removes the power cell from [src]!."),SPAN_ALERT("You remove the power cell from [src]!"))
 			src.power_change()
 			return
 
 		else if (istype(W, /obj/item/cell))
 			if(src.cell)
-				boutput(user, "<span class='alert'>There is already an energy cell inserted!</span>")
+				boutput(user, SPAN_ALERT("There is already an energy cell inserted!"))
 
 			else
 				user.drop_item()
@@ -362,7 +362,7 @@
 								I.set_loc(src)
 							src.modify = I
 					if (I && !src.modify)
-						boutput(usr, "<span class='notice'>[I] won't fit in the modify slot.</span>")
+						boutput(usr, SPAN_NOTICE("[I] won't fit in the modify slot."))
 				src.authenticated = 0
 				src.scan_access = null
 
@@ -385,7 +385,7 @@
 							I.set_loc(src)
 							src.modify = I
 					else
-						boutput(usr, "<span class='notice'>[I] won't fit in the authentication slot.</span>")
+						boutput(usr, SPAN_NOTICE("[I] won't fit in the authentication slot."))
 				src.authenticated = 0
 				src.scan_access = null
 
@@ -400,7 +400,7 @@
 						else
 							src.modify.access += access_type
 						src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
-						logTheThing(LOG_STATION, usr, "[access_allowed ? "adds" : "removes"] [get_access_desc(access_type)] access to the ID card (<b>[src.modify.registered]</b>).")
+						logTheThing(LOG_STATION, usr, "[access_allowed ? "adds" : "removes"] [get_access_desc(access_type)] access to the ID card (<b>[src.modify.registered]</b>) using [src.scan.registered]'s ID.")
 
 			if ("pronouns")
 				if (src.authenticated && src.modify)
@@ -455,9 +455,9 @@
 						logTheThing(LOG_STATION, usr, "changes the registered name on the ID card from <b>[src.modify.registered]</b> to <b>[t1]</b>.")
 						src.modify.registered = t1
 
-					src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
+						src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
 
-					playsound(src.loc, "keyboard", 50, 1, -15)
+						playsound(src.loc, "keyboard", 50, 1, -15)
 
 			if ("pin")
 				if (src.authenticated)
@@ -562,16 +562,16 @@
 		modify_only = 1
 
 	if (modify_only && src.eject && !src.scan && src.modify)
-		boutput(user, "<span class='notice'>[src.eject] will not work in the authentication card slot.</span>")
+		boutput(user, SPAN_NOTICE("[src.eject] will not work in the authentication card slot."))
 		return
 	else if (istype(I, /obj/item/card/id))
 		if (!src.scan && !modify_only)
-			boutput(user, "<span class='notice'>You insert [I] into the authentication card slot.</span>")
+			boutput(user, SPAN_NOTICE("You insert [I] into the authentication card slot."))
 			user.drop_item()
 			I.set_loc(src)
 			src.scan = I
 		else if (!src.modify)
-			boutput(user, "<span class='notice'>You insert [src.eject ? src.eject : I] into the target card slot.</span>")
+			boutput(user, SPAN_NOTICE("You insert [src.eject ? src.eject : I] into the target card slot."))
 			user.drop_item()
 			if (src.eject)
 				src.eject.set_loc(src)

@@ -18,7 +18,7 @@ Custom Books
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 1100
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 4
 	//
 
@@ -37,7 +37,7 @@ Custom Books
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] attempts to cut [him_or_her(user)]self with the book. What an idiot!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] attempts to cut [him_or_her(user)]self with the book. What an idiot!</b>"))
 		user.suiciding = 0
 		return 1
 
@@ -272,7 +272,7 @@ Custom Books
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
 				var/mob/living/carbon/human/user = usr
-				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
+				user.visible_message(SPAN_ALERT("<B>[user] fumbles the catch and is clonked on the head!</B>"))
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				user.changeStatus("stunned", 2 SECONDS)
 				user.changeStatus("weakened", 2 SECONDS)
@@ -408,7 +408,7 @@ Custom Books
 	attackby(obj/item/P, mob/user)
 		..()
 		if (istype(P, /obj/item/magnifying_glass))
-			boutput(user, "<span class='notice'>You pore over the book with the magnifying glass.</span>")
+			boutput(user, SPAN_NOTICE("You pore over the book with the magnifying glass."))
 			sleep(2 SECONDS)
 			boutput(user, "There's a note scribbled on the inside cover. It says, <i>To Milo, love Roger.</i>")
 
@@ -451,8 +451,8 @@ Custom Books
 	file_path = "strings/books/syndies_guide.txt"
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)

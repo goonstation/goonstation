@@ -35,9 +35,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	/// What icon state is our mob's head?
 	var/head_icon_state = "head"
 
-	/// What DMI holds the mob's hair sprites
-	var/customization_icon = 'icons/mob/human_hair.dmi'
-
 	/// The color that gets used for determining your colors
 	var/customization_first_color = "#101010"
 	/// The color that was set by the player's preferences
@@ -232,8 +229,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/CopyOtherHeadAppearance(var/datum/appearanceHolder/toCopy)
 		head_icon = toCopy.head_icon
 		head_icon_state = toCopy.head_icon_state
-
-		customization_icon = toCopy.customization_icon
 
 		customization_first_color_original = toCopy.customization_first_color_original
 		customization_first_color = toCopy.customization_first_color
@@ -431,15 +426,15 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (gain == TRUE)
 			if (length(E.msgGain) > 0)
 				if (E.isBad)
-					boutput(owner, "<span class='alert'>[E.msgGain]</span>")
+					boutput(owner, SPAN_ALERT("[E.msgGain]"))
 				else
-					boutput(owner, "<span class='notice'>[E.msgGain]</span>")
+					boutput(owner, SPAN_NOTICE("[E.msgGain]"))
 		else
 			if (length(E.msgLose) > 0)
 				if (E.isBad)
-					boutput(owner, "<span class='notice'>[E.msgLose]</span>")
+					boutput(owner, SPAN_NOTICE("[E.msgLose]"))
 				else
-					boutput(owner, "<span class='alert'>[E.msgLose]</span>")
+					boutput(owner, SPAN_ALERT("[E.msgLose]"))
 
 		return
 
@@ -478,6 +473,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 				genResearch.mutations_researched++
 			global_BE.research_level = max(global_BE.research_level, EFFECT_RESEARCH_ACTIVATED)
 
+		if(E.get_global_instance() == E)
+			CRASH("Cannot activate a global bioeffect on a mob!")
+		if(E.owner && E.owner != owner)
+			CRASH("BioEffect [E] [E.type] already has an owner [identify_object(E.owner)] but we activate it on [identify_object(src.owner)]!")
+		if(effectPool[E.id] != E)
+			CRASH("BioEffect [E] [E.type] is not in our effectPool but we activate it on [identify_object(src.owner)]!")
+
 		//AddEffect(E.id)
 		//effectPool.Remove(E)
 		// changed this to transfer the instance across rather than add a copy
@@ -488,6 +490,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		E.holder = src
 		E.activated_from_pool = 1
 		E.OnAdd()
+
 		OutputGainOrLoseMsg(E, TRUE)
 
 		mobAppearance.UpdateMob()
@@ -752,6 +755,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 				src.genetic_stability -= newEffect.stability_loss
 				src.genetic_stability = max(0,src.genetic_stability)
+
 			if(owner)
 				OutputGainOrLoseMsg(newEffect, TRUE)
 
@@ -773,6 +777,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/AddEffectInstanceNoDelay(var/datum/bioEffect/BE,var/do_stability = 1)
 		if (!istype(BE) || !owner || HasEffect(BE.id))
 			return null
+
+		if(BE.get_global_instance() == BE)
+			CRASH("Cannot add a global bioEffect instance to a bioHolder!")
+		if(BE.owner)
+			CRASH("BioEffect [BE] [BE.type] already has an owner [identify_object(BE.owner)] but we attempted to add it to [identify_object(src.owner)]!")
 
 		if(BE.effect_group)
 			for(var/datum/bioEffect/curr_id as anything in effects)
@@ -808,21 +817,24 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		var/datum/bioEffect/D = effects[id]
 		if (D && !D.removed)
-			D.OnRemove()
-			if (!D.activated_from_pool)
-				src.genetic_stability += D.stability_loss
-				src.genetic_stability = max(0,src.genetic_stability)
-			D.activated_from_pool = 0 //Fix for bug causing infinitely exploitable stability gain / loss
-
-			if (owner)
-				OutputGainOrLoseMsg(D, FALSE)
-
-			if (mobAppearance)
-				mobAppearance.UpdateMob()
-			logTheThing(LOG_COMBAT, owner, "loses the [D] mutation at [log_loc(owner)].")
-			return effects.Remove(D.id)
+			return src.RemoveEffectInstance(D)
 
 		return 0
+
+	proc/RemoveEffectInstance(var/datum/bioEffect/effect)
+		effect.OnRemove()
+		if (!effect.activated_from_pool)
+			src.genetic_stability += effect.stability_loss
+			src.genetic_stability = max(0,src.genetic_stability)
+		effect.activated_from_pool = 0 //Fix for bug causing infinitely exploitable stability gain / loss
+
+		if (owner)
+			OutputGainOrLoseMsg(effect, FALSE)
+
+		if (mobAppearance)
+			mobAppearance.UpdateMob()
+		logTheThing(LOG_COMBAT, owner, "loses the [effect] mutation at [log_loc(owner)].")
+		return effects.Remove(effect.id)
 
 	proc/RemoveAllEffects(var/type = null)
 		for(var/D as anything in effects)
@@ -911,6 +923,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/RandomEffect(var/type = "either", var/useProbability = 1, var/datum/dna_chromosome/toApply)
 		//Adds a random effect to this holder. Argument controls which type. bad , good, either.
+		if(check_target_immunity(owner, TRUE))
+			return
 		var/list/filtered = new/list()
 
 		for(var/T in bioEffectList)
@@ -936,6 +950,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			E = pick(filtered)
 
 		if (istype(toApply))
+			E = E.GetCopy()
 			toApply.apply(E)
 			AddEffectInstance(E)
 		else

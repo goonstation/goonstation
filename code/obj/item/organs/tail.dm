@@ -79,18 +79,18 @@
 
 			var/fluff = pick("slap", "shove", "place", "press", "jam")
 
-			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "press" ? "es" : "s"] [src] onto the apex of [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum!</span>",\
-				"<span class='alert'>You [fluff] [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] [src] onto the apex of your sacrum!</span>")
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff][fluff == "press" ? "es" : "s"] [src] onto the apex of [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum!"),\
+				SPAN_ALERT("You [fluff] [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum!"),\
+				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] [src] onto the apex of your sacrum!"))
 
 		else if (!H.organHolder.tail && H.organHolder.back_op_stage == BACK_SURGERY_OPENED && src.can_attach_organ(H, user))
 			attachment_successful = 1
 
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 
-			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] up against [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum!</span>",\
-				"<span class='alert'>You [fluff] [src] up against [user == H ? "your" : "[H]'s"] sacrum!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] up against your sacrum!</span>")
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] up against [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum!"),\
+				SPAN_ALERT("You [fluff] [src] up against [user == H ? "your" : "[H]'s"] sacrum!"),\
+				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] up against your sacrum!"))
 
 		if (attachment_successful)
 			if (user.find_in_hand(src))
@@ -256,6 +256,13 @@
 	organ_image_under_suit_1 = "cat_under_suit"
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "cat_over_suit"
+
+/obj/item/organ/tail/cat/bingus
+	desc = "A long, not-furry tail."
+	organ_image_icon = 'icons/mob/bingus.dmi'
+	organ_image_under_suit_1 = "bingus_under_suit"
+	organ_image_under_suit_2 = null
+	organ_image_over_suit = "bingus_over_suit"
 
 /obj/item/organ/tail/roach
 	name = "roach abdomen"

@@ -90,7 +90,7 @@
 	skin = "hs"
 	treatment_oxy = "perfluorodecalin"
 	access_lookup = "Head Surgeon"
-	text2speech = 1
+	text2speech = TRUE
 
 	New()
 		. = ..()
@@ -282,7 +282,7 @@
 /obj/machinery/bot/medbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		if(user)
-			boutput(user, "<span class='alert'>You short out [src]'s reagent synthesis circuits.</span>")
+			boutput(user, SPAN_ALERT("You short out [src]'s reagent synthesis circuits."))
 		src.KillPathAndGiveUp(1)
 		ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(user?.name)]", src.last_patient_cooldown * 10) // basically ignore the emagger for a long while. Till someone hits it!
 		src.emagged = 1
@@ -324,12 +324,12 @@
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			src.updateUsrDialog()
 		else
-			boutput(user, "<span class='alert'>Access denied.</span>")
+			boutput(user, SPAN_ALERT("Access denied."))
 
 	else if (isscrewingtool(W))
 		if (src.health < initial(src.health))
 			src.health = initial(src.health)
-			src.visible_message("<span class='notice'>[user] repairs [src]!</span>", "<span class='notice'>You repair [src].</span>")
+			src.visible_message(SPAN_NOTICE("[user] repairs [src]!"), SPAN_NOTICE("You repair [src]."))
 
 	else if (istype(W, /obj/item/reagent_containers/glass))
 		if (src.locked)
@@ -591,7 +591,7 @@
 		src.speak(message)
 		src.KillPathAndGiveUp(1)
 		return FALSE
-	else if(!actions.hasAction(src, "medbot_inject"))
+	else if(!actions.hasAction(src, /datum/action/bar/icon/medbot_inject))
 		src.KillPathAndGiveUp(0)
 		actions.start(new/datum/action/bar/icon/medbot_inject(src, reagent_id), src)
 		return TRUE
@@ -614,7 +614,6 @@
 /datum/action/bar/icon/medbot_inject
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "medbot_inject"
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "syringe_15"
 	var/obj/machinery/bot/medbot/master
@@ -677,7 +676,7 @@
 		attack_twitch(master)
 		master.currently_healing = 1
 		master.UpdateIcon(/*stun*/ 0, /*heal*/ 1)
-		master.visible_message("<span class='alert'><B>[master] is trying to inject [master.patient]!</B></span>")
+		master.visible_message(SPAN_ALERT("<B>[master] is trying to inject [master.patient]!</B>"))
 
 	onInterrupt()
 		. = ..()
@@ -694,7 +693,7 @@
 				for(var/reagent in reagent_id)
 					master.patient.reagents.add_reagent(reagent, reagent_id[reagent])
 
-			master.visible_message("<span class='alert'><B>[master] injects [master.patient] with the syringe!</B></span>")
+			master.visible_message(SPAN_ALERT("<B>[master] injects [master.patient] with the syringe!</B>"))
 
 		else if(master.terrifying)
 			var/list/sput_words = list()
@@ -704,7 +703,7 @@
 				sput.add_reagent(reagent, round(reagent_id[reagent] / length(reagent_id)))
 				sput_words += reagent_id_to_name(reagent)
 			smoke_reaction(sput, 1, get_turf(master))
-			master.visible_message("<span class='alert'>A shower of [english_list(sput_words)] shoots out of [master]'s hypospray!</span>")
+			master.visible_message(SPAN_ALERT("A shower of [english_list(sput_words)] shoots out of [master]'s hypospray!"))
 		playsound(master, 'sound/items/hypo.ogg', 80, FALSE)
 
 		master.KillPathAndGiveUp() // Don't discard the patient just yet, maybe they need more healing!
@@ -800,7 +799,7 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	src.audible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	src.audible_message(SPAN_ALERT("<B>[src] blows apart!</B>"))
 	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 
@@ -831,13 +830,13 @@
 			return
 		if (S.w_class >= W_CLASS_SMALL || S.storage)
 			if (!istype(S,/obj/item/storage/pill_bottle))
-				boutput(user, "<span class='alert'>[S] won't fit into [src]!</span>")
+				boutput(user, SPAN_ALERT("[S] won't fit into [src]!"))
 				return
 		..()
 		return
 
 	if (length(src.storage.get_contents()))
-		boutput(user, "<span class='alert'>You need to empty [src] out first!</span>")
+		boutput(user, SPAN_ALERT("You need to empty [src] out first!"))
 		return
 	else
 		var/obj/item/firstaid_arm_assembly/A = new /obj/item/firstaid_arm_assembly

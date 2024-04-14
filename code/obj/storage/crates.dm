@@ -17,6 +17,7 @@
 	can_flip_bust = 1
 	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
+	pass_unstable = TRUE
 
 	get_desc()
 		. = ..()
@@ -33,7 +34,7 @@
 	attackby(obj/item/I, mob/user)
 		if(!src.open && istype(I, /obj/item/antitamper))
 			if(src.locked)
-				boutput(user, "<span class='alert'>[src] is already locked and doesn't need [I].</span>")
+				boutput(user, SPAN_ALERT("[src] is already locked and doesn't need [I]."))
 				return
 			var/obj/item/antitamper/AT = I
 			AT.attach_to(src, user)
@@ -43,6 +44,11 @@
 	Cross(atom/movable/mover)
 		if(istype(mover, /obj/projectile))
 			return 1
+		if(src.open && isliving(mover)) // let people climb onto the crate if the crate is open and against a wall basically
+			var/move_dir = get_dir(mover, src)
+			var/turf/next_turf = get_step(src, move_dir)
+			if(next_turf && !total_cross(next_turf, src))
+				return TRUE
 		return ..()
 
 	Uncross(atom/movable/O, do_bump = TRUE)
@@ -162,12 +168,6 @@
 	icon_closed = "biohazardcrate"
 	weld_image_offset_Y = -2
 
-	cdc
-		name = "CDC pathogen sample crate"
-		desc = "A crate for sending pathogen or blood samples to the CDC for analysis."
-		spawn_contents = list(/obj/item/reagent_containers/syringe,
-		/obj/item/paper/cdc_pamphlet)
-
 /obj/storage/crate/freezer/milk
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 10, \
 	/obj/item/gun/russianrevolver)
@@ -184,7 +184,7 @@
 /obj/storage/crate/bin/lostandfound
 	name = "\improper Lost and Found bin"
 	desc = "Theoretically, items that are lost by a person are placed here so that the person may come and find them. This never happens."
-	spawn_contents = list(/obj/item/gnomechompski)
+	spawn_contents = list(/obj/item/gnomechompski, /obj/item/random_trinket_spawner, /obj/item/random_lost_item_spawner)
 
 /obj/storage/crate/bin/trash
 	name = "trash can"
@@ -246,11 +246,17 @@
 	/obj/item/clothing/mask/clown_hat,
 	/obj/item/storage/box/crayon,
 	/obj/item/storage/box/crayon/basic,
-	#ifdef AUTUMN
+	#ifdef SEASON_AUTUMN
 	/obj/item/clothing/shoes/clown_shoes/autumn,
 	/obj/item/clothing/head/clown_autumn_hat,
 	/obj/item/clothing/mask/clown_hat/autumn,
 	/obj/item/clothing/under/gimmick/clown_autumn,
+	#endif
+	#ifdef SEASON_WINTER
+	/obj/item/clothing/shoes/clown_shoes/winter,
+	/obj/item/clothing/head/clown_winter_hat,
+	/obj/item/clothing/mask/clown_hat/winter,
+	/obj/item/clothing/under/gimmick/clown_winter,
 	#endif
 	/obj/item/storage/box/balloonbox)
 
@@ -481,6 +487,13 @@ TYPEINFO(/obj/storage/crate/chest)
 			bux.pixel_x = rand(-9, 9)
 			bux.pixel_y = rand(0, 6)
 
+/obj/storage/crate/mail
+	name = "mail crate"
+	desc = "A mail crate."
+	icon_state = "mailcrate"
+	icon_opened = "mailcrateopen"
+	icon_closed = "mailcrate"
+
 // Gannets' Nuke Ops Specialist Class Crates
 
 /obj/storage/crate/classcrate
@@ -698,14 +711,14 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/raw_material/miracle = 2,
 		/obj/item/raw_material/telecrystal = 5,
 		/obj/item/raw_material/cerenkite = 5,
-		/obj/item/mining_tool/powerhammer)
+		/obj/item/mining_tool/powered/hammer)
 
 	ore2
 		spawn_contents = list(/obj/item/raw_material/plasmastone = 5,
 		/obj/item/raw_material/uqill = 5,
 		/obj/item/clothing/head/helmet/space/industrial,
 		/obj/item/clothing/suit/space/industrial,
-		/obj/item/mining_tool/power_pick)
+		/obj/item/mining_tool/powered/pickaxe)
 
 	ore3
 		spawn_contents = list(/obj/item/raw_material/cobryl = 5,
@@ -721,7 +734,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/mining_tool)
 
 	rad
-		spawn_contents = list(/obj/item/clothing/suit/rad,
+		spawn_contents = list(/obj/item/clothing/suit/hazard/rad,
 		/obj/item/mine/radiation = 5,
 		/obj/item/clothing/head/rad_hood,
 		/obj/item/storage/pill_bottle/antirad,

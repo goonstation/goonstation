@@ -3,6 +3,8 @@
 /* -------------------- Grenades -------------------- */
 /* ================================================== */
 
+ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
+
 /obj/item/chem_grenade
 	name = "imcoder chemical grenade"
 	icon_state = "grenade-chem1"
@@ -14,7 +16,7 @@
 	force = 2
 	var/armed = 0
 	var/icon_state_armed = "grenade-chem-armed"
-	var/list/beakers = new/list()
+	var/list/obj/beakers = new/list()
 	throw_speed = 4
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY | NOSPLASH
@@ -43,6 +45,9 @@
 	src.create_reagents(150000)
 	src.initialize_assemby()
 
+///clone for grenade launcher purposes only. Not a real deep copy, just barely good enough to work for something that's going to be instantly detonated. Mostly for like, custom grenades or whatever
+/obj/item/chem_grenade/proc/launcher_clone()
+	return new src.type
 
 /obj/item/chem_grenade/proc/initialize_assemby()
 	// completed grenade + assemblies -> chemical grenade assembly
@@ -77,7 +82,12 @@
 				return
 
 /obj/item/chem_grenade/attack_self(mob/user as mob)
+	. = ..()
 	src.arm(user)
+
+/obj/item/chem_grenade/ex_act(severity)
+	src.explode()
+	. = ..()
 
 /obj/item/chem_grenade/get_desc()
 	. = ..()
@@ -104,7 +114,7 @@
 			message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
 		logTheThing(LOG_COMBAT, user, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
-	boutput(user, "<span class='alert'>You prime the grenade! [src.grenade_time / (1 SECOND)] seconds!</span>")
+	boutput(user, SPAN_ALERT("You prime the grenade! [src.grenade_time / (1 SECOND)] seconds!"))
 	src.armed = TRUE
 	src.icon_state = icon_state_armed
 	playsound(src, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
@@ -164,7 +174,7 @@
 	var/obj/item/assembly/manipulated_assembly = to_combine_atom
 	if (!manipulated_assembly || !manipulated_assembly:status)
 		return
-	boutput(user, "<span class='notice'>You attach the [src.name] to the [manipulated_assembly.name]!</span>")
+	boutput(user, SPAN_NOTICE("You attach the [src.name] to the [manipulated_assembly.name]!"))
 	logTheThing(LOG_BOMBING, user, "made a chemical bomb with a [manipulated_assembly.name].")
 	message_admins("[key_name(user)] made a chemical bomb with a [manipulated_assembly.name].")
 
@@ -227,7 +237,7 @@
 		src.grenade_time = src.grenade_time_standard
 	else
 		src.grenade_time += src.interval_grenade_time
-	boutput(user, "<span class='notice'>You set [src] to detonate in [src.grenade_time / (1 SECOND)] seconds.</span>")
+	boutput(user, SPAN_NOTICE("You set [src] to detonate in [src.grenade_time / (1 SECOND)] seconds."))
 	src.tooltip_rebuild = 1
 	return TRUE
 
@@ -260,6 +270,15 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	..()
 	src.fluid_image1 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid1", -1)
 	src.fluid_image2 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid2", -1)
+
+/obj/item/chem_grenade/custom/launcher_clone()
+	var/obj/item/chem_grenade/custom/out = ..()
+	out.beakers += new/obj/item/reagent_containers/glass/beaker(out)
+	out.beakers += new/obj/item/reagent_containers/glass/beaker(out)
+	src.beakers[1]?.reagents?.copy_to(out.beakers[1].reagents, 1, TRUE, TRUE)
+	src.beakers[2]?.reagents?.copy_to(out.beakers[2].reagents, 1, TRUE, TRUE)
+	out.chem_grenade_completing()
+	return out
 
 /obj/item/chem_grenade/custom/initialize_assemby()
 	if (src.stage == 2)
@@ -300,7 +319,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 
 ///On stage 0, using the grenade in hand sets the fuse into the grenade
 /obj/item/chem_grenade/custom/proc/assemble_fuse(var/mob/user)
-	boutput(user, "<span class='notice'>You add the fuse to the metal casing.</span>")
+	boutput(user, SPAN_NOTICE("You add the fuse to the metal casing."))
 	playsound(src, 'sound/items/Screwdriver2.ogg', 25, -3)
 	src.icon_state = "grenade-chem2"
 	src.name = "unsecured grenade"
@@ -315,14 +334,14 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 /// chem grenade filling proc
 /obj/item/chem_grenade/custom/proc/chem_grenade_filling(var/atom/to_combine_atom, var/mob/user)
 	if (length(src.beakers) >= 2)
-		boutput(user, "<span class='alert'>The grenade can not hold more containers.</span>")
+		boutput(user, SPAN_ALERT("The grenade can not hold more containers."))
 		return TRUE
 	var/obj/item/reagent_containers/glass/manipulated_beaker = to_combine_atom
 	if (manipulated_beaker.initial_volume > src.custom_grenade_max_beaker_volume) // anything bigger than a regular beaker, but someone could varedit their reagent holder beyond this for admin nonsense
-		boutput(user, "<span class='alert'>This beaker is too large!</span>")
+		boutput(user, SPAN_ALERT("This beaker is too large!"))
 	else
 		if (manipulated_beaker.reagents && manipulated_beaker.reagents.total_volume)
-			boutput(user, "<span class='notice'>You add \the [manipulated_beaker] to the assembly.</span>")
+			boutput(user, SPAN_NOTICE("You add \the [manipulated_beaker] to the assembly."))
 			user.u_equip(manipulated_beaker)
 			manipulated_beaker.set_loc(src)
 			src.beakers += manipulated_beaker
@@ -337,12 +356,12 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 					src.fluid_image2.color = manipulated_beaker.reagents.get_average_color().to_rgba()
 					src.UpdateOverlays(src.fluid_image2, "fluid2")
 		else
-			boutput(user, "<span class='alert'>\The [manipulated_beaker] is empty.</span>")
+			boutput(user, SPAN_ALERT("\The [manipulated_beaker] is empty."))
 	return TRUE
 
 /// chem grenade completion proc
 /obj/item/chem_grenade/custom/proc/chem_grenade_completing(var/atom/to_combine_atom, var/mob/user)
-	boutput(user, "<span class='notice'>You lock the assembly.</span>")
+	boutput(user, SPAN_NOTICE("You lock the assembly."))
 	playsound(src, 'sound/items/Screwdriver.ogg', 25, -3)
 	src.name = "chemical grenade"
 	src.icon_state = "grenade-chem3"
@@ -357,6 +376,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	src.AddComponent(/datum/component/assembly, TOOL_SCREWING, PROC_REF(adjust_time), FALSE)
 	// completed grenade + wrench -> disassembling of the grenade
 	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassembly_filled), FALSE)
+	logTheThing(LOG_CHEMISTRY, user, "Assembles a custom chemical grenade (beaker 1: [beakers[1]]; beaker 2: [beakers[2]])")
 	return TRUE
 
 /// chem grenade disassembly
@@ -525,7 +545,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 					qdel(found_imp)
 
 					playsound(H.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
-					H.visible_message("<span class='notice'>The counter-revolutionary implant inside [H] shatters into one million pieces!</span>")
+					H.visible_message(SPAN_NOTICE("The counter-revolutionary implant inside [H] shatters into one million pieces!"))
 
 				if (can_convert && !(H.mind?.get_antagonist(ROLE_REVOLUTIONARY)))
 					H.mind?.add_antagonist(ROLE_REVOLUTIONARY, source = ANTAGONIST_SOURCE_CONVERTED)

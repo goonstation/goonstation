@@ -19,7 +19,7 @@
 	selected()
 		var/kind = input(usr, "What kind of decoration?", "Decoration type", "Skeleton") in src.decals
 		objtype = src.decals[kind]
-		boutput(usr, "<span class='notice'>Now placing [kind] objects in single spawn mode.</span>")
+		boutput(usr, SPAN_NOTICE("Now placing [kind] objects in single spawn mode."))
 
 	settings(var/ctrl, var/alt, var/shift)
 		selected()

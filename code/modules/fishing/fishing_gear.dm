@@ -44,7 +44,7 @@
 				fishing_spot_type = type2parent(fishing_spot_type)
 			if (fishing_spot)
 				if (fishing_spot.rod_tier_required > src.tier)
-					user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
+					user.visible_message(SPAN_ALERT("You need a higher tier rod to fish here!"))
 					return
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
 				return TRUE //cancel the attack because we're fishing now
@@ -71,7 +71,6 @@
 	/// how long the fishing action loop will take in seconds, set on onStart(), varies by 4 seconds in either direction.
 	duration = 1 MINUTE
 	/// id for fishing action
-	id = "fishing_for_fishies"
 
 	New(var/user, var/rod, var/fishing_spot, var/target)
 		..()
@@ -83,8 +82,8 @@
 	onStart()
 		..()
 		if (src.rod.tier < fishing_spot.rod_tier_required)
-			//user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
-			boutput(user, "<span class='notice'>You need a higher tier rod to fish here!.</span>")
+			//user.visible_message(SPAN_ALERT("You need a higher tier rod to fish here!"))
+			boutput(user, SPAN_NOTICE("You need a higher tier rod to fish here!."))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -93,7 +92,7 @@
 			return
 
 		if (user.bioHolder.HasEffect("clumsy") && prob(10))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles with [src.rod] in [his_or_her(user)] haste and hits [himself_or_herself(user)] in the forehead with it!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles with [src.rod] in [his_or_her(user)] haste and hits [himself_or_herself(user)] in the forehead with it!"))
 			user.changeStatus("weakened", 2 SECONDS)
 			playsound(user, 'sound/impact_sounds/tube_bonk.ogg', 50, 1)
 			interrupt(INTERRUPT_ALWAYS)
@@ -103,7 +102,7 @@
 		src.duration = max(0.5 SECONDS, rod.fishing_speed + (pick(1, -1) * (rand(0,40) / 10) SECONDS)) //translates to rod duration +- (0,4) seconds, minimum of 0.5 seconds
 		playsound(src.user, 'sound/items/fishing_rod_cast.ogg', 50, 1)
 		//src.user.visible_message("[src.user] starts fishing.")
-		boutput(user, "<span class='notice'>You start fishing.</span>")
+		boutput(user, SPAN_NOTICE("You start fishing."))
 		src.rod.is_fishing = TRUE
 		src.rod.UpdateIcon()
 		src.user.update_inhands()
@@ -179,6 +178,36 @@
 			src.icon_state = "fishing_rod_3-inactive"
 			src.item_state = "fishing_rod-inactive"
 
+/obj/item/fishing_rod/cybernetic
+	name = "cybernetic fishing rod"
+	desc = "A Cybernetic Fishing Rod. Use on a fishing rod on the ground to upgrade."
+	icon_state = "fishing_rod-inactive"
+	item_state = "fishing_rod-inactive"
+	tier = 1
+
+	update_icon()
+		var/isactive = src.is_fishing ? "active" : "inactive"
+		src.icon_state = "fishing_rod[src.tier > 1 ? "_[src.tier]" : ""]-[isactive]"
+		src.item_state = "fishing_rod-[isactive]"
+
+	afterattack(atom/target, mob/user, reach, params)
+		if (istype(target, /obj/item/fishing_rod/upgraded) && src.tier < 2)
+			src.tier = 2
+			src.icon = target.icon
+			src.icon_state = target.icon_state
+			user.visible_message("<span class='notice'>You upgrade your [src.name] with [target]</span>")
+			qdel(target)
+			return
+		if (istype(target, /obj/item/fishing_rod/master) && src.tier < 3)
+			src.tier = 3
+			src.icon = target.icon
+			src.icon_state = target.icon_state
+			user.visible_message("<span class='notice'>You upgrade your [src.name] with [target]]</span>")
+			qdel(target)
+			return
+		else
+			. = ..()
+
 // portable fishing portal currently found in a prefab in space
 TYPEINFO(/obj/item/fish_portal)
 	mats = 11
@@ -217,14 +246,64 @@ TYPEINFO(/obj/item/fish_portal)
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "fishing_pool"
 
-	basic
-		name = "basic pool"
+	ex_act(severity)
+		// dynamite fishing! make the research pool throw out fish depending on how big the severity of the explosion was
+		var/dynamite_fishing_cooldown = 1 SECOND //! the cooldown of dynamite fishing.
+		// First, we need to get our fishing spot datum
+		var/datum/fishing_spot/fishing_spot = null
+		var/fishing_spot_type = src.type
+		// now we search for the corresponding defined fishing spot up the chain of parents
+		while (fishing_spot_type != null)
+			fishing_spot = global.fishing_spots[fishing_spot_type]
+			if (fishing_spot != null)
+				break
+			fishing_spot_type = type2parent(fishing_spot_type)
+		// now we define our fishing sucess and damage on the fish tank based on the severity
+		// defined values are for severity 3
+		var/explosion_damage = -5 //! how much damage each explosion does
+		var/fish_chance = 20 //! how much fish per roll jumps out of the pond
+		var/fish_rolls = 2 //! how often the fish chance is rolled
+		var/dynamite_fishing_sucessfull = FALSE //! shows if the explosion sucessfully "fished" some fish
+		switch(severity)
+			if(1)
+				//You blew up the whole tank, doofus!
+				explosion_damage = -100
+				fish_chance = 0
+				fish_rolls = 0
+			if(2)
+				explosion_damage = -20
+				fish_chance = 70
+				fish_rolls = 5
+		if (fishing_spot && fish_rolls && !ON_COOLDOWN(src, "dynamite fishing", dynamite_fishing_cooldown))
+			var/turf/target_turf = get_turf(src)
+			// now, if we don't blow it up extremly, we can roll for fish
+			for (var/fish_try in 1 to fish_rolls)
+				if (prob(fish_chance))
+					var/atom/movable/fishing_result = fishing_spot.generate_fish(null, null, src)
+					if(fishing_result)
+						fishing_result.set_loc(target_turf)
+						var/target_point = get_turf(pick(orange(4, src)))
+						fishing_result.throw_at(target_point, rand(0, 10), rand(3, 9))
+						dynamite_fishing_sucessfull = TRUE
+			if (dynamite_fishing_sucessfull)
+				src.visible_message("<b class='alert'>Fishes jump out of [src]! [pick("Holy shit!", "Holy fuck!", "What the hell!", "What the fuck!")]</b>")
+				// lets create a neat water spread effect
+				var/datum/effects/system/steam_spread/splash = new /datum/effects/system/steam_spread
+				splash.set_up(6, 0, get_turf(src), color="#382ec9", plane=PLANE_NOSHADOW_ABOVE)
+				splash.attach(src)
+				splash.start()
+		//Now we damage the pond. No infinite dynamite fishing
+		src.material_trigger_on_explosion(severity)
+		src.changeHealth(explosion_damage)
 
-	upgraded
-		name = "upgraded pool"
+/obj/fishing_pool/basic
+	name = "basic pool"
 
-	master
-		name = "master pool"
+/obj/fishing_pool/upgraded
+	name = "upgraded pool"
+
+/obj/fishing_pool/master
+	name = "master pool"
 
 /obj/fishing_pool/portable
 	anchored = 0
@@ -253,10 +332,10 @@ TYPEINFO(/obj/item/fish_portal)
 
 	attack_hand(var/mob/user)
 		if (!length(src.contents))
-			boutput(user, "<span class='alert'>There is nothing in the upload terminal!</span>")
+			boutput(user, SPAN_ALERT("There is nothing in the upload terminal!"))
 			return
 		if (src.working)
-			boutput(user, "<span class='alert'>The terminal is busy!</span>")
+			boutput(user, SPAN_ALERT("The terminal is busy!"))
 			return
 		src.icon_state = "uploadterminal_working"
 		src.working = TRUE
@@ -293,7 +372,7 @@ TYPEINFO(/obj/item/fish_portal)
 						JOB_XP(user, "Angler", 5)
 						qdel( P )
 		if (found_blacklisted_fish)
-			src.visible_message("<span class='alert'>\The [src] ejects synthetical fish it was unable to do any research on!</span>")
+			src.visible_message(SPAN_ALERT("\The [src] ejects synthetical fish it was unable to do any research on!"))
 
 		// Wind down
 		for(var/obj/item/S in src)
@@ -307,19 +386,19 @@ TYPEINFO(/obj/item/fish_portal)
 
 	attackby(obj/item/W, mob/user)
 		if (src.working)
-			boutput(user, "<span class='alert'>The terminal is busy!</span>")
+			boutput(user, SPAN_ALERT("The terminal is busy!"))
 			return
 		if (istype(W, /obj/item/storage/fish_box))
 			var/obj/item/storage/fish_box/S = W
-			if (length(S.contents) < 1) boutput(user, "<span class='alert'>There's no fish in the portable aquarium!</span>")
+			if (length(S.contents) < 1) boutput(user, SPAN_ALERT("There's no fish in the portable aquarium!"))
 			else
-				user.visible_message("<span class='notice'>[user] loads [S]'s contents into [src]!</span>")
+				user.visible_message(SPAN_NOTICE("[user] loads [S]'s contents into [src]!"))
 				var/amtload = 0
 				for (var/obj/item/reagent_containers/food/fish/F in S.contents)
 					F.set_loc(src)
 					amtload++
 				S.UpdateIcon()
-				boutput(user, "<span class='notice'>[amtload] fish loaded from the portable aquarium!</span>")
+				boutput(user, SPAN_NOTICE("[amtload] fish loaded from the portable aquarium!"))
 				S.tooltip_rebuild = 1
 			return
 		else
@@ -329,9 +408,9 @@ TYPEINFO(/obj/item/fish_portal)
 					proceed = TRUE
 					break
 			if (!proceed)
-				boutput(user, "<span class='alert'>You can't put that in the upload terminal!</span>")
+				boutput(user, SPAN_ALERT("You can't put that in the upload terminal!"))
 				return
-			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."))
 			user.u_equip(W)
 			W.set_loc(src)
 			W.dropped(user)
@@ -349,14 +428,24 @@ TYPEINFO(/obj/item/fish_portal)
 			return ..()
 
 /obj/item/storage/fish_box
-	name = 	"Portable aquarium"
+	name = 	"portable aquarium"
 	desc = "A temporary solution for transporting fish."
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	icon_state = "aquarium"
 	item_state = "aquarium"
 	slots = 6
-	can_hold = 	list(/obj/item/reagent_containers/food/fish)
+	can_hold = list(/obj/item/reagent_containers/food/fish)
+
+/obj/item/storage/fish_box/small
+	name = 	"small portable aquarium"
+	desc = "A smaller, temporary solution for transporting fish."
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	icon_state = "aquarium"
+	item_state = "aquarium"
+	slots = 3
+	can_hold = list(/obj/item/reagent_containers/food/fish)
 
 TYPEINFO(/obj/item/syndie_fishing_rod)
 	mats = list("MET-3"=15, "WOOD"=5, "POW-2"=5, "CON-2"=5)
@@ -439,7 +528,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 					else
 						step_towards(src.lure, src)
 			else
-				user.visible_message("<span class='alert'><b>[user] yanks the lure out of [src.lure.owner]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] yanks the lure out of [src.lure.owner]!</b>"))
 				src.lure.set_loc(get_turf(src.lure.loc))
 				src.lure.owner = null
 
@@ -455,11 +544,11 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 		if (!ON_COOLDOWN(user, "syndie_fishing_delay", src.usage_cooldown))
 			if (src.lure.owner && isliving(src.lure.owner))
 				logTheThing(LOG_COMBAT, user, "at [log_loc(src)] reels in a Syndicate Fishing Rod hooked in [src.lure.owner]")
-				if (!actions.hasAction(user,"fishing_for_fools"))
+				if (!actions.hasAction(user, /datum/action/bar/syndie_fishing))
 					actions.start(new /datum/action/bar/syndie_fishing(user, src.lure.owner, src, src.lure), user)
 				if (!ON_COOLDOWN(user, "syndie_fishing_yank", src.yank_cooldown))
 					src.lure.owner.throw_at(target, yank_range, yank_range / 4)
-					user.visible_message("<span class='alert'><b>[user] thrashes [src.lure.owner] by yanking \the [src.name]!</b></span>")
+					user.visible_message(SPAN_ALERT("<b>[user] thrashes [src.lure.owner] by yanking \the [src.name]!</b>"))
 			else if (src.lure.loc == src)
 				if (target == loc)
 					return
@@ -509,11 +598,11 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 		target.setStatusMin("staggered", 4 SECONDS)
 		if(BOUNDS_DIST(target, user) == 0)
 			if (issilicon(target))
-				user.visible_message("<span class='alert'><b>[user] tears some scrap out of [target] with \the [src.name]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] tears some scrap out of [target] with \the [src.name]!</b>"))
 				playsound(target.loc, 'sound/impact_sounds/circsaw.ogg', 40, 1)
 				random_burn_damage(target, damage_on_reel)
 			else
-				user.visible_message("<span class='alert'><b>[user] reels some meat out of [target] with \the [src.name]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] reels some meat out of [target] with \the [src.name]!</b>"))
 				playsound(target.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				take_bleeding_damage(target, user, damage_on_reel, DAMAGE_CUT)
 			random_brute_damage(target, damage_on_reel)
@@ -616,7 +705,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 
 			src.owner = M
 			src.set_loc(M)
-			M.visible_message("<span class='alert'><b>[M] gets snagged by a fishing lure!</b></span>")
+			M.visible_message(SPAN_ALERT("<b>[M] gets snagged by a fishing lure!</b>"))
 			logTheThing(LOG_COMBAT, M, "is caught by a barbed fishing lure at [log_loc(src)]")
 			M.emote("scream")
 			take_bleeding_damage(M, null, 10, DAMAGE_STAB)
@@ -662,7 +751,6 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 	/// how long a step of reeling takes, set onStart
 	duration = 0
 	/// id for fishing action
-	id = "fishing_for_fools"
 
 	New(var/user, var/target, var/rod, var/lure)
 		..()

@@ -51,7 +51,7 @@
 				if (stolenItem.cant_other_remove)
 					M.throw_at(linkedGun, 3, 0.5)
 					return
-				logTheThing(LOG_COMBAT, linkedGun, " successfully steals \a [stolenItem]")
+				logTheThing(LOG_COMBAT, linkedGun, " [key_name(src.firer)] successfully steals \a [stolenItem]")
 				M.u_equip(stolenItem)
 				linkedGun.heldItem = stolenItem
 				stolenItem.set_loc(linkedGun)
@@ -98,11 +98,11 @@
 							boutput(M, "\A [linkedGun.heldItem] tries to cram itself into your pockets! [pick(strikeFlavor)]")
 			else
 				var/turf/T = get_turf(hit)
-				if(isrestrictedz(T.z) || istype(T, /turf/unsimulated))
+				if((isrestrictedz(T.z) || istype(T, /turf/unsimulated)) && !in_shuttle_transit(T))
 					message_admins("[key_name(src.firer)] is a nerd and tried to fire a pickpocket gun on an unsimulated turf at [log_loc(T)].")
 					T.visible_message("The [linkedGun.name] jams!")
 					return
-				logTheThing(LOG_COMBAT, linkedGun, " plants [linkedGun.heldItem] at [log_loc(hit)]")
+				logTheThing(LOG_COMBAT, linkedGun, " [key_name(src.firer)] plants [linkedGun.heldItem] at [log_loc(hit)]")
 				linkedGun.heldItem.set_loc(get_turf(hit))
 			linkedGun.heldItem = null // One wayor another it's somewhere else now
 
@@ -132,7 +132,7 @@
 						M.u_equip(broke)
 						qdel(broke)
 					else // Eye gouge
-						boutput(M, "<span class='alert'>Something suddenly gouges you in the eyes! JESUS FUCK OW</span>")
+						boutput(M, SPAN_ALERT("Something suddenly gouges you in the eyes! JESUS FUCK OW"))
 						M.take_eye_damage(10)
 				if ("r_arm") // Stop hitting yourself, stop hitting yourself
 					if (M.r_hand && isitem(M.r_hand))

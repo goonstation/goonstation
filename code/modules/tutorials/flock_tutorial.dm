@@ -39,7 +39,7 @@
 		src.fowner.sight = SEE_SELF | SEE_BLACKNESS
 		src.fowner.abilityHolder.addAbility(/datum/targetable/flockmindAbility/tutorial_exit)
 		for (var/mob/living/intangible/flock/trace/trace as anything in src.fowner.flock.traces)
-			boutput(trace, "<span class='notice'>You have joined your Flockmind in the tutorial, you will not be able to interact with anything while they complete it.</span>")
+			boutput(trace, SPAN_NOTICE("You have joined your Flockmind in the tutorial, you will not be able to interact with anything while they complete it."))
 			trace.set_loc(get_turf(src.fowner))
 
 	Finish()
@@ -156,7 +156,7 @@
 			if (context == src.must_deploy)
 				return TRUE
 			else
-				return "<span class='alert'><b>You must deploy on the marked tile.</b></span>"
+				return SPAN_ALERT("<b>You must deploy on the marked tile.</b>")
 		else if (action == FLOCK_ACTION_RIFT_COMPLETE)
 			src.finished = TRUE
 			return TRUE
@@ -231,7 +231,7 @@
 			if (locate(/obj/window) in get_turf(context))
 				return TRUE
 			else
-				return "<span class='alert'><b>You must convert a window.</b></span>"
+				return SPAN_ALERT("<b>You must convert a window.</b>")
 		if (action == FLOCK_ACTION_TURF_CLAIM && locate(/obj/window) in context)
 			finished = TRUE
 			return TRUE
@@ -309,7 +309,7 @@
 				src.finished = TRUE
 				return TRUE
 			else
-				return "<span class='alert'><b>You must place the tealprint on the marked tile.</b></span>"
+				return SPAN_ALERT("<b>You must place the tealprint on the marked tile.</b>")
 
 /datum/tutorialStep/flock/deposit_sentinel
 	name = "Direct drones to construct"
@@ -337,7 +337,7 @@
 			if (get_turf(src.ftutorial.fowner) == src.location)
 				return TRUE
 			else
-				return "<span class='alert'><b>You must place the tealprint on the marked tile.</b></span>"
+				return SPAN_ALERT("<b>You must place the tealprint on the marked tile.</b>")
 		if (action == FLOCK_ACTION_TEALPRINT_COMPLETE)
 			var/obj/flock_structure/struct = context
 			struct.process(200) //force a high mult process to immediately charge the structure if it needs it
@@ -431,7 +431,7 @@
 /mob/living/intangible/flock/flockmind/verb/help_my_tutorial_is_being_a_massive_shit()
 	set name = "EMERGENCY TUTORIAL STOP"
 	if (!src.tutorial)
-		boutput(src, "<span class='alert'>You're not in a tutorial, doofus. It's real. IT'S ALL REAL.</span>")
+		boutput(src, SPAN_ALERT("You're not in a tutorial, doofus. It's real. IT'S ALL REAL."))
 		return
 	src.tutorial.Finish()
 	src.tutorial = null

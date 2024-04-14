@@ -31,7 +31,7 @@ var/global/list/mapNames = list(
 	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30),
 	"Clarion" =				list("id" = "CLARION",		"settings" = "destiny/clarion", "playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
-	"Oshan Laboratory"= 	list("id" = "OSHAN",		"settings" = "oshan",			"playerPickable" = TRUE),
+	"Oshan Laboratory"= 	list("id" = "OSHAN",		"settings" = "oshan",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
 	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 70),
 
 	"Manta" =				list("id" = "MANTA",		"settings" = "manta",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 80),
@@ -41,14 +41,14 @@ var/global/list/mapNames = list(
 	"Mushroom" =			list("id" = "MUSHROOM",		"settings" = "mushroom",		"playerPickable" = FALSE),
 	"Trunkmap" =			list("id" = "TRUNKMAP",		"settings" = "trunkmap",		"playerPickable" = FALSE),
 	//"Density" = 			list("id" = "DENSITY",		"settings" = "density",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
-	"Density2" = 			list("id" = "DENSITY2",		"settings" = "density2",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 20),
+	"Density2" = 			list("id" = "DENSITY2",		"settings" = "density2",		"playerPickable" = FALSE,	"MaxPlayersAllowed" = 20),
 	"Ozymandias" =			list("id" = "OZYMANDIAS",	"settings" = "ozymandias",		"playerPickable" = FALSE,	"MinPlayersAllowed" = 40),
 	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE),
 	//"Icarus" =			list("id" = "ICARUS",		"settings" = "icarus",			"playerPickable" = FALSE),
 	//"Gehenna" =			list("id" = "GEHENNA",		"settings" = "gehenna",			"playerPickable" = FALSE),
 	"blank" =				list("id" = "BLANK",		"settings" = "", 				"playerPickable" = FALSE),
 	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE),
-	"DevTest" =	list("id" = "DEVTEST",		"settings" = "devtest",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 69)
+	"DevTest" =				list("id" = "DEVTEST",		"settings" = "devtest",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 69)
 )
 
 /obj/landmark/map
@@ -191,10 +191,12 @@ var/global/list/mapNames = list(
 			for(var/datum/job/J in job_controls.staple_jobs)
 				if(J.map_can_autooverride && (J.name in job_start_locations))
 					J.limit = length(job_start_locations[J.name])
+					J.upper_limit = J.limit
 
 		for(var/datum/job/J in job_controls.staple_jobs + job_controls.special_jobs)
 			if(J.type in src.job_limits_override)
 				J.limit = src.job_limits_override[J.type]
+				J.upper_limit = J.limit
 
 		SPAWN(5 SECONDS)
 			src.load_shuttle()
@@ -237,7 +239,7 @@ var/global/list/mapNames = list(
 /datum/map_settings/pod_wars
 	name = "POD_WARS"
 	default_gamemode = "pod_wars"
-	goonhub_map = "https://cdn.discordapp.com/attachments/890313890003566632/1137526717964103781/output.png"
+	goonhub_map = "https://goonhub.com/maps/pod_wars"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	style = "spess"
@@ -310,7 +312,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"
-	goonhub_map = "https://cdn.discordapp.com/attachments/412381738510319626/1116907371999010836/output.png"
+	goonhub_map = "https://goonhub.com/maps/wrestlemap"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -394,7 +396,7 @@ var/global/list/mapNames = list(
 		"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
 		"the robotics lab" = list(/area/station/medical/robotics),
 		"the bridge" = list(/area/station/bridge),
-		"the stock exchange at the public market" = list(/area/station/crew_quarters/stockex),
+		"the public market" = list(/area/station/crew_quarters/market),
 		"the escape arm" = list(/area/station/hallway/secondary/exit),
 		"the central room of the crew lounge" = list(/area/station/crew_quarters/quarters),
 		"the chapel" = list(/area/station/chapel/sanctuary))
@@ -795,6 +797,8 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+	shipping_destinations = list("North", "South")
 
 	valid_nuke_targets = list("the fitness room" = list(/area/station/crew_quarters/fitness),
 		"the quartermaster's office" = list(/area/station/quartermaster/office),
@@ -1201,7 +1205,7 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
-	valid_nuke_targets = list("the developer zone" = list(/area/devzone),
+	valid_nuke_targets = list("the developer zone" = list(/area/station/devzone),
 		"the test chamber or space" = list(/area/space))
 
 

@@ -18,6 +18,8 @@
 	desc = "You can't tell the difference, Honest!"
 	icon_state= "wig"
 	wear_layer = MOB_HAIR_LAYER2 //it IS hair afterall
+	hat_offset_y = -15 // offsets for hattable component
+	hat_offset_x = 0
 
 	///Takes a list of style ids to colors and generates a wig from it
 	proc/setup_wig(var/style_list)
@@ -27,7 +29,7 @@
 		for (var/style_id in style_list)
 			if (style_id == "none")
 				continue
-			var/image/h_image = image('icons/mob/human_hair.dmi', style_id)
+			var/image/h_image = image('icons/mob/human_hair.dmi', style_id) //  aloe TODO make these work with unlockable hair
 			h_image.color = style_list[style_id]
 			src.overlays += h_image
 			src.wear_image.overlays += h_image
@@ -62,9 +64,9 @@
 		var/list/possible_hairstyles
 
 		if (prob(50))
-			possible_hairstyles = filtered_concrete_typesof(/datum/customization_style, /proc/ismasc)
+			possible_hairstyles = pick(get_available_custom_style_types(filter_gender=FEMININE))
 		else
-			possible_hairstyles = filtered_concrete_typesof(/datum/customization_style, /proc/isfem)
+			possible_hairstyles = pick(get_available_custom_style_types(filter_gender=MASCULINE))
 
 		var/datum/customization_style/hair_type
 		var/picked_color = rgb(rand(0,255),rand(0,255),rand(0,255))
@@ -121,7 +123,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] slashes [his_or_her(user)] own throat with [src]!</b>"))
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
 		SPAWN(50 SECONDS)
@@ -165,7 +167,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] slashes [his_or_her(user)] own throat with [src]!</b>"))
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
 		SPAWN(50 SECONDS)
@@ -210,7 +212,7 @@
 				which_part = "entire coiffure"
 			if (EYES)
 				which_part = "eyes"
-		boutput(user, "<span class='hint'>You change your grip on the [src] to one that'll aim for the recipient's [which_part].</span>")
+		boutput(user, SPAN_HINT("You change your grip on the [src] to one that'll aim for the recipient's [which_part]."))
 
 /obj/item/reagent_containers/food/drinks/hairgrowth
 	name = "\improper EZ-Hairgrowth"
@@ -254,20 +256,20 @@
 		boutput(user, "Please call 1-800-CODER and tell us what's going on!")
 		return 0
 	if(src.uses_left <= 0)
-		boutput(user, "<span class='alert'>\The [src] is empty!</span>")
+		boutput(user, SPAN_ALERT("\The [src] is empty!"))
 		return 0
 	if(!M?.organHolder?.head)
-		boutput(user, "<span class='alert'>[M] has no head, and you're all out of stump dye!</span>")
+		boutput(user, SPAN_ALERT("[M] has no head, and you're all out of stump dye!"))
 		return 0
 	else //if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 		var/mob/living/carbon/human/H = M
 		if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES)))
 			// you can't stab someone in the eyes wearing a mask! - please do not stab people in the eyes with a dye bottle tia
-			boutput(user, "<span class='hint'>You're going to need to remove that mask/helmet first.</span>")
+			boutput(user, SPAN_HINT("You're going to need to remove that mask/helmet first."))
 			return 0
 		var/result_msg1 = "[user] dyes [M]'s hair."
-		var/result_msg2 = "<span class='notice'>You dye [M]'s hair.</span>"
-		var/result_msg3 = "<span class='notice'>[user] dyes your hair.</span>"
+		var/result_msg2 = SPAN_NOTICE("You dye [M]'s hair.")
+		var/result_msg3 = SPAN_NOTICE("[user] dyes your hair.")
 		var/is_barber = user.mind.assigned_role == "Barber"
 		var/passed_dye_roll = 1
 
@@ -306,7 +308,7 @@
 			switch(bottle.hair_group)
 				if(BOTTOM_DETAIL, MIDDLE_DETAIL, TOP_DETAIL)
 					if(!is_barber && prob(25))
-						boutput(M, "<span class='alert'>Oh no, you dyed the wrong thing!</span> Maybe they won't notice?")
+						boutput(M, "[SPAN_ALERT("Oh no, you dyed the wrong thing!")] Maybe they won't notice?")
 						bottle.hair_group = pick(list(BOTTOM_DETAIL, MIDDLE_DETAIL, TOP_DETAIL) - bottle.hair_group)
 					switch(bottle.hair_group)
 						if(BOTTOM_DETAIL)
@@ -317,7 +319,7 @@
 							M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
 				if(ALL_HAIR)
 					if(src.uses_left < 3)
-						boutput(M, "<span class='notice'>This dyejob's going to need a full bottle!</span>")
+						boutput(M, SPAN_NOTICE("This dyejob's going to need a full bottle!"))
 						return
 					else
 						M.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
@@ -327,14 +329,14 @@
 				if(EYES)
 					M.bioHolder.mobAppearance.e_color = bottle.customization_first_color
 					result_msg1 ="[user] dumps the [src] into [M]'s eyes!"
-					result_msg2 ="<span class='notice'>You dump the [src] in [M]'s eyes.</span>"
-					result_msg3 ="<span class='alert'>[user] dumps the [src] into your eyes!</span>"
+					result_msg2 =SPAN_NOTICE("You dump the [src] in [M]'s eyes.")
+					result_msg3 =SPAN_ALERT("[user] dumps the [src] into your eyes!")
 					if(user.mind.assigned_role == "Barber")
 						SPAWN(2 SECONDS)
 							boutput(M, "Huh, that actually didn't hurt that much. What a great [pick("barber", "stylist", "bangmangler")]!")
 					else
 						M.emote("scream", 0)
-						boutput(M, "<span class='alert'>IT BURNS!</span> But the pain fades quickly. Huh.")
+						boutput(M, "[SPAN_ALERT("IT BURNS!")] But the pain fades quickly. Huh.")
 			user.tri_message(M, result_msg1,\
 												result_msg2,\
 												result_msg3)
@@ -425,9 +427,9 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 
 	proc/insert_bottle(obj/item/dye_bottle/bottle, mob/user)
 		if(src.bottle)
-			boutput(user, "<span class='notice'>The dispenser already has a dye bottle in it.</span>")
+			boutput(user, SPAN_NOTICE("The dispenser already has a dye bottle in it."))
 		else
-			boutput(user, "<span class='notice'>You insert the dye bottle into the dispenser.</span>")
+			boutput(user, SPAN_NOTICE("You insert the dye bottle into the dispenser."))
 			if(bottle)
 				user.drop_item(bottle)
 				bottle.set_loc(src)
@@ -439,7 +441,7 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 		if(usr.stat || usr.restrained())
 			return
 		if (isAI(usr))
-			boutput(usr, "<span class='alert'>You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
+			boutput(usr, SPAN_ALERT("You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input."))
 			return
 
 		if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))))

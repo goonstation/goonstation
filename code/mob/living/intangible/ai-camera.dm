@@ -57,6 +57,8 @@
 		var/client_color = src.client.color
 		src.client.color = "#000000"
 		SPAWN(0) //let's try not hanging the entire server for 6 seconds every time an AI has wonky internet
+			if (!src.client) // just client things
+				return
 			src.client.images += aiImages
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.update_name_tag()
@@ -100,7 +102,7 @@
 			C.apply_keybind("robot_tg")
 
 	process_move(keys)
-		if(keys && src.move_dir && !src.use_movement_controller && !istype(src.loc, /turf)) //when a movement key is pressed, move out of tracked mob
+		if(keys && src.move_dir && !src.override_movement_controller && !istype(src.loc, /turf)) //when a movement key is pressed, move out of tracked mob
 			var/mob/living/intangible/aieye/O = src
 			O.set_loc(get_turf(src))
 		. = ..()
@@ -261,6 +263,7 @@
 		if (src.mainframe)
 			src.mainframe.say(message)
 		else
+			SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 			visible_message("[html_encode("[src]")] says, <b>[html_encode("[message]")]</b>")
 
 	say_radio()
@@ -290,6 +293,11 @@
 		//return mainframe.gib(give_medal, include_ejectables) //re-enable this when you are SUPREMELY CONFIDENT that all calls to gib() have intangible checks
 
 
+	create_viewport(kind, title, size, share_planes)
+		if (length(src.client?.getViewportsByType(VIEWPORT_ID_AI)) >= src.mainframe.viewport_limit)
+			boutput(src, SPAN_ALERT("You lack the computing resources needed to open another viewport."))
+		else
+			. = ..()
 
 	proc/mainframe_check()
 		if (mainframe)
@@ -305,7 +313,7 @@
 		if (src.mainframe)
 			mainframe.show_laws(0, src)
 		else
-			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
+			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
 		return
 
 	verb/cmd_return_mainframe()
@@ -321,7 +329,7 @@
 			mainframe.return_to(src)
 			update_statics()
 		else
-			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
+			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
 		return
 
 	verb/ai_view_crew_manifest()

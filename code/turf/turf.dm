@@ -38,8 +38,9 @@
 	var/tmp/blocked_dirs = 0
 	/// this turf is allowing unrestricted hotbox reactions
 	var/tmp/allow_unrestricted_hotbox = FALSE
+	/// an associative list of gangs to gang claims, representing who has a claim to, or other ownership on this tile
+	var/list/datum/gangtileclaim/controlling_gangs
 	var/wet = 0
-	var/sticky = FALSE
 	throw_unlimited = FALSE //throws cannot stop on this tile if true (also makes space drift)
 
 	var/step_material = 0
@@ -333,12 +334,14 @@
 /turf/space/New()
 	..()
 	if(global.dont_init_space) return
-	if (icon_state == "placeholder") icon_state = "[rand(1,25)]"
-	if (icon_state == "aplaceholder") icon_state = "a[rand(1,10)]"
-	if (icon_state == "dplaceholder") icon_state = "[rand(1,25)]"
-	if (icon_state == "d2placeholder") icon_state = "near_blank"
-	if (blowout == 1)
-		icon_state = "blowout[rand(1,5)]"
+	switch(icon_state)
+		if ("placeholder")
+			icon_state = "[rand(1,25)]"
+		if ("aplaceholder")
+			icon_state = "a[rand(1,10)]"
+		if ("dplaceholder")
+			icon_state = "[rand(1,25)]"
+
 	if (derelict_mode == 1)
 		icon = 'icons/turf/floors.dmi'
 		icon_state = "darkvoid"
@@ -417,7 +420,9 @@ proc/generate_space_color()
 	#ifndef CI_RUNTIME_CHECKING
 	if(fullbright)
 		if(!starlight)
-			starlight = image('icons/effects/overlays/simplelight.dmi', "starlight", pixel_x = -32, pixel_y = -32)
+			starlight = mutable_appearance('icons/effects/overlays/simplelight.dmi', "starlight")
+			starlight.pixel_x = -32
+			starlight.pixel_y = -32
 			starlight.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 			starlight.layer = LIGHTING_LAYER_BASE
 			starlight.plane = PLANE_LIGHTING
@@ -853,13 +858,17 @@ var/global/in_replace_with = 0
 
 				#undef _OLD_GAS_VAR_RESTORE
 			#undef _OLD_GAS_VAR_NOT_NULL
-
+			if(N.air)
+				N.update_visuals(N.air)
 			// tell atmos to update this tile's air settings
 			if (air_master)
 				air_master.tiles_to_update |= N
+		else if (air_master)
+			air_master.high_pressure_delta -= src //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
 			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.
+
 
 	if (istype(new_turf, /turf/simulated))
 		// tells the atmos system "hey this tile changed, maybe rebuild the group / borders"
@@ -1201,13 +1210,13 @@ TYPEINFO(/turf/simulated)
 /turf/space/attackby(obj/item/C, mob/user)
 	var/area/A = get_area (user)
 	if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
-		boutput(user, "<span class='alert'>You can't build here.</span>")
+		boutput(user, SPAN_ALERT("You can't build here."))
 		return
 	var/obj/item/rods/R = C
 	if (istype(R))
 		if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
 
-		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
+		boutput(user, SPAN_NOTICE("Constructing support lattice ..."))
 		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 		R.change_stack_amount(-1)
 		var/obj/lattice/lattice = new(src)
@@ -1334,7 +1343,7 @@ TYPEINFO(/turf/simulated)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/shovel))
 			if (src.icon_state == "dirt-dug")
-				boutput(user, "<span class='alert'>That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space.</span>")
+				boutput(user, SPAN_ALERT("That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space."))
 				return
 
 			user.visible_message("<b>[user]</b> begins to dig!", "You begin to dig!")

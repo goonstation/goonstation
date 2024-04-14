@@ -54,7 +54,7 @@
 					slotItem.set_loc(user.loc)
 					slots["[slotNum]"] = null
 					user.put_in_hand(slotItem, user.hand)
-					boutput(user, "<span class='notice'><B>You take the [slotItem] out of the cabinet.</B></span>")
+					boutput(user, SPAN_NOTICE("<B>You take the [slotItem] out of the cabinet.</B>"))
 					rebuildOverlays()
 					return
 			else
@@ -62,7 +62,7 @@
 					if(canHold(I))
 						takeItem(user, I, "[slotNum]") //aaaah.
 					else
-						boutput(user, "<span class='alert'><B>You can't put that item in the cabinet.</B></span>")
+						boutput(user, SPAN_ALERT("<B>You can't put that item in the cabinet.</B>"))
 
 	proc/takeItem(var/mob/user, var/obj/item/I, var/slotNum = null)
 		if (!ishuman(user))
@@ -74,7 +74,7 @@
 					break
 
 		if(!slotNum) //Still no free slot number, we're full.
-			boutput(user, "<span class='alert'><B>The cabinet is full.</B></span>")
+			boutput(user, SPAN_ALERT("<B>The cabinet is full.</B>"))
 			return
 
 		if(I && I == user.equipped())
@@ -82,7 +82,7 @@
 			I.set_loc(src)
 			slots[slotNum] = I
 			rebuildOverlays()
-			boutput(user, "<span class='notice'><B>You put the [I] into the cabinet.</B></span>")
+			boutput(user, SPAN_NOTICE("<B>You put the [I] into the cabinet.</B>"))
 		return
 
 	proc/canHold(var/obj/item/I)
@@ -262,12 +262,12 @@
 /obj/cabinet/taffy // for psychiatrists to prescribe
 
 	New()
-		slots["1"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/cherry(src)
-		slots["2"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/watermelon(src)
-		slots["3"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry(src)
-		slots["4"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/cherry(src)
-		slots["5"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/watermelon(src)
-		slots["6"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry(src)
+		slots["1"] = new /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry(src)
+		slots["2"] = new /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/watermelon(src)
+		slots["3"] = new /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/blueraspberry(src)
+		slots["4"] = new /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry(src)
+		slots["5"] = new /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/watermelon(src)
+		slots["6"] = new /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/blueraspberry(src)
 		rebuildOverlays()
 		return ..()
 

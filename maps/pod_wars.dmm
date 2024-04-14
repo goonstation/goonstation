@@ -405,11 +405,11 @@
 /area/pod_wars/spacejunk/fstation/medbay)
 "bQ" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit{
+/obj/item/clothing/suit/hazard/bio_suit{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/clothing/suit/bio_suit,
+/obj/item/clothing/suit/hazard/bio_suit,
 /obj/item/clothing/head/bio_hood{
 	pixel_x = -5;
 	pixel_y = 20
@@ -4611,7 +4611,7 @@
 /area/pod_wars/team2/power)
 "rR" = (
 /obj/table/reinforced/bar/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "rS" = (
@@ -6118,7 +6118,7 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "xy" = (
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/table/auto,
 /turf/simulated/floor/green/side{
 	dir = 10
@@ -8567,8 +8567,8 @@
 /obj/item/satchel/mining,
 /obj/item/satchel/mining,
 /obj/item/satchel/mining,
-/obj/item/mining_tool/power_pick,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
+/obj/item/mining_tool/powered/pickaxe,
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team2/mining)
 "HD" = (
@@ -9870,7 +9870,7 @@
 /area/pod_wars/spacejunk/miningoutpost)
 "MT" = (
 /obj/table/reinforced/bar/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "MU" = (
@@ -10398,7 +10398,7 @@
 "Pk" = (
 /obj/machinery/light/incandescent/netural,
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/restaurant)
 "Pm" = (
@@ -10693,8 +10693,8 @@
 /obj/item/satchel/mining,
 /obj/item/satchel/mining,
 /obj/item/satchel/mining,
-/obj/item/mining_tool/power_pick,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
+/obj/item/mining_tool/powered/pickaxe,
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team1/mining)
 "Qr" = (

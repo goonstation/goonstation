@@ -45,7 +45,7 @@ Right Mouse Button + Ctrl              = Delete whole group of fluid / smoke<br>
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if(isnull(src.reagent_id))
-			boutput(usr, "<span class='alert'>Select a reagent first!</span>")
+			boutput(usr, SPAN_ALERT("Select a reagent first!"))
 			return
 		var/turf/T = get_turf(object)
 		if(isnull(T))

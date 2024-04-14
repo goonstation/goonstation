@@ -63,7 +63,7 @@ TYPEINFO(/obj/item/storage/wall)
 		if (prob(50))
 			src.storage.add_contents(new /obj/item/clothing/head/helmet/firefighter(src))
 		if (prob(30))
-			src.storage.add_contents(new /obj/item/clothing/suit/fire(src))
+			src.storage.add_contents(new /obj/item/clothing/suit/hazard/fire(src))
 			src.storage.add_contents(new /obj/item/clothing/mask/gas/emergency(src))
 		if (prob(10))
 			src.storage.add_contents(new /obj/item/storage/firstaid/fire(src))
@@ -179,7 +179,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/satchel/mining = 2,
 	/obj/item/oreprospector,
 	/obj/item/ore_scoop,
-	/obj/item/mining_tool/power_pick,
+	/obj/item/mining_tool/powered/pickaxe,
 	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/storage/belt/mining)
 

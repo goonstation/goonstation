@@ -4,7 +4,7 @@
 	icon = 'icons/obj/clothing/item_wizard_rings.dmi'
 	icon_state = "ring"
 	item_state = "ring"
-	burn_possible = 0
+	burn_possible = FALSE
 	magical = 1
 	var/ability_path = null			//The ability that this ring is linked to.	//When it's null it's either soulguard or the parent. I'm lazy.
 	var/last_cast = 0
@@ -68,7 +68,7 @@
 		unequipped(var/mob/user)
 			..()
 			if (user?.bioHolder.RemoveEffect("hulk"))
-				boutput(user, "<span class='alert'><b>Removing [src] removes its powers with it!</b></span>")
+				boutput(user, SPAN_ALERT("<b>Removing [src] removes its powers with it!</b>"))
 			REMOVE_ATOM_PROPERTY(user, PROP_MOB_PASSIVE_WRESTLE, "empower")
 			REMOVE_ATOM_PROPERTY(user, PROP_MOB_STAMINA_REGEN_BONUS, "empower")
 
@@ -88,7 +88,7 @@
 				created_staff = staff
 
 			if (created_staff?.wizard_key != user?.mind.key && !isvirtual(user))
-				boutput(user, "<span class='notice'><b>You claim [created_staff] as your own!</b></span>")
+				boutput(user, SPAN_NOTICE("<b>You claim [created_staff] as your own!</b>"))
 				created_staff.wizard_key = user?.mind.key
 
 		disposing()
@@ -110,7 +110,7 @@
 				created_staff = staff
 
 			if (created_staff?.wizard_key != user?.mind.key && !isvirtual(user))
-				boutput(user, "<span class='notice'><b>You claim [created_staff] as your own!</b></span>")
+				boutput(user, SPAN_NOTICE("<b>You claim [created_staff] as your own!</b>"))
 				created_staff.wizard_key = user?.mind.key
 
 		disposing()
@@ -307,6 +307,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (alert(usr, "Are you sure you want to spawn all wizard rings at your current location?", "Spawn rings", "Yes", "No, I misclicked") == "No, I misclicked")
 		return
 	var/turf/T_LOC = get_turf(src.mob)

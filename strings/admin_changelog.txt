@@ -1,4 +1,42 @@
-(t)fri nov 3 23
+(t)wed apr 3 24
+(u)LeahTheTech
+(+)Pixel explosion mode is now a single verb toggle like everything else.
+(t)tue apr 02 24
+(u)Mordent
+(*)Player Polls panel now has a dedicated UI for creating polls
+(t)thu mar 21 24
+(u)Sord
+(+)"Give everyone a random firearm" button now allows you to choose either a safe-ish pick or fullrandom
+(t)mon mar 13 24
+(u)Sovexe
+(*)The Job Manager has been remade in TGUI
+(t)mon mar 11 24
+(u)LeahTheTech
+(*)Added "Plant" buildmode that lets you plant plants in things. You can set the mutation and density of the plants.
+(t)fri mar 08 24
+(u)LeahTheTech
+(*)Added admin juggling ability for juggling people and things you shouldn't.
+(t)sun feb 25 24
+(u)Azrun
+(*)Caves added to Find Planets and Terrainify
+(t)tue feb 20 24
+(u)Azrun
+(*)IO/Lava Moon added to Find Planets and Terrainify
+(t)wed jan 24 24
+(u)LeahTheTech
+(*)The law rack corruption random event can now be configured with custom laws.
+(t)mon jan 08 24
+(u)LeahTheTech
+(*)Added a pixel offsets editor to the admin interact menu to make pixel shifting easier.
+(t)mon dec 04 23
+(u)LeahTheTech
+(*)Added a "spawn rules" system for setting persistant varedits for all players. Type `spawn template` to access the template mob.
+(u)pali
+(*)The job creator can now edit existing jobs. Give staff assistants clown masks on spawn or whatever!
+(t)thu nov 09 23
+(u)Zamujasa
+(*)Added an admin object `/obj/admin_spacebux_store`. Spawn it, click it, and then click an item you want to sell copies of. It'll ask for how much (in spacebux, 0 is free), how many, and how many a player should be able to buy. May have bugs! I dunno yet!
+(t)fri nov 03 23
 (u)LeahTheTech
 (*)Added an admin spawned beacon item `/obj/item/device/event_beacon` that send a notification to the admin that spawned it when used. May be useful for gimmicks where you want players to be able to "summon" some kind of admin intervention.
 (t)tue oct 31 23
@@ -35,9 +73,6 @@
 (t)tue jul 11 23
 (u)Azrun
 (*)Bulk law changes now support paths (Now you can add hologram and ability modules)
-(t)tue jun 27 23
-(u)tarmunora
-(*)Admin PMs will display admin keys as ckey (as altkey) if alt key is set
 (t)fri jun 16 23
 (u)Sord
 (+)ASAY now shows your current alt key if you have one set

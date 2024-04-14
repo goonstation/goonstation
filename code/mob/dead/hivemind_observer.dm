@@ -1,5 +1,6 @@
 /mob/dead/target_observer/hivemind_observer
 	is_respawnable = FALSE
+	locked = TRUE
 	var/datum/abilityHolder/changeling/hivemind_owner
 	var/can_exit_hivemind_time = 0
 	var/last_attack = 0
@@ -16,7 +17,7 @@
 		return 1
 
 	say(var/message)
-		message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)
 			return
@@ -29,7 +30,7 @@
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
 			return
-
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 		. = src.say_hive(message, hivemind_owner)
 
 	stop_observing()
@@ -80,7 +81,7 @@
 		for (var/mob/member in hivemind_owner.get_current_hivemind())
 			if (!member.client)
 				continue
-			boutput(member, "<span class='game hivesay'><span class='prefix'>HIVEMIND: </span><b>[src]</b> points to [target].</span>")
+			boutput(member, SPAN_HIVESAY("[SPAN_PREFIX("HIVEMIND: ")]<b>[src]</b> points to [target]."))
 			member.client.images += point
 			viewers += member.client
 		var/matrix/M = matrix()
@@ -137,8 +138,8 @@
 	usr = src
 
 	if(world.time >= can_exit_hivemind_time && hivemind_owner && hivemind_owner.master != src)
-		boutput(src, "<span class='alert'>You have parted with the hivemind.</span>")
+		boutput(src, SPAN_ALERT("You have parted with the hivemind."))
 		src.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 	else
-		boutput(src, "<span class='alert'>You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds.</span>")
+		boutput(src, SPAN_ALERT("You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds."))
 

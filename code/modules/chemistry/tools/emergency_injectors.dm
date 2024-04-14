@@ -24,7 +24,6 @@
 		src.item_state = "emerg_inj-[src.label]"
 		src.fluid_image = image(src.icon, "emerg_inj-fluid")
 		src.fluid_image.color = src.reagents.get_average_color().to_rgba()
-		src.vis_contents += src.fluid_image
 		src.UpdateIcon()
 
 	on_reagent_change()
@@ -43,36 +42,36 @@
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (iscarbon(target) || ismobcritter(target))
 			if (src.empty || !src.reagents)
-				boutput(user, "<span class='alert'>There's nothing to inject, [src] has already been expended!</span>")
+				boutput(user, SPAN_ALERT("There's nothing to inject, [src] has already been expended!"))
 				return
 			else
 				if (!target.reagents)
 					return ..()
 				logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with [src] [log_reagents(src)]")
 				src.reagents.trans_to(target, amount_per_transfer_from_this)
-				user.visible_message("<span class='alert'>[user] injects [target == user ? himself_or_herself(user) : target] with [src]!</span>",\
-				"<span class='alert'>You inject [target == user ? "yourself" : target] with [src]!</span>")
+				user.visible_message(SPAN_ALERT("[user] injects [target == user ? himself_or_herself(user) : target] with [src]!"),\
+				SPAN_ALERT("You inject [target == user ? "yourself" : target] with [src]!"))
 				playsound(target, 'sound/items/hypo.ogg', 40, FALSE)
 				if(!src.reagents.total_volume)
 					src.empty = 1
 					src.name += " (expended)"
 				return
 		else
-			boutput(user, "<span class='alert'>You can only use [src] on people!</span>")
+			boutput(user, SPAN_ALERT("You can only use [src] on people!"))
 			return
 
 	attack_self(mob/user)
 		if (iscarbon(user) || ismobcritter(user))
 			if (src.empty || !src.reagents)
-				boutput(user, "<span class='alert'>There's nothing to inject, [src] has already been expended!</span>")
+				boutput(user, SPAN_ALERT("There's nothing to inject, [src] has already been expended!"))
 				return
 			else
 				if (!user.reagents)
 					return ..()
 				logTheThing(LOG_COMBAT, user, "injects themself with [src] [log_reagents(src)]")
 				src.reagents.trans_to(user, amount_per_transfer_from_this)
-				user.visible_message("<span class='alert'>[user] injects [himself_or_herself(user)] with [src]!</span>",\
-				"<span class='alert'>You inject yourself with [src]!</span>")
+				user.visible_message(SPAN_ALERT("[user] injects [himself_or_herself(user)] with [src]!"),\
+				SPAN_ALERT("You inject yourself with [src]!"))
 				playsound(user, 'sound/items/hypo.ogg', 40, FALSE)
 				if(!src.reagents.total_volume)
 					src.empty = 1
@@ -119,6 +118,12 @@
 	initial_reagents = list("penteticacid"=5)
 	label = "blue"
 	desc = "An auto-injector containing pentetic acid, an experimental and aggressive chelation agent."
+
+/obj/item/reagent_containers/emergency_injector/omnizine
+	name = "emergency auto-injector (omnizine)"
+	initial_reagents = list("omnizine"=5)
+	label = "white"
+	desc = "An auto-injector containing omnizine, the manufacturer's label is scratched off."
 
 /obj/item/reagent_containers/emergency_injector/insulin
 	name = "emergency auto-injector (insulin)"
@@ -220,7 +225,7 @@
 	label = "black"
 	desc = "An auto-injector containing uhh, well, y'see... Hmm. You're unsure on this one."
 	New()
-		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "lsd_bee", "space_drugs", "THC", "mucus", "green mucus", "crank", "bathsalts", "krokodil", "catdrugs", "jenkem", "psilocybin", "omnizine")
+		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "lsd_bee", "space_drugs", "THC", "mucus", "green mucus", "crank", "bathsalts", "krokodil", "catdrugs", "psilocybin", "omnizine")
 		..()
 
 

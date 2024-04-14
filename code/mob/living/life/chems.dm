@@ -13,7 +13,7 @@
 			owner.reagents.temperature_reagents(owner.bodytemperature, 100*reagent_time_multiplier, 100, 15*reagent_time_multiplier)
 
 			if (blood_system && owner.reagents.get_reagent("[owner.blood_id]"))
-				var/blood2absorb = min(owner.blood_absorption_rate, owner.reagents.get_reagent_amount("[owner.blood_id]")) * reagent_time_multiplier
+				var/blood2absorb = min(owner.get_blood_absorption_rate(), owner.reagents.get_reagent_amount("[owner.blood_id]")) * reagent_time_multiplier
 				owner.reagents.remove_reagent("[owner.blood_id]", blood2absorb)
 				owner.blood_volume += blood2absorb
 			if (owner.metabolizes && owner.reagents)//idk it runtimes)

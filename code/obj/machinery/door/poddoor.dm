@@ -362,6 +362,14 @@
 
 	// meant for use inside station, or if connected to space, not a door
 	shutters
+		New()
+			..()
+			START_TRACKING
+
+		disposing()
+			STOP_TRACKING
+			..()
+
 
 /obj/machinery/door/poddoor/blast/pyro
 	icon = 'icons/obj/doors/SL_doors.dmi'
@@ -1011,7 +1019,7 @@
 
 	SPAWN(0)
 		src.operating = 1
-		flick("[icon_base]1", src)
+		flick("[icon_base]c1", src)
 		src.icon_state = "[icon_base]1"
 		src.set_density(1)
 		if (src.visible)

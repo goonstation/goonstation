@@ -42,13 +42,13 @@
 			if (user.zone_sel.selecting == "l_arm")
 				HH = hands[1]
 				if (!HH.limb)
-					boutput(user, ("<span class='alert'><B> [src] has no left arm! </B></span>"))
+					boutput(user, (SPAN_ALERT("<B> [src] has no left arm! </B>")))
 					return
 				actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "left"), user)
 			else if (user.zone_sel.selecting == "r_arm")
 				HH = hands[2]
 				if (!HH.limb)
-					boutput(user, ("<span class='alert'><B> [src] has no right arm! </B></span>"))
+					boutput(user, (SPAN_ALERT("<B> [src] has no right arm! </B>")))
 					return
 				actions.start(new/datum/action/bar/icon/critter_arm_removal(src, "right"), user)
 			else return ..()
@@ -58,14 +58,14 @@
 			return TRUE
 		if (prob(20) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
 			playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 60, 1)
-			src.visible_message("<span class='alert'><b>[src] laughs!</b></span>", 1)
+			src.visible_message(SPAN_ALERT("<b>[src] laughs!</b>"))
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/brullbar_roar.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b><span class='alert'>[src] howls!</span></b>"
+					return SPAN_ALERT("<b>[src] howls!</b>")
 		return null
 
 	specific_emote_type(var/act)
@@ -119,7 +119,7 @@
 		if (ishuman(C))
 			var/mob/living/carbon/human/H = C
 			if(!is_king && iswerewolf(H))
-				src.visible_message("<span class='alert'><b>[src] backs away in fear!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[src] backs away in fear!</b>"))
 				step_away(src, H, 15)
 				src.set_dir(get_dir(src, H))
 				return FALSE
@@ -130,7 +130,7 @@
 
 		if (length(.) && prob(10))
 			playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 75, 1)
-			src.visible_message("<span class='alert'><B>[src]</B> roars!</span>")
+			src.visible_message(SPAN_ALERT("<B>[src]</B> roars!"))
 
 	seek_scavenge_target(var/range = 9)
 		. = list()
@@ -161,7 +161,7 @@
 
 	critter_scavenge(var/mob/target)
 		if (prob(30))
-			src.visible_message("<span class='alert'><b>[src] devours [target]! Holy shit!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src] devours [target]! Holy shit!</b>"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			if (ishuman(target)) new /obj/decal/fakeobjects/skeleton(target.loc)
 			target.ghostize()
@@ -182,17 +182,17 @@
 		if (isrobot(silicon) && !ON_COOLDOWN(src, "brullbar_messup_cyborg", 30 SECONDS))
 			var/mob/living/silicon/robot/cyborg = silicon
 			if (cyborg.part_head.ropart_get_damage_percentage() >= 85)
-				src.visible_message("<span class='alert'><B>[src] grabs [cyborg.name]'s head and wrenches it right off!</B></span>")
+				src.visible_message(SPAN_ALERT("<B>[src] grabs [cyborg.name]'s head and wrenches it right off!</B>"))
 				playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 50, 1)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
 				cyborg.compborg_lose_limb(cyborg.part_head)
 			else
-				src.visible_message("<span class='alert'><B>[src] pounds on [cyborg.name]'s head furiously!</B></span>")
+				src.visible_message(SPAN_ALERT("<B>[src] pounds on [cyborg.name]'s head furiously!</B>"))
 				playsound(src.loc, 'sound/voice/animal/brullbar_scream.ogg', 60, 1)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 				cyborg.part_head.ropart_take_damage(rand(20,40),0)
 		else
-			src.visible_message("<span class='alert'><B>[src] smashes [silicon] furiously!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] smashes [silicon] furiously!</B>"))
 			playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 			random_brute_damage(silicon, 15, 0)
 

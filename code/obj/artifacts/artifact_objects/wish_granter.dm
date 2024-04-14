@@ -48,7 +48,7 @@
 		sleep(0.5 SECONDS)
 		boutput(user, "<b>[O]</b> resonates, \"<big>SO BE IT...</big>\"")
 		playsound(O, 'sound/musical_instruments/Gong_Rumbling.ogg', 40, TRUE)
-		O.visible_message("<span class='alert'><b>[O]</b> begins to charge up...</span>")
+		O.visible_message(SPAN_ALERT("<b>[O]</b> begins to charge up..."))
 		O.ArtifactFaultUsed(user)
 		sleep(3 SECONDS)
 		if (prob(2))
@@ -57,7 +57,7 @@
 		if (evil)
 			switch(wish)
 				if("I wish to become rich!")
-					O.visible_message("<span class='alert'><b>[O]</b> envelops [user] in a golden light!</span>")
+					O.visible_message(SPAN_ALERT("<b>[O]</b> envelops [user] in a golden light!"))
 					playsound(user, 'sound/weapons/flashbang.ogg', 50, TRUE)
 					for(var/mob/N in viewers(user, null))
 						N.flash(3 SECONDS)
@@ -67,7 +67,7 @@
 					user.become_statue(getMaterial("gold"),"A statue of someone very wealthy", TRUE)
 
 				if("I wish for great power!")
-					O.visible_message("<span class='alert'><b>[O] discharges a massive bolt of electricity!</b></span>")
+					O.visible_message(SPAN_ALERT("<b>[O] discharges a massive bolt of electricity!</b>"))
 					playsound(user, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 					var/list/affected = DrawLine(O,user,/obj/line_obj/elec,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 					for(var/obj/OB in affected)
@@ -78,7 +78,7 @@
 		else
 			switch(wish)
 				if("I wish to become rich!")
-					O.visible_message("<span class='alert'>A ton of money falls out of thin air! Woah!</span>")
+					O.visible_message(SPAN_ALERT("A ton of money falls out of thin air! Woah!"))
 					for(var/turf/T in range(user,2))
 						if (T.density)
 							continue
@@ -86,7 +86,7 @@
 						S.setup(T)
 
 				if("I wish for great power!")
-					O.visible_message("<span class='alert'><b>[O]</b> envelops [user] in a brilliant light!</span>")
+					O.visible_message(SPAN_ALERT("<b>[O]</b> envelops [user] in a brilliant light!"))
 					if (ishuman(user))
 						var/mob/living/carbon/human/H = user
 						if (H.bioHolder)

@@ -82,11 +82,12 @@
 	if(!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
 		ret["charge"] = "?"
 		ret["max_charge"] = "?"
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Incapacitor
-		<br><span class='bold'>Energy:</span> [ret["charge"]]
-		<br><span class='bold'>Max Energy:</span> [ret["max_charge"]]
-		<br><span class='bold'>###=-</span></span><br>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] Incapacitor<br>\
+		[SPAN_BOLD("Energy:")] [ret["charge"]]<br>\
+		[SPAN_BOLD("Max Energy:")] [ret["max_charge"]]<br>\
+		[SPAN_BOLD("###=-")]")]"}
+
 
 ////////////
 // FLOCKCACHE
@@ -101,7 +102,8 @@
 /obj/item/flockcache/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed. data packet received.
-		<br><span class='bold'>ID:</span> Resource Cache
-		<br><span class='bold'>Resources:</span> [resources]
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] Resource Cache<br>\
+		[SPAN_BOLD("Resources:")] [resources]%<br>\
+		[SPAN_BOLD("###=-")]")]"}
+

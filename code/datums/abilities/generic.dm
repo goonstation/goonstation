@@ -124,7 +124,7 @@
 			var/mob/living/M = hit_atom
 			SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 			if (check_target_immunity(M, source = src))
-				src.visible_message("<b><span class='alert'>[src] bounces off [M] harmlessly!</span></b>")
+				src.visible_message(SPAN_ALERT("<b>[src] bounces off [M] harmlessly!</b>"))
 				return
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 
@@ -232,3 +232,20 @@
 
 	cast(atom/target)
 		holder.owner.show_credits()
+
+/datum/targetable/juggle
+	name = "Juggle"
+	desc = "Juggle anything."
+	cooldown = 10 SECOND
+	targeted = TRUE
+	target_anything = TRUE
+	var/empowered = FALSE
+
+	cast(atom/movable/target)
+		if (!ishuman(src.holder.owner))
+			return
+		if (!src.empowered && (target.anchored || target == src.holder.owner) || target.anchored == ANCHORED_ALWAYS)
+			boutput(src.holder.owner, SPAN_ALERT("Your juggling abilities aren't quite enough to juggle that."))
+			return
+		var/mob/living/carbon/human/human = src.holder.owner
+		human.add_juggle(target)

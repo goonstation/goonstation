@@ -89,6 +89,10 @@ var/global/logLength = 0
 		if ((!diaryLogging || forceNonDiaryLoggingToo) && config.allowRotatingFullLogs)
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 			logLength++
+
+		if (!diaryLogging)
+			var/datum/eventRecord/Log/logEvent = new()
+			logEvent.send(type, source && source != "<span class='blank'>(blank)</span>" ? source : null, text)
 	return
 
 ///Check config for whether a message should be logged to the diary
@@ -121,16 +125,17 @@ var/global/logLength = 0
 /proc/log_tgui(user, message, context,
 		datum/tgui_window/window,
 		datum/src_object)
-	var/entry = "\[tgui\] " // |GOONSTATION-CHANGE| (tgui:->\[tgui\])
+	var/entry = "" // |GOONSTATION-CHANGE| (tgui:->)
 	// Insert user info
+	var/source = null // |GOONSTATION-CHANGE| -> split source out of entry to send to logTheThing
 	if(!user)
-		entry += "(nobody)" // |GOONSTATION-CHANGE| (<nobody>->(nobody))
+		source = "(nobody)" // |GOONSTATION-CHANGE| (entry +->source ) (<nobody>->(nobody))
 	else if(istype(user, /mob))
 		var/mob/mob = user
-		entry += "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])"
+		source = "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])" // |GOONSTATION-CHANGE| (entry +->source )
 	else if(istype(user, /client))
 		var/client/client = user
-		entry += "[client.ckey]"
+		source = "[client.ckey]" // |GOONSTATION-CHANGE| (entry +->source )
 	// Insert context
 	if(context)
 		entry += " in [context]"
@@ -146,7 +151,7 @@ var/global/logLength = 0
 	if(message)
 		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)
 	entry += "<br>" // |GOONSTATION-CHANGE| (br)
-	WRITE_LOG(roundLog_name, entry)
+	logTheThing(LOG_TGUI, source, entry) // |GOONSTATION-CHANGE| (WRITE_LOG(roundLog_name, entry)->logTheThing(LOG_TGUI, source, entry))
 	logLength++
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
@@ -287,7 +292,7 @@ var/global/logLength = 0
 		if (type == "diary")
 			data += name
 		else
-			data += "<span class='name'>[name]</span>"
+			data += SPAN_NAME("[name]")
 	if (mobType)
 		data += " ([mobType])"
 	if (ckey && key)
@@ -348,7 +353,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 			friendly_fire = 1
 
 	if (friendly_fire)
-		logTheThing(LOG_COMBAT, shooter_data, "<span class='alert'>Friendly Fire!</span>[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+		logTheThing(LOG_COMBAT, shooter_data, "[SPAN_ALERT("Friendly Fire!")][vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 			mode.stats_manager?.inc_friendly_fire(shooter_data)
@@ -401,7 +406,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 		return
 	var/turf/our_turf = get_turf(A)
 	if (!our_turf)
-		return
+		return "(null)"
 	return "([showCoords(our_turf.x, our_turf.y, our_turf.z, plain, ghostjump=ghostjump)] in [our_turf.loc])"
 
 // Does what is says on the tin. We're using the global proc, though (Convair880).

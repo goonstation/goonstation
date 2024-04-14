@@ -71,7 +71,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 			qdel(W)
 			qdel(src)
 		else
-			boutput(user, "<span class='alert'>Looks like the fish won't fit over an intercom facing that way.</span>")
+			boutput(user, SPAN_ALERT("Looks like the fish won't fit over an intercom facing that way."))
 		return
 	. = ..()
 
@@ -92,7 +92,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	for(var/image/chat_maptext/I in src.chat_text?.lines)
 		I.bump_up()
 	var/maptext = generateMapText(msg, textLoc, style = "color:[color];", alpha = 255)
-	target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
+	if(maptext)
+		target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
 
 /obj/item/device/radio/intercom/receive_silicon_hotkey(var/mob/user)
 	..()
@@ -101,12 +102,12 @@ TYPEINFO(/obj/item/device/radio/intercom)
 		return
 
 	if (!isAIeye(user))
-		boutput("Deploy to an AI Eye first to override intercoms.")
+		boutput(user, "Deploy to an AI Eye first to override intercoms.")
 		return
 
 	if(user.client.check_key(KEY_BOLT))
 		if (src.locked_frequency)
-			boutput(user, "<span class='alert'>You can't override an intercom with a locked frequency!</span")
+			boutput(user, SPAN_ALERT("You can't override an intercom with a locked frequency!"))
 			return
 
 		var/original_src_frequency = src.frequency
@@ -116,7 +117,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 		// fake it till you make it
 		var/message = "<span class='radio [src.chat_class]' style='color:[src.device_color || text_colour]'>[radio_icon(src)]\
-		<span class='name'>[src]</span> <span class='message'>alerts, \"AI override engaged!\"</span></span>"
+		[SPAN_NAME("[src]")] [SPAN_MESSAGE("alerts, \"AI override engaged!\"")]</span>"
 		var/maptext = make_chat_maptext(src, "AI override engaged!", "color:[text_colour]")
 
 		src.speech_bubble(image('icons/mob/mob.dmi', "ai"))

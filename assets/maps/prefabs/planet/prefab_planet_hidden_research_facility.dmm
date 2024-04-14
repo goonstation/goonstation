@@ -70,7 +70,7 @@
 /area/noGenerate)
 "lC" = (
 /obj/storage/secure/closet/security,
-/obj/item/clothing/suit/bio_suit/armored,
+/obj/item/clothing/suit/hazard/bio_suit/armored,
 /obj/item/clothing/head/bio_hood,
 /turf/simulated/floor/redblack,
 /area/noGenerate)

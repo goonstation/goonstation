@@ -10,20 +10,23 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 
 	heal(var/mob/M)
 		..()
-		boutput(M, "<span class='alert'>It's just not good enough on its own...</span>")
+		boutput(M, SPAN_ALERT("It's just not good enough on its own..."))
 
 	afterattack(atom/target, mob/user, flag)
-		if (!src.reagents || src.qdeled || src.disposed) return //how
+		if (!src.reagents || !src.reagents?.total_volume || QDELETED(src)) return //how
+		if (istype(target, /obj/item/reagent_containers/food/snacks/condiment))
+			boutput(user, "<span class='alert'>You can't flavour a condiment!</span>")
+			return
 
 		if (istype(target, /obj/item/reagent_containers/food/snacks/))
-			user.visible_message("<span class='notice'>[user] adds [src] to \the [target].</span>", "<span class='notice'>You add [src] to \the [target].</span>")
+			user.visible_message(SPAN_NOTICE("[user] adds [src] to \the [target]."), SPAN_NOTICE("You add [src] to \the [target]."))
 			src.reagents.trans_to(target, 100)
 			qdel (src)
 			return
 
 		if (istype(target, /obj/item/reagent_containers/))
-			user.visible_message("<span class='notice'><b>[user]</b> crushes up \the [src] in \the [target].</span>",\
-			"<span class='notice'>You crush up \the [src] in \the [target].</span>")
+			user.visible_message(SPAN_NOTICE("<b>[user]</b> crushes up \the [src] in \the [target]."),\
+			SPAN_NOTICE("You crush up \the [src] in \the [target]."))
 			src.reagents.trans_to(target, 100)
 			qdel (src)
 
@@ -56,7 +59,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 
 	heal(var/mob/M)
 		. = ..()
-		boutput(M, "<span class='alert'>FUCK, SALTY!</span>")
+		boutput(M, SPAN_ALERT("FUCK, SALTY!"))
 		M.emote("scream")
 
 /obj/item/reagent_containers/food/snacks/condiment/mayo
@@ -101,6 +104,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	desc = "Not related to any kind of crop."
 	icon_state = "cream" //ITS NOT A GODDAMN COOKIE
 	food_color = "#F8F8F8"
+	initial_volume = 10
+	initial_reagents = list("cream"=10)
 
 /obj/item/reagent_containers/food/snacks/condiment/custard
 	name = "custard"
@@ -136,7 +141,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 
 	afterattack(atom/target, mob/user, flag)
 		if (istype(target, /obj/item/reagent_containers/food/snacks/) && src.reagents) //Wire: fix for Cannot execute null.trans to()
-			user.visible_message("<span class='notice'>[user] sprinkles [src] onto [target].</span>", "<span class='notice'>You sprinkle [src] onto [target].</span>")
+			user.visible_message(SPAN_NOTICE("[user] sprinkles [src] onto [target]."), SPAN_NOTICE("You sprinkle [src] onto [target]."))
 			src.reagents.trans_to(target, 20)
 			qdel (src)
 		else return
@@ -188,24 +193,26 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES))
-				H.tri_message(user, "<span class='alert'><b>[user]</b> uselessly [myVerb]s some [src.stuff] onto [H]'s headgear!</span>",\
-					"<span class='alert'>[H == user ? "You uselessly [myVerb]" : "[user] uselessly [myVerb]s"] some [src.stuff] onto your headgear! Okay then.</span>",\
-					"<span class='alert'>You uselessly [myVerb] some [src.stuff] onto [user == H ? "your" : "[H]'s"] headgear![user == H ? " Okay then." : null]</span>")
+				H.tri_message(user, SPAN_ALERT("<b>[user]</b> uselessly [myVerb]s some [src.stuff] onto [H]'s headgear!"),\
+					SPAN_ALERT("[H == user ? "You uselessly [myVerb]" : "[user] uselessly [myVerb]s"] some [src.stuff] onto your headgear! Okay then."),\
+					SPAN_ALERT("You uselessly [myVerb] some [src.stuff] onto [user == H ? "your" : "[H]'s"] headgear![user == H ? " Okay then." : null]"))
 				src.shakes ++
 				return
 			else
 				switch (src.stuff)
 					if ("salt")
-						H.tri_message(user, "<span class='alert'><b>[user]</b> [myVerb]s something into [H]'s eyes!</span>",\
-							"<span class='alert'>[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some salt into your eyes! <B>FUCK!</B></span>",\
-							"<span class='alert'>You [myVerb] some salt into [user == H ? "your" : "[H]'s"] eyes![user == H ? " <B>FUCK!</B>" : null]</span>")
+						H.tri_message(user, SPAN_ALERT("<b>[user]</b> [myVerb]s something into [H]'s eyes!"),\
+							SPAN_ALERT("[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some salt into your eyes! <B>FUCK THAT STINGS!</B>"),\
+							SPAN_ALERT("You [myVerb] some salt into [user == H ? "your" : "[H]'s"] eyes![user == H ? " <B>FUCK THAT STINGS!</B>" : null]"))
 						random_brute_damage(user, 1)
+						H.change_eye_blurry(rand(10, 16))
+						H.take_eye_damage(rand(12, 16))
 						src.shakes ++
 						return
 					if ("pepper")
-						H.tri_message(user, "<span class='alert'><b>[user]</b> [myVerb]s something onto [H]'s nose!</span>",\
-							"<span class='alert'>[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some pepper onto your nose! <B>Why?!</B></span>",\
-							"<span class='alert'>You [myVerb] some pepper onto [user == H ? "your" : "[H]'s"] nose![user == H ? " <B>Why?!</B>" : null]</span>")
+						H.tri_message(user, SPAN_ALERT("<b>[user]</b> [myVerb]s something onto [H]'s nose!"),\
+							SPAN_ALERT("[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some pepper onto your nose! <B>Why?!</B>"),\
+							SPAN_ALERT("You [myVerb] some pepper onto [user == H ? "your" : "[H]'s"] nose![user == H ? " <B>Why?!</B>" : null]"))
 						H.emote("sneeze")
 						src.shakes ++
 						for (var/i = 1, i <= 30, i++)
@@ -214,14 +221,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 									H.emote("sneeze")
 						return
 					else
-						H.tri_message(user, "<span class='alert'><b>[user]</b> [myVerb]s some [src.stuff] at [H]'s head!</span>",\
-							"<span class='alert'>[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some [src.stuff] at your head! Fuck!</span>",\
-							"<span class='alert'>You [myVerb] some [src.stuff] at [user == H ? "your" : "[H]'s"] head![user == H ? " Fuck!" : null]</span>")
+						H.tri_message(user, SPAN_ALERT("<b>[user]</b> [myVerb]s some [src.stuff] at [H]'s head!"),\
+							SPAN_ALERT("[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some [src.stuff] at your head! Fuck!"),\
+							SPAN_ALERT("You [myVerb] some [src.stuff] at [user == H ? "your" : "[H]'s"] head![user == H ? " Fuck!" : null]"))
 						src.shakes ++
 						return
 		else if (istype(target, /mob/living/critter/small_animal/slug) && src.stuff == "salt")
-			target.visible_message("<span class='alert'><b>[user]</b> [myVerb]s some salt onto [target] and it shrivels up!</span>",\
-			"<span class='alert'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
+			target.visible_message(SPAN_ALERT("<b>[user]</b> [myVerb]s some salt onto [target] and it shrivels up!"),\
+			SPAN_ALERT("<b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b>"))
 			target.TakeDamage(null, 15, 15)
 			src.shakes ++
 			return

@@ -26,7 +26,7 @@
 		if (!escape_vr)
 			var/area/A = get_area(src)
 			if ((T && !(T.z == 2)) || (A && !A.virtual))
-				boutput(src, "<span class='alert'>Is this virtual?  Is this real?? <b>YOUR MIND CANNOT TAKE THIS METAPHYSICAL CALAMITY</b></span>")
+				boutput(src, SPAN_ALERT("Is this virtual?  Is this real?? <b>YOUR MIND CANNOT TAKE THIS METAPHYSICAL CALAMITY</b>"))
 				src.gib()
 				return
 
@@ -61,7 +61,7 @@
 		if(!isghost)
 			return ..()
 
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		if (!message)
 			return
 

@@ -11,7 +11,7 @@
 			A.update_appearance()
 			return 1
 		else
-			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+			boutput(activator, SPAN_ALERT("You need to be an AI to use this, you goof!"))
 
 /datum/achievementReward/aicase/bee
 	title = "(AI Core Skin) Bee"

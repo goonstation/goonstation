@@ -273,7 +273,7 @@
 
 	pull(mob/user)
 		if (src.on)
-			boutput(user,"<span class='alert'><b>[src] resists being pulled around! Maybe deactivate it first.</b></span>")
+			boutput(user,SPAN_ALERT("<b>[src] resists being pulled around! Maybe deactivate it first.</b>"))
 			return 1
 		..()
 
@@ -385,7 +385,7 @@
 
 	attack_ai(mob/user as mob)
 		if (src.on && src.emagged)
-			boutput(user, "<span class='alert'>[src] refuses your authority!</span>")
+			boutput(user, SPAN_ALERT("[src] refuses your authority!"))
 			return
 		src.on = !src.on
 		if (src.on && src.pulled_by)
@@ -396,12 +396,12 @@
 		if (src.emagged < emag_stages)
 			if (emagged)
 				if (user)
-					boutput(user, "<span class='alert'>You short out [src]'s system clock inhibition circuits.</span>")
+					boutput(user, SPAN_ALERT("You short out [src]'s system clock inhibition circuits."))
 				UpdateOverlays(null, "secbot_hat")
 				UpdateOverlays(null, "secbot_charge")
 			else if (user)
-				boutput(user, "<span class='alert'>You short out [src]'s target assessment circuits.</span>")
-			src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+				boutput(user, SPAN_ALERT("You short out [src]'s target assessment circuits."))
+			src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 
 
 			src.emagged++
@@ -446,7 +446,7 @@
 		..()
 		if(!src.emagged && prob(75))
 			src.emagged = 1
-			src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 			src.on = 1
 			if (src.pulled_by)
 				src.pulled_by.remove_pulling()
@@ -461,12 +461,12 @@
 				boutput(M, "Controls are now [src.locked ? "locked." : "unlocked."]")
 				src.updateUsrDialog()
 			else
-				boutput(M, "<span class='alert'>Access denied.</span>")
+				boutput(M, SPAN_ALERT("Access denied."))
 
 		else if (isscrewingtool(I))
 			if (src.health < initial(health))
 				src.health = initial(health)
-				src.visible_message("<span class='alert'>[M] repairs [src]!</span>", "<span class='alert'>You repair [src].</span>")
+				src.visible_message(SPAN_ALERT("[M] repairs [src]!"), SPAN_ALERT("You repair [src]."))
 		else
 			switch(I.hit_type)
 				if (DAMAGE_BURN)
@@ -540,7 +540,7 @@
 		src.exploding = 1
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+			O.show_message(SPAN_ALERT("<B>[src] blows apart!</B>"), 1)
 		var/turf/Tsec = get_turf(src)
 
 		var/obj/item/secbot_assembly/Sa = new /obj/item/secbot_assembly(Tsec)
@@ -602,7 +602,7 @@
 
 				stuncount--
 				if (check_target_immunity(M))
-					src.visible_message("<span class='alert'><B>[src] tries to stun [M] with the [src.our_baton] but the attack bounces off uselessly!</B></span>")
+					src.visible_message(SPAN_ALERT("<B>[src] tries to stun [M] with the [src.our_baton] but the attack bounces off uselessly!</B>"))
 					playsound(src, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, TRUE, -1)
 				else
 					src.our_baton.do_stun(src, M, src.stun_type, 2)
@@ -1230,7 +1230,6 @@
 /datum/action/bar/icon/secbot_cuff
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "secbot_cuff"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "buddycuff"
 	var/obj/machinery/bot/secbot/master
@@ -1255,7 +1254,7 @@
 			return
 
 		playsound(master, 'sound/weapons/handcuffs.ogg', 30, TRUE, -2)
-		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [master.target]!</B></span>")
+		master.visible_message(SPAN_ALERT("<B>[master] is trying to put handcuffs on [master.target]!</B>"))
 		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON)
 			duration = round(duration * 0.75)
 			playsound(master, 'sound/misc/winding.ogg', 30, TRUE, -2)
@@ -1328,7 +1327,6 @@
 /datum/action/bar/icon/secbot_stun
 	duration = 10
 	interrupt_flags = 0 //THE SECURITRON STOPS FOR NOTHING
-	id = "secbot_cuff"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "stunbaton_active"
 	var/obj/machinery/bot/secbot/master
@@ -1354,7 +1352,7 @@
 			return
 
 		master.baton_charging = 1
-		master.visible_message("<span class='alert'><B>[master] is energizing its prod, preparing to zap [master.target]!</B></span>")
+		master.visible_message(SPAN_ALERT("<B>[master] is energizing its prod, preparing to zap [master.target]!</B>"))
 		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON || master.emagged >= 2)
 			playsound(master, 'sound/machines/ArtifactBee2.ogg', 30, TRUE, -2)
 			duration = round(duration * 0.6)

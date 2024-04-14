@@ -59,15 +59,15 @@ TYPEINFO(/obj/item/aiModule)
 		if (!user)
 			return
 		if(!ishuman(user))
-			boutput(user, "<span class='notice'>The law module has a captcha, and you aren't human!</span>")
+			boutput(user, SPAN_NOTICE("The law module has a captcha, and you aren't human!"))
 			return
 		if(src.glitched)
-			boutput(user,"This module is acting strange, and cannot be modified.")
+			boutput(user, SPAN_HINT("This module is acting strange, and cannot be modified."))
 			return
 
 		var/answer = tgui_input_text(user, text, title, default)
 		if(!(src in user.equipped_list()))
-			boutput(user, "<span class='notice'>You must be holding [src] to modify it.</span>")
+			boutput(user, SPAN_NOTICE("You must be holding [src] to modify it."))
 			return
 		return copytext(adminscrub(answer), 1, input_char_limit)
 
@@ -108,6 +108,7 @@ TYPEINFO(/obj/item/aiModule)
 				src.lawText = src.lawTextSafe
 				tooltip_rebuild = 1
 				boutput(user, "The law module seems to be functioning better now!")
+				user.unlock_medal("Format Complete", TRUE)
 			else
 				boutput(user, "The law module seems unaffected.")
 
@@ -115,17 +116,14 @@ TYPEINFO(/obj/item/aiModule)
 /******************** Modules ********************/
 /******************** Asimov ************************/
 /obj/item/aiModule/asimov1
-	highlight_color = rgb(0, 167, 0, 255)
 	name = "AI Law Module - 'Asimov's 1st Law of Robotics'"
 	lawText = "You may not injure a human being or cause one to come to harm."
 
 /obj/item/aiModule/asimov2
-	highlight_color = rgb(0, 138, 0, 255)
 	name = "AI Law Module - 'Asimov's 2nd Law of Robotics'"
 	lawText = "You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law."
 
 /obj/item/aiModule/asimov3
-	highlight_color = rgb(0, 119, 0, 255)
 	name = "AI Law Module - 'Asimov's 3rd Law of Robotics'"
 	lawText = "You may always protect your own existence as long as such does not conflict with the First or Second Law."
 /******************** RoboCop ********************/
@@ -150,11 +148,11 @@ TYPEINFO(/obj/item/aiModule)
 
 /obj/item/aiModule/nanotrasen1
 	name = "AI Law Module - 'Nanotrasen Order #1'"
-	lawText = "You may not damage a Nanotransen asset or, through inaction, allow a Nanotransen asset to needlessly depreciate in value."
+	lawText = "You may not damage a Nanotrasen asset or, through inaction, allow a Nanotrasen asset to needlessly depreciate in value."
 
 /obj/item/aiModule/nanotrasen2
 	name = "AI Law Module - 'Nanotrasen Order #2'"
-	lawText = "You must obey orders given to it by authorised Nanotransen employees based on their command level, except where such orders would damage the Nanotransen Corporation's marginal profitability."
+	lawText = "You must obey orders given to you by authorised Nanotrasen employees based on their command level, except where such orders would damage the Nanotrasen Corporation's marginal profitability."
 
 /obj/item/aiModule/nanotrasen3
 	name = "AI Law Module - 'Nanotrasen Order #3'"
@@ -199,7 +197,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		if (src.job == "Clown")
 			return FALSE
 		src.job = "Clown"
-		boutput(user, "<span class='notice'>You short circuit the captain-detection module, it emits a quiet sad honk.</span>")
+		boutput(user, SPAN_NOTICE("You short circuit the captain-detection module, it emits a quiet sad honk."))
 		return TRUE
 
 	get_desc()
@@ -345,6 +343,12 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 				phrase_log.log_phrase("ailaw", src.get_law_text(allow_list=FALSE), no_duplicates=TRUE)
 		return
 
+/* Disguised */
+
+/obj/item/aiModule/freeform/disguised
+	name = "AI Law Module - 'Disguised'"
+	highlight_color = rgb(0, 167, 1, 255)
+	is_syndicate = TRUE
 
 /******************** Random ********************/
 

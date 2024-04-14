@@ -1,4 +1,3 @@
-//stole this from vampire. prevents runtimes. IDK why this isn't in the parent.
 /atom/movable/screen/ability/topBar/gang
 	clicked(params)
 		var/datum/targetable/gang/spell = owner
@@ -16,11 +15,11 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.UpdateIcon()
-				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
+				boutput(usr, SPAN_NOTICE("Please press a number to bind this ability to..."))
 				return
 
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
+			boutput(owner.holder.owner, SPAN_ALERT("You can't use this spell here."))
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -43,7 +42,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "gang"
-	// notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
+	// notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
 	points = 0
 	pointName = "points"
 	var/stealthed = 0
@@ -85,7 +84,7 @@
 	onAttach(var/datum/abilityHolder/H)
 		..()
 		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
+			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>"))
 		return
 
 	updateObject()
@@ -118,17 +117,17 @@
 			return 0
 
 		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
+			boutput(M, SPAN_ALERT("You cannot use any powers in your current form."))
 			return 0
 
 		if (can_cast_anytime && !isdead(M))
 			return 1
 		if (!can_act(M, 0))
-			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
 			return 0
 
 		if (src.not_when_handcuffed && M.restrained())
-			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
 			return 0
 
 		return 1
@@ -138,6 +137,81 @@
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		return
 
+
+/datum/targetable/gang/locker_spot
+	name = "Show locker location"
+	desc = "Points you towards the location of your locker."
+	icon_state = "find_locker"
+
+	cast()
+		if (!holder)
+			return TRUE
+
+		var/mob/living/M = holder.owner
+
+		if (!M)
+			return TRUE
+
+		if (!M.mind || !M.get_gang())
+			boutput(M, SPAN_ALERT("Gang lockers? Huh?"))
+			return TRUE
+		var/datum/gang/userGang = M.get_gang()
+		var/obj/ganglocker/locker = userGang.locker
+		if (!locker)
+			boutput(M, SPAN_ALERT("Your gang doesn't have a locker!"))
+			return TRUE
+		if (M.GetComponent(/datum/component/tracker_hud/gang))
+			return TRUE
+		M.AddComponent(/datum/component/tracker_hud/gang, get_turf(locker))
+		SPAWN(3 SECONDS)
+			var/datum/component/tracker_hud/gang/component = M.GetComponent(/datum/component/tracker_hud/gang)
+			component.RemoveComponent()
+		return FALSE
+
+
+/datum/targetable/gang/toggle_overlay
+	name = "Toggle gang territory overlay"
+	desc = "Toggles the colored gang overlay."
+	icon_state = "toggle_overlays"
+	var/datum/mind/ownerMind
+
+	proc/remove_self(mind)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		if (imgroup.subscribed_minds_with_subcount[mind] > 0)
+			imgroup.remove_mind(mind)
+	cast(mob/target)
+		if (!holder)
+			return TRUE
+
+		var/mob/living/M = holder.owner
+
+		if (!M)
+			return TRUE
+
+		if (!M.mind && !M.get_gang())
+			boutput(M, SPAN_ALERT("Gang territory? What? You'd need to be in a gang to get it."))
+			return TRUE
+
+		ownerMind = M.mind
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		var/togglingOn = FALSE
+		if (imgroup.subscribed_minds_with_subcount[M.mind] > 0)
+			imgroup.remove_mind(ownerMind)
+			UnregisterSignal(ownerMind, COMSIG_MIND_DETACH_FROM_MOB)
+		else
+			togglingOn = TRUE
+			imgroup.add_mind(ownerMind)
+			RegisterSignal(ownerMind, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(remove_self))
+
+		boutput(M, "Gang territories turned [togglingOn ? "on" : "off"].")
+		return FALSE
+	disposing()
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		if (imgroup.subscribed_minds_with_subcount[ownerMind] > 0)
+			imgroup.remove_mind(ownerMind)
+		UnregisterSignal(ownerMind, COMSIG_MIND_DETACH_FROM_MOB)
+		..()
+
 /datum/targetable/gang/set_gang_base
 	name = "Set Gang Base"
 	desc = "Permanently sets the area you're currently in as your gang's base and spawns your gang's locker."
@@ -145,47 +219,52 @@
 	targeted = 0
 	can_cast_anytime = 1
 
+	proc/check_valid(mob/M, area/targetArea)
+		if(!istype(targetArea, /area/station))
+			boutput(M, SPAN_ALERT("You can only set your gang's base on the station."))
+			return FALSE
+
+		if(M.stat)
+			boutput(M, SPAN_ALERT("Not when you're incapacitated."))
+			return FALSE
+
+		//stop people setting up a locker they can't place
+		var/turf/T = get_turf(M)
+		if (length(T.controlling_gangs))
+			boutput(M, SPAN_ALERT("You can't place your base in another gang's turf!"))
+			return FALSE
+		for (var/obj/ganglocker/locker in range(1.5*GANG_TAG_INFLUENCE, T))
+			if(!IN_EUCLIDEAN_RANGE(locker, T, 1.5*GANG_TAG_INFLUENCE)) continue
+			boutput(M, SPAN_ALERT("You can't place your base so close to another gang's locker!"))
+			return FALSE
+
+		if((targetArea.teleport_blocked) || istype(targetArea, /area/supply) || istype(targetArea, /area/shuttle/))
+			boutput(M, SPAN_ALERT("You can't place your base here!"))
+			return FALSE
+		return TRUE
+
 	cast()
 		var/mob/M = holder.owner
 		var/area/area = get_area(M)
 
-		if(!istype(area, /area/station))
-			boutput(M, "<span class='alert'>You can only set your gang's base on the station.</span>")
+		if (!check_valid(M, area))
 			return
-
-		if(area.gang_base)
-			boutput(M, "<span class='alert'>Another gang's base is in this area!</span>")
-			return
-
-		if(M.stat)
-			boutput(M, "<span class='alert'>Not when you're incapacitated.</span>")
-			return
-
 		var/datum/antagonist/gang_leader/antag_role = M.mind.get_antagonist(ROLE_GANG_LEADER)
 		if (!antag_role)
 			return
 
 		antag_role.gang.select_gang_uniform()
-		antag_role.gang.base = area
-		area.gang_base = 1
+
+		if (!check_valid(M, area))
+			return
 
 		for(var/datum/mind/member in antag_role.gang.members)
-			boutput(member.current, "<span class='alert'>Your gang's base has been set up in [area]!</span>")
-
-		for(var/obj/decal/cleanable/gangtag/G in area)
-			if(G.owners == antag_role.gang)
-				continue
-			antag_role.gang.make_tag(get_turf(G))
-			break
+			boutput(member.current, SPAN_ALERT("Your gang's base has been set up in [area]!"))
 
 		var/obj/ganglocker/locker = new /obj/ganglocker(get_turf(M))
-		locker.name = "[antag_role.gang.gang_name] Locker"
-		locker.desc = "A locker with a small screen attached to the door, and the words 'Property of [antag_role.gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
-		locker.gang = antag_role.gang
+		locker.set_gang(antag_role.gang)
 		antag_role.gang.locker = locker
-		locker.UpdateIcon()
 
 		M.abilityHolder.removeAbility(/datum/targetable/gang/set_gang_base)
-		M.remove_ability_holder(/datum/abilityHolder/gang)
 
 		return

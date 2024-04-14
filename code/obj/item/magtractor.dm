@@ -39,7 +39,7 @@ TYPEINFO(/obj/item/magtractor)
 		//power usage here maybe??
 
 		if ((!src.holding || src.holding.disposed) && src.holder && processHeld) //If the item has been consumed somehow
-			actions.stopId("magpickerhold", src.holder)
+			actions.stopId(/datum/action/magPickerHold, src.holder)
 			processHeld = 0
 		return
 
@@ -59,15 +59,15 @@ TYPEINFO(/obj/item/magtractor)
 		if (!W) return 0
 
 		if (BOUNDS_DIST(get_turf(src), get_turf(W)) > 0)
-			out(user, "<span class='alert'>\The [W] is too far away!</span>")
+			boutput(user, SPAN_ALERT("\The [W] is too far away!"))
 			return 0
 
 		if (src.holding)
-			out(user, "<span class='alert'>\The [src] is already holding \the [src.holding]!</span>")
+			boutput(user, SPAN_ALERT("\The [src] is already holding \the [src.holding]!"))
 			return 0
 
 		if (W.anchored || W.w_class >= W_CLASS_BULKY) //too bulky for backpacks, too bulky for this
-			out(user, "<span class='notice'>\The [src] can't possibly hold that heavy an item!</span>")
+			boutput(user, SPAN_NOTICE("\The [src] can't possibly hold that heavy an item!"))
 			return 0
 
 		if (istype(W, /obj/item/magtractor))
@@ -96,12 +96,12 @@ TYPEINFO(/obj/item/magtractor)
 		if (!src.holding)
 			if (!isitem(A)) return 0
 			if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0)
-				out(user, "<span class='alert'>\The [A] is too far away!</span>")
+				boutput(user, SPAN_ALERT("\The [A] is too far away!"))
 				return 0
 			var/obj/item/target = A
 
 			if (target.anchored || target.w_class == W_CLASS_BULKY) //too bulky for backpacks, too bulky for this
-				out(user, "<span class='notice'>\The [src] can't possibly hold that heavy an item!</span>")
+				boutput(user, SPAN_NOTICE("\The [src] can't possibly hold that heavy an item!"))
 				return 0
 
 			if (istype(target, /obj/item/magtractor))
@@ -111,28 +111,28 @@ TYPEINFO(/obj/item/magtractor)
 			actions.start(new/datum/action/bar/private/icon/magPicker(target, src), user)
 
 		else if ((src.holding && src.holding.loc != src) || src.holding.disposed) // it's gone!!
-			actions.stopId("magpickerhold", user)
+			actions.stopId(/datum/action/magPickerHold, user)
 
 		return 1
 
 	throw_begin(atom/target)
 		..()
-		actions.stopId("magpicker", usr)
+		actions.stopId(/datum/action/bar/private/icon/magPicker, usr)
 		if (src.holding)
-			actions.stopId("magpickerhold", usr)
+			actions.stopId(/datum/action/magPickerHold, usr)
 
 	dropped(mob/user as mob)
 		..()
-		actions.stopId("magpicker", user)
+		actions.stopId(/datum/action/bar/private/icon/magPicker, user)
 		if (src.holding)
-			actions.stopId("magpickerhold", user)
+			actions.stopId(/datum/action/magPickerHold, user)
 
 	examine()
 		. = ..()
 		if (src.highpower)
-			. += "<span class='notice'>The [src] has HPM enabled!</span>"
+			. += SPAN_NOTICE("The [src] has HPM enabled!")
 		if (src.holding)
-			. += "<span class='notice'>\The [src.holding] is enveloped in the magnetic field.</span>"
+			. += SPAN_NOTICE("\The [src.holding] is enveloped in the magnetic field.")
 
 	proc/releaseItem()
 		set src in usr
@@ -141,7 +141,7 @@ TYPEINFO(/obj/item/magtractor)
 		set category = "Local"
 
 		if (!src || !src.holding || usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis")) return 0
-		actions.stopId("magpickerhold", usr)
+		actions.stopId(/datum/action/magPickerHold, usr)
 		return 1
 
 	proc/toggleHighPower()
@@ -165,7 +165,7 @@ TYPEINFO(/obj/item/magtractor)
 			src.highpower = 1
 			msg += "on"
 		if (magField) src.UpdateOverlays(magField, "magField")
-		out(usr, "[msg].</span>")
+		boutput(usr, "[msg].</span>")
 		return 1
 
 	proc/updateHeldOverlay(obj/item/W as obj)
@@ -194,7 +194,7 @@ TYPEINFO(/obj/item/magtractor)
 
 		W.set_loc(src)
 		W.pickup(user)
-
+		logTheThing(LOG_STATION, user, "pick up [W] with a magtractor at [log_loc(user)]")
 		src.holding = W
 		src.processHeld = 1
 		src.w_class = W_CLASS_BULKY //bulky
@@ -263,6 +263,6 @@ TYPEINFO(/obj/item/magtractor)
 
 	Exited(Obj, newloc) // handles the held item going byebye
 		if(Obj == src.holding  && src.holder)
-			actions.stopId("magpickerhold", src.holder)
+			actions.stopId(/datum/action/magPickerHold, src.holder)
 
 /obj/item/magtractor/abilities = list(/obj/ability_button/magtractor_toggle, /obj/ability_button/magtractor_drop)

@@ -17,7 +17,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	cropsize = 3
 	force_seed_on_harvest = 1
 	vending = 2
-	genome = 30
+	genome = 31
 	assoc_reagents = list("space_fungus")
 	mutations = list(/datum/plantmutation/fungus/amanita,/datum/plantmutation/fungus/psilocybin,/datum/plantmutation/fungus/cloak)
 
@@ -51,8 +51,8 @@ ABSTRACT_TYPE(/datum/plant/weed)
 					random_brute_damage(M, 8, 1)//slight bump to damage to account for everyone having 1 armor from jumpsuit, further bump to damage to make blooming lasher more difficult to cultivate
 					if (prob(20)) M.changeStatus("weakened", 3 SECONDS)
 
-				if (POT.health <= P.starthealth / 2) POT.visible_message("<span class='alert'><b>[POT.name]</b> weakly slaps [M] with a vine!</span>")
-				else POT.visible_message("<span class='alert'><b>[POT.name]</b> slashes [M] with thorny vines!</span>")
+				if (POT.health <= P.starthealth / 2) POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> weakly slaps [M] with a vine!"))
+				else POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> slashes [M] with thorny vines!"))
 
 	HYPattacked_proc(var/obj/machinery/plantpot/POT,var/mob/user,var/obj/item/W)
 		..()
@@ -63,10 +63,10 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		if (POT.growth < (P.growtime + DNA?.get_effective_value("growtime"))) return 0
 		// It's not big enough to be violent yet, so nothing happens
 
-		POT.visible_message("<span class='alert'><b>[POT.name]</b> violently retaliates against [user.name]!</span>")
+		POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> violently retaliates against [user.name]!"))
 		random_brute_damage(user, 10, 1)//see above
 		if (W && prob(50))
-			boutput(user, "<span class='alert'>The lasher grabs and smashes your [W]!</span>")
+			boutput(user, SPAN_ALERT("The lasher grabs and smashes your [W]!"))
 			W.dropped(user)
 			qdel(W)
 		return 1
@@ -75,7 +75,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		..()
 		if (.) return
 		if (POT.health > src.starthealth / 2)
-			boutput(user, "<span class='alert'>The lasher flails at you violently! You might need to weaken it first...</span>")
+			boutput(user, SPAN_ALERT("The lasher flails at you violently! You might need to weaken it first..."))
 			return 1
 		else
 			HYPaddCommut(POT.plantgenes, /datum/plant_gene_strain/reagent_adder/lasher)
@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	endurance = 80
 	special_proc = 1
 	vending = 2
-	genome = 40
+	genome = 34
 	assoc_reagents = list("radium")
 	mutations = list(/datum/plantmutation/radweed/redweed,/datum/plantmutation/radweed/safeweed)
 
@@ -148,7 +148,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	endurance = 30
 	special_proc = 1
 	vending = 2
-	genome = 45
+	genome = 40
 	var/exploding = 0
 	assoc_reagents = list("toxic_slurry")
 	mutations = list(/datum/plantmutation/slurrypod/omega)
@@ -171,18 +171,18 @@ ABSTRACT_TYPE(/datum/plant/weed)
 
 		if (POT.growth >= (P.harvtime + DNA?.get_effective_value("harvtime") + 50) && prob(10) && !src.exploding)
 			src.exploding = 1
-			POT.visible_message("<span class='alert'><b>[POT]</b> begins to bubble and expand!</span>")
+			POT.visible_message(SPAN_ALERT("<b>[POT]</b> begins to bubble and expand!"))
 			playsound(POT, 'sound/effects/bubbles.ogg', 50, TRUE)
 
 			SPAWN(5 SECONDS)
-				POT.visible_message("<span class='alert'><b>[POT]</b> bursts, sending toxic goop everywhere!</span>")
+				POT.visible_message(SPAN_ALERT("<b>[POT]</b> bursts, sending toxic goop everywhere!"))
 				playsound(POT, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 
 				for (var/mob/living/carbon/human/M in view(3,POT))
-					if(istype(M.wear_suit, /obj/item/clothing/suit/bio_suit) && istype(M.head, /obj/item/clothing/head/bio_hood))
-						boutput(M, "<span class='notice'>You are splashed by toxic goop, but your biosuit protects you!</span>")
+					if(istype(M.wear_suit, /obj/item/clothing/suit/hazard/bio_suit) && istype(M.head, /obj/item/clothing/head/bio_hood))
+						boutput(M, SPAN_NOTICE("You are splashed by toxic goop, but your biosuit protects you!"))
 						continue
-					boutput(M, "<span class='alert'>You are splashed by toxic goop!</span>")
+					boutput(M, SPAN_ALERT("You are splashed by toxic goop!"))
 					M.reagents.add_reagent("toxic_slurry", rand(5,20))
 				for (var/obj/machinery/plantpot/C in view(3,POT)) C.reagents.add_reagent("toxic_slurry", rand(5,10))
 

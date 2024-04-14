@@ -26,7 +26,7 @@
 		if (isturf(T) && istype(T,/turf/simulated/floor))
 			for (var/obj/O in T)
 				if (O.density)
-					boutput(holder.owner, "<span class='notice'>There is something in the way!</span>")
+					boutput(holder.owner, SPAN_NOTICE("There is something in the way!"))
 					return TRUE
 			if(istype(holder.owner, /mob/living/intangible/wraith))
 				var/mob/living/intangible/wraith/W = holder.owner

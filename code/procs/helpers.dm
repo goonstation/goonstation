@@ -25,12 +25,6 @@
 	return test == uppertext(test)
 
 /**
-  * Shows the calling client admins.txt
-  */
-/proc/showadminlist()
-	usr.client.Export("##action=browse_file","config/admins.txt")
-
-/**
   * Returns the line matrix from a start atom to an end atom, used in creating line objects
   */
 /proc/getLineMatrix(var/atom/start, var/atom/end)
@@ -184,10 +178,8 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 			if(!(T in crossed)) crossed.Add(T)
 	return crossed
 
-/**
-	* Returns the angle between two given atoms
-	*/
-proc/get_angle(atom/a, atom/b)
+/// Returns the angle between two given atoms
+/proc/get_angle(atom/a, atom/b)
 	var/turf/a_turf = get_turf(a)
 	var/turf/b_turf = get_turf(b)
 	if (isnull(a_turf) || isnull(b_turf))
@@ -260,13 +252,14 @@ proc/get_angle(atom/a, atom/b)
 		return 1
 
 /proc/is_blocked_turf(var/turf/T)
-	// drsingh for cannot read null.density
-	if (!T) return 0
-	if(T.density) return 1
+	. = FALSE
+	if (!T)
+		return FALSE
+	if (T.density)
+		return TRUE
 	for(var/atom/A in T)
-		if(A?.density)//&&A.anchored
-			return 1
-	return 0
+		if(A?.density) // && A.anchored
+			return TRUE
 
 //is_blocked_turf for flock
 /proc/flock_is_blocked_turf(var/turf/T)
@@ -404,7 +397,7 @@ proc/get_angle(atom/a, atom/b)
 		. = file_path
 	else
 		. = file(file_path)
-	. = trim(file2text(.))
+	. = trimtext(file2text(.))
 	if(can_escape)
 		. = replacetext(., "\\[separator]", "") // To be complete we should also replace \\ with \ etc. but who cares
 	. = splittext(., separator)
@@ -691,8 +684,7 @@ proc/get_angle(atom/a, atom/b)
 //Include details shows traitor status etc
 //Admins replaces the src ref for links with a placeholder for message_admins
 //Mentor just changes the private message link
-/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null, mob/user=null, ckey_and_alt_key = FALSE,
-		additional_url_data = null)
+/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null, mob/user=null, additional_url_data = null)
 	var/mob/the_mob = null
 	var/client/the_client = null
 	var/the_key = ""
@@ -754,10 +746,7 @@ proc/get_angle(atom/a, atom/b)
 			if (the_client.holder && the_client.stealth && !include_details)
 				text += "Administrator"
 			else if (the_client.holder && the_client.alt_key && !include_details)
-				if(ckey_and_alt_key && FALSE)
-					text += "[the_key] (as [the_client.fakekey])"
-				else
-					text += "[the_client.fakekey]"
+				text += "[the_client.fakekey]"
 			else
 				text += "[the_key]"
 		else
@@ -1000,24 +989,15 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 // <3 Fire
 // I'm preserving the above comment block, let it be known this proc used to use the variables "n", "pr", "te", "t", "p." I have fixed them. You're welcome.
 // <3 FlamingLily
-/proc/stars(input_text, probability)
-	if(probability == null)
-		probability = 25
-	if(probability <= 0)
-		return null
-	else
-		if (probability >= 100)
-			return input_text
-	var/output_text = ""
-	var/input_length = length(input_text)
-	var/cycle = 1
-	while(cycle <= input_length)
-		if ((copytext(input_text, cycle, cycle + 1) == " " || prob(probability)))
-			output_text = text("[][]", output_text, copytext(input_text, cycle, cycle + 1))
-		else
-			output_text = text("[]*", output_text)
-		cycle++
-	return output_text
+/proc/stars(phrase, probability = 25)
+	if(length(phrase) == 0)
+		return
+	var/list/chars = splittext_char(html_decode(phrase), "")
+	for(var/i in 1 to length(chars))
+		if(chars[i] == " " || !prob(probability))
+			continue
+		chars[i] = "*"
+	return sanitize(jointext(chars, ""))
 
 /proc/stutter(n)
 	var/te = html_decode(n)
@@ -1029,16 +1009,16 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		var/n_letter = copytext(te, p, p + 1)
 		if (prob(80))
 			if (prob(10))
-				n_letter = text("[n_letter][n_letter][n_letter][n_letter]")
+				n_letter = "[n_letter][n_letter][n_letter][n_letter]"
 			else
 				if (prob(20))
-					n_letter = text("[n_letter][n_letter][n_letter]")
+					n_letter = "[n_letter][n_letter][n_letter]"
 				else
 					if (prob(5))
-						n_letter = null
+						n_letter = n_letter
 					else
-						n_letter = text("[n_letter][n_letter]")
-		t = text("[t][n_letter]")
+						n_letter = "[n_letter][n_letter]"
+		t = "[t][n_letter]"
 		p++
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
@@ -1048,25 +1028,29 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			return
 		M.shakecamera = 1
 		var/client/client = M.client
-
+		// track total offsets to reset (rather than lazily setting pixel_x to 0)
+		var/total_off_x = 0
+		var/total_off_y = 0
 		for(var/i=0, i<duration, i++)
 			var/off_x = (rand(0, strength) * (prob(50) ? -1:1))
 			var/off_y = (rand(0, strength) * (prob(50) ? -1:1))
+			total_off_x -= off_x
+			total_off_y -= off_y
 			if(client)
 				animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			sleep(delay)
 
 		if (client)
-			client.pixel_x = 0
-			client.pixel_y = 0
+			animate(client, pixel_x = total_off_x, pixel_y = total_off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			M.shakecamera = 0
+		animate(pixel_x = total_off_x*-1, pixel_y = total_off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 
-/proc/findname(msg)
-	for(var/mob/M in mobs)
-		if (M.real_name == text("[msg]"))
-			return 1
-	return 0
+/proc/recoil_camera(mob/M, dir, strength=1, spread=3)
+	if(!M || !M.client || !M.client.recoil_controller)
+		return
+	M.client.recoil_controller.recoil_camera(dir,strength,spread)
+
 
 /proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
 	//returns only NORTH, SOUTH, EAST, or WEST
@@ -1299,7 +1283,7 @@ proc/outermost_movable(atom/movable/target)
 
 /proc/all_range(var/range,var/centre) //above two are blocked by opaque objects
 	. = list()
-	for (var/atom/A as anything in range(range,centre))
+	for (var/atom/A in range(range,centre))
 		if (ismob(A))
 			. += A
 		else if (isobj(A))
@@ -1357,34 +1341,34 @@ proc/outermost_movable(atom/movable/target)
 	. = text2path(stringtarget)
 
 /proc/GetRedPart(hex)
-    hex = uppertext(hex)
-    var/hi = text2ascii(hex, 2)
-    var/lo = text2ascii(hex, 3)
-    return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
+	hex = uppertext(hex)
+	var/hi = text2ascii(hex, 2)
+	var/lo = text2ascii(hex, 3)
+	return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
 
 /proc/GetGreenPart(hex)
-    hex = uppertext(hex)
-    var/hi = text2ascii(hex, 4)
-    var/lo = text2ascii(hex, 5)
-    return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
+	hex = uppertext(hex)
+	var/hi = text2ascii(hex, 4)
+	var/lo = text2ascii(hex, 5)
+	return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
 
 /proc/GetBluePart(hex)
-    hex = uppertext(hex)
-    var/hi = text2ascii(hex, 6)
-    var/lo = text2ascii(hex, 7)
-    return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
+	hex = uppertext(hex)
+	var/hi = text2ascii(hex, 6)
+	var/lo = text2ascii(hex, 7)
+	return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
 
 /proc/GetColors(hex)
-    hex = uppertext(hex)
-    var/hi1 = text2ascii(hex, 2)
-    var/lo1 = text2ascii(hex, 3)
-    var/hi2 = text2ascii(hex, 4)
-    var/lo2 = text2ascii(hex, 5)
-    var/hi3 = text2ascii(hex, 6)
-    var/lo3 = text2ascii(hex, 7)
-    return list(((hi1>= 65 ? hi1-55 : hi1-48)<<4) | (lo1 >= 65 ? lo1-55 : lo1-48),
-        ((hi2 >= 65 ? hi2-55 : hi2-48)<<4) | (lo2 >= 65 ? lo2-55 : lo2-48),
-        ((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))
+	hex = uppertext(hex)
+	var/hi1 = text2ascii(hex, 2)
+	var/lo1 = text2ascii(hex, 3)
+	var/hi2 = text2ascii(hex, 4)
+	var/lo2 = text2ascii(hex, 5)
+	var/hi3 = text2ascii(hex, 6)
+	var/lo3 = text2ascii(hex, 7)
+	return list(((hi1>= 65 ? hi1-55 : hi1-48)<<4) | (lo1 >= 65 ? lo1-55 : lo1-48),
+		((hi2 >= 65 ? hi2-55 : hi2-48)<<4) | (lo2 >= 65 ? lo2-55 : lo2-48),
+		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))
 
 //Shoves a jump to link or whatever in the thing :effort:
 /proc/showCoords(x, y, z, plaintext, holder, ghostjump)
@@ -1757,12 +1741,12 @@ proc/countJob(rank)
 	src.letter_overlay(letter, lcolor, text2dir(dir))
 
 /// Returns a list of eligible dead players that COULD choose to respawn or whatever
-/proc/eligible_dead_player_list(var/allow_dead_antags = 0, var/require_client = FALSE, var/for_antag = TRUE)
+/proc/eligible_dead_player_list(var/allow_dead_antags = 0, var/require_client = FALSE, var/for_antag = TRUE, allow_dnr = FALSE)
 	. = list()
 	for (var/datum/mind/M in ticker.minds)
 		if (M.current && M.current.client)
 			var/client/C = M.current.client
-			if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag) != 1)
+			if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag, allow_dnr=allow_dnr) != 1)
 				continue
 			if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 				continue
@@ -1772,7 +1756,7 @@ proc/countJob(rank)
 /// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 /// for_antag indicates that we are polling for an antag role and so should exclude antag-banned players
 /proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0,
-		var/require_client = FALSE, var/do_popup = TRUE, var/for_antag = TRUE)
+		var/require_client = FALSE, var/do_popup = TRUE, var/for_antag = TRUE, allow_dnr = FALSE)
 	var/list/candidates = list()
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
 	if (confirmation_spawn > 0)
@@ -1793,16 +1777,16 @@ proc/countJob(rank)
 			if (length(text_messages) >= 5) text_chat_toolate = text_messages[5]
 
 		text_alert = strip_html(text_alert, MAX_MESSAGE_LEN, 1)
-		text_chat_alert = "<span class='notice'><h3>[strip_html(text_chat_alert, MAX_MESSAGE_LEN)]</h3></span>"
-		text_chat_added = "<span class='notice'><h3>[strip_html(text_chat_added, MAX_MESSAGE_LEN)]</h3></span>"
-		text_chat_failed = "<span class='alert'><b>[strip_html(text_chat_failed, MAX_MESSAGE_LEN)]</b></span>"
-		text_chat_toolate = "<span class='alert'><b>[strip_html(text_chat_toolate, MAX_MESSAGE_LEN)]</b></span>"
+		text_chat_alert = SPAN_NOTICE("<h3>[strip_html(text_chat_alert, MAX_MESSAGE_LEN)]</h3>")
+		text_chat_added = SPAN_NOTICE("<h3>[strip_html(text_chat_added, MAX_MESSAGE_LEN)]</h3>")
+		text_chat_failed = SPAN_ALERT("<b>[strip_html(text_chat_failed, MAX_MESSAGE_LEN)]</b>")
+		text_chat_toolate = SPAN_ALERT("<b>[strip_html(text_chat_toolate, MAX_MESSAGE_LEN)]</b>")
 
 		// Run prompts. Minds are preferable to mob references because of the confirmation delay.
 		for (var/datum/mind/M in ticker.minds)
 			if (M.current && M.current.client)
 				var/client/C = M.current.client
-				if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag) != 1)
+				if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag, allow_dnr=allow_dnr) != 1)
 					continue
 				if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 					continue
@@ -1818,7 +1802,7 @@ proc/countJob(rank)
 						if (ghost_timestamp && (TIME > ghost_timestamp + confirmation_spawn))
 							if (M.current) boutput(M.current, text_chat_toolate)
 							return
-						if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag) != 1)
+						if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag, allow_dnr=allow_dnr) != 1)
 							if (M.current) boutput(M.current, text_chat_failed)
 							return
 
@@ -1837,7 +1821,7 @@ proc/countJob(rank)
 		// Filter list again.
 		if (candidates.len)
 			for (var/datum/mind/M2 in candidates)
-				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current, allow_dead_antags, require_client, for_antag) != 1)
+				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current, allow_dead_antags, require_client, for_antag, allow_dnr=allow_dnr) != 1)
 					candidates.Remove(M2)
 					continue
 
@@ -1862,7 +1846,7 @@ proc/countJob(rank)
 	candidates = list()
 
 	for (var/mob/O in mobs)
-		if (dead_player_list_helper(O, allow_dead_antags, require_client, for_antag) != 1)
+		if (dead_player_list_helper(O, allow_dead_antags, require_client, for_antag, allow_dnr=allow_dnr) != 1)
 			continue
 		if (!(O in candidates))
 			candidates.Add(O.mind)
@@ -1900,8 +1884,8 @@ proc/countJob(rank)
 	logTheThing(LOG_ADMIN, mind.current, " was chosen to respawn as a random event [respawning_as][is_round_observer ? " after joining as an observer" : ""]. Source: [source ? "[source]" : "random"]")
 
 // So there aren't multiple instances of C&P code (Convair880).
-/proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE, var/for_antag = TRUE)
-	if (!G?.mind || G.mind.get_player()?.dnr)
+/proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE, var/for_antag = TRUE, allow_dnr = FALSE)
+	if (!G?.mind || !allow_dnr && G.mind.get_player()?.dnr)
 		return 0
 	// if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
 	// 	return 0
@@ -1966,7 +1950,7 @@ proc/countJob(rank)
   * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
   */
 /proc/whois(target, limit = null, admin)
-	target = trim(ckey(target))
+	target = trimtext(ckey(target))
 	if (!target)
 		return null
 	. = list()
@@ -2049,35 +2033,32 @@ proc/countJob(rank)
 var/global/nextDectalkDelay = 1 //seconds
 var/global/lastDectalkUse = 0
 /proc/dectalk(msg)
-	if (!msg || !config.spacebee_api_key) return 0
+	if (!msg) return 0
 	if (TIME > (lastDectalkUse + (nextDectalkDelay * 10)))
 		lastDectalkUse = TIME
 		msg = copytext(msg, 1, 2000)
 
-		// Fetch via HTTP from goonhub
-		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/tts?dectalk=[url_encode(msg)]&api_key=[config.spacebee_api_key]", "", "")
-		request.begin_async()
-		UNTIL(request.is_complete())
-		var/datum/http_response/response = request.into_response()
-
-		if (response.errored || !response.body)
-			logTheThing(LOG_DEBUG, null, "<b>dectalk:</b> Failed to contact goonhub. msg : [msg]")
+		var/datum/apiModel/DectalkPlayResource/playDectalkResource
+		try
+			var/datum/apiRoute/dectalk/play/playDectalk = new
+			playDectalk.buildBody(msg, roundId)
+			playDectalkResource = apiHandler.queryAPI(playDectalk)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "<b>dectalk:</b> Failed to play dectalk for msg: '[msg]' because: [error.message]")
 			return
 
-		return list("audio" = response.body, "message" = msg)
+		return list("audio" = playDectalkResource.audio, "message" = msg)
 	else
 		return list("cooldown" = 1)
 
-proc/copy_datum_vars(var/atom/from, var/atom/target)
+proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 	if (!target || !from) return
 	for(var/V in from.vars)
 		if (!issaved(from.vars[V]))
 			continue
 
-		if(V == "type") continue
-		if(V == "parent_type") continue
-		if(V == "vars") continue
+		if(V == "type" || V == "parent_type" || V == "vars" || (V in blacklist)) continue
 		target.vars[V] = from.vars[V]
 
 /**
@@ -2098,9 +2079,6 @@ proc/copy_datum_vars(var/atom/from, var/atom/target)
 	var/name = get_nearest_color(C)
 	if (name)
 		return name
-
-var/list/uppercase_letters = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
-var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 
 // Helper for blob, wraiths and whoever else might need them (Convair880).
 /proc/restricted_z_allowed(var/mob/M, var/T)
@@ -2244,7 +2222,7 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 		if (M.mind.special_role)
 			var/special = uppertext(copytext(M.mind.special_role, 1, 2)) + copytext(M.mind.special_role, 2)
 			if (!strip)
-				special = "<span class='alert'>[special]</span>"
+				special = SPAN_ALERT("[special]")
 
 			role += " \[[special]]"
 
@@ -2252,18 +2230,6 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 		role += M.job
 
 	return role
-
-// DM simultaneously makes cursed shit like this work...
-// yet won't work with just the unicode raws - infinite pain
-var/const/___proper = "\proper"
-var/const/___improper = "\improper"
-var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
-
-/**
-  * Removes the special data inserted via use of \improper etc in strings
-  */
-/proc/stripTextMacros(text)
-	return replacetext(text, regexTextMacro, "")
 
 /**
   * Returns true if given mob/client/mind is an admin
@@ -2283,39 +2249,37 @@ var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
 
 	return FALSE
 
-/**
-  * Returns span with a color gradient between two given colors of given message
-  */
+/// Returns span with a color gradient between two given colors of given message
 proc/gradientText(var/color1, var/color2, message)
-  var/color1hex = hex2num(copytext(color1, 2))
-  var/color2hex = hex2num(copytext(color2, 2))
-  var/r1 = (color1hex >> 16) & 0xFF
-  var/g1 = (color1hex >> 8) & 0xFF
-  var/b1 = color1hex & 0xFF
-  var/dr = ((color2hex >> 16) & 0xFF)- r1
-  var/dg = ((color2hex >> 8) & 0xFF) - g1
-  var/db = (color2hex & 0xFF) - b1
-  var/list/result = new/list()
-  var/n = rand(0,10)/10.0 // what a shitty name for a variable
-  var/dir = prob(50) ? -1 : 1
-  for(var/i=1, i<=length(message), i += 3)
-    n += dir * 0.2
-    if(prob(20))
-      dir = dir/abs(dir) * -1
-    if(n < 0)
-      n = 0
-      dir = 1
-    if(n > 1)
-      n = 1
-      dir = -1
-    var/col = rgb(r1 + dr*n, g1 + dg*n, b1 + db*n)
-    var/chars = copytext(message, i, i+3)
-    result += "<span style='color:[col]'>[chars]</span>"
-  . = result.Join()
+	var/color1hex = hex2num(copytext(color1, 2))
+	var/color2hex = hex2num(copytext(color2, 2))
+	var/r1 = (color1hex >> 16) & 0xFF
+	var/g1 = (color1hex >> 8) & 0xFF
+	var/b1 = color1hex & 0xFF
+	var/dr = ((color2hex >> 16) & 0xFF)- r1
+	var/dg = ((color2hex >> 8) & 0xFF) - g1
+	var/db = (color2hex & 0xFF) - b1
+	var/list/result = new/list()
+	var/n = rand(0,10)/10.0 // what a shitty name for a variable
+	var/dir = prob(50) ? -1 : 1
+	for(var/i=1, i<=length(message), i += 3)
+		n += dir * 0.2
+		if(prob(20))
+			dir = dir/abs(dir) * -1
+		if(n < 0)
+			n = 0
+			dir = 1
+		if(n > 1)
+			n = 1
+			dir = -1
+		var/col = rgb(r1 + dr*n, g1 + dg*n, b1 + db*n)
+		var/chars = copytext(message, i, i+3)
+		result += "<span style='color:[col]'>[chars]</span>"
+	. = result.Join()
 
 /**
-  * Returns given text replaced by nonsense chars, excepting HTML tags, on a 40% or given % basis
-  */
+ * Returns given text replaced by nonsense chars, excepting HTML tags, on a 40% or given % basis
+ */
 proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
 	var/split_html_text = splittext(message,  regex("<\[^>\]*>"), 1, length(message), TRUE) //I'd love to just use include_delimiters=TRUE, but byond
 	var/list/corruptedChars = list("@","#","!",",",".","-","=","/","\\","'","\"","`","*","(",")","[","]","_","&")
@@ -2334,23 +2298,18 @@ proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
 	return jointext(.,"")
 
 
-/**
-  * Returns given text replaced entirely by nonsense chars
-  */
+/// Returns given text replaced entirely by nonsense chars
 proc/illiterateGarbleText(var/message)
 	. = radioGarbleText(message, 100)
 
-/**
-  * Returns the time in seconds since a given timestamp
-  */
+
+/// Returns the time in seconds since a given timestamp
 proc/getTimeInSecondsSinceTime(var/timestamp)
 	var/time_of_day = world.timeofday + ((world.timeofday < timestamp) ? 864000 : 0) // Offset the time of day in case of midnight rollover
 	var/time_elapsed = (time_of_day - timestamp)/10
 	return time_elapsed
 
-/**
-  * Handles the two states icon_size can be in: basic number, or string in WxH format
-  */
+/// Handles the two states icon_size can be in: basic number, or string in WxH format
 proc/getIconSize()
 	if (istext(world.icon_size))
 		var/list/iconSizes = splittext(world.icon_size, "x")
@@ -2358,18 +2317,14 @@ proc/getIconSize()
 
 	return world.icon_size
 
-/**
-  * Finds a client by ckey, throws exception if not found
-  */
+/// Finds a client by ckey, throws exception if not found
 proc/getClientFromCkey(ckey)
 	var/datum/player/player = find_player(ckey)
 	if(!player?.client)
 		throw EXCEPTION("Client not found")
 	return player.client
 
-/**
-	* Returns true if the given atom is within src's contents (deeply/recursively)
-	*/
+/// Returns true if the given atom is within src's contents (deeply/recursively)
 /atom/proc/contains(var/atom/A)
 	. = FALSE
 	if(!A)
@@ -2389,7 +2344,7 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 	if (!whitelist || (!TA || !TA.reagents) || (islist(whitelist) && !length(whitelist)))
 		return
 	if (!custom_message)
-		custom_message = "<span class='alert'>[TA] identifies and removes a harmful substance.</span>"
+		custom_message = SPAN_ALERT("[TA] identifies and removes a harmful substance.")
 
 	var/found = 0
 	for (var/reagent_id in TA.reagents.reagent_list)
@@ -2444,9 +2399,7 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 
 	return (seer.dir == dir)
 
-/**
-	* Returns the passed decisecond-format time in the form of a text string
-	*/
+/// Returns the passed decisecond-format time in the form of a text string
 proc/time_to_text(var/time)
 	. = list()
 
@@ -2607,6 +2560,16 @@ proc/total_density(turf/T)
 	for (var/atom/A in T)
 		. += A.density
 
+/// Checks if Cross succeeds for the turf and all atoms in it
+proc/total_cross(turf/T, atom/movable/mover)
+	. = T.Cross(mover)
+	if(!.)
+		return
+	for (var/atom/A in T)
+		. = A.Cross(mover)
+		if(!.)
+			return
+
 
 // Used to send a message to all ghosts when something Interesting has happened
 // Any message sent to this should just be a funny comment on something logged elsewhere,
@@ -2615,7 +2578,7 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 	if (!message)
 		return
 
-	var/rendered = "<span class='game deadsay'>[message]</span>"
+	var/rendered = SPAN_DEADSAY("[message]")
 	for (var/client/C)
 		if (C.deadchatoff) continue
 		if (!C.mob) continue
@@ -2642,3 +2605,46 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 		// Otherwise, output to ghosts
 		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
 			boutput(M, rendered)
+
+/// Find a client based on ckey
+/proc/find_client(ckey)
+	for (var/client/C in clients)
+		if (C.ckey == ckey)
+			return C
+
+/// Return a list of station-level storage objects that are safe to spawn things into
+/// * closed: if TRUE, only include storage objects that are closed
+/// * breathable: if TRUE, only include storage on breathable turfs
+/// * no_others: if TRUE, do not include multiple storage objects on the same turf
+/proc/get_random_station_storage_list(closed=FALSE, breathable=FALSE, no_others=FALSE)
+	RETURN_TYPE(/list/obj/storage)
+	. = list()
+	for_by_tcl(container, /obj/storage)
+		if (container.z != Z_LEVEL_STATION)
+			continue
+		if (closed && container.open)
+			continue
+		if (container.locked || container.welded || container.crunches_contents || container.needs_prying)
+			continue
+		if (istype(container, /obj/storage/secure) || istype(container, /obj/storage/crate/loot))
+			continue
+		// listening posts everywhere or martian ship (in station Z-level on Oshan)
+		if (istype(get_area(container), /area/listeningpost) || istype(get_area(container), /area/evilreaver))
+			continue
+
+		if (breathable)
+			var/turf/simulated/T = container.loc
+			if(istype(T) && (T.air?.oxygen <= (MOLES_O2STANDARD - 1) || T.air?.temperature <= T0C || T.air?.temperature >= DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX))
+				continue
+
+		if (no_others)
+			var/turf/container_turf = get_turf(container)
+			var/duplicate_containers = FALSE
+			for (var/obj/storage/container_on_turf in container_turf)
+				if (container != container_on_turf)
+					duplicate_containers = TRUE
+					break
+			if (duplicate_containers)
+				continue
+
+		. += container

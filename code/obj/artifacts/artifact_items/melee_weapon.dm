@@ -44,7 +44,7 @@
 			return
 		if (!isliving(user) || !isliving(target))
 			return
-		user.visible_message("<span class='alert'><b>[user.name]</b> attacks [target.name] with [O]!</span>")
+		user.visible_message(SPAN_ALERT("<b>[user.name]</b> attacks [target.name] with [O]!"))
 		var/turf/T = get_turf(user)
 		playsound(T, hitsound, 50, TRUE, -1)
 		switch(damtype)

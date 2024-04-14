@@ -212,7 +212,7 @@
 				ticker.minds += H.mind
 
 			V.update_colorful_parts()
-			for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>[H.name] disappears in a flash of light!!</span>", 1)
+			for(var/mob/O in AIviewers(src, null)) O.show_message(SPAN_ALERT("[H.name] disappears in a flash of light!!"), 1)
 			H.emote("scream")
 			playsound(H.loc, 'sound/weapons/flashbang.ogg', 25, 1)
 			for (var/mob/N in viewers(src, null))
@@ -280,7 +280,7 @@
 					if (clear)
 						L += T3
 
-		for(var/mob/O in AIviewers(H, null)) O.show_message("<span class='alert'>[H.name] disappears in a flash of light!!</span>", 1)
+		for(var/mob/O in AIviewers(H, null)) O.show_message(SPAN_ALERT("[H.name] disappears in a flash of light!!"), 1)
 		playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 
 		for (var/mob/N in viewers(H, null))
@@ -330,7 +330,7 @@
 				if (M.client)
 					M.client.playAmbience(our_area, AMBIENCE_FX_2, 50)
 			if(src.message)
-				M.show_message("<span class='game say bold'><span class='message'><span style='color: [src.text_color]'>[message]</span></span></span>", 2)
+				M.show_message("<span class='say bold'>[SPAN_MESSAGE("<span style='color: [src.text_color]'>[message]")]</span></span>", 2)
 
 /area/adventure/urs_dungeon
 	teleport_blocked = 2
@@ -526,7 +526,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/shovel))
-			user.visible_message("<span class='notice'>[user] digs in [src] with [W]!</span>")
+			user.visible_message(SPAN_NOTICE("[user] digs in [src] with [W]!"))
 			src.open()
 		return
 
@@ -621,13 +621,13 @@
 /*
 /obj/item/ursium/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (user != target)
-		user.visible_message("<span class='alert'>[user] is trying to force [target] to eat the [src.content]!</span>")
+		user.visible_message(SPAN_ALERT("[user] is trying to force [target] to eat the [src.content]!"))
 		if (do_mob(user, target, 40))
-			user.visible_message("<span class='alert'>[user] forced [target] to eat the [src.content]!</span>")
+			user.visible_message(SPAN_ALERT("[user] forced [target] to eat the [src.content]!"))
 			src.injest(target)
 	else
 		for(var/mob/O in viewers(target, null))
-			O.show_message(text("<span class='alert'>[target] ate the [content ? content : "empty canister"]!</span>"), 1)
+			O.show_message(SPAN_ALERT("[target] ate the [content ? content : "empty canister"]!"), 1)
 		src.injest(target)
 */
 

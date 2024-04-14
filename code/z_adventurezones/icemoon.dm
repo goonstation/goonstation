@@ -20,26 +20,15 @@ Contents:
 	can_burn = FALSE
 	can_break = FALSE
 
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/pitfall/target_landmark,\
+			BruteDamageMax = 33,\
+			FallTime = 0 SECONDS,\
+			TargetLandmark = LANDMARK_FALL_ICE_ELE)
+
 	ex_act(severity)
 		return
-
-	Entered(atom/movable/A as mob|obj)
-		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
-			return ..()
-		var/turf/T = pick_landmark(LANDMARK_FALL_ICE_ELE)
-		if (isturf(T))
-			visible_message("<span class='alert'>[A] falls down [src]!</span>")
-			if (ismob(A))
-				var/mob/M = A
-				if(!M.stat && ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if(H.gender == MALE) playsound(H.loc, 'sound/voice/screams/male_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					else playsound(H.loc, 'sound/voice/screams/female_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-				random_brute_damage(M, 33)
-				M.changeStatus("stunned", 10 SECONDS)
-			A.set_loc(T)
-			return
-		else ..()
 
 /turf/unsimulated/floor/arctic
 	can_burn = FALSE
@@ -103,21 +92,12 @@ Contents:
 	pathable = 0
 	can_replace_with_stuff = 1
 
-	// this is the code for falling from abyss into ice caves
-	// could maybe use an animation, or better text. perhaps a slide whistle ogg?
-	Entered(atom/A as mob|obj, atom/old_loc)
-		if (isobserver(A) || isintangible(A))
-			return ..()
-		if(isobj(A))
-			var/obj/O = A
-			if(isnull(old_loc) || O.anchored)
-				return ..()
-
-		var/turf/T = pick_landmark(LANDMARK_FALL_ICE)
-		if(T)
-			fall_to(T, A)
-			return
-		else ..()
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/pitfall/target_landmark,\
+			BruteDamageMax = 50,\
+			FallTime = 0 SECONDS,\
+			TargetLandmark = LANDMARK_FALL_ICE)
 
 /turf/unsimulated/floor/arctic/cliff
 	name = "icy cliff"

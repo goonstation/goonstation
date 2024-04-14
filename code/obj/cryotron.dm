@@ -22,7 +22,8 @@
 
 	var/list/folks_to_spawn = list()
 	var/list/their_jobs = list()
-	var/list/stored_mobs = list() // people who've bowed out of the round
+	var/list/stored_mobs = list() // people who've bowed out of the round, and at what time
+	var/list/stored_mobs_volunteered = list() // if said people bowed out of their own accord
 	var/list/stored_crew_names = list() // stores real_names and only removes names if you leave cryo, not ghost
 	var/tmp/busy = 0
 
@@ -128,6 +129,9 @@
 				return
 			if (thePerson.loc == firstLoc)
 				step(thePerson, SOUTH)
+			for (var/obj/O in src.loc) // dropped stuff & whatever spawned under them
+				if (O.anchored == UNANCHORED && O != src)
+					O.set_loc(locate(src.x, src.y-1, src.z)) // dump it in front of the cyrotron
 			src.icon_state = "cryotron_up"
 			flick("cryotron_go_up", src)
 
@@ -160,12 +164,13 @@
 				logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 				return 1
 
+		for(var/datum/antagonist/antagonist as anything in L.mind?.antagonists)
+			antagonist.handle_cryo()
 		stored_mobs += L
+		stored_mobs_volunteered += L
 		stored_crew_names += L.real_name
-		if (!voluntary) // someone shoved us in here, mark them as not being in here of their own choice (this can only be done with braindead people who have a ckey, so you can't just grief some guy by shoving them in)
-			stored_mobs[L] = "involuntary"
-		else
-			stored_mobs[L] = world.timeofday
+		stored_mobs[L] = TIME
+		stored_mobs_volunteered[L] = voluntary // if someone shoved us in here, mark them as not being in here of their own choice (this can only be done with braindead people who have a ckey, so you can't just grief some guy by shoving them in)
 		L.set_loc(src)
 		L.hibernating = 1
 		if (L.client)
@@ -183,6 +188,9 @@
 		var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)
 		if (!isnull(crew_record))
 			crew_record["p_stat"] = "In Cryogenic Storage"
+		var/datum/job/job = find_job_in_controller_by_string(L.job, soft=TRUE)
+		if (job && !job.unique)
+			job.assigned = max(0, job.assigned - 1)
 		logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 		return 1
 
@@ -208,8 +216,13 @@
 						if (mob_can_enter_storage(user))
 							add_person_to_storage(user)
 							respawn_controller.subscribeNewRespawnee(user.ckey)
+							for(var/datum/antagonist/antagonist as anything in user.mind?.antagonists)
+								antagonist.handle_perma_cryo()
 							user.mind?.get_player()?.dnr = TRUE
 							user.ghostize()
+							var/datum/job/job = find_job_in_controller_by_string(user.job, soft=TRUE)
+							if (job)
+								job.assigned = max(0, job.assigned - 1)
 							qdel(user)
 							return 1
 
@@ -270,9 +283,10 @@
 	proc/exit_prompt(var/mob/living/user as mob)
 		if (!user || !stored_mobs.Find(user))
 			return 0
-		var/entered = stored_mobs[user] // this will be the world.timeofday that the mob went into the cryotron, or a text string if they were forced in
-		if (isnum(entered)) // fix for cannot compare 614825 to "involuntary" (sadly there is no fix for spy sassing me about a runtime HE CAUSED, THE BUTT)
-			var/time_of_day = world.timeofday + ((world.timeofday < entered) ? 864000 : 0) //Offset the time of day in case of midnight rollover
+		var/entered = stored_mobs[user] // this will be the TIME that the mob went into the cryotron, or a text string if they were forced in
+		var/voluntary = stored_mobs_volunteered[user]
+		if (voluntary)
+			var/time_of_day = TIME //Offset the time of day in case of midnight rollover
 			if ((entered + CRYOSLEEP_DELAY) > time_of_day) // is the time entered plus 15 minutes greater than the current time? the mob hasn't waited long enough
 				var/time_left = entered + CRYOSLEEP_DELAY - time_of_day
 				if (time_left >= 0)
@@ -292,7 +306,9 @@
 			return 0
 		if (add_person_to_queue(user, null))
 			stored_mobs[user] = null
+			stored_mobs_volunteered[user] = null
 			stored_mobs -= user
+			stored_mobs_volunteered -= user
 			stored_crew_names -= user.real_name
 			var/datum/db_record/crew_record = data_core.general.find_record("id", user.datacore_id)
 			if (!isnull(crew_record))
@@ -312,46 +328,28 @@
 						if (H.glasses?.allow_blind_sight)
 							L.removeOverlayComposition(/datum/overlayComposition/blinded)
 				stored_mobs -= L
+				stored_mobs_volunteered -= L
 				if(!isnull(L.loc)) // loc only goes null when you ghost, probably
 					stored_crew_names -= L.real_name // you shouldn't be removed from the list when you ghost
 					var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)
 					if (!isnull(crew_record))
 						crew_record["p_stat"] = "Active"
 
-	attack_hand(var/mob/user)
-		if(isgrab(user.l_hand))
-			src.Attackby(user.l_hand, user)
-		else if(isgrab(user.r_hand))
-			src.Attackby(user.r_hand, user)
-		else if (!enter_prompt(user))
-			return ..()
-
-	attack_ai(mob/user as mob)
-		if(isAIeye(user))
-			boutput(user, "<span class='alert'>An incorporeal manifestation of an artificial intelligence's presence can't enter \the [src]!</span>")
-			return FALSE
-		if (!enter_prompt(user))
-			return ..()
-
-	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W, /obj/item/grab))
-			var/obj/item/grab/G = W
-			if (ismob(G.affecting) && insert_prompt(G.affecting, user))
-				user.u_equip(G)
-				qdel(G)
-		else if (!enter_prompt(user))
-			return ..()
+	/// Override to stop slamming mobs into the cryotron, without this the user will
+	/// drop the player mob they're trying to insert
+	attackby(obj/item/I, mob/user)
+		return
 
 	proc/insert_prompt(mob/target, mob/user)
 		if (target.client || !target.ckey)
-			boutput(user, "<span class='alert'>You can't force someone into cryosleep if they're still logged in or are an NPC!</span>")
+			boutput(user, SPAN_ALERT("You can't force someone into cryosleep if they're still logged in or are an NPC!"))
 			return FALSE
 		else if (tgui_alert(user, "Would you like to put [target] into cryogenic storage? [he_or_she(target)] will be able to leave it immediately if they log back in.", "Confirmation", list("Yes", "No")) == "Yes")
 			if (!src.mob_can_enter_storage(target, user))
 				return FALSE
 			else
 				src.add_person_to_storage(target, FALSE)
-				src.visible_message("<span class='alert'><b>[user] forces [target] into [src]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[user] forces [target] into [src]!</b>"))
 				return TRUE
 		return FALSE
 
@@ -361,9 +359,65 @@
 		if (!exit_prompt(user))
 			return ..()
 
+	/// Handling dragging players in to cryo, mainly for silicon players.
 	MouseDrop_T(atom/target, mob/user as mob)
-		if (ishuman(target) && isrobot(user) && BOUNDS_DIST(src, user) == 0 && BOUNDS_DIST(src, target) == 0 && BOUNDS_DIST(user, target) == 0)
-			insert_prompt(target, user)
+		if (!ishuman(target) && !isrobot(user))
 			return
+
+		if (BOUNDS_DIST(src, user) != 0)
+			return
+
+		if (BOUNDS_DIST(src, target) != 0)
+			return
+
+		if (BOUNDS_DIST(user, target) != 0)
+			return
+
+		insert_prompt(target, user)
 		return ..()
 
+	/// Override for handling all interactions with the cryo chamber
+	Click()
+		if (!usr)
+			return
+
+		if (isAIeye(usr) || isintangible(usr))
+			return
+
+		if (!can_act(usr) || !in_interact_range(src, usr))
+			return
+
+		if (isdead(usr) || isobserver(usr))
+			return
+
+		if (issilicon(usr))
+			enter_prompt(usr)
+			return
+
+		var/obj/item/in_hand_item = usr.equipped()
+
+		if (in_hand_item != null)
+			if (istype(in_hand_item, /obj/item/grab))
+				var/obj/item/grab/G = in_hand_item
+
+				if (ismob(G.affecting) && insert_prompt(G.affecting, usr))
+					usr.u_equip(G)
+					qdel(G)
+			else
+				enter_prompt(usr)
+				return
+
+		else if (usr.equipped_limb() != null && in_hand_item == null)
+			if (isgrab(usr.l_hand))
+				src.Attackby(usr.l_hand, usr)
+
+			else if (isgrab(usr.r_hand))
+				src.Attackby(usr.r_hand, usr)
+
+			else
+				enter_prompt(usr)
+				return
+		else
+			enter_prompt(usr)
+
+		return ..()

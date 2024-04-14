@@ -104,7 +104,7 @@ TYPEINFO(/area)
 		*
 		* If you set the d_n_i flag, it will render them useless.
 		*/
-	var/do_not_irradiate = 1
+	var/do_not_irradiate = TRUE
 
 	/// gang that owns this area in gang mode
 	var/datum/gang/gang_owners = null
@@ -480,6 +480,7 @@ TYPEINFO(/area)
 		return
 
 /area/space // the base area you SHOULD be using for space/ocean/etc.
+	do_not_irradiate = FALSE
 
 // zewaka - adventure/technical/admin areas below //
 
@@ -769,6 +770,7 @@ ABSTRACT_TYPE(/area/shuttle)
 	icon_state = "shuttle"
 
 /area/shuttle/john/diner/nadir
+	name = "John's Bus Station Dock"
 	filler_turf = "/turf/space/fluid/acid/clear"
 
 /area/shuttle/john/owlery
@@ -976,7 +978,7 @@ ABSTRACT_TYPE(/area/shuttle_particle_spawn)
 	name = "Twisted Wreckage"
 	icon_state = "donutbridge"
 	sound_environment = 14
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/otherdimesion //moved from actuallyKeelinsStuff.dm
 	requires_power = 0
@@ -1142,11 +1144,13 @@ ABSTRACT_TYPE(/area/adventure)
 	core
 		Entered(atom/movable/O)
 			..()
-			if (isliving(O) && !helldrone_awake)
-				helldrone_awake = 1
-				SPAWN(2 SECONDS)
-					helldrone_wakeup()
-					src.process()
+			if (isliving(O))
+				var/mob/living/L = O
+				if (L.client && !helldrone_awake)
+					helldrone_awake = 1
+					SPAWN(2 SECONDS)
+						helldrone_wakeup()
+						src.process()
 
 	proc/process()
 		if (!soundSubscribers || !helldrone_awake)
@@ -1386,7 +1390,7 @@ TYPEINFO(/area/diner)
 /area/pasiphae
 	name = "Pasiphae Primary Zone"
 	icon_state = "hallC"
-	do_not_irradiate = 0
+	do_not_irradiate = FALSE
 
 /area/pasiphae/hangar
 	name = "Pasiphae Hangar"
@@ -1395,7 +1399,7 @@ TYPEINFO(/area/diner)
 /area/pasiphae/maint
 	name = "Pasiphae Maintenance"
 	icon_state = "maintcentral"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/pasiphae/sys
 	name = "Pasiphae Systems Control"
@@ -1684,17 +1688,9 @@ ABSTRACT_TYPE(/area/sim)
 	name = "Vspace area 1"
 	icon_state = "simA1"
 
-/area/sim/a1entry
-	name = "Vspace area 1 Entry"
-	icon_state = "simA1E"
-
 /area/sim/area2
 	name = "Vspace area 2"
 	icon_state = "simA2"
-
-/area/sim/a2entry
-	name = "Vspace area 2 Entry"
-	icon_state = "simA2E"
 
 /area/sim/bball
 	name = "B-Ball Court"
@@ -1752,12 +1748,28 @@ ABSTRACT_TYPE(/area/sim/gunsim)
 
 // zewaka-station areas //
 
+
+// Maybe nuclear could use this in the future???
+/// Returns a list of all areas on a station
+/proc/get_accessible_station_areas()
+	if(global.station_areas && global.area_list_is_up_to_date)
+		return global.station_areas
+	// We need to update
+	. = list()
+	for_by_tcl(poss_area, /area/station)
+		for(var/turf/T in poss_area)
+			if(!isfloor(T) || is_blocked_turf(T) || T.z != Z_LEVEL_STATION)
+				continue
+			.[poss_area.name] = poss_area
+	global.area_list_is_up_to_date = TRUE
+	global.station_areas = .
+
 /// Base station area
 ABSTRACT_TYPE(/area/station)
 TYPEINFO(/area/station)
 	valid_bounty_area = TRUE
 /area/station
-	do_not_irradiate = 0
+	do_not_irradiate = FALSE
 	sound_fx_1 = 'sound/ambience/station/Station_VocalNoise1.ogg'
 	minimaps_to_render_on = MAP_ALL
 	occlude_foreground_parallax_layers = TRUE
@@ -1784,11 +1796,11 @@ ABSTRACT_TYPE(/area/station/atmos)
 	icon_state = "atmos"
 	sound_environment = 10
 	workplace = 1
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station/atmos/highcap_storage
 	name = "High-Capacity Atmospherics Storage"
-	do_not_irradiate = 0
+	do_not_irradiate = FALSE
 
 ABSTRACT_TYPE(/area/station/atmos/hookups)
 /area/station/atmos/hookups
@@ -1834,7 +1846,7 @@ TYPEINFO(/area/station/maintenance)
 	icon_state = "maintcentral"
 	sound_environment = 12
 	workplace = 1
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 	station_map_colour = MAPC_MAINTENANCE
 
 /area/station/maintenance/northwest
@@ -2101,7 +2113,7 @@ TYPEINFO(/area/station/hallway)
 
 /area/station/hallway/arrivals
 	name = "Arrival Hallway"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 	icon_state = "pink"
 
 ABSTRACT_TYPE(/area/station/hallway/primary)
@@ -2233,7 +2245,7 @@ ABSTRACT_TYPE(/area/station/hallway/secondary)
 /area/station/hallway/secondary/oshan_arrivals
 	name = "Oshan Arrivals"
 	icon_state = "blue"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station/hallway/secondary/shuttle
 	name = "Shuttle Bay"
@@ -2421,7 +2433,7 @@ ABSTRACT_TYPE(/area/station/crew_quarters)
 
 /area/station/crew_quarters/stockex
 	name = "Stock Exchange"
-	icon_state = "yellow"
+	icon_state = "stockex"
 	sound_environment = 0
 
 ABSTRACT_TYPE(/area/station/crew_quarters/radio)
@@ -2628,13 +2640,13 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 
 /area/station/crew_quarters/market
 	name = "Public Market"
-	icon_state = "yellow"
+	icon_state = "publicmarket"
 	sound_environment = 0
 	station_map_colour = MAPC_HALLWAY
 
 /area/station/crew_quarters/supplylobby
 	name = "Supply Lobby"
-	icon_state = "yellow"
+	icon_state = "supplylobby"
 	sound_environment = 0
 
 /area/station/crew_quarters/garden
@@ -2657,7 +2669,7 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crewquarters/cryotron
 	name ="Cryogenic Crew Storage"
 	icon_state = "blue"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 ABSTRACT_TYPE(/area/station/com_dish)
 /area/station/com_dish
@@ -2798,19 +2810,19 @@ TYPEINFO(/area/station/engine/substation)
 
 /area/station/engine/substation/pylon
 	name = "Electrical Substation"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station/engine/substation/west
 	name = "West Electrical Substation"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station/engine/substation/east
 	name = "East Electrical Substation"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station/engine/substation/north
 	name = "North Electrical Substation"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station/engine/proto
 	name = "Prototype Engine"
@@ -2880,6 +2892,11 @@ ABSTRACT_TYPE(/area/station/medical)
 	name = "Medbay Operating Theater"
 	icon_state = "medbay_surgery"
 
+/area/station/medical/medbay/reception
+	name = "Medbay Reception"
+	icon_state = "medbooth"
+	sound_environment = 3
+
 /area/station/medical/medbay/surgery/storage
 	name = "Medical Storage"
 	icon_state = "blue"
@@ -2920,13 +2937,13 @@ ABSTRACT_TYPE(/area/station/medical)
 	name = "Morgue"
 	icon_state = "morgue"
 	sound_environment = 3
-	station_map_colour = MAPC_MEDICAL
+	station_map_colour = MAPC_MORGUE
 
 /area/station/medical/crematorium
 	name = "Crematorium"
 	icon_state = "morgue"
 	sound_environment = 3
-	station_map_colour = MAPC_MEDICAL
+	station_map_colour = MAPC_MORGUE
 
 /area/station/medical/medbooth
 	name = "Medical Booth"
@@ -2942,7 +2959,7 @@ ABSTRACT_TYPE(/area/station/medical)
 	name = "Medical Maintenance"
 	icon_state = "medical_maintenance"
 	sound_environment = 3
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station/medical/staff
 	name = "Medbay Staff Area"
@@ -2976,7 +2993,7 @@ ABSTRACT_TYPE(/area/station/security)
 	icon_state = "brigcell"
 	sound_environment = 3
 	teleport_blocked = 0
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 	station_map_colour = MAPC_BRIG
 
 /area/station/security/brig/cell_block_control
@@ -3142,7 +3159,7 @@ ABSTRACT_TYPE(/area/station/security)
 /area/station/security/beepsky
 	name = "Beepsky's House"
 	icon_state = "storage"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 	spy_secure_area = FALSE	// Easy to get into
 
 ABSTRACT_TYPE(/area/station/solar)
@@ -3150,7 +3167,7 @@ ABSTRACT_TYPE(/area/station/solar)
 	requires_power = 0
 	luminosity = 1
 	workplace = 1
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station/solar/north
 	name = "North Solar Array"
@@ -3169,14 +3186,20 @@ ABSTRACT_TYPE(/area/station/solar)
 	name = "West Solar Array"
 	icon_state = "panelsW"
 
+TYPEINFO(/area/station/solar/small_backup1)
+	valid_bounty_area = FALSE
 /area/station/solar/small_backup1
 	name = "Emergency Solar Array 1"
 	icon_state = "yellow"
 
+TYPEINFO(/area/station/solar/small_backup2)
+	valid_bounty_area = FALSE
 /area/station/solar/small_backup2
 	name = "Emergency Solar Array 2"
 	icon_state = "yellow"
 
+TYPEINFO(/area/station/solar/small_backup3)
+	valid_bounty_area = FALSE
 /area/station/solar/small_backup3
 	name = "Emergency Solar Array 3"
 	icon_state = "yellow"
@@ -3283,7 +3306,7 @@ ABSTRACT_TYPE(/area/station/science)
 /area/station/science/gen_storage
 	name = "Research Storage"
 	icon_state = "genstorage"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station/science/restroom
 	name = "Research Restroom"
@@ -3317,7 +3340,7 @@ ABSTRACT_TYPE(/area/station/science)
 /area/station/science/storage
 	name = "Toxin Storage"
 	icon_state = "toxstorage"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 	station_map_colour = MAPC_TOXINS
 
 /area/station/science/laser
@@ -3331,7 +3354,7 @@ ABSTRACT_TYPE(/area/station/science)
 /area/station/science/construction
 	name = "Research Sector Construction Area"
 	icon_state = "yellow"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 ABSTRACT_TYPE(/area/station/chapel)
 /area/station/chapel
@@ -3405,7 +3428,7 @@ ABSTRACT_TYPE(/area/station/chapel)
 /area/station/storage/tech
 	name = "Technical Storage"
 	icon_state = "auxstorage"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station/storage/warehouse
 	name = "Central Warehouse"
@@ -3420,7 +3443,7 @@ ABSTRACT_TYPE(/area/station/chapel)
 
 /area/station/storage/northeast
 	name = "Northeast Area"
-	do_not_irradiate = 1;
+	do_not_irradiate = TRUE;
 
 /area/station/storage/hydroponics
 	name = "Hydroponics Storage"
@@ -3537,7 +3560,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Routing"
 	icon_state = "depot"
 	sound_environment = 13
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station/routing/depot
  name = "Routing Depot"
@@ -3568,7 +3591,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/research_outpost
 	name = "Research Outpost"
 	icon_state = "blue"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 	minimaps_to_render_on = MAP_ALL
 	station_map_colour = MAPC_RESEARCH
 	occlude_foreground_parallax_layers = TRUE
@@ -3590,7 +3613,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/research_outpost/maint
 		name = "Research Outpost Maintenance"
 		icon_state = "purple"
-		do_not_irradiate = 1
+		do_not_irradiate = TRUE
 
 /area/research_outpost/toxins
 		name = "Research Outpost Toxins"
@@ -3607,7 +3630,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Listening Post"
 	icon_state = "brig"
 	teleport_blocked = 1
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 	minimaps_to_render_on = MAP_SYNDICATE
 	station_map_colour = MAPC_SYNDICATE
 	occlude_foreground_parallax_layers = TRUE
@@ -3656,8 +3679,16 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Peregrine"
 	icon_state = "red"
 	requires_power = 0
+	sanctuary = 1
 	teleport_blocked = 1
-	do_not_irradiate = TRUE
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/pirate
+
+/area/pirate_ship_space
+	name = "Peregrine Space"
+	sanctuary = 1
+	teleport_blocked = 1
+	// Must match /area/pirate_ship
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/pirate
 
 /// Nukeops spawn station
 /area/syndicate_station
@@ -3709,7 +3740,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 		if(istype(M) && M.mind && !(M.mind.special_role == ROLE_WIZARD || M.mind.assigned_role == "Santa Claus)"))
 			if(M.client && M.client.holder)
 				return TRUE
-			boutput(M, "<span class='alert'>A magical barrier prevents you from entering!</span>") //or something
+			boutput(M, SPAN_ALERT("A magical barrier prevents you from entering!")) //or something
 			return FALSE
 		return TRUE
 
@@ -3720,28 +3751,8 @@ ABSTRACT_TYPE(/area/station/catwalk)
 ABSTRACT_TYPE(/area/station/ai_monitored)
 /area/station/ai_monitored
 	name = "AI Monitored Area"
-	var/obj/machinery/camera/motion/motioncamera = null
 	workplace = 1
 	station_map_colour = MAPC_COMMAND
-
-/area/station/ai_monitored/New()
-	..()
-	// locate and store the motioncamera
-	SPAWN(2 SECONDS) // spawn on a delay to let turfs/objs load
-		for (var/obj/machinery/camera/motion/M in src)
-			motioncamera = M
-			return
-	return
-
-/area/station/ai_monitored/Entered(atom/movable/O)
-	..()
-	if (ismob(O) && motioncamera)
-		motioncamera.newTarget(O)
-//
-/area/station/ai_monitored/Exited(atom/movable/O)
-	..()
-	if (ismob(O) && motioncamera)
-		motioncamera.lostTarget(O)
 
 ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 /area/station/ai_monitored/storage
@@ -3816,17 +3827,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	spy_secure_area = TRUE
 	station_map_colour = MAPC_COMMAND
 	var/list/obj/machinery/turret/turret_list = list()
-	var/obj/machinery/camera/motion/motioncamera = null
 	var/list/obj/blob/blob_list = list() //faster to cache blobs as they enter instead of searching the area for them (For turrets)
-
-/area/station/turret_protected/New()
-	..()
-	// locate and store the motioncamera
-	SPAWN(2 SECONDS) // spawn on a delay to let turfs/objs load
-		for (var/obj/machinery/camera/motion/M in src)
-			motioncamera = M
-			return
-	return
 
 /area/station/turret_protected/Entered(O)
 	..()
@@ -3836,16 +3837,11 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	if (!isliving(O) || issilicon(O) || isintangible(O))
 		return 1
 
-	motioncamera?.newTarget(O)
 	popUpTurrets()
 	return 1
 
 /area/station/turret_protected/Exited(O)
 	..()
-	if (isliving(O))
-		if (!issilicon(O))
-			motioncamera?.lostTarget(O)
-			//popDownTurrets()
 	if (istype(O,/obj/blob))
 		blob_list -= O
 	return 1
@@ -3925,7 +3921,7 @@ TYPEINFO(/area/station/turret_protected/AIbaseoutside)
 /area/station/turret_protected/armory_outside
 	name = "Armory Outer Perimeter"
 	icon_state = "secext"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 	requires_power = FALSE
 	minimaps_to_render_on = null
 
@@ -4107,7 +4103,7 @@ ABSTRACT_TYPE(/area/mining)
 
 	proc/SetName(var/name)
 		src.name = name
-		global.area_list_is_up_to_date = 0 // our area cache could no longer be accurate!
+		global.area_list_is_up_to_date = FALSE // our area cache could no longer be accurate!
 		for(var/obj/machinery/power/apc/apc in src)
 			apc.name = "[name] APC"
 			apc.area = src
@@ -4138,8 +4134,9 @@ ABSTRACT_TYPE(/area/mining)
 	teleport_blocked = 1
 	icon_state = "purple"
 
-/area/devzone
-	name = "Super Radical Awesone Dev Area"
+/// For Devtest testing purposes
+/area/station/devzone
+	name = "Dev Zone"
 	requires_power = FALSE
 	icon_state = "green"
 	ambient_light = "#FFFFE6"
@@ -4168,7 +4165,7 @@ ABSTRACT_TYPE(/area/mining)
 		power_environ = 1
 	else
 		luminosity = 0
-	global.area_list_is_up_to_date = 0
+	global.area_list_is_up_to_date = FALSE
 
 	SPAWN(1.5 SECONDS)
 		src.power_change()		// all machines set to current power level, also updates lighting icon
@@ -4339,7 +4336,7 @@ Don't try and do this in the editor nerd. ~Warc
 
 
 /area/station2
-	do_not_irradiate = 0
+	do_not_irradiate = FALSE
 	sound_fx_1 = 'sound/ambience/station/Station_VocalNoise1.ogg'
 	var/initial_structure_value = 0
 #ifdef MOVING_SUB_MAP
@@ -4361,7 +4358,7 @@ Don't try and do this in the editor nerd. ~Warc
 	icon_state = "atmos"
 	sound_environment = 10
 	workplace = 1
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/atmos/hookups
 	sound_environment = 3
@@ -4392,7 +4389,7 @@ area/station/communications
 	icon_state = "maintcentral"
 	sound_environment = 12
 	workplace = 1
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/maintenance/NWmaint
 	name = "North West Maintenance"
@@ -4549,13 +4546,13 @@ area/station/hallway/starboardupperhallway
 	name = "Construction Area"
 	icon_state = "construction"
 	workplace = 1
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/hallway/secondary/construction2
 	name = "Secondary Construction Area"
 	icon_state = "construction"
 	workplace = 1
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/hallway/secondary/entry
 	name = "Main Hallway"
@@ -4751,12 +4748,12 @@ area/station/hallway/starboardupperhallway
 /area/station2/crew_quarters/clown
 	name = "Clown Hole"
 	icon_state = "storage"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/crew_quarters/catering
 	name = "Catering Storage"
 	icon_state = "storage"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/crew_quarters/bathroom
 	name = "Bathroom"
@@ -4765,7 +4762,7 @@ area/station/hallway/starboardupperhallway
 /area/station2/security/beepsky
 	name = "Beepsky's House"
 	icon_state = "storage"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/crew_quarters/jazz
 	name = "Jazz Lounge"
@@ -4990,19 +4987,19 @@ area/station/crewquarters/cryotron
 
 /area/station2/engine/substation/pylon
 	name = "Electrical Substation"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/engine/substation/west
 	name = "West Electrical Substation"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/engine/substation/east
 	name = "East Electrical Substation"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/engine/substation/north
 	name = "North Electrical Substation"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/engine/proto
 	name = "Prototype Engine"
@@ -5035,7 +5032,7 @@ area/station/crewquarters/cryotron
 	icon_state = "teleporter"
 	requires_power = 0
 	teleport_blocked = 1
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/medical
 	name = "Medical area"
@@ -5130,7 +5127,7 @@ area/station/crewquarters/cryotron
 	name = "Medical Maintenance"
 	icon_state = "medical_maintenance"
 	sound_environment = 3
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/medical/staff
 	name = "Medbay Staff Area"
@@ -5276,7 +5273,7 @@ area/station/security/visitation
 	luminosity = 1
 	force_fullbright = 1
 	workplace = 1
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/solar/north
 	name = "North Solar Array"
@@ -5321,7 +5318,7 @@ area/station/security/visitation
 	name = "Quartermaster's Storage"
 	icon_state = "quartstorage"
 	sound_environment = 2
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/quartermaster/magnet
 	name = "Magnet Control Room"
@@ -5366,7 +5363,7 @@ area/station/security/visitation
 	icon_state = "yellow"
 	sound_environment = 5
 	workplace = 1
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/science
 	//name = "Research Outpost Zeta"
@@ -5378,7 +5375,7 @@ area/station/security/visitation
 /area/station2/science/gen_storage
 	name = "Research Storage"
 	icon_state = "genstorage"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/science/restroom
 	name = "Research Restroom"
@@ -5408,7 +5405,7 @@ area/station/security/visitation
 /area/station2/science/storage
 	name = "Toxin Storage"
 	icon_state = "toxstorage"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/science/laser
 	name = "Optics Lab"
@@ -5421,7 +5418,7 @@ area/station/security/visitation
 /area/station2/science/construction
 	name = "Research Sector Construction Area"
 	icon_state = "yellow"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/test_area
 	name = "Toxin Test Area"
@@ -5493,7 +5490,7 @@ area/station/security/visitation
 /area/station2/storage/tech
 	name = "Technical Storage"
 	icon_state = "auxstorage"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/storage/warehouse
 	name = "Central Warehouse"
@@ -5512,7 +5509,7 @@ area/station/security/visitation
 	name = "Hangar"
 	icon_state = "hangar"
 	workplace = 1
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 	main
 		name = "Pod Bay"
@@ -5556,26 +5553,26 @@ area/station/security/visitation
 	name = "Owlery"
 	icon_state = "yellow"
 	sound_environment = 15
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/aviary
 	name = "Aviary"
 	icon_state = "aviary"
 	sound_environment = 15
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/habitat
 	name = "Habitat Dome"
 	icon_state = "aviary"
 	sound_environment = 15
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 	force_fullbright = 1
 
 /area/station2/zen
 	name = "Zen Garden"
 	icon_state = "aviary"
 	sound_environment = 15
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/catwalk
 	icon_state = "yellow"
@@ -5597,7 +5594,7 @@ area/station/security/visitation
 	name = "Routing Depot"
 	icon_state = "depot"
 	sound_environment = 13
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 	catering
 		name = "Cafeteria Router"
@@ -5620,7 +5617,7 @@ area/station/security/visitation
 /area/research_outpost
 	name = "Research Outpost"
 	icon_state = "blue"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 	hangar
 		name = "Research Outpost Hangar"
@@ -5633,7 +5630,7 @@ area/station/security/visitation
 	maint
 		name = "Research Outpost Maintenance"
 		icon_state = "purple"
-		do_not_irradiate = 1
+		do_not_irradiate = TRUE
 
 	toxins
 		name = "Research Outpost Toxins"
@@ -5645,7 +5642,7 @@ area/station/security/visitation
 	name = "Listening Post"
 	icon_state = "brig"
 	teleport_blocked = 1
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 	syndicateassaultvessel
 		name ="Syndicate Assault Vessel"
@@ -5695,7 +5692,7 @@ area/station/security/visitation
 		if( istype(M) && M.mind && M.mind.special_role != "wizard" && isliving(M) )
 			if(M.client && M.client.holder)
 				return 1
-			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" )//or something
+			boutput( M, SPAN_ALERT("A magical barrier prevents you from entering!") )//or something
 			return 0
 		return 1
 
@@ -5799,7 +5796,7 @@ area/station/security/visitation
 	name = "AI Upload Chamber"
 	icon_state = "ai_upload"
 	sound_environment = 12
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/turret_protected/ai_upload_foyer
 	name = "AI Upload Foyer"
@@ -5810,7 +5807,7 @@ area/station/security/visitation
 	name = "AI Chamber"
 	icon_state = "ai_chamber"
 	sound_environment = 12
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
 
 /area/station2/turret_protected/AIbasecore1
 	name = "AI Core 1"

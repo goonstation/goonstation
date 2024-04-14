@@ -863,22 +863,22 @@ Code:
 
 		if (isAIeye(usr))
 			var/turf/eye_loc = get_turf(usr)
-			if (!(eye_loc.camera_coverage_emitters && length(eye_loc.camera_coverage_emitters)))
+			if (length(eye_loc.camera_coverage_emitters))
 				an_area = get_area(eye_loc)
 
-		signal.data["message"] = "<b><span class='alert'>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
+		signal.data["message"] = SPAN_ALERT("<b>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</b>")
 
 		src.post_signal(signal)
 
 		if(isliving(usr) && !remote)
 			playsound(src.master, alert_sound, 60)
 			var/map_text = null
-			map_text = make_chat_maptext(usr, "[alert_title] Emergency alert sent.", "font-family: 'Helvetica'; color: [alert_color]; font-size: 7px;", alpha = 215)
+			map_text = make_chat_maptext(usr, "[alert_title] Emergency alert sent.", "color: [alert_color]; font-size: 6px;", alpha = 215)
 			for (var/mob/O in hearers(usr))
 				O.show_message(assoc_maptext = map_text)
-			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.master].</span>",
-			"<span class='notice'>You press the \"Alert\" button on the side of your [src.master].</span>",
-			"<span class='alert'>You see [usr] press a button on the side of their [src.master].</span>")
+			usr.visible_message(SPAN_ALERT("[usr] presses a red button on the side of their [src.master]."),
+			SPAN_NOTICE("You press the \"Alert\" button on the side of your [src.master]."),
+			SPAN_ALERT("You see [usr] press a button on the side of their [src.master]."))
 
 //Whoever runs this gets to explode.
 /datum/computer/file/pda_program/bomb
@@ -1035,12 +1035,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 								dat += "[T.text]<br>"
 
 				if(2) //requested fines
-					var/can_approve = 0
 
 					var/PDAowner = src.master.owner
 					var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
-
-					if(PDAownerjob in list("Head of Security","Head of Personnel","Captain")) can_approve = 1
 
 					dat += "<br><br><a href='byond://?src=\ref[src];back=1'>Back</a>"
 
@@ -1049,7 +1046,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					for (var/datum/fine/F in data_core.fines)
 						if(!F.approver)
 							dat += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>Requested by: [F.issuer] - [F.issuer_job]"
-							if(can_approve) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
+							if((PDAownerjob in JOBS_CAN_TICKET_BIG) || ((PDAownerjob in JOBS_CAN_TICKET_SMALL) && F.amount <= MAX_FINE_NO_APPROVAL)) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
 							dat += "<br><br>"
 
 				if(3) //unpaid fines
@@ -1134,9 +1131,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			var/ticket_reason = input(usr, "Fine reason:",src.name) as text
 			if(!ticket_reason) return
 			ticket_reason = copytext(strip_html(ticket_reason), 1, MAX_MESSAGE_LEN)
-			var/fine_amount = input(usr, "Fine amount (1-1000):",src.name, 0) as num
+			var/fine_amount = input(usr, "Fine amount (1-10000):",src.name, 0) as num
 			if(!isnum_safe(fine_amount)) return
-			fine_amount = min(fine_amount,1000)
+			fine_amount = min(fine_amount,10000)
 			fine_amount = max(fine_amount,1)
 
 			var/datum/fine/F = new /datum/fine()
@@ -1149,8 +1146,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			F.issuer_byond_key = usr.key
 			data_core.fines += F
 
-			logTheThing(LOG_ADMIN, usr, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
-			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
+			logTheThing(LOG_ADMIN, usr, "requested a fine using [PDAowner]([PDAownerjob])'s PDA. It is a [fine_amount] credit fine on <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			if((fine_amount <= MAX_FINE_NO_APPROVAL && (PDAownerjob in JOBS_CAN_TICKET_SMALL)) || (PDAownerjob in JOBS_CAN_TICKET_BIG))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
 				playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 				SPAWN(3 SECONDS)
@@ -1160,8 +1157,11 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					p.name = "Official Fine Notification - [ticket_target]"
 					p.info = ticket_text
 					p.icon_state = "paper_caution"
+
+			else if(fine_amount <= MAX_FINE_NO_APPROVAL)
+				message = "Fine request created, awaiting approval from the [english_list(JOBS_CAN_TICKET_SMALL, "nobody", " or ")]."
 			else
-				message = "Fine request created, awaiting approval from the Captain, Head of Security or Head of Personnel."
+				message = "Fine request created, awaiting approval from the [english_list(JOBS_CAN_TICKET_BIG, "nobody", " or ")]."
 
 		else if(href_list["approve"])
 			var/PDAowner = src.master.owner
@@ -1732,11 +1732,12 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		. += "<h4>Rockbox™ Ore Cloud Status</h4>"
 
 		if (!istype(master.host_program, /datum/computer/file/pda_program/os/main_os) || !master.host_program:message_on)
-			return "<span class='alert'>Wireless messaging must be enabled to talk to the cloud!</span>"
+			. += SPAN_ALERT("Wireless messaging must be enabled to talk to the cloud!")
+			return
 
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
 			. += "<b>Location: [get_area(S)]</b><br>"
-			if(S.broken)
+			if(S.is_disabled())
 				.= "No response from Rockbox™ Ore Cloud Storage Container!<br><br>"
 				continue
 			if (!length(S.ores))

@@ -37,26 +37,30 @@
 
 	Eat(mob/M, mob/user)
 		if(isghostcritter(M) || isghostcritter(user))
-			return 0
+			return FALSE
 		if(M == user)
 			if(tgui_alert(user, "Are you sure you want to eat [src]?", "Eat brain?", list("Yes", "No")) == "Yes")
+				if (!(src in user.equipped_list())) //stop remotely eating people's brains please
+					return TRUE
 				logTheThing(LOG_COMBAT, user, "tries to eat [src] (owner's ckey [owner ? owner.ckey : null]).")
 				return ..()
 		else
 			if(tgui_alert(user, "Are you sure you want to feed [src] to [M]?", "Feed brain?", list("Yes", "No")) == "Yes")
+				if (!(src in user.equipped_list()))
+					return TRUE
 				logTheThing(LOG_COMBAT, user, "tries to feed [src] (owner's ckey [owner ? owner.ckey : null]) to [constructName(M)].")
 				return ..()
-		return 0
+		return FALSE
 
 	get_desc()
 		if (usr && (usr.traitHolder?.hasTrait("training_medical") || GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH)))
 			if (src.owner?.key)
 				if (!find_ghost_by_key(src.owner?.key))
-					. += "<br><span class='notice'>This brain is slimy.</span>"
+					. += "<br>[SPAN_NOTICE("This brain is slimy.")]"
 				else
-					. += "<br><span class='notice'>This brain is still warm.</span>"
+					. += "<br>[SPAN_NOTICE("This brain is still warm.")]"
 			else
-				. += "<br><span class='alert'>This brain has gone cold.</span>"
+				. += "<br>[SPAN_ALERT("This brain has gone cold.")]"
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for brains. */
@@ -67,23 +71,23 @@
 		var/obj/item/organ/organ_location = H.organHolder.get_organ("head")
 
 		if (!organ_location)
-			boutput(user, "<span class='notice'>Where are you putting that again? There's no head.</span>")
+			boutput(user, SPAN_NOTICE("Where are you putting that again? There's no head."))
 			return null
 
 		if (!headSurgeryCheck(H))
-			boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
+			boutput(user, SPAN_NOTICE("You're going to need to remove that mask/helmet/glasses first."))
 			return null
 
 		if (!H.organHolder.get_organ("brain") && H.organHolder.head.scalp_op_stage >= 4.0)
 			if (!H.organHolder.get_organ("skull"))
-				boutput(user, "<span class='notice'>There's no skull in there to hold the brain in place.</span>")
+				boutput(user, SPAN_NOTICE("There's no skull in there to hold the brain in place."))
 				return null
 
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 
-			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
-				"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!"),\
+				SPAN_ALERT("You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!"),\
+				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!"))
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
@@ -126,13 +130,13 @@
 			if (activated)
 				if (src.owner?.key)
 					if (!find_ghost_by_key(src.owner?.key))
-						. += "<br><span class='notice'>[src]'s indicators show that it once had a conciousness installed, but that conciousness cannot be located.</span>"
+						. += "<br>[SPAN_NOTICE("[src]'s indicators show that it once had a conciousness installed, but that conciousness cannot be located.")]"
 					else
-						. += "<br><span class='notice'>[src]'s indicators show that it is still operational, and can be installed into a new body immediately.</span>"
+						. += "<br>[SPAN_NOTICE("[src]'s indicators show that it is still operational, and can be installed into a new body immediately.")]"
 				else
-					. += "<br><span class='alert'>[src] has powered down fully.</span>"
+					. += "<br>[SPAN_ALERT("[src] has powered down fully.")]"
 			else
-				. += "<br><span class='alert'>[src] has its factory defaults enabled. No conciousness has entered it yet.</span>"
+				. += "<br>[SPAN_ALERT("[src] has its factory defaults enabled. No conciousness has entered it yet.")]"
 
 /obj/item/organ/brain/ai
 	name = "neural net processor"
@@ -176,6 +180,6 @@
 /obj/item/organ/brain/flockdrone/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Computational core
-		<br><span class='bold'>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] Computational core<br>\
+		[SPAN_BOLD("###=-")]")]"}

@@ -24,6 +24,12 @@ proc/qdel(var/datum/D)
 			for (var/C in D:contents)
 				qdel(C)
 
+		#ifdef OPENDREAM
+		SPAWN(1)
+			del(D)
+		return
+		#endif
+
 		/**
 			* We'll assume here that the object will be GC'ed.
 			* If the object is not GC'ed and must be explicitly deleted,

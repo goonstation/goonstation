@@ -36,7 +36,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	var/gen_analysis = 0 //Are we analysing the genes while reassembling the duder? (read: Do we work faster or do we give a material bonus?)
 	//Sound for scans and toggling gene analysis. They need to be the same so you can fake the former with the latter
 	var/sound_ping = 'sound/machines/ping.ogg'
-
+	var/emagged = FALSE
 	light_r =1
 	light_g = 0.6
 	light_b = 1
@@ -159,7 +159,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		var/obj/item/currency/spacecash/cash = W
 		src.held_credit += cash.amount
 		cash.amount = 0
-		user.show_text("<span class='notice'>You add [cash] to the credit in [src].</span>")
+		user.show_text(SPAN_NOTICE("You add [cash] to the credit in [src]."))
 		user.u_equip(W)
 		qdel(W)
 	else if (istype(W, /obj/item/disk/data/floppy))
@@ -173,7 +173,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 	else if (istype(W, /obj/item/cloner_upgrade))
 		if (allow_dead_scanning || allow_mind_erasure)
-			boutput(user, "<span class='alert'>There is already an upgrade installed.</span>")
+			boutput(user, SPAN_ALERT("There is already an upgrade installed."))
 			return
 
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
@@ -184,7 +184,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 	else if (istype(W, /obj/item/cloneModule/minderaser))
 		if(allow_mind_erasure || allow_dead_scanning)
-			boutput(user, "<span class='alert'>There is already an upgrade installed.</span>")
+			boutput(user, SPAN_ALERT("There is already an upgrade installed."))
 			return
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_mind_erasure = 1
@@ -194,10 +194,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	else if (istype(W, /obj/item/cloneModule/genepowermodule))
 		var/obj/item/cloneModule/genepowermodule/module = W
 		if(module.BE == null)
-			boutput(user, "<span class='alert'>You need to put an injector into the module before it will work!</span>")
+			boutput(user, SPAN_ALERT("You need to put an injector into the module before it will work!"))
 			return
 		if(src.BE)
-			boutput(user,"<span class='alert'>There is already a gene module in this upgrade spot! You can remove it by blowing up the genetics computer and building a new one. Or you could just use a screwdriver, I guess.</span>")
+			boutput(user,SPAN_ALERT("There is already a gene module in this upgrade spot! You can remove it by blowing up the genetics computer and building a new one. Or you could just use a screwdriver, I guess."))
 			return
 		src.BE = module.BE
 		user.drop_item()
@@ -217,6 +217,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 			src.records.Remove(RIP)
 			qdel(RIP)
 	..()
+
+/obj/machinery/computer/cloning/emag_act(mob/user, obj/item/card/emag/E)
+	..()
+	if (!src.emagged)
+		src.emagged = TRUE
+		playsound(src, 'sound/effects/sparks4.ogg', 50)
+		logTheThing(LOG_ADMIN, user, "emagged the cloning console at \[[log_loc(src)]]")
+		if(user)
+			boutput(user, "You short out the access lock on [src].")
+		return 1
+	return 0
 
 // message = message you want to pass to the noticebox
 // status = warning/success/danger/info which changes the color of the noticebox on the frontend
@@ -387,7 +398,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	if (inafterlifebar(selected) || isghostcritter(selected) || isVRghost(selected))
 		//for deleting the mob if theyre in the bar, in vr, or a ghost critter
 		var/mob/soon_to_be_deleted = selected
-		boutput(selected, "<span class='notice'>You are being returned to the land of the living!</span>")
+		boutput(selected, SPAN_NOTICE("You are being returned to the land of the living!"))
 		selected = soon_to_be_deleted.ghostize()
 		qdel(soon_to_be_deleted)
 
@@ -553,7 +564,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		if (is_incapacitated(M))
 			return FALSE
 		if (src.occupant)
-			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
+			boutput(M, SPAN_NOTICE("<B>The scanner is already occupied!</B>"))
 			return FALSE
 
 		.= TRUE
@@ -610,7 +621,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			return
 
 		if (src.occupant)
-			boutput(user, "<span class='notice'><B>The scanner is already occupied!</B></span>")
+			boutput(user, SPAN_NOTICE("<B>The scanner is already occupied!</B>"))
 			return
 
 		move_mob_inside(G.affecting, user)
@@ -644,11 +655,11 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		if(lock_status && !locked)
 			locked = 1
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-			boutput(occupant, "<span class='alert'>\The [src] locks shut!</span>")
+			boutput(occupant, SPAN_ALERT("\The [src] locks shut!"))
 		else if(!lock_status && locked)
 			locked = 0
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-			boutput(occupant, "<span class='notice'>\The [src] unlocks!</span>")
+			boutput(occupant, SPAN_NOTICE("\The [src] unlocks!"))
 
 	// Meat grinder functionality.
 	proc/find_pods()
@@ -697,7 +708,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 	proc/start_strip()
 		active_process = PROCESS_STRIP
 		set_lock(1)
-		boutput(occupant, "<span class='alert'>Hatches open and tiny, grabby claws emerge!</span>")
+		boutput(occupant, SPAN_ALERT("Hatches open and tiny, grabby claws emerge!"))
 
 		SubscribeToProcess()
 
@@ -749,7 +760,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 
 		if(to_remove)
 			if(prob(70))
-				boutput(occupant, "<span class='alert'>\The arms [pick("snatch", "grab", "steal", "remove", "nick", "blag")] your [to_remove.name]!</span>")
+				boutput(occupant, SPAN_ALERT("\The arms [pick("snatch", "grab", "steal", "remove", "nick", "blag")] your [to_remove.name]!"))
 				playsound(src, "sound/misc/rustle[rand(1,5)].ogg", 50, 1)
 			to_remove.set_loc(src.loc)
 		else
@@ -771,7 +782,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 
 	switch(action)
 		if("delete")
-			if(!src.allowed(usr))
+			if(!(src.allowed(usr) || src.emagged))
 				show_message("You do not have permission to delete records.", "danger")
 				return TRUE
 			var/selected_record =	find_record_by_id(params["id"])
@@ -786,7 +797,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			if (!cloning_with_records)
 				return
 			if(usr == src.scanner.occupant)
-				boutput(usr, "<span class='alert'>You can't quite reach the scan button from inside the scanner, darn!</span>")
+				boutput(usr, SPAN_ALERT("You can't quite reach the scan button from inside the scanner, darn!"))
 				return TRUE
 			if(!isnull(src.scanner))
 				src.scan_mob(src.scanner.occupant)
@@ -802,7 +813,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			if (cloning_with_records)
 				return
 			if(usr == src.scanner.occupant)
-				boutput(usr, "<span class='alert'>You can't quite reach the scan button from inside the scanner, darn!</span>")
+				boutput(usr, SPAN_ALERT("You can't quite reach the scan button from inside the scanner, darn!"))
 				return TRUE
 			if(!isnull(src.scanner))
 				var/datum/db_record/R = src.scan_mob(src.scanner.occupant)
@@ -917,7 +928,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 
 	. = list(
 		"cloningWithRecords" = cloning_with_records,
-		"allowedToDelete" = src.allowed(user),
+		"allowedToDelete" = (src.allowed(user) || src.emagged),
 		"scannerGone" = isnull(src.scanner),
 		"occupantScanned" = FALSE,
 

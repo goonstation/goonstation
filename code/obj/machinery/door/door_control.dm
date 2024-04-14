@@ -486,10 +486,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	..()
 	if (!(src.status & BROKEN))
 		src.status |= BROKEN
-		src.visible_message("<span class='alert'>[src] emits a sad thunk.  That can't be good.</span>")
+		src.visible_message(SPAN_ALERT("[src] emits a sad thunk.  That can't be good."))
 		playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50, 1)
 	else
-		boutput(user, "<span class='alert'>It's broken.</span>")
+		boutput(user, SPAN_ALERT("It's broken."))
 // Stolen from the vending module
 /// For a flying chat and message addition upon controller activation, not called outside of a child as things stand
 /obj/machinery/door_control/proc/speak(var/message)
@@ -498,7 +498,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		return
 	else
 		speak_text = make_chat_maptext(src, message, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
-		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2, assoc_maptext = speak_text)
+		src.audible_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\"")), assoc_maptext = speak_text)
 		if (speak_text && src.chat_text && length(src.chat_text.lines))
 			speak_text.measure(src)
 			for (var/image/chat_maptext/I in src.chat_text.lines)
@@ -524,12 +524,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		return
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
 	if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
-		user.visible_message("<span class='notice'>The [src] accepts the biometrics of the user and beeps, granting you access.</span>")
+		user.visible_message(SPAN_NOTICE("The [src] accepts the biometrics of the user and beeps, granting you access."))
 		src.toggle()
 		if (src.entrance_scanner)
 			src.speak(src.welcome_text)
 	else
-		boutput(user, "<span class='alert'>Invalid biometric profile. Access denied.</span>")
+		boutput(user, SPAN_ALERT("Invalid biometric profile. Access denied."))
 
 ////////////////////////////////////////////////////////
 //////////// Machine activation buttons	///////////////
@@ -1039,10 +1039,10 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 			if(istype(usr.loc, /obj/machinery/vehicle))
 				var/obj/machinery/vehicle/V = usr.loc
 				if (!V.com_system)
-					boutput(usr, "<span class='alert'>Your pod has no comms system installed!</span>")
+					boutput(usr, SPAN_ALERT("Your pod has no comms system installed!"))
 					return ..()
 				if (!V.com_system.active)
-					boutput(usr, "<span class='alert'>Your communications array isn't on!</span>")
+					boutput(usr, SPAN_ALERT("Your communications array isn't on!"))
 					return ..()
 				if (!access_type)
 					open_door()
@@ -1050,7 +1050,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 					if(V.com_system.access_type.Find(src.access_type))
 						open_door()
 					else
-						boutput(usr, "<span class='alert'>Access denied. Comms system not recognized.</span>")
+						boutput(usr, SPAN_ALERT("Access denied. Comms system not recognized."))
 						return ..()
 			return ..()
 
@@ -1063,7 +1063,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		return src.Attackhand(user)
 
 	attack_hand(mob/user)
-		boutput(user, "<span class='notice'>The password is \[[src.pass]\]</span>")
+		boutput(user, SPAN_NOTICE("The password is \[[src.pass]\]"))
 		return
 
 	proc/open_door()

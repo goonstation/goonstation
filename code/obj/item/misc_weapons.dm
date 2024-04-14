@@ -23,7 +23,6 @@ TYPEINFO(/obj/item/sword)
 	name = "cyalume saber"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "sword0"
-	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword0"
 	var/active = 0
@@ -108,7 +107,7 @@ TYPEINFO(/obj/item/sword)
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
-		AddComponent(/datum/component/itemblock/saberblock, PROC_REF(can_reflect), PROC_REF(get_reflect_color))
+		AddComponent(/datum/component/itemblock/reflect/saberblock, PROC_REF(can_reflect), PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 /obj/item/sword/proc/can_reflect()
@@ -137,7 +136,7 @@ TYPEINFO(/obj/item/sword)
 			user.visible_message("<span class='combat bold'>[user] [pick_string("descriptors.txt", pick("mopey", "borg_shake"))] baps [target] on the [pick("nose", "forehead", "wrist", "chest")] with \the [src]'s handle!</span>")
 			if(prob(3))
 				SPAWN(0.2 SECONDS)
-					target.visible_message("<span class='bold'>[target.name]</span> flops over in shame!")
+					target.visible_message("[SPAN_BOLD("[target.name]")] flops over in shame!")
 					target.changeStatus("stunned", 5 SECONDS)
 					target.changeStatus("weakened", 5 SECONDS)
 		else
@@ -199,17 +198,17 @@ TYPEINFO(/obj/item/sword)
 			return
 
 		if (!loaded_glowstick)
-			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick seems to be missing.</span>")
+			boutput(user, SPAN_ALERT("The sword emits a brief flash of light and turns off! The blade-focus glowstick seems to be missing."))
 			playsound(user, 'sound/items/zippo_close.ogg', 60, TRUE)
 			return
 
 		if (!loaded_glowstick.on)
-			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick hasn't been cracked!</span>")
+			boutput(user, SPAN_ALERT("The sword emits a brief flash of light and turns off! The blade-focus glowstick hasn't been cracked!"))
 			playsound(user, 'sound/items/zippo_close.ogg', 60, TRUE)
 			return
 
 	if (user.bioHolder.HasEffect("clumsy") && prob(50))
-		user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts [himself_or_herself(user)].</span>")
+		user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and cuts [himself_or_herself(user)]."))
 		user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 5, 5)
 		take_bleeding_damage(user, user, 5)
 		JOB_XP(user, "Clown", 1)
@@ -218,7 +217,7 @@ TYPEINFO(/obj/item/sword)
 	if (src.active)
 		src.UpdateIcon()
 		SET_BLOCKS(BLOCK_ALL)
-		boutput(user, "<span class='notice'>The sword is now active.</span>")
+		boutput(user, SPAN_NOTICE("The sword is now active."))
 		hit_type = DAMAGE_CUT
 		stamina_damage = active_stamina_dmg
 		if(!ON_COOLDOWN(src, "playsound_on", 2 SECONDS))
@@ -232,7 +231,7 @@ TYPEINFO(/obj/item/sword)
 	else
 		src.UpdateIcon()
 		SET_BLOCKS(BLOCK_SWORD)
-		boutput(user, "<span class='notice'>The sword can now be concealed.</span>")
+		boutput(user, SPAN_NOTICE("The sword can now be concealed."))
 		hit_type = DAMAGE_BLUNT
 		stamina_damage = inactive_stamina_dmg
 		if(!ON_COOLDOWN(src, "playsound_off", 2 SECONDS))
@@ -253,7 +252,7 @@ TYPEINFO(/obj/item/sword)
 	if (!src.active)
 		return 0
 
-	user.visible_message("<span class='alert'><b>[user] stabs [src] through [his_or_her(user)] chest.</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] stabs [src] through [his_or_her(user)] chest.</b>"))
 	take_bleeding_damage(user, null, 250, DAMAGE_STAB)
 	user.TakeDamage("chest", 200, 0)
 	SPAWN(50 SECONDS)
@@ -267,12 +266,12 @@ TYPEINFO(/obj/item/sword)
 
 	if (isscrewingtool(W))
 		if (src.active)
-			boutput(user, "<span class='alert'>The sword has to be off before you open it!</span>")
+			boutput(user, SPAN_ALERT("The sword has to be off before you open it!"))
 			return
 
 		if (!src.open)
 			if (!src.bladecolor) //rainbow
-				boutput(user, "<span class='alert'>This sword cannot be modified.</span>")
+				boutput(user, SPAN_ALERT("This sword cannot be modified."))
 				return
 
 			user.visible_message("<b>[user]</b> unscrews and opens [src].")
@@ -289,13 +288,13 @@ TYPEINFO(/obj/item/sword)
 			src.open = 0
 			src.icon_state = "[state_name]0"
 		else
-			boutput(user, "<span class='alert'>The screw spins freely in place without a blade to screw into.</span>")
+			boutput(user, SPAN_ALERT("The screw spins freely in place without a blade to screw into."))
 			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			return
 
 	if (istype(W, /obj/item/device/light/glowstick) && !loaded_glowstick && open)
 		if (!W:on)
-			boutput(user, "<span class='alert'>The glowstick needs to be on to act as a beam focus for the sword!</span>")
+			boutput(user, SPAN_ALERT("The glowstick needs to be on to act as a beam focus for the sword!"))
 			return
 		else
 			user.visible_message("<b>[user]</b> loads a glowstick into [src].")
@@ -388,7 +387,7 @@ TYPEINFO(/obj/item/sword)
 				if(src.active)
 					src.force = 60
 			else
-				boutput(user, "<span class='notice'>You feel that it was too soon for this...</span>")
+				boutput(user, SPAN_NOTICE("You feel that it was too soon for this..."))
 			. = ..()
 
 /obj/item/sword/orange
@@ -429,7 +428,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 				src.force = 60
 			. = ..()
 		else if(istype(user, /mob/living/critter/small_animal/cat))
-			boutput(user, "<span class='alert'>You can nyot use this!</span>")
+			boutput(user, SPAN_ALERT("You can nyot use this!"))
 		else
 			src.active_force = initial(src.active_force)
 			if(src.active)
@@ -442,7 +441,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		if(isadmin(user))
 			return ..()
 		else if(istype(user, /mob/living/critter/small_animal/cat))
-			boutput(user, "<span class='alert'>You can nyot use this!</span>")
+			boutput(user, SPAN_ALERT("You can nyot use this!"))
 		else
 			user.unequip_all()
 			user.make_critter(/mob/living/critter/small_animal/cat)
@@ -452,7 +451,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		if(isadmin(usr))
 			return ..()
 		else if(istype(usr, /mob/living/critter/small_animal/cat))
-			boutput(usr, "<span class='alert'>You can nyot use this!</span>")
+			boutput(usr, SPAN_ALERT("You can nyot use this!"))
 		else
 			usr.unequip_all()
 			usr.make_critter(/mob/living/critter/small_animal/cat)
@@ -487,6 +486,13 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	active_stamina_dmg = 65
 	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
+	var/strong_disorient = TRUE
+	gang
+		active_force = 22 // a bit more lethal. as a treat.
+		inactive_force = 8
+		active_stamina_dmg = 25
+		inactive_stamina_dmg = 10
+		strong_disorient = FALSE
 
 	can_reflect()
 		return FALSE
@@ -496,18 +502,15 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		. += "It is set to [src.active ? "on" : "off"]."
 
 /obj/item/sword/discount/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	//hhaaaaxxxxxxxx. overriding the disorient for my own effect
-	if (active)
-		hit_type = DAMAGE_BURN
-	else
-		hit_type = DAMAGE_BLUNT
-
 	//returns TRUE if parried. So stop here
 	if (..())
 		return
 
 	if (active)
-		target.do_disorient(0, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
+		if (strong_disorient)
+			target.do_disorient(0, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
+		else
+			target.do_disorient(0, weakened = 0, stunned = 0, disorient = 1, remove_stamina_below_zero = 0)
 
 ///////////////////////////////////////////////// Dagger /////////////////////////////////////////////////
 
@@ -584,7 +587,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throwforce = 20
 	stamina_cost = 5
 	c_flags = EQUIPPED_WHILE_HELD
-
 	setupProperties()
 		..()
 		setProperty("movespeed", -0.5)
@@ -596,16 +598,27 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "ninjaknife"
 	force = 8
-	throwforce = 11
+	throwforce = 18
 	throw_range = 10
 	flags = FPRINT | TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
+	gang
+		name = "familiar fighting knife"
+		force = 17
+		throwforce = 25
+		desc = "A light but robust combat knife that allows you to move faster in fights. It looks really familiar..."
+		icon_state = "combat_knife_gang"
+		inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+		item_state = "knife"
+		setupProperties()
+			..()
+			setProperty("movespeed", -0.5)
 
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
-			C.do_disorient(stamina_damage = 60, weakened = 0, stunned = 0, disorient = 40, remove_stamina_below_zero = 1)
+			C.do_disorient(stamina_damage = 40, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
 			C.emote("twitch_v")
 			A:lastattacker = usr
 			A:lastattackertime = world.time
@@ -688,10 +701,10 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			src.implanted(M)
-			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
+			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
-			H.changeStatus("weakened", 2 SECONDS)
-		random_brute_damage(M, 11)//embedding cares not for your armour
+			H.do_disorient(stamina_damage = 30, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
+		random_brute_damage(M, 18)//embedding cares not for your armour
 		take_bleeding_damage(M, null, 3, DAMAGE_CUT)
 
 /obj/item/nunchucks
@@ -724,7 +737,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	icon_state = "quarterstaff"
 	item_state = "quarterstaff"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	uses_multiple_icon_states = 1
 	force = 13
 	throwforce = 6
 	throw_range = 5
@@ -800,6 +812,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+	c_flags = ONBELT
 	var/makemeat = 1
 	HELP_MESSAGE_OVERRIDE({"Throw the knife at someone for a guaranteed short stun. Use the knife on a dead body to instantly turn it into meat."})
 
@@ -859,7 +872,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 /obj/item/knife/butcher/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] slashes [his_or_her(user)] own throat with [src]!</b>"))
 	blood_slash(user, 25)
 	user.TakeDamage("head", 150, 0)
 	return 1
@@ -883,6 +896,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 	New()
 		..()
+		src.setItemSpecial(/datum/item_special/rangestab)
 		if(istype(src.loc, /mob/living))
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)
@@ -903,7 +917,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	desc = "An energised battle axe. The handle bears the insignia of the Terra Nivium company."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "axe0"
-	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	var/active = 0
 	hit_type = DAMAGE_CUT
@@ -932,13 +945,13 @@ TYPEINFO(/obj/item/sword/pink/angel)
 /obj/item/axe/attack_self(mob/user as mob)
 	src.active = !( src.active )
 	if (src.active)
-		boutput(user, "<span class='notice'>The axe is now energised.</span>")
+		boutput(user, SPAN_NOTICE("The axe is now energised."))
 		src.hit_type = DAMAGE_BURN
 		src.force = 150
 		src.icon_state = "axe1"
 		src.w_class = W_CLASS_HUGE
 	else
-		boutput(user, "<span class='notice'>The axe can now be concealed.</span>")
+		boutput(user, SPAN_NOTICE("The axe can now be concealed."))
 		src.hit_type = DAMAGE_CUT
 		src.force = 40
 		src.icon_state = "axe0"
@@ -951,7 +964,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 /obj/item/axe/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] slashes [his_or_her(user)] own throat with [src]!</b>"))
 	blood_slash(user, 25)
 	user.TakeDamage("head", 150, 0)
 	return 1
@@ -989,6 +1002,14 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	stamina_cost = 15
 	stamina_crit_chance = 5
 
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if (variable == "force")
+			if (src.two_handed)
+				src.two_handed_force = newval
+			else
+				src.one_handed_force = newval
+
 	proc/set_values()
 		if(two_handed)
 			src.click_delay = COMBAT_CLICK_DELAY * 1.5
@@ -1018,7 +1039,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 				set_values()
 			else
 				if(!setTwoHanded(1)) //Go 2-handed.
-					boutput(user, "<span class='alert'>Can't switch to 2-handed while your other hand is full.</span>")
+					boutput(user, SPAN_ALERT("Can't switch to 2-handed while your other hand is full."))
 				else
 					set_values()
 		..()
@@ -1095,6 +1116,72 @@ TYPEINFO(/obj/item/bat)
 			hit_type = DAMAGE_CUT
 			hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		return ..()
+
+/obj/item/switchblade
+	name = "switchblade"
+	desc = "Spring-loaded and therefore completely illegal in Space England."
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	item_state = ""
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "switchblade-idle"
+	hit_type = DAMAGE_BLUNT
+	force = 3
+	throwforce = 7
+	stamina_damage = 5
+	stamina_cost = 1
+	event_handler_flags = USE_GRAB_CHOKE
+	special_grab = /obj/item/grab
+	stamina_crit_chance = 5
+	var/active = FALSE
+	w_class = W_CLASS_SMALL
+	HELP_MESSAGE_OVERRIDE({"This knife can be concealed in clothing by hitting worn clothes with it, do the *snap emote to retrieve it.\n
+	While unfolded, using this weapon's special attack grants increased critical chance & bleed effects."})
+
+	attack_self(mob/user)
+		toggle_active(user)
+		return ..()
+
+	proc/toggle_active(mob/user)
+		if (!active)
+			hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+			user.visible_message("<span class='combat bold'>[user] flips \the [src] open!</span>")
+			w_class = W_CLASS_NORMAL
+			active = TRUE
+			tool_flags = TOOL_CUTTING
+			item_state = "knife"
+			src.setItemSpecial(/datum/item_special/simple/bloodystab)
+			icon_state = "switchblade-open"
+			hit_type = DAMAGE_CUT
+			force = 10
+			stamina_crit_chance = 33
+			playsound(user, 'sound/items/blade_pull.ogg', 60, TRUE)
+		else if (!chokehold)
+			hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+			user.visible_message("<span class='combat bold'>[user] folds \the [src].</span>")
+			w_class = W_CLASS_SMALL
+			active = FALSE
+			item_state = ""
+			tool_flags = 0
+			src.setItemSpecial(/datum/item_special/simple)
+			icon_state = "switchblade-close"
+			hit_type = DAMAGE_BLUNT
+			stamina_crit_chance = 5
+			force = 3
+			playsound(user, 'sound/machines/heater_off.ogg', 40, TRUE)
+		user.update_inhands()
+		tooltip_rebuild = TRUE
+
+	afterattack(obj/O as obj, mob/user as mob)
+		if (O.loc == user && istype(O, /obj/item/clothing))
+			if (active)
+				toggle_active(user)
+			icon_state = "switchblade-idle"
+			boutput(user, "<span class='hint'>You hide the [src] inside \the [O]. (Use the snap emote while wearing the clothing item to retrieve it.)</span>")
+			user.u_equip(src)
+			src.set_loc(O)
+			src.dropped(user)
+		else
+			..()
 /////////////////////////////////////////////////// Ban me ////////////////////////////////////////////
 
 /obj/item/banme
@@ -1108,8 +1195,8 @@ TYPEINFO(/obj/item/bat)
 	throw_range = 7
 
 /obj/item/banme/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	boutput(target, "<span class='alert'><b>You have been BANNED by [user]!</b></span>")
-	boutput(user, "<span class='alert'><b>You have BANNED [target]!</b></span>")
+	boutput(target, SPAN_ALERT("<b>You have been BANNED by [user]!</b>"))
+	boutput(user, SPAN_ALERT("<b>You have BANNED [target]!</b>"))
 	playsound(loc, 'sound/vox/banned.ogg', 60, TRUE)
 	return
 
@@ -1207,7 +1294,7 @@ TYPEINFO(/obj/item/bat)
 		return 0
 	else
 		var/organtokill = pick("liver", "spleen", "heart", "appendix", "stomach", "intestines")
-		user.visible_message("<span class='alert'><b>[user] stabs the [src] into their own chest, ripping out their [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] stabs the [src] into their own chest, ripping out their [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b>"))
 		user.organHolder.drop_and_throw_organ(organtokill, dist = 5, speed = 1, showtext = 1)
 		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
 		user.TakeDamage("chest", 100, 0)
@@ -1283,18 +1370,18 @@ TYPEINFO(/obj/item/swords/katana)
 		if (target.is_open_container() && !ismob(target))
 			if(target.reagents?.has_reagent("sakuride", 1))
 				if(length(target.reagents.reagent_list) > 1)
-					boutput(user, "<span class='alert'>This coating is impure!</span>")
+					boutput(user, SPAN_ALERT("This coating is impure!"))
 					return
 				if(src.reagents.has_reagent("sakuride", src.reagent_capacity))
-					boutput(user, "<span class='alert'>The blade is already coated!</span>")
+					boutput(user, SPAN_ALERT("The blade is already coated!"))
 					return
 				target.reagents.trans_to(src, src.reagent_capacity)
 				boutput(user, "You apply the coating to the blade.")
 			else
-				boutput(user, "<span class='alert'>You cannot coat the [src] in this!</span>")
+				boutput(user, SPAN_ALERT("You cannot coat the [src] in this!"))
 
 /obj/item/swords/katana/suicide(var/mob/user as mob)
-	user.visible_message("<span class='alert'><b>[user] thrusts [src] through their stomach!</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] thrusts [src] through their stomach!</b>"))
 	var/say = pick("Kono shi wa watashinokazoku ni meiyo o ataeru","Haji no mae no shi", "Watashi wa kyo nagura reta.", "Teki ga katta", "Shinjiketo ga modotte kuru")
 	user.say(say)
 	blood_slash(user, 25)
@@ -1317,7 +1404,7 @@ TYPEINFO(/obj/item/swords/katana)
 	name = "reverse blade katana"
 	desc = "A sword whose blade is on the wrong side. Crafted by a master who grew to hate the death his weapons caused; which was weird since Oppenheimer has him beat by several orders of magnitude. Considered worthless by many, only a true virtuoso can unleash it's potential."
 	hit_type = DAMAGE_BLUNT
-	force = 18
+	force = 20
 	throw_range = 6
 	contraband = 5 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	delimb_prob = 1
@@ -1369,7 +1456,7 @@ TYPEINFO(/obj/item/swords/captain)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
 	else
-		user.visible_message("<span class='alert'><b>[user] cuts their own head clean off with the [src]! [pick("Holy shit", "Golly", "Wowie", "That's dedication", "What the heck")]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] cuts their own head clean off with the [src]! [pick("Holy shit", "Golly", "Wowie", "That's dedication", "What the heck")]!</b>"))
 		user.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1)
 		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
@@ -1410,7 +1497,7 @@ TYPEINFO(/obj/item/swords/captain)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
 	else
-		user.visible_message("<span class='alert'><b>[user] places the horn end of the [src] up to their head and sotfly honks it.</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] places the horn end of the [src] up to their head and sotfly honks it.</b>"))
 		SPAWN(1 SECOND)
 			if(prob(5))
 				playsound(user, 'sound/musical_instruments/Bikehorn_1.ogg', 50, FALSE, 0)
@@ -1425,7 +1512,6 @@ TYPEINFO(/obj/item/swords/captain)
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	wear_layer = MOB_SHEATH_LAYER
-	uses_multiple_icon_states = 1
 	hit_type = DAMAGE_BLUNT
 	force = 5 // can do a little more damage, as a treat
 	throwforce = 5
@@ -1463,7 +1549,7 @@ TYPEINFO(/obj/item/swords/captain)
 
 	attackby(obj/item/W, mob/user)
 		if (!istype(W, sword_path))
-			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
+			boutput(user, SPAN_ALERT("The [W] can't fit into [src]."))
 			return
 		if (istype(W, /obj/item/swords) && !src.sword_inside && !W.cant_drop == 1)
 			icon_state = sheathed_state
@@ -1472,12 +1558,12 @@ TYPEINFO(/obj/item/swords/captain)
 			W.set_loc(src)
 			user.update_clothing()
 			src.sword_inside = W //katana SHOULD be in the sheath now.
-			boutput(user, "<span class='notice'>You sheathe [W] in [src].</span>")
+			boutput(user, SPAN_NOTICE("You sheathe [W] in [src]."))
 			playsound(user, 'sound/effects/sword_sheath.ogg', 50, FALSE, 0)
 		else
 			..()
 			if(W.cant_drop == 1)
-				boutput(user, "<span class='notice'>You can't sheathe the [W] while its attached to your arm.</span>")
+				boutput(user, SPAN_NOTICE("You can't sheathe the [W] while its attached to your arm."))
 
 	mouse_drop(atom/over_object, src_location, over_location)
 		..()
@@ -1651,14 +1737,14 @@ TYPEINFO(/obj/item/swords/captain)
 		var/mob/living/carbon/C = target
 		if(!isdead(C))
 			force += 5
-			boutput(user, "<span class='alert'>The [src] delights in the bloodshed, you can feel it grow stronger!</span>")
+			boutput(user, SPAN_ALERT("The [src] delights in the bloodshed, you can feel it grow stronger!"))
 			take_bleeding_damage(C, user, 5, DAMAGE_STAB)
 	..()
 
 /obj/item/swords/bloodthirsty_blade/dropped(mob/user)
 	..()
 	if (isturf(src.loc))
-		user.visible_message("<span class='alert'>As the [src] falls from [user]'s hands, it seems to become duller!</span>")
+		user.visible_message(SPAN_ALERT("As the [src] falls from [user]'s hands, it seems to become duller!"))
 		force = 5
 		return
 
@@ -1695,7 +1781,7 @@ obj/item/swords/fragile_sword
 				if(force >= minimum_force)
 					force -= 5
 					throwforce = force
-					boutput(user, "<span class='alert'>The [src]'s edge dulls slightly on impact!</span>")
+					boutput(user, SPAN_ALERT("The [src]'s edge dulls slightly on impact!"))
 					take_bleeding_damage(C, user, 5, DAMAGE_STAB)
 		..()
 
@@ -1704,7 +1790,7 @@ obj/item/swords/fragile_sword
 			if(force <= maximum_force)
 				force += 5
 				throwforce = force
-				boutput(user, "<span class='notice'>You sharpen the blade of the [src] with the whetstone.</span>")
+				boutput(user, SPAN_NOTICE("You sharpen the blade of the [src] with the whetstone."))
 				playsound(loc, 'sound/items/blade_pull.ogg', 60, TRUE)
 		..()
 
@@ -1751,7 +1837,6 @@ obj/item/whetstone
 	pickup_sfx = 'sound/weapons/hadar_pickup.ogg'
 	hitsound = 'sound/weapons/hadar_impact.ogg'
 	two_handed = 1
-	uses_multiple_icon_states = 1
 
 	var/stage = STAGE_ONE
 	var/mode = SWIPE_MODE
@@ -1760,12 +1845,12 @@ obj/item/whetstone
 	var/stab_color = "#FF0000"
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		src.AddComponent(/datum/component/bloodflick)
 		src.setItemSpecial(/datum/item_special/swipe)
 		src.update_special_color()
-		AddComponent(/datum/component/itemblock/saberblock, null, PROC_REF(get_reflect_color))
+		AddComponent(/datum/component/itemblock/reflect/saberblock, null, PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	disposing()
@@ -1804,27 +1889,27 @@ obj/item/whetstone
 				if(src.force >= (src.maximum_force * 0.5))
 					src.stage = STAGE_TWO
 					icon_state = "hadar_sword[src.mode]_[src.stage]"
-					boutput(user, "<span class='alert'>[src]'s generator kicks into overdrive!</span>")
+					boutput(user, SPAN_ALERT("[src]'s generator kicks into overdrive!"))
 				else
-					boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
+					boutput(user, SPAN_ALERT("[src]'s generator builds charge!"))
 			if(STAGE_TWO)
 				if(src.force >= (src.maximum_force * 0.9))
 					src.stage = STAGE_THREE
 					icon_state = "hadar_sword[src.mode]_[src.stage]"
-					boutput(user, "<span class='alert'>[src]'s overloading generator growls and vents heat!</span>")
+					boutput(user, SPAN_ALERT("[src]'s overloading generator growls and vents heat!"))
 				else
-					boutput(user, "<span class='alert'>[src]'s overloading generator revs higher!</span>")
+					boutput(user, SPAN_ALERT("[src]'s overloading generator revs higher!"))
 			if(STAGE_THREE)
 				if(src.force == src.maximum_force)
-					boutput(user, "<span class='alert'>[src]'s overloaded generator blazes like a star!</span>")
+					boutput(user, SPAN_ALERT("[src]'s overloaded generator blazes like a star!"))
 				else
-					boutput(user, "<span class='alert'>[src]'s overloaded generator burns even brighter!</span>")
+					boutput(user, SPAN_ALERT("[src]'s overloaded generator burns even brighter!"))
 		src.tooltip_rebuild = TRUE
 
 /obj/item/heavy_power_sword/dropped(mob/user)
 	..()
 	if (isturf(src.loc))
-		user.visible_message("<span class='alert'>[src] drops from [user]'s hands and powers down!</span>")
+		user.visible_message(SPAN_ALERT("[src] drops from [user]'s hands and powers down!"))
 		force = initial(src.force)
 		src.stage = STAGE_ONE
 		icon_state = "hadar_sword[src.mode]_[src.stage]"
@@ -1834,14 +1919,14 @@ obj/item/whetstone
 /obj/item/heavy_power_sword/attack_self(mob/user as mob)
 	switch(src.mode) // switch in-case i want to add more modes later
 		if(SWIPE_MODE)
-			boutput(user, "<span class='alert'>[src] transforms enabling a ranged stab!</span>")
+			boutput(user, SPAN_ALERT("[src] transforms enabling a ranged stab!"))
 			src.mode = STAB_MODE
 			icon_state = "hadar_sword[src.mode]_[src.stage]"
 			item_state = "hadar_sword[src.mode]"
 			hit_type = DAMAGE_STAB
 			src.setItemSpecial(/datum/item_special/rangestab)
 		if(STAB_MODE)
-			boutput(user, "<span class='alert'>[src] transforms in order to swing wide!</span>")
+			boutput(user, SPAN_ALERT("[src] transforms in order to swing wide!"))
 			src.mode = SWIPE_MODE
 			icon_state = "hadar_sword[src.mode]_[src.stage]"
 			item_state = "hadar_sword[src.mode]"
@@ -1915,12 +2000,12 @@ obj/item/whetstone
 		if (user.mind)
 			if (isslasher(user) || check_target_immunity(user))
 				if (user.mind.key != src.slasher_key && !check_target_immunity(user))
-					boutput(user, "<span class='alert'>The [src.name] is attuned to another Slasher! You may use it, but it may get recalled at any time!</span>")
+					boutput(user, SPAN_ALERT("The [src.name] is attuned to another Slasher! You may use it, but it may get recalled at any time!"))
 				..()
 				return
 			else
 				random_brute_damage(user, 2*src.force)
-				boutput(user,"<span class='alert'>You feel immense pain!</span>")
+				boutput(user,SPAN_ALERT("You feel immense pain!"))
 				user.changeStatus("weakened", 80)
 				return
 		else ..()
@@ -1936,7 +2021,7 @@ obj/item/whetstone
 			return ..()
 		else
 			random_brute_damage(user, 2*src.force)
-			boutput(user,"<span class='alert'>You feel immense pain!</span>")
+			boutput(user,SPAN_ALERT("You feel immense pain!"))
 			user.changeStatus("weakened", 80)
 			return
 
@@ -2024,7 +2109,7 @@ obj/item/whetstone
 				src.click_delay = COMBAT_CLICK_DELAY * 0.75
 				hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
 				src.setItemSpecial(/datum/item_special/simple)
-				boutput(user, "<span class='notice'>You will now make light swings with the axe!</span>")
+				boutput(user, SPAN_NOTICE("You will now make light swings with the axe!"))
 			if("disarm") //thrust with the pointy end
 				force = HALB_LIGHT_DAMAGE
 				stamina_damage = HALB_LIGHT_STAMDAM
@@ -2035,7 +2120,7 @@ obj/item/whetstone
 				src.click_delay = COMBAT_CLICK_DELAY * 0.60
 				hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 				src.setItemSpecial(/datum/item_special/rangestab)
-				boutput(user, "<span class='notice'>You will thrust with the tip!</span>")
+				boutput(user, SPAN_NOTICE("You will thrust with the tip!"))
 
 			if("grab") //attack with the spur on the back
 				force = HALB_LIGHT_DAMAGE
@@ -2047,7 +2132,7 @@ obj/item/whetstone
 				src.click_delay = COMBAT_CLICK_DELAY
 				hitsound ='sound/impact_sounds/coconut_break.ogg' //it's a good hitsound when you ignore the name
 				src.setItemSpecial(/datum/item_special/simple)
-				boutput(user, "<span class='notice'>You will now make dehabilitating swings with the spur!</span>")
+				boutput(user, SPAN_NOTICE("You will now make dehabilitating swings with the spur!"))
 
 			if("harm") //wide, tiring swings with the axe
 				force = HALB_HEAVY_DAMAGE
@@ -2059,7 +2144,7 @@ obj/item/whetstone
 				src.click_delay = COMBAT_CLICK_DELAY * 1.25
 				hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
 				src.setItemSpecial(/datum/item_special/swipe)
-				boutput(user, "<span class='notice'>You will now make heavy swings with the axe!</span>")
+				boutput(user, SPAN_NOTICE("You will now make heavy swings with the axe!"))
 
 		user.update_inhands()
 		src.tooltip_rebuild = TRUE

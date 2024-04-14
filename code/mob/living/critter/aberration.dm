@@ -30,7 +30,7 @@
 	metabolizes = FALSE
 	use_stamina = FALSE
 
-	grabresistmessage = "but their hands pass right through %src%!"
+	grabresistmessage = "but their hands pass right through!"
 	death_text = "%src% dissipates!"
 
 	New()
@@ -71,19 +71,19 @@
 		brute.last_value = 100
 
 	attack_hand(mob/living/M, params, location, control)
-		boutput(M, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
+		boutput(M, SPAN_COMBAT("<b>Your hand passes right through! It's so cold...</b>"))
 		return
 
 	attackby(obj/item/I, mob/M)
 		if (!istype(I, /obj/item/baton))
-			boutput(M, "<span class='combat'><b>[I] passes right through!</b></span>")
+			boutput(M, SPAN_COMBAT("<b>[I] passes right through!</b>"))
 			return
 
 		var/obj/item/baton/B = I
 		if (!B.can_stun(1, M))
 			return
-		M.visible_message("<span class='combat'><b>[M] shocks the [src.name] with [I]!</b></span>",
-			"<span class='combat'><b>While your baton passes through, the [src.name] appears damaged!</b></span>")
+		M.visible_message(SPAN_COMBAT("<b>[M] shocks the [src.name] with [I]!</b>"),
+			SPAN_COMBAT("<b>While your baton passes through, the [src.name] appears damaged!</b>"))
 		M.lastattacked = src
 		B.process_charges(-1, M)
 
@@ -107,6 +107,9 @@
 
 	blob_act(power)
 		return
+
+	is_spacefaring()
+		return TRUE
 
 	proc/hurt(damage)
 		var/datum/healthHolder/Br = src.get_health_holder("brute")

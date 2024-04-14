@@ -88,7 +88,7 @@
 	attack_hand(mob/user)
 		//This dude is no Fonz
 		if (user.a_intent == "harm")
-			user.visible_message("<span class='combat'><b>[user]</b> punches the [src]!</span>","You punch the [src].  Your hand hurts.")
+			user.visible_message(SPAN_COMBAT("<b>[user]</b> punches the [src]!"),"You punch the [src].  Your hand hurts.")
 			playsound(src.loc, pick(sounds_punch), 100, 1)
 			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, rand(1, 4))
 			return
@@ -104,7 +104,7 @@
 		return
 
 	proc/mindswap()
-		src.visible_message("<span class='alert'>The [src] activates!</span>")
+		src.visible_message(SPAN_ALERT("The [src] activates!"))
 		playsound(src.loc, 'sound/effects/ghost2.ogg', 100, 1)
 
 		var/list/transfer_targets = list()
@@ -176,7 +176,7 @@
 	proc/telehop()
 		var/turf/T = pick_landmark(LANDMARK_BLOBSTART)
 		if(T)
-			src.visible_message("<span class='alert'>[src] disappears!</span>")
+			src.visible_message(SPAN_ALERT("[src] disappears!"))
 			playsound(src.loc, 'sound/effects/singsuck.ogg', 100, 1)
 			src.set_loc(T)
 		return
@@ -194,9 +194,6 @@
 /obj/item/reagent_containers/glass/beaker/strange_reagent
 	name = "beaker-'Property of H. Jam'"
 	desc = "A beaker labled 'Property of H. Jam'.  Can hold up to 50 units."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "beaker0"
-	item_state = "beaker"
 	initial_volume = 50
 
 	New()
@@ -291,7 +288,7 @@
 	var/list/mob/old_bodies = list()
 
 	attack_self(mob/user as mob)
-		user.visible_message("<span class='combat'>[user] tears the photo to shreds!</span>","<span class='combat'>You tear the photo to shreds!</span>")
+		user.visible_message(SPAN_COMBAT("[user] tears the photo to shreds!"),SPAN_COMBAT("You tear the photo to shreds!"))
 		qdel(src)
 		return
 
@@ -326,14 +323,14 @@
 	density = 1
 
 	attack_hand(mob/user)
-		boutput(user, "<span class='combat'>The knobs are fixed in place.  Might as well sit back and watch, I guess?</span>")
+		boutput(user, SPAN_COMBAT("The knobs are fixed in place.  Might as well sit back and watch, I guess?"))
 
 	examine(mob/user)
 		. = list()
 		if (ishuman(user) && !user.stat)
 			var/mob/living/carbon/human/M = user
 
-			M.visible_message("<span class='combat'>[M] stares blankly into [src], [his_or_her(M)] eyes growing duller and duller...</span>","<span class='combat'>You stare deeply into [src].  You...can't look away.  It's mesmerizing.  Sights, sounds, colors, shapes.  They blur together into a phantasm of beauty and wonder.</span>")
+			M.visible_message(SPAN_COMBAT("[M] stares blankly into [src], [his_or_her(M)] eyes growing duller and duller..."),SPAN_COMBAT("You stare deeply into [src].  You...can't look away.  It's mesmerizing.  Sights, sounds, colors, shapes.  They blur together into a phantasm of beauty and wonder."))
 			var/mob/living/carbon/holder = new
 			holder.set_loc(src)
 			if(M.mind)
@@ -422,10 +419,10 @@
 				used = 0
 
 		if (used)
-			user.visible_message("<span class='combat'><b>[user.name]</b> reads a spell from the book!</span>")
+			user.visible_message(SPAN_COMBAT("<b>[user.name]</b> reads a spell from the book!"))
 			src.uses--
 			if (uses == 0)
-				boutput(user, "<span class='combat'>The book crumbles away into dust! How spooooooky!</span>")
+				boutput(user, SPAN_COMBAT("The book crumbles away into dust! How spooooooky!"))
 				src.dropped(user)
 				qdel(src)
 
@@ -520,11 +517,11 @@
 	proc/scare_some_people()
 		src.spooky_shake()
 		playsound(src, src.trigger_sound, 40, 0)
-		src.visible_message("<span class='alert'><b>\The [src] comes to life and starts making an unearthly, haunting wail!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>\The [src] comes to life and starts making an unearthly, haunting wail!</b>"))
 		for (var/mob/M in viewers(src))
 			if (prob(66))
-				var/msg = pick("<span class='alert'><b>You're [pick("hella","super","very","extremely","completely","totally")] [pick("scared","spooked","terrified")]![pick("","!","!!")]</b><span>",\
-				"<span class='alert'><b>You've never felt so [pick("scared","spooked","terrified")]![pick("","!","!!")]</b><span>",\
+				var/msg = pick(SPAN_ALERT("<b>You're [pick("hella","super","very","extremely","completely","totally")] [pick("scared","spooked","terrified")]![pick("","!","!!")]</b>"),\
+				SPAN_ALERT("<b>You've never felt so [pick("scared","spooked","terrified")]![pick("","!","!!")]</b>"),\
 				"Oh, it's just a decoration.[pick(""," You were kinda spooked for a moment there."," That's a relief!")]")
 				M.show_text(msg)
 

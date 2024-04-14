@@ -569,7 +569,7 @@ proc/AddBlobSteps(var/datum/tutorial_base/regional/blob/T)
 /mob/living/intangible/blob_overmind/verb/help_my_tutorial_is_being_a_massive_shit()
 	set name = "EMERGENCY TUTORIAL STOP"
 	if (!tutorial)
-		boutput(src, "<span class='alert'>You're not in a tutorial, doofus. It's real. IT'S ALL REAL.</span>")
+		boutput(src, SPAN_ALERT("You're not in a tutorial, doofus. It's real. IT'S ALL REAL."))
 		return
 	src.tutorial.Finish()
 	src.tutorial = null

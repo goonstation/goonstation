@@ -35,7 +35,7 @@
 			if (length(user.grabbed_by) > 0)
 				for (var/obj/item/grab/grab in user.grabbed_by)
 					grab.assailant.u_equip(grab)
-			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside and slams shut!</span>")
+			O.visible_message(SPAN_ALERT("<b>[O]</b> suddenly pulls [user.name] inside and slams shut!"))
 			if (src.living)
 				new /mob/living/object/artifact(O.loc, O, user)
 			else
@@ -51,13 +51,13 @@
 			return
 		if (living && istype(O.loc, /mob/living/object))
 			var/mob/living/object/mob = O.loc
-			mob.visible_message("<span class='alert'>[prisoner.name] is ejected from [mob] and regains control of their body.</span>")
+			mob.visible_message(SPAN_ALERT("[prisoner.name] is ejected from [mob] and regains control of their body."))
 			mob.death(FALSE)
 		if (prisoner?.loc == O)
 			prisoner.set_loc(get_turf(O))
-			O.visible_message("<span class='alert'><b>[O]</b> releases [prisoner.name] and shuts down!</span>")
+			O.visible_message(SPAN_ALERT("<b>[O]</b> releases [prisoner.name] and shuts down!"))
 		else
-			O.visible_message("<span class='alert'><b>[O]</b> shuts down strangely!</span>")
+			O.visible_message(SPAN_ALERT("<b>[O]</b> shuts down strangely!"))
 		for(var/atom/movable/I in (O.contents-O.vis_contents))
 			I.set_loc(get_turf(O))
 		prisoner = null

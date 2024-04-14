@@ -12,7 +12,7 @@
 	failure_disease = /datum/ailment/disease/respiratory_failure
 	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING | SURGERY_SAWING
 	region = RIBS
-	var/temp_tolerance = T0C+66
+	var/temp_tolerance = DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX
 
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	var/safe_co2_max = 9 // Yes it's an arbitrary value who cares?
@@ -45,7 +45,7 @@
 	// 			donor.contract_disease(failure_disease,null,null,1)
 
 	///Return value indicates whether we have enough oxygen to breathe
-	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
+	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ_status/lung/update)
 		. = FALSE
 		var/breath_moles = TOTAL_MOLES(breath)
 		if(breath_moles == 0)
@@ -117,28 +117,28 @@
 		breath.nitrous_oxide = 0
 
 		if (prob(15) && (FARD_pp > fart_smell_min))
-			boutput(donor, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
+			boutput(donor, SPAN_ALERT("Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!"))
 			if ((FARD_pp > fart_vomit_min) && prob(50))
-				var/vomit_message = "<span class='notice'>[donor] vomits from the [pick("stink","stench","awful odor")]!!</span>"
+				var/vomit_message = SPAN_NOTICE("[donor] vomits from the [pick("stink","stench","awful odor")]!!")
 				donor.vomit(0, null, vomit_message)
 		if (FARD_pp > fart_choke_min)
 			donor.take_oxygen_deprivation(6.9 * mult/LUNG_COUNT)
 			if (prob(20))
 				update.emotes |= "cough"
 				if (prob(30))
-					boutput(donor, "<span class='alert'>Oh god it's so bad you could choke to death in here!</span>")
+					boutput(donor, SPAN_ALERT("Oh god it's so bad you could choke to death in here!"))
 
 		if (breath.temperature > min(temp_tolerance) && !donor.is_heat_resistant()) // Hot air hurts :(
 			var/lung_burn = clamp(breath.temperature - temp_tolerance, 0, 30) / 3
 			donor.TakeDamage("chest", 0, (lung_burn / LUNG_COUNT) + 3, 0, DAMAGE_BURN)
 			if(prob(20))
-				boutput(donor, "<span class='alert'>This air is searing hot!</span>")
+				boutput(donor, SPAN_ALERT("This air is searing hot!"))
 				if (prob(80))
 					holder.damage_organ(0, lung_burn + 6, 0, organ_holder_name)
 
 			update.show_fire_indicator = TRUE
 			if (prob(4))
-				boutput(donor, "<span class='alert'>Your lungs hurt like hell! This can't be good!</span>")
+				boutput(donor, SPAN_ALERT("Your lungs hurt like hell! This can't be good!"))
 
 
 	disposing()
@@ -253,8 +253,10 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	organ_name = "synthlung_L"
 	icon_state = "plant"
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a left lung, since it has three lobes. Hopefully whoever used to have this one doesn't need it anymore."
+	organ_holder_name = "left_lung"
+	body_side = L_ORGAN
 	synthetic = 1
-	failure_disease = /datum/ailment/disease/respiratory_failure
+	failure_disease = /datum/ailment/disease/respiratory_failure/left
 	New()
 		..()
 		src.icon_state = pick("plant_lung_L", "plant_lung_L_bloom")
@@ -264,8 +266,10 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	organ_name = "synthlung_R"
 	icon_state = "plant"
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a right lung, since it has two lobes and a cardiac notch, where the heart would be. Hopefully whoever used to have this one doesn't need it anymore."
+	organ_holder_name = "right_lung"
+	body_side = R_ORGAN
 	synthetic = 1
-	failure_disease = /datum/ailment/disease/respiratory_failure
+	failure_disease = /datum/ailment/disease/respiratory_failure/right
 	New()
 		..()
 		src.icon_state = pick("plant_lung_R", "plant_lung_R_bloom")
@@ -293,7 +297,7 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	breaths_oxygen = FALSE
 	safe_toxins_max = INFINITY
 
-	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
+	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ_status/lung/update)
 		. = ..()
 		var/safe_oxygen_max = 0.4
 
@@ -349,7 +353,7 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
 
-/datum/organ/lung/status
+/datum/organ_status/lung
 	var/show_oxy_indicator = FALSE
 	var/show_tox_indicator = FALSE
 	var/show_fire_indicator = FALSE

@@ -36,16 +36,16 @@
 		BLOCK_SETUP(BLOCK_ROPE)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span class='notice'>[user] begins coiling neon lining!</span>")
+		user.visible_message(SPAN_NOTICE("[user] begins coiling neon lining!"))
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span class='notice'>You finish coiling neon lining.</span>")
+		boutput(user, SPAN_NOTICE("You finish coiling neon lining."))
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] wraps neon lining around [his_or_her(user)] neck and tightens it.</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] wraps neon lining around [his_or_her(user)] neck and tightens it.</b>"))
 		user.take_oxygen_deprivation(160)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))

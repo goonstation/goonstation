@@ -3,7 +3,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	var/tmp/list/extra_buttons = list()
 	var/hotkey_number = null
 	var/name = "You shouldn't see me."
-	var/tmp/desc = "<span class='alert'>Someone is a lazy bum.</span>"
+	var/tmp/desc = SPAN_ALERT("Someone is a lazy bum.")
 	var/datum/buildmode_holder/holder = null
 	var/icon_state = null
 	var/admin_level = LEVEL_BABBY // restricts certain things to certain ranks
@@ -222,7 +222,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 		return TRUE
 
 	proc/display_help()
-		boutput(usr, "<span class='notice'>[mode.desc]</span>")
+		boutput(usr, SPAN_NOTICE("[mode.desc]"))
 
 	// You shouldn't actually interact with these anymore.
 	var/tmp/atom/movable/screen/buildmode/builddir/button_dir
@@ -234,23 +234,28 @@ ABSTRACT_TYPE(/datum/buildmode)
 	set name = "Reset Build Mode"
 	set desc = "If your build mode save got screwed up use this to reset it!"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(src.buildmode?.is_active)
 		src.togglebuildmode()
 	qdel(src.buildmode)
 	src.buildmode = new(src)
 	src.player.buildmode = src.buildmode
-	src.cloud_put("buildmode", null)
+	src.player.cloudSaves.putData("buildmode", null)
 	src.togglebuildmode()
 
 /client/proc/togglebuildmode()
 	set name = "Build Mode"
 	set desc = "Toggle build Mode on/off."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(!src.buildmode)
 		src.buildmode = src.player.get_buildmode()
 		src.buildmode.set_client(src)
+	logTheThing(LOG_ADMIN, src.mob, "toggles build mode [src.buildmode.is_active ? "off" : "on"]")
 
 	if(src.buildmode.is_active)
 		src.buildmode.deactivate()
@@ -399,7 +404,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 			mode.click_mode_right(pa.Find("ctrl"), pa.Find("alt"), pa.Find("shift"))
 
 	MouseWheel(delta_x, delta_y, location, control, params)
-		. = ..()
+		. = TRUE
 		var/current = 0
 		for(var/datum/buildmode/mode in holder.hotkey_bar)
 			if(mode == holder.mode)

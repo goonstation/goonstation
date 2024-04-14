@@ -47,13 +47,13 @@
 		if(isnull(src.target))
 			if(prob(60) || !by_type[/obj/machinery/drainage] || !length(by_type[/obj/machinery/drainage]))
 				src.target = pick(get_area_turfs(/area/station)) // don't @ me
-				target.visible_message("<span class='alert'><b>A rift to a [reagent.name] dimension suddenly warps into existence!</b></span>")
+				target.visible_message(SPAN_ALERT("<b>A rift to a [reagent.name] dimension suddenly warps into existence!</b>"))
 			else
 				var/obj/machinery/drainage/drain = pick(by_type[/obj/machinery/drainage])
 				drain.clogged = 60 // about 3 minutes
 				drain.UpdateIcon()
 				src.target = get_turf(drain)
-				target.visible_message("<span class='alert'><b>\The [drain] overflows with [reagent.name]!</b></span>")
+				target.visible_message(SPAN_ALERT("<b>\The [drain] overflows with [reagent.name]!</b>"))
 
 		if(!amount)
 			amount = pick(50, 100, 200, 500, 1000, 2000, 5000)

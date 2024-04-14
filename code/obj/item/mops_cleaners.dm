@@ -215,7 +215,7 @@ TRASH BAG
 	if (!isturf(user.loc)) // Hi, I'm hiding in a closet like a wuss while spraying people with death chems risk-free.
 		return
 	if (src.reagents.total_volume < 1)
-		boutput(user, "<span class='notice'>The spray bottle is empty!</span>")
+		boutput(user, SPAN_NOTICE("The spray bottle is empty!"))
 		return
 
 	if(src.reagents.has_reagent("water") || src.reagents.has_reagent("cleaner"))
@@ -262,7 +262,7 @@ TRASH BAG
 		return
 	if (!reagents)
 		return
-	. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
+	. = "<br>[SPAN_NOTICE("[reagents.get_description(user,rc_flags)]")]"
 	return
 
 // MOP
@@ -321,7 +321,7 @@ TRASH BAG
 /obj/item/mop/examine()
 	. = ..()
 	if(reagents?.total_volume)
-		. += "<span class='notice'>[src] is wet!</span>"
+		. += SPAN_NOTICE("[src] is wet!")
 
 /obj/item/mop/afterattack(atom/A, mob/user)// the main utility of all moppage and mopkind
 	if (ismob(A))
@@ -331,7 +331,7 @@ TRASH BAG
 		A = T.active_liquid || A // if we target a turf with an active liquid, target the liquid. else target the initial target
 
 	if ((src.reagents.total_volume < 1 || mopcount >= 9) && !istype(A, /obj/fluid))
-		boutput(user, "<span class='notice'>Your mop is dry!</span>", group = "mop")
+		boutput(user, SPAN_NOTICE("Your mop is dry!"), group = "mop")
 		return
 
 	if (istype(A, /turf/simulated) || istype(A, /obj/decal/cleanable) || istype(A, /obj/fluid))
@@ -357,15 +357,10 @@ TRASH BAG
 	if (istype(target_fluid))
 		user.show_text("You soak up [target_fluid] with [src].", "blue", group = "mop")
 		if (src.reagents && target_fluid.group)
-			target_fluid.group.drain(target_fluid,1,src)
+			target_fluid.group.drain(target_fluid, 1, src)
 		if (mopcount > 0)
 			mopcount--
-	else if (T)
-		T.clean_forensic()
-		user.show_text("You have mopped up [A]!", "blue", group = "mop")
-	else
-		A.clean_forensic()
-		user.show_text("You have mopped up [A]!", "blue", group = "mop")
+	T.clean_forensic()
 
 	if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
 		SPAWN(0.5 SECONDS)
@@ -401,11 +396,11 @@ TRASH BAG
 
 	afterattack(atom/A, mob/user)
 		if (src.reagents.total_volume < 1 || mopcount >= 5)
-			boutput(user, "<span class='notice'>Your mop is dry!</span>")
+			boutput(user, SPAN_NOTICE("Your mop is dry!"))
 			return
 
 		if (istype(A, /turf) || istype(A, /obj/decal/cleanable))
-			user.visible_message("<span class='alert'><B>[user] begins to clean [A]</B></span>")
+			user.visible_message(SPAN_ALERT("<B>[user] begins to clean [A]</B>"))
 			var/turf/U = get_turf(A)
 
 			if (do_after(user, 4 SECONDS))
@@ -508,7 +503,7 @@ TRASH BAG
 /obj/item/sponge/examine()
 	. = ..()
 	if(reagents?.total_volume)
-		. += "<span class='notice'>[src] is wet!</span>"
+		. += SPAN_NOTICE("[src] is wet!")
 
 /obj/item/sponge/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (user.a_intent == INTENT_HELP)
@@ -518,8 +513,8 @@ TRASH BAG
 /obj/item/sponge/attack_self(mob/user as mob)
 	if(spam_flag)
 		return
+	. = ..()
 	var/turf/location = get_turf(user)
-	user.visible_message("<span class='notice'>[user] wrings out [src].</span>")
 	spam_flag = 1
 	if (location)
 		src.reagents.reaction(location, TOUCH, src.reagents.total_volume)
@@ -532,7 +527,7 @@ TRASH BAG
 
 /obj/item/sponge/attackby(obj/item/W, mob/user)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
-		user.visible_message("<span class='notice'>[user] cuts [src] into the shape of... cheese?</span>")
+		user.visible_message(SPAN_NOTICE("[user] cuts [src] into the shape of... cheese?"))
 		if(src.loc == user)
 			user.u_equip(src)
 		src.set_loc(user)
@@ -545,10 +540,10 @@ TRASH BAG
 	if(hit && ishuman(hit))
 		if(prob(hit_face_prob))
 			var/mob/living/carbon/human/DUDE = hit
-			hit.visible_message("<span class='alert'><b>[src] hits [DUDE] squarely in the face!</b></span>")
+			hit.visible_message(SPAN_ALERT("<b>[src] hits [DUDE] squarely in the face!</b>"))
 			playsound(DUDE.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			if(DUDE.wear_mask || (DUDE.head && DUDE.head.c_flags & COVERSEYES))
-				boutput(DUDE, "<span class='alert'>Your headgear protects you! PHEW!!!</span>")
+				boutput(DUDE, SPAN_ALERT("Your headgear protects you! PHEW!!!"))
 				SPAWN(1 DECI SECOND) src.reagents.clear_reagents()
 				return
 			src.reagents.reaction(DUDE, TOUCH)
@@ -595,7 +590,7 @@ TRASH BAG
 	var/list/choices = src.get_action_options(target)
 
 	if (!length(choices))
-		boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
+		boutput(user, SPAN_NOTICE("You can't think of anything to do with [src]."))
 		return
 
 	var/selection
@@ -623,12 +618,8 @@ TRASH BAG
 					F.group.drain(F,1,src)
 				else
 					F.removed()
-				user.visible_message("[user] soaks up [F] with [src].",\
-				"<span class='notice'>You soak up [F] with [src].</span>", group="soakwipe")
 			else
 				target.reagents.trans_to(src, 15)
-				user.visible_message("[user] soaks up the mess on [target] with [src].",\
-				"<span class='notice'>You soak up the mess on [target] with [src].</span>", group="soakwipe")
 
 			JOB_XP(user, "Janitor", 1)
 
@@ -636,15 +627,11 @@ TRASH BAG
 			if (!istype(target, /turf/simulated)) // really, how?? :I
 				return
 			var/turf/simulated/T = target
-			user.visible_message("[user] dries up [T] with [src].",\
-			"<span class='notice'>You dry up [T] with [src].</span>")
 			JOB_XP(user, "Janitor", 1)
 			src.reagents.add_reagent("water", rand(5,15))
 			T.wet = 0
 
 		if (SPONGE_WIPE)
-			user.visible_message("[user] wipes down [target] with [src].",\
-			"<span class='notice'>You wipe down [target] with [src].</span>", group="soakwipe")
 			if (src.reagents.has_reagent("water"))
 				target.clean_forensic()
 			src.reagents.reaction(target, TOUCH, 5)
@@ -658,7 +645,6 @@ TRASH BAG
 				animate_smush(target)
 
 		if (SPONGE_WRING)
-			user.visible_message("<span class='alert'>[user] wrings [src] out into [target].</span>")
 			if (target.reagents)
 				src.reagents.trans_to(target, src.reagents.total_volume)
 			else if(istype(target, /obj/submachine/chef_sink))
@@ -666,7 +652,6 @@ TRASH BAG
 
 		if (SPONGE_WET)
 			var/fill_amt = (src.reagents.maximum_volume - src.reagents.total_volume)
-			user.visible_message("<span class='alert'>[user] wets [src] in [target].</span>")
 			if (target.reagents)
 				target.reagents.trans_to(src, fill_amt)
 			else
@@ -678,9 +663,9 @@ TRASH BAG
 
 /obj/item/sponge/ghostdronesafe/attack_self(mob/user as mob)
 	if (ON_COOLDOWN(user, "ghostdrone sponge wringing", 5 SECONDS))// Wtihout the cooldown, this is stupid powerful
-		boutput(user, "<span class='notice'> The [src] is still processing fluids, please wait!</span>")
+		boutput(user, SPAN_NOTICE(" The [src] is still processing fluids, please wait!"))
 		return
-	user.visible_message("<span class='notice'>[user] drains the [src].</span>")
+	user.visible_message(SPAN_NOTICE("[user] drains the [src]."))
 	src.reagents.clear_reagents()
 
 /obj/item/sponge/cheese
@@ -720,6 +705,7 @@ TRASH BAG
 		BLOCK_SETUP(BLOCK_SOFT)
 
 	dropped()
+		. = ..()
 		JOB_XP(usr, "Janitor", 2)
 		return
 
@@ -742,7 +728,7 @@ TRASH BAG
 	attackby(obj/item/W, mob/user, params)
 		var/mob/living/carbon/human/H = user
 		if(istype(W, /obj/item/reagent_containers) && istype(H) && istype(H.gloves, /obj/item/clothing/gloves/long))
-			boutput(user, "<span class='notice'>You stealthily replace the hidden [payload.name] with [W].</span>")
+			boutput(user, SPAN_NOTICE("You stealthily replace the hidden [payload.name] with [W]."))
 			user.drop_item(W)
 			src.payload.set_loc(src.loc)
 			user.put_in_hand_or_drop(src.payload)
@@ -837,6 +823,7 @@ TRASH BAG
 
 
 	dropped()
+		. = ..()
 		JOB_XP(usr, "Janitor", 2)
 		return
 
@@ -937,11 +924,11 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			user.put_in_hand_or_drop(src.bucket)
 			src.bucket = null
 		if(length(removed_things) == 0)
-			boutput(user, "<span class='notice'>\The [src] has no bucket nor trashbag.</span>")
+			boutput(user, SPAN_NOTICE("\The [src] has no bucket nor trashbag."))
 		else if(length(removed_things) == 1)
-			boutput(user, "<span class='notice'>You remove \the [removed_things[1]] from \the [src]</span>")
+			boutput(user, SPAN_NOTICE("You remove \the [removed_things[1]] from \the [src]"))
 		else
-			boutput(user, "<span class='notice'>You remove \the [removed_things[1]] and \the [removed_things[2]] from \the [src]</span>")
+			boutput(user, SPAN_NOTICE("You remove \the [removed_things[1]] and \the [removed_things[2]] from \the [src]"))
 		src.tooltip_rebuild = 1
 
 	attack_hand(mob/user)
@@ -950,15 +937,15 @@ TYPEINFO(/obj/item/handheld_vacuum)
 		else if(src.trashbag)
 			src.trashbag.set_loc(user.loc)
 			user.put_in_hand_or_drop(src.trashbag)
-			boutput(user, "<span class='notice'>You remove \the [src.trashbag] from \the [src]</span>")
+			boutput(user, SPAN_NOTICE("You remove \the [src.trashbag] from \the [src]"))
 			src.trashbag = null
 		else if(src.bucket)
 			src.bucket.set_loc(user.loc)
 			user.put_in_hand_or_drop(src.bucket)
-			boutput(user, "<span class='notice'>You remove \the [src.bucket] from \the [src]</span>")
+			boutput(user, SPAN_NOTICE("You remove \the [src.bucket] from \the [src]"))
 			src.bucket = null
 		else
-			boutput(user, "<span class='alert'>\The [src] has neither trashbag nor bucket.</span>")
+			boutput(user, SPAN_ALERT("\The [src] has neither trashbag nor bucket."))
 
 	afterattack(atom/target, mob/user, reach, params)
 		if(!isturf(user.loc))
@@ -969,7 +956,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			var/obj/storage/storage = target
 			for(var/obj/item/I in src.trashbag.storage.get_contents())
 				I.set_loc(storage)
-			boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
+			boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
 			src.tooltip_rebuild = 1
 			return
 		else if(istype(target, /obj/machinery/disposal))
@@ -977,25 +964,25 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			if(src.trashbag)
 				for(var/obj/item/I in src.trashbag.storage.get_contents())
 					I.set_loc(disposal)
-				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
+				boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
 				src.tooltip_rebuild = 1
 				disposal.update()
 				return
 		else if(istype(target, /obj/submachine/chef_sink))
 			if(src.bucket.reagents.total_volume > 0)
-				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
+				boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
 				src.bucket.reagents.clear_reagents()
 				src.tooltip_rebuild = 1
 			else
-				boutput(user, "<span class='notice'>[src]'s bucket is empty.</span>")
+				boutput(user, SPAN_NOTICE("[src]'s bucket is empty."))
 			return
 		else if(istype(target, /obj/mopbucket) && src.bucket)
 			if(src.bucket.reagents.total_volume > 0)
-				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
+				boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
 				src.bucket.transfer_all_reagents(target, user)
 				src.tooltip_rebuild = 1
 			else
-				boutput(user, "<span class='notice'>[src]'s bucket is empty.</span>")
+				boutput(user, SPAN_NOTICE("[src]'s bucket is empty."))
 			return
 		if(ON_COOLDOWN(src, "suck", 0.3 SECONDS))
 			return
@@ -1013,10 +1000,10 @@ TYPEINFO(/obj/item/handheld_vacuum)
 		var/success = FALSE
 		if(T.active_airborne_liquid && T.active_airborne_liquid.group)
 			if(isnull(src.bucket))
-				boutput(user, "<span class='alert'>\The [src] tries to suck up \the [T.active_airborne_liquid] but has no bucket!</span>")
+				boutput(user, SPAN_ALERT("\The [src] tries to suck up \the [T.active_airborne_liquid] but has no bucket!"))
 				. = FALSE
 			else if(src.bucket.reagents.is_full())
-				boutput(user, "<span class='alert'>\The [src] tries to suck up \the [T.active_airborne_liquid] but its bucket is full!</span>")
+				boutput(user, SPAN_ALERT("\The [src] tries to suck up \the [T.active_airborne_liquid] but its bucket is full!"))
 				. = FALSE
 			else
 				var/obj/fluid/airborne/F = T.active_airborne_liquid
@@ -1025,16 +1012,16 @@ TYPEINFO(/obj/item/handheld_vacuum)
 				var/amt = min(F.group.amt_per_tile, src.bucket.reagents.maximum_volume - src.bucket.reagents.total_volume)
 				F.group.drain(F, amt / max(1, F.group.amt_per_tile), src.bucket)
 				if(src.bucket.reagents.is_full())
-					boutput(user, "<span class='notice'>[src]'s [src.bucket] is now full.</span>")
+					boutput(user, SPAN_NOTICE("[src]'s [src.bucket] is now full."))
 				success = TRUE
 
 		var/obj/reagent_dispensers/cleanable/ants/ants = locate(/obj/reagent_dispensers/cleanable/ants) in T
 		if(ants)
 			if(isnull(src.bucket))
-				boutput(user, "<span class='alert'>\The [src] tries to suck up the ants but has no bucket!</span>")
+				boutput(user, SPAN_ALERT("\The [src] tries to suck up the ants but has no bucket!"))
 				. = FALSE
 			else if(src.bucket.reagents.is_full())
-				boutput(user, "<span class='alert'>\The [src] tries to suck up the ants but its bucket is full!</span>")
+				boutput(user, SPAN_ALERT("\The [src] tries to suck up the ants but its bucket is full!"))
 				. = FALSE
 			else
 				qdel(ants)
@@ -1048,10 +1035,10 @@ TYPEINFO(/obj/item/handheld_vacuum)
 		if(length(items_to_suck))
 			var/item_desc = length(items_to_suck) > 1 ? "some items" : "\the [items_to_suck[1]]"
 			if(isnull(src.trashbag))
-				boutput(user, "<span class='alert'>\The [src] tries to suck up [item_desc] but has no trashbag!</span>")
+				boutput(user, SPAN_ALERT("\The [src] tries to suck up [item_desc] but has no trashbag!"))
 				. = FALSE
 			else if(src.trashbag.storage.is_full())
-				boutput(user, "<span class='alert'>\The [src] tries to suck up [item_desc] but its [src.trashbag] is full!</span>")
+				boutput(user, SPAN_ALERT("\The [src] tries to suck up [item_desc] but its [src.trashbag] is full!"))
 				. = FALSE
 			else
 				for(var/obj/item/I as anything in items_to_suck)
@@ -1062,7 +1049,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 					for(var/obj/item/I as anything in items_to_suck)
 						src.trashbag.storage.add_contents_safe(I)
 						if(src.trashbag.storage.is_full())
-							boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
+							boutput(user, SPAN_NOTICE("[src]'s [src.trashbag] is now full."))
 							break
 
 		src.tooltip_rebuild = 1
@@ -1071,11 +1058,11 @@ TYPEINFO(/obj/item/handheld_vacuum)
 	attackby(obj/item/W, mob/user, params, is_special=0)
 		if(istype(W, /obj/item/trash_bag))
 			if(isnull(src.trashbag))
-				boutput(user, "<span class='notice'>You insert \the [W] into \the [src].")
+				boutput(user, SPAN_NOTICE("You insert \the [W] into \the [src]."))
 				src.trashbag = W
 				src.trashbag.set_loc(src)
 			else
-				boutput(user, "<span class='notice'>You swap the trash bags.")
+				boutput(user, SPAN_NOTICE("You swap the trash bags."))
 				var/obj/item/old_trashbag = src.trashbag
 				src.trashbag = W
 				src.trashbag.set_loc(src)
@@ -1086,11 +1073,11 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			src.tooltip_rebuild = 1
 		else if(istype(W, /obj/item/reagent_containers/glass/bucket))
 			if(isnull(src.bucket))
-				boutput(user, "<span class='notice'>You insert \the [W] into \the [src].")
+				boutput(user, SPAN_NOTICE("You insert \the [W] into \the [src]."))
 				src.bucket = W
 				src.bucket.set_loc(src)
 			else
-				boutput(user, "<span class='notice'>You swap the buckets.")
+				boutput(user, SPAN_NOTICE("You swap the buckets."))
 				var/obj/item/old_bucket = src.bucket
 				src.bucket = W
 				src.bucket.set_loc(src)
@@ -1179,7 +1166,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 								var/mob/M = A
 								M.changeStatus("weakened", 0.9 SECONDS)
 								M.force_laydown_standup()
-								boutput(M, "<span class='alert'>You are pulled by the force of [user]'s [master].</span>")
+								boutput(M, SPAN_ALERT("You are pulled by the force of [user]'s [master]."))
 						else
 							var/mob/M = A
 							if(!issilicon(M) && M.equipped() && prob(25))
@@ -1188,7 +1175,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 									I.set_loc(M.loc)
 									M.u_equip(I)
 									I.dropped(user)
-									boutput(M, "<span class='alert'>Your [I] is pulled from your hands by the force of [user]'s [master].</span>")
+									boutput(M, SPAN_ALERT("Your [I] is pulled from your hands by the force of [user]'s [master]."))
 				new/obj/effect/suck(T, get_dir(T, last))
 				last = T
 				if(end_now)
@@ -1221,7 +1208,6 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'	// Avoid icon duplication with the clothing
 	icon_state = "trashbag-f"
 	item_state = "trashbag"
-	uses_multiple_icon_states = TRUE
 	w_class = W_CLASS_TINY
 	rand_pos = TRUE
 	flags = FPRINT | TABLEPASS | NOSPLASH
@@ -1242,7 +1228,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 			if (action == "Cut into an outfit")
 				boutput(user, "You begin cutting up [src].")
 				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return
 				else
 					var/obj/item/clothing/under/gimmick/trashsinglet/trash_outfit = new clothing_type(get_turf(src))
@@ -1251,7 +1237,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 					for(var/obj/item/contents as anything in src.storage.get_contents())
 						src.storage.transfer_stored_item(contents, trash_outfit, TRUE)
 					usr.put_in_hand_or_drop(trash_outfit)
-					user.visible_message("<span class='notice'>[user] cuts their [src] into an outfit of questionably fashionable.</span>")
+					user.visible_message(SPAN_NOTICE("[user] cuts their [src] into an outfit of questionably fashionable."))
 					qdel(src)
 					return
 		..()

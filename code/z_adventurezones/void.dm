@@ -368,7 +368,7 @@ TYPEINFO(/turf/simulated/floor/void)
 		while(active && !activating && remain_active-- > 0) //So it will shut itself down after a while
 
 		if(remain_active <= 0)
-			src.visible_message("<span class='alert'>You hear a quiet click as \the [src] deactivates itself.</span>")
+			src.visible_message(SPAN_ALERT("You hear a quiet click as \the [src] deactivates itself."))
 			deactivate()
 
 
@@ -503,14 +503,14 @@ TYPEINFO(/turf/simulated/floor/void)
 
 			if(success)
 				playsound(src.loc, 'sound/effects/electric_shock.ogg', 50,1)
-				src.visible_message("<span class='alert'>\The [src] emits a loud crackling sound and the smell of ozone fills the air!</span>")
+				src.visible_message(SPAN_ALERT("\The [src] emits a loud crackling sound and the smell of ozone fills the air!"))
 				loop_duration = 7 //Something is amiss oh no!
 				remain_active = min(remain_active, 100)
 				remain_active_max = 100
 				used = 1
 			else
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 50,1)
-				src.visible_message("<span class='alert'>\The [src] emits a whirring and clicking noise followed by an angry beep!</span>")
+				src.visible_message(SPAN_ALERT("\The [src] emits a whirring and clicking noise followed by an angry beep!"))
 
 		SPAWN(5 SECONDS)
 			operating = 0

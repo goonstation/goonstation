@@ -85,8 +85,8 @@
 			return 1
 		if (prob(15) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
 			playsound(src, 'sound/voice/babynoise.ogg', 30, TRUE)
-			src.visible_message("<span class='notice'><b>[src]</b> coos!</span>",\
-			"<span class='notice'>You coo!</span>")
+			src.visible_message(SPAN_NOTICE("<b>[src]</b> coos!"),\
+			SPAN_NOTICE("You coo!"))
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -137,8 +137,8 @@
 		for (var/obj/item/implant/access/infinite/assistant/I in src.contents)
 			has_implant = TRUE
 		src.unequip_all()
-		src.visible_message("<span class='alert'><b>[src] grows up!</b></span>",\
-		"<span class='notice'><b>You grow up!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src] grows up!</b>"),\
+		SPAN_NOTICE("<b>You grow up!</b>"))
 		SPAWN(0)
 			var/mob/living/critter/spider/new_mob = src.make_critter(src.adultpath)
 			if (has_implant)
@@ -157,7 +157,7 @@
 
 		if(length(.) && prob(30))
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
-			src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
+			src.visible_message(SPAN_ALERT("<B>[src]</B> hisses!"))
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
@@ -537,9 +537,9 @@
 				continue
 			// IMMEDIATE INTERRUPT
 			var/datum/aiTask/task = CS.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(CS.ai, CS.ai.default_task))
-			task.target = T
 			CS.ai.priority_tasks += task
 			CS.ai.interrupt()
+			CS.ai.target = T
 			defenders++
 
 	critter_ability_attack(mob/target)

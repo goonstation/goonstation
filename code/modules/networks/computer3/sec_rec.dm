@@ -35,8 +35,6 @@
 	req_access = list(access_security)
 	var/tmp/menu = MENU_MAIN
 	var/tmp/field_input = 0
-	var/tmp/authenticated = null //Are we currently logged in?
-	var/tmp/datum/computer/file/user_data/account = null
 	var/datum/record_database/record_database = list()  //List of records, for jumping direclty to a specific ID
 	var/datum/db_record/active_general = null //General record
 	var/datum/db_record/active_secure = null //Security record
@@ -52,12 +50,13 @@
 	var/tmp/list/known_printers = list()
 	var/tmp/printer_status = "???"
 
-	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
 	var/setup_logdump_name = "seclog" //What name do we give our logdump textfile?
 	var/setup_mailgroup = MGD_SECURITY //The PDA mailgroup used when alerting security pdas to an arrest set.
 	var/setup_mail_freq = FREQ_PDA //Which frequency do we transmit PDA alerts on?
 
 	initialize() //Forms "SECMATE" ascii art. Oh boy.
+		if (..())
+			return TRUE
 	/*
 		var/title_art = {"<pre> ____________________    _ __________________
 \\  ___\\  ___\\  ___\\ -./  \\  __ \\ _  _\\  ___\\
@@ -65,28 +64,17 @@
  \\/\\_____\\_____\\_____\\ \\_\\ \\ \\ \\_\\ \\ \\ \\ \\_____\\
   \\/_____/_____/_____/_/  \\/_/_/\\/_/\\/_/\\/_____/ </pre>"}
 */
-		src.authenticated = null
 		src.record_database = data_core.general
 		src.master.temp = null
 		src.menu = MENU_MAIN
 		src.field_input = 0
 		//src.print_text(" [title_art]")
-		if(!src.find_access_file()) //Find the account information, as it's essentially a ~digital ID card~
-			src.print_text("<b>Error:</b> Cannot locate user file.  Quitting...")
-			src.master.unload_program(src) //Oh no, couldn't find the file.
-			return
 
 		src.radiocard = locate() in src.master.peripherals
 		if(!radiocard || !istype(src.radiocard))
 			src.radiocard = null
 			src.print_text("<b>Warning:</b> No radio module detected.")
 
-		if(!src.check_access(src.account.access))
-			src.print_text("User [src.account.registered] does not have needed access credentials.<br>Quitting...")
-			src.master.unload_program(src)
-			return
-
-		src.authenticated = src.account.registered
 		src.log_string += "<br><b>LOGIN:</b> [src.authenticated]"
 
 		src.print_text(mainmenu_text())
@@ -116,7 +104,7 @@
 						src.print_index()
 
 					if ("2") //Search records
-						src.print_text("Please enter target name, ID, DNA, rank, or fingerprint.")
+						src.print_text("Please enter target name, ID, DNA, rank, fingerprint, or criminal status.")
 
 						src.menu = MENU_SEARCH_INPUT
 						return
@@ -221,7 +209,7 @@
 					var/datum/db_record/G = new /datum/db_record(  )
 					G["name"] = "New Record"
 					G["full_name"] = "New Record"
-					G["id"] = "[num2hex(rand(1, 1.6777215E7), 6)]"
+					G["id"] = "[num2hex(rand(1, 0xffffff), 6)]"
 					G["rank"] = "Unassigned"
 					G["sex"] = "Other"
 					G["pronouns"] = "Unknown"
@@ -599,6 +587,9 @@
 				var/list/datum/db_record/results = list()
 				for(var/datum/db_record/R as anything in data_core.general.records)
 					var/haystack = jointext(list(ckey(R["name"]), ckey(R["dna"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
+					var/datum/db_record/haystack_secure_addition = data_core.security.find_record("id", R["id"])
+					if(istype(haystack_secure_addition, /datum/db_record))
+						haystack = jointext(list(haystack, ckey(haystack_secure_addition["criminal"])), " ")
 					if(findtext(haystack, searchText))
 						results += R
 
@@ -827,18 +818,6 @@
 			last_arrest_report = world.time
 			peripheral_command("transmit", signal, "\ref[src.radiocard]")
 			return
-
-		find_access_file() //Look for the whimsical account_data file
-			var/datum/computer/folder/accdir = src.holder.root
-			if(src.master.host_program) //Check where the OS is, preferably.
-				accdir = src.master.host_program.holder.root
-
-			var/datum/computer/file/user_data/target = parse_file_directory(setup_acc_filepath, accdir)
-			if(target && istype(target))
-				src.account = target
-				return 1
-
-			return 0
 
 		local_print()
 			var/obj/item/peripheral/printcard = find_peripheral("LAR_PRINTER")

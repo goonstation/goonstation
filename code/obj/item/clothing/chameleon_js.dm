@@ -5,7 +5,6 @@
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
 	icon_state = "black"
-	uses_multiple_icon_states = TRUE
 	item_state = "black"
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_jumpsuit_pattern
@@ -19,15 +18,15 @@
 
 	attackby(obj/item/clothing/under/U, mob/user)
 		if(istype(U, /obj/item/clothing/under/chameleon))
-			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a horrible jumpsuit chain reaction!</span>")
+			boutput(user, SPAN_ALERT("No!!! That's a terrible idea! You'll cause a horrible jumpsuit chain reaction!"))
 			SPAWN(1 SECOND)
-				boutput(user, "<span class='alert'>Nah, just kidding. Doing that still doesn't work though!</span>")
+				boutput(user, SPAN_ALERT("Nah, just kidding. Doing that still doesn't work though!"))
 			return
 
 		if(istype(U, /obj/item/clothing/under))
 			for(var/datum/chameleon_jumpsuit_pattern/P in src.clothing_choices)
 				if(P.name == U.name)
-					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
+					boutput(user, SPAN_ALERT("That appearance is already saved in the chameleon pattern banks!"))
 					return
 
 			var/datum/chameleon_jumpsuit_pattern/P = new /datum/chameleon_jumpsuit_pattern(src)
@@ -40,12 +39,12 @@
 			P.sprite_hand = U.inhand_image_icon
 			src.clothing_choices += P
 
-			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
+			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
 
 	emp_act()
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/M = src.loc
-			boutput(M, "<span class='alert'><B>Your chameleon jumpsuit malfunctions!</B></span>")
+			boutput(M, SPAN_ALERT("<B>Your chameleon jumpsuit malfunctions!</B>"))
 			src.name = "psychedelic jumpsuit"
 			src.desc = "Groovy!"
 			src.icon_state = "psyche"
@@ -302,7 +301,6 @@
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	icon = 'icons/obj/clothing/item_hats.dmi'
-	uses_multiple_icon_states = TRUE
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_hat_pattern
 	blocked_from_petasusaphilic = TRUE
@@ -318,15 +316,15 @@
 
 	attackby(obj/item/clothing/head/U, mob/user)
 		if(istype(U, /obj/item/clothing/head/chameleon))
-			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a cataclysmic hat infinite loop!</span>")
+			boutput(user, SPAN_ALERT("No!!! That's a terrible idea! You'll cause a cataclysmic hat infinite loop!"))
 			SPAWN(1 SECOND)
-				boutput(user, "<span class='alert'>Nah, just yankin' your chain. Doing that still doesn't work though!</span>")
+				boutput(user, SPAN_ALERT("Nah, just yankin' your chain. Doing that still doesn't work though!"))
 			return
 
 		if(istype(U, /obj/item/clothing/head/))
 			for(var/datum/chameleon_hat_pattern/P in src.clothing_choices)
 				if(P.name == U.name)
-					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
+					boutput(user, SPAN_ALERT("That appearance is already saved in the chameleon pattern banks!"))
 					return
 
 			var/datum/chameleon_hat_pattern/P = new /datum/chameleon_hat_pattern(src)
@@ -340,12 +338,12 @@
 			P.seal_hair = U.seal_hair
 			src.clothing_choices += P
 
-			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
+			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
 
 	emp_act()
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/M = src.loc
-			boutput(M, "<span class='alert'><B>Your chameleon hat malfunctions!</B></span>")
+			boutput(M, SPAN_ALERT("<B>Your chameleon hat malfunctions!</B>"))
 			src.name = "hat"
 			src.desc = "A knit cap in...what the hell?"
 			src.icon_state = "psyche"
@@ -551,7 +549,6 @@
 	item_state = "hoodie"
 	icon = 'icons/obj/clothing/overcoats/hoods/hoodies.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi'
-	uses_multiple_icon_states = TRUE
 	over_hair = FALSE
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_suit_pattern/hoodie
@@ -565,15 +562,15 @@
 
 	attackby(obj/item/clothing/suit/U, mob/user)
 		if(istype(U, /obj/item/clothing/suit/chameleon))
-			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a horrible outer suit meltdown death loop!</span>")
+			boutput(user, SPAN_ALERT("No!!! That's a terrible idea! You'll cause a horrible outer suit meltdown death loop!"))
 			SPAWN(1 SECOND)
-				boutput(user, "<span class='alert'>Nah, just making fun. Doing that still doesn't work though!</span>")
+				boutput(user, SPAN_ALERT("Nah, just making fun. Doing that still doesn't work though!"))
 			return
 
 		if(istype(U, /obj/item/clothing/suit))
 			for(var/datum/chameleon_suit_pattern/P in src.clothing_choices)
 				if(P.name == U.name)
-					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
+					boutput(user, SPAN_ALERT("That appearance is already saved in the chameleon pattern banks!"))
 					return
 
 			var/datum/chameleon_suit_pattern/P = new /datum/chameleon_suit_pattern(src)
@@ -587,12 +584,12 @@
 			P.over_hair = U.over_hair
 			src.clothing_choices += P
 
-			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
+			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
 
 	emp_act()
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/M = src.loc
-			boutput(M, "<span class='alert'><B>Your chameleon suit malfunctions!</B></span>")
+			boutput(M, SPAN_ALERT("<B>Your chameleon suit malfunctions!</B>"))
 			src.name = "hoodie"
 			src.desc = "A comfy jacket that's hard on the eyes."
 			src.icon_state = "hoodie-psyche"
@@ -890,7 +887,6 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	icon = 'icons/obj/clothing/item_glasses.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	wear_image_icon = 'icons/mob/clothing/eyes.dmi'
-	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_glasses_pattern
 
@@ -903,15 +899,15 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 
 	attackby(obj/item/clothing/glasses/U, mob/user)
 		if(istype(U, /obj/item/clothing/glasses/chameleon))
-			boutput(user, "<span class='alert'>No!!! That's a horrible idea! You'll cause a horrible eyewear cascade!</span>")
+			boutput(user, SPAN_ALERT("No!!! That's a horrible idea! You'll cause a horrible eyewear cascade!"))
 			SPAWN(1 SECOND)
-				boutput(user, "<span class='alert'>Nah, just pulling your leg. Doing that still doesn't work though!</span>")
+				boutput(user, SPAN_ALERT("Nah, just pulling your leg. Doing that still doesn't work though!"))
 			return
 
 		if(istype(U, /obj/item/clothing/glasses/))
 			for(var/datum/chameleon_glasses_pattern/P in src.clothing_choices)
 				if(P.name == U.name)
-					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
+					boutput(user, SPAN_ALERT("That appearance is already saved in the chameleon pattern banks!"))
 					return
 
 			var/datum/chameleon_glasses_pattern/P = new /datum/chameleon_glasses_pattern(src)
@@ -924,12 +920,12 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 			P.sprite_hand = U.inhand_image_icon
 			src.clothing_choices += P
 
-			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
+			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
 
 	emp_act()
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/M = src.loc
-			boutput(M, "<span class='alert'><B>Your chameleon glasses malfunction!</B></span>")
+			boutput(M, SPAN_ALERT("<B>Your chameleon glasses malfunction!</B>"))
 			src.name = "glasses"
 			src.desc = "A pair of glasses. They seem to be broken, though."
 			src.icon_state = "psyche"
@@ -1019,7 +1015,6 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	icon = 'icons/obj/clothing/item_shoes.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	wear_image_icon = 'icons/mob/clothing/feet.dmi'
-	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_shoes_pattern
 	step_sound = "step_default"
@@ -1033,19 +1028,19 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 
 	attackby(obj/item/clothing/shoes/U, mob/user)
 		if(istype(U, /obj/item/clothing/shoes/chameleon))
-			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a bad shoe feedback cycle!</span>")
+			boutput(user, SPAN_ALERT("No!!! That's a terrible idea! You'll cause a bad shoe feedback cycle!"))
 			SPAWN(1 SECOND)
-				boutput(user, "<span class='alert'>Nah, just joking. Doing that still doesn't work though!</span>")
+				boutput(user, SPAN_ALERT("Nah, just joking. Doing that still doesn't work though!"))
 			return
 
 		if(istype(U, /obj/item/clothing/shoes/cowboy/boom)) //if they're gonna copy sounds they're not gonna work on boom boots
-			boutput(user, "<span class='alert'>It doesn't seem like your chameleon shoes can copy that. Hmm.</span>")
+			boutput(user, SPAN_ALERT("It doesn't seem like your chameleon shoes can copy that. Hmm."))
 			return
 
 		if(istype(U, /obj/item/clothing/shoes))
 			for(var/datum/chameleon_shoes_pattern/P in src.clothing_choices)
 				if(P.name == U.name)
-					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
+					boutput(user, SPAN_ALERT("That appearance is already saved in the chameleon pattern banks!"))
 					return
 
 			var/datum/chameleon_shoes_pattern/P = new /datum/chameleon_shoes_pattern(src)
@@ -1059,12 +1054,12 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 			P.step_sound = U.step_sound
 			src.clothing_choices += P
 
-			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
+			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
 
 	emp_act()
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/M = src.loc
-			boutput(M, "<span class='alert'><B>Your chameleon shoes malfunction!</B></span>")
+			boutput(M, SPAN_ALERT("<B>Your chameleon shoes malfunction!</B>"))
 			src.name = "shoes"
 			src.desc = "A pair of shoes. Maybe they're those light up kind you had as a kid?"
 			src.icon_state = "psyche"
@@ -1209,7 +1204,6 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	icon = 'icons/obj/clothing/item_gloves.dmi'
 	wear_image_icon = 'icons/mob/clothing/hands.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
-	uses_multiple_icon_states = TRUE
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_gloves_pattern
 	material_prints = "black leather fibers"
@@ -1225,15 +1219,15 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 
 	attackby(obj/item/clothing/gloves/U, mob/user)
 		if(istype(U, /obj/item/clothing/gloves/chameleon))
-			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause an awful glove fractal!</span>")
+			boutput(user, SPAN_ALERT("No!!! That's a terrible idea! You'll cause an awful glove fractal!"))
 			SPAWN(1 SECOND)
-				boutput(user, "<span class='alert'>Nah, just having a laugh. Doing that still doesn't work though!</span>")
+				boutput(user, SPAN_ALERT("Nah, just having a laugh. Doing that still doesn't work though!"))
 			return
 
 		if(istype(U, /obj/item/clothing/gloves))
 			for(var/datum/chameleon_gloves_pattern/P in src.clothing_choices)
 				if(P.name == U.name)
-					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
+					boutput(user, SPAN_ALERT("That appearance is already saved in the chameleon pattern banks!"))
 					return
 
 			var/datum/chameleon_gloves_pattern/P = new /datum/chameleon_gloves_pattern(src)
@@ -1247,12 +1241,12 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 			src.clothing_choices += P
 			P.print_type = U.material_prints
 
-			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
+			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
 
 	emp_act()
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/M = src.loc
-			boutput(M, "<span class='alert'><B>Your chameleon gloves malfunction!</B></span>")
+			boutput(M, SPAN_ALERT("<B>Your chameleon gloves malfunction!</B>"))
 			src.name = "gloves"
 			src.desc = "A pair of gloves. Something seems off about them..."
 			src.icon_state = "psyche"
@@ -1371,7 +1365,6 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	icon = 'icons/obj/items/belts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
-	uses_multiple_icon_states = TRUE
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_belt_pattern
 
@@ -1385,15 +1378,15 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	attackby(obj/item/storage/belt/U, mob/user)
 		..()
 		if(istype(U, /obj/item/storage/belt/chameleon))
-			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a putrid belt spiral!</span>")
+			boutput(user, SPAN_ALERT("No!!! That's a terrible idea! You'll cause a putrid belt spiral!"))
 			SPAWN(1 SECOND)
-				boutput(user, "<span class='alert'>Nah, just jesting. Doing that still doesn't work though!</span>")
+				boutput(user, SPAN_ALERT("Nah, just jesting. Doing that still doesn't work though!"))
 			return
 
 		if(istype(U, /obj/item/storage/belt))
 			for(var/datum/chameleon_belt_pattern/P in src.clothing_choices)
 				if(P.name == U.name)
-					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
+					boutput(user, SPAN_ALERT("That appearance is already saved in the chameleon pattern banks!"))
 					return
 
 			var/datum/chameleon_belt_pattern/P = new /datum/chameleon_belt_pattern(src)
@@ -1406,12 +1399,12 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 			P.sprite_hand = U.inhand_image_icon
 			src.clothing_choices += P
 
-			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
+			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
 
 	emp_act()
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/M = src.loc
-			boutput(M, "<span class='alert'><B>Your chameleon belt malfunctions!</B></span>")
+			boutput(M, SPAN_ALERT("<B>Your chameleon belt malfunctions!</B>"))
 			src.name = "belt"
 			src.desc = "A flashing belt. Looks like you can still put things in it, though."
 			src.icon_state = "psyche"
@@ -1505,7 +1498,6 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	item_state = "backpack"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	uses_multiple_icon_states = TRUE
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_backpack_pattern
 	spawn_contents = list()
@@ -1552,15 +1544,15 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	attackby(obj/item/storage/backpack/U, mob/user)
 		..()
 		if(istype(U, /obj/item/storage/backpack/chameleon))
-			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a stinky backpack self-cloning freak accident!</span>")
+			boutput(user, SPAN_ALERT("No!!! That's a terrible idea! You'll cause a stinky backpack self-cloning freak accident!"))
 			SPAWN(1 SECOND)
-				boutput(user, "<span class='alert'>Nah, just kidding. Doing that still doesn't work though!</span>")
+				boutput(user, SPAN_ALERT("Nah, just kidding. Doing that still doesn't work though!"))
 			return
 
 		if(istype(U, /obj/item/storage/backpack))
 			for(var/datum/chameleon_backpack_pattern/P in src.clothing_choices)
 				if(P.name == U.name)
-					boutput(user, "<span class='alert'>That appearance is already saved in the chameleon pattern banks!</span>")
+					boutput(user, SPAN_ALERT("That appearance is already saved in the chameleon pattern banks!"))
 					return
 
 			var/datum/chameleon_backpack_pattern/P = new /datum/chameleon_backpack_pattern(src)
@@ -1573,12 +1565,12 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 			P.sprite_hand = U.inhand_image_icon
 			src.clothing_choices += P
 
-			boutput(user, "<span class='notice'>[U.name]'s appearance has been copied!</span>")
+			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
 
 	emp_act()
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/M = src.loc
-			boutput(M, "<span class='alert'><B>Your chameleon backpack malfunctions!</B></span>")
+			boutput(M, SPAN_ALERT("<B>Your chameleon backpack malfunctions!</B>"))
 			src.name = "backpack"
 			src.desc = "A flashing backpack. Looks like you can still put things in it, though."
 			src.icon_state = "psyche_backpack"
@@ -1756,12 +1748,12 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 				if(!outfit_to_delete)
 					return
 				if(outfit_to_delete.function)
-					boutput(user, "<span class='alert'>The chameleon outfit prevents you from deleting this function!</span>")
+					boutput(user, SPAN_ALERT("The chameleon outfit prevents you from deleting this function!"))
 					return
 
 				src.outfit_choices -= outfit_to_delete
 
-				boutput(user, "<span class='notice'>Outfit set deleted!</span>")
+				boutput(user, SPAN_NOTICE("Outfit set deleted!"))
 				return
 
 			if(which.function == "new_outfit")
@@ -1770,7 +1762,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 					return
 				for(var/datum/chameleon_outfit_choices/P in src.outfit_choices)
 					if(P.name == name)
-						boutput(user, "<span class='alert'>That outfit set name is already saved in the chameleon outfit banks!</span>")
+						boutput(user, SPAN_ALERT("That outfit set name is already saved in the chameleon outfit banks!"))
 						return
 
 				var/datum/chameleon_outfit_choices/P = new /datum/chameleon_outfit_choices(src)
@@ -1793,7 +1785,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 					P.backpack_type = connected_backpack.current_choice
 				src.outfit_choices += P
 
-				boutput(user, "<span class='notice'>New outfit set created!</span>")
+				boutput(user, SPAN_NOTICE("New outfit set created!"))
 				return
 
 			if(connected_jumpsuit || which.jumpsuit_type)
@@ -1840,7 +1832,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		glasses_type = new/datum/chameleon_glasses_pattern/sunglasses
 		shoes_type = new/datum/chameleon_shoes_pattern/caps_boots
 		gloves_type = new/datum/chameleon_gloves_pattern/caps_gloves
-		belt_type = null
+		belt_type = new/datum/chameleon_belt_pattern
 		backpack_type = new/datum/chameleon_backpack_pattern/captain
 
 	head_of_security
@@ -1850,7 +1842,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		suit_type = new/datum/chameleon_suit_pattern/hos_jacket
 		glasses_type = new/datum/chameleon_glasses_pattern/sechud
 		shoes_type = new/datum/chameleon_shoes_pattern/swat
-		gloves_type = null
+		gloves_type = new/datum/chameleon_gloves_pattern
 		belt_type = new/datum/chameleon_belt_pattern/security
 		backpack_type = new/datum/chameleon_backpack_pattern/security
 
@@ -1861,7 +1853,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		suit_type = new/datum/chameleon_suit_pattern/winter_coat_command
 		glasses_type = new/datum/chameleon_glasses_pattern
 		shoes_type = new/datum/chameleon_shoes_pattern/brown
-		gloves_type = null
+		gloves_type = new/datum/chameleon_gloves_pattern
 		belt_type = new/datum/chameleon_belt_pattern
 		backpack_type = new/datum/chameleon_backpack_pattern
 
@@ -1979,7 +1971,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		name = "Quartermaster"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/cargo
 		hat_type = new/datum/chameleon_hat_pattern
-		suit_type = new/datum/chameleon_suit_pattern
+		suit_type = new/datum/chameleon_suit_pattern/winter_coat_engineering
 		glasses_type = new/datum/chameleon_glasses_pattern
 		shoes_type = new/datum/chameleon_shoes_pattern
 		gloves_type = new/datum/chameleon_gloves_pattern

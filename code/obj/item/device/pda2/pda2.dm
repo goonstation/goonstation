@@ -11,6 +11,7 @@
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	wear_layer = MOB_BELT_LAYER
+	force = 3
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/obj/item/pen = null // slap a pen into that thang
 	var/registered = null // so we don't need to replace all the dang checks for ID cards
@@ -250,7 +251,7 @@
 				src.glide_size = M.glide_size
 				RegisterSignal(M, COMSIG_MOVABLE_THROW_END, PROC_REF(on_mob_throw_end))
 				if (M.slip(walking_matters = 1, ignore_actual_delay = 1, throw_type = THROW_PEEL_SLIP, params = list("slip_obj" = src)))
-					boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
+					boutput(M, SPAN_NOTICE("You slipped on the PDA!"))
 					if (M.bioHolder.HasEffect("clumsy"))
 						M.changeStatus("weakened", 5 SECONDS)
 						JOB_XP(M, "Clown", 1)
@@ -377,6 +378,7 @@
 		if(ismob(src.loc))
 			var/mob/mob = src.loc
 			get_all_character_setup_ringtones()
+
 			if(mob.client && (mob.client.preferences.pda_ringtone_index in selectable_ringtones) && mob.client?.preferences.pda_ringtone_index != "Two-Beep")
 				src.set_ringtone(selectable_ringtones[mob.client.preferences.pda_ringtone_index], FALSE, FALSE, "main", null, FALSE)
 				var/rtone_program = src.ringtone2program(src.r_tone)
@@ -457,7 +459,7 @@
 	if(!user.client)
 		return
 	if(!user.literate)
-		boutput(user, "<span class='alert'>You don't know how to read, the screen is meaningless to you.</span>")
+		boutput(user, SPAN_ALERT("You don't know how to read, the screen is meaningless to you."))
 		return
 
 	src.add_dialog(user)
@@ -592,20 +594,20 @@
 		user.drop_item()
 		C.set_loc(src)
 		if (isnull(src.cartridge))
-			boutput(user, "<span class='notice'>You insert [C] into [src].</span>")
+			boutput(user, SPAN_NOTICE("You insert [C] into [src]."))
 		else
-			boutput(user, "<span class='notice'>You remove the old cartridge and insert [C] into [src].</span>")
+			boutput(user, SPAN_NOTICE("You remove the old cartridge and insert [C] into [src]."))
 			user.put_in_hand_or_eject(src.cartridge)
 		src.cartridge = C
 		src.updateSelfDialog()
 
 	else if (istype(C, /obj/item/device/pda_module))
 		if(src.closed)
-			boutput(user, "<span class='alert'>The casing is closed!</span>")
+			boutput(user, SPAN_ALERT("The casing is closed!"))
 			return
 
 		if(src.module)
-			boutput(user, "<span class='alert'>There is already a module installed!</span>")
+			boutput(user, SPAN_ALERT("There is already a module installed!"))
 			return
 
 		user.drop_item()
@@ -625,7 +627,7 @@
 			return
 
 		if(src.closed)
-			boutput(user, "<span class='alert'>The casing is closed!</span>")
+			boutput(user, SPAN_ALERT("The casing is closed!"))
 			return
 
 		src.module.set_loc(get_turf(src))
@@ -637,26 +639,26 @@
 	else if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
 		if (!ID.registered)
-			boutput(user, "<span class='alert'>This ID isn't registered to anyone!</span>")
+			boutput(user, SPAN_ALERT("This ID isn't registered to anyone!"))
 			return
 		if (!src.owner)
 			src.owner = ID.registered
 			src.ownerAssignment = ID.assignment
 			src.name = "PDA-[src.owner]"
-			boutput(user, "<span class='notice'>Card scanned.</span>")
+			boutput(user, SPAN_NOTICE("Card scanned."))
 			src.updateSelfDialog()
 		else
 			if (src.ID_card)
 				if (IS_WORN_BY_SOMEONE_OTHER_THAN(src, user))
-					boutput(user, "<span class='alert'>There's already an ID card in [src].</span>")
+					boutput(user, SPAN_ALERT("There's already an ID card in [src]."))
 					return
-				boutput(user, "<span class='notice'>You swap [ID] and [src.ID_card].</span>")
+				boutput(user, SPAN_NOTICE("You swap [ID] and [src.ID_card]."))
 				src.eject_id_card(user)
 				src.insert_id_card(ID, user)
 				return
 			else if (!src.ID_card)
 				src.insert_id_card(ID, user)
-				boutput(user, "<span class='notice'>You insert [ID] into [src].</span>")
+				boutput(user, SPAN_NOTICE("You insert [ID] into [src]."))
 
 	else if (istype(C, /obj/item/uplink_telecrystal))
 		if (src.uplink && src.uplink.active)
@@ -667,7 +669,7 @@
 
 	else if (istype(C, /obj/item/explosive_uplink_telecrystal))
 		if (src.uplink && src.uplink.active)
-			boutput(user, "<span class='alert'>The [C] explodes!</span>")
+			boutput(user, SPAN_ALERT("The [C] explodes!"))
 			var/turf/T = get_turf(C.loc)
 			if(T)
 				T.hotspot_expose(700,125)
@@ -679,7 +681,7 @@
 		if (!src.pen)
 			src.insert_pen(C, user)
 		else
-			boutput(user, "<span class='alert'>There is already something in [src]'s pen slot!</span>")
+			boutput(user, SPAN_ALERT("There is already something in [src]'s pen slot!"))
 
 /obj/item/device/pda2/examine()
 	. = ..()
@@ -703,7 +705,7 @@
 		scan_dat = scan_atmospheric(A, visible = 1) // Replaced with global proc (Convair880).
 
 	if(scan_dat)
-		A.visible_message("<span class='alert'>[user] has scanned [A]!</span>")
+		A.visible_message(SPAN_ALERT("[user] has scanned [A]!"))
 		user.show_message(scan_dat, 1)
 
 	return
@@ -911,7 +913,7 @@
 			animate(time=2, icon_state=original_icon_state)
 			animate(time=2, transform=matrix(null, 0, -1, MATRIX_TRANSLATE))
 			animate(time=3, transform=null)
-			boutput(user, "<span class='notice'>You insert [insertedPen] into [src].</span>")
+			boutput(user, SPAN_NOTICE("You insert [insertedPen] into [src]."))
 
 /*
 	//Toggle the built-in flashlight
@@ -967,8 +969,8 @@
 			src.r_tone_temp = new/datum/ringtone(src)
 			if (ismob(src.loc))
 				var/mob/B = src.loc
-				B.show_message("<span class='alert'>FATAL RINGTONE ERROR! Please call 1-800-IM-CODER.</span>", 1)
-				B.show_message("<span class='alert'>Restoring backup ringtone...</span>", 1)
+				B.show_message(SPAN_ALERT("FATAL RINGTONE ERROR! Please call 1-800-IM-CODER."), 1)
+				B.show_message(SPAN_ALERT("Restoring backup ringtone..."), 1)
 			return
 		else
 			if(temp)
@@ -1007,7 +1009,7 @@
 					M.show_message("[bicon(src)] [RT?.succText]")
 
 	proc/bust_speaker()
-		src.visible_message("<span class='alert'>[src]'s tiny speaker explodes!</span>")
+		src.visible_message(SPAN_ALERT("[src]'s tiny speaker explodes!"))
 		playsound(src, 'sound/impact_sounds/Machinery_Break_1.ogg', 20, TRUE)
 		elecflash(src, radius=1, power=1, exclude_center = 0)
 		src.speaker_busted = 1
@@ -1115,7 +1117,7 @@
 	proc/explode()
 		if (src.bombproof)
 			if (ismob(src.loc))
-				boutput(src.loc, "<span class='alert'><b>ALERT:</b> An attempt to run malicious explosive code on your PDA has been blocked.</span>")
+				boutput(src.loc, SPAN_ALERT("<b>ALERT:</b> An attempt to run malicious explosive code on your PDA has been blocked."))
 			return
 
 		if(src in bible_contents)
@@ -1131,7 +1133,7 @@
 
 		if (ismob(src.loc))
 			var/mob/M = src.loc
-			M.show_message("<span class='alert'>Your [src] explodes!</span>", 1)
+			M.show_message(SPAN_ALERT("Your [src] explodes!"), 1)
 
 		if(T)
 			T.hotspot_expose(700,125)

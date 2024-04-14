@@ -28,7 +28,7 @@
 	attack_hand(var/mob/user)
 		. = ..()
 		if (!user.literate)
-			boutput(user, "<span class='alert'>You don't know how to read or write, operating a computer isn't going to work!</span>")
+			boutput(user, SPAN_ALERT("You don't know how to read or write, operating a computer isn't going to work!"))
 			return 1
 		interact_particle(user,src)
 
@@ -38,7 +38,7 @@
 	attackby(obj/item/W, mob/user)
 		if (can_reconnect)
 			if (ispulsingtool(W) && !(status & (BROKEN|NOPOWER)))
-				boutput(user, "<span class='notice'>You pulse the [name] to re-scan for equipment.</span>")
+				boutput(user, SPAN_NOTICE("You pulse the [name] to re-scan for equipment."))
 				connection_scan()
 				return
 		if (isscrewingtool(W) && src.circuit_type)
@@ -76,7 +76,7 @@
 		A.set_dir(src.dir)
 		A.circuit = M
 		A.anchored = ANCHORED
-		src.special_deconstruct(A)
+		src.special_deconstruct(A, user)
 		qdel(src)
 
 	///Put the code for finding the stuff your computer needs in this proc
@@ -84,7 +84,7 @@
 	//Placeholder so the multitool probing thing can go on this parent
 
 	///Special changes for deconstruction can be added by overriding this
-	proc/special_deconstruct(var/obj/computerframe/frame as obj)
+	proc/special_deconstruct(var/obj/computerframe/frame as obj, mob/user)
 
 
 /*

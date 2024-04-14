@@ -210,11 +210,11 @@
 				power--
 				handle_overlay()
 				if(power == 20)
-					boutput(target, "<span class='alert'>The [src] is dangerously low on power. Your energy pattern is destabilizing.</span>")
+					boutput(target, SPAN_ALERT("The [src] is dangerously low on power. Your energy pattern is destabilizing."))
 				if(power < 20)
 					random_brute_damage(target, 4)
 				if(power <= 0)
-					boutput(target, "<span class='alert'>The [src] is out of energy.</span>")
+					boutput(target, SPAN_ALERT("The [src] is out of energy."))
 					var/mob/old_trg = target
 					deactivate()
 					old_trg.changeStatus("stunned", 20 SECONDS)
@@ -255,13 +255,13 @@
 		if(activating) return
 		var/turf/T = get_turf(src)
 		if(isrestrictedz(T.z))
-			boutput(user, "<span class='notice'>The [src] buzzes oddly, and nothing further happens.</span>")
+			boutput(user, SPAN_NOTICE("The [src] buzzes oddly, and nothing further happens."))
 			return
 
 		if(locate(/obj/cable) in get_turf(src))
 
 			if(on_cooldown)
-				boutput(user, "<span class='alert'>The [src] is still recharging.</span>")
+				boutput(user, SPAN_ALERT("The [src] is still recharging."))
 				return
 
 			activating = 1
@@ -284,13 +284,13 @@
 			active = 1
 			activating = 0
 		else
-			boutput(user, "<span class='alert'>This needs to be used while standing on a cable.</span>")
+			boutput(user, SPAN_ALERT("This needs to be used while standing on a cable."))
 
 	attack_self(mob/user as mob)
 		if(activating) return
 
 		if(active)
-			boutput(target, "<span class='notice'>You deactivate the [src].</span>")
+			boutput(target, SPAN_NOTICE("You deactivate the [src]."))
 			deactivate()
 		else
 			if(istype(user.l_hand,/obj/item/phone_handset) || istype(user.r_hand,/obj/item/phone_handset)) // travel through space line
@@ -323,7 +323,7 @@
 				playsound(user.loc, 'sound/effects/singsuck.ogg', 40, 1)
 				user.visible_message("[user] suddenly emerges from the [EXIT]. [pick("","What the fuck?")]", "You emerge from the [EXIT].", "You hear a strange sucking noise.")
 			else
-				boutput(user, "<span class='notice'>You activate the [src].</span>")
+				boutput(user, SPAN_NOTICE("You activate the [src]."))
 				activate(user)
 			power -= 5
 			handle_overlay()

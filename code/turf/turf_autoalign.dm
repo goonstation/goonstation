@@ -36,14 +36,13 @@ TYPEINFO_NEW(/turf/simulated/wall/auto)
 
 	New()
 		..()
-		if (map_setting && ticker)
-			src.update_neighbors() // lessen these calls
-
-		if (current_state > GAME_STATE_WORLD_INIT)
+		if (current_state > GAME_STATE_WORLD_NEW)
 			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
+				if(istype(src))
+					src.update_neighbors()
 		else
-			worldgenCandidates[src] = 1
+			worldgenCandidates += src
 
 	generate_worldgen()
 		src.UpdateIcon()
@@ -156,9 +155,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 			var/obj/item/device/key/haunted/H = W
 			//Okay, create a temporary false wall.
 			if (H.last_use && ((H.last_use + 300) >= world.time))
-				boutput(user, "<span class='alert'>The key won't fit in all the way!</span>")
+				boutput(user, SPAN_ALERT("The key won't fit in all the way!"))
 				return
-			user.visible_message("<span class='alert'>[user] inserts [W] into [src]!</span>","<span class='alert'>The key seems to phase into the wall.</span>")
+			user.visible_message(SPAN_ALERT("[user] inserts [W] into [src]!"),SPAN_ALERT("The key seems to phase into the wall."))
 			H.last_use = world.time
 			blink(src)
 			var/turf/simulated/wall/false_wall/temp/fakewall = src.ReplaceWith(/turf/simulated/wall/false_wall/temp, FALSE, TRUE, FALSE, TRUE)
@@ -169,7 +168,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 
 		else if (istype(W, /obj/item/sheet) && src.d_state)
 			var/obj/item/sheet/S = W
-			boutput(user, "<span class='notice'>Repairing wall.</span>")
+			boutput(user, SPAN_NOTICE("Repairing wall."))
 			if (do_after(user, 2.5 SECONDS) && S.change_stack_amount(-1))
 				src.d_state = 0
 				src.icon_state = initial(src.icon_state)
@@ -178,7 +177,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 				else
 					var/datum/material/M = getMaterial("steel")
 					src.setMaterial(M)
-				boutput(user, "<span class='notice'>You repaired the wall.</span>")
+				boutput(user, SPAN_NOTICE("You repaired the wall."))
 				return
 
 		else if (istype(W, /obj/item/grab))
@@ -189,7 +188,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 				return
 
 		src.material_trigger_when_attacked(W, user, 1)
-		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
+		src.visible_message(SPAN_ALERT("[usr ? usr : "Someone"] uselessly hits [src] with [W]."), SPAN_ALERT("You uselessly hit [src] with [W]."))
 
 /turf/simulated/wall/auto/reinforced/the_tuff_stuff
 	explosion_resistance = 11
@@ -478,6 +477,7 @@ TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 	icon_state = "mapwall$$wood"
 #endif
 	default_material = "wood"
+	uses_default_material_appearance = TRUE
 
 TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 	connect_overlay = 0
@@ -709,14 +709,14 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto)
 
 	New()
 		. = ..()
-		if (map_setting && ticker)
-			src.update_neighbors()
-		if (current_state > GAME_STATE_WORLD_INIT)
+		if (current_state > GAME_STATE_WORLD_NEW)
 			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
+				if(istype(src))
+					src.update_neighbors()
 
 		else
-			worldgenCandidates[src] = 1
+			worldgenCandidates += src
 
 	generate_worldgen()
 		src.UpdateIcon()
@@ -1213,7 +1213,6 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 	opacity = FALSE
 
 /datum/action/bar/icon/wall_tool_interact
-	id = "wall_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 5 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -1283,7 +1282,7 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 				self_message = "You begin to pry the outer sheath off."
 				message = "[owner] begins to pry \the [the_wall]'s outer sheath off."
 				playsound(the_wall, 'sound/items/Crowbar.ogg', 100, TRUE)
-		owner.visible_message("<span class='alert'>[message]</span>", "<span class='notice'>[self_message]</span>")
+		owner.visible_message(SPAN_ALERT("[message]"), SPAN_NOTICE("[self_message]"))
 
 	onEnd()
 		..()
@@ -1330,4 +1329,4 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 				message = "[owner] removes \the [the_wall]'s outer sheath."
 				logTheThing(LOG_STATION, owner, "dismantles a Reinforced Wall in [owner.loc.loc] ([log_loc(owner)])")
 				the_wall.dismantle_wall()
-		owner.visible_message("<span class='alert'>[message]</span>", "<span class='notice'>[self_message]</span>")
+		owner.visible_message(SPAN_ALERT("[message]"), SPAN_NOTICE("[self_message]"))

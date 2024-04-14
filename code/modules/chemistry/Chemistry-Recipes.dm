@@ -359,7 +359,7 @@
 							smoke.set_up(1, 0, t)
 							smoke.start()
 			else
-				holder.add_reagent("steam", amount_to_boil, temp_new = holder.total_temperature, chemical_reaction = TRUE)
+				holder.add_reagent("steam", amount_to_boil, temp_new = holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 1)
 
 	steam_condensation
 		name = "Steam Condensation"
@@ -753,7 +753,7 @@
 		on_reaction(var/datum/reagents/holder)
 			var/location = get_turf(holder.my_atom)
 			for(var/mob/M in all_viewers(8, location))
-				boutput(M, "<span class='notice'>A faint cheesy smell drifts through the air...</span>")
+				boutput(M, SPAN_NOTICE("A faint cheesy smell drifts through the air..."))
 			return
 
 	cheese2
@@ -766,7 +766,7 @@
 		on_reaction(var/datum/reagents/holder)
 			var/location = get_turf(holder.my_atom)
 			for(var/mob/M in all_viewers(8, location))
-				boutput(M, "<span class='notice'>A faint cheesy smell drifts through the air...</span>")
+				boutput(M, SPAN_NOTICE("A faint cheesy smell drifts through the air..."))
 			return
 
 	gcheese
@@ -780,8 +780,17 @@
 		on_reaction(var/datum/reagents/holder)
 			var/location = get_turf(holder.my_atom)
 			for(var/mob/M in all_viewers(8, location))
-				boutput(M, "<span class='alert'>A horrible smell assaults your nose! What in space is it?</span>")
+				boutput(M, SPAN_ALERT("A horrible smell assaults your nose! What in space is it?"))
 			return
+
+	yoghurt
+		name = "Yoghurt"
+		id = "yoghurt"
+		result = "yoghurt"
+		required_reagents = list("milk" = 1, "yuck" = 1)
+		result_amount = 2
+		mix_phrase = "The mixture curdles up slightly."
+		mix_sound = 'sound/effects/splort.ogg'
 
 	lemonade
 		name = "Lemonade"
@@ -893,7 +902,7 @@
 		result = "catamount"
 		required_reagents = list("juice_orange" = 1, "grenadine" = 1, "ginger_ale" = 4, "ice" = 2)
 		result_amount = 8
-		mix_sound = 'sound/misc/drinkfizz.ogg'
+		mix_sound = 'sound/voice/animal/cat.ogg'
 		drinkrecipe = TRUE
 
 	pine_ginger
@@ -1129,7 +1138,7 @@
 		name = "Triple Triple"
 		id = "cocktail_triple"
 		result = "cocktail_triple"
-		required_reagents = list("cocktail_citrus" = 1, "triplemeth" = 1, "triplepiss" = 1)
+		required_reagents = list("cocktail_citrus" = 1, "triplemeth" = 1, "triplepissed" = 1)
 		result_amount = 1 //this is pretty much a hellpoison.
 		mix_phrase = "The mixture can't seem to control itself and settle down!"
 		mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -1687,7 +1696,7 @@
 		id = "pinacolada"
 		result = "pinacolada"
 		required_reagents = list("juice_pineapple" = 1, "rum" = 1, "coconut_milk" = 1)
-		result_amount = 4
+		result_amount = 3
 		mix_phrase = "The drink gives off the smell of a rainy beach."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
@@ -1950,6 +1959,30 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
+	cocktail_mulled_wine
+		name = "Mulled Wine"
+		id = "mulled_wine"
+		result = "mulled_wine"
+		required_reagents = list("wine" = 1, "cinnamon" = 1, "sugar" = 1)
+		result_amount = 3
+		mix_phrase = "You feel slightly warmer already."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_spacemas_spirit
+		name = "Spacemas Spirit"
+		id = "spacemas_spirit"
+		result = "spacemas_spirit"
+		required_reagents = list("mulled_wine" = 1, "vodka" = 1)
+		result_amount = 2
+#ifdef XMAS
+		mix_phrase = "You feel like giving gifts already."
+#else
+		mix_phrase = "It's not spacemas yet!."
+#endif
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
 	cola
 		name = "cola"
 		id = "cola"
@@ -2095,7 +2128,7 @@
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			if (holder.has_reagent("blood") || holder.has_reagent("bloodc")) //don't expose lings
 				for(var/mob/M in all_viewers(null, get_turf(holder.my_atom)))
-					boutput(M, "<span class='alert'>The gnesis rapidly absorbs the remaining blood before becoming inert.</span>")
+					boutput(M, SPAN_ALERT("The gnesis rapidly absorbs the remaining blood before becoming inert."))
 				holder.del_reagent("blood")
 				holder.del_reagent("bloodc")
 
@@ -2279,7 +2312,7 @@
 		mix_phrase = "The mixture settles into a white powder."
 		result_amount = 1
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			holder.add_reagent("hydrogen", created_volume * 2, chemical_reaction = TRUE)
+			holder.add_reagent("hydrogen", created_volume * 2, chemical_reaction = TRUE, chem_reaction_priority = 2)
 
 	mg_nh3_cl
 		name = "Magnesium-Ammonium Chloride"
@@ -2299,7 +2332,7 @@
 		min_temperature = T0C + 150
 		hidden = TRUE
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			holder.add_reagent("ammonia", created_volume * 6, chemical_reaction = TRUE)
+			holder.add_reagent("ammonia", created_volume * 6, chemical_reaction = TRUE, chem_reaction_priority = 2)
 		mix_phrase = "The mixture bubbles aggressively."
 
 	silicate
@@ -2321,8 +2354,8 @@
 		instant = 0
 		mix_phrase = "A small particulate forms into a tiny lattice."
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			holder.add_reagent("oxygen", created_volume, chemical_reaction = TRUE)
-			holder.add_reagent("salt", created_volume, chemical_reaction = TRUE)
+			holder.add_reagent("oxygen", created_volume, chemical_reaction = TRUE, chem_reaction_priority = 2)
+			holder.add_reagent("salt", created_volume, chemical_reaction = TRUE, chem_reaction_priority = 3)
 
 	graphene_compound
 		name = "Graphene Hardening Compound"
@@ -2400,7 +2433,7 @@
 				count -= 10
 				var/location = get_turf(holder.my_atom) || pick(holder.covered_cache)
 				for(var/mob/M in AIviewers(null, location))
-					boutput(M, "<span class='notice'>The plastic clumps together in a messy sheet.</span>")
+					boutput(M, SPAN_NOTICE("The plastic clumps together in a messy sheet."))
 				new /obj/item/material_piece/rubber/plastic(location)
 
 	hemodissolve // denaturing hemolymph
@@ -2414,10 +2447,10 @@
 		mix_phrase = "The hemolymph bubbles as a black precipitate falls out of the solution, denaturing into basic components."
 		hidden = TRUE
 		on_reaction(var/datum/reagents/holder, created_volume)
-			holder.add_reagent("meat_slurry", created_volume, chemical_reaction = TRUE)// meat slurry, since animal tissue
-			holder.add_reagent("saline", 2*created_volume, chemical_reaction = TRUE)//  saline-glucose solution, since blood
-			holder.add_reagent("spaceacillin", created_volume, chemical_reaction = TRUE)//  spaceacillin, since hemolymph is used for bacterial tests IRL
-			holder.add_reagent("denatured_enzyme", created_volume, chemical_reaction = TRUE)// and just some random biological chemicals for good measure
+			holder.add_reagent("meat_slurry", created_volume, chemical_reaction = TRUE, chem_reaction_priority = 2)// meat slurry, since animal tissue
+			holder.add_reagent("saline", 2*created_volume, chemical_reaction = TRUE, chem_reaction_priority = 3)//  saline-glucose solution, since blood
+			holder.add_reagent("spaceacillin", created_volume, chemical_reaction = TRUE, chem_reaction_priority = 4)//  spaceacillin, since hemolymph is used for bacterial tests IRL
+			holder.add_reagent("denatured_enzyme", created_volume, chemical_reaction = TRUE, chem_reaction_priority = 5)// and just some random biological chemicals for good measure
 
 	mutagen
 		name = "Unstable mutagen"
@@ -2491,7 +2524,8 @@
 		var/count = 0
 
 		does_react(var/datum/reagents/holder)
-			if (holder.my_atom && holder.my_atom.is_open_container() || (istype(holder,/datum/reagents/fluid_group) && !holder.is_airborne()))
+			if (holder.my_atom && holder.my_atom.is_open_container() && holder.total_temperature > (-10 + T0C)\
+				|| (istype(holder,/datum/reagents/fluid_group) && !holder.is_airborne()))
 				return TRUE
 			else
 				return FALSE
@@ -2530,7 +2564,7 @@
 		on_reaction(var/datum/reagents/holder, created_volume)
 			var/location = get_turf(holder.my_atom)
 			for(var/mob/M in all_viewers(null, location))
-				boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
+				boutput(M, SPAN_ALERT("The solution generates a strong vapor!"))
 			if(holder?.my_atom?.is_open_container())
 				// A slightly less stupid way of smoking contents. Maybe.
 				var/datum/reagents/smokeContents = new/datum/reagents/
@@ -2603,8 +2637,8 @@
 			nitrogen -= temp
 			holder.remove_reagent("nitrogen", temp)
 
-			holder.add_reagent("salbutamol",created_volume, chemical_reaction = TRUE)
-			holder.add_reagent("water",created_volume, chemical_reaction = TRUE)
+			holder.add_reagent("salbutamol",created_volume, chemical_reaction = TRUE, chem_reaction_priority = 2)
+			holder.add_reagent("water",created_volume, chemical_reaction = TRUE, chem_reaction_priority = 3)
 			return
 
 	lube
@@ -2691,7 +2725,7 @@
 			for(var/mob/living/carbon/human/H in location)
 				if(ishuman(H))
 					if(!H.wear_mask)
-						boutput(H, "<span class='alert'>The acidic vapors burn you!</span>")
+						boutput(H, SPAN_ALERT("The acidic vapors burn you!"))
 						H.TakeDamage("head", 0, created_volume, 0, DAMAGE_BURN) // WHY??
 						H.emote("scream")
 			return
@@ -2709,11 +2743,11 @@
 			for(var/mob/living/carbon/human/H in location)
 				if(ishuman(H))
 					if(!H.wear_mask)
-						boutput(H, "<span class='alert'>Your face comes into contact with the acidic vapors!</span>")
+						boutput(H, SPAN_ALERT("Your face comes into contact with the acidic vapors!"))
 						H.TakeDamage("head", 0, created_volume * 3, 0, DAMAGE_BURN) // IT'S ACID IT BURNS
 						H.emote("scream")
 						if(!H.disfigured)
-							boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
+							boutput(H, SPAN_ALERT("Your face has become disfigured!"))
 							H.disfigured = TRUE
 							H.UpdateName()
 						H.changeStatus("weakened", 8 SECONDS)
@@ -2732,9 +2766,9 @@
 		name = "Pentetic Acid"
 		id = "penteticacid"
 		result = "penteticacid"
-		required_reagents = list("photophosphide" = 1, "ammonia" = 3, "formaldehyde" = 1, "cyanide" = 1) //three parts ammonia because it's easy to make in 30u increments
+		required_reagents = list("photophosphide" = 1, "ammonia" = 3, "cyanide" = 1) //three parts ammonia because it's easy to make in 30u increments
 		// (dichloroethane + ammonia) + formaldehyde (maybe that should be implemented?) + (sodium cyanide) yields EDTA which is almost DPTA
-		result_amount = 8 //you get a lot for the pretty complicated precursors
+		result_amount = 6 //you get a lot for the pretty complicated precursors
 		mix_phrase = "The substance becomes very still, emitting a curious haze."
 
 	acetaldehyde
@@ -2827,7 +2861,7 @@
 		name = "Cyclopentanol"
 		id = "cyclopentanol"
 		result = "cyclopentanol"
-		min_temperature = T0C + 275
+		min_temperature = T0C + 50
 		required_reagents = list("acetic_acid" = 1, "ether" = 1, "barium" = 1, "hydrogen" = 1, "oxygen" = 1)
 		result_amount = 3
 		mix_phrase = "The mixture fizzles into a colorless liquid."
@@ -3044,7 +3078,7 @@
 	salbutamol_salicylic_acid // makes either based on input, not both at once though
 		name = "Salbutamol Salicylic Acid"
 		id = "salbutamol_salicylic_acid"
-		required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1)
+		required_reagents = list("sodium" = 0, "phenol" = 0, "carbon" = 0, "oxygen" = 0)
 		result = null //this changes in on_reaction
 		//technically it's either or, but for the purposes of the request console this makes both
 		eventual_result = list("salbutamol", "salicylic_acid")
@@ -3053,7 +3087,7 @@
 		reaction_speed = 4
 		temperature_change = 0 //this also changes
 		stateful = TRUE
-		mix_phrase = "The solution twirls mixes together idley."
+		mix_phrase = "The solution twirls and mixes together idley."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		reaction_icon_state = list("reaction_puff-1", "reaction_puff-2")
 		reaction_icon_color = "#ffffff"
@@ -3077,7 +3111,7 @@
 					holder.remove_reagent("salbutamol", 5)
 					if(flash_cooldown <= 0)
 						for(var/mob/M in AIviewers(null, get_turf(holder.my_atom)))
-							boutput(M, "<span class='alert'>The reaction pops and fizzles abruptly!</span>")
+							boutput(M, SPAN_ALERT("The reaction pops and fizzles abruptly!"))
 						flashpowder_reaction(get_turf(holder.my_atom), 10)
 						flash_cooldown = 5
 				else if(was_physically_shocked) //else if... if you overheat the reaction, no bonus for you!
@@ -3100,7 +3134,7 @@
 					holder.remove_reagent("salicylic_acid", 5)
 					if(flash_cooldown <= 0)
 						for(var/mob/M in AIviewers(null, get_turf(holder.my_atom)))
-							boutput(M, "<span class='alert'>The reaction pops and fizzles abruptly!</span>")
+							boutput(M, SPAN_ALERT("The reaction pops and fizzles abruptly!"))
 						flashpowder_reaction(get_turf(holder.my_atom), 10)
 						flash_cooldown = 5
 				else if(holder.total_temperature > highest_heat + 3) //you have to get at least three degrees hotter than before
@@ -3112,16 +3146,20 @@
 				if(was_physically_shocked)
 					was_physically_shocked = FALSE
 					for(var/mob/M in AIviewers(null, get_turf(holder.my_atom)))
-						boutput(M, "<span class='notice'>The solution begins to release warm cyan bubbles.</span>")
+						boutput(M, SPAN_NOTICE("The solution begins to release warm cyan bubbles."))
 					playsound(get_turf(holder.my_atom), 'sound/effects/bubbles_short.ogg', 50, 1)
 					result = "salbutamol"
 					temperature_change = 3
 				if(holder.total_temperature > T100C)
 					for(var/mob/M in AIviewers(null, get_turf(holder.my_atom)))
-						boutput(M, "<span class='notice'>The mixture glistens with red sparkles.</span>")
+						boutput(M, SPAN_NOTICE("The mixture glistens with red sparkles."))
 					playsound(get_turf(holder.my_atom), 'sound/effects/bubbles_short.ogg', 50, 1)
 					result = "salicylic_acid"
 					temperature_change = -3
+
+			if (result) //manually remove reagents only if we're actually reacting
+				for (var/reagent_id in src.required_reagents)
+					holder.remove_reagent(reagent_id, 1)
 
 		physical_shock(var/force, var/datum/reagents/holder)
 			if(force > 3)
@@ -3238,7 +3276,7 @@
 				playsound(get_turf(holder.my_atom), 'sound/effects/bubbles.ogg', 25, 1)
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
-					boutput(M, "<span class='notice'>The solution yields an astringent powder.</span>")
+					boutput(M, SPAN_NOTICE("The solution yields an astringent powder."))
 
 	ephedrine
 		name = "Ephedrine"
@@ -3260,7 +3298,7 @@
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			var/location = get_turf(holder.my_atom)
 			for(var/mob/M in all_viewers(null, location))
-				boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
+				boutput(M, SPAN_ALERT("The solution generates a strong vapor!"))
 			var/list/mob/living/carbon/mobs_affected = list()
 			for(var/mob/living/carbon/C in range(location, 1))
 				if(!issmokeimmune(C))
@@ -3341,7 +3379,7 @@
 		id = "initropidril"
 		result = "initropidril"
 		//required_reagents = list("crank" = 1, "histamine" = 1, "krokodil" = 1, "bathsalts" = 1, "atropine" = 1, "nicotine" = 1, "morphine" = 1)
-		required_reagents = list("triplepiss" = 1, "histamine" = 1, "methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1, "stabiliser" = 1)
+		required_reagents = list("triplepissed" = 1, "histamine" = 1, "methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1, "stabiliser" = 1)
 		result_amount = 4 // lowered slightly
 		mix_phrase = "A sweet and sugary scent drifts from the unpleasant milky substance."
 		hidden  = TRUE
@@ -3378,7 +3416,7 @@
 		name = "initropidril"
 		id = "fake_initropidril"
 		result = "fake_initropidril"
-		required_reagents = list("triplepiss" = 1, "histamine" = 1, "methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1)
+		required_reagents = list("triplepissed" = 1, "histamine" = 1, "methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1)
 		//required_reagents = list("methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1, "formaldehyde" = 1)
 		result_amount = 2
 		inhibitors = list("stabiliser")
@@ -3388,7 +3426,7 @@
 			if(prob(90))		// high chance of not working to piss them off
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in AIviewers(null, location))
-					boutput(M, "<span class='alert'>The solution bubbles rapidly but dissipates into nothing!</span>")
+					boutput(M, SPAN_ALERT("The solution bubbles rapidly but dissipates into nothing!"))
 				holder.clear_reagents()
 			return
 
@@ -3540,25 +3578,27 @@
 			if(!reaction_loc) return
 
 			if( (locate(/obj/alchemy/circle) in range(3,reaction_loc)) )
-				reaction_loc.visible_message("<span class='alert'>[bicon(my_atom)] The mixture turns into pure energy which promptly flows into the alchemy circle.</span>")
+				reaction_loc.visible_message(SPAN_ALERT("[bicon(my_atom)] The mixture turns into pure energy which promptly flows into the alchemy circle."))
 				var/gathered = 0
 				for(var/mob/living/M in view(5,reaction_loc))
-					boutput(M, "<span class='alert'>You feel a wracking pain as some of your life is ripped out.</span>")
-					gathered += M.max_health - round(M.max_health / 2)
-					//M.max_health = round(M.max_health / 2)
-					M.setStatus("maxhealth-", null, -round(M.max_health / 2))
+					boutput(M, SPAN_ALERT("You feel a wracking pain as some of your life is ripped out.")) //Anima ravages the soul, but doesn't actually remove any part of it, so it's still saleable to Zoldorf
+					gathered += round(M.max_health / 2)
+					var/datum/statusEffect/maxhealth/decreased/current_status = M.hasStatus("maxhealth-")
+					var/old_maxhealth_decrease = current_status ? current_status.change : 0
+					M.setStatus("maxhealth-", null, old_maxhealth_decrease - round(M.max_health / 2))
+
 					health_update_queue |= M
 					if(hascall(M,"add_stam_mod_max"))
 						M:add_stam_mod_max("anima_drain", -25)
 				if(gathered >= 80)
-					reaction_loc.visible_message("<span class='alert'>[bicon(my_atom)] As the alchemy circle rips the life out of everyone close to it, energies escape it and settle in the [my_atom].</span>")
+					reaction_loc.visible_message(SPAN_ALERT("[bicon(my_atom)] As the alchemy circle rips the life out of everyone close to it, energies escape it and settle in the [my_atom]."))
 					holder.add_reagent("anima",50, chemical_reaction = TRUE)
 					if (!particleMaster.CheckSystemExists(/datum/particleSystem/swoosh, my_atom))
 						particleMaster.SpawnSystem(new /datum/particleSystem/swoosh(my_atom))
 				else
-					reaction_loc.visible_message("<span class='alert'>[bicon(my_atom)] The alchemy circle briefly glows before fading back to normal. It seems like it couldn't gather enough energy.</span>")
+					reaction_loc.visible_message(SPAN_ALERT("[bicon(my_atom)] The alchemy circle briefly glows before fading back to normal. It seems like it couldn't gather enough energy."))
 			else
-				reaction_loc.visible_message("<span class='alert'>[bicon(my_atom)] The mixture turns into pure energy which quickly disperses. It needs to be channeled somehow.</span>")
+				reaction_loc.visible_message(SPAN_ALERT("[bicon(my_atom)] The mixture turns into pure energy which quickly disperses. It needs to be channeled somehow."))
 			return
 
 	phlogiston
@@ -3737,15 +3777,6 @@
 		result_amount = 2
 		mix_phrase = "The mixture yields a white crystalline compound."
 
-	plant_nutrients
-		name = "saltpetre"
-		id = "saltpetre"
-		result = "saltpetre"
-		required_reagents = list("urine" = 1, "poo" = 1, "potash" = 1)
-		result_amount = 3
-		mix_phrase = "A white crystalline substance condenses out of the mixture."
-		mix_sound = 'sound/misc/fuse.ogg'
-
 	slow_saltpetre
 		name = "slow saltpetre"
 		id = "slow_saltpetre"
@@ -3764,7 +3795,7 @@
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			// water byproduct
 			// some nitrification processes create additional water.
-			holder.add_reagent("water", created_volume,,holder.total_temperature, chemical_reaction = TRUE)
+			holder.add_reagent("water", created_volume,,holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 2)
 			// disgusting
 			var/turf/location = pick(holder.covered_turf())
 			location.fluid_react_single("miasma", created_volume, airborne = 1)
@@ -3789,27 +3820,6 @@
 			//This reaction does only happen in carbon-based beings and for only as long as there is less than 15u lungrot in the person
 			return holder.my_atom && iscarbon(holder.my_atom) && (holder.get_reagent_amount("lungrot_bloom") < 15)
 
-
-	jenkem // moved this down so improperly mixed nutrients yield jenkem instead
-		name = "Jenkem"
-		id = "jenkem"
-		result = "jenkem"
-		required_reagents = list("urine" = 1, "poo" = 1)
-		result_amount = 2
-		mix_phrase = "The mixture ferments into a filthy morass."
-		mix_sound = 'sound/impact_sounds/Slimy_Hit_4.ogg'
-
-		on_reaction(var/datum/reagents/holder, var/created_volume)
-			var/location = get_turf(holder.my_atom)
-			for(var/mob/M in all_viewers(null, location))
-				boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
-			var/list/mob/living/carbon/mobs_affected = list()
-			for(var/mob/living/carbon/C in range(location, 1))
-				if(!issmokeimmune(C))
-					mobs_affected += C
-			for(var/mob/living/carbon/C as anything in mobs_affected)
-				C.reagents.add_reagent("jenkem",(1 * created_volume) / length(mobs_affected)) // this is going to make people so, so angry
-			return
 
 	/*plant_nutrients_mutagenic
 		name = "Mutriant Plant Formula"
@@ -3881,7 +3891,7 @@
 		result_amount = 2
 		mix_phrase = "The mixture gives off a biting odor."
 		on_reaction(var/datum/reagents/holder, created_volume)
-			holder.add_reagent("oxygen", created_volume,, holder.total_temperature, chemical_reaction = TRUE)
+			holder.add_reagent("oxygen", created_volume,, holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 2)
 
 	nitric_acid
 		name = "Nitric Acid"
@@ -3895,7 +3905,7 @@
 			for (var/mob/living/carbon/human/H in location)
 				if (ishuman(H))
 					if (!H.wear_mask)
-						boutput(H, "<span class='alert'>The acidic vapors burn you!</span>")
+						boutput(H, SPAN_ALERT("The acidic vapors burn you!"))
 						H.TakeDamage("head", 0, created_volume, 0, DAMAGE_BURN) // why are the acids doing brute????
 						H.emote("scream")
 			return
@@ -3911,8 +3921,8 @@
 		mix_phrase = "The mixture bubbles and white crystals form."
 		hidden = TRUE
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			holder.add_reagent("nitrogen_dioxide", created_volume, , holder.total_temperature)
-			holder.add_reagent("water", created_volume, , holder.total_temperature)
+			holder.add_reagent("nitrogen_dioxide", created_volume, , holder.total_temperature, chem_reaction_priority = 2)
+			holder.add_reagent("water", created_volume, , holder.total_temperature, chem_reaction_priority = 3)
 
 	silver_fulminate
 		name = "Silver Fulminate"
@@ -3938,8 +3948,8 @@
 		mix_phrase = "Silver hairlike strands of silver form in the mixture, and the mixture becomes more blue."
 		hidden = TRUE
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			holder.add_reagent("silver", created_volume*2, , holder.total_temperature)
-			holder.add_reagent("water", created_volume, , holder.total_temperature)
+			holder.add_reagent("silver", created_volume*2, , holder.total_temperature, chem_reaction_priority = 2)
+			holder.add_reagent("water", created_volume, , holder.total_temperature, chem_reaction_priority = 3)
 
 	// 2 AgNO3 + Cu + (ethanol solvent) -> Cu(NO3)2 + 2 Ag
 	silver_nitrate_copper_nitrate_2
@@ -3951,8 +3961,8 @@
 		mix_phrase = "Silver hairlike strands of silver form in the mixture, and the mixture becomes more blue."
 		hidden = TRUE
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			holder.add_reagent("silver", created_volume*2, , holder.total_temperature)
-			holder.add_reagent("ethanol", created_volume, , holder.total_temperature)
+			holder.add_reagent("silver", created_volume*2, , holder.total_temperature, chem_reaction_priority = 2)
+			holder.add_reagent("ethanol", created_volume, , holder.total_temperature, chem_reaction_priority = 3)
 
 	// 2 AgNO3 + (heat) -> 2 Ag + O2 + 2 NO2
 	silver_nitrate_decomposition
@@ -3965,8 +3975,8 @@
 		mix_phrase = "Silver specks form in the mixture as it decomposes."
 		hidden = TRUE
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			holder.add_reagent("nitrogen_dioxide", created_volume, , holder.total_temperature)
-			holder.add_reagent("oxygen", created_volume/2, , holder.total_temperature)
+			holder.add_reagent("nitrogen_dioxide", created_volume, , holder.total_temperature, chem_reaction_priority = 2)
+			holder.add_reagent("oxygen", created_volume/2, , holder.total_temperature, chem_reaction_priority = 3)
 
 	/*
 	weedkiller/weedkiller2
@@ -3996,7 +4006,7 @@
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			// nickel is a catalyst and does not get used in the process
-			holder.add_reagent("nickel", created_volume / 2,,holder.total_temperature, chemical_reaction = TRUE)
+			holder.add_reagent("nickel", created_volume / 2,,holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 2)
 
 
 	foam
@@ -4014,18 +4024,18 @@
 			if(!holder?.my_atom?.is_open_container())
 				if(holder.my_atom)
 					for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
-						boutput(M, "<span class='notice'>With nowhere to go, the bubbles settle.</span>")
+						boutput(M, SPAN_NOTICE("With nowhere to go, the bubbles settle."))
 					return
 			var/turf/location = 0
 			if (holder.my_atom && length(holder.covered_cache) <= 1)
 				location = get_turf(holder.my_atom)
 				for(var/mob/M in AIviewers(5, location))
-					boutput(M, "<span class='alert'>The solution violently bubbles!</span>")
+					boutput(M, SPAN_ALERT("The solution violently bubbles!"))
 
 				location = get_turf(holder.my_atom)
 
 				for(var/mob/M in AIviewers(5, location))
-					boutput(M, "<span class='alert'>The solution spews out foam!</span>")
+					boutput(M, SPAN_ALERT("The solution spews out foam!"))
 
 				var/datum/effects/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 0)
@@ -4056,13 +4066,13 @@
 			if(!holder?.my_atom?.is_open_container())
 				if(holder.my_atom)
 					for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
-						boutput(M, "<span class='notice'>With nowhere to go, the metal settles.</span>")
+						boutput(M, SPAN_NOTICE("With nowhere to go, the metal settles."))
 					return
 
 			if (holder.my_atom && length(holder.covered_cache) <= 1)
 				location = get_turf(holder.my_atom)
 				for(var/mob/M in AIviewers(5, location))
-					boutput(M, "<span class='alert'>The solution spews out a metalic foam!</span>")
+					boutput(M, SPAN_ALERT("The solution spews out a metalic foam!"))
 
 				var/datum/effects/system/foam_spread/s = new()
 				s.set_up(created_volume/2, location, holder, 1)
@@ -4092,13 +4102,13 @@
 			if(!holder?.my_atom?.is_open_container())
 				if(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))
-						boutput(M, "<span class='notice'>With nowhere to go, the metal settles.</span>")
+						boutput(M, SPAN_NOTICE("With nowhere to go, the metal settles."))
 					return
 
 			if (holder?.my_atom)
 				location = get_turf(holder.my_atom)
 				for(var/mob/M in AIviewers(5, location))
-					boutput(M, "<span class='alert'>The solution spews out a metalic foam!</span>")
+					boutput(M, SPAN_ALERT("The solution spews out a metalic foam!"))
 
 				var/datum/effects/system/foam_spread/s = new()
 				s.set_up(created_volume/2, location, holder, 2)
@@ -4162,6 +4172,7 @@
 		id = "LSD"
 		result = "LSD"
 		required_reagents = list("diethylamine" = 1, "space_fungus" = 1)
+		min_temperature = T0C + 70
 		result_amount = 3
 		mix_phrase = "The mixture turns a rather unassuming color and settles."
 
@@ -4169,7 +4180,7 @@
 		name = "Bath Salts"
 		id= "bathsalts"
 		result = "bathsalts"
-		required_reagents = list("msg" = 1, "yuck" = 1, "denatured_enzyme" = 1, "saltpetre" = 1, "cleaner" = 1, "mercury" = 1, "mugwort" = 1)
+		required_reagents = list("msg" = 1, "yuck" = 1, "denatured_enzyme" = 1, "saltpetre" = 1, "cleaner" = 1, "mercury" = 1, "ghostchilijuice" = 1)
 		min_temperature = T0C + 100
 		result_amount = 6
 		mix_phrase = "Tiny cubic crystals precipitate out of the mixture. Huh."
@@ -4254,10 +4265,10 @@
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			// sewage is a catalyst and does not get used in the process
-			holder.add_reagent("sewage", created_volume * 5,,holder.total_temperature, chemical_reaction = TRUE)
+			holder.add_reagent("sewage", created_volume * 5,,holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 2)
 			// Byproduct is some nutrients from the decomposted egg and some bacterials toxins
-			holder.add_reagent("poo", created_volume * 2,,holder.total_temperature, chemical_reaction = TRUE)
-			holder.add_reagent("toxin", created_volume,,holder.total_temperature, chemical_reaction = TRUE)
+			holder.add_reagent("poo", created_volume * 2,,holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 3)
+			holder.add_reagent("toxin", created_volume,,holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 4)
 			// the decomposition process create some unbearable stench
 			var/turf/location = pick(holder.covered_turf())
 			location.fluid_react_single("miasma", created_volume * 4, airborne = 1)
@@ -4285,17 +4296,6 @@
 		required_reagents = list("catonium" = 1, "psilocybin" = 1, "ammonia" = 1, "fuel" = 1)
 		mix_phrase = "The mixture hisses oddly."
 		mix_sound = 'sound/voice/animal/cat_hiss.ogg'
-
-	boilpee // a shameful cogwerks. hobo chemistry, assistant-sourcable source of ammonia for various other reactions.
-		name = "Boiled Pee"
-		id = "boilpee"
-		result = "ammonia"
-		min_temperature = T0C + 80
-		result_amount = 1
-		required_reagents = list("urine" = 1, "water" = 1)
-		mix_phrase = "The mixture bubbles and gives off a sharp odor."
-		mix_sound = 'sound/misc/drinkfizz.ogg'
-		hidden = TRUE
 
 	crank // cogwerks - awful hobo drug that can be made by pissing in a bunch of vending machine stuff and then boiling it all with a welder
 		name = "Crank"
@@ -4375,7 +4375,7 @@
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			var/location = get_turf(holder.my_atom)
 			for(var/mob/M in AIviewers(5, location))
-				boutput(M, "<span class='alert'>The solution boils up into a choking cloud!</span>")
+				boutput(M, SPAN_ALERT("The solution boils up into a choking cloud!"))
 			src.mustard_gas = new /datum/effects/system/mustard_gas_spread/
 			src.mustard_gas.attach(src)
 			src.mustard_gas.set_up(5, 0, usr.loc)
@@ -4461,7 +4461,7 @@
 		reaction_speed = 1
 
 		on_reaction(datum/reagents/holder, created_volume) // TODO: actual byproduct/multi-output handling
-			holder.add_reagent("phenol", created_volume, temp_new = holder.total_temperature, chemical_reaction = TRUE)
+			holder.add_reagent("phenol", created_volume, temp_new = holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 2)
 
 	espresso //makin' caffeine by dehydrating coffee
 		name = "Coffee concentration"
@@ -5152,7 +5152,7 @@
 		mix_sound = 'sound/misc/fuse.ogg'
 
 		on_reaction(var/datum/reagents/holder, created_volume)
-			holder.add_reagent("salt", created_volume * 2,,holder.total_temperature, chemical_reaction = TRUE)
+			holder.add_reagent("salt", created_volume * 2,,holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 2)
 
 	gypsum //H2SO4 + CaCO3 -> CaSO4 + H2O + CO2
 		name = "calcium sulfate"
@@ -5163,7 +5163,7 @@
 		mix_phrase = "The mixture bubbles fervently."
 
 		on_reaction(var/datum/reagents/holder, created_volume)
-			holder.add_reagent("water", created_volume,,holder.total_temperature, chemical_reaction = TRUE)
+			holder.add_reagent("water", created_volume,,holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 2)
 
 	chalk //"pastels also contain clays and oils for binding, and strong pigments" some website i found
 		name = "chalk"
@@ -5207,8 +5207,8 @@
 		result_amount = 3
 		mix_phrase = "The white flakes turn into a white powder."
 		on_reaction(var/datum/reagents/holder, created_volume)
-			holder.add_reagent("water", created_volume / 3,,holder.total_temperature, chemical_reaction = TRUE)
-			holder.add_reagent("sodium_sulfate", created_volume / 3,,holder.total_temperature, chemical_reaction = TRUE)
+			holder.add_reagent("water", created_volume / 3,,holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 2)
+			holder.add_reagent("sodium_sulfate", created_volume / 3,,holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 3)
 
 	perfect_cement //lime, alumina, magnesia, iron (iii) oxide, calcium sulfate, sulfur trioxide
 		name = "perfect cement"
@@ -5280,3 +5280,12 @@
 		mix_phrase = "The mixture comes together slowly. It doesn't seem like it wants to be here."
 		required_reagents = list("poor_cement" = 1, "silicon_dioxide" = 5, "water" = 1)
 		result_amount = 7
+
+	triplepissed
+		name = "Triple Pissed"
+		id = "triple_pissed"
+		result = "triplepissed"
+		required_reagents = list("bathsalts" = 1, "beff" = 1, "capsaicin" = 1)
+		mix_phrase = "The mixture starts to froth and glows a furious red!"
+		result_amount = 3
+		hidden = TRUE

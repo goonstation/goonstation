@@ -62,6 +62,11 @@ var/list/pw_rewards_tier3 = null
 
 //setup teams and commanders
 /datum/game_mode/pod_wars/pre_setup()
+	if (global.map_setting != "POD_WARS")
+		message_admins("Pod wars gamemode attempted to start with a non pod wars map, aborting!")
+		logTheThing(LOG_DEBUG, "Pod wars gamemode attempted to start with a non pod wars map, aborting!")
+		return 0
+
 	board = new()
 	stats_manager = new()
 	if (!setup_teams())
@@ -110,7 +115,9 @@ var/list/pw_rewards_tier3 = null
 	// Add the player's team overlay to the general antagonist overlay image group, for Admin purposes.
 	if (antagonist_image_group.minds_with_associated_mob_image[mind])
 		antagonist_image_group.remove_mind_mob_overlay(mind)
-	antagonist_image_group.add_mind_mob_overlay(mind, image('icons/mob/antag_overlays.dmi', icon_state = overlay_icon_state))
+	var/image/antag_icon = image('icons/mob/antag_overlays.dmi', icon_state = overlay_icon_state)
+	antag_icon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+	antagonist_image_group.add_mind_mob_overlay(mind, antag_icon)
 
 	// Add the player's mind and their team overlay to the Pod Wars image group.
 	if (!pod_wars_image_group.subscribed_minds_with_subcount[mind])
@@ -118,7 +125,9 @@ var/list/pw_rewards_tier3 = null
 
 	if (pod_wars_image_group.minds_with_associated_mob_image[mind])
 		pod_wars_image_group.remove_mind_mob_overlay(mind)
-	pod_wars_image_group.add_mind_mob_overlay(mind, image('icons/mob/antag_overlays.dmi', icon_state = overlay_icon_state))
+	var/image/pod_wars_icon = image('icons/mob/antag_overlays.dmi', icon_state = overlay_icon_state)
+	pod_wars_icon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+	pod_wars_image_group.add_mind_mob_overlay(mind, pod_wars_icon)
 
 /datum/game_mode/pod_wars/proc/add_latejoin_to_team(var/datum/mind/mind, var/datum/job/JOB)
 	if (istype(JOB, /datum/job/special/pod_wars/nanotrasen))
@@ -452,7 +461,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	var/team_name_string = team?.name
 	if (team.team_num == TEAM_SYNDICATE)
 		team_name_string = "The Syndicate"
-	boutput(world, "<h3><span class='alert'>[team_name_string]'s [CS] has been destroyed!!</span></h3>")
+	boutput(world, SPAN_ALERT("<h3>[team_name_string]'s [CS] has been destroyed!!</h3>"))
 
 	//if all of this team's crit systems have been destroyed, atomatically end the round...
 	if (!length(team.mcguffins))
@@ -470,7 +479,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	var/team_name_string = team?.name
 	if (team.team_num == TEAM_SYNDICATE)
 		team_name_string = "The Syndicate"
-	boutput(world, "<h3><span class='alert'>[team_name_string]'s [CS] is under attack!!</span></h3>")
+	boutput(world, SPAN_ALERT("<h3>[team_name_string]'s [CS] is under attack!!</h3>"))
 
 
 /datum/game_mode/pod_wars/check_finished()
@@ -785,7 +794,7 @@ ABSTRACT_TYPE(/obj/machinery/macrofab/pod_wars)
 
 	attack_hand(var/mob/user)
 		if (get_pod_wars_team_num(user) != team_num)
-			boutput(user, "<span class='alert'>This machine's design makes no sense to you, you can't figure out how to use it!</span>")
+			boutput(user, SPAN_ALERT("This machine's design makes no sense to you, you can't figure out how to use it!"))
 			return
 
 		..()
@@ -897,11 +906,11 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			else
 				owner.waiting_for_hotkey = 1
 				src.UpdateIcon()
-				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
+				boutput(usr, SPAN_NOTICE("Please press a number to bind this ability to..."))
 				return
 
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
+			boutput(owner.holder.owner, SPAN_ALERT("You can't use this spell here."))
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null

@@ -16,6 +16,7 @@ TYPEINFO(/obj/item/gun/reagent)
 	var/fractional = FALSE
 	inventory_counter_enabled = 1
 	move_triggered = 1
+	recoil_strength = 1
 
 	New()
 		src.create_reagents(capacity)
@@ -49,7 +50,7 @@ TYPEINFO(/obj/item/gun/reagent)
 		if(src.current_projectile)
 			. += " Each shot will currently use [src.current_projectile.cost] units!"
 		else
-			. += "<span class='alert'>*ERROR* No output selected!</span>"
+			. += SPAN_ALERT("*ERROR* No output selected!")
 		..()
 
 	update_icon()
@@ -76,7 +77,7 @@ TYPEINFO(/obj/item/gun/reagent)
 
 	process_ammo(var/mob/user)
 		if (!canshoot(user))
-			boutput(user, "<span class='alert'>\The [src]'s internal reservoir does not contain enough reagents to fire it!</span>")
+			boutput(user, SPAN_ALERT("\The [src]'s internal reservoir does not contain enough reagents to fire it!"))
 		if(!src.projectile_reagents)
 			src.reagents.remove_any(src.current_projectile.cost)
 			src.UpdateIcon()
@@ -88,11 +89,11 @@ TYPEINFO(/obj/item/gun/reagent)
 			return
 
 		if(BOUNDS_DIST(src, usr) > 0)
-			boutput(usr, "<span class='alert'>You need to be closer to empty \the [src] out!</span>")
+			boutput(usr, SPAN_ALERT("You need to be closer to empty \the [src] out!"))
 			return
 
 		if (!src.reagents)
-			boutput(usr, "<span class='alert'>The little cap on the fluid container is stuck. Uh oh.</span>")
+			boutput(usr, SPAN_ALERT("The little cap on the fluid container is stuck. Uh oh."))
 			return
 
 		if(src.reagents.total_volume)
@@ -101,9 +102,9 @@ TYPEINFO(/obj/item/gun/reagent)
 				src.reagents.reaction(get_turf(src), TOUCH, src.reagents.total_volume)
 			src.reagents.clear_reagents()
 			src.UpdateIcon()
-			boutput(usr, "<span class='notice'>You dump out \the [src]'s stored reagents.</span>")
+			boutput(usr, SPAN_NOTICE("You dump out \the [src]'s stored reagents."))
 		else
-			boutput(usr, "<span class='alert'>There's nothing loaded to drain!</span>")
+			boutput(usr, SPAN_ALERT("There's nothing loaded to drain!"))
 
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/reagent_containers/glass))
@@ -138,13 +139,13 @@ TYPEINFO(/obj/item/gun/reagent/syringe)
 	get_desc(dist)
 		if (dist > 2)
 			return
-		. = "<br>[round(src.reagents.total_volume/15)] / [round(src.reagents.maximum_volume/src.current_projectile.cost)] shots available.<br><span class='notice'>The internal reservoir contains:</span>"
+		. = "<br>[round(src.reagents.total_volume/15)] / [round(src.reagents.maximum_volume/src.current_projectile.cost)] shots available.<br>[SPAN_NOTICE("The internal reservoir contains:")]"
 		if (src.reagents.reagent_list.len)
 			for (var/current_id in src.reagents.reagent_list)
 				var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
-				. += "<br><span class='notice'>&emsp; [current_reagent.volume] units of [current_reagent.name]</span>"
+				. += "<br>[SPAN_NOTICE("&emsp; [current_reagent.volume] units of [current_reagent.name]")]"
 		else
-			. += "<br><span class='notice'>&emsp; Nothing</span>"
+			. += "<br>[SPAN_NOTICE("&emsp; Nothing")]"
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		var/obj/projectile/P = ..()
@@ -170,7 +171,7 @@ TYPEINFO(/obj/item/gun/reagent/syringe)
 		if (!src.safe)
 			return 0
 		if (user)
-			boutput(user, "<span class='alert'>[src]'s volumetric limiter safeties have been disabled.</span>")
+			boutput(user, SPAN_ALERT("[src]'s volumetric limiter safeties have been disabled."))
 		src.safe = 0
 		src.fractional = TRUE
 		src.current_projectile.cost = 90
@@ -228,7 +229,7 @@ TYPEINFO(/obj/item/gun/reagent/syringe)
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/reagent_containers/food/snacks/ectoplasm) && !src.reagents.is_full())
 			I.reagents.trans_to(src, I.reagents.total_volume)
-			user.visible_message("<span class='alert'>[user] smooshes a glob of ectoplasm into [src].</span>")
+			user.visible_message(SPAN_ALERT("[user] smooshes a glob of ectoplasm into [src]."))
 			qdel(I)
 			return
 

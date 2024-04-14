@@ -82,11 +82,11 @@
 				affecting.force_laydown_standup()
 
 			if (state == GRAB_CHOKE)
-				logTheThing(LOG_COMBAT, src.assailant, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles at [log_loc(src.affecting)]")
+				logTheThing(LOG_COMBAT, src.assailant, "releases [his_or_her(src.assailant)] choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles at [log_loc(src.affecting)]")
 			else if (state == GRAB_PIN)
-				logTheThing(LOG_COMBAT, src.assailant, "drops their pin on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
+				logTheThing(LOG_COMBAT, src.assailant, "drops [his_or_her(src.assailant)] pin on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
 			else if(!istype(src, /obj/item/grab/block))
-				logTheThing(LOG_COMBAT, src.assailant, "drops their grab on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
+				logTheThing(LOG_COMBAT, src.assailant, "drops [his_or_her(src.assailant)] grab on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
 			if (affecting.grabbed_by)
 				affecting.grabbed_by -= src
 
@@ -145,7 +145,7 @@
 				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src.affecting] [log_reagents(src.affecting)] to [target] at [log_loc(user)].")
 				var/trans = src.affecting.reagents.trans_to(target, 10)
 				if (trans)
-					boutput(user, "<span class='notice'>You dump [trans] units of the solution from [src.affecting] to [target].</span>")
+					boutput(user, SPAN_NOTICE("You dump [trans] units of the solution from [src.affecting] to [target]."))
 
 	attack(atom/target, mob/user)
 		if (check())
@@ -223,7 +223,7 @@
 				else
 					logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 					for(var/mob/O in AIviewers(src.assailant, null))
-						O.show_message("<span class='alert'>[src.assailant] has grabbed [src.affecting] aggressively (now hands)!</span>", 1)
+						O.show_message(SPAN_ALERT("[src.assailant] has grabbed [src.affecting] aggressively (now hands)!"), 1)
 					icon_state = "reinforce"
 					src.state = GRAB_AGGRESSIVE //used to be '1'. SKIP LEVEL 1
 					set_affected_loc()
@@ -239,13 +239,13 @@
 				src.affecting.lastattackertime = world.time
 				logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 				user.next_click = world.time + user.combat_click_delay
-				src.assailant.visible_message("<span class='alert'>[src.assailant] has reinforced [his_or_her(assailant)] grip on [src.affecting] (now aggressive)!</span>")
+				src.assailant.visible_message(SPAN_ALERT("[src.assailant] has reinforced [his_or_her(assailant)] grip on [src.affecting] (now aggressive)!"))
 			if (GRAB_AGGRESSIVE)
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
 					for (var/obj/item/clothing/C in list(H.head, H.wear_suit, H.wear_mask, H.w_uniform))
 						if (C.c_flags & (BLOCKCHOKE))
-							boutput(src.assailant, "<span class='notice'>You have to take off [src.affecting]'s [C.name] first!</span>")
+							boutput(src.assailant, SPAN_NOTICE("You have to take off [src.affecting]'s [C.name] first!"))
 							return
 				actions.start(new/datum/action/bar/icon/strangle_target(src.affecting, src), src.assailant)
 				//user.next_click = world.time + 1 //mbc : wow. this makes so much sense as to why i would always toggle killchoke off immediately
@@ -253,9 +253,9 @@
 				user.next_click = world.time + user.combat_click_delay
 			if (GRAB_CHOKE)
 				src.state = GRAB_AGGRESSIVE
-				logTheThing(LOG_COMBAT, src.assailant, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles")
+				logTheThing(LOG_COMBAT, src.assailant, "releases [his_or_her(src.assailant)] choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles")
 				for (var/mob/O in AIviewers(src.assailant, null))
-					O.show_message("<span class='alert'>[src.assailant] has loosened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
+					O.show_message(SPAN_ALERT("[src.assailant] has loosened [his_or_her(assailant)] grip on [src.affecting]'s neck!"), 1)
 				user.next_click = world.time + user.combat_click_delay
 		UpdateIcon()
 
@@ -274,10 +274,10 @@
 			if (isitem(src.loc))
 				var/obj/item/I = src.loc
 				for (var/mob/O in AIviewers(src.assailant, null))
-					O.show_message("<span class='alert'>[src.assailant] has tightened [I] on [src.affecting]'s neck!</span>", 1)
+					O.show_message(SPAN_ALERT("[src.assailant] has tightened [I] on [src.affecting]'s neck!"), 1)
 			else
 				for (var/mob/O in AIviewers(src.assailant, null))
-					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
+					O.show_message(SPAN_ALERT("[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!"), 1)
 		src.state = GRAB_CHOKE
 		REMOVE_ATOM_PROPERTY(src.assailant, PROP_MOB_CANTMOVE, src)
 		src.assailant.lastattacked = src.affecting
@@ -305,7 +305,7 @@
 		logTheThing(LOG_COMBAT, src.assailant, "pins [constructTarget(src.affecting,"combat")]")
 
 		for (var/mob/O in AIviewers(src.assailant, null))
-			O.show_message("<span class='alert'>[src.assailant] has pinned [src.affecting] to [get_turf(T)]!</span>", 1)
+			O.show_message(SPAN_ALERT("[src.assailant] has pinned [src.affecting] to [get_turf(T)]!"), 1)
 
 		src.state = GRAB_PIN
 
@@ -381,18 +381,18 @@
 
 		if ((src.state == GRAB_PASSIVE && prob(STAMINA_P_GRAB_RESIST_CHANCE * prob_mod)))
 			for (var/mob/O in AIviewers(src.affecting, null))
-				O.show_message(text("<span class='alert'>[] has broken free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
+				O.show_message(SPAN_ALERT("[src.affecting] has broken free of [src.assailant]'s grip!"), 1, group = "resist")
 			qdel(src)
 		else if ((src.state == GRAB_STRONG && prob(STAMINA_S_GRAB_RESIST_CHANCE * prob_mod)))
-			affecting.visible_message("<span class='alert'>[src.affecting] has broken free of [src.assailant]'s powerful grip!</span>")
+			affecting.visible_message(SPAN_ALERT("[src.affecting] has broken free of [src.assailant]'s powerful grip!"))
 			qdel(src)
 		else if (src.state == GRAB_PIN)
 			var/succ = 0
 
-			if (resist_count >= 8 && prob(7 * prob_mod)) //after 8 resists, start rolling for breakage. this is to make sure people with stamina buffs cant infinite-pin someone
+			if (resist_count >= 8 && prob(10 * prob_mod)) //after 8 resists, start rolling for breakage. this is to make sure people with stamina buffs cant infinite-pin someone
 				succ = 1
 			else if (ishuman(src.assailant))
-				src.assailant.remove_stamina(19)
+				src.assailant.remove_stamina(29)
 				src.affecting.remove_stamina(10)
 				var/mob/living/carbon/human/H = src.assailant
 				if (H.stamina <= 0)
@@ -403,23 +403,23 @@
 
 			if (succ)
 				for (var/mob/O in AIviewers(src.affecting, null))
-					O.show_message(text("<span class='alert'>[] has broken free of []'s pin!</span>", src.affecting, src.assailant), 1, group = "resist")
+					O.show_message(SPAN_ALERT("[src.affecting] has broken free of [src.assailant]'s pin!"), 1, group = "resist")
 				qdel(src)
 			else
 				for (var/mob/O in AIviewers(src.affecting, null))
-					O.show_message(text("<span class='alert'>[] attempts to break free of []'s pin!</span>", src.affecting, src.assailant), 1, group = "resist")
+					O.show_message(SPAN_ALERT("[src.affecting] attempts to break free of [src.assailant]'s pin!"), 1, group = "resist")
 
 		else
 			if (prob(STAMINA_U_GRAB_RESIST_CHANCE * prob_mod))
 				for (var/mob/O in AIviewers(src.affecting, null))
-					O.show_message(text("<span class='alert'>[] has broken free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
+					O.show_message(SPAN_ALERT("[src.affecting] has broken free of [src.assailant]'s grip!"), 1, group = "resist")
 				qdel(src)
 			else
 				src.assailant.remove_stamina(assailant_stam_drain)
 				src.affecting.remove_stamina(affecting_stam_drain)
 
 				for (var/mob/O in AIviewers(src.affecting, null))
-					O.show_message(text("<span class='alert'>[] attempts to break free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
+					O.show_message(SPAN_ALERT("[src.affecting] attempts to break free of [src.assailant]'s grip!"), 1, group = "resist")
 
 	/// Helper for allowing people to move again for strong grabs so I can listen for the grab being deleted and run this
 	proc/on_strong_grab_drop()
@@ -431,7 +431,7 @@
 		if (BOUNDS_DIST(user, src.affecting) > 0)
 			return 0
 		if ((src.state < 1 && !(src.affecting.getStatusDuration("paralysis") || src.affecting.getStatusDuration("weakened") || src.affecting.stat)) || !isturf(user.loc))
-			user.visible_message("<span class='alert'>[src.affecting] stumbles a little!</span>")
+			user.visible_message(SPAN_ALERT("[src.affecting] stumbles a little!"))
 			user.u_equip(src)
 			return 0
 
@@ -459,7 +459,6 @@
 /datum/action/bar/icon/strangle_target
 	duration = 30
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED
-	id = "strangle_target"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "neck_over"
 	color_active = "#d37610"
@@ -498,14 +497,13 @@
 
 	onInterrupt()
 		..()
-		boutput(owner, "<span class='alert'>You have been interrupted!</span>")
+		boutput(owner, SPAN_ALERT("You have been interrupted!"))
 		G = null
 		target = null
 
 /datum/action/bar/icon/pin_target
-	duration = 25
+	duration = 30
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED
-	id = "pin_target"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "pin"
 	color_active = "#d37610"
@@ -519,7 +517,7 @@
 		T = Turf
 
 		if (ishuman(target) && target:stamina < target:stamina_max/2)
-			duration -= 15 * (1-(target:stamina/(target:stamina_max/2)))
+			duration -= 20 * (1-(target:stamina/(target:stamina_max/2)))
 
 		if (G.state < GRAB_AGGRESSIVE)
 			duration += 25 //takes longer if you dont have a good gripp
@@ -558,7 +556,7 @@
 
 	onInterrupt()
 		..()
-		boutput(owner, "<span class='alert'>You have been interrupted!</span>")
+		boutput(owner, SPAN_ALERT("You have been interrupted!"))
 		G = null
 		target = null
 
@@ -576,7 +574,7 @@
 	if (BOUNDS_DIST(src, M) > 0)
 		return 0
 
-	user.visible_message("<span class='alert'><B>[M] has been smashed against [src] by [user]!</B></span>")
+	user.visible_message(SPAN_ALERT("<B>[M] has been smashed against [src] by [user]!</B>"))
 	logTheThing(LOG_COMBAT, user, "smashes [constructTarget(M,"combat")] against [src]")
 
 	src.Bumped(M)
@@ -593,8 +591,8 @@
 /turf/grab_smash(obj/item/grab/G, mob/user)
 	var/mob/affecting = G.affecting //the parent disposes G
 	if(..())
-		var/duration = (G.state > 0) ? 4 SECONDS : 2 SECONDS
-		affecting.do_disorient(40, disorient = duration, stack_stuns = FALSE)
+		var/duration = (G.state > 0) ? 6 SECONDS : 4 SECONDS
+		affecting.do_disorient(80, disorient = duration, stack_stuns = FALSE)
 
 /obj/window/grab_smash(obj/item/grab/G, mob/user)
 	if (!ismob(G.affecting) || BOUNDS_DIST(G.affecting, src) != 0)
@@ -602,17 +600,17 @@
 	G.affecting.TakeDamage("head", 5, 0)
 	src.damage_blunt(10)
 	if (QDELETED(src))
-		src.visible_message("<span class='alert'><B>[user] smashes [G.affecting]'s head straight through [src]!</B></span>")
+		src.visible_message(SPAN_ALERT("<B>[user] smashes [G.affecting]'s head straight through [src]!</B>"))
 		logTheThing(LOG_COMBAT, user, "smashes [constructTarget(user,"combat")]'s head through [src]")
 		take_bleeding_damage(G.affecting, user, 15, DAMAGE_CUT, TRUE)
 		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
 	else
-		src.visible_message("<span class='alert'><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
+		src.visible_message(SPAN_ALERT("<B>[user] slams [G.affecting]'s head into [src]!</B>"))
 		logTheThing(LOG_COMBAT, user, "slams [constructTarget(user,"combat")]'s head into [src]")
 		playsound(src.loc, src.hitsound , 100, 1)
 
-	var/duration = (G.state > 0) ? 4 SECONDS : 2 SECONDS
-	G.affecting.do_disorient(20, disorient = duration, stack_stuns = FALSE)
+	var/duration = (G.state > 0) ? 5 SECONDS : 3 SECONDS
+	G.affecting.do_disorient(50, disorient = duration, stack_stuns = FALSE)
 
 	G.dispose()
 	return 1
@@ -725,7 +723,7 @@
 		for (var/obj/item/clothing/C in clothing)
 			if (C.c_flags & (COVERSMOUTH | MASKINTERNALS))
 				for (var/mob/O in AIviewers(src.assailant, null))
-					O.show_message("<span class='alert'>[src.assailant] fails to choke [src.affecting] with [src.loc] because their [C] is in the way!</span>", 1)
+					O.show_message(SPAN_ALERT("[src.assailant] fails to choke [src.affecting] with [src.loc] because [his_or_her(src.affecting)] [C] is in the way!"), 1)
 				return 0
 
 		..(msg_overridden = 1)
@@ -737,10 +735,10 @@
 
 		if (use_internal)
 			for (var/mob/O in AIviewers(src.assailant, null))
-				O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck, forcing them to inhale from [use_internal]!</span>", 1)
+				O.show_message(SPAN_ALERT("[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck, forcing [him_or_her(src.affecting)] to inhale from [use_internal]!"), 1)
 		else
 			for (var/mob/O in AIviewers(src.assailant, null))
-				O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck with no internals tank attached!</span>", 1)
+				O.show_message(SPAN_ALERT("[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck with no internals tank attached!"), 1)
 
 
 
@@ -767,7 +765,7 @@
 	if (..())
 		for (var/mob/O in AIviewers(user, null))
 			if (O.client)
-				O.show_message("<span class='alert'><B>[user] presses the barrel of [src] right against [target]!</B></span>")
+				O.show_message(SPAN_ALERT("<B>[user] presses the barrel of [src] right against [target]!</B>"))
 		target.show_text("<span style='color:red;font-weight:bold;font-size:130%'>[user] is ready to fire if you try to move or make any sudden movements!</span>")
 
 	src.hide_attack = initial(src.hide_attack)
@@ -787,7 +785,7 @@
 		if (!shot && src.assailant && isitem(src.loc))
 			for (var/mob/O in AIviewers(src.assailant, null))
 				if (O.client)
-					O.show_message("<span class='alert'>[src.assailant] lowers [src.loc].</span>")
+					O.show_message(SPAN_ALERT("[src.assailant] lowers [src.loc]."))
 
 		if (src.affecting)
 			var/found = 0
@@ -844,7 +842,7 @@
 
 		if (assailant)
 			if(assailant.hasStatus("blocking"))
-				assailant.visible_message("<span class='alert'>[assailant] lowers their defenses!</span>")
+				assailant.visible_message(SPAN_ALERT("[assailant] lowers [his_or_her(src.assailant)] defenses!"))
 				assailant.delStatus("blocking")
 			assailant.last_resist = world.time + COMBAT_BLOCK_DELAY
 		..()
@@ -938,12 +936,12 @@
 					if(issilicon(dive_attack_hit))
 						playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
 						for (var/mob/O in AIviewers(user))
-							O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!")
+							O.show_message(SPAN_ALERT("<b>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!</b>"))
 					else
 						dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
 						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
 						for (var/mob/O in AIviewers(user))
-							O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
+							O.show_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit]!</B>"), 1)
 					logTheThing(LOG_COMBAT, user, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
 
 
@@ -980,7 +978,7 @@
 								break
 			if(!dive_attack_hit)
 				for (var/mob/O in AIviewers(user))
-					O.show_message("<span class='alert'><B>[user] slides to the ground!</B></span>", 1, group = "resist")
+					O.show_message(SPAN_ALERT("<B>[user] slides to the ground!</B>"), 1, group = "resist")
 
 
 	user.u_equip(src)

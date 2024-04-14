@@ -7,6 +7,13 @@
 TYPEINFO(/obj/item/device/radio)
 	mats = 3
 
+///stupid global var, if true then all radios will start "bricked"
+var/no_more_radios = FALSE
+
+proc/no_more_radio()
+	global.no_more_radios = TRUE
+	for_by_tcl(radio, /obj/item/device/radio)
+		radio.bricked = TRUE
 /obj/item/device/radio
 	name = "station bounced radio"
 	desc = "A portable, non-wearable radio for communicating over a specified frequency. Has a microphone and a speaker which can be independently toggled."
@@ -67,12 +74,15 @@ var/list/headset_channel_lookup
 		set_secure_frequencies()
 
 	src.chat_text = new(null, src)
+	src.bricked = global.no_more_radios
+	START_TRACKING
 
 /obj/item/device/radio/disposing()
 	src.patch_link = null
 	src.traitorradio  = null
 	src.secure_connections = null
 	src.secure_frequencies = null
+	STOP_TRACKING
 	..()
 
 /obj/item/device/radio/proc/set_frequency(new_frequency)
@@ -371,17 +381,16 @@ var/list/headset_channel_lookup
 			R.hear_radio(M, messages, lang_id)
 
 	var/list/heard_flock = list() // heard by flockdrones/flockmind
-	var/datum/game_mode/conspiracy/N = ticker.mode
-	var/protected_frequency = null
-	if(istype(N))
-		protected_frequency = N.agent_radiofreq //groups conspirator frequency as a traitor one and protects it along with nukies
 	// Don't let them monitor Syndie headsets. You can get the radio_brain bioeffect at the start of the round, basically.
-	if (src.protected_radio != 1 && isnull(src.traitorradio) && protected_frequency != display_freq )
-		for (var/mob/living/L in radio_brains)
-			if(radio_brains[L] == 1 && display_freq != R_FREQ_DEFAULT)
-				continue
-			receive += L
+	var/protected = src.protected_radio || !isnull(src.traitorradio) || (display_freq in protected_frequencies)
+	for (var/mob/living/L in radio_brains)
+		if(radio_brains[L] == 1 && display_freq != R_FREQ_DEFAULT)
+			continue
+		else if(radio_brains[L] <= 3 && protected)
+			continue
+		receive += L
 
+	if(!protected)
 		for(var/mob/zoldorf/z in the_zoldorf)
 			if(z.client)
 				receive += z
@@ -588,7 +597,8 @@ var/list/headset_channel_lookup
 	if(!src.doesMapText && !force_radio_maptext)
 		return
 	var/maptext = generateMapText(msg, R = R, textLoc = textLoc) // if you want to simply ..() but want to override the maptext loc
-	R.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
+	if(maptext)
+		R.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
 
 // Hope I didn't butcher this, but I couldn't help but notice some odd stuff going on when I tried to debug radio jammers (Convair880).
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message, var/datum/packet_network/radio/freq)
@@ -646,9 +656,9 @@ var/list/headset_channel_lookup
 	. = ..()
 	if ((in_interact_range(src, user) || src.loc == user))
 		if (src.b_stat)
-			. += "<br><span class='notice'>[src] can be attached and modified!</span>"
+			. += "<br>[SPAN_NOTICE("[src] can be attached and modified!")]"
 		else
-			. += "<br><span class='notice'>[src] can not be modified or attached!</span>"
+			. += "<br>[SPAN_NOTICE("[src] can not be modified or attached!")]"
 	if (istype(src.secure_frequencies) && length(src.secure_frequencies))
 		. += "<br><b>Supplementary channels:</b>"
 		for (var/sayToken in src.secure_frequencies) //Most convoluted string of the year award 2013
@@ -660,9 +670,9 @@ var/list/headset_channel_lookup
 		return
 	src.b_stat = !( src.b_stat )
 	if (src.b_stat)
-		user.show_message("<span class='notice'>The radio can now be attached and modified!</span>")
+		user.show_message(SPAN_NOTICE("The radio can now be attached and modified!"))
 	else
-		user.show_message("<span class='notice'>The radio can no longer be modified or attached!</span>")
+		user.show_message(SPAN_NOTICE("The radio can no longer be modified or attached!"))
 	if (isliving(src.loc))
 		var/mob/living/M = src.loc
 		src.attack_self(M)
@@ -711,7 +721,7 @@ TYPEINFO(/obj/item/radiojammer)
 	icon_state = "beacon"
 	item_state = "signaler"
 	desc = "A small beacon that is tracked by the Teleporter Computer, allowing things to be sent to its general location."
-	burn_possible = 0
+	burn_possible = FALSE
 	anchored = ANCHORED
 
 	var/list/obj/portals_pointed_at_us
@@ -776,7 +786,7 @@ TYPEINFO(/obj/item/radiojammer)
 	icon_state = "electropack0"
 	var/code = 2
 	var/on = 0
-//	var/e_pads = 0
+	has_microphone = FALSE
 	frequency = FREQ_TRACKING_IMPLANT
 	throw_speed = 1
 	throw_range = 3
@@ -787,78 +797,46 @@ TYPEINFO(/obj/item/radiojammer)
 	desc = "A device that, when signaled on the correct frequency, causes a disabling electric shock to be sent to the animal (or human) wearing it."
 	cant_self_remove = 1
 
-/*
-/obj/item/device/radio/electropack/examine()
-	set src in view()
-	set category = "Local"
+/obj/item/device/radio/electropack/update_icon()
+	src.icon_state = "electropack[src.on]"
 
-	..()
-	if ((in_interact_range(src, usr) || src.loc == usr))
-		if (src.e_pads)
-			boutput(usr, "<span class='notice'>The electric pads are exposed!</span>")
-	return*/
+/obj/item/device/radio/electropack/ui_data(mob/user)
+	. = ..()
+	. += list(
+		"code" = src.code,
+		"hasToggleButton" = TRUE,
+		"power" = src.on
+	)
+
+/obj/item/device/radio/electropack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (.)
+		return
+	switch (action)
+		if ("set-code")
+			var/newcode = text2num_safe(params["value"])
+			newcode = round(newcode)
+			newcode = clamp(newcode, 1, 100)
+			src.code = newcode
+			. = TRUE
+		if ("toggle-power")
+			src.on = !(src.on)
+			. = TRUE
+			UpdateIcon()
 
 /obj/item/device/radio/electropack/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing/head/helmet))
-		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
+		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user, W, src)
 		W.set_loc(A)
-		A.part1 = W
 		W.layer = initial(W.layer)
 		user.u_equip(W)
 		user.put_in_hand_or_drop(A)
 		src.layer = initial(src.layer)
 		user.u_equip(src)
 		src.set_loc(A)
-		A.part2 = src
 		src.add_fingerprint(user)
 	return
 
-/obj/item/device/radio/electropack/Topic(href, href_list)
-	//..()
-	if (usr.stat || usr.restrained())
-		return
-	if (src.loc == usr || src.loc.loc == usr || (in_interact_range(src, usr) && istype(src.loc, /turf)))
-		src.add_dialog(usr)
-		if (href_list["freq"])
-			var/new_frequency = sanitize_frequency(frequency + text2num_safe(href_list["freq"]))
-			set_frequency(new_frequency)
-		else
-			if (href_list["code"])
-				src.code += text2num_safe(href_list["code"])
-				src.code = round(src.code)
-				src.code = min(100, src.code)
-				src.code = max(1, src.code)
-			else
-				if (href_list["power"])
-					src.on = !( src.on )
-					src.icon_state = text("electropack[]", src.on)
-		if (!( src.master ))
-			if (ismob(src.loc))
-				attack_self(src.loc)
-			else
-				for(var/mob/M in viewers(1, src))
-					if (M.client)
-						src.attack_self(M)
-		else
-			if (ismob(src.master.loc))
-				src.attack_self(src.master.loc)
-			else
-				for(var/mob/M in viewers(1, src.master))
-					if (M.client)
-						src.attack_self(M)
-	else
-		usr.Browse(null, WINDOW_OPTIONS)
-		return
-	return
-/*
-/obj/item/device/radio/electropack/accept_rad(obj/item/device/radio/signaler/R as obj, message)
-
-	if ((istype(R, /obj/item/device/radio/signaler) && R.frequency == src.frequency && R.code == src.code))
-		return 1
-	else
-		return null
-	return
-*/
 /obj/item/device/radio/electropack/receive_signal(datum/signal/signal)
 	if (!signal || !signal.data || ("[signal.data["code"]]" != "[code]"))//(signal.encryption != code))
 		return
@@ -866,7 +844,7 @@ TYPEINFO(/obj/item/radiojammer)
 	if (ismob(src.loc) && src.on)
 		var/mob/M = src.loc
 		if (src == M.back)
-			M.show_message("<span class='alert'><B>You feel a sharp shock!</B></span>")
+			M.show_message(SPAN_ALERT("<B>You feel a sharp shock!</B>"))
 			logTheThing(LOG_SIGNALERS, usr, "signalled an electropack worn by [constructTarget(M,"signalers")] at [log_loc(M)].") // Added (Convair880).
 			if((M.mind?.get_antagonist(ROLE_REVOLUTIONARY)) && !(M.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)) && prob(20))
 				M.mind?.remove_antagonist(ROLE_REVOLUTIONARY)
@@ -887,31 +865,11 @@ TYPEINFO(/obj/item/radiojammer)
 
 	return
 
-/obj/item/device/radio/electropack/attack_self(mob/user as mob, flag1)
-
-	if (!( ishuman(user) ))
-		return
-	src.add_dialog(user)
-	var/dat = {"<TT>
-<a href='?src=\ref[src];power=1'>Turn [src.on ? "Off" : "On"]</a><br>
-<B>Frequency/Code</B> for electropack:<br>
-Frequency:
-<a href='?src=\ref[src];freq=-10'>-</a>
-<a href='?src=\ref[src];freq=-2'>-</a> [format_frequency(src.frequency)]
-<a href='?src=\ref[src];freq=2'>+</a>
-<a href='?src=\ref[src];freq=10'>+</a><br>
-
-Code:
-<a href='?src=\ref[src];code=-5'>-</a>
-<a href='?src=\ref[src];code=-1'>-</a> [src.code]
-<a href='?src=\ref[src];code=1'>+</a>
-<a href='?src=\ref[src];code=5'>+</a><br>
-</TT>"}
-	user.Browse(dat, WINDOW_OPTIONS)
-	onclose(user, "radio")
+/obj/item/device/radio/electropack/hear_talk()
 	return
 
-
+/obj/item/device/radio/electropack/send_hear()
+	return
 
 // ****************************************************
 
@@ -919,7 +877,7 @@ Code:
 
 
 /obj/item/device/radio/signaler
-	name = "\improper Remote Signaling Device"
+	name = "remote signaler" //US spelling :vomit: but we should be consistent
 	icon_state = "signaller"
 	item_state = "signaler"
 	var/code = 30

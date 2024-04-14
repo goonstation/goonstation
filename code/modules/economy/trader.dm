@@ -71,7 +71,7 @@
 
 	anger()
 		for(var/mob/M in AIviewers(src))
-			boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
+			boutput(M, SPAN_ALERT("<B>[src.name]</B> becomes angry!"))
 		src.desc = "[src] looks angry."
 		SPAWN(rand(1000,3000))
 			src.visible_message("<b>[src.name] calms down.</b>")
@@ -82,7 +82,7 @@
 
 	proc/openTrade(var/mob/user, var/windowName = "trader", var/windowSize = "400x700")
 		if(angry)
-			boutput(user, "<span class='alert'>[src] is angry and won't trade with anyone right now.</span>")
+			boutput(user, SPAN_ALERT("[src] is angry and won't trade with anyone right now."))
 			return
 		src.add_dialog(user)
 		lastWindowName = windowName
@@ -103,19 +103,19 @@
 	attackby(obj/item/I, mob/user)
 		var/obj/item/card/id/id_card = get_id_card(I)
 		if (istype(id_card))
-			boutput(user, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+			boutput(user, SPAN_NOTICE("You swipe the ID card in the card reader."))
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(id_card.registered)
 			if(account)
 				var/enterpin = user.enter_pin("Card Reader")
 				if (enterpin == id_card.pin)
-					boutput(user, "<span class='notice'>Card authorized.</span>")
+					boutput(user, SPAN_NOTICE("Card authorized."))
 					src.scan = id_card
 				else
-					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
+					boutput(user, SPAN_ALERT("Pin number incorrect."))
 					src.scan = null
 			else
-				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
+				boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
 				src.scan = null
 
 	attack_hand(var/mob/user)
@@ -177,7 +177,7 @@
 					src.updateUsrDialog()
 					return
 				if (src.scan.registered in FrozenAccounts)
-					boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
+					boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
 					return
 
 				account = FindBankAccountByName(src.scan.registered)
@@ -403,19 +403,19 @@
 		else
 			var/obj/item/card/id/id_card = get_id_card(usr.equipped())
 			if (istype(id_card))
-				boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+				boutput(usr, SPAN_NOTICE("You swipe the ID card in the card reader."))
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(id_card.registered)
 				if(account)
 					var/enterpin = usr.enter_pin("Card Reader")
 					if (enterpin == id_card.pin)
-						boutput(usr, "<span class='notice'>Card authorized.</span>")
+						boutput(usr, SPAN_NOTICE("Card authorized."))
 						src.scan = id_card
 					else
-						boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+						boutput(usr, SPAN_ALERT("Pin number incorrect."))
 						src.scan = null
 				else
-					boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+					boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))
 					src.scan = null
 
 	/////////////////////////////////////////////
@@ -473,8 +473,8 @@
 		showswirl(pickedloc)
 		A.name = "Goods Crate ([src.name])"
 		if (!custom)
-			for(var/obj/O in shopping_cart)
-				O.set_loc(A)
+			for(var/atom/movable/purchased as anything in shopping_cart)
+				purchased.set_loc(A)
 			shopping_cart = new/list()
 		else
 			new custom(A)
@@ -560,24 +560,24 @@
 		if(!isliving(user)) return
 		if(!barter)
 			if(!src.scan)
-				boutput(user, "<span class='alert'>You have to scan your ID first!</span>")
+				boutput(user, SPAN_ALERT("You have to scan your ID first!"))
 				return
 			account = FindBankAccountByName(src.scan.registered)
 			if(!account)
-				boutput(user, "<span class='alert'>[src]There is no account registered with this card!</span>")
+				boutput(user, SPAN_ALERT("[src]There is no account registered with this card!"))
 				return
 		if(angry)
-			boutput(user, "<span class='alert'>[src] is angry and won't trade with anyone right now.</span>")
+			boutput(user, SPAN_ALERT("[src] is angry and won't trade with anyone right now."))
 			return
 		if(!alive)
-			boutput(user, "<span class='alert'>[src] is dead!</span>")
+			boutput(user, SPAN_ALERT("[src] is dead!"))
 			return
 		/*if (isitem(O))
-			user.visible_message("<span class='notice'>[src] rummages through [user]'s goods.</span>")
+			user.visible_message(SPAN_NOTICE("[src] rummages through [user]'s goods."))
 			var/staystill = user.loc
 			for(var/datum/commodity/N in goods_buy)
 				if (N.comtype == O.type)
-					user.visible_message("<span class='notice'>[src] is willing to buy all of [O].</span>")
+					user.visible_message(SPAN_NOTICE("[src] is willing to buy all of [O]."))
 					for(N.comtype in view(1,user))
 						account["current_money"] += N.price
 						qdel(N.comtype)
@@ -589,7 +589,7 @@
 				user.show_text("[src] stares at the locked [C], unamused. Maybe you should make sure the thing's open, first.", "red")
 				return
 			SPAWN(1 DECI SECOND)
-				user.visible_message("<span class='notice'>[src] rummages through [user]'s [O].</span>")
+				user.visible_message(SPAN_NOTICE("[src] rummages through [user]'s [O]."))
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
 				var/list/sold_string = list()
@@ -602,13 +602,13 @@
 				if(log_trades && length(sold_string))
 					logTheThing(LOG_STATION, user, "sold ([json_encode(sold_string)]) to [src] for [cratevalue] at [log_loc(get_turf(src))]")
 				if(cratevalue)
-					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] [currency] have been transferred to your account.</span>")
+					boutput(user, SPAN_NOTICE("[src] takes what they want from [O]. [cratevalue] [currency] have been transferred to your account."))
 					if(account)
 						account["current_money"] += cratevalue
 					else
 						barter_customers[barter_lookup(user)] += cratevalue
 				else
-					boutput(user, "<span class='notice'>[src] finds nothing of interest in [O].</span>")
+					boutput(user, SPAN_NOTICE("[src] finds nothing of interest in [O]."))
 
 // trader except money never comes out. You sell to accrue credit that can then be spent so it is a closed system.
 /obj/npc/trader/barter
@@ -1011,7 +1011,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/contraband/ntso_uniform(src)
 		src.goods_sell += new /datum/commodity/contraband/ntso_beret(src)
 		src.goods_sell += new /datum/commodity/contraband/ntso_vest(src)
-		src.goods_sell += new /datum/commodity/contraband/swatmask(src)
+		src.goods_sell += new /datum/commodity/contraband/swatmask/NT(src)
 		src.goods_sell += new /datum/commodity/drugs/methamphetamine(src)
 		src.goods_sell += new /datum/commodity/drugs/crank(src)
 		src.goods_sell += new /datum/commodity/drugs/catdrugs(src)
@@ -1226,7 +1226,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 
 /obj/npc/trader/exclown/attackby(obj/item/W, mob/living/user)
 	if (!src.honk && user.mind && user.mind.assigned_role == "Clown" && istype(W, /obj/item/toy/diploma))
-		src.visible_message("<span class='alert'><B>[user]</B> pokes [src] with [W]. [src] nods knowingly.</span>")
+		src.visible_message(SPAN_ALERT("<B>[user]</B> pokes [src] with [W]. [src] nods knowingly."))
 		src.spawncrate(/obj/item/storage/box/banana_grenade_kit)
 		src.honk = 1
 	else
@@ -1360,7 +1360,6 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/drugs/catdrugs(src)
 		src.goods_sell += new /datum/commodity/drugs/morphine(src)
 		src.goods_sell += new /datum/commodity/drugs/krokodil(src)
-		src.goods_sell += new /datum/commodity/drugs/jenkem(src)
 		src.goods_sell += new /datum/commodity/drugs/lsd(src)
 		src.goods_sell += new /datum/commodity/drug/lsd_bee(src)
 		src.goods_sell += new /datum/commodity/medical/ether(src)

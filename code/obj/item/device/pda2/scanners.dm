@@ -104,7 +104,7 @@
 			if (..() || !isobj(A) || !ismob(usr))
 				return
 			if (!istype(master.host_program, /datum/computer/file/pda_program/os/main_os) || !master.host_program:message_on)
-				return "<span class='alert'>Messaging must be enabled to communicate with engineering kit.</span>"
+				return SPAN_ALERT("Messaging must be enabled to communicate with engineering kit.")
 			var/obj/O = A
 			var/mob/user = usr
 			if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
@@ -114,7 +114,7 @@
 				return
 			animate_scanning(A, "#FFFF00")
 			if (!scan_result || scan_result == MECHANICS_ANALYSIS_INCOMPATIBLE)
-				return "<span class='alert'>Unable to scan.</span>"
+				return SPAN_ALERT("Unable to scan.")
 
 			var/datum/computer/file/electronics_scan/theScan = new
 			theScan.scannedName = initial(O.name)

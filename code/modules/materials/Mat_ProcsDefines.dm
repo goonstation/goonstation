@@ -99,7 +99,7 @@ var/global/list/material_cache
 				var/strPrefix = jointext(mat1.getPrefixes(), " ")
 				for(var/X in mat1.getMaterialPrefixList())
 					strPrefix += " [X]"
-				trim(strPrefix)
+				strPrefix = trimtext(strPrefix)
 				src.name_prefix(strPrefix ? strPrefix : "")
 				src.name_prefix(length(getQualityName(mat1.getQuality())) ? getQualityName(mat1.getQuality()) : "")
 			src.name_prefix(mat1.getName() ? mat1.getName() : "")
@@ -192,7 +192,7 @@ var/global/list/material_cache
 	if (MAT.getMaterialFlags() & MATERIAL_CRYSTAL)
 		return /obj/item/material_piece/block
 	if (MAT.getMaterialFlags() & MATERIAL_METAL)
-		return /obj/item/material_piece
+		return /obj/item/material_piece/metal
 	if (MAT.getMaterialFlags() & MATERIAL_ORGANIC)
 		return /obj/item/material_piece/wad
 	if (MAT.getMaterialFlags() & MATERIAL_CLOTH)

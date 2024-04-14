@@ -79,13 +79,13 @@
 			if (!controller.mind)
 				src.mind.transfer_to(controller)
 			else
-				boutput(src, "<span class='alert'>Your conscience tries to reintegrate your body, but its already possessed by something!</span>")
+				boutput(src, SPAN_ALERT("Your conscience tries to reintegrate your body, but its already possessed by something!"))
 
 		..(gibbed, 0)
 
 		if (!gibbed)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
-			src.audible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+			src.audible_message(SPAN_ALERT("<B>[src] blows apart!</B>"))
 			src.drop_item()
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 			elecflash(src, radius=1, power=3, exclude_center = 0)
@@ -97,9 +97,9 @@
 	proc/return_to_owner()
 		if (controller != null)
 			if(!controller.loc)
-				boutput(src, "<span class='alert'>A horrible sense of dread looms over you. You feel like your body has disappeared.</span>")
+				boutput(src, SPAN_ALERT("A horrible sense of dread looms over you. You feel like your body has disappeared."))
 			else if (!isalive(controller))
-				boutput(src, "<span class='alert'>A horrible sense of dread looms over you. Your real body is dead! The scuttlebot's advanced AI takes over and retains your conscience.</span>")
+				boutput(src, SPAN_ALERT("A horrible sense of dread looms over you. Your real body is dead! The scuttlebot's advanced AI takes over and retains your conscience."))
 			else
 				src.mind.transfer_to(controller)
 			controller = null

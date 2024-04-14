@@ -111,41 +111,41 @@
 
 	mouse_drop(over_object, src_location, over_location)
 		if(over_object == src)
-			boutput(usr, "<span class='notice'>You reset the output location of [src]!</span>")
+			boutput(usr, SPAN_NOTICE("You reset the output location of [src]!"))
 			src.output_target = src.loc
 			return
 
 		if(!istype(usr,/mob/living/))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
+			boutput(usr, SPAN_ALERT("Only living mobs are able to set the output target for [src]."))
 			return
 
 		if(BOUNDS_DIST(over_object, src) > 0)
-			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("[src] is too far away from the target!"))
 			return
 
 		if(BOUNDS_DIST(over_object, usr) > 0)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("You are too far away from the target!"))
 			return
 
 		if (istype(over_object,/obj/storage/crate/))
 			var/obj/storage/crate/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
+				boutput(usr, SPAN_ALERT("You can't use a currently unopenable crate as an output target."))
 			else
 				src.output_target = over_object
-				boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
+				boutput(usr, SPAN_NOTICE("You set [src] to output to [over_object]!"))
 
 		else if (istype(over_object,/obj/table/) || istype(over_object,/obj/rack/))
 			var/obj/O = over_object
 			src.output_target = O.loc
-			boutput(usr, "<span class='notice'>You set [src] to output on top of [O]!</span>")
+			boutput(usr, SPAN_NOTICE("You set [src] to output on top of [O]!"))
 
 		else if (istype(over_object,/turf) && !over_object:density)
 			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
+			boutput(usr, SPAN_NOTICE("You set [src] to output to [over_object]!"))
 
 		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
+			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
 		return
 
 	proc/get_output_location()
@@ -350,22 +350,22 @@
 		if(istype(W, /obj/item/deconstructor))
 			return ..()
 		if(issilicon(user)) // fix bug where borgs could put things into the nanofab and then reject them
-			boutput(user, "<span class='alert'>You can't put that in, it's attached to you.</span>")
+			boutput(user, SPAN_ALERT("You can't put that in, it's attached to you."))
 			return
 
 		if(isExploitableObject(W))
-			boutput(user, "<span class='alert'>\the [src] grumps at you and refuses to use [W].</span>")
+			boutput(user, SPAN_ALERT("\the [src] grumps at you and refuses to use [W]."))
 			return
 
-		user.visible_message("<span class='notice'>[user] puts \the [W] in \the [src].</span>")
+		user.visible_message(SPAN_NOTICE("[user] puts \the [W] in \the [src]."))
 		addMaterial(W, user)
 		/*
 		if(W.material != null)
-			user.visible_message("<span class='notice'>[user] puts \the [W] in \the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] puts \the [W] in \the [src]."))
 			if( W.material )
 				addMaterial(W, user)
 			else
-				boutput(user, "<span class='alert'>The fabricator can only use material-based objects.</span>")
+				boutput(user, SPAN_ALERT("The fabricator can only use material-based objects."))
 				return
 		*/
 		return

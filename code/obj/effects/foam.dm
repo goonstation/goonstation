@@ -168,7 +168,7 @@
 			if(!M.throwing && !M.lying)
 				M.remove_pulling()
 				playsound(src, 'sound/misc/slip.ogg', 50, TRUE, -3)
-				boutput(M, "<span class='notice'>You slipped on the foam!</span>")
+				boutput(M, SPAN_NOTICE("You slipped on the foam!"))
 				var/atom/target = get_edge_target_turf(M, M.dir)
 				switch (src.lube)
 					if (1) //lube

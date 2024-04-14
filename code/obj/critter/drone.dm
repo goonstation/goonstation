@@ -87,7 +87,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		src.oldtarget_name = newtarget.name
 		if (alertsound1 || alertsound2)
 			playsound(src.loc, ismob(newtarget) ? alertsound2 : alertsound1, 55, 1)
-		src.visible_message("<span class='alert'><b>[src]</b> starts chasing [src.target]!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]</b> starts chasing [src.target]!"))
 		task = "chasing"
 
 
@@ -121,7 +121,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 
 				if(smashed_shit)
 					playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
-					src.visible_message("<span class='alert'><B>[src]</B> smashes into \the [AM]!</span>")
+					src.visible_message(SPAN_ALERT("<B>[src]</B> smashes into \the [AM]!"))
 			..()
 
 
@@ -154,10 +154,12 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			if (A && src.z == A.z && GET_DIST(src,A) <= src.seekrange)
 				if (istype(atom, /obj/machinery/vehicle))
 					var/obj/machinery/vehicle/C = atom
-					if (C.health < 0) continue
-					if (!istype(C, /obj/machinery/vehicle/pod_smooth/syndicate)) src.attack = 1
-					if (C.name == src.attacker) src.attack = 1
-					src.attack = 1
+					if (C.health < 0)
+						continue
+					if (!(C.faction & FACTION_SYNDICATE))
+						src.attack = 1
+					if (C.name == src.attacker)
+						src.attack = 1
 
 					if (src.attack)
 						select_target(C)
@@ -215,7 +217,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		if(target)
 			src.attacking = 1
 			//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
-			src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> fires at [M]!"))
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -236,7 +238,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		if(target)
 			src.attacking = 1
 			//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
-			src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> fires at [M]!"))
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -506,7 +508,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 
 		assdrone // HEH
 			name = "Virtual Assault Drone"
-			desc = "This is a digital reconstruction of the BR-series breach drones employed by Nanotransen in space extraction and destruction missions."
+			desc = "This is a digital reconstruction of the BR-series breach drones employed by Nanotrasen in space extraction and destruction missions."
 			icon = 'icons/mob/critter/robotic/drone/assault.dmi'
 			icon_state = "drone_assault"
 			dead_state = "drone_assault"
@@ -653,7 +655,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		ChaseAttack(atom/M)
 			if(target && !attacking)
 				attacking = 1
-				src.visible_message("<span class='alert'><b>[src]</b> charges at [M]!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> charges at [M]!"))
 				walk_to(src, src.target,1,4)
 				var/tturf = get_turf(M)
 				Shoot(tturf, src.loc, src)
@@ -665,7 +667,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			if(target && !attacking)
 				attacking = 1
 				//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
-				src.visible_message("<span class='alert'><b>[src]</b> hits [M]!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> hits [M]!"))
 
 				var/tturf = get_turf(M)
 				Shoot(tturf, src.loc, src)
@@ -706,7 +708,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 				if(dying)
 					return
-				new /obj/item/mining_tool/power_pick(get_turf(src))
+				new /obj/item/mining_tool/powered/pickaxe(get_turf(src))
 				..()
 
 	gunshark
@@ -1039,7 +1041,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 
 			poorSoul.playsound_local_not_inworld('sound/effects/electric_shock.ogg', 50)
 			random_burn_damage(poorSoul, 45)
-			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
+			boutput(poorSoul, SPAN_ALERT("<B>You feel a powerful shock course through your body!</B>"))
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart(100)
@@ -1166,7 +1168,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 
 			poorSoul.playsound_local_not_inworld('sound/effects/electric_shock.ogg', 50)
 			random_burn_damage(poorSoul, 45)
-			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
+			boutput(poorSoul, SPAN_ALERT("<B>You feel a powerful shock course through your body!</B>"))
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart(100)

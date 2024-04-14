@@ -62,6 +62,7 @@ export interface CharacterPreferencesData {
   hudTheme: string;
   hudThemePreview: string;
   tooltipOption: CharacterPreferencesTooltip;
+  scrollWheelTargeting: CharacterPreferencesScrollTarget;
   tguiFancy: BooleanLike;
   tguiLock: BooleanLike;
   viewChangelog: BooleanLike;
@@ -78,6 +79,13 @@ export interface CharacterPreferencesData {
   traitsAvailable: CharacterPreferencesTraitData[];
   traitsMax: number;
   traitsPointsTotal: number;
+  partsData: Record<string, CharacterPreferencesPartData>;
+}
+export interface CharacterPreferencesPartData {
+  id: string;
+  name: string;
+  points: number;
+  img: string;
 }
 
 export interface CharacterPreferencesTraitStaticData {
@@ -120,4 +128,10 @@ export enum CharacterPreferenceViewSummary {
   Never,
   Always,
   TicketsReportsOnly,
+}
+
+export enum CharacterPreferencesScrollTarget {
+  Never = 1, // SCROLL_TARGET_NEVER
+  Hover = 2, // SCROLL_TARGET_HOVER
+  Always = 3 // SCROLL_TARGET_ALWAYS
 }

@@ -18,12 +18,12 @@
 		var/mob/living/M = holder.owner
 		var/datum/abilityHolder/vampire/V = holder
 
-		if (actions.hasAction(M, "vamp_blood_suck"))
-			boutput(M, "<span class='alert'>You are already performing a Bite action and cannot start a Blood Steal.</span>")
+		if (actions.hasAction(M, /datum/action/bar/private/icon/vamp_blood_suc))
+			boutput(M, SPAN_ALERT("You are already performing a Bite action and cannot start a Blood Steal."))
 			return 1
 
 		if (isnpc(target))
-			boutput(M, "<span class='alert'>The blood of this target would provide you with no sustenance.</span>")
+			boutput(M, SPAN_ALERT("The blood of this target would provide you with no sustenance."))
 			return 1
 
 		actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(M,V,target, src), M)
@@ -33,7 +33,6 @@
 /datum/action/bar/private/icon/vamp_ranged_blood_suc
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "vamp_blood_suck_ranged"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "blood"
 	bar_icon_state = "bar-vampire"
@@ -70,7 +69,7 @@
 			return
 
 		if (GET_DIST(M, HH) > 7)
-			boutput(M, "<span class='alert'>That target is too far away!</span>")
+			boutput(M, SPAN_ALERT("That target is too far away!"))
 			return
 
 		if (istype(H))
@@ -86,7 +85,7 @@
 			proj = initialize_projectile_pixel_spread(HH, new/datum/projectile/special/homing/vamp_blood, M)
 			tries--
 		if(isnull(proj) || proj.disposed)
-			boutput(HH, "<span class='alert'>Blood steal interrupted.</span>")
+			boutput(HH, SPAN_ALERT("Blood steal interrupted."))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -98,7 +97,7 @@
 		proj.launch()
 
 		if (prob(25))
-			boutput(HH, "<span class='alert'>Some blood is forced right out of your body!</span>")
+			boutput(HH, SPAN_ALERT("Some blood is forced right out of your body!"))
 
 		logTheThing(LOG_COMBAT, M, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
 
@@ -114,11 +113,11 @@
 	onInterrupt() //Called when the action fails / is interrupted.
 		if (state == ACTIONSTATE_RUNNING)
 			if (HH.blood_volume <= 0)
-				boutput(M, "<span class='alert'>[HH] doesn't have enough blood left to drink.</span>")
+				boutput(M, SPAN_ALERT("[HH] doesn't have enough blood left to drink."))
 			else if (!H.can_take_blood_from(H, HH))
-				boutput(M, "<span class='alert'>You have drank your fill [HH]'s blood. It tastes all bland and gross now.</span>")
+				boutput(M, SPAN_ALERT("You have drank your fill [HH]'s blood. It tastes all bland and gross now."))
 			else
-				boutput(M, "<span class='alert'>Your feast was interrupted.</span>")
+				boutput(M, SPAN_ALERT("Your feast was interrupted."))
 
 		if (ability)
 			ability.doCooldown()

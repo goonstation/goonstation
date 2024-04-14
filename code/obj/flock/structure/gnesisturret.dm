@@ -54,8 +54,8 @@
 		else
 			status = "idle"
 
-		return {"<span class='bold'>Status:</span> [status].
-	<br><span class='bold'>Gnesis Tank Level:</span> [src.reagents.total_volume]/[fluid_level_max]."}
+		return {"[SPAN_BOLD("Status:")] [status].
+	<br>[SPAN_BOLD("Gnesis Tank Level:")] [src.reagents.total_volume]/[fluid_level_max]."}
 
 	process(mult)
 		if(!src.flock)//if it dont exist it off
@@ -146,7 +146,7 @@
 			return FALSE
 		if (isdead(C))
 			return FALSE
-		if (!src.flock.isEnemy(C))
+		if (!src.isEnemy(C))
 			return FALSE
 		if (istype(C.loc,/obj/flock_structure/cage)) //already caged, stop shooting
 			return FALSE
@@ -171,6 +171,10 @@
 
 		return TRUE
 
+
+/obj/flock_structure/gnesisturret/angry
+	isEnemy(mob/M)
+		return istype(M) && isalive(M) && !isintangible(M)
 
 /datum/projectile/syringe/syringe_barbed/gnesis
 	name = "nanite spike"

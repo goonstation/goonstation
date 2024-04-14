@@ -263,15 +263,15 @@ TYPEINFO(/atom)
 			return // what're we gunna do here?? ain't got no reagent holder
 
 		if (!src.reagents.total_volume) // Check to make sure the from container isn't empty.
-			boutput(user, "<span class='alert'>[src] is empty!</span>")
+			boutput(user, SPAN_ALERT("[src] is empty!"))
 			return
 		else if (A.reagents.total_volume == A.reagents.maximum_volume) // Destination Container is full, quit trying to do things what you can't do!
-			boutput(user, "<span class='alert'>[A] is full!</span>") // Notify the user, then exit the process.
+			boutput(user, SPAN_ALERT("[A] is full!")) // Notify the user, then exit the process.
 			return
 
 		logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
 		var/T = src.reagents.trans_to(A, src.reagents.total_volume) // Dump it all!
-		boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
+		boutput(user, SPAN_NOTICE("You transfer [T] units into [A]."))
 		return
 
 /atom/proc/signal_event(var/event) // Right now, we only signal our container
@@ -638,6 +638,7 @@ TYPEINFO(/atom/movable)
 	src.move_speed = TIME - src.l_move_time
 	src.l_move_time = TIME
 	if (A != src.loc && A?.z == src.z)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
 		src.last_move = get_dir(A, src.loc)
 		if (length(src.attached_objs))
 			for (var/atom/movable/M as anything in attached_objs)
@@ -645,7 +646,6 @@ TYPEINFO(/atom/movable)
 		if (islist(src.tracked_blood))
 			src.track_blood()
 		actions.interrupt(src, INTERRUPT_MOVE)
-		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
 	//note : move is still called when we are steping into a wall. sometimes these are unnecesssary i think
 
 	if(last_turf == src.loc)
@@ -707,14 +707,14 @@ TYPEINFO(/atom/movable)
 	if (isghostcritter(user))
 		var/mob/living/critter/C = user
 		if (!C.can_pull(src))
-			boutput(user,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
+			boutput(user,SPAN_ALERT("<b>[src] is too heavy for you pull in your half-spectral state!</b>"))
 			return 1
 
 	if (iscarbon(user) || issilicon(user))
 		add_fingerprint(user)
 
 	if (istype(src,/obj/item/old_grenade/light_gimmick))
-		boutput(user, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
+		boutput(user, SPAN_NOTICE("You feel your hand reach out and clasp the grenade."))
 		src.Attackhand(user)
 		return 1
 	if (!( src.anchored ))
@@ -786,9 +786,9 @@ TYPEINFO(/atom/movable)
 
 	// Added for forensics (Convair880).
 	if (isitem(src) && src.blood_DNA)
-		. = list("<span class='alert'>This is a bloody [src.name].</span>")
+		. = list(SPAN_ALERT("This is a bloody [src.name]."))
 		if (src.desc)
-			. += "<br>[src.desc] <span class='alert'>It seems to be covered in blood!</span>"
+			. += "<br>[src.desc] [SPAN_ALERT("It seems to be covered in blood!")]"
 	else if (src.desc)
 		. += "<br>[src.desc]"
 
@@ -856,23 +856,23 @@ TYPEINFO(/atom/movable)
 	return
 
 ///wrapper proc for /atom/proc/attackby so that signals are always sent. Call this, but do not override it.
-/atom/proc/Attackby(obj/item/W, mob/user, params, is_special = 0)
+/atom/proc/Attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
 	SHOULD_NOT_OVERRIDE(1)
 	if(SEND_SIGNAL(W, COMSIG_ITEM_ATTACKBY_PRE, src, user))
 		return
 	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user, params, is_special))
 		return
-	src.attackby(W, user, params, is_special)
+	src.attackby(W, user, params, is_special, silent)
 
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
-/atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0)
+/atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
 	PROTECTED_PROC(TRUE)
 	if (src.storage?.storage_item_attack_by(W, user))
 		return
 	src.material_trigger_when_attacked(W, user, 1)
-	if (user && W && !(W.flags & SUPPRESSATTACK))
-		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
+	if (user && W && !(W.flags & SUPPRESSATTACK) && !silent)
+		user.visible_message(SPAN_COMBAT("<B>[user] hits [src] with [W]!</B>"))
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")
@@ -1417,3 +1417,10 @@ TYPEINFO(/atom/movable)
 		if("icon_state")
 			src.icon_state = oldval
 			src.set_icon_state(newval)
+
+/atom/movable/proc/is_that_in_this(atom/movable/target)
+	if (target.loc == src)
+		return TRUE
+	if (istype(target.loc, /atom/movable))
+		return src.is_that_in_this(target.loc)
+	return FALSE

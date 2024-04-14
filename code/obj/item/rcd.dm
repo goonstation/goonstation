@@ -161,6 +161,7 @@ TYPEINFO(/obj/item/rcd)
 
 	New()
 		..()
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job="Chief Engineer", message_admins_too=FALSE)
 		for(var/actionType in childrentypesof(/datum/contextAction/rcd)) //see context_actions.dm for those
 			var/datum/contextAction/rcd/action = new actionType()
 			if (action.mode in src.modes)
@@ -218,8 +219,8 @@ TYPEINFO(/obj/item/rcd)
 
 			if (RCD_MODE_PODDOORCONTROL)
 				boutput(user, "Changed mode to 'Pod Door Control'")
-				boutput(user, "<span class='notice'>Place a door control on a wall, then place any amount of pod doors on floors.</span>")
-				boutput(user, "<span class='notice'>You can also select an existing door control by whacking it with \the [src].</span>")
+				boutput(user, SPAN_NOTICE("Place a door control on a wall, then place any amount of pod doors on floors."))
+				boutput(user, SPAN_NOTICE("You can also select an existing door control by whacking it with \the [src]."))
 
 			if (RCD_MODE_LIGHTBULBS)
 				boutput(user, "Changed mode to 'Light Bulb Fixture'")
@@ -330,7 +331,7 @@ TYPEINFO(/obj/item/rcd)
 				if (istype(A, /obj/machinery/door/airlock)||istype(A, /obj/machinery/door/unpowered/wood))
 					var/obj/machinery/door/airlock/AL = A
 					if (AL.hardened == 1)
-						boutput(user, "<span class='alert'>\The [AL] is reinforced against rapid deconstruction!</span>")
+						boutput(user, SPAN_ALERT("\The [AL] is reinforced against rapid deconstruction!"))
 						return
 					if (do_thing(user, AL, "deconstructing \the [AL]", matter_remove_door, time_remove_door))
 						log_construction(user, "deconstructs an airlock ([AL])")
@@ -412,7 +413,7 @@ TYPEINFO(/obj/item/rcd)
 		if (issilicon(user))
 			return ..()
 		else if (length(working_on) > 0) //Lets not get too crazy
-			boutput(user, "<span class='notice'>[src] is already working on something else.</span>")
+			boutput(user, SPAN_NOTICE("[src] is already working on something else."))
 		else if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/obj/item/parts/surgery_target = null
@@ -420,13 +421,13 @@ TYPEINFO(/obj/item/rcd)
 			if (surgeryCheck(H, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
 				if (user.zone_sel.selecting == "chest") //Ass begone
 					if (H.organHolder.butt == null)
-						user.visible_message("<span class='alert'><b>Tries to remove [target]'s butt, but it's already gone!</b> </span>")
+						user.visible_message(SPAN_ALERT("<b>Tries to remove [target]'s butt, but it's already gone!</b> "))
 						return
 					else
 						surgery_target = H.organHolder.get_organ("butt")
 				else if (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg")) // Is the limb we are aiming for missing?
 					if (H.limbs.vars[user.zone_sel.selecting] == null)
-						user.visible_message("<span class='alert'><b>Tries to remove one of [target]'s limbs, but it's already gone!</b> </span>")
+						user.visible_message(SPAN_ALERT("<b>Tries to remove one of [target]'s limbs, but it's already gone!</b> "))
 						return
 					else
 						surgery_target = H.limbs.vars[user.zone_sel.selecting]
@@ -442,7 +443,7 @@ TYPEINFO(/obj/item/rcd)
 								user_limb_is_missing = TRUE
 
 						if(user_limb_is_missing == TRUE) //The limb/ass is already missing, maim yourself instead
-							user.visible_message("<span class='alert'><b>[user] messes up really badly with [src] and maims themselves! </b> </span>")
+							user.visible_message(SPAN_ALERT("<b>[user] messes up really badly with [src] and maims themselves! </b> "))
 							random_brute_damage(user, 35)
 							Huser.changeStatus("weakened", 3 SECONDS)
 							take_bleeding_damage(user, null, 25, DAMAGE_CUT, 1)
@@ -454,7 +455,7 @@ TYPEINFO(/obj/item/rcd)
 								surgery_target = Huser.limbs.vars[user.zone_sel.selecting]
 								surgery_target.remove()
 								qdel(surgery_target)
-							user.visible_message("<span class='alert'><b>[user] holds the [src] by the wrong end and removes their own [surgery_target]! </b> </span>")
+							user.visible_message(SPAN_ALERT("<b>[user] holds the [src] by the wrong end and removes their own [surgery_target]! </b> "))
 							random_brute_damage(user, 25)
 							take_bleeding_damage(user, null, 20, DAMAGE_CUT, 1)
 						playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
@@ -471,7 +472,7 @@ TYPEINFO(/obj/item/rcd)
 						random_brute_damage(H, 25)
 						take_bleeding_damage(H, null, 20)
 						playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
-						user.visible_message("<span class='alert'>Deconstructs [target]'s [surgery_target] with the RCD.</span>")
+						user.visible_message(SPAN_ALERT("Deconstructs [target]'s [surgery_target] with the RCD."))
 			else //Not in surgery conditions or aiming for a limb? Do a normal hit
 				return ..()
 
@@ -481,14 +482,14 @@ TYPEINFO(/obj/item/rcd)
 		if (ishuman(target) && matter >= 3)
 			var/mob/living/carbon/human/H = target
 			if(!isdead(H) && H.health > 0)
-				boutput(user, "<span class='alert'>You poke [H] with \the [src].</span>")
-				boutput(H, "<span class='alert'>[user] pokes you with \the [src].</span>")
+				boutput(user, SPAN_ALERT("You poke [H] with \the [src]."))
+				boutput(H, SPAN_ALERT("[user] pokes you with \the [src]."))
 				return
-			boutput(user, "<span class='alert'><B>You shove \the [src] down [H]'s mouth and pull the trigger!</B></span>")
-			H.show_message("<span class='alert'><B>[user] is shoving an RCD down your throat!</B></span>", 1)
+			boutput(user, SPAN_ALERT("<B>You shove \the [src] down [H]'s mouth and pull the trigger!</B>"))
+			H.show_message(SPAN_ALERT("<B>[user] is shoving an RCD down your throat!</B>"), 1)
 			for(var/mob/N in viewers(user, 3))
 				if(N.client && N != user && N != H)
-					N.show_message(text("<span class='alert'><B>[] shoves \the [src] down []'s throat!</B></span>", user, H), 1)
+					N.show_message(text(SPAN_ALERT("<B>[] shoves \the [src] down []'s throat!</B>"), user, H), 1)
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			if(do_after(user, 2 SECONDS))
 				elecflash(src)
@@ -692,7 +693,7 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 							qdel(A)
 							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 				else
-					boutput(user, "<span class='alert'>You cannot deconstruct that!</span>")
+					boutput(user, SPAN_ALERT("You cannot deconstruct that!"))
 					return
 			else if (istype(A, /obj/machinery/r_door_control) && ammo_check(user, matter_remove_door, 500))
 				var/obj/machinery/r_door_control/R = A
@@ -708,17 +709,17 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 							qdel(A)
 							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 				else
-					boutput(user, "<span class='alert'>You cannot deconstruct that!</span>")
+					boutput(user, SPAN_ALERT("You cannot deconstruct that!"))
 					return
 		else if (mode == RCD_MODE_PODDOORCONTROL)
 			if (istype(A, /obj/machinery/r_door_control))
 				var/obj/machinery/r_door_control/R = A
 				if (findtext(R.id, "rcd_built") != 0)
-					boutput(user, "<span class='notice'>Selected.</span>")
+					boutput(user, SPAN_NOTICE("Selected."))
 					hangar_id = R.id
 					mode = RCD_MODE_PODDOOR
 				else
-					boutput(user, "<span class='alert'>You cannot modify that!</span>")
+					boutput(user, SPAN_ALERT("You cannot modify that!"))
 			else if (istype(A, /turf/simulated/wall) && ammo_check(user, matter_create_door, 500))
 				boutput(user, "Creating Door Control ([matter_create_door])")
 				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
@@ -789,7 +790,7 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 			door_type = door_types[door_type_name_cache]
 
 		if (user.loc != L)
-			boutput(user, "<span class='alert'>Airlock build cancelled - you moved.</span>")
+			boutput(user, SPAN_ALERT("Airlock build cancelled - you moved."))
 			return
 
 		if (do_thing(user, A, "building an airlock", matter_create_door, 5 SECONDS))
@@ -848,7 +849,7 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 			return
 
 		if (user.loc != L)
-			boutput(user, "<span class='alert'>Door build cancelled - you moved.</span>")
+			boutput(user, SPAN_ALERT("Door build cancelled - you moved."))
 			return
 
 		if (do_thing(user, A, "building a door", matter_create_door, 5 SECONDS))
@@ -963,35 +964,36 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 
 	modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS)
 
+	/// Load the RCD from a stack of items at an (optional) fill ratio
+	proc/reload_from_stack(obj/item/stack, mob/user, fill_ratio = 1)
+		var/amount_needed = ceil((src.max_matter - src.matter) / fill_ratio)
+		var/partial_eat = FALSE
+		if(amount_needed == 0)
+			boutput(user, "\The [src] is full.")
+			return
+		if(stack.amount > amount_needed)
+			stack.change_stack_amount(-amount_needed)
+			src.matter = src.max_matter
+			partial_eat = TRUE
+		else
+			src.matter += round(stack.amount * fill_ratio)
+			qdel(stack)
+		boutput(user, "\The [src] [partial_eat ? "partially " : null]absorbs \the [stack.name] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+		src.UpdateIcon()
+
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
 			..()
 		else if (istype(W, /obj/item/sheet)) //allow selective direct recycle (prices have been adjusted)
 			var/sheet_mat_id = W.material.getID()
 			if(sheet_mat_id == "viscerite" || sheet_mat_id == "tensed_viscerite")
-				var/partial_eat = FALSE
-				if (src.matter + W.amount > src.max_matter)
-					W.amount -= (src.max_matter - src.matter)
-					src.matter = src.max_matter
-					partial_eat = TRUE
-					W.tooltip_rebuild = 1
-				else
-					src.matter += W.amount
-					qdel(W)
-				boutput(user, "\The [src] [partial_eat ? "partially " : null]absorbs [W] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
-				src.UpdateIcon()
+				src.reload_from_stack(W, user)
 		else if (isExploitableObject(W))
 			boutput(user, "Recycling [W] just doesn't work.")
 		else if (istype(W, /obj/item/raw_material/martian))
-			matter += 10
-			boutput(user, "\The [src] absorbs [W] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
-			qdel(W)
-			src.UpdateIcon()
+			src.reload_from_stack(W, user, 10)
 		else if (istype(W, /obj/item/material_piece/viscerite))
-			matter += 10
-			boutput(user, "\The [src] absorbs [W] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
-			qdel(W)
-			src.UpdateIcon()
+			src.reload_from_stack(W, user, 10)
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/yuck))
 			matter += 0.5
 			boutput(user, "\The [src] absorbs [W] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
@@ -1088,7 +1090,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 
 	attack_self(mob/user as mob)
 		if (src.broken)
-			boutput(user, "<span class='alert'>It's broken!</span>")
+			boutput(user, SPAN_ALERT("It's broken!"))
 			return
 
 		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
@@ -1105,14 +1107,14 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 
 	afterattack(atom/A, mob/user as mob)
 		if (src.broken > 1)
-			boutput(user, "<span class='alert'>It's broken!</span>")
+			boutput(user, SPAN_ALERT("It's broken!"))
 			return
 
 		if (!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))
 			return
 		if ((istype(A, /turf/space) || istype(A, /turf/simulated/floor)) && mode)
 			if (src.broken)
-				boutput(user, "<span class='alert'>Insufficient charge.</span>")
+				boutput(user, SPAN_ALERT("Insufficient charge."))
 				return
 
 			boutput(user, "Building [istype(A, /turf/space) ? "Floor (1)" : "Wall (3)"]...")
@@ -1130,7 +1132,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 					T.ReplaceWithWall()
 
 
-				boutput(user, "<span class='alert'>\the [src] shorts out!</span>")
+				boutput(user, SPAN_ALERT("\the [src] shorts out!"))
 				return
 
 		else if (!mode)
@@ -1145,7 +1147,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 				elecflash(src)
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 100, 1)
 
-				boutput(user, "<span class='combat'>\the [src] shorts out!</span>")
+				boutput(user, SPAN_COMBAT("\the [src] shorts out!"))
 
 				logTheThing(LOG_COMBAT, user, "manages to vaporize \[[log_loc(A)]] (and themselves) with a halloween RCD.")
 

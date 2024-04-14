@@ -10,6 +10,7 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 	var/datum/flock/my_flock = null
 	var/unlocked = FALSE
 	var/friendly_name
+	var/tealprint_purchase_name
 
 	New(var/datum/flock/F)
 		..()
@@ -23,6 +24,7 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 		if(!friendly_name)
 			stack_trace("[src.type] has invalid structType [sT]")
 			return
+		tealprint_purchase_name = "[initial(sT.flock_id)] ([initial(sT.online_compute_cost)])"
 
 	proc/process()
 		if(src.check_unlocked())

@@ -46,11 +46,11 @@
 	name = "engineering space helmet"
 	desc = "Comes equipped with a built-in flashlight."
 	icon_state = "espace0"
-	uses_multiple_icon_states = 1
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	see_face = FALSE
 	item_state = "s_helmet"
 	var/on = 0
+	var/base_icon_state = "espace"
 
 	var/datum/component/loctargeting/medium_directional_light/light_dir
 
@@ -67,7 +67,7 @@
 
 	proc/flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 		on = !on
-		src.icon_state = "espace[on]"
+		src.icon_state = "[base_icon_state][on]"
 		if (on)
 			light_dir.update(1)
 		else
@@ -79,20 +79,8 @@
 		return
 
 /obj/item/clothing/head/helmet/space/engineer/april_fools
-	icon_state = "espace0-alt"
-
-	flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
-		on = !on
-		src.icon_state = "espace[on]-alt"
-		if (on)
-			light_dir.update(1)
-		else
-			light_dir.update(0)
-		user.update_clothing()
-		if (activated_inhand)
-			var/obj/ability_button/flashlight_engiehelm/flashlight_button = locate(/obj/ability_button/flashlight_engiehelm) in src.ability_buttons
-			flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
-		return
+	base_icon_state = "espace-alt"
+	icon_state = "espace-alt0"
 
 /obj/item/clothing/head/helmet/space/engineer/abilities = list(/obj/ability_button/flashlight_engiehelm)
 
@@ -283,6 +271,7 @@
 	hides_from_examine = C_EARS|C_MASK // Light space suit helms have transparent fronts
 	seal_hair = 1
 	path_prot = 0
+	acid_survival_time = 5 MINUTES
 
 	setupProperties()
 		..()
@@ -312,17 +301,17 @@
 	blocked_from_petasusaphilic = TRUE
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 		setProperty("chemprot",30)
 		setProperty("heatprot", 15)
-		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 
 	#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(mob/user)
 		if (get_pod_wars_team_num(user) == team_num)
 			..()
 		else
-			boutput(user, "<span class='alert'>The space helmet <b>explodes</b> as you reach out to grab it!</span>")
+			boutput(user, SPAN_ALERT("The space helmet <b>explodes</b> as you reach out to grab it!"))
 			make_fake_explosion(src)
 			user.u_equip(src)
 			src.dropped(user)
@@ -359,7 +348,7 @@
 			if (get_pod_wars_team_num(user) == team_num)
 				..()
 			else
-				boutput(user, "<span class='alert'>The cap <b>explodes</b> as you reach out to grab it!</span>")
+				boutput(user, SPAN_ALERT("The cap <b>explodes</b> as you reach out to grab it!"))
 				make_fake_explosion(src)
 				user.u_equip(src)
 				src.dropped(user)
@@ -516,7 +505,7 @@
 		if (get_pod_wars_team_num(user) == team_num)
 			..()
 		else
-			boutput(user, "<span class='alert'>The space helmet <b>explodes</b> as you reach out to grab it!</span>")
+			boutput(user, SPAN_ALERT("The space helmet <b>explodes</b> as you reach out to grab it!"))
 			make_fake_explosion(src)
 			user.u_equip(src)
 			src.dropped(user)
@@ -559,7 +548,6 @@
 /obj/item/clothing/head/helmet/hardhat
 	name = "hard hat"
 	icon_state = "hardhat0"
-	uses_multiple_icon_states = 1
 	item_state = "hardhat0"
 	desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
 	var/on = 0
@@ -577,10 +565,10 @@
 		light_dir.update(0)
 
 	attack_self(mob/user)
-		src.flashlight_toggle(user)
+		src.flashlight_toggle(user, activated_inhand = TRUE)
 		return
 
-	proc/flashlight_toggle(var/mob/user, var/force_on = 0)
+	proc/flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 		on = !on
 		src.icon_state = "hardhat[on]"
 		src.item_state = "hardhat[on]"
@@ -589,6 +577,10 @@
 			light_dir.update(1)
 		else
 			light_dir.update(0)
+		if (activated_inhand)
+			var/obj/ability_button/flashlight_hardhat/flashlight_button = locate(/obj/ability_button/flashlight_hardhat) in src.ability_buttons
+			if(istype(flashlight_button))
+				flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
 		return
 
 	attackby(var/obj/item/T, mob/user as mob)
@@ -616,14 +608,14 @@
 				light_dir.update(0)
 			user.update_clothing()
 			if (activated_inhand)
-				var/obj/ability_button/flashlight_engiehelm/flashlight_button = locate(/obj/ability_button/flashlight_engiehelm) in src.ability_buttons
-				flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
+				var/obj/ability_button/flashlight_hardhat/flashlight_button = locate(/obj/ability_button/flashlight_hardhat) in src.ability_buttons
+				if (istype(flashlight_button))
+					flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
 			return
 
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
 	name = "helmet"
 	icon_state = "helmet-sec"
-	uses_multiple_icon_states = 1
 	c_flags = COVERSEYES | BLOCKCHOKE
 	item_state = "helmet"
 	desc = "Somewhat protects your head from being bashed in."
@@ -635,7 +627,7 @@
 		setProperty("heatprot", 10)
 		setProperty("meleeprot_head", 5)
 
-	flashlight_toggle(var/mob/user, var/force_on = 0)
+	flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 		on = !on
 		user.update_clothing()
 		if (on)
@@ -702,17 +694,29 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	item_state = "camhat"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
-	var/camera_network = "Zeta"
+	var/camera_network = "public"
 	var/static/camera_counter = 0
 
 	New()
 		..()
 		if(src.camera_tag == initial(src.camera_tag))
-			src.camera_tag = "Built [src.camera_tag] [src.camera_counter]"
+			src.camera_tag = "[src.camera_tag] [src.camera_counter]"
 			camera_counter++
 		src.camera = new /obj/machinery/camera (src)
 		src.camera.c_tag = src.camera_tag
 		src.camera.network = src.camera_network
+
+	disposing()
+		src.camera_counter--
+		qdel(src.camera)
+		src.camera = null
+		..()
+
+/obj/item/clothing/head/helmet/camera/telesci
+	name = "telescience camera helmet"
+	desc = "A helmet with a built in camera. It has \"Telescience\" written on it in marker."
+	camera_tag = "Telescience Helmet Cam"
+	camera_network = "telesci"
 
 /obj/item/clothing/head/helmet/camera/security
 	name = "security camera helmet"
@@ -765,7 +769,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 			if ("nod")
 				if (src.up)
 					src.flip_down(source, silent=TRUE)
-					boutput(source, "<span class='hint'>You nod, dropping the welding mask over your face.</span>")
+					boutput(source, SPAN_HINT("You nod, dropping the welding mask over your face."))
 
 	proc/obscure(mob/user)
 		user.addOverlayComposition(/datum/overlayComposition/weldingmask)
@@ -789,7 +793,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 				src.obscure(user)
 				user.update_clothing()
 		if (!silent)
-			boutput(user, "<span class='hint'>You flip the mask down. The mask now provides protection from eye damage.</span>")
+			boutput(user, SPAN_HINT("You flip the mask down. The mask now provides protection from eye damage."))
 
 
 	proc/flip_up(var/mob/living/carbon/human/user, var/silent = FALSE)
@@ -806,7 +810,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 				src.reveal(user)
 				user.update_clothing()
 		if (!silent)
-			boutput(user, "<span class='hint'>You flip the mask up. The mask now provides higher armor to the head.</span>")
+			boutput(user, SPAN_HINT("You flip the mask up. The mask now provides higher armor to the head."))
 
 	equipped(mob/user, slot)
 		. = ..()
@@ -861,7 +865,6 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 	name = "siren helmet"
 	desc = "A big flashing light that you put on your head. It also plays a siren for when you need to arrest someone!"
 	icon_state = "siren0"
-	uses_multiple_icon_states = 1
 	item_state = "siren"
 	abilities = list(/obj/ability_button/weeoo) // is near segway code in vehicle.dm
 	var/weeoo_in_progress = 0
@@ -990,7 +993,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 
 	proc/toggle_visor(var/mob/user)
 		src.visor_enabled = !src.visor_enabled
-		boutput(user, "<span class='notice'>You [src.visor_enabled ? "lower" : "raise"] the helmet's thermal vision visor.</span>")
+		boutput(user, SPAN_NOTICE("You [src.visor_enabled ? "lower" : "raise"] the helmet's thermal vision visor."))
 
 		// Update the item & icon states
 		src.item_state = "[initial(src.item_state)][src.visor_enabled ? "-on" : null]"
@@ -1067,6 +1070,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
 	item_state = "salvager-heavy"
 	blocked_from_petasusaphilic = TRUE
 	has_visor = TRUE
+	item_function_flags = IMMUNE_TO_ACID
 	visor_color_lst = list(
 		"color_r" = 1.0,
 		"color_g" = 0.9,
@@ -1119,7 +1123,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
 		step_rand(src)
-		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] kicks the bucket!</b>"))
 		user.death(FALSE)
 
 
@@ -1135,7 +1139,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
 	attack_self(mob/user as mob)
-		boutput(user, "<span class='notice'>You turn the bucket right side up.</span>")
+		boutput(user, SPAN_NOTICE("You turn the bucket right side up."))
 		var/obj/item/reagent_containers/glass/bucket/B = new bucket_type(src.loc)
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
@@ -1146,7 +1150,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	suicide(var/mob/user as mob)
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
-		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] kicks the bucket!</b>"))
 		user.death(FALSE)
 
 	red

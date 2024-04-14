@@ -83,7 +83,7 @@ TYPEINFO(/obj/machinery/dispenser)
 			inserted_o2 += W
 			user.u_equip(W)
 			W.set_loc(src)
-			user.visible_message("<span class='alert'><b>[user] inserts [W] into [src]!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] inserts [W] into [src]!</b>"))
 			UpdateIcon()
 			return
 	else if (istype(W, /obj/item/tank/plasma))
@@ -91,7 +91,7 @@ TYPEINFO(/obj/machinery/dispenser)
 			inserted_pl += W
 			user.u_equip(W)
 			W.set_loc(src)
-			user.visible_message("<span class='alert'><b>[user] inserts [W] into [src]!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] inserts [W] into [src]!</b>"))
 			UpdateIcon()
 			return
 	..()

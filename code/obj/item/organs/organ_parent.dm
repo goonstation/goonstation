@@ -163,7 +163,7 @@
 					continue
 				if(holder.organ_list[thing] == src)
 					holder.organ_list[thing] = null
-				if(thing in holder.vars && holder.vars[thing] == src) // organ holders suck, refactor when they no longer suck
+				if((thing in holder.vars) && holder.vars[thing] == src) // organ holders suck, refactor when they no longer suck
 					holder.vars[thing] = null
 
 		donor_original = null
@@ -286,7 +286,7 @@
 			return
 		if (user)
 			user.show_text("You disable the safety limiters on [src].", "red")
-		src.visible_message("<span class='alert'><B>[src] sparks and shudders oddly!</B></span>", 1)
+		src.visible_message(SPAN_ALERT("<B>[src] sparks and shudders oddly!</B>"))
 		src.emagged = 1
 		return 1
 
@@ -338,7 +338,7 @@
 				src.bones.take_damage(damage_type)
 
 		// if (src.get_damage() >= max_damage)
-		if (brute_dam + burn_dam + tox_dam >= max_damage)
+		if (src.brute_dam + src.burn_dam + src.tox_dam >= src.max_damage)
 			src.breakme()
 			donor?.contract_disease(failure_disease,null,null,1)
 		health_update_queue |= donor
@@ -417,9 +417,9 @@
 				return 0
 		if (!H.organHolder.get_organ(full_organ_name))
 
-			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] [src.organ_holder_location]!</span>",\
-				"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] [src.organ_holder_location]!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your [src.organ_holder_location]!</span>")
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] [src.organ_holder_location]!"),\
+				SPAN_ALERT("You [fluff] [src] into [user == H ? "your" : "[H]'s"] [src.organ_holder_location]!"),\
+				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your [src.organ_holder_location]!"))
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)

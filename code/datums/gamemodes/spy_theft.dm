@@ -208,7 +208,7 @@
 	for(var/datum/mind/M in ticker.mode.traitors) //We loop through ticker.mode.traitors and do spy checks here because the mode might not actually be spy thief. And this instance of the datum may be held by the TRUE MODE
 		LAGCHECK(LAG_LOW)
 		if (M.special_role == ROLE_SPY_THIEF && M.current)
-			boutput(M.current, "<span class='notice'><b>Spy Console</b> has been updated with new requests.</span>") //MAGIC SPY SENSE (I feel this is justified, spies NEED to know this)
+			boutput(M.current, SPAN_NOTICE("<b>Spy Console</b> has been updated with new requests.")) //MAGIC SPY SENSE (I feel this is justified, spies NEED to know this)
 			M.current.playsound_local(M.current, 'sound/machines/twobeep.ogg', 35)
 
 /datum/game_mode/spy_theft/proc/get_mob_list()
@@ -317,10 +317,10 @@
 	station_bounties[/obj/item/clothing/shoes/magnetic] = 1
 	station_bounties[/obj/item/clothing/shoes/clown_shoes] = 1
 
-	station_bounties[/obj/item/clothing/suit/bio_suit] = 1
-	station_bounties[/obj/item/clothing/suit/bio_suit/paramedic] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/bio_suit] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/paramedic] = 1
 	station_bounties[/obj/item/clothing/suit/judgerobe] = 1
-	station_bounties[/obj/item/clothing/suit/fire] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/fire] = 1
 	station_bounties[/obj/item/clothing/suit/armor/vest] = 2
 
 	station_bounties[/obj/item/robodefibrillator] = 1
@@ -653,11 +653,6 @@
 		var/typeinfo/area/typeinfo = A.get_typeinfo()
 		if (typeinfo.valid_bounty_area)
 			possible_areas += A
-
-	#ifdef GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
-	if(!length(possible_areas))
-		possible_areas = list(locate(/area/devzone))
-	#endif
 
 	for (var/datum/bounty_item/B in active_bounties)
 		if (B.bounty_type == BOUNTY_TYPE_ORGAN || B.bounty_type == BOUNTY_TYPE_BIG)

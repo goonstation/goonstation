@@ -67,7 +67,7 @@
 		if(isdead(src))
 			return
 		src.target = M
-		src.ai_state = AI_ATTACKING
+		src.ai_set_state(AI_ATTACKING)
 		src.ai_threatened = world.timeofday
 		var/target_name = M.name
 		//var/area/current_loc = get_area(src)
@@ -112,37 +112,6 @@
 
 //// rest in peace NPC classic-mentally challenged idiots, you were shit ////
 
-
-/mob/living/carbon/human/npc/syndicate
-	ai_aggressive = 1
-	New()
-		..()
-		SPAWN(0)
-			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-				src.real_name = "[syndicate_name()] Operative #[ticker.mode:agent_number]"
-				ticker.mode:agent_number++
-			else
-				src.real_name = "Syndicate Agent"
-			JobEquipSpawned("Syndicate Operative")
-			u_equip(l_store) // Deletes syndicate remote teleporter to keep people out of the syndie shuttle
-			u_equip(r_store) // Deletes uplink radio because fuckem
-
-/mob/living/carbon/human/npc/syndicate_weak
-	ai_aggressive = 1
-	New()
-		..()
-		SPAWN(0)
-			src.real_name = "Junior Syndicate Agent"
-			JobEquipSpawned("Junior Syndicate Operative")
-
-/mob/living/carbon/human/npc/syndicate_weak/no_ammo
-	ai_aggressive = 1
-	New()
-		..()
-		SPAWN(0)
-			src.real_name = "Junior Syndicate Agent"
-			JobEquipSpawned("Poorly Equipped Junior Syndicate Operative")
-
 /mob/living/carbon/human/npc/survivor // For prefab wrecks. Give them some life. Maybe expand this npc later idk
 	New()
 		..()
@@ -176,7 +145,7 @@
 /mob/living/carbon/human/proc/ai_init()
 	ai_set_active(1)
 	ai_laststep = 0
-	ai_state = AI_PASSIVE
+	ai_set_state(AI_PASSIVE)
 	ai_target = null
 	ai_threatened = 0
 	ai_movedelay = 3
@@ -189,7 +158,7 @@
 /mob/living/carbon/human/proc/ai_stop()
 	ai_set_active(0)
 	ai_laststep = 0
-	ai_state = AI_PASSIVE
+	ai_set_state(AI_PASSIVE)
 	ai_target = null
 	ai_threatened = 0
 	ai_movedelay = 3
@@ -237,7 +206,7 @@
 		ai_busy = 0
 	if(src.hasStatus("handcuffed"))
 		ai_target = null
-		ai_state = AI_PASSIVE
+		ai_set_state(AI_PASSIVE)
 		if(src.canmove && !ai_busy)
 			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(1 MINUTE + rand(-10 SECONDS, 10 SECONDS)), src)
 	ai_move()
@@ -293,11 +262,11 @@
 			lastRating = rating
 	//Did we find anyone to fight?
 	if(T)
-		ai_target = T
-		ai_state = AI_ANGERING
+		if (ai_set_state(AI_ANGERING))
+			ai_target = T
 		ai_threatened = world.timeofday
 	else
-		ai_state = AI_PASSIVE
+		ai_set_state(AI_PASSIVE)
 
 /mob/living/carbon/human/proc/ai_action()
 
@@ -320,12 +289,12 @@
 
 			if (GET_DIST(src,ai_target) > 6)
 				ai_target = null
-				ai_state = AI_PASSIVE
+				ai_set_state(AI_PASSIVE)
 				ai_threatened = 0
 				return
 
 			if ( (world.timeofday - ai_threatened) > 20 ) //Oh, it is on now! >:C
-				ai_state = AI_ATTACKING
+				ai_set_state(AI_ATTACKING)
 				return
 
 		if(AI_ATTACKING)	//Gonna kick your ass.
@@ -333,14 +302,14 @@
 			src.set_a_intent(INTENT_HARM)
 
 			if(src.health < src.max_health / 8 && !src.ai_suicidal && !src.ai_aggressive)
-				src.ai_state = AI_FLEEING
+				src.ai_set_state(AI_FLEEING)
 				src.ai_frustration = 0
 				return
 
 			if(!ai_target || ai_target == src && !ai_suicidal || ai_target.z != src.z || !src.ai_is_valid_target(ai_target))
 				ai_frustration = 0
 				ai_target = null
-				ai_state = AI_PASSIVE
+				ai_set_state(AI_PASSIVE)
 				return
 
 			var/valid = ai_validpath()
@@ -360,7 +329,7 @@
 					ai_target_old |= ai_target //Can't get to this dork
 					ai_frustration = 0
 					ai_target = null
-					ai_state = AI_PASSIVE
+					ai_set_state(AI_PASSIVE)
 					walk_towards(src,null)
 
 			var/area/A = get_area(src)
@@ -380,7 +349,7 @@
 
 			if(stop_fight)
 				ai_target = null
-				ai_state = AI_PASSIVE
+				ai_set_state(AI_PASSIVE)
 				return
 
 
@@ -394,7 +363,7 @@
 				if((carbon_target.getStatusDuration("weakened") || carbon_target.getStatusDuration("stunned") || carbon_target.getStatusDuration("paralysis")) && distance <= 1 && !ai_incapacitated())
 					if (istype(carbon_target.wear_mask, /obj/item/clothing/mask) && prob(10))
 						var/mask = carbon_target.wear_mask
-						src.visible_message("<span class='alert'><b>[src] is trying to take off [mask] from [carbon_target]'s head!</b></span>")
+						src.visible_message(SPAN_ALERT("<b>[src] is trying to take off [mask] from [carbon_target]'s head!</b>"))
 						carbon_target.u_equip(mask)
 						if (mask)
 							mask:set_loc(carbon_target:loc)
@@ -402,7 +371,7 @@
 							mask:layer = initial(mask:layer)
 					else if (carbon_target:wear_suit && prob(5) && !src.r_hand)
 						var/suit = carbon_target:wear_suit
-						src.visible_message("<span class='alert'><b>[src] is trying to take off [suit] from [carbon_target]'s body!</b></span>")
+						src.visible_message(SPAN_ALERT("<b>[src] is trying to take off [suit] from [carbon_target]'s body!</b>"))
 						carbon_target.u_equip(suit)
 						if (suit)
 							suit:set_loc(carbon_target:loc)
@@ -492,7 +461,7 @@
 			if(prob(5) && (distance == 3) && (world.timeofday - ai_pounced) > 180 && ai_validpath())
 				if(valid)
 					ai_pounced = world.timeofday
-					src.visible_message("<span class='alert'>[src] lunges at [ai_target]!</span>")
+					src.visible_message(SPAN_ALERT("[src] lunges at [ai_target]!"))
 					ai_target:changeStatus("weakened", 2 SECONDS)
 					SPAWN(0)
 						step_towards(src,ai_target)
@@ -516,7 +485,7 @@
 				if(guardbuddy.arrest_target != src)
 					cancel_fleeing = TRUE
 			if(cancel_fleeing)
-				src.ai_state = AI_PASSIVE
+				src.ai_set_state(AI_PASSIVE)
 				if(prob(95))
 					src.ai_target = null
 
@@ -694,7 +663,7 @@
 	if(ai_incapacitated())
 		walk(src, null)
 		if(src.ai_state == AI_FLEEING)
-			src.ai_state = AI_PASSIVE
+			src.ai_set_state(AI_PASSIVE)
 
 
 /mob/living/carbon/human/proc/ai_pickupstuff()
@@ -1007,6 +976,11 @@
 		if (!S.locked && can_reach(src, S) && prob(5))
 			src.hand_attack(S)
 
+/// Sets this mob's ai_state to `state`
+/// returns TRUE if the state was set, FALSE otherwise
+/mob/living/carbon/human/proc/ai_set_state(var/state)
+	src.ai_state = state
+	return TRUE
 
 #undef IS_NPC_HATED_ITEM
 #undef IS_NPC_CLOTHING

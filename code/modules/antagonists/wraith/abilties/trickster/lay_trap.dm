@@ -20,7 +20,7 @@
 			return 1
 
 		if (!istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster) && !istype(holder.owner, /mob/living/critter/wraith/trickster_puppet))
-			boutput(holder.owner, "<span class='notice'>You cannot cast this under your current form.</span>")
+			boutput(holder.owner, SPAN_NOTICE("You cannot cast this under your current form."))
 			return 1
 
 		var/mob/living/intangible/wraith/wraith_trickster/W = null
@@ -28,20 +28,20 @@
 		if(istype(holder.owner, /mob/living/intangible/wraith/wraith_trickster))
 			W = holder.owner
 			if (!W.haunting)
-				boutput(holder.owner, "<span class='notice'>You must be manifested to place a trap!</span>")
+				boutput(holder.owner, SPAN_NOTICE("You must be manifested to place a trap!"))
 				return 1
 		else
 			P = holder.owner
 		var/trap_choice = null
 		var/turf/T = get_turf(holder.owner)
 		if (!isturf(T) || !istype(T,/turf/simulated/floor))
-			boutput(holder.owner, "<span class='notice'>You cannot open a trap here.</span>")
+			boutput(holder.owner, SPAN_NOTICE("You cannot open a trap here."))
 			return 1
 		for (var/obj/machinery/wraith/runetrap/R in range(T, 3))
-			boutput(holder.owner, "<span class='notice'>That is too close to another trap.</span>")
+			boutput(holder.owner, SPAN_NOTICE("That is too close to another trap."))
 			return 1
 		if ((W != null && W.traps_laid >= max_traps) || (P != null && P.traps_laid >= max_traps))
-			boutput(holder.owner, "<span class='notice'>You already have too many traps!</span>")
+			boutput(holder.owner, SPAN_NOTICE("You already have too many traps!"))
 			return 1
 		if (length(src.trap_types) > 1)
 			trap_choice = input("What type of trap do you want?", "Target trap type", null) as null|anything in trap_types

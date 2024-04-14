@@ -5,6 +5,8 @@
 
 	shuttle_available = SHUTTLE_AVAILABLE_DELAY
 	shuttle_available_threshold = 20 MINUTES // default value, probably change this
+	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
+	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	//NOTE: if you need to track something, put it here
 	var/list/datum/mind/flockminds = list()
@@ -36,7 +38,8 @@
 /datum/game_mode/flock/post_setup()
 	for (var/datum/mind/flockmind in flockminds)
 		flockmind.add_antagonist(ROLE_FLOCKMIND, source = ANTAGONIST_SOURCE_ROUND_START)
-
+	SPAWN(rand(waittime_l, waittime_h))
+		send_intercept()
 	. = ..()
 
 /datum/game_mode/flock/victory_msg()

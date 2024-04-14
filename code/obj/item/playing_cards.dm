@@ -15,7 +15,7 @@
 	w_class = W_CLASS_TINY
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 	///what style of card sprite are we using?
 	var/card_style
 	///number of cards in a full deck (used for reference when updating stack size)
@@ -347,7 +347,7 @@
 			var/mob/user = usr
 			user.deathConfetti()
 			playsound(user.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50)
-			user.visible_message("<span class='combat'><b>[uppertext(user.name)] WINS THE GAME!</b></span>")
+			user.visible_message(SPAN_COMBAT("<b>[uppertext(user.name)] WINS THE GAME!</b>"))
 			if(!foiled)
 				logTheThing(LOG_COMBAT, user, "was instantly braindeath killed by [src] at [log_loc(src)].")
 				user.take_brain_damage(1000)
@@ -365,7 +365,7 @@ ABSTRACT_TYPE(/obj/item/card_group)
 	w_class = W_CLASS_TINY
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 	health = 10
 	inventory_counter_enabled = 1
 	/// same function as playing_card card name
@@ -1033,7 +1033,7 @@ ABSTRACT_TYPE(/obj/item/card_group)
 	w_class = W_CLASS_TINY
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 	health = 10
 	var/obj/item/card_group/stored_deck
 	var/box_style = "white"
@@ -1158,7 +1158,7 @@ ABSTRACT_TYPE(/obj/item/card_group)
 
 	onStart()
 		..()
-		user.visible_message("<span class='alert'><b>[user.name]</b> [pick(messages)]</span>")
+		user.visible_message(SPAN_ALERT("<b>[user.name]</b> [pick(messages)]"))
 
 	onUpdate()
 		..()
@@ -1171,7 +1171,7 @@ ABSTRACT_TYPE(/obj/item/card_group)
 	onEnd()
 		..()
 		if(card_box.icon_state == "stg-box")
-			user.visible_message("<span class='green'><b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box and retrieves the cards from inside.</span>")
+			user.visible_message(SPAN_SUCCESS("<b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box and retrieves the cards from inside."))
 			card_box.icon_state = "stg-box-torn"
 			user.put_in_hand_or_drop(card_box.stored_deck)
 			var/obj/decal/cleanable/generic/decal = make_cleanable(/obj/decal/cleanable/generic,get_turf(user.loc))

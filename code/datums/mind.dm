@@ -29,6 +29,9 @@ datum/mind
 	/// A list of every antagonist datum subordinate to this mind.
 	var/list/datum/antagonist/subordinate/subordinate_antagonists = list()
 
+	//Gang variables
+	var/obj/item/device/pda2/originalPDA //! The PDA that this crewmember started with - for gang PDA messages
+
 	// This used for dead/released/etc mindhacks and rogue robots we still want them to show up
 	// in the game over stats. It's a list because former mindhacks could also end up as an emagged
 	// cyborg or something. Use strings here, just like special_role (Convair880).
@@ -304,7 +307,7 @@ datum/mind
 		return FALSE
 
 	/// Attempts to remove existing antagonist datums of ID `role` from this mind, or if provided, a specific instance of an antagonist datum.
-	proc/remove_antagonist(role, source = null)
+	proc/remove_antagonist(role, source = null, take_gear = TRUE)
 		var/datum/antagonist/antagonist_role
 		if (istype(role, /datum/antagonist))
 			antagonist_role = role
@@ -319,7 +322,7 @@ datum/mind
 			return FALSE
 		if (antagonist_role.faction)
 			antagonist_role.owner.current.faction &= ~antagonist_role.faction
-		antagonist_role.remove_self(TRUE, source)
+		antagonist_role.remove_self(take_gear, source)
 		src.antagonists.Remove(antagonist_role)
 		if (!length(src.antagonists) && src.special_role == antagonist_role.id)
 			src.special_role = null

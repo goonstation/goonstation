@@ -21,5 +21,5 @@
 		if (disposed)
 			return
 		if (istype(W, /obj/item/device/key/iridium))
-			boutput(user, "<span class='notice'>iridium -c 'ufw allow 2323/stcp from ::1'</span>")
+			boutput(user, SPAN_NOTICE("iridium -c 'ufw allow 2323/stcp from ::1'"))
 			qdel(src)

@@ -42,7 +42,7 @@
 
 	process()
 		if(contained) return
-		if(!connected_port) //only react when pipe_network will ont it do it for you
+		if(!connected_port) //only react when pipe_network wont it do it for you
 			//Allow for reactions
 			air_contents?.react() //ZeWaka: Fix for null.react()
 
@@ -106,7 +106,7 @@
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/W, var/mob/user)
 	if(istype(W, /obj/item/tank))
 		if(!src.holding)
-			boutput(user, "<span class='notice'>You attach the [W.name] to the the [src.name]</span>")
+			boutput(user, SPAN_NOTICE("You attach the [W.name] to the the [src.name]"))
 			user.drop_item()
 			W.set_loc(src)
 			src.holding = W
@@ -117,12 +117,12 @@
 		if ((istype(src, /obj/machinery/portable_atmospherics/canister))) //No messing with anchored canbombs. -ZeWaka
 			var/obj/machinery/portable_atmospherics/canister/C = src
 			if (!isnull(C.det) && C.anchored)
-				boutput(user, "<span class='alert'>The detonating mechanism blocks you from modifying the anchors on the [src.name].</span>")
+				boutput(user, SPAN_ALERT("The detonating mechanism blocks you from modifying the anchors on the [src.name]."))
 				return
 		if(connected_port)
 			logTheThing(LOG_STATION, user, "has disconnected \the [src] [log_atmos(src)] from the port at [log_loc(src)].")
 			disconnect()
-			boutput(user, "<span class='notice'>You disconnect [name] from the port.</span>")
+			boutput(user, SPAN_NOTICE("You disconnect [name] from the port."))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			tgui_process.update_uis(src)
 			return
@@ -131,15 +131,18 @@
 			if(possible_port)
 				if(connect(possible_port))
 					logTheThing(LOG_STATION, user, "has connected \the [src] [log_atmos(src)] to the port at [log_loc(src)].")
-					boutput(user, "<span class='notice'>You connect [name] to the port.</span>")
+					boutput(user, SPAN_NOTICE("You connect [name] to the port."))
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					tgui_process.update_uis(src)
 					return
 				else
-					boutput(user, "<span class='notice'>[name] failed to connect to the port.</span>")
+					boutput(user, SPAN_NOTICE("[name] failed to connect to the port."))
 					return
 			else
-				boutput(user, "<span class='notice'>Nothing happens.</span>")
+				boutput(user, SPAN_NOTICE("Nothing happens."))
 				return
 
 	return
+
+/obj/machinery/portable_atmospherics/return_air()
+	return air_contents

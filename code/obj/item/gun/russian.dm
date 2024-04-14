@@ -39,46 +39,33 @@
 			playsound(user, 'sound/weapons/Gunclick.ogg', 80, TRUE)
 			for(var/mob/O in AIviewers(user, null))
 				if (O.client)
-					O.show_message("<span class='alert'>[user] points the gun at [his_or_her(user)] head. Click!</span>", 1, "<span class='alert'>Click!</span>", 2)
+					O.show_message(SPAN_ALERT("[user] points the gun at [his_or_her(user)] head. Click!"), 1, SPAN_ALERT("Click!"), 2)
 
 			inventory_counter.update_number(1)
 			return 0
 		else if(src.shotsLeft == 1)
 			if(ishuman(user))
-				var/list/nearby_turfs = list()
-				for(var/turf/T in view(5, user))
-					nearby_turfs += T
 				var/mob/living/carbon/human/H = user
-				var/obj/brain = H.organHolder.drop_organ("brain")
-				var/obj/l_eye = H.organHolder.drop_organ("left_eye")
-				var/obj/r_eye = H.organHolder.drop_organ("right_eye")
-				var/obj/head = H.organHolder.drop_organ("head")
-				brain?.throw_at(pick(nearby_turfs), pick(1,2), 10)
-				l_eye?.throw_at(pick(nearby_turfs), pick(1,2), 10)
-				r_eye?.throw_at(pick(nearby_turfs), pick(1,2), 10)
-				qdel(head)
+				H.head_explosion()
 			else
 				user.TakeDamage("head", 300, 0)
-			take_bleeding_damage(user, null, 500, DAMAGE_STAB)
+				take_bleeding_damage(user, null, 500, DAMAGE_STAB)
 			src.shotsLeft = 0
 			playsound(user, 'sound/weapons/Gunshot.ogg', 100, TRUE)
-			user.visible_message("<span class='alert'><B>BOOM!</B> [user]'s head explodes.</span>",\
-				"<span class='alert'><B>BOOM!</B></span>",\
-				"<span class='alert'>You hear someone's head explode.</span>")
 			logTheThing(LOG_COMBAT, user, "shoots themselves with [src] at [log_loc(user)].")
 			inventory_counter.update_number(0)
 			return 1
 		else
-			boutput(user, "<span class='notice'>You need to reload the gun.</span>")
+			boutput(user, SPAN_NOTICE("You need to reload the gun."))
 			inventory_counter.update_number(0)
 			return 0
 
 	proc/reload_gun(mob/user as mob)
 		if(src.shotsLeft <= 0)
-			user.visible_message("<span class='notice'>[user] finds a bullet on the ground and loads it into the gun, spinning the cylinder.</span>", "<span class='notice'>You find a bullet on the ground and load it into the gun, spinning the cylinder.</span>")
+			user.visible_message(SPAN_NOTICE("[user] finds a bullet on the ground and loads it into the gun, spinning the cylinder."), SPAN_NOTICE("You find a bullet on the ground and load it into the gun, spinning the cylinder."))
 			src.shotsLeft = rand(1, shotsMax)
 		else if(src.shotsLeft >= 1)
-			user.visible_message("<span class='notice'>[user] spins the cylinder.</span>", "<span class='notice'>You spin the cylinder.</span>")
+			user.visible_message(SPAN_NOTICE("[user] spins the cylinder."), SPAN_NOTICE("You spin the cylinder."))
 			src.shotsLeft = rand(1, shotsMax)
 		inventory_counter.update_number(1)
 

@@ -23,6 +23,7 @@
 		allowed_types -= DATA_INPUT_LIST_EDIT
 	if (!isnum(default))
 		allowed_types -= DATA_INPUT_NUM_ADJUST
+		allowed_types -= DATA_INPUT_BITFIELD
 
 	var/input = null 	// The input from the user- usually text, but might be a file or something.
 	var/selected_type
@@ -31,7 +32,7 @@
 	else
 		selected_type = input(custom_type_title || "Which input type?", custom_type_message || "Input Type Selection", default_type) as null|anything in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
 
-	if (selected_type != default_type && selected_type != "JSON") //clear the default if we aren't using the suggested type
+	if (selected_type != default_type && selected_type != "JSON" && selected_type != DATA_INPUT_BITFIELD) //clear the default if we aren't using the suggested type
 		default = null
 
 	switch(selected_type)
@@ -46,7 +47,7 @@
 			while (!stub)
 				stub = input(custom_message  || "Enter part of type:", custom_title) as null|text
 				if (!stub)
-					boutput(src, "<span class='alert'>Cancelled.</span>")
+					boutput(src, SPAN_ALERT("Cancelled."))
 					return
 				input = get_one_match(stub, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (isnull(input))
@@ -69,7 +70,7 @@
 			else
 				input = get_cached_file(input)
 				if(isnull(input))
-					boutput(src, "<span class='alert'>DMI file [input] not found.</span>")
+					boutput(src, SPAN_ALERT("DMI file [input] not found."))
 					return
 			if (alert("Would you like to associate an icon_state with the icon?", "icon_state", "Yes", "No") == "Yes")
 				var/state = input("Enter icon_state:", "icon_state") as null|text
@@ -79,6 +80,9 @@
 		if (DATA_INPUT_BOOL)
 			//lines written by the utterly insane
 			input = alert(custom_message  || "True or False?", custom_title + (!isnull(default) ? "(Default: [default ? "True" : "False"])" : null), "True", "False") == "True" ? TRUE : FALSE
+
+		if (DATA_INPUT_BITFIELD)
+			input = tgui_input_bitfield(usr, custom_title, default = default, timeout = 0, autofocus = TRUE)
 
 		if (DATA_INPUT_FILE)
 			input = input(custom_message  || "Select file:", custom_title) as null|file
@@ -115,7 +119,7 @@
 			if (!input)
 				input = locate("\[[reftext]\]")
 			if (!input)
-				boutput(src, "<span class='alert'>Invalid ref.</span>")
+				boutput(src, SPAN_ALERT("Invalid ref."))
 				return
 
 		if (DATA_INPUT_TURF_BY_COORDS)
@@ -124,7 +128,7 @@
 			var/z = input("Z coordinate", "Set to turf at \[[x], [y], _\]", null) as null|num
 			input = locate(x, y, z)
 			if (!input)
-				boutput(src, "<span class='alert'>Invalid turf.</span>")
+				boutput(src, SPAN_ALERT("Invalid turf."))
 				return
 
 		if (DATA_INPUT_REFPICKER)
@@ -133,11 +137,11 @@
 		if (DATA_INPUT_NEW_INSTANCE)
 			var/stub = input(custom_message  || "Enter part of type:", custom_title) as null|text
 			if (!stub)
-				boutput(src, "<span class='alert'>Cancelled.</span>")
+				boutput(src, SPAN_ALERT("Cancelled."))
 				return
 			input = get_one_match(stub, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 			if(isnull(input))
-				boutput(src, "<span class='alert'>Cancelled.</span>")
+				boutput(src, SPAN_ALERT("Cancelled."))
 				return
 			var/list/arglist = src.get_proccall_arglist()
 			if(length(arglist))
@@ -178,7 +182,7 @@
 			default = "[M.a],[M.b],[M.c],[M.d],[M.e],[M.f]"
 			input = input("Create a matrix:  (format: \"a,b,c,d,e,f\" without quotes). Must have a leading 0 for decimals:", custom_title, default) as null|message
 			if(input == null)
-				boutput(src, "<span class='alert'>Cancelled.</span>")
+				boutput(src, SPAN_ALERT("Cancelled."))
 				return
 
 			var/regex/R = new("(\\w*\\.*\\w+)(,|$)", "gi")
@@ -194,7 +198,7 @@
 				input = matrix(MV[1], MV[2], MV[3], MV[4], MV[5], MV[6])
 
 			else
-				boutput(src, "<span class='alert'>Matrix too short. Cancelled.</span>")
+				boutput(src, SPAN_ALERT("Matrix too short. Cancelled."))
 				return
 
 		// anything else, we just return a dummy value with the input type and let the caller handle it
@@ -202,7 +206,7 @@
 			input = selected_type
 
 	if (isnull(input) && selected_type != DATA_INPUT_NULL)
-		boutput(src, "<span class='alert'>Cancelled.</span>")
+		boutput(src, SPAN_ALERT("Cancelled."))
 		return
 
 	// Done with the switch. Now we return whatever we have

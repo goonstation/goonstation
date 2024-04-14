@@ -65,10 +65,10 @@
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.clothing_protects_from_chems())
-					boutput(M, "<span class='notice'>You are sprayed with guts, but your biosuit protects you!</span>")
+					boutput(M, SPAN_NOTICE("You are sprayed with guts, but your biosuit protects you!"))
 					continue
 				else
-					boutput(M, "<span class='alert'>You are sprayed with disgusting rotting flesh! You're pretty sure some of it got in your mouth.</span>")
+					boutput(M, SPAN_ALERT("You are sprayed with disgusting rotting flesh! You're pretty sure some of it got in your mouth."))
 			M.emote("scream")
 			M.take_toxin_damage(25)
 			if (M.reagents)
@@ -104,7 +104,7 @@
 /mob/living/critter/exploder/say(message, involuntary = 0)	//Should probably remove this
 	if(isdead(src) && src.is_npc)
 		return
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	..(message)
 

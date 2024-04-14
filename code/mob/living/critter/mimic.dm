@@ -136,14 +136,14 @@
 		if (..())
 			return TRUE
 		if (!isobj(target))
-			boutput(holder.owner, "<span class='alert'>You can't mimic this!</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't mimic this!"))
 			return TRUE
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>You must be adjacent to [target] to mimic it.</span>")
+			boutput(holder.owner, SPAN_ALERT("You must be adjacent to [target] to mimic it."))
 			return TRUE
 		var/mob/living/critter/mimic/parent = holder.owner
 		parent.disguise_as(target)
-		boutput(holder.owner, "<span class='alert'>You mimic [target].</span>")
+		boutput(holder.owner, SPAN_ALERT("You mimic [target]."))
 		return FALSE
 
 /datum/targetable/critter/sting/mimic
