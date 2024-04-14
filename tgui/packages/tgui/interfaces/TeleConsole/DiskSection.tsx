@@ -21,7 +21,6 @@ export const DiskSection = (props: DiskSectionProps) => {
       <Section title="Disk Controls">
         <Button
           icon="upload"
-          color="blue"
           onClick={onScanDisk}>
           Read from Disk
         </Button>

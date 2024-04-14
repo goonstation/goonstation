@@ -23,7 +23,7 @@ export interface TeleConsoleData {
 }
 
 export interface LongRangeData {
-  ref: string;
+  nameRef: string;
   name: string;
 }
 

@@ -23,31 +23,30 @@ export const LongRangeSection = (props: LongRangeSectionProps) => {
     <Section title="Destinations">
       <LabeledList>
         {destinations.length ? destinations.map(({ name }) => (
-          <div key={name}>
-            <LabeledList.Item
-              label={name}>
-              <Box textAlign="right">
-                <Button
-                  icon="sign-out-alt"
-                  onClick={() => onSend(name)}
-                  disabled={!isConnected}
-                >
-                  Send
-                </Button>
-                <Button
-                  icon="sign-in-alt"
-                  onClick={() => onReceive(name)}
-                  disabled={!isConnected}
-                >
-                  Receive
-                </Button>
-                <Button onClick={() => onToggle(name)} disabled={!isConnected}>
-                  <Icon name="ring" rotation={90} />
-                  Toggle Portal
-                </Button>
-              </Box>
-            </LabeledList.Item>
-          </div>
+          <LabeledList.Item
+            key={name}
+            label={name}>
+            <Box textAlign="right">
+              <Button
+                icon="sign-out-alt"
+                onClick={() => onSend(name)}
+                disabled={!isConnected}
+              >
+                Send
+              </Button>
+              <Button
+                icon="sign-in-alt"
+                onClick={() => onReceive(name)}
+                disabled={!isConnected}
+              >
+                Receive
+              </Button>
+              <Button onClick={() => onToggle(name)} disabled={!isConnected}>
+                <Icon name="ring" rotation={90} />
+                Toggle Portal
+              </Button>
+            </Box>
+          </LabeledList.Item>
         )) : (
           <LabeledList.Item>
             No destinations are currently available.

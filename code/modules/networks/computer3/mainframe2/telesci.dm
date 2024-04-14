@@ -1156,7 +1156,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			.["bookmarks"] = list()
 			for (var/datum/teleporter_bookmark/b as anything in bookmarks)
 				.["bookmarks"] += list(list(
-					"ref" = ref(b),
+					"nameRef" = ref(b),
 					"name" = b.name,
 					"x" = b.x,
 					"y" = b.y,
