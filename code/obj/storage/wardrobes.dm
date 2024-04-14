@@ -161,11 +161,11 @@ TYPEINFO(/obj/storage/closet/dresser)
 	name = "formalwear closet"
 	desc = "It's a closet! This one can be opened AND closed. Comes with formal clothes"
 	spawn_contents = list(/obj/item/clothing/under/gimmick/maid{pixel_x = -3; pixel_y = -4},
-	/obj/item/clothing/head/maid{pixel_x = 3; pixel_y = 10},
+	/obj/item/clothing/head/maid{pixel_x = -3; pixel_y = 10},
+	/obj/item/clothing/under/rank/bartender{pixel_x = 3; pixel_y = 2} = 2,
 	/obj/item/clothing/under/gimmick/butler{pixel_x = 3; pixel_y = -4},
 	/obj/item/clothing/head/that{pixel_x = 3; pixel_y = 14} = 2,
-	/obj/item/clothing/under/rank/bartender{pixel_x = 3; pixel_y = 2} = 2,
-	/obj/item/clothing/suit/wcoat{pixel_x = -3; pixel_y = -4} = 2,
+	/obj/item/clothing/suit/wcoat{pixel_x = -3; pixel_y = 4} = 2,
 	/obj/item/clothing/shoes/black{pixel_x = 0; pixel_y = -12} = 2)
 
 /obj/storage/closet/wardrobe/yellow/engineering
