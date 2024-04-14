@@ -209,7 +209,7 @@
 					update_static_data(usr,ui)
 			. = TRUE
 
-/obj/item/paper/proc/package_static_ui_data(mob/user)
+/obj/item/paper/ui_static_data(mob/user)
 	. = list(
 		"name" = src.name,
 		"sizeX" = src.sizex,
@@ -221,9 +221,6 @@
 		"stampable" = src.stampable,
 		"sealed" = src.sealed,
 	)
-
-/obj/item/paper/ui_static_data(mob/user)
-	. = src.package_static_ui_data(user)
 
 /obj/item/paper/ui_data(mob/user)
 	. = list(

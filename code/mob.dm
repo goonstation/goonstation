@@ -1479,10 +1479,7 @@
 		boutput(src, SPAN_NOTICE("The gane hasn't finished yet!"))
 		return
 
-	if(!ticker.crew_credits_by_client.Find("\ref[src.client]"))
-		ticker.crew_credits_by_client["\ref[src.client]"] = new /datum/crewCredits(src.client.preferences.summary_tab)
-
-	global.ticker.crew_credits_by_client["\ref[src.client]"].ui_interact(src)
+	global.ticker.get_credits().ui_interact(src)
 
 /mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))

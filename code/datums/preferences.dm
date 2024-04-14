@@ -52,8 +52,6 @@ var/list/removed_jobs = list(
 	var/view_changelog = 1
 	var/view_score = 1
 	var/view_tickets = 1
-	var/view_summary = SHOW_CREDITS_ALWAYS
-	var/summary_tab = CREDITS_TAB_CREW
 	var/admin_music_volume = 50
 	var/radio_music_volume = 10
 	var/use_click_buffer = 0
@@ -272,8 +270,6 @@ var/list/removed_jobs = list(
 			"viewChangelog" = src.view_changelog,
 			"viewScore" = src.view_score,
 			"viewTickets" = src.view_tickets,
-			"viewSummary" = src.view_summary,
-			"summaryTab" = src.summary_tab,
 			"useClickBuffer" = src.use_click_buffer,
 			"helpTextInExamine" = src.help_text_in_examine,
 			"useWasd" = src.use_wasd,
@@ -918,23 +914,15 @@ var/list/removed_jobs = list(
 				src.profile_modified = TRUE
 				return TRUE
 
-			if ("update-viewSummary")
-				if (params["value"] in list(SHOW_CREDITS_NEVER, SHOW_CREDITS_ALWAYS, SHOW_CREDITS_CITATIONS_REPORTS))
-					src.view_summary = params["value"]
-					src.profile_modified = TRUE
-					return TRUE
+			if ("update-viewScore")
+				src.view_score = !src.view_score
+				src.profile_modified = TRUE
+				return TRUE
 
-			if ("update-summaryTab")
-				if (params["value"] in list(
-					CREDITS_TAB_CREW,
-					CREDITS_TAB_ANTAGONIST,
-					CREDITS_TAB_SCORE,
-					CREDITS_TAB_CITATION,
-					CREDITS_TAB_REPORT,
-				))
-					src.summary_tab = params["value"]
-					src.profile_modified = TRUE
-					return TRUE
+			if ("update-viewTickets")
+				src.view_tickets = !src.view_tickets
+				src.profile_modified = TRUE
+				return TRUE
 
 			if ("update-useClickBuffer")
 				src.use_click_buffer = !src.use_click_buffer
@@ -1030,8 +1018,6 @@ var/list/removed_jobs = list(
 				auto_capitalization = 0
 				listen_ooc = 1
 				view_changelog = 1
-				view_summary = SHOW_CREDITS_ALWAYS
-				summary_tab = CREDITS_TAB_CREW
 				admin_music_volume = 50
 				radio_music_volume = 50
 				use_click_buffer = 0

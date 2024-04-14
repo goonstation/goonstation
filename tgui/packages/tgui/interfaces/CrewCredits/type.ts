@@ -7,20 +7,12 @@
  */
 
 import { BooleanLike } from 'common/react';
-import { PaperSheetData } from '../PaperSheet/type';
 
 export enum CrewCreditsTabKeys {
   Crew,
   Antagonists,
   Score,
   Citations,
-  Reports,
-}
-
-export interface CrewCreditsData{
-  current_tab: number;
-  has_citation_data: BooleanLike;
-  has_report_data: BooleanLike;
 }
 
 export interface CrewTabData {
@@ -98,30 +90,35 @@ export interface ScoreItemProps {
 }
 
 export interface CitationTabData {
-  tickets: CitationTargetData[];
-  fines: CitationTargetData[];
-  current_tab: number;
+  tickets: CitationsByTargetData[];
+  fines: CitationsByTargetData[];
 }
 
-export interface CitationTargetListProps {
+export interface CitationByTargetListProps {
   title: string;
-  citation_targets: CitationTargetData[];
+  citation_targets: CitationsByTargetData[];
 }
 
-export interface CitationTargetData {
+export interface CitationsByTargetData {
   name: string;
-  citations: string[];
+  citations: CitationData[];
 }
 
-export interface ReportMenuTabProps {
-  current_tab: number;
+export interface TicketData {
+  reason: string,
+  issuer: string,
+  issuer_job: string,
 }
 
-export interface ReportTabData {
-  reports: ReportData[];
+export interface FineData extends TicketData {
+  amount: number,
+  approver: string,
+  approver_job: string,
+  paid_amount: number,
+  paid: BooleanLike,
 }
 
-export interface ReportData {
-  issuer: string;
-  pages: PaperSheetData[];
-}
+export type CitationData = TicketData | FineData
+
+export const isFineData = (value: CitationData): value is FineData =>
+  'approver' in value;

@@ -20,8 +20,7 @@ var/global/current_state = GAME_STATE_INVALID
 
 	var/datum/ai_rack_manager/ai_law_rack_manager = new /datum/ai_rack_manager()
 
-	/// map of client ref to summary datum
-	var/list/datum/crewCredits/crew_credits_by_client = list()
+	var/datum/crewCredits/creds = null
 
 	var/skull_key_assigned = 0
 
@@ -669,6 +668,8 @@ var/global/current_state = GAME_STATE_INVALID
 	score_tracker.calculate_score()
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] score calculated")
 
+	src.creds = new /datum/crewCredits
+
 	var/final_score = score_tracker.final_score_all
 	if (final_score > 200)
 		final_score = 200
@@ -892,15 +893,14 @@ var/global/current_state = GAME_STATE_INVALID
 	SPAWN(0)
 		for(var/mob/E in mobs)
 			if(E.client)
-				var/datum/crewCredits/client_credits = new /datum/crewCredits(E.client.preferences.summary_tab)
-				src.crew_credits_by_client["\ref[E.client]"] = client_credits
 				if (!E.abilityHolder)
 					E.add_ability_holder(/datum/abilityHolder/generic)
 				E.addAbility(/datum/targetable/crew_credits)
-				if (E.client.preferences.view_summary == SHOW_CREDITS_ALWAYS)
-					src.crew_credits_by_client["\ref[E.client]"].ui_interact(E)
-				else if ((client_credits.has_citation_data || client_credits.has_report_data) && E.client.preferences.view_summary == SHOW_CREDITS_CITATIONS_REPORTS)
-					src.crew_credits_by_client["\ref[E.client]"].ui_interact(E)
+				if (E.client.preferences.view_score)
+					creds.ui_interact(E)
+				else if (E.client.preferences.view_tickets && creds.has_citation_data)
+					creds.ui_interact(E)
+				E.show_inspector_report()
 				SPAWN(0) show_xp_summary(E.key, E)
 	logTheThing(LOG_DEBUG, null, "Did credits")
 
@@ -908,5 +908,11 @@ var/global/current_state = GAME_STATE_INVALID
 		global.lag_detection_process.automatic_profiling(force_stop=TRUE)
 
 	return 1
+
+/datum/controller/gameticker/proc/get_credits()
+	RETURN_TYPE(/datum/crewCredits)
+	if (!src.creds)
+		src.creds = new /datum/crewCredits
+	return src.creds
 
 #undef LATEJOIN_FULL_WAGE_GRACE_PERIOD

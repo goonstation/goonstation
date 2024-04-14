@@ -5,6 +5,7 @@ var/datum/score_tracker/score_tracker
 	var/score_calculated = 0
 	var/final_score_all = 0
 	var/grade = "The Aristocrats!"
+	var/inspector_report = ""
 	// SECURITY DEPARTMENT
 	// var/score_crew_evacuation_rate = 0 save this for later to keep categories balanced
 	var/score_crew_survival_rate = 0
@@ -42,6 +43,8 @@ var/datum/score_tracker/score_tracker
 			return
 		// Even if its the end of the round it'd probably be nice to just calculate this once and let players grab that
 		// instead of calculating it again every time a player wants to look at the score
+
+		inspector_report = get_inspector_report()
 
 		// SECURITY DEPARTMENT SECTION
 		var/crew_count = 0
@@ -355,3 +358,21 @@ var/datum/score_tracker/score_tracker
 		if (beepsky_alive) 			. += "<B>Beepsky?:</B> Yes<BR>"
 
 		return jointext(., "")
+
+	proc/get_inspector_report()
+		. = list()
+		for_by_tcl(clipboard, /obj/item/clipboard/with_pen/inspector)
+			. += "<B>Inspector[clipboard.inspector_name ? " [clipboard.inspector_name]" : ""]'s report</B><BR><HR>"
+			for(var/obj/item/paper/paper in clipboard.contents)
+				//ignore blank untitled pages
+				if (paper.name == "paper" && !paper.info)
+					continue
+				if (paper.name != "paper")
+					. += "<B>[paper.name]</B>"
+				. += paper.info ? paper.info : "<BR><BR>"
+		return jointext(., "")
+
+/mob/proc/show_inspector_report()
+	if(!length(score_tracker.inspector_report)) return
+
+	src.Browse(score_tracker.inspector_report, "window=tickes;size=500x650")

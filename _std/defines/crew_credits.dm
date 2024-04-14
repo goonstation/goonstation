@@ -1,18 +1,6 @@
 /// DEBUG: Populates the end-game crew credits with fake names and antagonists. Note that some data entries will be nonsensical.
 //#define CREW_CREDITS_DEBUGGING
 
-// Player preference option: Show round summary
-#define SHOW_CREDITS_NEVER 0
-#define SHOW_CREDITS_ALWAYS 1
-/// Only show if there are tickets, fines, or reports; historically, separate dialogs
-#define SHOW_CREDITS_CITATIONS_REPORTS 2
-
-// Player preference option: Default round summary tab
-#define CREDITS_TAB_CREW 0
-#define CREDITS_TAB_ANTAGONIST 1
-#define CREDITS_TAB_SCORE 2
-#define CREDITS_TAB_CITATION 3
-#define CREDITS_TAB_REPORT 4
 
 #define CREW_TAB_SECTION_CAPTAIN "captain"
 #define CREW_TAB_SECTION_SECURITY "security"
@@ -39,5 +27,3 @@
 
 #define CITATION_TAB_SECTION_TICKETS "ticket_targets"
 #define CITATION_TAB_SECTION_FINES "fine_targets"
-
-#define REPORT_TAB_REPORTS "reports"

@@ -6,9 +6,8 @@
  */
 
 import { useBackend } from '../../backend';
-import { Box, Button, Dropdown, Image, LabeledList, Section } from '../../components';
-import { CrewCreditsTabKeys } from '../CrewCredits/type';
-import { CharacterPreferencesData, CharacterPreferencesScrollTarget, CharacterPreferencesTooltip, CharacterPreferenceViewSummary } from './type';
+import { Box, Button, Image, LabeledList, Section } from '../../components';
+import { CharacterPreferencesData, CharacterPreferencesScrollTarget, CharacterPreferencesTooltip } from './type';
 
 export const GameSettingsTab = (_props, context) => {
   const { act, data } = useBackend<CharacterPreferencesData>(context);
@@ -174,40 +173,6 @@ export const GameSettingsTab = (_props, context) => {
               tooltipPosition="top">
               Auto-open end-of-round ticket summary
             </Button.Checkbox>
-          </Box>
-          <Box mb="5px">
-            <Box mb="5px" color="label">
-              End-of-round summary pop-up.
-            </Box>
-            <Dropdown
-              width="50%"
-              options={[
-                "Never",
-                "Always",
-                "Only if tickets/reports exist",
-              ]}
-              selected={CharacterPreferenceViewSummary[data.viewSummary]}
-              onSelected={(value: CharacterPreferenceViewSummary) => act('update-viewSummary', { value: CharacterPreferenceViewSummary[value] })}
-              tooltip="The end-of-round summary shows various stats on how the round went. If this option is off, you can still see it by clicking the ability button."
-              tooltipPosition="top" />
-          </Box>
-          <Box mb="5px">
-            <Box mb="5px" color="label">
-              End-of-round summary starting tab
-            </Box>
-            <Dropdown
-              width="50%"
-              options={[
-                "Crew Credits",
-                "Antagonists",
-                "Station Score",
-                "Tickets/Fines",
-                "Inspector's Report",
-              ]}
-              selected={CrewCreditsTabKeys[data.summaryTab]}
-              onSelected={(value: CrewCreditsTabKeys) => act('update-summaryTab', { value: CrewCreditsTabKeys[value] })}
-              tooltip="Which tab to view initially on the end-of-round summary popup"
-              tooltipPosition="top" />
           </Box>
         </LabeledList.Item>
         <LabeledList.Item label="Controls">

@@ -66,8 +66,6 @@ export interface CharacterPreferencesData {
   tguiFancy: BooleanLike;
   tguiLock: BooleanLike;
   viewChangelog: BooleanLike;
-  viewSummary: number;
-  summaryTab: number;
   viewScore: BooleanLike;
   viewTickets: BooleanLike;
   useClickBuffer: BooleanLike;

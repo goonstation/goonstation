@@ -6,21 +6,21 @@
  */
 
 import { useBackend } from '../../backend';
-import { Box, Section } from '../../components';
-import { CitationTabData, CitationTargetData, CitationTargetListProps } from './type';
+import { Box, LabeledList, Section } from '../../components';
+import { CitationByTargetListProps, CitationData, CitationsByTargetData, CitationTabData, isFineData } from './type';
 
 export const CitationsTab = (props, context) => {
   const { data } = useBackend<CitationTabData>(context);
   const { tickets, fines } = data;
   return (
     <>
-      <CitationTargetList title="Tickets" citation_targets={tickets} />
-      <CitationTargetList title="Fines" citation_targets={fines} />
+      <CitationByTargetList title="Tickets" citation_targets={tickets} />
+      <CitationByTargetList title="Fines" citation_targets={fines} />
     </>
   );
 };
 
-const CitationTargetList = (props: CitationTargetListProps) => {
+const CitationByTargetList = (props: CitationByTargetListProps) => {
   const { title, citation_targets } = props;
   return (
     <Section title={title}>
@@ -35,19 +35,44 @@ const CitationTargetList = (props: CitationTargetListProps) => {
   );
 };
 
-const CitationList = (props: CitationTargetData) => {
+const CitationList = (props: CitationsByTargetData) => {
   const { name, citations } = props;
   return (
     <Section title={name}>
       {citations?.map((citation, index) => {
         return (
-          <Box
-            mb={2}
-            key={index}
-            dangerouslySetInnerHTML={{ __html: citation }}
-          />
+          <Citation key={index} {...citation} />
         );
       })}
+    </Section>
+  );
+};
+
+const Citation = (props: CitationData) => {
+  const { reason, issuer, issuer_job } = props;
+  return (
+    <Section>
+      <LabeledList>
+        <LabeledList.Item label="Cited by">
+          {issuer}, {issuer_job}
+        </LabeledList.Item>
+        <LabeledList.Item label="Reason">
+          {reason}
+        </LabeledList.Item>
+
+        {isFineData(props) && (
+          <>
+            <LabeledList.Item label="Approved by" color={!props.approver ? "bad" : "neutral"}>
+              {props.approver && (<>{props.approver}, {props.approver_job}</>)}
+              {!props.approver && ("Not Approved")}
+            </LabeledList.Item>
+            <LabeledList.Item label="Amount">
+              {props.amount}⪽&nbsp;
+              {props.approver && !props.paid && <>(Unpaid: {props.amount - props.paid_amount}⪽ remaining)</>}
+            </LabeledList.Item>
+          </>
+        )}
+      </LabeledList>
     </Section>
   );
 };
