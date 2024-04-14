@@ -892,15 +892,6 @@
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
-"aso" = (
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1;
-	dir = 8
-	},
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/engine/caution/west,
-/area/station/ai_monitored/armory)
 "ass" = (
 /obj/rack,
 /obj/item/bballbasket,
@@ -3573,6 +3564,15 @@
 	dir = 1
 	},
 /area/station/hallway/primary/southwest)
+"bBD" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/storage/secure/crate/gear/armory/equipment,
+/turf/simulated/floor/engine/caution/east,
+/area/station/ai_monitored/armory)
 "bBO" = (
 /turf/simulated/floor/caution/corner/misc{
 	dir = 9
@@ -4088,6 +4088,10 @@
 	dir = 1
 	},
 /area/station/hallway/primary/northwest)
+"bNo" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "bNr" = (
 /obj/table/wood/round/auto,
 /obj/item/device/light/candle{
@@ -7388,6 +7392,13 @@
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
 	})
+"dsh" = (
+/obj/deployable_turret/riot/active{
+	dir = 8
+	},
+/obj/mapping_helper/access/hos,
+/turf/simulated/floor/engine/caution/west,
+/area/station/ai_monitored/armory)
 "dsv" = (
 /obj/table/auto,
 /obj/machinery/light/small{
@@ -17654,17 +17665,6 @@
 /obj/item/reagent_containers/emergency_injector/spaceacillin,
 /turf/simulated/floor/black,
 /area/station/science/research_director)
-"hAE" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/landmark/pest,
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
 "hAU" = (
 /obj/item/sheet/glass{
 	amount = 10;
@@ -29228,6 +29228,15 @@
 /area/station/science/lobby{
 	name = "Science Lounge"
 	})
+"mfc" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/storage{
+	icon_state = "crewquarters";
+	name = "Warrens Hall"
+	})
 "mfp" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -34059,6 +34068,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
+"onQ" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/landmark/pest,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "oon" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -36940,15 +36960,6 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
-"pAs" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/storage/secure/closet/security/armory,
-/turf/simulated/floor/engine/caution/east,
-/area/station/ai_monitored/armory)
 "pAx" = (
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
@@ -45201,15 +45212,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
-"tna" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/black/grime,
-/area/station/maintenance/storage{
-	icon_state = "crewquarters";
-	name = "Warrens Hall"
-	})
 "tnw" = (
 /obj/grille/catwalk,
 /obj/stool/chair{
@@ -47046,10 +47048,6 @@
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
-"uaG" = (
-/obj/machinery/recharge_station,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "uaW" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
@@ -91789,7 +91787,7 @@ qLh
 rrM
 lXp
 oip
-pAs
+bBD
 orC
 vfp
 ons
@@ -92328,7 +92326,7 @@ qmk
 gjr
 eJW
 lMz
-uaG
+bNo
 ujY
 iEw
 pHb
@@ -92693,7 +92691,7 @@ bZk
 fFG
 qLh
 fYI
-aso
+dsh
 lBs
 wxF
 xDM
@@ -102074,7 +102072,7 @@ geI
 npp
 igO
 baj
-hAE
+onQ
 dQM
 fua
 fHL
@@ -107500,7 +107498,7 @@ oaS
 qOC
 iaN
 lGD
-tna
+mfc
 twa
 rcy
 bwD

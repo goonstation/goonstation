@@ -3124,6 +3124,12 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"aln" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 10
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "alr" = (
 /obj/disposalpipe/trunk/south,
 /obj/disposaloutlet/south,
@@ -8847,6 +8853,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"aIb" = (
+/obj/machinery/light/small,
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "aIc" = (
 /obj/disposalpipe/segment/mail/bent/south,
 /obj/cable{
@@ -11297,6 +11308,11 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"aSM" = (
+/obj/disposalpipe/segment/vertical,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "aSN" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -18565,6 +18581,12 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
+"byL" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 6
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "byM" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -29617,25 +29639,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
-"coH" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/access/hos,
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1;
-	dir = 1
-	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
-	},
-/area/station/ai_monitored/armory)
 "coJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -33356,6 +33359,12 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio/news_office)
+"eAO" = (
+/obj/storage/secure/crate/gear/armory/equipment,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0
+	},
+/area/station/ai_monitored/armory)
 "eBv" = (
 /obj/submachine/chicken_incubator,
 /obj/item/reagent_containers/food/snacks/ingredient/egg{
@@ -35845,10 +35854,6 @@
 /obj/machinery/meter,
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/core)
-"gri" = (
-/obj/disposalpipe/segment/bent/south,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "grq" = (
 /obj/disposalpipe/junction/left/north,
 /obj/cable{
@@ -42364,12 +42369,6 @@
 	dir = 5
 	},
 /area/station/security/interrogation)
-"llC" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 6
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "llE" = (
 /obj/rack,
 /obj/item/clothing/suit/hazard/paramedic,
@@ -44436,12 +44435,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"mNg" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 10
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
 "mNo" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
@@ -44873,6 +44866,10 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"ncT" = (
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "ndv" = (
 /obj/disposalpipe/switch_junction/left/south{
 	mail_tag = "medical booth";
@@ -46648,6 +46645,16 @@
 "our" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"ouF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/sw)
 "ouG" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -48191,12 +48198,6 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor,
 /area/station/science/testchamber)
-"pGO" = (
-/obj/storage/secure/closet/security/armory,
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
-	},
-/area/station/ai_monitored/armory)
 "pGQ" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -48784,15 +48785,6 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
-"qaL" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/central)
 "qbc" = (
 /obj/shrub,
 /obj/machinery/light/small{
@@ -49029,11 +49021,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/crew_quarters/md)
-"qmh" = (
-/obj/machinery/light/small,
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "qmn" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/fire{
@@ -49323,11 +49310,6 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
-"quM" = (
-/obj/disposalpipe/segment/vertical,
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "quP" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -49509,6 +49491,23 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor,
 /area/station/maintenance/east)
+"qAf" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/hos,
+/obj/deployable_turret/riot/active{
+	dir = 1
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0
+	},
+/area/station/ai_monitored/armory)
 "qAR" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/neutral/side{
@@ -50361,16 +50360,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"riR" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/sw)
 "riU" = (
 /obj/shrub,
 /turf/simulated/floor/grass,
@@ -58851,6 +58840,15 @@
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/darkblue/checker,
 /area/station/crew_quarters/radio/news_office)
+"xzv" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "xBa" = (
 /obj/kitchenspike,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -92744,7 +92742,7 @@ bug
 eWB
 bvo
 gOK
-llC
+byL
 bzP
 bws
 bws
@@ -93313,7 +93311,7 @@ aMt
 aMt
 aMt
 bCG
-quM
+aSM
 aTz
 aYv
 aRu
@@ -95712,7 +95710,7 @@ uRL
 tXo
 atJ
 ait
-gri
+ncT
 awF
 axK
 ayK
@@ -101138,7 +101136,7 @@ acj
 acj
 ajv
 akv
-mNg
+aln
 ami
 ami
 ami
@@ -101804,7 +101802,7 @@ bmy
 eaZ
 xXb
 sJN
-riR
+ouF
 vpD
 eeR
 sJN
@@ -120255,7 +120253,7 @@ mCq
 rHm
 gYY
 tDF
-coH
+qAf
 qUf
 gvi
 nHM
@@ -120855,7 +120853,7 @@ vTU
 pur
 vTU
 cba
-pGO
+eAO
 hEy
 xuw
 vvg
@@ -127435,7 +127433,7 @@ aHa
 aHa
 aFO
 bpA
-qmh
+aIb
 aIS
 aJU
 bPa
@@ -128970,7 +128968,7 @@ goW
 ohX
 lYv
 yhR
-qaL
+xzv
 wJp
 wJp
 wJp

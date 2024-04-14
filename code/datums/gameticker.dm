@@ -453,7 +453,6 @@ var/global/current_state = GAME_STATE_INVALID
 
 		emergency_shuttle.process()
 
-		#if DM_VERSION >= 514
 		if (useTimeDilation)//TIME_DILATION_ENABLED set this
 			if (world.time > last_try_dilate + TICKLAG_DILATE_INTERVAL) //interval separate from the process loop. maybe consider moving this for cleanup later (its own process loop with diff. interval?)
 				last_try_dilate = world.time
@@ -479,7 +478,6 @@ var/global/current_state = GAME_STATE_INVALID
 				if (world.tick_lag != dilated_tick_lag)
 					world.tick_lag = dilated_tick_lag
 					highMapCpuCount = 0
-		#endif
 
 		// Minds are sometimes kicked out of the global list, hence the fallback (Convair880).
 		if (src.last_readd_lost_minds_to_ticker && world.time > src.last_readd_lost_minds_to_ticker + 1800)

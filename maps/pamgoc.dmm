@@ -24087,14 +24087,6 @@
 	},
 /turf/space,
 /area/station/wreckage)
-"bfH" = (
-/obj/lattice,
-/obj/decal/fakeobjects/pipe{
-	color = "b4b4b4";
-	dir = 8
-	},
-/turf/space,
-/area/space)
 "bfJ" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
@@ -24449,31 +24441,6 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
-	},
-/turf/space,
-/area/space)
-"bgG" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/obj/decal/fakeobjects/pipe{
-	color = "b4b4b4";
-	dir = 8
-	},
-/obj/decal/floatingtiles{
-	icon_state = "floattiles4"
-	},
-/turf/space,
-/area/space)
-"bgH" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/obj/decal/fakeobjects/pipe{
-	color = "b4b4b4";
-	dir = 8
 	},
 /turf/space,
 /area/space)
@@ -56166,20 +56133,6 @@
 	dir = 4
 	},
 /area/station/engine/hotloop)
-"fqj" = (
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1
-	},
-/obj/machinery/turretid{
-	name = "External perimeter turret deactivation control";
-	pixel_y = 28;
-	req_access = null;
-	turretArea = /area/station/turret_protected/armory_outside
-	},
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "fqG" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 8;
@@ -56403,6 +56356,17 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
+"fUt" = (
+/obj/deployable_turret/riot/active,
+/obj/machinery/turretid{
+	name = "External perimeter turret deactivation control";
+	pixel_y = 28;
+	req_access = null;
+	turretArea = /area/station/turret_protected/armory_outside
+	},
+/obj/mapping_helper/access/hos,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "fUY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -57321,13 +57285,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/ranch)
-"hCK" = (
-/obj/storage/secure/closet/security/armory,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "hDd" = (
 /obj/storage/closet/welding_supply,
 /turf/simulated/floor/white,
@@ -62167,6 +62124,14 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/east,
 /area/station/medical/staff)
+"rwy" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
+	dir = 8
+	},
+/turf/space,
+/area/space)
 "rwU" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -62832,6 +62797,20 @@
 /obj/landmark/start/job/engineer,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
+"sNJ" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
+	dir = 8
+	},
+/obj/decal/floatingtiles{
+	icon_state = "floattiles4"
+	},
+/turf/space,
+/area/space)
 "sOG" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 8
@@ -63692,6 +63671,17 @@
 /obj/storage/cart,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
+"uIa" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
+	dir = 8
+	},
+/turf/space,
+/area/space)
 "uIL" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/medbay,
@@ -64935,6 +64925,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/staff)
+"xcm" = (
+/obj/storage/secure/crate/gear/armory/equipment,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "xcB" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -125367,7 +125364,7 @@ kAf
 teZ
 aVc
 cAL
-fqj
+fUt
 crq
 crq
 crq
@@ -125972,7 +125969,7 @@ hUH
 aVc
 cAL
 dam
-hCK
+xcm
 nvz
 pqo
 frS
@@ -145485,7 +145482,7 @@ cCO
 cCO
 cyV
 cCO
-bfH
+rwy
 cyV
 bfK
 bgb
@@ -146090,7 +146087,7 @@ cCO
 cyV
 azf
 azf
-bgG
+sNJ
 azw
 azi
 bfQ
@@ -146392,7 +146389,7 @@ cCO
 cyV
 azs
 bcT
-bgH
+uIa
 cyV
 bfJ
 bgb
@@ -146694,7 +146691,7 @@ cCO
 cyV
 azq
 azT
-bgH
+uIa
 cyV
 azp
 aAa
@@ -148202,7 +148199,7 @@ cCO
 cCO
 cCO
 cyV
-bgH
+uIa
 azW
 cqY
 cyV

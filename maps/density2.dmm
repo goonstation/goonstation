@@ -419,23 +419,6 @@
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"cs" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/obj/decal/fakeobjects{
-	density = 1;
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix"
-	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
-	},
-/area/station/science/teleporter)
 "cu" = (
 /obj/machinery/vending/floppy{
 	profit = 0
@@ -2888,6 +2871,23 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"rQ" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Active Particle Phase Matrix"
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0
+	},
+/area/station/science/teleporter)
 "rT" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon20_to_1_end,
 /turf/simulated/floor/auto/dirt,
@@ -3675,10 +3675,6 @@
 	layer = 2
 	},
 /area/station/solar/aisat)
-"xP" = (
-/obj/storage/secure/closet/security/armory,
-/turf/simulated/floor/marble/black,
-/area/station/bridge)
 "xU" = (
 /obj/machinery/conveyor/WE{
 	id = "qmout"
@@ -7654,6 +7650,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
+"XW" = (
+/obj/storage/secure/crate/gear/armory/equipment,
+/turf/simulated/floor/marble/black,
+/area/station/bridge)
 "XY" = (
 /turf/simulated/floor,
 /area/station/science)
@@ -49801,7 +49801,7 @@ MU
 MU
 MU
 RC
-xP
+XW
 aG
 aG
 Rf
@@ -79015,7 +79015,7 @@ gz
 dt
 hv
 Or
-cs
+rQ
 Td
 UC
 Ia
