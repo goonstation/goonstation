@@ -375,4 +375,4 @@ var/datum/score_tracker/score_tracker
 /mob/proc/show_inspector_report()
 	if(!length(score_tracker.inspector_report)) return
 
-	src.Browse(score_tracker.inspector_report, "window=tickes;size=500x650")
+	src.Browse(score_tracker.inspector_report, "window=inspector;size=500x650")

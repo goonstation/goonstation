@@ -70,6 +70,7 @@ export interface SuccinctAntagonistProps {
   dead: BooleanLike;
 }
 
+
 export interface ScoreTabData {
   victory_headline: string;
   victory_body: string;
@@ -77,7 +78,6 @@ export interface ScoreTabData {
   grade: string;
   score_groups: ScoreCategoryProps[];
 }
-
 export interface ScoreCategoryProps {
   title: string;
   entries: ScoreItemProps[];
@@ -121,4 +121,4 @@ export interface FineData extends TicketData {
 export type CitationData = TicketData | FineData
 
 export const isFineData = (value: CitationData): value is FineData =>
-  'approver' in value;
+  'amount' in value;

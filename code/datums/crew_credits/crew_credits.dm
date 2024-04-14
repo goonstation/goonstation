@@ -6,7 +6,7 @@
 	var/list/score_tab_data
 	var/list/citation_tab_data
 
-	var/has_citation_data
+	var/has_citation_data = FALSE
 
 /datum/crewCredits/New()
 	. = ..()
@@ -144,10 +144,10 @@
 				"entries" = src.score_tab_data[SCORE_TAB_SECTION_ESCAPEE],
 			),
 		),
+
 		// Tickets Tab Data:
 		"tickets" = src.citation_tab_data[CITATION_TAB_SECTION_TICKETS],
 		"fines" = src.citation_tab_data[CITATION_TAB_SECTION_FINES],
-
 	)
 
 /// For a specified mind, creates an entry in `crew_tab_data` containing the applicable information.
