@@ -441,14 +441,6 @@
 	points = -2
 	category = list("genetics")
 
-/datum/trait/unstablegenes
-	name = "Unstable Genes"
-	desc = "You are more likely to mutate from radiation or mutagens."
-	id = "unstablegenes"
-	icon_state = "domutateB"
-	points = 1
-	category = list("genetics")
-
 // TRINKETS/ITEMS - Purple Border
 
 /datum/trait/loyalist
@@ -656,13 +648,6 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "bigbruiser"
 	category = list("stats")
 	points = -2
-
-/datum/trait/softswatter
-	name = "Soft Swatter"
-	desc = "Weaker punches. Fighting's not your thing."
-	id = "softswatter"
-	category = list("stats")
-	points = 1
 
 /datum/trait/slowstrider
 	name = "Slow Strider"
