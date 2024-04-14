@@ -30,6 +30,8 @@
 	var/welded = FALSE
 	var/can_be_welded = FALSE
 	var/can_be_anchored = UNANCHORED
+	var/default_hat_y = 0
+	var/default_hat_x = 0
 	custom_suicide = TRUE
 	open_to_sound = TRUE
 
@@ -224,6 +226,11 @@
 		icon_state="housing_cabinet"
 		flags = FPRINT | EXTRADELAY | CONDUCT
 		light_color = list(0, 179, 255, 255)
+		default_hat_y = 14
+
+		New()
+			AddComponent(/datum/component/hattable, FALSE, FALSE, default_hat_y)
+			..()
 
 		attack_hand(mob/user)
 			if (istype(user,/mob/living/object) && user == src.loc) // prevent wacky nullspace bug
@@ -265,6 +272,12 @@
 		c_flags = ONBELT
 		light_color = list(51, 0, 0, 0)
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
+		default_hat_y = 7
+		default_hat_x = -1
+
+		New()
+			AddComponent(/datum/component/hattable, FALSE, FALSE, default_hat_y, default_hat_x)
+			..()
 
 		proc/find_trigger() // find the trigger comp, return 1 if found.
 			if (!istype(src.the_trigger))
@@ -503,7 +516,7 @@
 		return
 
 	proc/componentSay(var/string)
-		string = trim(sanitize(html_encode(string)))
+		string = trimtext(sanitize(html_encode(string)))
 		var/maptext = null
 		var/maptext_loc = null //Location used for center of all_hearers scan "Probably where you want your text attached to."
 
@@ -4350,7 +4363,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (src.text_limit)
 			text = copytext_char(text,1,src.text_limit+1)
 		if (src.trim_text)
-			text = trim(text)
+			text = trimtext(text)
 
 		if (!length(text) || src.text_limit == 0)
 			return

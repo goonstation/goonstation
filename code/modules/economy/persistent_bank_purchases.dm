@@ -127,11 +127,9 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 		if(isAI(M))
 			var/mob/living/silicon/ai/AI = M
-			if (ispath(path, /obj/item/clothing))
-				if(ispath(path,/obj/item/clothing/head))
-					AI.set_hat(new path(AI))
-					equip_success = 1
-
+			path = null
+			AI.bought_hat = TRUE
+			return
 
 
 		//The AI can't really wear items...
@@ -788,7 +786,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/living/M)
 			if (isAI(M))
 				var/mob/living/silicon/ai/A = M
-				var/picked = pick(filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats))
-				A.set_hat(new picked())
+				A.bought_hat = TRUE
 				return 1
 			return 0

@@ -369,7 +369,12 @@
 
 	New()
 		. = ..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.connect_to_minimap()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		. = ..()
 
 	attack_self(mob/user)
 		. = ..()

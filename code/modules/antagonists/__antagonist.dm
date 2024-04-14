@@ -81,6 +81,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/transfer_to(datum/mind/target, take_gear, source, silent = FALSE)
 		remove_self(take_gear, source)
 		owner.former_antagonist_roles.Add(owner.special_role)
+
 		owner.special_role = null // this isn't ideal, since the system should support multiple antagonists. once special_role is worked around, this won't be an issue
 		UnregisterSignal(src.owner, COMSIG_MIND_ATTACH_TO_MOB)
 		UnregisterSignal(src.owner, COMSIG_MIND_DETACH_FROM_MOB)
@@ -223,6 +224,9 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/assign_objectives()
 		return
 
+	/// Handle this antagonist entering cryogenic storage, possibly temporarily.
+	proc/handle_cryo()
+		return
 	/// Handle this antagonist entering cryogenic storage permanently
 	proc/handle_perma_cryo()
 		return

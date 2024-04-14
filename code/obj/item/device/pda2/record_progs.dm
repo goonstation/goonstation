@@ -150,6 +150,9 @@
 					dat += "Current Diseases: [src.active2["cdi"]]<br>"
 					dat += "Details: [src.active2["cdi_d"]]<br><br>"
 
+					dat += "Cloner Defects: [src.active2["cl_def"]]<br>"
+					dat += "Details: [src.active2["cl_def_d"]]<br><br>"
+
 					dat += "Important Notes: [src.active2["notes"]]<br>"
 				else
 					dat += "<b>Record Lost!</b><br>"

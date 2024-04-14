@@ -212,7 +212,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/catwalk/south)
 "abI" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/item/clothing/gloves/boxing,
 /obj/item/clothing/mask/wrestling/black,
 /obj/item/clothing/under/shorts/luchador/red,

@@ -70,15 +70,16 @@
 
 	M["bioHolder.bloodType"] = "[H.bioHolder.bloodType]"
 	M["mi_dis"] = "None"
-	M["mi_dis_d"] = "No minor disabilities have been declared."
+	M["mi_dis_d"] = MEDREC_DISABILITY_MINOR_DEFAULT
 	M["ma_dis"] = "None"
-	M["ma_dis_d"] = "No major disabilities have been diagnosed."
+	M["ma_dis_d"] = MEDREC_DISABILITY_MAJOR_DEFAULT
 	M["alg"] = "None"
-	M["alg_d"] = "No allergies have been detected in this patient."
+	M["alg_d"] = MEDREC_ALLERGY_DEFAULT
 	M["cdi"] = "None"
-	M["cdi_d"] = "No diseases have been diagnosed at the moment."
-
-	M["h_imp"] = "No health implant detected."
+	M["cdi_d"] = MEDREC_DISEASE_DEFAULT
+	M["cl_def"] = MEDREC_CLONE_DEFECT_DEFAULT
+	M["cl_def_d"] = "None"
+	M["h_imp"] = MEDREC_NO_IMPLANT
 
 	if(!length(med_note))
 		M["notes"] = "No notes."
@@ -236,15 +237,15 @@
 	if(H.traitHolder.hasTrait("unionized"))
 		wageMult = 1.5
 
-	if(wagesystem.jobs[H.job])
-		B["wage"] = round(wagesystem.jobs[H.job] * wageMult)
-	// Otherwise give them a default wage
+	var/datum/job/J
+	if (H.job != null && istext(H.job))
+		J = find_job_in_controller_by_string(H.job)
 	else
-		var/datum/job/J = find_job_in_controller_by_string(G["rank"])
-		if (J?.wages)
-			B["wage"] = round(J.wages * wageMult)
-		else
-			B["wage"] = 0
+		J = find_job_in_controller_by_string(H.mind.assigned_role)
+	if (J?.wages)
+		B["wage"] = round(J.wages * wageMult)
+	else
+		B["wage"] = 0
 
 	src.general.add_record(G)
 	src.medical.add_record(M)
