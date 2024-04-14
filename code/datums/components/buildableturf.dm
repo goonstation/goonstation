@@ -14,6 +14,15 @@ TYPEINFO(/datum/component/buildable_turf)
 	if(istype(T))
 		T.can_replace_with_stuff = TRUE
 
+/datum/component/buildable_turf/proc/do_build_floor(turf/location, mob/user, obj/item/rcd/RCD)
+	SPAWN(0.5)	// delay to not allow afterattack to trigger
+		var/turf/simulated/floor/T = location.ReplaceWithFloor()
+		T.inherit_area()
+		T.setMaterial(getMaterial(RCD.material_name))
+		clear_edge_overlays(location)
+		T.vis_contents -= station_repair.ambient_obj
+
+
 /datum/component/buildable_turf/proc/check_build_item(turf/location, obj/item/I, mob/user)
 	PRIVATE_PROC(TRUE)
 	var/area/A = get_area(user)
@@ -43,15 +52,8 @@ TYPEINFO(/datum/component/buildable_turf)
 			return
 
 		switch(RCD.mode)
-			if (1)
-				if (RCD.do_thing(user, location, "building a floor", RCD.matter_create_floor, RCD.time_create_floor))
-					SPAWN(0.5)	// delay to not allow afterattack to trigger
-						var/turf/simulated/floor/T = location.ReplaceWithFloor()
-						T.inherit_area()
-						T.setMaterial(getMaterial(RCD.material_name))
-						clear_edge_overlays(location)
-						T.vis_contents -= station_repair.ambient_obj
-					return TRUE
+			if (RCD_MODE_FLOORSWALLS)
+				return RCD.do_rcd_action(user, location, "building a floor", RCD.matter_create_floor, RCD.time_create_floor, PROC_REF(do_build_floor), src, RCD)
 
 /datum/component/buildable_turf/proc/clear_edge_overlays(turf/location)
 	for (var/turf/T in orange(location,1))
