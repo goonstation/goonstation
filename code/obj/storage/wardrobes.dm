@@ -19,7 +19,6 @@ TYPEINFO(/obj/storage/closet/dresser)
 	name = "wardrobe"
 	desc = "It's a wardrobe closet! This one can be opened AND closed. Comes prestocked with some changes of clothes."
 	soundproofing = 10
-#define SHOE_Y -12
 
 /* ==================== */
 /* ----- Standard ----- */
@@ -30,97 +29,97 @@ TYPEINFO(/obj/storage/closet/dresser)
 	desc = "A label on it reads: In order to improve workplace efficiency, employees are encouraged to spend no more than 5 minutes in the closet at a time."
 	icon_state = "gay"
 	icon_closed = "gay"
-	spawn_contents = list(/obj/item/clothing/under/pride = list(2, 3, 6), //Quantity, X offset, Y offset
-	/obj/item/clothing/under/pride/ace = list(2, -3, 6),
-	/obj/item/clothing/under/pride/aro = list(2, 3, 3),
-	/obj/item/clothing/under/pride/bi = list(2, -3, 3),
-	/obj/item/clothing/under/pride/inter = list(2, 3, 0),
-	/obj/item/clothing/under/pride/pan = list(2, -3, 0),
-	/obj/item/clothing/under/pride/poly = list(2, 3, -3),
-	/obj/item/clothing/under/pride/nb = list(2, -3, -3),
-	/obj/item/clothing/under/pride/lesb = list(2, 3, -6),
-	/obj/item/clothing/under/pride/gaymasc = list(2, -3, -6),
-	/obj/item/clothing/under/pride/trans = list(2, 0, -9))
+	spawn_contents = list(/obj/item/clothing/under/pride{pixel_x = 3; pixel_y = 6} = 2,
+	/obj/item/clothing/under/pride/ace{pixel_x = -3; pixel_y = 6} = 2,
+	/obj/item/clothing/under/pride/aro{pixel_x = 3; pixel_y = 3} = 2,
+	/obj/item/clothing/under/pride/bi{pixel_x = -3; pixel_y = 3} = 2,
+	/obj/item/clothing/under/pride/inter{pixel_x = 3; pixel_y = 0} = 2,
+	/obj/item/clothing/under/pride/pan{pixel_x = -3; pixel_y = 0} = 2,
+	/obj/item/clothing/under/pride/poly{pixel_x = 3; pixel_y = -3} = 2,
+	/obj/item/clothing/under/pride/nb{pixel_x = -3; pixel_y = -3} = 2,
+	/obj/item/clothing/under/pride/lesb{pixel_x = 3; pixel_y = -6} = 2,
+	/obj/item/clothing/under/pride/gaymasc{pixel_x = -3; pixel_y = -6} = 2,
+	/obj/item/clothing/under/pride/trans{pixel_x = 0; pixel_y = -9} = 2)
 
 /obj/storage/closet/wardrobe/black
 	name = "black wardrobe"
 	icon_state = "black"
 	icon_closed = "black"
-	spawn_contents = list(/obj/item/clothing/under/color = list(4, 0, -3),
-	/obj/item/clothing/shoes/black = list(4, 0, -12),
-	/obj/item/clothing/head/black = list(2, 0, 8))
+	spawn_contents = list(/obj/item/clothing/under/color{pixel_x = 0; pixel_y = -3} = 4,
+	/obj/item/clothing/shoes/black{pixel_x = 0; pixel_y = -12} = 4,
+	/obj/item/clothing/head/black{pixel_x = 0; pixel_y = 8} = 2)
 
 /obj/storage/closet/wardrobe/grey
 	name = "grey wardrobe"
 	icon_state = "grey"
 	icon_closed = "grey"
-	spawn_contents = list(/obj/item/clothing/under/color/grey = list(4, 0, -3),
-	/obj/item/clothing/shoes/black = list(5, 0, -12))
+	spawn_contents = list(/obj/item/clothing/under/color/grey{pixel_x = 0; pixel_y = -3} = 4,
+	/obj/item/clothing/shoes/black{pixel_x = 0; pixel_y = -12} = 4)
 
 /obj/storage/closet/wardrobe/white
 	name = "white wardrobe"
 	icon_state = "white"
 	icon_closed = "white"
-	spawn_contents = list(/obj/item/clothing/under/color/white = list(4, 0, -3),
-	/obj/item/clothing/shoes/brown = list(4, 0, -12),
-	/obj/item/clothing/head/white  = list(2, 0, 8))
+	spawn_contents = list(/obj/item/clothing/under/color/white{pixel_x = 0; pixel_y = -3} = 4,
+	/obj/item/clothing/shoes/brown{pixel_x = 0; pixel_y = -12} = 4,
+	/obj/item/clothing/head/white{pixel_x = 0; pixel_y = 8} = 2)
 
 /obj/storage/closet/wardrobe/pink
 	name = "pink wardrobe"
 	icon_state = "pink"
 	icon_closed = "pink"
-	spawn_contents = list(/obj/item/clothing/under/color/pink = list(4, 0, -3),
-	/obj/item/clothing/shoes/brown = list(4, 0, -12))
+	spawn_contents = list(/obj/item/clothing/under/color/pink{pixel_x = 0; pixel_y = -3} = 4,
+	/obj/item/clothing/shoes/brown{pixel_x = 0; pixel_y = -12} = 4)
 
 /obj/storage/closet/wardrobe/red
 	name = "red wardrobe"
 	icon_state = "red"
 	icon_closed = "red"
-	spawn_contents = list(/obj/item/clothing/under/color/red = list(4, 0, -3),
-	/obj/item/clothing/shoes/brown = list(4, 0, -12),
-	/obj/item/clothing/head/red = list(2, 0, 8))
+	spawn_contents = list(/obj/item/clothing/under/color/red{pixel_x = 0; pixel_y = -3} = 4,
+	/obj/item/clothing/shoes/brown{pixel_x = 0; pixel_y = -12} = 4,
+	/obj/item/clothing/head/red{pixel_x = 0; pixel_y = 8} = 2)
 
 /obj/storage/closet/wardrobe/orange
 	name = "orange wardrobe"
 	icon_state = "orange"
 	icon_closed = "orange"
-	spawn_contents = list(/obj/item/clothing/under/color/orange = list(4, 3, -3),
-	/obj/item/clothing/under/misc/prisoner = list(4, -3, -3),
-	/obj/item/clothing/shoes/orange = list(4, 0, -12))
+	spawn_contents = list(/obj/item/clothing/under/color/orange{pixel_x = 3; pixel_y = -3} = 4,
+	/obj/item/clothing/under/misc/prisoner{pixel_x = -3; pixel_y = -3} = 4,
+	/obj/item/clothing/shoes/orange{pixel_x = 0; pixel_y = -12} = 4)
 
 /obj/storage/closet/wardrobe/yellow
 	name = "yellow wardrobe"
 	icon_state = "yellow"
 	icon_closed = "yellow"
-	spawn_contents = list(/obj/item/clothing/under/color/yellow = list(4, 0, -3),
-	/obj/item/clothing/shoes/orange = list(4, 0, -12),
-	/obj/item/clothing/head/yellow = list(2, 0, 8))
+	spawn_contents = list(/obj/item/clothing/under/color/yellow{pixel_x = 0; pixel_y = -3} = 4,
+	/obj/item/clothing/shoes/orange{pixel_x = 0; pixel_y = -12} = 4,
+	/obj/item/clothing/head/yellow{pixel_x = 0; pixel_y = 8} = 2)
 
 /obj/storage/closet/wardrobe/green
 	name = "green wardrobe"
 	icon_state = "green"
 	icon_closed = "green"
-	spawn_contents = list(/obj/item/clothing/under/color/green = list(4, 0, -3),
-	/obj/item/clothing/shoes/black = list(4, 0, -12),
-	/obj/item/clothing/head/green = list(2, 0, 8))
+	spawn_contents = list(/obj/item/clothing/under/color/green{pixel_x = 0; pixel_y = -3} = 4,
+	/obj/item/clothing/shoes/black{pixel_x = 0; pixel_y = -12} = 4,
+	/obj/item/clothing/head/green{pixel_x = 0; pixel_y = 8} = 2)
 
 /obj/storage/closet/wardrobe/blue
 	name = "blue wardrobe"
 	icon_state = "blue"
 	icon_closed = "blue"
-	spawn_contents = list(/obj/item/clothing/under/color/blue = list(4, 0, -3),
-	/obj/item/clothing/shoes/brown = list(4, 0, -12),
-	/obj/item/clothing/head/blue = list(2, 0, 8))
+	spawn_contents = list(/obj/item/clothing/under/color/blue{pixel_x = 0; pixel_y = -3} = 4,
+	/obj/item/clothing/shoes/brown{pixel_x = 0; pixel_y = -12} = 4,
+	/obj/item/clothing/head/blue{pixel_x = 0; pixel_y = 8} = 2)
 
 /obj/storage/closet/wardrobe/mixed
 	name = "mixed wardrobe"
 	icon_state = "mixed"
 	icon_closed = "mixed"
-	spawn_contents = list(/obj/item/clothing/under/color/blue = list(2, -3, -3),
-	/obj/item/clothing/under/color/pink = list(2, 3, -3),
-	/obj/item/clothing/shoes/brown = list(4, 0, -12),
-	/obj/item/clothing/head/blue = list(1, 0, 8),
-	/obj/item/clothing/head/red = list(1, 0, 8))
+	spawn_contents = list(/obj/item/clothing/under/color/blue{pixel_x = 3; pixel_y = -3} = 2,
+	/obj/item/clothing/under/color/pink{pixel_x = 3; pixel_y = -3} = 2,
+	/obj/item/clothing/shoes/brown{pixel_x = 0; pixel_y = -12} = 4,
+	/obj/item/clothing/head/blue{pixel_x = -3; pixel_y = 8},
+	/obj/item/clothing/head/red{pixel_x = 3; pixel_y = 8})
 
 /* =================== */
 /* ----- Special ----- */
@@ -161,18 +160,18 @@ TYPEINFO(/obj/storage/closet/dresser)
 /obj/storage/closet/wardrobe/black/formalwear
 	name = "formalwear closet"
 	desc = "It's a closet! This one can be opened AND closed. Comes with formal clothes"
-	spawn_contents = list(/obj/item/clothing/under/gimmick/maid = list(1, -3, -4),
-	/obj/item/clothing/head/maid = list(1, 3, 10),
-	/obj/item/clothing/under/gimmick/butler = list(1, 3, -4),
-	/obj/item/clothing/head/that = list(2, 3, 14),
-	/obj/item/clothing/under/rank/bartender = list(2, 3, 2),
-	/obj/item/clothing/suit/wcoat = list(2, -3, -4),
-	/obj/item/clothing/shoes/black = list(2, 0, -12))
+	spawn_contents = list(/obj/item/clothing/under/gimmick/maid{pixel_x = -3; pixel_y = -4},
+	/obj/item/clothing/head/maid{pixel_x = 3; pixel_y = 10},
+	/obj/item/clothing/under/gimmick/butler{pixel_x = 3; pixel_y = -4},
+	/obj/item/clothing/head/that{pixel_x = 3; pixel_y = 14} = 2,
+	/obj/item/clothing/under/rank/bartender{pixel_x = 3; pixel_y = 2} = 2,
+	/obj/item/clothing/suit/wcoat{pixel_x = -3; pixel_y = -4} = 2,
+	/obj/item/clothing/shoes/black{pixel_x = 0; pixel_y = -12} = 2)
 
 /obj/storage/closet/wardrobe/yellow/engineering
 	name = "\improper Engineering wardrobe"
-	spawn_contents = list(/obj/item/clothing/under/rank/engineer = list(4, 0, -3),
-	/obj/item/clothing/shoes/orange = list(4, 0, -12))
+	spawn_contents = list(/obj/item/clothing/under/rank/engineer{pixel_x = 0; pixel_y = -3} = 4,
+	/obj/item/clothing/shoes/orange{pixel_x = 0; pixel_y = -12} = 4)
 
 /obj/storage/closet/wardrobe/red/security_gimmick
 	name = "\improper Security wardrobe"
@@ -193,22 +192,22 @@ TYPEINFO(/obj/storage/closet/dresser)
 
 /obj/storage/closet/wardrobe/white/medical
 	name = "\improper Medical wardrobe"
-	spawn_contents = list(/obj/item/clothing/under/rank/medical = list(4, 3, -3),
-	/obj/item/clothing/shoes/red = list(4, 0, -12),
+	spawn_contents = list(/obj/item/clothing/under/rank/medical{pixel_x = 3; pixel_y = -3} = 4,
+	/obj/item/clothing/shoes/red{pixel_x = 0; pixel_y = -12} = 4,
 	/obj/item/storage/box/stma_kit,
-	/obj/item/clothing/suit/labcoat = list(4, -3, -3))
+	/obj/item/clothing/suit/labcoat{pixel_x = -3; pixel_y = -3} = 4)
 
 /obj/storage/closet/wardrobe/white/research
 	name = "\improper Research wardrobe"
-	spawn_contents = list(/obj/item/clothing/under/rank/scientist = list(4, 3, -3),
-	/obj/item/clothing/shoes/white = list(4, 0, -12),
+	spawn_contents = list(/obj/item/clothing/under/rank/scientist{pixel_x = 3; pixel_y = -3} = 4,
+	/obj/item/clothing/shoes/white{pixel_x = 0; pixel_y = -12} = 4,
 	/obj/item/storage/box/stma_kit,
-	/obj/item/clothing/suit/labcoat = list(4, -3, -3))
+	/obj/item/clothing/suit/labcoat{pixel_x = -3; pixel_y = -3} = 4)
 
 /obj/storage/closet/wardrobe/white/genetics
 	name = "\improper Genetics wardrobe"
-	spawn_contents = list(/obj/item/clothing/under/rank/geneticist = list(4, 3, -3),
-	/obj/item/clothing/shoes/white = list(4, 0, -12),
+	spawn_contents = list(/obj/item/clothing/under/rank/geneticist{pixel_x = 3; pixel_y = -3} = 4,
+	/obj/item/clothing/shoes/white{pixel_x = 0; pixel_y = -12} = 4,
 	/obj/item/storage/box/stma_kit,
 	/obj/item/clothing/suit/labcoat = list(4, -3, -3))
 
