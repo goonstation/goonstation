@@ -90,8 +90,9 @@ var/global/logLength = 0
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 			logLength++
 
-	var/datum/eventRecord/Log/logEvent = new()
-	logEvent.send(type, source && source != "<span class='blank'>(blank)</span>" ? source : null, text)
+		if (!diaryLogging)
+			var/datum/eventRecord/Log/logEvent = new()
+			logEvent.send(type, source && source != "<span class='blank'>(blank)</span>" ? source : null, text)
 	return
 
 ///Check config for whether a message should be logged to the diary
