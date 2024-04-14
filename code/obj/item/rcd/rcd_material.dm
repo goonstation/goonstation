@@ -1,8 +1,6 @@
 /*
 	Material specific RCD variants
 */
-
-ABSTRACT_TYPE(/obj/item/rcd/material)
 /obj/item/rcd/material
 	///Material the RCD will build specifically windows out of (if left null, defaults to the same material as the structure)
 	var/window_material = null
