@@ -122,12 +122,6 @@ export enum CharacterPreferencesTooltip {
   Alt = 3, // TOOLTIP_ALT
 }
 
-export enum CharacterPreferenceViewSummary {
-  Never,
-  Always,
-  TicketsReportsOnly,
-}
-
 export enum CharacterPreferencesScrollTarget {
   Never = 1, // SCROLL_TARGET_NEVER
   Hover = 2, // SCROLL_TARGET_HOVER
