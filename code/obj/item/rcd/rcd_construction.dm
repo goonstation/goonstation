@@ -24,38 +24,48 @@ TYPEINFO(/obj/item/rcd/construction)
 	var/static/list/access_names = list() //ditto the above????
 	var/door_type = null
 
+	proc/do_build_door_control(atom/A, mob/user)
+
+		PROTECTED_PROC(TRUE)
+		var/idn = src.hangar_id_number
+		src.hangar_id_number++
+		src.hangar_id = "rcd_built_[idn]"
+		src.mode = RCD_MODE_PODDOOR
+
+		var/obj/machinery/r_door_control/R = new /obj/machinery/r_door_control(A)
+		R.id="[hangar_id]"
+		R.pass="[hangar_id]"
+		R.name="Access code: [hangar_id]"
+		log_construction(user, "creates Door Control [hangar_id]")
+		boutput(user, "Now creating pod bay blast doors linked to the new door control.")
+
+	proc/do_build_blast_door(atom/A, mob/user)
+
+		PROTECTED_PROC(TRUE)
+		var/stepdir = get_dir(src, A)
+		var/poddir = turn(stepdir, 90)
+
+		var/obj/machinery/door/poddoor/blast/B = new /obj/machinery/door/poddoor/blast(A)
+		B.id = "[hangar_id]"
+		B.set_dir(poddir)
+		B.autoclose = TRUE
+		ammo_consume(user, matter_create_door)
+		log_construction(user, "creates Blast Door [hangar_id]")
+
 	afterattack(atom/A, mob/user as mob)
 		..()
 		if (mode == RCD_MODE_DECONSTRUCT)
-			if (istype(A, /obj/machinery/door/poddoor/blast) && ammo_check(user, matter_remove_door, 500))
+			if (istype(A, /obj/machinery/door/poddoor/blast))
 				var /obj/machinery/door/poddoor/blast/B = A
 				if (findtext(B.id, "rcd_built") != 0)
-					boutput(user, "Deconstructing \the [B] ([matter_remove_door])...")
-					playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-					if(do_after(user, 5 SECONDS))
-						if (ammo_check(user, matter_remove_door))
-							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
-							src.sparkIfUnsafe()
-							ammo_consume(user, matter_remove_door)
-							logTheThing(LOG_STATION, user, "removes a pod door ([B]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
-							qdel(A)
-							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
+					src.do_rcd_action(user, A, "Deconstructing \the [B]", matter_remove_door, 5 SECONDS, PROC_REF(do_deconstruction), src, "pod door")
 				else
 					boutput(user, SPAN_ALERT("You cannot deconstruct that!"))
 					return
-			else if (istype(A, /obj/machinery/r_door_control) && ammo_check(user, matter_remove_door, 500))
+			else if (istype(A, /obj/machinery/r_door_control))
 				var/obj/machinery/r_door_control/R = A
 				if (findtext(R.id, "rcd_built") != 0)
-					boutput(user, "Deconstructing \the [R] ([matter_remove_door])...")
-					playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-					if(do_after(user, 5 SECONDS))
-						if (ammo_check(user, matter_remove_door))
-							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
-							src.sparkIfUnsafe()
-							ammo_consume(user, matter_remove_door)
-							logTheThing(LOG_STATION, user, "removes a Door Control ([A]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
-							qdel(A)
-							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
+					src.do_rcd_action(user, A, "Deconstructing \the [R]", matter_remove_door, 5 SECONDS, PROC_REF(do_deconstruction), src, "Door Control")
 				else
 					boutput(user, SPAN_ALERT("You cannot deconstruct that!"))
 					return
@@ -68,41 +78,13 @@ TYPEINFO(/obj/item/rcd/construction)
 					mode = RCD_MODE_PODDOOR
 				else
 					boutput(user, SPAN_ALERT("You cannot modify that!"))
-			else if (istype(A, /turf/simulated/wall) && ammo_check(user, matter_create_door, 500))
-				boutput(user, "Creating Door Control ([matter_create_door])")
-				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-				if(do_after(user, 5 SECONDS))
-					if (ammo_check(user, matter_create_door))
-						playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
-						src.sparkIfUnsafe()
-						var/idn = hangar_id_number
-						hangar_id_number++
-						hangar_id = "rcd_built_[idn]"
-						mode = RCD_MODE_PODDOOR
-						var/obj/machinery/r_door_control/R = new /obj/machinery/r_door_control(A)
-						R.id="[hangar_id]"
-						R.pass="[hangar_id]"
-						R.name="Access code: [hangar_id]"
-						ammo_consume(user, matter_create_door)
-						logTheThing(LOG_STATION, user, "creates Door Control [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
-						boutput(user, "Now creating pod bay blast doors linked to the new door control.")
+			else if (istype(A, /turf/simulated/wall))
+				src.do_rcd_action(user, A, "Creating Door Control", matter_create_door, 5 SECONDS, PROC_REF(do_build_door_control), src)
 
 		else if (mode == RCD_MODE_PODDOOR)
 			if (istype(A, /turf/simulated/floor) && ammo_check(user, matter_create_door, 500))
 				boutput(user, "Creating Pod Bay Door ([matter_create_door])")
-				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-				if(do_after(user, 5 SECONDS))
-					if (ammo_check(user, matter_create_door))
-						playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
-						src.sparkIfUnsafe()
-						var/stepdir = get_dir(src, A)
-						var/poddir = turn(stepdir, 90)
-						var/obj/machinery/door/poddoor/blast/B = new /obj/machinery/door/poddoor/blast(A)
-						B.id = "[hangar_id]"
-						B.set_dir(poddir)
-						B.autoclose = TRUE
-						ammo_consume(user, matter_create_door)
-						logTheThing(LOG_STATION, user, "creates Blast Door [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
+				src.do_rcd_action(user, A, "Creating Pod Bay Door", matter_create_door, 5 SECONDS, PROC_REF(do_build_blast_door), src)
 
 	create_door(var/turf/A, mob/user as mob)
 		var/turf/L = get_turf(user)
