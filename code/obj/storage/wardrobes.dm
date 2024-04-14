@@ -69,14 +69,14 @@ TYPEINFO(/obj/storage/closet/dresser)
 	name = "pink wardrobe"
 	icon_state = "pink"
 	icon_closed = "pink"
-	spawn_contents = list(/obj/item/clothing/under/color/pink = 4,
+	spawn_contents = list(/obj/item/clothing/under/color/pink = list(4, 0, -3),
 	/obj/item/clothing/shoes/brown = list(4, 0, -12))
 
 /obj/storage/closet/wardrobe/red
 	name = "red wardrobe"
 	icon_state = "red"
 	icon_closed = "red"
-	spawn_contents = list(/obj/item/clothing/under/color/red = 4,
+	spawn_contents = list(/obj/item/clothing/under/color/red = list(4, 0, -3),
 	/obj/item/clothing/shoes/brown = list(4, 0, -12),
 	/obj/item/clothing/head/red = list(2, 0, 8))
 
@@ -84,15 +84,15 @@ TYPEINFO(/obj/storage/closet/dresser)
 	name = "orange wardrobe"
 	icon_state = "orange"
 	icon_closed = "orange"
-	spawn_contents = list(/obj/item/clothing/under/color/orange = 4,
-	/obj/item/clothing/under/misc/prisoner = 3,
+	spawn_contents = list(/obj/item/clothing/under/color/orange = list(4, 3, -3),
+	/obj/item/clothing/under/misc/prisoner = list(4, -3, -3),
 	/obj/item/clothing/shoes/orange = list(4, 0, -12))
 
 /obj/storage/closet/wardrobe/yellow
 	name = "yellow wardrobe"
 	icon_state = "yellow"
 	icon_closed = "yellow"
-	spawn_contents = list(/obj/item/clothing/under/color/yellow = 4,
+	spawn_contents = list(/obj/item/clothing/under/color/yellow = list(4, 0, -3),
 	/obj/item/clothing/shoes/orange = list(4, 0, -12),
 	/obj/item/clothing/head/yellow = list(2, 0, 8))
 
@@ -100,7 +100,7 @@ TYPEINFO(/obj/storage/closet/dresser)
 	name = "green wardrobe"
 	icon_state = "green"
 	icon_closed = "green"
-	spawn_contents = list(/obj/item/clothing/under/color/green = 4,
+	spawn_contents = list(/obj/item/clothing/under/color/green = list(4, 0, -3),
 	/obj/item/clothing/shoes/black = list(4, 0, -12),
 	/obj/item/clothing/head/green = list(2, 0, 8))
 
@@ -108,7 +108,7 @@ TYPEINFO(/obj/storage/closet/dresser)
 	name = "blue wardrobe"
 	icon_state = "blue"
 	icon_closed = "blue"
-	spawn_contents = list(/obj/item/clothing/under/color/blue = 4,
+	spawn_contents = list(/obj/item/clothing/under/color/blue = list(4, 0, -3),
 	/obj/item/clothing/shoes/brown = list(4, 0, -12),
 	/obj/item/clothing/head/blue = list(2, 0, 8))
 
@@ -116,8 +116,8 @@ TYPEINFO(/obj/storage/closet/dresser)
 	name = "mixed wardrobe"
 	icon_state = "mixed"
 	icon_closed = "mixed"
-	spawn_contents = list(/obj/item/clothing/under/color/blue = 2,
-	/obj/item/clothing/under/color/pink = 2,
+	spawn_contents = list(/obj/item/clothing/under/color/blue = list(2, -3, -3),
+	/obj/item/clothing/under/color/pink = list(2, 3, -3),
 	/obj/item/clothing/shoes/brown = list(4, 0, -12),
 	/obj/item/clothing/head/blue = list(1, 0, 8),
 	/obj/item/clothing/head/red = list(1, 0, 8))
@@ -161,17 +161,17 @@ TYPEINFO(/obj/storage/closet/dresser)
 /obj/storage/closet/wardrobe/black/formalwear
 	name = "formalwear closet"
 	desc = "It's a closet! This one can be opened AND closed. Comes with formal clothes"
-	spawn_contents = list(/obj/item/clothing/under/gimmick/maid,
-	/obj/item/clothing/head/maid,
-	/obj/item/clothing/under/gimmick/butler,
-	/obj/item/clothing/head/that = 2,
-	/obj/item/clothing/under/rank/bartender = 2,
-	/obj/item/clothing/suit/wcoat = 2,
-	/obj/item/clothing/shoes/black = 2)
+	spawn_contents = list(/obj/item/clothing/under/gimmick/maid = list(1, -3, -4),
+	/obj/item/clothing/head/maid = list(1, 3, 10),
+	/obj/item/clothing/under/gimmick/butler = list(1, 3, -4),
+	/obj/item/clothing/head/that = list(2, 3, 14),
+	/obj/item/clothing/under/rank/bartender = list(2, 3, 2),
+	/obj/item/clothing/suit/wcoat = list(2, -3, -4),
+	/obj/item/clothing/shoes/black = list(2, 0, -12))
 
 /obj/storage/closet/wardrobe/yellow/engineering
 	name = "\improper Engineering wardrobe"
-	spawn_contents = list(/obj/item/clothing/under/rank/engineer = 4,
+	spawn_contents = list(/obj/item/clothing/under/rank/engineer = list(4, 0, -3),
 	/obj/item/clothing/shoes/orange = list(4, 0, -12))
 
 /obj/storage/closet/wardrobe/red/security_gimmick
@@ -193,24 +193,24 @@ TYPEINFO(/obj/storage/closet/dresser)
 
 /obj/storage/closet/wardrobe/white/medical
 	name = "\improper Medical wardrobe"
-	spawn_contents = list(/obj/item/clothing/under/rank/medical = 4,
+	spawn_contents = list(/obj/item/clothing/under/rank/medical = list(4, 3, -3),
 	/obj/item/clothing/shoes/red = list(4, 0, -12),
 	/obj/item/storage/box/stma_kit,
-	/obj/item/clothing/suit/labcoat = 3)
+	/obj/item/clothing/suit/labcoat = list(4, -3, -3))
 
 /obj/storage/closet/wardrobe/white/research
 	name = "\improper Research wardrobe"
-	spawn_contents = list(/obj/item/clothing/under/rank/scientist = 4,
+	spawn_contents = list(/obj/item/clothing/under/rank/scientist = list(4, 3, -3),
 	/obj/item/clothing/shoes/white = list(4, 0, -12),
 	/obj/item/storage/box/stma_kit,
-	/obj/item/clothing/suit/labcoat = 4)
+	/obj/item/clothing/suit/labcoat = list(4, -3, -3))
 
 /obj/storage/closet/wardrobe/white/genetics
 	name = "\improper Genetics wardrobe"
-	spawn_contents = list(/obj/item/clothing/under/rank/geneticist = 4,
-	/obj/item/clothing/shoes/white= list(4, 0, -12),
+	spawn_contents = list(/obj/item/clothing/under/rank/geneticist = list(4, 3, -3),
+	/obj/item/clothing/shoes/white = list(4, 0, -12),
 	/obj/item/storage/box/stma_kit,
-	/obj/item/clothing/suit/labcoat = 4)
+	/obj/item/clothing/suit/labcoat = list(4, -3, -3))
 
 /obj/storage/closet/dresser/random
 	var/list/list_jump = list(/obj/item/clothing/under/color,
