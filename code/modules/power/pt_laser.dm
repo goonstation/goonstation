@@ -187,9 +187,9 @@
 
 	var/output_mw = adjusted_output / 1e6
 
-	#define LOW_CAP (20) //provide a nice scalar for deminishing returns instead of a slow steady climb
+	#define LOW_CAP (23) //provide a nice scalar for deminishing returns instead of a slow steady climb
 	#define BUX_PER_WORK_CAP (5000-LOW_CAP) //at inf power, generate 5000$/tick, also max amt to drain/tick
-	#define ACCEL_FACTOR 69 //our acceleration factor towards cap
+	#define ACCEL_FACTOR 11 //our acceleration factor towards cap
 	#define STEAL_FACTOR 4 //Adjusts the curve of the stealing EQ (2nd deriv/concavity)
 
 	//For equation + explanation, https://www.desmos.com/calculator/r8bsyz5gf9
@@ -465,10 +465,10 @@
 
 	//this will probably need fiddling with, hard to decide on reasonable values
 	switch(power)
-		if(10 to 1e7)
+		if(10 to 10 MEGA WATTS)
 			L.set_burning(power/1e5) //100 (max burning) at 10MW
 			L.bodytemperature = max(power/1e4, L.bodytemperature) //1000K at 10MW. More than hotspot because it's hitting them not just radiating heat (i guess? idk)
-		if(1e7+1 to 5e8)
+		if(5 MEGA WATTS + 1 to 200 MEGA WATTS)
 			L.set_burning(100)
 			L.bodytemperature = max(power/1e4, L.bodytemperature)
 			L.TakeDamage("chest", 0, power/1e7) //ow
@@ -476,14 +476,14 @@
 				var/limb = pick("l_arm","r_arm","l_leg","r_leg")
 				L:sever_limb(limb)
 				L.visible_message("<b>The [src.name] slices off one of [L.name]'s limbs!</b>")
-		if(5e8+1 to 1e11) //you really fucked up this time buddy
+		if(200 MEGA WATTS + 1 to 5 GIGA WATTS) //you really fucked up this time buddy
 			make_cleanable( /obj/decal/cleanable/ash,src.loc)
 			L.unlock_medal("For Your Ohm Good", 1)
 			L.visible_message("<b>[L.name] is vaporised by the [src]!</b>")
 			logTheThing(LOG_COMBAT, L, "was elecgibbed by the PTL at [log_loc(L)].")
 			L.elecgib()
 			return 1 //tells the caller to remove L from the laser's affecting_mobs
-		if(1e11+1 to INFINITY) //you really, REALLY fucked up this time buddy
+		if(5 GIGA WATTS + 1 to INFINITY) //you really, REALLY fucked up this time buddy
 			L.unlock_medal("For Your Ohm Good", 1)
 			L.visible_message("<b>[L.name] is detonated by the [src]!</b>")
 			logTheThing(LOG_COMBAT, L, "was explosively gibbed by the PTL at [log_loc(L)].")
@@ -861,7 +861,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 			src.sink = seller
 	var/power = src.source.laser_power()
 	alpha = clamp(((log(10, max(power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
-	if(istype(src.loc, /turf/simulated/floor) && prob(power/1e6))
+	if(istype(src.loc, /turf/simulated/floor) && prob(power/1 MEGA WATT))
 		src.loc:burn_tile()
 
 	for (var/mob/living/L in src.loc)
