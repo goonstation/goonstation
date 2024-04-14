@@ -10009,8 +10009,7 @@
 	id = "crusher";
 	name = "Crusher Door Control";
 	pixel_x = 24;
-	pixel_y = -8;
-	timer = 100
+	pixel_y = -8
 	},
 /turf/simulated/floor/purple/side{
 	dir = 5
@@ -18647,7 +18646,8 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "crusher";
-	name = "Crusher Door"
+	name = "Crusher Door";
+	autoclose = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
