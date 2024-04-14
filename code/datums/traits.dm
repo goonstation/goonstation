@@ -483,6 +483,13 @@
 	points = -1
 	category = list("trinkets")
 
+/datum/trait/petperson
+	name = "Pet Person"
+	desc = "Start with your (possibly lovable) pet!"
+	id = "petperson"
+	points = -1
+	category = list("trinkets")
+
 /datum/trait/lunchbox
 	name = "Lunchbox"
 	desc = "Start your shift with a cute little lunchbox, packed with all your favourite foods!"

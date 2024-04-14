@@ -397,8 +397,8 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	name = "Cathara"
 	desc = "...is this really her?? Do they let cats be admins??"
 	icon_state = "cat1"
-	randomize_name = FALSE
-	randomize_look = FALSE
+	random_name = FALSE
+	random_look = FALSE
 
 	New()
 		..()
