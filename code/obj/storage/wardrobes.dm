@@ -209,7 +209,7 @@ TYPEINFO(/obj/storage/closet/dresser)
 	spawn_contents = list(/obj/item/clothing/under/rank/geneticist{pixel_x = 3; pixel_y = -3} = 4,
 	/obj/item/clothing/shoes/white{pixel_x = 0; pixel_y = -12} = 4,
 	/obj/item/storage/box/stma_kit,
-	/obj/item/clothing/shoes/white{pixel_x = -3; pixel_y = -3} = 4,
+	/obj/item/clothing/shoes/white{pixel_x = -3; pixel_y = -3} = 4)
 
 /obj/storage/closet/dresser/random
 	var/list/list_jump = list(/obj/item/clothing/under/color,
