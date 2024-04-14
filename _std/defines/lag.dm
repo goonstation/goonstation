@@ -37,7 +37,7 @@
 //ticklag stuff. code lives in gameticker's process() in datums/gameticker.dm
 #define TIME_DILATION_ENABLED 1
 /// min value ticklag can be
-#define MIN_TICKLAG 0.4
+#define MIN_TICKLAG 0.2
 /// max value ticklag can be
 #define OVERLOADED_WORLD_TICKLAG 1.4
 /// where to start ticklag if many players present
