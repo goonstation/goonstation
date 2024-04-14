@@ -265,7 +265,7 @@
 					src.throw_item(balloon, list("npc_throw"))
 					src.ai_delay_move = TRUE
 					break
-			if (!src.equipped() && !src.ai_delay_move)
+			else if (!src.equipped())
 				for (var/obj/item/implant/projectile/body_visible/dart/bardart/dart in view(1, src))
 					src.hand_attack(dart)
 					break
