@@ -48,7 +48,7 @@
 				return 100
 			actions.interrupt(src, INTERRUPT_ACTION)
 			SPAWN(0)
-				S.handleCast(target)
+				S.handleCast(target, params)
 				if(S)
 					if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
 						if(src)
