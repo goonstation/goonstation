@@ -1,4 +1,21 @@
 
+(t)sat apr 13 24
+(u)Mordent
+(p)18426
+(e)📄|A-UI
+(+)Wizard Spellbook UX improved updated to make spells easier to find.
+(u)Chatausours
+(p)18294
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)Captains now recieve a mindshield implant.
+(u)glowbold
+(p)18486
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)SecHUD users can see a person's SecHUD Flag regardless of criminal status.
+(u)mloccy
+(p)18208
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Adding some animations to the rockbox on damage, and made it so when its broken it cannot be used.
 (t)fri apr 12 24
 (u)ZeWaka
 (p)18142
