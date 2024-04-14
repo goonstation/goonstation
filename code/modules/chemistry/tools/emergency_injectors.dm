@@ -43,66 +43,13 @@
 		UpdateOverlays(src.fluid_image, "fluid")
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (iscarbon(target) || ismobcritter(target))
-			if (src.empty || !src.reagents)
-				boutput(user, SPAN_ALERT("There's nothing to inject, [src] has already been expended!"))
-				return
-			else
-				if (!target.reagents)
-					return ..()
-				if (src.manipulated_injection)
-					logTheThing(LOG_COMBAT, user, "tries to inject [constructTarget(target,"combat")] with a sabotaged [src] [log_reagents(src)]")
-					user.visible_message(SPAN_ALERT("[user] tries to use [src] on [target == user ? himself_or_herself(user) : target], but [src] fails and sprays its contents on the ground!"),\
-					SPAN_ALERT("You try to use [src] on [target == user ? "yourself" : target], but [src] jams prematurely and all its contents spray onto the ground!"))
-					var/turf/target_turf = get_turf(user)
-					var/datum/reagents/temp_holder = new
-					src.reagents.trans_to_direct(temp_holder, src.amount_per_transfer_from_this)
-					target_turf.fluid_react(temp_holder, temp_holder.total_volume)
-					temp_holder.reaction(target_turf, TOUCH)
-					playsound(user, 'sound/impact_sounds/Generic_Snap_1.ogg', 30, FALSE)
-				else
-					logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with [src] [log_reagents(src)]")
-					src.reagents.trans_to(target, src.amount_per_transfer_from_this)
-					user.visible_message(SPAN_ALERT("[user] injects [target == user ? himself_or_herself(user) : target] with [src]!"),\
-					SPAN_ALERT("You inject [target == user ? "yourself" : target] with [src]!"))
-					playsound(target, 'sound/items/hypo.ogg', 40, FALSE)
-				if(!src.reagents.total_volume)
-					src.empty = 1
-					src.name += " (expended)"
-				return
-		else
-			boutput(user, SPAN_ALERT("You can only use [src] on people!"))
-			return
+		src.try_injection(user, target)
+		return
 
 	attack_self(mob/user)
-		if (iscarbon(user) || ismobcritter(user))
-			if (src.empty || !src.reagents)
-				boutput(user, SPAN_ALERT("There's nothing to inject, [src] has already been expended!"))
-				return
-			else
-				if (!user.reagents)
-					return ..()
-				if (src.manipulated_injection)
-					logTheThing(LOG_COMBAT, user, "tries to inject themselves with a sabotaged [src] [log_reagents(src)]")
-					user.visible_message(SPAN_ALERT("[user] tries to use [src] on [himself_or_herself(user)], but [src] fails and sprays its contents on the ground!"))
-					var/turf/target_turf = get_turf(user)
-					var/datum/reagents/temp_holder = new
-					src.reagents.trans_to_direct(temp_holder, src.amount_per_transfer_from_this)
-					target_turf.fluid_react(temp_holder, temp_holder.total_volume)
-					temp_holder.reaction(target_turf, TOUCH)
-					playsound(user, 'sound/impact_sounds/Generic_Snap_1.ogg', 30, FALSE)
-				else
-					logTheThing(LOG_COMBAT, user, "injects themself with [src] [log_reagents(src)]")
-					src.reagents.trans_to(user, amount_per_transfer_from_this)
-					user.visible_message(SPAN_ALERT("[user] injects [himself_or_herself(user)] with [src]!"),\
-					SPAN_ALERT("You inject yourself with [src]!"))
-					playsound(user, 'sound/items/hypo.ogg', 40, FALSE)
-				if(!src.reagents.total_volume)
-					src.empty = 1
-					src.name += " (expended)"
-				return
-		else
-			return
+		src.try_injection(user, user)
+		return
+
 
 	get_help_message(dist, mob/user)
 		if(!src.empty)
@@ -112,12 +59,39 @@
 		if(!src.manipulated_injection && !src.empty)
 			. += " You can use a cutting tool to sabotage the injector."
 
+	proc/try_injection(mob/user, mob/target)
+		if (src.empty || !src.reagents)
+			boutput(user, SPAN_ALERT("There's nothing to inject, [src] has already been expended!"))
+			return
+		if (iscarbon(target) || ismobcritter(target) || target.reagents)
+			if (src.manipulated_injection)
+				logTheThing(LOG_COMBAT, user, "tries to inject [target == user ? himself_or_herself(user) : constructTarget(target,"combat")] with a sabotaged [src] [log_reagents(src)]")
+				user.visible_message(SPAN_ALERT("[user] tries to use [src] on [target == user ? himself_or_herself(user) : target], but [src] fails and sprays its contents on the ground!"),\
+				SPAN_ALERT("You try to use [src] on [target == user ? "yourself" : target], but [src] jams prematurely and all its contents spray onto the ground!"))
+				var/turf/target_turf = get_turf(user)
+				var/datum/reagents/temp_holder = new
+				src.reagents.trans_to_direct(temp_holder, src.amount_per_transfer_from_this)
+				target_turf.fluid_react(temp_holder, temp_holder.total_volume)
+				temp_holder.reaction(target_turf, TOUCH)
+				playsound(user, 'sound/impact_sounds/Generic_Snap_1.ogg', 30, FALSE)
+			else
+				logTheThing(LOG_COMBAT, user, "injects [target == user ? himself_or_herself(user) : constructTarget(target,"combat")] with [src] [log_reagents(src)]")
+				src.reagents.trans_to(target, src.amount_per_transfer_from_this)
+				user.visible_message(SPAN_ALERT("[user] injects [target == user ? himself_or_herself(user) : target] with [src]!"),\
+				SPAN_ALERT("You inject [target == user ? "yourself" : target] with [src]!"))
+				playsound(target, 'sound/items/hypo.ogg', 40, FALSE)
+			if(!src.reagents.total_volume)
+				src.empty = 1
+				src.name += " (expended)"
+		else
+			boutput(user, SPAN_ALERT("You can only use [src] on people!"))
+
 /// autoinjector manipulation procs
 	proc/knife_manipulation(var/atom/to_combine_atom, var/mob/user)
 		if (src.empty || !src.reagents)
 			boutput(user, SPAN_ALERT("There's no reason to sabotage this, [src] has already been expended!"))
 		else
-			boutput(user, SPAN_NOTICE("you cut into the spring mechanism, making it unuseable for medical use."))
+			boutput(user, SPAN_NOTICE("You cut into the spring mechanism, making it unusable for medical use."))
 			src.manipulated_injection = TRUE
 			src.desc += " You can see a deep cut on its side."
 			//Since we sucessfully manipulated the injector, remove all the assembly components
