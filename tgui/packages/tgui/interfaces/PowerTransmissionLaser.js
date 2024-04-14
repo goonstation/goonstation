@@ -14,6 +14,7 @@ export const PowerTransmissionLaser = (props, context) => {
   const { data } = useBackend(context);
   const {
     lifetimeEarnings,
+    storedBalance,
     name = 'Power Transmission Laser',
   } = data;
   return (
@@ -26,7 +27,7 @@ export const PowerTransmissionLaser = (props, context) => {
         <InputControls />
         <OutputControls />
         <NoticeBox success>
-          Earned Credits : {formatMoney(lifetimeEarnings)}
+          Stored Credits : {formatMoney(storedBalance)}⪽
         </NoticeBox>
       </Window.Content>
     </Window>

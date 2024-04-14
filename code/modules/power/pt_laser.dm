@@ -11,6 +11,7 @@
 	dir = EAST
 	bound_height = 96
 	bound_width = 96
+	req_access = list(access_engineering_power)
 	var/output = 0		//power output of the beam
 	var/capacity = 1e15
 	var/charge = 0
@@ -30,11 +31,12 @@
 	var/output_multi = 1e6
 	var/emagged = FALSE
 	var/lifetime_earnings = 0
-	var/undistributed_earnings = 0
+	var/current_balance = 0
 	var/excess = null //for tgui readout
 	var/is_charging = FALSE //for tgui readout
 	///A list of all laser segments from this PTL that reached the edge of the z-level
 	var/list/selling_lasers = list()
+	var/wireless_net_id = null
 
 /obj/machinery/power/pt_laser/New()
 	..()
@@ -57,7 +59,17 @@
 		terminal.master = src
 
 		AddComponent(/datum/component/mechanics_holder)
-
+		src.wireless_net_id = format_net_id("\ref[src]")
+		AddComponent( \
+			/datum/component/packet_connected/radio, \
+			null, \
+			FREQ_PDA, \
+			src.wireless_net_id, \
+			null, \
+			TRUE, \
+			"ptl", \
+			FALSE \
+		)
 		UpdateIcon()
 
 /obj/machinery/power/pt_laser/disposing()
@@ -71,6 +83,38 @@
 				make_cleanable( /obj/decal/cleanable/machine_debris,T)
 
 	..()
+
+/obj/machinery/power/pt_laser/attackby(obj/item/I, mob/user)
+	var/obj/item/card/id/id_card = get_id_card(I)
+	if (istype(id_card))
+		if (!src.check_access(id_card))
+			boutput(user, SPAN_ALERT("Access denied."))
+			return TRUE
+		var/datum/db_record/account = FindBankAccountByName(id_card.registered)
+		if (!account)
+			boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
+			return TRUE
+		// var/amount = tgui_input_number(user, "Withdraw how much?", "Withdraw amount", src.current_balance, src.current_balance, 0, 0, FALSE)
+		var/amount = input(user, "Withdraw how much?", "Withdraw amount", src.current_balance)
+		amount = clamp(amount, 0, src.current_balance)
+		src.current_balance -= amount
+		account["current_money"] += amount
+
+		src.send_pda_message("PT LASER: Transferring [amount][CREDIT_SIGN] to account of [id_card.registered] ([id_card.assignment])")
+		return TRUE
+	else
+		. = ..()
+
+/obj/machinery/power/pt_laser/proc/send_pda_message(msg)
+	var/datum/signal/signal = get_free_signal()
+	signal.source = src
+	signal.data["command"] = "text_message"
+	signal.data["sender_name"] = "ENGINE-MAILBOT"
+	signal.data["group"] = list(MGO_ENGINEER, MGA_ENGINE)
+	signal.data["message"] = msg
+	signal.data["sender"] = src.wireless_net_id
+	signal.data["address_1"] = "00000000"
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 /obj/machinery/power/pt_laser/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (src.emagged)
@@ -200,24 +244,10 @@
 	if (src.output < 0) //steals money since you emagged it
 		generated_moolah = (-2*output_mw*BUX_PER_WORK_CAP)/(2*STEAL_FACTOR*output_mw - BUX_PER_WORK_CAP*STEAL_FACTOR*ACCEL_FACTOR)
 
-	lifetime_earnings += generated_moolah
-	generated_moolah += undistributed_earnings
-	undistributed_earnings = 0
+	generated_moolah = round(generated_moolah)
 
-	// CE gets double the payout share from the PTL
-	var/list/accounts = FindBankAccountsByJobs(list("Chief Engineer", "Chief Engineer", "Engineer"))
-
-	if(!length(accounts)) // no engineering staff but someone still started the PTL
-		wagesystem.station_budget += generated_moolah
-	else if(abs(generated_moolah) >= accounts.len*2) //otherwise not enough to split evenly so don't bother I guess
-		wagesystem.station_budget += round(generated_moolah/2)
-		generated_moolah -= round(generated_moolah/2) //no coming up with $$$ out of air!
-
-		for(var/datum/db_record/t as anything in accounts)
-			t["current_money"] += round(generated_moolah/accounts.len)
-		undistributed_earnings += generated_moolah-(round(generated_moolah/accounts.len) * (length(accounts)))
-	else
-		undistributed_earnings += generated_moolah
+	src.lifetime_earnings += generated_moolah
+	src.current_balance += generated_moolah
 
 	#undef STEAL_FACTOR
 	#undef ACCEL_FACTOR
@@ -341,6 +371,7 @@
 		"isFiring" = src.firing,
 		"isLaserEnabled" = src.online,
 		"lifetimeEarnings" = src.lifetime_earnings,
+		"storedBalance" = src.current_balance,
 		"name" = src.name,
 		"outputLevel" = src.output,
 		"outputMultiplier" = src.output_multi,
