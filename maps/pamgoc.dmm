@@ -56171,10 +56171,7 @@
 	},
 /area/station/engine/hotloop)
 "fqj" = (
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1
-	},
+/obj/deployable_turret/riot/active,
 /obj/machinery/turretid{
 	name = "External perimeter turret deactivation control";
 	pixel_y = 28;
@@ -57326,7 +57323,7 @@
 /turf/simulated/floor/plating,
 /area/station/ranch)
 "hCK" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},

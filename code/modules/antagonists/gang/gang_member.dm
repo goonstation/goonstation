@@ -72,6 +72,8 @@
 
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		imgroup.add_mind(src.owner)
+		var/datum/client_image_group/objimgroup = get_image_group(CLIENT_IMAGE_GROUP_GANG_OBJECTIVES)
+		objimgroup.add_mind(src.owner)
 
 	remove_from_image_groups()
 		. = ..()
@@ -80,6 +82,9 @@
 		image_group.remove_mind(src.owner)
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		imgroup.remove_mind(src.owner)
+
+		var/datum/client_image_group/objimgroup = get_image_group(CLIENT_IMAGE_GROUP_GANG_OBJECTIVES)
+		objimgroup.remove_mind(src.owner)
 
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/gang/member, src)

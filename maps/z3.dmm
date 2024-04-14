@@ -6088,10 +6088,7 @@
 /area/abandonedmedicalship)
 "aHh" = (
 /obj/decal/cleanable/dirt,
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1
-	},
+/obj/deployable_turret/riot/active,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aHi" = (
@@ -10156,7 +10153,7 @@
 /area/derelict_ai_sat)
 "aTY" = (
 /obj/decal/fakeobjects/skeleton,
-/obj/item/mining_tool/powerhammer,
+/obj/item/mining_tool/powered/hammer,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
@@ -10286,7 +10283,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUt" = (
-/obj/item/mining_tool/drill,
+/obj/item/mining_tool/powered/drill,
 /obj/item/clothing/suit/space/engineer,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)

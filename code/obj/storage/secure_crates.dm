@@ -107,6 +107,18 @@
 	/obj/item/reagent_containers/food/drinks/bottle/vodka = 3,\
 	/obj/item/reagent_containers/food/drinks/curacao)
 
+/obj/storage/secure/crate/gear/armory/equipment
+	name = "\improper Special Equipment crate"
+	spawn_contents = list(/obj/item/requisition_token/security = 2,
+	/obj/item/requisition_token/security/assistant = 2,
+	/obj/item/turret_deployer/riot = 2)
+
+/obj/storage/secure/crate/gear/armory/equipment/looted
+	spawn_contents = list()
+	locked = 0
+	open = 1
+	emagged = 1
+
 /obj/storage/secure/crate/bee
 	name = "Secure Bee crate"
 	desc = "A secure crate with a picture of a bee on it. Buzz."

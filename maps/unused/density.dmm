@@ -363,7 +363,7 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "aW" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "aX" = (
