@@ -1,5 +1,6 @@
-/mob/proc/say()
-	return
+/mob/proc/say(message)
+	if (message)
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 
 /mob/proc/whisper(message, forced=FALSE)
 	return

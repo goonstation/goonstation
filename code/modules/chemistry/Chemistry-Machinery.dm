@@ -35,11 +35,12 @@ TYPEINFO(/obj/machinery/chem_heater)
 		output_target = src.loc
 
 	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
-
-		if(istype(B, /obj/item/reagent_containers/glass))
-			tryInsert(B, user)
+		if (!tryInsert(B, user))
+			return ..()
 
 	proc/tryInsert(obj/item/reagent_containers/glass/B, var/mob/user)
+		if(!istypes(B, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks/cocktailshaker))) //container paths are so baaad
+			return
 		if (status & (NOPOWER|BROKEN))
 			user.show_text("[src] seems to be out of order.", "red")
 			return
@@ -71,6 +72,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 		if(src.beaker || roboworking)
 			boutput(user, "You add the beaker to the machine!")
 			src.ui_interact(user)
+			. = TRUE
 		src.UpdateIcon()
 
 	handle_event(var/event, var/sender)
@@ -168,9 +170,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 			if("insert")
 				if (container)
 					return
-				var/obj/item/reagent_containers/glass/inserting = usr.equipped()
-				if(istype(inserting))
-					tryInsert(inserting, usr)
+				tryInsert(usr.equipped(), usr)
 			if("adjustTemp")
 				src.target_temp = clamp(params["temperature"], 0, 1000)
 				src.UpdateIcon()

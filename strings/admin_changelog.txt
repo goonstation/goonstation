@@ -1,3 +1,9 @@
+(t)wed apr 3 24
+(u)LeahTheTech
+(+)Pixel explosion mode is now a single verb toggle like everything else.
+(t)tue apr 02 24
+(u)Mordent
+(*)Player Polls panel now has a dedicated UI for creating polls
 (t)thu mar 21 24
 (u)Sord
 (+)"Give everyone a random firearm" button now allows you to choose either a safe-ish pick or fullrandom

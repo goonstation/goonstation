@@ -164,6 +164,8 @@
 				logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 				return 1
 
+		for(var/datum/antagonist/antagonist as anything in L.mind?.antagonists)
+			antagonist.handle_cryo()
 		stored_mobs += L
 		stored_mobs_volunteered += L
 		stored_crew_names += L.real_name

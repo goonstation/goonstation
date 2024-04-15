@@ -215,6 +215,7 @@
 				return src.emote(copytext(message, 2),1)
 
 			logTheThing(LOG_DIARY, src, "[src.name] - [src.real_name]: [message]", "say")
+			SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")
