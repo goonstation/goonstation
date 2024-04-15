@@ -863,6 +863,8 @@ var/global/in_replace_with = 0
 			// tell atmos to update this tile's air settings
 			if (air_master)
 				air_master.tiles_to_update |= N
+		else if (air_master)
+			air_master.high_pressure_delta -= src //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
 			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.

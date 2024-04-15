@@ -56171,10 +56171,7 @@
 	},
 /area/station/engine/hotloop)
 "fqj" = (
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1
-	},
+/obj/deployable_turret/riot/active,
 /obj/machinery/turretid{
 	name = "External perimeter turret deactivation control";
 	pixel_y = 28;

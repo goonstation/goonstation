@@ -21475,6 +21475,9 @@
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 8
 	},
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "fCj" = (
@@ -26046,10 +26049,6 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "iQe" = (
-/obj/machinery/optable{
-	id = "robotics"
-	},
-/obj/machinery/drainage,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -27429,6 +27428,7 @@
 	pixel_x = 6
 	},
 /obj/machinery/camera,
+/obj/machinery/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -28917,9 +28917,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1;
+/obj/deployable_turret/riot/active{
 	dir = 1
 	},
 /turf/simulated/floor/redblack,
@@ -29083,9 +29081,6 @@
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "lkd" = (
-/obj/machinery/computer/operating{
-	id = "OR1"
-	},
 /obj/item/device/radio/intercom/medical{
 	broadcasting = 1;
 	dir = 4
@@ -32892,7 +32887,9 @@
 /obj/machinery/ai_status_display{
 	pixel_y = 28
 	},
-/obj/machinery/dialysis,
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -39455,8 +39452,28 @@
 	},
 /area/station/crew_quarters/bar)
 "sYc" = (
-/obj/machinery/optable{
-	id = "OR1"
+/obj/surgery_tray,
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
 	},
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -40924,31 +40941,8 @@
 	},
 /area/station/security/hos)
 "udJ" = (
-/obj/surgery_tray,
-/obj/item/hemostat{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/suture{
-	pixel_y = 5
-	},
-/obj/item/scalpel{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/circular_saw{
-	pixel_y = 11
-	},
-/obj/item/staple_gun{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/machinery/status_display{
-	pixel_y = 30
+/obj/machinery/optable{
+	id = "OR1"
 	},
 /obj/machinery/light{
 	dir = 8;
@@ -43410,13 +43404,15 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "vXC" = (
-/obj/machinery/computer/operating{
-	id = "robotics"
-	},
 /obj/item/device/radio/intercom/medical{
 	pixel_x = 7;
 	pixel_y = 21
 	},
+/obj/machinery/optable{
+	id = "robotics"
+	},
+/obj/machinery/drainage,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "vYv" = (

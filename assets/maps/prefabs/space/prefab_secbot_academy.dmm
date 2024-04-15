@@ -325,9 +325,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/noGenerate)
 "nG" = (
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1;
+/obj/deployable_turret/riot/active{
 	desc = "A Nanotrasen Automatic Riot Control System repurposed for home security.";
 	dir = 4
 	},
