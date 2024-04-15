@@ -6,8 +6,6 @@
 	var/list/score_tab_data
 	var/list/citation_tab_data
 
-	var/has_citation_data = FALSE
-
 /datum/crewCredits/New()
 	. = ..()
 	src.crew_tab_data = list(
@@ -33,8 +31,8 @@
 		SCORE_TAB_SECTION_ESCAPEE = list(),
 	)
 	src.citation_tab_data = list(
-		TICKET_TAB_SECTION_TICKETS = list(),
-		TICKET_TAB_SECTION_FINES = list(),
+		CITATION_TAB_SECTION_TICKETS = list(),
+		CITATION_TAB_SECTION_FINES = list(),
 	)
 
 	src.generate_crew_credits()
@@ -519,7 +517,6 @@
 /// Tickets/Fines
 /datum/crewCredits/proc/generate_citation_data()
 	if(length(data_core.tickets))
-		src.has_citation_data = TRUE
 		var/list/people_with_tickets = list()
 		for (var/datum/ticket/T in data_core.tickets)
 			people_with_tickets |= T.target
@@ -539,7 +536,6 @@
 			))
 
 	if(length(data_core.fines))
-		src.has_citation_data = TRUE
 		var/list/people_with_fines = list()
 		for (var/datum/fine/F in data_core.fines)
 			people_with_fines |= F.target

@@ -898,7 +898,7 @@ var/global/current_state = GAME_STATE_INVALID
 				E.addAbility(/datum/targetable/crew_credits)
 				if (E.client.preferences.view_score)
 					creds.ui_interact(E)
-				else if (E.client.preferences.view_tickets && creds.has_citation_data)
+				else if (E.client.preferences.view_tickets && (length(creds.citation_tab_data[CITATION_TAB_SECTION_TICKETS]) || length(creds.citation_tab_data[CITATION_TAB_SECTION_FINES])))
 					creds.ui_interact(E)
 				E.show_inspector_report()
 				SPAWN(0) show_xp_summary(E.key, E)
