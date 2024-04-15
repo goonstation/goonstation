@@ -27,7 +27,6 @@ var/datum/score_tracker/score_tracker
 	var/final_score_civ = 0
 	var/most_xp = "OH NO THIS IS BROKEN"
 	var/score_text = null
-	var/tickets_text = null
 	var/mob/richest_escapee = null
 	var/richest_total = 0
 	var/mob/most_damaged_escapee = null
