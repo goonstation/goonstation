@@ -15868,7 +15868,6 @@
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/station/crew_quarters/barber_shop)
 "dzu" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/brig,
 /obj/machinery/door/airlock/pyro/glass/security,
 /obj/cable{
@@ -16397,14 +16396,6 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
-"dYd" = (
-/obj/disposalpipe/segment/mail,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/north)
 "dYq" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -18165,6 +18156,18 @@
 	dir = 4
 	},
 /area/station/storage/primary)
+"fAx" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/south)
 "fAz" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -19552,6 +19555,14 @@
 /obj/landmark/start/job/cyborg,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"gzY" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/north)
 "gAf" = (
 /obj/table/auto,
 /obj/item/rods/steel/fullstack,
@@ -19790,6 +19801,21 @@
 	},
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
+"gNO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "tour;next_tour=tour5;desc=And on my right is located the AI core, where the head of our sillicon friends is located. ";
+	freq = 1443;
+	location = "tour4";
+	name = "tour4 - AI"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/north)
 "gOZ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -20515,6 +20541,20 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"hwu" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellowblack"
+	},
+/area/station/hallway/primary/southeast)
 "hwB" = (
 /obj/machinery/disposal/small/west{
 	pixel_x = 5
@@ -25906,10 +25946,14 @@
 	},
 /area/station/engine/core/nuclear)
 "lFq" = (
-/obj/disposalpipe/segment,
-/obj/machinery/recharge_station,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/engine/caution/northsouth,
+/area/station/hangar/sec)
 "lFM" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -26566,13 +26610,11 @@
 	},
 /area/station/crew_quarters/pool)
 "mfK" = (
-/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
 	},
-/turf/simulated/floor/engine/caution/northsouth,
+/turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "mfZ" = (
 /obj/lattice{
@@ -30475,6 +30517,15 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"plN" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/west)
 "plW" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
@@ -31030,9 +31081,12 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "pGx" = (
-/obj/machinery/recharge_station,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
+/obj/machinery/traymachine/locking/tanning,
+/obj/machinery/computer/tanning{
+	pixel_y = 32
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
 "pGA" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -32188,12 +32242,6 @@
 	icon_state = "fblue2"
 	},
 /area/station/medical/head)
-"qAF" = (
-/obj/machinery/launcher_loader/south{
-	dir = 1
-	},
-/turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/office)
 "qAP" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -33953,6 +34001,10 @@
 /obj/machinery/door/airlock/pyro/medical,
 /turf/simulated/floor/sanitary,
 /area/station/medical/staff)
+"rUy" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "rVy" = (
 /obj/grille/catwalk{
 	dir = 10
@@ -34446,21 +34498,6 @@
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_east)
-"smO" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "tour;next_tour=tour5;desc=And on my right is located the AI core, where the head of our sillicon friends is located. ";
-	freq = 1443;
-	location = "tour4";
-	name = "tour4 - AI"
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/north)
 "smW" = (
 /obj/machinery/networked/mainframe/zeta{
 	tag = "ZETA_MAINFRAME"
@@ -35815,15 +35852,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
-"trC" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor/blackwhite{
-	dir = 4
-	},
-/area/station/hallway/primary/southwest)
 "trF" = (
 /obj/machinery/computer/card/department/security,
 /turf/simulated/floor/wood,
@@ -36829,6 +36857,17 @@
 	dir = 10
 	},
 /area/station/science/lobby)
+"ufc" = (
+/obj/machinery/conveyor/NS{
+	id = "cargobelt_in";
+	operating = 1
+	},
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/quartermaster/office)
 "ufP" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -36873,13 +36912,6 @@
 /obj/item/storage/belt/utility,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"ugz" = (
-/obj/machinery/traymachine/locking/tanning,
-/obj/machinery/computer/tanning{
-	pixel_y = 32
-	},
-/turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
 "ugP" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -37528,10 +37560,14 @@
 	},
 /area/station/engine/substation/east)
 "uCE" = (
-/obj/disposalpipe/segment/food,
-/obj/machinery/recharge_station,
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/blackwhite{
+	dir = 4
+	},
+/area/station/hallway/primary/southwest)
 "uCQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38371,6 +38407,12 @@
 /obj/mapping_helper/access/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"vkR" = (
+/obj/machinery/launcher_loader/south{
+	dir = 1
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/quartermaster/office)
 "vmJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -39679,20 +39721,6 @@
 /obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/science/research_director)
-"wBc" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment,
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -10
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "yellowblack"
-	},
-/area/station/hallway/primary/southeast)
 "wBn" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -40856,15 +40884,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/ce)
-"xBm" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/west)
 "xBu" = (
 /obj/item/reagent_containers/food/drinks/mug{
 	pixel_x = 19
@@ -40945,6 +40964,11 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"xDa" = (
+/obj/disposalpipe/segment/food,
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "xDd" = (
 /obj/machinery/firealarm/east,
 /obj/disposalpipe/segment{
@@ -41443,17 +41467,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "xZq" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/south)
+/obj/disposalpipe/segment,
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "xZV" = (
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor/bluegreen/side,
@@ -41468,17 +41485,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/psychiatrist)
-"yaP" = (
-/obj/machinery/conveyor/NS{
-	id = "cargobelt_in";
-	operating = 1
-	},
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
-	},
-/turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/office)
 "yaV" = (
 /obj/stool/chair/yellow,
 /obj/landmark/start/job/miner,
@@ -67816,7 +67822,7 @@ wJX
 pEZ
 abt
 pZK
-pGx
+rUy
 adD
 rWj
 byo
@@ -68126,7 +68132,7 @@ aty
 aty
 aty
 bhj
-trC
+uCE
 aty
 aYX
 hgC
@@ -71682,7 +71688,7 @@ biN
 gZt
 alP
 lye
-xBm
+plN
 ajl
 pWl
 usZ
@@ -72456,7 +72462,7 @@ fZk
 tsd
 asA
 nTZ
-ugz
+pGx
 oRA
 usZ
 usZ
@@ -72752,7 +72758,7 @@ kcV
 ghI
 aZg
 iJB
-uCE
+xDa
 mCQ
 mCQ
 mCQ
@@ -73729,7 +73735,7 @@ gKf
 gKf
 gKf
 gKf
-smO
+gNO
 gKf
 hDo
 gKf
@@ -74238,7 +74244,7 @@ asx
 wtf
 sGu
 arr
-dYd
+gzY
 lql
 mgu
 wtf
@@ -74302,7 +74308,7 @@ boR
 qcM
 xGu
 gPg
-wBc
+hwu
 buE
 dZw
 ifk
@@ -76789,7 +76795,7 @@ bJQ
 bCl
 aaT
 fdv
-qAF
+vkR
 odX
 kpu
 vjP
@@ -76846,7 +76852,7 @@ cpt
 ayW
 ayW
 hpL
-xZq
+fAx
 aOE
 aPU
 aRm
@@ -77303,7 +77309,7 @@ cYF
 bAq
 aau
 nRL
-yaP
+ufc
 acb
 oGr
 mAq
@@ -79706,7 +79712,7 @@ jGO
 oCX
 srl
 jGZ
-uTJ
+mfK
 ghp
 brs
 lWI
@@ -79965,7 +79971,7 @@ fUm
 fXV
 uTJ
 uTJ
-mfK
+lFq
 mfZ
 bIO
 bIO
@@ -80222,7 +80228,7 @@ sht
 fXV
 uTJ
 uTJ
-mfK
+lFq
 mfZ
 aaa
 aaa
@@ -80479,7 +80485,7 @@ oky
 fXV
 uTJ
 ghp
-mfK
+lFq
 bpe
 agJ
 bvT
@@ -80736,7 +80742,7 @@ aZf
 bjQ
 uTJ
 uTJ
-mfK
+lFq
 mfZ
 aaa
 aaa
@@ -84062,7 +84068,7 @@ bhW
 bjr
 bkD
 emM
-lFq
+xZq
 bpv
 bpv
 bqy
