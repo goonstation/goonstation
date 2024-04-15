@@ -2,7 +2,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	mats = 3
 
 /obj/item/device/radio/intercom
-
+	name = "Station Intercom (Radio)"
 #ifndef IN_MAP_EDITOR
 	icon_state = "intercom"
 #else
