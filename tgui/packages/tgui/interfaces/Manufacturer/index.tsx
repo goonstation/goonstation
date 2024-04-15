@@ -8,12 +8,76 @@
 import { useBackend, useLocalState, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
-import { Button, Collapsible, Divider, Input, LabeledList, Section, Slider, Stack, Tooltip } from '../../components';
+import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack, Tooltip } from '../../components';
 import { ButtonWithBadge } from '../../components/goonstation/ButtonWithBadge';
 import { truncate } from '../../format';
 import { formatMoney } from '../../format';
-import { MaintenencePanel, Manufacturable, ManufacturerData, Ore, Resource, Rockbox, WireData } from './type';
+import { MaintenencePanel, Manufacturable, ManufacturerData, Ore, QueueBlueprint, Resource, Rockbox, WireData } from './type';
 import { round } from 'common/math';
+import { CenteredText } from '../../components/goonstation/CenteredText';
+
+const getBlueprintTime = (time, manufacturerSpeed) => {
+  return round(time / 10 / manufacturerSpeed, 0.01);
+};
+
+const ProductionCard = (params, context) => {
+  const { act } = useBackend(context);
+  const { data, progress_pct, index, mode } = params;
+  return (
+    <Stack.Item>
+      <Stack>
+        <Stack.Item>
+          <ButtonWithBadge
+            width={16.5}
+            height={4.6}
+            image_path={data.img}
+          >
+            <Stack vertical>
+              <Stack.Item>
+                <CenteredText text={truncate(data.name)} />
+              </Stack.Item>
+              { index === 0 ? (
+                <Stack.Item>
+                  <ProgressBar
+                    value={progress_pct}
+                    minValue={0}
+                    maxValue={1}
+                    position="relative"
+                    color="rgba(0,0,0,0.2)"
+                  />
+                </Stack.Item>
+              ) : null}
+            </Stack>
+          </ButtonWithBadge>
+        </Stack.Item>
+        <Stack.Item>
+          <Stack vertical>
+            <Stack.Item>
+              <Button
+                width={2}
+                height={2}
+                pt={0.5}
+                pl={1.1}
+                icon="trash"
+                onClick={() => act("remove", { "index": index+1 })}
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                width={2}
+                height={2}
+                pl={1.3}
+                pt={0.5}
+                icon={(mode !== "halt") ? "pause" : "play"}
+                onClick={() => act("pause_toggle", { "action": (mode !== "halt") ? "pause" : "continue" })}
+              />
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+      </Stack>
+    </Stack.Item>
+  );
+};
 
 const CardInfo = (_, context) => {
   const { data, act } = useBackend<ManufacturerData>(context);
@@ -113,7 +177,7 @@ export const CollapsibleWireMenu = (props, context) => {
 
 const BlueprintButton = (props, context) => {
 
-  const { blueprintData, fabricatorSpeed } = props;
+  const { blueprintData, manufacturerSpeed } = props;
   const { act } = useBackend(context);
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
   let outputs = (blueprintData.item_outputs.length < 2 && blueprintData.create === 1) ? null : (
@@ -135,7 +199,7 @@ const BlueprintButton = (props, context) => {
           {value}: {blueprintData.item_amounts[index]/10} pieces<br />
         </>
       ))}
-      Time: {round(blueprintData.time / 10 / fabricatorSpeed, 0.01)}s<br />
+      Time: {getBlueprintTime(blueprintData.time, manufacturerSpeed)}s<br />
       {outputs}
     </>
   );
@@ -156,9 +220,10 @@ const BlueprintButton = (props, context) => {
           width={16.25}
           height={5.5}
           image_path={blueprintData.img}
-          text={truncate(blueprintData.name, 40)}
           onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
-        />
+        >
+          <CenteredText text={truncate(blueprintData.name, 40)} height={5.5} />
+        </ButtonWithBadge>
       </Stack.Item>
       <Stack.Item ml={0.5}>
         <Stack vertical>
@@ -228,6 +293,28 @@ export const Manufacturer = (_, context) => {
       setSwappingMaterial(null);
     }
   };
+  let getBlueprintFromQueueData = (queueData:QueueBlueprint) => {
+    // "available", "hidden", "download", "drive_blueprint"
+    let blueprintList = null;
+
+    if (queueData.type === "available") {
+      blueprintList = data.available_blueprints;
+    }
+    else if (queueData.type === "hidden") {
+      blueprintList = data.hidden_blueprints;
+    }
+    else if (queueData.type === "download") {
+      blueprintList = data.downloaded_blueprints;
+    }
+    else if (queueData.type === "drive_blueprint") {
+      blueprintList = data.drive_recipe_blueprints;
+    }
+    else {
+      return null;
+    }
+
+    return blueprintList[queueData.category].find((key) => (key.name === queueData.name));
+  };
   let usable_blueprints = [
     data.available_blueprints,
     data.downloaded_blueprints,
@@ -248,7 +335,7 @@ export const Manufacturer = (_, context) => {
                       ? blueprints[category].map((blueprintData: Manufacturable) => (
                         (blueprintData.name.toLowerCase().includes(search)
                           ? (
-                            <BlueprintButton blueprintData={blueprintData} fabricatorSpeed={data.speed} />
+                            <BlueprintButton blueprintData={blueprintData} manufacturerSpeed={data.speed} />
                           ) : null)
                       )) : null
                   ))}
@@ -353,6 +440,18 @@ export const Manufacturer = (_, context) => {
                   ))}
                   {data.rockbox_message}
                 </Section>
+              </Stack.Item>
+              <Stack.Item>
+                <Stack vertical>
+                  {data.queue.map((queued:QueueBlueprint, index:number) => (
+                    <ProductionCard
+                      key={index}
+                      index={index}
+                      data={getBlueprintFromQueueData(queued)}
+                      progress_pct={data.progress_pct}
+                    />
+                  ))}
+                </Stack>
               </Stack.Item>
             </Stack>
           </Stack.Item>

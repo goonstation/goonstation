@@ -28,7 +28,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	// General stuff
 	var/health = 100
 	var/supplemental_desc = null //! appended in get_desc() to the base description, to make subtype definitions cleaner
-	var/mode = "ready"
+	var/mode = "ready" // "ready", "working", "halt"
 	var/error = null
 	var/active_power_consumption = 0 //! How much power is consumed while active? This is determined automatically when the unit starts a production cycle
 	var/panel_open = FALSE
@@ -47,7 +47,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/obj/item/card/id/scan = null //! Used when deducting payment for ores from a Rockbox
 
 	// Printing and queues
-	var/time_left = 0
+	var/time_left = 0 //! time the current blueprint will take to manufacture
+	var/time_started = 0 //! time the last blueprint was queued
 	var/speed = 3
 	var/repeat = FALSE
 	var/manual_stop = FALSE
@@ -123,6 +124,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	disposing()
 		STOP_TRACKING
+		src.remove_storage()
 		manuf_controls.manufacturing_units -= src
 		src.work_display = null
 		src.activity_display = null
@@ -151,6 +153,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.link = null
 
 		for (var/obj/O in src.contents)
+			// unlikely now that manufacturers use storage datums but as said below
 			O.set_loc(src.loc)
 		for (var/mob/M in src.contents)
 			// unlikely as this is to happen we might as well make sure everything is purged
@@ -283,11 +286,31 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/resource_data = list()
 		for (var/mat_id in resource_amounts)
 			resource_data += list(list("name"="[src.get_our_material(mat_id)]", "id"=mat_id, "amount"=resource_amounts[mat_id]))
+		// Package additional information into each queued item for the badges so that it can lookup its already sent information
+		var/queue_data = list()
+		for (var/datum/manufacture/M in src.queue)
+			queue_data += list(list("name" = M.name, "category" = M.category, "type" = src.get_blueprint_type(M) ))
+		var/progress_pct = null
+		// would you believe i hurt my brain over this for a solid hour
+		// anyway this calculates the percentage progress of a blueprint by the time that already elapsed before a pause (0 if never paused)
+		// added to the current time that has been elapsed, divided by the total time to be elapsed.
+		// But we keep the pct a constant if we're paused, and just do time that was elapsed / time to elapse
+		progress_pct = TIME
+		if (length(src.queue))
+			var/datum/manufacture/M = src.queue[1]
+			if (src.mode == "halt")
+				progress_pct = src.time_left / M.time
+			else
+				progress_pct = ((M.time - src.time_left) + (TIME - src.time_started)) / M.time
+		progress_pct = progress_pct + 0
 		return list(
+			"queue" = queue_data,
+			"progress_pct" = progress_pct,
 			"rockbox_message" = src.temp,
 			"panel_open" = src.panel_open,
 			"hacked" = src.hacked,
 			"malfunction" = src.malfunction,
+			"mode" = src.mode,
 			"wire_bitflags" = src.wires,
 			"card_balance" = (!isnull(src.scan) ? FindBankAccountByName(src.scan.registered)["current_money"] : null),
 			"card_owner" = (!isnull(src.scan) ? src.scan.registered : null),
@@ -321,6 +344,19 @@ TYPEINFO(/obj/machinery/manufacturer)
 							   ),
 			"reagents" = (src.beaker && src.beaker.reagents) ? src.beaker.reagents.reagent_list : null,
 		)
+
+	/// Get whether a blueprint is available, hidden, downloaded, or a drive recipe. If in multiple print lists, picks the first result. Or null.
+	proc/get_blueprint_type(var/datum/manufacture/M)
+		if (M in src.available)
+			return "available"
+		else if (M in src.hidden)
+			return "hidden"
+		else if (M in src.download)
+			return "download"
+		else if (M in src.drive_recipes)
+			return "drive_recipes"
+		else
+			return null
 
 	#define ORE_TAX(price) round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01)
 	/// Gets rockbox data as list for ui_static_data
@@ -371,6 +407,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		return list(
 			"name" = M.name,
+			"category" = M.category,
 			"material_names" = M.item_names,
 			"item_names" = generated_names,
 			"item_descriptions" = generated_descriptions,
@@ -391,90 +428,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (src.shock(user, 33))
 					return
 		src.ui_interact(user)
-		return
-		/*
-		var/list/dat = list()
-		if (status & BROKEN || status & NOPOWER)
-			dat = "The screen is blank."
-			user.Browse(dat, "window=manufact;size=750x500")
-			onclose(user, "manufact")
-			return
-		dat += "<div class='tabs'>"
-		for (var/category in list("All") + src.categories)
-			var/actual_category = category == "All" ? null : category
-			dat += "<a [actual_category == src.category ? "class='active" : ""]' href='?src=\ref[src];category=[category]'>[category]</a>"
-		dat += "</div>"
-		dat += "<div id='products'>"
 
-		// Get the list of stuff we can print ...
-		var/list/products = src.available + src.drive_recipes + src.download
-		if (src.hacked)
-			products += src.hidden
-
-		// Then make it
-		var/can_be_made = 0
-		var/delete_link
-		for(var/datum/manufacture/A in products)
-			var/list/mats_used = get_materials_needed(A)
-
-			if (istext(src.search) && !findtext(A.name, src.search, 1, null))
-				continue
-			else if (istext(src.category) && src.category != A.category)
-				continue
-
-			can_be_made = (length(mats_used) >= A.item_paths.len)
-			if(delete_allowed && src.download.Find(A))
-				delete_link = {"<span class='delete' onclick='delete_product("\ref[A]");'>DELETE</span>"}
-
-			else
-				delete_link = ""
-
-			var/icon_text = "<img class='icon'>"
-			// @todo probably refactor this since it's copy pasted twice now.
-			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1], C = user.client)
-				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
-
-			if (istype(A, /datum/manufacture/mechanics))
-				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path, C = user.client)
-				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
-
-			var/list/material_text = list()
-			var/list/material_count = 0
-			for (var/i in 1 to A.item_paths.len)
-				material_count += A.item_amounts[i]
-				var/mat_name
-				if(isnull(A.item_names) || isnull(A.item_names[i]))
-					mat_name = get_nice_mat_name_for_manufacturers(A.item_paths[i])
-				else
-					mat_name = A.item_names[i]
-				material_text += {"
-				<span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]/10] [mat_name]</span>
-				"}
-
-			dat += {"
-		<div class='product[can_be_made ? "" : " disabled"]' onclick='product("\ref[A]");'>
-			<strong>[A.name]</strong>
-			<div class='required'><div>[material_text.Join("<br>")]</div></div>
-			[icon_text]
-			[delete_link]
-			<span class='mats'>[material_count/10] mat.</span>
-			<span class='time'>[A.time && src.speed ? round(A.time / src.speed / 10, 0.1) : "??"] sec.</span>
-		</div>"}
-
-
-		dat += "</div><div id='info'>"
-		dat += build_material_list(user)
-
-		//Search
-		dat += " <A href='?src=\ref[src];search=1'>(Search: \"[istext(src.search) ? html_encode(src.search) : "----"]\")</A><BR>"
-		// This is not re-formatted yet just b/c i don't wanna mess with it
-		*/
-
-	// Validate that an item is inside this machine for HREF check purposes
 	proc/validate_disp(datum/manufacture/M)
 		. = FALSE
 		if(src.available && (M in src.available))
@@ -490,7 +444,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return TRUE
 
 	ui_act(action, params)
-
 		if(!(action == "wire"))
 			if (IS_NOT_OPERATIONAL)
 				return
@@ -537,7 +490,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.eject_material(params["resource"])
 
 			if ("material_swap")
-				//NYI
 				src.swap_materials(params["resource_1"], params["resource_2"])
 
 			if ("card")
@@ -615,6 +567,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 						boutput(usr, SPAN_ALERT("Insufficient usable materials to manufacture first item in queue."))
 					else
 						src.begin_work(0)
+						src.time_started = TIME
 				else if (params["action"] == "pause")
 					src.mode = "halt"
 					src.build_icon()
@@ -1007,23 +960,35 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		src.updateUsrDialog()
 
-	/// Helper proc for swap_materials
+	/// Helper proc for swap_materials, gets the material index in the storage datum or retuns null if it doesn't exist.
 	proc/get_material_index_by_id(var/mat_id)
 		var/i = 1
-		for (var/obj/item/O in src.contents)
+		for (var/obj/item/O in src.storage.get_contents())
 			if (!O.material)
 				continue
 			if (mat_id == O.material.getID())
 				return i
 			i++
-		return i
+		return null
 
-	proc/swap_materials(var/mat_id_1, var/mat_id_2)
-		var/mat_index_1 = src.get_material_index_by_id(mat_id_1)
-		var/mat_index_2 = src.get_material_index_by_id(mat_id_2)
-		var/obj/item/temp_hold = src.contents[mat_index_1]
-		src.contents[mat_index_1] = src.contents[mat_index_2]
-		src.contents[mat_index_2] = temp_hold
+	/// Swap the "position" of two materials for the sake of priority use management. Changes all 3 relevant lists.
+	proc/swap_materials(var/material_id_1, var/material_id_2)
+		var/material_index_1 = src.get_material_index_by_id(material_id_1)
+		var/material_index_2 = src.get_material_index_by_id(material_id_2)
+		// Could be ejected by someone else between the time of selecting what to swap and swapping it
+		if (isnull(material_index_1) || isnull(material_index_2))
+			boutput(usr, SPAN_ALERT("One or both of those materials are not present in storage. Aborting."))
+		var/list/S = src.storage.get_contents()
+		var/held_material_1 = S[material_index_1]
+		S[material_index_1] = S[material_index_2]
+		S[material_index_2] = held_material_1
+		// gotta swap key AND value separately. I think.
+		var/held_amount_1 = src.resource_amounts[material_id_1]
+		var/held_amount_2 = src.resource_amounts[material_id_2]
+		src.resource_amounts[material_index_1] = material_id_2
+		src.resource_amounts[material_index_2] = material_id_1
+		src.resource_amounts[material_id_1] = held_amount_1
+		src.resource_amounts[material_id_2] = held_amount_2
 
 	proc/eject_material(var/mat_id)
 		if (src.mode != "ready")
@@ -1031,7 +996,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 		var/ejectamt = 0
 		var/turf/ejectturf = get_turf(usr)
-		for(var/obj/item/O in src.contents)
+
+		for(var/obj/item/O in src.storage.get_contents())
 			if (O.material && O.material.getID() == mat_id)
 				if (!ejectamt)
 					ejectamt = tgui_input_number(usr,"How many material pieces do you want to eject?","Eject Materials", 0, O.amount, 0)
@@ -1048,7 +1014,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					ejectamt = O.amount
 				src.update_resource_amount(mat_id, -ejectamt * 10) // ejectamt will always be <= actual amount
 				if (ejectamt == O.amount)
-					O.set_loc(get_output_location(O))
+					src.storage.transfer_stored_item(O, ejectturf)
 				else
 					var/obj/item/material_piece/P = new O.type
 					P.setMaterial(O.material)
@@ -1606,11 +1572,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (mat_id)
 				var/amount = M.item_amounts[i]
 				src.update_resource_amount(mat_id, -amount)
-				for (var/obj/item/I in src.contents)
+				for (var/obj/item/I in src.storage.get_contents())
 					if (I.material && istype(I, src.base_material_class) && I.material.getID() == mat_id)
 						var/target_amount = round(src.resource_amounts[mat_id] / 10)
 						if (!target_amount)
-							src.contents -= I
 							qdel(I)
 						else if (I.amount != target_amount)
 							I.change_stack_amount(-(I.amount - target_amount))
@@ -1672,6 +1637,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			// 5:     2.0s   18750  11250
 			src.active_power_consumption = 750 * src.speed ** 2
 			src.time_left = M.time
+			src.time_started = TIME
 			if (src.malfunction)
 				src.active_power_consumption += 3000
 				src.time_left += rand(2,6)
@@ -1785,14 +1751,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 		animate_shake(src,5,rand(3,8),rand(3,8))
 		src.visible_message(SPAN_ALERT("[src] makes [pick(src.text_flipout_adjective)] [pick(src.text_flipout_noun)]!"))
 		playsound(src.loc, pick(src.sounds_malfunction), 50, 2)
-		if (prob(15) && length(src.contents) > 4 && src.mode != "working")
+		if (prob(15) && length(src.storage.get_contents()) > 4 && src.mode != "working")
 			var/to_throw = rand(1,4)
 			var/obj/item/X = null
 			while(to_throw > 0)
 				if(!src.nearby_turfs.len) //SpyGuy for RTE "pick() from empty list"
 					break
-				X = pick(src.contents)
-				X.set_loc(src.loc)
+				X = pick(src.storage.get_contents())
+				src.storage.transfer_stored_item(X, src.loc)
 				X.throw_at(pick(src.nearby_turfs), 16, 3)
 				to_throw--
 		if (length(src.queue) > 1 && prob(20))
@@ -2000,7 +1966,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		if (istype(O, src.base_material_class) && O.material)
 			var/obj/item/material_piece/P = O
-			for(var/obj/item/material_piece/M in src.contents)
+			for(var/obj/item/material_piece/M in src.storage.get_contents())
 				if (istype(M, P) && M.material && M.material.isSameMaterial(P.material))
 					M.change_stack_amount(P.amount)
 					src.update_resource_amount(M.material.getID(), P.amount * 10, M.material)
@@ -2050,13 +2016,19 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return getMaterial(mat_id)
 
 	proc/claim_free_resources()
+
 		if (src.deconstruct_flags & DECON_BUILT)
 			free_resource_amt = 0
-		else if (free_resources.len && free_resource_amt > 0)
+			return
+
+		if (isnull(src.storage))
+			src.create_storage(/datum/storage/no_hud)
+
+		if (free_resources.len && free_resource_amt > 0)
 			for (var/X in src.free_resources)
 				if (ispath(X))
 					var/obj/item/material_piece/P = new X
-					P.set_loc(src)
+					src.storage.add_contents(P)
 					if (free_resource_amt > 1)
 						P.change_stack_amount(free_resource_amt - P.amount)
 					src.update_resource_amount(P.material.getID(), free_resource_amt * 10)

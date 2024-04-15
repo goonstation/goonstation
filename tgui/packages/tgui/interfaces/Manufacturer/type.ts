@@ -12,15 +12,13 @@ export type ManufacturerData = {
 
   card_owner:string;
   fabricator_name:string;
+  mode:string;
   rockbox_message:string;
 
   available_blueprints:Record<string, Manufacturable[]>;
   downloaded_blueprints:Record<string, Manufacturable[]>;
   drive_recipe_blueprints:Record<string, Manufacturable[]>;
   hidden_blueprints:Record<string, Manufacturable[]>;
-
-  resource_data:Resource[];
-  wires:WireData[];
 
   delete_allowed:BooleanLike;
   hacked:BooleanLike;
@@ -30,10 +28,15 @@ export type ManufacturerData = {
 
   card_balance:number;
   speed:number;
+  progress_pct:number;
   wire_bitflags:number;
 
   indicators:WireIndicators;
+
+  resource_data:Resource[];
   rockboxes:Rockbox[];
+  queue:QueueBlueprint[];
+  wires:WireData[];
 }
 
 // Keyed by name
@@ -86,4 +89,10 @@ export type WireIndicators = {
 export type WireData = {
   colorName: string;
   color: string;
+}
+
+export type QueueBlueprint = {
+  name: string;
+  category: string;
+  type: string; // "available", "hidden", "download", "drive_blueprint"
 }

@@ -8,14 +8,14 @@
 import { Stack } from "../Stack";
 import { Button } from "../Button";
 import { Image } from "../Image";
-import { CenteredText } from "./CenteredText";
+import { InfernoNode } from "inferno";
 
 type ButtonWithBadgeProps = {
   width: number | string,
   height: number | string,
   noImageShadow?: boolean,
   image_path: string;
-  text?: string;
+  children?: InfernoNode;
   onClick?: Function;
   onMouseEnter?: Function;
   onMouseLeave?: Function;
@@ -23,14 +23,12 @@ type ButtonWithBadgeProps = {
 }
 
 export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
-  // Strongly encouraged if you're reading this due to dissatisfaction with customizability that you implement
-  // your desired feature so you and others can use it <3
   const {
     width,
     height,
     noImageShadow,
     image_path,
-    text,
+    children,
     onClick,
     onMouseEnter,
     onMouseLeave,
@@ -57,7 +55,7 @@ export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
           />
         </Stack.Item>
         <Stack.Item grow mx={1}>
-          <CenteredText height={height} text={text} />
+          {children}
         </Stack.Item>
       </Stack>
     </Button>
