@@ -284,6 +284,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/mat_id in resource_amounts)
 			resource_data += list(list("name"="[src.get_our_material(mat_id)]", "id"=mat_id, "amount"=resource_amounts[mat_id]))
 		return list(
+			"rockbox_message" = src.temp,
 			"panel_open" = src.panel_open,
 			"hacked" = src.hacked,
 			"malfunction" = src.malfunction,
@@ -533,11 +534,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 						src.updateUsrDialog()
 
 			if ("material_eject")
-				src.eject_material(params["material"])
+				src.eject_material(params["resource"])
 
 			if ("material_swap")
 				//NYI
-				return
+				src.swap_materials(params["resource_1"], params["resource_2"])
 
 			if ("card")
 				if (params["scan"])
@@ -696,7 +697,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 
 		if(!scan)
-			src.temp = {"You have to scan a card in first.<BR>"}
+			src.temp = "You have to scan a card in first."
 			src.updateUsrDialog()
 			return
 		else
@@ -745,16 +746,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 					wagesystem.shipping_budget += (leftovers + sum_taxes)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
 
-					src.temp = {"Enjoy your purchase!<BR>"}
+					src.temp = "Enjoy your purchase!"
 				else
-					src.temp = {"You don't have enough dosh, bucko.<BR>"}
+					src.temp = "You don't have enough dosh, bucko."
 			else
 				if(quantity > 0)
-					src.temp = {"I don't have that many for sale, champ.<BR>"}
+					src.temp = "I don't have that many for sale, champ."
 				else
-					src.temp = {"Enter some actual valid number, you doofus!<BR>"}
+					src.temp = "Enter some actual valid number, you doofus!"
 		else
-			src.temp = {"That card doesn't have an account anymore, you might wanna get that checked out.<BR>"}
+			src.temp = "That card doesn't have an account anymore, you might wanna get that checked out."
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (!src.hacked)
@@ -1005,6 +1006,24 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.take_damage(damage)
 
 		src.updateUsrDialog()
+
+	/// Helper proc for swap_materials
+	proc/get_material_index_by_id(var/mat_id)
+		var/i = 1
+		for (var/obj/item/O in src.contents)
+			if (!O.material)
+				continue
+			if (mat_id == O.material.getID())
+				return i
+			i++
+		return i
+
+	proc/swap_materials(var/mat_id_1, var/mat_id_2)
+		var/mat_index_1 = src.get_material_index_by_id(mat_id_1)
+		var/mat_index_2 = src.get_material_index_by_id(mat_id_2)
+		var/obj/item/temp_hold = src.contents[mat_index_1]
+		src.contents[mat_index_1] = src.contents[mat_index_2]
+		src.contents[mat_index_2] = temp_hold
 
 	proc/eject_material(var/mat_id)
 		if (src.mode != "ready")

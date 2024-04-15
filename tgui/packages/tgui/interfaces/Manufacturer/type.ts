@@ -12,6 +12,7 @@ export type ManufacturerData = {
 
   card_owner:string;
   fabricator_name:string;
+  rockbox_message:string;
 
   available_blueprints:Record<string, Manufacturable[]>;
   downloaded_blueprints:Record<string, Manufacturable[]>;

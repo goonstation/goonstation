@@ -8,26 +8,27 @@
 import { useBackend, useLocalState, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
-import { Button, Collapsible, Divider, Flex, Input, LabeledList, Section, Slider, Stack, Tooltip } from '../../components';
+import { Button, Collapsible, Divider, Input, LabeledList, Section, Slider, Stack, Tooltip } from '../../components';
 import { ButtonWithBadge } from '../../components/goonstation/ButtonWithBadge';
 import { truncate } from '../../format';
 import { formatMoney } from '../../format';
 import { MaintenencePanel, Manufacturable, ManufacturerData, Ore, Resource, Rockbox, WireData } from './type';
-import { CenteredText } from '../../components/goonstation/CenteredText';
 import { round } from 'common/math';
 
 const CardInfo = (_, context) => {
   const { data, act } = useBackend<ManufacturerData>(context);
   return (data.card_owner === null || data.card_balance === null) ? (
-    <Section>
-      <Flex>
-        <Flex.Item grow>
-          <CenteredText text="No Account Found" />
-        </Flex.Item>
-        <Flex.Item>
+    <Section
+      textAlign="center"
+    >
+      <Stack vertical>
+        <Stack.Item>
+          No Account Found.
+        </Stack.Item>
+        <Stack.Item>
           <Button icon="add" onClick={() => act("card", { "scan": true })}>Add Account</Button>
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+      </Stack>
     </Section>
   ) : (
     <Section
@@ -52,15 +53,16 @@ const CardInfo = (_, context) => {
 
 const is_set = (bits, bit) => bits & (1 << bit);
 
-export const CollapsibleWireMenu = (props: MaintenencePanel, context) => {
+export const CollapsibleWireMenu = (props, context) => {
   const { act } = useBackend<ManufacturerData>(context);
+  const { wirePanel } = props;
   return (
     <Section
       textAlign="center"
       title="Maintenence Panel"
     >
       <LabeledList>
-        {props.wires.map((wire: WireData, i: number) => (
+        {wirePanel.wires.map((wire: WireData, i: number) => (
           <LabeledList.Item
             key={i}
             label={wire.colorName}
@@ -76,8 +78,8 @@ export const CollapsibleWireMenu = (props: MaintenencePanel, context) => {
               textAlign="center"
               width={4}
               key={i}
-              content={(is_set(props.wire_bitflags, i) !== 0) ? "Cut" : "Mend"}
-              onClick={() => act("wire", { action: ((is_set(props.wire_bitflags, i) !== 0) ? "cut" : "mend"), wire: i+1 })}
+              content={(is_set(wirePanel.wire_bitflags, i) !== 0) ? "Cut" : "Mend"}
+              onClick={() => act("wire", { action: ((is_set(wirePanel.wire_bitflags, i) !== 0) ? "cut" : "mend"), wire: i+1 })}
             />)]}
           />
         ))}
@@ -87,22 +89,22 @@ export const CollapsibleWireMenu = (props: MaintenencePanel, context) => {
         <LabeledList.Item
           label="Electrification Risk"
         >
-          {props.indicators.electrified ? "High" : "None"}
+          {wirePanel.indicators.electrified ? "High" : "None"}
         </LabeledList.Item>
         <LabeledList.Item
           label="System Stability"
         >
-          {props.indicators.malfunctioning ? "Unstable" : "Stable"}
+          {wirePanel.indicators.malfunctioning ? "Unstable" : "Stable"}
         </LabeledList.Item>
         <LabeledList.Item
           label="Inventory"
         >
-          {props.indicators.hacked ? "Expanded" : "Standard"}
+          {wirePanel.indicators.hacked ? "Expanded" : "Standard"}
         </LabeledList.Item>
         <LabeledList.Item
           label="Power"
         >
-          {props.indicators.hasPower ? "Sufficient" : "Insufficient"}
+          {wirePanel.indicators.hasPower ? "Sufficient" : "Insufficient"}
         </LabeledList.Item>
       </LabeledList>
     </Section>
@@ -200,6 +202,12 @@ export const Manufacturer = (_, context) => {
   const [repeat, toggleRepeatVar] = useSharedState(context, "repeat", data.repeat);
   const [speed, setSpeedVar] = useSharedState(context, "speed", data.speed);
   const [search, setSearchData] = useLocalState(context, "query", "");
+  const [swap, setSwappingMaterial] = useLocalState(context, "swap", null);
+  const wirePanel:MaintenencePanel = {
+    indicators: data.indicators,
+    wires: data.wires,
+    wire_bitflags: data.wire_bitflags,
+  };
   let toggleRepeat = () => {
     act("repeat");
     toggleRepeatVar(!repeat);
@@ -207,6 +215,18 @@ export const Manufacturer = (_, context) => {
   let updateSpeed = (newValue: number) => {
     act("speed", { "value": newValue });
     setSpeedVar(newValue);
+  };
+  let swapPriority = (materialID: string) => {
+    if (swap === null) {
+      setSwappingMaterial(materialID);
+    }
+    else if (swap === materialID) {
+      setSwappingMaterial(null);
+    }
+    else {
+      act("material_swap", { "resource_1": swap, "resource_2": materialID });
+      setSwappingMaterial(null);
+    }
   };
   let usable_blueprints = [
     data.available_blueprints,
@@ -236,7 +256,6 @@ export const Manufacturer = (_, context) => {
               ))}
             </Section>
           </Stack.Item>
-
           <Stack.Item grow>
             <Stack vertical>
               <Stack.Item>
@@ -249,8 +268,17 @@ export const Manufacturer = (_, context) => {
                       <LabeledList.Item
                         key={resourceData.id}
                         buttons={[
-                          <Button key="eject" icon="eject" onClick={() => act("material_eject", { "resource": resourceData.id })} />,
-                          <Button key="swap" icon="add" onClick={() => act("material_swap", { "resource": resourceData.id })} />,
+                          <Button
+                            key="eject"
+                            icon="eject"
+                            onClick={() => act("material_eject", { "resource": resourceData.id })}
+                          />,
+                          <Button
+                            key="swap"
+                            icon="arrows-up-down"
+                            color={(swap !== resourceData.id) ? null : "green"}
+                            onClick={() => swapPriority(resourceData.id)}
+                          />,
                         ]}
                         label={toTitleCase(resourceData.name)}
                         textAlign="center"
@@ -288,11 +316,10 @@ export const Manufacturer = (_, context) => {
                     </LabeledList.Item>
                   </LabeledList>
                 </Section>
-              </Stack.Item>
-              <Stack.Item>
-                {data.panel_open ? <CollapsibleWireMenu indicators={data.indicators} wires={data.wires} wire_bitflags={data.wire_bitflags} /> : ""}
-              </Stack.Item>
-              <Stack.Item>
+                {data.panel_open ? (
+                  <Stack.Item>
+                    <CollapsibleWireMenu wirePanel={wirePanel} />
+                  </Stack.Item>) : null}
                 <CardInfo />
               </Stack.Item>
               <Stack.Item>
@@ -301,28 +328,30 @@ export const Manufacturer = (_, context) => {
                   textAlign="center"
                 >
                   {data.rockboxes.map((rockbox: Rockbox) => (
-                    <LabeledList
+                    <Section
+                      title={rockbox.area_name}
                       key={rockbox.byondRef}
                     >
-                      <LabeledList.Item>
-                        {rockbox.area_name}
-                      </LabeledList.Item>
-                      {rockbox.ores.length !== 0 ? (rockbox.ores.map((ore: Ore) => (
-                        <LabeledList.Item
-                          key={ore.name}
-                          label={ore.name}
-                        >
-                          <Button
+                      <LabeledList>
+                        {rockbox.ores.length !== 0 ? (rockbox.ores.map((ore: Ore) => (
+                          <LabeledList.Item
+                            key={ore.name}
+                            label={ore.name}
                             textAlign="center"
-                            onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
-                            icon="add"
                           >
-                            {ore.cost}⪽
-                          </Button>
-                        </LabeledList.Item>
-                      ))) : "No Ores Loaded."}
-                    </LabeledList>
+                            <Button
+                              textAlign="center"
+                              onClick={() => act("ore_purchase", { "ore": ore.name, "storage_ref": rockbox.byondRef })}
+                              icon="add"
+                            >
+                              {ore.cost}⪽
+                            </Button>
+                          </LabeledList.Item>
+                        ))) : "No Ores Loaded."}
+                      </LabeledList>
+                    </Section>
                   ))}
+                  {data.rockbox_message}
                 </Section>
               </Stack.Item>
             </Stack>
