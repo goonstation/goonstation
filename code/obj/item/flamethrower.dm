@@ -68,7 +68,6 @@ A Flamethrower in various states of assembly
 	move_triggered = 1
 	spread_angle = 0
 	shoot_delay = 1 SECOND
-	recoil_strength = 6
 
 	New()
 		..()

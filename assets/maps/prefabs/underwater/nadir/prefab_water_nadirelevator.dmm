@@ -42,7 +42,7 @@
 /obj/item/sea_ladder{
 	pixel_x = 4
 	},
-/obj/item/mining_tool/powered/pickaxe{
+/obj/item/mining_tool/power_pick{
 	pixel_x = -7
 	},
 /obj/item/tank/oxygen,

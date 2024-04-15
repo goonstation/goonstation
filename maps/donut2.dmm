@@ -8229,9 +8229,6 @@
 /area/station/maintenance/inner/central)
 "aQK" = (
 /obj/decal/boxingrope,
-/obj/decal/tile_edge/line/black{
-	icon_state = "line1"
-	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aQM" = (
@@ -18789,10 +18786,6 @@
 /obj/decal/boxingropeenter{
 	dir = 4
 	},
-/obj/decal/tile_edge/line/grey{
-	dir = 4;
-	icon_state = "line1"
-	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "drq" = (
@@ -25394,10 +25387,6 @@
 /obj/decal/boxingrope{
 	dir = 8
 	},
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "hMP" = (
@@ -25960,10 +25949,6 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent,
-/obj/decal/tile_edge/line/black{
-	dir = 9;
-	icon_state = "line2"
-	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "igI" = (
@@ -31112,13 +31097,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
-"lwA" = (
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "lwG" = (
 /obj/stool/chair{
 	dir = 8
@@ -31838,10 +31816,6 @@
 "lQh" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 10
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 10;
-	icon_state = "line2"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -33098,10 +33072,6 @@
 "mIj" = (
 /obj/decal/boxingrope{
 	dir = 4
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -34438,6 +34408,15 @@
 /area/station/crew_quarters/catering)
 "nvT" = (
 /obj/machinery/vending/chapel,
+/obj/item/device/light/zippo,
+/obj/item/clothing/head/helmet/greek,
+/obj/item/clothing/suit/greek,
+/obj/item/clothing/under/gimmick/toga,
+/obj/item/clothing/head/laurels,
+/obj/item/clothing/head/laurels/gold,
+/obj/decal/poster/wallsign/poster_sol{
+	pixel_y = 31
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/office)
 "nwC" = (
@@ -37445,19 +37424,6 @@
 "piD" = (
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
-"piF" = (
-/obj/storage/crate{
-	name = "Special Syllogí";
-	desc = "Ένα μεγάλο μεταλλικό κουτί στο οποίο μπορείτε να βάλετε πράγματα. Ποιος ξέρει, μπορεί να έχει ήδη πράγματα μέσα του."
-	},
-/obj/item/clothing/under/gimmick/toga,
-/obj/item/clothing/suit/greek,
-/obj/item/clothing/head/helmet/greek,
-/obj/item/clothing/head/laurels/gold,
-/obj/item/device/light/zippo,
-/obj/item/clothing/head/laurels,
-/turf/simulated/floor/wood/seven,
-/area/station/chapel/office)
 "piG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39162,10 +39128,6 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
 	},
-/obj/decal/tile_edge/line/black{
-	dir = 6;
-	icon_state = "line2"
-	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "qjS" = (
@@ -39802,10 +39764,6 @@
 /obj/stool,
 /obj/landmark/start/job/assistant,
 /obj/landmark/pest,
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "qCm" = (
@@ -49170,10 +49128,6 @@
 	dir = 4
 	},
 /obj/landmark/start/job/assistant,
-/obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "line2"
-	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "wDG" = (
@@ -88592,7 +88546,7 @@ aJC
 bDz
 aNr
 rvW
-lwA
+aPt
 aPt
 aPt
 aQK
@@ -88894,7 +88848,7 @@ aJC
 qNj
 aNr
 mVd
-lwA
+aPt
 aPt
 aPt
 aQK
@@ -89196,7 +89150,7 @@ aJC
 cwg
 aNr
 qwR
-lwA
+aPt
 aPt
 aPt
 aQK
@@ -93107,7 +93061,7 @@ wNr
 pCJ
 avj
 nvT
-piF
+axt
 hRa
 avj
 cay

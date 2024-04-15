@@ -16,7 +16,6 @@ TYPEINFO(/obj/item/gun/reagent)
 	var/fractional = FALSE
 	inventory_counter_enabled = 1
 	move_triggered = 1
-	recoil_strength = 1
 
 	New()
 		src.create_reagents(capacity)

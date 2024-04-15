@@ -4,8 +4,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/items/guns/kinetic.dmi'
 	item_state = "gun"
 	m_amt = 2000
-	camera_recoil_sway_min = 5 // kinetics can be more shuddery than lasers
-	recoil_inaccuracy_max = 10 // +10 degrees of seperation at max recoil
 	var/obj/item/ammo/bullets/ammo = null
 	/// How much ammo can this gun hold? Don't make this null (Convair880).
 	var/max_ammo_capacity = 1
@@ -338,7 +336,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	var/max_ammo_capacity = 1
 	var/default_magazine = null
 	var/default_projectile = null
-	var/recoil_strength = 6
+
 	New()
 		name = "[src.caliber_name] rifle barrel"
 		desc = "An interchangable barrel for the Efnysien survival rifle. This one is designed to fire [src.caliber_name]."
@@ -351,7 +349,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		max_ammo_capacity = 10
 		default_magazine = /obj/item/ammo/bullets/bullet_22
 		default_projectile = /datum/projectile/bullet/bullet_22
-		recoil_strength = 6
 
 
 	barrel_9mm
@@ -361,7 +358,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		max_ammo_capacity = 15
 		default_magazine = /obj/item/ammo/bullets/bullet_9mm
 		default_projectile = /datum/projectile/bullet/bullet_9mm
-		recoil_strength = 9
 
 	barrel_556
 		caliber_name = "5.56x45mm NATO"
@@ -370,7 +366,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		max_ammo_capacity = 20
 		default_magazine = /obj/item/ammo/bullets/assault_rifle
 		default_projectile = /datum/projectile/bullet/assault_rifle
-		recoil_strength = 12
 
 /obj/item/casing
 	name = "bullet casing"
@@ -516,7 +511,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	var/failure_chance = 6
 	var/failured = 0
 	default_magazine = /obj/item/ammo/bullets/staples
-	icon_recoil_cap = 30
+
 	New()
 
 		ammo = new default_magazine
@@ -619,7 +614,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		src.ammo_cats = barrel.ammo_cats
 		src.max_ammo_capacity = barrel.max_ammo_capacity
 		src.default_magazine = barrel.default_magazine
-		src.recoil_strength = barrel.recoil_strength
 		set_current_projectile(new barrel.default_projectile)
 		src.projectiles = list(current_projectile)
 		src.desc = desc = "A semi-automatic rifle, renowned for it's easily convertible caliber, developed by Mabinogi Firearms Company. It's currently fitted with a [src.barrel.name]."
@@ -642,8 +636,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/bullet_22/faith
 	fire_animation = TRUE
-	recoil_strength = 4
-	icon_recoil_cap = 30
+
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_22)
@@ -667,8 +660,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/bullet_22HP
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_22, /obj/item/ammo/bullets/bullet_22HP)
 	ammobag_restock_cost = 1
-	recoil_strength = 3
-	icon_recoil_cap = 30
+
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_22/HP)
@@ -691,7 +683,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	spread_angle = 15 //15 degrees is a lot
 	can_dual_wield = TRUE //if you can figure it out, you can do it
 	fire_animation = TRUE
-	recoil_strength = 12
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD
@@ -733,7 +724,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	w_class = W_CLASS_BULKY
 	ammobag_magazines = list(/obj/item/ammo/bullets/akm)
 	ammobag_restock_cost = 3
-	recoil_strength = 10
 
 	New()
 		ammo = new default_magazine
@@ -762,9 +752,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/rifle_3006
 	fire_animation = TRUE
-	recoil_strength = 14
-	recoil_max = 14
-	recoil_inaccuracy_max = 20
 
 	New()
 		ammo = new default_magazine
@@ -790,7 +777,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/tranq_darts
 	fire_animation = TRUE
-	recoil_strength = 4
 
 	New()
 		ammo = new default_magazine
@@ -813,9 +799,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO
-	recoil_stacking_enabled = TRUE
-	recoil_strength = 6
-	icon_recoil_cap = 30
+
 	New()
 		if (prob(70))
 			icon_state = "glocktan"
@@ -911,12 +895,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	auto_eject = TRUE
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/nine_mm_surplus/mag_mor
-	icon_recoil_cap = 15
+
 	get_desc(dist, mob/user)
 		if (user.get_gang() != null)
-			. += "For when you need MOR' DAKKA. Uses 9mm Surplus rounds."
+			. += "For when you need MOR' DAKKA. Uses 9mm NATO rounds."
 		else
-			. += "Its firemodes are labelled 'DAKKA' and 'MOR'... Uses 9mm Surplus rounds."
+			. += "Its firemodes are labelled 'DAKKA' and 'MOR'... Uses 9mm NATO rounds."
 
 	New()
 		ammo = new default_magazine
@@ -973,7 +957,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/nine_mm_surplus/mag_grease
 	var/grease = 0 //guh
-	icon_recoil_cap = 20
 
 	New()
 		if (prob(33))
@@ -997,16 +980,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			if(two_handed)
 				setTwoHanded(0) //Go 1-handed.
 				src.spread_angle = initial(src.spread_angle)
-				icon_recoil_cap = initial(src.icon_recoil_cap)
-				recoil_max = initial(src.recoil_max)
 				icon_state = "grease"
 			else
 				if(!setTwoHanded(1)) //Go 2-handed.
 					boutput(user, SPAN_ALERT("Can't switch to 2-handed while your other hand is full."))
 				else
-					icon_recoil_cap = 10
 					icon_state = "greaseunfolded"
-					recoil_max = 100 // double how easy it is to control
 					src.spread_angle = 6
 		..()
 
@@ -1040,7 +1019,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/draco
 	name = "\improper Draco Pistol"
-	desc = "A full size 7.62x39mm 'Pistol'. With no stock. You should shoot this in bursts."
+	desc = "A full size 7.62x39mm 'Pistol'. With no stock. "
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "draco"
 	item_state = "draco"
@@ -1059,14 +1038,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	w_class = W_CLASS_BULKY
-	recoil_strength = 7
-	recoil_stacking_enabled = TRUE
-	recoil_stacking_max_stacks = 4 //make this thing go HARD if you hold it down
-	recoil_stacking_amount = 3
-	recoil_inaccuracy_max = 25
-	recoil_max = 100 // can eat more recoil for worse effects
-	icon_recoil_cap = 30
-
 
 	New()
 		ammo = new default_magazine
@@ -1275,13 +1246,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	name = "Lo-Point"
 	icon_state = "hipoint"
 	item_state = "hipoint"
-	shoot_delay = 4
+	shoot_delay = 1
 	spread_angle = 3
 	throwforce = 14 // literally throw it away
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
 	fire_animation = TRUE
-	max_ammo_capacity = 10
+	max_ammo_capacity = 12
 	auto_eject = TRUE
 	has_empty_state = TRUE
 	gildable = FALSE
@@ -1402,8 +1373,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	ammobag_magazines = list(/obj/item/ammo/bullets/a357, /obj/item/ammo/bullets/a357/AP)
 	ammobag_restock_cost = 2
-	recoil_strength = 12
-	icon_recoil_cap = 30
+
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/revolver_357)
@@ -1422,7 +1392,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/a38/stun
 	fire_animation = TRUE
-	recoil_strength = 10
 
 	New()
 		ammo = new default_magazine
@@ -1446,7 +1415,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	var/pulled = FALSE
 	add_residue = FALSE
-	recoil_enabled = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -1546,7 +1514,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	add_residue = FALSE
-	recoil_enabled = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -1571,7 +1538,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	add_residue = FALSE
-	recoil_strength = 3
 
 	New()
 		ammo = new default_magazine
@@ -1595,7 +1561,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	w_class = W_CLASS_SMALL
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/blow_darts/single
-	recoil_strength = 4
 
 	New()
 		ammo = new default_magazine
@@ -1615,7 +1580,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/derringer
 	fire_animation = TRUE
 	HELP_MESSAGE_OVERRIDE(null)
-	recoil_strength = 6
 
 	get_help_message(dist, mob/user)
 		var/keybind = "Default CTRL + W"
@@ -1660,7 +1624,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	spread_angle = 1
 	max_ammo_capacity = 7
 	default_magazine = /obj/item/ammo/bullets/c_45
-	recoil_strength = 11
 
 	detective
 		name = "\improper Peacemaker"
@@ -1691,7 +1654,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_FLINTLOCK)
 	max_ammo_capacity = 1
 	default_magazine = /obj/item/ammo/bullets/flintlock/single
-	recoil_strength = 12
 
 	New()
 		ammo = new default_magazine
@@ -1725,8 +1687,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/a12
 	ammobag_magazines = list(/obj/item/ammo/bullets/a12, /obj/item/ammo/bullets/aex)
 	ammobag_restock_cost = 2
-	recoil_strength = 10
-	recoil_max = 60
 
 	New()
 		if(prob(10))
@@ -1782,8 +1742,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/abg
 	var/racked_slide = FALSE
-	recoil_strength = 14
-	recoil_max = 60
 
 
 
@@ -1865,8 +1823,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	gildable = TRUE
 	default_magazine = /obj/item/ammo/bullets/pipeshot/scrap/five
-	recoil_strength = 10
-	recoil_max = 60
 
 	New()
 		ammo = new default_magazine
@@ -1947,9 +1903,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 1
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/flare/single
-	recoil_strength = 10
-	recoil_max = 20
-	icon_recoil_cap = 30
+
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flare)
@@ -1975,8 +1929,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	default_magazine = /obj/item/ammo/bullets/a12
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
-	recoil_strength = 14
-	recoil_max = 14
+
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/a12)
@@ -2070,7 +2023,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	two_handed = TRUE
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/flintlock/rifle/single
-	recoil_strength = 18
 
 	New()
 		..()
@@ -2106,7 +2058,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/smoke/single
 	fire_animation = TRUE
-	recoil_strength = 12
 
 	New()
 		ammo = new default_magazine
@@ -2157,7 +2108,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/pod_seeking_missile
 	var/collapsed
-	recoil_strength = 13
 
 	New()
 		ammo = new default_magazine
@@ -2274,7 +2224,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/rpg)
 	ammobag_spec_required = TRUE
 	ammobag_restock_cost = 4
-	recoil_strength = 13
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -2327,7 +2276,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/mrl)
 	ammobag_spec_required = TRUE
 	ammobag_restock_cost = 6
-	recoil_strength = 12
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -2366,7 +2314,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	two_handed = 1
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/antisingularity
-	recoil_strength = 12
 
 	New()
 		ammo = new default_magazine
@@ -2389,7 +2336,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_RIFLE
 	two_handed = TRUE
 	default_magazine = /obj/item/ammo/bullets/flintlock/mortar/single
-	recoil_strength = 14
 
 	New()
 		..()
@@ -2450,7 +2396,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/meowitzer
-	recoil_strength = 17
 
 	New()
 		ammo = new default_magazine
@@ -2493,8 +2438,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/bullet_9mm
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm)
 	ammobag_restock_cost = 1
-	recoil_strength = 8
-	icon_recoil_cap = 30
+
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_9mm)
@@ -2515,7 +2459,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_PISTOL_22)
 	default_magazine = /obj/item/ammo/bullets/bullet_22/smartgun
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_22/smartgun)
-	recoil_enabled = 0
 
 	New()
 		..()
@@ -2544,7 +2487,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/bullet_9mm/smg
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm/smg)
 	ammobag_restock_cost = 2
-	recoil_strength = 8
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -2561,17 +2503,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			if(two_handed)
 				setTwoHanded(0) //Go 1-handed.
 				src.spread_angle = initial(src.spread_angle)
-				icon_recoil_cap = initial(src.icon_recoil_cap)
-				recoil_max = initial(src.recoil_max)
-				recoil_strength = initial(src.recoil_strength)
 			else
 				if(!setTwoHanded(1)) //Go 2-handed.
 					boutput(user, SPAN_ALERT("Can't switch to 2-handed while your other hand is full."))
 				else
-					icon_recoil_cap = 10
-					recoil_max = 100
 					src.spread_angle = 4
-					recoil_strength = 5
 		..()
 
 /obj/item/gun/kinetic/smg/empty
@@ -2598,8 +2534,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	ammobag_magazines = list(/obj/item/ammo/bullets/tranq_darts/syndicate/pistol)
 	ammobag_restock_cost = 2
-	recoil_strength = 7
-	icon_recoil_cap = 30
+
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/tranq_dart/syndicate/pistol)
@@ -2621,8 +2556,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/buckshot_burst
 	fire_animation = TRUE
 	has_empty_state = TRUE
-	recoil_strength = 10
-	recoil_max = 60
 
 	New()
 		ammo = new default_magazine
@@ -2652,8 +2585,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	can_dual_wield = 0
 	spread_angle = 0
 	default_magazine = /obj/item/ammo/bullets/assault_rifle
-	recoil_strength = 9 // two handed guns can probably take lower recoil
-	recoil_stacking_enabled = TRUE
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -2775,12 +2706,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_AUTO_308)
 	max_ammo_capacity = 100
 	auto_eject = 0
-	shoot_delay = 7
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
-	spread_angle = 6
+	spread_angle = 8
 	can_dual_wield = 0
 
 	two_handed = 1
@@ -2788,17 +2718,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/lmg
 	ammobag_magazines = list(/obj/item/ammo/bullets/lmg)
 	ammobag_restock_cost = 3
-
-	camera_recoil_multiplier = 0.65 // this thing packs possibly excessive punch
-	camera_recoil_sway_max = 10 // lower the wobblies when shooting huge volumes of lead
-
-	recoil_strength = 5
-	recoil_stacking_enabled = TRUE
-	recoil_stacking_safe_stacks = 8
-	recoil_stacking_max_stacks = 8
-	recoil_stacking_amount = 0.5
-	recoil_max = 100 // eat more recoil
-
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
@@ -2828,9 +2747,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 1
 	auto_eject = 1
 	fire_animation = TRUE
-
-	recoil_strength = 20
-	recoil_max = 25 //seriously how are you going to fire this more than once
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
@@ -2882,8 +2798,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	slowdown = 10
 	slowdown_time = 15
 
-	recoil_strength = 0 // saving the discord from this joke
-
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
@@ -2928,8 +2842,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_spec_required = TRUE
 	ammobag_restock_cost = 3
 	sound_load_override = 'sound/weapons/gunload_rigil.ogg'
-	recoil_strength = 12
-	recoil_max = 40
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -2988,8 +2900,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/rifle_762_NATO
 	ammobag_magazines = list(/obj/item/ammo/bullets/rifle_762_NATO)
 	ammobag_restock_cost = 3
-	recoil_strength = 15
-	recoil_inaccuracy_max = 0 // just to be nice :)
+
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
@@ -3058,8 +2969,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	add_residue = TRUE
 	gildable = TRUE
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
-	recoil_strength = 10
-	recoil_max = 60
 	default_magazine = /obj/item/ammo/bullets/abg/two
 	var/broke_open = FALSE
 	var/shells_to_eject = 0

@@ -18,7 +18,6 @@
 	icon_closed = "lootcrimegang"
 	icon_opened = "lootcrimeopengang"
 	can_flip_bust = FALSE
-	grab_stuff_on_spawn = FALSE
 	anchored = ANCHORED
 	var/image/light = null
 	var/datum/loot_generator/lootMaster
@@ -106,7 +105,7 @@
 			SPAWN(2*GANG_CRATE_LOCK_TIME/3 )
 				src.light = image('icons/obj/large_storage.dmi',"gangcratelowlight")
 				UpdateIcon()
-			SPAWN((GANG_CRATE_LOCK_TIME - 3 SECONDS) )
+			SPAWN((GANG_CRATE_LOCK_TIME - 15 SECONDS) )
 				src.light = image('icons/obj/large_storage.dmi',"gangcrateblinkinglight")
 				UpdateIcon()
 			SPAWN(GANG_CRATE_LOCK_TIME)
@@ -171,7 +170,6 @@
 	desc = "A greasy, black duffle bag, this isn't station issue..."
 	icon_state = "gang_dufflebag"
 	item_state = "bowling"
-	w_class = W_CLASS_GIGANTIC
 	var/hidden = TRUE
 	var/open = FALSE
 	level = UNDERFLOOR
@@ -827,7 +825,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/medium)
 	dagger
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/dagger/throwing_knife/gang,rot=45,scale_x=0.55,scale_y=0.55)
+			spawn_item(C,I,/obj/item/dagger/syndicate/specialist,rot=45,scale_x=0.55,scale_y=0.55)
 
 	// GANG_CRATE_GEAR
 	pouch
@@ -1171,12 +1169,12 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/long_tall)
 			A.amount = 4
 			A.amount_left = 4
 
-	draco
+	/*draco
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			spawn_item(C,I,/obj/item/gun/kinetic/draco,off_x=-7,scale_x=0.8,scale_y=0.8)
 			//no mags for you! that would be crazy!
-
+	*/ // disabled until recoil is in. boo hoo
 	greasegun
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)

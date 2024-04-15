@@ -3185,20 +3185,14 @@ ABSTRACT_TYPE(/area/station/solar)
 	name = "West Solar Array"
 	icon_state = "panelsW"
 
-TYPEINFO(/area/station/solar/small_backup1)
-	valid_bounty_area = FALSE
 /area/station/solar/small_backup1
 	name = "Emergency Solar Array 1"
 	icon_state = "yellow"
 
-TYPEINFO(/area/station/solar/small_backup2)
-	valid_bounty_area = FALSE
 /area/station/solar/small_backup2
 	name = "Emergency Solar Array 2"
 	icon_state = "yellow"
 
-TYPEINFO(/area/station/solar/small_backup3)
-	valid_bounty_area = FALSE
 /area/station/solar/small_backup3
 	name = "Emergency Solar Array 3"
 	icon_state = "yellow"

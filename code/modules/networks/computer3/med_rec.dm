@@ -28,9 +28,8 @@
 #define FIELDNUM_ALGDET 16
 #define FIELDNUM_DISEASE 17
 #define FIELDNUM_DISDET 18
-#define FIELDNUM_CLDEF 19
-#define FIELDNUM_CLDET 20
-#define FIELDNUM_NOTES  21
+#define FIELDNUM_TRAITS 19
+#define FIELDNUM_NOTES  20
 
 #define FIELDNUM_DELETE "d"
 #define FIELDNUM_NEWREC 99
@@ -177,10 +176,9 @@
 							<br><br>Details: [src.active_medical["ma_dis_d"]]
 							<br><br><br>Allergies: [src.active_medical["alg"]]
 							<br><br>Details: [src.active_medical["alg_d"]]
-							<br><br><br>Current Diseases: [src.active_medical["cdi"]]
-							<br><br>Details: [src.active_medical["cdi_d"]]
-							<br><br><br>Cloner Defects: [src.active_medical["cl_def"]]
-							<br><br>Details: [src.active_medical["cl_def_d"]]
+							<br><br><br>Current Diseases: [src.active_medical["cdi"]] (per disease info placed in log/comment section)
+							<br>Details: [src.active_medical["cdi_d"]]<br><br><br>
+							<br>Traits: [src.active_medical["traits"]]<br><br><br>
 							Important Notes:<br>
 							<br>&emsp;[src.active_medical["notes"]]<br>"}
 
@@ -235,17 +233,16 @@
 						R["id"] = src.active_general["id"]
 						R["bioHolder.bloodType"] = "Unknown"
 						R["mi_dis"] = "None"
-						R["mi_dis_d"] = MEDREC_DISABILITY_MINOR_DEFAULT
+						R["mi_dis_d"] = "No minor disabilities have been declared."
 						R["ma_dis"] = "None"
-						R["ma_dis_d"] = MEDREC_DISABILITY_MAJOR_DEFAULT
+						R["ma_dis_d"] = "No major disabilities have been diagnosed."
 						R["alg"] = "None"
-						R["alg_d"] = MEDREC_ALLERGY_DEFAULT
+						R["alg_d"] = "No allergies have been detected in this patient."
 						R["cdi"] = "None"
-						R["cdi_d"] = MEDREC_DISEASE_DEFAULT
-						R["cl_def"] = "None"
-						R["cl_def_d"] = MEDREC_CLONE_DEFECT_DEFAULT
+						R["cdi_d"] = "No diseases have been diagnosed at the moment."
 						R["notes"] = "No notes."
-						R["h_imp"] = MEDREC_NO_IMPLANT
+						R["h_imp"] = "No health implant detected."
+						R["traits"] = "No known traits."
 						data_core.medical.add_record(R)
 						src.active_medical = R
 
@@ -458,26 +455,14 @@
 						else
 							return
 
-					if (FIELDNUM_CLDEF)
+					if (FIELDNUM_TRAITS)
 						if (!src.active_medical)
 							src.print_text("No medical record loaded!")
 							src.menu = MENU_IN_RECORD
 							return
 
 						if (ckey(inputText))
-							src.active_medical["cl_def"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
-						else
-							return
-
-
-					if (FIELDNUM_CLDET)
-						if (!src.active_medical)
-							src.print_text("No medical record loaded!")
-							src.menu = MENU_IN_RECORD
-							return
-
-						if (ckey(inputText))
-							src.active_medical["cl_def_d"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
+							src.active_medical["traits"] = copytext(inputText, 1, MAX_MESSAGE_LEN)
 						else
 							return
 
@@ -748,18 +733,17 @@
 			if ((istype(src.active_medical, /datum/db_record) && data_core.medical.has_record(src.active_medical)))
 				view_string += {"<br><center><b>Medical Data:</b></center>
 				<br>\[__]Current Health: [src.active_medical["h_imp"]]
-				<br>\[[FIELDNUM_BLOODTYPE]]Blood Type: [src.active_medical["bioHolder.bloodType"]]
-				<br>\[[FIELDNUM_MINDIS]]Minor Disabilities: [src.active_medical["mi_dis"]]
-				<br>\[[FIELDNUM_MINDET]]Details: [src.active_medical["mi_dis_d"]]
-				<br>\[[FIELDNUM_MAJDIS]]<br>Major Disabilities: [src.active_medical["ma_dis"]]
-				<br>\[[FIELDNUM_MAJDET]]Details: [src.active_medical["ma_dis_d"]]
-				<br>\[[FIELDNUM_ALLERGY]]<br>Allergies: [src.active_medical["alg"]]
-				<br>\[[FIELDNUM_ALGDET]]Details: [src.active_medical["alg_d"]]
-				<br>\[[FIELDNUM_DISEASE]]<br>Current Diseases: [src.active_medical["cdi"]] (per disease info placed in log/comment section)
-				<br>\[[FIELDNUM_DISDET]]Details: [src.active_medical["cdi_d"]]
-				<br>\[[FIELDNUM_CLDEF]]<br>Cloner Defects: [src.active_medical["cl_def"]]
-				<br>\[[FIELDNUM_CLDET]]Details: [src.active_medical["cl_def_d"]]
-				<br>\[[FIELDNUM_NOTES]]Important Notes:
+				<br>\[10]Blood Type: [src.active_medical["bioHolder.bloodType"]]
+				<br>\[11]Minor Disabilities: [src.active_medical["mi_dis"]]
+				<br>\[12]Details: [src.active_medical["mi_dis_d"]]
+				<br>\[13]<br>Major Disabilities: [src.active_medical["ma_dis"]]
+				<br>\[14]Details: [src.active_medical["ma_dis_d"]]
+				<br>\[15]<br>Allergies: [src.active_medical["alg"]]
+				<br>\[16]Details: [src.active_medical["alg_d"]]
+				<br>\[17]<br>Current Diseases: [src.active_medical["cdi"]] (per disease info placed in log/comment section)
+				<br>\[18]Details: [src.active_medical["cdi_d"]]
+				<br>\[19]Traits: [src.active_medical["traits"]]
+				<br>\[20]Important Notes:
 				<br>&emsp;[src.active_medical["notes"]]"}
 			else
 				view_string += "<br><br><b>Medical Record Lost!</b>"
@@ -819,6 +803,7 @@
 #undef FIELDNUM_ALGDET
 #undef FIELDNUM_DISEASE
 #undef FIELDNUM_DISDET
+#undef FIELDNUM_TRAITS
 #undef FIELDNUM_NOTES
 
 #undef FIELDNUM_DELETE

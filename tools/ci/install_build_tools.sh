@@ -3,4 +3,6 @@ set -euo pipefail
 
 source buildByond.conf
 
-# Nothing here currently
+source ~/.nvm/nvm.sh
+nvm install $NODE_VERSION
+nvm use $NODE_VERSION

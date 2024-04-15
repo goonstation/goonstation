@@ -1,7 +1,7 @@
 #define GANG_MAX_MEMBERS 4
 
 /// How long the leader must cryo before gang members can take their role
-#define GANG_CRYO_LOCKOUT 7.5 MINUTES
+#define GANG_CRYO_LOCKOUT 15 MINUTES
 
 // -------------------------
 // GANG ECONOMY
@@ -36,8 +36,6 @@
 
 /// /// Each drug is worth GANG_DRUG_BONUS_MULT * their value until this many units are provided
 #define GANG_DRUG_BONUS_CAP 200
-/// How many weed leaves provide a points bonus
-#define GANG_WEED_LIMIT 200 //gang weed
 /// Each drug then has this much market behind it after GANG_DRUG_BONUS_CAP is used up.
 #define GANG_DRUG_LIMIT 1000
 /// The multiplier for drugs that a gang has handed in less than GANG_DRUG_BONUS_CAP units of
@@ -69,7 +67,7 @@
 #define GANG_CRATE_INITIAL_DROP  30 MINUTES //!  when the first gang crate drops on RP
 #define GANG_CRATE_DROP_FREQUENCY 40 MINUTES //! how often gang crates are dropped on RP
 #else
-#define GANG_CRATE_INITIAL_DROP  17 MINUTES //!  when the first gang crate drops on classic
+#define GANG_CRATE_INITIAL_DROP  25 MINUTES //!  when the first gang crate drops on classic
 #define GANG_CRATE_DROP_FREQUENCY 25 MINUTES //! how often gang crates are dropped on classic
 #endif
 
@@ -103,8 +101,7 @@
 
 // CRATE DROP DEFINES
 #define GANG_CRATE_SCORE 500 //! how many points gang crates grant to each member, when opened
-#define GANG_CRATE_DROP_TIME 300 SECONDS //! How long it takes for gang crates to arrive after being announced
-#define GANG_CRATE_LOCK_TIME 10 SECONDS //! How long it takes for gang crates to unlock after arriving
+#define GANG_CRATE_LOCK_TIME 300 SECONDS //! how long gang crates stay locked to the floor, in seconds
 
 #define GANG_LOOT_SCORE 300 //! how many points gang duffel bags grant to each member when opened
 

@@ -22,8 +22,7 @@ TYPEINFO(/obj/machinery/shipalert)
 
 	var/usageState = 0 // 0 = glass cover, hammer. 1 = glass cover, no hammer. 2 = cover smashed
 	var/working = FALSE //processing loops
-	var/cooldownPeriod = 5 MINUTES //5 minutes, change according to player abuse
-	var/deactivateCooldown = 30 SECONDS //no instantly taking it back
+	var/cooldownPeriod = 2 MINUTES //2 minutes, change according to player abuse
 
 	New()
 		..()
@@ -52,8 +51,8 @@ TYPEINFO(/obj/machinery/shipalert)
 			//activate
 			if (src.working)
 				return
-			if (src.toggleActivate(user))
-				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			src.toggleActivate(user)
 
 /obj/machinery/shipalert/attackby(obj/item/W, mob/user)
 	if (user.stat)
@@ -85,36 +84,30 @@ TYPEINFO(/obj/machinery/shipalert)
 
 /obj/machinery/shipalert/proc/toggleActivate(mob/user)
 	if (!user)
-		return FALSE
+		return
 
 	if (src.working)
 		boutput(user, SPAN_ALERT("The alert coils are currently discharging, please be patient."))
-		return FALSE
+		return
 
 	src.working = TRUE
 
 	if (shipAlertState == SHIP_ALERT_BAD)
-		if (GET_COOLDOWN(src, "deactivate_cooldown"))
-			boutput(user, SPAN_ALERT("The alert coils are still in high-power mode, please wait to lift alert."))
-			src.working = FALSE
-			return FALSE
-		else
-			//centcom alert
-			command_alert("The emergency is over. Return to your regular duties.", "Alert - All Clear", alert_origin = ALERT_STATION)
+		//centcom alert
+		command_alert("The emergency is over. Return to your regular duties.", "Alert - All Clear", alert_origin = ALERT_STATION)
 
-			//toggle off
-			shipAlertState = SHIP_ALERT_GOOD
+		//toggle off
+		shipAlertState = SHIP_ALERT_GOOD
 
-			src.update_lights()
+		src.update_lights()
 
-			ON_COOLDOWN(src, "alert_cooldown", src.cooldownPeriod)
-			. = TRUE
+		ON_COOLDOWN(src, "alert_cooldown", src.cooldownPeriod)
 
 	else
 		if (GET_COOLDOWN(src, "alert_cooldown"))
 			boutput(user, SPAN_ALERT("The alert coils are still priming themselves."))
 			src.working = FALSE
-			return FALSE
+			return
 
 		//alert and siren
 #ifdef MAP_OVERRIDE_MANTA
@@ -122,13 +115,11 @@ TYPEINFO(/obj/machinery/shipalert)
 #else
 		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station. Report to your stations. Prepare for the worst.", "Alert - Condition Red", alert_origin = ALERT_STATION)
 #endif
-		playsound_global(world, soundGeneralQuarters, 100, pitch = 0.9) //lower pitch = more serious or something idk
+		playsound_global(world, soundGeneralQuarters, 100)
 		//toggle on
 		shipAlertState = SHIP_ALERT_BAD
-		ON_COOLDOWN(src, "deactivate_cooldown", src.deactivateCooldown)
+
 		src.update_lights()
-		src.do_lockdown(user)
-		. = TRUE
 
 	//alertWord stuff would go in a dedicated proc for extension
 	var/alertWord = "green"
@@ -136,30 +127,13 @@ TYPEINFO(/obj/machinery/shipalert)
 		alertWord = "red"
 
 	logTheThing(LOG_STATION, user, "toggled the ship alert to \"[alertWord]\"")
-	message_admins("[user] toggled the ship alert to \"[alertWord]\"")
+	logTheThing(LOG_DIARY, user, "toggled the ship alert to \"[alertWord]\"", "station")
 	src.working = FALSE
 
 /obj/machinery/shipalert/proc/update_lights()
 	for(var/obj/machinery/light/emergency/light in by_cat[TR_CAT_STATION_EMERGENCY_LIGHTS])
 		light.power_change()
 		LAGCHECK(LAG_LOW)
-
-/obj/machinery/shipalert/proc/do_lockdown(mob/user)
-	for_by_tcl(shutter, /obj/machinery/door/poddoor)
-		if (shutter.density)
-			continue
-		if (shutter.z != Z_LEVEL_STATION)
-			continue
-		if (shutter.id != "lockdown" && shutter.id != "ai_core" && shutter.id == "armory")
-			continue
-		shutter.close()
-
-	for_by_tcl(turret_control, /obj/machinery/turretid)
-		if (turret_control.lethal)
-			turret_control.toggle_lethal(user)
-		if (!turret_control.enabled)
-			turret_control.toggle_active(user)
-
 
 #undef COMPLETE
 #undef HAMMER_TAKEN

@@ -9,24 +9,20 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'goonstation/goonstation'
     steps:
-      - name: Get requirements.txt
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: ".github"
-
+      - name: Get The Script
+        run: |
+          wget "https://raw.githubusercontent.com/${{ github.repository }}/master/.github/update_changelog.py"
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
-          cache: pip
-
+          python-version: 3.8
       - name: Install dependencies
         run: |
-          pip install -r .github/workflows/requirements.txt
-
+          python -m pip install --upgrade pip
+          pip install pygithub pytz
       - name: Update Changelog
         run: |
-          python .github/update_changelog.py
+          python update_changelog.py
         env:
           REPO: ${{ github.repository }}
           TOKEN: ${{ secrets.GITHUB_TOKEN }}

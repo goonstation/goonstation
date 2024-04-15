@@ -602,7 +602,6 @@
 	move_triggered = 1
 	var/spread_base = 40
 	var/max_draw = 3
-	recoil_enabled = FALSE
 
 	New()
 		set_current_projectile(new/datum/projectile/arrow)

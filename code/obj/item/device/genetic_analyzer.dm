@@ -25,5 +25,3 @@
 	GP.poolDna = GS.dna_pool
 	GP.generate_known_unknown()
 	boutput(user, scan_genetic(target, prescan = GP, visible = 1))
-
-	record_cloner_defects(target)

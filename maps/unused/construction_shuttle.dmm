@@ -250,10 +250,10 @@
 /obj/table/reinforced/auto,
 /obj/item/oreprospector,
 /obj/item/oreprospector,
-/obj/item/mining_tool/powered/pickaxe{
+/obj/item/mining_tool/power_pick{
 	pixel_x = 7
 	},
-/obj/item/mining_tool/powered/pickaxe{
+/obj/item/mining_tool/power_pick{
 	pixel_x = 7
 	},
 /turf/simulated/floor/shuttle,

@@ -8,24 +8,23 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.repository == 'goonstation/goonstation' && (github.event.action == 'labeled' && github.event.label.name == 'E-Input-Wanted' || github.event.action != 'labeled' && contains(github.event.pull_request.labels.*.name, 'E-Input-Wanted')) }}
     steps:
-      - name: Get requirements.txt
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: ".github"
+      - name: Get The Script
+        run: |
+          wget "https://raw.githubusercontent.com/${{ github.repository }}/master/.github/post_to_forums.py"
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
-          cache: pip
+          python-version: 3.8
 
       - name: Install dependencies
         run: |
-          pip install -r .github/workflows/requirements.txt
+          python -m pip install --upgrade pip
+          pip install pygithub requests
 
       - name: Post the thread
         run: |
-          python .github/post_to_forums.py
+          python post_to_forums.py
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}

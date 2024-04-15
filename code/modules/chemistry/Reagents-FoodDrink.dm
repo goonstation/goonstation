@@ -724,7 +724,6 @@ datum
 			fluid_g = 64
 			fluid_b = 27
 			alch_strength = 0.25
-			volatility = 1 //funny
 
 		fooddrink/alcoholic/cocktail_suicider
 			name = "Suicider"
@@ -1148,12 +1147,6 @@ datum
 			description = "Well, at least it's not giving awful dating advice."
 			reagent_state = LIQUID
 			taste = "fruity"
-
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				. = ..()
-				if(method == INGEST && isliving(M))
-					M.setStatus("temp_accent", 30 SECONDS)
-
 
 		fooddrink/alcoholic/beach
 			name = "Bliss on the Beach"

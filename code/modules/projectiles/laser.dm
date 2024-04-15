@@ -729,7 +729,7 @@ toxic - poisons
 	shot_volume = 50
 	name = "single"
 	sname = "single"
-	damage = 14
+	damage = 11
 
 /datum/projectile/laser/lasergat/burst
 	name = "burst laser"

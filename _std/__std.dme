@@ -76,7 +76,6 @@
 #include "defines\materials.dm"
 #include "defines\mechanics.dm"
 #include "defines\medals.dm"
-#include "defines\medical.dm"
 #include "defines\message_lengths.dm"
 #include "defines\minimap.dm"
 #include "defines\mob.dm"

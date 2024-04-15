@@ -69,7 +69,6 @@
 	if (!message)
 		return
 
-	..()
 	if (dd_hasprefix(message, "*"))
 		return src.emote(copytext(message, 2),1)
 

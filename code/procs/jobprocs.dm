@@ -62,15 +62,6 @@ var/global/totally_random_jobs = FALSE
 
 	return candidates
 
-#define ASSIGN_STAFF_LISTS(JOB, player) if (istype(JOB, /datum/job/engineering/engineer))\
-	{engineering_staff += player}\
-else if (istype(JOB, /datum/job/research/scientist))\
-	{research_staff += player}\
-else if (istype(JOB, /datum/job/research/medical_doctor))\
-	{medical_staff += player}\
-else if (istype(JOB, /datum/job/security/security_officer))\
-	{security_officers += player}
-
 /proc/DivideOccupations()
 	set background = 1
 
@@ -136,11 +127,6 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	// Wiggle the players too so that priority isn't determined by key alphabetization
 	shuffle_list(unassigned)
 
-	//Shuffle them and *then* sort them according to their order priority
-	sortList(high_priority_jobs, PROC_REF(cmp_job_order_priority))
-
-	sortList(available_job_roles, PROC_REF(cmp_job_order_priority))
-
 	// First we deal with high-priority jobs like Captain or AI which generally will always
 	// be present on the station - we want these assigned first just to be sure
 	// Though we don't want to do this in sandbox mode where it won't matter anyway
@@ -148,12 +134,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		for(var/datum/job/JOB in high_priority_jobs)
 			if (!length(unassigned)) break
 
-			if (JOB.limit > 0 && JOB.assigned >= JOB.limit)
-				continue
-
-			//single digit pop rounds can be exempt from more than one high priority assignment per role
-			if (length(unassigned) < 10)
-				JOB.high_priority_limit = 1
+			if (JOB.limit > 0 && JOB.assigned >= JOB.limit) continue
 
 			// get all possible candidates for it
 			pick1 = FindOccupationCandidates(unassigned,JOB.name,1)
@@ -165,38 +146,28 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			// horrible multicore PC station round.. (i HOPE anyway)
 			for(var/mob/new_player/candidate in pick1)
 				if(!candidate.client) continue
-				if (JOB.assigned >= JOB.limit || JOB.assigned >= JOB.high_priority_limit || !length(unassigned)) break
+				if (JOB.assigned >= JOB.limit || !length(unassigned)) break
 				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv1")
-				ASSIGN_STAFF_LISTS(JOB, candidate)
 				candidate.mind.assigned_role = JOB.name
 				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 				unassigned -= candidate
 				JOB.assigned++
 			for(var/mob/new_player/candidate in pick2)
 				if(!candidate.client) continue
-				if (JOB.assigned >= JOB.limit || JOB.assigned >= JOB.high_priority_limit || !length(unassigned)) break
+				if (JOB.assigned >= JOB.limit || !length(unassigned)) break
 				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv2")
-				ASSIGN_STAFF_LISTS(JOB, candidate)
 				candidate.mind.assigned_role = JOB.name
 				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 				unassigned -= candidate
 				JOB.assigned++
 			for(var/mob/new_player/candidate in pick3)
 				if(!candidate.client) continue
-				if (JOB.assigned >= JOB.limit || JOB.assigned >= JOB.high_priority_limit || !length(unassigned)) break
+				if (JOB.assigned >= JOB.limit || !length(unassigned)) break
 				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv3")
-				ASSIGN_STAFF_LISTS(JOB, candidate)
 				candidate.mind.assigned_role = JOB.name
 				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 				unassigned -= candidate
 				JOB.assigned++
-
-			//we've filled out the high priority section of this job, drop it down to being a normal role for the rest
-			if (JOB.assigned >= JOB.high_priority_limit && JOB.assigned < JOB.limit)
-				high_priority_jobs -= JOB
-				available_job_roles |= JOB
-				shuffle_list(available_job_roles)
-
 	else
 		// if we are in sandbox mode just roll the hi-pri jobs back into the regular list so
 		// people can still get them if they chose them
@@ -233,7 +204,14 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		// If there's an open job slot for it, give the player the job and remove them from
 		// the list of unassigned players, hey presto everyone's happy (except clarks probly)
 		if (JOB.limit < 0 || !(JOB.assigned >= JOB.limit))
-			ASSIGN_STAFF_LISTS(JOB, player)
+			if (istype(JOB, /datum/job/engineering/engineer))
+				engineering_staff += player
+			else if (istype(JOB, /datum/job/research/scientist))
+				research_staff += player
+			else if (istype(JOB, /datum/job/research/medical_doctor))
+				medical_staff += player
+			else if (istype(JOB, /datum/job/security/security_officer))
+				security_officers += player
 
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [player] took [JOB.name] from favorite selector")
 			player.mind.assigned_role = JOB.name
@@ -256,7 +234,15 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		for(var/mob/new_player/candidate in pick2)
 			if (JOB.assigned >= JOB.limit || !length(unassigned))
 				break
-			ASSIGN_STAFF_LISTS(JOB, candidate)
+
+			if (istype(JOB, /datum/job/engineering/engineer))
+				engineering_staff += candidate
+			else if (istype(JOB, /datum/job/research/scientist))
+				research_staff += candidate
+			else if (istype(JOB, /datum/job/research/medical_doctor))
+				medical_staff += candidate
+			else if (istype(JOB, /datum/job/security/security_officer))
+				security_officers += candidate
 
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 2 Job Picker")
 			candidate.mind.assigned_role = JOB.name
@@ -279,7 +265,15 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		for(var/mob/new_player/candidate in pick3)
 			if (JOB.assigned >= JOB.limit || !length(unassigned))
 				break
-			ASSIGN_STAFF_LISTS(JOB, candidate)
+
+			if (istype(JOB, /datum/job/engineering/engineer))
+				engineering_staff += candidate
+			else if (istype(JOB, /datum/job/research/scientist))
+				research_staff += candidate
+			else if (istype(JOB, /datum/job/research/medical_doctor))
+				medical_staff += candidate
+			else if (istype(JOB, /datum/job/security/security_officer))
+				security_officers += candidate
 
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 3 Job Picker")
 			candidate.mind.assigned_role = JOB.name
@@ -419,15 +413,15 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	else if (length(JOB.slot_rhan))
 		H.equip_new_if_possible(JOB.slot_rhan[1], SLOT_R_HAND)
 
-	//#ifdef APRIL_FOOLS
-	//H.back?.setMaterial(getMaterial("jean"))
-	//H.gloves?.setMaterial(getMaterial("jean"))
-	//H.wear_suit?.setMaterial(getMaterial("jean"))
-	//H.wear_mask?.setMaterial(getMaterial("jean"))
-	//H.w_uniform?.setMaterial(getMaterial("jean"))
-	//H.shoes?.setMaterial(getMaterial("jean"))
-	//H.head?.setMaterial(getMaterial("jean"))
-	//#endif
+	#ifdef APRIL_FOOLS
+	H.back?.setMaterial(getMaterial("jean"))
+	H.gloves?.setMaterial(getMaterial("jean"))
+	H.wear_suit?.setMaterial(getMaterial("jean"))
+	H.wear_mask?.setMaterial(getMaterial("jean"))
+	H.w_uniform?.setMaterial(getMaterial("jean"))
+	H.shoes?.setMaterial(getMaterial("jean"))
+	H.head?.setMaterial(getMaterial("jean"))
+	#endif
 
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
 /mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn)
@@ -500,7 +494,14 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			H.spawnId(JOB)
 		if (src.traitHolder && src.traitHolder.hasTrait("stowaway"))
 			//Has the stowaway trait - they're hiding in a random locker
-			var/list/obj/storage/SL = get_random_station_storage_list(closed=TRUE, breathable=TRUE)
+			var/list/obj/storage/SL = list()
+			for_by_tcl(S, /obj/storage)
+				// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post (or the martian ship (on oshan))
+				if(S.z == 1 && !S.open && !istype(S, /obj/storage/secure) && !istype(S, /obj/storage/crate/loot) && !istype(get_area(S), /area/listeningpost) && !istype(get_area(S), /area/evilreaver))
+					var/turf/simulated/T = S.loc
+					//Simple checks done, now do some environment checks to make sure it's survivable
+					if(istype(T) && T.air && T.air.oxygen >= (MOLES_O2STANDARD - 1) && T.air.temperature >= T0C)
+						SL.Add(S)
 
 			if(length(SL) > 0)
 				src.set_loc(pick(SL))
@@ -810,13 +811,13 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		src.mind.store_memory("Your pin to your ID is: [C.pin]")
 	src.mind?.remembered_pin = C.pin
 
-	if (JOB.wages > 0)
+	if (wagesystem.jobs[JOB.name])
 		var/cashModifier = 1
 		if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 			cashModifier = 1.25
 
 		var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
-		S.setup(src,round(JOB.wages * cashModifier))
+		S.setup(src,round(wagesystem.jobs[JOB.name] * cashModifier))
 
 		if (isnull(src.get_slot(SLOT_R_STORE)))
 			src.equip_if_possible(S, SLOT_R_STORE)

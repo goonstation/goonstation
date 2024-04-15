@@ -282,13 +282,6 @@ menu "menu"
 		is-checked = true
 		can-check = true
 		saved-params = "is-checked"
-	elem "toggle_camera_recoil"
-		name = "&Camera Recoil"
-		command = "toggle-camera-recoil"
-		category = "&Effects"
-		is-checked = true
-		can-check = true
-		saved-params = "is-checked"
 	elem
 		name = "&Interface"
 		command = ""

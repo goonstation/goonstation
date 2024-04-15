@@ -274,11 +274,6 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (!isturf(owner.loc))
-			boutput(owner, SPAN_ALERT("You don't think you can build \the [obj_name] from in here..."))
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))

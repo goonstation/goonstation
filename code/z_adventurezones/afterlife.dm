@@ -22,7 +22,6 @@ Hell area (send people here if they die in a shameful way)
 
 /area/afterlife/heaven
 	name = "Heaven"
-	icon_state = "afterlife_heaven"
 	sanctuary = 1
 	ambient_light = rgb(20, 25, 30)
 

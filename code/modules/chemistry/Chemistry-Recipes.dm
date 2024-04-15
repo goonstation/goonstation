@@ -902,7 +902,7 @@
 		result = "catamount"
 		required_reagents = list("juice_orange" = 1, "grenadine" = 1, "ginger_ale" = 4, "ice" = 2)
 		result_amount = 8
-		mix_sound = 'sound/voice/animal/cat.ogg'
+		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
 	pine_ginger

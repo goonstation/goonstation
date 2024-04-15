@@ -43,10 +43,10 @@ TYPEINFO(/obj/machinery/recharger)
 	var/accepted_types = list( /obj/item/gun/energy, \
 								/obj/item/baton, \
 								/obj/item/cargotele, \
-								/obj/item/mining_tool/powered/pickaxe, \
-								/obj/item/mining_tool/powered/hammer, \
+								/obj/item/mining_tool/power_pick, \
+								/obj/item/mining_tool/powerhammer, \
 								/obj/item/ammo/power_cell, \
-								/obj/item/mining_tool/powered/shovel
+								/obj/item/mining_tool/power_shovel
 								)
 
 	var/obj/item/charging = null

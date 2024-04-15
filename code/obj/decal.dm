@@ -513,17 +513,6 @@ obj/decal/fakeobjects/teleport_pad
 		icon_state = "eldritch-[rand(1, 7)]"
 		..()
 
-/obj/decal/fakeobject/crashed_arrivals
-	name = "crashed human capsule missile"
-	desc = "Some kind of deliver means to get humans from here to there."
-	anchored = ANCHORED
-	density = 0
-	icon = 'icons/obj/large/32x64.dmi'
-	icon_state = "arrival_missile_synd-crash"
-	bound_width = 32
-	bound_height = 64
-
-
 /obj/decal/bloodtrace
 	name = "blood trace"
 	desc = "Oh my!!"
