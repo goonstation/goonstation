@@ -384,6 +384,8 @@
 		//Output controls
 		if("toggleOutput")
 			src.online = !src.online
+			if (!src.online && src.firing)
+				src.stop_firing()
 			src.process(1)
 			. = TRUE
 		if("setOutput")
