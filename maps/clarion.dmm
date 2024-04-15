@@ -1588,7 +1588,7 @@
 /obj/disposalpipe/switch_junction{
 	dir = 1;
 	icon_state = "pipe-sj2";
-	mail_tag = "escape";
+	mail_tag = "escape hallway";
 	name = "escape mail router"
 	},
 /obj/cable{
@@ -1974,7 +1974,7 @@
 "ahP" = (
 /obj/disposalpipe/switch_junction{
 	icon_state = "pipe-sj2";
-	mail_tag = "arrivals";
+	mail_tag = "arrivals hallway";
 	name = "arrivals mail router"
 	},
 /turf/simulated/floor/black,
@@ -2135,7 +2135,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
-/obj/machinery/disposal/mail,
+/obj/machinery/disposal/mail/autoname/public/escape,
 /turf/simulated/floor/bluegreen/side,
 /area/station/hallway/secondary/exit)
 "aiz" = (
@@ -14475,7 +14475,12 @@
 /obj/machinery/disposal/mail/small{
 	dir = 8;
 	pixel_x = 5;
-	pixel_y = 5
+	pixel_y = 5;
+	mail_tag = "chief_engineer";
+	message = "1";
+	mailgroup = "command";
+	mailgroup2 = "engineer";
+	name = "mail chute-'Chief Engineer'"
 	},
 /obj/disposalpipe/trunk/mail{
 	dir = 1
@@ -15551,7 +15556,7 @@
 	desc = "An underfloor mail pipe.";
 	dir = 2;
 	icon_state = "pipe-sj2";
-	mail_tag = "telesci";
+	mail_tag = "telescience";
 	name = "science teleporter mail router"
 	},
 /turf/simulated/floor/black,
@@ -27515,7 +27520,7 @@
 	desc = "An underfloor mail pipe.";
 	dir = 4;
 	icon_state = "pipe-sj2";
-	mail_tag = "test_chamber";
+	mail_tag = "testchamber";
 	name = "test chamber mail router"
 	},
 /turf/simulated/floor/black,
@@ -29193,9 +29198,6 @@
 	name = "Crew Quarters S05"
 	})
 "lpF" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -29203,8 +29205,8 @@
 	desc = "An underfloor mail pipe.";
 	dir = 4;
 	icon_state = "pipe-sj2";
-	mail_tag = "test_chamber";
-	name = "test chamber mail router"
+	mail_tag = "kitchen";
+	name = "kitchen mail router"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/central)
@@ -37338,7 +37340,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/disposal/mail/small/autoname/security/detective/west,
+/obj/machinery/disposal/mail/small/autoname/security/west,
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
