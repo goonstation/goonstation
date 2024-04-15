@@ -798,6 +798,7 @@ Code:
 				<a href='?src=\ref[src];alert=2'>Engineering Alert</a><br>
 				<a href='?src=\ref[src];alert=3'>Security Alert</a><br>
 				<a href='?src=\ref[src];alert=4'>Janitor Alert</a>
+				<a href='?src=\ref[src];alert=5'>Science Alert</a>
 				"}
 
 		else
@@ -847,12 +848,16 @@ Code:
 				alert_color = "#a30000"
 				alert_title = "Security"
 				alert_sound = 'sound/items/security_alert.ogg'
-			if (4 to INFINITY)
+			if (4)
 				mailgroup = MGO_JANITOR
 				alert_color = "#993399"
 				alert_title = "Janitor"
 				alert_sound = 'sound/items/janitor_alert.ogg'
-
+			if (5 to INFINITY)
+				mailgroup = MGD_SCIENCE
+				alert_color = "#a97da9"
+				alert_title = "Science"
+				alert_sound = 'sound/items/science_alert.ogg'
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.master
 		signal.data["address_1"] = "00000000"
