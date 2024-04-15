@@ -241,9 +241,6 @@
 	var/generated_moolah = (2*output_mw*BUX_PER_WORK_CAP)/(2*output_mw+BUX_PER_WORK_CAP*ACCEL_FACTOR) //used if output_mw > 0
 	generated_moolah += (4*output_mw*LOW_CAP)/(4*output_mw + LOW_CAP)
 
-	if (src.output < 0) //steals money since you emagged it
-		generated_moolah = (-2*output_mw*BUX_PER_WORK_CAP)/(2*STEAL_FACTOR*output_mw - BUX_PER_WORK_CAP*STEAL_FACTOR*ACCEL_FACTOR)
-
 	generated_moolah = round(generated_moolah)
 
 	src.lifetime_earnings += generated_moolah
@@ -302,12 +299,12 @@
 /obj/machinery/power/pt_laser/proc/start_firing()
 	if (!src.output)
 		return
-	var/turf/T = get_barrel_turf()
+	var/turf/T = src.emagged ? get_rear_turf() : get_barrel_turf()
 	if(!T) return //just in case
 
 	firing = TRUE
 	UpdateIcon(1)
-	src.laser = new(T, src.dir)
+	src.laser = new(T, src.emagged ? turn(src.dir, 180) : src.dir)
 	src.laser.source = src
 	src.laser.try_propagate()
 
@@ -419,10 +416,7 @@
 			. = TRUE
 		if("setOutput")
 			. = TRUE
-			if (src.emagged)
-				src.output_number = clamp(params["setOutput"], -999, 999)
-			else
-				src.output_number = clamp(params["setOutput"], 0, 999)
+			src.output_number = clamp(params["setOutput"], 0, 999)
 			src.output = src.output_number * src.output_multi
 			if(!src.output || !src.can_fire())
 				src.stop_firing()
