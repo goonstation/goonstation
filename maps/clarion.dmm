@@ -21475,7 +21475,9 @@
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 8
 	},
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "fCj" = (
@@ -32885,7 +32887,9 @@
 /obj/machinery/ai_status_display{
 	pixel_y = 28
 	},
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},

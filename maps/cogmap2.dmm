@@ -66268,7 +66268,9 @@
 	name = "Genetic Research"
 	})
 "nJi" = (
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "OR2"
+	},
 /turf/simulated/floor/redwhite/corner{
 	dir = 8
 	},
@@ -66766,7 +66768,9 @@
 /area/station/science/chemistry)
 "oiN" = (
 /obj/machinery/light/incandescent,
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
@@ -75455,7 +75459,9 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/central)
 "xWy" = (
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "xWI" = (

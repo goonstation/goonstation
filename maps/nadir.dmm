@@ -27544,7 +27544,9 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "lyN" = (
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "OR2"
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/medbay/surgery)
 "lyT" = (
@@ -30794,7 +30796,9 @@
 /area/station/hallway/primary/southeast)
 "mNV" = (
 /obj/machinery/drainage,
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "mOd" = (
@@ -35886,7 +35890,9 @@
 /area/station/maintenance/west)
 "pba" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/medbay/surgery)
 "pbh" = (

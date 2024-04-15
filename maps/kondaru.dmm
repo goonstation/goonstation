@@ -15160,7 +15160,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -36578,7 +36580,9 @@
 /turf/simulated/floor/purple,
 /area/station/science/storage)
 "gII" = (
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "gJa" = (

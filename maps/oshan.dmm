@@ -3294,7 +3294,9 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "akR" = (
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "akS" = (
@@ -5280,7 +5282,9 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "arB" = (

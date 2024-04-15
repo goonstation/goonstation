@@ -8227,7 +8227,9 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "cnS" = (
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "garbage_doc"
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "coa" = (
@@ -15942,7 +15944,9 @@
 	},
 /area/station/solar/east)
 "eKp" = (
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "eKv" = (
@@ -41025,7 +41029,9 @@
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3"
 	},
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "treatment"
+	},
 /turf/simulated/floor/blackwhite/side{
 	dir = 8
 	},

@@ -31929,7 +31929,9 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "cil" = (
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "cim" = (
@@ -47218,6 +47220,18 @@
 /obj/machinery/firealarm/south,
 /turf/simulated/floor/grey/side,
 /area/station/crew_quarters/courtroom)
+"jJz" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple,
+/obj/disposalpipe/segment/morgue,
+/obj/machinery/drainage,
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
+/turf/simulated/floor,
+/area/station/medical/medbay/surgery)
 "jJT" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 4
@@ -49107,7 +49121,9 @@
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment/morgue,
 /obj/machinery/drainage,
-/obj/machinery/computer/operating/small,
+/obj/machinery/computer/operating/small{
+	id = "OR2"
+	},
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "lel" = (
@@ -104808,7 +104824,7 @@ cwF
 crM
 uxP
 ctA
-lef
+jJz
 cDm
 cwe
 lef
