@@ -813,7 +813,7 @@ var/list/special_pa_observing_verbs = list(
 		if (src.owner:stealth && src.owner:alt_key)
 			src.set_alt_key()
 		if (new_key)
-			new_key = trim(new_key)
+			new_key = trimtext(new_key)
 			//stealth_hide_fakekey = (alert("Hide your fake key when using DSAY?", "Extra stealthy","Yes", "No") == "Yes")
 			// I think if people really wanna be Denmark they can just set themselves to be Denmark
 			new_key = strip_html(new_key)
@@ -866,7 +866,7 @@ var/list/special_pa_observing_verbs = list(
 		if (src.owner:alt_key && src.owner:stealth)
 			src.set_stealth_mode()
 		if (new_key)
-			new_key = trim(new_key)
+			new_key = trimtext(new_key)
 			new_key = strip_html(new_key)
 			if (length(new_key) >= 50)
 				new_key = copytext(new_key, 1, 50)
@@ -1075,13 +1075,17 @@ var/list/fun_images = list()
 	H.JobEquipSpawned("Staff Assistant", 1)
 	H.update_colorful_parts()
 
-/client/proc/respawn_as_job(var/datum/job/J in (job_controls.staple_jobs|job_controls.special_jobs|job_controls.hidden_jobs))
+/client/proc/respawn_as_job(var/datum/job/J in (job_controls.staple_jobs|job_controls.special_jobs|job_controls.hidden_jobs|job_controls.savefile_get_job_names(src)))
 	set name = "Respawn As Job"
 	set desc = "Respawn yourself as a given job. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
 	SHOW_VERB_DESC
+	if(istext(J))
+		var/idx = job_controls.savefile_get_job_names(src)?.Find(J)
+		if(job_controls.savefile_load(src, idx))
+			J = job_controls.create_job(TRUE)
 
 	respawn_as_self_internal(new_self=TRUE, jobstring = J.name)
 

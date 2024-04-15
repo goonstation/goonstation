@@ -63,6 +63,9 @@
 	var/blood_to_health_scalar = 0.75 //! 200 blood = 150 health
 	var/min_max_health = 40 //! Minimum health we can get to via blood loss. also lol
 
+	///How far you can stray from your vampire without losing blood
+	var/max_range = 20
+
 	///Counter that ticks up as you spend time away from your vampire before you start to loose blood
 	var/grace_count = 0
 	///How many (mult adjusted) life ticks before you start to lose blood
@@ -91,7 +94,7 @@
 		else
 			dist = GET_DIST(get_turf(master.owner), get_turf(src.owner))
 		dist = min(dist, 100)
-		if (dist > 15)
+		if (dist > src.max_range)
 			if (src.grace_count > src.grace_limit)
 				var/blood_loss = 15 + dist/2
 				src.blood_waste(blood_loss)

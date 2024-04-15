@@ -516,7 +516,7 @@
 		return
 
 	proc/componentSay(var/string)
-		string = trim(sanitize(html_encode(string)))
+		string = trimtext(sanitize(html_encode(string)))
 		var/maptext = null
 		var/maptext_loc = null //Location used for center of all_hearers scan "Probably where you want your text attached to."
 
@@ -4363,7 +4363,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (src.text_limit)
 			text = copytext_char(text,1,src.text_limit+1)
 		if (src.trim_text)
-			text = trim(text)
+			text = trimtext(text)
 
 		if (!length(text) || src.text_limit == 0)
 			return

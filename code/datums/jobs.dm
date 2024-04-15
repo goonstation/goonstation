@@ -221,6 +221,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	announce_on_join = TRUE
 	allow_spy_theft = FALSE
 	allow_antag_fallthrough = FALSE
+	receives_implant = /obj/item/implant/health/security/anti_mindhack
 	wiki_link = "https://wiki.ss13.co/Captain"
 
 	slot_card = /obj/item/card/id/gold

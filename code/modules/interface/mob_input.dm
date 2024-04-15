@@ -48,7 +48,7 @@
 				return 100
 			actions.interrupt(src, INTERRUPT_ACTION)
 			SPAWN(0)
-				S.handleCast(target)
+				S.handleCast(target, params)
 				if(S)
 					if((S.ignore_sticky_cooldown && !S.cooldowncheck()) || (S.sticky && S.cooldowncheck()))
 						if(src)
@@ -124,7 +124,7 @@
 		if (.)
 			additional_help_messages = list(.)	+ additional_help_messages
 		. = jointext(additional_help_messages, "\n")
-	. = replacetext(trim(.), "\n", "<br>")
+	. = replacetext(trimtext(.), "\n", "<br>")
 
 /mob/proc/help_examine(atom/target)
 	var/help = get_final_help_examine(target)

@@ -31929,7 +31929,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "cil" = (
-/obj/machinery/computer/operating{
+/obj/machinery/computer/operating/small{
 	id = "robotics"
 	},
 /turf/simulated/floor/black,
@@ -35734,9 +35734,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/computer/operating{
-	id = "OR1"
-	},
+/obj/iv_stand,
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "cul" = (
@@ -36235,9 +36233,7 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/computer/operating{
-	id = "OR2"
-	},
+/obj/iv_stand,
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "cwd" = (
@@ -47224,6 +47220,18 @@
 /obj/machinery/firealarm/south,
 /turf/simulated/floor/grey/side,
 /area/station/crew_quarters/courtroom)
+"jJz" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple,
+/obj/disposalpipe/segment/morgue,
+/obj/machinery/drainage,
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
+/turf/simulated/floor,
+/area/station/medical/medbay/surgery)
 "jJT" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 4
@@ -49113,7 +49121,9 @@
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment/morgue,
 /obj/machinery/drainage,
-/obj/iv_stand,
+/obj/machinery/computer/operating/small{
+	id = "OR2"
+	},
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "lel" = (
@@ -51003,10 +51013,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "mMm" = (
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1
-	},
+/obj/deployable_turret/riot/active,
 /obj/machinery/turretid{
 	name = "External perimeter turret deactivation control";
 	pixel_y = 28;
@@ -104817,7 +104824,7 @@ cwF
 crM
 uxP
 ctA
-lef
+jJz
 cDm
 cwe
 lef
