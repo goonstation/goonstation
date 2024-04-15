@@ -31929,9 +31929,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "cil" = (
-/obj/machinery/computer/operating{
-	id = "robotics"
-	},
+/obj/machinery/computer/operating/small,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "cim" = (
@@ -35734,9 +35732,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/computer/operating{
-	id = "OR1"
-	},
+/obj/iv_stand,
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "cul" = (
@@ -36235,9 +36231,7 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/computer/operating{
-	id = "OR2"
-	},
+/obj/iv_stand,
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "cwd" = (
@@ -49113,7 +49107,7 @@
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment/morgue,
 /obj/machinery/drainage,
-/obj/iv_stand,
+/obj/machinery/computer/operating/small,
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "lel" = (
