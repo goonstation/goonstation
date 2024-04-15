@@ -260,7 +260,7 @@
 			return
 		..()
 		if (src.ai_state == 0)
-			if (src.equipped() && istype(src.equipped(),/obj/item/implant/projectile/body_visible/dart/bardart))
+			if (istype(src.equipped(),/obj/item/implant/projectile/body_visible/dart/bardart))
 				for (var/obj/item/reagent_containers/balloon/balloon in view(7, src))
 					src.throw_item(balloon, list("npc_throw"))
 					src.ai_delay_move = TRUE
