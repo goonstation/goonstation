@@ -76,7 +76,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	var/random_name = FALSE
 	var/random_look = FALSE
 	var/name_list = "names/pets.txt"
-	var/player_can_spawn_with_pet = FALSE // For the Pet Person trait that makes you spawn with a pet (do not confuse with is_pet!!!)
+	var/player_can_spawn_with_pet = FALSE //! For the Pet Person trait that makes you spawn with a pet (do not confuse with is_pet!!!)
 
 	var/fur_color = 0
 	var/eye_color = 0
@@ -101,7 +101,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			src.randomize_name()
 
 	disposing()
-		if(src.is_pet)
+		if(src.is_pet || src.player_can_spawn_with_pet)
 			STOP_TRACKING_CAT(TR_CAT_PETS)
 		..()
 
@@ -361,8 +361,6 @@ proc/filter_carrier_pets(var/type)
 
 	New()
 		..()
-		if (src.random_name)
-			src.randomize_name()
 		if (src.random_look)
 #ifdef HALLOWEEN
 			src.cattype = 3 //Black cats for halloween.
