@@ -36,7 +36,6 @@
 	var/is_charging = FALSE //for tgui readout
 	///A list of all laser segments from this PTL that reached the edge of the z-level
 	var/list/selling_lasers = list()
-	var/wireless_net_id = null
 
 /obj/machinery/power/pt_laser/New()
 	..()
@@ -59,17 +58,6 @@
 		terminal.master = src
 
 		AddComponent(/datum/component/mechanics_holder)
-		src.wireless_net_id = format_net_id("\ref[src]")
-		AddComponent( \
-			/datum/component/packet_connected/radio, \
-			null, \
-			FREQ_PDA, \
-			src.wireless_net_id, \
-			null, \
-			TRUE, \
-			"ptl", \
-			FALSE \
-		)
 		UpdateIcon()
 
 /obj/machinery/power/pt_laser/disposing()
@@ -112,9 +100,9 @@
 	signal.data["sender_name"] = "ENGINE-MAILBOT"
 	signal.data["group"] = list(MGO_ENGINEER, MGA_ENGINE)
 	signal.data["message"] = msg
-	signal.data["sender"] = src.wireless_net_id
+	signal.data["sender"] = "00000000"
 	signal.data["address_1"] = "00000000"
-	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 
 /obj/machinery/power/pt_laser/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (src.emagged)
