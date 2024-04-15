@@ -38,13 +38,16 @@ export type ManufacturerData = {
 // Keyed by name
 export type Manufacturable = {
   name:string
+  material_names:string;
   item_names:string[];
   item_amounts:string[];
+  item_descriptions:string[];
   create:number;
   time:number;
   category:string;
   byondRef:string;
   img:string
+  show_cost:BooleanLike;
 }
 
 export type Rockbox = {

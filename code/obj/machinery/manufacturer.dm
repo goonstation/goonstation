@@ -309,10 +309,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"hidden_blueprints" = blueprints_as_list(src.hidden, user),
 			"downloaded_blueprints" = blueprints_as_list(src.download, user),
 			"drive_recipe_blueprints" = blueprints_as_list(src.drive_recipes, user),
-			"wires" = list(list(colorName="Amber",  color="#21868C"),
-						   list(colorName="Teal",   color="#6f0fb4"),
-						   list(colorName="Indigo", color="#FFBF00"),
-						   list(colorName="Lime",   color="#99FF1D"),
+			"wires" = list(list(colorName="Teal",  color="#21868C"),
+						   list(colorName="Indigo",color="#6f0fb4"),
+						   list(colorName="Amber", color="#FFBF00"),
+						   list(colorName="Lime",  color="#99FF1D"),
 						  ),
 			"rockboxes" = rockboxes_as_list(),
 			"manudrive" = list ("name" = "[src.manudrive]",
@@ -358,10 +358,23 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	/// Converts a manufacture datum to a list with string keys to relevant vars for the UI
 	proc/manufacture_as_list(datum/manufacture/M, mob/user)
+		var/generated_names = list()
+		var/generated_descriptions = list()
+		for (var/i in 1 to length(M.item_outputs))
+			// extremely unpleasant to do this
+			var/T = M.item_outputs[i]
+			var/obj/O = new T
+			if (!O || !isobj(O)) continue
+			generated_names += "\improper[O.name]"
+			generated_descriptions += "[O.desc]"
+
 		return list(
-			"name" = "[M]",
-			"item_names" = M.item_names,
+			"name" = M.name,
+			"material_names" = M.item_names,
+			"item_names" = generated_names,
+			"item_descriptions" = generated_descriptions,
 			"item_amounts" = M.item_amounts,
+			"item_outputs" = M.item_outputs,
 			"create" = M.create,
 			"time" = M.time,
 			"apply_material" = M.apply_material,
@@ -477,7 +490,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	ui_act(action, params)
 
-		if(!(action == "wire_cut" || action == "wire_pulse"))
+		if(!(action == "wire"))
 			if (IS_NOT_OPERATIONAL)
 				return
 
@@ -510,6 +523,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 				if (!check_enough_materials(I))
 					boutput(usr, SPAN_ALERT("Insufficient usable materials to manufacture that item."))
+					playsound(src.loc, src.sound_grump, 50, 1)
 				else if (length(src.queue) >= MAX_QUEUE_LENGTH)
 					boutput(usr, SPAN_ALERT("Manufacturer queue length limit reached."))
 				else
@@ -550,19 +564,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 								return
 						if (!(issnippingtool(usr.equipped())))
 							boutput(usr, SPAN_ALERT("You need to be holding a snipping tool for that!"))
-							return
-
-					if ("cut")
-						src.cut(APCIndexToWireColor[text2num_safe(params["wire"])])
-
-					if ("mend")
-						src.mend(APCIndexToWireColor[text2num_safe(params["wire"])])
+						else
+							if (params["action"] == "cut")
+								src.cut(usr, APCIndexToWireColor[text2num_safe(params["wire"])])
+							else
+								src.mend(usr, APCIndexToWireColor[text2num_safe(params["wire"])])
 
 					if ("pulse")
 						if (!(ispulsingtool(usr.equipped()) || isAI(usr)))
 							boutput(usr, SPAN_ALERT("You need to be holding a pulsing tool or similar for that!"))
-							return
-						src.pulse(APCIndexToWireColor[text2num_safe(params["wire"])])
+						else
+							src.pulse(usr, APCIndexToWireColor[text2num_safe(params["wire"])])
 
 			if ("speed")
 				if (src.mode == "working")
@@ -694,8 +706,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 		var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
 		if (account)
-			var/quantity = 1
-			quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
+			var/quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
 			if(!isnum_safe(quantity))
 				return
 			////////////
@@ -740,56 +751,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			else
 				if(quantity > 0)
 					src.temp = {"I don't have that many for sale, champ.<BR>"}
-					src.temp = null
-				if (src.scan.registered in FrozenAccounts)
-					boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
-					return
-				var/datum/db_record/account = null
-				account = FindBankAccountByName(src.scan.registered)
-				if (account)
-					var/quantity = 1
-					quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
-					if(!isnum_safe(quantity))
-						return
-
-					if(OCD.amount >= quantity && quantity > 0)
-						var/subtotal = round(price * quantity)
-						var/sum_taxes = round(taxes * quantity)
-						var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
-						var/total = subtotal + sum_taxes + rockbox_fees
-						if(account["current_money"] >= total)
-							account["current_money"] -= total
-							storage.eject_ores(ore, get_output_location(), quantity, transmit=1, user=usr)
-
-							 // Chief gets a bigger cut
-							var/list/accounts = FindBankAccountsByJobs(list("Chief Engineer", "Chief Engineer", "Miner"))
-
-							var/datum/signal/minerSignal = get_free_signal()
-							minerSignal.source = src
-							//any non-divisible amounts go to the shipping budget
-							var/leftovers = 0
-							if(length(accounts))
-								leftovers = subtotal % length(accounts)
-								var/divisible_amount = subtotal - leftovers
-								if(divisible_amount)
-									var/amount_per_account = divisible_amount/length(accounts)
-									for(var/datum/db_record/t as anything in accounts)
-										t["current_money"] += amount_per_account
-									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
-							else
-								leftovers = subtotal
-								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
-							wagesystem.shipping_budget += (leftovers + sum_taxes)
-							SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
-
-							src.temp = {"Enjoy your purchase!<BR>"}
-						else
-							src.temp = {"You don't have enough dosh, bucko.<BR>"}
-					else
-						if(quantity > 0)
-							src.temp = {"I don't have that many for sale, champ.<BR>"}
-						else
-							src.temp = {"Enter some actual valid number, you doofus!<BR>"}
 				else
 					src.temp = {"Enter some actual valid number, you doofus!<BR>"}
 		else
