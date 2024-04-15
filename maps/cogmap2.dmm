@@ -53507,30 +53507,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "dev" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_y = 11
-	},
-/obj/item/scalpel{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/hemostat{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/staple_gun{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/suture{
-	pixel_y = 5
-	},
-/obj/item/surgical_spoon,
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -53657,9 +53635,6 @@
 	},
 /obj/item/paper/book/from_file/medical_surgery_guide,
 /obj/machinery/drainage,
-/obj/machinery/defib_mount{
-	pixel_x = -28
-	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -53796,16 +53771,38 @@
 /turf/simulated/floor,
 /area/station/maintenance/solar/south)
 "dfC" = (
-/obj/machinery/computer/operating{
-	dir = 4
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/surgical_spoon,
+/obj/machinery/defib_mount{
+	pixel_x = -28
 	},
 /turf/simulated/floor/redwhite{
-	dir = 10
+	dir = 8
 	},
 /area/station/medical/medbay/surgery)
 "dfD" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
@@ -53813,9 +53810,33 @@
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
 "dfF" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
-/turf/simulated/floor/redwhite,
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/surgical_spoon,
+/turf/simulated/floor/redwhite{
+	dir = 4
+	},
 /area/station/medical/medbay/surgery)
 "dfK" = (
 /obj/overlay{
@@ -60160,31 +60181,9 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "hIe" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_y = 11
-	},
-/obj/item/scalpel{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/hemostat{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/staple_gun{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/suture{
-	pixel_y = 5
-	},
-/obj/item/surgical_spoon,
 /obj/machinery/light_switch/east,
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -66269,6 +66268,9 @@
 	name = "Genetic Research"
 	})
 "nJi" = (
+/obj/machinery/computer/operating/small{
+	id = "OR2"
+	},
 /turf/simulated/floor/redwhite/corner{
 	dir = 8
 	},
@@ -66766,8 +66768,8 @@
 /area/station/science/chemistry)
 "oiN" = (
 /obj/machinery/light/incandescent,
-/obj/machinery/computer/operating{
-	dir = 8
+/obj/machinery/computer/operating/small{
+	id = "OR1"
 	},
 /turf/simulated/floor/redwhite{
 	dir = 6
@@ -75457,7 +75459,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/central)
 "xWy" = (
-/obj/machinery/computer/operating{
+/obj/machinery/computer/operating/small{
 	id = "robotics"
 	},
 /turf/simulated/floor/sanitary/white,

@@ -21605,7 +21605,7 @@
 	},
 /area/catacombs)
 "bFH" = (
-/obj/window_blinds/middle,
+/obj/window_blinds/cog2/middle,
 /turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
@@ -61076,6 +61076,17 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/offices/shotgunbill)
+"iPo" = (
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/unsimulated/wall/generic{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_2";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom/lobby)
 "iPz" = (
 /turf/unsimulated/floor/setpieces/Azarak/cavefloor{
 	desc = "It's over Enakai";
@@ -64081,7 +64092,7 @@
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "lQe" = (
-/obj/window_blinds,
+/obj/window_blinds/cog2,
 /turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
@@ -65947,7 +65958,9 @@
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "nKc" = (
-/obj/window_blinds,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
 /turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_2";
@@ -69725,6 +69738,17 @@
 	},
 /turf/unsimulated/floor/black,
 /area/iomoon/base)
+"rsf" = (
+/obj/window_blinds/cog2{
+	dir = 8
+	},
+/turf/unsimulated/wall/generic{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_2";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom/lobby)
 "rst" = (
 /obj/admin_plaque{
 	desc = "A nameplate signifying the name of the art gallery.";
@@ -71668,7 +71692,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "tAK" = (
-/obj/window_blinds/right,
+/obj/window_blinds/cog2/right,
 /turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
@@ -75159,7 +75183,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
 "xaw" = (
-/obj/window_blinds/left,
+/obj/window_blinds/cog2/left,
 /turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
@@ -147542,14 +147566,14 @@ dnY
 dnY
 dFN
 sWb
-nKc
+iPo
 nKc
 sWb
 dMA
 dMY
 dNu
 sWb
-nKc
+iPo
 nKc
 sWb
 dOM
@@ -153585,9 +153609,9 @@ lWe
 sWb
 sWb
 sWb
-nKc
+rsf
 njd
-nKc
+rsf
 sWb
 sWb
 sWb

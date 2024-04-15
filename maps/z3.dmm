@@ -6088,10 +6088,7 @@
 /area/abandonedmedicalship)
 "aHh" = (
 /obj/decal/cleanable/dirt,
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1
-	},
+/obj/deployable_turret/riot/active,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aHi" = (

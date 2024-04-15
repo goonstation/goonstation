@@ -309,7 +309,7 @@
 	return abs(src.output) <= src.charge
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
-	src.laser?.traverse(PROC_REF(update_laser_segment))
+	src.laser?.traverse(new /datum/callback(src, PROC_REF(update_laser_segment)))
 
 /obj/machinery/power/pt_laser/proc/update_laser_segment(obj/linked_laser/ptl/laser)
 	var/alpha = clamp(((log(10, max(1,laser.source.laser_power() * laser.power)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
@@ -384,6 +384,8 @@
 		//Output controls
 		if("toggleOutput")
 			src.online = !src.online
+			if (!src.online && src.firing)
+				src.stop_firing()
 			src.process(1)
 			. = TRUE
 		if("setOutput")
@@ -506,7 +508,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	src.in_laser = null
 
 ///Another stub, should call traverse on all emitted laser segments with the proc passed through
-/obj/laser_sink/proc/traverse(proc_to_call)
+/obj/laser_sink/proc/traverse(datum/callback/callback)
 	return
 
 /obj/laser_sink/Move()
@@ -799,12 +801,12 @@ TYPEINFO(/obj/laser_sink/splitter)
 		qdel(src)
 
 ///Traverses all upstream laser segments and calls proc_to_call on each of them
-/obj/linked_laser/proc/traverse(proc_to_call)
+/obj/linked_laser/proc/traverse(datum/callback/callback)
 	var/obj/linked_laser/ptl/current_laser = src
 	do
-		call(proc_to_call)(current_laser)
+		callback.Invoke(current_laser)
 		if (!current_laser.next)
-			current_laser.sink?.traverse(proc_to_call)
+			current_laser.sink?.traverse(callback)
 		current_laser = current_laser.next
 	while (current_laser)
 

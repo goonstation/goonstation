@@ -464,7 +464,7 @@
 
 /obj/ability_button/jetpack2_toggle
 	name = "Toggle jetpack MKII"
-	icon_state = "jetoff"
+	icon_state = "jet2off"
 	requires_equip = TRUE
 
 	execute_ability()

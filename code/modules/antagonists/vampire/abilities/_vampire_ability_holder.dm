@@ -257,7 +257,7 @@
 		src.updateButtons()
 
 	proc/transmit_thrall_msg(var/message,var/mob/sender)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)
 			return

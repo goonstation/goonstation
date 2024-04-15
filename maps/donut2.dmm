@@ -8691,14 +8691,6 @@
 /obj/disposalpipe/trunk/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
-"aTr" = (
-/obj/machinery/drainage,
-/obj/item/paper/book/from_file/medical_surgery_guide,
-/obj/machinery/optable{
-	id = "OR2"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
 "aTt" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -10067,10 +10059,33 @@
 	},
 /area/station/medical/medbay/lobby)
 "bap" = (
-/obj/storage/secure/closet/medical/anesthetic,
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/surgical_spoon,
 /obj/item_dispenser/medical_mask,
 /turf/simulated/floor/redwhite{
-	dir = 9
+	dir = 1
 	},
 /area/station/medical/medbay/surgery)
 "baq" = (
@@ -10309,9 +10324,11 @@
 /area/station/bridge)
 "bbj" = (
 /obj/item_dispenser/latex_gloves,
-/obj/machinery/computer/operating{
+/obj/machinery/optable{
 	id = "OR2"
 	},
+/obj/item/paper/book/from_file/medical_surgery_guide,
+/obj/machinery/drainage,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -11263,7 +11280,30 @@
 	},
 /area/station/medical/robotics)
 "bhd" = (
-/obj/storage/secure/closet/medical/medicine,
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/surgical_spoon,
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},
@@ -13965,30 +14005,11 @@
 	},
 /area/station/hangar/sec)
 "bxu" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_y = 11
+/obj/machinery/computer/operating/small{
+	id = "OR1"
 	},
-/obj/item/scalpel{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/hemostat{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/staple_gun{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/suture{
-	pixel_y = 5
-	},
-/obj/item/surgical_spoon,
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
 "bxD" = (
@@ -14262,9 +14283,8 @@
 /area/station/medical/morgue)
 "byV" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
 /obj/machinery/light/incandescent,
+/obj/storage/secure/closet/medical/anesthetic,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -28457,16 +28477,6 @@
 /obj/cable/orange,
 /turf/simulated/floor/plating/airless,
 /area/space)
-"jIf" = (
-/obj/machinery/drainage,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/optable{
-	id = "OR1"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
 "jIt" = (
 /obj/machinery/portable_atmospherics/canister/empty,
 /obj/machinery/light/small/sticky/frostedred,
@@ -33194,31 +33204,10 @@
 	},
 /area/station/science/lobby)
 "mJq" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_y = 11
-	},
-/obj/item/scalpel{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/hemostat{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/staple_gun{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/suture{
-	pixel_y = 5
-	},
 /obj/machinery/light/incandescent,
-/obj/item/surgical_spoon,
+/obj/machinery/computer/operating/small{
+	id = "OR2"
+	},
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -36775,7 +36764,9 @@
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "oLr" = (
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating{
+	id = "robotics"
+	},
 /turf/simulated/floor/black/side{
 	dir = 4
 	},
@@ -39389,7 +39380,8 @@
 	dir = 4;
 	pixel_x = -4
 	},
-/obj/item/clothing/suit/cardboard_box/head_surgeon,
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -39983,9 +39975,11 @@
 /area/station/hallway/secondary/exit)
 "qIb" = (
 /obj/machinery/light/incandescent,
-/obj/machinery/computer/operating{
+/obj/machinery/optable{
 	id = "OR1"
 	},
+/obj/machinery/drainage,
+/obj/item/clothing/suit/cardboard_box/head_surgeon,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
 "qIv" = (
@@ -47320,9 +47314,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
 /obj/machinery/firealarm/west,
+/obj/storage/secure/closet/medical/medicine,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -64183,10 +64176,10 @@ fKq
 bhh
 aUi
 bbj
-aTr
+aVp
 aVU
 bhS
-jIf
+pwZ
 qIb
 oxC
 oxC
