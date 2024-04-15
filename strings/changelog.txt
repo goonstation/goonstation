@@ -1,4 +1,7 @@
 
+(t)sun apr 14 24
+(u)Sord
+(+)Added a new small variant of the operating table. Use a wrench on an operating table to switch it between the small or large version.
 (t)sat apr 13 24
 (u)Mordent
 (p)18426
