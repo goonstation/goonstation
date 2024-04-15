@@ -64,6 +64,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	icon_tag = "st"
 	quick_deploy_fuel = 2
 	associated_turret = /obj/deployable_turret/syndicate
+	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy. Alternatively, throw it at location to auto-deploy it, fully activated, in the direction thrown.")
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -85,6 +86,7 @@ TYPEINFO(/obj/item/turret_deployer/riot)
 	icon_tag = "nt"
 	is_syndicate = 1
 	associated_turret = /obj/deployable_turret/riot
+	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy.")
 
 /obj/item/turret_deployer/outpost
 	name = "Perimeter Turret Deployer"
@@ -460,6 +462,19 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		animate(transform = matrix(transform_original, ang/3, MATRIX_ROTATE | MATRIX_MODIFY), time = 10/3, loop = 0) // needs to do in multiple steps because byond takes shortcuts
 		animate(transform = matrix(transform_original, ang/3, MATRIX_ROTATE | MATRIX_MODIFY), time = 10/3, loop = 0) // :argh:
 
+	get_help_message(dist, mob/user)
+		if (!src.deconstructable || !src.can_toggle_activation)
+			return
+		. = {"Activation/maintenance:
+		1. Use a <b>welding tool</b> to secure it.
+		2. Use a <b>screwdriver</b> to turn it on.
+		3. (Optional) Click it with a <b>wrench</b> and then click a location to rotate the turret in that direction.
+		4. (Optional) While it's on, use a <b>welding tool</b> to repair any damage.
+
+		Disassembly:
+		1. Use a <b>screwdriver</b> to turn it off.
+		2. Use a <b>welding tool</b> to unsecure it.
+		3. Use a <b>wrench</b> to disassemble it."}
 
 /obj/deployable_turret/syndicate
 	name = "NAS-T"

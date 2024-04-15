@@ -217,7 +217,7 @@
 
 	var/body = "<ol><center>ADMIN PM</center><br><br>"
 
-	var/admin_pm = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+	var/admin_pm = trimtext(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
 	var/pm_in_browser = "<center>Click on my name to respond.</center><br><br>"
 
@@ -1232,7 +1232,7 @@
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	target = trim(lowertext(target))
+	target = trimtext(lowertext(target))
 	if (!target) return 0
 
 	var/list/msg = list()
@@ -2484,7 +2484,7 @@ var/global/night_mode_enabled = 0
 
 /client/proc/admin_toggle_lighting() //shameless copied from the ghost one
 	set name = "Toggle Lighting"
-	set desc = "Turns the scary darkness off"
+	set desc = "Toggle lighting on or off for yourself only."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	ADMIN_ONLY
 	SHOW_VERB_DESC

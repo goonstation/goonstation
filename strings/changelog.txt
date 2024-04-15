@@ -1,4 +1,161 @@
 
+(t)sun apr 14 24
+(u)Glamurio (Ryou)
+(p)18491
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(+)Adds two new negative traits to character creation.
+(u)Sord
+(+)Added a new small variant of the operating computer. Use a wrench on an operating computer to switch it between the small or large version.
+(t)sat apr 13 24
+(u)Mordent
+(p)18426
+(e)📄|A-UI
+(+)Wizard Spellbook UX improved updated to make spells easier to find.
+(u)Chatausours
+(p)18294
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)Captains now recieve a mindshield implant.
+(u)glowbold
+(p)18486
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)SecHUD users can see a person's SecHUD Flag regardless of criminal status.
+(u)mloccy
+(p)18208
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Adding some animations to the rockbox on damage, and made it so when its broken it cannot be used.
+(t)fri apr 12 24
+(u)ZeWaka
+(p)18142
+(e)🆕🔧⚙|C-Feature, A-Tooling, A-Internal
+(*)The server now runs BYOND 515. Now featuring a 60% lag reduction in some areas!
+(*)It's recommended to update your client as well, but it's not required currently.
+(u)LeahTheTech
+(*)Removed the shuttle auto-call on classic gangs mode.
+(t)wed apr 10 24
+(u)Valtsu0
+(p)18454
+(e)💅📄🔬|C-QoL, A-UI, A-Science
+(+)You can now cross off items in the artifact analysis form by double clicking.
+(u)LeahTheTech
+(+)Vampiric thralls can now stray 20 tiles from their vampire, up from 15.
+(t)tue apr 09 24
+(u)ZeWaka
+(e)🪲⚖🔄|C-Bug, C-Balance, C-Rework
+(*)Space is now properly irradiated during radstorm blowouts.
+(u)LeahTheTech
+(p)18450
+(e)🆕🔊|C-Feature, C-Sound
+(*)Pod component switches now have a satisfyingly clunky switch sound.
+(u)LeahTheTech
+(*)Smashing people into walls and windows now does more stamina damage and disorients for longer.
+(u)Retrino
+(p)18328
+(e)🎨|C-Sprites
+(+)Adds a few more bang styles, and a new split option for certain hairstyles. Base hairs by Walp, Thrush n me 👍
+(t)mon apr 08 24
+(u)Amylizzle
+(p)18442
+(e)🪲💨|C-Bug, A-Atmospherics
+(+)CO2 will now heat up much less from neutrons.
+(u)tarmunora
+(+)For parity with constructed cyborgs, wraith decay power no longer emags cyborg frames.
+(u)MetaReferencer
+(p)18373
+(e)🆕🔨🤖|C-Feature, A-Player-Actions, A-Silicons
+(+)Borgs can click-drag themselves onto weight machines (for no benefit).
+(t)sun apr 07 24
+(u)TDHooligan
+(p)18429
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Gangs can no longer sell slamguns/zip guns. Go do some *REAL* crime instead of welding pipes together.
+(u)LeahTheTech
+(p)18425
+(e)🆕🎨|C-Feature, C-Sprites
+(*)Cutting open mail with a knife now leaves behind the torn package as evidence.
+(u)LeahTheTech
+(+)Stun batons now turn themselves off when they no longer have enough charge to stun. Now if they look on then you know they can stun.
+(+)The vortexes event now spawns less vortices.
+(t)sat apr 06 24
+(u)glowbold
+(p)18267
+(e)🪲📄📦|C-Bug, A-UI, A-Game-Objects
+(*)Playerdorfs may once again vie for the souls of the living.
+(u)IPingu
+(p)18136
+(e)📄|A-UI
+(+)Adds Icons to spells in the wizard spellbook
+(u)LeahTheTech
+(+)Sleeper agents now have a more reasonably completable number of objectives.
+(p)18329
+(e)⚖🐣|C-Balance, A-Respawning
+(*)Security Officer is now a limited high priority role, meaning the game will attempt to ensure there are a minimum number of them in each shift. Having the role disabled will still prevent you from rolling it.
+(u)TDHooligan
+(p)18382
+(e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
+(+)Gang crates now take 10 seconds to un-anchor. Gang members can see where they'll spawn 5 minutes early.
+(+)Gang crates will no longer unceremoniously swallow and capture people when they spawn.
+(t)fri apr 05 24
+(u)glowbold
+(p)18372
+(e)🆕🌠|C-Feature, A-Events
+(+)NanoTrasen randomly screens trinkets for contraband.
+(u)LeahTheTech
+(p)18406
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)The ship alert button now closes all bridge and AI shutters and activates all turret controls.
+(+)The ship alert button now has a 5 minute cooldown and can't be revoked for 30 seconds after activating.
+(*)Radiation storms are now less common on the RP servers.
+(+)Cocktail shakers can now fit in chemical heaters.
+(t)thu apr 04 24
+(u)NibChocolateeny
+(p)18221
+(e)🆕🌱|C-Feature, A-Hydroponics
+(+)Killer tomatoes contain "Blood" as one of their associated reagents.
+(u)CalliopeSoups
+(p)18140
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Hats and wigs now fit snugly onto mechcomp cabinets and frames. This changes the backend for placing hats on things like ghostdrones, report any bugs if found.
+(u)TDHooligan
+(p)18370
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)One particularly aspirational gang has flooded the whole cannabis market. Gangs can now only get the 10 point bonus for the first 200 leaves.
+(u)TDHooligan
+(p)18369
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(+)Gang weapons no longer stun as hard. They kill harder. So kill each other harder, gangs.
+(t)mon apr 01 24
+(u)glowbold
+(p)18239
+(e)🆕💊💡|C-Feature, A-Medical, A-Station-Systems
+(+)Cloner Defects are now stored in patients' medical records. Make sure to scan with a health or genetic analyzer after cloning to keep the record updated.
+(t)sun mar 31 24
+(u)444explorer
+(p)18368
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Syndicate Shotglasses now properly force people to drink half their reagents when they get hit by them
+(t)fri mar 29 24
+(u)glowbold
+(p)18226
+(e)💅💊💡|C-QoL, A-Medical, A-Station-Systems
+(*)Medical records now list relevant traits as major/minor disabilities instead of a full list.
+(u)IPingu
+(p)18200
+(e)⚖|C-Balance
+(+)Lowers the bathroom robot's buying prices.
+(t)thu mar 28 24
+(u)glowbold
+(p)18336
+(e)⛔💡|C-Removal, A-Station-Systems
+(+)NanoTrasen no longer has a direct line of contact with the CDC.
+(u)TDHooligan
+(p)18310
+(e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
+(*)Gang firearms have been tweaked. Please feedback in the discord or forum.
+(+)Lo-Point now has a sensible firerate & has 2 fewer rounds.
+(+)Burst laser does 3 more damage/laser.
+(+)Webley Revolver now does stamina damage & has a weaker AP effect.
+(+)Striker-7 does stamina damage, damage now falls off later, but a lot faster.
+(+)The SMGs remain unchanged (They already have a lot of raw damage)
 (t)wed mar 27 24
 (u)Avanth
 (p)18326

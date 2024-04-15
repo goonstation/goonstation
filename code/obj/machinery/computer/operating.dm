@@ -15,6 +15,22 @@
 	var/list/victim_data[][] = list()
 	var/const/history_max = 25
 
+	attackby(obj/item/W, mob/user)
+		. = ..()
+		if (iswrenchingtool(W) && src.circuit_type)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer/operating/proc/change_shape,\
+			list(W, user), W.icon, W.icon_state, "[user] changes the shape of the [src].", null)
+		else
+			src.Attackhand(user)
+
+	get_help_message(dist, mob/user)
+		. = "You can use a <b>screwdriver</b> to unscrew the screen"
+		if (src.can_reconnect)
+			. += ",\nor a <b>multitool</b> to re-scan for equipment. <br> You may also use a <b>wrench</b> to reconfigure the [src] visually."
+		else
+			. += "."
+
 /obj/machinery/computer/operating/New()
 	..()
 	SPAWN(0.5 SECONDS)
@@ -302,3 +318,14 @@
 		"implant_count" = implant_count,
 		"has_chest_object" = has_chest_object,
 	)
+
+/obj/machinery/computer/operating/small
+	density = 0
+	icon_state = "operating-small"
+
+/obj/machinery/computer/operating/proc/change_shape(src)
+	if (density)
+		icon_state = "operating-small"
+	else
+		icon_state = "operating"
+	density = !density

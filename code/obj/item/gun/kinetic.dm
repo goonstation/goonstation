@@ -790,7 +790,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/tranq_darts
 	fire_animation = TRUE
-	recoil_strength = 10
+	recoil_strength = 4
 
 	New()
 		ammo = new default_magazine
@@ -914,9 +914,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_recoil_cap = 15
 	get_desc(dist, mob/user)
 		if (user.get_gang() != null)
-			. += "For when you need MOR' DAKKA. Uses 9mm NATO rounds."
+			. += "For when you need MOR' DAKKA. Uses 9mm Surplus rounds."
 		else
-			. += "Its firemodes are labelled 'DAKKA' and 'MOR'... Uses 9mm NATO rounds."
+			. += "Its firemodes are labelled 'DAKKA' and 'MOR'... Uses 9mm Surplus rounds."
 
 	New()
 		ammo = new default_magazine
@@ -1275,13 +1275,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	name = "Lo-Point"
 	icon_state = "hipoint"
 	item_state = "hipoint"
-	shoot_delay = 1
+	shoot_delay = 4
 	spread_angle = 3
 	throwforce = 14 // literally throw it away
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
 	fire_animation = TRUE
-	max_ammo_capacity = 12
+	max_ammo_capacity = 10
 	auto_eject = TRUE
 	has_empty_state = TRUE
 	gildable = FALSE
@@ -1446,7 +1446,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	var/pulled = FALSE
 	add_residue = FALSE
-	recoil_strength = 4
+	recoil_enabled = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -1499,7 +1499,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	inventory_counter_enabled = FALSE
 	allowReverseReload = FALSE
 	var/power_requirement = 100 //! The amount of power deducted from a borg's cell when they fire this.
-	recoil_strength = 4
 
 	New()
 		. = ..()
@@ -1547,7 +1546,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	add_residue = FALSE
-	recoil_strength = 6
+	recoil_enabled = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -1572,7 +1571,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	add_residue = FALSE
-	recoil_strength = 7
+	recoil_strength = 3
 
 	New()
 		ammo = new default_magazine
@@ -2093,6 +2092,40 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/rod)
 		..()
+
+/obj/item/gun/kinetic/four_bore_albatross
+	name = "\improper Albatross four-bore rifle"
+	desc = "A behemoth of a scoped rifle developed by Cormorant Precision Arms. Intended for suppression or elimination of monstrous targets."
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	icon_state = "four_bore"
+	item_state = "four_bore"
+	w_class = W_CLASS_BULKY
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
+	slowdown = 10
+	slowdown_time = 8
+	force = MELEE_DMG_RIFLE
+	two_handed = TRUE
+	can_dual_wield = FALSE
+	contraband = 7
+	ammo_cats = list(AMMO_FOUR_BORE)
+	spread_angle = 2
+	shoot_delay = 0.8 SECONDS
+	max_ammo_capacity = 2
+	default_magazine = /obj/item/ammo/bullets/four_bore/stun/two
+	fire_animation = FALSE
+	recoil_strength = 20
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/four_bore_stunners)
+		AddComponent(/datum/component/holdertargeting/sniper_scope, 12, 512, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
+		..()
+
+	setupProperties()
+		..()
+		setProperty("carried_movespeed", 0.6)
 
 //1.57
 /obj/item/gun/kinetic/riot40mm

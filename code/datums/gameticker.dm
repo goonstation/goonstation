@@ -1,6 +1,7 @@
 var/global/datum/controller/gameticker/ticker
 var/global/current_state = GAME_STATE_INVALID
 
+#define LATEJOIN_FULL_WAGE_GRACE_PERIOD 9 MINUTES
 /datum/controller/gameticker
 	var/hide_mode = TRUE
 	var/datum/game_mode/mode = null
@@ -452,7 +453,6 @@ var/global/current_state = GAME_STATE_INVALID
 
 		emergency_shuttle.process()
 
-		#if DM_VERSION >= 514
 		if (useTimeDilation)//TIME_DILATION_ENABLED set this
 			if (world.time > last_try_dilate + TICKLAG_DILATE_INTERVAL) //interval separate from the process loop. maybe consider moving this for cleanup later (its own process loop with diff. interval?)
 				last_try_dilate = world.time
@@ -478,7 +478,6 @@ var/global/current_state = GAME_STATE_INVALID
 				if (world.tick_lag != dilated_tick_lag)
 					world.tick_lag = dilated_tick_lag
 					highMapCpuCount = 0
-		#endif
 
 		// Minds are sometimes kicked out of the global list, hence the fallback (Convair880).
 		if (src.last_readd_lost_minds_to_ticker && world.time > src.last_readd_lost_minds_to_ticker + 1800)
@@ -702,7 +701,8 @@ var/global/current_state = GAME_STATE_INVALID
 	// DO THE PERSISTENT_BANK STUFF
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] processing spacebux updates")
 
-	var/time = world.time
+	// Sample world time to calculate wage loss for latejoiners later
+	var/game_end_time = world.time
 
 	logTheThing(LOG_DEBUG, null, "Revving up the spacebux loop...")
 
@@ -717,8 +717,10 @@ var/global/current_state = GAME_STATE_INVALID
 
 			//get base wage + initial earnings calculation
 			var/job_wage = 100
-			if (player.mind.assigned_role in wagesystem.jobs)
-				job_wage = wagesystem.jobs[player.mind.assigned_role]
+			if (player.mind.assigned_role != null && istext(player.mind.assigned_role))
+				var/datum/job/J = find_job_in_controller_by_string(player.mind.assigned_role)
+				if (istype(J))
+					job_wage = J.wages
 
 			var/job_wage_converted = 100
 			switch(job_wage)
@@ -747,8 +749,9 @@ var/global/current_state = GAME_STATE_INVALID
 				job_wage = PAY_IMPORTANT
 
 			//if part-time, reduce wage
-			if (player.mind.join_time > 5400) //grace period of 9 mins after roundstart to be a full-time employee
-				job_wage = (time - player.mind.join_time) / time * job_wage
+			if (player.mind.join_time > LATEJOIN_FULL_WAGE_GRACE_PERIOD) //grace period of 9 mins after roundstart to be a full-time employee
+				var/lossRatio = ((game_end_time - player.mind.join_time) / game_end_time)
+				job_wage = job_wage * lossRatio
 				bank_earnings.part_time = 1
 
 			var/earnings = final_score/100 * job_wage * 2 //TODO ECNONMY_REBALANCE: remove the *2
@@ -910,3 +913,5 @@ var/global/current_state = GAME_STATE_INVALID
 	if (!src.creds)
 		src.creds = new /datum/crewCredits
 	return src.creds
+
+#undef LATEJOIN_FULL_WAGE_GRACE_PERIOD

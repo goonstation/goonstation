@@ -51023,7 +51023,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "tyD" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
