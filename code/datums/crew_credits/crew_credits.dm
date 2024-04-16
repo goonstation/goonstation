@@ -526,12 +526,12 @@
 			for(var/datum/ticket/ticket in data_core.tickets)
 				if(ticket.target == ticket_target)
 					tickets += list(list(
-						"reason" = ticket.reason,
-						"issuer" = ticket.issuer,
-						"issuer_job" = ticket.issuer_job,
+						"reason" = html_decode(ticket.reason),
+						"issuer" = html_decode(ticket.issuer),
+						"issuer_job" = html_decode(ticket.issuer_job),
 					))
 			src.citation_tab_data[CITATION_TAB_SECTION_TICKETS] += list(list(
-				"name" = ticket_target,
+				"name" = html_decode(ticket_target),
 				"citations" = tickets,
 			))
 
