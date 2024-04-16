@@ -331,7 +331,10 @@ export const Manufacturer = (_, context) => {
     return blueprintList[queueData.category].find((key) => (key.name === queueData.name));
   };
   // used to combine the static and dynamic elements of the blueprintdata lists
-  let combineBlueprintLists = (list1:Record<string, Manufacturable[]>, list2:Record<string, Manufacturable[]>) => {
+  let combineBlueprintListElements = (
+    list1:Record<string, Manufacturable[]>,
+    list2:Record<string, Manufacturable[]>) =>
+  {
     let output:Record<string, Manufacturable[]> = list1;
     let keys = Object.keys(list1);
     for (let category of data.all_categories) {
@@ -346,10 +349,10 @@ export const Manufacturer = (_, context) => {
     return output;
   };
   let usable_blueprints = [
-    combineBlueprintLists(data.available_blueprints, data.static_available_blueprints),
-    combineBlueprintLists(data.downloaded_blueprints, data.static_downloaded_blueprints),
-    combineBlueprintLists(data.drive_recipe_blueprints, data.static_drive_recipe_blueprints),
-    (data.hacked ? combineBlueprintLists(data.hidden_blueprints, data.static_hidden_blueprints) : []),
+    combineBlueprintListElements(data.available_blueprints, data.static_available_blueprints),
+    combineBlueprintListElements(data.downloaded_blueprints, data.static_downloaded_blueprints),
+    combineBlueprintListElements(data.drive_recipe_blueprints, data.static_drive_recipe_blueprints),
+    (data.hacked ? combineBlueprintListElements(data.hidden_blueprints, data.static_hidden_blueprints) : []),
   ];
 
   return (

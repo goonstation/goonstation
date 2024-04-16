@@ -6,6 +6,7 @@
 #define MAX_SPEED 3
 #define MAX_SPEED_HACKED 5
 #define IS_NOT_OPERATIONAL (src.status & BROKEN || src.status & NOPOWER)
+#define ALL_BLUEPRINTS (src.available + src.download + src.hidden + src.drive_recipes)
 TYPEINFO(/obj/machinery/manufacturer)
 	mats = 20
 
@@ -65,6 +66,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/list/resource_amounts = list()
 	var/list/materials_in_use = list()
 	var/list/stored_materials_by_id = list()
+	var/materials_loaded_changed = TRUE //! true by default so that we update this information the first time someone opens this window
+	var/list/cached_manufacturables_by_name = list() //! List which stores the material requirement information of all blueprints associated by ID
 
 	// Production options
 	var/search = null
@@ -292,6 +295,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			ui.open()
 
 	ui_data(mob/user)
+		// We do this here to save a bit of computer power is someone is loading like 500 steel bars without the UI open or just rapidly in general
+		if (src.materials_loaded_changed)
+			for (var/datum/manufacture/M as anything in ALL_BLUEPRINTS)
+				src.cached_manufacturables_by_name[M.name] = src.check_enough_materials(M)
+			src.materials_loaded_changed = FALSE
 		// Send material data as tuples of material name, material id, material amount
 		var/resource_data = list()
 		for (var/obj/item/material_piece/P as anything in src.storage.get_contents())
@@ -434,8 +442,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 				"byondRef" = "\ref[M]",
 			)
 		else
+			// currently just one variable for non-static, but for good reason
 			return list(
-				"can_fabricate" = !isnull(src.check_enough_materials(M)),
+				"can_fabricate" = !isnull(src.cached_manufacturables_by_name[M.name]),
 			)
 
 	attack_hand(mob/user)
@@ -1484,9 +1493,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.add_schematic(X,"hidden")
 				src.hidden -= X
 
-	/// returns whether or not the materials that have been loaded into the fabricator changed since the last time this proc was called
-	proc/materials_loaded_changed()
-
 	proc/match_material_pattern(pattern, datum/material/mat)
 		if (!mat) // Marq fix for various cannot read null. runtimes
 			return FALSE
@@ -1584,6 +1590,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		return mats_used
 
+	/// Check if a blueprint can be manufactured with the current materials. tries to get a stored result if the materials in the fabricator
+	/// have not changed since the last call.
 	proc/check_enough_materials(datum/manufacture/M)
 		var/list/mats_used = get_materials_needed(M)
 		if (length(mats_used) == M.item_paths.len) // we have enough materials, so return the materials list, else return null
@@ -1601,6 +1609,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if (P.material && P.material.getID() == mat_id)
 						P.change_stack_amount(-amount)
 						break
+		src.materials_loaded_changed = TRUE
 
 	proc/begin_work(new_production = TRUE)
 		if (status & NOPOWER || status & BROKEN)
@@ -1785,6 +1794,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.storage.transfer_stored_item(X, src.loc)
 				X.throw_at(pick(src.nearby_turfs), 16, 3)
 				to_throw--
+			src.materials_loaded_changed = TRUE
 		if (length(src.queue) > 1 && prob(20))
 			var/list_counter = 0
 			for (var/datum/manufacture/X in src.queue)
@@ -1999,6 +2009,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		src.update_resource_amount(P.material.getID(), P.amount * 10, P.material)
 		P.set_loc(src)
+		src.materials_loaded_changed = TRUE
 
 	proc/take_damage(damage_amount = 0)
 		if (!damage_amount)
@@ -2059,6 +2070,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			free_resource_amt = 0
 		else
 			logTheThing(LOG_DEBUG, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
+
+		src.materials_loaded_changed = TRUE
 
 	proc/get_output_location(atom/A)
 		if (!src.output_target)
