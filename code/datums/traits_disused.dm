@@ -138,6 +138,7 @@
 	points = -1
 	unselectable = 1
 
+/*
 /datum/trait/badgenes
 	name = "Bad Genes"
 	desc = "You spawn with 2 random, permanent, bad mutations."
@@ -187,3 +188,4 @@
 
 			SPAWN(4 SECONDS) owner.add_memory(str) //FUCK THIS SPAWN FUCK FUUUCK
 		return
+*/
