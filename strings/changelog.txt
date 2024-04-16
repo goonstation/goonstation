@@ -1,5 +1,9 @@
 
 (t)tue apr 16 24
+(u)Caio029
+(p)18521
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)Due to a recent re-design of airlock circuitry, airlocks with a cut ID wire will not respond to any bumps, but pressing it will open or close it unconditionally.
 (u)LeahTheTech
 (*)Lasers now substantially heat up whatever they hit.
 (+)Lasers now collide with opaque windows.
