@@ -29481,6 +29481,11 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
+"opU" = (
+/obj/warp_beacon/security,
+/obj/lattice,
+/turf/space,
+/area/space)
 "opV" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33544,6 +33549,13 @@
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red/side,
 /area/station/security/main)
+"rxn" = (
+/obj/machinery/light/runway_light/delay3,
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
 "ryc" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -39553,8 +39565,8 @@
 "wkM" = (
 /obj/machinery/light/runway_light/delay3,
 /obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
+	dir = 1;
+	icon_state = "lattice-dir-b"
 	},
 /turf/space,
 /area/space)
@@ -39871,8 +39883,11 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/escape)
 "wAk" = (
-/obj/lattice,
-/obj/warp_beacon/security,
+/obj/machinery/light/runway_light/delay3,
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
 /turf/space,
 /area/space)
 "wAI" = (
@@ -80365,7 +80380,7 @@ bpe
 bDq
 aaa
 aaa
-wkM
+bKq
 bHI
 agJ
 akG
@@ -80620,10 +80635,10 @@ uTJ
 ghp
 bpe
 bCl
-bvT
 agJ
+bvT
+bJQ
 wAk
-bsz
 aaa
 aaa
 aaa
@@ -80879,8 +80894,8 @@ bpe
 bDq
 aaa
 aaa
-uYT
 aaa
+dhY
 aaa
 aaa
 aaa
@@ -81137,7 +81152,7 @@ bzA
 aaa
 aaa
 aaa
-aaa
+ukN
 aaa
 aaa
 aaa
@@ -81394,7 +81409,7 @@ bFA
 laq
 aaa
 aaa
-aaa
+dhY
 aaa
 aaa
 aaa
@@ -81650,9 +81665,9 @@ agl
 iZn
 laq
 aaa
-aaa
-aaa
-aaa
+rxn
+opU
+wkM
 aaa
 aaa
 aaa
@@ -81908,7 +81923,7 @@ iZn
 laq
 aaa
 aaa
-aaa
+uYT
 aaa
 aaa
 aaa
