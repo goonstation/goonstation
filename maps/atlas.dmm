@@ -2402,19 +2402,9 @@
 /area/station/chapel/sanctuary)
 "aiB" = (
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "2-8"
 	},
-/obj/machinery/disposal/small{
-	dir = 1;
-	pixel_y = 32
-	},
-/obj/disposalpipe/trunk{
-	dir = 4;
-	name = "factory pipe"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
+/obj/storage/secure/closet/kitchen,
 /turf/simulated/floor/white/corner{
 	dir = 8
 	},
@@ -15132,6 +15122,9 @@
 /obj/disposalpipe/junction/left/south{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "bdZ" = (
@@ -15374,6 +15367,10 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
+"bXo" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/cafeteria)
 "bZQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15934,12 +15931,6 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/north)
-"eje" = (
-/obj/submachine/chef_oven,
-/turf/simulated/floor/white/side{
-	dir = 8
-	},
-/area/station/crew_quarters/kitchen)
 "ekl" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -16017,6 +16008,11 @@
 /obj/noticeboard/persistent{
 	name = "Kitchen persistent notice board";
 	persistent_id = "kitchen"
+	},
+/obj/item/storage/wall{
+	dir = 4;
+	pixel_y = -1;
+	pixel_x = -32
 	},
 /turf/simulated/floor/white/corner,
 /area/station/crew_quarters/kitchen)
@@ -16528,21 +16524,6 @@
 /obj/table/auto,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
-"gNM" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/alt{
-	dir = 4;
-	req_access_txt = "25|28";
-	tag = "icon-generic2_closed (EAST)"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "gTj" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -16707,6 +16688,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/disposal/small{
+	dir = 8;
+	pixel_x = 4
+	},
+/obj/disposalpipe/trunk{
+	dir = 8;
+	name = "factory pipe"
+	},
 /turf/simulated/floor/white/side{
 	dir = 8
 	},
@@ -16725,6 +16714,15 @@
 	icon_state = "line1"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "kitchen_shutter";
+	layer = 4;
+	name = "Kitchen Shutter";
+	icon_state = "pdoor0";
+	panel_open = 1;
+	density = 0;
+	opacity = 0
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "hyW" = (
@@ -17781,6 +17779,9 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "mvz" = (
@@ -17926,23 +17927,19 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "mWz" = (
-/obj/storage/secure/closet/kitchen,
-/obj/submachine/chef_sink/chem_sink{
-	dir = 4;
-	pixel_x = -4
-	},
+/obj/storage/secure/closet/fridge/kitchen,
 /turf/simulated/floor/white/corner{
 	dir = 4
 	},
 /area/station/crew_quarters/kitchen)
 "mWA" = (
 /obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
 	icon_state = "1-4"
 	},
-/obj/disposalpipe/junction/right/east,
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "mYT" = (
@@ -18058,10 +18055,6 @@
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "nxa" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
-	pixel_x = 4
-	},
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -19168,8 +19161,8 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "rCX" = (
-/obj/storage/secure/closet/fridge/kitchen,
 /obj/item/device/radio/intercom/catering,
+/obj/submachine/chef_oven,
 /turf/simulated/floor/white/corner{
 	dir = 8
 	},
@@ -19752,7 +19745,10 @@
 "uct" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /obj/machinery/deep_fryer,
 /turf/simulated/floor/white/side,
@@ -20148,6 +20144,9 @@
 /area/station/mining/staff_room)
 "vpu" = (
 /obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/white/side,
 /area/station/crew_quarters/kitchen)
 "vqf" = (
@@ -20209,6 +20208,15 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
+"vyf" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 5
+	},
+/turf/simulated/floor/white/side{
+	dir = 8
+	},
+/area/station/crew_quarters/kitchen)
 "vCI" = (
 /obj/machinery/atmospherics/binary/valve{
 	name = "hot loop bypass valve"
@@ -20763,9 +20771,8 @@
 /area/station/engine/engineering)
 "xOc" = (
 /obj/decal/mule/dropoff,
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+/obj/disposalpipe/junction/right/east{
+	dir = 8
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
@@ -68990,7 +68997,7 @@ lbt
 iET
 adF
 rqr
-hLa
+bXo
 eFp
 hLa
 rEo
@@ -71397,12 +71404,12 @@ afa
 afa
 sQB
 agV
-gNM
+agV
 agV
 rCX
 jcY
-eje
 fps
+vyf
 nxa
 hyA
 wKr
