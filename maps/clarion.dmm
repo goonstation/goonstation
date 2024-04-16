@@ -12282,29 +12282,26 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "biZ" = (
-/obj/machinery/disposal/mail/small{
-	dir = 1;
-	mail_tag = "computer_core";
-	mailgroup = "command";
-	message = "1";
-	name = "mail chute-'Computer Core'";
-	pixel_y = 32
-	},
-/obj/disposalpipe/trunk/mail{
-	dir = 4
-	},
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
 	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/table/reinforced/auto,
+/obj/item/disk/data/tape/master/readonly,
+/obj/item/device/multitool,
+/obj/item/paper/book/from_file/dwainedummies,
+/obj/item/disk/data/tape{
+	layer = 3.5;
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/storage/box/tapebox,
+/obj/item/storage/box/diskbox,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "bja" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -12314,9 +12311,6 @@
 	},
 /area/station/turret_protected/Zeta)
 "bjb" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -12448,20 +12442,16 @@
 	name = "autoname  - SS13";
 	pixel_x = 10
 	},
+/obj/machinery/turretid{
+	pixel_x = 24;
+	req_access_txt = null;
+	turretArea = /area/station/turret_protected/Zeta
+	},
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "bki" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/box/diskbox,
-/obj/item/storage/box/tapebox,
-/obj/item/disk/data/tape/master/readonly,
-/obj/item/disk/data/tape{
-	layer = 3.5;
-	pixel_x = -5;
-	pixel_y = -5
-	},
-/obj/item/paper/book/from_file/dwainedummies,
-/obj/item/device/multitool,
+/obj/machinery/turret,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "bkl" = (
@@ -18334,6 +18324,10 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/item/device/radio/intercom/bridge{
+	broadcasting = 0;
+	dir = 4
+	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "cWk" = (
@@ -21862,15 +21856,6 @@
 /obj/mapping_helper/access,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
-"fPZ" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/east)
 "fRk" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -26019,9 +26004,6 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
-	},
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
@@ -33543,12 +33525,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
-	dir = 2;
-	mail_tag = "computer_core";
-	name = "computer core mail router"
-	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "oBG" = (
@@ -34489,9 +34466,6 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "ppU" = (
@@ -83431,7 +83405,7 @@ aOI
 aOI
 kbe
 aOI
-fPZ
+kbe
 aOI
 aOI
 aOI
