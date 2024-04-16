@@ -54,7 +54,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/repeat = FALSE
 	var/manual_stop = FALSE
 	var/output_cap = 20
-	var/last_queue_op = 0 //! This is an antispam timer to prevent autoclickers from lagging the server
 	var/list/queue = list()
 
 	// Resources/materials
@@ -478,20 +477,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		switch(action)
 			if ("product")
+				if (ON_COOLDOWN(src, "product", 1 SECOND))
+					boutput(usr, SPAN_ALERT("Slow down!"))
+					return
 				var/datum/manufacture/I = locate(params["blueprint_ref"])
 				if (!istype(I,/datum/manufacture/))
 					return
-				if(world.time < last_queue_op + 5) //Anti-spam to prevent people lagging the server with autoclickers
-					return
-				else
-					last_queue_op = world.time
-
 				// Verify that there is no href fuckery abound
 				if(!validate_disp(I))
 					// Since a manufacturer may get unhacked or a downloaded item could get deleted between someone
 					// opening the window and clicking the button we can't assume intent here, so no cluwne
 					return
-
 				if (!check_enough_materials(I))
 					boutput(usr, SPAN_ALERT("Insufficient usable materials to manufacture that item."))
 					playsound(src.loc, src.sound_grump, 50, 1)
@@ -500,7 +496,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				else
 					src.queue += I
 					if (src.mode == "ready")
-						src.begin_work(1)
+						src.begin_work( new_production = TRUE )
 						src.updateUsrDialog()
 
 			if ("material_eject")
@@ -586,7 +582,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if (!check_enough_materials(src.queue[1]))
 						boutput(usr, SPAN_ALERT("Insufficient usable materials to manufacture first item in queue."))
 					else
-						src.begin_work(0)
+						src.begin_work( new_production = FALSE )
 						src.time_started = TIME
 				else if (params["action"] == "pause")
 					src.mode = "halt"
@@ -602,7 +598,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					return
 
 				src.queue -= src.queue[operation]
-				begin_work()//pesky exploits // romayne update: i have no idea what exploit this prevents
+				begin_work( new_production = FALSE )//pesky exploits // romayne update: i have no idea what exploit this prevents
 
 			if ("delete") // remove blueprint from storage
 				if (ON_COOLDOWN(src, "delete", 1 SECOND)) return
@@ -613,7 +609,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (!istype(I,/datum/manufacture/mechanics/))
 					boutput(usr, SPAN_ALERT("Cannot delete this schematic."))
 					return
-				last_queue_op = world.time
 				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
 					src.download -= I
 
@@ -1270,7 +1265,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 				else
 					src.queue += item_bp
-					src.begin_work(1)
+					src.begin_work( new_production = TRUE )
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#APPENDED"))
 
 			if ("clear")
@@ -1303,13 +1298,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#BADOPERATION"))
 					return
 
-				if(TIME < last_queue_op + 5)
+				if(ON_COOLDOWN(src, "remove", 1 SECOND))
 					return
-				else
-					last_queue_op = TIME
 
 				src.queue -= src.queue[operation]
-				begin_work()
+				begin_work( new_production = FALSE )
 				post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#REMOVED"))
 
 			if ("resume")
@@ -1323,7 +1316,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 				else
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#RESUMED"))
-					src.begin_work(0)
+					src.begin_work( new_production = FALSE )
 
 			if ("pause")
 				src.mode = "halt"
@@ -1488,6 +1481,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (ispath(X))
 				src.add_schematic(X,"hidden")
 				src.hidden -= X
+
+	/// returns whether or not the materials that have been loaded into the fabricator changed since the last time this proc was called
+	proc/materials_loaded_changed()
 
 	proc/match_material_pattern(pattern, datum/material/mat)
 		if (!mat) // Marq fix for various cannot read null. runtimes
