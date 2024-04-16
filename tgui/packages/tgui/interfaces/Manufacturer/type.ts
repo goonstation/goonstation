@@ -49,6 +49,7 @@ export type Manufacturable = {
   name:string
 
   material_names:string[];
+  item_paths:string[];
   item_names:string[];
   item_amounts:string[];
   item_descriptions:string[];
@@ -61,7 +62,7 @@ export type Manufacturable = {
   img:string
 
   show_cost:BooleanLike;
-  can_fabricate:BooleanLike;
+  can_fabricate: Record<string, string> | null;
 }
 
 export type Rockbox = {

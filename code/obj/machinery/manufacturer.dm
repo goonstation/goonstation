@@ -295,11 +295,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 			ui.open()
 
 	ui_data(mob/user)
-		// We do this here to save a bit of computer power is someone is loading like 500 steel bars without the UI open or just rapidly in general
+		// We do this here to save a bit of computer power if someone is loading like 500 steel bars without the UI open or just rapidly in general
 		if (src.materials_loaded_changed)
-			for (var/datum/manufacture/M as anything in ALL_BLUEPRINTS)
-				src.cached_manufacturables_by_name[M.name] = src.check_enough_materials(M)
-			src.materials_loaded_changed = FALSE
+			// Also wait a bit if we're spewing items out like metal sheets
+			if (!ON_COOLDOWN(src, "evaluate_material_requirements", 5 SECONDS))
+				for (var/datum/manufacture/M as anything in ALL_BLUEPRINTS)
+					src.cached_manufacturables_by_name[M.name] = src.check_enough_materials(M)
+				src.materials_loaded_changed = FALSE
 		// Send material data as tuples of material name, material id, material amount
 		var/resource_data = list()
 		for (var/obj/item/material_piece/P as anything in src.storage.get_contents())
@@ -431,6 +433,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				"name" = M.name,
 				"category" = M.category,
 				"material_names" = M.item_names,
+				"item_paths" = M.item_paths,
 				"item_names" = generated_names,
 				"item_descriptions" = generated_descriptions,
 				"item_amounts" = M.item_amounts,
@@ -444,7 +447,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			// currently just one variable for non-static, but for good reason
 			return list(
-				"can_fabricate" = !isnull(src.cached_manufacturables_by_name[M.name]),
+				"can_fabricate" = src.cached_manufacturables_by_name[M.name],
 			)
 
 	attack_hand(mob/user)
@@ -1040,7 +1043,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 					playsound(src.loc, src.sound_grump, 50, 1)
 					boutput(usr, SPAN_ALERT("There's not that much material in [name]. It has ejected what it could."))
 					ejectamt = O.amount
-				src.update_resource_amount(mat_id, -ejectamt * 10) // ejectamt will always be <= actual amount
 				if (ejectamt == O.amount)
 					src.storage.transfer_stored_item(O, ejectturf)
 				else
@@ -1590,8 +1592,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		return mats_used
 
-	/// Check if a blueprint can be manufactured with the current materials. tries to get a stored result if the materials in the fabricator
-	/// have not changed since the last call.
+	/// Check if a blueprint can be manufactured with the current materials.
 	proc/check_enough_materials(datum/manufacture/M)
 		var/list/mats_used = get_materials_needed(M)
 		if (length(mats_used) == M.item_paths.len) // we have enough materials, so return the materials list, else return null
@@ -1604,7 +1605,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			var/mat_id = src.materials_in_use[pattern]
 			if (mat_id)
 				var/amount = M.item_amounts[i]/10
-				src.update_resource_amount(mat_id, -amount)
 				for (var/obj/item/material_piece/P as anything in src.storage.get_contents())
 					if (P.material && P.material.getID() == mat_id)
 						P.change_stack_amount(-amount)
@@ -1990,6 +1990,18 @@ TYPEINFO(/obj/machinery/manufacturer)
 			manudrive.set_loc(src.loc)
 		src.manudrive = null
 
+	/// Loads some amount of a material datum, specifically from processors currently, and creates a new material piece if needed
+	proc/load_material(var/datum/material/M, var/amount)
+		var/mat_id = M.getID()
+		for (var/obj/item/material_piece/P as anything in src.storage.get_contents())
+			if (P.material && P.material.getID() == mat_id)
+				P.change_stack_amount(amount)
+				return
+		// New material, who dis
+		var/obj/item/material_piece/P = new getProcessedMaterialForm(M)
+		P.amount = amount
+		src.storage.add_contents(P, visible = FALSE)
+
 	/// Loads a material piece from some user into the machine, stacking it if we have that type of material in the machine already.
 	proc/load_item(obj/item/O, mob/living/user)
 		if (!istype(O, src.base_material_class) && O.material)
@@ -2003,11 +2015,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for(var/obj/item/material_piece/M as anything in src.storage.get_contents())
 			if (M.material.isSameMaterial(P.material))
 				M.change_stack_amount(P.amount)
-				src.update_resource_amount(M.material.getID(), P.amount * 10, M.material)
 				qdel(P)
 				return
 
-		src.update_resource_amount(P.material.getID(), P.amount * 10, P.material)
 		P.set_loc(src)
 		src.materials_loaded_changed = TRUE
 
@@ -2038,17 +2048,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		src.build_icon()
 
-	proc/update_resource_amount(mat_id, amt, datum/material/mat_added=null)
-		src.resource_amounts[mat_id] = max(src.resource_amounts[mat_id] + amt, 0)
-		if (src.resource_amounts[mat_id] == 0)
-			stored_materials_by_id -= mat_id
-		else if (mat_added && !(mat_id in stored_materials_by_id))
-			stored_materials_by_id[mat_id] = mat_added
-
 	proc/get_our_material(mat_id)
-		if (mat_id in src.stored_materials_by_id)
-			return src.stored_materials_by_id[mat_id]
-		return getMaterial(mat_id)
+		for (var/obj/item/material_piece/M as anything in src.storage.get_contents())
+			if (M.material && M.material.getID() == mat_id)
+				return M.material
 
 	proc/claim_free_resources()
 
@@ -2066,7 +2069,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.storage.add_contents(P)
 					if (free_resource_amt > 1)
 						P.change_stack_amount(free_resource_amt - P.amount)
-					src.update_resource_amount(P.material.getID(), free_resource_amt * 10)
 			free_resource_amt = 0
 		else
 			logTheThing(LOG_DEBUG, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")

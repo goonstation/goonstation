@@ -74,7 +74,7 @@ TYPEINFO(/obj/machinery/processor)
 
 				if (istype(output_location, /obj/machinery/manufacturer))
 					var/obj/machinery/manufacturer/M = output_location
-					M.update_resource_amount(mat_id, out_amount * 10, mat)
+					M.load_material(mat, out_amount)
 
 				//If the input was a cable coil, output the conductor too
 				if (second_mat)
@@ -100,7 +100,7 @@ TYPEINFO(/obj/machinery/processor)
 
 					if (istype(output_location, /obj/machinery/manufacturer))
 						var/obj/machinery/manufacturer/M = output_location
-						M.update_resource_amount(second_mat_id, out_amount * 10, second_mat)
+						M.load_material(mat, out_amount)
 
 			//Delete items in processor and output leftovers
 			var/leftovers = (totalAmount/div_factor-out_amount)*div_factor

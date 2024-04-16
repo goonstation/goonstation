@@ -335,6 +335,9 @@ export const Manufacturer = (_, context) => {
     list1:Record<string, Manufacturable[]>,
     list2:Record<string, Manufacturable[]>) =>
   {
+    if (list1 === null || list2 === null) {
+      return null;
+    }
     let output:Record<string, Manufacturable[]> = list1;
     let keys = Object.keys(list1);
     for (let category of data.all_categories) {
