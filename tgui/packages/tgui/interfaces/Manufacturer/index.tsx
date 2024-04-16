@@ -403,7 +403,7 @@ export const Manufacturer = (_, context) => {
                         label={toTitleCase(resourceData.name)}
                         textAlign="center"
                       >
-                        {resourceData.amount / 10}
+                        {resourceData.amount}
                       </LabeledList.Item>
                     ))}
                   </LabeledList>

@@ -294,8 +294,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 	ui_data(mob/user)
 		// Send material data as tuples of material name, material id, material amount
 		var/resource_data = list()
-		for (var/mat_id in resource_amounts)
-			resource_data += list(list("name"="[src.get_our_material(mat_id)]", "id"=mat_id, "amount"=resource_amounts[mat_id]))
+		for (var/obj/item/material_piece/P as anything in src.storage.get_contents())
+			if (!P.material)
+				continue
+			resource_data += list(list("name" = P.material.getName(), "amount" = P.amount, "id" = P.material.getID()))
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
 		for (var/datum/manufacture/M in src.queue)
@@ -1593,15 +1595,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			var/pattern = M.item_paths[i]
 			var/mat_id = src.materials_in_use[pattern]
 			if (mat_id)
-				var/amount = M.item_amounts[i]
+				var/amount = M.item_amounts[i]/10
 				src.update_resource_amount(mat_id, -amount)
 				for (var/obj/item/material_piece/P as anything in src.storage.get_contents())
 					if (P.material && P.material.getID() == mat_id)
-						var/target_amount = round(src.resource_amounts[mat_id] / 10)
-						if (!target_amount)
-							qdel(P)
-						else if (P.amount != target_amount)
-							P.change_stack_amount(-(P.amount - target_amount))
+						P.change_stack_amount(-amount)
 						break
 
 	proc/begin_work(new_production = TRUE)
