@@ -909,6 +909,8 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	///How much speed boost this switch is getting
 	VAR_PROTECTED/speedup = 0
 
+	HELP_MESSAGE_OVERRIDE("Click to cycle between forward, stop, and reverse.<br>Click-drag right or left to set the direction forward or reverse.")
+
 	New()
 		. = ..()
 		UnsubscribeProcess()
