@@ -1,5 +1,9 @@
 
 (t)tue apr 16 24
+(u)LeahTheTech
+(p)18505
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)The PTL formulae have been rescaled to make it more profitable and dangerous at lower power levels
 (u)Ikea
 (p)18085
 (e)🆕🎨📡🤖|C-Feature, C-Sprites, A-AI, A-Silicons
