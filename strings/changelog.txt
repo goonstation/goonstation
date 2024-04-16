@@ -1,4 +1,9 @@
 
+(t)tue apr 16 24
+(u)Ikea
+(p)18085
+(e)🆕🎨📡🤖|C-Feature, C-Sprites, A-AI, A-Silicons
+(*)Eyebots now come with a portable intercom.
 (t)sun apr 14 24
 (u)Glamurio (Ryou)
 (p)18491
