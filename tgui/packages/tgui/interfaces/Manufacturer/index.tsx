@@ -13,7 +13,7 @@ import { ButtonWithBadge } from '../../components/goonstation/ButtonWithBadge';
 import { truncate } from '../../format';
 import { formatMoney } from '../../format';
 import { MaintenencePanel, Manufacturable, ManufacturerData, Ore, QueueBlueprint, Resource, Rockbox, WireData } from './type';
-import { round } from 'common/math';
+import { clamp, round } from 'common/math';
 import { CenteredText } from '../../components/goonstation/CenteredText';
 
 const getBlueprintTime = (time, manufacturerSpeed) => {
@@ -57,7 +57,7 @@ const ProductionCard = (params, context) => {
               </Stack.Item>
               <Stack.Item>
                 <ProgressBar
-                  value={progress_pct}
+                  value={clamp(progress_pct, 0, 1)}
                   minValue={0}
                   maxValue={1}
                   position="relative"
@@ -237,6 +237,7 @@ const BlueprintButton = (props, context) => {
           width={16.25}
           height={5.5}
           image_path={blueprintData.img}
+          disabled={!blueprintData.can_fabricate}
           onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
         >
           <CenteredText text={truncate(blueprintData.name, 40)} height={5.5} />
@@ -255,6 +256,7 @@ const BlueprintButton = (props, context) => {
                 mb={0.5}
                 pt={0.7}
                 icon="info"
+                disabled={!blueprintData.can_fabricate}
                 onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
               />
             </Tooltip>
@@ -269,6 +271,7 @@ const BlueprintButton = (props, context) => {
                 height={2.625}
                 pt={0.7}
                 icon="gear"
+                disabled={!blueprintData.can_fabricate}
                 onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
               />
             </Tooltip>
@@ -327,11 +330,26 @@ export const Manufacturer = (_, context) => {
 
     return blueprintList[queueData.category].find((key) => (key.name === queueData.name));
   };
+  // used to combine the static and dynamic elements of the blueprintdata lists
+  let combineBlueprintLists = (list1:Record<string, Manufacturable[]>, list2:Record<string, Manufacturable[]>) => {
+    let output:Record<string, Manufacturable[]> = list1;
+    let keys = Object.keys(list1);
+    for (let category of data.all_categories) {
+      if (keys.find((key: string) => (key === category))) {
+        for (let i = 0; i < list1[category].length; i++) {
+          for (let key of Object.keys(list2[category][i])) {
+            output[category][i][key] = list2[category][i][key];
+          }
+        }
+      }
+    }
+    return output;
+  };
   let usable_blueprints = [
-    data.available_blueprints,
-    data.downloaded_blueprints,
-    data.drive_recipe_blueprints,
-    (data.hacked ? data.hidden_blueprints : []),
+    combineBlueprintLists(data.available_blueprints, data.static_available_blueprints),
+    combineBlueprintLists(data.downloaded_blueprints, data.static_downloaded_blueprints),
+    combineBlueprintLists(data.drive_recipe_blueprints, data.static_drive_recipe_blueprints),
+    (data.hacked ? combineBlueprintLists(data.hidden_blueprints, data.static_hidden_blueprints) : []),
   ];
 
   return (
@@ -347,7 +365,10 @@ export const Manufacturer = (_, context) => {
                       ? blueprints[category].map((blueprintData: Manufacturable) => (
                         (blueprintData.name.toLowerCase().includes(search)
                           ? (
-                            <BlueprintButton blueprintData={blueprintData} manufacturerSpeed={data.speed} />
+                            <BlueprintButton
+                              blueprintData={blueprintData}
+                              manufacturerSpeed={data.speed}
+                            />
                           ) : null)
                       )) : null
                   ))}

@@ -276,6 +276,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 					status |= NOPOWER
 					src.build_icon()
 
+	// Overriden to not disable if no power, wire maintenence to restore power is on the GUI which creates catch-22 situation
+	broken_state_topic(mob/user)
+		. = user.shared_ui_interaction(src)
+		if (status & BROKEN)
+			return min(., UI_CLOSE)
+		else if (requires_power && status & (NOPOWER | POWEROFF))
+			return min(., UI_INTERACTIVE)
+		else if (status & MAINT)
+			return min(., UI_UPDATE)
+
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
@@ -297,20 +307,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// added to the current time that has been elapsed, divided by the total time to be elapsed.
 		// But we keep the pct a constant if we're paused, and just do time that was elapsed / time to elapse
 		if (length(src.queue))
-			var/datum/manufacture/M = src.queue[1]
 			if (src.mode != "working")
 				progress_pct = 1 - (src.time_left / src.original_duration)
 			else
-				boutput(world,"original duration - [src.original_duration]")
-				boutput(world,"time left         - [src.time_left]")
-				boutput(world,"time              - [TIME]")
-				boutput(world,"time started      - [src.time_started]")
 				progress_pct = ((src.original_duration - src.time_left) + (TIME - src.time_started)) / src.original_duration
-				boutput(world,"progress %        - [progress_pct]")
-				boutput(world,"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 		return list(
 			"queue" = queue_data,
 			"progress_pct" = progress_pct,
+			"available_blueprints" = blueprints_as_list(src.available, user, FALSE),
+			"hidden_blueprints" = blueprints_as_list(src.hidden, user, FALSE),
+			"downloaded_blueprints" = blueprints_as_list(src.download, user, FALSE),
+			"drive_recipe_blueprints" = blueprints_as_list(src.drive_recipes, user, FALSE),
 			"rockbox_message" = src.temp,
 			"panel_open" = src.panel_open,
 			"hacked" = src.hacked,
@@ -334,10 +341,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"fabricator_name" = src.name,
 			"all_categories" = src.categories,
 			"delete_allowed" = src.allowed(user),
-			"available_blueprints" = blueprints_as_list(src.available, user),
-			"hidden_blueprints" = blueprints_as_list(src.hidden, user),
-			"downloaded_blueprints" = blueprints_as_list(src.download, user),
-			"drive_recipe_blueprints" = blueprints_as_list(src.drive_recipes, user),
+			"static_available_blueprints" = blueprints_as_list(src.available, user, TRUE),
+			"static_hidden_blueprints" = blueprints_as_list(src.hidden, user, TRUE),
+			"static_downloaded_blueprints" = blueprints_as_list(src.download, user, TRUE),
+			"drive_recipe_blueprints" = blueprints_as_list(src.drive_recipes, user, TRUE),
 			"wires" = list(list(colorName="Teal",  color="#21868C"),
 						   list(colorName="Indigo",color="#6f0fb4"),
 						   list(colorName="Amber", color="#FFBF00"),
@@ -390,40 +397,45 @@ TYPEINFO(/obj/machinery/manufacturer)
 	#undef ORE_TAX
 
 	/// Converts list of manufacture datums to list keyed by category containing listified manufacture datums of said category.
-	proc/blueprints_as_list(var/list/L, mob/user)
+	proc/blueprints_as_list(var/list/L, mob/user, var/static_elements = FALSE)
 		var/list/as_list = list()
 		for (var/datum/manufacture/M as anything in L)
 			if (length(as_list[M.category]) == 0)
 				as_list[M.category] = list()
-			as_list[M.category] += list(manufacture_as_list(M, user))
+			as_list[M.category] += list(manufacture_as_list(M, user, static_elements))
 		return as_list
 
 	/// Converts a manufacture datum to a list with string keys to relevant vars for the UI
-	proc/manufacture_as_list(datum/manufacture/M, mob/user)
-		var/generated_names = list()
-		var/generated_descriptions = list()
-		for (var/i in 1 to length(M.item_outputs))
-			// extremely unpleasant to do this
-			var/T = M.item_outputs[i]
-			var/obj/O = new T
-			if (!O || !isobj(O)) continue
-			generated_names += "\improper[O.name]"
-			generated_descriptions += "[O.desc]"
+	proc/manufacture_as_list(datum/manufacture/M, mob/user, var/static_elements = FALSE)
+		if (static_elements)
+			var/generated_names = list()
+			var/generated_descriptions = list()
+			for (var/i in 1 to length(M.item_outputs))
+				// extremely unpleasant to do this
+				var/T = M.item_outputs[i]
+				var/obj/O = new T
+				if (!O || !isobj(O)) continue
+				generated_names += "\improper[O.name]"
+				generated_descriptions += "[O.desc]"
 
-		return list(
-			"name" = M.name,
-			"category" = M.category,
-			"material_names" = M.item_names,
-			"item_names" = generated_names,
-			"item_descriptions" = generated_descriptions,
-			"item_amounts" = M.item_amounts,
-			"item_outputs" = M.item_outputs,
-			"create" = M.create,
-			"time" = M.time,
-			"apply_material" = M.apply_material,
-			"img" = getItemIcon(M.item_outputs[1], C = user.client),
-			"byondRef" = "\ref[M]",
-		)
+			return list(
+				"name" = M.name,
+				"category" = M.category,
+				"material_names" = M.item_names,
+				"item_names" = generated_names,
+				"item_descriptions" = generated_descriptions,
+				"item_amounts" = M.item_amounts,
+				"item_outputs" = M.item_outputs,
+				"create" = M.create,
+				"time" = M.time,
+				"apply_material" = M.apply_material,
+				"img" = getItemIcon(M.item_outputs[1], C = user.client),
+				"byondRef" = "\ref[M]",
+			)
+		else
+			return list(
+				"can_fabricate" = !isnull(src.check_enough_materials(M)),
+			)
 
 	attack_hand(mob/user)
 		if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load

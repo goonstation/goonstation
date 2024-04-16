@@ -20,6 +20,11 @@ export type ManufacturerData = {
   drive_recipe_blueprints:Record<string, Manufacturable[]>;
   hidden_blueprints:Record<string, Manufacturable[]>;
 
+  static_available_blueprints:Record<string, Manufacturable[]>;
+  static_downloaded_blueprints:Record<string, Manufacturable[]>;
+  static_drive_recipe_blueprints:Record<string, Manufacturable[]>;
+  static_hidden_blueprints:Record<string, Manufacturable[]>;
+
   delete_allowed:BooleanLike;
   hacked:BooleanLike;
   malfunction:BooleanLike;
@@ -42,16 +47,21 @@ export type ManufacturerData = {
 // Keyed by name
 export type Manufacturable = {
   name:string
-  material_names:string;
+
+  material_names:string[];
   item_names:string[];
   item_amounts:string[];
   item_descriptions:string[];
+
   create:number;
   time:number;
+
   category:string;
   byondRef:string;
   img:string
+
   show_cost:BooleanLike;
+  can_fabricate:BooleanLike;
 }
 
 export type Rockbox = {

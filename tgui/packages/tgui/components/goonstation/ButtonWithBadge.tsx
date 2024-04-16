@@ -9,13 +9,15 @@ import { Stack } from "../Stack";
 import { Button } from "../Button";
 import { Image } from "../Image";
 import { InfernoNode } from "inferno";
+import { BooleanLike } from "common/react";
 
 type ButtonWithBadgeProps = {
   width: number | string,
   height: number | string,
-  noImageShadow?: boolean,
+  noImageShadow?: BooleanLike,
   image_path: string;
   children?: InfernoNode;
+  disabled?: BooleanLike;
   onClick?: Function;
   onMouseEnter?: Function;
   onMouseLeave?: Function;
@@ -33,6 +35,7 @@ export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
     onMouseEnter,
     onMouseLeave,
     opacity,
+    disabled,
   } = props;
 
   return (
@@ -43,6 +46,7 @@ export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
       p={0}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      disabled={disabled}
     >
       <Stack>
         <Stack.Item>
