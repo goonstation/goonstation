@@ -375,7 +375,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/rockboxes_as_list()
 		var/rockboxes = list()
 		for_by_tcl(cloud_container, /obj/machinery/ore_cloud_storage_container)
-			if(cloud_container.broken)
+			if(cloud_container.is_broken())
 				continue
 			var/ore_data = list()
 			for(var/ore_name as anything in cloud_container.ores)
@@ -667,8 +667,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/price = OCD.price
 		var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
 
-				if(storage?.is_disabled())
-					return
+		if(storage?.is_disabled())
+			return
 
 		if(!scan)
 			src.temp = "You have to scan a card in first."
