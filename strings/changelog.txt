@@ -1,6 +1,8 @@
 
 (t)tue apr 16 24
 (u)LeahTheTech
+(*)Lasers now substantially heat up whatever they hit.
+(+)Lasers now collide with opaque windows.
 (p)18511
 (e)🔄📄📦|C-Rework, A-UI, A-Game-Objects
 (*)The PTL now stores up all of the money it makes, which can be withdrawn by swiping an engineering ID.
