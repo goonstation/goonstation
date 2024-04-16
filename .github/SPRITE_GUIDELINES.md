@@ -13,7 +13,7 @@ So, you want to contribute sprite art to Goonstation. Great! This set of guideli
 * The Byond sprite editor is usable but doesn't have layers and can be pretty clunky. Some free editors include piskel, paint.net, and GIMP. Aseprite is also good and free if compiled yourself, it otherwise costs money. Even photoshop can be used if you're already comfortable with it. 
 
 ## Human Base 🧍
-![](https://cdn.discordapp.com/attachments/659599207946256416/873919587761156106/unknown.png)
+![](https://i.imgur.com/L1qXFuB.png)
 
 * The above human base is useful for drawing clothing items or in-hands by layering them over the base to ensure sprites line-up.
 # Basic Style 😎
@@ -42,13 +42,13 @@ So, you want to contribute sprite art to Goonstation. Great! This set of guideli
 
 * Consider using the palette provided here if you're having trouble creating a palette: 
 
-![](https://cdn.discordapp.com/attachments/585526776550391819/814227015875428372/unknown.png)
+![](https://i.imgur.com/oHMg5gg.png)
 
 ## Outlines 🖋
 
 * All sprites should make use of colored outlines. This means that sprites should have outlines consisting of darker shades of the colors it connects to, instead of having a single color outline. 
 
-![](https://cdn.discordapp.com/attachments/659599207946256416/882768492942737438/whiteboard.png)
+![](https://i.imgur.com/ymhWAP2.png)
 
 * Outlines should also be subject to the shading on the sprite, getting darker in darker parts of the sprites and lighter when outlining lighter parts.
 
