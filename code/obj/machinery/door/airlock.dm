@@ -578,7 +578,7 @@ var/global/list/cycling_airlocks = list()
 				return
 	..()
 /obj/machinery/door/airlock/bumpopen(atom/movable/AM)
-	if (src.isWireCut(AIRLOCK_WIRE_IDSCAN))
+	if (!src.requiresID()) // if the ID wire has been tampered with.
 		src.play_deny() // intentional nerf: idwire-cut doors won't respond to bumps. incentivizes people to fix it and makes them aware it is access hacked.
 		src.add_fingerprint(AM)
 		return
