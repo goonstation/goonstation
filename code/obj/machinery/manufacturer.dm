@@ -980,10 +980,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Helper proc for swap_materials, gets the material index in the storage datum or retuns null if it doesn't exist.
 	proc/get_material_index_by_id(var/mat_id)
 		var/i = 1
-		for (var/obj/item/O in src.storage.get_contents())
-			if (!O.material)
+		for (var/obj/item/material_piece/M in src.storage.get_contents())
+			if (!M.material)
 				continue
-			if (mat_id == O.material.getID())
+			if (mat_id == M.material.getID())
 				return i
 			i++
 		return null
@@ -1560,20 +1560,24 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return TRUE
 		return FALSE
 
-	proc/get_materials_needed(datum/manufacture/M) // returns associative list of item_paths with the mat_ids they're gonna use; does not guarantee all item_paths are satisfied
+	/// Returns associative list of item path to mat_id that will be used, but does not guarantee all item_paths are satisfied or that
+	/// the blueprint will have the required materials ready by the time it reaches the front of the queue
+	proc/get_materials_needed(datum/manufacture/M)
 		var/list/mats_used = list()
-		var/list/mats_available = src.resource_amounts.Copy()
+		var/list/mats_available = list()
 
 		for (var/i in 1 to M.item_paths.len)
-			var/pattern = M.item_paths[i]
-			var/amount = M.item_amounts[i]
-			for (var/mat_id in mats_available)
-				if (mats_available[mat_id] < amount)
+			var/required_pattern = M.item_paths[i]
+			var/required_amount = M.item_amounts[i]
+			for (var/obj/item/material_piece/P as anything in src.storage.get_contents())
+				var/mat_id = P.material.getID()
+				if (!(mat_id in mats_available))
+					mats_available[mat_id] = P.amount * 10
+				if (mats_available[mat_id] < required_amount)
 					continue
-				var/datum/material/mat = src.get_our_material(mat_id)
-				if (match_material_pattern(pattern, mat)) // TODO: refactor proc cuz this is bad
-					mats_used[pattern] = mat_id
-					mats_available[mat_id] -= amount
+				if (match_material_pattern(required_pattern, P.material)) // TODO: refactor proc cuz this is bad
+					mats_used[required_pattern] = mat_id
+					mats_available[mat_id] -= required_amount
 					break
 
 		return mats_used
@@ -1583,6 +1587,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (length(mats_used) == M.item_paths.len) // we have enough materials, so return the materials list, else return null
 			return mats_used
 
+	/// Go through the material requirements of a blueprint, and remove the matching materials from materials_in_use in appropriate quantities
 	proc/remove_materials(datum/manufacture/M)
 		for (var/i = 1 to M.item_paths.len)
 			var/pattern = M.item_paths[i]
@@ -1590,13 +1595,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (mat_id)
 				var/amount = M.item_amounts[i]
 				src.update_resource_amount(mat_id, -amount)
-				for (var/obj/item/I in src.storage.get_contents())
-					if (I.material && istype(I, src.base_material_class) && I.material.getID() == mat_id)
+				for (var/obj/item/material_piece/P as anything in src.storage.get_contents())
+					if (P.material && P.material.getID() == mat_id)
 						var/target_amount = round(src.resource_amounts[mat_id] / 10)
 						if (!target_amount)
-							qdel(I)
-						else if (I.amount != target_amount)
-							I.change_stack_amount(-(I.amount - target_amount))
+							qdel(P)
+						else if (P.amount != target_amount)
+							P.change_stack_amount(-(P.amount - target_amount))
 						break
 
 	proc/begin_work(new_production = TRUE)
@@ -1977,25 +1982,25 @@ TYPEINFO(/obj/machinery/manufacturer)
 			manudrive.set_loc(src.loc)
 		src.manudrive = null
 
+	/// Loads a material piece from some user into the machine, stacking it if we have that type of material in the machine already.
 	proc/load_item(obj/item/O, mob/living/user)
-		if (!O)
+		if (!istype(O, src.base_material_class) && O.material)
 			return
 
+		var/obj/item/material_piece/P = O
 		if (user)
-			user.u_equip(O)
-			O.dropped(user)
+			user.u_equip(P)
+			P.dropped(user)
 
-		if (istype(O, src.base_material_class) && O.material)
-			var/obj/item/material_piece/P = O
-			for(var/obj/item/material_piece/M in src.storage.get_contents())
-				if (istype(M, P) && M.material && M.material.isSameMaterial(P.material))
-					M.change_stack_amount(P.amount)
-					src.update_resource_amount(M.material.getID(), P.amount * 10, M.material)
-					qdel(P)
-					return
-			src.update_resource_amount(P.material.getID(), P.amount * 10, P.material)
+		for(var/obj/item/material_piece/M as anything in src.storage.get_contents())
+			if (M.material.isSameMaterial(P.material))
+				M.change_stack_amount(P.amount)
+				src.update_resource_amount(M.material.getID(), P.amount * 10, M.material)
+				qdel(P)
+				return
 
-		O.set_loc(src)
+		src.update_resource_amount(P.material.getID(), P.amount * 10, P.material)
+		P.set_loc(src)
 
 	proc/take_damage(damage_amount = 0)
 		if (!damage_amount)
