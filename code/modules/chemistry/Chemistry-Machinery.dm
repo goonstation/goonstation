@@ -491,7 +491,7 @@ TYPEINFO(/obj/machinery/chem_shaker/large)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CHEMMASTER_MINIMUM_REAGENT 5 // mininum reagent for pills, bottles and patches
-#define CHEMMASTER_CONTAINER_TRESHOLD 10 // equal or above this amount use container
+#define CHEMMASTER_CONTAINER_TRESHOLD 11 // equal or above this amount use container
 #define CHEMMASTER_ITEMNAME_MAXSIZE 16 // chosen by fair dice roll
 #define CHEMMASTER_MAX_PILL 22 // 22 pill icons
 #define CHEMMASTER_MAX_CANS 26 // 26 flavours of cans
@@ -944,6 +944,8 @@ TYPEINFO(/obj/machinery/chem_master)
 
 				var/obj/item/chem_pill_bottle/pill_bottle = null
 				if(use_pill_bottle || pillcount >= CHEMMASTER_CONTAINER_TRESHOLD)
+					if(pillcount >= CHEMMASTER_CONTAINER_TRESHOLD)
+						boutput(ui.user, "The [src] output limit beeps sternly, and a pill bottle automatically dispensed!")
 					pill_bottle = new(src)
 					pill_bottle.name = "[item_name] [pill_bottle.name]"
 
@@ -1069,6 +1071,8 @@ TYPEINFO(/obj/machinery/chem_master)
 				var/is_medical_patch = src.check_patch_whitelist()
 				var/obj/item/item_box/medical_patches/patch_box = null
 				if(use_box || patchcount >= CHEMMASTER_CONTAINER_TRESHOLD)
+					if(patchcount >= CHEMMASTER_CONTAINER_TRESHOLD)
+						boutput(ui.user, "The [src] output limit beeps sternly, and a patch box automatically dispensed!")
 					patch_box = new(src)
 					patch_box.name = "box of [item_name] patches"
 					if (is_medical_patch)
