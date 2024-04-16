@@ -2155,29 +2155,6 @@ TYPEINFO(/obj/item/gun/implanter)
 			random_brute_damage(M, 1)
 			src.implanted(M)
 
-	hit_check(datum/thrown_thing/thr)
-		if(src.throwing)
-			for (var/atom/A as anything in get_turf(src))
-				if (!src.throwing)
-					break
-				if(A == src) continue
-				if(A.GetComponent(/datum/component/glued)) continue
-				if(isliving(A))
-					var/mob/living/L = A
-					if (!L.throws_can_hit_me) continue
-					if (L.lying) continue
-					src.throw_impact(A, thr)
-					. = TRUE
-				if(isobj(A))
-					if(!A.Cross(src) || istype(A, /obj/item/reagent_containers/balloon)) // darts can hit balloons too
-						src.throw_impact(A, thr)
-						. = TRUE
-				if(ishuman(src) && istype(A, /obj/item/plant/tumbling_creeper))
-					var/obj/item/plant/tumbling_creeper/M = A
-					if(M.armed)
-						src.throw_impact(M, thr)
-						. = TRUE
-
 	attack_hand(mob/user)
 		src.pixel_x = 0
 		src.pixel_y = 0

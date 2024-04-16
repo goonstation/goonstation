@@ -234,6 +234,9 @@
 		..()
 		src.smash(T)
 
+	Cross(atom/movable/mover)
+		return !istype(mover, /obj/item/implant/projectile/body_visible/dart/bardart)
+
 /obj/item/balloon_animal
 	name = "balloon animal"
 	desc = "A little animal, made out of a balloon! How spiffy!"
