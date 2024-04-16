@@ -108,6 +108,11 @@
 	if (src.emagged)
 		return 0
 	src.emagged = TRUE
+	src.output_number = -src.output_number
+	src.output = src.output_number * src.output_multi
+	if (src.firing)
+		src.stop_firing()
+		src.start_firing()
 	if (user)
 		src.add_fingerprint(user)
 		playsound(src.loc, 'sound/machines/bweep.ogg', 10, TRUE)
@@ -404,7 +409,10 @@
 			. = TRUE
 		if("setOutput")
 			. = TRUE
-			src.output_number = clamp(params["setOutput"], 0, 999)
+			if (src.emagged)
+				src.output_number = clamp(params["setOutput"], -999, 0)
+			else
+				src.output_number = clamp(params["setOutput"], 0, 999)
 			src.output = src.output_number * src.output_multi
 			if(!src.output || !src.can_fire())
 				src.stop_firing()
