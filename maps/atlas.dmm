@@ -15438,6 +15438,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/landmark/start/job/assistant,
 /turf/simulated/floor/twotone/black{
 	dir = 8
 	},
@@ -15820,7 +15821,7 @@
 	pixel_x = 5;
 	pixel_y = 28
 	},
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "dKI" = (
@@ -15846,6 +15847,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/landmark/start/job/assistant,
 /turf/simulated/floor/twotone/black,
 /area/station/crew_quarters/cafeteria)
 "dRf" = (
@@ -16399,11 +16401,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
-"fWT" = (
-/obj/landmark/start/job/assistant,
-/obj/disposalpipe/junction/right/east,
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "gaP" = (
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_west{
 	dir = 5;
@@ -17113,6 +17110,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/landmark/start/job/assistant,
 /turf/simulated/floor/twotone/black,
 /area/station/crew_quarters/cafeteria)
 "jst" = (
@@ -17755,6 +17753,7 @@
 /area/station/hallway/primary/west)
 "mpy" = (
 /obj/stool/bench/wooden/auto,
+/obj/landmark/start/job/assistant,
 /turf/simulated/floor/twotone/black,
 /area/station/crew_quarters/cafeteria)
 "mqh" = (
@@ -17938,6 +17937,7 @@
 /area/station/science/lab)
 "mZI" = (
 /obj/stool/bench/wooden/auto,
+/obj/landmark/start/job/assistant,
 /turf/simulated/floor/twotone/black{
 	dir = 8
 	},
@@ -19824,6 +19824,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/landmark/start/job/assistant,
 /turf/simulated/floor/twotone/black{
 	dir = 8
 	},
@@ -20506,6 +20507,7 @@
 	icon_state = "line1"
 	},
 /obj/item/device/radio/intercom/catering,
+/obj/landmark/start/job/assistant,
 /turf/simulated/floor/twotone/black{
 	dir = 8
 	},
@@ -70787,7 +70789,7 @@ uFZ
 eZL
 ipM
 tbk
-fWT
+aiI
 aps
 ahV
 adn
