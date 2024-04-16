@@ -465,7 +465,7 @@
 
 	//this will probably need fiddling with, hard to decide on reasonable values
 	switch(power)
-		if(10 to 10 MEGA WATTS)
+		if(10 to 5 MEGA WATTS)
 			L.set_burning(power/1e5) //100 (max burning) at 10MW
 			L.bodytemperature = max(power/1e4, L.bodytemperature) //1000K at 10MW. More than hotspot because it's hitting them not just radiating heat (i guess? idk)
 		if(5 MEGA WATTS + 1 to 200 MEGA WATTS)
