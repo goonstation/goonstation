@@ -208,14 +208,13 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		return FALSE
 
 
-/obj/item/proc/remove_bandage(var/mob/living/carbon/human/H as mob, var/mob/user as mob)
-	if (!H)
-		return FALSE
+/obj/item/proc/remove_bandage(mob/living/carbon/human/H, mob/user)
+	. = TRUE
 
 	if (!ishuman(H))
 		return FALSE
 
-	if (user && user.a_intent != INTENT_HELP)
+	if (user?.a_intent != INTENT_HELP)
 		return FALSE
 
 	if (!islist(H.bandaged) || !length(H.bandaged))
@@ -229,17 +228,11 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		SPAN_NOTICE("You begin removing [H == user ? "your" : "[H]'s"] bandage."),\
 		SPAN_NOTICE("[H == user ? "You begin" : "<b>[user]</b> begins"] removing your bandage."))
 
-	if (!do_mob(user, H, 50))
-		user.show_text("You were interrupted!", "red")
-		return TRUE
+	if (!ON_COOLDOWN(src, "bandage_removal_sound", 0.5 SECONDS))
+		playsound(src, 'sound/items/Scissor.ogg', 100, TRUE)
 
-	user.tri_message(H, SPAN_NOTICE("<b>[user]</b> removes [H == user ? "[his_or_her(H)]" : "[H]'s"] bandage."),\
-		SPAN_NOTICE("You remove [H == user ? "your" : "[H]'s"] bandage."),\
-		SPAN_NOTICE("[H == user ? "You remove" : "<b>[user]</b> removes"] your bandage."))
-
-	H.bandaged -= removing
-	H.update_body()
-	return TRUE
+	SETUP_GENERIC_ACTIONBAR(user, H, 5 SECONDS, /mob/living/carbon/human/proc/on_bandage_removal, list(user, removing), src.icon, src.icon_state, null,
+		list(INTERRUPT_MOVE, INTERRUPT_ATTACKED, INTERRUPT_STUNNED, INTERRUPT_ACTION))
 
 /mob/proc/get_surgery_status(var/zone)
 	return FALSE
