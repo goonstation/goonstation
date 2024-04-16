@@ -15160,6 +15160,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -26831,9 +26834,6 @@
 /area/station/medical/medbay)
 "ceJ" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/machinery/computer/operating{
-	id = "OR1"
-	},
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -29673,6 +29673,8 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/bandage,
+/obj/item/bandage,
 /turf/simulated/floor/caution/east,
 /area/station/medical/robotics)
 "con" = (
@@ -29760,9 +29762,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/hos,
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1;
+/obj/deployable_turret/riot/active{
 	dir = 1
 	},
 /turf/simulated/floor/engine{
@@ -34530,6 +34530,7 @@
 /obj/item/storage/box/stma_kit,
 /obj/item/reagent_containers/iv_drip/saline,
 /obj/item/staple_gun,
+/obj/item/clothing/gloves/latex,
 /turf/simulated/floor/caution/east,
 /area/station/medical/robotics)
 "fjV" = (
@@ -36391,12 +36392,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/north)
-"gCb" = (
-/obj/machinery/computer/operating{
-	id = "robotics"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/robotics)
 "gCd" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -36585,12 +36580,9 @@
 /turf/simulated/floor/purple,
 /area/station/science/storage)
 "gII" = (
-/obj/table/auto,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/clothing/gloves/latex,
-/obj/item/hemostat,
-/obj/item/hemostat,
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "gJa" = (
@@ -44082,6 +44074,8 @@
 /obj/item/suture,
 /obj/item/clothing/mask/surgical_shield,
 /obj/machinery/firealarm/west,
+/obj/item/hemostat,
+/obj/item/hemostat,
 /turf/simulated/floor/caution/east,
 /area/station/medical/robotics)
 "mpN" = (
@@ -94855,8 +94849,8 @@ bfZ
 rUu
 chN
 coo
+czV
 czk
-gCb
 boV
 bxK
 byP
@@ -95157,7 +95151,7 @@ bfZ
 chr
 chO
 cop
-czV
+con
 gII
 boV
 qmL

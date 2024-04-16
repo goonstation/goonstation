@@ -667,8 +667,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/price = OCD.price
 		var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
 
-		if(storage?.broken)
-			return
+				if(storage?.is_disabled())
+					return
 
 		if(!scan)
 			src.temp = "You have to scan a card in first."

@@ -723,13 +723,6 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
-"aox" = (
-/obj/machinery/computer/operating{
-	dir = 4;
-	id = "OR2"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/medbay/surgery)
 "aoA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -895,9 +888,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "aso" = (
-/obj/deployable_turret/riot{
-	active = 1;
-	anchored = 1;
+/obj/deployable_turret/riot/active{
 	dir = 8
 	},
 /obj/mapping_helper/access/hos,
@@ -11604,6 +11595,19 @@
 	dir = 9
 	},
 /area/station/engine/ptl)
+"fid" = (
+/obj/table/reinforced/auto,
+/obj/machinery/defib_mount,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/scalpel,
+/obj/item/scissors/surgical_scissors,
+/obj/item/suture,
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/medbay/surgery)
 "fip" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/black,
@@ -14107,7 +14111,9 @@
 	mail_tag = "research";
 	name = "research mail junction"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
 /area/station/hallway/secondary/west)
 "gkj" = (
 /obj/disposalpipe/segment/vertical,
@@ -17977,6 +17983,12 @@
 /obj/item/pen,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering/ce)
+"hFX" = (
+/obj/machinery/computer/operating/small,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/listeningpost)
 "hGS" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -27533,6 +27545,12 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"lyN" = (
+/obj/machinery/computer/operating/small{
+	id = "OR2"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/medbay/surgery)
 "lyT" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/light_switch/east,
@@ -30780,6 +30798,9 @@
 /area/station/hallway/primary/southeast)
 "mNV" = (
 /obj/machinery/drainage,
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "mOd" = (
@@ -35869,6 +35890,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"pba" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/medbay/surgery)
 "pbh" = (
 /turf/simulated/floor/blueblack{
 	dir = 9
@@ -39356,6 +39384,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"qCo" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/optable{
+	id = "OR1"
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/medbay/surgery)
 "qCB" = (
 /obj/table/reinforced/auto,
 /obj/machinery/phone/unlisted,
@@ -41632,13 +41668,6 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
-"rNn" = (
-/obj/machinery/drainage,
-/obj/machinery/optable{
-	id = "OR1"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/medbay/surgery)
 "rNq" = (
 /obj/machinery/vending/pizza,
 /turf/simulated/floor/grey/blackgrime,
@@ -43314,13 +43343,6 @@
 	dir = 8
 	},
 /area/station/engine/ptl)
-"sBk" = (
-/obj/machinery/computer/operating{
-	dir = 8;
-	id = "OR1"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/medbay/surgery)
 "sBn" = (
 /obj/machinery/shieldgenerator/energy_shield{
 	power_level = 2
@@ -44109,6 +44131,10 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/brig/solitary)
+"sPV" = (
+/obj/machinery/computer/operating/small,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "sQj" = (
 /obj/disposalpipe/segment/transport,
 /obj/cable{
@@ -44749,18 +44775,6 @@
 	dir = 8
 	},
 /area/shuttle/arrival/station)
-"teC" = (
-/obj/table/reinforced/auto,
-/obj/machinery/defib_mount,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/obj/item/scalpel,
-/obj/item/scissors/surgical_scissors,
-/obj/item/suture,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/medbay/surgery)
 "teD" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/vertical,
@@ -45599,16 +45613,36 @@
 /turf/simulated/floor/red,
 /area/listeningpost)
 "twS" = (
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/surgical_spoon,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
-	},
-/obj/machinery/computer/operating{
-	dir = 4;
-	id = "robotics"
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
@@ -82161,7 +82195,7 @@ syI
 tjr
 hvz
 tjr
-tjr
+sPV
 tjr
 lmL
 sKl
@@ -85950,7 +85984,7 @@ xzc
 iOs
 pki
 nqG
-arl
+hFX
 arl
 maz
 pki
@@ -96890,9 +96924,9 @@ bJF
 bJF
 kOG
 bJF
-bJF
-oJM
 gjM
+oJM
+uPZ
 cjv
 bJF
 jbQ
@@ -100472,9 +100506,9 @@ tJx
 oWN
 mby
 aqa
-iZO
-rNn
-sBk
+fid
+xnq
+rSz
 xnq
 aqa
 ooK
@@ -100774,9 +100808,9 @@ jhj
 oWN
 cuz
 aqa
-iZO
-rSz
-teC
+qCo
+xnq
+wkT
 xnq
 bVD
 sCO
@@ -101076,9 +101110,9 @@ apJ
 oWN
 mvT
 aqa
-iZO
-aox
-wkT
+pba
+xnq
+lyN
 xnq
 xnq
 tZC

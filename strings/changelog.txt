@@ -1,4 +1,33 @@
 
+(t)tue apr 16 24
+(u)Ikea
+(p)18085
+(e)🆕🎨📡🤖|C-Feature, C-Sprites, A-AI, A-Silicons
+(*)Eyebots now come with a portable intercom.
+(t)sun apr 14 24
+(u)Glamurio (Ryou)
+(p)18491
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(+)Adds two new negative traits to character creation.
+(u)Sord
+(+)Added a new small variant of the operating computer. Use a wrench on an operating computer to switch it between the small or large version.
+(t)sat apr 13 24
+(u)Mordent
+(p)18426
+(e)📄|A-UI
+(+)Wizard Spellbook UX improved updated to make spells easier to find.
+(u)Chatausours
+(p)18294
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)Captains now recieve a mindshield implant.
+(u)glowbold
+(p)18486
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)SecHUD users can see a person's SecHUD Flag regardless of criminal status.
+(u)mloccy
+(p)18208
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Adding some animations to the rockbox on damage, and made it so when its broken it cannot be used.
 (t)fri apr 12 24
 (u)ZeWaka
 (p)18142

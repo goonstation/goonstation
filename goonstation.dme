@@ -1753,6 +1753,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\unit_tests\_unit_tests.dm"
 #include "code\modules\vending\clothingbooth.dm"
 #include "code\modules\vending\clothingbooth_items.dm"
+#include "code\modules\vending\jobclothing.dm"
 #include "code\modules\vending\vending.dm"
 #include "code\modules\vpn_bonk\vpn_bonk.dm"
 #include "code\modules\worldgen\GenerateMining.dm"

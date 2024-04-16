@@ -3293,6 +3293,12 @@
 "akQ" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"akR" = (
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
+/turf/simulated/floor/red,
+/area/station/medical/medbay/surgery)
 "akS" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
@@ -3700,12 +3706,6 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
-"amq" = (
-/obj/machinery/computer/operating{
-	id = "OR1"
-	},
-/turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "amr" = (
 /obj/machinery/drainage/big,
@@ -5282,7 +5282,7 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/obj/machinery/computer/operating{
+/obj/machinery/computer/operating/small{
 	id = "robotics"
 	},
 /turf/simulated/floor/black,
@@ -92403,7 +92403,7 @@ ajG
 aic
 akH
 alq
-amq
+anm
 ank
 vQY
 aoN
@@ -93007,7 +93007,7 @@ ahI
 ajJ
 eNT
 alq
-anm
+akR
 anm
 anY
 fha
