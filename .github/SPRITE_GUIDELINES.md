@@ -22,7 +22,7 @@ So, you want to contribute sprite art to Goonstation. Great! This set of guideli
 
 * Sprites should generally be in three-quarter perspective (3/4 perspective for short), with few exceptions. 3/4 perspective essentially means that objects have one face and the top visible, facing head on. This includes item sprites for most cases.
 
-![](https://cdn.discordapp.com/attachments/799118122899996754/872975960058781726/perspective.png)
+![](https://i.imgur.com/8TEclNH.png)
 
 * Avoid cabinet projection, where sprites are tilted, with their side visible.
 
