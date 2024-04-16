@@ -8227,7 +8227,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "cnS" = (
-/obj/machinery/computer/operating{
+/obj/machinery/computer/operating/small{
 	id = "garbage_doc"
 	},
 /turf/simulated/floor/plating/jen,
@@ -15943,6 +15943,12 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/east)
+"eKp" = (
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "eKv" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -41023,6 +41029,9 @@
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3"
 	},
+/obj/machinery/computer/operating/small{
+	id = "treatment"
+	},
 /turf/simulated/floor/blackwhite/side{
 	dir = 8
 	},
@@ -46507,12 +46516,6 @@
 /obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"odN" = (
-/obj/machinery/computer/operating{
-	id = "robotics"
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "odP" = (
 /turf/simulated/wall/auto/jen/purple,
 /area/station/hangar/science)
@@ -74749,10 +74752,6 @@
 "wGW" = (
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/computer/operating{
-	dir = 4;
-	id = "treatment"
 	},
 /turf/simulated/floor/blackwhite/corner{
 	dir = 8
@@ -128802,8 +128801,8 @@ cCD
 fXZ
 uvs
 uwN
-odN
 wXy
+uvs
 uvs
 rCl
 ohz
@@ -129103,7 +129102,7 @@ bpe
 xks
 uvs
 uvs
-uvs
+eKp
 tig
 uvs
 uvs
