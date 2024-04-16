@@ -407,8 +407,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 /obj/decal/cleanable/blood/dynamic
 	desc = "It's blood."
-	icon_state = "blank" // if you make any more giant white cumblobs all over my nice blood decals
-	random_icon_states = null // I swear to god I will fucking end you
+	icon_state = "blank"
+	random_icon_states = null
 	slippery = 0 // increases as blood volume does
 	color = null
 	var/last_volume = 1
