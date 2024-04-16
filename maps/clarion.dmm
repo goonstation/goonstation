@@ -10584,9 +10584,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bre" = (
-/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/computer3/generic/secure_data,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/engine,
-/area/station/engine/core/nuclear)
+/area/station/turret_protected/ai)
 "brf" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -10891,6 +10898,14 @@
 	icon_state = "fblue3"
 	},
 /area/station/crew_quarters/ce)
+"bte" = (
+/obj/machinery/computer3/generic/med_data,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/engine,
+/area/station/turret_protected/ai)
 "btf" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -16017,6 +16032,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
+"dGP" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/dwainedummies,
+/obj/item/disk/data/tape/master/readonly,
+/obj/item/storage/box/tapebox,
+/obj/item/storage/box/diskbox,
+/obj/item/device/multitool,
+/obj/item/disk/data/tape{
+	layer = 3.5;
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
 "dHk" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
@@ -16675,15 +16704,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/south)
-"ejc" = (
-/obj/cable/blue{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 6
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core/nuclear)
 "ejk" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -17006,6 +17026,13 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/storage/tools)
+"evK" = (
+/obj/cable/blue{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/binary/valve/purge,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "evS" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -18095,12 +18122,6 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
-"ftW" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/turf/simulated/floor/engine,
-/area/station/turret_protected/ai)
 "fvU" = (
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/crew_quarters/barber_shop)
@@ -19449,9 +19470,6 @@
 	},
 /area/station/hallway/primary/east)
 "guE" = (
-/obj/machinery/computer/robotics{
-	dir = 8
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
@@ -19461,6 +19479,9 @@
 	dir = 8;
 	name = "autoname  - SS13";
 	pixel_x = 10
+	},
+/obj/machinery/computer/general_alert{
+	dir = 8
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
@@ -19954,10 +19975,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
-"gSD" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "gSF" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light{
@@ -22330,7 +22347,9 @@
 /obj/cable/blue{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/binary/valve/purge,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 6
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "iFq" = (
@@ -23423,6 +23442,13 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/medbay/lobby)
+"jCk" = (
+/obj/cable/blue{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "jCo" = (
 /obj/window/cubicle{
 	dir = 8;
@@ -25853,20 +25879,6 @@
 	dir = 4
 	},
 /area/station/science/lobby)
-"lwa" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/dwainedummies,
-/obj/item/disk/data/tape/master/readonly,
-/obj/item/storage/box/tapebox,
-/obj/item/storage/box/diskbox,
-/obj/item/device/multitool,
-/obj/item/disk/data/tape{
-	layer = 3.5;
-	pixel_x = -5;
-	pixel_y = -5
-	},
-/turf/simulated/floor/circuit/green,
-/area/station/turret_protected/Zeta)
 "lwN" = (
 /obj/machinery/light/emergency,
 /obj/machinery/networked/test_apparatus/pitching_machine{
@@ -26721,6 +26733,12 @@
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
+"mfy" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "mfF" = (
 /obj/pool/perspective{
 	density = 0;
@@ -29778,8 +29796,8 @@
 	},
 /area/station/garden/aviary)
 "ozg" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
@@ -29884,13 +29902,6 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
-"oCA" = (
-/obj/cable/blue{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/floor/engine,
-/area/station/engine/core/nuclear)
 "oCK" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
@@ -29959,14 +29970,6 @@
 	icon_state = "fblue2"
 	},
 /area/station/medical/head)
-"oFL" = (
-/obj/machinery/turret,
-/obj/cable,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/engine,
-/area/station/turret_protected/ai)
 "oGr" = (
 /turf/simulated/floor/caution/corner/ne,
 /area/station/quartermaster/office)
@@ -30936,12 +30939,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/north)
-"ptr" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "ptz" = (
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
@@ -31183,6 +31180,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/mining/staff_room)
+"pDm" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "pDK" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4;
@@ -33273,14 +33274,6 @@
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"rhp" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/terminal/zeta,
-/turf/simulated/floor/engine,
-/area/station/turret_protected/ai)
 "rhu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33697,6 +33690,12 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/storage/primary)
+"rCe" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/turret_protected/ai)
 "rDg" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -34126,24 +34125,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/south)
-"rSl" = (
-/obj/machinery/turret,
-/obj/machinery/light{
-	dir = 1;
-	pixel_x = -1;
-	pixel_y = 21
-	},
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname  - SS13";
-	pixel_y = 21
-	},
-/turf/simulated/floor/engine,
-/area/station/turret_protected/ai)
 "rSV" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -36512,12 +36493,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
-"tEX" = (
-/obj/machinery/ai_status_display{
-	pixel_y = 28
-	},
-/turf/simulated/floor/engine,
-/area/station/turret_protected/ai)
 "tFW" = (
 /obj/disposalpipe/segment/brig{
 	dir = 2;
@@ -36830,6 +36805,14 @@
 	dir = 1
 	},
 /area/station/science/lobby)
+"tTZ" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/robotics,
+/turf/simulated/floor/engine,
+/area/station/turret_protected/ai)
 "tUr" = (
 /obj/table/auto,
 /obj/item/clipboard{
@@ -40047,6 +40030,24 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"wFa" = (
+/obj/machinery/turret,
+/obj/machinery/light{
+	dir = 1;
+	pixel_x = -1;
+	pixel_y = 21
+	},
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname  - SS13";
+	pixel_y = 21
+	},
+/turf/simulated/floor/engine,
+/area/station/turret_protected/ai)
 "wFe" = (
 /obj/stool/chair/red,
 /obj/machinery/recharger/wall{
@@ -40284,17 +40285,6 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/escape)
-"wMG" = (
-/obj/machinery/computer3/generic/secure_data,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/engine,
-/area/station/turret_protected/ai)
 "wNj" = (
 /obj/machinery/light{
 	dir = 4;
@@ -41504,6 +41494,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
+"xRo" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/turret_protected/ai)
 "xSg" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -41650,6 +41646,14 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/listeningpost)
+"xWW" = (
+/obj/machinery/turret,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/turret_protected/ai)
 "xXc" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
@@ -41777,13 +41781,9 @@
 	},
 /area/station/engine/substation/west)
 "ycm" = (
-/obj/machinery/computer3/generic/med_data,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
+/obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/engine,
-/area/station/turret_protected/ai)
+/area/station/engine/core/nuclear)
 "ydu" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency{
@@ -70208,9 +70208,9 @@ sPC
 iyw
 iyw
 rOK
-ejc
-oCA
 iFe
+jCk
+evK
 bll
 nbH
 hEr
@@ -70468,7 +70468,7 @@ vsR
 aTU
 qqO
 sOl
-bre
+ycm
 uVN
 wtl
 ezM
@@ -70725,7 +70725,7 @@ iyw
 iyw
 iyw
 iyw
-bre
+ycm
 uVN
 uVN
 uVN
@@ -75589,7 +75589,7 @@ buP
 uOd
 qPa
 sMg
-gSD
+pDm
 aPJ
 bem
 qlx
@@ -75841,13 +75841,13 @@ uts
 leb
 bdd
 bem
-ftW
+rCe
 ubu
 tEj
 oaa
 jeG
 vIq
-wMG
+bre
 bem
 boV
 kFB
@@ -76098,13 +76098,13 @@ qAP
 aWQ
 uaA
 bem
-tEX
+ozg
 sZQ
 iXr
 rgk
 sml
 xVL
-oFL
+xWW
 bem
 iar
 kFB
@@ -76355,13 +76355,13 @@ lkG
 aWQ
 uML
 bem
-ozg
+xRo
 swN
 kYi
 oaa
 aoh
-gSD
-ycm
+pDm
+bte
 bem
 jHX
 kFB
@@ -76612,13 +76612,13 @@ aWQ
 aWQ
 kGL
 bem
-rSl
-ptr
+wFa
+mfy
 hzb
 biT
 bkf
-gSD
-rhp
+pDm
+tTZ
 bem
 boU
 kFB
@@ -77129,7 +77129,7 @@ ake
 bfy
 bgG
 bhF
-lwa
+dGP
 ugQ
 cVG
 bmG
