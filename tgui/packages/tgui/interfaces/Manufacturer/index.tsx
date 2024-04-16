@@ -23,6 +23,24 @@ const getBlueprintTime = (time, manufacturerSpeed) => {
 const ProductionCard = (params, context) => {
   const { act } = useBackend(context);
   const { data, progress_pct, index, mode } = params;
+  // Simpler badge for the buttons where it doesn't matter, bottommost return for the bestest of buttons
+  if (index !== 0) {
+    return (
+      <Stack.Item>
+        <ButtonWithBadge
+          width="100%"
+          height={4.6}
+          image_path={data.img}
+          onClick={() => act("remove", { "index": index+1 })}
+        >
+          <CenteredText
+            text={truncate(data.name, 40)}
+            height={4.6}
+          />
+        </ButtonWithBadge>
+      </Stack.Item>
+    );
+  }
   return (
     <Stack.Item>
       <Stack>
@@ -31,22 +49,21 @@ const ProductionCard = (params, context) => {
             width={16.5}
             height={4.6}
             image_path={data.img}
+            onClick={() => act("remove", { "index": index+1 })}
           >
             <Stack vertical>
               <Stack.Item>
                 <CenteredText text={truncate(data.name)} />
               </Stack.Item>
-              { index === 0 ? (
-                <Stack.Item>
-                  <ProgressBar
-                    value={progress_pct}
-                    minValue={0}
-                    maxValue={1}
-                    position="relative"
-                    color="rgba(0,0,0,0.2)"
-                  />
-                </Stack.Item>
-              ) : null}
+              <Stack.Item>
+                <ProgressBar
+                  value={progress_pct}
+                  minValue={0}
+                  maxValue={1}
+                  position="relative"
+                  color="rgba(0,0,0,0.2)"
+                />
+              </Stack.Item>
             </Stack>
           </ButtonWithBadge>
         </Stack.Item>
@@ -68,8 +85,8 @@ const ProductionCard = (params, context) => {
                 height={2}
                 pl={1.3}
                 pt={0.5}
-                icon={(mode !== "halt") ? "pause" : "play"}
-                onClick={() => act("pause_toggle", { "action": (mode !== "halt") ? "pause" : "continue" })}
+                icon={(mode === "working") ? "pause" : "play"}
+                onClick={() => act("pause_toggle", { "action": (mode === "working") ? "pause" : "continue" })}
               />
             </Stack.Item>
           </Stack>
@@ -265,7 +282,6 @@ const BlueprintButton = (props, context) => {
 export const Manufacturer = (_, context) => {
   const { act, data } = useBackend<ManufacturerData>(context);
   const [repeat, toggleRepeatVar] = useSharedState(context, "repeat", data.repeat);
-  const [speed, setSpeedVar] = useSharedState(context, "speed", data.speed);
   const [search, setSearchData] = useLocalState(context, "query", "");
   const [swap, setSwappingMaterial] = useLocalState(context, "swap", null);
   const wirePanel:MaintenencePanel = {
@@ -276,10 +292,6 @@ export const Manufacturer = (_, context) => {
   let toggleRepeat = () => {
     act("repeat");
     toggleRepeatVar(!repeat);
-  };
-  let updateSpeed = (newValue: number) => {
-    act("speed", { "value": newValue });
-    setSpeedVar(newValue);
   };
   let swapPriority = (materialID: string) => {
     if (swap === null) {
@@ -394,19 +406,21 @@ export const Manufacturer = (_, context) => {
                     >
                       <Slider
                         minValue={1}
-                        value={speed}
+                        value={data.speed}
                         maxValue={3}
                         step={1}
                         stepPixelSize={100}
-                        onChange={(_e: any, value: number) => updateSpeed(value)}
+                        disabled={data.mode !== "working"}
+                        onChange={(_e: any, value: number) => act("speed", { "value": value })}
                       />
                     </LabeledList.Item>
                   </LabeledList>
                 </Section>
                 {data.panel_open ? (
-                  <Stack.Item>
+                  <Stack.Item mb={1} >
                     <CollapsibleWireMenu wirePanel={wirePanel} />
-                  </Stack.Item>) : null}
+                  </Stack.Item>
+                ) : null}
                 <CardInfo />
               </Stack.Item>
               <Stack.Item>
@@ -449,6 +463,7 @@ export const Manufacturer = (_, context) => {
                       index={index}
                       data={getBlueprintFromQueueData(queued)}
                       progress_pct={data.progress_pct}
+                      mode={data.mode}
                     />
                   ))}
                 </Stack>

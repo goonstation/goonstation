@@ -47,6 +47,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/obj/item/card/id/scan = null //! Used when deducting payment for ores from a Rockbox
 
 	// Printing and queues
+	var/original_duration = 0 //! duration of the currently queued print, used to keep track of progress when M.time gets modified weirdly in queueing
 	var/time_left = 0 //! time the current blueprint will take to manufacture
 	var/time_started = 0 //! time the last blueprint was queued
 	var/speed = 3
@@ -295,14 +296,18 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// anyway this calculates the percentage progress of a blueprint by the time that already elapsed before a pause (0 if never paused)
 		// added to the current time that has been elapsed, divided by the total time to be elapsed.
 		// But we keep the pct a constant if we're paused, and just do time that was elapsed / time to elapse
-		progress_pct = TIME
 		if (length(src.queue))
 			var/datum/manufacture/M = src.queue[1]
-			if (src.mode == "halt")
-				progress_pct = src.time_left / M.time
+			if (src.mode != "working")
+				progress_pct = 1 - (src.time_left / src.original_duration)
 			else
-				progress_pct = ((M.time - src.time_left) + (TIME - src.time_started)) / M.time
-		progress_pct = progress_pct + 0
+				boutput(world,"original duration - [src.original_duration]")
+				boutput(world,"time left         - [src.time_left]")
+				boutput(world,"time              - [TIME]")
+				boutput(world,"time started      - [src.time_started]")
+				progress_pct = ((src.original_duration - src.time_left) + (TIME - src.time_started)) / src.original_duration
+				boutput(world,"progress %        - [progress_pct]")
+				boutput(world,"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 		return list(
 			"queue" = queue_data,
 			"progress_pct" = progress_pct,
@@ -533,15 +538,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (src.mode == "working")
 					boutput(usr, SPAN_ALERT("You cannot alter the speed setting while the unit is working."))
 					return
-				src.speed = clamp(params["speed"], 0, (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
+				src.speed = clamp(params["value"], 1, (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
 
 			if ("repeat")
 				src.repeat = !src.repeat
 
 			if ("ore_purchase")
+				if (ON_COOLDOWN(src, "ore_purchase", 1 SECOND)) return
 				src.buy_ore(params["ore"], params["storage_ref"])
 
 			if ("clear") // clear entire queue
+				if (ON_COOLDOWN(src, "clear", 1 SECOND)) return
 				var/Qlength = length(src.queue)
 				if (Qlength < 1) // Nothing in list
 					return
@@ -559,6 +566,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.build_icon()
 
 			if ("pause_toggle")
+				if (ON_COOLDOWN(src, "pause_toggle", 1 SECOND)) return
 				if (params["action"] == "continue")
 					if (length(src.queue) < 1)
 						boutput(usr, SPAN_ALERT("Cannot find any items in queue to continue production."))
@@ -575,18 +583,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 						src.action_bar.interrupt(INTERRUPT_ALWAYS)
 
 			if ("remove") // remove queued blueprint
+				if (ON_COOLDOWN(src, "remove", 1 SECOND)) return
 				var/operation = text2num_safe(params["index"])
 				if (!isnum(operation) || length(src.queue) < 1 || operation > length(src.queue))
 					boutput(usr, SPAN_ALERT("Invalid operation."))
-					return
-
-				if (ON_COOLDOWN(src, "remove", 0.5 SECONDS)) //Anti-spam to prevent people lagging the server with autoclickers
 					return
 
 				src.queue -= src.queue[operation]
 				begin_work()//pesky exploits // romayne update: i have no idea what exploit this prevents
 
 			if ("delete") // remove blueprint from storage
+				if (ON_COOLDOWN(src, "delete", 1 SECOND)) return
 				if(!src.allowed(usr))
 					boutput(usr, SPAN_ALERT("Access denied."))
 					return
@@ -599,10 +606,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.download -= I
 
 			if ("manudrive")
+				if (ON_COOLDOWN(src, "manudrive", 1 SECOND)) return
 				if (params["action"] == "eject")
 					src.eject_manudrive(usr)
 
 			if ("beaker")
+				if (ON_COOLDOWN(src, "beaker", 1 SECOND)) return
 				switch(params["action"])
 					if ("eject")
 						if (src.beaker)
@@ -783,6 +792,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.panel_open = FALSE
 			boutput(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 			src.build_icon()
+			tgui_process.try_update_ui(user, src)
 
 		else if (isweldingtool(W))
 			var/do_action = 0
@@ -1636,13 +1646,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 			// 4:     2.5s   12000   9000
 			// 5:     2.0s   18750  11250
 			src.active_power_consumption = 750 * src.speed ** 2
-			src.time_left = M.time
-			src.time_started = TIME
-			if (src.malfunction)
-				src.active_power_consumption += 3000
-				src.time_left += rand(2,6)
-				src.time_left *= 1.5
-			src.time_left /= src.speed
+			// new item began fabrication, setup time variables
+			if (new_production)
+				src.time_left = M.time
+				src.time_started = TIME
+				if (src.malfunction)
+					src.active_power_consumption += 3000
+					src.time_left += rand(2,6)
+					src.time_left *= 1.5
+				src.time_left /= src.speed
+				src.original_duration = src.time_left
 
 		var/datum/computer/file/manudrive/manudrive_file = null
 		if(src.manudrive)
