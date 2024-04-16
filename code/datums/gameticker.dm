@@ -890,6 +890,13 @@ var/global/current_state = GAME_STATE_INVALID
 
 	logTheThing(LOG_DEBUG, null, "Power Generation: [json_encode(station_power_generation)]")
 
+	var/ptl_cash = 0
+	for(var/obj/machinery/power/pt_laser/P in machine_registry[MACHINES_POWER])
+		ptl_cash += P.lifetime_earnings
+	if(ptl_cash)
+		logTheThing(LOG_DEBUG, null, "PTL Cash: [ptl_cash]")
+
+
 	SPAWN(0)
 		for(var/mob/E in mobs)
 			if(E.client)

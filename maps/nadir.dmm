@@ -14111,7 +14111,9 @@
 	mail_tag = "research";
 	name = "research mail junction"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
 /area/station/hallway/secondary/west)
 "gkj" = (
 /obj/disposalpipe/segment/vertical,
@@ -96922,9 +96924,9 @@ bJF
 bJF
 kOG
 bJF
-bJF
-oJM
 gjM
+oJM
+uPZ
 cjv
 bJF
 jbQ
