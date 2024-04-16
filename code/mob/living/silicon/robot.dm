@@ -2854,7 +2854,7 @@
 				src.i_details.icon_state = "openbrain"
 			else
 				src.i_details.icon_state = "openbrainless"
-			UpdateOverlays(src.i_details, "brain")
+			UpdateOverlays(src.i_details, "brain", TRUE)
 		else
 			UpdateOverlays(null, "brain")
 
@@ -2874,13 +2874,13 @@
 			if (src.wiresexposed)
 				src.i_details.icon_state = "openwires"
 				src.i_panel.overlays += src.i_details
-			UpdateOverlays(src.i_panel, "brain")
+			UpdateOverlays(src.i_panel, "panel", TRUE)
 		else
 			UpdateOverlays(null, "panel")
 
 		if (src.emagged)
 			src.i_details.icon_state = "emagged"
-			UpdateOverlays(src.i_details, "emagged")
+			UpdateOverlays(src.i_details, "emagged", TRUE)
 		else
 			UpdateOverlays(null, "emagged")
 
@@ -2891,7 +2891,7 @@
 			for (var/obj/item/roboupgrade/R in src.upgrades)
 				if (R.activated && R.borg_overlay)
 					src.i_upgrades.overlays += image('icons/mob/robots.dmi', R.borg_overlay)
-			UpdateOverlays(src.i_upgrades, "upgrades")
+			UpdateOverlays(src.i_upgrades, "upgrades", TRUE)
 		else
 			UpdateOverlays(null, "upgrades")
 
