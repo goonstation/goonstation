@@ -2688,7 +2688,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	is_pet = TRUE
 	name_list = "names/seals.txt"
 	random_name = TRUE
-	player_can_spawn_with_pet = TRUE
+	player_can_spawn_with_pet = FALSE
 
 	setup_hands()
 		..()
