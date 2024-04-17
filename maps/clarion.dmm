@@ -7145,9 +7145,7 @@
 	name = "autoname  - SS13";
 	pixel_y = 21
 	},
-/turf/simulated/floor/grey/side{
-	dir = 8
-	},
+/turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "aVo" = (
 /obj/cable{
@@ -7642,9 +7640,7 @@
 /obj/item/device/radio/intercom{
 	dir = 4
 	},
-/turf/simulated/floor/grey/side{
-	dir = 8
-	},
+/turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "aXX" = (
 /obj/machinery/light{
@@ -16630,9 +16626,7 @@
 	name = "autoname  - SS13";
 	pixel_y = 21
 	},
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
+/turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "egr" = (
 /obj/machinery/power/apc{
@@ -19159,8 +19153,13 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "ghI" = (
-/obj/disposalpipe/segment/food,
-/turf/simulated/wall/auto/supernorn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "gip" = (
 /obj/table/reinforced/chemistry/auto/basicsup,
@@ -20619,9 +20618,7 @@
 	dir = 4;
 	pixel_x = -15
 	},
-/turf/simulated/floor/grey/side{
-	dir = 8
-	},
+/turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "hvf" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -21368,9 +21365,7 @@
 	dir = 8;
 	pixel_x = 20
 	},
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
+/turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "hUu" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -24174,6 +24169,9 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "kea" = (
@@ -25458,9 +25456,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8
 	},
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
+/turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "lfq" = (
 /obj/landmark/start/job/assistant,
@@ -28027,7 +28023,7 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/black,
 /area/station/engine/core/nuclear)
 "nbU" = (
 /obj/disposalpipe/segment{
@@ -36496,6 +36492,9 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -72901,7 +72900,7 @@ juH
 tme
 tme
 boM
-tme
+ghI
 tme
 bvx
 tme
@@ -73159,7 +73158,7 @@ aQY
 aQY
 aQY
 kcV
-ghI
+mCQ
 aZg
 mCQ
 mCQ
