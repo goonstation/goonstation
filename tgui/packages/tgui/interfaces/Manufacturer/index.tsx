@@ -8,7 +8,7 @@
 import { useBackend, useLocalState, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
-import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack, Tooltip } from '../../components';
+import { Box, Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack, Tooltip } from '../../components';
 import { ButtonWithBadge } from '../../components/goonstation/ButtonWithBadge';
 import { truncate } from '../../format';
 import { formatMoney } from '../../format';
@@ -255,12 +255,17 @@ const BlueprintButton = (props, context) => {
   let content_requirements = (
     <>
       Material Requirements:<br />
-      {blueprintData.material_names.map((value:string, index:number) => (
-        <>
-          {value}: {blueprintData.item_amounts[index]/10} pieces<br />
-          {blueprintData.item_paths[index]}
-        </>
-      ))}
+      <LabeledList>
+        {blueprintData.material_names.map((value:string, index:number) => (
+          <LabeledList.Item
+            key={index}
+            labelColor={(blueprintSatisfaction[index]) ? "green" : "red"}
+            label={value}
+          >
+            {blueprintData.item_amounts[index]/10} pieces<br />
+          </LabeledList.Item>
+        ))}
+      </LabeledList>
       Time: {getBlueprintTime(blueprintData.time, manufacturerSpeed)}s<br />
       {outputs}
     </>
