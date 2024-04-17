@@ -5558,6 +5558,10 @@
 	tag = "icon-rwindow (EAST)"
 	},
 /obj/window/reinforced/north,
+/obj/item_dispenser/icedispenser{
+	pixel_y = 12;
+	pixel_x = -13
+	},
 /turf/simulated/floor{
 	icon_state = "carpetSE"
 	},
@@ -16147,6 +16151,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
+/obj/item/clothing/glasses/spectro,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cIT" = (
@@ -16440,7 +16445,7 @@
 	},
 /area/station/hallway/primary/south)
 "dbJ" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor{
 	icon_state = "corner_east";
 	tag = "icon-corner_east"
@@ -18258,7 +18263,7 @@
 /area/station/turret_protected/ai)
 "eMY" = (
 /obj/machinery/light/incandescent,
-/obj/reagent_dispensers/still,
+/obj/machinery/chem_heater,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/baroffice)
 "eNp" = (
@@ -20969,7 +20974,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "hsU" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/caution/corner/ne{
 	dir = 1
 	},
@@ -33113,6 +33118,10 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
+"slw" = (
+/obj/reagent_dispensers/still,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/baroffice)
 "smR" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
@@ -36405,6 +36414,7 @@
 /area/station/turret_protected/Zeta)
 "uTp" = (
 /obj/machinery/chem_dispenser/alcohol,
+/obj/item/clothing/glasses/spectro,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/baroffice)
 "uTY" = (
@@ -72332,7 +72342,7 @@ aBa
 ldT
 kir
 kDt
-aEa
+slw
 cZb
 aFc
 kir
