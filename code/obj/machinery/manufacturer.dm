@@ -415,8 +415,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 			var/T = M.item_outputs[i]
 			var/obj/O = new T
 			if (!O || !isobj(O)) continue
+			if (M.apply_material)
+				O.setMaterial(get_material_for_pattern(M.item_paths[1]))
 			generated_names += "\improper[O.name]"
 			generated_descriptions += "[O.desc]"
+
+			qdel(O)
 
 		return list(
 			"name" = M.name,
@@ -1553,6 +1557,21 @@ TYPEINFO(/obj/machinery/manufacturer)
 			. += "FAB-1"
 		if (istype(M, /datum/material/crystal/gemstone))
 			. += "GEM-1"
+
+	/// Returns material in storage which first satisfies a pattern, otherwise returns null
+	/// Similar to get_materials_needed, but ignores amounts and implications of choosing materials
+	proc/get_material_for_pattern(var/pattern)
+		var/list/C = src.get_contents()
+		if (!length(C))
+			return null
+		if (pattern == "ALL")
+			return C[1]
+		for (var/piece_index in 1 to length(C))
+			var/obj/item/material_piece/P = C[piece_index]
+			var/P_id = P.material.getID()
+			if (pattern in src.material_patterns_by_id[P_id])
+				return P
+		return null
 
 	/// Returns associative list of item path to mat_id that will be used, but does not guarantee all item_paths are satisfied or that
 	/// the blueprint will have the required materials ready by the time it reaches the front of the queue
