@@ -803,8 +803,17 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_north,
-/obj/storage/closet/office,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/door_timer/minibrig/new_walls/west{
+	pixel_y = -13
+	},
+/obj/disposalpipe/segment/brig,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/arrivals)
 "aee" = (
@@ -867,6 +876,10 @@
 	name = "N light switch";
 	pixel_y = 24
 	},
+/obj/disposalpipe/segment/brig{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/arrivals)
 "aeq" = (
@@ -884,6 +897,10 @@
 "aet" = (
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/brig{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/checkpoint/arrivals)
@@ -16065,6 +16082,18 @@
 	dir = 5
 	},
 /area/station/medical/medbay/surgery)
+"cGu" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/storage/toilet{
+	dir = 8
+	},
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/arrivals)
 "cGx" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -17664,6 +17693,10 @@
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/head_of_personnel,
+/obj/disposalpipe/segment/brig{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/checkpoint/arrivals)
 "eij" = (
@@ -19007,6 +19040,13 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/turret_protected/Zeta)
+"fCk" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/security/checkpoint/arrivals)
 "fCr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -19224,6 +19264,14 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"fIx" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/simulated/floor/plating/airless,
+/area/station/security/checkpoint/arrivals)
 "fIA" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -19288,6 +19336,14 @@
 	dir = 8
 	},
 /area/station/engine/engineering/breakroom)
+"fOB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/security/checkpoint/arrivals)
 "fPi" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -20799,6 +20855,10 @@
 /area/station/hallway/secondary/entry)
 "hpj" = (
 /obj/shrub,
+/obj/disposaloutlet/south,
+/obj/disposalpipe/trunk/brig{
+	dir = 4
+	},
 /turf/simulated/floor/red/corner{
 	dir = 4
 	},
@@ -22323,6 +22383,12 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
+"iSA" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/checkpoint/arrivals)
 "iSN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -22567,6 +22633,14 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"jhU" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/turf/simulated/floor/plating/airless,
+/area/station/security/checkpoint/arrivals)
 "jij" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
@@ -22800,6 +22874,16 @@
 	},
 /turf/space,
 /area/station/solar/aisat)
+"jtW" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/security/checkpoint/arrivals)
 "juF" = (
 /turf/simulated/floor/airless/solar,
 /area/space)
@@ -23655,6 +23739,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"kki" = (
+/obj/machinery/door/airlock/pyro/security,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/brig,
+/obj/disposalpipe/segment/brig,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/arrivals)
 "klI" = (
 /obj/machinery/flasher/portable,
 /obj/machinery/light/incandescent,
@@ -25121,6 +25214,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"lPZ" = (
+/obj/storage/closet/office,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/arrivals)
 "lRr" = (
 /obj/cable{
 	icon_state = "2-9"
@@ -26337,12 +26434,29 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
+"nfz" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/security/checkpoint/arrivals)
 "nfL" = (
 /obj/machinery/firealarm/east,
 /obj/machinery/light/incandescent,
 /obj/storage/secure/closet/medical/anesthetic,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
+"nfW" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/checkpoint/arrivals)
 "nfX" = (
 /obj/item/device/radio/intercom/security,
 /obj/machinery/disposal,
@@ -26815,6 +26929,12 @@
 	dir = 1
 	},
 /area/station/science/artifact)
+"nAp" = (
+/obj/stool/bed/brig,
+/obj/item/clothing/suit/bedsheet/red,
+/obj/machinery/camera/auto,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/checkpoint/arrivals)
 "nAs" = (
 /turf/simulated/floor/purplewhite{
 	dir = 5
@@ -27074,6 +27194,10 @@
 	},
 /area/station/crew_quarters/courtroom)
 "nOL" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
@@ -27952,6 +28076,10 @@
 	dir = 1
 	},
 /area/station/science/hall)
+"oAQ" = (
+/obj/stool,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/checkpoint/arrivals)
 "oBD" = (
 /turf/simulated/floor{
 	icon_state = "carpetSW"
@@ -28065,6 +28193,17 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
+"oIz" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/water,
+/obj/item/pen,
+/obj/item/paper_bin,
+/obj/machinery/flasher/minibrig/new_walls/north,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/arrivals)
 "oIP" = (
 /obj/decal/tile_edge/floorguide/qm,
 /obj/decal/tile_edge/floorguide/arrow_w{
@@ -29902,6 +30041,13 @@
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
+"pTZ" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/obj/storage/secure/closet/brig_automatic/minibrig,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/arrivals)
 "pUe" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/heater,
@@ -35171,7 +35317,6 @@
 /area/station/hallway/primary/central)
 "ucf" = (
 /obj/stool,
-/obj/disposalpipe/trunk/brig,
 /obj/disposaloutlet{
 	dir = 2;
 	name = "brig delivery chute";
@@ -35915,6 +36060,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
+"uGr" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/floorflusher/minibrig,
+/obj/disposalpipe/trunk/brig,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/checkpoint/arrivals)
 "uGu" = (
 /obj/machinery/light/incandescent{
 	dir = 4
@@ -36544,6 +36697,13 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
+"vkM" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
 "vla" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36633,6 +36793,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/arrivals)
 "vnW" = (
@@ -81736,9 +81897,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+jtW
+fOB
+fIx
 adP
 adP
 aen
@@ -82037,14 +82198,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-adP
+fCk
+jhU
+pTZ
+uGr
+kki
 aed
 aet
-aeG
+lPZ
 mnW
 cMJ
 uLf
@@ -82339,10 +82500,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+adP
+oIz
+oAQ
+aeG
 mnW
 aee
 aeu
@@ -82642,9 +82803,9 @@ fEr
 fEr
 fEr
 aaY
-iNv
-iNv
-iNv
+nAp
+aeG
+iSA
 vnI
 aeg
 aev
@@ -82943,10 +83104,10 @@ ojn
 reX
 adh
 adh
-fEr
-aaa
-aaa
-aaa
+vkM
+fIx
+nfW
+cGu
 adP
 aeh
 aey
@@ -83246,9 +83407,9 @@ aaY
 sOq
 adh
 fEr
-aaa
-aaa
-aaa
+nfz
+fOB
+jhU
 adP
 adP
 aeB
