@@ -64,8 +64,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null
 	var/list/resource_amounts = list()
 	var/list/materials_in_use = list()
-	var/materials_loaded_changed = TRUE //! true by default so that we update this information the first time someone opens this window
-	var/list/cached_manufacturables_by_name = list() //! List which stores the material requirement information of all blueprints associated by ID
+	var/blueprints_known_changed = TRUE //! true by default so that we update this information the first time someone opens this window
 	var/list/material_patterns_by_id = list() //! Helper list which stores all the material patterns each loaded material satisfies, along with its ID
 
 	// Production options
@@ -293,13 +292,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			ui.open()
 
 	ui_data(mob/user)
-		// We do this here to save a bit of computer power if someone is loading like 500 steel bars without the UI open or just rapidly in general
-		if (src.materials_loaded_changed)
-			// Also wait a bit if we're spewing items out like metal sheets
-			if (!ON_COOLDOWN(src, "evaluate_material_requirements", 5 SECONDS))
-				for (var/datum/manufacture/M as anything in ALL_BLUEPRINTS)
-					src.cached_manufacturables_by_name[M.name] = src.check_enough_materials(M)
-				src.materials_loaded_changed = FALSE
+		// When we update the UI, we must regenerate the blueprint data if the blueprints known to us has changed since last time
+		if (blueprints_known_changed)
+			blueprints_known_changed = FALSE
+			src.update_static_data(user)
 		// Send material data as tuples of material name, material id, material amount
 		var/resource_data = list()
 		for (var/obj/item/material_piece/P as anything in src.get_contents())
@@ -422,7 +418,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		return list(
 			"name" = M.name,
-			"category" = M.category,
+			"category" = isnull(M.category) ? "Miscellaneous" : M.category, // fix for not displaying blueprints/manudrives
 			"material_names" = M.item_names,
 			"item_paths" = M.item_paths,
 			"item_names" = generated_names,
@@ -611,6 +607,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					return
 				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
 					src.download -= I
+					blueprints_known_changed = TRUE
 
 			if ("manudrive")
 				if (ON_COOLDOWN(src, "manudrive", 1 SECOND)) return
@@ -741,6 +738,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			playsound(src.loc, src.sound_happy, 50, 1)
 			boutput(user, SPAN_NOTICE("The manufacturer accepts and scans the blueprint."))
 			qdel(BP)
+			blueprints_known_changed = TRUE
 			return
 
 		else if (istype(W, /obj/item/satchel))
@@ -887,6 +885,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					W.dropped(user)
 				for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
 					src.drive_recipes = MD.drivestored
+			blueprints_known_changed = TRUE
 
 
 		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
@@ -1594,7 +1593,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if (P.material && P.material.getID() == mat_id)
 						P.change_stack_amount(-amount)
 						break
-		src.materials_loaded_changed = TRUE
 
 	proc/begin_work(new_production = TRUE)
 		if (status & NOPOWER || status & BROKEN)
@@ -1616,7 +1614,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		var/datum/manufacture/M = src.queue[1]
 		//Wire: Fix for href exploit creating arbitrary items
-		if (!(M in src.available + src.hidden + src.drive_recipes + src.download))
+		if (!(M in ALL_BLUEPRINTS))
 			src.mode = "halt"
 			src.error = "Corrupted entry purged from production queue."
 			src.queue -= src.queue[1]
@@ -1779,7 +1777,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.storage.transfer_stored_item(X, src.loc)
 				X.throw_at(pick(src.nearby_turfs), 16, 3)
 				to_throw--
-			src.materials_loaded_changed = TRUE
 		if (length(src.queue) > 1 && prob(20))
 			var/list_counter = 0
 			for (var/datum/manufacture/X in src.queue)
@@ -1848,6 +1845,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			manudrive.set_loc(src.loc)
 		src.manudrive = null
+		blueprints_known_changed = TRUE
 
 	/// Safely gets our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
 	proc/get_contents()
@@ -1900,7 +1898,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 					// Handle removing material from helper lists now that it's gone
 					material_patterns_by_id[P.material.getID()] = null
 					qdel(P)
-				src.materials_loaded_changed = TRUE
 				return
 
 		// No same material in storage, create/add the one we have and update the patterns index accordingly
@@ -1919,7 +1916,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.storage.add_contents(P, user = user, visible = FALSE)
 
 		material_patterns_by_id[P.material.getID()] = src.get_patterns_material_satisfies(P.material)
-		src.materials_loaded_changed = TRUE
 
 	proc/take_damage(damage_amount = 0)
 		if (!damage_amount)
@@ -1966,8 +1962,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			free_resource_amt = 0
 		else
 			logTheThing(LOG_DEBUG, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
-
-		src.materials_loaded_changed = TRUE
 
 	proc/get_output_location(atom/A)
 		if (!src.output_target)
