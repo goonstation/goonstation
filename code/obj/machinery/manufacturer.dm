@@ -416,10 +416,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 			var/obj/O = new T
 			if (!O || !isobj(O)) continue
 			if (M.apply_material)
-				O.setMaterial(get_material_for_pattern(M.item_paths[1]))
+				// fix for "Cannot execute null.update_number()"
+				if (isitem(O))
+					var/obj/item/I = O
+					I.inventory_counter_enabled = FALSE
+				var/obj/item/material_piece/P = get_material_for_pattern(M.item_paths[1])
+				O.setMaterial(P.material, appearance=FALSE)
 			generated_names += "\improper[O.name]"
 			generated_descriptions += "[O.desc]"
-
 			qdel(O)
 
 		return list(
