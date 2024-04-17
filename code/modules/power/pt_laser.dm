@@ -11,6 +11,7 @@
 	dir = EAST
 	bound_height = 96
 	bound_width = 96
+	req_access = list(access_engineering_power)
 	var/output = 0		//power output of the beam
 	var/capacity = 1e15
 	var/charge = 0
@@ -30,7 +31,7 @@
 	var/output_multi = 1e6
 	var/emagged = FALSE
 	var/lifetime_earnings = 0
-	var/undistributed_earnings = 0
+	var/current_balance = 0
 	var/excess = null //for tgui readout
 	var/is_charging = FALSE //for tgui readout
 	///A list of all laser segments from this PTL that reached the edge of the z-level
@@ -57,7 +58,6 @@
 		terminal.master = src
 
 		AddComponent(/datum/component/mechanics_holder)
-
 		UpdateIcon()
 
 /obj/machinery/power/pt_laser/disposing()
@@ -72,10 +72,47 @@
 
 	..()
 
+/obj/machinery/power/pt_laser/attackby(obj/item/I, mob/user)
+	var/obj/item/card/id/id_card = get_id_card(I)
+	if (istype(id_card))
+		if (!src.check_access(id_card))
+			boutput(user, SPAN_ALERT("Access denied."))
+			return TRUE
+		var/datum/db_record/account = FindBankAccountByName(id_card.registered)
+		if (!account)
+			boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
+			return TRUE
+		// var/amount = tgui_input_number(user, "Withdraw how much?", "Withdraw amount", src.current_balance, src.current_balance, 0, 0, FALSE)
+		var/amount = input(user, "Withdraw how much?", "Withdraw amount", src.current_balance)
+		amount = clamp(amount, 0, src.current_balance)
+		src.current_balance -= amount
+		account["current_money"] += amount
+
+		src.send_pda_message("PT LASER: Transferring [amount][CREDIT_SIGN] to account of [id_card.registered] ([id_card.assignment])")
+		return TRUE
+	else
+		. = ..()
+
+/obj/machinery/power/pt_laser/proc/send_pda_message(msg)
+	var/datum/signal/signal = get_free_signal()
+	signal.source = src
+	signal.data["command"] = "text_message"
+	signal.data["sender_name"] = "ENGINE-MAILBOT"
+	signal.data["group"] = list(MGO_ENGINEER, MGA_ENGINE)
+	signal.data["message"] = msg
+	signal.data["sender"] = "00000000"
+	signal.data["address_1"] = "00000000"
+	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
+
 /obj/machinery/power/pt_laser/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (src.emagged)
 		return 0
 	src.emagged = TRUE
+	src.output_number = -src.output_number
+	src.output = src.output_number * src.output_multi
+	if (src.firing)
+		src.stop_firing()
+		src.start_firing()
 	if (user)
 		src.add_fingerprint(user)
 		playsound(src.loc, 'sound/machines/bweep.ogg', 10, TRUE)
@@ -187,37 +224,20 @@
 
 	var/output_mw = adjusted_output / 1e6
 
-	#define LOW_CAP (20) //provide a nice scalar for deminishing returns instead of a slow steady climb
+	#define LOW_CAP (23) //provide a nice scalar for deminishing returns instead of a slow steady climb
 	#define BUX_PER_WORK_CAP (5000-LOW_CAP) //at inf power, generate 5000$/tick, also max amt to drain/tick
-	#define ACCEL_FACTOR 69 //our acceleration factor towards cap
+	#define ACCEL_FACTOR 15 //our acceleration factor towards cap
 	#define STEAL_FACTOR 4 //Adjusts the curve of the stealing EQ (2nd deriv/concavity)
 
-	//For equation + explanation, https://www.desmos.com/calculator/r8bsyz5gf9
+	//For equation + explanation, https://www.desmos.com/calculator/6pft2ayzt9
 	//Adjusted to give a decent amt. of cash/tick @ 50GW (said to be average hellburn)
 	var/generated_moolah = (2*output_mw*BUX_PER_WORK_CAP)/(2*output_mw+BUX_PER_WORK_CAP*ACCEL_FACTOR) //used if output_mw > 0
-	generated_moolah += (4*output_mw*LOW_CAP)/(4*output_mw + LOW_CAP)
+	generated_moolah += (5*output_mw*LOW_CAP)/(2*output_mw + LOW_CAP)
 
-	if (src.output < 0) //steals money since you emagged it
-		generated_moolah = (-2*output_mw*BUX_PER_WORK_CAP)/(2*STEAL_FACTOR*output_mw - BUX_PER_WORK_CAP*STEAL_FACTOR*ACCEL_FACTOR)
+	generated_moolah = round(generated_moolah)
 
-	lifetime_earnings += generated_moolah
-	generated_moolah += undistributed_earnings
-	undistributed_earnings = 0
-
-	// CE gets double the payout share from the PTL
-	var/list/accounts = FindBankAccountsByJobs(list("Chief Engineer", "Chief Engineer", "Engineer"))
-
-	if(!length(accounts)) // no engineering staff but someone still started the PTL
-		wagesystem.station_budget += generated_moolah
-	else if(abs(generated_moolah) >= accounts.len*2) //otherwise not enough to split evenly so don't bother I guess
-		wagesystem.station_budget += round(generated_moolah/2)
-		generated_moolah -= round(generated_moolah/2) //no coming up with $$$ out of air!
-
-		for(var/datum/db_record/t as anything in accounts)
-			t["current_money"] += round(generated_moolah/accounts.len)
-		undistributed_earnings += generated_moolah-(round(generated_moolah/accounts.len) * (length(accounts)))
-	else
-		undistributed_earnings += generated_moolah
+	src.lifetime_earnings += generated_moolah
+	src.current_balance += generated_moolah
 
 	#undef STEAL_FACTOR
 	#undef ACCEL_FACTOR
@@ -272,12 +292,12 @@
 /obj/machinery/power/pt_laser/proc/start_firing()
 	if (!src.output)
 		return
-	var/turf/T = get_barrel_turf()
+	var/turf/T = src.emagged ? get_rear_turf() : get_barrel_turf()
 	if(!T) return //just in case
 
 	firing = TRUE
 	UpdateIcon(1)
-	src.laser = new(T, src.dir)
+	src.laser = new(T, src.emagged ? turn(src.dir, 180) : src.dir)
 	src.laser.source = src
 	src.laser.try_propagate()
 
@@ -309,7 +329,7 @@
 	return abs(src.output) <= src.charge
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
-	src.laser?.traverse(PROC_REF(update_laser_segment))
+	src.laser?.traverse(new /datum/callback(src, PROC_REF(update_laser_segment)))
 
 /obj/machinery/power/pt_laser/proc/update_laser_segment(obj/linked_laser/ptl/laser)
 	var/alpha = clamp(((log(10, max(1,laser.source.laser_power() * laser.power)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
@@ -341,6 +361,7 @@
 		"isFiring" = src.firing,
 		"isLaserEnabled" = src.online,
 		"lifetimeEarnings" = src.lifetime_earnings,
+		"storedBalance" = src.current_balance,
 		"name" = src.name,
 		"outputLevel" = src.output,
 		"outputMultiplier" = src.output_multi,
@@ -384,12 +405,14 @@
 		//Output controls
 		if("toggleOutput")
 			src.online = !src.online
+			if (!src.online && src.firing)
+				src.stop_firing()
 			src.process(1)
 			. = TRUE
 		if("setOutput")
 			. = TRUE
 			if (src.emagged)
-				src.output_number = clamp(params["setOutput"], -999, 999)
+				src.output_number = clamp(params["setOutput"], -999, 0)
 			else
 				src.output_number = clamp(params["setOutput"], 0, 999)
 			src.output = src.output_number * src.output_multi
@@ -465,10 +488,10 @@
 
 	//this will probably need fiddling with, hard to decide on reasonable values
 	switch(power)
-		if(10 to 1e7)
+		if(10 to 5 MEGA WATTS)
 			L.set_burning(power/1e5) //100 (max burning) at 10MW
 			L.bodytemperature = max(power/1e4, L.bodytemperature) //1000K at 10MW. More than hotspot because it's hitting them not just radiating heat (i guess? idk)
-		if(1e7+1 to 5e8)
+		if(5 MEGA WATTS + 1 to 200 MEGA WATTS)
 			L.set_burning(100)
 			L.bodytemperature = max(power/1e4, L.bodytemperature)
 			L.TakeDamage("chest", 0, power/1e7) //ow
@@ -476,14 +499,14 @@
 				var/limb = pick("l_arm","r_arm","l_leg","r_leg")
 				L:sever_limb(limb)
 				L.visible_message("<b>The [src.name] slices off one of [L.name]'s limbs!</b>")
-		if(5e8+1 to 1e11) //you really fucked up this time buddy
+		if(200 MEGA WATTS + 1 to 5 GIGA WATTS) //you really fucked up this time buddy
 			make_cleanable( /obj/decal/cleanable/ash,src.loc)
 			L.unlock_medal("For Your Ohm Good", 1)
 			L.visible_message("<b>[L.name] is vaporised by the [src]!</b>")
 			logTheThing(LOG_COMBAT, L, "was elecgibbed by the PTL at [log_loc(L)].")
 			L.elecgib()
 			return 1 //tells the caller to remove L from the laser's affecting_mobs
-		if(1e11+1 to INFINITY) //you really, REALLY fucked up this time buddy
+		if(5 GIGA WATTS + 1 to INFINITY) //you really, REALLY fucked up this time buddy
 			L.unlock_medal("For Your Ohm Good", 1)
 			L.visible_message("<b>[L.name] is detonated by the [src]!</b>")
 			logTheThing(LOG_COMBAT, L, "was explosively gibbed by the PTL at [log_loc(L)].")
@@ -506,7 +529,7 @@ ABSTRACT_TYPE(/obj/laser_sink)
 	src.in_laser = null
 
 ///Another stub, should call traverse on all emitted laser segments with the proc passed through
-/obj/laser_sink/proc/traverse(proc_to_call)
+/obj/laser_sink/proc/traverse(datum/callback/callback)
 	return
 
 /obj/laser_sink/Move()
@@ -799,12 +822,12 @@ TYPEINFO(/obj/laser_sink/splitter)
 		qdel(src)
 
 ///Traverses all upstream laser segments and calls proc_to_call on each of them
-/obj/linked_laser/proc/traverse(proc_to_call)
+/obj/linked_laser/proc/traverse(datum/callback/callback)
 	var/obj/linked_laser/ptl/current_laser = src
 	do
-		call(proc_to_call)(current_laser)
+		callback.Invoke(current_laser)
 		if (!current_laser.next)
-			current_laser.sink?.traverse(proc_to_call)
+			current_laser.sink?.traverse(callback)
 		current_laser = current_laser.next
 	while (current_laser)
 
@@ -861,7 +884,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 			src.sink = seller
 	var/power = src.source.laser_power()
 	alpha = clamp(((log(10, max(power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
-	if(istype(src.loc, /turf/simulated/floor) && prob(power/1e6))
+	if(istype(src.loc, /turf/simulated/floor) && prob(power/1 MEGA WATT))
 		src.loc:burn_tile()
 
 	for (var/mob/living/L in src.loc)

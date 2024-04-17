@@ -1280,8 +1280,8 @@ TYPEINFO(/obj/submachine/foodprocessor)
 				if (milk_amount < 10 && yoghurt_amount < 10)
 					continue
 
-				var/cream_output = roundfloor(milk_amount / 10)
-				var/yoghurt_output = roundfloor(yoghurt_amount / 10)
+				var/cream_output = floor(milk_amount / 10)
+				var/yoghurt_output = floor(yoghurt_amount / 10)
 				P.reagents.remove_reagent("milk", cream_output * 10)
 				P.reagents.remove_reagent("yoghurt", yoghurt_output * 10)
 				for (var/i in 1 to cream_output)

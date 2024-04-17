@@ -154,7 +154,7 @@
 		if (prob(power * 0.5))
 			qdel(src)
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		if (exposed_temperature > 1000)
 			return ..()
 

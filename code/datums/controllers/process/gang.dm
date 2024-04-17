@@ -129,7 +129,7 @@
 				imgroup.remove_image(objective_image)
 				qdel(indicator)
 				var/obj/storage/crate/gang_crate/guns_and_gear/crate = new(location)
-				broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] is has arrived! Drag it to your locker.")
+				broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] has arrived! Drag it to your locker.")
 				logTheThing(LOG_GAMEMODE, crate, "The crate in [drop_zone.name] arrives on station. Location: [location.x],[location.y].")
 
 /datum/controller/process/gang_duffle_drop
@@ -161,10 +161,10 @@
 			var/broadcast_string = "<span style='font-size:20px'> Our associates have hidden [repeats] bag[s_es(repeats)] of weapons & supplies on board. The location[s_es(repeats)] have been tipped off to the PDAs of: "
 			if (length(gangChosenCivvies) > 1)
 				for (var/name=1 to length(gangChosenCivvies)-1)
-					broadcast_string += "[gangChosenCivvies[name].current.real_name] the [gangChosenCivvies[name].assigned_role]."
+					broadcast_string += "[gangChosenCivvies[name].current.real_name] the [gangChosenCivvies[name].assigned_role], "
 				broadcast_string += "and [gangChosenCivvies[length(gangChosenCivvies)].current.real_name] the [gangChosenCivvies[length(gangChosenCivvies)].assigned_role]."
 			else
-				broadcast_string += "[gangChosenCivvies[1].current.real_name] the [gangChosenCivvies[1].assigned_role],"
+				broadcast_string += "[gangChosenCivvies[1].current.real_name] the [gangChosenCivvies[1].assigned_role]."
 			broadcast_string += "</span>"
 			targetGang.broadcast_to_gang(broadcast_string)
 

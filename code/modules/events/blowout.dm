@@ -41,19 +41,17 @@
 			sleep(actualtime)
 
 			for (var/area/A in world)
-				LAGCHECK(LAG_LOW)
-				var/turf/a_turf = locate(/turf) in A
-				if (a_turf?.z != Z_LEVEL_STATION)
+				if (A.do_not_irradiate || (A.z != Z_LEVEL_STATION))
 					continue
-				if (A.do_not_irradiate)
-					continue
-				else
-					if (!A.irradiated)
-						A.irradiated = TRUE
-						A.UpdateIcon()
-					for (var/turf/T in A)
-						if (rand(0,1000) < 5 && istype(T,/turf/simulated/floor))
-							Artifact_Spawn(T)
+
+				if (!A.irradiated)
+					A.irradiated = TRUE
+					A.UpdateIcon()
+				for (var/turf/T in A)
+					if (rand(0,1000) < 5 && istype(T,/turf/simulated/floor))
+						Artifact_Spawn(T)
+
+				LAGCHECK(LAG_LOW) // let's only check after we've gone through a few areas
 
 			siren.repeat = FALSE
 			siren.channel = 5

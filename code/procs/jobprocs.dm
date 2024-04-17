@@ -137,9 +137,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	shuffle_list(unassigned)
 
 	//Shuffle them and *then* sort them according to their order priority
-	sortList(high_priority_jobs, PROC_REF(cmp_job_order_priority))
+	sortList(high_priority_jobs, GLOBAL_PROC_REF(cmp_job_order_priority))
 
-	sortList(available_job_roles, PROC_REF(cmp_job_order_priority))
+	sortList(available_job_roles, GLOBAL_PROC_REF(cmp_job_order_priority))
 
 	// First we deal with high-priority jobs like Captain or AI which generally will always
 	// be present on the station - we want these assigned first just to be sure
@@ -600,13 +600,16 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 /// Equip items from sensory traits
 /mob/living/carbon/human/proc/equip_sensory_items()
 	if (src.traitHolder.hasTrait("blind"))
-		src.stow_in_available(src.glasses)
+		if (src.glasses)
+			src.stow_in_available(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("shortsighted"))
-		src.stow_in_available(src.glasses)
+		if (src.glasses)
+			src.stow_in_available(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("deaf"))
-		src.stow_in_available(src.ears)
+		if (src.ears)
+			src.stow_in_available(src.ears)
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), SLOT_EARS)
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)

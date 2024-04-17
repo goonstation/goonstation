@@ -168,10 +168,12 @@
 				src.visible_message(SPAN_NOTICE("[src] shakes [target], trying to grab [his_or_her(target)] attention!"))
 	hit_twitch(target)
 
-/mob/living/proc/pull_out_implant(var/mob/living/user, var/obj/item/implant/dart)
+/mob/living/proc/pull_out_implant(var/mob/living/user, var/obj/item/implant/projectile/body_visible/dart)
 	dart.on_remove(src)
+	dart.on_pull_out(user)
 	src.implant.Remove(dart)
-	user.put_in_hand_or_drop(dart)
+	if(!QDELETED(dart)) //some implants will delete themselves on removal
+		user.put_in_hand_or_drop(dart)
 
 /mob/proc/administer_CPR(var/mob/living/carbon/human/target)
 	boutput(src, SPAN_ALERT("You have no idea how to perform CPR."))

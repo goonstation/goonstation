@@ -36,25 +36,27 @@
 		return bans
 
 	/// Add a ban
-	proc/add(admin_ckey, server_id, ckey, comp_id, ip, reason, duration = FALSE, requires_appeal = FALSE)
+	proc/add(admin_ckey, server_id, ckey, comp_id, ip, reason, duration = FALSE, requires_appeal = FALSE, added_externally = FALSE)
 		duration = duration ? duration / 10 : duration // duration given in deciseconds, api expects seconds
-		var/datum/apiRoute/bans/add/addBan = new
-		addBan.buildBody(
-			admin_ckey,
-			roundId,
-			server_id,
-			ckey,
-			comp_id,
-			ip,
-			reason,
-			duration,
-			requires_appeal
-		)
-		try
-			apiHandler.queryAPI(addBan)
-		catch (var/exception/e)
-			var/datum/apiModel/Error/error = e.name
-			throw EXCEPTION(error.message)
+
+		if (!added_externally)
+			var/datum/apiRoute/bans/add/addBan = new
+			addBan.buildBody(
+				admin_ckey,
+				roundId,
+				server_id,
+				ckey,
+				comp_id,
+				ip,
+				reason,
+				duration,
+				requires_appeal
+			)
+			try
+				apiHandler.queryAPI(addBan)
+			catch (var/exception/e)
+				var/datum/apiModel/Error/error = e.name
+				throw EXCEPTION(error.message)
 
 		// We do this instead of requiring an admin client argument because bans can be added multiple ways, e.g. from discord
 		var/client/adminClient = find_client(admin_ckey)
@@ -74,14 +76,15 @@
 		adminMsg += " has banned [targetClient ? targetClient : replacementText] [serverLogSnippet].<br>Reason: [reason]<br>Duration: [durationHuman].</span>"
 		message_admins(adminMsg)
 
-		// Tell discord
-		var/ircmsg[] = new()
-		ircmsg["key"] = adminKey
-		ircmsg["key2"] = "[ckey] (IP: [ip], CompID: [comp_id])"
-		ircmsg["msg"] = reason
-		ircmsg["time"] = durationHuman
-		ircmsg["timestamp"] = ((world.realtime / 10) / 60) + (duration / 60) // duration is in seconds, bot expects minutes
-		ircbot.export_async("ban", ircmsg)
+		if (!added_externally)
+			// Tell discord
+			var/ircmsg[] = new()
+			ircmsg["key"] = adminKey
+			ircmsg["key2"] = "[ckey] (IP: [ip], CompID: [comp_id])"
+			ircmsg["msg"] = reason
+			ircmsg["time"] = durationHuman
+			ircmsg["timestamp"] = ((world.realtime / 10) / 60) + (duration / 60) // duration is in seconds, bot expects minutes
+			ircbot.export_async("ban", ircmsg)
 
 		if (targetClient)
 			targetClient.mob.unlock_medal("Banned", FALSE)

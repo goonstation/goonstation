@@ -686,7 +686,7 @@
 	// shittery that breaks text or worse
 	var/static/regex/shittery_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
 	message = replacetext(message, shittery_regex, "")
-	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
+	message = strip_html(trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	var/client/my_client = src.client
 	if(isAI(src))
@@ -742,7 +742,7 @@
 
 	if(src.z == 2 && istype(get_area(src),/area/afterlife)) //check zlevel before doing istype
 		if (dd_hasprefix(message, ":d"))
-			message = trim(copytext(message, 3, MAX_MESSAGE_LEN))
+			message = trimtext(copytext(message, 3, MAX_MESSAGE_LEN))
 			return src.say_dead(message)
 
 	// wtf?
@@ -769,7 +769,7 @@
 			H.whisper(message, forced=TRUE)
 			return
 
-	message = trim(message)
+	message = trimtext(message)
 
 	// check for singing prefix before radio prefix
 	message = check_singing_prefix(message)
@@ -842,7 +842,7 @@
 
 	forced_language = get_special_language(secure_headset_mode)
 
-	message = trim(message)
+	message = trimtext(message)
 
 	// check for singing prefix after radio prefix
 	if (!singing)
@@ -1608,7 +1608,7 @@
 			L.help(src, M)
 
 		if (INTENT_DISARM)
-			if (src.mind && (M.mind?.get_master() == src.mind))
+			if (src.mind && (M.mind?.get_master(ROLE_VAMPTHRALL) == src.mind))
 				boutput(M, SPAN_ALERT("You cannot harm your master!"))
 				return
 
@@ -1630,7 +1630,7 @@
 			message_admin_on_attack(M, "grabs")
 
 		if (INTENT_HARM)
-			if (src.mind && (M.mind?.get_master() == src.mind))
+			if (src.mind && (M.mind?.get_master(ROLE_VAMPTHRALL) == src.mind))
 				boutput(M, SPAN_ALERT("You cannot harm your master!"))
 				return
 

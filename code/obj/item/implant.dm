@@ -975,6 +975,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		var/barbed = FALSE
 		var/pull_out_name = ""
 
+		proc/on_pull_out(mob/living/puller)
+			return
+
 		on_life(mult)
 			. = ..()
 			if (src.reagents?.total_volume)

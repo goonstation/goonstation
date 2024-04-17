@@ -453,7 +453,6 @@ var/global/current_state = GAME_STATE_INVALID
 
 		emergency_shuttle.process()
 
-		#if DM_VERSION >= 514
 		if (useTimeDilation)//TIME_DILATION_ENABLED set this
 			if (world.time > last_try_dilate + TICKLAG_DILATE_INTERVAL) //interval separate from the process loop. maybe consider moving this for cleanup later (its own process loop with diff. interval?)
 				last_try_dilate = world.time
@@ -479,7 +478,6 @@ var/global/current_state = GAME_STATE_INVALID
 				if (world.tick_lag != dilated_tick_lag)
 					world.tick_lag = dilated_tick_lag
 					highMapCpuCount = 0
-		#endif
 
 		// Minds are sometimes kicked out of the global list, hence the fallback (Convair880).
 		if (src.last_readd_lost_minds_to_ticker && world.time > src.last_readd_lost_minds_to_ticker + 1800)
@@ -891,6 +889,13 @@ var/global/current_state = GAME_STATE_INVALID
 	logTheThing(LOG_DEBUG, null, "Spawned XP")
 
 	logTheThing(LOG_DEBUG, null, "Power Generation: [json_encode(station_power_generation)]")
+
+	var/ptl_cash = 0
+	for(var/obj/machinery/power/pt_laser/P in machine_registry[MACHINES_POWER])
+		ptl_cash += P.lifetime_earnings
+	if(ptl_cash)
+		logTheThing(LOG_DEBUG, null, "PTL Cash: [ptl_cash]")
+
 
 	SPAWN(0)
 		for(var/mob/E in mobs)
