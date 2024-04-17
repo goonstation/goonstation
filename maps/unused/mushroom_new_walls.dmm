@@ -16247,7 +16247,6 @@
 /turf/space,
 /area/station/com_dish/comdish)
 "cOC" = (
-/obj/table/reinforced/bar,
 /obj/machinery/glass_recycler,
 /obj/window{
 	dir = 8;
@@ -16255,6 +16254,7 @@
 	reinf = 1
 	},
 /obj/window/reinforced/north,
+/obj/table/reinforced/bar/auto,
 /turf/simulated/floor{
 	icon_state = "carpetSW"
 	},
