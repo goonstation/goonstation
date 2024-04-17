@@ -822,7 +822,7 @@
 
 		if (istype(output_location, /obj/machinery/manufacturer))
 			var/obj/machinery/manufacturer/M = output_location
-			M.load_item(BAR)
+			M.change_contents(mat_piece = BAR)
 		else
 			BAR.set_loc(output_location)
 

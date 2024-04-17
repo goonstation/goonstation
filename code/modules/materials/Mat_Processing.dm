@@ -45,7 +45,6 @@ TYPEINFO(/obj/machinery/processor)
 			for(var/obj/item/M in matches)
 				totalAmount += M.amount
 
-			var/mat_id
 			var/datum/material/mat
 
 			//Check for exploitable inputs and divide the result accordingly
@@ -61,7 +60,6 @@ TYPEINFO(/obj/machinery/processor)
 			if (out_amount > 0)
 				if(exists_nearby)
 					exists_nearby.change_stack_amount(out_amount)
-					mat_id = exists_nearby.material.getID()
 					mat = exists_nearby.material
 				else
 					var/newType = getProcessedMaterialForm(current_thing.material)
@@ -69,17 +67,15 @@ TYPEINFO(/obj/machinery/processor)
 					P.set_loc(get_output_location())
 					P.setMaterial(current_thing.material)
 					P.change_stack_amount(out_amount - P.amount)
-					mat_id = P.material.getID()
 					mat = P.material
 
 				if (istype(output_location, /obj/machinery/manufacturer))
 					var/obj/machinery/manufacturer/M = output_location
-					M.load_material(mat, out_amount)
+					M.change_contents(mat_datum = mat, amount = out_amount)
 
 				//If the input was a cable coil, output the conductor too
 				if (second_mat)
 					var/obj/item/material_piece/second_exists_nearby = null
-					var/second_mat_id
 					for(var/obj/item/material_piece/G in output_location)
 						if(G.material.isSameMaterial(second_mat))
 							second_exists_nearby = G
@@ -87,7 +83,6 @@ TYPEINFO(/obj/machinery/processor)
 
 					if(second_exists_nearby)
 						second_exists_nearby.change_stack_amount(out_amount)
-						second_mat_id = second_exists_nearby.material.getID()
 						second_mat = second_exists_nearby.material
 					else
 						var/newType = getProcessedMaterialForm(second_mat)
@@ -95,12 +90,11 @@ TYPEINFO(/obj/machinery/processor)
 						PC.set_loc(get_output_location())
 						PC.setMaterial(second_mat)
 						PC.change_stack_amount(out_amount - PC.amount)
-						second_mat_id = PC.material.getID()
 						second_mat = PC.material
 
 					if (istype(output_location, /obj/machinery/manufacturer))
 						var/obj/machinery/manufacturer/M = output_location
-						M.load_material(mat, out_amount)
+						M.change_contents(mat_datum = mat, amount = out_amount)
 
 			//Delete items in processor and output leftovers
 			var/leftovers = (totalAmount/div_factor-out_amount)*div_factor

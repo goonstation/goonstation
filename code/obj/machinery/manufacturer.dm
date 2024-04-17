@@ -65,7 +65,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null
 	var/list/resource_amounts = list()
 	var/list/materials_in_use = list()
-	var/list/stored_materials_by_id = list()
 	var/materials_loaded_changed = TRUE //! true by default so that we update this information the first time someone opens this window
 	var/list/cached_manufacturables_by_name = list() //! List which stores the material requirement information of all blueprints associated by ID
 
@@ -800,7 +799,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for (var/obj/item/M in W.contents)
 				if (!istype(M,src.base_material_class))
 					continue
-				src.load_item(M)
+				src.change_contents(mat_piece = M)
 				amtload++
 			W:UpdateIcon()
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [W]!"))
@@ -825,7 +824,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.load_item(W,user)
+				src.change_contents(mat_piece = W, user = user)
 			else
 				if (src.health < 50)
 					boutput(user, SPAN_ALERT("It's too badly damaged. You'll need to replace the wiring first."))
@@ -846,7 +845,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [C] into the [src]."), SPAN_NOTICE("You load [C] into the [src]."))
-				src.load_item(C,user)
+				src.change_contents(mat_piece = C, user = user)
 			else
 				if (src.health >= 50)
 					boutput(user, SPAN_ALERT("The wiring is fine. You need to weld the external plating to do further repairs."))
@@ -868,7 +867,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.load_item(W,user)
+				src.change_contents(mat_piece = W, user = user)
 			else
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (src.dismantle_stage == 0)
@@ -961,7 +960,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
 			user.visible_message(SPAN_NOTICE("[user] loads [W] into [src]."), SPAN_NOTICE("You load [W] into [src]."))
-			src.load_item(W,user)
+			src.change_contents(mat_piece = W, user = user)
 
 		else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
 			src.Attackhand(user)
@@ -1013,13 +1012,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/held_material_1 = S[material_index_1]
 		S[material_index_1] = S[material_index_2]
 		S[material_index_2] = held_material_1
-		// gotta swap key AND value separately. I think.
-		var/held_amount_1 = src.resource_amounts[material_id_1]
-		var/held_amount_2 = src.resource_amounts[material_id_2]
-		src.resource_amounts[material_index_1] = material_id_2
-		src.resource_amounts[material_index_2] = material_id_1
-		src.resource_amounts[material_id_1] = held_amount_1
-		src.resource_amounts[material_id_2] = held_amount_2
 
 	proc/eject_material(var/mat_id)
 		if (src.mode != "ready")
@@ -1145,7 +1137,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for (var/obj/item/M in O.contents)
 				if (!istype(M,src.base_material_class))
 					continue
-				src.load_item(M)
+				src.change_contents(mat_piece = M, user = user)
 				amtload++
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [O]!"))
 			else boutput(user, SPAN_ALERT("No material loaded!"))
@@ -1162,7 +1154,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					continue
 				if (O.loc == user)
 					continue
-				src.load_item(M)
+				src.change_contents(mat_piece = M, user = user)
 				sleep(0.5)
 				if (user.loc != staystill) break
 			boutput(user, SPAN_NOTICE("You finish stuffing materials into [src]!"))
@@ -1990,35 +1982,65 @@ TYPEINFO(/obj/machinery/manufacturer)
 			manudrive.set_loc(src.loc)
 		src.manudrive = null
 
-	/// Loads some amount of a material datum, specifically from processors currently, and creates a new material piece if needed
-	proc/load_material(var/datum/material/M, var/amount)
-		var/mat_id = M.getID()
-		for (var/obj/item/material_piece/P as anything in src.storage.get_contents())
-			if (P.material && P.material.getID() == mat_id)
-				P.change_stack_amount(amount)
-				return
-		// New material, who dis
-		var/obj/item/material_piece/P = new getProcessedMaterialForm(M)
-		P.amount = amount
-		src.storage.add_contents(P, visible = FALSE)
+	/// Safely gets our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
+	proc/get_contents()
+		if (isnull(src.storage))
+			src.create_storage(/datum/storage/no_hud)
+		return src.storage.get_contents()
 
-	/// Loads a material piece from some user into the machine, stacking it if we have that type of material in the machine already.
-	proc/load_item(obj/item/O, mob/living/user)
-		if (!istype(O, src.base_material_class) && O.material)
+	/*
+	Safely modifies our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
+	Parameters for selection of material (requires at least one non-null):
+	mat_id = material id to set. creates a new material if none of that id exists
+	material_piece = physical object to add. transfers it to the storage, but adds it to an existing stack instead of applicable
+	material = material datum to add. acts as/overrides mat_id if provided
+	amount = delta material to add. 5 to add 5 bars, -5 to remove 5 bars, 0.5 to add 0.5 bars, etc.
+	user = (optional) any mob that may be loading this
+	*/
+	proc/change_contents(var/amount = 0, var/mat_id = null, var/obj/item/material_piece/mat_piece = null, var/datum/material/mat_datum = null, var/mob/living/user = null)
+		if (!amount)
+			if (isnull(mat_piece))
+				return
+			else
+				amount = mat_piece.amount
+
+		if (isnull(mat_id) && isnull(mat_piece) && isnull(mat_datum))
+			CRASH("add_contents on [src] cannot add null material to contents. something probably tried to add a material but gave null!")
+
+		// Try stacking with existing same material in storage
+		var/list/C = src.get_contents()
+		if (!isnull(mat_datum))
+			mat_id = mat_datum.getID()
+		for (var/obj/item/material_piece/P as anything in C)
+			if (!P.material)
+				continue
+			// Match by material piece
+			if (mat_piece && P.material.isSameMaterial(mat_piece.material))
+				P.amount += amount
+				if (user)
+					user.u_equip(mat_piece)
+					mat_piece.dropped(user)
+				qdel(mat_piece)
+				return
+			// Match by material datum / id
+			else if (mat_id && mat_id == P.material.getID())
+				P.amount += amount
+				return
+
+		// No same material in storage, create/add the one we have
+		if (!isnull(mat_piece))
+			src.storage.add_contents(mat_piece, user = user, visible = FALSE)
 			return
 
-		var/obj/item/material_piece/P = O
-		if (user)
-			user.u_equip(P)
-			P.dropped(user)
+		if (isnull(mat_datum))
+			// we gave an ID but no M, so override 'M' for this
+			mat_datum = getMaterial(mat_id)
 
-		for(var/obj/item/material_piece/M as anything in src.storage.get_contents())
-			if (M.material.isSameMaterial(P.material))
-				M.change_stack_amount(P.amount)
-				qdel(P)
-				return
+		var/T = getProcessedMaterialForm(mat_datum)
+		var/obj/item/material_piece/P = new T
+		P.amount = max(0, amount)
+		src.storage.add_contents(P, user = user, visible = FALSE)
 
-		P.set_loc(src)
 		src.materials_loaded_changed = TRUE
 
 	proc/take_damage(damage_amount = 0)
@@ -2058,9 +2080,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (src.deconstruct_flags & DECON_BUILT)
 			free_resource_amt = 0
 			return
-
-		if (isnull(src.storage))
-			src.create_storage(/datum/storage/no_hud)
 
 		if (free_resources.len && free_resource_amt > 0)
 			for (var/X in src.free_resources)
