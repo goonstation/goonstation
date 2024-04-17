@@ -8,7 +8,7 @@
 import { useBackend, useLocalState, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
-import { Box, Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack, Tooltip } from '../../components';
+import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack, Tooltip } from '../../components';
 import { ButtonWithBadge } from '../../components/goonstation/ButtonWithBadge';
 import { truncate } from '../../format';
 import { formatMoney } from '../../format';
