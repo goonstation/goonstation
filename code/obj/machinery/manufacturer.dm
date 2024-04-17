@@ -61,7 +61,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/base_material_class = /obj/item/material_piece //! Base class for material pieces that the manufacturer accepts. Keep this as material pieces only unless you're making larger changes to the system
 	var/free_resource_amt = 0 //! The amount of each free resource that the manufacturer comes preloaded with
 	var/list/obj/item/material_piece/free_resources = list() //! See free_resource_amt; this is the list of resources being populated from
-	var/obj/item/reagent_containers/glass/beaker = null
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null
 	var/list/resource_amounts = list()
 	var/list/materials_in_use = list()
@@ -132,7 +131,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.activity_display = null
 		src.panel_sprite = null
 		src.output_target = null
-		src.beaker = null
 		src.manudrive = null
 		src.available.len = 0
 		src.available = null
@@ -364,7 +362,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"manudrive" = list ("name" = "[src.manudrive]",
 							   	"limit" = src.manudrive?.fablimit,
 							   ),
-			"reagents" = (src.beaker && src.beaker.reagents) ? src.beaker.reagents.reagent_list : null,
 		)
 
 	/// Get whether a blueprint is available, hidden, downloaded, or a drive recipe. If in multiple print lists, picks the first result. Or null.
@@ -630,43 +627,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (params["action"] == "eject")
 					src.eject_manudrive(usr)
 
-			if ("beaker")
-				if (ON_COOLDOWN(src, "beaker", 1 SECOND)) return
-				switch(params["action"])
-					if ("eject")
-						if (src.beaker)
-							src.beaker.set_loc(get_output_location(beaker))
-						src.beaker = null
-
-					if ("transfer_to")
-						// reagents are going into beaker
-						var/obj/item/reagent_containers/glass/B = locate(params["beaker_ref"])
-						if (!istype(B,/obj/item/reagent_containers/glass/))
-							return
-						var/howmuch = input("Transfer how much to [B]?","[src.name]",B.reagents.maximum_volume - B.reagents.total_volume) as null|num
-						if (!howmuch || !B || B != src.beaker || !isnum_safe(howmuch) )
-							return
-						src.reagents.trans_to(B,howmuch)
-
-					if ("transfer_from")
-						// reagents are being drawn from beaker
-						var/obj/item/reagent_containers/glass/B = locate(params["beaker_ref"])
-						if (!istype(B,/obj/item/reagent_containers/glass/))
-							return
-						var/howmuch = tgui_input_number(usr, "Transfer how much from [B]?","[src.name]",B.reagents.total_volume)
-						if (!howmuch || !isnum_safe(howmuch))
-							return
-						B.reagents.trans_to(src,howmuch)
-
-					if ("flush")
-						var/the_reagent = params["reagent_ref"]
-						if (!istext(the_reagent))
-							return
-						var/howmuch = tgui_input_number(usr, "Flush how much [the_reagent]?","[src.name]",0)
-						if (!howmuch || !isnum_safe(howmuch))
-							return
-						src.reagents.remove_reagent(the_reagent,howmuch)
-
 		tgui_process.try_update_ui(usr, src)
 
 	proc/buy_ore(ore_name, storage_ref)
@@ -917,20 +877,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.status &= ~NOPOWER
 			src.shock(user,100)
 			src.build_icon()
-
-		else if (istype(W,/obj/item/reagent_containers/glass))
-			if (W.cant_drop)
-				boutput(user, SPAN_ALERT("You cannot put the [W] into [src]!"))
-				return
-			if (src.beaker)
-				boutput(user, SPAN_ALERT("There's already a receptacle in the machine. You need to remove it first."))
-			else
-				boutput(user, SPAN_NOTICE("You insert [W]."))
-				W.set_loc(src)
-				src.beaker = W
-				if (user && W)
-					user.u_equip(W)
-					W.dropped(user)
 
 		else if (istype(W,/obj/item/disk/data/floppy/manudrive))
 			if (src.manudrive)
@@ -1847,132 +1793,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.UpdateOverlays(src.panel_sprite, "panel")
 		else
 			src.UpdateOverlays(null, "panel")
-
-		/*
-		if (src.reagents.total_volume > 0)
-			dat += {"
-		<tr><th colspan='2'>Loaded Reagents</th></tr>
-			"}
-			for(var/current_id in src.reagents.reagent_list)
-				var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
-				dat += {"
-		<tr>
-			<td><a href='?src=\ref[src];flush=[current_reagent.name]'>[current_reagent.name]</a></td>
-			<td class='r'>[current_reagent.volume] units</td>
-		</tr>
-				"}
-		if (QDELETED(src.beaker))
-			src.beaker = null
-		if (src.beaker)
-			dat += {"
-		<tr><th colspan='2'>Container</th></tr>
-			"}
-
-			dat += {"
-		<tr><td colspan='2'><a href='?src=\ref[src];ejectbeaker=\ref[src.beaker]' class='buttonlink'>&#9167;</a> [src.beaker.name]<br>([round(src.beaker.reagents.total_volume)]/[src.beaker.reagents.maximum_volume])</td></tr>
-		<tr><td class='c'>
-			"}
-			if (src.reagents.total_volume && src.beaker.reagents.total_volume < src.beaker.reagents.maximum_volume)
-				dat += {"
-				<a href='?src=\ref[src];transto=\ref[src.beaker]'>Transfer<br>Machine &rarr; Container</a>
-				"}
-			else
-				dat += {"
-				&nbsp;
-				"}
-
-			dat += {"
-		</td><td class='c'>
-			"}
-
-			if (src.beaker.reagents.total_volume > 0)
-				dat += {"
-				<a href='?src=\ref[src];transfrom=\ref[src.beaker]'>Transfer<br>Container &rarr; Machine</a>
-				"}
-
-			dat += {"
-		</td></tr>
-			"}
-		dat += {"
-	</tbody>
-</table>
-			"}
-
-		return dat.Join()
-
-	proc/build_control_panel(mob/user as mob)
-		var/list/dat = list()
-
-		var/list/speed_opts = list()
-		for (var/i in 1 to (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
-			speed_opts += "<a href='?src=\ref[src];speed=[i]' class='buttonlink' style='[i == src.speed ? "font-weight: bold; background: #6c6;" : ""]'>[i]</a>"
-
-		if (src.speed > (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
-			// sometimes people get these set to wacky values
-			speed_opts += "<a href='?src=\ref[src];speed=[src.speed]' class='buttonlink' style='font-weight: bold; background: #c66;'>[src.speed]</a>"
-
-		dat += {"
-			<br>
-			<table style='width: 100%:'>
-				<thead><tr><th style='width: 50%:'>Speed</th><th style='width: 50%:'>Repeat</th></tr></thead>
-				<tbody><tr>
-					<td class='c'>[speed_opts.Join(" ")]</td>
-					<td class='c'><a href='?src=\ref[src];repeat=1'>[src.repeat ? "Yes" : "No"]</a></td>
-				</tr></tbody>
-			</table>
-
-			"}
-		if (src.error)
-			dat += "<br><b>ERROR: [src.error]</b><br>"
-
-		var/queue_num = 1
-		for(var/datum/manufacture/A in src.queue)
-
-			var/time_number = 0
-			var/remove_link = ""
-			var/pause_link = ""
-			if (queue_num == 1)
-				pause_link = (src.mode == "working" ? "<a href='?src=\ref[src];pause=1' class='buttonlink'>&#9208; Pause</a>" : "<a href='?src=\ref[src];continue=1' class='buttonlink'>&#57914; Resume</a>") + "<br>"
-			else
-				pause_link = ""
-
-			time_number = A.time && src.speed ? round(A.time / src.speed / 10, 0.1) : "??"
-
-			if (src.mode != "working" || queue_num != 1)
-				remove_link = "<a href='?src=\ref[src];removefromQ=[queue_num]' class='buttonlink'>&#128465; Remove</a>"
-			else
-				// shut up
-				remove_link = "&#8987; Working..."
-
-			var/icon_text = "<img class='icon'>"
-			if (A.item_outputs)
-				var/icon_rsc = getItemIcon(A.item_outputs[1], C = user.client)
-				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
-
-			if (istype(A, /datum/manufacture/mechanics))
-				var/datum/manufacture/mechanics/F = A
-				var/icon_rsc = getItemIcon(F.frame_path, C = user.client)
-				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-				icon_text = "<img class='icon' src='[icon_rsc]'>"
-
-
-			dat += {"
-		<div class='queue'>
-			[icon_text]
-			<strong>[A.name]</strong>
-			<br>[time_number] sec.
-		</div><div style='display: inline-block; vertical-align: middle;'>
-		[pause_link]
-		[remove_link]
-		</div>
-		<br>
-		"}
-
-			queue_num++
-
-		return dat.Join()
-	*/
 
 	proc/eject_manudrive(mob/living/user)
 		src.drive_recipes = null
