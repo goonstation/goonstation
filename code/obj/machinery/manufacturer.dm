@@ -439,7 +439,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 						I.inventory_counter_enabled = FALSE
 					var/obj/item/material_piece/P = get_material_for_pattern(M.item_paths[1])
 					O.setMaterial(P.material, appearance=FALSE)
-			generated_names += (O.name
+			generated_names += O.name
 			generated_descriptions += "[O.desc]"
 			qdel(O)
 
