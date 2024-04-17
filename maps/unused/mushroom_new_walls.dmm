@@ -24528,6 +24528,7 @@
 	dir = 8
 	},
 /obj/item/extinguisher,
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
 "ldT" = (
@@ -24781,6 +24782,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/purple,
 /area/station/science/hall)
 "lqS" = (
