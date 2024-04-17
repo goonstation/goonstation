@@ -1,7 +1,31 @@
 
+(t)tue apr 16 24
+(u)Caio029
+(p)18521
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)Due to a recent re-design of airlock circuitry, airlocks with a cut ID wire will not respond to any bumps, but pressing it will open or close it unconditionally.
+(u)LeahTheTech
+(*)Lasers now substantially heat up whatever they hit.
+(+)Lasers now collide with opaque windows.
+(p)18511
+(e)🔄📄📦|C-Rework, A-UI, A-Game-Objects
+(*)The PTL now stores up all of the money it makes, which can be withdrawn by swiping an engineering ID.
+(+)The PTL now has a new emag effect.
+(u)LeahTheTech
+(p)18505
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)The PTL formulae have been rescaled to make it more profitable and dangerous at lower power levels
+(u)Ikea
+(p)18085
+(e)🆕🎨📡🤖|C-Feature, C-Sprites, A-AI, A-Silicons
+(*)Eyebots now come with a portable intercom.
 (t)sun apr 14 24
+(u)Glamurio (Ryou)
+(p)18491
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(+)Adds two new negative traits to character creation.
 (u)Sord
-(+)Added a new small variant of the operating table. Use a wrench on an operating table to switch it between the small or large version.
+(+)Added a new small variant of the operating computer. Use a wrench on an operating computer to switch it between the small or large version.
 (t)sat apr 13 24
 (u)Mordent
 (p)18426

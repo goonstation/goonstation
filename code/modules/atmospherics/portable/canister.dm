@@ -158,7 +158,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		UpdateOverlays(atmos_dmi, "pressure")
 	return
 
-/obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 	if(reagents) reagents.temperature_reagents(exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
 		health -= 5

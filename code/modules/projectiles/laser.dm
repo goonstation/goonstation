@@ -49,12 +49,14 @@ toxic - poisons
 
 //Any special things when it hits shit?
 	on_hit(atom/hit)
-		return
+		if (!ismob(hit)) //I do not want to deal with players' bloodstreams boiling them alive, as metal as that would be
+			//this isn't completely realistic, as lasers don't really have a temperature and so won't plateau like this buuut this works for now
+			hit.temperature_expose(null, T0C + 100 + power * 20, 100, TRUE)
 
 	tick(var/obj/projectile/P)
 		if (istype(P.loc, /turf) && !(locate(/obj/blob/reflective) in get_turf(P.loc))) //eh, works for me:tm:
 			var/turf/T = P.loc
-			T.hotspot_expose(power*20, 5)
+			T.hotspot_expose(T0C + 100 + power*20, 5)
 
 /datum/projectile/laser/quad
 	name = "4 lasers"
