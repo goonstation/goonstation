@@ -1,4 +1,9 @@
+
 (t)wed apr 17 24
+(u)glowbold
+(p)16410
+(e)🆕🔄📄|C-Feature, C-Rework, A-UI
+(*)End-of-round tickets/fines now show up in the crew credits window
 (u)LeahTheTech
 (*)Mail crates now arrive half as often, each mail delivery is now worth twice as much in payout to the QMs.
 (t)tue apr 16 24
