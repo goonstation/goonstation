@@ -1,4 +1,6 @@
-
+(t)wed apr 17 24
+(u)LeahTheTech
+(*)Mail crates now arrive half as often, each mail delivery is now worth twice as much in payout to the QMs.
 (t)tue apr 16 24
 (u)Caio029
 (p)18521
