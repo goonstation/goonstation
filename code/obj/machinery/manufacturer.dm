@@ -301,7 +301,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.materials_loaded_changed = FALSE
 		// Send material data as tuples of material name, material id, material amount
 		var/resource_data = list()
-		for (var/obj/item/material_piece/P as anything in src.storage.get_contents())
+		for (var/obj/item/material_piece/P as anything in src.get_contents())
 			if (!P.material)
 				continue
 			resource_data += list(list("name" = P.material.getName(), "amount" = P.amount, "id" = P.material.getID()))
@@ -939,7 +939,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Helper proc for swap_materials, gets the material index in the storage datum or retuns null if it doesn't exist.
 	proc/get_material_index_by_id(var/mat_id)
 		var/i = 1
-		for (var/obj/item/material_piece/M in src.storage.get_contents())
+		for (var/obj/item/material_piece/M in src.get_contents())
 			if (!M.material)
 				continue
 			if (mat_id == M.material.getID())
@@ -954,7 +954,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// Could be ejected by someone else between the time of selecting what to swap and swapping it
 		if (isnull(material_index_1) || isnull(material_index_2))
 			boutput(usr, SPAN_ALERT("One or both of those materials are not present in storage. Aborting."))
-		var/list/S = src.storage.get_contents()
+		var/list/S = src.get_contents()
 		var/held_material_1 = S[material_index_1]
 		S[material_index_1] = S[material_index_2]
 		S[material_index_2] = held_material_1
@@ -966,7 +966,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/ejectamt = 0
 		var/turf/ejectturf = get_turf(usr)
 
-		for(var/obj/item/O in src.storage.get_contents())
+		for(var/obj/item/O in src.get_contents())
 			if (O.material && O.material.getID() == mat_id)
 				if (!ejectamt)
 					ejectamt = tgui_input_number(usr,"How many material pieces do you want to eject?","Eject Materials", 0, O.amount, 0)
@@ -1517,7 +1517,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/i in 1 to M.item_paths.len)
 			var/required_pattern = M.item_paths[i]
 			var/required_amount = M.item_amounts[i]
-			for (var/obj/item/material_piece/P as anything in src.storage.get_contents())
+			for (var/obj/item/material_piece/P as anything in src.get_contents())
 				var/mat_id = P.material.getID()
 				if (!(mat_id in mats_available))
 					mats_available[mat_id] = P.amount * 10
@@ -1543,7 +1543,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			var/mat_id = src.materials_in_use[pattern]
 			if (mat_id)
 				var/amount = M.item_amounts[i]/10
-				for (var/obj/item/material_piece/P as anything in src.storage.get_contents())
+				for (var/obj/item/material_piece/P as anything in src.get_contents())
 					if (P.material && P.material.getID() == mat_id)
 						P.change_stack_amount(-amount)
 						break
@@ -1722,13 +1722,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 		animate_shake(src,5,rand(3,8),rand(3,8))
 		src.visible_message(SPAN_ALERT("[src] makes [pick(src.text_flipout_adjective)] [pick(src.text_flipout_noun)]!"))
 		playsound(src.loc, pick(src.sounds_malfunction), 50, 2)
-		if (prob(15) && length(src.storage.get_contents()) > 4 && src.mode != "working")
+		if (prob(15) && length(src.get_contents()) > 4 && src.mode != "working")
 			var/to_throw = rand(1,4)
 			var/obj/item/X = null
 			while(to_throw > 0)
 				if(!src.nearby_turfs.len) //SpyGuy for RTE "pick() from empty list"
 					break
-				X = pick(src.storage.get_contents())
+				X = pick(src.get_contents())
 				src.storage.transfer_stored_item(X, src.loc)
 				X.throw_at(pick(src.nearby_turfs), 16, 3)
 				to_throw--
@@ -1812,19 +1812,23 @@ TYPEINFO(/obj/machinery/manufacturer)
 	Safely modifies our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
 	Parameters for selection of material (requires at least one non-null):
 	mat_id = material id to set. creates a new material if none of that id exists
+	mat_path = material path to use. creates material of path with amount arg or default amount if null
 	material_piece = physical object to add. transfers it to the storage, but adds it to an existing stack instead of applicable
 	material = material datum to add. acts as/overrides mat_id if provided
 	amount = delta material to add. 5 to add 5 bars, -5 to remove 5 bars, 0.5 to add 0.5 bars, etc.
 	user = (optional) any mob that may be loading this
 	*/
-	proc/change_contents(var/amount = 0, var/mat_id = null, var/obj/item/material_piece/mat_piece = null, var/datum/material/mat_datum = null, var/mob/living/user = null)
+	proc/change_contents(var/amount = null, var/mat_id = null, var/mat_path = null, var/obj/item/material_piece/mat_piece = null, var/datum/material/mat_datum = null, var/mob/living/user = null)
+		if (!isnull(mat_path))
+			mat_piece = new mat_path
+
 		if (!amount)
 			if (isnull(mat_piece))
 				return
 			else
 				amount = mat_piece.amount
 
-		if (isnull(mat_id) && isnull(mat_piece) && isnull(mat_datum))
+		if (isnull(mat_id) && isnull(mat_piece) && isnull(mat_datum) && isnull(mat_path))
 			CRASH("add_contents on [src] cannot add null material to contents. something probably tried to add a material but gave null!")
 
 		// Try stacking with existing same material in storage
@@ -1891,7 +1895,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.build_icon()
 
 	proc/get_our_material(mat_id)
-		for (var/obj/item/material_piece/M as anything in src.storage.get_contents())
+		for (var/obj/item/material_piece/M as anything in src.get_contents())
 			if (M.material && M.material.getID() == mat_id)
 				return M.material
 
@@ -1902,12 +1906,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 
 		if (free_resources.len && free_resource_amt > 0)
-			for (var/X in src.free_resources)
-				if (ispath(X))
-					var/obj/item/material_piece/P = new X
-					src.storage.add_contents(P)
-					if (free_resource_amt > 1)
-						P.change_stack_amount(free_resource_amt - P.amount)
+			for (var/typepath in src.free_resources)
+				if (ispath(typepath))
+					src.change_contents(amount = free_resource_amt, mat_path = typepath )
 			free_resource_amt = 0
 		else
 			logTheThing(LOG_DEBUG, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
@@ -2235,7 +2236,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass,
 		/obj/item/material_piece/cloth/cottonfabric,
-		/obj/item/raw_material/cobryl)
+		/obj/item/material_piece/cobryl)
 	available = list(
 		/datum/manufacture/flashlight,
 		/datum/manufacture/gps,
