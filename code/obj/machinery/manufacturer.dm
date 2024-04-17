@@ -439,7 +439,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 						I.inventory_counter_enabled = FALSE
 					var/obj/item/material_piece/P = get_material_for_pattern(M.item_paths[1])
 					O.setMaterial(P.material, appearance=FALSE)
-			generated_names += capitalize(O.name)
+			generated_names += (O.name
 			generated_descriptions += "[O.desc]"
 			qdel(O)
 
@@ -451,7 +451,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			img = getItemIcon(M.item_outputs[1], C = user.client)
 
 		return list(
-			"name" = M.name,
+			"name" = capitalize(M.name),
 			"category" = M.category,
 			"material_names" = M.item_names,
 			"item_paths" = M.item_paths,
