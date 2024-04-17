@@ -66,6 +66,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/list/materials_in_use = list()
 	var/materials_loaded_changed = TRUE //! true by default so that we update this information the first time someone opens this window
 	var/list/cached_manufacturables_by_name = list() //! List which stores the material requirement information of all blueprints associated by ID
+	var/list/cached_material_patterns = list() //! List which stores the material symbols each loaded material satisfies
 
 	// Production options
 	var/search = null
@@ -296,6 +297,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (src.materials_loaded_changed)
 			// Also wait a bit if we're spewing items out like metal sheets
 			if (!ON_COOLDOWN(src, "evaluate_material_requirements", 5 SECONDS))
+				for (var/obj/item/material_piece/P as anything in src.get_contents())
+					cached_material_patterns[P] = 1
 				for (var/datum/manufacture/M as anything in ALL_BLUEPRINTS)
 					src.cached_manufacturables_by_name[M.name] = src.check_enough_materials(M)
 				src.materials_loaded_changed = FALSE
@@ -310,8 +313,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/datum/manufacture/M in src.queue)
 			queue_data += list(list("name" = M.name, "category" = M.category, "type" = src.get_blueprint_type(M) ))
 		var/progress_pct = null
-		// would you believe i hurt my brain over this for a solid hour
-		// anyway this calculates the percentage progress of a blueprint by the time that already elapsed before a pause (0 if never paused)
+		// this calculates the percentage progress of a blueprint by the time that already elapsed before a pause (0 if never paused)
 		// added to the current time that has been elapsed, divided by the total time to be elapsed.
 		// But we keep the pct a constant if we're paused, and just do time that was elapsed / time to elapse
 		if (length(src.queue))
@@ -1507,6 +1509,61 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else if (pattern == mat.getID()) // specific material id
 			return TRUE
 		return FALSE
+
+	/// Get a list of the patterns a material satisfies. Does not include "ALL" in list, as it is assumed such a requirement is handled separately.
+	/// Includes all previous material tier strings for simple "x in y" checks, as well as material ID for those recipies which need exact mat.
+	proc/get_patterns_material_satisfies(datum/material/M)
+		var/output = list(M.getID())
+		var/material_flags = M.getMaterialFlags()
+		// get properties with getters once, ideally
+		var/density = M.getProperty("density")
+		var/hard = M.getProperty("hard")
+		var/reflective = M.getProperty("reflective")
+		var/electrical = M.getProperty("electrical")
+		var/radioactive = M.getProperty("radioactive")
+		if (!M)
+			return output
+		if (material_flags & MATERIAL_RUBBER)
+			output += "RUB"
+		if (material_flags & MATERIAL_ORGANIC)
+			output += "ORG"
+		if (material_flags & MATERIAL_WOOD)
+			output += "WOOD"
+		if (material_flags & MATERIAL_METAL)
+			var/hardness = (hard * 2) + density
+			if (hardness >= 15)
+				output += "MET-3"
+			if (hardness >= 10)
+				output += "MET-2"
+			output += "MET-1"
+		if (material_flags & MATERIAL_CRYSTAL)
+			if (density >= 7)
+				output += "CRY-2"
+			output += "CRY-1"
+		if (reflective >= 6)
+			output += "REF"
+		if (electrical >= 6)
+			if (electrical >= 8)
+				output += "CON-2"
+			output += "CON-1"
+		if (electrical <= 4 && material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
+			if (electrical <= 2)
+				output += "INS-2"
+			output += "INS-1"
+		if (density >= 4)
+			if (density >= 6)
+				output += "DEN-2"
+			output += "DEN-1"
+		if (material_flags & MATERIAL_ENERGY)
+			if (radioactive >= 2)
+				if (radioactive >= 5)
+					output += "POW-3"
+				output += "POW-2"
+			output += "POW-1"
+		if (material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC))
+			output += "FAB"
+		if (istype(M, /datum/material/crystal/gemstone))
+			output += "GEM"
 
 	/// Returns associative list of item path to mat_id that will be used, but does not guarantee all item_paths are satisfied or that
 	/// the blueprint will have the required materials ready by the time it reaches the front of the queue
