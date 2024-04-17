@@ -115,8 +115,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/turf/T in view(5,src))
 			nearby_turfs += T
 
-		src.create_reagents(1000)
-
 		src.work_display = image('icons/obj/manufacturer.dmi', "")
 		src.activity_display = image('icons/obj/manufacturer.dmi', "")
 		src.panel_sprite = image('icons/obj/manufacturer.dmi', "")
@@ -296,25 +294,29 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (blueprints_known_changed)
 			blueprints_known_changed = FALSE
 			src.update_static_data(user)
+
 		// Send material data as tuples of material name, material id, material amount
 		var/resource_data = list()
 		for (var/obj/item/material_piece/P as anything in src.get_contents())
 			if (!P.material)
 				continue
 			resource_data += list(list("name" = P.material.getName(), "amount" = P.amount, "id" = P.material.getID(), "satisfies" = src.material_patterns_by_id[P.material.getID()]))
+
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
 		for (var/datum/manufacture/M in src.queue)
 			queue_data += list(list("name" = M.name, "category" = M.category, "type" = src.get_blueprint_type(M) ))
-		var/progress_pct = null
-		// this calculates the percentage progress of a blueprint by the time that already elapsed before a pause (0 if never paused)
+
+		// This calculates the percentage progress of a blueprint by the time that already elapsed before a pause (0 if never paused)
 		// added to the current time that has been elapsed, divided by the total time to be elapsed.
 		// But we keep the pct a constant if we're paused, and just do time that was elapsed / time to elapse
+		var/progress_pct = null
 		if (length(src.queue))
 			if (src.mode != "working")
 				progress_pct = 1 - (src.time_left / src.original_duration)
 			else
 				progress_pct = ((src.original_duration - src.time_left) + (TIME - src.time_started)) / src.original_duration
+
 		return list(
 			"queue" = queue_data,
 			"progress_pct" = progress_pct,
@@ -410,21 +412,43 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/manufacture_as_list(datum/manufacture/M, mob/user)
 		var/generated_names = list()
 		var/generated_descriptions = list()
+
+		// Fix not having generated material names for blueprints like multitools
+		if (isnull(M.item_names))
+			M.item_names = list()
+			for (var/i in M.item_paths)
+				M.item_names += get_nice_mat_name_for_manufacturers(i)
+
 		for (var/i in 1 to length(M.item_outputs))
 			// extremely unpleasant to do this
-			var/T = M.item_outputs[i]
+			var/T
+			if (istype(M, /datum/manufacture/mechanics))
+				var/datum/manufacture/mechanics/mech = M
+				T = mech.frame_path
+			else
+				T = M.item_outputs[i]
+
 			var/obj/O = new T
 			if (!O || !isobj(O)) continue
-			if (M.apply_material)
-				// fix for "Cannot execute null.update_number()"
-				if (isitem(O))
-					var/obj/item/I = O
-					I.inventory_counter_enabled = FALSE
-				var/obj/item/material_piece/P = get_material_for_pattern(M.item_paths[1])
-				O.setMaterial(P.material, appearance=FALSE)
-			generated_names += "\improper[O.name]"
+			// Only run this marginally heavy code if we're going to be showing item names
+			if (length(M.item_outputs) > 1 || M.create > 1 || M.apply_material)
+				if (M.apply_material)
+					// fix for "Cannot execute null.update_number()"
+					if (isitem(O))
+						var/obj/item/I = O
+						I.inventory_counter_enabled = FALSE
+					var/obj/item/material_piece/P = get_material_for_pattern(M.item_paths[1])
+					O.setMaterial(P.material, appearance=FALSE)
+			generated_names += capitalize(O.name)
 			generated_descriptions += "[O.desc]"
 			qdel(O)
+
+		var/img
+		if (istype(M, /datum/manufacture/mechanics))
+			var/datum/manufacture/mechanics/mech = M
+			img = getItemIcon(mech.frame_path, C = user.client)
+		else
+			img = getItemIcon(M.item_outputs[1], C = user.client)
 
 		return list(
 			"name" = M.name,
@@ -438,7 +462,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"create" = M.create,
 			"time" = M.time,
 			"apply_material" = M.apply_material,
-			"img" = getItemIcon(M.item_outputs[1], C = user.client),
+			"img" = img,
 			"byondRef" = "\ref[M]",
 		)
 

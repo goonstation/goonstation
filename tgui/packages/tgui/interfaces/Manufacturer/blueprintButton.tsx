@@ -60,17 +60,19 @@ export const BlueprintButton = (props, context) => {
   );
   const isProduceable = blueprintSatisfaction.find((value:boolean) => !(value)) === undefined;
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
-  let outputs = (blueprintData.item_outputs.length < 2 && blueprintData.create === 1) ? null : (
-    <>
-      <br />
-      Outputs: <br />
-      {blueprintData.item_names.map((value:string, index:number) => (
-        <b key={index}>
-          {blueprintData.create}x {value}<br />
-        </b>
-      ))}
-    </>
-  );
+  let outputs = (blueprintData.item_outputs.length < 2
+    && blueprintData.create < 2
+    && !blueprintData.apply_material) ? null : (
+      <>
+        <br />
+        Outputs: <br />
+        {blueprintData.item_names.map((value:string, index:number) => (
+          <b key={index}>
+            {blueprintData.create}x {value}<br />
+          </b>
+        ))}
+      </>
+    );
   let content_requirements = (
     <Section
       title="Requirements"
