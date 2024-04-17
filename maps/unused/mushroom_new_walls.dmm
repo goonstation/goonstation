@@ -14672,7 +14672,7 @@
 "buO" = (
 /obj/machinery/light/incandescent,
 /obj/storage/secure/closet/medical/chemical,
-/turf/simulated/floor/carpet/blue/fancy/edge/sw,
+/turf/simulated/floor/blue/checker,
 /area/station/medical/head)
 "bwb" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
@@ -15998,6 +15998,7 @@
 	icon_state = "2-4";
 	pixel_y = 0
 	},
+/obj/machinery/computer/operating/small,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -18421,6 +18422,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/computer/operating/small,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "eUi" = (
@@ -21247,7 +21249,7 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/obj/machinery/computer/operating,
+/obj/machinery/computer/operating/small,
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
 	},
@@ -27238,7 +27240,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/blue/checker,
 /area/station/medical/head)
 "nQw" = (
 /obj/cable{
@@ -32744,7 +32746,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/blue/checker,
 /area/station/medical/head)
 "rWa" = (
 /turf/simulated/floor/orangeblack/side{
@@ -33031,10 +33033,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
 "sjv" = (
-/obj/machinery/computer/operating,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/computer/operating/small,
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
 	},
@@ -34634,6 +34636,13 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
+"twe" = (
+/obj/machinery/door/firedoor/pyro,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "twy" = (
 /obj/table/auto,
 /obj/item/clothing/head/plunger,
@@ -87100,7 +87109,7 @@ akc
 sDw
 waW
 cTE
-vpg
+twe
 goL
 aWV
 aWd
