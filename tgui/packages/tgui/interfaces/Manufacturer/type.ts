@@ -17,13 +17,8 @@ export type ManufacturerData = {
 
   available_blueprints:Record<string, Manufacturable[]>;
   downloaded_blueprints:Record<string, Manufacturable[]>;
-  drive_recipe_blueprints:Record<string, Manufacturable[]>;
+  recipe_blueprints:Record<string, Manufacturable[]>;
   hidden_blueprints:Record<string, Manufacturable[]>;
-
-  static_available_blueprints:Record<string, Manufacturable[]>;
-  static_downloaded_blueprints:Record<string, Manufacturable[]>;
-  static_drive_recipe_blueprints:Record<string, Manufacturable[]>;
-  static_hidden_blueprints:Record<string, Manufacturable[]>;
 
   delete_allowed:BooleanLike;
   hacked:BooleanLike;
@@ -62,7 +57,6 @@ export type Manufacturable = {
   img:string
 
   show_cost:BooleanLike;
-  can_fabricate: Record<string, string> | null;
 }
 
 export type Rockbox = {
@@ -76,6 +70,7 @@ export type Resource = {
   name: string;
   id: string;
   amount: number;
+  satisfies: string[];
 }
 
 export type Ore = {

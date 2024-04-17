@@ -66,7 +66,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/list/materials_in_use = list()
 	var/materials_loaded_changed = TRUE //! true by default so that we update this information the first time someone opens this window
 	var/list/cached_manufacturables_by_name = list() //! List which stores the material requirement information of all blueprints associated by ID
-	var/list/cached_material_patterns = list() //! List which stores the material symbols each loaded material satisfies
+	var/list/material_patterns_by_id = list() //! Helper list which stores all the material patterns each loaded material satisfies, along with its ID
 
 	// Production options
 	var/search = null
@@ -297,8 +297,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (src.materials_loaded_changed)
 			// Also wait a bit if we're spewing items out like metal sheets
 			if (!ON_COOLDOWN(src, "evaluate_material_requirements", 5 SECONDS))
-				for (var/obj/item/material_piece/P as anything in src.get_contents())
-					cached_material_patterns[P] = 1
 				for (var/datum/manufacture/M as anything in ALL_BLUEPRINTS)
 					src.cached_manufacturables_by_name[M.name] = src.check_enough_materials(M)
 				src.materials_loaded_changed = FALSE
@@ -307,7 +305,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/obj/item/material_piece/P as anything in src.get_contents())
 			if (!P.material)
 				continue
-			resource_data += list(list("name" = P.material.getName(), "amount" = P.amount, "id" = P.material.getID()))
+			resource_data += list(list("name" = P.material.getName(), "amount" = P.amount, "id" = P.material.getID(), "satisfies" = src.material_patterns_by_id[P.material.getID()]))
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
 		for (var/datum/manufacture/M in src.queue)
@@ -324,10 +322,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return list(
 			"queue" = queue_data,
 			"progress_pct" = progress_pct,
-			"available_blueprints" = blueprints_as_list(src.available, user, FALSE),
-			"hidden_blueprints" = blueprints_as_list(src.hidden, user, FALSE),
-			"downloaded_blueprints" = blueprints_as_list(src.download, user, FALSE),
-			"drive_recipe_blueprints" = blueprints_as_list(src.drive_recipes, user, FALSE),
 			"rockbox_message" = src.temp,
 			"panel_open" = src.panel_open,
 			"hacked" = src.hacked,
@@ -351,10 +345,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"fabricator_name" = src.name,
 			"all_categories" = src.categories,
 			"delete_allowed" = src.allowed(user),
-			"static_available_blueprints" = blueprints_as_list(src.available, user, TRUE),
-			"static_hidden_blueprints" = blueprints_as_list(src.hidden, user, TRUE),
-			"static_downloaded_blueprints" = blueprints_as_list(src.download, user, TRUE),
-			"drive_recipe_blueprints" = blueprints_as_list(src.drive_recipes, user, TRUE),
+			"available_blueprints" = blueprints_as_list(src.available, user),
+			"hidden_blueprints" = blueprints_as_list(src.hidden, user),
+			"downloaded_blueprints" = blueprints_as_list(src.download, user),
+			"recipe_blueprints" = blueprints_as_list(src.drive_recipes, user),
 			"wires" = list(list(colorName="Teal",  color="#21868C"),
 						   list(colorName="Indigo",color="#6f0fb4"),
 						   list(colorName="Amber", color="#FFBF00"),
@@ -415,38 +409,32 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return as_list
 
 	/// Converts a manufacture datum to a list with string keys to relevant vars for the UI
-	proc/manufacture_as_list(datum/manufacture/M, mob/user, var/static_elements = FALSE)
-		if (static_elements)
-			var/generated_names = list()
-			var/generated_descriptions = list()
-			for (var/i in 1 to length(M.item_outputs))
-				// extremely unpleasant to do this
-				var/T = M.item_outputs[i]
-				var/obj/O = new T
-				if (!O || !isobj(O)) continue
-				generated_names += "\improper[O.name]"
-				generated_descriptions += "[O.desc]"
+	proc/manufacture_as_list(datum/manufacture/M, mob/user)
+		var/generated_names = list()
+		var/generated_descriptions = list()
+		for (var/i in 1 to length(M.item_outputs))
+			// extremely unpleasant to do this
+			var/T = M.item_outputs[i]
+			var/obj/O = new T
+			if (!O || !isobj(O)) continue
+			generated_names += "\improper[O.name]"
+			generated_descriptions += "[O.desc]"
 
-			return list(
-				"name" = M.name,
-				"category" = M.category,
-				"material_names" = M.item_names,
-				"item_paths" = M.item_paths,
-				"item_names" = generated_names,
-				"item_descriptions" = generated_descriptions,
-				"item_amounts" = M.item_amounts,
-				"item_outputs" = M.item_outputs,
-				"create" = M.create,
-				"time" = M.time,
-				"apply_material" = M.apply_material,
-				"img" = getItemIcon(M.item_outputs[1], C = user.client),
-				"byondRef" = "\ref[M]",
-			)
-		else
-			// currently just one variable for non-static, but for good reason
-			return list(
-				"can_fabricate" = src.cached_manufacturables_by_name[M.name],
-			)
+		return list(
+			"name" = M.name,
+			"category" = M.category,
+			"material_names" = M.item_names,
+			"item_paths" = M.item_paths,
+			"item_names" = generated_names,
+			"item_descriptions" = generated_descriptions,
+			"item_amounts" = M.item_amounts,
+			"item_outputs" = M.item_outputs,
+			"create" = M.create,
+			"time" = M.time,
+			"apply_material" = M.apply_material,
+			"img" = getItemIcon(M.item_outputs[1], C = user.client),
+			"byondRef" = "\ref[M]",
+		)
 
 	attack_hand(mob/user)
 		if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
@@ -1513,7 +1501,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Get a list of the patterns a material satisfies. Does not include "ALL" in list, as it is assumed such a requirement is handled separately.
 	/// Includes all previous material tier strings for simple "x in y" checks, as well as material ID for those recipies which need exact mat.
 	proc/get_patterns_material_satisfies(datum/material/M)
-		var/output = list(M.getID())
+		. = list()
 		var/material_flags = M.getMaterialFlags()
 		// get properties with getters once, ideally
 		var/density = M.getProperty("density")
@@ -1522,48 +1510,48 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/electrical = M.getProperty("electrical")
 		var/radioactive = M.getProperty("radioactive")
 		if (!M)
-			return output
+			return .
 		if (material_flags & MATERIAL_RUBBER)
-			output += "RUB"
+			. += "RUB"
 		if (material_flags & MATERIAL_ORGANIC)
-			output += "ORG"
+			. += "ORG"
 		if (material_flags & MATERIAL_WOOD)
-			output += "WOOD"
+			. += "WOOD"
 		if (material_flags & MATERIAL_METAL)
 			var/hardness = (hard * 2) + density
 			if (hardness >= 15)
-				output += "MET-3"
+				. += "MET-3"
 			if (hardness >= 10)
-				output += "MET-2"
-			output += "MET-1"
+				. += "MET-2"
+			. += "MET-1"
 		if (material_flags & MATERIAL_CRYSTAL)
 			if (density >= 7)
-				output += "CRY-2"
-			output += "CRY-1"
+				. += "CRY-2"
+			. += "CRY-1"
 		if (reflective >= 6)
-			output += "REF"
+			. += "REF"
 		if (electrical >= 6)
 			if (electrical >= 8)
-				output += "CON-2"
-			output += "CON-1"
+				. += "CON-2"
+			. += "CON-1"
 		if (electrical <= 4 && material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
 			if (electrical <= 2)
-				output += "INS-2"
-			output += "INS-1"
+				. += "INS-2"
+			. += "INS-1"
 		if (density >= 4)
 			if (density >= 6)
-				output += "DEN-2"
-			output += "DEN-1"
+				. += "DEN-2"
+			. += "DEN-1"
 		if (material_flags & MATERIAL_ENERGY)
 			if (radioactive >= 2)
 				if (radioactive >= 5)
-					output += "POW-3"
-				output += "POW-2"
-			output += "POW-1"
+					. += "POW-3"
+				. += "POW-2"
+			. += "POW-1"
 		if (material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC))
-			output += "FAB"
+			. += "FAB-1"
 		if (istype(M, /datum/material/crystal/gemstone))
-			output += "GEM"
+			. += "GEM-1"
 
 	/// Returns associative list of item path to mat_id that will be used, but does not guarantee all item_paths are satisfied or that
 	/// the blueprint will have the required materials ready by the time it reaches the front of the queue
@@ -1571,18 +1559,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/mats_used = list()
 		var/list/mats_available = list()
 
-		for (var/i in 1 to M.item_paths.len)
-			var/required_pattern = M.item_paths[i]
-			var/required_amount = M.item_amounts[i]
-			for (var/obj/item/material_piece/P as anything in src.get_contents())
-				var/mat_id = P.material.getID()
-				if (!(mat_id in mats_available))
-					mats_available[mat_id] = P.amount * 10
-				if (mats_available[mat_id] < required_amount)
+		var/list/C = src.get_contents()
+		for (var/path_index in 1 to M.item_paths.len)
+			var/required_pattern = M.item_paths[path_index]
+			var/required_amount = M.item_amounts[path_index]
+			for (var/piece_index in 1 to length(C))
+				var/obj/item/material_piece/P = C[piece_index]
+				var/P_id = P.material.getID()
+				if (!(P_id in mats_available))
+					mats_available[P_id] = P.amount * 10
+				if (mats_available[P_id] < required_amount)
 					continue
-				if (match_material_pattern(required_pattern, P.material)) // TODO: refactor proc cuz this is bad
-					mats_used[required_pattern] = mat_id
-					mats_available[mat_id] -= required_amount
+				if (required_pattern == "ALL" || (required_pattern in src.material_patterns_by_id[P_id]))
+					mats_used[required_pattern] = P_id
+					mats_available[P_id] -= required_amount
 					break
 
 		return mats_used
@@ -1878,6 +1868,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/change_contents(var/amount = null, var/mat_id = null, var/mat_path = null, var/obj/item/material_piece/mat_piece = null, var/datum/material/mat_datum = null, var/mob/living/user = null)
 		if (!isnull(mat_path))
 			mat_piece = new mat_path
+			if (amount)
+				mat_piece.amount = amount
 
 		if (!amount)
 			if (isnull(mat_piece))
@@ -1895,22 +1887,26 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/obj/item/material_piece/P as anything in C)
 			if (!P.material)
 				continue
-			// Match by material piece
-			if (mat_piece && P.material.isSameMaterial(mat_piece.material))
+			// Match by material piece or id
+			if (mat_piece && P.material.isSameMaterial(mat_piece.material) ||\
+				mat_id && mat_id == P.material.getID())
 				P.amount += amount
 				if (user)
 					user.u_equip(mat_piece)
 					mat_piece.dropped(user)
-				qdel(mat_piece)
-				return
-			// Match by material datum / id
-			else if (mat_id && mat_id == P.material.getID())
-				P.amount += amount
+				if (!isnull(mat_piece))
+					qdel(mat_piece)
+				if (P.amount <= 0)
+					// Handle removing material from helper lists now that it's gone
+					material_patterns_by_id[P.material.getID()] = null
+					qdel(P)
+				src.materials_loaded_changed = TRUE
 				return
 
-		// No same material in storage, create/add the one we have
+		// No same material in storage, create/add the one we have and update the patterns index accordingly
 		if (!isnull(mat_piece))
 			src.storage.add_contents(mat_piece, user = user, visible = FALSE)
+			material_patterns_by_id[mat_piece.material.getID()] = src.get_patterns_material_satisfies(mat_piece.material)
 			return
 
 		if (isnull(mat_datum))
@@ -1922,6 +1918,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		P.amount = max(0, amount)
 		src.storage.add_contents(P, user = user, visible = FALSE)
 
+		material_patterns_by_id[P.material.getID()] = src.get_patterns_material_satisfies(P.material)
 		src.materials_loaded_changed = TRUE
 
 	proc/take_damage(damage_amount = 0)

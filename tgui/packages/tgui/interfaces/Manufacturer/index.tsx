@@ -192,10 +192,54 @@ export const CollapsibleWireMenu = (props, context) => {
   );
 };
 
+/*
+Get whether or not there is a sufficient amount to make. does NOT affect sanity checks on the DM side,
+this just offloads some of the computation to the client.
+
+Consequently, if the checks on the .dm end change, this has to change as well.
+
+Thankfully as this is mostly cosmetic, the only implication is that people might be able
+to try printing blueprints that get refused, or they may not be allowed to fabricate
+blueprints they should be allowed to.
+*/
+const GetProductionSatisfaction = (
+  pattern_requirements:string[],
+  amount_requirements:number[],
+  materials_stored:Resource[]) =>
+{
+  let satisfaction:boolean[] = [];
+  let availableMaterials:Record<string, number> = {};
+  for (let i in pattern_requirements) {
+    let required_pattern = pattern_requirements[i];
+    let compatible_material:Resource = materials_stored.find((value:Resource) => (
+      value.satisfies.find((satisfies_pattern:string) => (
+        required_pattern === "ALL" || required_pattern === satisfies_pattern
+      )) !== undefined
+    ));
+    if (compatible_material === undefined) {
+      satisfaction.push(false);
+    }
+    else {
+      satisfaction.push(true);
+      if (Object.keys(availableMaterials).find((value:string) => (value === compatible_material.id)) === undefined) {
+        availableMaterials[compatible_material.id] = compatible_material.amount;
+      }
+      availableMaterials[compatible_material.id] -= amount_requirements[i];
+    }
+  }
+  return satisfaction;
+};
+
 const BlueprintButton = (props, context) => {
 
-  const { blueprintData, manufacturerSpeed } = props;
+  const { blueprintData, materialData, manufacturerSpeed } = props;
   const { act } = useBackend(context);
+  const blueprintSatisfaction:boolean[] = GetProductionSatisfaction(
+    blueprintData.item_paths,
+    blueprintData.item_amounts,
+    materialData
+  );
+  const isProduceable = blueprintSatisfaction.find((value:boolean) => !(value)) === undefined;
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
   let outputs = (blueprintData.item_outputs.length < 2 && blueprintData.create === 1) ? null : (
     <>
@@ -214,6 +258,7 @@ const BlueprintButton = (props, context) => {
       {blueprintData.material_names.map((value:string, index:number) => (
         <>
           {value}: {blueprintData.item_amounts[index]/10} pieces<br />
+          {blueprintData.item_paths[index]}
         </>
       ))}
       Time: {getBlueprintTime(blueprintData.time, manufacturerSpeed)}s<br />
@@ -237,7 +282,7 @@ const BlueprintButton = (props, context) => {
           width={16.25}
           height={5.5}
           image_path={blueprintData.img}
-          disabled={!blueprintData.can_fabricate}
+          disabled={!isProduceable}
           onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
         >
           <CenteredText text={truncate(blueprintData.name, 40)} height={5.5} />
@@ -256,7 +301,7 @@ const BlueprintButton = (props, context) => {
                 mb={0.5}
                 pt={0.7}
                 icon="info"
-                disabled={!blueprintData.can_fabricate}
+                disabled={!isProduceable}
                 onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
               />
             </Tooltip>
@@ -271,7 +316,7 @@ const BlueprintButton = (props, context) => {
                 height={2.625}
                 pt={0.7}
                 icon="gear"
-                disabled={!blueprintData.can_fabricate}
+                disabled={!isProduceable}
                 onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
               />
             </Tooltip>
@@ -322,7 +367,7 @@ export const Manufacturer = (_, context) => {
       blueprintList = data.downloaded_blueprints;
     }
     else if (queueData.type === "drive_blueprint") {
-      blueprintList = data.drive_recipe_blueprints;
+      blueprintList = data.recipe_blueprints;
     }
     else {
       return null;
@@ -330,32 +375,11 @@ export const Manufacturer = (_, context) => {
 
     return blueprintList[queueData.category].find((key) => (key.name === queueData.name));
   };
-  // used to combine the static and dynamic elements of the blueprintdata lists
-  let combineBlueprintListElements = (
-    list1:Record<string, Manufacturable[]>,
-    list2:Record<string, Manufacturable[]>) =>
-  {
-    if (list1 === null || list2 === null) {
-      return null;
-    }
-    let output:Record<string, Manufacturable[]> = list1;
-    let keys = Object.keys(list1);
-    for (let category of data.all_categories) {
-      if (keys.find((key: string) => (key === category))) {
-        for (let i = 0; i < list1[category].length; i++) {
-          for (let key of Object.keys(list2[category][i])) {
-            output[category][i][key] = list2[category][i][key];
-          }
-        }
-      }
-    }
-    return output;
-  };
   let usable_blueprints = [
-    combineBlueprintListElements(data.available_blueprints, data.static_available_blueprints),
-    combineBlueprintListElements(data.downloaded_blueprints, data.static_downloaded_blueprints),
-    combineBlueprintListElements(data.drive_recipe_blueprints, data.static_drive_recipe_blueprints),
-    (data.hacked ? combineBlueprintListElements(data.hidden_blueprints, data.static_hidden_blueprints) : []),
+    data.available_blueprints,
+    data.downloaded_blueprints,
+    data.recipe_blueprints,
+    (data.hacked ? data.hidden_blueprints : []),
   ];
 
   return (
@@ -374,6 +398,7 @@ export const Manufacturer = (_, context) => {
                             <BlueprintButton
                               blueprintData={blueprintData}
                               manufacturerSpeed={data.speed}
+                              materialData={data.resource_data}
                             />
                           ) : null)
                       )) : null
