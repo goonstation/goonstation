@@ -259,7 +259,7 @@ const BlueprintButton = (props, context) => {
         {blueprintData.material_names.map((value:string, index:number) => (
           <LabeledList.Item
             key={index}
-            labelColor={(blueprintSatisfaction[index]) ? "green" : "red"}
+            labelColor={(blueprintSatisfaction[index]) ? null : "red"}
             label={value}
           >
             {blueprintData.item_amounts[index]/10} pieces<br />
