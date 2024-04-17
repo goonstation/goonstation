@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			src.is_pet = (copytext(src.name, 1, 2) in uppercase_letters)
 		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
 			src.is_pet = 0
-		if(src.is_pet || src.player_can_spawn_with_pet) // Also track player pets
+		if(src.is_pet)
 			START_TRACKING_CAT(TR_CAT_PETS)
 		..()
 
@@ -101,7 +101,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			src.randomize_name()
 
 	disposing()
-		if(src.is_pet || src.player_can_spawn_with_pet)
+		if(src.is_pet)
 			STOP_TRACKING_CAT(TR_CAT_PETS)
 		..()
 
