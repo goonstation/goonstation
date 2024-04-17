@@ -36,6 +36,8 @@
 	var/is_charging = FALSE //for tgui readout
 	///A list of all laser segments from this PTL that reached the edge of the z-level
 	var/list/selling_lasers = list()
+	///Is this PTL so wacky, weird and whimsical that its laser goes in squiggles?
+	var/wacky = FALSE
 
 /obj/machinery/power/pt_laser/New()
 	..()
@@ -894,8 +896,21 @@ TYPEINFO(/obj/laser_sink/splitter)
 			source.affecting_mobs |= L
 
 /obj/linked_laser/ptl/copy_laser(turf/T, dir)
-	var/obj/linked_laser/ptl/new_laser = ..()
+	var/wonky = FALSE //are we randomly turning?
+	var/wonky_facing = -1 //var to mimic the PTL mirror's facing system so we can use the same corner icon states
+	if (src.source.wacky && prob(10))
+		wonky = TRUE
+		dir = turn(dir, pick(-90, 90))
+		if ((src.dir | dir) in list(NORTHWEST, SOUTHEAST))
+			wonky_facing = 1
+		else
+			wonky_facing = 0
+
+	var/obj/linked_laser/ptl/new_laser = ..(T, dir)
 	new_laser.source = src.source
+
+	if (wonky)
+		new_laser.icon_state = "[initial(new_laser.icon_state)]_corner[wonky_facing]"
 	return new_laser
 
 /obj/linked_laser/ptl/Crossed(atom/movable/AM)
