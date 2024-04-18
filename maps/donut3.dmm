@@ -6181,11 +6181,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "bJT" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "AI Announcement Computer";
-	req_access_txt = "16";
-	req_access = list(16)
+/obj/machinery/computer/robotics{
+	dir = 8
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -10819,6 +10816,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/machinery/recharge_station,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload_foyer)
 "des" = (
@@ -15621,9 +15619,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
+/turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "eER" = (
 /obj/stool/chair/dining/wood{
@@ -18756,9 +18752,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
+/turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "fDa" = (
 /obj/machinery/light/incandescent/netural,
@@ -27572,9 +27566,7 @@
 	turretArea = /area/station/turret_protected/ai_upload
 	},
 /obj/mapping_helper/access/ai_upload,
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
+/turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "inm" = (
 /obj/disposalpipe/segment{
@@ -36820,7 +36812,6 @@
 	icon_state = "line1"
 	},
 /obj/item/device/radio/intercom/AI,
-/obj/machinery/recharge_station,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "lhg" = (
@@ -39168,13 +39159,7 @@
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/security/checkpoint/arrivals)
 "lON" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/ai_status_display,
-/turf/simulated/floor/blue/side{
-	dir = 1
-	},
+/turf/simulated/floor/blue/side,
 /area/station/hallway/primary/southeast)
 "lPi" = (
 /obj/machinery/light/incandescent/cool{
@@ -45392,6 +45377,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "nIA" = (
@@ -46624,9 +46610,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
+/turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "odP" = (
 /turf/simulated/wall/auto/jen/purple,
@@ -48632,15 +48616,12 @@
 	},
 /area/station/storage/primary)
 "oIu" = (
-/obj/cable{
-	icon_state = "0-8"
+/obj/decal/tile_edge/floorguide/ai,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 4
 	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/ai_upload)
+/turf/simulated/floor/blue/side,
+/area/station/hallway/primary/southeast)
 "oIv" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet/green/standard/narrow/east,
@@ -52728,9 +52709,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
+/turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "pTE" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -54395,9 +54374,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/blue/side{
-	dir = 1
-	},
+/turf/simulated/floor,
 /area/station/hallway/primary/southeast)
 "qtU" = (
 /obj/cable{
@@ -57305,6 +57282,16 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
+/obj/machinery/computer/announcement{
+	dir = 4;
+	name = "AI Announcement Computer";
+	req_access_txt = "16";
+	req_access = list(16)
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/AIsat)
 "row" = (
@@ -57627,7 +57614,7 @@
 /area/station/science/teleporter)
 "rtI" = (
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor,
+/turf/simulated/floor/blue/side,
 /area/station/hallway/primary/southeast)
 "rtO" = (
 /obj/decal/cleanable/dirt/jen,
@@ -58612,6 +58599,11 @@
 /area/station/maintenance/outer/east)
 "rJK" = (
 /obj/machinery/light/incandescent/netural,
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "rJM" = (
@@ -69168,10 +69160,6 @@
 "uWG" = (
 /obj/random_item_spawner/ai_experimental/one,
 /obj/table/reinforced/auto,
-/obj/item/circuitboard/robotics{
-	pixel_x = -2;
-	pixel_y = 8
-	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "uWL" = (
@@ -75176,20 +75164,13 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
 "wJx" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/machinery/computer3/terminal/zeta{
-	dir = 4;
-	setup_os_string = "ZETA_MAINFRAME"
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload_foyer)
 "wJD" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small/sticky,
@@ -75613,6 +75594,10 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 4
+	},
+/obj/machinery/computer3/terminal/zeta{
+	dir = 8;
+	setup_os_string = "ZETA_MAINFRAME"
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload_foyer)
@@ -137244,7 +137229,7 @@ evH
 iRB
 ykH
 qtI
-uDB
+oIu
 fhT
 hRH
 jXA
@@ -137545,7 +137530,7 @@ mWh
 okN
 mfZ
 ykH
-lON
+tVO
 rtI
 fhT
 ezP
@@ -137848,7 +137833,7 @@ mfZ
 cCT
 ykH
 qUS
-uDB
+lON
 fhT
 gAw
 vSO
@@ -138150,7 +138135,7 @@ cCT
 cCT
 ykH
 tVO
-uDB
+lON
 fhT
 fhT
 fhT
@@ -138452,7 +138437,7 @@ cCT
 idA
 nWb
 xME
-uDB
+lON
 gQk
 iad
 iad
@@ -138754,7 +138739,7 @@ cCT
 rhm
 ykH
 mua
-uDB
+lON
 wCO
 iad
 iad
@@ -139056,7 +139041,7 @@ cCT
 rhm
 ykH
 hAh
-uDB
+lON
 gQk
 iad
 iad
@@ -139358,7 +139343,7 @@ cCT
 rhm
 ykH
 wSY
-uDB
+lON
 ssX
 htp
 htp
@@ -140266,7 +140251,7 @@ diX
 fCV
 rJK
 htp
-wJx
+fVZ
 jtI
 qeM
 kcx
@@ -140568,7 +140553,7 @@ diX
 odf
 nIu
 mFT
-oIu
+vrw
 vrw
 unG
 vRi
@@ -140868,7 +140853,7 @@ lrg
 kuM
 diX
 ink
-mPI
+wJx
 htp
 lhf
 vDO
