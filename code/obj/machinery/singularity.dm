@@ -1088,7 +1088,7 @@ TYPEINFO(/obj/machinery/emitter)
 	mats = 10
 
 /obj/machinery/emitter
-	name = "Emitter"
+	name = "\improper Emitter"
 	desc = "Shoots a high power laser when active"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Emitter"
