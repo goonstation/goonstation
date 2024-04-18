@@ -64,7 +64,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null
 	var/list/resource_amounts = list()
 	var/list/materials_in_use = list()
-	var/blueprints_known_changed = TRUE //! true by default so that we update this information the first time someone opens this window
+	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
 	var/list/material_patterns_by_id = list() //! Helper list which stores all the material patterns each loaded material satisfies, along with its ID
 
 	// Production options
@@ -291,8 +291,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	ui_data(mob/user)
 		// When we update the UI, we must regenerate the blueprint data if the blueprints known to us has changed since last time
-		if (blueprints_known_changed)
-			blueprints_known_changed = FALSE
+		if (should_update_static)
+			should_update_static = FALSE
 			src.update_static_data(user)
 
 		// Send material data as tuples of material name, material id, material amount
@@ -643,7 +643,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					return
 				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
 					src.download -= I
-					blueprints_known_changed = TRUE
+					should_update_static = TRUE
 
 			if ("manudrive")
 				if (ON_COOLDOWN(src, "manudrive", 1 SECOND)) return
@@ -774,7 +774,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			playsound(src.loc, src.sound_happy, 50, 1)
 			boutput(user, SPAN_NOTICE("The manufacturer accepts and scans the blueprint."))
 			qdel(BP)
-			blueprints_known_changed = TRUE
+			should_update_static = TRUE
 			return
 
 		else if (istype(W, /obj/item/satchel))
@@ -921,7 +921,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					W.dropped(user)
 				for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
 					src.drive_recipes = MD.drivestored
-			blueprints_known_changed = TRUE
+			should_update_static = TRUE
 
 
 		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
@@ -983,6 +983,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/held_material_1 = S[material_index_1]
 		S[material_index_1] = S[material_index_2]
 		S[material_index_2] = held_material_1
+		src.should_update_static = TRUE
 
 	proc/eject_material(var/mat_id)
 		if (src.mode != "ready")
@@ -1892,7 +1893,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			manudrive.set_loc(src.loc)
 		src.manudrive = null
-		blueprints_known_changed = TRUE
+		should_update_static = TRUE
 
 	/// Safely gets our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
 	proc/get_contents()
