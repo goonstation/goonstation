@@ -12,6 +12,7 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	rc_flags = 0
 	initial_volume = 40
+	pass_unstable = TRUE
 	var/list/available_colors = list("white","black","red","rheart","green","blue","orange","pink","pheart","yellow","purple","bee","clown")
 	var/list/rare_colors = list("cluwne","bclown")
 	var/balloon_color = "white"
@@ -20,6 +21,7 @@
 	/// how many breaths should this balloon fill with at a canister
 	var/breaths = 5
 	var/datum/gas_mixture/air = new
+
 
 	New()
 		..()
