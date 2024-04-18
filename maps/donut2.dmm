@@ -418,7 +418,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_west/nopoweralert,
+/obj/machinery/power/apc/autoname_west/hardened,
 /obj/marker/supplymarker,
 /turf/simulated/floor/grey/side{
 	dir = 4

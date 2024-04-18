@@ -37394,7 +37394,7 @@
 	icon_state = "0-4"
 	},
 /obj/marker/supplymarker,
-/obj/machinery/power/apc/autoname_west/noaicontrol,
+/obj/machinery/power/apc/autoname_west/hardened,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
