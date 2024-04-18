@@ -650,6 +650,7 @@
 /obj/item/device/radio/intercom/engineering{
 	dir = 4
 	},
+/obj/laser_sink/mirror,
 /turf/simulated/floor/caution/west,
 /area/station/engine/ptl)
 "acq" = (
@@ -730,6 +731,7 @@
 	pixel_x = -24;
 	pixel_y = -8
 	},
+/obj/laser_sink/mirror,
 /turf/simulated/floor/caution/west,
 /area/station/engine/ptl)
 "acG" = (

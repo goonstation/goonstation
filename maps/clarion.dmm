@@ -15785,6 +15785,7 @@
 	},
 /area/station/engine/ptl)
 "bJi" = (
+/obj/laser_sink/mirror,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -15863,6 +15864,7 @@
 	},
 /area/station/engine/ptl)
 "bJE" = (
+/obj/laser_sink/mirror,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},

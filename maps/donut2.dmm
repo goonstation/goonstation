@@ -17380,6 +17380,7 @@
 	},
 /area/station/crew_quarters/heads)
 "cwb" = (
+/obj/laser_sink/mirror,
 /turf/simulated/floor,
 /area/station/engine/ptl)
 "cwg" = (

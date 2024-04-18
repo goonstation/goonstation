@@ -45290,6 +45290,7 @@
 	name = "W light switch";
 	pixel_x = -24
 	},
+/obj/laser_sink/mirror,
 /turf/simulated/floor,
 /area/station/engine/ptl)
 "hZq" = (
@@ -46075,6 +46076,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/laser_sink/mirror,
 /turf/simulated/floor,
 /area/station/engine/ptl)
 "iEN" = (

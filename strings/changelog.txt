@@ -1,5 +1,7 @@
 
 (t)thu apr 18 24
+(u)LeahTheTech
+(*)All maps with a PTL now have two laser mirrors by default.
 (u)Valtsu0
 (p)18441
 (e)💅📦🤖|C-QoL, A-Game-Objects, A-Silicons
