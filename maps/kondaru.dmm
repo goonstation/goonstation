@@ -11857,7 +11857,6 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/medbay)
 "aVa" = (
-/obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
 /obj/machinery/disposal,
 /obj/machinery/light/emergency{
