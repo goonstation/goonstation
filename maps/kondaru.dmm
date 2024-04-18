@@ -28770,9 +28770,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_south/noaicontrol{
-	cell_type = 5000
-	},
+/obj/machinery/power/apc/autoname_south/hardened,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "clz" = (
