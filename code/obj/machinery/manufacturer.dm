@@ -507,7 +507,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		switch(action)
 			if ("product")
-				if (ON_COOLDOWN(src, "product", 1 DECISECOND))
+				if (ON_COOLDOWN(src, "product", 1 DECI SECOND))
 					boutput(usr, SPAN_ALERT("Slow down!"))
 					return
 				var/datum/manufacture/I = locate(params["blueprint_ref"])
