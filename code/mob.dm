@@ -1358,6 +1358,12 @@
 
 	W.dropped(src)
 
+/// shortcut for the Notes - View verb
+/mob/verb/notes_alias()
+	set name = "Notes"
+	set hidden = TRUE
+
+	src.memory()
 
 /mob/verb/memory()
 	set name = "Notes - View"
