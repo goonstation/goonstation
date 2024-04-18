@@ -5,6 +5,7 @@
 (e)🆕🔄📄|C-Feature, C-Rework, A-UI
 (*)End-of-round tickets/fines now show up in the crew credits window
 (u)LeahTheTech
+(*)PTL lasers now go through telesci portals.
 (*)Mail crates now arrive half as often, each mail delivery is now worth twice as much in payout to the QMs.
 (t)tue apr 16 24
 (u)Caio029
