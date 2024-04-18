@@ -1,4 +1,9 @@
 
+(t)thu apr 18 24
+(u)FlameArrow57
+(p)18532
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Renamed notes commands in the Commands tab to "Add Note" -> "Notes - Modify" and "Notes" -> "Notes - View". "Notes - Modify" now allows you to add/remove notes all at once, rather than just adding one note at a time.
 (t)wed apr 17 24
 (u)glowbold
 (p)16410
