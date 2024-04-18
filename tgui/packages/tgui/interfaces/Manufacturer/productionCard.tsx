@@ -7,10 +7,9 @@
 
 import { truncate } from '../../format';
 import { useBackend } from "../../backend";
-import { Button, ProgressBar, Stack } from "../../components";
+import { Button, Stack } from "../../components";
 import { ButtonWithBadge } from "../../components/goonstation/ButtonWithBadge";
 import { CenteredText } from "../../components/goonstation/CenteredText";
-import { clamp } from 'common/math';
 
 /*
   Card which shows the blueprint being produced/queued, and if currently being produced,
@@ -18,7 +17,7 @@ import { clamp } from 'common/math';
 */
 export const ProductionCard = (params, context) => {
   const { act } = useBackend(context);
-  const { data, progress_pct, index, mode } = params;
+  const { data, index, mode } = params;
   // Simpler badge for the buttons where it doesn't matter, bottommost return for the bestest of buttons
   if (index !== 0) {
     return (
@@ -29,10 +28,7 @@ export const ProductionCard = (params, context) => {
           image_path={data.img}
           onClick={() => act("remove", { "index": index+1 })}
         >
-          <CenteredText
-            text={truncate(data.name, 40)}
-            height={4.6}
-          />
+          <CenteredText text={truncate(data.name, 40)} height={4.6} />
         </ButtonWithBadge>
       </Stack.Item>
     );
@@ -47,20 +43,7 @@ export const ProductionCard = (params, context) => {
             image_path={data.img}
             onClick={() => act("remove", { "index": index+1 })}
           >
-            <Stack vertical>
-              <Stack.Item>
-                <CenteredText text={truncate(data.name)} />
-              </Stack.Item>
-              <Stack.Item>
-                <ProgressBar
-                  value={clamp(progress_pct, 0, 1)}
-                  minValue={0}
-                  maxValue={1}
-                  position="relative"
-                  color="rgba(0,0,0,0.2)"
-                />
-              </Stack.Item>
-            </Stack>
+            <CenteredText text={truncate(data.name)} width={12} height={4.6} />
           </ButtonWithBadge>
         </Stack.Item>
         <Stack.Item>

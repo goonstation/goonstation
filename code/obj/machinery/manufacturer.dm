@@ -621,14 +621,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 						src.action_bar.interrupt(INTERRUPT_ALWAYS)
 
 			if ("remove") // remove queued blueprint
-				if (ON_COOLDOWN(src, "remove", 1 SECOND)) return
+				if (ON_COOLDOWN(src, "remove", 1 DECI SECOND))
+					boutput(usr, SPAN_ALERT("Slow Down!"))
+					return
 				var/operation = text2num_safe(params["index"])
 				if (!isnum(operation) || length(src.queue) < 1 || operation > length(src.queue))
 					boutput(usr, SPAN_ALERT("Invalid operation."))
 					return
-
 				src.queue -= src.queue[operation]
-				begin_work( new_production = FALSE )//pesky exploits // romayne update: i have no idea what exploit this prevents
+				// This is a new production if we removed the item at index 1, otherwise we just removed something not being produced yet
+				begin_work( new_production = (operation == 1) )
 
 			if ("delete") // remove blueprint from storage
 				if (ON_COOLDOWN(src, "delete", 1 SECOND)) return
@@ -1644,6 +1646,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 						break
 
 	proc/begin_work(new_production = TRUE)
+		src.error = null
 		if (status & NOPOWER || status & BROKEN)
 			return
 		if (!length(src.queue))
@@ -1660,7 +1663,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			playsound(src.loc, src.sound_grump, 50, 1)
 			src.build_icon()
 			return
-
 		var/datum/manufacture/M = src.queue[1]
 		//Wire: Fix for href exploit creating arbitrary items
 		if (!(M in ALL_BLUEPRINTS))
@@ -1672,14 +1674,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.build_icon()
 			return
 
-		src.error = null
-
 		if (src.malfunction && prob(40))
 			src.flip_out()
-
 		if (new_production)
 			var/list/mats_used = check_enough_materials(M)
-
 			if (!mats_used)
 				src.mode = "halt"
 				src.error = "Insufficient usable materials to continue queue production."

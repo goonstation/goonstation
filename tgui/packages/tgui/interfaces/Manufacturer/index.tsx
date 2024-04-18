@@ -8,12 +8,13 @@
 import { useBackend, useLocalState, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
-import { Button, Collapsible, Divider, Input, LabeledList, Section, Slider, Stack } from '../../components';
+import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
 import { formatMoney } from '../../format';
 import { MaintenencePanel, Manufacturable, ManufacturerData, Ore, QueueBlueprint, Resource, Rockbox, WireData } from './type';
 
 import { BlueprintButton } from './blueprintButton';
 import { ProductionCard } from './productionCard';
+import { clamp } from 'common/math';
 
 const is_set = (bits, bit) => bits & (1 << bit);
 
@@ -294,12 +295,21 @@ export const Manufacturer = (_, context) => {
               </Stack.Item>
               <Stack.Item>
                 <Stack vertical>
+                  {data.queue.length > 0 ? (
+                    <Stack.Item>
+                      <ProgressBar
+                        value={clamp(data.progress_pct, 0, 1)}
+                        minValue={0}
+                        maxValue={1}
+                        position="relative"
+                      />
+                    </Stack.Item>
+                  ) : null}
                   {data.queue.map((queued:QueueBlueprint, index:number) => (
                     <ProductionCard
                       key={index}
                       index={index}
                       data={getBlueprintFromQueueData(queued)}
-                      progress_pct={data.progress_pct}
                       mode={data.mode}
                     />
                   ))}
