@@ -235,7 +235,9 @@
 		src.smash(T)
 
 	Cross(atom/movable/mover)
-		return !istype(mover, /obj/item/implant/projectile/body_visible/dart/bardart)
+		if (istype(mover, /obj/item/implant/projectile/body_visible/dart/bardart))
+			return TRUE
+		return ..()
 
 /obj/item/balloon_animal
 	name = "balloon animal"
