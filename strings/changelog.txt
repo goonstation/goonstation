@@ -1,5 +1,9 @@
 
 (t)thu apr 18 24
+(u)Lord_Earthfire
+(p)17941
+(e)🆕💊📦|C-Feature, A-Medical, A-Game-Objects
+(+)You can cut the spring mechanism of auto-injectors with a knife to make them break and spill their contents upon use.
 (u)glowbold
 (p)18527
 (e)🆕🔨|C-Feature, A-Player-Actions
