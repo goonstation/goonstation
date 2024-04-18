@@ -2005,19 +2005,9 @@
 		result_amount = 2
 		min_temperature = 360
 		mix_phrase = "The cola simmers into a noxious black syrup."
-		on_reaction(datum/reagents/holder, created_volume)
-			. = ..()
-			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-			smoke.set_up(1, 0, get_turf(src))
-			smoke.start()
+		instant = FALSE
+		reaction_speed = 2
 
-	acid/cola_syrup //mintodo fix this shit
-		name = "Cola syrup"
-		id = "cola_syrup2"
-		required_reagents = list("cola" = 4, "VHFCS" = 1, "plasma" = 1) //Must be done alongside Sulfuric Acid rxn
-		result_amount = 4
-		min_temperature = 360
-		mix_phrase = "The cola simmers into a noxious black syrup."
 		on_reaction(datum/reagents/holder, created_volume)
 			. = ..()
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -2041,22 +2031,6 @@
 		result_amount = 3
 		mix_phrase = "The bitters and cola roughen the surface of the ice as they war with one another."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-
-	mauna_cola_awakens
-		name = "Mauna Cola Awakens"
-		id = "maunacola"
-		result = "maunacola"
-		required_reagents = list("powercola" = 1, "phlogiston" = 1, "ash" = 1)
-		result_amount = 3
-		reaction_icon_state = list("reaction_fire-1", "reaction_fire-2") // Consider making non-instant
-		reaction_icon_color = "#ffffff"
-		mix_sound = 'sound/misc/ground_rumble.ogg'
-		mix_phrase = "The container rumbles and sputters as the cola absorbs the mixture's heat."
-
-		on_reaction(var/datum/reagents/holder, var/created_volume)
-			for (var/mob/living/M in range(6, 6))
-				shake_camera(M, 4, 4)
-				M.show_text(SPAN_ALERT("<b>The ground rumbles softly.</b>"))
 
 	roaring_waters
 		name = "Roaring Waters"

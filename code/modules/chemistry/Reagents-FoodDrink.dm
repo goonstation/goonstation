@@ -1981,8 +1981,8 @@ datum
 			fluid_g = 207
 			fluid_b = 235
 			alch_strength = 0.1
-			thirst_value = 20 // accounting for depletion rate, it's only a little better than triple C... But it's faster than mixing 12 fruit juices
-			depletion_rate = 3 //Faster Than Ever
+			thirst_value = 12 // accounting for depletion rate, it's a little worse than triple C... But it's fast
+			depletion_rate = 3
 			description = "Chemical agitation gives the ice in this drink its unique striated pattern."
 			taste = "bittersweet"
 			reagent_state = LIQUID
@@ -1994,8 +1994,8 @@ datum
 			fluid_g = 85
 			fluid_b = 40
 			transparency = 240
-			thirst_value = 3
-			depletion_rate = 0.2 //kind of an intermediate between Roaring Waters and Colamara Chaos
+			thirst_value = 1.1
+			depletion_rate = 0.2
 			description = "An ancient storm brews within."
 			taste = list("sweet", "milky")
 			reagent_state = LIQUID
@@ -2016,7 +2016,7 @@ datum
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				var/stam_percent_left = M.stamina / M.stamina_max
-				alch_strength = clamp((8 * (1 - stam_percent_left)), 0.4, 6)
+				alch_strength = clamp((8 * (1 - stam_percent_left)), 0.4, 5)
 				..()
 
 		fooddrink/alcoholic/vampire
@@ -2028,7 +2028,7 @@ datum
 			transparency = 255
 			alch_strength = 0.25
 			thirst_value = 0.5
-			depletion_rate = 0.4
+			depletion_rate = 1
 			description = "This cocktail takes a unique approach to increasing blood alcohol content by draining blood as it intoxicates you."
 			taste = "metallic"
 			reagent_state = LIQUID
@@ -2037,71 +2037,12 @@ datum
 				if(!M) M = holder.my_atom
 				if (blood_system && isliving(M))
 					var/mob/living/H = M
-					var/vthirst = H.blood_volume - holder.get_reagent_amount("ethanol") * 5 //It thinks ethanol is yucky (It's right)
-					var/consume = clamp(vthirst / 130 - 0.3, 0, 5) //it gets less "thirsty" as blood volume decreases
+					var/blood_percent_left = H.blood_volume / 500 //Doesn't support custom blood maxima but neither do spleens! Fuck it
 					H.nutrition -= 1 * mult
-					H.blood_volume -= consume * mult
-					M.HealDamage("All", 2 * mult, 1 * mult, 1 * mult)
+					H.blood_volume -= 4 * mult
+					alch_strength = clamp((10 * (1 - blood_percent_left)), 0.25, 6)
 				..()
 				return
-
-		fooddrink/maunacola
-			name = "Mauna Cola Awakens"
-			id = "maunacola"
-			fluid_r = 233
-			fluid_g = 60
-			fluid_b = 0
-			transparency = 60
-			hunger_value = 1 // ??????
-			thirst_value = -0.3
-			description = "The magical properties of the other ingredients seems to have awakened something in the ashes."
-			taste = list("earthy", "ashen")
-			reagent_state = LIQUID
-
-			on_mob_life(var/mob/M, var/mult = 1)
-				var/mob/living/L = M
-				if (istype(L))
-					var/heatmsg = pick("Ah! So hot!", "You're too hot! It burns!", "Feels like you're burning inside!","HOT!")
-					var/EtOH_amt = holder.get_reagent_amount("ethanol")
-					if (EtOH_amt)
-						L.bodytemperature += clamp((EtOH_amt - 10)/3, 0, 30)
-						if (L.bodytemperature > (T0C+130) && EtOH_amt > 40)
-							var/burnrate = EtOH_amt/10
-							flush(holder, burnrate * mult, list("ethanol"))
-							L.bodytemperature += burnrate * 3
-							if (prob(60))
-								L.update_burning(burnrate * mult)
-							if (ishuman(L))
-								var/mob/living/carbon/human/H = L
-								if (H.sims)
-									H.sims.affectMotive("thirst", -1 * mult)
-								if (H.organHolder && H.organHolder.liver)
-									H.organHolder.damage_organ(0, 1 * mult, 0, "liver")
-					else
-						L.bodytemperature += 3
-
-					//If you're hot when you drink this, You Will Burn
-					if (L.bodytemperature > L.base_body_temp + L.temp_tolerance && !L.is_heat_resistant())
-						if (probmult(20)) boutput(L, SPAN_ALERT("[heatmsg]")) //mintodo play with heating numbers and burning numbers
-						L.TakeDamage("chest", 0, 1 * mult, 0, DAMAGE_BURN)
-
-					//Funny WOW reference, delete if lame
-					if(!L.stat && can_act(L) && probmult(6))
-						var/found = 0
-						for(var/mob/living/critter/small_animal/cockroach/R in oview(2, L))
-							if (!found)
-								found = 1
-								if(can_reach(L, R))
-									L.say("DIE, INSECT!")
-									L.point_at(R)
-									sleep(1 SECONDS)
-									var/turf/C = get_turf(R)
-									R.visible_message(SPAN_ALERT("[R] is consumed in flames!"))
-									fireflash(C,0)
-									playsound(R.loc, 'sound/effects/mag_fireballlaunch.ogg', 30, 0)
-									make_cleanable(/obj/decal/cleanable/ash, C)
-									qdel(R)
-					..()
 
 		fooddrink/roaringwaters
 			name = "Roaring Waters"
@@ -2111,7 +2052,7 @@ datum
 			fluid_b = 243
 			transparency = 80
 			thirst_value = 0.8 // Water if it hydrated you forever
-			depletion_rate = 0.05 // two sips (>10u) to completely restore thirst
+			depletion_rate = 0.05 // two sips to completely restore thirst, but it takes forever
 			description = "What a sorry excuse for a mixed drink."
 			taste = list("fresh", "clean")
 			reagent_state = LIQUID
@@ -2607,7 +2548,7 @@ datum
 				M.reagents.add_reagent("sugar", 2 * mult)
 				..()
 
-		fooddrink/caffeinated/powercola //done
+		fooddrink/caffeinated/powercola
 			name = "power cola"
 			id = "powercola"
 			description = "Madness. Madness. A union of cola with more cola."
