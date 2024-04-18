@@ -237,7 +237,7 @@
 
 	Cross(atom/movable/mover)
 		if (istype(mover, /obj/item/implant/projectile/body_visible/dart/bardart))
-			return TRUE
+			return FALSE
 		return ..()
 
 /obj/item/balloon_animal
