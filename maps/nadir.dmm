@@ -11591,6 +11591,7 @@
 /obj/cable{
 	icon_state = "0-5"
 	},
+/obj/laser_sink/mirror,
 /turf/simulated/floor/yellowblack{
 	dir = 9
 	},
@@ -13895,7 +13896,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_east/noaicontrol,
+/obj/machinery/power/apc/autoname_east/hardened,
 /turf/simulated/floor/engine,
 /area/listeningpost/power)
 "gfh" = (
@@ -34344,6 +34345,12 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
+"otB" = (
+/obj/laser_sink/mirror,
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/se{
+	name = "Southeast Breach Hull"
+	})
 "otJ" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -117199,7 +117206,7 @@ aYG
 xkP
 euK
 neB
-neB
+otB
 iXQ
 pol
 fXq

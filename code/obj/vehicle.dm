@@ -129,12 +129,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if(thing == src.rider)
 			src.eject_rider(crashed=FALSE, selfdismount=TRUE, ejectall=FALSE)
 
-	Click(location,control,params)
-		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier)
-			var/mob/dead/observer/O = usr
-			if(src.rider)
-				O.insert_observer(src.rider)
-		else
+	Click(location, control, params)
+		if(!ghost_observe_occupant(usr, src.rider))
 			. = ..()
 
 	proc/eject_other_stuff() // override if there's some stuff integral to the vehicle that should not be ejected

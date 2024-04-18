@@ -19,7 +19,7 @@
 	var/shuffling = FALSE
 	var/mob/living/intangible/wraith/master = null
 
-	faction = FACTION_WRAITH
+	faction = list(FACTION_WRAITH)
 
 	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)

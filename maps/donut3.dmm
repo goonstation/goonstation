@@ -2093,6 +2093,7 @@
 /obj/cable/blue{
 	icon_state = "1-4"
 	},
+/obj/laser_sink/mirror,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
 "aAZ" = (
@@ -57913,7 +57914,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "rAT" = (
-/obj/machinery/power/apc/autoname_north/noaicontrol,
+/obj/machinery/power/apc/autoname_north/hardened,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -65698,6 +65699,7 @@
 	})
 "tVF" = (
 /obj/machinery/light/incandescent/warm,
+/obj/laser_sink/mirror,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
 "tVH" = (
@@ -158776,7 +158778,7 @@ rAT
 egM
 iOW
 iOW
-csA
+iOW
 csA
 csA
 csA
@@ -159079,7 +159081,7 @@ bMv
 dbf
 ugC
 iOW
-csA
+iOW
 csA
 csA
 csA
@@ -159381,7 +159383,7 @@ pab
 sdI
 vhx
 ugC
-csA
+iOW
 csA
 csA
 csA
@@ -159683,7 +159685,7 @@ kvx
 pab
 rmD
 ugC
-csA
+iOW
 csA
 csA
 csA

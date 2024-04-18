@@ -56293,7 +56293,7 @@
 	icon_state = "0-4"
 	},
 /obj/marker/supplymarker,
-/obj/machinery/power/apc/autoname_west/noaicontrol,
+/obj/machinery/power/apc/autoname_west/hardened,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -64662,13 +64662,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"lOK" = (
-/obj/decal/tile_edge/line/blue{
-	icon_state = "noedge-tile1"
-	},
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/simulated/floor/engine,
-/area/station/hallway/primary/west)
 "lPr" = (
 /obj/disposalpipe/segment,
 /obj/decal/tile_edge/stripe/big,
@@ -71187,6 +71180,13 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"sJn" = (
+/obj/decal/tile_edge/line/blue{
+	icon_state = "noedge-tile1"
+	},
+/obj/laser_sink/mirror,
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/west)
 "sJz" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -110106,7 +110106,7 @@ bvY
 wSj
 lQM
 tSo
-vmj
+sJn
 wSj
 bvx
 bFZ
@@ -110408,7 +110408,7 @@ bwu
 bfc
 kCQ
 gcD
-lOK
+sJn
 bfc
 bEb
 bGA
@@ -111599,7 +111599,7 @@ xfg
 jnB
 aaa
 jNm
-big
+xJW
 bhc
 bii
 blk

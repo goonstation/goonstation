@@ -2808,7 +2808,7 @@ Returns:
 		M.update_cursor()
 		return
 
-/obj/perm_portal
+/obj/laser_sink/perm_portal //this path is FINE, shut UP
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	anchored = ANCHORED
@@ -2817,6 +2817,8 @@ Returns:
 	var/atom/target = null
 	var/target_tag = null
 	var/datum/light/light
+
+	var/obj/linked_laser/out_laser = null
 
 	New()
 		..()
@@ -2828,6 +2830,20 @@ Returns:
 		SPAWN(0.6 SECONDS)
 			if (target_tag)
 				target = locate(target_tag)
+
+	incident(obj/linked_laser/laser)
+		if (src.in_laser) //no infinite loops allowed
+			return FALSE
+		src.in_laser = laser
+		src.out_laser = laser.copy_laser(get_turf(target), laser.dir)
+		laser.next = src.out_laser
+		src.out_laser.try_propagate()
+		return TRUE
+
+	exident(obj/linked_laser/laser)
+		qdel(src.out_laser)
+		src.out_laser = null
+		..()
 
 	Bumped(atom/movable/AM)
 		if(target && istype(target))

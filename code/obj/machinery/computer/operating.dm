@@ -323,9 +323,10 @@
 	density = 0
 	icon_state = "operating-small"
 
-/obj/machinery/computer/operating/proc/change_shape(src)
-	if (density)
-		icon_state = "operating-small"
+/obj/machinery/computer/operating/proc/change_shape()
+	if (src.density)
+		src.base_icon_state = "operating-small"
 	else
-		icon_state = "operating"
-	density = !density
+		src.base_icon_state = "operating"
+	src.power_change() // redraw nopower/broken/screen glow
+	src.density = !src.density

@@ -335,7 +335,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Underground Station"
 	desc = "Turns space into a cave system"
 	additional_options = list("Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Asteroid"=FALSE)
 
 	New()
 		..()
@@ -343,10 +343,11 @@ ABSTRACT_TYPE(/datum/terrainify)
 	convert_station_level(params, mob/user)
 		if(..())
 			var/const/ambient_light = "#222222"
-			var/rain = params["Rain"]
-			rain = (rain == "No") ? null : rain
 
-			station_repair.station_generator = new/datum/map_generator/cave_generator
+			if(params["Asteroid"])
+				station_repair.station_generator = new/datum/map_generator/cave_generator/asteroid
+			else
+				station_repair.station_generator = new/datum/map_generator/cave_generator
 
 			if(params["Ambient Light Obj"])
 				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient

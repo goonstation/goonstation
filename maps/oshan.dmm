@@ -8581,6 +8581,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
+"aCa" = (
+/obj/laser_sink/mirror,
+/turf/simulated/floor,
+/area/station/engine/gas)
 "aCb" = (
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/networked/artifact_console,
@@ -12072,7 +12076,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_west/noaicontrol,
+/obj/machinery/power/apc/autoname_west/hardened,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -108447,7 +108451,7 @@ anx
 abL
 bfb
 aPR
-aPR
+aCa
 beP
 aaH
 aaN
@@ -108749,7 +108753,7 @@ anx
 beV
 bfb
 aPR
-aPR
+aCa
 beP
 aaJ
 bhu
