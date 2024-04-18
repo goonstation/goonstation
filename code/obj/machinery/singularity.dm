@@ -1216,6 +1216,7 @@ TYPEINFO(/obj/machinery/emitter)
 		src.visible_message(SPAN_ALERT("<b>[src]</b> fires a bolt of energy!"))
 
 		shoot_projectile_DIR(src, current_projectile, dir)
+		muzzle_flash_any(src, dir_to_angle(dir), "muzzle_flash_plaser")
 		use_power(current_projectile.power)
 
 		if(prob(35))
