@@ -5,6 +5,7 @@
 #define WIRE_SHOCK 4
 #define MAX_SPEED 3
 #define MAX_SPEED_HACKED 5
+#define MAX_SPEED_DAMAGED 8
 #define IS_NOT_OPERATIONAL (src.status & BROKEN || src.status & NOPOWER)
 #define ALL_BLUEPRINTS (src.available + src.download + src.hidden + src.drive_recipes)
 TYPEINFO(/obj/machinery/manufacturer)
@@ -329,6 +330,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"card_balance" = (!isnull(src.scan) ? FindBankAccountByName(src.scan.registered)["current_money"] : null),
 			"card_owner" = (!isnull(src.scan) ? src.scan.registered : null),
 			"speed" = src.speed,
+			"max_speed_normal" = MAX_SPEED,
+			"max_speed_hacked" = MAX_SPEED_HACKED,
 			"repeat" = src.repeat,
 			"resource_data" = resource_data,
 			"indicators" = list("electrified" = src.electrified,
@@ -562,15 +565,15 @@ TYPEINFO(/obj/machinery/manufacturer)
 							boutput(usr, SPAN_ALERT("You need to be holding a snipping tool for that!"))
 						else
 							if (params["action"] == "cut")
-								src.cut(usr, APCIndexToWireColor[text2num_safe(params["wire"])])
+								src.cut(usr, text2num_safe(params["wire"]))
 							else
-								src.mend(usr, APCIndexToWireColor[text2num_safe(params["wire"])])
+								src.mend(usr, text2num_safe(params["wire"]))
 
 					if ("pulse")
 						if (!(ispulsingtool(usr.equipped()) || isAI(usr)))
 							boutput(usr, SPAN_ALERT("You need to be holding a pulsing tool or similar for that!"))
 						else
-							src.pulse(usr, APCIndexToWireColor[text2num_safe(params["wire"])])
+							src.pulse(usr, text2num_safe(params["wire"]))
 
 			if ("speed")
 				if (src.mode == "working")
