@@ -1,5 +1,9 @@
 
 (t)thu apr 18 24
+(u)glowbold
+(p)18527
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Ghosts can click on most single-occupancy machines, like the port-a-brig, to observe the mob inside.
 (u)FlameArrow57
 (p)18532
 (e)💅🔨|C-QoL, A-Player-Actions
