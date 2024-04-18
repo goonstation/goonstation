@@ -334,11 +334,7 @@
 	return abs(src.output) <= src.charge
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
-	src.laser?.traverse(new /datum/callback(src, PROC_REF(update_laser_segment)))
-
-/obj/machinery/power/pt_laser/proc/update_laser_segment(obj/linked_laser/ptl/laser)
-	var/alpha = clamp(((log(10, max(1,laser.source.laser_power() * laser.power)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
-	laser.alpha = alpha
+	src.laser?.traverse(/obj/linked_laser/ptl/proc/update_source_power)
 
 /obj/machinery/power/pt_laser/broken_state_topic(mob/user)
 	if (src.charge)
@@ -528,11 +524,13 @@
 	icon_state = "ptl_beam"
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/power/pt_laser/source = null
-	var/datum/light/light
 
 /obj/linked_laser/ptl/New(loc, dir)
 	..()
 	src.add_simple_light("laser_beam", list(0, 0.8 * 255, 0.1 * 255, 255))
+
+/obj/linked_laser/ptl/proc/update_source_power()
+	src.alpha = clamp(((log(10, max(1,src.source.laser_power() * src.power)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 
 /obj/linked_laser/ptl/try_propagate()
 	. = ..()
@@ -542,7 +540,7 @@
 		if (seller.incident(src))
 			src.sink = seller
 	var/power = src.source.laser_power()
-	alpha = clamp(((log(10, max(power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+	src.update_source_power()
 	if(istype(src.loc, /turf/simulated/floor) && prob(power/1 MEGA WATT))
 		src.loc:burn_tile()
 
@@ -567,7 +565,7 @@
 	new_laser.source = src.source
 
 	if (wonky)
-		new_laser.icon_state = "[initial(new_laser.icon_state)]_corner[wonky_facing]"
+		new_laser.icon_state = src.get_corner_icon_state(wonky_facing)
 	return new_laser
 
 /obj/linked_laser/ptl/Crossed(atom/movable/AM)

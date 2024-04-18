@@ -33,6 +33,7 @@
 ///Attempt to propagate the laser by extending, interacting with sinks etc.
 ///Separated from New to allow setting up properties on a laser object without passing them as New args
 /obj/linked_laser/proc/try_propagate()
+	src.icon_state = src.get_icon_state()
 	var/turf/next_turf = get_next_turf()
 	if (!istype(next_turf) || next_turf == src.current_turf)
 		return
@@ -119,6 +120,7 @@
 		if (src.is_blocking(object))
 			return FALSE
 
+///NB: the parent is allowed to qdel src here, so child types should handle being qdeled in Crossed
 /obj/linked_laser/Crossed(atom/movable/A)
 	..()
 	if (istype(A, /obj/laser_sink) && src.previous)
@@ -131,14 +133,20 @@
 		qdel(src)
 
 ///Traverses all upstream laser segments and calls proc_to_call on each of them
-/obj/linked_laser/proc/traverse(datum/callback/callback)
+/obj/linked_laser/proc/traverse(proc_to_call)
 	var/obj/linked_laser/ptl/current_laser = src
 	do
-		callback.Invoke(current_laser)
+		call(current_laser, proc_to_call)()
 		if (!current_laser.next)
-			current_laser.sink?.traverse(callback)
+			current_laser.sink?.traverse(proc_to_call)
 		current_laser = current_laser.next
 	while (current_laser)
+
+/obj/linked_laser/proc/get_icon_state()
+	return src.icon_state
+
+/obj/linked_laser/proc/get_corner_icon_state(facing)
+	return "[src.get_icon_state()]_corner[facing]"
 
 //////////////clusterfuck signal registered procs///////////////
 

@@ -1412,6 +1412,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\jobxp\JobXP.dm"
 #include "code\modules\jobxp\JobXPRewards.dm"
 #include "code\modules\lasers\_laser_sink.dm"
+#include "code\modules\lasers\hemera_laser.dm"
 #include "code\modules\lasers\laser_mirror.dm"
 #include "code\modules\lasers\laser_splitter.dm"
 #include "code\modules\lasers\linked_laser.dm"

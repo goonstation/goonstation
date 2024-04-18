@@ -54,7 +54,7 @@ TYPEINFO(/obj/laser_sink/mirror)
 	src.out_laser = laser.copy_laser(get_turf(src), src.get_reflected_dir(laser.dir))
 	laser.next = src.out_laser
 	src.out_laser.try_propagate()
-	src.out_laser.icon_state = "[initial(src.out_laser.icon_state)]_corner[src.facing]"
+	src.out_laser.icon_state = out_laser.get_corner_icon_state(src.facing)
 	return TRUE
 
 /obj/laser_sink/mirror/exident(obj/linked_laser/laser)
