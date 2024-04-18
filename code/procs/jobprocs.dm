@@ -713,7 +713,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		pet.randomize_name()
 		pet.ai_retaliate_persistence = RETALIATE_ONCE
 		carrier.trap_mob(pet, src)
-		src.force_equip(carrier, SLOT_IN_BACKPACK, TRUE)
+		trinket = carrier
 	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
 		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
 		trinket = new random_lunchbox_path(src)
