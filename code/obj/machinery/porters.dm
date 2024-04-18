@@ -379,6 +379,9 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		if (req)
 			user.show_text(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]. Somehow, you know that it will unlock in [req/10] seconds."))
 
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
 
 	// Could be useful (Convair880).
 	mouse_drop(over_object, src_location, over_location)
