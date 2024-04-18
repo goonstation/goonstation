@@ -134,6 +134,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	proc/randomize_name()
 		src.name = pick_string_autokey(name_list)
 		src.real_name = src.name
+		src.update_name_tag(src.name)
 
 proc/filter_carrier_pets(var/type)
 	var/mob/living/critter/small_animal/coolpet = type
