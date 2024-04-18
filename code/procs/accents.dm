@@ -925,9 +925,9 @@ proc/random_accent()
 
 	var/list/phrase = list(
 		"excuse me" = "entschuldigung",
-		"yes sir" = "javol",
-		"yes maam" = "javol",
-		"yes ma'am" = "javol",
+		"yes sir" = "jawohl",
+		"yes maam" = "jawohl",
+		"yes ma'am" = "jawohl",
 		"good morning" = "guten morgen",
 		"good day" = "guten tag",
 		"good afternoon" = "guten tag",
