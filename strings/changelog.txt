@@ -1,5 +1,9 @@
 
 (t)thu apr 18 24
+(u)Retrino
+(p)18537
+(e)🆕💊🎭|C-Feature, A-Medical, A-RP
+(+)Saline-glucose can now be used as a treatment for dehydration.
 (u)Lord_Earthfire
 (p)17941
 (e)🆕💊📦|C-Feature, A-Medical, A-Game-Objects
