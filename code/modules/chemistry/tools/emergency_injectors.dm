@@ -52,12 +52,8 @@
 
 
 	get_help_message(dist, mob/user)
-		if(!src.empty)
-			. += " Use this to quickly inject medicine into a person."
-		else
-			. += " This injector is empty and thus unuseable."
 		if(!src.manipulated_injection && !src.empty)
-			. += " You can use a cutting tool to sabotage the injector."
+			. += " You can use a <b>knife</b> to sabotage the injector."
 
 	proc/try_injection(mob/user, mob/target)
 		if (src.empty || !src.reagents)
