@@ -89,7 +89,7 @@ export const TurbineControl = (_props, context) => {
               onChange={(e, value) => act("loadChange", { newVal: value })} />
           </Stack.Item>
           <Stack.Item>
-            Coolant Volume:
+            Flow Rate:
             <NumberInput
               minValue={1}
               value={volume}
