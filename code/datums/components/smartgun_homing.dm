@@ -32,7 +32,7 @@
 			aimer.images -= targeting_images[A]
 			targeting_images -= A
 
-// Pod targeting varient.
+// Pod targeting variant.
 /datum/component/holdertargeting/smartgun/homing/pod
 	type_to_target = /obj
 
@@ -52,7 +52,7 @@
 					src.mouse_target.y + round(src.target_poy / 32 + 0.5),\
 					src.mouse_target.z)
 				if(T)
-					for(var/atom/A as anything in range(2, T))
+					for(var/atom/A in range(2, T))
 						if (!istype(A, type_to_target) || !src.is_valid_target(user, A) || tracked_targets[A] >= src.maxlocks)
 							continue
 

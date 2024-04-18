@@ -3293,6 +3293,12 @@
 "akQ" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"akR" = (
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
+/turf/simulated/floor/red,
+/area/station/medical/medbay/surgery)
 "akS" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
@@ -3700,12 +3706,6 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
-"amq" = (
-/obj/machinery/computer/operating{
-	id = "OR1"
-	},
-/turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "amr" = (
 /obj/machinery/drainage/big,
@@ -5278,15 +5278,6 @@
 "arz" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
-"arA" = (
-/obj/cable{
-	icon_state = "5-10"
-	},
-/obj/machinery/computer/operating{
-	id = "robotics"
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "arB" = (
 /obj/disposalpipe/trunk/south,
 /turf/simulated/floor/plating/random,
@@ -8581,6 +8572,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
+"aCa" = (
+/obj/laser_sink/mirror,
+/turf/simulated/floor,
+/area/station/engine/gas)
 "aCb" = (
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/networked/artifact_console,
@@ -12068,15 +12063,6 @@
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"aOt" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west/noaicontrol,
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
-/area/listeningpost)
 "aOu" = (
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/neutral/side{
@@ -34682,6 +34668,15 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
+"foy" = (
+/obj/cable{
+	icon_state = "5-10"
+	},
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "fph" = (
 /obj/table,
 /obj/disposalpipe/segment/mail,
@@ -40651,6 +40646,15 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/diner/hallway)
+"ohN" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west/hardened,
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/listeningpost)
 "oiW" = (
 /obj/stool/chair/green{
 	dir = 8
@@ -53058,7 +53062,7 @@ aNj
 aNt
 aNj
 aPm
-aOt
+ohN
 aOM
 dBM
 aPo
@@ -92407,7 +92411,7 @@ ajG
 aic
 akH
 alq
-amq
+anm
 ank
 vQY
 aoN
@@ -93011,7 +93015,7 @@ ahI
 ajJ
 eNT
 alq
-anm
+akR
 anm
 anY
 fha
@@ -95721,7 +95725,7 @@ afq
 afx
 agk
 muF
-arA
+foy
 muF
 agj
 ais
@@ -108451,7 +108455,7 @@ anx
 abL
 bfb
 aPR
-aPR
+aCa
 beP
 aaH
 aaN
@@ -108753,7 +108757,7 @@ anx
 beV
 bfb
 aPR
-aPR
+aCa
 beP
 aaJ
 bhu

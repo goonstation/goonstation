@@ -199,7 +199,7 @@
 		boutput(usr, "<b>Deadchat is currently disabled.</b>")
 		return
 
-	message = trim(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
+	message = trimtext(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
 	if (!message)
 		return
 
@@ -299,7 +299,7 @@
 		message = L.check_singing_prefix(message)
 
 	//i guess this caused some real ugly text huh
-	//message = trim(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
+	//message = trimtext(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
 	if (!message)
 		return
 
@@ -610,7 +610,7 @@
 		boutput(src, "You are currently banned from using OOC and LOOC, you may appeal at https://forum.ss13.co/index.php")
 		return
 
-	msg = trim(copytext(html_encode(msg), 1, MAX_MESSAGE_LEN))
+	msg = trimtext(copytext(html_encode(msg), 1, MAX_MESSAGE_LEN))
 	if (!msg)
 		return
 	else if (!src.client.preferences.listen_ooc)
@@ -707,7 +707,7 @@
 		boutput(src, "You are currently banned from using OOC and LOOC, you may appeal at https://forum.ss13.co/index.php")
 		return
 
-	msg = trim(copytext(html_encode(sanitize(msg)), 1, MAX_MESSAGE_LEN))
+	msg = trimtext(copytext(html_encode(sanitize(msg)), 1, MAX_MESSAGE_LEN))
 	if (!msg)
 		return
 	else if (!src.client.preferences.listen_looc)

@@ -2353,17 +2353,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/west)
-"ahF" = (
-/obj/table/auto,
-/obj/item/storage/box/cutlery{
-	pixel_x = 8
-	},
-/obj/item/storage/box/popsicle_sticks{
-	pixel_x = -7
-	},
-/obj/table/auto,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "ahG" = (
 /obj/rack,
 /obj/item/storage/belt/utility,
@@ -2640,10 +2629,6 @@
 /obj/machinery/navbeacon/tour/atlas/tour1,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"aiF" = (
-/obj/machinery/chem_dispenser/chef,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "aiG" = (
 /obj/stool/chair/comfy{
 	dir = 8;
@@ -10001,21 +9986,6 @@
 	dir = 1
 	},
 /area/station/janitor/office)
-"aGE" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/pink,
-/obj/landmark/start/job/janitor,
-/obj/machinery/door_control{
-	id = "crusher";
-	name = "Crusher Door Control";
-	pixel_x = 24;
-	pixel_y = -8;
-	timer = 100
-	},
-/turf/simulated/floor/purple/side{
-	dir = 5
-	},
-/area/station/janitor/office)
 "aGF" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/engine,
@@ -14979,16 +14949,6 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
-"aXf" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_north/noaicontrol,
-/turf/simulated/floor/black,
-/area/listeningpost/power)
 "aXg" = (
 /obj/decal/fakeobjects{
 	density = 1;
@@ -16244,6 +16204,10 @@
 	dir = 1
 	},
 /area/station/bridge/customs)
+"cNK" = (
+/obj/machinery/chem_dispenser/chef,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "cOr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17651,14 +17615,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"kAO" = (
-/obj/table/auto,
-/obj/item/swingsignfolded,
-/obj/item/storage/box/plates{
-	pixel_x = 5
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "kDl" = (
 /obj/grille/catwalk,
 /obj/cable/yellow{
@@ -17824,6 +17780,17 @@
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"lus" = (
+/obj/table/auto,
+/obj/item/storage/box/cutlery{
+	pixel_x = 8
+	},
+/obj/item/storage/box/popsicle_sticks{
+	pixel_x = -7
+	},
+/obj/table/auto,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "luG" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -18640,20 +18607,6 @@
 /obj/submachine/fishing_upload_terminal/portable,
 /turf/simulated/floor,
 /area/station/ranch)
-"ple" = (
-/obj/machinery/conveyor/WE{
-	id = "trash";
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/strip_door,
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 4;
-	id = "crusher";
-	name = "Crusher Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/janitor/office)
 "plm" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -19225,6 +19178,14 @@
 	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
+"rRw" = (
+/obj/table/auto,
+/obj/item/swingsignfolded,
+/obj/item/storage/box/plates{
+	pixel_x = 5
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "rSw" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
@@ -19977,6 +19938,20 @@
 /obj/decal/mule/dropoff,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"vWv" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/pink,
+/obj/landmark/start/job/janitor,
+/obj/machinery/door_control{
+	id = "crusher";
+	name = "Crusher Door Control";
+	pixel_x = 24;
+	pixel_y = -8
+	},
+/turf/simulated/floor/purple/side{
+	dir = 5
+	},
+/area/station/janitor/office)
 "vYh" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -20306,6 +20281,31 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
+"xPO" = (
+/obj/machinery/conveyor/WE{
+	id = "trash";
+	name = "cargo belt - east";
+	operating = 1
+	},
+/obj/strip_door,
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "crusher";
+	name = "Crusher Door";
+	autoclose = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/janitor/office)
+"xQn" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_north/hardened,
+/turf/simulated/floor/black,
+/area/listeningpost/power)
 "xRX" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -70025,8 +70025,8 @@ acw
 aQR
 sck
 afA
-kAO
-ahF
+rRw
+lus
 aeX
 ajF
 akv
@@ -70328,7 +70328,7 @@ lgg
 aeX
 afB
 aSs
-aiF
+cNK
 aeX
 ajF
 bYs
@@ -77907,7 +77907,7 @@ auX
 azf
 aEZ
 aEu
-aGE
+vWv
 aZj
 aHM
 aIm
@@ -78208,7 +78208,7 @@ aUB
 aUB
 azf
 aFa
-ple
+xPO
 aFa
 aIm
 aIm
@@ -98865,7 +98865,7 @@ aNL
 aNL
 aNL
 aNL
-aXf
+xQn
 aNs
 aCi
 aSt

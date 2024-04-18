@@ -10112,13 +10112,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"aDC" = (
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
-/obj/machinery/chem_dispenser/chef,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "aDD" = (
 /obj/disposalpipe/switch_junction/biofilter{
 	dir = 4;
@@ -53507,35 +53500,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
-"dev" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_y = 11
-	},
-/obj/item/scalpel{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/hemostat{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/staple_gun{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/suture{
-	pixel_y = 5
-	},
-/obj/item/surgical_spoon,
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/medical/medbay/surgery)
 "dew" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 4
@@ -53652,19 +53616,6 @@
 /obj/landmark/start/job/medical_director,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
-"dfa" = (
-/obj/machinery/optable{
-	id = "OR2"
-	},
-/obj/item/paper/book/from_file/medical_surgery_guide,
-/obj/machinery/drainage,
-/obj/machinery/defib_mount{
-	pixel_x = -28
-	},
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/medical/medbay/surgery)
 "dfc" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin{
@@ -53796,26 +53747,7 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
 /area/station/maintenance/solar/south)
-"dfC" = (
-/obj/machinery/computer/operating{
-	dir = 4
-	},
-/turf/simulated/floor/redwhite{
-	dir = 10
-	},
-/area/station/medical/medbay/surgery)
-"dfD" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/redwhite,
-/area/station/medical/medbay/surgery)
 "dfE" = (
-/turf/simulated/floor/redwhite,
-/area/station/medical/medbay/surgery)
-"dfF" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
 "dfK" = (
@@ -56268,16 +56200,6 @@
 "dop" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/syndicate_teleporter)
-"doq" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/marker/supplymarker,
-/obj/machinery/power/apc/autoname_west/noaicontrol,
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
-/area/listeningpost)
 "dor" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -56526,6 +56448,14 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"dvK" = (
+/obj/machinery/computer/operating/small{
+	id = "OR2"
+	},
+/turf/simulated/floor/redwhite/corner{
+	dir = 8
+	},
+/area/station/medical/medbay/surgery)
 "dvQ" = (
 /obj/machinery/light,
 /obj/table/reinforced/auto,
@@ -58061,6 +57991,14 @@
 /obj/item/shipcomponent/mainweapon/phaser,
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
+"fkp" = (
+/obj/machinery/light_switch/east,
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
+/turf/simulated/floor/redwhite{
+	dir = 4
+	},
+/area/station/medical/medbay/surgery)
 "fkA" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -58927,6 +58865,12 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/checkpoint/arrivals)
+"gpj" = (
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/robotics)
 "gpz" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -59872,6 +59816,16 @@
 	dir = 6
 	},
 /area/station/mining/magnet)
+"hqr" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/marker/supplymarker,
+/obj/machinery/power/apc/autoname_west/hardened,
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/listeningpost)
 "hqI" = (
 /obj/table/wood/auto,
 /obj/machinery/computer3/luggable,
@@ -60160,36 +60114,6 @@
 /obj/machinery/atmospherics/unary/vent,
 /turf/simulated/floor/plating/airless,
 /area/space)
-"hIe" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_y = 11
-	},
-/obj/item/scalpel{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/hemostat{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/staple_gun{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/suture{
-	pixel_y = 5
-	},
-/obj/item/surgical_spoon,
-/obj/machinery/light_switch/east,
-/turf/simulated/floor/redwhite{
-	dir = 4
-	},
-/area/station/medical/medbay/surgery)
 "hIO" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Research Sector"
@@ -60978,6 +60902,13 @@
 /obj/machinery/atmospherics/unary/tank/air_repressurization,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"iqp" = (
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/medical/medbay/surgery)
 "iqN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -61264,6 +61195,38 @@
 	icon_state = "engine_caution_south"
 	},
 /area/station/mining/staff_room)
+"iHd" = (
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/surgical_spoon,
+/obj/machinery/defib_mount{
+	pixel_x = -28
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/medical/medbay/surgery)
 "iHY" = (
 /obj/machinery/drainage,
 /obj/machinery/optable{
@@ -63383,6 +63346,10 @@
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"kBX" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/redwhite,
+/area/station/medical/medbay/surgery)
 "kCF" = (
 /obj/table/reinforced/auto,
 /obj/mapping_helper/firedoor_spawn,
@@ -64413,6 +64380,16 @@
 /obj/effects/background_objects/mundus,
 /turf/space,
 /area/space)
+"lEj" = (
+/obj/machinery/optable{
+	id = "OR2"
+	},
+/obj/item/paper/book/from_file/medical_surgery_guide,
+/obj/machinery/drainage,
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/medical/medbay/surgery)
 "lEO" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -64664,13 +64641,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"lOK" = (
-/obj/decal/tile_edge/line/blue{
-	icon_state = "noedge-tile1"
-	},
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/simulated/floor/engine,
-/area/station/hallway/primary/west)
 "lPr" = (
 /obj/disposalpipe/segment,
 /obj/decal/tile_edge/stripe/big,
@@ -66269,11 +66239,6 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
-"nJi" = (
-/turf/simulated/floor/redwhite/corner{
-	dir = 8
-	},
-/area/station/medical/medbay/surgery)
 "nJk" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -66765,15 +66730,6 @@
 /obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
-"oiN" = (
-/obj/machinery/light/incandescent,
-/obj/machinery/computer/operating{
-	dir = 8
-	},
-/turf/simulated/floor/redwhite{
-	dir = 6
-	},
-/area/station/medical/medbay/surgery)
 "oje" = (
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/plating,
@@ -71186,6 +71142,13 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"sJn" = (
+/obj/decal/tile_edge/line/blue{
+	icon_state = "noedge-tile1"
+	},
+/obj/laser_sink/mirror,
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/west)
 "sJz" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -71526,6 +71489,15 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/garden)
+"sZL" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
+/turf/simulated/floor/redwhite{
+	dir = 6
+	},
+/area/station/medical/medbay/surgery)
 "sZT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -71598,6 +71570,35 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
+"teW" = (
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/surgical_spoon,
+/turf/simulated/floor/redwhite{
+	dir = 4
+	},
+/area/station/medical/medbay/surgery)
 "tfp" = (
 /obj/disposalpipe/segment/morgue,
 /obj/cable/orange{
@@ -75280,6 +75281,13 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"xJR" = (
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/obj/machinery/chem_dispenser/chef,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "xJS" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
@@ -75457,12 +75465,6 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/central)
-"xWy" = (
-/obj/machinery/computer/operating{
-	id = "robotics"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/robotics)
 "xWI" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -107343,7 +107345,7 @@ auT
 auT
 aAU
 aCp
-aDC
+xJR
 ase
 aFW
 aHH
@@ -108956,9 +108958,9 @@ daL
 cSt
 dcJ
 ddR
-dev
-dfa
-dfC
+iqp
+lEj
+iHd
 uBy
 dfZ
 cLH
@@ -109259,8 +109261,8 @@ cSt
 dfu
 wge
 cVp
-nJi
-dfD
+dvK
+kBX
 uBy
 dgr
 cLH
@@ -109864,7 +109866,7 @@ dcM
 klH
 dex
 cVp
-dfF
+teW
 uBy
 pmo
 dgv
@@ -110105,7 +110107,7 @@ bvY
 wSj
 lQM
 tSo
-vmj
+sJn
 wSj
 bvx
 bFZ
@@ -110407,7 +110409,7 @@ bwu
 bfc
 kCQ
 gcD
-lOK
+sJn
 bfc
 bEb
 bGA
@@ -110467,8 +110469,8 @@ uBy
 dcN
 rln
 opr
-hIe
-oiN
+fkp
+sZL
 uBy
 dgt
 cLH
@@ -111598,7 +111600,7 @@ xfg
 jnB
 aaa
 jNm
-big
+xJW
 bhc
 bii
 blk
@@ -112553,7 +112555,7 @@ tLy
 cqq
 cAK
 daZ
-xWy
+gpj
 daZ
 qEw
 nSx
@@ -155827,7 +155829,7 @@ dnU
 doc
 doc
 doc
-doq
+hqr
 dnA
 aab
 aab

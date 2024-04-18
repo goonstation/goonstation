@@ -119,7 +119,7 @@
 		if (!ishuman(user))
 			return
 		var/message = input("What should [src] say?")
-		message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
 		if (!message || BOUNDS_DIST(src, user) > 0)
 			return
 		logTheThing(LOG_SAY, user, "makes [src] say,  \"[message]\"")
@@ -1004,6 +1004,31 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Sally MacCaa"
 		icon_state = "sallymaccaa"
 		ckey = "avanth"
+
+	rukert
+		name = "\improper Rupert Crimehanson"
+		icon_state = "rupertcrimehanson"
+		ckey = "rukert"
+
+	kirdy2
+		name = "\improper Old Longbert"
+		icon_state = "oldlongbert"
+		ckey = "kirdy2"
+
+	O514
+		name = "\improper Emma Nureni"
+		icon_state = "emmanureni"
+		ckey = "O514"
+
+	sockssq
+		name = "\improper Hot Fudge"
+		icon_state = "hotfudge"
+		ckey = "sockssq"
+
+	torchwick
+		name = "\improper Sam Relius"
+		icon_state = "samrelius"
+		ckey = "torchwick"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
