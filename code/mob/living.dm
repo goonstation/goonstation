@@ -2123,7 +2123,7 @@
 			if (!shock_damage)
 				return 0
 
-	if (src.bioHolder.HasEffect("resist_electric_heal"))
+	if (src.bioHolder?.HasEffect("resist_electric_heal"))
 		var/healing = 0
 		healing = shock_damage / 3
 		src.HealDamage("All", healing, healing)

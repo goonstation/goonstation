@@ -1,4 +1,56 @@
 
+(t)wed apr 17 24
+(u)glowbold
+(p)16410
+(e)🆕🔄📄|C-Feature, C-Rework, A-UI
+(*)End-of-round tickets/fines now show up in the crew credits window
+(u)LeahTheTech
+(*)PTL lasers now go through telesci portals.
+(*)Mail crates now arrive half as often, each mail delivery is now worth twice as much in payout to the QMs.
+(t)tue apr 16 24
+(u)Caio029
+(p)18521
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)Due to a recent re-design of airlock circuitry, airlocks with a cut ID wire will not respond to any bumps, but pressing it will open or close it unconditionally.
+(u)LeahTheTech
+(*)Lasers now substantially heat up whatever they hit.
+(+)Lasers now collide with opaque windows.
+(p)18511
+(e)🔄📄📦|C-Rework, A-UI, A-Game-Objects
+(*)The PTL now stores up all of the money it makes, which can be withdrawn by swiping an engineering ID.
+(+)The PTL now has a new emag effect.
+(u)LeahTheTech
+(p)18505
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)The PTL formulae have been rescaled to make it more profitable and dangerous at lower power levels
+(u)Ikea
+(p)18085
+(e)🆕🎨📡🤖|C-Feature, C-Sprites, A-AI, A-Silicons
+(*)Eyebots now come with a portable intercom.
+(t)sun apr 14 24
+(u)Glamurio (Ryou)
+(p)18491
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(+)Adds two new negative traits to character creation.
+(u)Sord
+(+)Added a new small variant of the operating computer. Use a wrench on an operating computer to switch it between the small or large version.
+(t)sat apr 13 24
+(u)Mordent
+(p)18426
+(e)📄|A-UI
+(+)Wizard Spellbook UX improved updated to make spells easier to find.
+(u)Chatausours
+(p)18294
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)Captains now recieve a mindshield implant.
+(u)glowbold
+(p)18486
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)SecHUD users can see a person's SecHUD Flag regardless of criminal status.
+(u)mloccy
+(p)18208
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Adding some animations to the rockbox on damage, and made it so when its broken it cannot be used.
 (t)fri apr 12 24
 (u)ZeWaka
 (p)18142

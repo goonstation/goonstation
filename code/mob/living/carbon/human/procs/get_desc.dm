@@ -127,13 +127,12 @@
 				else
 					. += "<br>[SPAN_NOTICE("[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(desc_id_card)] [desc_id_card.name] in it.")]"
 
-	if (src.arrestIcon?.icon_state)
-		if(global.client_image_groups?[CLIENT_IMAGE_GROUP_ARREST_ICONS]?.subscribed_mobs_with_subcount[usr]) // are you in the list of people who can see arrest icons??
-			var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
-			if(sec_record)
-				var/sechud_flag = sec_record["sec_flag"]
-				if (lowertext(sechud_flag) != "none")
-					. += "<br>[SPAN_NOTICE("[src.name] has a Security HUD flag set:")] [SPAN_ALERT("[sechud_flag]")]"
+	if(global.client_image_groups?[CLIENT_IMAGE_GROUP_ARREST_ICONS]?.subscribed_mobs_with_subcount[usr]) // are you in the list of people who can see arrest icons??
+		var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
+		if(sec_record)
+			var/sechud_flag = sec_record["sec_flag"]
+			if (lowertext(sechud_flag) != "none")
+				. += "<br>[SPAN_NOTICE("[src.name] has a Security HUD flag set:")] [SPAN_ALERT("[sechud_flag]")]"
 
 	if (locate(/obj/item/implant/projectile/body_visible/dart) in src.implant)
 		var/count = 0

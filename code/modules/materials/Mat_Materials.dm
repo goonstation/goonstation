@@ -1688,6 +1688,20 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	specialNaming(atom/target)
 		. = replace_first_consonant_cluster(target.name, copytext(src.name , 1, 2))
 
+/datum/material/fabric/carpet
+	mat_id = "carpet"
+	name = "carpet"
+	desc = "Disgusting grimy carpet which hasn't been cleaned in 40 years. Probably the kind of carpet that is host to all kind of gross bugs"
+	color = "#fcfff2"
+	texture = "carpet"
+	texture_blend = BLEND_MULTIPLY
+
+	New()
+		..()
+		setProperty("density", 1)
+		setProperty("hard", 1)
+		setProperty("thermal", 4)
+		setProperty("flammable", 4)
 
 /datum/material/organic/pickle
 	mat_id = "pickle"

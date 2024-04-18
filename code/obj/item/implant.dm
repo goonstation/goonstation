@@ -720,7 +720,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	on_remove(var/mob/M)
 		..()
 		if (istype(M))
-			M.faction &= ~FACTION_BOTANY
+			M.faction -= FACTION_BOTANY
 
 	do_effect(power)
 		// enjoy your wasps
@@ -974,6 +974,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		leaves_wound = FALSE
 		var/barbed = FALSE
 		var/pull_out_name = ""
+
+		proc/on_pull_out(mob/living/puller)
+			return
 
 		on_life(mult)
 			. = ..()

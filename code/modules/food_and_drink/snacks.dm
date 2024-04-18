@@ -910,7 +910,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			boutput(M, SPAN_ALERT("It's just not good enough cold.."))
 		..()
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		switch(exposed_temperature)
 			if(T0C + 176 to T0C + 260)
 				if(src.warm <= DONK_WARM)

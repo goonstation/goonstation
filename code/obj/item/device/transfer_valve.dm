@@ -348,7 +348,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			var/image/straps = new(src.icon, icon_state = "wire_straps")
 			src.underlays += straps
 
-	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special varient.
+	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special variant.
 		src.wear_image.overlays = list()
 		if(src.tank_one)
 			src.wear_image.overlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_one_icon]1")

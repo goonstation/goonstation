@@ -87,7 +87,7 @@
 				H.attack_alert = 0
 				H.ai_init()
 				SPAWN(randfloat(1 SECOND, 3 SECONDS))
-					if(H) // completely convincing dialogue
+					if(H && !H.client) // completely convincing dialogue
 						if (prob(33))
 							H.say(pick(
 								"Well, that was weird!",
@@ -103,29 +103,24 @@
 							H.say(phrase_log.random_phrase("say"))
 							sleep(randfloat(1 SECOND, 3 SECONDS))
 							H.say(phrase_log.random_phrase("say"))
-					sleep(evil_delay)
-					if(H)
-						H.ai_aggressive = 1
-						H.ai_calm_down = 0
-					sleep(randfloat(3 SECOND, 20 SECONDS))
-					while (!isdead(H) && isnull(H.client))
-						H.say(phrase_log.random_phrase("say"))
-						sleep(randfloat(3 SECOND, 20 SECONDS))
+					src.make_evil(H)
 			else
-				// make clone evil
-				clone.attack_alert = 0
-				clone.ai_init()
-				clone.ai_aggressive = 1
-				clone.ai_calm_down = 0
-				var/mob/living/carbon/human/local_clone = clone
-				SPAWN(imprison_time)
-					while (!isdead(local_clone) && isnull(local_clone.client))
-						local_clone.say(phrase_log.random_phrase("say"))
-						sleep(randfloat(3 SECOND, 20 SECONDS))
+				src.make_evil()
 
 			SPAWN(imprison_time)
 				if (!O.disposed)
 					O.ArtifactDeactivated()
+
+	proc/make_evil(mob/living/carbon/human/clone)
+		sleep(evil_delay)
+		clone.attack_alert = 0
+		clone.ai_init()
+		clone.ai_aggressive = 1
+		clone.ai_calm_down = 0
+		sleep(randfloat(3 SECOND, 20 SECONDS))
+		while (!isdead(clone) && isnull(clone.client))
+			clone.say(phrase_log.random_phrase("say"))
+			sleep(randfloat(3 SECOND, 20 SECONDS))
 
 	effect_deactivate(obj/O)
 		if (..())
