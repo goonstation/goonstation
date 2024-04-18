@@ -339,6 +339,7 @@
 /client/proc/addBanTemp(mob/target)
 	set name = "Add Ban"
 	set desc = "Add a ban"
+	set popup_menu = 0
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	ADMIN_ONLY
 	SHOW_VERB_DESC
