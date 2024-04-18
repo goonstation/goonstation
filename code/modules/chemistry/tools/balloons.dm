@@ -22,7 +22,6 @@
 	var/breaths = 5
 	var/datum/gas_mixture/air = new
 
-
 	New()
 		..()
 		src.air.volume = 14 //source: I made it the fuck up
