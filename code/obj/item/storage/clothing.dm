@@ -477,3 +477,8 @@
 	/obj/item/clothing/suit/witchcape_mint,
 	/obj/item/device/light/glowstick/cyan)
 
+/obj/item/storage/box/costume/rabbitsuit
+	name = "rabbit suit costume set"
+	desc = "Be the mascot you always knew you could be."
+	spawn_contents = list(/obj/item/clothing/head/rabbithat,
+	/obj/item/clothing/suit/rabbitsuit)

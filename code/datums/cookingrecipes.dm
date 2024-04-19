@@ -1387,7 +1387,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 
 /datum/cookingrecipe/oven/pie_blackberry
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
-	item2 = /obj/item/reagent_containers/food/snacks/plant/blackberry
+	item2 = /obj/item/reagent_containers/food/snacks/plant/raspberry/blackberry
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/blackberry
 	category = "Pies"
