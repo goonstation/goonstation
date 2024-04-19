@@ -113,5 +113,5 @@ export type WireData = {
 export type QueueBlueprint = {
   name: string;
   category: string;
-  type: string; // "available", "hidden", "download", "drive_blueprint"
+  type: 'available' | 'hidden' | 'download' | 'drive_blueprint';
 }
