@@ -106,7 +106,7 @@
 #define GANG_CRATE_DROP_TIME 300 SECONDS //! How long it takes for gang crates to arrive after being announced
 #define GANG_CRATE_LOCK_TIME 10 SECONDS //! How long it takes for gang crates to unlock after arriving
 
-#define GANG_LOOT_SCORE 2000 //! how many points gang duffel bags grant to each member when opened
+#define GANG_LOOT_SCORE 1500 //! how many points gang duffel bags grant to each member when opened
 
 
 // GANG TAG DEFINES:
