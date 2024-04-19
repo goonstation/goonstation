@@ -115,7 +115,9 @@ export const Manufacturer = (_, context) => {
         continue;
       }
       for (let blueprint of blueprint_list[category]) {
-        blueprints_by_category[blueprint.category].push(blueprint);
+        if (blueprint.name.toLowerCase().includes(search)) {
+          blueprints_by_category[blueprint.category].push(blueprint);
+        }
       }
     }
   }
@@ -133,17 +135,14 @@ export const Manufacturer = (_, context) => {
                     open
                     title={`${category} (${blueprints_by_category[category].length})`}
                   >
-                    {
-                      blueprints_by_category[category].map((blueprint:Manufacturable) => (
-                        blueprint.name.toLowerCase().includes(search) ? (
-                          <BlueprintButton
-                            blueprintData={blueprint}
-                            manufacturerSpeed={data.speed}
-                            materialData={data.resource_data}
-                          />
-                        ) : null
-                      ))
-                    }
+                    {blueprints_by_category[category].map((blueprint:Manufacturable, index:number) => (
+                      <BlueprintButton
+                        key={index}
+                        blueprintData={blueprint}
+                        manufacturerSpeed={data.speed}
+                        materialData={data.resource_data}
+                      />
+                    ))}
                   </Collapsible>
                 )
               ))}
