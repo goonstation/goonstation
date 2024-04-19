@@ -8,15 +8,14 @@
 import { useBackend, useLocalState, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
-import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
+import { Button, Collapsible, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
 import { formatMoney } from '../../format';
-import { MaintenencePanel, Manufacturable, ManufacturerData, Ore, QueueBlueprint, Resource, Rockbox, WireData } from './type';
+import { MaintenencePanel, Manufacturable, ManufacturerData, Ore, QueueBlueprint, Resource, Rockbox } from './type';
 
 import { BlueprintButton } from './blueprintButton';
 import { ProductionCard } from './productionCard';
 import { clamp } from 'common/math';
-
-const is_set = (bits, bit) => bits & (1 << bit);
+import { CollapsibleWireMenu } from './collapsibleWireMenu';
 
 const CardInfo = (_, context) => {
   const { data, act } = useBackend<ManufacturerData>(context);
@@ -54,64 +53,6 @@ const CardInfo = (_, context) => {
   );
 };
 
-export const CollapsibleWireMenu = (props, context) => {
-  const { act } = useBackend<ManufacturerData>(context);
-  const { wirePanel } = props;
-  return (
-    <Section
-      textAlign="center"
-      title="Maintenence Panel"
-    >
-      <LabeledList>
-        {wirePanel.wires.map((wire: WireData, i: number) => (
-          <LabeledList.Item
-            key={i}
-            label={wire.colorName}
-            labelColor={wire.color}
-            buttons={[(<Button
-              textAlign="center"
-              width={4}
-              key={i}
-              content="Pulse"
-              onClick={() => act('wire', { action: "pulse", wire: i+1 })}
-            />),
-            (<Button
-              textAlign="center"
-              width={4}
-              key={i}
-              content={(is_set(wirePanel.wire_bitflags, i) !== 0) ? "Cut" : "Mend"}
-              onClick={() => act("wire", { action: ((is_set(wirePanel.wire_bitflags, i) !== 0) ? "cut" : "mend"), wire: i+1 })}
-            />)]}
-          />
-        ))}
-      </LabeledList>
-      <Divider />
-      <LabeledList>
-        <LabeledList.Item
-          label="Electrification Risk"
-        >
-          {wirePanel.indicators.electrified ? "High" : "None"}
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="System Stability"
-        >
-          {wirePanel.indicators.malfunctioning ? "Unstable" : "Stable"}
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Inventory"
-        >
-          {wirePanel.indicators.hacked ? "Expanded" : "Standard"}
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Power"
-        >
-          {wirePanel.indicators.hasPower ? "Sufficient" : "Insufficient"}
-        </LabeledList.Item>
-      </LabeledList>
-    </Section>
-  );
-};
-
 export const Manufacturer = (_, context) => {
   const { act, data } = useBackend<ManufacturerData>(context);
   const [repeat, toggleRepeatVar] = useSharedState(context, "repeat", data.repeat);
@@ -142,7 +83,7 @@ export const Manufacturer = (_, context) => {
     data.available_blueprints,
     data.downloaded_blueprints,
     data.recipe_blueprints,
-    (data.hacked ? data.hidden_blueprints : []),
+    data.hidden_blueprints,
   ];
   const all_blueprint_list_strings = [
     "available",
@@ -156,29 +97,49 @@ export const Manufacturer = (_, context) => {
     let targetList = all_blueprint_lists[index_from_type];
     return targetList[queueData.category].find((key) => (key.name === queueData.name));
   };
+  /*
+    Converts the blueprints we get into one larger list sorted by category.
+    This is done here instead of sending one big list to reduce the amount of times we need to refresh static data.
+  */
+  let blueprints_by_category:Record<string, Manufacturable[]> = {};
 
+  for (let category of data.all_categories) {
+    blueprints_by_category[category] = [];
+    for (let blueprint_list of all_blueprint_lists) {
+      if (blueprint_list[category] === undefined) {
+        continue;
+      }
+      for (let blueprint of blueprint_list[category]) {
+        blueprints_by_category[blueprint.category].push(blueprint);
+      }
+    }
+  }
   return (
     <Window width={1200} height={600} title={data.fabricator_name}>
       <Window.Content scrollable>
         <Stack>
           <Stack.Item width="80%">
             <Section>
-              {data.all_categories.map((category: string) => (
-                <Collapsible open title={category} key={category}>
-                  {all_blueprint_lists.map((blueprints: Record<string, Manufacturable[]>) => (
-                    (Object.keys(blueprints).find((key) => (key === category)))
-                      ? blueprints[category].map((blueprintData: Manufacturable) => (
-                        (blueprintData.name.toLowerCase().includes(search)
-                          ? (
-                            <BlueprintButton
-                              blueprintData={blueprintData}
-                              manufacturerSpeed={data.speed}
-                              materialData={data.resource_data}
-                            />
-                          ) : null)
-                      )) : null
-                  ))}
-                </Collapsible>
+              {data.all_categories.map((category:string) => (
+                blueprints_by_category[category].length > 0 && (
+                  <Collapsible
+                    key={category}
+                    open
+                    title={`${category} (${blueprints_by_category[category].length})`}
+                  >
+                    {
+                      blueprints_by_category[category].map((blueprint:Manufacturable) => (
+                        blueprint.name.toLowerCase().includes(search) ? (
+                          <BlueprintButton
+                            blueprintData={blueprint}
+                            manufacturerSpeed={data.speed}
+                            materialData={data.resource_data}
+                          />
+                        ) : null
+                      ))
+                    }
+                  </Collapsible>
+                )
               ))}
             </Section>
           </Stack.Item>
