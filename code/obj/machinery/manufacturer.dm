@@ -2970,13 +2970,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (I && length(I.item_outputs) && I.item_outputs[1])
 				getItemIcon(I.item_outputs[1])
 
-
+#undef MAX_QUEUE_LENGTH
 #undef WIRE_EXTEND
 #undef WIRE_POWER
 #undef WIRE_MALF
 #undef WIRE_SHOCK
-#undef MAX_QUEUE_LENGTH
+#undef MODE_READY
+#undef MODE_WORKING
+#undef MODE_HALT
 #undef MIN_SPEED
+#undef DEFAULT_SPEED
 #undef MAX_SPEED
 #undef MAX_SPEED_HACKED
-#undef MAX_SPEED_HACKED
+#undef MAX_SPEED_DAMAGED
+#undef ALL_BLUEPRINTS
