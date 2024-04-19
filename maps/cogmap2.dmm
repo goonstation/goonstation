@@ -52083,9 +52083,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/medlocker,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/pharmacy)
 "cYS" = (
@@ -64152,8 +64152,8 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4
 	},
-/obj/mapping_helper/access/medlocker,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/pharmacy)
 "lnj" = (

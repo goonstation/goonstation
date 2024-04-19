@@ -1,4 +1,17 @@
 
+(t)fri apr 19 24
+(u)mintyphresh
+(p)18430
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Completing a crew objective now grants 50 XP for that job.
+(u)TealSeer
+(p)18546
+(e)🗺⚖|A-Mapping, C-Balance
+(+)Cogmap 2's pharmacy no longer requires medical locker access to enter.
+(u)Carthridge / Nerkson
+(p)18428
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)A new egg-celent costume has bounced into Geoff Honkington's store! Check his stock for more info!
 (t)thu apr 18 24
 (u)LeahTheTech
 (*)All maps with a PTL now have two laser mirrors by default.
