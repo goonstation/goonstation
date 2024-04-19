@@ -409,25 +409,34 @@
 		..()
 		if(!active)
 			return
-		var/list/targets = list()
+
+		var/list/targets_by_name = list()
+		var/list/counts_by_type = list()
 		for (var/atom/movable/a in view(src.seekrange,ship.loc))
 			if(!a.anchored)
-				targets += a
+				counts_by_type[a.type] += 1
+				if (counts_by_type[a.type] == 1)
+					targets_by_name[a.name] = a
+				else
+					targets_by_name["[a.name] #[counts_by_type[a.type]]"] = a
 
-		target = input(usr, "Choose what to use the tractor beam on", "Choose Target")  as null|anything in targets
+		target = targets_by_name[tgui_input_list(usr, "Choose what to use the tractor beam on", "Choose Target", sortList(targets_by_name, GLOBAL_PROC_REF(cmp_text_asc)))]
 
 		if(!target)
 			deactivate()
 			return
 		tractor = image("icon" = 'icons/obj/ship.dmi', "icon_state" = "tractor", "layer" = FLOAT_LAYER)
 		target.overlays += tractor
+		RegisterSignal(src.ship, COMSIG_MOVABLE_MOVED, PROC_REF(tractor_drag))
 		settingup = 0
+
 	deactivate()
 		..()
 		settingup = 1
 		if(target)
 			target.overlays -= tractor
 			target = null
+			UnregisterSignal(src.ship, COMSIG_MOVABLE_MOVED)
 		return
 
 	opencomputer(mob/user as mob)
@@ -443,6 +452,12 @@
 		user.Browse(dat, "window=ship_sec_system")
 		onclose(user, "ship_sec_system")
 		return
+
+	proc/tractor_drag(obj/machinery/vehicle/holding_ship, atom/previous_loc, direction)
+		if (QDELETED(src.target) || GET_DIST(holding_ship, src.target) > src.seekrange)
+			UnregisterSignal(src.ship, COMSIG_MOVABLE_MOVED)
+			return
+		step_to(src.target, src.ship, 1)
 
 /obj/item/shipcomponent/secondary_system/repair
 	name = "Duracorp Construction Device"
