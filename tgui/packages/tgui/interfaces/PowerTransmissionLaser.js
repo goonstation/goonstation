@@ -194,7 +194,6 @@ const OutputControls = (props, context) => {
           mr="0.5em"
           size={1.25}
           animated
-          bipolar={isEmagged}
           inline
           step={5}
           stepPixelSize={2}
