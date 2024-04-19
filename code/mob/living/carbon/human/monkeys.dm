@@ -230,7 +230,7 @@
 	var/list/shitlist = list()
 	var/ai_aggression_timeout = 600
 	var/ai_poke_thing_chance = 1
-	var/ai_delay_move = FALSE
+	var/ai_delay_move = FALSE //! Delays the AI from moving a single time if set
 	default_mutantrace = /datum/mutantrace/monkey
 
 	New()
