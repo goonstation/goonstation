@@ -487,6 +487,7 @@
 	name = "Pet Person"
 	desc = "Start with your (possibly lovable) pet!"
 	id = "petperson"
+	icon_state = "petperson"
 	points = -1
 	category = list("trinkets")
 
