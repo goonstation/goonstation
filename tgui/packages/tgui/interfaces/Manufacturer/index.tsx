@@ -87,9 +87,9 @@ export const Manufacturer = (_, context) => {
   ];
   const all_blueprint_list_strings = [
     "available",
-    "hidden",
     "download",
     "drive_blueprint",
+    "hidden",
   ];
   // Get a Manufacturable from a QueueBlueprint using its type, category, and name.
   let getBlueprintFromQueueData = (queueData:QueueBlueprint) => {
@@ -102,10 +102,15 @@ export const Manufacturer = (_, context) => {
     This is done here instead of sending one big list to reduce the amount of times we need to refresh static data.
   */
   let blueprints_by_category:Record<string, Manufacturable[]> = {};
-
-  for (let category of data.all_categories) {
+  let test = "";
+  for (let category_index = 0; category_index < data.all_categories.length; category_index++) {
+    let category = data.all_categories[category_index];
     blueprints_by_category[category] = [];
-    for (let blueprint_list of all_blueprint_lists) {
+    for (let blueprint_index = 0; blueprint_index < all_blueprint_lists.length; blueprint_index++) {
+      if (!data.hacked && (all_blueprint_list_strings[blueprint_index] === "hidden")) {
+        continue;
+      }
+      let blueprint_list = all_blueprint_lists[blueprint_index];
       if (blueprint_list[category] === undefined) {
         continue;
       }
@@ -120,6 +125,7 @@ export const Manufacturer = (_, context) => {
         <Stack>
           <Stack.Item width="80%">
             <Section>
+              {test}
               {data.all_categories.map((category:string) => (
                 blueprints_by_category[category].length > 0 && (
                   <Collapsible
