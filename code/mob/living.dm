@@ -1792,6 +1792,11 @@
 							// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
 							if (locate(/mob) in A.contents)
 								. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
+							else if (locate(/obj/item/gang_loot) in A.contents)
+								. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
+						else if (A.always_slow_pull)
+							. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
+
 			. = lerp(1, . , pushpull_multiplier)
 
 
@@ -2123,7 +2128,7 @@
 			if (!shock_damage)
 				return 0
 
-	if (src.bioHolder.HasEffect("resist_electric_heal"))
+	if (src.bioHolder?.HasEffect("resist_electric_heal"))
 		var/healing = 0
 		healing = shock_damage / 3
 		src.HealDamage("All", healing, healing)

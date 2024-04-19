@@ -933,7 +933,7 @@ Frequency:
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/construction))
 				src.module = new /obj/item/robot_module/construction_ai( src )
 			else
-				src.module = new /obj/item/robot_module( src )
+				src.module = new /obj/item/robot_module/eyebot( src )
 			hud.update_tool_selector()
 
 			//ew

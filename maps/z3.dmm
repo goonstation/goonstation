@@ -4261,7 +4261,7 @@
 	density = 1;
 	desc = "A combination pick and place machine and wave soldering gizmo.  For making boards.  Buddy boards.   Well, it would if the interface wasn't broken.";
 	icon = 'icons/obj/manufacturer.dmi';
-	icon_state = "fab";
+	icon_state = "fab-recycle";
 	name = "PCB constructor"
 	},
 /turf/simulated/floor,

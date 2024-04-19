@@ -202,6 +202,12 @@
 						last_move_trigger = ticker ? ticker.round_elapsed_ticks : 0 //Wire note: Fix for Cannot read null.round_elapsed_ticks
 						deliver_move_trigger(running ? "sprint" : m_intent)
 
+					// Tripping (the physical kind)
+					var/trip_chance = 5
+					if (src.traitHolder && src.traitHolder.hasTrait("trippy") && prob(trip_chance))
+						src.setStatus("resting", INFINITE_STATUS)
+						src.force_laydown_standup()
+						src.visible_message(SPAN_ALERT("<B>[src]</B> trips!"))
 
 					src.glide_size = glide // dumb hack: some Move() code needs glide_size to be set early in order to adjust "following" objects
 					src.animate_movement = SLIDE_STEPS

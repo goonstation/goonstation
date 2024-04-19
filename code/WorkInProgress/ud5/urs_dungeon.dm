@@ -150,7 +150,7 @@
 					return
 				if(!target)
 					return
-				var/obj/perm_portal/P = new /obj/perm_portal(get_turf(src))
+				var/obj/laser_sink/perm_portal/P = new /obj/laser_sink/perm_portal(get_turf(src))
 				P.target = get_turf(target)
 				if(src.invisible_portal)
 					P.invisibility = 20

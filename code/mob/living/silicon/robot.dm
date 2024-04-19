@@ -2826,12 +2826,35 @@
 		UpdateOverlays(src.i_leg_decor, "leg_decor")
 		UpdateOverlays(src.i_arm_decor, "arm_decor")
 
+		if (length(src.clothes))
+			if (!src.i_clothes)
+				src.i_clothes = new
+			src.i_clothes.overlays.Cut()
+			for(var/x in src.clothes)
+				var/obj/item/clothing/U = src.clothes[x]
+				if (!istype(U))
+					continue
+				var/image/clothed_image = U.wear_image
+				if (!clothed_image)
+					continue
+				if (U.wear_state)
+					clothed_image.icon_state = U.wear_state
+				else
+					clothed_image.icon_state = U.icon_state
+				clothed_image.alpha = U.alpha
+				clothed_image.color = U.color
+				clothed_image.layer = U.wear_layer
+				src.i_clothes.overlays += clothed_image
+			UpdateOverlays(src.i_clothes, "clothes", TRUE)
+		else
+			UpdateOverlays(null, "clothes")
+
 		if (src.brainexposed && src.part_head)
 			if (src.part_head.brain)
 				src.i_details.icon_state = "openbrain"
 			else
 				src.i_details.icon_state = "openbrainless"
-			UpdateOverlays(src.i_details, "brain")
+			UpdateOverlays(src.i_details, "brain", TRUE)
 		else
 			UpdateOverlays(null, "brain")
 
@@ -2851,13 +2874,13 @@
 			if (src.wiresexposed)
 				src.i_details.icon_state = "openwires"
 				src.i_panel.overlays += src.i_details
-			UpdateOverlays(src.i_panel, "brain")
+			UpdateOverlays(src.i_panel, "panel", TRUE)
 		else
 			UpdateOverlays(null, "panel")
 
 		if (src.emagged)
 			src.i_details.icon_state = "emagged"
-			UpdateOverlays(src.i_details, "emagged")
+			UpdateOverlays(src.i_details, "emagged", TRUE)
 		else
 			UpdateOverlays(null, "emagged")
 
@@ -2868,33 +2891,10 @@
 			for (var/obj/item/roboupgrade/R in src.upgrades)
 				if (R.activated && R.borg_overlay)
 					src.i_upgrades.overlays += image('icons/mob/robots.dmi', R.borg_overlay)
-			UpdateOverlays(src.i_upgrades, "upgrades")
+			UpdateOverlays(src.i_upgrades, "upgrades", TRUE)
 		else
 			UpdateOverlays(null, "upgrades")
 
-		if (length(src.clothes))
-			if (!src.i_clothes)
-				src.i_clothes = new
-			src.i_clothes.overlays.Cut()
-			for(var/x in src.clothes)
-				var/obj/item/clothing/U = src.clothes[x]
-				if (!istype(U))
-					continue
-				var/image/clothed_image = U.wear_image
-				if (!clothed_image)
-					continue
-				if (U.wear_state)
-					clothed_image.icon_state = U.wear_state
-				else
-					clothed_image.icon_state = U.icon_state
-				//under_image.layer = MOB_CLOTHING_LAYER
-				clothed_image.alpha = U.alpha
-				clothed_image.color = U.color
-				clothed_image.layer = FLOAT_LAYER //MOB_CLOTHING_LAYER
-				src.i_clothes.overlays += clothed_image
-			UpdateOverlays(src.i_clothes, "clothes")
-		else
-			UpdateOverlays(null, "clothes")
 		src.update_mob_silhouette()
 
 	proc/compborg_force_unequip(var/slot = 0)
