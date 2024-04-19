@@ -1000,31 +1000,32 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 		var/ejectamt = 0
 		var/turf/ejectturf = get_turf(usr)
-
+		var/obj/item/target = null
 		for(var/obj/item/O in src.get_contents())
 			if (O.material && O.material.getID() == mat_id)
-				if (!ejectamt)
-					ejectamt = tgui_input_number(usr,"How many material pieces do you want to eject?","Eject Materials", 0, O.amount, 0)
-					if (ejectamt <= 0 || src.mode != MODE_READY || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
-						break
-					if (round(ejectamt) != ejectamt)
-						boutput(usr, SPAN_ALERT("You can only eject a whole number of a material"))
-						break
-				if (!ejectturf)
-					break
-				if (ejectamt > O.amount)
-					playsound(src.loc, src.sound_grump, 50, 1)
-					boutput(usr, SPAN_ALERT("There's not that much material in [name]. It has ejected what it could."))
-					ejectamt = O.amount
-				if (ejectamt == O.amount)
-					src.storage.transfer_stored_item(O, ejectturf)
-				else
-					var/obj/item/material_piece/P = new O.type
-					P.setMaterial(O.material)
-					P.change_stack_amount(ejectamt - P.amount)
-					O.change_stack_amount(-ejectamt)
-					P.set_loc(get_output_location(O))
+				target = O
 				break
+		if (isnull(target))
+			boutput(usr, SPAN_ALERT("ERROR: Material not found in storage."))
+			return
+		ejectamt = tgui_input_number(usr,"How many material pieces do you want to eject?","Eject Materials", 0, ceil(target.amount), 0)
+		ejectamt = floor(ejectamt)
+		if (ejectamt <= 0 || src.mode != MODE_READY || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
+			return
+		if (!ejectturf)
+			return
+		if (ejectamt > target.amount)
+			playsound(src.loc, src.sound_grump, 50, 1)
+			boutput(usr, SPAN_ALERT("There's not that much material in [name]. It has ejected what it could."))
+			ejectamt = floor(target.amount)
+		if (ejectamt == target.amount)
+			src.storage.transfer_stored_item(target, ejectturf)
+		else
+			var/obj/item/material_piece/P = new target.type
+			P.setMaterial(target.material)
+			P.change_stack_amount(ejectamt - P.amount)
+			target.change_stack_amount(-ejectamt)
+			P.set_loc(get_output_location(target))
 
 	proc/scan_card(obj/item/I)
 		var/obj/item/card/id/ID = get_id_card(I)
