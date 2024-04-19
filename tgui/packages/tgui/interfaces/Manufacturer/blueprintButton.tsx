@@ -68,7 +68,7 @@ export const BlueprintButton = (props, context) => {
   );
   const isProduceable = !blueprintSatisfaction.some((satisfied) => !satisfied))
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
-  let outputs = (blueprintData.item_outputs.length < 2
+  const outputs = (blueprintData.item_outputs.length < 2
     && blueprintData.create < 2
     && !blueprintData.apply_material) ? null : (
       <>
