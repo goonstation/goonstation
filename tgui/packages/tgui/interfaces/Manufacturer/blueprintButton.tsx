@@ -86,9 +86,7 @@ export const BlueprintButton = (props, context) => {
       title="Requirements"
       buttons={<Button icon="hourglass" backgroundColor="rgba(0,0,0,0)">{getBlueprintTime(blueprintData.time, manufacturerSpeed)}s</Button>}
     >
-      <LabeledList
-
-      >
+      <LabeledList>
         {blueprintData.material_names.map((value:string, index:number) => (
           <LabeledList.Item
             key={index}
