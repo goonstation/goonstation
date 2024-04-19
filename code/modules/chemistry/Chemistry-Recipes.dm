@@ -2047,23 +2047,29 @@
 		result = "lostcoke"
 		required_reagents = list("powercola" = 1, "port" = 1)
 		result_amount = 2
-		mix_phrase = "The mixture teleports away! Go find it!"
+		mix_phrase = null
 		mix_sound = FALSE
 
-		does_react(var/datum/reagents/holder)  // drink must be pure to mix-- no teleporting chem bombs
-			if(length(holder.reagent_list) > length(src.required_reagents))
+		does_react(var/datum/reagents/holder)
+			if(length(holder.reagent_list) > length(src.required_reagents)) // drink must be pure to mix-- no teleporting chem bombs
 				return FALSE
-			if(!holder.my_atom) //no teleportable container, no reaction
+			if(!holder.my_atom || !istype(holder.my_atom, /obj)) //no teleportable container, no reaction
 				return FALSE
 			else
 				return TRUE
 
 		on_reaction(var/datum/reagents/holder, var/created_volume) // Teleports away on mixing
 			playsound(get_turf(holder.my_atom), "warp", 20, 1)
+			var/oldloc = get_turf(my_atom)
 			if(istype(holder.my_atom, /obj))
 				var/obj/cup = holder.my_atom
 				cup.set_loc(get_a_random_station_unlocked_container_with_no_others_on_the_turf())
 
+			if(get_turf(my_atom) != oldloc) //checks if the drink actually teleported
+				boutput(M, SPAN_NOTICE("[bicon(my_atom)] The mixture teleports away! Go find it!"))
+			else
+				boutput(M, SPAN_NOTICE("[bicon(my_atom)] The mixture groans scarily, turning in on itself and disintegrating."))
+				holder.remove_reagent("lostcoke", created_volume)
 
 	redspot
 		name = "Redspot"
