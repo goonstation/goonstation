@@ -138,35 +138,24 @@ export const Manufacturer = (_, context) => {
       setSwappingMaterial(null);
     }
   };
-  // Get a Manufacturable from a QueueBlueprint using its type, category, and name.
-  let getBlueprintFromQueueData = (queueData:QueueBlueprint) => {
-    // "available", "hidden", "download", "drive_blueprint"
-    let blueprintList = null;
-
-    if (queueData.type === "available") {
-      blueprintList = data.available_blueprints;
-    }
-    else if (queueData.type === "hidden") {
-      blueprintList = data.hidden_blueprints;
-    }
-    else if (queueData.type === "download") {
-      blueprintList = data.downloaded_blueprints;
-    }
-    else if (queueData.type === "drive_blueprint") {
-      blueprintList = data.recipe_blueprints;
-    }
-    else {
-      return null;
-    }
-
-    return blueprintList[queueData.category].find((key) => (key.name === queueData.name));
-  };
-  let usable_blueprints = [
+  const all_blueprint_lists = [
     data.available_blueprints,
     data.downloaded_blueprints,
     data.recipe_blueprints,
     (data.hacked ? data.hidden_blueprints : []),
   ];
+  const all_blueprint_list_strings = [
+    "available",
+    "hidden",
+    "download",
+    "drive_blueprint",
+  ];
+  // Get a Manufacturable from a QueueBlueprint using its type, category, and name.
+  let getBlueprintFromQueueData = (queueData:QueueBlueprint) => {
+    let index_from_type = all_blueprint_list_strings.findIndex((type:string) => (type === queueData.type));
+    let targetList = all_blueprint_lists[index_from_type];
+    return targetList[queueData.category].find((key) => (key.name === queueData.name));
+  };
 
   return (
     <Window width={1200} height={600} title={data.fabricator_name}>
@@ -176,7 +165,7 @@ export const Manufacturer = (_, context) => {
             <Section>
               {data.all_categories.map((category: string) => (
                 <Collapsible open title={category} key={category}>
-                  {usable_blueprints.map((blueprints: Record<string, Manufacturable[]>) => (
+                  {all_blueprint_lists.map((blueprints: Record<string, Manufacturable[]>) => (
                     (Object.keys(blueprints).find((key) => (key === category)))
                       ? blueprints[category].map((blueprintData: Manufacturable) => (
                         (blueprintData.name.toLowerCase().includes(search)
