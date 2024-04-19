@@ -206,7 +206,7 @@ export const Manufacturer = (_, context) => {
                         step={1}
                         stepPixelSize={100}
                         disabled={data.mode !== "working"}
-                        onChange={(_e: any, value: number) => act("speed", { "value": value })}
+                        onChange={(_e: any, value: number) => act("speed", { value })}
                       />
                     </LabeledList.Item>
                   </LabeledList>
