@@ -7,7 +7,7 @@ const is_set = (bits, bit) => bits & (1 << bit);
 const ManufacturerWireData = [
   { name: "Teal", colorName: "teal" },
   { name: "Red", colorName: "red" },
-  { name: "Amber", colorName: "amber" },
+  { name: "Gold", colorName: "gold" },
   { name: "Lime", colorName: "lime" },
 ];
 

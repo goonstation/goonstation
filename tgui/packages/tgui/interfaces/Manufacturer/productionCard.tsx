@@ -18,6 +18,10 @@ import { CenteredText } from "../../components/goonstation/CenteredText";
 export const ProductionCard = (params, context) => {
   const { act } = useBackend(context);
   const { data, index, mode } = params;
+  // in case blueprint is taken out from under us and dm doesnt do it first
+  if (data === undefined) {
+    return null;
+  }
   // Simpler badge for the buttons where it doesn't matter, bottommost return for the bestest of buttons
   if (index !== 0) {
     return (

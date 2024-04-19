@@ -334,7 +334,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"card_owner" = (!isnull(src.scan) ? src.scan.registered : null),
 			"speed" = src.speed,
 			"repeat" = src.repeat,
+			"error" = src.error,
 			"resource_data" = resource_data,
+			"manudrive_uses_left" = src.get_drive_uses_left(),
 			"indicators" = list("electrified" = src.electrified,
 							    "malfunctioning" = src.malfunction,
 								"hacked" = src.hacked,
@@ -618,7 +620,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if (!check_enough_materials(src.queue[1]))
 						boutput(usr, SPAN_ALERT("Insufficient usable materials to manufacture first item in queue."))
 					else
-						src.begin_work( new_production = FALSE )
+						src.begin_work( new_production = TRUE )
 						src.time_started = TIME
 				else if (params["action"] == "pause")
 					src.mode = MODE_HALT
@@ -1656,6 +1658,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 			var/mat_id = src.materials_in_use[pattern]
 			src.change_contents(-M.item_amounts[i]/10, mat_id)
 
+	/// Get how many more times a drive can produce items it is stocked with
+	proc/get_drive_uses_left()
+		if(src.manudrive)
+			if (src.manudrive.fablimit == -1)
+				return -1 // Represents unlimited with manudrives, we roll with it
+			for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
+				if(!isnull(MD.num_working))
+					return src.manudrive.fablimit - MD.num_working
+		return 0 // none loaded
+
 	proc/begin_work(new_production = TRUE)
 		src.error = null
 		if (status & NOPOWER || status & BROKEN)
@@ -1725,7 +1737,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 				for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
 					if(MD.fablimit != -1 && MD.fablimit - MD.num_working <= 0)
 						src.mode = MODE_HALT
+						playsound(src.loc, src.sound_grump, 50, 1)
 						src.error = "The inserted ManuDrive is unable to operate further."
+						src.visible_message(SPAN_ALERT("[src] emits an angry buzz!"))
 						src.queue = list()
 						return
 					else
@@ -1944,7 +1958,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (!P.material)
 				continue
 			// Match by material piece or id
-			if (mat_piece && P.material.isSameMaterial(mat_piece.material) ||\
+			if (mat_piece && mat_piece.material && P.material.isSameMaterial(mat_piece.material) ||\
 				mat_id && mat_id == P.material.getID())
 				// fuck floating point, lets pretend we only use tenths
 				P.amount = round(P.amount + amount, 0.1)

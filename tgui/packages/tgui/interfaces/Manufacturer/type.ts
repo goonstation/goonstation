@@ -11,6 +11,7 @@ export type ManufacturerData = {
   all_categories:string[];
 
   card_owner:string;
+  error:string;
   fabricator_name:string;
   mode:string;
   rockbox_message:string;
@@ -29,18 +30,24 @@ export type ManufacturerData = {
   card_balance:number;
   progress_pct:number;
   speed:number;
+  manudrive_uses_left:number;
   min_speed:number;
   max_speed_normal:number;
   max_speed_hacked:number;
   wire_bitflags:number;
 
-
+  manudrive:Manudrive;
   indicators:WireIndicators;
 
   resource_data:Resource[];
   rockboxes:Rockbox[];
   queue:QueueBlueprint[];
   wires:number[];
+}
+
+export type Manudrive = {
+  name:string;
+  limit:number;
 }
 
 // Keyed by name

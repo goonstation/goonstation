@@ -33,7 +33,10 @@ const GetProductionSatisfaction = (
     let compatible_material:Resource;
     // Try to find compatible resource
     for (let resource of materials_stored) {
-      if (resource.amount < amount_requirements[i]/10) {
+      if (Object.keys(availableMaterials).find((value:string) => (value === resource.id)) === undefined) {
+        availableMaterials[resource.id] = resource.amount;
+      }
+      if (availableMaterials[resource.id] < amount_requirements[i]/10) {
         continue;
       }
       if (resource.satisfies.find((satisfies_pattern:string) => (
@@ -44,15 +47,11 @@ const GetProductionSatisfaction = (
       compatible_material = resource;
       break;
     }
-    
     if (compatible_material === undefined) {
       satisfaction.push(false);
       continue;
     }
     satisfaction.push(true);
-    if (Object.keys(availableMaterials).find((value:string) => (value === compatible_material.id)) === undefined) {
-      availableMaterials[compatible_material.id] = compatible_material.amount;
-    }
     availableMaterials[compatible_material.id] -= amount_requirements[i];
   }
   return satisfaction;

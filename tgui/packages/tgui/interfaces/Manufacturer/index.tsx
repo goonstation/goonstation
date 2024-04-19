@@ -8,7 +8,7 @@
 import { useBackend, useLocalState, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
-import { Button, Collapsible, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
+import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
 import { formatMoney } from '../../format';
 import { MaintenencePanel, Manufacturable, ManufacturerData, Ore, QueueBlueprint, Resource, Rockbox } from './type';
 
@@ -16,6 +16,7 @@ import { BlueprintButton } from './blueprintButton';
 import { ProductionCard } from './productionCard';
 import { clamp } from 'common/math';
 import { CollapsibleWireMenu } from './collapsibleWireMenu';
+import { pluralize } from '../common/stringUtils';
 
 const CardInfo = (_, context) => {
   const { data, act } = useBackend<ManufacturerData>(context);
@@ -88,15 +89,9 @@ export const Manufacturer = (_, context) => {
   const all_blueprint_list_strings = [
     "available",
     "download",
-    "drive_blueprint",
+    "drive_recipes",
     "hidden",
   ];
-  // Get a Manufacturable from a QueueBlueprint using its type, category, and name.
-  let getBlueprintFromQueueData = (queueData:QueueBlueprint) => {
-    let index_from_type = all_blueprint_list_strings.findIndex((type:string) => (type === queueData.type));
-    let targetList = all_blueprint_lists[index_from_type];
-    return targetList[queueData.category].find((key) => (key.name === queueData.name));
-  };
   /*
     Converts the blueprints we get into one larger list sorted by category.
     This is done here instead of sending one big list to reduce the amount of times we need to refresh static data.
@@ -121,6 +116,13 @@ export const Manufacturer = (_, context) => {
       }
     }
   }
+
+
+  // Get a Manufacturable from a QueueBlueprint using its type, category, and name.
+  let getBlueprintFromQueueData = (queueData:QueueBlueprint) => {
+    return blueprints_by_category[queueData.category].find((key) => (key.name === queueData.name));
+  };
+
   return (
     <Window width={1200} height={600} title={data.fabricator_name}>
       <Window.Content scrollable>
@@ -209,6 +211,38 @@ export const Manufacturer = (_, context) => {
                     </LabeledList.Item>
                   </LabeledList>
                 </Section>
+                {data.manudrive.limit !== null ? (
+                  <Stack.Item>
+                    <Section
+                      title="Loaded Manudrive"
+                      buttons={
+                        <Button
+                          icon="eject"
+                          content="Eject"
+                          onClick={() => act("manudrive", { "action": "eject" })}
+                        />
+                      }
+                      mb={1}
+                    >
+                      {data.manudrive.name}
+                      <Divider />
+                      <LabeledList>
+                        <LabeledList.Item
+                          label={"Fabrication Limit"}
+                        >
+                          {data.manudrive.limit === -1 ? "Unlimited" : `${data.manudrive.limit} ${pluralize("use", data.manudrive.limit)}`}
+                        </LabeledList.Item>
+                        {data.manudrive.limit !== -1 ? (
+                          <LabeledList.Item
+                            label={"Remaining Uses"}
+                          >
+                            {data.manudrive_uses_left}
+                          </LabeledList.Item>
+                        ) : null }
+                      </LabeledList>
+                    </Section>
+                  </Stack.Item>
+                ) : null}
                 {data.panel_open ? (
                   <Stack.Item mb={1} >
                     <CollapsibleWireMenu wirePanel={wirePanel} />
@@ -250,6 +284,13 @@ export const Manufacturer = (_, context) => {
               </Stack.Item>
               <Stack.Item>
                 <Stack vertical>
+                  {data.error !== null ? (
+                    <Section
+                      title="ERROR"
+                    >
+                      {data.error}
+                    </Section>
+                  ) : null}
                   {data.queue.length > 0 ? (
                     <Stack.Item>
                       <ProgressBar
