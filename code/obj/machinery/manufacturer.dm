@@ -5,7 +5,7 @@
 #define WIRE_SHOCK 4 //! this wire is in the machine specifically to shock curious staff assistants and serves no actual purpose
 #define MODE_READY "ready" //! machine is ready to produce more things
 #define MODE_WORKING "working" //! machine is making some things
-#define MODE_HALT = "halt" //! machine had to stop making things or couldnt due to some problem that occured
+#define MODE_HALT "halt" //! machine had to stop making things or couldnt due to some problem that occured
 #define MIN_SPEED 1 //! lowest speed fabricator can function at
 #define DEFAULT_SPEED 3 //! speed which manufacturers run at by default
 #define MAX_SPEED 3 //! maximum speed default manufacturers can be set to
@@ -1356,7 +1356,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/accept_loading(mob/user,allow_silicon)
 		if (!user)
 			return FALSE
-		if src.is_disabled()
+		if (src.is_disabled())
 			return FALSE
 		if (src.dismantle_stage > 0)
 			return FALSE
