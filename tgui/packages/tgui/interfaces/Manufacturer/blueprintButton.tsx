@@ -90,7 +90,7 @@ export const BlueprintButton = (props, context) => {
         {blueprintData.material_names.map((value:string, index:number) => (
           <LabeledList.Item
             key={index}
-            labelColor={(blueprintSatisfaction[index]) ? "label" : "red"}
+            labelColor={(blueprintSatisfaction[index]) ? undefined : "bad"}
             label={value}
             textAlign="right"
           >
