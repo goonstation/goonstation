@@ -1,12 +1,16 @@
-#define MAX_QUEUE_LENGTH 20
-#define WIRE_EXTEND 1
-#define WIRE_POWER 2
-#define WIRE_MALF 3
-#define WIRE_SHOCK 4
-#define MAX_SPEED 3
-#define MAX_SPEED_HACKED 5
-#define MAX_SPEED_DAMAGED 8
-#define IS_NOT_OPERATIONAL (src.status & BROKEN || src.status & NOPOWER)
+#define MAX_QUEUE_LENGTH 20 //! maximum amount of blueprints which may be queued for printing
+#define WIRE_EXTEND 1 //! wire which reveals blueprints in the "hidden" type
+#define WIRE_POWER 2 //! wire which can disable machine power
+#define WIRE_MALF 3 //! wire which causes machine to malfunction
+#define WIRE_SHOCK 4 //! this wire is in the machine specifically to shock curious staff assistants and serves no actual purpose
+#define MODE_READY "ready" //! machine is ready to produce more things
+#define MODE_WORKING "working" //! machine is making some things
+#define MODE_HALT = "halt" //! machine had to stop making things or couldnt due to some problem that occured
+#define MIN_SPEED 1 //! lowest speed fabricator can function at
+#define DEFAULT_SPEED 3 //! speed which manufacturers run at by default
+#define MAX_SPEED 3 //! maximum speed default manufacturers can be set to
+#define MAX_SPEED_HACKED 5 //! maximum speed manufacturers which are hacked (WIRE_EXTEND has been pulsed) can be set to
+#define MAX_SPEED_DAMAGED 8 //! maximum speed that fabricators which flip_out() can be set to, randomly.
 #define ALL_BLUEPRINTS (src.available + src.download + src.hidden + src.drive_recipes)
 TYPEINFO(/obj/machinery/manufacturer)
 	mats = 20
@@ -26,11 +30,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 	flags = NOSPLASH | FLUID_SUBMERGE
 	layer = STORAGE_LAYER
-
 	// General stuff
 	var/health = 100
 	var/supplemental_desc = null //! appended in get_desc() to the base description, to make subtype definitions cleaner
-	var/mode = "ready" // "ready", "working", "halt"
+	var/mode = MODE_READY //! the current status of the machine. Ready, working, or halt are all modes used currently.
 	var/error = null
 	var/active_power_consumption = 0 //! How much power is consumed while active? This is determined automatically when the unit starts a production cycle
 	var/panel_open = FALSE
@@ -188,13 +191,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		..()
 
-		if (src.mode == "working")
+		if (src.mode == MODE_WORKING)
 			use_power(src.active_power_consumption)
 
 		if (src.electrified > 0)
 			src.electrified--
 		/*
-		if (src.mode == "working")
+		if (src.mode == MODE_WORKING)
 			if (src.malfunction && prob(8))
 				src.flip_out()
 			src.time_left -= src.speed * 4.4 * mult
@@ -206,12 +209,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 						src.manual_stop = 0
 						playsound(src.loc, src.sound_happy, 50, 1)
 						src.visible_message(SPAN_NOTICE("[src] finishes its production queue."))
-						src.mode = "ready"
+						src.mode = MODE_READY
 						src.build_icon()
 		*/
 
 	proc/finish_work()
-
 		if(length(src.queue))
 			output_loop(src.queue[1])
 			if (!src.repeat)
@@ -221,7 +223,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.manual_stop = 0
 			playsound(src.loc, src.sound_happy, 50, 1)
 			src.visible_message(SPAN_NOTICE("[src] finishes its production queue."))
-			src.mode = "ready"
+			src.mode = MODE_READY
 			src.build_icon()
 
 	ex_act(severity)
@@ -263,10 +265,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.take_damage(damage)
 
 	power_change()
-		if(status & BROKEN)
+		if(src.is_broken())
 			src.build_icon()
 		else
-			if(powered() && src.dismantle_stage < 3)
+			if(src.powered() && src.dismantle_stage < 3)
 				status &= ~NOPOWER
 				src.build_icon()
 			else
@@ -277,7 +279,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	// Overriden to not disable if no power, wire maintenence to restore power is on the GUI which creates catch-22 situation
 	broken_state_topic(mob/user)
 		. = user.shared_ui_interaction(src)
-		if (status & BROKEN)
+		if (src.is_broken())
 			return min(., UI_CLOSE)
 		else if (requires_power && status & (NOPOWER | POWEROFF))
 			return min(., UI_INTERACTIVE)
@@ -306,14 +308,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
 		for (var/datum/manufacture/M in src.queue)
-			queue_data += list(list("name" = M.name, "category" = M.category, "type" = src.get_blueprint_type(M) ))
+			queue_data += list(list("name" = M.name, "category" = M.category, "type" = src.get_blueprint_type(M)))
 
 		// This calculates the percentage progress of a blueprint by the time that already elapsed before a pause (0 if never paused)
 		// added to the current time that has been elapsed, divided by the total time to be elapsed.
 		// But we keep the pct a constant if we're paused, and just do time that was elapsed / time to elapse
 		var/progress_pct = null
 		if (length(src.queue))
-			if (src.mode != "working")
+			if (src.mode != MODE_WORKING)
 				progress_pct = 1 - (src.time_left / src.original_duration)
 			else
 				progress_pct = ((src.original_duration - src.time_left) + (TIME - src.time_started)) / src.original_duration
@@ -337,7 +339,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"indicators" = list("electrified" = src.electrified,
 							    "malfunctioning" = src.malfunction,
 								"hacked" = src.hacked,
-								"hasPower" = !IS_NOT_OPERATIONAL,
+								"hasPower" = !src.is_disabled(),
+								src.has_no_power()
 							   ),
 		)
 
@@ -494,14 +497,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	ui_act(action, params)
 		if(!(action == "wire"))
-			if (IS_NOT_OPERATIONAL)
+			if (src.is_disabled())
 				return
 
 		if(usr.stat || usr.restrained())
 			return
 
 		if(src.electrified)
-			if (!(IS_NOT_OPERATIONAL))
+			if (!(src.is_disabled()))
 				if (src.shock(usr, 10))
 					return
 
@@ -528,7 +531,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					boutput(usr, SPAN_ALERT("Manufacturer queue length limit reached."))
 				else
 					src.queue += I
-					if (src.mode == "ready")
+					if (src.mode == MODE_READY)
 						src.begin_work( new_production = TRUE )
 						src.updateUsrDialog()
 
@@ -576,7 +579,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 							src.pulse(usr, text2num_safe(params["wire"]))
 
 			if ("speed")
-				if (src.mode == "working")
+				if (src.mode == MODE_WORKING)
 					boutput(usr, SPAN_ALERT("You cannot alter the speed setting while the unit is working."))
 					return
 				src.speed = clamp(params["value"], 1, (src.hacked ? MAX_SPEED_HACKED : MAX_SPEED))
@@ -597,13 +600,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (Qlength > 2)
 					src.queue.Cut(2)
 
-				if (src.mode != "working")
+				if (src.mode != MODE_WORKING)
 					src.queue -= src.queue[1]
 
-				if (src.mode == "halt") // Set ready if halted
+				if (src.mode == MODE_HALT) // Set ready if halted
 					src.manual_stop = FALSE
 					src.error = null
-					src.mode = "ready"
+					src.mode = MODE_READY
 					src.build_icon()
 
 			if ("pause_toggle")
@@ -618,7 +621,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 						src.begin_work( new_production = FALSE )
 						src.time_started = TIME
 				else if (params["action"] == "pause")
-					src.mode = "halt"
+					src.mode = MODE_HALT
 					src.build_icon()
 					if (src.action_bar)
 						src.action_bar.interrupt(INTERRUPT_ALWAYS)
@@ -989,7 +992,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.should_update_static = TRUE
 
 	proc/eject_material(var/mat_id)
-		if (src.mode != "ready")
+		if (src.mode != MODE_READY)
 			boutput(usr, SPAN_ALERT("You cannot eject materials while the unit is working."))
 			return
 		var/ejectamt = 0
@@ -999,7 +1002,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (O.material && O.material.getID() == mat_id)
 				if (!ejectamt)
 					ejectamt = tgui_input_number(usr,"How many material pieces do you want to eject?","Eject Materials", 0, O.amount, 0)
-					if (ejectamt <= 0 || src.mode != "ready" || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
+					if (ejectamt <= 0 || src.mode != MODE_READY || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
 						break
 					if (round(ejectamt) != ejectamt)
 						boutput(usr, SPAN_ALERT("You can only eject a whole number of a material"))
@@ -1256,13 +1259,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (Qlength > 2)
 					src.queue.Cut(2)
 
-				if (src.mode != "working")
+				if (src.mode != MODE_WORKING)
 					src.queue -= src.queue[1]
 
-				if (src.mode == "halt") // Set ready if halted
+				if (src.mode == MODE_HALT) // Set ready if halted
 					src.manual_stop = FALSE
 					src.error = null
-					src.mode = "ready"
+					src.mode = MODE_READY
 
 					src.build_icon()
 
@@ -1299,7 +1302,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.begin_work( new_production = FALSE )
 
 			if ("pause")
-				src.mode = "halt"
+				src.mode = MODE_HALT
 				src.build_icon()
 				if (src.action_bar)
 					src.action_bar.interrupt(INTERRUPT_ALWAYS)
@@ -1327,7 +1330,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if ("speed")
 				var/upperbound = src.hacked ? MAX_SPEED_HACKED : MAX_SPEED
 				var/given_speed = text2num(signal.data["data"])
-				if (src.mode == "working")
+				if (src.mode == MODE_WORKING)
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#WORKING"))
 					return
 
@@ -1350,7 +1353,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/accept_loading(mob/user,allow_silicon)
 		if (!user)
 			return FALSE
-		if IS_NOT_OPERATIONAL
+		if src.is_disabled()
 			return FALSE
 		if (src.dismantle_stage > 0)
 			return FALSE
@@ -1383,7 +1386,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if(WIRE_MALF)
 				src.malfunction = TRUE
 			if(WIRE_POWER)
-				if(!IS_NOT_OPERATIONAL)
+				if(!src.is_disabled())
 					src.shock(user, 100)
 					src.status |= NOPOWER
 
@@ -1411,7 +1414,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (WIRE_MALF)
 				src.malfunction = !src.malfunction
 			if (WIRE_POWER)
-				if(!IS_NOT_OPERATIONAL)
+				if(!src.is_disabled())
 					src.shock(user, 100)
 
 	proc/shock(mob/user, prb)
@@ -1655,12 +1658,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 		if (!length(src.queue))
 			src.manual_stop = 0
-			src.mode = "ready"
+			src.mode = MODE_READY
 			src.build_icon()
 			src.updateUsrDialog()
 			return
 		if (!istype(src.queue[1],/datum/manufacture/))
-			src.mode = "halt"
+			src.mode = MODE_HALT
 			src.error = "Corrupted entry purged from production queue."
 			src.queue -= src.queue[1]
 			src.visible_message(SPAN_ALERT("[src] emits an angry buzz!"))
@@ -1670,7 +1673,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/datum/manufacture/M = src.queue[1]
 		//Wire: Fix for href exploit creating arbitrary items
 		if (!(M in ALL_BLUEPRINTS))
-			src.mode = "halt"
+			src.mode = MODE_HALT
 			src.error = "Corrupted entry purged from production queue."
 			src.queue -= src.queue[1]
 			src.visible_message(SPAN_ALERT("[src] emits an angry buzz!"))
@@ -1683,7 +1686,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (new_production)
 			var/list/mats_used = check_enough_materials(M)
 			if (!mats_used)
-				src.mode = "halt"
+				src.mode = MODE_HALT
 				src.error = "Insufficient usable materials to continue queue production."
 				src.visible_message(SPAN_ALERT("[src] emits an angry buzz!"))
 				playsound(src.loc, src.sound_grump, 50, 1)
@@ -1717,7 +1720,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				var/obj/item/disk/data/floppy/manudrive/ManuD = src.manudrive
 				for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
 					if(MD.fablimit != -1 && MD.fablimit - MD.num_working <= 0)
-						src.mode = "halt"
+						src.mode = MODE_HALT
 						src.error = "The inserted ManuDrive is unable to operate further."
 						src.queue = list()
 						return
@@ -1726,7 +1729,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					manudrive_file = MD
 
 		playsound(src.loc, src.sound_beginwork, 50, 1, 0, 3)
-		src.mode = "working"
+		src.mode = MODE_WORKING
 		src.build_icon()
 
 		src.action_bar = actions.start(new/datum/action/bar/manufacturer(src, src.time_left, manudrive_file), src)
@@ -1760,7 +1763,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 			src.remove_materials(M)
 		else
-			src.mode = "halt"
+			src.mode = MODE_HALT
 			src.error = "Insufficient usable materials to continue queue production."
 			src.visible_message(SPAN_ALERT("[src] emits an angry buzz!"))
 			playsound(src.loc, src.sound_grump, 50, 1)
@@ -1818,7 +1821,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		animate_shake(src,5,rand(3,8),rand(3,8))
 		src.visible_message(SPAN_ALERT("[src] makes [pick(src.text_flipout_adjective)] [pick(src.text_flipout_noun)]!"))
 		playsound(src.loc, pick(src.sounds_malfunction), 50, 2)
-		if (prob(15) && length(src.get_contents()) > 4 && src.mode != "working")
+		if (prob(15) && length(src.get_contents()) > 4 && src.mode != MODE_WORKING)
 			var/to_throw = rand(1,4)
 			var/obj/item/X = null
 			while(to_throw > 0)
@@ -1836,15 +1839,15 @@ TYPEINFO(/obj/machinery/manufacturer)
 					continue
 				if (prob(33))
 					src.queue -= X
-		if (src.mode == "working")
+		if (src.mode == MODE_WORKING)
 			if (prob(5))
-				src.mode = "halt"
+				src.mode = MODE_HALT
 				src.build_icon()
 			else
 				if (prob(10))
 					src.active_power_consumption *= 2
 		if (prob(10))
-			src.speed = rand(1,8)
+			src.speed = rand(MIN_SPEED, MAX_SPEED_DAMAGED)
 		if (prob(5))
 			if (!src.electrified)
 				src.electrified = 5
@@ -1875,7 +1878,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (animspeed < 1 || animspeed > 5 || (src.malfunction && prob(50)))
 				animspeed = "malf"
 
-			if (src.mode == "working")
+			if (src.mode == MODE_WORKING)
 				src.work_display.icon_state = "fab-work[animspeed]"
 			else
 				src.work_display.icon_state = ""
@@ -2913,7 +2916,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		MA.time_left = src.duration - (TIME - src.started)
 		MA.manual_stop = FALSE
 		MA.error = null
-		MA.mode = "ready"
+		MA.mode = MODE_READY
 		MA.build_icon()
 		if(src.manudrive_file)
 			src.manudrive_file.num_working--
@@ -2965,5 +2968,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 #undef WIRE_MALF
 #undef WIRE_SHOCK
 #undef MAX_QUEUE_LENGTH
+#undef MIN_SPEED
 #undef MAX_SPEED
+#undef MAX_SPEED_HACKED
 #undef MAX_SPEED_HACKED
