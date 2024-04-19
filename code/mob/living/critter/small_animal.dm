@@ -814,6 +814,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	speechverb_ask = "spiy"
 	speechverb_stammer = "sremmats"
 	speechverb_gasp = "spsag"
+	player_can_spawn_with_pet = FALSE
 
 	mob_flags = SPEECH_REVERSE
 	/*
@@ -872,6 +873,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	health_burn = 100
 	dogtype = "george"
 	var/playing_dead = 0 // code mostly just c/p from possums, I'll shove this up on the parent somewhere at some point
+	player_can_spawn_with_pet = FALSE
 
 	New(loc)
 		..()
@@ -2208,8 +2210,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
-
 		HH = hands[2]
+
 		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
 		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
