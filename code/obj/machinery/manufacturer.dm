@@ -55,7 +55,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/original_duration = 0 //! duration of the currently queued print, used to keep track of progress when M.time gets modified weirdly in queueing
 	var/time_left = 0 //! time the current blueprint will take to manufacture
 	var/time_started = 0 //! time the last blueprint was queued
-	var/speed = 3
+	var/speed = DEFAULT_SPEED
 	var/repeat = FALSE
 	var/manual_stop = FALSE
 	var/output_cap = 20
@@ -333,8 +333,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"card_balance" = (!isnull(src.scan) ? FindBankAccountByName(src.scan.registered)["current_money"] : null),
 			"card_owner" = (!isnull(src.scan) ? src.scan.registered : null),
 			"speed" = src.speed,
-			"max_speed_normal" = MAX_SPEED,
-			"max_speed_hacked" = MAX_SPEED_HACKED,
 			"repeat" = src.repeat,
 			"resource_data" = resource_data,
 			"indicators" = list("electrified" = src.electrified,
@@ -362,6 +360,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"manudrive" = list ("name" = "[src.manudrive]",
 							   	"limit" = src.manudrive?.fablimit,
 							   ),
+			"min_speed" = MIN_SPEED,
+			"max_speed_normal" = MAX_SPEED,
+			"max_speed_hacked" = MAX_SPEED_HACKED,
 		)
 
 	/// Get whether a blueprint is available, hidden, downloaded, or a drive recipe. If in multiple print lists, picks the first result. Or null.

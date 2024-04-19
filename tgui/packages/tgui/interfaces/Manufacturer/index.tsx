@@ -245,7 +245,7 @@ export const Manufacturer = (_, context) => {
                       <Slider
                         minValue={1}
                         value={data.speed}
-                        maxValue={3}
+                        maxValue={data.hacked ? data.max_speed_hacked : data.max_speed_normal}
                         step={1}
                         stepPixelSize={100}
                         disabled={data.mode !== "working"}

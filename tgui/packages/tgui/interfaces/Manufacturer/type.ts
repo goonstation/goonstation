@@ -27,9 +27,13 @@ export type ManufacturerData = {
   repeat:BooleanLike;
 
   card_balance:number;
-  speed:number;
   progress_pct:number;
+  speed:number;
+  min_speed:number;
+  max_speed_normal:number;
+  max_speed_hacked:number;
   wire_bitflags:number;
+
 
   indicators:WireIndicators;
 
