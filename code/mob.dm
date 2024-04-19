@@ -133,7 +133,7 @@
 	var/job = null
 
 	/// For assigning mobs various factions, see factions.dm for definitions
-	var/faction = 0
+	var/faction = list()
 
 	var/nodamage = 0
 
@@ -913,7 +913,7 @@
 			output += "&emsp;[medal]"
 		output += "<b>You have [length(medals)] medal\s.</b>"
 		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1"  target="_blank">Medal Details</a>"}
-		boutput(src, output.Join("<br>"))
+		tgui_message(src, output.Join("<br>"), "Medals")
 
 /mob/verb/setdnr()
 	set name = "Set DNR"
@@ -1358,25 +1358,33 @@
 
 	W.dropped(src)
 
+/// shortcut for the Notes - View verb
+/mob/verb/notes_alias()
+	set name = "Notes"
+	set hidden = TRUE
+
+	src.memory()
 
 /mob/verb/memory()
-	set name = "Notes"
+	set name = "Notes - View"
 	// drsingh for cannot execute null.show_memory
 	if (isnull(mind))
 		return
 
 	mind.show_memory(src)
 
-/mob/verb/add_memory(msg as message)
-	set name = "Add Note"
+/mob/verb/add_memory()
+	set name = "Notes - Modify"
+
+	if (!src.mind)
+		return
 
 	if (mind.last_memory_time + 10 <= world.time)
 		mind.last_memory_time = world.time
 
-		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-		msg = sanitize(msg)
-
-		mind.store_memory(msg)
+	var/notes = tgui_input_text(src, "Set your notes:", "Change notes", src.mind.cust_notes, MAX_MESSAGE_LEN, TRUE, allowEmpty = TRUE)
+	if (!isnull(notes))
+		src.mind.cust_notes = notes
 
 // please note that this store_memory() vvv
 // does not store memories in the notes
@@ -1501,6 +1509,9 @@
 
 /mob/proc/put_in_hand(obj/item/I, hand)
 	. = 0
+
+/mob/proc/can_hold_two_handed()
+	. = FALSE
 
 /mob/proc/get_damage()
 	. = src.health
@@ -2343,8 +2354,8 @@
 	if (!ishuman(src)) // for the moment, only humans get dizzy
 		return
 
-	jitteriness = min(500, jitteriness + amount)	// store what will be new value
-													// clamped to max 500
+	jitteriness = min(400, jitteriness + amount)	// store what will be new value
+													// clamped to max 400
 	if (jitteriness > 100 && !is_jittery)
 		SPAWN(0)
 			jittery_process()

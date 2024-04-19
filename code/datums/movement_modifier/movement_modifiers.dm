@@ -53,6 +53,9 @@
 /datum/movement_modifier/death_march
 	additive_slowdown = -0.4
 
+/datum/movement_modifier/gang_trapped
+	additive_slowdown = 2
+
 /datum/movement_modifier/janktank
 	health_deficiency_adjustment = -50
 
@@ -82,7 +85,7 @@
 		return list(0,0.85)
 	return list(0,0.5)
 
-// robot legs
+// robot legs for humans
 /datum/movement_modifier/robotleg_right
 	health_deficiency_adjustment = -25
 
@@ -122,14 +125,53 @@
 		. *= 0.75
 	return list(0, .)
 
-/datum/movement_modifier/robot_part/head
-	additive_slowdown = -0.2
+/datum/movement_modifier/robot_mag_upgrade
+	additive_slowdown = 0.5
 
-/datum/movement_modifier/robot_part/arm_left
-	additive_slowdown = -0.2
+// robot heads
+/datum/movement_modifier/robot_part/light_head
+	additive_slowdown = -0.1
 
-/datum/movement_modifier/robot_part/arm_right
-	additive_slowdown = -0.2
+/datum/movement_modifier/robot_part/standard_head
+	additive_slowdown = -0.05
+
+/datum/movement_modifier/robot_part/sturdy_head
+	additive_slowdown = 0.05
+
+/datum/movement_modifier/robot_part/heavy_head
+	additive_slowdown = 0.35
+
+// robot arms
+/datum/movement_modifier/robot_part/light_arm_left
+	additive_slowdown = -0.05
+
+/datum/movement_modifier/robot_part/light_arm_right
+	additive_slowdown = -0.05
+
+/datum/movement_modifier/robot_part/sturdy_arm_left
+	additive_slowdown = 0.1
+
+/datum/movement_modifier/robot_part/sturdy_arm_right
+	additive_slowdown = 0.1
+
+/datum/movement_modifier/robot_part/heavy_arm_left
+	additive_slowdown = 0.2
+
+/datum/movement_modifier/robot_part/heavy_arm_right
+	additive_slowdown = 0.2
+
+// robot legs
+/datum/movement_modifier/robot_part/light_leg_left
+	additive_slowdown = -0.15
+
+/datum/movement_modifier/robot_part/light_leg_right
+	additive_slowdown = -0.15
+
+/datum/movement_modifier/robot_part/standard_leg_left
+	additive_slowdown = -0.1
+
+/datum/movement_modifier/robot_part/standard_leg_right
+	additive_slowdown = -0.1
 
 /datum/movement_modifier/robot_part/tread_left
 	additive_slowdown = -0.25
@@ -142,6 +184,14 @@
 
 /datum/movement_modifier/robot_part/thruster_right
 	additive_slowdown = -0.3
+
+// robot chests
+/datum/movement_modifier/robot_part/light_chest
+	additive_slowdown = -0.1
+
+/datum/movement_modifier/robot_part/standard_chest
+	additive_slowdown = -0.05
+
 
 // artifact legs
 /datum/movement_modifier/martian_legs/left
@@ -191,18 +241,16 @@
 
 /datum/movement_modifier/vampiric_thrall/modifiers(mob/user, move_target, running)
 	. = list(4,0)
-	if (ishuman(user))
-		var/mob/living/carbon/human/H = user
-		var/datum/mutantrace/vampiric_thrall/vampiric_thrall = H.mutantrace
-		if (!istype(vampiric_thrall))
-			return
-		switch (vampiric_thrall.blood_points)
-			if (151 to INFINITY)
-				.[1] = 0.7
-			if (101 to 151)
-				.[1] = 1.6
-			if (51 to 101)
-				.[1] = 2.8
+	var/datum/abilityHolder/vampiric_thrall/thrallHolder = user.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+	if (!thrallHolder)
+		return
+	switch (thrallHolder.points)
+		if (151 to INFINITY)
+			.[1] = 0.7
+		if (101 to 151)
+			.[1] = 1.6
+		if (51 to 101)
+			.[1] = 2.8
 
 /datum/movement_modifier/wheelchair
 	ask_proc = 1

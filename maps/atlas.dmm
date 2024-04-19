@@ -1753,7 +1753,7 @@
 	light_type = /obj/item/light/tube/reddish;
 	pixel_y = 21
 	},
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/caution/south,
 /area/station/ai_monitored/armory)
 "afF" = (
@@ -1785,7 +1785,7 @@
 	pixel_x = 5;
 	pixel_y = 28
 	},
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "afK" = (
@@ -5612,6 +5612,11 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/teleporter,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "teleporter"
+	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "atz" = (
@@ -5677,6 +5682,11 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "core"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "atG" = (
@@ -5933,6 +5943,11 @@
 /obj/disposalpipe/segment{
 	dir = 4;
 	level = -1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "inner"
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
@@ -6741,6 +6756,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering";
+	enter_id = "south"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
 "awE" = (
@@ -7212,6 +7232,11 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "axU" = (
@@ -7355,6 +7380,11 @@
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "meetingroom"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/united_command)
 "ayt" = (
@@ -9979,8 +10009,7 @@
 	id = "crusher";
 	name = "Crusher Door Control";
 	pixel_x = 24;
-	pixel_y = -8;
-	timer = 100
+	pixel_y = -8
 	},
 /turf/simulated/floor/purple/side{
 	dir = 5
@@ -13912,6 +13941,11 @@
 	dir = 4;
 	name = "Engine Room"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "sw"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aUa" = (
@@ -14951,7 +14985,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_north/noaicontrol,
+/obj/machinery/power/apc/autoname_north/hardened,
 /turf/simulated/floor/black,
 /area/listeningpost/power)
 "aXg" = (
@@ -15856,6 +15890,11 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "se"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bie" = (
@@ -15948,6 +15987,11 @@
 	},
 /obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/security,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "outer"
+	},
 /turf/simulated/floor,
 /area/station/security/secwing)
 "bAx" = (
@@ -16670,6 +16714,11 @@
 	dir = 4;
 	level = -1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "outer"
+	},
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
 "fiL" = (
@@ -16693,6 +16742,11 @@
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4;
 	name = "Engine Room"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "nw"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -17011,6 +17065,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering";
+	enter_id = "north"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
 "hpN" = (
@@ -17034,6 +17093,11 @@
 /obj/machinery/secscanner{
 	dir = 4;
 	pixel_x = -20
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	name = "Bridge";
+	enter_id = "outer"
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
@@ -17149,6 +17213,11 @@
 	},
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	name = "Security";
+	enter_id = "inner"
+	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -17899,6 +17968,11 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engine";
+	name = "Engineering";
+	enter_id = "ne"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "mlP" = (
@@ -18403,6 +18477,30 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"oOs" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4;
+	name = "AI Upload Chamber"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = -20
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aiupload";
+	name = "AI Upload";
+	enter_id = "inner"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai)
 "oPh" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -18548,7 +18646,8 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "crusher";
-	name = "Crusher Door"
+	name = "Crusher Door";
+	autoclose = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
@@ -18610,6 +18709,26 @@
 	},
 /obj/rack,
 /obj/item/gun/implanter,
+/obj/item/gun/kinetic/riot40mm{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/gun/kinetic/riot40mm{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/ammo/bullets/smoke{
+	pixel_x = 6;
+	pixel_y = -9
+	},
+/obj/item/ammo/bullets/smoke{
+	pixel_x = 8;
+	pixel_y = -7
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -7;
+	pixel_y = -6
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "pLJ" = (
@@ -19412,6 +19531,11 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/ejection{
 	dir = 8
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	name = "Engineering";
+	enter_id = "outer"
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
@@ -61759,7 +61883,7 @@ aGw
 aqD
 aqD
 aqD
-axT
+oOs
 aqD
 aqD
 aqD

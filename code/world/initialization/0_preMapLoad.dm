@@ -197,9 +197,6 @@
 			if (E.acceptable_in_mutini) // for the drink reagent  :T
 				mutini_effects[E.id] = E
 
-		Z_LOG_DEBUG("Preload", "  zoldorf")
-		zoldorfsetup()
-
 		Z_LOG_DEBUG("Preload", "  fluid turf misc setup")
 		fluid_turf_setup(first_time=TRUE)
 

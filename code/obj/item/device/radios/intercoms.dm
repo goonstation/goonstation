@@ -358,3 +358,11 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 	update_pixel_offset_dir()
 		return // no
+
+/obj/item/device/radio/intercom/AI/handheld
+	name = "Portable Intercom"
+	desc = "A portable intercom that's useful to do all the things intercoms normally do, which is mostly listening in on people."
+	broadcasting = FALSE
+	listening = FALSE
+	anchored = UNANCHORED
+	icon_state = "intercom_pot"

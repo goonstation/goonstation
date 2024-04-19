@@ -86,6 +86,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	density = 1
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
+	var/default_hat_y = 14
 	var/datum/hud/silicon/ai/hud
 	var/last_notice = 0//attack notices
 	var/network = "SS13"
@@ -98,8 +99,6 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
 	var/printalerts = 1
-	/// a list of strings used as fake laws that may be stated via the State Fake Laws command, to deceive people as a rogue AI
-	var/list/fake_laws = list()
 	var/glitchy_speak = 0
 	//Comm over powernet stuff
 	var/net_id = null
@@ -110,6 +109,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/termMute = FALSE
 	var/canvox = 1
 	var/can_announce = 1
+	var/bought_hat = FALSE
 	var/last_announcement = -INFINITY
 	var/announcement_cooldown = 1200
 	var/dismantle_stage = 0
@@ -196,7 +196,6 @@ or don't if it uses a custom topopen overlay
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 
 	req_access = list(access_heads)
-	var/obj/item/clothing/head/hat = null
 
 	var/fire_res_on_core = 0
 
@@ -211,26 +210,6 @@ or don't if it uses a custom topopen overlay
 	var/deployed_to_eyecam = 0
 	var/datum/ai_hologram_data/holoHolder = new
 	var/list/hologramContextActions
-
-	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
-		if( src.hat )
-			src.hat.wear_image.pixel_y = 0
-			src.UpdateOverlays(null, "hat")
-			if (user)
-				user.put_in_hand_or_drop(src.hat)
-			else
-				src.hat.set_loc(src.loc)
-			src.hat = null
-		// src.hat.wear_image.pixel_y = 10
-		// src.UpdateOverlays(src.hat.wear_image, "hat")
-		var/image/hat_image = SafeGetOverlayImage(hat.icon_state, hat.icon, hat.icon_state, src.layer+0.3)
-		hat_image.pixel_y = 12
-		if (istype(hat, /obj/item/clothing/head/bighat))
-			hat_image.pixel_y = 20
-
-		src.UpdateOverlays(hat_image, "hat")
-		src.hat = hat
-		hat.set_loc(src)
 
 /mob/living/silicon/ai/proc/give_feet()
 	animate(src, pixel_y = 14, time = 5, easing = SINE_EASING)
@@ -295,7 +274,11 @@ or don't if it uses a custom topopen overlay
 
 	ai_station_map = new /obj/minimap/ai
 	AddComponent(/datum/component/minimap_marker, MAP_AI | MAP_SYNDICATE, "ai")
-
+	SPAWN(0)
+		if (bought_hat || prob(5))
+			AddComponent(/datum/component/hattable, TRUE, TRUE, default_hat_y)
+		else
+			AddComponent(/datum/component/hattable, TRUE, FALSE, default_hat_y)
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
 	light.set_brightness(0.6)
@@ -342,9 +325,7 @@ or don't if it uses a custom topopen overlay
 		var/datum/contextAction/ai_hologram/action = new actionType(src)
 		hologramContextActions += action
 
-	if(prob(5))
-		var/hat_type = pick(childrentypesof(/obj/item/clothing/head))
-		src.set_hat(new hat_type)
+
 
 
 	SPAWN(0)
@@ -597,11 +578,6 @@ or don't if it uses a custom topopen overlay
 			user.visible_message(SPAN_ALERT("<b>[user.name]</b> uploads a moustache to [src.name]!"))
 		else if (src.dismantle_stage == 4 || isdead(src))
 			boutput(user, SPAN_ALERT("Using this on a deactivated AI would be silly."))
-	else if( istype(W,/obj/item/clothing/head))
-		user.drop_item()
-		src.set_hat(W, user)
-		user.visible_message( SPAN_NOTICE("[user] places the [W] on the [src]!") )
-		src.show_message( SPAN_NOTICE("[user] places the [W] on you!") )
 		if(istype(W, /obj/item/clothing/head/butt))
 			var/obj/item/clothing/head/butt/butt = W
 			if(butt.donor == user)
@@ -1012,8 +988,6 @@ or don't if it uses a custom topopen overlay
 		return list()
 
 	. = list("[SPAN_NOTICE("This is [bicon(src)] <B>[src.name]</B>!")] [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
-	if (src.hat)
-		. += SPAN_NOTICE("[src.name] is wearing the [bicon(src.hat)] [src.hat.name].")
 
 	if (isdead(src))
 		. += SPAN_ALERT("[src.name] is nonfunctional...")
@@ -1757,59 +1731,12 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/proc/ai_set_fake_laws()
 	set category = "AI Commands"
 	set name = "Set Fake Laws"
-
-	#define FAKE_LAW_LIMIT 12
-	var/law_base_choice = tgui_input_list(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", list("Real Laws", "Fake Laws"))
-	if (!law_base_choice)
-		return
-	var/law_base = ""
-	if(law_base_choice == "Real Laws")
-		if(src.law_rack_connection)
-			law_base = src.law_rack_connection.format_for_logs("\n")
-		else
-			law_base = ""
-	else if(law_base_choice == "Fake Laws")
-		for(var/fake_law in src.fake_laws)
-			// this is just the default input for the user, so it should be fine
-			law_base += "[html_decode(fake_law)]\n"
-
-	var/raw_law_text = tgui_input_text(usr, "Please enter the fake laws you would like to be able to state via the State Fake Laws command! Each line is one law.", "Fake Laws", law_base, multiline = TRUE)
-	if(!raw_law_text)
-		return
-	// split into lines
-	var/list/raw_law_list = splittext_char(raw_law_text, "\n")
-	// return if we input an excessive amount of laws
-	if (length(raw_law_list) > FAKE_LAW_LIMIT)
-		boutput(usr, SPAN_ALERT("You cannot set more than [FAKE_LAW_LIMIT] laws."))
-		return
-	// clear old fake laws
-	src.fake_laws = list()
-	// cleanse the lines and add them as our laws
-	for(var/raw_law in raw_law_list)
-		var/nice_law = trim(strip_html(raw_law))
-		// empty lines would probably be an accident and result in awkward pauses that might give the AI away
-		if (!length(nice_law))
-			continue
-		fake_laws += nice_law
-
-	src.show_message(SPAN_BOLD("Your new fake laws are: "))
-	for(var/a_law in src.fake_laws)
-		src.show_message(a_law)
-	#undef FAKE_LAW_LIMIT
+	src.set_fake_laws()
 
 /mob/living/silicon/ai/proc/ai_state_fake_laws()
 	set category = "AI Commands"
 	set name = "State Fake Laws"
-
-	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
-		return
-
-	for(var/a_law in src.fake_laws)
-		sleep(AI_LAW_STATE_DELAY)
-		// decode the symbols, because they will be encoded again when the law is spoken, and otherwise we'd double-dip
-		src.say(html_decode(a_law))
-		logTheThing(LOG_SAY, usr, "states a fake law: \"[a_law]\"")
+	src.state_fake_laws()
 
 /mob/living/silicon/ai/proc/ai_state_laws_all()
 	set category = "AI Commands"

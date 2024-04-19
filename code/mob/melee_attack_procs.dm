@@ -168,10 +168,12 @@
 				src.visible_message(SPAN_NOTICE("[src] shakes [target], trying to grab [his_or_her(target)] attention!"))
 	hit_twitch(target)
 
-/mob/living/proc/pull_out_implant(var/mob/living/user, var/obj/item/implant/dart)
+/mob/living/proc/pull_out_implant(var/mob/living/user, var/obj/item/implant/projectile/body_visible/dart)
 	dart.on_remove(src)
+	dart.on_pull_out(user)
 	src.implant.Remove(dart)
-	user.put_in_hand_or_drop(dart)
+	if(!QDELETED(dart)) //some implants will delete themselves on removal
+		user.put_in_hand_or_drop(dart)
 
 /mob/proc/administer_CPR(var/mob/living/carbon/human/target)
 	boutput(src, SPAN_ALERT("You have no idea how to perform CPR."))
@@ -612,11 +614,11 @@
 	if (!target_damage_multiplier)
 		msgs.played_sound = pick(sounds_punch)
 		msgs.visible_message_self(SPAN_COMBAT("<b>[src] [src.punchMessage] [target], but it does absolutely nothing!</B>"))
-		return
+		return msgs
 	if (!self_damage_multiplier)
 		msgs.played_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
 		msgs.visible_message_self(SPAN_COMBAT("<b>[src] hits [target] with a ridiculously feeble attack!</B>"))
-		return
+		return msgs
 
 	msgs.played_sound = "punch"
 	var/do_punch = FALSE
@@ -1015,7 +1017,7 @@
 						target.lastgasp()
 
 			if (stamina_crit)
-				target.handle_stamina_crit(stamina_target)
+				target.handle_stamina_crit()
 
 			if (src.disarm != 1)
 				owner.attack_finished(target)

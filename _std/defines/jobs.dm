@@ -40,3 +40,12 @@
 #define MGA_CRISIS "Crisis Alert"
 #define MGA_RADIO "Radio Alert"
 #define MGA_TRACKING "Tracking Alert"
+
+// Job categories
+#define JOB_SPECIAL "special"
+#define JOB_COMMAND "command"
+#define JOB_SECURITY "security"
+#define JOB_RESEARCH "research"
+#define JOB_ENGINEERING "engineering"
+#define JOB_CIVILIAN "civilian"
+#define JOB_CREATED "created"

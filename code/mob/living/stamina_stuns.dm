@@ -119,14 +119,13 @@
 //STAMINA UTILITY PROCS
 
 ///Responsible for executing critical hits to stamina
-/mob/proc/handle_stamina_crit(var/damage)
+/mob/proc/handle_stamina_crit()
 	. = 0
 
 //ddoub le dodbleu
-/mob/living/handle_stamina_crit(var/damage)
+/mob/living/handle_stamina_crit()
 	if(!src.use_stamina) return
-	damage = max(damage,10)
-	damage *= 4
+	var/damage = STAMINA_CRIT_DAMAGE
 	if(src.stamina >= 1 )
 		#if STAMINA_CRIT_DROP == 1
 		src.set_stamina(min(src.stamina,STAMINA_CRIT_DROP_NUM))

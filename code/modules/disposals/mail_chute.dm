@@ -157,6 +157,11 @@
 		mail_tag = "kitchen"
 		mailgroup = MGD_KITCHEN
 		message = 1
+	bar
+		name = "Bar"
+		mail_tag = "bar"
+		mailgroup = MGD_KITCHEN
+		message = 1
 	hydroponics
 		name = "Hydroponics"
 		mail_tag = "hydroponics"
@@ -358,6 +363,22 @@
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
+		mailgroup = MGD_KITCHEN
+		message = 1
+
+		north
+			dir = NORTH
+			pixel_y = 32
+		east
+			dir = EAST
+		south
+			dir = SOUTH
+		west
+			dir = WEST
+
+	bar
+		name = "Bar"
+		mail_tag = "bar"
 		mailgroup = MGD_KITCHEN
 		message = 1
 

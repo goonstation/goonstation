@@ -563,7 +563,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		dat+= src.temp
 		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
-			if(S.broken)
+			if(S.is_disabled())
 				continue
 			dat += "<B>[S.name] at [get_area(S)]:</B><br>"
 			var/list/ores = S.ores
@@ -843,7 +843,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				var/price = OCD.price
 				var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
 
-				if(storage?.broken)
+				if(storage?.is_disabled())
 					return
 
 				if(!scan)
@@ -873,12 +873,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 							account["current_money"] -= total
 							storage.eject_ores(ore, get_output_location(), quantity, transmit=1, user=usr)
 
-							 // This next bit is stolen from PTL Code
-							var/list/accounts = \
-								data_core.bank.find_records("job", "Chief Engineer") + \
-								data_core.bank.find_records("job", "Chief Engineer") + \
-								data_core.bank.find_records("job", "Miner")
-
+							 // Chief gets a bigger cut
+							var/list/accounts = FindBankAccountsByJobs(list("Chief Engineer", "Chief Engineer", "Miner"))
 
 							var/datum/signal/minerSignal = get_free_signal()
 							minerSignal.source = src
@@ -2415,6 +2411,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/robup_recharge,
 		/datum/manufacture/robup_repairpack,
 		/datum/manufacture/robup_speed,
+		/datum/manufacture/robup_mag,
 		/datum/manufacture/robup_meson,
 		/datum/manufacture/robup_aware,
 		/datum/manufacture/robup_physshield,
@@ -2608,6 +2605,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/oresatchelL,
 		/datum/manufacture/microjetpack,
 		/datum/manufacture/jetpack,
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/jetpackmkII,
+#endif
 		/datum/manufacture/geoscanner,
 		/datum/manufacture/geigercounter,
 		/datum/manufacture/eyes_meson,
@@ -2615,9 +2615,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/ore_accumulator,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
-#ifdef UNDERWATER_MAP
-		/datum/manufacture/jetpackmkII,
-#endif
 #ifndef UNDERWATER_MAP
 		/datum/manufacture/mining_magnet
 #endif

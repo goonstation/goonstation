@@ -902,7 +902,7 @@
 		result = "catamount"
 		required_reagents = list("juice_orange" = 1, "grenadine" = 1, "ginger_ale" = 4, "ice" = 2)
 		result_amount = 8
-		mix_sound = 'sound/misc/drinkfizz.ogg'
+		mix_sound = 'sound/voice/animal/cat.ogg'
 		drinkrecipe = TRUE
 
 	pine_ginger
@@ -3078,7 +3078,7 @@
 	salbutamol_salicylic_acid // makes either based on input, not both at once though
 		name = "Salbutamol Salicylic Acid"
 		id = "salbutamol_salicylic_acid"
-		required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1)
+		required_reagents = list("sodium" = 0, "phenol" = 0, "carbon" = 0, "oxygen" = 0)
 		result = null //this changes in on_reaction
 		//technically it's either or, but for the purposes of the request console this makes both
 		eventual_result = list("salbutamol", "salicylic_acid")
@@ -3087,7 +3087,7 @@
 		reaction_speed = 4
 		temperature_change = 0 //this also changes
 		stateful = TRUE
-		mix_phrase = "The solution twirls mixes together idley."
+		mix_phrase = "The solution twirls and mixes together idley."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		reaction_icon_state = list("reaction_puff-1", "reaction_puff-2")
 		reaction_icon_color = "#ffffff"
@@ -3157,6 +3157,10 @@
 					result = "salicylic_acid"
 					temperature_change = -3
 
+			if (result) //manually remove reagents only if we're actually reacting
+				for (var/reagent_id in src.required_reagents)
+					holder.remove_reagent(reagent_id, 1)
+
 		physical_shock(var/force, var/datum/reagents/holder)
 			if(force > 3)
 				was_physically_shocked = TRUE
@@ -3204,10 +3208,11 @@
 				shine.set_loc(T)
 				playsound(get_turf(holder.my_atom), 'sound/effects/sparks6.ogg', 50, 1) //this could be better with a bespoke sound eventually, didn't want to steal vampire glare sound but similar-ish?
 				SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
+					T = get_turf(holder.my_atom) //may have moved
 					qdel(shine)
 					holder.del_reagent("photophosphide")
 					explosion(holder.my_atom, T, -1,-1,0,1)
-					playsound(get_turf(holder.my_atom), 'sound/effects/Explosion1.ogg', 50, 1)
+					playsound(T, 'sound/effects/Explosion1.ogg', 50, 1)
 					fireflash(T, 0)
 					if(istype(holder.my_atom, /obj))
 						var/obj/container = holder.my_atom
@@ -4176,7 +4181,7 @@
 		name = "Bath Salts"
 		id= "bathsalts"
 		result = "bathsalts"
-		required_reagents = list("msg" = 1, "yuck" = 1, "denatured_enzyme" = 1, "saltpetre" = 1, "cleaner" = 1, "mercury" = 1, "mugwort" = 1)
+		required_reagents = list("msg" = 1, "yuck" = 1, "denatured_enzyme" = 1, "saltpetre" = 1, "cleaner" = 1, "mercury" = 1, "ghostchilijuice" = 1)
 		min_temperature = T0C + 100
 		result_amount = 6
 		mix_phrase = "Tiny cubic crystals precipitate out of the mixture. Huh."

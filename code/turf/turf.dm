@@ -38,6 +38,8 @@
 	var/tmp/blocked_dirs = 0
 	/// this turf is allowing unrestricted hotbox reactions
 	var/tmp/allow_unrestricted_hotbox = FALSE
+	/// an associative list of gangs to gang claims, representing who has a claim to, or other ownership on this tile
+	var/list/datum/gangtileclaim/controlling_gangs
 	var/wet = 0
 	throw_unlimited = FALSE //throws cannot stop on this tile if true (also makes space drift)
 
@@ -861,6 +863,8 @@ var/global/in_replace_with = 0
 			// tell atmos to update this tile's air settings
 			if (air_master)
 				air_master.tiles_to_update |= N
+		else if (air_master)
+			air_master.high_pressure_delta -= src //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
 			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.

@@ -191,10 +191,12 @@ var/global/list/mapNames = list(
 			for(var/datum/job/J in job_controls.staple_jobs)
 				if(J.map_can_autooverride && (J.name in job_start_locations))
 					J.limit = length(job_start_locations[J.name])
+					J.upper_limit = J.limit
 
 		for(var/datum/job/J in job_controls.staple_jobs + job_controls.special_jobs)
 			if(J.type in src.job_limits_override)
 				J.limit = src.job_limits_override[J.type]
+				J.upper_limit = J.limit
 
 		SPAWN(5 SECONDS)
 			src.load_shuttle()
@@ -237,7 +239,7 @@ var/global/list/mapNames = list(
 /datum/map_settings/pod_wars
 	name = "POD_WARS"
 	default_gamemode = "pod_wars"
-	goonhub_map = "https://cdn.discordapp.com/attachments/890313890003566632/1137526717964103781/output.png"
+	goonhub_map = "https://goonhub.com/maps/pod_wars"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	style = "spess"
@@ -310,7 +312,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"
-	goonhub_map = "https://cdn.discordapp.com/attachments/412381738510319626/1116907371999010836/output.png"
+	goonhub_map = "https://goonhub.com/maps/wrestlemap"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 

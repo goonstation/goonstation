@@ -119,7 +119,7 @@
 		/obj/item/rcd,
 		/obj/item/deconstructor/borg,
 		#ifdef MAP_OVERRIDE_OSHAN
-			/obj/item/mining_tool/power_shovel/borg,
+			/obj/item/mining_tool/powered/shovel,
 		#endif
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
 		/datum/robot/module_tool_creator/item_type/amount/steel_rod,
@@ -173,7 +173,7 @@
 		/datum/robot/module_tool_creator/recursive/module/common,
 		/obj/item/device/gps,
 		/obj/item/extinguisher/large/cyborg,
-		/obj/item/mining_tool/drill,
+		/obj/item/mining_tool/powered/drill,
 		/obj/item/ore_scoop/borg,
 		/obj/item/cargotele,
 		/obj/item/satchel/mining/large,
@@ -185,6 +185,11 @@
 		// TODO: make versatile satchel (same as civilian module's satchel)
 		// TODO: make cargo transporter (i.e. atmosporter, but allow single crate instead of canisters)
 	)
+
+/datum/robot/module_tool_creator/recursive/module/eyebot
+	definitions = list(
+		/datum/robot/module_tool_creator/recursive/module/common,
+		/obj/item/device/radio/intercom/AI/handheld)
 
 //These are not publically used anymore
 /datum/robot/module_tool_creator/recursive/module/construction_ai

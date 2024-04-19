@@ -259,7 +259,7 @@
 	max_skins = 4
 	reacting = 0
 	no_stamina_stuns = TRUE
-	faction = FACTION_ICEMOON
+	faction = list(FACTION_ICEMOON)
 
 /mob/living/critter/spider/ice/nice
 	ai_type = /datum/aiHolder/spider_peaceful
@@ -344,7 +344,7 @@
 	var/item_shoes = /obj/item/clothing/shoes/clown_shoes
 	var/item_mask = /obj/item/clothing/mask/clown_hat
 
-	faction = FACTION_CLOWN
+	faction = list(FACTION_CLOWN)
 
 	New()
 		..()
@@ -444,7 +444,7 @@
 	var/max_defensive_babies = 100
 	ai_type = /datum/aiHolder/clown_spider_queen
 
-	faction = FACTION_CLOWN
+	faction = list(FACTION_CLOWN)
 
 	cluwne
 		name = "queen cluwnespider"

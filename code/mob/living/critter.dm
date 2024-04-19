@@ -539,7 +539,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
 		if (src.client?.check_key(KEY_THROW) && src.a_intent == "help" && thing && isliving(target) && BOUNDS_DIST(src, target) <= 0)
 			usr = src
-			boutput(usr, SPAN_NOTICE("You offer [thing] to [target]."))
 			var/mob/living/living_target = target
 			living_target.give_item()
 			return
@@ -1477,6 +1476,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			var/obj/item/W = src.equipped()
 			if (W)
 				src.click(W, list())
+			else
+				var/datum/handHolder/HH = src.get_active_hand()
+				if(HH?.limb)
+					HH.limb.attack_self(src)
 		if ("togglethrow")
 			src.toggle_throw_mode()
 		if ("walk")
@@ -1610,6 +1613,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/was_built_from_frame(mob/user, newly_built)
 	. = ..()
 	wake_from_hibernation()
+
+/mob/living/critter/can_hold_two_handed()
+	return TRUE // critters can hold two handed items in one hand
 
 ABSTRACT_TYPE(/mob/living/critter/robotic)
 /// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads

@@ -381,17 +381,16 @@ var/list/headset_channel_lookup
 			R.hear_radio(M, messages, lang_id)
 
 	var/list/heard_flock = list() // heard by flockdrones/flockmind
-	var/datum/game_mode/conspiracy/N = ticker.mode
-	var/protected_frequency = null
-	if(istype(N))
-		protected_frequency = N.agent_radiofreq //groups conspirator frequency as a traitor one and protects it along with nukies
 	// Don't let them monitor Syndie headsets. You can get the radio_brain bioeffect at the start of the round, basically.
-	if (src.protected_radio != 1 && isnull(src.traitorradio) && protected_frequency != display_freq )
-		for (var/mob/living/L in radio_brains)
-			if(radio_brains[L] == 1 && display_freq != R_FREQ_DEFAULT)
-				continue
-			receive += L
+	var/protected = src.protected_radio || !isnull(src.traitorradio) || (display_freq in protected_frequencies)
+	for (var/mob/living/L in radio_brains)
+		if(radio_brains[L] == 1 && display_freq != R_FREQ_DEFAULT)
+			continue
+		else if(radio_brains[L] <= 3 && protected)
+			continue
+		receive += L
 
+	if(!protected)
 		for(var/mob/zoldorf/z in the_zoldorf)
 			if(z.client)
 				receive += z

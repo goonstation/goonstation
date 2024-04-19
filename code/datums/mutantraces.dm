@@ -860,7 +860,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	say_filter(var/message)
 		var/static/regex/s_regex = regex(@"(s)(.?)", "ig")
-		. = s_regex.Replace(message, PROC_REF(letter_s_replacement))
+		. = s_regex.Replace(message, /datum/mutantrace/lizard/proc/letter_s_replacement)
 
 	disposing()
 		if(ishuman(src.mob))
@@ -1039,16 +1039,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	jerk = TRUE
 	genetics_removable = FALSE
 
-	var/blood_points = 0
-#ifdef RP_MODE
-	var/blood_decay = 0.25
-#else
-	var/blood_decay = 0.5
-#endif
-	var/cleanable_tally = 0
-	var/blood_to_health_scalar = 0.75 //200 blood = 150 health
-	var/min_max_health = 40 //! Minimum health we can get to via blood loss. also lol
-
 	on_attach(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(src.mob))
@@ -1065,25 +1055,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.bioHolder.RemoveEffect("accent_thrall")
 			//REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall")
 		..()
-
-
-	onLife(var/mult = 1)
-		..()
-
-		if (src.mob.bleeding)
-			blood_points -= blood_decay * src.mob.bleeding
-
-		var/prev_blood = blood_points
-		blood_points -= blood_decay * mult
-		blood_points = max(0,blood_points)
-		cleanable_tally += (prev_blood - blood_points)
-		if (cleanable_tally > 20)
-			make_cleanable(/obj/decal/cleanable/blood,get_turf(src.mob))
-			cleanable_tally = 0
-
-		src.mob.max_health = blood_points * blood_to_health_scalar
-		src.mob.max_health = max(src.min_max_health, src.mob.max_health)
-		health_update_queue |= src.mob
 
 	emote(var/act)
 		var/message = null

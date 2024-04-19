@@ -720,7 +720,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	on_remove(var/mob/M)
 		..()
 		if (istype(M))
-			M.faction &= ~FACTION_BOTANY
+			M.faction -= FACTION_BOTANY
 
 	do_effect(power)
 		// enjoy your wasps
@@ -876,7 +876,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	bullet_9mm
 		name = "9mm round"
 		desc = "An extremely common bullet fired by a myriad of different cartridges."
-
+	bullet_455
+		name = ".455 round"
+		desc = "A powerful, old-timey revolver bullet, likely of criminal origin."
 	ninemmplastic
 		name = "9mm Plastic round"
 		icon_state = "bulletplastic"
@@ -914,6 +916,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		New()
 			..()
 			implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "buckshot_wound-[rand(0, 1)]", layer = MOB_EFFECT_LAYER)
+		bird
+			name = "birdshot"
+			desc = "A large collection of birdshot rounds, a less-lethal load for shotguns."
+
 	staple
 		name = "staple"
 		icon_state = "staple"
@@ -968,6 +974,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		leaves_wound = FALSE
 		var/barbed = FALSE
 		var/pull_out_name = ""
+
+		proc/on_pull_out(mob/living/puller)
+			return
 
 		on_life(mult)
 			. = ..()
@@ -1041,6 +1050,42 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				desc = "An empty syringe round, of the type that is fired from a syringe gun. It has a barbed tip. Nasty!"
 				icon_state = "syringeproj_barbed"
 				barbed = TRUE
+
+		janktanktwo
+			name = "spent JankTank II"
+			pull_out_name = "syringe"
+			desc = "A large syringe ripped straight out of some poor, presumably dead gang member!"
+			icon = 'icons/obj/syringe.dmi'
+			icon_state = "dna_scrambler_2"
+			var/obj/item/tool/janktanktwo/syringe
+			var/full = TRUE
+
+			New()
+				..()
+				implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "syringe_stick_1", layer = MOB_EFFECT_LAYER)
+			implanted(mob/M, mob/I)
+				..()
+				if (!full)
+					return
+				SPAWN(JANKTANK2_PAUSE_TIME - 0.5 SECONDS)
+					playsound(M.loc, 'sound/items/hypo.ogg', 50, 0)
+
+				SPAWN(JANKTANK2_PAUSE_TIME)
+					if (!ishuman(M))
+						return
+					full = FALSE
+					icon_state = "dna_scrambler_3"
+					desc = "A large, empty syringe. Whatever awfulness it contained is probably in somebody's heart. Eugh."
+					if (!src.owner)
+						src.visible_message("<span class='alert'>[src] sprays its' volatile contents everywhere, [prob(10) ? "it smells like bacon? <b><i>WHY?!?</i></b>" : "gross!"]</span>")
+						return
+
+					syringe.do_heal(src.owner)
+			proc/set_owner(obj/item/tool/janktanktwo/injector)
+				src.syringe = injector
+
+
+
 
 	blowdart
 		name = "blowdart"
@@ -1972,6 +2017,7 @@ TYPEINFO(/obj/item/gun/implanter)
 	icon_state = "implant"
 	contraband = 1
 	var/obj/item/implant/my_implant = null
+	recoil_strength = 1
 
 	New()
 		set_current_projectile(new/datum/projectile/implanter)
@@ -2098,15 +2144,19 @@ TYPEINFO(/obj/item/gun/implanter)
 		..()
 		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "dart_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
 
-	throw_impact(atom/M, datum/thrown_thing/thr)
+	throw_impact(atom/hit_thing, datum/thrown_thing/thr)
 		..()
-		if (ishuman(M) && prob(5))
-			var/mob/living/carbon/human/H = M
+		if (istype(hit_thing, /obj/item/reagent_containers/balloon))
+			var/obj/item/reagent_containers/balloon/balloon = hit_thing
+			balloon.smash()
+
+		else if (ishuman(hit_thing) && prob(5))
+			var/mob/living/carbon/human/H = hit_thing
 			H.implant.Add(src)
-			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
+			src.visible_message(SPAN_ALERT("[src] gets embedded in [H]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
-			random_brute_damage(M, 1)
-			src.implanted(M)
+			random_brute_damage(H, 1)
+			src.implanted(H)
 
 	attack_hand(mob/user)
 		src.pixel_x = 0
@@ -2126,14 +2176,14 @@ TYPEINFO(/obj/item/gun/implanter)
 		..()
 		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "dart_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
 
-	throw_impact(atom/M, datum/thrown_thing/thr)
+	throw_impact(atom/hit_thing, datum/thrown_thing/thr)
 		..()
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (ishuman(hit_thing))
+			var/mob/living/carbon/human/H = hit_thing
 			H.implant.Add(src)
-			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
+			src.visible_message(SPAN_ALERT("[src] gets embedded in [H]!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
-			random_brute_damage(M, 20)//if it can get in you, it probably doesn't give a damn about your armor
-			take_bleeding_damage(M, null, 10, DAMAGE_CUT)
-			src.implanted(M)
+			random_brute_damage(H, 20)//if it can get in you, it probably doesn't give a damn about your armor
+			take_bleeding_damage(H, null, 10, DAMAGE_CUT)
+			src.implanted(H)

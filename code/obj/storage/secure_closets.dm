@@ -328,7 +328,6 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	name = "\improper Chief Engineer's locker"
 	req_access = list(access_engineering_chief)
 	spawn_contents = list(
-		/obj/item/storage/belt/utility/prepared/ceshielded,
 		/obj/item/disk/data/floppy/manudrive/law_rack,
 		/obj/item/storage/box/clothing/chief_engineer,
 		/obj/item/device/radio/headset/command/ce,
@@ -354,7 +353,27 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/clothing/suit/space/light/engineer,
 		/obj/item/clothing/head/helmet/space/light/engineer,
 	#endif
+	)
 
+/obj/storage/secure/closet/command/chief_engineer/puzzle
+	locked = FALSE
+	spawn_contents = list(
+		/obj/item/storage/belt/utility/prepared/ceshielded, //instead of the law rack disk
+		/obj/item/storage/box/clothing/chief_engineer,
+		/obj/item/device/radio/headset/command/ce,
+		/obj/item/stamp/ce,
+		/obj/item/device/flash,
+		/obj/item/clothing/shoes/magnetic,
+		/obj/item/clothing/gloves/yellow,
+		/obj/item/clothing/suit/hazard/fire/heavy,
+		/obj/item/clothing/head/helmet/firefighter,
+		/obj/item/clothing/suit/hazard/rad,
+		/obj/item/clothing/head/rad_hood,
+		/obj/item/storage/toolbox/mechanical/yellow_tools,
+		/obj/item/storage/box/misctools,
+		/obj/item/extinguisher,
+		/obj/item/clothing/suit/space/light/engineer,
+		/obj/item/clothing/head/helmet/space/light/engineer,
 	)
 
 /* ==================== */
@@ -398,20 +417,6 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/camera_film,
 	/obj/item/storage/box/luminol_grenade_kit,
 	/obj/item/clipboard)
-
-/obj/storage/secure/closet/security/armory
-	name = "\improper Special Equipment locker"
-	reinforced = TRUE
-	req_access = list(access_maxsec)
-	spawn_contents = list(/obj/item/requisition_token/security = 2,
-	/obj/item/requisition_token/security/assistant = 2,
-	/obj/item/turret_deployer/riot = 2)
-
-/obj/storage/secure/closet/security/armory/looted
-	spawn_contents = list()
-	locked = 0
-	open = 1
-	emagged = 1
 
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items safe"
@@ -802,7 +807,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/satchel/mining = 2,
 	/obj/item/oreprospector,
 	/obj/item/ore_scoop,
-	/obj/item/mining_tool/power_pick,
+	/obj/item/mining_tool/powered/pickaxe,
 	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/storage/belt/mining,
 	/obj/item/device/geiger,

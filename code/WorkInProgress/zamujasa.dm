@@ -174,43 +174,6 @@
 		src.bumped = 1
 		animate(src, alpha = 0, maptext_y = maptext_y + 8, time = 4)
 
-
-/obj/ptl_mirror
-#define NW_SE 0
-#define SW_NE 1
-
-	anchored = ANCHORED
-	density = 1
-	opacity = 0
-	icon = 'icons/obj/metal.dmi'
-	icon_state = "sheet-g_1"
-
-	var/facing = NW_SE
-	var/list/affecting = list()
-
-	attack_hand(mob/user)
-		boutput(user, "rotating mirror...")
-		facing = 1 - facing
-		for (var/obj/machinery/power/pt_laser/PTL in affecting)
-			//
-			boutput(user, "[PTL] would be notified")
-
-
-	attackby(obj/item/W, mob/user)
-		if (iswrenchingtool(W))
-			boutput(user, "this would deconstruct it.")
-			return
-
-		..()
-		return
-
-#undef NW_SE
-#undef SW_NE
-
-
-
-
-
 /obj/invisible_teleporter
 	name = "invisible teleporter side 1"
 	desc = "Totally not a portal."

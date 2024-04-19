@@ -465,6 +465,10 @@
 		..()
 		implant_overlay = image(icon='icons/mob/human.dmi', icon_state="arrow_stick_[rand(0,4)]", layer=MOB_EFFECT_LAYER)
 
+	on_pull_out(mob/living/puller)
+		puller.put_in_hand_or_drop(src.arrow)
+		qdel(src)
+
 	// Hack.
 	set_loc()
 		..()
@@ -602,6 +606,7 @@
 	move_triggered = 1
 	var/spread_base = 40
 	var/max_draw = 3
+	recoil_enabled = FALSE
 
 	New()
 		set_current_projectile(new/datum/projectile/arrow)
