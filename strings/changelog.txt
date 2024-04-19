@@ -1,5 +1,9 @@
 
 (t)fri apr 19 24
+(u)mintyphresh
+(p)18430
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Completing a crew objective now grants 50 XP for that job.
 (u)TealSeer
 (p)18546
 (e)🗺⚖|A-Mapping, C-Balance
