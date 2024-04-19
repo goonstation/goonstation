@@ -285,13 +285,13 @@ export const Manufacturer = (_, context) => {
               </Stack.Item>
               <Stack.Item>
                 <Stack vertical>
-                  {data.error !== null ? (
+                  {data.error !== null && (
                     <Section
                       title="ERROR"
                     >
                       {data.error}
                     </Section>
-                  ) : null}
+                  )}
                   {data.queue.length > 0 && (
                     <Stack.Item>
                       <ProgressBar
