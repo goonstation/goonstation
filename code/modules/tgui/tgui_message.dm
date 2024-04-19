@@ -31,7 +31,7 @@
 	if (!user.client) // No NPCs or they hang Mob AI process
 		return
 
-	var/datum/tgui_message/msgbox = new(user, message, title, message, sanitize, timeout, theme)
+	var/datum/tgui_message/msgbox = new(user, message, title, sanitize, timeout, theme)
 	msgbox.ui_interact(user)
 
 /**

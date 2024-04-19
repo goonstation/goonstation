@@ -388,7 +388,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			src.UpdateOverlays(null, "smashed")
 
 	ropart_take_damage(var/bluntdmg = 0,var/burnsdmg = 0)
-		..() //parent calls del if we get destroyed so no need to handle not doing this
+		. = ..() //parent calls del if we get destroyed so no need to handle not doing this
 		if (!src.smashed && (bluntdmg > 10 || bluntdmg > 3 && prob(20)))
 			src.smashed = TRUE
 			src.UpdateIcon()

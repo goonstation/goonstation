@@ -2032,6 +2032,17 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	icon_state = "chaps"
 	item_state = "chaps"
 
+/obj/item/clothing/suit/rabbitsuit
+	name = "Rabbit Costume Suit"
+	desc = "Horrifingly cute, or cutely horrifying?"
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	icon_state = "rabbitsuit"
+	item_state = "rabbitsuit"
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+
 // Goku
 
 /obj/item/clothing/under/gimmick/goku

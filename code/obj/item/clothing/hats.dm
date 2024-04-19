@@ -2118,7 +2118,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 						A_value -= 2
 					else if (T.z == Z_LEVEL_STATION)
 						A_value += 1
-				var/atom_name = trim(stripTextMacros(A.name))
+				var/atom_name = trimtext(stripTextMacros(A.name))
 				if (length(atom_name) <= 2)
 					continue
 				if (findtext(atom_name, " "))
@@ -2236,3 +2236,13 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	icon_state = "bushhat"
 	item_state = "bushhat"
 	seal_hair = 1
+
+/obj/item/clothing/head/rabbithat
+	name = "Rabbit Costume Hat"
+	desc = "You're gonna need a psych eval after wearing this. And a shower."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	icon_state = "rabbithat"
+	item_state = "rabbithat"
+	seal_hair = TRUE

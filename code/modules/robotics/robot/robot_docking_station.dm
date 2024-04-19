@@ -182,6 +182,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 	src.build_icon()
 	return TRUE
 
+/obj/machinery/recharge_station/Click(location, control, params)
+	if(!src.ghost_observe_occupant(usr, src.occupant))
+		. = ..()
+
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
 	if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0)
 		return

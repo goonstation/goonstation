@@ -91,13 +91,15 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (!islist(src.spawn_contents))
 			return 0
 
+		var/i = 0
 		for (var/thing in src.spawn_contents)
 			var/amt = 1
-			if (!ispath(thing))
-				continue
 			if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
 				amt = abs(spawn_contents[thing])
-			do new thing(src)	//Two lines! I TOLD YOU I COULD DO IT!!!
+			do
+				var/atom/A = new thing(src)
+				A.layer += 0.00001 * i
+				i++
 			while (--amt > 0)
 
 	proc/get_welding_positions()
