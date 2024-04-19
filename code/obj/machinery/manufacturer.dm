@@ -996,17 +996,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	proc/eject_material(var/mat_id, mob/user = null)
 		if (src.mode != MODE_READY)
-			boutput(usr, SPAN_ALERT("You cannot eject materials while the unit is working."))
+			boutput(user, SPAN_ALERT("You cannot eject materials while the unit is working."))
 			return
 		var/ejectamt = 0
-		var/turf/ejectturf = get_turf(usr)
+		var/turf/ejectturf = get_output_location(user)
 		var/obj/item/target = null
 		for(var/obj/item/O in src.get_contents())
 			if (O.material && O.material.getID() == mat_id)
 				target = O
 				break
 		if (isnull(target))
-			boutput(usr, SPAN_ALERT("ERROR: Material not found in storage."))
+			boutput(user, SPAN_ALERT("ERROR: Material not found in storage."))
+			return
+		if (target.amount < 1)
+			boutput(user, SPAN_ALERT("ERROR: Not enough material to eject bars."))
 			return
 		ejectamt = tgui_input_number(usr,"How many material pieces do you want to eject?","Eject Materials", 0, ceil(target.amount), 0)
 		ejectamt = floor(ejectamt)
@@ -1016,7 +1019,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 		if (ejectamt > target.amount)
 			playsound(src.loc, src.sound_grump, 50, 1)
-			boutput(usr, SPAN_ALERT("There's not that much material in [name]. It has ejected what it could."))
+			boutput(user, SPAN_ALERT("There's not that much material in [name]. It has ejected what it could."))
 			ejectamt = floor(target.amount)
 		if (ejectamt == target.amount)
 			if (user)
@@ -1028,8 +1031,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 			P.change_stack_amount(ejectamt - P.amount)
 			target.change_stack_amount(-ejectamt)
 			if (user)
-				user.put_in_hand_or_drop(target)
-			P.set_loc(get_output_location(target))
+				user.put_in_hand_or_drop(P)
+			else
+				src.storage.transfer_stored_item(P, ejectturf)
 
 	proc/scan_card(obj/item/I)
 		var/obj/item/card/id/ID = get_id_card(I)
