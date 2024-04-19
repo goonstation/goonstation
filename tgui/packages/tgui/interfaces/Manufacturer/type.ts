@@ -90,7 +90,7 @@ export type Ore = {
   cost: number;
 }
 
-export type MaintenencePanel = {
+export type MaintenancePanel = {
   indicators: WireIndicators;
   wires: number[];
   wire_bitflags:number;
