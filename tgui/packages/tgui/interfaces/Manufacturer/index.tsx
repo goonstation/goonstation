@@ -58,7 +58,7 @@ export const Manufacturer = (_, context) => {
   const [repeat, toggleRepeatVar] = useSharedState(context, "repeat", data.repeat);
   const [search, setSearchData] = useLocalState(context, "query", "");
   const [swap, setSwappingMaterial] = useLocalState(context, "swap", null);
-  const wirePanel:MaintenencePanel = {
+  const wirePanel: MaintenancePanel = {
     indicators: data.indicators,
     wires: data.wires,
     wire_bitflags: data.wire_bitflags,
