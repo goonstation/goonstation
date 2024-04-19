@@ -244,11 +244,11 @@ export const Manufacturer = (_, context) => {
                     </Section>
                   </Stack.Item>
                 ) : null}
-                {data.panel_open ? (
+                {!!data.panel_open && (
                   <Stack.Item mb={1} >
                     <CollapsibleWireMenu wirePanel={wirePanel} />
                   </Stack.Item>
-                ) : null}
+                )}
                 <CardInfo />
               </Stack.Item>
               <Stack.Item>
