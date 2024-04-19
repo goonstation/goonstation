@@ -1657,12 +1657,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/i = 1 to M.item_paths.len)
 			var/pattern = M.item_paths[i]
 			var/mat_id = src.materials_in_use[pattern]
-			if (mat_id)
-				var/amount = M.item_amounts[i]/10
-				for (var/obj/item/material_piece/P as anything in src.get_contents())
-					if (P.material && P.material.getID() == mat_id)
-						P.change_stack_amount(-amount)
-						break
+			src.change_contents(-M.item_amounts[i]/10, mat_id)
 
 	proc/begin_work(new_production = TRUE)
 		src.error = null
@@ -1954,7 +1949,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			// Match by material piece or id
 			if (mat_piece && P.material.isSameMaterial(mat_piece.material) ||\
 				mat_id && mat_id == P.material.getID())
-				P.amount += amount
+				var/prev = P.amount
+				// fuck floating point, lets pretend we only use tenths
+				P.amount = round(P.amount + amount, 0.1)
+				boutput(world, SPAN_ALERT("[prev] + [amount] = [P.amount]"))
 				if (user)
 					user.u_equip(mat_piece)
 					mat_piece.dropped(user)
