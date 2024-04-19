@@ -15,7 +15,7 @@ type ButtonWithBadgeProps = {
   width: number | string,
   height: number | string,
   noImageShadow?: boolean,
-  image_path: string;
+  imagePath: string;
   children?: InfernoNode;
   disabled?: boolean;
   onClick?: Function;
