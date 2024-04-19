@@ -127,7 +127,7 @@ export const Manufacturer = (_, context) => {
     <Window width={1200} height={600} title={data.fabricator_name}>
       <Window.Content scrollable>
         <Stack>
-          <Stack.Item width="80%">
+          <Stack.Item grow>
             <Section>
               {test}
               {data.all_categories.map((category:string) => (
