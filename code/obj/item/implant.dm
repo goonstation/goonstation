@@ -2146,7 +2146,11 @@ TYPEINFO(/obj/item/gun/implanter)
 
 	throw_impact(atom/M, datum/thrown_thing/thr)
 		..()
-		if (ishuman(M) && prob(5))
+		if (istype(M, /obj/item/reagent_containers/balloon))
+			var/obj/item/reagent_containers/balloon/balloon = M
+			balloon.smash()
+
+		else if (ishuman(M) && prob(5))
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
 			src.visible_message(SPAN_ALERT("[src] gets embedded in [M]!"))
