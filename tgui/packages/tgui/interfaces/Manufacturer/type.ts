@@ -84,7 +84,7 @@ export type Resource = {
   satisfies: string[];
 }
 
-export type Ore = {
+export type OreData = {
   name: string;
   amount: number;
   cost: number;
