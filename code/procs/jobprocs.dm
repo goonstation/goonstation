@@ -707,6 +707,16 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy(src)
 		else
 			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("petperson"))
+		var/obj/item/pet_carrier/carrier = new/obj/item/pet_carrier(src)
+		var/picked = pick(filtered_concrete_typesof(/mob/living/critter/small_animal/, GLOBAL_PROC_REF(filter_carrier_pets)))
+		var/mob/living/critter/small_animal/pet = new picked(src)
+		pet.ai_type = /datum/aiHolder/wanderer
+		pet.aggressive = FALSE
+		pet.randomize_name()
+		pet.ai_retaliate_persistence = RETALIATE_ONCE
+		carrier.trap_mob(pet, src)
+		trinket = carrier
 	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
 		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
 		trinket = new random_lunchbox_path(src)

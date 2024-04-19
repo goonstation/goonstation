@@ -308,7 +308,8 @@ proc/broadcast_to_all_gangs(var/message)
 	/// Strings used to build PDA messages sent to civilians.
 	var/static/gangGreetings[] = list("yo", "hey","hiya","oi", "psst", "pssst" )
 	var/static/gangIntermediates[] = list("don't ask how I got your number.","heads up.", "help us out.")
-	var/static/gangEndings[] = list("best of luck.", "maybe help them, yeah?", "stay in line and you'll probably live.", "don't think of stealing it.")
+	var/static/gangThreats[] =list("don't try to snatch it, you hear?", "if you take our stuff, it'll get ugly.", "don't try and intervene.", "leave it alone.")
+	var/static/gangEndings[] = list("help them, or they might break your knees.", "stay in line and you'll probably live.", "don't fuck this up, or you're next.", "don't fuck this up.")
 
 	proc/living_member_count()
 		var/result = 0
@@ -745,10 +746,11 @@ proc/broadcast_to_all_gangs(var/message)
 		"rhino beetle helm" = /obj/item/clothing/head/rhinobeetle)
 
 	/// spawn loot and message a specific mind about it
-	proc/target_loot_spawn(var/datum/mind/civvie)
-		var/message = lootbag_spawn()
+	proc/target_loot_spawn(datum/mind/civvie, datum/gang/ownerGang)
+		var/message = lootbag_spawn(civvie, ownerGang)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
+		newsignal.encryption = "GDFTHR+\ref[civvie.originalPDA]"
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "Unknown Sender"
 		newsignal.data["message"] = "[message]"
@@ -784,7 +786,7 @@ proc/broadcast_to_all_gangs(var/message)
 			potential_drop_zones += areas[area]
 
 	/// hide a loot bag somewhere, return a probably-somewhat-believable PDA message explaining its' location
-	proc/lootbag_spawn()
+	proc/lootbag_spawn(datum/mind/civvie, datum/gang/ownerGang)
 		if (!potential_drop_zones)
 			find_potential_drop_zones()
 		var/area/loot_zone = pick(potential_drop_zones)
@@ -815,32 +817,33 @@ proc/broadcast_to_all_gangs(var/message)
 					turfList.Add(T)
 				else
 					uncoveredTurfList.Add(T)
-
+		var/obj/item/gang_loot/loot
 		if(length(bushList))
+			loot = new/obj/item/gang_loot/guns_and_gear
 			var/obj/shrub/target = pick(bushList)
 			target.override_default_behaviour = 1
-			target.additional_items.Add(/obj/item/gang_loot/guns_and_gear)
-			target.max_uses = 1
+			target.additional_items.Add(loot)
 			target.spawn_chance = 75
 			target.last_use = 0
-
+			target.max_uses += 1
 			message += " we left some goods in a bush [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]."
 			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a shrub: [target] at [target.x],[target.y]")
-
 		else if(length(crateList) && prob(80))
 			var/obj/storage/target = pick(crateList)
-			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
+			loot = new/obj/item/gang_loot/guns_and_gear(target.contents)
+			target.contents.Add(loot)
 			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
 			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a crate: [target] at [target.x],[target.y]")
 
 		else if(length(disposalList) && prob(85))
 			var/obj/machinery/disposal/target = pick(disposalList)
-			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
+			loot = new/obj/item/gang_loot/guns_and_gear(target.contents)
+			target.contents.Add(loot)
 			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
 			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a chute: [target] at [target.x],[target.y]")
 		else if(length(tableList) && prob(65))
-			var/turf/simulated/floor/target = pick(tableList)
-			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
+			var/turf/target = get_turf(pick(tableList))
+			loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
 			loot.layer = OVERFLOOR
 			//nudge this into position, for sneakiness
@@ -854,24 +857,27 @@ proc/broadcast_to_all_gangs(var/message)
 			message += " we hid a bag in \the [loot_zone], under a table. "
 			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [src.gang_name], under a table: [target] at [target.x],[target.y]")
 		else if(length(turfList))
-			var/turf/simulated/floor/target = pick(turfList)
-			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
-			target.contents.Add(loot)
+			var/turf/target = pick(turfList)
+			loot = new/obj/item/gang_loot/guns_and_gear(target)
+			loot.level = UNDERFLOOR
 			loot.hide(target.intact)
 			message += " we had to hide a bag in \the [loot_zone], under the floor tiles. "
 			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [src.gang_name], under the floor at [loot.x],[loot.y]")
 		else
 			var/turf/simulated/floor/target = pick(uncoveredTurfList)
-			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
+			loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
 			loot.hide(target.intact)
 			message += " we had to hide a bag in \the [loot_zone]. "
 			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [src.gang_name], on the floor at [loot.x],[loot.y].")
 
-		message += " there are folks aboard who will probably come looking. "
+		loot.informant = civvie.current.real_name
 
-		if (prob(40))
-			message += pick(gangEndings)
+		loot.owning_gang = ownerGang
+		loot.start_area = get_area(loot.loc)
+		message += pick(gangThreats)
+		message += " we've got folk aboard who will come by and ask you for this information. "
+		message += pick(gangEndings)
 
 		return message
 
@@ -2302,7 +2308,7 @@ proc/broadcast_to_all_gangs(var/message)
 	on_purchase(var/obj/ganglocker/locker, var/mob/user )
 		var/datum/gang/ourGang = locker.gang
 		var/datum/mind/target = ourGang.get_random_civvie()
-		ourGang.target_loot_spawn(target)
+		ourGang.target_loot_spawn(target, ourGang)
 		ourGang.broadcast_to_gang("An extra tip off has been purchased; "+ target.current.real_name + " recieved the location on their PDA.")
 		return TRUE //don't spawn anything
 

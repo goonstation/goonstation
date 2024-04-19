@@ -59089,8 +59089,8 @@
 /mob/living/critter/small_animal/cat{
 	desc = "This is Enzo. Up to no good.";
 	name = "Enzo";
-	randomize_look = 0;
-	randomize_name = 0;
+	random_look = 0;
+	random_name = 0;
 	real_name = "Enzo"
 	},
 /turf/unsimulated/floor/engine/caution/south,
@@ -63710,8 +63710,8 @@
 	desc = "It's Momo-san. So cute!";
 	icon_state = "cat2";
 	name = "Momo-San";
-	randomize_look = 0;
-	randomize_name = 0;
+	random_look = 0;
+	random_name = 0;
 	real_name = "Momo-San"
 	},
 /turf/unsimulated/floor/tatami/west,
@@ -73874,8 +73874,8 @@
 	desc = "This is Eloisa. She looks old, but sweet.";
 	icon_state = "cat4";
 	name = "Eloisa";
-	randomize_look = 0;
-	randomize_name = 0;
+	random_look = 0;
+	random_name = 0;
 	real_name = "Eloisa"
 	},
 /turf/unsimulated/floor/engine/caution/south,
@@ -74610,8 +74610,8 @@
 /mob/living/critter/small_animal/cat{
 	icon_state = "cat2";
 	name = "Moo";
-	randomize_look = 0;
-	randomize_name = 0
+	random_look = 0;
+	random_name = 0
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/adventure_gannets.dmi';
