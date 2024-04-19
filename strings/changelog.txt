@@ -1,5 +1,9 @@
 
 (t)fri apr 19 24
+(u)Glamurio (Ryou) & Zac
+(p)18510
+(e)🆕🗺🎨💪|C-Feature, A-Mapping, C-Sprites, A-Traits
+(*)Added the "Pet Person" trait, which spawns you with a random pet.
 (u)glowbold
 (p)15358
 (e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
