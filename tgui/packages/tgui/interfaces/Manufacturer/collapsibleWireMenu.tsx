@@ -18,7 +18,7 @@ export const CollapsibleWireMenu = (props, context) => {
   return (
     <Section
       textAlign="center"
-      title="Maintenence Panel"
+      title="Maintenance Panel"
     >
       <LabeledList>
         {wirePanel.wires.map((_, i: number) => (
