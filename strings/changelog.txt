@@ -1,4 +1,9 @@
 
+(t)fri apr 19 24
+(u)Carthridge / Nerkson
+(p)18428
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)A new egg-celent costume has bounced into Geoff Honkington's store! Check his stock for more info!
 (t)thu apr 18 24
 (u)LeahTheTech
 (*)All maps with a PTL now have two laser mirrors by default.
