@@ -70,7 +70,7 @@ export type Manufacturable = {
   show_cost:BooleanLike;
 }
 
-export type Rockbox = {
+export type RockboxData = {
   name: string;
   area_name: string;
   byondRef: string;
