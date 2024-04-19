@@ -1072,7 +1072,7 @@ TYPEINFO(/obj/machinery/chem_master)
 				var/obj/item/item_box/medical_patches/patch_box = null
 				if(use_box || patchcount > CHEMMASTER_NO_CONTAINER_MAX)
 					if(!use_box && patchcount > CHEMMASTER_NO_CONTAINER_MAX)
-						 src.visible_message("The [src] output limit beeps sternly, and a patch box is automatically dispensed!")
+						 src.visible_message("The [src]'s output limit beeps sternly, and a patch box is automatically dispensed!")
 					patch_box = new(src)
 					patch_box.name = "box of [item_name] patches"
 					if (is_medical_patch)
