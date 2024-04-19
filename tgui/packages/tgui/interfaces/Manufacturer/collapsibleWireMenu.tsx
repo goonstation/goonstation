@@ -1,23 +1,31 @@
 import { useBackend } from "../../backend";
 import { Button, Divider, LabeledList, Section } from "../../components";
-import { ManufacturerData, WireData } from "./type";
+import { ManufacturerData } from "./type";
 
 const is_set = (bits, bit) => bits & (1 << bit);
+
+const ManufacturerWireData = [
+  { name: "Teal", colorName: "teal" },
+  { name: "Red", colorName: "red" },
+  { name: "Amber", colorName: "amber" },
+  { name: "Lime", colorName: "lime" },
+];
 
 export const CollapsibleWireMenu = (props, context) => {
   const { act } = useBackend<ManufacturerData>(context);
   const { wirePanel } = props;
+
   return (
     <Section
       textAlign="center"
       title="Maintenence Panel"
     >
       <LabeledList>
-        {wirePanel.wires.map((wire: WireData, i: number) => (
+        {wirePanel.wires.map((_, i: number) => (
           <LabeledList.Item
             key={i}
-            label={wire.colorName}
-            labelColor={wire.color}
+            label={ManufacturerWireData[i].name}
+            labelColor={ManufacturerWireData[i].colorName}
             buttons={[(<Button
               textAlign="center"
               width={4}
@@ -29,8 +37,8 @@ export const CollapsibleWireMenu = (props, context) => {
               textAlign="center"
               width={4}
               key={i}
-              content={(is_set(wirePanel.wire_bitflags, i) !== 0) ? "Cut" : "Mend"}
-              onClick={() => act("wire", { action: ((is_set(wirePanel.wire_bitflags, i) !== 0) ? "cut" : "mend"), wire: i+1 })}
+              content={is_set(wirePanel.wire_bitflags, wirePanel.wires[i]-1) ? "Cut" : "Mend"}
+              onClick={() => act("wire", { action: (is_set(wirePanel.wire_bitflags, wirePanel.wires[i]-1) ? "cut" : "mend"), wire: i+1 })}
             />)]}
           />
         ))}

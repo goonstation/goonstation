@@ -2,7 +2,7 @@
 #define WIRE_EXTEND 1 //! wire which reveals blueprints in the "hidden" type
 #define WIRE_POWER 2 //! wire which can disable machine power
 #define WIRE_MALF 3 //! wire which causes machine to malfunction
-#define WIRE_SHOCK 4 //! this wire is in the machine specifically to shock curious staff assistants and serves no actual purpose
+#define WIRE_SHOCK 4 //! this wire is in the machine specifically to shock curious staff assistants
 #define MODE_READY "ready" //! machine is ready to produce more things
 #define MODE_WORKING "working" //! machine is making some things
 #define MODE_HALT "halt" //! machine had to stop making things or couldnt due to some problem that occured
@@ -351,11 +351,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"hidden_blueprints" = blueprints_as_list(src.hidden, user),
 			"downloaded_blueprints" = blueprints_as_list(src.download, user),
 			"recipe_blueprints" = blueprints_as_list(src.drive_recipes, user),
-			"wires" = list(list(colorName="Teal",  color="#21868C"),
-						   list(colorName="Indigo",color="#6f0fb4"),
-						   list(colorName="Amber", color="#FFBF00"),
-						   list(colorName="Lime",  color="#99FF1D"),
-						  ),
+			"wires" = APCIndexToWireColor,
 			"rockboxes" = rockboxes_as_list(),
 			"manudrive" = list ("name" = "[src.manudrive]",
 							   	"limit" = src.manudrive?.fablimit,
@@ -1405,7 +1401,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	proc/mend(mob/user, wireColor)
 		var/wireFlag = APCWireColorToFlag[wireColor]
-		var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
+		var/wireIndex = APCWireColorToIndex[wireColor]
 		src.wires |= wireFlag
 		switch(wireIndex)
 			if(WIRE_SHOCK)

@@ -40,7 +40,7 @@ export type ManufacturerData = {
   resource_data:Resource[];
   rockboxes:Rockbox[];
   queue:QueueBlueprint[];
-  wires:WireData[];
+  wires:number[];
 }
 
 // Keyed by name
@@ -85,7 +85,7 @@ export type Ore = {
 
 export type MaintenencePanel = {
   indicators: WireIndicators;
-  wires: WireData[];
+  wires: number[];
   wire_bitflags:number;
 }
 
@@ -98,7 +98,9 @@ export type WireIndicators = {
 
 export type WireData = {
   colorName: string;
-  color: string;
+  colorid: string;
+  flag: number;
+  id: number;
 }
 
 export type QueueBlueprint = {
