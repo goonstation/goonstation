@@ -43,7 +43,7 @@ export const ProductionCard = (params, context) => {
             image_path={data.img}
             onClick={() => act("remove", { "index": index+1 })}
           >
-            <CenteredText text={truncate(data.name)} width={12} height={4.6} />
+            <CenteredText text={truncate(data.name)} width={11} height={4.6} />
           </ButtonWithBadge>
         </Stack.Item>
         <Stack.Item>

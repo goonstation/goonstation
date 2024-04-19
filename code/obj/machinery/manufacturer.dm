@@ -294,7 +294,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	ui_data(mob/user)
 		// When we update the UI, we must regenerate the blueprint data if the blueprints known to us has changed since last time
-		if (should_update_static)
+		// No need to do this if we're depowered/broken though
+		if (should_update_static && !src.is_disabled())
 			should_update_static = FALSE
 			src.update_static_data(user)
 
@@ -313,7 +314,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// This calculates the percentage progress of a blueprint by the time that already elapsed before a pause (0 if never paused)
 		// added to the current time that has been elapsed, divided by the total time to be elapsed.
 		// But we keep the pct a constant if we're paused, and just do time that was elapsed / time to elapse
-		var/progress_pct = null
+		var/progress_pct = null // TODO: use predicted end time to have clientside progress animation instead of sending percentage
 		if (length(src.queue))
 			if (src.mode != MODE_WORKING)
 				progress_pct = 1 - (src.time_left / src.original_duration)
@@ -340,7 +341,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 							    "malfunctioning" = src.malfunction,
 								"hacked" = src.hacked,
 								"hasPower" = !src.is_disabled(),
-								src.has_no_power()
 							   ),
 		)
 
@@ -539,6 +539,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.eject_material(params["resource"])
 
 			if ("material_swap")
+				// Not doing this would certainly allow for exploits/bugs since resource allocation is greedy and could fail with different orders
+				if (src.mode == MODE_WORKING || src.mode == MODE_HALT)
+					boutput(usr, SPAN_ALERT("You cannot do that while the unit is working, it is already using the current materials!"))
 				src.swap_materials(params["resource_1"], params["resource_2"])
 
 			if ("card")
