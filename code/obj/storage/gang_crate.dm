@@ -176,6 +176,10 @@
 	var/open = FALSE
 	level = UNDERFLOOR
 
+	Eat(mob/M, mob/user)
+		boutput(user, SPAN_ALERT("You can't eat this! It tastes like [pick(list("a bitter video game cartridge","the inside of a clown's shoe","a hooligan's rancid socks"))]!"))
+		return FALSE
+
 	New()
 		src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job=null, message_admins_too=FALSE)
 		..()
