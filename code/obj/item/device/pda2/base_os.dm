@@ -534,7 +534,7 @@
 
 
 					if("message")
-						if(src.message_last + 20 > world.time) //Message sending delay
+						if(src.message_last + 20 > TIME) //Message sending delay
 							return
 
 						//var/obj/item/device/pda2/P = locate(href_list["target"])
@@ -562,7 +562,7 @@
 							return
 
 					if("ack")
-						if(src.message_last + 20 > world.time) //Message sending delay
+						if(src.message_last + 20 > TIME) //Message sending delay
 							return
 						src.CrisisAck(href_list["alert_group"], href_list["caller"], href_list["noreply"])
 						src.master.add_fingerprint(usr)
@@ -584,7 +584,7 @@
 						F.name = capitalize(lowertext(t))
 
 					if("send_file") //Give a file send request thing for current copied file.
-						if(src.message_last + 20 > world.time) //File sending delay.
+						if(src.message_last + 20 > TIME) //File sending delay.
 							return
 
 						src.SendFile(href_list["target"], href_list["group"])
@@ -1062,7 +1062,7 @@
 				signal.data["address_1"] = target_id
 			src.post_signal(signal)
 			src.message_note += "<i><b>&rarr; To [target_name]:</b></i><br>[message]<br>"
-			src.message_last = world.time
+			src.message_last = TIME
 
 			logTheThing(LOG_PDAMSG, null, "<i><b>[src.master.owner]'s PDA used by [key_name(src.master.loc)] &rarr; [target_name]:</b></i> [message]")
 			return 0
@@ -1096,7 +1096,7 @@
 			signal.data["sender_assignment"] = src.master.ownerAssignment
 			signal.data["address_1"] = target_id
 			src.post_signal(signal)
-			src.message_last = world.time
+			src.message_last = TIME
 
 			src.master.display_message("<b>Sent file to [target_name]:</b> [clipfile.name]")
 
@@ -1150,7 +1150,7 @@
 			signalinvite.data["sender"] = src.master.net_id
 			signalinvite.data["group"] = group
 			src.post_signal(signalinvite)
-			src.message_last = world.time
+			src.message_last = TIME
 
 		/// check if the message is one of the fileshare passkeys, then try to send them the file
 		proc/CheckForPasskey(var/message, var/sender)
@@ -1212,7 +1212,7 @@
 					caller_signal.data["address_1"] = caller_id
 					src.post_signal(caller_signal)
 
-			src.message_last = world.time
+			src.message_last = TIME
 			src.master.display_message("<b>To [group_id][caller_name ? ", [caller_name]" : ""]:</b> [message]")
 			src.message_note += "<i><b>&rarr; To [group_id][caller_name ? ", [caller_name]" : ""]:</b></i><br>[message]<br>"
 
