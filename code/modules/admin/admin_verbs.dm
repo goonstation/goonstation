@@ -153,7 +153,7 @@ var/list/admin_verbs = list(
 		/client/proc/display_bomb_monitor,
 		//Ban verbs
 		/client/proc/ban_panel,
-		/client/proc/addBanTemp,
+		/client/proc/addBanTempUntargetted,
 		/client/proc/banooc,
 		/client/proc/view_cid_list,
 		/client/proc/modify_parts,
