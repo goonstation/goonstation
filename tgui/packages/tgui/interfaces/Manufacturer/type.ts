@@ -96,7 +96,7 @@ export type MaintenencePanel = {
   wire_bitflags:number;
 }
 
-export type WireIndicators = {
+export type WireIndicatorsData = {
   electrified: number;
   malfunctioning: BooleanLike;
   hacked: BooleanLike;
