@@ -1,5 +1,9 @@
 
 (t)fri apr 19 24
+(u)TDHooligan
+(p)18345
+(e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
+(*)Gangs are fed up of stolen drops. They've started booby trapping their bags and cut back on weight savings.
 (u)Lord_Earthfire
 (p)18318
 (e)🪲🔎⚖🍝🌱|C-Bug, C-Code-Quality, C-Balance, A-Catering, A-Hydroponics
