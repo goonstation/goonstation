@@ -14,10 +14,10 @@ import { BooleanLike } from "common/react";
 type ButtonWithBadgeProps = {
   width: number | string,
   height: number | string,
-  noImageShadow?: BooleanLike,
+  noImageShadow?: boolean,
   image_path: string;
   children?: InfernoNode;
-  disabled?: BooleanLike;
+  disabled?: boolean;
   onClick?: Function;
   onMouseEnter?: Function;
   onMouseLeave?: Function;
