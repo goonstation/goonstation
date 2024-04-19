@@ -536,7 +536,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 						src.updateUsrDialog()
 
 			if ("material_eject")
-				src.eject_material(params["resource"])
+				src.eject_material(params["resource"], usr)
 
 			if ("material_swap")
 				// Not doing this would certainly allow for exploits/bugs since resource allocation is greedy and could fail with different orders
@@ -994,7 +994,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		S[material_index_2] = held_material_1
 		src.should_update_static = TRUE
 
-	proc/eject_material(var/mat_id)
+	proc/eject_material(var/mat_id, mob/user = null)
 		if (src.mode != MODE_READY)
 			boutput(usr, SPAN_ALERT("You cannot eject materials while the unit is working."))
 			return
@@ -1019,12 +1019,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 			boutput(usr, SPAN_ALERT("There's not that much material in [name]. It has ejected what it could."))
 			ejectamt = floor(target.amount)
 		if (ejectamt == target.amount)
+			if (user)
+				user.put_in_hand_or_drop(target)
 			src.storage.transfer_stored_item(target, ejectturf)
 		else
 			var/obj/item/material_piece/P = new target.type
 			P.setMaterial(target.material)
 			P.change_stack_amount(ejectamt - P.amount)
 			target.change_stack_amount(-ejectamt)
+			if (user)
+				user.put_in_hand_or_drop(target)
 			P.set_loc(get_output_location(target))
 
 	proc/scan_card(obj/item/I)
