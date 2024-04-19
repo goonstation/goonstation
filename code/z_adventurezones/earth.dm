@@ -399,6 +399,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	icon_state = "cat1"
 	random_name = FALSE
 	random_look = FALSE
+	player_can_spawn_with_pet = FALSE
 
 	New()
 		..()
