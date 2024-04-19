@@ -262,7 +262,7 @@ export const Manufacturer = (_, context) => {
                       key={rockbox.byondRef}
                     >
                       <LabeledList>
-                        {rockbox.ores.length !== 0 ? (rockbox.ores.map((ore: Ore) => (
+                        {rockbox.ores.length !== 0 ? (rockbox.ores.map((ore: OreData) => (
                           <LabeledList.Item
                             key={ore.name}
                             label={ore.name}
