@@ -61,7 +61,7 @@ export const BlueprintButton = (props, context) => {
 
   const { blueprintData, materialData, manufacturerSpeed } = props;
   const { act } = useBackend(context);
-  const blueprintSatisfaction:boolean[] = GetProductionSatisfaction(
+  const blueprintSatisfaction = getProductionSatisfaction(
     blueprintData.item_paths,
     blueprintData.item_amounts,
     materialData
