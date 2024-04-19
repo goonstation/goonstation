@@ -235,7 +235,7 @@ export const Manufacturer = (_, context) => {
                         </LabeledList.Item>
                         {data.manudrive.limit !== -1 ? (
                           <LabeledList.Item
-                            label={"Remaining Uses"}
+                            label="Remaining Uses"
                           >
                             {data.manudrive_uses_left}
                           </LabeledList.Item>
