@@ -656,6 +656,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if ("manudrive")
 				if (ON_COOLDOWN(src, "manudrive", 1 SECOND)) return
 				if (params["action"] == "eject")
+					if (src.mode != MODE_READY)
+						boutput(user, SPAN_ALERT("You can't do that while the unit is working!"))
+						return
 					src.eject_manudrive(usr)
 
 		tgui_process.try_update_ui(usr, src)

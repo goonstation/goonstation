@@ -219,6 +219,7 @@ export const Manufacturer = (_, context) => {
                         <Button
                           icon="eject"
                           content="Eject"
+                          disabled={data.mode !== "ready"}
                           onClick={() => act("manudrive", { "action": "eject" })}
                         />
                       }
