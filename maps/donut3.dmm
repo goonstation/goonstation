@@ -3950,6 +3950,10 @@
 /obj/submachine/ATM{
 	pixel_y = 32
 	},
+/obj/machinery/light/small{
+	dir = 8;
+	status = 2
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
 "bcd" = (
@@ -48616,12 +48620,13 @@
 	},
 /area/station/storage/primary)
 "oIu" = (
-/obj/decal/tile_edge/floorguide/ai,
-/obj/decal/tile_edge/floorguide/arrow_e{
-	dir = 4
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
 	},
-/turf/simulated/floor/blue/side,
-/area/station/hallway/primary/southeast)
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload_foyer)
 "oIv" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet/green/standard/narrow/east,
@@ -54374,7 +54379,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
 /area/station/hallway/primary/southeast)
 "qtU" = (
 /obj/cable{
@@ -75164,13 +75171,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
 "wJx" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/floorguide/ai,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 4
 	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/ai_upload_foyer)
+/turf/simulated/floor/blue/side,
+/area/station/hallway/primary/southeast)
 "wJD" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small/sticky,
@@ -137229,7 +137235,7 @@ evH
 iRB
 ykH
 qtI
-oIu
+wJx
 fhT
 hRH
 jXA
@@ -140853,7 +140859,7 @@ lrg
 kuM
 diX
 ink
-wJx
+oIu
 htp
 lhf
 vDO
