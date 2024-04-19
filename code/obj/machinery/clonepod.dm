@@ -809,6 +809,10 @@ TYPEINFO(/obj/machinery/clonepod)
 		src.go_out()
 		return
 
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
+
 	ex_act(severity)
 		switch(severity)
 			if(1)

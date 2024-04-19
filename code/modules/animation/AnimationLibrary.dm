@@ -528,7 +528,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	var/firing_angle = get_angle(origin, target)
 	muzzle_flash_any(M, firing_angle, muzzle_anim, muzzle_light_color, offset)
 
-proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25)
+proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25, var/horizontal_offset=0)
 	if (!A || firing_angle == null || !muzzle_anim) return
 
 	var/obj/particle/attack/muzzleflash/muzzleflash = new /obj/particle/attack/muzzleflash
@@ -541,7 +541,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		muzzleflash.overlays += muzzle_simple_light
 
 	var/matrix/mat = new
-	mat.Translate(0, offset)
+	mat.Translate(horizontal_offset, offset)
 	mat.Turn(firing_angle)
 	muzzleflash.transform = mat
 	muzzleflash.layer = A.layer

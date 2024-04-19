@@ -129,12 +129,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if(thing == src.rider)
 			src.eject_rider(crashed=FALSE, selfdismount=TRUE, ejectall=FALSE)
 
-	Click(location,control,params)
-		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier)
-			var/mob/dead/observer/O = usr
-			if(src.rider)
-				O.insert_observer(src.rider)
-		else
+	Click(location, control, params)
+		if(!ghost_observe_occupant(usr, src.rider))
 			. = ..()
 
 	proc/eject_other_stuff() // override if there's some stuff integral to the vehicle that should not be ejected
@@ -254,7 +250,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	blob_act(var/power)
 		qdel(src)
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		..()
 		// Simulate hotspot Crossed/Process so turfs engulfed in flames aren't simply ignored in vehicles
 		if (src.rider_visible && !src.sealed_cabin && ismob(src.rider) && exposed_volume > (CELL_VOLUME * 0.8) && exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)

@@ -38,6 +38,14 @@ TRASH BAG
 	..()
 	create_reagents(initial_volume)
 
+
+/obj/item/spraybottle/clown_flower
+	name = "suspicious flower"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	icon_state = "flower_gard"
+	item_state = "flower_gard"
+	desc = "A delicate flower from the Gardenia shrub native to Earth, trimmed for you to wear. These white flowers are known for their strong and sweet floral scent. Wait, do these all have nozzles?"
+
 /obj/item/spraybottle/detective
 	name = "luminol bottle"
 	desc = "A spray bottle labeled 'Luminol - Blood Detection Agent'. That's what those fancy detectives use to see blood!"
