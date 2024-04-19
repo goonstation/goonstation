@@ -1688,7 +1688,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 		var/datum/manufacture/M = src.queue[1]
 		//Wire: Fix for href exploit creating arbitrary items
-		if (!(M in ALL_BLUEPRINTS))
+		if (!(M in ALL_BLUEPRINTS) || (!src.hacked && (M in src.hidden)))
 			src.mode = MODE_HALT
 			src.error = "Corrupted entry purged from production queue."
 			src.queue -= src.queue[1]
