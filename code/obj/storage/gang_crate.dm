@@ -203,7 +203,7 @@
 	level = UNDERFLOOR
 
 	Eat(mob/M, mob/user)
-		boutput(user, SPAN_ALERT("You can't eat this! It tastes like [pick(list("a bitter video game cartridge","the inside of a clown's shoe","a hooligan's rancid socks"))]!"))
+		boutput(user, SPAN_ALERT("You can't eat this! It tastes like [pick(list("a video game cartridge","the inside of a clown's shoe","a hooligan's rancid socks"))]!"))
 		return FALSE
 
 	proc/initialize_loot_master(x,y)
