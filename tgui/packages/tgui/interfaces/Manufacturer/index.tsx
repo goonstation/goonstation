@@ -227,7 +227,7 @@ export const Manufacturer = (_, context) => {
                       <Divider />
                       <LabeledList>
                         <LabeledList.Item
-                          label={"Fabrication Limit"}
+                          label="Fabrication Limit"
                         >
                           {data.manudrive.limit === -1 ? "Unlimited" : `${data.manudrive.limit} ${pluralize("use", data.manudrive.limit)}`}
                         </LabeledList.Item>
