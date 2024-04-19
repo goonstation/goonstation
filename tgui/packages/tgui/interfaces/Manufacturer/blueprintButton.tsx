@@ -81,7 +81,7 @@ export const BlueprintButton = (props, context) => {
         ))}
       </>
     );
-  let content_requirements = (
+  const content_requirements = (
     <Section
       title="Requirements"
       buttons={<Button icon="hourglass" backgroundColor="rgba(0,0,0,0)">{getBlueprintTime(blueprintData.time, manufacturerSpeed)}s</Button>}
