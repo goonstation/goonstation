@@ -10,7 +10,7 @@ import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
 import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
 import { formatMoney } from '../../format';
-import { MaintenencePanel, Manufacturable, ManufacturerData, Ore, QueueBlueprint, Resource, Rockbox } from './type';
+import { MaintenancePanel, Manufacturable, ManufacturerData, Ore, QueueBlueprint, Resource, Rockbox } from './type';
 
 import { BlueprintButton } from './blueprintButton';
 import { ProductionCard } from './productionCard';
