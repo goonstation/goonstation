@@ -1,5 +1,9 @@
 
 (t)fri apr 19 24
+(u)glowbold
+(p)15358
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(+)PDA crisis alerts now include an 'ACK' link to quickly reply to the team and the sender.
 (u)TDHooligan
 (p)18345
 (e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
