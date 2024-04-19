@@ -77,7 +77,7 @@ export type Rockbox = {
   ores: Ore[];
 }
 
-export type Resource = {
+export type ResourceData = {
   name: string;
   id: string;
   amount: number;
