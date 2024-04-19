@@ -292,7 +292,7 @@ export const Manufacturer = (_, context) => {
                       {data.error}
                     </Section>
                   ) : null}
-                  {data.queue.length > 0 ? (
+                  {data.queue.length > 0 && (
                     <Stack.Item>
                       <ProgressBar
                         value={clamp(data.progress_pct, 0, 1)}
@@ -301,7 +301,7 @@ export const Manufacturer = (_, context) => {
                         position="relative"
                       />
                     </Stack.Item>
-                  ) : null}
+                  )}
                   {data.queue.map((queued:QueueBlueprint, index:number) => (
                     <ProductionCard
                       key={index}
