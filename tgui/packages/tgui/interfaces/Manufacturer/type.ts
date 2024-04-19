@@ -51,7 +51,7 @@ export type Manudrive = {
 }
 
 // Keyed by name
-export type Manufacturable = {
+export type ManufacturableData = {
   name:string
 
   material_names:string[];
