@@ -396,6 +396,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
+	object_flags = NO_GHOSTCRITTER
 	var/emagged = 0
 	var/working = 0
 	var/time = 5
