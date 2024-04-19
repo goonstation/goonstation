@@ -96,7 +96,6 @@ export const Manufacturer = (_, context) => {
     This is done here instead of sending one big list to reduce the amount of times we need to refresh static data.
   */
   let blueprints_by_category:Record<string, Manufacturable[]> = {};
-  let test = "";
   for (let category_index = 0; category_index < data.all_categories.length; category_index++) {
     let category = data.all_categories[category_index];
     blueprints_by_category[category] = [];
