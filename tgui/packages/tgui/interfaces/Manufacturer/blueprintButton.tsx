@@ -21,7 +21,7 @@ Thankfully as this is mostly cosmetic, the only implication is that people might
 to try printing blueprints that get refused, or they may not be allowed to fabricate
 blueprints they should be allowed to.
 */
-const GetProductionSatisfaction = (
+const getProductionSatisfaction = (
   pattern_requirements:string[],
   amount_requirements:number[],
   materials_stored:Resource[]) =>
