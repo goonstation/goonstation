@@ -1949,10 +1949,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			// Match by material piece or id
 			if (mat_piece && P.material.isSameMaterial(mat_piece.material) ||\
 				mat_id && mat_id == P.material.getID())
-				var/prev = P.amount
 				// fuck floating point, lets pretend we only use tenths
 				P.amount = round(P.amount + amount, 0.1)
-				boutput(world, SPAN_ALERT("[prev] + [amount] = [P.amount]"))
 				if (user)
 					user.u_equip(mat_piece)
 					mat_piece.dropped(user)
