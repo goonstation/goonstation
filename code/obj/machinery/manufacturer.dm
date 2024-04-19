@@ -1736,7 +1736,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				var/obj/item/disk/data/floppy/manudrive/ManuD = src.manudrive
 				for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
 					if(MD.fablimit != -1 && MD.fablimit - MD.num_working <= 0)
-						src.mode = MODE_HALT
+						src.mode = MODE_READY
 						playsound(src.loc, src.sound_grump, 50, 1)
 						src.error = "The inserted ManuDrive is unable to operate further."
 						src.visible_message(SPAN_ALERT("[src] emits an angry buzz!"))
