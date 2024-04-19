@@ -127,7 +127,6 @@ export const Manufacturer = (_, context) => {
         <Stack>
           <Stack.Item grow>
             <Section>
-              {test}
               {data.all_categories.map((category:string) => (
                 blueprints_by_category[category].length > 0 && (
                   <Collapsible
