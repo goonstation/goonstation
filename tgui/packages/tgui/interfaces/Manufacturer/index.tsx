@@ -184,7 +184,7 @@ export const Manufacturer = (_, context) => {
               <Stack.Item>
                 <Section
                   textAlign="center"
-                  title={"Fabricator Settings"}
+                  title="Fabricator Settings"
                 >
                   <LabeledList>
                     <LabeledList.Item
