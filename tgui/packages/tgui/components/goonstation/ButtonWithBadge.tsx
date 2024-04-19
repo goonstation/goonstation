@@ -42,7 +42,8 @@ export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
     <Button
       opacity={opacity}
       onClick={onClick}
-      width={width} height={height}
+      width={width}
+      height={height}
       p={0}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
