@@ -188,7 +188,7 @@ export const Manufacturer = (_, context) => {
                 >
                   <LabeledList>
                     <LabeledList.Item
-                      label={"Repeat"}
+                      label="Repeat"
                       buttons={<Button icon="repeat" onClick={() => toggleRepeat()}>Toggle Repeat</Button>}
                       textAlign="center"
                     >
