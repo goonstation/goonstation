@@ -1,6 +1,10 @@
 
 (t)sat apr 20 24
 (u)FlameArrow57
+(p)18566
+(e)⚖💅📦🚗|C-Balance, C-QoL, A-Game-Objects, A-Vehicles
+(+)The security Tri-Corp Tractor Beam pod component now works more responsively, dragging items as fast as the ship moves.
+(u)FlameArrow57
 (p)18574
 (e)🆕📦🚗|C-Feature, A-Game-Objects, A-Vehicles
 (+)Added a new Storage Hold pod secondary system to ship component fabricators. This is a storage-like component that allows ships to store up to 10 handheld items of normal size, just like a backpack. Accessible by click dragging the pod to you, click dragging items to the pod, or using ship buttons while inside the pod.
