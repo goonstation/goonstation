@@ -676,14 +676,16 @@
 			stam_power *= clamp(damage/pre_armor_damage, 1, 1/3)
 		stam_power *= max(0, (1-shield_amt["shield_strength"]))
 
-		//record the stamina damage to do
-		msgs.stamina_target -= max(stam_power, 0)
+		if (!target.hasStatus("weakened"))
+			//record the stamina damage to do
+			msgs.stamina_target -= max(stam_power, 0)
 
 		//if we can crit, roll for a crit. Crits are blocked by blocks.
 		if (prob(crit_chance) && !target.check_block()?.can_block(DAMAGE_BLUNT, 0))
 			msgs.stamina_crit = 1
 			msgs.played_sound = pick(sounds_punch)
 
+	target.get_revenge_stamina(msgs.stamina_target, damage, 0, DAMAGE_BLUNT) // this is a solid 'uncertain this should be here'
 	//do stamina cost
 	if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
 		msgs.stamina_self -= STAMINA_HTH_COST
@@ -1008,7 +1010,8 @@
 					target.add_stamina(stamina_target)
 				else
 					var/prev_stam = target.get_stamina()
-					target.remove_stamina(-stamina_target)
+					if (!target.hasStatus("weakened"))
+						target.remove_stamina(-stamina_target)
 					target.get_revenge_stamina(stamina_target, (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), damage_type )
 					target.stamina_stun()
 					if(prev_stam > 0 && target.get_stamina() <= 0) //We were just knocked out.
