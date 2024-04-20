@@ -996,6 +996,8 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 		if (!isliving(usr)) return
 		if (!can_act(usr) || !can_reach(usr, src)) return
+		var/mob/M = usr
+		if (ispulsingtool(M.equipped()) && istype(over_object, /obj/machinery/conveyor)) return // linking handled in conveyor MouseDrop_T
 		if (ON_COOLDOWN(src, "switch", CONVEYOR_SWITCH_COOLDOWN)) return
 		switch (over_location:x - src_location:x)
 			if (0)
