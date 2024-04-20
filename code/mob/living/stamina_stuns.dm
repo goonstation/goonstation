@@ -96,7 +96,7 @@
 	return
 
 /mob/living/get_revenge_stamina(stamina_damage, brute, burn, damage_type )
-	..()
+	. = ..()
 	if(!src.use_stamina) return
 	if(!isnum(stamina_damage)) return
 	if (src.hasStatus("weakened") && !src.hasStatus("paralysis") && (brute > 0 || burn >= 5))
