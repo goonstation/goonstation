@@ -36810,14 +36810,6 @@
 	},
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/kitchen)
-"lhf" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/item/device/radio/intercom/AI,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "lhg" = (
 /obj/machinery/disposal/small{
 	pixel_x = 6
@@ -46610,10 +46602,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/ai_status_display,
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "odP" = (
@@ -140861,7 +140853,7 @@ diX
 ink
 oIu
 htp
-lhf
+kPM
 vDO
 qeM
 kcx
