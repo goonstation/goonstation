@@ -288,6 +288,19 @@
 		// (2 arms get full negation, 1 negates half, 0 would get nothing except hardcoded to be 100 earlier)
 		return list(0-(applied_modifier*((2-missing_arms)*0.5)),1)
 
+/datum/movement_modifier/slither
+	ask_proc = 1
+
+/datum/movement_modifier/slither/modifiers(mob/living/user, move_target, running)
+	var/missing_arms = 0
+	var/missing_legs = 0
+	var/mob/living/carbon/human/H = user
+
+	if (user.lying)
+		applied_modifier = (0.9) * (7*2) // Counteract most of the effect of laying down if.. laying down
+		return list(0-(applied_modifier),1)
+
+
 // pathogen stuff
 
 /datum/movement_modifier/patho_oxygen

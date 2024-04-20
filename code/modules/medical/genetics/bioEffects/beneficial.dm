@@ -847,7 +847,7 @@ var/list/radio_brains = list()
 	limb_type = /datum/limb/small_critter/pincers
 
 /datum/bioEffect/carapace
-	name = "Chitinoarmis  Durescutis "
+	name = "Chitinoarmis Durescutis "
 	desc = "Subject skin develops into a hardened carapace."
 	id = "carapace"
 	probability = 20
@@ -875,6 +875,70 @@ var/list/radio_brains = list()
 		if(ismob(owner))
 			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_MELEEPROT_HEAD, src.type)
 			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_MELEEPROT_BODY, src.type)
+
+/datum/bioEffect/slither
+	name = "Lateral Undulation"
+	desc = "Subject muscles develop the ability to perform a serpentine locomation."
+	id = "slither"
+	probability = 20
+	effectType = EFFECT_TYPE_POWER
+	msgGain = "You feel like you could propsel yourself on your belly with a good wiggle."
+	msgLose = "You feel like moving around on your belly is a silly thing to do."
+	stability_loss = 5
+
+	OnAdd()
+		..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/slither, src.type)
+
+	OnRemove()
+		..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/slither, src.type)
+
+/datum/bioEffect/food_stores
+	name = "Lipid Stores"
+	desc = "Subject gains the ability to improve the nourhsment available from their lipid stores."
+	id = "camel_fat"
+	probability = 20
+	effectType = EFFECT_TYPE_POWER
+	msgGain = "You feel like can store away some food and drink for later."
+	msgLose = "You feel a little more lean than you did before."
+	stability_loss = 5
+	var/food_stored = 0
+	var/food_max = 50
+	var/store_above_perc = 80
+	var/use_below_perc = 30
+	var/lost_perc = 70
+
+	OnLife(var/mult)
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+
+			if(food_max < 50)
+				// Extra available to lets store some...
+				if(H.sims.getValue("Thirst") > store_above_perc)
+					var/absorb = 0.0909
+					H.sims.affectMotive("Thirst", -absorb)
+					food_stored += absorb * (lost_perc / 100)
+				if(H.sims.getValue("Hunger") > store_above_perc)
+					var/absorb = 0.078
+					H.sims.affectMotive("Hunger", -absorb)
+					food_stored += absorb * (lost_perc/ 100)
+
+			if(food_stored > 0)
+				// See if we can feed the need
+				if(H.sims.getValue("Thirst") < use_below_perc)
+					var/absorb = 0.0909
+					H.sims.affectMotive("Thirst", -absorb)
+					food_stored -= absorb
+
+				if(H.sims.getValue("Hunger") < use_below_perc)
+					var/absorb = 0.078
+					H.sims.affectMotive("Hunger", -absorb)
+					food_stored -= absorb
 
 
 ///////////////////////////

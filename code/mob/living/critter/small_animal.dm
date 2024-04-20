@@ -2027,6 +2027,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		src.event_handler_flags |= USE_PROXIMITY
 		src.bioHolder.AddNewPoolEffect("snake_bite", scramble=TRUE)
+		src.bioHolder.AddNewPoolEffect("slither", scramble=TRUE)
 
 	setup_hands()
 		..()
