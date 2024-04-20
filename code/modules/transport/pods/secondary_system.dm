@@ -379,6 +379,59 @@
 			user.visible_message(SPAN_ALERT("<b>[user]</b> is flung out of [src.ship]!"))
 			user.throw_at(get_edge_target_turf(user, pick(alldirs)), rand(3,7), 3)
 
+/obj/item/shipcomponent/secondary_system/storage
+	name = "Storage Hold"
+	desc = "Allows the ship to hold many smaller items, versus a typical cargo hold."
+	hud_state = "cargo"
+	f_active = TRUE
+	var/obj/dummy_storage/dummy_storage
+
+	New()
+		..()
+		src.dummy_storage = new(null, src)
+
+	disposing()
+		qdel(src.dummy_storage)
+		src.dummy_storage = null
+		..()
+
+/obj/item/shipcomponent/secondary_system/storage/Use(mob/user)
+	src.dummy_storage.storage.show_hud(user)
+
+/obj/item/shipcomponent/secondary_system/storage/activate()
+	src.dummy_storage.storage.show_hud(usr)
+
+/obj/item/shipcomponent/secondary_system/storage/deactivate()
+	for (var/atom/A as anything in src.dummy_storage.storage.get_contents())
+		src.dummy_storage.storage.transfer_stored_item(A, get_turf(src))
+
+/obj/item/shipcomponent/secondary_system/storage/Clickdrag_PodToObject(mob/living/user, atom/A)
+	if (user == A)
+		src.dummy_storage.storage.show_hud(user)
+
+/obj/item/shipcomponent/secondary_system/storage/Clickdrag_ObjectToPod(mob/living/user, atom/A)
+	if (istype(A, /obj/item) && src.dummy_storage.storage.check_can_hold(A) == STORAGE_CAN_HOLD)
+		src.dummy_storage.storage.add_contents(A, user)
+	else
+		boutput(user, SPAN_NOTICE("[src] can't hold this!"))
+
+/obj/item/shipcomponent/secondary_system/storage/on_shipdeath(var/obj/machinery/vehicle/ship)
+	var/atom/movable/AM
+	for (var/atom/A in src.dummy_storage.storage.get_contents())
+		src.dummy_storage.storage.transfer_stored_item(A, get_turf(src.ship))
+		A.visible_message(SPAN_ALERT("<b>[A]</b> is flung out of [src.ship]!"))
+		if (istype(A, /atom/movable))
+			AM = A
+			AM.throw_at(get_edge_target_turf(AM, pick(alldirs)), rand(3, 7), 3)
+
+/obj/dummy_storage
+	name = "Storage Hold"
+
+	New(turf/newLoc, obj/item/shipcomponent/secondary_system/storage/parent_storage)
+		..()
+		src.create_storage(/datum/storage, max_wclass = W_CLASS_NORMAL, slots = 10)
+		src.set_loc(parent_storage)
+
 /obj/item/shipcomponent/secondary_system/tractor_beam
 	name = "Tri-Corp Tractor Beam"
 	desc = "Allows the ship to pull objects towards it"
