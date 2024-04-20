@@ -427,7 +427,7 @@
 /obj/dummy_storage
 	name = "Storage Hold"
 
-	New(turf/newLoc, obj/item/shipcomponent/secondary_system/parent_storage)
+	New(turf/newLoc, obj/item/shipcomponent/secondary_system/storage/parent_storage)
 		..()
 		src.create_storage(/datum/storage, max_wclass = W_CLASS_NORMAL, slots = 10)
 		src.set_loc(parent_storage)
