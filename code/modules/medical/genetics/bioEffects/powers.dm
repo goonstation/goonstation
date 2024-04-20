@@ -2323,7 +2323,7 @@
 
 /datum/bioEffect/power/critter/snake_bite
 	name = "Ophidentis Vipernox"
-	desc = "Generates a hardened keratin area between the mouth and nose."
+	desc = "Generates an enhanced structure of your fangs allowing for venom."
 	id = "snake_bite"
 	msgGain = "You become oddly aware of your canines and they feel different."
 	msgLose = "You feel less aware of your teeth."
