@@ -229,7 +229,7 @@
 	proc/addDetails(banId, evasion = FALSE, admin_ckey, ckey, comp_id, ip)
 		var/datum/apiRoute/bans/add_detail/addDetail = new
 		addDetail.routeParams = list("[banId]")
-		addDetail.buildBody(ckey, comp_id, ip)
+		addDetail.buildBody(admin_ckey, roundId, ckey, comp_id, ip, evasion)
 		var/datum/apiModel/Tracked/BanDetail/banDetail
 		try
 			banDetail = apiHandler.queryAPI(addDetail)
