@@ -95,7 +95,8 @@
 /mob/proc/get_revenge_stamina(stamina_damage, brute, burn, damage_type )
 	return
 
-/mob/living/get_revenge_stamina(stamina_damage, brute, burn, damage_type )
+/mob/living/get_revenge_stamina(stamina_damage, brute, burn, damage_type)
+	. = ..()
 	if(!src.use_stamina) return
 	if(!isnum(stamina_damage)) return
 
