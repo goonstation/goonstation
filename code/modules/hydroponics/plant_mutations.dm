@@ -778,6 +778,10 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	PTrange = list(30, null)
 	chance = 50
 
+	HYPon_mutation_general(var/datum/plant/parent_plant, var/datum/plantgenes/passed_genes)
+		HYPaddCommut(passed_genes, /datum/plant_gene_strain/seedless)
+		return
+
 /datum/plantmutation/tree/paper
 	name = "Paper Tree"
 	dont_rename_crop = TRUE
