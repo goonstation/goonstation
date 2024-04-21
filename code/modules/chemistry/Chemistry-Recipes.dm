@@ -2055,9 +2055,12 @@
 		drinkrecipe = TRUE
 
 		does_react(var/datum/reagents/holder)
+			var/atom/my_atom = holder.my_atom
+			if(istype(my_atom, /obj)) var/obj/my_obj = holder.atom
+
 			if(length(holder.reagent_list) > length(src.required_reagents)) // drink must be pure to mix-- no teleporting chem bombs
 				return FALSE
-			if(!holder.my_atom || !istype(holder.my_atom, /obj)) //no teleportable container, no reaction
+			if(!my_atom || !my_obj || my_obj.cant_drop || holder.my_obj.anchored || (holder.my_atom.loc == (/obj/machinery || /obj/submachine))) //no teleportable container, no reaction
 				return FALSE
 			else
 				return TRUE
@@ -2068,8 +2071,8 @@
 
 			if(istype(my_atom, /obj)) // Teleports away on mixing
 				playsound(origin, "warp", 20, 1)
-				var/obj/cup = my_atom
-				cup.set_loc(get_a_random_station_unlocked_container_with_no_others_on_the_turf())
+				var/obj/my_obj = my_atom
+				my_obj.set_loc(get_a_random_station_unlocked_container_with_no_others_on_the_turf())
 
 			if(get_turf(my_atom) != origin) //checks if the drink actually teleported
 				mix_phrase = "The mixture teleports away! Go find it!"
