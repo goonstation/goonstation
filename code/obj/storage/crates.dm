@@ -812,3 +812,27 @@ TYPEINFO(/obj/storage/crate/chest)
 	escape
 		spawn_contents = list(/obj/item/sea_ladder,
 		/obj/item/pipebomb/bomb/engineering = 2)
+
+// evil nasty biohazard crate
+/obj/storage/crate/stxcrate
+	name = "saxitoxin grenade crate"
+	desc = "A menacing crate to store deadly saxitoxin grenades."
+	icon_state = "stxcrate"
+	icon_opened = "stxcrate_open"
+	icon_closed = "stxcrate"
+
+	filled_6
+		New()
+			var/datum/loot_generator/stx_filler
+			src.vis_controller = new(src)
+			stx_filler =  new /datum/loot_generator(3,1)
+			stx_filler.fill_remaining_with_instance(src, new /obj/loot_spawner/short/two_stx_grenades)
+			..()
+
+	filled_12
+		New()
+			var/datum/loot_generator/stx_filler
+			src.vis_controller = new(src)
+			stx_filler =  new /datum/loot_generator(3,2)
+			stx_filler.fill_remaining_with_instance(src, new /obj/loot_spawner/short/two_stx_grenades)
+			..()
