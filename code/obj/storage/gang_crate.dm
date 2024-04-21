@@ -700,11 +700,6 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/short)
 				. = ..()
 
 	// GANG_CRATE_GUN:
-	makarov
-		tier = GANG_CRATE_GUN
-		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/makarov,scale_x=0.725,scale_y=0.725)
-			I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 	webley
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
