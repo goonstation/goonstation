@@ -2022,6 +2022,7 @@
 		result_amount = 1
 		mix_phrase = "The cola grows more powerful than you could possibly imagine."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
 
 	colamara_chaos
 		name = "Colamara Chaos"
@@ -2031,6 +2032,7 @@
 		result_amount = 3
 		mix_phrase = "The bitters and cola roughen the surface of the ice as they war with one another."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
 
 	roaring_waters
 		name = "Roaring Waters"
@@ -2040,6 +2042,7 @@
 		result_amount = 10
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		mix_phrase = "A cool mist forms over the container as the waters crash over the ice."
+		drinkrecipe = TRUE
 
 	lostcoke
 		name = "The Lost Treasure of Kalimero"
@@ -2049,6 +2052,7 @@
 		result_amount = 2
 		mix_phrase = null
 		mix_sound = FALSE
+		drinkrecipe = TRUE
 
 		does_react(var/datum/reagents/holder)
 			if(length(holder.reagent_list) > length(src.required_reagents)) // drink must be pure to mix-- no teleporting chem bombs
@@ -2058,18 +2062,22 @@
 			else
 				return TRUE
 
-		on_reaction(var/datum/reagents/holder, var/created_volume) // Teleports away on mixing
-			playsound(get_turf(holder.my_atom), "warp", 20, 1)
-			var/oldloc = get_turf(my_atom)
-			if(istype(holder.my_atom, /obj))
-				var/obj/cup = holder.my_atom
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			var/atom/my_atom = holder.my_atom
+			var/origin = get_turf(holder.my_atom)
+
+			if(istype(my_atom, /obj)) // Teleports away on mixing
+				playsound(origin, "warp", 20, 1)
+				var/obj/cup = my_atom
 				cup.set_loc(get_a_random_station_unlocked_container_with_no_others_on_the_turf())
 
-			if(get_turf(my_atom) != oldloc) //checks if the drink actually teleported
-				boutput(M, SPAN_NOTICE("[bicon(my_atom)] The mixture teleports away! Go find it!"))
+			if(get_turf(my_atom) != origin) //checks if the drink actually teleported
+				mix_phrase = "The mixture teleports away! Go find it!"
 			else
-				boutput(M, SPAN_NOTICE("[bicon(my_atom)] The mixture groans scarily, turning in on itself and disintegrating."))
+				mix_phrase = "The mixture groans scarily, turning in on itself and disintegrating."
 				holder.remove_reagent("lostcoke", created_volume)
+			for(var/mob/living/M in AIviewers(7, get_turf(my_atom)) )
+				boutput(M, SPAN_NOTICE("[bicon(my_atom)] [mix_phrase]"))
 
 	redspot
 		name = "Redspot"
@@ -2079,6 +2087,7 @@
 		result_amount = 3
 		mix_phrase = "An ancient storm brews within." //worded so that people can use it for dramatic flair
 		mix_sound = 'sound/ambience/nature/Rain_ThunderDistant.ogg'
+		drinkrecipe = TRUE
 
 		on_reaction(datum/reagents/holder, created_volume)
 			var/turf/T = get_turf(holder.my_atom)
@@ -2095,6 +2104,7 @@
 		required_reagents = list("powercola" = 1, "plasma" = 1, "espresso" = 1, "rum" = 1, "simplesyrup" = 1, "pfire" = 1)
 		result_amount = 4
 		mix_phrase = "Globs of the ingredients barely mix with one another."
+		drinkrecipe = TRUE
 
 	rotorua
 		name = "Rotorua Ravager"
@@ -2104,6 +2114,7 @@
 		result_amount = 4
 		mix_phrase = "The cola bubbles and steams."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
 
 	vampire
 		name = "Vampire"
@@ -2113,6 +2124,7 @@
 		result_amount = 4
 		mix_phrase = "A stillness falls over the drink as it congeals."
 		mix_sound = 'sound/effects/heartbeat.ogg'
+		drinkrecipe = TRUE
 
 	legendairy
 		name = "Legendairy"
@@ -2122,6 +2134,7 @@
 		result_amount = 2
 		mix_phrase = "There's a small blast wave as the Power Cola and Super Milk meet."
 		mix_sound = 'sound/items/mining_blaster.ogg'
+		drinkrecipe = TRUE
 
 	hot_toddy
 		name = "Hot Toddy"
