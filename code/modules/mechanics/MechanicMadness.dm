@@ -3969,7 +3969,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		// byond automatically promotes URL-like text in maptext to links, which is an awful idea
 		// it also parses protocols in a nonsensical way - for example ahttp://foo.bar is the letter a followed by a http:// protocol link
 		// hence the special regex. I don't know if any other protocols are included in this by byond but ftp is not so I'm giving up here
-		. = replacetext(., bullshit_byond_parser_url_regex, "")
+		var/oldtext = null
+		while(!cmptext(oldtext, .)) //repeat until all protocols are killed.
+			oldtext = .
+			. = replacetext(., bullshit_byond_parser_url_regex, "")
 
 	proc/setText(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR || !input) return
