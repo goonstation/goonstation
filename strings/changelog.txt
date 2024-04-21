@@ -1,5 +1,9 @@
 
 (t)sat apr 20 24
+(u)LeahTheTech
+(p)18577
+(e)💅🤖|C-QoL, A-Silicons
+(+)The AI's primary radio microphone now defaults to off.
 (u)FlameArrow57
 (p)18566
 (e)⚖💅📦🚗|C-Balance, C-QoL, A-Game-Objects, A-Vehicles
