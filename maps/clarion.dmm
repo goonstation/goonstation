@@ -16975,8 +16975,8 @@
 	},
 /obj/table/reinforced/bar/auto,
 /obj/item/implant/projectile/glass_shard{
-	pixel_y = 6;
-	pixel_x = -4
+	pixel_y = 5;
+	pixel_x = -5
 	},
 /obj/item/cigbutt{
 	pixel_y = 11;
