@@ -12,7 +12,7 @@
 
 		if (length(hearers(5, pestlandmark)) != 0)
 			for (var/mob/living/C in hearers(5, pestlandmark))
-				if (C.client && !isdead(C)) // if the chosen spot is within 5 tiles of a player entity, ignore it
+				if (C.client && !isdead(C) && !isintangible(C)) // if the chosen spot is within 5 tiles of a player entity, ignore it
 					occupied = TRUE
 					break
 
@@ -27,10 +27,10 @@
 				occupiedlandmarks += pestlandmark
 				occupied = FALSE
 				for (var/mob/living/C in hearers(5, pestlandmark))
-					if (C.client && !isdead(C))
+					if (C.client && !isdead(C) && !isintangible(C))
 						occupied = TRUE
 
-			if (length(occupiedlandmarks) >= maxtests)
+			if (occupied)
 				logTheThing(LOG_DEBUG, null, "Minor pest event couldn't find a unoccupied LANDMARK_PESTSTART, spawning somewhere with people instead.")
 				pestlandmark = firstpestlandmark // goes back to the first option if none are available
 
