@@ -56734,6 +56734,10 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/catwalk/north)
+"dFC" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "dGI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -154614,7 +154618,7 @@ aaF
 aaF
 aan
 aan
-aan
+dFC
 dnA
 dnA
 dnA
