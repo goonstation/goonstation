@@ -15,8 +15,8 @@ const MAX_FREQ = 1489;
 export const PacketVision = (_props, context) => {
   const { data, act } = useBackend(context);
 
-  const setFrequency = (value) => {
-    act('set-frequency', { value });
+  const setFrequency = (value, finish) => {
+    act('set-frequency', { value, finish });
   };
   return (
     <Window width="280" height="150" title="Packetvision HUD">
@@ -33,8 +33,8 @@ export const PacketVision = (_props, context) => {
                     maxValue={MAX_FREQ}
                     stepPixelSize={2}
                     format={formatFrequency}
-                    onDrag={(_, value) => setFrequency(value)}
-                    onChange={(_, value) => setFrequency(value)}
+                    onDrag={(_, value) => setFrequency(value, false)}
+                    onChange={(_, value) => setFrequency(value, true)}
                   />
                 </Stack.Item>
                 <Stack.Item>

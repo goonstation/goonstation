@@ -732,9 +732,9 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 		if (action == "set-frequency")
 			var/old_freq = src.freq
 			src.freq = sanitize_frequency_diagnostic(params["value"])
-			if (src.freq != old_freq)
-				get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][old_freq]").remove_mob(user)
-				get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][src.freq]").add_mob(user)
+			if (src.freq != old_freq && src.equipped_in_slot == SLOT_GLASSES && params["finish"]) //update the image group only on finishing dragging
+				get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][old_freq]").remove_mob(usr)
+				get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][src.freq]").add_mob(usr)
 			return TRUE
 
 	equipped(var/mob/user, var/slot)
