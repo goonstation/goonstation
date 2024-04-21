@@ -660,7 +660,7 @@
 			return
 
 		boutput(user, "You remove a piece of paper from the [src].")
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 /obj/item/stamp
 	name = "rubber stamp"
