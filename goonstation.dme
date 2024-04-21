@@ -1379,6 +1379,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\holiday\halloween.dm"
 #include "code\modules\holiday\spacemas.dm"
 #include "code\modules\hydroponics\gene_strains.dm"
+#include "code\modules\hydroponics\hydroponics_growth_ticks.dm"
 #include "code\modules\hydroponics\hydroponics_misc_procs.dm"
 #include "code\modules\hydroponics\plant_mutations.dm"
 #include "code\modules\hydroponics\plants.dm"

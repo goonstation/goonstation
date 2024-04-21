@@ -559,7 +559,7 @@ datum
 								H.show_message(SPAN_ALERT("Ew, some of that disgusting green stuff touched you!"))
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				return
 
 		antiviral

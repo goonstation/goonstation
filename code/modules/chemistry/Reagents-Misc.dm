@@ -918,11 +918,10 @@ datum
 			value = 2 // 1c + 1c
 			hygiene_value = 0.25
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.growth += 4
-				if (prob(66))
-					P.health++
-				P.reagents.remove_any(4)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.growth_rate += 4
+				growth_tick.health_change += 0.66
+				growth_tick.water_consumption += 4
 
 		diethylamine
 			name = "diethylamine"
@@ -935,9 +934,8 @@ datum
 			transparency = 255
 			value = 4 // 2c + 1c + heat
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				if (prob(66))
-					P.growth+=2
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.growth_rate += 1.23
 
 		acetone
 			name = "acetone"
@@ -1090,10 +1088,8 @@ datum
 					else boutput(M, SPAN_ALERT("Yuck!"))
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				var/datum/plantgenes/DNA = P.plantgenes
-				if (prob(50))
-					DNA.endurance++
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.endurance_bonus += 0.5
 
 		cryostylane
 			name = "cryostylane"
@@ -3065,11 +3061,11 @@ datum
 						M.reagents.add_reagent(src.id,volume*plant_touch_modifier,src.data)
 						. = 0
 
-			on_plant_life(var/obj/machinery/plantpot/P)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				var/datum/plant/growing = P.current
 				if (growing.growthmode == "weed")
-					P.HYPdamageplant("poison",2)
-					P.growth -= 3
+					growth_tick.poison_damage += 2
+					growth_tick.growth_rate -= 3
 
 			reaction_obj(var/obj/O, var/volume)
 				if (istype(O, /obj/spacevine))
@@ -3096,11 +3092,8 @@ datum
 			fluid_b = 0
 			fluid_flags = FLUID_STACKING_BANNED
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				if (prob(80))
-					P.growth++
-				if (prob(80))
-					P.health++
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.health_change += 1.6
 
 		potash
 			name = "potash"
@@ -3111,7 +3104,7 @@ datum
 			fluid_g = 240
 			fluid_b = 240
 
-			on_plant_life(var/obj/machinery/plantpot/P)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				/*if (prob(80))
 					P.growth+=2
 				if (prob(80))
@@ -3119,16 +3112,13 @@ datum
 				*/
 				var/datum/plant/growing = P.current
 				var/datum/plantgenes/DNA = P.plantgenes
-				if (prob(24))
-					DNA.cropsize++
-				if (DNA.harvests > 1 && prob(24))
-					DNA.harvests--
-				if (growing.isgrass && prob(66) && P.growth > 2)
-					P.growth -= 2
-				if (prob(50))
-					P.growth++
-					P.health++
-
+				growth_tick.cropsize_bonus += 0.24
+				if (DNA.harvests > 1)
+					growth_tick.harvests_bonus -= 0.24
+				if (growing.isgrass && P.growth > 2)
+					growth_tick.growth_rate -= 1.23
+				growth_tick.growth_rate += 0.5
+				growth_tick.health_change += 0.5
 
 		plant_nutrients
 			name = "saltpetre"
@@ -3140,14 +3130,13 @@ datum
 			fluid_b = 240
 			hunger_value = 0.048
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				if (prob(80))
-					P.growth+=3
-				if (prob(80))
-					P.health+=3
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.growth_rate += 2.4
+				growth_tick.growth_rate += 2.4
+				growth_tick.potency_bonus += 0.5
 				var/datum/plantgenes/DNA = P.plantgenes
-				if (prob(50)) DNA.potency++
-				if (DNA.cropsize > 1 && prob(24)) DNA.cropsize--
+				if (DNA.cropsize > 1)
+					growth_tick.cropsize_bonus -= 0.24
 
 		///////////////////////////
 		/// BODILY FLUIDS /////////
@@ -3245,13 +3234,11 @@ datum
 					holder.del_reagent(src.id)
 				return
 */
-			on_plant_life(var/obj/machinery/plantpot/P)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				var/datum/plant/growing = P.current
-				var/datum/plantgenes/DNA = P.plantgenes
 				if (growing.growthmode == "carnivore")
-					P.growth += 3
-					if (prob(80))
-						DNA.endurance++
+					growth_tick.endurance_bonus += 0.8
+					growth_tick.growth_rate += 3
 
 			on_transfer(var/datum/reagents/source, var/datum/reagents/target, var/trans_amt)
 				if (istype(target.my_atom, /obj/item/reagent_containers/pill))
@@ -3380,9 +3367,8 @@ datum
 			viscosity = 0.5
 			fluid_flags = FLUID_STACKING_BANNED
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				if (prob(66))
-					P.health++
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.health_change += 0.66
 
 		big_bang_precursor
 			name = "stable bose-einstein macro-condensate"
@@ -3940,8 +3926,8 @@ datum
 				if (ismob(holder.my_atom))
 					holder.my_atom.delStatus("miasma")
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("poison",1)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.poison_damage += 1
 
 			syndicate
 				name = "syndicate miasma"
