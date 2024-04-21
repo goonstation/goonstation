@@ -1,5 +1,31 @@
 
 (t)fri apr 19 24
+(u)LeahTheTech
+(+)Laser mirrors can now be rotated with a crowbar.
+(u)Glamurio (Ryou) & Zac
+(p)18510
+(e)🆕🗺🎨💪|C-Feature, A-Mapping, C-Sprites, A-Traits
+(*)Added the "Pet Person" trait, which spawns you with a random pet.
+(u)glowbold
+(p)15358
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(+)PDA crisis alerts now include an 'ACK' link to quickly reply to the team and the sender.
+(u)TDHooligan
+(p)18345
+(e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
+(*)Gangs are fed up of stolen drops. They've started booby trapping their bags and cut back on weight savings.
+(u)Lord_Earthfire
+(p)18318
+(e)🪲🔎⚖🍝🌱|C-Bug, C-Code-Quality, C-Balance, A-Catering, A-Hydroponics
+(+)Top NT Scientists found plant-based produce from chef vendors, low quality plants and cargo crates to be more juicy than previously assumed.
+(u)mintyphresh
+(p)18430
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Completing a crew objective now grants 50 XP for that job.
+(u)TealSeer
+(p)18546
+(e)🗺⚖|A-Mapping, C-Balance
+(+)Cogmap 2's pharmacy no longer requires medical locker access to enter.
 (u)Carthridge / Nerkson
 (p)18428
 (e)🎨🎩|C-Sprites, A-Clothing
