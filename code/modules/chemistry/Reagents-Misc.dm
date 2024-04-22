@@ -2272,6 +2272,71 @@ datum
 			fluid_g = 255
 			fluid_b = 0
 			transparency = 127
+			overdose = 25
+			var/OD_ticks = 0
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M)
+					M = holder.my_atom
+				if (holder.get_reagent_amount(src.id) < src.overdose)
+					//once we loose the OD treshold, we really stop turning into rubber
+					src.OD_ticks = 0
+				..()
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if(!M)
+					M = holder.my_atom
+				switch (severity)
+					if (1)
+						if(prob(5))
+							//while we are overdosing, we don't fully break down the OD-ticks. Gotta get under the OD-limit
+							src.OD_ticks = min(0, src.OD_ticks - 1)
+						if(prob(10) && !ON_COOLDOWN(M, "flubber_jiggling", 8 SECONDS))
+							animate_flubber(M)
+							boutput(M, SPAN_ALERT("You feel [pick("like you're bending out of shape", "a jiggling sensation", "like something is wrong")]."))
+							//your body becoming rubber should hurt. We start at 6 damage and scale up to 8 damage before hitting the really dangerous OD-limit
+							random_brute_damage(M, 8 * (holder.get_reagent_amount(src.id) / src.overdose)  * mult)
+					if (2 to INFINITY)
+						//now the real fun starts
+						src.OD_ticks += 1
+						if(src.OD_ticks > 8 && prob(10))
+							boutput(M, SPAN_ALERT("<I>Your finger's feel rubbery!</I>"))
+							var/h = M.hand
+							M.hand = 0
+							M.drop_item()
+							M.hand = 1
+							M.drop_item()
+							M.hand = h
+						switch(src.OD_ticks)
+							if (1 to 8)
+								if (prob(33) && !ON_COOLDOWN(M, "flubber_jiggling", 8 SECONDS))
+									animate_flubber(M)
+									boutput(M, SPAN_ALERT(pick("Something feels seriously off.","You can swear you have seen your back just a second ago...")))
+									random_brute_damage(M, 8 * mult)
+							if (8 to 14)
+								if (prob(33) && !ON_COOLDOWN(M, "flubber_jiggling", 8 SECONDS))
+									animate_flubber(M, 6, 12, 3, 2)
+									boutput(M, SPAN_ALERT(pick("Your body cannot stop jiggling.","Your knees twist in an unsettling direction.")))
+									random_brute_damage(M, 10 * mult)
+							if (15 to 21)
+								if (prob(33) && !ON_COOLDOWN(M, "flubber_jiggling", 8 SECONDS))
+									boutput(M, SPAN_ALERT("<B>You cannot control your form! MAKE. IT. STOP!</B>"))
+									M.setStatusMin("stunned", 2 SECONDS * mult)
+									animate_flubber(M, 4, 12, 4, 2)
+									random_brute_damage(M, 12 * mult)
+							if (22 to INFINITY)
+								//now we gib the person with all their organs turned into rubber
+								var/turf/gib_turf = get_turf(M)
+								for (var/obj/item/content in M)
+									if (istype(content, /obj/item/organ))
+										var/obj/item/organ/manipulated_organ = content
+										if(!manipulated_organ.robotic)
+											manipulated_organ.setMaterial(getMaterial("synthrubber"), appearance = TRUE, setname = TRUE)
+									content.set_loc(gib_turf)
+									var/target_point = get_turf(pick(orange(8, gib_turf)))
+									content.throw_at(target_point, rand(0, 10), rand(1, 4))
+								M.gib()
+
 
 		fliptonium
 			name = "fliptonium"
