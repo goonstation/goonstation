@@ -23,10 +23,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
 		..()
 		if (.) return
-		var/datum/plant/P = POT.current
-		var/datum/plantgenes/DNA = POT.plantgenes
-
-		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime")) && prob(20))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_HARVESTABLE && prob(20))
 			POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> vomits profusely!"))
 			playsound(POT, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 			if(!locate(/obj/decal/cleanable/vomit) in get_turf(POT)) make_cleanable( /obj/decal/cleanable/vomit,get_turf(POT))
@@ -106,14 +103,13 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
 		..()
 		if (.) return
-		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		var/pr = 20
 		if(src.focused)
 			pr += 10
 
-		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(pr))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_MATURED && prob(pr))
 			if(focused)
 				if(stare_extreme(focused, POT))
 					return
@@ -178,9 +174,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		. = ..()
 		if (.)
 			return
-		var/datum/plant/P = POT.current
-		var/datum/plantgenes/DNA = POT.plantgenes
-		if (POT.growth < (P.harvtime + DNA?.get_effective_value("harvtime")))
+		if (POT.get_current_growth_stage() < HYP_GROWTH_HARVESTABLE)
 			return
 
 		for (var/obj/machinery/plantpot/otherPot in oview(1, POT))
@@ -235,11 +229,11 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(16))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_MATURED && prob(16))
 			playsound(POT,'sound/voice/animal/cat.ogg',30,TRUE,-1)
 			POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> meows!"))
 
-		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
+		if (POT.growth > HYPget_growth_to_harvestable(P, DNA) + 10)
 			var/mob/living/critter/small_animal/cat/synth/C = new(get_turf(POT))
 			C.health = POT.health
 			POT.visible_message(SPAN_NOTICE("The synthcat climbs out of the tray!"))
@@ -252,7 +246,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth < (P.growtime + DNA?.get_effective_value("growtime") + 10)) return 0
+		if (POT.growth < HYPget_growth_to_matured(P, DNA) + 10) return 0
 
 		playsound(POT,'sound/voice/animal/cat_hiss.ogg',30,TRUE,-1)
 		POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> hisses!"))
@@ -292,7 +286,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			chance_to_damage += 17
 			health_treshold_for_spreading -= 15
 		// We check for the health treshold and if we have grown sufficiently
-		if (POT.growth > (current_planttype.growtime - DNA?.get_effective_value("growtime")) && POT.health > round(current_planttype.starthealth * health_treshold_for_spreading / 100) && prob(chance_to_damage))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_MATURED && POT.health > round(current_planttype.starthealth * health_treshold_for_spreading / 100) && prob(chance_to_damage))
 			for (var/obj/machinery/plantpot/checked_plantpot in range(1,POT))
 				var/datum/plant/growing = checked_plantpot.current
 				// We don't try to destroy other creepers and cannot attack crystals
@@ -337,10 +331,10 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		if (.) return
 		var/datum/plant/current_plant = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
-		if (POT.growth > (current_plant.growtime - DNA?.get_effective_value("growtime")) && prob(4))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_MATURED && prob(4))
 			var/MEspeech = pick("Feed me!", "I'm hungryyyy...", "Give me blood!", "I'm starving!", "What's for dinner?")
 			for(var/mob/M in hearers(POT, null)) M.show_message("<B>Man-Eating Plant</B> gurgles, \"[MEspeech]\"")
-		if (POT.growth > (current_plant.harvtime - DNA?.get_effective_value("harvtime")))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_HARVESTABLE)
 			var/mob/living/critter/plant/maneater/new_maneater = new(get_turf(POT))
 			//Quality with the maneater is simulated a bit differently. It's calulated out of the endurance and potency-stat only
 			var/simulated_quality = (rand(-5, 5) + DNA?.get_effective_value("potency") / 6 + DNA?.get_effective_value("endurance") / 9)
@@ -366,10 +360,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	HYPattacked_proc(var/obj/machinery/plantpot/POT,var/mob/user)
 		..()
 		if (.) return
-		var/datum/plant/P = POT.current
-		var/datum/plantgenes/DNA = POT.plantgenes
-
-		if (POT.growth < (P.growtime - DNA?.get_effective_value("growtime"))) return 0
+		if (POT.get_current_growth_stage() < HYP_GROWTH_MATURED) return 0
 
 		var/MEspeech = pick("Hands off, asshole!","The hell d'you think you're doin'?!","You dick!","Bite me, motherfucker!")
 		for(var/mob/O in hearers(POT, null))
