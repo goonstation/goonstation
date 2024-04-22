@@ -677,7 +677,7 @@
 		stam_power *= max(0, (1-shield_amt["shield_strength"]))
 
 		if (!target.hasStatus("weakened"))
-			//record the stamina damage to do
+			//record the stamina damage to do. zero it if they are weakened
 			msgs.stamina_target -= max(stam_power, 0)
 
 		//if we can crit, roll for a crit. Crits are blocked by blocks.
