@@ -6250,15 +6250,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/medical/medbay/cloner)
-"awN" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/alarm{
-	pixel_y = 25
-	},
-/turf/simulated/floor/purple,
-/area/station/janitor/office)
 "awO" = (
 /obj/machinery/clone_scanner,
 /obj/cable{
@@ -8693,7 +8684,8 @@
 /obj/machinery/conveyor/WE{
 	id = "trash";
 	name = "cargo belt - east";
-	operating = 1
+	operating = 1;
+	move_lag = 15
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
@@ -9144,11 +9136,14 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/bridge/united_command)
 "aFP" = (
-/obj/disposaloutlet{
-	dir = 4
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
-/obj/disposalpipe/trunk{
-	dir = 8
+/obj/machinery/conveyor/SE{
+	id = "trash";
+	operating = 1;
+	move_lag = 15
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
@@ -9363,12 +9358,13 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
 "aGC" = (
-/obj/machinery/conveyor_switch{
-	id = "trash"
+/obj/disposalpipe/segment,
+/obj/machinery/conveyor/SN{
+	operating = 1;
+	id = "trash";
+	move_lag = 15
 	},
-/turf/simulated/floor/purple/side{
-	dir = 9
-	},
+/turf/simulated/floor/plating,
 /area/station/janitor/office)
 "aGD" = (
 /turf/simulated/floor/purple/side{
@@ -9535,19 +9531,6 @@
 	},
 /turf/simulated/floor/stairs/wide/other,
 /area/station/hangar/arrivals)
-"aHg" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/cable,
-/obj/disposaloutlet{
-	dir = 1;
-	name = "Janitor's Office Ejection Chute"
-	},
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/crew_quarters/lounge)
 "aHh" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -9560,20 +9543,23 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/disposal/small{
-	dir = 4;
-	name = "Janitor's Office Ejection Chute"
+/obj/disposaloutlet/north{
+	throw_range = 1
 	},
 /obj/disposalpipe/trunk{
-	dir = 8;
-	layer = -1
+	dir = 1
 	},
-/turf/simulated/floor/purple/side{
-	dir = 8
+/obj/machinery/conveyor/SN{
+	operating = 1;
+	id = "trash";
+	move_lag = 15
 	},
+/turf/simulated/floor/plating,
 /area/station/janitor/office)
 "aHj" = (
-/obj/landmark/antagonist/blob,
+/obj/machinery/conveyor_switch{
+	id = "trash"
+	},
 /turf/simulated/floor/purple/corner,
 /area/station/janitor/office)
 "aHk" = (
@@ -9763,14 +9749,10 @@
 	},
 /area/station/janitor/office)
 "aHK" = (
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
-/area/station/janitor/office)
-"aHL" = (
-/obj/reagent_dispensers/watertank,
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
 /area/station/janitor/office)
 "aHM" = (
 /obj/vehicle/floorbuffer{
@@ -10222,9 +10204,6 @@
 	},
 /area/station/solar/south)
 "aJR" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
 /area/station/janitor/office)
@@ -11817,12 +11796,6 @@
 	dir = 8
 	},
 /area/station/security/main)
-"aPl" = (
-/obj/mopbucket,
-/obj/item/mop,
-/obj/item/sponge,
-/turf/simulated/floor/purple,
-/area/station/janitor/office)
 "aPm" = (
 /obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/orangeblack,
@@ -12281,7 +12254,8 @@
 /obj/machinery/conveyor/WE{
 	id = "trash";
 	name = "cargo belt - east";
-	operating = 1
+	operating = 1;
+	move_lag = 15
 	},
 /obj/machinery/crusher,
 /turf/simulated/floor/plating,
@@ -12423,14 +12397,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
-"aRq" = (
-/obj/decal/cleanable/cobweb,
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/purple,
-/area/station/janitor/office)
 "aRr" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -12604,7 +12570,8 @@
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
 	name = "Janitor's Office";
-	tag = "icon-generic2_closed (EAST)"
+	tag = "icon-generic2_closed (EAST)";
+	id = "janidoor"
 	},
 /obj/mapping_helper/access/janitor,
 /obj/mapping_helper/firedoor_spawn,
@@ -13833,9 +13800,8 @@
 	},
 /area/station/hangar/main)
 "aVV" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
+/obj/cable,
+/obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
 "aVW" = (
@@ -16461,6 +16427,15 @@
 	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
+"gwJ" = (
+/obj/machinery/alarm{
+	pixel_y = 25
+	},
+/obj/mopbucket,
+/obj/item/mop,
+/obj/item/sponge,
+/turf/simulated/floor/purple,
+/area/station/janitor/office)
 "gxQ" = (
 /obj/machinery/printing_press,
 /turf/simulated/floor/plating/random,
@@ -17242,6 +17217,21 @@
 	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/engine/hotloop)
+"jRP" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/decal/cleanable/cobweb,
+/obj/machinery/door_control{
+	name = "Janitor's Office Door Control";
+	pixel_x = -24;
+	id = "janidoor"
+	},
+/obj/reagent_dispensers/watertank,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/purple,
+/area/station/janitor/office)
 "jUk" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -18515,7 +18505,8 @@
 /obj/machinery/conveyor/WE{
 	id = "trash";
 	name = "cargo belt - east";
-	operating = 1
+	operating = 1;
+	move_lag = 15
 	},
 /obj/strip_door,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -18551,6 +18542,15 @@
 	},
 /turf/simulated/floor/auto/grass,
 /area/station/crew_quarters/kitchen)
+"pms" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/janitor/office)
 "poZ" = (
 /obj/disposalpipe/segment/ejection,
 /obj/machinery/camera{
@@ -18833,6 +18833,9 @@
 	dir = 1
 	},
 /area/station/chapel/sanctuary)
+"quP" = (
+/turf/simulated/floor/plating/airless,
+/area/space)
 "qve" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
@@ -18885,6 +18888,10 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
+"qAd" = (
+/obj/lattice/auto,
+/turf/space,
+/area/space)
 "qAu" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
@@ -76270,7 +76277,7 @@ aVx
 aES
 aRF
 aGz
-aAV
+aEV
 aEV
 aRV
 aIK
@@ -76572,9 +76579,9 @@ aEo
 aET
 aDN
 aVV
-aHg
 aEV
-awN
+jRP
+aIp
 aFa
 aJe
 aaa
@@ -76874,8 +76881,8 @@ aEp
 aEU
 aFN
 aGB
-aHh
 aEV
+gwJ
 aJR
 aFa
 aaa
@@ -77176,9 +77183,9 @@ azf
 aEV
 aHh
 aEV
-aHh
-aRq
-aIp
+aEV
+aIl
+aIl
 aIm
 aaa
 aaa
@@ -77782,7 +77789,7 @@ aEu
 aGD
 aHj
 aHK
-aPl
+aIl
 aIm
 aaa
 aaa
@@ -78083,7 +78090,7 @@ aEY
 aEu
 aGD
 aHk
-aHL
+aIl
 aIm
 aIm
 aaa
@@ -78988,8 +78995,8 @@ aaa
 aFa
 aQO
 aFa
-aaa
-aaa
+qAd
+amf
 aaa
 aaa
 aaa
@@ -79289,9 +79296,9 @@ aaa
 aaa
 aFa
 aFT
-aFa
-aaa
-aaa
+pms
+quP
+amf
 aaa
 aaa
 aaa
@@ -79592,8 +79599,8 @@ aaa
 aFa
 aFU
 aFa
-aaa
-aaa
+apP
+aJe
 aaa
 aaa
 aaa
