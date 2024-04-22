@@ -109,13 +109,6 @@
 		else if (weak_duration > 0 SECONDS)  // but we also still need a penalty for getting stamcrit which is 5s.
 			src.setStatus("weakened", weak_duration-1)
 
-		var/stun_duration = src.getStatusDuration("stunned")
-		if (stun_duration > 3 SECONDS)
-			var/stun_reduction = min(stun_duration-3 SECONDS,(brute + burn)*0.6 SECONDS)
-			var/stunres_penalty = clamp(1-(get_stun_resist_mod()/2)/100,0,1)
-			src.setStatus("weakened", stun_duration-max(1,stun_reduction*stunres_penalty))
-		else if (stun_duration > 0 SECONDS)
-			src.setStatus("weakened", stun_duration-1)
 
 
 	if(src.stamina_bar?.last_update != TIME) src.stamina_bar?.update_value(src)
