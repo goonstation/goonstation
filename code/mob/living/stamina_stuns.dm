@@ -91,11 +91,11 @@
 	if(src.stamina_bar?.last_update != TIME) src.stamina_bar?.update_value(src)
 	return
 
-/// Adds 'get up' stamina/stun reduction, from taking beatdown damage.
-/mob/proc/get_revenge_stamina(stamina_damage, brute, burn, damage_type )
+/// Adds 'get up' stun reduction, from taking beatdown damage.
+/mob/proc/revenge_stun_reduction(stamina_damage, brute, burn, damage_type )
 	return
 
-/mob/living/get_revenge_stamina(stamina_damage, brute, burn, damage_type )
+/mob/living/revenge_stun_reduction(stamina_damage, brute, burn, damage_type )
 	. = ..()
 	if(!src.use_stamina) return
 	if(!isnum(stamina_damage)) return
