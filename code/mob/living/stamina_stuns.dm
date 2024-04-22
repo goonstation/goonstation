@@ -111,8 +111,8 @@
 
 
 
-	if(src.stamina_bar?.last_update != TIME) src.stamina_bar?.update_value(src)
-	return
+	if(src.stamina_bar?.last_update != TIME)
+		src.stamina_bar?.update_value(src)
 
 /mob/living/carbon/human/remove_stamina(var/x)
 	..()
