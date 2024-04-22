@@ -1,5 +1,7 @@
 
 (t)sun apr 21 24
+(u)tarmunora
+(*)Mechanical boots now counteract slowdown from pushing, pulling, and other worn equipment as opposed to a 50% reduction in movedelay. Also made somewhat cheaper to print.
 (u)Colossusqw
 (p)18590
 (e)💅📡|C-QoL, A-AI

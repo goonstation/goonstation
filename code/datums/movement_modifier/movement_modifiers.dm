@@ -23,6 +23,9 @@
 
 /datum/movement_modifier/equipment // per-mob instanced thing proxying an equip/unequip updated tally from equipment
 
+/datum/movement_modifier/mechboots
+	pushpull_multiplier = 0
+
 /datum/movement_modifier/hulkstrong
 	pushpull_multiplier = 0
 
