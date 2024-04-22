@@ -2302,8 +2302,8 @@ datum
 						if(src.OD_ticks > 8 && prob(10))
 							boutput(M, SPAN_ALERT("<I>Your finger's feel rubbery!</I>"))
 							if(istype(M, /mob/living))
-							var/mob/living/rubber_finger_mob = M
-							rubber_finger_mob.empty_hands()
+								var/mob/living/rubber_finger_mob = M
+								rubber_finger_mob.empty_hands()
 						switch(src.OD_ticks)
 							if (1 to 8)
 								if (prob(33) && !ON_COOLDOWN(M, "flubber_jiggling", 8 SECONDS))
