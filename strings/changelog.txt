@@ -1,5 +1,9 @@
 
 (t)mon apr 22 24
+(u)Colossusqw
+(p)18589
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Energy Drink now no longer has a random chance of causing heart failure, now the heart failure is handled via it's increased caffeine output.
 (u)Lord_Earthfire
 (p)18595
 (e)🆕📦|C-Feature, A-Game-Objects
