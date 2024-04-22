@@ -2567,7 +2567,7 @@ datum
 			fluid_b = 20
 			taste = "bitter"
 
-		fooddrink/caffeinated/coffee/energydrink
+		fooddrink/caffeinated/energydrink
 			name = "energy drink"
 			id = "energydrink"
 			description = "An energy drink is a liquid plastic with a high amount of caffeine."
