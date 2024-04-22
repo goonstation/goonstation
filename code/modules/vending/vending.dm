@@ -443,7 +443,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	..()
 
 /obj/machinery/vending/attack_ai(mob/user as mob)
-	return attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/vending/ui_interact(mob/user, datum/tgui/ui)
   ui = tgui_process.try_update_ui(user, src, ui)

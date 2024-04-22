@@ -1358,6 +1358,12 @@
 
 	W.dropped(src)
 
+/// shortcut for the Notes - View verb
+/mob/verb/notes_alias()
+	set name = "Notes"
+	set hidden = TRUE
+
+	src.memory()
 
 /mob/verb/memory()
 	set name = "Notes - View"
@@ -2895,9 +2901,19 @@
 		APPLY_MOVEMENT_MODIFIER(src, equipment_proxy, /obj/item)
 
 	// reset the modifiers to defaults
+	var/modifier = 1-GET_ATOM_PROPERTY(src, PROP_MOB_MOVESPEED_ASSIST)
+
 	equipment_proxy.additive_slowdown = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED)
+	if(equipment_proxy.additive_slowdown > 0)
+		equipment_proxy.additive_slowdown *= modifier
 	equipment_proxy.space_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_SPACE)
+	if(equipment_proxy.space_movement > 0)
+		equipment_proxy.space_movement *= modifier
 	equipment_proxy.aquatic_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
+	if(equipment_proxy.aquatic_movement > 0)
+		equipment_proxy.aquatic_movement *= modifier
+
+
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 /mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")

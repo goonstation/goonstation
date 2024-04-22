@@ -2034,7 +2034,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
 			return ..()
 		if (over_object == usr && src.icon_state == "slamgun-open-loaded") // sorry for doing it like this, but i have no idea how to do it cleaner.
-			attack_hand(usr)
+			src.Attackhand(usr)
 			return
 
 	attackby(obj/item/b, mob/user)

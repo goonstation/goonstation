@@ -414,6 +414,16 @@
 	icon_state = "fred2"
 	},
 /area/listeningpost)
+"abI" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west/hardened,
+/obj/marker/supplymarker,
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/listeningpost)
 "abK" = (
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -10048,6 +10058,36 @@
 	dir = 1
 	},
 /area/station/medical/medbay/lobby)
+"bap" = (
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/surgical_spoon,
+/obj/item_dispenser/medical_mask,
+/turf/simulated/floor/redwhite{
+	dir = 1
+	},
+/area/station/medical/medbay/surgery)
 "baq" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -10282,6 +10322,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"bbj" = (
+/obj/item_dispenser/latex_gloves,
+/obj/machinery/optable{
+	id = "OR2"
+	},
+/obj/item/paper/book/from_file/medical_surgery_guide,
+/obj/machinery/drainage,
+/turf/simulated/floor/redwhite{
+	dir = 1
+	},
+/area/station/medical/medbay/surgery)
 "bbl" = (
 /obj/stool/chair/blue,
 /obj/machinery/power/apc/autoname_west,
@@ -11228,6 +11279,35 @@
 	dir = 1
 	},
 /area/station/medical/robotics)
+"bhd" = (
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/surgical_spoon,
+/turf/simulated/floor/redwhite{
+	dir = 10
+	},
+/area/station/medical/medbay/surgery)
 "bhg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -13924,6 +14004,14 @@
 	dir = 4
 	},
 /area/station/hangar/sec)
+"bxu" = (
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
+/turf/simulated/floor/redwhite,
+/area/station/medical/medbay/surgery)
 "bxD" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/testchamber/bombchamber)
@@ -14193,6 +14281,14 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"byV" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/light/incandescent,
+/obj/storage/secure/closet/medical/anesthetic,
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/medical/medbay/surgery)
 "byW" = (
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
@@ -16230,15 +16326,6 @@
 	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/bar)
-"bJt" = (
-/obj/machinery/light/incandescent,
-/obj/machinery/optable{
-	id = "OR1"
-	},
-/obj/machinery/drainage,
-/obj/item/clothing/suit/cardboard_box/head_surgeon,
-/turf/simulated/floor/redwhite,
-/area/station/medical/medbay/surgery)
 "bJA" = (
 /obj/machinery/light/small/sticky/frostedred,
 /turf/simulated/floor/plating,
@@ -17292,6 +17379,10 @@
 	icon_state = "fgreen6"
 	},
 /area/station/crew_quarters/heads)
+"cwb" = (
+/obj/laser_sink/mirror,
+/turf/simulated/floor,
+/area/station/engine/ptl)
 "cwg" = (
 /obj/item/canned_laughter/crushed{
 	pixel_x = -17;
@@ -18024,10 +18115,6 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"cSV" = (
-/obj/laser_sink/mirror,
-/turf/simulated/floor,
-/area/station/engine/ptl)
 "cTh" = (
 /obj/stool/bed,
 /obj/mapping_helper/mob_spawn/corpse/human{
@@ -21215,36 +21302,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/hor)
-"eUm" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_y = 11
-	},
-/obj/item/scalpel{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/hemostat{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/staple_gun{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/suture{
-	pixel_y = 5
-	},
-/obj/item/surgical_spoon,
-/obj/item_dispenser/medical_mask,
-/turf/simulated/floor/redwhite{
-	dir = 1
-	},
-/area/station/medical/medbay/surgery)
 "eVj" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -25489,17 +25546,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"hQB" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 4;
-	pixel_x = -4
-	},
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/medical/medbay/surgery)
 "hQK" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -28863,6 +28909,15 @@
 /obj/item/device/radio/intercom,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"kaX" = (
+/obj/machinery/door_control/antagscanner{
+	entrance_scanner = 1;
+	pixel_x = 32
+	},
+/turf/simulated/floor/plating/airless{
+	dir = 10
+	},
+/area/space)
 "kaZ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/heads)
@@ -30612,14 +30667,6 @@
 /obj/machinery/manufacturer/gas,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
-"lfV" = (
-/obj/machinery/computer/operating/small{
-	id = "OR1"
-	},
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
-/turf/simulated/floor/redwhite,
-/area/station/medical/medbay/surgery)
 "lfX" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
@@ -33160,20 +33207,21 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
-"mJb" = (
-/obj/machinery/computer/operating{
-	id = "robotics"
-	},
-/turf/simulated/floor/black/side{
-	dir = 4
-	},
-/area/station/medical/robotics)
 "mJm" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/greenwhite/other{
 	dir = 4
 	},
 /area/station/science/lobby)
+"mJq" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/computer/operating/small{
+	id = "OR2"
+	},
+/turf/simulated/floor/redwhite{
+	dir = 1
+	},
+/area/station/medical/medbay/surgery)
 "mJK" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -33400,16 +33448,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
-"mPX" = (
-/obj/machinery/door_control/antagscanner{
-	entrance_scanner = 1;
-	pixel_x = 32
-	},
-/turf/simulated/floor/plating/airless{
-	dir = 10;
-	icon_state = "ast1"
-	},
-/area/space)
 "mQe" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34936,16 +34974,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/jazz)
-"nOp" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west/hardened,
-/obj/marker/supplymarker,
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
-/area/listeningpost)
 "nOG" = (
 /obj/cable/yellow{
 	icon_state = "4-8"
@@ -35661,16 +35689,6 @@
 	dir = 6
 	},
 /area/station/hallway/primary/south)
-"okp" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/machinery/firealarm/west,
-/obj/storage/secure/closet/medical/medicine,
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/medical/medbay/surgery)
 "okt" = (
 /obj/machinery/light/emergency,
 /obj/storage/closet/fire,
@@ -36745,6 +36763,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/engine)
+"oLr" = (
+/obj/machinery/computer/operating{
+	id = "robotics"
+	},
+/turf/simulated/floor/black/side{
+	dir = 4
+	},
+/area/station/medical/robotics)
 "oLv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37971,17 +37997,6 @@
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
-"pwY" = (
-/obj/item_dispenser/latex_gloves,
-/obj/machinery/optable{
-	id = "OR2"
-	},
-/obj/item/paper/book/from_file/medical_surgery_guide,
-/obj/machinery/drainage,
-/turf/simulated/floor/redwhite{
-	dir = 1
-	},
-/area/station/medical/medbay/surgery)
 "pwZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38105,35 +38120,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
-"pAH" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_y = 11
-	},
-/obj/item/scalpel{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/hemostat{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/staple_gun{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/suture{
-	pixel_y = 5
-	},
-/obj/item/surgical_spoon,
-/turf/simulated/floor/redwhite{
-	dir = 10
-	},
-/area/station/medical/medbay/surgery)
 "pAR" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 8
@@ -39389,6 +39375,17 @@
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"qoU" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -4
+	},
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/medical/medbay/surgery)
 "qoZ" = (
 /obj/cable/orange{
 	icon_state = "1-8"
@@ -39966,6 +39963,15 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
+"qIb" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/optable{
+	id = "OR1"
+	},
+/obj/machinery/drainage,
+/obj/item/clothing/suit/cardboard_box/head_surgeon,
+/turf/simulated/floor/redwhite,
+/area/station/medical/medbay/surgery)
 "qIv" = (
 /obj/loudspeaker,
 /turf/simulated/floor/wood/three,
@@ -46555,14 +46561,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"uYR" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/light/incandescent,
-/obj/storage/secure/closet/medical/anesthetic,
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/medical/medbay/surgery)
 "uZf" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment/mail{
@@ -47308,6 +47306,16 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"vwO" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/firealarm/west,
+/obj/storage/secure/closet/medical/medicine,
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/medical/medbay/surgery)
 "vwR" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50650,15 +50658,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"xCy" = (
-/obj/machinery/light/incandescent,
-/obj/machinery/computer/operating/small{
-	id = "OR2"
-	},
-/turf/simulated/floor/redwhite{
-	dir = 1
-	},
-/area/station/medical/medbay/surgery)
 "xCz" = (
 /obj/table/auto,
 /obj/item/aiModule/makeCaptain{
@@ -62049,7 +62048,7 @@ nhz
 bEJ
 lhs
 dQM
-cSV
+cwb
 nPV
 aaa
 aaa
@@ -62347,7 +62346,7 @@ aaa
 aaa
 aaa
 nPV
-cSV
+cwb
 kXx
 krg
 dQM
@@ -63870,12 +63869,12 @@ gcQ
 gsz
 byU
 ycM
-eUm
-hQB
-uYR
-okp
+bap
+qoU
+byV
+vwO
 vuk
-pAH
+bhd
 oxC
 gvO
 aVi
@@ -64172,12 +64171,12 @@ wge
 fKq
 bhh
 aUi
-pwY
+bbj
 aVp
 aVU
 bhS
 pwZ
-bJt
+qIb
 oxC
 oxC
 oxC
@@ -64474,12 +64473,12 @@ aPL
 aQu
 msE
 aUi
-xCy
+mJq
 aVp
 qWT
 bhS
 pwZ
-lfV
+bxu
 aXH
 jtw
 fEX
@@ -69476,7 +69475,7 @@ aas
 aaK
 aaK
 srP
-mPX
+kaX
 vrb
 abs
 tDE
@@ -70387,7 +70386,7 @@ abm
 lNn
 abD
 abD
-nOp
+abI
 vrb
 aac
 aab
@@ -70501,7 +70500,7 @@ jFV
 arN
 aKL
 yeP
-mJb
+oLr
 gUf
 aNM
 aPl

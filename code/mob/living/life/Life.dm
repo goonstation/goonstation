@@ -410,7 +410,6 @@
 	if (metalman_skin && prob(1))
 		var/msg = pick("can't see...","feels bad...","leave me...", "you're cold...", "unwelcome...")
 		src.show_text(voidSpeak(msg))
-		src.emagged = 1
 
 /mob/living/silicon/ai/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
