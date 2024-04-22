@@ -2056,12 +2056,19 @@
 
 		does_react(var/datum/reagents/holder)
 			var/atom/my_atom = holder.my_atom
-			if(istype(my_atom, /obj)) var/obj/my_obj = holder.atom
 
 			if(length(holder.reagent_list) > length(src.required_reagents)) // drink must be pure to mix-- no teleporting chem bombs
 				return FALSE
-			if(!my_atom || !my_obj || my_obj.cant_drop || holder.my_obj.anchored || (holder.my_atom.loc == (/obj/machinery || /obj/submachine))) //no teleportable container, no reaction
+			if(!my_atom || (holder.my_atom.loc == (/obj/machinery || /obj/submachine))) //no teleportable container, no reaction
 				return FALSE
+			if(istype(my_atom, /obj/item))
+				var/obj/item/my_item = my_atom
+				if(!my_item || my_item.cant_drop)
+					return FALSE
+			if(istype(my_atom, /atom/movable))
+				var/atom/movable/my_movable_atom = my_atom
+				if(!(my_movable_atom.anchored == UNANCHORED))
+					return FALSE
 			else
 				return TRUE
 
