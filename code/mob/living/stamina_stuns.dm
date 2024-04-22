@@ -97,8 +97,6 @@
 
 /mob/living/revenge_stun_reduction(stamina_damage, brute, burn, damage_type )
 	. = ..()
-	if(!src.use_stamina) return
-	if(!isnum(stamina_damage)) return
 	if (src.hasStatus("weakened") && !src.hasStatus("paralysis") && (brute > 0 || burn >= 5))
 
 		var/weak_duration = src.getStatusDuration("weakened")
@@ -108,11 +106,6 @@
 			src.setStatus("weakened", weak_duration-max(1,stun_reduction*stunres_penalty))
 		else if (weak_duration > 0 SECONDS)  // but we also still need a penalty for getting stamcrit which is 5s.
 			src.setStatus("weakened", weak_duration-1)
-
-
-
-	if(src.stamina_bar?.last_update != TIME)
-		src.stamina_bar?.update_value(src)
 
 /mob/living/carbon/human/remove_stamina(var/x)
 	..()
