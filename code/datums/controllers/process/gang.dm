@@ -110,18 +110,27 @@
 		if (!length(turfList))
 			message_admins("All attempts to find a valid location to spawn a weapons crate failed!")
 			return
-		var/obj/storage/crate/gang_crate/guns_and_gear/crate = new(pick(turfList))
-		broadcast_to_all_gangs("<span style='font-size:24px'> We've dropped off weapons & ammunition at <b>\the [drop_zone.name]!</b> It's anchored in place for 5 minutes, so get fortifying!</span>")
+		var/turf/location = pick(turfList)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANG_OBJECTIVES)
+		var/obj/effects/gang_crate_indicator/indicator = new(location)
+		var/image/objective_image = image('icons/effects/gang_overlays.dmi', indicator, "cratedrop")
+		objective_image.plane = PLANE_WALL
+		objective_image.alpha = 180
+		imgroup.add_image(objective_image)
+		broadcast_to_all_gangs("<span style='font-size:24px'> We're dropping off weapons & ammunition at <b>\the [drop_zone.name]!</b> It'll arrive in [GANG_CRATE_DROP_TIME/(1 MINUTE)] minute[s_es(GANG_CRATE_DROP_TIME/(1 MINUTE))] so get fortifying!</span>")
 
 
-		SPAWN(GANG_CRATE_LOCK_TIME - 1 MINUTE)
+		SPAWN(GANG_CRATE_DROP_TIME - 30 SECONDS)
 			if(drop_zone != null)
-				broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] can be moved in 1 minute!")
-				logTheThing(LOG_GAMEMODE, crate, "The crate in [drop_zone.name] has 1 minute left. Current location: [crate.x],[crate.y].")
-			sleep(1 MINUTE)
+				broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] will arrive in 30 seconds!")
+				logTheThing(LOG_GAMEMODE, src, "The crate in [drop_zone.name] will arrive in 30 seconds. Location: [location.x],[location.y].")
+			sleep(30 SECONDS)
 			if(drop_zone != null)
-				broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] is free! Drag it to your locker.")
-				logTheThing(LOG_GAMEMODE, crate, "The crate in [drop_zone.name] is freed. Current location: [crate.x],[crate.y].")
+				imgroup.remove_image(objective_image)
+				qdel(indicator)
+				var/obj/storage/crate/gang_crate/guns_and_gear/crate = new(location)
+				broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] has arrived! Drag it to your locker.")
+				logTheThing(LOG_GAMEMODE, crate, "The crate in [drop_zone.name] arrives on station. Location: [location.x],[location.y].")
 
 /datum/controller/process/gang_duffle_drop
 	var/repeats = 1
@@ -148,14 +157,14 @@
 				civiliansAlreadyPinged += civvie
 				if (!(civvie in gangChosenCivvies))
 					gangChosenCivvies += civvie
-				targetGang.target_loot_spawn(civvie)
+				targetGang.target_loot_spawn(civvie,targetGang)
 			var/broadcast_string = "<span style='font-size:20px'> Our associates have hidden [repeats] bag[s_es(repeats)] of weapons & supplies on board. The location[s_es(repeats)] have been tipped off to the PDAs of: "
 			if (length(gangChosenCivvies) > 1)
 				for (var/name=1 to length(gangChosenCivvies)-1)
-					broadcast_string += "[gangChosenCivvies[name].current.real_name] the [gangChosenCivvies[name].assigned_role]."
+					broadcast_string += "[gangChosenCivvies[name].current.real_name] the [gangChosenCivvies[name].assigned_role], "
 				broadcast_string += "and [gangChosenCivvies[length(gangChosenCivvies)].current.real_name] the [gangChosenCivvies[length(gangChosenCivvies)].assigned_role]."
 			else
-				broadcast_string += "[gangChosenCivvies[1].current.real_name] the [gangChosenCivvies[1].assigned_role],"
+				broadcast_string += "[gangChosenCivvies[1].current.real_name] the [gangChosenCivvies[1].assigned_role]."
 			broadcast_string += "</span>"
 			targetGang.broadcast_to_gang(broadcast_string)
 

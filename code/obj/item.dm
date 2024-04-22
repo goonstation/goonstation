@@ -22,6 +22,10 @@ ABSTRACT_TYPE(/obj/item)
 	var/inhand_color = null
 	/// storage datum holding it
 	var/datum/storage/stored = null
+	/// Used for the hattable component
+	var/hat_offset_y = 0
+	/// Used for the hattable component
+	var/hat_offset_x = 0
 
 	/*_______*/
 	/*Burning*/
@@ -1026,11 +1030,17 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	src.equipped_in_slot = null
 	user.update_equipped_modifiers()
 
+/// Call this proc inplace of afterattack(...)
 /obj/item/proc/AfterAttack(atom/target, mob/user, reach, params)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, reach, params)
 	. = src.afterattack(target, user, reach, params)
 
+/**
+ * DO NOT CALL THIS PROC - Call AfterAttack(...) Instead!
+ *
+ * Only override this proc!
+ */
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
 	set waitfor = 0
 	PROTECTED_PROC(TRUE)
@@ -1155,14 +1165,15 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	return "It is \an [t] item."
 
 /obj/item/attack_hand(mob/user)
-	var/checkloc = src.loc
-	while(checkloc && !istype(checkloc,/turf))
-		if (isliving(checkloc) && checkloc != user)
-			if(src in bible_contents)
-				break
-			else
-				return 0
-		checkloc = checkloc:loc
+	var/obj/item/checkloc = src.loc
+	if (!ismob(src.loc)) // Skip this loop if the FIRST loc is a mob, allowing component/hattable to proc take_hat_off on AIs/ghostdrones
+		while(checkloc && !istype(checkloc,/turf))
+			if(isliving(checkloc) && checkloc != user) // This heinous block is to make sure you're not swiping things from other people's backpacks
+				if(src in bible_contents) // Bibles share their contents globally, so magically taking stuff from them is fine
+					break
+				else
+					return 0
+			checkloc = checkloc.loc // Get the loc of the loc! The loop continues until it's the turf of what you clicked on
 
 	if(!src.can_pickup(user))
 		// unholdable storage items

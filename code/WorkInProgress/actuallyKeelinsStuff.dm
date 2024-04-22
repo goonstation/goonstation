@@ -1634,14 +1634,24 @@ Returns:
 					argcopy[r] = X
 			call(procpath)(arglist(argcopy))
 
-/datum/admins/proc/pixelexplosion(mode="explode" in list("explode", "pixelate"))
+/datum/admins/proc/pixelexplosion()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Pixel explosion mode"
-	set desc = "Enter pixel explosion mode."
+	set desc = "Makes everything you click on explode into pixels."
 	USR_ADMIN_ONLY
 	SHOW_VERB_DESC
-	alert("Clicking on things will now explode them into pixels!")
-	pixelmagic(mode == "explode")
+	if (istype(usr.targeting_ability, /datum/targetable/pixelpicker))
+		var/datum/targetable/pixelpicker/pixel_picker = usr.targeting_ability
+		usr.targeting_ability = null
+		qdel(pixel_picker)
+		usr.update_cursor()
+		boutput(usr, "Pixel explosion mode toggled off.")
+	else
+		var/mode = alert(usr, "Explode or pixelate?", "", "Explode", "Pixelate", "Cancel")
+		if (!mode || mode == "Cancel")
+			return
+		pixelmagic(mode == "Explode")
+		boutput(usr, "Clicking things will now [mode == "Explode" ? "explode them into pixels" : "turn them into individual pixel items"]")
 
 /datum/targetable/pixelpicker
 	target_anything = 1
@@ -1672,11 +1682,15 @@ Returns:
 	M.targeting_ability = R
 	M.update_cursor()
 
-/proc/dothepixelthing(var/atom/A, pixel_type=/obj/apixel, explode=TRUE)
+/proc/dothepixelthing(var/atom/movable/A, pixel_type=/obj/apixel, explode=TRUE)
 	if (isturf(A)) //deleting turfs is bad!
 		return
 
 	if(istype(A, /obj/item/apixel) || istype(A, /obj/apixel))
+		return
+
+	//large objects + pixel explosion effects = world ending amounts of lag
+	if (A.bound_width > 32 || A.bound_height > 32)
 		return
 
 	if (ismob(A)) //deleting mobs crashes them - lets transfer their client to a ghost first
@@ -1745,20 +1759,6 @@ Returns:
 	dropped(mob/user)
 		. = ..()
 		src.icon = initial(icon)
-
-
-/datum/admins/proc/turn_off_pixelexplosion()
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Turn off pixel explosion mode"
-	set desc = "Turns off pixel explosion mode."
-	USR_ADMIN_ONLY
-	SHOW_VERB_DESC
-	var/mob/M = usr
-	if (istype(M.targeting_ability, /datum/targetable/pixelpicker))
-		var/datum/targetable/pixelpicker/pixel_picker = M.targeting_ability
-		M.targeting_ability = null
-		qdel(pixel_picker)
-		M.update_cursor()
 
 /obj/item/craftedmelee/spear
 	name = "spear"
@@ -1857,14 +1857,14 @@ Returns:
 
 		if (r <= 60)
 			if(r < 30)
-				return item1.attack_self(user)
+				return item1.AttackSelf(user)
 			else
-				return item2.attack_self(user)
+				return item2.AttackSelf(user)
 		else
 			if(r <= 80)
 				SPAWN(0)
-					item1.attack_self(user)
-					item2.attack_self(user)
+					item1.AttackSelf(user)
+					item2.AttackSelf(user)
 				return
 			else
 				src.fall_apart(user)
@@ -2808,7 +2808,7 @@ Returns:
 		M.update_cursor()
 		return
 
-/obj/perm_portal
+/obj/laser_sink/perm_portal //this path is FINE, shut UP
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	anchored = ANCHORED
@@ -2817,6 +2817,8 @@ Returns:
 	var/atom/target = null
 	var/target_tag = null
 	var/datum/light/light
+
+	var/obj/linked_laser/out_laser = null
 
 	New()
 		..()
@@ -2828,6 +2830,20 @@ Returns:
 		SPAWN(0.6 SECONDS)
 			if (target_tag)
 				target = locate(target_tag)
+
+	incident(obj/linked_laser/laser)
+		if (src.in_laser) //no infinite loops allowed
+			return FALSE
+		src.in_laser = laser
+		src.out_laser = laser.copy_laser(get_turf(target), laser.dir)
+		laser.next = src.out_laser
+		src.out_laser.try_propagate()
+		return TRUE
+
+	exident(obj/linked_laser/laser)
+		qdel(src.out_laser)
+		src.out_laser = null
+		..()
 
 	Bumped(atom/movable/AM)
 		if(target && istype(target))
@@ -3295,9 +3311,9 @@ var/list/lag_list = new/list()
 			if(istype(active_mode,/datum/engibox_mode/replicate))
 				active_mode:obj_path = null
 
-			src.attack_self(usr)
+			src.AttackSelf(usr)
 			return
-		src.attack_self(usr)
+		src.AttackSelf(usr)
 		src.add_fingerprint(usr)
 		return
 

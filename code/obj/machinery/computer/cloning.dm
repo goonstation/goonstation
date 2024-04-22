@@ -536,6 +536,10 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			occupant = null
 		..()
 
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
+
 	MouseDrop_T(mob/living/target, mob/user)
 		if (!istype(target) || isAI(user))
 			return

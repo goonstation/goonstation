@@ -279,9 +279,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/light/zippo,
 	/obj/item/storage/box/clothing/research_director,
 	/obj/item/clothing/shoes/brown,
-	/obj/item/circular_saw,
-	/obj/item/scalpel,
 	/obj/item/hand_tele,
+	/obj/item/clothing/glasses/packetvision,
 	/obj/item/storage/box/zeta_boot_kit,
 	/obj/item/device/radio/electropack,
 	/obj/item/clothing/mask/gas,
@@ -417,20 +416,6 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/camera_film,
 	/obj/item/storage/box/luminol_grenade_kit,
 	/obj/item/clipboard)
-
-/obj/storage/secure/closet/security/armory
-	name = "\improper Special Equipment locker"
-	reinforced = TRUE
-	req_access = list(access_maxsec)
-	spawn_contents = list(/obj/item/requisition_token/security = 2,
-	/obj/item/requisition_token/security/assistant = 2,
-	/obj/item/turret_deployer/riot = 2)
-
-/obj/storage/secure/closet/security/armory/looted
-	spawn_contents = list()
-	locked = 0
-	open = 1
-	emagged = 1
 
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items safe"

@@ -2354,6 +2354,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/storagehold
+	name = "Storage Hold"
+	item_paths = list("MET-2")
+	item_amounts = list(20)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/storage)
+	time = 12 SECONDS
+	create = 1
+	category = "Resource"
+
 /datum/manufacture/orescoop
 	name = "Alloyed Solutions Ore Scoop/Hold"
 	item_paths = list("MET-2","CON-1")

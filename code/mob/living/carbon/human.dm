@@ -1142,7 +1142,6 @@
 				var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
 				if (thing)
 					usr = src
-					boutput(usr, SPAN_NOTICE("You offer [thing] to [target]."))
 					var/mob/living/living_target = target
 					living_target.give_item()
 					return
@@ -1534,7 +1533,7 @@
 					secure_headset_mode = lowertext(copytext(message,2,3))
 				message = copytext(message, 3)
 
-	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
+	message = strip_html(trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
 		return
@@ -3599,3 +3598,10 @@
 	src.visible_message(SPAN_ALERT("<B>BOOM!</B> [src]'s head explodes."),\
 	SPAN_ALERT("<B>BOOM!</B>"),\
 	SPAN_ALERT("You hear someone's head explode."))
+
+/mob/living/carbon/human/proc/on_bandage_removal(mob/user, bandaged_part)
+	user.tri_message(src, SPAN_NOTICE("<b>[user]</b> removes [src == user ? "[his_or_her(src)]" : "[src]'s"] bandage."),\
+		SPAN_NOTICE("You remove [src == user ? "your" : "[src]'s"] bandage."),\
+		SPAN_NOTICE("[src == user ? "You remove" : "<b>[user]</b> removes"] your bandage."))
+	src.bandaged -= bandaged_part
+	src.update_body()

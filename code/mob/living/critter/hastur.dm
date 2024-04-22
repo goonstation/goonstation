@@ -203,13 +203,13 @@ var/HasturPresent = 0
 
 	cast()
 		var/msg = input("Message:", text("What would you like to whisper to everyone?")) as null|text
-		msg = voidSpeak(trim(copytext(sanitize(msg), 1, 255)))
+		msg = voidSpeak(trimtext(copytext(sanitize(msg), 1, 255)))
 		if (!msg)
 			return
 
 		if (usr.client && usr.client.holder)
 			boutput(world, "<font color=purple><b>An otherwordly voice whispers into your ears... [msg]</b></font>")
-			//msg = voidSpeak(trim(copytext(sanitize(msg), 1, 255)))
+			//msg = voidSpeak(trimtext(copytext(sanitize(msg), 1, 255)))
 			//boutput(usr, "<b>You whisper to everyone:</b> [message]")
 
 

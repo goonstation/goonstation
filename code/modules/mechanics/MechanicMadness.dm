@@ -30,6 +30,8 @@
 	var/welded = FALSE
 	var/can_be_welded = FALSE
 	var/can_be_anchored = UNANCHORED
+	var/default_hat_y = 0
+	var/default_hat_x = 0
 	custom_suicide = TRUE
 	open_to_sound = TRUE
 
@@ -224,6 +226,11 @@
 		icon_state="housing_cabinet"
 		flags = FPRINT | EXTRADELAY | CONDUCT
 		light_color = list(0, 179, 255, 255)
+		default_hat_y = 14
+
+		New()
+			AddComponent(/datum/component/hattable, FALSE, FALSE, default_hat_y)
+			..()
 
 		attack_hand(mob/user)
 			if (istype(user,/mob/living/object) && user == src.loc) // prevent wacky nullspace bug
@@ -265,6 +272,12 @@
 		c_flags = ONBELT
 		light_color = list(51, 0, 0, 0)
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
+		default_hat_y = 7
+		default_hat_x = -1
+
+		New()
+			AddComponent(/datum/component/hattable, FALSE, FALSE, default_hat_y, default_hat_x)
+			..()
 
 		proc/find_trigger() // find the trigger comp, return 1 if found.
 			if (!istype(src.the_trigger))
@@ -503,7 +516,7 @@
 		return
 
 	proc/componentSay(var/string)
-		string = trim(sanitize(html_encode(string)))
+		string = trimtext(sanitize(html_encode(string)))
 		var/maptext = null
 		var/maptext_loc = null //Location used for center of all_hearers scan "Probably where you want your text attached to."
 
@@ -2721,7 +2734,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		if(ispulsingtool(W)) return // Don't press the button with a multitool, it brings up the config menu instead
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user)
 		if(level == UNDERFLOOR)
@@ -2742,7 +2755,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			return
 		var/lpm = params2list(params)
 		if(istype(usr, /mob/dead/observer) && !lpm["ctrl"] && !lpm["shift"] && !lpm["alt"])
-			src.attack_hand(usr)
+			src.Attackhand(usr)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(level == OVERFLOOR && GET_DIST(src, target) == 1)
@@ -3956,7 +3969,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		// byond automatically promotes URL-like text in maptext to links, which is an awful idea
 		// it also parses protocols in a nonsensical way - for example ahttp://foo.bar is the letter a followed by a http:// protocol link
 		// hence the special regex. I don't know if any other protocols are included in this by byond but ftp is not so I'm giving up here
-		. = replacetext(., bullshit_byond_parser_url_regex, "")
+		var/oldtext = null
+		while(!cmptext(oldtext, .)) //repeat until all protocols are killed.
+			oldtext = .
+			. = replacetext(., bullshit_byond_parser_url_regex, "")
 
 	proc/setText(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR || !input) return
@@ -4350,7 +4366,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (src.text_limit)
 			text = copytext_char(text,1,src.text_limit+1)
 		if (src.trim_text)
-			text = trim(text)
+			text = trimtext(text)
 
 		if (!length(text) || src.text_limit == 0)
 			return

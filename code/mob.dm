@@ -133,7 +133,7 @@
 	var/job = null
 
 	/// For assigning mobs various factions, see factions.dm for definitions
-	var/faction = 0
+	var/faction = list()
 
 	var/nodamage = 0
 
@@ -1358,25 +1358,33 @@
 
 	W.dropped(src)
 
+/// shortcut for the Notes - View verb
+/mob/verb/notes_alias()
+	set name = "Notes"
+	set hidden = TRUE
+
+	src.memory()
 
 /mob/verb/memory()
-	set name = "Notes"
+	set name = "Notes - View"
 	// drsingh for cannot execute null.show_memory
 	if (isnull(mind))
 		return
 
 	mind.show_memory(src)
 
-/mob/verb/add_memory(msg as message)
-	set name = "Add Note"
+/mob/verb/add_memory()
+	set name = "Notes - Modify"
+
+	if (!src.mind)
+		return
 
 	if (mind.last_memory_time + 10 <= world.time)
 		mind.last_memory_time = world.time
 
-		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-		msg = sanitize(msg)
-
-		mind.store_memory(msg)
+	var/notes = tgui_input_text(src, "Set your notes:", "Change notes", src.mind.cust_notes, MAX_MESSAGE_LEN, TRUE, allowEmpty = TRUE)
+	if (!isnull(notes))
+		src.mind.cust_notes = notes
 
 // please note that this store_memory() vvv
 // does not store memories in the notes
@@ -2893,9 +2901,19 @@
 		APPLY_MOVEMENT_MODIFIER(src, equipment_proxy, /obj/item)
 
 	// reset the modifiers to defaults
+	var/modifier = 1-GET_ATOM_PROPERTY(src, PROP_MOB_MOVESPEED_ASSIST)
+
 	equipment_proxy.additive_slowdown = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED)
+	if(equipment_proxy.additive_slowdown > 0)
+		equipment_proxy.additive_slowdown *= modifier
 	equipment_proxy.space_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_SPACE)
+	if(equipment_proxy.space_movement > 0)
+		equipment_proxy.space_movement *= modifier
 	equipment_proxy.aquatic_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
+	if(equipment_proxy.aquatic_movement > 0)
+		equipment_proxy.aquatic_movement *= modifier
+
+
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 /mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")

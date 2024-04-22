@@ -27,7 +27,7 @@
 			var/turf/T = NewLoc
 			if (T.turf_flags & MOB_SLIP)
 				var/wet_adjusted = T.wet
-				if (traitHolder?.hasTrait("super_slips") && T.wet) //non-zero wet
+				if (traitHolder?.hasTrait("super_slips") && (T.wet > 0)) //slippery when wet
 					wet_adjusted = max(wet_adjusted, 2) //whee
 
 				switch (wet_adjusted)

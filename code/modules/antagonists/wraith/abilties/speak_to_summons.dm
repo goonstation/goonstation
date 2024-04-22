@@ -24,7 +24,7 @@
 			return 1
 		for(var/mob/living/critter/C in W.summons)
 			logTheThing(LOG_SAY, W, "WRAITH WHISPER TO [constructTarget(C,"say")]: [message]")
-			message = trim(copytext(sanitize(message), 1, 255))
+			message = trimtext(copytext(sanitize(message), 1, 255))
 			if (!message)
 				return 1
 			boutput(C, "<b>Your master's voice resonates in your head... </b> [message]")

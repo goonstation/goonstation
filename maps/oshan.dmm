@@ -3293,6 +3293,12 @@
 "akQ" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"akR" = (
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
+/turf/simulated/floor/red,
+/area/station/medical/medbay/surgery)
 "akS" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
@@ -3700,12 +3706,6 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
-"amq" = (
-/obj/machinery/computer/operating{
-	id = "OR1"
-	},
-/turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "amr" = (
 /obj/machinery/drainage/big,
@@ -5282,7 +5282,7 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/obj/machinery/computer/operating{
+/obj/machinery/computer/operating/small{
 	id = "robotics"
 	},
 /turf/simulated/floor/black,
@@ -8581,6 +8581,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
+"aCa" = (
+/obj/laser_sink/mirror,
+/turf/simulated/floor,
+/area/station/engine/gas)
 "aCb" = (
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/networked/artifact_console,
@@ -12072,7 +12076,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_west/noaicontrol,
+/obj/machinery/power/apc/autoname_west/hardened,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -27793,7 +27797,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bUY" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/machinery/light/incandescent/harsh/very,
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -92403,7 +92407,7 @@ ajG
 aic
 akH
 alq
-amq
+anm
 ank
 vQY
 aoN
@@ -93007,7 +93011,7 @@ ahI
 ajJ
 eNT
 alq
-anm
+akR
 anm
 anY
 fha
@@ -108447,7 +108451,7 @@ anx
 abL
 bfb
 aPR
-aPR
+aCa
 beP
 aaH
 aaN
@@ -108749,7 +108753,7 @@ anx
 beV
 bfb
 aPR
-aPR
+aCa
 beP
 aaJ
 bhu

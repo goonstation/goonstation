@@ -1151,20 +1151,22 @@
 		if (isweldingtool(W))
 			if(W:try_weld(user, 1))
 				src.add_fingerprint(user)
-				var/repaired = HealDamage("All", 120, 0)
-				if(repaired || health < max_health)
+				if(health < max_health)
+					HealDamage("All", 120, 0)
 					src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s body."))
-				else boutput(user, SPAN_ALERT("There's no structural damage on [src.name] to mend."))
+				else
+					boutput(user, SPAN_ALERT("There's no structural damage on [src.name] to mend."))
 				src.update_appearance()
 
 		else if (istype(W, /obj/item/cable_coil) && wiresexposed)
 			var/obj/item/cable_coil/coil = W
 			src.add_fingerprint(user)
-			var/repaired = HealDamage("All", 0, 120)
-			if(repaired || health < max_health)
+			if(health < max_health)
 				coil.use(1)
+				HealDamage("All", 0, 120)
 				src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
-			else boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
+			else
+				boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
 			src.update_appearance()
 
 		else if (ispryingtool(W))
@@ -2824,12 +2826,35 @@
 		UpdateOverlays(src.i_leg_decor, "leg_decor")
 		UpdateOverlays(src.i_arm_decor, "arm_decor")
 
+		if (length(src.clothes))
+			if (!src.i_clothes)
+				src.i_clothes = new
+			src.i_clothes.overlays.Cut()
+			for(var/x in src.clothes)
+				var/obj/item/clothing/U = src.clothes[x]
+				if (!istype(U))
+					continue
+				var/image/clothed_image = U.wear_image
+				if (!clothed_image)
+					continue
+				if (U.wear_state)
+					clothed_image.icon_state = U.wear_state
+				else
+					clothed_image.icon_state = U.icon_state
+				clothed_image.alpha = U.alpha
+				clothed_image.color = U.color
+				clothed_image.layer = U.wear_layer
+				src.i_clothes.overlays += clothed_image
+			UpdateOverlays(src.i_clothes, "clothes", TRUE)
+		else
+			UpdateOverlays(null, "clothes")
+
 		if (src.brainexposed && src.part_head)
 			if (src.part_head.brain)
 				src.i_details.icon_state = "openbrain"
 			else
 				src.i_details.icon_state = "openbrainless"
-			UpdateOverlays(src.i_details, "brain")
+			UpdateOverlays(src.i_details, "brain", TRUE)
 		else
 			UpdateOverlays(null, "brain")
 
@@ -2849,13 +2874,13 @@
 			if (src.wiresexposed)
 				src.i_details.icon_state = "openwires"
 				src.i_panel.overlays += src.i_details
-			UpdateOverlays(src.i_panel, "brain")
+			UpdateOverlays(src.i_panel, "panel", TRUE)
 		else
 			UpdateOverlays(null, "panel")
 
 		if (src.emagged)
 			src.i_details.icon_state = "emagged"
-			UpdateOverlays(src.i_details, "emagged")
+			UpdateOverlays(src.i_details, "emagged", TRUE)
 		else
 			UpdateOverlays(null, "emagged")
 
@@ -2866,33 +2891,10 @@
 			for (var/obj/item/roboupgrade/R in src.upgrades)
 				if (R.activated && R.borg_overlay)
 					src.i_upgrades.overlays += image('icons/mob/robots.dmi', R.borg_overlay)
-			UpdateOverlays(src.i_upgrades, "upgrades")
+			UpdateOverlays(src.i_upgrades, "upgrades", TRUE)
 		else
 			UpdateOverlays(null, "upgrades")
 
-		if (length(src.clothes))
-			if (!src.i_clothes)
-				src.i_clothes = new
-			src.i_clothes.overlays.Cut()
-			for(var/x in src.clothes)
-				var/obj/item/clothing/U = src.clothes[x]
-				if (!istype(U))
-					continue
-				var/image/clothed_image = U.wear_image
-				if (!clothed_image)
-					continue
-				if (U.wear_state)
-					clothed_image.icon_state = U.wear_state
-				else
-					clothed_image.icon_state = U.icon_state
-				//under_image.layer = MOB_CLOTHING_LAYER
-				clothed_image.alpha = U.alpha
-				clothed_image.color = U.color
-				clothed_image.layer = FLOAT_LAYER //MOB_CLOTHING_LAYER
-				src.i_clothes.overlays += clothed_image
-			UpdateOverlays(src.i_clothes, "clothes")
-		else
-			UpdateOverlays(null, "clothes")
 		src.update_mob_silhouette()
 
 	proc/compborg_force_unequip(var/slot = 0)

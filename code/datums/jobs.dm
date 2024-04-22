@@ -3,6 +3,8 @@
 	var/list/alias_names = null
 	var/initial_name = null
 	var/linkcolor = "#0FF"
+
+	/// Job starting wages
 	var/wages = 0
 	var/limit = -1
 	/// job category flag for use with loops rather than a needing a bunch of type checks
@@ -27,7 +29,10 @@
 	var/needs_college = 0
 	var/assigned = 0
 	var/high_priority_job = FALSE
+	///Fill up to this limit, then drop this job out of high priotity
+	var/high_priority_limit = INFINITY
 	var/low_priority_job = FALSE
+	var/order_priority = 1 //! What order jobs are filled in within their priority tier, lower number = higher priority
 	var/cant_allocate_unwanted = FALSE //! Job cannot be set to "unwanted" in player preferences.
 	var/receives_miranda = FALSE
 	var/receives_implant = null //! Object path to the implant type given on spawn.
@@ -68,7 +73,7 @@
 	/// Does this job use the name and appearance from the character profile? (for tracking respawned names)
 	var/uses_character_profile = TRUE
 	/// The faction to be assigned to the mob on setup uses flags from factions.dm
-	var/faction = 0
+	var/faction = list()
 
 	var/short_description = null //! Description provided when a player hovers over the job name in latejoin menu
 	var/wiki_link = null //! Link to the wiki page for this job
@@ -216,6 +221,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	announce_on_join = TRUE
 	allow_spy_theft = FALSE
 	allow_antag_fallthrough = FALSE
+	receives_implant = /obj/item/implant/health/security/anti_mindhack
 	wiki_link = "https://wiki.ss13.co/Captain"
 
 	slot_card = /obj/item/card/id/gold
@@ -526,6 +532,9 @@ ABSTRACT_TYPE(/datum/job/security)
 	limit = 5
 	lower_limit = 3
 	variable_limit = TRUE
+	high_priority_job = TRUE
+	high_priority_limit = 2 //always try to make sure there's at least a couple of secoffs
+	order_priority = 2 //fill secoffs after captain and AI
 	wages = PAY_TRADESMAN
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
@@ -564,6 +573,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		name = "Security Assistant"
 		limit = 3
 		lower_limit = 2
+		high_priority_job = FALSE //nope
 		cant_spawn_as_con = TRUE
 		wages = PAY_UNTRAINED
 		receives_implant = /obj/item/implant/health/security
@@ -696,7 +706,7 @@ ABSTRACT_TYPE(/datum/job/research)
 /datum/job/research/roboticist
 	name = "Roboticist"
 	limit = 3
-	wages = 200
+	wages = PAY_DOCTORATE
 	slot_back = list(/obj/item/storage/backpack/robotics)
 	slot_belt = list(/obj/item/storage/belt/roboticist/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/roboticist)
@@ -980,7 +990,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	wiki_link = "https://wiki.ss13.co/Botanist"
 
-	faction = FACTION_BOTANY
+	faction = list(FACTION_BOTANY)
 
 	New()
 		..()
@@ -1087,7 +1097,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	change_name_on_spawn = TRUE
 	wiki_link = "https://wiki.ss13.co/Clown"
 
-	faction = FACTION_CLOWN
+	faction = list(FACTION_CLOWN)
 
 	New()
 		..()
@@ -1700,7 +1710,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	alt_names = list("Apiculturist", "Apiarist")
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
-	faction = FACTION_BOTANY
+	faction = list(FACTION_BOTANY)
 
 	New()
 		..()
@@ -1891,7 +1901,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc2 = list(/obj/item/device/pda2/clown)
 	slot_lhan = list(/obj/item/instrument/bikehorn)
 
-	faction = FACTION_CLOWN
+	faction = list(FACTION_CLOWN)
 
 	New()
 		..()
@@ -2388,7 +2398,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		/obj/item/clothing/head/helmet/space/syndicate,
 		/obj/item/clothing/suit/space/syndicate)
 
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 
@@ -2400,7 +2410,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	name = "Poorly Equipped Junior Syndicate Operative"
 	slot_poc2 = list()
 
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 
 // hidden jobs for nt-so vs syndicate spec-ops
 
@@ -2433,7 +2443,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/breaching_charge,
 							/obj/item/remote/syndicate_teleporter)
 
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 	special_spawn_location = LANDMARK_SYNDICATE
@@ -2539,7 +2549,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/clothing/head/NTberet,
 							/obj/item/currency/spacecash/fivehundred)
 
-	faction = FACTION_NANOTRASEN
+	faction = list(FACTION_NANOTRASEN)
 
 	New()
 		..()
@@ -2579,7 +2589,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/sheet/steel/fullstack,
 							/obj/item/sheet/glass/reinforced/fullstack)
 
-	faction = FACTION_NANOTRASEN
+	faction = list(FACTION_NANOTRASEN)
 
 	New()
 		..()
@@ -2620,7 +2630,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/reagent_containers/glass/bottle/omnizine,
 							/obj/item/reagent_containers/glass/bottle/ether)
 
-	faction = FACTION_NANOTRASEN
+	faction = list(FACTION_NANOTRASEN)
 
 	New()
 		..()
@@ -2664,7 +2674,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/cloth/handkerchief/nt)
 	wiki_link = "https://wiki.ss13.co/Nanotrasen_Security_Consultant"
 
-	faction = FACTION_NANOTRASEN
+	faction = list(FACTION_NANOTRASEN)
 
 	New()
 		..()
@@ -2970,7 +2980,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		team = 1
 		overlay_icon = "nanotrasen"
 
-		faction = FACTION_NANOTRASEN
+		faction = list(FACTION_NANOTRASEN)
 
 		receives_implant = /obj/item/implant/pod_wars/nanotrasen
 		slot_back = list(/obj/item/storage/backpack/NT)
@@ -3016,7 +3026,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		overlay_icon = "syndicate"
 		add_to_manifest = FALSE
 
-		faction = FACTION_SYNDICATE
+		faction = list(FACTION_SYNDICATE)
 
 		receives_implant = /obj/item/implant/pod_wars/syndicate
 		slot_back = list(/obj/item/storage/backpack/syndie)

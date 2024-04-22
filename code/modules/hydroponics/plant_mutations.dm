@@ -104,6 +104,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	name_prefix = "Suspicious "
 	crop = /obj/critter/killertomato
 	iconmod = "TomatoKiller"
+	assoc_reagents = list("blood")
 	harvest_cap = 3
 	infusion_chance = 50
 	infusion_reagents = list("strange_reagent")
@@ -288,7 +289,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	name = "Spice Pumpkin"
 	name_prefix = "Spiced "
 	iconmod = "PumpkinLatte"
-	crop = /obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
+	crop = /obj/item/reagent_containers/food/snacks/plant/pumpkin/pumpkinlatte
 	assoc_reagents = list("pumpkinspicelatte")
 	infusion_chance = 80
 	chance = 0
@@ -463,7 +464,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 /datum/plantmutation/soy/soylent
 	name = "Strange soybean"
 	name_prefix = "Strange "
-	crop = /obj/item/reagent_containers/food/snacks/plant/soylent
+	crop = /obj/item/reagent_containers/food/snacks/plant/soy/soylent
 	iconmod = "Soylent"
 
 // Contusine Mutations
@@ -909,14 +910,14 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	name = "Blackberry"
 	iconmod = "Blackberry"
 	dont_rename_crop = TRUE
-	crop = /obj/item/reagent_containers/food/snacks/plant/blackberry
+	crop = /obj/item/reagent_containers/food/snacks/plant/raspberry/blackberry
 	assoc_reagents = list("juice_blackberry")
 
 /datum/plantmutation/raspberry/blueraspberry
 	name = "Blue Raspberry"
 	iconmod = "BlueRaspberry"
 	dont_rename_crop = TRUE
-	crop = /obj/item/reagent_containers/food/snacks/plant/blueraspberry
+	crop = /obj/item/reagent_containers/food/snacks/plant/raspberry/blueraspberry
 	assoc_reagents = list("juice_blueraspberry")
 
 // Flower mutations

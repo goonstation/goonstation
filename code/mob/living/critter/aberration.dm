@@ -24,13 +24,13 @@
 	canbegrabbed = FALSE
 	throws_can_hit_me = FALSE
 	reagent_capacity = 0
-	faction = FACTION_DERELICT
+	faction = list(FACTION_DERELICT)
 	blood_id = null
 	can_bleed = FALSE
 	metabolizes = FALSE
 	use_stamina = FALSE
 
-	grabresistmessage = "but their hands pass right through %src%!"
+	grabresistmessage = "but their hands pass right through!"
 	death_text = "%src% dissipates!"
 
 	New()

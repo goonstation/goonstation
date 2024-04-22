@@ -1779,6 +1779,23 @@
 			target.anchored = ANCHORED
 
 
+/datum/action/bar/icon/unhook_gangbag
+	duration = 20 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	icon = 'icons/obj/items/storage.dmi'
+	icon_state = "gang_dufflebag"
+	id = "unhook_gangbag"
+	var/obj/item/gang_loot/target
+
+	New(new_owner, obj/item/gang_loot/new_target)
+		owner = new_owner
+		target = new_target
+		..()
+	onEnd()
+		..()
+		target.unhook()
+
+
 /datum/action/bar/icon/doorhack
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION

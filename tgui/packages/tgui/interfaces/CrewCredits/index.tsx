@@ -9,24 +9,24 @@
 import { useLocalState } from '../../backend';
 import { Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
+import { CrewCreditsTabKeys } from './type';
 import { CrewTab } from './CrewTab';
 import { AntagonistsTab } from './AntagonistsTab';
-import { CrewCreditsTabKeys } from './type';
 import { ScoreTab } from './ScoreTab';
+import { CitationsTab } from './CitationsTab';
 
 export const CrewCredits = (props, context) => {
-  const [menu, setMenu] = useLocalState(context, 'menu', CrewCreditsTabKeys.General);
-
+  const [menu, setMenu] = useLocalState(context, 'menu', CrewCreditsTabKeys.Crew);
   return (
-    <Window title="Crew Credits" width={600} height={600}>
+    <Window title="Round Summary" width={600} height={600}>
       <Window.Content scrollable>
         <Stack vertical fill>
           <Stack.Item>
             <Tabs>
               <Tabs.Tab
-                selected={menu === CrewCreditsTabKeys.General}
-                onClick={() => setMenu(CrewCreditsTabKeys.General)}>
-                General
+                selected={menu === CrewCreditsTabKeys.Crew}
+                onClick={() => setMenu(CrewCreditsTabKeys.Crew)}>
+                Crew Credits
               </Tabs.Tab>
               <Tabs.Tab
                 selected={menu === CrewCreditsTabKeys.Antagonists}
@@ -38,12 +38,18 @@ export const CrewCredits = (props, context) => {
                 onClick={() => setMenu(CrewCreditsTabKeys.Score)}>
                 Station Score
               </Tabs.Tab>
+              <Tabs.Tab
+                selected={menu === CrewCreditsTabKeys.Citations}
+                onClick={() => setMenu(CrewCreditsTabKeys.Citations)}>
+                Tickets/Fines
+              </Tabs.Tab>
             </Tabs>
           </Stack.Item>
           <Stack.Item>
-            {menu === CrewCreditsTabKeys.General && <CrewTab />}
+            {menu === CrewCreditsTabKeys.Crew && <CrewTab />}
             {menu === CrewCreditsTabKeys.Antagonists && <AntagonistsTab />}
             {menu === CrewCreditsTabKeys.Score && <ScoreTab />}
+            {menu === CrewCreditsTabKeys.Citations && <CitationsTab />}
           </Stack.Item>
         </Stack>
       </Window.Content>

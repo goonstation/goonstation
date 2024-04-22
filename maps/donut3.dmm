@@ -2093,6 +2093,7 @@
 /obj/cable/blue{
 	icon_state = "1-4"
 	},
+/obj/laser_sink/mirror,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
 "aAZ" = (
@@ -8227,7 +8228,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "cnS" = (
-/obj/machinery/computer/operating{
+/obj/machinery/computer/operating/small{
 	id = "garbage_doc"
 	},
 /turf/simulated/floor/plating/jen,
@@ -15943,6 +15944,12 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/east)
+"eKp" = (
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "eKv" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -41023,6 +41030,9 @@
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3"
 	},
+/obj/machinery/computer/operating/small{
+	id = "treatment"
+	},
 /turf/simulated/floor/blackwhite/side{
 	dir = 8
 	},
@@ -46507,12 +46517,6 @@
 /obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"odN" = (
-/obj/machinery/computer/operating{
-	id = "robotics"
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "odP" = (
 /turf/simulated/wall/auto/jen/purple,
 /area/station/hangar/science)
@@ -53241,7 +53245,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "qez" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/machinery/light/incandescent/warm/very{
 	dir = 8
 	},
@@ -57910,7 +57914,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "rAT" = (
-/obj/machinery/power/apc/autoname_north/noaicontrol,
+/obj/machinery/power/apc/autoname_north/hardened,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -65695,6 +65699,7 @@
 	})
 "tVF" = (
 /obj/machinery/light/incandescent/warm,
+/obj/laser_sink/mirror,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
 "tVH" = (
@@ -74749,10 +74754,6 @@
 "wGW" = (
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/computer/operating{
-	dir = 4;
-	id = "treatment"
 	},
 /turf/simulated/floor/blackwhite/corner{
 	dir = 8
@@ -128802,8 +128803,8 @@ cCD
 fXZ
 uvs
 uwN
-odN
 wXy
+uvs
 uvs
 rCl
 ohz
@@ -129103,7 +129104,7 @@ bpe
 xks
 uvs
 uvs
-uvs
+eKp
 tig
 uvs
 uvs
@@ -158777,7 +158778,7 @@ rAT
 egM
 iOW
 iOW
-csA
+iOW
 csA
 csA
 csA
@@ -159080,7 +159081,7 @@ bMv
 dbf
 ugC
 iOW
-csA
+iOW
 csA
 csA
 csA
@@ -159382,7 +159383,7 @@ pab
 sdI
 vhx
 ugC
-csA
+iOW
 csA
 csA
 csA
@@ -159684,7 +159685,7 @@ kvx
 pab
 rmD
 ugC
-csA
+iOW
 csA
 csA
 csA

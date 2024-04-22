@@ -2894,12 +2894,10 @@ TYPEINFO(/obj/machinery/networked/printer)
 	device_tag = "PNET_HEPT_EMIT"
 	dir = NORTH
 
-	var/obj/beam/h7_beam/beam = null
+	var/obj/linked_laser/h7_beam/beam = null
 	var/list/telecrystals[5]
 	var/crystalCount = 0
 	power_usage = 0
-
-	var/setup_beam_length = 48
 
 	New()
 		..()
@@ -3221,190 +3219,17 @@ TYPEINFO(/obj/machinery/networked/printer)
 				var/turf/beamTurf = get_step(src, src.dir)
 				if (!istype(beamTurf) || beamTurf.density)
 					return 0
-				src.beam = new /obj/beam/h7_beam(beamTurf, setup_beam_length, crystalCount)
+				src.beam = new /obj/linked_laser/h7_beam(beamTurf, src.dir)
 				src.beam.master = src
-				src.beam.set_dir(src.dir)
-				for (var/atom/movable/hitAtom in beamTurf)
-					if (hitAtom.density && !hitAtom.anchored)
-						src.beam.hit(hitAtom)
-
-					continue
+				src.beam.try_propagate()
 			else
-				src.beam.update_power(src.crystalCount)
+				src.beam.traverse(/obj/linked_laser/h7_beam/proc/update_master_power)
 
 			UpdateIcon()
 			src.updateUsrDialog()
 			return 1
 
 //Deathbeam for preceding death emitter
-/obj/beam/h7_beam
-	name = "energy beam"
-	desc = "A rather threatening beam of photons!"
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "h7beam1"
-	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	var/power = 1 //How dangerous is this beam, anyhow? 1-5. 1-3 cause minor teleport hops and radiation damage, 4 tends to deposit people in a place separate from their stuff (or organs), and 5 tears their molecules apart
-	//var/obj/beam/h7_beam/next = null
-	var/obj/machinery/networked/h7_emitter/master = null
-	limit = 48
-	anchored = ANCHORED
-	flags = TABLEPASS
-	var/datum/light/light
-
-	New(location, newLimit, newPower)
-		..()
-		light = new /datum/light/point
-		light.attach(src)
-		light.set_color(0.28, 0.07, 0.58)
-		light.set_brightness(min(src.power, 3) / 5)
-		light.set_height(0.5)
-		light.enable()
-
-		if (newLimit != null)
-			src.limit = newLimit
-		if (newPower != null)
-			src.power = newPower
-		src.icon_state = "h7beam[min(src.power, 5)]"
-		SPAWN(0.2 SECONDS)
-			generate_next()
-		return
-
-	disposing()
-		if (src.master)
-			if (src.master.beam == src)
-				src.master.beam = null
-			src.master = null
-		..()
-/*
-	disposing()
-		if (src.next)
-			qdel(src.next)
-
-		..()
-
-	disposing()
-		if (src.next)
-			src.next.dispose()
-			src.next = null
-
-		if (src.master)
-			if (src.master.beam == src)
-				src.master.beam = null
-			src.master = null
-		..()
-
-	Bumped()
-		src.hit()
-		return
-
-	Crossed(atom/movable/AM as mob|obj)
-		if (istype(AM, /obj/beam) || istype(AM, /mob/living/critter/aberration))
-			return
-		SPAWN( 0 )
-			src.hit(AM)
-			return
-		return
-*/
-	proc
-		update_power(var/newPower)
-			if (!newPower)
-				return
-
-			src.power = max(1, newPower)
-			if (src.next)
-				src.next:update_power(newPower)
-			return
-
-		telehop(atom/movable/hopAtom as mob|obj, hopOffset=1, varyZ=0)
-			var/targetZLevel = hopAtom.z
-			if (varyZ)
-				targetZLevel = pick(1,3,4,5)
-
-			hopOffset *= 3
-
-			var/turf/lowerLeft = locate( max(hopAtom.x - hopOffset, 1), max(1, hopAtom.y - hopOffset), targetZLevel)
-			var/turf/upperRight = locate( min( world.maxx, hopAtom.x + hopOffset), min(world.maxy, hopAtom.y + hopOffset), targetZLevel)
-
-			if (!lowerLeft || !upperRight)
-				return
-
-			var/list/hopTurfs = block(lowerLeft, upperRight)
-			if (!hopTurfs.len)
-				return
-
-			playsound(hopAtom.loc, "warp", 50, 1)
-			do_teleport(hopAtom, pick(hopTurfs), 0, 0)
-			return
-
-	hit(atom/movable/AM as mob|obj)
-		if (isliving(AM))
-			var/mob/living/hitMob = AM
-
-			switch (src.power)
-				if (1 to 3)
-					//telehop + radiation
-					if (iscarbon(hitMob))
-						hitMob.take_radiation_dose(3 SIEVERTS)
-						hitMob.changeStatus("weakened", 2 SECONDS)
-					telehop(hitMob, src.power, src.power > 2)
-					return
-
-				if (4)
-					//big telehop + might leave parts behind.
-					if (iscarbon(hitMob))
-						hitMob.take_radiation_dose(3 SIEVERTS)
-
-						random_brute_damage(hitMob, 25)
-						hitMob.changeStatus("weakened", 2 SECONDS)
-						if (ishuman(hitMob) && prob(25))
-							var/mob/living/carbon/human/hitHuman = hitMob
-							if (hitHuman.organHolder && hitHuman.organHolder.brain)
-								var/obj/item/organ/brain/B = hitHuman.organHolder.drop_organ("Brain", hitHuman.loc)
-								telehop(B, 2, 0)
-								boutput(hitHuman, SPAN_ALERT("<b>You seem to have left something...behind.</b>"))
-
-						telehop(hitMob, src.power, 1)
-					return
-
-				else
-					//Are they a human wearing the obsidian crown?
-					if (ishuman(hitMob) && istype(hitMob:head, /obj/item/clothing/head/void_crown))
-						var/obj/source = locate(/obj/dfissure_from)
-						if (!source)
-							telehop(AM, 5, 1)
-							return
-
-						AM.set_loc(get_turf(source))
-						return
-
-					//death!!
-					hitMob.vaporize()
-					return
-		else if (istype(AM, /obj) && !istype(AM, /obj/effects))
-			telehop(AM, src.power, src.power > 2)
-			return
-
-
-		return
-
-	generate_next()
-		if (src.limit < 1)
-			return
-
-		var/turf/nextTurf = get_step(src, src.dir)
-		if (istype(nextTurf))
-			if (nextTurf.density)
-				return
-
-			src.next = new /obj/beam/h7_beam(nextTurf, src.limit-1, src.power)
-			next:master = src.master
-			next.set_dir(src.dir)
-			for (var/atom/movable/hitAtom in nextTurf)
-				if (hitAtom.density && !hitAtom.anchored)
-					src.hit(hitAtom)
-
-				continue
-		return
 
 //Generic test apparatus
 TYPEINFO(/obj/machinery/networked/test_apparatus)

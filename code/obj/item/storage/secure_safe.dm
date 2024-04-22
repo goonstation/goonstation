@@ -300,7 +300,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	mechanics_type_override = /obj/item/storage/secure/ssafe
 
 	attack_hand(mob/user)
-		return attack_self(user)
+		return src.AttackSelf(user)
 
 /obj/item/storage/secure/ssafe/loot
 	configure_mode = FALSE

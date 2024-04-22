@@ -218,7 +218,7 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 	else if (isobj(target) || ismob(target))
 		var/atom/L = target.loc
 		while (L && !isturf(L))
-			if (L == user)
+			if (L == user || L == user.loc)
 				return 1
 			L = L.loc
 	return 0
@@ -722,7 +722,7 @@ proc/GetRandomPerimeterTurf(var/atom/A, var/dist = 10, var/dir)
 	if(isturf(T))
 		return T
 
-proc/ThrowRandom(var/atom/movable/A, var/dist = 10, var/speed = 1, var/list/params, var/thrown_from, var/throw_type, var/allow_anchored, var/bonus_throwforce, var/end_throw_callback)
+proc/ThrowRandom(atom/movable/A, dist = 10, speed = 1, list/params, thrown_from, throw_type, allow_anchored, bonus_throwforce, datum/callback/end_throw_callback)
 	if(istype(A))
 		var/turf/Y = GetRandomPerimeterTurf(A, dist)
 		A.throw_at(Y, dist, speed, params, thrown_from, throw_type, allow_anchored, bonus_throwforce, end_throw_callback)
