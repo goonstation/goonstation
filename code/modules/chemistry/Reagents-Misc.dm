@@ -2301,12 +2301,7 @@ datum
 						src.OD_ticks += 1
 						if(src.OD_ticks > 8 && prob(10))
 							boutput(M, SPAN_ALERT("<I>Your finger's feel rubbery!</I>"))
-							var/h = M.hand
-							M.hand = 0
-							M.drop_item()
-							M.hand = 1
-							M.drop_item()
-							M.hand = h
+							M.empty_hands()
 						switch(src.OD_ticks)
 							if (1 to 8)
 								if (prob(33) && !ON_COOLDOWN(M, "flubber_jiggling", 8 SECONDS))
