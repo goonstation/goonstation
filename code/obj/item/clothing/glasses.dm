@@ -712,7 +712,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	color_r = 0.9
 	color_g = 1
 	color_b = 0.9
-	var/freq = FREQ_PDA
+	var/freq = FREQ_AIRLOCK
 
 	attack_self(mob/user)
 		. = ..()
