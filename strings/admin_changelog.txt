@@ -1,3 +1,6 @@
+(t)sun apr 21 24
+(u)Zamujasa
+(*)New toggle, "Toggle Music Announcements". This will make remote music commands from Discord print out in-game, vaguely like the old DJ Mode (but without any names attached). Feel free to improve this! (DEFAULT: OFF, as it was before. the tguification of chat may change/deprecate this!)
 (t)sat apr 20 24
 (u)LeahTheTech
 (*)Added "RAS" as a shortcut for "Respawn-As-Self"
