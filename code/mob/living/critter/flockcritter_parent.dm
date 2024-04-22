@@ -161,7 +161,7 @@ TYPEINFO(/mob/living/critter/flock)
 /mob/living/critter/flock/say(message, involuntary = FALSE)
 	if(isdead(src) && src.is_npc)
 		return
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	..(message) // caw at the non-drones
 

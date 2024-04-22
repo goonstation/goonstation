@@ -65,8 +65,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	var/grab_stuff_on_spawn = TRUE
 
-	///Items that are 'inside' the crate, even when it's open. These will be dragged around with the crate until removed.
-	var/list/vis_items = list()
+	///Controls items that are 'inside' the crate, even when it's open. These will be dragged around with the crate until removed.
+	var/datum/vis_storage_controller/vis_controller
 
 	New()
 		..()
@@ -91,13 +91,15 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (!islist(src.spawn_contents))
 			return 0
 
+		var/i = 0
 		for (var/thing in src.spawn_contents)
 			var/amt = 1
-			if (!ispath(thing))
-				continue
 			if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
 				amt = abs(spawn_contents[thing])
-			do new thing(src)	//Two lines! I TOLD YOU I COULD DO IT!!!
+			do
+				var/atom/A = new thing(src)
+				A.layer += 0.00001 * i
+				i++
 			while (--amt > 0)
 
 	proc/get_welding_positions()
@@ -675,8 +677,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		for (var/obj/O in get_turf(src))
 			if (src.is_acceptable_content(O))
 				O.set_loc(src)
-		for (var/obj/O in vis_items)
-			vis_contents -= O
+		vis_controller?.hide()
 
 		for (var/mob/M in get_turf(src))
 			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
@@ -762,10 +763,9 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			spawn_contents = null
 
 		var/newloc = get_turf(src)
+		vis_controller?.show()
 		for (var/obj/O in src)
-			if (O in vis_items)
-				src.vis_contents += O
-			else
+			if (!(O in vis_controller?.vis_items))
 				O.set_loc(newloc)
 			if(istype(O,/obj/item/mousetrap))
 				var/obj/item/mousetrap/our_trap = O

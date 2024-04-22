@@ -168,6 +168,7 @@ datum/job_controller/proc/savefile_get_job_name(client/user, var/profileNum = 1)
 	return job_name
 
 datum/job_controller/proc/savefile_get_job_names(client/user)
+	RETURN_TYPE(/list)
 
 	if (!savefile_path_exists(user.ckey))
 		return null

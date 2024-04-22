@@ -942,7 +942,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 				C.linked_switches |= src
 
 	proc/trigger(var/inp)
-		attack_hand(usr) //bit of a hack but hey.
+		src.Attackhand(usr) //bit of a hack but hey.
 		return
 
 	proc/set_speed(datum/mechanicsMessage/msg)

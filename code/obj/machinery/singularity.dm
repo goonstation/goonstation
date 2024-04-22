@@ -1088,7 +1088,7 @@ TYPEINFO(/obj/machinery/emitter)
 	mats = 10
 
 /obj/machinery/emitter
-	name = "Emitter"
+	name = "\improper Emitter"
 	desc = "Shoots a high power laser when active"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Emitter"
@@ -1216,6 +1216,8 @@ TYPEINFO(/obj/machinery/emitter)
 		src.visible_message(SPAN_ALERT("<b>[src]</b> fires a bolt of energy!"))
 
 		shoot_projectile_DIR(src, current_projectile, dir)
+		var/horizontal_offset = (src.dir in list(EAST, WEST)) ? 10 : 0 //offset by 10 pixels if we're firing to the side otherwise it looks weird
+		muzzle_flash_any(src, dir_to_angle(dir), "muzzle_flash_plaser", horizontal_offset = horizontal_offset)
 		use_power(current_projectile.power)
 
 		if(prob(35))

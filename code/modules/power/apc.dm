@@ -74,6 +74,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/host_id = null
 	var/timeout = 60 //The time until we auto disconnect (if we don't get a refresh ping)
 	var/timeout_alert = 0 //Have we sent a timeout refresh alert?
+	var/hardened = 0 // azone/listening post apcs that you dont want fucked with. immune to explosions, blobs, meteors
 
 //	luminosity = 1
 	var/debug = 0
@@ -89,6 +90,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		noaicontrol
 			noalerts = 1
 			aidisabled = 1
+		hardened	//azone/listening post apcs
+			noalerts = 1
+			aidisabled = 1
+			hardened = 1
+			cell_type = 15000
 
 	autoname_east
 		name = "Autoname E APC"
@@ -102,6 +108,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			noalerts = 1
 			aidisabled = 1
 
+		hardened
+			noalerts = 1
+			aidisabled = 1
+			hardened = 1
+			cell_type = 15000
+
 	autoname_south
 		name = "Autoname S APC"
 		dir = SOUTH
@@ -114,6 +126,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			noalerts = 1
 			aidisabled = 1
 
+		hardened
+			noalerts = 1
+			aidisabled = 1
+			hardened = 1
+			cell_type = 15000
+
 	autoname_west
 		name = "Autoname W APC"
 		dir = WEST
@@ -125,6 +143,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		noaicontrol
 			noalerts = 1
 			aidisabled = 1
+
+		hardened
+			noalerts = 1
+			aidisabled = 1
+			hardened = 1
+			cell_type = 15000
 
 /proc/RandomAPCWires()
 	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
@@ -1367,6 +1391,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 // damage and destruction acts
 
 /obj/machinery/power/apc/meteorhit(var/obj/O as obj)
+	if (src.hardened)
+		return
+
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
 		explosion(src, src.loc, 1, 2, 4, 6)
@@ -1376,6 +1403,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	return
 
 /obj/machinery/power/apc/ex_act(severity)
+	if (src.hardened)
+		return
+
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
 		explosion(src, src.loc, 1, 2, 4, 6)
@@ -1397,6 +1427,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	return
 
 /obj/machinery/power/apc/temperature_expose(null, temp, volume)
+	if (src.hardened)
+		return
+
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
 		explosion(src, src.loc, 1, 2, 4, 6)
@@ -1404,6 +1437,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			qdel (src)
 
 /obj/machinery/power/apc/blob_act(var/power)
+	if (src.hardened)
+		return
+
 	if (prob(power * 2.5))
 		set_broken()
 

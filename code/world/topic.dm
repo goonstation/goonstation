@@ -95,7 +95,7 @@
 							if (!plist["arg"]) return 0
 
 							var/dir = plist["arg"]
-							dir = trim(copytext(sanitize(dir), 1, MAX_MESSAGE_LEN))
+							dir = trimtext(copytext(sanitize(dir), 1, MAX_MESSAGE_LEN))
 							dir = text2dir(dir)
 
 							switch(dir)
@@ -125,7 +125,7 @@
 							if (!plist["arg"]) return 0
 
 							var/msg = plist["arg"]
-							msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+							msg = trimtext(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
 							if (msg == INTENT_HELP || msg == INTENT_DISARM || msg == INTENT_GRAB || msg == INTENT_HARM)
 								twitch_mob.set_a_intent(lowertext(msg))
@@ -136,14 +136,14 @@
 							if (twitch_mob.next_click > world.time) return 1
 
 							var/dir = plist["arg"]
-							dir = trim(copytext(sanitize(dir), 1, MAX_MESSAGE_LEN))
+							dir = trimtext(copytext(sanitize(dir), 1, MAX_MESSAGE_LEN))
 							dir = text2dir(dir)
 
 							if (dir == 0)
 								if (ishuman(twitch_mob))
 									var/mob/living/carbon/human/H = twitch_mob
 									var/trg = plist["arg"]
-									trg = trim(copytext(sanitize(trg), 1, MAX_MESSAGE_LEN))
+									trg = trimtext(copytext(sanitize(trg), 1, MAX_MESSAGE_LEN))
 									H.auto_interact(trg)
 
 							var/turf/target = get_ranged_target_turf(twitch_mob, dir, 7)
@@ -171,7 +171,7 @@
 							if (!plist["arg"]) return 0
 
 							var/dir = plist["arg"]
-							dir = trim(copytext(sanitize(dir), 1, MAX_MESSAGE_LEN))
+							dir = trimtext(copytext(sanitize(dir), 1, MAX_MESSAGE_LEN))
 							dir = text2dir(dir)
 
 							if (ishuman(twitch_mob))
@@ -202,7 +202,7 @@
 							if (!plist["arg"]) return 0
 
 							var/msg = plist["arg"]
-							msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+							msg = trimtext(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
 							twitch_mob.hotkey(msg)
 							return 1
@@ -221,7 +221,7 @@
 							if (!plist["arg"]) return 0
 
 							var/msg = plist["arg"]
-							msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+							msg = trimtext(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
 							if (msg == "faint" || msg == "collapse") return 1 //nope!
 
@@ -233,7 +233,7 @@
 							if (isdead(twitch_mob)) return 1
 
 							var/msg = plist["arg"]
-							msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+							msg = trimtext(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
 							var/list/hudlist = list()
 							if (ishuman(twitch_mob))
@@ -264,7 +264,7 @@
 							if (!plist["arg"]) return 0
 
 							var/msg = plist["arg"]
-							msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+							msg = trimtext(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 							if (ishuman(twitch_mob))
 								var/mob/living/carbon/human/H = twitch_mob
 								H.auto_interact(msg)
@@ -277,7 +277,7 @@
 							if (isdead(twitch_mob)) return 1
 
 							var/msg = plist["arg"]
-							msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+							msg = trimtext(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
 							var/list/close_match = list()
 							for (var/atom/movable/I in view(1,twitch_mob))
@@ -333,7 +333,7 @@
 							if (!plist["arg"]) return 0
 
 							var/msg = plist["arg"]
-							msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+							msg = trimtext(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 							if (ishuman(twitch_mob))
 								var/mob/living/carbon/human/H = twitch_mob
 								H.ooc(msg)
@@ -401,7 +401,7 @@
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
 
-				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+				msg = trimtext(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 				msg = discord_emojify(msg)
 				logTheThing(LOG_OOC, nick, "OOC: [msg]")
 				logTheThing(LOG_DIARY, nick, ": [msg]", "ooc")
@@ -429,7 +429,7 @@
 					ircmsg["msg"] = msg
 					return ircbot.response(ircmsg)
 
-				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+				msg = trimtext(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 				msg = linkify(msg)
 				msg = discord_emojify(msg)
 
@@ -452,7 +452,7 @@
 					server_name = "GOON-???"
 				var/nick = plist["nick"]
 				var/msg = plist["msg"]
-				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
+				msg = trimtext(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
 				logTheThing(LOG_ADMIN, null, "[server_name] PM: [nick]: [msg]")
 				logTheThing(LOG_DIARY, null, "[server_name] PM: [nick]: [msg]", "admin")
@@ -936,3 +936,17 @@
 							canvas.load_from_id(canvas.id)
 						response[canvas.id] = icon2base64(canvas.art)
 				return json_encode(response)
+
+			if("ban_added")
+				bansHandler.add(
+					plist["admin_ckey"],
+					plist["server_id"],
+					plist["ckey"],
+					plist["comp_id"],
+					plist["ip"],
+					plist["reason"],
+					text2num(plist["duration"]) * 10,
+					text2num(plist["requires_appeal"]),
+					TRUE
+				)
+				return 1

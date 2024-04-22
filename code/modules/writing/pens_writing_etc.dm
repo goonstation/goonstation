@@ -1130,7 +1130,7 @@
 		src.update()
 		user.update_inhands()
 		SPAWN(0)
-			attack_self(user)
+			src.AttackSelf(user)
 			return
 		return
 
@@ -1327,7 +1327,7 @@
 					src.display_booklet_contents(usr,page_num)
 			if ("title_page")
 				if (cur_page.loc.loc == usr)
-					cur_page.attack_self(usr)
+					cur_page.AttackSelf(usr)
 			if ("title_book")
 				src.give_title(usr)
 			if ("first_page")

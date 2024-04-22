@@ -231,9 +231,9 @@ ADMIN_INTERACT_PROCS(/mob/living/carbon/human/fathergrife, proc/chatter)
 	proc/chatter()
 		set name = "Chatter"
 		var/phrase = pick_smart_string("father_grife.txt", "say", list(
-			"job" = PROC_REF(say_helper_job),
-			"crewmember" = PROC_REF(say_helper_crewmember),
-			"logged_phrase" = PROC_REF(say_helper_logged_phrase)
+			"job" = /mob/living/carbon/human/fathergrife/proc/say_helper_job,
+			"crewmember" = /mob/living/carbon/human/fathergrife/proc/say_helper_crewmember,
+			"logged_phrase" = /mob/living/carbon/human/fathergrife/proc/say_helper_logged_phrase
 		))
 		src.say(phrase)
 
