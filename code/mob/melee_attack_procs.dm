@@ -676,9 +676,8 @@
 			stam_power *= clamp(damage/pre_armor_damage, 1, 1/3)
 		stam_power *= max(0, (1-shield_amt["shield_strength"]))
 
-		if (!target.hasStatus("weakened"))
-			//record the stamina damage to do. zero it if they are weakened
-			msgs.stamina_target -= max(stam_power, 0)
+		//record the stamina damage to do
+		msgs.stamina_target -= max(stam_power, 0)
 
 		//if we can crit, roll for a crit. Crits are blocked by blocks.
 		if (prob(crit_chance) && !target.check_block()?.can_block(DAMAGE_BLUNT, 0))
@@ -1010,8 +1009,7 @@
 					target.add_stamina(stamina_target)
 				else
 					var/prev_stam = target.get_stamina()
-					if (!target.hasStatus("weakened"))
-						target.remove_stamina(-stamina_target)
+					target.remove_stamina(-stamina_target)
 					target.revenge_stun_reduction(stamina_target, (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), damage_type )
 					target.stamina_stun()
 					if(prev_stam > 0 && target.get_stamina() <= 0) //We were just knocked out.
