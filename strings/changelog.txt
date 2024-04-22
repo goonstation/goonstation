@@ -1,5 +1,16 @@
 
+(t)mon apr 22 24
+(u)Colossusqw
+(p)18589
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Energy Drink now no longer has a random chance of causing heart failure, now the heart failure is handled via it's increased caffeine output.
+(u)Lord_Earthfire
+(p)18595
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The automatic signaller component has received an option to be toggled on/off by a mechcomp signal.
 (t)sun apr 21 24
+(u)LeahTheTech
+(*)A pair of PacketVision glasses have been added to the research director's locker. Can be tuned to various frequencies to allow the user to "see" wireless packets.
 (u)tarmunora
 (*)Mechanical boots now counteract slowdown from pushing, pulling, and other worn equipment as opposed to a 50% reduction in movedelay. Also made somewhat cheaper to print.
 (u)Colossusqw
