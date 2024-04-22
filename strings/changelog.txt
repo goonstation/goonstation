@@ -1,4 +1,9 @@
 
+(t)mon apr 22 24
+(u)Lord_Earthfire
+(p)18595
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The automatic signaller component has received an option to be toggled on/off by a mechcomp signal.
 (t)sun apr 21 24
 (u)LeahTheTech
 (*)A pair of PacketVision glasses have been added to the research director's locker. Can be tuned to various frequencies to allow the user to "see" wireless packets.
