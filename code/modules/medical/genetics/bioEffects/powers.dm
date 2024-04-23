@@ -2343,7 +2343,7 @@
 
 /datum/bioEffect/power/critter/scorpion_sting
 	name = "Scorpiocauda Vipernox"
-	desc = "Generates a hardened keratin area between the mouth and nose."
+	desc = "Generates a hardened chitin tail like stucture."
 	id = "scorpion_sting"
 	msgGain = "You feel aware of something strange around your tail bone."
 	msgLose = "You feel a bit more normal."

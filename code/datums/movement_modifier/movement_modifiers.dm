@@ -295,12 +295,10 @@
 	ask_proc = 1
 
 /datum/movement_modifier/slither/modifiers(mob/living/user, move_target, running)
-	var/missing_arms = 0
-	var/missing_legs = 0
 	var/mob/living/carbon/human/H = user
 
 	if (user.lying)
-		applied_modifier = (0.9) * (7*2) // Counteract most of the effect of laying down if.. laying down
+		var/applied_modifier = (0.9) * (7*2) // Counteract most of the effect of laying down if.. laying down
 		return list(0-(applied_modifier),1)
 
 
