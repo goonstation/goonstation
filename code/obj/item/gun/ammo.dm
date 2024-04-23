@@ -1694,3 +1694,12 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 					overlays += "burst_laspistol-100"
 			return
 
+/obj/item/ammo/bullets/commander_rifle
+	sname = "custom smart round"
+	name = "H14-C Smart Magazine"
+	desc = "These must've been specially made, woah! The rounds inside seem to be lined with fancy electronics the guns barrel could program, somehow."
+	ammo_type = new/datum/projectile/bullet/commander_rifle
+	icon_state = "rifle_box_mag" //needs sprite, could modify nukie ak or rifle box mag, depends
+	amount_left = 14
+	max_amount = 14
+	ammo_cat = AMMO_RIFLE_COMM

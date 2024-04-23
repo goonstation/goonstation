@@ -1572,6 +1572,9 @@ datum/projectile/bullet/autocannon
 		else if (O)
 			src.has_det = 0
 
+	mist
+		var/obj/item/chem_grenade/fog
+
 /datum/projectile/bullet/breach_flashbang
 	name = "door-breaching flashbang"
 	window_pass = 0
@@ -2061,3 +2064,122 @@ datum/projectile/bullet/autocannon
 	impact_image_state = "bullethole-small"
 	casing = /obj/item/casing/medium
 	ricochets = TRUE
+
+/datum/projectile/bullet/commander_rifle
+	name = "shouldnt be seeing this!"
+	sname = "the useless barrel, call CODER!!"
+	shot_sound = 'sound/weapons/smartgun.ogg'
+	damage = 45
+	damage_type = D_PIERCING
+	implanted = /obj/item/implant/projectile/bullet_commander
+	impact_image_state = "bullethole-small"
+	casing = /obj/item/casing/medium
+	ricochets = FALSE
+
+	// if youre looking for the mist projectile see /datum/projectile/bullet/grenade_shell/mist
+
+	standard
+		name = "smart standard round"
+		sname = "the standard barrel"
+		damage = 45
+
+	penetrator
+		name = "smart penetrator round"
+		sname = "the penetrator barrel"
+		damage = 30
+		armor_ignored = 0.66
+		hit_type = DAMAGE_STAB
+
+		on_launch(obj/projectile/O)
+			O.AddComponent(/datum/component/sniper_wallpierce, 2, 20)
+
+	heavy //TODO: disorient user too
+		name = "smart heavy-duty round"
+		sname = "the heavy barrel"
+		damage = 70
+		armor_ignored = 0.33
+		hit_type = DAMAGE_STAB
+		cost = 2
+
+		#ifdef USE_STAMINA_DISORIENT
+		on_hit(atom/hit, dirflag, obj/projectile/proj)
+			if(ishuman(hit))
+				var/mob/living/carbon/human/H = hit
+				H.do_disorient(0, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
+		#endif
+
+	ricochet
+		name = "smart LSR round"
+		sname = "the ricochet barrel"
+		damage = 30
+		var/max_bounce_count = 3
+		var/reflect_on_nondense_hits = FALSE
+		var/reflectcount = 0
+
+		on_hit(atom/hit, direction, obj/projectile/P)
+			if (!ismob(hit))
+				shoot_reflected_bounce(P, hit, max_bounce_count, PROJ_NO_HEADON_BOUNCE, reflect_on_nondense_hits)
+				reflectcount++
+
+		get_power(obj/projectile/P, atom/A)
+			if(reflectcount != 0)
+				return 30 + 20 * P.reflectcount
+			else
+				return 30
+
+	incendiary
+		name = "smart flare round"
+		sname = "the icendiary barrel"
+		damage = 20
+		icon_state = "flare"
+
+		on_hit(atom/hit, direction, obj/projectile/P)
+			if (isliving(hit))
+				fireflash(get_turf(hit) || get_turf(P), 0)
+				hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
+
+	anticlown
+		name = "anti-humour round"
+		sname = "the anti-clown barrel"
+		damage = 10
+		icon_state = "random_thing"
+
+		on_hit(atom/hit, dirflag)
+			if (ishuman(hit))
+				var/mob/living/carbon/human/H = hit
+				var/clown_tally = 0
+				if(istype(H.w_uniform, /obj/item/clothing/under/misc/clown))
+					clown_tally += 1
+				if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
+					clown_tally += 1
+				if(istype(H.wear_mask, /obj/item/clothing/mask/clown_hat))
+					clown_tally += 1
+				if(clown_tally > 0)
+					playsound(H, 'sound/musical_instruments/Bikehorn_1.ogg', 50, TRUE)
+
+				if (H.job == "Clown" || clown_tally >= 2)
+					H.drop_from_slot(H.shoes)
+					H.ex_act(2)
+					H.emote("twitch_v")
+					JOB_XP(H, "Clown", 10)
+				return
+
+	acid
+		name = "smart acidic round"
+		sname = "the acidic barrel"
+		damage = 10
+		icon_state = "radbolt"
+
+		on_hit(atom/hit, direction, var/obj/projectile/projectile)
+			..()
+			var/power = projectile.power
+			hit.damage_corrosive(power)
+
+	doorbreach
+		name = "extra smart round"
+		sname = "the breaching barrel"
+		damage = 20
+		icon_state = "40mm_paint"
+
+		on_launch(obj/projectile/O)
+			O.AddComponent(/datum/component/proj_door_breach)

@@ -908,6 +908,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		icon_state = "bulletexpanded"
 		desc = ".41? What the heck? Who even uses these anymore?"
 
+	bullet_commander
+		icon_state = "bulletbig" // needs some fancy hightech bullet sprite
+		desc = "A large bullet from a rifle cartridge. Seems to be coated in burnt-out electronics. Weird."
+
+
 	bullet_12ga
 		name = "buckshot"
 		icon_state = "buckshot"
