@@ -398,10 +398,6 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		overlay_icon.Blend(icon('icons/mob/genetics_powers.dmi',"darkener"), ICON_ADD)
 		B.UpdateOverlays(image(overlay_icon), "ability_overlay")
 
-	disposing()
-		holder.removeAbility(/datum/targetable/critter/magic_missile)
-		. = ..()
-
 	onAttach(var/datum/abilityHolder/H)
 		..()
 

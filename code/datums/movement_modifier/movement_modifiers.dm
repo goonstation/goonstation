@@ -295,8 +295,6 @@
 	ask_proc = 1
 
 /datum/movement_modifier/slither/modifiers(mob/living/user, move_target, running)
-	var/mob/living/carbon/human/H = user
-
 	if (user.lying)
 		var/applied_modifier = (0.9) * (7*2) // Counteract most of the effect of laying down if.. laying down
 		return list(0-(applied_modifier),1)
