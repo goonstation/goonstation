@@ -146,7 +146,7 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 	on_process(var/obj/machinery/plantpot/PP, var/datum/plantgrowth_tick/growth_tick)
 		if (..())
 			return
-		growth_tick.tick_multiplier -= 0.75
+		growth_tick.tick_multiplier -= 0.25
 		growth_tick.water_consumption -= 0.5
 
 /datum/plant_gene_strain/growth_fast
