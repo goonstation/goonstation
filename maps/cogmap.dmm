@@ -38151,7 +38151,8 @@
 /area/station/hydroponics/bay)
 "cHR" = (
 /obj/machinery/atmospherics/binary/valve{
-	dir = 4
+	dir = 4;
+	name = "hot loop inlet valve"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -41282,7 +41283,7 @@
 /obj/machinery/atmospherics/binary/valve{
 	desc = "cold reserve tank valve";
 	dir = 4;
-	name = "reserve tank valve"
+	name = "cold reserve tank valve"
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
@@ -45013,7 +45014,8 @@
 /area/station/ranch)
 "hLX" = (
 /obj/machinery/atmospherics/binary/valve{
-	dir = 4
+	dir = 4;
+	name = "cold loop inlet valve"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -49654,7 +49656,7 @@
 /obj/machinery/atmospherics/binary/valve{
 	desc = "furnace bypass valve";
 	dir = 4;
-	name = "furnace bypass valve"
+	name = "burn chamber bypass valve"
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
@@ -57000,7 +57002,8 @@
 /area/station/crew_quarters/catering)
 "ryf" = (
 /obj/machinery/atmospherics/binary/valve{
-	dir = 4
+	dir = 4;
+	name = "hot loop inlet valve"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;

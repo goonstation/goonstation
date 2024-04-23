@@ -163,7 +163,7 @@
 	},
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "cold loop auxillary west"
+	name = "cold loop auxillary"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -186,7 +186,7 @@
 "iO" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop auxillary west"
+	name = "hot loop auxillary"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)

@@ -146,7 +146,9 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aaN" = (
-/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/atmospherics/binary/valve{
+	name = "freezer inlet valve"
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/coldloop)
 "aaO" = (
@@ -37233,6 +37235,13 @@
 /obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/central)
+"cdV" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "freezer bypass valve"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
 "cdX" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -57187,7 +57196,9 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/main)
 "ehC" = (
-/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/atmospherics/binary/valve{
+	name = "hot loop inlet valve"
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
 "eik" = (
@@ -57266,7 +57277,7 @@
 "enN" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop inlet valve"
+	name = "burn chamber bypass valve"
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -57703,6 +57714,13 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/science/lab)
+"eNY" = (
+/obj/machinery/atmospherics/binary/valve{
+	desc = "hot radiator outlet valve";
+	name = "hot radiator outlet valve"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/hotloop)
 "eOg" = (
 /obj/grille/catwalk{
 	dir = 10
@@ -58317,7 +58335,9 @@
 /turf/simulated/floor/orangeblack,
 /area/station/maintenance/central)
 "fDX" = (
-/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold reserve tank valve"
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -59251,7 +59271,8 @@
 /area/station/crew_quarters/cafeteria)
 "gEv" = (
 /obj/machinery/atmospherics/binary/valve{
-	dir = 4
+	dir = 4;
+	name = "cold loop inlet valve"
 	},
 /turf/simulated/floor/caution/north{
 	dir = 8
@@ -61214,7 +61235,8 @@
 /area/station/mining/staff_room)
 "iEv" = (
 /obj/machinery/atmospherics/binary/valve{
-	dir = 4
+	dir = 4;
+	name = "cold loop inlet valve"
 	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/coldloop)
@@ -62001,16 +62023,6 @@
 /obj/decal/poster/wallsign/stencil/left/g,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
-"jmi" = (
-/obj/cable/orange{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "hot loop auxillary west"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "jnB" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -63008,6 +63020,12 @@
 	dir = 4
 	},
 /area/station/medical/medbay/lobby)
+"kin" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "freezer outlet valve"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/coldloop)
 "kix" = (
 /obj/machinery/light{
 	dir = 1;
@@ -64271,15 +64289,15 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "luz" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold loop auxillary west"
-	},
 /obj/cable/orange{
 	icon_state = "2-4"
 	},
 /obj/cable/orange{
 	icon_state = "2-5"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold loop auxillary"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -64656,7 +64674,7 @@
 "lOr" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "cold loop auxillary west"
+	name = "cold loop auxillary"
 	},
 /obj/cable/orange{
 	icon_state = "1-4"
@@ -64977,7 +64995,8 @@
 	})
 "mdZ" = (
 /obj/machinery/atmospherics/binary/valve{
-	dir = 4
+	dir = 4;
+	name = "cold loop pressure release valve"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
@@ -68296,6 +68315,13 @@
 	pixel_y = 12
 	},
 /turf/simulated/floor/caution/south,
+/area/station/engine/hotloop)
+"pSs" = (
+/obj/machinery/atmospherics/binary/valve{
+	desc = "hot radiator inlet valve";
+	name = "hot radiator inlet valve"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
 "pSI" = (
 /obj/strip_door{
@@ -71751,7 +71777,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "tni" = (
-/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/atmospherics/binary/valve{
+	dir = 1;
+	name = "hot reserve tank valve"
+	},
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
 "tnE" = (
@@ -72072,12 +72101,12 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "tDZ" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "hot loop auxillary west"
-	},
 /obj/cable/orange{
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot loop auxillary"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -73822,6 +73851,13 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/central)
+"vMl" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot loop pressure release valve"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
 "vNL" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
@@ -113425,10 +113461,10 @@ wat
 hVd
 bts
 bij
-mdZ
+vMl
 byV
 liE
-jmi
+tDZ
 bGc
 bGc
 gXp
@@ -115249,7 +115285,7 @@ sVT
 sju
 baQ
 bQv
-mdZ
+cdV
 bTE
 bVi
 bWK
@@ -115552,7 +115588,7 @@ bCy
 bPb
 bQu
 bRY
-aaN
+kin
 bVj
 bWL
 bYf
@@ -115836,7 +115872,7 @@ biR
 bjJ
 blp
 bmH
-ehC
+eNY
 bpU
 brM
 btA
@@ -117044,7 +117080,7 @@ biS
 bjJ
 bmG
 bmH
-ehC
+pSs
 bpX
 msj
 btE

@@ -15289,7 +15289,7 @@
 "aYV" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop purge valve"
+	name = "hot loop pressure release valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southwest)
@@ -15786,7 +15786,7 @@
 "bxK" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "cold loop valve"
+	name = "cold loop outlet valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -16143,7 +16143,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "diS" = (
-/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold loop inlet valve"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/coldloop)
 "dlS" = (
@@ -16494,12 +16496,14 @@
 /area/station/security/detectives_office)
 "fcV" = (
 /obj/machinery/power/apc/autoname_east,
-/obj/machinery/atmospherics/binary/valve,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	name = "hot loop inlet valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
@@ -17407,7 +17411,7 @@
 "jUG" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "cold loop purge valve"
+	name = "cold loop pressure release valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
@@ -18850,9 +18854,11 @@
 "qyp" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
-/obj/machinery/atmospherics/binary/valve,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold loop inlet valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/coldloop)
@@ -19084,7 +19090,9 @@
 /turf/simulated/floor/blueblack,
 /area/station/turret_protected/ai)
 "rFr" = (
-/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/atmospherics/binary/valve{
+	name = "hot loop inlet valve"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
 "rKd" = (
@@ -19722,7 +19730,7 @@
 "uSJ" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop valve"
+	name = "hot radiator inlet valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -19858,7 +19866,7 @@
 /area/station/engine/engineering)
 "vCI" = (
 /obj/machinery/atmospherics/binary/valve{
-	name = "hot loop bypass valve"
+	name = "burn chamber bypass valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
