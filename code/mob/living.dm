@@ -1863,7 +1863,7 @@
 		return
 	if (src.client && src.special_sprint?.can_sprint(src))
 		src.special_sprint.do_sprint(src)
-	if (src.special_sprint.overrides_sprint)
+	if (src.special_sprint?.overrides_sprint)
 		return
 	else if (src.use_stamina)
 		if (!next_step_delay && world.time >= next_sprint_boost)
