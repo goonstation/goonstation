@@ -382,7 +382,7 @@ TYPEINFO(/obj/item/fish_portal)
 		playsound(src.loc, 'sound/effects/fish_processed_alt.ogg', 100, 1)
 
 	attack_ai(var/mob/user as mob)
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	attackby(obj/item/W, mob/user)
 		if (src.working)

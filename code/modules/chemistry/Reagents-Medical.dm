@@ -622,6 +622,7 @@ datum
 			id = "saline"
 			description = "This saline and glucose solution can help stabilize critically injured patients and cleanse wounds."
 			reagent_state = LIQUID
+			thirst_value = 0.25
 			fluid_r = 220
 			fluid_g = 220
 			fluid_b = 220
