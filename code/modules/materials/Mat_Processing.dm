@@ -438,7 +438,7 @@ TYPEINFO(/obj/machinery/processor)
 				second_part = null
 
 		updateResultName()
-		attack_hand(usr)
+		src.Attackhand(usr)
 
 	proc/updateResultName()
 		if(first_part && second_part)

@@ -165,6 +165,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_mute,
 		/client/proc/cmd_admin_mute_temp,
 		/client/proc/respawn_as_self,
+		/client/proc/ras,
 		/client/proc/respawn_as_new_self,
 		/client/proc/respawn_as_job,
 		/datum/admins/proc/toggletraitorscaling,
@@ -251,6 +252,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_force_mixed_wraith,
 		/client/proc/toggle_spooky_light_plane,
 		/datum/admins/proc/toggle_radio_audio,
+		/datum/admins/proc/toggle_remote_music_announcements,
 		///proc/possess,
 		/proc/possessmob,
 		/proc/releasemob,
@@ -1111,6 +1113,12 @@ var/list/fun_images = list()
 
 	respawn_as_self_internal(new_self=FALSE)
 
+/client/proc/ras()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "RAS"
+	set popup_menu = 0
+	ADMIN_ONLY
+	respawn_as_self_internal(new_self=FALSE)
 
 /client/proc/respawn_as_self_internal(new_self=FALSE, jobstring = "Staff Assistant")
 	ADMIN_ONLY

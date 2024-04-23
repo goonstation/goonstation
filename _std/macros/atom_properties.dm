@@ -237,6 +237,7 @@ To remove:
 #define PROP_MOB_AI_UNTRACKABLE(x) x("aiuntrackable", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_BLOOD_TRACKING_ALWAYS(x) x("bloodtrackingalways", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_VAULT_SPEED(x) x("vaultspeed", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
+#define PROP_MOB_MOVESPEED_ASSIST(x) x("movespeed_assist", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM) //what fraction (0-1) of movespeed penalty (from equipment only) to negate
 //armour properties
 #define PROP_MOB_MELEEPROT_HEAD(x) x("meleeprot_head", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX)
 #define PROP_MOB_MELEEPROT_BODY(x) x("meleeprot_body", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX)

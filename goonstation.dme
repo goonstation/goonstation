@@ -461,6 +461,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living.dm"
 #include "code\mob\melee_attack_procs.dm"
 #include "code\mob\new_player.dm"
+#include "code\mob\special_sprint.dm"
 #include "code\mob\suicide.dm"
 #include "code\mob\transform_procs.dm"
 #include "code\mob\who.dm"

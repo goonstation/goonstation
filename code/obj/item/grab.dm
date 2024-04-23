@@ -151,7 +151,7 @@
 		if (check())
 			return
 		if (target == src.affecting)
-			attack_self(user)
+			src.AttackSelf(user)
 			return
 
 	attack_hand(mob/user)

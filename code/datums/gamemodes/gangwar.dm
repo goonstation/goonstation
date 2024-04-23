@@ -623,7 +623,10 @@ proc/broadcast_to_all_gangs(var/message)
 			show_score_maptext(amount, location)
 		else if (bonusMob.client && !bonusMob.client.preferences?.flying_chat_hidden)
 			var/image/chat_maptext/chat_text = null
-			chat_text = make_chat_maptext(bonusMob, "<span class='ol c pixel' style='color: #08be4e;'>+[amount]</span>", alpha = 180, time = 1.5 SECONDS)
+			if (amount >= 1000)
+				chat_text = make_chat_maptext(bonusMob, "<span class='ol c pixel' style='color: #08be4e; font-weight: bold; font-size: 24px;'>+[amount]</span>", alpha = 180, time = 3 SECONDS)
+			else
+				chat_text = make_chat_maptext(bonusMob, "<span class='ol c pixel' style='color: #08be4e;'>+[amount]</span>", alpha = 180, time = 1.5 SECONDS)
 			if (chat_text)
 				chat_text.show_to(bonusMob.client)
 

@@ -301,6 +301,7 @@ var/global
 	announce_banlogin = 1
 	announce_jobbans = 0
 	radio_audio_enabled = 1
+	remote_music_announcements = 0
 
 
 	outpost_destroyed = 0

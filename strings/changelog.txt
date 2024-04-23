@@ -1,4 +1,37 @@
-
+(t)tue apr 23 24
+(u)LeahTheTech
+(+)Shower heads can now be deconstructed.
+(t)mon apr 22 24
+(u)Colossusqw
+(p)18589
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Energy Drink now no longer has a random chance of causing heart failure, now the heart failure is handled via it's increased caffeine output.
+(u)Lord_Earthfire
+(p)18595
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The automatic signaller component has received an option to be toggled on/off by a mechcomp signal.
+(t)sun apr 21 24
+(u)LeahTheTech
+(*)A pair of PacketVision glasses have been added to the research director's locker. Can be tuned to various frequencies to allow the user to "see" wireless packets.
+(u)tarmunora
+(*)Mechanical boots now counteract slowdown from pushing, pulling, and other worn equipment as opposed to a 50% reduction in movedelay. Also made somewhat cheaper to print.
+(u)Colossusqw
+(p)18590
+(e)💅📡|C-QoL, A-AI
+(+)Random pests cannot spawn directly onto players anymore.
+(t)sat apr 20 24
+(u)LeahTheTech
+(p)18577
+(e)💅🤖|C-QoL, A-Silicons
+(+)The AI's primary radio microphone now defaults to off.
+(u)FlameArrow57
+(p)18566
+(e)⚖💅📦🚗|C-Balance, C-QoL, A-Game-Objects, A-Vehicles
+(*)The security Tri-Corp Tractor Beam pod component now works more responsively, dragging items as fast as the ship moves.
+(u)FlameArrow57
+(p)18574
+(e)🆕📦🚗|C-Feature, A-Game-Objects, A-Vehicles
+(*)Added a new Storage Hold pod secondary system to ship component fabricators. This is a storage-like component that allows ships to store up to 10 handheld items of normal size, just like a backpack. Accessible by click dragging the pod to you, click dragging items to the pod, or using ship buttons while inside the pod.
 (t)fri apr 19 24
 (u)LeahTheTech
 (+)Laser mirrors can now be rotated with a crowbar.
