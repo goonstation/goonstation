@@ -2302,6 +2302,8 @@
 						if (thrown_limb)
 							thrown_limb.throwforce = tmp_force
 
+/datum/bioEffect/power/critter
+	id = "critter_do_not_use"
 
 /datum/bioEffect/power/critter/peck
 	name = "Aviornis Rostriformis "
