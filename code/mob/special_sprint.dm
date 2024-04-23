@@ -1,4 +1,6 @@
 /datum/special_sprint
+	///Disable regular sprinting behaviour
+	var/overrides_sprint = FALSE
 	proc/can_sprint(mob/M)
 		if (isliving(M))
 			var/mob/living/owner = M
