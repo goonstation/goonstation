@@ -2093,6 +2093,7 @@
 /obj/cable/blue{
 	icon_state = "1-4"
 	},
+/obj/laser_sink/mirror,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
 "aAZ" = (
@@ -65698,6 +65699,7 @@
 	})
 "tVF" = (
 /obj/machinery/light/incandescent/warm,
+/obj/laser_sink/mirror,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
 "tVH" = (

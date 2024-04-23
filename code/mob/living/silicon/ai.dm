@@ -337,9 +337,9 @@ or don't if it uses a custom topopen overlay
 		src.radio2.name = "AI Intercom Monitor"
 		src.radio2.device_color = "#7F7FE2"
 		src.radio3.name = "Secure Channels Monitor"
-		src.radio1.broadcasting = 1
+		src.radio1.broadcasting = FALSE
 		src.radio2.set_frequency(R_FREQ_INTERCOM_AI)
-		src.radio3.broadcasting = 0
+		src.radio3.broadcasting = FALSE
 		src.internal_pda.name = "AI's Internal PDA Unit"
 		src.internal_pda.owner = "AI"
 		if (src.brain && src.key)

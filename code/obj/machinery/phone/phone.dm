@@ -337,6 +337,7 @@ TYPEINFO(/obj/machinery/phone)
 	var/obj/machinery/phone/parent = null
 	flags = TALK_INTO_HAND
 	w_class = W_CLASS_TINY
+	var/icon/handset_icon = null
 
 	New(var/obj/machinery/phone/parent_phone, var/mob/living/picker_upper)
 		if(!parent_phone)
@@ -349,6 +350,7 @@ TYPEINFO(/obj/machinery/phone)
 		stripe_image.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		src.color = parent_phone.color
 		src.UpdateOverlays(stripe_image, "stripe")
+		src.handset_icon = getFlatIcon(src)
 		processing_items.Add(src)
 
 	proc/get_holder()
@@ -382,15 +384,36 @@ TYPEINFO(/obj/machinery/phone)
 		..()
 		if(GET_DIST(src, get_holder()) > 0 || !src.parent.linked || !src.parent.linked.handset) // Guess they dropped it? *shrug
 			return
-		var/processed = SPAN_SAY("[SPAN_BOLD("[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]")]\] says, </span> [SPAN_MESSAGE("\"[text[1]]\"")]")
-		var/mob/T = src.parent.linked.handset.get_holder()
-		if(T?.client)
-			if(GET_DIST(src.parent.linked.handset,src.parent.linked.handset.get_holder())<1)
-				T.show_message(processed, 2)
-			M.show_message(processed, 2)
 
-			for (var/obj/item/device/radio/intercom/I in range(3, T))
-				I.talk_into(M, text, null, M.real_name, lang_id)
+		var/heard_name = M.get_heard_name(just_name_itself=TRUE)
+		if(M.mind)
+			heard_name = "<span class='name' data-ctx='\ref[M.mind]'>[heard_name]</span>"
+
+		var/obj/item/phone_handset/listener_handset = src.parent.linked.handset
+
+		var/mob/listener = listener_handset.get_holder()
+		if(listener?.client)
+			var/phone_ident = "\[ <span style=\"color:[src.parent.stripe_color]\">[bicon(src.handset_icon)] [src.parent.phone_id]</span> \]"
+			var/said_message = SPAN_SAY("[SPAN_BOLD("[heard_name] [phone_ident]")]  [SPAN_MESSAGE(M.say_quote(text[1]))]")
+			if (listener.client.holder && ismob(M) && M.mind)
+				said_message = "<span class='adminHearing' data-ctx='[listener.client.chatOutput.getContextFlags()]'>[said_message]</span>"
+
+			// chat feedback to let talker know when they are speaking over the phone
+			M.show_message(said_message, 2)
+
+			if(GET_DIST(src.parent.linked.handset,src.parent.linked.handset.get_holder())<1)
+				var/heard_voice = M.voice_name
+				if(M.mind)
+					heard_voice = "<span class='name' data-ctx='\ref[M.mind]'>[heard_voice]</span>"
+				if(!listener.say_understands(M, lang_id))
+					said_message = SPAN_SAY("[SPAN_BOLD("[heard_voice] [phone_ident]")] [SPAN_MESSAGE(M.voice_message)]")
+					if (listener.client.holder && ismob(M) && M.mind)
+						said_message = "<span class='adminHearing' data-ctx='[listener.client.chatOutput.getContextFlags()]'>[said_message]</span>"
+				listener.show_message(said_message, 2)
+
+			// intercoms overhear phone conversations
+			for (var/obj/item/device/radio/intercom/I in range(3, listener))
+				I.talk_into(M, text, null, heard_name, lang_id)
 
 TYPEINFO(/obj/machinery/phone/wall)
 	mats = 25

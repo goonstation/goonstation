@@ -12,6 +12,7 @@
 	var/list/records = null
 	var/id = null
 	var/frequency = null
+	var/base_icon_state = null
 
 	/// does it have a glow in the dark screen? see computer_screens.dmi
 	var/glow_in_dark_screen = TRUE
@@ -109,6 +110,7 @@
 
 /obj/machinery/computer/New()
 	..()
+	base_icon_state = initial(icon_state)
 	light = new/datum/light/point
 	light.set_brightness(0.4)
 	light.set_color(light_r, light_g, light_b)
@@ -160,14 +162,13 @@
 /obj/machinery/computer/power_change()
 	//if(!istype(src,/obj/machinery/computer/security/telescreen))
 	if(status & BROKEN)
-		icon_state = initial(icon_state)
-		src.icon_state += "b"
+		icon_state = "[src.base_icon_state]b"
 		light.disable()
 		if(glow_in_dark_screen)
 			src.ClearSpecificOverlays("screen_image")
 
 	else if(powered())
-		icon_state = initial(icon_state)
+		icon_state = src.base_icon_state
 		status &= ~NOPOWER
 		light.enable()
 		if(glow_in_dark_screen)
@@ -178,9 +179,7 @@
 			src.UpdateOverlays(screen_image, "screen_image")
 	else
 		SPAWN(rand(0, 15))
-			//src.icon_state = "c_unpowered"
-			icon_state = initial(icon_state)
-			src.icon_state += "0"
+			src.icon_state = "[src.base_icon_state]0"
 			status |= NOPOWER
 			light.disable()
 			if(glow_in_dark_screen)
@@ -208,7 +207,6 @@
 	var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 	smoke.set_up(5, 0, src)
 	smoke.start()
-	icon_state = initial(icon_state)
-	icon_state += "b"
+	icon_state = "[src.base_icon_state]b"
 	light.disable()
 	status |= BROKEN

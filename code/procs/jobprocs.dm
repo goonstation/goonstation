@@ -230,6 +230,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		if (!JOB.allow_traitors && player.mind.special_role ||  !JOB.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
 			player.antag_fallthrough = TRUE
 			continue
+		if ((!JOB.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
+			player.antag_fallthrough = TRUE
+			continue
 		// If there's an open job slot for it, give the player the job and remove them from
 		// the list of unassigned players, hey presto everyone's happy (except clarks probly)
 		if (JOB.limit < 0 || !(JOB.assigned >= JOB.limit))
@@ -704,6 +707,16 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy(src)
 		else
 			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("petperson"))
+		var/obj/item/pet_carrier/carrier = new/obj/item/pet_carrier(src)
+		var/picked = pick(filtered_concrete_typesof(/mob/living/critter/small_animal/, GLOBAL_PROC_REF(filter_carrier_pets)))
+		var/mob/living/critter/small_animal/pet = new picked(src)
+		pet.ai_type = /datum/aiHolder/wanderer
+		pet.aggressive = FALSE
+		pet.randomize_name()
+		pet.ai_retaliate_persistence = RETALIATE_ONCE
+		carrier.trap_mob(pet, src)
+		trinket = carrier
 	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
 		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
 		trinket = new random_lunchbox_path(src)
