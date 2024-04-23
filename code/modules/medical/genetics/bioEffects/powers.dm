@@ -2307,7 +2307,7 @@
 	name = "Aviornis Rostriformis "
 	desc = "Generates a hardened keratin area between the mouth and nose."
 	id = "beak_peck"
-	msgGain = "You feel your mouth and nose feel more difficult to move."
+	msgGain = "You feel your mouth and nose become more difficult to move."
 	msgLose = "You feel your face return to normal."
 	cooldown = 10 SECONDS
 	occur_in_genepools = 0

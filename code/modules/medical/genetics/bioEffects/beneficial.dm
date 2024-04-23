@@ -806,8 +806,8 @@ var/list/radio_brains = list()
 	id = "claws"
 	probability = 20
 	effectType = EFFECT_TYPE_POWER
-	msgGain = "You feel like your arms feel strange and clumbsy."
-	msgLose = "You are once again feel comfortable with your arms."
+	msgGain = "Your arms start to feel strange and clumsy."
+	msgLose = "You once again feel comfortable with your arms."
 	stability_loss = 5
 	icon_state  = "blood_od"
 	effect_group = "blood"
@@ -828,7 +828,7 @@ var/list/radio_brains = list()
 
 /datum/bioEffect/claws/pincer
 	name = "Manuschela Crustaceaformis "
-	desc = "Subject arm change into a pincer."
+	desc = "Subject's arm changes into a pincer."
 	id = "claws_pincer"
 	msgGain = "You feel like your arms are oddly firm."
 	msgLose = "You are once again feel comfortable with your arms."
@@ -852,7 +852,7 @@ var/list/radio_brains = list()
 	id = "carapace"
 	probability = 20
 	effectType = EFFECT_TYPE_POWER
-	msgGain = "You feel like skin becoming hardened."
+	msgGain = "You feel your skin harden."
 	msgLose = "You feel your skin become soft and supple."
 	stability_loss = 5
 	icon_state  = "aura"
@@ -882,7 +882,7 @@ var/list/radio_brains = list()
 	id = "slither"
 	probability = 20
 	effectType = EFFECT_TYPE_POWER
-	msgGain = "You feel like you could propsel yourself on your belly with a good wiggle."
+	msgGain = "You feel like you could propel yourself on your belly with a good wiggle."
 	msgLose = "You feel like moving around on your belly is a silly thing to do."
 	stability_loss = 5
 
@@ -900,11 +900,11 @@ var/list/radio_brains = list()
 
 /datum/bioEffect/food_stores
 	name = "Lipid Stores"
-	desc = "Subject gains the ability to improve the nourhsment available from their lipid stores."
+	desc = "Subject gains the ability to improve the nourishment available from their lipid stores."
 	id = "camel_fat"
 	probability = 20
 	effectType = EFFECT_TYPE_POWER
-	msgGain = "You feel like can store away some food and drink for later."
+	msgGain = "You feel like you can store away some food and drink for later."
 	msgLose = "You feel a little more lean than you did before."
 	stability_loss = 5
 	var/food_stored = 0
