@@ -24,6 +24,8 @@ TYPEINFO(/obj/item/device/transfer_valve)
 	var/image/tank_two_image = null
 	var/image/tank_one_image_under = null
 	var/image/tank_two_image_under = null
+	///if true, allows adding cable to wear on back. TODO: refactor this out
+	var/allow_wearable = TRUE
 
 	w_class = W_CLASS_GIGANTIC /// HEH
 	p_class = 3 /// H E H
@@ -121,7 +123,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			attacher = user
 			UpdateIcon()
 
-		else if(istype(item, /obj/item/cable_coil)) //make loops for shoulder straps
+		else if(istype(item, /obj/item/cable_coil) && src.allow_wearable) //make loops for shoulder straps
 			if(c_flags & ONBACK)
 				boutput(user, SPAN_ALERT("The valve already has shoulder straps!"))
 				return
@@ -136,7 +138,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			boutput(user, SPAN_NOTICE("You attach two loops of [item] to the transfer valve!"))
 			UpdateIcon()
 
-		else if (issnippingtool(item))
+		else if ((c_flags & ONBACK) && issnippingtool(item))
 			if(usr?.back && usr.back == src)
 				boutput(usr, SPAN_ALERT("You can't detach the loops of wire while you're wearing [src]!"))
 			else
@@ -190,8 +192,6 @@ TYPEINFO(/obj/item/device/transfer_valve)
 	attack_self(mob/user as mob)
 		if (isghostdrone(user))
 			return
-		if (user.get_gang())
-			boutput(user, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
 		src.ui_interact(user)
 
 #define TANK_PRESSURE(item_tank) (hasvar(item_tank, "air_contents")) ? MIXTURE_PRESSURE(item_tank.air_contents) : 0
@@ -220,8 +220,6 @@ TYPEINFO(/obj/item/device/transfer_valve)
 		..()
 		if (isghostdrone(usr) || usr.stat || usr.restrained())
 			return
-		if (usr.get_gang())
-			boutput(usr, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
 		switch(action)
 			if ("add_item")
 				if (params["tank"])
@@ -244,8 +242,8 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				src.attached_device = null
 				UpdateIcon()
 			if ("interact_device")
-				attached_device.attack_self(usr)
-		src.attack_self(usr)
+				attached_device.AttackSelf(usr)
+		src.AttackSelf(usr)
 		src.add_fingerprint(usr)
 
 	proc/remove_tank(var/T)
@@ -350,7 +348,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			var/image/straps = new(src.icon, icon_state = "wire_straps")
 			src.underlays += straps
 
-	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special varient.
+	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special variant.
 		src.wear_image.overlays = list()
 		if(src.tank_one)
 			src.wear_image.overlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_one_icon]1")
@@ -505,6 +503,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
 	var/obj/item/storage/briefcase/B = null
+	allow_wearable = FALSE
 
 	update_icon()
 

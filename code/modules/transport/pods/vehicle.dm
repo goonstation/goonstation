@@ -23,7 +23,8 @@
 	var/obj/item/shipcomponent/sensor/sensors = null
 	var/obj/item/shipcomponent/secondary_system/lock/lock = null
 	var/obj/item/shipcomponent/pod_lights/lights = null
-	var/rcs = 0		//bool, 1 for active, 0 for inactive
+	/// brake toggle
+	var/rcs = TRUE
 	var/uses_weapon_overlays = 0
 	var/health = 200
 	var/maxhealth = 200
@@ -58,6 +59,7 @@
 	/// I got sick of having the comms type swapping code in 17 New() ship types
 	/// so this is the initial type of comms array this vehicle will have
 	var/init_comms_type = /obj/item/shipcomponent/communications
+	var/faction = null // I don't really want to atom level define this, but it does make sense for pods to have faction too
 
 	//////////////////////////////////////////////////////
 	///////Life Support Stuff ////////////////////////////
@@ -1847,6 +1849,7 @@
 	health = 150
 	maxhealth = 150
 	acid_damage_multiplier = 0
+	faction = FACTION_SYNDICATE
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()

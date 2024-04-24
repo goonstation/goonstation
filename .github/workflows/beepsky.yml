@@ -25,6 +25,17 @@ jobs:
       - name: Setup Rust
         uses: hecrj/setup-rust-action@v2.0.0
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          cache: "yarn"
+          cache-dependency-path: ./tgui/yarn.lock
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+
       - name: Install Dependencies
         run: |
           pip3 install setuptools
@@ -35,7 +46,7 @@ jobs:
 
       - name: Check TGUI
         run: |
-          tools/ci/build_tgui.sh
+          tgui/bin/tgui --ci
 
       - name: Misc Checks
         run: |
@@ -64,26 +75,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: touch +secret/__secret.dme
-      - uses: actions/checkout@v4
+      - uses: robinraju/release-downloader@v1.9
         with:
-          repository: OpenDreamProject/OpenDream
-          submodules: "recursive"
-          path: OpenDream
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: "7.0"
-      - uses: actions/cache@v4
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-od-${{ hashFiles('OpenDream/**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-od
-      - uses: zyactions/dotnet-restore@v1
-        with:
-          working-directory: OpenDream
-      - run: dotnet build -c Release OpenDream/OpenDream.sln
-      - run: dotnet OpenDream/bin/DMCompiler/DMCompiler.dll --suppress-unimplemented goonstation.dme
+          repository: "OpenDreamProject/OpenDream"
+          tag: "latest"
+          fileName: "DMCompiler_linux-x64.tar.gz"
+          extract: true
+      - run: ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented goonstation.dme --version=515.1635
 
   compile:
     name: Compile
@@ -161,6 +159,17 @@ jobs:
       - name: Setup Rust
         uses: hecrj/setup-rust-action@v2.0.0
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          cache: "yarn"
+          cache-dependency-path: ./tgui/yarn.lock
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+
       - name: Install Dependencies
         run: |
           pip3 install setuptools
@@ -172,7 +181,7 @@ jobs:
       - name: Misc Checks
         run: |
           tools/ci/check_filedirs.sh goonstation.dme
-          tools/ci/build_tgui.sh
+          tgui/bin/tgui --ci
           tools/ci/check_grep_secret.sh
           tools/bootstrap/python tools/ci/validate_dme.py <goonstation.dme
           tools/bootstrap/python -m dmi.test
@@ -185,4 +194,4 @@ jobs:
 
       - name: Compile
         run: |
-          tools/ci/dm.sh -DCIBUILD -DTRAVIS_SUB goonstation.dme
+          tools/ci/dm.sh -DCIBUILD goonstation.dme

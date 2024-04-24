@@ -151,7 +151,7 @@
 		if (check())
 			return
 		if (target == src.affecting)
-			attack_self(user)
+			src.AttackSelf(user)
 			return
 
 	attack_hand(mob/user)
@@ -591,8 +591,8 @@
 /turf/grab_smash(obj/item/grab/G, mob/user)
 	var/mob/affecting = G.affecting //the parent disposes G
 	if(..())
-		var/duration = (G.state > 0) ? 4 SECONDS : 2 SECONDS
-		affecting.do_disorient(40, disorient = duration, stack_stuns = FALSE)
+		var/duration = (G.state > 0) ? 6 SECONDS : 4 SECONDS
+		affecting.do_disorient(80, disorient = duration, stack_stuns = FALSE)
 
 /obj/window/grab_smash(obj/item/grab/G, mob/user)
 	if (!ismob(G.affecting) || BOUNDS_DIST(G.affecting, src) != 0)
@@ -609,8 +609,8 @@
 		logTheThing(LOG_COMBAT, user, "slams [constructTarget(user,"combat")]'s head into [src]")
 		playsound(src.loc, src.hitsound , 100, 1)
 
-	var/duration = (G.state > 0) ? 4 SECONDS : 2 SECONDS
-	G.affecting.do_disorient(20, disorient = duration, stack_stuns = FALSE)
+	var/duration = (G.state > 0) ? 5 SECONDS : 3 SECONDS
+	G.affecting.do_disorient(50, disorient = duration, stack_stuns = FALSE)
 
 	G.dispose()
 	return 1

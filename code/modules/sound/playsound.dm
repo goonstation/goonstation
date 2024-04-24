@@ -164,6 +164,8 @@ proc/is_music_playing()
 			if (!adminC || !(adminC.stealth && !adminC.fakekey))
 				// Stealthed admins won't show the "now playing music" message,
 				// for added ability to be spooky.
+				if (remote_music_announcements)
+					boutput(C, "Playing <b>[data["title"]]</b> ([data["duration_human"]]).")
 				boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
 
 

@@ -23,6 +23,9 @@
 
 /datum/movement_modifier/equipment // per-mob instanced thing proxying an equip/unequip updated tally from equipment
 
+/datum/movement_modifier/mechboots
+	pushpull_multiplier = 0
+
 /datum/movement_modifier/hulkstrong
 	pushpull_multiplier = 0
 
@@ -52,6 +55,9 @@
 
 /datum/movement_modifier/death_march
 	additive_slowdown = -0.4
+
+/datum/movement_modifier/gang_trapped
+	additive_slowdown = 2
 
 /datum/movement_modifier/janktank
 	health_deficiency_adjustment = -50
@@ -121,6 +127,9 @@
 	if(user.part_leg_r)
 		. *= 0.75
 	return list(0, .)
+
+/datum/movement_modifier/robot_mag_upgrade
+	additive_slowdown = 0.5
 
 // robot heads
 /datum/movement_modifier/robot_part/light_head

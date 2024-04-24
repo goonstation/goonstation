@@ -22,6 +22,7 @@ TRAYS
 	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 2
+	c_flags = ONBELT
 
 	New()
 		..()
@@ -371,6 +372,7 @@ TRAYS
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	c_flags = ONBELT
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
@@ -607,6 +609,8 @@ TRAYS
 	var/stackable = TRUE
 	/// Do we have a plate stacked on us?
 	var/plate_stacked = FALSE
+	/// Can this smash someone on the head?
+	var/can_headsmash = TRUE
 
 	New()
 		..()
@@ -708,8 +712,6 @@ TRAYS
 
 	/// Removes a piece of food from the plate.
 	proc/remove_contents(obj/item/food)
-		if (!(food in src.contents))
-			return
 		MOVE_OUT_TO_TURF_SAFE(food, src)
 		src.vis_contents -= food
 		food.appearance_flags = initial(food.appearance_flags)
@@ -734,7 +736,7 @@ TRAYS
 		if (length(src.contents))
 			src.visible_message(SPAN_ALERT("Everything [src.is_plate ? "on" : "in"] \the [src] goes flying!"))
 		for (var/atom/movable/food in src)
-			food.set_loc(get_turf(src))
+			src.remove_contents(food)
 			if (istype(food, /obj/item/plate))
 				var/obj/item/plate/not_food = food
 				SPAWN(0.1 SECONDS) // This is rude but I want a small delay in smashing nested plates. More satisfying
@@ -814,7 +816,7 @@ TRAYS
 				src.remove_contents(pick(src.contents))
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(user.a_intent == INTENT_HARM && src.is_plate)
+		if(user.a_intent == INTENT_HARM && src.can_headsmash)
 			if(target == user)
 				boutput(user, SPAN_ALERT("<B>You smash [src] over your own head!</b>"))
 			else
@@ -896,6 +898,7 @@ TRAYS
 	is_plate = FALSE
 	max_space = 6
 	space_left = 6
+	can_headsmash = FALSE
 	var/open = FALSE
 
 	add_contents(obj/item/food, mob/user, click_params) // Due to non-plates skipping some checks in the original add_contents() we'll have to do our own checks.
@@ -1085,6 +1088,50 @@ TRAYS
 		tray_health--
 
 	shatter() // don't
+		return
+
+/obj/item/plate/cooling_rack // because grilled and fried foods always scalding you is annoying. This also lets you cook things in plasma fires.
+	name = "cooling rack"
+	desc = "A wire-mesh rack that lets food items cool down for safe(er?) consumption."
+	icon = 'icons/obj/foodNdrink/food_related.dmi'
+	icon_state = "coolingrack"
+	flags = FPRINT | TABLEPASS
+	force = 3
+	throwforce = 5
+	throw_speed = 3
+	throw_range = 5
+	pickup_sfx = "step_lattice"
+	w_class = W_CLASS_NORMAL
+	hit_sound = "step_lattice"
+	can_headsmash = FALSE // no unbreakable smashing tool for you!
+	stackable = FALSE // and no stacking them on plates!
+
+	New()
+		. = ..()
+		processing_items |= src
+
+	disposing()
+		. = ..()
+		processing_items.Remove(src)
+
+	process()
+		if (!length(src.contents)) return
+		var/turf/simulated/T = get_turf(src.loc)
+		if (!T) return
+		var/temp_to_expose = istype(T) ? T.air.temperature : T.temperature
+		for (var/obj/item/reagent_containers/food in src.contents)
+			var/datum/reagents/R = food.reagents
+			R.temperature_reagents(temp_to_expose, exposed_volume = (150 + R.total_volume * 2), change_cap = 75)
+
+	add_contents(obj/item/food, mob/user, click_params)
+		if (!food.edible)
+			boutput(user, SPAN_ALERT("That's not food, it doesn't belong on \the [src]!"))
+			return
+		..()
+
+	shatter()//mesh trays don't shatter
+		shit_goes_everywhere()
+
 		return
 
 //sushiiiiiii

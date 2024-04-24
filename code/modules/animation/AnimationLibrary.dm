@@ -528,7 +528,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	var/firing_angle = get_angle(origin, target)
 	muzzle_flash_any(M, firing_angle, muzzle_anim, muzzle_light_color, offset)
 
-proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25)
+proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25, var/horizontal_offset=0)
 	if (!A || firing_angle == null || !muzzle_anim) return
 
 	var/obj/particle/attack/muzzleflash/muzzleflash = new /obj/particle/attack/muzzleflash
@@ -541,7 +541,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		muzzleflash.overlays += muzzle_simple_light
 
 	var/matrix/mat = new
-	mat.Translate(0, offset)
+	mat.Translate(horizontal_offset, offset)
 	mat.Turn(firing_angle)
 	muzzleflash.transform = mat
 	muzzleflash.layer = A.layer
@@ -1878,3 +1878,16 @@ proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8
 	animate(time = time/2, pixel_y = 30, easing = CUBIC_EASING | EASE_OUT, loop = -1)
 	animate(time = time/2, pixel_y = 0, easing = CUBIC_EASING | EASE_IN, loop = -1)
 	animate_spin(thing, parallel = TRUE)
+
+/proc/animate_psy_juggle(atom/thing, duration = 2 SECONDS)
+	var/eighth_duration = duration / 8  // Divide the duration for each segment of the octagon
+	var/distance = 24  // Max distance from the center in pixels
+	animate(thing, pixel_x = distance, pixel_y = distance * 0.5, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate(pixel_x = distance * 0.5, pixel_y = distance, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate(pixel_x = -distance * 0.5, pixel_y = distance, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate(pixel_x = -distance, pixel_y = distance * 0.5, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate(pixel_x = -distance, pixel_y = -distance * 0.5, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate(pixel_x = -distance * 0.5, pixel_y = -distance, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate(pixel_x = distance * 0.5, pixel_y = -distance, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate(pixel_x = distance, pixel_y = -distance * 0.5, time=eighth_duration, easing = LINEAR_EASING, loop = -1)
+	animate_spin(thing, parallel = TRUE, T = 2 SECONDS)

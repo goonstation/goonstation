@@ -568,7 +568,15 @@
 		var/mob/living/L = owner
 		L.speech_void = FALSE
 
-
+	OnSpeak(var/message)
+		SPAWN(0)
+			var/image/chat_maptext/line = src.owner.chat_text.lines[length(src.owner.chat_text.lines)]
+			for (var/i in 1 to 22)
+				if (QDELETED(line))
+					break
+				line.transform = matrix(rand()/5 + 0.9, MATRIX_SCALE)
+				sleep(2)
+		return message
 
 /datum/bioEffect/speech/yee // DO NOT MAKE THIS APPEAR IN GENEPOOLS OR INTO A TRAIT OR ANY OF THAT, PLEASE, THANK YOU IN ADVANCE - with love, haine
 	name = "yee"

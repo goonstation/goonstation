@@ -20,13 +20,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	seedcolor = "#AA2222"
 	crop = /obj/item/plant/flower/rose
 	commuts = list(/datum/plant_gene_strain/immunity_radiation,/datum/plant_gene_strain/damage_res/bad)
-
-	HYPinfusionP(var/obj/item/seed/S,var/reagent)
-		..()
-		var/datum/plantgenes/DNA = S.plantgenes
-		if (!DNA) return
-		if (reagent == "luminol")
-			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/rose/holorose)
+	mutations = list(/datum/plantmutation/rose/holorose)
 
 /datum/plant/flower/sunflower
 	name = "Sunflower"
@@ -78,7 +72,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 		if (POT.growth > (P.harvtime - DNA?.get_effective_value("growtime")) && prob(spray_prob))
 			var/list/plant_complete_reagents = HYPget_assoc_reagents(P, DNA)
 			for (var/plantReagent in plant_complete_reagents)
-				reagents_temp.add_reagent(plantReagent, 3 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(plant_complete_reagents))))))
+				reagents_temp.add_reagent(plantReagent, 3 * max(1, HYPfull_potency_calculation(DNA, 0.1 / length(plant_complete_reagents))))
 			reagents_temp.smoke_start()
 			qdel(reagents_temp)
 

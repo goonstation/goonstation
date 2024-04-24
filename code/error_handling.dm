@@ -26,6 +26,9 @@ var/global/blame_for_runtimes = FALSE
 		"invalid" = invalid
 	)
 
+	var/datum/eventRecord/Error/errorEvent = new()
+	errorEvent.buildAndSend(E, usr)
+
 	//Output formatted runtime to the usual error.log
 #ifndef CI_RUNTIME_CHECKING
 	if (invalid)
@@ -54,6 +57,7 @@ var/global/blame_for_runtimes = FALSE
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (!cdn)
 		var/list/viewerResources = list(
@@ -71,6 +75,7 @@ var/global/blame_for_runtimes = FALSE
 	set popup_menu = 0
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (global.blame_for_runtimes)
 		global.blame_for_runtimes = FALSE
 		boutput(src, SPAN_NOTICE("Aggressive debugging disabled"))

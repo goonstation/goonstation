@@ -592,24 +592,6 @@ datum
 				..()
 				return
 
-		carpet
-			name = "carpet"
-			id = "carpet"
-			description = "A covering of thick fabric used on floors. This type looks particularly gross."
-			reagent_state = LIQUID
-			fluid_r = 112
-			fluid_b = 69
-			fluid_g = 19
-			transparency = 255
-			value = 4 // 2 2
-			viscosity = 0.3
-
-			reaction_turf(var/turf/T, var/volume)
-				if (T.icon == 'icons/turf/floors.dmi' && volume >= 5)
-					SPAWN(1.5 SECONDS)
-						T.icon_state = "grimy"
-				return
-
 		fffoam
 			name = "firefighting foam"
 			id = "ff-foam"
@@ -806,7 +788,7 @@ datum
 			reaction_turf(var/turf/target, var/volume)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
-					simulated_target.wetify(2, 60, 60 SECONDS)
+					simulated_target.wetify(2, 60 SECONDS)
 
 		superlube
 			name = "organic superlubricant"
@@ -3183,6 +3165,7 @@ datum
 			value = 2
 			var/list/pathogens = list()
 			var/pathogens_processed = 0
+			var/congealed = FALSE //! if this blood came from a pill, stops vampires getting points from it
 			hygiene_value = -2
 			hunger_value = 0.068
 			viscosity = 0.4
@@ -3228,6 +3211,9 @@ datum
 								/*if (M.bioHolder && (src.blood_DNA == M.bioHolder.Uid))
 									M.show_text("Injecting your own blood? Who are you kidding?", "red")
 									return*/
+								if (src.congealed)
+									boutput(M, SPAN_ALERT("EUGH! This blood is totally congealed and worthless."))
+									return 1
 								if (prob(33))
 									boutput(M, SPAN_ALERT("Fresh blood would be better..."))
 								var/bloodget = volume_passed / 3
@@ -3268,6 +3254,9 @@ datum
 						DNA.endurance++
 
 			on_transfer(var/datum/reagents/source, var/datum/reagents/target, var/trans_amt)
+				if (istype(target.my_atom, /obj/item/reagent_containers/pill))
+					var/datum/reagent/blood/blood = target.get_reagent("blood")
+					blood.congealed = TRUE
 				var/list/source_pathogens = source.aggregate_pathogens()
 				var/list/target_pathogens = target.aggregate_pathogens()
 				var/target_changed = 0
@@ -3283,7 +3272,6 @@ datum
 							if (!istype(B))
 								continue
 							B.pathogens = target_pathogens
-				return
 
 		blood/bloodc
 			id = "bloodc"
@@ -4188,6 +4176,7 @@ datum
 			proc/analyzed(source, mob/user)
 				if (!issilicon(user) && !isAI(user) && !isintangible(user) && !isobserver(user)) //there's probably other things we should exclude here
 					src.holder.trans_to(user, max(1, src.volume))
+
 
 /obj/badman/ //I really don't know a good spot to put this guy so im putting him here, fuck you.
 	name = "Senator Death Badman"

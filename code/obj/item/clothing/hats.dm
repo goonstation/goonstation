@@ -2036,6 +2036,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	name = "mushroom cap"
 	desc = "Makes your lungs feel a little fuzzy."
 	var/additional_desc = ""
+	hat_offset_y = 4
 	icon_state = "mushroom-red"
 	item_state = "mushroom-red"
 
@@ -2117,7 +2118,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 						A_value -= 2
 					else if (T.z == Z_LEVEL_STATION)
 						A_value += 1
-				var/atom_name = trim(stripTextMacros(A.name))
+				var/atom_name = trimtext(stripTextMacros(A.name))
 				if (length(atom_name) <= 2)
 					continue
 				if (findtext(atom_name, " "))
@@ -2214,3 +2215,34 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 		var/image/big_tree = image(icon('icons/misc/worlds.dmi', "shrub_autumn", SOUTHWEST))
 		big_tree.pixel_y = 32
 		src.wear_image.overlays += big_tree
+
+/obj/item/clothing/head/weirdohat
+	name = "outlander's mask"
+	desc = "A visor with teal spikes dragging behind the mask, vaguely reminiscent of an extinct alien race."
+	icon_state = "weirdohat"
+	item_state = "weirdohat"
+	seal_hair = 1
+
+/obj/item/clothing/head/lighthat
+	name = "light mitre"
+	desc = "A golden mitre pointing tall, proudly touting the strength of its faith and its light"
+	icon_state = "lighthat"
+	item_state = "lighthat"
+	seal_hair = 1
+
+/obj/item/clothing/head/bushhat
+	name = "druid mask"
+	desc = "Flowers, grass, and other flora completely cover the face of this mask. You can almost hear the roar of earthen creatures calling from inside the shrubbery"
+	icon_state = "bushhat"
+	item_state = "bushhat"
+	seal_hair = 1
+
+/obj/item/clothing/head/rabbithat
+	name = "Rabbit Costume Hat"
+	desc = "You're gonna need a psych eval after wearing this. And a shower."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	icon_state = "rabbithat"
+	item_state = "rabbithat"
+	seal_hair = TRUE

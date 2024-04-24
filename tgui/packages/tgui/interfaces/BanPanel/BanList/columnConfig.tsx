@@ -37,14 +37,14 @@ export const buildColumnConfigs = (callbacks: ColumnConfigsCallbacks): ColumnCon
     header: 'ID',
     id: 'id',
     getValue: (data) => data.id,
-    renderContents: ({ value }) => <a href={`https://staging.goonhub.com/admin/bans/${value}`}>{value}</a>,
+    renderContents: ({ value }) => <a href={`https://goonhub.com/admin/bans/${value}`}>{value}</a>,
     basis: 4,
   },
   {
     header: 'ckey',
     id: 'ckey',
     getValue: (data) => data.original_ban_detail.ckey ?? 'N/A',
-    renderContents: ({ value }) => <a href={`https://staging.goonhub.com/admin/players/${value}`}>{value}</a>,
+    renderContents: ({ value }) => <a href={`https://goonhub.com/admin/players/${value}`}>{value}</a>,
     basis: 10, // I think 32 chars is the max, this is slightly below but whatever
     grow: 1,
   },
@@ -102,7 +102,7 @@ export const buildColumnConfigs = (callbacks: ColumnConfigsCallbacks): ColumnCon
     id: 'admin',
     getValue: (data) => data.game_admin ?? 'N/A',
     renderContents: ({ value }) => (
-      <a href={`https://staging.goonhub.com/admin/game-admins/${value.id}`} class="NoColor">
+      <a href={`https://goonhub.com/admin/game-admins/${value.id}`} class="NoColor">
         {value.name}
       </a>
     ),

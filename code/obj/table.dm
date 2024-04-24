@@ -379,13 +379,13 @@ TYPEINFO_NEW(/obj/table)
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		. = ..()
 		if (ismob(AM))
-			if (AM != thr.user && (BOUNDS_DIST(thr.user, src) <= 0))
+			if (AM != thr.thrown_by && (BOUNDS_DIST(thr.thrown_by, src) <= 0))
 				var/remove_tablepass = HAS_FLAG(AM.flags, TABLEPASS) ? FALSE : TRUE //this sucks and should be a mob property x2 augh
 				AM.flags |= TABLEPASS
 				step(AM, get_dir(AM, src))
 				if (remove_tablepass)
 					REMOVE_FLAG(AM.flags, TABLEPASS)
-				src.harm_slam(thr.user, AM)
+				src.harm_slam(thr.thrown_by, AM)
 
 
 //Replacement for monkies walking through tables: They now parkour over them.
@@ -420,7 +420,7 @@ TYPEINFO_NEW(/obj/table)
 			return
 		if(!(ownerMob.flags & TABLEPASS))
 			ownerMob.flags |= TABLEPASS
-			thr.end_throw_callback = PROC_REF(unset_tablepass_callback)
+			thr.end_throw_callback = CALLBACK(src, PROC_REF(unset_tablepass_callback))
 		for(var/O in AIviewers(ownerMob))
 			var/mob/M = O //inherently typed list
 			var/the_text = "[ownerMob] jumps over [the_railing]."
@@ -641,6 +641,13 @@ TYPEINFO_NEW(/obj/table/nanotrasen)
 	icon = 'icons/obj/furniture/single_tables.dmi'
 	icon_state = "endtable-gothic"
 	parts_type = /obj/item/furniture_parts/endtable_gothic
+
+/obj/table/endtable_honey
+	name = "block of solidified honey"
+	desc = "Preferred work surface of Space Bees."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtablehoney"
+	parts_type = /obj/item/furniture_parts/endtable_honey
 
 /obj/table/podium_wood
 	name = "wooden podium"
@@ -1184,6 +1191,7 @@ TYPEINFO(/obj/table/glass)
 			src.UpdateOverlays(null, "SEcorner")
 			src.UpdateOverlays(null, "NEcorner")
 			src.UpdateOverlays(null, "NWcorner")
+			src.set_density(0)
 			return
 
 		// check it out a new piece of hacky nonsense

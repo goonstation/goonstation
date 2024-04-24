@@ -381,6 +381,12 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	default_material = "beewool"
 	mat_changename = FALSE
 
+/obj/item/material_piece/cloth/carpet
+	name = "carpet"
+	desc = "Some grimy carpet."
+	icon_state = "fabric"
+	default_material = "carpet"
+
 /obj/item/material_piece/soulsteel
 	desc = "A bar of soulsteel. Metal made from souls."
 	icon_state = "bar"

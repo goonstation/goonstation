@@ -250,6 +250,19 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_angle_variance = 10
 	dissipation_variance = 10
 
+/datum/projectile/special/spreader/buckshot_burst/bone
+	spread_projectile_type = /datum/projectile/bullet/improvbone
+	name = "bone"
+	sname = "bone"
+	cost = 1
+	pellets_to_fire = 3
+	casing = /obj/item/casing/shotgun/pipe
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	speed_max = 30
+	speed_min = 20
+	spread_angle_variance = 25
+	dissipation_variance = 40
+
 /datum/projectile/special/spreader/buckshot_burst/nails
 	name = "nails"
 	sname = "nails"
@@ -275,6 +288,16 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	pellets_to_fire = 7
 	spread_projectile_type = /datum/projectile/bullet/spike
 	shot_sound = 'sound/weapons/radxbow.ogg'
+
+/datum/projectile/special/spreader/uniform_burst/bird12
+	name = "birdshot"
+	sname = "birdshot"
+	spread_angle = 8
+	cost = 1
+	pellets_to_fire = 3
+	spread_projectile_type = /datum/projectile/bullet/bird12
+	casing = /obj/item/casing/shotgun/red
+	shot_sound = 'sound/weapons/birdshot.ogg'
 
 
 /datum/projectile/special/spreader/buckshot_burst/foamdarts
