@@ -1,5 +1,9 @@
 
 (t)wed apr 24 24
+(u)Klushy225
+(p)18050
+(e)🎨💪|C-Sprites, A-Traits
+(*)Added a german accent to the game, which makes the player sound very german.
 (u)glowbold
 (p)18526
 (e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
