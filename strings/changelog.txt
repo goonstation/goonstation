@@ -1,5 +1,9 @@
 
 (t)wed apr 24 24
+(u)Chatauscours
+(p)18516
+(e)🗺🔄|A-Mapping, C-Rework
+(*)NT accumulated enough budget for the most of the Clarion ship to be rebuilt.
 (u)Paaiii
 (p)18614
 (e)🎨|C-Sprites
