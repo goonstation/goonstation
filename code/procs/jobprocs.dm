@@ -611,6 +611,10 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		if (src.ears)
 			src.stow_in_available(src.ears)
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), SLOT_EARS)
+	if (src.traitHolder.hasTrait("muted"))
+		if (src.l_store)
+			src.stow_in_available(src.l_store)
+		src.equip_if_possible(new /obj/item/device/speech_pro(src), SLOT_L_STORE)
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
 	equip_job_items(JOB, src)

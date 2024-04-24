@@ -264,6 +264,20 @@
 
 // LANGUAGE - Yellow Border
 
+/datum/trait/muted
+	name = "Muted"
+	desc = "Spawn permanently muted but with a verbal assistance device."
+	id = "muted"
+	icon_state = "muted"
+	points = 0
+	category = list("language")
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Mute"
+	disability_desc = "Permanent speech loss"
+
+	onAdd(var/mob/owner)
+		owner.bioHolder?.AddEffect("mute", 0, 0, 0, 1)
+
 /datum/trait/swedish
 	name = "Swedish"
 	desc = "You are from sweden. Meat balls and so on."

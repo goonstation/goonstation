@@ -90,6 +90,7 @@
 #include "defines\projectiles.dm"
 #include "defines\radio.dm"
 #include "defines\RCD.dm"
+#include "defines\speech_pro.dm"
 #include "defines\reagents.dm"
 #include "defines\robot.dm"
 #include "defines\roles.dm"
