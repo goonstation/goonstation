@@ -1889,7 +1889,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliate_patience = 1
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	aggressive = TRUE
-	player_can_spawn_with_pet = FALSE
+	player_can_spawn_with_pet = TRUE
 
 	add_abilities = list(/datum/targetable/critter/wasp_sting/scorpion_sting,
 						/datum/targetable/critter/pincer_grab)
@@ -2012,7 +2012,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //annoy a snake enough and pay the price
 	aggressive = TRUE
-	player_can_spawn_with_pet = FALSE
+	player_can_spawn_with_pet = TRUE
 	add_abilities = list(/datum/targetable/critter/wasp_sting/snake_bite)
 
 	New()
