@@ -1095,7 +1095,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/speech_pro
 	name = "Verbal Assistance Device"
 	item_paths = list("MET-1","CON-1","INS-1")
-	item_amounts = list(2,1,1)
+	item_amounts = list(3,1,1)
 	item_outputs = list(/obj/item/device/speech_pro)
 	time = 45 SECONDS
 	create = 1
