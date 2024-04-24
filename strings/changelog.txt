@@ -1,5 +1,9 @@
 
 (t)wed apr 24 24
+(u)Paaiii
+(p)18614
+(e)🎨|C-Sprites
+(+)Resprites the sunhat clothing item!
 (u)mloccy
 (p)18509
 (e)🔎💅🔨📦|C-Code-Quality, C-QoL, A-Player-Actions, A-Game-Objects
