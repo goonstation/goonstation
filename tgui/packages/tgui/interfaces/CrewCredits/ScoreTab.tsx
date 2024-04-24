@@ -5,7 +5,6 @@
  * @license MIT
  */
 
-import { Fragment } from "inferno";
 import { useBackend } from "../../backend";
 import { Box, ItemList, LabeledList, Section, Stack } from "../../components";
 import { ScoreCategoryProps, ScoreItemProps, ScoreTabData } from "./type";
@@ -29,7 +28,13 @@ export const ScoreTab = (props, context) => {
   );
 };
 
-const SummaryDisplay = (props) => {
+interface SummaryDisplayProps {
+  preamble: string;
+  headline: string | JSX.Element;
+  body: string;
+}
+
+const SummaryDisplay = (props: SummaryDisplayProps) => {
   const {
     preamble,
     headline,

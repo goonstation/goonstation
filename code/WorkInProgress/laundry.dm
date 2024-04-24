@@ -292,6 +292,10 @@ TYPEINFO(/obj/submachine/laundry_machine)
 						processing_items.Add(src)
 	src.UpdateIcon()
 
+/obj/submachine/laundry_machine/Click(location, control, params)
+	if(!src.ghost_observe_occupant(usr, src.occupant))
+		. = ..()
+
 #undef PRE
 #undef WASH
 #undef DRY

@@ -51,11 +51,11 @@
 			if (src.uses >= 1 && usr.teleportscroll(1, 1, src, null, TRUE) == 1)
 				src.uses -= 1
 		if (ismob(src.loc))
-			attack_self(src.loc)
+			src.AttackSelf(src.loc)
 		else
 			for(var/mob/M in viewers(1, src))
 				if (M.client)
-					src.attack_self(M)
+					src.AttackSelf(M)
 	return
 
 ////////////////////////////////////////////////////// Staves /////////////////////////////////////////////////////

@@ -229,7 +229,7 @@
 	proc/addDetails(banId, evasion = FALSE, admin_ckey, ckey, comp_id, ip)
 		var/datum/apiRoute/bans/add_detail/addDetail = new
 		addDetail.routeParams = list("[banId]")
-		addDetail.buildBody(ckey, comp_id, ip)
+		addDetail.buildBody(admin_ckey, roundId, ckey, comp_id, ip, evasion)
 		var/datum/apiModel/Tracked/BanDetail/banDetail
 		try
 			banDetail = apiHandler.queryAPI(addDetail)
@@ -337,12 +337,7 @@
 	)
 
 /client/proc/addBanTemp(mob/target)
-	set name = "Add Ban"
-	set desc = "Add a ban"
-	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	ADMIN_ONLY
-	SHOW_VERB_DESC
-
 	var/list/data = src.addBanTempDialog(target)
 	if (!data) return
 
@@ -350,3 +345,14 @@
 		bansHandler.add(data["akey"], data["server"], data["ckey"], data["compId"], data["ip"], data["reason"], data["duration"])
 	catch (var/exception/e)
 		tgui_alert(src.mob, "Failed to add ban because: [e.name]", "Error")
+
+/client/proc/addBanTempUntargetted()
+	set name = "Add Ban"
+	set desc = "Add a ban"
+	set popup_menu = 0
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+
+	src.addBanTemp()
