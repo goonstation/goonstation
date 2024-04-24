@@ -3,7 +3,7 @@ TYPEINFO(/obj/item/device/speech_pro)
 
 /obj/item/device/speech_pro
 	name = "Speech Pro"
-	desc = "This device can output a variety of pre-selected phrases. Activate it in-hand while empty to select phrases, then speak to use them!"
+	desc = "This device can output a variety of phrases for easy communication."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "speech_pro"
 	item_state = "speech_pro"
