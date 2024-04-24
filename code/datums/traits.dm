@@ -266,7 +266,7 @@
 
 /datum/trait/muted
 	name = "Muted"
-	desc = "Spawn permanently muteness and a Speech Pro."
+	desc = "Spawn with permanent muteness and a Speech Pro."
 	id = "muted"
 	icon_state = "muted"
 	points = 0
