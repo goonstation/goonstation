@@ -3107,28 +3107,17 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if(ckey(perp.name) in target_names)
 					return 7
 
+				if(perp.mutantrace.jerk)
+					return 5
+
 				var/obj/item/card/id/perp_id = perp.equipped()
 				if (!istype(perp_id))
 					perp_id = perp.get_id()
 
-				if(perp_id) //Checking for targets and permits
-					if(ckey(perp_id.registered) in target_names)
-						return 7
-
-					var/list/contraband_returned = list()
-					if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !(contraband_access in perp_id.access), !(weapon_access in perp_id.access)))
-						. += max(contraband_returned)
-				else
-					var/list/contraband_returned = list()
-					if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
-						. += max(contraband_returned)
-				if(perp.mutantrace.jerk)
-//					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
-//						return 5 //Zombies are bad news!
-
-//					threatcount += 2
-
-					return 5
+				if(!perp_id || !(contraband_access in perp_id.access))
+					. += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_CONTRABAND)
+				if(!perp_id || !(weapon_access in perp_id.access))
+					. += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_GUNS)
 
 
 		halloween //Go trick or treating!
