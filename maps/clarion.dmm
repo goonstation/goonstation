@@ -24015,7 +24015,7 @@
 "kby" = (
 /obj/machinery/flasher/portable,
 /obj/machinery/power/apc{
-	areastring = "Solitary Confinement";
+	areastring = "Brig";
 	dir = 8;
 	name = "Brig APC";
 	pixel_x = -24
