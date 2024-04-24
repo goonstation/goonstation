@@ -33445,8 +33445,7 @@
 	pixel_x = 32
 	},
 /turf/simulated/floor/plating/airless{
-	dir = 10;
-	icon_state = "ast1"
+	dir = 10
 	},
 /area/space)
 "mQe" = (

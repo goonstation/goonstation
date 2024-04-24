@@ -33,7 +33,7 @@
 	var/atom/movable/my_stick = null
 
 	//note: this is not the best way to do this, but I'm showing it here as an example. It is better to create a peaceful AI holder with no attack tasks and use that.
-	var/aggressive = TRUE
+	aggressive = TRUE
 
 	faction = list(FACTION_WIZARD)
 

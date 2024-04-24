@@ -1,5 +1,64 @@
-
+(t)tue apr 23 24
+(u)LeahTheTech
+(+)Shower heads can now be deconstructed.
+(t)mon apr 22 24
+(u)Colossusqw
+(p)18589
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Energy Drink now no longer has a random chance of causing heart failure, now the heart failure is handled via it's increased caffeine output.
+(u)Lord_Earthfire
+(p)18595
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The automatic signaller component has received an option to be toggled on/off by a mechcomp signal.
+(t)sun apr 21 24
+(u)LeahTheTech
+(*)A pair of PacketVision glasses have been added to the research director's locker. Can be tuned to various frequencies to allow the user to "see" wireless packets.
+(u)tarmunora
+(*)Mechanical boots now counteract slowdown from pushing, pulling, and other worn equipment as opposed to a 50% reduction in movedelay. Also made somewhat cheaper to print.
+(u)Colossusqw
+(p)18590
+(e)💅📡|C-QoL, A-AI
+(+)Random pests cannot spawn directly onto players anymore.
+(t)sat apr 20 24
+(u)LeahTheTech
+(p)18577
+(e)💅🤖|C-QoL, A-Silicons
+(+)The AI's primary radio microphone now defaults to off.
+(u)FlameArrow57
+(p)18566
+(e)⚖💅📦🚗|C-Balance, C-QoL, A-Game-Objects, A-Vehicles
+(*)The security Tri-Corp Tractor Beam pod component now works more responsively, dragging items as fast as the ship moves.
+(u)FlameArrow57
+(p)18574
+(e)🆕📦🚗|C-Feature, A-Game-Objects, A-Vehicles
+(*)Added a new Storage Hold pod secondary system to ship component fabricators. This is a storage-like component that allows ships to store up to 10 handheld items of normal size, just like a backpack. Accessible by click dragging the pod to you, click dragging items to the pod, or using ship buttons while inside the pod.
 (t)fri apr 19 24
+(u)LeahTheTech
+(+)Laser mirrors can now be rotated with a crowbar.
+(u)Glamurio (Ryou) & Zac
+(p)18510
+(e)🆕🗺🎨💪|C-Feature, A-Mapping, C-Sprites, A-Traits
+(*)Added the "Pet Person" trait, which spawns you with a random pet.
+(u)glowbold
+(p)15358
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(+)PDA crisis alerts now include an 'ACK' link to quickly reply to the team and the sender.
+(u)TDHooligan
+(p)18345
+(e)🆕🎨🧛|C-Feature, C-Sprites, A-Gamemodes
+(*)Gangs are fed up of stolen drops. They've started booby trapping their bags and cut back on weight savings.
+(u)Lord_Earthfire
+(p)18318
+(e)🪲🔎⚖🍝🌱|C-Bug, C-Code-Quality, C-Balance, A-Catering, A-Hydroponics
+(+)Top NT Scientists found plant-based produce from chef vendors, low quality plants and cargo crates to be more juicy than previously assumed.
+(u)mintyphresh
+(p)18430
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Completing a crew objective now grants 50 XP for that job.
+(u)TealSeer
+(p)18546
+(e)🗺⚖|A-Mapping, C-Balance
+(+)Cogmap 2's pharmacy no longer requires medical locker access to enter.
 (u)Carthridge / Nerkson
 (p)18428
 (e)🎨🎩|C-Sprites, A-Clothing

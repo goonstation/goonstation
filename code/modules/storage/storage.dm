@@ -425,6 +425,8 @@
 
 /// show storage contents
 /datum/storage/proc/show_hud(mob/user)
+	if (user.s_active && user.s_active != src.hud)
+		user.detach_hud(user.s_active)
 	user.s_active = src.hud
 	src.hud.update(user)
 	user.attach_hud(src.hud)

@@ -2,6 +2,7 @@
 #define IS_NPC_HATED_ITEM(x) ( \
 		istype(x, /obj/item/handcuffs) || \
 		istype(x, /obj/item/device/radio/electropack) || \
+		istype(x, /obj/item/reagent_containers/balloon) || \
 		x:block_vision \
 	)
 
@@ -229,6 +230,7 @@
 	var/list/shitlist = list()
 	var/ai_aggression_timeout = 600
 	var/ai_poke_thing_chance = 1
+	var/ai_delay_move = FALSE //! Delays the AI from moving a single time if set
 	default_mutantrace = /datum/mutantrace/monkey
 
 	New()
@@ -258,6 +260,15 @@
 			return
 		..()
 		if (src.ai_state == 0)
+			if (istype(src.equipped(),/obj/item/implant/projectile/body_visible/dart/bardart))
+				for (var/obj/item/reagent_containers/balloon/balloon in view(7, src))
+					src.throw_item(balloon, list("npc_throw"))
+					src.ai_delay_move = TRUE
+					break
+			else if (!src.equipped())
+				for (var/obj/item/implant/projectile/body_visible/dart/bardart/dart in view(1, src))
+					src.hand_attack(dart)
+					break
 			if (prob(50))
 				src.ai_pickpocket(priority_only=prob(80))
 			else if (prob(50))
@@ -495,6 +506,9 @@
 
 	ai_move()
 		if(src.ai_picking_pocket)
+			return
+		if(src.ai_delay_move)
+			src.ai_delay_move = FALSE
 			return
 		. = ..()
 
