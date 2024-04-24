@@ -49,11 +49,11 @@ datum/achievementReward/aicase/ai_industrial
 	required_medal = "This object menaces with spikes of..."
 	aiskin = "industrial"
 
-/datum/achievementReward/aicase/ai_kingsway
+/*/datum/achievementReward/aicase/ai_kingsway
 	title = "(AI Core Skin) Kingsway"
-	desc = "Antique remnants of a long-dead company."
-	required_medal = "Identity Theft" //nt ai using a ks casing is sort of like identity theft? idk its placeholder until theres a bradbury medal
-	aiskin = "kingsway"
+	desc = "Replaces your AI core with a fancy new model."
+	required_medal = PLEEEASE someone make a kingsway associated medal something for playing all three obtainable brad tapes in the same round or something
+	aiskin = "kingsway"*/
 
 datum/achievementReward/aicase/ai_salvage
 	title = "(AI Core Skin) Salvaged"
@@ -66,12 +66,6 @@ datum/achievementReward/aicase/ai_salvage
 	desc = "Fancies your AI core up to look very neon."
 	required_medal = "Virtual Ascension"
 	aiskin = "shock"
-
-/datum/achievementReward/aicase/ai_cardboard
-	title = "(AI Core Skin) Cardboard"
-	desc = "AI core delivery! Sign here, please."
-	required_medal = "Tax Haven"
-	aiskin = "cardboard"
 
 /datum/achievementReward/aicase/ai_meat
 	title = "(AI Core Skin) Wetware"
