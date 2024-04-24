@@ -1,3 +1,9 @@
+
+(t)wed apr 24 24
+(u)glowbold
+(p)18526
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Click-dragging a conveyor switch to the left or right will change its direction to match.
 (t)tue apr 23 24
 (u)LeahTheTech
 (+)Shower heads can now be deconstructed.
