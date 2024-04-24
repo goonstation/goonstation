@@ -33104,10 +33104,11 @@
 	},
 /area/afterlife/hell)
 "cuP" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/diner/tug)
 "cuQ" = (
 /obj/decal/tile_edge/line/blue{
@@ -47524,9 +47525,7 @@
 	dir = 8;
 	icon_state = "alt_heater"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3dir"
-	},
+/turf/simulated/shuttle/wall,
 /area/wizard_station)
 "djy" = (
 /obj/rack,
@@ -47959,15 +47958,6 @@
 	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/west)
-"dld" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon_state = "wall"
-	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "4"
-	},
-/area/shuttle/battle)
 "dle" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
@@ -48301,14 +48291,6 @@
 "dmn" = (
 /obj/indestructible/shuttle_corner,
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/battle)
-"dmo" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "diagonalWall"
-	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "4"
-	},
 /area/shuttle/battle)
 "dmr" = (
 /turf/unsimulated/floor/orangeblack/corner,
@@ -63401,10 +63383,7 @@
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "wall3"
-	},
+/turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
 "lfB" = (
 /obj/table/reinforced/auto,
@@ -64940,9 +64919,10 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/lobby)
 "mKe" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/diner/tug)
 "mKt" = (
 /turf/unsimulated/floor/wood/seven,
@@ -68344,10 +68324,11 @@
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
 "pXI" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/diner/tug)
 "pXL" = (
 /turf/unsimulated/floor/carpet/blue/fancy{
@@ -69539,10 +69520,7 @@
 	icon_state = "wall3_trans"
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "wall3"
-	},
+/turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
 "rit" = (
 /obj/item/device/light/flashlight,
@@ -70283,10 +70261,7 @@
 	dir = 1;
 	icon_state = "wall3_trans"
 	},
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
-	},
+/turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
 "rON" = (
 /obj/machinery/door/airlock/pyro/classic{
@@ -71509,10 +71484,11 @@
 	},
 /area/titlescreen)
 "toK" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon_state = "diagonalWall3"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/diner/tug)
 "tpK" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -159163,7 +159139,7 @@ xWi
 xWi
 xWi
 xWi
-dld
+dlP
 dkZ
 dkZ
 dkZ
@@ -159171,7 +159147,7 @@ dlP
 dkZ
 dkZ
 dkZ
-dmo
+dlP
 xWi
 xWi
 xWi

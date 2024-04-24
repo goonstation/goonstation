@@ -64859,10 +64859,11 @@
 	},
 /area/station/hallway/primary/east)
 "tJD" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/space)
 "tJK" = (
 /turf/simulated/wall/auto/jen,

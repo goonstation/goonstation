@@ -834,6 +834,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/short)
 
 	// GANG_CRATE_GUN:
 	webley
+		weight=10
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/webley,scale_x=0.65,scale_y=0.65)
