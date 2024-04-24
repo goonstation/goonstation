@@ -2734,7 +2734,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		if(ispulsingtool(W)) return // Don't press the button with a multitool, it brings up the config menu instead
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user)
 		if(level == UNDERFLOOR)
@@ -2755,7 +2755,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			return
 		var/lpm = params2list(params)
 		if(istype(usr, /mob/dead/observer) && !lpm["ctrl"] && !lpm["shift"] && !lpm["alt"])
-			src.attack_hand(usr)
+			src.Attackhand(usr)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(level == OVERFLOOR && GET_DIST(src, target) == 1)
@@ -3543,6 +3543,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Start",PROC_REF(setActive))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Stop",PROC_REF(setInactive))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle On/Off",PROC_REF(toggleActive))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Interval Length",PROC_REF(setIntervalLength))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Repeat Count",PROC_REF(setRepeatCount))
 
@@ -3586,6 +3587,12 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 	proc/setInactive()
 		wantActive = FALSE
+
+	proc/toggleActive()
+		if (src.wantActive)
+			wantActive = FALSE
+		else
+			startRepeatingTheSignal()
 
 	proc/setActiveManually(obj/item/W as obj, mob/user as mob)
 		if(!in_interact_range(src, user) || user.stat)

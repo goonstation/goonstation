@@ -1,4 +1,38 @@
 
+(t)wed apr 24 24
+(u)mloccy
+(p)18509
+(e)🔎💅🔨📦|C-Code-Quality, C-QoL, A-Player-Actions, A-Game-Objects
+(+)RCD now has action bars.
+(u)Klushy225
+(p)18050
+(e)🎨💪|C-Sprites, A-Traits
+(*)Added a german accent to the game, which makes the player sound very german.
+(u)glowbold
+(p)18526
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Click-dragging a conveyor switch to the left or right will change its direction to match.
+(t)tue apr 23 24
+(u)LeahTheTech
+(+)Shower heads can now be deconstructed.
+(t)mon apr 22 24
+(u)Colossusqw
+(p)18589
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Energy Drink now no longer has a random chance of causing heart failure, now the heart failure is handled via it's increased caffeine output.
+(u)Lord_Earthfire
+(p)18595
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The automatic signaller component has received an option to be toggled on/off by a mechcomp signal.
+(t)sun apr 21 24
+(u)LeahTheTech
+(*)A pair of PacketVision glasses have been added to the research director's locker. Can be tuned to various frequencies to allow the user to "see" wireless packets.
+(u)tarmunora
+(*)Mechanical boots now counteract slowdown from pushing, pulling, and other worn equipment as opposed to a 50% reduction in movedelay. Also made somewhat cheaper to print.
+(u)Colossusqw
+(p)18590
+(e)💅📡|C-QoL, A-AI
+(+)Random pests cannot spawn directly onto players anymore.
 (t)sat apr 20 24
 (u)LeahTheTech
 (p)18577

@@ -1,4 +1,5 @@
 #define MIN_REAGENT_FOR_CONVERSION 5
+ABSTRACT_TYPE(/datum/reagent/transmutation)
 /datum/reagent/transmutation
 	var/material_name = "steel"
 
@@ -25,6 +26,8 @@
 /datum/reagent/transmutation/custom
 	name = "transmutium"
 	id = "custom_transmutation"
+	random_chem_blacklisted = TRUE
+
 	on_add()
 		. = ..()
 		if (!istext(src.data))

@@ -190,14 +190,14 @@
 /area/shuttle/arrival/station)
 "aaT" = (
 /turf/simulated/shuttle/wall/cockpit/window{
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/shuttle/arrival/station)
 "aaV" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 4;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/shuttle/arrival/station)
@@ -37310,7 +37310,7 @@
 "cAx" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/abandonedship)
 "cAy" = (
@@ -37743,7 +37743,7 @@
 "cBR" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/abandonedship)
 "cBS" = (

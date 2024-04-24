@@ -86,7 +86,7 @@
 
 	var/stance = "normal"
 
-	var/special_sprint = SPRINT_NORMAL
+	var/datum/special_sprint/special_sprint = null
 	var/next_step_delay = 0
 	var/next_sprint_boost = 0
 	var/sustained_moves = 0
@@ -1861,13 +1861,10 @@
 		return
 	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
 		return
-	if (special_sprint && src.client)
-		if (special_sprint & SPRINT_BAT)
-			spell_batpoof(src, cloak = 0)
-		if (special_sprint & SPRINT_FIRE)
-			spell_firepoof(src)
-		if (special_sprint & SPRINT_BAT_CLOAKED)
-			spell_batpoof(src, cloak = 1)
+	if (src.client && src.special_sprint?.can_sprint(src))
+		src.special_sprint.do_sprint(src)
+	if (src.special_sprint?.overrides_sprint)
+		return
 	else if (src.use_stamina)
 		if (!next_step_delay && world.time >= next_sprint_boost)
 			if (!(HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
@@ -2002,7 +1999,7 @@
 			if (D_KINETIC)
 				if (stun > 0) //kinetic weapons don't disorient
 					stun = stun / max(1, rangedprot_mod*0.75)
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
@@ -2010,7 +2007,7 @@
 
 			if (D_PIERCING)
 				if (stun > 0) //kinetic weapons don't disorient
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.TakeDamage("chest", damage/rangedprot_mod, 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
@@ -2019,7 +2016,7 @@
 			if (D_SLASHING)
 				if (stun > 0) //kinetic weapons don't disorient
 					stun = stun / rangedprot_mod
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				if (rangedprot_mod > 1)
 					src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
@@ -2028,7 +2025,7 @@
 
 			if (D_ENERGY)
 				if (stun > 0)
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = min(stun,  80), remove_stamina_below_zero = 0) //only energy stunners apply disorient and are resisted
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = 0, disorient = min(stun,  80), remove_stamina_below_zero = 0) //only energy stunners apply disorient and are resisted
 
 				if (isalive(src)) lastgasp()
 
@@ -2038,7 +2035,7 @@
 
 			if (D_BURNING)
 				if (stun > 0)
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				if (src.is_heat_resistant())
 					// fire resistance should probably not let you get hurt by welders
@@ -2049,7 +2046,7 @@
 
 			if (D_RADIOACTIVE)
 				if (stun > 0)
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.take_radiation_dose(damage / (40 * (1 + src.radiation_dose * 1.25)) SIEVERTS, TRUE)
 				src.reagents?.add_reagent("uranium", damage / 40) //this is mooostly for flavour
@@ -2061,7 +2058,7 @@
 
 			if (D_TOXIC)
 				if (stun > 0)
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 1, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 1, target_type = DISORIENT_NONE)
 
 				if (!P.reagents)
 					src.take_toxin_damage(damage)
