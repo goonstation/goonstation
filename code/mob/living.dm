@@ -86,7 +86,7 @@
 
 	var/stance = "normal"
 
-	var/special_sprint = SPRINT_NORMAL
+	var/datum/special_sprint/special_sprint = null
 	var/next_step_delay = 0
 	var/next_sprint_boost = 0
 	var/sustained_moves = 0
@@ -1861,13 +1861,10 @@
 		return
 	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
 		return
-	if (special_sprint && src.client)
-		if (special_sprint & SPRINT_BAT)
-			spell_batpoof(src, cloak = 0)
-		if (special_sprint & SPRINT_FIRE)
-			spell_firepoof(src)
-		if (special_sprint & SPRINT_BAT_CLOAKED)
-			spell_batpoof(src, cloak = 1)
+	if (src.client && src.special_sprint?.can_sprint(src))
+		src.special_sprint.do_sprint(src)
+	if (src.special_sprint?.overrides_sprint)
+		return
 	else if (src.use_stamina)
 		if (!next_step_delay && world.time >= next_sprint_boost)
 			if (!(HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
