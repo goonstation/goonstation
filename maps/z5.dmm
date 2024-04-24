@@ -2820,9 +2820,10 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/security)
 "AV" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/noGenerate)
 "AY" = (
 /obj/cable{
