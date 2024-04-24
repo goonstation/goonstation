@@ -2255,7 +2255,7 @@ or don't if it uses a custom topopen overlay
 
 		UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
-		if (src.coreSkin == "meat" || src.coreSkin == "plant") // these ones have bits that overlap the screen and need to layer differently, this... works for that. i guess
+		if (src.coreSkin == "meat" || src.coreSkin == "plant") // these ones have bits that overlap the screen and need to layer differently
 			src.UpdateOverlays(SafeGetOverlayImage("core-case", 'icons/mob/ai.dmi', coreSkin, src.layer+0.3), "core-case")
 		else
 			src.UpdateOverlays(null, "core-case")

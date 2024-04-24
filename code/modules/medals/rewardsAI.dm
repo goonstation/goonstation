@@ -49,11 +49,11 @@ datum/achievementReward/aicase/ai_industrial
 	required_medal = "This object menaces with spikes of..."
 	aiskin = "industrial"
 
-/*/datum/achievementReward/aicase/ai_kingsway
+/datum/achievementReward/aicase/ai_kingsway
 	title = "(AI Core Skin) Kingsway"
 	desc = "Antique remnants of a long-dead company."
-	required_medal = "Identity Theft" //look im grasping at straws here but,, nt ai using ks casing ~= id theft? idk its placeholder
-	aiskin = "kingsway"*/
+	required_medal = "Identity Theft" //nt ai using a ks casing is sort of like identity theft? idk its placeholder until theres a bradbury medal
+	aiskin = "kingsway"
 
 datum/achievementReward/aicase/ai_salvage
 	title = "(AI Core Skin) Salvaged"
@@ -76,12 +76,12 @@ datum/achievementReward/aicase/ai_salvage
 /datum/achievementReward/aicase/ai_meat
 	title = "(AI Core Skin) Wetware"
 	desc = "Nanotrasen is taking 'biological computers' to a whole new level!"
-	required_medal = "Original Sin"
+	required_medal = "My Bologna Has A First Name"
 	aiskin = "meat"
 
 /datum/achievementReward/aicase/ai_plant
 	title = "(AI Core Skin) Biophilic"
-	desc = "Your solution for a greener station: biophilic archetecture! Not even your AI core is safe from it."
+	desc = "Your solution for a greener station: biophilic design! Not even the AI core is safe from it."
 	required_medal = "Bill Masen"
 	aiskin = "plant"
 
