@@ -84,7 +84,7 @@
 					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 					newname = strip_html(newname)
 					H.real_name = newname
-					H.UpdateName()
+					H.on_realname_change()
 
 	remove_equipment()
 		src.owner.current.UnregisterSignal(src.owner.current, COMSIG_MOB_PICKUP)
