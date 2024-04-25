@@ -14,6 +14,7 @@ Hell area (send people here if they die in a shameful way)
 	icon_state = "afterlife_bar"
 	requires_power = 0
 	teleport_blocked = 1
+	ambient_light = rgb(20, 25, 30)
 
 /area/afterlife/bar/sanctuary
 	name = "The Afterlife Lounge"
@@ -104,3 +105,9 @@ proc/inafterlifebar(var/mob/M as mob in world)
 
 proc/inafterlife(var/mob/M as mob in world)
 	return istype(get_area(M),/area/afterlife)
+
+/obj/submachine/scryingpool/afterlifebar
+
+// belongs in the center of pool
+/obj/landmark/scryingpool/afterlifebar
+	name = "afterlifebar-scrying-pool"
