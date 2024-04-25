@@ -1,4 +1,6 @@
-
+(t)thu apr 25 24
+(u)LeahTheTech
+(*)Molitz and molitz-beta now become visibly dull and inert when they are depleted of gas.
 (t)wed apr 24 24
 (u)Sord
 (+)The Donut 2 Research Outpost main hallway is now more publicly accessible. Don't knock on the windows, it scares the science away
