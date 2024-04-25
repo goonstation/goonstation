@@ -355,6 +355,9 @@
 		return
 	sheet.change_stack_amount(-5)
 	src.setMaterial(sheet.material)
+	if (!("reinforced" in src.name_prefixes))
+		src.name_prefix("reinforced") // so it says "bohrum reinforced pipe"
+	src.UpdateName()
 
 /obj/machinery/atmospherics/pipe/simple/disposing()
 	node1?.disconnect(src)
