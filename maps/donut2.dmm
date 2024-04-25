@@ -1584,6 +1584,10 @@
 /area/station/science/lobby)
 "ajb" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2{
+	layer = 2.9;
+	pixel_y = 13
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/observatory)
 "ajg" = (
@@ -19007,7 +19011,6 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/storage/crate/adventure,
 /turf/simulated/floor/green/corner,
 /area/station/science/lobby)
 "dxC" = (
@@ -20007,8 +20010,7 @@
 /area/station/maintenance/inner/central)
 "edC" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/sci,
-/obj/mapping_helper/access/research_foyer,
+/obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/science/lobby)
@@ -21958,10 +21960,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/sci{
+/obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/mapping_helper/access/research_foyer,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "fox" = (
@@ -25521,10 +25522,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/sci{
+/obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/mapping_helper/access/research_foyer,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "hPD" = (
@@ -32672,6 +32672,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/sci_alt,
+/obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/access/research,
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
@@ -33696,7 +33697,6 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
-/obj/mapping_helper/access/research_foyer,
 /turf/simulated/floor/red,
 /area/station/science/lobby)
 "mWT" = (
@@ -37660,11 +37660,10 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/sci{
+/obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/research_foyer,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "poJ" = (
@@ -42745,8 +42744,7 @@
 /area/station/garden/owlery)
 "sze" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/sci,
-/obj/mapping_helper/access/research_foyer,
+/obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "szg" = (
@@ -45564,8 +45562,7 @@
 /area/station/science/artifact)
 "uoQ" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/sci,
-/obj/mapping_helper/access/research_foyer,
+/obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/neutral/side{
 	dir = 4
@@ -50516,6 +50513,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/vending/pizza,
+/obj/blind_switch/area/north,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "xxZ" = (
