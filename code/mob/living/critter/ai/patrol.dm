@@ -17,6 +17,13 @@
 			movesubtask.max_path_dist = 150
 		add_task(movesubtask)
 
+	next_task()
+		. = ..()
+		if (length(holder.priority_tasks)) //consume priority tasks first
+			var/datum/aiTask/priority_task = holder.priority_tasks[1]
+			holder.priority_tasks -= priority_task
+			return priority_task
+
 	on_tick()
 		if(src.holder.target && istype(subtasks[subtask_index], /datum/aiTask/succeedable/move)) // MOVE TASK
 			// make sure we both set our target and move to our target correctly
@@ -84,7 +91,7 @@
 		..()
 
 	proc/ai_receive_signal(mob/attached, datum/signal/signal)
-		if(!src.enabled)
+		if(!src.enabled || ismob(src.target)) // this ai is off or fighting
 			return
 
 		if(signal.data["auth_code"] != netpass_security) // commanding the bot requires netpass_security
@@ -104,11 +111,11 @@
 					src.nearest_beacon_id = signal.data["beacon"]
 					src.nearest_dist = dist
 				return
-			else // start the 2 second countdown to assigning best found beacon as target
+			else // start the 1 second countdown to assigning best found beacon as target
 				src.nearest_beacon = signal.source
 				src.nearest_beacon_id = signal.data["beacon"]
 				src.nearest_dist = dist
-				SPAWN(2 SECONDS) // beacons BETTER respond within 2 seconds
+				SPAWN(1 SECOND) // nav beacons have a decisecond delay before responding
 					src.target = src.nearest_beacon
 					src.next_patrol_id = src.nearest_beacon_id
 					src.nearest_beacon = null

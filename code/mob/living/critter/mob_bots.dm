@@ -427,6 +427,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	health_burn_vuln = 1.25
 	ai_retaliates = TRUE
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
+	ai_retaliate_patience = 0
 	ai_type = /datum/aiHolder/patroller/packet_based
 	is_npc = TRUE
 	ai_attacks_neutral = TRUE
@@ -693,10 +694,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 	should_critter_retaliate(mob/attcker, obj/attcked_with)
 		. = ..()
-		if((src.health >= (src.max_health * 0.6)) && src.allowed(attcker)) // if health is more than 60%, assume it was friendly fire
+		if(src.get_health_percentage() >= 0.6 && src.allowed(attcker)) // if health is more than 60%, assume it was friendly fire
 			. = FALSE
-
-
 
 /datum/targetable/critter/bot/handcuff
 	name = "Detain"
