@@ -754,10 +754,10 @@ var/global/list/mapNames = list(
 		//"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
 		"the artifact lab" = list(/area/station/science/artifact),
 		"the bridge" = list(/area/station/bridge),
-		"the community center (chapel)" = list(/area/station/chapel/sanctuary),
-		"the aviary" = list(/area/station/garden/aviary),
-		"the quartermaster's storage room" = list(/area/station/quartermaster/storage))
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the aviary" = list(/area/station/garden/aviary)
 		//"the robotics lab" = list(/area/station/medical/robotics))
+	)
 
 /datum/map_settings/oshan
 	name = "OSHAN"

@@ -592,7 +592,7 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/show_score_maptext(amount, turf/location)
 		var/image/chat_maptext/chat_text = null
 		chat_text = make_chat_maptext(location, "<span class='ol c pixel' style='color: #08be4e;'>+[amount]</span>", alpha = 180, time = 0.5 SECONDS)
-		chat_text.show_to(src.leader.current.client)
+		chat_text.show_to(src.leader?.current.client)
 		for (var/datum/mind/userMind as anything in src.members)
 			var/client/userClient = userMind.current.client
 			if (userClient?.preferences?.flying_chat_hidden)
@@ -623,7 +623,10 @@ proc/broadcast_to_all_gangs(var/message)
 			show_score_maptext(amount, location)
 		else if (bonusMob.client && !bonusMob.client.preferences?.flying_chat_hidden)
 			var/image/chat_maptext/chat_text = null
-			chat_text = make_chat_maptext(bonusMob, "<span class='ol c pixel' style='color: #08be4e;'>+[amount]</span>", alpha = 180, time = 1.5 SECONDS)
+			if (amount >= 1000)
+				chat_text = make_chat_maptext(bonusMob, "<span class='ol c pixel' style='color: #08be4e; font-weight: bold; font-size: 24px;'>+[amount]</span>", alpha = 180, time = 3 SECONDS)
+			else
+				chat_text = make_chat_maptext(bonusMob, "<span class='ol c pixel' style='color: #08be4e;'>+[amount]</span>", alpha = 180, time = 1.5 SECONDS)
 			if (chat_text)
 				chat_text.show_to(bonusMob.client)
 
@@ -1081,7 +1084,6 @@ proc/broadcast_to_all_gangs(var/message)
 		target_area.being_captured = FALSE
 		var/sprayOver = FALSE
 		for (var/obj/decal/gangtag/otherTag in range(1,target_turf))
-			otherTag.owners.unclaim_tiles(target_turf,GANG_TAG_INFLUENCE, GANG_TAG_SIGHT_RANGE)
 			otherTag.disable()
 			sprayOver = TRUE
 
@@ -2364,6 +2366,7 @@ proc/broadcast_to_all_gangs(var/message)
 	/// Makes this tag inert, so it no longer provides points.
 	proc/disable()
 		active = FALSE
+		src.owners?.unclaim_tiles(get_turf(src), GANG_TAG_INFLUENCE, GANG_TAG_SIGHT_RANGE)
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		imgroup.remove_image(heatTracker)
 		src.heatTracker = null
@@ -2424,10 +2427,8 @@ proc/broadcast_to_all_gangs(var/message)
 
 
 	disposing(var/uncapture = 1)
-		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
-		imgroup.remove_image(heatTracker)
+		src.disable()
 		STOP_TRACKING
-		heatTracker = null
 		owners = null
 		mobs = null
 		var/area/tagarea = get_area(src)
