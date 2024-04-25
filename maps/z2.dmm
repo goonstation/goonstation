@@ -67984,6 +67984,11 @@
 	icon_state = "bloodfloor_3"
 	},
 /area/meat_derelict/guts)
+"puy" = (
+/turf/unsimulated/floor/stairs/wood/wide{
+	dir = 6
+	},
+/area/afterlife/bar)
 "pwe" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/decal/residual_energy,
@@ -70894,6 +70899,9 @@
 /obj/stool/bed,
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
+"siz" = (
+/turf/unsimulated/floor/stairs/wood/wide,
+/area/afterlife/bar)
 "siD" = (
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
 	pixel_x = -11;
@@ -97651,7 +97659,7 @@ daH
 daH
 ddo
 dSd
-ddJ
+siz
 bpd
 dSY
 dSb
@@ -97953,7 +97961,7 @@ daH
 daH
 dcX
 ddh
-ddJ
+puy
 bpd
 dSY
 dSb
