@@ -17018,8 +17018,8 @@
 	icon_state = "scanner_off";
 	pixel_y = 10
 	},
-/obj/machinery/door/airlock/pyro/glass/reinforced,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria)
 "ltM" = (
@@ -19230,8 +19230,8 @@
 	pixel_y = 10
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/glass/reinforced,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria)
 "tce" = (
