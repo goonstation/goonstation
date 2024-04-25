@@ -1,5 +1,9 @@
 
 (t)wed apr 24 24
+(u)Retrino, Azrun
+(p)18605
+(e)🔨🎩|A-Player-Actions, A-Clothing
+(*)Adds a new "Ballroom Supplies" crate to cargo, containing dress shoes that allow players to use Azrun's social dancing feature.
 (u)Cheekybrdy
 (p)18609
 (e)🗺🎨|A-Mapping, C-Sprites
