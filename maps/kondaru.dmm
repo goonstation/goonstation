@@ -34933,11 +34933,11 @@
 /turf/simulated/floor/plating,
 /area/station/engine/monitoring)
 "fyt" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "cold loop auxillary"
-	},
 /obj/cable{
 	icon_state = "4-10"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold loop auxiliary valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -48370,7 +48370,7 @@
 "pGm" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop auxillary"
+	name = "hot loop auxiliary valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)

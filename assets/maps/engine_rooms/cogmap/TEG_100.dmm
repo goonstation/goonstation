@@ -163,7 +163,7 @@
 	},
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "cold loop auxillary"
+	name = "cold loop auxiliary valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -186,7 +186,7 @@
 "iO" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop auxillary"
+	name = "hot loop auxiliary valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -262,7 +262,7 @@
 /area/station/engine/core)
 "pc" = (
 /obj/machinery/atmospherics/binary/valve{
-	name = "outlet purge valve"
+	name = "hot loop purge valve"
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
@@ -620,11 +620,11 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "OQ" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "outlet purge valve"
-	},
 /obj/cable/orange{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold loop purge valve"
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)

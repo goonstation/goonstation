@@ -64297,7 +64297,7 @@
 	},
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "cold loop auxillary"
+	name = "cold loop auxiliary valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -64674,7 +64674,7 @@
 "lOr" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "cold loop auxillary"
+	name = "cold loop auxiliary valve"
 	},
 /obj/cable/orange{
 	icon_state = "1-4"
@@ -64996,7 +64996,7 @@
 "mdZ" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "cold loop pressure release valve"
+	name = "cold loop purge valve"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
@@ -72106,7 +72106,7 @@
 	},
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop auxillary"
+	name = "hot loop auxiliary valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -73854,7 +73854,7 @@
 "vMl" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop pressure release valve"
+	name = "hot loop purge valve"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)

@@ -15289,7 +15289,7 @@
 "aYV" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop pressure release valve"
+	name = "hot loop purge valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southwest)
@@ -17411,7 +17411,7 @@
 "jUG" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "cold loop pressure release valve"
+	name = "cold loop purge valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
@@ -18729,11 +18729,12 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "pVp" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
-	},
 /obj/disposalpipe/segment/ejection{
 	dir = 8
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot loop auxiliary valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
