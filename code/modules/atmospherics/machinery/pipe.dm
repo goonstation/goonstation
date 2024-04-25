@@ -310,6 +310,7 @@
 			if (prob(50))
 				rupture()
 
+#define SHEETS_TO_REINFORCE 5
 /obj/machinery/atmospherics/pipe/simple/attackby(var/obj/item/W, var/mob/user)
 	if(isweldingtool(W))
 		if(!ruptured)
@@ -350,7 +351,7 @@
 			boutput(user, SPAN_ALERT("[src] is already reinforced with [src.material.getName()]!"))
 			return
 		var/obj/item/weldingtool/welder = user.find_tool_in_hand(TOOL_WELDING)
-		if (W.amount < 5)
+		if (W.amount < SHEETS_TO_REINFORCE)
 			boutput(user, SPAN_ALERT("You need at least 10 sheets to reinforce [src]."))
 		if (!welder || !welder.welding)
 			boutput(user, SPAN_ALERT("You need something to weld [W] to [src] with!"))
@@ -362,13 +363,15 @@
 				list(W, user), SPAN_NOTICE("[user] welds [W] to [src]"), positions[1], positions[2]),user)
 
 /obj/machinery/atmospherics/pipe/simple/proc/weld_sheet(obj/item/sheet/sheet, mob/user)
-	if (sheet.amount < 5)
+	if (sheet.amount < SHEETS_TO_REINFORCE)
 		return
-	sheet.change_stack_amount(-5)
+	sheet.change_stack_amount(-SHEETS_TO_REINFORCE)
 	src.setMaterial(sheet.material)
 	if (!("reinforced" in src.name_prefixes))
 		src.name_prefix("reinforced") // so it says "bohrum reinforced pipe"
 	src.UpdateName()
+
+#undef SHEETS_TO_REINFORCE
 
 /obj/machinery/atmospherics/pipe/simple/disposing()
 	node1?.disconnect(src)
