@@ -980,6 +980,12 @@
 	icon_state = "fblue2"
 	},
 /area/station/hallway/secondary/exit)
+"afz" = (
+/obj/machinery/manufacturer/mining,
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/station/mining/staff_room)
 "afP" = (
 /obj/machinery/light_switch/south{
 	pixel_y = 28
@@ -8921,9 +8927,13 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/lab)
 "beL" = (
-/obj/machinery/light,
-/obj/machinery/vending/air_vendor/plasma,
-/turf/simulated/floor/yellow/side,
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grime,
 /area/station/mining/staff_room)
 "beM" = (
 /obj/disposalpipe/segment,
@@ -9490,14 +9500,9 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/cloner)
 "bjM" = (
-/obj/table/auto,
-/obj/item/device/matanalyzer,
-/obj/item/slag_shovel,
-/obj/item/device/matanalyzer,
-/obj/item/device/matanalyzer,
-/obj/item/slag_shovel,
-/obj/item/paper/book/from_file/matsci_guide,
-/turf/simulated/floor/yellow,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
 /area/station/mining/staff_room)
 "bjN" = (
 /mob/living/carbon/human/npc/monkey,
@@ -11523,16 +11528,13 @@
 /turf/space,
 /area/space)
 "bvZ" = (
-/obj/machinery/portable_reclaimer,
-/obj/decal/stripe_caution,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
 	},
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/mining/staff_room)
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/space)
 "bwb" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -12766,11 +12768,15 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "bIE" = (
-/obj/machinery/light/runway_light/delay3,
-/obj/lattice{
-	icon_state = "lattice-dir"
+/obj/grille/catwalk{
+	dir = 4
 	},
-/turf/space,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
 /area/space)
 "bIF" = (
 /obj/lattice{
@@ -14075,14 +14081,12 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
 "bZm" = (
-/obj/item/device/radio/intercom/cargo{
-	dir = 8
+/obj/submachine/cargopad{
+	name = "Mineral Magnet Pad"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
+/obj/machinery/oreaccumulator,
 /turf/simulated/floor/yellow/side{
-	dir = 4
+	dir = 8
 	},
 /area/station/mining/staff_room)
 "bZs" = (
@@ -14672,12 +14676,21 @@
 	dir = 1
 	},
 /area/station/crew_quarters/market)
-"ctX" = (
-/obj/decal/tile_edge/line/yellow{
-	dir = 5;
-	icon_state = "line1"
+"ctJ" = (
+/obj/lattice,
+/obj/grille/steel,
+/obj/cable{
+	icon_state = "1-2"
 	},
-/turf/simulated/floor,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/space,
+/area/station/com_dish/auxdish)
+"ctX" = (
+/turf/simulated/floor/engine{
+	icon_state = "engine_caution_west"
+	},
 /area/station/mining/staff_room)
 "cua" = (
 /obj/cable{
@@ -14777,13 +14790,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "cyd" = (
-/obj/decal/tile_edge/line/yellow{
-	icon_state = "line1"
-	},
+/obj/machinery/nanofab/refining,
 /obj/cable{
-	icon_state = "2-4"
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/grime,
+/turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "cyH" = (
 /obj/table/reinforced/bar/auto,
@@ -15464,17 +15475,6 @@
 	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/ce)
-"ddt" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
 "ddF" = (
 /obj/table/reinforced/auto,
 /obj/bedsheetbin{
@@ -15529,9 +15529,11 @@
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "deG" = (
-/turf/simulated/floor/yellow/side{
-	dir = 9
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "line1"
 	},
+/turf/simulated/floor/grime,
 /area/station/mining/staff_room)
 "dfk" = (
 /obj/disposalpipe/segment/mail,
@@ -16124,22 +16126,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
-"dGH" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Mining"
-	},
-/obj/mapping_helper/access/mining,
-/obj/mapping_helper/firedoor_spawn,
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/mining/staff_room)
 "dHk" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
@@ -16540,10 +16526,14 @@
 /turf/simulated/floor/wood,
 /area/station/security/hos)
 "dXY" = (
-/obj/machinery/computer/magnet{
-	dir = 8
+/obj/decal/tile_edge/line/yellow{
+	dir = 4;
+	icon_state = "line1"
 	},
-/turf/simulated/floor/yellow/side,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
 /area/station/mining/staff_room)
 "dYq" = (
 /obj/cable{
@@ -17037,11 +17027,13 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/escape)
 "erD" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
 	},
-/turf/simulated/floor/yellow/side,
-/area/station/mining/staff_room)
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/space)
 "esa" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17292,6 +17284,16 @@
 	dir = 8
 	},
 /area/station/security/secwing)
+"eFs" = (
+/obj/decal/tile_edge/line/yellow{
+	dir = 6;
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
 "eFV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -19326,11 +19328,11 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "gko" = (
-/obj/decal/tile_edge/line/yellow{
-	dir = 6;
-	icon_state = "line1"
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "gkH" = (
 /obj/machinery/light{
@@ -19352,13 +19354,6 @@
 "glL" = (
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
-"glY" = (
-/obj/machinery/nanofab/mining,
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/mining/staff_room)
 "gmd" = (
 /obj/machinery/light{
 	dir = 8;
@@ -19800,6 +19795,10 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/turf/simulated/floor/orangeblack,
+/area/station/mining/staff_room)
+"gBK" = (
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "gDf" = (
@@ -20921,13 +20920,14 @@
 /turf/simulated/floor/wood,
 /area/station/security/hos)
 "hCX" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/light/runway_light/delay3,
-/turf/space,
-/area/space)
+/obj/rack,
+/obj/item/clothing/shoes/magnetic,
+/obj/item/clothing/suit/space/engineer,
+/obj/item/clothing/head/helmet/space/engineer,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/jetpack/micro,
+/turf/simulated/floor/orangeblack,
+/area/station/mining/staff_room)
 "hDo" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -21027,11 +21027,6 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
-"hFQ" = (
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/mining/staff_room)
 "hGu" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -22115,9 +22110,16 @@
 	},
 /area/station/science/research_director)
 "ise" = (
-/obj/machinery/processor,
-/turf/simulated/floor/yellow,
-/area/station/mining/staff_room)
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
 "isI" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -22464,7 +22466,9 @@
 /area/station/crew_quarters/bar)
 "iDd" = (
 /obj/machinery/manufacturer/hangar,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
 /area/station/mining/staff_room)
 "iDw" = (
 /obj/cable{
@@ -23456,6 +23460,11 @@
 "jtY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/com_dish/comdish)
+"jue" = (
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/mining/staff_room)
 "juq" = (
 /obj/machinery/light_switch/west{
 	pixel_x = -30
@@ -24018,6 +24027,16 @@
 	dir = 8
 	},
 /area/station/medical/medbay/lobby)
+"jPt" = (
+/obj/decal/tile_edge/line/yellow{
+	dir = 5;
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
 "jPy" = (
 /obj/machinery/atmospherics/unary/vent,
 /turf/simulated/floor/engine,
@@ -26101,16 +26120,12 @@
 	},
 /area/station/science/artifact)
 "lwR" = (
-/obj/lattice,
-/obj/grille/steel,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-2"
+/obj/machinery/light/runway_light/delay3,
+/obj/lattice{
+	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/com_dish/auxdish)
+/area/space)
 "lxH" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
@@ -26169,13 +26184,13 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "lzQ" = (
-/obj/table/auto,
-/obj/item/shipcomponent/mainweapon/rockdrills,
-/obj/item/shipcomponent/mainweapon/mining,
-/obj/item/shipcomponent/secondary_system/orescoop,
-/obj/item/shipcomponent/secondary_system/orescoop,
-/obj/machinery/light,
-/turf/simulated/floor/yellow,
+/obj/machinery/light/emergency,
+/obj/machinery/computer/magnet{
+	dir = 8
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
 /area/station/mining/staff_room)
 "lzT" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -26349,6 +26364,11 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor,
 /area/station/science/artifact)
+"lHu" = (
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/station/mining/staff_room)
 "lHA" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -27157,13 +27177,21 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "mld" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
+/obj/machinery/door/airlock/pyro/external{
+	name = "Mining"
 	},
-/obj/machinery/light/runway_light/delay3,
-/turf/space,
-/area/space)
+/obj/mapping_helper/access/mining,
+/obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/mining/staff_room)
 "mll" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Hydroponics"
@@ -27319,7 +27347,13 @@
 	},
 /area/station/bridge)
 "mty" = (
-/obj/machinery/portable_reclaimer,
+/obj/table/auto,
+/obj/item/device/matanalyzer,
+/obj/item/slag_shovel,
+/obj/item/device/matanalyzer,
+/obj/item/device/matanalyzer,
+/obj/item/slag_shovel,
+/obj/item/paper/book/from_file/matsci_guide,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -28400,12 +28434,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "nlE" = (
-/obj/rack,
-/obj/item/clothing/shoes/magnetic,
-/obj/item/clothing/suit/space/engineer,
-/obj/item/clothing/head/helmet/space/engineer,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack/micro,
+/obj/machinery/processor,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "nlO" = (
@@ -28915,13 +28944,12 @@
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "nET" = (
-/obj/rack,
-/obj/item/clothing/shoes/magnetic,
-/obj/item/clothing/suit/space/engineer,
-/obj/item/clothing/head/helmet/space/engineer,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack/micro,
-/obj/decal/cleanable/dirt,
+/obj/table/auto,
+/obj/item/shipcomponent/mainweapon/rockdrills,
+/obj/item/shipcomponent/mainweapon/mining,
+/obj/item/shipcomponent/secondary_system/orescoop,
+/obj/item/shipcomponent/secondary_system/orescoop,
+/obj/machinery/light,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "nFa" = (
@@ -29642,9 +29670,14 @@
 /turf/simulated/floor/plating,
 /area/station/science/bot_storage)
 "oiD" = (
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_west"
-	},
+/obj/rack,
+/obj/item/clothing/shoes/magnetic,
+/obj/item/clothing/suit/space/engineer,
+/obj/item/clothing/head/helmet/space/engineer,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/jetpack/micro,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "oiM" = (
 /obj/disposalpipe/segment/food,
@@ -29714,11 +29747,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "olG" = (
-/obj/decal/tile_edge/line/yellow{
-	dir = 4;
-	icon_state = "line1"
-	},
-/turf/simulated/floor,
+/obj/machinery/light,
+/obj/stool,
+/turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
 "olN" = (
 /obj/disposalpipe/segment,
@@ -31243,6 +31274,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
+"pvZ" = (
+/obj/decal/tile_edge/line/yellow{
+	dir = 10;
+	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
 "pwy" = (
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/redblack{
@@ -31396,14 +31437,8 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
 "pAN" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable{
-	dir = null
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/plating,
+/obj/machinery/light,
+/turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
 "pBl" = (
 /obj/machinery/genetics_booth,
@@ -31653,17 +31688,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
-"pKK" = (
-/obj/machinery/ore_cloud_storage_container{
-	pixel_x = 1;
-	pixel_y = 2
-	},
-/obj/decal/cleanable/dirt,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/yellow,
-/area/station/mining/staff_room)
 "pLf" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left,
@@ -31923,13 +31947,13 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "pUY" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir-b"
+/obj/machinery/ore_cloud_storage_container{
+	pixel_x = 1;
+	pixel_y = 2
 	},
-/obj/machinery/light/runway_light/delay3,
-/turf/space,
-/area/space)
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/yellow,
+/area/station/mining/staff_room)
 "pVa" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -34597,10 +34621,13 @@
 	},
 /area/station/medical/medbay)
 "say" = (
-/obj/machinery/manufacturer/mining,
-/obj/machinery/light/emergency,
-/turf/simulated/floor/yellow/side{
-	dir = 6
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_east"
 	},
 /area/station/mining/staff_room)
 "saG" = (
@@ -36015,14 +36042,13 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "teM" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
 	},
-/obj/machinery/oreaccumulator,
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/mining/staff_room)
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/space)
 "teN" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -36949,17 +36975,6 @@
 "tJp" = (
 /turf/simulated/floor/black,
 /area/station/engine/core/nuclear)
-"tJJ" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
 "tJN" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -37268,12 +37283,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"tWU" = (
-/obj/stool,
-/turf/simulated/floor/yellow/side{
-	dir = 10
-	},
-/area/station/mining/staff_room)
 "tXc" = (
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/white,
@@ -38910,13 +38919,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"vaz" = (
-/obj/landmark/pest,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/mining/staff_room)
 "vaW" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -39835,14 +39837,10 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "vYz" = (
-/obj/decal/tile_edge/line/yellow{
-	dir = 1;
-	icon_state = "line1"
+/obj/item/device/radio/intercom/cargo{
+	dir = 8
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/grime,
+/turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "vYO" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
@@ -40268,8 +40266,12 @@
 /turf/simulated/floor/black,
 /area/station/engine/core/nuclear)
 "wtr" = (
-/obj/machinery/nanofab/refining,
-/turf/simulated/floor/yellow,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
 /area/station/mining/staff_room)
 "wtF" = (
 /obj/reagent_dispensers/heliumtank,
@@ -40848,6 +40850,12 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "wQk" = (
+/obj/machinery/portable_reclaimer,
+/obj/decal/stripe_caution,
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -41171,14 +41179,10 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "xjc" = (
-/obj/decal/tile_edge/line/yellow{
-	dir = 10;
-	icon_state = "line1"
-	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
 "xjR" = (
 /obj/disposalpipe/segment,
@@ -41297,16 +41301,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
-"xml" = (
-/obj/machinery/vehicle/pod_smooth/industrial,
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_west"
-	},
-/area/station/mining/staff_room)
 "xnY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -41821,6 +41815,13 @@
 "xIM" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
+"xJg" = (
+/obj/machinery/nanofab/mining,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/mining/staff_room)
 "xJq" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -79892,13 +79893,13 @@ buJ
 buJ
 spY
 aGI
-deG
+lHu
 wCE
+iDd
+bZm
 wQk
-wQk
-wQk
-tWU
-pAN
+afz
+gko
 ozL
 fYc
 fYc
@@ -80194,15 +80195,15 @@ lzy
 kEQ
 mUg
 aGI
-hFQ
+jue
 bGF
-gko
-olG
-ctX
-dXY
+bGF
+bGF
+bGF
+pAN
 uPt
-ddt
-lwR
+ise
+ctJ
 iPQ
 efv
 bFQ
@@ -80498,12 +80499,12 @@ jxr
 gtw
 kpd
 bGF
-cyd
-pKK
-vYz
-erD
-dGH
-tJJ
+eFs
+dXY
+jPt
+xjc
+mld
+bIE
 fYc
 bdF
 efv
@@ -80800,9 +80801,9 @@ paz
 aGI
 aTN
 bGF
-xjc
-osX
-qeP
+beL
+pUY
+deG
 dVF
 gAY
 ozL
@@ -81102,10 +81103,10 @@ iEV
 gtw
 gJF
 bGF
-vaz
-bGF
-bGF
-beL
+pvZ
+osX
+qeP
+olG
 bHW
 ozL
 bIF
@@ -81404,10 +81405,10 @@ bpa
 gtw
 mty
 buI
-bZm
-teM
-bvZ
-say
+wtr
+bjM
+bjM
+lzQ
 aGI
 jqJ
 aaa
@@ -81706,10 +81707,10 @@ jkc
 wWO
 dmR
 bHa
-wtr
-ise
-bjM
-lzQ
+cyd
+hCX
+hCX
+oiD
 gtw
 hfQ
 aaa
@@ -82007,10 +82008,10 @@ lTT
 bGd
 tco
 krO
-erD
-glY
+xjc
+xJg
 nlE
-nlE
+gBK
 nET
 gtw
 ozL
@@ -82310,10 +82311,10 @@ yaV
 bGb
 pDl
 hFc
-iDd
+qQU
 stl
-xml
-oiD
+ctX
+ctX
 umk
 ozL
 agJ
@@ -82614,7 +82615,7 @@ pDl
 hFc
 qQU
 hYa
-rhT
+kSy
 rhT
 umk
 aly
@@ -82916,7 +82917,7 @@ akJ
 dVF
 qQU
 hYa
-kSy
+rhT
 rhT
 umk
 ozL
@@ -83217,9 +83218,9 @@ bGe
 tij
 dVF
 qQU
-hmq
-mhM
-mhM
+hYa
+kSy
+rhT
 umk
 ozL
 aaa
@@ -83518,15 +83519,15 @@ uoT
 qbF
 qWe
 nns
-qQU
-qQU
-qQU
-qQU
+vYz
+hmq
+mhM
+say
 fPs
 ozL
 bvT
 agJ
-bIE
+lwR
 agJ
 bsl
 mfK
@@ -84125,9 +84126,9 @@ lTe
 csQ
 bIO
 bIO
-pUY
+bvZ
 bJQ
-hCX
+teM
 bDp
 aaa
 aaa
@@ -87744,7 +87745,7 @@ bpe
 bDq
 aaa
 aaa
-mld
+erD
 bHI
 agJ
 akG
