@@ -751,7 +751,7 @@ proc/broadcast_to_all_gangs(var/message)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
 		newsignal.encryption = "GDFTHR+\ref[civvie.originalPDA]"
-		newsignal.encryption_visibility = 15
+		newsignal.encryption_density = 85
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "Unknown Sender"
 		newsignal.data["message"] = "[message]"

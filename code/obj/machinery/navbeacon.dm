@@ -164,9 +164,6 @@ TYPEINFO(/obj/machinery/navbeacon)
 		signal.source = src
 		signal.transmission_method = 1
 		signal.data["beacon"] = location
-		var/turf/T = get_turf(src)
-		signal.data["x"] = T.x
-		signal.data["y"] = T.y
 		signal.data["netid"] = net_id
 		if (target)
 			signal.data["address_1"] = target
@@ -176,7 +173,7 @@ TYPEINFO(/obj/machinery/navbeacon)
 
 		if(signal.data["patrol"])
 			signal.encryption = "ERR_12845_NT_SECURE_PACKET:"
-			signal.encryption_visibility = 10
+			signal.encryption_density = 90
 			signal.data["auth_code"] = netpass_security
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)

@@ -263,7 +263,7 @@
 		// look for encrypted packets and obscure them (but leave a bit visible, if they say to)
 		if(signal.encryption)
 			t += "[signal.encryption]"
-			t2 = stars(t2, signal.encryption_visibility)
+			t2 = stars(t2, signal.encryption_density)
 
 		result += "[t][t2]"
 

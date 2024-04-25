@@ -426,14 +426,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	health_burn = 25
 	health_burn_vuln = 1.25
 	ai_retaliates = TRUE
-	ai_retaliate_patience = 1
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
-	ai_type = /datum/aiHolder/patroller
+	ai_type = /datum/aiHolder/patroller/packet_based
 	is_npc = TRUE
 	ai_attacks_neutral = TRUE
 	var/net_id
 	var/power = TRUE
-	var/beacon_freq = FREQ_NAVBEACON
 	var/control_freq = FREQ_BOT_CONTROL
 	var/emagged = 0
 	var/emote_cooldown = 7 SECONDS
@@ -468,7 +466,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 		for(var/actionType in childrentypesof(/datum/contextAction/securitron)) //see context_actions.dm
@@ -575,8 +572,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 					var/cap_name = uppertext(copytext_char(src.name,1,2)) + copytext_char(src.name,2)
 					src.say("Ten-Forty One. [cap_name]: ONLINE.")
 					add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
+					ai.enable()
 				else
 					remove_simple_light("secbot")
+					ai.disable()
 				return src.power
 			if ("check_contraband")
 				src.check_contraband = !src.check_contraband
@@ -603,21 +602,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		// process all-bot input
 		if(signal_command=="bot_status")
 			src.send_status()
-
-		if(signal.data["auth_pass"] != netpass_security) // commanding the bot requires netpass_security
-			return
-
-		if(istype(src.ai,/datum/aiHolder/patroller/packet_based))
-			var/datum/aiHolder/patroller/packet_based/packet_ai = src.ai
-			// receive response from beacon
-			var/signal_beacon = signal.data["beacon"]
-			var/valid = signal.data["patrol"] && signal.data["next_patrol"]
-			if(!signal_beacon || !valid)
-				return
-
-			if(signal.data["patrol"] == packet_ai.patrol_id) // redirection at next stop
-				packet_ai.next_patrol_id = signal.data["next_patrol"]
-				packet_ai.next_patrol_target = signal.source
 
 	proc/send_status()
 		var/datum/signal/signal = get_free_signal()
@@ -707,6 +691,13 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				return 0
 		return 1
 
+	should_critter_retaliate(mob/attcker, obj/attcked_with)
+		. = ..()
+		if((src.health >= (src.max_health * 0.6)) && src.allowed(attcker)) // if health is more than 60%, assume it was friendly fire
+			. = FALSE
+
+
+
 /datum/targetable/critter/bot/handcuff
 	name = "Detain"
 	desc = "Attempts to handcuff a target."
@@ -748,7 +739,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 /datum/action/bar/icon/mob_secbot_cuff
 	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "secbot_cuff"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "buddycuff"
 	var/mob/master
@@ -820,3 +810,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			var/mob/M = target
 			M.do_disorient(150, weakened = 120, disorient = 60)
 
+/mob/living/critter/robotic/securitron/weed_seeking
+	name = "weedhound"
+	real_name = "weedhound"
+	ai_type = /datum/aiHolder/patroller
+
+/mob/living/critter/spider/ice/queen/test_patrol
+	ai_type = /datum/aiHolder/patroller/packet_based
