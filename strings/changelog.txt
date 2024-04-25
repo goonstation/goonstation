@@ -1,5 +1,9 @@
 
 (t)wed apr 24 24
+(u)Cheekybrdy
+(p)18609
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Gannets variant doors are now compliant with sprite standards
 (u)Lord_Earthfire
 (p)18596
 (e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry
