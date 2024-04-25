@@ -428,7 +428,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 1
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
-	ai_type = /datum/aiHolder/aggressive
+	ai_type = /datum/aiHolder/patroller
 	is_npc = TRUE
 	ai_attacks_neutral = TRUE
 	var/net_id
@@ -439,6 +439,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	var/emote_cooldown = 7 SECONDS
 	var/siren_active = FALSE
 	var/list/req_access = list(access_security)
+	var/weapon_access = access_carrypermit
+	var/contraband_access = access_contrabandpermit
 	var/check_contraband = TRUE
 	var/check_records = TRUE
 	var/is_detaining = FALSE
@@ -459,7 +461,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 		src.abilityHolder.addAbility(/datum/targetable/critter/bot/handcuff)
 
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_base, "robot_health_slow_immunity")
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity")
 
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(src)
 
@@ -540,7 +542,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			if ("flex")
 				src.say("I AM THE LAW.")
 				playsound(src, "sound/voice/biamthelaw.ogg", 50, FALSE, 0, 1)
-		return ..()
+		return
 
 	proc/siren()
 		if(siren_active)
@@ -570,7 +572,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			if ("power")
 				src.power = !src.power
 				if (src.power)
-					src.say("Ten-Forty One. [src.name]: ONLINE.")
+					var/cap_name = uppertext(copytext_char(src.name,1,2)) + copytext_char(src.name,2)
+					src.say("Ten-Forty One. [cap_name]: ONLINE.")
 					add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 				else
 					remove_simple_light("secbot")
@@ -589,12 +592,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				return src.is_detaining
 			if ("report_arrests")
 				src.report_arrests = !src.report_arrests
-				src.say("Ten-Four. [src.report_arrests ? "Reporting arrests on [FREQ_PDA]" : "No longer reporting arrests"].")
+				src.say("Ten-Four. [src.report_arrests ? "Reporting arrests on: [FREQ_PDA]" : "No longer reporting arrests."]")
 				return src.report_arrests
-
-	proc/locate_beacon(var/dest_code)
-
-		return
 
 	proc/receive_signal(datum/signal/signal)
 		if(!src.power)
@@ -605,11 +604,20 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		if(signal_command=="bot_status")
 			src.send_status()
 
-		// receive response from beacon
-		var/signal_beacon = signal.data["beacon"]
-		var/valid = signal.data["patrol"]
-		if(!signal_beacon || !valid)
+		if(signal.data["auth_pass"] != netpass_security) // commanding the bot requires netpass_security
 			return
+
+		if(istype(src.ai,/datum/aiHolder/patroller/packet_based))
+			var/datum/aiHolder/patroller/packet_based/packet_ai = src.ai
+			// receive response from beacon
+			var/signal_beacon = signal.data["beacon"]
+			var/valid = signal.data["patrol"] && signal.data["next_patrol"]
+			if(!signal_beacon || !valid)
+				return
+
+			if(signal.data["patrol"] == packet_ai.patrol_id) // redirection at next stop
+				packet_ai.next_patrol_id = signal.data["next_patrol"]
+				packet_ai.next_patrol_target = signal.source
 
 	proc/send_status()
 		var/datum/signal/signal = get_free_signal()
@@ -626,29 +634,26 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			return FALSE
 		return ..()
 
+//If the security records say to arrest them, arrest them
+//Or if they have weapons and aren't security, arrest them.
 	proc/assess_perp(mob/living/perp)
-		if(src.emagged)
-			return 10 //Everyone is a criminal!
-
 		var/threatcount = 0
 
-		var/obj/item/card/id/perp_id = perp.equipped()
-		if (!istype(perp_id))
-			perp_id = perp.get_id()
+		if(src.emagged) return 10 //Everyone is a criminal!
 
 		if((src.check_contraband)) // bot is set to actively search for contraband
+			var/obj/item/card/id/perp_id = perp.equipped()
+			if (!istype(perp_id))
+				perp_id = perp.get_id()
 
-			if(perp_id) //Checking for targets and permits
-				var/list/contraband_returned = list()
-				if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !(access_contrabandpermit in perp_id.access), !(access_carrypermit in perp_id.access)))
-					threatcount += max(contraband_returned)
-			else
-				var/list/contraband_returned = list()
-				if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
-					threatcount += max(contraband_returned)
+			//Agent cards lower threat level
+			if(istype(perp_id, /obj/item/card/id/syndicate))
+				threatcount -= 2
 
-		if (istype(perp_id, /obj/item/card/id/syndicate)) //Agent cards lower threat level
-			threatcount -= 2
+			if(!perp_id || !(contraband_access in perp_id.access))
+				threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_CONTRABAND)
+			if(!perp_id || !(weapon_access in perp_id.access))
+				threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_GUNS)
 
 		var/perpname = perp.name
 		if(ishuman(perp))
@@ -665,7 +670,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		if(threatcount >= 4)
 			return threatcount
 
-		// note - this does allow flagging 'fire elemental' and such for arrest. probably cool
+		// note - this does allow flagging 'fire elemental' and such for arrest. probably fine
 		if (src.check_records) // bot is set to actively compare security records
 			for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
 				if(R["criminal"] == "*Arrest*")

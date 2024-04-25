@@ -260,15 +260,10 @@
 		for(var/d in signal.data)
 			t2 += "[d]=[signal.data[d]]; "
 
-		// look for detomax packet and obscure it (so it won't be easy to copy)
-		if(signal.data["command"] == "text_message" && signal.data["batt_adjust"] == netpass_syndicate)
-			t += "ERR_12939_CORRUPT_PACKET:"
-			t2 = stars(t2, 15)
-
-		// ruck kit lock packets use this
+		// look for encrypted packets and obscure them (but leave a bit visible, if they say to)
 		if(signal.encryption)
 			t += "[signal.encryption]"
-			t2 = stars(t2, 15)
+			t2 = stars(t2, signal.encryption_visibility)
 
 		result += "[t][t2]"
 

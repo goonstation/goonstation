@@ -103,16 +103,13 @@ TYPEINFO(/obj/machinery/navbeacon)
 	// or one of the set transponder keys
 	// if found, return a signal
 	receive_signal(datum/signal/signal)
-		if (!signal || signal.encryption) return
+		if (!signal || signal.encryption || !signal.data["sender"])
+			return
 
 		var/beaconrequest = signal.data["findbeacon"] || signal.data["address_tag"]
 		if(beaconrequest && ((beaconrequest in codes) || beaconrequest == "any" || beaconrequest == location))
 			SPAWN(1 DECI SECOND)
 				post_status(signal.data["sender"] || signal.data["netid"])
-			return
-
-		if (!signal.data["address_1"] || !signal.data["sender"])
-			// Not for us, ignore
 			return
 
 		if (signal.data["address_1"] != src.net_id)
@@ -167,12 +164,20 @@ TYPEINFO(/obj/machinery/navbeacon)
 		signal.source = src
 		signal.transmission_method = 1
 		signal.data["beacon"] = location
+		var/turf/T = get_turf(src)
+		signal.data["x"] = T.x
+		signal.data["y"] = T.y
 		signal.data["netid"] = net_id
 		if (target)
 			signal.data["address_1"] = target
 
 		for(var/key in codes)
 			signal.data[key] = codes[key]
+
+		if(signal.data["patrol"])
+			signal.encryption = "ERR_12845_NT_SECURE_PACKET:"
+			signal.encryption_visibility = 10
+			signal.data["auth_code"] = netpass_security
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 

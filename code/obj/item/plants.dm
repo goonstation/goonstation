@@ -109,6 +109,14 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	contraband = 1
 	w_class = W_CLASS_TINY
 
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+
+	New()
+		STOP_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+		. = ..()
+
 /obj/item/plant/herb/cannabis/spawnable
 	make_reagents()
 		src.create_reagents(85)

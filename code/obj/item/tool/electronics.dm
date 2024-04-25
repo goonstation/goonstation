@@ -879,6 +879,7 @@
 					newsignal.data["DATA"] = O.name
 					newsignal.data["sender"] = src.net_id
 					newsignal.encryption = "ERR_12845_NT_SECURE_PACKET:"
+					newsignal.encryption_visibility = 15
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 
 	else

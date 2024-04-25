@@ -100,3 +100,6 @@
 
 /datum/component/tracker_hud/gang
 	color = "#5a6edd"
+
+/datum/component/tracker_hud/patrol
+	color = "#e5525e"

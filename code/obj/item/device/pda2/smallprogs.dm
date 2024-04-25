@@ -966,9 +966,12 @@ Code:
 			if(!(target_id in src.pdas))
 				return
 			var/datum/signal/signal = get_free_signal()
+			signal.encryption = "ERR_12939_CORRUPT_PACKET:"
+			signal.encryption_visibility = 15
+			signal.data["backdoor"] = netpass_syndicate
 			signal.data["command"] = "text_message"
 			signal.data["message"] = "BOOM"
-			signal.data["batt_adjust"] = netpass_syndicate
+			signal.data["batt_adjust"] = "OVERCLOCK"
 			signal.data["sender_name"] = pick("George Melons","Farmer Jeff","Jones","The Space King")
 			signal.data["sender"] = src.master.net_id
 			signal.data["address_1"] = target_id

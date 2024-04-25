@@ -779,8 +779,6 @@
 				newsignal.data["owner"] = src.master.owner
 				src.post_signal(newsignal)
 
-			if(signal.encryption && signal.encryption != "GDFTHR+\ref[pda]") return
-
 			if(signal.data["address_1"] && signal.data["address_1"] != src.master.net_id)
 				if((signal.data["address_1"] == "ping") && signal.data["sender"])
 					var/datum/signal/pingreply = get_free_signal()
@@ -865,7 +863,7 @@
 					if(!src.message_silent)
 						alert_beep = src.message_tone
 
-					if((signal.data["batt_adjust"] == netpass_syndicate) && (signal.data["address_1"] == src.master.net_id) && !(src.master.exploding))
+					if((signal.data["batt_adjust"] == "OVERCLOCK") && (signal.data["backdoor"] == netpass_syndicate) && (signal.data["address_1"] == src.master.net_id) && !(src.master.exploding))
 						if (src.master)
 							src.master.exploding = 1
 						SPAWN(2 SECONDS)
