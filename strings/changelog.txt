@@ -1,5 +1,10 @@
 
 (t)wed apr 24 24
+(u)Lord_Earthfire
+(p)18596
+(e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry
+(+)Consuming too high amounts of liquid space rubber has been found affect the consumers body in unintended ways.
+(+)Bouncing off other people while under the effect of LSR now deals brute damage to both parties.
 (u)Chatauscours
 (p)18516
 (e)🗺🔄|A-Mapping, C-Rework
