@@ -20646,6 +20646,12 @@
 	name = "Mining";
 	req_access = null
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
 "xlM" = (
