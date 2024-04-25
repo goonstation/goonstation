@@ -140,7 +140,7 @@
 	operating = 1
 	},
 /obj/machinery/door/poddoor/pyro{
-	id = "qm_dock";
+	id = "cargodock_in";
 	name = "Import Hatch"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
@@ -323,7 +323,7 @@
 	dir = 1
 	},
 /obj/machinery/door/poddoor/pyro{
-	id = "manualshipping";
+	id = "cargodock_out";
 	name = "Export Driver Hatch"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
@@ -1419,6 +1419,20 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
+"amU" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/firealarm/east{
+	pixel_y = 24
+	},
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/secwing)
 "any" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8608,7 +8622,7 @@
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
-	icon_state = "fblue3"
+	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/ce)
 "bcT" = (
@@ -10926,8 +10940,8 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue3"
+	dir = 9;
+	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/ce)
 "btf" = (
@@ -22101,10 +22115,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue3"
-	},
+/turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "itr" = (
 /obj/disposalpipe/segment/mail,
@@ -24282,7 +24293,7 @@
 	},
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
-	name = "Bridge"
+	req_access = null
 	},
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
@@ -24902,7 +24913,7 @@
 /area/station/hallway/secondary/exit)
 "kFN" = (
 /obj/item/device/radio/intercom/AI{
-	dir = 4
+	dir = 1
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -25269,10 +25280,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_chief,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue3"
-	},
+/turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "kXe" = (
 /obj/disposalpipe/segment/mail{
@@ -26713,16 +26721,6 @@
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/bar)
-"lXZ" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2{
-	dir = 4
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue3"
-	},
-/area/station/crew_quarters/ce)
 "lYR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27432,7 +27430,7 @@
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
-	icon_state = "fblue3"
+	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/ce)
 "mzm" = (
@@ -27834,7 +27832,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/poddoor/blast{
 	density = 0;
 	dir = 4;
@@ -27849,6 +27846,7 @@
 	name = "Bridge"
 	},
 /obj/mapping_helper/access/heads,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "mON" = (
@@ -30261,7 +30259,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/firealarm/south,
+/obj/item/storage/wall/office{
+	pixel_y = -24
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
 "oJu" = (
@@ -31978,9 +31978,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/status_display{
-	pixel_y = -30
-	},
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
@@ -32678,7 +32675,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/storage/wall/office,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -34455,7 +34451,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/machinery/door/airlock/pyro/medical,
-/turf/simulated/floor/sanitary,
+/turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "rVy" = (
 /obj/grille/catwalk{
@@ -42098,6 +42094,9 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/machinery/status_display{
+	pixel_y = -30
 	},
 /turf/simulated/floor/black,
 /area/station/security/secwing)
@@ -76136,7 +76135,7 @@ thC
 siQ
 brc
 bwF
-lXZ
+hmk
 itq
 hmk
 bwF
@@ -84898,7 +84897,7 @@ egp
 leC
 hUp
 bxf
-xaW
+amU
 hEh
 bBF
 bLX
