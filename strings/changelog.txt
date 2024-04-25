@@ -1,5 +1,7 @@
 
 (t)wed apr 24 24
+(u)Sord
+(+)The Donut 2 Research Outpost main hallway is now more publicly accessible. Don't knock on the windows, it scares the science away
 (u)Retrino, Azrun
 (p)18605
 (e)🔨🎩|A-Player-Actions, A-Clothing
