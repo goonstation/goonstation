@@ -44759,9 +44759,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "dan" = (
-/obj/decal/boxingropeenter{
-	name = "Boxing ropes"
-	},
+/obj/decal/boxingrope,
 /turf/unsimulated/floor/specialroom/gym,
 /area/afterlife/bar)
 "dao" = (
@@ -44871,7 +44869,6 @@
 /area/area_that_kills_you_if_you_enter_it)
 "daI" = (
 /obj/disposalpipe/segment/vertical,
-/obj/decal/tile_edge/stripe,
 /turf/unsimulated/floor/wood/six,
 /area/afterlife/bar/sanctuary)
 "daJ" = (
@@ -44879,7 +44876,7 @@
 	dir = 8
 	},
 /obj/railing/velvet,
-/turf/unsimulated/floor/carpet/red/standard/edge/east,
+/turf/unsimulated/floor/carpet/red/standard/edge/ne,
 /area/afterlife/bar)
 "daK" = (
 /turf/unsimulated/floor/black,
@@ -45065,9 +45062,6 @@
 	},
 /area/iomoon/caves)
 "dbi" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
 /turf/unsimulated/floor/black,
 /area/afterlife/bar/sanctuary)
 "dbj" = (
@@ -45308,6 +45302,7 @@
 	},
 /area/hospital/underground)
 "dcf" = (
+/obj/map/light/brightwhite,
 /turf/unsimulated/floor/stairs/wood{
 	dir = 8
 	},
@@ -45571,12 +45566,6 @@
 	},
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
-"dcT" = (
-/obj/decal/tile_edge/stripe{
-	dir = 4
-	},
-/turf/unsimulated/floor/wood,
-/area/afterlife/bar)
 "dcU" = (
 /obj/submachine/foodprocessor{
 	dir = 8
@@ -45627,12 +45616,11 @@
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
 "ddc" = (
-/obj/decal/tile_edge/stripe,
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
+/obj/decal/stage_edge,
+/obj/stool/chair{
+	dir = 1
 	},
-/obj/map/light/brightwhite,
-/turf/unsimulated/floor/wood,
+/turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "ddd" = (
 /obj/decal/tile_edge/stripe{
@@ -45897,7 +45885,6 @@
 /area/afterlife/bar)
 "ddQ" = (
 /obj/mic_stand,
-/obj/decal/tile_edge/stripe,
 /turf/unsimulated/floor/wood,
 /area/afterlife/bar)
 "ddR" = (
@@ -49248,13 +49235,8 @@
 	},
 /turf/unsimulated/floor/black,
 /area/afterlife/bar)
-"duG" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/turf/unsimulated/floor/wood,
-/area/afterlife/bar)
 "duH" = (
+/obj/decoration/collapsedwall,
 /obj/structure/woodwall,
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
@@ -51275,12 +51257,6 @@
 /obj/map/light/green,
 /turf/unsimulated/floor/setpieces/swampgrass,
 /area/centcom/offices/tterc)
-"dBO" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
-	},
-/turf/unsimulated/floor/wood/six,
-/area/afterlife/bar/sanctuary)
 "dBS" = (
 /obj/stool/chair/comfy/throne_gold{
 	dir = 8
@@ -56044,11 +56020,6 @@
 /obj/disposalpipe/trunk/north,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
-"dSv" = (
-/obj/decal/tile_edge/stripe,
-/obj/map/light/brightwhite,
-/turf/unsimulated/floor/wood/six,
-/area/afterlife/bar/sanctuary)
 "dSw" = (
 /obj/decal/stage_edge{
 	dir = 8
@@ -56057,6 +56028,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/random_item_spawner/dressup/one,
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
 "dSx" = (
@@ -56077,10 +56049,6 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = -6;
 	pixel_y = 10
-	},
-/obj/decal/tile_edge/stripe,
-/obj/decal/tile_edge/stripe{
-	dir = 4
 	},
 /obj/map/light/brighterwhite,
 /turf/unsimulated/floor/wood,
@@ -57033,10 +57001,10 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt/dirt3,
-/obj/random_item_spawner/dressup,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/random_item_spawner/dressup/one,
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
 "ejz" = (
@@ -64635,12 +64603,6 @@
 "mje" = (
 /obj/item/instrument/large/piano{
 	name = "old piano"
-	},
-/obj/decal/tile_edge/stripe{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe{
-	dir = 1
 	},
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/wood,
@@ -72978,13 +72940,6 @@
 	},
 /turf/space,
 /area/syndicate_station_space)
-"uHL" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/obj/map/light/brightwhite,
-/turf/unsimulated/floor/wood,
-/area/afterlife/bar)
 "uHO" = (
 /obj/machinery/computer3/generic/med_data/console_upper,
 /turf/unsimulated/floor/circuit/white,
@@ -97367,7 +97322,7 @@ cwf
 cwf
 cwf
 dan
-dqe
+ddc
 daN
 aaa
 ctn
@@ -97971,7 +97926,7 @@ cwf
 cwf
 cwf
 dan
-dqe
+ddc
 daN
 aaa
 ctn
@@ -99170,9 +99125,9 @@ daJ
 dSc
 ddh
 daF
-uHL
-duG
-ddc
+ddh
+dSd
+ddh
 jxZ
 rlN
 cwC
@@ -99768,14 +99723,14 @@ dbS
 dcr
 dTj
 daP
-dSv
+dTj
 iKM
 ddd
 cwC
 cwC
 esn
 mje
-dcT
+dSd
 dSz
 dqe
 rlN
@@ -100070,7 +100025,7 @@ dbS
 dcr
 dTj
 daP
-dSv
+dTj
 dSh
 iVn
 dSo
@@ -101278,7 +101233,7 @@ dcp
 dbX
 dcp
 hIh
-dBO
+daP
 dcp
 dTi
 dcV
