@@ -40569,16 +40569,12 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access = null
-	},
 /obj/mapping_helper/access/hos,
 /obj/machinery/secscanner{
 	pixel_y = -10
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/weapons,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "wMt" = (

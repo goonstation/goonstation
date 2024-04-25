@@ -67024,17 +67024,15 @@
 	},
 /area/station/com_dish/auxdish)
 "owh" = (
-/obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
-	dir = 4;
-	name = "Armory"
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
 	dir = 4
 	},
 /obj/mapping_helper/access/hos,
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/weapons{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "owx" = (

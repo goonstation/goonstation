@@ -38456,16 +38456,15 @@
 	name = "Nuclear Control Room"
 	})
 "qih" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	aiControlDisabled = 1;
-	dir = 4
-	},
 /obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
+	},
+/obj/machinery/door/airlock/pyro/weapons{
+	dir = 4
 	},
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/ai_monitored/armory)

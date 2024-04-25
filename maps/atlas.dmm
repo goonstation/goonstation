@@ -17824,14 +17824,11 @@
 	},
 /area/station/crew_quarters/kitchen)
 "ogd" = (
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/hos,
+/obj/machinery/door/airlock/pyro/weapons,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "ogX" = (

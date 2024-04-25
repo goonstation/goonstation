@@ -34914,16 +34914,12 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical)
 "fGB" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access_txt = "37"
-	},
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/machinery/door/airlock/pyro/weapons,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "fGJ" = (
@@ -42998,16 +42994,13 @@
 /turf/simulated/floor/martian,
 /area/evilreaver)
 "scd" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	aiControlDisabled = 1;
-	dir = 4;
-	name = "Armory";
-	req_access_txt = "37"
-	},
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/weapons{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)

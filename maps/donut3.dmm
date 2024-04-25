@@ -2302,15 +2302,15 @@
 /turf/simulated/wall/auto/jen/red,
 /area/station/maintenance/outer/west)
 "aEe" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	dir = 4
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/weapons{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "aEf" = (
@@ -66477,9 +66477,6 @@
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/storage/tech)
 "uke" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	aiControlDisabled = 1
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/hos,
 /obj/machinery/secscanner,
@@ -66488,6 +66485,7 @@
 	},
 /obj/decal/stripe_delivery,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/machinery/door/airlock/pyro/weapons,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "ukq" = (

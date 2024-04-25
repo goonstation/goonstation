@@ -52481,11 +52481,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "sNE" = (
-/obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access = null
-	},
 /obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "1-2"
@@ -52498,6 +52493,7 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
+/obj/machinery/door/airlock/pyro/weapons,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "sNO" = (

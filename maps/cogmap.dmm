@@ -42047,16 +42047,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "fsC" = (
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access = null
-	},
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/machinery/door/airlock/pyro/weapons,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "fsG" = (
@@ -62877,16 +62873,12 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "vUR" = (
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access = null
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/hos,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/machinery/door/airlock/pyro/weapons,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "vVq" = (

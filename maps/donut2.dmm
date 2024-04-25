@@ -30266,9 +30266,7 @@
 "kTp" = (
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/security/alt{
-	aiHacking = 1
-	},
+/obj/machinery/door/airlock/pyro/weapons,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "kTw" = (
@@ -44840,11 +44838,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/command/alt{
-	dir = 4
-	},
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/weapons{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "tOK" = (
