@@ -52150,7 +52150,9 @@
 	},
 /area/centcom/lounge)
 "dGA" = (
-/obj/machinery/door/airlock/gannets/glass/security/alt,
+/obj/machinery/door/airlock/gannets/glass/security/alt{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGB" = (
@@ -55349,7 +55351,9 @@
 /turf/unsimulated/floor/white,
 /area/centcom/lobby)
 "dPE" = (
-/obj/machinery/door/airlock/gannets/medical,
+/obj/machinery/door/airlock/gannets/medical{
+	dir = 4
+	},
 /turf/unsimulated/floor/white,
 /area/centcom/lobby)
 "dPF" = (
@@ -55458,7 +55462,9 @@
 /turf/unsimulated/floor,
 /area/centcom/lobby)
 "dPX" = (
-/obj/machinery/door/airlock/gannets/glass/medical,
+/obj/machinery/door/airlock/gannets/glass/medical{
+	dir = 4
+	},
 /turf/unsimulated/floor/white/side{
 	dir = 4
 	},
@@ -55519,7 +55525,9 @@
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dQh" = (
-/obj/machinery/door/airlock/gannets/security,
+/obj/machinery/door/airlock/gannets/security{
+	dir = 4
+	},
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dQi" = (
@@ -55559,7 +55567,9 @@
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dQp" = (
-/obj/machinery/door/airlock/gannets/glass/security,
+/obj/machinery/door/airlock/gannets/glass/security{
+	dir = 4
+	},
 /turf/unsimulated/floor/black/side{
 	dir = 8
 	},
@@ -59120,7 +59130,8 @@
 	desc = "A double black security door. Looks pretty tough. I wouldn't take this door on in a fight.";
 	icon = 'icons/obj/doors/destiny.dmi';
 	icon_state = "fmorg_closed";
-	name = "airlock"
+	name = "airlock";
+	dir = 4
 	},
 /area/sim/gunsim/lobby)
 "gJy" = (
@@ -68378,7 +68389,9 @@
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
 "qaO" = (
-/obj/machinery/door/airlock/gannets/glass/engineering/alt,
+/obj/machinery/door/airlock/gannets/glass/engineering/alt{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/centcom/lounge)
 "qaX" = (
@@ -68542,6 +68555,17 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"qmy" = (
+/obj/mapping_helper/access/heads,
+/obj/mapping_helper/access/admin_override,
+/obj/machinery/door/airlock/gannets/command/alt{
+	req_access = null;
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "qny" = (
 /obj/decal/cleanable/blood{
 	icon_state = "left_bloodyhands_c"
@@ -72032,6 +72056,12 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
+"tZh" = (
+/obj/machinery/door/airlock/gannets/glass/alt{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/centcom/lounge)
 "tZr" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -75689,11 +75719,12 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
 "xAC" = (
-/obj/machinery/door/airlock/gannets/chemistry/alt{
-	req_access = null
-	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/access/admin_override,
+/obj/machinery/door/airlock/gannets/chemistry/alt{
+	req_access = null;
+	dir = 4
+	},
 /turf/unsimulated/floor/purple{
 	dir = 5
 	},
@@ -142679,8 +142710,8 @@ aES
 aES
 duU
 wLo
-dGb
-dGb
+tZh
+tZh
 wLo
 wLo
 dGA
@@ -149081,8 +149112,8 @@ wel
 wel
 wel
 wel
-iYe
-iYe
+qmy
+qmy
 wel
 wel
 vgi
