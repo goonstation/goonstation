@@ -177,7 +177,8 @@
 		return
 
 	if(pressure && src.fatigue_pressure)
-		var/iterations = clamp(log(pressure/src.fatigue_pressure)/log(2),0,20)
+		var/effective_fatigue_pressure = src.fatigue_pressure * ((src.material?.getProperty("density") ** 2) || 1)
+		var/iterations = clamp(log(pressure/effective_fatigue_pressure)/log(2),0,20)
 		for(var/i = iterations; i>0 && i>=ruptured; i--)
 			if(prob(5/i))
 				new_rupture = i + 1
@@ -335,7 +336,25 @@
 		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, duration, /obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe,\
 		list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
 		actions.start(action_bar, user)
+	else if (!src.destroyed && !src.ruptured && istype(W, /obj/item/sheet))
+		if (!(W.material?.getMaterialFlags() & MATERIAL_METAL))
+			boutput(user, SPAN_ALERT("You can't weld that!"))
+			return
+		var/obj/item/weldingtool/welder = user.find_tool_in_hand(TOOL_WELDING)
+		if (W.amount < 5)
+			boutput(user, SPAN_ALERT("You need at least 10 sheets to reinforce [src]."))
+		if (!welder || !welder.welding)
+			boutput(user, SPAN_ALERT("You need something to weld [W] to [src] with!"))
+			return
+		if (!welder.try_weld(user, 0.8, noisy=2))
+			return
+		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(weld_sheet), list(W, user), welder.icon, welder.icon_state, SPAN_NOTICE("[user] welds [W] to [src]"), INTERRUPT_STUNNED)
 
+/obj/machinery/atmospherics/pipe/simple/proc/weld_sheet(obj/item/sheet/sheet, mob/user)
+	if (sheet.amount < 5)
+		return
+	sheet.change_stack_amount(-5)
+	src.setMaterial(sheet.material)
 
 /obj/machinery/atmospherics/pipe/simple/disposing()
 	node1?.disconnect(src)
