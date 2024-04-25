@@ -18676,6 +18676,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "oOs" = (
@@ -19544,6 +19545,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "snt" = (
