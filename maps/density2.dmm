@@ -4782,7 +4782,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
-/turf/simulated/shuttle/wall/corner,
+/turf/space,
 /area/shuttle/arrival/station)
 "Fi" = (
 /obj/table/reinforced/bar/auto,
@@ -4904,6 +4904,12 @@
 /obj/machinery/vending/coffee,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"FY" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/space,
+/area/shuttle/arrival/station)
 "FZ" = (
 /obj/cable/orange{
 	icon_state = "0-2"
@@ -7031,14 +7037,6 @@
 	},
 /turf/simulated/floor/auto/grass/leafy,
 /area/station/crew_quarters/garden/sunlight)
-"UI" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1
-	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 1
-	},
-/area/shuttle/arrival/station)
 "UJ" = (
 /obj/railing/orange/reinforced{
 	dir = 1
@@ -7048,9 +7046,7 @@
 /area/station/ranch)
 "UN" = (
 /obj/indestructible/shuttle_corner,
-/turf/simulated/shuttle/wall/corner{
-	dir = 8
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "UP" = (
 /obj/item/storage/wall/medical,
@@ -7072,12 +7068,7 @@
 /area/shuttle/arrival/station)
 "Vb" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/unsimulated/floor{
-	desc = "";
-	dir = 8;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor6"
-	},
+/turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
 "Ve" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -7099,23 +7090,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/poster/wallsign/stencil/left/a,
 /obj/decal/poster/wallsign/stencil/right/r,
-/turf/unsimulated/floor{
-	desc = "";
-	dir = 8;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor6"
-	},
+/turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
 "Vq" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/poster/wallsign/stencil/left/r,
 /obj/decal/poster/wallsign/stencil/right/v,
-/turf/unsimulated/floor{
-	desc = "";
-	dir = 8;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor6"
-	},
+/turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
 "Vr" = (
 /turf/unsimulated/wall/auto/lead/blue,
@@ -7655,8 +7636,6 @@
 /area/station/science)
 "XZ" = (
 /turf/unsimulated/wall/generic{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "wall";
 	opacity = 0
 	},
 /area/shuttle/arrival/station)
@@ -7753,15 +7732,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
 "YJ" = (
-/turf/unsimulated/wall/generic{
-	icon = 'icons/effects/160x160.dmi';
-	icon_state = "shuttlecock";
-	layer = 30;
-	name = "Cockpit";
-	opacity = 0;
-	pixel_x = -64;
-	pixel_y = -64
-	},
+/turf/simulated/shuttle/wall/cockpit,
 /area/shuttle/arrival/station)
 "YK" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -7936,9 +7907,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 4
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "ZN" = (
 /turf/simulated/floor/plating/airless/asteroid,
@@ -23621,7 +23590,7 @@ Rf
 Rf
 Rf
 Rf
-Rf
+XB
 Rf
 Rf
 Rf
@@ -52821,7 +52790,7 @@ gE
 gE
 lF
 lF
-UI
+FY
 Va
 VC
 WX
@@ -56144,7 +56113,7 @@ Tt
 hj
 Rf
 Rf
-UI
+FY
 Ww
 Xj
 VC
@@ -56749,7 +56718,7 @@ in
 Rf
 Rf
 Rf
-Rf
+FY
 Xq
 XV
 XV
@@ -57052,11 +57021,11 @@ Rf
 Rf
 Rf
 Rf
-Xy
+FY
 XZ
 XZ
 XZ
-Zf
+ZK
 Rf
 Rf
 Rf

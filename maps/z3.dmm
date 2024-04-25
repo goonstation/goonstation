@@ -1561,12 +1561,6 @@
 /obj/effects/background_objects/quadriga,
 /turf/space,
 /area/space)
-"aeQ" = (
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/bee_trader{
-	dir = 6;
-	icon_state = "diagonalWall3"
-	})
 "aeR" = (
 /turf/simulated/floor/caution/east{
 	dir = 8
@@ -4962,14 +4956,6 @@
 	},
 /turf/space,
 /area/salyut)
-"axk" = (
-/turf/simulated/shuttle/wall{
-	dir = 10;
-	icon_state = "wall3_space"
-	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
 "axl" = (
 /obj/item/raw_material/rock{
 	icon_state = "rock2"
@@ -5021,10 +5007,11 @@
 	},
 /area/salyut)
 "axJ" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -5077,18 +5064,22 @@
 	name = "GLOMAR Salvager"
 	})
 "ayg" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_space_end"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "ayh" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_space_end"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -5150,10 +5141,11 @@
 	name = "GLOMAR Salvager"
 	})
 "ayC" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -5355,26 +5347,9 @@
 	dir = 5
 	},
 /area/flock_trader)
-"aAU" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3_space"
-	},
-/area/space)
 "aAV" = (
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating/scorched,
-/area/space)
-"aBi" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
-	},
-/area/space)
-"aBj" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3_space"
-	},
 /area/space)
 "aBk" = (
 /obj/decal/fakeobjects{
@@ -5905,29 +5880,19 @@
 	},
 /turf/simulated/floor,
 /area/h7/control)
-"aGt" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3_space"
-	},
-/area/abandonedship)
 "aGu" = (
 /turf/simulated/floor{
 	icon_state = "carpetNE"
 	},
 /area/radiostation/bedroom)
 "aGv" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_space_end"
 	},
+/turf/space,
 /area/space)
-"aGw" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall3_space"
-	},
-/area/abandonedship)
 "aGx" = (
 /turf/simulated/wall/auto/supernorn,
 /area/radiostation/bedroom)
@@ -5956,15 +5921,17 @@
 /turf/simulated/floor,
 /area/h7/control)
 "aGB" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/abandonedship)
 "aGC" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/abandonedship)
 "aGD" = (
 /obj/decal/fakeobjects/shuttlethruster,
@@ -5995,12 +5962,6 @@
 /area/space)
 "aGK" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/space)
-"aGL" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall3_space"
-	},
 /area/space)
 "aGN" = (
 /obj/decal/floatingtiles{
@@ -6050,14 +6011,6 @@
 /obj/item/raw_material/shard/glass,
 /turf/space,
 /area/space)
-"aHa" = (
-/turf/simulated/shuttle/wall{
-	dir = 5;
-	icon_state = "wall3_space"
-	},
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
 "aHb" = (
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
@@ -6068,11 +6021,6 @@
 	},
 /turf/space,
 /area/abandonedmedicalship)
-"aHd" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
-	},
-/area/space)
 "aHf" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -6192,18 +6140,6 @@
 	},
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
-"aHA" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall_space"
-	},
-/area/abandonedship)
-"aHD" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall_space"
-	},
-/area/abandonedship)
 "aHE" = (
 /obj/decal/fakeobjects/vacuumtape,
 /obj/decal/stripe_delivery,
@@ -6366,11 +6302,6 @@
 	},
 /turf/space,
 /area/space)
-"aIb" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
-	},
-/area/abandonedmedicalship)
 "aIc" = (
 /obj/item/cable_coil/cut,
 /obj/landmark/spawner/artifact,
@@ -6507,10 +6438,11 @@
 	name = "GLOMAR Salvager"
 	})
 "aIA" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -6616,12 +6548,6 @@
 "aIP" = (
 /turf/simulated/floor/airless/damaged3,
 /area/abandonedship)
-"aIQ" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3_space_end"
-	},
-/area/space)
 "aIR" = (
 /obj/machinery/light{
 	dir = 4;
@@ -6647,9 +6573,10 @@
 /turf/space,
 /area/space)
 "aIV" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -6776,17 +6703,18 @@
 /turf/space,
 /area/space)
 "aJq" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
 "aJs" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window";
 	opacity = 0
 	},
@@ -6878,19 +6806,22 @@
 /turf/simulated/floor,
 /area/h7/computer_core)
 "aJI" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/abandonedship)
 "aJJ" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "aJK" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/abandonedship)
 "aJL" = (
 /obj/decal/fakeobjects/pipe{
@@ -6923,10 +6854,11 @@
 	name = "GLOMAR Salvager"
 	})
 "aJP" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -7023,10 +6955,12 @@
 	dir = 4;
 	color = "b4b4b4"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_space_end"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -7122,12 +7056,6 @@
 	},
 /turf/simulated/floor/airless/circuit,
 /area/abandonedmedicalship)
-"aKq" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall_space"
-	},
-/area/abandonedmedicalship)
 "aKx" = (
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
@@ -7145,7 +7073,7 @@
 "aKA" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window";
 	opacity = 0
 	},
@@ -7323,9 +7251,11 @@
 	dir = 4;
 	color = "b4b4b4"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_space_end"
 	},
+/turf/space,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
@@ -7353,10 +7283,11 @@
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aLn" = (
 /obj/decal/cleanable/robot_debris{
@@ -7657,10 +7588,11 @@
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aMl" = (
 /obj/machinery/navbeacon{
@@ -7840,10 +7772,11 @@
 	dir = 4;
 	name = "sensor array"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aMO" = (
 /obj/cable{
@@ -7873,10 +7806,11 @@
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aMT" = (
 /obj/cable{
@@ -7927,10 +7861,11 @@
 	desc = "You should probably leave it alone.";
 	name = "sensor array"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aNb" = (
 /turf/simulated/floor/airless/plating/damaged2,
@@ -7982,9 +7917,10 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aNm" = (
 /obj/lattice{
@@ -8442,10 +8378,11 @@
 	dir = 1;
 	name = "sensor array"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aOQ" = (
 /obj/machinery/light{
@@ -8490,10 +8427,11 @@
 	dir = 1;
 	icon_state = "lattice-dir-b"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aOW" = (
 /obj/storage/crate,
@@ -8570,10 +8508,11 @@
 	dir = 8;
 	name = "sensor array"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aPe" = (
 /obj/cable{
@@ -10455,10 +10394,11 @@
 /turf/simulated/floor,
 /area/h7)
 "aUQ" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/space)
 "aUR" = (
 /obj/item/raw_material/syreline,
@@ -10577,10 +10517,11 @@
 /turf/simulated/floor,
 /area/h7/crew)
 "aVi" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/space)
 "aVj" = (
 /obj/storage/crate,
@@ -17151,7 +17092,7 @@
 	},
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/diner/jucer_trader)
 "ggp" = (
@@ -17695,10 +17636,11 @@
 /area/diner/dining)
 "hAu" = (
 /obj/decal/cleanable/machine_debris,
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "hEK" = (
 /obj/random_pod_spawner/random_putt_spawner,
@@ -19015,6 +18957,15 @@
 /obj/table/endtable_honey,
 /turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
+"llr" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/evilreaver/storage/engineering{
+	name = "GLOMAR Salvager"
+	})
 "lma" = (
 /obj/computerframe,
 /turf/simulated/floor/plating,
@@ -19576,7 +19527,7 @@
 "mKS" = (
 /turf/simulated/shuttle/wall{
 	dir = 10;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/diner/tug)
 "mMr" = (
@@ -19656,12 +19607,6 @@
 	},
 /turf/unsimulated/floor/white/grime,
 /area/timewarp/ship)
-"mXB" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3_space"
-	},
-/area/helldrone)
 "mYW" = (
 /obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
@@ -19928,10 +19873,12 @@
 /turf/space,
 /area/space)
 "nCh" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_space_end"
 	},
+/turf/space,
 /area/abandonedship)
 "nCy" = (
 /obj/decal/fakeobjects{
@@ -20148,7 +20095,7 @@
 "oqh" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/abandonedmedicalship)
 "oro" = (
@@ -20294,7 +20241,7 @@
 "oQX" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/diner/tug)
 "oSn" = (
@@ -20476,10 +20423,11 @@
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "ply" = (
 /obj/item/paint_can/rainbow,
@@ -20796,7 +20744,7 @@
 	icon_state = "alt_heater"
 	},
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/diner/jucer_trader)
 "qdV" = (
@@ -21000,6 +20948,13 @@
 	icon_state = "red2"
 	},
 /area/diner/dining)
+"qHp" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall_trans"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/abandonedship)
 "qLo" = (
 /obj/decal/timeplug{
 	dir = 4
@@ -21237,10 +21192,12 @@
 /turf/simulated/floor/grime,
 /area/diner/arcade)
 "roN" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_space_end"
 	},
+/turf/space,
 /area/abandonedship)
 "rpS" = (
 /turf/unsimulated/floor/honeyblocks,
@@ -22086,6 +22043,15 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
+"tux" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall_trans"
+	},
+/turf/simulated/floor/plating/airless/asteroid{
+	stone_color = "#575A5E"
+	},
+/area/abandonedship)
 "tuE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -22708,6 +22674,13 @@
 	icon_state = "floor2"
 	},
 /area/diner/tug)
+"vef" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall_trans"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/abandonedship)
 "vem" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock/pyro/classic{
@@ -23233,6 +23206,13 @@
 	dir = 1
 	},
 /area/timewarp/ship)
+"wwl" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/abandonedship)
 "wwZ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -33021,7 +33001,7 @@ aaa
 aaa
 aad
 aaa
-aHD
+oxJ
 aHU
 bgC
 aHU
@@ -34853,7 +34833,7 @@ aaa
 aaa
 aaa
 aak
-aBi
+nre
 aaa
 aaa
 aaa
@@ -35457,7 +35437,7 @@ aac
 aaz
 aaa
 aak
-aGL
+ycy
 aQf
 aaa
 aaa
@@ -38182,7 +38162,7 @@ aaz
 aaz
 aaz
 aaz
-hme
+wwl
 iYn
 aSh
 iYn
@@ -39074,9 +39054,9 @@ aaa
 aaa
 aaa
 aaa
-aAU
+atL
 cFx
-aBi
+nre
 aaa
 aaa
 aaa
@@ -39762,7 +39742,7 @@ bgu
 bgu
 bgu
 bgu
-mXB
+tcp
 aaa
 aaa
 aaa
@@ -40063,7 +40043,7 @@ bgu
 wqE
 jOk
 bgu
-mXB
+tcp
 aaa
 aaa
 aaa
@@ -40364,7 +40344,7 @@ bgu
 bgu
 uVV
 uVV
-mXB
+tcp
 aaa
 aaa
 aaa
@@ -46013,7 +45993,7 @@ aaa
 aaa
 aaa
 aaa
-aAU
+atL
 aNl
 aaa
 aaa
@@ -46315,7 +46295,7 @@ aaa
 aaa
 aaa
 aaa
-aGL
+ycy
 aNm
 aaa
 aaa
@@ -47221,7 +47201,7 @@ aaa
 aaa
 aaa
 aGK
-aBj
+dDa
 aao
 aaa
 axl
@@ -47773,7 +47753,7 @@ aaa
 aaa
 aaa
 aaa
-aGt
+kRB
 iYn
 iYn
 aGB
@@ -47827,11 +47807,11 @@ aaa
 aaa
 aaa
 aao
-aAU
+atL
 aNw
 aGK
 aOi
-aBi
+nre
 aaa
 aaa
 aaa
@@ -48679,7 +48659,7 @@ aaa
 aaa
 aaa
 aaa
-aGw
+hme
 iYn
 iYn
 aGC
@@ -49035,11 +49015,11 @@ aaa
 aaa
 aaa
 aaa
-aGL
+ycy
 aNw
 aGK
 aNw
-aBj
+dDa
 aao
 aaa
 aaa
@@ -49645,7 +49625,7 @@ aaa
 aaa
 aaa
 aao
-aAU
+atL
 aGK
 aaa
 aaa
@@ -50010,7 +49990,7 @@ aaa
 aaa
 aHr
 rzX
-nQg
+tux
 aHU
 tQJ
 xiB
@@ -50212,7 +50192,7 @@ aaa
 aaa
 aaa
 aaa
-aHA
+nQg
 aHN
 aHU
 aHU
@@ -50551,7 +50531,7 @@ aaa
 aaa
 aaa
 aNm
-aBi
+nre
 aaa
 aaa
 aaa
@@ -50853,7 +50833,7 @@ aaa
 aaa
 aaa
 aLm
-aBj
+dDa
 aaa
 aaa
 aaa
@@ -52326,7 +52306,7 @@ aaa
 aaa
 aaa
 aaa
-aHD
+oxJ
 aHU
 bej
 aHU
@@ -55003,8 +54983,8 @@ aaa
 aaa
 aaa
 aaa
-aAU
-aBi
+atL
+nre
 aaa
 aaa
 aaa
@@ -55306,7 +55286,7 @@ aaa
 aaa
 aaa
 aAV
-aBj
+dDa
 aaa
 aaa
 aaa
@@ -56045,7 +56025,7 @@ aac
 aab
 aab
 bbs
-aHd
+adh
 aaa
 bcy
 aaa
@@ -56237,7 +56217,7 @@ aac
 aaa
 aaa
 aaa
-aAU
+atL
 bmU
 aaa
 aaa
@@ -56348,7 +56328,7 @@ aab
 aab
 aGW
 aUQ
-aHd
+adh
 bcy
 aaa
 aaa
@@ -56949,7 +56929,7 @@ aab
 aab
 aac
 aab
-nQg
+vef
 aHU
 bfc
 bci
@@ -57445,7 +57425,7 @@ aab
 aaa
 aaa
 aaa
-aGL
+ycy
 aGS
 aaa
 aaa
@@ -58761,7 +58741,7 @@ aac
 aac
 aac
 aab
-oxJ
+qHp
 bfc
 aHU
 aHU
@@ -59861,7 +59841,7 @@ aab
 aab
 aaa
 aaa
-aGt
+kRB
 iYn
 iYn
 iYn
@@ -59874,14 +59854,14 @@ aaa
 aaa
 aaa
 ujl
-aBi
+nre
 aaa
-aGt
+kRB
 iYn
 iYn
 aGB
 aaa
-aAU
+atL
 ujl
 aaa
 aaa
@@ -60485,7 +60465,7 @@ aLQ
 aLW
 aMe
 aaa
-aIQ
+dDa
 aaa
 aaa
 aaa
@@ -60546,7 +60526,7 @@ aaa
 aaa
 aaa
 aaa
-aAU
+atL
 hAu
 aaa
 aaa
@@ -60767,7 +60747,7 @@ aac
 aaa
 aaa
 aaa
-aGw
+hme
 iYn
 iYn
 aAo
@@ -61386,7 +61366,7 @@ aaa
 aaa
 aaa
 aaa
-aGw
+hme
 fJe
 iYn
 aGC
@@ -72258,7 +72238,7 @@ aaa
 aaa
 aaa
 aaa
-aIA
+llr
 aIV
 aIz
 aJL
@@ -72451,13 +72431,13 @@ aaa
 aaa
 aaa
 aaa
-aeQ
+wvT
 alp
 cdo
 sFI
 hGO
 dYj
-aeQ
+wvT
 aaa
 iDu
 rsr
@@ -73660,11 +73640,11 @@ aaa
 aaa
 aaa
 aaa
-aeQ
+wvT
 ajr
 aic
 dlJ
-aeQ
+wvT
 afs
 afD
 afD
@@ -73769,7 +73749,7 @@ aaa
 aaa
 aaa
 aaa
-axk
+aIA
 aIz
 oSn
 aKg
@@ -73779,7 +73759,7 @@ aKX
 alx
 oSn
 aIz
-aHa
+aJP
 aaa
 aaa
 aaa
@@ -95572,7 +95552,7 @@ aHb
 aHb
 aHb
 aHb
-aIb
+aIk
 aaa
 aaa
 aaa
@@ -97384,7 +97364,7 @@ aJx
 aHb
 aHb
 aHb
-aKq
+aLa
 aaa
 aaa
 aaa
