@@ -337,11 +337,17 @@
 		list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
 		actions.start(action_bar, user)
 
-	else if (!src.destroyed && !src.ruptured && istype(W, /obj/item/sheet))
+	else if (istype(W, /obj/item/sheet))
 		if (actions.hasAction(user, /datum/action/bar/private/welding))
+			return
+		if (src.destroyed || src.ruptured)
+			boutput(user, SPAN_ALERT("You should repair [src] first."))
 			return
 		if (!(W.material?.getMaterialFlags() & MATERIAL_METAL))
 			boutput(user, SPAN_ALERT("You can't weld that!"))
+			return
+		if (W.material?.isSameMaterial(src.material))
+			boutput(user, SPAN_ALERT("[src] is already reinforced with [src.material.getName()]!"))
 			return
 		var/obj/item/weldingtool/welder = user.find_tool_in_hand(TOOL_WELDING)
 		if (W.amount < 5)
