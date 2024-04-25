@@ -106,7 +106,10 @@ proc/inafterlifebar(var/mob/M as mob in world)
 proc/inafterlife(var/mob/M as mob in world)
 	return istype(get_area(M),/area/afterlife)
 
+#ifndef SECRETS_ENABLED
 /obj/submachine/scryingpool/afterlifebar
+/turf/unsimulated/floor/plating/holo
+#endif
 
 // belongs in the center of pool
 /obj/landmark/scryingpool/afterlifebar
