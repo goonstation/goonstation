@@ -139,11 +139,11 @@ datum
 				var/ld_amt = holder.get_reagent_amount(src.id)
 				var/mob/living/carbon/human/M = target
 				if(ld_amt > 40)
-					regret = TRUE //If you go too far, you'll never enjoy it again
+					regret = TRUE //If you go too far, you'll wish you hadn't
 				if (!istype(M))
 					return
-				var/coke = pick("conk", "croke", "ckoe", "clock", "coge", "choke", "coque", "legend")
-				var/milk = pick("malk", "mylik", "millic", "vilk", "mick", "mill", "mrilck", "dairy")
+				var/coke = pick("conk", "croke", "ckoe", "clock", "coge", "choke", "coque", "cob", "legend")
+				var/milk = pick("malk", "mylik", "millic", "vilk", "mick", "mill", "mrilck", "mok", "dairy")
 				var/thinkpositive = pick("What a great drink.", "Wonder if there's more around?",\
 				"Yum!","You daydream about having more.","Maybe your coworkers want some!","You should get more.")
 				var/thinknegative = pick("The thought sickens you.", "You feel betrayed.",\
@@ -155,11 +155,18 @@ datum
 							boutput(M, SPAN_ALERT(pick("Your thoughts turn briefly to [coke] [milk]. [thinkpositive]",\
 							"Your stomach rolls. Must be time for some [coke] [milk]!",\
 							"A delicious taste lingers in your throat!")))
-						if (probmult(12))
-							var/obj/item/reagent_containers/food/drinks/helddrink = M.equipped()
-							if(helddrink)
-								helddrink.take_a_drink(M, M) //mintodo force you to drink from held glasses. Use method from drinkslide to trace sip action and force that
-							M.say("Wow! Great drink!") //The iconic line!!
+						else if (probmult(12))
+							if(!M.stat && !M.lying && can_act(M) && !M.equipped() && probmult(6)) //shameless klepto theft
+								for(var/obj/item/reagent_containers/food/drinks/drinkingglass/I in oview(1, M))
+									if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(M, I) && !HAS_ATOM_PROPERTY(I, PROP_MOVABLE_KLEPTO_IGNORE) && I.reagents.has_reagent("legendairy"))
+										I.Attackhand(M)
+
+							var/obj/item/reagent_containers/food/drinks/helddrink = M.equipped() // Rechecks for held drink
+							if(helddrink && reagents.has_reagent("legendairy"))
+								helddrink.take_a_drink(M, M) // forces you to drink from held glasses.
+								M.emote("takes an exaggerated swig of [his_or_her(M)] drink, finishing it off with a loud ahh.")
+								if (probmult(70)) M.say("Wow! Great drink!") // The iconic line!!
+
 						else if (probmult(6))
 							M.say(pick("[coke] [milk] was great.",\
 								"Mmm. I love [coke] [milk]!",\
@@ -169,13 +176,15 @@ datum
 								"What legendary taste!",\
 								"Gotta get me a sippy of that dranky drank!",\
 								"This really [coke]s my [milk]!"))
+
 					if(TRUE)
 						if (probmult (6))
+							M.emote("scowl")
 							boutput(M, SPAN_ALERT(pick("Your thoughts turn briefly to [coke] [milk]. [thinknegative]",\
 							"Your stomach rolls. Must be because of that [coke] [milk].",\
 							"The vile taste of [coke] [milk] lingers in your throat.",\
 							"You feel nauseous. You resolve to never drink [coke] [milk] again.")))
-						if (probmult(6))
+						else if (probmult(6))
 							M.say(pick("I don't want any more of that [coke] [milk].",\
 								"I'm not thirsty anymore.",\
 								"I want to go home.",\
@@ -1953,8 +1962,7 @@ datum
 			fluid_g = 215
 			fluid_b = 0
 			alch_strength = 0.8
-			thirst_value = 50 //It's treasure!
-			hunger_value = 5  //Made from magic cola & magic wine
+			thirst_value = 15 //It's treasure!
 			depletion_rate = 1 //good things never last forever
 			description = "At long last-- the legacy of Kalimoxto's namesake!"
 			taste = "like ambrosia from the gods"
@@ -2016,7 +2024,7 @@ datum
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				var/stam_percent_left = M.stamina / M.stamina_max
-				alch_strength = clamp((8 * (1 - stam_percent_left)), 0.4, 5)
+				alch_strength = clamp((4 * (1 - stam_percent_left)), 0.4, 2.5)
 				..()
 
 		fooddrink/alcoholic/vampire
@@ -2040,7 +2048,7 @@ datum
 					var/blood_percent_left = H.blood_volume / 500 //Doesn't support custom blood maxima but neither do spleens! Fuck it
 					H.nutrition -= 1 * mult
 					H.blood_volume -= 4 * mult
-					alch_strength = clamp((10 * (1 - blood_percent_left)), 0.25, 6)
+					alch_strength = clamp((6.5 * (1 - blood_percent_left)), 0.25, 4)
 				..()
 				return
 
@@ -2051,7 +2059,7 @@ datum
 			fluid_g = 247
 			fluid_b = 243
 			transparency = 80
-			thirst_value = 0.8 // Water if it hydrated you forever
+			thirst_value = 0.5 // Water if it hydrated you forever
 			depletion_rate = 0.05 // two sips to completely restore thirst, but it takes forever
 			description = "What a sorry excuse for a mixed drink."
 			taste = list("fresh", "clean")
@@ -2557,7 +2565,7 @@ datum
 			fluid_b = 33
 			transparency = 70
 			taste = list("sugary", "acrid")
-			thirst_value = 1.8
+			thirst_value = 0.5
 			viscosity = 0.5
 			caffeine_content = 0.4
 
