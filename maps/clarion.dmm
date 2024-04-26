@@ -319,8 +319,8 @@
 /area/station/garden/aviary)
 "aaT" = (
 /obj/machinery/mass_driver{
-	id = "manualshipping";
-	dir = 1
+	dir = 1;
+	id = "manualshipping"
 	},
 /obj/machinery/door/poddoor/pyro{
 	id = "cargodock_out";
@@ -1307,8 +1307,8 @@
 /area/station/engine/core/nuclear)
 "akZ" = (
 /obj/railing/orange/reinforced{
-	icon_state = "railing-reinforced";
-	dir = 1
+	dir = 1;
+	icon_state = "railing-reinforced"
 	},
 /obj/railing/orange/reinforced,
 /obj/machinery/light{
@@ -4346,13 +4346,13 @@
 "aEB" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge{
-	pixel_y = -4;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = -4
 	},
 /obj/item/cigbutt,
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
-	pixel_y = 9;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 9
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -4599,8 +4599,8 @@
 	},
 /obj/table/round,
 /obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 5;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 5
 	},
 /turf/simulated/floor/black/side{
 	dir = 8
@@ -5718,8 +5718,8 @@
 	},
 /obj/table/wood/auto/desk,
 /obj/item_dispenser/icedispenser{
-	pixel_y = 23;
-	dir = 4
+	dir = 4;
+	pixel_y = 23
 	},
 /obj/item/gun/russianrevolver,
 /turf/simulated/floor/specialroom/bar,
@@ -7508,12 +7508,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/southeast)
-"aXa" = (
-/obj/machinery/lrteleporter{
-	layer = 3
-	},
-/turf/simulated/floor/white,
-/area/station/science/teleporter)
 "aXb" = (
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
@@ -8808,8 +8802,8 @@
 /area/station/science/lab)
 "bdF" = (
 /obj/item/paper{
-	name = "IMPORTANT NOTICE";
-	info = "NEXT TIME YOU BLOW UP THE COMMS DISH, IT WILL BE DEDUCTED OUT OF YOUR PAYCHECK! -Captain"
+	info = "NEXT TIME YOU BLOW UP THE COMMS DISH, IT WILL BE DEDUCTED OUT OF YOUR PAYCHECK! -Captain";
+	name = "IMPORTANT NOTICE"
 	},
 /obj/lattice,
 /obj/grille/steel,
@@ -9661,9 +9655,9 @@
 /area/station/hallway/primary/southwest)
 "bla" = (
 /obj/machinery/computer/announcement{
+	dir = 8;
 	name = "Security Announcement Computer";
-	req_access_txt = "19";
-	dir = 8
+	req_access_txt = "19"
 	},
 /obj/blind_switch/area/east{
 	pixel_y = 4
@@ -10712,10 +10706,10 @@
 	},
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
+	dir = 8;
 	icon_state = "pipe-sj2";
 	mail_tag = "mining";
-	name = "mining mail router";
-	dir = 8
+	name = "mining mail router"
 	},
 /obj/cable/orange{
 	icon_state = "2-4"
@@ -11666,13 +11660,13 @@
 "bwK" = (
 /obj/machinery/disposal/mail/small{
 	dir = 8;
-	pixel_x = 5;
-	pixel_y = 5;
 	mail_tag = "chief_engineer";
-	message = "1";
 	mailgroup = "command";
 	mailgroup2 = "engineer";
-	name = "mail chute-'Chief Engineer'"
+	message = "1";
+	name = "mail chute-'Chief Engineer'";
+	pixel_x = 5;
+	pixel_y = 5
 	},
 /obj/disposalpipe/trunk/mail{
 	dir = 1
@@ -11716,10 +11710,10 @@
 "bxg" = (
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
+	dir = 8;
 	icon_state = "pipe-sj2";
 	mail_tag = "engineering";
-	name = "engineering mail router";
-	dir = 8
+	name = "engineering mail router"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -12218,9 +12212,9 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/switch_junction/right/north{
+	dir = 2;
 	mail_tag = "ranch";
-	name = "ranch mail junction";
-	dir = 2
+	name = "ranch mail junction"
 	},
 /turf/simulated/floor/black/side{
 	dir = 4
@@ -12556,8 +12550,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
-	name = "Engineering";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Engineering"
 	},
 /obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor/yellow,
@@ -13978,12 +13972,12 @@
 	},
 /obj/table/reinforced/bar/auto,
 /obj/item/implant/projectile/glass_shard{
-	pixel_y = 6;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 6
 	},
 /obj/item/cigbutt{
-	pixel_y = 11;
-	pixel_x = 11
+	pixel_x = 11;
+	pixel_y = 11
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -14432,8 +14426,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engine";
-	name = "Engine Room";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Engine Room"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -14661,8 +14655,8 @@
 	dir = 10
 	},
 /turf/simulated/floor{
-	icon_state = "yellowblack";
-	dir = 1
+	dir = 1;
+	icon_state = "yellowblack"
 	},
 /area/station/crew_quarters/market)
 "ctX" = (
@@ -14785,8 +14779,8 @@
 	pixel_y = -2
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style{
-	pixel_y = 9;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = 9
 	},
 /turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
 /area/station/crew_quarters/bar)
@@ -15338,13 +15332,13 @@
 "cXK" = (
 /obj/item/device/radio/intercom/catering{
 	dir = 8;
-	pixel_y = 5;
-	pixel_x = 21
+	pixel_x = 21;
+	pixel_y = 5
 	},
 /obj/machinery/firealarm/north{
+	dir = 8;
 	pixel_x = 24;
-	pixel_y = -10;
-	dir = 8
+	pixel_y = -10
 	},
 /obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/caution/corner/sw,
@@ -16516,10 +16510,10 @@
 "dYG" = (
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
+	dir = 8;
 	icon_state = "pipe-sj2";
 	mail_tag = "brig";
-	name = "brig mail router";
-	dir = 8
+	name = "brig mail router"
 	},
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -16767,8 +16761,8 @@
 /area/station/maintenance/northeast)
 "ejn" = (
 /obj/railing/orange/reinforced{
-	icon_state = "railing-reinforced";
-	dir = 1
+	dir = 1;
+	icon_state = "railing-reinforced"
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -16951,8 +16945,8 @@
 	},
 /obj/table/reinforced/bar/auto,
 /obj/item/raw_material/shard/glass{
-	pixel_y = 1;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 1
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -16987,8 +16981,8 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor{
-	icon_state = "yellowblack";
-	dir = 1
+	dir = 1;
+	icon_state = "yellowblack"
 	},
 /area/station/crew_quarters/market)
 "erp" = (
@@ -17801,8 +17795,8 @@
 /area/station/crew_quarters/ce)
 "fdv" = (
 /obj/machinery/mass_driver{
-	id = "manualshipping";
-	dir = 1
+	dir = 1;
+	id = "manualshipping"
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/office)
@@ -18494,8 +18488,8 @@
 "fHF" = (
 /obj/table/reinforced/auto,
 /obj/machinery/mixer{
-	pixel_y = 3;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 3
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -19097,8 +19091,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
-	name = "Engineering";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Engineering"
 	},
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -19465,8 +19459,8 @@
 	},
 /obj/landmark/start/job/engineer,
 /turf/simulated/floor{
-	icon_state = "yellowblack";
-	dir = 1
+	dir = 1;
+	icon_state = "yellowblack"
 	},
 /area/station/engine/core/nuclear)
 "gsw" = (
@@ -19551,8 +19545,8 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "yellowblack";
-	dir = 1
+	dir = 1;
+	icon_state = "yellowblack"
 	},
 /area/station/crew_quarters/market)
 "gui" = (
@@ -19701,8 +19695,8 @@
 /area/station/bridge)
 "gzh" = (
 /obj/railing/orange/reinforced{
-	icon_state = "railing-reinforced";
-	dir = 1
+	dir = 1;
+	icon_state = "railing-reinforced"
 	},
 /obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/dirt,
@@ -20902,8 +20896,8 @@
 	},
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
-	name = "Engineering";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Engineering"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
@@ -21224,8 +21218,8 @@
 /area/station/science/chemistry)
 "hNA" = (
 /turf/simulated/floor{
-	icon_state = "yellowblack";
-	dir = 1
+	dir = 1;
+	icon_state = "yellowblack"
 	},
 /area/station/crew_quarters/market)
 "hNO" = (
@@ -22399,12 +22393,12 @@
 	pixel_y = 7
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style{
-	pixel_y = 14;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 14
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style{
-	pixel_y = 1;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 1
 	},
 /obj/item/cigbutt{
 	pixel_y = 4
@@ -22583,8 +22577,8 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "yellowblack";
-	dir = 1
+	dir = 1;
+	icon_state = "yellowblack"
 	},
 /area/station/crew_quarters/market)
 "iHF" = (
@@ -22839,13 +22833,13 @@
 	},
 /obj/machinery/door/poddoor/blast/single{
 	autoclose = 1;
+	dir = 4;
 	doordir = "noblasts";
 	icon_state = "bdoornoblasts1";
 	id = "disposals_door";
 	layer = 4;
 	name = "Disposals Safety Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
@@ -23568,8 +23562,8 @@
 	},
 /obj/decal/stage_edge,
 /obj/swingsign{
-	message = "Big Rob's comedy hour<br>Coming soon!";
-	anchored = 1
+	anchored = 1;
+	message = "Big Rob's comedy hour<br>Coming soon!"
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
@@ -23621,8 +23615,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/bar,
 /obj/machinery/cashreg{
-	pixel_y = -2;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = -2
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -24338,13 +24332,13 @@
 	},
 /obj/table/wood/auto/desk,
 /obj/machinery/espresso_machine{
-	pixel_y = 8;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 8
 	},
 /obj/item/reagent_containers/food/drinks/espressocup,
 /obj/item/clothing/head/helmet/space/santahat{
-	pixel_y = 13;
-	pixel_x = 12
+	pixel_x = 12;
+	pixel_y = 13
 	},
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -25418,12 +25412,12 @@
 /area/station/quartermaster/office)
 "lbe" = (
 /obj/machinery/door/poddoor/blast/single{
+	dir = 4;
 	doordir = "noblasts";
 	icon_state = "bdoornoblasts1";
 	id = "disposals_vent";
 	layer = 4;
-	name = "Disposals Vent";
-	dir = 4
+	name = "Disposals Vent"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -25821,10 +25815,10 @@
 "lnd" = (
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
+	dir = 8;
 	icon_state = "pipe-sj2";
 	mail_tag = "security";
-	name = "security mail router";
-	dir = 8
+	name = "security mail router"
 	},
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -27908,8 +27902,8 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "yellowblack";
-	dir = 1
+	dir = 1;
+	icon_state = "yellowblack"
 	},
 /area/station/engine/core/nuclear)
 "mSB" = (
@@ -28763,8 +28757,8 @@
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
-	name = "Engineering";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Engineering"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
@@ -29831,8 +29825,8 @@
 /area/station/hydroponics/bay)
 "otK" = (
 /obj/machinery/light_switch/north{
-	pixel_y = 26;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 26
 	},
 /obj/machinery/firealarm/north{
 	pixel_x = 6;
@@ -30618,12 +30612,12 @@
 "oUA" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/decoration/ashtray{
-	pixel_y = -1;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = -1
 	},
 /obj/item/cigbutt{
-	pixel_y = 6;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 6
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
 	pixel_x = -12
@@ -32109,8 +32103,8 @@
 	pixel_y = 30
 	},
 /obj/item/paper{
-	name = "Engineering Notice";
-	info = "To whoever built this airlock: I don't know who you are. I don't know what you want. What I do have are a very particular set of skills. Skills I have acquired over a very long career. Skills that make me a nightmare for people like you. If you fix this monstrosity now that'll be the end of it. I will not look for you, I will not pursue you, but if you don't, I will look for you, I will find you and I will kill you. -Head Architect"
+	info = "To whoever built this airlock: I don't know who you are. I don't know what you want. What I do have are a very particular set of skills. Skills I have acquired over a very long career. Skills that make me a nightmare for people like you. If you fix this monstrosity now that'll be the end of it. I will not look for you, I will not pursue you, but if you don't, I will look for you, I will find you and I will kill you. -Head Architect";
+	name = "Engineering Notice"
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
@@ -32406,8 +32400,8 @@
 	dir = 8
 	},
 /turf/simulated/floor/stairs{
-	icon_state = "wood_stairs";
-	dir = 8
+	dir = 8;
+	icon_state = "wood_stairs"
 	},
 /area/station/crew_quarters/bar)
 "qor" = (
@@ -32511,8 +32505,8 @@
 	},
 /obj/disposaloutlet{
 	desc = "An outlet for the pneumatic mail system.";
-	name = "undeliverable mail outlet";
-	dir = 4
+	dir = 4;
+	name = "undeliverable mail outlet"
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
@@ -32709,8 +32703,8 @@
 	},
 /obj/table/reinforced/bar/auto,
 /obj/item/cocktail_stuff/celery{
-	pixel_y = 8;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/crew_quarters/bar)
@@ -32841,9 +32835,9 @@
 /area/station/hallway/primary/central)
 "qIY" = (
 /obj/machinery/computer/announcement{
+	dir = 8;
 	name = "QM Announcement Computer";
-	req_access_txt = "31";
-	dir = 8
+	req_access_txt = "31"
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/quartermaster/office)
@@ -35059,8 +35053,8 @@
 /obj/mapping_helper/access/engineering,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
-	name = "Engineering";
-	enter_id = "outer"
+	enter_id = "outer";
+	name = "Engineering"
 	},
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -35972,8 +35966,8 @@
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/glass_recycler{
-	pixel_y = 9;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 9
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -36085,8 +36079,8 @@
 	},
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor{
-	icon_state = "yellowblack";
-	dir = 1
+	dir = 1;
+	icon_state = "yellowblack"
 	},
 /area/station/crew_quarters/market)
 "tiz" = (
@@ -38273,8 +38267,8 @@
 /area/station/science/chemistry)
 "uJV" = (
 /obj/machinery/recharger/wall{
-	pixel_y = 28;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 28
 	},
 /obj/cable{
 	icon_state = "2-8"
@@ -40207,8 +40201,8 @@
 "wvG" = (
 /obj/table/reinforced/chemistry/auto/clericalsup,
 /obj/machinery/glass_recycler/chemistry{
-	pixel_y = 9;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 9
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 8
@@ -40633,8 +40627,8 @@
 /area/station/hangar/main)
 "wNy" = (
 /obj/machinery/door/unpowered/wood/pyro{
-	name = "The Snip";
-	dir = 8
+	dir = 8;
+	name = "The Snip"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
@@ -41773,8 +41767,8 @@
 /area/station/engine/core/nuclear)
 "xMo" = (
 /obj/railing/orange/reinforced{
-	icon_state = "railing-reinforced";
-	dir = 1
+	dir = 1;
+	icon_state = "railing-reinforced"
 	},
 /obj/railing/orange/reinforced,
 /obj/railing/orange/reinforced{
@@ -41843,8 +41837,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engine";
-	name = "Engine Room";
-	enter_id = "inner"
+	enter_id = "inner";
+	name = "Engine Room"
 	},
 /obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor/engine,
@@ -42106,8 +42100,8 @@
 /area/station/ranch)
 "xZq" = (
 /turf/simulated/floor{
-	icon_state = "yellowblack";
-	dir = 1
+	dir = 1;
+	icon_state = "yellowblack"
 	},
 /area/station/engine/core/nuclear)
 "xZV" = (
@@ -42392,10 +42386,10 @@
 "ylN" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	autoclose = 1;
+	dir = 8;
 	id = "cargo_swapabout";
 	layer = 3.2;
-	name = "Cargo Transfer";
-	dir = 8
+	name = "Cargo Transfer"
 	},
 /obj/machinery/conveyor/EW{
 	id = "QM-storage"
@@ -87592,7 +87586,7 @@ aSS
 aVe
 tXm
 aVS
-aXa
+aXb
 aXb
 aZE
 pxJ
