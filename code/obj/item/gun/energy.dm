@@ -1300,9 +1300,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		..()
 
 	attack_hand(mob/user)
-		if (!owner_prints)
-			boutput(user, SPAN_ALERT("[src] has accepted your DNA string. You are its owner!"))
-			assign_name(user)
+		assign_name(user)
 		..()
 
 
@@ -1310,16 +1308,16 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	//you have to use voice activation to change modes. haha!
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
-		if (!owner_prints)
-			boutput(user, SPAN_ALERT("[src] has accepted your DNA string. You are its owner!"))
-			assign_name(user)
-		else
-			boutput(user, SPAN_NOTICE("There don't seem to be any buttons on [src] to press."))
+		assign_name(user)
 
 	proc/assign_name(var/mob/M)
+		if (owner_prints)
+			boutput(M, SPAN_NOTICE("There don't seem to be any buttons on [src] to press."))
+			return
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder)
+				boutput(M, SPAN_ALERT("[src] has accepted the DNA string. [H.real_name] is now the owner!"))
 				owner_prints = H.bioHolder.Uid
 				src.name = "HoS [H.real_name]'s Lawbringer"
 				tooltip_rebuild = 1
