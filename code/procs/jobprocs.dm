@@ -550,6 +550,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 					if (!locate(/mob/living/carbon/human) in get_turf(bed)) //this is slow but it's Probably worth it
 						valid_beds += bed
 
+			logTheThing(LOG_STATION, src, "has the Heavy Sleeper trait and has finished iterating through beds.")
 			if (length(valid_beds) > 0)
 				var/obj/stool/bed/picked = pick(valid_beds)
 				src.set_loc(get_turf(picked))
