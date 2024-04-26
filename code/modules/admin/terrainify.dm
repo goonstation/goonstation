@@ -334,8 +334,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/caveify
 	name = "Underground Station"
 	desc = "Turns space into a cave system"
-	additional_options = list("Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
+	additional_options = list("Mining"=list("None","Normal","Rich"), "Bioluminescent Algae Coverage"=list("None", "Normal", "Heavy", "Extreme", "All"))
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Asteroid"=FALSE)
 
 	New()
 		..()
@@ -343,10 +343,11 @@ ABSTRACT_TYPE(/datum/terrainify)
 	convert_station_level(params, mob/user)
 		if(..())
 			var/const/ambient_light = "#222222"
-			var/rain = params["Rain"]
-			rain = (rain == "No") ? null : rain
 
-			station_repair.station_generator = new/datum/map_generator/cave_generator
+			if(params["Asteroid"])
+				station_repair.station_generator = new/datum/map_generator/cave_generator/asteroid
+			else
+				station_repair.station_generator = new/datum/map_generator/cave_generator
 
 			if(params["Ambient Light Obj"])
 				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
@@ -355,6 +356,31 @@ ABSTRACT_TYPE(/datum/terrainify)
 				station_repair.ambient_light = new /image/ambient
 				station_repair.ambient_light.color = ambient_light
 
+			var/algae_coverage = 0
+			switch(params["Bioluminescent Algae Coverage"])
+				if ("Normal")
+					algae_coverage = 0.25
+				if ("Heavy")
+					algae_coverage = 0.5
+				if ("Extreme")
+					algae_coverage = 0.75
+				if ("All")
+					algae_coverage = 1
+			if (algae_coverage)
+				if(!bioluminescent_algae)
+					bioluminescent_algae = new(algae_coverage)
+					bioluminescent_algae.setup()
+				SPAWN(1 MINUTE) // bad hack
+					for (var/turf/simulated/wall/auto/asteroid/wall in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+						if (wall.icon_state == "asteroid-255") continue
+						if (wall.ore) continue // Skip if there's ore here already
+						var/list/color_vals = bioluminescent_algae?.get_color(wall)
+						if (length(color_vals))
+							var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
+							algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
+							algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[wall.icon_state]"))
+							wall.UpdateOverlays(algea, "glow_algae")
+							wall.add_medium_light("glow_algae", color_vals)
 
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))

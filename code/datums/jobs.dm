@@ -35,7 +35,7 @@
 	var/order_priority = 1 //! What order jobs are filled in within their priority tier, lower number = higher priority
 	var/cant_allocate_unwanted = FALSE //! Job cannot be set to "unwanted" in player preferences.
 	var/receives_miranda = FALSE
-	var/receives_implant = null //! Object path to the implant type given on spawn.
+	var/list/receives_implants = null //! List of object paths of implant types given on spawn.
 	var/receives_disk = FALSE
 	var/receives_security_disk = FALSE
 	var/receives_badge = FALSE
@@ -73,7 +73,7 @@
 	/// Does this job use the name and appearance from the character profile? (for tracking respawned names)
 	var/uses_character_profile = TRUE
 	/// The faction to be assigned to the mob on setup uses flags from factions.dm
-	var/faction = 0
+	var/faction = list()
 
 	var/short_description = null //! Description provided when a player hovers over the job name in latejoin menu
 	var/wiki_link = null //! Link to the wiki page for this job
@@ -127,55 +127,56 @@
 				M.mind.miranda = DEFAULT_MIRANDA
 		M.faction |= src.faction
 
-		SPAWN(0)
-			if (src.receives_implant && ispath(src.receives_implant))
-				var/mob/living/carbon/human/H = M
-				var/obj/item/implant/I = new src.receives_implant(M)
-				if (src.receives_disk && ishuman(M))
-					if (H.back?.storage)
-						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back.storage.get_contents()
-						if (D)
-							var/datum/computer/file/clone/R = locate(/datum/computer/file/clone/) in D.root.contents
-							if (R)
-								R.fields["imp"] = "\ref[I]"
+		if (length(src.receives_implants))
+			for(var/obj/item/implant/implant as anything in src.receives_implants)
+				if(ispath(implant))
+					var/mob/living/carbon/human/H = M
+					var/obj/item/implant/I = new implant(M)
+					if (ispath(I, /obj/item/implant/health) && src.receives_disk && ishuman(M))
+						if (H.back?.storage)
+							var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back.storage.get_contents()
+							if (D)
+								var/datum/computer/file/clone/R = locate(/datum/computer/file/clone/) in D.root.contents
+								if (R)
+									R.fields["imp"] = "\ref[I]"
 
-			var/give_access_implant = ismobcritter(M)
-			if(!spawn_id && (length(access) > 0 || length(access) == 1 && access[1] != access_fuck_all))
-				give_access_implant = TRUE
-			if (give_access_implant)
-				var/obj/item/implant/access/I = new /obj/item/implant/access(M)
-				I.access.access = src.access.Copy()
-				I.uses = -1
+		var/give_access_implant = ismobcritter(M)
+		if(!spawn_id && (length(access) > 0 || length(access) == 1 && access[1] != access_fuck_all))
+			give_access_implant = TRUE
+		if (give_access_implant)
+			var/obj/item/implant/access/I = new /obj/item/implant/access(M)
+			I.access.access = src.access.Copy()
+			I.uses = -1
 
-			if (src.special_spawn_location && !no_special_spawn)
-				var/location = src.special_spawn_location
-				if (!istype(src.special_spawn_location, /turf))
-					location = pick_landmark(src.special_spawn_location)
-				if (!isnull(location))
-					M.set_loc(location)
+		if (src.special_spawn_location && !no_special_spawn)
+			var/location = src.special_spawn_location
+			if (!istype(src.special_spawn_location, /turf))
+				location = pick_landmark(src.special_spawn_location)
+			if (!isnull(location))
+				M.set_loc(location)
 
-			if (ishuman(M) && src.bio_effects)
-				var/list/picklist = params2list(src.bio_effects)
-				if (length(picklist))
-					for(var/pick in picklist)
-						M.bioHolder.AddEffect(pick)
+		if (ishuman(M) && src.bio_effects)
+			var/list/picklist = params2list(src.bio_effects)
+			if (length(picklist))
+				for(var/pick in picklist)
+					M.bioHolder.AddEffect(pick)
 
-			if (ishuman(M) && src.starting_mutantrace)
-				var/mob/living/carbon/human/H = M
-				H.set_mutantrace(src.starting_mutantrace)
+		if (ishuman(M) && src.starting_mutantrace)
+			var/mob/living/carbon/human/H = M
+			H.set_mutantrace(src.starting_mutantrace)
 
-			if (src.objective)
-				var/datum/objective/newObjective = new /datum/objective/crew(src.objective, M.mind)
-				boutput(M, "<B>Your OPTIONAL Crew Objectives are as follows:</b>")
-				boutput(M, "<B>Objective #1</B>: [newObjective.explanation_text]")
+		if (src.objective)
+			var/datum/objective/newObjective = new /datum/objective/crew(src.objective, M.mind)
+			boutput(M, "<B>Your OPTIONAL Crew Objectives are as follows:</b>")
+			boutput(M, "<B>Objective #1</B>: [newObjective.explanation_text]")
 
-			if (M.client && src.change_name_on_spawn && !jobban_isbanned(M, "Custom Names"))
-				//if (ishuman(M)) //yyeah this doesn't work with critters fix later
-				var/default = M.real_name + " the " + src.name
-				var/orig_real = M.real_name
-				M.choose_name(3, src.name, default)
-				if(M.real_name != default && M.real_name != orig_real)
-					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
+		if (M.client && src.change_name_on_spawn && !jobban_isbanned(M, "Custom Names"))
+			//if (ishuman(M)) //yyeah this doesn't work with critters fix later
+			var/default = M.real_name + " the " + src.name
+			var/orig_real = M.real_name
+			M.choose_name(3, src.name, default)
+			if(M.real_name != default && M.real_name != orig_real)
+				phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
 
 	/// Is this job highlighted for priority latejoining
 	proc/is_highlighted()
@@ -221,7 +222,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	announce_on_join = TRUE
 	allow_spy_theft = FALSE
 	allow_antag_fallthrough = FALSE
-	receives_implant = /obj/item/implant/health/security/anti_mindhack
+	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	wiki_link = "https://wiki.ss13.co/Captain"
 
 	slot_card = /obj/item/card/id/gold
@@ -315,7 +316,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_disk = TRUE
 	receives_security_disk = TRUE
 	receives_badge = TRUE
-	receives_implant = /obj/item/implant/health/security/anti_mindhack
+	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Head_of_Security"
 
@@ -541,7 +542,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	can_join_gangs = FALSE
 	cant_spawn_as_con = TRUE
 	cant_spawn_as_rev = TRUE
-	receives_implant = /obj/item/implant/health/security/anti_mindhack
+	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	receives_disk = TRUE
 	receives_security_disk = TRUE
 	receives_badge = TRUE
@@ -576,7 +577,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		high_priority_job = FALSE //nope
 		cant_spawn_as_con = TRUE
 		wages = PAY_UNTRAINED
-		receives_implant = /obj/item/implant/health/security
+		receives_implants = list(/obj/item/implant/health/security)
 		slot_back = list(/obj/item/storage/backpack/security)
 		slot_jump = list(/obj/item/clothing/under/rank/security/assistant)
 		slot_suit = list()
@@ -990,7 +991,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	wiki_link = "https://wiki.ss13.co/Botanist"
 
-	faction = FACTION_BOTANY
+	faction = list(FACTION_BOTANY)
 
 	New()
 		..()
@@ -1097,7 +1098,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	change_name_on_spawn = TRUE
 	wiki_link = "https://wiki.ss13.co/Clown"
 
-	faction = FACTION_CLOWN
+	faction = list(FACTION_CLOWN)
 
 	New()
 		..()
@@ -1710,7 +1711,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	alt_names = list("Apiculturist", "Apiarist")
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
-	faction = FACTION_BOTANY
+	faction = list(FACTION_BOTANY)
 
 	New()
 		..()
@@ -1901,7 +1902,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc2 = list(/obj/item/device/pda2/clown)
 	slot_lhan = list(/obj/item/instrument/bikehorn)
 
-	faction = FACTION_CLOWN
+	faction = list(FACTION_CLOWN)
 
 	New()
 		..()
@@ -2398,7 +2399,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		/obj/item/clothing/head/helmet/space/syndicate,
 		/obj/item/clothing/suit/space/syndicate)
 
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 
@@ -2410,7 +2411,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	name = "Poorly Equipped Junior Syndicate Operative"
 	slot_poc2 = list()
 
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 
 // hidden jobs for nt-so vs syndicate spec-ops
 
@@ -2422,7 +2423,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
 	cant_spawn_as_rev = TRUE
-	receives_implant = /obj/item/implant/revenge/microbomb
+	receives_implants = list(/obj/item/implant/revenge/microbomb)
 	slot_back = list(/obj/item/storage/backpack/syndie)
 	slot_belt = list(/obj/item/storage/belt/gun/pistol)
 	slot_jump = list(/obj/item/clothing/under/misc/syndicate)
@@ -2443,7 +2444,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/breaching_charge,
 							/obj/item/remote/syndicate_teleporter)
 
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 	special_spawn_location = LANDMARK_SYNDICATE
@@ -2531,7 +2532,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	cant_spawn_as_rev = TRUE
 	receives_badge = TRUE
 	receives_miranda = TRUE
-	receives_implant = /obj/item/implant/health
+	receives_implants = list(/obj/item/implant/health)
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security/ntso)
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
@@ -2549,7 +2550,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/clothing/head/NTberet,
 							/obj/item/currency/spacecash/fivehundred)
 
-	faction = FACTION_NANOTRASEN
+	faction = list(FACTION_NANOTRASEN)
 
 	New()
 		..()
@@ -2589,7 +2590,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/sheet/steel/fullstack,
 							/obj/item/sheet/glass/reinforced/fullstack)
 
-	faction = FACTION_NANOTRASEN
+	faction = list(FACTION_NANOTRASEN)
 
 	New()
 		..()
@@ -2630,7 +2631,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/reagent_containers/glass/bottle/omnizine,
 							/obj/item/reagent_containers/glass/bottle/ether)
 
-	faction = FACTION_NANOTRASEN
+	faction = list(FACTION_NANOTRASEN)
 
 	New()
 		..()
@@ -2656,7 +2657,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	cant_spawn_as_rev = TRUE
 	receives_badge = TRUE
 	receives_miranda = TRUE
-	receives_implant = /obj/item/implant/health/security/anti_mindhack
+	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security/ntsc) //special secbelt subtype that spawns with the NTSO gear inside
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
@@ -2674,7 +2675,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/cloth/handkerchief/nt)
 	wiki_link = "https://wiki.ss13.co/Nanotrasen_Security_Consultant"
 
-	faction = FACTION_NANOTRASEN
+	faction = list(FACTION_NANOTRASEN)
 
 	New()
 		..()
@@ -2980,9 +2981,9 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		team = 1
 		overlay_icon = "nanotrasen"
 
-		faction = FACTION_NANOTRASEN
+		faction = list(FACTION_NANOTRASEN)
 
-		receives_implant = /obj/item/implant/pod_wars/nanotrasen
+		receives_implants = list(/obj/item/implant/pod_wars/nanotrasen)
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_belt = list(/obj/item/gun/energy/blaster_pod_wars/nanotrasen)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
@@ -3026,9 +3027,9 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		overlay_icon = "syndicate"
 		add_to_manifest = FALSE
 
-		faction = FACTION_SYNDICATE
+		faction = list(FACTION_SYNDICATE)
 
-		receives_implant = /obj/item/implant/pod_wars/syndicate
+		receives_implants = list(/obj/item/implant/pod_wars/syndicate)
 		slot_back = list(/obj/item/storage/backpack/syndie)
 		slot_belt = list(/obj/item/gun/energy/blaster_pod_wars/syndicate)
 		slot_jump = list(/obj/item/clothing/under/misc/syndicate)

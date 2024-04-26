@@ -3263,6 +3263,12 @@
 "akQ" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"akR" = (
+/obj/machinery/computer/operating/small{
+	id = "OR1"
+	},
+/turf/simulated/floor/red,
+/area/station/medical/medbay/surgery)
 "akS" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
@@ -3670,12 +3676,6 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
-"amq" = (
-/obj/machinery/computer/operating{
-	id = "OR1"
-	},
-/turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "amr" = (
 /obj/machinery/drainage/big,
@@ -5248,15 +5248,6 @@
 "arz" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
-"arA" = (
-/obj/cable{
-	icon_state = "5-10"
-	},
-/obj/machinery/computer/operating{
-	id = "robotics"
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "arB" = (
 /obj/disposalpipe/trunk/south,
 /turf/simulated/floor/plating/random,
@@ -8551,6 +8542,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
+"aCa" = (
+/obj/laser_sink/mirror,
+/turf/simulated/floor,
+/area/station/engine/gas)
 "aCb" = (
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/networked/artifact_console,
@@ -12033,15 +12028,6 @@
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"aOt" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west/noaicontrol,
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
-/area/listeningpost)
 "aOu" = (
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/neutral/side{
@@ -27679,6 +27665,13 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
+"bUY" = (
+/obj/storage/secure/crate/gear/armory/equipment,
+/obj/machinery/light/incandescent/harsh/very,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/ai_monitored/armory)
 "bVa" = (
 /obj/item/device/radio/intercom/security,
 /obj/machinery/vending/security_ammo,
@@ -35010,13 +35003,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
-"gao" = (
-/obj/storage/secure/crate/gear/armory/equipment,
-/obj/machinery/light/incandescent/harsh/very,
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/station/ai_monitored/armory)
 "gaA" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
@@ -42340,6 +42326,15 @@
 /obj/stool,
 /turf/simulated/floor/plating/random,
 /area/derelict_diner)
+"qHe" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west/hardened,
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/listeningpost)
 "qHL" = (
 /obj/decal/fakeobjects/pipe{
 	color = "b4b4b4";
@@ -46059,6 +46054,15 @@
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"wUy" = (
+/obj/cable{
+	icon_state = "5-10"
+	},
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "wUO" = (
 /obj/item/device/camera_viewer/telesci,
 /obj/table/round/auto,
@@ -53049,7 +53053,7 @@ aNj
 aNt
 aNj
 aPm
-aOt
+qHe
 aOM
 dBM
 aPo
@@ -90674,7 +90678,7 @@ bQE
 bRG
 ivJ
 bTR
-gao
+bUY
 bVV
 bWF
 bXv
@@ -92398,7 +92402,7 @@ ajG
 aic
 akH
 alq
-amq
+anm
 ank
 vQY
 aoN
@@ -93002,7 +93006,7 @@ ahI
 ajJ
 eNT
 alq
-anm
+akR
 anm
 anY
 fha
@@ -95712,7 +95716,7 @@ afq
 afx
 agk
 muF
-arA
+wUy
 muF
 agj
 ais
@@ -108442,7 +108446,7 @@ anx
 abL
 bfb
 aPR
-aPR
+aCa
 beP
 aaH
 aaN
@@ -108744,7 +108748,7 @@ anx
 beV
 bfb
 aPR
-aPR
+aCa
 beP
 aaJ
 bhu

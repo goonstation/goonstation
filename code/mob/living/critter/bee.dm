@@ -37,6 +37,7 @@
 	health_burn_vuln = 0.5
 	metabolizes = 0 // for now?
 	butcherable = BUTCHER_YOU_MONSTER
+	player_can_spawn_with_pet = FALSE // That's what beestfriend is for nerd
 	flags = TABLEPASS
 	fits_under_table = 1
 	hand_count = 3

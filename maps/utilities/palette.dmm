@@ -3934,11 +3934,6 @@
 	},
 /turf/simulated/floor,
 /area/space)
-"pt" = (
-/turf/simulated/shuttle/wall{
-	dir = 4
-	},
-/area/space)
 "pu" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -4005,12 +4000,6 @@
 	},
 /obj/decal/poster/wallsign/stencil/left/one,
 /turf/simulated/floor/yellow,
-/area/space)
-"pH" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3"
-	},
 /area/space)
 "pI" = (
 /obj/table/auto/desk{
@@ -5384,11 +5373,6 @@
 	icon_state = "8-9"
 	},
 /turf/simulated/floor/plating/random,
-/area/space)
-"vh" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
 /area/space)
 "vi" = (
 /turf/simulated/floor/carpet/blue/standard/innercorner/se_triple,
@@ -6801,9 +6785,7 @@
 /turf/simulated/floor,
 /area/space)
 "AS" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall2"
-	},
+/turf/space,
 /area/space)
 "AT" = (
 /turf/simulated/floor/carpet/red,
@@ -10327,9 +10309,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/space)
-"Pz" = (
-/turf/simulated/shuttle/wall,
-/area/space)
 "PA" = (
 /turf/simulated/floor/carpet/green/standard/junction/ne_w,
 /area/space)
@@ -11197,12 +11176,6 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
-/area/space)
-"Sl" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall4"
-	},
 /area/space)
 "Sn" = (
 /obj/item/device/radio/intercom/AI{
@@ -13236,8 +13209,8 @@ WQ
 oU
 Cm
 ZR
-pt
-Pz
+AS
+AS
 AS
 "}
 (2,1,1) = {"
@@ -13311,9 +13284,9 @@ uQ
 kU
 YL
 aY
-pH
-vh
-Sl
+AS
+AS
+AS
 "}
 (3,1,1) = {"
 Fx

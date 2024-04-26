@@ -28,7 +28,7 @@ TYPEINFO(/obj/machinery/lrteleporter)
 		STOP_TRACKING
 
 	attack_ai(mob/user as mob)
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user)
 		ui_interact(user)

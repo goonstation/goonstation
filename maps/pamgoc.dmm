@@ -53824,20 +53824,6 @@
 "cyO" = (
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
-"cyP" = (
-/turf/simulated/shuttle/wall/cockpit/window{
-	dir = 2;
-	icon_state = "wall_space";
-	name = "window"
-	},
-/area/shuttle/arrival/station)
-"cyQ" = (
-/turf/simulated/shuttle/wall/cockpit/window{
-	dir = 4;
-	icon_state = "wall_space";
-	name = "window"
-	},
-/area/shuttle/arrival/station)
 "cyR" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
@@ -53847,18 +53833,6 @@
 	dir = 1
 	},
 /area/shuttle/arrival/station)
-"cyT" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall3_space"
-	},
-/area/abandonedship)
-"cyU" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3_space"
-	},
-/area/abandonedship)
 "cyV" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
@@ -56133,6 +56107,17 @@
 	dir = 4
 	},
 /area/station/engine/hotloop)
+"fqj" = (
+/obj/deployable_turret/riot/active,
+/obj/machinery/turretid{
+	name = "External perimeter turret deactivation control";
+	pixel_y = 28;
+	req_access = null;
+	turretArea = /area/station/turret_protected/armory_outside
+	},
+/obj/mapping_helper/access/hos,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "fqG" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 8;
@@ -56356,17 +56341,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
-"fUt" = (
-/obj/deployable_turret/riot/active,
-/obj/machinery/turretid{
-	name = "External perimeter turret deactivation control";
-	pixel_y = 28;
-	req_access = null;
-	turretArea = /area/station/turret_protected/armory_outside
-	},
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "fUY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -57174,6 +57148,12 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"hmi" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall_3_trans"
+	},
+/area/abandonedship)
 "hmD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -57285,6 +57265,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/ranch)
+"hCK" = (
+/obj/storage/secure/crate/gear/armory/equipment,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "hDd" = (
 /obj/storage/closet/welding_supply,
 /turf/simulated/floor/white,
@@ -59082,6 +59069,12 @@
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
+"kLj" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall_3_trans"
+	},
+/area/abandonedship)
 "kLp" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Arrivals Desk";
@@ -63386,6 +63379,13 @@
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/plating,
 /area/station/engine/power)
+"tUA" = (
+/turf/simulated/shuttle/wall/cockpit/window{
+	dir = 4;
+	icon_state = "wall_trans";
+	name = "window"
+	},
+/area/shuttle/arrival/station)
 "tVo" = (
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
@@ -64647,6 +64647,13 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
+"wCJ" = (
+/turf/simulated/shuttle/wall/cockpit/window{
+	dir = 2;
+	icon_state = "wall_trans";
+	name = "window"
+	},
+/area/shuttle/arrival/station)
 "wEF" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 8
@@ -64925,13 +64932,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/staff)
-"xcm" = (
-/obj/storage/secure/crate/gear/armory/equipment,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "xcB" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -108751,7 +108751,7 @@ cwV
 bfm
 bfm
 cyR
-cyP
+wCJ
 cCQ
 aBn
 clm
@@ -109355,7 +109355,7 @@ cwV
 bfm
 bfm
 cyR
-cyQ
+tUA
 cCQ
 aAG
 bqh
@@ -125364,7 +125364,7 @@ kAf
 teZ
 aVc
 cAL
-fUt
+fqj
 crq
 crq
 crq
@@ -125969,7 +125969,7 @@ hUH
 aVc
 cAL
 dam
-xcm
+hCK
 nvz
 pqo
 frS
@@ -145178,14 +145178,14 @@ cCO
 cCO
 cCO
 cCO
-cyT
+kLj
 cCO
 bgb
 cyV
 bhc
 azw
 cyV
-cyU
+hmi
 cCO
 cCO
 cCO

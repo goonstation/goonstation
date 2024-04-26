@@ -1,5 +1,5 @@
 /proc/vegetablegibs(turf/T, list/ejectables, bdna, btype)
-	var/list/vegetables = list(/obj/item/reagent_containers/food/snacks/plant/soylent, \
+	var/list/vegetables = list(/obj/item/reagent_containers/food/snacks/plant/soy/soylent, \
 		                       /obj/item/reagent_containers/food/snacks/plant/lettuce, \
 		                       /obj/item/reagent_containers/food/snacks/plant/cucumber, \
 		                       /obj/item/reagent_containers/food/snacks/plant/carrot, \
@@ -279,7 +279,7 @@
 		var/list/potential_caretakers = list()
 		for(var/mob/living/carbon/human/checked_human in hearers(5, src))
 			//botanists or people who contributed to the plant can be caretakers and be talked to
-			if ((checked_human.faction & src.faction) || (checked_human in src.growers))
+			if (length(checked_human.faction & src.faction) || (checked_human in src.growers))
 				potential_caretakers += checked_human
 		//we only talk to people we actually want to talk to
 		if (length(potential_caretakers) > 0)

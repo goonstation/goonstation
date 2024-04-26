@@ -1,10 +1,13 @@
 
 var/global/list/list/turf/landmarks = list()
 
-proc/pick_landmark(name, default = null)
+proc/pick_landmark(name, default = null, ignorespecific = list())
 	if(!(name in landmarks))
 		return default
-	return pick(landmarks[name])
+	if (ignorespecific == list())
+		return pick(landmarks[name])
+	else
+		return pick(landmarks[name] - ignorespecific)
 
 /obj/landmark
 	name = "landmark"

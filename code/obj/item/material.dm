@@ -830,7 +830,7 @@
 
 	proc/load_reclaim(obj/item/W as obj, mob/user as mob)
 		. = FALSE
-		if (src.is_valid(W))
+		if (src.is_valid(W) && brain_check(W, user, TRUE))
 			if (W.stored)
 				W.stored.transfer_stored_item(W, src, user = user)
 			else
@@ -964,7 +964,7 @@
 				continue
 			if (M.name != O.name)
 				continue
-			if(!src.is_valid(M))
+			if(!(src.is_valid(M) && brain_check(M, user, FALSE)))
 				continue
 			M.set_loc(src)
 			playsound(src, sound_load, 40, TRUE)
@@ -999,3 +999,23 @@
 		if (!istype(I))
 			return
 		return (I.material && !istype(I,/obj/item/material_piece) && !istype(I,/obj/item/nuclear_waste)) || istype(I,/obj/item/wizard_crystal)
+
+	proc/brain_check(var/obj/item/I, var/mob/user, var/ask)
+		if (!istype(I))
+			return
+		var/obj/item/organ/brain/brain = null
+		if (istype(I, /obj/item/parts/robot_parts/head))
+			var/obj/item/parts/robot_parts/head/head = I
+			brain = head.brain
+		else if (istype(I, /obj/item/organ/brain))
+			brain = I
+
+		if (brain)
+			if (!ask)
+				boutput(user, SPAN_ALERT("[I] turned the intelligence detection light on! You decide to not load it for now."))
+				return FALSE
+			var/accept = tgui_alert(user, "Possible intelligence detected. Are you sure you want to reclaim [I]?", "Incinerate brain?", list("Yes", "No")) == "Yes" && can_reach(user, src) && user.equipped() == I
+			if (accept)
+				logTheThing(LOG_COMBAT, user, "loads [brain] (owner's ckey [brain.owner ? brain.owner.ckey : null]) into a portable reclaimer.")
+			return accept
+		return TRUE
