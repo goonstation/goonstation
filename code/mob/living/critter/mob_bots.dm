@@ -646,12 +646,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	if (C.hasStatus("handcuffed"))
 		return FALSE // already handled
 	var/threat_level = assess_perp(C)
-	if (GET_COOLDOWN(C,"MARKED_FOR_SECURITRON_ARREST")) // set in assess_perp
+	if (!GET_COOLDOWN(C,"MARKED_FOR_SECURITRON_ARREST")) // set in assess_perp
 		return FALSE // not a threat
 	if (GET_COOLDOWN(C,"ARRESTED_BY_SECURITRON_\ref[src]"))
 		return FALSE // we JUST arrested this jerk
 	. = ..()
-	if(. && !ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
+	if(. && !ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown) && threat_level > 4)
 		src.accuse_perp(C, threat_level)
 		src.siren()
 
