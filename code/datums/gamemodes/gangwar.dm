@@ -176,29 +176,8 @@
 
 	..()
 
-/datum/game_mode/gang/proc/is_deceased(var/datum/mind/M)
-	if (!M?.current)
-		return TRUE
-	if(isdead(M.current))
-		return TRUE
-	if(inafterlife(M.current))
-		return TRUE
-	if(isVRghost(M.current))
-		return TRUE
-	if(!iscarbon(M.current))
-		return TRUE
-	return FALSE
-
 /datum/game_mode/gang/proc/check_winner()
 	var/datum/gang/victorius_gang = null
-
-	// Round is over. Grant points for living players.
-	for (var/datum/gang/gang in src.gangs)
-		if (is_deceased(gang.leader))
-			boutput(world, "leader alive for [gang.gang_name]")
-		for (var/datum/mind/member in gang.members)
-			if (!is_deceased(member))
-				boutput(world, "member [member.current] alive for [gang.gang_name]")
 
 	// Find the highest scoring gang.
 	for (var/datum/gang/gang in src.gangs)
