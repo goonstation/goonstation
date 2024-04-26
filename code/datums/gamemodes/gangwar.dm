@@ -2372,9 +2372,9 @@ proc/broadcast_to_all_gangs(var/message)
 	density = FALSE
 	anchored = TRUE
 	layer = TAG_LAYER
-	exploded = FALSE
 	icon = 'icons/obj/decals/graffiti.dmi'
 	icon_state = "gangtag0"
+	var/exploded = FALSE
 	var/datum/gang/owners = null
 	var/list/mobs
 	var/heat = 0 // a rough estimation of how regularly this tag has people near it
