@@ -712,6 +712,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		var/picked = pick(filtered_concrete_typesof(/mob/living/critter/small_animal/, GLOBAL_PROC_REF(filter_carrier_pets)))
 		var/mob/living/critter/small_animal/pet = new picked(src)
 		pet.ai_type = /datum/aiHolder/wanderer
+		pet.ai = new pet.ai_type(pet)
 		pet.aggressive = FALSE
 		pet.randomize_name()
 		pet.ai_retaliate_persistence = RETALIATE_ONCE

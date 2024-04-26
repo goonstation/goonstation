@@ -177,7 +177,8 @@
 		return
 
 	if(pressure && src.fatigue_pressure)
-		var/iterations = clamp(log(pressure/src.fatigue_pressure)/log(2),0,20)
+		var/effective_fatigue_pressure = src.fatigue_pressure * ((src.material?.getProperty("density") ** 2) || 1)
+		var/iterations = clamp(log(pressure/effective_fatigue_pressure)/log(2),0,20)
 		for(var/i = iterations; i>0 && i>=ruptured; i--)
 			if(prob(5/i))
 				new_rupture = i + 1
@@ -309,6 +310,7 @@
 			if (prob(50))
 				rupture()
 
+#define SHEETS_TO_REINFORCE 5
 /obj/machinery/atmospherics/pipe/simple/attackby(var/obj/item/W, var/mob/user)
 	if(isweldingtool(W))
 		if(!ruptured)
@@ -336,6 +338,40 @@
 		list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
 		actions.start(action_bar, user)
 
+	else if (istype(W, /obj/item/sheet))
+		if (actions.hasAction(user, /datum/action/bar/private/welding))
+			return
+		if (src.destroyed || src.ruptured)
+			boutput(user, SPAN_ALERT("You should repair [src] first."))
+			return
+		if (!(W.material?.getMaterialFlags() & MATERIAL_METAL))
+			boutput(user, SPAN_ALERT("You can't weld that!"))
+			return
+		if (W.material?.isSameMaterial(src.material))
+			boutput(user, SPAN_ALERT("[src] is already reinforced with [src.material.getName()]!"))
+			return
+		var/obj/item/weldingtool/welder = user.find_tool_in_hand(TOOL_WELDING)
+		if (W.amount < SHEETS_TO_REINFORCE)
+			boutput(user, SPAN_ALERT("You need at least 10 sheets to reinforce [src]."))
+		if (!welder || !welder.welding)
+			boutput(user, SPAN_ALERT("You need something to weld [W] to [src] with!"))
+			return
+		if (!welder.try_weld(user, 0.8, noisy=2))
+			return
+		var/positions = src.get_welding_positions()
+		actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, PROC_REF(weld_sheet), \
+				list(W, user), SPAN_NOTICE("[user] welds [W] to [src]"), positions[1], positions[2]),user)
+
+/obj/machinery/atmospherics/pipe/simple/proc/weld_sheet(obj/item/sheet/sheet, mob/user)
+	if (sheet.amount < SHEETS_TO_REINFORCE)
+		return
+	sheet.change_stack_amount(-SHEETS_TO_REINFORCE)
+	src.setMaterial(sheet.material)
+	if (!("reinforced" in src.name_prefixes))
+		src.name_prefix("reinforced") // so it says "bohrum reinforced pipe"
+	src.UpdateName()
+
+#undef SHEETS_TO_REINFORCE
 
 /obj/machinery/atmospherics/pipe/simple/disposing()
 	node1?.disconnect(src)

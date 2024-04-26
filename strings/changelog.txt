@@ -1,4 +1,19 @@
 
+(t)fri apr 26 24
+(u)LeahTheTech
+(p)18621
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Gas pipes can now be reinforced with metal sheets to increase their pressure tolerance based on the material's density.
+(u)tarmunora
+(+)botany produce triggers reactions on harvest
+(u)Terms-On-Dragon
+(p)15272
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(+)The AI has learned a new DEVIOUS face to express across the station.
+(u)TDHooligan
+(p)18475
+(e)💅🧛|C-QoL, A-Gamemodes
+(+)Gangs will randomly elect a new leader if their current one dies early into a shift.
 (t)thu apr 25 24
 (u)Sovexe
 (p)18620

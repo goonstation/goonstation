@@ -76,7 +76,9 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	"Very Happy" = "ai_veryhappy-dol",\
 	"Very Happy (Inverted)" = "ai_veryhappy-lod",\
 	"Wink" = "ai_wink-dol",\
-	"Wink (Inverted)" = "ai_wink-lod") // this should be in typeinfo
+	"Wink (Inverted)" = "ai_wink-lod",\
+	"Devious" = "ai_devious-dol",\
+	"Devious (Inverted)" = "ai_devious-lod") // this should be in typeinfo
 /mob/living/silicon/ai
 	name = "AI"
 	voice_name = "synthesized voice"
