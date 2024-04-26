@@ -2059,29 +2059,22 @@
 
 			if(length(holder.reagent_list) > length(src.required_reagents)) // drink must be pure to mix-- no teleporting chem bombs
 				return FALSE
-			if(!my_atom || (holder.my_atom.loc == (/obj/machinery || /obj/submachine))) //no teleportable container, no reaction
-				return FALSE
-			if(istype(my_atom, /obj/item))
-				var/obj/item/my_item = my_atom
-				if(!my_item || my_item.cant_drop)
-					return FALSE
-			if(istype(my_atom, /atom/movable))
-				var/atom/movable/my_movable_atom = my_atom
-				if(!(my_movable_atom.anchored == UNANCHORED))
-					return FALSE
-			else
+			if(istype(my_atom, /obj/item/reagent_containers/food/drinks/cocktailshaker)) // Must be made in your precious cocktail shaker
 				return TRUE
+			else
+				return FALSE
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			var/atom/my_atom = holder.my_atom
-			var/origin = get_turf(holder.my_atom)
+			var/mob/mixperson = my_atom.loc
 
 			if(istype(my_atom, /obj)) // Teleports away on mixing
-				playsound(origin, "warp", 20, 1)
+				playsound(get_turf(my_atom), "warp", 20, 1)
+				mixperson.remove_item(my_atom)
 				var/obj/my_obj = my_atom
 				my_obj.set_loc(get_a_random_station_unlocked_container_with_no_others_on_the_turf())
 
-			if(get_turf(my_atom) != origin) //checks if the drink actually teleported
+			if(my_atom.loc != mixperson) //checks if the drink actually teleported
 				mix_phrase = "The mixture teleports away! Go find it!"
 			else
 				mix_phrase = "The mixture groans scarily, turning in on itself and disintegrating."
