@@ -72,7 +72,8 @@
 	var/mob/living/critter/C = holder.owner
 	return C.seek_target(src.max_dist)
 
-/datum/aiTask/tsequence/goalbased/critter/attack/on_tick()
+/datum/aiTask/sequence/goalbased/critter/attack/on_tick()
+	..()
 	if(length(holder.owner.grabbed_by))
 		holder.owner.resist()
 

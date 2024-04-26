@@ -397,10 +397,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	name = "securitron"
 	real_name = "securitron"
 #ifdef HALLOWEEN
-	desc = "A little security robot, apparently carved out of a pumpkin.  He looks...spooky?"
+	desc = "A little security robot, apparently carved out of a pumpkin.  It looks...spooky?"
 	icon = 'icons/misc/halloween.dmi'
 #else
-	desc = "A little security robot.  He looks less than thrilled."
+	desc = "A little security robot.  It looks less than thrilled."
 	icon = 'icons/obj/bots/aibots.dmi'
 #endif
 	icon_state = "secbot0"
@@ -436,6 +436,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	var/control_freq = FREQ_BOT_CONTROL
 	var/emagged = 0
 	var/emote_cooldown = 7 SECONDS
+	var/arrest_cooldown = 10 SECONDS
 	var/siren_active = FALSE
 	var/list/req_access = list(access_security)
 	var/weapon_access = access_carrypermit
@@ -518,11 +519,17 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			return
 		user.showContextActions(src.contexts, src, src.configContextLayout)
 
+	pull(mob/user)
+		if (src.power)
+			boutput(user,SPAN_ALERT("<b>[src] resists being pulled around! Maybe deactivate it first.</b>"))
+			return 1
+		..()
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if (act == "scream")
 			src.siren()
 			return null
-		if (ON_COOLDOWN(src, "secbot_emote_cooldown", src.emote_cooldown))
+		if (ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
 			return null
 		switch (act)
 			if ("laugh")
@@ -541,6 +548,20 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				src.say("I AM THE LAW.")
 				playsound(src, "sound/voice/biamthelaw.ogg", 50, FALSE, 0, 1)
 		return
+
+	proc/accuse_perp(atom/target, threat = 4)
+		src.point_at(target)
+		src.say("LEVEL [threat] INFRACTION ALERT.")
+		switch(rand(1,3))
+			if(1)
+				src.say("CRIMINAL DETECTED.")
+				playsound(src, 'sound/voice/bcriminal.ogg', 50, FALSE, 0, 1)
+			if(2)
+				src.say("PREPARE FOR JUSTICE.")
+				playsound(src, 'sound/voice/bjustice.ogg', 50, FALSE, 0, 1)
+			if(3)
+				src.say("FREEZE. SCUMBAG.")
+				playsound(src, 'sound/voice/bfreeze.ogg', 50, FALSE, 0, 1)
 
 	proc/siren()
 		if(siren_active)
@@ -565,34 +586,41 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		else
 			..()
 
+	proc/set_power(var/on_off)
+		if(src.power == on_off)
+			return
+		src.power = on_off
+		if (src.power)
+			src.say("TEN-FORTY ONE. [uppertext(src.name)]: ONLINE.")
+			add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
+			ai.enable()
+			if (src.pulled_by)
+				src.pulled_by.remove_pulling()
+		else
+			src.say("TEN-FORTY TWO. [uppertext(src.name)]: OFFLINE.")
+			remove_simple_light("secbot")
+			ai.disable()
+
 	proc/configure(var/setting, var/mob/M)
 		switch(setting)
 			if ("power")
-				src.power = !src.power
-				if (src.power)
-					var/cap_name = uppertext(copytext_char(src.name,1,2)) + copytext_char(src.name,2)
-					src.say("Ten-Forty One. [cap_name]: ONLINE.")
-					add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
-					ai.enable()
-				else
-					remove_simple_light("secbot")
-					ai.disable()
+				src.set_power(!src.power)
 				return src.power
 			if ("check_contraband")
 				src.check_contraband = !src.check_contraband
-				src.say("Ten-Four. Contraband Checks: [src.check_contraband ? "ENGAGED" : "DISENGAGED"].")
+				src.say("TEN-FOUR. CONTRABAND CHECKS: [src.check_contraband ? "ENGAGED" : "DISENGAGED"].")
 				return src.check_contraband
 			if ("check_records")
 				src.check_records = !src.check_records
-				src.say("Ten-Four. Security Records: [src.check_records ? "REFERENCED" : "IGNORED"].")
+				src.say("TEN-FOUR. SECURITY RECORDS: [src.check_records ? "REFERENCED" : "IGNORED"].")
 				return src.check_records
 			if ("arrest_type")
 				src.is_detaining = !src.is_detaining
-				src.say("Ten-Four. Arrest Mode: [src.is_detaining ? "DETAIN" : "RESTRAIN"].")
+				src.say("TEN-FOUR. ENGAGEMENT MODE: [src.is_detaining ? "DETAIN" : "RESTRAIN"].")
 				return src.is_detaining
 			if ("report_arrests")
 				src.report_arrests = !src.report_arrests
-				src.say("Ten-Four. [src.report_arrests ? "Reporting arrests on: [FREQ_PDA]" : "No longer reporting arrests."]")
+				src.say("TEN-FOUR. [src.report_arrests ? "REPORTING ARRESTS ON: [FREQ_PDA]" : "LONE RANGER PROTOCOL ENGAGED."]")
 				return src.report_arrests
 
 	proc/receive_signal(datum/signal/signal)
@@ -615,16 +643,25 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, control_freq)
 
 	valid_target(var/mob/living/C)
-		if ((C.hasStatus("handcuffed")) || (assess_perp(C) < 4))
-			return FALSE
-		return ..()
+		if (C.hasStatus("handcuffed"))
+			return FALSE // already handled
+		var/threat_level = assess_perp(C)
+		if (threat_level < 4)
+			return FALSE // not a threat
+		if (GET_COOLDOWN(C,"ARRESTED_BY_SECURITRON_\ref[src]"))
+			return FALSE // we JUST arrested this jerk
+		. = ..()
+		if(. && !ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
+			src.accuse_perp(C, threat_level)
+			src.siren()
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
 	proc/assess_perp(mob/living/perp)
 		var/threatcount = 0
 
-		if(src.emagged) return 10 //Everyone is a criminal!
+		if(src.emagged >= 2)
+			return rand(7,15) //Everything that moves is a crimer!
 
 		if((src.check_contraband)) // bot is set to actively search for contraband
 			var/obj/item/card/id/perp_id = perp.equipped()
@@ -642,6 +679,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 		var/perpname = perp.name
 		if(ishuman(perp))
+			if(src.emagged)
+				return rand(7,15) //Everyone's a crimer!
 			var/mob/living/carbon/human/H_perp = perp
 			if(istype(H_perp.mutantrace, /datum/mutantrace/abomination))
 				threatcount += 5
@@ -696,6 +735,27 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		. = ..()
 		if(src.get_health_percentage() >= 0.6 && src.allowed(attcker)) // if health is more than 60%, assume it was friendly fire
 			. = FALSE
+		if(. && !ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
+			src.accuse_perp(attcker, 7)
+			src.siren()
+
+
+	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if(ON_COOLDOWN(src,"EMAG_COOLDOWN",12 SECONDS)) // no rapid double emags
+			if (user)
+				boutput(user, SPAN_ALERT("\The [src] can't be shorted out again this soon!"))
+			return 0
+
+		if (user)
+			boutput(user, SPAN_ALERT("You short out [src]'s target assessment circuits."))
+			OVERRIDE_COOLDOWN(user,"ARRESTED_BY_SECURITRON_\ref[src]",3 SECONDS) // just enough time to book it
+		src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
+
+		src.emagged++
+		src.set_power(TRUE)
+
+		logTheThing(LOG_STATION, user, "emagged securitron ([src]) at [log_loc(src)].")
+		return 1
 
 /datum/targetable/critter/bot/handcuff
 	name = "Detain"
@@ -742,6 +802,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	icon_state = "buddycuff"
 	var/mob/master
 	var/mob/living/carbon/human/target
+	var/arrest_cooldown = 10 SECONDS
 
 	New(var/mob/living/M, var/mob/living/carbon/human/H)
 		src.master = M
@@ -756,11 +817,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	onEnd()
 		..()
 		if(ishuman(target))
+			OVERRIDE_COOLDOWN(target,"ARRESTED_BY_SECURITRON_\ref[master]",src.arrest_cooldown)
 			target.handcuffs = new /obj/item/handcuffs/guardbot(target)
 			target.setStatus("handcuffed", duration = INFINITE_STATUS)
 			logTheThing(LOG_COMBAT, master, "handcuffs [constructTarget(target,"combat")] at [log_loc(master)].")
 
-			var/user_location = get_area(master)
+			var/area/user_location = get_area(master)
 			var/turf/target_loc = get_turf(target)
 			if(!target_loc)
 				target_loc = get_turf(master)
@@ -814,5 +876,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	real_name = "weedhound"
 	ai_type = /datum/aiHolder/patroller
 
-/mob/living/critter/spider/ice/queen/test_patrol
-	ai_type = /datum/aiHolder/patroller/packet_based
+	assess_perp(mob/living/perp)
+		if(perp.reagents && perp.reagents.has_reagent("THC"))
+			return 420
+		. = ..()

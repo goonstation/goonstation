@@ -3,15 +3,17 @@
 		..()
 		default_task = get_instance(/datum/aiTask/sequence/patrol, list(src))
 
+/// move between targets found with targeting_subtask, interrupting to combat_interrupt if seek_target on owner finds a combat target
 /datum/aiTask/sequence/patrol
 	name = "patrolling"
 	distance_from_target = 0
-	max_dist = 0
-	var/targeting_subtask = /datum/aiTask/succeedable/patrol_target_locate/global_cannabis
+	max_dist = 7
+	var/targeting_subtask_type = /datum/aiTask/succeedable/patrol_target_locate/global_cannabis
+	var/combat_interrupt_type = /datum/aiTask/sequence/goalbased/critter/attack
 
 	New(parentHolder, transTask)
 		. = ..()
-		add_task(src.holder.get_instance(src.targeting_subtask, list(holder)))
+		add_task(src.holder.get_instance(src.targeting_subtask_type, list(holder)))
 		var/datum/aiTask/succeedable/move/movesubtask = holder.get_instance(/datum/aiTask/succeedable/move, list(holder))
 		if(istype(movesubtask))
 			movesubtask.max_path_dist = 150
@@ -25,6 +27,19 @@
 			return priority_task
 
 	on_tick()
+		var/list/mob/living/combat_targets
+		if(ismobcritter(src.holder.owner)) // check for targets
+			var/mob/living/critter/C = src.holder.owner
+			combat_targets = C.seek_target(src.max_dist)
+
+		if(length(combat_targets) >= 1) // interrupt into combat_interrupt_type
+			var/mob/living/combat_target = src.get_best_target(combat_targets)
+			if(combat_target)
+				var/datum/aiTask/sequence/goalbased/combat_instance = src.holder.get_instance(src.combat_interrupt_type, list(src.holder, src))
+				if(combat_instance.precondition())
+					src.holder.interrupt_to_task(combat_instance)
+				return
+
 		if(src.holder.target && istype(subtasks[subtask_index], /datum/aiTask/succeedable/move)) // MOVE TASK
 			// make sure we both set our target and move to our target correctly
 			var/datum/aiTask/succeedable/move/M = subtasks[subtask_index]
@@ -90,14 +105,18 @@
 		UnregisterSignal(src.owner, COMSIG_MOVABLE_RECEIVE_PACKET)
 		..()
 
-	proc/ai_receive_signal(mob/attached, datum/signal/signal)
-		if(!src.enabled || ismob(src.target)) // this ai is off or fighting
+	proc/ai_receive_signal(mob/attached, datum/signal/signal, transmission_method, range, connection_id)
+		if(!src.enabled || !istype(src.current_task,/datum/aiTask/sequence/patrol)) // this ai is off or busy
+			return
+
+		if(connection_id == "ai_beacon")
+			src.nav_beacon_signal(signal)
+
+	proc/nav_beacon_signal(datum/signal/signal)
+		if(signal.data["address_1"] != src.net_id) // commanding the bot requires directly addressing it
 			return
 
 		if(signal.data["auth_code"] != netpass_security) // commanding the bot requires netpass_security
-			return
-
-		if(signal.data["address_1"] != src.net_id) // commanding the bot to change destinations requires directly addressing it
 			return
 
 		if(!signal.data["beacon"] || !signal.data["patrol"] || !signal.data["next_patrol"])
@@ -127,7 +146,7 @@
 			src.next_patrol_id = signal.data["next_patrol"]
 
 /datum/aiTask/sequence/patrol/packet_based
-	targeting_subtask = /datum/aiTask/succeedable/patrol_target_locate/packet_based
+	targeting_subtask_type = /datum/aiTask/succeedable/patrol_target_locate/packet_based
 
 /datum/aiTask/succeedable/patrol_target_locate/packet_based
 	max_fails = 5 // very generous
