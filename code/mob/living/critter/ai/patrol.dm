@@ -67,10 +67,14 @@
 	. = ..()
 	src.target = null
 
-/// magically hunt down a weed
+/// magically hunt down a weed on our z level
 /datum/aiTask/succeedable/patrol_target_locate/global_cannabis/on_tick()
 	. = ..()
-	src.target = pick(by_cat[TR_CAT_CANNABIS_OBJ_ITEMS])
+	for(var/obj/item/X in by_cat[TR_CAT_CANNABIS_OBJ_ITEMS])
+		var/obj/item/plant/herb/cannabis/C = X
+		if (istype(C) && C.z == holder.owner.z)
+			src.target = C
+			break
 
 /// securitron patrol pattern
 /datum/aiHolder/patroller/packet_based
