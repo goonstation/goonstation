@@ -12,7 +12,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/list/add_abilities = null
 
 	var/datum/hud/critter/hud
-	var/datum/hud/critter/custom_hud_type = /datum/hud/critter
+	var/datum/hud/critter/custom_hud_type = /datum/hud/critter //TODO: Remove eventually for hudzone handling
 	var/datum/organHolder/custom_organHolder_type = null
 
 	var/hand_count = 0		// Used to ease setup. Setting this in-game has no effect.
@@ -138,9 +138,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	else
 		src.organHolder = new/datum/organHolder/critter(src, custom_brain_type)
 
-	..()
+	. = ..()
 
-	hud = new custom_hud_type(src)
+	src.hud = new src.custom_hud_type(src)
+	src.hud.setup_elements()
+
 	src.attach_hud(hud)
 	src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
 	src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
@@ -174,6 +176,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	if(hud)
 		if(src.stamina_bar)
 			hud.remove_object(stamina_bar)
+		src.hud.delete_hud_zone("health_zone")
 
 		hud.dispose()
 		hud = null

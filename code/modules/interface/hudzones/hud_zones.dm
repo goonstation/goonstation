@@ -13,9 +13,9 @@
 	/// Assoc list of `"elem_alias" = /datum/hud_element` elements
 	var/list/elements = null
 	/// What horizontal side of the hud zone are new elements added from? can be `"EAST"` or `"WEST"`
-	var/horizontal_edge = 0
+	var/horizontal_edge = WEST
 	/// What vertical side of the hud zone are new elements added from? can be `"NORTH"` or `"SOUTH"`
-	var/vertical_edge = 0
+	var/vertical_edge = SOUTH
 	/// Current relative horizontal offset to place new elements at
 	var/horizontal_offset = 0
 	/// Current relative vertical offset to place new elements at

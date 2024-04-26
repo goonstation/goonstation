@@ -4,8 +4,6 @@
 	var/list/hands = list()
 	/// list of equipment hud elements
 	var/list/equipment = list()
-	/// health hud element
-	var/atom/movable/screen/hud/health = null
 	/// oxygen hud element
 	var/atom/movable/screen/hud/oxygen = null
 	/// fire hud element
@@ -60,11 +58,24 @@
 	..()
 	src.master = M
 
+/datum/hud/critter/disposing()
+	src.master = null
+	. = ..()
+
+/datum/hud/critter/proc/setup_elements()
 	// element load order determines position in the hud
 	src.create_hand_element()
-	src.create_health_element()
-	src.create_stamina_element()
-	src.create_temperature_element()
+
+	var/list/health_zone_coords = list(x_low = WIDE_TILE_WIDTH/2, y_low = TILE_HEIGHT, x_high = WIDE_TILE_WIDTH, y_high = TILE_HEIGHT) // top right
+	var/datum/hud_zone/health_zone = src.create_hud_zone(health_zone_coords, "health_zone", EAST)
+	health_zone.register_element(src.create_health_element(), "health")
+	if (src.master.use_stamina)
+		health_zone.register_element(src.create_stamina_element(), "stamina")
+	health_zone.register_element(src.create_temperature_element(), "temp")
+
+
+	// problem is health and temp are overlapping somehow
+
 
 	// these elements rely on being able to breathe
 	if (src.master.get_health_holder("oxy"))
@@ -85,7 +96,6 @@
 	src.create_rest_element()
 	src.create_resist_element()
 	src.create_equipment_element()
-
 
 /// clears owner mob
 /datum/hud/critter/clear_master()
@@ -287,29 +297,33 @@
 					src.master.force_laydown_standup()
 				src.update_resting()
 
-/// updates health hud element
+/// Updates health hud element
 /datum/hud/critter/proc/update_health()
-	if (!isdead(src.master))
-		if (!src.health) //Runtime fix: Cannot modify null.icon_state
-			return
-		var/h_ratio = (src.master.health / src.master.max_health) * 100
-		switch(h_ratio)
-			if(90 to INFINITY)
-				src.health.icon_state = "health0" // green with green marker
-			if(75 to 90)
-				src.health.icon_state = "health1" // green
-			if(60 to 75)
-				src.health.icon_state = "health2" // yellow
-			if(45 to 60)
-				src.health.icon_state = "health3" // orange
-			if(20 to 45)
-				src.health.icon_state = "health4" // dark orange
-			if(10 to 20)
-				src.health.icon_state = "health5" // red
-			else
-				src.health.icon_state = "health6" // crit
-	else
-		src.health.icon_state = "health7"         // dead
+	var/datum/hud_element/health_elem = src.get_hudzone("health_zone").get_element("health")
+	var/atom/movable/screen/hud/screen_obj = health_elem.screen_obj
+	if (isnull(screen_obj))
+		return
+	if (isdead(src.master))
+		screen_obj.icon_state = "health7"		// dead
+		return
+
+	var/h_ratio = (src.master.health / src.master.max_health) * 100
+	switch(h_ratio)
+		if(90 to INFINITY)
+			screen_obj.icon_state = "health0"	// green with green marker
+		if(75 to 90)
+			screen_obj.icon_state = "health1"	// green
+		if(60 to 75)
+			screen_obj.icon_state = "health2"	// yellow
+		if(45 to 60)
+			screen_obj.icon_state = "health3"	// orange
+		if(20 to 45)
+			screen_obj.icon_state = "health4"	// dark orange
+		if(10 to 20)
+			screen_obj.icon_state = "health5"	// red
+		else
+			screen_obj.icon_state = "health6"	// crit
+
 
 /// updates intent hud element
 /datum/hud/critter/proc/update_intent()
@@ -490,23 +504,22 @@
 	src.right_offset = initial_hand_offset + length(src.master.hands)
 
 /datum/hud/critter/proc/create_health_element()
-	src.health = src.create_screen("health", "health", src.hud_icon, "health0",\
-	"EAST[src.next_topright()],NORTH", HUD_LAYER)
+	return new /datum/hud_element(src.create_screen("health", "health", src.hud_icon, "health0"))
 
 /datum/hud/critter/proc/create_stamina_element()
-	if (src.master.use_stamina)
-		var/stamloc = "EAST[src.next_topright()], NORTH"
-		src.stamina = src.create_screen("stamina","Stamina", src.hud_icon, "stamina",\
-		stamloc, HUD_LAYER, tooltipTheme = "stamina")
-		src.stamina_back = src.create_screen("stamina_back","Stamina", src.hud_icon, "stamina_back",\
-		stamloc, HUD_LAYER_UNDER_1)
-		if (src.master.stamina_bar)
-			src.stamina.desc = src.master.stamina_bar.getDesc(src.master)
+	var/atom/movable/screen/hud/stam_back = src.create_screen("stamina_back", "Stamina", src.hud_icon, "stamina_back", layer = HUD_LAYER_UNDER_1)
+	var/atom/movable/screen/hud/stam_front = src.create_screen("stamina", "Stamina", src.hud_icon, "stamina", layer = HUD_LAYER, tooltipTheme = "stamina")
+	stam_front.underlays += stam_back
+	if (src.master.stamina_bar)
+		stam_front.desc = src.master.stamina_bar.getDesc(src.master)
+	return new /datum/hud_element(
+		stam_front
+	)
 
 /datum/hud/critter/proc/create_temperature_element()
-	src.bodytemp = src.create_screen("bodytemp","Temperature", src.hud_icon, "temp0",\
-	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "tempInd tempInd0")
-	src.bodytemp.desc = "The temperature feels fine."
+	return new /datum/hud_element(
+		src.create_screen("bodytemp", "Temperature", src.hud_icon, "temp0", tooltipTheme = "tempInd tempInd0", desc = "The temperature feels fine.")
+	)
 
 /datum/hud/critter/proc/create_oxygen_element()
 	src.oxygen = src.create_screen("oxygen", "Suffocation Warning", src.hud_icon, "oxy0",\

@@ -518,7 +518,7 @@ TYPEINFO(/atom/movable)
 	var/mechanics_type_override = null
 
 //some more of these event handler flag things are handled in set_loc far below . . .
-/atom/movable/New()
+/atom/movable/New(loc)
 	..()
 	var/typeinfo/obj/typeinfo = src.get_typeinfo()
 	if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
