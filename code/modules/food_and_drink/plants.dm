@@ -183,11 +183,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	crop_prefix = "seething "
 	desc = "You say tomato, I toolbox you."
 
-	HYPsetup_DNA(datum/plantgenes/passed_genes, obj/machinery/plantpot/harvested_plantpot, datum/plant/origin_plant, quality_status)
-		. = ..()
-		var/datum/reagent/combustible/fuel/F = src.reagents.get_reagent("fuel")
-		F?.explosion_threshold = INFINITY
-
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		var/mob/living/carbon/human/H = A
