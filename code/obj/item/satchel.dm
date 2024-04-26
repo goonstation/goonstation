@@ -179,7 +179,6 @@
 		name = "produce satchel"
 		desc = "A leather satchel for carrying around crops and seeds."
 		icon_state = "hydrosatchel"
-		maxitems = 30
 		itemstring = "items of produce"
 
 		New()
