@@ -448,314 +448,314 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	var/list/datum/contextAction/contexts = list()
 	var/datum/contextLayout/configContextLayout = new /datum/contextLayout/experimentalcircle
 
-	New()
-		. = ..()
-		src.net_id = generate_net_id(src)
+/mob/living/critter/robotic/securitron/New()
+	. = ..()
+	src.net_id = generate_net_id(src)
 
-		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/viruses)
-		remove_lifeprocess(/datum/lifeprocess/blood)
-		remove_lifeprocess(/datum/lifeprocess/radiation)
+	remove_lifeprocess(/datum/lifeprocess/blindness)
+	remove_lifeprocess(/datum/lifeprocess/viruses)
+	remove_lifeprocess(/datum/lifeprocess/blood)
+	remove_lifeprocess(/datum/lifeprocess/radiation)
 
-		new /obj/item/implant/access/infinite/captain(src)
+	new /obj/item/implant/access/infinite/captain(src)
 
-		src.abilityHolder.addAbility(/datum/targetable/critter/bot/handcuff)
+	src.abilityHolder.addAbility(/datum/targetable/critter/bot/handcuff)
 
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity")
+	APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity")
 
-		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(src)
+	get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(src)
+
+	add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
+
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
+	MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+
+	for(var/actionType in childrentypesof(/datum/contextAction/securitron)) //see context_actions.dm
+		src.contexts += new actionType()
+
+	#ifdef I_AM_ABOVE_THE_LAW
+	START_TRACKING_CAT(TR_CAT_DELETE_ME)
+	#endif
+
+/mob/living/critter/robotic/securitron/disposing()
+	#ifdef I_AM_ABOVE_THE_LAW
+	STOP_TRACKING_CAT(TR_CAT_DELETE_ME)
+	#endif
+	..()
+
+/mob/living/critter/robotic/securitron/setup_hands()
+	..()
+	var/datum/handHolder/HH = hands[1]
+	HH.limb = new /datum/limb/small_critter/med
+	HH.icon = 'icons/mob/critter_ui.dmi'
+	HH.icon_state = "handn"
+	HH.name = "long arm"
+	HH.limb_name = "long arm"
+	HH.can_hold_items = 1
+	HH.can_attack = 1
+	HH.can_range_attack = 1
+
+/mob/living/critter/robotic/securitron/setup_healths()
+	add_hh_robot(src.health_brute, src.health_brute_vuln)
+	add_hh_robot_burn(src.health_burn, src.health_burn_vuln)
+
+/mob/living/critter/robotic/securitron/get_melee_protection(zone, damage_type)
+	return 3
+
+/mob/living/critter/robotic/securitron/get_ranged_protection()
+	return 2
+
+/mob/living/critter/robotic/securitron/death(var/gibbed)
+	..(gibbed, 0)
+	if (!gibbed)
+		gib(src)
+	else
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
+		make_cleanable(/obj/decal/cleanable/oil,src.loc)
+
+/mob/living/critter/robotic/securitron/attack_ai(mob/user as mob)
+	if (src.power && src.emagged)
+		boutput(user, "<span class='alert'>[src] refuses your authority!</span>")
+		return
+	user.showContextActions(src.contexts, src, src.configContextLayout)
+
+/mob/living/critter/robotic/securitron/pull(mob/user)
+	if (src.power)
+		boutput(user,SPAN_ALERT("<b>[src] resists being pulled around! Maybe deactivate it first.</b>"))
+		return 1
+	..()
+
+/mob/living/critter/robotic/securitron/specific_emotes(var/act, var/param = null, var/voluntary = 0)
+	if (act == "scream")
+		src.siren()
+		return null
+	if (ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
+		return null
+	switch (act)
+		if ("laugh")
+			src.say("YOU CAN'T OUTRUN A RADIO.")
+			playsound(src, "sound/voice/bradio.ogg", 50, FALSE, 0, 1)
+		if ("fart")
+			src.say("YOUR MOVE, CREEP.")
+			playsound(src, "sound/voice/bcreep.ogg", 50, FALSE, 0, 1)
+		if ("salute")
+			src.say("HAVE A SECURE DAY.")
+			playsound(src, "sound/voice/bsecureday.ogg", 50, FALSE, 0, 1)
+		if ("snap")
+			src.say("GOD MADE TOMORROW FOR THE CROOKS WE DON'T CATCH TODAY.")
+			playsound(src, "sound/voice/bgod.ogg", 50, FALSE, 0, 1)
+		if ("flex")
+			src.say("I AM THE LAW.")
+			playsound(src, "sound/voice/biamthelaw.ogg", 50, FALSE, 0, 1)
+	return
+
+/mob/living/critter/robotic/securitron/proc/accuse_perp(atom/target, threat = 4)
+	src.point_at(target)
+	src.say("LEVEL [threat] INFRACTION ALERT.")
+	switch(rand(1,3))
+		if(1)
+			src.say("CRIMINAL DETECTED.")
+			playsound(src, 'sound/voice/bcriminal.ogg', 50, FALSE, 0, 1)
+		if(2)
+			src.say("PREPARE FOR JUSTICE.")
+			playsound(src, 'sound/voice/bjustice.ogg', 50, FALSE, 0, 1)
+		if(3)
+			src.say("FREEZE. SCUMBAG.")
+			playsound(src, 'sound/voice/bfreeze.ogg', 50, FALSE, 0, 1)
+
+/mob/living/critter/robotic/securitron/proc/siren()
+	if(siren_active)
+		return
+	SPAWN(0)
+		siren_active = TRUE
+		var/weeoo = 10
+		playsound(src, 'sound/machines/siren_police.ogg', 50, TRUE)
+		while (weeoo)
+			add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
+			sleep(0.2 SECONDS)
+			add_simple_light("secbot", list(255 * 0.1, 255 * 0.1, 255 * 0.9, 0.8 * 255))
+			sleep(0.2 SECONDS)
+			weeoo--
 
 		add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
+		siren_active = FALSE
 
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
-
-		for(var/actionType in childrentypesof(/datum/contextAction/securitron)) //see context_actions.dm
-			src.contexts += new actionType()
-
-		#ifdef I_AM_ABOVE_THE_LAW
-		START_TRACKING_CAT(TR_CAT_DELETE_ME)
-		#endif
-
-	disposing()
-		#ifdef I_AM_ABOVE_THE_LAW
-		STOP_TRACKING_CAT(TR_CAT_DELETE_ME)
-		#endif
-		..()
-
-	setup_hands()
-		..()
-		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/small_critter/med
-		HH.icon = 'icons/mob/critter_ui.dmi'
-		HH.icon_state = "handn"
-		HH.name = "long arm"
-		HH.limb_name = "long arm"
-		HH.can_hold_items = 1
-		HH.can_attack = 1
-		HH.can_range_attack = 1
-
-	setup_healths()
-		add_hh_robot(src.health_brute, src.health_brute_vuln)
-		add_hh_robot_burn(src.health_burn, src.health_burn_vuln)
-
-	get_melee_protection(zone, damage_type)
-		return 3
-
-	get_ranged_protection()
-		return 2
-
-	death(var/gibbed)
-		..(gibbed, 0)
-		if (!gibbed)
-			gib(src)
-		else
-			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
-			make_cleanable(/obj/decal/cleanable/oil,src.loc)
-
-	attack_ai(mob/user as mob)
-		if (src.power && src.emagged)
-			boutput(user, "<span class='alert'>[src] refuses your authority!</span>")
-			return
+/mob/living/critter/robotic/securitron/attack_hand(mob/user, params)
+	if (user.a_intent == INTENT_HELP && src.allowed(user))
 		user.showContextActions(src.contexts, src, src.configContextLayout)
-
-	pull(mob/user)
-		if (src.power)
-			boutput(user,SPAN_ALERT("<b>[src] resists being pulled around! Maybe deactivate it first.</b>"))
-			return 1
+	else
 		..()
 
-	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		if (act == "scream")
-			src.siren()
-			return null
-		if (ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
-			return null
-		switch (act)
-			if ("laugh")
-				src.say("YOU CAN'T OUTRUN A RADIO.")
-				playsound(src, "sound/voice/bradio.ogg", 50, FALSE, 0, 1)
-			if ("fart")
-				src.say("YOUR MOVE, CREEP.")
-				playsound(src, "sound/voice/bcreep.ogg", 50, FALSE, 0, 1)
-			if ("salute")
-				src.say("HAVE A SECURE DAY.")
-				playsound(src, "sound/voice/bsecureday.ogg", 50, FALSE, 0, 1)
-			if ("snap")
-				src.say("GOD MADE TOMORROW FOR THE CROOKS WE DON'T CATCH TODAY.")
-				playsound(src, "sound/voice/bgod.ogg", 50, FALSE, 0, 1)
-			if ("flex")
-				src.say("I AM THE LAW.")
-				playsound(src, "sound/voice/biamthelaw.ogg", 50, FALSE, 0, 1)
+/mob/living/critter/robotic/securitron/proc/set_power(var/on_off)
+	if(src.power == on_off)
+		return
+	src.power = on_off
+	if (src.power)
+		src.say("TEN-FORTY ONE. [uppertext(src.name)]: ONLINE.")
+		add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
+		ai.enable()
+		if (src.pulled_by)
+			src.pulled_by.remove_pulling()
+	else
+		src.say("TEN-FORTY TWO. [uppertext(src.name)]: OFFLINE.")
+		remove_simple_light("secbot")
+		ai.disable()
+
+/mob/living/critter/robotic/securitron/proc/configure(var/setting, var/mob/M)
+	switch(setting)
+		if ("power")
+			src.set_power(!src.power)
+			return src.power
+		if ("check_contraband")
+			src.check_contraband = !src.check_contraband
+			src.say("TEN-FOUR. CONTRABAND CHECKS: [src.check_contraband ? "ENGAGED" : "DISENGAGED"].")
+			return src.check_contraband
+		if ("check_records")
+			src.check_records = !src.check_records
+			src.say("TEN-FOUR. SECURITY RECORDS: [src.check_records ? "REFERENCED" : "IGNORED"].")
+			return src.check_records
+		if ("arrest_type")
+			src.is_detaining = !src.is_detaining
+			src.say("TEN-FOUR. ENGAGEMENT MODE: [src.is_detaining ? "DETAIN" : "RESTRAIN"].")
+			return src.is_detaining
+		if ("report_arrests")
+			src.report_arrests = !src.report_arrests
+			src.say("TEN-FOUR. [src.report_arrests ? "REPORTING ARRESTS ON: [FREQ_PDA]" : "LONE RANGER PROTOCOL ENGAGED."]")
+			return src.report_arrests
+
+/mob/living/critter/robotic/securitron/proc/receive_signal(datum/signal/signal)
+	if(!src.power)
 		return
 
-	proc/accuse_perp(atom/target, threat = 4)
-		src.point_at(target)
-		src.say("LEVEL [threat] INFRACTION ALERT.")
-		switch(rand(1,3))
-			if(1)
-				src.say("CRIMINAL DETECTED.")
-				playsound(src, 'sound/voice/bcriminal.ogg', 50, FALSE, 0, 1)
-			if(2)
-				src.say("PREPARE FOR JUSTICE.")
-				playsound(src, 'sound/voice/bjustice.ogg', 50, FALSE, 0, 1)
-			if(3)
-				src.say("FREEZE. SCUMBAG.")
-				playsound(src, 'sound/voice/bfreeze.ogg', 50, FALSE, 0, 1)
+	var/signal_command = signal.data["command"]
+	// process all-bot input
+	if(signal_command=="bot_status")
+		src.send_status()
 
-	proc/siren()
-		if(siren_active)
-			return
-		SPAWN(0)
-			siren_active = TRUE
-			var/weeoo = 10
-			playsound(src, 'sound/machines/siren_police.ogg', 50, TRUE)
-			while (weeoo)
-				add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
-				sleep(0.2 SECONDS)
-				add_simple_light("secbot", list(255 * 0.1, 255 * 0.1, 255 * 0.9, 0.8 * 255))
-				sleep(0.2 SECONDS)
-				weeoo--
+/mob/living/critter/robotic/securitron/proc/send_status()
+	var/datum/signal/signal = get_free_signal()
+	signal.source = src
+	signal.data["sender"] = src.net_id
+	signal.data["type"] = "secbot"
+	signal.data["name"] = name
+	signal.data["loca"] = get_area(src)
+	signal.data["mode"] = 1
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, control_freq)
 
-			add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
-			siren_active = FALSE
-
-	attack_hand(mob/user, params)
-		if (user.a_intent == INTENT_HELP && src.allowed(user))
-			user.showContextActions(src.contexts, src, src.configContextLayout)
-		else
-			..()
-
-	proc/set_power(var/on_off)
-		if(src.power == on_off)
-			return
-		src.power = on_off
-		if (src.power)
-			src.say("TEN-FORTY ONE. [uppertext(src.name)]: ONLINE.")
-			add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
-			ai.enable()
-			if (src.pulled_by)
-				src.pulled_by.remove_pulling()
-		else
-			src.say("TEN-FORTY TWO. [uppertext(src.name)]: OFFLINE.")
-			remove_simple_light("secbot")
-			ai.disable()
-
-	proc/configure(var/setting, var/mob/M)
-		switch(setting)
-			if ("power")
-				src.set_power(!src.power)
-				return src.power
-			if ("check_contraband")
-				src.check_contraband = !src.check_contraband
-				src.say("TEN-FOUR. CONTRABAND CHECKS: [src.check_contraband ? "ENGAGED" : "DISENGAGED"].")
-				return src.check_contraband
-			if ("check_records")
-				src.check_records = !src.check_records
-				src.say("TEN-FOUR. SECURITY RECORDS: [src.check_records ? "REFERENCED" : "IGNORED"].")
-				return src.check_records
-			if ("arrest_type")
-				src.is_detaining = !src.is_detaining
-				src.say("TEN-FOUR. ENGAGEMENT MODE: [src.is_detaining ? "DETAIN" : "RESTRAIN"].")
-				return src.is_detaining
-			if ("report_arrests")
-				src.report_arrests = !src.report_arrests
-				src.say("TEN-FOUR. [src.report_arrests ? "REPORTING ARRESTS ON: [FREQ_PDA]" : "LONE RANGER PROTOCOL ENGAGED."]")
-				return src.report_arrests
-
-	proc/receive_signal(datum/signal/signal)
-		if(!src.power)
-			return
-
-		var/signal_command = signal.data["command"]
-		// process all-bot input
-		if(signal_command=="bot_status")
-			src.send_status()
-
-	proc/send_status()
-		var/datum/signal/signal = get_free_signal()
-		signal.source = src
-		signal.data["sender"] = src.net_id
-		signal.data["type"] = "secbot"
-		signal.data["name"] = name
-		signal.data["loca"] = get_area(src)
-		signal.data["mode"] = 1
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, control_freq)
-
-	valid_target(var/mob/living/C)
-		if (C.hasStatus("handcuffed"))
-			return FALSE // already handled
-		var/threat_level = assess_perp(C)
-		if (threat_level < 4)
-			return FALSE // not a threat
-		if (GET_COOLDOWN(C,"ARRESTED_BY_SECURITRON_\ref[src]"))
-			return FALSE // we JUST arrested this jerk
-		. = ..()
-		if(. && !ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
-			src.accuse_perp(C, threat_level)
-			src.siren()
+/mob/living/critter/robotic/securitron/valid_target(var/mob/living/C)
+	if (C.hasStatus("handcuffed"))
+		return FALSE // already handled
+	var/threat_level = assess_perp(C)
+	if (threat_level < 4)
+		return FALSE // not a threat
+	if (GET_COOLDOWN(C,"ARRESTED_BY_SECURITRON_\ref[src]"))
+		return FALSE // we JUST arrested this jerk
+	. = ..()
+	if(. && !ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
+		src.accuse_perp(C, threat_level)
+		src.siren()
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
-	proc/assess_perp(mob/living/perp)
-		var/threatcount = 0
+/mob/living/critter/robotic/securitron/proc/assess_perp(mob/living/perp)
+	var/threatcount = 0
 
-		if(src.emagged >= 2)
-			return rand(7,15) //Everything that moves is a crimer!
+	if(src.emagged >= 2)
+		return rand(7,15) //Everything that moves is a crimer!
 
-		if((src.check_contraband)) // bot is set to actively search for contraband
-			var/obj/item/card/id/perp_id = perp.equipped()
-			if (!istype(perp_id))
-				perp_id = perp.get_id()
+	if((src.check_contraband)) // bot is set to actively search for contraband
+		var/obj/item/card/id/perp_id = perp.equipped()
+		if (!istype(perp_id))
+			perp_id = perp.get_id()
 
-			//Agent cards lower threat level
-			if(istype(perp_id, /obj/item/card/id/syndicate))
-				threatcount -= 2
+		//Agent cards lower threat level
+		if(istype(perp_id, /obj/item/card/id/syndicate))
+			threatcount -= 2
 
-			if(!perp_id || !(contraband_access in perp_id.access))
-				threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_CONTRABAND)
-			if(!perp_id || !(weapon_access in perp_id.access))
-				threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_GUNS)
+		if(!perp_id || !(contraband_access in perp_id.access))
+			threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_CONTRABAND)
+		if(!perp_id || !(weapon_access in perp_id.access))
+			threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_GUNS)
 
-		var/perpname = perp.name
-		if(ishuman(perp))
-			if(src.emagged)
-				return rand(7,15) //Everyone's a crimer!
-			var/mob/living/carbon/human/H_perp = perp
-			if(istype(H_perp.mutantrace, /datum/mutantrace/abomination))
+	var/perpname = perp.name
+	if(ishuman(perp))
+		if(src.emagged)
+			return rand(7,15) //Everyone's a crimer!
+		var/mob/living/carbon/human/H_perp = perp
+		if(istype(H_perp.mutantrace, /datum/mutantrace/abomination))
+			threatcount += 5
+
+		perpname = H_perp.face_visible() ? H_perp.real_name : perpname
+		if(perp.traitHolder.hasTrait("stowaway") && perp.traitHolder.hasTrait("jailbird"))
+			if(isnull(data_core.security.find_record("name", perpname)))
 				threatcount += 5
 
-			perpname = H_perp.face_visible() ? H_perp.real_name : perpname
-			if(perp.traitHolder.hasTrait("stowaway") && perp.traitHolder.hasTrait("jailbird"))
-				if(isnull(data_core.security.find_record("name", perpname)))
-					threatcount += 5
-
-		// we have grounds to make an arrest, don't bother with further analysis
-		if(threatcount >= 4)
-			return threatcount
-
-		// note - this does allow flagging 'fire elemental' and such for arrest. probably fine
-		if (src.check_records) // bot is set to actively compare security records
-			for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
-				if(R["criminal"] == "*Arrest*")
-					threatcount = 7
-					break
-
+	// we have grounds to make an arrest, don't bother with further analysis
+	if(threatcount >= 4)
 		return threatcount
 
-	proc/allowed(mob/M)
-		//check if it doesn't require any access at all
-		if(src.check_access(null))
+	// note - this does allow flagging 'fire elemental' and such for arrest. probably fine
+	if (src.check_records) // bot is set to actively compare security records
+		for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
+			if(R["criminal"] == "*Arrest*")
+				threatcount = 7
+				break
+
+	return threatcount
+
+/mob/living/critter/robotic/securitron/proc/allowed(mob/M)
+	//check if it doesn't require any access at all
+	if(src.check_access(null))
+		return 1
+	if(src.check_access(M.equipped()))
+		return 1
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		//if they are holding or wearing a card that has access, that works
+		if(src.check_access(H.wear_id))
 			return 1
-		if(src.check_access(M.equipped()))
-			return 1
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			//if they are holding or wearing a card that has access, that works
-			if(src.check_access(H.wear_id))
-				return 1
+	return 0
+
+/mob/living/critter/robotic/securitron/proc/check_access(obj/item/I)
+	if(!istype(src.req_access, /list)) //something's very wrong
+		return 1
+
+	var/obj/item/card/id/id_card = get_id_card(I)
+	var/list/L = src.req_access
+	if(!L.len) //no requirements
+		return 1
+	if(!istype(id_card, /obj/item/card/id) || !id_card:access) //not ID or no access
+		return 0
+	for(var/req in src.req_access)
+		if(!(req in id_card:access)) //doesn't have this access
+			return 0
+	return 1
+
+/mob/living/critter/robotic/securitron/should_critter_retaliate(mob/attcker, obj/attcked_with)
+	. = ..()
+	if(src.get_health_percentage() >= 0.6 && src.allowed(attcker)) // if health is more than 60%, assume it was friendly fire
+		. = FALSE
+	if(. && !ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
+		src.accuse_perp(attcker, 7)
+		src.siren()
+
+/mob/living/critter/robotic/securitron/emag_act(var/mob/user, var/obj/item/card/emag/E)
+	if(ON_COOLDOWN(src,"EMAG_COOLDOWN",12 SECONDS)) // no rapid double emags
+		if (user)
+			boutput(user, SPAN_ALERT("\The [src] can't be shorted out again this soon!"))
 		return 0
 
-	proc/check_access(obj/item/I)
-		if(!istype(src.req_access, /list)) //something's very wrong
-			return 1
+	if (user)
+		boutput(user, SPAN_ALERT("You short out [src]'s target assessment circuits."))
+		OVERRIDE_COOLDOWN(user,"ARRESTED_BY_SECURITRON_\ref[src]",3 SECONDS) // just enough time to book it
+	src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 
-		var/obj/item/card/id/id_card = get_id_card(I)
-		var/list/L = src.req_access
-		if(!L.len) //no requirements
-			return 1
-		if(!istype(id_card, /obj/item/card/id) || !id_card:access) //not ID or no access
-			return 0
-		for(var/req in src.req_access)
-			if(!(req in id_card:access)) //doesn't have this access
-				return 0
-		return 1
+	src.emagged++
+	src.set_power(TRUE)
 
-	should_critter_retaliate(mob/attcker, obj/attcked_with)
-		. = ..()
-		if(src.get_health_percentage() >= 0.6 && src.allowed(attcker)) // if health is more than 60%, assume it was friendly fire
-			. = FALSE
-		if(. && !ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
-			src.accuse_perp(attcker, 7)
-			src.siren()
+	logTheThing(LOG_STATION, user, "emagged securitron ([src]) at [log_loc(src)].")
+	return 1
 
-
-	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if(ON_COOLDOWN(src,"EMAG_COOLDOWN",12 SECONDS)) // no rapid double emags
-			if (user)
-				boutput(user, SPAN_ALERT("\The [src] can't be shorted out again this soon!"))
-			return 0
-
-		if (user)
-			boutput(user, SPAN_ALERT("You short out [src]'s target assessment circuits."))
-			OVERRIDE_COOLDOWN(user,"ARRESTED_BY_SECURITRON_\ref[src]",3 SECONDS) // just enough time to book it
-		src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
-
-		src.emagged++
-		src.set_power(TRUE)
-
-		logTheThing(LOG_STATION, user, "emagged securitron ([src]) at [log_loc(src)].")
-		return 1
 
 /datum/targetable/critter/bot/handcuff
 	name = "Detain"
@@ -804,47 +804,47 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	var/mob/living/carbon/human/target
 	var/arrest_cooldown = 10 SECONDS
 
-	New(var/mob/living/M, var/mob/living/carbon/human/H)
-		src.master = M
-		src.target = H
-		..()
+/datum/action/bar/icon/mob_secbot_cuff/New(var/mob/living/M, var/mob/living/carbon/human/H)
+	src.master = M
+	src.target = H
+	..()
 
-	onStart()
-		..()
-		playsound(master, 'sound/weapons/handcuffs.ogg', 30, TRUE, -2)
-		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [target]!</B></span>")
+/datum/action/bar/icon/mob_secbot_cuff/onStart()
+	..()
+	playsound(master, 'sound/weapons/handcuffs.ogg', 30, TRUE, -2)
+	master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [target]!</B></span>")
 
-	onEnd()
-		..()
-		if(ishuman(target))
-			OVERRIDE_COOLDOWN(target,"ARRESTED_BY_SECURITRON_\ref[master]",src.arrest_cooldown)
-			target.handcuffs = new /obj/item/handcuffs/guardbot(target)
-			target.setStatus("handcuffed", duration = INFINITE_STATUS)
-			logTheThing(LOG_COMBAT, master, "handcuffs [constructTarget(target,"combat")] at [log_loc(master)].")
+/datum/action/bar/icon/mob_secbot_cuff/onEnd()
+	..()
+	if(ishuman(target))
+		OVERRIDE_COOLDOWN(target,"ARRESTED_BY_SECURITRON_\ref[master]",src.arrest_cooldown)
+		target.handcuffs = new /obj/item/handcuffs/guardbot(target)
+		target.setStatus("handcuffed", duration = INFINITE_STATUS)
+		logTheThing(LOG_COMBAT, master, "handcuffs [constructTarget(target,"combat")] at [log_loc(master)].")
 
-			var/area/user_location = get_area(master)
-			var/turf/target_loc = get_turf(target)
-			if(!target_loc)
-				target_loc = get_turf(master)
+		var/area/user_location = get_area(master)
+		var/turf/target_loc = get_turf(target)
+		if(!target_loc)
+			target_loc = get_turf(master)
 
-				//////PDA NOTIFY/////
+			//////PDA NOTIFY/////
 
-			var/message2send ="Notification: [target] detained by [master] in [user_location] at coordinates [target_loc.x], [target_loc.y]."
+		var/message2send ="Notification: [target] detained by [master] in [user_location] at coordinates [target_loc.x], [target_loc.y]."
 
-			var/datum/signal/signal = get_free_signal()
-			signal.source = src
-			signal.data["sender"] = "00000000"
-			signal.data["command"] = "text_message"
-			signal.data["sender_name"] = "SECURITY-MAILBOT"
-			signal.data["group"] = list(MGD_SECURITY, MGA_ARREST)
-			signal.data["address_1"] = "00000000"
-			signal.data["message"] = message2send
-			SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "pda")
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src
+		signal.data["sender"] = "00000000"
+		signal.data["command"] = "text_message"
+		signal.data["sender_name"] = "SECURITY-MAILBOT"
+		signal.data["group"] = list(MGD_SECURITY, MGA_ARREST)
+		signal.data["address_1"] = "00000000"
+		signal.data["message"] = message2send
+		SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "pda")
 
-	canRunCheck(in_start)
-		. = ..()
-		if ((BOUNDS_DIST(master, target) > 0) || master == null || target == null || target.hasStatus("handcuffed"))
-			interrupt(INTERRUPT_ALWAYS)
+/datum/action/bar/icon/mob_secbot_cuff/canRunCheck(in_start)
+	. = ..()
+	if ((BOUNDS_DIST(master, target) > 0) || master == null || target == null || target.hasStatus("handcuffed"))
+		interrupt(INTERRUPT_ALWAYS)
 
 
 /mob/living/critter/robotic/securitron/bowling
@@ -852,31 +852,31 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	real_name = "bowlatron"
 	throw_speed = 0.75
 
-	New()
-		. = ..()
+/mob/living/critter/robotic/securitron/bowling/New()
+	. = ..()
 
-		RegisterSignal(src, COMSIG_MOVABLE_HIT_THROWN, PROC_REF(electric_bowling_strike))
+	RegisterSignal(src, COMSIG_MOVABLE_HIT_THROWN, PROC_REF(electric_bowling_strike))
 
-	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+/mob/living/critter/robotic/securitron/bowling/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
-		throw_unlimited = TRUE
-		..()
+	throw_unlimited = TRUE
+	..()
 
-	proc/electric_bowling_strike(mob/thrown_mob, atom/target, datum/thrown_thing/thrown_thing)
-		if	(isturf(target) && !target.density)
-			return
-		thrown_mob.visible_message("<span class='alert'>[thrown_mob] unleashes a flash of electricity on impact!</span>")
-		elecflash(src.loc, 1, 2, 1)
-		if (ismob(target))
-			var/mob/M = target
-			M.do_disorient(150, weakened = 120, disorient = 60)
+/mob/living/critter/robotic/securitron/bowling/proc/electric_bowling_strike(mob/thrown_mob, atom/target, datum/thrown_thing/thrown_thing)
+	if	(isturf(target) && !target.density)
+		return
+	thrown_mob.visible_message("<span class='alert'>[thrown_mob] unleashes a flash of electricity on impact!</span>")
+	elecflash(src.loc, 1, 2, 1)
+	if (ismob(target))
+		var/mob/M = target
+		M.do_disorient(150, weakened = 120, disorient = 60)
 
 /mob/living/critter/robotic/securitron/weed_seeking
 	name = "weedhound"
 	real_name = "weedhound"
 	ai_type = /datum/aiHolder/patroller
 
-	assess_perp(mob/living/perp)
-		if(perp.reagents && perp.reagents.has_reagent("THC"))
-			return 420
-		. = ..()
+/mob/living/critter/robotic/securitron/weed_seeking/assess_perp(mob/living/perp)
+	if(perp.reagents && perp.reagents.has_reagent("THC"))
+		return 420
+	. = ..()
