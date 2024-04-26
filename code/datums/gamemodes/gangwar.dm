@@ -176,8 +176,29 @@
 
 	..()
 
+/datum/game_mode/gang/proc/is_deceased(var/datum/mind/M)
+	if (!M?.current)
+		return TRUE
+	if(isdead(M.current))
+		return TRUE
+	if(inafterlife(M.current))
+		return TRUE
+	if(isVRghost(M.current))
+		return TRUE
+	if(!iscarbon(M.current))
+		return TRUE
+	return FALSE
+
 /datum/game_mode/gang/proc/check_winner()
 	var/datum/gang/victorius_gang = null
+
+	// Round is over. Grant points for living players.
+	for (var/datum/gang/gang in src.gangs)
+		if (is_deceased(gang.leader))
+			boutput(world, "leader alive for [gang.gang_name]")
+		for (var/datum/mind/member in gang.members)
+			if (!is_deceased(member))
+				boutput(world, "member [member.current] alive for [gang.gang_name]")
 
 	// Find the highest scoring gang.
 	for (var/datum/gang/gang in src.gangs)
@@ -2351,6 +2372,7 @@ proc/broadcast_to_all_gangs(var/message)
 	density = FALSE
 	anchored = TRUE
 	layer = TAG_LAYER
+	exploded = FALSE
 	icon = 'icons/obj/decals/graffiti.dmi'
 	icon_state = "gangtag0"
 	var/datum/gang/owners = null
@@ -2385,6 +2407,12 @@ proc/broadcast_to_all_gangs(var/message)
 		heat = round(heat * GANG_TAG_HEAT_DECAY_MUL, 0.01) //slowly decay heat
 		mobs = list()
 		return heat
+
+	ex_act()
+		if (!exploded)
+			exploded = TRUE
+			desc = desc + " So heavy, in fact, that this tag can't be exploded. Huh."
+		return //no!
 
 	proc/apply_score(var/largestHeat)
 		var/mappedHeat // the 'heat' value mapped to the scale of 0-5
