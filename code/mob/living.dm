@@ -2314,13 +2314,14 @@
 		boutput(helper, SPAN_NOTICE("[src]'s bleeding has already stopped!"))
 		return
 
-	if (prob(80))
-		helper.tri_message(src, SPAN_NOTICE("<b>[helper]</b> fails to help [src == helper ? "[his_or_her(src)]" : "[src]'s"] bleeding!"),\
-				SPAN_NOTICE("You fail to help [src == helper ? "your" : "[src]'s"] bleeding!"),\
+	var/old_bleed = src.bleeding
+	repair_bleeding_damage(src, 20, rand(1, 2))
+
+	if (src.bleeding - old_bleed >= 0)
+		helper.tri_message(src, SPAN_NOTICE("<b>[helper]</b> fails to stop [src == helper ? "[his_or_her(src)]" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("You fail to stop [src == helper ? "your" : "[src]'s"] bleeding!"),\
 				SPAN_NOTICE("[helper == src ? "You fail" : "<b>[helper]</b> fails"] to stop your bleeding!"))
 		return
-
-	repair_bleeding_damage(src, 100, rand(1, 2))
 
 	switch (src.bleeding)
 		if (-INFINITY to 0)
