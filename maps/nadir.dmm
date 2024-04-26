@@ -270,22 +270,6 @@
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
-"agr" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/machinery/chem_dispenser/chef{
-	desc = "It's covered in a thin layer of slightly greasy dust. The contents were probably expired before they even got here.";
-	dispensable_reagents = list("ketchup","mustard","salt","pepper","gravy","chocolate","mint","chocolate_milk","strawberry_milk");
-	name = "HAPPY CHEF Dispense-o-Matic"
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/grey/blackgrime,
-/area/station/crew_quarters/catering)
 "agu" = (
 /obj/cable{
 	icon_state = "5-8"
@@ -7023,40 +7007,6 @@
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
 	})
-"dhn" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_y = 11
-	},
-/obj/item/scalpel{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/hemostat{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/staple_gun{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/suture{
-	pixel_y = 5
-	},
-/obj/item/surgical_spoon,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/robotics)
 "dhu" = (
 /obj/reagent_dispensers/foamtank,
 /obj/machinery/light{
@@ -11542,6 +11492,21 @@
 /obj/rack/organized/techstorage_eng/transception,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
+"fhD" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "0-5"
+	},
+/obj/laser_sink/mirror,
+/turf/simulated/floor/yellowblack{
+	dir = 9
+	},
+/area/station/engine/ptl)
 "fid" = (
 /obj/table/reinforced/auto,
 /obj/machinery/defib_mount,
@@ -13839,6 +13804,13 @@
 	dir = 1
 	},
 /area/station/security/interrogation)
+"geQ" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east/hardened,
+/turf/simulated/floor/engine,
+/area/listeningpost/power)
 "gfh" = (
 /turf/simulated/floor/engine/caution/south,
 /area/listeningpost)
@@ -14047,6 +14019,15 @@
 /obj/item/device/analyzer/healthanalyzer,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"gjM" = (
+/obj/disposalpipe/switch_junction/left/north{
+	mail_tag = "research";
+	name = "research mail junction"
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/hallway/secondary/west)
 "gkj" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -15383,13 +15364,6 @@
 "gIl" = (
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
-"gIn" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_east/hardened,
-/turf/simulated/floor/engine,
-/area/listeningpost/power)
 "gIp" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/darkblue,
@@ -30798,6 +30772,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
+"mNV" = (
+/obj/machinery/drainage,
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/robotics)
 "mOd" = (
 /obj/stool/bench/red/auto,
 /obj/machinery/light{
@@ -35159,13 +35140,6 @@
 "oNg" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
-"oNp" = (
-/obj/machinery/drainage,
-/obj/machinery/computer/operating/small{
-	id = "robotics"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/robotics)
 "oNO" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
@@ -40377,15 +40351,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/pasiphae/bridge)
-"rfK" = (
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = "research";
-	name = "research mail junction"
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 4
-	},
-/area/station/hallway/secondary/west)
 "rfM" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
@@ -45649,6 +45614,40 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost)
+"twS" = (
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/surgical_spoon,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/robotics)
 "txe" = (
 /obj/machinery/door_control{
 	id = "nadirclomp";
@@ -47132,21 +47131,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"udn" = (
-/obj/machinery/power/apc/autoname_west,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/cable{
-	icon_state = "0-5"
-	},
-/obj/laser_sink/mirror,
-/turf/simulated/floor/yellowblack{
-	dir = 9
-	},
-/area/station/engine/ptl)
 "udv" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -49631,6 +49615,18 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/grey/corner,
 /area/station/crew_quarters/lounge)
+"vlN" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/machinery/chem_dispenser/chef,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/grey/blackgrime,
+/area/station/crew_quarters/catering)
 "vlO" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/warehouse)
@@ -85071,7 +85067,7 @@ eNp
 omq
 eGd
 lqF
-gIn
+geQ
 iWV
 eNp
 mky
@@ -89377,7 +89373,7 @@ grs
 cOL
 oVg
 rvl
-agr
+vlN
 iaW
 mrH
 kgO
@@ -96925,7 +96921,7 @@ bJF
 bJF
 kOG
 bJF
-rfK
+gjM
 oJM
 uPZ
 cjv
@@ -97500,7 +97496,7 @@ oSa
 ndG
 oSa
 rJL
-dhn
+twS
 lin
 qcz
 cTE
@@ -97803,7 +97799,7 @@ sBQ
 llV
 rJL
 jxY
-oNp
+mNV
 rKH
 lyB
 ecd
@@ -116598,7 +116594,7 @@ lCi
 neB
 kRD
 iXQ
-udn
+fhD
 sAj
 eRb
 nIj

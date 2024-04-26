@@ -5248,6 +5248,15 @@
 "arz" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
+"arA" = (
+/obj/cable{
+	icon_state = "5-10"
+	},
+/obj/machinery/computer/operating/small{
+	id = "robotics"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "arB" = (
 /obj/disposalpipe/trunk/south,
 /turf/simulated/floor/plating/random,
@@ -12028,6 +12037,15 @@
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"aOt" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west/hardened,
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/listeningpost)
 "aOu" = (
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/neutral/side{
@@ -32297,6 +32315,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"cyx" = (
+/obj/machinery/chem_dispenser/chef,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "cyT" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg{
@@ -42326,15 +42348,6 @@
 /obj/stool,
 /turf/simulated/floor/plating/random,
 /area/derelict_diner)
-"qHe" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west/hardened,
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
-/area/listeningpost)
 "qHL" = (
 /obj/decal/fakeobjects/pipe{
 	color = "b4b4b4";
@@ -46054,15 +46067,6 @@
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"wUy" = (
-/obj/cable{
-	icon_state = "5-10"
-	},
-/obj/machinery/computer/operating/small{
-	id = "robotics"
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "wUO" = (
 /obj/item/device/camera_viewer/telesci,
 /obj/table/round/auto,
@@ -53053,7 +53057,7 @@ aNj
 aNt
 aNj
 aPm
-qHe
+aOt
 aOM
 dBM
 aPo
@@ -77047,7 +77051,7 @@ bmU
 bhC
 bhC
 bkL
-bhC
+cyx
 bhC
 bhC
 bkN
@@ -95716,7 +95720,7 @@ afq
 afx
 agk
 muF
-wUy
+arA
 muF
 agj
 ais
