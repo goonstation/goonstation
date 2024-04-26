@@ -742,14 +742,21 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			return 0
 	return 1
 
-/mob/living/critter/robotic/securitron/should_critter_retaliate(mob/attcker, obj/attcked_with)
+/mob/living/critter/robotic/securitron/should_critter_retaliate(mob/attacker, obj/attacked_with)
 	. = ..()
-	if(src.get_health_percentage() >= 0.6 && src.allowed(attcker)) // if health is more than 60%, assume it was friendly fire
+	var/aggression_hp = 1
+	if(ishuman(attacker))
+		var/mob/living/carbon/human/H = attacker
+		if(istype(H.wear_suit,/obj/item/clothing/suit/security_badge))
+			aggression_hp -= 0.4 // 20 damage allowed out of pure respect
+	if(src.allowed(attacker))
+		aggression_hp -= 0.2 // 10 damage allowed for the bosses
+	if(src.get_health_percentage() > aggression_hp) // if health is still high enough, assume it was friendly fire
 		. = FALSE
 	if(.)
-		EXTEND_COOLDOWN(attcker, "MARKED_FOR_SECURITRON_ARREST", 5 SECONDS)
+		EXTEND_COOLDOWN(attacker, "MARKED_FOR_SECURITRON_ARREST", 5 SECONDS)
 		if(!ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
-			src.accuse_perp(attcker, rand(5,8))
+			src.accuse_perp(attacker, rand(5,8))
 			src.siren()
 
 /mob/living/critter/robotic/securitron/emag_act(var/mob/user, var/obj/item/card/emag/E)

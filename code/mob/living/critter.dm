@@ -1444,7 +1444,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		return can_act(src,TRUE)
 
 	/// Used for generic critter mobAI - returns TRUE when the mob should retaliate to this attack. Only used if ai_retaliates = TRUE
-	proc/should_critter_retaliate(var/mob/attcker, var/obj/attcked_with)
+	proc/should_critter_retaliate(var/mob/attacker, var/obj/attacked_with)
 		return src.ai_retaliates && (src._ai_patience_count <= 0)
 
 
