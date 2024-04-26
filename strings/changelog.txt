@@ -1,5 +1,9 @@
 
 (t)fri apr 26 24
+(u)Terms-On-Dragon
+(p)15272
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(+)The AI has learned a new DEVIOUS face to express across the station.
 (u)TDHooligan
 (p)18475
 (e)💅🧛|C-QoL, A-Gamemodes
