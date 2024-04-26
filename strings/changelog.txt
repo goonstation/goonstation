@@ -1,4 +1,9 @@
 
+(t)fri apr 26 24
+(u)TDHooligan
+(p)18475
+(e)💅🧛|C-QoL, A-Gamemodes
+(+)Gangs will randomly elect a new leader if their current one dies early into a shift.
 (t)thu apr 25 24
 (u)Sovexe
 (p)18620
