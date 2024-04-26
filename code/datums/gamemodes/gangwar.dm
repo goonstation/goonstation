@@ -2387,11 +2387,13 @@ proc/broadcast_to_all_gangs(var/message)
 		mobs = list()
 		return heat
 
-	ex_act()
-		if (!exploded)
-			exploded = TRUE
-			desc = desc + " So heavy, in fact, that this tag can't be exploded. Huh."
-		return //no!
+	ex_act(severity)
+		if (severity > 1)
+			if (!exploded)
+				exploded = TRUE
+				desc = desc + " So heavy, in fact, that this tag hasn't exploded. Huh."
+			return //no!
+		..()
 
 	proc/apply_score(var/largestHeat)
 		var/mappedHeat // the 'heat' value mapped to the scale of 0-5
