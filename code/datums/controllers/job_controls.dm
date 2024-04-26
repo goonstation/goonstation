@@ -98,7 +98,7 @@ var/datum/job_controller/job_controls
 			dat += "<A href='?src=\ref[src];EditPock2=1'>Starting 2nd Pocket Item:</A> [english_list(src.job_creator.slot_poc2)]<br>"
 			dat += "<A href='?src=\ref[src];EditLhand=1'>Starting Left Hand Item:</A> [english_list(src.job_creator.slot_lhan)]<br>"
 			dat += "<A href='?src=\ref[src];EditRhand=1'>Starting Right Hand Item:</A> [english_list(src.job_creator.slot_rhan)]<br>"
-			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implant:</A> [src.job_creator.receives_implant]<br>"
+			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implants:</A> [english_list(src.job_creator.receives_implants)]<br>"
 			for(var/i in 1 to 7)
 				dat += "<A href='?src=\ref[src];EditBpItem=[i]'>Starting Backpack Item [i]:</A> [length(src.job_creator.items_in_backpack) >= i ? src.job_creator.items_in_backpack[i] : null]<br>"
 			for(var/i in 1 to 7)
@@ -668,11 +668,11 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["EditImpl"])
-			switch(alert("Clear or reselect implant?","Job Creator","Clear","Reselect"))
+			switch(alert("Clear or reselect implant?","Job Creator","Clear","Add"))
 				if("Clear")
-					src.job_creator.receives_implant = null
+					src.job_creator.receives_implants = null
 
-				if("Reselect")
+				if("Add")
 					var/list/L = list()
 					var/search_for = input(usr, "Search for implants (or leave blank for complete list)", "Select implant") as null|text
 					if (search_for)
@@ -689,8 +689,10 @@ var/datum/job_controller/job_controls
 					else
 						usr.show_text("No implant matching that name", "red")
 						return
+					if(isnull(src.job_creator.receives_implants))
+						src.job_creator.receives_implants = list()
+					src.job_creator.receives_implants += picker
 
-					src.job_creator.receives_implant = picker
 
 			src.job_creator()
 
@@ -910,7 +912,7 @@ var/datum/job_controller/job_controls
 	JOB.announce_on_join = src.job_creator.announce_on_join
 	JOB.radio_announcement = src.job_creator.radio_announcement
 	JOB.add_to_manifest = src.job_creator.add_to_manifest
-	JOB.receives_implant = src.job_creator.receives_implant
+	JOB.receives_implants = src.job_creator.receives_implants
 	JOB.items_in_backpack = src.job_creator.items_in_backpack
 	JOB.items_in_belt = src.job_creator.items_in_belt
 	JOB.spawn_id = src.job_creator.spawn_id

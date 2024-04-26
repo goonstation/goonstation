@@ -6343,7 +6343,7 @@
 /area/space)
 "st" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3";
+	icon_state = "wall_3_trans";
 	dir = 2
 	},
 /area/space)
@@ -6610,13 +6610,13 @@
 "tf" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "tg" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "th" = (
@@ -6628,7 +6628,7 @@
 "ti" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "tj" = (
@@ -7093,7 +7093,7 @@
 "tZ" = (
 /turf/simulated/shuttle/wall{
 	dir = 10;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "ua" = (
@@ -7177,7 +7177,7 @@
 "uj" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "uk" = (
@@ -7255,7 +7255,7 @@
 /area/space)
 "ur" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3";
+	icon_state = "wall_3_trans";
 	dir = 5
 	},
 /area/space)
@@ -7315,7 +7315,7 @@
 /area/space)
 "uA" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3";
+	icon_state = "wall_3_trans";
 	dir = 9
 	},
 /area/space)
@@ -7398,7 +7398,7 @@
 /area/space)
 "uL" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3";
+	icon_state = "wall_3_trans";
 	dir = 6
 	},
 /area/space)
@@ -7657,7 +7657,7 @@
 	},
 /turf/simulated/shuttle/wall{
 	dir = 6;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 

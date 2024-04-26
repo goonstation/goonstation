@@ -318,11 +318,28 @@ proc/broadcast_to_all_gangs(var/message)
 				result++
 		return result
 
+	/// how to handle the gang leader dying horribly early into the shift (suicide etc)
+	proc/handle_leader_early_death()
+		if (!src.locker)
+			choose_new_leader()
+			logTheThing(LOG_ADMIN, src.leader.ckey, "was given the role of leader for [gang_name], as their previous leader died early with no locker.")
+			message_admins("[src.leader.ckey] has been granted the role of leader for their gang, [gang_name], as the previous leader died early with no locker.")
+			broadcast_to_gang("Your leader has died early into the shift. Leadership has been transferred to [src.leader.current.real_name]")
+		else
+			broadcast_to_gang("Your leader has died early into the shift. If not revived, a new leader will be picked in [GANG_LEADER_SOFT_DEATH_DELAY/(1 MINUTE)] minutes.")
+			SPAWN (GANG_LEADER_SOFT_DEATH_DELAY)
+				if (!isalive(src.leader.current))
+					choose_new_leader()
+					logTheThing(LOG_ADMIN, src.leader.ckey, "was given the role of leader for [gang_name], as their previous leader died early and wasn't respawned/revived.")
+					message_admins("[src.leader.ckey] has been granted the role of leader for their gang, [gang_name], as the previous leader died early and wasn't respawned/revived.")
+					broadcast_to_gang("Your leader has died early into the shift. Leadership has been transferred to [src.leader.current.real_name]")
+
 	/// how to handle the gang leader entering cryo (but not guaranteed to be permanent)
 	proc/handle_leader_temp_cryo()
 		if (!src.locker)
 			choose_new_leader()
 		else
+			// the delay here is handled by the locker.
 			broadcast_to_gang("Your leader has entered temporary cryogenic storage. You can claim leadership at your locker in [GANG_CRYO_LOCKOUT/(1 MINUTE)] minutes.")
 
 	/// handle the gang leader entering cryo permanently
@@ -331,6 +348,9 @@ proc/broadcast_to_all_gangs(var/message)
 			broadcast_to_gang("Your leader has entered permanent cryogenic storage. You can claim leadership at your locker.")
 			leader_claimable = TRUE
 		else
+			logTheThing(LOG_ADMIN, src.leader.ckey, "was given the role of leader for [gang_name], as their leader cryo'd without a locker.")
+			message_admins("[src.leader.ckey] has been granted the role of leader for their gang, [gang_name], as leader cryo'd without a locker.")
+			broadcast_to_gang("As your leader has entered cryogenic storage without a locker, [src.leader.current.real_name] is now your new leader.")
 			choose_new_leader()
 
 	proc/choose_new_leader()
@@ -341,8 +361,8 @@ proc/broadcast_to_all_gangs(var/message)
 				if (!candidate.hibernating)
 					smelly_unfortunate = member
 		if (!smelly_unfortunate)
-			logTheThing(LOG_ADMIN, leader.ckey, "The leader of [gang_name] cryo'd with no living members to take the role.")
-			message_admins("The leader of [gang_name], [leader.ckey] cryo'd with no living members to take the role.")
+			logTheThing(LOG_ADMIN, leader.ckey, "The leader of [gang_name] cryo'd/died early with no living members to take the role.")
+			message_admins("The leader of [gang_name], [leader.ckey] cryo'd/died early with no living members to take the role.")
 			return
 
 		var/datum/mind/bad_leader = leader
@@ -353,9 +373,6 @@ proc/broadcast_to_all_gangs(var/message)
 		smelly_unfortunate.remove_antagonist(ROLE_GANG_MEMBER,ANTAGONIST_REMOVAL_SOURCE_OVERRIDE,FALSE)
 		leaderRole.transfer_to(smelly_unfortunate, FALSE, ANTAGONIST_REMOVAL_SOURCE_EXPIRED)
 		bad_leader.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = smelly_unfortunate)
-		logTheThing(LOG_ADMIN, smelly_unfortunate.ckey, "was given the role of leader for [gang_name], as their leader entered cryo with no locker.")
-		message_admins("[smelly_unfortunate.ckey] has been granted the role of leader for their gang, [gang_name], as their leader entered cryo with no locker.")
-		broadcast_to_gang("As your leader has entered cryogenic storage without a locker, [smelly_unfortunate.current.real_name] is now your new leader.")
 
 	proc/get_dead_memberlist()
 		var/list/result = list()
@@ -592,7 +609,7 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/show_score_maptext(amount, turf/location)
 		var/image/chat_maptext/chat_text = null
 		chat_text = make_chat_maptext(location, "<span class='ol c pixel' style='color: #08be4e;'>+[amount]</span>", alpha = 180, time = 0.5 SECONDS)
-		chat_text.show_to(src.leader.current.client)
+		chat_text.show_to(src.leader?.current.client)
 		for (var/datum/mind/userMind as anything in src.members)
 			var/client/userClient = userMind.current.client
 			if (userClient?.preferences?.flying_chat_hidden)
@@ -1084,7 +1101,6 @@ proc/broadcast_to_all_gangs(var/message)
 		target_area.being_captured = FALSE
 		var/sprayOver = FALSE
 		for (var/obj/decal/gangtag/otherTag in range(1,target_turf))
-			otherTag.owners.unclaim_tiles(target_turf,GANG_TAG_INFLUENCE, GANG_TAG_SIGHT_RANGE)
 			otherTag.disable()
 			sprayOver = TRUE
 
@@ -2367,6 +2383,7 @@ proc/broadcast_to_all_gangs(var/message)
 	/// Makes this tag inert, so it no longer provides points.
 	proc/disable()
 		active = FALSE
+		src.owners?.unclaim_tiles(get_turf(src), GANG_TAG_INFLUENCE, GANG_TAG_SIGHT_RANGE)
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		imgroup.remove_image(heatTracker)
 		src.heatTracker = null
@@ -2427,10 +2444,8 @@ proc/broadcast_to_all_gangs(var/message)
 
 
 	disposing(var/uncapture = 1)
-		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
-		imgroup.remove_image(heatTracker)
+		src.disable()
 		STOP_TRACKING
-		heatTracker = null
 		owners = null
 		mobs = null
 		var/area/tagarea = get_area(src)
