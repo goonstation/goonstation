@@ -1050,6 +1050,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/summer)
 	name = "Red Collar Dress"
 	path = /obj/item/clothing/under/collardressr
 
+/datum/clothingbooth_item/summer/sunhaty
+	name = "Yellow Sunhat"
+	path = /obj/item/clothing/head/sunhat/sunhaty
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/5
+
 //Masquerade
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/masquerade)

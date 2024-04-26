@@ -403,6 +403,13 @@ var/global/datum/bioluminescent_algae/bioluminescent_algae
 	var/perlin_zoom = 65
 	///The absolute lowest a color value can be, e.g. if the noise at the coords was 0. To help give us bright vibrant colors
 	var/const/color_alpha = 30
+	/// percentage of map to cover, used as salinity cutoff
+	var/coverage = 0.25
+
+	New(coverage_override)
+		. = ..()
+		if (coverage_override)
+			src.coverage = coverage_override
 
 	proc/setup()
 		seeds = list()
@@ -416,7 +423,7 @@ var/global/datum/bioluminescent_algae/bioluminescent_algae
 		var/drift_y = (A.y + rand(-random_square_drift, random_square_drift)) / perlin_zoom
 
 		var/salinity = text2num(rustg_noise_get_at_coordinates("[seeds["salinity"]]", "[drift_x]", "[drift_y]"))
-		if (salinity > 0.25) // no algae for you :(
+		if (salinity > coverage) // no algae for you :(
 			return
 		var/hue_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["hue"]]", "[drift_x]", "[drift_y]"))
 		var/saturation_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["saturation"]]", "[drift_x]", "[drift_y]"))

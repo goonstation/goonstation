@@ -18,7 +18,7 @@
 	speechverb_stammer = "states"
 	speechverb_exclaim = "declares"
 	speechverb_ask = "queries"
-	faction = FACTION_DERELICT
+	faction = list(FACTION_DERELICT)
 
 	setup_healths()
 		add_hh_robot(100, 1)
@@ -445,7 +445,7 @@
 	health_brute_vuln = 0.5
 	health_burn = 20
 	health_burn_vuln = 0.25
-	faction = FACTION_DERELICT
+	faction = list(FACTION_DERELICT)
 	ai_type = /datum/aiHolder/aggressive
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0

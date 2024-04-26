@@ -19,7 +19,7 @@
 	health_burn_vuln = 1.5
 	is_npc = TRUE
 
-	faction = FACTION_WRAITH
+	faction = list(FACTION_WRAITH)
 
 	use_stamina = FALSE
 
@@ -104,7 +104,7 @@
 /mob/living/critter/exploder/say(message, involuntary = 0)	//Should probably remove this
 	if(isdead(src) && src.is_npc)
 		return
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	..(message)
 

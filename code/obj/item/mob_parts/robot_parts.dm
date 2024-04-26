@@ -22,7 +22,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	var/max_health = 100
 	var/dmg_blunt = 0
 	var/dmg_burns = 0
-	/// for calculating speed modifiers
+	/// Currently vestigal variable previously used for speed, being left for potiental future application
 	var/weight = 0
 	/// does this part consume any extra power
 	var/powerdrain = 0
@@ -315,6 +315,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 /obj/item/parts/robot_parts/head/standard
 	name = "standard cyborg head"
 	max_health = 160
+	robot_movement_modifier = /datum/movement_modifier/robot_part/standard_head
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
@@ -330,6 +331,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	material_amt = ROBOT_HEAD_COST + ROBOT_STURDY_COST
 	max_health = 225
 	weight = 0.2
+	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_head
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY) // shush
 
 	attackby(obj/item/W, mob/user)
@@ -347,6 +349,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	material_amt = ROBOT_HEAD_COST + ROBOT_HEAVY_COST
 	max_health = 350
 	weight = 0.4
+	robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_head
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
 
 /obj/item/parts/robot_parts/head/light
@@ -356,7 +359,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	icon_state = "head-light"
 	material_amt = ROBOT_HEAD_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 60
-	robot_movement_modifier = /datum/movement_modifier/robot_part/head
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_head
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
 /obj/item/parts/robot_parts/head/antique
@@ -366,7 +369,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	icon_state = "head-android"
 	max_health = 150
 	visible_eyes = 0
-	robot_movement_modifier = /datum/movement_modifier/robot_part/head
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_head
 
 /obj/item/parts/robot_parts/head/screen
 	name = "cyborg screen head"
@@ -385,7 +388,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			src.UpdateOverlays(null, "smashed")
 
 	ropart_take_damage(var/bluntdmg = 0,var/burnsdmg = 0)
-		..() //parent calls del if we get destroyed so no need to handle not doing this
+		. = ..() //parent calls del if we get destroyed so no need to handle not doing this
 		if (!src.smashed && (bluntdmg > 10 || bluntdmg > 3 && prob(20)))
 			src.smashed = TRUE
 			src.UpdateIcon()
@@ -500,6 +503,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."
 	material_amt = ROBOT_CHEST_COST
 	max_health = 250
+	robot_movement_modifier = /datum/movement_modifier/robot_part/standard_chest
 
 	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
@@ -521,6 +525,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 	icon_state = "body-light"
 	material_amt = ROBOT_CHEST_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 75
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_chest
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT) // hush
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
@@ -634,6 +639,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 
 /obj/item/parts/robot_parts/arm/left/standard
 	name = "standard cyborg left arm"
+
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
@@ -647,6 +653,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	material_amt = ROBOT_LIMB_COST + ROBOT_STURDY_COST
 	max_health = 115
 	weight = 0.2
+	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
 	attackby(obj/item/W, mob/user)
@@ -662,6 +669,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	material_amt = ROBOT_LIMB_COST + ROBOT_HEAVY_COST
 	max_health = 175
 	weight = 0.4
+	robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
 
 /obj/item/parts/robot_parts/arm/left/light
@@ -671,7 +679,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
 	handlistPart = "armL-light"
-	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_left
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
@@ -699,6 +707,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	material_amt = ROBOT_LIMB_COST + ROBOT_STURDY_COST
 	max_health = 115
 	weight = 0.2
+	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
 	attackby(obj/item/W, mob/user)
@@ -714,6 +723,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	material_amt = ROBOT_LIMB_COST + ROBOT_HEAVY_COST
 	max_health = 175
 	weight = 0.4
+	robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
 
 /obj/item/parts/robot_parts/arm/right/light
@@ -723,7 +733,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
 	handlistPart = "armR-light"
-	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_right
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
@@ -832,7 +842,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	partlistPart = "legL-light"
 	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
-	robot_movement_modifier = /datum/movement_modifier/robotleg_left
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
 /obj/item/parts/robot_parts/leg/left/treads
@@ -869,7 +879,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	partlistPart = "legR-light"
 	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
-	robot_movement_modifier = /datum/movement_modifier/robotleg_right
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
 /obj/item/parts/robot_parts/leg/right/treads

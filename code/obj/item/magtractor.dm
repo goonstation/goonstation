@@ -85,7 +85,7 @@ TYPEINFO(/obj/item/magtractor)
 	attack_self(mob/user as mob)
 		if (src.holding && !src.holding.disposed)
 			//activate held item (if possible)
-			src.holding.attack_self(user)
+			src.holding.AttackSelf(user)
 			src.updateHeldOverlay(src.holding) //for items that update icon on activation (e.g. welders)
 		else
 			return 0
@@ -194,7 +194,7 @@ TYPEINFO(/obj/item/magtractor)
 
 		W.set_loc(src)
 		W.pickup(user)
-
+		logTheThing(LOG_STATION, user, "pick up [W] with a magtractor at [log_loc(user)]")
 		src.holding = W
 		src.processHeld = 1
 		src.w_class = W_CLASS_BULKY //bulky

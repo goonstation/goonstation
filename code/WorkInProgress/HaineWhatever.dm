@@ -1214,6 +1214,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	var/possible_bling_uncommon = list(/obj/item/currency/spacecash/hundred,/obj/item/coin)
 	var/possible_bling_rare = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/gold)
 	default_material = "gold"
+	recoil_strength = 4
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!istype(target, /turf) || !istype(start, /turf))
@@ -1479,11 +1480,6 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	var/hexnum = copytext(num1, 2)
 	var/num2 = num2hex(hex2num(hexnum) - 554040)
 */
-
-/turf/simulated/tempstuff
-	name = "floor"
-	icon = 'icons/misc/HaineSpriteDump.dmi'
-	icon_state = "gooberything_small"
 
 /obj/item/blessed_ball_bearing
 	name = "blessed ball bearing" // fill claymores with them for all your nazi-vampire-protection needs

@@ -120,6 +120,16 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	frame_path = /obj/disposalpipe/loafer
 
+/******************** Communications Dish *******************/
+
+/datum/manufacture/mechanics/comms_dish
+	name = "Communications Dish"
+	item_paths = list("MET-1", "MET-2", "INS-1" , "CON-1")
+	item_amounts = list(20,10,20,20)
+	time = 60 SECONDS
+	create = 1
+	frame_path = /obj/machinery/communications_dish
+
 /******************** AI Law Rack *******************/
 
 /datum/manufacture/mechanics/lawrack
@@ -990,6 +1000,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/pocketoxyex
+	name = "Extended Capacity Pocket Oxygen Tank"
+	item_paths = list("DEN-2","INS-1", "RUB")
+	item_amounts = list(10, 20, 5)
+	item_outputs = list(/obj/item/tank/emergency_oxygen/extended/empty)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 /******************** Medical **************************/
 
 /datum/manufacture/scalpel
@@ -1719,7 +1738,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("MET-1","MET-2","CON-1","ALL")
 	item_amounts = list(15,5,10,5)
 	item_outputs = list(/obj/machinery/bot/mining)
-	time = 0 SECONDS
+	time = 10 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -1737,6 +1756,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("CON-1","CRY-1")
 	item_amounts = list(3,5)
 	item_outputs = list(/obj/item/roboupgrade/speed)
+	time = 60 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/robup_mag
+	name = "Magnetic Traction Upgrade"
+	item_paths = list("CON-1","CRY-1")
+	item_amounts = list(5,3)
+	item_outputs = list(/obj/item/roboupgrade/magboot)
 	time = 60 SECONDS
 	create = 1
 	category = "Component"
@@ -2022,7 +2050,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Powered Pick"
 	item_paths = list("MET-2","CON-1")
 	item_amounts = list(2,5)
-	item_outputs = list(/obj/item/mining_tool/power_pick)
+	item_outputs = list(/obj/item/mining_tool/powered/pickaxe)
 	time = 10 SECONDS
 	create = 1
 	category = "Tool"
@@ -2047,18 +2075,18 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/powerhammer
 	name = "Power Hammer"
-	item_paths = list("DEN-1","CON-1")
-	item_amounts = list(1,8)
-	item_outputs = list(/obj/item/mining_tool/powerhammer)
+	item_paths = list("MET-2","MET-3","CON-1")
+	item_amounts = list(15,7,10)
+	item_outputs = list(/obj/item/mining_tool/powered/hammer)
 	time = 70 SECONDS
 	create = 1
 	category = "Tool"
 
 /datum/manufacture/drill
 	name = "Laser Drill"
-	item_paths = list("MET-2","MET-3","CON-2")
-	item_amounts = list(15,7,10)
-	item_outputs = list(/obj/item/mining_tool/drill)
+	item_paths = list("MET-2","CON-2")
+	item_amounts = list(15,10)
+	item_outputs = list(/obj/item/mining_tool/powered/drill)
 	time = 90 SECONDS
 	create = 1
 	category = "Tool"
@@ -2322,6 +2350,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("MET-2")
 	item_amounts = list(20)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/cargo)
+	time = 12 SECONDS
+	create = 1
+	category = "Resource"
+
+/datum/manufacture/storagehold
+	name = "Storage Hold"
+	item_paths = list("MET-2")
+	item_amounts = list(20)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/storage)
 	time = 12 SECONDS
 	create = 1
 	category = "Resource"

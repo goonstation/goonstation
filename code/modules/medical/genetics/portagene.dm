@@ -73,6 +73,10 @@
 		playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 		return
 
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
+
 	MouseDrop_T(mob/living/target, mob/user)
 		if (!istype(target) || isAI(user))
 			return

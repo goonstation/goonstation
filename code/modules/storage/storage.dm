@@ -425,6 +425,8 @@
 
 /// show storage contents
 /datum/storage/proc/show_hud(mob/user)
+	if (user.s_active && user.s_active != src.hud)
+		user.detach_hud(user.s_active)
 	user.s_active = src.hud
 	src.hud.update(user)
 	user.attach_hud(src.hud)
@@ -434,6 +436,10 @@
 	if (user.s_active == src.hud)
 		user.s_active = null
 		user.detach_hud(src.hud)
+
+/datum/storage/proc/hide_all_huds()
+	for (var/mob/M as anything in src.hud?.mobs)
+		src.hide_hud(M)
 
 /// if user sees the storage hud
 /datum/storage/proc/hud_shown(mob/user)

@@ -99,7 +99,7 @@ TYPEINFO(/obj/item/device/audio_log)
 		max_lines = 30
 
 		attack_hand(mob/user)
-			return attack_self(user)
+			return src.AttackSelf(user)
 
 		updateSelfDialog()
 			return updateUsrDialog()
@@ -364,6 +364,9 @@ TYPEINFO(/obj/item/device/audio_log)
 
 			src.tape.speakers = src.audiolog_speakers
 			src.audiolog_speakers = null
+
+			SPAWN(10 SECONDS) // Let people get their bearings first
+				src.play()
 
 			return
 

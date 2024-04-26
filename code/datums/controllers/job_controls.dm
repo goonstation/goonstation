@@ -5,7 +5,7 @@ var/datum/job_controller/job_controls
 	var/list/special_jobs = list()
 	var/list/hidden_jobs = list() // not visible to players, for admin stuff, like the respawn panel
 	var/allow_special_jobs = 1 // hopefully this doesn't break anything!!
-	var/datum/job/job_creator = null
+	var/datum/job/created/job_creator = null
 
 	var/loaded_save = 0
 	var/last_client = null
@@ -52,45 +52,8 @@ var/datum/job_controller/job_controls
 		for (var/datum/job/J in staple_jobs)
 			if (J.limit > 0)
 				J.limit *= 4
+				J.upper_limit = J.limit
 		#endif
-
-
-	proc/job_config()
-		var/dat = "<html><body><title>Job Controller</title>"
-		dat += "<b><u>Job Controls</u></b><HR>"
-		dat += "<b>Command & Security Jobs</b><BR>"
-		for(var/datum/job/command/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		for(var/datum/job/security/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Research Jobs</b><BR>"
-		for(var/datum/job/research/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Engineering Jobs</b><BR>"
-		for(var/datum/job/engineering/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Civilian Jobs</b><BR>"
-		for(var/datum/job/civilian/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		dat += "<BR>"
-		dat += "<b>Special Jobs</b><BR>"
-		for(var/datum/job/special/JOB in src.special_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
-		for(var/datum/job/created/JOB in src.special_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a>"
-			dat += " <a href='byond://?src=\ref[src];RemoveJob=\ref[JOB]'>(Remove)</A><BR>"
-		dat += "<BR>"
-		if (src.allow_special_jobs)
-			dat += "<A href='?src=\ref[src];SpecialToggle=1'>Special Jobs Enabled</A><BR>"
-		else
-			dat += "<A href='?src=\ref[src];SpecialToggle=1'>Special Jobs Disabled</A><BR>"
-		dat += "<A href='?src=\ref[src];JobCreator=1'>Create New Job</A>"
-		dat += "</body></html>"
-
-		usr.Browse(dat,"window=jobconfig;size=300x600")
 
 	proc/check_user_changed()//Since this is a 'public' window that everyone can get to, make sure we keep the user contained to their own savefile
 		if (last_client != usr.client)
@@ -135,7 +98,7 @@ var/datum/job_controller/job_controls
 			dat += "<A href='?src=\ref[src];EditPock2=1'>Starting 2nd Pocket Item:</A> [english_list(src.job_creator.slot_poc2)]<br>"
 			dat += "<A href='?src=\ref[src];EditLhand=1'>Starting Left Hand Item:</A> [english_list(src.job_creator.slot_lhan)]<br>"
 			dat += "<A href='?src=\ref[src];EditRhand=1'>Starting Right Hand Item:</A> [english_list(src.job_creator.slot_rhan)]<br>"
-			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implant:</A> [src.job_creator.receives_implant]<br>"
+			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implants:</A> [english_list(src.job_creator.receives_implants)]<br>"
 			for(var/i in 1 to 7)
 				dat += "<A href='?src=\ref[src];EditBpItem=[i]'>Starting Backpack Item [i]:</A> [length(src.job_creator.items_in_backpack) >= i ? src.job_creator.items_in_backpack[i] : null]<br>"
 			for(var/i in 1 to 7)
@@ -189,48 +152,7 @@ var/datum/job_controller/job_controls
 		usr.Browse(dat.Join(),"window=jobcreator;size=500x650")
 
 	Topic(href, href_list[])
-		// JOB CONFIG COMMANDS
 		USR_ADMIN_ONLY
-		if(href_list["AlterCap"])
-			var/list/alljobs = src.staple_jobs | src.special_jobs
-			var/datum/job/JOB = locate(href_list["AlterCap"]) in alljobs
-			var/newcap = input("Choose the new cap.","Job Cap Config", JOB.limit) as null|num
-			if (isnull(newcap))
-				return
-			JOB.limit = newcap
-			message_admins("Admin [key_name(usr)] altered [JOB.name] job cap to [newcap]")
-			logTheThing(LOG_ADMIN, usr, "altered [JOB.name] job cap to [newcap]")
-			logTheThing(LOG_DIARY, usr, "altered [JOB.name] job cap to [newcap]", "admin")
-			src.job_config()
-
-		if(href_list["RemoveJob"])
-			var/list/alljobs = src.staple_jobs | src.special_jobs
-			var/datum/job/JOB = locate(href_list["RemoveJob"]) in alljobs
-			if (!istype(JOB,/datum/job/created/))
-				boutput(usr, SPAN_ALERT("<b>Removing integral jobs is not allowed. Bad for business, y'know.</b>"))
-				return
-			message_admins("Admin [key_name(usr)] removed special job [JOB.name]")
-			logTheThing(LOG_ADMIN, usr, "removed special job [JOB.name]")
-			logTheThing(LOG_DIARY, usr, "removed special job [JOB.name]", "admin")
-			src.special_jobs -= JOB
-			src.job_config()
-
-		if(href_list["SpecialToggle"])
-			src.allow_special_jobs = !src.allow_special_jobs
-			message_admins("Admin [key_name(usr)] toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]")
-			logTheThing(LOG_ADMIN, usr, "toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]")
-			logTheThing(LOG_DIARY, usr, "toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]", "admin")
-			src.job_config()
-
-		if(href_list["JobCreator"])
-			savefile_fix(usr.client)
-			src.job_creator()
-
-		if(href_list["Edit"])
-			src.job_creator = locate(href_list["Edit"])
-			savefile_fix(usr.client)
-			src.job_creator()
-
 		// JOB CREATOR COMMANDS
 
 		// I tweaked this section a little so you can actual search for certain items.
@@ -746,11 +668,11 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["EditImpl"])
-			switch(alert("Clear or reselect implant?","Job Creator","Clear","Reselect"))
+			switch(alert("Clear or reselect implant?","Job Creator","Clear","Add"))
 				if("Clear")
-					src.job_creator.receives_implant = null
+					src.job_creator.receives_implants = null
 
-				if("Reselect")
+				if("Add")
 					var/list/L = list()
 					var/search_for = input(usr, "Search for implants (or leave blank for complete list)", "Select implant") as null|text
 					if (search_for)
@@ -767,8 +689,10 @@ var/datum/job_controller/job_controls
 					else
 						usr.show_text("No implant matching that name", "red")
 						return
+					if(isnull(src.job_creator.receives_implants))
+						src.job_creator.receives_implants = list()
+					src.job_creator.receives_implants += picker
 
-					src.job_creator.receives_implant = picker
 
 			src.job_creator()
 
@@ -888,10 +812,7 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["ChangeName"])
-			if (src.job_creator.change_name_on_spawn == 0)
-				src.job_creator.change_name_on_spawn = 1
-			else
-				src.job_creator.change_name_on_spawn = 0
+			src.job_creator.change_name_on_spawn = !src.job_creator.change_name_on_spawn
 			src.job_creator()
 
 		if(href_list["SetSpawnLoc"])
@@ -906,6 +827,9 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["CreateJob"])
+			if (!length(src.job_creator.name))
+				alert("You must give your job a name.")
+				return
 			var/datum/job/match_check
 			try
 				match_check = find_job_in_controller_by_string(src.job_creator.name)
@@ -918,48 +842,11 @@ var/datum/job_controller/job_controls
 				boutput(usr, SPAN_ALERT("<b>A job with this name already exists. It cannot be created.</b>"))
 				return
 			else
-				var/datum/job/created/JOB = new /datum/job/created(src)
+				var/hidden = FALSE
 				if(href_list["Hidden"])
-					src.hidden_jobs += JOB
-				else
-					src.special_jobs += JOB
-				wagesystem.jobs[JOB.name] = src.job_creator.wages
+					hidden = TRUE
 
-				JOB.name = src.job_creator.name
-				JOB.wages = src.job_creator.wages
-				JOB.limit = src.job_creator.limit
-				JOB.mob_type = src.job_creator.mob_type
-				JOB.slot_head = src.job_creator.slot_head
-				JOB.slot_mask = src.job_creator.slot_mask
-				JOB.slot_ears = src.job_creator.slot_ears
-				JOB.slot_eyes = src.job_creator.slot_eyes
-				JOB.slot_glov = src.job_creator.slot_glov
-				JOB.slot_foot = src.job_creator.slot_foot
-				JOB.slot_card = src.job_creator.slot_card
-				JOB.slot_jump = src.job_creator.slot_jump
-				JOB.slot_suit = src.job_creator.slot_suit
-				JOB.slot_back = src.job_creator.slot_back
-				JOB.slot_belt = src.job_creator.slot_belt
-				JOB.slot_poc1 = src.job_creator.slot_poc1
-				JOB.slot_poc2 = src.job_creator.slot_poc2
-				JOB.slot_lhan = src.job_creator.slot_lhan
-				JOB.slot_rhan = src.job_creator.slot_rhan
-				JOB.access = JOB.access | src.job_creator.access
-				JOB.change_name_on_spawn = src.job_creator.change_name_on_spawn
-				JOB.special_spawn_location = src.job_creator.special_spawn_location
-				JOB.bio_effects = src.job_creator.bio_effects
-				JOB.objective = src.job_creator.objective
-				JOB.announce_on_join = src.job_creator.announce_on_join
-				JOB.radio_announcement = src.job_creator.radio_announcement
-				JOB.add_to_manifest = src.job_creator.add_to_manifest
-				JOB.receives_implant = src.job_creator.receives_implant
-				JOB.items_in_backpack = src.job_creator.items_in_backpack
-				JOB.items_in_belt = src.job_creator.items_in_belt
-				JOB.spawn_id = src.job_creator.spawn_id
-				JOB.starting_mutantrace = src.job_creator.starting_mutantrace
-				message_admins("Admin [key_name(usr)] created special job [JOB.name]")
-				logTheThing(LOG_ADMIN, usr, "created special job [JOB.name]")
-				logTheThing(LOG_DIARY, usr, "created special job [JOB.name]", "admin")
+				src.create_job(hidden)
 
 			src.job_creator()
 
@@ -990,7 +877,53 @@ var/datum/job_controller/job_controls
 				alert(usr, "Could not find a savefile with that ckey!.")
 			src.job_creator()
 
-/proc/find_job_in_controller_by_string(var/string, var/staple_only = 0)
+///create job datum from job-creator job datum. todo just add a clone method to jobs?
+/datum/job_controller/proc/create_job(hidden = FALSE)
+	var/datum/job/created/JOB = new /datum/job/created(src)
+	if(hidden)
+		src.hidden_jobs += JOB
+	else
+		src.special_jobs += JOB
+
+	JOB.name = src.job_creator.name
+	JOB.wages = src.job_creator.wages
+	JOB.limit = src.job_creator.limit
+	JOB.mob_type = src.job_creator.mob_type
+	JOB.slot_head = src.job_creator.slot_head
+	JOB.slot_mask = src.job_creator.slot_mask
+	JOB.slot_ears = src.job_creator.slot_ears
+	JOB.slot_eyes = src.job_creator.slot_eyes
+	JOB.slot_glov = src.job_creator.slot_glov
+	JOB.slot_foot = src.job_creator.slot_foot
+	JOB.slot_card = src.job_creator.slot_card
+	JOB.slot_jump = src.job_creator.slot_jump
+	JOB.slot_suit = src.job_creator.slot_suit
+	JOB.slot_back = src.job_creator.slot_back
+	JOB.slot_belt = src.job_creator.slot_belt
+	JOB.slot_poc1 = src.job_creator.slot_poc1
+	JOB.slot_poc2 = src.job_creator.slot_poc2
+	JOB.slot_lhan = src.job_creator.slot_lhan
+	JOB.slot_rhan = src.job_creator.slot_rhan
+	JOB.access = JOB.access | src.job_creator.access
+	JOB.change_name_on_spawn = src.job_creator.change_name_on_spawn
+	JOB.special_spawn_location = src.job_creator.special_spawn_location
+	JOB.bio_effects = src.job_creator.bio_effects
+	JOB.objective = src.job_creator.objective
+	JOB.announce_on_join = src.job_creator.announce_on_join
+	JOB.radio_announcement = src.job_creator.radio_announcement
+	JOB.add_to_manifest = src.job_creator.add_to_manifest
+	JOB.receives_implants = src.job_creator.receives_implants
+	JOB.items_in_backpack = src.job_creator.items_in_backpack
+	JOB.items_in_belt = src.job_creator.items_in_belt
+	JOB.spawn_id = src.job_creator.spawn_id
+	JOB.starting_mutantrace = src.job_creator.starting_mutantrace
+	message_admins("Admin [key_name(usr)] created special job [JOB.name]")
+	logTheThing(LOG_ADMIN, usr, "created special job [JOB.name]")
+	logTheThing(LOG_DIARY, usr, "created special job [JOB.name]", "admin")
+	return JOB
+
+///Soft supresses crash on failing to find a job
+/proc/find_job_in_controller_by_string(var/string, var/staple_only = 0, var/soft = FALSE, var/case_sensitive = TRUE)
 	RETURN_TYPE(/datum/job)
 	if (!string || !istext(string))
 		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
@@ -1007,21 +940,22 @@ var/datum/job_controller/job_controls
 		return null
 	var/list/results = list()
 	for (var/datum/job/J in job_controls.staple_jobs)
-		if (J.name == string || (string in J.alias_names))
+		if (J.match_to_string(string, case_sensitive))
 			results += J
 	if (!staple_only)
 		for (var/datum/job/J in job_controls.special_jobs)
-			if (J.name == string || (string in J.alias_names))
+			if (J.match_to_string(string, case_sensitive))
 				results += J
 		for (var/datum/job/J in job_controls.hidden_jobs)
-			if (J.name == string || (string in J.alias_names))
+			if (J.match_to_string(string, case_sensitive))
 				results += J
 	if(length(results) == 1)
 		return results[1]
 	else if(length(results) > 1)
 		stack_trace("Multiple jobs share the name '[string]'!")
 		return results[1]
-	CRASH("No job found with name '[string]'!")
+	if (!soft)
+		CRASH("No job found with name '[string]'!")
 
 /proc/find_job_in_controller_by_path(var/path)
 	if (!path || !ispath(path) || !istype(path,/datum/job/))
@@ -1037,8 +971,12 @@ var/datum/job_controller/job_controls
 	return null
 
 /client/proc/cmd_job_controls()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Job Controls"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
-	if (job_controls == null) boutput(src, "<h3 class='admin'>UH OH! Shit's broken as fuck!</h3>")
-	else src.debug_variables(job_controls)
+	if (isnull(src.holder.job_manager))
+		src.holder.job_manager = new
+
+	src.holder.job_manager.ui_interact(src.mob)

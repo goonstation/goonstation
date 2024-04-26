@@ -592,24 +592,6 @@ datum
 				..()
 				return
 
-		carpet
-			name = "carpet"
-			id = "carpet"
-			description = "A covering of thick fabric used on floors. This type looks particularly gross."
-			reagent_state = LIQUID
-			fluid_r = 112
-			fluid_b = 69
-			fluid_g = 19
-			transparency = 255
-			value = 4 // 2 2
-			viscosity = 0.3
-
-			reaction_turf(var/turf/T, var/volume)
-				if (T.icon == 'icons/turf/floors.dmi' && volume >= 5)
-					SPAWN(1.5 SECONDS)
-						T.icon_state = "grimy"
-				return
-
 		fffoam
 			name = "firefighting foam"
 			id = "ff-foam"
@@ -806,7 +788,7 @@ datum
 			reaction_turf(var/turf/target, var/volume)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
-					simulated_target.wetify(2, 60, 60 SECONDS)
+					simulated_target.wetify(2, 60 SECONDS)
 
 		superlube
 			name = "organic superlubricant"
@@ -2290,6 +2272,56 @@ datum
 			fluid_g = 255
 			fluid_b = 0
 			transparency = 127
+			overdose = 25
+			var/OD_ticks = 0
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M)
+					M = holder.my_atom
+				if (holder.get_reagent_amount(src.id) < src.overdose)
+					//once we loose the OD treshold, we really stop turning into rubber
+					src.OD_ticks = 0
+				..()
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if(!M)
+					M = holder.my_atom
+				switch (severity)
+					if (1)
+						if(prob(5))
+							//while we are overdosing, we don't fully break down the OD-ticks. Gotta get under the OD-limit
+							src.OD_ticks = max(0, src.OD_ticks - 1)
+						if(prob(10) && !ON_COOLDOWN(M, "flubber_jiggling", 8 SECONDS))
+							animate_flubber(M)
+							boutput(M, SPAN_ALERT("You feel [pick("like you're bending out of shape", "a jiggling sensation", "like something is wrong")]."))
+							//your body becoming rubber should hurt. We start at 6 damage and scale up to 8 damage before hitting the really dangerous OD-limit
+							random_brute_damage(M, 8 * (holder.get_reagent_amount(src.id) / src.overdose)  * mult)
+					if (2 to INFINITY)
+						//now the real fun starts
+						src.OD_ticks += 1
+						if(src.OD_ticks > 8 && prob(10))
+							boutput(M, SPAN_ALERT("<I>Your finger's feel rubbery!</I>"))
+							if(istype(M, /mob/living))
+								var/mob/living/rubber_finger_mob = M
+								rubber_finger_mob.empty_hands()
+						switch(src.OD_ticks)
+							if (1 to 10)
+								if (prob(25) && !ON_COOLDOWN(M, "flubber_jiggling", 8 SECONDS))
+									animate_flubber(M)
+									boutput(M, SPAN_ALERT(pick("Something feels seriously off.","You can swear you have seen your back just a second ago...", "It felt like your stomach shifted upwards for a second, odd...")))
+									random_brute_damage(M, 8 * mult)
+							if (11 to 22)
+								if (prob(25) && !ON_COOLDOWN(M, "flubber_jiggling", 6 SECONDS))
+									animate_flubber(M, 6, 10, 3, 2)
+									boutput(M, SPAN_ALERT(pick("Your body cannot stop jiggling.","Your knees twist in an unsettling direction.", "Your eyes bounce inside your skull for a moment, holy fuck...")))
+									random_brute_damage(M, 10 * mult)
+							if (23 to INFINITY)
+								if (prob(25) && !ON_COOLDOWN(M, "flubber_jiggling", 6 SECONDS))
+									boutput(M, SPAN_ALERT("<B>[pick("Your body stretches to an unreasonable degree, FUCK!","You cannot control your form! MAKE. IT. STOP!", "You feel your organs jiggling into each other... IT HURTS!")]</B>"))
+									M.setStatusMin("stunned", 2 SECONDS * mult)
+									animate_flubber(M, 4, 8, 4, 2.5)
+									random_brute_damage(M, 12 * mult)
+
 
 		fliptonium
 			name = "fliptonium"
@@ -2605,12 +2637,14 @@ datum
 				if(M)
 					boutput(M, SPAN_ALERT("You feel yourself fading away."))
 					M.alpha = 0
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, src.id)
 					if(effect_length > 75)
 						M.take_brain_damage(10) // there!
 					SPAWN(effect_length * 10)
 						if(M.alpha != 255)
 							boutput(M, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
 							M.alpha = 255
+							REMOVE_ATOM_PROPERTY(M, PROP_MOB_HIDE_ICONS, src.id)
 
 			do_overdose(var/severity, var/mob/living/M, var/mult = 1)
 				var/effect = ..(severity, M)
@@ -3181,6 +3215,7 @@ datum
 			value = 2
 			var/list/pathogens = list()
 			var/pathogens_processed = 0
+			var/congealed = FALSE //! if this blood came from a pill, stops vampires getting points from it
 			hygiene_value = -2
 			hunger_value = 0.068
 			viscosity = 0.4
@@ -3213,11 +3248,10 @@ datum
 				if (!ishuman(M)) return
 				if (method == INGEST)
 					if (M.mind)
-						var/mob/living/carbon/human/H = M
-						if (istype(H.mutantrace, /datum/mutantrace/vampiric_thrall))
-							var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
+						var/datum/abilityHolder/vampiric_thrall/thrallHolder = M.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+						if (thrallHolder)
 							var/bloodget = volume_passed / 4
-							V.blood_points += bloodget
+							thrallHolder.points += bloodget
 							holder.del_reagent(src.id)
 
 						if (isvampire(M))
@@ -3227,6 +3261,9 @@ datum
 								/*if (M.bioHolder && (src.blood_DNA == M.bioHolder.Uid))
 									M.show_text("Injecting your own blood? Who are you kidding?", "red")
 									return*/
+								if (src.congealed)
+									boutput(M, SPAN_ALERT("EUGH! This blood is totally congealed and worthless."))
+									return 1
 								if (prob(33))
 									boutput(M, SPAN_ALERT("Fresh blood would be better..."))
 								var/bloodget = volume_passed / 3
@@ -3267,6 +3304,9 @@ datum
 						DNA.endurance++
 
 			on_transfer(var/datum/reagents/source, var/datum/reagents/target, var/trans_amt)
+				if (istype(target.my_atom, /obj/item/reagent_containers/pill))
+					var/datum/reagent/blood/blood = target.get_reagent("blood")
+					blood.congealed = TRUE
 				var/list/source_pathogens = source.aggregate_pathogens()
 				var/list/target_pathogens = target.aggregate_pathogens()
 				var/target_changed = 0
@@ -3282,7 +3322,6 @@ datum
 							if (!istype(B))
 								continue
 							B.pathogens = target_pathogens
-				return
 
 		blood/bloodc
 			id = "bloodc"
@@ -4187,6 +4226,7 @@ datum
 			proc/analyzed(source, mob/user)
 				if (!issilicon(user) && !isAI(user) && !isintangible(user) && !isobserver(user)) //there's probably other things we should exclude here
 					src.holder.trans_to(user, max(1, src.volume))
+
 
 /obj/badman/ //I really don't know a good spot to put this guy so im putting him here, fuck you.
 	name = "Senator Death Badman"

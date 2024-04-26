@@ -148,9 +148,9 @@ var/global/lastStationNameChange = 0 //timestamp
 /proc/verify_station_name(name, adminset)
 	//Admins can just kinda set it to whatever
 	if (adminset)
-		return trim(name)
+		return trimtext(name)
 
-	name = lowertext(trim(name))
+	name = lowertext(trimtext(name))
 
 	if (length(name) < 1 || length(name) > MAX_STATION_NAME_LENGTH)
 		return 0
@@ -173,7 +173,7 @@ var/global/lastStationNameChange = 0 //timestamp
 
 		formattedName += station_name_whitelist[lowertext(word)] + " "
 
-	return valid ? trim(formattedName) : valid
+	return valid ? trimtext(formattedName) : valid
 
 
 /proc/set_station_name(mob/user = null, manual = null, admin_override=null, name=null)
@@ -223,6 +223,9 @@ var/global/lastStationNameChange = 0 //timestamp
 				#endif
 			else
 				the_station_name = name
+
+	var/datum/eventRecord/StationName/stationNameEvent = new()
+	stationNameEvent.send(name)
 
 	station_name = name
 

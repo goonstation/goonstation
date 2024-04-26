@@ -78,6 +78,8 @@
 
 /mob/new_player/AIize(var/mobile=0)
 	src.spawning = 1
+	src.name = "AI"
+	src.real_name = "AI"
 	return ..()
 
 /mob/living/carbon/AIize(var/mobile=0)
@@ -173,6 +175,7 @@
 		newmob.ghost_spawned = ghost_spawned
 		if(!istype(newmob, /mob/living/critter/small_animal/mouse/weak/mentor))
 			newmob.name_prefix("ethereal")
+			newmob.name_suffix("[rand(10,99)][rand(10,99)]")
 			newmob.UpdateName()
 	if (!T || !isturf(T))
 		T = get_turf(src)
@@ -570,11 +573,6 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	if(!src.client.holder)
 		boutput(src, SPAN_ALERT("You aren't even an admin, how did you get here?!"))
-		return
-
-	// has the game started?
-	if(!ticker || !ticker.mode)
-		boutput(src, SPAN_ALERT("The game hasn't started yet, silly!"))
 		return
 
 	if (tgui_alert(src, "Are you sure you want to respawn as an admin mouse?", "Respawn as Animal", list("Yes", "No")) != "Yes")

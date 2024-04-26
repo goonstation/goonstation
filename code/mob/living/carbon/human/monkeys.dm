@@ -2,6 +2,7 @@
 #define IS_NPC_HATED_ITEM(x) ( \
 		istype(x, /obj/item/handcuffs) || \
 		istype(x, /obj/item/device/radio/electropack) || \
+		istype(x, /obj/item/reagent_containers/balloon) || \
 		x:block_vision \
 	)
 
@@ -229,6 +230,7 @@
 	var/list/shitlist = list()
 	var/ai_aggression_timeout = 600
 	var/ai_poke_thing_chance = 1
+	var/ai_delay_move = FALSE //! Delays the AI from moving a single time if set
 	default_mutantrace = /datum/mutantrace/monkey
 
 	New()
@@ -258,6 +260,15 @@
 			return
 		..()
 		if (src.ai_state == 0)
+			if (istype(src.equipped(),/obj/item/implant/projectile/body_visible/dart/bardart))
+				for (var/obj/item/reagent_containers/balloon/balloon in view(7, src))
+					src.throw_item(balloon, list("npc_throw"))
+					src.ai_delay_move = TRUE
+					break
+			else if (!src.equipped())
+				for (var/obj/item/implant/projectile/body_visible/dart/bardart/dart in view(1, src))
+					src.hand_attack(dart)
+					break
 			if (prob(50))
 				src.ai_pickpocket(priority_only=prob(80))
 			else if (prob(50))
@@ -477,18 +488,15 @@
 				if(!length(choices))
 					return
 				thingy = pick(choices)
-				slot = thingy.equipped_in_slot
 			else if (theft_target.l_store && theft_target.r_store)
 				thingy = pick(theft_target.l_store, theft_target.r_store)
-				if (thingy == theft_target.r_store)
-					slot = 16
 			else if (theft_target.l_store)
 				thingy = theft_target.l_store
 			else if (theft_target.r_store)
 				thingy = theft_target.r_store
-				slot = 16
 			else // ???
 				return
+		slot = theft_target.get_slot_from_item(thingy)
 		walk_towards(src, null)
 		if(ismonkey(theft_target))
 			src.say("I help!")
@@ -498,6 +506,9 @@
 
 	ai_move()
 		if(src.ai_picking_pocket)
+			return
+		if(src.ai_delay_move)
+			src.ai_delay_move = FALSE
 			return
 		. = ..()
 
@@ -565,9 +576,12 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 
-	var/mob/living/carbon/human/npc/source  //The npc doing the action
-	var/mob/living/carbon/human/target  	//The target of the action
-	var/slot						    	//The slot number
+	/// NPC who is pickpocketing
+	var/mob/living/carbon/human/npc/source
+	/// The pick-pocketing victim
+	var/mob/living/carbon/human/target
+	/// The SLOT_* define (i.e. SLOT_BACK)
+	var/slot
 
 	New(var/Source, var/Target, var/Slot)
 		source = Source

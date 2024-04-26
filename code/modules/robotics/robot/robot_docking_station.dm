@@ -88,7 +88,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 /obj/machinery/recharge_station/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing))
 		if (!istype(W, /obj/item/clothing/mask) && !istype(W, /obj/item/clothing/head) && !istype(W, /obj/item/clothing/under) && !istype(W, /obj/item/clothing/suit))
-			boutput(user, SPAN_ALERT("This type of is not compatible."))
+			boutput(user, SPAN_ALERT("This type of clothing is not compatible."))
 			return
 		if (user.contents.Find(W))
 			user.drop_item()
@@ -182,6 +182,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 	src.build_icon()
 	return TRUE
 
+/obj/machinery/recharge_station/Click(location, control, params)
+	if(!src.ghost_observe_occupant(usr, src.occupant))
+		. = ..()
+
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
 	if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0)
 		return
@@ -189,7 +193,8 @@ TYPEINFO(/obj/machinery/recharge_station)
 		return
 	if (!isliving(user) || isAI(user))
 		return
-
+	if (isintangible(user))
+		return
 	if (isitem(AM) && can_act(user))
 		src.Attackby(AM, user)
 		return

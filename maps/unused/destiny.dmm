@@ -12380,7 +12380,7 @@
 /area/station/crew_quarters/pool)
 "bng" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -51023,7 +51023,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "tyD" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
