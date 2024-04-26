@@ -511,7 +511,7 @@ TYPEINFO(/obj/item/device/matanalyzer)
 
 /obj/item/device/matanalyzer
 	icon_state = "matanalyzer"
-	name = "Material analyzer"
+	name = "material analyzer"
 	desc = "This piece of equipment can detect and analyze materials."
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
