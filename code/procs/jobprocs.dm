@@ -543,14 +543,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				#undef MAX_ALLOWED_ITERATIONS
 
 		if (src.traitHolder && src.traitHolder.hasTrait("sleepy"))
-			logTheThing(LOG_STATION, src, "has the Heavy Sleeper trait and is trying to spawn")
 			var/list/valid_beds = list()
 			for_by_tcl(bed, /obj/stool/bed)
 				if (bed.z == Z_LEVEL_STATION && istype(get_area(bed), /area/station)) //believe it or not there are station areas on nonstation z levels
 					if (!(locate(/mob/living/carbon/human) in get_turf(bed))) //this is slow but it's Probably worth it
 						valid_beds += bed
 
-			logTheThing(LOG_STATION, src, "has the Heavy Sleeper trait and has finished iterating through beds.")
 			if (length(valid_beds) > 0)
 				var/obj/stool/bed/picked = pick(valid_beds)
 				src.set_loc(get_turf(picked))
