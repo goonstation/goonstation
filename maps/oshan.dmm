@@ -46938,8 +46938,8 @@
 /area/station/engine/engineering)
 "ygP" = (
 /obj/machinery/light/incandescent/greenish,
-/obj/item/shipcomponent/pod_lights/police_siren,
-/obj/item/shipcomponent/pod_lights/police_siren,
+/obj/item/shipcomponent/secondary_system/police_siren,
+/obj/item/shipcomponent/secondary_system/police_siren,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "yhP" = (

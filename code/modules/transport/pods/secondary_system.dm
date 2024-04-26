@@ -1148,3 +1148,42 @@
 			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is installed."
 			tooltip_rebuild = 1
 			return
+
+/obj/item/shipcomponent/secondary_system/police_siren
+	name = "Police Lights"
+	desc = "Wee woo."
+	icon_state= "sec_system"
+	hud_state = "siren"
+	/// Number of red&blue light cycles remaining
+	var/light_cycle_count = 0
+
+	Use(mob/user as mob)
+		activate()
+
+	activate()
+		. = ..()
+		if(.)
+			src.siren()
+			return TRUE
+
+	deactivate()
+		. = ..()
+		src.light_cycle_count = 0
+		ship.remove_sm_light("pod_siren\ref[src]")
+
+	proc/siren()
+		if(src.light_cycle_count > 0)
+			return
+
+		src.light_cycle_count = 10
+
+		SPAWN(0)
+			playsound(src.loc, 'sound/machines/siren_police.ogg', 50, 1)
+			ship.add_sm_light("pod_siren\ref[src]", list(0.1*255,0.1*255,0.9*255,200), directional = 1)
+
+			while(light_cycle_count-- > 0)
+				ship.add_sm_light("pod_siren\ref[src]", list(0.9*255,0.1*255,0.1*255,200), directional = 1)
+				sleep(0.3 SECONDS)
+				ship.add_sm_light("pod_siren\ref[src]", list(0.1*255,0.1*255,0.9*255,200), directional = 1)
+				sleep(0.3 SECONDS)
+			src.deactivate()

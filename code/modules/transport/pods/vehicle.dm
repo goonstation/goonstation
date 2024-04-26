@@ -2168,10 +2168,8 @@
 			name = "security patrol car"
 			desc = "A Toriyama-Okawara SV-93 personal mobility vehicle, outfitted with a taser gun, siren system and a security livery."
 			Install(new /obj/item/shipcomponent/mainweapon/taser(src))
+			Install(new /obj/item/shipcomponent/secondary_system/police_siren(src))
 
-			src.lights = new /obj/item/shipcomponent/pod_lights/police_siren( src )
-			src.lights.ship = src
-			src.components += src.lights
 /*
 	engineering
 		body_type =

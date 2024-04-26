@@ -36345,10 +36345,10 @@
 /area/flock_trader)
 "pmO" = (
 /obj/table/reinforced/auto,
-/obj/item/shipcomponent/pod_lights/police_siren{
+/obj/item/shipcomponent/secondary_system/police_siren{
 	pixel_x = 12
 	},
-/obj/item/shipcomponent/pod_lights/police_siren{
+/obj/item/shipcomponent/secondary_system/police_siren{
 	pixel_x = -4
 	},
 /obj/table/reinforced/auto,
