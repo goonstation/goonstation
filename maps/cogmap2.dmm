@@ -10112,12 +10112,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"aDC" = (
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "aDD" = (
 /obj/disposalpipe/switch_junction/biofilter{
 	dir = 4;
@@ -52076,18 +52070,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/pharmacy)
-"cYR" = (
-/obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
 "cYS" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -64152,14 +64134,6 @@
 	dir = 9
 	},
 /area/space)
-"lmZ" = (
-/obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/blue,
-/area/station/medical/medbay/pharmacy)
 "lnj" = (
 /turf/unsimulated/floor/shuttle/green{
 	dir = 4
@@ -70117,6 +70091,14 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/catwalk/north)
+"rDe" = (
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/pharmacy)
 "rDA" = (
 /obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/simulated/floor,
@@ -73139,6 +73121,18 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"uPB" = (
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/pharmacy)
 "uPO" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
@@ -75285,6 +75279,13 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"xJR" = (
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/obj/machinery/chem_dispenser/chef,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "xJS" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
@@ -107348,7 +107349,7 @@ auT
 auT
 aAU
 aCp
-aDC
+xJR
 ase
 aFW
 aHH
@@ -108047,9 +108048,9 @@ cSy
 cGJ
 cGJ
 cGI
-lmZ
+rDe
 ydT
-cYR
+uPB
 cGI
 cGI
 cGJ
