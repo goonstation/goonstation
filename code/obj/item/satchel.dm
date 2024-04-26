@@ -7,16 +7,13 @@
 	health = 6
 	w_class = W_CLASS_TINY
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
-	var/maxitems = 50
+	var/maxitems = 30
 	var/max_stack_scoop = 20 //! if you try to put stacks inside the item, this one limits how much you can in one action. Creating 100 items out of a stack in a single action should not happen.
 	var/list/allowed = null
 	var/list/exceptions = null //! this list are for items that are in the allowed-list for other reasons, but should not be able to be put in satchels
 	var/maximal_w_class = W_CLASS_BULKY //! the maximum weight class the satchels should be able to carry.
 	var/itemstring = "items"
 	inventory_counter_enabled = 1
-
-	HELP_MESSAGE_OVERRIDE("Click on it to pull out a random item, or click on it with <b>Grab Intent</b> to search for a specific item.")
-
 
 	New()
 		..()
@@ -62,69 +59,6 @@
 			src.UpdateIcon()
 			tooltip_rebuild = 1
 		else ..()
-
-	attack_hand(mob/user)
-		// There's a hilarious bug in here - if you're searching through the container
-		// and then throw it, after you finish searching the container will just.
-		// warp back to your hands.
-		// This is probably easily fixable by just running the check again
-		// but to be honest this is one of those funny bugs that can be fixed later
-
-		if (GET_DIST(user, src) <= 0 && length(src.contents))
-			if (user.l_hand == src || user.r_hand == src)
-				var/obj/item/getItem = null
-
-				if (length(src.contents) > 1)
-					if (user.a_intent == INTENT_GRAB)
-						getItem = src.search_through(user)
-
-					else
-						user.visible_message(SPAN_NOTICE("<b>[user]</b> rummages through \the [src]."),\
-						SPAN_NOTICE("You rummage through \the [src]."))
-
-						getItem = pick(src.contents)
-
-				else if (length(src.contents) == 1)
-					getItem = src.contents[1]
-
-				if (getItem)
-					user.visible_message(SPAN_NOTICE("<b>[user]</b> takes \a [getItem.name] out of \the [src]."),\
-					SPAN_NOTICE("You take \a [getItem.name] from [src]."))
-					user.put_in_hand_or_drop(getItem)
-					src.UpdateIcon()
-			tooltip_rebuild = 1
-		return ..(user)
-
-	proc/search_through(mob/user as mob)
-
-		if(!istype(user))
-			return
-
-		// attack_hand does all the checks for if you can do this
-		user.visible_message(SPAN_NOTICE("<b>[user]</b> looks through \the [src]..."),\
-		SPAN_NOTICE("You look through \the [src]."))
-		var/list/satchel_contents = list()
-		var/list/has_dupes = list()
-		var/temp = ""
-		for (var/obj/item/I in src.contents)
-			temp = ""
-			if (satchel_contents[I.name])
-				if (has_dupes[I.name])
-					has_dupes[I.name] = has_dupes[I.name] + 1
-				else
-					has_dupes[I.name] = 2
-				temp = "[I.name] ([has_dupes[I.name]])"
-				satchel_contents += temp
-				satchel_contents[temp] = I
-			else
-				temp = "[I.name]"
-				satchel_contents += temp
-				satchel_contents[temp] = I
-		sortList(satchel_contents, /proc/cmp_text_asc)
-		var/chosenItem = input("Select an item to pull out.", "Choose Item") as null|anything in satchel_contents
-		if (!chosenItem || !(satchel_contents[chosenItem] in src.contents))
-			return
-		return satchel_contents[chosenItem]
 
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
@@ -273,7 +207,7 @@
 
 		large
 			desc = "A leather satchel for carrying around crops and seeds. This one happens to be <em>really</em> big."
-			maxitems = 200
+			maxitems = 100
 
 
 	mining
