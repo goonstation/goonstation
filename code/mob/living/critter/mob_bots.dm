@@ -646,7 +646,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	if (C.hasStatus("handcuffed"))
 		return FALSE // already handled
 	var/threat_level = assess_perp(C)
-	if (threat_level < 4)
+	if (GET_COOLDOWN(C,"MARKED_FOR_SECURITRON_ARREST")) // set in assess_perp
 		return FALSE // not a threat
 	if (GET_COOLDOWN(C,"ARRESTED_BY_SECURITRON_\ref[src]"))
 		return FALSE // we JUST arrested this jerk
@@ -654,6 +654,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	if(. && !ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
 		src.accuse_perp(C, threat_level)
 		src.siren()
+
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
@@ -692,12 +693,14 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 	// we have grounds to make an arrest, don't bother with further analysis
 	if(threatcount >= 4)
+		EXTEND_COOLDOWN(perp, "MARKED_FOR_SECURITRON_ARREST", threatcount * 2.5 SECONDS)
 		return threatcount
 
 	// note - this does allow flagging 'fire elemental' and such for arrest. probably fine
 	if (src.check_records) // bot is set to actively compare security records
 		for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
 			if(R["criminal"] == "*Arrest*")
+				EXTEND_COOLDOWN(perp, "MARKED_FOR_SECURITRON_ARREST", 1 SECOND) // clearing a record stops securitrons quickly
 				threatcount = 7
 				break
 
@@ -715,6 +718,14 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		if(src.check_access(H.wear_id))
 			return 1
 	return 0
+
+/mob/living/critter/robotic/securitron/critter_attack(mob/target)
+	if((target.lying) && ishuman(target) && !target.hasStatus("handcuffed"))
+		var/datum/targetable/critter/handcuff = src.abilityHolder.getAbility(/datum/targetable/critter/bot/handcuff)
+		if(handcuff && !handcuff.disabled && handcuff.cooldowncheck())
+			handcuff.handleCast(target)
+			return
+	..()
 
 /mob/living/critter/robotic/securitron/proc/check_access(obj/item/I)
 	if(!istype(src.req_access, /list)) //something's very wrong
@@ -735,9 +746,11 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	. = ..()
 	if(src.get_health_percentage() >= 0.6 && src.allowed(attcker)) // if health is more than 60%, assume it was friendly fire
 		. = FALSE
-	if(. && !ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
-		src.accuse_perp(attcker, 7)
-		src.siren()
+	if(.)
+		EXTEND_COOLDOWN(attcker, "MARKED_FOR_SECURITRON_ARREST", 5 SECONDS)
+		if(!ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
+			src.accuse_perp(attcker, rand(5,8))
+			src.siren()
 
 /mob/living/critter/robotic/securitron/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(ON_COOLDOWN(src,"EMAG_COOLDOWN",12 SECONDS)) // no rapid double emags
@@ -766,34 +779,34 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "firebot_fire"
 
-	cast(atom/target)
-		if (..())
+/datum/targetable/critter/bot/handcuff/cast(atom/target)
+	if (..())
+		return TRUE
+	var/mob/living/carbon/human/H = target
+	if (!ishuman(target))
+		target = get_turf(target)
+	if (isturf(target))
+		H = locate(/mob/living/carbon/human) in target
+		if (!H)
+			boutput(holder.owner, "<span class='alert'>Nothing to detain there.</span>")
 			return TRUE
-		var/mob/living/carbon/human/H = target
-		if (!ishuman(target))
-			target = get_turf(target)
-		if (isturf(target))
-			H = locate(/mob/living/carbon/human) in target
-			if (!H)
-				boutput(holder.owner, "<span class='alert'>Nothing to detain there.</span>")
-				return TRUE
-		if (H == holder.owner)
-			return TRUE
-		if (!H.lying)
-			boutput(holder.owner, "<span class='alert'>The target must be lying down.</span>")
-			return TRUE
-		if (BOUNDS_DIST(holder.owner, H) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to detain.</span>")
-			return TRUE
-		var/mob/M = holder.owner
-		if (!isturf(M.loc))
-			boutput(holder.owner, "<span class='alert'>You'll need to get out of \the [M.loc] before trying to detain someone.")
-			return TRUE
-		if (target.hasStatus("handcuffed"))
-			boutput(holder.owner, "<span class='alert'>That target is already cuffed.</span>")
-			return TRUE
-		actions.start(new/datum/action/bar/icon/mob_secbot_cuff(M, H), M)
-		return 0
+	if (H == holder.owner)
+		return TRUE
+	if (!H.lying)
+		boutput(holder.owner, "<span class='alert'>The target must be lying down.</span>")
+		return TRUE
+	if (BOUNDS_DIST(holder.owner, H) > 0)
+		boutput(holder.owner, "<span class='alert'>That is too far away to detain.</span>")
+		return TRUE
+	var/mob/M = holder.owner
+	if (!isturf(M.loc))
+		boutput(holder.owner, "<span class='alert'>You'll need to get out of \the [M.loc] before trying to detain someone.")
+		return TRUE
+	if (target.hasStatus("handcuffed"))
+		boutput(holder.owner, "<span class='alert'>That target is already cuffed.</span>")
+		return TRUE
+	actions.start(new/datum/action/bar/icon/mob_secbot_cuff(M, H), M)
+	return 0
 
 /datum/action/bar/icon/mob_secbot_cuff
 	duration = 4 SECONDS
