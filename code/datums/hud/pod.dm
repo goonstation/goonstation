@@ -39,7 +39,7 @@
 		sensors = create_screen("sensors", "Sensors", 'icons/mob/hud_pod.dmi', "sensors-off", "NORTH+1,WEST+5", tooltipTheme = "pod-alt", desc = "Turn the pod's sensors on or off")
 		sensors_use = create_screen("sensors_use", "Activate Sensors", 'icons/mob/hud_pod.dmi', "sensors-use", "NORTH+1,WEST+6", tooltipTheme = "pod", desc = "Use the pod's sensors to search for drones and lifeforms nearby")
 		weapon = create_screen("weapon", "Main Weapon", 'icons/mob/hud_pod.dmi', "weapon-off", "NORTH+1,WEST+7", tooltipTheme = "pod-alt", desc = "Turn the main weapon on or off, if the pod is equipped with one")
-		lights = create_screen("lights", "Toggle Lights", 'icons/mob/hud_pod.dmi', "lights_off", "NORTH+1, WEST+8", tooltipTheme = "pod", desc = "Turn the pod's external lights on or off")
+		lights = create_screen("lights", "Toggle Lights", 'icons/mob/hud_pod.dmi', "lights-off", "NORTH+1, WEST+8", tooltipTheme = "pod", desc = "Turn the pod's external lights on or off")
 		secondary = create_screen("secondary", "Secondary System", 'icons/mob/hud_pod.dmi', "blank", "NORTH+1,WEST+9", tooltipTheme = "pod", desc = "Enable or disable the secondary system installed in the pod, if there is one")
 		lock = create_screen("lock", "Lock", 'icons/mob/hud_pod.dmi', "lock-locked", "NORTH+1,WEST+10", tooltipTheme = "pod-alt", desc = "LOCK YOUR PODS YOU DOOFUSES")
 		set_code = create_screen("set_code", "Set Lock code", 'icons/mob/hud_pod.dmi', "set-code", "NORTH+1,WEST+11", tooltipTheme = "pod", desc = "Set the code used to unlock the pod")
@@ -157,11 +157,12 @@
 				lock.icon_state = "lock-locked"
 			else
 				lock.icon_state = "lock-unlocked"
+
 		if (master.lights)
 			if (master.lights.active)
-				lights.icon_state = "lights_on"
+				lights.icon_state = "[master.lights.hud_state]-on"
 			else
-				lights.icon_state = "lights_off"
+				lights.icon_state = "[master.lights.hud_state]-off"
 
 		if (master.rcs)
 			rcs.icon_state = "rcs-on"
