@@ -223,6 +223,7 @@
 	var/radiation_dose_decay = 0.02 //at this rate, assuming no lag, it will take 40 life ticks, or ~80 seconds to recover naturally from 1st stage radiation posioning,
 	/// last time this mob got dosed with radiation
 	var/last_radiation_dose_time = 0
+
 	/// set to observed mob if you're currently observing a mob, otherwise null
 	var/mob/observing = null
 	/// A list of emotes that trigger a special action for this mob

@@ -39,7 +39,7 @@
 	elements = null
 
 /// Internal use only. Recalculates all offsets for the elements/
-/datum/hud_zone/proc/recalculate_offsets()
+/datum/hud_zone/proc/recalculate_offsets() as null
 	PRIVATE_PROC(TRUE)
 	src.horizontal_offset = 0
 	src.vertical_offset = 0
@@ -55,17 +55,17 @@
 /datum/hud_zone/proc/adjust_offset(datum/hud_element/element)
 	PRIVATE_PROC(TRUE)
 	// prework
-	var/absolute_pos_horizontal // absolute horizontal position (whole screen) where new elements are added, used with hud offsets
+	var/relative_pos_horizontal // absolute horizontal position (whole screen) where new elements are added, used with hud offsets
 	if (src.horizontal_edge == "EAST")
-		absolute_pos_horizontal = 21 - src.coords["x_high"] // take x loc of right corner (east edge), adjust to be on west edge
+		relative_pos_horizontal = 21 - src.coords["x_high"] // take x loc of right corner (east edge), adjust to be on west edge
 	else // west
-		absolute_pos_horizontal = 0 + src.coords["x_low"] // take x loc of left corner (west edge)
+		relative_pos_horizontal = 0 + src.coords["x_low"] - 1 // take x loc of left corner (west edge)
 
-	var/absolute_pos_vertical // absolute vertical position (whole screen) where new elements are added, used with hud offsets
+	var/relative_pos_vertical // absolute vertical position (whole screen) where new elements are added, used with hud offsets
 	if (src.vertical_edge == "NORTH")
-		absolute_pos_vertical = 15 - src.coords["y_high"] // take y loc of top corner (north edge), adjust to be on south edge
+		relative_pos_vertical = TILE_HEIGHT - src.coords["y_high"] // take y loc of top corner (north edge), adjust to be on south edge
 	else // south
-		absolute_pos_vertical = 0 + src.coords["y_low"] // take y loc of bottom corner (south edge)
+		relative_pos_vertical = 0 + src.coords["y_low"] - 1 // take y loc of bottom corner (south edge)
 
 	// wraparound handling
 	if (src.ensure_empty(element) == HUD_ZONE_FULL)
@@ -73,14 +73,14 @@
 
 	// screenloc figuring outing
 	var/screen_loc_horizontal = src.horizontal_edge
-	var/horizontal_offset_adjusted = (absolute_pos_horizontal + src.horizontal_offset - 1) // Convert from 1-indexed to 0-indexed
+	var/horizontal_offset_adjusted = (relative_pos_horizontal + src.horizontal_offset)
 	if (screen_loc_horizontal == "EAST") // elements added with an east bound move left, elements with a west bound move right
 		screen_loc_horizontal += "-[horizontal_offset_adjusted]"
 	else
 		screen_loc_horizontal += "+[horizontal_offset_adjusted]"
 
 	var/screen_loc_vertical = src.vertical_edge
-	var/vertical_offset_adjusted = (absolute_pos_vertical + src.vertical_offset - 1) // Convert from 1-indexed to 0-indexed
+	var/vertical_offset_adjusted = (relative_pos_vertical + src.vertical_offset)
 	if (screen_loc_vertical == "NORTH") // elements added with an east bound move left, elements with a west bound move right
 		screen_loc_vertical += "-[vertical_offset_adjusted]"
 	else
