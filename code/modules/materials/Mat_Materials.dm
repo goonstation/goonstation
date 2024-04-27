@@ -700,7 +700,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		value = 300
 
-		setProperty("density", 5)
+		setProperty("density", 6)
 		setProperty("hard", 2)
 		setProperty("reflective", 6)
 		setProperty("electrical", 7)
