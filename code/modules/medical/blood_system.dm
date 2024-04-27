@@ -685,7 +685,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		src.show_text("[L == src ? "You're" : "Someone's"] already putting pressure on [L == src ? "your" : "[L]'s"] wounds!", "red")
 		return
 
-	L?.add_fingerprint(src)
+	L.add_fingerprint(src)
 	L.being_staunched = TRUE
 
 	src.tri_message(L, SPAN_NOTICE("<b>[src]</b> puts pressure on [src == L ? "[his_or_her(L)]" : "[L]'s"] wounds, trying to stop the bleeding!"),\
