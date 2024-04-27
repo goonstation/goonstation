@@ -243,8 +243,7 @@
 		var/target = "(Ckey: [banDetail.ckey], IP: [banDetail.ip], CompID: [banDetail.comp_id])"
 
 		logTheThing(LOG_DEBUG, "Adding evasion ban, original ban detail field: [ban.original_ban_detail]")
-		var/list/original_details = json_decode(ban.original_ban_detail)
-		var/original_ckey = original_details["ckey"]
+		var/original_ckey = ban.original_ban_detail["ckey"]
 
 		// Tell admins
 		var/msg = "added ban [evasion ? "evasion" : ""] details [target] to ban ID [ban.id], original ckey: [original_ckey]"
