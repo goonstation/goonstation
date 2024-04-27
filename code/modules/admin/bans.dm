@@ -241,6 +241,7 @@
 		var/messageAdminsAdmin = admin_ckey == "bot" ? admin_ckey : key_name(adminClient ? adminClient : admin_ckey)
 		var/target = "(Ckey: [banDetail.ckey], IP: [banDetail.ip], CompID: [banDetail.comp_id])"
 
+		logTheThing(LOG_DEBUG, "Adding evasion ban, original ban detail field: [ban.original_ban_detail]")
 		var/list/original_details = json_decode(ban.original_ban_detail)
 		var/original_ckey = original_details["ckey"]
 
