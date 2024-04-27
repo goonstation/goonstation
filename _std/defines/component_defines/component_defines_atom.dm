@@ -78,7 +78,7 @@
 	#define COMSIG_MOVABLE_HIT_THROWN "mov_hit_thrown"
 	/// when an AM is teleported by do_teleport
 	#define COMSIG_MOVABLE_TELEPORTED "mov_teleport"
-	/// when an AM changes contraband level, propagating up
+	/// when an AM changes contraband level (self_applied)
 	#define COMSIG_MOVABLE_CONTRABAND_CHANGED "mov_contraband_changed"
 	/// when an AM is revealed from under a floor tile (turf revealed from)
 	#define COMSIG_MOVABLE_FLOOR_REVEALED "mov_floor_revealed"
