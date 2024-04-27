@@ -243,7 +243,7 @@
 		var/original_ckey = ban.original_ban_detail["ckey"]
 
 		// Tell admins
-		var/msg = "added ban [evasion ? "evasion" : ""] details [target] to ban ID [ban.id], original ckey: [original_ckey]"
+		var/msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID [ban.id], Original Ckey: [original_ckey]"
 		logTheThing(LOG_ADMIN, adminClient ? adminClient : admin_ckey, msg)
 		logTheThing(LOG_DIARY, adminClient ? adminClient : admin_ckey, msg, "admin")
 		message_admins("<span class='internal'>[messageAdminsAdmin] [msg]</span>")
