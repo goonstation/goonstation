@@ -187,7 +187,7 @@
 			if (length(load) == 1)
 				crate = load[1]
 			else
-				crate = input(usr, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
+				crate = src.get_unloadable(usr)
 			if(!crate)
 				return
 			unload(crate)
@@ -214,7 +214,7 @@
 		boutput(user, SPAN_ALERT("[src] has nothing to unload."))
 		return
 
-	var/crate = input(user, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
+	var/crate = src.get_unloadable(user)
 	if(!crate)
 		return
 
@@ -317,6 +317,18 @@
 		C.set_loc(ship.loc)
 	step(C, turn(ship.dir,180))
 	return C
+
+/obj/item/shipcomponent/secondary_system/cargo/proc/get_unloadable(mob/user)
+	var/list/cargo_by_name = list()
+	var/list/counts_by_type = list()
+	for (var/atom/movable/AM as anything in src.load)
+		counts_by_type[AM.type] += 1
+		if (counts_by_type[AM.type] == 1)
+			cargo_by_name[AM.name] = AM
+		else
+			cargo_by_name["[AM.name] #[counts_by_type[AM.type]]"] = AM
+
+	return cargo_by_name[tgui_input_list(user, "Choose which cargo to unload", "Choose Cargo", sortList(cargo_by_name, GLOBAL_PROC_REF(cmp_text_asc)))]
 
 /obj/item/shipcomponent/secondary_system/cargo/on_shipdeath(var/obj/machinery/vehicle/ship)
 	shuffle_list(src.load)
