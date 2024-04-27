@@ -290,6 +290,10 @@ TYPEINFO(/obj/machinery/sleeper)
 			occupant = null
 		..()
 
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
+
 	update_icon()
 		ENSURE_IMAGE(src.image_lid, src.icon, "sleeperlid[!isnull(occupant)]")
 		src.UpdateOverlays(src.image_lid, "lid")

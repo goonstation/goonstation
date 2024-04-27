@@ -123,15 +123,15 @@
 			user.Attackby(src, user)
 		return
 
-	throw_impact(atom/M, datum/thrown_thing/thr)
+	throw_impact(atom/hit_thing, datum/thrown_thing/thr)
 		..()
-		if (src.medical && !borg && !src.in_use && (can_operate_on(M)))
+		if (src.medical && !borg && !src.in_use && (can_operate_on(hit_thing)))
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
-				M.visible_message(SPAN_ALERT("[src] lands on [M] sticky side down!"))
-				logTheThing(LOG_COMBAT, M, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(M)].")
-				apply_to(M,usr)
-				attach_sticker(M)
+				hit_thing.visible_message(SPAN_ALERT("[src] lands on [hit_thing] sticky side down!"))
+				logTheThing(LOG_COMBAT, hit_thing, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(hit_thing)].")
+				apply_to(hit_thing, usr)
+				attach_sticker(hit_thing)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.in_use)

@@ -33,7 +33,7 @@ var/global/datum/eventRecorder/eventRecorder
 		addr += "[config.goonhub_events_endpoint]:[config.goonhub_events_port]"
 		var/res = rustg_redis_connect_rq(addr)
 
-		if (res)
+		if (isnull(res) || (json_decode(res)["success"] == FALSE))
 			src.connected = FALSE
 			var/logMsg = "Failed to connect to Goonhub Event Recording service. Reason: [res]"
 			logTheThing(LOG_DEBUG, null, "<b>Event Recorder:</b> [logMsg]")

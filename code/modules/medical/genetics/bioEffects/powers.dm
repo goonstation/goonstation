@@ -2276,7 +2276,7 @@
 					//double power if the ability is empowered (doesn't really do anything, but w/e)
 					var/tmp_force = thrown_limb.throwforce
 					thrown_limb.throwforce = limb_force* (throw_power+1)	//double damage if empowered
-					var/callback = (SL?.stun_mode) ? /datum/targetable/geneticsAbility/shoot_limb/proc/hit_callback : null
+					var/datum/callback/callback = (SL?.stun_mode) ? CALLBACK(src, PROC_REF(hit_callback)) : null
 					thrown_limb.throw_at(target, range, throw_power * (linked_power.power), end_throw_callback=callback)
 					//without snychronizer, you take damage and bleed on usage of the power
 					if (!linked_power.safety)

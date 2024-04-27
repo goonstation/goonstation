@@ -258,7 +258,7 @@
 		controller.show_text("Interface failure with the radio!", "red")
 		return
 
-	src.rad.attack_self(controller)
+	src.rad.AttackSelf(controller)
 
 /obj/item/device/brainjar/proc/control_signaller()
 	set name = "Control Signaller"
@@ -270,7 +270,7 @@
 		controller.show_text("Interface failure with the remote signalling device!", "red")
 		return
 
-	src.signal.attack_self(controller)
+	src.signal.AttackSelf(controller)
 
 
 /obj/item/device/brainjar/proc/control_canister_detonator()

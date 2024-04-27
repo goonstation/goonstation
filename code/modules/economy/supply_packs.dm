@@ -1246,6 +1246,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/packing
 	containername = "Shoe Crate"
 
+/datum/supply_packs/ballroom
+	name = "Ballroom Supplies"
+	desc = "Host your very own HR approved ball."
+	contains = list(/obj/random_item_spawner/formalclothes,
+					/obj/item/clothing/shoes/dress_shoes/dance = 4)
+	cost = PAY_IMPORTANT*2
+	containertype = /obj/storage/crate
+	containername = "Ballroom Supplies"
+
 /datum/supply_packs/kendo
 	name = "Kendo Crate"
 	desc = "A crate containing two full sets of kendo equipment."

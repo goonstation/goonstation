@@ -190,6 +190,12 @@
 			target.bioHolder.AddEffect("husk")
 			target.bioHolder.mobAppearance.flavor_text = "A desiccated husk."
 
+			if (ishuman(ownerMob))
+				var/mob/living/carbon/human/H = ownerMob
+				if (H.sims)
+					H.sims.affectMotive("Thirst", 10)
+					H.sims.affectMotive("Hunger", 10)
+
 	onInterrupt()
 		..()
 		boutput(owner, SPAN_ALERT("Our absorption of [target] has been interrupted!"))

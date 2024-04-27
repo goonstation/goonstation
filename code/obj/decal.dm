@@ -682,7 +682,7 @@ obj/decal/fakeobjects/teleport_pad
 				M.visible_message(SPAN_ALERT("<b>[M]</b> hits their head on [src]!"))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
 
-/obj/decal/icefloor/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/decal/icefloor/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 	. = ..()
 	if (exposed_temperature > T0C)
 		if(prob((exposed_temperature - T0C) * 0.1))

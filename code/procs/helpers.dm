@@ -397,7 +397,7 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 		. = file_path
 	else
 		. = file(file_path)
-	. = trim(file2text(.))
+	. = trimtext(file2text(.))
 	if(can_escape)
 		. = replacetext(., "\\[separator]", "") // To be complete we should also replace \\ with \ etc. but who cares
 	. = splittext(., separator)
@@ -1283,7 +1283,7 @@ proc/outermost_movable(atom/movable/target)
 
 /proc/all_range(var/range,var/centre) //above two are blocked by opaque objects
 	. = list()
-	for (var/atom/A as anything in range(range,centre))
+	for (var/atom/A in range(range,centre))
 		if (ismob(A))
 			. += A
 		else if (isobj(A))
@@ -1950,7 +1950,7 @@ proc/countJob(rank)
   * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
   */
 /proc/whois(target, limit = null, admin)
-	target = trim(ckey(target))
+	target = trimtext(ckey(target))
 	if (!target)
 		return null
 	. = list()
@@ -2084,18 +2084,13 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 /proc/restricted_z_allowed(var/mob/M, var/T)
 	. = FALSE
 
-	if (M && isblob(M))
+	if (isblob(M))
 		var/mob/living/intangible/blob_overmind/B = M
 		if (B.tutorial)
 			return TRUE
 
-	var/area/A
-	if (T && istype(T, /area))
-		A = T
-	else if (T && isturf(T))
-		A = get_area(T)
-
-	if (A && istype(A) && A.allowed_restricted_z)
+	var/area/A = get_area(T)
+	if (A?.allowed_restricted_z)
 		return TRUE
 
 /**
