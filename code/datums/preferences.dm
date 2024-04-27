@@ -548,9 +548,9 @@ var/list/removed_jobs = list(
 					src.pin	= null
 					return TRUE
 				else
-					var/new_pin = tgui_input_number(usr, "Please select a PIN between 1000 and 9999", "Character Generation", src.pin || 1000, 9999, 1000)
+					var/new_pin = tgui_input_number(usr, "Please select a PIN between [PIN_MIN] and [PIN_MAX]", "Character Generation", src.pin || PIN_MIN, PIN_MAX, PIN_MIN)
 					if (new_pin)
-						src.pin = clamp(round(text2num(new_pin)), 1000, 9999)
+						src.pin = clamp(round(text2num(new_pin)), PIN_MIN, PIN_MAX)
 						src.profile_modified = TRUE
 						return TRUE
 
