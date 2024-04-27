@@ -302,6 +302,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				// Puritans have a bad time.
 				// This is a little different from how it was before:
 				// - Immediately take 250 tox and 100 random brute
+				// - Always get a major cloning defect
 				// - 50% chance, per limb, to lose that limb
 				// - enforced premature_clone, which gibs you on death
 				// If you have a clone body that's been allowed to fully heal before
@@ -312,6 +313,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				src.occupant.bioHolder?.AddEffect("premature_clone")
 				src.occupant.take_toxin_damage(250)
 				random_brute_damage(src.occupant, 100, 0)
+				defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MAJOR)
 				if (ishuman(src.occupant))
 					var/mob/living/carbon/human/P = src.occupant
 					if (P.limbs)
