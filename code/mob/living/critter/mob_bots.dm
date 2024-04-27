@@ -656,7 +656,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	if (GET_COOLDOWN(C, "ARRESTED_BY_SECURITRON_\ref[src]"))
 		return FALSE // we JUST arrested this jerk
 	. = ..()
-	if(. && !ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown) && threat_level > 4)
+	if(. && !ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown) && threat_level >= 4)
 		src.accuse_perp(C, threat_level)
 		src.siren()
 
