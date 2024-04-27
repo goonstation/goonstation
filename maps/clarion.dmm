@@ -30663,7 +30663,6 @@
 	},
 /area/station/medical/medbay)
 "oUh" = (
-/obj/cable,
 /obj/storage/crate/robotparts,
 /obj/item/sheet/steel/fullstack{
 	pixel_x = 7;
@@ -32165,11 +32164,11 @@
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "qdP" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
 /obj/item/storage/wall/random{
 	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/medical/robotics)
@@ -35314,9 +35313,6 @@
 "szi" = (
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
 	},
 /obj/machinery/light/small/sticky/cool/very{
 	dir = 1
