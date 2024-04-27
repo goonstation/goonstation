@@ -82,7 +82,7 @@
 	var/minimum_temperature_difference = 300
 	/// How well we share temperature.
 	var/thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-	/// Pressure needed before the pipe gets a chance to burst.
+	/// Pressure needed before the pipe gets a chance to burst, see proc/effective_fatigue_pressure for the value that takes into account material stats too
 	var/fatigue_pressure = 150*ONE_ATMOSPHERE
 	/// Can this pipe rupture?
 	var/can_rupture = FALSE // Currently only used for red pipes (insulated).
@@ -94,6 +94,9 @@
 
 	level = UNDERFLOOR
 	alpha = 128
+
+/obj/machinery/atmospherics/pipe/simple/proc/effective_fatigue_pressure()
+	return src.fatigue_pressure * ((src.material?.getProperty("density") ** 2) || 1)
 
 /// Returns list of coordinates to start and stop welding animation.
 /obj/machinery/atmospherics/pipe/simple/proc/get_welding_positions()
@@ -177,8 +180,7 @@
 		return
 
 	if(pressure && src.fatigue_pressure)
-		var/effective_fatigue_pressure = src.fatigue_pressure * ((src.material?.getProperty("density") ** 2) || 1)
-		var/iterations = clamp(log(pressure/effective_fatigue_pressure)/log(2),0,20)
+		var/iterations = clamp(log(pressure/effective_fatigue_pressure())/log(2),0,20)
 		for(var/i = iterations; i>0 && i>=ruptured; i--)
 			if(prob(5/i))
 				new_rupture = i + 1
@@ -277,7 +279,8 @@
 
 	var/datum/gas_mixture/gas = return_air()
 	var/pressure = MIXTURE_PRESSURE(gas)
-	if(pressure > fatigue_pressure) check_pressure(pressure)
+	if(pressure > src.effective_fatigue_pressure())
+		src.check_pressure(pressure)
 
 
 
@@ -289,8 +292,8 @@
 
 	var/pressure_difference = pressure - MIXTURE_PRESSURE(environment)
 
-	if(can_rupture && !GET_COOLDOWN(parent, "pipeline_rupture_protection") && !GET_COOLDOWN(src, "rupture_protection") && pressure_difference > fatigue_pressure)
-		var/rupture_prob = (pressure_difference - fatigue_pressure)/50000
+	if(can_rupture && !GET_COOLDOWN(parent, "pipeline_rupture_protection") && !GET_COOLDOWN(src, "rupture_protection") && pressure_difference > src.effective_fatigue_pressure())
+		var/rupture_prob = (pressure_difference - src.effective_fatigue_pressure())/50000
 		if(prob(rupture_prob))
 			rupture(pressure_difference)
 
@@ -365,8 +368,8 @@
 /obj/machinery/atmospherics/pipe/simple/proc/weld_sheet(obj/item/sheet/sheet, mob/user)
 	if (sheet.amount < SHEETS_TO_REINFORCE)
 		return
-	sheet.change_stack_amount(-SHEETS_TO_REINFORCE)
 	src.setMaterial(sheet.material)
+	sheet.change_stack_amount(-SHEETS_TO_REINFORCE)
 	if (!("reinforced" in src.name_prefixes))
 		src.name_prefix("reinforced") // so it says "bohrum reinforced pipe"
 	src.UpdateName()

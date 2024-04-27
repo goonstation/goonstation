@@ -729,12 +729,12 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 		.["frequency"] = src.freq
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-		if (action == "set-frequency")
+		if (action == "set-frequency" && params["finish"])
 			var/old_freq = src.freq
 			src.freq = sanitize_frequency_diagnostic(params["value"])
-			if (src.freq != old_freq && src.equipped_in_slot == SLOT_GLASSES && params["finish"]) //update the image group only on finishing dragging
-				get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][old_freq]").remove_mob(usr)
-				get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][src.freq]").add_mob(usr)
+			if (src.freq != old_freq && src.equipped_in_slot == SLOT_GLASSES && ismob(src.loc))
+				get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][old_freq]").remove_mob(src.loc)
+				get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][src.freq]").add_mob(src.loc)
 			return TRUE
 
 	equipped(var/mob/user, var/slot)
@@ -746,6 +746,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 		if(src.equipped_in_slot == SLOT_GLASSES)
 			get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][src.freq]").remove_mob(user)
 		..()
+
 TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 	mats = 6
 /obj/item/clothing/glasses/toggleable/atmos

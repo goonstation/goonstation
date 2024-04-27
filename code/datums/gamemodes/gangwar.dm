@@ -2370,6 +2370,7 @@ proc/broadcast_to_all_gangs(var/message)
 	layer = TAG_LAYER
 	icon = 'icons/obj/decals/graffiti.dmi'
 	icon_state = "gangtag0"
+	var/exploded = FALSE
 	var/datum/gang/owners = null
 	var/list/mobs
 	var/heat = 0 // a rough estimation of how regularly this tag has people near it
@@ -2402,6 +2403,14 @@ proc/broadcast_to_all_gangs(var/message)
 		heat = round(heat * GANG_TAG_HEAT_DECAY_MUL, 0.01) //slowly decay heat
 		mobs = list()
 		return heat
+
+	ex_act(severity)
+		if (severity > 1)
+			if (!exploded)
+				exploded = TRUE
+				desc = desc + " So heavy, in fact, that this tag hasn't exploded. Huh."
+			return //no!
+		..()
 
 	proc/apply_score(var/largestHeat)
 		var/mappedHeat // the 'heat' value mapped to the scale of 0-5
