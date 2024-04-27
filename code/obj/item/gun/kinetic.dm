@@ -2817,6 +2817,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	spread_angle = 6
 	can_dual_wield = 0
 
+	contraband = 7
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/lmg
@@ -2874,6 +2875,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	slowdown = 10
 	slowdown_time = 15
 
+	contraband = 8
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
@@ -3015,6 +3017,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	slowdown_time = 5
 
 	can_dual_wield = 0
+	contraband = 7
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 
