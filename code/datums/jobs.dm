@@ -118,6 +118,7 @@
 			src.admin_set_limit = TRUE
 
 	proc/special_setup(var/mob/M, no_special_spawn)
+		SHOULD_NOT_SLEEP(TRUE)
 		if (!M)
 			return
 		if (src.receives_miranda)
