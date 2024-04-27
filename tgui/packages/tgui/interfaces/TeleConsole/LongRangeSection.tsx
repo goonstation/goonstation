@@ -22,7 +22,7 @@ export const LongRangeSection = (props: LongRangeSectionProps) => {
   return (
     <Section title="Destinations">
       <LabeledList>
-        {destinations.length ? destinations.map(({ name }) => (
+        {destinations && destinations.length ? destinations.map(({ name }) => (
           <LabeledList.Item
             key={name}
             label={name}>
