@@ -1,4 +1,9 @@
 
+(t)sat apr 27 24
+(u)FlameArrow57
+(p)18569
+(e)🪲💅🔨|C-Bug, C-QoL, A-Player-Actions
+(+)Added a visible action bar for hand staunching wounds.
 (t)fri apr 26 24
 (u)LeahTheTech
 (p)18621
