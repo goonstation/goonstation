@@ -737,6 +737,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					if (mob_flags & AT_GUNPOINT)
 						for(var/obj/item/grab/gunpoint/G in grabbed_by)
 							G.shoot()
+				if(src.equipped())
+					L.attack_hand(target, src)
+					HH.set_cooldown_overlay()
+					src.lastattacked = target
+					return
 
 				switch (a_intent)
 					if (INTENT_HELP)
@@ -1404,7 +1409,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 	/// How the critter should attack normally
 	proc/critter_basic_attack(var/mob/target)
-		src.set_a_intent(INTENT_HARM)
+		if(src.intent == INTENT_HELP)
+			src.set_a_intent(INTENT_HARM)
 		src.hand_attack(target)
 		return TRUE
 

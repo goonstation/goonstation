@@ -428,9 +428,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	ai_retaliates = TRUE
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	ai_retaliate_patience = 0
-	ai_type = /datum/aiHolder/patroller/packet_based
+	ai_type = /datum/aiHolder/patroller/packet_based/securitron
 	is_npc = TRUE
 	ai_attacks_neutral = TRUE
+	var/initial_limb = /obj/item/baton/mobsecbot
 	var/net_id
 	var/power = TRUE
 	var/control_freq = FREQ_BOT_CONTROL
@@ -486,14 +487,17 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 /mob/living/critter/robotic/securitron/setup_hands()
 	..()
 	var/datum/handHolder/HH = hands[1]
-	HH.limb = new /datum/limb/small_critter/med
-	HH.icon = 'icons/mob/critter_ui.dmi'
-	HH.icon_state = "handn"
-	HH.name = "long arm"
+	HH.limb = new /datum/limb/item
 	HH.limb_name = "long arm"
-	HH.can_hold_items = 1
-	HH.can_attack = 1
-	HH.can_range_attack = 1
+	HH.name = "long arm"
+	HH.icon_state = "handn"
+	HH.icon = 'icons/mob/critter_ui.dmi'
+	if (src.initial_limb)
+		HH.item = new src.initial_limb(src)
+		var/obj/item/I = HH.item
+		I.cant_drop = 1
+		I.cant_self_remove = 1
+		I.cant_other_remove = 1
 
 /mob/living/critter/robotic/securitron/setup_healths()
 	add_hh_robot(src.health_brute, src.health_brute_vuln)
