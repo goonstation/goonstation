@@ -2213,8 +2213,7 @@
 			src.lights.ship = src
 			src.components += src.lights
 
-			if (src.myhud)
-				src.myhud.update_states()
+			src.myhud?.update_states()
 /*
 	engineering
 		body_type =
