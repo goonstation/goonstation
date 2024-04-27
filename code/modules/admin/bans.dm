@@ -231,12 +231,13 @@
 		addDetail.routeParams = list("[ban.id]")
 		addDetail.buildBody(admin_ckey, roundId, ckey, comp_id, ip, evasion)
 		var/datum/apiModel/Tracked/BanDetail/banDetail
+		logTheThing(LOG_DEBUG, "Evasion: sending API query")
 		try
 			banDetail = apiHandler.queryAPI(addDetail)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
 			throw EXCEPTION(error.message)
-
+		logTheThing(LOG_DEBUG, "Evasion: API query finished")
 		var/client/adminClient = find_client(admin_ckey)
 		var/messageAdminsAdmin = admin_ckey == "bot" ? admin_ckey : key_name(adminClient ? adminClient : admin_ckey)
 		var/target = "(Ckey: [banDetail.ckey], IP: [banDetail.ip], CompID: [banDetail.comp_id])"
