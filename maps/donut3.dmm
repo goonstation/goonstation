@@ -6184,12 +6184,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
-"bJT" = (
-/obj/machinery/computer/robotics{
-	dir = 8
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "bJZ" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -14471,15 +14465,12 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "elp" = (
+/obj/item/aiModule/removeCrew{
+	pixel_y = 13
+	},
 /obj/table/reinforced/auto,
-/obj/item/aiModule/makeCaptain{
-	pixel_y = -5
-	},
-/obj/item/aiModule/freeform{
-	pixel_y = 9
-	},
-/obj/item/device/radio/intercom/AI{
-	dir = 4
+/obj/item/aiModule/emergency{
+	pixel_y = -1
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -15202,17 +15193,16 @@
 /turf/simulated/floor/plating/jen,
 /area/station/science/storage)
 "eyn" = (
+/obj/item/device/radio/intercom/AI{
+	dir = 4
+	},
 /obj/table/reinforced/auto,
-/obj/item/aiModule/notHuman{
-	pixel_y = -6
+/obj/item/aiModule/freeform{
+	pixel_y = 9
 	},
-/obj/item/aiModule/oneHuman{
-	pixel_y = 8
+/obj/item/aiModule/makeCaptain{
+	pixel_y = -5
 	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "eyo" = (
@@ -18489,17 +18479,11 @@
 	},
 /area/station/science/testchamber)
 "fyu" = (
-/obj/table/reinforced/auto,
-/obj/item/device/infra_sensor{
-	pixel_x = 1;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/toggleable/meson{
-	pixel_x = 1;
-	pixel_y = -7
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/computer/robotics{
+	dir = 8
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -30907,22 +30891,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"jpC" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 4
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai_upload)
 "jpI" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -31206,15 +31174,17 @@
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "jtI" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
+/obj/cable{
+	icon_state = "0-4"
 	},
-/obj/decal/tile_edge/line/black{
-	dir = 6;
-	icon_state = "line2"
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 4
 	},
-/turf/simulated/floor/circuit,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "jtK" = (
 /obj/table/wood/auto/desk,
@@ -34566,12 +34536,12 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "kwL" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -39576,11 +39546,11 @@
 /area/station/science/bot_storage)
 "lUl" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/emergency{
-	pixel_y = -1
+/obj/item/aiModule/oneHuman{
+	pixel_y = 8
 	},
-/obj/item/aiModule/removeCrew{
-	pixel_y = 13
+/obj/item/aiModule/notHuman{
+	pixel_y = -6
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -57920,11 +57890,8 @@
 /area/station/crew_quarters/garden)
 "ryN" = (
 /obj/decal/tile_edge/line/black{
-	dir = 6;
-	icon_state = "line1"
-	},
-/obj/machinery/status_display{
-	pixel_y = 30
+	dir = 10;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -60049,12 +60016,20 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/storage)
 "sgE" = (
-/obj/decal/tile_edge/line/black{
-	dir = 10;
-	icon_state = "line1"
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 8
 	},
-/obj/machinery/ai_status_display,
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "sgU" = (
 /obj/cable{
@@ -60815,7 +60790,14 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "ssX" = (
-/turf/simulated/wall/auto/reinforced/jen,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "ssY" = (
 /obj/table/wood/round/auto,
@@ -64190,9 +64172,16 @@
 /area/station/crew_quarters/arcade)
 "txz" = (
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "0-2"
 	},
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/obj/cable,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 1
+	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "txE" = (
 /obj/cable{
@@ -64809,11 +64798,14 @@
 /area/station/maintenance/outer/nw)
 "tGS" = (
 /obj/machinery/light_switch/east,
-/obj/machinery/turret{
-	dir = 10
+/obj/table/reinforced/auto,
+/obj/item/device/infra_sensor{
+	pixel_x = 1;
+	pixel_y = 3
 	},
-/obj/machinery/light/incandescent{
-	dir = 4
+/obj/item/clothing/glasses/toggleable/meson{
+	pixel_x = 1;
+	pixel_y = -7
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -66864,11 +66856,12 @@
 /area/ghostdrone_factory)
 "unG" = (
 /obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
 	icon_state = "1-4"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/lawrack,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "unM" = (
@@ -69690,18 +69683,13 @@
 	},
 /area/station/hallway/primary/west)
 "vfc" = (
-/obj/cable{
-	icon_state = "0-2"
+/obj/machinery/turret{
+	dir = 10
 	},
-/obj/cable,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 1
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "vft" = (
 /obj/machinery/light/emergency{
@@ -71339,17 +71327,6 @@
 /area/station/crew_quarters/bathroom{
 	name = "South Bathroom"
 	})
-"vDO" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 10;
-	icon_state = "line2"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "vDP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -72238,8 +72215,13 @@
 	},
 /area/station/security/visitation)
 "vRi" = (
-/obj/machinery/lawrack,
-/turf/simulated/floor/black,
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/cable,
+/obj/machinery/power/apc/autoname_south,
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "vRt" = (
 /obj/cable{
@@ -77006,22 +76988,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
-"xib" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 8
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai_upload)
 "xid" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -78285,11 +78251,11 @@
 	},
 /area/station/medical/medbay/cloner)
 "xzq" = (
-/obj/cable{
-	icon_state = "0-2"
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "xzw" = (
 /obj/decal/cleanable/dirt/jen,
@@ -80051,12 +80017,10 @@
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay)
 "yaq" = (
+/obj/machinery/ai_status_display,
 /obj/decal/tile_edge/line/black{
-	dir = 4;
+	dir = 10;
 	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -139047,8 +139011,8 @@ iad
 iad
 iad
 gQk
-xzq
-txz
+htp
+rdj
 rdj
 rdj
 rdj
@@ -139342,7 +139306,6 @@ rhm
 ykH
 wSY
 lON
-ssX
 htp
 htp
 htp
@@ -139350,7 +139313,8 @@ htp
 htp
 htp
 htp
-jpC
+jtI
+rdj
 rdj
 rdj
 rdj
@@ -139645,14 +139609,14 @@ diX
 eED
 pXA
 htp
-htp
 skT
+lUl
 eyn
 elp
-lUl
 lzA
 htp
 uzV
+rdj
 rdj
 rdj
 rdj
@@ -139947,14 +139911,14 @@ diX
 pTC
 mPI
 htp
-htp
-ryN
-yaq
+ssX
+fVZ
 fVZ
 fVZ
 jWB
 htp
 uzV
+rdj
 rdj
 rdj
 rdj
@@ -140249,14 +140213,14 @@ diX
 fCV
 rJK
 htp
-fVZ
-jtI
-qeM
+xzq
+kcx
 kcx
 kcx
 cyp
 htp
 uzV
+rdj
 rdj
 rdj
 rdj
@@ -140554,11 +140518,11 @@ mFT
 vrw
 vrw
 unG
+vrw
 vRi
-kcx
-wQE
 htp
 uzV
+rdj
 rdj
 rdj
 rdj
@@ -140853,14 +140817,14 @@ diX
 ink
 oIu
 htp
-kPM
-vDO
-qeM
+ryN
 kcx
+qeM
 kcx
 wQE
 htp
 uzV
+rdj
 rdj
 rdj
 rdj
@@ -141155,14 +141119,14 @@ diX
 wOD
 dec
 htp
-htp
-sgE
-kwL
+yaq
 kPM
+kwL
 kPM
 saY
 htp
 uzV
+rdj
 rdj
 rdj
 rdj
@@ -141457,14 +141421,14 @@ diX
 vVY
 diX
 htp
-htp
+vfc
 tGS
 fyu
-bJT
 uWG
 aGR
 htp
 uzV
+rdj
 rdj
 rdj
 rdj
@@ -141765,8 +141729,8 @@ oXT
 htp
 htp
 htp
-htp
-xib
+sgE
+rdj
 rdj
 rdj
 rdj
@@ -142066,9 +142030,9 @@ bsh
 qcf
 bsh
 bsh
-bsh
-vfc
+txz
 iih
+rdj
 rdj
 rdj
 rdj
