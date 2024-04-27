@@ -10,7 +10,7 @@ TYPEINFO(/datum/component/contraband)
 		return COMPONENT_INCOMPATIBLE
 	var/atom/movable/AM = parent
 
-	SEND_SIGNAL(AM, COMSIG_MOVABLE_CONTRABAND_CHANGED)
+	SEND_SIGNAL(AM, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 
 	APPLY_ATOM_PROPERTY(AM, PROP_MOVABLE_VISIBLE_GUNS, src, carry_level)
 	APPLY_ATOM_PROPERTY(AM, PROP_MOVABLE_VISIBLE_CONTRABAND, src, contraband_level)
@@ -23,34 +23,37 @@ TYPEINFO(/datum/component/contraband)
 
 	src.visible_contraband_changed(AM)
 
-/datum/component/contraband/proc/visible_contraband_changed(atom/owner)
-	if(isitem(owner) && ismob(owner.loc))
-		var/obj/item/I = owner
+/datum/component/contraband/proc/visible_contraband_changed(atom/owner, self_applied = FALSE)
+	if(self_applied)
+		src.contraband_logic(owner, owner)
+	else
+		if(isitem(owner) && ismob(owner.loc))
+			var/obj/item/I = owner
 
-		if (I.equipped_in_slot)
-			var/mob/M = I.loc
-			src.equipped(I, M, I.equipped_in_slot)
+			if (I.equipped_in_slot)
+				var/mob/M = I.loc
+				src.equipped(I, M, I.equipped_in_slot)
 
-	else if(ismovable(owner.loc))
-		var/atom/movable/AM = owner.loc
-		src.contraband_logic(owner, AM)
+		else if(ismovable(owner.loc))
+			var/atom/movable/AM = owner.loc
+			src.contraband_logic(owner, AM)
 
-/datum/component/contraband/proc/contraband_logic(atom/movable/owner, atom/movable/location, multiplier = 1)
-	REMOVE_ATOM_PROPERTY(location, PROP_MOVABLE_VISIBLE_GUNS, src)
-	REMOVE_ATOM_PROPERTY(location, PROP_MOVABLE_VISIBLE_CONTRABAND, src)
+/datum/component/contraband/proc/contraband_logic(atom/movable/owner, atom/movable/applied, multiplier = 1)
+	REMOVE_ATOM_PROPERTY(applied, PROP_MOVABLE_VISIBLE_GUNS, src)
+	REMOVE_ATOM_PROPERTY(applied, PROP_MOVABLE_VISIBLE_CONTRABAND, src)
 
 	var/has_contra_override = HAS_ATOM_PROPERTY(owner,PROP_MOVABLE_CONTRABAND_OVERRIDE)
 
 	var/contra_guns = GET_ATOM_PROPERTY(owner,PROP_MOVABLE_VISIBLE_GUNS)
 	if(contra_guns)
-		APPLY_ATOM_PROPERTY(location, PROP_MOVABLE_VISIBLE_GUNS, src, (has_contra_override ? GET_ATOM_PROPERTY(owner,PROP_MOVABLE_CONTRABAND_OVERRIDE) : contra_guns) * multiplier)
+		APPLY_ATOM_PROPERTY(applied, PROP_MOVABLE_VISIBLE_GUNS, src, (has_contra_override ? GET_ATOM_PROPERTY(owner,PROP_MOVABLE_CONTRABAND_OVERRIDE) : contra_guns) * multiplier)
 		has_contra_override = FALSE
 
 	var/contra_nonguns = GET_ATOM_PROPERTY(owner,PROP_MOVABLE_VISIBLE_CONTRABAND)
 	if(contra_nonguns || has_contra_override)
-		APPLY_ATOM_PROPERTY(location, PROP_MOVABLE_VISIBLE_CONTRABAND, src, (has_contra_override ? GET_ATOM_PROPERTY(owner,PROP_MOVABLE_CONTRABAND_OVERRIDE) : contra_nonguns) * multiplier)
+		APPLY_ATOM_PROPERTY(applied, PROP_MOVABLE_VISIBLE_CONTRABAND, src, (has_contra_override ? GET_ATOM_PROPERTY(owner,PROP_MOVABLE_CONTRABAND_OVERRIDE) : contra_nonguns) * multiplier)
 
-	SEND_SIGNAL(location, COMSIG_MOVABLE_CONTRABAND_CHANGED)
+	SEND_SIGNAL(applied, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 
 /datum/component/contraband/proc/equipped(obj/item/owner, mob/user, slot = null)
 	var/slot_mult = 1
@@ -67,7 +70,7 @@ TYPEINFO(/datum/component/contraband)
 	REMOVE_ATOM_PROPERTY(user, PROP_MOVABLE_VISIBLE_GUNS, src)
 	REMOVE_ATOM_PROPERTY(user, PROP_MOVABLE_VISIBLE_CONTRABAND, src)
 
-	SEND_SIGNAL(user, COMSIG_MOVABLE_CONTRABAND_CHANGED)
+	SEND_SIGNAL(user, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
 
 /datum/component/contraband/UnregisterFromParent()
 	. = ..()
@@ -84,4 +87,4 @@ TYPEINFO(/datum/component/contraband)
 		var/atom/movable/AM = parent
 		REMOVE_ATOM_PROPERTY(AM, PROP_MOVABLE_VISIBLE_GUNS, src)
 		REMOVE_ATOM_PROPERTY(AM, PROP_MOVABLE_VISIBLE_CONTRABAND, src)
-		SEND_SIGNAL(AM, COMSIG_MOVABLE_CONTRABAND_CHANGED)
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_CONTRABAND_CHANGED, FALSE)
