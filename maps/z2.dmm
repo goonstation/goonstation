@@ -69462,6 +69462,11 @@
 	dir = 1
 	},
 /area/iomoon/base/underground)
+"qUv" = (
+/obj/map/light/brightwhite,
+/obj/machinery/maptext_monitor/scrying_pool/afterlife_bar,
+/turf/unsimulated/floor/wood,
+/area/afterlife/bar)
 "qUB" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -97915,7 +97920,7 @@ daH
 daH
 daH
 dcX
-ddh
+qUv
 puy
 bpd
 dSY
@@ -100629,7 +100634,7 @@ gAK
 daP
 daP
 dcx
-daP
+dTj
 dda
 dSs
 dcI
