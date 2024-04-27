@@ -280,9 +280,6 @@ TYPEINFO(/obj/machinery/clonepod)
 					// First cloning can't get major defects
 					defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MINOR)
 
-		if (length(defects.active_cloner_defects) > 7)
-			src.occupant.unlock_medal("Quit Cloning Around")
-
 		src.mess = FALSE
 		var/is_puritan = FALSE
 		if (!isnull(traits) && src.occupant.traitHolder)
@@ -322,6 +319,9 @@ TYPEINFO(/obj/machinery/clonepod)
 							if (prob(50))
 								P.limbs.sever(limb)
 			#endif
+
+		if (length(defects.active_cloner_defects) > 7)
+			src.occupant.unlock_medal("Quit Cloning Around")
 
 		if (src.mess)
 			boutput(src.occupant, "[SPAN_NOTICE("<b>Clone generation process initi&mdash;</b>")][SPAN_ALERT(" oh fuck oh god oh no no NO <b>NO NO THIS IS NOT GOOD</b>")]")
