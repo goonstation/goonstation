@@ -531,7 +531,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		return null
 	if (ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
 		return null
-	switch (act)
+	src.trash_talk(act)
+
+/mob/living/critter/robotic/securitron/proc/trash_talk(var/emote = null)
+	if(!emote)
+		emote = pick("laugh","fart","salute","snap","flex")
+	switch (emote)
 		if ("laugh")
 			src.say("YOU CAN'T OUTRUN A RADIO.")
 			playsound(src, "sound/voice/bradio.ogg", 50, FALSE, 0, 1)
@@ -646,23 +651,24 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	if (C.hasStatus("handcuffed"))
 		return FALSE // already handled
 	var/threat_level = assess_perp(C)
-	if (!GET_COOLDOWN(C,"MARKED_FOR_SECURITRON_ARREST")) // set in assess_perp
+	if (!GET_COOLDOWN(C, "MARKED_FOR_SECURITRON_ARREST")) // set in assess_perp
 		return FALSE // not a threat
-	if (GET_COOLDOWN(C,"ARRESTED_BY_SECURITRON_\ref[src]"))
+	if (GET_COOLDOWN(C, "ARRESTED_BY_SECURITRON_\ref[src]"))
 		return FALSE // we JUST arrested this jerk
 	. = ..()
 	if(. && !ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown) && threat_level > 4)
 		src.accuse_perp(C, threat_level)
 		src.siren()
 
-
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
 /mob/living/critter/robotic/securitron/proc/assess_perp(mob/living/perp)
 	var/threatcount = 0
 
-	if(src.emagged >= 2)
-		return rand(7,15) //Everything that moves is a crimer!
+	if(src.emagged > 1)
+		threatcount = rand(7,15)
+		EXTEND_COOLDOWN(perp, "MARKED_FOR_SECURITRON_ARREST", threatcount * 1.5 SECONDS)
+		return threatcount //Everything that moves is a crimer!
 
 	if((src.check_contraband)) // bot is set to actively search for contraband
 		var/obj/item/card/id/perp_id = perp.equipped()
@@ -681,7 +687,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	var/perpname = perp.name
 	if(ishuman(perp))
 		if(src.emagged)
-			return rand(7,15) //Everyone's a crimer!
+			threatcount = rand(7,15)
+			EXTEND_COOLDOWN(perp, "MARKED_FOR_SECURITRON_ARREST", threatcount * 1.5 SECONDS)
+			return threatcount //Everyone's a crimer!
 		var/mob/living/carbon/human/H_perp = perp
 		if(istype(H_perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5
@@ -743,6 +751,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	return 1
 
 /mob/living/critter/robotic/securitron/should_critter_retaliate(mob/attacker, obj/attacked_with)
+	if(attacker.hasStatus("handcuffed") && !src.emagged) // usually doesnt matter... unless
+		return FALSE // unless for some godforsaken reason, this securitron has a non-stunning weapon
 	. = ..()
 	var/aggression_hp = 1
 	if(ishuman(attacker))
@@ -752,7 +762,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	if(src.allowed(attacker))
 		aggression_hp -= 0.2 // 10 damage allowed for the bosses
 	if(src.get_health_percentage() > aggression_hp) // if health is still high enough, assume it was friendly fire
-		. = FALSE
+		return FALSE
 	if(.)
 		EXTEND_COOLDOWN(attacker, "MARKED_FOR_SECURITRON_ARREST", 5 SECONDS)
 		if(!ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
@@ -766,12 +776,25 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		return 0
 
 	if (user)
-		boutput(user, SPAN_ALERT("You short out [src]'s target assessment circuits."))
-		OVERRIDE_COOLDOWN(user,"ARRESTED_BY_SECURITRON_\ref[src]",3 SECONDS) // just enough time to book it
+		if(!src.emagged)
+			boutput(user, SPAN_ALERT("You short out [src]'s contraband assessment circuits!"))
+			OVERRIDE_COOLDOWN(user, "ARRESTED_BY_SECURITRON_\ref[src]", 3 SECONDS) // just enough time to book it
+		else if(src.emagged == 1)
+			boutput(user, SPAN_ALERT("You scramble [src]'s target verification circuits!"))
+			OVERRIDE_COOLDOWN(user, "ARRESTED_BY_SECURITRON_\ref[src]", 1 SECOND) // run fast
+		else
+			boutput(user, SPAN_ALERT("You mess with \the [src] a bit more, just for kicks."))
+	playsound(src, 'sound/effects/sparks4.ogg', 50, FALSE, 0, 1)
 	src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 
 	src.emagged++
 	src.set_power(TRUE)
+
+	if (src.emagged >= 5)
+		playsound(src, 'sound/effects/glitchy1.ogg', 50, FALSE, 0, 1)
+		src.say("I WAS THE LAW.")
+		SPAWN(5 DECI SECONDS)
+			src.blowthefuckup(2)
 
 	logTheThing(LOG_STATION, user, "emagged securitron ([src]) at [log_loc(src)].")
 	return 1
@@ -841,6 +864,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		target.handcuffs = new /obj/item/handcuffs/guardbot(target)
 		target.setStatus("handcuffed", duration = INFINITE_STATUS)
 		logTheThing(LOG_COMBAT, master, "handcuffs [constructTarget(target,"combat")] at [log_loc(master)].")
+
+		if(istype(master,/mob/living/critter/robotic/securitron))
+			var/mob/living/critter/robotic/securitron/secbot = master
+			if(secbot.ai?.enabled)
+				secbot.trash_talk()
+
 
 		var/area/user_location = get_area(master)
 		var/turf/target_loc = get_turf(target)
