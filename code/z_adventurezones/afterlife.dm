@@ -109,6 +109,7 @@ proc/inafterlife(var/mob/M as mob in world)
 #ifndef SECRETS_ENABLED
 /obj/submachine/scryingpool/afterlifebar
 /turf/unsimulated/floor/plating/holo
+/obj/machinery/maptext_monitor/scrying_pool/afterlife_bar
 #endif
 
 // belongs in the center of pool
