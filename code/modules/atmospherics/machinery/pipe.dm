@@ -368,8 +368,8 @@
 /obj/machinery/atmospherics/pipe/simple/proc/weld_sheet(obj/item/sheet/sheet, mob/user)
 	if (sheet.amount < SHEETS_TO_REINFORCE)
 		return
-	sheet.change_stack_amount(-SHEETS_TO_REINFORCE)
 	src.setMaterial(sheet.material)
+	sheet.change_stack_amount(-SHEETS_TO_REINFORCE)
 	if (!("reinforced" in src.name_prefixes))
 		src.name_prefix("reinforced") // so it says "bohrum reinforced pipe"
 	src.UpdateName()
