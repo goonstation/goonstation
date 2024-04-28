@@ -1,5 +1,7 @@
 
 (t)sat apr 27 24
+(u)tarmunora
+(+)AI can now use ; instead of :1 to speak over their primary internal radio
 (u)FlameArrow57
 (p)18569
 (e)🪲💅🔨|C-Bug, C-QoL, A-Player-Actions
