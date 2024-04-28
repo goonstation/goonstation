@@ -36668,7 +36668,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/switch_junction/right/south{
-	mail_tag = "detectives"
+	mail_tag = "detective"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
