@@ -1535,7 +1535,6 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/disposal/mail/small/autoname/kitchen/south,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "apT" = (
@@ -42385,12 +42384,11 @@
 /obj/item/kitchen/utensil/fork,
 /obj/item/kitchen/utensil/spoon,
 /obj/item/reagent_containers/food/drinks/bowl,
-/obj/machinery/disposal/mail/small{
-	dir = 4;
-	pixel_x = -5
-	},
 /obj/disposalpipe/trunk/mail{
 	dir = 4
+	},
+/obj/machinery/disposal/mail/small/autoname/kitchen/east{
+	pixel_x = -5
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
