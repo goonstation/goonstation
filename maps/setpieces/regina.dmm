@@ -86,8 +86,7 @@
 /area/space)
 "cc" = (
 /obj/machinery/atmospherics/unary/vent_pump{
-	dir = 8;
-	
+	dir = 8
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -146,6 +145,12 @@
 	dir = 4
 	},
 /area/space)
+"es" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/simulated/floor/airless/engine/vacuum,
+/area/regina)
 "et" = (
 /obj/decoration/vent/vent2,
 /turf/simulated/wall/auto/shuttle{
@@ -266,6 +271,12 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"gM" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/simulated/floor/airless/engine,
+/area/regina)
 "gP" = (
 /obj/stool/chair/comfy,
 /obj/npc/trader/random,
@@ -364,10 +375,11 @@
 /turf/simulated/grimycarpet,
 /area/regina)
 "hS" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/simulated/floor/airless/engine,
 /area/regina)
 "hV" = (
 /obj/window/reinforced/east,
@@ -475,6 +487,12 @@
 	dir = 4
 	},
 /area/regina)
+"jC" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/simulated/floor/airless/engine/vacuum,
+/area/regina)
 "jD" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -490,7 +508,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/simulated/floor/airless/engine,
 /area/regina)
 "jG" = (
 /obj/indestructible/shuttle_corner{
@@ -527,7 +545,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/space,
+/turf/simulated/floor/airless/engine/vacuum,
 /area/regina)
 "kK" = (
 /obj/indestructible/shuttle_corner{
@@ -932,7 +950,7 @@
 	dir = 1;
 	icon_state = "alt_propulsion"
 	},
-/turf/unsimulated/floor/arctic/snow/ice,
+/turf/simulated/floor/airless/engine,
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "ri" = (
 /obj/decal/fakeobjects/teleport_pad,
@@ -1022,7 +1040,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/floor/airless/engine,
 /area/regina)
 "tk" = (
 /obj/indestructible/shuttle_corner{
@@ -1081,12 +1099,6 @@
 	},
 /turf/simulated/floor/airless/engine,
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
-"up" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall3_space"
-	},
-/area/space)
 "ur" = (
 /turf/simulated/floor/caution/north,
 /area/regina)
@@ -1144,6 +1156,16 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"vC" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/rail{
+	dir = 4
+	},
+/turf/simulated/floor/airless/engine/vacuum,
+/area/regina)
 "vY" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -1174,7 +1196,7 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/simulated/floor/airless/engine/vacuum,
 /area/regina)
 "wh" = (
 /turf/simulated/grimycarpet,
@@ -1189,7 +1211,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
-/turf/space,
+/turf/simulated/floor/airless/engine/vacuum,
 /area/space)
 "wL" = (
 /obj/decal/fakeobjects/teleport_pad,
@@ -1334,15 +1356,34 @@
 	},
 /turf/simulated/floor/airless/engine/caution/north,
 /area/space)
-"yN" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1
+"yH" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
 	},
+/obj/rail{
+	dir = 4
+	},
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/simulated/floor/airless/engine/vacuum,
+/area/regina)
+"yK" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/simulated/floor/airless/engine,
+/area/regina)
+"yN" = (
 /obj/lattice{
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/simulated/floor/airless/engine/vacuum,
 /area/regina)
 "yU" = (
 /obj/machinery/sleeper{
@@ -1399,7 +1440,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
-/turf/space,
+/turf/simulated/floor/airless/engine/vacuum,
 /area/regina)
 "zY" = (
 /obj/machinery/shuttle/engine/heater{
@@ -1607,7 +1648,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
-/turf/space,
+/turf/simulated/floor/airless/engine/vacuum,
 /area/regina)
 "EQ" = (
 /turf/unsimulated/floor/shuttle{
@@ -1633,7 +1674,10 @@
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
-/turf/space,
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/simulated/floor/airless/engine/caution/south,
 /area/regina)
 "Fi" = (
 /obj/lattice{
@@ -1646,7 +1690,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
-/turf/space,
+/turf/simulated/floor/airless/engine/vacuum,
 /area/regina)
 "Fk" = (
 /turf/simulated/wall/auto/shuttle,
@@ -1690,7 +1734,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/space,
+/turf/simulated/floor/airless/engine,
 /area/regina)
 "FM" = (
 /obj/machinery/shuttle/engine/propulsion{
@@ -1720,13 +1764,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"GR" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/area/space)
 "GT" = (
 /obj/mapping_helper/wingrille_spawn/bulletproof,
 /turf/simulated/floor/plating,
@@ -1815,13 +1852,13 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/simulated/floor/airless/engine/vacuum,
 /area/regina)
 "IV" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/space,
+/turf/simulated/floor/airless/engine/caution/south,
 /area/regina)
 "Jo" = (
 /obj/storage/crate/xmas,
@@ -1853,10 +1890,11 @@
 /turf/simulated/floor/airless/damaged3,
 /area/regina)
 "Km" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/simulated/floor/airless/engine,
 /area/regina)
 "Kw" = (
 /obj/lattice{
@@ -1895,6 +1933,12 @@
 	},
 /turf/simulated/floor/airless/engine,
 /area/space)
+"KU" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/simulated/floor/airless/engine/caution/north,
+/area/regina)
 "KV" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -1913,13 +1957,6 @@
 	},
 /turf/simulated/floor/airless/engine,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"Lh" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/area/space)
 "Ln" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
@@ -1930,8 +1967,7 @@
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "Ls" = (
 /obj/machinery/atmospherics/unary/vent_pump{
-	dir = 2;
-	
+	dir = 2
 	},
 /turf/simulated/floor/caution/north,
 /area/regina)
@@ -2078,7 +2114,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/simulated/floor/airless/engine/vacuum,
 /area/regina)
 "NB" = (
 /turf/unsimulated/floor/engine,
@@ -2101,13 +2137,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
-"OH" = (
-/obj/stool/chair/comfy/shuttle/brown,
-/obj/machinery/computer/shuttle_bus/embedded/south,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/regina)
 "OM" = (
 /obj/decal/poster/wallsign/hazard_danger,
 /turf/simulated/wall/auto/shuttle,
@@ -2158,7 +2187,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/simulated/floor/airless/engine/vacuum,
 /area/regina)
 "Qf" = (
 /obj/npc/trader/random,
@@ -2371,12 +2400,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"Un" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3_space"
-	},
-/area/space)
 "Uq" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -2479,6 +2502,12 @@
 	dir = 4
 	},
 /turf/simulated/floor/airless/engine/vacuum,
+/area/regina)
+"WO" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/simulated/floor/airless/engine/caution/north,
 /area/regina)
 "Xb" = (
 /turf/unsimulated/wall/auto/adventure/hospital/interior,
@@ -2653,7 +2682,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/space,
+/turf/simulated/floor/airless/engine,
 /area/regina)
 "Zs" = (
 /obj/decal/fakeobjects/teleport_pad,
@@ -3481,7 +3510,7 @@ WE
 sN
 pi
 pi
-Fh
+yK
 Wn
 pR
 TV
@@ -3569,7 +3598,7 @@ Uu
 oN
 oN
 WE
-Fh
+yK
 pR
 TV
 dR
@@ -3639,7 +3668,7 @@ TB
 aI
 aI
 UG
-Ey
+WO
 iU
 Vf
 wh
@@ -3900,18 +3929,18 @@ TB
 aI
 aI
 UG
-Zj
+KU
 sN
 jE
 Tm
 qd
 Ug
 nQ
-Zj
+jC
 yc
 iV
 yc
-IV
+es
 nQ
 Tm
 qd
@@ -4772,7 +4801,7 @@ jd
 Rm
 xf
 Wn
-wU
+vC
 WM
 dY
 dY
@@ -5207,7 +5236,7 @@ jd
 Rm
 xf
 Wn
-wU
+vC
 XU
 im
 im
@@ -5302,7 +5331,7 @@ rw
 Ug
 Zj
 mp
-IV
+gM
 Tm
 rw
 im
@@ -5482,7 +5511,7 @@ rw
 Za
 Za
 XU
-FK
+yH
 Wn
 pR
 TV
@@ -5532,7 +5561,7 @@ Wn
 Km
 lu
 zd
-Un
+KR
 lu
 If
 Wn
@@ -5967,7 +5996,7 @@ Wn
 hS
 ir
 XW
-up
+hH
 ir
 XW
 Wn
@@ -6831,7 +6860,7 @@ UO
 UO
 UO
 TO
-Lh
+KR
 pv
 pv
 pv
@@ -7179,7 +7208,7 @@ UO
 UO
 UO
 TO
-GR
+hH
 pv
 pv
 pv
@@ -9135,7 +9164,7 @@ hv
 hv
 aG
 MG
-OH
+AM
 La
 tp
 pT

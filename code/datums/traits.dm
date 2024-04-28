@@ -333,6 +333,18 @@
 		return
 */
 
+
+
+/datum/trait/german
+	name = "German"
+	desc = "You're from somewhere in the middle of Texas. Prost y'all."
+	id = "german"
+	icon_state = "german"
+	points = 0
+	category =  list("language")
+
+	onAdd(var/mob/owner)
+		owner.bioHolder?.AddEffect("accent_german")
 /datum/trait/finnish
 	name = "Finnish Accent"
 	desc = "...and you thought space didn't have Finns?"
@@ -480,6 +492,14 @@
 	desc = "Start with a bee egg as your trinket."
 	id = "beestfriend"
 	icon_state = "bee"
+	points = -1
+	category = list("trinkets")
+
+/datum/trait/petperson
+	name = "Pet Person"
+	desc = "Start with your (possibly lovable) pet!"
+	id = "petperson"
+	icon_state = "petperson"
 	points = -1
 	category = list("trinkets")
 

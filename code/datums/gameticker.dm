@@ -356,8 +356,7 @@ var/global/current_state = GAME_STATE_INVALID
 
 				if (player.mind.ckey)
 					//Record player participation in this round via the goonhub API
-					SPAWN(0)
-						participationRecorder.record(P)
+					participationRecorder.record(P)
 
 				if (player.mind && player.mind.assigned_role == "AI")
 					player.close_spawn_windows()
@@ -648,6 +647,7 @@ var/global/current_state = GAME_STATE_INVALID
 			if(CO.check_completion())
 				crewMind.completed_objs++
 				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] [SPAN_SUCCESS("<B>Success</B>")]")
+				JOB_XP(crewMind.current, crewMind.assigned_role, CO.XPreward)
 				logTheThing(LOG_DIARY, crewMind, "completed objective: [CO.explanation_text]")
 				if (!isnull(CO.medal_name) && !isnull(crewMind.current))
 					crewMind.current.unlock_medal(CO.medal_name, CO.medal_announce)
@@ -890,16 +890,24 @@ var/global/current_state = GAME_STATE_INVALID
 
 	logTheThing(LOG_DEBUG, null, "Power Generation: [json_encode(station_power_generation)]")
 
+	var/ptl_cash = 0
+	for(var/obj/machinery/power/pt_laser/P in machine_registry[MACHINES_POWER])
+		ptl_cash += P.lifetime_earnings
+	if(ptl_cash)
+		logTheThing(LOG_DEBUG, null, "PTL Cash: [ptl_cash]")
+
+
 	SPAWN(0)
 		for(var/mob/E in mobs)
 			if(E.client)
 				if (!E.abilityHolder)
 					E.add_ability_holder(/datum/abilityHolder/generic)
 				E.addAbility(/datum/targetable/crew_credits)
-				if (E.client.preferences.view_tickets)
-					E.showtickets()
 				if (E.client.preferences.view_score)
 					creds.ui_interact(E)
+				else if (E.client.preferences.view_tickets && (length(creds.citation_tab_data[CITATION_TAB_SECTION_TICKETS]) || length(creds.citation_tab_data[CITATION_TAB_SECTION_FINES])))
+					creds.ui_interact(E)
+				E.show_inspector_report()
 				SPAWN(0) show_xp_summary(E.key, E)
 	logTheThing(LOG_DEBUG, null, "Did credits")
 

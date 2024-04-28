@@ -148,7 +148,7 @@
 
 // foam disolves when heated
 // except metal foams
-/obj/effects/foam/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/effects/foam/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 	if(!metal && prob(max(0, exposed_temperature - 475)))
 		flick("foam-disolve", src)
 

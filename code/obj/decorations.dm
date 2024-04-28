@@ -311,6 +311,11 @@
 				visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around! \An [thing] falls out!</b>"))
 				last_use = world.time
 				max_uses--
+			else if (istype(something, /obj))
+				var/obj/thing = something
+				additional_items -= something
+				thing.set_loc(src.loc)
+				visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around! \An [thing] falls out!</b>"))
 		else
 			visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around![prob(20) ? " A few leaves fall out!" : null]</b>"))
 

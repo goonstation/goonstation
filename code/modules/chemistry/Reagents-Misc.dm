@@ -592,24 +592,6 @@ datum
 				..()
 				return
 
-		carpet
-			name = "carpet"
-			id = "carpet"
-			description = "A covering of thick fabric used on floors. This type looks particularly gross."
-			reagent_state = LIQUID
-			fluid_r = 112
-			fluid_b = 69
-			fluid_g = 19
-			transparency = 255
-			value = 4 // 2 2
-			viscosity = 0.3
-
-			reaction_turf(var/turf/T, var/volume)
-				if (T.icon == 'icons/turf/floors.dmi' && volume >= 5)
-					SPAWN(1.5 SECONDS)
-						T.icon_state = "grimy"
-				return
-
 		fffoam
 			name = "firefighting foam"
 			id = "ff-foam"
@@ -2290,6 +2272,56 @@ datum
 			fluid_g = 255
 			fluid_b = 0
 			transparency = 127
+			overdose = 25
+			var/OD_ticks = 0
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M)
+					M = holder.my_atom
+				if (holder.get_reagent_amount(src.id) < src.overdose)
+					//once we loose the OD treshold, we really stop turning into rubber
+					src.OD_ticks = 0
+				..()
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if(!M)
+					M = holder.my_atom
+				switch (severity)
+					if (1)
+						if(prob(5))
+							//while we are overdosing, we don't fully break down the OD-ticks. Gotta get under the OD-limit
+							src.OD_ticks = max(0, src.OD_ticks - 1)
+						if(prob(10) && !ON_COOLDOWN(M, "flubber_jiggling", 8 SECONDS))
+							animate_flubber(M)
+							boutput(M, SPAN_ALERT("You feel [pick("like you're bending out of shape", "a jiggling sensation", "like something is wrong")]."))
+							//your body becoming rubber should hurt. We start at 6 damage and scale up to 8 damage before hitting the really dangerous OD-limit
+							random_brute_damage(M, 8 * (holder.get_reagent_amount(src.id) / src.overdose)  * mult)
+					if (2 to INFINITY)
+						//now the real fun starts
+						src.OD_ticks += 1
+						if(src.OD_ticks > 8 && prob(10))
+							boutput(M, SPAN_ALERT("<I>Your finger's feel rubbery!</I>"))
+							if(istype(M, /mob/living))
+								var/mob/living/rubber_finger_mob = M
+								rubber_finger_mob.empty_hands()
+						switch(src.OD_ticks)
+							if (1 to 10)
+								if (prob(25) && !ON_COOLDOWN(M, "flubber_jiggling", 8 SECONDS))
+									animate_flubber(M)
+									boutput(M, SPAN_ALERT(pick("Something feels seriously off.","You can swear you have seen your back just a second ago...", "It felt like your stomach shifted upwards for a second, odd...")))
+									random_brute_damage(M, 8 * mult)
+							if (11 to 22)
+								if (prob(25) && !ON_COOLDOWN(M, "flubber_jiggling", 6 SECONDS))
+									animate_flubber(M, 6, 10, 3, 2)
+									boutput(M, SPAN_ALERT(pick("Your body cannot stop jiggling.","Your knees twist in an unsettling direction.", "Your eyes bounce inside your skull for a moment, holy fuck...")))
+									random_brute_damage(M, 10 * mult)
+							if (23 to INFINITY)
+								if (prob(25) && !ON_COOLDOWN(M, "flubber_jiggling", 6 SECONDS))
+									boutput(M, SPAN_ALERT("<B>[pick("Your body stretches to an unreasonable degree, FUCK!","You cannot control your form! MAKE. IT. STOP!", "You feel your organs jiggling into each other... IT HURTS!")]</B>"))
+									M.setStatusMin("stunned", 2 SECONDS * mult)
+									animate_flubber(M, 4, 8, 4, 2.5)
+									random_brute_damage(M, 12 * mult)
+
 
 		fliptonium
 			name = "fliptonium"
@@ -4195,95 +4227,6 @@ datum
 				if (!issilicon(user) && !isAI(user) && !isintangible(user) && !isobserver(user)) //there's probably other things we should exclude here
 					src.holder.trans_to(user, max(1, src.volume))
 
-#define MIN_JEANS_FOR_CONVERSION 5
-		/// Jeans reagent turns turfs and objects into jeans
-		/// and on touch on humans will convert their clothes into jeans material
-		jeans
-			name = "liquid jeans"
-			id = "jeans"
-			fluid_r = 39
-			fluid_g = 78
-			fluid_b = 133
-			taste = "like a good quality all wear garment"
-			reagent_state = LIQUID
-
-
-
-			New()
-				. = ..()
-
-			reaction_turf(var/turf/T, var/volume)
-				. = ..()
-				if (volume < MIN_JEANS_FOR_CONVERSION)
-					return
-
-				if (!T)
-					return
-
-				T.setMaterial(getMaterial("jean"))
-
-			reaction_obj(var/obj/O, var/volume)
-				. = ..()
-				if (volume < MIN_JEANS_FOR_CONVERSION)
-					return
-
-				if (!O)
-					return
-
-				O.setMaterial(getMaterial("jean"))
-
-			var/list/jean_affected_slots = list(
-				SLOT_BACK,
-				SLOT_WEAR_MASK,
-				SLOT_BELT,
-				SLOT_WEAR_ID,
-				SLOT_EARS,
-				SLOT_GLASSES,
-				SLOT_GLOVES,
-				SLOT_HEAD,
-				SLOT_SHOES,
-				SLOT_WEAR_SUIT,
-				SLOT_W_UNIFORM)
-
-			proc/handle_mob_touch(mob/living/M, volume)
-				if (!ishuman(M))
-					return
-
-				if (volume < MIN_JEANS_FOR_CONVERSION)
-					return
-
-				var/mob/living/carbon/human/human = M
-				var/update_required = FALSE
-				for (var/slot in jean_affected_slots)
-					var/obj/item/I = human.get_slot(slot)
-
-					if (!I)
-						continue
-
-					if (I.material?.isSameMaterial(getMaterial("jean")))
-						continue
-
-					volume = max(0, volume - MIN_JEANS_FOR_CONVERSION)
-					if (volume == 0)
-						break
-
-					I.setMaterial(getMaterial("jean"))
-					update_required = TRUE
-
-				if (update_required)
-					human.update_clothing()
-
-			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
-				. = ..()
-				if (!M || volume <= 0)
-					return
-
-				if (method != TOUCH)
-					return
-
-				handle_mob_touch(M, volume)
-
-#undef MIN_JEANS_FOR_CONVERSION
 
 /obj/badman/ //I really don't know a good spot to put this guy so im putting him here, fuck you.
 	name = "Senator Death Badman"

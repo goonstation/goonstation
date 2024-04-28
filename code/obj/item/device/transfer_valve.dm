@@ -242,8 +242,8 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				src.attached_device = null
 				UpdateIcon()
 			if ("interact_device")
-				attached_device.attack_self(usr)
-		src.attack_self(usr)
+				attached_device.AttackSelf(usr)
+		src.AttackSelf(usr)
 		src.add_fingerprint(usr)
 
 	proc/remove_tank(var/T)
@@ -348,7 +348,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			var/image/straps = new(src.icon, icon_state = "wire_straps")
 			src.underlays += straps
 
-	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special varient.
+	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special variant.
 		src.wear_image.overlays = list()
 		if(src.tank_one)
 			src.wear_image.overlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_one_icon]1")

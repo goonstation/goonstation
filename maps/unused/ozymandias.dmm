@@ -14696,9 +14696,7 @@
 /area/station/crew_quarters/pool)
 "dXr" = (
 /obj/indestructible/shuttle_corner,
-/turf/simulated/shuttle/wall/corner{
-	dir = 8
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "dXF" = (
 /obj/machinery/door/airlock/pyro/glass,
@@ -15394,9 +15392,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 4
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "ehc" = (
 /obj/rack,
@@ -17317,9 +17313,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 1
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "eEN" = (
 /obj/cable{
@@ -17464,10 +17458,11 @@
 	name = "Chapel Reception"
 	})
 "eGp" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "eGE" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -43661,10 +43656,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "lzz" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "wall3"
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
 	},
+/turf/simulated/floor/airless/damaged1,
 /area/space)
 "lzL" = (
 /obj/landmark/spawner/artifact,
@@ -55362,7 +55358,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
-/turf/simulated/shuttle/wall/corner,
+/turf/space,
 /area/shuttle/arrival/station)
 "ozs" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -55429,9 +55425,11 @@
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/crew_quarters/arcade/dungeon)
 "oAA" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "oAC" = (
 /obj/cable{
@@ -73795,10 +73793,11 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "teN" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
 	},
+/turf/simulated/floor/airless/damaged1,
 /area/space)
 "teR" = (
 /obj/machinery/light/emergency{
@@ -84665,8 +84664,7 @@
 /area/station/quartermaster/office)
 "vJl" = (
 /obj/machinery/manufacturer/general/grody{
-	free_resource_amt = 2;
-
+	free_resource_amt = 2
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -124437,11 +124435,11 @@ aJu
 aJu
 aJu
 aJu
-qpT
+sTu
 xFz
 xFz
 xFz
-vhb
+sTu
 aJu
 aJu
 aJu

@@ -151,7 +151,7 @@
 		if (check())
 			return
 		if (target == src.affecting)
-			attack_self(user)
+			src.AttackSelf(user)
 			return
 
 	attack_hand(mob/user)
@@ -433,12 +433,14 @@
 		if ((src.state < 1 && !(src.affecting.getStatusDuration("paralysis") || src.affecting.getStatusDuration("weakened") || src.affecting.stat)) || !isturf(user.loc))
 			user.visible_message(SPAN_ALERT("[src.affecting] stumbles a little!"))
 			user.u_equip(src)
+			qdel(src)
 			return 0
 
 		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
 		.= src.affecting
 		user.u_equip(src)
+		qdel(src)
 
 
 	proc/check_hostage(owner, obj/projectile/P)
