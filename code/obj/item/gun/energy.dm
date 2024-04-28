@@ -1300,19 +1300,23 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		..()
 
 	attack_hand(mob/user)
-		src.assign_name(user)
+		if (!owner_prints)
+			src.assign_name(user)
 		..()
-
 
 	//if it has no owner prints scanned, the next person to attack_self it is the owner.
 	//you have to use voice activation to change modes. haha!
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
-		src.assign_name(user)
+		if (owner_prints)
+			boutput(user, SPAN_NOTICE("There don't seem to be any buttons on [src] to press."))
+		else
+			src.assign_name(user)
+		..()
+
 
 	proc/assign_name(var/mob/M)
 		if (owner_prints)
-			boutput(M, SPAN_NOTICE("There don't seem to be any buttons on [src] to press."))
 			return
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
