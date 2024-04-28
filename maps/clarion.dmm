@@ -10706,9 +10706,6 @@
 	},
 /area/station/hallway/primary/southeast)
 "brn" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
 	dir = 8;
