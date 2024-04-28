@@ -23942,7 +23942,7 @@
 /area/station/medical/medbay/treatment)
 "jOO" = (
 /obj/machinery/firealarm/east,
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -24219,7 +24219,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},

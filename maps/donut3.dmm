@@ -25947,7 +25947,7 @@
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
 "hLQ" = (
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
@@ -43283,7 +43283,7 @@
 /obj/decal/tile_edge/stripe/corner{
 	dir = 9
 	},
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/decal/stripe_caution,
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/engine,
