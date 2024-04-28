@@ -26,6 +26,8 @@ Left Mouse Button on turf/mob/obj      = FIRE! Literally.<br>
 		melting = (alert("Does the fire melt floors?",,"Yes", "No") == "Yes") ? 1 : 0
 		if (tgui_alert(usr, "Is the fire a chemical fire?", "Atmos or chem fire", list("Yes", "No")) == "Yes")
 			src.chemfire_color = tgui_input_list(usr, "Choose color", "Color", src.chemfire_colors) || CHEM_FIRE_RED
+		else
+			src.chemfire_color = null
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!object)
@@ -38,4 +40,3 @@ Left Mouse Button on turf/mob/obj      = FIRE! Literally.<br>
 			fireflash_melting(object, radius, temperature, falloff, chemfire = src.chemfire_color)
 		else
 			fireflash(object, radius, temperature, falloff, chemfire = src.chemfire_color)
-		src.chemfire_color = null
