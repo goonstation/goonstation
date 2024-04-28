@@ -366,6 +366,8 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 	var/fire_color = CHEM_FIRE_RED
 
+	var/color_set = FALSE
+
 // chemfire - use a chem_fire define
 /obj/hotspot/chemfire/New(turf/newLoc, chemfire)
 	..()
@@ -384,6 +386,11 @@ ABSTRACT_TYPE(/obj/hotspot)
 	src.UpdateOverlays(im2, "fire-over")
 
 /obj/hotspot/chemfire/set_real_color()
+	if (src.color_set)
+		return
+	src.color_set = TRUE
+
+	// no particular reason for color values chosen in this proc, just based off what worked
 	var/list/rgb
 	switch (src.fire_color)
 		if (CHEM_FIRE_RED)
@@ -402,9 +409,5 @@ ABSTRACT_TYPE(/obj/hotspot)
 			rgb = list(0, 0, 0)
 		if (CHEM_FIRE_WHITE)
 			rgb = list(50, 50, 50)
-	#ifndef HOTSPOT_MEDIUM_LIGHTS
-	src.light.set_color(rgb[1], rgb[2], rgb[3], queued_run = TRUE)
-	src.light.enable(queued_run = TRUE)
-	#else
-	src.add_medium_light("hotspot", list(rgb[1], rgb[2], rgb[3], 100))
-	#endif
+	src.add_medium_light("fire_lightup", list(65, 65, 65, 100))
+	src.add_medium_light("fire_color_highlight", list(rgb[1], rgb[2], rgb[3], 100))
