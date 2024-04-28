@@ -1,5 +1,9 @@
 
 (t)sat apr 27 24
+(u)LeahTheTech
+(p)18657
+(e)⚖⚗|C-Balance, A-Chemistry
+(*)Simplified the charcoal recipe: (1) Carbon + (1) Ash => (1) Charcoal + (1) Steam, with additional charcoal yield if the steam is prevented from evaporating.
 (u)FlameArrow57
 (p)18569
 (e)🪲💅🔨|C-Bug, C-QoL, A-Player-Actions
