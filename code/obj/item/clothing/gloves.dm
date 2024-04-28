@@ -22,7 +22,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	var/hide_prints = 1 // Seems more efficient to do this with one global proc and a couple of vars (Convair880).
 	var/scramble_prints = 0
 	var/material_prints = null
-	var/no_prints = FALSE // For extra sneaky prints
+	var/no_prints = FALSE
 
 	var/can_be_charged = 0 // Currently, there are provisions for icon state "yellow" only. You have to update this file and mob_procs.dm if you're wanna use other glove sprites (Convair880).
 	var/glove_ID = null
