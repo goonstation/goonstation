@@ -1,5 +1,9 @@
 
 (t)sat apr 27 24
+(u)glowbold
+(p)18653
+(e)🆕⚖💊|C-Feature, C-Balance, A-Medical
+(+)Puritans recieve major cloning defects when cloned.
 (u)tarmunora
 (+)AI can now use ; instead of :1 to speak over their primary internal radio
 (u)LeahTheTech
