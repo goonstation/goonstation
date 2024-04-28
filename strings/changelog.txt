@@ -1,6 +1,11 @@
 
 (t)sat apr 27 24
 (u)glowbold
+(p)18275
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Using the Authentication Disk on the armory computer will revoke armory access.
+(*)Once per round, the Authentication Disk can authorize armory access, but doing so will prevent revoking armory access.
+(u)glowbold
 (p)18653
 (e)🆕⚖💊|C-Feature, C-Balance, A-Medical
 (+)Puritans recieve major cloning defects when cloned.
