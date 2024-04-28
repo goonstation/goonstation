@@ -1,4 +1,9 @@
 
+(t)sun apr 28 24
+(u)Azrun
+(p)18383
+(e)🆕🗺🎨🔄📄🔬💡|C-Feature, A-Mapping, C-Sprites, C-Rework, A-UI, A-Science, A-Station-Systems
+(*)Long Range Teleport has been folded into the normal Teleporter!  Check out the Observatory to go on new adventures!
 (t)sat apr 27 24
 (u)glowbold
 (p)18275
