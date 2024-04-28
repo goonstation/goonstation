@@ -35,9 +35,8 @@
 #define PLAYERS_PER_GANG_GENERATED 12
 #endif
 	var/num_teams = clamp(round((num_players) / PLAYERS_PER_GANG_GENERATED), setup_min_teams, setup_max_teams) //1 gang per 9 players, 15 on RP
-#undef PLAYERS_PER_GANG_GENERATED
-
 	logTheThing(LOG_GAMEMODE, src, "Counted [num_players] available, with [PLAYERS_PER_GANG_GENERATED] per gang that means [num_teams] gangs.")
+#undef PLAYERS_PER_GANG_GENERATED
 
 	var/list/leaders_possible = get_possible_enemies(ROLE_GANG_LEADER, num_teams)
 	if (num_teams > length(leaders_possible))
