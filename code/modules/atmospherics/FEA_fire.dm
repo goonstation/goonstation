@@ -361,7 +361,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 	icon = 'icons/effects/fire_chemical.dmi'
 	icon_state = "red_full-1"
 	plane = PLANE_DEFAULT
-	layer = OBJ_LAYER - 0.1
+	layer = OBJ_LAYER - 0.2 // so that part of the fire appears behind objects. 0.2 to account for vending machine, etc layering
 	blend_mode = BLEND_DEFAULT
 
 	var/fire_color = CHEM_FIRE_RED
