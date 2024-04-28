@@ -1,7 +1,7 @@
 
 (t)sun apr 28 24
 (u)tarmunora
-(+)Armory shotgun racks have been swapped out for phaser racks (and vice versa phaser crates for shotgun crates). Armory phasers come with a slightly larger default power cell
+(+)Armory shotgun racks have been swapped out for phaser racks (and vice versa phaser crates for shotgun crates). Armory phasers come with a slightly larger default power cell. phaser rack sprites by Flaborized
 (u)Azrun
 (p)18383
 (e)🆕🗺🎨🔄📄🔬💡|C-Feature, A-Mapping, C-Sprites, C-Rework, A-UI, A-Science, A-Station-Systems
