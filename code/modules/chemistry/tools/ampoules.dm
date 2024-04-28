@@ -25,10 +25,11 @@
 		return
 	if(target == user)
 		boutput(user, SPAN_NOTICE("You crack open and inhale [src]."))
+		user.inhale_ampoule(src, user)
 	else
 		user.visible_message(SPAN_ALERT("[user] attempts to force [target] to inhale [src]!"))
-	SETUP_GENERIC_ACTIONBAR(user, target, 3 SECONDS, /mob/proc/inhale_ampoule, list(src, user), src.icon, src.icon_state, null, \
-		list(INTERRUPT_MOVE, INTERRUPT_ATTACKED, INTERRUPT_STUNNED, INTERRUPT_ACTION))
+		SETUP_GENERIC_ACTIONBAR(user, target, 3 SECONDS, /mob/proc/inhale_ampoule, list(src, user), src.icon, src.icon_state, null, \
+			list(INTERRUPT_MOVE, INTERRUPT_ATTACKED, INTERRUPT_STUNNED, INTERRUPT_ACTION))
 
 /obj/item/reagent_containers/ampoule/on_reagent_change()
 	..()
