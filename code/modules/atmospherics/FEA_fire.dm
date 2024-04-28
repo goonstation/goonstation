@@ -1,12 +1,12 @@
 #define HOTSPOT_MEDIUM_LIGHTS
 
 /// Exposes our reagents and material to some temperature, letting them figure out how to react to it.
-/atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 	if (src.reagents)
-		src.reagents.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1)
+		src.reagents.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1, cannot_be_cooled = cannot_be_cooled)
 	src.material_trigger_on_temp(exposed_temperature)
 
-/obj/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 	. = ..()
 	if (istype(src.artifact,/datum/artifact))
 		src.ArtifactStimulus("heat", exposed_temperature)

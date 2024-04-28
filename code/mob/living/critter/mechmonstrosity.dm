@@ -18,7 +18,7 @@
 	speechverb_stammer = "states"
 	speechverb_exclaim = "declares"
 	speechverb_ask = "queries"
-	faction = FACTION_DERELICT
+	faction = list(FACTION_DERELICT)
 
 	setup_healths()
 		add_hh_robot(100, 1)
@@ -248,7 +248,6 @@
 /datum/action/bar/icon/mechanimateAbility
 	duration = 8 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "mechanimate"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "turn_over"
 	var/mob/living/target
@@ -446,7 +445,7 @@
 	health_brute_vuln = 0.5
 	health_burn = 20
 	health_burn_vuln = 0.25
-	faction = FACTION_DERELICT
+	faction = list(FACTION_DERELICT)
 	ai_type = /datum/aiHolder/aggressive
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0

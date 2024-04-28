@@ -534,6 +534,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	icon_state = "lavafish"
 	inhand_color = "#eb2d2d"
 	rarity = ITEM_RARITY_EPIC
+	firesource = FIRESOURCE_OPEN_FLAME
 
 	New()
 		global.processing_items += src
@@ -546,6 +547,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	process()
 		if (ismob(src.loc) && prob(60))
 			src.loc.changeStatus("burning", pick(3, 5) SECONDS)
+
+	attack(mob/target, mob/user, def_zone, is_special, params)
+		. = ..()
+		if (prob(50))
+			playsound(target, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE)
+			target.changeStatus("burning", 2 SECONDS)
 
 /obj/item/reagent_containers/food/fish/igneous_fish
 	name = "igneous fish"
@@ -601,3 +608,11 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 			var/fish = pick(/obj/item/reagent_containers/food/fish/salmon,/obj/item/reagent_containers/food/fish/carp,/obj/item/reagent_containers/food/fish/bass)
 			new fish(get_turf(src))
 			qdel(src)
+/obj/item/reagent_containers/food/fish/borgfish
+	name = "Cyborg Fish"
+	desc = "This must be an experiment from a bored roboticist."
+	icon_state = "borgfish"
+	inhand_color = "#b6b5b5"
+	slice_product = /obj/item/material_piece/steel
+	default_material = "steel"
+	rarity = ITEM_RARITY_RARE

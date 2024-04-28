@@ -41,6 +41,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
+		START_TRACKING
 		src.AddComponent(/datum/component/obj_projectile_damage)
 		SPAWN(0.5 SECONDS)
 			if (src)
@@ -66,6 +67,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if(air_contents)
 			qdel(air_contents)
 			air_contents = null
+		STOP_TRACKING
 		..()
 
 	was_deconstructed_to_frame(mob/user)
@@ -180,7 +182,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				qdel(G)
 		else
 			if (istype(mag))
-				actions.stopId("magpickerhold", user)
+				actions.stopId(/datum/action/magPickerHold, user)
 			else if (!src.fits_in(I) || !user.drop_item())
 				return
 			I.set_loc(src)
@@ -228,6 +230,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		// if it has just been shot out of a mail chute, don't accept it.
 		if (GET_COOLDOWN(MO, "PipeEject"))
 			return
+
+		if (isliving(MO))
+			var/mob/living/mobtarget = MO
+			if  (mobtarget.buckled || isAI(mobtarget))
+				return
+
+			if (istype(src, /obj/machinery/disposal/mail))
+				//Is this mob allowed to ride mailchutes?
+				if (!mobtarget.canRideMailchutes())
+					return
 
 		if(isitem(MO))
 			var/obj/item/I = MO
@@ -426,7 +438,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			mode = DISPOSAL_CHUTE_CHARGED
 			power_usage = 100
 			update()
-			if (is_processing)
+			if (is_processing && !flush)
 				UnsubscribeProcess()
 				is_processing = 0
 		return
@@ -792,7 +804,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 /datum/action/bar/icon/shoveMobIntoChute
 	duration = 0.2 SECONDS
 	interrupt_flags =  INTERRUPT_STUNNED | INTERRUPT_ACT
-	id = "shoveMobIntoChute"
 	icon = 'icons/obj/disposal.dmi'
 	icon_state = "shoveself-disposal" //varies, see below
 	var/obj/machinery/disposal/chute

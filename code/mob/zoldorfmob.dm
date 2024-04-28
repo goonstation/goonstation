@@ -26,6 +26,7 @@
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_GHOST
 		src.see_in_dark = SEE_DARK_FULL
+		src.flags |= UNCRUSHABLE
 
 	proc/addAllAbilities()
 		src.addAbility(/datum/targetable/zoldorfAbility/fortune)
@@ -208,12 +209,13 @@
 		return 0
 
 	say(var/message)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		if(free)
 			if (dd_hasprefix(message, "*"))
 				return src.emote(copytext(message, 2),1)
 
 			logTheThing(LOG_DIARY, src, "[src.name] - [src.real_name]: [message]", "say")
+			SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")

@@ -296,7 +296,6 @@ TYPEINFO(/obj/machinery/power/furnace)
 		return 1
 
 /datum/action/bar/icon/stuff_mob_into_furnace
-	id = "stuff_into_furnace"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 	duration = 5 SECONDS

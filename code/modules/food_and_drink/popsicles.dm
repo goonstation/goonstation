@@ -1,10 +1,9 @@
 /obj/item/stick
-	name = "popsicle stick"
+	name = "stick"
 	desc = "You made a house out of these once in kindergarten."
 	icon = 'icons/obj/foodNdrink/food_popsicles.dmi'
 	icon_state = "stick"
 	throwforce = 1
-	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 5
 	w_class = W_CLASS_TINY
@@ -16,7 +15,7 @@
 		if (user.find_in_hand(src) && !src.broken)
 			user.visible_message("<b>[user]</b> bends [src] a little too far back and it snaps in half. Shoot!")
 			playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, TRUE, 0, 2)
-			src.name = "broken popsicle stick"
+			src.name = "broken stick"
 			src.icon_state = "stick-broken"
 			src.broken = 1
 
@@ -88,7 +87,6 @@
 				R.add_reagent("juice_lime", 5)
 				R.add_reagent("luminol", 5)
 				R.add_reagent("chalk", 5)
-				R.add_reagent("urine", 5)
 			if("cherry")
 				src.desc = "A red popsicle, which appears to be \"'Roid Rage Redberry\" flavor, guaranteed to put you into a rage until you taste more."
 				R.add_reagent("juice_strawberry", 5)

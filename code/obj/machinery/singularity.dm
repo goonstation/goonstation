@@ -61,6 +61,9 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	density = 1
 	var/bhole = 0 // it is time. we can trust people to use the singularity For Good - cirr
 
+	HELP_MESSAGE_OVERRIDE({"Automatically creates a singularity when all surrounding containment fields are active.\
+							Can be anchored/unanchored with a <b>wrench</b>"})
+
 /obj/machinery/the_singularitygen/process()
 	var/max_radius = singularity_containment_check(get_turf(src))
 	if(isnull(max_radius))
@@ -113,6 +116,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	density = 1
 	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	deconstruct_flags = DECON_NONE
+	flags = FPRINT // no fluid submerge images and we also don't need tgui interactability
 
 
 	pixel_x = -16
@@ -402,7 +406,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			gain += A.material.getProperty("n_radioactive") * 6 * A.material_amt
 			if(isitem(A))
 				var/obj/item/I = A
-				gain *= I.amount
+				gain *= min(I.amount, INFINITY)
 
 		if (A.reagents)
 			gain += min(A.reagents.total_volume/4, 50)
@@ -537,8 +541,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 						var/datum/material/M = getMaterial("steel")
 						S.setMaterial(M)
 					W.ReplaceWithFloor()
-			else
-				T.ReplaceWithFloor()
 	return
 #endif
 
@@ -594,6 +596,10 @@ TYPEINFO(/obj/machinery/field_generator)
 	var/obj/machinery/power/data_terminal/link = null
 	var/active_dirs = 0
 	var/shortestlink = 0
+
+	HELP_MESSAGE_OVERRIDE({"In order to be activated, the Field Generator has to be <b>wrenched</b> and <b>welded</b> down first. Once \
+							secured, a valid ID has to be swiped to unlock the controls. On activation, the generator will connect to \
+							other ones within a cardinal range of 13 tiles."})
 
 	proc/set_active(var/act)
 		if (src.active != act)
@@ -798,7 +804,7 @@ TYPEINFO(/obj/machinery/field_generator)
 				return
 			var/positions = src.get_welding_positions()
 			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action, \
-						list(user), "[user] finishes using their [W.name] on the field generator.", positions[1], positions[2]),user)
+						list(user), "[user] finishes using [his_or_her(user)] [W.name] on the field generator.", positions[1], positions[2]),user)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the field generator to the floor.")
 			return
@@ -1082,7 +1088,7 @@ TYPEINFO(/obj/machinery/emitter)
 	mats = 10
 
 /obj/machinery/emitter
-	name = "Emitter"
+	name = "\improper Emitter"
 	desc = "Shoots a high power laser when active"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Emitter"
@@ -1102,6 +1108,10 @@ TYPEINFO(/obj/machinery/emitter)
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/heavy
+
+	HELP_MESSAGE_OVERRIDE({"The Emitter shoots laser bolts at Containment Field Generators to power them. Has to be \
+							<b>wrenched</b> and <b>welded</b> down before being useable. The control systems must be unlocked \
+							with a valid ID in order to activate the Emitter."})
 
 /obj/machinery/emitter/New()
 	..()
@@ -1206,6 +1216,8 @@ TYPEINFO(/obj/machinery/emitter)
 		src.visible_message(SPAN_ALERT("<b>[src]</b> fires a bolt of energy!"))
 
 		shoot_projectile_DIR(src, current_projectile, dir)
+		var/horizontal_offset = (src.dir in list(EAST, WEST)) ? 10 : 0 //offset by 10 pixels if we're firing to the side otherwise it looks weird
+		muzzle_flash_any(src, dir_to_angle(dir), "muzzle_flash_plaser", horizontal_offset = horizontal_offset)
 		use_power(current_projectile.power)
 
 		if(prob(35))
@@ -1247,7 +1259,7 @@ TYPEINFO(/obj/machinery/emitter)
 				return
 			var/positions = src.get_welding_positions()
 			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action, \
-						list(user), "[user] finishes using their [W.name] on the emitter.", positions[1], positions[2]),user)
+						list(user), "[user] finishes using [his_or_her(user)] [W.name] on the emitter.", positions[1], positions[2]),user)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the emitter to the floor.")
 			return
@@ -1256,7 +1268,7 @@ TYPEINFO(/obj/machinery/emitter)
 			return
 
 	var/obj/item/card/id/id_card = get_id_card(W)
-	if (istype(id_card))
+	if (istype(id_card) && length(src.req_access))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
@@ -1362,6 +1374,22 @@ TYPEINFO(/obj/machinery/emitter)
 
 	return
 
+/obj/machinery/emitter/assault
+	name = "prototype assault emitter"
+	desc = "Shoots a VERY high power laser when active. The ID lock appears to have been messily smashed off."
+	current_projectile = new/datum/projectile/laser/asslaser
+	locked = FALSE
+	fire_delay = 30
+	req_access = list()
+	HELP_MESSAGE_OVERRIDE({"The Emitter shoots assault lasers at <s>Containment Field Generators</s> just about anything! Has to be \
+							<b>wrenched</b> and <b>welded</b> down before being useable."})
+
+	attack_ai(mob/user)
+		return
+
+	receive_signal(datum/signal/signal)
+		return
+
 /////////////////////////////////// Collector array /////////////////////////////////
 
 /obj/item/electronics/frame/collector_array
@@ -1387,6 +1415,8 @@ TYPEINFO(/obj/machinery/power/collector_array)
 	var/obj/item/tank/plasma/P = null
 	var/obj/machinery/power/collector_control/CU = null
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
+	HELP_MESSAGE_OVERRIDE({"Must be cardinally adjacent to a Radiation Collector Controller to function. \
+							It can be bolted or unbolted to the floor with a <b>wrench</b>."})
 
 /obj/machinery/power/collector_array/New()
 	..()
@@ -1447,7 +1477,7 @@ TYPEINFO(/obj/machinery/power/collector_array)
 /obj/machinery/power/collector_array/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		if(src.active)
-			boutput(SPAN_ALERT("The [src.name] must be turned off first!"))
+			boutput(user, SPAN_ALERT("The [src.name] must be turned off first!"))
 		else
 			if (!src.anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -1520,6 +1550,10 @@ TYPEINFO(/obj/machinery/power/collector_control)
 	var/obj/machinery/power/collector_array/CAW = null
 	var/list/obj/machinery/the_singularity/S = null
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
+
+	HELP_MESSAGE_OVERRIDE({"Transfers the energy from cardinally adjacent Radiation Collector Arrays \
+							to the wire below it as usable electric power. \
+							It can be bolted or unbolted to the floor with a <b>wrench</b>."})
 
 /obj/machinery/power/collector_control/New()
 	..()
@@ -1680,7 +1714,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 /obj/machinery/power/collector_control/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		if(src.active)
-			boutput(SPAN_ALERT("The [src.name] must be turned off first!"))
+			boutput(user, SPAN_ALERT("The [src.name] must be turned off first!"))
 		else
 			if (!src.anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -1707,6 +1741,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 TYPEINFO(/obj/machinery/the_singularitybomb)
 	mats = 14
 
+ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 /obj/machinery/the_singularitybomb
 	name = "\improper Singularity Bomb"
 	desc = "A WMD that creates a singularity."
@@ -1804,27 +1839,12 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 				switch(href_list["spec"])
 					if("prime")
 						if(!timing)
-							src.timing = 1
-							processing_items |= src
-							src.icon_state = "portgen2"
-
-							// And here (Convair880).
-							logTheThing(LOG_BOMBING, usr, "activated [src.name] ([src.time] seconds) at [log_loc(src)].")
-							message_admins("[key_name(usr)] activated [src.name] ([src.time] seconds) at [log_loc(src)].")
-							if (ismob(usr))
-								src.activator = usr
-
+							src.prime()
 						else
 							boutput(usr, SPAN_ALERT("\The [src] is already primed!"))
 					if("abort")
 						if(timing)
-							src.timing = 0
-							src.icon_state = "portgen1"
-
-							// And here (Convair880).
-							logTheThing(LOG_BOMBING, usr, "deactivated [src.name][src.activator ? " (primed by [constructTarget(src.activator,"bombing")]" : ""] at [log_loc(src)].")
-							message_admins("[key_name(usr)] deactivated [src.name][src.activator ? " (primed by [key_name(src.activator)])" : ""] at [log_loc(src)].")
-
+							src.abort()
 						else
 							boutput(usr, SPAN_ALERT("\The [src] is already deactivated!"))
 			if("timer")
@@ -1862,6 +1882,23 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 		usr.Browse(null, "window=timer")
 		return
 	return
+
+/obj/machinery/the_singularitybomb/proc/prime()
+	src.timing = 1
+	processing_items |= src
+	src.icon_state = "portgen2"
+	logTheThing(LOG_BOMBING, usr, "activated [src.name] ([src.time] seconds) at [log_loc(src)].")
+	message_admins("[key_name(usr)] activated [src.name] ([src.time] seconds) at [log_loc(src)].")
+	if (ismob(usr))
+		src.activator = usr
+
+/obj/machinery/the_singularitybomb/proc/abort()
+	src.timing = 0
+	src.icon_state = "portgen1"
+
+	// And here (Convair880).
+	logTheThing(LOG_BOMBING, usr, "deactivated [src.name][src.activator ? " (primed by [constructTarget(src.activator,"bombing")]" : ""] at [log_loc(src)].")
+	message_admins("[key_name(usr)] deactivated [src.name][src.activator ? " (primed by [key_name(src.activator)])" : ""] at [log_loc(src)].")
 
 /obj/machinery/the_singularitybomb/attack_ai(mob/user as mob)
 	return

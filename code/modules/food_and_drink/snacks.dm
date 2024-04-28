@@ -108,7 +108,7 @@
 					return
 				else
 					boutput(user, SPAN_NOTICE("You sharpen the pizza, and start slicing it."))
-		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
+		if (istool(W, TOOL_CUTTING | TOOL_SAWING | TOOL_SNIPPING))
 			if (src.sliced)
 				boutput(user, SPAN_ALERT("This has already been sliced."))
 				return
@@ -116,6 +116,12 @@
 			if (src.name == "cheese keyzza")
 				boutput(user, "<i>You feel as though something of value has been lost...</i>")
 			src.make_slices()
+
+		// I don't know why pizza attackby doesn't call the rest of the attackby proc chain, and I'm too afraid to ask, so dupe code here
+		if ((istype(W, /obj/item/tongs)) && (istype(src.loc, /obj/item/plate))) // If pizza is is on a plate/tray/pizza box (implied you're a borg)
+			boutput(user, "You remove [src] from the [src.loc.name].")
+			var/obj/item/plate/plate_action = src.loc
+			plate_action.remove_contents(src)
 
 	//todo: make this use the actual generic slicing behaviour
 	proc/make_slices()
@@ -317,6 +323,8 @@
 	bites_left = 1
 	heal_amt = 1
 	fill_amt = 0.5
+	initial_volume = 30
+	initial_reagents = list("sugar" = 15)
 	var/frosted = 0
 	food_color = "#CC9966"
 	festivity = 1
@@ -348,14 +356,16 @@
 		heal_amt = 0
 		icon_state = "cookie-metal"
 		food_effects = list("food_hp_up")
+		initial_volume = 40
+		initial_reagents = list("sugar" = 10, "iron" = 10)
 
 	chocolate_chip
 		name = "chocolate-chip cookie"
 		desc = "Invented during the Great Depression, this chocolate-laced cookie was a key element of FDR's New Deal policies."
 		icon_state = "cookie-chips"
 		heal_amt = 2
-		initial_volume = 15
-		initial_reagents = list("chocolate"=10)
+		initial_volume = 40
+		initial_reagents = list("sugar" = 15, "chocolate" = 5)
 
 	oatmeal
 		name = "oatmeal cookie"
@@ -367,22 +377,24 @@
 		name = "bacon cookie"
 		desc = "A cookie made out of bacon. Is this intended to be savory or a sweet candied bacon sort of thing? Whatever it is, it's pretty dumb."
 		icon_state = "cookie-bacon"
-		initial_volume = 50
-		initial_reagents = list("porktonium"=25)
+		initial_volume = 40
+		initial_reagents = list("sugar" = 10, "porktonium"=10)
 		food_effects = list("food_sweaty")
 
 	jaffa
 		name = "jaffa cake"
 		desc = "Legally a cake, this edible consists of precision layers of chocolate, sponge cake, and orange jelly."
 		icon_state = "cookie-jaffa"
+		initial_volume = 40
+		initial_reagents = list("sugar" = 10, "chocolate"=5, "juice_orange"=5)
 
 	spooky
 		name = "spookie"
 		desc = "Two ounces of pure terror."
 		icon_state = "cookie-spooky"
 		frosted = 1
-		initial_volume = 25
-		initial_reagents = list("ectoplasm"=10)
+		initial_volume = 40
+		initial_reagents = list("sugar" = 10, "ectoplasm"=10)
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	butter
@@ -390,16 +402,14 @@
 		desc = "Little bite-sized heart attacks." //no kidding
 		icon_state = "cookie-butter"
 		frosted = 1
-		initial_volume = 25
-		initial_reagents = list("butter"=10)
+		initial_volume = 40
+		initial_reagents = list("sugar" = 10, "butter"=10)
 
 	peanut
 		name = "peanut butter cookie"
 		desc = "It's delicious and nutritious... probably."
 		icon_state = "cookie-peanut"
 		frosted = 1
-		initial_volume = 25
-		initial_reagents = list("sugar"=20)
 		food_effects = list("food_deep_burp")
 
 	dog
@@ -437,6 +447,8 @@
 	icon_state = "moonpie-sugar"
 	bites_left = 1
 	heal_amt = 6
+	initial_volume = 100
+	initial_reagents = list("sugar" = 30, "cream" = 10)
 	var/frosted = 0
 	food_effects = list("food_refreshed")
 	meal_time_flags = MEAL_TIME_SNACK
@@ -465,6 +477,8 @@
 		icon_state = "moonpie-metal"
 		heal_amt = 0
 		food_effects = list("food_hp_up_big")
+		initial_volume = 100
+		initial_reagents = list("sugar" = 20, "iron" = 20, "cream" = 10)
 
 	chocolate_chip
 		name = "chocolate-chip moon pie"
@@ -472,6 +486,8 @@
 		icon_state = "moonpie-chips"
 		heal_amt = 7
 		food_effects = list("food_refreshed_big")
+		initial_volume = 100
+		initial_reagents = list("sugar" = 30, "chocolate" = 10, "cream" = 10)
 
 	oatmeal
 		name = "oatmeal moon pie"
@@ -485,8 +501,8 @@
 		desc = "How is this even food?"
 		icon_state = "moonpie-bacon"
 		heal_amt = 5
-		initial_volume = 50
-		initial_reagents = "porktonium"
+		initial_volume = 100
+		initial_reagents = list("sugar" = 20, "porktonium" = 20, "cream" = 10)
 		food_effects = list("food_sweaty_big")
 
 	jaffa
@@ -494,6 +510,8 @@
 		desc = "This dish was named in an attempt to dodge sales taxes on pie production. However, it is actually legally considered a form of crumble."
 		icon_state = "moonpie-jaffa"
 		heal_amt = 8
+		initial_volume = 100
+		initial_reagents = list("sugar" = 20, "chocolate" = 10, "juice_orange" = 10, "cream" = 10)
 		food_effects = list("food_refreshed_big")
 
 	chocolate
@@ -501,6 +519,8 @@
 		desc = "A confection infamous for being especially terrible for you, in a culture noted for having nothing but foods that are terrible for you."
 		icon_state = "moonpie-chocolate"
 		heal_amt = 25 //oh jesus
+		initial_volume = 100
+		initial_reagents = list("sugar" = 20, "chocolate" = 30, "cream" = 10)
 		food_effects = list("food_refreshed_big")
 
 	spooky
@@ -509,8 +529,8 @@
 		icon_state = "moonpie-spooky"
 		heal_amt = 6
 		frosted = 1
-		initial_volume = 25
-		initial_reagents = list("ectoplasm"=10)
+		initial_volume = 100
+		initial_reagents = list("sugar" = 20, "ectoplasm"=20, "cream" = 10)
 		food_effects = list("food_refreshed_big")
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
@@ -691,6 +711,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
+	initial_reagents = list("cream"=10)
 	food_effects = list("food_tox", "food_disease_resist")
 
 /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/amanita
@@ -700,8 +721,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
-	initial_volume = 30
-	initial_reagents = list("amanitin"=30)
+	initial_reagents = list("amanitin"=30, "cream"=10)
 	food_effects = list("food_disease_resist", "food_rad_resist")
 
 /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/psilocybin
@@ -711,8 +731,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
-	initial_volume = 60
-	initial_reagents = list("psilocybin"=20,"LSD"=20,"space_drugs"=20)
+	initial_reagents = list("psilocybin"=20,"LSD"=20,"space_drugs"=20, "cream"=10)
 	food_effects = list("food_tox", "food_disease_resist", "food_rad_resist")
 
 /obj/item/reagent_containers/food/snacks/salad
@@ -787,13 +806,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_reagents = list("atropine"=10,"space_drugs"=10)
 	prize = 0
 
-/obj/item/reagent_containers/food/snacks/cereal_box/cirrial
-	name = "cereal box -'Flocked-Flakes Cirrial'"
-	desc = "A bluey-green cereal that beeps gently at you, they're grrrrowing out of the box oh fuck!"
-	icon_state = "cereal_box5"
-	initial_volume = 20
-	initial_reagents = list("feather_fluid"=10)
+/obj/item/reagent_containers/food/snacks/cereal_box/flock
+	name = "cereal box -'Flocked-Flakes'"
+	desc = "A bluey-green cereal that beeps gently at you, they're grrrrowing out of the box, oh fuck!"
+	icon_state = "cereal_box6"
 	prize = 0
+
+	heal(mob/M)
+		. = ..()
+		M.reagents?.add_reagent("flockdrone_fluid", 5)
 
 /obj/item/reagent_containers/food/snacks/soup/cereal
 	name = "dry cereal"
@@ -889,7 +910,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			boutput(M, SPAN_ALERT("It's just not good enough cold.."))
 		..()
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		switch(exposed_temperature)
 			if(T0C + 176 to T0C + 260)
 				if(src.warm <= DONK_WARM)
@@ -3181,3 +3202,46 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 			qdel (W)
 			return
 		return ..()
+
+/obj/item/reagent_containers/food/snacks/brownie
+	name = "brownie"
+	desc = "A perfectly baked square of chocolatey goodness. Yum!"
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "brownie"
+	bites_left = 3
+	heal_amt = 2
+	food_color = "#38130C"
+	initial_volume = 10
+	initial_reagents = list("chocolate" = 5)
+	food_effects = list("food_warm","food_energized")
+	meal_time_flags = MEAL_TIME_SNACK
+
+/obj/item/reagent_containers/food/snacks/brownie_batch
+	name = "brownies"
+	desc = "A whole batch of freshly baked and chewy brownies."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "brownie_batch"
+	bites_left = 12
+	heal_amt = 2
+	food_color = "#38130C"
+	initial_volume = 40
+	initial_reagents = list("chocolate" = 20)
+	food_effects = list("food_warm","food_energized")
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/brownie
+	slice_amount = 4
+	slice_suffix = "square"
+	w_class = W_CLASS_BULKY
+	use_bite_mask = FALSE
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
+			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
+			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)

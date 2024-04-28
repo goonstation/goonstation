@@ -1898,7 +1898,6 @@
 /datum/action/bar/icon/buddy_cuff
 	duration = 30 // zippy zipcuffs
 	interrupt_flags = INTERRUPT_MOVE
-	id = "buddy_cuff"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 	var/obj/machinery/bot/guardbot/master
@@ -2805,7 +2804,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				*/
 				if(1)
 					// First, check if we're already cuffing someone. Quit getting sidetracked, you scatterbrained rectangles
-					if(actions.hasAction(src.master, "buddy_cuff"))
+					if(actions.hasAction(src.master, /datum/action/bar/icon/buddy_cuff))
 						return
 
 					// Next check if they have someone to arrest, and that they're alive. And that they're living.
@@ -2847,14 +2846,14 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						src.arrest_target = null
 						src.last_found = world.time
 					src.arrest_attempts = 0
-					actions.stopId("buddy_cuff", src.master)
+					actions.stopId(/datum/action/bar/icon/buddy_cuff, src.master)
 
 					return 1
 
 				if("path_error","path_blocked")
 					src.arrest_attempts++
 					if(src.arrest_attempts >= 2)
-						actions.stopId("buddy_cuff", src.master)
+						actions.stopId(/datum/action/bar/icon/buddy_cuff, src.master)
 						src.target = null
 						if(arrest_target)
 							src.arrest_target = null
@@ -3053,7 +3052,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			drop_arrest_target()
 				src.arrest_target = null
 				src.last_found = world.time
-				actions.stopId("buddy_cuff", src.master)
+				actions.stopId(/datum/action/bar/icon/buddy_cuff, src.master)
 				src.master.frustration = 0
 				master.set_emotion()
 				return
@@ -3334,7 +3333,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					src.protected = null
 					src.arrest_attempts = 0
 					src.follow_attempts = 0
-					actions.stopId("buddy_cuff", src.master)
+					actions.stopId(/datum/action/bar/icon/buddy_cuff, src.master)
 				if("path_error","path_blocked")
 					if (src.protected)
 						if(!(src.protected in view(7,master)))
@@ -3396,7 +3395,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 
 			drop_arrest_target()
 				src.arrest_target = null
-				actions.stopId("buddy_cuff", src.master)
+				actions.stopId(/datum/action/bar/icon/buddy_cuff, src.master)
 				return
 
 			check_buddy()

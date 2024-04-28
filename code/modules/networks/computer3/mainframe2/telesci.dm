@@ -54,8 +54,8 @@ TYPEINFO(/obj/machinery/networked/telepad)
 	var/realy = 0
 	var/realz = 0
 	var/tmp/session = null
-	var/obj/perm_portal/start_portal
-	var/obj/perm_portal/end_portal
+	var/obj/laser_sink/perm_portal/start_portal
+	var/obj/laser_sink/perm_portal/end_portal
 	var/image/disconnectedImage
 	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL | DECON_WELDER | DECON_WIRECUTTERS | DECON_WRENCH | DECON_DESTRUCT
 
@@ -578,7 +578,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				logTheThing(LOG_STATION, usr, "created a portal to [log_loc(target)] at [log_loc(src.loc)] with a telepad")
 
 	proc/makeportal(var/turf/newloc, var/turf/destination)
-		var/obj/perm_portal/P = new /obj/perm_portal (newloc)
+		var/obj/laser_sink/perm_portal/P = new /obj/laser_sink/perm_portal (newloc)
 		P.target = destination
 		return P
 
@@ -792,7 +792,6 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				var/summon = pick(
 					/mob/living/critter/zombie,
 					/mob/living/critter/bear,
-					/mob/living/carbon/human/npc/syndicate,
 					/mob/living/critter/martian/soldier,
 					/mob/living/critter/lion,
 					/obj/critter/yeti,
@@ -883,7 +882,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				if (!istype(user_data))
 					user_data = new
 
-					user_data.fields["userid"] = "telepad"
+					user_data.fields["userid"] = src.net_id
 					user_data.fields["access"] = "11"
 
 				src.timeout = initial(src.timeout)

@@ -38,6 +38,8 @@
 	var/tmp/blocked_dirs = 0
 	/// this turf is allowing unrestricted hotbox reactions
 	var/tmp/allow_unrestricted_hotbox = FALSE
+	/// an associative list of gangs to gang claims, representing who has a claim to, or other ownership on this tile
+	var/list/datum/gangtileclaim/controlling_gangs
 	var/wet = 0
 	throw_unlimited = FALSE //throws cannot stop on this tile if true (also makes space drift)
 
@@ -332,12 +334,14 @@
 /turf/space/New()
 	..()
 	if(global.dont_init_space) return
-	if (icon_state == "placeholder") icon_state = "[rand(1,25)]"
-	if (icon_state == "aplaceholder") icon_state = "a[rand(1,10)]"
-	if (icon_state == "dplaceholder") icon_state = "[rand(1,25)]"
-	if (icon_state == "d2placeholder") icon_state = "near_blank"
-	if (blowout == 1)
-		icon_state = "blowout[rand(1,5)]"
+	switch(icon_state)
+		if ("placeholder")
+			icon_state = "[rand(1,25)]"
+		if ("aplaceholder")
+			icon_state = "a[rand(1,10)]"
+		if ("dplaceholder")
+			icon_state = "[rand(1,25)]"
+
 	if (derelict_mode == 1)
 		icon = 'icons/turf/floors.dmi'
 		icon_state = "darkvoid"
@@ -416,7 +420,9 @@ proc/generate_space_color()
 	#ifndef CI_RUNTIME_CHECKING
 	if(fullbright)
 		if(!starlight)
-			starlight = image('icons/effects/overlays/simplelight.dmi', "starlight", pixel_x = -32, pixel_y = -32)
+			starlight = mutable_appearance('icons/effects/overlays/simplelight.dmi', "starlight")
+			starlight.pixel_x = -32
+			starlight.pixel_y = -32
 			starlight.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 			starlight.layer = LIGHTING_LAYER_BASE
 			starlight.plane = PLANE_LIGHTING
@@ -852,13 +858,17 @@ var/global/in_replace_with = 0
 
 				#undef _OLD_GAS_VAR_RESTORE
 			#undef _OLD_GAS_VAR_NOT_NULL
-
+			if(N.air)
+				N.update_visuals(N.air)
 			// tell atmos to update this tile's air settings
 			if (air_master)
 				air_master.tiles_to_update |= N
+		else if (air_master)
+			air_master.high_pressure_delta -= src //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
 			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.
+
 
 	if (istype(new_turf, /turf/simulated))
 		// tells the atmos system "hey this tile changed, maybe rebuild the group / borders"
@@ -1098,6 +1108,7 @@ TYPEINFO(/turf/simulated)
 	text = "<font color=#aaa>#"
 	density = 1
 	pathable = 0
+	explosion_resistance = 999999
 	flags = ALWAYS_SOLID_FLUID
 	gas_impermeable = TRUE
 #ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors

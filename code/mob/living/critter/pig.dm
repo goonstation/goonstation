@@ -50,8 +50,7 @@
 		else
 			if (isintangible(C)) return FALSE
 			if (isdead(C)) return FALSE
-			if (src.faction)
-				if (C.faction & src.faction) return FALSE
+			if (length(C.faction & src.faction)) return FALSE
 			if (istype(C, /mob/living/critter/small_animal/mouse)) return TRUE
 
 	death(var/gibbed)
@@ -76,8 +75,11 @@
 	setup_hands()
 		. = ..()
 		var/datum/handHolder/HH = hands[1]
-		var/datum/limb/mouth/small/limb = HH.limb
+		var/datum/limb/mouth/maneater/limb = new/datum/limb/mouth/maneater
+		HH.limb = limb
 		limb.dam_high = 12
 		limb.dam_low = 8
-		limb.stam_damage_mult = 2.25
 		limb.miss_prob = 100
+		limb.borg_damage_bonus = 5
+		limb.human_desorient_duration = 0
+		limb.human_stam_damage = 20

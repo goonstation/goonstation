@@ -373,10 +373,10 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		if(length(src.rc_entries) == 3) src.item_rewarders += new /datum/rc_itemreward/plant_cartridge
 		src.payout += 8000 * length(src.rc_entries)
 
-		if(prob(70))
+		if(prob(30))
 			src.item_rewarders += new /datum/rc_itemreward/strange_seed
 		else
-			src.item_rewarders += new /datum/rc_itemreward/uv_lamp_frame
+			src.item_rewarders += new /datum/rc_itemreward/tumbleweed
 		..()
 
 /datum/rc_entry/seed/scientific
@@ -428,6 +428,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		for (var/i in 1 to src.count)
 			seed_list += new /obj/item/seed/alien
 		return seed_list
+
+/datum/rc_itemreward/tumbleweed
+	name = "aggressive plant specimen"
+
+	build_reward()
+		return new /obj/item/plant/tumbling_creeper
 
 /datum/rc_itemreward/uv_lamp_frame
 	name = "ultraviolet botanical lamp"
@@ -605,6 +611,14 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	typepath = /obj/item/material_piece/cloth/carbon
 	typepath_alt = /obj/item/material_piece/cloth/beewool
 
+	rc_eval(obj/item/eval_item)
+		. = ..()
+		if (.) return
+		if (istype(eval_item, /obj/item/material_piece/cloth))
+			if(eval_item.material?.getID() == "carbonfibre" || eval_item.material?.getID() == "beewool")
+				rollcount += eval_item.amount
+				. = TRUE
+
 /datum/rc_entry/stack/uqill_minprice
 	name = "uqill"
 	commodity = /datum/commodity/ore/uqill
@@ -646,7 +660,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/item/laser_drill
 	name = "handheld laser drill"
-	typepath = /obj/item/mining_tool/drill
+	typepath = /obj/item/mining_tool/powered/drill
 
 /datum/rc_entry/stack/claretine
 	name = "claretine"
@@ -709,7 +723,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 			if("paramedic suit")
 				rewardthing1 = /obj/item/clothing/suit/hazard/paramedic
 			if("heavy firesuit")
-				rewardthing1 = /obj/item/clothing/suit/fire/heavy
+				rewardthing1 = /obj/item/clothing/suit/hazard/fire/heavy
 			if("light space suit set")
 				rewardthing1 = /obj/item/clothing/suit/space/light
 				rewardthing2 = /obj/item/clothing/head/helmet/space/light
@@ -719,7 +733,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 				rewardthing2 = /obj/item/clothing/head/emerg
 			if("radiation suit set")
 				rewardthing1 = /obj/item/clothing/head/rad_hood
-				rewardthing2 = /obj/item/clothing/suit/rad
+				rewardthing2 = /obj/item/clothing/suit/hazard/rad
 
 	build_reward()
 		var/list/yielder = list()
@@ -743,7 +757,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_itemreward/hedron
 	name = "prototype multifunction tool"
 	build_reward()
-		var/theitem = new /obj/item/mining_tool/hedron_beam
+		var/theitem = new /obj/item/mining_tool/powered/hedron_beam
 		return theitem
 
 /datum/rc_itemreward/beam_devices

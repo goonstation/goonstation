@@ -496,3 +496,17 @@ TYPEINFO(/obj/item/clothing/suit/armor/NT_alt)
 		setProperty("rangedprot", 0.7)
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 35)
+
+/obj/item/clothing/suit/armor/gang
+	name = "light armor vest"
+	desc = "A minimalist plate carrier strapped to your torso. Provides as much protection as you can get without cramping your style."
+	icon = 'icons/obj/items/gang.dmi'
+	icon_state = "lightvest"
+	item_state = "lightvest"
+	body_parts_covered = TORSO
+	hides_from_examine = 0
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 5)
+		setProperty("rangedprot", 0.5)

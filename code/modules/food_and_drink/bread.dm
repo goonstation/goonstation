@@ -55,6 +55,7 @@
 	desc = "A bread made with honey. Right there in the name, first thing, top billing."
 	icon_state = "honeyloaf"
 	real_name = "honey-wheat bread"
+	initial_volume = 60
 	initial_reagents = list("bread"=30,"honey"=30)
 
 	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/honeywheat
@@ -85,6 +86,7 @@
 	desc = "Fattening and delicious, despite the hair.  It tastes like the soul of rock and roll."
 	icon_state = "elvisbread"
 	real_name ="elvis bread"
+	initial_volume = 60
 	initial_reagents = list("bread"=30,"essenceofelvis"=30)
 	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/elvis
 
@@ -93,6 +95,7 @@
 	desc = "The bread of the damned."
 	icon_state = "dreadloaf"
 	real_name = "dread"
+	initial_volume = 90
 	initial_reagents = list("bread"=30,"ectoplasm"=60)
 	slice_product = /obj/item/reagent_containers/food/snacks/breadslice/spooky
 
@@ -107,12 +110,14 @@
 	sweet
 		name = "northern-style cornbread"
 		desc = "A chunk of sweet maize-based quickbread."
+		initial_volume = 60
 		initial_reagents = list("bread"=30,"cornsyrup"=30)
 		slice_product = /obj/item/reagent_containers/food/snacks/breadslice/corn/sweet
 
 		honey
 			name = "honey cornbread"
 			desc = "A chunk of honey-sweetened maize-based quickbread."
+			initial_volume = 120
 			initial_reagents = list("bread"=30,"cornsyrup"=30,"honey"=60)
 			slice_product = /obj/item/reagent_containers/food/snacks/breadslice/corn/sweet/honey
 

@@ -371,8 +371,6 @@ datum
 				if(probmult(6))
 					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
 					M.vomit(0, null, vomit_message)
-				if(probmult(4))
-					M.emote("piss")
 				..()
 				return
 
@@ -624,6 +622,7 @@ datum
 			id = "saline"
 			description = "This saline and glucose solution can help stabilize critically injured patients and cleanse wounds."
 			reagent_state = LIQUID
+			thirst_value = 0.25
 			fluid_r = 220
 			fluid_g = 220
 			fluid_b = 220

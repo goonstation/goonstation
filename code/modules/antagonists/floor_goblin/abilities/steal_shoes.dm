@@ -45,7 +45,6 @@
 		return 1
 
 /datum/action/bar/icon/steal_shoes//Putting items on or removing items from others.
-	id = "stealshoes"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"

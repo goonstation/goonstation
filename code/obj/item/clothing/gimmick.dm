@@ -493,6 +493,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "Hey, still looks pretty happy for being so blue."
 	icon_state = "blessedclown"
 	item_state = "bclown_hat"
+	base_icon_state = "blessedclown"
 	bald_desc_state = "For sad clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/blue
@@ -518,6 +519,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "Purple is a very flattering color on almost everyone."
 	icon_state = "purpleclown"
 	//item_state = "purpleclown"
+	base_icon_state = "purpleclown"
 	bald_desc_state = "For fancy clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/purple
@@ -538,6 +540,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "pink clown mask"
 	desc = "This reminds you of cotton candy."
 	icon_state = "pinkclown"
+	base_icon_state = "pinkclown"
 	//item_state = "pinkclown"
 	bald_desc_state = "For sweet clowns who want to show off their hair!"
 
@@ -572,6 +575,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "yellow clown mask"
 	desc = "A ray of sunshine."
 	icon_state = "yellowclown"
+	base_icon_state = "yellowclown"
 	//item_state = "yellowclown"
 	bald_desc_state = "For bright clowns who want to show off their hair!"
 
@@ -2027,3 +2031,14 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "chaps"
 	item_state = "chaps"
+
+/obj/item/clothing/suit/rabbitsuit
+	name = "Rabbit Costume Suit"
+	desc = "Horrifingly cute, or cutely horrifying?"
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	icon_state = "rabbitsuit"
+	item_state = "rabbitsuit"
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES

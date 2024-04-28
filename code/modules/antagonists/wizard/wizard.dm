@@ -3,7 +3,7 @@
 	display_name = "wizard"
 	antagonist_icon = "wizard"
 	success_medal = "You're no Elminster!"
-	faction = FACTION_WIZARD
+	faction = list(FACTION_WIZARD)
 	uses_pref_name = FALSE
 
 	/// The ability holder of this wizard, containing their respective abilities.
@@ -56,7 +56,7 @@
 		if (!src.vr)
 			H.equip_if_possible(new /obj/item/teleportation_scroll(H), SLOT_L_HAND)
 
-		var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(src.vr)
+		var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(src, src.vr)
 		SB.wizard_key = src.owner.key
 		H.equip_if_possible(SB, SLOT_BELT)
 
@@ -73,7 +73,7 @@
 
 		if (!src.vr && !src.pseudo)
 			SPAWN(0)
-				var/newname = tgui_input_text(H, "You are a Wizard. Would you like to change your name to something else?", "Name change", randomname, max_length = 25)
+				var/newname = tgui_input_text(H, "You are a Wizard. Would you like to change your name to something else?", "Name change", randomname, max_length = 28)
 				if(newname && newname != randomname)
 					phrase_log.log_phrase("name-wizard", randomname, no_duplicates = TRUE)
 
@@ -84,7 +84,7 @@
 					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 					newname = strip_html(newname)
 					H.real_name = newname
-					H.UpdateName()
+					H.on_realname_change()
 
 	remove_equipment()
 		src.owner.current.UnregisterSignal(src.owner.current, COMSIG_MOB_PICKUP)

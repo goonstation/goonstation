@@ -38,6 +38,14 @@ TRASH BAG
 	..()
 	create_reagents(initial_volume)
 
+
+/obj/item/spraybottle/clown_flower
+	name = "suspicious flower"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	icon_state = "flower_gard"
+	item_state = "flower_gard"
+	desc = "A delicate flower from the Gardenia shrub native to Earth, trimmed for you to wear. These white flowers are known for their strong and sweet floral scent. Wait, do these all have nozzles?"
+
 /obj/item/spraybottle/detective
 	name = "luminol bottle"
 	desc = "A spray bottle labeled 'Luminol - Blood Detection Agent'. That's what those fancy detectives use to see blood!"
@@ -357,15 +365,10 @@ TRASH BAG
 	if (istype(target_fluid))
 		user.show_text("You soak up [target_fluid] with [src].", "blue", group = "mop")
 		if (src.reagents && target_fluid.group)
-			target_fluid.group.drain(target_fluid,1,src)
+			target_fluid.group.drain(target_fluid, 1, src)
 		if (mopcount > 0)
 			mopcount--
-	else if (T)
-		T.clean_forensic()
-		user.show_text("You have mopped up [A]!", "blue", group = "mop")
-	else
-		A.clean_forensic()
-		user.show_text("You have mopped up [A]!", "blue", group = "mop")
+	T.clean_forensic()
 
 	if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
 		SPAWN(0.5 SECONDS)
@@ -518,8 +521,8 @@ TRASH BAG
 /obj/item/sponge/attack_self(mob/user as mob)
 	if(spam_flag)
 		return
+	. = ..()
 	var/turf/location = get_turf(user)
-	user.visible_message(SPAN_NOTICE("[user] wrings out [src]."))
 	spam_flag = 1
 	if (location)
 		src.reagents.reaction(location, TOUCH, src.reagents.total_volume)
@@ -623,12 +626,8 @@ TRASH BAG
 					F.group.drain(F,1,src)
 				else
 					F.removed()
-				user.visible_message("[user] soaks up [F] with [src].",\
-				SPAN_NOTICE("You soak up [F] with [src]."), group="soakwipe")
 			else
 				target.reagents.trans_to(src, 15)
-				user.visible_message("[user] soaks up the mess on [target] with [src].",\
-				SPAN_NOTICE("You soak up the mess on [target] with [src]."), group="soakwipe")
 
 			JOB_XP(user, "Janitor", 1)
 
@@ -636,15 +635,11 @@ TRASH BAG
 			if (!istype(target, /turf/simulated)) // really, how?? :I
 				return
 			var/turf/simulated/T = target
-			user.visible_message("[user] dries up [T] with [src].",\
-			SPAN_NOTICE("You dry up [T] with [src]."))
 			JOB_XP(user, "Janitor", 1)
 			src.reagents.add_reagent("water", rand(5,15))
 			T.wet = 0
 
 		if (SPONGE_WIPE)
-			user.visible_message("[user] wipes down [target] with [src].",\
-			SPAN_NOTICE("You wipe down [target] with [src]."), group="soakwipe")
 			if (src.reagents.has_reagent("water"))
 				target.clean_forensic()
 			src.reagents.reaction(target, TOUCH, 5)
@@ -658,7 +653,6 @@ TRASH BAG
 				animate_smush(target)
 
 		if (SPONGE_WRING)
-			user.visible_message(SPAN_ALERT("[user] wrings [src] out into [target]."))
 			if (target.reagents)
 				src.reagents.trans_to(target, src.reagents.total_volume)
 			else if(istype(target, /obj/submachine/chef_sink))
@@ -666,7 +660,6 @@ TRASH BAG
 
 		if (SPONGE_WET)
 			var/fill_amt = (src.reagents.maximum_volume - src.reagents.total_volume)
-			user.visible_message(SPAN_ALERT("[user] wets [src] in [target]."))
 			if (target.reagents)
 				target.reagents.trans_to(src, fill_amt)
 			else
@@ -720,6 +713,7 @@ TRASH BAG
 		BLOCK_SETUP(BLOCK_SOFT)
 
 	dropped()
+		. = ..()
 		JOB_XP(usr, "Janitor", 2)
 		return
 
@@ -837,6 +831,7 @@ TRASH BAG
 
 
 	dropped()
+		. = ..()
 		JOB_XP(usr, "Janitor", 2)
 		return
 

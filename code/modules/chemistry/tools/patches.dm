@@ -123,15 +123,15 @@
 			user.Attackby(src, user)
 		return
 
-	throw_impact(atom/M, datum/thrown_thing/thr)
+	throw_impact(atom/hit_thing, datum/thrown_thing/thr)
 		..()
-		if (src.medical && !borg && !src.in_use && (can_operate_on(M)))
+		if (src.medical && !borg && !src.in_use && (can_operate_on(hit_thing)))
 			if (prob(30) || good_throw && prob(70))
 				src.in_use = 1
-				M.visible_message(SPAN_ALERT("[src] lands on [M] sticky side down!"))
-				logTheThing(LOG_COMBAT, M, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(M)].")
-				apply_to(M,usr)
-				attach_sticker(M)
+				hit_thing.visible_message(SPAN_ALERT("[src] lands on [hit_thing] sticky side down!"))
+				logTheThing(LOG_COMBAT, hit_thing, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(hit_thing)].")
+				apply_to(hit_thing, usr)
+				attach_sticker(hit_thing)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.in_use)
@@ -536,7 +536,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
 
-		if (can_operate_on(target) && !actions.hasAction(user,"automender_apply"))
+		if (can_operate_on(target) && !actions.hasAction(user, /datum/action/bar/icon/automender_apply))
 			if (target == user)
 				target.visible_message("[user] begins mending [himself_or_herself(user)] with [src].",\
 					SPAN_NOTICE("You begin mending yourself with [src]."))
@@ -616,7 +616,6 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 /datum/action/bar/icon/automender_apply
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "automender_apply"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mender-active"
 	var/mob/living/user

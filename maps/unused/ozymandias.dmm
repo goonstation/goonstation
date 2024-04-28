@@ -2029,10 +2029,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aDa" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor,
 /area/station/security/equipment)
 "aDh" = (
@@ -3175,10 +3172,8 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aRD" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads{
@@ -4194,10 +4189,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bar)
 "bfy" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bfB" = (
@@ -5032,10 +5024,7 @@
 /turf/simulated/floor/grey,
 /area/station/engine/coldloop)
 "bsF" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "bsL" = (
@@ -6690,12 +6679,10 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "bRm" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Test Chamber Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/machinery/light/small{
@@ -9258,10 +9245,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
@@ -9810,7 +9795,7 @@
 /area/station/crew_quarters/quartersA)
 "cIL" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -12963,10 +12948,7 @@
 /turf/simulated/floor/black,
 /area/station/communications/centre)
 "dzB" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor,
 /area/station/hangar/medical)
 "dzW" = (
@@ -14714,9 +14696,7 @@
 /area/station/crew_quarters/pool)
 "dXr" = (
 /obj/indestructible/shuttle_corner,
-/turf/simulated/shuttle/wall/corner{
-	dir = 8
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "dXF" = (
 /obj/machinery/door/airlock/pyro/glass,
@@ -15412,9 +15392,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 4
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "ehc" = (
 /obj/rack,
@@ -15878,10 +15856,8 @@
 	},
 /area/station/medical/staff)
 "emJ" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -16290,10 +16266,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "erD" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters{
 	name = "Chapel Reception"
@@ -16994,19 +16967,17 @@
 	},
 /area/station/hallway/primary/north)
 "ezB" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Gas Supply 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/caution/corner/nw,
 /area/station/engine/hotloop)
 "ezC" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -17053,10 +17024,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
 "eAx" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/heads{
@@ -17344,9 +17313,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 1
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "eEN" = (
 /obj/cable{
@@ -17491,10 +17458,11 @@
 	name = "Chapel Reception"
 	})
 "eGp" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "eGE" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -17763,10 +17731,8 @@
 	},
 /area/station/science/lobby)
 "eJz" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig/genpop)
@@ -18209,10 +18175,8 @@
 /turf/simulated/floor/engine/caution/north,
 /area/station/science/teleporter)
 "eOY" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -18490,10 +18454,8 @@
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "eSJ" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/storage/eva)
@@ -19328,10 +19290,8 @@
 	},
 /area/station/science/lobby)
 "ffc" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -20613,10 +20573,8 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	level = 2;
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	level = 2
 	},
 /turf/simulated/floor/grey,
 /area/station/bridge)
@@ -20693,10 +20651,8 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "fye" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor/engine,
 /area/station/storage/warehouse)
@@ -20704,10 +20660,8 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	level = 2;
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	level = 2
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/core)
@@ -21367,7 +21321,7 @@
 /area/shuttle/arrival/station)
 "fGK" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -21827,10 +21781,8 @@
 	name = "The Warrens"
 	})
 "fMY" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "1-10"
@@ -23428,10 +23380,8 @@
 /turf/simulated/floor/grey,
 /area/station/security/processing)
 "gju" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -24993,11 +24943,9 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "gCt" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 4;
-	icon_state = "on";
-	level = 2;
-	on = 1
+	level = 2
 	},
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
@@ -26804,7 +26752,7 @@
 /area/station/hallway/secondary/north)
 "han" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "haw" = (
@@ -28426,9 +28374,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "htQ" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
-	pixel_y = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -29130,10 +29076,8 @@
 /turf/simulated/floor/airless/plating,
 /area/station/mining/refinery)
 "hCG" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
@@ -30739,9 +30683,8 @@
 	name = "Book Nook"
 	})
 "ibk" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 8;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/orangeblack/side{
@@ -31038,12 +30981,10 @@
 /turf/simulated/floor/engine,
 /area/station/storage/warehouse)
 "ihi" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Inlet Purge";
-	on = 1;
 	target_pressure = 2000
 	},
 /obj/machinery/camera{
@@ -32292,9 +32233,8 @@
 	},
 /area/station/crew_quarters/data)
 "iyJ" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 4;
-	on = 1;
 	transfer_rate = 1000
 	},
 /obj/cable{
@@ -33280,10 +33220,8 @@
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/south)
 "iLE" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
@@ -33795,10 +33733,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "iSb" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -33845,10 +33780,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
 /area/station/crew_quarters/quarters_west)
 "iTg" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "iTh" = (
@@ -34101,8 +34033,8 @@
 /area/station/crewquarters/garbagegarbs)
 "iXy" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
@@ -34706,10 +34638,8 @@
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "jfi" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -36416,7 +36346,7 @@
 /area/station/medical/medbay)
 "jCz" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -37450,10 +37380,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "jRA" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
@@ -38386,10 +38314,8 @@
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering/private)
 "kdm" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -38428,10 +38354,8 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "kel" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -38572,10 +38496,7 @@
 	name = "Honkington's Abode"
 	})
 "kgi" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "kgj" = (
@@ -38789,10 +38710,7 @@
 	name = "The Warrens"
 	})
 "kiL" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "kiX" = (
@@ -38855,10 +38773,8 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "kjU" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
@@ -40149,9 +40065,8 @@
 	},
 /area/station/hallway/primary/west)
 "kBF" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/redblack,
@@ -40571,9 +40486,8 @@
 /turf/simulated/floor/caution/east,
 /area/ghostdrone_factory)
 "kHz" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/blueblack,
@@ -41115,10 +41029,8 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/east)
 "kOF" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering/private)
@@ -41881,12 +41793,10 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "kZs" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Auxiliary Supply";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/engine,
@@ -42162,10 +42072,8 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/west)
 "ldy" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
@@ -42201,12 +42109,10 @@
 /turf/simulated/floor/grey,
 /area/station/mining/staff_room)
 "ldV" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Auxiliary Supply";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/engine,
@@ -42942,10 +42848,8 @@
 	name = "Witness Protection"
 	})
 "lnm" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor,
@@ -43752,10 +43656,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "lzz" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "wall3"
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
 	},
+/turf/simulated/floor/airless/damaged1,
 /area/space)
 "lzL" = (
 /obj/landmark/spawner/artifact,
@@ -43975,12 +43880,10 @@
 /turf/simulated/floor/black/side,
 /area/station/hangar/main)
 "lBR" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Gas Supply 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/caution/north,
@@ -44232,11 +44135,9 @@
 /turf/simulated/floor/plating,
 /area/station/garden/aviary)
 "lEn" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Outlet Purge";
-	on = 1;
 	target_pressure = 2000
 	},
 /turf/simulated/floor/engine/caution/east,
@@ -44439,11 +44340,9 @@
 /turf/simulated/floor/engine,
 /area/station/science/artifact)
 "lGJ" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Outlet Purge";
-	on = 1;
 	target_pressure = 2000
 	},
 /obj/cable{
@@ -44835,12 +44734,10 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "lKO" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/caution/corner/ne,
@@ -46280,10 +46177,8 @@
 	name = "Chapel Reception"
 	})
 "mdi" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
@@ -47012,10 +46907,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	level = 2;
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	level = 2
 	},
 /turf/simulated/floor/caution/north,
 /area/station/science/lab)
@@ -47487,7 +47380,7 @@
 /obj/item/parts/robot_parts/leg/left,
 /obj/item/parts/robot_parts/leg/right,
 /obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/head/standard,
 /obj/item/parts/robot_parts/arm/left,
 /obj/item/parts/robot_parts/arm/right,
 /turf/simulated/floor/grime,
@@ -49187,10 +49080,8 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction2{
@@ -49436,7 +49327,6 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Toxin Lab Repressurization";
 	target_pressure = 101
 	},
@@ -50856,12 +50746,10 @@
 	name = "The Warrens"
 	})
 "nqG" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -51015,7 +50903,6 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Air Mix Reserve Tank";
 	target_pressure = 2000
 	},
@@ -51086,10 +50973,7 @@
 /turf/simulated/floor,
 /area/station/hangar/science)
 "nvf" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor,
 /area/station/hangar/science)
 "nvF" = (
@@ -51097,7 +50981,7 @@
 /area/station/hangar/main)
 "nvI" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/extinguisher,
 /obj/item/chem_grenade/firefighting,
@@ -51839,7 +51723,7 @@
 /area/station/medical/medbay/lobby)
 "nFB" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -51896,7 +51780,6 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Plasma Reserve Tank";
 	target_pressure = 2000
 	},
@@ -52175,7 +52058,7 @@
 /area/station/crew_quarters/courtroom)
 "nIH" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/airless,
@@ -52944,10 +52827,8 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/west)
 "nSq" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 1;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/plating,
@@ -53047,7 +52928,6 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Carbon Dioxide Reserve Tank";
 	target_pressure = 2000
 	},
@@ -54547,12 +54427,10 @@
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/south)
 "one" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/caution/north,
@@ -55182,7 +55060,6 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Nitrogen Reserve Tank";
 	target_pressure = 2000
 	},
@@ -55481,7 +55358,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
-/turf/simulated/shuttle/wall/corner,
+/turf/space,
 /area/shuttle/arrival/station)
 "ozs" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -55548,9 +55425,11 @@
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/crew_quarters/arcade/dungeon)
 "oAA" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "oAC" = (
 /obj/cable{
@@ -55831,10 +55710,8 @@
 	name = "Med-Sci Security Checkpoint"
 	})
 "oDc" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "L3"
@@ -56343,10 +56220,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/data)
 "oKu" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -56900,10 +56774,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "oSZ" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/cable{
@@ -57315,10 +57187,8 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/gas)
 "oYY" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/jazz)
@@ -58055,10 +57925,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "piR" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
@@ -58406,8 +58274,8 @@
 /area/station/engine/elect)
 "pnj" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
 /obj/machinery/light{
@@ -58459,7 +58327,6 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Oxygen Reserve Tank";
 	target_pressure = 2000
 	},
@@ -58991,10 +58858,8 @@
 	},
 /area/station/medical/medbay)
 "puP" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -59579,10 +59444,8 @@
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/arcade)
 "pCE" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor,
@@ -59939,10 +59802,8 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_west)
 "pHL" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
@@ -61216,10 +61077,8 @@
 	},
 /area/station/teleporter)
 "pXv" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/machinery/camera{
@@ -61344,10 +61203,8 @@
 /turf/simulated/floor/caution/corner/nw,
 /area/station/maintenance/solar/south)
 "pYL" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
@@ -63241,7 +63098,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/security/hos)
 "qAx" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -64116,10 +63973,7 @@
 /turf/simulated/floor/sandytile,
 /area/station/ranch)
 "qLD" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
 "qLJ" = (
@@ -65932,10 +65786,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "rjj" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
@@ -67121,7 +66973,7 @@
 /area/station/crew_quarters/market)
 "rAe" = (
 /obj/rack,
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /obj/item/clothing/head/helmet/welding,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/power)
@@ -67553,10 +67405,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
 "rEy" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/security/equipment)
@@ -67701,10 +67551,8 @@
 	},
 /area/space)
 "rGF" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -67955,11 +67803,9 @@
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/private)
 "rKG" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 1;
-	icon_state = "on";
-	level = 2;
-	on = 1
+	level = 2
 	},
 /obj/cable{
 	icon_state = "2-4"
@@ -69306,10 +69152,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/north)
 "rZP" = (
@@ -71006,12 +70849,10 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "svR" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -71648,8 +71489,8 @@
 /area/station/maintenance/solar/west)
 "sDX" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
@@ -72007,7 +71848,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /obj/item/satchel/mining,
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/construction{
@@ -73206,10 +73047,8 @@
 /turf/simulated/floor/engine/caution/corner,
 /area/station/engine/power)
 "sVH" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
@@ -73552,10 +73391,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "sZP" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/wood/seven,
 /area/station/garden/aviary)
@@ -73957,10 +73793,11 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "teN" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
 	},
+/turf/simulated/floor/airless/damaged1,
 /area/space)
 "teR" = (
 /obj/machinery/light/emergency{
@@ -74489,10 +74326,8 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "tmi" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -75042,21 +74877,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "tsQ" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "tsY" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -75342,10 +75173,8 @@
 	},
 /area/station/medical/medbay/treatment)
 "twS" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/lobby)
@@ -76355,7 +76184,7 @@
 /area/station/engine/power)
 "tKE" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/storage/toolbox/emergency,
 /obj/item/clothing/mask/gas/emergency,
@@ -76363,7 +76192,7 @@
 /area/station/science/gen_storage)
 "tKG" = (
 /obj/storage/secure/closet/engineering/electrical,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /obj/cable{
 	icon_state = "4-8"
@@ -76417,10 +76246,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
 "tLM" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/lobby{
@@ -77038,10 +76865,7 @@
 /turf/simulated/floor/engine/caution/east,
 /area/station/science/teleporter)
 "tTB" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor/blueblack/corner{
 	dir = 8
 	},
@@ -77990,12 +77814,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/hydroponics)
 "ufG" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -79093,7 +78915,7 @@
 /area/station/communications/centre)
 "uuC" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -84842,8 +84664,7 @@
 /area/station/quartermaster/office)
 "vJl" = (
 /obj/machinery/manufacturer/general/grody{
-	free_resource_amt = 2;
-	
+	free_resource_amt = 2
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -85138,10 +84959,8 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
 "vNJ" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/lobby)
@@ -85468,10 +85287,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/mining/refinery)
@@ -85535,7 +85352,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /obj/item/satchel/mining,
 /obj/machinery/light/small{
 	dir = 8;
@@ -86476,10 +86293,8 @@
 /area/station/security/equipment)
 "wfD" = (
 /obj/random_item_spawner/junk/one_or_zero,
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -87498,10 +87313,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "wrF" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "wrG" = (
@@ -87653,7 +87465,7 @@
 /area/station/crew_quarters/fitness)
 "wtw" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -88043,7 +87855,7 @@
 /obj/item/parts/robot_parts/leg/left,
 /obj/item/parts/robot_parts/leg/right,
 /obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head,
+/obj/item/parts/robot_parts/head/standard,
 /obj/item/parts/robot_parts/arm/left,
 /obj/item/parts/robot_parts/arm/right,
 /obj/machinery/light_switch/north,
@@ -91200,7 +91012,7 @@
 /area/station/engine/engineering/ce)
 "xkx" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/item/device/radio/intercom/catering,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/quarters{
@@ -93276,10 +93088,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "xJK" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/west)
 "xJT" = (
@@ -94983,10 +94792,8 @@
 	name = "Warrens Hall"
 	})
 "yfP" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/west)
@@ -124628,11 +124435,11 @@ aJu
 aJu
 aJu
 aJu
-qpT
+sTu
 xFz
 xFz
 xFz
-vhb
+sTu
 aJu
 aJu
 aJu

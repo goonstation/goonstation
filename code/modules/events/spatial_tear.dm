@@ -83,7 +83,6 @@
 /datum/action/bar/icon/push_through_tear
 	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "push_through_tear"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "tear_push"
 	var/mob/ownerMob

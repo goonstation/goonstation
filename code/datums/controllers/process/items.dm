@@ -27,7 +27,7 @@
 					lasttime = world.timeofday
 					game_start_countdown.update_status("Initializing items\n([itemcount], [round(itemcount / totalcount * 100)]%)")
 
-			LAGCHECK(LAG_HIGH)
+			sleep(-1)
 
 		detailed_count = new
 

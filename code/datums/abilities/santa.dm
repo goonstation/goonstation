@@ -214,7 +214,7 @@
 	desc = "Warp to somewhere else via the power of Christmas."
 	icon_state = "warp"
 	targeted = 0
-	cooldown = 30 SECONDS
+	cooldown = 80 SECONDS
 
 	cast()
 		var/list/tele_areas = get_teleareas()

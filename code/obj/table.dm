@@ -376,10 +376,21 @@ TYPEINFO_NEW(/obj/table)
 			return
 		actions.start(new /datum/action/bar/icon/railing_jump/table_jump(M, src), M)
 
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
+		if (ismob(AM))
+			if (AM != thr.thrown_by && (BOUNDS_DIST(thr.thrown_by, src) <= 0))
+				var/remove_tablepass = HAS_FLAG(AM.flags, TABLEPASS) ? FALSE : TRUE //this sucks and should be a mob property x2 augh
+				AM.flags |= TABLEPASS
+				step(AM, get_dir(AM, src))
+				if (remove_tablepass)
+					REMOVE_FLAG(AM.flags, TABLEPASS)
+				src.harm_slam(thr.thrown_by, AM)
+
+
 //Replacement for monkies walking through tables: They now parkour over them.
 //Note: Max count of tables traversable is 2 more than the iteration limit
 /datum/action/bar/icon/railing_jump/table_jump
-	id = "table_jump"
 	var/const/throw_range = 7
 	var/const/iteration_limit = 5
 	resumable = TRUE
@@ -409,7 +420,7 @@ TYPEINFO_NEW(/obj/table)
 			return
 		if(!(ownerMob.flags & TABLEPASS))
 			ownerMob.flags |= TABLEPASS
-			thr.end_throw_callback = PROC_REF(unset_tablepass_callback)
+			thr.end_throw_callback = CALLBACK(src, PROC_REF(unset_tablepass_callback))
 		for(var/O in AIviewers(ownerMob))
 			var/mob/M = O //inherently typed list
 			var/the_text = "[ownerMob] jumps over [the_railing]."
@@ -590,8 +601,8 @@ TYPEINFO_NEW(/obj/table/syndicate)
 	parts_type = /obj/item/furniture_parts/table/syndicate
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -630,6 +641,13 @@ TYPEINFO_NEW(/obj/table/nanotrasen)
 	icon = 'icons/obj/furniture/single_tables.dmi'
 	icon_state = "endtable-gothic"
 	parts_type = /obj/item/furniture_parts/endtable_gothic
+
+/obj/table/endtable_honey
+	name = "block of solidified honey"
+	desc = "Preferred work surface of Space Bees."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtablehoney"
+	parts_type = /obj/item/furniture_parts/endtable_honey
 
 /obj/table/podium_wood
 	name = "wooden podium"
@@ -1173,6 +1191,7 @@ TYPEINFO(/obj/table/glass)
 			src.UpdateOverlays(null, "SEcorner")
 			src.UpdateOverlays(null, "NEcorner")
 			src.UpdateOverlays(null, "NWcorner")
+			src.set_density(0)
 			return
 
 		// check it out a new piece of hacky nonsense
@@ -1255,7 +1274,6 @@ TYPEINFO(/obj/table/glass)
 /* ======================================== */
 
 /datum/action/bar/icon/table_tool_interact
-	id = "table_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 50
 	icon = 'icons/ui/actions.dmi'
@@ -1356,7 +1374,6 @@ TYPEINFO(/obj/table/glass)
 		owner.visible_message(SPAN_NOTICE("[owner] [verbens] [the_table]."))
 
 /datum/action/bar/icon/fold_folding_table
-	id = "fold_folding_table"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 15
 	icon = 'icons/ui/actions.dmi'
@@ -1399,7 +1416,6 @@ TYPEINFO(/obj/table/glass)
 		the_table.deconstruct()
 
 /datum/action/bar/icon/furnish_table
-	id = "furnish_table"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 5 SECONDS
 	icon = 'icons/ui/actions.dmi'

@@ -379,6 +379,9 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		if (req)
 			user.show_text(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]. Somehow, you know that it will unlock in [req/10] seconds."))
 
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
 
 	// Could be useful (Convair880).
 	mouse_drop(over_object, src_location, over_location)
@@ -517,7 +520,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		if (!src.owner || !src.victim || QDELETED(G) || brig?.occupant)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
+		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0) || !isturf(src.victim.loc) || !isturf(src.owner.loc))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.brig.visible_message(SPAN_ALERT("[owner] shoves [victim] into [src.brig]!"))

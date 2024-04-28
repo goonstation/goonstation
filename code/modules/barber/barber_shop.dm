@@ -18,6 +18,8 @@
 	desc = "You can't tell the difference, Honest!"
 	icon_state= "wig"
 	wear_layer = MOB_HAIR_LAYER2 //it IS hair afterall
+	hat_offset_y = -15 // offsets for hattable component
+	hat_offset_x = 0
 
 	///Takes a list of style ids to colors and generates a wig from it
 	proc/setup_wig(var/style_list)
@@ -27,7 +29,7 @@
 		for (var/style_id in style_list)
 			if (style_id == "none")
 				continue
-			var/image/h_image = image('icons/mob/human_hair.dmi', style_id)
+			var/image/h_image = image('icons/mob/human_hair.dmi', style_id) //  aloe TODO make these work with unlockable hair
 			h_image.color = style_list[style_id]
 			src.overlays += h_image
 			src.wear_image.overlays += h_image
@@ -62,9 +64,9 @@
 		var/list/possible_hairstyles
 
 		if (prob(50))
-			possible_hairstyles = filtered_concrete_typesof(/datum/customization_style, /proc/ismasc)
+			possible_hairstyles = pick(get_available_custom_style_types(filter_gender=FEMININE))
 		else
-			possible_hairstyles = filtered_concrete_typesof(/datum/customization_style, /proc/isfem)
+			possible_hairstyles = pick(get_available_custom_style_types(filter_gender=MASCULINE))
 
 		var/datum/customization_style/hair_type
 		var/picked_color = rgb(rand(0,255),rand(0,255),rand(0,255))

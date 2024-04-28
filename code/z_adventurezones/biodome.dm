@@ -581,6 +581,17 @@ SYNDICATE DRONE FACTORY AREAS
 
 	var/active = 0
 
+	New()
+		. = ..()
+		if (current_state > GAME_STATE_WORLD_NEW)
+			SPAWN(0) //worldgen overrides ideally
+				UpdateIcon()
+		else
+			worldgenCandidates += src
+
+	proc/generate_worldgen()
+		src.UpdateIcon()
+
 	proc/do_move(var/direction)
 		if(active) return
 		var/turf/tile = get_step(src,direction)
@@ -599,6 +610,8 @@ SYNDICATE DRONE FACTORY AREAS
 			tile.invisibility = INVIS_ALWAYS_ISH
 			tile.set_opacity(1)
 			active = 0
+			src.UpdateIcon()
+			update_neighbors()
 
 	find_suitable_tiles()
 		var/list/possible = new/list()
@@ -640,8 +653,23 @@ SYNDICATE DRONE FACTORY AREAS
 			picked.invisibility = INVIS_ALWAYS_ISH
 			picked.set_opacity(1)
 			active = 0
+			src.UpdateIcon()
+			update_neighbors()
 
 		//SPAWN(rand(100,200)) update() // raised delay
+
+	proc/update_neighbors()
+		for (var/turf/unsimulated/wall/auto/T in orange(1,src))
+			T.UpdateIcon()
+		for (var/obj/shifting_wall/sneaky/cave/W in orange(1,src))
+			W.UpdateIcon()
+
+	update_icon()
+		var/typeinfo/turf/unsimulated/wall/auto/typinfo = get_type_typeinfo(/turf/unsimulated/wall/auto/adventure)
+		var/connectdir = get_connected_directions_bitflag(typinfo.connects_to, typinfo.connects_to_exceptions, TRUE, typinfo.connect_diagonal)
+		var/mod = "cave-"
+		var/the_state = "[mod][connectdir]"
+		icon_state = the_state
 
 /obj/line_obj/whip
 	name = "Whip"
@@ -1392,7 +1420,7 @@ var/satellite_crash_event_status = -1
 		projection.layer = satellite.layer + 1
 		satellite.overlays += projection
 
-		var/obj/perm_portal/portal = new /obj/perm_portal {name="rift in space and time"; desc = "uh...huhh"; pixel_x = 16;} (locate(satellite.x+1,satellite.y-1, satellite.z))
+		var/obj/laser_sink/perm_portal/portal = new /obj/laser_sink/perm_portal {name="rift in space and time"; desc = "uh...huhh"; pixel_x = 16;} (locate(satellite.x+1,satellite.y-1, satellite.z))
 		for (var/obj/O in portal.loc)
 			if (O.density && O.anchored && O != portal)
 				qdel(O)
@@ -1405,7 +1433,7 @@ var/satellite_crash_event_status = -1
 			else
 				portal.target = get_turf(pick( drone_zone.contents ))
 
-			var/obj/perm_portal/portal2 = new /obj/perm_portal {name="rift in space and time"; desc = "uh...huhh";} (get_turf(portal.target))
+			var/obj/laser_sink/perm_portal/portal2 = new /obj/laser_sink/perm_portal {name="rift in space and time"; desc = "uh...huhh";} (get_turf(portal.target))
 			portal2.target = get_turf(portal)
 
 		satellite_crash_event_status = 2

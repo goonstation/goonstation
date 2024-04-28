@@ -62,11 +62,9 @@
 	},
 /area/station/devzone)
 "aI" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
-	target_pressure = 1000;
-	on = 1;
-	icon_state = "intact_on"
+	target_pressure = 1000
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -310,11 +308,9 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "eC" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 8;
-	on = 1;
-	transfer_rate = 1000;
-	icon_state = "intact_on"
+	transfer_rate = 1000
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
@@ -690,12 +686,9 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "jk" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	on = 1;
-	pixel_y = 1;
-	target_pressure = 1e+031;
-	icon_state = "intact_on"
+	target_pressure = 1e+031
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -746,11 +739,9 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
 "jE" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
-	target_pressure = 1000;
-	on = 1;
-	icon_state = "intact_on"
+	target_pressure = 1000
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -866,12 +857,9 @@
 /turf/simulated/floor/grass/random,
 /area/station/devzone)
 "lN" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
-	pixel_y = 1;
-	target_pressure = 1e+031;
-	icon_state = "intact_on"
+	target_pressure = 1e+031
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -1006,12 +994,10 @@
 /turf/simulated/floor,
 /area/station/turret_protected/ai)
 "nI" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/machinery/door_control{
@@ -1051,10 +1037,8 @@
 /turf/simulated/floor/white,
 /area/station/devzone)
 "oc" = (
-/obj/machinery/atmospherics/unary/outlet_injector/overfloor{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/overfloor/active{
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
@@ -1618,10 +1602,8 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "wd" = (
-/obj/machinery/atmospherics/binary/pump{
-	target_pressure = 1000;
-	on = 1;
-	icon_state = "intact_on"
+/obj/machinery/atmospherics/binary/pump/active{
+	target_pressure = 1000
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -1759,10 +1741,8 @@
 /turf/unsimulated/floor/engine/vacuum,
 /area/station/devzone)
 "xO" = (
-/obj/machinery/atmospherics/binary/volume_pump{
-	on = 1;
-	transfer_rate = 1000;
-	icon_state = "intact_on"
+/obj/machinery/atmospherics/binary/volume_pump/active{
+	transfer_rate = 1000
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -1798,11 +1778,9 @@
 /turf/simulated/floor/engine,
 /area/station/devzone)
 "yj" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
-	transfer_rate = 1000;
-	icon_state = "intact_on"
+	transfer_rate = 1000
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -1953,12 +1931,10 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "zY" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/machinery/door_control{
@@ -2011,11 +1987,9 @@
 /area/station/devzone)
 "Aq" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 8;
-	on = 1;
-	transfer_rate = 1000;
-	icon_state = "intact_on"
+	transfer_rate = 1000
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -2131,11 +2105,9 @@
 /turf/simulated/floor/airless/engine/glow/blue,
 /area/station/devzone)
 "Cs" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 8;
-	on = 1;
-	transfer_rate = 1000;
-	icon_state = "intact_on"
+	transfer_rate = 1000
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -2169,12 +2141,9 @@
 /turf/simulated/floor/bluewhite,
 /area/station/devzone)
 "CE" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
-	pixel_y = 1;
-	target_pressure = 1e+031;
-	icon_state = "intact_on"
+	target_pressure = 1e+031
 	},
 /obj/cable/brown{
 	icon_state = "1-4"
@@ -2438,10 +2407,7 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "FP" = (
-/obj/machinery/networked/artifact_console{
-	desc = "It just sorta showed up in a giant box of test equipment.";
-	name = "giant mystery science doodad"
-	},
+/obj/machinery/networked/artifact_console,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
@@ -2494,11 +2460,9 @@
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "GN" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 4;
-	on = 1;
-	transfer_rate = 1000;
-	icon_state = "intact_on"
+	transfer_rate = 1000
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor,
@@ -2951,12 +2915,10 @@
 	mouse_opacity = 0;
 	name = "Untouchable Permanent Atmospheric/Liquid Forcefield"
 	},
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/railing/red{
@@ -3155,11 +3117,9 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "OG" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
-	target_pressure = 1000;
-	on = 1;
-	icon_state = "intact_on"
+	target_pressure = 1000
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -3252,12 +3212,10 @@
 	mouse_opacity = 0;
 	name = "Untouchable Permanent Atmospheric/Liquid Forcefield"
 	},
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/railing/red{
@@ -3342,10 +3300,8 @@
 /turf/unsimulated/floor/airless,
 /area/station/devzone)
 "Rj" = (
-/obj/machinery/atmospherics/unary/outlet_injector/overfloor{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/overfloor/active{
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
@@ -3580,11 +3536,9 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
 "TN" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 4;
-	on = 1;
-	transfer_rate = 1000;
-	icon_state = "intact_on"
+	transfer_rate = 1000
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
@@ -3619,11 +3573,9 @@
 /turf/simulated/floor/red/redblackchecker,
 /area/station/devzone)
 "Ug" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
-	target_pressure = 1000;
-	on = 1;
-	icon_state = "intact_on"
+	target_pressure = 1000
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
@@ -3704,10 +3656,8 @@
 /turf/simulated/floor/grass/random,
 /area/station/devzone)
 "Vs" = (
-/obj/machinery/atmospherics/unary/outlet_injector/overfloor{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/overfloor/active{
+	dir = 4
 	},
 /obj/machinery/sparker{
 	id = "combustion_ignition";
@@ -3731,11 +3681,9 @@
 /turf/unsimulated/floor/engine/vacuum,
 /area/station/devzone)
 "VY" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
-	target_pressure = 1000;
-	on = 1;
-	icon_state = "intact_on"
+	target_pressure = 1000
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
@@ -3868,6 +3816,7 @@
 /obj/railing/red{
 	dir = 8
 	},
+/obj/item/storage/box/popsicle_sticks,
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "Xk" = (
@@ -4030,7 +3979,7 @@
 /area/station/devzone)
 "Yr" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /turf/simulated/floor/white,
 /area/station/devzone)
 "Yt" = (

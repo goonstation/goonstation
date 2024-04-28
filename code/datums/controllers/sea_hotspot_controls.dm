@@ -56,9 +56,9 @@
 			Z_LOG_DEBUG("Mining Map", "Generating map ...")
 			map = icon('icons/misc/trenchMapEmpty.dmi', "template")
 			var/turf_color = null
-			for (var/x = 1, x <= world.maxx, x++)
-				for (var/y = 1, y <= world.maxy, y++)
-					var/turf/T = locate(x,y,5)
+			for (var/x in 1 to world.maxx)
+				for (var/y in 1 to world.maxy)
+					var/turf/T = locate(x,y,MINING_Z)
 					if (istype(T, /turf/simulated/wall/auto/asteroid) || istype(T, /turf/simulated/floor/plating/airless/asteroid))
 						turf_color = "solid"
 					else if (istype(T, /turf/space))
@@ -643,9 +643,9 @@
 		if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
 			actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
 			return
-		else if (istype(W,/obj/item/mining_tool/power_shovel))
-			var/obj/item/mining_tool/power_shovel/PS = W
-			if (PS.status)
+		else if (istype(W,/obj/item/mining_tool/powered/shovel))
+			var/obj/item/mining_tool/powered/shovel/PS = W
+			if (PS.is_on)
 				actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
 			else
 				actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
@@ -687,9 +687,9 @@
 			return
 		if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
 			actions.start(new/datum/action/bar/icon/dig_sea_hole(src.loc), user)
-		else if (istype(W,/obj/item/mining_tool/power_shovel))
-			var/obj/item/mining_tool/power_shovel/PS = W
-			if (PS.status)
+		else if (istype(W,/obj/item/mining_tool/powered/shovel))
+			var/obj/item/mining_tool/powered/shovel/PS = W
+			if (PS.is_on)
 				actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src.loc), user)
 			else
 				actions.start(new/datum/action/bar/icon/dig_sea_hole(src.loc), user)
@@ -1054,6 +1054,61 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 	var/stomp_cooldown = 10 SECONDS
 	var/stomp_damage = 20
 	requires_equip = TRUE
+	var/prevLayer = null
+	var/prevPlane = null
+
+	proc/start_jump()
+		the_mob.visible_message(SPAN_ALERT("<b>[the_mob]</b> activates the boost on their stomper boots!"))
+		playsound(src.loc, 'sound/items/miningtool_on.ogg', 50, 1)
+		src.prevLayer = the_mob.layer
+		src.prevPlane = the_mob.plane
+		the_mob.layer = EFFECTS_LAYER_4 // need to be above posters and shit
+		the_mob.plane = PLANE_NOSHADOW_ABOVE
+		APPLY_ATOM_PROPERTY(the_mob, PROP_ATOM_NEVER_DENSE, src)
+		the_mob.flags |= TABLEPASS
+
+		if (prob(10))
+			the_mob.emote("flip")
+
+		animate(the_mob,
+			pixel_y = jump_height * 32,
+			time = jump_time / 2,
+			easing = EASE_OUT | CIRCULAR_EASING,
+			flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
+		animate(
+			pixel_y = -jump_height * 32,
+			time = jump_time / 2,
+			easing = EASE_IN | CIRCULAR_EASING,
+			flags = ANIMATION_RELATIVE)
+
+	proc/end_jump(mob/jumper)
+		jumper.layer = prevLayer
+		jumper.plane = prevPlane
+		REMOVE_ATOM_PROPERTY(jumper, PROP_ATOM_NEVER_DENSE, src)
+		jumper.flags &= ~TABLEPASS
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1, 0.1, 0.7)
+
+		if (locate(/obj/item/clothing/shoes) in jumper.get_equipped_items())
+			if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
+				SPAWN(0.4 SECONDS)
+					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, 0.1, 0.7)
+
+			for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
+				if (BOUNDS_DIST(src, H.center.turf()) == 0)
+					playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE, 0.1, 0.7)
+					for (var/mob/O in hearers(jumper, null))
+						O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"")), 2)
+
+			for (var/mob/M in get_turf(src))
+				if (isliving(M) && M != jumper)
+					random_brute_damage(M, src.stomp_damage, TRUE)
+					M.changeStatus("weakened", 1 SECOND)
+					playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
+		else
+			// took them off mid air
+			random_brute_damage(jumper, 25, FALSE)
+			jumper.changeStatus("weakened", 3 SECONDS)
+			playsound(jumper.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 90, 1)
 
 	execute_ability()
 		if(!(the_item in the_mob.get_equipped_items()))
@@ -1062,60 +1117,11 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 		if (!ON_COOLDOWN(src, "stomp", src.stomp_cooldown))
 			// Mostly stolen from jumpy
 			if (istype(the_mob.loc, /turf/))
-				the_mob.visible_message(SPAN_ALERT("<b>[the_mob]</b> activates the boost on their stomper boots!"))
-				playsound(src.loc, 'sound/items/miningtool_on.ogg', 50, 1)
-				var/prevLayer = the_mob.layer
-				var/prevPlane = the_mob.plane
-				the_mob.layer = EFFECTS_LAYER_4 // need to be above posters and shit
-				the_mob.plane = PLANE_NOSHADOW_ABOVE
-				APPLY_ATOM_PROPERTY(the_mob, PROP_ATOM_NEVER_DENSE, src)
-				the_mob.flags |= TABLEPASS
-
-				if (prob(10))
-					the_mob.emote("flip")
-
-				animate(the_mob,
-					pixel_y = jump_height * 32,
-					time = jump_time / 2,
-					easing = EASE_OUT | CIRCULAR_EASING,
-					flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
-				animate(
-					pixel_y = -jump_height * 32,
-					time = jump_time / 2,
-					easing = EASE_IN | CIRCULAR_EASING,
-					flags = ANIMATION_RELATIVE)
-
+				src.start_jump()
 				SPAWN(0)
 					var/mob/jumper = the_mob // do this so we still have a reference if the button gets deleted
 					sleep(jump_time)
-					jumper.layer = prevLayer
-					jumper.plane = prevPlane
-					REMOVE_ATOM_PROPERTY(jumper, PROP_ATOM_NEVER_DENSE, src)
-					jumper.flags &= ~TABLEPASS
-					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1, 0.1, 0.7)
-
-					if (locate(/obj/item/clothing/shoes) in jumper.get_equipped_items())
-						if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
-							SPAWN(0.4 SECONDS)
-								playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, 0.1, 0.7)
-
-						for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
-							if (BOUNDS_DIST(src, H.center.turf()) == 0)
-								playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE, 0.1, 0.7)
-								for (var/mob/O in hearers(jumper, null))
-									O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"")), 2)
-
-						for (var/mob/M in get_turf(src))
-							if (isliving(M) && M != jumper)
-								random_brute_damage(M, src.stomp_damage, TRUE)
-								M.changeStatus("weakened", 1 SECOND)
-								playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
-					else
-						// took them off mid air
-						random_brute_damage(jumper, 25, FALSE)
-						jumper.changeStatus("weakened", 3 SECONDS)
-						playsound(jumper.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 90, 1)
-
+					src.end_jump(jumper)
 
 			else if (istype(the_mob.loc, /obj/))
 				var/obj/container = the_mob.loc
@@ -1140,6 +1146,20 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 	stomp_cooldown = 0 SECONDS
 	stomp_damage = 200
 
+/obj/item/clothing/shoes/stomp_boots/very_high
+	name = "very high stomper boots"
+	desc = "How high IS the ceiling in here?"
+	abilities = list(/obj/ability_button/stomper_boot_stomp/very_high)
+
+/obj/ability_button/stomper_boot_stomp/very_high
+	start_jump()
+		..()
+		APPLY_ATOM_PROPERTY(src.the_mob, PROP_MOB_NOCLIP, src)
+
+	end_jump(mob/jumper)
+		REMOVE_ATOM_PROPERTY(jumper, PROP_MOB_NOCLIP, src)
+		..()
+
 ////////////////////////////////////////////////////////////
 //actions
 ////////////////////////////////////////////////////////////
@@ -1148,7 +1168,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 /datum/action/bar/icon/build_vent_capture
 	duration = 50
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "build_vent_capture"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/turf/T
@@ -1187,7 +1206,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 /datum/action/bar/icon/unbuild_vent_capture
 	duration = 50
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "unbuild_vent_capture"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/obj/machinery/power/vent_capture/V
@@ -1219,7 +1237,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 /datum/action/bar/icon/dig_sea_hole
 	duration = 30
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "dig_sea_hole"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/turf/T

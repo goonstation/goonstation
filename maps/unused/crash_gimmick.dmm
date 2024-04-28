@@ -11263,10 +11263,8 @@
 	},
 /area/russian/radiation)
 "bDF" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor{
 	desc = " It is made of steel.";
@@ -17955,10 +17953,11 @@
 	},
 /area/russian/radiation)
 "clN" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/shuttle/arrival/station)
 "cmH" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
@@ -18039,10 +18038,8 @@
 	},
 /area/station/science/testchamber)
 "cmU" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
@@ -19238,10 +19235,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black{
@@ -19611,7 +19606,7 @@
 "cth" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 1;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/shuttle/arrival/station)
@@ -20799,7 +20794,7 @@
 "cxM" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel/fullstack,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -21410,10 +21405,8 @@
 	},
 /area/russian/radiation)
 "czA" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
@@ -30360,7 +30353,6 @@
 	name = "special bedsheet"
 	},
 /obj/decal/cleanable/dirt,
-/obj/decal/cleanable/urine,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -35581,7 +35573,7 @@
 	icon_state = "bedsheet-hop"
 	},
 /obj/decal/cleanable/dirt,
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup,
 /turf/space,
 /area/space)
 "dEP" = (
@@ -35941,7 +35933,7 @@
 /area/shuttle/arrival/station)
 "dIW" = (
 /obj/table/reinforced/auto,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /obj/item/crowbar/red,
 /obj/item/crowbar/red,
 /obj/item/crowbar/red,
@@ -36552,9 +36544,10 @@
 	},
 /area/station/hallway/secondary/entry)
 "dZq" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/shuttle/arrival/station)
 "dZT" = (
 /turf/simulated/shuttle/wall/escape{
@@ -39640,11 +39633,11 @@
 	},
 /area/russian/radiation)
 "fUq" = (
-/turf/simulated/shuttle/wall/cockpit/window{
-	dir = 4;
-	icon_state = "wall_space";
-	name = "window"
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/shuttle/arrival/station)
 "fUw" = (
 /obj/disposalpipe/junction/right/west,
@@ -41927,8 +41920,8 @@
 /area/russian/radiation)
 "gQS" = (
 /obj/storage/closet/radiation,
-/obj/item/clothing/suit/rad,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/plating/random{
@@ -44295,7 +44288,7 @@
 /area/russian/radiation)
 "idR" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -45047,9 +45040,8 @@
 	},
 /area/russian/radiation)
 "ixN" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn{
@@ -46234,7 +46226,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
 	dir = 9
 	},
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/item/gun/energy/taser_gun,
 /obj/item/gun/energy/taser_gun{
 	pixel_y = 7
@@ -47709,6 +47701,13 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
+"jBG" = (
+/turf/simulated/shuttle/wall/cockpit/window{
+	dir = 4;
+	icon_state = "wall_trans";
+	name = "window"
+	},
+/area/shuttle/arrival/station)
 "jBN" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -50128,9 +50127,7 @@
 	},
 /area/russian/radiation)
 "kPY" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
-	pixel_y = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor{
@@ -52090,9 +52087,8 @@
 	},
 /area/russian/radiation)
 "lLc" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor{
@@ -53281,10 +53277,8 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum{
 	desc = " It is made of steel.";
@@ -55085,7 +55079,7 @@
 /area/russian/radiation)
 "ngI" = (
 /obj/table/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/disposalpipe/segment/morgue,
 /turf/space,
 /area/russian/radiation)
@@ -56137,9 +56131,8 @@
 	},
 /area/russian/radiation)
 "nFR" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/yellow/side{
@@ -59074,11 +59067,9 @@
 	},
 /area/russian/radiation)
 "oUS" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Gas Supply 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/red/checker{
@@ -59092,11 +59083,9 @@
 	},
 /area/russian/radiation)
 "oVc" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Gas Supply 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/red/checker{
@@ -59183,10 +59172,8 @@
 	},
 /area/russian/radiation)
 "oXx" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -59816,7 +59803,7 @@
 	name = "dried vomit"
 	},
 /obj/table/wood/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor3"
 	},
@@ -60901,9 +60888,7 @@
 	},
 /area/russian/radiation)
 "pWJ" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
-	pixel_y = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn{
@@ -61955,10 +61940,11 @@
 	},
 /area/russian/radiation)
 "quU" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/station/hallway/secondary/exit)
 "qvt" = (
 /turf/unsimulated/wall/auto/adventure/shuttle{
@@ -62517,9 +62503,8 @@
 	},
 /area/russian/radiation)
 "qIo" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 4;
-	on = 1;
 	transfer_rate = 1000
 	},
 /obj/disposalpipe/segment{
@@ -64794,11 +64779,9 @@
 	},
 /area/russian/radiation)
 "rJX" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/disposalpipe/segment{
@@ -64814,11 +64797,9 @@
 	},
 /area/russian/radiation)
 "rKA" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/disposalpipe/segment{
@@ -65450,10 +65431,11 @@
 	},
 /area/russian/radiation)
 "rZa" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/station/ranch)
 "rZf" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
@@ -65514,11 +65496,11 @@
 	},
 /area/russian/radiation)
 "sca" = (
-/turf/simulated/shuttle/wall/cockpit/window{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon_state = "wall_space";
-	name = "window"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/station/ranch)
 "scq" = (
 /obj/machinery/atmospherics/binary/valve,
@@ -72495,10 +72477,11 @@
 /turf/space,
 /area/space)
 "wfx" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/russian/radiation)
 "wgb" = (
 /obj/grille/steel,
@@ -72512,10 +72495,11 @@
 	},
 /area/russian/radiation)
 "wgg" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/russian/radiation)
 "wgu" = (
 /obj/grille/steel,
@@ -73677,6 +73661,13 @@
 	},
 /turf/space,
 /area/space)
+"wIO" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall_trans"
+	},
+/turf/space,
+/area/shuttle/arrival/station)
 "wIQ" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -74730,8 +74721,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent";
 	tag = ""
 	},
@@ -74746,7 +74737,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/random{
@@ -74757,7 +74749,8 @@
 "xnH" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/plating/random{
 	broken = 1;
@@ -75525,10 +75518,11 @@
 	},
 /area/russian/radiation)
 "xIH" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/russian/radiation)
 "xIT" = (
 /obj/machinery/mass_driver{
@@ -76010,7 +76004,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -76024,7 +76019,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -119989,7 +119985,7 @@ dGb
 dGb
 dGb
 dGb
-cth
+wIO
 cwJ
 dKN
 cwJ
@@ -120594,7 +120590,7 @@ dGb
 dGb
 dGb
 dGb
-cth
+wIO
 dLC
 dVl
 dVl
@@ -120897,7 +120893,7 @@ dGb
 dGb
 dGb
 dGb
-cth
+wIO
 dVr
 dVr
 dVr
@@ -121202,7 +121198,7 @@ dGb
 dNK
 cth
 jdl
-fUq
+jBG
 dNK
 dGb
 dGb

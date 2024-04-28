@@ -26,7 +26,6 @@
 /datum/action/bar/private/icon/hunter_transform
 	duration = 50
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
-	id = "hunter_transform"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 	var/datum/targetable/hunter/hunter_gearspawn/transform

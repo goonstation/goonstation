@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	health_burn = 10
 	health_burn_vuln = 2
 
-	faction = FACTION_AQUATIC
+	faction = list(FACTION_AQUATIC)
 
 	var/out_of_water_debuff = 1 // debuff amount for being out of water
 	var/in_water_buff = 1 // buff amount for being in water
@@ -41,8 +41,11 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	if(src.is_pet)
 		START_TRACKING_CAT(TR_CAT_PETS)
 	..()
-	aquabreath_process = add_lifeprocess(/datum/lifeprocess/aquatic_breathing,src.in_water_buff,src.out_of_water_debuff)
 	remove_lifeprocess(/datum/lifeprocess/blood) // caused lag, not sure why exactly
+
+/mob/living/critter/aquatic/restore_life_processes()
+	. = ..()
+	src.aquabreath_process = add_lifeprocess(/datum/lifeprocess/aquatic_breathing,src.in_water_buff,src.out_of_water_debuff)
 
 /mob/living/critter/aquatic/disposing()
 	ai?.dispose()
@@ -493,7 +496,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 					sleep(0.2 SECONDS)
 				SPAWN(5 SECONDS)
 				for (var/mob/living/M in oview(src, 7))
-					M.reagents.add_reagent(pick("cyanide","neurotoxin","venom","histamine","jenkem","lsd"), 5)
+					M.reagents.add_reagent(pick("cyanide","neurotoxin","venom","histamine","lsd"), 5)
 				return SPAN_ALERT("<b>[src]</b> does a sinister dance.")
 		if ("snap")
 			if (src.emote_check(voluntary, 300))

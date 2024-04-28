@@ -217,7 +217,7 @@ TYPEINFO(/obj/item/clothing/shoes/hermes)
 		delProperty("chemprot")
 
 TYPEINFO(/obj/item/clothing/shoes/industrial)
-	mats = list("MET-3"= 15,"CON-2" = 10,"POW-3" = 10)
+	mats = list("MET-3"= 15,"CON-2" = 10,"POW-2" = 10)
 
 /obj/item/clothing/shoes/industrial
 #ifdef UNDERWATER_MAP
@@ -234,12 +234,14 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	kick_bonus = 2
 
 /obj/item/clothing/shoes/industrial/equipped(mob/user, slot)
+	APPLY_ATOM_PROPERTY(user, PROP_MOB_MOVESPEED_ASSIST, src.type, 1)
 	. = ..()
-	APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/reagent/energydrink, src.type)
+	APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/mechboots, src.type)
 
 /obj/item/clothing/shoes/industrial/unequipped(mob/user)
+	REMOVE_ATOM_PROPERTY(user, PROP_MOB_MOVESPEED_ASSIST, src.type)
 	. = ..()
-	REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/reagent/energydrink, src.type)
+	REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/mechboots, src.type)
 
 /obj/item/clothing/shoes/white
 	name = "white shoes"

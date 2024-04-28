@@ -315,6 +315,8 @@
 	set name = "Gibself"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/turf/T = get_turf(src.mob)
 	if(T)
 		var/obj/overlay/O = new/obj/overlay(T)
@@ -461,14 +463,15 @@
 				boutput(tysontarget2, "Here is where you'd get banned.")
 				qdel(src)
 				return
-			var/addData[] = new()
-			addData["ckey"] = tysontarget2.ckey
-			addData["compID"] =  tysontarget2.computer_id
-			addData["ip"] = tysontarget2.client.address
-			addData["reason"] = tysonreason
-			addData["akey"] = caller:ckey
-			addData["mins"] = tysonmins2
-			addBan(addData)
+			bansHandler.add(
+				caller:ckey,
+				null,
+				tysontarget2.ckey,
+				tysontarget2.computer_id,
+				tysontarget2.client.address,
+				tysonreason,
+				tysonmins2 * 60 * 10
+			)
 			boutput(tysontarget2, SPAN_ALERT("<BIG><B>You have been tysoned by [usr.client.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.</B></BIG>"))
 			boutput(tysontarget2, SPAN_ALERT("This is a temporary tysonban, it will be removed in [tysonmins2] minutes."))
 			logTheThing(LOG_ADMIN, caller:client, "has tysonbanned [constructTarget(tysontarget2,"admin")]. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.")

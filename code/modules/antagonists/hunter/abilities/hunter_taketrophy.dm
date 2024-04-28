@@ -62,7 +62,6 @@
 /datum/action/bar/private/icon/hunter_taketrophy
 	duration = 60
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "hunter_taketrophy"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 	var/target

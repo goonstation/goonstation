@@ -90,7 +90,6 @@
 	var/is_zombie = 0
 	var/jitteriness = 0
 	var/charges = 0
-	var/urine = 0
 	var/nutrition = 100
 	var/losebreath = 0
 	var/intent = null
@@ -134,7 +133,7 @@
 	var/job = null
 
 	/// For assigning mobs various factions, see factions.dm for definitions
-	var/faction = 0
+	var/faction = list()
 
 	var/nodamage = 0
 
@@ -160,7 +159,6 @@
 	var/singing = 0 // true when last thing living mob said was sung, i.e. prefixed with "%""
 
 	var/movement_delay_modifier = 0 //Always applied.
-	var/apply_movement_delay_until = -1 //world.time at which our movement delay modifier expires
 	var/restrain_time = 0 //we are restrained ; time at which we will be freed.  (using timeofday)
 
 //Disease stuff
@@ -564,7 +562,7 @@
 			if(!ON_COOLDOWN(src, "flubber_bounce", 0.1 SECONDS) || src.hasStatus("sugar_rush"))
 				src.now_pushing = 0
 				var/atom/source = A
-				src.visible_message(SPAN_ALERT("<B>[src]</B>'s bounces off [A]!"))
+				src.visible_message(SPAN_ALERT("<B>[src]</B> bounces off [A]!"))
 				playsound(source, 'sound/misc/boing/6.ogg', 100, TRUE)
 				var/throw_dir = turn(get_dir(A, src),rand(-1,1)*45)
 				src.throw_at(get_edge_cheap(source, throw_dir),  20, 3)
@@ -612,13 +610,15 @@
 					return
 
 				var/atom/source = get_turf(tmob)
-				src.visible_message(SPAN_ALERT("<B>[src]</B> and <B>[tmob]</B>'s bounce off each other!"))
+				src.visible_message(SPAN_ALERT("<B>[src]</B> and <B>[tmob]</B> bounce off each other!"))
 				playsound(source, 'sound/misc/boing/6.ogg', 100, TRUE)
 				var/target_dir = get_dir(src, tmob)
 				var/src_dir = get_dir(tmob, src)
 				tmob.throw_at(get_edge_cheap(source, target_dir),  20, 3)
 				src.throw_at(get_edge_cheap(source, src_dir),  20, 3)
-
+				if(!ON_COOLDOWN(src, "flubber_damage", 2 SECONDS) || !ON_COOLDOWN(tmob, "flubber_damage", 2 SECONDS))
+					random_brute_damage(tmob, 7, TRUE)
+					random_brute_damage(src, 7, TRUE)
 				logTheThing(LOG_COMBAT, src, "with reagents [log_reagents(src.reagents)] is flubber bounced [dir2text(src_dir)] due to impact with mob [log_object(tmob)] [log_reagents(tmob.reagents)] at [log_loc(src)].")
 				logTheThing(LOG_COMBAT, tmob, "with reagents [log_reagents(tmob.reagents)] is flubber bounced [dir2text(target_dir)] due to impact with mob [log_object(src)] [log_reagents(src.reagents)] at [log_loc(tmob)].")
 
@@ -915,7 +915,7 @@
 			output += "&emsp;[medal]"
 		output += "<b>You have [length(medals)] medal\s.</b>"
 		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1"  target="_blank">Medal Details</a>"}
-		boutput(src, output.Join("<br>"))
+		tgui_message(src, output.Join("<br>"), "Medals")
 
 /mob/verb/setdnr()
 	set name = "Set DNR"
@@ -1035,12 +1035,6 @@
 
 		LI += W
 	.= LI
-
-/mob/proc/findname(msg)
-	for(var/mob/M in mobs)
-		if (M.real_name == text("[]", msg))
-			.= M
-	.= 0
 
 /mob/proc/movement_delay(var/atom/move_target = 0)
 	.= 2 + movement_delay_modifier
@@ -1260,7 +1254,7 @@
 			.= 0
 		if (origW)
 			origW.holding = null
-			actions.stopId("magpickerhold", src)
+			actions.stopId(/datum/action/magPickerHold, src)
 
 //throw the dropped item
 /mob/proc/drop_item_throw(obj/item/W)
@@ -1366,25 +1360,33 @@
 
 	W.dropped(src)
 
+/// shortcut for the Notes - View verb
+/mob/verb/notes_alias()
+	set name = "Notes"
+	set hidden = TRUE
+
+	src.memory()
 
 /mob/verb/memory()
-	set name = "Notes"
+	set name = "Notes - View"
 	// drsingh for cannot execute null.show_memory
 	if (isnull(mind))
 		return
 
 	mind.show_memory(src)
 
-/mob/verb/add_memory(msg as message)
-	set name = "Add Note"
+/mob/verb/add_memory()
+	set name = "Notes - Modify"
+
+	if (!src.mind)
+		return
 
 	if (mind.last_memory_time + 10 <= world.time)
 		mind.last_memory_time = world.time
 
-		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-		msg = sanitize(msg)
-
-		mind.store_memory(msg)
+	var/notes = tgui_input_text(src, "Set your notes:", "Change notes", src.mind.cust_notes, MAX_MESSAGE_LEN, TRUE, allowEmpty = TRUE)
+	if (!isnull(notes))
+		src.mind.cust_notes = notes
 
 // please note that this store_memory() vvv
 // does not store memories in the notes
@@ -1465,11 +1467,11 @@
 	set hidden = 1
 
 	if (src.health < 0)
+		logTheThing(LOG_COMBAT, src, "succumbs to death.")
 		boutput(src, SPAN_NOTICE("You have given up life and succumbed to death."))
 		src.death()
 		if (!src.suiciding)
 			src.unlock_medal("Yield", 1)
-		logTheThing(LOG_COMBAT, src, "succumbs")
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -1509,6 +1511,9 @@
 
 /mob/proc/put_in_hand(obj/item/I, hand)
 	. = 0
+
+/mob/proc/can_hold_two_handed()
+	. = FALSE
 
 /mob/proc/get_damage()
 	. = src.health
@@ -2351,8 +2356,8 @@
 	if (!ishuman(src)) // for the moment, only humans get dizzy
 		return
 
-	jitteriness = min(500, jitteriness + amount)	// store what will be new value
-													// clamped to max 500
+	jitteriness = min(400, jitteriness + amount)	// store what will be new value
+													// clamped to max 400
 	if (jitteriness > 100 && !is_jittery)
 		SPAWN(0)
 			jittery_process()
@@ -2898,9 +2903,19 @@
 		APPLY_MOVEMENT_MODIFIER(src, equipment_proxy, /obj/item)
 
 	// reset the modifiers to defaults
+	var/modifier = 1-GET_ATOM_PROPERTY(src, PROP_MOB_MOVESPEED_ASSIST)
+
 	equipment_proxy.additive_slowdown = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED)
+	if(equipment_proxy.additive_slowdown > 0)
+		equipment_proxy.additive_slowdown *= modifier
 	equipment_proxy.space_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_SPACE)
+	if(equipment_proxy.space_movement > 0)
+		equipment_proxy.space_movement *= modifier
 	equipment_proxy.aquatic_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
+	if(equipment_proxy.aquatic_movement > 0)
+		equipment_proxy.aquatic_movement *= modifier
+
+
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 /mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")

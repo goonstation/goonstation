@@ -65,6 +65,7 @@
 	})
 "as" = (
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
 	},
@@ -126,6 +127,12 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"aD" = (
+/mob/living/critter/fermid/worker,
+/turf/unsimulated/floor/marble/black,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "aG" = (
 /obj/decal/stage_edge/alt{
 	color = "#222222"
@@ -158,9 +165,7 @@
 	dir = 1;
 	pixel_y = 10
 	},
-/mob/living/critter/fermid{
-	health_burn_vuln = 0.35
-	},
+/mob/living/critter/fermid/spitter,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -259,7 +264,7 @@
 	name = "SHAME BOARD"
 	},
 /obj/item/paper{
-	desc = "Looks like one of the Technicians got called out." ;
+	desc = "Looks like one of the Technicians got called out.";
 	icon_state = "postit-writing";
 	info = "<b>Left a malfunctioning SMES unit at his service desk without following proper energy isolation and lockout procedures. AGAIN! </b>";
 	name = "Joff Muncey, Repair Technician";
@@ -267,7 +272,7 @@
 	pixel_y = 29
 	},
 /obj/item/paper{
-	desc = "Looks like some of the Sales team got called out." ;
+	desc = "Looks like some of the Sales team got called out.";
 	icon_state = "postit-writing";
 	info = "<b>The sales techs didn't flush their garbage disposal ALL WEEK. It's attracting ants!! Does plant cleanliness mean NOTHING to you?</b>";
 	name = "Gordon Baade & Sue Zhang, Sales Technicians";
@@ -275,7 +280,7 @@
 	pixel_y = 28
 	},
 /obj/item/paper{
-	desc = "Looks like one of the Janitors got called out." ;
+	desc = "Looks like one of the Janitors got called out.";
 	icon_state = "postit-writing";
 	info = "<b>Hurry up and take care of these damned ants! </b>";
 	name = "Tedward Benson, Janitor";
@@ -283,7 +288,7 @@
 	pixel_y = 26
 	},
 /obj/item/paper{
-	desc = "Looks like one of the Engineers got called out." ;
+	desc = "Looks like one of the Engineers got called out.";
 	icon_state = "postit-writing";
 	info = "<b>Borrowed GLEN's wrench, didn't return it for weeks!</b>";
 	name = "Jimmy Li, Engineer";
@@ -506,6 +511,7 @@
 	desc = "A tank.  For storing water.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
+	icon_state = "tank-map";
 	name = "Fishtank Water Storage";
 	tag = ""
 	},
@@ -569,7 +575,7 @@
 	desc = "It is not working.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor/plating,
@@ -616,6 +622,7 @@
 	})
 "cz" = (
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
 	},
@@ -759,6 +766,7 @@
 	pixel_y = 16
 	},
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
 	},
@@ -819,13 +827,11 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "du" = (
-/mob/living/critter/fermid{
-	health_burn_vuln = 0.35
-	},
 /obj/item/gun/kinetic/detectiverevolver{
 	name = "\improper Piper .38 revolver";
 	rarity = 3
 	},
+/mob/living/critter/fermid/spitter,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -844,10 +850,11 @@
 	name = "Reactor Core"
 	})
 "dz" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -1064,6 +1071,7 @@
 	})
 "eD" = (
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	dir = 6
 	},
 /obj/railing/yellow/reinforced{
@@ -1292,7 +1300,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
@@ -1346,6 +1354,7 @@
 	})
 "fG" = (
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	desc = "A pipe.";
 	name = "pipe"
 	},
@@ -1420,6 +1429,7 @@
 "fW" = (
 /obj/grille/steel,
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	dir = 4;
 	tag = "icon-intact-f (EAST)"
 	},
@@ -1447,6 +1457,7 @@
 	})
 "gl" = (
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	dir = 4;
 	tag = "icon-intact-f (EAST)"
 	},
@@ -1523,6 +1534,7 @@
 	pixel_y = -12;
 	rarity = 3
 	},
+/mob/living/critter/fermid/worker,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -1802,10 +1814,11 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "hE" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -1867,6 +1880,7 @@
 	})
 "hP" = (
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
 	},
@@ -2404,6 +2418,7 @@
 	})
 "jS" = (
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
 	},
@@ -2442,6 +2457,7 @@
 	})
 "jW" = (
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	desc = "A pipe.";
 	dir = 4;
 	name = "pipe";
@@ -2483,10 +2499,11 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "kc" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -2974,7 +2991,7 @@
 	desc = "It is working.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_on";
+	icon_state = "on-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor/engine/glow/blue,
@@ -3234,6 +3251,7 @@
 "nC" = (
 /obj/table/mauxite/auto,
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
 	},
@@ -4154,6 +4172,15 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"qU" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/mob/living/critter/fermid/worker,
+/turf/unsimulated/floor/wood/five,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "qW" = (
 /obj/mapping_helper/mob_spawn/corpse/human/random,
 /obj/decal/cleanable/blood/splatter{
@@ -4206,9 +4233,11 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "ri" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -4276,7 +4305,7 @@
 	desc = "It is not working.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor/sanitary/blue,
@@ -4529,6 +4558,7 @@
 	})
 "sx" = (
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
 	},
@@ -4791,6 +4821,12 @@
 /turf/unsimulated/floor/engine/glow/blue,
 /area/russian/radiation{
 	name = "Reactor Core"
+	})
+"tA" = (
+/mob/living/critter/fermid/worker,
+/turf/unsimulated/floor/wood/three,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
 	})
 "tC" = (
 /obj/machinery/light/small/floor,
@@ -5080,6 +5116,16 @@
 	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
+	})
+"uK" = (
+/obj/reagent_dispensers/cleanable/ants{
+	color = "green";
+	name = "irradiated ants"
+	},
+/mob/living/critter/fermid/hulk/radioactive,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/russian/radiation{
+	name = "Reactor Core"
 	})
 "uL" = (
 /obj/railing/yellow/reinforced{
@@ -5584,10 +5630,8 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
 	},
-/mob/living/critter/fermid{
-	health_burn_vuln = 0.35
-	},
 /obj/reagent_dispensers/cleanable/ants,
+/mob/living/critter/fermid/worker,
 /turf/simulated/floor,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -6222,9 +6266,9 @@
 	})
 "zt" = (
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	dir = 4;
-	name = "pipe";
-	pixel_y = 0
+	name = "pipe"
 	},
 /obj/decoration/junctionbox{
 	pixel_x = 2;
@@ -6415,6 +6459,7 @@
 	desc = "A tank.  For storing air.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
+	icon_state = "tank-map";
 	name = "airlock storage tank";
 	tag = ""
 	},
@@ -6472,8 +6517,8 @@
 	anchored = 1;
 	pixel_y = 16
 	},
-/obj/item/clothing/suit/rad/iomoon,
-/obj/item/clothing/suit/rad/iomoon,
+/obj/item/clothing/suit/hazard/rad/iomoon,
+/obj/item/clothing/suit/hazard/rad/iomoon,
 /turf/unsimulated/floor/yellow/checker,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -7704,9 +7749,7 @@
 	})
 "FG" = (
 /obj/reagent_dispensers/cleanable/ants,
-/mob/living/critter/fermid{
-	health_burn_vuln = 0.35
-	},
+/mob/living/critter/fermid/worker,
 /turf/unsimulated/floor/wood/two,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -8181,8 +8224,8 @@
 	anchored = 1;
 	pixel_y = 16
 	},
-/obj/item/clothing/suit/rad/iomoon,
-/obj/item/clothing/suit/rad/iomoon,
+/obj/item/clothing/suit/hazard/rad/iomoon,
+/obj/item/clothing/suit/hazard/rad/iomoon,
 /turf/unsimulated/floor/yellow/checker,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -8235,9 +8278,7 @@
 /obj/decal/fakeobjects/pipe/heat{
 	dir = 4
 	},
-/mob/living/critter/fermid{
-	health_burn_vuln = 0.35
-	},
+/mob/living/critter/fermid/worker,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -8437,6 +8478,12 @@
 	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
+	})
+"IZ" = (
+/mob/living/critter/fermid/hulk/radioactive,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/russian/radiation{
+	name = "Reactor Core"
 	})
 "Ja" = (
 /obj/railing/yellow/reinforced,
@@ -9032,9 +9079,9 @@
 "LD" = (
 /obj/disposalpipe/segment,
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	dir = 4;
-	name = "pipe";
-	pixel_y = 0
+	name = "pipe"
 	},
 /mob/living/critter/fermid{
 	health_burn_vuln = 0.35
@@ -9199,7 +9246,7 @@
 	})
 "Mt" = (
 /obj/overlay{
-	desc = "A portrait of Friedrich Oskar Giesel, the German radiophysicist and namesake of Giesel Radiofabrik." ;
+	desc = "A portrait of Friedrich Oskar Giesel, the German radiophysicist and namesake of Giesel Radiofabrik.";
 	icon = 'icons/obj/decals/wallsigns.dmi';
 	icon_state = "portrait";
 	name = "portrait";
@@ -9599,6 +9646,7 @@
 "NB" = (
 /obj/grille/steel,
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	dir = 4;
 	tag = "icon-intact-f (EAST)"
 	},
@@ -9673,6 +9721,7 @@
 	})
 "NQ" = (
 /obj/decal/fakeobjects/pipe{
+	color = "b4b4b4";
 	dir = 1;
 	tag = "icon-intact (NORTH)"
 	},
@@ -9782,6 +9831,16 @@
 	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
+	})
+"Od" = (
+/obj/reagent_dispensers/cleanable/ants{
+	color = "green";
+	name = "irradiated ants"
+	},
+/mob/living/critter/fermid/hulk/radioactive,
+/turf/unsimulated/floor/engine/caution/north,
+/area/russian/radiation{
+	name = "Reactor Core"
 	})
 "Oe" = (
 /obj/disposalpipe/segment,
@@ -9902,7 +9961,7 @@
 	desc = "It is working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_on";
+	icon_state = "on-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor/engine/glow/blue,
@@ -10166,9 +10225,7 @@
 	})
 "PO" = (
 /obj/decal/cleanable/blood/tracks,
-/mob/living/critter/fermid{
-	health_burn_vuln = 0.35
-	},
+/mob/living/critter/fermid/spitter,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -10327,7 +10384,7 @@
 /obj/storage/closet/mauxite{
 	pixel_y = 16
 	},
-/obj/item/clothing/suit/hazard/janitor,
+/obj/item/clothing/suit/hazard/bio_suit/janitor,
 /obj/item/clothing/head/bio_hood/janitor,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
@@ -10789,7 +10846,7 @@
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump";
 	pixel_y = -10
 	},
@@ -10914,6 +10971,7 @@
 	desc = "A tank.  For storing water.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
+	icon_state = "tank-map";
 	name = "Laundry Water Storage";
 	tag = ""
 	},
@@ -11048,6 +11106,14 @@
 	},
 /turf/unsimulated/floor/redblack{
 	dir = 1
+	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"TC" = (
+/mob/living/critter/fermid/worker,
+/turf/unsimulated/floor/plating{
+	icon_state = "plating_jen"
 	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -11287,7 +11353,7 @@
 	})
 "UG" = (
 /obj/overlay{
-	desc = "A portrait of Friedrich Oskar Giesel, the German radiophysicist and namesake of Giesel Radiofabrik." ;
+	desc = "A portrait of Friedrich Oskar Giesel, the German radiophysicist and namesake of Giesel Radiofabrik.";
 	icon = 'icons/obj/decals/wallsigns.dmi';
 	icon_state = "portrait";
 	name = "portrait";
@@ -11683,7 +11749,7 @@
 	})
 "Wi" = (
 /obj/item/caution{
-	desc = "The sign warns you that this site has been temporarily closed pending the completion of pest extermination services." ;
+	desc = "The sign warns you that this site has been temporarily closed pending the completion of pest extermination services.";
 	name = "CLOSED FOR PEST CONTROL"
 	},
 /turf/simulated/floor/stairs/dark/wide{
@@ -12422,7 +12488,7 @@
 	})
 "Zi" = (
 /obj/item/caution{
-	desc = "The sign warns you that this site has been temporarily closed pending the completion of pest extermination services." ;
+	desc = "The sign warns you that this site has been temporarily closed pending the completion of pest extermination services.";
 	name = "CLOSED FOR PEST CONTROL"
 	},
 /turf/simulated/floor/stairs/dark/wide{
@@ -13741,7 +13807,7 @@ Zm
 FJ
 Zm
 tl
-RC
+qU
 Zm
 Vb
 Sj
@@ -15527,7 +15593,7 @@ WL
 hi
 Kp
 WP
-Jg
+TC
 RY
 wp
 WP
@@ -15815,7 +15881,7 @@ WL
 DD
 hF
 WP
-ee
+TC
 HX
 wp
 WP
@@ -16247,7 +16313,7 @@ WL
 qR
 qR
 WP
-ee
+TC
 HX
 wp
 WP
@@ -16257,7 +16323,7 @@ sL
 sL
 WP
 DL
-nz
+tA
 Sz
 wi
 Yf
@@ -16474,7 +16540,7 @@ wK
 Fs
 cv
 cv
-kv
+aD
 cv
 cv
 cv
@@ -16545,7 +16611,7 @@ sL
 GF
 Fs
 cv
-cv
+aD
 cv
 cv
 zy
@@ -17126,7 +17192,7 @@ WP
 Fg
 WP
 Lz
-NH
+IZ
 OJ
 dx
 oe
@@ -17201,7 +17267,7 @@ Ir
 NX
 OQ
 ty
-SG
+Od
 uR
 NH
 OQ
@@ -17344,12 +17410,12 @@ WP
 Lz
 eG
 mq
-Ed
+uK
 oe
 uR
 eG
 mq
-NH
+IZ
 SG
 WP
 WP

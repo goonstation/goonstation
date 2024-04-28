@@ -26,7 +26,7 @@
 /turf/space/fluid/acid/clear,
 /area/noGenerate)
 "A" = (
-/obj/item/mining_tool/drill,
+/obj/item/mining_tool/powered/drill,
 /turf/space/fluid/acid/clear,
 /area/noGenerate)
 "C" = (

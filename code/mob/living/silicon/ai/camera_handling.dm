@@ -56,7 +56,6 @@
 	var/target_name = tgui_input_list(usr, "Which creature should you track?", "Track", creatures)
 
 	if (!target_name)
-		//usr:cameraFollow = null
 		src.tracker.cease_track()
 		return
 

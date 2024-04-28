@@ -44,6 +44,8 @@
 	keys_changed(mob/user, keys, changed)
 		if (istype(src.owner, /obj/machinery/vehicle/tank/minisub/escape_sub) || !owner)
 			return
+		if(user != src.owner.pilot)
+			return
 		if(changed & KEY_SHOCK)
 			shooting = keys & KEY_SHOCK
 		if (changed & (KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT))
@@ -70,6 +72,9 @@
 
 	process_move(mob/user, keys)
 		if (istype(src.owner, /obj/machinery/vehicle/tank/minisub/escape_sub))
+			return
+
+		if(user != src.owner.pilot)
 			return
 
 		var/can_user_act = user && user == owner.pilot && !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !isdead(user)

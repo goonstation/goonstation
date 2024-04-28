@@ -168,6 +168,10 @@
 				viewstat = 0
 				boutput(user, SPAN_NOTICE("You unsecure the [src]."))
 			else if(secured == 2)
+				if(!isturf(user.loc))
+					boutput(user, SPAN_ALERT("You can't deploy the [src] from in here!"))
+					return
+
 				boutput(user, SPAN_ALERT("You deploy the [src]!"))
 				logTheThing(LOG_STATION, user, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
 				if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
@@ -191,9 +195,6 @@
 		if (!anchored)
 			src.set_dir(turn(src.dir, 90))
 			return
-	else if (iswrenchingtool(W))
-		boutput(user, SPAN_ALERT("You deconstruct [src] into its base materials!"))
-		src.drop_resources(W,user)
 	..()
 
 /obj/item/electronics/frame/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
@@ -327,44 +328,9 @@
 
 	return
 
-/obj/item/electronics/frame/proc/drop_resources(obj/item/W as obj, mob/user as mob)
-	var/datum/manufacture/mechanics/R = null
-
-	if (src.deconstructed_thing)
-		for (var/datum/manufacture/mechanics/M in manuf_controls.custom_schematics)
-			if (M.frame_path == deconstructed_thing.type)
-				R = M
-				break
-	else
-		for (var/datum/manufacture/mechanics/M in manuf_controls.custom_schematics)
-			if (M.frame_path == src.store_type)
-				R = M
-				break
-
-	if (istype(R))
-		var/looper = round(R.item_amounts[1] / 10)
-		while (looper > 0)
-			var/obj/item/material_piece/mauxite/M = new /obj/item/material_piece/mauxite
-			M.set_loc(get_turf(src))
-			looper--
-		looper = round(R.item_amounts[2] / 10)
-		while (looper > 0)
-			var/obj/item/material_piece/pharosium/P = new /obj/item/material_piece/pharosium
-			P.set_loc(get_turf(src))
-			looper--
-		looper = round(R.item_amounts[3] / 10)
-		while (looper > 0)
-			var/obj/item/material_piece/molitz/M = new /obj/item/material_piece/molitz
-			M.set_loc(get_turf(src))
-			looper--
-	else
-		boutput(user, SPAN_ALERT("Could not reclaim resources."))
-	qdel(src)
-
 /datum/action/bar/icon/build_electronics_frame
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "build_electronics_frame"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/obj/item/electronics/frame/F
@@ -1109,7 +1075,6 @@
 /datum/action/bar/icon/deconstruct_obj
 	duration = 20
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "deconstruct_obj"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "decon"
 	var/obj/O

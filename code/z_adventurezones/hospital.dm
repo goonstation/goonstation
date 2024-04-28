@@ -180,6 +180,7 @@
 
 			else
 				target.vaporize(,1)
+				src.target = null
 
 			maniac_active &= ~2
 			qdel(src)

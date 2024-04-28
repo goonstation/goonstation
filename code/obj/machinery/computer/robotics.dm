@@ -2,7 +2,7 @@
 	name = "Robotics Control"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "robotics"
-	req_access = list(access_robotics)
+	req_access = list(access_ai_upload)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	desc = "A computer that allows an authorized user to have an overview of the cyborgs on the station."
 	power_usage = 500
@@ -30,7 +30,8 @@
 	..()
 	return
 
-/obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj)
+/obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj, mob/user)
+	logTheThing(LOG_STATION, src, "is deconstructed by [key_name(user)] at [log_loc(src)]")
 	frame.circuit.id = src.id
 
 /obj/machinery/computer/robotics/process()

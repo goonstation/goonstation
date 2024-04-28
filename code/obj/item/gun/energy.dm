@@ -8,6 +8,10 @@ TYPEINFO(/obj/item/gun/energy)
 	m_amt = 2000
 	g_amt = 1000
 	add_residue = 0 // Does this gun add gunshot residue when fired? Energy guns shouldn't.
+	recoil_inaccuracy_max = 0 //lasers probably dont shudder as you shoot them
+	icon_recoil_enabled = FALSE // same, this is probably better to visualize inaccuracy anyway
+	camera_recoil_enabled = FALSE // no camera recoil on tasers etc please
+
 	var/rechargeable = 1 // Can we put this gun in a recharger? False should be a very rare exception.
 	var/robocharge = 800
 	var/cell_type = /obj/item/ammo/power_cell // Type of cell to spawn by default.
@@ -17,6 +21,7 @@ TYPEINFO(/obj/item/gun/energy)
 	var/can_swap_cell = 1
 	var/uses_charge_overlay = FALSE //! Does this gun use charge overlays on the sprite?
 	var/charge_icon_state
+	var/restrict_cell_type
 	var/image/charge_image = null
 	muzzle_flash = null
 	inventory_counter_enabled = 1
@@ -25,7 +30,7 @@ TYPEINFO(/obj/item/gun/energy)
 		var/cell = null
 		if(cell_type)
 			cell = new cell_type
-		AddComponent(/datum/component/cell_holder, cell, rechargeable, custom_cell_max_capacity, can_swap_cell)
+		AddComponent(/datum/component/cell_holder, cell, rechargeable, custom_cell_max_capacity, can_swap_cell, restrict_cell_type)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		..()
 		UpdateIcon()
@@ -215,6 +220,7 @@ TYPEINFO(/obj/item/gun/energy)
 /obj/item/gun/energy/laser_gun/antique
 	name = "antique laser gun"
 	icon_state = "caplaser"
+	item_state = "capgun"
 	desc = "It's a kit model of the Mod.00 'Lunaport Legend' laser gun from Super! Protector Friend. With realistic sound fx and exciting LED display! This one has been hazardously upgraded."
 	muzzle_flash = "muzzle_flash_laser"
 	cell_type = null
@@ -329,14 +335,11 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 			if (!src.charge_image)
 				src.charge_image = image(src.icon)
 				src.charge_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
-			if(ret["charge"] >= 37) //this makes it only enter its "final" sprite when it's actually able to fire, if you change the amount of charge regen or max charge the bow has, make this number one charge increment before full charge
-				src.charge_image.icon_state = "[src.icon_state]full"
-				src.UpdateOverlays(src.charge_image, "charge")
-			else
-				var/ratio = min(1, ret["charge"] / ret["max_charge"])
-				ratio = round(ratio, 0.25) * 100
-				src.charge_image.icon_state = "[src.charge_icon_state][ratio]"
-				src.UpdateOverlays(src.charge_image, "charge")
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			// the -0.125 is so we only show the final state when we're actually ready to fire
+			ratio = round(ratio-0.125, 0.25) * 100
+			src.charge_image.icon_state = "[src.charge_icon_state][ratio]"
+			src.UpdateOverlays(src.charge_image, "charge")
 
 ////////////////////////////////////////EGun
 TYPEINFO(/obj/item/gun/energy/egun)
@@ -387,7 +390,7 @@ TYPEINFO(/obj/item/gun/energy/egun)
 
 
 TYPEINFO(/obj/item/gun/energy/egun_jr)
-	mats = list("MET-1"=10, "CON-1"=5, "POW-1"=5)
+	mats = null
 
 /obj/item/gun/energy/egun_jr
 	name = "energy gun junior"
@@ -578,6 +581,8 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 	force = 6
 	desc = "I think it stands for Banned For Griefing?"
 	cell_type = /obj/item/ammo/power_cell/high_power
+	recoil_strength = 20
+	camera_recoil_enabled = TRUE
 
 	New()
 		set_current_projectile(new/datum/projectile/bfg)
@@ -842,7 +847,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/burst)
 		projectiles = list(current_projectile)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
 /obj/item/gun/energy/blaster_carbine
@@ -883,6 +888,8 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 	rarity = 5
 	muzzle_flash = "muzzle_flash_bluezap"
+	recoil_strength = 20
+	camera_recoil_enabled = TRUE
 
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/cannon)
@@ -1198,8 +1205,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 		shot.firer = user.key
 		shot.targetZone = user.zone_sel.selecting
 		var/turf/us = get_turf(src)
-		var/turf/tgt = get_turf(target)
-		if(isrestrictedz(us.z) || isrestrictedz(tgt.z))
+		if(isrestrictedz(us.z) && !in_shuttle_transit(us))
 			boutput(user, "\The [src.name] jams!")
 			return
 		return ..(target, user)
@@ -1213,8 +1219,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 			return
 
 		var/turf/us = get_turf(src)
-		var/turf/tgt = get_turf(target)
-		if(isrestrictedz(us.z) || isrestrictedz(tgt.z))
+		if (isrestrictedz(us.z) && !in_shuttle_transit(us))
 			boutput(user, "\The [src.name] jams!")
 			message_admins("[key_name(user)] is a nerd and tried to fire a pickpocket gun in a restricted z-level at [log_loc(us)].")
 			return
@@ -1357,26 +1362,31 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 					set_current_projectile(projectiles["detain"])
 					item_state = "lawg-detain"
 					playsound(M, 'sound/vox/detain.ogg', 50)
+					src.toggle_recoil(FALSE)
 				if ("execute", "exterminate")
 					set_current_projectile(projectiles["execute"])
 					current_projectile.cost = 30
 					item_state = "lawg-execute"
 					playsound(M, 'sound/vox/exterminate.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("smokeshot","fog")
 					set_current_projectile(projectiles["smokeshot"])
 					current_projectile.cost = 50
 					item_state = "lawg-smokeshot"
 					playsound(M, 'sound/vox/smoke.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("knockout", "sleepshot")
 					set_current_projectile(projectiles["knockout"])
 					current_projectile.cost = 60
 					item_state = "lawg-knockout"
 					playsound(M, 'sound/vox/sleep.ogg', 50)
+					src.toggle_recoil(FALSE)
 				if ("hotshot","incendiary")
 					set_current_projectile(projectiles["hotshot"])
 					current_projectile.cost = 60
 					item_state = "lawg-hotshot"
 					playsound(M, 'sound/vox/hot.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("bigshot","highexplosive","he")
 					set_current_projectile(projectiles["bigshot"])
 					current_projectile.cost = 170
@@ -1384,16 +1394,17 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 					playsound(M, 'sound/vox/high.ogg', 50)
 					SPAWN(0.4 SECONDS)
 						playsound(M, 'sound/vox/explosive.ogg', 50)
+					src.toggle_recoil(TRUE)
 				if ("clownshot","clown")
 					set_current_projectile(projectiles["clownshot"])
 					item_state = "lawg-clownshot"
 					playsound(M, 'sound/vox/clown.ogg', 30)
+					src.toggle_recoil(FALSE)
 				if ("pulse", "push", "throw")
 					set_current_projectile(projectiles["pulse"])
 					item_state = "lawg-pulse"
 					playsound(M, 'sound/vox/push.ogg', 50)
-
-					/datum/projectile/energy_bolt/pulse
+					src.toggle_recoil(FALSE)
 		else		//if you're not the owner and try to change it, then fuck you
 			switch(text)
 				if ("detain","execute","knockout","hotshot","incendiary","bigshot","highexplosive","he","clownshot","clown", "pulse", "punch")
@@ -1423,6 +1434,16 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 					return 0
 				else
 					return 1
+
+	proc/toggle_recoil(on)
+		if(on)
+			recoil_inaccuracy_max = 5
+			icon_recoil_enabled = TRUE
+			camera_recoil_enabled = TRUE
+		else
+			recoil_inaccuracy_max = 0
+			icon_recoil_enabled = FALSE
+			camera_recoil_enabled = FALSE
 
 	//all gun modes use the same base sprite icon "lawbringer0" depending on the current projectile/current mode, we apply a coloured overlay to it.
 	update_icon()
@@ -1613,6 +1634,8 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	two_handed = 1
 	can_dual_wield = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/howitzer
+	camera_recoil_enabled = TRUE
+	recoil_strength = 50
 
 	New()
 		..()
@@ -1725,7 +1748,7 @@ TYPEINFO(/obj/item/gun/energy/cornicen3)
 	New()
 		set_current_projectile(new/datum/projectile/laser/plasma/auto)
 		projectiles = list(current_projectile,new/datum/projectile/laser/plasma/burst)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.5, 1.5, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.5)
 		..()
 
 	update_icon()
@@ -1763,6 +1786,8 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 	var/state = TRUE
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_LARGE
+	camera_recoil_enabled = TRUE
+	recoil_strength = 20
 
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
@@ -1772,12 +1797,12 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_bluezap"
-	cell_type = /obj/item/ammo/power_cell/self_charging/big
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 	shoot_delay = 0.8 SECONDS
 
 	New()
-		set_current_projectile(new/datum/projectile/laser/asslaser)
-		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
+		set_current_projectile(new/datum/projectile/laser/ntso_cannon)
+		AddComponent(/datum/component/holdertargeting/windup, 2 SECOND)
 		..()
 
 	attack_self(mob/user)
@@ -1790,7 +1815,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 			src.icon_state = collapsed_state
 			w_class = W_CLASS_NORMAL
 		else
-			AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
+			AddComponent(/datum/component/holdertargeting/windup, 2 SECOND)
 			src.icon_state = active_state
 			w_class = W_CLASS_BULKY
 		state = !state
@@ -1828,7 +1853,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 		set_current_projectile(new/datum/projectile/energy_bolt/smgburst)
 
 		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/smgauto)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
 	update_icon()
@@ -1888,3 +1913,327 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 		set_current_projectile(new/datum/projectile/energy_bolt/dazzler)
 		projectiles = list(current_projectile)
 		..()
+
+// Makeshift Laser Rifle
+#define HEAT_REMOVED_PER_PROCESS 30
+#define FIRE_THRESHOLD 125
+TYPEINFO(/obj/item/gun/energy/makeshift)
+	mats = 0
+
+/obj/item/gun/energy/makeshift
+	name = "makeshift laser rifle"
+	icon = 'icons/obj/items/guns/energy64x32.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	icon_state = "makeshift-energy"
+	item_state = "makeshift_laser"
+	wear_state = "makeshift_laser"
+	c_flags = ONBACK
+	cell_type = null
+	can_swap_cell = FALSE
+	rechargeable = FALSE
+	force = 7
+	two_handed = TRUE
+	can_dual_wield = FALSE
+	desc = "A laser rifle cobbled together from various appliances, Prone to overheating."
+	muzzle_flash = "muzzle_flash_phaser"
+	charge_icon_state = "laser"
+	spread_angle = 10
+	shoot_delay = 5 DECI SECONDS
+	///What light source we use for the rifle
+	var/obj/item/light/tube/our_light
+	///What battery this gun uses
+	var/obj/item/cell/our_cell
+	///How much heat this weapon has after firing, the weapon breaks if this gets too high
+	var/heat = 0
+	///What step of repair are we on if we have broken? 0 = functional
+	var/heat_repair = 0
+
+	proc/attach_cell(var/obj/item/cell/C, mob/user)
+		if (user)
+			user.u_equip(C)
+		RegisterSignal(C, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove_cell))
+		our_cell = C
+		our_cell.set_loc(src)
+		our_cell.AddComponent(/datum/component/power_cell, our_cell.maxcharge, our_cell.charge, our_cell.genrate, 0, FALSE)
+		SEND_SIGNAL(src, COMSIG_CELL_SWAP, our_cell)
+		UpdateIcon()
+
+	proc/attach_light(var/obj/item/light/tube/T, mob/user)
+		if (user)
+			user.u_equip(T)
+		our_light = T
+		our_light.set_loc(src)
+		UpdateIcon()
+		var/datum/projectile/laser/makeshift/new_laser = new /datum/projectile/laser/makeshift
+		new_laser.color_icon = rgb(our_light.color_r * 255, our_light.color_g * 255, our_light.color_b * 255)
+		new_laser.color_red = our_light.color_r
+		new_laser.color_green = our_light.color_g
+		new_laser.color_blue = our_light.color_b
+		set_current_projectile(new_laser)
+
+	proc/do_explode()
+		explosion(src, get_turf(src), -1, -1, 1, 2)
+		qdel(src)
+
+	proc/finish_repairs(var/obj/item/cable_coil/C, /var/mob/user)
+		C.change_stack_amount(-10)
+		heat_repair = 0
+		playsound(src, 'sound/effects/pop.ogg', 50, TRUE)
+		src.icon_state = "makeshift-energy"
+		UpdateIcon()
+
+	proc/add_heat(var/heat_to_add, var/mob/user)
+		heat += heat_to_add
+		if (heat >= FIRE_THRESHOLD)
+			if (user)
+				boutput(user,SPAN_ALERT("[src] bursts into flame!"))
+			if (our_cell)
+				our_cell.use(our_cell.charge)
+				SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
+			elecflash(get_turf(src), 1, 3)
+			our_light.light_status = LIGHT_BURNED
+			our_light.update()
+			heat_repair = 1
+			src.icon_state = "makeshift-burnt-1"
+			heat += FIRE_THRESHOLD // spicy!
+			UpdateIcon()
+
+	proc/remove_cell()
+		var/obj/item/cell/C = our_cell
+		C.UpdateIcon()
+		UnregisterSignal(C, COMSIG_PARENT_PRE_DISPOSING)
+		var/datum/component/power_cell/comp = C.GetComponent(/datum/component/power_cell)
+		comp.UnregisterFromParent()
+		comp.RemoveComponent()
+		our_cell = null
+		// need to reset our component or else a runtime occurs
+		var/datum/component/cell_holder/holder = src.GetComponent(/datum/component/cell_holder)
+		holder.cell = null
+		UpdateIcon()
+
+	emp_act()
+		if (our_cell)
+			src.visible_message(SPAN_ALERT("[src]'s cell violently overheats!"))
+			src.add_heat(FIRE_THRESHOLD)
+
+	New()
+		processing_items |= src
+		set_current_projectile(new/datum/projectile/laser/makeshift)
+		projectiles = list(current_projectile)
+		..()
+
+	Exited(Obj, newloc)
+		var/obj/item/cell/C = Obj
+		if (istype(C) && !QDELETED(C))
+			src.remove_cell()
+		. = ..()
+
+
+	process()
+		if (heat > 0)
+			if (heat > FIRE_THRESHOLD)
+				var/mob/living/victim = src.loc
+				if (istype(victim))
+					victim.changeStatus("burning", 7 SECONDS)
+					if (!ON_COOLDOWN(victim, "makeshift_burn", 5 SECONDS))
+						boutput(victim, SPAN_ALERT("You are set on fire due to the extreme temperature of [src]!"))
+						victim.emote("scream")
+			heat = max(0, heat - HEAT_REMOVED_PER_PROCESS)
+			UpdateIcon()
+		return
+
+	canshoot(mob/user)
+		if (heat_repair != 0)
+			boutput(user,SPAN_ALERT("[src] will need repairs before being able to function!"))
+			return FALSE
+		if (!our_light)
+			boutput(user,SPAN_ALERT("[src] needs a light source to function!"))
+			return FALSE
+		else if (our_light.light_status != LIGHT_OK)
+			boutput(user,SPAN_ALERT("[src] has no reaction when you pull the trigger!"))
+			return FALSE
+		else
+			return ..()
+
+	attackby(obj/item/W, mob/user, params)
+		if (heat < FIRE_THRESHOLD)
+			if(heat_repair) // gun machine broke, we need to repair it
+				if (issnippingtool(W) && heat_repair == 1)
+					boutput(user,SPAN_NOTICE("You remove the burnt wiring from [src]."))
+					playsound(src, 'sound/items/Wirecutter.ogg', 50, TRUE)
+					heat_repair++
+					src.icon_state = "makeshift-burnt-2"
+					UpdateIcon()
+					return
+				else if (istype(W, /obj/item/cable_coil) && heat_repair == 2)
+					if (W.amount >= 10)
+						SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/gun/energy/makeshift/proc/finish_repairs,\
+						list(W,user), W.icon, W.icon_state, SPAN_NOTICE("[user] replaces the burnt wiring within [src]."), null)
+					else
+						boutput(user,SPAN_NOTICE("You need at least 10 wire to repair the wiring."))
+					return
+			else if (iswrenchingtool(W) && our_cell)
+				var/obj/item/removed_cell = our_cell
+				SEND_SIGNAL(src, COMSIG_CELL_SWAP, null)
+				boutput(user,SPAN_NOTICE("You disconnect [our_cell] from [src]."))
+				playsound(src, 'sound/items/Ratchet.ogg', 50, TRUE)
+				user.put_in_hand_or_drop(removed_cell)
+				return
+			else if (istype(W, /obj/item/cell) && !our_cell)
+				user.u_equip(W)
+				boutput(user,SPAN_NOTICE("You attach [W] to [src]."))
+				attach_cell(W, user)
+				return
+			else if (issnippingtool(W) && our_light)
+				boutput(user,SPAN_NOTICE("You remove the wiring attaching [our_light] to the barrel."))
+				playsound(src, 'sound/items/Wirecutter.ogg', 50, TRUE)
+				user.put_in_hand_or_drop(our_light)
+				our_light = null
+				UpdateIcon()
+				return
+			else if (istype(W, /obj/item/light/tube) && !our_light)
+				boutput(user,SPAN_NOTICE("You place [W] inside of the barrel and redo the wiring."))
+				playsound(src, 'sound/effects/pop.ogg', 50, TRUE)
+				attach_light(W, user)
+				UpdateIcon()
+				return
+			..()
+		else
+			boutput(user,SPAN_NOTICE("Attempting to work on [src] while its on fire might be a bad idea..."))
+			return
+
+	get_desc()
+		. = ..()
+		if (!heat_repair)
+			if (!our_cell && isnull(cell_type))
+				. += SPAN_ALERT("<b> [src] is lacking a power source!</b>")
+			if (!our_light)
+				. += SPAN_ALERT("<b> [src] is lacking a light source!</b>")
+			else if(our_light.light_status != LIGHT_OK)
+				. += SPAN_ALERT("<b> [src]'s light source is nonfunctional!</b>")
+		else
+			. += SPAN_ALERT("<b> [src] is broken and requires repairs!</b>")
+
+	get_help_message(dist, mob/user)
+		switch(src.heat_repair)
+			if(0)
+				if(cell_type)
+					; //noop
+				else if(!our_cell)
+					. += "You can use a large energy cell on [src] to attach it to the gun."
+				else
+					. += "You can use a <b>wrench</b> to remove [src]'s energy cell."
+				if(!our_light)
+					. += "You can use a light tube on [src] to insert it into the gun."
+				else
+					. += "You can use <b>wirecutters</b> to remove [src]'s light tube."
+			if(1)
+				. = "You can use <b>wirecutters</b> to remove the burnt wiring."
+			if(2)
+				. = "You can add 10 wire to replace the wiring."
+
+	attack_self(mob/user)
+		var/I = tgui_input_number(user, "Input a firerate (In deciseconds)", "Timer Adjustment", shoot_delay, 10, 2)
+		if (!I || BOUNDS_DIST(src, user) > 0)
+			return
+		shoot_delay = I
+		boutput(user, SPAN_NOTICE("You adjust [src] to fire every [I / 10] seconds."))
+
+	update_icon()
+		if (our_cell)
+			var/image/overlay_image
+			if (istype(our_cell, /obj/item/cell/artifact))
+				var/obj/item/cell/artifact/C = our_cell
+				var/datum/artifact/powercell/AS = C.artifact
+				var/datum/artifact_origin/AO = AS.artitype
+				overlay_image = SafeGetOverlayImage("gun_cell", src.icon, "makeshift-[AO.name]")
+			else
+				overlay_image = SafeGetOverlayImage("gun_cell", src.icon, "makeshift-[our_cell.icon_state]")
+			src.UpdateOverlays(overlay_image, "gun_cell")
+		else
+			src.UpdateOverlays(null, "gun_cell")
+
+		if (our_light)
+			var/image/overlay_image = SafeGetOverlayImage("gun_light", src.icon, "makeshift-light")
+			src.UpdateOverlays(overlay_image, "gun_light")
+		else
+			src.UpdateOverlays(null, "gun_light")
+
+		if (heat > FIRE_THRESHOLD)
+			var/image/overlay_image = SafeGetOverlayImage("gun_smoke", src.icon, "makeshift-burn")
+			src.UpdateOverlays(overlay_image, "gun_smoke")
+		else if (heat > 70)
+			var/image/overlay_image = SafeGetOverlayImage("gun_smoke", src.icon, "makeshift-smoke")
+			src.UpdateOverlays(overlay_image, "gun_smoke")
+		else
+			src.UpdateOverlays(null, "gun_smoke")
+		..()
+
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if (canshoot(user))
+			if (our_light.rigged) // bad idea
+				src.visible_message(SPAN_ALERT("[src]'s light tube violently explodes!"))
+				do_explode()
+				return
+			var/datum/projectile/laser/makeshift/possible_laser
+			if (istype(possible_laser))
+				src.add_heat(rand(possible_laser.heat_low, possible_laser.heat_high), user)
+			else // allow varedit shenanigans
+				src.add_heat(rand(15,20), user)
+			UpdateIcon()
+			our_cell?.use(current_projectile.cost)
+		return ..(target, start, user)
+
+/obj/item/gun/energy/makeshift/spawnable // for testing purposes
+
+	New()
+		..()
+		var/obj/item/cell/supercell/charged/C = new /obj/item/cell/supercell/charged
+		C.UpdateIcon() // fix visual bug
+		src.attach_cell(C)
+		var/obj/item/light/tube/T = new /obj/item/light/tube
+		src.attach_light(T)
+
+
+/obj/item/gun/energy/lasergat
+	name = "\improper Hafgan Mod.93R Repeating Laser"
+	rechargeable = 0
+	icon_state = "burst_laser_idle"
+	cell_type = /obj/item/ammo/power_cell/lasergat
+	desc = "Introduced to compete with the Clock line of military sidearms. The Mod. 93R repeating laser masked early laser tech's heat problems with expendable liquid coolant cartridges, whose off-gassing caused unpredictable recoil that made it widely unpopular."
+	item_state = "egun-kill"
+	force = 5
+	add_residue = 1 // this is unique in that it spews energy-gun-gas or something
+	muzzle_flash = "muzzle_flash_elec"
+	uses_charge_overlay = TRUE
+	charge_icon_state = "burst_laser"
+	shoot_delay = 6
+	spread_angle = 6
+	restrict_cell_type = /obj/item/ammo/power_cell/lasergat
+	New()
+		set_current_projectile(new/datum/projectile/laser/lasergat/burst)
+		projectiles = list(current_projectile)
+		..()
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if (canshoot(user))
+			..()
+			flick("burst_laser", src)
+			flick(src.charge_image, src.charge_image)
+			SPAWN(6 DECI SECONDS)
+				playsound(user, 'sound/effects/tinyhiss.ogg', 60, TRUE)
+			return
+		..()
+
+	update_icon()
+		if (!canshoot())
+			src.icon_state = "burst_laser_empty"
+		else
+			src.icon_state = "burst_laser_idle"
+		..()
+	attack_self(var/mob/M)
+		..()
+		UpdateIcon()
+		M.update_inhands()
+
+#undef HEAT_REMOVED_PER_PROCESS
+#undef FIRE_THRESHOLD

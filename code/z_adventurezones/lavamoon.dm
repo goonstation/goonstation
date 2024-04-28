@@ -574,7 +574,7 @@ var/sound/iomoon_alarm_sound = null
 			. = ..()
 
 //Clothing & Associated Equipment
-/obj/item/clothing/suit/rad/iomoon
+/obj/item/clothing/suit/hazard/rad/iomoon
 	name = "FB-8 Environment Suit"
 	desc = "A rather old-looking suit designed to guard against extreme heat and radiation."
 	icon_state = "rad_io"
@@ -598,7 +598,7 @@ var/sound/iomoon_alarm_sound = null
 	icon_state = "syndicate"
 	icon_opened = "syndicate-open"
 	icon_closed = "syndicate"
-	spawn_contents = list(/obj/item/clothing/suit/rad/iomoon,\
+	spawn_contents = list(/obj/item/clothing/suit/hazard/rad/iomoon,\
 	/obj/item/clothing/head/rad_hood/iomoon)
 
 /obj/machinery/light/small/iomoon
@@ -1035,7 +1035,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 					var/obj/decal/exitMarker = locate("IOMOON_BOSSDEATH_EXIT")
 					if (istype(exitMarker))
-						var/obj/perm_portal/portalOut = new
+						var/obj/laser_sink/perm_portal/portalOut = new
 						portalOut.target = get_turf(exitMarker)
 						portalOut.icon = 'icons/misc/worlds.dmi'
 						portalOut.icon_state = "jitterportal"

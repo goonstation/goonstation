@@ -129,12 +129,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if(thing == src.rider)
 			src.eject_rider(crashed=FALSE, selfdismount=TRUE, ejectall=FALSE)
 
-	Click(location,control,params)
-		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier)
-			var/mob/dead/observer/O = usr
-			if(src.rider)
-				O.insert_observer(src.rider)
-		else
+	Click(location, control, params)
+		if(!ghost_observe_occupant(usr, src.rider))
 			. = ..()
 
 	proc/eject_other_stuff() // override if there's some stuff integral to the vehicle that should not be ejected
@@ -254,7 +250,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	blob_act(var/power)
 		qdel(src)
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		..()
 		// Simulate hotspot Crossed/Process so turfs engulfed in flames aren't simply ignored in vehicles
 		if (src.rider_visible && !src.sealed_cabin && ismob(src.rider) && exposed_volume > (CELL_VOLUME * 0.8) && exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
@@ -350,7 +346,7 @@ TYPEINFO(/obj/vehicle/segway)
 	update()
 	..()
 	in_bump = TRUE
-	if(isturf(AM) && (src.emagged || src.rider.bioHolder.HasEffect("clumsy") || (src.rider.reagents && src.rider.reagents.has_reagent("ethanol"))))
+	if((isturf(AM) || istype(AM, /obj/window)) && (src.emagged || src.rider.bioHolder.HasEffect("clumsy") || (src.rider.reagents && src.rider.reagents.has_reagent("ethanol"))))
 		src.rider.visible_message(SPAN_ALERT("<b>[rider] crashes into the wall with \the [src]!</b>"), SPAN_ALERT("<b>[src] crashes into the wall!</b>"))
 		eject_rider(2)
 		JOB_XP(rider, "Clown", 1)
@@ -617,6 +613,7 @@ TYPEINFO(/obj/vehicle/segway)
 /obj/vehicle/segway/emag_act(mob/user, obj/item/card/emag/E)
 	if (!src.emagged)
 		src.emagged = TRUE
+		src.delay = 1.4
 		src.weeoo()
 		src.desc = src.desc + " It looks like the safety circuits have been shorted out."
 		src.visible_message(SPAN_ALERT("<b>[src] beeps ominously.</b>"))
@@ -752,6 +749,10 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 			sleep(0.3 SECONDS)
 			if (D_turf.active_liquid)
 				D_turf.active_liquid.try_connect_to_adjacent()
+
+			// clean floor drawings akin to the mop
+			var/turf/T = get_turf(src)
+			T.clean_forensic()
 
 			qdel(D)
 
@@ -1772,13 +1773,13 @@ TYPEINFO(/obj/vehicle/adminbus)
 		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 		if(rider && prob(40))
 			playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-			src.visible_message(SPAN_ALERT("<b>[M] has pulled [rider] out of the [src]!</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[M] has pulled [rider] out of the [src]!</b>"))
 			rider.changeStatus("weakened", 2 SECONDS)
 			eject_rider(0,0,0)
 		else
 			if(src.contents.len)
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-				src.visible_message(SPAN_ALERT("<b>[M] opens up the [src], spilling the contents out!</b>"), 1)
+				src.visible_message(SPAN_ALERT("<b>[M] opens up the [src], spilling the contents out!</b>"))
 				for(var/atom/A in src.contents)
 					if(ismob(A))
 						var/mob/N = A
@@ -1888,10 +1889,21 @@ TYPEINFO(/obj/vehicle/adminbus)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 			O.throw_at(target, 10, 2)
-			if(istype(O, /obj/window) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
+			if(istype(O, /obj/window) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal) || istype(O, /obj/table) || istype(O, /obj/railing) || istype(O, /obj/rack))
 				qdel(O)
+			if(istype(O, /obj/storage))
+				O:pry_open()
+				O.density = 0
+			if(istype(O, /obj/machinery/vending))
+				O:fall()
+			if(istype(O, /obj/machinery/computer) || istype(O, /obj/machinery/computer3))
+				O:set_broken()
 			if(istype(O, /obj/critter))
 				O:CritterDeath()
+			if(istype(O, /obj/machinery/vehicle))
+				O:shipdeath()
+			if(istype(O, /obj/machinery) && is_badmin_bus)
+				qdel(O)
 			if(!isnull(O) && is_badmin_bus)
 				O:ex_act(2)
 			in_bump = 0

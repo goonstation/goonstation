@@ -5,9 +5,6 @@
 	customization_available = 1
 	announce_to_admins = 0 // Doing it manually.
 	weight = 20
-#ifdef RP_MODE
-	disabled = 1
-#endif
 
 	var/antag_count = 0
 	var/lock = 0

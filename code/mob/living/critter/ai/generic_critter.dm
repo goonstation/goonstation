@@ -36,6 +36,8 @@
 	name = "aggressive wander"
 
 /datum/aiTask/timed/wander/critter/aggressive/on_tick()
+	if(length(holder.owner.grabbed_by))
+		holder.owner.resist()
 	var/mob/living/critter/C = holder.owner
 	if(istype(holder.owner) && length(C.seek_target()))
 		src.holder.owner.ai.interrupt()
@@ -70,6 +72,10 @@
 	var/mob/living/critter/C = holder.owner
 	return C.seek_target(src.max_dist)
 
+/datum/aiTask/tsequence/goalbased/critter/attack/on_tick()
+	if(length(holder.owner.grabbed_by))
+		holder.owner.resist()
+
 /////////////// The aiTask/succeedable handles the behaviour to do when we're in range of the target
 
 /datum/aiTask/succeedable/critter/attack
@@ -89,6 +95,8 @@
 	return has_started && C.can_critter_attack() //if we've started an attack, and can attack again, then hooray, we have completed this task
 
 /datum/aiTask/succeedable/critter/attack/on_tick()
+	if(length(holder.owner.grabbed_by))
+		holder.owner.resist()
 	if(!has_started)
 		var/mob/living/critter/C = holder.owner
 		var/mob/T = holder.target
@@ -346,6 +354,11 @@
 	..()
 	add_task(holder.get_instance(/datum/aiTask/succeedable/retaliate, list(holder)))
 
+/datum/aiTask/sequence/goalbased/retaliate/on_tick()
+	. = ..()
+	if(length(holder.owner.grabbed_by))
+		holder.owner.resist()
+
 /datum/aiTask/sequence/goalbased/retaliate/get_targets()
 	if (QDELETED(src.targetted_mob))
 		. = list()
@@ -393,6 +406,9 @@
 /datum/aiTask/succeedable/retaliate/on_tick()
 	//keep moving towards the target and attacking them in range for as long as is necessary
 	//has_started marks that we've hit them once
+	if(length(holder.owner.grabbed_by))
+		holder.owner.resist()
+
 	var/mob/living/critter/C = holder.owner
 	var/mob/T = holder.target
 	if(C && T && BOUNDS_DIST(C, T) == 0)

@@ -154,7 +154,7 @@
 		if (prob(power * 0.5))
 			qdel(src)
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		if (exposed_temperature > 1000)
 			return ..()
 
@@ -188,6 +188,10 @@
 		amount = min(get_fuel(), amount)
 		if (reagents)
 			reagents.remove_reagent("fuel", amount)
+		src.inventory_counter.update_number(get_fuel())
+
+	on_reagent_change(add)
+		. = ..()
 		src.inventory_counter.update_number(get_fuel())
 
 #define EYE_DAMAGE_IMMUNE 2

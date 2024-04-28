@@ -606,7 +606,6 @@
 	duration = 10 SECONDS
 
 	interrupt_flags = 0
-	id = "blobabsorb"
 	var/mob/living/target
 	var/mob/living/intangible/blob_overmind/blob_o
 

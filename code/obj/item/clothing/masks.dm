@@ -231,8 +231,8 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		item_function_flags = IMMUNE_TO_ACID
 
 		New()
-			..()
 			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
 
 		disposing()
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -344,6 +344,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "clown"
 	item_state = "clown_hat"
 	see_face = FALSE
+	var/base_icon_state = "clown"
 
 	var/spam_flag = 0
 	var/spam_timer = 100
@@ -369,14 +370,14 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 			src.mask_bald = TRUE
 			src.name = "wigless clown mask"
 			src.desc = bald_desc_state
-			src.icon_state = "[src.icon_state]_bald"
+			src.icon_state = "[src.base_icon_state]_bald"
 			src.item_state = "clown_bald"
 			user.show_text("You tuck back the wig on the [src].")
 		else
 			src.mask_bald = FALSE
 			src.name = initial(src.name)
 			src.desc = initial(src.desc)
-			src.icon_state = initial(src.icon_state)
+			src.icon_state = src.base_icon_state
 			src.item_state = "clown_hat"
 			user.show_text("You untuck the wig from the [src].")
 
@@ -385,12 +386,14 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		desc = "A special clown mask made to celebrate Autumn. Orange you glad you have it!!"
 		icon_state = "clown_autumn"
 		item_state = "clown_autumn"
+		base_icon_state = "clown_autumn"
 
 	winter
 		name = "winter clown wig and mask"
 		desc = "A special clown mask made to celebrate Winter. You'd be blue without it!! Like cold things? Blue? Get it?"
 		icon_state = "clown_winter"
 		item_state = "clown_winter"
+		base_icon_state = "clown_winter"
 
 /obj/item/clothing/mask/gas/syndie_clown
 	name = "clown wig and mask"
@@ -784,4 +787,21 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	desc = "Traditionally thought to repel evil spirits, thanks to the tengu's alarming face. Maybe it works on staffies, too."
 	item_state = "tengu"
 	icon_state = "tengu"
+	see_face = FALSE
+
+// New chaplain stuff
+
+/obj/item/clothing/mask/greencultmask
+	name = "lost horror veil"
+	desc = "A dark green shroud with loose fabric tendrils at the end of the face You feel dizzy and lost just gazing into the visage."
+	item_state = "greencultmask"
+	icon_state = "greencultmask"
+	wear_layer = MOB_OVER_TOP_LAYER
+	see_face = FALSE
+/obj/item/clothing/mask/burnedcultmask
+	name = "incendiary mask"
+	desc = "A face mask designed to look like a burning candle's flame. It smells of smoke when worn."
+	item_state = "burnedcultmask"
+	icon_state = "burnedcultmask"
+	wear_layer = MOB_OVER_TOP_LAYER
 	see_face = FALSE

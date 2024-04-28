@@ -380,7 +380,9 @@
 	// quick hacky thing to have similar functionality to get_organ
 	// maybe one day one of us will make this better - cirr
 	proc/get_limb(var/limb)
-		if(!limb) return
+		RETURN_TYPE(/obj/item/parts)
+		if(!limb)
+			return
 		switch(limb)
 			if("l_arm")
 				. = l_arm
@@ -757,7 +759,7 @@
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
 	if (src.mind) // I think this is kinda important (Convair880).
-		if (src.mind.ckey)
+		if (src.mind.ckey && !inafterlife(src))
 			var/turf/where = get_turf(src)
 			var/where_text = "Unknown (?, ?, ?)"
 			if (where)
@@ -1041,12 +1043,18 @@
 
 	var/obj/item/I = src.equipped()
 
-	if (!I || !isitem(I) || I.cant_drop) return
+	if (!I || !isitem(I) || I.cant_drop)
+		return
 
+	var/obj/item/grab/grab = null
 	if (istype(I, /obj/item/grab))
-		var/obj/item/grab/G = I
-		I = G.handle_throw(src, target)
-		if (!I) return
+		grab = I
+	else if (I.chokehold)
+		grab = I.chokehold
+	if (grab)
+		I = grab.handle_throw(src, target)
+		if (!I)
+			return
 
 	I.set_loc(src.loc)
 
@@ -1078,8 +1086,6 @@
 		if (iscarbon(I))
 			var/mob/living/carbon/C = I
 			logTheThing(LOG_COMBAT, src, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
-			if ( ishuman(C) && !C.getStatusDuration("weakened"))
-				C.changeStatus("weakened", 1 SECOND)
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
@@ -1142,7 +1148,6 @@
 				var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
 				if (thing)
 					usr = src
-					boutput(usr, SPAN_NOTICE("You offer [thing] to [target]."))
 					var/mob/living/living_target = target
 					living_target.give_item()
 					return
@@ -1534,7 +1539,7 @@
 					secure_headset_mode = lowertext(copytext(message,2,3))
 				message = copytext(message, 3)
 
-	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
+	message = strip_html(trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
 		return
@@ -1865,6 +1870,16 @@
 				return TRUE
 	return FALSE
 
+/mob/living/carbon/human/can_hold_two_handed()
+	. = ..()
+	if (src.r_hand || src.l_hand)
+		return FALSE
+	if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
+		return FALSE
+	if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)))
+		return FALSE
+	return TRUE
+
 /mob/living/carbon/human/put_in_hand(obj/item/I, hand)
 	if (!istype(I))
 		return 0
@@ -1875,12 +1890,8 @@
 			return 1
 		return 0
 	if (I.two_handed) //MARKER1
-		if (src.r_hand || src.l_hand)
-			return 0
-		if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
-			return 0
-		if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)))
-			return 0
+		if (!src.can_hold_two_handed())
+			return FALSE
 		src.l_hand = I
 		src.r_hand = I
 		I.pickup(src)
@@ -2265,6 +2276,36 @@
 		return force_equip(I, slot, role_equipped)
 	else
 		return 0
+
+/// swap I into the given slot, puts item in that slot (if it exists) into hand or on ground
+/mob/living/carbon/human/proc/autoequip_slot(obj/item/I, slot)
+	if(!src.can_equip(I, slot) || istype(I.loc, /obj/item/parts))
+		return FALSE
+	var/obj/item/current = src.get_slot(slot)
+	if(current && current.cant_self_remove)
+		return FALSE
+	src.u_equip(I)
+	if(current)
+		current.unequipped(src)
+		src.hud?.remove_item(current)
+		src.vars[slot] = null
+		if(!src.put_in_hand(current))
+			src.drop_from_slot(current, get_turf(current))
+	src.force_equip(I, slot)
+	return TRUE
+///Tries to put an item in an available backpack, pocket, or hand slot; will delete the item if unable to place.
+/mob/living/carbon/human/proc/stow_in_available(obj/item/I)
+	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
+		return
+	if (src.autoequip_slot(I, SLOT_L_STORE))
+		return
+	if (src.autoequip_slot(I, SLOT_R_STORE))
+		return
+	if (src.autoequip_slot(I, SLOT_L_HAND))
+		return
+	if (src.autoequip_slot(I, SLOT_R_HAND))
+		return
+	qdel(I)
 
 /mob/living/carbon/human/swap_hand(var/specify=-1)
 	if(src.hand == specify)
@@ -2933,29 +2974,29 @@
 	if (!src.juggling())
 		return
 	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything they were juggling!"))
-	for (var/obj/O in src.juggling)
-		src.remove_juggle(O)
-		if (istype(O, /obj/item/gun) && prob(80)) //prob(80)
-			var/obj/item/gun/gun = O
+	for (var/atom/movable/A in src.juggling)
+		src.remove_juggle(A)
+		if (istype(A, /obj/item/gun) && prob(80)) //prob(80)
+			var/obj/item/gun/gun = A
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
 		else if (prob(40)) //bombs might land funny
-			if (istype(O, /obj/item/chem_grenade) || istype(O, /obj/item/old_grenade) || istype(O, /obj/item/pipebomb/bomb))
-				var/obj/item/explosive = O
+			if (istype(A, /obj/item/chem_grenade) || istype(A, /obj/item/old_grenade) || istype(A, /obj/item/pipebomb/bomb))
+				var/obj/item/explosive = A
 				explosive.AttackSelf(src)
-			else if (istype(O, /obj/item/device/transfer_valve))
-				var/obj/item/device/transfer_valve/ttv = O
+			else if (istype(A, /obj/item/device/transfer_valve))
+				var/obj/item/device/transfer_valve/ttv = A
 				ttv.toggle_valve()
 				logTheThing(LOG_BOMBING, src, "accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
 				message_admins("[key_name(usr)] accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
-		O.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
+		A.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
 		if (prob(25))
-			O.throw_at(get_step(src, pick(alldirs)), 1, 1)
+			A.throw_at(get_step(src, pick(alldirs)), 1, 1)
 	src.drop_from_slot(src.r_hand)
 	src.drop_from_slot(src.l_hand)
 	src.update_body()
 	logTheThing(LOG_STATION, src, "drops the items they were juggling")
 
-/mob/living/carbon/human/proc/remove_juggle(obj/thing)
+/mob/living/carbon/human/proc/remove_juggle(atom/movable/thing)
 	UnregisterSignal(thing, COMSIG_MOVABLE_SET_LOC)
 	thing.layer = initial(thing.layer)
 	src.juggle_dummy.vis_contents -= thing
@@ -2965,7 +3006,7 @@
 	thing.layer = initial(thing.layer)
 	src.juggling -= thing
 
-/mob/living/carbon/human/proc/add_juggle(var/obj/thing as obj)
+/mob/living/carbon/human/proc/add_juggle(atom/movable/thing)
 	if (!thing || src.stat)
 		return
 	if (istype(thing, /obj/item/grab))
@@ -2976,12 +3017,12 @@
 	if (src.juggling())
 		var/items = ""
 		var/count = 0
-		for (var/obj/O in src.juggling)
+		for (var/atom/movable/juggled in src.juggling)
 			count ++
 			if (length(src.juggling) > 1 && count == src.juggling.len)
-				items += " and [O]"
+				items += " and [juggled]"
 				continue
-			items += ", [O]"
+			items += ", [juggled]"
 		items = copytext(items, 3)
 		src.visible_message("<b>[src]</b> adds [thing] to the [items] [he_or_she(src)]'s already juggling!")
 	else
@@ -3005,6 +3046,17 @@
 		i.on_spin_emote(src)
 	src.update_body()
 	logTheThing(LOG_STATION, src, "starts juggling [thing].")
+
+/mob/living/carbon/human/relaymove(mob/user, direction, delay, running)
+	if ((user in src.juggling) && !ON_COOLDOWN(user, "resist_juggle", 1 SECOND))
+		boutput(user, SPAN_ALERT("You attempt to wriggle free from the unending juggling."))
+		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+		if (prob(15))
+			src.remove_juggle(user)
+			user.set_loc(src.loc)
+
+/mob/living/carbon/human/return_air()
+	return src.loc?.return_air()
 
 /mob/living/carbon/human/does_it_metabolize()
 	return 1
@@ -3535,3 +3587,34 @@
 /mob/living/carbon/human/choose_name(retries, what_you_are, default_name, force_instead)
 	. = ..()
 	src.on_realname_change()
+
+/mob/living/carbon/human/proc/head_explosion()
+	var/list/nearby_turfs = list()
+	for(var/turf/T in view(5, src))
+		nearby_turfs += T
+		var/obj/brain = src.organHolder.drop_organ("brain")
+		var/obj/l_eye = src.organHolder.drop_organ("left_eye")
+		var/obj/r_eye = src.organHolder.drop_organ("right_eye")
+		var/obj/head = src.organHolder.drop_organ("head")
+		brain?.throw_at(pick(nearby_turfs), pick(1,2), 10)
+		l_eye?.throw_at(pick(nearby_turfs), pick(1,2), 10)
+		r_eye?.throw_at(pick(nearby_turfs), pick(1,2), 10)
+		qdel(head)
+	take_bleeding_damage(src, null, 500, DAMAGE_STAB)
+	src.visible_message(SPAN_ALERT("<B>BOOM!</B> [src]'s head explodes."),\
+	SPAN_ALERT("<B>BOOM!</B>"),\
+	SPAN_ALERT("You hear someone's head explode."))
+
+/mob/living/carbon/human/proc/on_bandage_removal(mob/user, bandaged_part)
+	user.tri_message(src, SPAN_NOTICE("<b>[user]</b> removes [src == user ? "[his_or_her(src)]" : "[src]'s"] bandage."),\
+		SPAN_NOTICE("You remove [src == user ? "your" : "[src]'s"] bandage."),\
+		SPAN_NOTICE("[src == user ? "You remove" : "<b>[user]</b> removes"] your bandage."))
+	src.bandaged -= bandaged_part
+	src.update_body()
+
+/mob/living/carbon/human/proc/drag_onto_op_table(obj/machinery/optable/table)
+	src.setStatus("resting", INFINITE_STATUS)
+	src.force_laydown_standup()
+	src.hud.update_resting()
+	src.set_loc(get_turf(table))
+	table.victim = src

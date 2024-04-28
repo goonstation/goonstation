@@ -38,12 +38,12 @@
 					closet_check_spawn(new_item)
 
 		if (!islist(src.items2spawn) || !length(src.items2spawn))
-			logTheThing(LOG_DEBUG, src, "has an invalid items2spawn list")
-			return
+			var/area/area = get_area(src)
+			CRASH("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has an invalid rare_items2spawn list")
 		if (rare_chance)
 			if (!islist(src.rare_items2spawn) || !length(src.rare_items2spawn))
-				logTheThing(LOG_DEBUG, src, "has an invalid rare_items2spawn list")
-				return
+				var/area/area = get_area(src)
+				CRASH("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has an invalid rare_items2spawn list")
 		if (amt2spawn == 0)
 			amt2spawn = rand(min_amt2spawn, max_amt2spawn)
 		if (amt2spawn == 0) // If for whatever reason we still end up with 0...
@@ -55,15 +55,15 @@
 				if (rare_items2spawn)
 					item_list = rare_items2spawn
 				else
-					logTheThing(LOG_DEBUG, src, "has an invalid rare spawn list, [rare_items2spawn]")
-					DEBUG_MESSAGE("[src] has an invalid rare spawn list, [rare_items2spawn]")
+					var/area/area = get_area(src)
+					stack_trace("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has an invalid rare spawn list, [json_encode(rare_items2spawn)]")
 					continue
 			else
 				item_list = items2spawn
 			var/obj/new_item = pick(item_list)
 			if (!ispath(new_item))
-				logTheThing(LOG_DEBUG, src, "has a non-path item in its spawn list, [new_item]")
-				DEBUG_MESSAGE("[src] has a non-path item in its spawn list, [new_item]")
+				var/area/area = get_area(src)
+				stack_trace("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has a non-path item in its spawn list, [new_item]")
 				continue
 
 			closet_check_spawn(new_item)
@@ -82,7 +82,7 @@
 	max_amt2spawn = 1
 	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy/chocolate,
 	/obj/item/reagent_containers/food/snacks/candy/nougat,
-	/obj/item/reagent_containers/food/snacks/candy/butterscotch,
+	/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch,
 	/obj/item/reagent_containers/food/snacks/sandwich/meat_h,
 	/obj/item/reagent_containers/food/snacks/sandwich/meat_m,
 	/obj/item/reagent_containers/food/snacks/sandwich/meat_s,
@@ -1691,6 +1691,75 @@
 		min_amt2spawn = 5
 		max_amt2spawn = 7
 
+/obj/random_item_spawner/formalclothes
+	name = "formal clothing spawner"
+	icon_state = "rand_gimmick"
+	min_amt2spawn = 5
+	max_amt2spawn = 10
+	items2spawn = list(/obj/item/clothing/under/gimmick/red_wcoat,
+						/obj/item/clothing/under/gimmick/black_wcoat,
+						/obj/item/clothing/under/gimmick/blue_wcoat,
+						/obj/item/clothing/under/rank/bartender/tuxedo,
+						/obj/item/clothing/under/redtie,
+						/obj/item/clothing/under/shirt_pants_w/blacktie,
+						/obj/item/clothing/under/shirt_pants_w/bluetie,
+						/obj/item/clothing/under/shirt_pants_w/redtie,
+						/obj/item/clothing/under/shirt_pants_w,
+						/obj/item/clothing/under/shirt_pants_br/blacktie,
+						/obj/item/clothing/under/shirt_pants_br/bluetie,
+						/obj/item/clothing/under/shirt_pants_br/redtie,
+						/obj/item/clothing/under/shirt_pants_br,
+						/obj/item/clothing/under/shirt_pants_b/blacktie,
+						/obj/item/clothing/under/shirt_pants_b/redtie,
+						/obj/item/clothing/under/shirt_pants_b/bluetie,
+						/obj/item/clothing/under/shirt_pants_b,
+						/obj/item/clothing/under/gimmick/butler,
+						/obj/item/clothing/under/misc/dress,
+						/obj/item/clothing/under/misc/dress/red,
+						/obj/item/clothing/suit/dressb,
+						/obj/item/clothing/under/misc/fancy_vest)
+
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	four
+		amt2spawn = 4
+
+	five
+		amt2spawn = 5
+
+	six
+		amt2spawn = 6
+
+	seven
+		amt2spawn = 7
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7
+
 /obj/random_item_spawner/furniture_parts
 	name = "furniture parts spawner"
 	icon_state = "rand_furniture"
@@ -1769,12 +1838,14 @@
 		min_amt2spawn = 5
 		max_amt2spawn = 7
 
-/obj/random_item_spawner/kineticgun // used in the 4th of july admin button.
+/obj/random_item_spawner/kineticgun //base type. split old behavior to fullrandom
 	name = "firearm spawner"
 	icon_state = "rand_gun"
 	min_amt2spawn = 1 // doing it this way to preserve current use of spawner while allowing random amounts
 	max_amt2spawn = 1
 	items2spawn = null
+
+/obj/random_item_spawner/kineticgun/fullrandom // used in the 4th of july admin button.
 	New()
 		items2spawn = concrete_typesof(/obj/item/gun/kinetic) - /obj/item/gun/kinetic/meowitzer //No, just no
 		. = ..()
@@ -1805,7 +1876,11 @@
 	/obj/item/gun/kinetic/sawnoff,
 	/obj/item/gun/kinetic/single_action/colt_saa,
 	/obj/item/gun/kinetic/single_action/flintlock,
-	/obj/item/gun/kinetic/zipgun)
+	/obj/item/gun/kinetic/zipgun,
+	/obj/item/gun/kinetic/makarov,
+	/obj/item/gun/kinetic/single_action/mts_255,
+	/obj/item/gun/kinetic/survival_rifle,
+	/obj/item/gun/kinetic/survival_rifle)
 
 	one
 		amt2spawn = 1
@@ -1977,13 +2052,13 @@
 		/obj/item/reagent_containers/food/snacks/plant/peas/ammonia,
 		/obj/item/reagent_containers/food/snacks/plant/potato,
 		/obj/item/reagent_containers/food/snacks/plant/pumpkin,
-		/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte,
+		/obj/item/reagent_containers/food/snacks/plant/pumpkin/pumpkinlatte,
 		/obj/item/reagent_containers/food/snacks/plant/garlic,
 		/obj/item/reagent_containers/food/snacks/plant/eggplant,
 		/obj/item/reagent_containers/food/snacks/plant/turmeric,
 		/obj/item/reagent_containers/food/snacks/plant/mustard,
 		/obj/item/reagent_containers/food/snacks/plant/bamboo,
-		/obj/item/reagent_containers/food/snacks/plant/soylent
+		/obj/item/reagent_containers/food/snacks/plant/soy/soylent
 	)
 
 	New()
@@ -2001,7 +2076,7 @@
 		// Exclude toxic / dangerous / fruits or subtypes
 		items2spawn -= list(/obj/item/reagent_containers/food/snacks/plant/pear/sickly,
 			/obj/item/reagent_containers/food/snacks/plant/pumpkin/summon,
-			/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte,
+			/obj/item/reagent_containers/food/snacks/plant/pumpkin/pumpkinlatte,
 			/obj/item/reagent_containers/food/snacks/plant/slurryfruit,
 			/obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega,
 			/obj/item/reagent_containers/food/snacks/plant/purplegoop,

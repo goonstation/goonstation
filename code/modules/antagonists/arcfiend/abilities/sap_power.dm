@@ -63,7 +63,6 @@
 /datum/action/bar/private/icon/sap_power
 	duration = 1 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
-	id = "sap_power"
 	icon = 'icons/mob/arcfiend.dmi'
 	icon_state = "sap_icon"
 

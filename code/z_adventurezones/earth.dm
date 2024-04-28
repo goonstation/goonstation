@@ -82,6 +82,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	beejail
 		ckey = ""
 		name = "Bee Jail"
+	bilo
+		ckey = "bilo216"
+		name = "Office of Bilo"
 	bubs
 		ckey = "insanoblan"
 		name = "Office of bubs"
@@ -394,8 +397,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	name = "Cathara"
 	desc = "...is this really her?? Do they let cats be admins??"
 	icon_state = "cat1"
-	randomize_name = FALSE
-	randomize_look = FALSE
+	random_name = FALSE
+	random_look = FALSE
+	player_can_spawn_with_pet = FALSE
 
 	New()
 		..()

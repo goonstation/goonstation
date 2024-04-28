@@ -333,7 +333,7 @@
 		if(src.exploding) return
 		src.exploding = 1
 		src.on = 0
-		src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"), 1)
+		src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"))
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 
 		elecflash(src, radius=1, power=3, exclude_center = 0)
@@ -367,7 +367,6 @@
 /datum/action/bar/icon/cleanbotclean
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "cleanbot_clean"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
 	var/obj/machinery/bot/cleanbot/master

@@ -180,6 +180,8 @@ dmm_suite
 				for(var/atomModel in splittext(models, comma_delim))
 					var bracketPos = findtext(atomModel, "{")
 					var atomPath = text2path(copytext(atomModel, 1, bracketPos))
+					if(!atomPath)
+						stack_trace("Attempted to load invalid type [copytext(atomModel, 1, bracketPos)]!")
 					var/list/attributes
 					if(bracketPos)
 						attributes = new()
@@ -283,10 +285,10 @@ dmm_suite
 						key_value_regex.Find(key_str)
 						key_str = key_value_regex.group[1]
 						val_str = key_value_regex.group[2]
-						var/val = isnull(val_str) ? null : loadAttribute(trim(val_str), strings)
-						.[loadAttribute(trim(key_str), strings)] = val
+						var/val = isnull(val_str) ? null : loadAttribute(trimtext(val_str), strings)
+						.[loadAttribute(trimtext(key_str), strings)] = val
 					else
-						. += loadAttribute(trim(key_str), strings)
+						. += loadAttribute(trimtext(key_str), strings)
 
 
 //-- Preloading ----------------------------------------------------------------

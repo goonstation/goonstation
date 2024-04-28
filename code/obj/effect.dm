@@ -3,8 +3,7 @@
 	mouse_opacity = 0
 	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
 
-/obj/effect/distort
-	icon = 'icons/effects/distort.dmi'
+/obj/effect/rt
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR
 	vis_flags = VIS_INHERIT_DIR
 

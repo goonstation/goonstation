@@ -179,7 +179,7 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 /datum/component/holdertargeting/windup/proc/do_windup(mob/living/L)
 	set waitfor = 0
 	var/obj/item/gun/G = parent
-	winder = new/datum/action/bar/icon/windup/infinite(G, duration, src)
+	winder = new/datum/action/bar/icon/windup/infinite(G, duration)
 	actions.start(winder, L)
 
 /datum/component/holdertargeting/windup/proc/end_shootloop(mob/living/user, object, location, control, params)
@@ -245,7 +245,6 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 /datum/action/bar/icon/windup
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "guncharge"
 	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/item/gun/ownerGun
@@ -257,7 +256,7 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 	resumable = FALSE
 
 
-	New(_gun,  _time, _comp, _do_point_blank = FALSE)
+	New(_gun,  _time, _do_point_blank = FALSE)
 		ownerGun = _gun
 		icon = ownerGun.icon
 		icon_state = ownerGun.icon_state

@@ -21,6 +21,8 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 	var/BruteDamageMax = 0
 	/// How long it takes for a thing to fall into the pit. 0 is instant, but usually you'd have a couple deciseconds where something can be flung across. Should use time defines.
 	var/FallTime = 0.3 SECONDS
+	/// Whether anchored == ANCHORED atoms are supposed to fall down or not. Currently defaults to true because minisubs and such.
+	var/allow_anchored = TRUE
 
 	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS)
 		. = ..()
@@ -46,7 +48,7 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 			return
 		if (HAS_FLAG(AM.event_handler_flags, IMMUNE_TRENCH_WARP))
 			return
-		if (AM.anchored || locate(/obj/lattice) in src.parent)
+		if (AM.anchored && !allow_anchored || AM.anchored >= ANCHORED_ALWAYS || (locate(/obj/lattice) in src.parent))
 			return
 		if (ismob(AM))
 			var/mob/M = AM
@@ -58,7 +60,8 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 		// if the fall has coyote time, then delay it
 		if (src.FallTime)
 			SPAWN(src.FallTime)
-				AM.loc.GetComponent(/datum/component/pitfall)?.try_fall(signalsender, AM)
+				if (!QDELETED(AM))
+					AM.loc.GetComponent(/datum/component/pitfall)?.try_fall(signalsender, AM)
 		else
 			src.try_fall(signalsender, AM)
 
@@ -79,7 +82,7 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 	/// a proc that makes a movable atom 'A' fall from 'src.typecasted_parent()' to 'T' with a maximum of 'brutedamage' brute damage
 	proc/fall_to(var/turf/T, var/atom/movable/A, var/brutedamage = 50)
 		SHOULD_NOT_OVERRIDE(TRUE)
-		if(istype(A, /obj/overlay) || A.anchored == 2)
+		if(istype(A, /obj/overlay) || A.anchored >= ANCHORED_ALWAYS)
 			return
 		#ifdef CHECK_MORE_RUNTIMES
 		if(current_state <= GAME_STATE_WORLD_NEW)

@@ -82,7 +82,7 @@
 	var/minimum_temperature_difference = 300
 	/// How well we share temperature.
 	var/thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-	/// Pressure needed before the pipe gets a chance to burst.
+	/// Pressure needed before the pipe gets a chance to burst, see proc/effective_fatigue_pressure for the value that takes into account material stats too
 	var/fatigue_pressure = 150*ONE_ATMOSPHERE
 	/// Can this pipe rupture?
 	var/can_rupture = FALSE // Currently only used for red pipes (insulated).
@@ -94,6 +94,9 @@
 
 	level = UNDERFLOOR
 	alpha = 128
+
+/obj/machinery/atmospherics/pipe/simple/proc/effective_fatigue_pressure()
+	return src.fatigue_pressure * ((src.material?.getProperty("density") ** 2) || 1)
 
 /// Returns list of coordinates to start and stop welding animation.
 /obj/machinery/atmospherics/pipe/simple/proc/get_welding_positions()
@@ -155,10 +158,10 @@
 		src.icon_state = "disco"
 		src.desc = "A one meter section of regular pipe has been placed but needs to be welded into place."
 		// create valid edges back to us and rebuild from here out to merge pipeline(s)
-		if(!istype(node1, /obj/machinery/atmospherics/pipe/manifold))
+		if(!istype(node1, /obj/machinery/atmospherics/pipe/manifold) && !istype(node1, /obj/machinery/atmospherics/pipe/quadway)) //temporary til i refactor pipe init a bit
 			node1.dir = node1.initialize_directions
 		node1.initialize()
-		if(!istype(node2, /obj/machinery/atmospherics/pipe/manifold))
+		if(!istype(node2, /obj/machinery/atmospherics/pipe/manifold) && !istype(node2, /obj/machinery/atmospherics/pipe/quadway))
 			node2.dir = node2.initialize_directions
 		node2.initialize()
 		src.parent.build_pipeline(src)
@@ -177,7 +180,7 @@
 		return
 
 	if(pressure && src.fatigue_pressure)
-		var/iterations = clamp(log(pressure/src.fatigue_pressure)/log(2),0,20)
+		var/iterations = clamp(log(pressure/effective_fatigue_pressure())/log(2),0,20)
 		for(var/i = iterations; i>0 && i>=ruptured; i--)
 			if(prob(5/i))
 				new_rupture = i + 1
@@ -276,7 +279,8 @@
 
 	var/datum/gas_mixture/gas = return_air()
 	var/pressure = MIXTURE_PRESSURE(gas)
-	if(pressure > fatigue_pressure) check_pressure(pressure)
+	if(pressure > src.effective_fatigue_pressure())
+		src.check_pressure(pressure)
 
 
 
@@ -288,8 +292,8 @@
 
 	var/pressure_difference = pressure - MIXTURE_PRESSURE(environment)
 
-	if(can_rupture && !GET_COOLDOWN(parent, "pipeline_rupture_protection") && !GET_COOLDOWN(src, "rupture_protection") && pressure_difference > fatigue_pressure)
-		var/rupture_prob = (pressure_difference - fatigue_pressure)/50000
+	if(can_rupture && !GET_COOLDOWN(parent, "pipeline_rupture_protection") && !GET_COOLDOWN(src, "rupture_protection") && pressure_difference > src.effective_fatigue_pressure())
+		var/rupture_prob = (pressure_difference - src.effective_fatigue_pressure())/50000
 		if(prob(rupture_prob))
 			rupture(pressure_difference)
 
@@ -309,6 +313,7 @@
 			if (prob(50))
 				rupture()
 
+#define SHEETS_TO_REINFORCE 5
 /obj/machinery/atmospherics/pipe/simple/attackby(var/obj/item/W, var/mob/user)
 	if(isweldingtool(W))
 		if(!ruptured)
@@ -336,6 +341,40 @@
 		list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
 		actions.start(action_bar, user)
 
+	else if (istype(W, /obj/item/sheet))
+		if (actions.hasAction(user, /datum/action/bar/private/welding))
+			return
+		if (src.destroyed || src.ruptured)
+			boutput(user, SPAN_ALERT("You should repair [src] first."))
+			return
+		if (!(W.material?.getMaterialFlags() & MATERIAL_METAL))
+			boutput(user, SPAN_ALERT("You can't weld that!"))
+			return
+		if (W.material?.isSameMaterial(src.material))
+			boutput(user, SPAN_ALERT("[src] is already reinforced with [src.material.getName()]!"))
+			return
+		var/obj/item/weldingtool/welder = user.find_tool_in_hand(TOOL_WELDING)
+		if (W.amount < SHEETS_TO_REINFORCE)
+			boutput(user, SPAN_ALERT("You need at least 10 sheets to reinforce [src]."))
+		if (!welder || !welder.welding)
+			boutput(user, SPAN_ALERT("You need something to weld [W] to [src] with!"))
+			return
+		if (!welder.try_weld(user, 0.8, noisy=2))
+			return
+		var/positions = src.get_welding_positions()
+		actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, PROC_REF(weld_sheet), \
+				list(W, user), SPAN_NOTICE("[user] welds [W] to [src]"), positions[1], positions[2]),user)
+
+/obj/machinery/atmospherics/pipe/simple/proc/weld_sheet(obj/item/sheet/sheet, mob/user)
+	if (sheet.amount < SHEETS_TO_REINFORCE)
+		return
+	src.setMaterial(sheet.material)
+	sheet.change_stack_amount(-SHEETS_TO_REINFORCE)
+	if (!("reinforced" in src.name_prefixes))
+		src.name_prefix("reinforced") // so it says "bohrum reinforced pipe"
+	src.UpdateName()
+
+#undef SHEETS_TO_REINFORCE
 
 /obj/machinery/atmospherics/pipe/simple/disposing()
 	node1?.disconnect(src)
@@ -524,13 +563,7 @@
 	fatigue_pressure = INFINITY
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/update_icon()
-	if(node1 && node2)
-		icon_state = "intact"
-
-		var/node1_direction = get_dir(src, node1)
-		var/node2_direction = get_dir(src, node2)
-
-		icon_state = "[node1_direction|node2_direction]"
+	icon_state = (node1 && node2) ? "intact" : "exposed"
 
 
 /obj/machinery/atmospherics/pipe/vertical_pipe
@@ -589,7 +622,11 @@
 
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "manifold-map"
+#else
 	icon_state = "manifold"
+#endif
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes"
 	level = UNDERFLOOR
@@ -605,10 +642,12 @@
 	..()
 	initialize_directions = (NORTH|SOUTH|EAST|WEST) ^ dir
 
-/obj/machinery/atmospherics/pipe/manifold/hide(var/i)
-	if(level == UNDERFLOOR && istype(loc, /turf/simulated))
-		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
-	UpdateIcon()
+/obj/machinery/atmospherics/pipe/manifold/hide(var/intact)
+	var/hide_pipe = CHECKHIDEPIPE(src)
+	invisibility = hide_pipe ? INVIS_ALWAYS : INVIS_NONE
+	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 90), "short", issimplepipe(src.node1) ?  src.node1.color : null, hide_pipe)
+	SET_PIPE_UNDERLAY(src.node2, turn(src.dir, 180), "short", issimplepipe(src.node2) ?  src.node2.color : null, hide_pipe)
+	SET_PIPE_UNDERLAY(src.node3, turn(src.dir, -90), "short", issimplepipe(src.node3) ?  src.node3.color : null, hide_pipe)
 
 /obj/machinery/atmospherics/pipe/manifold/pipeline_expansion()
 	return list(node1, node2, node3)
@@ -616,13 +655,7 @@
 /obj/machinery/atmospherics/pipe/manifold/process()
 	..()
 
-	if(!node1)
-		parent.mingle_with_turf(loc, 70)
-
-	else if(!node2)
-		parent.mingle_with_turf(loc, 70)
-
-	else if(!node3)
+	if(!(src.node1 && src.node2 && src.node3))
 		parent.mingle_with_turf(loc, 70)
 
 /obj/machinery/atmospherics/pipe/manifold/disposing()
@@ -659,58 +692,136 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
-	if(node1 && node2&& node3)
-		icon_state = "manifold"
-		alpha = invisibility ? 128 : 255
-
-	else
-		var/connected = 0
-		var/unconnected = 0
-		var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
-
-		if(node1)
-			connected |= get_dir(src, node1)
-		if(node2)
-			connected |= get_dir(src, node2)
-		if(node3)
-			connected |= get_dir(src, node3)
-
-		unconnected = (~connected)&(connect_directions)
-
-		icon_state = "manifold_[connected]_[unconnected]"
+	var/turf/T = get_turf(src)
+	src.hide(T.intact)
+	alpha = invisibility ? 128 : 255
 
 /obj/machinery/atmospherics/pipe/manifold/initialize()
-	var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
+	var/node1_connect = turn(src.dir, 90)
+	var/node2_connect = turn(src.dir, 180)
+	var/node3_connect = turn(src.dir, -90)
 
-	for(var/direction in cardinal)
-		if(direction&connect_directions)
-			for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-				if(target.initialize_directions & get_dir(target,src))
-					node1 = target
-					break
-
-			connect_directions &= ~direction
+	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
+		if(target.initialize_directions & get_dir(target,src))
+			src.node1 = target
 			break
 
-	for(var/direction in cardinal)
-		if(direction&connect_directions)
-			for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-				if(target.initialize_directions & get_dir(target,src))
-					node2 = target
-					break
-
-			connect_directions &= ~direction
+	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
+		if(target.initialize_directions & get_dir(target,src))
+			src.node2 = target
 			break
 
-	for(var/direction in cardinal)
-		if(direction&connect_directions)
-			for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-				if(target.initialize_directions & get_dir(target,src))
-					node3 = target
-					break
-
-			connect_directions &= ~direction
+	for(var/obj/machinery/atmospherics/target in get_step(src,node3_connect))
+		if(target.initialize_directions & get_dir(target,src))
+			src.node3 = target
 			break
 
 	var/turf/T = src.loc			// hide if turf is not intact
+	hide(T.intact)
+
+
+/obj/machinery/atmospherics/pipe/quadway
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "4way-map"
+#else
+	icon_state = "4way"
+#endif
+	name = "pipe 4-way manifold"
+	desc = "A manifold composed of regular pipes"
+	level = UNDERFLOOR
+	volume = 140
+	var/obj/machinery/atmospherics/node1
+	var/obj/machinery/atmospherics/node2
+	var/obj/machinery/atmospherics/node3
+	var/obj/machinery/atmospherics/node4
+
+/obj/machinery/atmospherics/pipe/quadway/overfloor
+	level = OVERFLOOR
+
+/obj/machinery/atmospherics/pipe/quadway/New()
+	..()
+	initialize_directions = NORTH|SOUTH|EAST|WEST
+
+/obj/machinery/atmospherics/pipe/quadway/hide(var/intact)
+	var/hide_pipe = CHECKHIDEPIPE(src)
+	invisibility = hide_pipe ? INVIS_ALWAYS : INVIS_NONE
+	SET_PIPE_UNDERLAY(src.node1, SOUTH, "short", issimplepipe(src.node1) ?  src.node1.color : null, hide_pipe)
+	SET_PIPE_UNDERLAY(src.node2, WEST, "short", issimplepipe(src.node2) ?  src.node2.color : null, hide_pipe)
+	SET_PIPE_UNDERLAY(src.node3, NORTH, "short", issimplepipe(src.node3) ?  src.node3.color : null, hide_pipe)
+	SET_PIPE_UNDERLAY(src.node4, EAST, "short", issimplepipe(src.node4) ?  src.node4.color : null, hide_pipe)
+
+/obj/machinery/atmospherics/pipe/quadway/pipeline_expansion()
+	return list(src.node1, src.node2, src.node3, src.node4)
+
+/obj/machinery/atmospherics/pipe/quadway/process()
+	..()
+
+	if(!(src.node1 && src.node2 && src.node3 && src.node4))
+		src.parent.mingle_with_turf(loc, 70)
+
+/obj/machinery/atmospherics/pipe/quadway/disposing()
+	src.node1?.disconnect(src)
+	src.node2?.disconnect(src)
+	src.node3?.disconnect(src)
+	src.node4?.disconnect(src)
+	src.parent = null
+	..()
+
+/obj/machinery/atmospherics/pipe/quadway/disconnect(obj/machinery/atmospherics/reference)
+	if(reference == node1)
+		if(istype(node1, /obj/machinery/atmospherics/pipe))
+			src.parent?.dispose()
+			src.parent = null
+		src.node1 = null
+
+	else if(reference == node2)
+		if(istype(node2, /obj/machinery/atmospherics/pipe))
+			src.parent?.dispose()
+			src.parent = null
+		src.node2 = null
+
+	else if(reference == node3)
+		if(istype(node3, /obj/machinery/atmospherics/pipe))
+			src.parent?.dispose()
+			src.parent = null
+		src.node3 = null
+
+	else if(reference == src.node4)
+		if(istype(src.node4, /obj/machinery/atmospherics/pipe))
+			src.parent?.dispose()
+			src.parent = null
+		src.node4 = null
+
+	UpdateIcon()
+
+	..()
+
+/obj/machinery/atmospherics/pipe/quadway/update_icon()
+	var/turf/T = get_turf(src)
+	src.hide(T.intact)
+
+/obj/machinery/atmospherics/pipe/quadway/initialize()
+
+	for(var/obj/machinery/atmospherics/target in get_step(src, SOUTH))
+		if(target.initialize_directions & get_dir(target,src))
+			src.node1 = target
+			break
+
+	for(var/obj/machinery/atmospherics/target in get_step(src, WEST))
+		if(target.initialize_directions & get_dir(target,src))
+			src.node2 = target
+			break
+
+	for(var/obj/machinery/atmospherics/target in get_step(src, NORTH))
+		if(target.initialize_directions & get_dir(target,src))
+			src.node3 = target
+			break
+
+	for(var/obj/machinery/atmospherics/target in get_step(src, EAST))
+		if(target.initialize_directions & get_dir(target,src))
+			src.node4 = target
+			break
+
+	var/turf/T = src.loc // hide if turf is not intact
 	hide(T.intact)

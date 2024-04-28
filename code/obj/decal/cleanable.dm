@@ -19,7 +19,7 @@ proc/make_cleanable(var/type,var/loc)
 	var/sample_amt = 10
 	var/sample_reagent = "water"
 	var/sample_verb = "scoop"
-	var/slippery = 0 // set it to the probability that you want people to slip in the stuff, ie urine's slippery is 80 so you have an 80% chance to slip on it
+	var/slippery = 0 // set it to the probability that you want people to slip in the stuff, ie if slippery is 80 so you have an 80% chance to slip on it
 	var/slipped_in_blood = 0 // self explanitory hopefully
 	var/can_dry = 0
 	var/dry = 0 // if it's slippery to start, is it dry now?
@@ -407,8 +407,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 /obj/decal/cleanable/blood/dynamic
 	desc = "It's blood."
-	icon_state = "blank" // if you make any more giant white cumblobs all over my nice blood decals
-	random_icon_states = null // I swear to god I will fucking end you
+	icon_state = "blank"
+	random_icon_states = null
 	slippery = 0 // increases as blood volume does
 	color = null
 	var/last_volume = 1
@@ -880,62 +880,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			return
 		else
 			return ..()
-
-/obj/decal/cleanable/urine
-	name = "urine"
-	desc = "It's yellow, and it smells."
-	icon = 'icons/effects/urine.dmi'
-	icon_state = "floor1"
-	random_icon_states = list("floor1", "floor2", "floor3")
-	var/thrice_drunk = 0
-	can_dry = 1
-	slippery = 80
-	can_sample = 1
-	sample_amt = 4
-	sample_reagent = "urine"
-	stain = "piss-soaked"
-
-	Crossed(atom/movable/O)
-		if (istype(O, /obj/item/clothing/under/towel))
-			var/obj/item/clothing/under/towel/T = O
-			T.dry_turf(get_turf(src))
-			return
-		else
-			return ..()
-
-	Sample(var/obj/item/W as obj, var/mob/user as mob)
-		if (!src.can_sample)
-			return 0
-
-		if (W.is_open_container() && W.reagents)
-			if (W.reagents.total_volume >= W.reagents.maximum_volume - 2)
-				user.show_text("[W] is too full!", "red")
-				return
-
-			else
-				user.visible_message(SPAN_NOTICE("<b>[user]</b> is splashing the urine puddle into \the [W]. How singular."),\
-				SPAN_NOTICE("You splash a little urine into \the [W]."))
-
-				switch (thrice_drunk)
-					if (0)
-						W.reagents.add_reagent("urine", 1)
-					if (1)
-						W.reagents.add_reagent("urine", 1)
-						W.reagents.add_reagent("toeoffrog", 1)
-					if (2)
-						W.reagents.add_reagent("urine", 1)
-						W.reagents.add_reagent("woolofbat", 1)
-					if (3)
-						W.reagents.add_reagent("urine", 1)
-						W.reagents.add_reagent("tongueofdog", 1)
-					if (4)
-						W.reagents.add_reagent("triplepiss",1)
-
-				if (prob(25))
-					qdel(src)
-
-				W.reagents.handle_reactions()
-				return 1
 
 /obj/decal/cleanable/vomit
 	name = "pool of vomit"
@@ -1581,7 +1525,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			var/turf/T = get_turf(src)
 			while (burn_time > 0)
 				if (loc == T && !disposed && on_fire)
-					fireflash_melting(T, 0, T0C + 3100, 0, chemfire = CHEM_FIRE_WHITE)
+					fireflash(T, 0, T0C + 3100, 0, chemfire = CHEM_FIRE_WHITE)
 					if (burn_time <= 2)
 						for (var/D in cardinal)
 							var/turf/Q = get_step(T, D)
@@ -1625,7 +1569,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				on_fire = null
 				burn_time = initial(burn_time)
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		if (exposed_temperature >= T0C + 473)
 			ignite()
 		..()

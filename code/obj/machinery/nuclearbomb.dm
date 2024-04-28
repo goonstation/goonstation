@@ -448,7 +448,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 /datum/action/bar/icon/unanchorNuke
 	duration = 55
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "unanchornuke"
 	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/machinery/nuclearbomb/the_bomb = null
@@ -554,7 +553,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		var/can_user_recognize = !extremely_convincing && \
 			( \
 				user?.mind?.get_antagonist(ROLE_NUKEOP) || user?.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER) || \
-				dist <= src.recognizable_range || user?.faction == FACTION_SYNDICATE \
+				dist <= src.recognizable_range || (FACTION_SYNDICATE in user?.faction) \
 			)
 		if(isnull(src.our_bomb?.deref()) || can_user_recognize)
 			. = "<br>An extremely powerful balloon capable of deceiving the whole station."

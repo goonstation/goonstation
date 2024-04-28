@@ -23,7 +23,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	health_brute = 10
 	health_burn = 10
 
-	faction = FACTION_NEUTRAL
+	faction = list(FACTION_NEUTRAL)
 	flags = TABLEPASS
 	fits_under_table = 1
 	base_move_delay = 1.5
@@ -311,7 +311,8 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 
 	Move(NewLoc, direct)
 		. = ..()
-		animate(src, time=5 SECONDS, pixel_x=rand(-4,4), pixel_y=rand(-8,8))
+		if (!ON_COOLDOWN(src, "move_bumble", 5 SECONDS))
+			animate(src, time=5 SECONDS, pixel_x=rand(-4,4), pixel_y=rand(-8,8))
 
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W, /obj/item/reagent_containers/glass/jar) || istype(W, /obj/item/reagent_containers/glass/beaker/large))

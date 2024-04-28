@@ -71,7 +71,6 @@
 	/// how long the fishing action loop will take in seconds, set on onStart(), varies by 4 seconds in either direction.
 	duration = 1 MINUTE
 	/// id for fishing action
-	id = "fishing_for_fishies"
 
 	New(var/user, var/rod, var/fishing_spot, var/target)
 		..()
@@ -247,14 +246,64 @@ TYPEINFO(/obj/item/fish_portal)
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "fishing_pool"
 
-	basic
-		name = "basic pool"
+	ex_act(severity)
+		// dynamite fishing! make the research pool throw out fish depending on how big the severity of the explosion was
+		var/dynamite_fishing_cooldown = 1 SECOND //! the cooldown of dynamite fishing.
+		// First, we need to get our fishing spot datum
+		var/datum/fishing_spot/fishing_spot = null
+		var/fishing_spot_type = src.type
+		// now we search for the corresponding defined fishing spot up the chain of parents
+		while (fishing_spot_type != null)
+			fishing_spot = global.fishing_spots[fishing_spot_type]
+			if (fishing_spot != null)
+				break
+			fishing_spot_type = type2parent(fishing_spot_type)
+		// now we define our fishing sucess and damage on the fish tank based on the severity
+		// defined values are for severity 3
+		var/explosion_damage = -5 //! how much damage each explosion does
+		var/fish_chance = 20 //! how much fish per roll jumps out of the pond
+		var/fish_rolls = 2 //! how often the fish chance is rolled
+		var/dynamite_fishing_sucessfull = FALSE //! shows if the explosion sucessfully "fished" some fish
+		switch(severity)
+			if(1)
+				//You blew up the whole tank, doofus!
+				explosion_damage = -100
+				fish_chance = 0
+				fish_rolls = 0
+			if(2)
+				explosion_damage = -20
+				fish_chance = 70
+				fish_rolls = 5
+		if (fishing_spot && fish_rolls && !ON_COOLDOWN(src, "dynamite fishing", dynamite_fishing_cooldown))
+			var/turf/target_turf = get_turf(src)
+			// now, if we don't blow it up extremly, we can roll for fish
+			for (var/fish_try in 1 to fish_rolls)
+				if (prob(fish_chance))
+					var/atom/movable/fishing_result = fishing_spot.generate_fish(null, null, src)
+					if(fishing_result)
+						fishing_result.set_loc(target_turf)
+						var/target_point = get_turf(pick(orange(4, src)))
+						fishing_result.throw_at(target_point, rand(0, 10), rand(3, 9))
+						dynamite_fishing_sucessfull = TRUE
+			if (dynamite_fishing_sucessfull)
+				src.visible_message("<b class='alert'>Fishes jump out of [src]! [pick("Holy shit!", "Holy fuck!", "What the hell!", "What the fuck!")]</b>")
+				// lets create a neat water spread effect
+				var/datum/effects/system/steam_spread/splash = new /datum/effects/system/steam_spread
+				splash.set_up(6, 0, get_turf(src), color="#382ec9", plane=PLANE_NOSHADOW_ABOVE)
+				splash.attach(src)
+				splash.start()
+		//Now we damage the pond. No infinite dynamite fishing
+		src.material_trigger_on_explosion(severity)
+		src.changeHealth(explosion_damage)
 
-	upgraded
-		name = "upgraded pool"
+/obj/fishing_pool/basic
+	name = "basic pool"
 
-	master
-		name = "master pool"
+/obj/fishing_pool/upgraded
+	name = "upgraded pool"
+
+/obj/fishing_pool/master
+	name = "master pool"
 
 /obj/fishing_pool/portable
 	anchored = 0
@@ -333,7 +382,7 @@ TYPEINFO(/obj/item/fish_portal)
 		playsound(src.loc, 'sound/effects/fish_processed_alt.ogg', 100, 1)
 
 	attack_ai(var/mob/user as mob)
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	attackby(obj/item/W, mob/user)
 		if (src.working)
@@ -379,24 +428,24 @@ TYPEINFO(/obj/item/fish_portal)
 			return ..()
 
 /obj/item/storage/fish_box
-	name = 	"Portable aquarium"
+	name = 	"portable aquarium"
 	desc = "A temporary solution for transporting fish."
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	icon_state = "aquarium"
 	item_state = "aquarium"
 	slots = 6
-	can_hold = 	list(/obj/item/reagent_containers/food/fish)
+	can_hold = list(/obj/item/reagent_containers/food/fish)
 
 /obj/item/storage/fish_box/small
-	name = 	"Small Portable aquarium"
+	name = 	"small portable aquarium"
 	desc = "A smaller, temporary solution for transporting fish."
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	icon_state = "aquarium"
 	item_state = "aquarium"
 	slots = 3
-	can_hold = 	list(/obj/item/reagent_containers/food/fish)
+	can_hold = list(/obj/item/reagent_containers/food/fish)
 
 TYPEINFO(/obj/item/syndie_fishing_rod)
 	mats = list("MET-3"=15, "WOOD"=5, "POW-2"=5, "CON-2"=5)
@@ -495,7 +544,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 		if (!ON_COOLDOWN(user, "syndie_fishing_delay", src.usage_cooldown))
 			if (src.lure.owner && isliving(src.lure.owner))
 				logTheThing(LOG_COMBAT, user, "at [log_loc(src)] reels in a Syndicate Fishing Rod hooked in [src.lure.owner]")
-				if (!actions.hasAction(user,"fishing_for_fools"))
+				if (!actions.hasAction(user, /datum/action/bar/syndie_fishing))
 					actions.start(new /datum/action/bar/syndie_fishing(user, src.lure.owner, src, src.lure), user)
 				if (!ON_COOLDOWN(user, "syndie_fishing_yank", src.yank_cooldown))
 					src.lure.owner.throw_at(target, yank_range, yank_range / 4)
@@ -702,7 +751,6 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 	/// how long a step of reeling takes, set onStart
 	duration = 0
 	/// id for fishing action
-	id = "fishing_for_fools"
 
 	New(var/user, var/target, var/rod, var/lure)
 		..()

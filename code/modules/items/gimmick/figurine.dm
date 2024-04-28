@@ -119,7 +119,7 @@
 		if (!ishuman(user))
 			return
 		var/message = input("What should [src] say?")
-		message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
 		if (!message || BOUNDS_DIST(src, user) > 0)
 			return
 		logTheThing(LOG_SAY, user, "makes [src] say,  \"[message]\"")
@@ -177,7 +177,7 @@ var/list/figure_high_rarity = list(\
 /datum/figure_info/boxer,
 /datum/figure_info/lawyer,
 /datum/figure_info/barber,
-/datum/figure_info/mailman,
+/datum/figure_info/mailcourier,
 /datum/figure_info/tourist,
 /datum/figure_info/vice,
 /datum/figure_info/clown,
@@ -268,8 +268,8 @@ var/list/figure_patreon_rarity = concrete_typesof(/datum/figure_info/patreon)
 		name = "barber"
 		icon_state = "barber"
 
-	mailman
-		name = "mailman"
+	mailcourier
+		name = "mail courier"
 		icon_state = "mailman"
 
 	atmos
@@ -986,8 +986,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "bowlofnuts"
 
 	joeled
-		name = "\improper Lawrence Crowley"
-		icon_state = "lawrencecrowley"
+		name = "\improper Tank Transfer"
+		icon_state = "tanktransfer"
 		ckey = "joeled"
 
 	firekestrel
@@ -999,6 +999,36 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Jelly Fish"
 		icon_state = "jellyfish"
 		ckey = "lyy"
+
+	avanth
+		name = "\improper Sally MacCaa"
+		icon_state = "sallymaccaa"
+		ckey = "avanth"
+
+	rukert
+		name = "\improper Rupert Crimehanson"
+		icon_state = "rupertcrimehanson"
+		ckey = "rukert"
+
+	kirdy2
+		name = "\improper Old Longbert"
+		icon_state = "oldlongbert"
+		ckey = "kirdy2"
+
+	O514
+		name = "\improper Emma Nureni"
+		icon_state = "emmanureni"
+		ckey = "O514"
+
+	sockssq
+		name = "\improper Hot Fudge"
+		icon_state = "hotfudge"
+		ckey = "sockssq"
+
+	torchwick
+		name = "\improper Sam Relius"
+		icon_state = "samrelius"
+		ckey = "torchwick"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

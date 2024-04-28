@@ -36,14 +36,13 @@ TYPEINFO_NEW(/turf/simulated/wall/auto)
 
 	New()
 		..()
-		if (map_setting && ticker)
-			src.update_neighbors() // lessen these calls
-
-		if (current_state > GAME_STATE_WORLD_INIT)
+		if (current_state > GAME_STATE_WORLD_NEW)
 			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
+				if(istype(src))
+					src.update_neighbors()
 		else
-			worldgenCandidates[src] = 1
+			worldgenCandidates += src
 
 	generate_worldgen()
 		src.UpdateIcon()
@@ -478,6 +477,7 @@ TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 	icon_state = "mapwall$$wood"
 #endif
 	default_material = "wood"
+	uses_default_material_appearance = TRUE
 
 TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 	connect_overlay = 0
@@ -709,14 +709,14 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto)
 
 	New()
 		. = ..()
-		if (map_setting && ticker)
-			src.update_neighbors()
-		if (current_state > GAME_STATE_WORLD_INIT)
+		if (current_state > GAME_STATE_WORLD_NEW)
 			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
+				if(istype(src))
+					src.update_neighbors()
 
 		else
-			worldgenCandidates[src] = 1
+			worldgenCandidates += src
 
 	generate_worldgen()
 		src.UpdateIcon()
@@ -1213,7 +1213,6 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 	opacity = FALSE
 
 /datum/action/bar/icon/wall_tool_interact
-	id = "wall_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 5 SECONDS
 	icon = 'icons/ui/actions.dmi'

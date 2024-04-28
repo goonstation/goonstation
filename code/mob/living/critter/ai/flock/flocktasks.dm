@@ -167,7 +167,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/replicate/succeeded()
-	. = (!actions.hasAction(holder.owner, "flock_egg")) // for whatever reason, the required action has stopped
+	. = (!actions.hasAction(holder.owner, /datum/action/bar/flock_egg)) // for whatever reason, the required action has stopped
 
 /datum/aiTask/succeedable/replicate/on_tick()
 	if(!has_started)
@@ -301,7 +301,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/build/succeeded()
-	. = isfeathertile(holder.target) || (has_started && !actions.hasAction(holder.owner, "flock_convert"))
+	. = isfeathertile(holder.target) || (has_started && !actions.hasAction(holder.owner, /datum/action/bar/flock_convert))
 
 /datum/aiTask/succeedable/build/on_tick()
 	if(!has_started && !failed() && !succeeded())
@@ -441,7 +441,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/repair/succeeded()
-	. = (!actions.hasAction(holder.owner, "flock_repair")) // for whatever reason, the required action has stopped
+	. = (!actions.hasAction(holder.owner, /datum/action/bar/flock_repair)) // for whatever reason, the required action has stopped
 
 /datum/aiTask/succeedable/repair/on_tick()
 	if(!has_started)
@@ -512,7 +512,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/deposit/succeeded()
-	. = (!actions.hasAction(holder.owner, "flock_repair")) // for whatever reason, the required action has stopped
+	. = (!actions.hasAction(holder.owner, /datum/action/bar/flock_deposit)) // for whatever reason, the required action has stopped
 
 /datum/aiTask/succeedable/deposit/on_tick()
 	if(!has_started)
@@ -919,7 +919,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/capture/succeeded()
-	. = istype(holder?.target?.loc, /obj/flock_structure/cage) || (has_started && !actions.hasAction(holder.owner, "flock_entomb"))
+	. = istype(holder?.target?.loc, /obj/flock_structure/cage) || (has_started && !actions.hasAction(holder.owner, /datum/action/bar/flock_entomb))
 
 /datum/aiTask/succeedable/capture/on_tick()
 	if(!has_started && !failed() && !succeeded())
@@ -934,7 +934,7 @@ stare
 			if(!in_interact_range(owncritter, holder.target) || !istype(T.loc, /turf))
 				holder.interrupt() //this should basically never happen, but sanity check just in case
 				return
-			else if(!actions.hasAction(owncritter, "flock_entomb")) // let's not keep interrupting our own action
+			else if(!actions.hasAction(owncritter, /datum/action/bar/flock_entomb)) // let's not keep interrupting our own action
 				if(owncritter.floorrunning)
 					owncritter.end_floorrunning(TRUE)
 				owncritter.set_dir(get_dir(owncritter, holder.target))
@@ -999,7 +999,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/butcher/succeeded()
-	. = (!actions.hasAction(holder.owner, "butcherlivingcritter")) // for whatever reason, the required action has stopped
+	. = (!actions.hasAction(holder.owner, /datum/action/bar/icon/butcher_living_critter)) // for whatever reason, the required action has stopped
 
 /datum/aiTask/succeedable/butcher/on_tick()
 	if(!has_started)
@@ -1049,7 +1049,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/barricade/succeeded()
-	return is_blocked_turf(target) || (has_started && !actions.hasAction(holder.owner, "flock_construct"))
+	return is_blocked_turf(target) || (has_started && !actions.hasAction(holder.owner, /datum/action/bar/flock_construct))
 
 /datum/aiTask/succeedable/barricade/on_tick()
 	if (!has_started && !failed() && !succeeded())
@@ -1060,7 +1060,7 @@ stare
 		if(dist > 1)
 			holder.interrupt() //this should basically never happen, but sanity check just in case
 			return
-		else if(!actions.hasAction(drone, "flock_convert")) // let's not keep interrupting our own action
+		else if(!actions.hasAction(drone, /datum/action/bar/flock_convert)) // let's not keep interrupting our own action
 			drone.set_dir(get_dir(drone, holder.target))
 			drone.hand_attack(holder.target)
 			has_started = TRUE
@@ -1116,7 +1116,7 @@ stare
 		return TRUE
 
 /datum/aiTask/succeedable/deconstruct/succeeded()
-	. = (!actions.hasAction(holder.owner, "flock_decon")) // for whatever reason, the required action has stopped
+	. = (!actions.hasAction(holder.owner, /datum/action/bar/flock_decon)) // for whatever reason, the required action has stopped
 	if(.)
 		var/mob/living/critter/flock/drone/F = holder.owner
 		F?.flock?.toggleDeconstructionFlag(holder.target)

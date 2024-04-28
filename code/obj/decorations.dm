@@ -308,11 +308,16 @@
 				#else
 				var/thing = new something(src.loc)
 				#endif
-				visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around! \An [thing] falls out!</b>"), 1)
+				visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around! \An [thing] falls out!</b>"))
 				last_use = world.time
 				max_uses--
+			else if (istype(something, /obj))
+				var/obj/thing = something
+				additional_items -= something
+				thing.set_loc(src.loc)
+				visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around! \An [thing] falls out!</b>"))
 		else
-			visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around![prob(20) ? " A few leaves fall out!" : null]</b>"), 1)
+			visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around![prob(20) ? " A few leaves fall out!" : null]</b>"))
 
 		//no more BUSH SHIELDS
 		for(var/mob/living/L in get_turf(src))
@@ -472,7 +477,7 @@
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.destroy()
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
-			src.visible_message(SPAN_ALERT("<b>[user] ravages [src] with [W].</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[user] ravages [src] with [W].</b>"))
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 		return
 
@@ -526,7 +531,7 @@
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.UpdateIcon()
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
-			src.visible_message(SPAN_ALERT("<b>[user] ravages the [src] with [W].</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[user] ravages the [src] with [W].</b>"))
 			src.interesting = "Inexplicably, the signal flags on the shattered mast just say 'fuck [user.real_name]'."
 		return
 
@@ -1324,8 +1329,8 @@ obj/decoration/gibberBroken
 	icon_state = "syndiepc1"
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -1469,7 +1474,7 @@ obj/decoration/gibberBroken
 /obj/decoration/bullethole
 	anchored = ANCHORED_ALWAYS
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "bhole"
+	icon_state = "bullethole"
 	mouse_opacity = 0
 
 	examine()

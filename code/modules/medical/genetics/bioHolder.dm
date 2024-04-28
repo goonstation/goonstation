@@ -35,9 +35,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	/// What icon state is our mob's head?
 	var/head_icon_state = "head"
 
-	/// What DMI holds the mob's hair sprites
-	var/customization_icon = 'icons/mob/human_hair.dmi'
-
 	/// The color that gets used for determining your colors
 	var/customization_first_color = "#101010"
 	/// The color that was set by the player's preferences
@@ -232,8 +229,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/CopyOtherHeadAppearance(var/datum/appearanceHolder/toCopy)
 		head_icon = toCopy.head_icon
 		head_icon_state = toCopy.head_icon_state
-
-		customization_icon = toCopy.customization_icon
 
 		customization_first_color_original = toCopy.customization_first_color_original
 		customization_first_color = toCopy.customization_first_color
@@ -822,21 +817,24 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		var/datum/bioEffect/D = effects[id]
 		if (D && !D.removed)
-			D.OnRemove()
-			if (!D.activated_from_pool)
-				src.genetic_stability += D.stability_loss
-				src.genetic_stability = max(0,src.genetic_stability)
-			D.activated_from_pool = 0 //Fix for bug causing infinitely exploitable stability gain / loss
-
-			if (owner)
-				OutputGainOrLoseMsg(D, FALSE)
-
-			if (mobAppearance)
-				mobAppearance.UpdateMob()
-			logTheThing(LOG_COMBAT, owner, "loses the [D] mutation at [log_loc(owner)].")
-			return effects.Remove(D.id)
+			return src.RemoveEffectInstance(D)
 
 		return 0
+
+	proc/RemoveEffectInstance(var/datum/bioEffect/effect)
+		effect.OnRemove()
+		if (!effect.activated_from_pool)
+			src.genetic_stability += effect.stability_loss
+			src.genetic_stability = max(0,src.genetic_stability)
+		effect.activated_from_pool = 0 //Fix for bug causing infinitely exploitable stability gain / loss
+
+		if (owner)
+			OutputGainOrLoseMsg(effect, FALSE)
+
+		if (mobAppearance)
+			mobAppearance.UpdateMob()
+		logTheThing(LOG_COMBAT, owner, "loses the [effect] mutation at [log_loc(owner)].")
+		return effects.Remove(effect.id)
 
 	proc/RemoveAllEffects(var/type = null)
 		for(var/D as anything in effects)
@@ -925,6 +923,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/RandomEffect(var/type = "either", var/useProbability = 1, var/datum/dna_chromosome/toApply)
 		//Adds a random effect to this holder. Argument controls which type. bad , good, either.
+		if(check_target_immunity(owner, TRUE))
+			return
 		var/list/filtered = new/list()
 
 		for(var/T in bioEffectList)

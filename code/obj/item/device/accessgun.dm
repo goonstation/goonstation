@@ -145,7 +145,6 @@ TYPEINFO(/obj/item/device/accessgun)
 /datum/action/bar/icon/access_reprog
 	duration = 90
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "access_reprog"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "reprog"
 	var/obj/O

@@ -73,7 +73,7 @@
 	var/list/colorable_symbols = list("None", "Skull", "Drop", "Shortcross", "Smile", "One", "FadeCircle", "Square", "NT", "Ghost", "Bone",\
 	"Heart", "Pentagram", "Key", "Lock")
 	/// alchemical symbols (because theres a lot of them)
-	var/list/alchemical_symbols = list("None", "Mercury", "Salt", "Sulfur", "Urine", "Water", "Fire", "Air", "Earth", "Calcination", "Congelation",\
+	var/list/alchemical_symbols = list("None", "Mercury", "Salt", "Sulfur", "Water", "Fire", "Air", "Earth", "Calcination", "Congelation",\
 	"Fixation", "Dissolution", "Digestion", "Distillation", "Sublimation", "Seperation", "Ceration", "Fermentation", "Multiplication",\
 	"Projection")
 	var/list/alphanumeric_symbols = list("None", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",\
@@ -199,17 +199,17 @@
 /obj/machinery/printing_press/attackby(var/obj/item/W, mob/user)
 	if (istype(W, /obj/item/paper_bin))
 		var/obj/item/paper_bin/P = W
-		if (P.amount > 0 && src.paper_amt <= src.paper_max) //if the paper bin has paper, and adding the paper bin doesnt add too much paper
+		if (P.amount_left > 0 && src.paper_amt <= src.paper_max) //if the paper bin has paper, and adding the paper bin doesnt add too much paper
 			boutput(user, "You load \the [P] into \the [src].")
 			var/amount_to_take = src.paper_max - src.paper_amt
-			var/amount_taken = min(amount_to_take, P.amount)
+			var/amount_taken = min(amount_to_take, P.amount_left)
 			src.paper_amt += amount_taken
 			UpdateIcon()
-			P.amount = P.amount - amount_taken
+			P.amount_left = P.amount_left - amount_taken
 			P.update()
 			return
 		else
-			if (P.amount <= 0)
+			if (P.amount_left <= 0)
 				if (length(P.contents) > 0)
 					boutput(user, "\The [P] has no unsoiled sheets left in it.") // someone put junk paper in the bin
 				else

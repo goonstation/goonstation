@@ -464,3 +464,9 @@ ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 
 	for(var/mob/O in targets)
 		O.show_message(SPAN_SAY("[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]"), 2, assoc_maptext = chat_text)
+
+/obj/proc/ghost_observe_occupant(mob/viewer, mob/occupant)
+	if(istype(viewer, /mob/dead/observer) && viewer.client && !viewer.client.keys_modifier && occupant)
+		var/mob/dead/observer/O = viewer
+		O.insert_observer(occupant)
+		return TRUE

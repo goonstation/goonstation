@@ -139,8 +139,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/list/typevulns
 
 	/// ignores suffocation from being underwater + moves at full speed underwater
-	var/aquatic = 0
-	var/needs_oxy = 1
+	var/aquatic = FALSE
+	/// Takes burn damage and hygiene loss on contact with water
+	var/aquaphobic = FALSE
+	var/needs_oxy = TRUE
 
 	var/voice_override = 0
 	var/step_override = null
@@ -226,7 +228,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	proc/load_clothing_icons()
 		SHOULD_CALL_PARENT(TRUE)
 		for (var/category in src.clothing_icons)
-			src.clothing_icon_states[category] = icon_states(src.clothing_icons[category], 1)
+			src.clothing_icon_states[category] = icon_states(src.clothing_icons[category])
+
+	/// Called by /mob/living/carbon/human/update_clothing()'s slot-specific sub-procs.
+	/// Each sub-proc passes its obj to this proc, which you can then operate on.
+	/// Should return a filter or list of filters, to be added to the obj's wear_image.filters
+	proc/apply_clothing_filters(var/obj/item/worn)
+		. = null
 
 	proc/say_filter(var/message)
 		return message
@@ -852,7 +860,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	say_filter(var/message)
 		var/static/regex/s_regex = regex(@"(s)(.?)", "ig")
-		. = s_regex.Replace(message, PROC_REF(letter_s_replacement))
+		. = s_regex.Replace(message, /datum/mutantrace/lizard/proc/letter_s_replacement)
 
 	disposing()
 		if(ishuman(src.mob))
@@ -1031,16 +1039,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	jerk = TRUE
 	genetics_removable = FALSE
 
-	var/blood_points = 0
-#ifdef RP_MODE
-	var/blood_decay = 0.25
-#else
-	var/blood_decay = 0.5
-#endif
-	var/cleanable_tally = 0
-	var/blood_to_health_scalar = 0.75 //200 blood = 150 health
-	var/min_max_health = 40 //! Minimum health we can get to via blood loss. also lol
-
 	on_attach(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(src.mob))
@@ -1057,25 +1055,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.bioHolder.RemoveEffect("accent_thrall")
 			//REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall")
 		..()
-
-
-	onLife(var/mult = 1)
-		..()
-
-		if (src.mob.bleeding)
-			blood_points -= blood_decay * src.mob.bleeding
-
-		var/prev_blood = blood_points
-		blood_points -= blood_decay * mult
-		blood_points = max(0,blood_points)
-		cleanable_tally += (prev_blood - blood_points)
-		if (cleanable_tally > 20)
-			make_cleanable(/obj/decal/cleanable/blood,get_turf(src.mob))
-			cleanable_tally = 0
-
-		src.mob.max_health = blood_points * blood_to_health_scalar
-		src.mob.max_health = max(src.min_max_health, src.mob.max_health)
-		health_update_queue |= src.mob
 
 	emote(var/act)
 		var/message = null
@@ -1874,6 +1853,20 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		. = ..()
 
+/datum/mutantrace/cat/bingus // our beloved
+	name = "bingus"
+	icon = 'icons/mob/bingus.dmi'
+	race_mutation = /datum/bioEffect/mutantrace/cat/bingus
+	mutant_organs = list("tail" = /obj/item/organ/tail/cat/bingus)
+	mutant_folder = 'icons/mob/bingus.dmi'
+	dna_mutagen_banned = FALSE
+	genetics_removable = FALSE
+	aquaphobic = TRUE
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/bingus/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/bingus/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/left
 
 /datum/mutantrace/amphibian
 	name = "amphibian"
@@ -2087,6 +2080,25 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 		return
 
+/obj/effect/rt/cow_distorts
+	icon = 'icons/mob/cow.dmi'
+
+/obj/effect/rt/cow_distorts/under // extends jumpsuit icons to cover the udder
+	icon_state = "under_distort"
+/obj/effect/rt/cow_distorts/suit // covers udder and hand gaps, adapts icon state for different suit styles
+	icon_state = "suit_distort"
+/obj/effect/rt/cow_distorts/belt // udder, hand gaps
+	icon_state = "belt_distort"
+/obj/effect/rt/cow_distorts/satchel // covers hand gap in east dir only
+	icon_state = "satchel_distort"
+
+/obj/effect/rt/cow_gloves_mask // trims far-side glove sprites so they don't render on top of the udder
+	icon = 'icons/mob/cow.dmi'
+	icon_state = "gloves_mask"
+/obj/effect/rt/cow_backpack_mask // trims the far-side backpack strap, so it appears to hide behind the udder
+	icon = 'icons/mob/cow.dmi'
+	icon_state = "backpack_mask"
+
 /datum/mutantrace/cow
 	name = "cow"
 	icon = 'icons/mob/cow.dmi'
@@ -2121,6 +2133,14 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	self_click_fluff = list("fur", "hooves", "horns")
 	blood_id = "milk"
 
+	var/clothes_filters_active = TRUE // can toggle the filters with a custom mutantrace emote: *udder
+	var/obj/effect/rt/cow_distorts/under/distort_under = new
+	var/obj/effect/rt/cow_distorts/suit/distort_suit = new
+	var/obj/effect/rt/cow_distorts/belt/distort_belt = new
+	var/obj/effect/rt/cow_distorts/satchel/distort_satchel = new
+	var/obj/effect/rt/cow_gloves_mask/mask_gloves = new
+	var/obj/effect/rt/cow_backpack_mask/mask_backpack = new
+
 	on_attach(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(src.mob))
@@ -2131,6 +2151,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.kickMessage = "stomps"
 			src.mob.traitHolder?.addTrait("hemophilia")
 
+			src.mob.vis_contents += list(src.distort_under,src.distort_suit,src.distort_belt,src.distort_satchel,src.mask_gloves,src.mask_backpack)
+
 	disposing()
 		if (ishuman(src.mob))
 			var/mob/living/carbon/human/H = src.mob
@@ -2138,7 +2160,43 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				H.mob_flags &= ~SHOULD_HAVE_A_TAIL
 			H.kickMessage = initial(H.kickMessage)
 			H.traitHolder?.removeTrait("hemophilia")
+
+			src.mob.vis_contents -= list(src.distort_under,src.distort_suit,src.distort_belt,src.distort_satchel,src.mask_gloves,src.mask_backpack)
 		. = ..()
+
+	apply_clothing_filters(var/obj/item/worn)
+		. = ..()
+		if (!src.clothes_filters_active) return
+		var/list/output = list()
+
+		if (istype(worn, /obj/item/clothing/suit))
+			var/obj/item/clothing/cloth = worn
+			var/hands = (cloth.hides_from_examine & C_GLOVES || src.mob.gloves) ? "" : "_hands" // armor layers over gloves X)
+			var/icon/working_icon = icon(cloth.wear_image_icon, cloth.wear_image.icon_state)
+
+			if (working_icon.GetPixel(21, 18, dir = EAST))
+				// check if a pixel is over the udder, mostly space/diving suits and some voluminous coats
+				src.distort_suit.icon_state = "suit_wide[hands]_distort"
+			else if (!working_icon.GetPixel(19, 18, dir = EAST))
+				// check if it's possibly an open jacket, like black/jean/winter jackets or lab/captain coat
+				src.distort_suit.icon_state = "suit_thin[hands]_distort"
+			else // everything else, generic and mostly decent
+				src.distort_suit.icon_state = "suit[hands]_distort"
+
+			output += filter(type="displace", render_source = src.distort_suit.render_target, size = 127)
+		else if (istype(worn, /obj/item/clothing/gloves))
+			output += filter(type="alpha", render_source = src.mask_gloves.render_target, flags = MASK_INVERSE)
+		else if (istype(worn, /obj/item/storage/backpack/satchel))
+			if (src.mob.gloves) return // layers layers layers
+			output += filter(type="displace", render_source = src.distort_satchel.render_target, size = 127)
+		else if (istype(worn, /obj/item/storage/backpack))
+			output += filter(type="alpha", render_source = src.mask_backpack.render_target, flags = MASK_INVERSE)
+		else if (istype(worn, /obj/item/storage/belt) || istype(worn, /obj/item/storage/fanny))
+			output += filter(type="displace", render_source = src.distort_belt.render_target, size = 127)
+		else if (istype(worn, /obj/item/clothing/under))
+			output += filter(type="displace", render_source = src.distort_under.render_target, size = 127)
+
+		return output
 
 	say_filter(var/message)
 		.= replacetext(message, "cow", "human")
@@ -2149,12 +2207,16 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	emote(var/act, var/voluntary)
 		switch(act)
 			if ("scream")
-				if (src.mob.emote_check(voluntary, 50))
+				if (src.mob.emote_check(voluntary, 50) && !src.mob.bioHolder.HasEffect("mute"))
 					. = "<B>[src.mob]</B> moos!"
 					playsound(src.mob, 'sound/voice/screams/moo.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("milk")
 				if (src.mob.emote_check(voluntary))
 					.= release_milk()
+			if ("udder")
+				src.clothes_filters_active = !src.clothes_filters_active
+				boutput(src.mob, src.clothes_filters_active ? "Bovine-specific clothes filters activated." : "Disabled bovine-specific clothes filters.")
+				src.mob.update_clothing()
 			else
 				.= ..()
 
@@ -2328,7 +2390,7 @@ TYPEINFO(/datum/mutantrace/pug)
 
 	proc/throw_response(target, item, thrower)
 		// Don't dive at things we throw; don't dive if we're stunned or dead; dive 15% of the time, 100% at limbs
-		if (src.mob == thrower || is_incapacitated(src.mob) || (prob(85) && !istype(item, /obj/item/parts)))
+		if (src.mob == thrower || is_incapacitated(src.mob) || (prob(85) && !(istype(item, /obj/item/parts) || istype(item, /obj/item/material_piece/bone))))
 			return
 		src.mob.throw_at(get_turf(item), 1, 1)
 		src.mob.visible_message(SPAN_ALERT("[src.mob] staggers."))

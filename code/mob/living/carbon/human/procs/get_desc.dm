@@ -127,13 +127,12 @@
 				else
 					. += "<br>[SPAN_NOTICE("[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(desc_id_card)] [desc_id_card.name] in it.")]"
 
-	if (src.arrestIcon?.icon_state)
-		if(global.client_image_groups?[CLIENT_IMAGE_GROUP_ARREST_ICONS]?.subscribed_mobs_with_subcount[usr]) // are you in the list of people who can see arrest icons??
-			var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
-			if(sec_record)
-				var/sechud_flag = sec_record["sec_flag"]
-				if (lowertext(sechud_flag) != "none")
-					. += "<br>[SPAN_NOTICE("[src.name] has a Security HUD flag set:")] [SPAN_ALERT("[sechud_flag]")]"
+	if(global.client_image_groups?[CLIENT_IMAGE_GROUP_ARREST_ICONS]?.subscribed_mobs_with_subcount[usr]) // are you in the list of people who can see arrest icons??
+		var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
+		if(sec_record)
+			var/sechud_flag = sec_record["sec_flag"]
+			if (lowertext(sechud_flag) != "none")
+				. += "<br>[SPAN_NOTICE("[src.name] has a Security HUD flag set:")] [SPAN_ALERT("[sechud_flag]")]"
 
 	if (locate(/obj/item/implant/projectile/body_visible/dart) in src.implant)
 		var/count = 0
@@ -152,6 +151,12 @@
 		for (var/obj/item/implant/projectile/body_visible/arrow/P in src.implant)
 			count++
 		. += "<br>[SPAN_ALERT("[src] has [count > 1 ? "arrows" : "an arrow"] stuck in [him_or_her(src)]!")]"
+
+	if (locate(/obj/item/implant/projectile/body_visible/seed) in src.implant)
+		var/count = 0
+		for (var/obj/item/implant/projectile/body_visible/seed/P in src.implant)
+			count++
+		. += "<br>[SPAN_ALERT("[src] has [count > 1 ? "seeds" : "a seed"] stuck in [him_or_her(src)]!")]"
 
 	if (src.is_jittery)
 		switch(src.jitteriness)
@@ -247,12 +252,10 @@
 		else
 			. += "<br>[SPAN_ALERT("<B>[src.name]'s entire chest is missing!</B>")]"
 
-
-		if (src.organHolder.back_op_stage > BACK_SURGERY_CLOSED)
-			if (!src.organHolder.butt)
-				. += "<br>[SPAN_ALERT("<B>[src.name]'s butt seems to be missing!</B>")]"
-			else
-				. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on [t_his] butt!</B>")]"
+		if (!src.organHolder.butt)
+			. += "<br>[SPAN_ALERT("<B>[src.name]'s butt seems to be missing!</B>")]"
+		else if (src.organHolder.back_op_stage > BACK_SURGERY_CLOSED)
+			. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on [t_his] butt!</B>")]"
 
 	if (src.limbs)
 		if (!src.limbs.l_arm)

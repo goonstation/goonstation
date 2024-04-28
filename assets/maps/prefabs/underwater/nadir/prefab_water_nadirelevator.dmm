@@ -42,7 +42,7 @@
 /obj/item/sea_ladder{
 	pixel_x = 4
 	},
-/obj/item/mining_tool/power_pick{
+/obj/item/mining_tool/powered/pickaxe{
 	pixel_x = -7
 	},
 /obj/item/tank/oxygen,
@@ -490,7 +490,7 @@
 /area/shuttle/sea_elevator)
 "sR" = (
 /obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/machinery/mixer,
 /obj/machinery/light/incandescent/warm{
 	dir = 4;
 	nostick = 1;

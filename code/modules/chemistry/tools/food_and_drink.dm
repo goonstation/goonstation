@@ -45,6 +45,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			return FALSE
 		if (locate(/obj/table) in src.loc) // locate is faster than typechecking each movable
 			return TRUE
+		if (locate(/obj/surgery_tray) in src.loc) // includes kitchen islands
+			return TRUE
 		return FALSE
 
 	proc/get_food_color()
@@ -106,6 +108,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
+			src.onSlice()
 			for (var/i in 1 to src.slice_amount)
 				var/atom/slice_result = new src.slice_product(T)
 				if(istype(slice_result, /obj/item/reagent_containers/food))
@@ -114,6 +117,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			qdel (src)
 		else
 			..()
+
+	proc/onSlice() //special slice behaviour
+		return
 
 	//This proc handles all the actions being done to the produce. use this proc to work with your slices after they were created (looking at all these slice code at plant produce...)
 	proc/process_sliced_products(var/obj/item/reagent_containers/food/slice, var/amount_to_transfer)
@@ -197,11 +203,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				return
 
 			src.Eat(user,user)
-		else if (istype(W, /obj/item/tongs))
-			if (src.stored)
+		else if (istype(W, /obj/item/tongs)) // Borg only tool to move food out of containers
+			if (src.stored) // If snack is in a foodbox
 				boutput(user, "You take [src] out of [src.stored.linked_item].")
 				src.stored.transfer_stored_item(src, get_turf(src), user = user)
 				user.put_in_hand_or_drop(src)
+			else if (istype(src.loc, /obj/item/plate)) // If snack is on a plate/tray/pizza box (implied you're a borg)
+				boutput(user, "You remove [src] from the [src.loc.name].")
+				var/obj/item/plate/plate_action = src.loc
+				plate_action.remove_contents(src)
 			else
 				src.AttackSelf(user)
 		else
@@ -376,28 +386,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (doseed)
 					var/datum/plant/stored = P.planttype
 					if (istype(stored) && !stored.isgrass)
-						var/obj/item/seed/S
-						if (stored.unique_seed)
-							S = new stored.unique_seed
-							S.set_loc(consumer.loc)
-						else
-							S = new /obj/item/seed
-							S.set_loc(consumer.loc)
-							S.removecolor()
-
-						var/datum/plantgenes/DNA = P.plantgenes
-						var/datum/plantgenes/PDNA = S.plantgenes
-						if (!stored.hybrid && !stored.unique_seed)
-							S.generic_seed_setup(stored, TRUE)
-						HYPpassplantgenes(DNA,PDNA)
-						if (stored.hybrid)
-							var/plantType = stored.type
-							var/datum/plant/hybrid = new plantType(S)
-							for (var/V in stored.vars)
-								if (issaved(stored.vars[V]) && V != "holder")
-									hybrid.vars[V] = stored.vars[V]
-							S.planttype = hybrid
-							S.plant_seed_color(stored.seedcolor)
+						HYPgenerateseedcopy(SRCDNA, stored, P.generation, consumer.loc)
 						consumer.visible_message(SPAN_NOTICE("<b>[consumer]</b> spits out a seed."),\
 						SPAN_NOTICE("You spit out a seed."))
 			if(src.dropped_item)
@@ -599,6 +588,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (soda_can.is_sealed && (soda_can.reagents.has_reagent("cola", 5) || soda_can.reagents.has_reagent("tonic", 5) || soda_can.reagents.has_reagent("sodawater", 5)))
 					soda_can.shaken = TRUE
 					return
+			if(src.is_sealed)
+				return
 			if(user.mind.assigned_role == "Bartender")
 				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
 				if(!ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
@@ -663,7 +654,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		// in this case m is the consumer and user is the one holding it
-		if (istype(src, /obj/item/reagent_containers/food/drinks/bottle/soda))
+		if (istype(src, /obj/item/reagent_containers/food/drinks/bottle))
 			var/obj/item/reagent_containers/food/drinks/bottle/W = src
 			if (W.broken)
 				return
@@ -699,7 +690,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	proc/take_a_drink(var/mob/consumer, var/mob/feeder)
 		var/tasteMessage = SPAN_NOTICE("[src.reagents.get_taste_string(consumer)]")
 		if (consumer == feeder)
-			consumer.visible_message(SPAN_NOTICE("[consumer] takes a sip from [src]."),"[SPAN_NOTICE("You take a sip from [src].")]\n[tasteMessage]", group = "drinkMessages")
+			consumer.visible_message(SPAN_NOTICE("[consumer] takes a sip from [src]."),"[SPAN_NOTICE("You take a sip from [src].")]\n[tasteMessage]", group = "[consumer]_drink_messages")
 		else
 			consumer.visible_message(SPAN_ALERT("[feeder] makes [consumer] drink from the [src]."),
 			"[SPAN_ALERT("[feeder] makes you drink from the [src].")]\n[tasteMessage]",
@@ -712,7 +703,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					src.reagents.trans_to(consumer, min(reagents.total_volume, src.gulp_size))
 
 		playsound(consumer.loc,'sound/items/drink.ogg', rand(10,50), 1)
-		consumer.urine += 0.1
 		eat_twitch(consumer)
 
 	//bleck, i dont like this at all. (Copied from chemistry-tools reagent_containers/glass/ definition w minor adjustments)
@@ -1057,7 +1047,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					take_bleeding_damage(user, null, damage)
 			else
 				src.shatter++
-				user.visible_message(SPAN_ALERT("<b>[user]</b> [pick("shanks","stabs","attacks")] [target] with the broken [src]!"))
+				user.visible_message(SPAN_ALERT("<b>[user]</b> [pick("shanks","stabs","attacks")] [target] with the broken [src.name]!"))
 				logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a broken [src] at [log_loc(user)].")
 				playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
 				var/damage = rand(1,10)
@@ -1322,9 +1312,6 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		var/mob/living/carbon/human/H = user
 		var/list/choices = list()
 
-		var/bladder = H.sims?.getValue("Bladder")
-		if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
-			choices += "pee in it"
 		if (src.in_glass)
 			choices += "remove [src.in_glass]"
 			if (!istype(src.in_glass, /obj/item/cocktail_stuff/drink_umbrella) || (H.bioHolder && (H.bioHolder.HasEffect("clumsy") || H.bioHolder.HasEffect("mattereater"))))
@@ -1349,21 +1336,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		var/obj/item/remove_thing
 		var/obj/item/eat_thing
 
-		if (selection == "pee in it")
-			bladder = H.sims?.getValue("Bladder")
-			if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
-				H.visible_message(SPAN_ALERT("<B>[H] pees in [src]!</B>"))
-				playsound(H, 'sound/misc/pourdrink.ogg', 50, TRUE)
-				if (!H.sims)
-					H.urine -= 2
-				else
-					H.sims.affectMotive("Bladder", 100)
-				src.reagents.add_reagent("urine", 8)
-			else
-				boutput(H, SPAN_ALERT("You don't feel like you need to go."))
-			return
-
-		else if (selection == "drink from it")
+		if (selection == "drink from it")
 			if (!ON_COOLDOWN(src, "hotkey_drink", 0.6 SECONDS))
 				attack(user, user)
 
@@ -1448,17 +1421,20 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		if(!istype(target, /obj/table) || src.cant_drop)
 			return ..()
 		var/obj/table/target_table = target
-		var/obj/table/source_table = locate() in get_step(user, user.dir)
-		if(isnull(source_table))
-			for(var/dir in cardinal)
-				source_table = locate() in get_step(user, dir)
-				if(!isnull(source_table))
-					user.set_dir(dir)
-					break
+		var/obj/table/source_table = null
+		var/obj/table/candidate_table = null
+		var/dist = INFINITY
+		for(var/dir in cardinal)
+			candidate_table = locate() in get_step(user, dir)
+			if(GET_MANHATTAN_DIST(candidate_table, target_table) < dist)
+				source_table = candidate_table
+				dist = GET_MANHATTAN_DIST(source_table, target_table)
+
 		if(isnull(source_table))
 			return
 		if(!can_reach(user, source_table))
 			return
+		user.set_dir(get_dir(user, source_table))
 		if("icon-x" in params)
 			src.pixel_x = text2num(params["icon-x"]) - 16
 		if("icon-y" in params)
@@ -1484,7 +1460,6 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 //this action accepts a target that is not the owner, incase we want to allow forced chugging.
 /datum/action/bar/icon/chug
 	duration = 0.5 SECONDS
-	id = "chugging"
 	var/mob/glassholder
 	var/mob/target
 	var/obj/item/reagent_containers/food/drinks/glass
@@ -1533,7 +1508,6 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			glass.reagents.reaction(target, INGEST, clamp(glass.reagents.total_volume, CHEM_EPSILON, min(glass.gulp_size, (target.reagents?.maximum_volume - target.reagents?.total_volume))))
 			glass.reagents.trans_to(target, min(glass.reagents.total_volume, glass.gulp_size))
 			playsound(target.loc,'sound/items/drink.ogg', rand(10,50), 1)
-			target.urine += 0.1
 			eat_twitch(target)
 
 		if(glass.reagents.total_volume <= 0)
@@ -1572,10 +1546,10 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			if (src.reagents.total_volume)
 				logTheThing(LOG_CHEMISTRY, H, "is forced to drink from [src] [log_reagents(src)] at [log_loc(H)] thrown by [constructTarget(thr.thrown_by, "combat")].")
 				src.reagents.reaction(H, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(reagents.total_volume/2, (H.reagents?.maximum_volume - H.reagents?.total_volume))))
-				SPAWN(0.5 SECONDS)
-					if (src?.reagents && H?.reagents)
-						src.reagents.trans_to(H, reagents.total_volume/2)
+				if (src?.reagents && H?.reagents)
+					src.reagents.trans_to(H, reagents.total_volume/2)
 		. = ..()
+
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf
 	name = "old fashioned glass"
@@ -1671,18 +1645,22 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 				src.amount_per_transfer_from_this = 15
 				src.gulp_size = 15
 				src.initial_volume = 15
+				src.reagents.maximum_volume = 15
 			if ("wine")
 				src.name = "wine glass"
 				src.icon_state = "glass-wine"
 				src.initial_volume = 30
+				src.reagents.maximum_volume = 30
 			if ("cocktail")
 				src.name = "cocktail glass"
 				src.icon_state = "glass-cocktail"
 				src.initial_volume = 20
+				src.reagents.maximum_volume = 20
 			if ("flute")
 				src.name = "champagne flute"
 				src.icon_state = "glass-flute"
 				src.initial_volume = 20
+				src.reagents.maximum_volume = 20
 
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled
@@ -1760,6 +1738,14 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 					 "mint_tea", "tomcollins", "sangria", "peachschnapps", "mintjulep",
 					 "mojito", "cremedementhe", "grasshopper", "freeze", "limeade", "juice_peach",
 					 "juice_banana")
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/icewater
+	New()
+		..()
+		SPAWN(0)
+			if (src.reagents)
+				src.reagents.add_reagent("ice", 15, null, T0C)
+				src.reagents.add_reagent("water", 35, null, T0C)
 
 /obj/item/reagent_containers/food/drinks/duo
 	name = "red duo cup"
@@ -2010,7 +1996,6 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	g_amt = 30
 	initial_volume = 50
 	can_recycle = FALSE
-	initial_reagents = list("pumpkinspicelatte"=30)
 
 /obj/item/reagent_containers/food/drinks/energyshake
 	name = "Brotein Shake - Dragon Balls flavor"

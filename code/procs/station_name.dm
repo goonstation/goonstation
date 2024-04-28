@@ -20,8 +20,8 @@ var/global/station_name_changing = 1 //Are people allowed to change the station 
 var/global/station_or_ship = null
 var/global/station_name = null
 var/global/the_station_name = null
-var/global/list/station_name_whitelist = new()
-var/global/list/station_name_whitelist_sectioned = new()
+var/global/list/station_name_whitelist = list()
+var/global/list/station_name_whitelist_sectioned = list()
 
 var/global/stationNameChangeDelay = 1 MINUTE //deciseconds. 600 = 60 seconds
 var/global/lastStationNameChange = 0 //timestamp
@@ -148,9 +148,9 @@ var/global/lastStationNameChange = 0 //timestamp
 /proc/verify_station_name(name, adminset)
 	//Admins can just kinda set it to whatever
 	if (adminset)
-		return trim(name)
+		return trimtext(name)
 
-	name = lowertext(trim(name))
+	name = lowertext(trimtext(name))
 
 	if (length(name) < 1 || length(name) > MAX_STATION_NAME_LENGTH)
 		return 0
@@ -173,7 +173,7 @@ var/global/lastStationNameChange = 0 //timestamp
 
 		formattedName += station_name_whitelist[lowertext(word)] + " "
 
-	return valid ? trim(formattedName) : valid
+	return valid ? trimtext(formattedName) : valid
 
 
 /proc/set_station_name(mob/user = null, manual = null, admin_override=null, name=null)
@@ -223,6 +223,9 @@ var/global/lastStationNameChange = 0 //timestamp
 				#endif
 			else
 				the_station_name = name
+
+	var/datum/eventRecord/StationName/stationNameEvent = new()
+	stationNameEvent.send(name)
 
 	station_name = name
 

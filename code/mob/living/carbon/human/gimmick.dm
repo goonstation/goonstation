@@ -231,9 +231,9 @@ ADMIN_INTERACT_PROCS(/mob/living/carbon/human/fathergrife, proc/chatter)
 	proc/chatter()
 		set name = "Chatter"
 		var/phrase = pick_smart_string("father_grife.txt", "say", list(
-			"job" = PROC_REF(say_helper_job),
-			"crewmember" = PROC_REF(say_helper_crewmember),
-			"logged_phrase" = PROC_REF(say_helper_logged_phrase)
+			"job" = /mob/living/carbon/human/fathergrife/proc/say_helper_job,
+			"crewmember" = /mob/living/carbon/human/fathergrife/proc/say_helper_crewmember,
+			"logged_phrase" = /mob/living/carbon/human/fathergrife/proc/say_helper_logged_phrase
 		))
 		src.say(phrase)
 
@@ -250,7 +250,7 @@ ADMIN_INTERACT_PROCS(/mob/living/carbon/human/fathergrife, proc/chatter)
 		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = AI_ATTACKING
+			src.ai_set_state(AI_ATTACKING)
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 
@@ -691,7 +691,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = AI_ATTACKING
+			src.ai_set_state(AI_ATTACKING)
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.set_a_intent(INTENT_HARM)
@@ -858,7 +858,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = AI_ATTACKING
+			src.ai_set_state(AI_ATTACKING)
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 

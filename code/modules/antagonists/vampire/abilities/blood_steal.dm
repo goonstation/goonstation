@@ -18,7 +18,7 @@
 		var/mob/living/M = holder.owner
 		var/datum/abilityHolder/vampire/V = holder
 
-		if (actions.hasAction(M, "vamp_blood_suck"))
+		if (actions.hasAction(M, /datum/action/bar/private/icon/vamp_blood_suc))
 			boutput(M, SPAN_ALERT("You are already performing a Bite action and cannot start a Blood Steal."))
 			return 1
 
@@ -33,7 +33,6 @@
 /datum/action/bar/private/icon/vamp_ranged_blood_suc
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "vamp_blood_suck_ranged"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "blood"
 	bar_icon_state = "bar-vampire"

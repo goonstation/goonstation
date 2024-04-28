@@ -11,11 +11,14 @@ Thus, the two variables affect pump operation are set in New():
 		Higher quantities of this cause more air to be perfected later
 			but overall network volume is also increased as this increases...
 */
+/// Min pump pressure.
+#define MIN_PRESSURE 0
+/// Max pump pressure.
+#define MAX_PRESSURE 149 * ONE_ATMOSPHERE
 
 /obj/machinery/atmospherics/binary/pump
 	icon = 'icons/obj/atmospherics/pump.dmi'
-	icon_state = "intact_off"
-
+	icon_state = "off-map"
 	name = "Gas pump"
 	desc = "A pump"
 	layer = PIPE_MACHINE_LAYER
@@ -23,14 +26,20 @@ Thus, the two variables affect pump operation are set in New():
 
 	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
-	var/frequency = 0
+	/// Radio frequency to operate on.
+	var/frequency = FREQ_PUMP_CONTROL
+	/// Radio ID we respond to for multicast.
 	var/id = null
+	/// Radio ID that refers to specifically us.
+	var/net_id = null
 
 	var/datum/pump_ui/ui
 
 /obj/machinery/atmospherics/binary/pump/New()
 	..()
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+	if(src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		src.net_id = generate_net_id(src)
 
 /obj/machinery/atmospherics/binary/pump/initialize()
 	..()
@@ -40,16 +49,12 @@ Thus, the two variables affect pump operation are set in New():
 	UpdateIcon()
 
 /obj/machinery/atmospherics/binary/pump/update_icon()
-	if(node1&&node2)
-		icon_state = "intact_[on?("on"):("off")]"
-	else
-		if(node1)
-			icon_state = "exposed_1_off"
-		else if(node2)
-			icon_state = "exposed_2_off"
-		else
-			icon_state = "exposed_3_off"
-		on = FALSE
+	if(!(node1&&node2))
+		src.on = FALSE
+
+	icon_state = src.on ? "on" : "off"
+	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 180), "medium", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node2, src.dir, "medium", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
 
 /obj/machinery/atmospherics/binary/pump/process()
 	..()
@@ -84,8 +89,11 @@ Thus, the two variables affect pump operation are set in New():
 	signal.source = src
 
 	signal.data["tag"] = src.id
+	signal.data["netid"] = src.net_id
 	signal.data["device"] = "AGP"
 	signal.data["power"] = src.on ? "on" : "off"
+	signal.data["min_output"] = MIN_PRESSURE
+	signal.data["max_output"] = MAX_PRESSURE
 	signal.data["target_output"] = src.target_pressure
 	signal.data["address_tag"] = "pumpcontrol"
 
@@ -95,8 +103,9 @@ Thus, the two variables affect pump operation are set in New():
 
 
 /obj/machinery/atmospherics/binary/pump/receive_signal(datum/signal/signal)
-	if(signal.data["tag"] && (signal.data["tag"] != id))
-		return FALSE
+	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["netid"] && (signal.data["netid"] == src.net_id))))
+		if(signal.data["command"] != "broadcast_status")
+			return FALSE
 
 	switch(signal.data["command"])
 		if("broadcast_status")
@@ -104,35 +113,59 @@ Thus, the two variables affect pump operation are set in New():
 				broadcast_status()
 
 		if("power_on")
-			on = TRUE
+			src.on = TRUE
+			. = TRUE
 
 		if("power_off")
-			on = FALSE
+			src.on = FALSE
+			. = TRUE
 
 		if("power_toggle")
-			on = !on
+			src.on = !src.on
+			. = TRUE
 
 		if("set_output_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
-			number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
-			target_pressure = number
+			src.target_pressure = clamp(number, MIN_PRESSURE, MAX_PRESSURE)
+			. = TRUE
 
-	if(signal.data["tag"])
-		SPAWN(0.5 SECONDS)
-			broadcast_status()
+		if("help")
+			var/datum/signal/help = get_free_signal()
+			help.transmission_method = TRANSMISSION_RADIO
+			help.source = src
 
-	UpdateIcon()
+			help.data["info"] = "Command help. \
+									broadcast_status - Broadcasts info about self. \
+									power_on - Turns on pump. \
+									power_off - Turns off pump. \
+									power_toggle - Toggles pump. \
+									set_output_pressure (parameter: Number) - Sets pressure in kilopascals to parameter. Max at [MAX_PRESSURE] kPA."
+
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
+
+
+	if(.)
+		src.UpdateIcon()
+		var/turf/intact = get_turf(src)
+		intact = intact.intact
+		var/hide_pipe = CHECKHIDEPIPE(src)
+		flick("[hide_pipe ? "h" : "" ]alert", src)
+		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/binary/pump/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W) || iswrenchingtool(W))
 		ui.show_ui(user)
 
+/obj/machinery/atmospherics/binary/pump/active
+	icon_state = "on-map"
+	on = TRUE
+
 /datum/pump_ui/basic_pump_ui
 	value_name = "Target Pressure"
 	value_units = "kPa"
-	min_value = 0
-	max_value = 15000
+	min_value = MIN_PRESSURE
+	max_value = MAX_PRESSURE
 	incr_sm = 50
 	incr_lg = 100
 	var/obj/machinery/atmospherics/binary/pump/our_pump
@@ -158,3 +191,6 @@ Thus, the two variables affect pump operation are set in New():
 
 /datum/pump_ui/basic_pump_ui/get_atom()
 	return our_pump
+
+#undef MIN_PRESSURE
+#undef MAX_PRESSURE

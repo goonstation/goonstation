@@ -611,6 +611,7 @@ var/list/radio_brains = list()
 
 /datum/bioEffect/hulk/hidden
 	name = "Hidden Gamma Ray Exposure"
+	id = "hulk_hidden"
 	visible = FALSE
 	occur_in_genepools = 0
 	probability = 0
