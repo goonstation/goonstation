@@ -22,6 +22,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	var/hide_prints = 1 // Seems more efficient to do this with one global proc and a couple of vars (Convair880).
 	var/scramble_prints = 0
 	var/material_prints = null
+	var/no_prints = FALSE // For extra sneaky prints
 
 	var/can_be_charged = 0 // Currently, there are provisions for icon state "yellow" only. You have to update this file and mob_procs.dm if you're wanna use other glove sprites (Convair880).
 	var/glove_ID = null
@@ -509,6 +510,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "transparent"
 	item_state = "transparent"
 	material_prints = "transparent high-quality synthetic fibers"
+	no_prints = TRUE // leaves no trace behind
 	var/deployed = FALSE
 
 	nodescripition = TRUE
@@ -548,7 +550,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		if(check_target_immunity( target ))
 			return 0
 		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with hand blades at [log_loc(user)].")
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 16, 16, 0, 0.8, 0, can_punch = 0, can_kick = 0)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 15, 15, 0, 0.8, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("stab", "slashe")
 		msgs.base_attack_message = SPAN_ALERT("<b>[user] [action]s [target] with their hand blades!</b>")
@@ -558,7 +560,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		user.lastattacked = target
 
 	proc/sheathe_blades_toggle(mob/living/user)
-		playsound(src.loc, 'sound/effects/sword_unsheath1.ogg', 50, 1)
+		playsound(src.loc, 'sound/effects/sword_unsheath1.ogg', 35, 1, -3)
 
 		if(deployed)
 			deployed = FALSE
@@ -584,12 +586,12 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		else
 			deployed = TRUE
 			hit_type = DAMAGE_CUT
-			force = 11
+			force = 15
 			stamina_damage = 20
 			stamina_cost = 10
 			stamina_crit_chance = 0
 			activeweapon = TRUE
-			setSpecialOverride(/datum/item_special/double, src)
+			setSpecialOverride(/datum/item_special/double/gloves, src)
 
 			attack_verbs = "slashes"
 			hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'

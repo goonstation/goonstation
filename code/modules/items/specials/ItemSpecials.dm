@@ -1211,6 +1211,10 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 		return
 
+	gloves  // More agile attacks with bladed gloves
+		moveDelay = 2
+		moveDelayDuration = 2
+
 /datum/item_special/barrier
 	cooldown = 0
 	staminaCost = 0
