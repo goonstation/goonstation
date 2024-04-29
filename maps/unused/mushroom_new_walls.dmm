@@ -17149,6 +17149,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "dIy" = (
@@ -24422,6 +24425,9 @@
 	icon_state = "1-2"
 	},
 /obj/landmark/start/job/rancher,
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "kPj" = (
@@ -28423,11 +28429,13 @@
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
-/obj/machinery/disposal/botany{
-	name = "Produce Chute - Ranch"
-	},
 /obj/disposalpipe/trunk/produce{
 	dir = 1
+	},
+/obj/machinery/floorflusher{
+	desc = "A chute for sending things to the kitchen";
+	id = "ranch_flusher";
+	name = "Kitchen Chute"
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -36379,6 +36387,13 @@
 	},
 /obj/stool/chair/green,
 /obj/disposalpipe/chicken_disposal_pipe/vertical,
+/obj/railing/orange/reinforced,
+/obj/machinery/activation_button/flusher_button{
+	id = "ranch_flusher";
+	name = "Kitchen Chute Activation Button";
+	pixel_x = -20;
+	pixel_y = -9
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "uPR" = (
