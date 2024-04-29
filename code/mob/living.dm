@@ -134,10 +134,6 @@
 		src.ensure_bp_list()
 
 	if (src.use_stamina)
-		//stamina bar gets added to the hud in subtypes human and critter... im sorry.
-		//eventual hud merger pls
-		src.stamina_bar = new(src)
-
 		var/turf/T = get_turf(src)
 		var/area/AR = get_area(src)
 		if(isnull(T) || T.z <= Z_LEVEL_STATION || AR.active)
@@ -166,11 +162,6 @@
 
 	if(use_stamina)
 		STOP_TRACKING_CAT(TR_CAT_STAMINA_MOBS)
-
-	if(stamina_bar)
-		for (var/datum/hud/thishud in huds)
-			thishud.remove_object(stamina_bar)
-		stamina_bar = null
 
 	for (var/atom/A as anything in skin_process)
 		qdel(A)

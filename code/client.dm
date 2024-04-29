@@ -1310,14 +1310,11 @@ var/global/curr_day = null
 		H.hud.master = null
 		qdel(H.hud)
 		qdel(H.zone_sel)
-		qdel(H.stamina_bar)
 
 		H.hud = new(H)
 		H.attach_hud(H.hud)
 		H.zone_sel = new(H)
 		H.attach_hud(H.zone_sel)
-		H.stamina_bar = new(H)
-		H.hud.add_object(H.stamina_bar, initial(H.stamina_bar.layer), "EAST-1, NORTH")
 		if(H.sims)
 			H.sims.add_hud()
 		H.update_equipment_screen_loc()

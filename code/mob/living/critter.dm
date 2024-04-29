@@ -140,16 +140,12 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 	. = ..()
 
-	src.hud = new src.custom_hud_type(src)
+	src.hud = new src.custom_hud_type(src) //ZEWAKA TODO: check flock
 	src.hud.setup_elements()
 
 	src.attach_hud(hud)
 	src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
 	src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
-
-	if (src.stamina_bar)
-		hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
-
 
 	health_update_queue |= src
 
@@ -169,32 +165,12 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	#endif
 
 /mob/living/critter/disposing()
-	if(organHolder)
-		organHolder.dispose()
-		organHolder = null
+	QDEL_NULL(organHolder)
+	QDEL_NULL(hud)
 
-	if(hud)
-		if(src.stamina_bar)
-			hud.remove_object(stamina_bar)
-		src.hud.delete_hud_zone("health_zone")
-
-		hud.dispose()
-		hud = null
-
-	for(var/datum/handHolder/hh in hands)
-		hh.dispose()
-	hands.len = 0
-	hands = null
-
-	for(var/datum/equipmentHolder/eh in equipment)
-		eh.dispose()
-	equipment.len = 0
-	equipment = null
-
-	for(var/obj/item/I in implants)
-		I.dispose()
-	implants.len = 0
-	implants = null
+	QDEL_LIST(src.hands)
+	QDEL_LIST(src.equipment)
+	QDEL_LIST(src.implants)
 
 	for(var/damage_type in healthlist)
 		var/datum/healthHolder/hh = healthlist[damage_type]
@@ -205,10 +181,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	if (src.is_npc)
 		src.registered_area?.registered_mob_critters -= src
 		src.registered_area = null
-	if (ai)
-		qdel(ai)
-		ai = null
-	..()
+	QDEL_NULL(src.ai)
+	. = ..()
 
 ///enables mob ai that was disabled by a hibernation task
 /mob/living/critter/proc/wake_from_hibernation()
@@ -222,6 +196,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/proc/setup_healths()
 	// add_health_holder(/datum/healthHolder/flesh)
 	// etc..
+
+/mob/living/critter/handle_stamina_updates()
+	. = ..()
+	if (src.client && src.hud?.stamina_bar)
+		src.hud.stamina_bar.update_value(src)
 
 /mob/living/critter/proc/setup_overlays()
 	//used for critters that have overlays for their bioholder (hair color eye color etc)

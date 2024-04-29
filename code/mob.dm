@@ -22,7 +22,6 @@
 	var/last_move_trigger = 0
 
 	var/atom/movable/screen/internals = null
-	var/atom/movable/screen/stamina_bar/stamina_bar = null
 
 	var/robot_talk_understand = 0
 

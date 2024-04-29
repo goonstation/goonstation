@@ -45,20 +45,18 @@
 	.= 0
 
 /mob/living/carbon/human/update_stamina_desc(var/newDesc)
-	if (src.hud && src.hud.stamina)
-		src.hud.stamina.desc = newDesc
+	src.hud?.stamina?.desc = newDesc
 
 /mob/living/critter/update_stamina_desc(var/newDesc)
-	if (src.hud && src.hud.stamina)
-		src.hud.stamina.desc = newDesc
+	src.hud?.stamina?.desc = newDesc
 
-/atom/movable/screen/stamina_bar
+/atom/movable/screen/hud/stamina_bar
 	name = "Stamina"
 	desc = ""
 	icon = 'icons/mob/hud_human_new.dmi'
 	icon_state = "stamina_bar"
 	var/last_val = -123123
-	var/tooltipTheme = "stamina"
+	tooltipTheme = "stamina"
 	var/last_update = 0
 	layer = HUD_LAYER-1
 

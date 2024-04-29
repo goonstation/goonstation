@@ -39,6 +39,7 @@
 		stats
 		legend
 		sel
+	var/atom/movable/screen/hud/stamina_bar/stamina_bar
 	var/list/atom/movable/screen/hud/inventory_bg = list()
 	var/list/obj/item/inventory_items = list()
 	var/show_inventory = 1
@@ -250,9 +251,9 @@
 		bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
 
 		stamina = create_screen("stamina","Stamina", src.icon_hud, "stamina", "EAST-1, NORTH", HUD_LAYER, tooltipTheme = "stamina")
+		src.stamina_bar = create_screen("stamina_bar","Stamina", src.icon_hud, "stamina_bar", "EAST-1, NORTH", HUD_LAYER-1, customType = /atom/movable/screen/hud/stamina_bar)
 		stamina_back = create_screen("stamina_back","Stamina", src.icon_hud, "stamina_back", "EAST-1, NORTH", HUD_LAYER-2)
-		if (master?.stamina_bar)
-			stamina.desc = master.stamina_bar.getDesc(master)
+		stamina.desc = src.stamina_bar.getDesc(M)
 
 		bodytemp = create_screen("bodytemp","Temperature", src.icon_hud, "temp0", "EAST-2, NORTH", HUD_LAYER, tooltipTheme = "tempInd tempInd0")
 		bodytemp.desc = "The temperature feels fine."
@@ -1163,8 +1164,7 @@
 			for (var/atom/movable/screen/hud/H in inventory_bg)
 				H.icon = new_file
 
-			if (master.stamina_bar)
-				master.stamina_bar.icon = new_file
+			src.stamina_bar?.icon = new_file
 
 	proc/set_sprint(var/on)
 		if(stamina)

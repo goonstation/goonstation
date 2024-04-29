@@ -20,6 +20,8 @@
 	var/atom/movable/screen/hud/resist = null
 	/// stamina hud element
 	var/atom/movable/screen/hud/stamina = null
+	/// actual stamina bar
+	var/atom/movable/screen/hud/stamina_bar/stamina_bar = null
 	/// backdrop of stamina hud element
 	var/atom/movable/screen/hud/stamina_back = null
 	/// temperature hud element
@@ -59,6 +61,8 @@
 	src.master = M
 
 /datum/hud/critter/disposing()
+	src.delete_hud_zone("health_zone")
+	// Will cleanly dispose once everything is in hud zones
 	src.master = null
 	. = ..()
 
@@ -73,20 +77,16 @@
 		health_zone.register_element(src.create_stamina_element(), "stamina")
 	health_zone.register_element(src.create_temperature_element(), "temp")
 
-
-	// problem is health and temp are overlapping somehow
-
-
 	// these elements rely on being able to breathe
 	if (src.master.get_health_holder("oxy"))
 		src.create_oxygen_element()
 		src.create_fire_element()
 		src.create_toxin_element()
 
-	src.create_radiation_element()
+	// src.create_radiation_element()
 
-	if (src.master.can_bleed)
-		src.create_bleeding_element()
+	// if (src.master.can_bleed)
+	// 	src.create_bleeding_element()
 
 	src.create_throwing_element()
 
@@ -379,11 +379,10 @@
 					global.animate_buff_in(U)
 	return
 
-//HUMAN COPOY PASTE
-/// updates stamina sprinting icon state
-/datum/hud/critter/proc/set_sprint(var/on)
-	if(src.stamina)
-		src.stamina.icon_state = on ? "stamina_sprint" : "stamina"
+/// Updates stamina sprinting icon state
+/datum/hud/critter/proc/set_sprint(on)
+	var/datum/hud_element/stamina_elem = src.get_hudzone("health_zone").get_element("stamina")
+	stamina_elem?.screen_obj.icon_state = on ? "stamina_sprint" : "stamina"
 
 /// updates bleeding hud element
 /datum/hud/critter/proc/update_blood_indicator()
@@ -504,14 +503,14 @@
 	src.right_offset = initial_hand_offset + length(src.master.hands)
 
 /datum/hud/critter/proc/create_health_element()
-	return new /datum/hud_element(src.create_screen("health", "health", src.hud_icon, "health0"))
+	return new /datum/hud_element(src.create_screen("health", "Health", src.hud_icon, "health0"))
 
 /datum/hud/critter/proc/create_stamina_element()
-	var/atom/movable/screen/hud/stam_back = src.create_screen("stamina_back", "Stamina", src.hud_icon, "stamina_back", layer = HUD_LAYER_UNDER_1)
+	var/atom/movable/screen/hud/stam_back = src.create_screen("stamina_back", "Stamina", src.hud_icon, "stamina_back", layer = HUD_LAYER_UNDER_2)
+	src.stamina_bar = create_screen("stamina_bar","Stamina", src.hud_icon, "stamina_bar", "EAST-1, NORTH", HUD_LAYER_UNDER_1, customType = /atom/movable/screen/hud/stamina_bar)
 	var/atom/movable/screen/hud/stam_front = src.create_screen("stamina", "Stamina", src.hud_icon, "stamina", layer = HUD_LAYER, tooltipTheme = "stamina")
 	stam_front.underlays += stam_back
-	if (src.master.stamina_bar)
-		stam_front.desc = src.master.stamina_bar.getDesc(src.master)
+	stam_front.desc = src.stamina_bar.getDesc(src.master)
 	return new /datum/hud_element(
 		stam_front
 	)
