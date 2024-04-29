@@ -23039,12 +23039,6 @@
 	},
 /turf/space,
 /area/station/solar/aisat)
-"jtk" = (
-/obj/cable{
-	icon_state = "0-9"
-	},
-/turf/space,
-/area/space)
 "juF" = (
 /turf/simulated/floor/airless/solar,
 /area/space)
@@ -100113,7 +100107,7 @@ kSG
 kSG
 hcV
 aaa
-jtk
+aaa
 aaa
 aaa
 aaa
