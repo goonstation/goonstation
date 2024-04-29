@@ -1019,6 +1019,72 @@
 				M.vis_contents -= E
 			qdel(E)
 
+/// A looping weld action bar. Duration and cost are per cycle.
+/datum/action/bar/private/welding/loop
+	/// Mob doing the action
+	var/mob/user
+	/// Tool being used to weld
+	var/obj/item/welder
+	/// Unit cost per cycle (for charging fuel)
+	var/cycle_cost
+
+	New(owner, target, duration, proc_path, proc_args, end_message, start, stop, call_proc_on, tool, cost)
+		. = ..()
+		src.user = owner
+		src.welder = tool
+		if(cost)
+			src.cycle_cost = cost
+
+	proc/checkContinue()
+		if(!isweldingtool(src.welder)) // omnitools
+			return FALSE
+		return TRUE
+
+	onStart()
+		..()
+		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
+		src.loopStart()
+
+	loopStart()
+		..()
+		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
+		if(src.welder:try_weld(owner, src.cycle_cost))
+			..()
+		onRestart()
+
+
+/// Weld-repairing vehicles/pods hulls
+/datum/action/bar/private/welding/loop/vehicle
+	duration = 0.5 SECONDS
+	cycle_cost = 1
+
+/datum/action/bar/private/welding/loop/vehicle/checkContinue()
+	. = ..()
+	if(!.) return FALSE
+
+	var/obj/machinery/vehicle/vehicle = target
+	if(!istype(vehicle))
+		return FALSE
+
+	if(vehicle.health >= vehicle.maxhealth)
+		return FALSE
+
+	var/turf/T = get_turf(target)
+	if(T.active_liquid)
+		if(T.active_liquid.my_depth_level >= 3 && T.active_liquid.group.reagents.get_reagent_amount("tene")) //SO MANY PERIODS
+			boutput(user, SPAN_ALERT("The damaged parts are saturated with fluid. You need to move somewhere drier."))
+			return FALSE
+#ifdef MAP_OVERRIDE_NADIR
+	if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
+		//prevent in-acid welding from extending excursion times indefinitely
+		boutput(user, SPAN_ALERT("The damaged parts are saturated with acid. You need to move somewhere with less pressure."))
+		return FALSE
+#endif
+	return TRUE
+
 //CLASSES & OBJS
 
 /obj/actions //These objects are mostly used for the attached_objs var on mobs to attach progressbars to mobs.

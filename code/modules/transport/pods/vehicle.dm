@@ -115,25 +115,15 @@
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (health < maxhealth && isweldingtool(W))
-			var/turf/T = get_turf(src)
-			if(T.active_liquid)
-				if(T.active_liquid.my_depth_level >= 3 && T.active_liquid.group.reagents.get_reagent_amount("tene")) //SO MANY PERIODS
-					boutput(user, SPAN_ALERT("The damaged parts are saturated with fluid. You need to move somewhere drier."))
-					return
-#ifdef MAP_OVERRIDE_NADIR
-			if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
-				//prevent in-acid welding from extending excursion times indefinitely
-				boutput(user, SPAN_ALERT("The damaged parts are saturated with acid. You need to move somewhere with less pressure."))
+			if (actions.hasAction(user, /datum/action/bar/private/welding/loop/vehicle))
 				return
-#endif
-			if(!W:try_weld(user, 1))
-				return
-			src.health += 30
-			checkhealth()
-			src.add_fingerprint(user)
-			src.visible_message(SPAN_ALERT("[user] has fixed some of the dents on [src]!"))
-			if(health >= maxhealth)
-				src.visible_message(SPAN_ALERT("[src] is fully repaired!"))
+			var/datum/action/bar/icon/callback/action_bar
+			action_bar = new /datum/action/bar/private/welding/loop/vehicle(user, src, \
+			proc_path=/obj/machinery/vehicle/proc/weld_action, \
+			proc_args=list(user), \
+			tool=W)
+			action_bar.maximum_range = 2
+			actions.start(action_bar, user)
 			return
 
 		if (istype(W, /obj/item/shipcomponent))
@@ -833,6 +823,14 @@
 					return
 				if(-20 to 0)
 					shipcrit()
+
+/obj/machinery/vehicle/proc/weld_action(mob/user)
+	src.health += 30
+	src.checkhealth()
+	src.add_fingerprint(user)
+	src.visible_message(SPAN_ALERT("[user] has fixed some of the dents on [src]!"))
+	if(health >= maxhealth)
+		src.visible_message(SPAN_ALERT("[src] is fully repaired!"))
 
 /obj/machinery/vehicle/proc/shipcrit()
 	if (src.engine)
