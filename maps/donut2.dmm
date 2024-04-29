@@ -11527,7 +11527,6 @@
 /obj/item/device/audio_log{
 	pixel_y = 8
 	},
-/obj/item/clothing/glasses/thermal,
 /turf/simulated/floor/escape/corner{
 	dir = 1
 	},
