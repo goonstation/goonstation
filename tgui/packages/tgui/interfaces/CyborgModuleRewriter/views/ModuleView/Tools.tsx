@@ -6,9 +6,9 @@
  */
 
 import { SFC } from 'inferno';
-import { Tabs } from '../../../components';
-import { EmptyPlaceholder } from '../EmptyPlaceholder';
-import { ToolData } from '../type';
+import { Tabs } from '../../../../components';
+import { EmptyPlaceholder } from '../../EmptyPlaceholder';
+import type { ToolData } from '../../type/data';
 
 interface ToolProps {
   selected: boolean;
