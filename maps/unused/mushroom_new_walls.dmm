@@ -19165,6 +19165,11 @@
 	name = "Bridge Blast Doors";
 	opacity = 0
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	enter_id = "inner";
+	name = "Bridge"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "fDF" = (
@@ -25228,6 +25233,11 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	enter_id = "outer";
+	name = "Bridge"
+	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "lJw" = (
@@ -26763,6 +26773,11 @@
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
 	opacity = 0
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	enter_id = "inner";
+	name = "Bridge"
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -32206,6 +32221,11 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "bridge";
+	enter_id = "outer";
+	name = "Bridge"
+	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "rzQ" = (
