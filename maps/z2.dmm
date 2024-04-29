@@ -15475,7 +15475,7 @@
 /area/marsoutpost)
 "biQ" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/ingredient/pizza2{
+/obj/item/reagent_containers/food/snacks/ingredient/pizza_base{
 	pixel_y = 12
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/gcheese{
@@ -39236,7 +39236,7 @@
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cMM" = (
-/obj/item/reagent_containers/food/snacks/ingredient/pizza2,
+/obj/item/reagent_containers/food/snacks/ingredient/pizza_base,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cMN" = (

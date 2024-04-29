@@ -500,7 +500,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			if(prob(1))
 				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message(SPAN_ALERT("<B>The [src] screams!</B>"))
-			var/obj/item/reagent_containers/food/snacks/ingredient/pizza1/P = new /obj/item/reagent_containers/food/snacks/ingredient/pizza1(src.loc)
+			var/obj/item/reagent_containers/food/snacks/ingredient/pizza_base/P = new /obj/item/reagent_containers/food/snacks/ingredient/pizza_base(src.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(P)
 			qdel(src)
@@ -669,71 +669,86 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 		src.pixel_x = rand(-8, 8)
 		src.pixel_y = rand(-8, 8)
 
-/obj/item/reagent_containers/food/snacks/ingredient/pizza1
-	name = "unfinished pizza base"
-	desc = "You need to add tomatoes..."
+/obj/item/reagent_containers/food/snacks/ingredient/pizza_base
+	name = "pizza dough"
+	desc = "A good start to a delicious pizza."
 	icon_state = "pizzabase"
+	initial_volume = 50
+	custom_food = FALSE
+	var/image/sauce
+	var/sauce_color = "#d24300"
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+
+	/// how many times this pizza was flourished
+	var/fancy_spins = 0
+
+	var/list/obj/item/toppings_left
+	var/list/obj/item/toppings_right
+
+	get_desc(dist, mob/user)
+		if(dist > 2)
+			return
+		if(src.reagents?.total_volume)
+			var/datum/color/c = src.reagents.get_average_color()
+			var/nearest_color_text = get_nearest_color(c)
+			. = " The sauce is [nearest_color_text]."
+			. += src.reagents.get_exact_description(user)
+		else
+			. = " There is no sauce."
+
+	on_reagent_change(add)
+		. = ..()
+		src.sauce_color = src.reagents.get_average_rgb()
+		UpdateIcon()
+
+	update_icon()
+		sauce = SafeGetOverlayImage("sauce", src.icon, "pizzasauce")
+		sauce.appearance_flags = RESET_COLOR | PIXEL_SCALE
+		sauce.color = sauce_color
+		UpdateOverlays(sauce, "sauce")
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/ketchup) || istype(W, /obj/item/reagent_containers/food/snacks/plant/tomato))
-			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
-			var/obj/item/reagent_containers/food/snacks/ingredient/pizza2/D=new /obj/item/reagent_containers/food/snacks/ingredient/pizza2(W.loc)
-			user.u_equip(W)
-			user.put_in_hand_or_drop(D)
-			qdel(W)
-			qdel(src)
-		if (prob(25))
-			JOB_XP(user, "Chef", 1)
-		else if (iscuttingtool(W) || issawingtool(W))
-			boutput(user, SPAN_NOTICE("You cut [src] into smaller pieces..."))
+		if (!src.custom_food && (iscuttingtool(W) || issawingtool(W) || issnippingtool(W))) // make tortillas if untouched
+			boutput(user, SPAN_NOTICE("You cut [src] into smaller pieces."))
 			for(var/i = 1, i <= 3, i++)
 				new /obj/item/reagent_containers/food/snacks/ingredient/tortilla(get_turf(src))
 			qdel(src)
-		if (prob(25))
-			JOB_XP(user, "Chef", 1)
-		else ..()
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
+
+		if(W.is_open_container() && W.reagents.total_volume) // add sauce from open reagent container
+			src.custom_food = TRUE
+		..()
 
 	attack_self(var/mob/user as mob)
-		boutput(user, SPAN_NOTICE("You knead the [src] back into a blob."))
-		new /obj/item/reagent_containers/food/snacks/ingredient/dough(get_turf(src))
-		qdel (src)
+		if(user.traitHolder.hasTrait("training_chef") || prob(60))
+			src.custom_food = TRUE
+			user.visible_message(SPAN_NOTICE("[user] [pick("expertly", "acrobatically", "deftly", "masterfully")] spins \the [src]."), group = "pizzaspin")
+			src.fancy_spins++
+			if(src.fancy_spins == 10)
+				boutput(user,SPAN_ALERT("\The [src] is spun to perfection."))
+				if (prob(50))
+					JOB_XP(user, "Chef", 1)
+		else
+			user.visible_message(SPAN_ALERT("[user] [pick("clumsily", "catastrophically", "shamefully")] fumbles \the [src]."), group = "pizzaspin")
+			src.fancy_spins = 0
+			user.setStatus("resting", duration = INFINITE_STATUS)
+			user.force_laydown_standup()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user == target)
-			boutput(user, SPAN_ALERT("You need to add tomatoes, you greedy beast!"))
+			boutput(user, SPAN_ALERT("You need to at least bake it, you greedy beast!"))
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
 
-/obj/item/reagent_containers/food/snacks/ingredient/pizza2
-	name = "half-finished pizza base"
-	desc = "You need to add cheese..."
-	icon_state = "pizzabase2"
-	custom_food = 0
+	Eat(mob/M as mob, mob/user, by_matter_eater = TRUE)
+		boutput(user, SPAN_ALERT("You need to at least bake it, you greedy beast!"))
+		return
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheese))
-			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
-			var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/D = new /obj/item/reagent_containers/food/snacks/ingredient/pizza3(W.loc)
-			user.u_equip(W)
-			user.put_in_hand_or_drop(D)
-			qdel(W)
-			qdel(src)
-		else ..()
 
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (user == target)
-			boutput(user, SPAN_ALERT("You need to add cheese, you greedy beast!"))
-			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
-			return
-		else
-			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
-			return
-
-	attack_self(mob/user as mob)
-		attack(user, user)
 
 /obj/item/reagent_containers/food/snacks/ingredient/pizza3
 	name = "uncooked pizza"

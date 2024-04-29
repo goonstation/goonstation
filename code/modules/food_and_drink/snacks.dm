@@ -64,25 +64,28 @@
 	fill_amt = 5
 	bites_left = 1
 	heal_amt = 1
+	initial_reagents = 10
 	w_class = W_CLASS_TINY
+	var/sharpened = FALSE
 
-	attack()
-		if (sharpened)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (src.sharpened)
 			boutput(target, SPAN_ALERT("The pizza was too pointy!"))
 			take_bleeding_damage(target, user, 50, DAMAGE_CUT)
 		..()
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
-		if (iscarbon(A))
-			var/mob/living/carbon/human/H = A
-			H.implant.Add(src)
-			src.visible_message(SPAN_ALERT("[src] gets embedded in [H]!"))
-			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
-			H.changeStatus("weakened", 2 SECONDS)
-			src.set_loc(H)
-			src.transfer_all_reagents(H)
-		random_brute_damage(A, 11)
-		take_bleeding_damage(A, null, 25, DAMAGE_STAB)
+		if(src.sharpened)
+			if (iscarbon(hit_atom))
+				var/mob/living/carbon/human/H = hit_atom
+				H.implant.Add(src)
+				src.visible_message(SPAN_ALERT("[src] gets embedded in [H]!"))
+				playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
+				H.changeStatus("weakened", 2 SECONDS)
+				src.set_loc(H)
+				src.transfer_all_reagents(H)
+			random_brute_damage(hit_atom, 11)
+			take_bleeding_damage(hit_atom, null, 25, DAMAGE_STAB)
 		. = ..()
 
 
@@ -98,12 +101,8 @@
 	mat_changeappearance = 0
 	mat_changename = 0
 	mat_changedesc = 0
-	initial_volume = 50
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice
-
-	var/list/obj/item/toppings_left
-	var/list/obj/item/toppings_right
 
 	var/sharpened = FALSE
 
@@ -139,43 +138,23 @@
 	throw_impact(atom/A)
 		if (!sharpened || isnull(A))
 			..()
-
-	proc/add_topping(var/num)
-		var/icon/I
-		if (!sliced)
-			I = new /icon('icons/obj/foodNdrink/food_meals.dmi',"pizza_topping_[x]")
-			I.Blend(topping_color, ICON_ADD)
-			src.overlays += I
-		else if (num == 0 && sliced == 1) // Bad, I know, sorry!
-			I = new /icon('icons/obj/foodNdrink/food_meals.dmi',"pizza_topping_s1")
-			I.Blend(topping_color, ICON_ADD)
-			src.overlays += I
-		else
-			var/x = 0
-			while(x++ < num)
-				I = new /icon('icons/obj/foodNdrink/food_meals.dmi',"pizza_topping_s[x]")
-				topping_color = pick(src.topping_holder)
-				src.topping_holder -= topping_color
-				I.Blend(topping_color, ICON_ADD)
-				src.overlays += I
-
 /obj/item/reagent_containers/food/snacks/pizza/pepperoni
 	name = "pepperoni pizza"
 	desc = "A typical pepperoni pizza."
 	initial_volume = 80
-	initial_reagents = list("tomato_sauce" = 50, "cheese" = 10, "pepperoni" = 20)
+	initial_reagents = list("juice_tomato" = 50, "cheese" = 10, "pepperoni" = 20)
 
 /obj/item/reagent_containers/food/snacks/pizza/meatball
 	name = "meatball pizza"
 	desc = "A typical meatball pizza."
 	initial_volume = 80
-	initial_reagents = list("tomato_sauce" = 50, "cheese" = 10, "beff" = 20)
+	initial_reagents = list("juice_tomato" = 50, "cheese" = 10, "beff" = 20)
 
 /obj/item/reagent_containers/food/snacks/pizza/mushroom
 	name = "mushroom pizza"
 	desc = "A typical mushroom pizza."
 	initial_volume = 80
-	initial_reagents = list("tomato_sauce" = 50, "cheese" = 10, "space_fungus" = 20)
+	initial_reagents = list("juice_tomato" = 50, "cheese" = 10, "space_fungus" = 20)
 
 /obj/item/reagent_containers/food/snacks/pizza/xmas
 	name = "\improper Spacemas pizza"

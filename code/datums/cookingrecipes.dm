@@ -978,10 +978,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 				customPizza.name = "pizza"
 				customPizza.desc = "A plain cheese and tomato pizza. Looks pretty alright."
 			customPizza.overlays += P.overlays
-			customPizza.num = P.num
-			customPizza.topping = P.topping
-			customPizza.topping_types = P.topping_types
-			customPizza.topping_colors = P.topping_colors
 			customPizza.heal_amt = P.heal_amt
 			P.reagents.trans_to(customPizza, P.reagents.total_volume)
 			customPizza.food_effects += P.food_effects

@@ -2364,14 +2364,14 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 
 	vend_product()
 		var/obj/item/reagent_containers/food/snacks/pizza/pizza = ..()
-		if (src.sharpen)
+		/*if (src.sharpen)
 			pizza.sharpened = TRUE
 			var/list/slices = pizza.make_slices()
 			for(var/obj/item/reagent_containers/food/snacks/pizza/slice in slices)
 				slice.throw_at(usr, 16, 3)
 			return slices[1]
-		else
-			return pizza
+		else*/
+		return pizza
 
 	prevend_effect()
 		playsound(src.loc, 'sound/machines/driveclick.ogg', 30, 1, 0.1)
