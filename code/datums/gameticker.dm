@@ -208,14 +208,11 @@ var/global/current_state = GAME_STATE_INVALID
 	sleep(0.5 SECONDS)
 
 	//Distribute jobs
-	logTheThing(LOG_DEBUG, null, "distributing jobs")
 	distribute_jobs()
 
 	//Create player characters and transfer them
-	logTheThing(LOG_DEBUG, null, "creating characters")
 	create_characters()
 
-	logTheThing(LOG_DEBUG, null, "adding minds")
 	add_minds()
 
 	// rip collar key, nerds murdered people for you as non-antags and it was annoying
@@ -223,11 +220,9 @@ var/global/current_state = GAME_STATE_INVALID
 
 #ifdef CREW_OBJECTIVES
 	//Create objectives for the non-traitor/nogoodnik crew.
-	logTheThing(LOG_DEBUG, null, "generating objectives")
 	generate_crew_objectives()
 #endif
 	//picky eater trait handling
-	logTheThing(LOG_DEBUG, null, "picky eatering")
 	for (var/mob/living/carbon/human/H in mobs)
 		if (H.client && H.traitHolder?.hasTrait("picky_eater"))
 			var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
@@ -236,7 +231,6 @@ var/global/current_state = GAME_STATE_INVALID
 				H.mind.store_memory(eater_trait.explanation_text)
 
 	//Equip characters
-	logTheThing(LOG_DEBUG, null, "equipping characters")
 	equip_characters()
 
 #ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE

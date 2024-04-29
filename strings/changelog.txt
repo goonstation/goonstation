@@ -1,6 +1,34 @@
 
+(t)sun apr 28 24
+(u)tarmunora
+(+)Armory shotgun racks have been swapped out for phaser racks (and vice versa phaser crates for shotgun crates). Armory phasers come with a slightly larger default power cell. phaser rack sprites by Flaborized
+(u)Azrun
+(p)18383
+(e)🆕🗺🎨🔄📄🔬💡|C-Feature, A-Mapping, C-Sprites, C-Rework, A-UI, A-Science, A-Station-Systems
+(*)Long Range Teleport has been folded into the normal Teleporter!  Check out the Observatory to go on new adventures!
+(t)sat apr 27 24
+(u)glowbold
+(p)18275
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Using the Authentication Disk on the armory computer will revoke armory access.
+(*)Once per round, the Authentication Disk can authorize armory access, but doing so will prevent revoking armory access.
+(u)glowbold
+(p)18653
+(e)🆕⚖💊|C-Feature, C-Balance, A-Medical
+(+)Puritans recieve major cloning defects when cloned.
+(u)tarmunora
+(+)AI can now use ; instead of :1 to speak over their primary internal radio
+(u)LeahTheTech
+(p)18657
+(e)⚖⚗|C-Balance, A-Chemistry
+(*)Simplified the charcoal recipe: (1) Carbon + (1) Ash => (1) Charcoal + (1) Steam, with additional charcoal yield if the steam is prevented from evaporating.
+(u)FlameArrow57
+(p)18569
+(e)🪲💅🔨|C-Bug, C-QoL, A-Player-Actions
+(+)Added a visible action bar for hand staunching wounds.
 (t)fri apr 26 24
 (u)LeahTheTech
+(*)Item grabs now throw the person being grabbed rather than the item. No more throwing your gun in a hostage situation!
 (p)18621
 (e)⚖📦|C-Balance, A-Game-Objects
 (*)Gas pipes can now be reinforced with metal sheets to increase their pressure tolerance based on the material's density.

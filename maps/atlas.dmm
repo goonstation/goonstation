@@ -1895,7 +1895,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
 "agW" = (
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /turf/simulated/floor/caution/west,
 /area/station/ai_monitored/armory)
 "agX" = (
@@ -11423,7 +11423,7 @@
 	},
 /area/station/mining/refinery)
 "aRO" = (
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/caution/south,
 /area/station/ai_monitored/armory)
