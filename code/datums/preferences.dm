@@ -1982,7 +1982,7 @@ var/global/list/hair_details = list("einstein" = /datum/customization_style/hair
 	"messy_waves" = /datum/customization_style/hair/short/messy_waves_half,\
 	"longtwintail" = /datum/customization_style/hair/hairup/longtwintail_half,\
 	"glamponytail" = /datum/customization_style/hair/hairup/glamponytail_half,\
-	"pig" = /datum/customization_style/hair/hairup/half,\
+	"pig" = /datum/customization_style/hair/hairup/pig_half,\
 	"wavy_tail" = /datum/customization_style/hair/hairup/wavy_tail_half\
 	)
 
