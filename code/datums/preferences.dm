@@ -1955,23 +1955,36 @@ var/global/list/hair_details = list("einstein" = /datum/customization_style/hair
 	"80s" = /datum/customization_style/hair/long/eightiesfade,\
 	"glammetal" = /datum/customization_style/hair/long/glammetalO,\
 	"lionsmane" = /datum/customization_style/hair/long/lionsmane_fade,\
-	"longwaves" = /datum/customization_style/hair/long/longwaves_fade,\
+	"longwaves" = list(/datum/customization_style/hair/long/longwaves_fade, /datum/customization_style/hair/long/longwaves_half),\
 	"ripley" = /datum/customization_style/hair/long/ripley_fade,\
-	"violet" = /datum/customization_style/hair/long/violet_fade,\
+	"violet" = list(/datum/customization_style/hair/long/violet_fade, /datum/customization_style/hair/long/violet_half),\
 	"willow" = /datum/customization_style/hair/long/willow_fade,\
-	"rockponytail" = /datum/customization_style/hair/hairup/rockponytail_fade,\
-	"pompompigtail" = /datum/customization_style/hair/long/flatbangs, /datum/customization_style/hair/long/twobangs_long,\
+	"rockponytail" = list(/datum/customization_style/hair/hairup/rockponytail_fade, /datum/customization_style/hair/hairup/rockponytail_half),\
+	"pompompigtail" = list(/datum/customization_style/hair/long/flatbangs, /datum/customization_style/hair/long/twobangs_long),\
 	"breezy" = /datum/customization_style/hair/long/breezy_fade,\
-	"flick" = /datum/customization_style/hair/short/flick_fade,\
+	"flick" = list(/datum/customization_style/hair/short/flick_fade, /datum/customization_style/hair/short/flick_half),\
 	"mermaid" = /datum/customization_style/hair/long/mermaidfade,\
-	"smoothwave" = /datum/customization_style/hair/long/smoothwave_fade,\
+	"smoothwave" = list(/datum/customization_style/hair/long/smoothwave_fade, /datum/customization_style/hair/long/smoothwaves_half),\
 	"longbeard" = /datum/customization_style/beard/longbeardfade,\
 	"pomp" = /datum/customization_style/hair/short/pompS,\
 	"mohawk" = list(/datum/customization_style/hair/short/mohawkFT, /datum/customization_style/hair/short/mohawkFB, /datum/customization_style/hair/short/mohawkS),\
 	"emo" = /datum/customization_style/hair/short/emoH,\
 	"clown" = list(/datum/customization_style/hair/short/clownT, /datum/customization_style/hair/short/clownM, /datum/customization_style/hair/short/clownB),\
 	"dreads" = /datum/customization_style/hair/long/dreadsA,\
-	"afro" = list(/datum/customization_style/hair/short/afroHR, /datum/customization_style/hair/short/afroHL, /datum/customization_style/hair/short/afroST, /datum/customization_style/hair/short/afroSM, /datum/customization_style/hair/short/afroSB, /datum/customization_style/hair/short/afroSL, /datum/customization_style/hair/short/afroSR, /datum/customization_style/hair/short/afroSC, /datum/customization_style/hair/short/afroCNE, /datum/customization_style/hair/short/afroCNW, /datum/customization_style/hair/short/afroCSE, /datum/customization_style/hair/short/afroCSW, /datum/customization_style/hair/short/afroSV, /datum/customization_style/hair/short/afroSH))
+	"afro" = list(/datum/customization_style/hair/short/afroHR, /datum/customization_style/hair/short/afroHL, /datum/customization_style/hair/short/afroST, /datum/customization_style/hair/short/afroSM, \
+	/datum/customization_style/hair/short/afroSB, /datum/customization_style/hair/short/afroSL, /datum/customization_style/hair/short/afroSR, /datum/customization_style/hair/short/afroSC, \
+	/datum/customization_style/hair/short/afroCNE, /datum/customization_style/hair/short/afroCNW, /datum/customization_style/hair/short/afroCSE, /datum/customization_style/hair/short/afroCSW, \
+	/datum/customization_style/hair/short/afroSV, /datum/customization_style/hair/short/afroSH),\
+	"combedfront" = /datum/customization_style/hair/short/combedfrontbangs,\
+	"combedfrontshort" = /datum/customization_style/hair/short/combedfrontshortbangs,\
+	"longfront" = /datum/customization_style/hair/short/longfrontbangs,\
+	"spoon" = /datum/customization_style/hair/short/spoonbangs,\
+	"messy_waves" = /datum/customization_style/hair/short/messy_waves_half,\
+	"longtwintail" = /datum/customization_style/hair/hairup/longtwintail_half,\
+	"glamponytail" = /datum/customization_style/hair/hairup/glamponytail_half,\
+	"pig" = /datum/customization_style/hair/hairup/half,\
+	"wavy_tail" = /datum/customization_style/hair/hairup/wavy_tail_half\
+	)
 
 // all these icon state names are ridiculous
 var/global/list/feminine_ustyles = list("No Underwear" = "none",\
