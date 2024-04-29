@@ -5390,6 +5390,9 @@
 	pixel_x = 8;
 	pixel_y = 4
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "auV" = (
@@ -7128,10 +7131,12 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
-/obj/machinery/chem_heater,
-/obj/item/clothing/glasses/spectro,
+/obj/machinery/chem_heater{
+	pixel_x = 3;
+	dir = 8
+	},
 /obj/item/storage/wall{
-	spawn_contents = list(/obj/item/storage/box/fruit_wedges,/obj/item/storage/box/cocktail_doodads,/obj/item/storage/box/cocktail_umbrellas,/obj/item/storage/box/glassbox,/obj/item/hand_labeler,/obj/item/storage/firstaid/toxin,/obj/item/device/reagentscanner,/obj/item/reagent_containers/dropper,/obj/item/reagent_containers/dropper/mechanical,/obj/item/storage/box/ic_cones=2,/obj/item/storage/toolbox/emergency);
+	spawn_contents = list(/obj/item/storage/box/fruit_wedges,/obj/item/storage/box/cocktail_doodads,/obj/item/storage/box/cocktail_umbrellas,/obj/item/storage/box/glassbox,/obj/item/hand_labeler,/obj/item/storage/firstaid/toxin,/obj/item/device/reagentscanner,/obj/item/reagent_containers/dropper,/obj/item/reagednt_containers/dropper/mechanical,/obj/item/storage/box/ic_cones=2,/obj/item/storage/toolbox/emergency);
 	pixel_x = 32;
 	dir = 8
 	},
@@ -38893,6 +38898,9 @@
 	pixel_x = 9;
 	pixel_y = -5
 	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "dnk" = (
@@ -49480,12 +49488,6 @@
 	},
 /turf/space,
 /area/space)
-"lAh" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/catering)
 "lAF" = (
 /obj/table/auto,
 /obj/item/dye_bottle,
@@ -56478,9 +56480,6 @@
 /area/station/engine/engineering)
 "qRK" = (
 /obj/storage/secure/closet/civilian/bartender,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "qSm" = (
@@ -58941,7 +58940,11 @@
 /obj/table/wood/auto/desk,
 /obj/item/gun/russianrevolver{
 	pixel_x = -1;
-	pixel_y = 1
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_x = 9;
+	pixel_y = -2
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
@@ -119184,7 +119187,7 @@ atP
 awj
 axz
 tqo
-lAh
+tbE
 tbE
 tbE
 aqY
