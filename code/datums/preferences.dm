@@ -1964,7 +1964,7 @@ var/global/list/hair_details = list("einstein" = /datum/customization_style/hair
 	"breezy" = /datum/customization_style/hair/long/breezy_fade,\
 	"flick" = list(/datum/customization_style/hair/short/flick_fade, /datum/customization_style/hair/short/flick_half),\
 	"mermaid" = /datum/customization_style/hair/long/mermaidfade,\
-	"smoothwave" = list(/datum/customization_style/hair/long/smoothwave_fade, /datum/customization_style/hair/long/smoothwaves_half),\
+	"smoothwave" = list(/datum/customization_style/hair/long/smoothwave_fade, /datum/customization_style/hair/long/smoothwave_half),\
 	"longbeard" = /datum/customization_style/beard/longbeardfade,\
 	"pomp" = /datum/customization_style/hair/short/pompS,\
 	"mohawk" = list(/datum/customization_style/hair/short/mohawkFT, /datum/customization_style/hair/short/mohawkFB, /datum/customization_style/hair/short/mohawkS),\
