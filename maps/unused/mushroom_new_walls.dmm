@@ -13831,7 +13831,7 @@
 	hardened = 1;
 	id = "medbay_entrance"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
 "bqO" = (
 /turf/simulated/floor/white,
