@@ -51,8 +51,7 @@
 		LAZYLISTINIT(src.fingerprints)
 
 		if (H.gloves) // Fixed: now adds distorted prints even if 'fingerprintslast == ckey'. Important for the clean_forensic proc (Convair880).
-			if (!H.gloves.no_prints) // Stops very sneaky gloves from creating prints
-				seen_print = H.gloves.distort_prints(H.bioHolder.fingerprints, TRUE)
+			seen_print = H.gloves.distort_prints(H.bioHolder.fingerprints, TRUE)
 		else
 			seen_print = H.bioHolder.fingerprints
 
