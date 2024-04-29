@@ -21468,6 +21468,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	enter_id = "inner";
+	name = "Engineering"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "hOw" = (
@@ -25890,6 +25895,11 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering";
+	enter_id = "outer";
+	name = "Engineering"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
