@@ -176,7 +176,7 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 		prev_data[P_INDEX] = 0
 		for(var/ikey in overlay_refs) //Because we're storing the position of each overlay in the list we need to shift our indices down to stay synched
 			var/list/L = overlay_refs[ikey]
-			if(length(L) && L[P_INDEX] >= index)
+			if(L?[P_INDEX] >= index)
 				L[P_INDEX]--
 
 	if(I)
@@ -231,7 +231,6 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 		else
 			stack_trace("Overlays on [identify_object(src)] were modified by non-UpdateOverlays method.")
 
-		prev_data[P_INDEX] = 0
 		for(var/ikey in overlay_refs) //Because we're storing the position of each overlay in the list we need to shift our indices down to stay synched
 			var/list/L = overlay_refs[ikey]
 			if(L?[P_INDEX] >= index)
@@ -281,7 +280,6 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 				else
 					stack_trace("Overlays on [identify_object(src)] were modified by non-UpdateOverlays method.")
 
-				prev_data[P_INDEX] = 0
 				for(var/ikey in overlay_refs) //Because we're storing the position of each overlay in the list we need to shift our indices down to stay synched
 					var/list/L = overlay_refs[ikey]
 					if(L?[P_INDEX] >= index)
