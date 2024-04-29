@@ -16787,6 +16787,11 @@
 	dir = 4;
 	icon_state = "pipe-s"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "security";
+	enter_id = "inner";
+	name = "Security"
+	},
 /turf/simulated/floor/red/checker{
 	dir = 4
 	},
@@ -33280,6 +33285,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "security";
+	enter_id = "outer";
+	name = "Security"
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "sro" = (
