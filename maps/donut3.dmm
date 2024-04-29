@@ -33573,10 +33573,6 @@
 /area/station/quartermaster/office)
 "kfJ" = (
 /obj/table/auto,
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -4;
-	pixel_y = 9
-	},
 /obj/item/storage/box/revimp_kit{
 	pixel_x = 3;
 	pixel_y = -6
