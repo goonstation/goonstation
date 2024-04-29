@@ -14680,7 +14680,7 @@
 "buO" = (
 /obj/machinery/light/incandescent,
 /obj/storage/secure/closet/medical/chemical,
-/turf/simulated/floor/blue/checker,
+/turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/medical/head)
 "bwb" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
