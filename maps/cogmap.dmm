@@ -43424,15 +43424,15 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "guJ" = (
-/obj/machinery/door_control{
-	id = "bar";
-	name = "Bar Shutter Control";
-	pixel_x = -24
-	},
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c";
 	name = "factory pipe"
+	},
+/obj/machinery/door_control{
+	name = "Kitchen Shutter Control";
+	pixel_x = -24;
+	id = "kitchen"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
