@@ -206,7 +206,7 @@
 						access_emergency_storage, access_change_ids, access_eva, access_heads, access_head_of_personnel, access_medical_lockers,
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_kitchen, access_robotics, access_cargo, access_supply_console,
-						access_research, access_hydro, access_ranch, access_mail, access_ai_upload, access_pathology, access_researchfoyer,
+						access_research, access_hydro, access_ranch, access_ai_upload, access_pathology, access_researchfoyer,
 						access_telesci, access_teleporter)
 		if("Head of Security")
 #ifdef RP_MODE
@@ -219,7 +219,7 @@
 						access_emergency_storage, access_change_ids, access_eva, access_heads, access_medical_lockers,
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_crematorium, access_kitchen, access_robotics, access_cargo,
-						access_research, access_dwaine_superuser, access_hydro, access_ranch, access_mail, access_ai_upload,
+						access_research, access_dwaine_superuser, access_hydro, access_ranch, access_ai_upload,
 						access_engineering, access_teleporter, access_engineering_engine, access_engineering_power, access_engineering_control,
 						access_mining, access_pathology, access_researchfoyer)
 #endif
@@ -258,7 +258,7 @@
 				access_medical, access_medlab, access_morgue, access_securitylockers,
 				access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
 				access_emergency_storage, access_chapel_office, access_kitchen,
-				access_bar, access_janitor, access_robotics, access_cargo, access_construction, access_hydro, access_mail,
+				access_bar, access_janitor, access_robotics, access_cargo, access_construction, access_hydro,
 				access_engineering, access_maint_tunnels, access_external_airlocks,
 				access_tech_storage, access_engineering_storage, access_engineering_eva,
 				access_engineering_power, access_engineering_engine, access_mining_shuttle,
@@ -352,7 +352,7 @@
 		if("Assistant", "Staff Assistant", "Technical Assistant", "Radio Show Host")
 			return list(access_maint_tunnels, access_tech_storage)
 		if("Mail Courier")
-			return list(access_maint_tunnels, access_mail, access_heads, access_cargo, access_hangar)
+			return list(access_maint_tunnels, access_heads, access_cargo, access_hangar)
 
 		//////////////////////////// Other or gimmick
 		if("VIP")
@@ -379,7 +379,7 @@
 	            access_emergency_storage, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
 	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology,
-	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_ranch, access_mail,
+	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_ranch,
 	            access_engineering, access_maint_tunnels, access_external_airlocks,
 	            access_tech_storage, access_engineering_storage, access_engineering_eva,
 	            access_engineering_power, access_engineering_engine, access_mining_shuttle,
@@ -394,7 +394,7 @@
 	            access_emergency_storage, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
 	            access_chapel_office, access_kitchen, access_medical_lockers, access_pathology,
-	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_ranch, access_mail,
+	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_construction, access_hydro, access_ranch,
 	            access_engineering, access_maint_tunnels, access_external_airlocks,
 	            access_tech_storage, access_engineering_storage, access_engineering_eva,
 	            access_engineering_power, access_engineering_engine, access_mining_shuttle,
