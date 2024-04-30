@@ -2364,13 +2364,23 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 
 	vend_product()
 		var/obj/item/reagent_containers/food/snacks/pizza/pizza = ..()
-		/*if (src.sharpen)
+		if (src.sharpen)
+			pizza.set_loc(src) // to hide the pizza while it slices it up slowly
 			pizza.sharpened = TRUE
-			var/list/slices = pizza.make_slices()
-			for(var/obj/item/reagent_containers/food/snacks/pizza/slice in slices)
-				slice.throw_at(usr, 16, 3)
-			return slices[1]
-		else*/
+			var/amount_to_transfer = round(pizza.reagents.total_volume / pizza.slice_amount) // unfortunately a partial copy paste from slice code
+			pizza.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
+			pizza.onSlice()
+			var/turf/T = get_turf(src)
+			SPAWN(0)
+				for (var/i in 1 to pizza.slice_amount)
+					var/atom/slice_result = new pizza.slice_product(T)
+					if(istype(slice_result, /obj/item/reagent_containers/food))
+						var/obj/item/reagent_containers/food/slice = slice_result
+						pizza.process_sliced_products(slice, amount_to_transfer)
+						slice.throw_at(usr, 16, 3)
+						sleep(1 DECI SECOND) // introduced because this actually just instacrit you before
+				qdel(pizza)
+				return
 		return pizza
 
 	prevend_effect()

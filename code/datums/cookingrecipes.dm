@@ -933,12 +933,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 		return customSandwich
 
 /*
-/datum/cookingrecipe/oven/pizza_fresh
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza3
-	cookbonus = 18
-	output = /obj/item/reagent_containers/food/snacks/pizza/fresh
-	category = "Pizza"
-
 /datum/cookingrecipe/oven/pizza_ball
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizzab
 	cookbonus = 18
@@ -956,9 +950,10 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	cookbonus = 18
 	output = /obj/item/reagent_containers/food/snacks/pizza/shroom
 	category = "Pizza"
+*/
 
-/datum/cookingrecipe/oven/pizza
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza3
+/datum/cookingrecipe/oven/pizza_custom
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza_base
 	cookbonus = 18
 	output = /obj/item/reagent_containers/food/snacks/pizza
 	category = "Pizza"
@@ -967,23 +962,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 		if (!ourCooker)
 			return null
 
-		var/obj/item/reagent_containers/food/snacks/pizza/customPizza = new /obj/item/reagent_containers/food/snacks/pizza (ourCooker)
+		for (var/obj/item/reagent_containers/food/snacks/ingredient/pizza_base/P in ourCooker)
+			return P.bake_pizza()
 
-		for (var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/P in ourCooker)
-			var/toppingstext = null
-			if(P.toppingstext)
-				toppingstext = P.toppingstext
-				customPizza.name = "[toppingstext] pizza"
-				customPizza.desc = "A pizza with [toppingstext] toppings. Looks pretty [pick("good","dang good","delicious","scrumptious","heavenly","alright")]."
-			else
-				customPizza.name = "pizza"
-				customPizza.desc = "A plain cheese and tomato pizza. Looks pretty alright."
-			customPizza.overlays += P.overlays
-			customPizza.heal_amt = P.heal_amt
-			P.reagents.trans_to(customPizza, P.reagents.total_volume)
-			customPizza.food_effects += P.food_effects
-
-		return customPizza*/
 
 /datum/cookingrecipe/oven/cheesetoast
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
