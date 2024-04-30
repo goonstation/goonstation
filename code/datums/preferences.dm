@@ -189,19 +189,7 @@ var/list/removed_jobs = list(
 
 		sanitize_null_values()
 
-		var/list/traits = list()
-		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
-			var/selected = (trait.id in traitPreferences.traits_selected)
-			var/list/categories
-			if (islist(trait.category))
-				categories = trait.category.Copy()
-				categories.Remove(src.traitPreferences.hidden_categories)
-
-			traits += list(list(
-				"id" = trait.id,
-				"selected" = selected,
-				"available" = src.traitPreferences.isAvailableTrait(trait.id, selected)
-			))
+		var/list/traits = src.traitPreferences.generateTraitData(user)
 
 		var/list/custom_parts_data = list()
 		for (var/slot_id in src.custom_parts)
