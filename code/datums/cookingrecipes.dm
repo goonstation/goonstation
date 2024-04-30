@@ -932,6 +932,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 
 		return customSandwich
 
+/*
 /datum/cookingrecipe/oven/pizza_fresh
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza3
 	cookbonus = 18
@@ -982,7 +983,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 			P.reagents.trans_to(customPizza, P.reagents.total_volume)
 			customPizza.food_effects += P.food_effects
 
-		return customPizza
+		return customPizza*/
 
 /datum/cookingrecipe/oven/cheesetoast
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice

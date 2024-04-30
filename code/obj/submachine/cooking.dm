@@ -550,9 +550,9 @@ table#cooktime a#start {
 			src.recipes = list()
 
 		if (!src.recipes.len)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_shroom(src)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_pepper(src)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_ball(src)
+			//src.recipes += new /datum/cookingrecipe/oven/pizza_shroom(src)
+			//src.recipes += new /datum/cookingrecipe/oven/pizza_pepper(src)
+			//src.recipes += new /datum/cookingrecipe/oven/pizza_ball(src)
 			src.recipes += new /datum/cookingrecipe/oven/haggass(src)
 			src.recipes += new /datum/cookingrecipe/oven/haggis(src)
 			src.recipes += new /datum/cookingrecipe/oven/scotch_egg(src)
@@ -771,8 +771,8 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/porridge(src)
 			src.recipes += new /datum/cookingrecipe/oven/ratatouille(src)
 			// Put all single-ingredient recipes after this point
-			src.recipes += new /datum/cookingrecipe/oven/pizza(src)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_fresh(src)
+			//src.recipes += new /datum/cookingrecipe/oven/pizza(src)
+			//src.recipes += new /datum/cookingrecipe/oven/pizza_fresh(src)
 			src.recipes += new /datum/cookingrecipe/oven/cake_custom_item(src)
 			src.recipes += new /datum/cookingrecipe/oven/pancake(src)
 			src.recipes += new /datum/cookingrecipe/oven/bread(src)
