@@ -162,7 +162,7 @@ datum
 							did_not_react = 0
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if (H.mutantrace.aquaphobic && istype(src, /datum/reagent/water))
+						if (H.mutantrace?.aquaphobic && istype(src, /datum/reagent/water))
 							animate_shake(H)
 							if (prob(50))
 								H.emote("scream")

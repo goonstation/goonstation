@@ -203,7 +203,7 @@
 				if (!locate(/obj/linked_laser/ptl) in get_turf(L)) //safety because Uncross is somehow unreliable
 					affecting_mobs -= L
 					continue
-				if(burn_living(L,adj_output*PTLEFFICIENCY)) //returns 1 if they are gibbed, 0 otherwise
+				if(burn_living(L,adj_output)) //returns 1 if they are gibbed, 0 otherwise
 					affecting_mobs -= L
 
 			charge -= adj_output
