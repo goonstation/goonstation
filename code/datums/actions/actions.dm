@@ -1013,47 +1013,44 @@
 		else
 			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
 
-		if(E)
-			if(ismovable(src.target))
-				var/atom/movable/M = src.target
-				M.vis_contents -= E
-			qdel(E)
-
 /// A looping weld action bar. Duration and cost are per cycle.
 /datum/action/bar/private/welding/loop
-	/// Mob doing the action
-	var/mob/user
-	/// Tool being used to weld
+	/// Tool being used to weld (weldingtool, omnitool, etc)
 	var/obj/item/welder
 	/// Unit cost per cycle (for charging fuel)
 	var/cycle_cost
 
 	New(owner, target, duration, proc_path, proc_args, end_message, start, stop, call_proc_on, tool, cost)
 		. = ..()
-		src.user = owner
 		src.welder = tool
 		if(cost)
 			src.cycle_cost = cost
 
-	proc/checkContinue()
-		if(!isweldingtool(src.welder)) // omnitools
-			return FALSE
-		return TRUE
+	canRunCheck(in_start)
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/M = owner
+		if (!istype(M) || !isweldingtool(M.equipped()) || !src.welder:welding)
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 	onStart()
 		..()
-		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
 		src.loopStart()
 
-	loopStart()
-		..()
-		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
-
 	onEnd()
-		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
-		if(src.welder:try_weld(owner, src.cycle_cost))
-			..()
-		onRestart()
+		if(!src.welder:try_weld(owner, src.cycle_cost))
+			src.interrupt(INTERRUPT_ALWAYS)
+			return
+		..()
+		if(src.welder:get_fuel())
+			src.onResume()
+			src.onRestart()
 
 
 /// Weld-repairing vehicles/pods hulls
@@ -1061,29 +1058,31 @@
 	duration = 0.5 SECONDS
 	cycle_cost = 1
 
-/datum/action/bar/private/welding/loop/vehicle/checkContinue()
+/datum/action/bar/private/welding/loop/vehicle/New(owner, target, duration, proc_path, proc_args, end_message, start, stop, call_proc_on, tool, cost)
 	. = ..()
-	if(!.) return FALSE
+	src.place_to_put_bar = owner
+
+/datum/action/bar/private/welding/loop/vehicle/canRunCheck(in_start)
+	..()
 
 	var/obj/machinery/vehicle/vehicle = target
 	if(!istype(vehicle))
-		return FALSE
+		src.interrupt(INTERRUPT_ALWAYS)
 
 	if(vehicle.health >= vehicle.maxhealth)
-		return FALSE
+		src.interrupt(INTERRUPT_ALWAYS)
 
 	var/turf/T = get_turf(target)
 	if(T.active_liquid)
 		if(T.active_liquid.my_depth_level >= 3 && T.active_liquid.group.reagents.get_reagent_amount("tene")) //SO MANY PERIODS
-			boutput(user, SPAN_ALERT("The damaged parts are saturated with fluid. You need to move somewhere drier."))
-			return FALSE
+			boutput(owner, SPAN_ALERT("The damaged parts are saturated with fluid. You need to move somewhere drier."))
+			src.interrupt(INTERRUPT_ALWAYS)
 #ifdef MAP_OVERRIDE_NADIR
 	if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
 		//prevent in-acid welding from extending excursion times indefinitely
-		boutput(user, SPAN_ALERT("The damaged parts are saturated with acid. You need to move somewhere with less pressure."))
-		return FALSE
+		boutput(owner, SPAN_ALERT("The damaged parts are saturated with acid. You need to move somewhere with less pressure."))
+		src.interrupt(INTERRUPT_ALWAYS)
 #endif
-	return TRUE
 
 //CLASSES & OBJS
 

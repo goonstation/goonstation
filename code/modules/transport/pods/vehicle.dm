@@ -114,7 +114,7 @@
 
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
-		if (health < maxhealth && isweldingtool(W))
+		if (health < maxhealth && isweldingtool(W) && W:welding)
 			if (actions.hasAction(user, /datum/action/bar/private/welding/loop/vehicle))
 				return
 			var/datum/action/bar/icon/callback/action_bar
@@ -122,7 +122,6 @@
 			proc_path=/obj/machinery/vehicle/proc/weld_action, \
 			proc_args=list(user), \
 			tool=W)
-			action_bar.maximum_range = 2
 			actions.start(action_bar, user)
 			return
 
