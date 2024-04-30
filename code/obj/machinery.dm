@@ -350,7 +350,7 @@
 	var/obj/machinery/door/d1 = null
 	var/obj/machinery/door/d2 = null
 	anchored = ANCHORED
-	req_access = list(access_armory)
+	req_access = list(access_security)
 
 /obj/machinery/noise_switch
 	name = "Speaker Toggle"

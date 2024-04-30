@@ -201,7 +201,7 @@
 		if("Captain")
 			return get_all_accesses()
 		if("Head of Personnel")
-			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_forensics_lockers, access_armory,
+			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_forensics_lockers,
 						access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
 						access_emergency_storage, access_change_ids, access_eva, access_heads, access_head_of_personnel, access_medical_lockers,
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
@@ -214,7 +214,7 @@
 			hos_access += access_maxsec
 			return hos_access
 #else
-			return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers, access_forensics_lockers, access_armory,
+			return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers, access_forensics_lockers,
 						access_tox, access_tox_storage, access_chemistry, access_medical, access_morgue, access_medlab,
 						access_emergency_storage, access_change_ids, access_eva, access_heads, access_medical_lockers,
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
@@ -254,7 +254,7 @@
 		///////////////////////////// Security
 		if("Security Officer")
 #ifdef RP_MODE
-			return list(access_security, access_brig, access_forensics_lockers, access_armory,
+			return list(access_security, access_brig, access_forensics_lockers,
 				access_medical, access_medlab, access_morgue, access_securitylockers,
 				access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
 				access_emergency_storage, access_chapel_office, access_kitchen,
@@ -373,7 +373,7 @@
 			return list()
 
 /proc/get_all_accesses()  // not adding the special stuff to this
-	return list(access_security, access_brig, access_forensics_lockers, access_armory,
+	return list(access_security, access_brig, access_forensics_lockers,
 	            access_medical, access_medlab, access_morgue, access_securitylockers,
 	            access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
 	            access_emergency_storage, access_change_ids, access_ai_upload,
@@ -388,7 +388,7 @@
 				access_researchfoyer, access_telesci, access_artlab, access_robotdepot)
 
 /proc/syndicate_spec_ops_access() //syndie spec ops need to get out of the listening post.
-	return list(access_security, access_brig, access_forensics_lockers, access_armory,
+	return list(access_security, access_brig, access_forensics_lockers,
 	            access_medical, access_medlab, access_morgue, access_securitylockers,
 	            access_tox, access_tox_storage, access_chemistry, access_carrypermit,
 	            access_emergency_storage, access_change_ids, access_ai_upload,
