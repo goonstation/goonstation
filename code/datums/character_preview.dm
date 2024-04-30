@@ -147,8 +147,18 @@
 		preview_mob.organHolder.left_eye?.update_color(AH, "L")
 		preview_mob.organHolder.right_eye?.update_color(AH, "R")
 		preview_mob.organHolder.head.donor = preview_mob
-		//preview_mob.organHolder.head.donor_appearance.CopyOther(preview_mob.bioHolder.mobAppearance)
-		//preview_mob.update_colorful_parts()
+
+		if(preview_mob.mutantrace.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
+			preview_mob.bioHolder.mobAppearance.s_tone = preview_mob.bioHolder.mobAppearance.customization_first_color
+			preview_mob.update_colorful_parts()
+		else if(preview_mob.mutantrace.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_2)
+			preview_mob.bioHolder.mobAppearance.s_tone = preview_mob.bioHolder.mobAppearance.customization_second_color
+			preview_mob.update_colorful_parts()
+		else if(preview_mob.mutantrace.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_3)
+			preview_mob.bioHolder.mobAppearance.s_tone = preview_mob.bioHolder.mobAppearance.customization_third_color
+			preview_mob.update_colorful_parts()
+
+		preview_mob.update_colorful_parts()
 		preview_mob.set_body_icon_dirty()
 		preview_mob.set_face_icon_dirty()
 		preview_mob.real_name = "clone of " + name
