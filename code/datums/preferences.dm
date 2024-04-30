@@ -964,6 +964,7 @@ var/list/removed_jobs = list(
 						if (customization.trait_cost)
 							option_string += " ([customization.trait_cost] trait point[customization.trait_cost > 1 ? "s" : ""])"
 						options[option_string] = customization.id
+				src.traitPreferences.traitDataDirty = TRUE
 				var/result = tgui_input_list(usr, "Select custom part", "Pick part", options)
 				if (!result)
 					return FALSE
