@@ -87,7 +87,7 @@
 			src.add_topping(W, user, params)
 		return ..()
 
-	/// Used to pick the pizza up by click dragging some food to you, in case the pizza is covered in toppings
+	/// Used to pick the pizza up by click dragging a topping to you, in case the pizza is covered in toppings
 	proc/indirect_pickup(var/topping, mob/user, atom/over_object)
 		if (user == over_object && in_interact_range(src, user) && can_act(user))
 			src.Attackhand(user)
@@ -153,7 +153,6 @@
 			return 0
 		var/obj/item/reagent_containers/food/snacks/pizza/unbaked_pizza = src.bake_pizza(TRUE)
 		return unbaked_pizza.Eat(M, user, TRUE)
-
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (temperature >= T0C+3200) // syndicate zippos and raging plasmafires, for laughs
@@ -263,11 +262,11 @@
 /obj/item/reagent_containers/food/snacks/pizza
 	name = "pizza"
 	desc = "A sauceless, cheeseless pizza."
-	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "pizzacrust"
 	fill_amt = 1
 	bites_left = 12
-	heal_amt = 3
+	heal_amt = 1
 	w_class = W_CLASS_NORMAL
 	slice_amount = 6
 	sliceable = TRUE
@@ -277,6 +276,7 @@
 	mat_changeappearance = 0
 	mat_changename = 0
 	mat_changedesc = 0
+	var/sauce_color = "#d24300"
 	var/sharpened = FALSE
 
 	custom_food = 0
@@ -361,64 +361,177 @@
 			take_bleeding_damage(hit_atom, null, 25, DAMAGE_STAB)
 		. = ..()
 
-/obj/item/reagent_containers/food/snacks/pizza/pepperoni
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/standard)
+/obj/item/reagent_containers/food/snacks/pizza/standard
+	name = "fresh basic pizza"
+	desc = "Base non-bespoke oven pizza (you shouldn't see this)."
+	icon_state = "cheesepizza"
+	fill_amt = 4
+	bites_left = 12
+	heal_amt = 3
+	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/standard
+
+/obj/item/reagent_containers/food/snacks/pizza/standard/cheese
+	name = "fresh cheese pizza"
+	desc = "A cheesy pizza pie with thick tomato sauce."
+	icon_state = "cheesepizza"
+	initial_reagents = list("bread" = 10, "juice_tomato" = 10, "cheese" = 5)
+	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/standard/cheese
+
+/obj/item/reagent_containers/food/snacks/pizza/standard/meatball
+	name = "fresh meatball pizza"
+	desc = "A cheesy pizza pie topped with succulent meatballs."
+	icon_state = "meatballpizza"
+	initial_reagents = list("bread" = 10, "juice_tomato" = 10, "cheese" = 5, "beff" = 20)
+	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/standard/meatball
+
+/obj/item/reagent_containers/food/snacks/pizza/standard/pepperoni
+	name = "fresh pepperoni pizza"
+	desc = "A cheesy pizza pie topped with bright red sizzling pepperoni slices."
+	icon_state = "pepperonipizza"
+	initial_reagents = list("bread" = 10, "juice_tomato" = 10, "cheese" = 5, "pepperoni" = 20)
+	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/standard/pepperoni
+
+/obj/item/reagent_containers/food/snacks/pizza/standard/mushroom
+	name = "fresh mushroom pizza"
+	desc = "A cheesy pizza pie topped with fresh picked mushrooms."
+	icon_state = "mushroompizza"
+	initial_reagents = list("bread" = 10, "juice_tomato" = 10, "cheese" = 5, "space_fungus" = 20)
+	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/standard/mushroom
+
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/vendor)
+/obj/item/reagent_containers/food/snacks/pizza/vendor
+	name = "vendor pizza"
+	desc = "Base vendor pizza (you shouldn't see this)."
+	icon_state = "cheesepizza"
+	fill_amt = 4
+	bites_left = 6
+	heal_amt = 2
+	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor
+
+/obj/item/reagent_containers/food/snacks/pizza/vendor/cheese
+	name = "cheese pizza"
+	desc = "A greasy cheese pizza."
+	icon_state = "cheesepizza"
+	initial_reagents = list("bread" = 5, "juice_tomato" = 5, "cheese" = 5, "badgrease" = 20)
+	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/cheese
+
+/obj/item/reagent_containers/food/snacks/pizza/vendor/pepperoni
 	name = "pepperoni pizza"
-	desc = "A typical pepperoni pizza."
-	initial_volume = 80
-	initial_reagents = list("juice_tomato" = 50, "cheese" = 10, "pepperoni" = 20)
+	desc = "A greasy pepperoni pizza."
+	icon_state = "pepperonipizza"
+	initial_reagents = list("bread" = 5, "juice_tomato" = 5, "cheese" = 5, "pepperoni" = 15, "badgrease" = 20)
+	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/pepperoni
 
-/obj/item/reagent_containers/food/snacks/pizza/meatball
+/obj/item/reagent_containers/food/snacks/pizza/vendor/meatball
 	name = "meatball pizza"
-	desc = "A typical meatball pizza."
-	initial_volume = 80
-	initial_reagents = list("juice_tomato" = 50, "cheese" = 10, "beff" = 20)
+	desc = "A greasy meatball pizza."
+	icon_state = "meatballpizza"
+	initial_reagents = list("bread" = 5, "juice_tomato" = 5, "cheese" = 5, "beff" = 15, "badgrease" = 20)
+	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/meatball
 
-/obj/item/reagent_containers/food/snacks/pizza/mushroom
+/obj/item/reagent_containers/food/snacks/pizza/vendor/mushroom
 	name = "mushroom pizza"
-	desc = "A typical mushroom pizza."
-	initial_volume = 80
-	initial_reagents = list("juice_tomato" = 50, "cheese" = 10, "space_fungus" = 20)
+	desc = "A greasy mushroom pizza."
+	icon_state = "mushroompizza"
+	initial_reagents = list("bread" = 5, "juice_tomato" = 5, "cheese" = 5, "space_fungus" = 15, "badgrease" = 20)
+	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/mushroom
 
+/obj/item/reagent_containers/food/snacks/pizza/vendor/pineapple // only from hacked vendor
+	name = "pineapple pizza"
+	desc = "A greasy pineapple pizza. Some people have strong opinions about it."
+	contraband = 2
+	initial_reagents = list("bread" = 5, "juice_tomato" = 5, "cheese" = 5, "juice_pineapple" = 15, "badgrease" = 20)
+	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/pineapple
+
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizzaslice/standard)
+/obj/item/reagent_containers/food/snacks/pizzaslice/standard
+	name = "slice of fresh basic pizza"
+	desc = "A slice of base oven pizza (you shouldn't see this)."
+	icon_state = "cheesy"
+	fill_amt = 1
+	bites_left = 2
+	heal_amt = 3
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/standard/cheese
+	name = "slice of fresh cheese pizza"
+	desc = "A cheesy pizza slice with thick tomato sauce."
+	icon_state = "cheesepizza-slice"
+	initial_reagents = list("bread" = 2, "juice_tomato" = 2, "cheese" = 1)
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/standard/meatball
+	name = "slice of fresh meatball pizza"
+	desc = "A cheesy pizza slice topped with succulent meatballs."
+	icon_state = "meatballpizza-slice"
+	initial_reagents = list("bread" = 2, "juice_tomato" = 2, "cheese" = 1, "beff" = 4)
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/standard/pepperoni
+	name = "slice of fresh pepperoni pizza"
+	desc = "A cheesy pizza slice topped with bright red sizzling pepperoni slices."
+	icon_state = "pepperonipizza-slice"
+	initial_reagents = list("bread" = 2, "juice_tomato" = 2, "cheese" = 1, "pepperoni" = 4)
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/standard/mushroom
+	name = "slice of fresh mushroom pizza"
+	desc = "A cheesy pizza slice topped with fresh picked mushrooms."
+	icon_state = "mushroompizza-slice"
+	initial_reagents = list("bread" = 2, "juice_tomato" = 2, "cheese" = 1, "space_fungus" = 4)
+
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizzaslice/vendor)
+/obj/item/reagent_containers/food/snacks/pizzaslice/standard
+	name = "slice of fresh basic pizza"
+	desc = "A slice of base vendor pizza (you shouldn't see this)."
+	icon_state = "cheesepizza-slice"
+	fill_amt = 1
+	bites_left = 1
+	heal_amt = 2
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/vendor/cheese
+	name = "slice of cheese pizza"
+	desc = "A slice of greasy cheese pizza."
+	icon_state = "cheesepizza-slice"
+	initial_reagents = list("bread" = 1, "juice_tomato" = 1, "cheese" = 1, "badgrease" = 4)
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/vendor/pepperoni
+	name = "slice of pepperoni pizza"
+	desc = "A slice of greasy pepperoni pizza."
+	icon_state = "pepperonipizza-slice"
+	initial_reagents = list("bread" = 1, "juice_tomato" = 1, "cheese" = 1, "pepperoni" = 3, "badgrease" = 4)
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/vendor/meatball
+	name = "slice of meatball pizza"
+	desc = "A slice of greasy meatball pizza."
+	icon_state = "meatballpizza-slice"
+	initial_reagents = list("bread" = 1, "juice_tomato" = 1, "cheese" = 1, "beff" = 3, "badgrease" = 4)
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/vendor/mushroom
+	name = "slice of mushroom pizza"
+	desc = "A slice of greasy mushroom pizza."
+	icon_state = "mushroompizza-slice"
+	initial_reagents = list("bread" = 1, "juice_tomato" = 1, "cheese" = 1, "space_fungus" = 3, "badgrease" = 4)
+
+/obj/item/reagent_containers/food/snacks/pizzaslice/vendor/pineapple // only from hacked vendor
+	name = "slice of pineapple pizza"
+	desc = "A slice of greasy pineapple pizza. Some people have strong opinions about it."
+	contraband = 1
+	initial_reagents = list("bread" = 1, "juice_tomato" = 1, "cheese" = 1, "juice_pineapple" = 3, "badgrease" = 4)
+
+/// weird pizzas below this line
 /obj/item/reagent_containers/food/snacks/pizza/xmas
 	name = "\improper Spacemas pizza"
 	desc = "A traditional Spacemas pizza! It has ham, mashed potatoes, gingerbread and candy canes on it, with eggnog sauce and a fruitcake crust! Yum!"
 
-/obj/item/reagent_containers/food/snacks/pizza/pineapple
-	name = "pineapple pizza"
-	desc = "A typical pineapple pizza. Some people have strong opinions about it."
-	contraband = 2
-
-/obj/item/reagent_containers/food/snacks/pizza/fresh
-    name = "fresh pizza"
-    desc = "A cheesy pizza pie with thick tomato sauce."
-    icon_state = "cheesy"
-
-/obj/item/reagent_containers/food/snacks/pizza/ball
-    name = "fresh meatball pizza"
-    desc = "A fresh pizza pie topped with succulent meatballs."
-    icon_state = "meatball"
-
-/obj/item/reagent_containers/food/snacks/pizza/pepper
-    name = "fresh pepperoni pizza"
-    desc = "A cheesy pizza pie toped with bright red sizzling pepperoni slices."
-    icon_state = "peper"
-
-/obj/item/reagent_containers/food/snacks/pizza/shroom
-    name = "fresh mushroom pizza"
-    desc = "A pizza pie toped fresh picked mushrooms."
-    icon_state = "shroom"
-
 /obj/item/reagent_containers/food/snacks/pizza/bad
-    name = "soft serve cheese pizza"
-    desc = "A pizza shipped from god knows where straight to cargo."
-    icon_state = "pizza-b"
+	name = "soft serve cheese pizza"
+	desc = "A pizza shipped from god knows where straight to cargo."
+	icon_state = "pizza-b"
 
 /obj/item/reagent_containers/food/snacks/pizza/pepperbad
-    name = "soft serve pepperoni pizza"
-    desc = "A pizza shipped from god knows where straight to cargo."
-    icon_state = "pizza_m"
+	name = "soft serve pepperoni pizza"
+	desc = "A pizza shipped from god knows where straight to cargo."
+	icon_state = "pizza_m"
 
 /obj/item/reagent_containers/food/snacks/pizza/mushbad
-    name = "soft serve mushroom pizza"
-    desc = "A pizza shipped from god knows where straight to cargo."
-    icon_state = "pizza_v"
+	name = "soft serve mushroom pizza"
+	desc = "A pizza shipped from god knows where straight to cargo."
+	icon_state = "pizza_v"

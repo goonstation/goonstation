@@ -932,26 +932,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 
 		return customSandwich
 
-/*
-/datum/cookingrecipe/oven/pizza_ball
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizzab
-	cookbonus = 18
-	output = /obj/item/reagent_containers/food/snacks/pizza/ball
-	category = "Pizza"
-
-/datum/cookingrecipe/oven/pizza_pepper
-	item1= /obj/item/reagent_containers/food/snacks/ingredient/pizzap
-	cookbonus = 18
-	output = /obj/item/reagent_containers/food/snacks/pizza/pepper
-	category = "Pizza"
-
-/datum/cookingrecipe/oven/pizza_shroom
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizzam
-	cookbonus = 18
-	output = /obj/item/reagent_containers/food/snacks/pizza/shroom
-	category = "Pizza"
-*/
-
 /datum/cookingrecipe/oven/pizza_custom
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza_base
 	cookbonus = 18
@@ -964,7 +944,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 
 		for (var/obj/item/reagent_containers/food/snacks/ingredient/pizza_base/P in ourCooker)
 			return P.bake_pizza()
-
 
 /datum/cookingrecipe/oven/cheesetoast
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice

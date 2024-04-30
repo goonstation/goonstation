@@ -550,9 +550,6 @@ table#cooktime a#start {
 			src.recipes = list()
 
 		if (!src.recipes.len)
-			//src.recipes += new /datum/cookingrecipe/oven/pizza_shroom(src)
-			//src.recipes += new /datum/cookingrecipe/oven/pizza_pepper(src)
-			//src.recipes += new /datum/cookingrecipe/oven/pizza_ball(src)
 			src.recipes += new /datum/cookingrecipe/oven/haggass(src)
 			src.recipes += new /datum/cookingrecipe/oven/haggis(src)
 			src.recipes += new /datum/cookingrecipe/oven/scotch_egg(src)
