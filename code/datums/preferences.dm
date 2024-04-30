@@ -1123,8 +1123,9 @@ var/list/removed_jobs = list(
 				mutantRace = T.mutantRace
 				break
 
-		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name=src.real_name)
-
+		var/ret = src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name=src.real_name)
+		if(ret)
+			src.AH = ret
 		// bald trait preview stuff
 		if (!src.preview)
 			return
