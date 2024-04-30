@@ -16544,6 +16544,11 @@
 /obj/machinery/door/airlock/pyro/security,
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "security";
+	enter_id = "inner";
+	name = "Security"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "dgc" = (
