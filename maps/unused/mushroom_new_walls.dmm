@@ -14441,6 +14441,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "Captains Quarters"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/medical/head)
 "btp" = (
@@ -31840,6 +31843,10 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/stool/chair/blue{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Genetics Research Morgue";
 	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
