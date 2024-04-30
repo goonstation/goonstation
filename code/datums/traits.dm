@@ -727,6 +727,14 @@ ABSTRACT_TYPE(/datum/trait/job)
 	category = list("background")
 	points = 0
 
+/datum/trait/jailbird
+	name = "Jailbird"
+	desc = "You have a criminal record and are currently on the run!"
+	id = "jailbird"
+	icon_state = "jail"
+	category = list("background")
+	points = -1
+
 // NO CATEGORY - Grey Border
 
 /datum/trait/hemo
@@ -896,13 +904,6 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "You start with a higher paycheck than normal."
 	id = "unionized"
 	icon_state = "handshake"
-	points = -1
-
-/datum/trait/jailbird
-	name = "Jailbird"
-	desc = "You have a criminal record and are currently on the run!"
-	id = "jailbird"
-	icon_state = "jail"
 	points = -1
 
 /datum/trait/clericalerror

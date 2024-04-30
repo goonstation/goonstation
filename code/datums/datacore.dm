@@ -168,35 +168,18 @@
 								"Excessive swearing",\
 								"Cutting in line.",\
 								"Tying the captain's shoelaces together.",\
-								"Forgetting the captain's birthday.")
-		S["mi_crim_d"] = "No details provided."
-		S["ma_crim"] = pick(\
 								"Grand theft apidae.",\
 								"Bee murder.",\
 								"Superfarted on the captain.",\
-								"Released the singularity.",\
-								"Stole the captain's spare ID.",\
-								"Arson, murder, jaywalking.",\
-								"Arson.",\
-								"Murder.",\
-								"Jaywalking.",\
 								"Skating right through the bounds of real-space. Wicked sick, but highly illegal.",\
 								"Being a really really bad surgeon.",\
-								"Distributing meth.",\
-								"Dismemberment and decapitation.",\
-								"Running around with a chainsaw.",\
-								"Throwing explosive tomatoes at people.",\
 								"Caused multiple seemingly unrelated accidents.",\
 								"Dabbing.",\
-								"Assembling explosives.",\
 								"Being in the wrong place at the wrong time.",\
-								"Assault.",\
-								"Tossing someone in space.",\
-								"Over-escalation.",\
-								"Manslaughter",\
-								"Refusing to share their meth.",\
-								"Grand larceny.")
-		S["ma_crim_d"] = "No details provided."
+								"Forgetting the captain's birthday.")
+		S["mi_crim_d"] = "No details provided."
+		S["ma_crim"] = "None"
+		S["ma_crim_d"] = "No major crime convictions."
 
 
 		var/randomNote = pick("Huge nerd.", "Total jerkface.", "Absolute dingus.", "Insanely endearing.", "Worse than clown.", "Massive crapstain.");
@@ -207,11 +190,9 @@
 
 		boutput(H, SPAN_NOTICE("You are currently on the run because you've committed the following crimes:"))
 		boutput(H, SPAN_NOTICE("- [S["mi_crim"]]"))
-		boutput(H, SPAN_NOTICE("- [S["ma_crim"]]"))
 
 		H.mind.store_memory("You've committed the following crimes before arriving on the station:")
 		H.mind.store_memory("- [S["mi_crim"]]")
-		H.mind.store_memory("- [S["ma_crim"]]")
 	else
 		if (H.mind?.assigned_role == "Clown")
 			S["criminal"] = "Clown"
