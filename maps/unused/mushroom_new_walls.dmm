@@ -20411,6 +20411,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering2";
+	enter_id = "inner";
+	name = "Engineering"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "gKu" = (
@@ -21057,6 +21062,11 @@
 /obj/mapping_helper/access/engineering,
 /obj/disposalpipe/segment/mail,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering2";
+	enter_id = "outer";
+	name = "Engineering"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "hqX" = (
@@ -21482,7 +21492,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engineering";
+	cycle_id = "engineering2";
 	enter_id = "inner";
 	name = "Engineering"
 	},
@@ -23144,6 +23154,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "engineering2";
+	enter_id = "outer";
+	name = "Engineering"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "jzN" = (
@@ -25913,7 +25928,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/airlock/cycler{
-	cycle_id = "engineering";
+	cycle_id = "engineering2";
 	enter_id = "outer";
 	name = "Engineering"
 	},
