@@ -140,6 +140,16 @@
 		src.flat_icon = null
 		var/mob/living/carbon/human/preview_mob = src.preview_thing
 		preview_mob.dir = direction
+
+		if(preview_mob.mutantrace.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
+			AH.s_tone = preview_mob.bioHolder.mobAppearance.customization_first_color
+		else if(preview_mob.mutantrace.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_2)
+			AH.s_tone = preview_mob.bioHolder.mobAppearance.customization_second_color
+		else if(preview_mob.mutantrace.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_3)
+			AH.s_tone = preview_mob.bioHolder.mobAppearance.customization_third_color
+		else
+			AH.s_tone = AH.s_tone_original
+
 		preview_mob.bioHolder.mobAppearance.CopyOther(AH)
 		if(preview_mob.mutantrace.type != (istype(MR, /datum/mutantrace) ? MR.type : MR))
 			preview_mob.set_mutantrace(MR)
@@ -148,17 +158,7 @@
 		preview_mob.organHolder.right_eye?.update_color(AH, "R")
 		preview_mob.organHolder.head.donor = preview_mob
 
-		if(preview_mob.mutantrace.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
-			preview_mob.bioHolder.mobAppearance.s_tone = preview_mob.bioHolder.mobAppearance.customization_first_color
-			preview_mob.update_colorful_parts()
-		else if(preview_mob.mutantrace.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_2)
-			preview_mob.bioHolder.mobAppearance.s_tone = preview_mob.bioHolder.mobAppearance.customization_second_color
-			preview_mob.update_colorful_parts()
-		else if(preview_mob.mutantrace.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_3)
-			preview_mob.bioHolder.mobAppearance.s_tone = preview_mob.bioHolder.mobAppearance.customization_third_color
-			preview_mob.update_colorful_parts()
-
-		preview_mob.update_colorful_parts()
+//		AH.s_tone = AH.s_tone_original
 		preview_mob.set_body_icon_dirty()
 		preview_mob.set_face_icon_dirty()
 		preview_mob.real_name = "clone of " + name
