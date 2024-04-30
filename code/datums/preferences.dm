@@ -102,6 +102,8 @@ var/list/removed_jobs = list(
 	///An associative list of slots to part IDs, see part_customization.dm
 	var/list/custom_parts = null
 
+	var/list/profile_names = null
+	var/profile_names_dirty = TRUE
 	//var/fartsound = "default"
 	//var/screamsound = "default"
 
@@ -109,6 +111,7 @@ var/list/removed_jobs = list(
 		character_name_validation = regex("\\w+") //TODO: Make this regex a bit sturdier (capitalization requirements, character whitelist, etc)
 		randomize_name()
 		randomizeLook()
+		profile_names = new/list(SAVEFILE_PROFILES_MAX)
 		..()
 		if (isnull(src.custom_parts)) //I feel like there should be a better place to init this
 			src.custom_parts = list(
@@ -173,11 +176,13 @@ var/list/removed_jobs = list(
 
 		var/list/profiles = new/list(SAVEFILE_PROFILES_MAX)
 		for (var/i = 1, i <= SAVEFILE_PROFILES_MAX, i++)
+			if(profile_names_dirty)
+				src.profile_names[i] = src.savefile_get_profile_name(client, i)
 			profiles[i] = list(
 				"active" = i == src.profile_number,
-				"name" = src.savefile_get_profile_name(client, i),
+				"name" = src.profile_names[i],
 			)
-
+		src.profile_names_dirty = FALSE
 		var/list/cloud_saves = list()
 		for (var/name in client.player.cloudSaves.saves)
 			cloud_saves += name
@@ -239,7 +244,7 @@ var/list/removed_jobs = list(
 			"chatsound" = src.AH.voicetype,
 			"pdaColor" = src.PDAcolor,
 			"pdaRingtone" = src.pda_ringtone_index,
-			"skinTone" = src.AH.s_tone,
+			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
 			"customColor1" = src.AH.customization_first_color,
@@ -332,7 +337,7 @@ var/list/removed_jobs = list(
 				if (isnull(src.profile_name) || is_blank_string(src.profile_name))
 					tgui_alert(usr, "You need to give your profile a name.", "Pick name")
 					return
-
+				src.profile_names_dirty = TRUE
 				if (!isnull(index) && isnum(index))
 					src.savefile_save(client.key, index)
 					src.profile_number = index
@@ -655,9 +660,9 @@ var/list/removed_jobs = list(
 				var/units = 1
 				if (params["alot"])
 					units = 8
-				var/list/L = hex_to_rgb_list(AH.s_tone)
-				AH.s_tone = rgb(max(L[1]-units, 61), max(L[2]-units, 8), max(L[3]-units, 0))
-				AH.s_tone_original = AH.s_tone
+				var/list/L = hex_to_rgb_list(AH.s_tone_original)
+				AH.s_tone_original = rgb(max(L[1]-units, 61), max(L[2]-units, 8), max(L[3]-units, 0))
+				AH.s_tone = AH.s_tone_original
 
 				update_preview_icon()
 				src.profile_modified = TRUE
@@ -666,9 +671,9 @@ var/list/removed_jobs = list(
 				var/units = 1
 				if (params["alot"])
 					units = 8
-				var/list/L = hex_to_rgb_list(AH.s_tone)
-				AH.s_tone = rgb(min(L[1]+units, 255), min(L[2]+units, 236), min(L[3]+units, 183))
-				AH.s_tone_original = AH.s_tone
+				var/list/L = hex_to_rgb_list(AH.s_tone_original)
+				AH.s_tone_original = rgb(min(L[1]+units, 255), min(L[2]+units, 236), min(L[3]+units, 183))
+				AH.s_tone = AH.s_tone_original
 
 				update_preview_icon()
 				src.profile_modified = TRUE
@@ -1123,7 +1128,9 @@ var/list/removed_jobs = list(
 				mutantRace = T.mutantRace
 				break
 
+		var/s_orig = AH.s_tone_original
 		var/ret = src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name=src.real_name)
+		AH.s_tone_original = s_orig // refuse any edits made by mutantrace setting/etc
 		if(ret)
 			src.AH = ret
 		// bald trait preview stuff
