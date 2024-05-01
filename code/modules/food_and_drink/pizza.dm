@@ -6,8 +6,8 @@
 	custom_food = FALSE
 	var/sauce_color = "#d24300"
 	var/cheesy = 0
-	var/image/sauce = null
-	var/image/cheese = null
+	var/image/sauce_image = null
+	var/image/cheese_image = null
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 	w_class = W_CLASS_NORMAL
@@ -40,15 +40,15 @@
 
 	update_icon()
 		if(src.reagents.total_volume)
-			src.sauce = SafeGetOverlayImage("sauce", 'icons/obj/foodNdrink/food_ingredient.dmi', "pizzasauce")
-			sauce.appearance_flags = RESET_COLOR | PIXEL_SCALE
-			sauce.color = src.sauce_color
+			src.sauce_image = SafeGetOverlayImage("sauce", 'icons/obj/foodNdrink/food_ingredient.dmi', "pizzasauce")
+			src.sauce_image.appearance_flags = RESET_COLOR | PIXEL_SCALE
+			src.sauce_image.color = src.sauce_color
 		else
-			src.sauce = null
+			src.sauce_image = null
 		if(src.cheesy)
-			src.cheese = SafeGetOverlayImage("cheese", 'icons/obj/foodNdrink/food_ingredient.dmi', "pizzacheese[src.cheesy]")
-		UpdateOverlays(src.sauce, "sauce", TRUE)
-		UpdateOverlays(src.cheese, "cheese", TRUE)
+			src.cheese_image = SafeGetOverlayImage("cheese", 'icons/obj/foodNdrink/food_ingredient.dmi', "pizzacheese[src.cheesy]")
+		UpdateOverlays(src.sauce_image, "sauce", TRUE)
+		UpdateOverlays(src.cheese_image, "cheese", TRUE)
 		..()
 
 	attackby(obj/item/W, mob/user, params)
@@ -153,6 +153,8 @@
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (temperature >= T0C+3200) // syndicate zippos and raging plasmafires, for laughs
 			var/obj/item/reagent_containers/food/snacks/pizza/baked_pizza = src.bake_pizza()
+			for(var/mob/M in AIviewers(baked_pizza))
+				boutput(M, SPAN_NOTICE("\The [baked_pizza.name] roasts from heat!"))
 			baked_pizza.quality = 5
 		. = ..()
 
@@ -198,7 +200,7 @@
 
 		var/nearest_color_text
 		if(src.reagents.total_volume)
-			baked_pizza.UpdateOverlays(src.sauce, "sauce")
+			baked_pizza.UpdateOverlays(src.sauce_image, "sauce")
 			var/datum/color/c = src.reagents.get_average_color()
 			nearest_color_text = get_nearest_color(c)
 			baked_pizza.name = "pizza marinara"
@@ -210,14 +212,14 @@
 			baked_pizza.name = "none pizza"
 
 		if (src.cheesy == 1)
-			baked_pizza.UpdateOverlays(src.cheese, "cheese")
+			baked_pizza.UpdateOverlays(src.cheese_image, "cheese")
 			baked_pizza.reagents.maximum_volume += 5
 			baked_pizza.reagents.add_reagent("cheese", 5)
 			temp_food_effects["food_hp_up"] = 2
 			baked_pizza.name = "cheese pizza"
 			baked_pizza.desc = "A delicious cheesy pizza!<br>The sauce is [nearest_color_text]."
 		else if (src.cheesy > 1)
-			baked_pizza.UpdateOverlays(src.cheese, "cheese")
+			baked_pizza.UpdateOverlays(src.cheese_image, "cheese")
 			baked_pizza.reagents.maximum_volume += 40
 			baked_pizza.reagents.add_reagent("cheese", 40)
 			temp_food_effects["food_hp_up_big"] = 2
@@ -253,7 +255,7 @@
 					baked_pizza.heal_amt += food.heal_amt / 12
 					baked_pizza.fill_amt += food.fill_amt
 				else
-					baked_pizza.heal_amt -= topping.w_class / 18
+					baked_pizza.heal_amt -= topping.w_class / 18 // wrench pizzas are not healthy
 					baked_pizza.fill_amt += topping.w_class / 2
 
 				var/image/topping_image = SafeGetOverlayImage("topping_\ref[topping]", topping.icon, topping.icon_state, pixel_x = topping.pixel_x, pixel_y = topping.pixel_y)
@@ -372,30 +374,30 @@
 	mat_changedesc = 0
 	var/sauce_color = "#ff2f00"
 	var/cheesy = 1
-	var/image/sauce = null
-	var/image/cheese = null
+	var/image/sauce_image = null
+	var/image/cheese_image = null
 	var/sharpened = FALSE
 
 	New()
 		..()
 		src.setMaterial(getMaterial("pizza"), appearance = 0, setname = 0)
-		// this is a funny workaround for the fact that any pizza not made by cooking will have quality reset to 0 from the above call
+		// this is a workaround for the fact that any pizza not made by cooking will have quality reset to 0 from the above call
 		src.quality = 1
 		src.UpdateIcon()
 
 	update_icon()
 		if(src.sauce_color)
-			src.sauce = SafeGetOverlayImage("sauce", 'icons/obj/foodNdrink/food_meals.dmi', "pizzasauceslice")
-			sauce.appearance_flags = RESET_COLOR | PIXEL_SCALE
-			sauce.color = src.sauce_color
+			src.sauce_image = SafeGetOverlayImage("sauce", 'icons/obj/foodNdrink/food_meals.dmi', "pizzasauceslice")
+			src.sauce_image.appearance_flags = RESET_COLOR | PIXEL_SCALE
+			src.sauce_image.color = src.sauce_color
 		else
-			src.sauce = null
+			src.sauce_image = null
 		if(src.cheesy)
-			src.cheese = SafeGetOverlayImage("cheese", 'icons/obj/foodNdrink/food_meals.dmi', "pizzacheeseslice")
+			src.cheese_image = SafeGetOverlayImage("cheese", 'icons/obj/foodNdrink/food_meals.dmi', "pizzacheeseslice")
 		else
-			src.cheese = null
-		UpdateOverlays(src.sauce, "sauce", TRUE)
-		UpdateOverlays(src.cheese, "cheese", TRUE)
+			src.cheese_image = null
+		UpdateOverlays(src.sauce_image, "sauce", TRUE)
+		UpdateOverlays(src.cheese_image, "cheese", TRUE)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.sharpened)
