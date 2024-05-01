@@ -75,10 +75,10 @@
 		dat += " *------------------------------------------------*<BR>"
 
 		for(var/mob/living/silicon/robot/R in A.connected_robots)
-			dat += "[R.name] |"
 			if(R.disposed)
 				continue
-			else if(isnull(R.part_head?.brain))
+			dat += "[R.name] |"
+			if(isnull(R.part_head?.brain))
 				dat += " Intelligence Cortex Missing |"
 			else if(R.stat)
 				dat += " Not Responding |"
