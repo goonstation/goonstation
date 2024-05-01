@@ -297,7 +297,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
-/datum/game_mode/proc/roundstart_player_count()
+/datum/game_mode/proc/roundstart_player_count(loud = TRUE)
 	var/readied_count = 0
 	var/unreadied_count = 0
 	for (var/client/C in global.clients)
@@ -307,7 +307,10 @@ ABSTRACT_TYPE(/datum/game_mode)
 				readied_count++
 			else
 				unreadied_count++
-	return readied_count + (unreadied_count/2)
+	var/total = readied_count + (unreadied_count/2)
+	if (loud)
+		logTheThing(LOG_GAMEMODE, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
+	return total
 
 ////////////////////////////
 // Objective related code //
