@@ -4,6 +4,8 @@
 (e)🆕💅|C-Feature,C-QoL
 (*)Josh now sells a paintball gun. You can load it with paint.
 (*)The paint dispenser and paint cans have seen minor QoL improvements.
+(+)The paint crate now includes totally random paint cans.
+(+)Paint cans are named after the colors they contain, and examining them shows how many uses are left.
 (u)Lyy
 (p)18393
 (e)🎨🎩|C-Sprites, A-Clothing
