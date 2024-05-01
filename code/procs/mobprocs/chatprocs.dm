@@ -955,7 +955,7 @@
 			else
 				msg = alt
 				type = alt_type
-		if ((type & 2) && !src.hearing_check(1))
+		if ((type & 2) && !src.hearing_check())
 			check_failed = TRUE
 			if (!alt)
 				return
@@ -965,35 +965,28 @@
 			if ((type & 1) && !src.sight_check(1))
 				return
 
-	if (!just_maptext && (isunconscious(src) || src.sleeping || src.getStatusDuration("paralysis")))
-		if (prob(20))
-			boutput(src, "<I>... You can almost hear something ...</I>")
-			if (isliving(src))
-				for (var/mob/dead/target_observer/observer in src:observers)
-					boutput(observer, "<I>... You can almost hear something ...</I>")
-	else
-		if(!just_maptext)
-			boutput(src, msg, group)
+	if(!just_maptext)
+		boutput(src, msg, group)
 
-		var/psychic_link = src.get_psychic_link()
-		if (ismob(psychic_link))
-			boutput(psychic_link, msg, group)
+	var/psychic_link = src.get_psychic_link()
+	if (ismob(psychic_link))
+		boutput(psychic_link, msg, group)
 
-		if(!check_failed)
-			if(assoc_maptext && src.client && !src.client.preferences?.flying_chat_hidden)
-				assoc_maptext.show_to(src.client)
+	if(!check_failed)
+		if(assoc_maptext && src.client && !src.client.preferences?.flying_chat_hidden)
+			assoc_maptext.show_to(src.client)
 
-			if (isliving(src))
-				for (var/mob/dead/target_observer/M in src.observers)
-					if(!just_maptext)
-						if (M.client?.holder && !M.client.player_mode)
-							if (M.mind)
-								msg = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[msg]</span>"
-							boutput(M, msg, group)
-						else
-							boutput(M, msg, group)
-					if(assoc_maptext && M.client && !M.client.preferences.flying_chat_hidden)
-						assoc_maptext.show_to(M.client)
+		if (isliving(src))
+			for (var/mob/dead/target_observer/M in src.observers)
+				if(!just_maptext)
+					if (M.client?.holder && !M.client.player_mode)
+						if (M.mind)
+							msg = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[msg]</span>"
+						boutput(M, msg, group)
+					else
+						boutput(M, msg, group)
+				if(assoc_maptext && M.client && !M.client.preferences.flying_chat_hidden)
+					assoc_maptext.show_to(M.client)
 
 // Show a message to all mobs in sight of this one
 // This would be for visible actions by the src mob
