@@ -1,5 +1,9 @@
 
 (t)tue apr 30 24
+(u)Zamujasa
+(e)🆕💅|C-Feature,C-QoL
+(*)Josh now sells a paintball gun. You can load it with paint.
+(*)The paint dispenser and paint cans have seen minor QoL improvements.
 (u)Lyy
 (p)18393
 (e)🎨🎩|C-Sprites, A-Clothing

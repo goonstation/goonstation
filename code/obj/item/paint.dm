@@ -65,6 +65,12 @@
 			P.paint_intensity = src.paint_intensity
 			P.add_orig = src.add_orig
 			P.generate_icon()
+
+			var/datum/color/C = new
+			C.from_hex(col_new)
+			P.name = "[get_nearest_color(C)] paint can"
+
+			user.put_in_hand_or_drop(P)
 		return
 
 //////////////////// broken paint vending machine
@@ -269,22 +275,27 @@ var/list/cached_colors = new/list()
 		..()
 		generate_icon()
 
+	examine()
+		. = ..()
+		. += "It has [src.uses] use\s left."
+
 	attack_hand(mob/user)
 		..()
 		generate_icon()
 
 	proc/paint_thing(atom/target as mob|obj|turf, force = FALSE)
-		// this handles actually painting things, instead of afterattack,
-		// and assumes
 		if (uses <= 0 && !force)
+			// if we have no uses and we are not forcing it, abort
 			return FALSE
+		else if (!force)
+			// otherwise, if we aren't forcing it (but we have uses), reduce by one
+			uses--
+
+		if (uses <= 0) src.overlays = null
+		src.inventory_counter?.update_number(src.uses)
 
 		playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, TRUE)
-
 		target.add_filter("paint_color", 1, color_matrix_filter(normalize_color_to_matrix(src.actual_paint_color)))
-		uses--
-		if (uses <= 0) overlays = null
-
 		if (ismob(target.loc))
 			var/mob/M = target.loc
 			M.update_clothing() //trigger an update if this is worn clothing
@@ -299,10 +310,16 @@ var/list/cached_colors = new/list()
 			return FALSE
 
 		if (src.paint_thing(target))
-			user.visible_message(SPAN_NOTICE("[user] paints \the [target]."), "You paint \the [target].", SPAN_NOTICE("You hear a wet splat."))
-			src.inventory_counter?.update_number(src.uses)
+			user.visible_message(SPAN_NOTICE("[user] paints \the [target] with \the [src]."), "You paint \the [target] with \the [src].", SPAN_NOTICE("You hear a wet splat."))
 
 		return TRUE
+
+	attackby(obj/item/W, mob/user, params)
+		if (istype(W, /obj/item/gun/paintball))
+			W.Attackby(src, user)
+			return
+
+		. = ..()
 
 	proc/generate_icon()
 		overlays = null
