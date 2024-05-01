@@ -194,7 +194,7 @@
 
 /datum/commodity/trader/josh/paintgun
 	comname = "Portable Paint Popper"
-	comtype = /obj/item/gun/kinetic/foamdartrevolver
+	comtype = /obj/item/gun/paintball
 	price_boundary = list(PAY_IMPORTANT,PAY_EXECUTIVE)
 	possible_names = list("This'll let you paint the town red! Or any other color!",
 	"Load this bad boy up with some paint and you'll be seeing colors!",
