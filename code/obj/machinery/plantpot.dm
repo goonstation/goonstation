@@ -794,8 +794,6 @@ TYPEINFO(/obj/machinery/plantpot)
 	else return FALSE
 
 /obj/machinery/plantpot/proc/HYPresolve_plantgrowth_tick(var/datum/plantgrowth_tick/growth_tick)
-	// The above is pretty much to figure out whether or not the water level
-	// icon on the plant pot needs to change.
 	var/datum/plantgenes/DNA = src.plantgenes
 	var/current_water_level = src.update_water_level()
 	var/final_growth_rate = growth_tick.growth_rate
