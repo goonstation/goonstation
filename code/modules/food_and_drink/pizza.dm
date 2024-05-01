@@ -334,10 +334,6 @@
 	attack_self(mob/user as mob)
 		attack(user, user)
 
-	throw_impact(atom/A)
-		if (!sharpened || isnull(A))
-			..()
-
 	process_sliced_products(obj/item/reagent_containers/food/slice, amount_to_transfer)
 		var/obj/item/reagent_containers/food/snacks/pizzaslice/pizza_slice = slice
 		pizza_slice.sauce_color = src.sauce_color
