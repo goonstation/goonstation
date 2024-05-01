@@ -283,9 +283,9 @@ var/list/cached_colors = new/list()
 	examine()
 		. = ..()
 		if (src.uses > 0)
-			. += "It has [colorname] (<span style='display: inline-block; height: 1em; width: 1em; border: 1px solid black; background-color: [src.paint_color];'>&nbsp;</span>) paint. It has [src.uses] use\s left."
+			. += "It has <span style='display: inline-block; height: 1em; width: 1em; border: 1px solid black; background-color: [src.paint_color];'>&nbsp;</span> [colorname] paint. It has [src.uses] use\s left."
 		else
-			. += "It is empty. It used to have [colorname] (<span style='display: inline-block; height: 1em; width: 1em; border: 1px solid black; background-color: [src.paint_color];'>&nbsp;</span>) paint, though."
+			. += "It is empty. It used to have <span style='display: inline-block; height: 1em; width: 1em; border: 1px solid black; background-color: [src.paint_color];'>&nbsp;</span> [colorname] paint, though."
 
 
 
