@@ -1,4 +1,9 @@
 
+(t)tue apr 30 24
+(u)Lyy
+(p)18393
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a certain anime martial artist's costume to Geoff Honkington's shop.
 (t)sun apr 28 24
 (u)tarmunora
 (+)Armory shotgun racks have been swapped out for phaser racks (and vice versa phaser crates for shotgun crates). Armory phasers come with a slightly larger default power cell. phaser rack sprites by Flaborized
