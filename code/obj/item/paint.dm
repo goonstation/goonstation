@@ -263,6 +263,7 @@ var/list/cached_colors = new/list()
 	var/add_orig = 0
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
+	inventory_counter_enabled = TRUE
 
 	New()
 		..()
@@ -272,28 +273,41 @@ var/list/cached_colors = new/list()
 		..()
 		generate_icon()
 
-	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == loc || BOUNDS_DIST(src, target) > 0 || istype(target,/obj/machinery/vending/paint) ) return FALSE
-
-		if(uses <= 0)
-			boutput(user, "It's empty.")
+	proc/paint_thing(atom/target as mob|obj|turf, force = FALSE)
+		// this handles actually painting things, instead of afterattack,
+		// and assumes
+		if (uses <= 0 && !force)
 			return FALSE
 
-		user.visible_message(SPAN_NOTICE("[user] paints \the [target]."), "You paint \the [target]", SPAN_NOTICE("You hear a wet splat."))
-		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, TRUE)
-
-		uses--
-		if(uses <= 0) overlays = null
+		playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, TRUE)
 
 		target.add_filter("paint_color", 1, color_matrix_filter(normalize_color_to_matrix(src.actual_paint_color)))
-		if(ismob(target.loc))
+		uses--
+		if (uses <= 0) overlays = null
+
+		if (ismob(target.loc))
 			var/mob/M = target.loc
 			M.update_clothing() //trigger an update if this is worn clothing
+
+		return TRUE
+
+	afterattack(atom/target as mob|obj|turf, mob/user as mob)
+		if (target == loc || BOUNDS_DIST(src, target) > 0 || istype(target,/obj/machinery/vending/paint)) return FALSE
+
+		if (uses <= 0)
+			boutput(user, "\The [src] is empty.")
+			return FALSE
+
+		if (src.paint_thing(target))
+			user.visible_message(SPAN_NOTICE("[user] paints \the [target]."), "You paint \the [target].", SPAN_NOTICE("You hear a wet splat."))
+			src.inventory_counter?.update_number(src.uses)
+
 		return TRUE
 
 	proc/generate_icon()
 		overlays = null
-		if(uses <= 0) return
+		src.inventory_counter?.update_number(src.uses)
+		if (uses <= 0) return
 		if (!paint_overlay)
 			paint_overlay = image('icons/misc/old_or_unused.dmi',"paint_overlay")
 		paint_overlay.color = paint_color
@@ -336,7 +350,7 @@ var/list/cached_colors = new/list()
 
 /obj/item/paint_can/rainbow
 	name = "rainbow paint can"
-	desc = "This Paint Can contains rich, thick, rainbow paint. No, we don't know how it works either."
+	desc = "This paint can contains rich, thick, rainbow paint. No, we don't know how it works either."
 	var/colorlist = list()
 	var/currentcolor = 1
 	New()
@@ -346,21 +360,20 @@ var/list/cached_colors = new/list()
 		src.paint_color = colorlist[currentcolor]
 		..()
 
-	afterattack(var/atom/target, var/mob/user, var/change_color = TRUE)
-		if(!..()) return
+	paint_thing(atom/target as mob|obj|turf, force = FALSE, change_color = TRUE)
+		if (!..())
+			return FALSE
 
-		if(change_color)
-			src.currentcolor += 1
-			if (src.currentcolor > length(src.colorlist))
-				src.currentcolor = 1
-
+		if (change_color)
+			src.currentcolor = (src.currentcolor % length(src.colorlist)) + 1
 			src.paint_color = colorlist[currentcolor]
 			src.generate_icon()
+
 		return TRUE
 
 /obj/item/paint_can/rainbow/plaid
 	name = "pattern paint can"
-	desc = "A perfectly ordinary can of paint. Oh, except that it paints patterns."
+	desc = "A perfectly ordinary can of rainbow paint. Oh, except that it paints patterns."
 	var/patternlist = list()
 	var/currentpattern = 1
 
@@ -372,9 +385,11 @@ var/list/cached_colors = new/list()
 
 		currentpattern = rand(1, length(src.patternlist))
 
+	paint_thing(atom/target as mob|obj|turf, force = FALSE, change_color = TRUE)
+		if (!..(target, force, FALSE))
+			// advance
+			return FALSE
 
-	afterattack(var/atom/target, var/mob/user, var/change_color = TRUE)
-		if(!..(target, user, FALSE)) return
 		var/matrix/scale_transform = matrix()
 		var/icon/I = new(target.icon) //isn't DM great?
 		scale_transform.Scale(I.Width()/32, I.Height()/32)
@@ -385,15 +400,9 @@ var/list/cached_colors = new/list()
 			M.update_clothing() //trigger an update if this is worn clothing
 
 		if(change_color)
-			src.currentcolor += 1
-			if (src.currentcolor > length(src.colorlist))
-				src.currentcolor = 1
-
-			src.currentpattern += 1
-			if (src.currentpattern > length(src.patternlist))
-				src.currentpattern = 1
-
-
+			src.currentcolor = (src.currentcolor % length(src.colorlist)) + 1
+			src.currentpattern = (src.currentpattern % length(src.patternlist)) + 1
 			src.paint_color = colorlist[currentcolor]
 			src.generate_icon()
+
 		return TRUE
