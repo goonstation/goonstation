@@ -1,4 +1,9 @@
 
+(t)wed may 01 24
+(u)LeahTheTech
+(p)18698
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Unreadied players now contribute 1/2 of a readied player to roundstart gamemode scaling. (Yes this means more antags on average)
 (t)tue apr 30 24
 (u)Zamujasa
 (e)🆕💅|C-Feature,C-QoL
