@@ -152,7 +152,8 @@
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (temperature >= T0C+3200) // syndicate zippos and raging plasmafires, for laughs
-			src.bake_pizza()
+			var/obj/item/reagent_containers/food/snacks/pizza/baked_pizza = bake_pizza()
+			baked_pizza.quality = 5
 		. = ..()
 
 	proc/bake_pizza(var/matter_eater_fake_bake = FALSE)
