@@ -267,7 +267,7 @@ var/list/cached_colors = new/list()
 	w_class = W_CLASS_SMALL
 	inventory_counter_enabled = TRUE
 
-	New(col_new = null)
+	New(loc, col_new = null)
 		..()
 		if (col_new)
 			src.paint_color = col_new
