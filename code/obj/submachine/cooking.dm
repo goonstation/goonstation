@@ -869,15 +869,6 @@ table#cooktime a#start {
 					// otherwise it will be the created item from this
 					output = R.specialOutput(src)
 
-					//Complete pizza crew objectives if possible
-					/*if(istype(output,/obj/item/reagent_containers/food/snacks/pizza/))
-						var/obj/item/reagent_containers/food/snacks/pizza/P = output
-						if (usr.mind?.objectives)
-							for (var/datum/objective/crew/chef/pizza/objective in usr.mind.objectives)
-								var/list/matching_toppings = P.topping_types & objective.choices
-								if(length(matching_toppings) >= PIZZA_OBJ_COUNT)
-									objective.completed = TRUE*/
-
 					if (isnull(output))
 						output = R.output
 

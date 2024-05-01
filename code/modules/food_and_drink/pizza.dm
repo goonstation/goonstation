@@ -4,10 +4,10 @@
 	icon_state = "pizzabase"
 	initial_volume = 50
 	custom_food = FALSE
-	var/image/sauce = null
 	var/sauce_color = "#d24300"
-	var/image/cheese = null
 	var/cheesy = 0
+	var/image/sauce = null
+	var/image/cheese = null
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 	w_class = W_CLASS_NORMAL
@@ -49,9 +49,10 @@
 			src.cheese = SafeGetOverlayImage("cheese", 'icons/obj/foodNdrink/food_ingredient.dmi', "pizzacheese[src.cheesy]")
 		UpdateOverlays(src.sauce, "sauce", TRUE)
 		UpdateOverlays(src.cheese, "cheese", TRUE)
+		..()
 
 	attackby(obj/item/W, mob/user, params)
-		if (!src.custom_food && (iscuttingtool(W) || issawingtool(W) || issnippingtool(W))) // make tortillas if untouched
+		if (!src.reagents.total_volume && !length(src.contents) && !src.cheesy && (iscuttingtool(W) || issawingtool(W) || issnippingtool(W))) // make tortillas if untouched
 			boutput(user, SPAN_NOTICE("You cut [src] into smaller pieces."))
 			for(var/i = 1, i <= 3, i++)
 				new /obj/item/reagent_containers/food/snacks/ingredient/tortilla(get_turf(src))
@@ -61,11 +62,9 @@
 			return
 
 		if ((src.reagents.maximum_volume != src.reagents.total_volume) && (istype(W, /obj/item/reagent_containers/food/snacks/condiment/) || W.is_open_container()) && W.reagents.total_volume) // add sauce from open reagent container
-			src.custom_food = TRUE
 			return ..()
 		else if (!src.cheesy)
 			if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheese))
-				src.custom_food = TRUE
 				if (prob(25))
 					JOB_XP(user, "Chef", 1)
 				src.cheesy = 1
@@ -75,7 +74,6 @@
 				src.UpdateIcon()
 				return ..()
 			else if (istype(W, /obj/item/reagent_containers/food/snacks/cheesewheel))
-				src.custom_food = TRUE
 				JOB_XP(user, "Chef", 1)
 				src.cheesy = 2
 				boutput(user, SPAN_NOTICE("You add \the [W] to \the [src]. Holy shit!"))
@@ -96,7 +94,6 @@
 	proc/add_topping(var/obj/item/topping, var/mob/user, var/list/params = null)
 		if(src.place_on(topping, user, params))
 			boutput(user, SPAN_NOTICE("You add \the [topping] to \the [src]."))
-			src.custom_food = TRUE
 			src.topping_space_left -= topping.w_class
 			topping.set_loc(src)
 			topping.transform = matrix(matrix(src.transform, src.topping_scale, src.topping_scale, MATRIX_SCALE), rand(-180,180), MATRIX_ROTATE)
@@ -126,7 +123,6 @@
 
 	attack_self(var/mob/user as mob)
 		if(user.traitHolder.hasTrait("training_chef") || prob(60))
-			src.custom_food = TRUE
 			user.visible_message(SPAN_NOTICE("[user] [pick("expertly", "acrobatically", "deftly", "masterfully")] spins \the [src]."), group = "pizzaspin")
 			src.fancy_spins++
 			if(src.fancy_spins == 10)
@@ -161,6 +157,36 @@
 
 	proc/bake_pizza(var/matter_eater_fake_bake = FALSE)
 		var/obj/item/reagent_containers/food/snacks/pizza/baked_pizza = new(src.loc)
+
+		//locate a potential chef
+		var/mob/living/carbon/human/baker
+		for(var/mob/living/carbon/human/potential_baker in range(4, get_turf(src)))
+			if (baker)
+				break
+			if (potential_baker.mind?.objectives)
+				for(var/datum/objective/crew/chef/pizza/objective in potential_baker.mind.objectives)
+					if (!objective.completed)
+						baker = potential_baker
+						break
+
+		//Complete pizza crew objectives if possible
+		if (baker)
+			for (var/datum/objective/crew/chef/pizza/objective in baker.mind?.objectives)
+				if (!objective.completed)
+					var/matching_toppings = 0
+					for (var/obj/item/topping in src.contents)
+						if(topping.type in objective.choices)
+							matching_toppings++
+						if(matching_toppings >= PIZZA_OBJ_COUNT)
+							boutput(baker, SPAN_NOTICE("That's one spectacular pizza. You feel accomplished."))
+							objective.completed = TRUE
+							break
+
+		baked_pizza.sauce_color = src.sauce_color
+		baked_pizza.cheesy = src.cheesy
+
+		baked_pizza.pixel_x = src.pixel_x
+		baked_pizza.pixel_y = src.pixel_y
 
 		if(matter_eater_fake_bake)
 			baked_pizza.icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
@@ -276,23 +302,23 @@
 	mat_changeappearance = 0
 	mat_changename = 0
 	mat_changedesc = 0
-	var/sauce_color = "#d24300"
+	var/sauce_color = "#ff2f00"
+	var/cheesy = 1
 	var/sharpened = FALSE
-
-	custom_food = 0
 
 	food_effects = list()
 
 	New()
 		..()
 		src.setMaterial(getMaterial("pizza"), appearance = 0, setname = 0)
-		// this is a funny workaround for the fact that any pizza not made by cooking will have quality reset to 0 from the above call
+		// this is a workaround for the fact that any pizza not made by cooking will have quality reset to 0 from the above call
 		src.quality = 1
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/kitchen/utensil/knife/pizza_cutter/traitor))
 			var/obj/item/kitchen/utensil/knife/pizza_cutter/traitor/cutter = W
 			if (cutter.sharpener_mode)
+				boutput(user, "You sharpen \the [src].")
 				src.sharpened = TRUE
 		..()
 
@@ -314,25 +340,63 @@
 
 	process_sliced_products(obj/item/reagent_containers/food/slice, amount_to_transfer)
 		var/obj/item/reagent_containers/food/snacks/pizzaslice/pizza_slice = slice
+		pizza_slice.sauce_color = src.sauce_color
+		pizza_slice.cheesy = src.cheesy
+		pizza_slice.UpdateIcon()
 		pizza_slice.heal_amt = src.heal_amt
 		pizza_slice.food_effects = src.food_effects
 		pizza_slice.reagents.maximum_volume = max(10, amount_to_transfer)
 		pizza_slice.name = "slice of " + src.name
 		pizza_slice.desc = src.desc
 		pizza_slice.sharpened = src.sharpened
+		if(src.material && src.material.getID() == "pizza")
+			pizza_slice.setMaterial(src.material)
+			pizza_slice.quality = src.quality
+			pizza_slice.mat_changeappearance = 1
+			pizza_slice.mat_changename = 1
+			pizza_slice.mat_changedesc = 1
 		..()
 
 /obj/item/reagent_containers/food/snacks/pizzaslice
 	name = "pizza slice"
 	desc = "A slice of cheeseless, sauceless pizza."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
-	icon_state = "pslice"
+	icon_state = "pizzacrustslice"
 	fill_amt = 1
 	bites_left = 2
 	heal_amt = 1
 	initial_reagents = 10
 	w_class = W_CLASS_TINY
+	material_amt = 0.17
+	mat_changeappearance = 0
+	mat_changename = 0
+	mat_changedesc = 0
+	var/sauce_color = "#ff2f00"
+	var/cheesy = 1
+	var/image/sauce = null
+	var/image/cheese = null
 	var/sharpened = FALSE
+
+	New()
+		..()
+		src.setMaterial(getMaterial("pizza"), appearance = 0, setname = 0)
+		// this is a funny workaround for the fact that any pizza not made by cooking will have quality reset to 0 from the above call
+		src.quality = 1
+		src.UpdateIcon()
+
+	update_icon()
+		if(src.sauce_color)
+			src.sauce = SafeGetOverlayImage("sauce", 'icons/obj/foodNdrink/food_meals.dmi', "pizzasauceslice")
+			sauce.appearance_flags = RESET_COLOR | PIXEL_SCALE
+			sauce.color = src.sauce_color
+		else
+			src.sauce = null
+		if(src.cheesy)
+			src.cheese = SafeGetOverlayImage("cheese", 'icons/obj/foodNdrink/food_meals.dmi', "pizzacheeseslice")
+		else
+			src.cheese = null
+		UpdateOverlays(src.sauce, "sauce", TRUE)
+		UpdateOverlays(src.cheese, "cheese", TRUE)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.sharpened)
@@ -344,6 +408,7 @@
 		if (istype(W, /obj/item/kitchen/utensil/knife/pizza_cutter/traitor))
 			var/obj/item/kitchen/utensil/knife/pizza_cutter/traitor/cutter = W
 			if (cutter.sharpener_mode)
+				boutput(user, "You sharpen \the [src].")
 				src.sharpened = TRUE
 		..()
 
@@ -370,6 +435,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/standard)
 	bites_left = 12
 	heal_amt = 3
 	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/standard
+	food_effects = list("food_hp_up", "food_deep_burp")
 
 /obj/item/reagent_containers/food/snacks/pizza/standard/cheese
 	name = "fresh cheese pizza"
@@ -408,6 +474,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/vendor)
 	bites_left = 6
 	heal_amt = 2
 	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor
+	food_effects = list("food_deep_burp")
 
 /obj/item/reagent_containers/food/snacks/pizza/vendor/cheese
 	name = "cheese pizza"
@@ -448,66 +515,58 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizzaslice/standard)
 /obj/item/reagent_containers/food/snacks/pizzaslice/standard
 	name = "slice of fresh basic pizza"
 	desc = "A slice of base oven pizza (you shouldn't see this)."
-	icon_state = "cheesy"
 	fill_amt = 1
 	bites_left = 2
 	heal_amt = 3
+	food_effects = list("food_hp_up", "food_deep_burp")
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/standard/cheese
 	name = "slice of fresh cheese pizza"
 	desc = "A cheesy pizza slice with thick tomato sauce."
-	icon_state = "cheesepizza-slice"
 	initial_reagents = list("bread" = 2, "juice_tomato" = 2, "cheese" = 1)
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/standard/meatball
 	name = "slice of fresh meatball pizza"
 	desc = "A cheesy pizza slice topped with succulent meatballs."
-	icon_state = "meatballpizza-slice"
 	initial_reagents = list("bread" = 2, "juice_tomato" = 2, "cheese" = 1, "beff" = 4)
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/standard/pepperoni
 	name = "slice of fresh pepperoni pizza"
 	desc = "A cheesy pizza slice topped with bright red sizzling pepperoni slices."
-	icon_state = "pepperonipizza-slice"
 	initial_reagents = list("bread" = 2, "juice_tomato" = 2, "cheese" = 1, "pepperoni" = 4)
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/standard/mushroom
 	name = "slice of fresh mushroom pizza"
 	desc = "A cheesy pizza slice topped with fresh picked mushrooms."
-	icon_state = "mushroompizza-slice"
 	initial_reagents = list("bread" = 2, "juice_tomato" = 2, "cheese" = 1, "space_fungus" = 4)
 
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizzaslice/vendor)
 /obj/item/reagent_containers/food/snacks/pizzaslice/standard
 	name = "slice of fresh basic pizza"
 	desc = "A slice of base vendor pizza (you shouldn't see this)."
-	icon_state = "cheesepizza-slice"
 	fill_amt = 1
 	bites_left = 1
 	heal_amt = 2
+	food_effects = list("food_deep_burp")
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/cheese
 	name = "slice of cheese pizza"
 	desc = "A slice of greasy cheese pizza."
-	icon_state = "cheesepizza-slice"
 	initial_reagents = list("bread" = 1, "juice_tomato" = 1, "cheese" = 1, "badgrease" = 4)
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/pepperoni
 	name = "slice of pepperoni pizza"
 	desc = "A slice of greasy pepperoni pizza."
-	icon_state = "pepperonipizza-slice"
 	initial_reagents = list("bread" = 1, "juice_tomato" = 1, "cheese" = 1, "pepperoni" = 3, "badgrease" = 4)
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/meatball
 	name = "slice of meatball pizza"
 	desc = "A slice of greasy meatball pizza."
-	icon_state = "meatballpizza-slice"
 	initial_reagents = list("bread" = 1, "juice_tomato" = 1, "cheese" = 1, "beff" = 3, "badgrease" = 4)
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/mushroom
 	name = "slice of mushroom pizza"
 	desc = "A slice of greasy mushroom pizza."
-	icon_state = "mushroompizza-slice"
 	initial_reagents = list("bread" = 1, "juice_tomato" = 1, "cheese" = 1, "space_fungus" = 3, "badgrease" = 4)
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/pineapple // only from hacked vendor
@@ -516,22 +575,25 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizzaslice/vendor)
 	contraband = 1
 	initial_reagents = list("bread" = 1, "juice_tomato" = 1, "cheese" = 1, "juice_pineapple" = 3, "badgrease" = 4)
 
-/// weird pizzas below this line
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/cargo)
+/obj/item/reagent_containers/food/snacks/pizza/cargo
+	name = "soft serve base pizza"
+	desc = "A pizza shipped from god knows where straight to cargo."
+	initial_reagents = list("pizza" = 30, "salt" = 10, "badgrease" = 10)
+	food_effects = list("food_deep_burp", "food_sweaty")
+
+/obj/item/reagent_containers/food/snacks/pizza/cargo/cheese
+	name = "soft serve cheese pizza"
+	icon_state = "cheesepizza"
+
+/obj/item/reagent_containers/food/snacks/pizza/cargo/pepperoni
+	name = "soft serve pepperoni pizza"
+	icon_state = "pepperonipizza"
+
+/obj/item/reagent_containers/food/snacks/pizza/cargo/mushroom
+	name = "soft serve mushroom pizza"
+	icon_state = "mushroompizza"
+
 /obj/item/reagent_containers/food/snacks/pizza/xmas
 	name = "\improper Spacemas pizza"
 	desc = "A traditional Spacemas pizza! It has ham, mashed potatoes, gingerbread and candy canes on it, with eggnog sauce and a fruitcake crust! Yum!"
-
-/obj/item/reagent_containers/food/snacks/pizza/bad
-	name = "soft serve cheese pizza"
-	desc = "A pizza shipped from god knows where straight to cargo."
-	icon_state = "pizza-b"
-
-/obj/item/reagent_containers/food/snacks/pizza/pepperbad
-	name = "soft serve pepperoni pizza"
-	desc = "A pizza shipped from god knows where straight to cargo."
-	icon_state = "pizza_m"
-
-/obj/item/reagent_containers/food/snacks/pizza/mushbad
-	name = "soft serve mushroom pizza"
-	desc = "A pizza shipped from god knows where straight to cargo."
-	icon_state = "pizza_v"

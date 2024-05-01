@@ -1019,7 +1019,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		else if(istype(W,/obj/item/reagent_containers/food/snacks/pizza))
 			var/obj/item/reagent_containers/food/snacks/pizza/P = W
 			boutput(user, SPAN_NOTICE("You create pizza-ghetti!"))
-			var/obj/item/reagent_containers/food/snacks/spaghetti/spicy/D = new/obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti(W.loc)
+			var/obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti/D = new/obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti(W.loc)
 			D.food_effects += P.food_effects
 			D.food_effects += src.food_effects
 			user.u_equip(W)
@@ -1050,7 +1050,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_reagents = list("capsaicin"=50,"omnizine"=5,"synaptizine"=5)
 	food_effects = list("food_energized","food_brute","food_burn")
 	meal_time_flags = MEAL_TIME_DINNER
-	/// Is this pizza under high security? (ie will it burn non security members who eat it)
+	/// Is this spaghetti under high security? (ie will it burn non security members who eat it)
 	var/secured = FALSE
 
 	New()
