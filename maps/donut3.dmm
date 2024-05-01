@@ -26035,7 +26035,7 @@
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
 "hLQ" = (
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
@@ -33736,10 +33736,6 @@
 /area/station/quartermaster/office)
 "kfJ" = (
 /obj/table/auto,
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -4;
-	pixel_y = 9
-	},
 /obj/item/storage/box/revimp_kit{
 	pixel_x = 3;
 	pixel_y = -6
@@ -43434,7 +43430,7 @@
 /obj/decal/tile_edge/stripe/corner{
 	dir = 9
 	},
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/decal/stripe_caution,
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/engine,

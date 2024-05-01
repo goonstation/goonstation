@@ -1535,7 +1535,6 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/disposal/mail/small/autoname/kitchen/south,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "apT" = (
@@ -10707,9 +10706,6 @@
 	},
 /area/station/hallway/primary/southeast)
 "brn" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
 	dir = 8;
@@ -23942,7 +23938,7 @@
 /area/station/medical/medbay/treatment)
 "jOO" = (
 /obj/machinery/firealarm/east,
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -24219,7 +24215,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -36669,7 +36665,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/switch_junction/right/south{
-	mail_tag = "detectives"
+	mail_tag = "detective"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -38155,10 +38151,6 @@
 	},
 /obj/window_blinds/cog2{
 	dir = 4
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 1;
-	icon_state = "pipe-c"
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -42385,12 +42377,11 @@
 /obj/item/kitchen/utensil/fork,
 /obj/item/kitchen/utensil/spoon,
 /obj/item/reagent_containers/food/drinks/bowl,
-/obj/machinery/disposal/mail/small{
-	dir = 4;
-	pixel_x = -5
-	},
 /obj/disposalpipe/trunk/mail{
 	dir = 4
+	},
+/obj/machinery/disposal/mail/small/autoname/kitchen/east{
+	pixel_x = -5
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
