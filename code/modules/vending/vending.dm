@@ -304,7 +304,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 /obj/machinery/vending/bullet_act(var/obj/projectile/P)
 	if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
-		if((src.can_fall) && prob(P.power))
+		if((src.can_fall) && prob(P.power * P.proj_data?.ks_ratio))
 			src.fall()
 	..()
 

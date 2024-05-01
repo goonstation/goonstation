@@ -38304,7 +38304,7 @@
 /turf/space/fluid/manta,
 /area/mantaSpace)
 "oIR" = (
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-2"

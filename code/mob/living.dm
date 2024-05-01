@@ -788,7 +788,10 @@
 			message_mode = "headset"
 	// Special message handling
 	else if (copytext(message, 1, 2) == ";")
-		message_mode = "headset"
+		if(isAI(src))
+			message_mode = "internal 1"
+		else
+			message_mode = "headset"
 		message = copytext(message, 2)
 
 	else if ((length(message) >= 2) && (copytext(message,1,2) == ":"))
