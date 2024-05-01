@@ -1120,10 +1120,8 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 		src.UpdateOverlays(src.image_tray, "tray")
 		src.UpdateOverlays(src.image_sugar, "meltedsugar-sheet")
 
-	attackby(obj/item/W, mob/user)
-		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
-			new /obj/item/plate/tray(src.loc)
-		..()
+	onSlice()
+		new /obj/item/plate/tray(src.loc)
 
 /obj/item/reagent_containers/food/snacks/ingredient/melted_sugar_strip
 	name = "melted sugar strips"

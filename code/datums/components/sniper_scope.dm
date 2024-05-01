@@ -59,6 +59,7 @@ TYPEINFO(/datum/component/holdertargeting/sniper_scope)
 	if(src.scope_overlay)
 		if(!user.hasOverlayComposition(src.scope_overlay))
 			user.addOverlayComposition(src.scope_overlay)
+			user.updateOverlaysClient(user.client)
 	if(src.scope_sound)
 		playsound(user, src.scope_sound, 50, TRUE)
 
@@ -71,3 +72,4 @@ TYPEINFO(/datum/component/holdertargeting/sniper_scope)
 		user.client.pixel_y = 0
 	if(src.scope_overlay)
 		user.removeOverlayComposition(src.scope_overlay)
+		user.updateOverlaysClient(user.client)

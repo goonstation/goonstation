@@ -724,6 +724,7 @@ datum
 			fluid_g = 64
 			fluid_b = 27
 			alch_strength = 0.25
+			volatility = 1 //funny
 
 		fooddrink/alcoholic/cocktail_suicider
 			name = "Suicider"
@@ -1148,6 +1149,12 @@ datum
 			reagent_state = LIQUID
 			taste = "fruity"
 
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if(method == INGEST && isliving(M))
+					M.setStatus("temp_accent", 30 SECONDS)
+
+
 		fooddrink/alcoholic/beach
 			name = "Bliss on the Beach"
 			id = "beach"
@@ -1379,6 +1386,14 @@ datum
 			alch_strength = 0.3
 			description = "The favorite drink of unfaithful, alcoholic executives in really nice suits."
 			reagent_state = LIQUID
+
+			reaction_mob(mob/M, method=TOUCH, volume_passed)
+				. = ..()
+				if(!volume_passed)
+					return
+				if(method == INGEST)
+					//use a status to make it a little more robust with regard to not getting stuck in noir vision hopefully?
+					M.changeStatus("noir", 5 SECONDS * volume_passed)
 
 		fooddrink/alcoholic/planter
 			name = "Planter's Punch"
@@ -2552,7 +2567,7 @@ datum
 			fluid_b = 20
 			taste = "bitter"
 
-		fooddrink/caffeinated/coffee/energydrink
+		fooddrink/caffeinated/energydrink
 			name = "energy drink"
 			id = "energydrink"
 			description = "An energy drink is a liquid plastic with a high amount of caffeine."
@@ -2562,17 +2577,17 @@ datum
 			fluid_b = 45
 			transparency = 170
 			overdose = 25
-			depletion_rate = 0.4
+			depletion_rate = 0.5
 			addiction_prob = 4
 			addiction_prob2 = 10
 			var/tickcounter = 0
 			thirst_value = -0.2
 			bladder_value = 0.04
 			energy_value = 1
-			stun_resist = 25
+			stun_resist = 15
 			taste = "supercharged"
 			threshold = THRESHOLD_INIT
-			caffeine_content = 1
+			caffeine_content = 2.5
 
 
 			cross_threshold_over()
@@ -2590,26 +2605,26 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if (ishuman(M))
-					tickcounter++
-
+					tickcounter += mult
 				..()
 
 			on_mob_life_complete(var/mob/M)
 				if(M)
-					if (tickcounter < 20)
+					if (tickcounter < 30)
 						return
 					else
 						M.show_message(SPAN_ALERT("You feel exhausted!"))
-						M.setStatus("drowsy", tickcounter SECONDS)
-						M.dizziness = tickcounter - 20
+						M.setStatus("slowed", tickcounter SECONDS, 2)
+						M.dizziness = tickcounter - 30
+						M.reagents.remove_reagent("caffeine", tickcounter - 30)
 					src.holder.del_reagent(id)
 
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				if (severity == 1 && prob(10))
 					M.show_message(SPAN_ALERT("Your heart feels like it wants to jump out of your chest."))
-				else if (ishuman(M) && ((severity == 2 && probmult(3 + tickcounter / 25)) || (severity == 1 && probmult(tickcounter / 50))))
-					M:contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)
+				else if (ishuman(M) && ((severity == 2 && probmult(3 + tickcounter / 5)) || (severity == 1 && probmult(tickcounter / 10))))
+					M.reagents.add_reagent("caffeine", 2 * mult)
 
 		fooddrink/caffeinated/tea
 			name = "tea"

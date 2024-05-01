@@ -1043,12 +1043,18 @@
 
 	var/obj/item/I = src.equipped()
 
-	if (!I || !isitem(I) || I.cant_drop) return
+	if (!I || !isitem(I) || I.cant_drop)
+		return
 
+	var/obj/item/grab/grab = null
 	if (istype(I, /obj/item/grab))
-		var/obj/item/grab/G = I
-		I = G.handle_throw(src, target)
-		if (!I) return
+		grab = I
+	else if (I.chokehold)
+		grab = I.chokehold
+	if (grab)
+		I = grab.handle_throw(src, target)
+		if (!I)
+			return
 
 	I.set_loc(src.loc)
 
@@ -1142,7 +1148,6 @@
 				var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
 				if (thing)
 					usr = src
-					boutput(usr, SPAN_NOTICE("You offer [thing] to [target]."))
 					var/mob/living/living_target = target
 					living_target.give_item()
 					return
@@ -1534,7 +1539,7 @@
 					secure_headset_mode = lowertext(copytext(message,2,3))
 				message = copytext(message, 3)
 
-	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
+	message = strip_html(trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
 		return
@@ -1865,6 +1870,16 @@
 				return TRUE
 	return FALSE
 
+/mob/living/carbon/human/can_hold_two_handed()
+	. = ..()
+	if (src.r_hand || src.l_hand)
+		return FALSE
+	if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
+		return FALSE
+	if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)))
+		return FALSE
+	return TRUE
+
 /mob/living/carbon/human/put_in_hand(obj/item/I, hand)
 	if (!istype(I))
 		return 0
@@ -1875,12 +1890,8 @@
 			return 1
 		return 0
 	if (I.two_handed) //MARKER1
-		if (src.r_hand || src.l_hand)
-			return 0
-		if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
-			return 0
-		if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)))
-			return 0
+		if (!src.can_hold_two_handed())
+			return FALSE
 		src.l_hand = I
 		src.r_hand = I
 		I.pickup(src)
@@ -2282,6 +2293,19 @@
 			src.drop_from_slot(current, get_turf(current))
 	src.force_equip(I, slot)
 	return TRUE
+///Tries to put an item in an available backpack, pocket, or hand slot; will delete the item if unable to place.
+/mob/living/carbon/human/proc/stow_in_available(obj/item/I)
+	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
+		return
+	if (src.autoequip_slot(I, SLOT_L_STORE))
+		return
+	if (src.autoequip_slot(I, SLOT_R_STORE))
+		return
+	if (src.autoequip_slot(I, SLOT_L_HAND))
+		return
+	if (src.autoequip_slot(I, SLOT_R_HAND))
+		return
+	qdel(I)
 
 /mob/living/carbon/human/swap_hand(var/specify=-1)
 	if(src.hand == specify)
@@ -3580,3 +3604,17 @@
 	src.visible_message(SPAN_ALERT("<B>BOOM!</B> [src]'s head explodes."),\
 	SPAN_ALERT("<B>BOOM!</B>"),\
 	SPAN_ALERT("You hear someone's head explode."))
+
+/mob/living/carbon/human/proc/on_bandage_removal(mob/user, bandaged_part)
+	user.tri_message(src, SPAN_NOTICE("<b>[user]</b> removes [src == user ? "[his_or_her(src)]" : "[src]'s"] bandage."),\
+		SPAN_NOTICE("You remove [src == user ? "your" : "[src]'s"] bandage."),\
+		SPAN_NOTICE("[src == user ? "You remove" : "<b>[user]</b> removes"] your bandage."))
+	src.bandaged -= bandaged_part
+	src.update_body()
+
+/mob/living/carbon/human/proc/drag_onto_op_table(obj/machinery/optable/table)
+	src.setStatus("resting", INFINITE_STATUS)
+	src.force_laydown_standup()
+	src.hud.update_resting()
+	src.set_loc(get_turf(table))
+	table.victim = src

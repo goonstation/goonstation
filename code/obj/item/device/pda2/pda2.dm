@@ -378,6 +378,7 @@
 		if(ismob(src.loc))
 			var/mob/mob = src.loc
 			get_all_character_setup_ringtones()
+
 			if(mob.client && (mob.client.preferences.pda_ringtone_index in selectable_ringtones) && mob.client?.preferences.pda_ringtone_index != "Two-Beep")
 				src.set_ringtone(selectable_ringtones[mob.client.preferences.pda_ringtone_index], FALSE, FALSE, "main", null, FALSE)
 				var/rtone_program = src.ringtone2program(src.r_tone)
@@ -733,7 +734,7 @@
 /obj/item/device/pda2/mouse_drop(atom/over_object, src_location, over_location)
 	..()
 	if (over_object == usr && src.loc == usr && isliving(usr) && !usr.stat)
-		src.attack_self(usr)
+		src.AttackSelf(usr)
 
 /obj/item/device/pda2/verb/pdasay(var/target in pdasay_autocomplete, var/message as text)
 	set name = "PDAsay"

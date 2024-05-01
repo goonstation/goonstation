@@ -424,6 +424,7 @@
 	max_amount = 30
 	ammo_cat = AMMO_AUTO_762
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
 	draco
 		name = "Draco Magazine"
 		desc = "A curved 30 round magazine, for the Draco Pistol."
@@ -554,8 +555,8 @@
 
 	lopoint
 		name = "9mm Lo-Point magazine"
-		amount_left = 12
-		max_amount = 12
+		amount_left = 10
+		max_amount = 10
 
 /obj/item/ammo/bullets/nine_mm_NATO
 	sname = "9mm frangible"
@@ -795,11 +796,14 @@
 		sound_load = 'sound/weapons/gunload_click.ogg'
 		sname = "12ga Birdshot"
 		name = "12ga birdshot ammo box"
-		desc = "A box of birdshot shells, still more than capable of murder."
+		desc = "A box of birdshot shells. Still capable of murder. Likely by exsanguination."
 
 		seven //for striker
 			amount_left = 7
 			max_amount = 7
+		two //for coachgun
+			amount_left = 2
+			max_amount = 2
 
 
 /obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo
@@ -957,6 +961,40 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_type = new/datum/projectile/bullet/rod
 	ammo_cat = AMMO_COILGUN
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+/obj/item/ammo/bullets/four_bore
+	sname = "Four-Bore Termination Round"
+	name = "four-bore termination rounds"
+	desc = "A box of inch wide lethal rounds. These are for monsters that shouldn't exist."
+	ammo_type = new/datum/projectile/bullet/four_bore
+	amount_left = 6
+	max_amount = 6
+	ammo_cat = AMMO_FOUR_BORE
+	icon_state = "4b-6"
+	icon_empty = "4b-0"
+	icon_dynamic = 1
+	icon_short = "4b"
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+/obj/item/ammo/bullets/four_bore/stun
+	sname = "Four-Bore Roundhouse Slug"
+	name = "four-bore roundhouse slugs"
+	desc = "A box of massive rubber slugs. These are sublethal, not nonlethal."
+	ammo_type = new/datum/projectile/bullet/four_bore_stunners
+	amount_left = 6
+	max_amount = 6
+	ammo_cat = AMMO_FOUR_BORE
+	icon_state = "4bs-6"
+	icon_empty = "4bs-0"
+	icon_dynamic = 1
+	icon_short = "4bs"
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+	two //spawns in albatross
+		amount_left = 2
+		max_amount = 2
 
 //1.57
 /obj/item/ammo/bullets/autocannon
@@ -1346,6 +1384,19 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 			new/obj/item/implant/projectile/staple(get_turf(src))
 		qdel(src)
 
+/obj/item/ammo/bullets/webley
+	sname = ".455 Webley"
+	name = ".455 Webley Bullets"
+	desc = "A small speedloader of reproduction .455 Webley ammunition, with a custom armor-penetrating core."
+	icon_state = "455-6"
+	amount_left = 6
+	max_amount = 6
+	ammo_type = new/datum/projectile/bullet/webley
+	ammo_cat = AMMO_WEBLEY
+	icon_dynamic = 1
+	icon_short = "455"
+	icon_empty = "speedloader_empty"
+
 //////////////////////////////////// Power cells for eguns //////////////////////////
 
 /obj/item/ammo/power_cell
@@ -1642,15 +1693,4 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 				if(99)
 					overlays += "burst_laspistol-100"
 			return
-/obj/item/ammo/bullets/webley
-	sname = ".455 Webley"
-	name = ".455 Webley Bullets"
-	desc = "A small speedloader, full of ammunition for a Webley Revolver."
-	icon_state = "455-6"
-	amount_left = 6
-	max_amount = 6
-	ammo_type = new/datum/projectile/bullet/webley
-	ammo_cat = AMMO_WEBLEY
-	icon_dynamic = 1
-	icon_short = "455"
-	icon_empty = "speedloader_empty"
+

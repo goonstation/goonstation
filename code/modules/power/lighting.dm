@@ -500,10 +500,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	desc = "A small light used to guide pods into hangars."
 	icon_state = "runway10"
 	base_state = "runway1"
-	fitting = "bulb"
+	fitting = "floor"
 	brightness = 0.5
-	light_type = /obj/item/light/bulb
-	allowed_type = /obj/item/light/bulb
+	light_type = /obj/item/light/bulb/runway
+	allowed_type = /obj/item/light/bulb/runway
 	plane = PLANE_NOSHADOW_BELOW
 	on = 1
 	wallmounted = 0
@@ -1211,7 +1211,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 // called when on fire
 
-/obj/machinery/light/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/machinery/light/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 	if(reagents) reagents.temperature_reagents(exposed_temperature, exposed_volume)
 	if(prob(max(0, exposed_temperature - 1650)))   //0% at <400C, 100% at >500C   // previous value for subtraction was -673. tons of lights exploded Azungar edit: Nudged this up a bit just in case.
 		broken()
@@ -1609,6 +1609,9 @@ TYPEINFO(/obj/item/light)
 			color_r = 0.99
 			color_g = 0.81
 			color_b = 0.99
+
+	runway
+		burnprob = 0
 
 /obj/item/light/big_bulb
 	name = "beacon bulb"

@@ -22,6 +22,7 @@ TRAYS
 	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 2
+	c_flags = ONBELT
 
 	New()
 		..()
@@ -61,6 +62,7 @@ TRAYS
 
 	attack_self(mob/user as mob)
 		src.rotate()
+		..()
 
 	proc/rotate()
 		if(rotatable)
@@ -371,6 +373,7 @@ TRAYS
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	c_flags = ONBELT
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
@@ -710,8 +713,6 @@ TRAYS
 
 	/// Removes a piece of food from the plate.
 	proc/remove_contents(obj/item/food)
-		if (!(food in src.contents))
-			return
 		MOVE_OUT_TO_TURF_SAFE(food, src)
 		src.vis_contents -= food
 		food.appearance_flags = initial(food.appearance_flags)
@@ -736,7 +737,7 @@ TRAYS
 		if (length(src.contents))
 			src.visible_message(SPAN_ALERT("Everything [src.is_plate ? "on" : "in"] \the [src] goes flying!"))
 		for (var/atom/movable/food in src)
-			food.set_loc(get_turf(src))
+			src.remove_contents(food)
 			if (istype(food, /obj/item/plate))
 				var/obj/item/plate/not_food = food
 				SPAWN(0.1 SECONDS) // This is rude but I want a small delay in smashing nested plates. More satisfying

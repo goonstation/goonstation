@@ -212,7 +212,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/catwalk/south)
 "abI" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /obj/item/clothing/gloves/boxing,
 /obj/item/clothing/mask/wrestling/black,
 /obj/item/clothing/under/shorts/luchador/red,
@@ -19543,7 +19543,7 @@
 /obj/decal/tile_edge/stripe{
 	dir = 4
 	},
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
@@ -51925,7 +51925,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/cable{
 	icon_state = "2-8"
 	},

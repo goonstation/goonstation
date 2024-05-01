@@ -179,7 +179,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/satchel/mining = 2,
 	/obj/item/oreprospector,
 	/obj/item/ore_scoop,
-	/obj/item/mining_tool/power_pick,
+	/obj/item/mining_tool/powered/pickaxe,
 	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/storage/belt/mining)
 
@@ -300,6 +300,7 @@ obj/item/storage/wall/clothingrack/hatrack
 		/obj/item/clothing/head/beret/random_color = 1,
 		/obj/item/clothing/head/beret/random_color = 1,
 		/obj/item/clothing/head/sunhat/sunhatg = 1,
+		/obj/item/clothing/head/sunhat/sunhaty = 1,
 		/obj/item/clothing/head/serpico = 1,
 		/obj/item/clothing/head/cowboy = 1)
 

@@ -902,7 +902,7 @@
 		result = "catamount"
 		required_reagents = list("juice_orange" = 1, "grenadine" = 1, "ginger_ale" = 4, "ice" = 2)
 		result_amount = 8
-		mix_sound = 'sound/misc/drinkfizz.ogg'
+		mix_sound = 'sound/voice/animal/cat.ogg'
 		drinkrecipe = TRUE
 
 	pine_ginger
@@ -2958,7 +2958,7 @@
 		id = "charcoal"
 		result = "charcoal"
 		required_reagents = list("carbon" = 1, "ash" = 1)
-		inhibitors = list("steam")
+		inhibitors = list("steam" = 2)
 		min_temperature = T0C + 140 //irl this needs to be much, much hotter than this but this will be fine for the game, and less annoying to cool for medical use
 		result_amount = 1
 		instant = FALSE
@@ -2967,52 +2967,20 @@
 		mix_phrase = "The mixture yields a fine black powder."
 		mix_sound = 'sound/misc/fuse.ogg'
 
+		on_reaction(datum/reagents/holder, created_volume)
+			holder.add_reagent("steam", created_volume)
+
 	charcoal_steam //higher quality activated charcoal can be made irl with steam so this kinda fits
 		name = "Steam Activated Charcoal"
 		id = "charcoal_steam"
 		result = "charcoal"
-		required_reagents = list("carbon" = 1, "ash" = 1, "steam" = 4) //steam and ash are awkward things to add since hot water + ash is potash, can use condensers/smart reagent ordering
-		min_temperature = T0C + 140
-		result_amount = 5 //no 'quality' system, so instead you get much more yield
+		required_reagents = list("carbon" = 1, "ash" = 1, "steam" = 2)
+		result_amount = 4 //no 'quality' system, so instead you get more yield
 		instant = FALSE
 		reaction_speed = 10
 		temperature_change = -10
 		mix_phrase = "The mixture yields a fine black powder."
 		mix_sound = 'sound/misc/fuse.ogg'
-
-	charcoal_burning
-		name = "Charcoal burning"
-		id = "charcoal_burning"
-		required_reagents = list("charcoal" = 0) //removed in on_reaction()
-		min_temperature = T0C + 140 //over boiling so you can boil away any excess water without wasting your charcoal in a big barrel or something
-		result_amount = 1
-		instant = FALSE
-		reaction_speed = 3
-		temperature_change = 5 //cancels out the charcoal production reaction, so you don't have to provide constant/a lot of heat if you choose to mix it in an open container
-		mix_phrase = "The solution produces flames and smoke."
-		reaction_icon_state = list("reaction_fire-1", "reaction_fire-2")
-		reaction_icon_color = "#ffffff"
-		//would benefit from a good 'burn-y' mix sound
-
-		does_react(var/datum/reagents/holder)
-			if(holder.has_reagent("oxygen") || holder?.my_atom?.is_open_container() || istype(holder,/datum/reagents/fluid_group))
-				return TRUE
-			else
-				return FALSE
-
-		on_reaction(var/datum/reagents/holder, var/created_volume)
-			holder.remove_reagent("charcoal", created_volume)
-			holder.remove_reagent("oxygen", created_volume)
-			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
-				var/list/covered = holder.covered_turf()
-				if (covered.len < 5)
-					for(var/turf/t in covered)
-						if(prob(20)) //quite low prob but this is an over time reaction, less spammy
-							var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-							smoke.set_up(1, 0, t)
-							smoke.start()
-			else
-				holder.add_reagent("ash", created_volume * 3, temp_new = holder.total_temperature, chemical_reaction = TRUE) //a way to make more ash with ash if you want to make lots and lots of charcoal
 
 	teporone // COGWERKS CHEM REVISION PROJECT: marked for revision - magic drug
 		name = "Teporone"
@@ -3078,7 +3046,7 @@
 	salbutamol_salicylic_acid // makes either based on input, not both at once though
 		name = "Salbutamol Salicylic Acid"
 		id = "salbutamol_salicylic_acid"
-		required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1)
+		required_reagents = list("sodium" = 0, "phenol" = 0, "carbon" = 0, "oxygen" = 0)
 		result = null //this changes in on_reaction
 		//technically it's either or, but for the purposes of the request console this makes both
 		eventual_result = list("salbutamol", "salicylic_acid")
@@ -3087,7 +3055,7 @@
 		reaction_speed = 4
 		temperature_change = 0 //this also changes
 		stateful = TRUE
-		mix_phrase = "The solution twirls mixes together idley."
+		mix_phrase = "The solution twirls and mixes together idley."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		reaction_icon_state = list("reaction_puff-1", "reaction_puff-2")
 		reaction_icon_color = "#ffffff"
@@ -3157,6 +3125,10 @@
 					result = "salicylic_acid"
 					temperature_change = -3
 
+			if (result) //manually remove reagents only if we're actually reacting
+				for (var/reagent_id in src.required_reagents)
+					holder.remove_reagent(reagent_id, 1)
+
 		physical_shock(var/force, var/datum/reagents/holder)
 			if(force > 3)
 				was_physically_shocked = TRUE
@@ -3204,10 +3176,11 @@
 				shine.set_loc(T)
 				playsound(get_turf(holder.my_atom), 'sound/effects/sparks6.ogg', 50, 1) //this could be better with a bespoke sound eventually, didn't want to steal vampire glare sound but similar-ish?
 				SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
+					T = get_turf(holder.my_atom) //may have moved
 					qdel(shine)
 					holder.del_reagent("photophosphide")
 					explosion(holder.my_atom, T, -1,-1,0,1)
-					playsound(get_turf(holder.my_atom), 'sound/effects/Explosion1.ogg', 50, 1)
+					playsound(T, 'sound/effects/Explosion1.ogg', 50, 1)
 					fireflash(T, 0)
 					if(istype(holder.my_atom, /obj))
 						var/obj/container = holder.my_atom

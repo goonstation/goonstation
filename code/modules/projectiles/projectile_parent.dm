@@ -526,7 +526,7 @@
 		src.tracked_blood = null
 		return
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		return
 
 ABSTRACT_TYPE(/datum/projectile)

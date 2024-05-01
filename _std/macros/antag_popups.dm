@@ -198,6 +198,9 @@
 			if ("gang_member")
 				window_title = "You've joined a Gang!"
 				filename = "html/traitorTips/gang_member_added.html"
+			if ("gang_leader")
+				window_title = "You've started a Gang!"
+				filename = "html/traitorTips/gang_leader.html"
 
 			// vamp/changeling
 			if ("vampire")
@@ -324,16 +327,12 @@
 
 		if (!filename)
 			return
-		var/html = grabResource(filename)
-		html = replacetext(html, "{ref}", "\ref[get_singleton(/datum/antagPopups)]")
-		M.Browse(html, "window=antagTips;size=700x450;title=[window_title]")
 
+		SPAWN(0)
+			var/html = grabResource(filename)
+			html = replacetext(html, "{ref}", "\ref[get_singleton(/datum/antagPopups)]")
+			M.Browse(html, "window=antagTips;size=700x450;title=[window_title]")
 
-/client/proc/cmd_admin_antag_popups()
-	set name = "View Special Role Popups"
-	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	if (src.holder)
-		get_singleton(/datum/antagPopups).showPanel()
 
 /mob
 	///Stores the name of the last antag popup shown to the mob

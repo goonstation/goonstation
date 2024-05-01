@@ -133,7 +133,7 @@
 	var/job = null
 
 	/// For assigning mobs various factions, see factions.dm for definitions
-	var/faction = 0
+	var/faction = list()
 
 	var/nodamage = 0
 
@@ -616,7 +616,9 @@
 				var/src_dir = get_dir(tmob, src)
 				tmob.throw_at(get_edge_cheap(source, target_dir),  20, 3)
 				src.throw_at(get_edge_cheap(source, src_dir),  20, 3)
-
+				if(!ON_COOLDOWN(src, "flubber_damage", 2 SECONDS) || !ON_COOLDOWN(tmob, "flubber_damage", 2 SECONDS))
+					random_brute_damage(tmob, 7, TRUE)
+					random_brute_damage(src, 7, TRUE)
 				logTheThing(LOG_COMBAT, src, "with reagents [log_reagents(src.reagents)] is flubber bounced [dir2text(src_dir)] due to impact with mob [log_object(tmob)] [log_reagents(tmob.reagents)] at [log_loc(src)].")
 				logTheThing(LOG_COMBAT, tmob, "with reagents [log_reagents(tmob.reagents)] is flubber bounced [dir2text(target_dir)] due to impact with mob [log_object(src)] [log_reagents(src.reagents)] at [log_loc(tmob)].")
 
@@ -1358,25 +1360,33 @@
 
 	W.dropped(src)
 
+/// shortcut for the Notes - View verb
+/mob/verb/notes_alias()
+	set name = "Notes"
+	set hidden = TRUE
+
+	src.memory()
 
 /mob/verb/memory()
-	set name = "Notes"
+	set name = "Notes - View"
 	// drsingh for cannot execute null.show_memory
 	if (isnull(mind))
 		return
 
 	mind.show_memory(src)
 
-/mob/verb/add_memory(msg as message)
-	set name = "Add Note"
+/mob/verb/add_memory()
+	set name = "Notes - Modify"
+
+	if (!src.mind)
+		return
 
 	if (mind.last_memory_time + 10 <= world.time)
 		mind.last_memory_time = world.time
 
-		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-		msg = sanitize(msg)
-
-		mind.store_memory(msg)
+	var/notes = tgui_input_text(src, "Set your notes:", "Change notes", src.mind.cust_notes, MAX_MESSAGE_LEN, TRUE, allowEmpty = TRUE)
+	if (!isnull(notes))
+		src.mind.cust_notes = notes
 
 // please note that this store_memory() vvv
 // does not store memories in the notes
@@ -1457,11 +1467,11 @@
 	set hidden = 1
 
 	if (src.health < 0)
+		logTheThing(LOG_COMBAT, src, "succumbs to death.")
 		boutput(src, SPAN_NOTICE("You have given up life and succumbed to death."))
 		src.death()
 		if (!src.suiciding)
 			src.unlock_medal("Yield", 1)
-		logTheThing(LOG_COMBAT, src, "succumbs")
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -1501,6 +1511,9 @@
 
 /mob/proc/put_in_hand(obj/item/I, hand)
 	. = 0
+
+/mob/proc/can_hold_two_handed()
+	. = FALSE
 
 /mob/proc/get_damage()
 	. = src.health
@@ -2890,9 +2903,19 @@
 		APPLY_MOVEMENT_MODIFIER(src, equipment_proxy, /obj/item)
 
 	// reset the modifiers to defaults
+	var/modifier = 1-GET_ATOM_PROPERTY(src, PROP_MOB_MOVESPEED_ASSIST)
+
 	equipment_proxy.additive_slowdown = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED)
+	if(equipment_proxy.additive_slowdown > 0)
+		equipment_proxy.additive_slowdown *= modifier
 	equipment_proxy.space_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_SPACE)
+	if(equipment_proxy.space_movement > 0)
+		equipment_proxy.space_movement *= modifier
 	equipment_proxy.aquatic_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
+	if(equipment_proxy.aquatic_movement > 0)
+		equipment_proxy.aquatic_movement *= modifier
+
+
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 /mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")
@@ -3301,3 +3324,13 @@
 
 /mob/proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_OTHER, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)
 	src.mind?.add_antagonist(role_id, do_equip, do_objectives, do_relocate, silent, source, respect_mutual_exclusives, do_pseudo, do_vr, late_setup)
+
+/mob/proc/inhale_ampoule(obj/item/reagent_containers/ampoule/amp, mob/user)
+	if(user != src)
+		user.visible_message(SPAN_ALERT("[user] forces [src] to inhale [amp]!"), SPAN_ALERT("You force [src] to inhale [amp]!"))
+	logTheThing(LOG_COMBAT, user, "[user == src ? "inhales" : "makes [constructTarget(src,"combat")] inhale"] an ampoule [log_reagents(amp)] at [log_loc(user)].")
+	amp.reagents.reaction(src, INGEST, 5, paramslist = list("inhaled"))
+	amp.reagents.trans_to(src, 5)
+	amp.expended = TRUE
+	amp.icon_state = "amp-broken"
+	playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, TRUE)

@@ -611,6 +611,14 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	typepath = /obj/item/material_piece/cloth/carbon
 	typepath_alt = /obj/item/material_piece/cloth/beewool
 
+	rc_eval(obj/item/eval_item)
+		. = ..()
+		if (.) return
+		if (istype(eval_item, /obj/item/material_piece/cloth))
+			if(eval_item.material?.getID() == "carbonfibre" || eval_item.material?.getID() == "beewool")
+				rollcount += eval_item.amount
+				. = TRUE
+
 /datum/rc_entry/stack/uqill_minprice
 	name = "uqill"
 	commodity = /datum/commodity/ore/uqill
@@ -652,7 +660,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/item/laser_drill
 	name = "handheld laser drill"
-	typepath = /obj/item/mining_tool/drill
+	typepath = /obj/item/mining_tool/powered/drill
 
 /datum/rc_entry/stack/claretine
 	name = "claretine"
@@ -749,7 +757,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_itemreward/hedron
 	name = "prototype multifunction tool"
 	build_reward()
-		var/theitem = new /obj/item/mining_tool/hedron_beam
+		var/theitem = new /obj/item/mining_tool/powered/hedron_beam
 		return theitem
 
 /datum/rc_itemreward/beam_devices
