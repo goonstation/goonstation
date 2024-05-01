@@ -57,6 +57,9 @@
 			PB.color_green = color_list[2] / 255
 			PB.color_blue = color_list[3] / 255
 			P.color = src.paint_ammo.paint_color
+			// somehow of all things this works. sure. whatever. perfect.
+			// if you figure out how to do it better: please
+			src.paint_ammo.paint_thing(P, TRUE, TRUE)
 
 	// remove paint can
 	attack_self(mob/user as mob)

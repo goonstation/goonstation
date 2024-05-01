@@ -224,7 +224,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	//used for critters that have overlays for their bioholder (hair color eye color etc)
 
 /mob/living/critter/proc/add_health_holder(var/T)
-	var/datum/healthHolder/HH = new T
+	var/datum/healthHolder/HH = new T(src)
 	if (!istype(HH))
 		return null
 	if (HH.associated_damage_type in healthlist)
