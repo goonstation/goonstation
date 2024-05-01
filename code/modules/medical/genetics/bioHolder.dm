@@ -171,7 +171,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		..()
 		voicetype = RANDOM_HUMAN_VOICE
 
-	proc/CopyOther(var/datum/appearanceHolder/toCopy)
+	proc/CopyOther(var/datum/appearanceHolder/toCopy, skip_update_colorful = FALSE)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
 		mob_appearance_flags = toCopy.mob_appearance_flags
 
@@ -221,7 +221,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		voicetype = toCopy.voicetype
 
 		flavor_text = toCopy.flavor_text
-		if(ishuman(owner))
+		if(ishuman(owner) && !skip_update_colorful)
 			var/mob/living/carbon/human/H = owner
 			H.update_colorful_parts()
 		return src
