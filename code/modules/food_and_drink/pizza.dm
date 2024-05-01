@@ -299,6 +299,7 @@
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice
 	initial_volume = 60 // 40 units will be available to stuff the crust
+	custom_food = FALSE
 	initial_reagents = list("bread" = 20)
 	mat_changeappearance = 0
 	mat_changename = 0
@@ -319,7 +320,7 @@
 		if (istype(W, /obj/item/kitchen/utensil/knife/pizza_cutter/traitor))
 			var/obj/item/kitchen/utensil/knife/pizza_cutter/traitor/cutter = W
 			if (cutter.sharpener_mode)
-				boutput(user, "You sharpen \the [src].")
+				boutput(user, "You sharpen and slice \the [src].")
 				src.sharpened = TRUE
 		..()
 
@@ -363,6 +364,7 @@
 	bites_left = 2
 	heal_amt = 1
 	initial_reagents = 10
+	custom_food = FALSE
 	w_class = W_CLASS_TINY
 	material_amt = 0.17
 	mat_changeappearance = 0
@@ -423,7 +425,6 @@
 			take_bleeding_damage(hit_atom, null, 25, DAMAGE_STAB)
 		. = ..()
 
-ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/standard)
 /obj/item/reagent_containers/food/snacks/pizza/standard
 	name = "fresh basic pizza"
 	desc = "Base non-bespoke oven pizza (you shouldn't see this)."
@@ -462,7 +463,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/standard)
 	initial_reagents = list("bread" = 10, "juice_tomato" = 10, "cheese" = 5, "space_fungus" = 20)
 	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/standard/mushroom
 
-ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/vendor)
 /obj/item/reagent_containers/food/snacks/pizza/vendor
 	name = "vendor pizza"
 	desc = "Base vendor pizza (you shouldn't see this)."
@@ -508,7 +508,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/vendor)
 	initial_reagents = list("bread" = 5, "juice_tomato" = 5, "cheese" = 5, "juice_pineapple" = 15, "badgrease" = 20)
 	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice/vendor/pineapple
 
-ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizzaslice/standard)
 /obj/item/reagent_containers/food/snacks/pizzaslice/standard
 	name = "slice of fresh basic pizza"
 	desc = "A slice of base oven pizza (you shouldn't see this)."
@@ -537,7 +536,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizzaslice/standard)
 	desc = "A cheesy pizza slice topped with fresh picked mushrooms."
 	initial_reagents = list("bread" = 2, "juice_tomato" = 2, "cheese" = 1, "space_fungus" = 4)
 
-ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizzaslice/vendor)
 /obj/item/reagent_containers/food/snacks/pizzaslice/standard
 	name = "slice of fresh basic pizza"
 	desc = "A slice of base vendor pizza (you shouldn't see this)."
@@ -572,7 +570,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizzaslice/vendor)
 	contraband = 1
 	initial_reagents = list("bread" = 1, "juice_tomato" = 1, "cheese" = 1, "juice_pineapple" = 3, "badgrease" = 4)
 
-ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza/cargo)
 /obj/item/reagent_containers/food/snacks/pizza/cargo
 	name = "soft serve base pizza"
 	desc = "A pizza shipped from god knows where straight to cargo."
