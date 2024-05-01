@@ -153,8 +153,7 @@
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (temperature >= T0C+3200) // syndicate zippos and raging plasmafires, for laughs
 			var/obj/item/reagent_containers/food/snacks/pizza/baked_pizza = src.bake_pizza()
-			for(var/mob/M in AIviewers(baked_pizza))
-				boutput(M, SPAN_NOTICE("\The [baked_pizza.name] roasts from heat!"))
+			baked_pizza.visible_message(SPAN_NOTICE("\The [baked_pizza.name] roasts from heat!"))
 			baked_pizza.quality = 5
 		. = ..()
 
