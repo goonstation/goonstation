@@ -297,6 +297,18 @@ ABSTRACT_TYPE(/datum/game_mode)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
+/datum/game_mode/proc/roundstart_player_count()
+	var/readied_count = 0
+	var/unreadied_count = 0
+	for (var/client/C in global.clients)
+		var/mob/new_player/mob = C.mob
+		if (istype(mob))
+			if (mob.ready)
+				readied_count++
+			else
+				unreadied_count++
+	return readied_count + (unreadied_count/2)
+
 ////////////////////////////
 // Objective related code //
 ////////////////////////////
