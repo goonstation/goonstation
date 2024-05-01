@@ -2441,6 +2441,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	pet_text = list("gently baps", "pets", "cuddles")
 	density = TRUE
 	player_can_spawn_with_pet = TRUE
+	var/obj/item/armadillo_ball/our_ball
 	var/infected
 
 	New()
@@ -2451,6 +2452,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	disposing()
 		. = ..()
 		STOP_TRACKING
+		qdel(our_ball)
+		our_ball = null
 
 	setup_hands()
 		..()
@@ -2492,6 +2495,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			ball_up(emote=FALSE, force=TRUE)
 		..()
 
+	set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
+		if(is_balled() && !QDELETED(our_ball))
+			qdel(our_ball)
+		..()
+
 	proc/is_balled()
 		. = istype(src.loc, /obj/item/armadillo_ball)
 
@@ -2500,10 +2508,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			. = SPAN_ALERT("<b>[src]</b> wiggles!")
 			return
 		if(is_balled())
-			var/obj/item/armadillo_ball/ball = src.loc
-			if(ismob(ball.loc))
-				var/mob/M = ball.loc
-				M.remove_item(ball)
+			if(ismob(our_ball.loc))
+				var/mob/M = our_ball.loc
+				M.remove_item(our_ball)
 				boutput(M,SPAN_ALERT("The <b>[src]</b> slips out of your possession!"))
 			src.set_loc(get_turf(src))
 			if(!emote)
@@ -2511,7 +2518,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						SPAN_ALERT("<b>You relax out of your ball!</b>"))
 			else
 				. = SPAN_ALERT("<b>[src]</b> uncurls from a ball!")
-			qdel(ball)
+			qdel(our_ball)
+			our_ball = null
 		else
 			if(!emote)
 				src.visible_message(SPAN_ALERT("<b>[src]</b> curls into a ball!"),\
@@ -2523,10 +2531,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					G.affecting.visible_message(SPAN_ALERT("[G.affecting] slips free of [G.assailant]'s grip!"))
 					G.assailant.u_equip(G)
 					qdel(G)
-				var/obj/item/armadillo_ball/ball = new(get_turf(src))
-				src.set_loc(ball)
-				ball.dir = src.dir
-				ball.icon = src.icon
+				our_ball = new(get_turf(src))
+				src.set_loc(our_ball)
+				our_ball.dir = src.dir
+				our_ball.icon = src.icon
 
 	Move(var/atom/NewLoc, direct)
 		if(src.is_balled())
