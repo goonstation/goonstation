@@ -1046,7 +1046,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
-/datum/syndicate_buylist/traitor/ai_disguised_module
+/datum/syndicate_buylist/traitor/syndicard_deluxe
 	name = "DELUXE Agent Card"
 	item = /obj/item/card/id/syndicate/deluxe
 	cost = 3
