@@ -1508,10 +1508,8 @@
 /turf/space,
 /area/space)
 "afj" = (
-/obj/item/reagent_containers/food/snacks/pizza/standard/meatball{
-	doants = 0;
-	icon_state = "pslice";
-	sliced = 1
+/obj/item/reagent_containers/food/snacks/pizzaslice/standard/meatball{
+	doants = 0
 	},
 /turf/simulated/floor/stairs/dark/wide,
 /area/station/medical/morgue)
