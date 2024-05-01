@@ -301,9 +301,13 @@ TYPEINFO(/obj/item/card/emag)
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate_shuttle)
 	HELP_MESSAGE_OVERRIDE(null)
+	var/reusable = 0
+
+/obj/item/card/id/syndicate/deluxe
+	reusable = 1
 
 /obj/item/card/id/syndicate/attack_self(mob/user as mob)
-	if(!src.registered)
+	if(!src.registered || src.reusable)
 		var/reg = copytext(src.sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)), 1, 100)
 		var/ass = copytext(src.sanitize_name(input(user, "What occupation would you like to put on this card?\n Note: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Staff Assistant"), 1), 1, 100)
 		var/color = input(user, "What color should the ID's color band be?\nClick cancel to abort the forging process.") as null|anything in list("clown","golden","blue","red","green","purple","yellow","nanotrasen","syndicate","No band")

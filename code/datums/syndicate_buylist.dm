@@ -1046,6 +1046,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/traitor/ai_disguised_module
+	name = "DELUXE Agent Card"
+	item = /obj/item/card/id/syndicate/deluxe
+	cost = 3
+	vr_allowed = FALSE
+	desc = "A counterfeit identification card, designed to prevent tracking by the station's AI systems. Unlike the standard version, its programmable identification circuit can be used multiple times, allowing the entry of many custom false identities. It is also capable of scanning other ID cards and replicating their access credentials."
+	job = list("Head of Personnel")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
