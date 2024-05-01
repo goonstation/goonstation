@@ -23,12 +23,7 @@
 
 /datum/game_mode/assday/pre_setup()
 
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-		if (player.ready)
-			num_players++
+	var/num_players = src.roundstart_player_count()
 
 	var/num_traitors = 1
 	var/num_wraiths = 1
