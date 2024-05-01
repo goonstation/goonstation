@@ -59,7 +59,7 @@
 		else
 			src.move_dir = 0
 
-		if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
+		if(!src.dir_locked && !is_unconscious(src)) //in order to not turn around and good fuckin ruin the emote animation
 			src.set_dir(src.move_dir)
 	if (changed & (KEY_THROW|KEY_PULL|KEY_POINT|KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK)) // bleh
 		src.update_cursor()

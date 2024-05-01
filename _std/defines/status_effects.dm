@@ -11,3 +11,5 @@
 
 /// Misc stuff which isn't inherently good or bad
 #define STATUS_QUALITY_NEUTRAL 3
+
+#define is_unconscious(x) x.hasStatus("paralysis")
