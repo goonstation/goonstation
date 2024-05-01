@@ -293,29 +293,26 @@ dmm_suite
 
 //-- Preloading ----------------------------------------------------------------
 
-turf
-	var
-		dmm_suite/preloader/dmm_preloader
+turf/var/dmm_suite/preloader/dmm_preloader
 
-atom/New(turf/newLoc)
-    if(isturf(newLoc))
-        var/dmm_suite/preloader/preloader = newLoc.dmm_preloader
-        if(preloader)
-            newLoc.dmm_preloader = null
-            preloader.load(src)
-    . = ..()
+/atom/New(newLoc)
+	if(isturf(newLoc))
+		var/turf/T = newLoc
+		var/dmm_suite/preloader/preloader = T.dmm_preloader
+		if(preloader)
+			T.dmm_preloader = null
+			preloader.load(src)
+	. = ..()
 
-dmm_suite
-	preloader
-		parent_type = /datum
-		var
-			list/attributes
-		New(turf/loadLocation, list/_attributes)
-			loadLocation.dmm_preloader = src
-			attributes = _attributes
-			. = ..()
-		proc
-			load(atom/newAtom)
-				var/list/attributesMirror = attributes // apparently this is faster
-				for(var/attributeName in attributesMirror)
-					newAtom.vars[attributeName] = attributesMirror[attributeName]
+/dmm_suite/preloader
+	parent_type = /datum
+	var/list/attributes
+
+	New(turf/loadLocation, list/_attributes)
+		loadLocation.dmm_preloader = src
+		attributes = _attributes
+		. = ..()
+	proc/load(atom/newAtom)
+		var/list/attributesMirror = attributes // apparently this is faster
+		for(var/attributeName in attributesMirror)
+			newAtom.vars[attributeName] = attributesMirror[attributeName]
