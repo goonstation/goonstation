@@ -60,7 +60,6 @@
 		var/col_new = input(user, "Pick paint color", "Pick paint color", src.paint_color) as color
 		if(col_new)
 			var/obj/item/paint_can/P = new/obj/item/paint_can(src.loc, col_new)
-			P.paint_color = col_new
 			paint_color = col_new
 			P.paint_intensity = src.paint_intensity
 			P.add_orig = src.add_orig
@@ -267,7 +266,7 @@ var/list/cached_colors = new/list()
 	w_class = W_CLASS_SMALL
 	inventory_counter_enabled = TRUE
 
-	New(col_new = null)
+	New(loc, col_new = null)
 		..()
 		if (col_new)
 			src.paint_color = col_new
@@ -377,7 +376,8 @@ var/list/cached_colors = new/list()
 
 /obj/item/paint_can/totally_random
 	New()
-		..(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
+		src.paint_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+		..()
 
 /obj/item/paint_can/rainbow
 	name = "rainbow paint can"
