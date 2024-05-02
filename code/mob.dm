@@ -179,6 +179,7 @@
 
 	var/tmp/client/last_client // actually the current client, used by Logout due to BYOND
 	var/last_ckey
+	var/logout_at = null
 	var/joined_date = null
 	mat_changename = 0
 	mat_changedesc = 0

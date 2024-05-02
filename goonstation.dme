@@ -2350,6 +2350,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\procs\waldo.dm"
 #include "code\procs\mobprocs\attacks.dm"
 #include "code\procs\mobprocs\chatprocs.dm"
+#include "code\procs\mobprocs\offline_indicator.dm"
 #include "code\procs\mobprocs\typing_indicator.dm"
 #include "code\turf\floors.dm"
 #include "code\turf\floors_airless.dm"
