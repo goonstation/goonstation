@@ -118,9 +118,12 @@
 			if (actions.hasAction(user, /datum/action/bar/private/welding/loop/vehicle))
 				return
 			var/datum/action/bar/icon/callback/action_bar
+			var/list/positions = src.get_welding_positions()
 			action_bar = new /datum/action/bar/private/welding/loop/vehicle(user, src, \
 			proc_path=/obj/machinery/vehicle/proc/weld_action, \
 			proc_args=list(user), \
+			start=positions[1], \
+			stop=positions[2], \
 			tool=W)
 			actions.start(action_bar, user)
 			return
@@ -823,6 +826,7 @@
 				if(-20 to 0)
 					shipcrit()
 
+/// Callback for welding repair actionbar
 /obj/machinery/vehicle/proc/weld_action(mob/user)
 	src.health += 30
 	src.checkhealth()
@@ -830,6 +834,22 @@
 	src.visible_message(SPAN_ALERT("[user] has fixed some of the dents on [src]!"))
 	if(health >= maxhealth)
 		src.visible_message(SPAN_ALERT("[src] is fully repaired!"))
+
+/// Produces a random small welding line across the vehicle
+/obj/machinery/vehicle/proc/get_welding_positions()
+	var/start
+	var/stop
+	// 0,0 coords correspond to 16,16 on sprite of any size
+	// so we need to shift the range by -16
+	var/startX = rand(-8, (src.bound_width-24))
+	var/startY = rand(-8, (src.bound_height-24))
+	var/difference = rand(3, 6) // small x means bigger y, vice versa
+	var/endX = startX + (difference * (prob(50) ? 1 : -1))
+	var/endY = startY + ((8 - difference) * (prob(50) ? 1 : -1))
+
+	start = list(startX, startY)
+	stop = list(endX, endY)
+	. = list(start, stop)
 
 /obj/machinery/vehicle/proc/shipcrit()
 	if (src.engine)
@@ -1767,8 +1787,6 @@
 
 /obj/machinery/vehicle/proc/go_home()
 	. = src.com_system?.get_home_turf()
-
-
 
 //TODO
 

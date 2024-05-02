@@ -954,6 +954,23 @@
 	var/list/proc_args = null
 	bar_on_owner = FALSE
 
+	proc/make_welding_effect()
+		if(E)
+			if(ismovable(src.target))
+				var/atom/movable/M = src.target
+				M.vis_contents -= E
+			qdel(E)
+
+		if(ismovable(src.target))
+			var/atom/movable/M = src.target
+			E = new(M)
+			M.vis_contents += E
+		else
+			E = new(src.target)
+		E.pixel_x = start_offset[1]
+		E.pixel_y = start_offset[2]
+		animate(E, time=src.duration, pixel_x=end_offset[1], pixel_y=end_offset[2])
+
 	New(owner, target, duration, proc_path, proc_args, end_message, start, stop, call_proc_on)
 		..()
 		src.owner = owner
@@ -976,16 +993,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-		if(!E)
-			if(ismovable(src.target))
-				var/atom/movable/M = src.target
-				E = new(M)
-				M.vis_contents += E
-			else
-				E = new(src.target)
-			E.pixel_x = start_offset[1]
-			E.pixel_y = start_offset[2]
-			animate(E, time=src.duration, pixel_x=end_offset[1], pixel_y=end_offset[2])
+		src.make_welding_effect()
 
 	onDelete(var/flag)
 		if(E)
@@ -1043,6 +1051,10 @@
 		..()
 		src.loopStart()
 
+	loopStart()
+		..()
+		src.make_welding_effect()
+
 	onEnd()
 		if(!src.welder:try_weld(owner, src.cycle_cost))
 			src.interrupt(INTERRUPT_ALWAYS)
@@ -1061,6 +1073,13 @@
 /datum/action/bar/private/welding/loop/vehicle/New(owner, target, duration, proc_path, proc_args, end_message, start, stop, call_proc_on, tool, cost)
 	. = ..()
 	src.place_to_put_bar = owner
+
+/datum/action/bar/private/welding/loop/vehicle/loopStart()
+	var/obj/machinery/vehicle/V = target
+	var/newPositions = V.get_welding_positions()
+	src.start_offset = newPositions[1]
+	src.end_offset = newPositions[2]
+	. = ..()
 
 /datum/action/bar/private/welding/loop/vehicle/canRunCheck(in_start)
 	..()
