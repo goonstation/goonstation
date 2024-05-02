@@ -1,5 +1,9 @@
 
 (t)thu may 02 24
+(u)MylieDaniels
+(p)18692
+(e)🗺🎨🔎🔄📦🍝|A-Mapping, C-Sprites, C-Code-Quality, C-Rework, A-Game-Objects, A-Catering
+(+)Pizza has been completely reworked. To get started, roll some dough. To finish it up, bake for 9 seconds on HIGH, or find a way to expose to a terribly high heat. The middle? That's entirely up to you.
 (u)JORJ949
 (p)18550
 (e)🗺⚖|A-Mapping, C-Balance
