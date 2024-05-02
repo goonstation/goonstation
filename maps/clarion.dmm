@@ -10079,7 +10079,6 @@
 	dir = 4
 	},
 /obj/landmark/start/job/bartender,
-/obj/machinery/light/small/floor,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "bop" = (
@@ -14918,10 +14917,6 @@
 	icon_state = "fred6"
 	},
 /area/station/science/lobby)
-"cJD" = (
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/bar)
 "cJF" = (
 /obj/machinery/camera,
 /obj/machinery/vending/snack,
@@ -15127,6 +15122,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "cSo" = (
@@ -84539,7 +84535,7 @@ bok
 aFK
 aGu
 pmx
-cJD
+aDu
 aDu
 kNZ
 aMb
