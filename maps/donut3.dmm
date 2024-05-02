@@ -70310,7 +70310,7 @@
 /obj/storage/secure/closet/fridge,
 /obj/item/reagent_containers/food/drinks/milk,
 /obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/pizza/pepperoni,
+/obj/item/reagent_containers/food/snacks/pizza/standard/pepperoni,
 /turf/simulated/floor/grey/corner{
 	dir = 4
 	},

@@ -18417,7 +18417,7 @@
 /obj/machinery/traymachine/morgue{
 	dir = 2
 	},
-/obj/item/reagent_containers/food/snacks/pizza/meatball,
+/obj/item/reagent_containers/food/snacks/pizza/standard/meatball,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bbq" = (

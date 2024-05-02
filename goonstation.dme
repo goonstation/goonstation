@@ -1180,6 +1180,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\food_and_drink\ice_cream.dm"
 #include "code\modules\food_and_drink\ingredients.dm"
 #include "code\modules\food_and_drink\pies.dm"
+#include "code\modules\food_and_drink\pizza.dm"
 #include "code\modules\food_and_drink\plants.dm"
 #include "code\modules\food_and_drink\popsicles.dm"
 #include "code\modules\food_and_drink\sandwiches.dm"
