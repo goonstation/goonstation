@@ -42308,7 +42308,6 @@
 /turf/simulated/floor,
 /area/research_outpost)
 "qDX" = (
-/obj/disposalpipe/segment/mail,
 /obj/disposalpipe/switch_junction/right/south{
 	mail_tag = "detective's office"
 	},
