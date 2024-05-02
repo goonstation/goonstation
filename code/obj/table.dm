@@ -41,6 +41,7 @@ TYPEINFO_NEW(/obj/table)
 
 	New(loc)
 		..()
+		START_TRACKING
 		if (src.has_drawer)
 			src.create_storage(/datum/storage/unholdable, spawn_contents = src.drawer_contents, slots = 13, max_wclass = W_CLASS_SMALL)
 

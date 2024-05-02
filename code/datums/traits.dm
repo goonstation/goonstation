@@ -183,6 +183,12 @@
 	proc/hasTrait(var/id)
 		. = (id in traits)
 
+	proc/getTraitWithCategory(var/cat)
+		for(var/id in traits)
+			var/datum/trait/T = traits[id]
+			if (T.category == cat)
+				. = T
+
 //Yes these are objs because grid control. Shut up. I don't like it either.
 /datum/trait
 	var/name
@@ -200,6 +206,7 @@
 	var/disability_type = TRAIT_DISABILITY_NONE //! Is this a major/minor/not a disability
 	var/disability_name = "" //! Name of the disability for medical records
 	var/disability_desc = "" //! Description of the disability for medical records
+	var/spawn_delay = 0 // To avoid ugly hardcoded spawn delay
 
 	New()
 		ASSERT(src.name)
@@ -707,6 +714,16 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "sleepy"
 	category = list("background")
 	points = 0
+	spawn_delay = 10 SECONDS
+
+/datum/trait/partyanimal
+	name = "Party Animal"
+	desc = "You don't remember much about last night, but you know you had a good time."
+	id = "partyanimal"
+	icon_state = "partyanimal"
+	category = list("background")
+	points = 0
+	spawn_delay = 3 SECONDS
 
 // NO CATEGORY - Grey Border
 

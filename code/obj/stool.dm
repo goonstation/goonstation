@@ -37,6 +37,7 @@
 	material_amt = 0.1
 
 	New()
+		START_TRACKING
 		if (!src.anchored && src.securable) // we're able to toggle between being secured to the floor or not, and we started unsecured
 			src.p_class = 2 // so make us easy to move
 		..()
@@ -347,10 +348,6 @@ TYPEINFO(/obj/stool/wooden)
 		icon_state = "rollerbed"
 		parts_type = /obj/item/furniture_parts/bed/roller
 		scoot_sounds = list( 'sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg' )
-
-	New()
-		..()
-		START_TRACKING
 
 	Move()
 		if(src.buckled_guy?.loc != src.loc)
