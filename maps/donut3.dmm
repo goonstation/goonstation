@@ -4693,14 +4693,12 @@
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "bpC" = (
-/obj/machinery/door/airlock/pyro/command{
-	req_access = null
-	},
 /obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/command,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "bpJ" = (
@@ -8671,6 +8669,11 @@
 	dir = 10
 	},
 /area/station/hangar/main)
+"cua" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/stockex)
 "cuc" = (
 /obj/machinery/computer/secure_data/detective_computer,
 /obj/cable,
@@ -9946,13 +9949,11 @@
 "cPA" = (
 /obj/machinery/light_switch/east,
 /obj/table/reinforced/auto,
-/obj/item/device/infra_sensor{
-	pixel_x = 1;
-	pixel_y = 3
+/obj/item/aiModule/notHuman{
+	pixel_y = -6
 	},
-/obj/item/clothing/glasses/toggleable/meson{
-	pixel_x = 1;
-	pixel_y = -7
+/obj/item/aiModule/oneHuman{
+	pixel_y = 8
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -14483,13 +14484,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "elp" = (
-/obj/item/aiModule/removeCrew{
-	pixel_y = 13
-	},
 /obj/table/reinforced/auto,
-/obj/item/aiModule/emergency{
-	pixel_y = -1
-	},
+/obj/random_item_spawner/ai_experimental/one,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "elv" = (
@@ -15343,6 +15339,9 @@
 	turretArea = /area/station/turret_protected/ai_upload
 	},
 /obj/mapping_helper/access/ai_upload,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "ezQ" = (
@@ -16495,6 +16494,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/sw)
 "eSW" = (
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "eTk" = (
@@ -18571,8 +18571,12 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/computer/robotics{
-	dir = 8
+/obj/table/reinforced/auto,
+/obj/item/aiModule/freeform{
+	pixel_y = 9
+	},
+/obj/item/aiModule/makeCaptain{
+	pixel_y = -5
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -22017,6 +22021,10 @@
 	dir = 8;
 	setup_os_string = "ZETA_MAINFRAME"
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload_foyer)
 "gAU" = (
@@ -26373,6 +26381,9 @@
 	icon_state = "2-8"
 	},
 /obj/item/device/radio/intercom/AI,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "hRN" = (
@@ -31304,6 +31315,9 @@
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "jtK" = (
@@ -32343,13 +32357,18 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "jJN" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/east{
+	pixel_y = 2
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/blind_switch/area/east{
+	pixel_y = -6
 	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 5
@@ -33913,11 +33932,13 @@
 /area/station/bridge/customs)
 "kjk" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/oneHuman{
-	pixel_y = 8
+/obj/item/clothing/glasses/toggleable/meson{
+	pixel_x = 1;
+	pixel_y = -7
 	},
-/obj/item/aiModule/notHuman{
-	pixel_y = -6
+/obj/item/device/infra_sensor{
+	pixel_x = 1;
+	pixel_y = 3
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -48981,6 +49002,11 @@
 /area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
+"oMn" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/stockex)
 "oMo" = (
 /obj/machinery/light/emergency,
 /obj/machinery/disposal/brig{
@@ -49094,9 +49120,8 @@
 /area/station/crew_quarters/garden)
 "oOz" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/decal/stripe_delivery,
 /turf/simulated/floor/plating,
-/area/station/hallway/primary/west)
+/area/station/turret_protected/ai_upload)
 "oOC" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -53047,6 +53072,9 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17{
 	codes_txt = "patrol;next_patrol=1"
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
 "pYD" = (
@@ -56185,12 +56213,8 @@
 /obj/item/device/radio/intercom/AI{
 	dir = 4
 	},
-/obj/table/reinforced/auto,
-/obj/item/aiModule/freeform{
-	pixel_y = 9
-	},
-/obj/item/aiModule/makeCaptain{
-	pixel_y = -5
+/obj/machinery/computer/robotics{
+	dir = 4
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -58658,7 +58682,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "rJK" = (
-/obj/machinery/light/incandescent/netural,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10;
@@ -68387,6 +68410,7 @@
 /area/station/maintenance/outer/west)
 "uIw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/stockex)
 "uID" = (
@@ -69243,8 +69267,13 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "uWG" = (
-/obj/random_item_spawner/ai_experimental/one,
 /obj/table/reinforced/auto,
+/obj/item/aiModule/removeCrew{
+	pixel_y = 13
+	},
+/obj/item/aiModule/emergency{
+	pixel_y = -1
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "uWL" = (
@@ -112380,7 +112409,7 @@ bwO
 dxp
 csM
 qXP
-uIw
+cua
 rdj
 rdj
 rdj
@@ -112686,7 +112715,7 @@ uIw
 rdj
 rdj
 rdj
-oOz
+iHj
 xYA
 wQc
 gzN
@@ -113588,7 +113617,7 @@ bwO
 qGs
 yeJ
 lwW
-uIw
+cua
 rdj
 rdj
 rdj
@@ -113890,7 +113919,7 @@ vSe
 qGs
 hHF
 xNO
-uIw
+oMn
 rdj
 rdj
 rdj
@@ -136916,7 +136945,7 @@ vxz
 ouW
 ykb
 rJK
-avI
+oOz
 xzq
 ehT
 ehT
@@ -137520,7 +137549,7 @@ rhm
 ouW
 ezP
 oIu
-avI
+oOz
 ryN
 ehT
 oLF
