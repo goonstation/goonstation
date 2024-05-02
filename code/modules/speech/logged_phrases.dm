@@ -42,6 +42,7 @@ var/global/datum/phrase_log/phrase_log = new
 	var/api_cache_size = 40
 	var/static/regex/non_freeform_laws
 	var/static/regex/name_regex = new(@"\b[A-Z][a-z]* [A-Z][a-z]*\b", "g")
+	var/PANIC = FALSE
 
 	New()
 		..()
@@ -131,6 +132,11 @@ var/global/datum/phrase_log/phrase_log = new
 			src.phrases = json_decode(file2text(src.filename))
 		else
 			src.phrases = list()
+
+		if(!islist(src.phrases))
+			PANIC = TRUE
+			src.phrases = list()
+
 		src.original_lengths = list()
 		for(var/category in src.phrases)
 			src.original_lengths[category] = length(src.phrases[category])
@@ -204,7 +210,7 @@ var/global/datum/phrase_log/phrase_log = new
 		rustg_file_write(file2text(new_uncool), src.uncool_words_filename)
 
 	proc/save()
-		if(isnull(src.phrases))
+		if(isnull(src.phrases) || PANIC)
 			return
 		for(var/category in src.phrases)
 			var/list/phrases = src.phrases[category]
