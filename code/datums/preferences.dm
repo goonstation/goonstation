@@ -126,7 +126,7 @@ var/list/removed_jobs = list(
 		return tgui_always_state.can_use_topic(src, user)
 
 	ui_interact(mob/user, datum/tgui/ui)
-		if(!tgui_process)
+		if (!tgui_process)
 			boutput(user, SPAN_ALERT("Hold on a moment, stuff is still setting up."))
 			return
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -175,7 +175,7 @@ var/list/removed_jobs = list(
 
 		var/list/profiles = new/list(SAVEFILE_PROFILES_MAX)
 		for (var/i = 1, i <= SAVEFILE_PROFILES_MAX, i++)
-			if(profile_names_dirty)
+			if (profile_names_dirty)
 				src.profile_names[i] = src.savefile_get_profile_name(client, i)
 			profiles[i] = list(
 				"active" = i == src.profile_number,
@@ -281,14 +281,14 @@ var/list/removed_jobs = list(
 
 		var/client/client = ismob(usr) ? usr.client : usr
 
-		switch(action)
+		switch (action)
 			if ("previewSound")
 				var/sound_file
 
 				if (params["pdaRingtone"])
 					get_all_character_setup_ringtones()
 					var/datum/ringtone/RT = selectable_ringtones[src.pda_ringtone_index]
-					if(istype(RT) && length(RT.ringList))
+					if (istype(RT) && length(RT.ringList))
 						sound_file = RT.ringList[rand(1,length(RT.ringList))]
 
 				if (params["fartsound"])
@@ -344,22 +344,22 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("cloud-new")
-				if(length(client.player.cloudSaves.saves) >= SAVEFILE_CLOUD_PROFILES_MAX)
+				if (length(client.player.cloudSaves.saves) >= SAVEFILE_CLOUD_PROFILES_MAX)
 					tgui_alert(usr, "You have hit your cloud save limit. Please write over an existing save.", "Max saves")
 				else
 					var/new_name = tgui_input_text(usr, "What would you like to name the save?", "Save Name")
-					if(length(new_name) < 3 || length(new_name) > MOB_NAME_MAX_LENGTH)
+					if (length(new_name) < 3 || length(new_name) > MOB_NAME_MAX_LENGTH)
 						tgui_alert(usr, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!", "Letter count out of range")
 					else
 						var/ret = src.cloudsave_save(usr.client, new_name)
-						if(istext(ret))
+						if (istext(ret))
 							boutput( usr, SPAN_ALERT("Failed to save savefile: [ret]") )
 						else
 							boutput( usr, SPAN_NOTICE("Savefile saved!") )
 
 			if ("cloud-save")
 				var/ret = src.cloudsave_save(client, params["name"])
-				if(istext(ret))
+				if (istext(ret))
 					boutput(usr, SPAN_ALERT("Failed to save savefile: [ret]"))
 				else
 					boutput(usr, SPAN_NOTICE("Savefile saved!"))
@@ -367,7 +367,7 @@ var/list/removed_jobs = list(
 
 			if ("cloud-load")
 				var/ret = src.cloudsave_load(client, params["name"])
-				if( istext(ret))
+				if (istext(ret))
 					boutput(usr, SPAN_ALERT("Failed to load savefile: [ret]"))
 				else
 					boutput(usr, SPAN_NOTICE("Savefile loaded!"))
@@ -376,7 +376,7 @@ var/list/removed_jobs = list(
 
 			if ("cloud-delete")
 				var/ret = src.cloudsave_delete(client, params["name"])
-				if(istext(ret))
+				if (istext(ret))
 					boutput(usr, SPAN_ALERT("Failed to delete savefile: [ret]"))
 				else
 					boutput(usr, SPAN_NOTICE("Savefile deleted!"))
@@ -506,11 +506,11 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-pronouns")
-				if(isnull(src.AH.pronouns))
+				if (isnull(src.AH.pronouns))
 					src.AH.pronouns = get_singleton(/datum/pronouns/theyThem)
 				else
 					src.AH.pronouns = src.AH.pronouns.next_pronouns()
-					if(src.AH.pronouns == get_singleton(/datum/pronouns/theyThem))
+					if (src.AH.pronouns == get_singleton(/datum/pronouns/theyThem))
 						src.AH.pronouns = null
 				src.profile_modified = TRUE
 				return TRUE
@@ -597,7 +597,7 @@ var/list/removed_jobs = list(
 
 			if ("update-pdaRingtone")
 				get_all_character_setup_ringtones()
-				if(!length(selectable_ringtones))
+				if (!length(selectable_ringtones))
 					src.pda_ringtone_index = "Two-Beep"
 					tgui_alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x")
 					logTheThing(LOG_DEBUG, usr, "get_all_character_setup_ringtones() didn't return anything!")
@@ -620,15 +620,15 @@ var/list/removed_jobs = list(
 			if ("update-skinTone")
 				var/new_tone = "#FEFEFE"
 				if (usr.has_medal("Contributor"))
-					switch(tgui_alert(usr, "Goonstation contributors get to pick any colour for their skin tone!", "Thanks, pal!", list("Paint me like a posh fence!", "Use Standard tone.", "Cancel")))
-						if("Paint me like a posh fence!")
+					switch (tgui_alert(usr, "Goonstation contributors get to pick any colour for their skin tone!", "Thanks, pal!", list("Paint me like a posh fence!", "Use Standard tone.", "Cancel")))
+						if ("Paint me like a posh fence!")
 							new_tone = tgui_color_picker(usr, "Please select skin color.", "Character Generation", src.AH.s_tone)
-						if("Use Standard tone.")
+						if ("Use Standard tone.")
 							new_tone = get_standard_skintone(usr)
 						else
 							return
 
-					if(new_tone)
+					if (new_tone)
 						src.AH.s_tone = new_tone
 						src.AH.s_tone_original = new_tone
 
@@ -637,7 +637,7 @@ var/list/removed_jobs = list(
 						return TRUE
 				else
 					new_tone = get_standard_skintone(usr)
-					if(new_tone)
+					if (new_tone)
 						src.AH.s_tone = new_tone
 						src.AH.s_tone_original = new_tone
 
@@ -695,7 +695,7 @@ var/list/removed_jobs = list(
 
 			if ("update-detail-color")
 				var/current_color
-				switch(params["id"])
+				switch (params["id"])
 					if ("custom1")
 						current_color = src.AH.customization_first_color
 					if ("custom2")
@@ -706,7 +706,7 @@ var/list/removed_jobs = list(
 						current_color = src.AH.u_color
 				var/new_color = tgui_color_picker(usr, "Please select a color.", "Character Generation", current_color)
 				if (new_color)
-					switch(params["id"])
+					switch (params["id"])
 						if ("custom1")
 							src.AH.customization_first_color = new_color
 						if ("custom2")
@@ -722,14 +722,14 @@ var/list/removed_jobs = list(
 
 			if ("update-detail-style")
 				var/new_style
-				switch(params["id"])
+				switch (params["id"])
 					if ("custom1", "custom2", "custom3")
 						new_style = select_custom_style(usr, no_gimmick_hair=TRUE)
 					if ("underwear")
 						new_style = tgui_input_list(usr, "Select an underwear style", "Character Generation", underwear_styles)
 
 				if (new_style)
-					switch(params["id"])
+					switch (params["id"])
 						if ("custom1")
 							src.AH.customization_first = new_style
 						if ("custom2")
@@ -749,7 +749,7 @@ var/list/removed_jobs = list(
 				var/current_index
 				var/list/style_list
 
-				switch(params["id"])
+				switch (params["id"])
 					if ("custom1")
 						current_style = src.AH.customization_first.type
 					if ("custom2")
@@ -762,7 +762,7 @@ var/list/removed_jobs = list(
 				if (isnull(current_style))
 					return
 
-				switch(params["id"])
+				switch (params["id"])
 					if ("custom1", "custom2", "custom3")
 						style_list = get_available_custom_style_types(usr.client, no_gimmick_hair=TRUE)
 					if ("underwear")
@@ -778,7 +778,7 @@ var/list/removed_jobs = list(
 					new_style = style_list[current_index - 1 < 1 ? length(style_list) : current_index - 1]
 
 				if (new_style)
-					switch(params["id"])
+					switch (params["id"])
 						if ("custom1")
 							src.AH.customization_first = new new_style
 						if ("custom2")
@@ -1384,7 +1384,7 @@ var/list/removed_jobs = list(
 					print_the_job = TRUE
 			else
 				print_the_job = TRUE
-			if(print_the_job)
+			if (print_the_job)
 				HTML += " <a href=\"byond://?src=\ref[src];preferences=1;occ=1;job=[J_Fav.name];level=0\" style='font-weight: bold; color: [J_Fav.linkcolor];'>[J_Fav.name]</a>"
 
 		HTML += {"
@@ -1509,21 +1509,21 @@ var/list/removed_jobs = list(
 		user.Browse(HTML.Join(), "window=mob_occupation;size=850x580")
 		return
 
-	proc/SetJob(mob/user, occ=1, job="Captain",var/level = 0)
+	proc/SetJob(mob/user, occ=1, job="Captain", var/level = 0)
 		if (src.antispam)
 			return
-		switch(occ)
+		switch (occ)
 			if (1)
-				if(src.job_favorite != job)
+				if (src.job_favorite != job)
 					return
 			if (2)
-				if(!(job in src.jobs_med_priority))
+				if (!(job in src.jobs_med_priority))
 					return
 			if (3)
-				if(!(job in src.jobs_low_priority))
+				if (!(job in src.jobs_low_priority))
 					return
 			if (4)
-				if(!(job in src.jobs_unwanted))
+				if (!(job in src.jobs_unwanted))
 					return
 			else
 				return
@@ -1535,7 +1535,7 @@ var/list/removed_jobs = list(
 		if (!find_job_in_controller_by_string(job,1))
 #endif
 			boutput(user, SPAN_ALERT("<b>The game could not find that job in the internal list of jobs.</b>"))
-			switch(occ)
+			switch (occ)
 				if (1) src.job_favorite = null
 				if (2) src.jobs_med_priority -= job
 				if (3) src.jobs_low_priority -= job
@@ -1544,7 +1544,7 @@ var/list/removed_jobs = list(
 		if (job=="AI" && (!config.allow_ai))
 			boutput(user, SPAN_ALERT("<b>Selecting the AI is not currently allowed.</b>"))
 			if (occ != 4)
-				switch(occ)
+				switch (occ)
 					if (1) src.job_favorite = null
 					if (2) src.jobs_med_priority -= job
 					if (3) src.jobs_low_priority -= job
@@ -1554,7 +1554,7 @@ var/list/removed_jobs = list(
 		if (jobban_isbanned(user, job))
 			boutput(user, SPAN_ALERT("<b>You are banned from this job and may not select it.</b>"))
 			if (occ != 4)
-				switch(occ)
+				switch (occ)
 					if (1) src.job_favorite = null
 					if (2) src.jobs_med_priority -= job
 					if (3) src.jobs_low_priority -= job
@@ -1572,7 +1572,7 @@ var/list/removed_jobs = list(
 			if (!isnull(round_num) && round_num < temp_job.rounds_needed_to_play) //they havent played enough rounds!
 				boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b>"))
 				if (occ != 4)
-					switch(occ)
+					switch (occ)
 						if (1) src.job_favorite = null
 						if (2) src.jobs_med_priority -= job
 						if (3) src.jobs_low_priority -= job
@@ -1585,10 +1585,10 @@ var/list/removed_jobs = list(
 		var/datum/job/J = find_job_in_controller_by_string(job)
 		if (level == 0)
 			var/list/valid_actions = list("Favorite","Medium Priority","Low Priority","Unwanted")
-			if(J.wiki_link)
+			if (J.wiki_link)
 				valid_actions += "Show Wiki Page"
 
-			switch(occ)
+			switch (occ)
 				if (1) valid_actions -= "Favorite"
 				if (2) valid_actions -= "Medium Priority"
 				if (3) valid_actions -= "Low Priority"
@@ -1599,7 +1599,7 @@ var/list/removed_jobs = list(
 				src.antispam = 0
 				return
 		else
-			switch(level)
+			switch (level)
 				if (1) picker = "Favorite"
 				if (2) picker = "Medium Priority"
 				if (3) picker = "Low Priority"
@@ -1612,7 +1612,7 @@ var/list/removed_jobs = list(
 
 		var/successful_move = 0
 
-		switch(picker)
+		switch (picker)
 			if ("Favorite")
 				if (src.job_favorite)
 					src.jobs_med_priority += src.job_favorite
@@ -1637,7 +1637,7 @@ var/list/removed_jobs = list(
 				user << link(J.wiki_link)
 
 		if (successful_move)
-			switch(occ)
+			switch (occ)
 				// i know, repetitive, but its the safest way i can think of right now
 				if (2) src.jobs_med_priority -= job
 				if (3) src.jobs_low_priority -= job
@@ -1680,7 +1680,7 @@ var/list/removed_jobs = list(
 
 		if (link_tags["resetalljobs"])
 			var/resetwhat = tgui_input_list(user, "Reset all jobs to which level?", "Job Preferences", list("Medium Priority", "Low Priority", "Unwanted"))
-			switch(resetwhat)
+			switch (resetwhat)
 				if ("Medium Priority")
 					src.ResetAllPrefsToMed(user)
 				if ("Low Priority")
@@ -1801,7 +1801,7 @@ var/list/removed_jobs = list(
 					character.bioHolder.bloodType = blType
 
 			SPAWN(0) // avoid blocking
-				if(jobban_isbanned(user, "Custom Names"))
+				if (jobban_isbanned(user, "Custom Names"))
 					randomize_name()
 					randomizeLook()
 					character.bioHolder?.bloodType = random_blood_type()
