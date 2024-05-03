@@ -122,7 +122,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs/paint
 	name = "Artistic Supplies Crate"
 	desc = "A selection of random paints, and an artistic toolbox. Get arty!"
-	contains = list(/obj/item/paint_can/random = 4, /obj/item/storage/toolbox/artistic)
+	contains = list(/obj/item/paint_can/totally_random = 5, /obj/item/storage/toolbox/artistic)
 	cost = PAY_TRADESMAN*3
 	containertype = /obj/storage/crate/packing
 	containername = "Artistic Crate"

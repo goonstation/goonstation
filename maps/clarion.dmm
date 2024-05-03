@@ -8382,10 +8382,6 @@
 /obj/landmark/random_room/size5x3,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"bbs" = (
-/obj/machinery/phone/wall,
-/turf/simulated/wall/auto/supernorn,
-/area/station/medical/robotics)
 "bbt" = (
 /obj/machinery/vending/cola/blue,
 /obj/machinery/light{
@@ -23253,6 +23249,9 @@
 	name = "autoname  - SS13";
 	pixel_y = 18;
 	tag = ""
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -69444,7 +69443,7 @@ gRH
 bkJ
 wCP
 uCt
-bbs
+bkJ
 jme
 hnd
 hnd

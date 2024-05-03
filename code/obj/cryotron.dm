@@ -313,6 +313,9 @@
 			var/datum/db_record/crew_record = data_core.general.find_record("id", user.datacore_id)
 			if (!isnull(crew_record))
 				crew_record["p_stat"] = "Active"
+			var/datum/job/job = find_job_in_controller_by_string(user.job, soft=TRUE)
+			if (job && !job.unique)
+				job.assigned = min(job.limit, job.assigned + 1)
 			return 1
 		return 0
 
