@@ -92,18 +92,13 @@ export const Manufacturer = (_, context) => {
       setSwappingMaterial(null);
     }
   };
-  const all_blueprint_lists = [
-    data.available_blueprints,
-    data.downloaded_blueprints,
-    data.recipe_blueprints,
-    data.hidden_blueprints,
-  ];
-  const all_blueprint_list_strings = [
-    "available",
-    "download",
-    "drive_recipes",
-    "hidden",
-  ];
+  const all_blueprints:Record<string, ManufacturableData[]> = {
+    "available": data.available_blueprints,
+    "download": data.downloaded_blueprints,
+    "drive_recipes": data.recipe_blueprints,
+    "hidden": data.hidden_blueprints,
+  };
+  const blueprint_types = Object.keys(all_blueprints);
   /*
     Converts the blueprints we get into one larger list sorted by category.
     This is done here instead of sending one big list to reduce the amount of times we need to refresh static data.
@@ -112,11 +107,12 @@ export const Manufacturer = (_, context) => {
   for (let category_index = 0; category_index < data.all_categories.length; category_index++) {
     let category = data.all_categories[category_index];
     blueprints_by_category[category] = [];
-    for (let blueprint_index = 0; blueprint_index < all_blueprint_lists.length; blueprint_index++) {
-      if (!data.hacked && (all_blueprint_list_strings[blueprint_index] === "hidden")) {
+    for (let blueprint_index = 0; blueprint_index < blueprint_types.length; blueprint_index++) {
+      const category_name = blueprint_types[blueprint_index];
+      if (!data.hacked && (category_name === "hidden")) {
         continue;
       }
-      let blueprint_list = all_blueprint_lists[blueprint_index];
+      let blueprint_list = all_blueprints[category_name];
       if (blueprint_list[category] === undefined) {
         continue;
       }
