@@ -5,10 +5,10 @@
  * @license ISC
  */
 
-import { Button, Divider, LabeledList, Section } from "../../components";
-import { MaintenancePanel } from "./type";
-import { is_set } from '../common/bitflag';
-import { WIRE_PANEL_BUTTONS_WIDTH } from './constant';
+import { Button, Divider, LabeledList, Section } from "../../../components";
+import { MaintenancePanel } from "../type";
+import { is_set } from '../../common/bitflag';
+import { WIRE_PANEL_BUTTONS_WIDTH } from '../constant';
 
 const ManufacturerWireData = [
   { name: "Teal", colorName: "teal" },

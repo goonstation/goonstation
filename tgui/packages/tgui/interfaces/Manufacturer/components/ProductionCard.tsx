@@ -5,11 +5,11 @@
  * @license ISC
  */
 
-import { truncate } from '../../format';
-import { Button, Stack } from "../../components";
+import { truncate } from '../../../format';
+import { Button, Stack } from "../../../components";
 import { ButtonWithBadge } from "./ButtonWithBadge";
 import { CenteredText } from "./CenteredText";
-import { ProductionCardData } from "./type";
+import { ProductionCardData } from "../type";
 /*
   Card which shows the blueprint being produced/queued, and if currently being produced,
   a progressbar for how close it is to being done.

@@ -13,11 +13,11 @@ import { toTitleCase } from 'common/string';
 import { pluralize } from '../common/stringUtils';
 import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
 import { ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './type';
-import { BlueprintButton } from './BlueprintButton';
-import { CardInfo } from './CardInfo';
-import { CollapsibleWireMenu } from './CollapsibleWireMenu';
+import { BlueprintButton } from './components/BlueprintButton';
+import { CardInfo } from './components/CardInfo';
+import { CollapsibleWireMenu } from './components/CollapsibleWireMenu';
 import { BLUEPRINT_WINDOW_WIDTH, MANUDRIVE_UNLIMITED } from './constant';
-import { ProductionCard } from './ProductionCard';
+import { ProductionCard } from './components/ProductionCard';
 
 export const Manufacturer = (_, context) => {
   const { act, data } = useBackend<ManufacturerData>(context);

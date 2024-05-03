@@ -5,9 +5,9 @@
  * @license ISC
  */
 
-import { Button, LabeledList, Section, Stack } from '../../components';
-import { CardInfoProps } from './type';
-import { formatMoney } from '../../format';
+import { Button, LabeledList, Section, Stack } from '../../../components';
+import { CardInfoProps } from '../type';
+import { formatMoney } from '../../../format';
 
 export const CardInfo = (props:CardInfoProps) => {
   const {
