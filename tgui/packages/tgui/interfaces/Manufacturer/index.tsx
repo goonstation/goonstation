@@ -16,7 +16,7 @@ import { ProductionCard } from './ProductionCard';
 import { clamp } from 'common/math';
 import { CollapsibleWireMenu } from './CollapsibleWireMenu';
 import { pluralize } from '../common/stringUtils';
-import { BLUEPRINT_WINDOW_WIDTH, MANUDRIVE_UNLIMITED } from './constant';
+import { BLUEPRINT_WINDOW_WIDTH, MANUDRIVE_UNLIMITED, SETTINGS_WINDOW_MARGINS_VERTICAL } from './constant';
 import { is_set } from '../common/bitflag';
 
 const CardInfo = (props:CardInfoProps) => {
@@ -212,49 +212,51 @@ export const Manufacturer = (_, context) => {
                     </LabeledList.Item>
                   </LabeledList>
                 </Section>
-                {data.manudrive.limit !== null && (
-                  <Stack.Item>
-                    <Section
-                      title="Loaded Manudrive"
-                      buttons={
-                        <Button
-                          icon="eject"
-                          content="Eject"
-                          disabled={data.mode !== "ready"}
-                          onClick={() => act("manudrive", { "action": "eject" })}
-                        />
-                      }
-                    >
-                      {data.manudrive.name}
-                      <Divider />
-                      <LabeledList>
+              </Stack.Item>
+              {data.manudrive.limit !== null && (
+                <Stack.Item>
+                  <Section
+                    title="Loaded Manudrive"
+                    buttons={
+                      <Button
+                        icon="eject"
+                        content="Eject"
+                        disabled={data.mode !== "ready"}
+                        onClick={() => act("manudrive", { "action": "eject" })}
+                      />
+                    }
+                  >
+                    {data.manudrive.name}
+                    <Divider />
+                    <LabeledList>
+                      <LabeledList.Item
+                        label="Fabrication Limit"
+                      >
+                        {manudriveIsUnlimited(data.manudrive.limit) ? "Unlimited" : `${data.manudrive.limit} ${pluralize("use", data.manudrive.limit)}`}
+                      </LabeledList.Item>
+                      {!manudriveIsUnlimited(data.manudrive.limit) && (
                         <LabeledList.Item
-                          label="Fabrication Limit"
+                          label="Remaining Uses"
                         >
-                          {manudriveIsUnlimited(data.manudrive.limit) ? "Unlimited" : `${data.manudrive.limit} ${pluralize("use", data.manudrive.limit)}`}
+                          {data.manudrive_uses_left}
                         </LabeledList.Item>
-                        {!manudriveIsUnlimited(data.manudrive.limit) && (
-                          <LabeledList.Item
-                            label="Remaining Uses"
-                          >
-                            {data.manudrive_uses_left}
-                          </LabeledList.Item>
-                        )}
-                      </LabeledList>
-                    </Section>
-                  </Stack.Item>
-                )}
-                {!!data.panel_open && (
-                  <Stack.Item>
-                    <CollapsibleWireMenu
-                      actionWirePulse={actionWirePulse}
-                      actionWireCutOrMend={actionWireCutOrMend}
-                      indicators={data.indicators}
-                      wires={data.wires}
-                      wire_bitflags={data.wire_bitflags}
-                    />
-                  </Stack.Item>
-                )}
+                      )}
+                    </LabeledList>
+                  </Section>
+                </Stack.Item>
+              )}
+              {!!data.panel_open && (
+                <Stack.Item>
+                  <CollapsibleWireMenu
+                    actionWirePulse={actionWirePulse}
+                    actionWireCutOrMend={actionWireCutOrMend}
+                    indicators={data.indicators}
+                    wires={data.wires}
+                    wire_bitflags={data.wire_bitflags}
+                  />
+                </Stack.Item>
+              )}
+              <Stack.Item>
                 <CardInfo
                   actionCardLogin={actionCardLogin}
                   actionCardLogout={actionCardLogout}
