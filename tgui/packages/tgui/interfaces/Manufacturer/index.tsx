@@ -10,7 +10,7 @@ import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
 import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
 import { formatMoney } from '../../format';
-import { MaintenancePanel, Manufacturable, ManufacturerData, Ore, QueueBlueprint, Resource, Rockbox } from './type';
+import { MaintenancePanel, ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './type';
 import { BlueprintButton } from './blueprintButton';
 import { ProductionCard } from './productionCard';
 import { clamp } from 'common/math';
@@ -95,7 +95,7 @@ export const Manufacturer = (_, context) => {
     Converts the blueprints we get into one larger list sorted by category.
     This is done here instead of sending one big list to reduce the amount of times we need to refresh static data.
   */
-  let blueprints_by_category:Record<string, Manufacturable[]> = {};
+  let blueprints_by_category:Record<string, ManufacturableData[]> = {};
   for (let category_index = 0; category_index < data.all_categories.length; category_index++) {
     let category = data.all_categories[category_index];
     blueprints_by_category[category] = [];
@@ -116,7 +116,7 @@ export const Manufacturer = (_, context) => {
   }
 
 
-  // Get a Manufacturable from a QueueBlueprint using its type, category, and name.
+  // Get a ManufacturableData from a QueueBlueprint using its type, category, and name.
   let getBlueprintFromQueueData = (queueData:QueueBlueprint) => {
     return blueprints_by_category[queueData.category].find((key) => (key.name === queueData.name));
   };
@@ -134,7 +134,7 @@ export const Manufacturer = (_, context) => {
                     open
                     title={`${category} (${blueprints_by_category[category].length})`}
                   >
-                    {blueprints_by_category[category].map((blueprint:Manufacturable, index:number) => (
+                    {blueprints_by_category[category].map((blueprint:ManufacturableData, index:number) => (
                       <BlueprintButton
                         key={index}
                         blueprintData={blueprint}
@@ -155,7 +155,7 @@ export const Manufacturer = (_, context) => {
               <Stack.Item>
                 <Section title="Loaded Materials" textAlign="center">
                   <LabeledList>
-                    {data.resource_data.map((resourceData: Resource) => (
+                    {data.resource_data.map((resourceData: ResourceData) => (
                       <LabeledList.Item
                         key={resourceData.id}
                         buttons={[
@@ -253,7 +253,7 @@ export const Manufacturer = (_, context) => {
                   title="Rockbox™ Containers"
                   textAlign="center"
                 >
-                  {data.rockboxes.map((rockbox: Rockbox) => (
+                  {data.rockboxes.map((rockbox: RockboxData) => (
                     <Section
                       title={rockbox.area_name}
                       key={rockbox.byondRef}

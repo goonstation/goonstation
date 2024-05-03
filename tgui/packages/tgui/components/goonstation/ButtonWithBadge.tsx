@@ -9,7 +9,6 @@ import { Stack } from "../Stack";
 import { Button } from "../Button";
 import { Image } from "../Image";
 import { InfernoNode } from "inferno";
-import { BooleanLike } from "common/react";
 
 type ButtonWithBadgeProps = {
   width: number | string,
@@ -29,7 +28,7 @@ export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
     width,
     height,
     noImageShadow,
-    image_path,
+    imagePath,
     children,
     onClick,
     onMouseEnter,
@@ -55,7 +54,7 @@ export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
             verticalAlign="top"
             height={height}
             pixelated
-            src={image_path}
+            src={imagePath}
             backgroundColor={noImageShadow ? null : "rgba(0,0,0,0.2)"}
           />
         </Stack.Item>

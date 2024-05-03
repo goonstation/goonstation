@@ -16,10 +16,10 @@ export type ManufacturerData = {
   mode:string;
   rockbox_message:string;
 
-  available_blueprints:Record<string, Manufacturable[]>;
-  downloaded_blueprints:Record<string, Manufacturable[]>;
-  recipe_blueprints:Record<string, Manufacturable[]>;
-  hidden_blueprints:Record<string, Manufacturable[]>;
+  available_blueprints:Record<string, ManufacturableData[]>;
+  downloaded_blueprints:Record<string, ManufacturableData[]>;
+  recipe_blueprints:Record<string, ManufacturableData[]>;
+  hidden_blueprints:Record<string, ManufacturableData[]>;
 
   delete_allowed:BooleanLike;
   hacked:BooleanLike;
@@ -37,10 +37,10 @@ export type ManufacturerData = {
   wire_bitflags:number;
 
   manudrive:Manudrive;
-  indicators:WireIndicators;
+  indicators:WireIndicatorsData;
 
-  resource_data:Resource[];
-  rockboxes:Rockbox[];
+  resource_data:ResourceData[];
+  rockboxes:RockboxData[];
   queue:QueueBlueprint[];
   wires:number[];
 }
@@ -74,7 +74,7 @@ export type RockboxData = {
   name: string;
   area_name: string;
   byondRef: string;
-  ores: Ore[];
+  ores: OreData[];
 }
 
 export type ResourceData = {
@@ -91,7 +91,7 @@ export type OreData = {
 }
 
 export type MaintenancePanel = {
-  indicators: WireIndicators;
+  indicators: WireIndicatorsData;
   wires: number[];
   wire_bitflags:number;
 }

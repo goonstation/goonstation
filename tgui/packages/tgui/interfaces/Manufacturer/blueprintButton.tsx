@@ -1,7 +1,7 @@
 
 import { useBackend } from '../../backend';
 import { Button, LabeledList, Section, Stack, Tooltip } from '../../components';
-import { Resource } from './type';
+import { ResourceData } from './type';
 import { round } from 'common/math';
 import { ButtonWithBadge } from '../../components/goonstation/ButtonWithBadge';
 import { CenteredText } from '../../components/goonstation/CenteredText';
@@ -24,13 +24,13 @@ blueprints they should be allowed to.
 const getProductionSatisfaction = (
   pattern_requirements:string[],
   amount_requirements:number[],
-  materials_stored:Resource[]) =>
+  materials_stored:ResourceData[]) =>
 {
   let satisfaction:boolean[] = [];
   let availableMaterials:Record<string, number> = {};
   for (let i in pattern_requirements) {
     let required_pattern = pattern_requirements[i];
-    let compatible_material:Resource;
+    let compatible_material:ResourceData;
     // Try to find compatible resource
     for (let resource of materials_stored) {
       if (Object.keys(availableMaterials).find((value:string) => (value === resource.id)) === undefined) {
@@ -64,9 +64,10 @@ export const BlueprintButton = (props, context) => {
   const blueprintSatisfaction = getProductionSatisfaction(
     blueprintData.item_paths,
     blueprintData.item_amounts,
-    materialData
+    materialData,
   );
-  const isProduceable = !blueprintSatisfaction.some((satisfied) => !satisfied))
+  // Condense producability
+  const notProduceable = blueprintSatisfaction.some((materialIsProducable:boolean) => materialIsProducable === false);
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
   const outputs = (blueprintData.item_outputs.length < 2
     && blueprintData.create < 2
@@ -115,8 +116,8 @@ export const BlueprintButton = (props, context) => {
           key={blueprintData.name}
           width={16.25}
           height={5.5}
-          image_path={blueprintData.img}
-          disabled={!isProduceable}
+          imagePath={blueprintData.img}
+          disabled={notProduceable}
           onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
         >
           <CenteredText text={truncate(blueprintData.name, 40)} height={5.5} />
@@ -135,7 +136,7 @@ export const BlueprintButton = (props, context) => {
                 mb={0.5}
                 pt={0.7}
                 icon="info"
-                disabled={!isProduceable}
+                disabled={notProduceable}
                 onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
               />
             </Tooltip>
@@ -150,7 +151,7 @@ export const BlueprintButton = (props, context) => {
                 height={2.625}
                 pt={0.7}
                 icon="gear"
-                disabled={!isProduceable}
+                disabled={notProduceable}
                 onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
               />
             </Tooltip>
