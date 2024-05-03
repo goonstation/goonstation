@@ -44,13 +44,8 @@
 					if (myID)
 						has_contraband_permit = (access_contrabandpermit in myID.access)
 						has_carry_permit = (access_carrypermit in myID.access)
-					if (has_contraband_permit && has_carry_permit) // has all permissions for contraband, don't check
-						myID = null
-					else
-						var/list/contraband_returned = list()
-						if (SEND_SIGNAL(H, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !has_contraband_permit, !has_carry_permit))
-							if (max(contraband_returned) > 0)
-								arrestState = "Contraband"
+					if ((!has_contraband_permit && GET_ATOM_PROPERTY(H,PROP_MOVABLE_VISIBLE_CONTRABAND) > 0) || (!has_carry_permit && GET_ATOM_PROPERTY(H,PROP_MOVABLE_VISIBLE_GUNS) > 0))
+						arrestState = "Contraband"
 			if (H.arrestIcon.icon_state != arrestState)
 				H.arrestIcon.icon_state = arrestState
 
