@@ -14698,14 +14698,6 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
-"dvB" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Medbay";
-	id = "medbay_front"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "dvS" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -26824,14 +26816,6 @@
 	dir = 8
 	},
 /area/station/science/hall)
-"ocb" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/landmark/antagonist/blob,
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "ocp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -30697,9 +30681,6 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/landmark/start{
-	name = "predator"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "qVk" = (
@@ -32791,7 +32772,6 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "swA" = (
@@ -36260,12 +36240,12 @@
 /area/station/science/hall)
 "uZQ" = (
 /obj/table/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/mask/surgical_shield,
 /obj/machinery/light/incandescent,
 /obj/item/robodefibrillator,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical_shield,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/clothing/mask/surgical,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -95711,7 +95691,7 @@ anA
 aaa
 aYR
 bcA
-ocb
+bdC
 bet
 ben
 bgo
@@ -95727,7 +95707,7 @@ xQr
 rRY
 jYD
 jlz
-dvB
+dRA
 cxV
 rha
 beq
