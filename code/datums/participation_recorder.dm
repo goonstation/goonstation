@@ -30,6 +30,7 @@ var/global/datum/participationRecorder/participationRecorder
 
 	//Record a participation for a player (or add it to a queue if holding)
 	proc/record(datum/player/P)
+		set waitfor = FALSE
 		if (!P)
 			throw EXCEPTION("No player given")
 

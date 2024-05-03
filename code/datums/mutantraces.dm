@@ -457,7 +457,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		AH.e_state = src.eye_state
 		AH.e_offset_y = src.eye_offset ? src.eye_offset : src.head_offset
 
-		AH.UpdateMob()
+		if(mode != "preview")
+			AH.UpdateMob()
 
 	proc/LimbSetter(var/mob/living/carbon/human/L, var/mode as text)
 		if(!ishuman(L) || !L.organHolder || !L.limbs)

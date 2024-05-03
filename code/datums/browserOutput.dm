@@ -209,7 +209,7 @@ var/global
 				//Add evasion ban details
 				var/datum/apiModel/Tracked/BanResource/ban = checkBan["ban"]
 				bansHandler.addDetails(
-					ban.id,
+					ban,
 					TRUE,
 					"bot",
 					src.owner.ckey,

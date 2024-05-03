@@ -616,7 +616,9 @@
 				var/src_dir = get_dir(tmob, src)
 				tmob.throw_at(get_edge_cheap(source, target_dir),  20, 3)
 				src.throw_at(get_edge_cheap(source, src_dir),  20, 3)
-
+				if(!ON_COOLDOWN(src, "flubber_damage", 2 SECONDS) || !ON_COOLDOWN(tmob, "flubber_damage", 2 SECONDS))
+					random_brute_damage(tmob, 7, TRUE)
+					random_brute_damage(src, 7, TRUE)
 				logTheThing(LOG_COMBAT, src, "with reagents [log_reagents(src.reagents)] is flubber bounced [dir2text(src_dir)] due to impact with mob [log_object(tmob)] [log_reagents(tmob.reagents)] at [log_loc(src)].")
 				logTheThing(LOG_COMBAT, tmob, "with reagents [log_reagents(tmob.reagents)] is flubber bounced [dir2text(target_dir)] due to impact with mob [log_object(src)] [log_reagents(src.reagents)] at [log_loc(tmob)].")
 
@@ -3326,3 +3328,13 @@
 
 /mob/proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_OTHER, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)
 	src.mind?.add_antagonist(role_id, do_equip, do_objectives, do_relocate, silent, source, respect_mutual_exclusives, do_pseudo, do_vr, late_setup)
+
+/mob/proc/inhale_ampoule(obj/item/reagent_containers/ampoule/amp, mob/user)
+	if(user != src)
+		user.visible_message(SPAN_ALERT("[user] forces [src] to inhale [amp]!"), SPAN_ALERT("You force [src] to inhale [amp]!"))
+	logTheThing(LOG_COMBAT, user, "[user == src ? "inhales" : "makes [constructTarget(src,"combat")] inhale"] an ampoule [log_reagents(amp)] at [log_loc(user)].")
+	amp.reagents.reaction(src, INGEST, 5, paramslist = list("inhaled"))
+	amp.reagents.trans_to(src, 5)
+	amp.expended = TRUE
+	amp.icon_state = "amp-broken"
+	playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, TRUE)

@@ -20,13 +20,7 @@
 	boutput(world, "<B>Trust no one.</B>")
 
 /datum/game_mode/conspiracy/pre_setup() // Presetup does selection and marking of antags before mobs are spawned, postsetup actually gives them objectives
-	var/numPlayers = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if(player.ready)
-			numPlayers++
+	var/numPlayers = src.roundstart_player_count()
 
 	var/numConspirators = clamp(round(numPlayers / 5), 2, maxConspirators) // Selects number of conspirators
 

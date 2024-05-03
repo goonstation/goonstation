@@ -1043,12 +1043,18 @@
 
 	var/obj/item/I = src.equipped()
 
-	if (!I || !isitem(I) || I.cant_drop) return
+	if (!I || !isitem(I) || I.cant_drop)
+		return
 
+	var/obj/item/grab/grab = null
 	if (istype(I, /obj/item/grab))
-		var/obj/item/grab/G = I
-		I = G.handle_throw(src, target)
-		if (!I) return
+		grab = I
+	else if (I.chokehold)
+		grab = I.chokehold
+	if (grab)
+		I = grab.handle_throw(src, target)
+		if (!I)
+			return
 
 	I.set_loc(src.loc)
 
@@ -3605,3 +3611,10 @@
 		SPAN_NOTICE("[src == user ? "You remove" : "<b>[user]</b> removes"] your bandage."))
 	src.bandaged -= bandaged_part
 	src.update_body()
+
+/mob/living/carbon/human/proc/drag_onto_op_table(obj/machinery/optable/table)
+	src.setStatus("resting", INFINITE_STATUS)
+	src.force_laydown_standup()
+	src.hud.update_resting()
+	src.set_loc(get_turf(table))
+	table.victim = src

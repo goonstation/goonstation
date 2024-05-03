@@ -543,12 +543,14 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				#undef MAX_ALLOWED_ITERATIONS
 
 		if (src.traitHolder && src.traitHolder.hasTrait("sleepy"))
+			logTheThing(LOG_STATION, src, "has the Heavy Sleeper trait and is trying to spawn")
 			var/list/valid_beds = list()
 			for_by_tcl(bed, /obj/stool/bed)
 				if (bed.z == Z_LEVEL_STATION && istype(get_area(bed), /area/station)) //believe it or not there are station areas on nonstation z levels
-					if (!locate(/mob/living/carbon/human) in get_turf(bed)) //this is slow but it's Probably worth it
+					if (!(locate(/mob/living/carbon/human) in get_turf(bed))) //this is slow but it's Probably worth it
 						valid_beds += bed
 
+			logTheThing(LOG_STATION, src, "has the Heavy Sleeper trait and has finished iterating through beds.")
 			if (length(valid_beds) > 0)
 				var/obj/stool/bed/picked = pick(valid_beds)
 				src.set_loc(get_turf(picked))
@@ -592,11 +594,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 		//Equip_Bank_Purchase AFTER special_setup() call, because they might no longer be a human after that
 	//this was previously indented in the ishuman() block, but I don't think it needs to be - Amylizzle
-	if (possible_new_mob)
-		var/mob/living/newmob = possible_new_mob
-		newmob.Equip_Bank_Purchase(newmob.mind.purchased_bank_item)
-	else
-		src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
+	SPAWN(0)
+		if (possible_new_mob)
+			var/mob/living/newmob = possible_new_mob
+			newmob.Equip_Bank_Purchase(newmob.mind.purchased_bank_item)
+		else
+			src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
 
 	return
 
@@ -712,6 +715,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		var/picked = pick(filtered_concrete_typesof(/mob/living/critter/small_animal/, GLOBAL_PROC_REF(filter_carrier_pets)))
 		var/mob/living/critter/small_animal/pet = new picked(src)
 		pet.ai_type = /datum/aiHolder/wanderer
+		pet.ai = new pet.ai_type(pet)
 		pet.aggressive = FALSE
 		pet.randomize_name()
 		pet.ai_retaliate_persistence = RETALIATE_ONCE

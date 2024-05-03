@@ -381,6 +381,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 							algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[wall.icon_state]"))
 							wall.UpdateOverlays(algea, "glow_algae")
 							wall.add_medium_light("glow_algae", color_vals)
+						LAGCHECK(LAG_LOW)
 
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))

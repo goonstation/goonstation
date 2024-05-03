@@ -1,3 +1,115 @@
+
+(t)thu may 02 24
+(u)MylieDaniels
+(p)18692
+(e)🗺🎨🔎🔄📦🍝|A-Mapping, C-Sprites, C-Code-Quality, C-Rework, A-Game-Objects, A-Catering
+(+)Pizza has been completely reworked. To get started, roll some dough. To finish it up, bake for 9 seconds on HIGH, or find a way to expose to a terribly high heat. The middle? That's entirely up to you.
+(u)JORJ949
+(p)18550
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Donut 3's AI Upload and Stock Exchange have swapped locations.
+(t)wed may 01 24
+(u)LeahTheTech
+(p)18698
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Unreadied players now contribute 1/2 of a readied player to roundstart gamemode scaling. (Yes this means more antags on average)
+(t)tue apr 30 24
+(u)Zamujasa
+(e)🆕💅|C-Feature,C-QoL
+(*)Josh now sells a paintball gun. You can load it with paint.
+(*)The paint dispenser and paint cans have seen minor QoL improvements.
+(+)The paint crate now includes totally random paint cans.
+(+)Paint cans are named after the colors they contain, and examining them shows how many uses are left.
+(u)Lyy
+(p)18393
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added a certain anime martial artist's costume to Geoff Honkington's shop.
+(t)sun apr 28 24
+(u)tarmunora
+(+)Armory shotgun racks have been swapped out for phaser racks (and vice versa phaser crates for shotgun crates). Armory phasers come with a slightly larger default power cell. phaser rack sprites by Flaborized
+(u)Azrun
+(p)18383
+(e)🆕🗺🎨🔄📄🔬💡|C-Feature, A-Mapping, C-Sprites, C-Rework, A-UI, A-Science, A-Station-Systems
+(*)Long Range Teleport has been folded into the normal Teleporter!  Check out the Observatory to go on new adventures!
+(t)sat apr 27 24
+(u)glowbold
+(p)18275
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Using the Authentication Disk on the armory computer will revoke armory access.
+(*)Once per round, the Authentication Disk can authorize armory access, but doing so will prevent revoking armory access.
+(u)glowbold
+(p)18653
+(e)🆕⚖💊|C-Feature, C-Balance, A-Medical
+(+)Puritans recieve major cloning defects when cloned.
+(u)tarmunora
+(+)AI can now use ; instead of :1 to speak over their primary internal radio
+(u)LeahTheTech
+(p)18657
+(e)⚖⚗|C-Balance, A-Chemistry
+(*)Simplified the charcoal recipe: (1) Carbon + (1) Ash => (1) Charcoal + (1) Steam, with additional charcoal yield if the steam is prevented from evaporating.
+(u)FlameArrow57
+(p)18569
+(e)🪲💅🔨|C-Bug, C-QoL, A-Player-Actions
+(+)Added a visible action bar for hand staunching wounds.
+(t)fri apr 26 24
+(u)LeahTheTech
+(*)Item grabs now throw the person being grabbed rather than the item. No more throwing your gun in a hostage situation!
+(p)18621
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Gas pipes can now be reinforced with metal sheets to increase their pressure tolerance based on the material's density.
+(u)tarmunora
+(+)botany produce triggers reactions on harvest
+(u)Terms-On-Dragon
+(p)15272
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(+)The AI has learned a new DEVIOUS face to express across the station.
+(u)TDHooligan
+(p)18475
+(e)💅🧛|C-QoL, A-Gamemodes
+(+)Gangs will randomly elect a new leader if their current one dies early into a shift.
+(t)thu apr 25 24
+(u)Sovexe
+(p)18620
+(e)🗺|A-Mapping
+(*)The afterlife bar has undergone renovations, and a new big screen CrewTV has been installed.
+(u)LeahTheTech
+(*)Molitz and molitz-beta now become visibly dull and inert when they are depleted of gas.
+(t)wed apr 24 24
+(u)Sord
+(+)The Donut 2 Research Outpost main hallway is now more publicly accessible. Don't knock on the windows, it scares the science away
+(u)Retrino, Azrun
+(p)18605
+(e)🔨🎩|A-Player-Actions, A-Clothing
+(*)Adds a new "Ballroom Supplies" crate to cargo, containing dress shoes that allow players to use Azrun's social dancing feature.
+(u)Cheekybrdy
+(p)18609
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Gannets variant doors are now compliant with sprite standards
+(u)Lord_Earthfire
+(p)18596
+(e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry
+(+)Consuming too high amounts of liquid space rubber has been found affect the consumers body in unintended ways.
+(+)Bouncing off other people while under the effect of LSR now deals brute damage to both parties.
+(u)Chatauscours
+(p)18516
+(e)🗺🔄|A-Mapping, C-Rework
+(*)NT accumulated enough budget for the most of the Clarion ship to be rebuilt.
+(u)Paaiii
+(p)18614
+(e)🎨|C-Sprites
+(+)Resprites the sunhat clothing item!
+(u)mloccy
+(p)18509
+(e)🔎💅🔨📦|C-Code-Quality, C-QoL, A-Player-Actions, A-Game-Objects
+(+)RCD now has action bars.
+(u)Klushy225
+(p)18050
+(e)🎨💪|C-Sprites, A-Traits
+(*)Added a german accent to the game, which makes the player sound very german.
+(u)glowbold
+(p)18526
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Click-dragging a conveyor switch to the left or right will change its direction to match.
 (t)tue apr 23 24
 (u)LeahTheTech
 (+)Shower heads can now be deconstructed.

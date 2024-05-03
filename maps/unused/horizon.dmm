@@ -388,7 +388,7 @@
 "abd" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
@@ -407,7 +407,7 @@
 "abg" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
@@ -888,7 +888,7 @@
 "aco" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "acp" = (
@@ -1165,7 +1165,7 @@
 "acW" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
@@ -1983,7 +1983,7 @@
 "afh" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "afi" = (
@@ -2063,7 +2063,7 @@
 /area/station/crew_quarters/lounge)
 "afu" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
@@ -2122,16 +2122,10 @@
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
 	})
-"afC" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3_space"
-	},
-/area/station/science/spectral)
 "afE" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/station/science/spectral)
 "afF" = (
@@ -2538,7 +2532,7 @@
 "agT" = (
 /turf/simulated/shuttle/wall{
 	dir = 5;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/station/science/spectral)
 "agU" = (
@@ -2552,7 +2546,7 @@
 /area/station/science/spectral)
 "agW" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/station/science/spectral)
 "aha" = (
@@ -4013,13 +4007,13 @@
 "alQ" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/station/science/spectral)
 "alR" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/station/science/spectral)
 "alS" = (
@@ -4078,7 +4072,7 @@
 "ama" = (
 /obj/machinery/shuttle/engine/propulsion,
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/station/engine/substation/pylon)
 "amb" = (
@@ -4100,7 +4094,7 @@
 /obj/machinery/shuttle/engine/propulsion,
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/station/engine/substation/pylon)
 "amf" = (
@@ -8751,7 +8745,7 @@
 "aAx" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "aAy" = (
@@ -8775,7 +8769,7 @@
 "aAB" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 1;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/shuttle/arrival/station)
@@ -9790,7 +9784,7 @@
 "aDJ" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 4;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/shuttle/arrival/station)
@@ -10485,7 +10479,7 @@
 /area/space)
 "aFz" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "aFA" = (
@@ -13836,7 +13830,7 @@
 "aOL" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/station/hallway/secondary/exit)
 "aOM" = (
@@ -28812,7 +28806,7 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bES" = (
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 21
@@ -42556,13 +42550,13 @@
 "csl" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/ghostdrone_factory)
 "csn" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/ghostdrone_factory)
 "cso" = (
@@ -43011,7 +43005,7 @@
 	})
 "ctG" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/ghostdrone_factory)
 "ctH" = (
@@ -43035,7 +43029,7 @@
 "ctK" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/ghostdrone_factory)
 "ctL" = (
@@ -43534,12 +43528,6 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
-"cvw" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3_space"
-	},
-/area/space)
 "cvy" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 8
@@ -43651,7 +43639,7 @@
 /area/listeningpost)
 "cvN" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "cvO" = (
@@ -44128,7 +44116,7 @@
 "cwZ" = (
 /turf/simulated/shuttle/wall{
 	dir = 10;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "cxc" = (
@@ -44401,7 +44389,7 @@
 "cxM" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall_3_trans"
 	},
 /area/space)
 "cxN" = (
@@ -47589,7 +47577,7 @@
 "esS" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
@@ -48049,7 +48037,7 @@
 "fiU" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
@@ -48807,7 +48795,7 @@
 "gug" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/station/ranch)
 "guU" = (
@@ -50213,7 +50201,7 @@
 "iNY" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 4;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/station/ranch)
@@ -50829,7 +50817,7 @@
 "jUq" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 1;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/station/ranch)
@@ -53078,7 +53066,7 @@
 "nAw" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/ghostdrone_factory)
 "nAW" = (
@@ -54356,7 +54344,7 @@
 /area/station/crew_quarters/quarters_south)
 "pEL" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/station/ranch)
 "pFo" = (
@@ -55284,7 +55272,7 @@
 /turf/space,
 /area/space)
 "rhG" = (
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
 	dir = 1
 	},
@@ -56387,7 +56375,7 @@
 "sPV" = (
 /turf/simulated/shuttle/wall{
 	dir = 5;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/ghostdrone_factory)
 "sSc" = (
@@ -57737,7 +57725,7 @@
 "vhY" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall_3_trans"
 	},
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
@@ -73668,7 +73656,7 @@ aaa
 aaa
 aaa
 aaa
-cvw
+cxM
 cvN
 aaa
 pqC
@@ -74442,7 +74430,7 @@ aaa
 aaa
 aaa
 aaa
-cvw
+cxM
 pqC
 aFy
 aFy
@@ -74742,7 +74730,7 @@ aaa
 aaa
 aaa
 aaa
-cvw
+cxM
 pqC
 pqC
 abI
@@ -86572,7 +86560,7 @@ aaa
 aaa
 aaa
 aaa
-afC
+alQ
 rut
 ahU
 cRB
@@ -86872,7 +86860,7 @@ aaa
 aaa
 aaa
 aaa
-afC
+alQ
 rut
 agT
 ahm

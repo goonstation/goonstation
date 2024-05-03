@@ -535,6 +535,12 @@ TRASH BAG
 
 /obj/item/sponge/attackby(obj/item/W, mob/user)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		if (src.loc == user && isrobot(user))
+			boutput(user, "You can't quite angle your [W.name] into your [src.name].")
+			return
+		if (src.cant_drop || src.cant_self_remove)
+			boutput(user, "You can't bring yourself to cut away your own personal [src.name]!")
+			return
 		user.visible_message(SPAN_NOTICE("[user] cuts [src] into the shape of... cheese?"))
 		if(src.loc == user)
 			user.u_equip(src)

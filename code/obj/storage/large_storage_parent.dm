@@ -616,7 +616,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			return 0
 		if (istype(A, /obj/decal/fakeobjects/skeleton)) // uuuuuuugh
 			return 1
-		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /atom/movable/screen) || istype(A, /obj/storage)))
+		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /atom/movable/screen) || istype(A, /obj/storage) || istype(A, /obj/tug_cart)))
 			return 0
 
 	var/obj/storage/entangled
@@ -830,7 +830,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				M.show_text("<b>OH JESUS CHRIST</b>", "red")
 				bleed(M, 500, 5)
 				src.log_me(usr && ismob(usr) ? usr : null, M, "uses trash compactor")
-				var/mob/living/carbon/cube/meat/meatcube = M.make_cube(/mob/living/carbon/cube/meat, rand(10,15), get_turf(src))
+				var/mob/living/carbon/cube/meatcube = M.make_cube(null, rand(10,15), get_turf(src))
 				if (src.crunches_deliciously)
 					meatcube.name = "hotdog"
 					var/obj/item/reagent_containers/food/snacks/hotdog/syndicate/snoopdog = new /obj/item/reagent_containers/food/snacks/hotdog/syndicate(src)
