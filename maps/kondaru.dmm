@@ -18802,6 +18802,10 @@
 /obj/machinery/recharger{
 	pixel_y = 3
 	},
+/obj/item/hand_tele{
+	pixel_y = 7;
+	pixel_x = 16
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "bzL" = (

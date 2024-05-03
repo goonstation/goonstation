@@ -1117,11 +1117,10 @@ var/list/removed_jobs = list(
 				mutantRace = T.mutantRace
 				break
 
+		AH.mutant_race = mutantRace
 		var/s_orig = AH.s_tone_original
-		var/ret = src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name=src.real_name)
+		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name=src.real_name)
 		AH.s_tone_original = s_orig // refuse any edits made by mutantrace setting/etc
-		if(ret)
-			src.AH = ret
 		// bald trait preview stuff
 		if (!src.preview)
 			return
