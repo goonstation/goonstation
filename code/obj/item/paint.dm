@@ -59,12 +59,12 @@
 			return
 		var/col_new = input(user, "Pick paint color", "Pick paint color", src.paint_color) as color
 		if(col_new)
-			var/obj/item/paint_can/P = new/obj/item/paint_can(src.loc)
-			P.paint_color = col_new
+			var/obj/item/paint_can/P = new/obj/item/paint_can(src.loc, col_new)
 			paint_color = col_new
 			P.paint_intensity = src.paint_intensity
 			P.add_orig = src.add_orig
 			P.generate_icon()
+			user.put_in_hand_or_drop(P)
 		return
 
 //////////////////// broken paint vending machine
@@ -251,10 +251,11 @@ var/list/cached_colors = new/list()
 
 /obj/item/paint_can
 	name = "paint can"
-	desc = "A Paint Can and a brush."
+	desc = "A brush."
 	icon = 'icons/misc/old_or_unused.dmi'
 	icon_state = "paint"
 	item_state = "bucket"
+	var/colorname = null
 	var/paint_color = rgb(1,1,1)
 	var/actual_paint_color
 	var/image/paint_overlay
@@ -265,26 +266,45 @@ var/list/cached_colors = new/list()
 	w_class = W_CLASS_SMALL
 	inventory_counter_enabled = TRUE
 
-	New()
+	New(loc, col_new = null)
 		..()
+		if (col_new)
+			src.paint_color = col_new
+			src.colorname = null
+		if (!src.colorname)
+			var/datum/color/C = new
+			C.from_hex(paint_color)
+			src.colorname = get_nearest_color(C)
+			src.name = "[colorname] paint can"
 		generate_icon()
+
+
+	examine()
+		. = ..()
+		if (src.uses > 0)
+			. += "It has <span style='display: inline-block; height: 1em; width: 1em; border: 1px solid black; background-color: [src.paint_color];'>&nbsp;</span> [colorname] paint. It has [src.uses] use\s left."
+		else
+			. += "It is empty. It used to have <span style='display: inline-block; height: 1em; width: 1em; border: 1px solid black; background-color: [src.paint_color];'>&nbsp;</span> [colorname] paint, though."
+
+
 
 	attack_hand(mob/user)
 		..()
 		generate_icon()
 
-	proc/paint_thing(atom/target as mob|obj|turf, force = FALSE)
-		// this handles actually painting things, instead of afterattack,
-		// and assumes
+	proc/paint_thing(atom/target as mob|obj|turf, force = FALSE, quiet = FALSE)
 		if (uses <= 0 && !force)
+			// if we have no uses and we are not forcing it, abort
 			return FALSE
+		else if (!force)
+			// otherwise, if we aren't forcing it (but we have uses), reduce by one
+			uses--
 
-		playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, TRUE)
+		if (uses <= 0) src.overlays = null
+		src.inventory_counter?.update_number(src.uses)
 
+		if (!quiet) playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, TRUE)
 		target.add_filter("paint_color", 1, color_matrix_filter(normalize_color_to_matrix(src.actual_paint_color)))
-		uses--
-		if (uses <= 0) overlays = null
-
 		if (ismob(target.loc))
 			var/mob/M = target.loc
 			M.update_clothing() //trigger an update if this is worn clothing
@@ -299,10 +319,16 @@ var/list/cached_colors = new/list()
 			return FALSE
 
 		if (src.paint_thing(target))
-			user.visible_message(SPAN_NOTICE("[user] paints \the [target]."), "You paint \the [target].", SPAN_NOTICE("You hear a wet splat."))
-			src.inventory_counter?.update_number(src.uses)
+			user.visible_message(SPAN_NOTICE("[user] paints \the [target] with \the [src]."), "You paint \the [target] with \the [src].", SPAN_NOTICE("You hear a wet splat."))
 
 		return TRUE
+
+	attackby(obj/item/W, mob/user, params)
+		if (istype(W, /obj/item/gun/paintball))
+			W.Attackby(src, user)
+			return
+
+		. = ..()
 
 	proc/generate_icon()
 		overlays = null
@@ -323,7 +349,7 @@ var/list/cached_colors = new/list()
 	name = "random paint can"
 	uses = 5
 	New()
-		var/colorname = "Weird"
+		colorname = "weird"
 		switch(rand(1,6))
 			if(1)
 				paint_color = rgb(255,10,10)
@@ -348,9 +374,15 @@ var/list/cached_colors = new/list()
 		desc = "[colorname] paint. In a can. Whoa!"
 		..()
 
+/obj/item/paint_can/totally_random
+	New()
+		src.paint_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+		..()
+
 /obj/item/paint_can/rainbow
 	name = "rainbow paint can"
 	desc = "This paint can contains rich, thick, rainbow paint. No, we don't know how it works either."
+	colorname = "shimmering rainbow"
 	var/colorlist = list()
 	var/currentcolor = 1
 	New()
@@ -374,6 +406,7 @@ var/list/cached_colors = new/list()
 /obj/item/paint_can/rainbow/plaid
 	name = "pattern paint can"
 	desc = "A perfectly ordinary can of rainbow paint. Oh, except that it paints patterns."
+	colorname = "mysterious pattern"
 	var/patternlist = list()
 	var/currentpattern = 1
 

@@ -1,5 +1,25 @@
 
+(t)thu may 02 24
+(u)MylieDaniels
+(p)18692
+(e)🗺🎨🔎🔄📦🍝|A-Mapping, C-Sprites, C-Code-Quality, C-Rework, A-Game-Objects, A-Catering
+(+)Pizza has been completely reworked. To get started, roll some dough. To finish it up, bake for 9 seconds on HIGH, or find a way to expose to a terribly high heat. The middle? That's entirely up to you.
+(u)JORJ949
+(p)18550
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Donut 3's AI Upload and Stock Exchange have swapped locations.
+(t)wed may 01 24
+(u)LeahTheTech
+(p)18698
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Unreadied players now contribute 1/2 of a readied player to roundstart gamemode scaling. (Yes this means more antags on average)
 (t)tue apr 30 24
+(u)Zamujasa
+(e)🆕💅|C-Feature,C-QoL
+(*)Josh now sells a paintball gun. You can load it with paint.
+(*)The paint dispenser and paint cans have seen minor QoL improvements.
+(+)The paint crate now includes totally random paint cans.
+(+)Paint cans are named after the colors they contain, and examining them shows how many uses are left.
 (u)Lyy
 (p)18393
 (e)🎨🎩|C-Sprites, A-Clothing
