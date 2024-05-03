@@ -228,6 +228,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 
 /obj/machinery/glass_recycler/chemistry //Chemistry doesn't really need all of the drinking glass options and such so I'm limiting it down a notch.
 	name = "chemistry glass recycler"
+	glass_amt = 15
 
 	get_products()
 		product_list += new /datum/glass_product("beaker", /obj/item/reagent_containers/glass/beaker, 1)
@@ -242,6 +243,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 
 /obj/machinery/glass_recycler/bar //the bar should not have to scroll through all this chemmy crap to get to the glasses and pitchers they use
 	name = "kitchen glass recycler"
+	glass_amt = 20
 
 	get_products()
 		product_list += new /datum/glass_product("pitcher", /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher, 2)

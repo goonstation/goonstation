@@ -884,8 +884,6 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	req_access = list(access_bar)
 	spawn_contents = list(/obj/item/gun/russianrevolver,\
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,\
-	/obj/item/reagent_containers/food/drinks/drinkingglass/shot = 4,\
-	/obj/item/reagent_containers/food/drinks/drinkingglass/wine = 2,\
 	/obj/item/storage/box/glassbox)
 
 /obj/storage/secure/closet/civilian/chaplain

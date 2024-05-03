@@ -784,7 +784,7 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	name = "basic supply lab counter"
 	desc = "Everything an aspiring chemist needs to start making chemicals!"
 	drawer_contents = list(/obj/item/paper/book/from_file/pharmacopia,
-				/obj/item/storage/box/beakerbox = 2,
+				/obj/item/storage/box/beakerbox,
 				/obj/item/reagent_containers/glass/beaker/large = 2,
 				/obj/item/clothing/glasses/spectro,
 				/obj/item/device/reagentscanner = 2,
@@ -794,8 +794,7 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 /obj/table/reinforced/chemistry/auto/auxsup
 	name = "auxiliary supply lab counter"
 	desc = "Extra supplies for the discerning chemist."
-	drawer_contents = list(/obj/item/storage/box/beakerbox,
-				/obj/item/storage/box/patchbox,
+	drawer_contents = list(/obj/item/storage/box/patchbox,
 				/obj/item/storage/box/syringes,
 				/obj/item/clothing/glasses/spectro,
 				/obj/item/device/reagentscanner,
