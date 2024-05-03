@@ -55,6 +55,7 @@ obj/item/engivac/update_icon(mob/M = null)
 ///Change worn sprite depending on slot
 obj/item/engivac/equipped(var/mob/user, var/slot)
 	..()
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	if (slot == SLOT_BACK)
 		wear_image = image('icons/mob/clothing/back.dmi')
@@ -109,6 +110,14 @@ obj/item/engivac/attackby(obj/item/I, mob/user)
 		held_toolbox = I
 		I.set_loc(src)
 		UpdateIcon(user)
+		return
+	if (istype(I, /obj/item/toolbox_tiles) && !held_toolbox)
+		for(var/obj/item/storage/toolbox/T in I.contents)
+			user.u_equip(I)
+			src.held_toolbox = T
+			T.set_loc(src)
+			UpdateIcon(user)
+			qdel(I)
 		return
 	..()
 
