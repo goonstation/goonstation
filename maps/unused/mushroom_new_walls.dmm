@@ -8918,6 +8918,12 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 1;
+	setup_beam_length = 3
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
 "aTt" = (
@@ -15820,10 +15826,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core"
-	},
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
@@ -17837,7 +17839,14 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 1;
+	setup_beam_length = 8
+	},
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
 "eol" = (
 /turf/simulated/wall/auto/supernorn,
@@ -22356,19 +22365,6 @@
 /obj/machinery/portableowl/judgementowl,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
-"iIk" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/ai_upload)
 "iIt" = (
 /obj/storage/closet/fire,
 /obj/item/crowbar,
@@ -26373,7 +26369,13 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	setup_beam_length = 8
+	},
+/turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
 "mQk" = (
 /obj/disposalpipe/switch_junction/left/east{
@@ -39235,6 +39237,19 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"xvI" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 4;
+	setup_beam_length = 3
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/turret_protected/ai_upload)
 "xvJ" = (
 /obj/cable,
 /obj/cable{
@@ -94741,7 +94756,7 @@ aaa
 aaa
 aaa
 aaa
-aTs
+xvI
 aTr
 aUY
 aUY
@@ -95654,7 +95669,7 @@ nLx
 nLx
 nLx
 nLx
-iIk
+nLx
 enu
 anA
 aaa
