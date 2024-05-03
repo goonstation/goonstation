@@ -22093,7 +22093,6 @@
 "jrG" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /turf/simulated/floor/engine/caution/north,
@@ -30237,9 +30236,7 @@
 	})
 "mAw" = (
 /obj/table/reinforced/auto,
-/obj/machinery/glass_recycler/bar{
-	glass_amt = 40
-	},
+/obj/machinery/glass_recycler/bar,
 /obj/mapping_helper/access/kitchen,
 /obj/mapping_helper/access/bar,
 /obj/forcefield/energyshield/perma/doorlink,
@@ -36119,7 +36116,6 @@
 "pjD" = (
 /obj/table/nanotrasen/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/power/apc/autoname_north/nopoweralert{
@@ -45030,7 +45026,6 @@
 "tiT" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/power/apc/autoname_north,

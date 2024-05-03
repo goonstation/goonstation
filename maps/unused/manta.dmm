@@ -9764,9 +9764,7 @@
 /area/station/security/starboardtorpedoes)
 "aCq" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/glass_recycler{
-	glass_amt = 5
-	},
+/obj/machinery/glass_recycler,
 /obj/decal/tile_edge/line/black{
 	dir = 4;
 	icon_state = "line1"

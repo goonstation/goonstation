@@ -31749,7 +31749,6 @@
 "pPk" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/item/storage/box/beakerbox,

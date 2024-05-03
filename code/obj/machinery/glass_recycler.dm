@@ -50,7 +50,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 	icon_state = "synthesizer"
 	anchored = ANCHORED
 	density = 0
-	var/glass_amt = 0
+	var/glass_amt = 5
 	var/list/product_list = list()
 	flags = NOSPLASH | FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	event_handler_flags = NO_MOUSEDROP_QOL

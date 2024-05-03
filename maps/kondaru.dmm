@@ -12967,7 +12967,6 @@
 	pixel_y = 24
 	},
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /obj/machinery/light_switch/north{
@@ -55088,7 +55087,6 @@
 /obj/table/reinforced/auto,
 /obj/machinery/light,
 /obj/machinery/glass_recycler{
-	glass_amt = 5;
 	pixel_y = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
@@ -59366,7 +59364,6 @@
 "xQK" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 20;
 	pixel_y = 8
 	},
 /obj/machinery/camera{

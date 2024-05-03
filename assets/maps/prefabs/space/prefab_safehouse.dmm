@@ -821,7 +821,6 @@
 "IS" = (
 /obj/table/auto,
 /obj/machinery/glass_recycler{
-	glass_amt = 10;
 	pixel_y = 6
 	},
 /obj/decal/cleanable/dirt/jen,
