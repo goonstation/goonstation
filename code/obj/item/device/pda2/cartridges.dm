@@ -378,6 +378,23 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.root.add_file( new /datum/computer/file/text/handbook_botanist(src))
 
+	hop
+		name = "\improper CaterCoordinate + cartridge"
+		desc = "For everything a person managing a civilian department would need if they actually were going to do that, as if."
+		icon_state = "cart-records"
+		file_amount = 64
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
+			src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
+			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
+			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/plant_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/mopfinder(src))
+			src.root.add_file( new /datum/computer/file/text/handbook_botanist(src))
+			src.read_only = 1
 	miner
 		name = "\improper MineralMagic™ cartridge"
 		desc = "Always know where your Rockbox™ Ore is."
