@@ -26,7 +26,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 	ai_retaliates = FALSE
 	ai_type = /datum/aiHolder/ranged
-	faction = FACTION_DERELICT
+	faction = list(FACTION_DERELICT)
 	is_npc = TRUE
 
 	var/speak_lines = TRUE
@@ -221,7 +221,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	speak_lines = FALSE
 
 	is_npc = FALSE
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 
 	setup_hands()
 		..()
@@ -312,7 +312,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/mrl)
 		HH.icon_state = "hand38"
 		HH.limb_name = "Fomalhaut MRL Arm"
 
-		src.UpdateOverlays(image(src.icon,"gunbot-mrl"), "guns")
+		src.UpdateOverlays(image(src.icon,"gunbot-mrls"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/flame)
 	mats = list("MET-2" = 12, "CON-2" = 12, "DEN-1" = 6, "POW-2"=4)
@@ -394,7 +394,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/chainsaw)
 		S.cant_self_remove = 1
 		S.cant_other_remove = 1
 
-		src.UpdateOverlays(image(src.icon, "gunbot-chainsaw"), "guns")
+		src.UpdateOverlays(image(src.icon, "gunbot-saw"), "guns")
 
 
 /obj/machinery/fabricator/gunbot

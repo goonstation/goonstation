@@ -102,6 +102,8 @@ var/list/removed_jobs = list(
 	///An associative list of slots to part IDs, see part_customization.dm
 	var/list/custom_parts = null
 
+	var/list/profile_names = null
+	var/profile_names_dirty = TRUE
 	//var/fartsound = "default"
 	//var/screamsound = "default"
 
@@ -109,6 +111,7 @@ var/list/removed_jobs = list(
 		character_name_validation = regex("\\w+") //TODO: Make this regex a bit sturdier (capitalization requirements, character whitelist, etc)
 		randomize_name()
 		randomizeLook()
+		profile_names = new/list(SAVEFILE_PROFILES_MAX)
 		..()
 		if (isnull(src.custom_parts)) //I feel like there should be a better place to init this
 			src.custom_parts = list(
@@ -173,30 +176,20 @@ var/list/removed_jobs = list(
 
 		var/list/profiles = new/list(SAVEFILE_PROFILES_MAX)
 		for (var/i = 1, i <= SAVEFILE_PROFILES_MAX, i++)
+			if(profile_names_dirty)
+				src.profile_names[i] = src.savefile_get_profile_name(client, i)
 			profiles[i] = list(
 				"active" = i == src.profile_number,
-				"name" = src.savefile_get_profile_name(client, i),
+				"name" = src.profile_names[i],
 			)
-
+		src.profile_names_dirty = FALSE
 		var/list/cloud_saves = list()
 		for (var/name in client.player.cloudSaves.saves)
 			cloud_saves += name
 
 		sanitize_null_values()
 
-		var/list/traits = list()
-		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
-			var/selected = (trait.id in traitPreferences.traits_selected)
-			var/list/categories
-			if (islist(trait.category))
-				categories = trait.category.Copy()
-				categories.Remove(src.traitPreferences.hidden_categories)
-
-			traits += list(list(
-				"id" = trait.id,
-				"selected" = selected,
-				"available" = src.traitPreferences.isAvailableTrait(trait.id, selected)
-			))
+		var/list/traits = src.traitPreferences.generateTraitData(user)
 
 		var/list/custom_parts_data = list()
 		for (var/slot_id in src.custom_parts)
@@ -239,7 +232,7 @@ var/list/removed_jobs = list(
 			"chatsound" = src.AH.voicetype,
 			"pdaColor" = src.PDAcolor,
 			"pdaRingtone" = src.pda_ringtone_index,
-			"skinTone" = src.AH.s_tone,
+			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
 			"customColor1" = src.AH.customization_first_color,
@@ -332,7 +325,7 @@ var/list/removed_jobs = list(
 				if (isnull(src.profile_name) || is_blank_string(src.profile_name))
 					tgui_alert(usr, "You need to give your profile a name.", "Pick name")
 					return
-
+				src.profile_names_dirty = TRUE
 				if (!isnull(index) && isnum(index))
 					src.savefile_save(client.key, index)
 					src.profile_number = index
@@ -395,7 +388,7 @@ var/list/removed_jobs = list(
 				for (var/c in bad_name_characters)
 					new_profile_name = replacetext(new_profile_name, c, "")
 
-				new_profile_name = trim(new_profile_name)
+				new_profile_name = trimtext(new_profile_name)
 
 				if (new_profile_name)
 					if (length(new_profile_name) >= 26)
@@ -413,7 +406,7 @@ var/list/removed_jobs = list(
 				var/new_name = tgui_input_text(usr, "Please select a first name:", "Character Generation", src.name_first)
 				if (isnull(new_name))
 					return
-				new_name = trim(new_name)
+				new_name = trimtext(new_name)
 				for (var/c in bad_name_characters)
 					new_name = replacetext(new_name, c, "")
 				if (length(new_name) < NAME_CHAR_MIN)
@@ -440,7 +433,7 @@ var/list/removed_jobs = list(
 				var/new_name = tgui_input_text(usr, "Please select a middle name:", "Character Generation", src.name_middle)
 				if (isnull(new_name))
 					return
-				new_name = trim(new_name)
+				new_name = trimtext(new_name)
 				for (var/c in bad_name_characters)
 					new_name = replacetext(new_name, c, "")
 				if (length(new_name) > NAME_CHAR_MAX)
@@ -459,7 +452,7 @@ var/list/removed_jobs = list(
 				var/new_name = tgui_input_text(usr, "Please select a last name:", "Character Generation", src.name_last)
 				if (isnull(new_name))
 					return
-				new_name = trim(new_name)
+				new_name = trimtext(new_name)
 				for (var/c in bad_name_characters)
 					new_name = replacetext(new_name, c, "")
 				if (length(new_name) < NAME_CHAR_MIN)
@@ -655,9 +648,9 @@ var/list/removed_jobs = list(
 				var/units = 1
 				if (params["alot"])
 					units = 8
-				var/list/L = hex_to_rgb_list(AH.s_tone)
-				AH.s_tone = rgb(max(L[1]-units, 61), max(L[2]-units, 8), max(L[3]-units, 0))
-				AH.s_tone_original = AH.s_tone
+				var/list/L = hex_to_rgb_list(AH.s_tone_original)
+				AH.s_tone_original = rgb(max(L[1]-units, 61), max(L[2]-units, 8), max(L[3]-units, 0))
+				AH.s_tone = AH.s_tone_original
 
 				update_preview_icon()
 				src.profile_modified = TRUE
@@ -666,9 +659,9 @@ var/list/removed_jobs = list(
 				var/units = 1
 				if (params["alot"])
 					units = 8
-				var/list/L = hex_to_rgb_list(AH.s_tone)
-				AH.s_tone = rgb(min(L[1]+units, 255), min(L[2]+units, 236), min(L[3]+units, 183))
-				AH.s_tone_original = AH.s_tone
+				var/list/L = hex_to_rgb_list(AH.s_tone_original)
+				AH.s_tone_original = rgb(min(L[1]+units, 255), min(L[2]+units, 236), min(L[3]+units, 183))
+				AH.s_tone = AH.s_tone_original
 
 				update_preview_icon()
 				src.profile_modified = TRUE
@@ -971,6 +964,7 @@ var/list/removed_jobs = list(
 						if (customization.trait_cost)
 							option_string += " ([customization.trait_cost] trait point[customization.trait_cost > 1 ? "s" : ""])"
 						options[option_string] = customization.id
+				src.traitPreferences.traitDataDirty = TRUE
 				var/result = tgui_input_list(usr, "Select custom part", "Pick part", options)
 				if (!result)
 					return FALSE
@@ -1123,8 +1117,10 @@ var/list/removed_jobs = list(
 				mutantRace = T.mutantRace
 				break
 
+		AH.mutant_race = mutantRace
+		var/s_orig = AH.s_tone_original
 		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name=src.real_name)
-
+		AH.s_tone_original = s_orig // refuse any edits made by mutantrace setting/etc
 		// bald trait preview stuff
 		if (!src.preview)
 			return
@@ -1955,23 +1951,36 @@ var/global/list/hair_details = list("einstein" = /datum/customization_style/hair
 	"80s" = /datum/customization_style/hair/long/eightiesfade,\
 	"glammetal" = /datum/customization_style/hair/long/glammetalO,\
 	"lionsmane" = /datum/customization_style/hair/long/lionsmane_fade,\
-	"longwaves" = /datum/customization_style/hair/long/longwaves_fade,\
+	"longwaves" = list(/datum/customization_style/hair/long/longwaves_fade, /datum/customization_style/hair/long/longwaves_half),\
 	"ripley" = /datum/customization_style/hair/long/ripley_fade,\
-	"violet" = /datum/customization_style/hair/long/violet_fade,\
+	"violet" = list(/datum/customization_style/hair/long/violet_fade, /datum/customization_style/hair/long/violet_half),\
 	"willow" = /datum/customization_style/hair/long/willow_fade,\
-	"rockponytail" = /datum/customization_style/hair/hairup/rockponytail_fade,\
-	"pompompigtail" = /datum/customization_style/hair/long/flatbangs, /datum/customization_style/hair/long/twobangs_long,\
+	"rockponytail" = list(/datum/customization_style/hair/hairup/rockponytail_fade, /datum/customization_style/hair/hairup/rockponytail_half),\
+	"pompompigtail" = list(/datum/customization_style/hair/long/flatbangs, /datum/customization_style/hair/long/twobangs_long),\
 	"breezy" = /datum/customization_style/hair/long/breezy_fade,\
-	"flick" = /datum/customization_style/hair/short/flick_fade,\
+	"flick" = list(/datum/customization_style/hair/short/flick_fade, /datum/customization_style/hair/short/flick_half),\
 	"mermaid" = /datum/customization_style/hair/long/mermaidfade,\
-	"smoothwave" = /datum/customization_style/hair/long/smoothwave_fade,\
+	"smoothwave" = list(/datum/customization_style/hair/long/smoothwave_fade, /datum/customization_style/hair/long/smoothwave_half),\
 	"longbeard" = /datum/customization_style/beard/longbeardfade,\
 	"pomp" = /datum/customization_style/hair/short/pompS,\
 	"mohawk" = list(/datum/customization_style/hair/short/mohawkFT, /datum/customization_style/hair/short/mohawkFB, /datum/customization_style/hair/short/mohawkS),\
 	"emo" = /datum/customization_style/hair/short/emoH,\
 	"clown" = list(/datum/customization_style/hair/short/clownT, /datum/customization_style/hair/short/clownM, /datum/customization_style/hair/short/clownB),\
 	"dreads" = /datum/customization_style/hair/long/dreadsA,\
-	"afro" = list(/datum/customization_style/hair/short/afroHR, /datum/customization_style/hair/short/afroHL, /datum/customization_style/hair/short/afroST, /datum/customization_style/hair/short/afroSM, /datum/customization_style/hair/short/afroSB, /datum/customization_style/hair/short/afroSL, /datum/customization_style/hair/short/afroSR, /datum/customization_style/hair/short/afroSC, /datum/customization_style/hair/short/afroCNE, /datum/customization_style/hair/short/afroCNW, /datum/customization_style/hair/short/afroCSE, /datum/customization_style/hair/short/afroCSW, /datum/customization_style/hair/short/afroSV, /datum/customization_style/hair/short/afroSH))
+	"afro" = list(/datum/customization_style/hair/short/afroHR, /datum/customization_style/hair/short/afroHL, /datum/customization_style/hair/short/afroST, /datum/customization_style/hair/short/afroSM, \
+	/datum/customization_style/hair/short/afroSB, /datum/customization_style/hair/short/afroSL, /datum/customization_style/hair/short/afroSR, /datum/customization_style/hair/short/afroSC, \
+	/datum/customization_style/hair/short/afroCNE, /datum/customization_style/hair/short/afroCNW, /datum/customization_style/hair/short/afroCSE, /datum/customization_style/hair/short/afroCSW, \
+	/datum/customization_style/hair/short/afroSV, /datum/customization_style/hair/short/afroSH),\
+	"combedfront" = /datum/customization_style/hair/short/combedfrontbangs,\
+	"combedfrontshort" = /datum/customization_style/hair/short/combedfrontshortbangs,\
+	"longfront" = /datum/customization_style/hair/short/longfrontbangs,\
+	"spoon" = /datum/customization_style/hair/short/spoonbangs,\
+	"messy_waves" = /datum/customization_style/hair/short/messy_waves_half,\
+	"longtwintail" = /datum/customization_style/hair/hairup/longtwintail_half,\
+	"glamponytail" = /datum/customization_style/hair/hairup/glamponytail_half,\
+	"pig" = /datum/customization_style/hair/hairup/pig_half,\
+	"wavy_tail" = /datum/customization_style/hair/hairup/wavy_tail_half\
+	)
 
 // all these icon state names are ridiculous
 var/global/list/feminine_ustyles = list("No Underwear" = "none",\

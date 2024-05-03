@@ -1103,6 +1103,101 @@ toxic - poisons
 	on_hit(atom/hit)
 		explosion_new(null, get_turf(hit), 5)
 
+/datum/projectile/bullet/four_bore
+	name = "termination round"
+	sname = "terminate"
+	icon_state = "20mm"
+	shot_sound = 'sound/weapons/fourboreshot.ogg'
+	damage = 95
+	dissipation_rate = 8
+	dissipation_delay = 10
+	armor_ignored = 0.4
+	cost = 1
+	projectile_speed = 72
+	implanted = null
+	hit_type = DAMAGE_STAB
+	damage_type = D_PIERCING
+	impact_image_state = "bullethole-large"
+	casing = /obj/item/casing/cannon
+	ricochets = FALSE
+	hit_ground_chance = 50
+	shot_volume = 130
+	shot_sound_extrarange = 1
+
+	on_launch(obj/projectile/proj)
+		proj.AddComponent(/datum/component/sniper_wallpierce, 1) //pierces 1 walls/lockers/doors/etc. Does not function on restricted Z, rwalls and blast doors use 2 pierces
+		for(var/mob/M in range(proj.loc, 2))
+			shake_camera(M, 3, 4)
+
+	on_hit(atom/hit, dirflag, obj/projectile/P)
+		var/turf/T = get_turf(hit)
+
+		if(hit && isobj(hit))
+			new /obj/effects/rendersparks (T)
+			var/obj/O = hit
+			O.throw_shrapnel(T, 1, 1)
+
+			if(istype(hit, /obj/machinery/door))
+				var/obj/machinery/door/D = hit
+				if(!D.cant_emag)
+					D.take_damage(P.power * 2.5) //mess up doors a ton
+
+			else if(istype(hit, /obj/window))
+				var/obj/window/W = hit
+				W.damage_blunt(P.power * 1.75) //and windows too, but maybe a bit less
+
+		if (hit && ismob(hit))
+			var/mob/M = hit
+			if(ishuman(hit))
+				var/mob/living/carbon/human/H = hit
+				#ifdef USE_STAMINA_DISORIENT
+				H.do_disorient(max(P.power,10), weakened = 2 SECONDS, stunned = 2 SECONDS, disorient = 0, remove_stamina_below_zero = FALSE)
+				#else
+				H.changeStatus("stunned", 4 SECONDS)
+				H.changeStatus("weakened", 3 SECONDS)
+				#endif
+			var/turf/target = get_edge_target_turf(hit, dirflag)
+			M.throw_at(target, max(round(P.power / 20), 0), 3, throw_type = THROW_GUNIMPACT)
+
+		if(hit && isturf(hit))
+			new /obj/effects/rendersparks (T)
+			T.throw_shrapnel(T, 1, 1)
+
+		..()
+
+/datum/projectile/bullet/four_bore_stunners //behavior is distinct enough to not be a child of four_bore lethals
+	name = "roundhouse slug"
+	sname = "roundhouse"
+	icon_state = "20mm"
+	shot_sound = 'sound/weapons/fourboreshot.ogg'
+	damage = 15
+	stun = 105
+	dissipation_rate = 12
+	dissipation_delay = 10
+	cost = 1
+	projectile_speed = 54
+	implanted = null
+	hit_type = DAMAGE_BLUNT
+	damage_type = D_KINETIC
+	impact_image_state = null
+	casing = /obj/item/casing/cannon
+	ricochets = TRUE
+
+	on_launch(obj/projectile/proj)
+		for(var/mob/M in range(proj.loc, 2))
+			shake_camera(M, 2, 4)
+
+	on_hit(atom/hit, dirflag, obj/projectile/P)
+		if(hit && isobj(hit) && istype(hit, /obj/window))
+			var/obj/window/W = hit
+			W.damage_blunt(P.power / 2.5) //even if it aint metal, its gonna crack a window
+
+		if (hit && ismob(hit))
+			var/mob/M = hit
+			var/turf/target = get_edge_target_turf(hit, dirflag)
+			M.throw_at(target, max(round(P.power / 35), 0), 3, throw_type = THROW_GUNIMPACT)
+		..()
+
 //1.57
 datum/projectile/bullet/autocannon
 	name = "HE grenade"

@@ -137,9 +137,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	shuffle_list(unassigned)
 
 	//Shuffle them and *then* sort them according to their order priority
-	sortList(high_priority_jobs, PROC_REF(cmp_job_order_priority))
+	sortList(high_priority_jobs, GLOBAL_PROC_REF(cmp_job_order_priority))
 
-	sortList(available_job_roles, PROC_REF(cmp_job_order_priority))
+	sortList(available_job_roles, GLOBAL_PROC_REF(cmp_job_order_priority))
 
 	// First we deal with high-priority jobs like Captain or AI which generally will always
 	// be present on the station - we want these assigned first just to be sure
@@ -228,6 +228,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		if (JOB.requires_whitelist && !NT.Find(ckey(player.mind.key)))
 			continue
 		if (!JOB.allow_traitors && player.mind.special_role ||  !JOB.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
+			player.antag_fallthrough = TRUE
+			continue
+		if ((!JOB.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
 			player.antag_fallthrough = TRUE
 			continue
 		// If there's an open job slot for it, give the player the job and remove them from
@@ -540,12 +543,14 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				#undef MAX_ALLOWED_ITERATIONS
 
 		if (src.traitHolder && src.traitHolder.hasTrait("sleepy"))
+			logTheThing(LOG_STATION, src, "has the Heavy Sleeper trait and is trying to spawn")
 			var/list/valid_beds = list()
 			for_by_tcl(bed, /obj/stool/bed)
 				if (bed.z == Z_LEVEL_STATION && istype(get_area(bed), /area/station)) //believe it or not there are station areas on nonstation z levels
-					if (!locate(/mob/living/carbon/human) in get_turf(bed)) //this is slow but it's Probably worth it
+					if (!(locate(/mob/living/carbon/human) in get_turf(bed))) //this is slow but it's Probably worth it
 						valid_beds += bed
 
+			logTheThing(LOG_STATION, src, "has the Heavy Sleeper trait and has finished iterating through beds.")
 			if (length(valid_beds) > 0)
 				var/obj/stool/bed/picked = pick(valid_beds)
 				src.set_loc(get_turf(picked))
@@ -600,13 +605,16 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 /// Equip items from sensory traits
 /mob/living/carbon/human/proc/equip_sensory_items()
 	if (src.traitHolder.hasTrait("blind"))
-		src.stow_in_available(src.glasses)
+		if (src.glasses)
+			src.stow_in_available(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("shortsighted"))
-		src.stow_in_available(src.glasses)
+		if (src.glasses)
+			src.stow_in_available(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("deaf"))
-		src.stow_in_available(src.ears)
+		if (src.ears)
+			src.stow_in_available(src.ears)
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), SLOT_EARS)
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
@@ -701,6 +709,17 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy(src)
 		else
 			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("petperson"))
+		var/obj/item/pet_carrier/carrier = new/obj/item/pet_carrier(src)
+		var/picked = pick(filtered_concrete_typesof(/mob/living/critter/small_animal/, GLOBAL_PROC_REF(filter_carrier_pets)))
+		var/mob/living/critter/small_animal/pet = new picked(src)
+		pet.ai_type = /datum/aiHolder/wanderer
+		pet.ai = new pet.ai_type(pet)
+		pet.aggressive = FALSE
+		pet.randomize_name()
+		pet.ai_retaliate_persistence = RETALIATE_ONCE
+		carrier.trap_mob(pet, src)
+		trinket = carrier
 	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
 		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
 		trinket = new random_lunchbox_path(src)

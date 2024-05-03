@@ -3,6 +3,13 @@
 /// How long the leader must cryo before gang members can take their role
 #define GANG_CRYO_LOCKOUT 7.5 MINUTES
 
+/// How long into the shift gang leadership is transferable, in the case of the leader's suicide/death.
+// Note: this makes a member REPLACE the dead leader. The leader remains a member.
+#define GANG_LEADER_SOFT_DEATH_TIME 20 MINUTES
+/// If a gang locker exists, how long to wait before picing a new leader
+// This is for the use case where the leader has done the bare minimum.
+#define GANG_LEADER_SOFT_DEATH_DELAY 5 MINUTES
+
 // -------------------------
 // GANG ECONOMY
 // -------------------------
@@ -35,13 +42,13 @@
 /// Drug points:
 
 /// /// Each drug is worth GANG_DRUG_BONUS_MULT * their value until this many units are provided
-#define GANG_DRUG_BONUS_CAP 200
+#define GANG_DRUG_BONUS_CAP 300
 /// How many weed leaves provide a points bonus
 #define GANG_WEED_LIMIT 200 //gang weed
 /// Each drug then has this much market behind it after GANG_DRUG_BONUS_CAP is used up.
-#define GANG_DRUG_LIMIT 1000
+#define GANG_DRUG_LIMIT 300
 /// The multiplier for drugs that a gang has handed in less than GANG_DRUG_BONUS_CAP units of
-#define GANG_DRUG_BONUS_MULT 5
+#define GANG_DRUG_BONUS_MULT 3
 
 #define GANG_DRUG_SCORE_BATHSALTS  3
 #define GANG_DRUG_SCORE_MORPHINE  1
@@ -102,11 +109,11 @@
 
 
 // CRATE DROP DEFINES
-#define GANG_CRATE_SCORE 500 //! how many points gang crates grant to each member, when opened
+#define GANG_CRATE_SCORE 5000 //! how many points gang crates grant to each member, when opened
 #define GANG_CRATE_DROP_TIME 300 SECONDS //! How long it takes for gang crates to arrive after being announced
 #define GANG_CRATE_LOCK_TIME 10 SECONDS //! How long it takes for gang crates to unlock after arriving
 
-#define GANG_LOOT_SCORE 300 //! how many points gang duffel bags grant to each member when opened
+#define GANG_LOOT_SCORE 1500 //! how many points gang duffel bags grant to each member when opened
 
 
 // GANG TAG DEFINES:
@@ -119,7 +126,7 @@
 /// how often tags calculate their heat & score
 #define GANG_TAG_SCORE_INTERVAL 15 SECONDS
 /// How many points a tag gives for each heat rating it has
-#define GANG_TAG_POINTS_PER_HEAT 1.5
+#define GANG_TAG_POINTS_PER_HEAT 1
 /// How much heat gang tags retain every score interval
 // Higher means gang tags stay hot for longer
 // If popular gang tags are staying too hot for too long after players leave, consider setting it lower.

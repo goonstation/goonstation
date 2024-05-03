@@ -528,7 +528,7 @@ proc/muzzle_flash_attack_particle(var/mob/M, var/turf/origin, var/turf/target, v
 	var/firing_angle = get_angle(origin, target)
 	muzzle_flash_any(M, firing_angle, muzzle_anim, muzzle_light_color, offset)
 
-proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25)
+proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var/muzzle_light_color, var/offset=25, var/horizontal_offset=0)
 	if (!A || firing_angle == null || !muzzle_anim) return
 
 	var/obj/particle/attack/muzzleflash/muzzleflash = new /obj/particle/attack/muzzleflash
@@ -541,7 +541,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		muzzleflash.overlays += muzzle_simple_light
 
 	var/matrix/mat = new
-	mat.Translate(0, offset)
+	mat.Translate(horizontal_offset, offset)
 	mat.Turn(firing_angle)
 	muzzleflash.transform = mat
 	muzzleflash.layer = A.layer
@@ -948,6 +948,29 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	SPAWN(amount)
 		if (A)
 			animate(A, pixel_y = return_y, pixel_x = return_x,time = 1,loop = 1, easing = LINEAR_EASING)
+	return
+
+/proc/animate_flubber(var/atom/A, var/jiggle_duration_start = 6, var/jiggle_duration_end = 12, var/amount = 3, var/severity = 1.5)
+	//makes the person quickly increase it's y-size up and down
+	if (!istype(A))
+		return
+	var/matrix/M1 = matrix(1, 1, MATRIX_SCALE)
+	var/matrix/M2 = matrix(1, severity, MATRIX_SCALE)
+	var/current_jiggle_duration = jiggle_duration_start
+	var/do_loops = amount
+	SPAWN(0)
+		while (do_loops > 0)
+			do_loops--
+			if (istype(A))
+				animate(A, transform = M2, time = round(current_jiggle_duration / 2), easing = BOUNCE_EASING, flags=ANIMATION_PARALLEL)
+			else
+				break
+			sleep(round(current_jiggle_duration / 2))
+			if (istype(A))
+				animate(A, transform = M1, time = round(current_jiggle_duration / 2), easing = BOUNCE_EASING, flags=ANIMATION_PARALLEL)
+			sleep(round(current_jiggle_duration / 2) )
+			//make the jiggling slower/faster towards the end
+			current_jiggle_duration += (jiggle_duration_end - jiggle_duration_start) / min(1,(amount - 1))
 	return
 
 /proc/animate_teleport(var/atom/A)

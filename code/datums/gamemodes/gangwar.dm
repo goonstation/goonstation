@@ -14,44 +14,28 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
-	var/list/potential_hot_zones = null
-	var/area/hot_zone
-#ifdef RP_MODE
-	var/const/kidnapping_timer = 15 MINUTES 	//Time to find and kidnap the victim.
-	var/const/delay_between_kidnappings = 12 MINUTES
-#else
-	var/const/kidnapping_timer = 8 MINUTES 	//Time to find and kidnap the victim.
-	var/const/delay_between_kidnappings = 5 MINUTES
-#endif
-	var/kidnapping_score = 20000
-	var/kidnap_success = 0			//true if the gang successfully kidnaps.
-
 	var/slow_process = 0			//number of ticks to skip the extra gang process loops
 	var/shuttle_called = FALSE
-	var/mob/kidnapping_target
 
 /datum/game_mode/gang/announce()
 	boutput(world, "<B>The current game mode is - Gang War!</B>")
 	boutput(world, "<B>A number of gangs are competing for control of the station!</B>")
 	boutput(world, "<B>Gang members are antagonists and can kill or be killed!</B>")
 
-/datum/game_mode/gang/pre_setup()
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-		if(player.ready) num_players++
-
 #ifdef RP_MODE
 #define PLAYERS_PER_GANG_GENERATED 15
 #else
 #define PLAYERS_PER_GANG_GENERATED 12
 #endif
+/datum/game_mode/gang/pre_setup()
+	var/num_players = src.roundstart_player_count()
+
 	var/num_teams = clamp(round((num_players) / PLAYERS_PER_GANG_GENERATED), setup_min_teams, setup_max_teams) //1 gang per 9 players, 15 on RP
-#undef PLAYERS_PER_GANG_GENERATED
+	logTheThing(LOG_GAMEMODE, src, "Counted [num_players] available, with [PLAYERS_PER_GANG_GENERATED] per gang that means [num_teams] gangs.")
 
 	var/list/leaders_possible = get_possible_enemies(ROLE_GANG_LEADER, num_teams)
 	if (num_teams > length(leaders_possible))
+		logTheThing(LOG_GAMEMODE, src, "Reducing number of gangs from [num_teams] to [length(leaders_possible)] due to lack of available gang leaders.")
 		num_teams = length(leaders_possible)
 
 	if (!length(leaders_possible))
@@ -82,6 +66,7 @@
 		leader.special_role = ROLE_GANG_LEADER
 
 	return 1
+#undef PLAYERS_PER_GANG_GENERATED
 
 /datum/game_mode/gang/post_setup()
 	for(var/datum/mind/antag_mind in src.traitors)
@@ -95,9 +80,6 @@
 	for(var/datum/mind/antag_mind in src.traitors)
 		antag_mind.get_antagonist(ROLE_GANG_LEADER)?.unsilence()
 		antag_mind.get_antagonist(ROLE_GANG_MEMBER)?.unsilence()
-
-
-	find_potential_hot_zones()
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
@@ -114,7 +96,7 @@
 	for(var/datum/gang/gang in src.gangs)
 		num_people_needed += min(gang.current_max_gang_members, max_member_count) - length(gang.members)
 	if(isnull(candidates))
-		candidates = get_possible_enemies(ROLE_GANG_MEMBER, num_people_needed, allow_carbon=TRUE, filter_proc=PROC_REF(can_join_gangs), force_fill = FALSE)
+		candidates = get_possible_enemies(ROLE_GANG_MEMBER, num_people_needed, allow_carbon=TRUE, filter_proc=GLOBAL_PROC_REF(can_join_gangs), force_fill = FALSE)
 	var/num_people_available = min(num_people_needed, length(candidates))
 	var/people_added_per_gang = round(num_people_available / num_teams)
 	num_people_available = people_added_per_gang * num_teams
@@ -126,15 +108,9 @@
 			candidate.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = gang.leader, silent=TRUE)
 			traitors |= candidate
 
-/datum/game_mode/gang/proc/can_join_gangs(mob/M)
+/proc/can_join_gangs(mob/M) //stupid frickin 515 call syntax making me make this a global grumble grumble
 	var/datum/job/job = find_job_in_controller_by_string(M.mind.assigned_role)
 	. = !job || job.can_join_gangs
-
-/datum/game_mode/gang/proc/force_shuttle()
-	if (!emergency_shuttle.online)
-		emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
-		emergency_shuttle.incall()
-		command_alert("Centcom is very disappointed in you all for this 'gang' silliness. The shuttle has been called.","Emergency Shuttle Update")
 
 /datum/game_mode/gang/send_intercept()
 	..(src.traitors)
@@ -142,11 +118,6 @@
 
 /datum/game_mode/gang/process()
 	..()
-#ifndef RP_MODE
-	if (ticker.round_elapsed_ticks >= 55 MINUTES && !shuttle_called)
-		shuttle_called = TRUE
-		force_shuttle()
-#endif //RP_MODE
 	slow_process ++
 	if (slow_process < 5)
 		return
@@ -187,6 +158,8 @@
 
 
 /datum/game_mode/gang/declare_completion()
+	for (var/datum/gang/gang in src.gangs)
+		logTheThing(LOG_GAMEMODE, src, "Gang [gang.gang_name] ended the round with [gang.gang_score()] total score.")
 	if (!check_winner())
 		boutput(world, "<h2><b>The round was a draw!</b></h2>")
 
@@ -218,77 +191,6 @@
 
 	if (istype(victorius_gang))
 		return victorius_gang
-
-/// hot zone thing
-
-/datum/game_mode/gang/proc/find_potential_hot_zones()
-	potential_hot_zones = list()
-	var/list/area/areas = get_accessible_station_areas()
-	for(var/area/area in areas)
-		if(istype(areas[area], /area/station/security) || areas[area].teleport_blocked || istype(areas[area], /area/station/turret_protected))
-			continue
-		potential_hot_zones += areas[area]
-	return
-
-/datum/game_mode/gang/proc/process_kidnapping_event()
-	kidnap_success = 0
-	kidnapping_target = null
-	var/datum/gang/top_gang = null
-	for (var/datum/gang/G in gangs)
-		if (!top_gang)
-			top_gang = G
-			continue
-		if (G.gang_score() > top_gang.gang_score())
-			top_gang = G
-
-	if (!top_gang)
-		logTheThing(LOG_DEBUG, null, "No winning gang chosen for kidnapping event. Something's broken.")
-		message_admins("No winning gang chosen for kidnapping event. Something's broken.")
-		return 0
-
-	//get possible targets. Looks for ckey, if they are not dead, and if they are not in the top gang.
-	var/list/potential_targets = list()
-	for (var/mob/living/carbon/human/H in mobs)
-		if (H.ckey && !isdead(H) && H.get_gang() != top_gang && !istype(H.mutantrace, /datum/mutantrace/virtual))
-			potential_targets += H
-
-	if (!length(potential_targets))
-		logTheThing(LOG_DEBUG, null, "No players found to be kidnapping targets.")
-		message_admins("No kidnapping target has been chosen for kidnapping event. This should be pretty unlikely, unless there's only like 1 person on.")
-		return 0
-
-	kidnapping_target = pick(potential_targets)
-	var/target_name
-	if (ismob(kidnapping_target))
-		target_name = kidnapping_target.real_name
-	broadcast_to_all_gangs("The [hot_zone.name] is a high priority area. Ensure that your gang has control of it five minutes from now!")
-
-	//alert gangs, alert target which gang to be wary of.
-	for (var/datum/gang/G in gangs)
-		if (G == top_gang)
-			G.broadcast_to_gang("A bounty has been placed on the capture of [target_name]. Shove them into your gang locker <ALIVE>, within 8 minutes for a massive reward!")
-		else
-			G.broadcast_to_gang("[target_name] is the target of a kidnapping by [top_gang.gang_name]. Ensure that [target_name] is alive and well for the next 8 minutes for a reward!")
-
-	boutput(kidnapping_target, SPAN_ALERT("You get the feeling that [top_gang.gang_name] wants you dead! Run and hide or ask security for help!"))
-
-	SPAWN(kidnapping_timer - 1 MINUTE)
-		if(kidnapping_target != null) broadcast_to_all_gangs("[target_name] has still not been captured by [top_gang.gang_name] and they have 1 minute left!")
-		sleep(1 MINUTE)
-		//if they didn't kidnap em, then give points to other gangs depending on whether they are alive or not.
-		if(!kidnap_success)
-			//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
-			if (kidnapping_target && !isdead(kidnapping_target))
-				for (var/datum/gang/G in gangs)
-					if (G != top_gang)
-						G.score_event += kidnapping_score / length(gangs)	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
-				broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnap [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
-			else
-				broadcast_to_all_gangs("[target_name] has died in one way or another. No gangs have been rewarded for this futile exercise.")
-
-			sleep(delay_between_kidnappings)
-		process_kidnapping_event()
-
 
 proc/broadcast_to_all_gangs(var/message)
 	var/datum/language/L = languages.language_cache["english"]
@@ -404,7 +306,8 @@ proc/broadcast_to_all_gangs(var/message)
 	/// Strings used to build PDA messages sent to civilians.
 	var/static/gangGreetings[] = list("yo", "hey","hiya","oi", "psst", "pssst" )
 	var/static/gangIntermediates[] = list("don't ask how I got your number.","heads up.", "help us out.")
-	var/static/gangEndings[] = list("best of luck.", "maybe help them, yeah?", "stay in line and you'll probably live.", "don't think of stealing it.")
+	var/static/gangThreats[] =list("don't try to snatch it, you hear?", "if you take our stuff, it'll get ugly.", "don't try and intervene.", "leave it alone.")
+	var/static/gangEndings[] = list("help them, or they might break your knees.", "stay in line and you'll probably live.", "don't fuck this up, or you're next.", "don't fuck this up.")
 
 	proc/living_member_count()
 		var/result = 0
@@ -413,11 +316,28 @@ proc/broadcast_to_all_gangs(var/message)
 				result++
 		return result
 
+	/// how to handle the gang leader dying horribly early into the shift (suicide etc)
+	proc/handle_leader_early_death()
+		if (!src.locker)
+			choose_new_leader()
+			logTheThing(LOG_ADMIN, src.leader.ckey, "was given the role of leader for [gang_name], as their previous leader died early with no locker.")
+			message_admins("[src.leader.ckey] has been granted the role of leader for their gang, [gang_name], as the previous leader died early with no locker.")
+			broadcast_to_gang("Your leader has died early into the shift. Leadership has been transferred to [src.leader.current.real_name]")
+		else
+			broadcast_to_gang("Your leader has died early into the shift. If not revived, a new leader will be picked in [GANG_LEADER_SOFT_DEATH_DELAY/(1 MINUTE)] minutes.")
+			SPAWN (GANG_LEADER_SOFT_DEATH_DELAY)
+				if (!isalive(src.leader.current))
+					choose_new_leader()
+					logTheThing(LOG_ADMIN, src.leader.ckey, "was given the role of leader for [gang_name], as their previous leader died early and wasn't respawned/revived.")
+					message_admins("[src.leader.ckey] has been granted the role of leader for their gang, [gang_name], as the previous leader died early and wasn't respawned/revived.")
+					broadcast_to_gang("Your leader has died early into the shift. Leadership has been transferred to [src.leader.current.real_name]")
+
 	/// how to handle the gang leader entering cryo (but not guaranteed to be permanent)
 	proc/handle_leader_temp_cryo()
 		if (!src.locker)
 			choose_new_leader()
 		else
+			// the delay here is handled by the locker.
 			broadcast_to_gang("Your leader has entered temporary cryogenic storage. You can claim leadership at your locker in [GANG_CRYO_LOCKOUT/(1 MINUTE)] minutes.")
 
 	/// handle the gang leader entering cryo permanently
@@ -426,6 +346,9 @@ proc/broadcast_to_all_gangs(var/message)
 			broadcast_to_gang("Your leader has entered permanent cryogenic storage. You can claim leadership at your locker.")
 			leader_claimable = TRUE
 		else
+			logTheThing(LOG_ADMIN, src.leader.ckey, "was given the role of leader for [gang_name], as their leader cryo'd without a locker.")
+			message_admins("[src.leader.ckey] has been granted the role of leader for their gang, [gang_name], as leader cryo'd without a locker.")
+			broadcast_to_gang("As your leader has entered cryogenic storage without a locker, [src.leader.current.real_name] is now your new leader.")
 			choose_new_leader()
 
 	proc/choose_new_leader()
@@ -436,8 +359,8 @@ proc/broadcast_to_all_gangs(var/message)
 				if (!candidate.hibernating)
 					smelly_unfortunate = member
 		if (!smelly_unfortunate)
-			logTheThing(LOG_ADMIN, leader.ckey, "The leader of [gang_name] cryo'd with no living members to take the role.")
-			message_admins("The leader of [gang_name], [leader.ckey] cryo'd with no living members to take the role.")
+			logTheThing(LOG_ADMIN, leader.ckey, "The leader of [gang_name] cryo'd/died early with no living members to take the role.")
+			message_admins("The leader of [gang_name], [leader.ckey] cryo'd/died early with no living members to take the role.")
 			return
 
 		var/datum/mind/bad_leader = leader
@@ -448,9 +371,6 @@ proc/broadcast_to_all_gangs(var/message)
 		smelly_unfortunate.remove_antagonist(ROLE_GANG_MEMBER,ANTAGONIST_REMOVAL_SOURCE_OVERRIDE,FALSE)
 		leaderRole.transfer_to(smelly_unfortunate, FALSE, ANTAGONIST_REMOVAL_SOURCE_EXPIRED)
 		bad_leader.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = smelly_unfortunate)
-		logTheThing(LOG_ADMIN, smelly_unfortunate.ckey, "was given the role of leader for [gang_name], as their leader entered cryo with no locker.")
-		message_admins("[smelly_unfortunate.ckey] has been granted the role of leader for their gang, [gang_name], as their leader entered cryo with no locker.")
-		broadcast_to_gang("As your leader has entered cryogenic storage without a locker, [smelly_unfortunate.current.real_name] is now your new leader.")
 
 	proc/get_dead_memberlist()
 		var/list/result = list()
@@ -687,7 +607,7 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/show_score_maptext(amount, turf/location)
 		var/image/chat_maptext/chat_text = null
 		chat_text = make_chat_maptext(location, "<span class='ol c pixel' style='color: #08be4e;'>+[amount]</span>", alpha = 180, time = 0.5 SECONDS)
-		chat_text.show_to(src.leader.current.client)
+		chat_text.show_to(src.leader?.current.client)
 		for (var/datum/mind/userMind as anything in src.members)
 			var/client/userClient = userMind.current.client
 			if (userClient?.preferences?.flying_chat_hidden)
@@ -718,7 +638,10 @@ proc/broadcast_to_all_gangs(var/message)
 			show_score_maptext(amount, location)
 		else if (bonusMob.client && !bonusMob.client.preferences?.flying_chat_hidden)
 			var/image/chat_maptext/chat_text = null
-			chat_text = make_chat_maptext(bonusMob, "<span class='ol c pixel' style='color: #08be4e;'>+[amount]</span>", alpha = 180, time = 1.5 SECONDS)
+			if (amount >= 1000)
+				chat_text = make_chat_maptext(bonusMob, "<span class='ol c pixel' style='color: #08be4e; font-weight: bold; font-size: 24px;'>+[amount]</span>", alpha = 180, time = 3 SECONDS)
+			else
+				chat_text = make_chat_maptext(bonusMob, "<span class='ol c pixel' style='color: #08be4e;'>+[amount]</span>", alpha = 180, time = 1.5 SECONDS)
 			if (chat_text)
 				chat_text.show_to(bonusMob.client)
 
@@ -838,10 +761,11 @@ proc/broadcast_to_all_gangs(var/message)
 		"rhino beetle helm" = /obj/item/clothing/head/rhinobeetle)
 
 	/// spawn loot and message a specific mind about it
-	proc/target_loot_spawn(var/datum/mind/civvie)
-		var/message = lootbag_spawn()
+	proc/target_loot_spawn(datum/mind/civvie, datum/gang/ownerGang)
+		var/message = lootbag_spawn(civvie, ownerGang)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
+		newsignal.encryption = "GDFTHR+\ref[civvie.originalPDA]"
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "Unknown Sender"
 		newsignal.data["message"] = "[message]"
@@ -854,7 +778,7 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/get_random_civvie(var/list/deferred_minds)
 		var/mindList[0]
 		for (var/datum/mind/M as anything in ticker.minds)
-			if (M.get_antagonist(ROLE_GANG_LEADER) || M.get_antagonist(ROLE_GANG_MEMBER) || !(M.originalPDA) || ishuman(M) || (M.assigned_role in security_jobs))
+			if (M.get_antagonist(ROLE_GANG_LEADER) || M.get_antagonist(ROLE_GANG_MEMBER) || !(M.originalPDA) || !ishuman(M.current) || (M.assigned_role in security_jobs))
 				continue
 			if (isnull(M.current.loc)) //deleted or an admin who has removeself'd
 				continue
@@ -877,7 +801,7 @@ proc/broadcast_to_all_gangs(var/message)
 			potential_drop_zones += areas[area]
 
 	/// hide a loot bag somewhere, return a probably-somewhat-believable PDA message explaining its' location
-	proc/lootbag_spawn()
+	proc/lootbag_spawn(datum/mind/civvie, datum/gang/ownerGang)
 		if (!potential_drop_zones)
 			find_potential_drop_zones()
 		var/area/loot_zone = pick(potential_drop_zones)
@@ -908,32 +832,33 @@ proc/broadcast_to_all_gangs(var/message)
 					turfList.Add(T)
 				else
 					uncoveredTurfList.Add(T)
-
+		var/obj/item/gang_loot/loot
 		if(length(bushList))
+			loot = new/obj/item/gang_loot/guns_and_gear
 			var/obj/shrub/target = pick(bushList)
 			target.override_default_behaviour = 1
-			target.additional_items.Add(/obj/item/gang_loot/guns_and_gear)
-			target.max_uses = 1
+			target.additional_items.Add(loot)
 			target.spawn_chance = 75
 			target.last_use = 0
-
+			target.max_uses += 1
 			message += " we left some goods in a bush [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]."
 			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a shrub: [target] at [target.x],[target.y]")
-
 		else if(length(crateList) && prob(80))
 			var/obj/storage/target = pick(crateList)
-			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
+			loot = new/obj/item/gang_loot/guns_and_gear(target.contents)
+			target.contents.Add(loot)
 			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
 			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a crate: [target] at [target.x],[target.y]")
 
 		else if(length(disposalList) && prob(85))
 			var/obj/machinery/disposal/target = pick(disposalList)
-			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
+			loot = new/obj/item/gang_loot/guns_and_gear(target.contents)
+			target.contents.Add(loot)
 			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
 			logTheThing(LOG_GAMEMODE, target, "Spawned at \the [loot_zone] for [src.gang_name], inside a chute: [target] at [target.x],[target.y]")
 		else if(length(tableList) && prob(65))
-			var/turf/simulated/floor/target = pick(tableList)
-			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
+			var/turf/target = get_turf(pick(tableList))
+			loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
 			loot.layer = OVERFLOOR
 			//nudge this into position, for sneakiness
@@ -947,24 +872,27 @@ proc/broadcast_to_all_gangs(var/message)
 			message += " we hid a bag in \the [loot_zone], under a table. "
 			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [src.gang_name], under a table: [target] at [target.x],[target.y]")
 		else if(length(turfList))
-			var/turf/simulated/floor/target = pick(turfList)
-			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
-			target.contents.Add(loot)
+			var/turf/target = pick(turfList)
+			loot = new/obj/item/gang_loot/guns_and_gear(target)
+			loot.level = UNDERFLOOR
 			loot.hide(target.intact)
 			message += " we had to hide a bag in \the [loot_zone], under the floor tiles. "
 			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [src.gang_name], under the floor at [loot.x],[loot.y]")
 		else
 			var/turf/simulated/floor/target = pick(uncoveredTurfList)
-			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
+			loot = new/obj/item/gang_loot/guns_and_gear
 			target.contents.Add(loot)
 			loot.hide(target.intact)
 			message += " we had to hide a bag in \the [loot_zone]. "
 			logTheThing(LOG_GAMEMODE, loot, "Spawned at \the [loot_zone] for [src.gang_name], on the floor at [loot.x],[loot.y].")
 
-		message += " there are folks aboard who will probably come looking. "
+		loot.informant = civvie.current.real_name
 
-		if (prob(40))
-			message += pick(gangEndings)
+		loot.owning_gang = ownerGang
+		loot.start_area = get_area(loot.loc)
+		message += pick(gangThreats)
+		message += " we've got folk aboard who will come by and ask you for this information. "
+		message += pick(gangEndings)
 
 		return message
 
@@ -1171,7 +1099,6 @@ proc/broadcast_to_all_gangs(var/message)
 		target_area.being_captured = FALSE
 		var/sprayOver = FALSE
 		for (var/obj/decal/gangtag/otherTag in range(1,target_turf))
-			otherTag.owners.unclaim_tiles(target_turf,GANG_TAG_INFLUENCE, GANG_TAG_SIGHT_RANGE)
 			otherTag.disable()
 			sprayOver = TRUE
 
@@ -1835,36 +1762,6 @@ proc/broadcast_to_all_gangs(var/message)
 		if (W.cant_drop)
 			return
 
-		//kidnapping event here
-		//if they're the target
-		var/datum/gang/user_gang = user.get_gang()
-		if (istype(W, /obj/item/grab))
-			if (user_gang != src.gang)
-				boutput(user, SPAN_ALERT("You can't kidnap someone for a different gang!"))
-				return
-			if (istype(ticker.mode, /datum/game_mode/gang))	//gotta be gang mode to kidnap
-				var/datum/game_mode/gang/mode = ticker.mode
-				var/obj/item/grab/G = W
-				if (G.affecting == mode.kidnapping_target)		//Can only shove the target in, nobody else. target must be not dead and must have a kill or pin grab on em.
-					if (isdead(G.affecting))
-						boutput(user, SPAN_ALERT("[G.affecting] is dead, you can't kidnap a dead person!"))
-					else if (G.state < GRAB_AGGRESSIVE)
-						boutput(user, SPAN_ALERT("You'll need a stronger grip to successfully kinapp this person!"))
-					else
-						user.visible_message(SPAN_NOTICE("[user] shoves [G.affecting] into [src]!"))
-						G.affecting.set_loc(src)
-						//assign poitns, gangs
-
-						user_gang.score_event += mode.kidnapping_score
-						broadcast_to_all_gangs("[src.gang.gang_name] has successfully kidnapped [mode.kidnapping_target] and has been rewarded for their efforts.")
-
-						mode.kidnapping_target = null
-						mode.kidnap_success = 1
-						G.affecting.remove()
-						qdel(G)
-			return
-
-
 		if (istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/currency/spacecash) || istype(W,/obj/item/device/transfer_valve)|| istype(W,/obj/item/storage/pill_bottle))
 			if (insert_item(W,user))
 				user.visible_message(SPAN_NOTICE("[user] puts [W] into [src]!"))
@@ -2425,7 +2322,7 @@ proc/broadcast_to_all_gangs(var/message)
 	on_purchase(var/obj/ganglocker/locker, var/mob/user )
 		var/datum/gang/ourGang = locker.gang
 		var/datum/mind/target = ourGang.get_random_civvie()
-		ourGang.target_loot_spawn(target)
+		ourGang.target_loot_spawn(target, ourGang)
 		ourGang.broadcast_to_gang("An extra tip off has been purchased; "+ target.current.real_name + " recieved the location on their PDA.")
 		return TRUE //don't spawn anything
 
@@ -2471,6 +2368,7 @@ proc/broadcast_to_all_gangs(var/message)
 	layer = TAG_LAYER
 	icon = 'icons/obj/decals/graffiti.dmi'
 	icon_state = "gangtag0"
+	var/exploded = FALSE
 	var/datum/gang/owners = null
 	var/list/mobs
 	var/heat = 0 // a rough estimation of how regularly this tag has people near it
@@ -2484,6 +2382,7 @@ proc/broadcast_to_all_gangs(var/message)
 	/// Makes this tag inert, so it no longer provides points.
 	proc/disable()
 		active = FALSE
+		src.owners?.unclaim_tiles(get_turf(src), GANG_TAG_INFLUENCE, GANG_TAG_SIGHT_RANGE)
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		imgroup.remove_image(heatTracker)
 		src.heatTracker = null
@@ -2502,6 +2401,14 @@ proc/broadcast_to_all_gangs(var/message)
 		heat = round(heat * GANG_TAG_HEAT_DECAY_MUL, 0.01) //slowly decay heat
 		mobs = list()
 		return heat
+
+	ex_act(severity)
+		if (severity > 1)
+			if (!exploded)
+				exploded = TRUE
+				desc = desc + " So heavy, in fact, that this tag hasn't exploded. Huh."
+			return //no!
+		..()
 
 	proc/apply_score(var/largestHeat)
 		var/mappedHeat // the 'heat' value mapped to the scale of 0-5
@@ -2544,10 +2451,8 @@ proc/broadcast_to_all_gangs(var/message)
 
 
 	disposing(var/uncapture = 1)
-		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
-		imgroup.remove_image(heatTracker)
+		src.disable()
 		STOP_TRACKING
-		heatTracker = null
 		owners = null
 		mobs = null
 		var/area/tagarea = get_area(src)

@@ -285,37 +285,34 @@ dmm_suite
 						key_value_regex.Find(key_str)
 						key_str = key_value_regex.group[1]
 						val_str = key_value_regex.group[2]
-						var/val = isnull(val_str) ? null : loadAttribute(trim(val_str), strings)
-						.[loadAttribute(trim(key_str), strings)] = val
+						var/val = isnull(val_str) ? null : loadAttribute(trimtext(val_str), strings)
+						.[loadAttribute(trimtext(key_str), strings)] = val
 					else
-						. += loadAttribute(trim(key_str), strings)
+						. += loadAttribute(trimtext(key_str), strings)
 
 
 //-- Preloading ----------------------------------------------------------------
 
-turf
-	var
-		dmm_suite/preloader/dmm_preloader
+turf/var/dmm_suite/preloader/dmm_preloader
 
-atom/New(turf/newLoc)
-    if(isturf(newLoc))
-        var/dmm_suite/preloader/preloader = newLoc.dmm_preloader
-        if(preloader)
-            newLoc.dmm_preloader = null
-            preloader.load(src)
-    . = ..()
+/atom/New(newLoc)
+	if(isturf(newLoc))
+		var/turf/T = newLoc
+		var/dmm_suite/preloader/preloader = T.dmm_preloader
+		if(preloader)
+			T.dmm_preloader = null
+			preloader.load(src)
+	. = ..()
 
-dmm_suite
-	preloader
-		parent_type = /datum
-		var
-			list/attributes
-		New(turf/loadLocation, list/_attributes)
-			loadLocation.dmm_preloader = src
-			attributes = _attributes
-			. = ..()
-		proc
-			load(atom/newAtom)
-				var/list/attributesMirror = attributes // apparently this is faster
-				for(var/attributeName in attributesMirror)
-					newAtom.vars[attributeName] = attributesMirror[attributeName]
+/dmm_suite/preloader
+	parent_type = /datum
+	var/list/attributes
+
+	New(turf/loadLocation, list/_attributes)
+		loadLocation.dmm_preloader = src
+		attributes = _attributes
+		. = ..()
+	proc/load(atom/newAtom)
+		var/list/attributesMirror = attributes // apparently this is faster
+		for(var/attributeName in attributesMirror)
+			newAtom.vars[attributeName] = attributesMirror[attributeName]

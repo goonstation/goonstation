@@ -60,7 +60,8 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 		// if the fall has coyote time, then delay it
 		if (src.FallTime)
 			SPAWN(src.FallTime)
-				AM.loc.GetComponent(/datum/component/pitfall)?.try_fall(signalsender, AM)
+				if (!QDELETED(AM))
+					AM.loc.GetComponent(/datum/component/pitfall)?.try_fall(signalsender, AM)
 		else
 			src.try_fall(signalsender, AM)
 

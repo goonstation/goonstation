@@ -345,7 +345,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			return TRUE
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
-			if(P.proj_data?.window_pass)
+			if(P.proj_data?.window_pass && !src.opacity)
 				return TRUE
 		if (!is_cardinal(dir))
 			return FALSE //full tile window, you can't move into it!

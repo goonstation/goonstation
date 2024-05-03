@@ -163,47 +163,6 @@
 			P.processing = FALSE
 		qdel(src)
 
-
-/proc/spell_batpoof(var/mob/H, var/cloak = 0)
-	if (!H || !ismob(H))
-		return
-	if (!isturf(H.loc))
-		H.show_text("You can't seem to transform in here.", "red")
-		return
-	if (isdead(H))
-		return
-	if (!H.canmove)
-		return
-	if(isrestrictedz(H.loc.z))
-		return
-
-	if (isliving(H))
-		var/mob/living/owner = H
-		if (owner.stamina < STAMINA_SPRINT)
-			return
-
-
-	//usecloak == check abilityholder
-	new /obj/dummy/spell_batpoof( get_turf(H), H , cloak)
-
-/proc/spell_firepoof(var/mob/H)
-	if (!H || !ismob(H))
-		return
-	if (!isturf(H.loc))
-		H.show_text("You can't seem to transform in here.", "red")
-		return
-	if (isdead(H))
-		return
-	if (!H.canmove)
-		return
-
-	if (isliving(H))
-		var/mob/living/owner = H
-		if (owner.stamina < STAMINA_SPRINT)
-			return
-
-	new /obj/dummy/spell_batpoof/firepoof( get_turf(H), H , 0)
-
 /obj/dummy/spell_batpoof
 	name = "bat"
 	icon = 'icons/misc/critter.dmi'

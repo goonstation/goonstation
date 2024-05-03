@@ -7,11 +7,7 @@
 //close only counts in horseshoes and byond
 #define EXTRA_TICK_SPACE 2
 
-#if DM_VERSION >= 514
 #define APPROX_TICK_USE (world.tick_usage + world.map_cpu + EXTRA_TICK_SPACE)
-#else
-#define APPROX_TICK_USE (world.tick_usage + EXTRA_TICK_SPACE)
-#endif
 
 //lagcheck stuff
 #ifndef SPACEMAN_DMM
@@ -37,7 +33,7 @@
 //ticklag stuff. code lives in gameticker's process() in datums/gameticker.dm
 #define TIME_DILATION_ENABLED 1
 /// min value ticklag can be
-#define MIN_TICKLAG 0.4
+#define MIN_TICKLAG 0.2
 /// max value ticklag can be
 #define OVERLOADED_WORLD_TICKLAG 1.4
 /// where to start ticklag if many players present

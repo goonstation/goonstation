@@ -457,7 +457,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		AH.e_state = src.eye_state
 		AH.e_offset_y = src.eye_offset ? src.eye_offset : src.head_offset
 
-		AH.UpdateMob()
+		if(mode != "preview")
+			AH.UpdateMob()
 
 	proc/LimbSetter(var/mob/living/carbon/human/L, var/mode as text)
 		if(!ishuman(L) || !L.organHolder || !L.limbs)
@@ -860,7 +861,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	say_filter(var/message)
 		var/static/regex/s_regex = regex(@"(s)(.?)", "ig")
-		. = s_regex.Replace(message, PROC_REF(letter_s_replacement))
+		. = s_regex.Replace(message, /datum/mutantrace/lizard/proc/letter_s_replacement)
 
 	disposing()
 		if(ishuman(src.mob))

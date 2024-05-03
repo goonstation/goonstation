@@ -147,6 +147,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 	var/delay = 600
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "fluid_spawn"
+	invisibility = INVIS_ADVENTURE
 
 	var/datum/reagents/R
 

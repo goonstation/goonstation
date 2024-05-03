@@ -391,6 +391,13 @@
 		acane.name = "cane"
 		acane.desc = "Totally a cane."
 
+/obj/item/storage/box/costume/crap/goku
+	name = "anime martial artist costume"
+	spawn_contents = list(
+		/obj/item/clothing/shoes/goku,
+		/obj/item/clothing/under/gimmick/goku
+	)
+
 /obj/item/storage/box/costume/light_borg
 	name = "light cyborg costume"
 	spawn_contents = list(/obj/item/clothing/suit/gimmick/light_borg)
@@ -477,3 +484,8 @@
 	/obj/item/clothing/suit/witchcape_mint,
 	/obj/item/device/light/glowstick/cyan)
 
+/obj/item/storage/box/costume/rabbitsuit
+	name = "rabbit suit costume set"
+	desc = "Be the mascot you always knew you could be."
+	spawn_contents = list(/obj/item/clothing/head/rabbithat,
+	/obj/item/clothing/suit/rabbitsuit)

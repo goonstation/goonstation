@@ -156,7 +156,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			src.UpdateIcon()
 
 		else if (src.cycle == WASH && prob(40)) // play a washery sound
-			H.delStatus("burning")
+			H?.delStatus("burning")
 			playsound(src, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 80, TRUE)
 			src.shake()
 		else if (src.cycle == DRY && prob(20)) // play a dryery sound
@@ -291,6 +291,10 @@ TYPEINFO(/obj/submachine/laundry_machine)
 					if (!(src in processing_items))
 						processing_items.Add(src)
 	src.UpdateIcon()
+
+/obj/submachine/laundry_machine/Click(location, control, params)
+	if(!src.ghost_observe_occupant(usr, src.occupant))
+		. = ..()
 
 #undef PRE
 #undef WASH

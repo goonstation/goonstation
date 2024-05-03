@@ -71,6 +71,7 @@
 
 ABSTRACT_TYPE(/datum/objective/crew)
 /datum/objective/crew
+	var/XPreward = 50
 
 /datum/objective/crew/custom
 
@@ -620,7 +621,7 @@ ABSTRACT_TYPE(/datum/objective/crew/miner)
 		var/list/materials = list()
 		if(isnull(check_result))
 			for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
-				if(S.broken)
+				if(S.is_disabled())
 					continue
 				var/list/ores = S.ores
 				for(var/ore in ores)

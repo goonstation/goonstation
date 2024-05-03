@@ -270,6 +270,14 @@
 				sec_system.deactivate()
 				src.updateDialog()
 
+			else if (href_list["alights"])
+				lights.activate()
+				src.updateDialog()
+
+			else if (href_list["dlights"])
+				lights.deactivate()
+				src.updateDialog()
+
 			else if (href_list["comcomp"])
 				com_system.opencomputer(usr)
 				src.updateDialog()
@@ -288,6 +296,10 @@
 
 			else if (href_list["sec_systemcomp"])
 				sec_system.opencomputer(usr)
+				src.updateDialog()
+
+			else if (href_list["lightscomp"])
+				lights.opencomputer(usr)
 				src.updateDialog()
 
 			src.add_fingerprint(usr)
@@ -383,6 +395,15 @@
 					components -= sensors
 					sensors.set_loc(src.loc)
 					sensors = null
+					src.updateDialog()
+
+			else if (href_list["unlights"])
+				if (src.lights)
+					logTheThing(LOG_VEHICLE, usr, "ejects the lights system ([src.lights]) from [src] at [log_loc(src)]")
+					lights.deactivate()
+					components -= lights
+					lights.set_loc(src.loc)
+					lights = null
 					src.updateDialog()
 
 			// Added logs for atmos tanks and such here, because booby-trapping pods is becoming a trend (Convair880).
@@ -872,6 +893,11 @@
 			else
 				boutput(usr, "That system already has a part!")
 				return
+		if("Lights")
+			if(!lights)
+				lights = S
+			else
+				boutput(usr, "That system already has a part!")
 		if("Lock")
 			if (!lock)
 				src.lock = S
@@ -1255,7 +1281,7 @@
 
 	src.add_dialog(user)
 
-	var/dat = "<TT><B>[src] Maintenance Panel</B><BR><HR><BR>"
+	var/dat = "<TT><B>[src] Maintenance Panel</B><BR>"
 	//Air and Fuel tanks
 	dat += "<HR><B>Atmos Tank</B>: "
 	if(!isnull(src.atmostank))
@@ -1310,6 +1336,12 @@
 	dat += "<HR><B>Secondary System</B>: "
 	if(src.sec_system)
 		dat += "<A href='?src=\ref[src];unsec_system=1'>[src.sec_system]</A>"
+	else
+		dat += "None Installed"
+	////Lights System
+	dat += "<HR><B>Lights System</B>: "
+	if(src.lights)
+		dat += "<A href='?src=\ref[src];unlights=1'>[src.lights]</A>"
 	else
 		dat += "None Installed"
 	////Locking System
@@ -1424,6 +1456,14 @@
 			dat += {"<HR><B>Secondary System</B>: <I><A href='?src=\ref[src];sec_systemcomp=1'>[src.sec_system]</A></I> "}
 			dat += {"<BR><A href='?src=\ref[src];asec_system=1'>(Activate)</A>"}
 		dat+= {"([src.sec_system.power_used])"}
+	if(src.lights)
+		if(src.lights.active)
+			dat += {"<HR><B>Lights</B>: <I><A href='?src=\ref[src];lightscomp=1'>[src.lights]</A></I> "}
+			dat += {"<BR><A href='?src=\ref[src];dlights=1'>(Deactivate)</A>"}
+		else
+			dat += {"<HR><B>Lights</B>: <I><A href='?src=\ref[src];lightscomp=1'>[src.lights]</A></I> "}
+			dat += {"<BR><A href='?src=\ref[src];alights=1'>(Activate)</A>"}
+		dat+= {"([src.lights.power_used])"}
 	if(src.lock)
 		if(src.locked)
 			dat += "<HR><B>Lock</B>:<br><a href='?src=\ref[src.lock];unlock=1'>(Unlock)</a>"
@@ -2172,6 +2212,8 @@
 			src.lights = new /obj/item/shipcomponent/pod_lights/police_siren( src )
 			src.lights.ship = src
 			src.components += src.lights
+
+			src.myhud?.update_states()
 /*
 	engineering
 		body_type =

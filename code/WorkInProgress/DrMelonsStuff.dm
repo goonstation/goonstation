@@ -139,6 +139,10 @@
 		else
 			. = ..()
 
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
+
 	mouse_drop(obj/over_object, src_location, over_location)
 		if (isintangible(usr))
 			return

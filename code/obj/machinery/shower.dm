@@ -8,6 +8,7 @@
 	desc = "A shower head, for showering."
 	anchored = ANCHORED
 	flags = OPENCONTAINER
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WIRECUTTERS
 
 	var/on = 0 //Are we currently spraying???
 	var/default_reagent = "cleaner" //Some water will also be added.
@@ -26,6 +27,10 @@
 	///Silly wrapper proc to drop the args
 	proc/mechcomp_toggle()
 		src.toggle(null)
+
+	was_deconstructed_to_frame(mob/user)
+		if (src.on)
+			src.toggle(user)
 
 	attack_ai(mob/user as mob)
 		src.toggle(user)
