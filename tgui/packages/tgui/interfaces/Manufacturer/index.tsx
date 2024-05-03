@@ -258,10 +258,11 @@ export const Manufacturer = (_, context) => {
                       title={rockbox.area_name}
                       key={rockbox.byondRef}
                     >
-                      <LabeledList>
-                        {rockbox.ores.length !== 0 ? (rockbox.ores.map((ore: OreData) => (
+                      {rockbox.ores.length !== 0 ? (rockbox.ores.map((ore: OreData) => (
+                        <LabeledList
+                          key={ore.name}
+                        >
                           <LabeledList.Item
-                            key={ore.name}
                             label={ore.name}
                             textAlign="center"
                           >
@@ -273,8 +274,8 @@ export const Manufacturer = (_, context) => {
                               {ore.cost}⪽
                             </Button>
                           </LabeledList.Item>
-                        ))) : "No Ores Loaded."}
-                      </LabeledList>
+                        </LabeledList>
+                      ))) : "No Ores Loaded."}
                     </Section>
                   ))}
                   {data.rockbox_message}
