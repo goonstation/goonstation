@@ -15816,6 +15816,18 @@
 /obj/random_item_spawner/med_kit,
 /turf/simulated/floor,
 /area/station/engine/inner)
+"csM" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core"
+	},
+/obj/cable,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating/airless,
+/area/station/turret_protected/ai_upload)
 "csY" = (
 /obj/window/reinforced/west,
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
@@ -17821,17 +17833,11 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "enu" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 1
-	},
 /obj/cable,
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
 "eol" = (
 /turf/simulated/wall/auto/supernorn,
@@ -22353,6 +22359,14 @@
 "iIk" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/networked/secdetector{
+	area_access = 99;
+	detector_id = "AI Core";
+	dir = 1
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
 "iIt" = (
@@ -26353,18 +26367,13 @@
 /turf/simulated/floor/plating/jen,
 /area/station/turret_protected/Zeta)
 "mQj" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core"
-	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
 "mQk" = (
 /obj/disposalpipe/switch_junction/left/east{
@@ -27366,6 +27375,14 @@
 /obj/fudad,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/bar)
+"nLx" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/turret_protected/ai_upload)
 "nLV" = (
 /obj/landmark/shuttle_subwoofer,
 /turf/space,
@@ -36777,13 +36794,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/central)
-"veW" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/turret_protected/ai_upload)
 "vfi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
@@ -95042,7 +95052,7 @@ jRG
 aUY
 cEt
 aTr
-veW
+qeZ
 aaa
 aaa
 mBC
@@ -95344,7 +95354,7 @@ aTr
 aTr
 aTr
 aTr
-veW
+qeZ
 giH
 aaa
 aYR
@@ -95639,12 +95649,12 @@ aaa
 aaa
 aaa
 mQj
-iIk
-iIk
-iIk
-iIk
-iIk
-iIk
+csM
+nLx
+nLx
+nLx
+nLx
+nLx
 iIk
 enu
 anA
