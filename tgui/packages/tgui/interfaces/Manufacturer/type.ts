@@ -115,3 +115,10 @@ export type QueueBlueprint = {
   category: string;
   type: 'available' | 'hidden' | 'download' | 'drive_blueprint';
 }
+
+export type CardInfoProps = {
+  actionCardLogin: () => void;
+  actionCardLogout: () => void;
+  card_owner: string;
+  card_balance: number;
+}

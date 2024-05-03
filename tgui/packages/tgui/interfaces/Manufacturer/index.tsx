@@ -10,16 +10,21 @@ import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
 import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
 import { formatMoney } from '../../format';
-import { MaintenancePanel, ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './type';
+import { CardInfoProps, MaintenancePanel, ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './type';
 import { BlueprintButton } from './BlueprintButton';
 import { ProductionCard } from './ProductionCard';
 import { clamp } from 'common/math';
 import { CollapsibleWireMenu } from './CollapsibleWireMenu';
 import { pluralize } from '../common/stringUtils';
 
-const CardInfo = (_, context) => {
-  const { data, act } = useBackend<ManufacturerData>(context);
-  return (data.card_owner === null || data.card_balance === null) ? (
+const CardInfo = (props:CardInfoProps) => {
+  const {
+    actionCardLogin,
+    actionCardLogout,
+    card_owner,
+    card_balance,
+  } = props;
+  return (card_owner === null || card_balance === null) ? (
     <Section
       textAlign="center"
     >
@@ -28,25 +33,25 @@ const CardInfo = (_, context) => {
           No Account Found.
         </Stack.Item>
         <Stack.Item>
-          <Button icon="add" onClick={() => act("card", { "scan": true })}>Add Account</Button>
+          <Button icon="add" onClick={() => actionCardLogin()}>Add Account</Button>
         </Stack.Item>
       </Stack>
     </Section>
   ) : (
     <Section
       title="Account Info"
-      buttons={<Button icon="minus" onClick={() => act("card", { "remove": true })}>Log Out</Button>}
+      buttons={<Button icon="minus" onClick={() => actionCardLogout()}>Log Out</Button>}
     >
       <LabeledList>
         <LabeledList.Item
           label="Owner"
         >
-          {data.card_owner}
+          {card_owner}
         </LabeledList.Item>
         <LabeledList.Item
           label="Balance"
         >
-          {formatMoney(data.card_balance)}⪽
+          {formatMoney(card_balance)}⪽
         </LabeledList.Item>
       </LabeledList>
     </Section>
@@ -66,6 +71,10 @@ export const Manufacturer = (_, context) => {
     wires: data.wires,
     wire_bitflags: data.wire_bitflags,
   };
+  // Define some actions for the interface and its children
+  const actionCardLogout = () => act("card", { "remove": true });
+  const actionCardLogin = () => act("card", { "scan": true });
+
   let toggleRepeat = () => {
     act("repeat");
     toggleRepeatVar(!repeat);
@@ -249,7 +258,12 @@ export const Manufacturer = (_, context) => {
                     <CollapsibleWireMenu wirePanel={wirePanel} />
                   </Stack.Item>
                 )}
-                <CardInfo />
+                <CardInfo
+                  actionCardLogin={actionCardLogin}
+                  actionCardLogout={actionCardLogout}
+                  card_owner={data.card_owner}
+                  card_balance={data.card_balance}
+                />
               </Stack.Item>
               <Stack.Item>
                 <Section
