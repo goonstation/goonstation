@@ -140,13 +140,18 @@
 		src.flat_icon = null
 		var/mob/living/carbon/human/preview_mob = src.preview_thing
 		preview_mob.dir = direction
-		preview_mob.bioHolder.mobAppearance.CopyOther(AH)
-		preview_mob.set_mutantrace(MR)
+
+		preview_mob.bioHolder.mobAppearance.CopyOther(AH, skip_update_colorful = TRUE)
+		if(preview_mob.mutantrace.type != (istype(MR, /datum/mutantrace) ? MR.type : MR))
+			preview_mob.set_mutantrace(MR)
+		preview_mob.mutantrace.AppearanceSetter(preview_mob, "preview")
+		if (preview_mob.mutantrace.special_head)
+			preview_mob.organHolder?.head?.MakeMutantHead(preview_mob.mutantrace.special_head, preview_mob.mutantrace.mutant_folder, preview_mob.mutantrace.special_head_state, skip_update = TRUE)
+		preview_mob.update_colorful_parts()
 		preview_mob.organHolder.left_eye?.update_color(AH, "L")
 		preview_mob.organHolder.right_eye?.update_color(AH, "R")
 		preview_mob.organHolder.head.donor = preview_mob
-		preview_mob.organHolder.head.donor_appearance.CopyOther(preview_mob.bioHolder.mobAppearance)
-		preview_mob.update_colorful_parts()
+
 		preview_mob.set_body_icon_dirty()
 		preview_mob.set_face_icon_dirty()
 		preview_mob.real_name = "clone of " + name

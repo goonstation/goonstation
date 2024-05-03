@@ -788,7 +788,10 @@
 			message_mode = "headset"
 	// Special message handling
 	else if (copytext(message, 1, 2) == ";")
-		message_mode = "headset"
+		if(isAI(src))
+			message_mode = "internal 1"
+		else
+			message_mode = "headset"
 		message = copytext(message, 2)
 
 	else if ((length(message) >= 2) && (copytext(message,1,2) == ":"))
@@ -2305,3 +2308,31 @@
 	for(var/datum/random_event/start/until_playing/RE in random_events.delayed_start)
 		if(RE.include_latejoin && RE.is_crew_affected(src))
 			RE.apply_to_player(src)
+
+/mob/living/proc/staunch_wound(mob/helper)
+	if (src.bleeding <= 0)
+		boutput(helper, SPAN_NOTICE("[src]'s bleeding has already stopped!"))
+		return
+
+	var/old_bleed = src.bleeding
+	repair_bleeding_damage(src, 20, rand(1, 2))
+
+	if (src.bleeding - old_bleed >= 0)
+		helper.tri_message(src, SPAN_NOTICE("<b>[helper]</b> fails to stop [src == helper ? "[his_or_her(src)]" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("You fail to stop [src == helper ? "your" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("[helper == src ? "You fail" : "<b>[helper]</b> fails"] to stop your bleeding!"))
+		return
+
+	switch (src.bleeding)
+		if (-INFINITY to 0)
+			helper.tri_message(src, SPAN_NOTICE("<b>[helper]</b> stops [src == helper ? "[his_or_her(src)]" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("You stop [src == helper ? "your" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("[helper == src ? "You stop" : "<b>[helper]</b> stops"] your bleeding!"))
+		if (1 to 3)
+			helper.tri_message(src, SPAN_NOTICE("<b>[helper]</b> slows [src == helper ? "[his_or_her(src)]" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("You slow [src == helper ? "your" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("[helper == src ? "You slow" : "<b>[helper]</b> slows"] your bleeding!"))
+		if (4 to INFINITY)
+			helper.tri_message(src, SPAN_NOTICE("<b>[helper]</b> barely slows [src == helper ? "[his_or_her(src)]" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("You barely slow [src == helper ? "your" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("[helper == src ? "You stop" : "<b>[helper]</b> stops"] your bleeding with little success!"))

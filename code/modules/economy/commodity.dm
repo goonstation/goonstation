@@ -1423,6 +1423,11 @@
 	comtype = /obj/item/storage/box/costume/crap/wonka
 	price = PAY_TRADESMAN
 
+/datum/commodity/costume/goku
+	comname = "Anime Martial Artist Costume"
+	comtype = /obj/item/storage/box/costume/crap/goku
+	price = PAY_TRADESMAN
+
 /datum/commodity/costume/light_borg //YJHGHTFH's light borg costume
 	comname = "Light Cyborg Costume"
 	comtype = /obj/item/storage/box/costume/light_borg

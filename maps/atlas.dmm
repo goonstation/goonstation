@@ -1508,10 +1508,8 @@
 /turf/space,
 /area/space)
 "afj" = (
-/obj/item/reagent_containers/food/snacks/pizza/meatball{
-	doants = 0;
-	icon_state = "pslice";
-	sliced = 1
+/obj/item/reagent_containers/food/snacks/pizzaslice/standard/meatball{
+	doants = 0
 	},
 /turf/simulated/floor/stairs/dark/wide,
 /area/station/medical/morgue)
@@ -1982,7 +1980,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
 "agW" = (
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /turf/simulated/floor/caution/west,
 /area/station/ai_monitored/armory)
 "agX" = (
@@ -11939,7 +11937,7 @@
 	},
 /area/station/mining/refinery)
 "aRO" = (
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/caution/south,
 /area/station/ai_monitored/armory)
