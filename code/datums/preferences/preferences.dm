@@ -27,42 +27,42 @@ var/list/removed_jobs = list(
 	var/synd_int_note
 	var/employment_note
 
-	var/be_traitor = 0
-	var/be_syndicate = 0
-	var/be_syndicate_commander = 0
-	var/be_spy = 0
-	var/be_gangleader = 0
-	var/be_gangmember = 0
-	var/be_revhead = 0
-	var/be_changeling = 0
-	var/be_wizard = 0
-	var/be_werewolf = 0
-	var/be_vampire = 0
-	var/be_arcfiend = 0
-	var/be_wraith = 0
-	var/be_blob = 0
-	var/be_conspirator = 0
-	var/be_flock = 0
-	var/be_salvager = 0
-	var/be_misc = 0
+	var/be_traitor = FALSE
+	var/be_syndicate = FALSE
+	var/be_syndicate_commander = FALSE
+	var/be_spy = FALSE
+	var/be_gangleader = FALSE
+	var/be_gangmember = FALSE
+	var/be_revhead = FALSE
+	var/be_changeling = FALSE
+	var/be_wizard = FALSE
+	var/be_werewolf = FALSE
+	var/be_vampire = FALSE
+	var/be_arcfiend = FALSE
+	var/be_wraith = FALSE
+	var/be_blob = FALSE
+	var/be_conspirator = FALSE
+	var/be_flock = FALSE
+	var/be_salvager = FALSE
+	var/be_misc = FALSE
 
-	var/be_random_name = 0
-	var/be_random_look = 0
-	var/random_blood = 0
-	var/view_changelog = 1
-	var/view_score = 1
-	var/view_tickets = 1
+	var/be_random_name = FALSE
+	var/be_random_look = FALSE
+	var/random_blood = FALSE
+	var/view_changelog = TRUE
+	var/view_score = TRUE
+	var/view_tickets = TRUE
 	var/admin_music_volume = 50
 	var/radio_music_volume = 10
-	var/use_click_buffer = 0
+	var/use_click_buffer = FALSE
 	var/help_text_in_examine = TRUE
-	var/listen_ooc = 1
-	var/listen_looc = 1
-	var/flying_chat_hidden = 0
-	var/auto_capitalization = 0
-	var/local_deadchat = 0
-	var/use_wasd = 1
-	var/use_azerty = 0 // do they have an AZERTY keyboard?
+	var/listen_ooc = TRUE
+	var/listen_looc = TRUE
+	var/flying_chat_hidden = FALSE
+	var/auto_capitalization = FALSE
+	var/local_deadchat = FALSE
+	var/use_wasd = TRUE
+	var/use_azerty = FALSE // do they have an AZERTY keyboard?
 	var/spessman_direction = SOUTH
 	var/PDAcolor = "#6F7961"
 
@@ -77,9 +77,9 @@ var/list/removed_jobs = list(
 
 	var/datum/movable_preview/character/preview = null
 
-	var/mentor = 0
-	var/see_mentor_pms = 1 // do they wanna disable mentor pms?
-	var/antispam = 0
+	var/mentor = FALSE
+	var/see_mentor_pms = TRUE // do they wanna disable mentor pms?
+	var/antispam = FALSE
 
 	var/datum/traitPreferences/traitPreferences = new
 
@@ -1007,33 +1007,33 @@ var/list/removed_jobs = list(
 				pin = null
 				flavor_text = null
 				src.ResetAllPrefsToLow(usr)
-				flying_chat_hidden = 0
-				local_deadchat = 0
-				auto_capitalization = 0
-				listen_ooc = 1
-				view_changelog = 1
-				view_score = 1
-				view_tickets = 1
+				flying_chat_hidden = FALSE
+				local_deadchat = FALSE
+				auto_capitalization = FALSE
+				listen_ooc = TRUE
+				view_changelog = TRUE
+				view_score = TRUE
+				view_tickets = TRUE
 				admin_music_volume = 50
 				radio_music_volume = 50
-				use_click_buffer = 0
+				use_click_buffer = FALSE
 				help_text_in_examine = TRUE
-				be_traitor = 0
-				be_syndicate = 0
-				be_syndicate_commander = 0
-				be_spy = 0
-				be_gangleader = 0
-				be_gangmember = 0
-				be_revhead = 0
-				be_changeling = 0
-				be_wizard = 0
-				be_werewolf = 0
-				be_vampire = 0
-				be_wraith = 0
-				be_blob = 0
-				be_conspirator = 0
-				be_flock = 0
-				be_misc = 0
+				be_traitor = FALSE
+				be_syndicate = FALSE
+				be_syndicate_commander = FALSE
+				be_spy = FALSE
+				be_gangleader = FALSE
+				be_gangmember = FALSE
+				be_revhead = FALSE
+				be_changeling = FALSE
+				be_wizard = FALSE
+				be_werewolf = FALSE
+				be_vampire = FALSE
+				be_wraith = FALSE
+				be_blob = FALSE
+				be_conspirator = FALSE
+				be_flock = FALSE
+				be_misc = FALSE
 				tooltip_option = TOOLTIP_ALWAYS
 				scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
 				tgui_fancy = TRUE
@@ -1041,13 +1041,13 @@ var/list/removed_jobs = list(
 				PDAcolor = "#6F7961"
 				pda_ringtone_index = "Two-Beep"
 				if (!force_random_names)
-					be_random_name = 0
+					be_random_name = FALSE
 				else
-					be_random_name = 1
+					be_random_name = TRUE
 				if (!force_random_looks)
-					be_random_look = 0
+					be_random_look = FALSE
 				else
-					be_random_look = 1
+					be_random_look = TRUE
 				blType = "A+"
 
 				src.update_preview_icon()
@@ -1059,7 +1059,7 @@ var/list/removed_jobs = list(
 		if (!ON_COOLDOWN(usr, "preferences_preview_sound", 0.5 SECONDS))
 			usr.playsound_local(usr, S, 100)
 
-	proc/randomize_name(var/first = 1, var/middle = 1, var/last = 1)
+	proc/randomize_name(var/first = TRUE, var/middle = TRUE, var/last = TRUE)
 		//real_name = random_name(src.gender)
 		if (src.gender == MALE)
 			if (first)
@@ -1579,7 +1579,7 @@ var/list/removed_jobs = list(
 					src.jobs_unwanted += job
 				return
 
-		src.antispam = 1
+		src.antispam = TRUE
 
 		var/picker = "Low Priority"
 		var/datum/job/J = find_job_in_controller_by_string(job)
@@ -1596,7 +1596,7 @@ var/list/removed_jobs = list(
 
 			picker = tgui_input_list(usr, "Which bracket would you like to move this job to?", "Job Preferences", valid_actions)
 			if (!picker)
-				src.antispam = 0
+				src.antispam = FALSE
 				return
 		else
 			switch (level)
@@ -1607,32 +1607,32 @@ var/list/removed_jobs = list(
 
 		if (J.cant_allocate_unwanted && picker == "Unwanted")
 			boutput(user, SPAN_ALERT("<b>[job] cannot be set to Unwanted.</b>"))
-			src.antispam = 0
+			src.antispam = FALSE
 			return
 
-		var/successful_move = 0
+		var/successful_move = FALSE
 
 		switch (picker)
 			if ("Favorite")
 				if (src.job_favorite)
 					src.jobs_med_priority += src.job_favorite
 				src.job_favorite = job
-				successful_move = 1
+				successful_move = TRUE
 			if ("Medium Priority")
 				src.jobs_med_priority += job
 				if (occ == 1)
 					src.job_favorite = null
-				successful_move = 1
+				successful_move = TRUE
 			if ("Low Priority")
 				src.jobs_low_priority += job
 				if (occ == 1)
 					src.job_favorite = null
-				successful_move = 1
+				successful_move = TRUE
 			if ("Unwanted")
 				src.jobs_unwanted += job
 				if (occ == 1)
 					src.job_favorite = null
-				successful_move = 1
+				successful_move = TRUE
 			if ("Show Wiki Page")
 				user << link(J.wiki_link)
 
@@ -1643,7 +1643,7 @@ var/list/removed_jobs = list(
 				if (3) src.jobs_low_priority -= job
 				if (4) src.jobs_unwanted -= job
 
-		src.antispam = 0
+		src.antispam = FALSE
 		return 1
 
 	Topic(href, href_list[])
@@ -1662,7 +1662,7 @@ var/list/removed_jobs = list(
 
 		// do we check if they actually modified something? no.
 		// thats effort.
-		src.profile_modified = 1
+		src.profile_modified = TRUE
 
 		if (link_tags["job"])
 			src.SetJob(user, text2num(link_tags["occ"]), link_tags["job"], text2num(link_tags["level"]))
@@ -1785,7 +1785,7 @@ var/list/removed_jobs = list(
 
 		src.ShowChoices(user)
 
-	proc/copy_to(mob/living/character,var/mob/user,ignore_randomizer = 0, skip_post_new_stuff=FALSE)
+	proc/copy_to(mob/living/character, var/mob/user, ignore_randomizer = FALSE, skip_post_new_stuff = FALSE)
 		src.sanitize_null_values()
 		if (!ignore_randomizer)
 			if (be_random_name)
