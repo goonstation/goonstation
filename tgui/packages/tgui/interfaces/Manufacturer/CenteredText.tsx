@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { Box } from "../Box";
+import { Box } from "../../components/Box";
 
 type CenteredTextProps = {
   position?:string;
