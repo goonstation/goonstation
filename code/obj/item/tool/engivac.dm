@@ -55,6 +55,7 @@ obj/item/engivac/update_icon(mob/M = null)
 ///Change worn sprite depending on slot
 obj/item/engivac/equipped(var/mob/user, var/slot)
 	..()
+UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	if (slot == SLOT_BACK)
 		wear_image = image('icons/mob/clothing/back.dmi')
