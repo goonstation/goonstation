@@ -15,44 +15,35 @@ this just offloads some of the computation to the client.
 
 Consequently, if the checks on the .dm end change, this has to change as well.
 
-Thankfully as this is mostly cosmetic, the only implication is that people might be able
-to try printing blueprints that get refused, or they may not be allowed to fabricate
-blueprints they should be allowed to.
+Only the DM checks matter for actually making the item though, this just enables and disables buttons /
+shows what materials are missing.
 */
 const getProductionSatisfaction = (
   pattern_requirements:string[],
   amount_requirements:number[],
   materials_stored:ResourceData[]) =>
 {
-  let satisfaction:boolean[] = [];
-  let availableMaterials:Record<string, number> = {};
+  // Copy values of mats stored to edit in case we need to try the same material twice
+  let material_amts_predicted:Record<string, number> = {};
+  materials_stored.forEach((value:ResourceData) => (
+    material_amts_predicted[value.id] = value.amount
+  ));
+  let patterns_satisfied:boolean[] = [];
   for (let i in pattern_requirements) {
-    let required_pattern = pattern_requirements[i];
-    let compatible_material:ResourceData | undefined;
-    // Try to find compatible resource
-    for (let resource of materials_stored) {
-      if (Object.keys(availableMaterials).find((value:string) => (value === resource.id)) === undefined) {
-        availableMaterials[resource.id] = resource.amount;
-      }
-      if (availableMaterials[resource.id] < amount_requirements[i]/10) {
-        continue;
-      }
-      if (resource.satisfies.find((satisfies_pattern:string) => (
-        (required_pattern === "ALL" || required_pattern === satisfies_pattern)
-      )) === undefined) {
-        continue;
-      }
-      compatible_material = resource;
-      break;
+    const target_pattern = pattern_requirements[i];
+    const target_amount = amount_requirements[i];
+    const matchingMaterial = materials_stored.find((material:ResourceData) => (
+      target_pattern === "ALL" || material.satisfies.find((pattern:string) => (pattern === target_pattern)) !== undefined
+    ));
+    if (matchingMaterial !== undefined && matchingMaterial.amount >= target_amount/10) {
+      material_amts_predicted[i] -= target_amount/10;
+      patterns_satisfied.push(true);
     }
-    if (compatible_material === undefined) {
-      satisfaction.push(false);
-      continue;
+    else {
+      patterns_satisfied.push(false);
     }
-    satisfaction.push(true);
-    availableMaterials[compatible_material.id] -= amount_requirements[i];
   }
-  return satisfaction;
+  return patterns_satisfied;
 };
 
 export const BlueprintButton = (props:BlueprintButtonData) => {
