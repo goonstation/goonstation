@@ -29,18 +29,22 @@ export const CollapsibleWireMenu = (props:MaintenancePanel) => {
             key={i}
             label={ManufacturerWireData[i].name}
             labelColor={ManufacturerWireData[i].colorName}
-            buttons={[(<Button
-              textAlign="center"
-              key={i}
-              content="Pulse"
-              onClick={() => actionWirePulse(i)}
-            />),
-            (<Button
-              textAlign="center"
-              key={i}
-              content={is_set(wire_bitflags, wires[i]-1) ? "Cut" : "Mend"}
-              onClick={() => actionWireCutOrMend(i, is_set(wire_bitflags, wires[i]-1))}
-            />)]}
+            buttons={
+              <>
+                <Button
+                  textAlign="center"
+                  key={i}
+                  content="Pulse"
+                  onClick={() => actionWirePulse(i)}
+                />
+                <Button
+                  textAlign="center"
+                  key={i}
+                  content={is_set(wire_bitflags, wires[i]-1) ? "Cut" : "Mend"}
+                  onClick={() => actionWireCutOrMend(i, is_set(wire_bitflags, wires[i]-1))}
+                />
+              </>
+            }
           />
         ))}
       </LabeledList>
