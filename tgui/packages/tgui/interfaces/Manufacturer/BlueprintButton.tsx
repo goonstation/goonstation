@@ -11,7 +11,7 @@ import { round } from 'common/math';
 import { ButtonWithBadge } from './ButtonWithBadge';
 import { CenteredText } from './CenteredText';
 import { truncate } from '../../format';
-import { BLUEPRINT_BUTTON_HEIGHT, BLUEPRINT_BUTTON_MARGINS_HORIZONTAL, BLUEPRINT_BUTTON_MARGINS_VERTICAL, BLUEPRINT_BUTTON_WIDTH, BLUEPRINT_MINIBUTTON_ICON_SIZE, BLUEPRINT_MINIBUTTON_INBETWEEN_SPACING, BLUEPRINT_MINIBUTTON_WIDTH } from './constant';
+import { BlueprintButtonStyle, BlueprintMiniButtonStyle } from './constant';
 
 const getBlueprintTime = (time, manufacturerSpeed) => {
   return round(time / 10 / manufacturerSpeed, 0.01);
@@ -109,67 +109,67 @@ export const BlueprintButton = (props:BlueprintButtonData) => {
   return (
     <Stack inline>
       <Stack.Item
-        ml={BLUEPRINT_BUTTON_MARGINS_HORIZONTAL}
-        my={BLUEPRINT_BUTTON_MARGINS_VERTICAL}
+        ml={BlueprintButtonStyle.MarginX}
+        my={BlueprintButtonStyle.MarginY}
       >
         <ButtonWithBadge
-          width={BLUEPRINT_BUTTON_WIDTH}
-          height={BLUEPRINT_BUTTON_HEIGHT}
+          width={BlueprintButtonStyle.Width}
+          height={BlueprintButtonStyle.Height}
           key={blueprintData.name}
           imagePath={blueprintData.img}
           disabled={notProduceable}
           onClick={() => actionVendProduct(blueprintData.byondRef)}
         >
           <CenteredText
-            height={BLUEPRINT_BUTTON_HEIGHT}
+            height={BlueprintButtonStyle.Height}
             text={truncate(blueprintData.name, 40)}
           />
         </ButtonWithBadge>
       </Stack.Item>
       <Stack.Item
-        mr={BLUEPRINT_BUTTON_MARGINS_HORIZONTAL}
+        mr={BlueprintButtonStyle.MarginX}
       >
         <Stack vertical
-          my={BLUEPRINT_BUTTON_MARGINS_VERTICAL}
+          my={BlueprintButtonStyle.MarginY}
         >
           <Stack.Item
-            mb={BLUEPRINT_MINIBUTTON_INBETWEEN_SPACING}
+            mb={BlueprintMiniButtonStyle.Spacing}
           >
             <Tooltip
               content={content_info}
             >
               <Button
-                width={BLUEPRINT_MINIBUTTON_WIDTH}
-                height={(BLUEPRINT_BUTTON_HEIGHT-BLUEPRINT_MINIBUTTON_INBETWEEN_SPACING)/2}
+                width={BlueprintMiniButtonStyle.Width}
+                height={(BlueprintButtonStyle.Height-BlueprintMiniButtonStyle.Spacing)/2}
                 align="center"
                 disabled={notProduceable}
                 onClick={() => actionVendProduct(blueprintData.byondRef)}
-                py={BLUEPRINT_MINIBUTTON_ICON_SIZE/2}
+                py={BlueprintMiniButtonStyle.IconSize/2}
               >
                 <Icon
                   name="info"
-                  size={BLUEPRINT_MINIBUTTON_ICON_SIZE}
+                  size={BlueprintMiniButtonStyle.IconSize}
                 />
               </Button>
             </Tooltip>
           </Stack.Item>
           <Stack.Item
-            mt={BLUEPRINT_MINIBUTTON_INBETWEEN_SPACING}
+            mt={BlueprintMiniButtonStyle.Spacing}
           >
             <Tooltip
               content={content_requirements}
             >
               <Button
-                width={BLUEPRINT_MINIBUTTON_WIDTH}
-                height={(BLUEPRINT_BUTTON_HEIGHT-BLUEPRINT_MINIBUTTON_INBETWEEN_SPACING)/2}
+                width={BlueprintMiniButtonStyle.Width}
+                height={(BlueprintButtonStyle.Height-BlueprintMiniButtonStyle.Spacing)/2}
                 align="center"
                 disabled={notProduceable}
                 onClick={() => actionVendProduct(blueprintData.byondRef)}
-                py={BLUEPRINT_MINIBUTTON_ICON_SIZE/2}
+                py={BlueprintMiniButtonStyle.IconSize/2}
               >
                 <Icon
                   name="gear"
-                  size={BLUEPRINT_MINIBUTTON_ICON_SIZE}
+                  size={BlueprintMiniButtonStyle.IconSize}
                 />
               </Button>
             </Tooltip>

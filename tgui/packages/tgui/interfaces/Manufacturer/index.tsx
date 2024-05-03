@@ -7,66 +7,22 @@
 
 import { useBackend, useLocalState } from '../../backend';
 import { Window } from '../../layouts';
-import { toTitleCase } from 'common/string';
-import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
-import { formatMoney } from '../../format';
-import { CardInfoProps, ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './type';
-import { BlueprintButton } from './BlueprintButton';
-import { ProductionCard } from './ProductionCard';
-import { clamp } from 'common/math';
-import { CollapsibleWireMenu } from './CollapsibleWireMenu';
-import { pluralize } from '../common/stringUtils';
-import { BLUEPRINT_WINDOW_WIDTH, MANUDRIVE_UNLIMITED, SETTINGS_WINDOW_MARGINS_VERTICAL } from './constant';
 import { is_set } from '../common/bitflag';
-
-const CardInfo = (props:CardInfoProps) => {
-  const {
-    actionCardLogin,
-    actionCardLogout,
-    card_owner,
-    card_balance,
-  } = props;
-  return (card_owner === null || card_balance === null) ? (
-    <Section
-      textAlign="center"
-    >
-      <Stack vertical>
-        <Stack.Item>
-          No Account Found.
-        </Stack.Item>
-        <Stack.Item>
-          <Button icon="add" onClick={() => actionCardLogin()}>Add Account</Button>
-        </Stack.Item>
-      </Stack>
-    </Section>
-  ) : (
-    <Section
-      title="Account Info"
-      buttons={<Button icon="minus" onClick={() => actionCardLogout()}>Log Out</Button>}
-    >
-      <LabeledList>
-        <LabeledList.Item
-          label="Owner"
-        >
-          {card_owner}
-        </LabeledList.Item>
-        <LabeledList.Item
-          label="Balance"
-        >
-          {formatMoney(card_balance)}⪽
-        </LabeledList.Item>
-      </LabeledList>
-    </Section>
-  );
-};
+import { clamp } from 'common/math';
+import { toTitleCase } from 'common/string';
+import { pluralize } from '../common/stringUtils';
+import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
+import { ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './type';
+import { BlueprintButton } from './BlueprintButton';
+import { CardInfo } from './CardInfo';
+import { CollapsibleWireMenu } from './CollapsibleWireMenu';
+import { BLUEPRINT_WINDOW_WIDTH, MANUDRIVE_UNLIMITED } from './constant';
+import { ProductionCard } from './ProductionCard';
 
 export const Manufacturer = (_, context) => {
   const { act, data } = useBackend<ManufacturerData>(context);
   const [search, setSearchData] = useLocalState(context, "query", "");
   const [swap, setSwappingMaterial] = useLocalState(context, "swap", null);
-  // Define some variables used for the interface
-  const blueprintWindowWidthPercentage = "80%";
-  const manudriveIsUnlimited = (value:any) => value === MANUDRIVE_UNLIMITED;
   // Define some actions for the interface and its children
   const actionCardLogout = () => act("card", { "remove": true });
   const actionCardLogin = () => act("card", { "scan": true });
@@ -75,6 +31,7 @@ export const Manufacturer = (_, context) => {
   const actionWirePulse = (index:number) => act('wire', { action: "pulse", wire: index+1 });
   const actionWireCutOrMend = (index:number) => act("wire", { action: ((is_set(data.wire_bitflags, data.wires[index]-1)) ? "cut" : "mend"), wire: index+1 });
   const actionVendProduct = (byondRef:string) => act("request_product", { "blueprint_ref": byondRef });
+  // Local states for pleasant UX while selecting one button (highlight green) and then second button (perform action)
   let swapPriority = (materialID: string) => {
     if (swap === null) {
       setSwappingMaterial(materialID);
@@ -232,9 +189,9 @@ export const Manufacturer = (_, context) => {
                       <LabeledList.Item
                         label="Fabrication Limit"
                       >
-                        {manudriveIsUnlimited(data.manudrive.limit) ? "Unlimited" : `${data.manudrive.limit} ${pluralize("use", data.manudrive.limit)}`}
+                        {(data.manudrive.limit === MANUDRIVE_UNLIMITED) ? "Unlimited" : `${data.manudrive.limit} ${pluralize("use", data.manudrive.limit)}`}
                       </LabeledList.Item>
-                      {!manudriveIsUnlimited(data.manudrive.limit) && (
+                      {(data.manudrive.limit !== MANUDRIVE_UNLIMITED) && (
                         <LabeledList.Item
                           label="Remaining Uses"
                         >

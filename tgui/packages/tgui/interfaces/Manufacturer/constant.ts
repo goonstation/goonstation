@@ -8,15 +8,23 @@
 /**
  * Controls the size and spacing of blueprint buttons on the main panel.
  */
-export const BLUEPRINT_BUTTON_WIDTH = 15.5;
-export const BLUEPRINT_BUTTON_HEIGHT = 5;
-export const BLUEPRINT_BUTTON_MARGINS_HORIZONTAL = 0.5;
-export const BLUEPRINT_BUTTON_MARGINS_VERTICAL = 0.5;
+export enum BlueprintButtonStyle {
+  Width = 15.5,
+  Height = 5,
+  MarginX = 0.5,
+  MarginY = 0.5,
+}
 
 // Controls the smaller 'settings' and 'info' buttons on the side of each larger button.
-export const BLUEPRINT_MINIBUTTON_WIDTH = 2;
-export const BLUEPRINT_MINIBUTTON_ICON_SIZE = 1;
-export const BLUEPRINT_MINIBUTTON_INBETWEEN_SPACING = 0.40;
+export enum BlueprintMiniButtonStyle {
+  Width = 2,
+  IconSize = 1,
+  Spacing = 0.4,
+}
+
+export enum ProductionCardStyle {
+  
+}
 
 // Controls the amount of space the blueprint window takes up. The remaining percentage is settings.
 export const BLUEPRINT_WINDOW_WIDTH = "55%";
