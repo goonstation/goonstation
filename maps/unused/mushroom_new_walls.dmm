@@ -34434,7 +34434,6 @@
 /obj/item/storage/box/revimp_kit{
 	pixel_x = 8
 	},
-/obj/item/clothing/glasses/thermal,
 /turf/simulated/floor,
 /area/station/security/main)
 "tmj" = (
