@@ -3,7 +3,7 @@ import { Button, LabeledList, Section, Stack, Tooltip } from '../../components';
 import { ResourceData } from './type';
 import { round } from 'common/math';
 import { ButtonWithBadge } from '../../components/goonstation/ButtonWithBadge';
-import { CenteredText } from './ct';
+import { CenteredText } from './CenteredText';
 import { truncate } from '../../format';
 
 const getBlueprintTime = (time, manufacturerSpeed) => {

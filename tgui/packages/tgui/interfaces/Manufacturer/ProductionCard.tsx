@@ -9,7 +9,7 @@ import { truncate } from '../../format';
 import { useBackend } from "../../backend";
 import { Button, Stack } from "../../components";
 import { ButtonWithBadge } from "../../components/goonstation/ButtonWithBadge";
-import { CenteredText } from "./ct";
+import { CenteredText } from "./CenteredText";
 
 /*
   Card which shows the blueprint being produced/queued, and if currently being produced,
