@@ -13,7 +13,7 @@ export type ManufacturerData = {
   card_owner:string;
   error:string;
   fabricator_name:string;
-  mode:string;
+  mode: 'working' | 'halt' | 'ready';
   rockbox_message:string;
 
   available_blueprints:Record<string, ManufacturableData[]>;
@@ -57,7 +57,7 @@ export type ManufacturableData = {
   material_names:string[];
   item_paths:string[];
   item_names:string[];
-  item_amounts:string[];
+  item_amounts:number[];
   item_descriptions:string[];
 
   create:number;
@@ -67,6 +67,7 @@ export type ManufacturableData = {
   byondRef:string;
   img:string
 
+  apply_material:BooleanLike;
   show_cost:BooleanLike;
 }
 
@@ -91,6 +92,8 @@ export type OreData = {
 }
 
 export type MaintenancePanel = {
+  actionWirePulse: (index:number) => void
+  actionWireCutOrMend: (index:number, is_cut:BooleanLike) => void
   indicators: WireIndicatorsData;
   wires: number[];
   wire_bitflags:number;
@@ -121,4 +124,20 @@ export type CardInfoProps = {
   actionCardLogout: () => void;
   card_owner: string;
   card_balance: number;
+}
+
+export type ProductionCardData = {
+  actionQueueRemove: (index:number) => void;
+  actionQueueTogglePause: (mode:string) => void;
+  img:string;
+  index:number;
+  mode: 'working' | 'halt' | 'ready';
+  name:string;
+}
+
+export type BlueprintButtonData = {
+  actionVendProduct: (byondRef:string) => void;
+  blueprintData: ManufacturableData;
+  materialData: ResourceData[];
+  manufacturerSpeed: number;
 }

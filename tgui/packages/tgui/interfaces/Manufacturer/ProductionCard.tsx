@@ -5,21 +5,31 @@
  * @license ISC
  */
 
-import { truncate } from '../../format';
-import { useBackend } from "../../backend";
-import { Button, Stack } from "../../components";
-import { ButtonWithBadge } from "../../components/goonstation/ButtonWithBadge";
+import { truncate } from './../../format';
+import { Button, Stack } from "./../../components";
+import { ButtonWithBadge } from "./ButtonWithBadge";
 import { CenteredText } from "./CenteredText";
-
+import { ProductionCardData } from "./type";
 /*
   Card which shows the blueprint being produced/queued, and if currently being produced,
   a progressbar for how close it is to being done.
 */
-export const ProductionCard = (params, context) => {
-  const { act } = useBackend(context);
-  const { data, index, mode } = params;
-  // in case blueprint is taken out from under us and dm doesnt do it first
-  if (data === undefined) {
+export const ProductionCard = (params:ProductionCardData) => {
+  const {
+    actionQueueRemove,
+    actionQueueTogglePause,
+    img,
+    index,
+    mode,
+    name,
+  } = params;
+
+  // dont display Weird things
+  if (img === undefined
+      || index === undefined
+      || mode === undefined
+      || name === undefined
+  ) {
     return null;
   }
   // Simpler badge for the buttons where it doesn't matter, bottommost return for the bestest of buttons
@@ -29,10 +39,10 @@ export const ProductionCard = (params, context) => {
         <ButtonWithBadge
           width="100%"
           height={4.6}
-          imagePath={data.img}
-          onClick={() => act("remove", { "index": index+1 })}
+          imagePath={img}
+          onClick={() => actionQueueRemove(index)}
         >
-          <CenteredText text={truncate(data.name, 40)} height={4.6} />
+          <CenteredText text={truncate(name, 40)} height={4.6} />
         </ButtonWithBadge>
       </Stack.Item>
     );
@@ -44,32 +54,24 @@ export const ProductionCard = (params, context) => {
           <ButtonWithBadge
             width={16.5}
             height={4.6}
-            imagePath={data.img}
-            onClick={() => act("remove", { "index": index+1 })}
+            imagePath={img}
+            onClick={() => actionQueueRemove(index)}
           >
-            <CenteredText text={truncate(data.name)} width={11} height={4.6} />
+            <CenteredText text={truncate(name)} />
           </ButtonWithBadge>
         </Stack.Item>
         <Stack.Item>
           <Stack vertical>
             <Stack.Item>
               <Button
-                width={2}
-                height={2}
-                pt={0.5}
-                pl={1.1}
                 icon="trash"
-                onClick={() => act("remove", { "index": index+1 })}
+                onClick={() => actionQueueRemove(index)}
               />
             </Stack.Item>
             <Stack.Item>
               <Button
-                width={2}
-                height={2}
-                pl={1.3}
-                pt={0.5}
                 icon={(mode === "working") ? "pause" : "play"}
-                onClick={() => act("pause_toggle", { "action": (mode === "working") ? "pause" : "continue" })}
+                onClick={() => actionQueueTogglePause(mode)}
               />
             </Stack.Item>
           </Stack>

@@ -6,11 +6,12 @@
  */
 
 import { useBackend, useLocalState, useSharedState } from '../../backend';
+import { BooleanLike } from 'common/react';
 import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
 import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
 import { formatMoney } from '../../format';
-import { CardInfoProps, MaintenancePanel, ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './type';
+import { CardInfoProps, ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './temp/type';
 import { BlueprintButton } from './BlueprintButton';
 import { ProductionCard } from './ProductionCard';
 import { clamp } from 'common/math';
@@ -65,15 +66,15 @@ export const Manufacturer = (_, context) => {
   const [swap, setSwappingMaterial] = useLocalState(context, "swap", null);
   // Define some variables used for the interface
   const blueprintWindowWidthPercentage = "80%";
-
-  const wirePanel: MaintenancePanel = {
-    indicators: data.indicators,
-    wires: data.wires,
-    wire_bitflags: data.wire_bitflags,
-  };
+  const manudriveIsUnlimited = (value:any) => value === -1;
   // Define some actions for the interface and its children
   const actionCardLogout = () => act("card", { "remove": true });
   const actionCardLogin = () => act("card", { "scan": true });
+  const actionQueueRemove = (index:number) => act("remove", { "index": index+1 });
+  const actionQueueTogglePause = (mode:string) => act("pause_toggle", { "action": (mode === "working") ? "pause" : "continue" });
+  const actionWirePulse = (index:number) => act('wire', { action: "pulse", wire: index+1 });
+  const actionWireCutOrMend = (index:number, is_cut:BooleanLike) => act("wire", { action: (is_cut ? "cut" : "mend"), wire: index+1 });
+  const actionVendProduct = (byondRef:string) => act("product", { "blueprint_ref": byondRef });
 
   let toggleRepeat = () => {
     act("repeat");
@@ -129,9 +130,9 @@ export const Manufacturer = (_, context) => {
 
 
   // Get a ManufacturableData from a QueueBlueprint using its type, category, and name.
-  let getBlueprintFromQueueData = (queueData:QueueBlueprint) => {
-    return blueprints_by_category[queueData.category].find((key) => (key.name === queueData.name));
-  };
+  let queueBlueprintRefs = data.queue.map((queued:QueueBlueprint) =>
+    blueprints_by_category[queued.category].find((key) => (key.name === queued.name))
+  );
 
   return (
     <Window width={1200} height={600} title={data.fabricator_name}>
@@ -220,7 +221,7 @@ export const Manufacturer = (_, context) => {
                     </LabeledList.Item>
                   </LabeledList>
                 </Section>
-                {data.manudrive.limit !== null ? (
+                {data.manudrive.limit !== null && (
                   <Stack.Item>
                     <Section
                       title="Loaded Manudrive"
@@ -232,7 +233,6 @@ export const Manufacturer = (_, context) => {
                           onClick={() => act("manudrive", { "action": "eject" })}
                         />
                       }
-                      mb={1}
                     >
                       {data.manudrive.name}
                       <Divider />
@@ -240,22 +240,28 @@ export const Manufacturer = (_, context) => {
                         <LabeledList.Item
                           label="Fabrication Limit"
                         >
-                          {data.manudrive.limit === -1 ? "Unlimited" : `${data.manudrive.limit} ${pluralize("use", data.manudrive.limit)}`}
+                          {manudriveIsUnlimited(data.manudrive.limit) ? "Unlimited" : `${data.manudrive.limit} ${pluralize("use", data.manudrive.limit)}`}
                         </LabeledList.Item>
-                        {data.manudrive.limit !== -1 ? (
+                        {!manudriveIsUnlimited(data.manudrive.limit) && (
                           <LabeledList.Item
                             label="Remaining Uses"
                           >
                             {data.manudrive_uses_left}
                           </LabeledList.Item>
-                        ) : null }
+                        )}
                       </LabeledList>
                     </Section>
                   </Stack.Item>
-                ) : null}
+                )}
                 {!!data.panel_open && (
-                  <Stack.Item mb={1} >
-                    <CollapsibleWireMenu wirePanel={wirePanel} />
+                  <Stack.Item>
+                    <CollapsibleWireMenu
+                      actionWirePulse={actionWirePulse}
+                      actionWireCutOrMend={actionWireCutOrMend}
+                      indicators={data.indicators}
+                      wires={data.wires}
+                      wire_bitflags={data.wire_bitflags}
+                    />
                   </Stack.Item>
                 )}
                 <CardInfo
@@ -317,12 +323,15 @@ export const Manufacturer = (_, context) => {
                       />
                     </Stack.Item>
                   )}
-                  {data.queue.map((queued:QueueBlueprint, index:number) => (
+                  {queueBlueprintRefs.map((queued:ManufacturableData, index:number) => (
                     <ProductionCard
                       key={index}
                       index={index}
-                      data={getBlueprintFromQueueData(queued)}
+                      actionQueueRemove={actionQueueRemove}
+                      actionQueueTogglePause={actionQueueTogglePause}
                       mode={data.mode}
+                      img={queued.img}
+                      name={queued.name}
                     />
                   ))}
                 </Stack>

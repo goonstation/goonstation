@@ -1,10 +1,9 @@
-import { useBackend } from '../../backend';
-import { Button, LabeledList, Section, Stack, Tooltip } from '../../components';
-import { ResourceData } from './type';
+import { Button, LabeledList, Section, Stack, Tooltip } from './../../components';
+import { BlueprintButtonData, ResourceData } from './type';
 import { round } from 'common/math';
-import { ButtonWithBadge } from '../../components/goonstation/ButtonWithBadge';
+import { ButtonWithBadge } from './ButtonWithBadge';
 import { CenteredText } from './CenteredText';
-import { truncate } from '../../format';
+import { truncate } from './../../format';
 
 const getBlueprintTime = (time, manufacturerSpeed) => {
   return round(time / 10 / manufacturerSpeed, 0.01);
@@ -56,10 +55,14 @@ const getProductionSatisfaction = (
   return satisfaction;
 };
 
-export const BlueprintButton = (props, context) => {
+export const BlueprintButton = (props:BlueprintButtonData) => {
 
-  const { blueprintData, materialData, manufacturerSpeed } = props;
-  const { act } = useBackend(context);
+  const {
+    actionVendProduct,
+    blueprintData,
+    materialData,
+    manufacturerSpeed,
+  } = props;
   const blueprintSatisfaction = getProductionSatisfaction(
     blueprintData.item_paths,
     blueprintData.item_amounts,
@@ -68,7 +71,7 @@ export const BlueprintButton = (props, context) => {
   // Condense producability
   const notProduceable = blueprintSatisfaction.some((materialIsProducable:boolean) => materialIsProducable === false);
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
-  const outputs = (blueprintData.item_outputs.length < 2
+  const outputs = (blueprintData.item_names.length < 2
     && blueprintData.create < 2
     && !blueprintData.apply_material) ? null : (
       <>
@@ -105,19 +108,15 @@ export const BlueprintButton = (props, context) => {
   // /datum/manufacture contains no description of its 'contents', so the first item works
   let content_info = blueprintData.item_descriptions[0];
   return (
-    <Stack inline
-      width={18.75}
-      height={5.5}
-      m={0.5}
-    >
+    <Stack inline>
       <Stack.Item>
         <ButtonWithBadge
-          key={blueprintData.name}
           width={16.25}
           height={5.5}
+          key={blueprintData.name}
           imagePath={blueprintData.img}
           disabled={notProduceable}
-          onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
+          onClick={() => actionVendProduct(blueprintData.byondRef)}
         >
           <CenteredText text={truncate(blueprintData.name, 40)} height={5.5} />
         </ButtonWithBadge>
@@ -136,7 +135,7 @@ export const BlueprintButton = (props, context) => {
                 pt={0.7}
                 icon="info"
                 disabled={notProduceable}
-                onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
+                onClick={() => actionVendProduct(blueprintData.byondRef)}
               />
             </Tooltip>
           </Stack.Item>
@@ -151,7 +150,7 @@ export const BlueprintButton = (props, context) => {
                 pt={0.7}
                 icon="gear"
                 disabled={notProduceable}
-                onClick={() => act("product", { "blueprint_ref": blueprintData.byondRef })}
+                onClick={() => actionVendProduct(blueprintData.byondRef)}
               />
             </Tooltip>
           </Stack.Item>

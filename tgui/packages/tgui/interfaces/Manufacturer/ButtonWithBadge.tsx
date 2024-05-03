@@ -5,9 +5,9 @@
  * @license ISC
  */
 
-import { Stack } from "../Stack";
-import { Button } from "../Button";
-import { Image } from "../Image";
+import { Stack } from "./../../components/Stack";
+import { Button } from "./../../components/Button";
+import { Image } from "./../../components/Image";
 import { InfernoNode } from "inferno";
 
 type ButtonWithBadgeProps = {

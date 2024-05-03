@@ -1,8 +1,6 @@
-import { useBackend } from "../../backend";
-import { Button, Divider, LabeledList, Section } from "../../components";
-import { ManufacturerData } from "./type";
-
-const is_set = (bits, bit) => bits & (1 << bit);
+import { Button, Divider, LabeledList, Section } from "./../../components";
+import { MaintenancePanel } from "./type";
+import { is_set } from './../common/bitflag';
 
 const ManufacturerWireData = [
   { name: "Teal", colorName: "teal" },
@@ -11,9 +9,14 @@ const ManufacturerWireData = [
   { name: "Lime", colorName: "lime" },
 ];
 
-export const CollapsibleWireMenu = (props, context) => {
-  const { act } = useBackend<ManufacturerData>(context);
-  const { wirePanel } = props;
+export const CollapsibleWireMenu = (props:MaintenancePanel) => {
+  const {
+    actionWirePulse,
+    actionWireCutOrMend,
+    indicators,
+    wires,
+    wire_bitflags,
+  } = props;
 
   return (
     <Section
@@ -21,7 +24,7 @@ export const CollapsibleWireMenu = (props, context) => {
       title="Maintenance Panel"
     >
       <LabeledList>
-        {wirePanel.wires.map((_, i: number) => (
+        {wires.map((_, i: number) => (
           <LabeledList.Item
             key={i}
             label={ManufacturerWireData[i].name}
@@ -31,14 +34,14 @@ export const CollapsibleWireMenu = (props, context) => {
               width={4}
               key={i}
               content="Pulse"
-              onClick={() => act('wire', { action: "pulse", wire: i+1 })}
+              onClick={() => actionWirePulse(i)}
             />),
             (<Button
               textAlign="center"
               width={4}
               key={i}
-              content={is_set(wirePanel.wire_bitflags, wirePanel.wires[i]-1) ? "Cut" : "Mend"}
-              onClick={() => act("wire", { action: (is_set(wirePanel.wire_bitflags, wirePanel.wires[i]-1) ? "cut" : "mend"), wire: i+1 })}
+              content={is_set(wire_bitflags, wires[i]-1) ? "Cut" : "Mend"}
+              onClick={() => actionWireCutOrMend(i, is_set(wire_bitflags, wires[i]-1))}
             />)]}
           />
         ))}
@@ -48,22 +51,22 @@ export const CollapsibleWireMenu = (props, context) => {
         <LabeledList.Item
           label="Electrification Risk"
         >
-          {wirePanel.indicators.electrified ? "High" : "None"}
+          {indicators.electrified ? "High" : "None"}
         </LabeledList.Item>
         <LabeledList.Item
           label="System Stability"
         >
-          {wirePanel.indicators.malfunctioning ? "Unstable" : "Stable"}
+          {indicators.malfunctioning ? "Unstable" : "Stable"}
         </LabeledList.Item>
         <LabeledList.Item
           label="Inventory"
         >
-          {wirePanel.indicators.hacked ? "Expanded" : "Standard"}
+          {indicators.hacked ? "Expanded" : "Standard"}
         </LabeledList.Item>
         <LabeledList.Item
           label="Power"
         >
-          {wirePanel.indicators.hasPower ? "Sufficient" : "Insufficient"}
+          {indicators.hasPower ? "Sufficient" : "Insufficient"}
         </LabeledList.Item>
       </LabeledList>
     </Section>
