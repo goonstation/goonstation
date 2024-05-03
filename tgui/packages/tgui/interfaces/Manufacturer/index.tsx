@@ -11,10 +11,10 @@ import { toTitleCase } from 'common/string';
 import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
 import { formatMoney } from '../../format';
 import { MaintenancePanel, ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './type';
-import { BlueprintButton } from './blueprintButton';
-import { ProductionCard } from './productionCard';
+import { BlueprintButton } from './BlueprintButton';
+import { ProductionCard } from './ProductionCard';
 import { clamp } from 'common/math';
-import { CollapsibleWireMenu } from './collapsibleWireMenu';
+import { CollapsibleWireMenu } from './CollapsibleWireMenu';
 import { pluralize } from '../common/stringUtils';
 
 const CardInfo = (_, context) => {
