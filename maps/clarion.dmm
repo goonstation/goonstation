@@ -38372,9 +38372,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/bar/auto,
-/obj/machinery/glass_recycler/bar{
-	glass_amt = 20
-	},
+/obj/machinery/glass_recycler/bar,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "uJC" = (
