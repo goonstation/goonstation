@@ -37,12 +37,10 @@ export const ProductionCard = (params:ProductionCardData) => {
     return (
       <Stack.Item>
         <ButtonWithBadge
-          width="100%"
-          height={4.6}
           imagePath={img}
           onClick={() => actionQueueRemove(index)}
         >
-          <CenteredText text={truncate(name, 40)} height={4.6} />
+          <CenteredText text={truncate(name, 40)} />
         </ButtonWithBadge>
       </Stack.Item>
     );
@@ -52,8 +50,6 @@ export const ProductionCard = (params:ProductionCardData) => {
       <Stack>
         <Stack.Item>
           <ButtonWithBadge
-            width={16.5}
-            height={4.6}
             imagePath={img}
             onClick={() => actionQueueRemove(index)}
           >

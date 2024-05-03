@@ -1,6 +1,6 @@
-import { Button, Divider, LabeledList, Section } from "./../../components";
-import { MaintenancePanel } from "./type";
-import { is_set } from './../common/bitflag';
+import { Button, Divider, LabeledList, Section } from "../../../components";
+import { MaintenancePanel } from "../type";
+import { is_set } from '../../common/bitflag';
 
 const ManufacturerWireData = [
   { name: "Teal", colorName: "teal" },
@@ -31,14 +31,12 @@ export const CollapsibleWireMenu = (props:MaintenancePanel) => {
             labelColor={ManufacturerWireData[i].colorName}
             buttons={[(<Button
               textAlign="center"
-              width={4}
               key={i}
               content="Pulse"
               onClick={() => actionWirePulse(i)}
             />),
             (<Button
               textAlign="center"
-              width={4}
               key={i}
               content={is_set(wire_bitflags, wires[i]-1) ? "Cut" : "Mend"}
               onClick={() => actionWireCutOrMend(i, is_set(wire_bitflags, wires[i]-1))}

@@ -1,9 +1,9 @@
-import { Button, LabeledList, Section, Stack, Tooltip } from './../../components';
-import { BlueprintButtonData, ResourceData } from './type';
+import { Button, LabeledList, Section, Stack, Tooltip } from '../../../components';
+import { BlueprintButtonData, ResourceData } from '../type';
 import { round } from 'common/math';
-import { ButtonWithBadge } from './ButtonWithBadge';
-import { CenteredText } from './CenteredText';
-import { truncate } from './../../format';
+import { ButtonWithBadge } from '../ButtonWithBadge';
+import { CenteredText } from '../CenteredText';
+import { truncate } from '../../../format';
 
 const getBlueprintTime = (time, manufacturerSpeed) => {
   return round(time / 10 / manufacturerSpeed, 0.01);
@@ -28,7 +28,7 @@ const getProductionSatisfaction = (
   let availableMaterials:Record<string, number> = {};
   for (let i in pattern_requirements) {
     let required_pattern = pattern_requirements[i];
-    let compatible_material:ResourceData;
+    let compatible_material:ResourceData | undefined;
     // Try to find compatible resource
     for (let resource of materials_stored) {
       if (Object.keys(availableMaterials).find((value:string) => (value === resource.id)) === undefined) {
@@ -111,17 +111,15 @@ export const BlueprintButton = (props:BlueprintButtonData) => {
     <Stack inline>
       <Stack.Item>
         <ButtonWithBadge
-          width={16.25}
-          height={5.5}
           key={blueprintData.name}
           imagePath={blueprintData.img}
           disabled={notProduceable}
           onClick={() => actionVendProduct(blueprintData.byondRef)}
         >
-          <CenteredText text={truncate(blueprintData.name, 40)} height={5.5} />
+          <CenteredText text={truncate(blueprintData.name, 40)} />
         </ButtonWithBadge>
       </Stack.Item>
-      <Stack.Item ml={0.5}>
+      <Stack.Item>
         <Stack vertical>
           <Stack.Item>
             <Tooltip
@@ -129,25 +127,18 @@ export const BlueprintButton = (props:BlueprintButtonData) => {
             >
               <Button
                 align="center"
-                width={2}
-                height={2.625}
-                mb={0.5}
-                pt={0.7}
                 icon="info"
                 disabled={notProduceable}
                 onClick={() => actionVendProduct(blueprintData.byondRef)}
               />
             </Tooltip>
           </Stack.Item>
-          <Stack.Item m={0}>
+          <Stack.Item>
             <Tooltip
               content={content_requirements}
             >
               <Button
                 align="center"
-                width={2}
-                height={2.625}
-                pt={0.7}
                 icon="gear"
                 disabled={notProduceable}
                 onClick={() => actionVendProduct(blueprintData.byondRef)}
