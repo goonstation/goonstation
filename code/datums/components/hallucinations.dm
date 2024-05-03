@@ -3,6 +3,12 @@ TYPEINFO(/datum/component/hallucination/trippy_colors)
 		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts in seconds. -1 for permanent", 30),
 	)
 
+TYPEINFO(/datum/component/hallucination/fake_singulo)
+	initialization_args = list(
+		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts in seconds. -1 for permanent", 30),
+	)
+
+
 TYPEINFO(/datum/component/hallucination/random_sound)
 	initialization_args = list(
 		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts in seconds. -1 for permanent", 30),
@@ -343,6 +349,25 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		else
 			return FALSE //create a new hallucination
 
+
+/// Fake singulo - hallucinate a loose singularity approaching and eating the station
+/datum/component/hallucination/fake_singulo
+	var/obj/fake_singulo/my_singulo = null
+
+	do_mob_tick(mob, mult)
+		if(parent_mob.client && (QDELETED(my_singulo)))
+			var/start_turf = parent_mob.loc
+			my_singulo = new(start_turf,parent_mob)
+
+		..()
+
+	UnregisterFromParent()
+		. = ..()
+		UnregisterSignal(parent, COMSIG_LIVING_LIFE_TICK)
+		if(parent_mob?.client)
+			animate(parent_mob.client, color = null, time = 2 SECONDS, easing = SINE_EASING)
+
+
 //#########################################################
 //                    SUPPORTING CAST
 //#########################################################
@@ -549,9 +574,86 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			for(var/mob/O in oviewers(world.view , my_target))
 				boutput(O, SPAN_ALERT("<B>[my_target] stumbles around.</B>"))
 
+/obj/fake_singulo
+	icon = null
+	icon_state = null
+	var/list/my_image_overrides = list()
+	var/list/eaten_atoms = list()
+	var/mob/my_target = null
+
+/obj/fake_singulo/New(var/loc, var/mob/target)
+	..()
+	SPAWN(60 SECONDS)
+		qdel(src)
+	src.my_target = target
+	var/image/client_image = image(icon = 'icons/effects/64x64.dmi', icon_state = "whole", loc = src)
+	client_image.override = TRUE
+	client_image.plane = PLANE_DEFAULT_NOWARP
+	var/image/lense = image(icon='icons/effects/overlays/lensing.dmi', icon_state="lensing_med_hole", pixel_x = -208, pixel_y = -208, loc = src)
+	lense.plane = PLANE_DISTORTION
+	lense.blend_mode = BLEND_OVERLAY
+	lense.appearance_flags = RESET_ALPHA | RESET_COLOR
+	src.my_image_overrides += client_image
+	src.my_image_overrides += lense
+	target << client_image
+	target << lense
+	process()
+
+/obj/fake_singulo/disposing()
+	if(src.my_image_overrides && my_target?.client)
+		for(var/client_image in src.my_image_overrides)
+			my_target.client?.images -= client_image
+			qdel(client_image)
+	qdel(src.my_image_overrides) //not really necessary, but why not
+	qdel(src.eaten_atoms)
+	. = ..()
 
 
+/obj/fake_singulo/proc/process()
+	var/target_dist = get_dist(src, src.my_target)
+	if(target_dist > 10) //if offscreen by a good amount
+		qdel(src)
+		return
+	else if(target_dist > 5)
+		//oh no you're being pulled into the singularity!
+		if(prob(50))
+			step_towards(src.my_target, src)
 
+	//otherwise, we're pretending to be a singularity
+	if(prob(30))
+		step(src, pick(cardinal))
+
+	//"eat" stuff by overriding its icon with a blank icon state
+	for (var/X in range(3, src))
+		if (!X)
+			continue
+		if (X == src)
+			continue
+
+		var/atom/A = X
+
+		if (A.event_handler_flags & IMMUNE_SINGULARITY)
+			continue
+
+		if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
+			continue
+
+		if (!isarea(X))
+			if(IN_EUCLIDEAN_RANGE(src, X, 1.5))
+				if(X in src.eaten_atoms)
+					continue
+				//this is a thing we're going to eat, so blank client image override for you
+				var/image/blank_image = image(loc = X)
+				blank_image.override = TRUE
+				src.my_image_overrides += blank_image
+				src.eaten_atoms += X
+				src.my_target << blank_image
+
+	SPAWN(1 SECOND)
+		process()
+
+
+///Helper procs
 
 /proc/fake_blood(var/mob/target)
 	var/obj/overlay/O = new/obj/overlay(target.loc)
