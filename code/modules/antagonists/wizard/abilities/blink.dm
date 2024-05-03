@@ -47,6 +47,12 @@
 
 		var/turf/targetturf = locate(targetx, targety, holder.owner.z)
 
+		var/list/turf/passthrough_turfs = raytrace(get_turf(holder.owner), targetturf)
+		for(var/turf/T as anything in passthrough_turfs)
+			if (istype(T, /turf/cordon))
+				boutput(holder.owner, SPAN_ALERT("Your spell can't depart the universe!"))
+				return
+
 		playsound(holder.owner.loc, 'sound/effects/mag_teleport.ogg', 25, 1, -1)
 
 		var/list/turfs = new/list()
