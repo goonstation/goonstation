@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState, useSharedState } from '../../backend';
+import { useBackend, useLocalState } from '../../backend';
 import { BooleanLike } from 'common/react';
 import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
@@ -61,7 +61,6 @@ const CardInfo = (props:CardInfoProps) => {
 
 export const Manufacturer = (_, context) => {
   const { act, data } = useBackend<ManufacturerData>(context);
-  const [repeat, toggleRepeatVar] = useSharedState(context, "repeat", data.repeat);
   const [search, setSearchData] = useLocalState(context, "query", "");
   const [swap, setSwappingMaterial] = useLocalState(context, "swap", null);
   // Define some variables used for the interface
@@ -75,11 +74,6 @@ export const Manufacturer = (_, context) => {
   const actionWirePulse = (index:number) => act('wire', { action: "pulse", wire: index+1 });
   const actionWireCutOrMend = (index:number, is_cut:BooleanLike) => act("wire", { action: (is_cut ? "cut" : "mend"), wire: index+1 });
   const actionVendProduct = (byondRef:string) => act("product", { "blueprint_ref": byondRef });
-
-  let toggleRepeat = () => {
-    act("repeat");
-    toggleRepeatVar(!repeat);
-  };
   let swapPriority = (materialID: string) => {
     if (swap === null) {
       setSwappingMaterial(materialID);
@@ -145,6 +139,7 @@ export const Manufacturer = (_, context) => {
                   >
                     {blueprints_by_category[category].map((blueprint:ManufacturableData, index:number) => (
                       <BlueprintButton
+                        actionVendProduct={actionVendProduct}
                         key={index}
                         blueprintData={blueprint}
                         manufacturerSpeed={data.speed}
@@ -197,7 +192,7 @@ export const Manufacturer = (_, context) => {
                   <LabeledList>
                     <LabeledList.Item
                       label="Repeat"
-                      buttons={<Button icon="repeat" onClick={() => toggleRepeat()}>Toggle Repeat</Button>}
+                      buttons={<Button icon="repeat" onClick={() => act("repeat")}>Toggle Repeat</Button>}
                       textAlign="center"
                     >
                       {data.repeat ? "On" : "Off"}
