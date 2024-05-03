@@ -1,4 +1,3 @@
-
 import { useBackend } from '../../backend';
 import { Button, LabeledList, Section, Stack, Tooltip } from '../../components';
 import { ResourceData } from './type';
