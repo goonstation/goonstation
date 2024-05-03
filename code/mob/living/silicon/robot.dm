@@ -118,6 +118,8 @@
 		if (frame)
 			src.freemodule = frame.freemodule
 			src.frame_material = frame.material
+			if(HAS_ATOM_PROPERY(frame, PROP_ATOM_ROUNDSTART_BORG))
+				APPLY_ATOM_PROPERTY(src, PROP_ATOM_ROUNDSTART_BORG, "borg")
 		if (starter && !(src.dependent || src.shell))
 			var/obj/item/parts/robot_parts/chest/light/PC = new /obj/item/parts/robot_parts/chest/light(src)
 			var/obj/item/cell/supercell/charged/CELL = new /obj/item/cell/supercell/charged(PC)
@@ -294,6 +296,8 @@
 			frame.emagged = src.emagged
 			frame.syndicate = src.syndicate
 			frame.freemodule = src.freemodule
+			if(HAS_ATOM_PROPERTY(src, PROP_ATOM_ROUNDSTART_BORG))
+				APPLY_ATOM_PROPERTY(frame, PROP_ATOM_ROUNDSTART_BORG, "borg")
 
 			src.ghostize()
 			qdel(src)
@@ -2382,6 +2386,10 @@
 				src.set_module(new /obj/item/robot_module/construction_worker(src))
 				if(length(src.upgrades) < src.max_upgrades)
 					src.upgrades += new /obj/item/roboupgrade/visualizer(src)
+
+
+		var/datum/eventRecord/CyborgModuleSelection/cyborgModuleSelectionEvent = new()
+		cyborgModuleSelectionEvent.buildAndSend(src, mod)
 
 		var/datum/robot_cosmetic/C = null
 		var/datum/robot_cosmetic/M = null
