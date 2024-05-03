@@ -11,12 +11,13 @@ import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
 import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
 import { formatMoney } from '../../format';
-import { CardInfoProps, ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './temp/type';
-import { BlueprintButton } from './t/BlueprintButton';
+import { CardInfoProps, ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './type';
+import { BlueprintButton } from './BlueprintButton';
 import { ProductionCard } from './ProductionCard';
 import { clamp } from 'common/math';
-import { CollapsibleWireMenu } from './t/CollapsibleWireMenu';
+import { CollapsibleWireMenu } from './CollapsibleWireMenu';
 import { pluralize } from '../common/stringUtils';
+import { BLUEPRINT_WINDOW_WIDTH } from './constant';
 
 const CardInfo = (props:CardInfoProps) => {
   const {
@@ -86,11 +87,11 @@ export const Manufacturer = (_, context) => {
       setSwappingMaterial(null);
     }
   };
-  const all_blueprints:Record<string, ManufacturableData[]> = {
-    "available": data.available_blueprints,
-    "download": data.downloaded_blueprints,
-    "drive_recipes": data.recipe_blueprints,
-    "hidden": data.hidden_blueprints,
+  const all_blueprints = {
+    available: data.available_blueprints,
+    download: data.downloaded_blueprints,
+    drive_recipes: data.recipe_blueprints,
+    hidden: data.hidden_blueprints,
   };
   const blueprint_types = Object.keys(all_blueprints);
   /*
@@ -118,7 +119,6 @@ export const Manufacturer = (_, context) => {
     }
   }
 
-
   // Get a ManufacturableData from a QueueBlueprint using its type, category, and name.
   let queueBlueprintRefs = data.queue.map((queued:QueueBlueprint) =>
     blueprints_by_category[queued.category].find((key) => (key.name === queued.name))
@@ -128,7 +128,7 @@ export const Manufacturer = (_, context) => {
     <Window width={1200} height={600} title={data.fabricator_name}>
       <Window.Content scrollable>
         <Stack>
-          <Stack.Item grow>
+          <Stack.Item grow width={BLUEPRINT_WINDOW_WIDTH}>
             <Section>
               {data.all_categories.map((category:string) => (
                 blueprints_by_category[category].length > 0 && (

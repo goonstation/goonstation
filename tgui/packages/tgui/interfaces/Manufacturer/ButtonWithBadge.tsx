@@ -11,8 +11,8 @@ import { Image } from "./../../components/Image";
 import { InfernoNode } from "inferno";
 
 type ButtonWithBadgeProps = {
-  width: number | string,
-  height: number | string,
+  width?: number | string,
+  height?: number | string,
   noImageShadow?: boolean,
   imagePath: string;
   children?: InfernoNode;
@@ -41,8 +41,8 @@ export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
     <Button
       opacity={opacity}
       onClick={onClick}
-      width={width}
-      height={height}
+      width={width || "100%"}
+      height={height || "100%"}
       p={0}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -52,7 +52,7 @@ export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
         <Stack.Item>
           <Image
             verticalAlign="top"
-            height={height}
+            height={height || "100%"}
             pixelated
             src={imagePath}
             backgroundColor={noImageShadow ? null : "rgba(0,0,0,0.2)"}

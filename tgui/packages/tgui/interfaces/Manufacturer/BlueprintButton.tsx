@@ -1,9 +1,17 @@
-import { Button, LabeledList, Section, Stack, Tooltip } from '../../../components';
-import { BlueprintButtonData, ResourceData } from '../type';
+/**
+ * @file
+ * @copyright 2024
+ * @author Romayne (https://github.com/MeggalBozale)
+ * @license ISC
+ */
+
+import { Button, Icon, LabeledList, Section, Stack, Tooltip } from '../../components';
+import { BlueprintButtonData, ResourceData } from './type';
 import { round } from 'common/math';
-import { ButtonWithBadge } from '../ButtonWithBadge';
-import { CenteredText } from '../CenteredText';
-import { truncate } from '../../../format';
+import { ButtonWithBadge } from './ButtonWithBadge';
+import { CenteredText } from './CenteredText';
+import { truncate } from '../../format';
+import { BLUEPRINT_BUTTON_HEIGHT, BLUEPRINT_BUTTON_MARGINS_HORIZONTAL, BLUEPRINT_BUTTON_MARGINS_VERTICAL, BLUEPRINT_BUTTON_WIDTH, BLUEPRINT_MINIBUTTON_ICON_SIZE, BLUEPRINT_MINIBUTTON_INBETWEEN_SPACING, BLUEPRINT_MINIBUTTON_WIDTH } from './constant';
 
 const getBlueprintTime = (time, manufacturerSpeed) => {
   return round(time / 10 / manufacturerSpeed, 0.01);
@@ -100,40 +108,70 @@ export const BlueprintButton = (props:BlueprintButtonData) => {
   let content_info = blueprintData.item_descriptions[0];
   return (
     <Stack inline>
-      <Stack.Item>
+      <Stack.Item
+        ml={BLUEPRINT_BUTTON_MARGINS_HORIZONTAL}
+        my={BLUEPRINT_BUTTON_MARGINS_VERTICAL}
+      >
         <ButtonWithBadge
+          width={BLUEPRINT_BUTTON_WIDTH}
+          height={BLUEPRINT_BUTTON_HEIGHT}
           key={blueprintData.name}
           imagePath={blueprintData.img}
           disabled={notProduceable}
           onClick={() => actionVendProduct(blueprintData.byondRef)}
         >
-          <CenteredText text={truncate(blueprintData.name, 40)} />
+          <CenteredText
+            height={BLUEPRINT_BUTTON_HEIGHT}
+            text={truncate(blueprintData.name, 40)}
+          />
         </ButtonWithBadge>
       </Stack.Item>
-      <Stack.Item>
-        <Stack vertical>
-          <Stack.Item>
+      <Stack.Item
+        mr={BLUEPRINT_BUTTON_MARGINS_HORIZONTAL}
+      >
+        <Stack vertical
+          my={BLUEPRINT_BUTTON_MARGINS_VERTICAL}
+        >
+          <Stack.Item
+            mb={BLUEPRINT_MINIBUTTON_INBETWEEN_SPACING}
+          >
             <Tooltip
               content={content_info}
             >
               <Button
+                width={BLUEPRINT_MINIBUTTON_WIDTH}
+                height={(BLUEPRINT_BUTTON_HEIGHT-BLUEPRINT_MINIBUTTON_INBETWEEN_SPACING)/2}
                 align="center"
-                icon="info"
                 disabled={notProduceable}
                 onClick={() => actionVendProduct(blueprintData.byondRef)}
-              />
+                py={BLUEPRINT_MINIBUTTON_ICON_SIZE/2}
+              >
+                <Icon
+                  name="info"
+                  size={BLUEPRINT_MINIBUTTON_ICON_SIZE}
+                />
+              </Button>
             </Tooltip>
           </Stack.Item>
-          <Stack.Item>
+          <Stack.Item
+            mt={BLUEPRINT_MINIBUTTON_INBETWEEN_SPACING}
+          >
             <Tooltip
               content={content_requirements}
             >
               <Button
+                width={BLUEPRINT_MINIBUTTON_WIDTH}
+                height={(BLUEPRINT_BUTTON_HEIGHT-BLUEPRINT_MINIBUTTON_INBETWEEN_SPACING)/2}
                 align="center"
-                icon="gear"
                 disabled={notProduceable}
                 onClick={() => actionVendProduct(blueprintData.byondRef)}
-              />
+                py={BLUEPRINT_MINIBUTTON_ICON_SIZE/2}
+              >
+                <Icon
+                  name="gear"
+                  size={BLUEPRINT_MINIBUTTON_ICON_SIZE}
+                />
+              </Button>
             </Tooltip>
           </Stack.Item>
         </Stack>

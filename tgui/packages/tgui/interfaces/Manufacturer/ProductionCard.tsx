@@ -5,8 +5,8 @@
  * @license ISC
  */
 
-import { truncate } from './../../format';
-import { Button, Stack } from "./../../components";
+import { truncate } from '../../format';
+import { Button, Stack } from "../../components";
 import { ButtonWithBadge } from "./ButtonWithBadge";
 import { CenteredText } from "./CenteredText";
 import { ProductionCardData } from "./type";
@@ -40,7 +40,9 @@ export const ProductionCard = (params:ProductionCardData) => {
           imagePath={img}
           onClick={() => actionQueueRemove(index)}
         >
-          <CenteredText text={truncate(name, 40)} />
+          <CenteredText
+            text={truncate(name, 40)}
+          />
         </ButtonWithBadge>
       </Stack.Item>
     );

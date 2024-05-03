@@ -1,6 +1,13 @@
-import { Button, Divider, LabeledList, Section } from "../../../components";
-import { MaintenancePanel } from "../type";
-import { is_set } from '../../common/bitflag';
+/**
+ * @file
+ * @copyright 2024
+ * @author Romayne (https://github.com/MeggalBozale)
+ * @license ISC
+ */
+
+import { Button, Divider, LabeledList, Section } from "../../components";
+import { MaintenancePanel } from "./type";
+import { is_set } from '../common/bitflag';
 
 const ManufacturerWireData = [
   { name: "Teal", colorName: "teal" },
