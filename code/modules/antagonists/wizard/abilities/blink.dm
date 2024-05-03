@@ -47,6 +47,10 @@
 
 		var/turf/targetturf = locate(targetx, targety, holder.owner.z)
 
+		if(isrestrictedz(holder.owner.z) && !istype(get_area(targetturf), /area/wizard_station))
+			boutput(holder.owner, SPAN_ALERT("It's too dangerous to blink there!"))
+			return
+
 		playsound(holder.owner.loc, 'sound/effects/mag_teleport.ogg', 25, 1, -1)
 
 		var/list/turfs = new/list()
