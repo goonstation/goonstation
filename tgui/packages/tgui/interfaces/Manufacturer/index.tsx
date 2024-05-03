@@ -73,7 +73,7 @@ export const Manufacturer = (_, context) => {
   const actionQueueTogglePause = (mode:string) => act("pause_toggle", { "action": (mode === "working") ? "pause" : "continue" });
   const actionWirePulse = (index:number) => act('wire', { action: "pulse", wire: index+1 });
   const actionWireCutOrMend = (index:number, is_cut:BooleanLike) => act("wire", { action: (is_cut ? "cut" : "mend"), wire: index+1 });
-  const actionVendProduct = (byondRef:string) => act("product", { "blueprint_ref": byondRef });
+  const actionVendProduct = (byondRef:string) => act("request_product", { "blueprint_ref": byondRef });
   let swapPriority = (materialID: string) => {
     if (swap === null) {
       setSwappingMaterial(materialID);

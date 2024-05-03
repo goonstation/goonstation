@@ -511,7 +511,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return
 
 		switch(action)
-			if ("product")
+			if ("request_product")
 				if (ON_COOLDOWN(src, "product", 1 DECI SECOND))
 					boutput(usr, SPAN_ALERT("Slow down!"))
 					return
