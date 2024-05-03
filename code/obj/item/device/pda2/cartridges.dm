@@ -381,12 +381,13 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 	hop
 		name = "\improper CaterCoordinate + cartridge"
 		desc = "For everything a person managing a civilian department would need if they actually were going to do that, as if."
-		icon_state = "cart-records"
+		icon_state = "cart-hydro"
 		file_amount = 64
 
 		New()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
+			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 			src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
 			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
