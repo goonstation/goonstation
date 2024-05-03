@@ -6,7 +6,6 @@
  */
 
 import { useBackend, useLocalState } from '../../backend';
-import { BooleanLike } from 'common/react';
 import { Window } from '../../layouts';
 import { toTitleCase } from 'common/string';
 import { Button, Collapsible, Divider, Input, LabeledList, ProgressBar, Section, Slider, Stack } from '../../components';
@@ -17,7 +16,8 @@ import { ProductionCard } from './ProductionCard';
 import { clamp } from 'common/math';
 import { CollapsibleWireMenu } from './CollapsibleWireMenu';
 import { pluralize } from '../common/stringUtils';
-import { BLUEPRINT_WINDOW_WIDTH } from './constant';
+import { BLUEPRINT_WINDOW_WIDTH, MANUDRIVE_UNLIMITED } from './constant';
+import { is_set } from '../common/bitflag';
 
 const CardInfo = (props:CardInfoProps) => {
   const {
@@ -66,14 +66,14 @@ export const Manufacturer = (_, context) => {
   const [swap, setSwappingMaterial] = useLocalState(context, "swap", null);
   // Define some variables used for the interface
   const blueprintWindowWidthPercentage = "80%";
-  const manudriveIsUnlimited = (value:any) => value === -1;
+  const manudriveIsUnlimited = (value:any) => value === MANUDRIVE_UNLIMITED;
   // Define some actions for the interface and its children
   const actionCardLogout = () => act("card", { "remove": true });
   const actionCardLogin = () => act("card", { "scan": true });
   const actionQueueRemove = (index:number) => act("remove", { "index": index+1 });
   const actionQueueTogglePause = (mode:string) => act("pause_toggle", { "action": (mode === "working") ? "pause" : "continue" });
   const actionWirePulse = (index:number) => act('wire', { action: "pulse", wire: index+1 });
-  const actionWireCutOrMend = (index:number, is_cut:BooleanLike) => act("wire", { action: (is_cut ? "cut" : "mend"), wire: index+1 });
+  const actionWireCutOrMend = (index:number) => act("wire", { action: ((is_set(data.wire_bitflags, data.wires[index]-1)) ? "cut" : "mend"), wire: index+1 });
   const actionVendProduct = (byondRef:string) => act("request_product", { "blueprint_ref": byondRef });
   let swapPriority = (materialID: string) => {
     if (swap === null) {

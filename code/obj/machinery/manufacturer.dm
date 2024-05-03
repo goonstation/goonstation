@@ -353,7 +353,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"hidden_blueprints" = blueprints_as_list(src.hidden, user),
 			"downloaded_blueprints" = blueprints_as_list(src.download, user),
 			"recipe_blueprints" = blueprints_as_list(src.drive_recipes, user),
-			"wires" = APCIndexToWireColor,
+			"wires" = APCWireColorToIndex,
 			"rockboxes" = rockboxes_as_list(),
 			"manudrive" = list ("name" = "[src.manudrive]",
 							   	"limit" = src.manudrive?.fablimit,

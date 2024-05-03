@@ -48,7 +48,7 @@ export const CollapsibleWireMenu = (props:MaintenancePanel) => {
                   textAlign="center"
                   key={i}
                   content={is_set(wire_bitflags, wires[i]-1) ? "Cut" : "Mend"}
-                  onClick={() => actionWireCutOrMend(i, is_set(wire_bitflags, wires[i]-1))}
+                  onClick={() => actionWireCutOrMend(i)}
                 />
               </>
             }

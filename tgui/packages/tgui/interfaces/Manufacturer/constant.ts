@@ -24,4 +24,5 @@ export const BLUEPRINT_WINDOW_WIDTH = "55%";
 // The vertical margin between settings elements.
 export const SETTINGS_WINDOW_MARGINS_VERTICAL = 1;
 
-
+// Manudrives use a non-infinite value to specify there is unlimited uses, improve clarity for now
+export const MANUDRIVE_UNLIMITED = -1;

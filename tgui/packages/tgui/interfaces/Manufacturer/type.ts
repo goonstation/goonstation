@@ -93,7 +93,7 @@ export type OreData = {
 
 export type MaintenancePanel = {
   actionWirePulse: (index:number) => void
-  actionWireCutOrMend: (index:number, is_cut:BooleanLike) => void
+  actionWireCutOrMend: (index:number) => void
   indicators: WireIndicatorsData;
   wires: number[];
   wire_bitflags:number;
