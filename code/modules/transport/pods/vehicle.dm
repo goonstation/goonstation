@@ -509,27 +509,31 @@
 		var/damage = round(P.power, 1.0)
 
 		var/hitsound = null
-		switch(P.proj_data.damage_type)
-			if(D_KINETIC)
-				src.health -= damage/1.7
-				hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
-			if(D_PIERCING)
-				src.health -= damage/1
-				hitsound = 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
-			if(D_ENERGY)
-				src.health -= damage/1.5
-				hitsound = 'sound/impact_sounds/Energy_Hit_3.ogg'
-			if(D_SLASHING)
-				src.health -= damage/2
-				hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
-			if(D_BURNING)
-				src.material_trigger_on_temp(5000)
-				src.health -= damage/3
-				hitsound = 'sound/items/Welder.ogg'
-			if(D_SPECIAL) //blob
-				src.health -= damage
-				hitsound = 'sound/impact_sounds/Slimy_Hit_2.ogg'
-		checkhealth()
+
+		if(istype(P.proj_data, /datum/projectile/bullet/foamdart)) // foam darts shouldn't hurt
+			hitsound = 'sound/impact_sounds/Glass_Hit_1.ogg'
+		else
+			switch(P.proj_data.damage_type)
+				if(D_KINETIC)
+					src.health -= damage/1.7
+					hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
+				if(D_PIERCING)
+					src.health -= damage/1
+					hitsound = 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
+				if(D_ENERGY)
+					src.health -= damage/1.5
+					hitsound = 'sound/impact_sounds/Energy_Hit_3.ogg'
+				if(D_SLASHING)
+					src.health -= damage/2
+					hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
+				if(D_BURNING)
+					src.material_trigger_on_temp(5000)
+					src.health -= damage/3
+					hitsound = 'sound/items/Welder.ogg'
+				if(D_SPECIAL) //blob
+					src.health -= damage
+					hitsound = 'sound/impact_sounds/Slimy_Hit_2.ogg'
+			checkhealth()
 		if(P.proj_data && P.proj_data.disruption) //ZeWaka: Fix for null.disruption
 			src.disrupt(P.proj_data.disruption, P)
 
