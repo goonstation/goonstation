@@ -6538,12 +6538,6 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
-"ayK" = (
-/obj/stool/chair/comfy{
-	dir = 1
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/cafeteria)
 "ayM" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet{
@@ -6589,6 +6583,11 @@
 /obj/machinery/vending/alcohol/with_ammo{
 	dir = 8;
 	pixel_x = 8
+	},
+/obj/decal/poster/wallsign/fire{
+	desc = "Please remember to drink responsibly.";
+	name = "MIXOLOGY HAZARD";
+	pixel_x = 32
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
@@ -7107,6 +7106,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/stool/chair/comfy{
+	dir = 1
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "aAq" = (
@@ -7136,7 +7138,7 @@
 	dir = 8
 	},
 /obj/item/storage/wall{
-	spawn_contents = list(/obj/item/storage/box/fruit_wedges,/obj/item/storage/box/cocktail_doodads,/obj/item/storage/box/cocktail_umbrellas,/obj/item/storage/box/glassbox,/obj/item/hand_labeler,/obj/item/storage/firstaid/toxin,/obj/item/device/reagentscanner,/obj/item/reagent_containers/dropper,/obj/item/reagednt_containers/dropper/mechanical,/obj/item/storage/box/ic_cones=2,/obj/item/storage/toolbox/emergency);
+	spawn_contents = list(/obj/item/storage/box/fruit_wedges,/obj/item/storage/box/cocktail_doodads,/obj/item/storage/box/cocktail_umbrellas,/obj/item/storage/box/glassbox,/obj/item/hand_labeler,/obj/item/storage/firstaid/toxin,/obj/item/device/reagentscanner,/obj/item/reagent_containers/dropper,/obj/item/reagent_containers/dropper/mechanical,/obj/item/storage/box/ic_cones=2,/obj/item/storage/toolbox/emergency);
 	pixel_x = 32;
 	dir = 8
 	},
@@ -57898,11 +57900,6 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
-	},
-/obj/decal/poster/wallsign/fire{
-	desc = "Please remember to drink responsibly.";
-	name = "MIXOLOGY HAZARD";
-	pixel_x = -32
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/crew_quarters/baroffice)
@@ -112541,8 +112538,8 @@ ase
 atv
 auK
 avW
+avW
 inZ
-ayK
 aAp
 aBP
 aDb
