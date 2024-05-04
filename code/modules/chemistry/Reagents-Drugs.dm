@@ -322,11 +322,11 @@ datum
 				//pretty colors
 				M.AddComponent(/datum/component/hallucination/trippy_colors, timeout=10)
 
-				//get attacked
+			//get attacked
 				if(prob(60)) //monkey mode
-					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=monkey_images, name_list=monkey_names, attacker_prob=20, max_attackers=3)
+					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=monkey_images, name_list=monkey_names, attacker_prob=4, max_attackers=1)
 				else
-					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=null, name_list=null, attacker_prob=20, max_attackers=3)
+					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=null, name_list=null, attacker_prob=4, max_attackers=1)
 
 				//THE VOICES GET LOUDER
 				M.AddComponent(/datum/component/hallucination/random_sound, timeout=10, sound_list=src.halluc_sounds, sound_prob=5)
@@ -377,7 +377,8 @@ datum
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 5)
 				var/image/imagekey = pick(bee_halluc)
-				M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(imagekey), name_list=bee_halluc[imagekey], attacker_prob=10)
+				if()
+				M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(imagekey), name_list=bee_halluc[imagekey], attacker_prob=7, max_attackers = 1)
 				if (probmult(12))
 					M.visible_message(pick("<b>[M]</b> makes a buzzing sound.", "<b>[M]</b> buzzes."),pick("BZZZZZZZZZZZZZZZ", SPAN_ALERT("<b>THE BUZZING GETS LOUDER</b>"), SPAN_ALERT("<b>THE BUZZING WON'T STOP</b>")))
 				if (probmult(15))
