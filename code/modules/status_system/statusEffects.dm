@@ -878,6 +878,27 @@
 					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 				. = ..()
 
+		locked
+			id = "locked"
+			name = "Paralyzed" //I'm going to scream
+			desc = "You are completely paralyzed."
+			unique = 1
+			maxDuration = 30 SECONDS
+
+			onAdd(optional=null)
+				. = ..()
+				if (ismob(owner) && !QDELETED(owner))
+					var/mob/mob_owner = owner
+					APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+					APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTTURN, src.type)
+
+			onRemove()
+				if (ismob(owner) && !QDELETED(owner))
+					var/mob/mob_owner = owner
+					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTTURN, src.type)
+				. = ..()
+
 		dormant
 			id = "dormant"
 			name = "Dormant"

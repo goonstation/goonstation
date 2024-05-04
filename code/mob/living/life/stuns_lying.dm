@@ -25,7 +25,7 @@
 			if (C?.in_fakedeath)
 				changeling_fakedeath = TRUE
 
-			if (statusList["paralysis"] || statusList["stunned"] || statusList["weakened"] || statusList["pinned"] || changeling_fakedeath || must_lie) //Stunned etc.
+			if (statusList["paralysis"] || statusList["stunned"] || statusList["weakened"] || statusList["pinned"] || statusList["locked"] || changeling_fakedeath || must_lie) //Stunned etc.
 				var/setStat = owner.stat
 				var/oldStat = owner.stat
 				if (statusList["stunned"])
