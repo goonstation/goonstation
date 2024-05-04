@@ -47577,6 +47577,10 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"kmo" = (
+/obj/stool,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "kms" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window/eastright{
@@ -57824,6 +57828,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
+"sgN" = (
+/obj/machinery/weapon_stand/phaser_rack,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "shp" = (
 /obj/table/auto,
 /obj/cable{
@@ -95963,7 +95971,7 @@ gsU
 nxc
 act
 acV
-adE
+sgN
 adE
 adE
 adE
@@ -116214,7 +116222,7 @@ alg
 jwh
 alg
 rqj
-auR
+kmo
 qQK
 uQK
 ppQ
