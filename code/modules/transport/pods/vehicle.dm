@@ -554,32 +554,28 @@
 		qdel(P)
 		return
 
-	proc/disrupt(var/disruption as num, var/obj/projectile/P)
-		if(disruption)
-			playsound(src.loc, pick('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg', 'sound/effects/electric_shock.ogg', 'sound/effects/elec_bzzz.ogg'), 50, 1)
-			if(pilot)
-				boutput(src.pilot, "[ship_message("WARNING! Electrical system disruption detected!")]")
-			//if (P)
-			//	for (var/mob/M in src)
-			//		M.bullet_act_indirect(P)
-			var/chance = disruption * 1
-			for(var/obj/item/shipcomponent/S in src.components)
-				var/my_chance = chance
-				if (istype(S, /obj/item/shipcomponent/engine))
-					my_chance += 40
+	proc/disrupt(disruption, obj/projectile/P)
+		if(disruption <= 0 || !length(src.components))
+			return
+		playsound(src.loc, pick('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg', 'sound/effects/electric_shock.ogg', 'sound/effects/elec_bzzz.ogg'), 50, 1)
+		if(pilot)
+			boutput(src.pilot, "[ship_message("WARNING! Electrical system disruption detected!")]")
 
-				if(prob(my_chance))
-					if (istype(S, /obj/item/shipcomponent/engine)) //dont turn off engine thats annoying. instead ddisable the wormhole func!!
-						var/obj/item/shipcomponent/engine/E = S
-						if (E.ready)
-							E.ready = 0
-							E.ready()
-					else
-						S.deactivate()
+		var/obj/item/shipcomponent/S = pick(src.components)
+		if (istype(S, /obj/item/shipcomponent/engine))
+			disruption += 40
 
-					chance -= 25
-					if (chance <= 0)
-						return
+		if(prob(disruption))
+			if (istype(S, /obj/item/shipcomponent/engine)) //dont turn off engine thats annoying. instead ddisable the wormhole func!!
+				var/obj/item/shipcomponent/engine/E = S
+				if (E.ready)
+					E.ready = 0
+					E.ready()
+			else
+				S.deactivate()
+				S.disrupted = TRUE
+				SPAWN(2 SECONDS)
+					S.disrupted = FALSE
 
 	emp_act()
 		src.disrupt(10)
