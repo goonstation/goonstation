@@ -39,9 +39,9 @@ A.UpdateOverlays(null, "hat",0,1) 	//Removes the overlay in the "hat" slot, but 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Usage:	AddOverlays(var/image/I, var/key, var/force=0)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Handles updating existing overlays and adding new overlays
+Handles updating existing overlays and adding new overlays.
 
-I		=	image that you want to add to the atom's overlays (null to clear)
+I		=	image that you want to add to the atom's overlays (assumed to not be null)
 key		=	which "slot" do you want the image to go in
 force	=	Don't care if there is an existing image with the same details, update anyway. Can be useful if the image to be added is a composite with several overlays of its own.
 
@@ -198,14 +198,13 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 	if(isnull(key))
 		CRASH("AddOverlays called without a key.")
 	LAZYLISTINIT(src.overlay_refs)
+	ASSERT(I)
 
 	var/list/prev_data
 	//List to store info about the last state of the icon
 	prev_data = overlay_refs[key]
-	if(isnull(prev_data) && I) //Ok, we don't have previous data, but we will add an overlay
+	if(isnull(prev_data)) //Ok, we don't have previous data, but we will add an overlay
 		prev_data = new /list(P_ILEN)
-	else
-		return 0 // no image to add and no prev data
 
 	var/hash = ref(I.appearance)
 	var/image/prev_overlay = prev_data[P_IMAGE] //overlay_refs[key]
