@@ -377,7 +377,6 @@ datum
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 5)
 				var/image/imagekey = pick(bee_halluc)
-				if()
 				M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(imagekey), name_list=bee_halluc[imagekey], attacker_prob=7, max_attackers = 1)
 				if (probmult(12))
 					M.visible_message(pick("<b>[M]</b> makes a buzzing sound.", "<b>[M]</b> buzzes."),pick("BZZZZZZZZZZZZZZZ", SPAN_ALERT("<b>THE BUZZING GETS LOUDER</b>"), SPAN_ALERT("<b>THE BUZZING WON'T STOP</b>")))
