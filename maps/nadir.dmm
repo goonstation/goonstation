@@ -7846,21 +7846,13 @@
 /area/station/maintenance/southwest)
 "dAz" = (
 /obj/table/auto,
-/obj/item/storage/box/cocktail_doodads{
-	pixel_x = 6;
-	pixel_y = 17
-	},
-/obj/item/storage/box/fruit_wedges{
-	pixel_x = -4;
-	pixel_y = 10
-	},
-/obj/item/storage/box/cocktail_umbrellas{
-	pixel_x = 6;
-	pixel_y = 3
-	},
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/item/storage/box/beer{
+	pixel_y = 6;
+	pixel_x = 3
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
@@ -11796,12 +11788,7 @@
 /obj/item/reagent_containers/food/drinks/juicer{
 	pixel_y = 5
 	},
-/obj/item/storage/box/fruit_wedges{
-	pixel_x = 6
-	},
-/obj/item/storage/box/beer{
-	pixel_x = -6
-	},
+/obj/item/storage/box/fruit_wedges,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "fpk" = (
@@ -18202,17 +18189,9 @@
 	name = "Drop Capsule"
 	})
 "hLA" = (
-/obj/storage/crate{
-	name = "Cone Crate"
+/obj/machinery/chem_master{
+	dir = 8
 	},
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/reagent_containers/food/snacks/condiment/chocchips,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "hLN" = (
@@ -27148,13 +27127,15 @@
 /area/station/hallway/primary/northeast)
 "lsm" = (
 /obj/table/auto,
-/obj/item/storage/box/glassbox{
-	pixel_x = 6;
-	pixel_y = 10
+/obj/item/gun/russianrevolver{
+	pixel_y = -9
 	},
-/obj/item/gun/russianrevolver,
 /obj/machinery/phone/wall{
 	pixel_y = 32
+	},
+/obj/item/reagent_containers/food/drinks/eggnog{
+	pixel_x = 5;
+	pixel_y = 13
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
@@ -31883,6 +31864,7 @@
 	pixel_x = 5;
 	pixel_y = 13
 	},
+/obj/item/reagent_containers/food/snacks/condiment/chocchips,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "nnN" = (
@@ -39682,9 +39664,6 @@
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
-	},
-/obj/machinery/chem_master{
-	dir = 8
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
@@ -49392,7 +49371,6 @@
 /turf/simulated/floor,
 /area/pasiphae/bridge)
 "veT" = (
-/obj/item/storage/firstaid/toxin,
 /obj/item/device/reagentscanner{
 	pixel_x = 8;
 	pixel_y = -2
