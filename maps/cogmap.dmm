@@ -47577,10 +47577,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"kmo" = (
-/obj/stool,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "kms" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window/eastright{
@@ -116222,7 +116218,7 @@ alg
 jwh
 alg
 rqj
-kmo
+auR
 qQK
 uQK
 ppQ
