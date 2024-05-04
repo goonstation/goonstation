@@ -884,6 +884,7 @@
 			desc = "You are completely paralyzed."
 			unique = 1
 			maxDuration = 30 SECONDS
+			icon_state = "locked"
 
 			onAdd(optional=null)
 				. = ..()
