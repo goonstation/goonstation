@@ -307,7 +307,11 @@ ABSTRACT_TYPE(/datum/game_mode)
 				readied_count++
 			else
 				unreadied_count++
+#ifdef RP_MODE
+	var/total = readied_count + (unreadied_count/4)
+#else
 	var/total = readied_count + (unreadied_count/2)
+#endif
 	if (loud)
 		logTheThing(LOG_GAMEMODE, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
 	return total
