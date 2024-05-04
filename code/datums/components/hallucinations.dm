@@ -378,7 +378,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			if(bad_turf_count >= 10)
 				//failed to spawn, call that a runtime cos it's weird
 				throw EXCEPTION("Failed to find a valid turf for fake singulo hallucination. That's weird, someone should investigate that. Hallucinator: [parent_mob] loc: [parent_mob?.loc]")
-			my_singulo = new(start_turf,parent_mob)
+			my_singulo = new(start_turf,parent_mob,ttl)
 
 		..()
 
@@ -612,9 +612,9 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	var/spaget_count = 0
 	var/right_spinning = 0
 
-/obj/fake_singulo/New(var/loc, var/mob/target)
+/obj/fake_singulo/New(var/loc, var/mob/target, var/ttl = 60 SECONDS)
 	..()
-	SPAWN(60 SECONDS)
+	SPAWN(ttl)
 		qdel(src)
 	src.right_spinning = prob(50)
 	src.my_target = target
