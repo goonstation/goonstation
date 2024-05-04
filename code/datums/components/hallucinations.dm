@@ -349,14 +349,35 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		else
 			return FALSE //create a new hallucination
 
+//#########################################################
+//                     FAKE SINGULO
+//#########################################################
 
-/// Fake singulo - hallucinate a loose singularity approaching and eating the station
+/// Fake singulo - hallucinate a loose singularity approaching you and eating the station
 /datum/component/hallucination/fake_singulo
 	var/obj/fake_singulo/my_singulo = null
 
 	do_mob_tick(mob, mult)
-		if(parent_mob.client && (QDELETED(my_singulo)))
-			var/start_turf = parent_mob.loc
+		if(parent_mob.client && (QDELETED(my_singulo)) && prob(50))
+			//pick a turf at the edge of the player's screen. Either all the way left/right + rand up/down, or all the way up/down + rand left/right
+			var/start_turf = null
+			var/bad_turf_count = 0
+			var/viewsize = parent_mob.client.view
+			if(!isnum(viewsize))
+				viewsize = splittext(viewsize,"x")
+				viewsize[1] = round(text2num(viewsize[1])/2)+1
+				viewsize[2] = round(text2num(viewsize[2])/2)+1
+			else
+				viewsize = round(viewsize/2)+1
+				viewsize = list(viewsize, viewsize)
+			while(isnull(start_turf) && bad_turf_count < 10) //just in case we pick an invalid turf a bunch, don't hang the server
+				var/x_offset = prob(50) ? (prob(50) ? -viewsize[1] : viewsize[1]) : rand(-viewsize[1],viewsize[1])
+				var/y_offset = abs(x_offset) != viewsize[1] ? (prob(50) ? -viewsize[2] : viewsize[2]) : rand(-viewsize[2],viewsize[2])
+				start_turf = locate(parent_mob.x + x_offset, parent_mob.y + y_offset, parent_mob.z)
+				bad_turf_count++
+			if(bad_turf_count >= 10)
+				//failed to spawn, call that a runtime cos it's weird
+				throw EXCEPTION("Failed to find a valid turf for fake singulo hallucination. That's weird, someone should investigate that. Hallucinator: [parent_mob] loc: [parent_mob?.loc]")
 			my_singulo = new(start_turf,parent_mob)
 
 		..()
@@ -364,9 +385,14 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	UnregisterFromParent()
 		. = ..()
 		UnregisterSignal(parent, COMSIG_LIVING_LIFE_TICK)
-		if(parent_mob?.client)
-			animate(parent_mob.client, color = null, time = 2 SECONDS, easing = SINE_EASING)
+		if(parent_mob?.client && (!QDELETED(my_singulo)))
+			qdel(my_singulo)
 
+
+
+	CheckDupeComponent(timeout)
+		..()
+		return TRUE //only one of these please, just reset timeout
 
 //#########################################################
 //                    SUPPORTING CAST
@@ -575,16 +601,22 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 				boutput(O, SPAN_ALERT("<B>[my_target] stumbles around.</B>"))
 
 /obj/fake_singulo
+	name = "gravitational singularity"
+	desc = "Perhaps the densest thing in existence, except for you."
 	icon = null
 	icon_state = null
+	density = 0
 	var/list/my_image_overrides = list()
 	var/list/eaten_atoms = list()
 	var/mob/my_target = null
+	var/spaget_count = 0
+	var/right_spinning = 0
 
 /obj/fake_singulo/New(var/loc, var/mob/target)
 	..()
 	SPAWN(60 SECONDS)
 		qdel(src)
+	src.right_spinning = prob(50)
 	src.my_target = target
 	var/image/client_image = image(icon = 'icons/effects/64x64.dmi', icon_state = "whole", loc = src)
 	client_image.override = TRUE
@@ -611,10 +643,10 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 /obj/fake_singulo/proc/process()
 	var/target_dist = get_dist(src, src.my_target)
-	if(target_dist > 10) //if offscreen by a good amount
+	if(target_dist > 20) //if offscreen by a good amount
 		qdel(src)
 		return
-	else if(target_dist > 5)
+	else if(target_dist < 6)
 		//oh no you're being pulled into the singularity!
 		if(prob(50))
 			step_towards(src.my_target, src)
@@ -622,6 +654,8 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	//otherwise, we're pretending to be a singularity
 	if(prob(30))
 		step(src, pick(cardinal))
+	else
+		step_towards(src, src.my_target) //oh god it's chasing me!
 
 	//"eat" stuff by overriding its icon with a blank icon state
 	for (var/X in range(3, src))
@@ -629,7 +663,6 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			continue
 		if (X == src)
 			continue
-
 		var/atom/A = X
 
 		if (A.event_handler_flags & IMMUNE_SINGULARITY)
@@ -639,19 +672,64 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			continue
 
 		if (!isarea(X))
-			if(IN_EUCLIDEAN_RANGE(src, X, 1.5))
-				if(X in src.eaten_atoms)
+			if(IN_EUCLIDEAN_RANGE(src, A, 2.5))
+				if (X == src.my_target) //gotcha!
+					if(!ON_COOLDOWN(src.my_target, "fake_singulo_scream", 5 SECONDS))
+						src.my_target.emote("scream", FALSE)
+					src.my_target.changeStatus("weakened", 2 SECONDS)
+					src.my_target.changeStatus("stunned", 2 SECONDS)
+					SPAWN(5 SECONDS)
+						qdel(src)
+
+				if(A in src.eaten_atoms)
 					continue
 				//this is a thing we're going to eat, so blank client image override for you
-				var/image/blank_image = image(loc = X)
+				var/image/blank_image = image(loc = A)
 				blank_image.override = TRUE
 				src.my_image_overrides += blank_image
 				src.eaten_atoms += X
 				src.my_target << blank_image
-
+				//for the spinny falling in animations. low count for performance
+				//this is almost a straight copy/paste from singulo code
+				if(src.spaget_count < 3 || X == src.my_target) //always show the mob getting spaget'd
+					src.spaget_count++
+					var/spaget_time = 15 SECONDS
+					//create dummy object with client image appearance
+					var/obj/dummy/spaget_overlay = new()
+					var/image/spaget_overlay_client_image = image(loc=spaget_overlay)
+					spaget_overlay_client_image.appearance = A.appearance
+					spaget_overlay_client_image.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
+					spaget_overlay_client_image.pixel_x = A.pixel_x + (A.x - src.x + 0.5)*32
+					spaget_overlay_client_image.pixel_y = A.pixel_y + (A.y - src.y + 0.5)*32
+					spaget_overlay_client_image.plane = PLANE_DEFAULT
+					spaget_overlay_client_image.mouse_opacity = 0
+					spaget_overlay_client_image.transform = A.transform
+					if(prob(0.1)) // easteregg
+						spaget_overlay_client_image.icon = 'icons/obj/foodNdrink/food_meals.dmi'
+						spaget_overlay_client_image.icon_state = "spag-dish"
+						spaget_overlay_client_image.transform.Scale(2, 2)
+					src.my_target << spaget_overlay_client_image
+					var/angle = get_angle(A, src)
+					var/matrix/flatten = matrix((A.x - src.x)*(cos(angle)), 0, -spaget_overlay.pixel_x, (A.y - src.y)*(sin(angle)), 0, -spaget_overlay.pixel_y)
+					animate(spaget_overlay, spaget_time, FALSE, QUAD_EASING, 0, alpha=0, transform=flatten)
+					var/obj/dummy/spaget_turner = new()
+					spaget_turner.vis_contents += spaget_overlay
+					spaget_turner.mouse_opacity = 0
+					spaget_turner.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_TOGETHER
+					animate_spin(spaget_turner, right_spinning ? "R" : "L", spaget_time / 8 + randfloat(-2, 2), looping=2, parallel=FALSE)
+					src.vis_contents += spaget_turner
+					SPAWN(spaget_time + 1 SECOND)
+						src.spaget_count--
+						qdel(spaget_overlay)
+						qdel(spaget_turner)
 	SPAWN(1 SECOND)
 		process()
 
+/obj/fake_singulo/Move(NewLoc, direct)
+	. = ..()
+	if (NewLoc) //we can always move, because we're not real
+		src.set_dir(get_dir(loc, NewLoc))
+		src.set_loc(NewLoc)
 
 ///Helper procs
 
