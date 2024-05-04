@@ -2,6 +2,7 @@
 (t)sat may 04 24
 (u)tarmunora
 (+)Walking over someone while on harm intent will throw a free kick on a moderate cooldown. Trample lube victims and napping staff assistants alike.
+(+)Rebalance syndicate chainsaw.
 (u)DecidedlyUnethical
 (p)18752
 (e)💅📦🍝|C-QoL, A-Game-Objects, A-Catering
