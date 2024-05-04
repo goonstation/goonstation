@@ -341,6 +341,7 @@ var/list/removed_jobs = list(
 
 					boutput(usr, SPAN_NOTICE("<b>Character loaded from Slot [index].</b>"))
 					update_preview_icon()
+					src.traitPreferences.traitDataDirty = TRUE
 					return TRUE
 
 			if ("cloud-new")
