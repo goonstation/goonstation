@@ -940,14 +940,10 @@
 			if(istype(perp_id, /obj/item/card/id/syndicate))
 				threatcount -= 2
 
-			if(perp_id) //Checking for targets and permits
-				var/list/contraband_returned = list()
-				if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !(contraband_access in perp_id.access), !(weapon_access in perp_id.access)))
-					threatcount += max(contraband_returned)
-			else
-				var/list/contraband_returned = list()
-				if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
-					threatcount += max(contraband_returned)
+			if(!perp_id || !(contraband_access in perp_id.access))
+				threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_CONTRABAND)
+			if(!perp_id || !(weapon_access in perp_id.access))
+				threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_VISIBLE_GUNS)
 
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5

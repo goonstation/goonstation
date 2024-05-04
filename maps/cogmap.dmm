@@ -53339,15 +53339,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade)
-"oRJ" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/market)
 "oRT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -64812,12 +64803,6 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
@@ -103038,7 +103023,7 @@ bAt
 bAt
 bAt
 fBI
-oRJ
+bAt
 bBq
 bAt
 adC
