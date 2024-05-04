@@ -1,5 +1,10 @@
 
 (t)sat may 04 24
+(u)FlameArrow57
+(p)18755
+(e)⚖📦🚗|C-Balance, A-Game-Objects, A-Vehicles
+(+)Increased armory Mk. 3 Disruptor pod weapon damage (from 0 to mobs, ~9 to vehicles -> 10 to mobs, ~15 to vehicles)
+(+)Pod disruption from projectiles now causes a random picked pod component to be disabled for 2 seconds. Manual re-activation still required.
 (u)tarmunora
 (+)Walking over someone while on harm intent will throw a free kick on a moderate cooldown. Trample lube victims and napping staff assistants alike.
 (+)Rebalance syndicate chainsaw.
