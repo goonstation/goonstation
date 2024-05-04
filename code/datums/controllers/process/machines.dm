@@ -142,5 +142,3 @@
 			machines[machine]+=amount
 
 #endif MACHINE_PROCESSING_DEBUG
-
-// xyz
