@@ -304,7 +304,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if (cell)
 			// if opened, update overlays for cell
 			var/image/I_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.icon_state]")
-			UpdateOverlays(I_cell, "cell", 0, 1)
+			AddOverlays(I_cell, "cell")
 
 	else if(emagged)
 		icon_state = "apcemag"
@@ -332,14 +332,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		var/image/I_equp = SafeGetOverlayImage("equipment", 'icons/obj/power.dmi', "apco0-[equipment]")
 		var/image/I_envi = SafeGetOverlayImage("environment", 'icons/obj/power.dmi', "apco2-[environ]")
 
-		UpdateOverlays(I_lock, "lock", 0, 1)
-		UpdateOverlays(I_chrg, "charge", 0, 1)
-		UpdateOverlays(I_brke, "breaker", 0, 1)
+		AddOverlays(I_lock, "lock")
+		AddOverlays(I_chrg, "charge")
+		AddOverlays(I_brke, "breaker")
 
 		if(operating && !do_not_operate)
-			UpdateOverlays(I_lite, "lighting", 0, 1)
-			UpdateOverlays(I_equp, "equipment", 0, 1)
-			UpdateOverlays(I_envi, "environment", 0, 1)
+			AddOverlays(I_lite, "lighting",)
+			AddOverlays(I_equp, "equipment")
+			AddOverlays(I_envi, "environment")
 
 /obj/machinery/power/apc/emp_act()
 	..()

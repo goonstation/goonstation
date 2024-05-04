@@ -604,7 +604,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		overlay.pixel_y = poy
 		wall_overlay_images[overlay_key] = overlay
 
-		src.UpdateOverlays(overlay, overlay_key)
+		src.AddOverlays(overlay, overlay_key)
 
 	proc/clear_overlay(var/key = 0)
 		if (!key)

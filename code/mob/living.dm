@@ -296,7 +296,7 @@
 
 /mob/living/Logout()
 	. = ..()
-	src.UpdateOverlays(null, "speech_bubble")
+	src.ClearSpecificOverlays("speech_bubble")
 	src.is_npc = initial(src.is_npc)
 
 

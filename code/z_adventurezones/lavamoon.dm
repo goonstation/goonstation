@@ -52,7 +52,7 @@
 	New()
 		..()
 		if (prob(33))
-			src.UpdateOverlays(image(src.icon, "panelscorched"), "burn")
+			src.AddOverlays(image(src.icon, "panelscorched"), "burn")
 
 /turf/unsimulated/iomoon/ancient_floor
 	name = "Ancient Metal Floor"

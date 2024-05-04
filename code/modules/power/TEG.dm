@@ -439,14 +439,14 @@
 			else
 				open_icon.Shift(SOUTH,5)
 				open_icon.Shift(WEST,5)
-			src.UpdateOverlays(image(open_icon), "open")
+			src.AddOverlays(image(open_icon), "open")
 		else
-			src.UpdateOverlays(null, "open")
+			src.ClearSpecificOverlays("open")
 
 		if(src.variant_b_active)
-			UpdateOverlays(image('icons/obj/atmospherics/pipes.dmi', "circ[side]-o1"), "variant")
+			AddOverlays(image('icons/obj/atmospherics/pipes.dmi', "circ[side]-o1"), "variant")
 		else
-			UpdateOverlays(null, "variant")
+			ClearSpecificOverlays("variant")
 
 		return 1
 
@@ -757,19 +757,19 @@ datum/pump_ui/circulator_ui
 
 	update_icon()
 		if(status & (NOPOWER))
-			UpdateOverlays(null, "power")
+			ClearSpecificOverlays("power")
 		else if(status & (BROKEN))
-			UpdateOverlays(image('icons/obj/power.dmi', "teg-err"), "power")
+			AddOverlays(image('icons/obj/power.dmi', "teg-err"), "power")
 		else
 			if(lastgenlev != 0)
-				UpdateOverlays(image('icons/obj/power.dmi', "teg-op[lastgenlev]"), "power")
+				AddOverlays(image('icons/obj/power.dmi', "teg-op[lastgenlev]"), "power")
 			else
-				UpdateOverlays(null, "power")
+				ClearSpecificOverlays("power")
 
 		if(src.variant_b)
-			UpdateOverlays(image('icons/obj/power.dmi', "teg_var"), "variant")
+			AddOverlays(image('icons/obj/power.dmi', "teg_var"), "variant")
 		else
-			UpdateOverlays(null, "variant")
+			ClearSpecificOverlays(null, "variant")
 
 		var/max_warning = src.circ1?.warning_active | src.circ2?.warning_active
 		if( max_warning )
@@ -793,7 +793,7 @@ datum/pump_ui/circulator_ui
 			else
 				warning.color = "#feb308"
 				warning_light_desc = "<br>[SPAN_ALERT("The power caution light[one_light ? " is" : "s are"] flashing.")]"
-			UpdateOverlays(warning, "warning")
+			AddOverlays(warning, "warning")
 
 			if(lastgenlev)
 				if(max_warning > WARNING_5MIN)
@@ -806,7 +806,7 @@ datum/pump_ui/circulator_ui
 				light.disable()
 
 		else
-			UpdateOverlays(null, "warning")
+			ClearSpecificOverlays("warning")
 			warning_light_desc = null
 
 			switch (lastgenlev)
@@ -842,7 +842,7 @@ datum/pump_ui/circulator_ui
 
 		. = GetOverlayImage("mask")
 		if(.)
-			UpdateOverlays(.,"mask")
+			AddOverlays(.,"mask")
 
 	process(mult)
 		if(!src.circ1 || !src.circ2)

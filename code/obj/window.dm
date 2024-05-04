@@ -825,7 +825,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	update_icon()
 		if (!src.anchored)
 			icon_state = "[mod]0"
-			src.UpdateOverlays(null, "connect")
+			src.ClearSpecificOverlays("connect")
 			update_damage_overlay()
 			return
 
@@ -838,9 +838,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				src.connect_image = image(src.icon, "overlay-[overlaydir]")
 			else
 				src.connect_image.icon_state = "overlay-[overlaydir]"
-				src.UpdateOverlays(src.connect_image, "connect")
+				src.AddOverlays(src.connect_image, "connect")
 		else
-			src.UpdateOverlays(null, "connect")
+			src.ClearSpecificOverlays("connect")
 		src.update_damage_overlay()
 
 	proc/update_neighbors()
@@ -869,7 +869,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			src.damage_image.icon_state = "light-[connectdir]"
 		else
 			src.damage_image.icon_state = null
-		src.UpdateOverlays(src.damage_image, "damage")
+		src.AddOverlays(src.damage_image, "damage")
 
 /obj/window/auto/the_tuff_stuff
 	explosion_resistance = 3

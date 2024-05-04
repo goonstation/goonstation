@@ -1365,7 +1365,7 @@
 					patient.implant.Remove(I)
 					var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
 					wadblood.color = patient.blood_color
-					newcase.UpdateOverlays(wadblood, "blood")
+					newcase.AddOverlays(wadblood, "blood")
 					newcase.blood_DNA = patient.bioHolder.Uid
 					newcase.blood_type = patient.bioHolder.bloodType
 				else
