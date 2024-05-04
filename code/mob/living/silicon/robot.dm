@@ -118,7 +118,7 @@
 		if (frame)
 			src.freemodule = frame.freemodule
 			src.frame_material = frame.material
-			if(HAS_ATOM_PROPERY(frame, PROP_ATOM_ROUNDSTART_BORG))
+			if(HAS_ATOM_PROPERTY(frame, PROP_ATOM_ROUNDSTART_BORG))
 				APPLY_ATOM_PROPERTY(src, PROP_ATOM_ROUNDSTART_BORG, "borg")
 		if (starter && !(src.dependent || src.shell))
 			var/obj/item/parts/robot_parts/chest/light/PC = new /obj/item/parts/robot_parts/chest/light(src)
