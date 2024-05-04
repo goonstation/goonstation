@@ -46,13 +46,7 @@ var/global/list/nuke_op_camo_matrix = null
 		logTheThing(LOG_DEBUG, null, "Failed to find Syndicate spawn landmark, aborting nuke round pre-setup.")
 		return 0
 
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (player.ready)
-			num_players++
+	var/num_players = src.roundstart_player_count()
 #ifndef ME_AND_MY_40_ALT_ACCOUNTS
 	if (num_players < minimum_players)
 		boutput(world, SPAN_ALERT("<b>ERROR: Minimum player count of [minimum_players] required for Nuclear game mode, aborting nuke round pre-setup.</b>"))

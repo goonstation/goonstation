@@ -77,6 +77,13 @@
 	desc = "Just keep rollin' rollin'."
 	icon_state = "armadillo_ball"
 
+	pickup(mob/user)
+		if(locate(/mob/living/critter/small_animal/armadillo) in src)
+			..()
+		else
+			user.remove_item(src)
+			qdel(src)
+
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = THROW_NORMAL, allow_anchored = UNANCHORED, bonus_throwforce = 0)
 		if(!ismob(target))
 			throw_unlimited = 1

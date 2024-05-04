@@ -118,6 +118,7 @@
 			src.admin_set_limit = TRUE
 
 	proc/special_setup(var/mob/M, no_special_spawn)
+		SHOULD_NOT_SLEEP(TRUE)
 		if (!M)
 			return
 		if (src.receives_miranda)
@@ -1156,7 +1157,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		if (!M)
 			return
-		return M.Robotize_MK2()
+		var/mob/living/silicon/S = M.Robotize_MK2()
+		APPLY_ATOM_PROPERTY(S, PROP_ATOM_ROUNDSTART_BORG, "borg")
+		return S
 
 // Special Cases
 

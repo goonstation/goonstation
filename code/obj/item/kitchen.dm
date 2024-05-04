@@ -62,6 +62,7 @@ TRAYS
 
 	attack_self(mob/user as mob)
 		src.rotate()
+		..()
 
 	proc/rotate()
 		if(rotatable)
