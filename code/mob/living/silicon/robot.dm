@@ -118,6 +118,8 @@
 		if (frame)
 			src.freemodule = frame.freemodule
 			src.frame_material = frame.material
+			if(HAS_ATOM_PROPERTY(frame, PROP_ATOM_ROUNDSTART_BORG))
+				APPLY_ATOM_PROPERTY(src, PROP_ATOM_ROUNDSTART_BORG, "borg")
 		if (starter && !(src.dependent || src.shell))
 			var/obj/item/parts/robot_parts/chest/light/PC = new /obj/item/parts/robot_parts/chest/light(src)
 			var/obj/item/cell/supercell/charged/CELL = new /obj/item/cell/supercell/charged(PC)
@@ -294,6 +296,8 @@
 			frame.emagged = src.emagged
 			frame.syndicate = src.syndicate
 			frame.freemodule = src.freemodule
+			if(HAS_ATOM_PROPERTY(src, PROP_ATOM_ROUNDSTART_BORG))
+				APPLY_ATOM_PROPERTY(frame, PROP_ATOM_ROUNDSTART_BORG, "borg")
 
 			src.ghostize()
 			qdel(src)
@@ -906,6 +910,9 @@
 		update_bodypart()
 
 	bullet_act(var/obj/projectile/P)
+		log_shot(P, src)
+		src.visible_message(SPAN_ALERT("<b>[src]</b> is struck by [P]!"))
+
 		var/dmgtype = 0 // 0 for brute, 1 for burn
 		var/dmgmult = 1.2
 		switch (P.proj_data.damage_type)
@@ -922,16 +929,11 @@
 				dmgtype = 1
 				dmgmult = 0.2
 			if(D_TOXIC)
-				dmgmult = 0
+				return
 			if(D_SPECIAL)
-				dmgmult = 0
+				return
 
-
-		log_shot(P, src)
-		src.visible_message(SPAN_ALERT("<b>[src]</b> is struck by [P]!"))
 		var/damage = (P.power / 3) * dmgmult
-		if (damage < 1)
-			return
 
 		if(P.proj_data.stun && P.proj_data.damage <= 5)
 			src.do_disorient(clamp(P.power*4, P.proj_data.stun*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
@@ -2384,6 +2386,10 @@
 				src.set_module(new /obj/item/robot_module/construction_worker(src))
 				if(length(src.upgrades) < src.max_upgrades)
 					src.upgrades += new /obj/item/roboupgrade/visualizer(src)
+
+
+		var/datum/eventRecord/CyborgModuleSelection/cyborgModuleSelectionEvent = new()
+		cyborgModuleSelectionEvent.buildAndSend(src, mod)
 
 		var/datum/robot_cosmetic/C = null
 		var/datum/robot_cosmetic/M = null

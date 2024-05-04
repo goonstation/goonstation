@@ -419,19 +419,6 @@
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"cs" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/obj/machinery/lrteleporter{
-	layer = 3
-	},
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
-	},
-/area/station/science/teleporter)
 "cu" = (
 /obj/machinery/vending/floppy{
 	profit = 0
@@ -2810,6 +2797,12 @@
 	},
 /turf/simulated/floor/purple/checker,
 /area/station/quartermaster/office)
+"rl" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/space,
+/area/shuttle/arrival/station)
 "rm" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2884,6 +2877,23 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"rQ" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Active Particle Phase Matrix"
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0
+	},
+/area/station/science/teleporter)
 "rT" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon20_to_1_end,
 /turf/simulated/floor/auto/dirt,
@@ -3059,6 +3069,12 @@
 	},
 /turf/simulated/floor/purple/checker,
 /area/station/science)
+"tg" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/decal/poster/wallsign/stencil/left/a,
+/obj/decal/poster/wallsign/stencil/right/r,
+/turf/unsimulated/floor/plating,
+/area/shuttle/arrival/station)
 "tl" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 2;
@@ -3070,6 +3086,10 @@
 "tn" = (
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
+"tu" = (
+/obj/indestructible/shuttle_corner,
+/turf/space,
+/area/shuttle/arrival/station)
 "tx" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -3286,6 +3306,9 @@
 "uF" = (
 /turf/unsimulated/wall/setpieces/leadwindow,
 /area/station/hallway/secondary/entry)
+"uG" = (
+/turf/simulated/shuttle/wall/cockpit,
+/area/shuttle/arrival/station)
 "uJ" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/decal/cleanable/dirt,
@@ -3960,6 +3983,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/office)
+"zL" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/decal/poster/wallsign/stencil/left/r,
+/obj/decal/poster/wallsign/stencil/right/v,
+/turf/unsimulated/floor/plating,
+/area/shuttle/arrival/station)
 "zN" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate/clown,
@@ -4108,6 +4137,12 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
 /area/station/hallway/secondary/researchshuttle)
+"AH" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/space,
+/area/shuttle/arrival/station)
 "AQ" = (
 /turf/simulated/floor/stairs/wood/wide{
 	dir = 4
@@ -4778,12 +4813,6 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/innercorner/north,
 /area/station/bridge)
-"Fg" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4
-	},
-/turf/space,
-/area/shuttle/arrival/station)
 "Fi" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/phone,
@@ -7044,10 +7073,6 @@
 /obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
-"UN" = (
-/obj/indestructible/shuttle_corner,
-/turf/space,
-/area/shuttle/arrival/station)
 "UP" = (
 /obj/item/storage/wall/medical,
 /turf/simulated/wall/auto/shuttle{
@@ -7066,10 +7091,6 @@
 	icon_state = "15"
 	},
 /area/shuttle/arrival/station)
-"Vb" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/unsimulated/floor/plating,
-/area/shuttle/arrival/station)
 "Ve" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -7085,18 +7106,6 @@
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor6"
 	},
-/area/shuttle/arrival/station)
-"Vk" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/stencil/left/a,
-/obj/decal/poster/wallsign/stencil/right/r,
-/turf/unsimulated/floor/plating,
-/area/shuttle/arrival/station)
-"Vq" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/stencil/left/r,
-/obj/decal/poster/wallsign/stencil/right/v,
-/turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
 "Vr" = (
 /turf/unsimulated/wall/auto/lead/blue,
@@ -7458,6 +7467,11 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
+"Xm" = (
+/turf/unsimulated/wall/generic{
+	opacity = 0
+	},
+/area/shuttle/arrival/station)
 "Xo" = (
 /obj/machinery/power/furnace{
 	active = 1;
@@ -7634,11 +7648,6 @@
 "XY" = (
 /turf/simulated/floor,
 /area/station/science)
-"XZ" = (
-/turf/unsimulated/wall/generic{
-	opacity = 0
-	},
-/area/shuttle/arrival/station)
 "Yg" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "4"
@@ -7664,6 +7673,10 @@
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor6"
 	},
+/area/shuttle/arrival/station)
+"Yn" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
 "Yp" = (
 /obj/cable{
@@ -7731,9 +7744,6 @@
 "YD" = (
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
-"YJ" = (
-/turf/simulated/shuttle/wall/cockpit,
-/area/shuttle/arrival/station)
 "YK" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
@@ -7903,12 +7913,6 @@
 "ZJ" = (
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
-"ZK" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8
-	},
-/turf/space,
-/area/shuttle/arrival/station)
 "ZN" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -51583,7 +51587,7 @@ SJ
 lF
 Rf
 Rf
-UN
+tu
 Ux
 Ux
 Ux
@@ -51591,7 +51595,7 @@ Yg
 Ux
 Ux
 Ux
-Fg
+rl
 Rf
 Rf
 Rf
@@ -52800,7 +52804,7 @@ VC
 bw
 VC
 Va
-ZK
+AH
 Rf
 Rf
 Rf
@@ -53395,7 +53399,7 @@ SY
 QU
 WK
 Rf
-Vb
+Yn
 VW
 VW
 XN
@@ -53403,7 +53407,7 @@ XN
 XN
 VW
 XN
-Vb
+Yn
 Rf
 Rf
 Rf
@@ -55207,7 +55211,7 @@ Oj
 Mq
 WK
 Rf
-Vk
+tg
 VW
 Xb
 VW
@@ -55215,7 +55219,7 @@ VW
 YU
 XN
 XN
-Vk
+tg
 Rf
 Rf
 Rf
@@ -55509,7 +55513,7 @@ Oj
 Kd
 WK
 Rf
-Vq
+zL
 VW
 Xf
 VW
@@ -55517,7 +55521,7 @@ VW
 XN
 XN
 XN
-Vq
+zL
 Rf
 Rf
 Rf
@@ -56121,7 +56125,7 @@ Yv
 VC
 Xj
 Ww
-ZK
+AH
 Rf
 Rf
 Rf
@@ -56724,7 +56728,7 @@ XV
 XV
 XV
 Zp
-ZK
+AH
 Rf
 Rf
 Rf
@@ -57022,10 +57026,10 @@ Rf
 Rf
 Rf
 FY
-XZ
-XZ
-XZ
-ZK
+Xm
+Xm
+Xm
+AH
 Rf
 Rf
 Rf
@@ -57325,7 +57329,7 @@ Rf
 Rf
 XB
 Xy
-YJ
+uG
 Zf
 XB
 Rf
@@ -78980,7 +78984,7 @@ gz
 dt
 hv
 Or
-cs
+rQ
 Td
 UC
 Ia

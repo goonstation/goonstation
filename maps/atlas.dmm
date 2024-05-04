@@ -1508,10 +1508,8 @@
 /turf/space,
 /area/space)
 "afj" = (
-/obj/item/reagent_containers/food/snacks/pizza/meatball{
-	doants = 0;
-	icon_state = "pslice";
-	sliced = 1
+/obj/item/reagent_containers/food/snacks/pizzaslice/standard/meatball{
+	doants = 0
 	},
 /turf/simulated/floor/stairs/dark/wide,
 /area/station/medical/morgue)
@@ -1982,7 +1980,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
 "agW" = (
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /turf/simulated/floor/caution/west,
 /area/station/ai_monitored/armory)
 "agX" = (
@@ -2867,6 +2865,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/main)
 "akA" = (
@@ -3366,6 +3365,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/main)
 "amW" = (
@@ -11939,7 +11939,7 @@
 	},
 /area/station/mining/refinery)
 "aRO" = (
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/caution/south,
 /area/station/ai_monitored/armory)
@@ -12282,6 +12282,12 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/machinery/disposal/small{
+	dir = 8
+	},
+/obj/disposalpipe/trunk{
+	dir = 8
 	},
 /turf/simulated/floor/stairs/wide/other,
 /area/station/security/main)
@@ -14336,6 +14342,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/red/corner{
 	dir = 8
 	},
@@ -15339,6 +15346,7 @@
 	name = "Security";
 	enter_id = "outer"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/secwing)
 "eTg" = (
@@ -15539,6 +15547,10 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/red/corner{
 	dir = 4
@@ -16030,6 +16042,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -16084,10 +16097,7 @@
 /area/station/security/secwing)
 "hQZ" = (
 /obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-8"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -16190,6 +16200,7 @@
 	name = "Security";
 	enter_id = "inner"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -17402,6 +17413,7 @@
 /obj/item/storage/box/diskbox,
 /obj/item/disk/data/tape/guardbot_tools,
 /obj/item/disk/data/tape,
+/obj/item/device/multitool,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "mRp" = (
@@ -18047,6 +18059,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/stairs/wide,
 /area/station/security/main)
 "oWx" = (
@@ -18202,6 +18218,10 @@
 "plm" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/red/side{
 	dir = 5
@@ -18923,6 +18943,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/main)
 "rCf" = (
@@ -19636,6 +19657,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"uqe" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/junction/right/east,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "uri" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19731,6 +19759,7 @@
 	},
 /obj/machinery/navbeacon/mule/security_north/east,
 /obj/decal/mule/beacon,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -20544,6 +20573,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -20720,7 +20750,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -74071,7 +74103,7 @@ hyW
 xqC
 uAZ
 ePs
-lXC
+uqe
 uHV
 ahV
 ayh

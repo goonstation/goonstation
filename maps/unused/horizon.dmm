@@ -28806,7 +28806,7 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bES" = (
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 21
@@ -55272,7 +55272,7 @@
 /turf/space,
 /area/space)
 "rhG" = (
-/obj/storage/secure/crate/weapon/armory/phaser,
+/obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
 	dir = 1
 	},

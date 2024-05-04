@@ -39244,7 +39244,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "xyI" = (
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/weapon_stand/phaser_rack,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "xyJ" = (

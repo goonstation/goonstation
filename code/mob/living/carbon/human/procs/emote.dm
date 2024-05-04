@@ -1095,21 +1095,21 @@
 					else
 						message = "<B>[src]</B> flexes [his_or_her(src)] muscles."
 						maptext_out = "<I>flexes [his_or_her(src)] muscles</I>"
+					if(src.emote_check(voluntary))
+						for (var/obj/item/C as anything in src.get_equipped_items())
+							if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
+								var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
+								var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
+								drop_item()
+								O.set_loc(src)
+								equip_if_possible(O, drophand)
+								src.visible_message(SPAN_ALERT("<B>[src] pulls a set of tools out of \the [C]!</B>"))
+								playsound(src.loc, "rustle", 60, 1)
+								break
 				else
 					message = "<B>[src]</B> tries to stretch [his_or_her(src)] arms."
 					maptext_out = "<I>tries to stretch [his_or_her(src)] arms</I>"
 				m_type = 1
-
-				for (var/obj/item/C as anything in src.get_equipped_items())
-					if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
-						var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
-						var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
-						drop_item()
-						O.set_loc(src)
-						equip_if_possible(O, drophand)
-						src.visible_message(SPAN_ALERT("<B>[src] pulls a set of tools out of \the [C]!</B>"))
-						playsound(src.loc, "rustle", 60, 1)
-						break
 
 			if ("facepalm")
 				if (!src.restrained())
@@ -1634,16 +1634,17 @@
 				m_type = 1
 
 			if ("wink")
-				for (var/obj/item/C as anything in src.get_equipped_items())
-					if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
-						var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
-						var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
-						drop_item()
-						D.set_loc(src)
-						equip_if_possible(D, drophand)
-						src.visible_message(SPAN_ALERT("<B>[src] pulls a derringer out of \the [C]!</B>"))
-						playsound(src.loc, "rustle", 60, 1)
-						break
+				if (!src.restrained() && src.emote_check(voluntary))
+					for (var/obj/item/C as anything in src.get_equipped_items())
+						if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
+							var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
+							var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
+							drop_item()
+							D.set_loc(src)
+							equip_if_possible(D, drophand)
+							src.visible_message(SPAN_ALERT("<B>[src] pulls a derringer out of \the [C]!</B>"))
+							playsound(src.loc, "rustle", 60, 1)
+							break
 
 				message = "<B>[src]</B> winks."
 				maptext_out = "<I>winks</I>"

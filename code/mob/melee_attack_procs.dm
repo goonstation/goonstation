@@ -623,7 +623,7 @@
 	msgs.played_sound = "punch"
 	var/do_punch = FALSE
 	var/do_kick = FALSE
-	if(!target.canmove && target.lying && can_kick)
+	if(target.lying && can_kick)
 		do_armor = FALSE
 		do_stam = FALSE
 		do_kick = TRUE

@@ -510,6 +510,7 @@
 			..()
 			return
 		else
+			logTheThing(LOG_STATION, user, "builds an amusing duck at [log_loc(src)]")
 			var/obj/machinery/bot/duckbot/D = new /obj/machinery/bot/duckbot
 			D.eggs = rand(2,5) // LAY EGG IS TRUE!!!
 			boutput(user, SPAN_NOTICE("You add [W] to [src]."))

@@ -252,6 +252,8 @@ TYPEINFO(/obj/item/gun/energy)
 		projectiles = list(current_projectile)
 		..()
 
+/obj/item/gun/energy/phaser_gun/extended_mag
+	cell_type = /obj/item/ammo/power_cell/med_plus_power
 
 TYPEINFO(/obj/item/gun/energy/phaser_small)
 	mats = 20

@@ -1827,7 +1827,7 @@ obj/item/whetstone
 	c_flags = ONBACK
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
-	contraband = 5
+	contraband = 8
 	w_class = W_CLASS_BULKY
 	force = 25
 	throwforce = 25
