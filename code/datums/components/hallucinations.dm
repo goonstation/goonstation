@@ -649,7 +649,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	else if(target_dist < 6)
 		//oh no you're being pulled into the singularity!
 		if(prob(50))
-			step_towards(src.my_target, src)
+			src.my_target.step_towards_movedelay(src) //respect standard movements, this isn't actual gravity, you're just stepping cos you're hallucinating
 
 	//otherwise, we're pretending to be a singularity
 	if(prob(30))
