@@ -1157,8 +1157,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		if (!M)
 			return
-		. = M.Robotize_MK2()
-		APPLY_ATOM_PROPERTY(., PROP_ATOM_ROUNDSTART_BORG, "borg")
+		var/mob/living/silicon/S = M.Robotize_MK2()
+		APPLY_ATOM_PROPERTY(S, PROP_ATOM_ROUNDSTART_BORG, "borg")
+		return S
 
 // Special Cases
 
