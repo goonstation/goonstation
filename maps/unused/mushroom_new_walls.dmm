@@ -12927,11 +12927,13 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/chemistry)
 "bVF" = (
-/obj/machinery/door/airlock/pyro/glass/med,
 /obj/mapping_helper/access/morgue,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	name = "Morgue"
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
@@ -30435,6 +30437,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "qNM" = (
@@ -34850,11 +34853,11 @@
 	},
 /area/station/hallway/secondary/entry)
 "tZN" = (
-/obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4
-	},
 /obj/mapping_helper/access/morgue,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "uad" = (
