@@ -1424,7 +1424,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 			icon_state = "bangflag[icon_state]"
 			return
 		else
-			boutput(user, SPAN_NOTICE("The gun is still cooling down from it's last incredibly powerful shot! Or at least you pretend that it is."))
+			boutput(user, SPAN_NOTICE("The gun is still cooling down from its last incredibly powerful shot! Or at least you pretend that it is."))
 
 	attack_self(mob/user)
 		if (src.bangfired)
@@ -1449,6 +1449,53 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	desc = "There are 4 bullets left! Each shot will currently use 1 bullet!"
 	description = "A bang flag unfurls out of the barrel!"
 	two_handed = 1
+
+/obj/item/bang_gun/lawlbringer
+	name = "\improper Lawlbringer"
+	icon = 'icons/obj/items/guns/energy.dmi'
+	item_state = "lawg-detain"
+	icon_state = "lawbringer0"
+	desc = "A gun with a microphone. Fascinating."
+	description = "A bang flag unfurls out of the barrel!"
+	inventory_counter_enabled = TRUE
+
+	New()
+		src.create_inventory_counter()
+		inventory_counter.update_percent(1, 1)
+		..()
+
+	attack_hand(mob/user)
+		boutput(user, SPAN_ALERT("\The [src] has accepted your DNA string. You are its owner!"))
+		assign_name(user)
+		..()
+
+	proc/assign_name(var/mob/M)
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if (H.bioHolder)
+				src.name = "HoS [H.real_name]'s Lawlbringer"
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(reach || src.bangfired)
+			// this falling through is ok since it won't activate the else/if there either,
+			// so it will fall through once more
+			..()
+		else if (!ON_COOLDOWN(src, "recent_fire", 30 SECOND))
+			src.bangfired = TRUE
+			user?.visible_message(SPAN_ALERT("[user] fires [src][target ? " at [target]" : null]! [description]"))
+			playsound(user, 'sound/musical_instruments/Trombone_Failiure.ogg', 50, TRUE)
+			inventory_counter.update_percent(0, 1)
+			return
+		else
+			boutput(user, SPAN_NOTICE("The gun is still cooling down from its last incredibly powerful shot! Or at least you pretend that it is."))
+
+	attack_self(mob/user)
+		if (src.bangfired)
+			src.bangfired = FALSE
+			icon_state = initial(src.icon_state)
+			boutput(user, SPAN_NOTICE("You awkwardly jam the tiny flag back into the barrel."))
+			inventory_counter.update_percent(1, 1)
+
 
 /*
 /obj/item // if I accidentally commit this uncommented PLEASE KILL ME tia <3

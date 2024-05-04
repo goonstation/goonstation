@@ -550,9 +550,6 @@ table#cooktime a#start {
 			src.recipes = list()
 
 		if (!src.recipes.len)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_shroom(src)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_pepper(src)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_ball(src)
 			src.recipes += new /datum/cookingrecipe/oven/haggass(src)
 			src.recipes += new /datum/cookingrecipe/oven/haggis(src)
 			src.recipes += new /datum/cookingrecipe/oven/scotch_egg(src)
@@ -771,8 +768,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/porridge(src)
 			src.recipes += new /datum/cookingrecipe/oven/ratatouille(src)
 			// Put all single-ingredient recipes after this point
-			src.recipes += new /datum/cookingrecipe/oven/pizza(src)
-			src.recipes += new /datum/cookingrecipe/oven/pizza_fresh(src)
+			src.recipes += new /datum/cookingrecipe/oven/pizza_custom(src)
 			src.recipes += new /datum/cookingrecipe/oven/cake_custom_item(src)
 			src.recipes += new /datum/cookingrecipe/oven/pancake(src)
 			src.recipes += new /datum/cookingrecipe/oven/bread(src)
@@ -872,15 +868,6 @@ table#cooktime a#start {
 					// this is null if it uses normal outputs (see below),
 					// otherwise it will be the created item from this
 					output = R.specialOutput(src)
-
-					//Complete pizza crew objectives if possible
-					if(istype(output,/obj/item/reagent_containers/food/snacks/pizza/))
-						var/obj/item/reagent_containers/food/snacks/pizza/P = output
-						if (usr.mind?.objectives)
-							for (var/datum/objective/crew/chef/pizza/objective in usr.mind.objectives)
-								var/list/matching_toppings = P.topping_types & objective.choices
-								if(length(matching_toppings) >= PIZZA_OBJ_COUNT)
-									objective.completed = TRUE
 
 					if (isnull(output))
 						output = R.output

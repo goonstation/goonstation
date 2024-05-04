@@ -47037,6 +47037,9 @@
 	},
 /obj/machinery/phone,
 /obj/blind_switch/area/east,
+/obj/item/stamp/cap{
+	pixel_x = 6
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
 "uas" = (
@@ -48029,10 +48032,16 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/paper_bin,
-/obj/item/pen/fancy,
-/obj/item/stamp/cap{
-	pixel_x = 15
+/obj/item/paper_bin{
+	pixel_y = 2;
+	pixel_x = -1
+	},
+/obj/item/pen/fancy{
+	pixel_x = -3
+	},
+/obj/item/hand_tele{
+	pixel_x = 15;
+	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/bridge/captain)

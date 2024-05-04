@@ -1,3 +1,6 @@
+(t)wed may  1 24
+(u)Zamujasa
+(*)"Intercom Help", the VOX sound list, now has links to play the sounds for everyone.
 (t)sun apr 21 24
 (u)Zamujasa
 (*)New toggle, "Toggle Music Announcements". This will make remote music commands from Discord print out in-game, vaguely like the old DJ Mode (but without any names attached). Feel free to improve this! (DEFAULT: OFF, as it was before. the tguification of chat may change/deprecate this!)

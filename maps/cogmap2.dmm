@@ -35384,6 +35384,10 @@
 /obj/item/item_box/gold_star{
 	item_amount = 20
 	},
+/obj/item/hand_tele{
+	pixel_y = 6;
+	pixel_x = -14
+	},
 /obj/item/card/id/captains_spare,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
