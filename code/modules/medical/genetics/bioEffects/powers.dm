@@ -143,7 +143,7 @@
 		using = TRUE
 
 		var/datum/bioEffect/power/mattereater/mattereater = linked_power
-		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path)
+		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path) - owner?.organHolder?.stomach?.stomach_contents
 		if (ismob(owner.loc) || istype(owner.loc, /obj/))
 			for (var/atom/A in owner.loc.contents)
 				if (istype(A, mattereater.target_path))
