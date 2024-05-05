@@ -54,8 +54,8 @@
 
 			if (!fake)
 				random_brute_damage(target, 15, 1)
-				target.changeStatus("paralysis", 2 SECONDS)
-				target.changeStatus("weakened", 3 SECONDS)
+				target.changeStatus("unconscious", 2 SECONDS)
+				target.changeStatus("knockdown", 3 SECONDS)
 				target.force_laydown_standup()
 				target.change_misstep_chance(25)
 

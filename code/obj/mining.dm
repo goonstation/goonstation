@@ -466,6 +466,7 @@
 					pull_new_source()
 
 	disposing()
+		src.health = 0 // DIE!!!!!! GOD!!!! (this makes sure the computers know the magnet is Dead and Buried)
 		src.visible_message("<b>[src] breaks apart!</b>")
 		robogibs(src.loc)
 		playsound(src.loc, src.sound_destroyed, 50, 2)
@@ -668,6 +669,7 @@
 			M.set_density(0)
 			M.invisibility = INVIS_ALWAYS
 
+		src.check_should_die()
 		src.updateUsrDialog()
 		return
 
@@ -795,6 +797,7 @@
 			return
 		switch(action)
 			if("linkmagnet")
+				src.connection_scan() // Magnets can explode inbetween scanning and linking
 				linked_magnet = locate(params["ref"]) in linked_magnets
 				if (!istype(linked_magnet))
 					linked_magnet = null
@@ -814,12 +817,11 @@
 				. = TRUE
 			else
 				if(istype(src.linked_magnet))
+					if (src.linked_magnet.health <= 0)
+						src.linked_magnet = null // ITS DEAD!!!! STOP!!!
+						src.visible_message("<b>[src.name]</b> armeds, \"Designated magnet is no longer operational.\"")
+						return
 					. = src.linked_magnet.ui_act(action, params)
-
-	ui_status(mob/user, datum/ui_state/armed)
-		. = ..()
-		if(istype(src.linked_magnet))
-			. = min(., linked_magnet.ui_status(user))
 
 /obj/machinery/computer/magnet/connection_scan()
 	linked_magnets = list()
@@ -2045,7 +2047,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 			if (!isdead(C) && C.client) shake_camera(C, 3, 2)
 			if(GET_DIST(src,C) <= src.expl_light)
 				C.changeStatus("stunned", 8 SECONDS)
-				C.changeStatus("weakened", 10 SECONDS)
+				C.changeStatus("knockdown", 10 SECONDS)
 				C.stuttering += 15
 				boutput(C, SPAN_ALERT("The concussive blast knocks you off your feet!"))
 			if(GET_DIST(src,C) <= src.expl_heavy)

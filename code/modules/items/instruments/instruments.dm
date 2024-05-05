@@ -523,7 +523,7 @@
 		//bad, but eh clowns...
 		if (prob(30))
 			for (var/mob/living/carbon/human/H in view(2, user))
-				if (H.hasStatus("weakened"))
+				if (H.hasStatus("knockdown"))
 					JOB_XP(user, "Clown", 2)
 					break
 
@@ -857,7 +857,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 				ghost_to_toss.set_loc(soul_stuff.loc)
 
 		some_poor_fucker.throw_at(T, 1, 1)
-		some_poor_fucker.changeStatus("weakened", 2 SECONDS)
+		some_poor_fucker.changeStatus("knockdown", 2 SECONDS)
 
 
 

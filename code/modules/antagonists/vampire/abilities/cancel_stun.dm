@@ -23,9 +23,7 @@
 		if (is_incapacitated(M) && M.stamina < 40)
 			M.set_stamina(40)
 
-		M.delStatus("stunned")
-		M.delStatus("weakened")
-		M.delStatus("paralysis")
+		M.remove_stuns()
 		M.delStatus("slowed")
 		M.delStatus("disorient")
 		M.change_misstep_chance(-INFINITY)
@@ -61,7 +59,7 @@
 		if (!M)
 			return 1
 
-		var/greatest_stun = max(3, M.getStatusDuration("stunned"),M.getStatusDuration("weakened"),M.getStatusDuration("paralysis"),M.getStatusDuration("slowed")/4,M.getStatusDuration("disorient")/2)
+		var/greatest_stun = max(3, M.getStatusDuration("stunned"),M.getStatusDuration("knockdown"),M.getStatusDuration("unconscious"),M.getStatusDuration("slowed")/4,M.getStatusDuration("disorient")/2)
 		greatest_stun = round(greatest_stun / 20)
 
 		M.TakeDamage("All", greatest_stun, 0)

@@ -75,7 +75,7 @@
 			var/PLoc = pick_landmark(LANDMARK_PRISONWARP)
 			var/turf/origin_turf = get_turf(M)
 			if (PLoc)
-				M.changeStatus("paralysis", 8 SECONDS)
+				M.changeStatus("unconscious", 8 SECONDS)
 				M.set_loc(PLoc)
 			else
 				message_admins("[key_name(usr)] couldn't send [key_name(M)] to the prison zone (no landmark found).")

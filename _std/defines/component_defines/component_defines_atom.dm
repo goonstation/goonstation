@@ -231,6 +231,8 @@
 	#define COMSIG_MOB_SPRINT "mob_sprint"
 	/// Sent when the mob says something (message)
 	#define COMSIG_MOB_SAY "mob_say"
+	/// Sent when the mob should trigger a threat grab (yes this is really specific but shush)
+	#define COMSIG_MOB_TRIGGER_THREAT "mob_threat"
 
 	// ---- cloaking device signal ----
 

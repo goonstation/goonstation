@@ -138,8 +138,8 @@ TYPEINFO_NEW(/obj/table)
 
 	/// Slam a dude on a table (harmfully)
 	proc/harm_slam(mob/user, mob/victim)
-		if (!victim.hasStatus("weakened"))
-			victim.changeStatus("weakened", 3 SECONDS)
+		if (!victim.hasStatus("knockdown"))
+			victim.changeStatus("knockdown", 3 SECONDS)
 			victim.force_laydown_standup()
 		src.visible_message(SPAN_ALERT("<b>[user] slams [victim] onto \the [src]!</b>"))
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
@@ -148,8 +148,8 @@ TYPEINFO_NEW(/obj/table)
 
 	/// Slam a dude on the table (gently, with great care)
 	proc/gentle_slam(mob/user, mob/victim)
-		if (!victim.hasStatus("weakened"))
-			victim.changeStatus("weakened", 2 SECONDS)
+		if (!victim.hasStatus("knockdown"))
+			victim.changeStatus("knockdown", 2 SECONDS)
 			victim.force_laydown_standup()
 		src.visible_message(SPAN_ALERT("[user] puts [victim] on \the [src]."))
 
@@ -329,7 +329,7 @@ TYPEINFO_NEW(/obj/table)
 		return FALSE
 
 	MouseDrop_T(atom/O, mob/user as mob)
-		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 
 		if (ismob(O) && O == user)
@@ -583,8 +583,8 @@ TYPEINFO_NEW(/obj/table/mauxite)
 		return
 
 	harm_slam(mob/user, mob/victim)
-		if (!victim.hasStatus("weakened"))
-			victim.changeStatus("weakened", 4 SECONDS)
+		if (!victim.hasStatus("knockdown"))
+			victim.changeStatus("knockdown", 4 SECONDS)
 			victim.force_laydown_standup()
 		src.visible_message(SPAN_ALERT("<b>[user] slams [victim] onto \the [src], collapsing it instantly!</b>"))
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
@@ -784,7 +784,7 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	name = "basic supply lab counter"
 	desc = "Everything an aspiring chemist needs to start making chemicals!"
 	drawer_contents = list(/obj/item/paper/book/from_file/pharmacopia,
-				/obj/item/storage/box/beakerbox = 2,
+				/obj/item/storage/box/beakerbox,
 				/obj/item/reagent_containers/glass/beaker/large = 2,
 				/obj/item/clothing/glasses/spectro,
 				/obj/item/device/reagentscanner = 2,
@@ -794,8 +794,7 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 /obj/table/reinforced/chemistry/auto/auxsup
 	name = "auxiliary supply lab counter"
 	desc = "Extra supplies for the discerning chemist."
-	drawer_contents = list(/obj/item/storage/box/beakerbox,
-				/obj/item/storage/box/patchbox,
+	drawer_contents = list(/obj/item/storage/box/patchbox,
 				/obj/item/storage/box/syringes,
 				/obj/item/clothing/glasses/spectro,
 				/obj/item/device/reagentscanner,
@@ -1134,7 +1133,7 @@ TYPEINFO(/obj/table/glass)
 		if(src.glass_broken != GLASS_INTACT)
 			return ..()
 		victim.set_loc(src.loc)
-		victim.changeStatus("weakened", 4 SECONDS)
+		victim.changeStatus("knockdown", 4 SECONDS)
 		src.visible_message(SPAN_ALERT("<b>[user] slams [victim] onto \the [src]!</b>"))
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
 		src.material_trigger_when_attacked(victim, user, 1)

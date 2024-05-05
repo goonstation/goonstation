@@ -62,9 +62,9 @@
 		AH.lead = holder.owner
 		AH.follow = null
 
-		if(AH.lead.getStatusDuration("weakened") || AH.lead.getStatusDuration("stunned") || AH.lead.getStatusDuration("paralysis") || AH.lead.lying)
+		if(AH.lead.getStatusDuration("knockdown") || AH.lead.getStatusDuration("stunned") || AH.lead.getStatusDuration("unconscious") || AH.lead.lying)
 			. = FALSE
-		if(AH.follow && (AH.follow.getStatusDuration("weakened") || AH.follow.getStatusDuration("stunned") || AH.follow.getStatusDuration("paralysis") || AH.follow.lying))
+		if(AH.follow && (AH.follow.getStatusDuration("knockdown") || AH.follow.getStatusDuration("stunned") || AH.follow.getStatusDuration("unconscious") || AH.follow.lying))
 			. = FALSE
 		else
 			for (var/obj/item/grab/G in AH.lead?.equipped_list(check_for_magtractor = 0))

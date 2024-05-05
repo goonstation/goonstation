@@ -32,7 +32,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 			var/mob/living/carbon/human/H = M
 			boutput(H, SPAN_ALERT("You bite down into a razor blade!"))
 			H.TakeDamage("head", 10, 0, 0, DAMAGE_STAB)
-			H.changeStatus("weakened", 3 SECONDS)
+			H.changeStatus("knockdown", 3 SECONDS)
 			H.UpdateDamageIcon()
 			src.razor_blade = 0
 			new /obj/item/razor_blade( get_turf(src) )

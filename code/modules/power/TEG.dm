@@ -1076,7 +1076,8 @@ datum/pump_ui/circulator_ui
 					fireflash(src, firesize)
 					for(var/atom/movable/M in view(firesize, src.loc)) // fuck up those jerkbag engineers
 						if(M.anchored) continue
-						if(ismob(M)) if(hasvar(M,"weakened")) M:changeStatus("weakened", 8 SECONDS)
+						if(ismob(M))
+							M.changeStatus("knockdown", 8 SECONDS)
 						if(ismob(M)) random_brute_damage(M, 10)
 						if(ismob(M))
 							var/atom/targetTurf = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
@@ -1100,7 +1101,7 @@ datum/pump_ui/circulator_ui
 						W.smash()
 					for (var/mob/living/M in range(6, src.loc))
 						shake_camera(M, 3, 16)
-						M.changeStatus("weakened", 1 SECOND)
+						M.changeStatus("knockdown", 1 SECOND)
 					for (var/atom/A in range(rand(1,3), src.loc))
 						if (istype(A, /turf/simulated))
 							A.pixel_x = rand(-1,1)

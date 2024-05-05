@@ -192,7 +192,7 @@
 				if (prob(W.force*2))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1, -1)
 					for (var/mob/M in src)
-						M.changeStatus("weakened",1 SECONDS)
+						M.changeStatus("knockdown",1 SECONDS)
 						M.show_text("The physical shock of the blow knocks you around!", "red")
 				return /////ships should pretty much be immune to fire
 			else
@@ -200,7 +200,7 @@
 				if (prob(W.force*3))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1, -1)
 					for (var/mob/M in src)
-						M.changeStatus("weakened",1 SECONDS)
+						M.changeStatus("knockdown",1 SECONDS)
 						M.show_text("The physical shock of the blow knocks you around!", "red")
 
 		checkhealth()
@@ -657,7 +657,7 @@
 				if(M.health > 0)
 					vehicular_manslaughter = 1 //we first check if the person is not in crit before hit, if yes we qualify for vehicular manslaughter achievement
 				//M.changeStatus("stunned", 1 SECOND)
-				//M.changeStatus("weakened", 1 SECOND)
+				//M.changeStatus("knockdown", 1 SECOND)
 				M.TakeDamageAccountArmor("chest", power * 1.3, 0, 0, DAMAGE_BLUNT)
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
@@ -1045,7 +1045,7 @@
 		boutput(boarder, SPAN_ALERT("[src] is locked!"))
 		return
 
-	if (boarder.getStatusDuration("stunned") > 0 || boarder.getStatusDuration("weakened") || boarder.getStatusDuration("paralysis") || !isalive(boarder) || boarder.restrained())
+	if (boarder.getStatusDuration("stunned") > 0 || boarder.getStatusDuration("knockdown") || boarder.getStatusDuration("unconscious") || !isalive(boarder) || boarder.restrained())
 		boutput(boarder, SPAN_ALERT("You can't enter a pod while incapacitated or restrained."))
 		return
 
@@ -1194,7 +1194,7 @@
 		if(!BOARD_DIST_ALLOWED(owner,V) || V == null || V.locked)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (isdead(M) || M.restrained() || owner.getStatusDuration("knockdown") || owner.getStatusDuration("unconscious") || owner.getStatusDuration("stunned"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1210,7 +1210,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (isdead(M) || M.restrained() || owner.getStatusDuration("weakened") || owner.getStatusDuration("paralysis") || owner.getStatusDuration("stunned"))
+		if (isdead(M) || M.restrained() || owner.getStatusDuration("knockdown") || owner.getStatusDuration("unconscious") || owner.getStatusDuration("stunned"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
