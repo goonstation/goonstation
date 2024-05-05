@@ -509,27 +509,31 @@
 		var/damage = round(P.power, 1.0)
 
 		var/hitsound = null
-		switch(P.proj_data.damage_type)
-			if(D_KINETIC)
-				src.health -= damage/1.7
-				hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
-			if(D_PIERCING)
-				src.health -= damage/1
-				hitsound = 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
-			if(D_ENERGY)
-				src.health -= damage/1.5
-				hitsound = 'sound/impact_sounds/Energy_Hit_3.ogg'
-			if(D_SLASHING)
-				src.health -= damage/2
-				hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
-			if(D_BURNING)
-				src.material_trigger_on_temp(5000)
-				src.health -= damage/3
-				hitsound = 'sound/items/Welder.ogg'
-			if(D_SPECIAL) //blob
-				src.health -= damage
-				hitsound = 'sound/impact_sounds/Slimy_Hit_2.ogg'
-		checkhealth()
+
+		if(istype(P.proj_data, /datum/projectile/bullet/foamdart)) // foam darts shouldn't hurt
+			hitsound = 'sound/impact_sounds/Glass_Hit_1.ogg'
+		else
+			switch(P.proj_data.damage_type)
+				if(D_KINETIC)
+					src.health -= damage/1.7
+					hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
+				if(D_PIERCING)
+					src.health -= damage/1
+					hitsound = 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
+				if(D_ENERGY)
+					src.health -= damage/1.5
+					hitsound = 'sound/impact_sounds/Energy_Hit_3.ogg'
+				if(D_SLASHING)
+					src.health -= damage/2
+					hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
+				if(D_BURNING)
+					src.material_trigger_on_temp(5000)
+					src.health -= damage/3
+					hitsound = 'sound/items/Welder.ogg'
+				if(D_SPECIAL) //blob
+					src.health -= damage
+					hitsound = 'sound/impact_sounds/Slimy_Hit_2.ogg'
+			checkhealth()
 		if(P.proj_data && P.proj_data.disruption) //ZeWaka: Fix for null.disruption
 			src.disrupt(P.proj_data.disruption, P)
 
@@ -575,32 +579,28 @@
 		qdel(P)
 		return
 
-	proc/disrupt(var/disruption as num, var/obj/projectile/P)
-		if(disruption)
-			playsound(src.loc, pick('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg', 'sound/effects/electric_shock.ogg', 'sound/effects/elec_bzzz.ogg'), 50, 1)
-			if(pilot)
-				boutput(src.pilot, "[ship_message("WARNING! Electrical system disruption detected!")]")
-			//if (P)
-			//	for (var/mob/M in src)
-			//		M.bullet_act_indirect(P)
-			var/chance = disruption * 1
-			for(var/obj/item/shipcomponent/S in src.components)
-				var/my_chance = chance
-				if (istype(S, /obj/item/shipcomponent/engine))
-					my_chance += 40
+	proc/disrupt(disruption, obj/projectile/P)
+		if(disruption <= 0 || !length(src.components))
+			return
+		playsound(src.loc, pick('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg', 'sound/effects/electric_shock.ogg', 'sound/effects/elec_bzzz.ogg'), 50, 1)
+		if(pilot)
+			boutput(src.pilot, "[ship_message("WARNING! Electrical system disruption detected!")]")
 
-				if(prob(my_chance))
-					if (istype(S, /obj/item/shipcomponent/engine)) //dont turn off engine thats annoying. instead ddisable the wormhole func!!
-						var/obj/item/shipcomponent/engine/E = S
-						if (E.ready)
-							E.ready = 0
-							E.ready()
-					else
-						S.deactivate()
+		var/obj/item/shipcomponent/S = pick(src.components)
+		if (istype(S, /obj/item/shipcomponent/engine))
+			disruption += 40
 
-					chance -= 25
-					if (chance <= 0)
-						return
+		if(prob(disruption))
+			if (istype(S, /obj/item/shipcomponent/engine)) //dont turn off engine thats annoying. instead ddisable the wormhole func!!
+				var/obj/item/shipcomponent/engine/E = S
+				if (E.ready)
+					E.ready = 0
+					E.ready()
+			else
+				S.deactivate()
+				S.disrupted = TRUE
+				SPAWN(2 SECONDS)
+					S.disrupted = FALSE
 
 	emp_act()
 		src.disrupt(10)

@@ -388,11 +388,11 @@
 
 /obj/proc/place_on(obj/item/W as obj, mob/user as mob, params)
 	. = FALSE
-	if (W && !issilicon(user)) // no ghost drones should not be able to do this either, not just borgs
+	if (W && !isghostdrone(user)) // im allowing borgs to do this when its specifically overridden into a mousedrop - mylie
 		var/dirbuffer //*hmmpf* it's not like im a hacky coder or anything... (＃￣^￣)
 		dirbuffer = W.dir //though actually this will preserve item rotation when placed on tables so they don't rotate when placed. (this is a niche bug with silverware, but I thought I might as well stop it from happening with other things <3)
 		if (user)
-			if (W.cant_drop)
+			if (W.cant_drop) // this should handle borgs dropping their tools, anyway? - mylie
 				return
 			user.drop_item()
 		if(W.dir != dirbuffer)

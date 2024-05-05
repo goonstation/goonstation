@@ -772,43 +772,42 @@
 
 	src.hide_attack = initial(src.hide_attack)
 
-/obj/item/grab/gunpoint
-	var/shot = 0
-
-	New()
-		..()
+ABSTRACT_TYPE(/obj/item/grab/threat)
+/obj/item/grab/threat
+	var/activated = FALSE
 
 	post_item_setup()
 		..()
-		if (!(src.affecting.mob_flags & AT_GUNPOINT))
-			src.affecting.mob_flags |= AT_GUNPOINT
+		RegisterSignal(src.affecting, COMSIG_MOB_TRIGGER_THREAT, PROC_REF(activate))
 
 	disposing()
-		if (!shot && src.assailant && isitem(src.loc))
+		UnregisterSignal(src.affecting, COMSIG_MOB_TRIGGER_THREAT)
+		if (!src.activated && src.assailant && isitem(src.loc))
 			for (var/mob/O in AIviewers(src.assailant, null))
 				if (O.client)
 					O.show_message(SPAN_ALERT("[src.assailant] lowers [src.loc]."))
-
-		if (src.affecting)
-			var/found = 0
-			for (var/obj/item/grab/gunpoint/G in src.affecting.grabbed_by)
-				if (G != src)
-					found = 1
-					break
-			if (!found)
-				src.affecting.mob_flags &= ~AT_GUNPOINT
 		..()
 
-	proc/shoot()
-		if(src.shot)
+	do_resist()
+		src.activate()
+		if (!QDELETED(src))
+			..()
+
+	proc/activate()
+		if(src.activated)
 			return
-		src.shot = TRUE
+		src.activated = TRUE
 		if (src.affecting && src.assailant && isitem(src.loc))
-			var/obj/item/gun/G = src.loc
-			G.ShootPointBlank(src.affecting,src.assailant,1) //don't shoot an offhand gun
+			src.kill(src.loc)
 
 		qdel(src)
 
+	proc/kill(obj/item/weapon)
+		return
+
+/obj/item/grab/threat/gunpoint
+	kill(obj/item/gun/gun)
+		gun.ShootPointBlank(src.affecting,src.assailant,1) //don't shoot an offhand gun
 
 /obj/item/grab/block
 	c_flags = EQUIPPED_WHILE_HELD

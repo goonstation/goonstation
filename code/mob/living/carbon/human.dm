@@ -1107,9 +1107,7 @@
 			for(var/mob/M in view(7, I.loc))
 				shake_camera(M, 20, 8)
 
-		if (mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 
 		src.next_click = world.time + src.combat_click_delay
 

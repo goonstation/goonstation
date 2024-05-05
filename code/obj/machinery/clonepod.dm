@@ -307,10 +307,10 @@ TYPEINFO(/obj/machinery/clonepod)
 				// out of deep critical health before they turn into chunky salsa
 				// This should be really rare to have happen, but I want to leave it in
 				// just in case someone manages to pull off a miracle save
+				defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MAJOR)
 				src.occupant.bioHolder?.AddEffect("premature_clone")
 				src.occupant.take_toxin_damage(250)
 				random_brute_damage(src.occupant, 100, 0)
-				defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MAJOR)
 				if (ishuman(src.occupant))
 					var/mob/living/carbon/human/P = src.occupant
 					if (P.limbs)

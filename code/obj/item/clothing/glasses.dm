@@ -714,6 +714,9 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	color_b = 0.9
 	var/freq = FREQ_AIRLOCK
 
+	get_desc()
+		return "A little dial on the side is set to [format_frequency(src.freq)]."
+
 	attack_self(mob/user)
 		. = ..()
 		src.ui_interact(user)
