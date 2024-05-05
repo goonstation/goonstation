@@ -535,6 +535,12 @@ TRASH BAG
 
 /obj/item/sponge/attackby(obj/item/W, mob/user)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		if (src.loc == user && isrobot(user))
+			boutput(user, "You can't quite angle your [W.name] into your [src.name].")
+			return
+		if (src.cant_drop || src.cant_self_remove)
+			boutput(user, "You can't bring yourself to cut away your own personal [src.name]!")
+			return
 		user.visible_message(SPAN_NOTICE("[user] cuts [src] into the shape of... cheese?"))
 		if(src.loc == user)
 			user.u_equip(src)
@@ -1172,7 +1178,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 							A.throw_at(T == turf_list[1] ? get_turf(master) : turf_list[1], src.throw_range, src.throw_speed)
 							if(ismob(A))
 								var/mob/M = A
-								M.changeStatus("weakened", 0.9 SECONDS)
+								M.changeStatus("knockdown", 0.9 SECONDS)
 								M.force_laydown_standup()
 								boutput(M, SPAN_ALERT("You are pulled by the force of [user]'s [master]."))
 						else

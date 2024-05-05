@@ -1307,7 +1307,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.hardness /= 2
 		else
 			src.hardness = 0
-		src.UpdateOverlays(image('icons/turf/walls/asteroid.dmi', "weakened"), "asteroid_weakened")
+		src.UpdateOverlays(image('icons/turf/walls/asteroid.dmi', "knockdown"), "asteroid_weakened")
 
 	proc/damage_asteroid(var/power,var/allow_zero = 0)
 		// use this for stuff that arent mining tools but still attack asteroids
@@ -2045,7 +2045,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 			if (!isdead(C) && C.client) shake_camera(C, 3, 2)
 			if(GET_DIST(src,C) <= src.expl_light)
 				C.changeStatus("stunned", 8 SECONDS)
-				C.changeStatus("weakened", 10 SECONDS)
+				C.changeStatus("knockdown", 10 SECONDS)
 				C.stuttering += 15
 				boutput(C, SPAN_ALERT("The concussive blast knocks you off your feet!"))
 			if(GET_DIST(src,C) <= src.expl_heavy)
@@ -2704,10 +2704,11 @@ TYPEINFO(/obj/item/ore_scoop)
 			if (length(satchel.contents) < 1)
 				boutput(user, SPAN_ALERT("The satchel in [src] is empty."))
 				return
-			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
-			for (var/obj/item/I in satchel.contents)
-				I.set_loc(target)
-			satchel.UpdateIcon()
+			if(!is_blocked_turf(target))
+				user.visible_message("[user] dumps out [src]'s satchel contents onto the ground.", "You dump out [src]'s satchel contents onto the ground.")
+				for (var/obj/item/I in satchel.contents)
+					I.set_loc(target)
+				satchel.UpdateIcon()
 			return
 		if (istype(target, /obj/item/satchel/mining))
 			if (!issilicon(user))

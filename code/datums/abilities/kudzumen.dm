@@ -78,7 +78,7 @@
 			//unstealth
 			if (stealthed)
 				src.stealthed = 0
-				owner.changeStatus("weakened", 6 SECONDS)
+				owner.changeStatus("knockdown", 6 SECONDS)
 				animate(owner, alpha=255, time=3 SECONDS)
 
 				boutput(owner, "<b class='hint'>You reappear.</b>")
@@ -320,7 +320,7 @@
 			if (istype(H) && istype(H.mutantrace, /datum/mutantrace/kudzu) && istype(H.abilityHolder, /datum/abilityHolder/kudzu))
 				var/datum/abilityHolder/kudzu/KAH = H.abilityHolder
 				H.abilityHolder.points = min(KAH.MAX_POINTS, KAH.points + 20)
-				H.changeStatus("weakened", -3 SECONDS)
+				H.changeStatus("knockdown", -3 SECONDS)
 		return
 
 /datum/targetable/kudzu/kudzusay

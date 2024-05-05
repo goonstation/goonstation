@@ -7,7 +7,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
-	special_grab = /obj/item/grab/gunpoint
+	special_grab = /obj/item/grab/threat/gunpoint
 
 	item_state = "gun"
 	m_amt = 2000
@@ -395,9 +395,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if (ismob(user))
 		var/mob/M = user
-		if (M.mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in M.grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(M, COMSIG_MOB_TRIGGER_THREAT)
 		if(slowdown)
 			SPAWN(-1)
 				M.movement_delay_modifier += slowdown
