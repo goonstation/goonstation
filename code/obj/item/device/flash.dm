@@ -269,7 +269,7 @@ TYPEINFO(/obj/item/device/flash)
 				var/dist = GET_DIST(get_turf(src),M)
 				dist = min(dist,4)
 				dist = max(dist,1)
-				M.apply_flash(20, weak = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
+				M.apply_flash(20, knockdown = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
 
 
 	// Handle bulb wear.
