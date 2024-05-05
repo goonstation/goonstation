@@ -64,7 +64,7 @@
 							sleep(1 SECOND)
 						HU.bioHolder.age = original_age
 						HU.changeStatus("stunned", 10 SECONDS)
-						HU.changeStatus("weakened", 10 SECONDS)
+						HU.changeStatus("knockdown", 10 SECONDS)
 						var/turf/T = get_edge_target_turf(holder.owner, holder.owner.dir)
 						SPAWN(0)
 							playsound(holder.owner.loc, "swing_hit", 40, 1)

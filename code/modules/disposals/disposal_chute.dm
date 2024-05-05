@@ -279,8 +279,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	// leave the disposal
 	proc/go_out(mob/user)
 		user.set_loc(src.loc)
-		if (!user.hasStatus("weakened"))
-			user.changeStatus("weakened", 1 SECOND)
+		if (!user.hasStatus("knockdown"))
+			user.changeStatus("knockdown", 1 SECOND)
 			user.force_laydown_standup()
 		update()
 		return

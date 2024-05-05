@@ -481,7 +481,7 @@ TYPEINFO(/obj/item/rcd)
 			if(user_limb_is_missing == TRUE) //The limb/ass is already missing, maim yourself instead
 				user.visible_message(SPAN_ALERT("<b>[user] messes up really badly with [src] and maims themselves! </b> "))
 				random_brute_damage(user, 35)
-				Huser.changeStatus("weakened", 3 SECONDS)
+				Huser.changeStatus("knockdown", 3 SECONDS)
 				take_bleeding_damage(user, null, 25, DAMAGE_CUT, 1)
 			else	//Limb's here? We lose it
 				if (user.zone_sel.selecting == "chest")

@@ -59,7 +59,7 @@
 		if (!M)
 			return 1
 
-		var/greatest_stun = max(3, M.getStatusDuration("stunned"),M.getStatusDuration("weakened"),M.getStatusDuration("paralysis"),M.getStatusDuration("slowed")/4,M.getStatusDuration("disorient")/2)
+		var/greatest_stun = max(3, M.getStatusDuration("stunned"),M.getStatusDuration("knockdown"),M.getStatusDuration("unconscious"),M.getStatusDuration("slowed")/4,M.getStatusDuration("disorient")/2)
 		greatest_stun = round(greatest_stun / 20)
 
 		M.TakeDamage("All", greatest_stun, 0)
