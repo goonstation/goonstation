@@ -801,7 +801,7 @@
 					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 				. = ..()
 
-		weakened
+		knockdown
 			id = "knockdown"
 			name = "Knocked-down"
 			desc = "You are knocked-down.<br>Unable to take any actions, prone."
@@ -858,7 +858,7 @@
 
 
 
-		paralysis
+		unconscious
 			id = "unconscious"
 			name = "Unconscious"
 			desc = "You are unconscious.<br>Unable to take any actions, blinded."
@@ -878,7 +878,7 @@
 					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 				. = ..()
 
-		locked
+		paralysis
 			id = "paralysis"
 			name = "Paralyzed" //I'm going to scream
 			desc = "You are completely paralyzed."
