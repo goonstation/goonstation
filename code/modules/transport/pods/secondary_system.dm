@@ -61,6 +61,10 @@
 		user.Browse(dat, "window=ship_sec_system")
 		onclose(user, "ship_sec_system")
 		return
+	
+	run_component()
+		if (!src.ship.passengers)
+			src.deactivate()
 
 /obj/item/shipcomponent/secondary_system/orescoop
 	name = "Alloyed Solutions Ore Scoop/Hold"
